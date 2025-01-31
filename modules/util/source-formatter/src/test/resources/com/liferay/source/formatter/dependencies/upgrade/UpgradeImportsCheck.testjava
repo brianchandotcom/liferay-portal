@@ -55,7 +55,7 @@ import com.liferay.portlet.journal.service.JournalContentSearchLocalServiceUtil;
 	},
 	service = ClayDataSetDisplayView.class
 )
-public class UpgradeJavaCheck extends BaseTableClayDataSetDisplayView {
+public class UpgradeImportsCheck extends BaseTableClayDataSetDisplayView {
 
 	@Override
 	public ClayTableSchema getClayTableSchema() {

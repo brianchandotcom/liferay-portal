@@ -1,0 +1,54 @@
+<%--
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+--%>
+
+<%@ page import="com.liferay.frontend.data.set.provider.search.FDSPagination" %>
+<%@ page import="com.liferay.frontend.data.set.view.FDSView" %>
+<%@ page import="com.liferay.frontend.data.set.view.table.BaseTableFDSView" %>
+<%@ page import="com.liferay.frontend.data.set.view.table.FDSTableSchema" %>
+<%@ page import="com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilder" %>
+<%@ page import="com.liferay.frontend.data.set.view.table.FDSTableSchemaBuilderFactory" %>
+<%@ page import="com.liferay.frontend.data.set.view.table.FDSTableSchemaField" %>
+<%@ page import="com.liferay.portal.kernel.messaging.DestinationNames" %>
+<%@ page import="com.liferay.portal.kernel.messaging.Message" %>
+<%@ page import="com.liferay.portal.kernel.scheduler.SchedulerEngineHelper" %>
+<%@ page import="com.liferay.portal.kernel.scheduler.SchedulerEntryImpl" %>
+<%@ page import="com.liferay.portal.kernel.scheduler.SchedulerException" %>
+<%@ page import="com.liferay.petra.string.StringPool" %>
+<%@ page import="com.liferay.portal.kernel.model.Company" %>
+<%@ page import="com.liferay.portal.kernel.model.Group" %>
+<%@ page import="com.liferay.portal.kernel.model.Layout" %>
+<%@ page import="com.liferay.portal.kernel.model.Portlet" %>
+<%@ page import="com.liferay.portal.kernel.model.Role" %>
+<%@ page import="com.liferay.portal.kernel.model.User" %>
+<%@ page import="com.liferay.portal.kernel.model.UserGroup" %>
+<%@ page import="com.liferay.portal.kernel.service.ClassNameLocalServiceUtil" %>
+<%@ page import="com.liferay.portal.kernel.service.CompanyLocalServiceUtil" %>
+<%@ page import="com.liferay.portal.kernel.service.GroupLocalServiceUtil" %>
+<%@ page import="com.liferay.portal.kernel.service.LayoutLocalServiceUtil" %>
+<%@ page import="com.liferay.portal.kernel.service.PortletLocalServiceUtil" %>
+<%@ page import="com.liferay.portal.kernel.service.RoleLocalServiceUtil" %>
+<%@ page import="com.liferay.portal.kernel.service.UserGroupLocalServiceUtil" %>
+<%@ page import="com.liferay.portal.kernel.service.UserLocalServiceUtil" %>
+<%@ page import="com.liferay.portal.kernel.service.permission.GroupPermissionUtil" %>
+<%@ page import="com.liferay.portal.kernel.service.permission.LayoutPermissionUtil" %>
+<%@ page import="com.liferay.portal.kernel.theme.ThemeDisplay" %>
+<%@ page import="com.liferay.portal.kernel.util.CookieUtil" %>
+<%@ page import="com.liferay.portal.kernel.util.PortalUtil" %>
+<%@ page import="com.liferay.document.library.kernel.model.DLFileEntry" %>
+<%@ page import="com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil" %>
+<%@ page import="com.liferay.journal.model.JournalArticle" %>
+<%@ page import="com.liferay.journal.service.JournalContentSearchLocalServiceUtil" %>
+
+<%
+public static FDSTableSchema getFDSTableSchema() {
+	FDSTableSchemaBuilder fDSTableSchemaBuilder = _fDSTableSchemaBuilderFactory.create();
+
+	return fDSTableSchemaBuilder.build();
+}
+
+private FDSTableSchemaBuilderFactory _fDSTableSchemaBuilderFactory;
+%>

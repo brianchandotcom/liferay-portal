@@ -1,0 +1,54 @@
+<%--
+/**
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+--%>
+
+<%@ page import="com.liferay.frontend.taglib.clay.data.Pagination" %>
+<%@ page import="com.liferay.frontend.taglib.clay.data.set.ClayDataSetDisplayView" %>
+<%@ page import="com.liferay.frontend.taglib.clay.data.set.view.table.BaseTableClayDataSetDisplayView" %>
+<%@ page import="com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchema" %>
+<%@ page import="com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilder" %>
+<%@ page import="com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilderFactory" %>
+<%@ page import="com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaField" %>
+<%@ page import="com.liferay.portal.kernel.messaging.DestinationNames" %>
+<%@ page import="com.liferay.portal.kernel.messaging.Message" %>
+<%@ page import="com.liferay.portal.kernel.scheduler.SchedulerEngineHelper" %>
+<%@ page import="com.liferay.portal.kernel.scheduler.SchedulerEntryImpl" %>
+<%@ page import="com.liferay.portal.kernel.scheduler.SchedulerException" %>
+<%@ page import="com.liferay.portal.kernel.util.StringPool" %>
+<%@ page import="com.liferay.portal.model.Company" %>
+<%@ page import="com.liferay.portal.model.Group" %>
+<%@ page import="com.liferay.portal.model.Layout" %>
+<%@ page import="com.liferay.portal.model.Portlet" %>
+<%@ page import="com.liferay.portal.model.Role" %>
+<%@ page import="com.liferay.portal.model.User" %>
+<%@ page import="com.liferay.portal.model.UserGroup" %>
+<%@ page import="com.liferay.portal.service.ClassNameLocalServiceUtil" %>
+<%@ page import="com.liferay.portal.service.CompanyLocalServiceUtil" %>
+<%@ page import="com.liferay.portal.service.GroupLocalServiceUtil" %>
+<%@ page import="com.liferay.portal.service.LayoutLocalServiceUtil" %>
+<%@ page import="com.liferay.portal.service.PortletLocalServiceUtil" %>
+<%@ page import="com.liferay.portal.service.RoleLocalServiceUtil" %>
+<%@ page import="com.liferay.portal.service.UserGroupLocalServiceUtil" %>
+<%@ page import="com.liferay.portal.service.UserLocalServiceUtil" %>
+<%@ page import="com.liferay.portal.service.permission.GroupPermissionUtil" %>
+<%@ page import="com.liferay.portal.service.permission.LayoutPermissionUtil" %>
+<%@ page import="com.liferay.portal.theme.ThemeDisplay" %>
+<%@ page import="com.liferay.portal.util.CookieUtil" %>
+<%@ page import="com.liferay.portal.util.PortalUtil" %>
+<%@ page import="com.liferay.portlet.documentlibrary.model.DLFileEntry" %>
+<%@ page import="com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil" %>
+<%@ page import="com.liferay.portlet.journal.model.JournalArticle" %>
+<%@ page import="com.liferay.portlet.journal.service.JournalContentSearchLocalServiceUtil" %>
+
+<%
+public static ClayTableSchema getClayTableSchema() {
+	ClayTableSchemaBuilder clayTableSchemaBuilder = _clayTableSchemaBuilderFactory.create();
+
+	return clayTableSchemaBuilder.build();
+}
+
+private ClayTableSchemaBuilderFactory _clayTableSchemaBuilderFactory;
+%>

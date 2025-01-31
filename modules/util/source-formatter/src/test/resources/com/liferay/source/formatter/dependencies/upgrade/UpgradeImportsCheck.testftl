@@ -1,0 +1,9 @@
+<#assign
+	layoutLocalService = serviceLocator.findService("com.liferay.portal.service.LayoutLocalService")
+
+	serviceContext = staticUtil["com.liferay.portal.service.ServiceContextThreadLocal"].getServiceContext()
+
+	commerceAccountLocalServiceUtil = staticUtil["com.liferay.commerce.account.service.CommerceAccountLocalServiceUtil"]
+
+	commerceAccount = commerceAccountLocalServiceUtil.getCommerceAccount(param)
+/>

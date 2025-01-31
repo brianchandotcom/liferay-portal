@@ -57,7 +57,7 @@ import com.liferay.journal.service.JournalContentSearchLocalServiceUtil;
 	},
 	service = FDSView.class
 )
-public class UpgradeJavaCheck extends BaseTableFDSView {
+public class UpgradeImportsCheck extends BaseTableFDSView {
 
 	@Override
 	public FDSTableSchema getFDSTableSchema(Locale locale) {

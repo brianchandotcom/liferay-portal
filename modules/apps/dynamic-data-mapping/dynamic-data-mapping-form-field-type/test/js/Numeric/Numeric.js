@@ -9,9 +9,8 @@ import userEvent from '@testing-library/user-event';
 import {FormProvider} from 'data-engine-js-components-web';
 import React from 'react';
 
-import Numeric, {
-	maxLengthExceeded,
-} from '../../../src/main/resources/META-INF/resources/Numeric/Numeric';
+import Numeric from '../../../src/main/resources/META-INF/resources/Numeric/Numeric';
+import {maxLengthExceeded} from '../../../src/main/resources/META-INF/resources/Numeric/numericUtil';
 
 const globalLanguageDirection = Liferay.Language.direction;
 

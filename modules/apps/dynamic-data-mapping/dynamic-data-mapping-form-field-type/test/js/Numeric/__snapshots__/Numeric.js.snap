@@ -8,24 +8,29 @@ exports[`Field Numeric Integer Input Mask toggle has an inputMaskFormat 1`] = `
     data-field-name="numericField"
   >
     <div
-      data-tooltip-align="top"
-      title="+12 (34) 5678-9012"
+      class="input-group"
     >
+      <div
+        class="input-group-item"
+        data-tooltip-align="top"
+        title="+12 (34) 5678-9012"
+      >
+        <input
+          aria-invalid="true"
+          class="form-control ddm-form-field-type__numeric--rtl"
+          id="numericField"
+          name="numericField_masked"
+          placeholder="+__ (__) ____-____"
+          type="text"
+          value="+12 (34) 5678-9012"
+        />
+      </div>
       <input
-        aria-invalid="true"
-        class="form-control ddm-form-field-type__numeric--rtl"
-        id="numericField"
-        name="numericField_masked"
-        placeholder="+__ (__) ____-____"
-        type="text"
-        value="+12 (34) 5678-9012"
+        name="numericField"
+        type="hidden"
+        value="123456789012"
       />
     </div>
-    <input
-      name="numericField"
-      type="hidden"
-      value="123456789012"
-    />
     <input
       name="numericField_edited"
       type="hidden"
@@ -52,15 +57,20 @@ exports[`Field Numeric renders the default markup 1`] = `
     class="form-group hide"
   >
     <div
-      data-tooltip-align="top"
+      class="input-group"
     >
-      <input
-        aria-invalid="true"
-        class="form-control ddm-form-field-type__numeric--rtl"
-        name="undefined"
-        type="text"
-        value=""
-      />
+      <div
+        class="input-group-item"
+        data-tooltip-align="top"
+      >
+        <input
+          aria-invalid="true"
+          class="form-control ddm-form-field-type__numeric--rtl"
+          name="undefined"
+          type="text"
+          value=""
+        />
+      </div>
     </div>
     <input
       name="undefined_edited"

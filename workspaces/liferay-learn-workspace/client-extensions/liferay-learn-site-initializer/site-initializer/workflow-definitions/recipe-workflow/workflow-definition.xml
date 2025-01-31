@@ -1,13 +1,10 @@
 <?xml version="1.0"?>
 
-<workflow-definition
-	xmlns="urn:liferay.com:liferay-workflow_7.4.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
->
+<workflow-definition xmlns="urn:liferay.com:liferay-workflow_7.4.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd">
 	<name>Recipe Workflow</name>
 	<description>A single approver can approve a workflow content.</description>
-	<version>1</version>
+	<version>50</version>
 	<state>
 		<name>created</name>
 		<description>Begin a workflow.</description>
@@ -46,11 +43,11 @@
 		<metadata>
 			<![CDATA[
 				{
-					"terminal": true,
 					"xy": [
 						539,
 						74
-					]
+					],
+					"terminal": true
 				}
 			]]>
 		</metadata>
@@ -58,15 +55,27 @@
 			<action>
 				<name>approve</name>
 				<status>0</status>
+				<priority>1</priority>
 				<execution-type>onEntry</execution-type>
 			</action>
 			<notification>
-				<name>Approve Notification</name>
+				<name>Approve Notification Email</name>
 				<template>
 					<![CDATA[Congrats, your recipe article has been approved by ${userName}. You can find your recipe article live on <a href="https://learn.liferay.com">Learn</a> by searching the related keywords.]]>
 				</template>
 				<template-language>freemarker</template-language>
 				<notification-type>email</notification-type>
+				<recipients receptionType="to">
+					<user />
+				</recipients>
+				<execution-type>onEntry</execution-type>
+			</notification>
+			<notification>
+				<name>Approve Notification User</name>
+				<template>
+					<![CDATA[Congrats, your recipe article has been approved by ${userName}. You can find your recipe article live on Liferay Learn by searching the related keywords.]]>
+				</template>
+				<template-language>freemarker</template-language>
 				<notification-type>user-notification</notification-type>
 				<recipients receptionType="to">
 					<user />
@@ -107,12 +116,23 @@
 				<execution-type>onAssignment</execution-type>
 			</action>
 			<notification>
-				<name>Creator Modification Notification</name>
+				<name>Creator Modification Notification Email</name>
 				<template>
 					<![CDATA[Hi, your recipe article has been rejected by ${userName}, with the following comment: ${taskComments}. You may update and re-submit the recipe by logging into <a href="https://learn.liferay.com">Learn</a>.]]>
 				</template>
 				<template-language>freemarker</template-language>
 				<notification-type>email</notification-type>
+				<recipients receptionType="to">
+					<user />
+				</recipients>
+				<execution-type>onAssignment</execution-type>
+			</notification>
+			<notification>
+				<name>Creator Modification Notification User</name>
+				<template>
+					<![CDATA[Hi, your recipe article has been rejected by ${userName}, with the following comment: ${taskComments}. You may update and re-submit the recipe by logging into Liferay Learn.]]>
+				</template>
+				<template-language>freemarker</template-language>
 				<notification-type>user-notification</notification-type>
 				<recipients receptionType="to">
 					<user />
@@ -156,12 +176,23 @@
 		</metadata>
 		<actions>
 			<notification>
-				<name>Review Notification</name>
+				<name>Review Notification Email</name>
 				<template>
 					<![CDATA[${userName} submitted a recipe article for review in the workflow. Please login to <a href="https://learn.liferay.com">Learn</a> to review and take action.]]>
 				</template>
 				<template-language>freemarker</template-language>
 				<notification-type>email</notification-type>
+				<recipients receptionType="to">
+					<assignees />
+				</recipients>
+				<execution-type>onAssignment</execution-type>
+			</notification>
+			<notification>
+				<name>Review Notification User</name>
+				<template>
+					<![CDATA[${userName} submitted a recipe article for review in the workflow. Please login to Liferay Learn to review and take action.]]>
+				</template>
+				<template-language>freemarker</template-language>
 				<notification-type>user-notification</notification-type>
 				<recipients receptionType="to">
 					<assignees />

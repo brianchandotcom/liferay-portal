@@ -99,13 +99,15 @@ public class BooleanObjectFieldBusinessType implements ObjectFieldBusinessType {
 		String defaultValue = objectFieldSettingsValuesMap.get(
 			ObjectFieldSettingConstants.NAME_DEFAULT_VALUE);
 
-		if (!(Objects.equals(defaultValue, "false") ||
-			  Objects.equals(defaultValue, "true"))) {
+		if (Objects.equals(defaultValue, "false") ||
+			Objects.equals(defaultValue, "true")) {
 
-			throw new ObjectFieldSettingValueException.InvalidValue(
-				objectField.getName(),
-				ObjectFieldSettingConstants.NAME_DEFAULT_VALUE, defaultValue);
+			return;
 		}
+
+		throw new ObjectFieldSettingValueException.InvalidValue(
+			objectField.getName(),
+			ObjectFieldSettingConstants.NAME_DEFAULT_VALUE, defaultValue);
 	}
 
 	@Reference

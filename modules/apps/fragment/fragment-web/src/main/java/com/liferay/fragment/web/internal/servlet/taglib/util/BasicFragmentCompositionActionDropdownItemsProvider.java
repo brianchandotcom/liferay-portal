@@ -70,15 +70,21 @@ public class BasicFragmentCompositionActionDropdownItemsProvider {
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
 					DropdownItemListBuilder.add(
-						() -> hasManageFragmentEntriesPermission,
+						() ->
+							hasManageFragmentEntriesPermission &&
+							!_fragmentComposition.isMarketplace(),
 						_getUpdateFragmentCompositionPreviewActionUnsafeConsumer()
 					).add(
 						() ->
 							hasManageFragmentEntriesPermission &&
-							(_fragmentComposition.getPreviewFileEntryId() > 0),
+							(_fragmentComposition.getPreviewFileEntryId() >
+								0) &&
+							!_fragmentComposition.isMarketplace(),
 						_getDeleteFragmentCompositionPreviewActionUnsafeConsumer()
 					).add(
-						() -> hasManageFragmentEntriesPermission,
+						() ->
+							hasManageFragmentEntriesPermission &&
+							!_fragmentComposition.isMarketplace(),
 						_getRenameFragmentCompositionActionUnsafeConsumer()
 					).build());
 				dropdownGroupItem.setSeparator(true);
@@ -87,7 +93,9 @@ public class BasicFragmentCompositionActionDropdownItemsProvider {
 			dropdownGroupItem -> {
 				dropdownGroupItem.setDropdownItems(
 					DropdownItemListBuilder.add(
-						() -> hasManageFragmentEntriesPermission,
+						() ->
+							hasManageFragmentEntriesPermission &&
+							!_fragmentComposition.isMarketplace(),
 						_getExportFragmentCompositionActionUnsafeConsumer()
 					).add(
 						() -> hasManageFragmentEntriesPermission,

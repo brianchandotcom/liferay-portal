@@ -235,6 +235,7 @@ export default {
 		onNetworkStatus,
 		removedItemIds,
 		segmentsExperienceId,
+		stepperFragmentEntryLinkId,
 	}: {
 		addedItemIds: string[];
 		itemConfig: FormLayoutDataItem['config'];
@@ -243,8 +244,10 @@ export default {
 		onNetworkStatus: OnNetworkStatus;
 		removedItemIds: string[];
 		segmentsExperienceId: string | null;
+		stepperFragmentEntryLinkId?: FragmentEntryLink['fragmentEntryLinkId'];
 	}) {
 		return draftServiceFetch<{
+			fragmentEntryLinks: FragmentEntryLinkMap;
 			layoutData: LayoutData;
 		}>(
 			config.undoUpdateFormConfigURL,
@@ -256,6 +259,7 @@ export default {
 					movedItemIds: JSON.stringify(movedItemIds),
 					removedItemIds,
 					segmentsExperienceId,
+					stepperFragmentEntryLinkId,
 				},
 			},
 			onNetworkStatus

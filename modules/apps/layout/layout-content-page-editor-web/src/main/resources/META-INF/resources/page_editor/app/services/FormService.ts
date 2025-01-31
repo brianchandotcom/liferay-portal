@@ -72,12 +72,14 @@ export default {
 		itemId,
 		onNetworkStatus,
 		segmentsExperienceId,
+		stepperFragmentEntryLinkId,
 	}: {
 		fields: string[] | undefined;
 		itemConfig: FormLayoutDataItem['config'];
 		itemId: string;
 		onNetworkStatus: OnNetworkStatus;
 		segmentsExperienceId: string;
+		stepperFragmentEntryLinkId: FragmentEntryLink['fragmentEntryLinkId'];
 	}) {
 		return draftServiceFetch<{
 			addedFragmentEntryLinks: FragmentEntryLinkMap;
@@ -92,6 +94,7 @@ export default {
 					itemConfig: JSON.stringify(itemConfig),
 					itemId,
 					segmentsExperienceId,
+					stepperFragmentEntryLinkId,
 				},
 			},
 			onNetworkStatus

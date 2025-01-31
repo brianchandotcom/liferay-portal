@@ -5,6 +5,7 @@
 
 import updateFormItemConfig from '../../actions/updateFormItemConfig';
 import LayoutService from '../../services/LayoutService';
+import {getStepperChild} from '../../utils/getStepperChild';
 
 function undoAction({action, store}) {
 	const {
@@ -27,6 +28,14 @@ function undoAction({action, store}) {
 		nextMovedItems.push({itemId: item.itemId, parentId: item.parentId});
 	});
 
+	const form = store.layoutData.items[itemId];
+
+	const stepper = getStepperChild(
+		form,
+		store.layoutData,
+		store.fragmentEntryLinks
+	);
+
 	return (dispatch) => {
 		return LayoutService.undoUpdateFormConfig({
 			addedItemIds: removedItemIds,
@@ -36,11 +45,13 @@ function undoAction({action, store}) {
 			onNetworkStatus: dispatch,
 			removedItemIds: addedItemIds,
 			segmentsExperienceId: store.segmentsExperienceId,
-		}).then(({layoutData}) => {
+			stepperFragmentEntryLinkId: stepper?.config?.fragmentEntryLinkId,
+		}).then(({fragmentEntryLinks, layoutData}) => {
 			dispatch(
 				updateFormItemConfig({
 					addedItemIds: removedItemIds,
 					deletedItems,
+					fragmentEntryLinks,
 					isMapping,
 					itemIds: [itemId],
 					layoutData,

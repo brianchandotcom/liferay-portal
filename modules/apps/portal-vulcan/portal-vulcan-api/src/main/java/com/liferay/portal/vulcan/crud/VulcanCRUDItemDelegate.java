@@ -22,11 +22,11 @@ public interface VulcanCRUDItemDelegate<T> {
 
 	public T getItem(Long id) throws Exception;
 
-	public void setContextCompany(Company contextCompany);
+	public void setContextCompany(Company company);
 
 	public void setContextUriInfo(UriInfo uriInfo);
 
-	public void setContextUser(User contextUser);
+	public void setContextUser(User user);
 
 	public void setGroupLocalService(GroupLocalService groupLocalService);
 

@@ -27,7 +27,7 @@ public class AllSectionCardsFDSView extends BaseCardsFDSView {
 
 	@Override
 	public String getImage() {
-		return "image";
+		return "embedded.contentUrl";
 	}
 
 	@Override

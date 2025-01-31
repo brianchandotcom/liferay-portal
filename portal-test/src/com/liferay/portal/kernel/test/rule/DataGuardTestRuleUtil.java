@@ -53,7 +53,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Deque;
-import java.util.LinkedHashMap;
+import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
@@ -276,7 +276,7 @@ public class DataGuardTestRuleUtil {
 
 		StringBundler sb = new StringBundler();
 
-		LinkedHashMap<String, List<BaseModel<?>>> dataMap = _captureDataMap();
+		Map<String, List<BaseModel<?>>> dataMap = _captureDataMap();
 
 		for (Map.Entry<String, List<BaseModel<?>>> entry : dataMap.entrySet()) {
 			String className = entry.getKey();
@@ -335,14 +335,13 @@ public class DataGuardTestRuleUtil {
 			Map<String, List<BaseModel<?>>> previousDataMap)
 		throws Throwable {
 
-		LinkedHashMap<String, PersistedModelLocalService>
-			persistedModelLocalServices = _getPersistedModelLocalServices();
+		Map<String, PersistedModelLocalService> persistedModelLocalServices =
+			_getPersistedModelLocalServices();
 
 		while (true) {
 			boolean deleted = false;
 
-			LinkedHashMap<String, List<BaseModel<?>>> dataMap =
-				_captureDataMap();
+			Map<String, List<BaseModel<?>>> dataMap = _captureDataMap();
 
 			for (Map.Entry<String, List<BaseModel<?>>> entry :
 					dataMap.entrySet()) {
@@ -401,12 +400,11 @@ public class DataGuardTestRuleUtil {
 		}
 	}
 
-	private static LinkedHashMap<String, List<BaseModel<?>>> _captureDataMap() {
-		LinkedHashMap<String, PersistedModelLocalService>
-			persistedModelLocalServices = _getPersistedModelLocalServices();
+	private static Map<String, List<BaseModel<?>>> _captureDataMap() {
+		Map<String, PersistedModelLocalService> persistedModelLocalServices =
+			_getPersistedModelLocalServices();
 
-		LinkedHashMap<String, List<BaseModel<?>>> dataMap =
-			new LinkedHashMap<>();
+		Map<String, List<BaseModel<?>>> dataMap = new HashMap<>();
 
 		for (Map.Entry<String, PersistedModelLocalService> entry :
 				persistedModelLocalServices.entrySet()) {
@@ -522,11 +520,11 @@ public class DataGuardTestRuleUtil {
 		return persistedModelLocalService.getBasePersistence();
 	}
 
-	private static LinkedHashMap<String, PersistedModelLocalService>
+	private static Map<String, PersistedModelLocalService>
 		_getPersistedModelLocalServices() {
 
-		LinkedHashMap<String, PersistedModelLocalService>
-			scrubbedPersistedModelLocalServices = new LinkedHashMap<>();
+		Map<String, PersistedModelLocalService>
+			scrubbedPersistedModelLocalServices = new HashMap<>();
 
 		ServiceTrackerMap<String, PersistedModelLocalService>
 			serviceTrackerMap = ReflectionTestUtil.getFieldValue(

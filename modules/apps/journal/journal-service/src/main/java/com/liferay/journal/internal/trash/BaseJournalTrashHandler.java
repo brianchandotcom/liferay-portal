@@ -9,6 +9,7 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.service.JournalFolderLocalServiceUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ContainerModel;
 import com.liferay.portal.kernel.model.TrashedModel;
@@ -149,29 +150,19 @@ public abstract class BaseJournalTrashHandler extends BaseTrashHandler {
 			OrderByComparator<?> orderByComparator)
 		throws PortalException {
 
-		List<TrashedModel> trashedModels = new ArrayList<>();
-
 		JournalFolder folder = JournalFolderLocalServiceUtil.getFolder(classPK);
 
-		List<Object> foldersAndArticles =
+		return TransformUtil.transform(
 			JournalFolderLocalServiceUtil.getFoldersAndArticles(
 				folder.getGroupId(), classPK, WorkflowConstants.STATUS_IN_TRASH,
-				start, end, orderByComparator);
+				start, end, orderByComparator),
+			folderOrArticle -> {
+				if (folderOrArticle instanceof JournalFolder) {
+					return (JournalFolder)folderOrArticle;
+				}
 
-		for (Object folderOrArticle : foldersAndArticles) {
-			if (folderOrArticle instanceof JournalFolder) {
-				JournalFolder curFolder = (JournalFolder)folderOrArticle;
-
-				trashedModels.add(curFolder);
-			}
-			else {
-				JournalArticle article = (JournalArticle)folderOrArticle;
-
-				trashedModels.add(article);
-			}
-		}
-
-		return trashedModels;
+				return (JournalArticle)folderOrArticle;
+			});
 	}
 
 	protected abstract long getGroupId(long classPK) throws PortalException;

@@ -1781,8 +1781,8 @@ public class LayoutStagedModelDataHandlerTest
 			_layoutSEOEntryLocalService.fetchLayoutSEOEntryByUuidAndGroupId(
 				uuid, groupId);
 
-		_assertMapEquals(canonicalURLMap, layoutSEOEntry.getCanonicalURLMap());
 		_assertLayoutSEOEntryCustomMetaTags(layoutSEOEntry);
+		_assertMapEquals(canonicalURLMap, layoutSEOEntry.getCanonicalURLMap());
 	}
 
 	private void _assertMapEquals(

@@ -38,15 +38,13 @@ LayoutsSEODisplayContext layoutsSEODisplayContext = (LayoutsSEODisplayContext)re
 				</p>
 
 				<%
-				LayoutSEOEntry layoutSEOEntry = layoutsSEODisplayContext.getSelLayoutSEOEntry();
-
 				List<LayoutSEOEntryCustomMetaTag> layoutSEOEntryCustomMetaTags = new ArrayList<>();
+
+				LayoutSEOEntry layoutSEOEntry = layoutsSEODisplayContext.getSelLayoutSEOEntry();
 
 				if (layoutSEOEntry != null) {
 					layoutSEOEntryCustomMetaTags = LayoutSEOEntryLocalServiceUtil.getLayoutSEOEntryCustomMetaTags(layoutSEOEntry.getGroupId(), layoutSEOEntry.getLayoutSEOEntryId());
 				}
-
-				int[] propertiesIndexes = {0};
 				%>
 
 				<div id="<portlet:namespace />properties">
@@ -88,7 +86,7 @@ LayoutsSEODisplayContext layoutsSEODisplayContext = (LayoutsSEODisplayContext)re
 						</c:otherwise>
 					</c:choose>
 
-					<aui:input name="propertiesIndexes" type="hidden" value="<%= StringUtil.merge(propertiesIndexes, StringPool.COMMA) %>" />
+					<aui:input name="propertiesIndexes" type="hidden" value="0" />
 				</div>
 			</clay:sheet-section>
 		</clay:sheet>

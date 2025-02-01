@@ -26,7 +26,6 @@ page import="com.liferay.layout.seo.web.internal.constants.LayoutSEOWebKeys" %><
 page import="com.liferay.layout.seo.web.internal.display.context.LayoutsSEODisplayContext" %><%@
 page import="com.liferay.layout.seo.web.internal.display.context.OpenGraphSettingsDisplayContext" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
-page import="com.liferay.petra.string.StringUtil" %><%@
 page import="com.liferay.portal.kernel.exception.SitemapChangeFrequencyException" %><%@
 page import="com.liferay.portal.kernel.exception.SitemapIncludeException" %><%@
 page import="com.liferay.portal.kernel.exception.SitemapPagePriorityException" %><%@

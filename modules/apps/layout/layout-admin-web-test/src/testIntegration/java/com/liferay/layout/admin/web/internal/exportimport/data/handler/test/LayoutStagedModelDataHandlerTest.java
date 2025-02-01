@@ -2160,19 +2160,19 @@ public class LayoutStagedModelDataHandlerTest
 			layout.getLayoutId(),
 			Arrays.asList(
 				new LayoutSEOEntryCustomMetaTagProperty(
-					"property1",
 					HashMapBuilder.put(
 						LocaleUtil.getSiteDefault(), "content1"
 					).put(
 						LocaleUtil.SPAIN, "contenido1"
-					).build()),
+					).build(),
+					"property1"),
 				new LayoutSEOEntryCustomMetaTagProperty(
-					"property2",
 					HashMapBuilder.put(
 						LocaleUtil.getSiteDefault(), "content2"
 					).put(
 						LocaleUtil.SPAIN, "contenido2"
-					).build())),
+					).build(),
+					"property2")),
 			ServiceContextTestUtil.getServiceContext(
 				layout.getGroupId(), TestPropsValues.getUserId()));
 

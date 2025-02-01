@@ -216,13 +216,13 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 			_layout.getLayoutId(),
 			Arrays.asList(
 				new LayoutSEOEntryCustomMetaTagProperty(
-					"property1",
 					Collections.singletonMap(
-						LocaleUtil.getSiteDefault(), "content1")),
+						LocaleUtil.getSiteDefault(), "content1"),
+					"property1"),
 				new LayoutSEOEntryCustomMetaTagProperty(
-					"property2",
 					Collections.singletonMap(
-						LocaleUtil.getSiteDefault(), "content2"))),
+						LocaleUtil.getSiteDefault(), "content2"),
+					"property2")),
 			ServiceContextTestUtil.getServiceContext(
 				_layout.getGroupId(), TestPropsValues.getUserId()));
 
@@ -256,13 +256,13 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 			_layout.getLayoutId(),
 			Arrays.asList(
 				new LayoutSEOEntryCustomMetaTagProperty(
-					"property1",
 					Collections.singletonMap(
-						LocaleUtil.getSiteDefault(), "content1")),
+						LocaleUtil.getSiteDefault(), "content1"),
+					"property1"),
 				new LayoutSEOEntryCustomMetaTagProperty(
-					"property2",
 					Collections.singletonMap(
-						LocaleUtil.getSiteDefault(), "content2"))),
+						LocaleUtil.getSiteDefault(), "content2"),
+					"property2")),
 			ServiceContextTestUtil.getServiceContext(
 				_layout.getGroupId(), TestPropsValues.getUserId()));
 
@@ -294,9 +294,9 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 			_layout.getLayoutId(),
 			Collections.singletonList(
 				new LayoutSEOEntryCustomMetaTagProperty(
-					"custom property",
 					Collections.singletonMap(
-						LocaleUtil.getSiteDefault(), StringPool.BLANK))),
+						LocaleUtil.getSiteDefault(), StringPool.BLANK),
+					"custom property")),
 			ServiceContextTestUtil.getServiceContext(
 				_layout.getGroupId(), TestPropsValues.getUserId()));
 
@@ -329,9 +329,9 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 			_layout.getLayoutId(),
 			Collections.singletonList(
 				new LayoutSEOEntryCustomMetaTagProperty(
-					"& property",
 					Collections.singletonMap(
-						LocaleUtil.getSiteDefault(), "& content"))),
+						LocaleUtil.getSiteDefault(), "& content"),
+					"& property")),
 			ServiceContextTestUtil.getServiceContext(
 				_layout.getGroupId(), TestPropsValues.getUserId()));
 
@@ -494,13 +494,13 @@ public class OpenGraphTopHeadDynamicIncludeTest {
 			_layout.getLayoutId(),
 			Arrays.asList(
 				new LayoutSEOEntryCustomMetaTagProperty(
-					"property1",
 					Collections.singletonMap(
-						LocaleUtil.getSiteDefault(), "content1")),
+						LocaleUtil.getSiteDefault(), "content1"),
+					"property1"),
 				new LayoutSEOEntryCustomMetaTagProperty(
-					"property2",
 					Collections.singletonMap(
-						LocaleUtil.getSiteDefault(), StringPool.BLANK))),
+						LocaleUtil.getSiteDefault(), StringPool.BLANK),
+					"property2")),
 			ServiceContextTestUtil.getServiceContext(
 				_layout.getGroupId(), TestPropsValues.getUserId()));
 

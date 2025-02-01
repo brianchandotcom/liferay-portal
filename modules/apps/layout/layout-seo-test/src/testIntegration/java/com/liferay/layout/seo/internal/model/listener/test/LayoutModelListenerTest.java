@@ -70,13 +70,13 @@ public class LayoutModelListenerTest {
 			layout.getLayoutId(),
 			Arrays.asList(
 				new LayoutSEOEntryCustomMetaTagProperty(
-					"property1",
 					Collections.singletonMap(
-						LocaleUtil.getSiteDefault(), "content1")),
+						LocaleUtil.getSiteDefault(), "content1"),
+					"property1"),
 				new LayoutSEOEntryCustomMetaTagProperty(
-					"property2",
 					Collections.singletonMap(
-						LocaleUtil.getSiteDefault(), "content2"))),
+						LocaleUtil.getSiteDefault(), "content2"),
+					"property2")),
 			ServiceContextTestUtil.getServiceContext(
 				layout.getGroupId(), TestPropsValues.getUserId()));
 

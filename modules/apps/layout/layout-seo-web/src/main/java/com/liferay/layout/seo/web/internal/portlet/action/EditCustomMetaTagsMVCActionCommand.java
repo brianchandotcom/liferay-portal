@@ -124,7 +124,7 @@ public class EditCustomMetaTagsMVCActionCommand extends BaseMVCActionCommand {
 			if (MapUtil.isNotEmpty(contentMap)) {
 				layoutSEOEntryCustomMetaTagProperties.add(
 					new LayoutSEOEntryCustomMetaTagProperty(
-						property, contentMap));
+						contentMap, property));
 			}
 		}
 

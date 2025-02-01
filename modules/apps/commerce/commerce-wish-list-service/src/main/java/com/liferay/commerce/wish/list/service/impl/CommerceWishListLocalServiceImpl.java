@@ -132,7 +132,7 @@ public class CommerceWishListLocalServiceImpl
 
 	@Override
 	public CommerceWishList fetchCommerceWishList(
-		long groupId, long userId, boolean defaultWishList,
+		long userId, long groupId, boolean defaultWishList,
 		OrderByComparator<CommerceWishList> orderByComparator) {
 
 		return commerceWishListPersistence.fetchByG_U_D_First(
@@ -163,7 +163,7 @@ public class CommerceWishListLocalServiceImpl
 
 	@Override
 	public List<CommerceWishList> getCommerceWishLists(
-		long groupId, long userId, int start, int end,
+		long userId, long groupId, int start, int end,
 		OrderByComparator<CommerceWishList> orderByComparator) {
 
 		return commerceWishListPersistence.findByG_U(
@@ -176,14 +176,14 @@ public class CommerceWishListLocalServiceImpl
 	}
 
 	@Override
-	public int getCommerceWishListsCount(long groupId, long userId) {
+	public int getCommerceWishListsCount(long userId, long groupId) {
 		return commerceWishListPersistence.countByG_U(groupId, userId);
 	}
 
 	@Override
 	@ThreadLocalCachable
 	public CommerceWishList getDefaultCommerceWishList(
-			long groupId, long userId, String guestUuid)
+			long userId, long groupId, String guestUuid)
 		throws PortalException {
 
 		User user = _userLocalService.getUser(userId);

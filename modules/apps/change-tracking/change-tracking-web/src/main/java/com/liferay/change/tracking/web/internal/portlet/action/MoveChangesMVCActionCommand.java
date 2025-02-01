@@ -79,14 +79,14 @@ public class MoveChangesMVCActionCommand
 					CTEntry ctEntry = _ctEntryLocalService.fetchCTEntry(
 						fromCTCollectionId, modelClassNameId, modelClassPK);
 
-					_moveChange(ctEntry, fromCTCollectionId, toCTCollectionId);
+					_moveCTEntry(ctEntry, fromCTCollectionId, toCTCollectionId);
 				}
 
 				for (long ctEntryId : ctEntryIds) {
 					CTEntry ctEntry = _ctEntryLocalService.fetchCTEntry(
 						ctEntryId);
 
-					_moveChange(ctEntry, fromCTCollectionId, toCTCollectionId);
+					_moveCTEntry(ctEntry, fromCTCollectionId, toCTCollectionId);
 				}
 			}
 			catch (PortalException portalException) {
@@ -126,7 +126,7 @@ public class MoveChangesMVCActionCommand
 		actionResponse.sendRedirect(redirect);
 	}
 
-	private <T extends BaseModel<T>> void _moveChange(
+	private <T extends BaseModel<T>> void _moveCTEntry(
 			CTEntry ctEntry, long fromCTCollectionId, long toCTCollectionId)
 		throws PortalException {
 

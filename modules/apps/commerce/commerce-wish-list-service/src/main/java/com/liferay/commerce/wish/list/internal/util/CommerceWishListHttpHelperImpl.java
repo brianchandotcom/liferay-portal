@@ -86,7 +86,7 @@ public class CommerceWishListHttpHelperImpl
 
 		CommerceWishList commerceWishList =
 			_commerceWishListLocalService.getDefaultCommerceWishList(
-				groupId, user.getUserId(), guestUuid);
+				user.getUserId(), groupId, guestUuid);
 
 		if (commerceWishList == null) {
 			return commerceWishList;

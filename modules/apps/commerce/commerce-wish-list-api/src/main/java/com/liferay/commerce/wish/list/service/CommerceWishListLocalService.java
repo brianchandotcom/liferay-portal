@@ -74,7 +74,7 @@ public interface CommerceWishListLocalService
 		CommerceWishList commerceWishList);
 
 	public CommerceWishList addCommerceWishList(
-			long groupId, long userId, String name, boolean defaultWishList)
+			long userId, long groupId, String name, boolean defaultWishList)
 		throws PortalException;
 
 	/**
@@ -216,7 +216,7 @@ public interface CommerceWishListLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceWishList fetchCommerceWishList(
-		long groupId, long userId, boolean defaultWishList,
+		long userId, long groupId, boolean defaultWishList,
 		OrderByComparator<CommerceWishList> orderByComparator);
 
 	/**
@@ -283,7 +283,7 @@ public interface CommerceWishListLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceWishList> getCommerceWishLists(
-		long groupId, long userId, int start, int end,
+		long userId, long groupId, int start, int end,
 		OrderByComparator<CommerceWishList> orderByComparator);
 
 	/**
@@ -324,12 +324,12 @@ public interface CommerceWishListLocalService
 	public int getCommerceWishListsCount(long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCommerceWishListsCount(long groupId, long userId);
+	public int getCommerceWishListsCount(long userId, long groupId);
 
 	@ThreadLocalCachable
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceWishList getDefaultCommerceWishList(
-			long groupId, long userId, String guestUuid)
+			long userId, long groupId, String guestUuid)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

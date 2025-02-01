@@ -54,11 +54,11 @@ public class CommerceWishListLocalServiceUtil {
 	}
 
 	public static CommerceWishList addCommerceWishList(
-			long groupId, long userId, String name, boolean defaultWishList)
+			long userId, long groupId, String name, boolean defaultWishList)
 		throws PortalException {
 
 		return getService().addCommerceWishList(
-			groupId, userId, name, defaultWishList);
+			userId, groupId, name, defaultWishList);
 	}
 
 	/**
@@ -239,11 +239,11 @@ public class CommerceWishListLocalServiceUtil {
 	}
 
 	public static CommerceWishList fetchCommerceWishList(
-		long groupId, long userId, boolean defaultWishList,
+		long userId, long groupId, boolean defaultWishList,
 		OrderByComparator<CommerceWishList> orderByComparator) {
 
 		return getService().fetchCommerceWishList(
-			groupId, userId, defaultWishList, orderByComparator);
+			userId, groupId, defaultWishList, orderByComparator);
 	}
 
 	/**
@@ -327,11 +327,11 @@ public class CommerceWishListLocalServiceUtil {
 	}
 
 	public static List<CommerceWishList> getCommerceWishLists(
-		long groupId, long userId, int start, int end,
+		long userId, long groupId, int start, int end,
 		OrderByComparator<CommerceWishList> orderByComparator) {
 
 		return getService().getCommerceWishLists(
-			groupId, userId, start, end, orderByComparator);
+			userId, groupId, start, end, orderByComparator);
 	}
 
 	/**
@@ -379,16 +379,16 @@ public class CommerceWishListLocalServiceUtil {
 		return getService().getCommerceWishListsCount(groupId);
 	}
 
-	public static int getCommerceWishListsCount(long groupId, long userId) {
-		return getService().getCommerceWishListsCount(groupId, userId);
+	public static int getCommerceWishListsCount(long userId, long groupId) {
+		return getService().getCommerceWishListsCount(userId, groupId);
 	}
 
 	public static CommerceWishList getDefaultCommerceWishList(
-			long groupId, long userId, String guestUuid)
+			long userId, long groupId, String guestUuid)
 		throws PortalException {
 
 		return getService().getDefaultCommerceWishList(
-			groupId, userId, guestUuid);
+			userId, groupId, guestUuid);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery

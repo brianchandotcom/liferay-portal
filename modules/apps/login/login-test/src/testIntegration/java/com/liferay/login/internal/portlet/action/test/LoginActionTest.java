@@ -75,8 +75,6 @@ public class LoginActionTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_originalName = PrincipalThreadLocal.getName();
-
 		_group = GroupTestUtil.addGroup();
 
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
@@ -281,8 +279,6 @@ public class LoginActionTest {
 	@Inject
 	private LayoutUtilityPageEntryLocalService
 		_layoutUtilityPageEntryLocalService;
-
-	private String _originalName;
 
 	@Inject
 	private Portal _portal;

@@ -4378,10 +4378,9 @@ public class DefaultObjectEntryManagerImplTest
 			},
 			ObjectDefinitionConstants.SCOPE_COMPANY);
 
-		Object attachmentObject = objectEntry.getPropertyValue(
+		Object value1 = objectEntry.getPropertyValue(
 			"attachmentObjectFieldName");
-		Object picklistObject = objectEntry.getPropertyValue(
-			"picklistObjectFieldName");
+		Object value2 = objectEntry.getPropertyValue("picklistObjectFieldName");
 
 		objectEntry = _defaultObjectEntryManager.updateObjectEntry(
 			TestPropsValues.getCompanyId(), dtoConverterContext,
@@ -4389,9 +4388,9 @@ public class DefaultObjectEntryManagerImplTest
 			new ObjectEntry() {
 				{
 					properties = HashMapBuilder.put(
-						"attachmentObjectFieldName", attachmentObject
+						"attachmentObjectFieldName", value1
 					).put(
-						"picklistObjectFieldName", picklistObject
+						"picklistObjectFieldName", value2
 					).put(
 						"textObjectFieldName", "Edited"
 					).build();

@@ -68,13 +68,13 @@ public class DiscardChangesMVCActionCommand
 			CTEntry ctEntry = _ctEntryLocalService.fetchCTEntry(
 				ctCollectionId, modelClassNameId, modelClassPK);
 
-			_discardChange(ctCollectionId, ctEntry);
+			_discardCTEntry(ctCollectionId, ctEntry);
 		}
 
 		for (long ctEntryId : ctEntryIds) {
 			CTEntry ctEntry = _ctEntryLocalService.fetchCTEntry(ctEntryId);
 
-			_discardChange(ctCollectionId, ctEntry);
+			_discardCTEntry(ctCollectionId, ctEntry);
 		}
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
@@ -84,7 +84,7 @@ public class DiscardChangesMVCActionCommand
 		}
 	}
 
-	private <T extends BaseModel<T>> void _discardChange(
+	private <T extends BaseModel<T>> void _discardCTEntry(
 			long ctCollectionId, CTEntry ctEntry)
 		throws Exception {
 

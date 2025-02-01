@@ -126,11 +126,9 @@ public interface CommerceWishListLocalService
 
 	public void deleteCommerceWishLists(long userId, Date date);
 
-	public void deleteCommerceWishListsByGroupId(long groupId)
-		throws PortalException;
+	public void deleteCommerceWishListsByGroupId(long groupId);
 
-	public void deleteCommerceWishListsByUserId(long userId)
-		throws PortalException;
+	public void deleteCommerceWishListsByUserId(long userId);
 
 	/**
 	 * @throws PortalException
@@ -232,8 +230,7 @@ public interface CommerceWishListLocalService
 
 	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public CommerceWishList forceDeleteCommerceWishList(
-			CommerceWishList commerceWishList)
-		throws PortalException;
+		CommerceWishList commerceWishList);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();

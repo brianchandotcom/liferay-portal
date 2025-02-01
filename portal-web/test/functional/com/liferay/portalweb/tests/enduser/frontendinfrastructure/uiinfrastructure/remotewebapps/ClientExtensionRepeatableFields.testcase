@@ -1,3 +1,4 @@
+@component-name = "portal-frontend-infrastructure"
 definition {
 
 	property portal.release = "true";

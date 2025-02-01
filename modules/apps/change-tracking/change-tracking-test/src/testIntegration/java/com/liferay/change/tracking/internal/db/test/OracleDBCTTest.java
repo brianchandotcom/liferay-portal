@@ -75,7 +75,7 @@ public class OracleDBCTTest {
 	}
 
 	@Test
-	public void testDiscardCTCollectionWithOver1000Entries() throws Exception {
+	public void testDeleteCTCollectionWithOver1000CTEntries() throws Exception {\
 		JournalFolder journalFolder = null;
 
 		try (LoggingTimer loggingTimer = new LoggingTimer();
@@ -109,7 +109,7 @@ public class OracleDBCTTest {
 	}
 
 	@Test
-	public void testMoveAndDiscardCTEntryWithOver1000Entries()
+	public void testMoveAndDiscardCTEntryWithOver1000CTEntries()
 		throws Exception {
 
 		JournalFolder journalFolder = null;
@@ -169,7 +169,7 @@ public class OracleDBCTTest {
 	}
 
 	@Test
-	public void testPublishCTCollectionWithOver1000Entries() throws Exception {
+	public void testPublishCTCollectionWithOver1000CTEntries() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(

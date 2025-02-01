@@ -50,18 +50,16 @@ public class CommerceWishListItemLocalServiceImpl
 			long cProductId, String json)
 		throws PortalException {
 
+		User user = _userLocalService.getUser(userId);
 		CommerceWishList commerceWishList =
 			_commerceWishListPersistence.findByPrimaryKey(commerceWishListId);
-
-		User user = _userLocalService.getUser(userId);
 
 		_validate(
 			commerceWishListId, cpInstanceUuid, cProductId, user.getUserId());
 
-		long commerceWishListItemId = counterLocalService.increment();
-
 		CommerceWishListItem commerceWishListItem =
-			commerceWishListItemPersistence.create(commerceWishListItemId);
+			commerceWishListItemPersistence.create(
+				counterLocalService.increment());
 
 		commerceWishListItem.setGroupId(commerceWishList.getGroupId());
 		commerceWishListItem.setCompanyId(user.getCompanyId());

@@ -50,16 +50,14 @@ public class CommerceWishListUpgradeProcess extends UpgradeProcess {
 
 			if (!_resourcePermissionLocalService.hasResourcePermission(
 					resourcePermission.getCompanyId(),
-					resourcePermission.getName(),
-					resourcePermission.getScope(),
+					resourcePermission.getName(), resourcePermission.getScope(),
 					resourcePermission.getPrimKey(),
 					resourcePermission.getRoleId(),
 					CommerceWishListActionKeys.ADD_COMMERCE_WISH_LIST)) {
 
 				_resourcePermissionLocalService.addResourcePermission(
 					resourcePermission.getCompanyId(),
-					resourcePermission.getName(),
-					resourcePermission.getScope(),
+					resourcePermission.getName(), resourcePermission.getScope(),
 					resourcePermission.getPrimKey(),
 					resourcePermission.getRoleId(),
 					CommerceWishListActionKeys.ADD_COMMERCE_WISH_LIST);
@@ -67,27 +65,23 @@ public class CommerceWishListUpgradeProcess extends UpgradeProcess {
 
 			if (!_resourcePermissionLocalService.hasResourcePermission(
 					resourcePermission.getCompanyId(),
-					resourcePermission.getName(),
-					resourcePermission.getScope(),
+					resourcePermission.getName(), resourcePermission.getScope(),
 					resourcePermission.getPrimKey(),
 					resourcePermission.getRoleId(),
 					CommerceWishListActionKeys.VIEW_COMMERCE_WISH_LISTS)) {
 
 				_resourcePermissionLocalService.addResourcePermission(
 					resourcePermission.getCompanyId(),
-					resourcePermission.getName(),
-					resourcePermission.getScope(),
+					resourcePermission.getName(), resourcePermission.getScope(),
 					resourcePermission.getPrimKey(),
 					resourcePermission.getRoleId(),
 					CommerceWishListActionKeys.VIEW_COMMERCE_WISH_LISTS);
 			}
 
 			_resourcePermissionLocalService.removeResourcePermission(
-				resourcePermission.getCompanyId(),
-				resourcePermission.getName(), resourcePermission.getScope(),
-				resourcePermission.getPrimKey(),
-				resourcePermission.getRoleId(),
-				"MANAGE_COMMERCE_WISH_LISTS");
+				resourcePermission.getCompanyId(), resourcePermission.getName(),
+				resourcePermission.getScope(), resourcePermission.getPrimKey(),
+				resourcePermission.getRoleId(), "MANAGE_COMMERCE_WISH_LISTS");
 		}
 
 		_resourceActionLocalService.deleteResourceAction(resourceAction);

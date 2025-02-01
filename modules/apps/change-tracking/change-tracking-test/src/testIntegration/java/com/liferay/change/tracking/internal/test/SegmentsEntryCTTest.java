@@ -102,7 +102,7 @@ public class SegmentsEntryCTTest {
 	}
 
 	@Test
-	public void testModifySegmentsEntry() throws Exception {
+	public void testUpdateSegmentsEntry() throws Exception {
 		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
 			_group.getGroupId());
 

@@ -68,13 +68,11 @@ public class ViewRelatedEntriesDisplayContext {
 		_userLocalService = userLocalService;
 
 		_ctCollectionId = ParamUtil.getLong(renderRequest, "ctCollectionId");
-
+		_ctEntryIds = StringUtil.split(
+			ParamUtil.getString(httpServletRequest, "id"), 0L);
 		_modelClassNameId = ParamUtil.getLong(
 			renderRequest, "modelClassNameId");
 		_modelClassPK = ParamUtil.getLong(renderRequest, "modelClassPK");
-		_ctEntryIds = StringUtil.split(
-			ParamUtil.getString(httpServletRequest, "id"), 0L);
-
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}

@@ -42,7 +42,7 @@ public class CommerceWishListServiceImpl
 			groupId, CommerceWishListActionKeys.ADD_COMMERCE_WISH_LIST);
 
 		return commerceWishListLocalService.addCommerceWishList(
-			groupId, getUserId(), name, defaultWishList);
+			getUserId(), groupId, name, defaultWishList);
 	}
 
 	@Override

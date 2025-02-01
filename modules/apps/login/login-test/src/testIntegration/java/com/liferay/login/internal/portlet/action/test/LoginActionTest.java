@@ -179,7 +179,7 @@ public class LoginActionTest {
 
 			siteInitializer.initialize(groupId);
 
-			Layout layout = _addTypeContentLayout(true);
+			Layout layout = _addTypeContentLayout();
 
 			_removeGuestViewPermission(layout);
 
@@ -205,7 +205,7 @@ public class LoginActionTest {
 		}
 	}
 
-	private Layout _addTypeContentLayout(boolean publish) throws Exception {
+	private Layout _addTypeContentLayout() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				_group, TestPropsValues.getUserId());
@@ -217,20 +217,15 @@ public class LoginActionTest {
 			LayoutConstants.TYPE_CONTENT, false, StringPool.BLANK,
 			serviceContext);
 
-		if (publish) {
-			Layout draftLayout = layout.fetchDraftLayout();
+		Layout draftLayout = layout.fetchDraftLayout();
 
-			Assert.assertNotNull(draftLayout);
+		Assert.assertNotNull(draftLayout);
 
-			ContentLayoutTestUtil.publishLayout(draftLayout, layout);
+		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
 
-			layout = _layoutLocalService.getLayout(layout.getPlid());
+		layout = _layoutLocalService.getLayout(layout.getPlid());
 
-			Assert.assertTrue(layout.isPublished());
-		}
-		else {
-			Assert.assertFalse(layout.isPublished());
-		}
+		Assert.assertTrue(layout.isPublished());
 
 		return layout;
 	}

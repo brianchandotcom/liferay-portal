@@ -63,7 +63,7 @@ public class CommerceWishListServiceImpl
 
 		CommerceWishList commerceWishList =
 			commerceWishListLocalService.fetchCommerceWishList(
-				groupId, getUserId(), defaultWishList, orderByComparator);
+				getUserId(), groupId, defaultWishList, orderByComparator);
 
 		if (commerceWishList != null) {
 			_commerceWishListModelResourcePermission.check(
@@ -94,7 +94,7 @@ public class CommerceWishListServiceImpl
 			groupId, CommerceWishListActionKeys.VIEW_COMMERCE_WISH_LISTS);
 
 		return commerceWishListLocalService.getCommerceWishLists(
-			groupId, getUserId(), start, end, orderByComparator);
+			getUserId(), groupId, start, end, orderByComparator);
 	}
 
 	@Override
@@ -103,7 +103,7 @@ public class CommerceWishListServiceImpl
 			groupId, CommerceWishListActionKeys.VIEW_COMMERCE_WISH_LISTS);
 
 		return commerceWishListLocalService.getCommerceWishListsCount(
-			groupId, getUserId());
+			getUserId(), groupId);
 	}
 
 	@Override
@@ -112,7 +112,7 @@ public class CommerceWishListServiceImpl
 
 		CommerceWishList commerceWishList =
 			commerceWishListLocalService.getDefaultCommerceWishList(
-				groupId, getUserId(), null);
+				getUserId(), groupId, null);
 
 		if (commerceWishList != null) {
 			_commerceWishListModelResourcePermission.check(

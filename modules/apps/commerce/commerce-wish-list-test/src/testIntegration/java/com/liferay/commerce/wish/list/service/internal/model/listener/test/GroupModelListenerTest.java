@@ -49,7 +49,7 @@ public class GroupModelListenerTest {
 	public void testOnBeforeRemove() throws Exception {
 		CommerceWishList commerceWishList =
 			_commerceWishListLocalService.addCommerceWishList(
-				_group.getGroupId(), _user.getUserId(),
+				_user.getUserId(), _group.getGroupId(),
 				RandomTestUtil.randomString(), true);
 
 		_groupLocalService.deleteGroup(_group);

@@ -43,8 +43,8 @@ public class ObjectEntryFolderServiceImpl
 		throws PortalException {
 
 		ModelResourcePermissionUtil.check(
-			_modelResourcePermission, getPermissionChecker(),
-			groupId, parentObjectEntryFolderId, ActionKeys.ADD_FOLDER);
+			_modelResourcePermission, getPermissionChecker(), groupId,
+			parentObjectEntryFolderId, ActionKeys.ADD_FOLDER);
 
 		return objectEntryFolderLocalService.addObjectEntryFolder(
 			externalReferenceCode, getUserId(), groupId,

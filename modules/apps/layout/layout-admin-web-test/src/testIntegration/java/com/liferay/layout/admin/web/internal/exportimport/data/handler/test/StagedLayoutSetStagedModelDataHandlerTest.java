@@ -81,7 +81,7 @@ public class StagedLayoutSetStagedModelDataHandlerTest
 
 	@Test
 	@TestInfo("LPD-47835")
-	public void testExportImportLayoutPriorityWithDuplicatedLayoutId()
+	public void testExportImportLayoutPriorityWithDuplicateLayoutId()
 		throws Exception {
 
 		initExport();

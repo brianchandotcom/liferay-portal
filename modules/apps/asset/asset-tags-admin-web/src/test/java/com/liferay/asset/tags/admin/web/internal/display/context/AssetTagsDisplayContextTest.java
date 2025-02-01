@@ -59,7 +59,7 @@ public class AssetTagsDisplayContextTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_setUpLanguage();
+		_setUpLanguageUtil();
 		_setUpPortletURLUtil();
 	}
 
@@ -103,7 +103,7 @@ public class AssetTagsDisplayContextTest {
 	private AssetTagsDisplayContext _getAssetTagsDisplayContext(
 		boolean liveGroup) {
 
-		_setUpStagingGroupHelper(liveGroup);
+		_setUpStagingGroupHelperUtil(liveGroup);
 
 		Group group = Mockito.mock(Group.class);
 
@@ -124,7 +124,7 @@ public class AssetTagsDisplayContextTest {
 			new MockLiferayPortletRenderResponse());
 	}
 
-	private void _setUpLanguage() {
+	private void _setUpLanguageUtil() {
 		LanguageUtil languageUtil = new LanguageUtil();
 
 		Mockito.when(
@@ -150,7 +150,7 @@ public class AssetTagsDisplayContextTest {
 		);
 	}
 
-	private void _setUpStagingGroupHelper(boolean liveGroup) {
+	private void _setUpStagingGroupHelperUtil(boolean liveGroup) {
 		StagingGroupHelper stagingGroupHelper = Mockito.mock(
 			StagingGroupHelper.class);
 
@@ -203,7 +203,6 @@ public class AssetTagsDisplayContextTest {
 		Assert.assertEquals(
 			assetTagActionDropdownItems.toString(), 3,
 			assetTagActionDropdownItems.size());
-
 		_assertDropdownItem(
 			assetTagActionDropdownItems.get(0), "pencil", "edit");
 		_assertDropdownItem(

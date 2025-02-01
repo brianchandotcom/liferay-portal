@@ -97,12 +97,13 @@ public class AssetTagsAdminPortletTest {
 			null, TestPropsValues.getUserId(), _group.getGroupId(), name,
 			ServiceContextTestUtil.getServiceContext());
 
-		String newName = RandomTestUtil.randomString();
-
 		MockLiferayPortletActionRequest mockLiferayPortletActionRequest =
 			_getMockLiferayPortletActionRequest();
 
+		String newName = RandomTestUtil.randomString();
+
 		mockLiferayPortletActionRequest.setParameter("name", newName);
+
 		mockLiferayPortletActionRequest.setParameter(
 			"tagId", String.valueOf(assetTag.getTagId()));
 
@@ -124,7 +125,6 @@ public class AssetTagsAdminPortletTest {
 			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			RandomTestUtil.randomString(),
 			ServiceContextTestUtil.getServiceContext());
-
 		AssetTag targetAssetTag = _assetTagLocalService.addTag(
 			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			RandomTestUtil.randomString(),

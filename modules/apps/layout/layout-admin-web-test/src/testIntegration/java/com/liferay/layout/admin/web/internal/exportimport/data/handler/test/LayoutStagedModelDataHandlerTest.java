@@ -1625,7 +1625,9 @@ public class LayoutStagedModelDataHandlerTest
 			layout.fetchDraftLayout());
 	}
 
-	private void _assertCustomMetaTags(LayoutSEOEntry layoutSEOEntry) {
+	private void _assertLayoutSEOEntryCustomMetaTags(
+		LayoutSEOEntry layoutSEOEntry) {
+
 		List<LayoutSEOEntryCustomMetaTag> layoutSEOEntryCustomMetaTags =
 			_layoutSEOEntryLocalService.getLayoutSEOEntryCustomMetaTags(
 				layoutSEOEntry.getGroupId(),
@@ -1780,7 +1782,7 @@ public class LayoutStagedModelDataHandlerTest
 				uuid, groupId);
 
 		_assertMapEquals(canonicalURLMap, layoutSEOEntry.getCanonicalURLMap());
-		_assertCustomMetaTags(layoutSEOEntry);
+		_assertLayoutSEOEntryCustomMetaTags(layoutSEOEntry);
 	}
 
 	private void _assertMapEquals(

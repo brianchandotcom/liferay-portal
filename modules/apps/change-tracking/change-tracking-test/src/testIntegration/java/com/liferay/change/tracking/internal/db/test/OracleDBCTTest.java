@@ -75,7 +75,7 @@ public class OracleDBCTTest {
 	}
 
 	@Test
-	public void testDeleteCTCollectionWithOver1000CTEntries() throws Exception {\
+	public void testDeleteCTCollectionWithOver1000CTEntries() throws Exception {
 		JournalFolder journalFolder = null;
 
 		try (LoggingTimer loggingTimer = new LoggingTimer();

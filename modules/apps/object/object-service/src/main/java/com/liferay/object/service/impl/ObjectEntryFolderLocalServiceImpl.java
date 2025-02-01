@@ -123,11 +123,8 @@ public class ObjectEntryFolderLocalServiceImpl
 
 		_validateParentObjectEntryFolderId(
 			objectEntryFolder.getGroupId(), parentObjectEntryFolderId);
-
-		User user = _userLocalService.getUser(userId);
-
 		_validateName(
-			objectEntryFolder.getGroupId(), user.getCompanyId(),
+			objectEntryFolder.getGroupId(), objectEntryFolder.getCompanyId(),
 			objectEntryFolderId, parentObjectEntryFolderId, name);
 
 		objectEntryFolder.setParentObjectEntryFolderId(

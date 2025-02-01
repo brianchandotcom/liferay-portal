@@ -66,9 +66,6 @@ public class ObjectEntryFolderLocalServiceTest {
 
 	@Test
 	public void testAddObjectEntryFolder() throws Exception {
-
-		// Duplicate external reference code
-
 		String externalReferenceCode = StringUtil.randomString();
 
 		AssertUtils.assertFailure(
@@ -88,8 +85,6 @@ public class ObjectEntryFolderLocalServiceTest {
 						PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT);
 			});
 
-		// Duplicate name
-
 		String name = StringUtil.randomString();
 
 		AssertUtils.assertFailure(
@@ -106,34 +101,12 @@ public class ObjectEntryFolderLocalServiceTest {
 						PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT);
 			});
 
-		// Null label map
-
-		ObjectEntryFolder objectEntryFolder =
-			_objectEntryFolderLocalService.addObjectEntryFolder(
-				StringUtil.randomString(), TestPropsValues.getUserId(),
-				_group.getGroupId(),
-				ObjectEntryFolderConstants.
-					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
-				null, StringUtil.randomString(),
-				ServiceContextTestUtil.getServiceContext());
-
-		AssertUtils.assertEquals(
-			HashMapBuilder.put(
-				LocaleUtil.getSiteDefault(), objectEntryFolder.getName()
-			).build(),
-			objectEntryFolder.getLabelMap());
-
-		// Null name
-
 		AssertUtils.assertFailure(
 			ObjectEntryFolderNameException.MustNotBeNull.class, "Name is null",
 			() -> _addObjectEntryFolder(
 				StringUtil.randomString(), _group.getGroupId(), null,
 				ObjectEntryFolderConstants.
 					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT));
-
-		// Scope
-
 		AssertUtils.assertFailure(
 			ObjectEntryFolderScopeException.class,
 			StringBundler.concat(
@@ -152,6 +125,21 @@ public class ObjectEntryFolderLocalServiceTest {
 					StringUtil.randomString(),
 					parentObjectEntryFolder.getObjectEntryFolderId());
 			});
+
+		ObjectEntryFolder objectEntryFolder =
+			_objectEntryFolderLocalService.addObjectEntryFolder(
+				StringUtil.randomString(), TestPropsValues.getUserId(),
+				_group.getGroupId(),
+				ObjectEntryFolderConstants.
+					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+				null, StringUtil.randomString(),
+				ServiceContextTestUtil.getServiceContext());
+
+		AssertUtils.assertEquals(
+			HashMapBuilder.put(
+				LocaleUtil.getSiteDefault(), objectEntryFolder.getName()
+			).build(),
+			objectEntryFolder.getLabelMap());
 	}
 
 	@Test
@@ -194,9 +182,6 @@ public class ObjectEntryFolderLocalServiceTest {
 
 	@Test
 	public void testUpdateObjectEntryFolder() throws Exception {
-
-		// Duplicate name
-
 		String name = StringUtil.randomString();
 
 		AssertUtils.assertFailure(
@@ -221,33 +206,6 @@ public class ObjectEntryFolderLocalServiceTest {
 					objectEntryFolder.getLabelMap(), name);
 			});
 
-		// Null label map
-
-		ObjectEntryFolder objectEntryFolder1 = _addObjectEntryFolder(
-			StringUtil.randomString(), _group.getGroupId(),
-			StringUtil.randomString(),
-			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT);
-
-		Assert.assertNotEquals(
-			objectEntryFolder1.getName(),
-			objectEntryFolder1.getLabel(LocaleUtil.getSiteDefault()));
-
-		ObjectEntryFolder objectEntryFolder2 =
-			_objectEntryFolderLocalService.updateObjectEntryFolder(
-				TestPropsValues.getUserId(),
-				objectEntryFolder1.getObjectEntryFolderId(),
-				ObjectEntryFolderConstants.
-					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
-				null, objectEntryFolder1.getName());
-
-		AssertUtils.assertEquals(
-			HashMapBuilder.put(
-				LocaleUtil.getSiteDefault(), objectEntryFolder2.getName()
-			).build(),
-			objectEntryFolder2.getLabelMap());
-
-		// Null name
-
 		AssertUtils.assertFailure(
 			ObjectEntryFolderNameException.MustNotBeNull.class, "Name is null",
 			() -> {
@@ -263,9 +221,6 @@ public class ObjectEntryFolderLocalServiceTest {
 					objectEntryFolder.getParentObjectEntryFolderId(),
 					objectEntryFolder.getLabelMap(), null);
 			});
-
-		// Scope
-
 		AssertUtils.assertFailure(
 			ObjectEntryFolderScopeException.class,
 			StringBundler.concat(
@@ -293,6 +248,29 @@ public class ObjectEntryFolderLocalServiceTest {
 					objectEntryFolder.getLabelMap(),
 					objectEntryFolder.getName());
 			});
+
+		ObjectEntryFolder objectEntryFolder1 = _addObjectEntryFolder(
+			StringUtil.randomString(), _group.getGroupId(),
+			StringUtil.randomString(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT);
+
+		Assert.assertNotEquals(
+			objectEntryFolder1.getName(),
+			objectEntryFolder1.getLabel(LocaleUtil.getSiteDefault()));
+
+		ObjectEntryFolder objectEntryFolder2 =
+			_objectEntryFolderLocalService.updateObjectEntryFolder(
+				TestPropsValues.getUserId(),
+				objectEntryFolder1.getObjectEntryFolderId(),
+				ObjectEntryFolderConstants.
+					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+				null, objectEntryFolder1.getName());
+
+		AssertUtils.assertEquals(
+			HashMapBuilder.put(
+				LocaleUtil.getSiteDefault(), objectEntryFolder2.getName()
+			).build(),
+			objectEntryFolder2.getLabelMap());
 	}
 
 	private ObjectDefinition _addGroupCustomObjectDefinition()

@@ -101,7 +101,26 @@ public class ObjectEntryFolderLocalServiceImpl
 		ObjectEntryFolder objectEntryFolder) {
 
 		try {
-			_deleteObjectEntryFolderObjectEntries(objectEntryFolder);
+			ActionableDynamicQuery actionableDynamicQuery =
+				_objectEntryLocalService.getActionableDynamicQuery();
+
+			actionableDynamicQuery.setAddCriteriaMethod(
+				dynamicQuery -> {
+					dynamicQuery.add(
+						RestrictionsFactoryUtil.eq(
+							"groupId", objectEntryFolder.getGroupId()));
+					dynamicQuery.add(
+						RestrictionsFactoryUtil.eq(
+							"companyId", objectEntryFolder.getCompanyId()));
+					dynamicQuery.add(
+						RestrictionsFactoryUtil.like(
+							"treePath", objectEntryFolder.getTreePath() + "%"));
+				});
+			actionableDynamicQuery.setPerformActionMethod(
+				(ObjectEntry objectEntry) ->
+					_objectEntryLocalService.deleteObjectEntry(objectEntry));
+			actionableDynamicQuery.performActions();
+
 			_deleteObjectEntryFolders(objectEntryFolder);
 
 			return objectEntryFolder;
@@ -158,31 +177,6 @@ public class ObjectEntryFolderLocalServiceImpl
 				objectEntryFolder.getObjectEntryFolderId(),
 				serviceContext.getModelPermissions());
 		}
-	}
-
-	private void _deleteObjectEntryFolderObjectEntries(
-			ObjectEntryFolder objectEntryFolder)
-		throws PortalException {
-
-		ActionableDynamicQuery actionableDynamicQuery =
-			_objectEntryLocalService.getActionableDynamicQuery();
-
-		actionableDynamicQuery.setAddCriteriaMethod(
-			dynamicQuery -> {
-				dynamicQuery.add(
-					RestrictionsFactoryUtil.eq(
-						"groupId", objectEntryFolder.getGroupId()));
-				dynamicQuery.add(
-					RestrictionsFactoryUtil.eq(
-						"companyId", objectEntryFolder.getCompanyId()));
-				dynamicQuery.add(
-					RestrictionsFactoryUtil.like(
-						"treePath", objectEntryFolder.getTreePath() + "%"));
-			});
-		actionableDynamicQuery.setPerformActionMethod(
-			(ObjectEntry objectEntry) ->
-				_objectEntryLocalService.deleteObjectEntry(objectEntry));
-		actionableDynamicQuery.performActions();
 	}
 
 	private void _deleteObjectEntryFolders(ObjectEntryFolder objectEntryFolder)

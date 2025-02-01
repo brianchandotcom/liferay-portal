@@ -367,10 +367,10 @@ public class CPConfigurationListEligibilityFeatureFlagListener
 
 		try (Connection connection = DataAccess.getConnection();
 			PreparedStatement preparedStatement1 = connection.prepareStatement(
-				"select Group_.groupId, Group_.companyId from " +
-					"CommerceCatalog join Group_ on Group_.classNameId = ? " +
-						"and Group_.classPK = ",
-				"CommerceCatalog.commerceCatalogId");
+				StringBundler.concat(
+					"select Group_.groupId, Group_.companyId from ",
+					"CommerceCatalog join Group_ on Group_.classNameId = ? ",
+					"and Group_.classPK = CommerceCatalog.commerceCatalogId"));
 			PreparedStatement preparedStatement2 = connection.prepareStatement(
 				StringBundler.concat(
 					"select CPDefinition.CPDefinitionId, TEMP_TABLE.type_, ",

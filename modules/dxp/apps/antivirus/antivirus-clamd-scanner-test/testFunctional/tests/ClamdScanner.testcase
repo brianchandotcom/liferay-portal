@@ -1,4 +1,4 @@
-@component-name = "antivirus"
+@component-name = "portal-security"
 definition {
 
 	property custom.properties = "dl.store.antivirus.enabled=true${line.separator}virtual.hosts.valid.hosts=localhost,127.0.0.1,clamd";

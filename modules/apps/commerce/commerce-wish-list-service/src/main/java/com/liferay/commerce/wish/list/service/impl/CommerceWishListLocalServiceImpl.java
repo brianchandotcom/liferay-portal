@@ -48,7 +48,7 @@ public class CommerceWishListLocalServiceImpl
 
 	@Override
 	public CommerceWishList addCommerceWishList(
-			long groupId, long userId, String name, boolean defaultWishList)
+			long userId, long groupId, String name, boolean defaultWishList)
 		throws PortalException {
 
 		User user = _userLocalService.getUser(userId);

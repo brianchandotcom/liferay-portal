@@ -48,9 +48,10 @@ public class CommerceWishListItemLocalServiceTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
-		_user = UserTestUtil.addUser();
 
 		_cpInstance = CPTestUtil.addCPInstance(_group.getGroupId());
+
+		_user = UserTestUtil.addUser();
 	}
 
 	@Test

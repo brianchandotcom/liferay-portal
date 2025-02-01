@@ -2176,8 +2176,8 @@ public class LayoutStagedModelDataHandlerTest
 			ServiceContextTestUtil.getServiceContext(
 				layout.getGroupId(), TestPropsValues.getUserId()));
 
+		_assertLayoutSEOEntryCustomMetaTags(layoutSEOEntry);
 		_assertMapEquals(canonicalURLMap, layoutSEOEntry.getCanonicalURLMap());
-		_assertCustomMetaTags(layoutSEOEntry);
 
 		return layoutSEOEntry;
 	}

@@ -16,10 +16,10 @@ import java.util.Map;
 public class LayoutSEOEntryCustomMetaTagProperty implements Serializable {
 
 	public LayoutSEOEntryCustomMetaTagProperty(
-		String property, Map<Locale, String> contentMap) {
+		Map<Locale, String> contentMap, String property) {
 
-		_property = property;
 		_contentMap = contentMap;
+		_property = property;
 	}
 
 	public Map<Locale, String> getContentMap() {

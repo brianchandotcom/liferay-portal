@@ -356,10 +356,10 @@ public class LayoutSEOEntryLocalServiceImpl
 			layoutSEOEntryCustomMetaTag.setGroupId(groupId);
 			layoutSEOEntryCustomMetaTag.setCompanyId(companyId);
 			layoutSEOEntryCustomMetaTag.setLayoutSEOEntryId(layoutSEOEntryId);
-			layoutSEOEntryCustomMetaTag.setProperty(
-				layoutSEOEntryCustomMetaTagProperty.getProperty());
 			layoutSEOEntryCustomMetaTag.setContentMap(
 				layoutSEOEntryCustomMetaTagProperty.getContentMap());
+			layoutSEOEntryCustomMetaTag.setProperty(
+				layoutSEOEntryCustomMetaTagProperty.getProperty());
 
 			_layoutSEOEntryCustomMetaTagPersistence.update(
 				layoutSEOEntryCustomMetaTag);

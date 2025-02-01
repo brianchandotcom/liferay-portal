@@ -43,7 +43,7 @@ public class ObjectEntryFolderServiceImpl
 		throws PortalException {
 
 		ModelResourcePermissionUtil.check(
-			_objectEntryFolderModelResourcePermission, getPermissionChecker(),
+			_modelResourcePermission, getPermissionChecker(),
 			groupId, parentObjectEntryFolderId, ActionKeys.ADD_FOLDER);
 
 		return objectEntryFolderLocalService.addObjectEntryFolder(
@@ -55,7 +55,7 @@ public class ObjectEntryFolderServiceImpl
 	public ObjectEntryFolder deleteObjectEntryFolder(long objectEntryFolderId)
 		throws PortalException {
 
-		_objectEntryFolderModelResourcePermission.check(
+		_modelResourcePermission.check(
 			getPermissionChecker(), objectEntryFolderId, ActionKeys.DELETE);
 
 		return objectEntryFolderLocalService.deleteObjectEntryFolder(
@@ -70,7 +70,7 @@ public class ObjectEntryFolderServiceImpl
 			objectEntryFolderLocalService.getObjectEntryFolder(
 				objectEntryFolderId);
 
-		_objectEntryFolderModelResourcePermission.check(
+		_modelResourcePermission.check(
 			getPermissionChecker(), objectEntryFolder, ActionKeys.VIEW);
 
 		return objectEntryFolder;
@@ -82,7 +82,7 @@ public class ObjectEntryFolderServiceImpl
 			Map<Locale, String> labelMap, String name)
 		throws PortalException {
 
-		_objectEntryFolderModelResourcePermission.check(
+		_modelResourcePermission.check(
 			getPermissionChecker(), objectEntryFolderId, ActionKeys.UPDATE);
 
 		return objectEntryFolderLocalService.updateObjectEntryFolder(
@@ -96,6 +96,6 @@ public class ObjectEntryFolderServiceImpl
 		target = "(model.class.name=com.liferay.object.model.ObjectEntryFolder)"
 	)
 	private volatile ModelResourcePermission<ObjectEntryFolder>
-		_objectEntryFolderModelResourcePermission;
+		_modelResourcePermission;
 
 }

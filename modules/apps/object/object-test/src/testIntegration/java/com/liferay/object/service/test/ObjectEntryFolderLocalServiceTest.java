@@ -271,9 +271,7 @@ public class ObjectEntryFolderLocalServiceTest {
 			objectEntryFolder2.getLabelMap());
 	}
 
-	private ObjectDefinition _addObjectDefinition()
-		throws Exception {
-
+	private ObjectDefinition _addObjectDefinition() throws Exception {
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.addCustomObjectDefinition(
 				TestPropsValues.getUserId(), 0, null, false, true, false, false,

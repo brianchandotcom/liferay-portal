@@ -5,14 +5,13 @@
 
 package com.liferay.journal.web.internal.webdav;
 
-import com.liferay.dynamic.data.mapping.model.DDMStructure;
-import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.webdav.DDMWebDAV;
 import com.liferay.journal.constants.JournalFolderConstants;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalFolderService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -114,44 +113,26 @@ public class JournalWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 	private List<Resource> _getStructures(WebDAVRequest webDAVRequest)
 		throws Exception {
 
-		List<Resource> resources = new ArrayList<>();
-
-		List<DDMStructure> ddmStructures =
+		return TransformUtil.transform(
 			_journalFolderService.getDDMStructures(
 				new long[] {webDAVRequest.getGroupId()},
 				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
-				JournalFolderConstants.RESTRICTION_TYPE_INHERIT);
-
-		for (DDMStructure ddmStructure : ddmStructures) {
-			Resource resource = _ddmWebDAV.toResource(
-				webDAVRequest, ddmStructure, getRootPath(), true);
-
-			resources.add(resource);
-		}
-
-		return resources;
+				JournalFolderConstants.RESTRICTION_TYPE_INHERIT),
+			ddmStructure -> _ddmWebDAV.toResource(
+				webDAVRequest, ddmStructure, getRootPath(), true));
 	}
 
 	private List<Resource> _getTemplates(WebDAVRequest webDAVRequest)
 		throws Exception {
 
-		List<Resource> resources = new ArrayList<>();
-
-		List<DDMTemplate> ddmTemplates =
+		return TransformUtil.transform(
 			_ddmTemplateLocalService.getTemplatesByStructureClassNameId(
 				webDAVRequest.getGroupId(),
 				_portal.getClassNameId(JournalArticle.class),
 				WorkflowConstants.STATUS_APPROVED, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null);
-
-		for (DDMTemplate ddmTemplate : ddmTemplates) {
-			Resource resource = _ddmWebDAV.toResource(
-				webDAVRequest, ddmTemplate, getRootPath(), true);
-
-			resources.add(resource);
-		}
-
-		return resources;
+				QueryUtil.ALL_POS, null),
+			ddmTemplate -> _ddmWebDAV.toResource(
+				webDAVRequest, ddmTemplate, getRootPath(), true));
 	}
 
 	@Reference

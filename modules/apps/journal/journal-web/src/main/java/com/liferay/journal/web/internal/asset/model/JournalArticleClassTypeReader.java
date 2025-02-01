@@ -11,13 +11,13 @@ import com.liferay.asset.model.DDMStructureClassType;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.journal.constants.JournalPortletKeys;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.staging.StagingGroupHelper;
 import com.liferay.staging.StagingGroupHelperUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -34,21 +34,13 @@ public class JournalArticleClassTypeReader implements ClassTypeReader {
 	public List<ClassType> getAvailableClassTypes(
 		long[] groupIds, Locale locale) {
 
-		List<ClassType> classTypes = new ArrayList<>();
-
-		List<DDMStructure> ddmStructures =
+		return TransformUtil.transform(
 			DDMStructureLocalServiceUtil.getStructures(
 				_replaceGroupIds(groupIds),
-				PortalUtil.getClassNameId(_className));
-
-		for (DDMStructure ddmStructure : ddmStructures) {
-			classTypes.add(
-				new DDMStructureClassType(
-					ddmStructure.getStructureId(), ddmStructure.getName(locale),
-					LocaleUtil.toLanguageId(locale)));
-		}
-
-		return classTypes;
+				PortalUtil.getClassNameId(_className)),
+			ddmStructure -> new DDMStructureClassType(
+				ddmStructure.getStructureId(), ddmStructure.getName(locale),
+				LocaleUtil.toLanguageId(locale)));
 	}
 
 	@Override

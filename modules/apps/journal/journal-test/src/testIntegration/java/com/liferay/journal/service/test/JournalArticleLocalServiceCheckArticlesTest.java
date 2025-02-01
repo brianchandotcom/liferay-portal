@@ -289,8 +289,6 @@ public class JournalArticleLocalServiceCheckArticlesTest {
 		JournalArticle article = addArticle(
 			_group.getGroupId(), false, approved, false);
 
-		// Add a new-to-expire version
-
 		article = updateArticle(article, mode);
 
 		Calendar calendar = getExpirationCalendar(Time.HOUR, -2);

@@ -1204,8 +1204,7 @@ public class ManagementToolbarTag extends BaseContainerTag {
 		if (isShowResultsBar()) {
 			jspWriter.write("<nav class=\"subnav-tbar subnav-tbar-primary");
 			jspWriter.write(" tbar tbar-inline-xs-down\"><div class=\"");
-			jspWriter.write("container-fluid container-fluid-max-xl");
-			jspWriter.write("\">");
+			jspWriter.write("container-fluid container-fluid-max-xl \">");
 			jspWriter.write("<ul class=\"tbar-nav tbar-nav-wrap\">");
 			jspWriter.write("<li class=\"tbar-item");
 

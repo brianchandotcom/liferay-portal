@@ -22,12 +22,12 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"osgi.jaxrs.application.select=(osgi.jaxrs.name=Liferay.Headless.Commerce.Delivery.Catalog)",
 		"osgi.jaxrs.extension=true",
-		"osgi.jaxrs.name=Liferay.Headless.Commerce.Delivery.Catalog.RequiredCommerceWishListExceptionMapper"
+		"osgi.jaxrs.name=Liferay.Headless.Commerce.Delivery.Catalog.RequiredWishListExceptionMapper"
 	},
 	service = ExceptionMapper.class
 )
 @Provider
-public class RequiredCommerceWishListExceptionMapper
+public class RequiredWishListExceptionMapper
 	extends BaseExceptionMapper<RequiredCommerceWishListException> {
 
 	@Override

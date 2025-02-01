@@ -83,8 +83,8 @@ public class LayoutSEOEntryLocalServiceImpl
 					groupId, sourceLayoutSEOEntry.getLayoutSEOEntryId()),
 				layoutSEOEntryCustomMetaTag ->
 					new LayoutSEOEntryCustomMetaTagProperty(
-						layoutSEOEntryCustomMetaTag.getProperty(),
-						layoutSEOEntryCustomMetaTag.getContentMap())));
+						layoutSEOEntryCustomMetaTag.getContentMap(),
+						layoutSEOEntryCustomMetaTag.getProperty())));
 
 		return targetLayoutSEOEntry;
 	}

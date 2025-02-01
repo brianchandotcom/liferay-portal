@@ -95,7 +95,7 @@ public class EditOpenGraphMVCActionCommandTest {
 			TestPropsValues.getUserId(), _layout.getGroupId(), false,
 			_layout.getLayoutId(),
 			Collections.singletonList(
-				new LayoutSEOEntryCustomMetaTagProperty(property, contentMap)),
+				new LayoutSEOEntryCustomMetaTagProperty(contentMap, property)),
 			ServiceContextTestUtil.getServiceContext(
 				_layout.getGroupId(), TestPropsValues.getUserId()));
 

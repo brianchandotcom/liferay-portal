@@ -65,10 +65,10 @@ public class LayoutSEOEntryCustomMetaTagTableReferenceDefinitionTest
 			_layoutSEOEntry.isPrivateLayout(), _layoutSEOEntry.getLayoutId(),
 			Collections.singletonList(
 				new LayoutSEOEntryCustomMetaTagProperty(
-					RandomTestUtil.randomString(),
 					Collections.singletonMap(
 						LocaleUtil.getSiteDefault(),
-						RandomTestUtil.randomString()))),
+						RandomTestUtil.randomString()),
+					RandomTestUtil.randomString())),
 			ServiceContextTestUtil.getServiceContext());
 	}
 

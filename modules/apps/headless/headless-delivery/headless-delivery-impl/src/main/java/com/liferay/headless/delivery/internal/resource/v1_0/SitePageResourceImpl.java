@@ -989,11 +989,11 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 			transformToList(
 				customMetaTags,
 				customMetaTag -> new LayoutSEOEntryCustomMetaTagProperty(
-					customMetaTag.getKey(),
 					LocalizedMapUtil.getLocalizedMap(
 						contextAcceptLanguage.getPreferredLocale(),
 						customMetaTag.getValue(),
-						customMetaTag.getValue_i18n()))),
+						customMetaTag.getValue_i18n()),
+					customMetaTag.getKey())),
 			serviceContext);
 	}
 

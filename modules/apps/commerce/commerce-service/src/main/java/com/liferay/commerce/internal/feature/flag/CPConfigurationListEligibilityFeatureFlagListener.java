@@ -369,8 +369,9 @@ public class CPConfigurationListEligibilityFeatureFlagListener
 			PreparedStatement preparedStatement1 = connection.prepareStatement(
 				StringBundler.concat(
 					"select Group_.groupId, Group_.companyId from ",
-					"CommerceCatalog join Group_ on Group_.classNameId = ? ",
-					"and Group_.classPK = CommerceCatalog.commerceCatalogId"));
+					"CommerceCatalog join Group_ on Group_.companyId = ? and ",
+					"Group_.classNameId = ? and Group_.classPK = ",
+					"CommerceCatalog.commerceCatalogId"));
 			PreparedStatement preparedStatement2 = connection.prepareStatement(
 				StringBundler.concat(
 					"select CPDefinition.CPDefinitionId, TEMP_TABLE.type_, ",
@@ -405,10 +406,11 @@ public class CPConfigurationListEligibilityFeatureFlagListener
 					"groupId = ? and classNameId = ? and classPK in (select ",
 					"classPK from (select classPK from CPConfigurationEntry ",
 					"where groupId = ? and classNameId = ? and ",
-					"CPConfigurationListId != ?) Internal) and ",
+					"CPConfigurationListId != ?) TEMP_TABLE) and ",
 					"CPConfigurationListId = ?"))) {
 
-			preparedStatement1.setLong(1, commerceCatalogClassNameId);
+			preparedStatement1.setLong(1, companyId);
+			preparedStatement1.setLong(2, commerceCatalogClassNameId);
 
 			ResultSet resultSet = preparedStatement1.executeQuery();
 

@@ -5,17 +5,7 @@
  */
 --%>
 
-<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
-
-<%@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
-taglib uri="http://liferay.com/tld/frontend-data-set" prefix="frontend-data-set" %><%@
-taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
+<%@ taglib uri="http://liferay.com/tld/frontend-data-set" prefix="frontend-data-set" %>
 
 <%@ page import="com.liferay.site.cms.site.initializer.internal.constants.CMSSiteInitializerFDSNames" %><%@
 page import="com.liferay.site.cms.site.initializer.internal.display.context.AllSectionDisplayContext" %>
-
-<liferay-frontend:defineObjects />
-
-<liferay-theme:defineObjects />
-
-<portlet:defineObjects />

@@ -1,3 +1,4 @@
+@component-name = "portal-platform-experience"
 definition {
 
 	property osgi.modules.includes = "frontend-taglib-clay-sample-web";

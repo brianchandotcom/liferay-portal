@@ -9,6 +9,7 @@ import com.liferay.journal.model.JournalContentSearch;
 import com.liferay.journal.service.base.JournalContentSearchLocalServiceBaseImpl;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.lang.HashUtil;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -213,17 +214,10 @@ public class JournalContentSearchLocalServiceImpl
 	public List<Long> getLayoutIds(
 		long groupId, boolean privateLayout, String articleId) {
 
-		List<Long> layoutIds = new ArrayList<>();
-
-		List<JournalContentSearch> contentSearches =
+		return TransformUtil.transform(
 			journalContentSearchPersistence.findByG_P_A(
-				groupId, privateLayout, articleId);
-
-		for (JournalContentSearch contentSearch : contentSearches) {
-			layoutIds.add(contentSearch.getLayoutId());
-		}
-
-		return layoutIds;
+				groupId, privateLayout, articleId),
+			contentSearch -> contentSearch.getLayoutId());
 	}
 
 	@Override

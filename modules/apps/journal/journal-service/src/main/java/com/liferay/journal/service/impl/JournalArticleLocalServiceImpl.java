@@ -94,6 +94,7 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.string.CharPool;
@@ -2642,19 +2643,10 @@ public class JournalArticleLocalServiceImpl
 
 	@Override
 	public List<String> getArticleLocalizationLanguageIds(long articlePK) {
-		List<JournalArticleLocalization> journalArticleLocalizationList =
-			_journalArticleLocalizationPersistence.findByArticlePK(articlePK);
-
-		List<String> availableLanguageIds = new ArrayList<>();
-
-		for (JournalArticleLocalization journalArticleLocalization :
-				journalArticleLocalizationList) {
-
-			availableLanguageIds.add(
+		return TransformUtil.transform(
+			_journalArticleLocalizationPersistence.findByArticlePK(articlePK),
+			journalArticleLocalization ->
 				journalArticleLocalization.getLanguageId());
-		}
-
-		return availableLanguageIds;
 	}
 
 	/**

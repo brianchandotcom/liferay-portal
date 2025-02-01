@@ -31,8 +31,9 @@ public abstract class BaseUpgradePortletPreferences
 	protected String getGroupExternalReferenceCode(long companyId, long groupId)
 		throws Exception {
 
-		Map<Long, String> externalReferenceCodes = _externalReferenceCodesMap.computeIfAbsent(
-			companyId, curCompanyId -> new ConcurrentHashMap<>());
+		Map<Long, String> externalReferenceCodes =
+			_externalReferenceCodesMap.computeIfAbsent(
+				companyId, curCompanyId -> new ConcurrentHashMap<>());
 
 		return externalReferenceCodes.computeIfAbsent(
 			groupId, curGroupId -> _getGroupExternalReferenceCode(curGroupId));

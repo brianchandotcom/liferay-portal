@@ -10930,15 +10930,15 @@ public class ObjectEntryResourceTest {
 		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
 		_addResourcePermission(
-			ActionKeys.VIEW, _objectDefinition2.getClassName(), role);
-		_addResourcePermission(
-			ActionKeys.VIEW, _objectDefinition3.getClassName(), role);
-		_addResourcePermission(
 			ObjectActionKeys.ADD_OBJECT_ENTRY,
 			_objectDefinition2.getResourceName(), role);
 		_addResourcePermission(
 			ObjectActionKeys.ADD_OBJECT_ENTRY,
 			_objectDefinition3.getResourceName(), role);
+		_addResourcePermission(
+			ActionKeys.VIEW, _objectDefinition2.getClassName(), role);
+		_addResourcePermission(
+			ActionKeys.VIEW, _objectDefinition3.getClassName(), role);
 
 		User user1 = _addUser("test1", "test1");
 		User user2 = _addUser("test2", "test2");
@@ -11969,13 +11969,13 @@ public class ObjectEntryResourceTest {
 		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
 		_addResourcePermission(
-			ActionKeys.VIEW, _objectDefinition1.getClassName(), role);
-		_addResourcePermission(
 			ObjectActionKeys.ADD_OBJECT_ENTRY,
 			_objectDefinition2.getResourceName(), role);
 		_addResourcePermission(
 			ObjectActionKeys.ADD_OBJECT_ENTRY,
 			_objectDefinition3.getResourceName(), role);
+		_addResourcePermission(
+			ActionKeys.VIEW, _objectDefinition1.getClassName(), role);
 
 		User user1 = _addUser("test1", "test1");
 		User user2 = _addUser("test2", "test2");

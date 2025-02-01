@@ -40,52 +40,54 @@ public class CommerceWishListUpgradeProcess extends UpgradeProcess {
 				_resourcePermissionLocalService.getResourcePermissions(
 					"com.liferay.commerce.wish.list")) {
 
-			if (_resourcePermissionLocalService.hasActionId(
-					resourcePermission, resourceAction) &&
-				(resourcePermission.getScope() !=
+			if (!_resourcePermissionLocalService.hasActionId(
+					resourcePermission, resourceAction) ||
+				(resourcePermission.getScope() ==
 					ResourceConstants.SCOPE_INDIVIDUAL)) {
 
-				if (!_resourcePermissionLocalService.hasResourcePermission(
-						resourcePermission.getCompanyId(),
-						resourcePermission.getName(),
-						resourcePermission.getScope(),
-						resourcePermission.getPrimKey(),
-						resourcePermission.getRoleId(),
-						CommerceWishListActionKeys.ADD_COMMERCE_WISH_LIST)) {
+				continue;
+			}
 
-					_resourcePermissionLocalService.addResourcePermission(
-						resourcePermission.getCompanyId(),
-						resourcePermission.getName(),
-						resourcePermission.getScope(),
-						resourcePermission.getPrimKey(),
-						resourcePermission.getRoleId(),
-						CommerceWishListActionKeys.ADD_COMMERCE_WISH_LIST);
-				}
-
-				if (!_resourcePermissionLocalService.hasResourcePermission(
-						resourcePermission.getCompanyId(),
-						resourcePermission.getName(),
-						resourcePermission.getScope(),
-						resourcePermission.getPrimKey(),
-						resourcePermission.getRoleId(),
-						CommerceWishListActionKeys.VIEW_COMMERCE_WISH_LISTS)) {
-
-					_resourcePermissionLocalService.addResourcePermission(
-						resourcePermission.getCompanyId(),
-						resourcePermission.getName(),
-						resourcePermission.getScope(),
-						resourcePermission.getPrimKey(),
-						resourcePermission.getRoleId(),
-						CommerceWishListActionKeys.VIEW_COMMERCE_WISH_LISTS);
-				}
-
-				_resourcePermissionLocalService.removeResourcePermission(
+			if (!_resourcePermissionLocalService.hasResourcePermission(
 					resourcePermission.getCompanyId(),
-					resourcePermission.getName(), resourcePermission.getScope(),
+					resourcePermission.getName(),
+					resourcePermission.getScope(),
 					resourcePermission.getPrimKey(),
 					resourcePermission.getRoleId(),
-					"MANAGE_COMMERCE_WISH_LISTS");
+					CommerceWishListActionKeys.ADD_COMMERCE_WISH_LIST)) {
+
+				_resourcePermissionLocalService.addResourcePermission(
+					resourcePermission.getCompanyId(),
+					resourcePermission.getName(),
+					resourcePermission.getScope(),
+					resourcePermission.getPrimKey(),
+					resourcePermission.getRoleId(),
+					CommerceWishListActionKeys.ADD_COMMERCE_WISH_LIST);
 			}
+
+			if (!_resourcePermissionLocalService.hasResourcePermission(
+					resourcePermission.getCompanyId(),
+					resourcePermission.getName(),
+					resourcePermission.getScope(),
+					resourcePermission.getPrimKey(),
+					resourcePermission.getRoleId(),
+					CommerceWishListActionKeys.VIEW_COMMERCE_WISH_LISTS)) {
+
+				_resourcePermissionLocalService.addResourcePermission(
+					resourcePermission.getCompanyId(),
+					resourcePermission.getName(),
+					resourcePermission.getScope(),
+					resourcePermission.getPrimKey(),
+					resourcePermission.getRoleId(),
+					CommerceWishListActionKeys.VIEW_COMMERCE_WISH_LISTS);
+			}
+
+			_resourcePermissionLocalService.removeResourcePermission(
+				resourcePermission.getCompanyId(),
+				resourcePermission.getName(), resourcePermission.getScope(),
+				resourcePermission.getPrimKey(),
+				resourcePermission.getRoleId(),
+				"MANAGE_COMMERCE_WISH_LISTS");
 		}
 
 		_resourceActionLocalService.deleteResourceAction(resourceAction);

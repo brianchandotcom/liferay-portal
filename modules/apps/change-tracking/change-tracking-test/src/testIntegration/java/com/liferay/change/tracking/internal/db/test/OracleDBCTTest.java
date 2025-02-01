@@ -169,7 +169,9 @@ public class OracleDBCTTest {
 	}
 
 	@Test
-	public void testPublishCTCollectionWithOver1000CTEntries() throws Exception {
+	public void testPublishCTCollectionWithOver1000CTEntries()
+		throws Exception {
+
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(

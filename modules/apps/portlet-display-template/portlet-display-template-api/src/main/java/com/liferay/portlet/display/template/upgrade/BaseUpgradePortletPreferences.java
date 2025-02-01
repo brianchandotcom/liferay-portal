@@ -31,20 +31,20 @@ public abstract class BaseUpgradePortletPreferences
 	protected String getGroupExternalReferenceCode(long companyId, long groupId)
 		throws Exception {
 
-		Map<Long, String> companyIdGroupIdMap = _groupIdMap.computeIfAbsent(
+		Map<Long, String> externalReferenceCodes = _externalReferenceCodesMap.computeIfAbsent(
 			companyId, curCompanyId -> new ConcurrentHashMap<>());
 
-		return companyIdGroupIdMap.computeIfAbsent(
+		return externalReferenceCodes.computeIfAbsent(
 			groupId, curGroupId -> _getGroupExternalReferenceCode(curGroupId));
 	}
 
 	protected long getGroupId(long companyId, String groupKey)
 		throws Exception {
 
-		Map<String, Long> companyIdGroupKeyMap = _groupKeyMap.computeIfAbsent(
+		Map<String, Long> groupIds = _groupIdsMap.computeIfAbsent(
 			companyId, curCompanyId -> new ConcurrentHashMap<>());
 
-		return companyIdGroupKeyMap.computeIfAbsent(
+		return groupIds.computeIfAbsent(
 			groupKey,
 			curGroupKey -> {
 				Object[] group = _getGroup(companyId, curGroupKey);
@@ -60,14 +60,14 @@ public abstract class BaseUpgradePortletPreferences
 					return 0L;
 				}
 
-				Map<Long, String> companyIdGroupIdMap =
-					_groupIdMap.computeIfAbsent(
+				Map<Long, String> externalReferenceCodes =
+					_externalReferenceCodesMap.computeIfAbsent(
 						companyId, curCompanyId -> new ConcurrentHashMap<>());
 
 				String externalReferenceCode = (String)group[0];
 				long groupId = (long)group[1];
 
-				companyIdGroupIdMap.computeIfAbsent(
+				externalReferenceCodes.computeIfAbsent(
 					groupId, curGroupId -> externalReferenceCode);
 
 				return groupId;
@@ -231,9 +231,9 @@ public abstract class BaseUpgradePortletPreferences
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseUpgradePortletPreferences.class);
 
-	private final Map<Long, Map<Long, String>> _groupIdMap =
+	private final Map<Long, Map<Long, String>> _externalReferenceCodesMap =
 		new ConcurrentHashMap<>();
-	private final Map<Long, Map<String, Long>> _groupKeyMap =
+	private final Map<Long, Map<String, Long>> _groupIdsMap =
 		new ConcurrentHashMap<>();
 	private final Map<Long, Map<Long, Long>> _plidMap =
 		new ConcurrentHashMap<>();

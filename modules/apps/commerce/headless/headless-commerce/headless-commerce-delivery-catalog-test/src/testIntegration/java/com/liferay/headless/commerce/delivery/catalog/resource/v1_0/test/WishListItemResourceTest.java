@@ -16,13 +16,14 @@ import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.commerce.wish.list.model.CommerceWishList;
-import com.liferay.commerce.wish.list.service.CommerceWishListLocalServiceUtil;
+import com.liferay.commerce.wish.list.service.CommerceWishListLocalService;
 import com.liferay.headless.commerce.delivery.catalog.client.dto.v1_0.WishListItem;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.test.rule.Inject;
 
 import org.junit.Before;
 import org.junit.runner.RunWith;
@@ -52,10 +53,9 @@ public class WishListItemResourceTest extends BaseWishListItemResourceTestCase {
 
 		_commerceChannel = CommerceTestUtil.addCommerceChannel(
 			testGroup.getGroupId(), RandomTestUtil.randomString());
-		_commerceWishList =
-			CommerceWishListLocalServiceUtil.addCommerceWishList(
-				testGroup.getGroupId(), _user.getUserId(),
-				RandomTestUtil.randomString(), false);
+		_commerceWishList = _commerceWishListLocalService.addCommerceWishList(
+			_user.getUserId(), testGroup.getGroupId(),
+			RandomTestUtil.randomString(), false);
 	}
 
 	@Override
@@ -147,6 +147,9 @@ public class WishListItemResourceTest extends BaseWishListItemResourceTestCase {
 
 	@DeleteAfterTestRun
 	private CommerceWishList _commerceWishList;
+
+	@Inject
+	private CommerceWishListLocalService _commerceWishListLocalService;
 
 	@DeleteAfterTestRun
 	private CPInstance _cpInstance;

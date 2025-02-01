@@ -1625,46 +1625,6 @@ public class LayoutStagedModelDataHandlerTest
 			layout.fetchDraftLayout());
 	}
 
-	private void _assertLayoutSEOEntryCustomMetaTags(
-		LayoutSEOEntry layoutSEOEntry) {
-
-		List<LayoutSEOEntryCustomMetaTag> layoutSEOEntryCustomMetaTags =
-			_layoutSEOEntryLocalService.getLayoutSEOEntryCustomMetaTags(
-				layoutSEOEntry.getGroupId(),
-				layoutSEOEntry.getLayoutSEOEntryId());
-
-		Assert.assertFalse(layoutSEOEntryCustomMetaTags.isEmpty());
-		Assert.assertEquals(
-			layoutSEOEntryCustomMetaTags.toString(), 2,
-			layoutSEOEntryCustomMetaTags.size());
-
-		LayoutSEOEntryCustomMetaTag firstLayoutSEOEntryCustomMetaTag =
-			layoutSEOEntryCustomMetaTags.get(0);
-
-		Assert.assertEquals(
-			"property1", firstLayoutSEOEntryCustomMetaTag.getProperty());
-		Assert.assertEquals(
-			"content1",
-			firstLayoutSEOEntryCustomMetaTag.getContent(
-				LocaleUtil.getSiteDefault()));
-		Assert.assertEquals(
-			"contenido1",
-			firstLayoutSEOEntryCustomMetaTag.getContent(LocaleUtil.SPAIN));
-
-		LayoutSEOEntryCustomMetaTag secondLayoutSEOEntryCustomMetaTag =
-			layoutSEOEntryCustomMetaTags.get(1);
-
-		Assert.assertEquals(
-			"property2", secondLayoutSEOEntryCustomMetaTag.getProperty());
-		Assert.assertEquals(
-			"content2",
-			secondLayoutSEOEntryCustomMetaTag.getContent(
-				LocaleUtil.getSiteDefault()));
-		Assert.assertEquals(
-			"contenido2",
-			secondLayoutSEOEntryCustomMetaTag.getContent(LocaleUtil.SPAIN));
-	}
-
 	private void _assertExportImportContentReference(
 			long classPK, String fieldName, String infoItemClassName,
 			String infoItemFormVariationKey,
@@ -1783,6 +1743,46 @@ public class LayoutStagedModelDataHandlerTest
 
 		_assertLayoutSEOEntryCustomMetaTags(layoutSEOEntry);
 		_assertMapEquals(canonicalURLMap, layoutSEOEntry.getCanonicalURLMap());
+	}
+
+	private void _assertLayoutSEOEntryCustomMetaTags(
+		LayoutSEOEntry layoutSEOEntry) {
+
+		List<LayoutSEOEntryCustomMetaTag> layoutSEOEntryCustomMetaTags =
+			_layoutSEOEntryLocalService.getLayoutSEOEntryCustomMetaTags(
+				layoutSEOEntry.getGroupId(),
+				layoutSEOEntry.getLayoutSEOEntryId());
+
+		Assert.assertFalse(layoutSEOEntryCustomMetaTags.isEmpty());
+		Assert.assertEquals(
+			layoutSEOEntryCustomMetaTags.toString(), 2,
+			layoutSEOEntryCustomMetaTags.size());
+
+		LayoutSEOEntryCustomMetaTag firstLayoutSEOEntryCustomMetaTag =
+			layoutSEOEntryCustomMetaTags.get(0);
+
+		Assert.assertEquals(
+			"property1", firstLayoutSEOEntryCustomMetaTag.getProperty());
+		Assert.assertEquals(
+			"content1",
+			firstLayoutSEOEntryCustomMetaTag.getContent(
+				LocaleUtil.getSiteDefault()));
+		Assert.assertEquals(
+			"contenido1",
+			firstLayoutSEOEntryCustomMetaTag.getContent(LocaleUtil.SPAIN));
+
+		LayoutSEOEntryCustomMetaTag secondLayoutSEOEntryCustomMetaTag =
+			layoutSEOEntryCustomMetaTags.get(1);
+
+		Assert.assertEquals(
+			"property2", secondLayoutSEOEntryCustomMetaTag.getProperty());
+		Assert.assertEquals(
+			"content2",
+			secondLayoutSEOEntryCustomMetaTag.getContent(
+				LocaleUtil.getSiteDefault()));
+		Assert.assertEquals(
+			"contenido2",
+			secondLayoutSEOEntryCustomMetaTag.getContent(LocaleUtil.SPAIN));
 	}
 
 	private void _assertMapEquals(

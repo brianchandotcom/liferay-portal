@@ -36,8 +36,8 @@
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="layoutSEOEntryId" type="long" />
-		<field name="property" type="String" />
 		<field localized="true" name="content" type="String" />
+		<field name="property" type="String" />
 	</model>
 	<model name="com.liferay.layout.seo.model.LayoutSEOSite">
 		<field name="mvccVersion" type="long" />

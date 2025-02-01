@@ -149,21 +149,6 @@ public interface LayoutSEOEntryCustomMetaTagModel
 	public void setLayoutSEOEntryId(long layoutSEOEntryId);
 
 	/**
-	 * Returns the property of this layout seo entry custom meta tag.
-	 *
-	 * @return the property of this layout seo entry custom meta tag
-	 */
-	@AutoEscape
-	public String getProperty();
-
-	/**
-	 * Sets the property of this layout seo entry custom meta tag.
-	 *
-	 * @param property the property of this layout seo entry custom meta tag
-	 */
-	public void setProperty(String property);
-
-	/**
 	 * Returns the content of this layout seo entry custom meta tag.
 	 *
 	 * @return the content of this layout seo entry custom meta tag
@@ -262,6 +247,21 @@ public interface LayoutSEOEntryCustomMetaTagModel
 	 */
 	public void setContentMap(
 		Map<Locale, String> contentMap, Locale defaultLocale);
+
+	/**
+	 * Returns the property of this layout seo entry custom meta tag.
+	 *
+	 * @return the property of this layout seo entry custom meta tag
+	 */
+	@AutoEscape
+	public String getProperty();
+
+	/**
+	 * Sets the property of this layout seo entry custom meta tag.
+	 *
+	 * @param property the property of this layout seo entry custom meta tag
+	 */
+	public void setProperty(String property);
 
 	@Override
 	public String[] getAvailableLanguageIds();

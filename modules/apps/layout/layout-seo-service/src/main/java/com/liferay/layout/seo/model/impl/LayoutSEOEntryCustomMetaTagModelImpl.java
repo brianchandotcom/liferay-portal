@@ -69,8 +69,8 @@ public class LayoutSEOEntryCustomMetaTagModelImpl
 		{"mvccVersion", Types.BIGINT}, {"ctCollectionId", Types.BIGINT},
 		{"layoutSEOEntryCustomMetaTagId", Types.BIGINT},
 		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
-		{"layoutSEOEntryId", Types.BIGINT}, {"property", Types.VARCHAR},
-		{"content", Types.VARCHAR}
+		{"layoutSEOEntryId", Types.BIGINT}, {"content", Types.VARCHAR},
+		{"property", Types.VARCHAR}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -83,12 +83,12 @@ public class LayoutSEOEntryCustomMetaTagModelImpl
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("layoutSEOEntryId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("property", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("content", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("property", Types.VARCHAR);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table LayoutSEOEntryCustomMetaTag (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,layoutSEOEntryCustomMetaTagId LONG not null,groupId LONG,companyId LONG,layoutSEOEntryId LONG,property VARCHAR(75) null,content STRING null,primary key (layoutSEOEntryCustomMetaTagId, ctCollectionId))";
+		"create table LayoutSEOEntryCustomMetaTag (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,layoutSEOEntryCustomMetaTagId LONG not null,groupId LONG,companyId LONG,layoutSEOEntryId LONG,content STRING null,property VARCHAR(75) null,primary key (layoutSEOEntryCustomMetaTagId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table LayoutSEOEntryCustomMetaTag";
@@ -254,9 +254,9 @@ public class LayoutSEOEntryCustomMetaTagModelImpl
 				"layoutSEOEntryId",
 				LayoutSEOEntryCustomMetaTag::getLayoutSEOEntryId);
 			attributeGetterFunctions.put(
-				"property", LayoutSEOEntryCustomMetaTag::getProperty);
-			attributeGetterFunctions.put(
 				"content", LayoutSEOEntryCustomMetaTag::getContent);
+			attributeGetterFunctions.put(
+				"property", LayoutSEOEntryCustomMetaTag::getProperty);
 
 			_attributeGetterFunctions = Collections.unmodifiableMap(
 				attributeGetterFunctions);
@@ -302,13 +302,13 @@ public class LayoutSEOEntryCustomMetaTagModelImpl
 				(BiConsumer<LayoutSEOEntryCustomMetaTag, Long>)
 					LayoutSEOEntryCustomMetaTag::setLayoutSEOEntryId);
 			attributeSetterBiConsumers.put(
-				"property",
-				(BiConsumer<LayoutSEOEntryCustomMetaTag, String>)
-					LayoutSEOEntryCustomMetaTag::setProperty);
-			attributeSetterBiConsumers.put(
 				"content",
 				(BiConsumer<LayoutSEOEntryCustomMetaTag, String>)
 					LayoutSEOEntryCustomMetaTag::setContent);
+			attributeSetterBiConsumers.put(
+				"property",
+				(BiConsumer<LayoutSEOEntryCustomMetaTag, String>)
+					LayoutSEOEntryCustomMetaTag::setProperty);
 
 			_attributeSetterBiConsumers = Collections.unmodifiableMap(
 				(Map)attributeSetterBiConsumers);
@@ -422,25 +422,6 @@ public class LayoutSEOEntryCustomMetaTagModelImpl
 	}
 
 	@Override
-	public String getProperty() {
-		if (_property == null) {
-			return "";
-		}
-		else {
-			return _property;
-		}
-	}
-
-	@Override
-	public void setProperty(String property) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_property = property;
-	}
-
-	@Override
 	public String getContent() {
 		if (_content == null) {
 			return "";
@@ -549,6 +530,25 @@ public class LayoutSEOEntryCustomMetaTagModelImpl
 			LocalizationUtil.updateLocalization(
 				contentMap, getContent(), "Content",
 				LocaleUtil.toLanguageId(defaultLocale)));
+	}
+
+	@Override
+	public String getProperty() {
+		if (_property == null) {
+			return "";
+		}
+		else {
+			return _property;
+		}
+	}
+
+	@Override
+	public void setProperty(String property) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_property = property;
 	}
 
 	public long getColumnBitmask() {
@@ -683,8 +683,8 @@ public class LayoutSEOEntryCustomMetaTagModelImpl
 		layoutSEOEntryCustomMetaTagImpl.setCompanyId(getCompanyId());
 		layoutSEOEntryCustomMetaTagImpl.setLayoutSEOEntryId(
 			getLayoutSEOEntryId());
-		layoutSEOEntryCustomMetaTagImpl.setProperty(getProperty());
 		layoutSEOEntryCustomMetaTagImpl.setContent(getContent());
+		layoutSEOEntryCustomMetaTagImpl.setProperty(getProperty());
 
 		layoutSEOEntryCustomMetaTagImpl.resetOriginalValues();
 
@@ -708,10 +708,10 @@ public class LayoutSEOEntryCustomMetaTagModelImpl
 			this.<Long>getColumnOriginalValue("companyId"));
 		layoutSEOEntryCustomMetaTagImpl.setLayoutSEOEntryId(
 			this.<Long>getColumnOriginalValue("layoutSEOEntryId"));
-		layoutSEOEntryCustomMetaTagImpl.setProperty(
-			this.<String>getColumnOriginalValue("property"));
 		layoutSEOEntryCustomMetaTagImpl.setContent(
 			this.<String>getColumnOriginalValue("content"));
+		layoutSEOEntryCustomMetaTagImpl.setProperty(
+			this.<String>getColumnOriginalValue("property"));
 
 		return layoutSEOEntryCustomMetaTagImpl;
 	}
@@ -807,20 +807,20 @@ public class LayoutSEOEntryCustomMetaTagModelImpl
 		layoutSEOEntryCustomMetaTagCacheModel.layoutSEOEntryId =
 			getLayoutSEOEntryId();
 
-		layoutSEOEntryCustomMetaTagCacheModel.property = getProperty();
-
-		String property = layoutSEOEntryCustomMetaTagCacheModel.property;
-
-		if ((property != null) && (property.length() == 0)) {
-			layoutSEOEntryCustomMetaTagCacheModel.property = null;
-		}
-
 		layoutSEOEntryCustomMetaTagCacheModel.content = getContent();
 
 		String content = layoutSEOEntryCustomMetaTagCacheModel.content;
 
 		if ((content != null) && (content.length() == 0)) {
 			layoutSEOEntryCustomMetaTagCacheModel.content = null;
+		}
+
+		layoutSEOEntryCustomMetaTagCacheModel.property = getProperty();
+
+		String property = layoutSEOEntryCustomMetaTagCacheModel.property;
+
+		if ((property != null) && (property.length() == 0)) {
+			layoutSEOEntryCustomMetaTagCacheModel.property = null;
 		}
 
 		return layoutSEOEntryCustomMetaTagCacheModel;
@@ -892,9 +892,9 @@ public class LayoutSEOEntryCustomMetaTagModelImpl
 	private long _groupId;
 	private long _companyId;
 	private long _layoutSEOEntryId;
-	private String _property;
 	private String _content;
 	private String _contentCurrentLanguageId;
+	private String _property;
 
 	public <T> T getColumnValue(String columnName) {
 		Function<LayoutSEOEntryCustomMetaTag, Object> function =
@@ -931,8 +931,8 @@ public class LayoutSEOEntryCustomMetaTagModelImpl
 		_columnOriginalValues.put("groupId", _groupId);
 		_columnOriginalValues.put("companyId", _companyId);
 		_columnOriginalValues.put("layoutSEOEntryId", _layoutSEOEntryId);
-		_columnOriginalValues.put("property", _property);
 		_columnOriginalValues.put("content", _content);
+		_columnOriginalValues.put("property", _property);
 	}
 
 	private transient Map<String, Object> _columnOriginalValues;
@@ -958,9 +958,9 @@ public class LayoutSEOEntryCustomMetaTagModelImpl
 
 		columnBitmasks.put("layoutSEOEntryId", 32L);
 
-		columnBitmasks.put("property", 64L);
+		columnBitmasks.put("content", 64L);
 
-		columnBitmasks.put("content", 128L);
+		columnBitmasks.put("property", 128L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

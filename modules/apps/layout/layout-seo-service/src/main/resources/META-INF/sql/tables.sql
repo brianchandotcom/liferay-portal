@@ -30,8 +30,8 @@ create table LayoutSEOEntryCustomMetaTag (
 	groupId LONG,
 	companyId LONG,
 	layoutSEOEntryId LONG,
-	property VARCHAR(75) null,
 	content STRING null,
+	property VARCHAR(75) null,
 	primary key (layoutSEOEntryCustomMetaTagId, ctCollectionId)
 );
 

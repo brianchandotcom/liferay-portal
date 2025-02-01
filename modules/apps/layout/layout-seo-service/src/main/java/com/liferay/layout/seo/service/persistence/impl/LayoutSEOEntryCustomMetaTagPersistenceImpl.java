@@ -1453,8 +1453,8 @@ public class LayoutSEOEntryCustomMetaTagPersistenceImpl
 		ctStrictColumnNames.add("groupId");
 		ctStrictColumnNames.add("companyId");
 		ctMergeColumnNames.add("layoutSEOEntryId");
-		ctMergeColumnNames.add("property");
 		ctMergeColumnNames.add("content");
+		ctMergeColumnNames.add("property");
 
 		_ctColumnNamesMap.put(
 			CTColumnResolutionType.CONTROL, ctControlColumnNames);

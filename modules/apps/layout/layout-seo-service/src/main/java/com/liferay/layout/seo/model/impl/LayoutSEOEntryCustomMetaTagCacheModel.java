@@ -85,10 +85,10 @@ public class LayoutSEOEntryCustomMetaTagCacheModel
 		sb.append(companyId);
 		sb.append(", layoutSEOEntryId=");
 		sb.append(layoutSEOEntryId);
-		sb.append(", property=");
-		sb.append(property);
 		sb.append(", content=");
 		sb.append(content);
+		sb.append(", property=");
+		sb.append(property);
 		sb.append("}");
 
 		return sb.toString();
@@ -107,18 +107,18 @@ public class LayoutSEOEntryCustomMetaTagCacheModel
 		layoutSEOEntryCustomMetaTagImpl.setCompanyId(companyId);
 		layoutSEOEntryCustomMetaTagImpl.setLayoutSEOEntryId(layoutSEOEntryId);
 
-		if (property == null) {
-			layoutSEOEntryCustomMetaTagImpl.setProperty("");
-		}
-		else {
-			layoutSEOEntryCustomMetaTagImpl.setProperty(property);
-		}
-
 		if (content == null) {
 			layoutSEOEntryCustomMetaTagImpl.setContent("");
 		}
 		else {
 			layoutSEOEntryCustomMetaTagImpl.setContent(content);
+		}
+
+		if (property == null) {
+			layoutSEOEntryCustomMetaTagImpl.setProperty("");
+		}
+		else {
+			layoutSEOEntryCustomMetaTagImpl.setProperty(property);
 		}
 
 		layoutSEOEntryCustomMetaTagImpl.resetOriginalValues();
@@ -139,8 +139,8 @@ public class LayoutSEOEntryCustomMetaTagCacheModel
 		companyId = objectInput.readLong();
 
 		layoutSEOEntryId = objectInput.readLong();
-		property = objectInput.readUTF();
 		content = objectInput.readUTF();
+		property = objectInput.readUTF();
 	}
 
 	@Override
@@ -157,18 +157,18 @@ public class LayoutSEOEntryCustomMetaTagCacheModel
 
 		objectOutput.writeLong(layoutSEOEntryId);
 
-		if (property == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(property);
-		}
-
 		if (content == null) {
 			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(content);
+		}
+
+		if (property == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(property);
 		}
 	}
 
@@ -178,7 +178,7 @@ public class LayoutSEOEntryCustomMetaTagCacheModel
 	public long groupId;
 	public long companyId;
 	public long layoutSEOEntryId;
-	public String property;
 	public String content;
+	public String property;
 
 }

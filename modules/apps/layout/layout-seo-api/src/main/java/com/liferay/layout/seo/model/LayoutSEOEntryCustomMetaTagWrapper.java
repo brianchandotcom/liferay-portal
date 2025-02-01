@@ -45,8 +45,8 @@ public class LayoutSEOEntryCustomMetaTagWrapper
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("layoutSEOEntryId", getLayoutSEOEntryId());
-		attributes.put("property", getProperty());
 		attributes.put("content", getContent());
+		attributes.put("property", getProperty());
 
 		return attributes;
 	}
@@ -90,16 +90,16 @@ public class LayoutSEOEntryCustomMetaTagWrapper
 			setLayoutSEOEntryId(layoutSEOEntryId);
 		}
 
-		String property = (String)attributes.get("property");
-
-		if (property != null) {
-			setProperty(property);
-		}
-
 		String content = (String)attributes.get("content");
 
 		if (content != null) {
 			setContent(content);
+		}
+
+		String property = (String)attributes.get("property");
+
+		if (property != null) {
+			setProperty(property);
 		}
 	}
 

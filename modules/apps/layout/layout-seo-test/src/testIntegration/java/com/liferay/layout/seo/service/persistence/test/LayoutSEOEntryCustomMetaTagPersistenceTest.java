@@ -127,10 +127,10 @@ public class LayoutSEOEntryCustomMetaTagPersistenceTest {
 		newLayoutSEOEntryCustomMetaTag.setLayoutSEOEntryId(
 			RandomTestUtil.nextLong());
 
-		newLayoutSEOEntryCustomMetaTag.setProperty(
+		newLayoutSEOEntryCustomMetaTag.setContent(
 			RandomTestUtil.randomString());
 
-		newLayoutSEOEntryCustomMetaTag.setContent(
+		newLayoutSEOEntryCustomMetaTag.setProperty(
 			RandomTestUtil.randomString());
 
 		_layoutSEOEntryCustomMetaTags.add(
@@ -160,11 +160,11 @@ public class LayoutSEOEntryCustomMetaTagPersistenceTest {
 			existingLayoutSEOEntryCustomMetaTag.getLayoutSEOEntryId(),
 			newLayoutSEOEntryCustomMetaTag.getLayoutSEOEntryId());
 		Assert.assertEquals(
-			existingLayoutSEOEntryCustomMetaTag.getProperty(),
-			newLayoutSEOEntryCustomMetaTag.getProperty());
-		Assert.assertEquals(
 			existingLayoutSEOEntryCustomMetaTag.getContent(),
 			newLayoutSEOEntryCustomMetaTag.getContent());
+		Assert.assertEquals(
+			existingLayoutSEOEntryCustomMetaTag.getProperty(),
+			newLayoutSEOEntryCustomMetaTag.getProperty());
 	}
 
 	@Test
@@ -209,7 +209,7 @@ public class LayoutSEOEntryCustomMetaTagPersistenceTest {
 			"LayoutSEOEntryCustomMetaTag", "mvccVersion", true,
 			"ctCollectionId", true, "layoutSEOEntryCustomMetaTagId", true,
 			"groupId", true, "companyId", true, "layoutSEOEntryId", true,
-			"property", true, "content", true);
+			"content", true, "property", true);
 	}
 
 	@Test
@@ -451,9 +451,9 @@ public class LayoutSEOEntryCustomMetaTagPersistenceTest {
 		layoutSEOEntryCustomMetaTag.setLayoutSEOEntryId(
 			RandomTestUtil.nextLong());
 
-		layoutSEOEntryCustomMetaTag.setProperty(RandomTestUtil.randomString());
-
 		layoutSEOEntryCustomMetaTag.setContent(RandomTestUtil.randomString());
+
+		layoutSEOEntryCustomMetaTag.setProperty(RandomTestUtil.randomString());
 
 		_layoutSEOEntryCustomMetaTags.add(
 			_persistence.update(layoutSEOEntryCustomMetaTag));

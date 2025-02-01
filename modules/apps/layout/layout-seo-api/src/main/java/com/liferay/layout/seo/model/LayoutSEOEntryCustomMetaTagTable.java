@@ -41,12 +41,12 @@ public class LayoutSEOEntryCustomMetaTagTable
 	public final Column<LayoutSEOEntryCustomMetaTagTable, Long>
 		layoutSEOEntryId = createColumn(
 			"layoutSEOEntryId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
-	public final Column<LayoutSEOEntryCustomMetaTagTable, String> property =
-		createColumn(
-			"property", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<LayoutSEOEntryCustomMetaTagTable, String> content =
 		createColumn(
 			"content", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
+	public final Column<LayoutSEOEntryCustomMetaTagTable, String> property =
+		createColumn(
+			"property", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 
 	private LayoutSEOEntryCustomMetaTagTable() {
 		super(

@@ -58,9 +58,23 @@ public class JavaModuleInternalImportsCheck extends BaseFileCheck {
 				pos = absolutePath.lastIndexOf("/com/liferay/");
 			}
 
+			String match = matcher.group(1);
+
 			String expectedImportFileLocation =
 				absolutePath.substring(0, pos + 13) +
-					StringUtil.replace(matcher.group(1), '.', '/') + ".java";
+					StringUtil.replace(match, '.', '/') + ".java";
+
+			if (match.endsWith(
+					"wiki.engine.creole.internal.parser.parser." +
+						"Creole10Lexer") ||
+				match.endsWith(
+					"wiki.engine.creole.internal.parser.parser." +
+						"Creole10Parser")) {
+
+				expectedImportFileLocation =
+					expectedImportFileLocation.replaceFirst(
+						"/src/main/java/", "/src/main/antlr/");
+			}
 
 			File file = new File(expectedImportFileLocation);
 

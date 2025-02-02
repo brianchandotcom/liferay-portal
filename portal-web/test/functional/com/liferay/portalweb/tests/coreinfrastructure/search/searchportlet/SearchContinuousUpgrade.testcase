@@ -1,4 +1,4 @@
-@component-name = "portal-upgrades"
+@component-name = "portal-search"
 definition {
 
 	property app.server.types = "tomcat";

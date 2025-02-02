@@ -1,4 +1,4 @@
-@component-name = "portal-upgrades"
+@component-name = "portal-bpm"
 definition {
 
 	property portal.release = "true";

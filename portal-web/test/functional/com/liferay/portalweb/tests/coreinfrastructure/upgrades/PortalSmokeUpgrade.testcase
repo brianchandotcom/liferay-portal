@@ -1,4 +1,4 @@
-@component-name = "portal-upgrades"
+@component-name = "portal-db-infrastructure"
 definition {
 
 	property app.server.types = "jboss,tomcat,weblogic,wildfly";

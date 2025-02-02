@@ -1,4 +1,4 @@
-@component-name = "portal-upgrades"
+@component-name = "portal-db-infrastructure"
 definition {
 
 	property custom.properties = "dl.store.impl=com.liferay.portal.store.db.DBStore";

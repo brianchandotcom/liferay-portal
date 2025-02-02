@@ -1,4 +1,4 @@
-@component-name = "portal-upgrades"
+@component-name = "portal-content-management"
 definition {
 
 	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver";

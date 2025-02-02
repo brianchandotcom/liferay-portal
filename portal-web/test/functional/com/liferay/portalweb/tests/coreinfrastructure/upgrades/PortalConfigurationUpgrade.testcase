@@ -1,4 +1,4 @@
-@component-name = "portal-upgrades"
+@component-name = "portal-core-infra"
 definition {
 
 	property custom.properties = "layout.user.access.via.plid.enabled=true";

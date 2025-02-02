@@ -79,10 +79,8 @@ public class RecycleBinSiteSettingsConfigurationScreenWrapper
 
 		@Override
 		public boolean isVisible(Group group) {
-			boolean trashEnabled = PrefsPropsUtil.getBoolean(
+			return PrefsPropsUtil.getBoolean(
 				group.getCompanyId(), PropsKeys.TRASH_ENABLED);
-
-			return trashEnabled;
 		}
 
 	}

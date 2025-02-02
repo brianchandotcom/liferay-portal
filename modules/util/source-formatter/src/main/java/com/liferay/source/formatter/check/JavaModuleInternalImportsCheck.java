@@ -53,8 +53,8 @@ public class JavaModuleInternalImportsCheck extends BaseFileCheck {
 
 		Matcher matcher = _internalImportPattern.matcher(content);
 		int pos = -1;
-		List<String> renamedSourceDirNames = getAttributeValues(
-			_RENAMED_SOURCE_DIR_NAMES_KEY, absolutePath);
+		List<String> renamedSourcePathNames = getAttributeValues(
+			_RENAMED_SOURCE_PATH_NAMES_KEY, absolutePath);
 
 		while (matcher.find()) {
 			if (pos == -1) {
@@ -67,9 +67,9 @@ public class JavaModuleInternalImportsCheck extends BaseFileCheck {
 				absolutePath.substring(0, pos + 13) +
 					StringUtil.replace(match, '.', '/') + ".java";
 
-			for (String renamedSourceDirName : renamedSourceDirNames) {
+			for (String renamedSourcePathName : renamedSourcePathNames) {
 				String[] parts = StringUtil.split(
-					renamedSourceDirName, StringPool.COLON);
+					renamedSourcePathName, StringPool.COLON);
 
 				if (match.equals(parts[0])) {
 					expectedImportFileLocation =
@@ -91,8 +91,8 @@ public class JavaModuleInternalImportsCheck extends BaseFileCheck {
 		}
 	}
 
-	private static final String _RENAMED_SOURCE_DIR_NAMES_KEY =
-		"renamedSourceDirNames";
+	private static final String _RENAMED_SOURCE_PATH_NAMES_KEY =
+		"renamedSourcePathNames";
 
 	private static final Pattern _internalImportPattern = Pattern.compile(
 		"\nimport com\\.liferay\\.(.*\\.internal\\.([a-z].*?\\.)?[A-Z].*?)" +

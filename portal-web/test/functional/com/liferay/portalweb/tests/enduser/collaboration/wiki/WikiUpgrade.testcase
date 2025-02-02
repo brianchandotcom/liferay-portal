@@ -1,4 +1,4 @@
-@component-name = "portal-upgrades"
+@component-name = "portal-content-management"
 definition {
 
 	property custom.properties = "feature.flag.LPD-35013=false";

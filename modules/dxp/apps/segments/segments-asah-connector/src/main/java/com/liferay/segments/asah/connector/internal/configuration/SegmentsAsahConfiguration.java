@@ -37,7 +37,7 @@ public interface SegmentsAsahConfiguration {
 
 	@Meta.AD(
 		deflt = "60", description = "check-interval-description", min = "1",
-		name = "check-interval-name", required = false
+		name = "update-interval", required = false
 	)
 	public int checkInterval();
 

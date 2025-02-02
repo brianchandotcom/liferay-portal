@@ -1,6 +1,6 @@
 /**
  * Object
- * A Java client JAR is available for use with the group ID \'com.liferay\', artifact ID \'com.liferay.object.admin.rest.client\', and version \'1.0.74\'.
+ * A Java client JAR is available for use with the group ID \'com.liferay\', artifact ID \'com.liferay.object.admin.rest.client\', and version \'1.0.75\'.
  *
  * The version of the OpenAPI document: v1.0
  * 

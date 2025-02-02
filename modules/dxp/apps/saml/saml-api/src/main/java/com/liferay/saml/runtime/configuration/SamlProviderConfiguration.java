@@ -70,7 +70,7 @@ public interface SamlProviderConfiguration {
 
 	@Meta.AD(
 		deflt = "3000", description = "saml-sp-clock-skew-description",
-		id = "saml.sp.clock.skew", name = "saml-sp-clock-skew", required = false
+		id = "saml.sp.clock.skew", name = "clock-skew", required = false
 	)
 	public long clockSkew();
 

@@ -265,11 +265,7 @@ public class WikiPageSearchTest extends BaseSearchTestCase {
 
 			String vendor = searchEngine.getVendor();
 
-			if (vendor.equals("Lucene")) {
-				return true;
-			}
-
-			return false;
+			return vendor.equals("Lucene");
 		}
 
 		private final BaseModel<?> _parentBaseModel;

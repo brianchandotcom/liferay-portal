@@ -81,13 +81,8 @@ public class WikiPageWorkflowHandler extends BaseWorkflowHandler<WikiPage> {
 
 	@Override
 	public boolean isVisible(Group group) {
-		if (!FeatureFlagManagerUtil.isEnabled(
-				group.getCompanyId(), "LPD-35013")) {
-
-			return false;
-		}
-
-		return true;
+		return FeatureFlagManagerUtil.isEnabled(
+			group.getCompanyId(), "LPD-35013");
 	}
 
 	@Override

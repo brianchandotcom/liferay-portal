@@ -315,13 +315,8 @@ public class WikiPagesManagementToolbarDisplayContext {
 	}
 
 	public boolean isShowInfoButton() {
-		if (Validator.isNull(
-				ParamUtil.getString(_httpServletRequest, "keywords"))) {
-
-			return true;
-		}
-
-		return false;
+		return Validator.isNull(
+			ParamUtil.getString(_httpServletRequest, "keywords"));
 	}
 
 	public boolean isShowSearch() {

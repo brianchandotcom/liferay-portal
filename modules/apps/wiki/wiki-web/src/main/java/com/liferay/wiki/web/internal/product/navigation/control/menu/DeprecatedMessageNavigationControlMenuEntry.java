@@ -61,11 +61,7 @@ public class DeprecatedMessageNavigationControlMenuEntry
 			return false;
 		}
 
-		if (PortletKeys.WIKI_ADMIN.equals(portletDisplay.getPortletName())) {
-			return true;
-		}
-
-		return false;
+		return PortletKeys.WIKI_ADMIN.equals(portletDisplay.getPortletName());
 	}
 
 	@Override

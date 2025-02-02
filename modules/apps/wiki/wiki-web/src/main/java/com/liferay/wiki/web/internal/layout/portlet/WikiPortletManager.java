@@ -31,13 +31,8 @@ public class WikiPortletManager implements PortletManager {
 
 	@Override
 	public boolean isVisible(Layout layout) {
-		if (!FeatureFlagManagerUtil.isEnabled(
-				layout.getCompanyId(), "LPD-35013")) {
-
-			return false;
-		}
-
-		return true;
+		return FeatureFlagManagerUtil.isEnabled(
+			layout.getCompanyId(), "LPD-35013");
 	}
 
 }

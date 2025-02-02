@@ -44,13 +44,8 @@ public class WikiPanelApp extends BasePanelApp {
 	public boolean isShow(PermissionChecker permissionChecker, Group group)
 		throws PortalException {
 
-		if (!FeatureFlagManagerUtil.isEnabled(
-				group.getCompanyId(), "LPD-35013")) {
-
-			return false;
-		}
-
-		return true;
+		return FeatureFlagManagerUtil.isEnabled(
+			group.getCompanyId(), "LPD-35013");
 	}
 
 	@Reference(

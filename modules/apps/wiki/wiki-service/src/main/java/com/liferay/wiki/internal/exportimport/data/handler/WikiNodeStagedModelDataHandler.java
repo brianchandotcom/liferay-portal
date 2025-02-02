@@ -81,11 +81,7 @@ public class WikiNodeStagedModelDataHandler
 
 	@Override
 	public boolean isEnabled(long companyId) {
-		if (!FeatureFlagManagerUtil.isEnabled(companyId, "LPD-35013")) {
-			return false;
-		}
-
-		return true;
+		return FeatureFlagManagerUtil.isEnabled(companyId, "LPD-35013");
 	}
 
 	@Activate

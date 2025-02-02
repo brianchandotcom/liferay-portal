@@ -680,14 +680,9 @@ public class WikiListPagesDisplayContext {
 	private Boolean _isSubscribed(WikiPage wikiPage) {
 		User user = _wikiRequestHelper.getUser();
 
-		if (SubscriptionLocalServiceUtil.isSubscribed(
-				user.getCompanyId(), user.getUserId(), WikiPage.class.getName(),
-				wikiPage.getResourcePrimKey())) {
-
-			return true;
-		}
-
-		return false;
+		return SubscriptionLocalServiceUtil.isSubscribed(
+			user.getCompanyId(), user.getUserId(), WikiPage.class.getName(),
+			wikiPage.getResourcePrimKey());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -1098,9 +1098,10 @@ public class FreeMarkerTool {
 		if (permissionsSchema.isReadOnly() || permissionsSchema.isWriteOnly()) {
 			throw new IllegalStateException(
 				StringBundler.concat(
-					"The `", schemaName, ".permissions` attribute cannot be ",
-					permissionsSchema.isReadOnly() ? "readOnly " : "writeOnly ",
-					"to autogenerate the permissions code"));
+					"The attribute \"", schemaName,
+					".permissions\" cannot be \"",
+					permissionsSchema.isReadOnly() ? "readOnly" : "writeOnly",
+					"\""));
 		}
 
 		return true;

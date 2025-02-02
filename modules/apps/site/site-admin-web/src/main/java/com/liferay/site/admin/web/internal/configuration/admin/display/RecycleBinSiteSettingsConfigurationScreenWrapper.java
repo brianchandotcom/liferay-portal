@@ -82,11 +82,7 @@ public class RecycleBinSiteSettingsConfigurationScreenWrapper
 			boolean trashEnabled = PrefsPropsUtil.getBoolean(
 				group.getCompanyId(), PropsKeys.TRASH_ENABLED);
 
-			if (!trashEnabled) {
-				return false;
-			}
-
-			return true;
+			return trashEnabled;
 		}
 
 	}

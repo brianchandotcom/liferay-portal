@@ -85,11 +85,7 @@ public class DefaultUserAssociationsSiteSettingsConfigurationScreenWrapper
 
 		@Override
 		public boolean isVisible(Group group) {
-			if (group.isCompany()) {
-				return false;
-			}
-
-			return true;
+			return !group.isCompany();
 		}
 
 		@Override

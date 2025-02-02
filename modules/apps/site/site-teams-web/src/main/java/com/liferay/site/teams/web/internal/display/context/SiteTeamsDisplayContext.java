@@ -111,19 +111,11 @@ public class SiteTeamsDisplayContext {
 	}
 
 	public boolean isDescriptiveView() {
-		if (Objects.equals(getDisplayStyle(), "descriptive")) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(getDisplayStyle(), "descriptive");
 	}
 
 	public boolean isListView() {
-		if (Objects.equals(getDisplayStyle(), "list")) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(getDisplayStyle(), "list");
 	}
 
 	protected String getKeywords() {

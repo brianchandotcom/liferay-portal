@@ -444,14 +444,9 @@ public class SiteNavigationAdminDisplayContext {
 				).put(
 					"selected",
 					() -> {
-						if (Objects.equals(
-								ddmTemplate.getTemplateKey(),
-								_getDefaultDDMTemplateKey())) {
-
-							return true;
-						}
-
-						return false;
+						return Objects.equals(
+							ddmTemplate.getTemplateKey(),
+							_getDefaultDDMTemplateKey());
 					}
 				).put(
 					"value", HtmlUtil.escape(ddmTemplate.getTemplateKey())

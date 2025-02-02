@@ -213,11 +213,7 @@ public class GroupSearchProvider {
 	}
 
 	private static boolean _isSearch(PortletRequest portletRequest) {
-		if (Validator.isNotNull(_getKeywords(portletRequest))) {
-			return true;
-		}
-
-		return false;
+		return Validator.isNotNull(_getKeywords(portletRequest));
 	}
 
 }

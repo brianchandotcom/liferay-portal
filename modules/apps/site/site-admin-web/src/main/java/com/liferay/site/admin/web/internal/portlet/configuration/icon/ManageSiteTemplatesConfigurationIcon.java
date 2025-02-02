@@ -89,14 +89,9 @@ public class ManageSiteTemplatesConfigurationIcon
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		if (PortalPermissionUtil.contains(
-				themeDisplay.getPermissionChecker(),
-				ActionKeys.ADD_LAYOUT_SET_PROTOTYPE)) {
-
-			return true;
-		}
-
-		return false;
+		return PortalPermissionUtil.contains(
+			themeDisplay.getPermissionChecker(),
+			ActionKeys.ADD_LAYOUT_SET_PROTOTYPE);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

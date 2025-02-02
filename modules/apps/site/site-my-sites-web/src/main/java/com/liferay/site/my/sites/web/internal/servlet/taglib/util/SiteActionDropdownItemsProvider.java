@@ -203,13 +203,8 @@ public class SiteActionDropdownItemsProvider {
 			return false;
 		}
 
-		if (SiteMembershipPolicyUtil.isMembershipRequired(
-				_themeDisplay.getUserId(), _group.getGroupId())) {
-
-			return false;
-		}
-
-		return true;
+		return !SiteMembershipPolicyUtil.isMembershipRequired(
+			_themeDisplay.getUserId(), _group.getGroupId());
 	}
 
 	private boolean _isShowMembershipRequestAction() throws Exception {
@@ -227,14 +222,9 @@ public class SiteActionDropdownItemsProvider {
 	}
 
 	private boolean _isShowMembershipRequestedAction() {
-		if (MembershipRequestLocalServiceUtil.hasMembershipRequest(
-				_themeDisplay.getUserId(), _group.getGroupId(),
-				MembershipRequestConstants.STATUS_PENDING)) {
-
-			return true;
-		}
-
-		return false;
+		return MembershipRequestLocalServiceUtil.hasMembershipRequest(
+			_themeDisplay.getUserId(), _group.getGroupId(),
+			MembershipRequestConstants.STATUS_PENDING);
 	}
 
 	private final Group _group;

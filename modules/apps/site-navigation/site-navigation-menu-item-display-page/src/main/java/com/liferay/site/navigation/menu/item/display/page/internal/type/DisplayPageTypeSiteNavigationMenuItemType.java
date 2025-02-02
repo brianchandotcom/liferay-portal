@@ -391,11 +391,7 @@ public class DisplayPageTypeSiteNavigationMenuItemType
 
 	@Override
 	public boolean isBrowsable(SiteNavigationMenuItem siteNavigationMenuItem) {
-		if (_hasAssetDisplayPage(siteNavigationMenuItem)) {
-			return true;
-		}
-
-		return false;
+		return _hasAssetDisplayPage(siteNavigationMenuItem);
 	}
 
 	@Override

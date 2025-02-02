@@ -128,14 +128,9 @@ public class AddGroupDisplayContext {
 			return false;
 		}
 
-		if (Objects.equals(
-				ParamUtil.getString(_httpServletRequest, "creationType"),
-				SiteAdminConstants.CREATION_TYPE_SITE_TEMPLATE)) {
-
-			return true;
-		}
-
-		return false;
+		return Objects.equals(
+			ParamUtil.getString(_httpServletRequest, "creationType"),
+			SiteAdminConstants.CREATION_TYPE_SITE_TEMPLATE);
 	}
 
 	private long _getParentGroupId() {

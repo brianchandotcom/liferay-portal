@@ -191,14 +191,8 @@ public class SiteAdminManagementToolbarDisplayContext
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		if (PortalPermissionUtil.contains(
-				themeDisplay.getPermissionChecker(),
-				ActionKeys.ADD_COMMUNITY)) {
-
-			return true;
-		}
-
-		return false;
+		return PortalPermissionUtil.contains(
+			themeDisplay.getPermissionChecker(), ActionKeys.ADD_COMMUNITY);
 	}
 
 	@Override

@@ -401,11 +401,7 @@ public class SitemapManagerImpl implements SitemapManager {
 			virtualHostname = "localhost";
 		}
 
-		if (Objects.equals(virtualHostname, themeDisplay.getServerName())) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(virtualHostname, themeDisplay.getServerName());
 	}
 
 	private void _removeEntriesAndSize(Element rootElement) {

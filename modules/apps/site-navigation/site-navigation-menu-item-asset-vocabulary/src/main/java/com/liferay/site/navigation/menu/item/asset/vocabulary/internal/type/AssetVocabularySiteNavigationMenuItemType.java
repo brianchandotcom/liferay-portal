@@ -360,16 +360,10 @@ public class AssetVocabularySiteNavigationMenuItemType
 				siteNavigationMenuItem.getTypeSettings()
 			).build();
 
-		if (AssetVocabularyPermission.contains(
-				permissionChecker,
-				GetterUtil.getLong(
-					typeSettingsUnicodeProperties.get("classPK")),
-				ActionKeys.VIEW)) {
-
-			return true;
-		}
-
-		return false;
+		return AssetVocabularyPermission.contains(
+			permissionChecker,
+			GetterUtil.getLong(typeSettingsUnicodeProperties.get("classPK")),
+			ActionKeys.VIEW);
 	}
 
 	@Override

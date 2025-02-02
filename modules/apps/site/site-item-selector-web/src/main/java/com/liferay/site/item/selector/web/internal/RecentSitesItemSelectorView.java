@@ -68,11 +68,7 @@ public class RecentSitesItemSelectorView
 		SiteItemSelectorCriterion siteItemSelectorCriterion,
 		ThemeDisplay themeDisplay) {
 
-		if (siteItemSelectorCriterion.isIncludeRecentSites()) {
-			return true;
-		}
-
-		return false;
+		return siteItemSelectorCriterion.isIncludeRecentSites();
 	}
 
 	@Override

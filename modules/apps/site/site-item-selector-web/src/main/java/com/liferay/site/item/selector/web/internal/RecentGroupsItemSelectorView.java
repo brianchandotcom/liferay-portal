@@ -68,11 +68,7 @@ public class RecentGroupsItemSelectorView
 		GroupItemSelectorCriterion groupItemSelectorCriterion,
 		ThemeDisplay themeDisplay) {
 
-		if (groupItemSelectorCriterion.isIncludeRecentSites()) {
-			return true;
-		}
-
-		return false;
+		return groupItemSelectorCriterion.isIncludeRecentSites();
 	}
 
 	@Override

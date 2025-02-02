@@ -128,15 +128,9 @@ public class SiteNavigationAdminManagementToolbarDisplayContext
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		if (SiteNavigationPermission.contains(
-				themeDisplay.getPermissionChecker(),
-				themeDisplay.getSiteGroupId(),
-				SiteNavigationActionKeys.ADD_SITE_NAVIGATION_MENU)) {
-
-			return true;
-		}
-
-		return false;
+		return SiteNavigationPermission.contains(
+			themeDisplay.getPermissionChecker(), themeDisplay.getSiteGroupId(),
+			SiteNavigationActionKeys.ADD_SITE_NAVIGATION_MENU);
 	}
 
 	@Override

@@ -73,11 +73,7 @@ public class MySitesItemSelectorView
 		SiteItemSelectorCriterion siteItemSelectorCriterion,
 		ThemeDisplay themeDisplay) {
 
-		if (siteItemSelectorCriterion.isIncludeMySites()) {
-			return true;
-		}
-
-		return false;
+		return siteItemSelectorCriterion.isIncludeMySites();
 	}
 
 	@Override

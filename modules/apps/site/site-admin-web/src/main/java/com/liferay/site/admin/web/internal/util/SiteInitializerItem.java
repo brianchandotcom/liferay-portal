@@ -64,11 +64,7 @@ public class SiteInitializerItem {
 	}
 
 	public boolean isCreationTypeInitializer() {
-		if (_type.equals(SiteAdminConstants.CREATION_TYPE_INITIALIZER)) {
-			return true;
-		}
-
-		return false;
+		return _type.equals(SiteAdminConstants.CREATION_TYPE_INITIALIZER);
 	}
 
 	public boolean isCreationTypeSiteTemplate() {

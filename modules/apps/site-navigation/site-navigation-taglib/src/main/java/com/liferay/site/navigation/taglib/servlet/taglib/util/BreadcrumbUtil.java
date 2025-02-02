@@ -424,16 +424,11 @@ public class BreadcrumbUtil {
 		LayoutSet layoutSet, ThemeDisplay themeDisplay) {
 
 		try {
-			if (LayoutPermissionUtil.contains(
-					themeDisplay.getPermissionChecker(),
-					LayoutLocalServiceUtil.getDefaultPlid(
-						layoutSet.getGroupId(), layoutSet.isPrivateLayout()),
-					ActionKeys.VIEW)) {
-
-				return true;
-			}
-
-			return false;
+			return LayoutPermissionUtil.contains(
+				themeDisplay.getPermissionChecker(),
+				LayoutLocalServiceUtil.getDefaultPlid(
+					layoutSet.getGroupId(), layoutSet.isPrivateLayout()),
+				ActionKeys.VIEW);
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

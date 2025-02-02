@@ -101,11 +101,7 @@ public class CustomFieldsSiteSettingsConfigurationScreenWrapper
 				}
 			}
 
-			if (!hasCustomAttributesAvailable) {
-				return false;
-			}
-
-			return true;
+			return hasCustomAttributesAvailable;
 		}
 
 	}

@@ -120,23 +120,21 @@ public class XMLTagAttributesCheck extends BaseTagAttributesCheck {
 				String trimmedLine = StringUtil.trimLeading(line);
 
 				if (sortAttributes) {
-					if (trimmedLine.startsWith(StringPool.LESS_THAN) &&
-						trimmedLine.endsWith(StringPool.GREATER_THAN) &&
-						!trimmedLine.startsWith("<?") &&
-						!trimmedLine.startsWith("<%") &&
-						!trimmedLine.startsWith("<!") &&
-						!(line.contains("<![CDATA[") && line.contains("]]>"))) {
+					if (line.contains("<![CDATA[")) {
+						sortAttributes = false;
+					}
+					else if (trimmedLine.startsWith(StringPool.LESS_THAN) &&
+							 trimmedLine.endsWith(StringPool.GREATER_THAN) &&
+							 !trimmedLine.startsWith("<?") &&
+							 !trimmedLine.startsWith("<%") &&
+							 !trimmedLine.startsWith("<!")) {
 
 						line = formatTagAttributes(
 							absolutePath, line, true, false);
 					}
-					else if (trimmedLine.startsWith("<![CDATA[") &&
-							 !trimmedLine.endsWith("]]>")) {
-
-						sortAttributes = false;
-					}
 				}
-				else if (trimmedLine.endsWith("]]>")) {
+
+				if (line.contains("]]>")) {
 					sortAttributes = true;
 				}
 

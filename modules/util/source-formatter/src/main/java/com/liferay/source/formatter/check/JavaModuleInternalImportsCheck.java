@@ -5,11 +5,13 @@
 
 package com.liferay.source.formatter.check;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.check.util.JavaSourceUtil;
 
 import java.io.File;
 
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -50,8 +52,9 @@ public class JavaModuleInternalImportsCheck extends BaseFileCheck {
 		String fileName, String absolutePath, String content) {
 
 		Matcher matcher = _internalImportPattern.matcher(content);
-
 		int pos = -1;
+		List<String> renamedSourceDirNames = getAttributeValues(
+			_RENAMED_SOURCE_DIR_NAMES_KEY, absolutePath);
 
 		while (matcher.find()) {
 			if (pos == -1) {
@@ -64,16 +67,17 @@ public class JavaModuleInternalImportsCheck extends BaseFileCheck {
 				absolutePath.substring(0, pos + 13) +
 					StringUtil.replace(match, '.', '/') + ".java";
 
-			if (match.endsWith(
-					"wiki.engine.creole.internal.parser.parser." +
-						"Creole10Lexer") ||
-				match.endsWith(
-					"wiki.engine.creole.internal.parser.parser." +
-						"Creole10Parser")) {
+			for (String renamedSourceDirName : renamedSourceDirNames) {
+				String[] parts = StringUtil.split(
+					renamedSourceDirName, StringPool.COLON);
 
-				expectedImportFileLocation =
-					expectedImportFileLocation.replaceFirst(
-						"/src/main/java/", "/src/main/antlr/");
+				if (match.equals(parts[0])) {
+					expectedImportFileLocation =
+						expectedImportFileLocation.replaceFirst(
+							"/src/main/java/", "/src/main/" + parts[1] + "/");
+
+					break;
+				}
 			}
 
 			File file = new File(expectedImportFileLocation);
@@ -86,6 +90,9 @@ public class JavaModuleInternalImportsCheck extends BaseFileCheck {
 			}
 		}
 	}
+
+	private static final String _RENAMED_SOURCE_DIR_NAMES_KEY =
+		"renamedSourceDirNames";
 
 	private static final Pattern _internalImportPattern = Pattern.compile(
 		"\nimport com\\.liferay\\.(.*\\.internal\\.([a-z].*?\\.)?[A-Z].*?)" +

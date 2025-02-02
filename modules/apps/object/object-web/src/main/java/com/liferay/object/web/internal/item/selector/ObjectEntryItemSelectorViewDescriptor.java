@@ -199,14 +199,8 @@ public class ObjectEntryItemSelectorViewDescriptor
 
 	@Override
 	public boolean isShowBreadcrumb() {
-		if (StringUtil.equals(
-				_objectDefinition.getScope(),
-				ObjectDefinitionConstants.SCOPE_SITE)) {
-
-			return true;
-		}
-
-		return false;
+		return StringUtil.equals(
+			_objectDefinition.getScope(), ObjectDefinitionConstants.SCOPE_SITE);
 	}
 
 	@Override

@@ -29,11 +29,7 @@ public class ObjectFieldImpl extends ObjectFieldBaseImpl {
 
 	@Override
 	public boolean compareBusinessType(String businessType) {
-		if (Objects.equals(getBusinessType(), businessType)) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(getBusinessType(), businessType);
 	}
 
 	@Override

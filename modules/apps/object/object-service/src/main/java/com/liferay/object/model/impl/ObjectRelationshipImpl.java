@@ -22,11 +22,7 @@ public class ObjectRelationshipImpl extends ObjectRelationshipBaseImpl {
 
 	@Override
 	public boolean compareType(String type) {
-		if (type.equals(getType())) {
-			return true;
-		}
-
-		return false;
+		return type.equals(getType());
 	}
 
 	@Override
@@ -34,11 +30,7 @@ public class ObjectRelationshipImpl extends ObjectRelationshipBaseImpl {
 		Set<String> defaultObjectRelationshipTypes =
 			ObjectRelationshipUtil.getDefaultObjectRelationshipTypes();
 
-		if (defaultObjectRelationshipTypes.contains(type)) {
-			return true;
-		}
-
-		return false;
+		return defaultObjectRelationshipTypes.contains(type);
 	}
 
 	@Override

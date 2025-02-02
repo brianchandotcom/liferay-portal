@@ -17,11 +17,7 @@ public class ObjectValidationRuleImpl extends ObjectValidationRuleBaseImpl {
 
 	@Override
 	public boolean compareOutputType(String outputType) {
-		if (Objects.equals(getOutputType(), outputType)) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(getOutputType(), outputType);
 	}
 
 	@Override

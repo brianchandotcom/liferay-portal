@@ -427,15 +427,10 @@ public class ObjectDefinitionNotificationTermEvaluator
 	private boolean _isObjectFieldTermName(
 		String objectFieldName, String termName) {
 
-		if (StringUtil.equals(
-				ObjectDefinitionNotificationTermUtil.getObjectFieldTermName(
-					_objectDefinition.getShortName(), objectFieldName),
-				termName)) {
-
-			return true;
-		}
-
-		return false;
+		return StringUtil.equals(
+			ObjectDefinitionNotificationTermUtil.getObjectFieldTermName(
+				_objectDefinition.getShortName(), objectFieldName),
+			termName);
 	}
 
 	private final List<EvaluatorFunction> _evaluatorFunctions = Arrays.asList(

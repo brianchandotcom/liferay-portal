@@ -205,14 +205,8 @@ public class ObjectDefinitionImpl extends ObjectDefinitionBaseImpl {
 
 	@Override
 	public boolean isDefaultStorageType() {
-		if (Objects.equals(
-				getStorageType(),
-				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT)) {
-
-			return true;
-		}
-
-		return false;
+		return Objects.equals(
+			getStorageType(), ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT);
 	}
 
 	@Override

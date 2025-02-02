@@ -165,11 +165,7 @@ public class ObjectEntryFieldSortDSLQueryVisitor
 	}
 
 	private boolean _isParentComplexField(Sort sort) {
-		if (StringUtil.equals(sort.getFieldName(), sort.getFieldPath())) {
-			return false;
-		}
-
-		return true;
+		return !StringUtil.equals(sort.getFieldName(), sort.getFieldPath());
 	}
 
 }

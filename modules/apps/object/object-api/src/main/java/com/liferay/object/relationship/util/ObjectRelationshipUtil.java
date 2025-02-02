@@ -185,11 +185,7 @@ public class ObjectRelationshipUtil {
 		String restContextPath = getRESTContextPath(
 			objectDefinition, systemObjectDefinitionManagerRegistry);
 
-		if (restContextPath.matches(".*/\\{\\w+}/.*")) {
-			return true;
-		}
-
-		return false;
+		return restContextPath.matches(".*/\\{\\w+}/.*");
 	}
 
 	private static final Set<String> _defaultObjectRelationshipTypes =

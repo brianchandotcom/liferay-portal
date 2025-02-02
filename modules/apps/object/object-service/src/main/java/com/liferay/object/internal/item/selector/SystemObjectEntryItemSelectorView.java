@@ -122,18 +122,12 @@ public class SystemObjectEntryItemSelectorView
 		InfoItemItemSelectorCriterion itemSelectorCriterion,
 		ThemeDisplay themeDisplay) {
 
-		if (StringUtil.equals(
-				_itemSelector.getItemSelectedEventName(
-					themeDisplay.getURLCurrent()),
-				StringBundler.concat(
-					"_",
-					ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
-					"_selectInfoItem"))) {
-
-			return false;
-		}
-
-		return true;
+		return !StringUtil.equals(
+			_itemSelector.getItemSelectedEventName(
+				themeDisplay.getURLCurrent()),
+			StringBundler.concat(
+				"_", ContentPageEditorPortletKeys.CONTENT_PAGE_EDITOR_PORTLET,
+				"_selectInfoItem"));
 	}
 
 	@Override

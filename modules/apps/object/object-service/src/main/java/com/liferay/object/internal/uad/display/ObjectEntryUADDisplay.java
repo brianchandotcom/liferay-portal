@@ -105,11 +105,7 @@ public class ObjectEntryUADDisplay extends BaseModelUADDisplay<ObjectEntry> {
 			_objectScopeProviderRegistry.getObjectScopeProvider(
 				_objectDefinition.getScope());
 
-		if (objectScopeProvider.isGroupAware()) {
-			return true;
-		}
-
-		return false;
+		return objectScopeProvider.isGroupAware();
 	}
 
 	@Override

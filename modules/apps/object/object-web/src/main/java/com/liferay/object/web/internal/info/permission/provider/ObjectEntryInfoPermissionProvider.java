@@ -38,14 +38,8 @@ public class ObjectEntryInfoPermissionProvider
 	public boolean hasAddPermission(
 		long groupId, PermissionChecker permissionChecker) {
 
-		if (_portletResourcePermission.contains(
-				permissionChecker, groupId,
-				ObjectActionKeys.ADD_OBJECT_ENTRY)) {
-
-			return true;
-		}
-
-		return false;
+		return _portletResourcePermission.contains(
+			permissionChecker, groupId, ObjectActionKeys.ADD_OBJECT_ENTRY);
 	}
 
 	@Override

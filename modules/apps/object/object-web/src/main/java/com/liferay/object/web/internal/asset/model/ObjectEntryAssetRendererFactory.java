@@ -109,14 +109,9 @@ public class ObjectEntryAssetRendererFactory
 
 	@Override
 	public boolean isSelectable() {
-		if (StringUtil.equals(
-				_objectDefinition.getScope(),
-				ObjectDefinitionConstants.SCOPE_COMPANY)) {
-
-			return false;
-		}
-
-		return true;
+		return !StringUtil.equals(
+			_objectDefinition.getScope(),
+			ObjectDefinitionConstants.SCOPE_COMPANY);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

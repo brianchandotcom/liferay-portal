@@ -726,11 +726,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		Map<Long, List<ServiceRegistration<?>>> serviceRegistrationsMap =
 			_scopedServiceRegistrationsMap.get(restContextPath);
 
-		if (MapUtil.isNotEmpty(serviceRegistrationsMap)) {
-			return false;
-		}
-
-		return true;
+		return !MapUtil.isNotEmpty(serviceRegistrationsMap);
 	}
 
 	private void _undeployCustomObjectDefinition(

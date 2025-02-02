@@ -198,11 +198,13 @@ public abstract class Base${schemaName}ResourceImpl
 					</#if>
 
 					do${stringUtil.upperCaseFirstLetter(javaMethodSignature.methodName)}(
-						<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
-							${javaMethodParameter.parameterName}
 
-							<#sep>, </#sep>
-						</#list>
+					<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
+						${javaMethodParameter.parameterName}
+
+						<#sep>, </#sep>
+					</#list>
+
 					);
 
 					<#if javaMethodSignature.returnType?contains("Page<")>
@@ -257,11 +259,13 @@ public abstract class Base${schemaName}ResourceImpl
 
 					${javaMethodSignature.returnType} ${httpMethod}${schemaName} =
 						do${stringUtil.upperCaseFirstLetter(javaMethodSignature.methodName)}(
+
 						<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
 							${javaMethodParameter.parameterName}
 
 							<#sep>, </#sep>
 						</#list>
+
 						);
 
 					if (permissions != null) {
@@ -273,13 +277,14 @@ public abstract class Base${schemaName}ResourceImpl
 							<#else>
 								${schemaVarName}Id
 							</#if>
+
 							, permissions);
 
 						${httpMethod}${schemaName}.setPermissions(
 							() -> NestedFieldsSupplier.supply("permissions", nestedField -> {
-									Collection<Permission> collection = permissionPage.getItems();
+								Collection<Permission> collection = permissionPage.getItems();
 
-									return collection.toArray(new Permission[collection.size()]);
+								return collection.toArray(new Permission[collection.size()]);
 							}));
 					}
 
@@ -800,6 +805,7 @@ public abstract class Base${schemaName}ResourceImpl
 
 										<#sep>, </#sep>
 									</#list>
+
 									);
 
 									<#if stringUtil.equals(javaDataType, patchBatchJavaMethodSignature.returnType)>
@@ -862,6 +868,7 @@ public abstract class Base${schemaName}ResourceImpl
 												);
 
 											}
+
 											<#if postParentBatchJavaMethodSignature?has_next>
 												else
 											</#if>
@@ -884,6 +891,7 @@ public abstract class Base${schemaName}ResourceImpl
 
 												);
 											}
+
 											<#if postParentByERCBatchJavaMethodSignature?has_next>
 												else
 											</#if>
@@ -1038,6 +1046,7 @@ public abstract class Base${schemaName}ResourceImpl
 					}
 					else
 				</#if>
+
 				<#if getSiteBatchJavaMethodSignature??>
 					<#assign parentParameterNames = parentParameterNames + ["siteId"] />
 

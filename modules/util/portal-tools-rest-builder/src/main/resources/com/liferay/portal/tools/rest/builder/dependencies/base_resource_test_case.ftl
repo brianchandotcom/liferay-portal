@@ -37,8 +37,8 @@ import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 </#if>
 
 <#assign
-	javaMethodSignatures = freeMarkerTool.getResourceTestCaseJavaMethodSignatures(configYAML, openAPIYAML, schemaName)
 	generatePermissionsJavaMethodSignatures = []
+	javaMethodSignatures = freeMarkerTool.getResourceTestCaseJavaMethodSignatures(configYAML, openAPIYAML, schemaName)
 
 	generateDepotEntry = freeMarkerTool.containsJavaMethodSignature(javaMethodSignatures, "AssetLibrary")
 />
@@ -708,7 +708,6 @@ public abstract class Base${schemaName}ResourceTestCase {
 						${javaMethodParameter.parameterType} ${javaMethodParameter.parameterName}<#sep>, </#sep>
 					</#list>
 				) throws Exception {
-
 					Map<String, Map<String, String>> expectedActions = new HashMap<>();
 
 					<#if (javaMethodSignature.pathJavaMethodParameters?size == 1) && freeMarkerTool.hasPath(javaMethodSignatures, javaMethodSignature.path + "/batch")>
@@ -3414,8 +3413,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 			protected ${schemaName} randomPermissions${schemaName}() throws Exception {
 				${schemaName} ${schemaVarName} = random${schemaName}();
 
-				com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
-					RoleConstants.TYPE_REGULAR);
+				com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
 				${schemaVarName}.setPermissions(
 					new Permission[] {
@@ -3425,8 +3423,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 								setRoleName(role.getName());
 							}
 						}
-					}
-				);
+					});
 
 				return ${schemaVarName};
 			}

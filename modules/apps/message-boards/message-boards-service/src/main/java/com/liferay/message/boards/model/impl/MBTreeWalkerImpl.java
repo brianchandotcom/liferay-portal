@@ -104,11 +104,7 @@ public class MBTreeWalkerImpl implements MBTreeWalker {
 	public boolean isLeaf(MBMessage message) {
 		Long messageIdObj = Long.valueOf(message.getMessageId());
 
-		if (_messageIdsMap.containsKey(messageIdObj)) {
-			return false;
-		}
-
-		return true;
+		return !_messageIdsMap.containsKey(messageIdObj);
 	}
 
 	@Override

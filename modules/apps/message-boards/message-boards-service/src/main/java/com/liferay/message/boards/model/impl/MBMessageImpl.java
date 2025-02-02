@@ -271,11 +271,7 @@ public class MBMessageImpl extends MBMessageBaseImpl {
 	public boolean isFormatBBCode() {
 		String format = getFormat();
 
-		if (format.equals("bbcode")) {
-			return true;
-		}
-
-		return false;
+		return format.equals("bbcode");
 	}
 
 	@Override

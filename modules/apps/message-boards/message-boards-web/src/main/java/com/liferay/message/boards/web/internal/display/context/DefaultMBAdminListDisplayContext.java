@@ -91,11 +91,7 @@ public class DefaultMBAdminListDisplayContext
 		String mvcRenderCommandName = ParamUtil.getString(
 			_httpServletRequest, "mvcRenderCommandName");
 
-		if (mvcRenderCommandName.equals("/message_boards/search")) {
-			return true;
-		}
-
-		return false;
+		return mvcRenderCommandName.equals("/message_boards/search");
 	}
 
 	@Override

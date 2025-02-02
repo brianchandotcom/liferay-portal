@@ -177,24 +177,13 @@ public class MBNavigationDisplayContext {
 	private boolean _isMBPortlet() {
 		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
 
-		if (Objects.equals(
-				portletDisplay.getPortletName(),
-				MBPortletKeys.MESSAGE_BOARDS)) {
-
-			return true;
-		}
-
-		return false;
+		return Objects.equals(
+			portletDisplay.getPortletName(), MBPortletKeys.MESSAGE_BOARDS);
 	}
 
 	private boolean _isViewBannedUsersNavigationItemActive() {
-		if (_mvcRenderCommandName.equals(
-				"/message_boards_admin/view_banned_users")) {
-
-			return true;
-		}
-
-		return false;
+		return _mvcRenderCommandName.equals(
+			"/message_boards_admin/view_banned_users");
 	}
 
 	private boolean _isViewCategoriesNavigationItemActive() {
@@ -211,37 +200,21 @@ public class MBNavigationDisplayContext {
 	}
 
 	private boolean _isViewMyPostsNavigationItemActive() {
-		if (_mvcRenderCommandName.equals("/message_boards/view_my_posts")) {
-			return true;
-		}
-
-		return false;
+		return _mvcRenderCommandName.equals("/message_boards/view_my_posts");
 	}
 
 	private boolean _isViewMySubscriptionsNavigationItemActive() {
-		if (_mvcRenderCommandName.equals(
-				"/message_boards/view_my_subscriptions")) {
-
-			return true;
-		}
-
-		return false;
+		return _mvcRenderCommandName.equals(
+			"/message_boards/view_my_subscriptions");
 	}
 
 	private boolean _isViewRecentPostsNavigationItemActive() {
-		if (_mvcRenderCommandName.equals("/message_boards/view_recent_posts")) {
-			return true;
-		}
-
-		return false;
+		return _mvcRenderCommandName.equals(
+			"/message_boards/view_recent_posts");
 	}
 
 	private boolean _isViewStatisticsNavigationItemActive() {
-		if (_mvcRenderCommandName.equals("/message_boards/view_statistics")) {
-			return true;
-		}
-
-		return false;
+		return _mvcRenderCommandName.equals("/message_boards/view_statistics");
 	}
 
 	private final HttpServletRequest _httpServletRequest;

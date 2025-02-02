@@ -359,11 +359,7 @@ public class DefaultMBListDisplayContext implements MBListDisplayContext {
 		String entriesNavigation = ParamUtil.getString(
 			_httpServletRequest, "entriesNavigation");
 
-		if (entriesNavigation.equals("recent")) {
-			return true;
-		}
-
-		return false;
+		return entriesNavigation.equals("recent");
 	}
 
 	private boolean _isShowSearch(String mvcRenderCommandName) {

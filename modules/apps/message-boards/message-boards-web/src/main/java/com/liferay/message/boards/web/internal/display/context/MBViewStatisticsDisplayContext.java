@@ -54,14 +54,9 @@ public class MBViewStatisticsDisplayContext {
 	public boolean isMBAdmin() {
 		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
 
-		if (Objects.equals(
-				portletDisplay.getPortletName(),
-				MBPortletKeys.MESSAGE_BOARDS_ADMIN)) {
-
-			return true;
-		}
-
-		return false;
+		return Objects.equals(
+			portletDisplay.getPortletName(),
+			MBPortletKeys.MESSAGE_BOARDS_ADMIN);
 	}
 
 	private long _getCategoryId() {

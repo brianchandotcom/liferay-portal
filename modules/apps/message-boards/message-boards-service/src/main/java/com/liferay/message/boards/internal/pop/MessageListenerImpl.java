@@ -322,11 +322,7 @@ public class MessageListenerImpl implements MessageListener {
 
 		String[] mailAutoReply = message.getHeader("X-Mail-Autoreply");
 
-		if (ArrayUtil.isNotEmpty(mailAutoReply)) {
-			return true;
-		}
-
-		return false;
+		return ArrayUtil.isNotEmpty(mailAutoReply);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

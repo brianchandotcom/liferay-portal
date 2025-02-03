@@ -15,6 +15,7 @@ import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.internal.upgrade.v11_5_1.SupplierRoleUpgradeProcess;
 import com.liferay.commerce.internal.upgrade.v11_5_2.CommerceChannelRepositoryUpgradeProcess;
 import com.liferay.commerce.internal.upgrade.v13_0_3.CPConfigurationUpgradeProcess;
+import com.liferay.commerce.internal.upgrade.v13_0_4.CPConfigurationListEligibilityUpgradeProcess;
 import com.liferay.commerce.internal.upgrade.v1_2_0.CommerceSubscriptionUpgradeProcess;
 import com.liferay.commerce.internal.upgrade.v2_0_0.CommercePaymentMethodUpgradeProcess;
 import com.liferay.commerce.internal.upgrade.v2_1_0.CPDAvailabilityEstimateUpgradeProcess;
@@ -48,6 +49,7 @@ import com.liferay.commerce.model.impl.CommerceShipmentItemModelImpl;
 import com.liferay.commerce.model.impl.CommerceShippingMethodModelImpl;
 import com.liferay.commerce.product.service.CPConfigurationEntryLocalService;
 import com.liferay.commerce.product.service.CPConfigurationListLocalService;
+import com.liferay.commerce.product.service.CPConfigurationListRelLocalService;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CommerceChannelAccountEntryRelLocalService;
@@ -84,6 +86,7 @@ import com.liferay.portal.kernel.upgrade.CTModelUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portlet.display.template.upgrade.BaseUpgradePortletPreferences;
 
@@ -835,7 +838,13 @@ public class CommerceServiceUpgradeStepRegistrator
 				_classNameLocalService, _cpConfigurationEntryLocalService,
 				_cpConfigurationListLocalService, _language));
 
-		registry.register("13.0.3", "13.0.4", new DummyUpgradeProcess());
+		registry.register(
+			"13.0.3", "13.0.4",
+			new CPConfigurationListEligibilityUpgradeProcess(
+				_commerceChannelRelLocalService,
+				_cpConfigurationEntryLocalService,
+				_cpConfigurationListLocalService,
+				_cpConfigurationListRelLocalService, _portal));
 
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce upgrade step registrator finished");
@@ -899,6 +908,10 @@ public class CommerceServiceUpgradeStepRegistrator
 	private CPConfigurationListLocalService _cpConfigurationListLocalService;
 
 	@Reference
+	private CPConfigurationListRelLocalService
+		_cpConfigurationListRelLocalService;
+
+	@Reference
 	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 	@Reference
@@ -927,6 +940,9 @@ public class CommerceServiceUpgradeStepRegistrator
 
 	@Reference
 	private PhoneLocalService _phoneLocalService;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private RegionLocalService _regionLocalService;

@@ -61,6 +61,8 @@ import com.liferay.portal.kernel.model.Users_UserGroupsTable;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchException;
@@ -127,6 +129,7 @@ import java.util.Set;
  */
 public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public Role addRole(
 			String externalReferenceCode, long userId, String className,
@@ -430,6 +433,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	 * @param  role the role
 	 * @return the deleted role
 	 */
+	@Indexable(type = IndexableType.DELETE)
 	@Override
 	@SystemEvent(
 		action = SystemEventConstants.ACTION_SKIP,
@@ -1891,6 +1895,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	 *         role.
 	 * @return the role with the primary key
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public Role updateRole(
 			long roleId, String name, Map<Locale, String> titleMap,

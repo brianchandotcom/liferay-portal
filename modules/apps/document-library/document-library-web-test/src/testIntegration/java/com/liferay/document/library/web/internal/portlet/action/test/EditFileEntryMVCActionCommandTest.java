@@ -119,7 +119,6 @@ public class EditFileEntryMVCActionCommandTest {
 			_group.getGroupId(), TestPropsValues.getUserId(), _TEMP_FOLDER_NAME,
 			TempFileEntryUtil.getTempFileName("test.jpg"), _getInputStream(),
 			ContentTypes.IMAGE_JPEG);
-
 		FileEntry tempFileEntry2 = TempFileEntryUtil.addTempFileEntry(
 			_group.getGroupId(), TestPropsValues.getUserId(), _TEMP_FOLDER_NAME,
 			TempFileEntryUtil.getTempFileName("test.gif"), _getInputStream(),
@@ -155,7 +154,6 @@ public class EditFileEntryMVCActionCommandTest {
 			_group.getGroupId(), TestPropsValues.getUserId(), _TEMP_FOLDER_NAME,
 			TempFileEntryUtil.getTempFileName("test.jpg"), _getInputStream(),
 			ContentTypes.IMAGE_JPEG);
-
 		FileEntry tempFileEntry2 = TempFileEntryUtil.addTempFileEntry(
 			_group.getGroupId(), TestPropsValues.getUserId(), _TEMP_FOLDER_NAME,
 			TempFileEntryUtil.getTempFileName("test.gif"), _getInputStream(),
@@ -191,7 +189,6 @@ public class EditFileEntryMVCActionCommandTest {
 			_group.getGroupId(), TestPropsValues.getUserId(), _TEMP_FOLDER_NAME,
 			TempFileEntryUtil.getTempFileName("image.jpg"), _getInputStream(),
 			ContentTypes.IMAGE_JPEG);
-
 		FileEntry tempFileEntry2 = TempFileEntryUtil.addTempFileEntry(
 			_group.getGroupId(), TestPropsValues.getUserId(), _TEMP_FOLDER_NAME,
 			TempFileEntryUtil.getTempFileName("image.jpg"), _getInputStream(),

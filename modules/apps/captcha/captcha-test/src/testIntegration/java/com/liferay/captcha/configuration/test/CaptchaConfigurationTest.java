@@ -109,34 +109,34 @@ public class CaptchaConfigurationTest {
 	}
 
 	private boolean _isCaptchaRendered() throws Exception {
-		String portletURL = PortletURLBuilder.create(
-			PortletURLFactoryUtil.create(
-				_getMockHttpServletRequest(), PortletKeys.LOGIN,
-				_layoutLocalService.fetchLayout(TestPropsValues.getPlid()),
-				PortletRequest.RENDER_PHASE)
-		).setMVCRenderCommandName(
-			"/login/create_account"
-		).setParameter(
-			"saveLastPath", false
-		).setPortletMode(
-			PortletMode.VIEW
-		).setWindowState(
-			WindowState.MAXIMIZED
-		).buildString();
+		URL url = new URL(
+			PortletURLBuilder.create(
+				PortletURLFactoryUtil.create(
+					_getMockHttpServletRequest(), PortletKeys.LOGIN,
+					_layoutLocalService.fetchLayout(TestPropsValues.getPlid()),
+					PortletRequest.RENDER_PHASE)
+			).setMVCRenderCommandName(
+				"/login/create_account"
+			).setParameter(
+				"saveLastPath", false
+			).setPortletMode(
+				PortletMode.VIEW
+			).setWindowState(
+				WindowState.MAXIMIZED
+			).buildString());
 
-		HttpURLConnection httpURLConnection = (HttpURLConnection)new URL(
-			portletURL
-		).openConnection();
+		HttpURLConnection httpURLConnection =
+			(HttpURLConnection)url.openConnection();
 
 		Assert.assertEquals(
 			HttpURLConnection.HTTP_OK, httpURLConnection.getResponseCode());
 
-		try (BufferedReader reader = new BufferedReader(
+		try (BufferedReader bufferedReader = new BufferedReader(
 				new InputStreamReader(httpURLConnection.getInputStream()))) {
 
 			String line;
 
-			while ((line = reader.readLine()) != null) {
+			while ((line = bufferedReader.readLine()) != null) {
 				if (line.contains("CAPTCHA")) {
 					return true;
 				}

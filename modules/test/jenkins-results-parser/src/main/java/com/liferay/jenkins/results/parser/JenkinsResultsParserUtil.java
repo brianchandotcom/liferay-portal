@@ -788,25 +788,9 @@ public class JenkinsResultsParserUtil {
 			httpURLConnection.setDoOutput(true);
 			httpURLConnection.setRequestMethod("POST");
 
-			HTTPAuthorization httpAuthorization = null;
-
-			String jenkinsAdminUserName = getBuildProperty(
-				"jenkins.admin.user.name");
-
-			if (jenkinsMasterName.contains("test-1-0")) {
-				String jenkinsAdminUserPassword = getBuildProperty(
-					"jenkins.admin.user.password");
-
-				httpAuthorization = new BasicHTTPAuthorization(
-					jenkinsAdminUserPassword, jenkinsAdminUserName);
-			}
-			else {
-				String jenkinsAdminUserToken = getBuildProperty(
-					"jenkins.admin.user.token");
-
-				httpAuthorization = new BasicHTTPAuthorization(
-					jenkinsAdminUserToken, jenkinsAdminUserName);
-			}
+			HTTPAuthorization httpAuthorization = new BasicHTTPAuthorization(
+				getBuildProperty("jenkins.admin.user.token"),
+				getBuildProperty("jenkins.admin.user.name"));
 
 			httpURLConnection.setRequestProperty(
 				"Authorization", httpAuthorization.toString());

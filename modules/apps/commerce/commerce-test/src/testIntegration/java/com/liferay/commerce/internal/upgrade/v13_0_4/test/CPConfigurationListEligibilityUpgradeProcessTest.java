@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.commerce.internal.feature.flag.test;
+package com.liferay.commerce.internal.upgrade.v13_0_4.test;
 
 import com.liferay.account.model.AccountGroup;
 import com.liferay.account.service.AccountGroupLocalService;
@@ -28,17 +28,17 @@ import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.commerce.product.type.simple.constants.SimpleCPTypeConstants;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagListener;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+import com.liferay.portal.upgrade.test.util.UpgradeTestUtil;
 
 import java.util.List;
 import java.util.Objects;
@@ -52,17 +52,16 @@ import org.junit.runner.RunWith;
 /**
  * @author Stefano Motta
  */
-@FeatureFlags("LPD-10889")
 @RunWith(Arquillian.class)
-public class CPConfigurationListEligibilityFeatureFlagListenerTest {
+public class CPConfigurationListEligibilityUpgradeProcessTest {
 
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule =
+	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void testCPConfigurationListEligibility() throws Exception {
+	public void testUpdateCPConfigurationListEligibility() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext();
 
@@ -135,8 +134,7 @@ public class CPConfigurationListEligibilityFeatureFlagListenerTest {
 			commerceCatalog.getGroupId(), SimpleCPTypeConstants.NAME, false,
 			false);
 
-		_featureFlagListener.onValue(
-			TestPropsValues.getCompanyId(), "LPD-10889", true);
+		_runUpgrade();
 
 		EntityCacheUtil.clearCache();
 
@@ -315,18 +313,18 @@ public class CPConfigurationListEligibilityFeatureFlagListenerTest {
 		catch (Exception exception) {
 			Assert.assertNotNull(exception);
 		}
-
-		_featureFlagListener.onValue(
-			TestPropsValues.getCompanyId(), "LPD-10889", false);
-
-		EntityCacheUtil.clearCache();
-
-		Assert.assertFalse(
-			ListUtil.exists(
-				_cpConfigurationListLocalService.getCPConfigurationLists(
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS),
-				cpConfigurationList -> !cpConfigurationList.isMaster()));
 	}
+
+	private void _runUpgrade() throws Exception {
+		UpgradeProcess upgradeProcess = UpgradeTestUtil.getUpgradeStep(
+			_upgradeStepRegistrator, _CLASS_NAME);
+
+		upgradeProcess.upgrade();
+	}
+
+	private static final String _CLASS_NAME =
+		"com.liferay.commerce.internal.upgrade.v13_0_4." +
+			"CPConfigurationListEligibilityUpgradeProcess";
 
 	@Inject
 	private static CommerceCatalogLocalService _commerceCatalogLocalService;
@@ -341,6 +339,11 @@ public class CPConfigurationListEligibilityFeatureFlagListenerTest {
 
 	@Inject
 	private static CPDefinitionLocalService _cpDefinitionLocalService;
+
+	@Inject(
+		filter = "(&(component.name=com.liferay.commerce.internal.upgrade.registry.CommerceServiceUpgradeStepRegistrator))"
+	)
+	private static UpgradeStepRegistrator _upgradeStepRegistrator;
 
 	@Inject
 	private AccountGroupLocalService _accountGroupLocalService;
@@ -357,10 +360,5 @@ public class CPConfigurationListEligibilityFeatureFlagListenerTest {
 	@Inject
 	private CPConfigurationListRelLocalService
 		_cpConfigurationListRelLocalService;
-
-	@Inject(
-		filter = "component.name=com.liferay.commerce.internal.feature.flag.CPConfigurationListEligibilityFeatureFlagListener"
-	)
-	private FeatureFlagListener _featureFlagListener;
 
 }

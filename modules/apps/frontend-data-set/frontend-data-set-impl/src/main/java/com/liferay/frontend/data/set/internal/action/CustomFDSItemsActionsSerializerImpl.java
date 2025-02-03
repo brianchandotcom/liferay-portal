@@ -56,18 +56,13 @@ public class CustomFDSItemsActionsSerializerImpl
 			fdsActionDropdownItem.putData(
 				"disableHeader",
 				(boolean)Validator.isNull(properties.get("title")));
-
 			fdsActionDropdownItem.putData(
 				"errorMessage", properties.get("errorMessage"));
-
 			fdsActionDropdownItem.putData(
 				"requestBody", properties.get("requestBody"));
-
 			fdsActionDropdownItem.putData("size", properties.get("modalSize"));
-
 			fdsActionDropdownItem.putData(
 				"status", properties.get("confirmationMessageType"));
-
 			fdsActionDropdownItem.putData(
 				"successMessage", properties.get("successMessage"));
 

@@ -118,6 +118,8 @@ describe('Collection', () => {
 			})
 		);
 
+		Liferay.FeatureFlags['LPD-18221'] = true;
+
 		await act(async () => {
 			renderCollection({
 				collection: {
@@ -134,6 +136,8 @@ describe('Collection', () => {
 		expect(
 			document.body.querySelector('.page-editor__collection-item')
 		).toBeInTheDocument();
+
+		Liferay.FeatureFlags['LPD-18221'] = false;
 	});
 
 	it('renders empty collection items', async () => {

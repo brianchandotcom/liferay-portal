@@ -5620,7 +5620,7 @@ test.describe('Edit mode form errors', () => {
 	}
 
 	test(
-		'Can only drop form fragments inside a mapped form container',
+		'Can only drop form fragments inside a mapped form container except for Localization Select',
 		{
 			tag: ['@LPS-149984', '@LPS-157740'],
 		},
@@ -5658,9 +5658,20 @@ test.describe('Edit mode form errors', () => {
 
 			await waitForAlert(
 				page,
-				'Error:Form components can only be placed inside a mapped form container.',
+				'Error:This form component can only be placed inside a mapped form container.',
 				{type: 'danger'}
 			);
+
+			// Assert that Localization select can be added outside a form container
+
+			await pageEditorPage.addFragment(
+				'Form Components',
+				'Localization Select'
+			);
+
+			await expect(
+				page.locator('.lfr-layout-structure-item-localization-select')
+			).toBeVisible();
 
 			// Assert form fragments cannot be placed inside an unmapped form container
 

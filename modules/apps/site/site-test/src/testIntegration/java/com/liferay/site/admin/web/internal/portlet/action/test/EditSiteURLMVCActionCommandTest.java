@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -78,7 +79,8 @@ public class EditSiteURLMVCActionCommandTest {
 		String redirect = (String)mockLiferayPortletActionRequest.getAttribute(
 			WebKeys.REDIRECT);
 
-		Assert.assertTrue(redirect.contains(groupFriendlyURL));
+		Assert.assertTrue(
+			redirect.contains(StringUtil.toLowerCase(groupFriendlyURL)));
 		Assert.assertTrue(redirect.contains(themeDisplay.getPortalURL()));
 	}
 

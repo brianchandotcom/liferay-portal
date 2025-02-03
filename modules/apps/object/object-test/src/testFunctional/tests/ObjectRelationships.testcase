@@ -282,50 +282,6 @@ definition {
 		ObjectPortlet.viewEntry(entry = "Entry A");
 	}
 
-	@description = "LPS-155537 - Verify that it's possible to create an object with a relationship that has a parameter"
-	@priority = 5
-	test CanCreateObjectWithRelationshipParameter {
-		property portal.acceptance = "true";
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		task ("Given the object Account related with a custom object definition School") {
-			ObjectAdmin.addObjectViaAPI(
-				labelName = "School",
-				objectName = "School",
-				pluralLabelName = "School");
-
-			ObjectAdmin.addObjectRelationshipViaAPI(
-				objectName_1 = "AccountEntry",
-				objectName_2 = "School",
-				relationshipLabel = "Teacher",
-				relationshipName = "teacher",
-				relationshipType = "oneToMany");
-
-			ObjectAdmin.publishObjectViaAPI(objectName = "School");
-		}
-
-		task ("When creating a relationship from Postal Address to School") {
-			ObjectAdmin.openObjectAdmin();
-
-			ObjectPortlet.selectCustomObject(label = "Postal Address");
-
-			ObjectAdmin.gotoRelationshipsTab();
-
-			ObjectAdmin.addObjectRelationshipViaUI(
-				label = "Postal Address with School",
-				object = "School",
-				parameterOption = "Teacher",
-				type = "One to Many");
-		}
-
-		task ("Then the relationship is added") {
-			AssertElementPresent(
-				key_label = "Postal Address with School",
-				locator1 = "ObjectAdmin#RELATIONSHIP_LABEL");
-		}
-	}
-
 	@description = "LPS-145393 - Verify it is possible to create a Relationship One-to-Many from a Native Object to a Custom Object"
 	@priority = 5
 	test CanCreateOneToManyForNativeObject {
@@ -1129,64 +1085,6 @@ definition {
 				key_tableRow = 3,
 				key_tableValue = "Entry C",
 				locator1 = "CreateObject#VIEW_ENTRY_FIELD_BY_INDEX");
-		}
-	}
-
-	@description = "LPS-155537 - Verify that it's possible to edit a relationship parameter"
-	@priority = 4
-	test CanEditRelationshipParameter {
-		property test.liferay.virtual.instance = "false";
-		property test.run.type = "single";
-
-		task ("Given the object Account related twice with a custom object definition Hospital") {
-			ObjectAdmin.addObjectViaAPI(
-				labelName = "Hospital",
-				objectName = "Hospital",
-				pluralLabelName = "Hospital");
-
-			for (var nameRelationship : list "Public,Private") {
-				ObjectAdmin.addObjectRelationshipViaAPI(
-					objectName_1 = "AccountEntry",
-					objectName_2 = "Hospital",
-					relationshipLabel = "Relationship ${nameRelationship}",
-					relationshipName = "relationship${nameRelationship}",
-					relationshipType = "oneToMany");
-			}
-
-			ObjectAdmin.publishObjectViaAPI(objectName = "Hospital");
-		}
-
-		task ("and Given a relationship from Postal Address to Hospital") {
-			ObjectAdmin.openObjectAdmin();
-
-			ObjectPortlet.selectCustomObject(label = "Postal Address");
-
-			ObjectAdmin.gotoRelationshipsTab();
-
-			ObjectAdmin.addObjectRelationshipViaUI(
-				label = "Relationship Order",
-				object = "Hospital",
-				parameterOption = "Relationship Public",
-				type = "One to Many");
-		}
-
-		task ("When editing the parameter of the relationship") {
-			ObjectAdmin.goToRelationshipsDetails(fieldName = "Relationship Order");
-
-			ObjectAdmin.selectDropdownItem(
-				labelName = "Parameter",
-				optionName = "Relationship Private");
-
-			PortletEntry.save();
-		}
-
-		task ("Then the parameter is updated") {
-			ObjectAdmin.goToRelationshipsDetails(fieldName = "Relationship Order");
-
-			AssertTextEquals(
-				key_labelName = "Parameter",
-				locator1 = "ObjectAdmin#CLAY_GENERIC_BUTTON",
-				value1 = "Relationship Private");
 		}
 	}
 

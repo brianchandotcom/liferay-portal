@@ -213,6 +213,11 @@ public abstract class BaseMessageResourceTestCase {
 	}
 
 	@Test
+	public void testPostMessagesExportPage() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
 	public void testPostMessageImport() throws Exception {
 		Assert.assertTrue(false);
 	}

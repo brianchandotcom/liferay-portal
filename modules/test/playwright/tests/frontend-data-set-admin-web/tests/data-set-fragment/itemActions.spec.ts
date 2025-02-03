@@ -301,8 +301,9 @@ test.describe('Item Actions in Data Set fragment', () => {
 
 			await expect(
 				page
-				.locator(`#${dropdownId}`)
-				.filter({has: page.getByRole('menu')})).not.toBeVisible()
+					.locator(`#${dropdownId}`)
+					.filter({has: page.getByRole('menu')})
+			).not.toBeVisible();
 
 			const frame = dataSetFragmentPage.sidePanelFrame;
 

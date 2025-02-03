@@ -4392,11 +4392,6 @@ components:
             description:
                 Represents a definition of a Page Rule Action.
             properties:
-                action:
-                    # @review
-                    description:
-                        The page rule action's action.
-                    type: string
                 id:
                     # @review
                     description:

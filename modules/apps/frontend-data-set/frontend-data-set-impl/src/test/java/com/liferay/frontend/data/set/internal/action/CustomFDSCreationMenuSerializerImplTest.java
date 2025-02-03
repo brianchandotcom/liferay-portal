@@ -47,12 +47,11 @@ public class CustomFDSCreationMenuSerializerImplTest {
 	@Test
 	public void testSerialization() throws Exception {
 
-		// different creation menus
+		// different creation menu
 
-		_mockFDSCreationActionObjectEntries(
-			new String[] {"New 1.1", "New 1.2"}, "fdsName1");
+		_mockFDSCreationMenu(new String[] {"New 1.1", "New 1.2"}, "fdsName1");
 
-		_mockFDSCreationActionObjectEntries(new String[] {"New 2"}, "fdsName2");
+		_mockFDSCreationMenu(new String[] {"New 2"}, "fdsName2");
 
 		CreationMenu creationMenu1 =
 			_customFDSCreationMenuSerializerImpl.serialize(
@@ -77,7 +76,7 @@ public class CustomFDSCreationMenuSerializerImplTest {
 
 		// no creation menu
 
-		_mockFDSCreationActionObjectEntries(null, "fdsName");
+		_mockFDSCreationMenu(null, "fdsName");
 
 		Assert.assertTrue(
 			_customFDSCreationMenuSerializerImpl.serialize(
@@ -93,7 +92,7 @@ public class CustomFDSCreationMenuSerializerImplTest {
 		String[] fdsNames = {"fdsName1", "fdsName2"};
 
 		for (String fdsName : fdsNames) {
-			_mockFDSCreationActionObjectEntries(titles, fdsName);
+			_mockFDSCreationMenu(titles, fdsName);
 
 			CreationMenu creationMenu =
 				_customFDSCreationMenuSerializerImpl.serialize(
@@ -129,7 +128,7 @@ public class CustomFDSCreationMenuSerializerImplTest {
 		return dropdownItems.size();
 	}
 
-	private void _mockFDSCreationActionObjectEntries(
+	private void _mockFDSCreationMenu(
 		String[] dropdownItemTitles, String fdsName) {
 
 		Mockito.when(
@@ -142,7 +141,7 @@ public class CustomFDSCreationMenuSerializerImplTest {
 
 		if (ArrayUtil.isEmpty(dropdownItemTitles)) {
 			Mockito.when(
-				baseCustomFDSSerializer.getCreationActionObjectEntries(
+				baseCustomFDSSerializer.getCreationMenuObjectEntries(
 					fdsName, _httpServletRequest)
 			).thenReturn(
 				Collections.emptySet()
@@ -165,7 +164,7 @@ public class CustomFDSCreationMenuSerializerImplTest {
 		}
 
 		Mockito.when(
-			baseCustomFDSSerializer.getCreationActionObjectEntries(
+			baseCustomFDSSerializer.getCreationMenuObjectEntries(
 				fdsName, _httpServletRequest)
 		).thenReturn(
 			objectEntries

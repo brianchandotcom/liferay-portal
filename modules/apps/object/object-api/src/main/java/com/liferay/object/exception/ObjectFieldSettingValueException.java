@@ -22,7 +22,7 @@ public class ObjectFieldSettingValueException extends PortalException {
 		public ExceedsMaxLength(int maxLength, String objectFieldSettingName) {
 			super(
 				String.format(
-					"The setting %s exceeds the maximum length of %s",
+					"The setting \"%s\" exceeds the maximum length of %s",
 					objectFieldSettingName, maxLength));
 		}
 
@@ -36,7 +36,8 @@ public class ObjectFieldSettingValueException extends PortalException {
 
 			super(
 				String.format(
-					"The value %s of setting %s is invalid for object field %s",
+					"The value %s of setting \"%s\" is invalid for object " +
+						"field \"%s\"",
 					objectFieldSettingValue, objectFieldSettingName,
 					objectFieldName));
 		}
@@ -47,7 +48,8 @@ public class ObjectFieldSettingValueException extends PortalException {
 
 			super(
 				String.format(
-					"The value %s of setting %s is invalid for object field %s",
+					"The value %s of setting \"%s\" is invalid for object " +
+						"field \"%s\"",
 					objectFieldSettingValue, objectFieldSettingName,
 					objectFieldName),
 				throwable);
@@ -63,7 +65,7 @@ public class ObjectFieldSettingValueException extends PortalException {
 
 			super(
 				String.format(
-					"The settings %s are required for object field %s",
+					"The settings \"%s\" are required for object field \"%s\"",
 					StringUtil.merge(
 						objectFieldSettingsNames, StringPool.COMMA_AND_SPACE),
 					objectFieldName));
@@ -77,7 +79,7 @@ public class ObjectFieldSettingValueException extends PortalException {
 		public UnmodifiableValue(String objectFieldSettingName) {
 			super(
 				String.format(
-					"The value of setting %s is unmodifiable when object " +
+					"The value of setting \"%s\" is unmodifiable when object " +
 						"definition is published",
 					objectFieldSettingName));
 		}

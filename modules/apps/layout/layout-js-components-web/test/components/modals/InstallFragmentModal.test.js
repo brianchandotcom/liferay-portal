@@ -28,7 +28,7 @@ describe('InstallFragmentModal', () => {
 
 		expect(
 			screen.getByText(
-				'the-installation-process-is-ongoing-and-may-take-a-few-minutes-closing-the-window-will-not-cancel-the-process'
+				'the-installation-process-is-ongoing-and-may-take-a-few-minutes'
 			)
 		).toBeInTheDocument();
 	});

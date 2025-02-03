@@ -41,7 +41,7 @@ export default function InstallFragmentModal({
 
 					<div className="ml-4 mr-4 text-center text-secondary">
 						{Liferay.Language.get(
-							'the-installation-process-is-ongoing-and-may-take-a-few-minutes-closing-the-window-will-not-cancel-the-process'
+							'the-installation-process-is-ongoing-and-may-take-a-few-minutes'
 						)}
 					</div>
 				</ClayModal.Body>

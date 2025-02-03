@@ -7,6 +7,7 @@ package com.liferay.headless.admin.user.internal.resource.v1_0;
 
 import com.liferay.headless.admin.user.dto.v1_0.Role;
 import com.liferay.headless.admin.user.dto.v1_0.RolePermission;
+import com.liferay.headless.admin.user.internal.odata.entity.v1_0.RoleEntityModel;
 import com.liferay.headless.admin.user.resource.v1_0.RoleResource;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.NoSuchRoleException;
@@ -14,6 +15,8 @@ import com.liferay.portal.kernel.exception.RoleAssignmentException;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.OrganizationService;
@@ -30,18 +33,22 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
+import com.liferay.portal.vulcan.util.SearchUtil;
 import com.liferay.roles.admin.role.type.contributor.RoleTypeContributor;
 import com.liferay.roles.admin.role.type.contributor.provider.RoleTypeContributorProvider;
 
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+
+import javax.ws.rs.core.MultivaluedMap;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -147,6 +154,13 @@ public class RoleResourceImpl extends BaseRoleResourceImpl {
 	}
 
 	@Override
+	public EntityModel getEntityModel(MultivaluedMap multivaluedMap)
+		throws Exception {
+
+		return _entityModel;
+	}
+
+	@Override
 	public Role getRole(Long roleId) throws Exception {
 		com.liferay.portal.kernel.model.Role role = _roleService.fetchRole(
 			roleId);
@@ -177,37 +191,44 @@ public class RoleResourceImpl extends BaseRoleResourceImpl {
 
 	@Override
 	public Page<Role> getRolesPage(
-			String search, Integer[] types, Pagination pagination)
+			String search, Integer[] types, Filter filter,
+			Pagination pagination)
 		throws Exception {
 
-		if (types == null) {
-			types = new Integer[] {
-				RoleConstants.TYPE_ORGANIZATION, RoleConstants.TYPE_REGULAR,
-				RoleConstants.TYPE_SITE
-			};
-		}
-
-		return Page.of(
+		return SearchUtil.search(
 			HashMapBuilder.<String, Map<String, String>>put(
 				"get",
 				addAction(
 					ActionKeys.VIEW, "getRolesPage", Role.class.getName(), 0L)
 			).build(),
-			transform(
-				_roleService.search(
-					contextCompany.getCompanyId(), search, types, null,
-					pagination.getStartPosition(), pagination.getEndPosition(),
-					null),
-				role -> _roleDTOConverter.toDTO(
+			booleanQuery -> {
+			},
+			filter, com.liferay.portal.kernel.model.Role.class.getName(),
+			search, pagination,
+			queryConfig -> queryConfig.setSelectedFieldNames(
+				Field.ENTRY_CLASS_PK),
+			searchContext -> {
+				if (ArrayUtil.isNotEmpty(types)) {
+					searchContext.setAttribute("types", types);
+				}
+
+				searchContext.setCompanyId(contextCompany.getCompanyId());
+				searchContext.setUserId(contextUser.getUserId());
+			},
+			null,
+			document -> {
+				com.liferay.portal.kernel.model.Role role =
+					_roleService.getRole(
+						GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)));
+
+				return _roleDTOConverter.toDTO(
 					new DefaultDTOConverterContext(
 						true, _getActions(role.getRoleId()),
 						_dtoConverterRegistry, role.getRoleId(),
 						contextAcceptLanguage.getPreferredLocale(),
 						contextUriInfo, contextUser),
-					role)),
-			pagination,
-			_roleService.searchCount(
-				contextCompany.getCompanyId(), search, types, null));
+					role);
+			});
 	}
 
 	@Override
@@ -551,6 +572,8 @@ public class RoleResourceImpl extends BaseRoleResourceImpl {
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
+
+	private final EntityModel _entityModel = new RoleEntityModel();
 
 	@Reference
 	private OrganizationService _organizationService;

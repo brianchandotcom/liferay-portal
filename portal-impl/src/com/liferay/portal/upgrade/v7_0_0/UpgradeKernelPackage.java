@@ -15,12 +15,14 @@ import com.liferay.portal.kernel.dao.db.IndexMetadata;
 import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -127,7 +129,7 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 				String[] primaryKeyColumnNames = db.getPrimaryKeyColumnNames(
 					connection, tableName);
 
-				StringBundler sb = new StringBundler();
+				List<String> primaryKeys = new ArrayList<>();
 
 				try (Statement s = connection.createStatement();
 					ResultSet resultSet = s.executeQuery(
@@ -138,22 +140,26 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 							" having count(*) > 1"))) {
 
 					while (resultSet.next()) {
-						sb.append(resultSet.getLong(1));
-						sb.append(StringPool.COMMA_AND_SPACE);
+						primaryKeys.add(String.valueOf(resultSet.getLong(1)));
 					}
-
-					if (sb.length() == 0) {
-						return;
-					}
-
-					sb.setIndex(sb.index() - 1);
 				}
 
-				runSQL(
-					StringBundler.concat(
-						"delete from ", tableName, " where ",
-						primaryKeyColumnNames[0], " in (", sb,
-						StringPool.CLOSE_PARENTHESIS));
+				int start = 0;
+				int end = DBManagerUtil.getDBInMaxParameters();
+
+				while (start < primaryKeys.size()) {
+					runSQL(
+						StringBundler.concat(
+							"delete from ", tableName, " where ",
+							primaryKeyColumnNames[0], " in (",
+							String.join(
+								StringPool.COMMA_AND_SPACE,
+								ListUtil.subList(primaryKeys, start, end)),
+							StringPool.CLOSE_PARENTHESIS));
+
+					end += DBManagerUtil.getDBInMaxParameters();
+					start += DBManagerUtil.getDBInMaxParameters();
+				}
 			}
 			finally {
 				addIndexes(

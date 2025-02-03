@@ -66,7 +66,8 @@ public interface ObjectEntryLocalService
 	 */
 	public ObjectEntry addObjectEntry(
 			long userId, long groupId, long objectDefinitionId,
-			Map<String, Serializable> values, ServiceContext serviceContext)
+			String defaultLanguageId, Map<String, Serializable> values,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	/**

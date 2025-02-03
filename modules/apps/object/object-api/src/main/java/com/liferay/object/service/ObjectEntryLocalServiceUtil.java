@@ -39,12 +39,13 @@ public class ObjectEntryLocalServiceUtil {
 	 */
 	public static ObjectEntry addObjectEntry(
 			long userId, long groupId, long objectDefinitionId,
-			Map<String, Serializable> values,
+			String defaultLanguageId, Map<String, Serializable> values,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addObjectEntry(
-			userId, groupId, objectDefinitionId, values, serviceContext);
+			userId, groupId, objectDefinitionId, defaultLanguageId, values,
+			serviceContext);
 	}
 
 	/**

@@ -32,12 +32,14 @@ public class ObjectEntryLocalServiceWrapper
 	@Override
 	public com.liferay.object.model.ObjectEntry addObjectEntry(
 			long userId, long groupId, long objectDefinitionId,
+			String defaultLanguageId,
 			java.util.Map<String, java.io.Serializable> values,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectEntryLocalService.addObjectEntry(
-			userId, groupId, objectDefinitionId, values, serviceContext);
+			userId, groupId, objectDefinitionId, defaultLanguageId, values,
+			serviceContext);
 	}
 
 	/**

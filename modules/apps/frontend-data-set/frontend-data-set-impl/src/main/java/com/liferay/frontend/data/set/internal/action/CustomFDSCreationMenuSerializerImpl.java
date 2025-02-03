@@ -9,10 +9,12 @@ import com.liferay.frontend.data.set.action.FDSCreationMenuSerializer;
 import com.liferay.frontend.data.set.internal.serializer.BaseCustomFDSSerializer;
 import com.liferay.frontend.data.set.serializer.FDSSerializer;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemBuilder;
-import com.liferay.object.rest.dto.v1_0.ObjectEntry;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,13 +38,24 @@ public class CustomFDSCreationMenuSerializerImpl
 
 		CreationMenu creationMenu = new CreationMenu();
 
-		for (ObjectEntry objectEntry :
-				getCreationMenuObjectEntries(fdsName, httpServletRequest)) {
+		for (DropdownItem dropdownItem :
+				_getDropdownItems(fdsName, httpServletRequest)) {
 
-			Map<String, Object> properties = objectEntry.getProperties();
+			creationMenu.addPrimaryDropdownItem(dropdownItem);
+		}
 
-			creationMenu.addPrimaryDropdownItem(
-				DropdownItemBuilder.putData(
+		return creationMenu;
+	}
+
+	private List<DropdownItem> _getDropdownItems(
+		String fdsName, HttpServletRequest httpServletRequest) {
+
+		return TransformUtil.transform(
+			getCreationMenuObjectEntries(fdsName, httpServletRequest),
+			objectEntry -> {
+				Map<String, Object> properties = objectEntry.getProperties();
+
+				return DropdownItemBuilder.putData(
 					"disableHeader",
 					String.valueOf(Validator.isNull(properties.get("title")))
 				).putData(
@@ -60,10 +73,8 @@ public class CustomFDSCreationMenuSerializerImpl
 					String.valueOf(properties.get("label"))
 				).setTarget(
 					String.valueOf(properties.get("target"))
-				).build());
-		}
-
-		return creationMenu;
+				).build();
+			});
 	}
 
 }

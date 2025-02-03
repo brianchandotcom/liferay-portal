@@ -90,6 +90,7 @@ public interface RoleLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public Role addRole(Role role);
 
+	@Indexable(type = IndexableType.REINDEX)
 	public Role addRole(
 			String externalReferenceCode, long userId, String className,
 			long classPK, String name, Map<Locale, String> titleMap,
@@ -1019,6 +1020,7 @@ public interface RoleLocalService
 	 role.
 	 * @return the role with the primary key
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	public Role updateRole(
 			long roleId, String name, Map<Locale, String> titleMap,
 			Map<Locale, String> descriptionMap, String subtype,

@@ -57,6 +57,52 @@ public class Organization implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(Organization.class, json);
 	}
 
+	@Schema(
+		description = "The list of accounts associated with this organization."
+	)
+	@Valid
+	public AccountBrief[] getAccountBriefs() {
+		if (_accountBriefsSupplier != null) {
+			accountBriefs = _accountBriefsSupplier.get();
+
+			_accountBriefsSupplier = null;
+		}
+
+		return accountBriefs;
+	}
+
+	public void setAccountBriefs(AccountBrief[] accountBriefs) {
+		this.accountBriefs = accountBriefs;
+
+		_accountBriefsSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setAccountBriefs(
+		UnsafeSupplier<AccountBrief[], Exception> accountBriefsUnsafeSupplier) {
+
+		_accountBriefsSupplier = () -> {
+			try {
+				return accountBriefsUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(
+		description = "The list of accounts associated with this organization."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected AccountBrief[] accountBriefs;
+
+	@JsonIgnore
+	private Supplier<AccountBrief[]> _accountBriefsSupplier;
+
 	@Schema
 	@Valid
 	public Map<String, Map<String, String>> getActions() {
@@ -187,6 +233,48 @@ public class Organization implements Serializable {
 
 	@JsonIgnore
 	private Supplier<String> _commentSupplier;
+
+	@Schema(description = "The user who created the organization.")
+	@Valid
+	public Creator getCreator() {
+		if (_creatorSupplier != null) {
+			creator = _creatorSupplier.get();
+
+			_creatorSupplier = null;
+		}
+
+		return creator;
+	}
+
+	public void setCreator(Creator creator) {
+		this.creator = creator;
+
+		_creatorSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setCreator(
+		UnsafeSupplier<Creator, Exception> creatorUnsafeSupplier) {
+
+		_creatorSupplier = () -> {
+			try {
+				return creatorUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(description = "The user who created the organization.")
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Creator creator;
+
+	@JsonIgnore
+	private Supplier<Creator> _creatorSupplier;
 
 	@Schema
 	@Valid
@@ -926,6 +1014,99 @@ public class Organization implements Serializable {
 	@JsonIgnore
 	private Supplier<Organization> _parentOrganizationSupplier;
 
+	@Schema
+	@Valid
+	public com.liferay.portal.vulcan.permission.Permission[] getPermissions() {
+		if (_permissionsSupplier != null) {
+			permissions = _permissionsSupplier.get();
+
+			_permissionsSupplier = null;
+		}
+
+		return permissions;
+	}
+
+	public void setPermissions(
+		com.liferay.portal.vulcan.permission.Permission[] permissions) {
+
+		this.permissions = permissions;
+
+		_permissionsSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setPermissions(
+		UnsafeSupplier
+			<com.liferay.portal.vulcan.permission.Permission[], Exception>
+				permissionsUnsafeSupplier) {
+
+		_permissionsSupplier = () -> {
+			try {
+				return permissionsUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected com.liferay.portal.vulcan.permission.Permission[] permissions;
+
+	@JsonIgnore
+	private Supplier<com.liferay.portal.vulcan.permission.Permission[]>
+		_permissionsSupplier;
+
+	@Schema(
+		description = "The list of roles associated with this organization."
+	)
+	@Valid
+	public RoleBrief[] getRoleBriefs() {
+		if (_roleBriefsSupplier != null) {
+			roleBriefs = _roleBriefsSupplier.get();
+
+			_roleBriefsSupplier = null;
+		}
+
+		return roleBriefs;
+	}
+
+	public void setRoleBriefs(RoleBrief[] roleBriefs) {
+		this.roleBriefs = roleBriefs;
+
+		_roleBriefsSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setRoleBriefs(
+		UnsafeSupplier<RoleBrief[], Exception> roleBriefsUnsafeSupplier) {
+
+		_roleBriefsSupplier = () -> {
+			try {
+				return roleBriefsUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(
+		description = "The list of roles associated with this organization."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected RoleBrief[] roleBriefs;
+
+	@JsonIgnore
+	private Supplier<RoleBrief[]> _roleBriefsSupplier;
+
 	@Schema(
 		description = "A list of services the organization provides. This follows the [`Service`](https://www.schema.org/Service) specification."
 	)
@@ -972,6 +1153,53 @@ public class Organization implements Serializable {
 	@JsonIgnore
 	private Supplier<Service[]> _servicesSupplier;
 
+	@Schema(description = "The categories associated with this organization.")
+	@Valid
+	public TaxonomyCategoryBrief[] getTaxonomyCategoryBriefs() {
+		if (_taxonomyCategoryBriefsSupplier != null) {
+			taxonomyCategoryBriefs = _taxonomyCategoryBriefsSupplier.get();
+
+			_taxonomyCategoryBriefsSupplier = null;
+		}
+
+		return taxonomyCategoryBriefs;
+	}
+
+	public void setTaxonomyCategoryBriefs(
+		TaxonomyCategoryBrief[] taxonomyCategoryBriefs) {
+
+		this.taxonomyCategoryBriefs = taxonomyCategoryBriefs;
+
+		_taxonomyCategoryBriefsSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setTaxonomyCategoryBriefs(
+		UnsafeSupplier<TaxonomyCategoryBrief[], Exception>
+			taxonomyCategoryBriefsUnsafeSupplier) {
+
+		_taxonomyCategoryBriefsSupplier = () -> {
+			try {
+				return taxonomyCategoryBriefsUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(
+		description = "The categories associated with this organization."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected TaxonomyCategoryBrief[] taxonomyCategoryBriefs;
+
+	@JsonIgnore
+	private Supplier<TaxonomyCategoryBrief[]> _taxonomyCategoryBriefsSupplier;
+
 	@Schema(description = "The tree path of the organization.")
 	public String getTreePath() {
 		if (_treePathSupplier != null) {
@@ -1012,6 +1240,53 @@ public class Organization implements Serializable {
 
 	@JsonIgnore
 	private Supplier<String> _treePathSupplier;
+
+	@Schema(
+		description = "The list of users associated with this organization."
+	)
+	@Valid
+	public UserAccountBrief[] getUserAccountBriefs() {
+		if (_userAccountBriefsSupplier != null) {
+			userAccountBriefs = _userAccountBriefsSupplier.get();
+
+			_userAccountBriefsSupplier = null;
+		}
+
+		return userAccountBriefs;
+	}
+
+	public void setUserAccountBriefs(UserAccountBrief[] userAccountBriefs) {
+		this.userAccountBriefs = userAccountBriefs;
+
+		_userAccountBriefsSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setUserAccountBriefs(
+		UnsafeSupplier<UserAccountBrief[], Exception>
+			userAccountBriefsUnsafeSupplier) {
+
+		_userAccountBriefsSupplier = () -> {
+			try {
+				return userAccountBriefsUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(
+		description = "The list of users associated with this organization."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected UserAccountBrief[] userAccountBriefs;
+
+	@JsonIgnore
+	private Supplier<UserAccountBrief[]> _userAccountBriefsSupplier;
 
 	@Schema
 	@Valid
@@ -1085,6 +1360,28 @@ public class Organization implements Serializable {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
+		AccountBrief[] accountBriefs = getAccountBriefs();
+
+		if (accountBriefs != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"accountBriefs\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < accountBriefs.length; i++) {
+				sb.append(String.valueOf(accountBriefs[i]));
+
+				if ((i + 1) < accountBriefs.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		Map<String, Map<String, String>> actions = getActions();
 
 		if (actions != null) {
@@ -1133,6 +1430,18 @@ public class Organization implements Serializable {
 			sb.append(_escape(comment));
 
 			sb.append("\"");
+		}
+
+		Creator creator = getCreator();
+
+		if (creator != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"creator\": ");
+
+			sb.append(String.valueOf(creator));
 		}
 
 		CustomField[] customFields = getCustomFields();
@@ -1402,6 +1711,51 @@ public class Organization implements Serializable {
 			sb.append(String.valueOf(parentOrganization));
 		}
 
+		com.liferay.portal.vulcan.permission.Permission[] permissions =
+			getPermissions();
+
+		if (permissions != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"permissions\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < permissions.length; i++) {
+				sb.append(permissions[i]);
+
+				if ((i + 1) < permissions.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		RoleBrief[] roleBriefs = getRoleBriefs();
+
+		if (roleBriefs != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"roleBriefs\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < roleBriefs.length; i++) {
+				sb.append(String.valueOf(roleBriefs[i]));
+
+				if ((i + 1) < roleBriefs.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		Service[] services = getServices();
 
 		if (services != null) {
@@ -1424,6 +1778,29 @@ public class Organization implements Serializable {
 			sb.append("]");
 		}
 
+		TaxonomyCategoryBrief[] taxonomyCategoryBriefs =
+			getTaxonomyCategoryBriefs();
+
+		if (taxonomyCategoryBriefs != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"taxonomyCategoryBriefs\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < taxonomyCategoryBriefs.length; i++) {
+				sb.append(String.valueOf(taxonomyCategoryBriefs[i]));
+
+				if ((i + 1) < taxonomyCategoryBriefs.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		String treePath = getTreePath();
 
 		if (treePath != null) {
@@ -1438,6 +1815,28 @@ public class Organization implements Serializable {
 			sb.append(_escape(treePath));
 
 			sb.append("\"");
+		}
+
+		UserAccountBrief[] userAccountBriefs = getUserAccountBriefs();
+
+		if (userAccountBriefs != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"userAccountBriefs\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < userAccountBriefs.length; i++) {
+				sb.append(String.valueOf(userAccountBriefs[i]));
+
+				if ((i + 1) < userAccountBriefs.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		UserAccount[] userAccounts = getUserAccounts();

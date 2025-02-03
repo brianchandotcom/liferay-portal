@@ -258,48 +258,6 @@
 		</condition>
 	</fail>
 
-	<whichresource property="google.errorprone.compiler" resource="/com/google/errorprone/ErrorProneAntCompilerAdapter.class" />
-
-	<if>
-		<and>
-			<equals arg1="${javac.compiler}" arg2="com.google.errorprone.ErrorProneAntCompilerAdapter" />
-			<not>
-				<isset property="google.errorprone.compiler" />
-			</not>
-		</and>
-		<then>
-			<trycatch>
-				<try>
-					<copy
-						file="${project.dir}/lib/development/error-prone-ant.jar"
-						todir="${ant.home}/lib"
-					/>
-				</try>
-				<catch>
-					<fail>
-.
-
-Please manually copy ${project.dir}/lib/development/error-prone-ant.jar to
-${ant.home}/lib to install Error-Prone. Then rerun your task.
-					</fail>
-				</catch>
-			</trycatch>
-
-			<if>
-				<available file="${ant.home}/lib/error-prone-ant.jar" />
-				<then>
-					<fail>
-.
-
-Task cannot continue because Error-Prone is not installed.
-
-Error-Prone was automatically installed. Please rerun your task.
-					</fail>
-				</then>
-			</if>
-		</then>
-	</if>
-
 	<fail message=".${line.separator}Please set the environment variable ANT_OPTS to the recommended value of${line.separator}&quot;-Xmx2560m&quot;.">
 		<condition>
 			<not>

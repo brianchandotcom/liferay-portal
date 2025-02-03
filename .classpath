@@ -60,7 +60,6 @@
 	<classpathentry kind="lib" path="lib/development/dtddoc.jar"/>
 	<classpathentry kind="lib" path="lib/development/dtdparser.jar"/>
 	<classpathentry kind="lib" path="lib/development/dumbster.jar"/>
-	<classpathentry kind="lib" path="lib/development/error-prone-ant.jar"/>
 	<classpathentry kind="lib" path="lib/development/freemarker.jar"/>
 	<classpathentry kind="lib" path="lib/development/guava.jar"/>
 	<classpathentry kind="lib" path="lib/development/hamcrest-core.jar"/>

@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import path from 'path';
+
 import projectScopeRequire from '../util/projectScopeRequire.mjs';
 
 /**
@@ -25,24 +27,26 @@ export default function getProjectEntryPoints(projectDir = '.') {
 		projectDir
 	);
 
+	const projectDirectory = path.basename(projectDir);
+
 	const entryPoints = {};
 
 	if (main) {
-		verifyResourcePath(main, 'main');
+		verifyResourcePath(main, 'main', projectDirectory);
 
 		entryPoints.main = main;
 		entryPoints.typescript = main;
 	}
 
 	if (typescript && typescript.main) {
-		verifyResourcePath(typescript.main, 'typescript');
+		verifyResourcePath(typescript.main, 'typescript', projectDirectory);
 
 		entryPoints.typescript = typescript.main;
 	}
 
 	if (submodules) {
 		Object.values(submodules).forEach((submodulePath) => {
-			verifyResourcePath(submodulePath, 'submodule');
+			verifyResourcePath(submodulePath, 'submodule', projectDirectory);
 		});
 
 		entryPoints.submodules = submodules;
@@ -51,7 +55,7 @@ export default function getProjectEntryPoints(projectDir = '.') {
 	return entryPoints;
 }
 
-function verifyResourcePath(resourcePath, type) {
+function verifyResourcePath(resourcePath, type, projectDirectory) {
 	if (
 		resourcePath.startsWith('./src/main/resources/META-INF/resources') ||
 		resourcePath.startsWith('./src/node/')
@@ -60,6 +64,6 @@ function verifyResourcePath(resourcePath, type) {
 	}
 
 	throw Error(
-		`❌ '${type}' path '${resourcePath}' is not allowed, it must be located under 'src/main/resources/META-INF/resources/*'.`
+		`❌ '${type}' path '${resourcePath}' is not allowed for '${projectDirectory}', it must be located under './src/main/resources/META-INF/resources/*'.`
 	);
 }

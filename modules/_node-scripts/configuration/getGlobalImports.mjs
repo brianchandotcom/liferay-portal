@@ -39,9 +39,17 @@ export default async function getGlobalImports() {
 			webContextPath: getWebContextPath(providerName),
 		};
 
-		for (const packageName of imports[providerName]) {
+		for (let packageName of imports[providerName]) {
+			let submodule = false;
+
+			if (packageName.startsWith('./')) {
+				packageName = `${providerName}/${packageName.replace('./', '')}`;
+				submodule = true;
+			}
+
 			externalImports[packageName] = {
 				external: true,
+				submodule,
 				webContextPath: getWebContextPath(providerName),
 			};
 		}

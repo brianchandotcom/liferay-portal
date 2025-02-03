@@ -5,17 +5,12 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
-import com.liferay.fragment.constants.FragmentEntryLinkConstants;
-import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.exception.NoSuchEntryException;
 import com.liferay.fragment.listener.FragmentEntryLinkListener;
 import com.liferay.fragment.listener.FragmentEntryLinkListenerRegistry;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
-import com.liferay.fragment.processor.DefaultFragmentEntryProcessorContext;
-import com.liferay.fragment.processor.FragmentEntryProcessorContext;
-import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.fragment.renderer.DefaultFragmentRendererContext;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererRegistry;
@@ -42,7 +37,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -239,52 +233,9 @@ public class AddStepperFragmentEntryLinkMVCActionCommand
 				stepperFragmentEntryLink);
 		}
 
-		JSONObject editableValuesJSONObject =
-			_fragmentEntryLinkManager.mergeEditableValuesJSONObject(
-				_jsonFactory.createJSONObject(
-					stepperFragmentEntryLink.getEditableValues()),
-				JSONUtil.put(
-					FragmentEntryProcessorConstants.
-						KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
-					JSONUtil.put("numberOfSteps", numberOfSteps)));
-
-		stepperFragmentEntryLink =
-			_fragmentEntryLinkService.updateFragmentEntryLink(
-				stepperFragmentEntryLink.getFragmentEntryLinkId(),
-				editableValuesJSONObject.toString());
-
-		FragmentEntryProcessorContext fragmentEntryProcessorContext =
-			new DefaultFragmentEntryProcessorContext(
-				_portal.getHttpServletRequest(actionRequest),
-				_portal.getHttpServletResponse(actionResponse),
-				FragmentEntryLinkConstants.EDIT,
-				LocaleUtil.getMostRelevantLocale());
-
-		String processedHTML =
-			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
-				stepperFragmentEntryLink, fragmentEntryProcessorContext);
-
-		JSONObject newEditableValuesJSONObject =
-			_fragmentEntryLinkManager.mergeEditableValuesJSONObject(
-				_fragmentEntryProcessorRegistry.
-					getDefaultEditableValuesJSONObject(
-						processedHTML,
-						stepperFragmentEntryLink.getConfiguration()),
-				editableValuesJSONObject);
-
-		stepperFragmentEntryLink =
-			_fragmentEntryLinkService.updateFragmentEntryLink(
-				stepperFragmentEntryLink.getFragmentEntryLinkId(),
-				newEditableValuesJSONObject.toString());
-
-		for (FragmentEntryLinkListener fragmentEntryLinkListener :
-				_fragmentEntryLinkListenerRegistry.
-					getFragmentEntryLinkListeners()) {
-
-			fragmentEntryLinkListener.
-				onUpdateFragmentEntryLinkConfigurationValues(
-					stepperFragmentEntryLink);
-		}
+		stepperFragmentEntryLink = _formItemManager.updateNumberOfStepps(
+			actionRequest, actionResponse, numberOfSteps,
+			stepperFragmentEntryLink);
 
 		return jsonObject.put(
 			"addedItemIds",
@@ -341,9 +292,6 @@ public class AddStepperFragmentEntryLinkMVCActionCommand
 
 	@Reference
 	private FragmentEntryLinkService _fragmentEntryLinkService;
-
-	@Reference
-	private FragmentEntryProcessorRegistry _fragmentEntryProcessorRegistry;
 
 	@Reference
 	private FragmentRendererRegistry _fragmentRendererRegistry;

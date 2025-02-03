@@ -41,6 +41,7 @@ export function TranslationOptionsContainer({
 					values.businessType === 'Decimal' ||
 					values.businessType === 'Integer' ||
 					values.businessType === 'LongInteger' ||
+					values.businessType === 'MultiselectPicklist' ||
 					values.businessType === 'PrecisionDecimal'))) &&
 		!values.system;
 

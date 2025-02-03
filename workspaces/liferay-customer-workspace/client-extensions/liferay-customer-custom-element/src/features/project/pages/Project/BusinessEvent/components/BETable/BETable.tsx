@@ -3,15 +3,14 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {useNavigate} from 'react-router-dom';
-
-import './SVTable.css';
-
 import DataTable from '~/components/DataTable';
+
+import './BETable.css';
 
 export interface IColumn {
 	columnKey: string;
 	label: string;
+	subLabel?: string;
 }
 
 export interface IRow {
@@ -24,23 +23,8 @@ interface IProps {
 	rows: IRow[];
 }
 
-const SVTable = ({columns, rows}: IProps) => {
-	const navigate = useNavigate();
-
-	const handleRowClick = (row: IRow) => {
-		if (row.link) {
-			navigate(row.link);
-		}
-	};
-
-	return (
-		<DataTable
-			className="sv"
-			columns={columns}
-			onRowClick={handleRowClick}
-			rows={rows}
-		/>
-	);
+const BETable = ({columns, rows}: IProps) => {
+	return <DataTable className="be" columns={columns} rows={rows} />;
 };
 
-export default SVTable;
+export default BETable;

@@ -1,0 +1,64 @@
+.be-structured-data {
+	width: 100%;
+
+	tbody tr:hover {
+		background-color: var(--color-action-primary-hover-lighten);
+	}
+	
+	td, th {
+		padding: var(--spacer-3);
+		
+		&:first-child {
+			border-radius: var(--border-radius-sm) 0 0 var(--border-radius-sm) !important;
+		}
+		
+		&:last-child {
+			border-radius: 0 var(--border-radius-sm) var(--border-radius-sm) 0 !important;
+		}
+	}
+	
+	td {
+		border-width: 0;
+		color: var(--color-neutral-8);
+	}
+	
+	thead {
+		background-color: var(--color-neutral-0);
+		border-bottom: 1px solid var(--color-neutral-2);
+	}
+}
+
+.be-table {
+	.be-header-label {
+		font-size: 0.875rem;
+	}
+
+	.be-header-sub-label {
+		color: var(--color-neutral-7);
+		font-size: 0.813rem;
+		font-weight: 400;
+	}
+
+	.be-row {
+		cursor: pointer;
+	}
+	
+	.be-status {
+		background-color: var(--color-neutral-5);
+		border-radius: var(--border-radius-sm);
+		color: var(--color-neutral-0);
+		font-size: var(--font-size-sm);
+	}
+	
+	.be-status-canceled {
+		background-color: var(--color-state-error);
+	}
+	
+	.be-status-open {
+		background-color: var(--color-state-success);
+	}
+	
+	.be-status-overdue {
+		background-color: var(--color-state-warning);
+	}
+}

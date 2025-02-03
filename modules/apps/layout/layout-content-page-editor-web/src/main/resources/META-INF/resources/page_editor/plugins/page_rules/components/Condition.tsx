@@ -126,12 +126,12 @@ export default function Condition({
 
 	const selectRef = useRef<HTMLButtonElement | undefined>();
 
-	const completeConditon = !!condition.options?.value;
+	const completeCondition = !!condition.options?.value;
 
 	return (
 		<RuleBuilderItem
 			aria-label={
-				completeConditon
+				completeCondition
 					? description
 					: Liferay.Language.get('incomplete-condition')
 			}

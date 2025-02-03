@@ -238,7 +238,7 @@ const AppsPanel = ({
 			className="applications-menu-wrapper"
 		>
 			<div className="applications-menu-header">
-				<ClayLayout.ContainerFluid size="xl">
+				<ClayLayout.ContainerFluid size={false}>
 					<ClayLayout.Row>
 						<ClayLayout.Col>
 							<ClayLayout.ContentRow
@@ -284,7 +284,7 @@ const AppsPanel = ({
 			</div>
 
 			<div className="applications-menu-bg applications-menu-border-top applications-menu-content">
-				<ClayLayout.ContainerFluid size="xl">
+				<ClayLayout.ContainerFluid size={false}>
 					<ClayLayout.Row>
 						<ClayLayout.Col className="pr-0" md="9" xl="8">
 							<ClayTabs.Content activeIndex={activeTab}>
@@ -328,7 +328,7 @@ const AppsPanel = ({
 			</div>
 
 			<div className="applications-menu-bg applications-menu-footer">
-				<ClayLayout.ContainerFluid size="xl">
+				<ClayLayout.ContainerFluid size={false}>
 					<ClayLayout.Row>
 						<ClayLayout.Col className="pr-3" md="9" xl="8">
 							<ClayLayout.ContentRow

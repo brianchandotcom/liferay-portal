@@ -401,6 +401,11 @@ public class CTCollectionWrapper
 		return model.isProduction();
 	}
 
+	@Override
+	public boolean isReadOnly() {
+		return model.isReadOnly();
+	}
+
 	/**
 	 * Returns <code>true</code> if this ct collection is shareable.
 	 *

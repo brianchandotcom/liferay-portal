@@ -46,7 +46,7 @@ public class CustomFDSCreationMenuSerializerImplTest {
 	}
 
 	@Test
-	public void testSerialization() throws Exception {
+	public void testSerialize() throws Exception {
 
 		// Different creation menu
 
@@ -86,8 +86,8 @@ public class CustomFDSCreationMenuSerializerImplTest {
 
 		String[] titles = {"New A", "New B"};
 
-		_testSerialization("fdsName1", titles);
-		_testSerialization("fdsName2", titles);
+		_testSerialize("fdsName1", titles);
+		_testSerialize("fdsName2", titles);
 	}
 
 	private boolean _containsTitle(CreationMenu creationMenu, String title) {
@@ -157,7 +157,7 @@ public class CustomFDSCreationMenuSerializerImplTest {
 			CustomFDSCreationMenuSerializerImpl.class);
 	}
 
-	private void _testSerialization(String fdsName, String[] titles)
+	private void _testSerialize(String fdsName, String[] titles)
 		throws Exception {
 
 		_mockFDSCreationMenu(fdsName, titles);

@@ -149,7 +149,10 @@ const reducer = (state, action) => {
 		let rangeLimitIds = {};
 		let nextActiveItemIds = [itemId];
 
-		if (!Liferay.FeatureFlags['LPD-18221']) {
+		if (
+			!Liferay.FeatureFlags['LPD-18221'] ||
+			state.activeItemType === ITEM_TYPES.editable
+		) {
 			nextActiveItemIds = itemId ? [itemId] : [];
 		}
 		else if (!itemId) {

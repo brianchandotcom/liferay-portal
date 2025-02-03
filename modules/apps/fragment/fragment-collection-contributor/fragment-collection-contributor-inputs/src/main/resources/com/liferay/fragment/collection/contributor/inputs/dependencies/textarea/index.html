@@ -12,7 +12,7 @@
 			<textarea aria-describedby="${fragmentEntryLinkNamespace}-textarea-help-text" aria-labelledby="${fragmentEntryLinkNamespace}-textarea-label [#if  input.errorMessage?has_content]${fragmentEntryLinkNamespace}-textarea-error-message[/#if]" class="form-control" id="${fragmentEntryLinkNamespace}-textarea" name="${input.name}" placeholder="${configuration.placeholder}" [#if input.readOnly]readonly[/#if] ${input.required?then('required', '')} [#if configuration.numberOfLines > 0]rows="${configuration.numberOfLines}"[/#if] type="text">[#if input.value??]${input.value}[/#if]</textarea>
 
 			[#if !input.localizable && input.attributes.unlocalizedFieldsMessage??]
-				<div aria-label="${input.attributes.unlocalizedFieldsMessage}" class="d-none lfr-portal-tooltip mt-1 pt-2" data-title="${input.attributes.unlocalizedFieldsMessage}" id="${fragmentEntryLinkNamespace}-unlocalized-info" tabindex="0">
+				<div aria-label="${input.attributes.unlocalizedFieldsMessage}" class="d-none lfr-portal-tooltip mt-1 pt-2" data-title="${input.attributes.unlocalizedFieldsMessage}" id="${fragmentEntryLinkNamespace}-unlocalized-info" role="tooltip" tabindex="0">
 					[@clay["icon"] className="ml-2 mt-0 text-secondary" symbol="question-circle-full" /]
 				</div>
 			[/#if]

@@ -8,7 +8,7 @@
 			<input aria-describedby="${fragmentEntryLinkNamespace}-numeric-input-help-text" aria-labelledby="${fragmentEntryLinkNamespace}-numeric-input-label [#if input.errorMessage?has_content]${fragmentEntryLinkNamespace}-numeric-input-error-message[/#if]" class="form-control" data-validation-message-text="${languageUtil.get(locale, "enter-a-valid-value.-the-value-has-too-many-decimals")}" id="${fragmentEntryLinkNamespace}-numeric-input" [#if input.attributes.max??]max="${input.attributes.max}"[/#if] [#if input.attributes.min??]min="${input.attributes.min}"[/#if] name="${input.name}" [#if input.readOnly]readonly[/#if] ${input.required?then('required', '')} [#if input.attributes.dataType?? && input.attributes.dataType="decimal" && input.attributes.step??]step="${input.attributes.step}"[/#if] placeholder="${configuration.placeholder}" type="number" [#if input.value??]value="${input.value}"[/#if] />
 
 			[#if !input.localizable && input.attributes.unlocalizedFieldsMessage??]
-				<div aria-label="${input.attributes.unlocalizedFieldsMessage}" class="d-none lfr-portal-tooltip mt-1 pt-2" data-title="${input.attributes.unlocalizedFieldsMessage}" id="${fragmentEntryLinkNamespace}-unlocalized-info" tabindex="0">
+				<div aria-label="${input.attributes.unlocalizedFieldsMessage}" class="d-none lfr-portal-tooltip mt-1 pt-2" data-title="${input.attributes.unlocalizedFieldsMessage}" id="${fragmentEntryLinkNamespace}-unlocalized-info" role="tooltip" tabindex="0">
 					[@clay["icon"] className="ml-2 mt-0 text-secondary" symbol="question-circle-full" /]
 				</div>
 			[/#if]

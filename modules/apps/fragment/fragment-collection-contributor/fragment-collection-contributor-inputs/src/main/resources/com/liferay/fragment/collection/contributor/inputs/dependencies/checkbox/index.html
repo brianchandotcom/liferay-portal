@@ -13,7 +13,7 @@
 		</label>
 
 		[#if !input.localizable && input.attributes.unlocalizedFieldsMessage??]
-			<div aria-label="${input.attributes.unlocalizedFieldsMessage}" class="d-none lfr-portal-tooltip" data-title="${input.attributes.unlocalizedFieldsMessage}" id="${fragmentEntryLinkNamespace}-unlocalized-info" tabindex="0">
+			<div aria-label="${input.attributes.unlocalizedFieldsMessage}" class="d-none lfr-portal-tooltip" data-title="${input.attributes.unlocalizedFieldsMessage}" id="${fragmentEntryLinkNamespace}-unlocalized-info" role="tooltip" tabindex="0">
 				[@clay["icon"] className="ml-2 mt-0 text-secondary" symbol="question-circle-full" /]
 			</div>
 		[/#if]

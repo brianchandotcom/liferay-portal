@@ -69,7 +69,7 @@ public class SystemFDSCreationMenuSerializerImplTest
 	@Test
 	public void testSerialization() throws Exception {
 
-		// different creation menus
+		// different creation menu
 
 		ServiceRegistration<SystemFDSEntry> systemFDSEntryServiceRegistration1 =
 			registerSystemFDSEntry("fdsName1", "/app", "/endpoint", "schema");

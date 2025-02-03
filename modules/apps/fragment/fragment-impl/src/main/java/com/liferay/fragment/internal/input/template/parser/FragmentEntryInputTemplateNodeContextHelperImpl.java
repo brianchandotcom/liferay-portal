@@ -983,13 +983,13 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 		if (infoField.isLocalizable() &&
 			(value instanceof InfoLocalizedValue)) {
 
+			HashMap<Locale, Object> parsedValues = new HashMap<>();
+
 			InfoLocalizedValue<?> infoLocalizedValue =
 				(InfoLocalizedValue<?>)value;
 
 			Map<Locale, Object> values =
 				(Map<Locale, Object>)infoLocalizedValue.getValues();
-
-			HashMap<Locale, Object> parsedValues = new HashMap<>();
 
 			for (Map.Entry<Locale, Object> entry : values.entrySet()) {
 				parsedValues.put(

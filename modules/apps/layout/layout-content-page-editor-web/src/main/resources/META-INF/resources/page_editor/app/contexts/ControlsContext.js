@@ -362,7 +362,11 @@ const useSelectItem = () => {
 	return useCallback(
 		(
 			itemId,
-			{itemType = ITEM_TYPES.layoutDataItem, origin = null} = {
+			{
+				parentId = null,
+				itemType = ITEM_TYPES.layoutDataItem,
+				origin = null,
+			} = {
 				itemType: ITEM_TYPES.layoutDataItem,
 			}
 		) => {
@@ -372,6 +376,7 @@ const useSelectItem = () => {
 				layoutData: layoutDataRef.current,
 				multiSelect: multiSelectTypeRef.current,
 				origin,
+				parentId,
 				type: SELECT_ITEM,
 			});
 		},

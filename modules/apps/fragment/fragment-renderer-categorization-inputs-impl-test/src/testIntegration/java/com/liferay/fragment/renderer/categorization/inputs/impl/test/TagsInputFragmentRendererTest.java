@@ -47,7 +47,7 @@ public class TagsInputFragmentRendererTest
 	@Override
 	protected ObjectEntry addObjectEntry() throws Exception {
 		return _objectEntryLocalService.addObjectEntry(
-			TestPropsValues.getUserId(), group.getGroupId(),
+			TestPropsValues.getUserId(), group.getGroupId(), null,
 			objectDefinition.getObjectDefinitionId(),
 			HashMapBuilder.<String, Serializable>put(
 				"firstName", RandomTestUtil.randomString()

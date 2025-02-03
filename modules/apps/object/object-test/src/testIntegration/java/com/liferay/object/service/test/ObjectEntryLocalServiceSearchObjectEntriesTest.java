@@ -578,7 +578,7 @@ public class ObjectEntryLocalServiceSearchObjectEntriesTest {
 		throws Exception {
 
 		return _objectEntryLocalService.addObjectEntry(
-			TestPropsValues.getUserId(), 0,
+			TestPropsValues.getUserId(), 0, null,
 			_objectDefinition.getObjectDefinitionId(), values,
 			ServiceContextTestUtil.getServiceContext());
 	}

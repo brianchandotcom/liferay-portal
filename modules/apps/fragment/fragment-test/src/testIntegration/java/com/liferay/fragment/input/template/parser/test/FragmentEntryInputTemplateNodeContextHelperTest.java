@@ -125,7 +125,7 @@ public class FragmentEntryInputTemplateNodeContextHelperTest {
 		_objectDefinition = _addObjectDefinition();
 
 		_objectEntry = _objectEntryLocalService.addObjectEntry(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			TestPropsValues.getUserId(), _group.getGroupId(), null,
 			_objectDefinition.getObjectDefinitionId(),
 			HashMapBuilder.<String, Serializable>put(
 				"myMultiselectPicklist",
@@ -192,7 +192,7 @@ public class FragmentEntryInputTemplateNodeContextHelperTest {
 			"_c_customObjectDefinitionId");
 
 		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			TestPropsValues.getUserId(), _group.getGroupId(), null,
 			objectDefinition.getObjectDefinitionId(),
 			HashMapBuilder.<String, Serializable>put(
 				relationshipObjectFieldName, _objectEntry.getObjectEntryId()
@@ -415,7 +415,7 @@ public class FragmentEntryInputTemplateNodeContextHelperTest {
 		Timestamp esTimestamp = new Timestamp(esDate.getTime());
 
 		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			TestPropsValues.getUserId(), _group.getGroupId(), null,
 			objectDefinition.getObjectDefinitionId(),
 			HashMapBuilder.<String, Serializable>put(
 				"myDate", enDate

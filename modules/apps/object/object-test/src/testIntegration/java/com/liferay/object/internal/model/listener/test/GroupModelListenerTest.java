@@ -95,7 +95,7 @@ public class GroupModelListenerTest {
 		Group group = GroupTestUtil.addGroup();
 
 		ObjectEntry objectEntry1 = _objectEntryLocalService.addObjectEntry(
-			TestPropsValues.getUserId(), group.getGroupId(),
+			TestPropsValues.getUserId(), group.getGroupId(), null,
 			_objectDefinition1.getObjectDefinitionId(),
 			HashMapBuilder.<String, Serializable>put(
 				_OBJECT_FIELD_NAME, RandomTestUtil.randomString()
@@ -106,7 +106,7 @@ public class GroupModelListenerTest {
 			_objectRelationship.getObjectFieldId2());
 
 		ObjectEntry objectEntry2 = _objectEntryLocalService.addObjectEntry(
-			TestPropsValues.getUserId(), group.getGroupId(),
+			TestPropsValues.getUserId(), group.getGroupId(), null,
 			_objectDefinition2.getObjectDefinitionId(),
 			HashMapBuilder.<String, Serializable>put(
 				_OBJECT_FIELD_NAME, RandomTestUtil.randomString()

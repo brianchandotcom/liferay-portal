@@ -199,7 +199,7 @@ public class ObjectEntryIndexerReindexTest {
 				objectDefinition.getObjectDefinitionId());
 
 			ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
-				TestPropsValues.getUserId(), 0,
+				TestPropsValues.getUserId(), 0, null,
 				objectDefinition.getObjectDefinitionId(),
 				HashMapBuilder.<String, Serializable>put(
 					"decimalLocalized_i18n",

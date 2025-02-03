@@ -4799,7 +4799,8 @@ public class ObjectEntryResourceTest {
 
 		ObjectEntry serviceBuilderObjectEntry =
 			_objectEntryLocalService.addObjectEntry(
-				user.getUserId(), 0, objectDefinition.getObjectDefinitionId(),
+				user.getUserId(), 0, null,
+				objectDefinition.getObjectDefinitionId(),
 				HashMapBuilder.<String, Serializable>put(
 					"testField", true
 				).build(),
@@ -6439,7 +6440,7 @@ public class ObjectEntryResourceTest {
 
 			ObjectEntry serviceBuilderObjectEntry =
 				_objectEntryLocalService.addObjectEntry(
-					TestPropsValues.getUserId(), 0,
+					TestPropsValues.getUserId(), 0, null,
 					objectDefinition.getObjectDefinitionId(),
 					HashMapBuilder.<String, Serializable>put(
 						"authorOfGospel", true

@@ -775,7 +775,8 @@ public class ObjectRelatedModelsProviderTest {
 			AccountEntry accountEntry2 = _addAccountEntry(user.getUserId());
 
 			ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
-				user.getUserId(), 0, objectDefinition.getObjectDefinitionId(),
+				user.getUserId(), 0, null,
+				objectDefinition.getObjectDefinitionId(),
 				Collections.emptyMap(),
 				ServiceContextTestUtil.getServiceContext());
 

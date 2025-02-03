@@ -2457,7 +2457,7 @@ public class ObjectEntryLocalServiceTest {
 			_objectRelationship.getObjectFieldId2(), true);
 
 		_objectEntryLocalService.addObjectEntry(
-			TestPropsValues.getUserId(), 0,
+			TestPropsValues.getUserId(), 0, null,
 			_objectDefinition.getObjectDefinitionId(), values, serviceContext);
 
 		_assertCount(8);
@@ -4765,8 +4765,8 @@ public class ObjectEntryLocalServiceTest {
 		throws Exception {
 
 		return _objectEntryLocalService.addObjectEntry(
-			TestPropsValues.getUserId(), groupId, objectDefinitionId, values,
-			ServiceContextTestUtil.getServiceContext());
+			TestPropsValues.getUserId(), groupId, null, objectDefinitionId,
+			values, ServiceContextTestUtil.getServiceContext());
 	}
 
 	private ObjectEntry _addObjectEntry(Map<String, Serializable> values)
@@ -5204,7 +5204,7 @@ public class ObjectEntryLocalServiceTest {
 		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
 
 		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
-			TestPropsValues.getUserId(), 0,
+			TestPropsValues.getUserId(), 0, null,
 			_objectDefinition.getObjectDefinitionId(), values1, serviceContext);
 
 		Assert.assertEquals(
@@ -5247,7 +5247,7 @@ public class ObjectEntryLocalServiceTest {
 				serviceContext));
 
 		objectEntry = _objectEntryLocalService.addObjectEntry(
-			TestPropsValues.getUserId(), 0,
+			TestPropsValues.getUserId(), 0, null,
 			_objectDefinition.getObjectDefinitionId(), values2, serviceContext);
 
 		_objectDefinition.setEnableObjectEntryDraft(false);
@@ -5556,14 +5556,14 @@ public class ObjectEntryLocalServiceTest {
 					"Group ID ", groupId, " is not valid for scope \"", scope,
 					"\""),
 				() -> _objectEntryLocalService.addObjectEntry(
-					TestPropsValues.getUserId(), groupId,
+					TestPropsValues.getUserId(), groupId, null,
 					objectDefinition.getObjectDefinitionId(),
 					Collections.<String, Serializable>emptyMap(),
 					ServiceContextTestUtil.getServiceContext()));
 		}
 		else {
 			_objectEntryLocalService.addObjectEntry(
-				TestPropsValues.getUserId(), groupId,
+				TestPropsValues.getUserId(), groupId, null,
 				objectDefinition.getObjectDefinitionId(),
 				Collections.<String, Serializable>emptyMap(),
 				ServiceContextTestUtil.getServiceContext());

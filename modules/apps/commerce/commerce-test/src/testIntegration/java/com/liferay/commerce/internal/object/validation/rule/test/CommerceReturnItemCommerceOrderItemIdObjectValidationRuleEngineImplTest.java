@@ -122,7 +122,7 @@ public class
 		}
 
 		_objectEntry = _objectEntryLocalService.addObjectEntry(
-			commerceReturnObjectDefinition.getUserId(), 0,
+			commerceReturnObjectDefinition.getUserId(), 0, null,
 			commerceReturnObjectDefinition.getObjectDefinitionId(),
 			HashMapBuilder.<String, Serializable>put(
 				"r_accountToCommerceReturns_accountEntryId",

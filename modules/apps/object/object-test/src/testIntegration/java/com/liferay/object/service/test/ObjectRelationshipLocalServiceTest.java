@@ -2119,7 +2119,7 @@ public class ObjectRelationshipLocalServiceTest {
 		throws Exception {
 
 		return _objectEntryLocalService.addObjectEntry(
-			TestPropsValues.getUserId(), 0,
+			TestPropsValues.getUserId(), 0, null,
 			objectDefinition.getObjectDefinitionId(), values,
 			ServiceContextTestUtil.getServiceContext());
 	}

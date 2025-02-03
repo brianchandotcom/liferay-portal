@@ -497,7 +497,7 @@ public class ObjectEntryLocalServiceImpl
 		}
 
 		objectEntry = addObjectEntry(
-			userId, groupId, objectDefinitionId, values, serviceContext);
+			userId, groupId, null, objectDefinitionId, values, serviceContext);
 
 		if (Validator.isNotNull(externalReferenceCode)) {
 			objectEntry.setExternalReferenceCode(externalReferenceCode);

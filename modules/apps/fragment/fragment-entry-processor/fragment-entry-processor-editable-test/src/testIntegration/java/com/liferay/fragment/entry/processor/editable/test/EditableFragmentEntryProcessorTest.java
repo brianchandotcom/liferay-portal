@@ -751,7 +751,7 @@ public class EditableFragmentEntryProcessorTest {
 			objectDefinition.getClassName());
 
 		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
-			TestPropsValues.getUserId(), _group.getGroupId(),
+			TestPropsValues.getUserId(), _group.getGroupId(), null,
 			objectDefinition.getObjectDefinitionId(),
 			HashMapBuilder.<String, Serializable>put(
 				"text", RandomTestUtil.randomString()

@@ -760,7 +760,7 @@ function showErrorToast(source) {
 
 	if (source.fragmentEntryType === FRAGMENT_ENTRY_TYPES.input) {
 		error = Liferay.Language.get(
-			'form-components-can-only-be-placed-inside-a-mapped-form-container'
+			'this-form-component-can-only-be-placed-inside-a-mapped-form-container'
 		);
 	}
 

@@ -1267,7 +1267,17 @@ public abstract class Base${schemaName}ResourceImpl
 	<#if generateCRUD>
 		@Override
 		public ${schemaName} getItem(Long id) throws Exception {
-			return ${getByIdJavaMethodSignature.methodName}(id);
+			return ${getByIdJavaMethodSignature.methodName}(
+			<#list getByIdJavaMethodSignature.javaMethodParameters as javaMethodParameter>
+				<#if freeMarkerTool.isIdParameter(javaMethodParameter, schemaName)>
+					id
+				<#else>
+					null
+				</#if>
+
+				<#sep>, </#sep>
+			</#list>
+			);
 		}
 	</#if>
 

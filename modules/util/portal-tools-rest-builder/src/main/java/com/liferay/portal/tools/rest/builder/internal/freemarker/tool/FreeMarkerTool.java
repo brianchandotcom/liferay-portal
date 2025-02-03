@@ -146,11 +146,7 @@ public class FreeMarkerTool {
 		for (JavaMethodParameter javaMethodParameter :
 				javaMethodSignature.getPathJavaMethodParameters()) {
 
-			if ((StringUtil.equals(
-					javaMethodParameter.getParameterName(), "id") ||
-				 StringUtil.equals(
-					 javaMethodParameter.getParameterName(),
-					 StringUtil.lowerCaseFirstLetter(schemaName) + "Id")) &&
+			if (isIdParameter(javaMethodParameter, schemaName) &&
 				StringUtil.equals(
 					javaMethodParameter.getParameterType(), "java.lang.Long")) {
 
@@ -1140,6 +1136,20 @@ public class FreeMarkerTool {
 		}
 
 		return true;
+	}
+
+	public boolean isIdParameter(
+		JavaMethodParameter javaMethodParameter, String schemaName) {
+
+		if (StringUtil.equals(javaMethodParameter.getParameterName(), "id") ||
+			StringUtil.equals(
+				javaMethodParameter.getParameterName(),
+				StringUtil.lowerCaseFirstLetter(schemaName) + "Id")) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public boolean isParameter(

@@ -20,6 +20,7 @@ export interface Action {
 
 interface ActionProps {
 	action: Action;
+	inputFragmentItems: {label: string; value: string}[];
 	layoutDataItems: {label: string; value: string}[];
 	onActionChange: (action: Action) => void;
 	onDeleteAction: () => void;
@@ -48,6 +49,7 @@ export const ACTION_ITEMS = [
 
 export default function Action({
 	action,
+	inputFragmentItems,
 	layoutDataItems,
 	onActionChange,
 	onDeleteAction,
@@ -58,7 +60,7 @@ export default function Action({
 
 	const [{description}] = useActionValues({
 		actions: [action],
-		items: layoutDataItems,
+		items: [...layoutDataItems, ...inputFragmentItems],
 	});
 
 	const selectRef = useRef<HTMLButtonElement | undefined>();

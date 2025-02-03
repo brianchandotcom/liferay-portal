@@ -12,12 +12,10 @@ import {ScreenReaderAnnouncerContextProvider} from '@liferay/layout-js-component
 import classNames from 'classnames';
 import {useId} from 'frontend-js-components-web';
 import {openToast} from 'frontend-js-web';
-import React, {useEffect, useMemo, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {v4 as uuidv4} from 'uuid';
 
-import {LAYOUT_DATA_ITEM_TYPES} from '../../../app/config/constants/layoutDataItemTypes';
 import {useDispatch, useSelector} from '../../../app/contexts/StoreContext';
-import selectLayoutDataItemLabel from '../../../app/selectors/selectLayoutDataItemLabel';
 import addRule from '../../../app/thunks/addRule';
 import updateRule from '../../../app/thunks/updateRule';
 import {
@@ -30,7 +28,6 @@ export default function RulesModal({editingRule, onCloseModal}) {
 		onClose: () => onCloseModal(editingRule?.id),
 	});
 
-	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
 	const layoutData = useSelector((state) => state.layoutData);
 
 	const rules = layoutData.pageRules;
@@ -52,30 +49,6 @@ export default function RulesModal({editingRule, onCloseModal}) {
 		() => editingRule?.conditions || [{id: uuidv4()}]
 	);
 	const [conditionType, setConditionType] = useState('all');
-
-	const layoutDataItems = useMemo(() => {
-		const items = [];
-
-		Object.values(layoutData.items).forEach((item) => {
-			if (
-				item.type !== LAYOUT_DATA_ITEM_TYPES.collectionItem &&
-				item.type !== LAYOUT_DATA_ITEM_TYPES.column &&
-				item.type !== LAYOUT_DATA_ITEM_TYPES.dropZone &&
-				item.type !== LAYOUT_DATA_ITEM_TYPES.fragmentDropZone &&
-				item.type !== LAYOUT_DATA_ITEM_TYPES.root
-			) {
-				items.push({
-					label: selectLayoutDataItemLabel(
-						{fragmentEntryLinks, layoutData},
-						item
-					),
-					value: item.itemId,
-				});
-			}
-		});
-
-		return items;
-	}, [layoutData, fragmentEntryLinks]);
 
 	const onSave = () => {
 		if (!name) {
@@ -213,7 +186,6 @@ export default function RulesModal({editingRule, onCloseModal}) {
 					>
 						<RuleBuilderActionSection
 							actions={actions}
-							layoutDataItems={layoutDataItems}
 							setActions={(actions) => {
 								setRuleError(false);
 

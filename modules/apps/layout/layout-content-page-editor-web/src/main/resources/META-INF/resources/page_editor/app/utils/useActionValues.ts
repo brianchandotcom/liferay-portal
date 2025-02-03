@@ -4,7 +4,6 @@
  */
 
 import {
-	ACTION_ITEMS,
 	ACTION_TYPE_ITEMS,
 	Action,
 } from '../../plugins/page_rules/components/Action';
@@ -18,15 +17,13 @@ type Props = {
 
 export default function useActionValues({actions, items}: Props) {
 	return actions.map((_action, index) => {
-		const action = getAction(_action.action);
 		const item = getItem(items, _action.itemId);
 		const prefix = getPrefix(index);
 		const type = getType(_action.type);
 
-		const description = getDescription(action, item, prefix, type);
+		const description = getDescription(item, prefix, type);
 
 		return {
-			action,
 			description,
 			id: _action.id,
 			item,
@@ -36,21 +33,10 @@ export default function useActionValues({actions, items}: Props) {
 	});
 }
 
-function getAction(action: Action['action']) {
-	if (!action) {
-		return '';
-	}
-
-	return ACTION_ITEMS.find(({value}) => value === action)?.label;
-}
-
-function getDescription(
-	action?: string,
-	item?: string,
-	prefix?: string,
-	type?: string
-) {
-	return [prefix, type, action, item].filter((item) => item).join(' ');
+function getDescription(item?: string, prefix?: string, type?: string) {
+	return [prefix, type, Liferay.Language.get('fragment'), item]
+		.filter((item) => item)
+		.join(' ');
 }
 
 function getItem(items: Item[], itemId?: Action['itemId']) {

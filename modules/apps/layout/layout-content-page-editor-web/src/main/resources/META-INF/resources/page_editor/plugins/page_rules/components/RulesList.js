@@ -226,8 +226,6 @@ function Action({action}) {
 
 			<span className="font-weight-semi-bold">{action.type}</span>
 
-			{action.action}
-
 			<ClayLabel className="m-0" displayType="secondary">
 				{action.item}
 			</ClayLabel>

@@ -15,8 +15,8 @@ import {flushSync} from 'react-dom';
 
 import {v4 as uuidv4} from 'uuid';
 
-import { LAYOUT_DATA_ITEM_TYPES } from '../../../app/config/constants/layoutDataItemTypes';
-import { useSelector } from '../../../app/contexts/StoreContext';
+import {LAYOUT_DATA_ITEM_TYPES} from '../../../app/config/constants/layoutDataItemTypes';
+import {useSelector} from '../../../app/contexts/StoreContext';
 import selectLayoutDataItemLabel from '../../../app/selectors/selectLayoutDataItemLabel';
 import ActionComponent, {Action} from './Action';
 import ConditionComponent, {Condition} from './Condition';
@@ -50,7 +50,6 @@ export function RuleBuilderActionSection({
 	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
 	const layoutData = useSelector((state) => state.layoutData);
 
-
 	const [layoutDataItems, inputFragmentItems] = useMemo(() => {
 		const layoutItems: {label: string; value: string}[] = [];
 		const inputFragments: {label: string; value: string}[] = [];
@@ -73,7 +72,8 @@ export function RuleBuilderActionSection({
 			}
 
 			if (item.type === LAYOUT_DATA_ITEM_TYPES.fragment) {
-				const fragment = fragmentEntryLinks[item.config.fragmentEntryLinkId];
+				const fragment =
+					fragmentEntryLinks[item.config.fragmentEntryLinkId];
 
 				if (fragment && fragment.fragmentEntryType === 'input') {
 					inputFragments.push({

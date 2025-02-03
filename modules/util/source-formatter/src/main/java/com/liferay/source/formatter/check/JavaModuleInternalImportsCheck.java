@@ -53,20 +53,18 @@ public class JavaModuleInternalImportsCheck extends BaseFileCheck {
 
 		Matcher matcher = _internalImportPattern.matcher(content);
 
-		int pos = -1;
+		int pos = absolutePath.lastIndexOf("/com/liferay/");
+
+		String s = absolutePath.substring(0, pos + 13);
+
 		List<String> renamedSourcePathNames = getAttributeValues(
 			_RENAMED_SOURCE_PATH_NAMES_KEY, absolutePath);
 
 		while (matcher.find()) {
-			if (pos == -1) {
-				pos = absolutePath.lastIndexOf("/com/liferay/");
-			}
-
 			String match = matcher.group(1);
 
 			String expectedImportFileLocation =
-				absolutePath.substring(0, pos + 13) +
-					StringUtil.replace(match, '.', '/') + ".java";
+				s + StringUtil.replace(match, '.', '/') + ".java";
 
 			for (String renamedSourcePathName : renamedSourcePathNames) {
 				String[] parts = StringUtil.split(

@@ -10,7 +10,6 @@ import com.liferay.portal.kernel.captcha.Captcha;
 import com.liferay.portal.kernel.captcha.CaptchaConfigurationException;
 import com.liferay.portal.kernel.captcha.CaptchaException;
 import com.liferay.portal.kernel.module.service.Snapshot;
-import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.io.IOException;
 
@@ -34,7 +33,7 @@ public class CaptchaUtil {
 	public static void check(PortletRequest portletRequest)
 		throws CaptchaException {
 
-		getCaptcha().check(PortalUtil.getHttpServletRequest(portletRequest));
+		getCaptcha().check(portletRequest);
 	}
 
 	public static void enforceCaptcha(HttpServletRequest httpServletRequest) {
@@ -44,8 +43,7 @@ public class CaptchaUtil {
 	public static void enforceCaptcha(PortletRequest portletRequest)
 		throws CaptchaConfigurationException {
 
-		getCaptcha().enforceCaptcha(
-			PortalUtil.getHttpServletRequest(portletRequest));
+		getCaptcha().enforceCaptcha(portletRequest);
 	}
 
 	public static Captcha getCaptcha() {
@@ -63,8 +61,7 @@ public class CaptchaUtil {
 	}
 
 	public static boolean isEnabled(PortletRequest portletRequest) {
-		return getCaptcha().isEnabled(
-			PortalUtil.getHttpServletRequest(portletRequest));
+		return getCaptcha().isEnabled(portletRequest);
 	}
 
 	public static void serveImage(

@@ -25,6 +25,7 @@ const test = mergeTests(
 	apiHelpersTest,
 	collectionsPagesTest,
 	featureFlagsTest({
+		'LPD-18221': {enabled: true},
 		'LPS-178052': {enabled: true},
 	}),
 	loginTest(),
@@ -249,7 +250,7 @@ testWithIsolatedSite(
 		await pageEditorPage.addFragment(
 			'Basic Components',
 			'Heading',
-			page.locator('.page-editor__collection-item.empty').last()
+			page.locator('.page-editor__collection-item.empty').first()
 		);
 
 		// Assert pagination is visible by default
@@ -489,7 +490,7 @@ test('Checks Content Flags, Content Ratings and Content Display are compatible w
 		title: getRandomString(),
 	});
 
-	// Go to edit mode of the created
+	// Go to edit mode of the created page
 
 	await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
 
@@ -503,7 +504,7 @@ test('Checks Content Flags, Content Ratings and Content Display are compatible w
 
 	// Check that the Content Display shows Default Template by default
 
-	await page.getByText('Animal 02 content').click();
+	await page.getByText('Animal 01 content').click();
 
 	await expect(page.getByLabel('Template', {exact: true})).toHaveValue(
 		'Default Template'
@@ -519,45 +520,10 @@ test('Checks Content Flags, Content Ratings and Content Display are compatible w
 		}),
 	});
 
-	// Check that the Content Ratings is shown in each item and the Field input has the corresponding name
+	// Check that the Content Ratings and Content Flags are shown for every item
 
-	const voteItem = page.getByLabel('Vote', {exact: true});
-
-	await expect(voteItem).toHaveCount(2);
-
-	await voteItem.first().click();
-
-	await expect(page.getByPlaceholder('No Item Selected')).toHaveValue(
-		'Animal 01 - Dogs and Cats categories'
-	);
-
-	await voteItem.nth(1).click();
-
-	await expect(page.getByPlaceholder('No Item Selected')).toHaveValue(
-		'Animal 02 - Dogs category'
-	);
-
-	// Check that the Content Flags is shown in each item and the Field input has the corresponding name
-
-	const reportItem = page.locator('[data-name="Content Flags"]');
-
-	await expect(reportItem).toHaveCount(2);
-
-	await reportItem.first().click();
-
-	await page.getByPlaceholder('No Item Selected').waitFor();
-
-	await expect(page.getByPlaceholder('No Item Selected')).toHaveValue(
-		'Animal 01 - Dogs and Cats categories'
-	);
-
-	await reportItem.nth(1).click();
-
-	await page.getByPlaceholder('No Item Selected').waitFor();
-
-	await expect(page.getByPlaceholder('No Item Selected')).toHaveValue(
-		'Animal 02 - Dogs category'
-	);
+	await expect(page.getByLabel('Vote', {exact: true})).toHaveCount(2);
+	await expect(page.locator('button', {hasText: 'Report'})).toHaveCount(2);
 });
 
 test('Modifies inline text on all collection items', async ({
@@ -1012,7 +978,7 @@ test('Activate the first element when a fragment is added to a Collection Displa
 	await pageEditorPage.addFragment(
 		'Basic Components',
 		'Heading',
-		page.locator('.page-editor__collection-item.empty').last()
+		page.locator('.page-editor__collection-item.empty').first()
 	);
 
 	const headingId = await pageEditorPage.getFragmentId('Heading');

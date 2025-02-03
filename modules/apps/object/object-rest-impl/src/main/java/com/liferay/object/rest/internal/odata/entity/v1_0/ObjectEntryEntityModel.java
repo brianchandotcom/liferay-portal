@@ -13,6 +13,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.relationship.util.ObjectRelationshipUtil;
+import com.liferay.object.rest.internal.odata.entity.ReferenceStringEntityField;
 import com.liferay.object.service.ObjectFieldLocalServiceUtil;
 import com.liferay.object.service.ObjectRelationshipLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
@@ -33,9 +34,11 @@ import com.liferay.portal.odata.entity.StringEntityField;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Function;
 
 import javax.ws.rs.BadRequestException;
 
@@ -157,6 +160,10 @@ public class ObjectEntryEntityModel implements EntityModel {
 			"Unable to get entity field for object field " + objectField);
 	}
 
+	private Function<Locale, String> _getExternalReferenceCodeFunction() {
+		return locale -> "externalReferenceCode";
+	}
+
 	private Map<String, EntityField> _getObjectDefinitionEntityFieldsMap(
 		ObjectDefinition objectDefinition) {
 
@@ -211,7 +218,8 @@ public class ObjectEntryEntityModel implements EntityModel {
 			).put(
 				"externalReferenceCode",
 				() -> new StringEntityField(
-					"externalReferenceCode", locale -> "externalReferenceCode")
+					"externalReferenceCode",
+					_getExternalReferenceCodeFunction())
 			).put(
 				"id", new IdEntityField("id", locale -> "id", String::valueOf)
 			).put(
@@ -279,13 +287,11 @@ public class ObjectEntryEntityModel implements EntityModel {
 
 			entityFieldsMap.put(
 				objectRelationshipERCObjectFieldName,
-				new EntityField(
+				new ReferenceStringEntityField(
 					objectRelationshipERCObjectFieldName,
-					EntityField.Type.STRING, locale -> "externalReferenceCode",
-					locale ->
-						objectFieldName.split(StringPool.UNDERLINE)[1] +
-							"/externalReferenceCode",
-					String::valueOf));
+					_getExternalReferenceCodeFunction(),
+					objectFieldName.split(StringPool.UNDERLINE)[1] +
+						"/externalReferenceCode"));
 
 			String relationshipIdName = objectFieldName.substring(
 				objectFieldName.lastIndexOf(StringPool.UNDERLINE) + 1);

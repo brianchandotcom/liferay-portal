@@ -4449,7 +4449,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 					serviceContext.getUserId(),
 					serviceContext.getScopeGroupId(),
 					jsonObject.getLong("segmentsEntryId"),
-					draftLayout.getClassPK(),
+					draftLayout.getPlid(),
 					SiteInitializerUtil.toMap(
 						jsonObject.getString("name_i18n")),
 					jsonObject.getBoolean("active", true), unicodeProperties,

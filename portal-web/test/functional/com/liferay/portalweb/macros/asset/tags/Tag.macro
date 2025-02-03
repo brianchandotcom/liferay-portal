@@ -34,70 +34,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro addWithNullTitleCP(tagName = null) {
-		Tag._addCP(tagName = ${tagName});
-
-		Button.clickSave();
-
-		AssertElementPresent(locator1 = "Icon#ASTERISK");
-
-		AssertTextEquals(
-			locator1 = "Message#REQUIRED_INFO",
-			value1 = "The Name field is required.");
-	}
-
-	@summary = "Default summary"
-	macro cancelEditCP(tagNameEdit = null, tagMenuName = null) {
-		LexiconEntry.gotoEntryMenuItem(
-			menuItem = "Edit",
-			rowEntry = ${tagMenuName});
-
-		PortletEntry.inputName(name = ${tagNameEdit});
-
-		Button.clickCancel();
-	}
-
-	@summary = "Default summary"
-	macro deleteByIconCP(tagNameList = null) {
-		for (var tagName : list ${tagNameList}) {
-			LexiconEntry.selectEntry(key_rowEntry = ${tagName});
-		}
-
-		Click(
-			key_text = "trash",
-			locator1 = "ManagementBar#ANY_ICON");
-
-		AssertTextEquals(
-			locator1 = "Modal#BODY",
-			value1 = "Are you sure you want to delete this? It will be deleted immediately.");
-
-		Click(
-			key_text = "Delete",
-			locator1 = "Modal#MODAL_FOOTER_BUTTON");
-
-		Alert.viewSuccessMessage();
-	}
-
-	@summary = "Default summary"
-	macro deleteCP(tagNameList = null) {
-		for (var tagName : list ${tagNameList}) {
-			LexiconEntry.gotoEntryMenuItem(
-				menuItem = "Delete",
-				rowEntry = ${tagName});
-
-			AssertTextEquals(
-				locator1 = "Modal#BODY",
-				value1 = "Are you sure you want to delete this? It will be deleted immediately.");
-
-			Click(
-				key_text = "Delete",
-				locator1 = "Modal#MODAL_FOOTER_BUTTON");
-
-			Alert.viewSuccessMessage();
-		}
-	}
-
-	@summary = "Default summary"
 	macro editCP(tagNameEdit = null, tagMenuName = null) {
 		LexiconEntry.gotoEntryMenuItem(
 			menuItem = "Edit",
@@ -106,68 +42,6 @@ definition {
 		PortletEntry.inputName(name = ${tagNameEdit});
 
 		PortletEntry.save();
-	}
-
-	@summary = "Default summary"
-	macro gotoMerge(mergeMethod = null, tagNameList = null) {
-		if (${mergeMethod} == "menuItem") {
-			LexiconEntry.gotoEntryMenuItem(
-				menuItem = "Merge",
-				rowEntry = ${tagName});
-		}
-		else {
-			for (var tagName : list ${tagNameList}) {
-				LexiconEntry.selectEntry(rowEntry = ${tagName});
-			}
-
-			Click(locator1 = "ManagementBar#ELLIPSIS");
-
-			Click(locator1 = "Button#MERGE");
-		}
-	}
-
-	@summary = "Default summary"
-	macro mergeSingleTagWarning() {
-		AssertClickNoError(
-			locator1 = "Button#SAVE",
-			value1 = "Save");
-
-		AssertConfirm(value1 = "Please choose at least 2 tags.");
-	}
-
-	@summary = "Default summary"
-	macro mergeTags(tagNameList = null, mergedTag = null) {
-		Select(
-			key_fieldLabel = "Into This Tag:",
-			locator1 = "Select#GENERIC_SELECT_FIELD",
-			value1 = ${mergedTag});
-
-		ClickNoError(locator1 = "Button#SAVE");
-
-		var message = "Are you sure you want to merge \"${tagNameList}\" into \"${mergedTag}\"? This will change all items tagged with \"${tagNameList}\" to instead be tagged with \"${mergedTag}\".";
-
-		AssertConfirm(value1 = ${message});
-
-		Alert.viewSuccessMessage();
-	}
-
-	@summary = "Default summary"
-	macro mergeTagsSelectAdditionalTags(tagNameList = null) {
-		WaitForLiferayEvent.initializeLiferayEventLog();
-
-		Click(locator1 = "Button#SELECT");
-
-		SelectFrameTop();
-
-		SelectFrame(locator1 = "IFrame#MODAL_BODY");
-
-		for (var tagName : list ${tagNameList}) {
-			LexiconEntry.selectEntry(rowEntry = ${tagName});
-		}
-
-		SelectFrameTop();
-
-		Button.clickDone();
 	}
 
 	@summary = "Default summary"
@@ -215,13 +89,6 @@ definition {
 	macro viewCP(tagNameList = null) {
 		for (var tagName : list ${tagNameList}) {
 			LexiconEntry.viewEntryName(rowEntry = ${tagName});
-		}
-	}
-
-	@summary = "Default summary"
-	macro viewNotPresentCP(tagNameList = null) {
-		for (var tagName : list ${tagNameList}) {
-			LexiconEntry.viewNoEntry(rowEntry = ${tagName});
 		}
 	}
 

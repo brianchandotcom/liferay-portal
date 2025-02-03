@@ -224,7 +224,6 @@ describe('RulesSidebar', () => {
 					{
 						actions: [
 							{
-								action: 'fragment',
 								id: 'action-id',
 								itemId: 'item1',
 								type: 'show',
@@ -252,7 +251,7 @@ describe('RulesSidebar', () => {
 		const rule = document.querySelector('li');
 
 		expect(rule.textContent).toBe(
-			'Rule 1ifuseris-the-useruser1showfragmentFragment 1'
+			'Rule 1ifuseris-the-useruser1showFragment 1'
 		);
 	});
 
@@ -263,7 +262,6 @@ describe('RulesSidebar', () => {
 					{
 						actions: [
 							{
-								action: 'fragment',
 								id: 'action-id',
 								itemId: 'item1',
 								type: 'show',

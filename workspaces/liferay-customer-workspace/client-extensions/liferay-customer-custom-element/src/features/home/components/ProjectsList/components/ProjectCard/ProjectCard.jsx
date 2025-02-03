@@ -23,10 +23,10 @@ const statusReport = {
 
 const ProjectCard = ({compressed, loading, onClick, ...koroneikiAccount}) => {
 	const showSLAStatus = Boolean(
-	    koroneikiAccount.partnershipCurrent ||
-	        koroneikiAccount.partnershipExpired ||
-	        koroneikiAccount.partnershipFuture ||
-		    koroneikiAccount.slaCurrent ||
+		koroneikiAccount.partnershipCurrent ||
+			koroneikiAccount.partnershipExpired ||
+			koroneikiAccount.partnershipFuture ||
+			koroneikiAccount.slaCurrent ||
 			koroneikiAccount.slaExpired ||
 			koroneikiAccount.slaFuture
 	);

@@ -52,6 +52,7 @@ public class JavaModuleInternalImportsCheck extends BaseFileCheck {
 		String fileName, String absolutePath, String content) {
 
 		Matcher matcher = _internalImportPattern.matcher(content);
+
 		int pos = -1;
 		List<String> renamedSourcePathNames = getAttributeValues(
 			_RENAMED_SOURCE_PATH_NAMES_KEY, absolutePath);

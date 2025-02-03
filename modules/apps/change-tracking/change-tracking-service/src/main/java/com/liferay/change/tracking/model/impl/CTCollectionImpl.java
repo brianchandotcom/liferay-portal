@@ -14,6 +14,7 @@ import com.liferay.change.tracking.service.CTScoreLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.List;
 
@@ -79,6 +80,17 @@ public class CTCollectionImpl extends CTCollectionBaseImpl {
 	@Override
 	public boolean isProduction() {
 		if (CTConstants.CT_COLLECTION_ID_PRODUCTION == getCtCollectionId()) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean isReadOnly() {
+		if ((getStatus() != WorkflowConstants.STATUS_DRAFT) &&
+			(getStatus() != WorkflowConstants.STATUS_PENDING)) {
+
 			return true;
 		}
 

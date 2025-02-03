@@ -64,6 +64,18 @@ public class DepotEntryGroupRelServiceImpl
 	}
 
 	@Override
+	public DepotEntryGroupRel getDepotEntryGroupRel(
+			long depotEntryId, long toGroupId)
+		throws PortalException {
+
+		_depotEntryModelResourcePermission.check(
+			getPermissionChecker(), depotEntryId, ActionKeys.VIEW);
+
+		return depotEntryGroupRelLocalService.getDepotEntryGroupRel(
+			depotEntryId, toGroupId);
+	}
+
+	@Override
 	public List<DepotEntryGroupRel> getDepotEntryGroupRels(
 			long groupId, int start, int end)
 		throws PortalException {

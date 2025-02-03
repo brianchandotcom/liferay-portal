@@ -40,6 +40,7 @@ export function FormValidationModal({onCloseModal, onPublish}) {
 
 	return (
 		<ClayModal
+			center
 			className="page-editor__form-validation-modal"
 			observer={observer}
 			status="warning"
@@ -122,6 +123,7 @@ function SingleErrorModal({formValidation, observer, onClose, onPublish}) {
 
 	return (
 		<ClayModal
+			center
 			className="page-editor__form-validation-modal"
 			observer={observer}
 			status="warning"

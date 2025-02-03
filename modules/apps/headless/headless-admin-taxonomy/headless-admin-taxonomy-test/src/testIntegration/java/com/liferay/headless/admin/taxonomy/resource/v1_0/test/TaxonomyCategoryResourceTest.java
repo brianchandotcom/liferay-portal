@@ -1013,8 +1013,8 @@ public class TaxonomyCategoryResourceTest
 			if (Objects.equals(permission.getRoleName(), RoleConstants.OWNER)) {
 				Assert.assertArrayEquals(
 					new String[] {
-						ActionKeys.ADD_CATEGORY, ActionKeys.DELETE,
-						ActionKeys.PERMISSIONS, ActionKeys.UPDATE,
+						ActionKeys.DELETE, ActionKeys.PERMISSIONS,
+						ActionKeys.ADD_CATEGORY, ActionKeys.UPDATE,
 						ActionKeys.VIEW
 					},
 					permission.getActionIds());

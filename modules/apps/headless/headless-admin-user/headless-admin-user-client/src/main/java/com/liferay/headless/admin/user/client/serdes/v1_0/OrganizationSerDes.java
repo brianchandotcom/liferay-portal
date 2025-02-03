@@ -6,10 +6,14 @@
 package com.liferay.headless.admin.user.client.serdes.v1_0;
 
 import com.liferay.headless.admin.user.client.dto.v1_0.Account;
+import com.liferay.headless.admin.user.client.dto.v1_0.AccountBrief;
 import com.liferay.headless.admin.user.client.dto.v1_0.CustomField;
 import com.liferay.headless.admin.user.client.dto.v1_0.Organization;
+import com.liferay.headless.admin.user.client.dto.v1_0.RoleBrief;
 import com.liferay.headless.admin.user.client.dto.v1_0.Service;
+import com.liferay.headless.admin.user.client.dto.v1_0.TaxonomyCategoryBrief;
 import com.liferay.headless.admin.user.client.dto.v1_0.UserAccount;
+import com.liferay.headless.admin.user.client.dto.v1_0.UserAccountBrief;
 import com.liferay.headless.admin.user.client.json.BaseJSONParser;
 
 import java.text.DateFormat;
@@ -56,6 +60,26 @@ public class OrganizationSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ssXX");
 
+		if (organization.getAccountBriefs() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"accountBriefs\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < organization.getAccountBriefs().length; i++) {
+				sb.append(String.valueOf(organization.getAccountBriefs()[i]));
+
+				if ((i + 1) < organization.getAccountBriefs().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (organization.getActions() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -101,6 +125,16 @@ public class OrganizationSerDes {
 			sb.append(_escape(organization.getComment()));
 
 			sb.append("\"");
+		}
+
+		if (organization.getCreator() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"creator\": ");
+
+			sb.append(String.valueOf(organization.getCreator()));
 		}
 
 		if (organization.getCustomFields() != null) {
@@ -338,6 +372,46 @@ public class OrganizationSerDes {
 			sb.append(String.valueOf(organization.getParentOrganization()));
 		}
 
+		if (organization.getPermissions() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"permissions\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < organization.getPermissions().length; i++) {
+				sb.append(organization.getPermissions()[i]);
+
+				if ((i + 1) < organization.getPermissions().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
+		if (organization.getRoleBriefs() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"roleBriefs\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < organization.getRoleBriefs().length; i++) {
+				sb.append(String.valueOf(organization.getRoleBriefs()[i]));
+
+				if ((i + 1) < organization.getRoleBriefs().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (organization.getServices() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -358,6 +432,30 @@ public class OrganizationSerDes {
 			sb.append("]");
 		}
 
+		if (organization.getTaxonomyCategoryBriefs() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"taxonomyCategoryBriefs\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < organization.getTaxonomyCategoryBriefs().length;
+				 i++) {
+
+				sb.append(
+					String.valueOf(
+						organization.getTaxonomyCategoryBriefs()[i]));
+
+				if ((i + 1) < organization.getTaxonomyCategoryBriefs().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (organization.getTreePath() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -370,6 +468,29 @@ public class OrganizationSerDes {
 			sb.append(_escape(organization.getTreePath()));
 
 			sb.append("\"");
+		}
+
+		if (organization.getUserAccountBriefs() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"userAccountBriefs\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < organization.getUserAccountBriefs().length;
+				 i++) {
+
+				sb.append(
+					String.valueOf(organization.getUserAccountBriefs()[i]));
+
+				if ((i + 1) < organization.getUserAccountBriefs().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		if (organization.getUserAccounts() != null) {
@@ -414,6 +535,15 @@ public class OrganizationSerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ssXX");
 
+		if (organization.getAccountBriefs() == null) {
+			map.put("accountBriefs", null);
+		}
+		else {
+			map.put(
+				"accountBriefs",
+				String.valueOf(organization.getAccountBriefs()));
+		}
+
 		if (organization.getActions() == null) {
 			map.put("actions", null);
 		}
@@ -435,6 +565,13 @@ public class OrganizationSerDes {
 		}
 		else {
 			map.put("comment", String.valueOf(organization.getComment()));
+		}
+
+		if (organization.getCreator() == null) {
+			map.put("creator", null);
+		}
+		else {
+			map.put("creator", String.valueOf(organization.getCreator()));
 		}
 
 		if (organization.getCustomFields() == null) {
@@ -578,6 +715,21 @@ public class OrganizationSerDes {
 				String.valueOf(organization.getParentOrganization()));
 		}
 
+		if (organization.getPermissions() == null) {
+			map.put("permissions", null);
+		}
+		else {
+			map.put(
+				"permissions", String.valueOf(organization.getPermissions()));
+		}
+
+		if (organization.getRoleBriefs() == null) {
+			map.put("roleBriefs", null);
+		}
+		else {
+			map.put("roleBriefs", String.valueOf(organization.getRoleBriefs()));
+		}
+
 		if (organization.getServices() == null) {
 			map.put("services", null);
 		}
@@ -585,11 +737,29 @@ public class OrganizationSerDes {
 			map.put("services", String.valueOf(organization.getServices()));
 		}
 
+		if (organization.getTaxonomyCategoryBriefs() == null) {
+			map.put("taxonomyCategoryBriefs", null);
+		}
+		else {
+			map.put(
+				"taxonomyCategoryBriefs",
+				String.valueOf(organization.getTaxonomyCategoryBriefs()));
+		}
+
 		if (organization.getTreePath() == null) {
 			map.put("treePath", null);
 		}
 		else {
 			map.put("treePath", String.valueOf(organization.getTreePath()));
+		}
+
+		if (organization.getUserAccountBriefs() == null) {
+			map.put("userAccountBriefs", null);
+		}
+		else {
+			map.put(
+				"userAccountBriefs",
+				String.valueOf(organization.getUserAccountBriefs()));
 		}
 
 		if (organization.getUserAccounts() == null) {
@@ -618,7 +788,10 @@ public class OrganizationSerDes {
 
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
-			if (Objects.equals(jsonParserFieldName, "actions")) {
+			if (Objects.equals(jsonParserFieldName, "accountBriefs")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "actions")) {
 				return true;
 			}
 			else if (Objects.equals(
@@ -627,6 +800,9 @@ public class OrganizationSerDes {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "comment")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "creator")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "customFields")) {
@@ -693,10 +869,24 @@ public class OrganizationSerDes {
 
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "permissions")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "roleBriefs")) {
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "services")) {
 				return false;
 			}
+			else if (Objects.equals(
+						jsonParserFieldName, "taxonomyCategoryBriefs")) {
+
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "treePath")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "userAccountBriefs")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "userAccounts")) {
@@ -711,7 +901,23 @@ public class OrganizationSerDes {
 			Organization organization, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "actions")) {
+			if (Objects.equals(jsonParserFieldName, "accountBriefs")) {
+				if (jsonParserFieldValue != null) {
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					AccountBrief[] accountBriefsArray =
+						new AccountBrief[jsonParserFieldValues.length];
+
+					for (int i = 0; i < accountBriefsArray.length; i++) {
+						accountBriefsArray[i] = AccountBriefSerDes.toDTO(
+							(String)jsonParserFieldValues[i]);
+					}
+
+					organization.setAccountBriefs(accountBriefsArray);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "actions")) {
 				if (jsonParserFieldValue != null) {
 					organization.setActions(
 						(Map<String, Map<String, String>>)jsonParserFieldValue);
@@ -738,6 +944,12 @@ public class OrganizationSerDes {
 			else if (Objects.equals(jsonParserFieldName, "comment")) {
 				if (jsonParserFieldValue != null) {
 					organization.setComment((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "creator")) {
+				if (jsonParserFieldValue != null) {
+					organization.setCreator(
+						CreatorSerDes.toDTO((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "customFields")) {
@@ -874,6 +1086,42 @@ public class OrganizationSerDes {
 						OrganizationSerDes.toDTO((String)jsonParserFieldValue));
 				}
 			}
+			else if (Objects.equals(jsonParserFieldName, "permissions")) {
+				if (jsonParserFieldValue != null) {
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					com.liferay.headless.admin.user.client.permission.
+						Permission[] permissionsArray = new
+						com.liferay.headless.admin.user.client.permission.
+							Permission[jsonParserFieldValues.length];
+
+					for (int i = 0; i < permissionsArray.length; i++) {
+						permissionsArray[i] =
+							com.liferay.headless.admin.user.client.permission.
+								Permission.toDTO(
+									(String)jsonParserFieldValues[i]);
+					}
+
+					organization.setPermissions(permissionsArray);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "roleBriefs")) {
+				if (jsonParserFieldValue != null) {
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					RoleBrief[] roleBriefsArray =
+						new RoleBrief[jsonParserFieldValues.length];
+
+					for (int i = 0; i < roleBriefsArray.length; i++) {
+						roleBriefsArray[i] = RoleBriefSerDes.toDTO(
+							(String)jsonParserFieldValues[i]);
+					}
+
+					organization.setRoleBriefs(roleBriefsArray);
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "services")) {
 				if (jsonParserFieldValue != null) {
 					Object[] jsonParserFieldValues =
@@ -890,9 +1138,48 @@ public class OrganizationSerDes {
 					organization.setServices(servicesArray);
 				}
 			}
+			else if (Objects.equals(
+						jsonParserFieldName, "taxonomyCategoryBriefs")) {
+
+				if (jsonParserFieldValue != null) {
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					TaxonomyCategoryBrief[] taxonomyCategoryBriefsArray =
+						new TaxonomyCategoryBrief[jsonParserFieldValues.length];
+
+					for (int i = 0; i < taxonomyCategoryBriefsArray.length;
+						 i++) {
+
+						taxonomyCategoryBriefsArray[i] =
+							TaxonomyCategoryBriefSerDes.toDTO(
+								(String)jsonParserFieldValues[i]);
+					}
+
+					organization.setTaxonomyCategoryBriefs(
+						taxonomyCategoryBriefsArray);
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "treePath")) {
 				if (jsonParserFieldValue != null) {
 					organization.setTreePath((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "userAccountBriefs")) {
+				if (jsonParserFieldValue != null) {
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					UserAccountBrief[] userAccountBriefsArray =
+						new UserAccountBrief[jsonParserFieldValues.length];
+
+					for (int i = 0; i < userAccountBriefsArray.length; i++) {
+						userAccountBriefsArray[i] =
+							UserAccountBriefSerDes.toDTO(
+								(String)jsonParserFieldValues[i]);
+					}
+
+					organization.setUserAccountBriefs(userAccountBriefsArray);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "userAccounts")) {

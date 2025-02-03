@@ -51,15 +51,8 @@ public class CaptchaConfigurationTest {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void testCompanyCaptchaConfiguration() throws Exception {
-		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
-				new ConfigurationTemporarySwapper(
-					CaptchaConfiguration.class.getName(),
-					new HashMapDictionaryBuilder(
-					).<String, Object>put(
-						"createAccountCaptchaEnabled", false
-					).build());
-			CompanyConfigurationTemporarySwapper
+	public void test() throws Exception {
+		try (CompanyConfigurationTemporarySwapper
 				companyConfigurationTemporarySwapper =
 					new CompanyConfigurationTemporarySwapper(
 						TestPropsValues.getCompanyId(),
@@ -67,14 +60,18 @@ public class CaptchaConfigurationTest {
 						new HashMapDictionaryBuilder(
 						).<String, Object>put(
 							"createAccountCaptchaEnabled", true
-						).build())) {
+						).build());
+			ConfigurationTemporarySwapper configurationTemporarySwapper =
+				new ConfigurationTemporarySwapper(
+					CaptchaConfiguration.class.getName(),
+					new HashMapDictionaryBuilder(
+					).<String, Object>put(
+						"createAccountCaptchaEnabled", false
+					).build())) {
 
 			Assert.assertTrue(_isCaptchaRendered());
 		}
-	}
 
-	@Test
-	public void testSystemCaptchaConfiguration() throws Exception {
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(
 					CaptchaConfiguration.class.getName(),

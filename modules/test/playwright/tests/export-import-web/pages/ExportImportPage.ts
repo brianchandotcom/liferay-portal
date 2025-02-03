@@ -12,14 +12,14 @@ export class ExportImportPage {
 	readonly continueButton: Locator;
 	readonly downloadButton: Locator;
 	readonly exportButton: Locator;
+	readonly exportPermissionsButton: Locator;
 	readonly fileSelector: Locator;
 	readonly importButton: Locator;
+	readonly importPermissionsButton: Locator;
 	readonly newExportButton: Locator;
 	readonly newImportButton: Locator;
 	readonly newImportProcess: Locator;
 	readonly page: Page;
-	readonly exportPermissionsButton: Locator;
-	readonly importPermissionsButton: Locator;
 	readonly productMenuPage: ProductMenuPage;
 	readonly title: Locator;
 

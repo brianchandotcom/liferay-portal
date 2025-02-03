@@ -193,6 +193,9 @@
 						"readOnly": true,
 						"type": "string"
 					},
+					"defaultLanguageId": {
+						"type": "string"
+					},
 					"externalReferenceCode": {
 						"readOnly": false,
 						"type": "string",

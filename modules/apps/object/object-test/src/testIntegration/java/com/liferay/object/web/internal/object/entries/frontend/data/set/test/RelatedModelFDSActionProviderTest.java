@@ -87,7 +87,7 @@ public class RelatedModelFDSActionProviderTest {
 
 		PrincipalThreadLocal.setName(user.getUserId());
 
-		_assertDropdownItem(
+		_assertDropdownItems(
 			new String[] {"view", "delete"},
 			_fdsActionProvider.getDropdownItems(
 				TestPropsValues.getGroupId(),
@@ -103,7 +103,7 @@ public class RelatedModelFDSActionProviderTest {
 			String.valueOf(TestPropsValues.getCompanyId()), role.getRoleId(),
 			ActionKeys.UPDATE);
 
-		_assertDropdownItem(
+		_assertDropdownItems(
 			new String[] {"view"},
 			_fdsActionProvider.getDropdownItems(
 				TestPropsValues.getGroupId(),
@@ -114,7 +114,7 @@ public class RelatedModelFDSActionProviderTest {
 					false)));
 	}
 
-	private void _assertDropdownItem(
+	private void _assertDropdownItems(
 		String[] expectedDropdownItemLabels,
 		List<DropdownItem> actualDropdownItems) {
 

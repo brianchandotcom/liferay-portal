@@ -3,9 +3,15 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+/** AUTO-GENERATED: DO NOT EDIT
+ *
+ * This is generated based on each module's `node-scripts.config.js`
+ *
+ */
+
 module.exports = {
+	hash: 'f06cce35f5a3a2cc620e5d1d7bc123b864d2d5cc1a7e716380b2a7ed874b91cb',
 	imports: {
-		'@liferay/accessibility-menu-web': [],
 		'@liferay/accessibility-settings-state-web': [],
 		'@liferay/address-web': [],
 		'@liferay/analytics-reports-js-components-web': [],
@@ -32,7 +38,6 @@ module.exports = {
 			'graphql-hooks',
 			'graphql',
 			'highlight.js/styles/monokai-sublime.css',
-			'liferay-ckeditor',
 			'qrcode',
 			'react-dropzone',
 			'react-transition-group',
@@ -54,6 +59,7 @@ module.exports = {
 			'highlight.js/lib/languages/javascript',
 			'highlight.js/lib/languages/plaintext',
 			'image-promise',
+			'liferay-ckeditor',
 			'lodash.groupby',
 			'lodash.isequal',
 			'moment',
@@ -73,8 +79,8 @@ module.exports = {
 			'react',
 			'react-16',
 			'react-18',
-			'react-dnd',
 			'react-dnd-html5-backend',
+			'react-dnd',
 			'react-dom',
 			'react-dom-16',
 			'react-dom-18',
@@ -94,27 +100,12 @@ module.exports = {
 		'data-engine-js-components-web': [],
 		'data-engine-taglib': [],
 		'dynamic-data-mapping-form-field-type': ['leaflet/dist/leaflet.css'],
-		'frontend-editor-alloyeditor-web': [],
 		'frontend-editor-ckeditor-web': [
 			'@ckeditor/ckeditor5-react',
 			'ckeditor5',
 			'ckeditor5/ckeditor5.css',
 		],
 		'frontend-js-components-web': [],
-		'frontend-js-node-shims': [
-			'assert',
-			'buffer',
-			'domain',
-			'domain-browser',
-			'events',
-			'os',
-			'path',
-			'process',
-			'string_decoder',
-			'timers',
-			'url',
-			'util',
-		],
 		'frontend-js-recharts': ['recharts'],
 		'frontend-js-web': [],
 		'frontend-taglib-clay': [
@@ -127,7 +118,9 @@ module.exports = {
 			'@clayui/charts',
 			'@clayui/color-picker',
 			'@clayui/core',
-			'@clayui/css',
+			'@clayui/css/lib/css/atlas.css',
+			'@clayui/css/lib/css/base.css',
+			'@clayui/css/lib/css/cadmin.css',
 			'@clayui/data-provider',
 			'@clayui/date-picker',
 			'@clayui/drop-down',
@@ -149,9 +142,9 @@ module.exports = {
 			'@clayui/pagination',
 			'@clayui/pagination-bar',
 			'@clayui/panel',
-			'@clayui/provider',
 			'@clayui/popover',
 			'@clayui/progress-bar',
+			'@clayui/provider',
 			'@clayui/shared',
 			'@clayui/slider',
 			'@clayui/sticker',
@@ -164,7 +157,6 @@ module.exports = {
 		],
 		'item-selector-taglib': [],
 		'item-selector-web': [],
-		'portal-workflow-kaleo-designer-web': [],
 		'social-bookmarks-taglib': [],
 	},
 
@@ -189,11 +181,6 @@ module.exports = {
 
 	symbols: {
 		'@clayui/charts': ['bb', 'default'],
-		'@clayui/css': [
-
-			// Need to explicitly disable exports because the package differs in browser and server
-
-		],
 		'axe-core': ['*', 'default'],
 		'ckeditor5': [
 			'Alignment',
@@ -242,15 +229,7 @@ module.exports = {
 		'numeral': ['*', 'default'],
 		'object-hash': ['*', 'default'],
 		'prop-types': ['*', 'default'],
-		'qrcode': [
-
-			// Need to explicitly list exports because the package differs in browser and server
-
-			'create',
-			'toCanvas',
-			'toString',
-			'toDataURL',
-		],
+		'qrcode': ['create', 'toCanvas', 'toString', 'toDataURL'],
 		'qs': ['*', 'default'],
 		'react': ['*', 'default'],
 		'react-dnd': ['*', 'default'],

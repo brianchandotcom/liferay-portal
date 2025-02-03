@@ -42,7 +42,8 @@ import com.liferay.portal.kernel.util.MethodKey;
 public class ObjectEntryServiceHttp {
 
 	public static com.liferay.object.model.ObjectEntry addObjectEntry(
-			HttpPrincipal httpPrincipal, long groupId, long objectDefinitionId,
+			HttpPrincipal httpPrincipal, long groupId, String defaultLanguageId,
+			long objectDefinitionId,
 			java.util.Map<String, java.io.Serializable> values,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -53,7 +54,8 @@ public class ObjectEntryServiceHttp {
 				_addObjectEntryParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, groupId, objectDefinitionId, values, serviceContext);
+				methodKey, groupId, defaultLanguageId, objectDefinitionId,
+				values, serviceContext);
 
 			Object returnObj = null;
 
@@ -881,7 +883,7 @@ public class ObjectEntryServiceHttp {
 
 	private static final Class<?>[] _addObjectEntryParameterTypes0 =
 		new Class[] {
-			long.class, long.class, java.util.Map.class,
+			long.class, String.class, long.class, java.util.Map.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addOrUpdateObjectEntryParameterTypes1 =

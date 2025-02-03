@@ -110,7 +110,7 @@ function ToolbarBody({className}) {
 			)}
 			onClick={deselectItem}
 			ref={dropClearRef}
-			size="xl"
+			size={false}
 		>
 			<ZoomAlert />
 

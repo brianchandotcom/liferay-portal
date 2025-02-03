@@ -12,8 +12,7 @@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/react" prefix="react" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
-<%@ page import="com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil" %><%@
-page import="com.liferay.portal.search.tuning.synonyms.web.internal.constants.SynonymsPortletKeys" %><%@
+<%@ page import="com.liferay.portal.search.tuning.synonyms.web.internal.constants.SynonymsPortletKeys" %><%@
 page import="com.liferay.portal.search.tuning.synonyms.web.internal.display.context.EditSynonymSetsDisplayContext" %>
 
 <liferay-frontend:defineObjects />
@@ -34,7 +33,7 @@ portletDisplay.setURLBackTitle(portletDisplay.getPortletDisplayName());
 
 <liferay-frontend:edit-form
 	action="<%= editSynonymSetURL %>"
-	fluid='<%= FeatureFlagManagerUtil.isEnabled("LPS-184404") %>'
+	fluid="<%= true %>"
 	name="<%= editSynonymSetsDisplayContext.getFormName() %>"
 >
 	<aui:input name="<%= editSynonymSetsDisplayContext.getInputName() %>" type="hidden" value="" />

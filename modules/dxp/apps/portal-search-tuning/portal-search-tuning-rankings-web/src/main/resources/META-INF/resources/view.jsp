@@ -106,7 +106,7 @@ RankingPortletDisplayContext rankingPortletDisplayContext = (RankingPortletDispl
 />
 
 <clay:container-fluid
-	fullWidth='<%= FeatureFlagManagerUtil.isEnabled("LPS-184404") %>'
+	fullWidth="<%= true %>"
 >
 	<aui:form method="post" name="fm">
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />

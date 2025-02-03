@@ -15,7 +15,7 @@ export default function ResultsBar({
 			{...otherProps}
 			className="subnav-tbar subnav-tbar-primary tbar tbar-inline-xs-down"
 		>
-			<ClayLayout.ContainerFluid size="xl">
+			<ClayLayout.ContainerFluid size={false}>
 				<ul className="tbar-nav tbar-nav-wrap">{children}</ul>
 			</ClayLayout.ContainerFluid>
 		</nav>

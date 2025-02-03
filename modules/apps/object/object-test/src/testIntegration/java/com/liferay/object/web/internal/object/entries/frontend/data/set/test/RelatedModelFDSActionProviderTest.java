@@ -88,14 +88,14 @@ public class RelatedModelFDSActionProviderTest {
 		PrincipalThreadLocal.setName(user.getUserId());
 
 		_assertDropdownItem(
+			new String[] {"view", "delete"},
 			_fdsActionProvider.getDropdownItems(
 				TestPropsValues.getGroupId(),
 				_getMockHttpServletRequest(objectEntry.getObjectEntryId()),
 				new RelatedModel(
 					objectDefinition.getClassName(),
 					objectEntry.getObjectEntryId(), objectEntry.getTitleValue(),
-					false)),
-			"delete", "view");
+					false)));
 
 		_resourcePermissionLocalService.removeResourcePermission(
 			TestPropsValues.getCompanyId(), objectDefinition.getClassName(),
@@ -104,26 +104,29 @@ public class RelatedModelFDSActionProviderTest {
 			ActionKeys.UPDATE);
 
 		_assertDropdownItem(
+			new String[] {"view"},
 			_fdsActionProvider.getDropdownItems(
 				TestPropsValues.getGroupId(),
 				_getMockHttpServletRequest(objectEntry.getObjectEntryId()),
 				new RelatedModel(
 					objectDefinition.getClassName(),
 					objectEntry.getObjectEntryId(), objectEntry.getTitleValue(),
-					false)),
-			"view");
+					false)));
 	}
 
 	private void _assertDropdownItem(
-		List<DropdownItem> dropdownItems, String... labels) {
+		String[] expectedDropdownItemLabels,
+		List<DropdownItem> actualDropdownItems) {
 
 		Assert.assertEquals(
-			dropdownItems.toString(), labels.length, dropdownItems.size());
+			actualDropdownItems.toString(), expectedDropdownItemLabels.length,
+			actualDropdownItems.size());
 
-		for (int i = 0; i < labels.length; i++) {
-			DropdownItem dropdownItem = dropdownItems.get(i);
+		for (int i = 0; i < expectedDropdownItemLabels.length; i++) {
+			DropdownItem actualDropdownItem = actualDropdownItems.get(i);
 
-			Assert.assertEquals(labels[i], dropdownItem.get("label"));
+			Assert.assertEquals(
+				expectedDropdownItemLabels[i], actualDropdownItem.get("label"));
 		}
 	}
 

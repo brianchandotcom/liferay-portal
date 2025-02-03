@@ -215,6 +215,36 @@ export function RuleBuilderConditionSection({
 }: RuleBuilderConditionProps) {
 	const {sendMessage} = useContext(ScreenReaderAnnouncerContext);
 
+	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
+	const layoutData = useSelector((state) => state.layoutData);
+
+	const inputFragmentItems = useMemo(() => {
+		const inputFragments: {label: string; value: string}[] = [];
+
+		Object.values(layoutData.items).forEach((item) => {
+			if (item.type === LAYOUT_DATA_ITEM_TYPES.fragment) {
+				const fragment =
+					fragmentEntryLinks[item.config.fragmentEntryLinkId];
+
+				if (
+					fragment &&
+					fragment.fragmentEntryType === 'input' &&
+					!fragment.fieldTypes?.includes('localizationSelect')
+				) {
+					inputFragments.push({
+						label: selectLayoutDataItemLabel(
+							{fragmentEntryLinks, layoutData},
+							item
+						),
+						value: item.itemId,
+					});
+				}
+			}
+		});
+
+		return inputFragments;
+	}, [layoutData, fragmentEntryLinks]);
+
 	const conditionRefMap = useMemo(() => new Map(), []);
 
 	const onAddCondition = () => {
@@ -333,6 +363,7 @@ export function RuleBuilderConditionSection({
 					{conditions.map((condition, index, conditions) => (
 						<ConditionComponent
 							condition={condition}
+							inputFragmentItems={inputFragmentItems}
 							key={condition.id}
 							onConditionChange={(condition) =>
 								setConditions((previousConditions) => {

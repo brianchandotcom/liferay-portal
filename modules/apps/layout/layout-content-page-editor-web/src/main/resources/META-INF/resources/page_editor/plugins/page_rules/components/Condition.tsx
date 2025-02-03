@@ -16,17 +16,18 @@ import RuleBuilderItem from './RuleBuilderItem';
 import RuleSelect from './RuleSelect';
 
 export interface Condition {
-	field?: 'user' | 'role' | 'segment';
+	field?: 'user' | 'role' | 'segment' | string;
 	id: string;
 	options?: {
 		type: 'equal' | 'not-equal';
 		value?: string;
 	};
-	type: 'user' | undefined;
+	type: 'user' | 'formFragment' | undefined;
 }
 
 interface ConditionProps {
 	condition: Condition;
+	inputFragmentItems: {label: string; value: string}[];
 	onConditionChange: (condition: Condition) => void;
 	onDeleteCondition: () => void;
 	showDeleteButton: boolean;
@@ -34,6 +35,7 @@ interface ConditionProps {
 }
 
 const TYPE_VALUES = {
+	formFragment: 'formFragment',
 	user: 'user',
 } as const;
 
@@ -41,6 +43,10 @@ export const CONDITION_TYPE_ITEMS = [
 	{
 		label: Liferay.Language.get('user'),
 		value: TYPE_VALUES.user,
+	},
+	{
+		label: Liferay.Language.get('form-fragment'),
+		value: TYPE_VALUES.formFragment,
 	},
 ] as const;
 
@@ -53,34 +59,32 @@ const CONDITION_VALUES = {
 	user: 'user',
 } as const;
 
-export const CONDITION_ITEMS = {
-	[TYPE_VALUES.user]: [
-		{
-			label: Liferay.Language.get('is-the-user'),
-			value: CONDITION_VALUES.user,
-		},
-		{
-			label: Liferay.Language.get('is-not-the-user'),
-			value: CONDITION_VALUES.not_user,
-		},
-		{
-			label: Liferay.Language.get('has-the-role-of'),
-			value: CONDITION_VALUES.role,
-		},
-		{
-			label: Liferay.Language.get('does-not-have-the-role-of'),
-			value: CONDITION_VALUES.not_role,
-		},
-		{
-			label: Liferay.Language.get('belongs-to-segment'),
-			value: CONDITION_VALUES.segment,
-		},
-		{
-			label: Liferay.Language.get('does-not-belong-to-segment'),
-			value: CONDITION_VALUES.not_segment,
-		},
-	],
-} as const;
+export const USER_CONDITION_ITEMS = [
+	{
+		label: Liferay.Language.get('is-the-user'),
+		value: CONDITION_VALUES.user,
+	},
+	{
+		label: Liferay.Language.get('is-not-the-user'),
+		value: CONDITION_VALUES.not_user,
+	},
+	{
+		label: Liferay.Language.get('has-the-role-of'),
+		value: CONDITION_VALUES.role,
+	},
+	{
+		label: Liferay.Language.get('does-not-have-the-role-of'),
+		value: CONDITION_VALUES.not_role,
+	},
+	{
+		label: Liferay.Language.get('belongs-to-segment'),
+		value: CONDITION_VALUES.segment,
+	},
+	{
+		label: Liferay.Language.get('does-not-belong-to-segment'),
+		value: CONDITION_VALUES.not_segment,
+	},
+];
 
 const VALUE_SELECTOR_COMPONENTS: Record<
 	(typeof CONDITION_VALUES)[keyof typeof CONDITION_VALUES],
@@ -96,6 +100,7 @@ const VALUE_SELECTOR_COMPONENTS: Record<
 
 export default function Condition({
 	condition,
+	inputFragmentItems,
 	onConditionChange,
 	onDeleteCondition,
 	showDeleteButton,
@@ -103,11 +108,7 @@ export default function Condition({
 }: ConditionProps) {
 	const {sendMessage} = useContext(ScreenReaderAnnouncerContext);
 
-	const ValueSelectorComponent: FC<SelectorProps> | null = condition.field
-		? VALUE_SELECTOR_COMPONENTS[condition.field]
-		: null;
-
-	const [{description}] = useConditionValues({conditions: [condition]});
+	const [{description}] = useConditionValues({conditions: [condition], items: inputFragmentItems});
 
 	const selectRef = useRef<HTMLButtonElement | undefined>();
 
@@ -141,24 +142,163 @@ export default function Condition({
 				triggerRef={selectRef}
 			/>
 
-			{condition.type && CONDITION_ITEMS[condition.type] ? (
+			{condition.type === TYPE_VALUES.user ? (
+				<UserTypeSelectors
+					condition={condition}
+					onConditionChange={onConditionChange}
+					sendMessage={sendMessage}
+				/>
+			) : null}
+
+			{condition.type === TYPE_VALUES.formFragment ? (
+				<FormFragmentTypeSelectors
+					condition={condition}
+					inputFragmentItems={inputFragmentItems}
+					onConditionChange={onConditionChange}
+					sendMessage={sendMessage}
+				/>
+			) : null}
+		</RuleBuilderItem>
+	);
+}
+
+function FormFragmentTypeSelectors({
+	condition,
+	inputFragmentItems,
+	onConditionChange,
+	sendMessage,
+}: {
+	condition: Condition;
+	inputFragmentItems: {label: string; value: string}[];
+	onConditionChange: (condition: Condition) => void;
+	sendMessage: (message: string) => void;
+}) {
+	return (
+		<>
+			<RuleSelect
+				aria-label={sub(
+					Liferay.Language.get('select-x'),
+					Liferay.Language.get('fragment')
+				)}
+				items={inputFragmentItems}
+				onSelectionChange={(selectedFragment) => {
+					onConditionChange({
+						...condition,
+						field: selectedFragment,
+					});
+				}}
+				selectedKey={condition.field}
+			/>
+
+			{condition.field ? (
 				<RuleSelect
 					aria-label={sub(
 						Liferay.Language.get('select-x'),
-						Liferay.Language.get('condition')
+						Liferay.Language.get('type')
 					)}
-					items={CONDITION_ITEMS[condition.type]}
-					onSelectionChange={(selectedCondition) => {
+					items={[
+						{
+							label: Liferay.Language.get('is-equal-to'),
+							value: 'equal',
+						},
+						{
+							label: Liferay.Language.get('is-not-equal-to'),
+							value: 'not-equal',
+						},
+					]}
+					onSelectionChange={(type) => {
 						onConditionChange({
 							...condition,
-							...convertConditionValueToOptions(
-								selectedCondition
-							),
+							options: {
+								...condition.options!,
+								type,
+							},
 						});
 					}}
-					selectedKey={convertOptionsToConditionValue(condition)}
+					selectedKey={condition.options?.type}
 				/>
 			) : null}
+
+			{condition.options?.type ? (
+				<RuleSelect
+					aria-label={sub(
+						Liferay.Language.get('select-x'),
+						Liferay.Language.get('type')
+					)}
+					items={[
+						{
+							label: Liferay.Language.get('value'),
+							value: 'value',
+						},
+					]}
+					onSelectionChange={() => {}}
+					selectedKey="value"
+				/>
+			) : null}
+
+			{condition.options?.type ? (
+				<RuleSelect
+					aria-label={sub(
+						Liferay.Language.get('select-x'),
+						Liferay.Language.get('value')
+					)}
+					items={[
+						{label: Liferay.Language.get('true'), value: 'true'},
+						{
+							label: Liferay.Language.get('false'),
+							value: 'false',
+						},
+					]}
+					onSelectionChange={(value) => {
+						onConditionChange({
+							...condition,
+							options: {
+								...condition.options!,
+								value,
+							},
+						});
+
+						sendMessage(
+							Liferay.Language.get('condition-completed')
+						);
+					}}
+					selectedKey={condition.options?.value}
+				/>
+			) : null}
+		</>
+	);
+}
+
+function UserTypeSelectors({
+	condition,
+	onConditionChange,
+	sendMessage,
+}: {
+	condition: Condition;
+	onConditionChange: (condition: Condition) => void;
+	sendMessage: (message: string) => void;
+}) {
+	const ValueSelectorComponent: FC<SelectorProps> | null =
+		VALUE_SELECTOR_COMPONENTS[
+			condition.field as keyof typeof CONDITION_VALUES
+		];
+
+	return (
+		<>
+			<RuleSelect
+				aria-label={sub(
+					Liferay.Language.get('select-x'),
+					Liferay.Language.get('condition')
+				)}
+				items={USER_CONDITION_ITEMS}
+				onSelectionChange={(selectedCondition) => {
+					onConditionChange({
+						...condition,
+						...convertConditionValueToOptions(selectedCondition),
+					});
+				}}
+				selectedKey={convertOptionsToConditionValue(condition)}
+			/>
 
 			{ValueSelectorComponent ? (
 				<ValueSelectorComponent
@@ -178,7 +318,7 @@ export default function Condition({
 					value={condition.options?.value}
 				/>
 			) : null}
-		</RuleBuilderItem>
+		</>
 	);
 }
 

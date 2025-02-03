@@ -23,7 +23,7 @@ function getSessionClickFormData(cmd) {
 }
 
 function getSessionClickURL() {
-	return `${Liferay.ThemeDisplay.getPortalURL()}${Liferay.ThemeDisplay.getPathMain()}/portal/session_click`;
+	return `${Liferay.ThemeDisplay.getPortalURL()}${Liferay.ThemeDisplay.getPathMain()}/portal/session_click?p_l_id=${Liferay.ThemeDisplay.getPlid()}`;
 }
 
 /**

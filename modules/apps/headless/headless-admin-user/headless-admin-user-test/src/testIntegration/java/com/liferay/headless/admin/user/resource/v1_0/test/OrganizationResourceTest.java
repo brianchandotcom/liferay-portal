@@ -10,46 +10,67 @@ import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.entry.rel.service.AssetEntryAssetCategoryRelLocalService;
+import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetTag;
+import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.asset.kernel.service.AssetTagLocalService;
+import com.liferay.asset.test.util.AssetTestUtil;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.expando.kernel.model.ExpandoTable;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
+import com.liferay.headless.admin.user.client.dto.v1_0.Creator;
 import com.liferay.headless.admin.user.client.dto.v1_0.CustomField;
 import com.liferay.headless.admin.user.client.dto.v1_0.CustomValue;
 import com.liferay.headless.admin.user.client.dto.v1_0.Organization;
 import com.liferay.headless.admin.user.client.pagination.Page;
 import com.liferay.headless.admin.user.client.pagination.Pagination;
+import com.liferay.headless.admin.user.client.resource.v1_0.OrganizationResource;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
+import com.liferay.portal.util.PropsValues;
 
 import java.io.InputStream;
 
@@ -57,6 +78,7 @@ import java.text.DateFormat;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -288,6 +310,14 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 				fetchAccountEntryOrganizationRel(
 					_accountEntry.getAccountEntryId(),
 					organization.getOrganizationId()));
+	}
+
+	@Override
+	@Test
+	public void testGetOrganization() throws Exception {
+		super.testGetOrganization();
+
+		_testGetOrganizationWithNestedFields();
 	}
 
 	@Override
@@ -862,6 +892,132 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 		assertContains(organization2, (List<Organization>)page.getItems());
 	}
 
+	private void _testGetOrganizationWithNestedFields() throws Exception {
+		Organization postOrganization = testGetOrganization_addOrganization();
+
+		AccountEntry accountEntry1 = _accountEntryLocalService.addAccountEntry(
+			TestPropsValues.getUserId(),
+			AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
+			null, null, null, AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
+			WorkflowConstants.STATUS_APPROVED,
+			ServiceContextTestUtil.getServiceContext());
+
+		organizationResource.postAccountOrganization(
+			accountEntry1.getAccountEntryId(), postOrganization.getId());
+
+		AccountEntry accountEntry2 = _accountEntryLocalService.addAccountEntry(
+			TestPropsValues.getUserId(),
+			AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(), null,
+			null, null, null, AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
+			WorkflowConstants.STATUS_APPROVED,
+			ServiceContextTestUtil.getServiceContext());
+
+		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+			com.liferay.portal.kernel.model.Organization.class.getName(),
+			GetterUtil.getLong(postOrganization.getId()));
+
+		AssetTag assetTag = _assetTagLocalService.addTag(
+			RandomTestUtil.randomString(), assetEntry.getUserId(),
+			assetEntry.getGroupId(), RandomTestUtil.randomString(),
+			new ServiceContext());
+
+		_assetTagLocalService.addAssetEntryAssetTag(
+			assetEntry.getEntryId(), assetTag);
+
+		AssetVocabulary assetVocabulary = AssetTestUtil.addVocabulary(
+			TestPropsValues.getGroupId());
+
+		AssetCategory assetCategory = AssetTestUtil.addCategory(
+			TestPropsValues.getGroupId(), assetVocabulary.getVocabularyId());
+
+		_assetEntryAssetCategoryRelLocalService.addAssetEntryAssetCategoryRel(
+			assetEntry.getEntryId(), assetCategory.getCategoryId());
+
+		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		com.liferay.portal.kernel.model.Organization organization =
+			_organizationLocalService.getOrganization(
+				GetterUtil.getLong(postOrganization.getId()));
+
+		_roleLocalService.addGroupRole(
+			organization.getGroupId(), role.getRoleId());
+
+		_resourcePermissionLocalService.setResourcePermissions(
+			TestPropsValues.getCompanyId(),
+			com.liferay.portal.kernel.model.Organization.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL, postOrganization.getId(),
+			role.getRoleId(), new String[] {ActionKeys.DELETE});
+
+		User user1 = UserTestUtil.addUser();
+
+		organizationResource.postUserAccountsByEmailAddress(
+			String.valueOf(organization.getOrganizationId()), null,
+			new String[] {user1.getEmailAddress()});
+
+		User user2 = UserTestUtil.addUser();
+
+		OrganizationResource organizationResource =
+			OrganizationResource.builder(
+			).authentication(
+				"test@liferay.com", PropsValues.DEFAULT_ADMIN_PASSWORD
+			).locale(
+				LocaleUtil.getDefault()
+			).parameters(
+				"nestedFields",
+				"accountBriefs,creator,permissions,roleBriefs," +
+					"taxonomyCategoryBriefs,userAccountBriefs"
+			).build();
+
+		Organization getOrganization = organizationResource.getOrganization(
+			String.valueOf(organization.getOrganizationId()));
+
+		Assert.assertTrue(
+			ArrayUtil.exists(
+				getOrganization.getAccountBriefs(),
+				accountBrief ->
+					accountBrief.getId() == accountEntry1.getAccountEntryId()));
+		Assert.assertFalse(
+			ArrayUtil.exists(
+				getOrganization.getAccountBriefs(),
+				accountBrief ->
+					accountBrief.getId() == accountEntry2.getAccountEntryId()));
+		Assert.assertNotNull(getOrganization.getCreator());
+
+		Creator creator = getOrganization.getCreator();
+
+		Assert.assertTrue(creator.getId() == TestPropsValues.getUserId());
+
+		Assert.assertTrue(
+			ArrayUtil.exists(
+				getOrganization.getPermissions(),
+				permission ->
+					Objects.equals(permission.getRoleName(), role.getName()) &&
+					(permission.getActionIds().length == 1) &&
+					Objects.equals(permission.getActionIds()[0], "DELETE")));
+		Assert.assertTrue(
+			ArrayUtil.exists(
+				getOrganization.getRoleBriefs(),
+				groupRole -> groupRole.getId() == role.getRoleId()));
+		Assert.assertTrue(
+			ArrayUtil.exists(
+				getOrganization.getTaxonomyCategoryBriefs(),
+				taxonomyCategoryBrief -> Objects.equals(
+					taxonomyCategoryBrief.getTaxonomyCategoryId(),
+					assetCategory.getCategoryId())));
+		Assert.assertTrue(
+			ArrayUtil.exists(
+				getOrganization.getUserAccountBriefs(),
+				userAccountBrief ->
+					userAccountBrief.getId() == user1.getUserId()));
+		Assert.assertFalse(
+			ArrayUtil.exists(
+				getOrganization.getUserAccountBriefs(),
+				userAccountBrief ->
+					userAccountBrief.getId() == user2.getUserId()));
+	}
+
 	private void _testPatchOrganizationByExternalReferenceCodeWithImageExternalReferenceCode()
 		throws Exception {
 
@@ -1049,6 +1205,16 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 		_accountEntryOrganizationRelLocalService;
 
 	@Inject
+	private AssetEntryAssetCategoryRelLocalService
+		_assetEntryAssetCategoryRelLocalService;
+
+	@Inject
+	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Inject
+	private AssetTagLocalService _assetTagLocalService;
+
+	@Inject
 	private ClassNameLocalService _classNameLocalService;
 
 	@Inject
@@ -1062,6 +1228,12 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 
 	@Inject
 	private OrganizationLocalService _organizationLocalService;
+
+	@Inject
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Inject
+	private RoleLocalService _roleLocalService;
 
 	private User _user;
 

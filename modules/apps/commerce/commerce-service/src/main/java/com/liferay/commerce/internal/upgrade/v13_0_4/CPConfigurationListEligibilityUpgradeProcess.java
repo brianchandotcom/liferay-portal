@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.commerce.internal.feature.flag;
+package com.liferay.commerce.internal.upgrade.v13_0_4;
 
 import com.liferay.account.model.AccountGroup;
 import com.liferay.commerce.product.model.CPConfigurationEntry;
@@ -11,23 +11,18 @@ import com.liferay.commerce.product.model.CPConfigurationList;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CPConfigurationEntryLocalService;
+import com.liferay.commerce.product.service.CPConfigurationEntryLocalServiceUtil;
 import com.liferay.commerce.product.service.CPConfigurationListLocalService;
 import com.liferay.commerce.product.service.CPConfigurationListRelLocalService;
 import com.liferay.commerce.product.service.CommerceChannelRelLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagListener;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -38,33 +33,121 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Stefano Motta
  */
-@Component(
-	property = "featureFlagKey=LPD-10889", service = FeatureFlagListener.class
-)
-public class CPConfigurationListEligibilityFeatureFlagListener
-	implements FeatureFlagListener {
+public class CPConfigurationListEligibilityUpgradeProcess
+	extends UpgradeProcess {
+
+	public CPConfigurationListEligibilityUpgradeProcess(
+		CommerceChannelRelLocalService commerceChannelRelLocalService,
+		CPConfigurationEntryLocalService cpConfigurationEntryLocalService,
+		CPConfigurationListLocalService cpConfigurationListLocalService,
+		CPConfigurationListRelLocalService cpConfigurationListRelLocalService,
+		Portal portal) {
+
+		_commerceChannelRelLocalService = commerceChannelRelLocalService;
+		_cpConfigurationEntryLocalService = cpConfigurationEntryLocalService;
+		_cpConfigurationListLocalService = cpConfigurationListLocalService;
+		_cpConfigurationListRelLocalService =
+			cpConfigurationListRelLocalService;
+		_portal = portal;
+	}
 
 	@Override
-	public void onValue(
-		long companyId, String featureFlagKey, boolean enabled) {
+	protected void doUpgrade() throws Exception {
+		long accountGroupClassNameId = _portal.getClassNameId(
+			AccountGroup.class.getName());
+		long commerceCatalogClassNameId = _portal.getClassNameId(
+			CommerceCatalog.class.getName());
+		long cpConfigurationListClassNameId = _portal.getClassNameId(
+			CPConfigurationList.class.getName());
+		long cpDefinitionClassNameId = _portal.getClassNameId(
+			CPDefinition.class.getName());
 
-		try {
-			if (!enabled) {
-				_onFeatureFlagDisabled(companyId);
+		try (
+			PreparedStatement selectPreparedStatement1 =
+				connection.prepareStatement(
+					"select Group_.companyId, Group_.groupId from " +
+					"CommerceCatalog join Group_ on Group_.classNameId = ? " +
+					"and Group_.classPK = CommerceCatalog.commerceCatalogId");
 
-				return;
+			PreparedStatement selectPreparedStatement2 =
+				connection.prepareStatement(
+					StringBundler.concat(
+						"select CPDefinition.CPDefinitionId, Rel.type_, ",
+						"Rel.classPK, Rel.resourceId from CPDefinition join ",
+						"(select 'C' as type_, classPK, commerceChannelId as ",
+						"resourceId from CommerceChannelRel where classNameId ",
+						"= ? union select 'A' as type_, classPK, ",
+						"accountGroupId as resourceId from AccountGroupRel ",
+						"where classNameId = ?) Rel on ",
+						"(CPDefinition.CPDefinitionId = Rel.classPK and ",
+				 		"CPDefinition.groupId = ?) order by Rel.classPK"));
+
+			PreparedStatement selectPreparedStatement3 =
+				connection.prepareStatement(
+					"select distinct CPConfigurationListId from " +
+					"CPConfigurationListRel where classNameId = ? and " +
+					"classPK = ?");
+
+			PreparedStatement selectPreparedStatement4 =
+				connection.prepareStatement(
+					"select distinct classPK as CPConfigurationListId from " +
+					"CommerceChannelRel where classNameId = ? and " +
+					"commerceChannelId = ?");
+
+			PreparedStatement updatePreparedStatement =
+				connection.prepareStatement(
+					StringBundler.concat(
+						"update CPConfigurationEntry set visible = ? where ",
+						"classNameId = ? and CPConfigurationListId = ? and ",
+						"groupId = ? and classPK in (select classPK from ",
+						"(select classPK from CPConfigurationEntry where ",
+						"classNameId = ? and CPConfigurationListId != ? and ",
+						"groupId = ?) Internal)"))) {
+
+			selectPreparedStatement1.setLong(1, commerceCatalogClassNameId);
+
+			ResultSet resultSet = selectPreparedStatement1.executeQuery();
+
+			while (resultSet.next()) {
+				long groupId = resultSet.getLong("groupId");
+
+				CPConfigurationList masterCPConfigurationList =
+					_cpConfigurationListLocalService.
+						getMasterCPConfigurationList(groupId);
+
+				if (masterCPConfigurationList == null) {
+					continue;
+				}
+
+				CPConfigurationEntry templateCPConfigurationEntry =
+					masterCPConfigurationList.
+						fetchTemplateCPConfigurationEntry();
+
+				if (templateCPConfigurationEntry == null) {
+					continue;
+				}
+
+				selectPreparedStatement2.setLong(1, cpDefinitionClassNameId);
+				selectPreparedStatement2.setLong(2, cpDefinitionClassNameId);
+				selectPreparedStatement2.setLong(3, groupId);
+
+				_addCPConfigurationLists(
+					masterCPConfigurationList, selectPreparedStatement2);
+
+				_addCPConfigurationEntries(
+					accountGroupClassNameId, cpConfigurationListClassNameId,
+					cpDefinitionClassNameId,
+					masterCPConfigurationList.getCPConfigurationListId(),
+					selectPreparedStatement2, selectPreparedStatement3,
+					selectPreparedStatement4);
+
+				_updateMasterCPConfigurationEntries(
+					cpDefinitionClassNameId, groupId, masterCPConfigurationList,
+					updatePreparedStatement);
 			}
-
-			_onFeatureFlagEnabled(companyId);
-		}
-		catch (Exception exception) {
-			_log.error(exception);
 		}
 	}
 
@@ -91,9 +174,10 @@ public class CPConfigurationListEligibilityFeatureFlagListener
 				curClassPK = classPK;
 
 				masterCPConfigurationEntry =
-					_cpConfigurationEntryLocalService.fetchCPConfigurationEntry(
-						cpDefinitionClassNameId, classPK,
-						masterCPConfigurationListId);
+					CPConfigurationEntryLocalServiceUtil.
+						fetchCPConfigurationEntry(
+							cpDefinitionClassNameId, classPK,
+							masterCPConfigurationListId);
 			}
 
 			if (masterCPConfigurationEntry == null) {
@@ -108,8 +192,6 @@ public class CPConfigurationListEligibilityFeatureFlagListener
 			if (type.equals("A")) {
 				selectPreparedStatement2.setLong(1, accountGroupClassNameId);
 				selectPreparedStatement2.setLong(2, resourceId);
-				selectPreparedStatement2.setLong(
-					3, masterCPConfigurationEntry.getGroupId());
 
 				resultSet2 = selectPreparedStatement2.executeQuery();
 			}
@@ -117,8 +199,6 @@ public class CPConfigurationListEligibilityFeatureFlagListener
 				selectPreparedStatement3.setLong(
 					1, cpConfigurationListClassNameId);
 				selectPreparedStatement3.setLong(2, resourceId);
-				selectPreparedStatement3.setLong(
-					3, masterCPConfigurationEntry.getGroupId());
 
 				resultSet2 = selectPreparedStatement3.executeQuery();
 			}
@@ -311,158 +391,6 @@ public class CPConfigurationListEligibilityFeatureFlagListener
 		}
 	}
 
-	private void _onFeatureFlagDisabled(long companyId) throws PortalException {
-		List<Group> groups = _groupLocalService.getGroups(
-			companyId, CommerceCatalog.class.getName(), 0);
-
-		for (Group group : groups) {
-			List<CPConfigurationList> cpConfigurationLists =
-				_cpConfigurationListLocalService.getCPConfigurationLists(
-					group.getGroupId(), companyId);
-
-			for (CPConfigurationList cpConfigurationList :
-					cpConfigurationLists) {
-
-				if (cpConfigurationList.isMaster()) {
-					continue;
-				}
-
-				_commerceChannelRelLocalService.deleteCommerceChannelRels(
-					CPConfigurationList.class.getName(),
-					cpConfigurationList.getCPConfigurationListId());
-				_cpConfigurationListLocalService.forceDeleteCPConfigurationList(
-					cpConfigurationList);
-				_cpConfigurationListRelLocalService.
-					deleteCPConfigurationListRels(
-						cpConfigurationList.getCPConfigurationListId());
-			}
-		}
-	}
-
-	private void _onFeatureFlagEnabled(long companyId) {
-		List<Group> groups = _groupLocalService.getGroups(
-			companyId, CommerceCatalog.class.getName(), 0);
-
-		for (Group group : groups) {
-			List<CPConfigurationList> cpConfigurationLists =
-				_cpConfigurationListLocalService.getCPConfigurationLists(
-					group.getGroupId(), companyId);
-
-			for (CPConfigurationList cpConfigurationList :
-					cpConfigurationLists) {
-
-				if (!cpConfigurationList.isMaster()) {
-					return;
-				}
-			}
-		}
-
-		long accountGroupClassNameId = _portal.getClassNameId(
-			AccountGroup.class.getName());
-		long commerceCatalogClassNameId = _portal.getClassNameId(
-			CommerceCatalog.class.getName());
-		long cpConfigurationListClassNameId = _portal.getClassNameId(
-			CPConfigurationList.class.getName());
-		long cpDefinitionClassNameId = _portal.getClassNameId(
-			CPDefinition.class.getName());
-
-		try (Connection connection = DataAccess.getConnection();
-
-			 PreparedStatement selectPreparedStatement1 =
-				 connection.prepareStatement(
-					 "select Group_.companyId, Group_.groupId from " +
-					 "CommerceCatalog join Group_ on Group_.classNameId = ? " +
-					 "and Group_.classPK = CommerceCatalog.commerceCatalogId");
-
-			 PreparedStatement selectPreparedStatement2 =
-				 connection.prepareStatement(
-					 StringBundler.concat(
-						 "select CPDefinition.CPDefinitionId, Rel.type_, ",
-						 "Rel.classPK, Rel.resourceId from CPDefinition join ",
-						 "(select 'C' as type_, classPK, commerceChannelId as ",
-						 "resourceId from CommerceChannelRel where ",
-						 "classNameId = ? union select 'A' as type_, classPK, ",
-						 "accountGroupId as resourceId from AccountGroupRel ",
-						 "where classNameId = ?) Rel on ",
-						 "(CPDefinition.CPDefinitionId = Rel.classPK and ",
-						 "CPDefinition.groupId = ?) order by Rel.classPK"));
-
-			 PreparedStatement selectPreparedStatement3 =
-				 connection.prepareStatement(
-					 StringBundler.concat(
-					 	"select distinct CPConfigurationListRel.",
-					 	"CPConfigurationListId from CPConfigurationListRel ",
-						"join CPConfigurationList on CPConfigurationList.",
-						"CPConfigurationListId = CPConfigurationListRel.",
-					 	"CPConfigurationListId where classNameId = ? and ",
-					 	"classPK = ? and groupId = ?"));
-
-			 PreparedStatement selectPreparedStatement4 =
-				 connection.prepareStatement(
-					 StringBundler.concat(
-						"select distinct classPK as CPConfigurationListId ",
-						"from CommerceChannelRel join CPConfigurationList on ",
-					 	"CPConfigurationList.CPConfigurationListId = classPK ",
-					 	"where classNameId = ? and commerceChannelId = ? and ",
-					 	"groupId = ?"));
-
-			 PreparedStatement updatePreparedStatement =
-				 connection.prepareStatement(
-					 StringBundler.concat(
-						 "update CPConfigurationEntry set visible = ? where ",
-						 "classNameId = ? and CPConfigurationListId = ? and ",
-						 "groupId = ? and classPK in (select classPK from ",
-						 "(select classPK from CPConfigurationEntry where ",
-						 "classNameId = ? and CPConfigurationListId != ? and ",
-						 "groupId = ?) Internal)"))) {
-
-			selectPreparedStatement1.setLong(1, commerceCatalogClassNameId);
-
-			ResultSet resultSet = selectPreparedStatement1.executeQuery();
-
-			while (resultSet.next()) {
-				long groupId = resultSet.getLong("groupId");
-
-				CPConfigurationList masterCPConfigurationList =
-					_cpConfigurationListLocalService.
-						getMasterCPConfigurationList(groupId);
-
-				if (masterCPConfigurationList == null) {
-					continue;
-				}
-
-				CPConfigurationEntry templateCPConfigurationEntry =
-					masterCPConfigurationList.
-						fetchTemplateCPConfigurationEntry();
-
-				if (templateCPConfigurationEntry == null) {
-					continue;
-				}
-
-				selectPreparedStatement2.setLong(1, cpDefinitionClassNameId);
-				selectPreparedStatement2.setLong(2, cpDefinitionClassNameId);
-				selectPreparedStatement2.setLong(3, groupId);
-
-				_addCPConfigurationLists(
-					masterCPConfigurationList, selectPreparedStatement2);
-
-				_addCPConfigurationEntries(
-					accountGroupClassNameId, cpConfigurationListClassNameId,
-					cpDefinitionClassNameId,
-					masterCPConfigurationList.getCPConfigurationListId(),
-					selectPreparedStatement2, selectPreparedStatement3,
-					selectPreparedStatement4);
-
-				_updateMasterCPConfigurationEntries(
-					cpDefinitionClassNameId, groupId, masterCPConfigurationList,
-					updatePreparedStatement);
-			}
-		}
-		catch (Exception exception) {
-			_log.error(exception);
-		}
-	}
-
 	private void _updateMasterCPConfigurationEntries(
 			long cpDefinitionClassNameId, long groupId,
 			CPConfigurationList masterCPConfigurationList,
@@ -482,26 +410,14 @@ public class CPConfigurationListEligibilityFeatureFlagListener
 		preparedStatement.executeUpdate();
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		CPConfigurationListEligibilityFeatureFlagListener.class);
-
-	@Reference
-	private CommerceChannelRelLocalService _commerceChannelRelLocalService;
-
-	@Reference
-	private CPConfigurationEntryLocalService _cpConfigurationEntryLocalService;
-
-	@Reference
-	private CPConfigurationListLocalService _cpConfigurationListLocalService;
-
-	@Reference
-	private CPConfigurationListRelLocalService
+	private final CommerceChannelRelLocalService
+		_commerceChannelRelLocalService;
+	private final CPConfigurationEntryLocalService
+		_cpConfigurationEntryLocalService;
+	private final CPConfigurationListLocalService
+		_cpConfigurationListLocalService;
+	private final CPConfigurationListRelLocalService
 		_cpConfigurationListRelLocalService;
-
-	@Reference
-	private GroupLocalService _groupLocalService;
-
-	@Reference
-	private Portal _portal;
+	private final Portal _portal;
 
 }

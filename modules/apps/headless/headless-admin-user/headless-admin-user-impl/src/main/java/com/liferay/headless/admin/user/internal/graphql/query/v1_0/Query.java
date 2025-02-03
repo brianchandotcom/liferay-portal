@@ -1320,7 +1320,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {roles(page: ___, pageSize: ___, search: ___, types: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {roles(filter: ___, page: ___, pageSize: ___, search: ___, types: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
 		description = "Retrieves the portal instance's roles. Results can be paginated."
@@ -1328,6 +1328,7 @@ public class Query {
 	public RolePage roles(
 			@GraphQLName("search") String search,
 			@GraphQLName("types") Integer[] types,
+			@GraphQLName("filter") String filterString,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -1337,7 +1338,9 @@ public class Query {
 			this::_populateResourceContext,
 			roleResource -> new RolePage(
 				roleResource.getRolesPage(
-					search, types, Pagination.of(page, pageSize))));
+					search, types,
+					_filterBiFunction.apply(roleResource, filterString),
+					Pagination.of(page, pageSize))));
 	}
 
 	/**

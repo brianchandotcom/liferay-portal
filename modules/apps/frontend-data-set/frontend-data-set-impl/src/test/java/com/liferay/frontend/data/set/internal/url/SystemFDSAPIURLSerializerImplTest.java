@@ -7,6 +7,7 @@ package com.liferay.frontend.data.set.internal.url;
 
 import com.liferay.frontend.data.set.SystemFDSEntry;
 import com.liferay.frontend.data.set.internal.BaseSystemFDSSerializerTestCase;
+import com.liferay.frontend.data.set.serializer.FDSSerializer;
 import com.liferay.frontend.data.set.url.FDSAPIURLResolver;
 import com.liferay.frontend.data.set.url.FDSAPIURLResolverRegistry;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory;
@@ -73,10 +74,10 @@ public class SystemFDSAPIURLSerializerImplTest
 		);
 
 		ReflectionTestUtil.setFieldValue(
-			_systemFDSAPIURLSerializerImpl, "_fdsAPIURLBuilderFactory",
+			_fdsSerializer, "_fdsAPIURLBuilderFactory",
 			_fdsAPIURLBuilderFactoryImpl);
 		ReflectionTestUtil.setFieldValue(
-			_systemFDSAPIURLSerializerImpl, "_systemFDSEntryRegistry",
+			_fdsSerializer, "_systemFDSEntryRegistry",
 			systemFDSEntryRegistryImpl);
 	}
 
@@ -88,7 +89,7 @@ public class SystemFDSAPIURLSerializerImplTest
 	}
 
 	@Test
-	public void testSerialization() throws Exception {
+	public void testSerialize() throws Exception {
 
 		// Different resolvers
 
@@ -105,12 +106,10 @@ public class SystemFDSAPIURLSerializerImplTest
 
 		Assert.assertEquals(
 			"/o/app1/endpoint/bar",
-			_systemFDSAPIURLSerializerImpl.serialize(
-				"fdsName1", httpServletRequest));
+			_fdsSerializer.serialize("fdsName1", httpServletRequest));
 		Assert.assertEquals(
 			"/o/app2/endpoint/{foo}",
-			_systemFDSAPIURLSerializerImpl.serialize(
-				"fdsName2", httpServletRequest));
+			_fdsSerializer.serialize("fdsName2", httpServletRequest));
 
 		fdsAPIURLServiceRegistration.unregister();
 		systemFDSEntryServiceRegistration1.unregister();
@@ -123,8 +122,7 @@ public class SystemFDSAPIURLSerializerImplTest
 
 		Assert.assertEquals(
 			"/o/app/endpoint",
-			_systemFDSAPIURLSerializerImpl.serialize(
-				"fdsName", httpServletRequest));
+			_fdsSerializer.serialize("fdsName", httpServletRequest));
 
 		systemFDSEntryServiceRegistration1.unregister();
 
@@ -135,8 +133,7 @@ public class SystemFDSAPIURLSerializerImplTest
 
 		Assert.assertEquals(
 			"/o/app/endpoint?param=3",
-			_systemFDSAPIURLSerializerImpl.serialize(
-				"fdsName", httpServletRequest));
+			_fdsSerializer.serialize("fdsName", httpServletRequest));
 
 		systemFDSEntryServiceRegistration1.unregister();
 
@@ -149,8 +146,7 @@ public class SystemFDSAPIURLSerializerImplTest
 
 		Assert.assertEquals(
 			"/o/app/endpoint/bar?bar=3",
-			_systemFDSAPIURLSerializerImpl.serialize(
-				"fdsName", httpServletRequest));
+			_fdsSerializer.serialize("fdsName", httpServletRequest));
 
 		fdsAPIURLServiceRegistration.unregister();
 		systemFDSEntryServiceRegistration1.unregister();
@@ -166,12 +162,10 @@ public class SystemFDSAPIURLSerializerImplTest
 
 		Assert.assertEquals(
 			"/o/app/endpoint/bar",
-			_systemFDSAPIURLSerializerImpl.serialize(
-				"fdsName1", httpServletRequest));
+			_fdsSerializer.serialize("fdsName1", httpServletRequest));
 		Assert.assertEquals(
 			"/o/app/endpoint/bar",
-			_systemFDSAPIURLSerializerImpl.serialize(
-				"fdsName2", httpServletRequest));
+			_fdsSerializer.serialize("fdsName2", httpServletRequest));
 
 		fdsAPIURLServiceRegistration.unregister();
 		systemFDSEntryServiceRegistration1.unregister();
@@ -211,7 +205,7 @@ public class SystemFDSAPIURLSerializerImplTest
 		new FDSAPIURLResolverRegistryImpl();
 	private static ServiceTrackerMap<String, ServiceWrapper<FDSAPIURLResolver>>
 		_fdsAPIURLResolverServiceTrackerMap;
-	private static final SystemFDSAPIURLSerializerImpl
-		_systemFDSAPIURLSerializerImpl = new SystemFDSAPIURLSerializerImpl();
+	private static final FDSSerializer<String> _fdsSerializer =
+		new SystemFDSAPIURLSerializerImpl();
 
 }

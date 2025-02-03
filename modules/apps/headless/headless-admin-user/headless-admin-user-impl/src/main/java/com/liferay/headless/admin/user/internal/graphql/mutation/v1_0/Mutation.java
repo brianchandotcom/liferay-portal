@@ -1903,6 +1903,7 @@ public class Mutation {
 	public Response createRolesPageExportBatch(
 			@GraphQLName("search") String search,
 			@GraphQLName("types") Integer[] types,
+			@GraphQLName("filter") String filterString,
 			@GraphQLName("callbackURL") String callbackURL,
 			@GraphQLName("contentType") String contentType,
 			@GraphQLName("fieldNames") String fieldNames)
@@ -1912,7 +1913,9 @@ public class Mutation {
 			_roleResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			roleResource -> roleResource.postRolesPageExportBatch(
-				search, types, callbackURL, contentType, fieldNames));
+				search, types,
+				_filterBiFunction.apply(roleResource, filterString),
+				callbackURL, contentType, fieldNames));
 	}
 
 	@GraphQLField(description = "Creates a new role")

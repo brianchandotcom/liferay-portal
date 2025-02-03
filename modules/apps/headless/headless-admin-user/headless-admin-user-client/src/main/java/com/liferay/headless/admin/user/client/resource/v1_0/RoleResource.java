@@ -35,21 +35,23 @@ public interface RoleResource {
 	}
 
 	public Page<Role> getRolesPage(
-			String search, Integer[] types, Pagination pagination)
+			String search, Integer[] types, String filterString,
+			Pagination pagination)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getRolesPageHttpResponse(
-			String search, Integer[] types, Pagination pagination)
+			String search, Integer[] types, String filterString,
+			Pagination pagination)
 		throws Exception;
 
 	public void postRolesPageExportBatch(
-			String search, Integer[] types, String callbackURL,
-			String contentType, String fieldNames)
+			String search, Integer[] types, String filterString,
+			String callbackURL, String contentType, String fieldNames)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse postRolesPageExportBatchHttpResponse(
-			String search, Integer[] types, String callbackURL,
-			String contentType, String fieldNames)
+			String search, Integer[] types, String filterString,
+			String callbackURL, String contentType, String fieldNames)
 		throws Exception;
 
 	public Role postRole(Role role) throws Exception;
@@ -352,11 +354,12 @@ public interface RoleResource {
 	public static class RoleResourceImpl implements RoleResource {
 
 		public Page<Role> getRolesPage(
-				String search, Integer[] types, Pagination pagination)
+				String search, Integer[] types, String filterString,
+				Pagination pagination)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse = getRolesPageHttpResponse(
-				search, types, pagination);
+				search, types, filterString, pagination);
 
 			String content = httpResponse.getContent();
 
@@ -418,7 +421,8 @@ public interface RoleResource {
 		}
 
 		public HttpInvoker.HttpResponse getRolesPageHttpResponse(
-				String search, Integer[] types, Pagination pagination)
+				String search, Integer[] types, String filterString,
+				Pagination pagination)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -452,6 +456,10 @@ public interface RoleResource {
 				}
 			}
 
+			if (filterString != null) {
+				httpInvoker.parameter("filter", filterString);
+			}
+
 			if (pagination != null) {
 				httpInvoker.parameter(
 					"page", String.valueOf(pagination.getPage()));
@@ -471,13 +479,14 @@ public interface RoleResource {
 		}
 
 		public void postRolesPageExportBatch(
-				String search, Integer[] types, String callbackURL,
-				String contentType, String fieldNames)
+				String search, Integer[] types, String filterString,
+				String callbackURL, String contentType, String fieldNames)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				postRolesPageExportBatchHttpResponse(
-					search, types, callbackURL, contentType, fieldNames);
+					search, types, filterString, callbackURL, contentType,
+					fieldNames);
 
 			String content = httpResponse.getContent();
 
@@ -528,8 +537,8 @@ public interface RoleResource {
 		}
 
 		public HttpInvoker.HttpResponse postRolesPageExportBatchHttpResponse(
-				String search, Integer[] types, String callbackURL,
-				String contentType, String fieldNames)
+				String search, Integer[] types, String filterString,
+				String callbackURL, String contentType, String fieldNames)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -563,6 +572,10 @@ public interface RoleResource {
 				for (int i = 0; i < types.length; i++) {
 					httpInvoker.parameter("types", String.valueOf(types[i]));
 				}
+			}
+
+			if (filterString != null) {
+				httpInvoker.parameter("filter", filterString);
 			}
 
 			if (callbackURL != null) {

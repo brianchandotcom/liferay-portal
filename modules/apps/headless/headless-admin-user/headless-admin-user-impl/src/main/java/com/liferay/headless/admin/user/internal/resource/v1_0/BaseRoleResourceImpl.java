@@ -86,6 +86,10 @@ public abstract class BaseRoleResourceImpl
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "filter"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "page"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
@@ -120,6 +124,7 @@ public abstract class BaseRoleResourceImpl
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("types")
 			Integer[] types,
+			@javax.ws.rs.core.Context Filter filter,
 			@javax.ws.rs.core.Context Pagination pagination)
 		throws Exception {
 
@@ -133,6 +138,10 @@ public abstract class BaseRoleResourceImpl
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "filter"
+			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "search"
@@ -170,6 +179,7 @@ public abstract class BaseRoleResourceImpl
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("types")
 			Integer[] types,
+			@javax.ws.rs.core.Context Filter filter,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("callbackURL")
 			String callbackURL,
@@ -1351,7 +1361,7 @@ public abstract class BaseRoleResourceImpl
 		throws Exception {
 
 		return getRolesPage(
-			search, (Integer[])parameters.get("types"), pagination);
+			search, (Integer[])parameters.get("types"), filter, pagination);
 	}
 
 	@Override

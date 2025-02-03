@@ -280,7 +280,6 @@ const ALLOWED_NAMED_SCOPE_EXCEPTIONS = [
 	'frontend-js-jquery-web',
 	'frontend-js-loader-modules-extender',
 	'frontend-js-lodash-web',
-	'frontend-js-node-shims',
 	'frontend-js-react-web',
 	'frontend-js-recharts',
 	'frontend-js-spa-web',

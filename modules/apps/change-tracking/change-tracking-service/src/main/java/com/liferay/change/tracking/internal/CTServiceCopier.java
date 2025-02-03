@@ -102,9 +102,7 @@ public class CTServiceCopier<T extends CTModel<T>> {
 			if (i == _BATCH_SIZE) {
 				sb.setStringAt(")", sb.index() - 1);
 
-				sb.append(" or ");
-				sb.append(tableName);
-				sb.append(".");
+				sb.append(" or t1.");
 				sb.append(primaryKeyName);
 				sb.append(" in (");
 

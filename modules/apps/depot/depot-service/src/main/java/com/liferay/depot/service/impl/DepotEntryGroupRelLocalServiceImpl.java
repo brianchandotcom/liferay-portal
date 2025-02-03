@@ -97,6 +97,14 @@ public class DepotEntryGroupRelLocalServiceImpl
 	}
 
 	@Override
+	public DepotEntryGroupRel getDepotEntryGroupRel(
+		long depotEntryId, long toGroupId) {
+
+		return depotEntryGroupRelPersistence.fetchByD_TGI(
+			depotEntryId, toGroupId);
+	}
+
+	@Override
 	public List<DepotEntryGroupRel> getDepotEntryGroupRels(
 		DepotEntry depotEntry) {
 

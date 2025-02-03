@@ -1135,3 +1135,74 @@ testWithIsolatedSite(
 		await expect(page.getByText('No Results Found')).not.toBeVisible();
 	}
 );
+
+testWithIsolatedSite(
+	'Only first collection item is interactable',
+	{
+		tag: '@LPD-45724',
+	},
+	async ({apiHelpers, page, pageEditorPage, site}) => {
+
+		// Create definition for a collection with a heading inside it
+
+		const headingId = getRandomString();
+
+		const collectionId = getRandomString();
+
+		const collectionDefinition = getCollectionDefinition({
+			id: collectionId,
+			pageElements: [
+				getFragmentDefinition({
+					id: headingId,
+					key: 'BASIC_COMPONENT-heading',
+				}),
+			],
+			provider: 'Highest Rated Assets',
+		});
+
+		// Create a content page and go to edit mode
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([collectionDefinition]),
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		await page
+			.getByText('Select a Page Element', {
+				exact: true,
+			})
+			.waitFor();
+
+		// Select Collection Display
+
+		await pageEditorPage.selectFragment(collectionId);
+
+		// Click all headings from the second one to confirm they are not selectable
+
+		const headings = await page
+			.locator(`.lfr-layout-structure-item-${headingId}`)
+			.all();
+
+		for (let i = 1; i < headings.length; i++) {
+			await headings[i].click({force: true});
+
+			await expect(
+				page.locator('.page-editor__topper__title', {
+					hasText: 'Heading',
+				})
+			).not.toBeVisible();
+		}
+
+		// Click first heading and confirm it's selectable
+
+		await clickAndExpectToBeVisible({
+			target: page.locator('.page-editor__topper__title', {
+				hasText: 'Heading',
+			}),
+			trigger: headings[0],
+		});
+	}
+);

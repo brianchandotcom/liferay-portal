@@ -165,10 +165,6 @@ const MemoizedNodeContent = React.memo(NodeContent, (prevProps, nextProps) =>
 
 function NodeContentWithoutDND({isActive, isMapped, node}) {
 	const layoutDataRef = useSelectorRef((store) => store.layoutData);
-	const canUpdatePageStructure = useSelector(selectCanUpdatePageStructure);
-	const selectedViewportSize = useSelector(
-		(state) => state.selectedViewportSize
-	);
 
 	const selectItem = useSelectItem();
 
@@ -187,24 +183,6 @@ function NodeContentWithoutDND({isActive, isMapped, node}) {
 			type: node.type || node.itemType,
 		}),
 		[layoutDataRef, node]
-	);
-
-	const {fieldTypes, fragmentEntryType} = useSelectorCallback(
-		(state) => {
-			if (!node.type === LAYOUT_DATA_ITEM_TYPES.fragment) {
-				return null;
-			}
-
-			const fragmentEntryLink =
-				state.fragmentEntryLinks[item.config?.fragmentEntryLinkId];
-
-			return {
-				fieldTypes: fragmentEntryLink?.fieldTypes ?? [],
-				fragmentEntryType: fragmentEntryLink?.fragmentEntryType ?? null,
-			};
-		},
-		[item],
-		deepEqual
 	);
 
 	return (
@@ -233,16 +211,6 @@ function NodeContentWithoutDND({isActive, isMapped, node}) {
 					}
 				}}
 				role="button"
-			/>
-
-			<MoveButton
-				canUpdate={canUpdatePageStructure}
-				fieldTypes={fieldTypes}
-				fragmentEntryType={fragmentEntryType}
-				item={item}
-				node={node}
-				nodeRef={nodeRef}
-				selectedViewportSize={selectedViewportSize}
 			/>
 
 			<NameLabel

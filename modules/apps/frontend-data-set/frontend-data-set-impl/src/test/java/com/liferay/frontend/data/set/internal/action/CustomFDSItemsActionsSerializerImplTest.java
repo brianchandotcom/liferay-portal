@@ -7,6 +7,7 @@ package com.liferay.frontend.data.set.internal.action;
 
 import com.liferay.frontend.data.set.internal.serializer.BaseCustomFDSSerializer;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
+import com.liferay.frontend.data.set.serializer.FDSSerializer;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -44,65 +45,49 @@ public class CustomFDSItemsActionsSerializerImplTest {
 	}
 
 	@Test
-	public void testSerialization() throws Exception {
+	public void testSerialize() throws Exception {
 
-		// different items actions
+		// Different items actions
 
-		_mockFDSItemsActions(new String[] {"New 1.1", "New 1.2"}, "fdsName1");
+		_mockFDSItemsActions("fdsName1", new String[] {"New 1.1", "New 1.2"});
 
-		_mockFDSItemsActions(new String[] {"New 2"}, "fdsName2");
+		_mockFDSItemsActions("fdsName2", new String[] {"New 2"});
 
 		List<FDSActionDropdownItem> actionDropdownItems1 =
-			_customFDSItemsActionsSerializerImpl.serialize(
-				"fdsName1", _httpServletRequest);
-
-		List<FDSActionDropdownItem> actionDropdownItems2 =
-			_customFDSItemsActionsSerializerImpl.serialize(
-				"fdsName2", _httpServletRequest);
-
-		Assert.assertTrue(_containsLabel(actionDropdownItems1, "New 1.1"));
-		Assert.assertTrue(_containsLabel(actionDropdownItems1, "New 1.2"));
-		Assert.assertTrue(actionDropdownItems1.size() == 2);
-
-		Assert.assertTrue(_containsLabel(actionDropdownItems2, "New 2"));
-		Assert.assertTrue(actionDropdownItems2.size() == 1);
+			_fdsSerializer.serialize("fdsName1", _httpServletRequest);
 
 		Assert.assertFalse(_containsLabel(actionDropdownItems1, "New 2"));
+		Assert.assertTrue(actionDropdownItems1.size() == 2);
+		Assert.assertTrue(_containsLabel(actionDropdownItems1, "New 1.1"));
+		Assert.assertTrue(_containsLabel(actionDropdownItems1, "New 1.2"));
+
+		List<FDSActionDropdownItem> actionDropdownItems2 =
+			_fdsSerializer.serialize("fdsName2", _httpServletRequest);
+
 		Assert.assertFalse(_containsLabel(actionDropdownItems2, "New 1.1"));
 		Assert.assertFalse(_containsLabel(actionDropdownItems2, "New 1.2"));
+		Assert.assertTrue(actionDropdownItems2.size() == 1);
+		Assert.assertTrue(_containsLabel(actionDropdownItems2, "New 2"));
 
 		_resetSerializer();
 
-		// no items actions
+		// No items actions
 
-		_mockFDSItemsActions(null, "fdsName");
+		_mockFDSItemsActions("fdsName", null);
 
 		Assert.assertTrue(
-			_customFDSItemsActionsSerializerImpl.serialize(
+			_fdsSerializer.serialize(
 				"fdsName", _httpServletRequest
 			).isEmpty());
 
 		_resetSerializer();
 
-		// shared items actions
+		// Shared items actions
 
 		String[] labels = {"New A", "New B"};
 
-		String[] fdsNames = {"fdsName1", "fdsName2"};
-
-		for (String fdsName : fdsNames) {
-			_mockFDSItemsActions(labels, fdsName);
-
-			List<FDSActionDropdownItem> actionDropdownItems =
-				_customFDSItemsActionsSerializerImpl.serialize(
-					fdsName, _httpServletRequest);
-
-			for (String label : labels) {
-				Assert.assertTrue(_containsLabel(actionDropdownItems, label));
-			}
-
-			Assert.assertTrue(labels.length == actionDropdownItems.size());
-		}
+		_testSerialize("fdsName1", labels);
+		_testSerialize("fdsName2", labels);
 	}
 
 	private boolean _containsLabel(
@@ -117,18 +102,15 @@ public class CustomFDSItemsActionsSerializerImplTest {
 		return false;
 	}
 
-	private void _mockFDSItemsActions(
-		String[] dropdownItemLabels, String fdsName) {
-
+	private void _mockFDSItemsActions(String fdsName, String[] labels) {
 		Mockito.when(
-			_customFDSItemsActionsSerializerImpl.serialize(
-				fdsName, _httpServletRequest)
+			_fdsSerializer.serialize(fdsName, _httpServletRequest)
 		).thenCallRealMethod();
 
 		BaseCustomFDSSerializer baseCustomFDSSerializer =
-			(BaseCustomFDSSerializer)_customFDSItemsActionsSerializerImpl;
+			(BaseCustomFDSSerializer)_fdsSerializer;
 
-		if (ArrayUtil.isEmpty(dropdownItemLabels)) {
+		if (ArrayUtil.isEmpty(labels)) {
 			Mockito.when(
 				baseCustomFDSSerializer.getItemsActionsObjectEntries(
 					fdsName, _httpServletRequest)
@@ -141,12 +123,12 @@ public class CustomFDSItemsActionsSerializerImplTest {
 
 		Set<ObjectEntry> objectEntries = new HashSet<>();
 
-		for (String dropdownItemLabel : dropdownItemLabels) {
+		for (String label : labels) {
 			ObjectEntry objectEntry = new ObjectEntry();
 
 			objectEntry.setProperties(
 				HashMapBuilder.put(
-					"label", (Object)dropdownItemLabel
+					"label", (Object)label
 				).build());
 
 			objectEntries.add(objectEntry);
@@ -161,12 +143,26 @@ public class CustomFDSItemsActionsSerializerImplTest {
 	}
 
 	private void _resetSerializer() throws Exception {
-		_customFDSItemsActionsSerializerImpl = Mockito.mock(
+		_fdsSerializer = Mockito.mock(
 			CustomFDSItemsActionsSerializerImpl.class);
 	}
 
-	private static CustomFDSItemsActionsSerializerImpl
-		_customFDSItemsActionsSerializerImpl;
+	private void _testSerialize(String fdsName, String[] labels)
+		throws Exception {
+
+		_mockFDSItemsActions(fdsName, labels);
+
+		List<FDSActionDropdownItem> actionDropdownItems =
+			_fdsSerializer.serialize(fdsName, _httpServletRequest);
+
+		for (String label : labels) {
+			Assert.assertTrue(_containsLabel(actionDropdownItems, label));
+		}
+
+		Assert.assertTrue(labels.length == actionDropdownItems.size());
+	}
+
+	private static FDSSerializer<List<FDSActionDropdownItem>> _fdsSerializer;
 	private static final HttpServletRequest _httpServletRequest = Mockito.mock(
 		HttpServletRequest.class);
 

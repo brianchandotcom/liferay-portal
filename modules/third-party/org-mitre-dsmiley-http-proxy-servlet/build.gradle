@@ -1,0 +1,23 @@
+import com.liferay.gradle.plugins.patcher.PatchTask
+
+apply plugin: "com.liferay.patcher"
+
+task patch(type: PatchTask)
+
+dependencies {
+	compileOnly group: "org.apache.felix", name: "org.apache.felix.http.servlet-api", version: "1.1.2"
+	compileOnly group: "org.mitre.dsmiley.httpproxy", name: "smiley-http-proxy-servlet", version: "1.12.1"
+}
+
+jarSources {
+	mustRunAfter patch
+}
+
+patch {
+	ext {
+		autoClean = false
+	}
+
+	fileNames "org/mitre/dsmiley/httpproxy/ProxyServlet.java"
+	originalLibModuleName = "smiley-http-proxy-servlet"
+}

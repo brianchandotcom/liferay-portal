@@ -4,5 +4,5 @@
  */
 
 module.exports = {
-	main: 'src/main/resources/META-INF/resources/index.js',
+	main: './src/main/resources/META-INF/resources/index.js',
 };

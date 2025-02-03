@@ -53,8 +53,8 @@ export default function getProjectEntryPoints(projectDir = '.') {
 
 function verifyResourcePath(resourcePath, type) {
 	if (
-		resourcePath.startsWith('src/main/resources/META-INF/resources') ||
-		resourcePath.startsWith('src/node/')
+		resourcePath.startsWith('./src/main/resources/META-INF/resources') ||
+		resourcePath.startsWith('./src/node/')
 	) {
 		return true;
 	}

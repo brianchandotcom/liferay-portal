@@ -302,6 +302,10 @@ public class CTScoreLocalServiceImpl extends CTScoreLocalServiceBaseImpl {
 		CTScore originalCTScore = ctScorePersistence.fetchByCtCollectionId(
 			ctCollectionId);
 
+		if (ctCollection.isReadOnly()) {
+			return originalCTScore;
+		}
+
 		if (originalCTScore == null) {
 			return addCTScore(ctCollectionId);
 		}

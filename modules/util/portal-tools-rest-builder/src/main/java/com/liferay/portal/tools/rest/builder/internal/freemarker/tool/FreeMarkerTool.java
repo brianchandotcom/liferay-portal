@@ -130,11 +130,32 @@ public class FreeMarkerTool {
 		ConfigYAML configYAML, List<JavaMethodSignature> javaMethodSignatures,
 		String schemaName) {
 
-		if (configYAML.isGenerateCRUD() && isVersionCompatible(configYAML, 7) &&
-			containsJavaMethodSignature(
-				javaMethodSignatures, "get" + schemaName)) {
+		if (!configYAML.isGenerateCRUD() ||
+			!isVersionCompatible(configYAML, 7)) {
 
-			return true;
+			return false;
+		}
+
+		JavaMethodSignature javaMethodSignature = getJavaMethodSignature(
+			javaMethodSignatures, "get" + schemaName);
+
+		if (javaMethodSignature == null) {
+			return false;
+		}
+
+		for (JavaMethodParameter javaMethodParameter :
+				javaMethodSignature.getPathJavaMethodParameters()) {
+
+			if ((StringUtil.equals(
+					javaMethodParameter.getParameterName(), "id") ||
+				 StringUtil.equals(
+					 javaMethodParameter.getParameterName(),
+					 StringUtil.lowerCaseFirstLetter(schemaName) + "Id")) &&
+				StringUtil.equals(
+					javaMethodParameter.getParameterType(), "java.lang.Long")) {
+
+				return true;
+			}
 		}
 
 		return false;

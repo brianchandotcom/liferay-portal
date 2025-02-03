@@ -3426,6 +3426,12 @@
 		"to": "HtmlUtil_IW.getInstance"
 	},
 	{
+		"classNames": "CommercePaymentMethodGroupRel",
+		"from": "getEngineKey",
+		"issueKey": "LPD-40549",
+		"to": "getPaymentIntegrationKey"
+	},
+	{
 		"from": "CommercePaymentConstants.COMMERCE_PAYMENT_METHOD_TYPE_OFFLINE",
 		"issueKey": "LPD-40553",
 		"newImports": [

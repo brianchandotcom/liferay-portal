@@ -62,6 +62,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -982,14 +983,15 @@ public class TaxonomyCategoryResourceTest
 
 		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
-		Permission permission = new Permission() {
-			{
-				actionIds = new String[] {ActionKeys.DELETE};
-				roleName = role.getName();
-			}
-		};
-
-		randomTaxonomyCategory.setPermissions(new Permission[] {permission});
+		randomTaxonomyCategory.setPermissions(
+			new Permission[] {
+				new Permission() {
+					{
+						actionIds = new String[] {ActionKeys.DELETE};
+						roleName = role.getName();
+					}
+				}
+			});
 
 		TaxonomyCategory postTaxonomyCategory =
 			testPostTaxonomyCategoryTaxonomyCategory_addTaxonomyCategory(
@@ -1001,15 +1003,23 @@ public class TaxonomyCategoryResourceTest
 		Assert.assertEquals(
 			Arrays.toString(permissions), 2, permissions.length);
 
-		_assertPermissions(
-			new String[] {
-				ActionKeys.ADD_CATEGORY, ActionKeys.DELETE,
-				ActionKeys.PERMISSIONS, ActionKeys.UPDATE, ActionKeys.VIEW
-			},
-			permissions[0], RoleConstants.OWNER);
+		for (Permission permission : permissions) {
+			if (Objects.equals(permission.getRoleName(), role.getName())) {
+				Assert.assertArrayEquals(
+					new String[] {ActionKeys.DELETE},
+					permission.getActionIds());
+			}
 
-		_assertPermissions(
-			new String[] {ActionKeys.DELETE}, permissions[1], role.getName());
+			if (Objects.equals(permission.getRoleName(), RoleConstants.OWNER)) {
+				Assert.assertArrayEquals(
+					new String[] {
+						ActionKeys.ADD_CATEGORY, ActionKeys.DELETE,
+						ActionKeys.PERMISSIONS, ActionKeys.UPDATE,
+						ActionKeys.VIEW
+					},
+					permission.getActionIds());
+			}
+		}
 	}
 
 	private void _testPutTaxonomyCategoryWithPermissions() throws Exception {

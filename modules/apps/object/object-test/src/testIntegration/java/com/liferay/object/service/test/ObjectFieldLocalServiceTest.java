@@ -612,13 +612,13 @@ public class ObjectFieldLocalServiceTest {
 				"10", "false", null));
 		AssertUtils.assertFailure(
 			ObjectFieldSettingValueException.ExceedsMaxLength.class,
-			"The setting prefix exceeds the maximum length of 50",
+			"The setting \"prefix\" exceeds the maximum length of 50",
 			() -> _addCustomObjectDefinitionWithAutoIncrementObjectField(
 				RandomTestUtil.randomString(), RandomTestUtil.randomString(51),
 				null, false, StringPool.BLANK));
 		AssertUtils.assertFailure(
 			ObjectFieldSettingValueException.ExceedsMaxLength.class,
-			"The setting suffix exceeds the maximum length of 50",
+			"The setting \"suffix\" exceeds the maximum length of 50",
 			() -> _addCustomObjectDefinitionWithAutoIncrementObjectField(
 				RandomTestUtil.randomString(), StringPool.BLANK, null, false,
 				RandomTestUtil.randomString(51)));
@@ -627,8 +627,10 @@ public class ObjectFieldLocalServiceTest {
 
 		AssertUtils.assertFailure(
 			ObjectFieldSettingValueException.InvalidValue.class,
-			"The value " + defaultValue +
-				" of setting defaultValue is invalid for object field boolean",
+			StringBundler.concat(
+				"The value ", defaultValue,
+				" of setting \"defaultValue\" is invalid for object field ",
+				"\"boolean\""),
 			() -> ObjectDefinitionTestUtil.addCustomObjectDefinition(
 				Collections.singletonList(
 					new BooleanObjectFieldBuilder(
@@ -655,8 +657,10 @@ public class ObjectFieldLocalServiceTest {
 					).build())));
 		AssertUtils.assertFailure(
 			ObjectFieldSettingValueException.InvalidValue.class,
-			"The value " + defaultValue +
-				" of setting defaultValue is invalid for object field picklist",
+			StringBundler.concat(
+				"The value ", defaultValue,
+				" of setting \"defaultValue\" is invalid for object field ",
+				"\"picklist\""),
 			() -> _addCustomObjectDefinitionWithPicklistObjectField(
 				defaultValue, ObjectFieldSettingConstants.VALUE_INPUT_AS_VALUE,
 				false, false));
@@ -667,8 +671,8 @@ public class ObjectFieldLocalServiceTest {
 			ObjectFieldSettingValueException.InvalidValue.class,
 			StringBundler.concat(
 				"The value ", initialValue,
-				" of setting initialValue is invalid for object field ",
-				"autoIncrement"),
+				" of setting \"initialValue\" is invalid for object field ",
+				"\"autoIncrement\""),
 			() -> _addCustomObjectDefinitionWithAutoIncrementObjectField(
 				String.valueOf(initialValue), null, null, false,
 				StringPool.BLANK));
@@ -677,35 +681,37 @@ public class ObjectFieldLocalServiceTest {
 
 		AssertUtils.assertFailure(
 			ObjectFieldSettingValueException.InvalidValue.class,
-			"The value " + uniqueValues +
-				" of setting uniqueValues is invalid for object field text",
+			StringBundler.concat(
+				"The value ", uniqueValues,
+				" of setting \"uniqueValues\" is invalid for object field ",
+				"\"text\""),
 			() -> _addCustomObjectDefinitionWithTextObjectField(
 				null, null, uniqueValues));
 
 		AssertUtils.assertFailure(
 			ObjectFieldSettingValueException.InvalidValue.class,
-			"The value expressionBuilder of setting defaultValueType is " +
-				"invalid for object field picklist",
+			"The value expressionBuilder of setting \"defaultValueType\" is " +
+				"invalid for object field \"picklist\"",
 			() -> _addCustomObjectDefinitionWithPicklistObjectField(
 				_listTypeEntryKey,
 				ObjectFieldSettingConstants.VALUE_EXPRESSION_BUILDER, true,
 				true));
 		AssertUtils.assertFailure(
 			ObjectFieldSettingValueException.InvalidValue.class,
-			"The value LPS@ of setting prefix is invalid for object field " +
-				"autoIncrement",
+			"The value LPS@ of setting \"prefix\" is invalid for object " +
+				"field \"autoIncrement\"",
 			() -> _addCustomObjectDefinitionWithAutoIncrementObjectField(
 				RandomTestUtil.randomString(), "LPS@", null, false, null));
 		AssertUtils.assertFailure(
 			ObjectFieldSettingValueException.InvalidValue.class,
-			"The value ^private of setting suffix is invalid for object " +
-				"field autoIncrement",
+			"The value ^private of setting \"suffix\" is invalid for object " +
+				"field \"autoIncrement\"",
 			() -> _addCustomObjectDefinitionWithAutoIncrementObjectField(
 				RandomTestUtil.randomString(), null, null, false, "^private"));
 		AssertUtils.assertFailure(
 			ObjectFieldSettingValueException.MissingRequiredValues.class,
-			"The settings acceptedFileExtensions, fileSource, " +
-				"maximumFileSize are required for object field upload",
+			"The settings \"acceptedFileExtensions, fileSource, " +
+				"maximumFileSize\" are required for object field \"upload\"",
 			() -> ObjectDefinitionTestUtil.addCustomObjectDefinition(
 				Arrays.asList(
 					new AttachmentObjectFieldBuilder(
@@ -717,24 +723,25 @@ public class ObjectFieldLocalServiceTest {
 					).build())));
 		AssertUtils.assertFailure(
 			ObjectFieldSettingValueException.MissingRequiredValues.class,
-			"The settings defaultValue, defaultValueType are required for " +
-				"object field picklist",
+			"The settings \"defaultValue, defaultValueType\" are required " +
+				"for object field \"picklist\"",
 			() -> _addCustomObjectDefinitionWithPicklistObjectField(
 				null, null, true, true));
 		AssertUtils.assertFailure(
 			ObjectFieldSettingValueException.MissingRequiredValues.class,
-			"The settings initialValue are required for object field " +
-				"autoIncrement",
+			"The settings \"initialValue\" are required for object field " +
+				"\"autoIncrement\"",
 			() -> _addCustomObjectDefinitionWithAutoIncrementObjectField(
 				StringPool.BLANK, null, null, false, null));
 		AssertUtils.assertFailure(
 			ObjectFieldSettingValueException.MissingRequiredValues.class,
-			"The settings maxLength are required for object field text",
+			"The settings \"maxLength\" are required for object field \"text\"",
 			() -> _addCustomObjectDefinitionWithTextObjectField(
 				null, "true", null));
 		AssertUtils.assertFailure(
 			ObjectFieldSettingValueException.MissingRequiredValues.class,
-			"The settings timeStorage are required for object field datetime",
+			"The settings \"timeStorage\" are required for object field " +
+				"\"datetime\"",
 			() -> ObjectDefinitionTestUtil.addCustomObjectDefinition(
 				Collections.singletonList(
 					new DateTimeObjectFieldBuilder(
@@ -1800,8 +1807,8 @@ public class ObjectFieldLocalServiceTest {
 
 		AssertUtils.assertFailure(
 			ObjectFieldSettingValueException.UnmodifiableValue.class,
-			"The value of setting initialValue is unmodifiable when object " +
-				"definition is published",
+			"The value of setting \"initialValue\" is unmodifiable when " +
+				"object definition is published",
 			() -> _addOrUpdateCustomObjectField(
 				autoIncrementObjectField,
 				Arrays.asList(
@@ -1819,7 +1826,7 @@ public class ObjectFieldLocalServiceTest {
 					).build())));
 		AssertUtils.assertFailure(
 			ObjectFieldSettingValueException.UnmodifiableValue.class,
-			"The value of setting prefix is unmodifiable when object " +
+			"The value of setting \"prefix\" is unmodifiable when object " +
 				"definition is published",
 			() -> _addOrUpdateCustomObjectField(
 				autoIncrementObjectField,
@@ -1838,7 +1845,7 @@ public class ObjectFieldLocalServiceTest {
 					).build())));
 		AssertUtils.assertFailure(
 			ObjectFieldSettingValueException.UnmodifiableValue.class,
-			"The value of setting suffix is unmodifiable when object " +
+			"The value of setting \"suffix\" is unmodifiable when object " +
 				"definition is published",
 			() -> _addOrUpdateCustomObjectField(
 				autoIncrementObjectField,
@@ -1908,8 +1915,8 @@ public class ObjectFieldLocalServiceTest {
 
 		AssertUtils.assertFailure(
 			ObjectFieldSettingValueException.UnmodifiableValue.class,
-			"The value of setting uniqueValues is unmodifiable when object " +
-				"definition is published",
+			"The value of setting \"uniqueValues\" is unmodifiable when " +
+				"object definition is published",
 			() -> _addOrUpdateCustomObjectField(
 				integerObjectField,
 				Arrays.asList(

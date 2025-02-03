@@ -56,7 +56,7 @@
 					"condition": "role",
 					"id": "condition1",
 					"options": {
-						"type": "equal",
+						"type": "Equal",
 						"value": "roleId"
 					},
 					"type": "user"
@@ -65,7 +65,7 @@
 					"condition": "user",
 					"id": "condition2",
 					"options": {
-						"type": "equal",
+						"type": "Equal",
 						"value": "userId"
 					},
 					"type": "user"

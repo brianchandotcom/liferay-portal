@@ -52,14 +52,20 @@
 				{
 					"condition": "role",
 					"id": "condition1",
-					"type": "user",
-					"value": "roleId"
+					"options": {
+						"type": "Equal",
+						"value": "roleId"
+					},
+					"type": "user"
 				},
 				{
 					"condition": "user",
 					"id": "condition2",
-					"type": "user",
-					"value": "userId"
+					"options": {
+						"type": "Equal",
+						"value": "userId"
+					},
+					"type": "user"
 				}
 			]
 		}

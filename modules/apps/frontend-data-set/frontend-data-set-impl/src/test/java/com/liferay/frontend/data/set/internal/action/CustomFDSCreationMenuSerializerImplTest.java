@@ -47,36 +47,34 @@ public class CustomFDSCreationMenuSerializerImplTest {
 	@Test
 	public void testSerialization() throws Exception {
 
-		// different creation menu
+		// Different creation menu
 
-		_mockFDSCreationMenu(new String[] {"New 1.1", "New 1.2"}, "fdsName1");
-
-		_mockFDSCreationMenu(new String[] {"New 2"}, "fdsName2");
+		_mockFDSCreationMenu("fdsName1", new String[] {"New 1.1", "New 1.2"});
+		_mockFDSCreationMenu("fdsName2", new String[] {"New 2"});
 
 		CreationMenu creationMenu1 =
 			_customFDSCreationMenuSerializerImpl.serialize(
 				"fdsName1", _httpServletRequest);
 
+		Assert.assertEquals(2, _getPrimaryItemsSize(creationMenu1));
+		Assert.assertFalse(_containsTitle(creationMenu1, "New 2"));
+		Assert.assertTrue(_containsTitle(creationMenu1, "New 1.1"));
+		Assert.assertTrue(_containsTitle(creationMenu1, "New 1.2"));
+
 		CreationMenu creationMenu2 =
 			_customFDSCreationMenuSerializerImpl.serialize(
 				"fdsName2", _httpServletRequest);
 
-		Assert.assertTrue(_containsTitle(creationMenu1, "New 1.1"));
-		Assert.assertTrue(_containsTitle(creationMenu1, "New 1.2"));
-		Assert.assertEquals(2, _itemCount(creationMenu1));
-
-		Assert.assertTrue(_containsTitle(creationMenu2, "New 2"));
-		Assert.assertEquals(1, _itemCount(creationMenu2));
-
-		Assert.assertFalse(_containsTitle(creationMenu1, "New 2"));
+		Assert.assertEquals(1, _getPrimaryItemsSize(creationMenu2));
 		Assert.assertFalse(_containsTitle(creationMenu2, "New 1.1"));
 		Assert.assertFalse(_containsTitle(creationMenu2, "New 1.2"));
+		Assert.assertTrue(_containsTitle(creationMenu2, "New 2"));
 
 		_resetSerializer();
 
-		// no creation menu
+		// No creation menu
 
-		_mockFDSCreationMenu(null, "fdsName");
+		_mockFDSCreationMenu("fdsName", null);
 
 		Assert.assertTrue(
 			_customFDSCreationMenuSerializerImpl.serialize(
@@ -85,25 +83,12 @@ public class CustomFDSCreationMenuSerializerImplTest {
 
 		_resetSerializer();
 
-		// shared creation menu
+		// Shared creation menu
 
 		String[] titles = {"New A", "New B"};
 
-		String[] fdsNames = {"fdsName1", "fdsName2"};
-
-		for (String fdsName : fdsNames) {
-			_mockFDSCreationMenu(titles, fdsName);
-
-			CreationMenu creationMenu =
-				_customFDSCreationMenuSerializerImpl.serialize(
-					fdsName, _httpServletRequest);
-
-			for (String title : titles) {
-				Assert.assertTrue(_containsTitle(creationMenu, title));
-			}
-
-			Assert.assertEquals(titles.length, _itemCount(creationMenu));
-		}
+		_testSerialization("fdsName1", titles);
+		_testSerialization("fdsName2", titles);
 	}
 
 	private boolean _containsTitle(CreationMenu creationMenu, String title) {
@@ -121,16 +106,14 @@ public class CustomFDSCreationMenuSerializerImplTest {
 		return false;
 	}
 
-	private int _itemCount(CreationMenu creationMenu) {
+	private int _getPrimaryItemsSize(CreationMenu creationMenu) {
 		List<DropdownItem> dropdownItems = (List<DropdownItem>)creationMenu.get(
 			"primaryItems");
 
 		return dropdownItems.size();
 	}
 
-	private void _mockFDSCreationMenu(
-		String[] dropdownItemTitles, String fdsName) {
-
+	private void _mockFDSCreationMenu(String fdsName, String[] titles) {
 		Mockito.when(
 			_customFDSCreationMenuSerializerImpl.serialize(
 				fdsName, _httpServletRequest)
@@ -139,7 +122,7 @@ public class CustomFDSCreationMenuSerializerImplTest {
 		BaseCustomFDSSerializer baseCustomFDSSerializer =
 			(BaseCustomFDSSerializer)_customFDSCreationMenuSerializerImpl;
 
-		if (ArrayUtil.isEmpty(dropdownItemTitles)) {
+		if (ArrayUtil.isEmpty(titles)) {
 			Mockito.when(
 				baseCustomFDSSerializer.getCreationMenuObjectEntries(
 					fdsName, _httpServletRequest)
@@ -152,12 +135,12 @@ public class CustomFDSCreationMenuSerializerImplTest {
 
 		Set<ObjectEntry> objectEntries = new HashSet<>();
 
-		for (String dropdownItemTitle : dropdownItemTitles) {
+		for (String title : titles) {
 			ObjectEntry objectEntry = new ObjectEntry();
 
 			objectEntry.setProperties(
 				HashMapBuilder.put(
-					"title", (Object)dropdownItemTitle
+					"title", (Object)title
 				).build());
 
 			objectEntries.add(objectEntry);
@@ -174,6 +157,22 @@ public class CustomFDSCreationMenuSerializerImplTest {
 	private void _resetSerializer() {
 		_customFDSCreationMenuSerializerImpl = Mockito.mock(
 			CustomFDSCreationMenuSerializerImpl.class);
+	}
+
+	private void _testSerialization(String fdsName, String[] titles)
+		throws Exception {
+
+		_mockFDSCreationMenu(fdsName, titles);
+
+		CreationMenu creationMenu =
+			_customFDSCreationMenuSerializerImpl.serialize(
+				fdsName, _httpServletRequest);
+
+		for (String title : titles) {
+			Assert.assertTrue(_containsTitle(creationMenu, title));
+		}
+
+		Assert.assertEquals(titles.length, _getPrimaryItemsSize(creationMenu));
 	}
 
 	private static CustomFDSCreationMenuSerializerImpl

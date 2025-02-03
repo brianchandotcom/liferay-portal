@@ -9,10 +9,9 @@ import com.liferay.frontend.data.set.action.FDSItemsActionsSerializer;
 import com.liferay.frontend.data.set.internal.serializer.BaseCustomFDSSerializer;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.data.set.serializer.FDSSerializer;
-import com.liferay.object.rest.dto.v1_0.ObjectEntry;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -35,41 +34,38 @@ public class CustomFDSItemsActionsSerializerImpl
 	public List<FDSActionDropdownItem> serialize(
 		String fdsName, HttpServletRequest httpServletRequest) {
 
-		List<FDSActionDropdownItem> dropdownItems = new ArrayList<>();
+		return TransformUtil.transform(
+			getItemsActionsObjectEntries(fdsName, httpServletRequest),
+			objectEntry -> {
+				Map<String, Object> properties = objectEntry.getProperties();
 
-		for (ObjectEntry objectEntry :
-				getItemsActionsObjectEntries(fdsName, httpServletRequest)) {
+				FDSActionDropdownItem fdsActionDropdownItem =
+					new FDSActionDropdownItem(
+						String.valueOf(properties.get("confirmationMessage")),
+						String.valueOf(properties.get("url")),
+						String.valueOf(properties.get("icon")),
+						objectEntry.getExternalReferenceCode(),
+						String.valueOf(properties.get("label")),
+						String.valueOf(properties.get("method")),
+						String.valueOf(properties.get("permissionKey")),
+						String.valueOf(properties.get("target")));
 
-			Map<String, Object> properties = objectEntry.getProperties();
+				fdsActionDropdownItem.putData(
+					"disableHeader",
+					(boolean)Validator.isNull(properties.get("title")));
+				fdsActionDropdownItem.putData(
+					"errorMessage", properties.get("errorMessage"));
+				fdsActionDropdownItem.putData(
+					"requestBody", properties.get("requestBody"));
+				fdsActionDropdownItem.putData(
+					"size", properties.get("modalSize"));
+				fdsActionDropdownItem.putData(
+					"status", properties.get("confirmationMessageType"));
+				fdsActionDropdownItem.putData(
+					"successMessage", properties.get("successMessage"));
 
-			FDSActionDropdownItem fdsActionDropdownItem =
-				new FDSActionDropdownItem(
-					String.valueOf(properties.get("confirmationMessage")),
-					String.valueOf(properties.get("url")),
-					String.valueOf(properties.get("icon")),
-					objectEntry.getExternalReferenceCode(),
-					String.valueOf(properties.get("label")),
-					String.valueOf(properties.get("method")),
-					String.valueOf(properties.get("permissionKey")),
-					String.valueOf(properties.get("target")));
-
-			fdsActionDropdownItem.putData(
-				"disableHeader",
-				(boolean)Validator.isNull(properties.get("title")));
-			fdsActionDropdownItem.putData(
-				"errorMessage", properties.get("errorMessage"));
-			fdsActionDropdownItem.putData(
-				"requestBody", properties.get("requestBody"));
-			fdsActionDropdownItem.putData("size", properties.get("modalSize"));
-			fdsActionDropdownItem.putData(
-				"status", properties.get("confirmationMessageType"));
-			fdsActionDropdownItem.putData(
-				"successMessage", properties.get("successMessage"));
-
-			dropdownItems.add(fdsActionDropdownItem);
-		}
-
-		return dropdownItems;
+				return fdsActionDropdownItem;
+			});
 	}
 
 }

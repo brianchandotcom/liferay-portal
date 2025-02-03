@@ -71,9 +71,9 @@ public class JavaModuleInternalImportsCheck extends BaseFileCheck {
 					renamedSourcePathName, StringPool.COLON);
 
 				if (match.equals(parts[0])) {
-					expectedImportFileLocation =
-						expectedImportFileLocation.replaceFirst(
-							"/src/main/java/", "/src/main/" + parts[1] + "/");
+					expectedImportFileLocation = StringUtil.replaceFirst(
+						expectedImportFileLocation, "/src/main/java/",
+						"/src/main/" + parts[1] + "/");
 
 					break;
 				}

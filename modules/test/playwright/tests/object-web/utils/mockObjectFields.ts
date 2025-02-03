@@ -134,6 +134,10 @@ function isLocalizable(businessType: ObjectFieldBusinessTypes) {
 		'boolean',
 		'date',
 		'dateTime',
+		'decimal',
+		'integer',
+		'longInteger',
+		'precisionDecimal',
 	];
 
 	return localizableBusinessTypes.includes(businessType);

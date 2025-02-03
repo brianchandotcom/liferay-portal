@@ -1,0 +1,19 @@
+diff --git a/org/mitre/dsmiley/httpproxy/ProxyServlet.java b/org/mitre/dsmiley/httpproxy/ProxyServlet.java
+index fdf6c7facfec1..3e7936402c0e3 100644
+--- a/org/mitre/dsmiley/httpproxy/ProxyServlet.java
++++ b/org/mitre/dsmiley/httpproxy/ProxyServlet.java
+@@ -369,7 +369,7 @@ public class ProxyServlet extends HttpServlet {
+       //   only way to pass the reason along too.
+       int statusCode = proxyResponse.getStatusLine().getStatusCode();
+       //noinspection deprecation
+-      servletResponse.setStatus(statusCode, proxyResponse.getStatusLine().getReasonPhrase());
++      servletResponse.setStatus(statusCode);
+ 
+       // Copying response headers to make sure SESSIONID or other Cookie which comes from the remote
+       // server will be saved in client when the proxied url was redirected to another one.
+@@ -846,3 +846,4 @@ public class ProxyServlet extends HttpServlet {
+   }
+ 
+ }
++/* @generated */
+\ No newline at end of file

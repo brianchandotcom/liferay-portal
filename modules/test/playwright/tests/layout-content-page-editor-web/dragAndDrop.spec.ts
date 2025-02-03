@@ -41,6 +41,14 @@ const test = mergeTests(
 	pageManagementSiteTest
 );
 
+const testWithoutMultiselection = mergeTests(
+	test,
+	featureFlagsTest({
+		'LPD-18221': {enabled: false},
+		'LPS-178052': {enabled: true},
+	})
+);
+
 test('Checks that a widget can be added and dragged to another part of the page', async ({
 	apiHelpers,
 	page,
@@ -403,7 +411,7 @@ test(
 	}
 );
 
-test(
+testWithoutMultiselection(
 	'Check correct item is selected when dragging into a collection item from tree',
 	{tag: ['@LPD-41382']},
 	async ({
@@ -492,7 +500,7 @@ test(
 	}
 );
 
-test(
+testWithoutMultiselection(
 	'Check correct item is selected when dragging into a collection item from layout',
 	{tag: ['@LPD-41382']},
 	async ({
@@ -542,7 +550,7 @@ test(
 
 		await expect(async () => {
 			await heading.dragTo(
-				page.locator('.page-editor__collection-item').nth(1)
+				page.locator('.page-editor__collection-item-old').nth(1)
 			);
 
 			const topper = page

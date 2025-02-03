@@ -40,6 +40,7 @@ const test = mergeTests(
 	collectionsPagesTest,
 	dataApiHelpersTest,
 	featureFlagsTest({
+		'LPD-18221': {enabled: true},
 		'LPS-178052': {enabled: true},
 	}),
 	isolatedSiteTest,
@@ -190,7 +191,7 @@ test('Allows selecting specific repeatable collection provider', async ({
 		page.locator('.page-editor__collection-item').first()
 	);
 
-	await page.locator('.lfr-layout-structure-item-collection').last().click();
+	await page.getByText('No Collection Selected').first().click();
 
 	await pageEditorPage.chooseCollectionDisplayOption(
 		'Repeatable Fields Collection Providers',
@@ -202,7 +203,7 @@ test('Allows selecting specific repeatable collection provider', async ({
 	await pageEditorPage.addFragment(
 		'Basic Components',
 		'Heading',
-		page.locator('.page-editor__collection-item.empty').last()
+		page.locator('.page-editor__collection-item.empty').first()
 	);
 
 	// Select editable and map it

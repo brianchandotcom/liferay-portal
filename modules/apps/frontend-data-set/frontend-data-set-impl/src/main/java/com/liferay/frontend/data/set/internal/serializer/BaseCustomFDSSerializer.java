@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class BaseCustomFDSSerializer {
 
-	public Set<ObjectEntry> getCreationActionObjectEntries(
+	public Set<ObjectEntry> getCreationMenuObjectEntries(
 		String externalReferenceCode, HttpServletRequest httpServletRequest) {
 
 		return _getSortedRelatedObjectEntries(

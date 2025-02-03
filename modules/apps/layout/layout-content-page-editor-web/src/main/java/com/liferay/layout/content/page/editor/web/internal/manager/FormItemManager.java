@@ -6,12 +6,18 @@
 package com.liferay.layout.content.page.editor.web.internal.manager;
 
 import com.liferay.fragment.constants.FragmentConstants;
+import com.liferay.fragment.constants.FragmentEntryLinkConstants;
 import com.liferay.fragment.contributor.FragmentCollectionContributor;
 import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.helper.DefaultInputFragmentEntryConfigurationProvider;
+import com.liferay.fragment.listener.FragmentEntryLinkListener;
+import com.liferay.fragment.listener.FragmentEntryLinkListenerRegistry;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
+import com.liferay.fragment.processor.DefaultFragmentEntryProcessorContext;
+import com.liferay.fragment.processor.FragmentEntryProcessorContext;
+import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.fragment.service.FragmentEntryLinkService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.info.field.InfoField;
@@ -34,6 +40,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -43,6 +50,8 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
@@ -54,6 +63,9 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -455,6 +467,61 @@ public class FormItemManager {
 		return layoutStructureItemChanges;
 	}
 
+	public FragmentEntryLink updateNumberOfStepps(
+			ActionRequest actionRequest, ActionResponse actionResponse,
+			int numberOfSteps, FragmentEntryLink stepperFragmentEntryLink)
+		throws Exception {
+
+		JSONObject editableValuesJSONObject =
+			_fragmentEntryLinkManager.mergeEditableValuesJSONObject(
+				_jsonFactory.createJSONObject(
+					stepperFragmentEntryLink.getEditableValues()),
+				JSONUtil.put(
+					FragmentEntryProcessorConstants.
+						KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+					JSONUtil.put("numberOfSteps", numberOfSteps)));
+
+		stepperFragmentEntryLink =
+			_fragmentEntryLinkService.updateFragmentEntryLink(
+				stepperFragmentEntryLink.getFragmentEntryLinkId(),
+				editableValuesJSONObject.toString());
+
+		FragmentEntryProcessorContext fragmentEntryProcessorContext =
+			new DefaultFragmentEntryProcessorContext(
+				_portal.getHttpServletRequest(actionRequest),
+				_portal.getHttpServletResponse(actionResponse),
+				FragmentEntryLinkConstants.EDIT,
+				LocaleUtil.getMostRelevantLocale());
+
+		String processedHTML =
+			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
+				stepperFragmentEntryLink, fragmentEntryProcessorContext);
+
+		JSONObject newEditableValuesJSONObject =
+			_fragmentEntryLinkManager.mergeEditableValuesJSONObject(
+				_fragmentEntryProcessorRegistry.
+					getDefaultEditableValuesJSONObject(
+						processedHTML,
+						stepperFragmentEntryLink.getConfiguration()),
+				editableValuesJSONObject);
+
+		stepperFragmentEntryLink =
+			_fragmentEntryLinkService.updateFragmentEntryLink(
+				stepperFragmentEntryLink.getFragmentEntryLinkId(),
+				newEditableValuesJSONObject.toString());
+
+		for (FragmentEntryLinkListener fragmentEntryLinkListener :
+				_fragmentEntryLinkListenerRegistry.
+					getFragmentEntryLinkListeners()) {
+
+			fragmentEntryLinkListener.
+				onUpdateFragmentEntryLinkConfigurationValues(
+					stepperFragmentEntryLink);
+		}
+
+		return stepperFragmentEntryLink;
+	}
+
 	public static class LayoutStructureItemChanges {
 
 		public void addAddedLayoutStructureItems(
@@ -762,6 +829,10 @@ public class FormItemManager {
 		_fragmentCollectionContributorRegistry;
 
 	@Reference
+	private FragmentEntryLinkListenerRegistry
+		_fragmentEntryLinkListenerRegistry;
+
+	@Reference
 	private FragmentEntryLinkManager _fragmentEntryLinkManager;
 
 	@Reference
@@ -769,6 +840,9 @@ public class FormItemManager {
 
 	@Reference
 	private FragmentEntryLocalService _fragmentEntryLocalService;
+
+	@Reference
+	private FragmentEntryProcessorRegistry _fragmentEntryProcessorRegistry;
 
 	@Reference
 	private GroupLocalService _groupLocalService;
@@ -784,5 +858,8 @@ public class FormItemManager {
 
 	@Reference
 	private Language _language;
+
+	@Reference
+	private Portal _portal;
 
 }

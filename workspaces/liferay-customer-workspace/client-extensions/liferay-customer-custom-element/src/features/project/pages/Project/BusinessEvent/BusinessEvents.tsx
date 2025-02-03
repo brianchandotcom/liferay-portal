@@ -7,11 +7,243 @@ import i18n from '~/utils/I18n';
 
 import './BusinessEvents.css';
 
+import {ButtonWithIcon} from '@clayui/core';
+import {useEffect, useMemo, useState} from 'react';
+import {ButtonDropDown} from '~/components';
+import {IRow} from '~/components/DataTable';
+import {hasAdminUserAccount} from '~/features/project/containers/ActivationKeysTable/utils/hasAdminUserAccount';
+import BEActionsHeader from '~/features/project/pages/Project/BusinessEvent/components/BEActionsHeader';
+import BETable from '~/features/project/pages/Project/BusinessEvent/components/BETable';
+import {getFormattedDate} from '~/features/project/utils/getFormattedDate';
+import useCurrentKoroneikiAccount from '~/hooks/useCurrentKoroneikiAccount';
+import {getBusinessEvents} from '~/services/liferay/api';
+import {getFormattedTime} from '~/utils/getFormattedTime';
+
+import useMyUserAccountByAccountExternalReferenceCode from '../TeamMembers/components/TeamMembersTable/hooks/useMyUserAccountByAccountExternalReferenceCode';
+
+interface IBusinessEventTicket {
+	associatedTickets: string;
+	description: string;
+	eventStatus: IEventStatusOrType;
+	eventType: IEventStatusOrType;
+	name: string;
+	targetGoLiveDateTime: string;
+}
+
+interface IEventStatusOrType {
+	name: string;
+}
+
+interface IOrganizationBrief {
+	name: string;
+}
+
+const columns = [
+	{
+		columnKey: 'eventName',
+		label: i18n.translate('event-name'),
+		subLabel: i18n.translate('type'),
+	},
+	{
+		columnKey: 'status',
+		label: i18n.translate('status'),
+	},
+	{
+		columnKey: 'details',
+		label: i18n.translate('details'),
+	},
+	{
+		columnKey: 'associatedTickets',
+		label: i18n.translate('associated-tickets'),
+	},
+	{
+		columnKey: 'targetGoLiveDate',
+		label: i18n.translate('target-go-live-date'),
+	},
+	{
+		columnKey: 'actions',
+		label: '',
+	},
+];
+
 const BusinessEvents = () => {
+	const [businessEventsTickets, setBusinessEventsTickets] = useState<
+		IBusinessEventTicket[]
+	>([]);
+
+	const {data, loading} = useCurrentKoroneikiAccount();
+	const koroneikiAccount = data?.koroneikiAccountByExternalReferenceCode;
+
+	const {data: myUserAccountData} =
+		useMyUserAccountByAccountExternalReferenceCode(
+			loading,
+			koroneikiAccount?.accountKey
+		);
+	const loggedUserAccount = myUserAccountData?.myUserAccount;
+
+	const isAdminUserAccount = hasAdminUserAccount(myUserAccountData);
+	const hasProjectAdminOrRequesterRole =
+		loggedUserAccount?.selectedAccountSummary?.hasSupportSeatRole;
+	const isLiferayStaff = loggedUserAccount?.isLiferayStaff;
+
+	const hasFLSOrganizationAssociated = useMemo<boolean>(
+		() =>
+			loggedUserAccount?.organizationBriefs?.some(
+				(orgBrief: IOrganizationBrief) => orgBrief.name.includes('FLS')
+			) ?? false,
+		[loggedUserAccount?.organizationBriefs]
+	);
+
+	const hasAllEventsPermissions =
+		isAdminUserAccount ||
+		hasProjectAdminOrRequesterRole ||
+		isLiferayStaff ||
+		hasFLSOrganizationAssociated;
+
+	useEffect(() => {
+		const fetchBusinessEvents = async () => {
+			try {
+				const businessEventsResponse = await getBusinessEvents();
+
+				setBusinessEventsTickets(businessEventsResponse.items);
+			}
+			catch (error) {
+				console.error('Error', error);
+			}
+		};
+
+		fetchBusinessEvents();
+	}, []);
+
+	const rows = useMemo(() => {
+		const userOptions = [
+			{
+				customOptionStyle: 'pr-5',
+				label: i18n.translate('view-details'),
+				onClick: () => {},
+			},
+		];
+
+		if (hasAllEventsPermissions) {
+			userOptions.push(
+				{
+					customOptionStyle: 'pr-5',
+					label: i18n.translate('edit-event'),
+					onClick: () => {},
+				},
+				{
+					customOptionStyle: 'pr-5',
+					label: i18n.translate('record-actual-go-live'),
+					onClick: () => {},
+				},
+				{
+					customOptionStyle: 'pr-5 be-cancel-event-option',
+					label: i18n.translate('cancel-event'),
+					onClick: () => {},
+				}
+			);
+		}
+
+		if (businessEventsTickets?.length > 0) {
+			return businessEventsTickets.map((eventTicket) => ({
+				actions: (
+					<div className="d-flex justify-content-center">
+						<ButtonDropDown
+							customDropDownButton={
+								<ButtonWithIcon
+									aria-label={i18n.translate(
+										'manage-user-options'
+									)}
+									borderless
+									className="text-neutral-5"
+									symbol="ellipsis-v"
+								/>
+							}
+							items={userOptions}
+							label="Options"
+							menuElementAttrs={{
+								className: 'p-0 text-neutral-10',
+							}}
+							menuWidth="shrink"
+						/>
+					</div>
+				),
+				associatedTickets: (
+					<div className="text-neutral-10">
+						{eventTicket?.associatedTickets}
+					</div>
+				),
+				details: (
+					<div className="text-neutral-10">
+						{eventTicket?.description}
+					</div>
+				),
+				eventName: (
+					<div>
+						<div className="font-weight-semi-bold text-neutral-10">
+							{eventTicket?.name}
+						</div>
+
+						<div className="be-subtitle text-neutral-7">
+							{eventTicket?.eventType?.name}
+						</div>
+					</div>
+				),
+				status: (
+					<div className="align-items-center d-flex">
+						<div
+							className={`align-items-center font-weight-semi-bold be-status be-status-${eventTicket?.eventStatus?.name.toLowerCase()} px-2 py-1`}
+						>
+							{eventTicket?.eventStatus?.name}
+						</div>
+					</div>
+				),
+				targetGoLiveDate: (
+					<div>
+						<div className="text-neutral-10">
+							{getFormattedDate(
+								eventTicket?.targetGoLiveDateTime,
+								'day2DMonthSYearN'
+							)}
+						</div>
+
+						<div className="be-subtitle text-neutral-7">
+							{getFormattedTime(
+								eventTicket?.targetGoLiveDateTime
+							)}
+						</div>
+					</div>
+				),
+			}));
+		}
+
+		return [];
+	}, [businessEventsTickets, hasAllEventsPermissions]);
+
 	return (
-		<>
-			<h1>{i18n.translate('business-events')}</h1>
-		</>
+		<div className="py-4">
+			<div>
+				<h1 className="font-weight-bold text-neutral-10">
+					{i18n.translate('business-events')}
+				</h1>
+
+				<h6 className="font-weight-normal text-neutral-7">
+					{i18n.translate(
+						'this-table-allows-you-to-create-manage-and-track-your-business-events-please-note-that-business-events-closed-for-more-than-a-year-will-not-be-displayed-here'
+					)}
+				</h6>
+			</div>
+
+			<div className="mb-1">
+				<BEActionsHeader
+					hasAllEventsPermissions={hasAllEventsPermissions}
+				/>
+			</div>
+
+			<div>
+				<BETable columns={columns} rows={rows as unknown as IRow[]} />
+			</div>
+		</div>
 	);
 };
 

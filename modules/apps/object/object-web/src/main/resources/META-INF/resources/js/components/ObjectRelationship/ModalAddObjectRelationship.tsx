@@ -177,15 +177,8 @@ export function ModalAddObjectRelationship({
 									objectDefinitionExternalReferenceCode1={
 										values.objectDefinitionExternalReferenceCode2 as string
 									}
-									onChange={async (
-										parameterObjectFieldName
-									) => {
+									onChange={(parameterObjectFieldName) => {
 										setValues({parameterObjectFieldName});
-
-										await onSubmit({
-											...values,
-											parameterObjectFieldName,
-										});
 									}}
 									value={values.parameterObjectFieldName}
 								/>

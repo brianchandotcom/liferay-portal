@@ -138,7 +138,7 @@ public class ObjectEntryImpl extends ObjectEntryBaseImpl {
 	}
 
 	@Override
-	public String getURLTitle(Locale locale) throws PortalException {
+	public String getURLTitle(Locale locale) {
 		if (!FeatureFlagManagerUtil.isEnabled("LPD-21926")) {
 			return null;
 		}
@@ -156,7 +156,7 @@ public class ObjectEntryImpl extends ObjectEntryBaseImpl {
 	}
 
 	@Override
-	public Map<String, String> getURLTitleMap() throws PortalException {
+	public Map<String, String> getURLTitleMap() {
 		if (!FeatureFlagManagerUtil.isEnabled("LPD-21926")) {
 			return null;
 		}

@@ -54,6 +54,7 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -208,6 +209,16 @@ public class ObjectEntryDTOConverter
 						_userLocalService.fetchUser(objectEntry.getUserId())));
 				setDateCreated(objectEntry::getCreateDate);
 				setDateModified(objectEntry::getModifiedDate);
+				setDefaultLanguageId(
+					() -> {
+						if (FeatureFlagManagerUtil.isEnabled(
+								objectDefinition.getCompanyId(), "LPD-32050")) {
+
+							return objectEntry.getDefaultLanguageId();
+						}
+
+						return null;
+					});
 				setExternalReferenceCode(objectEntry::getExternalReferenceCode);
 				setFriendlyUrlPath(
 					() -> objectEntry.getURLTitle(

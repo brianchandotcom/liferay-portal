@@ -35,11 +35,13 @@ import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineExportTaskResource;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
+import com.liferay.portal.vulcan.crud.VulcanCRUDItemDelegate;
 import com.liferay.portal.vulcan.multipart.MultipartBody;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.ActionUtil;
+import com.liferay.portal.vulcan.util.UriInfoUtil;
 
 import java.io.Serializable;
 
@@ -69,7 +71,8 @@ import javax.ws.rs.core.UriInfo;
 @javax.ws.rs.Path("/v1.0")
 public abstract class BaseMessageBoardAttachmentResourceImpl
 	implements EntityModelResource, MessageBoardAttachmentResource,
-			   VulcanBatchEngineTaskItemDelegate<MessageBoardAttachment> {
+			   VulcanBatchEngineTaskItemDelegate<MessageBoardAttachment>,
+			   VulcanCRUDItemDelegate<MessageBoardAttachment> {
 
 	/**
 	 * Invoke this method with the command line:
@@ -949,6 +952,11 @@ public abstract class BaseMessageBoardAttachmentResourceImpl
 		return null;
 	}
 
+	@Override
+	public MessageBoardAttachment getItem(Long id) throws Exception {
+		return getMessageBoardAttachment(id);
+	}
+
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
 	}
@@ -991,7 +999,8 @@ public abstract class BaseMessageBoardAttachmentResourceImpl
 	}
 
 	public void setContextUriInfo(UriInfo contextUriInfo) {
-		this.contextUriInfo = contextUriInfo;
+		this.contextUriInfo = UriInfoUtil.getVulcanUriInfo(
+			getApplicationPath(), contextUriInfo);
 	}
 
 	public void setContextUser(
@@ -1034,6 +1043,10 @@ public abstract class BaseMessageBoardAttachmentResourceImpl
 
 	public void setSortParserProvider(SortParserProvider sortParserProvider) {
 		this.sortParserProvider = sortParserProvider;
+	}
+
+	protected String getApplicationPath() {
+		return "headless-delivery";
 	}
 
 	public void setVulcanBatchEngineExportTaskResource(

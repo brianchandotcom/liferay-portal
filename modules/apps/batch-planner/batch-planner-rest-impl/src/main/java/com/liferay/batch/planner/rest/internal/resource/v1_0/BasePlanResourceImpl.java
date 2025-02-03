@@ -20,9 +20,11 @@ import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.crud.VulcanCRUDItemDelegate;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.ActionUtil;
+import com.liferay.portal.vulcan.util.UriInfoUtil;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -43,7 +45,8 @@ import javax.ws.rs.core.UriInfo;
  */
 @Generated("")
 @javax.ws.rs.Path("/v1.0")
-public abstract class BasePlanResourceImpl implements PlanResource {
+public abstract class BasePlanResourceImpl
+	implements PlanResource, VulcanCRUDItemDelegate<Plan> {
 
 	/**
 	 * Invoke this method with the command line:
@@ -215,6 +218,11 @@ public abstract class BasePlanResourceImpl implements PlanResource {
 		return new Plan();
 	}
 
+	@Override
+	public Plan getItem(Long id) throws Exception {
+		return getPlan(id);
+	}
+
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
 		this.contextAcceptLanguage = contextAcceptLanguage;
 	}
@@ -238,7 +246,8 @@ public abstract class BasePlanResourceImpl implements PlanResource {
 	}
 
 	public void setContextUriInfo(UriInfo contextUriInfo) {
-		this.contextUriInfo = contextUriInfo;
+		this.contextUriInfo = UriInfoUtil.getVulcanUriInfo(
+			getApplicationPath(), contextUriInfo);
 	}
 
 	public void setContextUser(
@@ -281,6 +290,10 @@ public abstract class BasePlanResourceImpl implements PlanResource {
 
 	public void setSortParserProvider(SortParserProvider sortParserProvider) {
 		this.sortParserProvider = sortParserProvider;
+	}
+
+	protected String getApplicationPath() {
+		return "batch-planner";
 	}
 
 	protected Map<String, String> addAction(

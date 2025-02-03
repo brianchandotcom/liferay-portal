@@ -47,12 +47,14 @@ import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineExportTaskResource;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
+import com.liferay.portal.vulcan.crud.VulcanCRUDItemDelegate;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.permission.ModelPermissionsUtil;
 import com.liferay.portal.vulcan.permission.Permission;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.ActionUtil;
+import com.liferay.portal.vulcan.util.UriInfoUtil;
 
 import java.io.Serializable;
 
@@ -84,7 +86,8 @@ import javax.ws.rs.core.UriInfo;
 @javax.ws.rs.Path("/v1.0")
 public abstract class BaseDocumentFolderResourceImpl
 	implements DocumentFolderResource, EntityModelResource,
-			   VulcanBatchEngineTaskItemDelegate<DocumentFolder> {
+			   VulcanBatchEngineTaskItemDelegate<DocumentFolder>,
+			   VulcanCRUDItemDelegate<DocumentFolder> {
 
 	/**
 	 * Invoke this method with the command line:
@@ -2137,6 +2140,11 @@ public abstract class BaseDocumentFolderResourceImpl
 		return null;
 	}
 
+	@Override
+	public DocumentFolder getItem(Long id) throws Exception {
+		return getDocumentFolder(id);
+	}
+
 	protected String getPermissionCheckerActionsResourceName(Object id)
 		throws Exception {
 
@@ -2344,7 +2352,8 @@ public abstract class BaseDocumentFolderResourceImpl
 	}
 
 	public void setContextUriInfo(UriInfo contextUriInfo) {
-		this.contextUriInfo = contextUriInfo;
+		this.contextUriInfo = UriInfoUtil.getVulcanUriInfo(
+			getApplicationPath(), contextUriInfo);
 	}
 
 	public void setContextUser(
@@ -2387,6 +2396,10 @@ public abstract class BaseDocumentFolderResourceImpl
 
 	public void setSortParserProvider(SortParserProvider sortParserProvider) {
 		this.sortParserProvider = sortParserProvider;
+	}
+
+	protected String getApplicationPath() {
+		return "headless-delivery";
 	}
 
 	public void setVulcanBatchEngineExportTaskResource(

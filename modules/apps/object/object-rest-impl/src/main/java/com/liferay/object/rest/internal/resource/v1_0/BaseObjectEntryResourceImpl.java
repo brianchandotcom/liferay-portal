@@ -45,12 +45,14 @@ import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineExportTaskResource;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
+import com.liferay.portal.vulcan.crud.VulcanCRUDItemDelegate;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.permission.ModelPermissionsUtil;
 import com.liferay.portal.vulcan.permission.Permission;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 import com.liferay.portal.vulcan.util.ActionUtil;
+import com.liferay.portal.vulcan.util.UriInfoUtil;
 
 import java.io.Serializable;
 
@@ -81,7 +83,8 @@ import javax.ws.rs.core.UriInfo;
 @Generated("")
 public abstract class BaseObjectEntryResourceImpl
 	implements EntityModelResource, ObjectEntryResource,
-			   VulcanBatchEngineTaskItemDelegate<ObjectEntry> {
+			   VulcanBatchEngineTaskItemDelegate<ObjectEntry>,
+			   VulcanCRUDItemDelegate<ObjectEntry> {
 
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -1475,6 +1478,11 @@ public abstract class BaseObjectEntryResourceImpl
 		return null;
 	}
 
+	@Override
+	public ObjectEntry getItem(Long id) throws Exception {
+		return getObjectEntry(id);
+	}
+
 	protected String getPermissionCheckerActionsResourceName(Object id)
 		throws Exception {
 
@@ -1681,7 +1689,8 @@ public abstract class BaseObjectEntryResourceImpl
 	}
 
 	public void setContextUriInfo(UriInfo contextUriInfo) {
-		this.contextUriInfo = contextUriInfo;
+		this.contextUriInfo = UriInfoUtil.getVulcanUriInfo(
+			getApplicationPath(), contextUriInfo);
 	}
 
 	public void setContextUser(
@@ -1724,6 +1733,10 @@ public abstract class BaseObjectEntryResourceImpl
 
 	public void setSortParserProvider(SortParserProvider sortParserProvider) {
 		this.sortParserProvider = sortParserProvider;
+	}
+
+	protected String getApplicationPath() {
+		return null;
 	}
 
 	public void setVulcanBatchEngineExportTaskResource(

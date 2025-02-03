@@ -31,7 +31,7 @@ public class CustomFDSBulkActionsSerializerImpl
 	public List<FDSActionDropdownItem> serialize(
 		String fdsName, HttpServletRequest httpServletRequest) {
 
-		// TODO: add support for bulk actions in the DSM
+		// TODO
 
 		return Collections.emptyList();
 	}

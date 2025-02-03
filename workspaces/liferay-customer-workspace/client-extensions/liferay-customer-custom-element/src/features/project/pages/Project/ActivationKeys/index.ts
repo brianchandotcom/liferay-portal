@@ -3,15 +3,4 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ActivationKeysSkeleton from '~/features/project/layouts/ActivationKeysLayout/Skeleton';
-
-import Commerce from './Commerce';
-import EnterpriseSearch from './EnterpriseSearch';
-
-const ActivationKey = {
-	Commerce,
-	EnterpriseSearch,
-	Skeleton: ActivationKeysSkeleton,
-};
-
-export default ActivationKey;
+export {default} from './ActivationKeys';

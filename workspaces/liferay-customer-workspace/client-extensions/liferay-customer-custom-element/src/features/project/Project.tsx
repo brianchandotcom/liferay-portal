@@ -3,15 +3,16 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import './styles/app.scss';
+
+import './app.scss';
 import {AppContextProvider} from './context';
-import OnboardingPages from './pages';
+import ProjectPages from './pages';
 
-const Onboarding = () => {
-	return (
-		<AppContextProvider>
-			<OnboardingPages />
-		</AppContextProvider>
-	);
-};
+const Project = () => (
+	<AppContextProvider>
+		<ProjectPages />
+	</AppContextProvider>
+);
 
-export default Onboarding;
+export default Project;

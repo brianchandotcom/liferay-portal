@@ -145,7 +145,8 @@ public class CommerceReturnObjectEntryValuesContributorTest {
 				TestPropsValues.getCompanyId(), "CommerceReturn");
 
 		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
-			_user.getUserId(), 0, objectDefinition.getObjectDefinitionId(),
+			_user.getUserId(), 0, null,
+			objectDefinition.getObjectDefinitionId(),
 			HashMapBuilder.<String, Serializable>put(
 				"channelGroupId", _commerceChannel.getSiteGroupId()
 			).put(

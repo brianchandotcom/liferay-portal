@@ -162,6 +162,7 @@ public class DefaultObjectEntryManagerImpl
 		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
 			_objectEntryService.addObjectEntry(
 				getGroupId(objectDefinition, scopeKey),
+				objectEntry.getDefaultLanguageId(),
 				objectDefinition.getObjectDefinitionId(),
 				_toObjectValues(
 					dtoConverterContext.getLocale(), objectDefinition,

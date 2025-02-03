@@ -705,7 +705,7 @@ public class ObjectViewLocalServiceTest {
 			errorMessage, "[ , ]", relationshipObjectFieldName);
 
 		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
-			TestPropsValues.getUserId(), 0,
+			TestPropsValues.getUserId(), 0, null,
 			objectDefinition.getObjectDefinitionId(), Collections.emptyMap(),
 			ServiceContextTestUtil.getServiceContext());
 

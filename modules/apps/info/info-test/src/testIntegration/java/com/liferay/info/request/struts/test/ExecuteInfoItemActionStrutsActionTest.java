@@ -98,7 +98,7 @@ public class ExecuteInfoItemActionStrutsActionTest {
 			_portal.getClassNameId(objectDefinition.getClassName()));
 
 		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
-			_user.getUserId(), _group.getGroupId(),
+			_user.getUserId(), _group.getGroupId(), null,
 			objectDefinition.getObjectDefinitionId(),
 			HashMapBuilder.<String, Serializable>put(
 				"text", RandomTestUtil.randomString()

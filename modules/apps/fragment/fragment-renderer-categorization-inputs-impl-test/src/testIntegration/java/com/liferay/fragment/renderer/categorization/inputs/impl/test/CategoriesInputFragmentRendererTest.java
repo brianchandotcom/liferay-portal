@@ -151,7 +151,7 @@ public class CategoriesInputFragmentRendererTest
 		}
 
 		return _objectEntryLocalService.addObjectEntry(
-			TestPropsValues.getUserId(), groupId,
+			TestPropsValues.getUserId(), groupId, null,
 			objectDefinition.getObjectDefinitionId(),
 			HashMapBuilder.<String, Serializable>put(
 				"firstName", RandomTestUtil.randomString()

@@ -3814,7 +3814,7 @@ public class DefaultObjectEntryManagerImplTest
 	@Test
 	public void testGetObjectEntryDocument() throws Exception {
 		_objectEntryLocalService.addObjectEntry(
-			adminUser.getUserId(), 0,
+			adminUser.getUserId(), 0, null,
 			_objectDefinition1.getObjectDefinitionId(),
 			HashMapBuilder.<String, Serializable>put(
 				"textObjectFieldName", StringUtil.randomId()
@@ -4565,7 +4565,7 @@ public class DefaultObjectEntryManagerImplTest
 		AccountEntry accountEntry1 = _addAccountEntry();
 
 		_objectEntryLocalService.addObjectEntry(
-			adminUser.getUserId(), 0,
+			adminUser.getUserId(), 0, null,
 			_objectDefinition3.getObjectDefinitionId(),
 			HashMapBuilder.<String, Serializable>put(
 				"r_oneToManyRelationshipName1_accountEntryId",
@@ -4580,7 +4580,7 @@ public class DefaultObjectEntryManagerImplTest
 		AccountEntry accountEntry2 = _addAccountEntry();
 
 		_objectEntryLocalService.addObjectEntry(
-			adminUser.getUserId(), 0,
+			adminUser.getUserId(), 0, null,
 			_objectDefinition3.getObjectDefinitionId(),
 			HashMapBuilder.<String, Serializable>put(
 				"r_oneToManyRelationshipName1_accountEntryId",

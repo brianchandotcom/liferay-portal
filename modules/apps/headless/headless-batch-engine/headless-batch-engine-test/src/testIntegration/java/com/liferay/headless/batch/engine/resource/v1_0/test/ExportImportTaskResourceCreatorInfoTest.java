@@ -247,7 +247,8 @@ public class ExportImportTaskResourceCreatorInfoTest {
 		throws Exception {
 
 		return _objectEntryLocalService.addObjectEntry(
-			user.getUserId(), 0L, objectDefinition.getObjectDefinitionId(),
+			user.getUserId(), 0L, null,
+			objectDefinition.getObjectDefinitionId(),
 			HashMapBuilder.<String, Serializable>put(
 				objectFieldName, objectFieldValue
 			).build(),
@@ -260,7 +261,8 @@ public class ExportImportTaskResourceCreatorInfoTest {
 		throws Exception {
 
 		return _objectEntryLocalService.addObjectEntry(
-			user.getUserId(), 0L, objectDefinition.getObjectDefinitionId(),
+			user.getUserId(), 0L, null,
+			objectDefinition.getObjectDefinitionId(),
 			HashMapBuilder.<String, Serializable>put(
 				objectFieldName, objectFieldValue
 			).put(

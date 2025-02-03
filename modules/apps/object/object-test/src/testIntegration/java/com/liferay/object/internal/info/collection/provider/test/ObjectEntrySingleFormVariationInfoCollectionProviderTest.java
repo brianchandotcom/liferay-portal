@@ -224,7 +224,7 @@ public class ObjectEntrySingleFormVariationInfoCollectionProviderTest {
 
 			for (int i = 0; i < expectedObjectEntriesSize; i++) {
 				_objectEntryLocalService.addObjectEntry(
-					TestPropsValues.getUserId(), 0,
+					TestPropsValues.getUserId(), 0, null,
 					objectDefinition.getObjectDefinitionId(),
 					HashMapBuilder.<String, Serializable>put(
 						"textObjectFieldName", RandomTestUtil.randomString()

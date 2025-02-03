@@ -154,7 +154,8 @@ public class FDSSamplePortlet extends MVCPortlet {
 
 		for (int i = 1; i <= 100; i++) {
 			_objectEntryLocalService.addObjectEntry(
-				user.getUserId(), 0, objectDefinition.getObjectDefinitionId(),
+				user.getUserId(), 0, null,
+				objectDefinition.getObjectDefinitionId(),
 				HashMapBuilder.<String, Serializable>put(
 					"color", colors[i % 4]
 				).put(

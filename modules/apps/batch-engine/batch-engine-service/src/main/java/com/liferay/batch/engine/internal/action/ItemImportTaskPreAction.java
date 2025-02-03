@@ -27,6 +27,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.jackson.databind.ser.VulcanPropertyFilter;
 
+import java.util.Set;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -125,7 +127,12 @@ public class ItemImportTaskPreAction implements ImportTaskPreAction {
 		ObjectWriter objectWriter = objectMapper.writer(
 			new SimpleFilterProvider(
 			).addFilter(
-				"Liferay.Vulcan", VulcanPropertyFilter.serializeAll()
+				"Liferay.Vulcan",
+				VulcanPropertyFilter.of(
+					Set.of(
+						"creator", "creator.externalReferenceCode",
+						"creator.id"),
+					null)
 			));
 
 		return objectWriter.writeValueAsString(item);

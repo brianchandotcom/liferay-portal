@@ -5,5 +5,5 @@
 
 	accountEntryLocalServiceUtil = staticUtil["com.liferay.account.service.AccountEntryLocalServiceUtil"]
 
-	commerceAccount = accountEntryLocalServiceUtil.getCommerceAccount(param)
+	accountEntry = accountEntryLocalServiceUtil.getAccountEntry(param)
 />

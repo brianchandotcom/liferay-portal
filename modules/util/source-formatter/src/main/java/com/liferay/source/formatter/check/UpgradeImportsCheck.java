@@ -45,20 +45,6 @@ public class UpgradeImportsCheck extends BaseFileCheck {
 		return _fixImports(fileName, content);
 	}
 
-	private static void _checkClassNames(
-		String importName, String newImportName) {
-
-		String className = SourceFormatterUtil.getSimpleName(importName);
-		String newClassName = SourceFormatterUtil.getSimpleName(newImportName);
-
-		if (!className.equals(newClassName)) {
-			_variablesMap.put(className, newClassName);
-			_variablesMap.put(
-				StringUtil.lowerCaseFirstLetter(className),
-				StringUtil.lowerCaseFirstLetter(newClassName));
-		}
-	}
-
 	private static String _replaceVariables(String content) {
 		String newContent = content;
 
@@ -83,6 +69,22 @@ public class UpgradeImportsCheck extends BaseFileCheck {
 		}
 
 		return newContent;
+	}
+
+	private void _checkClassNames() {
+		for (Map.Entry<String, String> entry : _importsMap.entrySet()) {
+			String className = SourceFormatterUtil.getSimpleName(
+				entry.getKey());
+			String newClassName = SourceFormatterUtil.getSimpleName(
+				entry.getValue());
+
+			if (!className.equals(newClassName)) {
+				_variablesMap.put(className, newClassName);
+				_variablesMap.put(
+					StringUtil.lowerCaseFirstLetter(className),
+					StringUtil.lowerCaseFirstLetter(newClassName));
+			}
+		}
 	}
 
 	private String _fixImports(String fileName, String content)
@@ -121,9 +123,9 @@ public class UpgradeImportsCheck extends BaseFileCheck {
 			}
 
 			content = StringUtil.replace(content, importName, newImportName);
-
-			_checkClassNames(importName, newImportName);
 		}
+
+		_checkClassNames();
 
 		if (fileName.endsWith(".java")) {
 			return StringUtil.replace(

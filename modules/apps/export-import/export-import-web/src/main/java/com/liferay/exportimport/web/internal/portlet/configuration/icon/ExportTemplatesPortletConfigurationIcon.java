@@ -17,6 +17,6 @@ import org.osgi.service.component.annotations.Component;
 	property = "javax.portlet.name=" + ExportImportPortletKeys.EXPORT,
 	service = PortletConfigurationIcon.class
 )
-public class ExportTemplatesConfigurationIcon
+public class ExportTemplatesPortletConfigurationIcon
 	extends BaseTemplatesPortletConfigurationIcon {
 }

@@ -139,7 +139,7 @@ export default function StructureTreeNode({node}) {
 			isActive={node.activable && isSelected}
 			isMapped={node.mapped}
 			node={node}
-		></NodeContentWithoutDND>
+		/>
 	) : (
 		<MemoizedNodeContent
 			activationOrigin={isSelected ? activationOrigin : null}
@@ -207,6 +207,7 @@ function NodeContentWithoutDND({isActive, isMapped, node}) {
 						selectItem(itemId, {
 							itemType: node.itemType,
 							origin: ITEM_ACTIVATION_ORIGINS.sidebar,
+							parentId: node.parentId,
 						});
 					}
 				}}

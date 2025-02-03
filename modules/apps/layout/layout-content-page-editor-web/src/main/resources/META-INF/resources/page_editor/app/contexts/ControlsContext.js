@@ -129,8 +129,10 @@ const reducer = (state, action) => {
 		layoutData,
 		multiSelect,
 		origin,
+		parentId,
 		type,
 	} = action;
+
 	let nextState = state;
 
 	if (type === HOVER_ITEM && itemId !== nextState.hoveredItemId) {
@@ -148,6 +150,7 @@ const reducer = (state, action) => {
 	) {
 		let rangeLimitIds = {};
 		let nextActiveItemIds = [itemId];
+		let nextItemType = itemType;
 
 		if (
 			!Liferay.FeatureFlags['LPD-18221'] ||
@@ -159,10 +162,24 @@ const reducer = (state, action) => {
 			nextActiveItemIds = [];
 		}
 		else if (multiSelect === MULTI_SELECT_TYPES.simple) {
-			nextActiveItemIds = getActiveItemIds(
-				nextState.activeItemIds,
-				itemId
-			);
+			if (itemType === ITEM_TYPES.editable) {
+				if (state.activeItemIds.includes(parentId)) {
+					return state;
+				}
+
+				nextActiveItemIds = getActiveItemIds(
+					nextState.activeItemIds,
+					parentId
+				);
+
+				nextItemType = ITEM_TYPES.layoutDataItem;
+			}
+			else {
+				nextActiveItemIds = getActiveItemIds(
+					nextState.activeItemIds,
+					itemId
+				);
+			}
 		}
 		else if (multiSelect === MULTI_SELECT_TYPES.range) {
 
@@ -229,7 +246,7 @@ const reducer = (state, action) => {
 			...nextState,
 			activationOrigin: origin,
 			activeItemIds: nextActiveItemIds,
-			activeItemType: itemType,
+			activeItemType: nextItemType,
 			rangeLimitIds,
 		};
 	}

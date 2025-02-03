@@ -278,6 +278,7 @@ function FragmentContentInteractionsFilter({
 		if (!isActive(editable.itemId)) {
 			selectItem(editable.itemId, {
 				itemType: ITEM_TYPES.editable,
+				parentId: itemId,
 			});
 
 			return;

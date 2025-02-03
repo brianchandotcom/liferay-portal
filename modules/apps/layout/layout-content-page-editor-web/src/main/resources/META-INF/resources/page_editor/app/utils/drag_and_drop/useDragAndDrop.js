@@ -151,13 +151,15 @@ export function useDragItem(source, onDragEnd, onBegin = () => {}) {
 
 	if (activeItemIds.length > 1) {
 		sources = [
-			...activeItemIds.map((id) =>
-				toMovementItem(
-					id,
-					layoutDataRef.current,
-					fragmentEntryLinksRef.current
-				)
-			),
+			...activeItemIds
+				.filter((id) => layoutDataRef.current.items[id])
+				.map((id) =>
+					toMovementItem(
+						id,
+						layoutDataRef.current,
+						fragmentEntryLinksRef.current
+					)
+				),
 		];
 	}
 

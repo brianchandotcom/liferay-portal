@@ -5,9 +5,12 @@
 
 package com.liferay.headless.admin.user.internal.dto.v1_0.converter;
 
+import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
 import com.liferay.asset.kernel.model.AssetTag;
+import com.liferay.asset.kernel.service.AssetCategoryService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
+import com.liferay.headless.admin.user.dto.v1_0.AccountBrief;
 import com.liferay.headless.admin.user.dto.v1_0.EmailAddress;
 import com.liferay.headless.admin.user.dto.v1_0.HoursAvailable;
 import com.liferay.headless.admin.user.dto.v1_0.Location;
@@ -15,12 +18,21 @@ import com.liferay.headless.admin.user.dto.v1_0.Organization;
 import com.liferay.headless.admin.user.dto.v1_0.OrganizationContactInformation;
 import com.liferay.headless.admin.user.dto.v1_0.Phone;
 import com.liferay.headless.admin.user.dto.v1_0.PostalAddress;
+import com.liferay.headless.admin.user.dto.v1_0.RoleBrief;
 import com.liferay.headless.admin.user.dto.v1_0.Service;
+import com.liferay.headless.admin.user.dto.v1_0.TaxonomyCategoryBrief;
+import com.liferay.headless.admin.user.dto.v1_0.UserAccountBrief;
 import com.liferay.headless.admin.user.dto.v1_0.WebUrl;
+import com.liferay.headless.admin.user.internal.dto.v1_0.util.AccountBriefUtil;
+import com.liferay.headless.admin.user.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.EmailAddressUtil;
+import com.liferay.headless.admin.user.internal.dto.v1_0.util.PermissionUtil;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.PhoneUtil;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.PostalAddressUtil;
+import com.liferay.headless.admin.user.internal.dto.v1_0.util.RoleBriefUtil;
+import com.liferay.headless.admin.user.internal.dto.v1_0.util.TaxonomyCategoryBriefUtil;
+import com.liferay.headless.admin.user.internal.dto.v1_0.util.UserAccountBriefUtil;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.WebUrlUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -34,15 +46,21 @@ import com.liferay.portal.kernel.service.EmailAddressService;
 import com.liferay.portal.kernel.service.OrgLaborService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.OrganizationService;
+import com.liferay.portal.kernel.service.PermissionService;
 import com.liferay.portal.kernel.service.PhoneService;
 import com.liferay.portal.kernel.service.RegionService;
+import com.liferay.portal.kernel.service.ResourceActionLocalService;
+import com.liferay.portal.kernel.service.RoleService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.service.WebsiteService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
+import com.liferay.portal.vulcan.fields.NestedFieldsSupplier;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.text.DecimalFormat;
@@ -106,8 +124,28 @@ public class OrganizationResourceDTOConverter
 
 		return new Organization() {
 			{
+				setAccountBriefs(
+					() -> NestedFieldsSupplier.supply(
+						"accountBriefs",
+						fieldName -> TransformUtil.transformToArray(
+							_accountEntryOrganizationRelLocalService.
+								getAccountEntryOrganizationRelsByOrganizationId(
+									organization.getOrganizationId()),
+							accountEntryOrganizationRel ->
+								AccountBriefUtil.toAccountBrief(
+									_accountEntryLocalService.fetchAccountEntry(
+										accountEntryOrganizationRel.
+											getAccountEntryId())),
+							AccountBrief.class)));
 				setActions(dtoConverterContext::getActions);
 				setComment(organization::getComments);
+				setCreator(
+					() -> NestedFieldsSupplier.supply(
+						"creator",
+						fieldName -> CreatorUtil.toCreator(
+							_portal,
+							_userLocalService.fetchUser(
+								organization.getUserId()))));
 				setCustomFields(
 					() -> CustomFieldsUtil.toCustomFields(
 						dtoConverterContext.isAcceptAllLanguages(),
@@ -240,13 +278,51 @@ public class OrganizationResourceDTOConverter
 					() -> organizationResourceDTOConverter.toDTO(
 						dtoConverterContext,
 						organization.getParentOrganization()));
+				setPermissions(
+					() -> NestedFieldsSupplier.supply(
+						"permissions",
+						nestedFieldNames -> PermissionUtil.toPermissions(
+							organization.getCompanyId(),
+							organization.getGroupId(),
+							organization.getOrganizationId(),
+							com.liferay.portal.kernel.model.Organization.class.
+								getName(),
+							_permissionService, _resourceActionLocalService)));
+				setRoleBriefs(
+					() -> NestedFieldsSupplier.supply(
+						"roleBriefs",
+						fieldName -> TransformUtil.transformToArray(
+							_roleService.getGroupRoles(
+								organization.getGroupId()),
+							RoleBriefUtil::toRoleBrief, RoleBrief.class)));
 				setServices(
 					() -> TransformUtil.transformToArray(
 						_orgLaborService.getOrgLabors(
 							organization.getOrganizationId()),
 						OrganizationResourceDTOConverter.this::_toService,
 						Service.class));
+				setTaxonomyCategoryBriefs(
+					() -> NestedFieldsSupplier.supply(
+						"taxonomyCategoryBriefs",
+						nestedFieldNames -> TransformUtil.transformToArray(
+							_assetCategoryService.getCategories(
+								com.liferay.portal.kernel.model.Organization.
+									class.getName(),
+								organization.getOrganizationId()),
+							assetCategory ->
+								TaxonomyCategoryBriefUtil.
+									toTaxonomyCategoryBrief(
+										assetCategory, dtoConverterContext),
+							TaxonomyCategoryBrief.class)));
 				setTreePath(organization::getTreePath);
+				setUserAccountBriefs(
+					() -> NestedFieldsSupplier.supply(
+						"userAccountBriefs",
+						fieldName -> TransformUtil.transformToArray(
+							_userLocalService.getOrganizationUsers(
+								organization.getOrganizationId()),
+							UserAccountBriefUtil::toUserAccountBrief,
+							UserAccountBrief.class)));
 			}
 		};
 	}
@@ -318,8 +394,14 @@ public class OrganizationResourceDTOConverter
 	}
 
 	@Reference
+	private AccountEntryLocalService _accountEntryLocalService;
+
+	@Reference
 	private AccountEntryOrganizationRelLocalService
 		_accountEntryOrganizationRelLocalService;
+
+	@Reference
+	private AssetCategoryService _assetCategoryService;
 
 	@Reference
 	private AssetTagLocalService _assetTagLocalService;
@@ -343,10 +425,25 @@ public class OrganizationResourceDTOConverter
 	private OrgLaborService _orgLaborService;
 
 	@Reference
+	private PermissionService _permissionService;
+
+	@Reference
 	private PhoneService _phoneService;
 
 	@Reference
+	private Portal _portal;
+
+	@Reference
 	private RegionService _regionService;
+
+	@Reference
+	private ResourceActionLocalService _resourceActionLocalService;
+
+	@Reference
+	private RoleService _roleService;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 	@Reference
 	private UserService _userService;

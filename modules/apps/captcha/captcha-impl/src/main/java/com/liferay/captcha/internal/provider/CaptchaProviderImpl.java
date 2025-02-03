@@ -33,9 +33,8 @@ public class CaptchaProviderImpl implements CaptchaProvider {
 	public Captcha getCaptcha() {
 		CaptchaConfiguration captchaConfiguration = getCaptchaConfiguration();
 
-		String captchaClassName = captchaConfiguration.captchaEngine();
-
-		return _serviceTrackerMap.getService(captchaClassName);
+		return _serviceTrackerMap.getService(
+			captchaConfiguration.captchaEngine());
 	}
 
 	@Override

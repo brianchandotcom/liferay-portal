@@ -105,10 +105,10 @@ public class SimpleCaptchaImpl implements Captcha {
 
 	@Override
 	public boolean isEnabled(HttpServletRequest httpServletRequest) {
+		HttpSession httpSession = _getHttpSession(httpServletRequest);
+
 		CaptchaConfiguration captchaConfiguration =
 			captchaProvider.getCaptchaConfiguration();
-
-		HttpSession httpSession = _getHttpSession(httpServletRequest);
 
 		int maxChallenges;
 

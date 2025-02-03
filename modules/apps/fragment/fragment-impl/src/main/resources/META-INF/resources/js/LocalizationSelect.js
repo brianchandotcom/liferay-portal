@@ -3,12 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayButton from '@clayui/button';
-import {Option, Picker} from '@clayui/core';
-import ClayIcon from '@clayui/icon';
-import classNames from 'classnames';
-import {TranslationAdminItem} from 'frontend-js-components-web';
-import {sub} from 'frontend-js-web';
+import {LanguagePicker} from '@clayui/core';
 import React, {useEffect, useMemo, useState} from 'react';
 
 import './LocalizationSelect.scss';
@@ -24,11 +19,10 @@ export function LocalizationSelect({
 }) {
 	const [active, setActive] = useState(false);
 	const [selectedLocaleId, setSelectedLocaleId] = useState(defaultLanguageId);
-	const [translatedInputs, setTranslatedInputs] = useState({});
+	const [translations, setTranslations] = useState({});
 
 	const localizableInputs = useMemo(
-		() =>
-			document.querySelectorAll('label[data-localizable="true"]').length,
+		() => document.querySelectorAll('[data-localizable="true"]').length,
 		[]
 	);
 
@@ -43,11 +37,20 @@ export function LocalizationSelect({
 				document.querySelectorAll(
 					`[type="hidden"][name$="_${languageId}"]`
 				)
-			).filter((input) => input.getAttribute('value') !== null);
+			).filter((input) => input.getAttribute('value') !== null).length;
 
-			setTranslatedInputs((previousState) => ({
+			const label = locales.find(
+				(locale) => locale.id === languageId
+			).label;
+
+			setTranslations((previousState) => ({
 				...previousState,
-				[languageId]: translatedInputs.length,
+				...((defaultLanguageId === languageId || translatedInputs) && {
+					[label]: {
+						total: localizableInputs,
+						translated: translatedInputs,
+					},
+				}),
 			}));
 		};
 
@@ -60,7 +63,7 @@ export function LocalizationSelect({
 		return () => {
 			Liferay.detach(EVENT_TRANSLATION_STATUS);
 		};
-	}, [locales]);
+	}, [defaultLanguageId, locales, localizableInputs]);
 
 	useEffect(() => {
 		const onLocaleChanged = ({languageId}) => {
@@ -77,78 +80,36 @@ export function LocalizationSelect({
 	}, [selectedLocaleId]);
 
 	return (
-		<Picker
+		<LanguagePicker
 			active={active}
-			as={TriggerButton}
+			defaultLocaleId={defaultLanguageId}
 			hideLanguageLabel={hideLanguageLabel}
-			items={locales}
+			locales={locales}
+			messages={{
+				default: Liferay.Language.get('default'),
+				option: Liferay.Language.get('x-language-x'),
+				translated: Liferay.Language.get('translated'),
+				translating: Liferay.Language.get('translating-x-x'),
+				trigger: Liferay.Language.get(
+					'select-a-language.-current-language-x'
+				),
+				untranslated: Liferay.Language.get('not-translated'),
+			}}
 			onActiveChange={(active) => {
 				if (!editMode) {
 					setActive(active);
 				}
 			}}
-			onSelectionChange={(id) => {
+			onSelectedLocaleChange={(id) => {
 				onSelectedLocaleChange(id);
 
 				Liferay.fire('localizationSelect:localeChanged', {
 					languageId: id,
 				});
 			}}
-			selectedKey={selectedLocaleId}
-			selectedLocale={locales.find(
-				(locale) => locale.id === selectedLocaleId
-			)}
+			selectedLocaleId={selectedLocaleId}
 			small={size === 'small'}
-		>
-			{(item) => (
-				<Option key={item.id} textValue={item.label}>
-					<TranslationAdminItem
-						defaultLanguageId={defaultLanguageId}
-						item={item}
-						translationProgress={
-							localizableInputs
-								? {
-										totalItems: localizableInputs,
-										translatedItems: translatedInputs,
-									}
-								: null
-						}
-					/>
-				</Option>
-			)}
-		</Picker>
+			translations={translations}
+		/>
 	);
 }
-
-const TriggerButton = React.forwardRef(
-	({hideLanguageLabel, selectedLocale, small, ...props}, ref) => {
-		const ariaLabelButton = sub(
-			Liferay.Language.get('select-a-language.-current-language-x'),
-			selectedLocale.displayName
-		);
-
-		return (
-			<ClayButton
-				{...props}
-				aria-label={ariaLabelButton}
-				className={classNames(
-					'btn-block form-control-select localization-select',
-					{'hidden-label': hideLanguageLabel}
-				)}
-				displayType="secondary"
-				ref={ref}
-				size={small ? 'sm' : undefined}
-			>
-				<span className="inline-item-before">
-					<ClayIcon symbol={selectedLocale.symbol} />
-				</span>
-
-				{!hideLanguageLabel ? (
-					<span className="font-weight-normal mr-2">
-						{selectedLocale.label}
-					</span>
-				) : null}
-			</ClayButton>
-		);
-	}
-);

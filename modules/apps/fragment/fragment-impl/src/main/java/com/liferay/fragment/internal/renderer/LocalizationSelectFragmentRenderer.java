@@ -191,11 +191,11 @@ public class LocalizationSelectFragmentRenderer implements FragmentRenderer {
 								locale);
 
 							return JSONUtil.put(
-								"displayName", locale.getDisplayName()
-							).put(
 								"id", LocaleUtil.toLanguageId(locale)
 							).put(
 								"label", w3cLanguageId
+							).put(
+								"name", locale.getDisplayName()
 							).put(
 								"symbol", StringUtil.toLowerCase(w3cLanguageId)
 							);

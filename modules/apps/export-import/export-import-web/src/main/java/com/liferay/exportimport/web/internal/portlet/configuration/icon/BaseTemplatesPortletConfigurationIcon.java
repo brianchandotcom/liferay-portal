@@ -21,7 +21,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Carlos Correa
  */
-public abstract class BaseExportTemplatesConfigurationIcon
+public abstract class BaseTemplatesPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
 	@Override

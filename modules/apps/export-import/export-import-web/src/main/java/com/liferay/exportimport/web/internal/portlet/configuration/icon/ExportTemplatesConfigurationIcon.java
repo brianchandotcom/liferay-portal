@@ -18,5 +18,5 @@ import org.osgi.service.component.annotations.Component;
 	service = PortletConfigurationIcon.class
 )
 public class ExportTemplatesConfigurationIcon
-	extends BaseExportTemplatesConfigurationIcon {
+	extends BaseTemplatesPortletConfigurationIcon {
 }

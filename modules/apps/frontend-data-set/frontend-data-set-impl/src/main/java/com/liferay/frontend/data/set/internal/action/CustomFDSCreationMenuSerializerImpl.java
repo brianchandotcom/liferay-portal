@@ -37,7 +37,7 @@ public class CustomFDSCreationMenuSerializerImpl
 		CreationMenu creationMenu = new CreationMenu();
 
 		for (ObjectEntry objectEntry :
-				getCreationActionObjectEntries(fdsName, httpServletRequest)) {
+				getCreationMenuObjectEntries(fdsName, httpServletRequest)) {
 
 			Map<String, Object> properties = objectEntry.getProperties();
 

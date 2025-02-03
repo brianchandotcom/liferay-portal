@@ -8,12 +8,13 @@
 <%@ include file="/init.jsp" %>
 
 <%
-AllSectionDisplayContext allSectionDisplayContext = new AllSectionDisplayContext();
+AllSectionDisplayContext allSectionDisplayContext = new AllSectionDisplayContext(request);
 %>
 
 <frontend-data-set:headless-display
 	apiURL="<%= allSectionDisplayContext.getAPIURL() %>"
 	bulkActionDropdownItems="<%= allSectionDisplayContext.getBulkActionDropdownItems() %>"
+	emptyState="<%= allSectionDisplayContext.getEmptyState() %>"
 	fdsActionDropdownItems="<%= allSectionDisplayContext.getFDSActionDropdownItems() %>"
 	formName="fm"
 	id="<%= CMSSiteInitializerFDSNames.ALL_SECTION %>"

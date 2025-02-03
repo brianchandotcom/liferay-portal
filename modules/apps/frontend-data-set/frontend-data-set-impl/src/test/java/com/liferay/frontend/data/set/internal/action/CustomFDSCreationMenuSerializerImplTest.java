@@ -6,6 +6,7 @@
 package com.liferay.frontend.data.set.internal.action;
 
 import com.liferay.frontend.data.set.internal.serializer.BaseCustomFDSSerializer;
+import com.liferay.frontend.data.set.serializer.FDSSerializer;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
@@ -52,18 +53,16 @@ public class CustomFDSCreationMenuSerializerImplTest {
 		_mockFDSCreationMenu("fdsName1", new String[] {"New 1.1", "New 1.2"});
 		_mockFDSCreationMenu("fdsName2", new String[] {"New 2"});
 
-		CreationMenu creationMenu1 =
-			_customFDSCreationMenuSerializerImpl.serialize(
-				"fdsName1", _httpServletRequest);
+		CreationMenu creationMenu1 = _fdsSerializer.serialize(
+			"fdsName1", _httpServletRequest);
 
 		Assert.assertEquals(2, _getPrimaryItemsSize(creationMenu1));
 		Assert.assertFalse(_containsTitle(creationMenu1, "New 2"));
 		Assert.assertTrue(_containsTitle(creationMenu1, "New 1.1"));
 		Assert.assertTrue(_containsTitle(creationMenu1, "New 1.2"));
 
-		CreationMenu creationMenu2 =
-			_customFDSCreationMenuSerializerImpl.serialize(
-				"fdsName2", _httpServletRequest);
+		CreationMenu creationMenu2 = _fdsSerializer.serialize(
+			"fdsName2", _httpServletRequest);
 
 		Assert.assertEquals(1, _getPrimaryItemsSize(creationMenu2));
 		Assert.assertFalse(_containsTitle(creationMenu2, "New 1.1"));
@@ -77,7 +76,7 @@ public class CustomFDSCreationMenuSerializerImplTest {
 		_mockFDSCreationMenu("fdsName", null);
 
 		Assert.assertTrue(
-			_customFDSCreationMenuSerializerImpl.serialize(
+			_fdsSerializer.serialize(
 				"fdsName", _httpServletRequest
 			).isEmpty());
 
@@ -115,12 +114,11 @@ public class CustomFDSCreationMenuSerializerImplTest {
 
 	private void _mockFDSCreationMenu(String fdsName, String[] titles) {
 		Mockito.when(
-			_customFDSCreationMenuSerializerImpl.serialize(
-				fdsName, _httpServletRequest)
+			_fdsSerializer.serialize(fdsName, _httpServletRequest)
 		).thenCallRealMethod();
 
 		BaseCustomFDSSerializer baseCustomFDSSerializer =
-			(BaseCustomFDSSerializer)_customFDSCreationMenuSerializerImpl;
+			(BaseCustomFDSSerializer)_fdsSerializer;
 
 		if (ArrayUtil.isEmpty(titles)) {
 			Mockito.when(
@@ -155,7 +153,7 @@ public class CustomFDSCreationMenuSerializerImplTest {
 	}
 
 	private void _resetSerializer() {
-		_customFDSCreationMenuSerializerImpl = Mockito.mock(
+		_fdsSerializer = Mockito.mock(
 			CustomFDSCreationMenuSerializerImpl.class);
 	}
 
@@ -164,9 +162,8 @@ public class CustomFDSCreationMenuSerializerImplTest {
 
 		_mockFDSCreationMenu(fdsName, titles);
 
-		CreationMenu creationMenu =
-			_customFDSCreationMenuSerializerImpl.serialize(
-				fdsName, _httpServletRequest);
+		CreationMenu creationMenu = _fdsSerializer.serialize(
+			fdsName, _httpServletRequest);
 
 		for (String title : titles) {
 			Assert.assertTrue(_containsTitle(creationMenu, title));
@@ -175,8 +172,7 @@ public class CustomFDSCreationMenuSerializerImplTest {
 		Assert.assertEquals(titles.length, _getPrimaryItemsSize(creationMenu));
 	}
 
-	private static CustomFDSCreationMenuSerializerImpl
-		_customFDSCreationMenuSerializerImpl;
+	private static FDSSerializer<CreationMenu> _fdsSerializer;
 	private static final HttpServletRequest _httpServletRequest = Mockito.mock(
 		HttpServletRequest.class);
 

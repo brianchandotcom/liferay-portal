@@ -52,6 +52,7 @@ public class DB2DBTest extends BaseDBTestCase {
 		Assert.assertEquals(
 			"alter table DLFolder alter column userName drop default;",
 			_defaultAlter);
+		Assert.assertNull(_nullableAlter);
 	}
 
 	@Test
@@ -117,9 +118,7 @@ public class DB2DBTest extends BaseDBTestCase {
 		Assert.assertEquals(
 			"alter table DLFolder alter column userName drop default;",
 			_defaultAlter);
-		Assert.assertEquals(
-			"alter table DLFolder alter column userName drop not null;",
-			_nullableAlter);
+		Assert.assertNull(_nullableAlter);
 	}
 
 	@Test
@@ -131,9 +130,7 @@ public class DB2DBTest extends BaseDBTestCase {
 		Assert.assertEquals(
 			"alter table DLFolder alter column userName drop default;",
 			_defaultAlter);
-		Assert.assertEquals(
-			"alter table DLFolder alter column userName drop not null;",
-			_nullableAlter);
+		Assert.assertNull(_nullableAlter);
 	}
 
 	@Test
@@ -172,6 +169,11 @@ public class DB2DBTest extends BaseDBTestCase {
 				if (StringUtil.count(template, "null") > 0) {
 					_nullableAlter = template;
 				}
+			}
+
+			@Override
+			protected boolean isNullable(String tableName, String columnName) {
+				return true;
 			}
 
 		};

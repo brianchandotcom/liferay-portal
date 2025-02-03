@@ -11,6 +11,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.db.IndexMetadata;
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.log.Log;
@@ -33,6 +34,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -436,6 +438,16 @@ public class DB2DB extends BaseDB {
 		return _DB2;
 	}
 
+	protected boolean isNullable(String tableName, String columnName)
+		throws SQLException {
+
+		try (Connection connection = DataAccess.getConnection()) {
+			DBInspector dbInspector = new DBInspector(connection);
+
+			return dbInspector.isNullable(tableName, columnName);
+		}
+	}
+
 	protected boolean isRequiresReorgTable(
 			Connection connection, String tableName)
 		throws SQLException {
@@ -553,7 +565,7 @@ public class DB2DB extends BaseDB {
 
 						runSQL(
 							StringUtil.replace(
-								"alter table @table@ alter column  " +
+								"alter table @table@ alter column " +
 									"@old-column@ drop default;",
 								REWORD_TEMPLATE, template));
 					}
@@ -567,23 +579,26 @@ public class DB2DB extends BaseDB {
 
 					String nullable = template[template.length - 1];
 
-					if (!Validator.isBlank(nullable)) {
-						String nullableAlter;
+					boolean currentNullable = isNullable(
+						template[0], template[1]);
 
-						if (nullable.equals("not null")) {
-							nullableAlter = StringUtil.replace(
+					if (Objects.equals(nullable, "not null") &&
+						currentNullable) {
+
+						runSQL(
+							StringUtil.replace(
 								"alter table @table@ alter column " +
 									"@old-column@ set not null;",
-								REWORD_TEMPLATE, template);
-						}
-						else {
-							nullableAlter = StringUtil.replace(
+								REWORD_TEMPLATE, template));
+					}
+					else if (!Objects.equals(nullable, "not null") &&
+							 !currentNullable) {
+
+						runSQL(
+							StringUtil.replace(
 								"alter table @table@ alter column " +
 									"@old-column@ drop not null;",
-								REWORD_TEMPLATE, template);
-						}
-
-						runSQL(nullableAlter);
+								REWORD_TEMPLATE, template));
 					}
 				}
 				else if (line.startsWith(ALTER_TABLE_NAME)) {

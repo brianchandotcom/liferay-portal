@@ -871,9 +871,9 @@ public class TemplateInfoItemFieldSetProviderTest {
 			infoField.getName());
 
 		_assertInfoFieldValue(
-			ddmFormFieldValues, infoFieldValue, LocaleUtil.US);
-		_assertInfoFieldValue(
 			ddmFormFieldValues, infoFieldValue, LocaleUtil.SPAIN);
+		_assertInfoFieldValue(
+			ddmFormFieldValues, infoFieldValue, LocaleUtil.US);
 	}
 
 	@Test

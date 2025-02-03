@@ -22,8 +22,10 @@ import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
+import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
@@ -41,20 +43,29 @@ import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.template.TemplateConstants;
+import com.liferay.portal.kernel.template.TemplateVariableDefinition;
+import com.liferay.portal.kernel.template.TemplateVariableGroup;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.TestInfo;
+import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderRequest;
+import com.liferay.portal.kernel.test.portlet.MockLiferayPortletRenderResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -90,11 +101,13 @@ import java.time.format.FormatStyle;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -826,10 +839,15 @@ public class TemplateInfoItemFieldSetProviderTest {
 			TemplateTestUtil.addTemplateEntry(
 				JournalArticle.class.getName(),
 				String.valueOf(journalArticle.getDDMStructureId()),
-				RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-				TemplateTestUtil.getRepeatableFieldSampleScriptFTL(
-					"DDMStructure_Text1"),
 				_serviceContext);
+
+		_updateDDMTemplateScript(
+			journalArticleTemplateEntry, "DDMStructure_Text1",
+			StringBundler.concat(
+				_language.get(LocaleUtil.US, "content"), StringPool.SPACE,
+				StringPool.OPEN_PARENTHESIS,
+				ddmStructure.getName(LocaleUtil.US),
+				StringPool.CLOSE_PARENTHESIS));
 
 		List<InfoFieldValue<Object>> infoFieldValues =
 			_templateInfoItemFieldSetProvider.getInfoFieldValues(
@@ -852,26 +870,10 @@ public class TemplateInfoItemFieldSetProviderTest {
 				journalArticleTemplateEntry.getTemplateEntryId(),
 			infoField.getName());
 
-		_assertExpectedNames(
-			(String)infoFieldValue.getValue(LocaleUtil.US),
-			TransformUtil.transformToArray(
-				ddmFormFieldValues,
-				ddmFormFieldValue -> {
-					Value ddmFormFieldValueValue = ddmFormFieldValue.getValue();
-
-					return ddmFormFieldValueValue.getString(LocaleUtil.US);
-				},
-				String.class));
-		_assertExpectedNames(
-			(String)infoFieldValue.getValue(LocaleUtil.SPAIN),
-			TransformUtil.transformToArray(
-				ddmFormFieldValues,
-				ddmFormFieldValue -> {
-					Value ddmFormFieldValueValue = ddmFormFieldValue.getValue();
-
-					return ddmFormFieldValueValue.getString(LocaleUtil.SPAIN);
-				},
-				String.class));
+		_assertInfoFieldValue(
+			ddmFormFieldValues, infoFieldValue, LocaleUtil.US);
+		_assertInfoFieldValue(
+			ddmFormFieldValues, infoFieldValue, LocaleUtil.SPAIN);
 	}
 
 	@Test
@@ -1083,6 +1085,31 @@ public class TemplateInfoItemFieldSetProviderTest {
 		}
 	}
 
+	private void _assertInfoFieldValue(
+		List<DDMFormFieldValue> ddmFormFieldValues,
+		InfoFieldValue<Object> infoFieldValue, Locale locale) {
+
+		String value = (String)infoFieldValue.getValue(locale);
+
+		for (String formFieldValue :
+				TransformUtil.transformToArray(
+					ddmFormFieldValues,
+					ddmFormFieldValue -> {
+						Value ddmFormFieldValueValue =
+							ddmFormFieldValue.getValue();
+
+						return ddmFormFieldValueValue.getString(locale);
+					},
+					String.class)) {
+
+			int index = value.indexOf(formFieldValue);
+
+			Assert.assertTrue(value, index >= 0);
+
+			value = value.substring(index);
+		}
+	}
+
 	private void _assertLocalizedValues(
 			Map<Locale, String> expectedValues, String fieldName)
 		throws Exception {
@@ -1247,6 +1274,67 @@ public class TemplateInfoItemFieldSetProviderTest {
 			clazz.getResourceAsStream("dependencies/" + fileName));
 	}
 
+	private void _updateDDMTemplateScript(
+			TemplateEntry templateEntry, String templateVariableDefinitionName,
+			String templateVariableGroupLabel)
+		throws Exception {
+
+		MockLiferayPortletRenderRequest mockLiferayPortletRenderRequest =
+			new MockLiferayPortletRenderRequest();
+
+		mockLiferayPortletRenderRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, _serviceContext.getThemeDisplay());
+
+		mockLiferayPortletRenderRequest.setParameter(
+			"templateEntryId",
+			String.valueOf(templateEntry.getTemplateEntryId()));
+
+		_mvcRenderCommand.render(
+			mockLiferayPortletRenderRequest,
+			new MockLiferayPortletRenderResponse());
+
+		String script = null;
+
+		for (TemplateVariableGroup templateVariableGroup :
+				(Collection<TemplateVariableGroup>)ReflectionTestUtil.invoke(
+					mockLiferayPortletRenderRequest.getAttribute(
+						WebKeys.PORTLET_DISPLAY_CONTEXT),
+					"getTemplateVariableGroups", new Class<?>[0])) {
+
+			if (!Objects.equals(
+					templateVariableGroup.getLabel(),
+					templateVariableGroupLabel)) {
+
+				continue;
+			}
+
+			for (TemplateVariableDefinition templateVariableDefinition :
+					templateVariableGroup.getTemplateVariableDefinitions()) {
+
+				if (!Objects.equals(
+						templateVariableDefinition.getName(),
+						templateVariableDefinitionName)) {
+
+					continue;
+				}
+
+				script = templateVariableDefinition.generateCode(
+					TemplateConstants.LANG_TYPE_FTL)[0];
+
+				break;
+			}
+		}
+
+		Assert.assertNotNull(script);
+
+		DDMTemplate ddmTemplate = _ddmTemplateLocalService.getDDMTemplate(
+			templateEntry.getDDMTemplateId());
+
+		ddmTemplate.setScript(script);
+
+		_ddmTemplateLocalService.updateDDMTemplate(ddmTemplate);
+	}
+
 	@Inject(filter = "ddm.form.deserializer.type=json")
 	private static DDMFormDeserializer _jsonDDMFormDeserializer;
 
@@ -1267,6 +1355,9 @@ public class TemplateInfoItemFieldSetProviderTest {
 	@Inject
 	private DDMFormValuesToFieldsConverter _ddmFormValuesToFieldsConverter;
 
+	@Inject
+	private DDMTemplateLocalService _ddmTemplateLocalService;
+
 	private TemplateEntry _globalTemplateEntry;
 
 	@DeleteAfterTestRun
@@ -1280,7 +1371,14 @@ public class TemplateInfoItemFieldSetProviderTest {
 	@Inject
 	private JSONFactory _jsonFactory;
 
+	@Inject
+	private Language _language;
+
 	private Layout _layout;
+
+	@Inject(filter = "mvc.command.name=/template/edit_ddm_template")
+	private MVCRenderCommand _mvcRenderCommand;
+
 	private ServiceContext _originalServiceContext;
 	private Locale _originalSiteDefaultLocale;
 	private Locale _originalThemeDisplayLocale;

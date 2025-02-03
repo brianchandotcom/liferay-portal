@@ -282,14 +282,12 @@ test(
 		documentLibraryEditDocumentTypesPage,
 		documentLibraryEditFilePage,
 		documentLibraryPage,
-		site,
 	}) => {
 		const dTypeTitle = getRandomString();
 		const title = getRandomString();
 
 		await documentLibraryEditDocumentTypesPage.createNewDLTypeWithUploadField(
-			dTypeTitle,
-			site.friendlyUrlPath
+			dTypeTitle
 		);
 
 		await documentLibraryEditFilePage.publishNewFileWithoutGuestViewPermission(

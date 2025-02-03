@@ -35,7 +35,7 @@ public class RequiredWishListExceptionMapper
 		RequiredCommerceWishListException requiredCommerceWishListException) {
 
 		return new Problem(
-			Response.Status.BAD_REQUEST, "Unable to delete default wish list");
+			Response.Status.BAD_REQUEST, "Unable to delete required wish list");
 	}
 
 }

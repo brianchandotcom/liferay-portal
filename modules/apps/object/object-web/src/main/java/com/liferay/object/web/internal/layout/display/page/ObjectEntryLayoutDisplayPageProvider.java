@@ -5,6 +5,7 @@
 
 package com.liferay.object.web.internal.layout.display.page;
 
+import com.liferay.friendly.url.info.item.provider.InfoItemFriendlyURLProvider;
 import com.liferay.info.item.ClassPKInfoItemIdentifier;
 import com.liferay.info.item.ERCInfoItemIdentifier;
 import com.liferay.info.item.InfoItemIdentifier;
@@ -34,12 +35,14 @@ public class ObjectEntryLayoutDisplayPageProvider
 	extends BaseLayoutDisplayPageProvider<ObjectEntry> {
 
 	public ObjectEntryLayoutDisplayPageProvider(
+		InfoItemFriendlyURLProvider<ObjectEntry> infoItemFriendlyURLProvider,
 		ObjectDefinition objectDefinition,
 		ObjectDefinitionLocalService objectDefinitionLocalService,
 		ObjectEntryLocalService objectEntryLocalService,
 		ObjectEntryManager objectEntryManager,
 		UserLocalService userLocalService) {
 
+		_infoItemFriendlyURLProvider = infoItemFriendlyURLProvider;
 		_objectDefinition = objectDefinition;
 		_objectDefinitionLocalService = objectDefinitionLocalService;
 		_objectEntryLocalService = objectEntryLocalService;
@@ -87,7 +90,7 @@ public class ObjectEntryLayoutDisplayPageProvider
 					objectEntry.getObjectDefinitionId());
 
 			return new ObjectEntryLayoutDisplayPageObjectProvider(
-				objectDefinition, objectEntry);
+				_infoItemFriendlyURLProvider, objectDefinition, objectEntry);
 		}
 
 		ERCInfoItemIdentifier ercInfoItemIdentifier =
@@ -119,7 +122,7 @@ public class ObjectEntryLayoutDisplayPageProvider
 
 			if (objectEntry != null) {
 				return new ObjectEntryLayoutDisplayPageObjectProvider(
-					_objectDefinition,
+					_infoItemFriendlyURLProvider, _objectDefinition,
 					ObjectEntryUtil.toObjectEntry(
 						_objectDefinition.getObjectDefinitionId(),
 						objectEntry));
@@ -156,12 +159,14 @@ public class ObjectEntryLayoutDisplayPageProvider
 		getLayoutDisplayPageObjectProvider(ObjectEntry objectEntry) {
 
 		return new ObjectEntryLayoutDisplayPageObjectProvider(
-			_objectDefinition, objectEntry);
+			_infoItemFriendlyURLProvider, _objectDefinition, objectEntry);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ObjectEntryLayoutDisplayPageProvider.class);
 
+	private final InfoItemFriendlyURLProvider<ObjectEntry>
+		_infoItemFriendlyURLProvider;
 	private final ObjectDefinition _objectDefinition;
 	private final ObjectDefinitionLocalService _objectDefinitionLocalService;
 	private final ObjectEntryLocalService _objectEntryLocalService;

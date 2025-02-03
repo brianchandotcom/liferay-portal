@@ -444,6 +444,7 @@ const ALLOWED_NAMED_SCOPE_EXCEPTIONS = [
 ];
 
 const ALLOWED_NON_GLOBAL_DEPENDENCIES = [
+	'@clayui/css',
 	'@liferay/amd-loader',
 	'@types/request',
 	'@types/node-fetch',

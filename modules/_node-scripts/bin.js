@@ -99,6 +99,13 @@ const COMMANDS = {
 		parameters: '',
 		script: './format/self.mjs',
 	},
+	'generate:global-config': {
+		description: `
+		Generates global node-scripts.config.js.
+`,
+		parameters: '',
+		script: './generate/globalConfig.mjs',
+	},
 	'generate:tsconfig': {
 		description: `
 		Generates tsconfig.json files for all projects.

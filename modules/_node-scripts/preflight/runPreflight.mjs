@@ -4,6 +4,7 @@
  */
 
 import {checkConfigFileNames} from './checkConfigFileNames.mjs';
+import {checkGlobalNodeScriptsConfig} from './checkGlobalNodeScriptsConfig.mjs';
 import {checkNodeScriptsHash} from './checkNodeScriptsHash.mjs';
 import {checkPackageJSONFiles} from './checkPackageJSONFiles.mjs';
 import {checkYarnLock} from './checkYarnLock.mjs';
@@ -25,6 +26,7 @@ export default async function runPreflight() {
 		checkPackageJSONFiles(),
 		checkYarnLock(),
 		checkNodeScriptsHash(),
+		checkGlobalNodeScriptsConfig(),
 	]);
 
 	return results.flat();

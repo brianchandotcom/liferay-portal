@@ -12,11 +12,16 @@ function cluster_set_up {
 	local slave_home="${LIFERAY_HOME}-${1}"
 
 	cp "${CURRENT_DIR_NAME}/com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration.config" "${slave_home}/osgi/configs"
+
 	sed -i "s/%LIFERAY_DOCKER_NETWORK_NAME%/${LIFERAY_DOCKER_NETWORK_NAME}/g" "${slave_home}/osgi/configs/com.liferay.portal.search.elasticsearch7.configuration.ElasticsearchConfiguration.config"
 
 	rm -fr "${slave_home}/data"
+
 	mkdir -p "${slave_home}/data"
+
 	ln -s "${LIFERAY_HOME}/data/document_library" "${slave_home}/data"
+
+	local domain
 
 	for domain in "${slave_home}/routes/default/dxp/"*
 	do
@@ -27,6 +32,8 @@ function cluster_set_up {
 	rm -fr "${slave_home}/osgi/state"
 	rm -fr "${slave_home}/osgi/tomcat/work"
 	rm -fr "${slave_home}/osgi/work"
+
+	local node_home
 
 	for node_home in "${LIFERAY_HOME}" "${slave_home}"
 	do

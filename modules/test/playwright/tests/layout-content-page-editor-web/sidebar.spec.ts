@@ -2095,12 +2095,6 @@ test.describe('Rules Panel', () => {
 
 			await clickAndExpectToBeVisible({
 				autoClick: true,
-				target: page.getByRole('option', {name: 'Fragment'}),
-				trigger: page.getByLabel('Select Item for the Action'),
-			});
-
-			await clickAndExpectToBeVisible({
-				autoClick: true,
 				target: page.getByRole('option', {name: 'Button'}),
 				trigger: page.getByLabel('Select Fragment'),
 			});
@@ -2117,7 +2111,7 @@ test.describe('Rules Panel', () => {
 			// Assert rule is created
 
 			await expect(
-				page.getByText('IfUserIs the UsertestHideFragmentButton')
+				page.getByText('IfUserIs the UsertestHideButton')
 			).toBeVisible();
 
 			// Edit rule
@@ -2152,7 +2146,7 @@ test.describe('Rules Panel', () => {
 			// Assert rule was updated
 
 			await expect(
-				page.getByText('IfUserHas the Role OfGuestHideFragmentButton')
+				page.getByText('IfUserHas the Role OfGuestHideButton')
 			).toBeVisible();
 
 			// Delete rule
@@ -2255,12 +2249,6 @@ test.describe('Rules Panel', () => {
 				autoClick: true,
 				target: page.getByRole('option', {name: 'Hide'}),
 				trigger: page.getByLabel('Select Action'),
-			});
-
-			await clickAndExpectToBeVisible({
-				autoClick: true,
-				target: page.getByRole('option', {name: 'Fragment'}),
-				trigger: page.getByLabel('Select Item for the Action'),
 			});
 
 			await clickAndExpectToBeVisible({

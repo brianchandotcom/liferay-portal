@@ -219,7 +219,10 @@ function hasInputChild(
 	layoutData: LayoutData,
 	fragmentEntryLinks: FragmentEntryLinkMap
 ): boolean {
-	if (child.fragmentEntryType === FRAGMENT_ENTRY_TYPES.input) {
+	if (
+		child.fragmentEntryType === FRAGMENT_ENTRY_TYPES.input &&
+		!isLocalizationSelect(child)
+	) {
 		return true;
 	}
 

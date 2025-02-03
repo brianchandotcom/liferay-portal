@@ -25,27 +25,6 @@ public class PageRuleAction implements Cloneable, Serializable {
 		return PageRuleActionSerDes.toDTO(json);
 	}
 
-	public String getAction() {
-		return action;
-	}
-
-	public void setAction(String action) {
-		this.action = action;
-	}
-
-	public void setAction(
-		UnsafeSupplier<String, Exception> actionUnsafeSupplier) {
-
-		try {
-			action = actionUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected String action;
-
 	public String getId() {
 		return id;
 	}

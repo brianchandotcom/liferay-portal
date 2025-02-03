@@ -53,30 +53,30 @@ public class PageRuleCondition implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(PageRuleCondition.class, json);
 	}
 
-	@Schema(description = "The page rule condition's description.")
-	public String getCondition() {
-		if (_conditionSupplier != null) {
-			condition = _conditionSupplier.get();
+	@Schema(description = "The page rule condition's field.")
+	public String getField() {
+		if (_fieldSupplier != null) {
+			field = _fieldSupplier.get();
 
-			_conditionSupplier = null;
+			_fieldSupplier = null;
 		}
 
-		return condition;
+		return field;
 	}
 
-	public void setCondition(String condition) {
-		this.condition = condition;
+	public void setField(String field) {
+		this.field = field;
 
-		_conditionSupplier = null;
+		_fieldSupplier = null;
 	}
 
 	@JsonIgnore
-	public void setCondition(
-		UnsafeSupplier<String, Exception> conditionUnsafeSupplier) {
+	public void setField(
+		UnsafeSupplier<String, Exception> fieldUnsafeSupplier) {
 
-		_conditionSupplier = () -> {
+		_fieldSupplier = () -> {
 			try {
-				return conditionUnsafeSupplier.get();
+				return fieldUnsafeSupplier.get();
 			}
 			catch (RuntimeException runtimeException) {
 				throw runtimeException;
@@ -87,12 +87,12 @@ public class PageRuleCondition implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "The page rule condition's description.")
+	@GraphQLField(description = "The page rule condition's field.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String condition;
+	protected String field;
 
 	@JsonIgnore
-	private Supplier<String> _conditionSupplier;
+	private Supplier<String> _fieldSupplier;
 
 	@Schema(description = "The page rule condition's ID.")
 	public String getId() {
@@ -241,18 +241,18 @@ public class PageRuleCondition implements Serializable {
 
 		sb.append("{");
 
-		String condition = getCondition();
+		String field = getField();
 
-		if (condition != null) {
+		if (field != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"condition\": ");
+			sb.append("\"field\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(condition));
+			sb.append(_escape(field));
 
 			sb.append("\"");
 		}

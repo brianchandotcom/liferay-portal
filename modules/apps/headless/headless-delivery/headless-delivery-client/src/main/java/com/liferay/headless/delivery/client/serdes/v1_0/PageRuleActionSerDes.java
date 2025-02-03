@@ -46,20 +46,6 @@ public class PageRuleActionSerDes {
 
 		sb.append("{");
 
-		if (pageRuleAction.getAction() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"action\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(pageRuleAction.getAction()));
-
-			sb.append("\"");
-		}
-
 		if (pageRuleAction.getId() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -121,13 +107,6 @@ public class PageRuleActionSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (pageRuleAction.getAction() == null) {
-			map.put("action", null);
-		}
-		else {
-			map.put("action", String.valueOf(pageRuleAction.getAction()));
-		}
-
 		if (pageRuleAction.getId() == null) {
 			map.put("id", null);
 		}
@@ -167,10 +146,7 @@ public class PageRuleActionSerDes {
 
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
-			if (Objects.equals(jsonParserFieldName, "action")) {
-				return false;
-			}
-			else if (Objects.equals(jsonParserFieldName, "id")) {
+			if (Objects.equals(jsonParserFieldName, "id")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "itemId")) {
@@ -188,12 +164,7 @@ public class PageRuleActionSerDes {
 			PageRuleAction pageRuleAction, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "action")) {
-				if (jsonParserFieldValue != null) {
-					pageRuleAction.setAction((String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "id")) {
+			if (Objects.equals(jsonParserFieldName, "id")) {
 				if (jsonParserFieldValue != null) {
 					pageRuleAction.setId((String)jsonParserFieldValue);
 				}

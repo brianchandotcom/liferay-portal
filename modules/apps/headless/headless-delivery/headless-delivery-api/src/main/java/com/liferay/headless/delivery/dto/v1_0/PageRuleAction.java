@@ -51,47 +51,6 @@ public class PageRuleAction implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(PageRuleAction.class, json);
 	}
 
-	@Schema(description = "The page rule action's action.")
-	public String getAction() {
-		if (_actionSupplier != null) {
-			action = _actionSupplier.get();
-
-			_actionSupplier = null;
-		}
-
-		return action;
-	}
-
-	public void setAction(String action) {
-		this.action = action;
-
-		_actionSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setAction(
-		UnsafeSupplier<String, Exception> actionUnsafeSupplier) {
-
-		_actionSupplier = () -> {
-			try {
-				return actionUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField(description = "The page rule action's action.")
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String action;
-
-	@JsonIgnore
-	private Supplier<String> _actionSupplier;
-
 	@Schema(description = "The page rule action's ID.")
 	public String getId() {
 		if (_idSupplier != null) {
@@ -237,22 +196,6 @@ public class PageRuleAction implements Serializable {
 		StringBundler sb = new StringBundler();
 
 		sb.append("{");
-
-		String action = getAction();
-
-		if (action != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"action\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(action));
-
-			sb.append("\"");
-		}
 
 		String id = getId();
 

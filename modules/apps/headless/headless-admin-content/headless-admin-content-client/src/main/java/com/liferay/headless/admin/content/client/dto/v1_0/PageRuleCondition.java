@@ -25,26 +25,26 @@ public class PageRuleCondition implements Cloneable, Serializable {
 		return PageRuleConditionSerDes.toDTO(json);
 	}
 
-	public String getCondition() {
-		return condition;
+	public String getField() {
+		return field;
 	}
 
-	public void setCondition(String condition) {
-		this.condition = condition;
+	public void setField(String field) {
+		this.field = field;
 	}
 
-	public void setCondition(
-		UnsafeSupplier<String, Exception> conditionUnsafeSupplier) {
+	public void setField(
+		UnsafeSupplier<String, Exception> fieldUnsafeSupplier) {
 
 		try {
-			condition = conditionUnsafeSupplier.get();
+			field = fieldUnsafeSupplier.get();
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	protected String condition;
+	protected String field;
 
 	public String getId() {
 		return id;

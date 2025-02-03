@@ -46,16 +46,16 @@ public class PageRuleConditionSerDes {
 
 		sb.append("{");
 
-		if (pageRuleCondition.getCondition() != null) {
+		if (pageRuleCondition.getField() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
 			}
 
-			sb.append("\"condition\": ");
+			sb.append("\"field\": ");
 
 			sb.append("\"");
 
-			sb.append(_escape(pageRuleCondition.getCondition()));
+			sb.append(_escape(pageRuleCondition.getField()));
 
 			sb.append("\"");
 		}
@@ -119,12 +119,11 @@ public class PageRuleConditionSerDes {
 
 		Map<String, String> map = new TreeMap<>();
 
-		if (pageRuleCondition.getCondition() == null) {
-			map.put("condition", null);
+		if (pageRuleCondition.getField() == null) {
+			map.put("field", null);
 		}
 		else {
-			map.put(
-				"condition", String.valueOf(pageRuleCondition.getCondition()));
+			map.put("field", String.valueOf(pageRuleCondition.getField()));
 		}
 
 		if (pageRuleCondition.getId() == null) {
@@ -166,7 +165,7 @@ public class PageRuleConditionSerDes {
 
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
-			if (Objects.equals(jsonParserFieldName, "condition")) {
+			if (Objects.equals(jsonParserFieldName, "field")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {
@@ -187,10 +186,9 @@ public class PageRuleConditionSerDes {
 			PageRuleCondition pageRuleCondition, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "condition")) {
+			if (Objects.equals(jsonParserFieldName, "field")) {
 				if (jsonParserFieldValue != null) {
-					pageRuleCondition.setCondition(
-						(String)jsonParserFieldValue);
+					pageRuleCondition.setField((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "id")) {

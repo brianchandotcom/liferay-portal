@@ -47,6 +47,7 @@ const test = mergeTests(
 	displayPageTemplatesPagesTest,
 	documentLibraryPagesTest,
 	featureFlagsTest({
+		'LPD-18221': {enabled: true},
 		'LPD-39304': {enabled: true},
 		'LPS-178052': {enabled: true},
 	}),
@@ -63,6 +64,7 @@ const test = mergeTests(
 const testWithPrivatePages = mergeTests(
 	test,
 	featureFlagsTest({
+		'LPD-18221': {enabled: true},
 		'LPD-38869': {enabled: true},
 		'LPD-39304': {enabled: true},
 		'LPS-178052': {enabled: true},
@@ -2530,3 +2532,70 @@ test.describe('Custom Fragments', () => {
 		}
 	);
 });
+
+test(
+	'Check multiple fragments can be duplicated after multiselecting them',
+	{tag: ['@LPD-47080']},
+	async ({apiHelpers, page, pageEditorPage, site}) => {
+
+		// Create a page with a heading and a button and go to edit mode
+
+		const headingId = getRandomString();
+		const headingDefinition = getFragmentDefinition({
+			id: headingId,
+			key: 'BASIC_COMPONENT-heading',
+		});
+
+		const buttonId = getRandomString();
+		const buttonDefinition = getFragmentDefinition({
+			id: buttonId,
+			key: 'BASIC_COMPONENT-button',
+		});
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([
+				buttonDefinition,
+				headingDefinition,
+			]),
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		// Go to Browser and select both fragments
+
+		await pageEditorPage.goToSidebarTab('Browser');
+
+		await clickAndExpectToBeVisible({
+			target: page.locator('.page-editor__topper__title', {
+				hasText: 'Heading',
+			}),
+			trigger: page.locator('.page-editor__page-structure__tree-node', {
+				hasText: 'Heading',
+			}),
+		});
+
+		await page.keyboard.down('Control');
+
+		await clickAndExpectToBeVisible({
+			target: page.getByText('2 Items Selected'),
+			trigger: page.locator('.page-editor__page-structure__tree-node', {
+				hasText: 'Button',
+			}),
+		});
+
+		// Duplicate the fragments and check it works well
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {name: 'Duplicate'}),
+			trigger: page.getByLabel('Actions for Selected Items'),
+		});
+
+		await pageEditorPage.waitForChangesSaved();
+
+		await expect(page.getByText('Go Somewhere')).toHaveCount(2);
+		await expect(page.getByText('Heading Example')).toHaveCount(2);
+	}
+);

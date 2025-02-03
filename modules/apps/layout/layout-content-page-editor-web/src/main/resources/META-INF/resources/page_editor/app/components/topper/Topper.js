@@ -17,7 +17,10 @@ import {ITEM_ACTIVATION_ORIGINS} from '../../config/constants/itemActivationOrig
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 import {config} from '../../config/index';
 import {useSetCollectionActiveItemContext} from '../../contexts/CollectionActiveItemContext';
-import {useToControlsId} from '../../contexts/CollectionItemContext';
+import {
+	useCollectionItemIndex,
+	useToControlsId,
+} from '../../contexts/CollectionItemContext';
 import {
 	useActivationOrigin,
 	useActiveItemIds,
@@ -122,6 +125,7 @@ function TopperContent({
 	const layoutDataRef = useSelectorRef((state) => state.layoutData);
 
 	const toControlsId = useToControlsId();
+	const collectionItemIndex = useCollectionItemIndex();
 
 	const keyboardMovementPosition = useMovementTargetPosition();
 	const selectItem = useSelectItem();
@@ -224,6 +228,10 @@ function TopperContent({
 		);
 
 	const {elementRef, isFocusable} = useLayoutKeyboardNavigation(item);
+
+	if (collectionItemIndex > 0 && Liferay.FeatureFlags['LPD-18221']) {
+		return children;
+	}
 
 	return (
 		<div

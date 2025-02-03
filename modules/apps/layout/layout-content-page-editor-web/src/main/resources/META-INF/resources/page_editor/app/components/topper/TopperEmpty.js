@@ -12,7 +12,10 @@ import React, {useRef} from 'react';
 import {getLayoutDataItemPropTypes} from '../../../prop_types/index';
 import {ITEM_ACTIVATION_ORIGINS} from '../../config/constants/itemActivationOrigins';
 import {useClipboard} from '../../contexts/ClipboardContext';
-import {useToControlsId} from '../../contexts/CollectionItemContext';
+import {
+	useCollectionItemIndex,
+	useToControlsId,
+} from '../../contexts/CollectionItemContext';
 import {
 	useActiveItemIds,
 	useHoverItem,
@@ -44,8 +47,12 @@ import {TopperLabel} from './TopperLabel';
 
 export default function ({activable = true, children, ...props}) {
 	const canUpdatePageStructure = useSelector(selectCanUpdatePageStructure);
+	const collectionItemIndex = useCollectionItemIndex();
 
-	if (!canUpdatePageStructure) {
+	if (
+		!canUpdatePageStructure ||
+		(collectionItemIndex > 0 && Liferay.FeatureFlags['LPD-18221'])
+	) {
 		return children;
 	}
 

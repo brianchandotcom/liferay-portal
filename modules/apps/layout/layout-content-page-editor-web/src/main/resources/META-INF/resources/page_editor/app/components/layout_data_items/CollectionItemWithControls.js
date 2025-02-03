@@ -27,6 +27,9 @@ const CollectionItemWithControls = React.forwardRef(({children, item}, ref) => {
 	return (
 		<div
 			className={classNames('page-editor__collection__block', {
+				'disabled':
+					collectionItemIndex > 0 &&
+					Liferay.FeatureFlags['LPD-18221'],
 				'empty': !title,
 				'flex-grow-1': !children.length,
 			})}

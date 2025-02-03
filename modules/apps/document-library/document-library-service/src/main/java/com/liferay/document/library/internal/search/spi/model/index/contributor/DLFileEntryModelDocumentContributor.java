@@ -45,7 +45,6 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextExtractor;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.search.ml.embedding.text.TextEmbeddingDocumentContributor;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
@@ -376,13 +375,7 @@ public class DLFileEntryModelDocumentContributor
 		CTCollection ctCollection = _ctCollectionLocalService.getCTCollection(
 			CTCollectionThreadLocal.getCTCollectionId());
 
-		if ((ctCollection.getStatus() != WorkflowConstants.STATUS_DRAFT) &&
-			(ctCollection.getStatus() != WorkflowConstants.STATUS_PENDING)) {
-
-			return true;
-		}
-
-		return false;
+		return ctCollection.isReadOnly();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

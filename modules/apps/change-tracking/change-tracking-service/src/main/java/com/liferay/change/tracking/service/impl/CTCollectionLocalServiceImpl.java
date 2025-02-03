@@ -585,10 +585,7 @@ public class CTCollectionLocalServiceImpl
 		CTCollection ctCollection = ctCollectionPersistence.findByPrimaryKey(
 			ctCollectionId);
 
-		if (!force &&
-			(ctCollection.getStatus() != WorkflowConstants.STATUS_DRAFT) &&
-			(ctCollection.getStatus() != WorkflowConstants.STATUS_PENDING)) {
-
+		if (!force && ctCollection.isReadOnly()) {
 			throw new PortalException(
 				"Change tracking collection " + ctCollection + " is read only");
 		}
@@ -883,9 +880,7 @@ public class CTCollectionLocalServiceImpl
 		CTCollection toCTCollection = ctCollectionPersistence.findByPrimaryKey(
 			toCTCollectionId);
 
-		if ((toCTCollection.getStatus() != WorkflowConstants.STATUS_DRAFT) &&
-			(toCTCollection.getStatus() != WorkflowConstants.STATUS_PENDING)) {
-
+		if (toCTCollection.isReadOnly()) {
 			throw new CTCollectionStatusException(
 				"Change tracking collection " + toCTCollection +
 					" is read only");

@@ -87,22 +87,15 @@ public class RelatedModelFDSActionProviderTest {
 
 		PrincipalThreadLocal.setName(user.getUserId());
 
-		List<DropdownItem> dropdownItems = _fdsActionProvider.getDropdownItems(
-			TestPropsValues.getGroupId(),
-			_getMockHttpServletRequest(objectEntry.getObjectEntryId()),
-			new RelatedModel(
-				objectDefinition.getClassName(), objectEntry.getObjectEntryId(),
-				objectEntry.getTitleValue(), false));
-
-		Assert.assertEquals(dropdownItems.toString(), 2, dropdownItems.size());
-
-		DropdownItem dropdownItem1 = dropdownItems.get(0);
-
-		Assert.assertEquals("view", dropdownItem1.get("label"));
-
-		DropdownItem dropdownItem2 = dropdownItems.get(1);
-
-		Assert.assertEquals("delete", dropdownItem2.get("label"));
+		_assertDropdownItem(
+			_fdsActionProvider.getDropdownItems(
+				TestPropsValues.getGroupId(),
+				_getMockHttpServletRequest(objectEntry.getObjectEntryId()),
+				new RelatedModel(
+					objectDefinition.getClassName(),
+					objectEntry.getObjectEntryId(), objectEntry.getTitleValue(),
+					false)),
+			"delete", "view");
 
 		_resourcePermissionLocalService.removeResourcePermission(
 			TestPropsValues.getCompanyId(), objectDefinition.getClassName(),
@@ -110,18 +103,28 @@ public class RelatedModelFDSActionProviderTest {
 			String.valueOf(TestPropsValues.getCompanyId()), role.getRoleId(),
 			ActionKeys.UPDATE);
 
-		dropdownItems = _fdsActionProvider.getDropdownItems(
-			TestPropsValues.getGroupId(),
-			_getMockHttpServletRequest(objectEntry.getObjectEntryId()),
-			new RelatedModel(
-				objectDefinition.getClassName(), objectEntry.getObjectEntryId(),
-				objectEntry.getTitleValue(), false));
+		_assertDropdownItem(
+			_fdsActionProvider.getDropdownItems(
+				TestPropsValues.getGroupId(),
+				_getMockHttpServletRequest(objectEntry.getObjectEntryId()),
+				new RelatedModel(
+					objectDefinition.getClassName(),
+					objectEntry.getObjectEntryId(), objectEntry.getTitleValue(),
+					false)),
+			"view");
+	}
 
-		Assert.assertEquals(dropdownItems.toString(), 1, dropdownItems.size());
+	private void _assertDropdownItem(
+		List<DropdownItem> dropdownItems, String... labels) {
 
-		dropdownItem1 = dropdownItems.get(0);
+		Assert.assertEquals(
+			dropdownItems.toString(), labels.length, dropdownItems.size());
 
-		Assert.assertEquals("view", dropdownItem1.get("label"));
+		for (int i = 0; i < labels.length; i++) {
+			DropdownItem dropdownItem = dropdownItems.get(i);
+
+			Assert.assertEquals(labels[i], dropdownItem.get("label"));
+		}
 	}
 
 	private MockHttpServletRequest _getMockHttpServletRequest(
@@ -130,6 +133,9 @@ public class RelatedModelFDSActionProviderTest {
 
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
+
+		mockHttpServletRequest.addParameter(
+			"objectEntryId", String.valueOf(objectEntryId));
 
 		mockHttpServletRequest.setAttribute(
 			WebKeys.CURRENT_URL, "http://localhost:8080/currentURL");
@@ -145,9 +151,6 @@ public class RelatedModelFDSActionProviderTest {
 
 		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);
-
-		mockHttpServletRequest.addParameter(
-			"objectEntryId", String.valueOf(objectEntryId));
 
 		return mockHttpServletRequest;
 	}

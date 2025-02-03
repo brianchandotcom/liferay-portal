@@ -1,0 +1,19 @@
+.be-search-bar {
+	border-radius: 0.5rem;
+	height: 2.875rem;
+	width: 17rem;
+
+	& + .be-search-icon {
+		bottom: 1.063rem;
+		fill: var(--color-neutral-5);
+		font-size: var(--text-paragraph-font-size);
+		right: 1.25rem;
+	}
+}
+
+.be-create-event {
+	border-radius: 0.5rem;
+	font-size: 1.125rem;
+	height: 3rem;
+	width: 8.125rem;
+}

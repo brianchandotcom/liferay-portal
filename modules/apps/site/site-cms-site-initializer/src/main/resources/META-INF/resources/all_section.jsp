@@ -11,15 +11,17 @@
 AllSectionDisplayContext allSectionDisplayContext = new AllSectionDisplayContext(request);
 %>
 
-<frontend-data-set:headless-display
-	apiURL="<%= allSectionDisplayContext.getAPIURL() %>"
-	bulkActionDropdownItems="<%= allSectionDisplayContext.getBulkActionDropdownItems() %>"
-	emptyState="<%= allSectionDisplayContext.getEmptyState() %>"
-	fdsActionDropdownItems="<%= allSectionDisplayContext.getFDSActionDropdownItems() %>"
-	formName="fm"
-	id="<%= CMSSiteInitializerFDSNames.ALL_SECTION %>"
-	itemsPerPage="<%= 10 %>"
-	selectedItemsKey="id"
-	selectionType="multiple"
-	style="fluid"
-/>
+<div class="cms-section">
+	<frontend-data-set:headless-display
+		apiURL="<%= allSectionDisplayContext.getAPIURL() %>"
+		bulkActionDropdownItems="<%= allSectionDisplayContext.getBulkActionDropdownItems() %>"
+		emptyState="<%= allSectionDisplayContext.getEmptyState() %>"
+		fdsActionDropdownItems="<%= allSectionDisplayContext.getFDSActionDropdownItems() %>"
+		formName="fm"
+		id="<%= CMSSiteInitializerFDSNames.ALL_SECTION %>"
+		itemsPerPage="<%= 10 %>"
+		selectedItemsKey="id"
+		selectionType="multiple"
+		style="fluid"
+	/>
+</div>

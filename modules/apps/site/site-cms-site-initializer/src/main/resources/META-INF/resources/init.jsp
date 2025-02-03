@@ -5,11 +5,17 @@
  */
 --%>
 
-<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
+<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+taglib uri="http://liferay.com/tld/frontend-data-set" prefix="frontend-data-set" %><%@
+taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
+taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ taglib uri="http://liferay.com/tld/frontend-data-set" prefix="frontend-data-set" %>
-
-<%@ page import="com.liferay.site.cms.site.initializer.internal.constants.CMSSiteInitializerFDSNames" %><%@
+<%@ page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
+page import="com.liferay.site.cms.site.initializer.internal.constants.CMSSiteInitializerFDSNames" %><%@
 page import="com.liferay.site.cms.site.initializer.internal.display.context.AllSectionDisplayContext" %>
 
-<portlet:defineObjects />
+<liferay-theme:defineObjects />
+
+<liferay-util:html-top>
+	<aui:link href='<%= PortalUtil.getStaticResourceURL(request, PortalUtil.getPathProxy() + application.getContextPath() + "/css/main.css") %>' rel="stylesheet" type="text/css" />
+</liferay-util:html-top>

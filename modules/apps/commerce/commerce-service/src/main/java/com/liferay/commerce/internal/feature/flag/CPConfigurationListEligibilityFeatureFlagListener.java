@@ -377,16 +377,15 @@ public class CPConfigurationListEligibilityFeatureFlagListener
 			PreparedStatement selectPreparedStatement2 =
 				connection.prepareStatement(
 					StringBundler.concat(
-						"select CPDefinition.CPDefinitionId, TEMP_TABLE.type_, ",
-						"TEMP_TABLE.classPK, TEMP_TABLE.resourceId from ",
-						"CPDefinition join (select 'C' as type_, classPK, ",
-						"commerceChannelId as resourceId from ",
-						"CommerceChannelRel where classNameId = ? union ",
-						"select 'A' as type_, classPK, accountGroupId as ",
-						"resourceId from AccountGroupRel where classNameId = ",
-						"?) TEMP_TABLE on (CPDefinition.CPDefinitionId = ",
-						"TEMP_TABLE.classPK and CPDefinition.groupId = ?) ",
-						"order by TEMP_TABLE.classPK"));
+						"select CPDefinition.CPDefinitionId, Rel.type_, ",
+						"Rel.classPK, Rel.resourceId from CPDefinition join ",
+						"(select 'C' as type_, classPK, commerceChannelId as ",
+						"resourceId from CommerceChannelRel where classNameId ",
+						"= ? union select 'A' as type_, classPK, ",
+						"accountGroupId as resourceId from AccountGroupRel ",
+						"where classNameId = ?) Rel on (CPDefinition.",
+						"CPDefinitionId = Rel.classPK and CPDefinition.",
+						"groupId = ?) order by Rel.classPK"));
 
 			PreparedStatement selectPreparedStatement3 =
 				connection.prepareStatement(

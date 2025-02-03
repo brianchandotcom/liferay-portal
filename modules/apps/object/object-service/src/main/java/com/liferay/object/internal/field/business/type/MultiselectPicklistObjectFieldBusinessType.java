@@ -122,6 +122,9 @@ public class MultiselectPicklistObjectFieldBusinessType
 
 				return ddmFormFieldOptions;
 			}
+		).putAll(
+			ObjectFieldBusinessType.super.getProperties(
+				objectField, objectFieldRenderingContext)
 		).build();
 	}
 

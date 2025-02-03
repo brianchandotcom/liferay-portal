@@ -28,11 +28,13 @@ export class AddNewObjectRelationshipModalPage {
 		inherited,
 		manyRecordsOf,
 		objectRelationshipLabel,
+		parameter,
 		type,
 	}: {
 		inherited?: boolean;
 		manyRecordsOf?: string;
 		objectRelationshipLabel: string;
+		parameter?: string;
 		type: ObjectRelationshipType;
 	}): Promise<ObjectRelationship> {
 		await expect(this.modalHeader).toBeVisible();
@@ -51,6 +53,10 @@ export class AddNewObjectRelationshipModalPage {
 			await this.objectRelationshipFormPage.selectManyRecordsOf(
 				manyRecordsOf
 			);
+		}
+
+		if (parameter) {
+			await this.objectRelationshipFormPage.selectParameter(parameter);
 		}
 
 		const responsePromise = this.page.waitForResponse(

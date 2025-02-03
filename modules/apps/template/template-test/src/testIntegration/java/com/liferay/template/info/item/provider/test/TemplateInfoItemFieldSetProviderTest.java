@@ -1284,7 +1284,6 @@ public class TemplateInfoItemFieldSetProviderTest {
 
 		mockLiferayPortletRenderRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, _serviceContext.getThemeDisplay());
-
 		mockLiferayPortletRenderRequest.setParameter(
 			"templateEntryId",
 			String.valueOf(templateEntry.getTemplateEntryId()));

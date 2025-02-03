@@ -9,7 +9,7 @@ module.exports = {
 		'ckeditor5',
 		'ckeditor5/ckeditor5.css',
 	],
-	main: 'src/main/resources/META-INF/resources/js/index.ts',
+	main: './src/main/resources/META-INF/resources/js/index.ts',
 	symbols: {
 		ckeditor5: [
 			'Alignment',

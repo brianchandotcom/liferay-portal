@@ -9,5 +9,5 @@ module.exports = {
 		'codemirror/addon/hint/show-hint.css',
 		'codemirror/lib/codemirror.css',
 	],
-	main: 'src/main/resources/META-INF/resources/js/index.ts',
+	main: './src/main/resources/META-INF/resources/js/index.ts',
 };

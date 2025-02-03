@@ -17,7 +17,7 @@ module.exports = {
 		'react-dom-16',
 		'react-dom-18',
 	],
-	main: 'src/main/resources/META-INF/resources/js/index.ts',
+	main: './src/main/resources/META-INF/resources/js/index.ts',
 	symbols: {
 		'prop-types': ['*', 'default'],
 		'react': ['*', 'default'],

@@ -33,5 +33,5 @@ module.exports = {
 			target: ['es2020'],
 		},
 	},
-	main: 'src/main/resources/META-INF/resources/js/index.ts',
+	main: './src/main/resources/META-INF/resources/js/index.ts',
 };

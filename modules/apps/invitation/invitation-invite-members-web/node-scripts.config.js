@@ -4,5 +4,5 @@
  */
 
 module.exports = {
-	main: 'src/main/resources/META-INF/resources/invite_members/js/InviteMembers.js',
+	main: './src/main/resources/META-INF/resources/invite_members/js/InviteMembers.js',
 };

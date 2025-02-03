@@ -489,6 +489,13 @@ components:
                 Represents an organization. Organizations can contain other organizations (suborganizations). Properties
                 follow the [Organization](https://schema.org/Organization) specification.
             properties:
+                accountBriefs:
+                    description:
+                        The list of accounts associated with this organization.
+                    items:
+                        $ref: "#/components/schemas/AccountBrief"
+                    readOnly: true
+                    type: array
                 actions:
                     additionalProperties:
                         additionalProperties:
@@ -504,6 +511,11 @@ components:
                     description:
                         The text of a comment associated with the organization.
                     type: string
+                creator:
+                    $ref: "#/components/schemas/Creator"
+                    description:
+                        The user who created the organization.
+                    readOnly: true
                 customFields:
                     items:
                         $ref: "#/components/schemas/CustomField"
@@ -643,6 +655,17 @@ components:
                     $ref: "#/components/schemas/Organization"
                     description:
                         The organization's parent organization.
+                permissions:
+                    items:
+                        type: permission
+                    type: array
+                roleBriefs:
+                    description:
+                        The list of roles associated with this organization.
+                    items:
+                        $ref: "#/components/schemas/RoleBrief"
+                    readOnly: true
+                    type: array
                 services:
                     description:
                         A list of services the organization provides. This follows the
@@ -676,10 +699,24 @@ components:
                                 type: string
                         type: object
                     type: array
+                taxonomyCategoryBriefs:
+                    description:
+                        The categories associated with this organization.
+                    items:
+                        $ref: "#/components/schemas/TaxonomyCategoryBrief"
+                    readOnly: true
+                    type: array
                 treePath:
                     description:
                         The tree path of the organization.
                     type: string
+                userAccountBriefs:
+                    description:
+                        The list of users associated with this organization.
+                    items:
+                        $ref: "#/components/schemas/UserAccountBrief"
+                    readOnly: true
+                    type: array
                 userAccounts:
                     items:
                         $ref: "#/components/schemas/UserAccount"

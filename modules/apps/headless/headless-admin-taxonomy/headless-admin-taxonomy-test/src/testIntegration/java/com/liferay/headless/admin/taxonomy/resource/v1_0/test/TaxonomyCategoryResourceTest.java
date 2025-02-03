@@ -42,7 +42,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
@@ -447,21 +446,6 @@ public class TaxonomyCategoryResourceTest
 
 		return taxonomyCategoryResource.postTaxonomyCategoryTaxonomyCategory(
 			parentTaxonomyCategoryId, taxonomyCategory);
-	}
-
-	private void _assertPermissions(
-		String[] expectedActionIds, Permission permission, String role) {
-
-		Assert.assertEquals(
-			expectedActionIds.length, permission.getActionIds().length);
-
-		Object[] actionIds = permission.getActionIds();
-
-		for (String expectedActionId : expectedActionIds) {
-			Assert.assertTrue(ArrayUtil.contains(actionIds, expectedActionId));
-		}
-
-		Assert.assertEquals(role, permission.getRoleName());
 	}
 
 	private void _assertTaxonomyCategoriesPageOrder(
@@ -1030,14 +1014,15 @@ public class TaxonomyCategoryResourceTest
 
 		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
-		Permission permission = new Permission() {
-			{
-				actionIds = new String[] {ActionKeys.VIEW};
-				roleName = role.getName();
-			}
-		};
-
-		randomTaxonomyCategory.setPermissions(new Permission[] {permission});
+		randomTaxonomyCategory.setPermissions(
+			new Permission[] {
+				new Permission() {
+					{
+						actionIds = new String[] {ActionKeys.VIEW};
+						roleName = role.getName();
+					}
+				}
+			});
 
 		TaxonomyCategory putTaxonomyCategory =
 			taxonomyCategoryResource.putTaxonomyCategory(
@@ -1049,8 +1034,12 @@ public class TaxonomyCategoryResourceTest
 		Assert.assertEquals(
 			Arrays.toString(permissions), 1, permissions.length);
 
-		_assertPermissions(
-			new String[] {ActionKeys.VIEW}, permissions[0], role.getName());
+		Permission permission = permissions[0];
+
+		Assert.assertArrayEquals(
+			new String[] {ActionKeys.VIEW}, permission.getActionIds());
+
+		Assert.assertEquals(role.getName(), permission.getRoleName());
 	}
 
 	@Inject

@@ -112,7 +112,7 @@ function Rule({onDelete, onEdit, rule, savedRuleId, setSavedRuleId}) {
 		}))
 	);
 
-	const conditions = useConditionValues(rule);
+	const conditions = useConditionValues({...rule, items});
 	const actions = useActionValues({...rule, items});
 
 	return (

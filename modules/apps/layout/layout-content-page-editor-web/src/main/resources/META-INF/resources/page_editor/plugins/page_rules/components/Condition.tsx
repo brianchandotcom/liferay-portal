@@ -34,7 +34,7 @@ interface ConditionProps {
 	wrapperRef?: ComponentProps<typeof RuleBuilderItem>['wrapperRef'];
 }
 
-const TYPE_VALUES = {
+export const TYPE_VALUES = {
 	formFragment: 'formFragment',
 	user: 'user',
 } as const;
@@ -86,6 +86,17 @@ export const USER_CONDITION_ITEMS = [
 	},
 ];
 
+export const FORM_FRAGMENT_CONDITION_ITEMS = [
+	{
+		label: Liferay.Language.get('is-equal-to'),
+		value: 'equal',
+	},
+	{
+		label: Liferay.Language.get('is-not-equal-to'),
+		value: 'not-equal',
+	},
+] as const;
+
 const VALUE_SELECTOR_COMPONENTS: Record<
 	(typeof CONDITION_VALUES)[keyof typeof CONDITION_VALUES],
 	FC<SelectorProps> | null
@@ -108,7 +119,10 @@ export default function Condition({
 }: ConditionProps) {
 	const {sendMessage} = useContext(ScreenReaderAnnouncerContext);
 
-	const [{description}] = useConditionValues({conditions: [condition], items: inputFragmentItems});
+	const [{description}] = useConditionValues({
+		conditions: [condition],
+		items: inputFragmentItems,
+	});
 
 	const selectRef = useRef<HTMLButtonElement | undefined>();
 
@@ -196,16 +210,7 @@ function FormFragmentTypeSelectors({
 						Liferay.Language.get('select-x'),
 						Liferay.Language.get('type')
 					)}
-					items={[
-						{
-							label: Liferay.Language.get('is-equal-to'),
-							value: 'equal',
-						},
-						{
-							label: Liferay.Language.get('is-not-equal-to'),
-							value: 'not-equal',
-						},
-					]}
+					items={FORM_FRAGMENT_CONDITION_ITEMS}
 					onSelectionChange={(type) => {
 						onConditionChange({
 							...condition,

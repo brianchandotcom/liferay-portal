@@ -32,6 +32,7 @@ import com.liferay.headless.admin.user.dto.v1_0.WebUrl;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.EmailAddressUtil;
+import com.liferay.headless.admin.user.internal.dto.v1_0.util.PermissionUtil;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.PhoneUtil;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.PostalAddressUtil;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.ServiceBuilderListTypeUtil;
@@ -72,8 +73,6 @@ import com.liferay.portal.security.permission.UserBagFactoryUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedFieldsSupplier;
-import com.liferay.portal.vulcan.permission.Permission;
-import com.liferay.portal.vulcan.permission.PermissionUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.Collection;
@@ -285,22 +284,10 @@ public class UserResourceDTOConverter
 				setPermissions(
 					() -> NestedFieldsSupplier.supply(
 						"permissions",
-						nestedFieldNames -> {
-							_permissionService.checkPermission(
-								user.getGroupId(), User.class.getName(),
-								user.getUserId());
-
-							Collection<Permission> permissions =
-								PermissionUtil.getPermissions(
-									user.getCompanyId(),
-									_resourceActionLocalService.
-										getResourceActions(
-											User.class.getName()),
-									user.getUserId(), User.class.getName(),
-									null);
-
-							return permissions.toArray(new Permission[0]);
-						}));
+						nestedFieldNames -> PermissionUtil.toPermissions(
+							user.getCompanyId(), user.getGroupId(),
+							user.getUserId(), User.class.getName(),
+							_permissionService, _resourceActionLocalService)));
 				setProfileURL(
 					() -> {
 						Group group = user.getGroup();

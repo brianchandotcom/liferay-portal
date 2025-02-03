@@ -6,14 +6,15 @@
 package com.liferay.headless.admin.user.internal.dto.v1_0.converter;
 
 import com.liferay.account.model.AccountEntry;
-import com.liferay.account.model.AccountGroupRel;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountGroupLocalService;
 import com.liferay.account.service.AccountGroupRelLocalService;
 import com.liferay.headless.admin.user.dto.v1_0.AccountBrief;
 import com.liferay.headless.admin.user.dto.v1_0.AccountGroup;
+import com.liferay.headless.admin.user.internal.dto.v1_0.util.AccountBriefUtil;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.CustomFieldsUtil;
+import com.liferay.headless.admin.user.internal.dto.v1_0.util.PermissionUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
@@ -26,10 +27,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedFieldsSupplier;
-import com.liferay.portal.vulcan.permission.Permission;
-import com.liferay.portal.vulcan.permission.PermissionUtil;
-
-import java.util.Collection;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -88,7 +85,9 @@ public class AccountGroupResourceDTOConverter
 							_accountGroupRelLocalService.getAccountGroupRels(
 								accountGroup.getAccountGroupId(),
 								AccountEntry.class.getName()),
-							accountGroupRel -> _toAccountBrief(accountGroupRel),
+							accountGroupRel -> AccountBriefUtil.toAccountBrief(
+								_accountEntryLocalService.fetchAccountEntry(
+									accountGroupRel.getClassPK())),
 							AccountBrief.class)));
 				setCreator(
 					() -> NestedFieldsSupplier.supply(
@@ -118,44 +117,15 @@ public class AccountGroupResourceDTOConverter
 							Company company = _companyLocalService.getCompany(
 								accountGroup.getCompanyId());
 
-							_permissionService.checkPermission(
+							return PermissionUtil.toPermissions(
+								accountGroup.getCompanyId(),
 								company.getGroupId(),
+								accountGroup.getAccountGroupId(),
 								com.liferay.account.model.AccountGroup.class.
 									getName(),
-								accountGroup.getAccountGroupId());
-
-							Collection<Permission> permissions =
-								PermissionUtil.getPermissions(
-									accountGroup.getCompanyId(),
-									_resourceActionLocalService.
-										getResourceActions(
-											com.liferay.account.model.
-												AccountGroup.class.getName()),
-									accountGroup.getAccountGroupId(),
-									com.liferay.account.model.AccountGroup.
-										class.getName(),
-									null);
-
-							return permissions.toArray(new Permission[0]);
+								_permissionService,
+								_resourceActionLocalService);
 						}));
-			}
-		};
-	}
-
-	private AccountBrief _toAccountBrief(AccountGroupRel accountGroupRel) {
-		AccountEntry accountEntry = _accountEntryLocalService.fetchAccountEntry(
-			accountGroupRel.getClassPK());
-
-		if (accountEntry == null) {
-			return null;
-		}
-
-		return new AccountBrief() {
-			{
-				setExternalReferenceCode(
-					accountEntry::getExternalReferenceCode);
-				setId(accountEntry::getAccountEntryId);
-				setName(accountEntry::getName);
 			}
 		};
 	}

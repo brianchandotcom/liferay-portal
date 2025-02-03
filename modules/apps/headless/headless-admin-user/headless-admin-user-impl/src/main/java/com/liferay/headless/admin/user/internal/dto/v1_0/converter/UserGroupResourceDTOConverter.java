@@ -8,10 +8,11 @@ package com.liferay.headless.admin.user.internal.dto.v1_0.converter;
 import com.liferay.headless.admin.user.dto.v1_0.RoleBrief;
 import com.liferay.headless.admin.user.dto.v1_0.UserAccountBrief;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.CreatorUtil;
+import com.liferay.headless.admin.user.internal.dto.v1_0.util.PermissionUtil;
+import com.liferay.headless.admin.user.internal.dto.v1_0.util.RoleBriefUtil;
+import com.liferay.headless.admin.user.internal.dto.v1_0.util.UserAccountBriefUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Role;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.PermissionService;
@@ -25,10 +26,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedFieldsSupplier;
-import com.liferay.portal.vulcan.permission.Permission;
-import com.liferay.portal.vulcan.permission.PermissionUtil;
-
-import java.util.Collection;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -92,64 +89,29 @@ public class UserGroupResourceDTOConverter
 				setPermissions(
 					() -> NestedFieldsSupplier.supply(
 						"permissions",
-						nestedFieldNames -> {
-							_permissionService.checkPermission(
-								userGroup.getGroupId(),
-								UserGroup.class.getName(),
-								userGroup.getUserGroupId());
-
-							Collection<Permission> permissions =
-								PermissionUtil.getPermissions(
-									userGroup.getCompanyId(),
-									_resourceActionLocalService.
-										getResourceActions(
-											UserGroup.class.getName()),
-									userGroup.getUserGroupId(),
-									UserGroup.class.getName(), null);
-
-							return permissions.toArray(new Permission[0]);
-						}));
+						nestedFieldNames -> PermissionUtil.toPermissions(
+							userGroup.getCompanyId(), userGroup.getGroupId(),
+							userGroup.getUserGroupId(),
+							UserGroup.class.getName(), _permissionService,
+							_resourceActionLocalService)));
 				setRoleBriefs(
 					() -> NestedFieldsSupplier.supply(
 						"roleBriefs",
 						fieldName -> TransformUtil.transformToArray(
 							_roleService.getGroupRoles(userGroup.getGroupId()),
-							groupRole -> _toRoleBrief(groupRole),
-							RoleBrief.class)));
+							RoleBriefUtil::toRoleBrief, RoleBrief.class)));
 				setUserAccountBriefs(
 					() -> NestedFieldsSupplier.supply(
 						"userAccountBriefs",
 						fieldName -> TransformUtil.transformToArray(
 							_userLocalService.getUserGroupUsers(
 								userGroup.getUserGroupId()),
-							user -> _toUserAccountBrief(user),
+							UserAccountBriefUtil::toUserAccountBrief,
 							UserAccountBrief.class)));
 				setUsersCount(
 					() -> _userLocalService.getUserGroupUsersCount(
 						userGroup.getUserGroupId(),
 						WorkflowConstants.STATUS_APPROVED));
-			}
-		};
-	}
-
-	private RoleBrief _toRoleBrief(Role role) {
-		return new RoleBrief() {
-			{
-				setExternalReferenceCode(role::getExternalReferenceCode);
-				setId(role::getRoleId);
-				setName(role::getName);
-			}
-		};
-	}
-
-	private UserAccountBrief _toUserAccountBrief(User user) {
-		return new UserAccountBrief() {
-			{
-				setAlternateName(user::getScreenName);
-				setEmailAddress(user::getEmailAddress);
-				setExternalReferenceCode(user::getExternalReferenceCode);
-				setId(user::getUserId);
-				setName(user::getFullName);
 			}
 		};
 	}

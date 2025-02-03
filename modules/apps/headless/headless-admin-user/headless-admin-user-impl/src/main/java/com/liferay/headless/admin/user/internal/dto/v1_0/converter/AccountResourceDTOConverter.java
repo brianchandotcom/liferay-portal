@@ -29,6 +29,7 @@ import com.liferay.headless.admin.user.dto.v1_0.WebUrl;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.EmailAddressUtil;
+import com.liferay.headless.admin.user.internal.dto.v1_0.util.PermissionUtil;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.PhoneUtil;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.PostalAddressUtil;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.TaxonomyCategoryBriefUtil;
@@ -56,10 +57,6 @@ import com.liferay.portal.kernel.webserver.WebServerServletToken;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedFieldsSupplier;
-import com.liferay.portal.vulcan.permission.Permission;
-import com.liferay.portal.vulcan.permission.PermissionUtil;
-
-import java.util.Collection;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -245,23 +242,12 @@ public class AccountResourceDTOConverter
 				setPermissions(
 					() -> NestedFieldsSupplier.supply(
 						"permissions",
-						nestedFieldNames -> {
-							_permissionService.checkPermission(
-								accountEntry.getAccountEntryGroupId(),
-								AccountEntry.class.getName(),
-								accountEntry.getAccountEntryId());
-
-							Collection<Permission> permissions =
-								PermissionUtil.getPermissions(
-									accountEntry.getCompanyId(),
-									_resourceActionLocalService.
-										getResourceActions(
-											AccountEntry.class.getName()),
-									accountEntry.getAccountEntryId(),
-									AccountEntry.class.getName(), null);
-
-							return permissions.toArray(new Permission[0]);
-						}));
+						nestedFieldNames -> PermissionUtil.toPermissions(
+							accountEntry.getCompanyId(),
+							accountEntry.getAccountEntryGroupId(),
+							accountEntry.getAccountEntryId(),
+							AccountEntry.class.getName(), _permissionService,
+							_resourceActionLocalService)));
 				setStatus(accountEntry::getStatus);
 				setTaxId(accountEntry::getTaxIdNumber);
 				setTaxonomyCategoryBriefs(

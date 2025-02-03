@@ -47,9 +47,31 @@ const renderComponent = ({rules = []} = {}) =>
 					fragmentEntryLink1: {
 						name: 'Fragment 1',
 					},
+					fragmentEntryLink2: {
+						fragmentEntryType: 'input',
+						name: 'Fragment 2',
+					},
+					fragmentEntryLink3: {
+						fragmentEntryType: 'input',
+						name: 'Fragment 3',
+					},
 				},
 				layoutData: {
 					items: {
+						formItem1: {
+							config: {
+								fragmentEntryLinkId: 'fragmentEntryLink2',
+							},
+							itemId: 'formItem1',
+							type: LAYOUT_DATA_ITEM_TYPES.fragment,
+						},
+						formItem2: {
+							config: {
+								fragmentEntryLinkId: 'fragmentEntryLink3',
+							},
+							itemId: 'formItem2',
+							type: LAYOUT_DATA_ITEM_TYPES.fragment,
+						},
 						item1: {
 							config: {
 								fragmentEntryLinkId: 'fragmentEntryLink1',
@@ -217,7 +239,7 @@ describe('RulesSidebar', () => {
 		);
 	});
 
-	it('shows conditions and actions description', async () => {
+	it('shows user conditions and actions description', async () => {
 		await act(async () => {
 			renderComponent({
 				rules: [
@@ -255,7 +277,45 @@ describe('RulesSidebar', () => {
 		);
 	});
 
-	it('adds aria-label to the rule with conditions and actions description', async () => {
+	it('shows form fragment conditions and actions description', async () => {
+		await act(async () => {
+			renderComponent({
+				rules: [
+					{
+						actions: [
+							{
+								id: 'action-id',
+								itemId: 'formItem1',
+								type: 'disable',
+							},
+						],
+						conditionType: 'all',
+						conditions: [
+							{
+								field: 'formItem2',
+								id: 'condition-id',
+								options: {
+									type: 'equal',
+									value: 'true',
+								},
+								type: 'formFragment',
+							},
+						],
+						id: 'rule-1',
+						name: 'Rule 1',
+					},
+				],
+			});
+		});
+
+		const rule = document.querySelector('li');
+
+		expect(rule.textContent).toBe(
+			'Rule 1ifFragment 3is-equal-totruedisableFragment 2'
+		);
+	});
+
+	it('adds aria-label to the user rule with conditions and actions description', async () => {
 		await act(async () => {
 			renderComponent({
 				rules: [
@@ -289,6 +349,44 @@ describe('RulesSidebar', () => {
 		expect(
 			screen.getByLabelText(
 				'Rule 1: if user is-the-user user1 show fragment Fragment 1'
+			)
+		).toBeInTheDocument();
+	});
+
+	it('adds aria-label to the user form fragment rule with conditions and actions description', async () => {
+		await act(async () => {
+			renderComponent({
+				rules: [
+					{
+						actions: [
+							{
+								id: 'action-id',
+								itemId: 'formItem1',
+								type: 'disable',
+							},
+						],
+						conditionType: 'all',
+						conditions: [
+							{
+								field: 'formItem2',
+								id: 'condition-id',
+								options: {
+									type: 'equal',
+									value: 'true',
+								},
+								type: 'formFragment',
+							},
+						],
+						id: 'rule-1',
+						name: 'Rule 1',
+					},
+				],
+			});
+		});
+
+		expect(
+			screen.getByLabelText(
+				'Rule 1: if Fragment 3 is-equal-to true disable fragment Fragment 2'
 			)
 		).toBeInTheDocument();
 	});

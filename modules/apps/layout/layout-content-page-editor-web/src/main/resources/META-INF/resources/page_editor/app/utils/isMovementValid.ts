@@ -73,7 +73,7 @@ export function isMovementValid({
 
 		if (reason === 'input-outside-form') {
 			message = Liferay.Language.get(
-				'form-components-can-only-be-placed-inside-a-mapped-form-container'
+				'this-form-component-can-only-be-placed-inside-a-mapped-form-container'
 			);
 		}
 		else if (reason === 'existing-stepper') {

@@ -184,7 +184,7 @@ public abstract class BaseDuplicateItemMVCActionCommand
 		if (exception instanceof FormContainerParentItemRequiredException) {
 			errorMessage = LanguageUtil.get(
 				themeDisplay.getLocale(),
-				"form-components-can-only-be-placed-inside-a-mapped-form-" +
+				"this-form-component-can-only-be-placed-inside-a-mapped-form-" +
 					"container");
 		}
 		else if (exception instanceof NoninstanceablePortletException) {

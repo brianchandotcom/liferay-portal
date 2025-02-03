@@ -8,6 +8,7 @@ package com.liferay.frontend.data.set.internal.action;
 import com.liferay.frontend.data.set.SystemFDSEntry;
 import com.liferay.frontend.data.set.action.FDSCreationMenu;
 import com.liferay.frontend.data.set.internal.BaseSystemFDSSerializerTestCase;
+import com.liferay.frontend.data.set.serializer.FDSSerializer;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemBuilder;
@@ -55,7 +56,7 @@ public class SystemFDSCreationMenuSerializerImplTest
 			_creationMenuServiceTrackerMap);
 
 		ReflectionTestUtil.setFieldValue(
-			_systemFDSCreationMenuSerializerImpl, "_fdsCreationMenuRegistry",
+			_fdsSerializer, "_fdsCreationMenuRegistry",
 			_fdsCreationMenuRegistryImpl);
 	}
 
@@ -67,15 +68,12 @@ public class SystemFDSCreationMenuSerializerImplTest
 	}
 
 	@Test
-	public void testSerialization() throws Exception {
+	public void testSerialize() throws Exception {
 
-		// different creation menu
+		// Different creation menu
 
 		ServiceRegistration<SystemFDSEntry> systemFDSEntryServiceRegistration1 =
 			registerSystemFDSEntry("fdsName1", "/app", "/endpoint", "schema");
-
-		ServiceRegistration<SystemFDSEntry> systemFDSEntryServiceRegistration2 =
-			registerSystemFDSEntry("fdsName2", "/app", "/endpoint", "schema");
 
 		CreationMenu creationMenu1 = CreationMenuBuilder.addDropdownItem(
 			DropdownItemBuilder.setIcon(
@@ -86,6 +84,13 @@ public class SystemFDSCreationMenuSerializerImplTest
 		ServiceRegistration<FDSCreationMenu> creationMenuServiceRegistration1 =
 			_registerCreationMenu(creationMenu1, "fdsName1");
 
+		Assert.assertEquals(
+			creationMenu1,
+			_fdsSerializer.serialize("fdsName1", httpServletRequest));
+
+		ServiceRegistration<SystemFDSEntry> systemFDSEntryServiceRegistration2 =
+			registerSystemFDSEntry("fdsName2", "/app", "/endpoint", "schema");
+
 		CreationMenu creationMenu2 = CreationMenuBuilder.addDropdownItem(
 			DropdownItemBuilder.setIcon(
 				"cog"
@@ -95,21 +100,13 @@ public class SystemFDSCreationMenuSerializerImplTest
 		ServiceRegistration<FDSCreationMenu> creationMenuServiceRegistration2 =
 			_registerCreationMenu(creationMenu2, "fdsName2");
 
-		Assert.assertNotEquals(
-			_systemFDSCreationMenuSerializerImpl.serialize(
-				"fdsName1", httpServletRequest),
-			_systemFDSCreationMenuSerializerImpl.serialize(
-				"fdsName2", httpServletRequest));
-
-		Assert.assertEquals(
-			creationMenu1,
-			_systemFDSCreationMenuSerializerImpl.serialize(
-				"fdsName1", httpServletRequest));
-
 		Assert.assertEquals(
 			creationMenu2,
-			_systemFDSCreationMenuSerializerImpl.serialize(
-				"fdsName2", httpServletRequest));
+			_fdsSerializer.serialize("fdsName2", httpServletRequest));
+
+		Assert.assertNotEquals(
+			_fdsSerializer.serialize("fdsName1", httpServletRequest),
+			_fdsSerializer.serialize("fdsName2", httpServletRequest));
 
 		creationMenuServiceRegistration1.unregister();
 
@@ -119,19 +116,19 @@ public class SystemFDSCreationMenuSerializerImplTest
 
 		systemFDSEntryServiceRegistration2.unregister();
 
-		// no creation menu
+		// No creation menu
 
 		systemFDSEntryServiceRegistration1 = registerSystemFDSEntry(
 			"fdsName", "/app", "/endpoint", "schema");
 
 		Assert.assertTrue(
-			_systemFDSCreationMenuSerializerImpl.serialize(
+			_fdsSerializer.serialize(
 				"fdsName", httpServletRequest
 			).isEmpty());
 
 		systemFDSEntryServiceRegistration1.unregister();
 
-		// shared creation menu
+		// Shared creation menu
 
 		systemFDSEntryServiceRegistration1 = registerSystemFDSEntry(
 			"fdsName1", "/app", "/endpoint", "schema");
@@ -152,10 +149,8 @@ public class SystemFDSCreationMenuSerializerImplTest
 			creationMenu1, "fdsName2");
 
 		Assert.assertEquals(
-			_systemFDSCreationMenuSerializerImpl.serialize(
-				"fdsName1", httpServletRequest),
-			_systemFDSCreationMenuSerializerImpl.serialize(
-				"fdsName2", httpServletRequest));
+			_fdsSerializer.serialize("fdsName1", httpServletRequest),
+			_fdsSerializer.serialize("fdsName2", httpServletRequest));
 
 		creationMenuServiceRegistration1.unregister();
 
@@ -190,8 +185,7 @@ public class SystemFDSCreationMenuSerializerImplTest
 			_creationMenuServiceTrackerMap;
 	private static final FDSCreationMenuRegistryImpl
 		_fdsCreationMenuRegistryImpl = new FDSCreationMenuRegistryImpl();
-	private static final SystemFDSCreationMenuSerializerImpl
-		_systemFDSCreationMenuSerializerImpl =
-			new SystemFDSCreationMenuSerializerImpl();
+	private static final FDSSerializer<CreationMenu> _fdsSerializer =
+		new SystemFDSCreationMenuSerializerImpl();
 
 }

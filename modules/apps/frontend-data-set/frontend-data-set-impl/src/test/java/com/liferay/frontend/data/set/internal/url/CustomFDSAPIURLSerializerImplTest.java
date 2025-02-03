@@ -6,6 +6,7 @@
 package com.liferay.frontend.data.set.internal.url;
 
 import com.liferay.frontend.data.set.internal.serializer.BaseCustomFDSSerializer;
+import com.liferay.frontend.data.set.serializer.FDSSerializer;
 import com.liferay.frontend.data.set.url.FDSAPIURLResolver;
 import com.liferay.frontend.data.set.url.FDSAPIURLResolverRegistry;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
@@ -104,8 +105,7 @@ public class CustomFDSAPIURLSerializerImplTest {
 
 		Assert.assertEquals(
 			"/o/app/endpoint/bar",
-			_customFDSAPIURLSerializerImpl.serialize(
-				"fdsName", _httpServletRequest));
+			_fdsSerializer.serialize("fdsName", _httpServletRequest));
 
 		serviceRegistration.unregister();
 
@@ -121,12 +121,10 @@ public class CustomFDSAPIURLSerializerImplTest {
 
 		Assert.assertEquals(
 			"/o/app1/endpoint/bar",
-			_customFDSAPIURLSerializerImpl.serialize(
-				"fdsName1", _httpServletRequest));
+			_fdsSerializer.serialize("fdsName1", _httpServletRequest));
 		Assert.assertEquals(
 			"/o/app2/endpoint/{foo}",
-			_customFDSAPIURLSerializerImpl.serialize(
-				"fdsName2", _httpServletRequest));
+			_fdsSerializer.serialize("fdsName2", _httpServletRequest));
 
 		serviceRegistration.unregister();
 
@@ -142,12 +140,10 @@ public class CustomFDSAPIURLSerializerImplTest {
 
 		Assert.assertEquals(
 			"/o/app/endpoint/bar",
-			_customFDSAPIURLSerializerImpl.serialize(
-				"fdsName1", _httpServletRequest));
+			_fdsSerializer.serialize("fdsName1", _httpServletRequest));
 		Assert.assertEquals(
 			"/o/app/endpoint/bar",
-			_customFDSAPIURLSerializerImpl.serialize(
-				"fdsName2", _httpServletRequest));
+			_fdsSerializer.serialize("fdsName2", _httpServletRequest));
 
 		serviceRegistration.unregister();
 
@@ -161,8 +157,7 @@ public class CustomFDSAPIURLSerializerImplTest {
 
 		Assert.assertEquals(
 			"/o/app/endpoint?nestedFields=creator",
-			_customFDSAPIURLSerializerImpl.serialize(
-				"fdsName", _httpServletRequest));
+			_fdsSerializer.serialize("fdsName", _httpServletRequest));
 
 		_resetSerializer();
 
@@ -172,8 +167,7 @@ public class CustomFDSAPIURLSerializerImplTest {
 			"fdsName", new String[] {"creator.name", "status.id"}, "/app",
 			"/endpoint", "schema");
 
-		String url = _customFDSAPIURLSerializerImpl.serialize(
-			"fdsName", _httpServletRequest);
+		String url = _fdsSerializer.serialize("fdsName", _httpServletRequest);
 
 		Assert.assertTrue(url.startsWith("/o/app/endpoint?"));
 
@@ -194,8 +188,7 @@ public class CustomFDSAPIURLSerializerImplTest {
 			new String[] {"creator.name", "status.id", "relation.creator.name"},
 			"/app", "/endpoint", "schema");
 
-		url = _customFDSAPIURLSerializerImpl.serialize(
-			"fdsName", _httpServletRequest);
+		url = _fdsSerializer.serialize("fdsName", _httpServletRequest);
 
 		Assert.assertTrue(url.startsWith("/o/app/endpoint?"));
 
@@ -257,12 +250,11 @@ public class CustomFDSAPIURLSerializerImplTest {
 		String restEndpoint, String restSchema) {
 
 		Mockito.when(
-			_customFDSAPIURLSerializerImpl.serialize(
-				fdsName, _httpServletRequest)
+			_fdsSerializer.serialize(fdsName, _httpServletRequest)
 		).thenCallRealMethod();
 
 		BaseCustomFDSSerializer baseCustomFDSSerializer =
-			(BaseCustomFDSSerializer)_customFDSAPIURLSerializerImpl;
+			(BaseCustomFDSSerializer)_fdsSerializer;
 
 		Mockito.when(
 			baseCustomFDSSerializer.getDataSetObjectEntryProperties(
@@ -337,11 +329,10 @@ public class CustomFDSAPIURLSerializerImplTest {
 	}
 
 	private void _resetSerializer() {
-		_customFDSAPIURLSerializerImpl = Mockito.mock(
-			CustomFDSAPIURLSerializerImpl.class);
+		_fdsSerializer = Mockito.mock(CustomFDSAPIURLSerializerImpl.class);
 
 		ReflectionTestUtil.setFieldValue(
-			_customFDSAPIURLSerializerImpl, "_fdsAPIURLBuilderFactory",
+			_fdsSerializer, "_fdsAPIURLBuilderFactory",
 			_fdsAPIURLBuilderFactoryImpl);
 	}
 
@@ -349,11 +340,11 @@ public class CustomFDSAPIURLSerializerImplTest {
 		CustomFDSAPIURLSerializerImplTest.class);
 
 	private static BundleContext _bundleContext;
-	private static CustomFDSAPIURLSerializerImpl _customFDSAPIURLSerializerImpl;
 	private static final FDSAPIURLBuilderFactoryImpl
 		_fdsAPIURLBuilderFactoryImpl = new FDSAPIURLBuilderFactoryImpl();
 	private static final FDSAPIURLResolverRegistry _fdsAPIURLResolverRegistry =
 		new FDSAPIURLResolverRegistryImpl();
+	private static FDSSerializer<String> _fdsSerializer;
 	private static final HttpServletRequest _httpServletRequest = Mockito.mock(
 		HttpServletRequest.class);
 	private static ServiceTrackerMap<String, ServiceWrapper<FDSAPIURLResolver>>

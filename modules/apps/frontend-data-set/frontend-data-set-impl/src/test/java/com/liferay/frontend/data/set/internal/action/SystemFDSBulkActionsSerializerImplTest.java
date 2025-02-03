@@ -9,6 +9,7 @@ import com.liferay.frontend.data.set.SystemFDSEntry;
 import com.liferay.frontend.data.set.action.FDSBulkActions;
 import com.liferay.frontend.data.set.internal.BaseSystemFDSSerializerTestCase;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
+import com.liferay.frontend.data.set.serializer.FDSSerializer;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
@@ -56,7 +57,7 @@ public class SystemFDSBulkActionsSerializerImplTest
 			_bulkActionsServiceTrackerMap);
 
 		ReflectionTestUtil.setFieldValue(
-			_systemFDSBulkActionsSerializerImpl, "_fdsBulkActionsRegistry",
+			_fdsSerializer, "_fdsBulkActionsRegistry",
 			_fdsBulkActionsRegistryImpl);
 	}
 
@@ -68,15 +69,12 @@ public class SystemFDSBulkActionsSerializerImplTest
 	}
 
 	@Test
-	public void testSerialization() throws Exception {
+	public void testSerialize() throws Exception {
 
-		// different bulk actions
+		// Different bulk actions
 
 		ServiceRegistration<SystemFDSEntry> systemFDSEntryServiceRegistration1 =
 			registerSystemFDSEntry("fdsName1", "/app", "/endpoint", "schema");
-
-		ServiceRegistration<SystemFDSEntry> systemFDSEntryServiceRegistration2 =
-			registerSystemFDSEntry("fdsName2", "/app", "/endpoint", "schema");
 
 		List<FDSActionDropdownItem> dropDownItemList1 = ListUtil.fromArray(
 			new FDSActionDropdownItem(
@@ -86,6 +84,13 @@ public class SystemFDSBulkActionsSerializerImplTest
 		ServiceRegistration<FDSBulkActions> bulkActionsServiceRegistration1 =
 			_registerBulkActions(dropDownItemList1, "fdsName1");
 
+		Assert.assertEquals(
+			dropDownItemList1,
+			_fdsSerializer.serialize("fdsName1", httpServletRequest));
+
+		ServiceRegistration<SystemFDSEntry> systemFDSEntryServiceRegistration2 =
+			registerSystemFDSEntry("fdsName2", "/app", "/endpoint", "schema");
+
 		List<FDSActionDropdownItem> dropDownItemList2 = ListUtil.fromArray(
 			new FDSActionDropdownItem(
 				null, "cog", "permissions", "permissions", "get", "permissions",
@@ -94,21 +99,13 @@ public class SystemFDSBulkActionsSerializerImplTest
 		ServiceRegistration<FDSBulkActions> bulkActionsServiceRegistration2 =
 			_registerBulkActions(dropDownItemList2, "fdsName2");
 
-		Assert.assertNotEquals(
-			_systemFDSBulkActionsSerializerImpl.serialize(
-				"fdsName1", httpServletRequest),
-			_systemFDSBulkActionsSerializerImpl.serialize(
-				"fdsName2", httpServletRequest));
-
-		Assert.assertEquals(
-			dropDownItemList1,
-			_systemFDSBulkActionsSerializerImpl.serialize(
-				"fdsName1", httpServletRequest));
-
 		Assert.assertEquals(
 			dropDownItemList2,
-			_systemFDSBulkActionsSerializerImpl.serialize(
-				"fdsName2", httpServletRequest));
+			_fdsSerializer.serialize("fdsName2", httpServletRequest));
+
+		Assert.assertNotEquals(
+			_fdsSerializer.serialize("fdsName1", httpServletRequest),
+			_fdsSerializer.serialize("fdsName2", httpServletRequest));
 
 		bulkActionsServiceRegistration1.unregister();
 
@@ -118,19 +115,19 @@ public class SystemFDSBulkActionsSerializerImplTest
 
 		systemFDSEntryServiceRegistration2.unregister();
 
-		// no bulk actions
+		// No bulk actions
 
 		systemFDSEntryServiceRegistration1 = registerSystemFDSEntry(
 			"fdsName", "/app", "/endpoint", "schema");
 
 		Assert.assertTrue(
-			_systemFDSBulkActionsSerializerImpl.serialize(
+			_fdsSerializer.serialize(
 				"fdsName", httpServletRequest
 			).isEmpty());
 
 		systemFDSEntryServiceRegistration1.unregister();
 
-		// shared bulk actions
+		// Shared bulk actions
 
 		systemFDSEntryServiceRegistration1 = registerSystemFDSEntry(
 			"fdsName1", "/app", "/endpoint", "schema");
@@ -150,10 +147,8 @@ public class SystemFDSBulkActionsSerializerImplTest
 			dropDownItemList1, "fdsName2");
 
 		Assert.assertEquals(
-			_systemFDSBulkActionsSerializerImpl.serialize(
-				"fdsName1", httpServletRequest),
-			_systemFDSBulkActionsSerializerImpl.serialize(
-				"fdsName2", httpServletRequest));
+			_fdsSerializer.serialize("fdsName1", httpServletRequest),
+			_fdsSerializer.serialize("fdsName2", httpServletRequest));
 
 		bulkActionsServiceRegistration1.unregister();
 
@@ -187,8 +182,7 @@ public class SystemFDSBulkActionsSerializerImplTest
 			_bulkActionsServiceTrackerMap;
 	private static final FDSBulkActionsRegistryImpl
 		_fdsBulkActionsRegistryImpl = new FDSBulkActionsRegistryImpl();
-	private static final SystemFDSBulkActionsSerializerImpl
-		_systemFDSBulkActionsSerializerImpl =
-			new SystemFDSBulkActionsSerializerImpl();
+	private static final FDSSerializer<List<FDSActionDropdownItem>>
+		_fdsSerializer = new SystemFDSBulkActionsSerializerImpl();
 
 }

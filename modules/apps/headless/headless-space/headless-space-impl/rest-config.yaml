@@ -9,3 +9,4 @@ clientDir: "../headless-space-client/src/main/java"
 forcePredictableOperationId: true
 generateBatch: false
 generateGraphQL: false
+testDir: "../headless-space-test/src/testIntegration/java"

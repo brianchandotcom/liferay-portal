@@ -103,6 +103,41 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Message"
             tags: ["Message"]
+    "/messages/export":
+        post:
+            operationId: getExportPage
+            parameters:
+                - in: query
+                  name: languageId
+                  required: true
+                  schema:
+                      type: string
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            items:
+                                type: string
+                            type: array
+                    application/xml:
+                        schema:
+                            items:
+                                type: string
+                            type: array
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Message"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Message"
+                                type: array
+            tags: ["Message"]
     "/messages/import":
         post:
             operationId: postMessageImport

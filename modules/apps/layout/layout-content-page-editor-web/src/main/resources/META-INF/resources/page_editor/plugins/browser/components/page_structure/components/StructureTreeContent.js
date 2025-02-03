@@ -630,7 +630,7 @@ function visit(
 					mapped: isMapped(editable),
 					name: mappedFieldLabel || editableId,
 					onHoverNode,
-					parentId: item.parentId,
+					parentId: item.itemId,
 					removable: false,
 					tooltipTitle: EDITABLE_TYPE_LABELS[type],
 				});

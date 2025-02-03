@@ -6,7 +6,7 @@ echo CURRENT_DIR_NAME=${CURRENT_DIR_NAME}
 
 source ${CURRENT_DIR_NAME}/../../../../../env/common.sh
 
-function cluster_set_up() {
+function cluster_set_up {
 	prepare_additional_bundles ${1}
 
 	local slave_home="${LIFERAY_HOME}-${1}"

@@ -114,7 +114,8 @@ public class CPConfigurationListEligibilityFeatureFlagListener
 				resultSet2 = preparedStatement2.executeQuery();
 			}
 			else {
-				preparedStatement3.setLong(1, cpConfigurationListClassNameId);
+				preparedStatement3.setLong(
+					1, cpConfigurationListClassNameId);
 				preparedStatement3.setLong(2, resourceId);
 				preparedStatement3.setLong(
 					3, masterCPConfigurationEntry.getGroupId());
@@ -366,47 +367,53 @@ public class CPConfigurationListEligibilityFeatureFlagListener
 			CPDefinition.class.getName());
 
 		try (Connection connection = DataAccess.getConnection();
-			PreparedStatement preparedStatement1 = connection.prepareStatement(
-				"select Group_.groupId, Group_.companyId from " +
+			PreparedStatement preparedStatement1 =
+				connection.prepareStatement(
+					"select Group_.groupId, Group_.companyId from " +
 					"CommerceCatalog join Group_ on Group_.classNameId = ? " +
-						"and Group_.classPK = ",
-				"CommerceCatalog.commerceCatalogId");
-			PreparedStatement preparedStatement2 = connection.prepareStatement(
-				StringBundler.concat(
-					"select CPDefinition.CPDefinitionId, TEMP_TABLE.type_, ",
-					"TEMP_TABLE.classPK, TEMP_TABLE.resourceId from ",
-					"CPDefinition join (select 'C' as type_, classPK, ",
-					"commerceChannelId as resourceId from CommerceChannelRel ",
-					"where classNameId = ? union select 'A' as type_, ",
-					"classPK, accountGroupId as resourceId from ",
-					"AccountGroupRel where classNameId = ?) TEMP_TABLE on ",
-					"(CPDefinition.CPDefinitionId = TEMP_TABLE.classPK and ",
-					"CPDefinition.groupId = ?) order by TEMP_TABLE.classPK"));
-			PreparedStatement preparedStatement3 = connection.prepareStatement(
-				StringBundler.concat(
-					"select distinct CPConfigurationListRel.",
-					"CPConfigurationListId from CPConfigurationListRel join ",
-					"CPConfigurationList on CPConfigurationList.",
-					"CPConfigurationListId = CPConfigurationListRel.",
-					"CPConfigurationListId where CPConfigurationListRel.",
-					"classNameId = ? and CPConfigurationListRel.classPK = ? ",
-					"and CPConfigurationList.groupId = ?"));
-			PreparedStatement preparedStatement4 = connection.prepareStatement(
-				StringBundler.concat(
-					"select distinct classPK as CPConfigurationListId from ",
-					"CommerceChannelRel join CPConfigurationList on ",
-					"CPConfigurationList.CPConfigurationListId = ",
-					"CommerceChannelRel.classPK where CommerceChannelRel.",
-					"classNameId = ? and CommerceChannelRel.commerceChannelId ",
-					"= ? and CPConfigurationList.groupId = ?"));
-			PreparedStatement preparedStatement5 = connection.prepareStatement(
-				StringBundler.concat(
-					"update CPConfigurationEntry set visible = ? where ",
-					"groupId = ? and classNameId = ? and classPK in (select ",
-					"classPK from (select classPK from CPConfigurationEntry ",
-					"where groupId = ? and classNameId = ? and ",
-					"CPConfigurationListId != ?) TEMP_TABLE) and ",
-					"CPConfigurationListId = ?"))) {
+					"and Group_.classPK = CommerceCatalog.commerceCatalogId");
+			PreparedStatement preparedStatement2 =
+				connection.prepareStatement(
+					StringBundler.concat(
+						"select CPDefinition.CPDefinitionId, TEMP_TABLE.type_, ",
+						"TEMP_TABLE.classPK, TEMP_TABLE.resourceId from ",
+						"CPDefinition join (select 'C' as type_, classPK, ",
+						"commerceChannelId as resourceId from ",
+						"CommerceChannelRel where classNameId = ? union ",
+						"select 'A' as type_, classPK, accountGroupId as ",
+						"resourceId from AccountGroupRel where classNameId = ",
+						"?) TEMP_TABLE on (CPDefinition.CPDefinitionId = ",
+						"TEMP_TABLE.classPK and CPDefinition.groupId = ?) ",
+						"order by TEMP_TABLE.classPK"));
+			PreparedStatement preparedStatement3 =
+				connection.prepareStatement(
+					StringBundler.concat(
+						"select distinct CPConfigurationListRel.",
+						"CPConfigurationListId from CPConfigurationListRel ",
+						"join CPConfigurationList on CPConfigurationList.",
+						"CPConfigurationListId = CPConfigurationListRel.",
+						"CPConfigurationListId where CPConfigurationListRel.",
+						"classNameId = ? and CPConfigurationListRel.classPK = ",
+						"? and CPConfigurationList.groupId = ?"));
+			PreparedStatement preparedStatement4 =
+				connection.prepareStatement(
+					StringBundler.concat(
+						"select distinct classPK as CPConfigurationListId ",
+						"from CommerceChannelRel join CPConfigurationList on ",
+						"CPConfigurationList.CPConfigurationListId = ",
+						"CommerceChannelRel.classPK where CommerceChannelRel.",
+						"classNameId = ? and CommerceChannelRel.",
+						"commerceChannelId = ? and CPConfigurationList.",
+						"groupId = ?"));
+			PreparedStatement preparedStatement5 =
+				connection.prepareStatement(
+					StringBundler.concat(
+						"update CPConfigurationEntry set visible = ? where ",
+						"groupId = ? and classNameId = ? and classPK in ",
+						"(select classPK from (select classPK from ",
+						"CPConfigurationEntry where groupId = ? and ",
+						"classNameId = ? and CPConfigurationListId != ?) ",
+						"Internal) and CPConfigurationListId = ?"))) {
 
 			preparedStatement1.setLong(1, companyId);
 			preparedStatement1.setLong(2, commerceCatalogClassNameId);
@@ -443,7 +450,8 @@ public class CPConfigurationListEligibilityFeatureFlagListener
 					accountGroupClassNameId, cpConfigurationListClassNameId,
 					cpDefinitionClassNameId,
 					masterCPConfigurationList.getCPConfigurationListId(),
-					preparedStatement2, preparedStatement3, preparedStatement4);
+					preparedStatement2, preparedStatement3,
+					preparedStatement4);
 
 				_updateMasterCPConfigurationEntries(
 					cpDefinitionClassNameId, groupId, masterCPConfigurationList,

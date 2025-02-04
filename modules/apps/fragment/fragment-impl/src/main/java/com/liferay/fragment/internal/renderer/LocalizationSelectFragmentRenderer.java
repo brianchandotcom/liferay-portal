@@ -184,8 +184,8 @@ public class LocalizationSelectFragmentRenderer implements FragmentRenderer {
 				).put(
 					"locales",
 					JSONUtil.toJSONArray(
-						_language.getAvailableLocales(
-							themeDisplay.getSiteGroupId()),
+						_language.getCompanyAvailableLocales(
+							themeDisplay.getCompanyId()),
 						locale -> {
 							String w3cLanguageId = LocaleUtil.toW3cLanguageId(
 								locale);

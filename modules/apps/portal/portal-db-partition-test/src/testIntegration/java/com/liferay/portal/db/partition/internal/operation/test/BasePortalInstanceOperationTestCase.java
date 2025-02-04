@@ -40,7 +40,7 @@ import org.osgi.service.cm.ConfigurationAdmin;
 /**
  * @author Mariano Álvaro Sáiz
  */
-public abstract class BaseVirtualInstanceOperationTestCase
+public abstract class BasePortalInstanceOperationTestCase
 	extends BaseDBPartitionTestCase {
 
 	@BeforeClass

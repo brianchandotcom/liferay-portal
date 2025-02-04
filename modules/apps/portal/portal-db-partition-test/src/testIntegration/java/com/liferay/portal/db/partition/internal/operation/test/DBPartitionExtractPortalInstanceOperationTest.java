@@ -16,33 +16,32 @@ import org.junit.runner.RunWith;
  * @author Mariano Álvaro Sáiz
  */
 @RunWith(Arquillian.class)
-public class DBPartitionExtractVirtualInstanceOperationTest
-	extends BaseVirtualInstanceOperationTestCase {
+public class DBPartitionExtractPortalInstanceOperationTest
+	extends BasePortalInstanceOperationTestCase {
 
 	@Override
 	public String getComponentName() {
-		return "DBPartitionExtractVirtualInstanceOperation";
+		return "ExtractPortalInstanceOperation";
 	}
 
 	@Test
 	public void testDeployConfiguration() throws Exception {
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				"com.liferay.portal.db.partition.internal.operation." +
-					"DBPartitionExtractVirtualInstanceOperation",
+				"com.liferay.portal.instances.internal.operation." +
+					"ExtractPortalInstanceOperation",
 				LoggerTestUtil.ERROR)) {
 
-			deployConfiguration(_PID, "partitionCompanyId=L\"0\"\n");
+			deployConfiguration(_PID, "companyId=L\"0\"\n");
 
 			assertLog(
-				logCapture,
-				"Virtual instance with company ID 0 does not exist");
+				logCapture, "Portal instance with company ID 0 does not exist");
 		}
 
 		assertConfigurationIsDeletedAfterDeploy(_PID);
 	}
 
 	private static final String _PID =
-		"com.liferay.portal.db.partition.internal.configuration." +
-			"DBPartitionExtractVirtualInstanceConfiguration";
+		"com.liferay.portal.instances.internal.configuration." +
+			"ExtractPortalInstanceConfiguration";
 
 }

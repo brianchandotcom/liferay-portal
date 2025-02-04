@@ -26,8 +26,8 @@ import org.junit.runner.RunWith;
  * @author István András Dézsi
  */
 @RunWith(Arquillian.class)
-public class DBPartitionCopyVirtualInstanceOperationTest
-	extends BaseVirtualInstanceOperationTestCase {
+public class DBPartitionCopyPortalInstanceOperationTest
+	extends BasePortalInstanceOperationTestCase {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
@@ -43,7 +43,7 @@ public class DBPartitionCopyVirtualInstanceOperationTest
 
 	@Override
 	public String getComponentName() {
-		return "DBPartitionCopyVirtualInstanceOperation";
+		return "CopyPortalInstanceOperation";
 	}
 
 	@Test
@@ -54,7 +54,7 @@ public class DBPartitionCopyVirtualInstanceOperationTest
 			deployConfiguration(
 				_PID,
 				StringBundler.concat(
-					"name=\"testName\"\nsourcePartitionCompanyId=L\"",
+					"name=\"testName\"\nsourceCompanyId=L\"",
 					_company.getCompanyId(), "\"\nvirtualHostname=",
 					"\"testVirtualHostname\"\nwebId=\"testWebId\"\n"));
 
@@ -79,21 +79,21 @@ public class DBPartitionCopyVirtualInstanceOperationTest
 		throws Exception {
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				"com.liferay.portal.db.partition.internal.operation." +
-					"DBPartitionCopyVirtualInstanceOperation",
+				"com.liferay.portal.instances.internal.operation." +
+					"CopyPortalInstanceOperation",
 				LoggerTestUtil.ERROR)) {
 
 			deployConfiguration(
 				_PID,
 				StringBundler.concat(
-					"destinationPartitionCompanyId=L\"",
+					"destinationCompanyId=L\"",
 					PortalInstancePool.getDefaultCompanyId(), "\"\n",
-					"name=\"testName\"\nsourcePartitionCompanyId=L\"",
+					"name=\"testName\"\nsourceCompanyId=L\"",
 					_company.getCompanyId(), "\"\nvirtualHostname=",
 					"\"testVirtualHostname\"\nwebId=\"testWebId\"\n"));
 			assertLog(
 				logCapture,
-				"Virtual instance with company ID " +
+				"Portal instance with company ID " +
 					PortalInstancePool.getDefaultCompanyId() +
 						" already exists");
 		}
@@ -102,8 +102,8 @@ public class DBPartitionCopyVirtualInstanceOperationTest
 	}
 
 	private static final String _PID =
-		"com.liferay.portal.db.partition.internal.configuration." +
-			"DBPartitionCopyVirtualInstanceConfiguration";
+		"com.liferay.portal.instances.internal.configuration." +
+			"CopyPortalInstanceConfiguration";
 
 	private static Company _company;
 

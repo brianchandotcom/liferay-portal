@@ -17,29 +17,29 @@ import org.junit.runner.RunWith;
  * @author Mariano Álvaro Sáiz
  */
 @RunWith(Arquillian.class)
-public class DBPartitionInsertVirtualInstanceOperationTest
-	extends BaseVirtualInstanceOperationTestCase {
+public class DBPartitionInsertPortalInstanceOperationTest
+	extends BasePortalInstanceOperationTestCase {
 
 	@Override
 	public String getComponentName() {
-		return "DBPartitionInsertVirtualInstanceOperation";
+		return "InsertPortalInstanceOperation";
 	}
 
 	@Test
 	public void testDeployConfiguration() throws Exception {
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				"com.liferay.portal.db.partition.internal.operation." +
-					"DBPartitionInsertVirtualInstanceOperation",
+				"com.liferay.portal.instances.internal.operation." +
+					"InsertPortalInstanceOperation",
 				LoggerTestUtil.ERROR)) {
 
 			deployConfiguration(
 				_PID,
-				"newWebId=\"testNewWebId\"\npartitionCompanyId=L\"" +
+				"newWebId=\"testNewWebId\"\ncompanyId=L\"" +
 					PortalInstancePool.getDefaultCompanyId() + "\"\n");
 
 			assertLog(
 				logCapture,
-				"Virtual instance with company ID " +
+				"Portal instance with company ID " +
 					PortalInstancePool.getDefaultCompanyId() +
 						" already exists");
 		}
@@ -48,7 +48,7 @@ public class DBPartitionInsertVirtualInstanceOperationTest
 	}
 
 	private static final String _PID =
-		"com.liferay.portal.db.partition.internal.configuration." +
-			"DBPartitionInsertVirtualInstanceConfiguration";
+		"com.liferay.portal.instances.internal.configuration." +
+			"InsertPortalInstanceConfiguration";
 
 }

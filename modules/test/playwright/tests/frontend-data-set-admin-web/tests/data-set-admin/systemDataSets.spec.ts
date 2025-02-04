@@ -76,6 +76,18 @@ test(
 			await expect(customizedSampleListItem).toBeVisible();
 		});
 
+		await test.step('Assert the items are listed in alphabetical order', async () => {
+			expect(
+				creationModal.container.locator(
+					'.data-set-content-wrapper .list-group-title'
+				)
+			).toHaveText([
+				'Classic Sample',
+				'Customized Sample',
+				'React Sample',
+			]);
+		});
+
 		await test.step('Search system data set items', async () => {
 			await creationModal.searchInput.fill('Classic');
 

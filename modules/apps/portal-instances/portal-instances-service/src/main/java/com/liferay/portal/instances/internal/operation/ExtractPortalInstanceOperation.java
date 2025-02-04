@@ -46,7 +46,7 @@ public class ExtractPortalInstanceOperation
 							properties);
 
 				long companyId =
-					extractPortalInstanceConfiguration.companyId();
+					extractPortalInstanceConfiguration.extractCompanyId();
 
 				if (_companyLocalService.fetchCompany(companyId) == null) {
 					_log.error(

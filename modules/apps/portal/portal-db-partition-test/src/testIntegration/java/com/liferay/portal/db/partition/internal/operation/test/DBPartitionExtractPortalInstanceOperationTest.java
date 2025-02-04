@@ -31,7 +31,7 @@ public class DBPartitionExtractPortalInstanceOperationTest
 					"ExtractPortalInstanceOperation",
 				LoggerTestUtil.ERROR)) {
 
-			deployConfiguration(_PID, "companyId=L\"0\"\n");
+			deployConfiguration(_PID, "extractCompanyId=L\"0\"\n");
 
 			assertLog(
 				logCapture, "Portal instance with company ID 0 does not exist");

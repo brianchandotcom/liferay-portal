@@ -5,11 +5,17 @@
 
 package com.liferay.cookies.banner.web.internal.servlet.taglib;
 
+import com.liferay.cookies.configuration.CookiesConfigurationProvider;
+import com.liferay.cookies.configuration.CookiesPreferenceHandlingConfiguration;
 import com.liferay.frontend.js.loader.modules.extender.esm.ESImportUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.aui.JSFragment;
 import com.liferay.portal.kernel.servlet.taglib.aui.ScriptData;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.url.builder.AbsolutePortalURLBuilder;
 import com.liferay.portal.url.builder.AbsolutePortalURLBuilderFactory;
 
@@ -35,6 +41,24 @@ public class EnableThirdPartyCookiesBottomJSDynamicInclude
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, String key)
 		throws IOException {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		try {
+			CookiesPreferenceHandlingConfiguration
+				cookiesPreferenceHandlingConfiguration =
+					_cookiesConfigurationProvider.
+						getCookiesPreferenceHandlingConfiguration(themeDisplay);
+
+			if (!cookiesPreferenceHandlingConfiguration.enabled()) {
+				return;
+			}
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+		}
 
 		AbsolutePortalURLBuilder absolutePortalURLBuilder =
 			_absolutePortalURLBuilderFactory.getAbsolutePortalURLBuilder(
@@ -62,8 +86,14 @@ public class EnableThirdPartyCookiesBottomJSDynamicInclude
 		dynamicIncludeRegistry.register("/html/common/themes/bottom.jsp#post");
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		EnableThirdPartyCookiesBottomJSDynamicInclude.class);
+
 	@Reference
 	private AbsolutePortalURLBuilderFactory _absolutePortalURLBuilderFactory;
+
+	@Reference
+	private CookiesConfigurationProvider _cookiesConfigurationProvider;
 
 	@Reference
 	private Portal _portal;

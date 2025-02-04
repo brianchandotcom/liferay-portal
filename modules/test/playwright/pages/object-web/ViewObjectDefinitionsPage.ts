@@ -87,6 +87,13 @@ export class ViewObjectDefinitionsPage {
 			.click();
 	}
 
+	async clickObjectDefinitionActionButton(objectDefinitionLabel: string) {
+		await this.page
+			.getByRole('row', {name: objectDefinitionLabel})
+			.getByRole('button')
+			.click();
+	}
+
 	async createObjectFolder(objectFolderLabel: string): Promise<ObjectFolder> {
 		await this.addObjectFolderButton.click();
 		await this.objectFolderLabelInput.click();

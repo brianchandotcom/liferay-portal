@@ -627,6 +627,12 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>A namespace for the form and its elements. This attribute lets you set a namespace value that differs from the default portlet namespace.</description>
+			<name>portletNamespace</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>preserveRatio</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

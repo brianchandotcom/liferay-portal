@@ -36,7 +36,7 @@ String selectLogoURL = (String)request.getAttribute("liferay-frontend:logo-selec
 			).put(
 				"logoURL", logoURL
 			).put(
-				"portletNamespace", portletNamespace
+				"portletNamespace", () -> portletNamespace
 			).put(
 				"selectLogoURL", selectLogoURL
 			).build()

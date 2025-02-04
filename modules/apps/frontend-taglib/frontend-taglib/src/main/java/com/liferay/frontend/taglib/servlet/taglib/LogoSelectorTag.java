@@ -54,6 +54,10 @@ public class LogoSelectorTag extends IncludeTag {
 		return _label;
 	}
 
+	public String getPortletNamespace() {
+		return _portletNamespace;
+	}
+
 	public boolean isDisabled() {
 		return _disabled;
 	}
@@ -93,6 +97,10 @@ public class LogoSelectorTag extends IncludeTag {
 		setServletContext(ServletContextUtil.getServletContext());
 	}
 
+	public void setPortletNamespace(String portletNamespace) {
+		_portletNamespace = portletNamespace;
+	}
+
 	public void setPreserveRatio(boolean preserveRatio) {
 		_preserveRatio = preserveRatio;
 	}
@@ -107,6 +115,7 @@ public class LogoSelectorTag extends IncludeTag {
 		_description = null;
 		_disabled = false;
 		_label = null;
+		_portletNamespace = null;
 		_preserveRatio = false;
 	}
 
@@ -131,7 +140,7 @@ public class LogoSelectorTag extends IncludeTag {
 			_getLogoURL(httpServletRequest));
 		httpServletRequest.setAttribute(
 			"liferay-frontend:logo-selector:portletNamespace",
-			PortletKeys.IMAGE_UPLOADER);
+			_portletNamespace);
 
 		String randomKey = PortalUtil.generateRandomKey(
 			httpServletRequest, "taglib_ui_logo_selector");
@@ -203,6 +212,7 @@ public class LogoSelectorTag extends IncludeTag {
 	private String _description;
 	private boolean _disabled;
 	private String _label;
+	private String _portletNamespace;
 	private boolean _preserveRatio;
 
 }

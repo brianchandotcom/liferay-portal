@@ -86,7 +86,7 @@ test(
 			await apiHelpers.jsonWebServicesFragmentEntry.addFragmentEntry({
 				fragmentCollectionId,
 				groupId: site.id,
-				html: '<div class="fragment-name">[@liferay_frontend["logo-selector"] currentLogoURL="/image/user_female_portrait.png" defaultLogoURL="/image/user_female_portrait.png"/]</div>',
+				html: '<div class="fragment-name">[@liferay_frontend["logo-selector"] currentLogoURL="/image/user_female_portrait.png" defaultLogoURL="/image/user_female_portrait.png" portletNamespace="com_liferay_image_uploader_web_portlet_ImageUploaderPortlet_"/]</div>',
 				name: fragmentName,
 			});
 		});

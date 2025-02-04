@@ -33,7 +33,7 @@ import org.mockito.Mockito;
 /**
  * @author Daniel Sanz
  */
-public class CustomFDSCreationMenuSerializerImplTest {
+public class CreationMenuCustomFDSSerializerImplTest {
 
 	@ClassRule
 	@Rule
@@ -154,7 +154,7 @@ public class CustomFDSCreationMenuSerializerImplTest {
 
 	private void _resetSerializer() {
 		_fdsSerializer = Mockito.mock(
-			CustomFDSCreationMenuSerializerImpl.class);
+			CreationMenuCustomFDSSerializerImpl.class);
 	}
 
 	private void _testSerialize(String fdsName, String[] titles)

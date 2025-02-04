@@ -341,6 +341,23 @@ components:
                     format: int64
                     readOnly: true
                     type: integer
+        AssetLibraryBrief:
+            properties:
+                externalReferenceCode:
+                    description:
+                        The asset library's external reference code.
+                    type: string
+                groupId:
+                    description:
+                        The asset library's group ID.
+                    format: int64
+                    readOnly: true
+                    type: integer
+                name:
+                    description:
+                        The asset library's name.
+                    readOnly: true
+                    type: string
         Creator:
             description:
                 Represents the user who created/authored the content. Properties follow the
@@ -1194,11 +1211,23 @@ components:
                     description:
                         The user's alias or screen name.
                     type: string
+                assetLibraryBriefs:
+                    description:
+                        The user's asset libraries.
+                    items:
+                        $ref: "#/components/schemas/AssetLibraryBrief"
+                    readOnly: true
+                    type: array
                 birthDate:
                     description:
                         The user's date of birth.
                     format: date
                     type: string
+                creator:
+                    $ref: "#/components/schemas/Creator"
+                    description:
+                        The user who created this user account.
+                    readOnly: true
                 currentPassword:
                     description:
                         The user's current password. Used to authenticate a user when they attempt to update their own
@@ -1352,6 +1381,13 @@ components:
                         The user's status.
                     enum: [Active, Inactive]
                     type: string
+                taxonomyCategoryBriefs:
+                    description:
+                        The categories associated with this user.
+                    items:
+                        $ref: "#/components/schemas/TaxonomyCategoryBrief"
+                    readOnly: true
+                    type: array
                 userAccountContactInformation:
                     description:
                         The user's contact information.

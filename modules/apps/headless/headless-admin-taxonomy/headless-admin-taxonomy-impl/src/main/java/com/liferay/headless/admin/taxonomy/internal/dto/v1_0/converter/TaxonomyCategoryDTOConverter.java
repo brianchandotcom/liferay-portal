@@ -19,11 +19,6 @@ import com.liferay.headless.admin.taxonomy.dto.v1_0.TaxonomyCategory;
 import com.liferay.headless.admin.taxonomy.dto.v1_0.TaxonomyCategoryProperty;
 import com.liferay.headless.admin.taxonomy.internal.dto.v1_0.util.CreatorUtil;
 import com.liferay.petra.function.transform.TransformUtil;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.service.PermissionService;
-import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -33,11 +28,7 @@ import com.liferay.portal.vulcan.dto.action.DTOActionProvider;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedFieldsSupplier;
-import com.liferay.portal.vulcan.permission.Permission;
-import com.liferay.portal.vulcan.permission.PermissionUtil;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
-
-import java.util.Collection;
 
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.UriInfo;
@@ -188,37 +179,6 @@ public class TaxonomyCategoryDTOConverter
 							}
 						};
 					});
-				setPermissions(
-					() -> {
-						if (!FeatureFlagManagerUtil.isEnabled("LPD-41304")) {
-							return null;
-						}
-
-						try {
-							_permissionService.checkPermission(
-								assetCategory.getGroupId(),
-								AssetCategory.class.getName(),
-								assetCategory.getCategoryId());
-
-							Collection<Permission> permissions =
-								PermissionUtil.getPermissions(
-									assetCategory.getCompanyId(),
-									_resourceActionLocalService.
-										getResourceActions(
-											AssetCategory.class.getName()),
-									assetCategory.getCategoryId(),
-									AssetCategory.class.getName(), null);
-
-							return permissions.toArray(new Permission[0]);
-						}
-						catch (Exception exception) {
-							if (_log.isDebugEnabled()) {
-								_log.debug(exception);
-							}
-
-							return null;
-						}
-					});
 				setSiteId(assetCategory::getGroupId);
 				setTaxonomyCategoryProperties(
 					() -> TransformUtil.transformToArray(
@@ -278,9 +238,6 @@ public class TaxonomyCategoryDTOConverter
 		};
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		TaxonomyCategoryDTOConverter.class);
-
 	@Reference
 	private AssetCategoryLocalService _assetCategoryLocalService;
 
@@ -303,13 +260,7 @@ public class TaxonomyCategoryDTOConverter
 	private DTOActionProvider _dtoActionProvider;
 
 	@Reference
-	private PermissionService _permissionService;
-
-	@Reference
 	private Portal _portal;
-
-	@Reference
-	private ResourceActionLocalService _resourceActionLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

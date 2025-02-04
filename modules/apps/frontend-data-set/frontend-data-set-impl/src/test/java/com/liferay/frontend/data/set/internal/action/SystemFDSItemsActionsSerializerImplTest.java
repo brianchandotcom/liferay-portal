@@ -83,7 +83,7 @@ public class SystemFDSItemsActionsSerializerImplTest
 					"headless"));
 
 		ServiceRegistration<FDSItemsActions> itemsActionsServiceRegistration1 =
-			_registerFDSItemsActions("fdsName1", fdsActionDropdownItems1);
+			_registerFDSItemsActions(fdsActionDropdownItems1, "fdsName1");
 
 		Assert.assertEquals(
 			fdsActionDropdownItems1,
@@ -99,7 +99,7 @@ public class SystemFDSItemsActionsSerializerImplTest
 					"permissions", "modal-permissions"));
 
 		ServiceRegistration<FDSItemsActions> itemsActionsServiceRegistration2 =
-			_registerFDSItemsActions("fdsName2", fdsActionDropdownItems2);
+			_registerFDSItemsActions(fdsActionDropdownItems2, "fdsName2");
 
 		Assert.assertEquals(
 			fdsActionDropdownItems2,
@@ -138,9 +138,9 @@ public class SystemFDSItemsActionsSerializerImplTest
 				"headless"));
 
 		itemsActionsServiceRegistration1 = _registerFDSItemsActions(
-			"fdsName1", fdsActionDropdownItems1);
+			fdsActionDropdownItems1, "fdsName1");
 		itemsActionsServiceRegistration2 = _registerFDSItemsActions(
-			"fdsName2", fdsActionDropdownItems1);
+			fdsActionDropdownItems1, "fdsName2");
 
 		Assert.assertEquals(
 			_fdsSerializer.serialize("fdsName1", httpServletRequest),
@@ -153,7 +153,7 @@ public class SystemFDSItemsActionsSerializerImplTest
 	}
 
 	private ServiceRegistration<FDSItemsActions> _registerFDSItemsActions(
-		String fdsName, List<FDSActionDropdownItem> fdsActionDropdownItems) {
+		List<FDSActionDropdownItem> fdsActionDropdownItems, String fdsName) {
 
 		return bundleContext.registerService(
 			FDSItemsActions.class,

@@ -37,7 +37,9 @@ $btn-disabled-opacity: 1;
 $inline-item-spacer-x: var(--btn-inline-item-spacer-x);
 
 $btn: (
+	--btn-active-color: $white,
 	--btn-default-border-color: transparent,
+	--btn-default-color: $white,
 	active: (
 		background-color:
 			var(
@@ -121,5 +123,57 @@ $btn-link: (
 	),
 	disabled: (
 		color: var(--color-action-primary-disabled),
+	),
+);
+
+$btn-danger: (
+	active: (
+		color: c-unset,
+	),
+	color: c-unset,
+	focus: (
+		color: c-unset,
+	),
+	hover: (
+		color: c-unset,
+	),
+);
+
+$btn-info: (
+	active: (
+		color: c-unset,
+	),
+	color: c-unset,
+	focus: (
+		color: c-unset,
+	),
+	hover: (
+		color: c-unset,
+	),
+);
+
+$btn-success: (
+	active: (
+		color: c-unset,
+	),
+	color: c-unset,
+	focus: (
+		color: c-unset,
+	),
+	hover: (
+		color: c-unset,
+	),
+);
+
+$btn-warning: (
+	active: (
+		color: c-unset,
+	),
+	color: c-unset,
+	focus: (
+		color: c-unset,
+	),
+	hover: (
+		color: c-unset,
 	),
 );

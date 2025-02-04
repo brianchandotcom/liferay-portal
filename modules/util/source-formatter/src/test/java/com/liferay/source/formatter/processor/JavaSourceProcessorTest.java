@@ -759,6 +759,13 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testSealedModifierUsage() throws Exception {
+		test(
+			"SealedModifierUsage.testjava",
+			"Do not use modifier \"sealed\" and \"non-sealed\"", 11);
+	}
+
+	@Test
 	public void testSecureRandomNumberGeneration() throws Exception {
 		test(
 			"SecureRandomNumberGeneration.testjava",

@@ -35,7 +35,7 @@ generateGrammarSource {
 	dependsOn cleanGenerateGrammarSource
 
 	doFirst {
-		delete fileTree("src/main/java/" + parserDirName) {
+		delete fileTree("src/main/java/" + parserDirName + "/generated") {
 			exclude "**/source_formatter.ignore"
 		}
 
@@ -61,7 +61,7 @@ generateGrammarSource {
 
 			from outputDirectory
 			include "**/*.java"
-			into "src/main/java/" + parserDirName
+			into "src/main/java/" + parserDirName + "/generated"
 		}
 
 		copy {

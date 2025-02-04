@@ -300,6 +300,14 @@ public class NavigationMenuResourceTest
 	}
 
 	@Override
+	@Test
+	public void testPostSiteNavigationMenu() throws Exception {
+		super.testPostSiteNavigationMenu();
+
+		_testPostSiteNavigationMenuWithNavigationType();
+	}
+
+	@Override
 	protected boolean equals(
 		NavigationMenu navigationMenu1, NavigationMenu navigationMenu2) {
 
@@ -942,6 +950,21 @@ public class NavigationMenuResourceTest
 				customFields, _getExpectedCustomFields(serviceContext)));
 
 		navigationMenuResource.deleteNavigationMenu(postNavigationMenu.getId());
+	}
+
+	private void _testPostSiteNavigationMenuWithNavigationType()
+		throws Exception {
+
+		NavigationMenu navigationMenu = _randomNavigationMenu(false);
+
+		navigationMenu.setNavigationType(NavigationMenu.NavigationType.PRIMARY);
+
+		navigationMenu = navigationMenuResource.postSiteNavigationMenu(
+			testGroup.getGroupId(), navigationMenu);
+
+		Assert.assertEquals(
+			NavigationMenu.NavigationType.PRIMARY,
+			navigationMenu.getNavigationType());
 	}
 
 	@Inject

@@ -427,9 +427,9 @@ test.describe('Manage root models elements through Objects Admin', () => {
 
 			await viewObjectDefinitionsPage.goto();
 
-			await viewObjectDefinitionsPage.actionsButton.first().waitFor();
-
-			await viewObjectDefinitionsPage.actionsButton.last().click();
+			await viewObjectDefinitionsPage.clickObjectDefinitionActionButton(
+				objectDefinition1.label['en_US']
+			);
 
 			await viewObjectDefinitionsPage.deleteObjectDefinitionOption.click();
 

@@ -115,7 +115,6 @@ test.describe('Manage object relationships through Model Builder', () => {
 		apiHelpers,
 		modelBuilderDiagramPage,
 		page,
-		viewObjectDefinitionsPage,
 	}) => {
 		const objectFolder =
 			await apiHelpers.objectAdmin.postRandomObjectFolder();
@@ -144,13 +143,9 @@ test.describe('Manage object relationships through Model Builder', () => {
 			type: 'objectDefinition',
 		});
 
-		await viewObjectDefinitionsPage.goto();
-
-		await viewObjectDefinitionsPage.openObjectFolder(
-			objectFolder.label['en_US']
-		);
-
-		await viewObjectDefinitionsPage.viewInModelBuilderButton.click();
+		await modelBuilderDiagramPage.goto({
+			objectFolderName: objectFolder.name,
+		});
 
 		await modelBuilderDiagramPage.connectObjectDefinitionsNodeHandles(
 			objectDefinition1.id,

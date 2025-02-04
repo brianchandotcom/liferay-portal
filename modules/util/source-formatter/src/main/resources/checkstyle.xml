@@ -790,6 +790,11 @@
 			<message key="empty.line.missing.after.variable.definition" value="There should be an empty line after variable definition on line &quot;{0}&quot;" />
 			<message key="variable.declaration.move" value="Move the variable declaration for &quot;{0}&quot; on line &quot;{1}&quot;" />
 		</module>
+		<module name="com.liferay.source.formatter.checkstyle.check.SealedAndNonsealedModifierCheck">
+			<property name="category" value="Performance" />
+			<property name="description" value="Finds usage of `sealed` and `non-sealed`." />
+			<message key="modifier.avoid" value="Do not use modifier &quot;sealed&quot; and &quot;non-sealed&quot;" />
+		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.SelfReferenceCheck">
 			<property name="category" value="Bug Prevention" />
 			<property name="description" value="Finds cases of unnecessary reference to its own class." />

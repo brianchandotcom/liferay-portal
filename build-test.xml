@@ -1193,7 +1193,7 @@ jdbc.default.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 							<isset property="java.jdk.home" />
 						</not>
 						<then>
-							<fail>Unable to get the property "java.jdk.home" for jdk version @{version} and type @{type}.</fail>
+							<property name="java.jdk.home" value="${env.JAVA_HOME}" />
 						</then>
 					</if>
 
@@ -1223,15 +1223,39 @@ jdbc.default.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 			<var name="java.jdk.opts" unset="true" />
 
 			<propertycopy from="java.jdk.opts[@{version}][@{architecture}][@{type}]" property="java.jdk.opts" silent="true" />
-
-			<condition property="java.jdk.opts" value="${java.jdk.opts.default.runtime}">
+			<if>
 				<and>
 					<not>
 						<isset property="java.jdk.opts" />
 					</not>
 					<isset property="java.jdk.opts.default.runtime" />
 				</and>
-			</condition>
+				<then>
+					<property name="java.jdk.opts" value="${java.jdk.opts.default.runtime}" />
+				</then>
+				<elseif>
+					<and>
+						<not>
+							<isset property="java.jdk.opts" />
+						</not>
+						<isset property="env.JAVA_OPTS" />
+					</and>
+					<then>
+						<property name="java.jdk.opts" value="${env.JAVA_OPTS}" />
+					</then>
+				</elseif>
+				<elseif>
+					<and>
+						<not>
+							<isset property="java.jdk.opts" />
+						</not>
+						<isset property="env.ANT_OPTS" />
+					</and>
+					<then>
+						<property name="java.jdk.opts" value="${env.ANT_OPTS}" />
+					</then>
+				</elseif>
+			</if>
 
 			<var name="java.jdk.opts" value="${java.jdk.opts} -XX:+IgnoreUnrecognizedVMOptions" />
 		</sequential>

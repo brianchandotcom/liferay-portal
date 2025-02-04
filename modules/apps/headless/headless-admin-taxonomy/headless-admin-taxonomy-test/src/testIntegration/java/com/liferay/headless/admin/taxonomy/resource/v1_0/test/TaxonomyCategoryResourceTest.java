@@ -24,22 +24,16 @@ import com.liferay.headless.admin.taxonomy.client.dto.v1_0.TaxonomyCategoryPrope
 import com.liferay.headless.admin.taxonomy.client.dto.v1_0.TaxonomyVocabulary;
 import com.liferay.headless.admin.taxonomy.client.pagination.Page;
 import com.liferay.headless.admin.taxonomy.client.pagination.Pagination;
-import com.liferay.headless.admin.taxonomy.client.permission.Permission;
 import com.liferay.headless.admin.taxonomy.client.problem.Problem;
 import com.liferay.headless.admin.taxonomy.client.resource.v1_0.TaxonomyCategoryResource;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.model.ResourceConstants;
-import com.liferay.portal.kernel.model.Role;
-import com.liferay.portal.kernel.model.role.RoleConstants;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -52,7 +46,6 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.util.PropsValues;
 
@@ -61,7 +54,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -71,7 +63,6 @@ import org.junit.runner.RunWith;
 /**
  * @author Javier Gamarra
  */
-@FeatureFlags("LPD-41304")
 @RunWith(Arquillian.class)
 public class TaxonomyCategoryResourceTest
 	extends BaseTaxonomyCategoryResourceTestCase {
@@ -124,7 +115,6 @@ public class TaxonomyCategoryResourceTest
 
 		_testGetTaxonomyCategoryTaxonomyCategoryUsageCount();
 		_testGetTaxonomyCategoryWithAssetCategoryProperty();
-		_testGetTaxonomyCategoryWithPermissions();
 	}
 
 	@Override
@@ -236,22 +226,6 @@ public class TaxonomyCategoryResourceTest
 		_testPatchTaxonomyCategoryWithParentTaxonomyCategoryInADifferentTaxonomyVocabulary(
 			_addTaxonomyCategoryWithParentAssetVocabulary(assetVocabulary1),
 			_addTaxonomyCategoryWithParentAssetVocabulary(assetVocabulary2));
-	}
-
-	@Override
-	@Test
-	public void testPostTaxonomyCategoryTaxonomyCategory() throws Exception {
-		super.testPostTaxonomyCategoryTaxonomyCategory();
-
-		_testPostTaxonomyCategoryTaxonomyCategoryWithPermissions();
-	}
-
-	@Override
-	@Test
-	public void testPutTaxonomyCategory() throws Exception {
-		super.testPutTaxonomyCategory();
-
-		_testPutTaxonomyCategoryWithPermissions();
 	}
 
 	@Override
@@ -628,58 +602,6 @@ public class TaxonomyCategoryResourceTest
 			taxonomyCategoryProperty.getValue(), value);
 	}
 
-	private void _testGetTaxonomyCategoryWithPermissions() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext();
-
-		AssetCategory parentAssetCategory =
-			_assetCategoryLocalService.addCategory(
-				TestPropsValues.getUserId(), testGroup.getGroupId(),
-				RandomTestUtil.randomString(),
-				_assetVocabulary.getVocabularyId(), serviceContext);
-
-		AssetCategory assetCategory = _addAssetCategory(
-			_assetVocabulary, new Date(), parentAssetCategory, serviceContext);
-
-		_resourcePermissionLocalService.deleteResourcePermissions(
-			assetCategory.getCompanyId(), AssetCategory.class.getName(),
-			ResourceConstants.SCOPE_INDIVIDUAL, assetCategory.getCategoryId());
-
-		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
-
-		_resourcePermissionLocalService.setResourcePermissions(
-			TestPropsValues.getCompanyId(), AssetCategory.class.getName(),
-			ResourceConstants.SCOPE_INDIVIDUAL,
-			String.valueOf(assetCategory.getCategoryId()), role.getRoleId(),
-			new String[] {ActionKeys.DELETE, ActionKeys.PERMISSIONS});
-
-		Page<TaxonomyCategory> page =
-			taxonomyCategoryResource.getTaxonomyCategoryTaxonomyCategoriesPage(
-				String.valueOf(parentAssetCategory.getCategoryId()), null, null,
-				null, Pagination.of(1, 10), null);
-
-		Assert.assertEquals(1, page.getTotalCount());
-
-		List<TaxonomyCategory> taxonomyCategories =
-			(List<TaxonomyCategory>)page.getItems();
-
-		TaxonomyCategory taxonomyCategory = taxonomyCategories.get(0);
-
-		Assert.assertNotNull(taxonomyCategory.getPermissions());
-
-		Permission[] permissions = taxonomyCategory.getPermissions();
-
-		Assert.assertEquals(
-			Arrays.toString(permissions), 1, permissions.length);
-
-		Permission permission = permissions[0];
-
-		Assert.assertEquals(role.getName(), permission.getRoleName());
-		Assert.assertEquals(
-			new Object[] {ActionKeys.DELETE, ActionKeys.PERMISSIONS},
-			permission.getActionIds());
-	}
-
 	private void _testGetTaxonomyVocabularyTaxonomyCategoriesPageFlatten(
 			AssetVocabulary assetVocabulary)
 		throws Exception {
@@ -958,88 +880,6 @@ public class TaxonomyCategoryResourceTest
 						}
 					}));
 		}
-	}
-
-	private void _testPostTaxonomyCategoryTaxonomyCategoryWithPermissions()
-		throws Exception {
-
-		TaxonomyCategory randomTaxonomyCategory = randomTaxonomyCategory();
-
-		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
-
-		randomTaxonomyCategory.setPermissions(
-			new Permission[] {
-				new Permission() {
-					{
-						actionIds = new String[] {ActionKeys.DELETE};
-						roleName = role.getName();
-					}
-				}
-			});
-
-		TaxonomyCategory postTaxonomyCategory =
-			testPostTaxonomyCategoryTaxonomyCategory_addTaxonomyCategory(
-				randomTaxonomyCategory);
-
-		Permission[] permissions = postTaxonomyCategory.getPermissions();
-
-		Assert.assertNotNull(permissions);
-		Assert.assertEquals(
-			Arrays.toString(permissions), 2, permissions.length);
-
-		for (Permission permission : permissions) {
-			if (Objects.equals(permission.getRoleName(), role.getName())) {
-				Assert.assertArrayEquals(
-					new String[] {ActionKeys.DELETE},
-					permission.getActionIds());
-			}
-
-			if (Objects.equals(permission.getRoleName(), RoleConstants.OWNER)) {
-				Assert.assertArrayEquals(
-					new String[] {
-						ActionKeys.DELETE, ActionKeys.PERMISSIONS,
-						ActionKeys.ADD_CATEGORY, ActionKeys.UPDATE,
-						ActionKeys.VIEW
-					},
-					permission.getActionIds());
-			}
-		}
-	}
-
-	private void _testPutTaxonomyCategoryWithPermissions() throws Exception {
-		TaxonomyCategory postTaxonomyCategory =
-			testPutTaxonomyCategory_addTaxonomyCategory();
-
-		TaxonomyCategory randomTaxonomyCategory = randomTaxonomyCategory();
-
-		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
-
-		randomTaxonomyCategory.setPermissions(
-			new Permission[] {
-				new Permission() {
-					{
-						actionIds = new String[] {ActionKeys.VIEW};
-						roleName = role.getName();
-					}
-				}
-			});
-
-		TaxonomyCategory putTaxonomyCategory =
-			taxonomyCategoryResource.putTaxonomyCategory(
-				postTaxonomyCategory.getId(), randomTaxonomyCategory);
-
-		Permission[] permissions = putTaxonomyCategory.getPermissions();
-
-		Assert.assertNotNull(permissions);
-		Assert.assertEquals(
-			Arrays.toString(permissions), 1, permissions.length);
-
-		Permission permission = permissions[0];
-
-		Assert.assertArrayEquals(
-			new String[] {ActionKeys.VIEW}, permission.getActionIds());
-
-		Assert.assertEquals(role.getName(), permission.getRoleName());
 	}
 
 	@Inject

@@ -6,12 +6,10 @@
 package com.liferay.headless.admin.taxonomy.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.headless.admin.taxonomy.client.dto.v1_0.AssetType;
 import com.liferay.headless.admin.taxonomy.client.dto.v1_0.TaxonomyVocabulary;
 import com.liferay.headless.admin.taxonomy.client.pagination.Page;
 import com.liferay.headless.admin.taxonomy.client.pagination.Pagination;
-import com.liferay.headless.admin.taxonomy.client.permission.Permission;
 import com.liferay.headless.admin.taxonomy.client.problem.Problem;
 import com.liferay.headless.admin.taxonomy.client.resource.v1_0.TaxonomyVocabularyResource;
 import com.liferay.headless.admin.taxonomy.client.serdes.v1_0.TaxonomyVocabularySerDes;
@@ -19,28 +17,21 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.model.ResourceConstants;
-import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.RoleTestUtil;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -279,7 +270,6 @@ public class TaxonomyVocabularyResourceTest
 			).build());
 	}
 
-	@FeatureFlags("LPD-41304")
 	@Override
 	@Test
 	public void testGetTaxonomyVocabulary() throws Exception {
@@ -287,7 +277,6 @@ public class TaxonomyVocabularyResourceTest
 
 		_testGetTaxonomyVocabularyActions();
 		_testGetTaxonomyVocabularyWithoutPermissionsAction();
-		_testGetTaxonomyVocabularyWithPermissions();
 	}
 
 	@Override
@@ -369,25 +358,6 @@ public class TaxonomyVocabularyResourceTest
 					taxonomyVocabulariesJSONObject.getString("items"))));
 	}
 
-	@FeatureFlags("LPD-41304")
-	@Override
-	@Test
-	public void testPostAssetLibraryTaxonomyVocabulary() throws Exception {
-		super.testPostAssetLibraryTaxonomyVocabulary();
-
-		_testPostAssetLibraryTaxonomyVocabularyWithPermissions();
-	}
-
-	@FeatureFlags("LPD-41304")
-	@Override
-	@Test
-	public void testPostSiteTaxonomyVocabulary() throws Exception {
-		super.testPostSiteTaxonomyVocabulary();
-
-		_testPostSiteTaxonomyVocabularyWithPermissions();
-	}
-
-	@FeatureFlags("LPD-41304")
 	@Override
 	@Test
 	public void testPutAssetLibraryTaxonomyVocabularyByExternalReferenceCode()
@@ -396,27 +366,6 @@ public class TaxonomyVocabularyResourceTest
 		super.testPutAssetLibraryTaxonomyVocabularyByExternalReferenceCode();
 
 		_testPutAssetLibraryTaxonomyVocabularyByExternalReferenceCodeWithExternalReferenceCode();
-		_testPutAssetLibraryTaxonomyVocabularyByExternalReferenceCodeWithPermissions();
-	}
-
-	@FeatureFlags("LPD-41304")
-	@Override
-	@Test
-	public void testPutSiteTaxonomyVocabularyByExternalReferenceCode()
-		throws Exception {
-
-		super.testPutSiteTaxonomyVocabularyByExternalReferenceCode();
-
-		_testPutSiteTaxonomyVocabularyByExternalReferenceCodeWithPermissions();
-	}
-
-	@FeatureFlags("LPD-41304")
-	@Override
-	@Test
-	public void testPutTaxonomyVocabulary() throws Exception {
-		super.testPutTaxonomyVocabulary();
-
-		_testPutTaxonomyVocabularyWithPermissions();
 	}
 
 	@Override
@@ -600,133 +549,6 @@ public class TaxonomyVocabularyResourceTest
 		Assert.assertNull(getTaxonomyVocabulary.getPermissions());
 	}
 
-	private void _testGetTaxonomyVocabularyWithPermissions() throws Exception {
-		TaxonomyVocabulary postTaxonomyVocabulary =
-			testGetTaxonomyVocabulary_addTaxonomyVocabulary();
-
-		_resourcePermissionLocalService.deleteResourcePermissions(
-			testCompany.getCompanyId(), AssetVocabulary.class.getName(),
-			ResourceConstants.SCOPE_INDIVIDUAL, postTaxonomyVocabulary.getId());
-
-		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
-
-		_resourcePermissionLocalService.setResourcePermissions(
-			TestPropsValues.getCompanyId(), AssetVocabulary.class.getName(),
-			ResourceConstants.SCOPE_INDIVIDUAL,
-			String.valueOf(postTaxonomyVocabulary.getId()), role.getRoleId(),
-			new String[] {ActionKeys.DELETE, ActionKeys.PERMISSIONS});
-
-		TaxonomyVocabulary getTaxonomyVocabulary =
-			taxonomyVocabularyResource.getTaxonomyVocabulary(
-				postTaxonomyVocabulary.getId());
-
-		Assert.assertNotNull(getTaxonomyVocabulary.getPermissions());
-
-		Permission[] permissions = getTaxonomyVocabulary.getPermissions();
-
-		Assert.assertEquals(
-			Arrays.toString(permissions), 1, permissions.length);
-
-		Permission permission = permissions[0];
-
-		Assert.assertEquals(role.getName(), permission.getRoleName());
-		Assert.assertArrayEquals(
-			new Object[] {ActionKeys.DELETE, ActionKeys.PERMISSIONS},
-			permission.getActionIds());
-	}
-
-	private void _testPostAssetLibraryTaxonomyVocabularyWithPermissions()
-		throws Exception {
-
-		TaxonomyVocabulary randomTaxonomyVocabulary =
-			randomTaxonomyVocabulary();
-
-		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
-
-		randomTaxonomyVocabulary.setPermissions(
-			new Permission[] {
-				new Permission() {
-					{
-						actionIds = new String[] {ActionKeys.DELETE};
-						roleName = role.getName();
-					}
-				}
-			});
-
-		TaxonomyVocabulary postTaxonomyVocabulary =
-			testPostAssetLibraryTaxonomyVocabulary_addTaxonomyVocabulary(
-				randomTaxonomyVocabulary);
-
-		Permission[] permissions = postTaxonomyVocabulary.getPermissions();
-
-		Assert.assertNotNull(permissions);
-		Assert.assertEquals(
-			Arrays.toString(permissions), 2, permissions.length);
-
-		for (Permission permission : permissions) {
-			if (Objects.equals(permission.getRoleName(), role.getName())) {
-				Assert.assertArrayEquals(
-					new String[] {ActionKeys.DELETE},
-					permission.getActionIds());
-			}
-
-			if (Objects.equals(permission.getRoleName(), RoleConstants.OWNER)) {
-				Assert.assertArrayEquals(
-					new String[] {
-						ActionKeys.DELETE, ActionKeys.PERMISSIONS,
-						ActionKeys.UPDATE, ActionKeys.VIEW
-					},
-					permission.getActionIds());
-			}
-		}
-	}
-
-	private void _testPostSiteTaxonomyVocabularyWithPermissions()
-		throws Exception {
-
-		TaxonomyVocabulary randomTaxonomyVocabulary =
-			randomTaxonomyVocabulary();
-
-		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
-
-		randomTaxonomyVocabulary.setPermissions(
-			new Permission[] {
-				new Permission() {
-					{
-						actionIds = new String[] {ActionKeys.DELETE};
-						roleName = role.getName();
-					}
-				}
-			});
-
-		TaxonomyVocabulary postTaxonomyVocabulary =
-			testPostSiteTaxonomyVocabulary_addTaxonomyVocabulary(
-				randomTaxonomyVocabulary);
-
-		Permission[] permissions = postTaxonomyVocabulary.getPermissions();
-
-		Assert.assertNotNull(permissions);
-		Assert.assertEquals(
-			Arrays.toString(permissions), 2, permissions.length);
-
-		for (Permission permission : permissions) {
-			if (Objects.equals(permission.getRoleName(), role.getName())) {
-				Assert.assertArrayEquals(
-					new String[] {ActionKeys.DELETE},
-					permission.getActionIds());
-			}
-
-			if (Objects.equals(permission.getRoleName(), RoleConstants.OWNER)) {
-				Assert.assertArrayEquals(
-					new String[] {
-						ActionKeys.DELETE, ActionKeys.PERMISSIONS,
-						ActionKeys.UPDATE, ActionKeys.VIEW
-					},
-					permission.getActionIds());
-			}
-		}
-	}
-
 	private void _testPutAssetLibraryTaxonomyVocabularyByExternalReferenceCodeWithExternalReferenceCode()
 		throws Exception {
 
@@ -746,129 +568,6 @@ public class TaxonomyVocabularyResourceTest
 			externalReferenceCode,
 			putTaxonomyVocabulary.getExternalReferenceCode());
 		assertValid(putTaxonomyVocabulary);
-	}
-
-	private void _testPutAssetLibraryTaxonomyVocabularyByExternalReferenceCodeWithPermissions()
-		throws Exception {
-
-		String externalReferenceCode = StringUtil.toLowerCase(
-			RandomTestUtil.randomString());
-
-		TaxonomyVocabulary taxonomyVocabulary =
-			testPutAssetLibraryTaxonomyVocabularyByExternalReferenceCode_createTaxonomyVocabulary();
-
-		TaxonomyVocabulary putTaxonomyVocabulary =
-			taxonomyVocabularyResource.
-				putAssetLibraryTaxonomyVocabularyByExternalReferenceCode(
-					testPutAssetLibraryTaxonomyVocabularyByExternalReferenceCode_getAssetLibraryId(),
-					externalReferenceCode, taxonomyVocabulary);
-
-		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
-
-		Permission permission = new Permission() {
-			{
-				actionIds = new String[] {ActionKeys.VIEW};
-				roleName = role.getName();
-			}
-		};
-
-		putTaxonomyVocabulary.setPermissions(new Permission[] {permission});
-
-		putTaxonomyVocabulary =
-			taxonomyVocabularyResource.
-				putAssetLibraryTaxonomyVocabularyByExternalReferenceCode(
-					testPutAssetLibraryTaxonomyVocabularyByExternalReferenceCode_getAssetLibraryId(),
-					putTaxonomyVocabulary.getExternalReferenceCode(),
-					putTaxonomyVocabulary);
-
-		Permission[] permissions = putTaxonomyVocabulary.getPermissions();
-
-		Assert.assertNotNull(permissions);
-		Assert.assertEquals(
-			Arrays.toString(permissions), 1, permissions.length);
-
-		Assert.assertEquals(permission.getRoleName(), role.getName());
-		Assert.assertArrayEquals(
-			new String[] {ActionKeys.VIEW}, permission.getActionIds());
-	}
-
-	private void _testPutSiteTaxonomyVocabularyByExternalReferenceCodeWithPermissions()
-		throws Exception {
-
-		String externalReferenceCode = StringUtil.toLowerCase(
-			RandomTestUtil.randomString());
-
-		TaxonomyVocabulary taxonomyVocabulary =
-			testPutSiteTaxonomyVocabularyByExternalReferenceCode_createTaxonomyVocabulary();
-
-		TaxonomyVocabulary putTaxonomyVocabulary =
-			taxonomyVocabularyResource.
-				putSiteTaxonomyVocabularyByExternalReferenceCode(
-					testPutSiteTaxonomyVocabularyByExternalReferenceCode_getSiteId(
-						taxonomyVocabulary),
-					externalReferenceCode, taxonomyVocabulary);
-
-		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
-
-		Permission permission = new Permission() {
-			{
-				actionIds = new String[] {ActionKeys.VIEW};
-				roleName = role.getName();
-			}
-		};
-
-		putTaxonomyVocabulary.setPermissions(new Permission[] {permission});
-
-		putTaxonomyVocabulary =
-			taxonomyVocabularyResource.
-				putSiteTaxonomyVocabularyByExternalReferenceCode(
-					testPutSiteTaxonomyVocabularyByExternalReferenceCode_getSiteId(
-						putTaxonomyVocabulary),
-					putTaxonomyVocabulary.getExternalReferenceCode(),
-					putTaxonomyVocabulary);
-
-		Permission[] permissions = putTaxonomyVocabulary.getPermissions();
-
-		Assert.assertNotNull(permissions);
-		Assert.assertEquals(
-			Arrays.toString(permissions), 1, permissions.length);
-
-		Assert.assertEquals(permission.getRoleName(), role.getName());
-		Assert.assertArrayEquals(
-			new String[] {ActionKeys.VIEW}, permission.getActionIds());
-	}
-
-	private void _testPutTaxonomyVocabularyWithPermissions() throws Exception {
-		TaxonomyVocabulary taxonomyVocabulary =
-			testPutTaxonomyVocabulary_addTaxonomyVocabulary();
-
-		TaxonomyVocabulary randomTaxonomyVocabulary =
-			randomTaxonomyVocabulary();
-
-		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
-
-		Permission permission = new Permission() {
-			{
-				actionIds = new String[] {ActionKeys.VIEW};
-				roleName = role.getName();
-			}
-		};
-
-		randomTaxonomyVocabulary.setPermissions(new Permission[] {permission});
-
-		TaxonomyVocabulary putTaxonomyVocabulary =
-			taxonomyVocabularyResource.putTaxonomyVocabulary(
-				taxonomyVocabulary.getId(), randomTaxonomyVocabulary);
-
-		Permission[] permissions = putTaxonomyVocabulary.getPermissions();
-
-		Assert.assertNotNull(permissions);
-		Assert.assertEquals(
-			Arrays.toString(permissions), 1, permissions.length);
-
-		Assert.assertEquals(permission.getRoleName(), role.getName());
-		Assert.assertArrayEquals(
-			new String[] {ActionKeys.VIEW}, permission.getActionIds());
 	}
 
 	@Inject

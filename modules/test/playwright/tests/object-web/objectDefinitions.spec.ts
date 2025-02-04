@@ -21,6 +21,7 @@ import {objectPagesTest} from '../../fixtures/objectPagesTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {getRandomInt} from '../../utils/getRandomInt';
 import getRandomString from '../../utils/getRandomString';
+import {waitForAlert} from '../../utils/waitForAlert';
 import getFragmentDefinition from '../layout-content-page-editor-web/utils/getFragmentDefinition';
 import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDefinition';
 import {createObjectFields} from './utils/mockObjectFields';
@@ -168,7 +169,12 @@ test.describe('Manage object definitions through Model Builder', () => {
 			type: 'objectDefinition',
 		});
 
-		expect(page.getByText(objectDefinitionLabel)).toBeVisible();
+		await waitForAlert(
+			page,
+			`Success:${objectDefinitionLabel} was created successfully.`
+		);
+
+		await expect(page.getByText(objectDefinitionLabel)).toBeVisible();
 
 		await viewObjectDefinitionsPage.viewInModelBuilderButton.click();
 

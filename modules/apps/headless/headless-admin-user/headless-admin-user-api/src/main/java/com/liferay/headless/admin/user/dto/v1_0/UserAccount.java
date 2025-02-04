@@ -226,6 +226,49 @@ public class UserAccount implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _alternateNameSupplier;
 
+	@Schema(description = "The user's asset libraries.")
+	@Valid
+	public AssetLibraryBrief[] getAssetLibraryBriefs() {
+		if (_assetLibraryBriefsSupplier != null) {
+			assetLibraryBriefs = _assetLibraryBriefsSupplier.get();
+
+			_assetLibraryBriefsSupplier = null;
+		}
+
+		return assetLibraryBriefs;
+	}
+
+	public void setAssetLibraryBriefs(AssetLibraryBrief[] assetLibraryBriefs) {
+		this.assetLibraryBriefs = assetLibraryBriefs;
+
+		_assetLibraryBriefsSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setAssetLibraryBriefs(
+		UnsafeSupplier<AssetLibraryBrief[], Exception>
+			assetLibraryBriefsUnsafeSupplier) {
+
+		_assetLibraryBriefsSupplier = () -> {
+			try {
+				return assetLibraryBriefsUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(description = "The user's asset libraries.")
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected AssetLibraryBrief[] assetLibraryBriefs;
+
+	@JsonIgnore
+	private Supplier<AssetLibraryBrief[]> _assetLibraryBriefsSupplier;
+
 	@Schema(description = "The user's date of birth.")
 	public Date getBirthDate() {
 		if (_birthDateSupplier != null) {
@@ -266,6 +309,48 @@ public class UserAccount implements Serializable {
 
 	@JsonIgnore
 	private Supplier<Date> _birthDateSupplier;
+
+	@Schema(description = "The user who created this user account.")
+	@Valid
+	public Creator getCreator() {
+		if (_creatorSupplier != null) {
+			creator = _creatorSupplier.get();
+
+			_creatorSupplier = null;
+		}
+
+		return creator;
+	}
+
+	public void setCreator(Creator creator) {
+		this.creator = creator;
+
+		_creatorSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setCreator(
+		UnsafeSupplier<Creator, Exception> creatorUnsafeSupplier) {
+
+		_creatorSupplier = () -> {
+			try {
+				return creatorUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(description = "The user who created this user account.")
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Creator creator;
+
+	@JsonIgnore
+	private Supplier<Creator> _creatorSupplier;
 
 	@Schema(
 		description = "The user's current password. Used to authenticate a user when they attempt to update their own password."
@@ -1552,6 +1637,51 @@ public class UserAccount implements Serializable {
 	@JsonIgnore
 	private Supplier<Status> _statusSupplier;
 
+	@Schema(description = "The categories associated with this user.")
+	@Valid
+	public TaxonomyCategoryBrief[] getTaxonomyCategoryBriefs() {
+		if (_taxonomyCategoryBriefsSupplier != null) {
+			taxonomyCategoryBriefs = _taxonomyCategoryBriefsSupplier.get();
+
+			_taxonomyCategoryBriefsSupplier = null;
+		}
+
+		return taxonomyCategoryBriefs;
+	}
+
+	public void setTaxonomyCategoryBriefs(
+		TaxonomyCategoryBrief[] taxonomyCategoryBriefs) {
+
+		this.taxonomyCategoryBriefs = taxonomyCategoryBriefs;
+
+		_taxonomyCategoryBriefsSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setTaxonomyCategoryBriefs(
+		UnsafeSupplier<TaxonomyCategoryBrief[], Exception>
+			taxonomyCategoryBriefsUnsafeSupplier) {
+
+		_taxonomyCategoryBriefsSupplier = () -> {
+			try {
+				return taxonomyCategoryBriefsUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(description = "The categories associated with this user.")
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected TaxonomyCategoryBrief[] taxonomyCategoryBriefs;
+
+	@JsonIgnore
+	private Supplier<TaxonomyCategoryBrief[]> _taxonomyCategoryBriefsSupplier;
+
 	@Schema(description = "The user's contact information.")
 	@Valid
 	public UserAccountContactInformation getUserAccountContactInformation() {
@@ -1738,6 +1868,28 @@ public class UserAccount implements Serializable {
 			sb.append("\"");
 		}
 
+		AssetLibraryBrief[] assetLibraryBriefs = getAssetLibraryBriefs();
+
+		if (assetLibraryBriefs != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"assetLibraryBriefs\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < assetLibraryBriefs.length; i++) {
+				sb.append(String.valueOf(assetLibraryBriefs[i]));
+
+				if ((i + 1) < assetLibraryBriefs.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		Date birthDate = getBirthDate();
 
 		if (birthDate != null) {
@@ -1752,6 +1904,18 @@ public class UserAccount implements Serializable {
 			sb.append(liferayToJSONDateFormat.format(birthDate));
 
 			sb.append("\"");
+		}
+
+		Creator creator = getCreator();
+
+		if (creator != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"creator\": ");
+
+			sb.append(String.valueOf(creator));
 		}
 
 		String currentPassword = getCurrentPassword();
@@ -2261,6 +2425,29 @@ public class UserAccount implements Serializable {
 			sb.append(status);
 
 			sb.append("\"");
+		}
+
+		TaxonomyCategoryBrief[] taxonomyCategoryBriefs =
+			getTaxonomyCategoryBriefs();
+
+		if (taxonomyCategoryBriefs != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"taxonomyCategoryBriefs\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < taxonomyCategoryBriefs.length; i++) {
+				sb.append(String.valueOf(taxonomyCategoryBriefs[i]));
+
+				if ((i + 1) < taxonomyCategoryBriefs.length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
 		}
 
 		UserAccountContactInformation userAccountContactInformation =

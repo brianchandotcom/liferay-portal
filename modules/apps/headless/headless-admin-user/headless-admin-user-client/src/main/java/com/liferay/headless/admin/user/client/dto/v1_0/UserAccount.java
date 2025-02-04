@@ -112,6 +112,28 @@ public class UserAccount implements Cloneable, Serializable {
 
 	protected String alternateName;
 
+	public AssetLibraryBrief[] getAssetLibraryBriefs() {
+		return assetLibraryBriefs;
+	}
+
+	public void setAssetLibraryBriefs(AssetLibraryBrief[] assetLibraryBriefs) {
+		this.assetLibraryBriefs = assetLibraryBriefs;
+	}
+
+	public void setAssetLibraryBriefs(
+		UnsafeSupplier<AssetLibraryBrief[], Exception>
+			assetLibraryBriefsUnsafeSupplier) {
+
+		try {
+			assetLibraryBriefs = assetLibraryBriefsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected AssetLibraryBrief[] assetLibraryBriefs;
+
 	public Date getBirthDate() {
 		return birthDate;
 	}
@@ -132,6 +154,27 @@ public class UserAccount implements Cloneable, Serializable {
 	}
 
 	protected Date birthDate;
+
+	public Creator getCreator() {
+		return creator;
+	}
+
+	public void setCreator(Creator creator) {
+		this.creator = creator;
+	}
+
+	public void setCreator(
+		UnsafeSupplier<Creator, Exception> creatorUnsafeSupplier) {
+
+		try {
+			creator = creatorUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Creator creator;
 
 	public String getCurrentPassword() {
 		return currentPassword;
@@ -787,6 +830,30 @@ public class UserAccount implements Cloneable, Serializable {
 	}
 
 	protected Status status;
+
+	public TaxonomyCategoryBrief[] getTaxonomyCategoryBriefs() {
+		return taxonomyCategoryBriefs;
+	}
+
+	public void setTaxonomyCategoryBriefs(
+		TaxonomyCategoryBrief[] taxonomyCategoryBriefs) {
+
+		this.taxonomyCategoryBriefs = taxonomyCategoryBriefs;
+	}
+
+	public void setTaxonomyCategoryBriefs(
+		UnsafeSupplier<TaxonomyCategoryBrief[], Exception>
+			taxonomyCategoryBriefsUnsafeSupplier) {
+
+		try {
+			taxonomyCategoryBriefs = taxonomyCategoryBriefsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected TaxonomyCategoryBrief[] taxonomyCategoryBriefs;
 
 	public UserAccountContactInformation getUserAccountContactInformation() {
 		return userAccountContactInformation;

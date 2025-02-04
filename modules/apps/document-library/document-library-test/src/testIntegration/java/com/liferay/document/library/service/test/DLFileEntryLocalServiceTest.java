@@ -60,6 +60,7 @@ import com.liferay.expando.kernel.service.ExpandoTableLocalServiceUtil;
 import com.liferay.friendly.url.model.FriendlyURLEntry;
 import com.liferay.friendly.url.service.FriendlyURLEntryLocalServiceUtil;
 import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
@@ -196,16 +197,14 @@ public class DLFileEntryLocalServiceTest {
 	public void testAddFileEntryWhenValidateExtensionDisabled()
 		throws Exception {
 
-		boolean enabled = DLAppHelperThreadLocal.isEnabled();
-
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(
 					DLConfiguration.class.getName(),
 					HashMapDictionaryBuilder.<String, Object>put(
 						"fileExtensions", "png"
-					).build())) {
-
-			DLAppHelperThreadLocal.setEnabled(false);
+					).build());
+			SafeCloseable safeCloseable =
+				DLAppHelperThreadLocal.setEnabledWithSafeCloseable(false)) {
 
 			DLFileEntryLocalServiceUtil.addFileEntry(
 				null, TestPropsValues.getUserId(), _group.getGroupId(),
@@ -219,25 +218,20 @@ public class DLFileEntryLocalServiceTest {
 				null, null, null,
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 		}
-		finally {
-			DLAppHelperThreadLocal.setEnabled(enabled);
-		}
 	}
 
 	@Test(expected = FileExtensionException.class)
 	public void testAddFileEntryWhenValidateExtensionEnabled()
 		throws Exception {
 
-		boolean enabled = DLAppHelperThreadLocal.isEnabled();
-
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(
 					DLConfiguration.class.getName(),
 					HashMapDictionaryBuilder.<String, Object>put(
 						"fileExtensions", "png"
-					).build())) {
-
-			DLAppHelperThreadLocal.setEnabled(true);
+					).build());
+			SafeCloseable safeCloseable =
+				DLAppHelperThreadLocal.setEnabledWithSafeCloseable(true)) {
 
 			DLFileEntryLocalServiceUtil.addFileEntry(
 				null, TestPropsValues.getUserId(), _group.getGroupId(),
@@ -250,9 +244,6 @@ public class DLFileEntryLocalServiceTest {
 				null, null, new UnsyncByteArrayInputStream(new byte[0]), 0,
 				null, null, null,
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
-		}
-		finally {
-			DLAppHelperThreadLocal.setEnabled(enabled);
 		}
 	}
 

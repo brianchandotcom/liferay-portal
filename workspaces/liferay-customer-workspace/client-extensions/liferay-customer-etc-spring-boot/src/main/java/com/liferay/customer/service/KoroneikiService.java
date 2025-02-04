@@ -5,9 +5,11 @@
 
 package com.liferay.customer.service;
 
+import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ExternalLink;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ProductPurchase;
 import com.liferay.osb.koroneiki.phloem.rest.client.pagination.Page;
 import com.liferay.osb.koroneiki.phloem.rest.client.pagination.Pagination;
+import com.liferay.osb.koroneiki.phloem.rest.client.resource.v1_0.ExternalLinkResource;
 import com.liferay.osb.koroneiki.phloem.rest.client.resource.v1_0.ProductPurchaseResource;
 import com.liferay.petra.string.StringPool;
 
@@ -29,9 +31,37 @@ import org.springframework.stereotype.Component;
 @Component
 public class KoroneikiService {
 
-	@CacheEvict(allEntries = true, value = "productPurchases")
+	@CacheEvict(
+		allEntries = true, value = {"externalLinks", "productPurchases"}
+	)
 	@Scheduled(cron = "0 0 * * * *")
 	public void cacheEvict() throws Exception {
+	}
+
+	@Cacheable("externalLinks")
+	public List<ExternalLink> fetchExternalLinks(
+			String accountKey, int page, int pageSize)
+		throws Exception {
+
+		ExternalLinkResource externalLinkResource =
+			ExternalLinkResource.builder(
+			).header(
+				"API_TOKEN", _koroneikiAuthToken
+			).endpoint(
+				new URL(_koroneikiURL)
+			).build();
+
+		Page<ExternalLink> externalLinkPage =
+			externalLinkResource.getAccountAccountKeyExternalLinksPage(
+				accountKey, Pagination.of(page, pageSize));
+
+		if ((externalLinkPage != null) &&
+			(externalLinkPage.getItems() != null)) {
+
+			return new ArrayList<>(externalLinkPage.getItems());
+		}
+
+		return Collections.emptyList();
 	}
 
 	@Cacheable("productPurchases")

@@ -58,6 +58,19 @@ public class MultiselectPicklistObjectFieldBusinessType
 	}
 
 	@Override
+	public Object getDisplayContextValue(
+			ObjectField objectField, long userId, Map<String, Object> values)
+		throws PortalException {
+
+		if (objectField.isLocalized()) {
+			return getLocalizedValues(objectField, userId, values);
+		}
+
+		return ObjectFieldBusinessType.super.getDisplayContextValue(
+			objectField, userId, values);
+	}
+
+	@Override
 	public String getLabel(Locale locale) {
 		return _language.get(locale, "multiselect-picklist");
 	}

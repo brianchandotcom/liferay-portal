@@ -22,6 +22,7 @@ import com.liferay.commerce.product.exception.CPDefinitionProductTypeNameExcepti
 import com.liferay.commerce.product.exception.NoSuchCPDefinitionException;
 import com.liferay.commerce.product.exception.NoSuchCatalogException;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
+import com.liferay.commerce.product.model.CPConfigurationEntry;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPInstance;
@@ -29,6 +30,7 @@ import com.liferay.commerce.product.model.CProduct;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
+import com.liferay.commerce.product.service.CPConfigurationEntryService;
 import com.liferay.commerce.product.service.CPDefinitionLinkService;
 import com.liferay.commerce.product.service.CPDefinitionOptionRelService;
 import com.liferay.commerce.product.service.CPDefinitionOptionValueRelService;
@@ -120,6 +122,7 @@ import com.liferay.portal.kernel.service.RepositoryLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.settings.SystemSettingsLocator;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -903,6 +906,19 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 		return new ProductShippingConfiguration();
 	}
 
+	private ProductShippingConfiguration _getProductShippingConfiguration(
+		ProductConfiguration productConfiguration) {
+
+		ProductShippingConfiguration productShippingConfiguration =
+			productConfiguration.getProductShippingConfiguration();
+
+		if (productShippingConfiguration == null) {
+			return new ProductShippingConfiguration();
+		}
+
+		return productShippingConfiguration;
+	}
+
 	private Page<Product> _getProductsPage(
 			long companyId, String search, Filter filter, Pagination pagination,
 			Sort[] sorts,
@@ -954,6 +970,29 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 		return new ProductTaxConfiguration();
 	}
 
+	private ProductTaxConfiguration _getProductTaxConfiguration(
+		ProductConfiguration productConfiguration) {
+
+		ProductTaxConfiguration productTaxConfiguration =
+			productConfiguration.getProductTaxConfiguration();
+
+		if (productTaxConfiguration == null) {
+			return new ProductTaxConfiguration();
+		}
+
+		return productTaxConfiguration;
+	}
+
+	private boolean _isTaxable(
+		ProductTaxConfiguration productTaxConfiguration) {
+
+		if (productTaxConfiguration.getTaxable() == null) {
+			return true;
+		}
+
+		return productTaxConfiguration.getTaxable();
+	}
+
 	private Product _toProduct(Long cpDefinitionId) throws Exception {
 		CPDefinition cpDefinition = _cpDefinitionService.getCPDefinition(
 			cpDefinitionId);
@@ -979,6 +1018,94 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 			product.getProductConfiguration();
 
 		if (productConfiguration != null) {
+			CPConfigurationEntry masterCPConfigurationEntry =
+				cpDefinition.fetchMasterCPConfigurationEntry();
+
+			if (masterCPConfigurationEntry != null) {
+				ProductShippingConfiguration productShippingConfiguration =
+					_getProductShippingConfiguration(productConfiguration);
+
+				ProductTaxConfiguration productTaxConfiguration =
+					_getProductTaxConfiguration(productConfiguration);
+
+				_cpConfigurationEntryService.updateCPConfigurationEntry(
+					GetterUtil.getString(
+						productConfiguration.getExternalReferenceCode(),
+						masterCPConfigurationEntry.getExternalReferenceCode()),
+					masterCPConfigurationEntry.getCPConfigurationEntryId(),
+					GetterUtil.getLong(
+						productTaxConfiguration.getId(),
+						masterCPConfigurationEntry.getCPTaxCategoryId()),
+					ProductConfigurationUtil.getAllowedOrderQuantities(
+						productConfiguration.getAllowedOrderQuantities(),
+						masterCPConfigurationEntry.getAllowedOrderQuantities()),
+					GetterUtil.getBoolean(
+						productConfiguration.getAllowBackOrder(),
+						masterCPConfigurationEntry.isBackOrders()),
+					GetterUtil.getLong(
+						productConfiguration.getAvailabilityEstimateId(),
+						masterCPConfigurationEntry.
+							getCommerceAvailabilityEstimateId()),
+					GetterUtil.getString(
+						productConfiguration.getInventoryEngine(),
+						masterCPConfigurationEntry.
+							getCPDefinitionInventoryEngine()),
+					GetterUtil.getDouble(
+						productShippingConfiguration.getDepth(),
+						masterCPConfigurationEntry.getDepth()),
+					GetterUtil.getBoolean(
+						productConfiguration.getDisplayAvailability(),
+						masterCPConfigurationEntry.isDisplayAvailability()),
+					GetterUtil.getBoolean(
+						productConfiguration.getDisplayStockQuantity(),
+						masterCPConfigurationEntry.isDisplayStockQuantity()),
+					GetterUtil.getBoolean(
+						productShippingConfiguration.getFreeShipping(),
+						masterCPConfigurationEntry.isFreeShipping()),
+					GetterUtil.getDouble(
+						productShippingConfiguration.getHeight(),
+						masterCPConfigurationEntry.getHeight()),
+					GetterUtil.getString(
+						productConfiguration.getLowStockAction(),
+						masterCPConfigurationEntry.getLowStockActivity()),
+					BigDecimalUtil.get(
+						productConfiguration.getMaxOrderQuantity(),
+						masterCPConfigurationEntry.getMaxOrderQuantity()),
+					BigDecimalUtil.get(
+						productConfiguration.getMinOrderQuantity(),
+						masterCPConfigurationEntry.getMinOrderQuantity()),
+					BigDecimalUtil.get(
+						productConfiguration.getMinStockQuantity(),
+						masterCPConfigurationEntry.getMinStockQuantity()),
+					BigDecimalUtil.get(
+						productConfiguration.getMultipleOrderQuantity(),
+						masterCPConfigurationEntry.getMultipleOrderQuantity()),
+					GetterUtil.getBoolean(
+						productConfiguration.getPurchasable(),
+						masterCPConfigurationEntry.isPurchasable()),
+					GetterUtil.getBoolean(
+						productShippingConfiguration.getShippable(),
+						masterCPConfigurationEntry.isShippable()),
+					GetterUtil.getDouble(
+						productShippingConfiguration.getShippingExtraPrice(),
+						masterCPConfigurationEntry.getShippingExtraPrice()),
+					GetterUtil.getBoolean(
+						productShippingConfiguration.getShippingSeparately(),
+						masterCPConfigurationEntry.isShipSeparately()),
+					GetterUtil.getBoolean(
+						!_isTaxable(productTaxConfiguration),
+						masterCPConfigurationEntry.isTaxExempt()),
+					GetterUtil.getBoolean(
+						productConfiguration.getVisible(),
+						masterCPConfigurationEntry.isVisible()),
+					GetterUtil.getDouble(
+						productShippingConfiguration.getWeight(),
+						masterCPConfigurationEntry.getWeight()),
+					GetterUtil.getDouble(
+						productShippingConfiguration.getWidth(),
+						masterCPConfigurationEntry.getWidth()));
+			}
+
 			ProductConfigurationUtil.updateCPDefinitionInventory(
 				_cpDefinitionInventoryService, productConfiguration,
 				cpDefinition.getCPDefinitionId());
@@ -1567,6 +1694,9 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 
 	@Reference
 	private CPAttachmentFileEntryService _cpAttachmentFileEntryService;
+
+	@Reference
+	private CPConfigurationEntryService _cpConfigurationEntryService;
 
 	@Reference
 	private CPDAvailabilityEstimateService _cpdAvailabilityEstimateService;

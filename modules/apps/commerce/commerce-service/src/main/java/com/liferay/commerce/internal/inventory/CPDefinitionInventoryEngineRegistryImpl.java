@@ -55,7 +55,7 @@ public class CPDefinitionInventoryEngineRegistryImpl
 		String key) {
 
 		if (Validator.isNull(key)) {
-			return null;
+			key = CPDefinitionInventoryEngineImpl.KEY;
 		}
 
 		ServiceTrackerCustomizerFactory.ServiceWrapper

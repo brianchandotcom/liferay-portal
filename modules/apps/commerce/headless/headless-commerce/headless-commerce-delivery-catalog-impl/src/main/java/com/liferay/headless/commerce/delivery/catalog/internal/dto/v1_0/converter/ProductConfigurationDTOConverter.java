@@ -45,7 +45,10 @@ public class ProductConfigurationDTOConverter
 		CPDefinition cpDefinition = _cpDefinitionLocalService.getCPDefinition(
 			(Long)dtoConverterContext.getId());
 
-		if (FeatureFlagManagerUtil.isEnabled("LPD-10889")) {
+		if ((dtoConverterContext instanceof
+				ProductConfigurationDTOConverterContext) &&
+			FeatureFlagManagerUtil.isEnabled("LPD-10889")) {
+
 			ProductConfigurationDTOConverterContext
 				productConfigurationDTOConverterContext =
 					(ProductConfigurationDTOConverterContext)
@@ -97,6 +100,10 @@ public class ProductConfigurationDTOConverter
 								_cpdAvailabilityEstimateLocalService.
 									fetchCPDAvailabilityEstimateByCProductId(
 										cpDefinition.getCProductId());
+
+							if (cpdAvailabilityEstimate == null) {
+								return null;
+							}
 
 							CommerceAvailabilityEstimate
 								commerceAvailabilityEstimate =

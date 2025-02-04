@@ -13,6 +13,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.context.CommerceContextFactory;
+import com.liferay.commerce.context.CommerceContextThreadLocal;
 import com.liferay.commerce.frontend.internal.wishlist.model.WishListItemUpdated;
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.model.CPInstance;
@@ -80,6 +81,8 @@ public class CommerceWishListResource {
 				_commerceChannelLocalService.
 					getCommerceChannelGroupIdBySiteGroupId(groupId),
 				userId, 0, commerceAccountId);
+
+			CommerceContextThreadLocal.set(commerceContext);
 
 			httpServletRequest.setAttribute(
 				CommerceWebKeys.COMMERCE_CONTEXT, commerceContext);

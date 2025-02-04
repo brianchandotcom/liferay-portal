@@ -173,17 +173,16 @@ const FriendlyURLHistoryModal = ({
 						const inputLocalizableComponent =
 							Liferay.component(elementId);
 
+						inputLocalizableComponent.updateInputLanguage(
+							urlTitle,
+							languageId
+						);
+
 						if (
 							inputLocalizableComponent.getSelectedLanguageId() ===
 							languageId
 						) {
 							inputLocalizableComponent.updateInput(urlTitle);
-						}
-						else {
-							inputLocalizableComponent.updateInputLanguage(
-								urlTitle,
-								languageId
-							);
 						}
 					}
 					else {

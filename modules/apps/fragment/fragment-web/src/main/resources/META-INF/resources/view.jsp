@@ -86,7 +86,7 @@ List<FragmentCollectionContributor> fragmentCollectionContributors = fragmentEnt
 													HashMapBuilder.<String, Object>put(
 														"body", LanguageUtil.get(request, "we-are-excited-to-share-that-marketplace-is-now-part-of-fragments")
 													).put(
-														"heading", LanguageUtil.format(request, "marketplace-is-now-in-x", LanguageUtil.get(request, "fragments"))
+														"heading", LanguageUtil.get(request, "marketplace-is-now-in-fragments")
 													).build()
 												%>'
 												borderless="<%= true %>"

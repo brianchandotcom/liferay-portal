@@ -52,7 +52,7 @@ import org.osgi.framework.ServiceRegistration;
 /**
  * @author Daniel Sanz
  */
-public class CustomFDSAPIURLSerializerImplTest {
+public class APIURLCustomFDSSerializerImplTest {
 
 	@ClassRule
 	@Rule
@@ -329,7 +329,7 @@ public class CustomFDSAPIURLSerializerImplTest {
 	}
 
 	private void _resetSerializer() {
-		_fdsSerializer = Mockito.mock(CustomFDSAPIURLSerializerImpl.class);
+		_fdsSerializer = Mockito.mock(APIURLCustomFDSSerializerImpl.class);
 
 		ReflectionTestUtil.setFieldValue(
 			_fdsSerializer, "_fdsAPIURLBuilderFactory",
@@ -337,7 +337,7 @@ public class CustomFDSAPIURLSerializerImplTest {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		CustomFDSAPIURLSerializerImplTest.class);
+		APIURLCustomFDSSerializerImplTest.class);
 
 	private static BundleContext _bundleContext;
 	private static final FDSAPIURLBuilderFactoryImpl

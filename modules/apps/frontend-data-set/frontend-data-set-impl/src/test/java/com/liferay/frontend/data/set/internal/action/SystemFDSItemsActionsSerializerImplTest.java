@@ -104,6 +104,7 @@ public class SystemFDSItemsActionsSerializerImplTest
 		Assert.assertEquals(
 			fdsActionDropdownItems2,
 			_fdsSerializer.serialize("fdsName2", httpServletRequest));
+
 		Assert.assertNotEquals(
 			_fdsSerializer.serialize("fdsName1", httpServletRequest),
 			_fdsSerializer.serialize("fdsName2", httpServletRequest));

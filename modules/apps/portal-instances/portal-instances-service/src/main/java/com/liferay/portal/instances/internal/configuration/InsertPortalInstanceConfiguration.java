@@ -20,6 +20,9 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface InsertPortalInstanceConfiguration {
 
+	@Meta.AD(type = Meta.Type.Long)
+	public long insertCompanyId();
+
 	@Meta.AD(required = false)
 	public String newName();
 
@@ -28,8 +31,5 @@ public interface InsertPortalInstanceConfiguration {
 
 	@Meta.AD(required = false)
 	public String newWebId();
-
-	@Meta.AD(type = Meta.Type.Long)
-	public long companyId();
 
 }

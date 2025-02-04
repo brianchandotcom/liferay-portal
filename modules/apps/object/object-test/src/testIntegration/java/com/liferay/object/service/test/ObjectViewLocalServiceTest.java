@@ -639,11 +639,14 @@ public class ObjectViewLocalServiceTest {
 	}
 
 	private void _deleteObjectFields() throws Exception {
-		List<ObjectField> objectFields =
-			_objectFieldLocalService.getObjectFields(
-				_objectDefinition.getObjectDefinitionId());
+		for (ObjectField objectField :
+				_objectFieldLocalService.getObjectFields(
+					_objectDefinition.getObjectDefinitionId())) {
 
-		for (ObjectField objectField : objectFields) {
+			if (objectField.isMetadata()) {
+				continue;
+			}
+
 			_objectFieldLocalService.deleteObjectField(objectField);
 		}
 	}

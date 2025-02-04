@@ -2324,13 +2324,92 @@ test.describe('Form Localization', () => {
 			displayPageTemplatesPage,
 			page,
 			pageEditorPage,
-			pageManagementSite,
+			site,
 		}) => {
 
 			// Create an object with translations
 
 			const objectDefinitionApiClient =
 				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+
+			const {body: objectDefinition} =
+				await objectDefinitionApiClient.postObjectDefinition({
+					active: true,
+					enableLocalization: true,
+					externalReferenceCode: 'translationFieldsGroupERC',
+					label: {
+						en_US: 'Translation Fields Group',
+					},
+					name: 'TranslationFieldsGroup',
+					objectFields: [
+						{
+							DBType: ObjectField.DBTypeEnum.Clob,
+							businessType: ObjectField.BusinessTypeEnum.RichText,
+							externalReferenceCode: 'richTextERC',
+							indexed: true,
+							indexedAsKeyword: false,
+							label: {
+								en_US: 'Rich Text',
+							},
+							localized: true,
+							name: 'richText',
+							required: false,
+						},
+						{
+							DBType: ObjectField.DBTypeEnum.Clob,
+							businessType: ObjectField.BusinessTypeEnum.LongText,
+							externalReferenceCode: 'longTextERC',
+							indexed: true,
+							indexedAsKeyword: false,
+							label: {
+								en_US: 'Long Text',
+							},
+							localized: true,
+							name: 'longText',
+							required: false,
+						},
+						{
+							DBType: ObjectField.DBTypeEnum.String,
+							businessType: ObjectField.BusinessTypeEnum.Text,
+							externalReferenceCode: 'text',
+							indexed: true,
+							indexedAsKeyword: false,
+							label: {
+								en_US: 'Text',
+							},
+							localized: true,
+							name: 'text',
+							required: false,
+						},
+						{
+							DBType: ObjectField.DBTypeEnum.Boolean,
+							businessType: ObjectField.BusinessTypeEnum.Boolean,
+							externalReferenceCode: 'booleanERC',
+							indexed: true,
+							indexedAsKeyword: false,
+							label: {
+								en_US: 'Boolean',
+							},
+							localized: true,
+							name: 'boolean',
+							required: false,
+						},
+					],
+					panelCategoryKey: 'control_panel.object',
+					pluralLabel: {
+						en_US: 'Translation Fields Groups',
+					},
+					portlet: true,
+					scope: 'company',
+					status: {
+						code: 0,
+					},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
 
 			const objectEntry = await apiHelpers.objectEntry.postObjectEntry(
 				{
@@ -2347,39 +2426,30 @@ test.describe('Form Localization', () => {
 						es_ES: 'text spanish',
 					},
 				},
-				'c/allfieldses',
-				pageManagementSite.key
+				'c/' + objectDefinition.name.toLowerCase() + 's'
 			);
 
 			// Create a display page and add a form container with localization select
 
 			const displayPageTemplateName = getRandomString();
 
-			const {className: objectDefinitionClassName} = (
-				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
-					getObjectERC('All Fields')
-				)
-			).body;
-
 			const className =
 				await apiHelpers.jsonWebServicesClassName.fetchClassName(
-					objectDefinitionClassName
+					objectDefinition.className
 				);
 
 			await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.addDisplayPageLayoutPageTemplateEntry(
 				{
 					classNameId: className.classNameId,
 					classTypeId: '0',
-					groupId: pageManagementSite.id,
+					groupId: site.id,
 					name: displayPageTemplateName,
 				}
 			);
 
 			// Go to edit display page template
 
-			await displayPageTemplatesPage.goto(
-				pageManagementSite.friendlyUrlPath
-			);
+			await displayPageTemplatesPage.goto(site.friendlyUrlPath);
 
 			await displayPageTemplatesPage.editTemplate(
 				displayPageTemplateName
@@ -2394,7 +2464,7 @@ test.describe('Form Localization', () => {
 
 			await pageEditorPage.mapFormFragment(
 				formId,
-				'All Fields (Default)',
+				'Translation Fields Group (Default)',
 				'all',
 				{addLocalizationSelect: true}
 			);
@@ -2404,36 +2474,42 @@ test.describe('Form Localization', () => {
 			// Go to the object display page
 
 			await page.goto(
-				`/web${pageManagementSite.friendlyUrlPath}/e/${displayPageTemplateName}/${className.classNameId}/${objectEntry.id}`
+				`/web${site.friendlyUrlPath}/e/${displayPageTemplateName}/${className.classNameId}/${objectEntry.id}`
 			);
 
 			// Assert that translation is displayed correctly
 
-			const textInput = page.getByRole('textbox', {
-				exact: true,
-				name: 'Text',
-			});
+			const checkboxField = page.getByRole('checkbox', {name: 'Boolean'});
 
-			const textareaInput = page.getByRole('textbox', {
+			const longTextField = page.getByRole('textbox', {
 				exact: true,
 				name: 'Long Text',
 			});
 
-			await expect(textareaInput).toHaveValue('long text english');
+			const richTextField = page.frameLocator('iframe[title="editor"]');
+
+			const textField = page.getByRole('textbox', {
+				exact: true,
+				name: 'Text',
+			});
+
+			await expect(checkboxField).not.toBeChecked();
+
+			await expect(longTextField).toHaveValue('long text english');
 
 			await expect(
-				page
-					.frameLocator('iframe[title="editor"]')
-					.getByText('rich text english')
+				richTextField.getByText('rich text english')
 			).toBeVisible();
 
-			await expect(textInput).toHaveValue('text english');
+			await expect(textField).toHaveValue('text english');
 
 			// Fill new values for the translation
 
-			await textareaInput.fill('long text english 1');
+			await checkboxField.check();
 
-			await page.getByLabel('Text', {exact: true}).fill('text english 1');
+			await longTextField.fill('long text english 1');
+
+			await textField.fill('text english 1');
 
 			await page.evaluate(() => {
 				Object.values((window as any).CKEDITOR.instances).forEach(
@@ -2453,21 +2529,23 @@ test.describe('Form Localization', () => {
 				),
 			});
 
-			await expect(textareaInput).toHaveValue('long text spanish');
+			await expect(checkboxField).toBeChecked();
+
+			await expect(longTextField).toHaveValue('long text spanish');
 
 			await expect(
-				page
-					.frameLocator('iframe[title="editor"]')
-					.getByText('rich text spanish')
+				richTextField.getByText('rich text spanish')
 			).toBeVisible();
 
-			await expect(textInput).toHaveValue('text spanish');
+			await expect(textField).toHaveValue('text spanish');
 
 			// Fill new values
 
-			await textareaInput.fill('long text spanish 1');
+			await checkboxField.uncheck();
 
-			await textInput.fill('text spanish 1');
+			await longTextField.fill('long text spanish 1');
+
+			await textField.fill('text spanish 1');
 
 			await page.evaluate(() => {
 				Object.values((window as any).CKEDITOR.instances).forEach(
@@ -2488,8 +2566,10 @@ test.describe('Form Localization', () => {
 			// Go to custom object admin an check the values
 
 			await goToObjectEntity({
-				entityName: 'All Fields',
+				entityName: 'Translation Fields Group',
+				entityPluralName: 'Translation Fields Groups',
 				page,
+				siteScope: 'Control Panel',
 			});
 
 			await clickAndExpectToBeVisible({
@@ -2503,14 +2583,14 @@ test.describe('Form Localization', () => {
 					.last(),
 			});
 
-			await textareaInput.waitFor();
+			await longTextField.waitFor();
+
+			await expect(checkboxField).toBeChecked();
 
 			await expect(page.getByText('long text english 1')).toBeVisible();
 
 			await expect(
-				page
-					.frameLocator('iframe[title="editor"]')
-					.getByText('rich text english 1')
+				richTextField.getByText('rich text english 1')
 			).toBeVisible();
 
 			await expect(page.locator('input.ddm-field-text')).toHaveValue(
@@ -2525,12 +2605,12 @@ test.describe('Form Localization', () => {
 				trigger: page.getByTestId('triggerButton').first(),
 			});
 
+			await expect(checkboxField).not.toBeChecked();
+
 			await expect(page.getByText('long text spanish 1')).toBeVisible();
 
 			await expect(
-				page
-					.frameLocator('iframe[title="editor"]')
-					.getByText('rich text spanish 1')
+				richTextField.getByText('rich text spanish 1')
 			).toBeVisible();
 
 			await expect(page.locator('input.ddm-field-text')).toHaveValue(

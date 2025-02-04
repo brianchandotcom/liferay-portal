@@ -3500,6 +3500,24 @@
 	},
 	{
 		"classNames": [
+			"SiteNavigationMenuLocalService",
+			"SiteNavigationMenuLocalServiceUtil"
+		],
+		"from": "addSiteNavigationMenu(long paramName, long paramName, String paramName, int paramName, boolean paramName, ServiceContext paramName)",
+		"issueKey": "LPD-47113",
+		"to": "addSiteNavigationMenu(null, param#0#, param#1#, param#2#, param#3#, param#4#, param#5#)"
+	},
+	{
+		"classNames": [
+			"SiteNavigationMenuService",
+			"SiteNavigationMenuServiceUtil"
+		],
+		"from": "addSiteNavigationMenu(long paramName, String paramName, int paramName, boolean paramName, ServiceContext paramName)",
+		"issueKey": "LPD-47113",
+		"to": "addSiteNavigationMenu(null, param#0#, param#1#, param#2#, param#3#, param#4#)"
+	},
+	{
+		"classNames": [
 			"SiteNavigationMenuItemLocalService",
 			"SiteNavigationMenuItemLocalServiceUtil"
 		],

@@ -51,6 +51,18 @@ portletDisplay.setURLBack(objectEntryDisplayContext.getBackURL());
 	</c:choose>
 </aui:form>
 
+<c:if test="<%= SessionErrors.contains(renderRequest, PrincipalException.MustHavePermission.class.getName()) %>">
+	<aui:script>
+		Liferay.Util.openToast({
+			autoClose: 5000,
+			message:
+				'<liferay-ui:message key="you-do-not-have-the-required-permissions" />',
+			title: '<liferay-ui:message key="error" />:',
+			type: 'danger',
+		});
+	</aui:script>
+</c:if>
+
 <c:if test="<%= !objectEntryDisplayContext.isGuestUser() %>">
 	<aui:script sandbox="<%= true %>">
 		const eventHandlers = [];

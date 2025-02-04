@@ -1,4 +1,5 @@
 {
+	"enableLocalization": true,
 	"externalReferenceCode": "lemon-object-erc",
 	"label": {
 		"en_US": "Lemon"

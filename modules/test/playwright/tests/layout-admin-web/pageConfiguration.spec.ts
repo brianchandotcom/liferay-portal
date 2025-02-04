@@ -1399,13 +1399,15 @@ test.describe('SEO configuration', () => {
 
 			const fileChooserPromise = page.waitForEvent('filechooser');
 
-			await page.getByLabel('Select Image', {exact: true}).click();
-
 			const iframe = page.frameLocator('iframe[title="Select Image"]');
 
-			await expect(
-				iframe.getByText('Drag & Drop Your Images or Browse to Upload')
-			).toBeVisible();
+			await clickAndExpectToBeVisible({
+				target: iframe.getByText(
+					'Drag & Drop Your Images or Browse to Upload'
+				),
+				timeout: 2000,
+				trigger: page.getByLabel('Select Image', {exact: true}),
+			});
 
 			await iframe
 				.getByText('Drag & Drop Your Images or Browse to Upload')

@@ -21,6 +21,8 @@ public interface CommerceTaxEngine {
 
 	public String getDescription(Locale locale);
 
+	public String getKey();
+
 	public String getName(Locale locale);
 
 }

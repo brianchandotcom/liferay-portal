@@ -45,7 +45,20 @@ public class CommerceTaxEngineRegistryImpl
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, CommerceTaxEngine.class, "commerce.tax.engine.key");
+			bundleContext, CommerceTaxEngine.class, null,
+			(serviceReference, emitter) -> {
+				CommerceTaxEngine commerceTaxEngine = bundleContext.getService(
+					serviceReference);
+
+				try {
+					if (commerceTaxEngine.getKey() != null) {
+						emitter.emit(commerceTaxEngine.getKey());
+					}
+				}
+				finally {
+					bundleContext.ungetService(serviceReference);
+				}
+			});
 	}
 
 	@Deactivate

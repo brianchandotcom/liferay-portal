@@ -21,17 +21,17 @@ public class DBPartitionExtractVirtualInstanceOperationTest
 
 	@Override
 	public String getComponentName() {
-		return "DBPartitionExtractVirtualInstanceOperation";
+		return "ExtractVirtualInstanceOperation";
 	}
 
 	@Test
 	public void testDeployConfiguration() throws Exception {
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				"com.liferay.portal.db.partition.internal.operation." +
-					"DBPartitionExtractVirtualInstanceOperation",
+				"com.liferay.portal.virtual.instances.internal.operation." +
+					"ExtractVirtualInstanceOperation",
 				LoggerTestUtil.ERROR)) {
 
-			deployConfiguration(_PID, "partitionCompanyId=L\"0\"\n");
+			deployConfiguration(_PID, "companyId=L\"0\"\n");
 
 			assertLog(
 				logCapture,
@@ -42,7 +42,7 @@ public class DBPartitionExtractVirtualInstanceOperationTest
 	}
 
 	private static final String _PID =
-		"com.liferay.portal.db.partition.internal.configuration." +
-			"DBPartitionExtractVirtualInstanceConfiguration";
+		"com.liferay.portal.virtual.instances.internal.configuration." +
+			"ExtractVirtualInstanceConfiguration";
 
 }

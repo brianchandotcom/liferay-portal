@@ -22,19 +22,19 @@ public class DBPartitionInsertVirtualInstanceOperationTest
 
 	@Override
 	public String getComponentName() {
-		return "DBPartitionInsertVirtualInstanceOperation";
+		return "InsertVirtualInstanceOperation";
 	}
 
 	@Test
 	public void testDeployConfiguration() throws Exception {
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				"com.liferay.portal.db.partition.internal.operation." +
-					"DBPartitionInsertVirtualInstanceOperation",
+				"com.liferay.portal.virtual.instances.internal.operation." +
+					"InsertVirtualInstanceOperation",
 				LoggerTestUtil.ERROR)) {
 
 			deployConfiguration(
 				_PID,
-				"newWebId=\"testNewWebId\"\npartitionCompanyId=L\"" +
+				"newWebId=\"testNewWebId\"\ncompanyId=L\"" +
 					PortalInstancePool.getDefaultCompanyId() + "\"\n");
 
 			assertLog(
@@ -48,7 +48,7 @@ public class DBPartitionInsertVirtualInstanceOperationTest
 	}
 
 	private static final String _PID =
-		"com.liferay.portal.db.partition.internal.configuration." +
-			"DBPartitionInsertVirtualInstanceConfiguration";
+		"com.liferay.portal.virtual.instances.internal.configuration." +
+			"InsertVirtualInstanceConfiguration";
 
 }

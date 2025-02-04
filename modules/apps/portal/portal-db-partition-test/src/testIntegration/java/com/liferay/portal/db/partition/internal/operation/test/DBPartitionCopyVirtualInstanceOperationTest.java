@@ -43,7 +43,7 @@ public class DBPartitionCopyVirtualInstanceOperationTest
 
 	@Override
 	public String getComponentName() {
-		return "DBPartitionCopyVirtualInstanceOperation";
+		return "CopyVirtualInstanceOperation";
 	}
 
 	@Test
@@ -54,7 +54,7 @@ public class DBPartitionCopyVirtualInstanceOperationTest
 			deployConfiguration(
 				_PID,
 				StringBundler.concat(
-					"name=\"testName\"\nsourcePartitionCompanyId=L\"",
+					"name=\"testName\"\nsourceCompanyId=L\"",
 					_company.getCompanyId(), "\"\nvirtualHostname=",
 					"\"testVirtualHostname\"\nwebId=\"testWebId\"\n"));
 
@@ -79,16 +79,16 @@ public class DBPartitionCopyVirtualInstanceOperationTest
 		throws Exception {
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
-				"com.liferay.portal.db.partition.internal.operation." +
-					"DBPartitionCopyVirtualInstanceOperation",
+				"com.liferay.portal.virtual.instances.internal.operation." +
+					"CopyVirtualInstanceOperation",
 				LoggerTestUtil.ERROR)) {
 
 			deployConfiguration(
 				_PID,
 				StringBundler.concat(
-					"destinationPartitionCompanyId=L\"",
+					"destinationCompanyId=L\"",
 					PortalInstancePool.getDefaultCompanyId(), "\"\n",
-					"name=\"testName\"\nsourcePartitionCompanyId=L\"",
+					"name=\"testName\"\nsourceCompanyId=L\"",
 					_company.getCompanyId(), "\"\nvirtualHostname=",
 					"\"testVirtualHostname\"\nwebId=\"testWebId\"\n"));
 			assertLog(
@@ -102,8 +102,8 @@ public class DBPartitionCopyVirtualInstanceOperationTest
 	}
 
 	private static final String _PID =
-		"com.liferay.portal.db.partition.internal.configuration." +
-			"DBPartitionCopyVirtualInstanceConfiguration";
+		"com.liferay.portal.virtual.instances.internal.configuration." +
+			"CopyVirtualInstanceConfiguration";
 
 	private static Company _company;
 

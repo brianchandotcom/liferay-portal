@@ -523,7 +523,7 @@ public abstract class BaseBuildData implements BuildData {
 	private static final Pattern _buildURLPattern = Pattern.compile(
 		JenkinsResultsParserUtil.combine(
 			"(?<jobURL>https?://(?<masterHostname>",
-			"(?<cohortName>test-\\d+)-\\d+)(\\.liferay\\.com)?/job/",
+			"(?<cohortName>test-\\d+)-\\d+)(-aws)?(\\.liferay\\.com)?/job/",
 			"(?<jobName>[^/]+)/(.*/)?)(?<buildNumber>\\d+)/?"));
 	private static final Pattern _gitHubBranchURLPattern = Pattern.compile(
 		"https://github.com/(?<username>[^/]+)/(?<repositoryName>[^/]+)/tree/" +

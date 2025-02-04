@@ -227,7 +227,7 @@ public class LockedLayoutsDisplayContext {
 	}
 
 	public boolean hasLockedLayouts() {
-		return !ListUtil.isEmpty(_getLockedLayouts());
+		return ListUtil.isNotEmpty(_getLockedLayouts());
 	}
 
 	public static class LockedLayoutOrder {

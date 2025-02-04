@@ -137,7 +137,7 @@ public class LockedLayoutsPortalSettingsConfigurationScreenWrapper
 				Configuration[] configuration =
 					_configurationAdmin.listConfigurations(filterString);
 
-				return !ArrayUtil.isEmpty(configuration);
+				return ArrayUtil.isNotEmpty(configuration);
 			}
 			catch (InvalidSyntaxException | IOException exception) {
 				throw new ConfigurationException(exception);

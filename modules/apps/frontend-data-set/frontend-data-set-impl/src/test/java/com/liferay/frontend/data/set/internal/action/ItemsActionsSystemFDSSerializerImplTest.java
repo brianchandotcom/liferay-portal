@@ -34,7 +34,7 @@ import org.osgi.framework.ServiceRegistration;
 /**
  * @author Daniel Sanz
  */
-public class SystemFDSItemsActionsSerializerImplTest
+public class ItemsActionsSystemFDSSerializerImplTest
 	extends BaseSystemFDSSerializerTestCase {
 
 	@ClassRule
@@ -174,7 +174,7 @@ public class SystemFDSItemsActionsSerializerImplTest
 	private static final FDSItemsActionsRegistryImpl
 		_fdsItemsActionsRegistryImpl = new FDSItemsActionsRegistryImpl();
 	private static final FDSSerializer<List<FDSActionDropdownItem>>
-		_fdsSerializer = new SystemFDSItemsActionsSerializerImpl();
+		_fdsSerializer = new ItemsActionsSystemFDSSerializerImpl();
 	private static ServiceTrackerMap
 		<String,
 		 ServiceTrackerCustomizerFactory.ServiceWrapper<FDSItemsActions>>

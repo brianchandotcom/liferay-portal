@@ -11,7 +11,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 /**
  * @author Daniel Sanz
  */
-public interface FDSCreationMenuSerializer extends FDSSerializer<CreationMenu> {
+public interface CreationMenuFDSSerializer extends FDSSerializer<CreationMenu> {
 
 	@Override
 	public default String getKey() {

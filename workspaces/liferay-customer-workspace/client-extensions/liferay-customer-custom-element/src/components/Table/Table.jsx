@@ -8,7 +8,7 @@ import classNames from 'classnames';
 import {useEffect, useState} from 'react';
 import {FilterIcon} from '../../assets/filter_icon';
 import TablePagination from './Pagination';
-import TableSkeleton from './Skeleton';
+import TableSkeleton from './TableSkeleton';
 import i18n from '~/utils/I18n';
 
 const Table = ({

@@ -8,7 +8,7 @@ import {ClayRadio} from '@clayui/form';
 import classNames from 'classnames';
 import {forwardRef} from 'react';
 
-export const Radio = forwardRef(
+const Radio = forwardRef(
 	(
 		{
 			description,
@@ -118,3 +118,5 @@ export const Radio = forwardRef(
 		);
 	}
 );
+
+export default Radio;

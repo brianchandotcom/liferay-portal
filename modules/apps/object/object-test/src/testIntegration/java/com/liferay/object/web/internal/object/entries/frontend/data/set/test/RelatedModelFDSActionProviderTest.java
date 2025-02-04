@@ -88,7 +88,7 @@ public class RelatedModelFDSActionProviderTest {
 		PrincipalThreadLocal.setName(user.getUserId());
 
 		_assertDropdownItems(
-			new String[] {"view", "delete"},
+			new String[] {"delete", "view"},
 			_fdsActionProvider.getDropdownItems(
 				TestPropsValues.getGroupId(),
 				_getMockHttpServletRequest(objectEntry.getObjectEntryId()),

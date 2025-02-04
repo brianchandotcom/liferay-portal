@@ -3,7 +3,7 @@
 		background-color: var(--color-action-primary-hover-lighten);
 		color: var(--color-action-primary-hover) !important;
 
-		svg {
+		& svg {
 			color: var(--color-action-primary-hover) !important;
 			opacity: 0.5;
 		}

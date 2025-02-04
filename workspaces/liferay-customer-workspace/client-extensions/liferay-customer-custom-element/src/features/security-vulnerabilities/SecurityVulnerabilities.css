@@ -1,11 +1,11 @@
 .sv-structured-data {
 	width: 100%;
 
-	tbody tr:hover {
+	& tbody tr:hover {
 		background-color: var(--color-action-primary-hover-lighten);
 	}
 	
-	td, th {
+	& td, th {
 		padding: var(--spacer-3);
 		
 		&:first-child {
@@ -17,12 +17,12 @@
 		}
 	}
 	
-	td {
+	& td {
 		border-width: 0;
 		color: var(--color-neutral-8);
 	}
 	
-	thead {
+	& thead {
 		background-color: var(--color-neutral-1);
 	}
 }

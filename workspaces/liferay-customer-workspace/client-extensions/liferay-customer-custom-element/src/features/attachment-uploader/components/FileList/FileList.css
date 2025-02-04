@@ -1,63 +1,5 @@
 .file-list-item {
-	&-container {
-		align-items: center;
-		border: 0.063rem solid #e2e2e4;
-		border-radius: 0.625rem;
-		display: flex;
-		flex-direction: row;
-		height: 6.5rem;
-		justify-content: space-between;
-		margin: 1.5rem 0;
-		padding: 1rem;
-		width: 37.5rem;
-	}
-
-	&-left-content {
-		align-items: center;
-		display: flex;
-		justify-content: center;
-
-		&-icon {
-			filter: invert(35%) sepia(86%) saturate(1411%) hue-rotate(206deg)
-				brightness(102%) contrast(101%);
-			height: 1.5rem;
-			width: 1.5rem;
-		}
-
-		&-icon-container {
-			align-items: center;
-			background-color: var(--color-brand-primary-lighten-5);
-			border-radius: 0.25rem;
-			display: flex;
-			height: 4.5rem;
-			justify-content: center;
-			margin-right: 1rem;
-			width: 4.5rem;
-		}
-
-		&-text {
-			&-container {
-				display: flex;
-				flex-direction: column;
-			}
-
-			&-file-name {
-				color: #282934;
-				font-size: 1rem;
-				font-weight: 400;
-				line-height: 1.5rem;
-			}
-
-			&-file-size {
-				color: #6c6c75;
-				font-size: 0.813rem;
-				font-weight: 400;
-				line-height: 1rem;
-			}
-		}
-	}
-
-	&-button {
+	.file-list-item-button {
 		background-color: transparent;
 		border: 0.095rem solid var(--color-action-neutral-default);
 		border-radius: 0.375rem;
@@ -74,6 +16,64 @@
 		&:hover {
 			background-color: var(--color-action-neutral-default);
 			color: var(--color-neutral-0);
+		}
+	}
+
+	.file-list-item-container {
+		align-items: center;
+		border: 0.063rem solid #e2e2e4;
+		border-radius: 0.625rem;
+		display: flex;
+		flex-direction: row;
+		height: 6.5rem;
+		justify-content: space-between;
+		margin: 1.5rem 0;
+		padding: 1rem;
+		width: 37.5rem;
+	}
+
+	.file-list-item-left-content {
+		align-items: center;
+		display: flex;
+		justify-content: center;
+
+		.file-list-item-left-content-icon {
+			filter: invert(35%) sepia(86%) saturate(1411%) hue-rotate(206deg)
+				brightness(102%) contrast(101%);
+			height: 1.5rem;
+			width: 1.5rem;
+		}
+
+		.file-list-item-left-content-icon-container {
+			align-items: center;
+			background-color: var(--color-brand-primary-lighten-5);
+			border-radius: 0.25rem;
+			display: flex;
+			height: 4.5rem;
+			justify-content: center;
+			margin-right: 1rem;
+			width: 4.5rem;
+		}
+
+		.file-list-item-left-content-text {
+			.file-list-item-left-content-text-container {
+				display: flex;
+				flex-direction: column;
+			}
+
+			.file-list-item-left-content-text-file-name {
+				color: #282934;
+				font-size: 1rem;
+				font-weight: 400;
+				line-height: 1.5rem;
+			}
+
+			.file-list-item-left-content-text-file-size {
+				color: #6c6c75;
+				font-size: 0.813rem;
+				font-weight: 400;
+				line-height: 1rem;
+			}
 		}
 	}
 }

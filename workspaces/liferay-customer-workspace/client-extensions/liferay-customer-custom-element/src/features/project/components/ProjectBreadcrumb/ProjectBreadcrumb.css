@@ -8,14 +8,14 @@
 	overflow-y: hidden;
 	width: 17.5rem;
 
-	ul {
-		li {
-			margin-left: 0.5rem;
-			margin-right: 0.313rem;
+	& ul {
+		&:hover {
+			border-radius: 0.375rem;
 		}
 
-		:hover {
-			border-radius: 0.375rem;
+		& li {
+			margin-left: 0.5rem;
+			margin-right: 0.313rem;
 		}
 	}
 }
@@ -111,26 +111,26 @@
 .cp-extended-dropdown {
 	top: 16.7rem !important;
 
+	& ul {
+		max-height: 16.563rem !important;
+		overflow-y: scroll !important;
+	}
+
 	.dropdown-section {
 		padding-bottom: 0.625rem;
 		padding-top: 0.725rem;
-	}
-
-	ul {
-		max-height: 16.563rem !important;
-		overflow-y: scroll !important;
 	}
 }
 
 .cp-short-dropdown {
 	top: 13.2rem !important;
 
-	.dropdown-section {
-		padding: 0.2rem 1rem;
+	& ul {
+		overflow-y: hidden;
 	}
 
-	ul {
-		overflow-y: hidden;
+	.dropdown-section {
+		padding: 0.2rem 1rem;
 	}
 }
 

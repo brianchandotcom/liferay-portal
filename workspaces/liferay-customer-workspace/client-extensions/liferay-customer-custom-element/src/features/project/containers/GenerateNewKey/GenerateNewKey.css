@@ -19,7 +19,7 @@
 .cp-input-generate-label div {
 	margin: 0 !important;
 	
-	label {
+	& label {
 		margin: 0 !important;
 		width: 100%;
 	}

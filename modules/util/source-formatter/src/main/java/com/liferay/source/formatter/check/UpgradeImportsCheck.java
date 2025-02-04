@@ -34,8 +34,6 @@ public class UpgradeImportsCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
-		_getImportsMap();
-
 		if (!fileName.endsWith(".java") && !fileName.endsWith(".jsp") &&
 			!fileName.endsWith(".ftl")) {
 
@@ -45,62 +43,16 @@ public class UpgradeImportsCheck extends BaseFileCheck {
 		return _fixImports(fileName, content);
 	}
 
-	private static String _replaceVariables(String content) {
-		String newContent = content;
-
-		if (!_variablesMap.isEmpty()) {
-			newContent = StringUtil.replace(
-				content, ArrayUtil.toStringArray(_variablesMap.keySet()),
-				ArrayUtil.toStringArray(_variablesMap.values()), true);
-
-			for (Map.Entry<String, String> entry : _variablesMap.entrySet()) {
-				String regex = StringBundler.concat(
-					"\\b([_a-z]\\w*)", entry.getKey(), "\\b");
-
-				Pattern pattern = Pattern.compile(regex);
-
-				Matcher variableMatcher = pattern.matcher(newContent);
-
-				if (variableMatcher.find()) {
-					newContent = newContent.replaceAll(
-						regex, variableMatcher.group(1) + entry.getValue());
-				}
-			}
-		}
-
-		return newContent;
-	}
-
-	private void _checkClassNames() {
-		for (Map.Entry<String, String> entry : _importsMap.entrySet()) {
-			String className = SourceFormatterUtil.getSimpleName(
-				entry.getKey());
-			String newClassName = SourceFormatterUtil.getSimpleName(
-				entry.getValue());
-
-			if (!className.equals(newClassName)) {
-				_variablesMap.put(className, newClassName);
-				_variablesMap.put(
-					StringUtil.lowerCaseFirstLetter(className),
-					StringUtil.lowerCaseFirstLetter(newClassName));
-			}
-		}
-	}
-
-	private String _fixImports(String fileName, String content)
+	private static List<String> _getImportNames(String fileName, String content)
 		throws Exception {
 
 		List<String> importNames = new ArrayList<>();
-
-		String newContent = content;
 
 		if (fileName.endsWith(".java")) {
 			JavaClass javaClass = JavaClassParser.parseJavaClass(
 				fileName, content);
 
 			importNames = javaClass.getImportNames();
-
-			newContent = javaClass.getContent();
 		}
 		else if (fileName.endsWith(".jsp")) {
 			importNames = JSPImportsFormatter.getImportNames(content);
@@ -113,10 +65,46 @@ public class UpgradeImportsCheck extends BaseFileCheck {
 			}
 		}
 
-		_variablesMap = new HashMap<>();
+		return importNames;
+	}
+
+	private static String _replaceVariables(
+		String content, Map<String, String> variablesMap) {
+
+		if (variablesMap.isEmpty()) {
+			return content;
+		}
+
+		String newContent = StringUtil.replace(
+			content, ArrayUtil.toStringArray(variablesMap.keySet()),
+			ArrayUtil.toStringArray(variablesMap.values()), true);
+
+		for (Map.Entry<String, String> entry : variablesMap.entrySet()) {
+			String regex = StringBundler.concat(
+				"\\b([_a-z]\\w*)", entry.getKey(), "\\b");
+
+			Pattern pattern = Pattern.compile(regex);
+
+			Matcher variableMatcher = pattern.matcher(newContent);
+
+			if (variableMatcher.find()) {
+				newContent = newContent.replaceAll(
+					regex, variableMatcher.group(1) + entry.getValue());
+			}
+		}
+
+		return newContent;
+	}
+
+	private synchronized String _fixImports(String fileName, String content)
+		throws Exception {
+
+		List<String> importNames = _getImportNames(fileName, content);
+
+		Map<String, String> importsMap = _getMap("imports.txt");
 
 		for (String importName : importNames) {
-			String newImportName = _importsMap.get(importName);
+			String newImportName = importsMap.get(importName);
 
 			if (newImportName == null) {
 				continue;
@@ -125,20 +113,20 @@ public class UpgradeImportsCheck extends BaseFileCheck {
 			content = StringUtil.replace(content, importName, newImportName);
 		}
 
-		_checkClassNames();
+		Map<String, String> variablesMap = _getVariablesMap(importsMap);
 
 		if (fileName.endsWith(".java")) {
+			JavaClass javaClass = JavaClassParser.parseJavaClass(
+				fileName, content);
+
+			String newContent = javaClass.getContent();
+
 			return StringUtil.replace(
-				content, newContent, _replaceVariables(newContent));
+				content, newContent,
+				_replaceVariables(newContent, variablesMap));
 		}
 
-		return _replaceVariables(content);
-	}
-
-	private synchronized void _getImportsMap() throws Exception {
-		if (_importsMap == null) {
-			_importsMap = _getMap("imports.txt");
-		}
+		return _replaceVariables(content, variablesMap);
 	}
 
 	private Map<String, String> _getMap(String fileName) throws Exception {
@@ -168,10 +156,29 @@ public class UpgradeImportsCheck extends BaseFileCheck {
 		return map;
 	}
 
+	private Map<String, String> _getVariablesMap(
+		Map<String, String> importsMap) {
+
+		Map<String, String> variablesMap = new HashMap<>();
+
+		for (Map.Entry<String, String> entry : importsMap.entrySet()) {
+			String className = SourceFormatterUtil.getSimpleName(
+				entry.getKey());
+			String newClassName = SourceFormatterUtil.getSimpleName(
+				entry.getValue());
+
+			if (!className.equals(newClassName)) {
+				variablesMap.put(className, newClassName);
+				variablesMap.put(
+					StringUtil.lowerCaseFirstLetter(className),
+					StringUtil.lowerCaseFirstLetter(newClassName));
+			}
+		}
+
+		return variablesMap;
+	}
+
 	private static final Pattern _ftlImportNamePattern = Pattern.compile(
 		"(?:findService|staticUtil)[(\\[]\"([^\\s\"]+)\"[)\\]]");
-	private static Map<String, String> _variablesMap;
-
-	private Map<String, String> _importsMap;
 
 }

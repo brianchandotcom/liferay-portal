@@ -597,7 +597,6 @@ test.describe('Manage object definitions through Model Builder', () => {
 test.describe('Manage object definitions through View Object Definitions', () => {
 	test('can delete an object definition by FDS action', async ({
 		apiHelpers,
-		page,
 		viewObjectDefinitionsPage,
 	}) => {
 		const objectDefinition1 =
@@ -623,13 +622,9 @@ test.describe('Manage object definitions through View Object Definitions', () =>
 
 		await viewObjectDefinitionsPage.goto();
 
-		await page.locator('.cell-item-actions').first().waitFor();
-
-		await page
-			.locator('.cell-item-actions')
-			.last()
-			.locator('.dropdown-toggle')
-			.click();
+		await viewObjectDefinitionsPage.clickObjectDefinitionActionButton(
+			objectDefinition2.label['en_US']
+		);
 
 		await viewObjectDefinitionsPage.deleteObjectDefinitionOption.click();
 

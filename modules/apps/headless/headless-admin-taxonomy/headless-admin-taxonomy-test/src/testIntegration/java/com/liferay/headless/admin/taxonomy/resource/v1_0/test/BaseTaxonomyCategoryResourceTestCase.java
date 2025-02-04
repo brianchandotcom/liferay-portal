@@ -116,6 +116,18 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		).locale(
 			LocaleUtil.getDefault()
 		).build();
+
+		permissionsTaxonomyCategoryResource = TaxonomyCategoryResource.builder(
+		).authentication(
+			testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).parameter(
+			"nestedFields", "permissions"
+		).build();
 	}
 
 	@After
@@ -969,6 +981,14 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 
 		assertEquals(postTaxonomyCategory, getTaxonomyCategory);
 		assertValid(getTaxonomyCategory);
+
+		Assert.assertNull(getTaxonomyCategory.getPermissions());
+
+		getTaxonomyCategory =
+			permissionsTaxonomyCategoryResource.getTaxonomyCategory(
+				postTaxonomyCategory.getId());
+
+		Assert.assertNotNull(getTaxonomyCategory.getPermissions());
 	}
 
 	protected TaxonomyCategory testGetTaxonomyCategory_addTaxonomyCategory()
@@ -1132,12 +1152,32 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		assertEquals(randomTaxonomyCategory, putTaxonomyCategory);
 		assertValid(putTaxonomyCategory);
 
+		Assert.assertNull(putTaxonomyCategory.getPermissions());
+
 		TaxonomyCategory getTaxonomyCategory =
 			taxonomyCategoryResource.getTaxonomyCategory(
 				putTaxonomyCategory.getId());
 
 		assertEquals(randomTaxonomyCategory, getTaxonomyCategory);
 		assertValid(getTaxonomyCategory);
+
+		TaxonomyCategory randomPermissionsTaxonomyCategory =
+			randomPermissionsTaxonomyCategory();
+
+		putTaxonomyCategory = taxonomyCategoryResource.putTaxonomyCategory(
+			postTaxonomyCategory.getId(), randomPermissionsTaxonomyCategory);
+
+		assertEquals(randomPermissionsTaxonomyCategory, putTaxonomyCategory);
+		assertValid(putTaxonomyCategory);
+
+		Assert.assertNull(putTaxonomyCategory.getPermissions());
+
+		putTaxonomyCategory =
+			permissionsTaxonomyCategoryResource.putTaxonomyCategory(
+				postTaxonomyCategory.getId(),
+				randomPermissionsTaxonomyCategory);
+
+		Assert.assertNotNull(putTaxonomyCategory.getPermissions());
 	}
 
 	protected TaxonomyCategory testPutTaxonomyCategory_addTaxonomyCategory()
@@ -1278,6 +1318,20 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 			page,
 			testGetTaxonomyVocabularyTaxonomyCategoriesPage_getExpectedActions(
 				taxonomyVocabularyId));
+
+		for (TaxonomyCategory taxonomyCategory : page.getItems()) {
+			Assert.assertNull(taxonomyCategory.getPermissions());
+		}
+
+		page =
+			permissionsTaxonomyCategoryResource.
+				getTaxonomyVocabularyTaxonomyCategoriesPage(
+					taxonomyVocabularyId, null, null, null, null,
+					Pagination.of(1, 10), null);
+
+		for (TaxonomyCategory taxonomyCategory : page.getItems()) {
+			Assert.assertNotNull(taxonomyCategory.getPermissions());
+		}
 
 		taxonomyCategoryResource.deleteTaxonomyCategory(
 			taxonomyCategory1.getId());
@@ -1716,6 +1770,24 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 
 		assertEquals(randomTaxonomyCategory, postTaxonomyCategory);
 		assertValid(postTaxonomyCategory);
+
+		TaxonomyCategory randomPermissionsTaxonomyCategory1 =
+			randomPermissionsTaxonomyCategory();
+
+		TaxonomyCategory postPermissionsTaxonomyCategory1 =
+			testPostTaxonomyVocabularyTaxonomyCategory_addTaxonomyCategory(
+				randomPermissionsTaxonomyCategory1);
+
+		Assert.assertNull(postPermissionsTaxonomyCategory1.getPermissions());
+
+		TaxonomyCategory randomPermissionsTaxonomyCategory2 =
+			randomPermissionsTaxonomyCategory();
+
+		TaxonomyCategory postPermissionsTaxonomyCategory2 =
+			testPostTaxonomyVocabularyTaxonomyCategory_addPermissionsTaxonomyCategory(
+				randomPermissionsTaxonomyCategory2);
+
+		Assert.assertNotNull(postPermissionsTaxonomyCategory2.getPermissions());
 	}
 
 	protected TaxonomyCategory
@@ -1726,6 +1798,17 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		return taxonomyCategoryResource.postTaxonomyVocabularyTaxonomyCategory(
 			testGetTaxonomyVocabularyTaxonomyCategoriesPage_getTaxonomyVocabularyId(),
 			taxonomyCategory);
+	}
+
+	protected TaxonomyCategory
+			testPostTaxonomyVocabularyTaxonomyCategory_addPermissionsTaxonomyCategory(
+				TaxonomyCategory taxonomyCategory)
+		throws Exception {
+
+		return permissionsTaxonomyCategoryResource.
+			postTaxonomyVocabularyTaxonomyCategory(
+				testGetTaxonomyVocabularyTaxonomyCategoriesPage_getTaxonomyVocabularyId(),
+				taxonomyCategory);
 	}
 
 	@Test
@@ -1793,6 +1876,17 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 
 		assertEquals(postTaxonomyCategory, getTaxonomyCategory);
 		assertValid(getTaxonomyCategory);
+
+		Assert.assertNull(getTaxonomyCategory.getPermissions());
+
+		getTaxonomyCategory =
+			permissionsTaxonomyCategoryResource.
+				getTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode(
+					testGetTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode_getTaxonomyVocabularyId(
+						postTaxonomyCategory),
+					postTaxonomyCategory.getExternalReferenceCode());
+
+		Assert.assertNotNull(getTaxonomyCategory.getPermissions());
 	}
 
 	protected Long
@@ -1970,6 +2064,8 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		assertEquals(randomTaxonomyCategory, putTaxonomyCategory);
 		assertValid(putTaxonomyCategory);
 
+		Assert.assertNull(putTaxonomyCategory.getPermissions());
+
 		TaxonomyCategory getTaxonomyCategory =
 			taxonomyCategoryResource.
 				getTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode(
@@ -1979,6 +2075,32 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 
 		assertEquals(randomTaxonomyCategory, getTaxonomyCategory);
 		assertValid(getTaxonomyCategory);
+
+		TaxonomyCategory randomPermissionsTaxonomyCategory =
+			randomPermissionsTaxonomyCategory();
+
+		putTaxonomyCategory =
+			taxonomyCategoryResource.
+				putTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode(
+					testPutTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode_getTaxonomyVocabularyId(
+						postTaxonomyCategory),
+					postTaxonomyCategory.getExternalReferenceCode(),
+					randomPermissionsTaxonomyCategory);
+
+		assertEquals(randomPermissionsTaxonomyCategory, putTaxonomyCategory);
+		assertValid(putTaxonomyCategory);
+
+		Assert.assertNull(putTaxonomyCategory.getPermissions());
+
+		putTaxonomyCategory =
+			permissionsTaxonomyCategoryResource.
+				putTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode(
+					testPutTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode_getTaxonomyVocabularyId(
+						postTaxonomyCategory),
+					postTaxonomyCategory.getExternalReferenceCode(),
+					randomPermissionsTaxonomyCategory);
+
+		Assert.assertNotNull(putTaxonomyCategory.getPermissions());
 
 		TaxonomyCategory newTaxonomyCategory =
 			testPutTaxonomyVocabularyTaxonomyCategoryByExternalReferenceCode_createTaxonomyCategory();
@@ -3219,7 +3341,29 @@ public abstract class BaseTaxonomyCategoryResourceTestCase {
 		return randomTaxonomyCategory();
 	}
 
+	protected TaxonomyCategory randomPermissionsTaxonomyCategory()
+		throws Exception {
+
+		TaxonomyCategory taxonomyCategory = randomTaxonomyCategory();
+
+		com.liferay.portal.kernel.model.Role role = RoleTestUtil.addRole(
+			RoleConstants.TYPE_REGULAR);
+
+		taxonomyCategory.setPermissions(
+			new Permission[] {
+				new Permission() {
+					{
+						setActionIds(new String[] {"VIEW"});
+						setRoleName(role.getName());
+					}
+				}
+			});
+
+		return taxonomyCategory;
+	}
+
 	protected TaxonomyCategoryResource taxonomyCategoryResource;
+	protected TaxonomyCategoryResource permissionsTaxonomyCategoryResource;
 	protected com.liferay.portal.kernel.model.Group irrelevantGroup;
 	protected com.liferay.portal.kernel.model.Company testCompany;
 	protected com.liferay.portal.kernel.model.Group testGroup;

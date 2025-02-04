@@ -46,6 +46,7 @@ import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineExportTaskResource;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
+import com.liferay.portal.vulcan.fields.NestedFieldsSupplier;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.permission.ModelPermissionsUtil;
@@ -84,6 +85,13 @@ import javax.ws.rs.core.UriInfo;
 public abstract class BaseTaxonomyVocabularyResourceImpl
 	implements EntityModelResource, TaxonomyVocabularyResource,
 			   VulcanBatchEngineTaskItemDelegate<TaxonomyVocabulary> {
+
+	protected abstract Page<TaxonomyVocabulary>
+			doGetAssetLibraryTaxonomyVocabulariesPage(
+				Long assetLibraryId, String search,
+				com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
+				Filter filter, Pagination pagination, Sort[] sorts)
+		throws Exception;
 
 	/**
 	 * Invoke this method with the command line:
@@ -139,22 +147,47 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 	@javax.ws.rs.Path("/asset-libraries/{assetLibraryId}/taxonomy-vocabularies")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public Page<TaxonomyVocabulary> getAssetLibraryTaxonomyVocabulariesPage(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("assetLibraryId")
-			Long assetLibraryId,
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.ws.rs.QueryParam("search")
-			String search,
-			@javax.ws.rs.core.Context
-				com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
-			@javax.ws.rs.core.Context Filter filter,
-			@javax.ws.rs.core.Context Pagination pagination,
-			@javax.ws.rs.core.Context Sort[] sorts)
+	public final Page<TaxonomyVocabulary>
+			getAssetLibraryTaxonomyVocabulariesPage(
+				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+				@javax.validation.constraints.NotNull
+				@javax.ws.rs.PathParam("assetLibraryId")
+				Long assetLibraryId,
+				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+				@javax.ws.rs.QueryParam("search")
+				String search,
+				@javax.ws.rs.core.Context
+					com.liferay.portal.vulcan.aggregation.Aggregation
+						aggregation,
+				@javax.ws.rs.core.Context Filter filter,
+				@javax.ws.rs.core.Context Pagination pagination,
+				@javax.ws.rs.core.Context Sort[] sorts)
 		throws Exception {
 
-		return Page.of(Collections.emptyList());
+		Page<TaxonomyVocabulary> taxonomyVocabularyPage =
+			doGetAssetLibraryTaxonomyVocabulariesPage(
+				assetLibraryId, search, aggregation, filter, pagination, sorts);
+
+		for (TaxonomyVocabulary taxonomyVocabulary :
+				taxonomyVocabularyPage.getItems()) {
+
+			taxonomyVocabulary.setPermissions(
+				() -> NestedFieldsSupplier.supply(
+					"permissions",
+					nestedField -> {
+						Page<Permission> permissionPage =
+							getTaxonomyVocabularyPermissionsPage(
+								taxonomyVocabulary.getId(), null);
+
+						Collection<Permission> permissions =
+							permissionPage.getItems();
+
+						return permissions.toArray(
+							new Permission[permissions.size()]);
+					}));
+		}
+
+		return taxonomyVocabularyPage;
 	}
 
 	/**
@@ -247,6 +280,10 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 		).build();
 	}
 
+	protected abstract TaxonomyVocabulary doPostAssetLibraryTaxonomyVocabulary(
+			Long assetLibraryId, TaxonomyVocabulary taxonomyVocabulary)
+		throws Exception;
+
 	/**
 	 * Invoke this method with the command line:
 	 *
@@ -270,7 +307,7 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public TaxonomyVocabulary postAssetLibraryTaxonomyVocabulary(
+	public final TaxonomyVocabulary postAssetLibraryTaxonomyVocabulary(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
 			@javax.ws.rs.PathParam("assetLibraryId")
@@ -278,7 +315,30 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 			TaxonomyVocabulary taxonomyVocabulary)
 		throws Exception {
 
-		return new TaxonomyVocabulary();
+		Permission[] permissions = taxonomyVocabulary.getPermissions();
+
+		TaxonomyVocabulary postTaxonomyVocabulary =
+			doPostAssetLibraryTaxonomyVocabulary(
+				assetLibraryId, taxonomyVocabulary);
+
+		if (permissions != null) {
+			Page<Permission> permissionPage =
+				putTaxonomyVocabularyPermissionsPage(
+					postTaxonomyVocabulary.getId(), permissions);
+
+			postTaxonomyVocabulary.setPermissions(
+				() -> NestedFieldsSupplier.supply(
+					"permissions",
+					nestedField -> {
+						Collection<Permission> collection =
+							permissionPage.getItems();
+
+						return collection.toArray(
+							new Permission[collection.size()]);
+					}));
+		}
+
+		return postTaxonomyVocabulary;
 	}
 
 	/**
@@ -380,6 +440,11 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 		throws Exception {
 	}
 
+	protected abstract TaxonomyVocabulary
+			doGetAssetLibraryTaxonomyVocabularyByExternalReferenceCode(
+				Long assetLibraryId, String externalReferenceCode)
+		throws Exception;
+
 	/**
 	 * Invoke this method with the command line:
 	 *
@@ -419,7 +484,7 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public TaxonomyVocabulary
+	public final TaxonomyVocabulary
 			getAssetLibraryTaxonomyVocabularyByExternalReferenceCode(
 				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 				@javax.validation.constraints.NotNull
@@ -431,8 +496,33 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 				String externalReferenceCode)
 		throws Exception {
 
-		return new TaxonomyVocabulary();
+		TaxonomyVocabulary getTaxonomyVocabulary =
+			doGetAssetLibraryTaxonomyVocabularyByExternalReferenceCode(
+				assetLibraryId, externalReferenceCode);
+
+		getTaxonomyVocabulary.setPermissions(
+			() -> NestedFieldsSupplier.supply(
+				"permissions",
+				nestedField -> {
+					Page<Permission> permissionPage =
+						getTaxonomyVocabularyPermissionsPage(
+							getTaxonomyVocabulary.getId(), null);
+
+					Collection<Permission> permissions =
+						permissionPage.getItems();
+
+					return permissions.toArray(
+						new Permission[permissions.size()]);
+				}));
+
+		return getTaxonomyVocabulary;
 	}
+
+	protected abstract TaxonomyVocabulary
+			doPutAssetLibraryTaxonomyVocabularyByExternalReferenceCode(
+				Long assetLibraryId, String externalReferenceCode,
+				TaxonomyVocabulary taxonomyVocabulary)
+		throws Exception;
 
 	/**
 	 * Invoke this method with the command line:
@@ -466,7 +556,7 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@javax.ws.rs.PUT
 	@Override
-	public TaxonomyVocabulary
+	public final TaxonomyVocabulary
 			putAssetLibraryTaxonomyVocabularyByExternalReferenceCode(
 				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 				@javax.validation.constraints.NotNull
@@ -479,7 +569,30 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 				TaxonomyVocabulary taxonomyVocabulary)
 		throws Exception {
 
-		return new TaxonomyVocabulary();
+		Permission[] permissions = taxonomyVocabulary.getPermissions();
+
+		TaxonomyVocabulary putTaxonomyVocabulary =
+			doPutAssetLibraryTaxonomyVocabularyByExternalReferenceCode(
+				assetLibraryId, externalReferenceCode, taxonomyVocabulary);
+
+		if (permissions != null) {
+			Page<Permission> permissionPage =
+				putTaxonomyVocabularyPermissionsPage(
+					putTaxonomyVocabulary.getId(), permissions);
+
+			putTaxonomyVocabulary.setPermissions(
+				() -> NestedFieldsSupplier.supply(
+					"permissions",
+					nestedField -> {
+						Collection<Permission> collection =
+							permissionPage.getItems();
+
+						return collection.toArray(
+							new Permission[collection.size()]);
+					}));
+		}
+
+		return putTaxonomyVocabulary;
 	}
 
 	/**
@@ -642,6 +755,13 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 			assetLibraryId, portletName, null);
 	}
 
+	protected abstract Page<TaxonomyVocabulary>
+			doGetSiteTaxonomyVocabulariesPage(
+				Long siteId, String search,
+				com.liferay.portal.vulcan.aggregation.Aggregation aggregation,
+				Filter filter, Pagination pagination, Sort[] sorts)
+		throws Exception;
+
 	/**
 	 * Invoke this method with the command line:
 	 *
@@ -699,7 +819,7 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 	@javax.ws.rs.Path("/sites/{siteId}/taxonomy-vocabularies")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public Page<TaxonomyVocabulary> getSiteTaxonomyVocabulariesPage(
+	public final Page<TaxonomyVocabulary> getSiteTaxonomyVocabulariesPage(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
 			@javax.ws.rs.PathParam("siteId")
@@ -714,7 +834,30 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 			@javax.ws.rs.core.Context Sort[] sorts)
 		throws Exception {
 
-		return Page.of(Collections.emptyList());
+		Page<TaxonomyVocabulary> taxonomyVocabularyPage =
+			doGetSiteTaxonomyVocabulariesPage(
+				siteId, search, aggregation, filter, pagination, sorts);
+
+		for (TaxonomyVocabulary taxonomyVocabulary :
+				taxonomyVocabularyPage.getItems()) {
+
+			taxonomyVocabulary.setPermissions(
+				() -> NestedFieldsSupplier.supply(
+					"permissions",
+					nestedField -> {
+						Page<Permission> permissionPage =
+							getTaxonomyVocabularyPermissionsPage(
+								taxonomyVocabulary.getId(), null);
+
+						Collection<Permission> permissions =
+							permissionPage.getItems();
+
+						return permissions.toArray(
+							new Permission[permissions.size()]);
+					}));
+		}
+
+		return taxonomyVocabularyPage;
 	}
 
 	/**
@@ -805,6 +948,10 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 		).build();
 	}
 
+	protected abstract TaxonomyVocabulary doPostSiteTaxonomyVocabulary(
+			Long siteId, TaxonomyVocabulary taxonomyVocabulary)
+		throws Exception;
+
 	/**
 	 * Invoke this method with the command line:
 	 *
@@ -831,7 +978,7 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 	@javax.ws.rs.POST
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public TaxonomyVocabulary postSiteTaxonomyVocabulary(
+	public final TaxonomyVocabulary postSiteTaxonomyVocabulary(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
 			@javax.ws.rs.PathParam("siteId")
@@ -839,7 +986,29 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 			TaxonomyVocabulary taxonomyVocabulary)
 		throws Exception {
 
-		return new TaxonomyVocabulary();
+		Permission[] permissions = taxonomyVocabulary.getPermissions();
+
+		TaxonomyVocabulary postTaxonomyVocabulary =
+			doPostSiteTaxonomyVocabulary(siteId, taxonomyVocabulary);
+
+		if (permissions != null) {
+			Page<Permission> permissionPage =
+				putTaxonomyVocabularyPermissionsPage(
+					postTaxonomyVocabulary.getId(), permissions);
+
+			postTaxonomyVocabulary.setPermissions(
+				() -> NestedFieldsSupplier.supply(
+					"permissions",
+					nestedField -> {
+						Collection<Permission> collection =
+							permissionPage.getItems();
+
+						return collection.toArray(
+							new Permission[collection.size()]);
+					}));
+		}
+
+		return postTaxonomyVocabulary;
 	}
 
 	/**
@@ -939,6 +1108,11 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 		throws Exception {
 	}
 
+	protected abstract TaxonomyVocabulary
+			doGetSiteTaxonomyVocabularyByExternalReferenceCode(
+				Long siteId, String externalReferenceCode)
+		throws Exception;
+
 	/**
 	 * Invoke this method with the command line:
 	 *
@@ -978,19 +1152,45 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 	)
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public TaxonomyVocabulary getSiteTaxonomyVocabularyByExternalReferenceCode(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("siteId")
-			Long siteId,
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("externalReferenceCode")
-			String externalReferenceCode)
+	public final TaxonomyVocabulary
+			getSiteTaxonomyVocabularyByExternalReferenceCode(
+				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+				@javax.validation.constraints.NotNull
+				@javax.ws.rs.PathParam("siteId")
+				Long siteId,
+				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+				@javax.validation.constraints.NotNull
+				@javax.ws.rs.PathParam("externalReferenceCode")
+				String externalReferenceCode)
 		throws Exception {
 
-		return new TaxonomyVocabulary();
+		TaxonomyVocabulary getTaxonomyVocabulary =
+			doGetSiteTaxonomyVocabularyByExternalReferenceCode(
+				siteId, externalReferenceCode);
+
+		getTaxonomyVocabulary.setPermissions(
+			() -> NestedFieldsSupplier.supply(
+				"permissions",
+				nestedField -> {
+					Page<Permission> permissionPage =
+						getTaxonomyVocabularyPermissionsPage(
+							getTaxonomyVocabulary.getId(), null);
+
+					Collection<Permission> permissions =
+						permissionPage.getItems();
+
+					return permissions.toArray(
+						new Permission[permissions.size()]);
+				}));
+
+		return getTaxonomyVocabulary;
 	}
+
+	protected abstract TaxonomyVocabulary
+			doPutSiteTaxonomyVocabularyByExternalReferenceCode(
+				Long siteId, String externalReferenceCode,
+				TaxonomyVocabulary taxonomyVocabulary)
+		throws Exception;
 
 	/**
 	 * Invoke this method with the command line:
@@ -1024,19 +1224,43 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@javax.ws.rs.PUT
 	@Override
-	public TaxonomyVocabulary putSiteTaxonomyVocabularyByExternalReferenceCode(
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("siteId")
-			Long siteId,
-			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
-			@javax.validation.constraints.NotNull
-			@javax.ws.rs.PathParam("externalReferenceCode")
-			String externalReferenceCode,
-			TaxonomyVocabulary taxonomyVocabulary)
+	public final TaxonomyVocabulary
+			putSiteTaxonomyVocabularyByExternalReferenceCode(
+				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+				@javax.validation.constraints.NotNull
+				@javax.ws.rs.PathParam("siteId")
+				Long siteId,
+				@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+				@javax.validation.constraints.NotNull
+				@javax.ws.rs.PathParam("externalReferenceCode")
+				String externalReferenceCode,
+				TaxonomyVocabulary taxonomyVocabulary)
 		throws Exception {
 
-		return new TaxonomyVocabulary();
+		Permission[] permissions = taxonomyVocabulary.getPermissions();
+
+		TaxonomyVocabulary putTaxonomyVocabulary =
+			doPutSiteTaxonomyVocabularyByExternalReferenceCode(
+				siteId, externalReferenceCode, taxonomyVocabulary);
+
+		if (permissions != null) {
+			Page<Permission> permissionPage =
+				putTaxonomyVocabularyPermissionsPage(
+					putTaxonomyVocabulary.getId(), permissions);
+
+			putTaxonomyVocabulary.setPermissions(
+				() -> NestedFieldsSupplier.supply(
+					"permissions",
+					nestedField -> {
+						Collection<Permission> collection =
+							permissionPage.getItems();
+
+						return collection.toArray(
+							new Permission[collection.size()]);
+					}));
+		}
+
+		return putTaxonomyVocabulary;
 	}
 
 	/**
@@ -1271,6 +1495,10 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 		).build();
 	}
 
+	protected abstract TaxonomyVocabulary doGetTaxonomyVocabulary(
+			Long taxonomyVocabularyId)
+		throws Exception;
+
 	/**
 	 * Invoke this method with the command line:
 	 *
@@ -1304,14 +1532,32 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 	@javax.ws.rs.Path("/taxonomy-vocabularies/{taxonomyVocabularyId}")
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@Override
-	public TaxonomyVocabulary getTaxonomyVocabulary(
+	public final TaxonomyVocabulary getTaxonomyVocabulary(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
 			@javax.ws.rs.PathParam("taxonomyVocabularyId")
 			Long taxonomyVocabularyId)
 		throws Exception {
 
-		return new TaxonomyVocabulary();
+		TaxonomyVocabulary getTaxonomyVocabulary = doGetTaxonomyVocabulary(
+			taxonomyVocabularyId);
+
+		getTaxonomyVocabulary.setPermissions(
+			() -> NestedFieldsSupplier.supply(
+				"permissions",
+				nestedField -> {
+					Page<Permission> permissionPage =
+						getTaxonomyVocabularyPermissionsPage(
+							getTaxonomyVocabulary.getId(), null);
+
+					Collection<Permission> permissions =
+						permissionPage.getItems();
+
+					return permissions.toArray(
+						new Permission[permissions.size()]);
+				}));
+
+		return getTaxonomyVocabulary;
 	}
 
 	/**
@@ -1391,6 +1637,10 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 			taxonomyVocabularyId, existingTaxonomyVocabulary);
 	}
 
+	protected abstract TaxonomyVocabulary doPutTaxonomyVocabulary(
+			Long taxonomyVocabularyId, TaxonomyVocabulary taxonomyVocabulary)
+		throws Exception;
+
 	/**
 	 * Invoke this method with the command line:
 	 *
@@ -1417,7 +1667,7 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 	@javax.ws.rs.Produces({"application/json", "application/xml"})
 	@javax.ws.rs.PUT
 	@Override
-	public TaxonomyVocabulary putTaxonomyVocabulary(
+	public final TaxonomyVocabulary putTaxonomyVocabulary(
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.validation.constraints.NotNull
 			@javax.ws.rs.PathParam("taxonomyVocabularyId")
@@ -1425,7 +1675,29 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 			TaxonomyVocabulary taxonomyVocabulary)
 		throws Exception {
 
-		return new TaxonomyVocabulary();
+		Permission[] permissions = taxonomyVocabulary.getPermissions();
+
+		TaxonomyVocabulary putTaxonomyVocabulary = doPutTaxonomyVocabulary(
+			taxonomyVocabularyId, taxonomyVocabulary);
+
+		if (permissions != null) {
+			Page<Permission> permissionPage =
+				putTaxonomyVocabularyPermissionsPage(
+					putTaxonomyVocabulary.getId(), permissions);
+
+			putTaxonomyVocabulary.setPermissions(
+				() -> NestedFieldsSupplier.supply(
+					"permissions",
+					nestedField -> {
+						Collection<Permission> collection =
+							permissionPage.getItems();
+
+						return collection.toArray(
+							new Permission[collection.size()]);
+					}));
+		}
+
+		return putTaxonomyVocabulary;
 	}
 
 	/**

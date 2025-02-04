@@ -42,13 +42,15 @@
 	var="close"
 >
 	<c:if test="<%= dismissible %>">
-		<button aria-label="<%= LanguageUtil.get(request, "close") %>" class="close" data-dismiss="liferay-alert" type="button">
-			<svg aria-hidden="true" class="icon-monospaced lexicon-icon lexicon-icon-times">
-				<use xlink:href="<%= spritemap %>#times" />
-			</svg>
+		<liferay-ui:csp>
+			<button aria-label="<%= LanguageUtil.get(request, "close") %>" class="close" onclick="event.preventDefault();const container = event.delegateTarget.closest('.alert');if (container) {container.parentNode.removeChild(container);}" type="button">
+				<svg aria-hidden="true" class="icon-monospaced lexicon-icon lexicon-icon-times">
+					<use xlink:href="<%= spritemap %>#times" />
+				</svg>
 
-			<span class="sr-only"><liferay-ui:message key="close" /></span>
-		</button>
+				<span class="sr-only"><liferay-ui:message key="close" /></span>
+			</button>
+		</liferay-ui:csp>
 	</c:if>
 </liferay-util:buffer>
 

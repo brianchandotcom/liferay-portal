@@ -26,12 +26,10 @@ import com.liferay.portal.kernel.service.SystemEventLocalServiceUtil;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.systemevent.SystemEventHierarchyEntry;
 import com.liferay.portal.kernel.systemevent.SystemEventHierarchyEntryThreadLocal;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
 import java.lang.annotation.Annotation;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import java.util.Collections;
@@ -188,9 +186,7 @@ public class SystemEventAdvice extends ChainableMethodAdvice {
 			getClassName(classedModel), classPK);
 	}
 
-	protected String getClassExternalReferenceCode(ClassedModel classedModel)
-		throws IllegalAccessException, InvocationTargetException {
-
+	protected String getClassExternalReferenceCode(ClassedModel classedModel) {
 		String externalReferenceCode = null;
 
 		if (classedModel instanceof ExternalReferenceCodeModel) {
@@ -199,28 +195,6 @@ public class SystemEventAdvice extends ChainableMethodAdvice {
 
 			externalReferenceCode =
 				externalReferenceCodeModel.getExternalReferenceCode();
-		}
-
-		if (Validator.isNull(externalReferenceCode)) {
-			Class<?> modelClass = classedModel.getClass();
-
-			Method getExternalReferenceCodeMethod = null;
-
-			try {
-				getExternalReferenceCodeMethod = modelClass.getMethod(
-					"getExternalReferenceCode");
-			}
-			catch (Exception exception) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(exception);
-				}
-
-				return StringPool.BLANK;
-			}
-
-			externalReferenceCode =
-				(String)getExternalReferenceCodeMethod.invoke(
-					classedModel, new Object[0]);
 		}
 
 		return externalReferenceCode;

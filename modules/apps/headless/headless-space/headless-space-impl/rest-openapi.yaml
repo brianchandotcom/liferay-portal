@@ -105,3 +105,84 @@ paths:
                         default response
             # @review
             tags: ["Space"]
+    /spaces/{spaceId}:
+        delete:
+            description:
+                Deletes the space and returns a 204 if the operation succeeds.
+            operationId: deleteSpace
+            parameters:
+                - in: path
+                  name: spaceId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+            tags: ["Space"]
+        get:
+            description:
+                Retrieves the space.
+            operationId: getSpace
+            parameters:
+                - in: path
+                  name: spaceId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: nestedFields
+                  schema:
+                      type: string
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Space"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Space"
+            tags: ["Space"]
+        patch:
+            description:
+                Updates the space using only the fields received in the request body. Any other fields are left
+                untouched. Returns the updated space.
+            operationId: patchSpace
+            parameters:
+                - in: path
+                  name: spaceId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Space"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/Space"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Space"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Space"
+            tags: ["Space"]

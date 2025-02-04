@@ -7,7 +7,9 @@ package com.liferay.headless.space.internal.resource.v1_0;
 
 import com.liferay.depot.model.DepotAppCustomization;
 import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.model.DepotEntryGroupRel;
 import com.liferay.depot.service.DepotAppCustomizationLocalService;
+import com.liferay.depot.service.DepotEntryGroupRelService;
 import com.liferay.depot.service.DepotEntryService;
 import com.liferay.headless.space.dto.v1_0.Space;
 import com.liferay.headless.space.resource.v1_0.SpaceResource;
@@ -129,6 +131,9 @@ public class SpaceResourceImpl extends BaseSpaceResourceImpl {
 	@Reference
 	private DepotAppCustomizationLocalService
 		_depotAppCustomizationLocalService;
+
+	@Reference
+	private DepotEntryGroupRelService _depotEntryGroupRelService;
 
 	@Reference
 	private DepotEntryService _depotEntryService;

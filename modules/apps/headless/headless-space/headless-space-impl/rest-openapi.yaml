@@ -186,3 +186,58 @@ paths:
                             schema:
                                 $ref: "#/components/schemas/Space"
             tags: ["Space"]
+    /spaces/{spaceId}/links/{toSiteId}:
+        delete:
+            description:
+                Removes a space link with the received space and site ids. Returns the space.
+            operationId: deleteSpaceLinkToSite
+            parameters:
+                - in: path
+                  name: spaceId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: toSiteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Space"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Space"
+            tags: ["Space"]
+        post:
+            description:
+                Adds a space link with the received space and site ids. Returns the space.
+            operationId: postSpaceLinkToSite
+            parameters:
+                - in: path
+                  name: spaceId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: toSiteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Space"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Space"
+            tags: ["Space"]

@@ -44,7 +44,7 @@ public class SpaceDTOConverter implements DTOConverter<DepotEntry, Space> {
 	@Override
 	public String getJaxRsLink(long classPK, UriInfo uriInfo) {
 		return JaxRsLinkUtil.getJaxRsLink(
-			"headless-delivery", BaseSpaceResourceImpl.class, "getAssetLibrary",
+			"headless-delivery", BaseSpaceResourceImpl.class, "getSpace",
 			uriInfo, classPK);
 	}
 

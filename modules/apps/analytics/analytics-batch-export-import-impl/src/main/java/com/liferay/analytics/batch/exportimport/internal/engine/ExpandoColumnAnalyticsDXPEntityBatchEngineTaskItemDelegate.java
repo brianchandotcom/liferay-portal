@@ -8,6 +8,8 @@ package com.liferay.analytics.batch.exportimport.internal.engine;
 import com.liferay.analytics.batch.exportimport.internal.dto.v1_0.converter.constants.DTOConverterConstants;
 import com.liferay.analytics.batch.exportimport.internal.engine.util.DTOConverterUtil;
 import com.liferay.analytics.dxp.entity.rest.dto.v1_0.DXPEntity;
+import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
+import com.liferay.analytics.settings.configuration.AnalyticsConfigurationRegistry;
 import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
 import com.liferay.batch.engine.pagination.Page;
@@ -97,14 +99,19 @@ public class ExpandoColumnAnalyticsDXPEntityBatchEngineTaskItemDelegate
 		}
 
 		DynamicQuery dynamicQuery = _expandoColumnLocalService.dynamicQuery();
-
 		Property tableIdProperty = PropertyFactoryUtil.forName("tableId");
+		Property nameProperty = PropertyFactoryUtil.forName("name");
+		AnalyticsConfiguration analyticsConfiguration =
+			_analyticsConfigurationRegistry.getAnalyticsConfiguration(
+				companyId);
 
 		if ((organizationExpandoTable != null) && (userExpandoTable != null)) {
 			dynamicQuery.add(
 				RestrictionsFactoryUtil.or(
 					tableIdProperty.eq(organizationExpandoTable.getTableId()),
 					tableIdProperty.eq(userExpandoTable.getTableId())));
+			dynamicQuery.add(
+				nameProperty.eq(analyticsConfiguration.syncedUserFieldNames()));
 		}
 		else if (organizationExpandoTable != null) {
 			dynamicQuery.add(
@@ -112,10 +119,15 @@ public class ExpandoColumnAnalyticsDXPEntityBatchEngineTaskItemDelegate
 		}
 		else {
 			dynamicQuery.add(tableIdProperty.eq(userExpandoTable.getTableId()));
+			dynamicQuery.add(
+				nameProperty.in(analyticsConfiguration.syncedUserFieldNames()));
 		}
 
 		return buildDynamicQuery(companyId, dynamicQuery, parameters);
 	}
+
+	@Reference
+	private AnalyticsConfigurationRegistry _analyticsConfigurationRegistry;
 
 	@Reference
 	private AnalyticsSettingsManager _analyticsSettingsManager;

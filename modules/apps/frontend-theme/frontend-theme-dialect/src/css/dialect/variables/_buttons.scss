@@ -38,6 +38,8 @@ $inline-item-spacer-x: var(--btn-inline-item-spacer-x);
 
 $btn: (
 	--btn-default-border-color: transparent,
+	--btn-default-color: $white,
+	--btn-active-color: $white,
 	active: (
 		background-color:
 			var(
@@ -121,5 +123,57 @@ $btn-link: (
 	),
 	disabled: (
 		color: var(--color-action-primary-disabled),
+	),
+);
+
+$btn-danger: (
+	color: c-unset,
+	hover: (
+		color: c-unset,
+	),
+	active: (
+		color: c-unset,
+	),
+	focus: (
+		color: c-unset,
+	),
+);
+
+$btn-info: (
+	color: c-unset,
+	hover: (
+		color: c-unset,
+	),
+	active: (
+		color: c-unset,
+	),
+	focus: (
+		color: c-unset,
+	),
+);
+
+$btn-success: (
+	color: c-unset,
+	hover: (
+		color: c-unset,
+	),
+	active: (
+		color: c-unset,
+	),
+	focus: (
+		color: c-unset,
+	),
+);
+
+$btn-warning: (
+	color: c-unset,
+	hover: (
+		color: c-unset,
+	),
+	active: (
+		color: c-unset,
+	),
+	focus: (
+		color: c-unset,
 	),
 );

@@ -5,22 +5,22 @@
 .cp-activation-key-table {
 	max-width: 85vw;
 
-	.cursor-pointer {
-		cursor: pointer;
-	}
-
-	tbody {
-		tr:first-child {
-			td {
+	& tbody {
+		& tr:first-child {
+			& td {
 				border-top: 1px solid #e1e1e4 !important;
 			}
 		}
 
-		tr:last-child {
-			td {
+		& tr:last-child {
+			& td {
 				border-bottom: 1px solid #e1e1e4 !important;
 			}
 		}
+	}
+
+	.cursor-pointer {
+		cursor: pointer;
 	}
 }
 

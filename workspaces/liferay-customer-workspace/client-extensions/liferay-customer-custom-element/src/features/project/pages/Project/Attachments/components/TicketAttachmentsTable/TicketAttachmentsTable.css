@@ -21,12 +21,12 @@
 }
 
 .cp-ticket-attachments-table-wrapper {
-	.lexicon-icon-ellipsis-v {
-		fill: var(--color-neutral-5);
+	& svg {
+		cursor: pointer;
 	}
 
-	svg {
-		cursor: pointer;
+	.lexicon-icon-ellipsis-v {
+		fill: var(--color-neutral-5);
 	}
 
 	.table-responsive,
@@ -36,7 +36,7 @@
 }
 
 .dropdown-menu {
-	button.dropdown-item {
+	& button.dropdown-item {
 		padding: 0.75rem;
 
 		&:hover:not(.disabled) {
@@ -47,17 +47,17 @@
 		}
 	}
 
+	& ul.list-unstyled {
+		margin-bottom: 0;
+		padding: 0.5rem;
+	}
+
 	.lexicon-icon-download,
 	.lexicon-icon-trash {
 		height: 1rem;
 		margin-right: 0.5rem;
 		opacity: 0.5;
 		width: 1rem;
-	}
-
-	ul.list-unstyled {
-		margin-bottom: 0;
-		padding: 0.5rem;
 	}
 }
 

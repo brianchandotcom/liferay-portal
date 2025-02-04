@@ -4,11 +4,11 @@
 	margin-bottom: var(--spacer-3);
 	padding: var(--spacer-3);
 
-	a {
+	& a {
 		font-weight: var(--font-weight-semi-bold);
 	}
 
-	p {
+	& p {
 		color: var(--color-neutral-10);
 		font-size: var(--font-size-md);
 	}

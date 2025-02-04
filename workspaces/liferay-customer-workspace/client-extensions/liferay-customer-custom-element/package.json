@@ -38,7 +38,6 @@
 		"react-dropzone": "^14.2.3",
 		"react-router-dom": "^6.2.1",
 		"recharts": "^2.13.3",
-		"sass": "^1.77.8",
 		"swr": "^2.2.0"
 	},
 	"devDependencies": {

@@ -8,6 +8,10 @@
 		height: 436px;
 		width: 600px;
 
+		& p {
+			color: var(--neutral-10, #282934);
+		}
+
 		.cp-project-error-message-card-icon {
 			background: var(--brand-primary-lighten-lighten-5, #e7efff);
 			border-radius: 1rem;
@@ -27,10 +31,6 @@
 		.cp-project-error-message-title {
 			font-size: 28px;
 			font-weight: 700;
-		}
-
-		p {
-			color: var(--neutral-10, #282934);
 		}
 	}
 }

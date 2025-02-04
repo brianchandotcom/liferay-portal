@@ -1,5 +1,15 @@
 .dropzone-upload {
-	&-container {
+	.dropzone-upload-button {
+		background-color: var(--color-neutral-0);
+		font-size: 0.875rem;
+		padding: 0.5rem 0.75rem;
+
+		&:hover {
+			background-color: var(--color-neutral-0);
+		}
+	}
+
+	.dropzone-upload-container {
 		align-items: center;
 		border: 0.095rem dashed #b1b2b9;
 		border-radius: 0.5rem;
@@ -9,7 +19,7 @@
 		justify-content: center;
 		transition: border-color 0.3s;
 
-		&-active {
+		&.dropzone-upload-container-active {
 			background-color: #edf3fe;
 			border-color: var(--color-action-primary-default);
 
@@ -19,8 +29,15 @@
 		}
 	}
 
-	&-document {
-		&-container {
+	.dropzone-upload-description {
+		color: #6c6c75;
+		font-size: 0.813rem;
+		font-weight: 400;
+		line-height: 1rem;
+	}
+
+	.dropzone-upload-document {
+		.dropzone-upload-document-container {
 			align-items: center;
 			background-color: #e6edfb;
 			border-radius: 0.563rem;
@@ -31,7 +48,7 @@
 			width: 8.125rem;
 		}
 
-		&-icon {
+		.dropzone-upload-document-icon {
 			height: 2rem;
 			width: 2rem;
 			filter: invert(23%) sepia(90%) saturate(3736%) hue-rotate(217deg)
@@ -39,32 +56,15 @@
 		}
 	}
 
-	&-text {
+	.dropzone-upload-text {
 		color: #282934;
 		font-size: 1rem;
 		font-weight: 400;
 		line-height: 1.5rem;
 
-		&-container {
+		.dropzone-upload-text-container {
 			align-items: center;
 			margin-bottom: 0.813rem;
 		}
-	}
-
-	&-button {
-		background-color: var(--color-neutral-0);
-		font-size: 0.875rem;
-		padding: 0.5rem 0.75rem;
-
-		:hover {
-			background-color: var(--color-neutral-0);
-		}
-	}
-
-	&-description {
-		color: #6c6c75;
-		font-size: 0.813rem;
-		font-weight: 400;
-		line-height: 1rem;
 	}
 }

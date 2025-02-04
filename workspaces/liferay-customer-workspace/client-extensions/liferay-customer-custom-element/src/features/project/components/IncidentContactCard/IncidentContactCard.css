@@ -10,48 +10,35 @@
 	order: 1;
 	padding: 1.5rem;
 
-	.h4,
-	.h5,
-	p,
-	h1,
+	& h1,
 	h3,
 	h4,
-	h5 {
+	h5, 
+	p,
+	.h4,
+	.h5 {
 		align-items: center;
 		display: flex;
 		font-family: 'Source Sans Pro';
 		font-style: normal;
 	}
 
-	h1 {
+	& h1 {
 		color: var(--color-neutral-10);
 		font-size: 1.5rem;
 		font-weight: 700;
 		line-height: 1.75rem;
 	}
 
-	.h5,
-	p,
-	h5 {
-		font-size: 0.813rem;
-		font-weight: 400;
-		line-height: 1rem;
-	}
-
-	p {
-		color: var(--color-neutral-7);
-		margin-bottom: 0.5rem;
-	}
-
-	h3 {
+	& h3 {
 		color: var(--color-neutral-10);
 		font-size: 1.063rem;
 		font-weight: 700;
 		line-height: 1.25rem;
 	}
 
-	.h4,
-	h4 {
+	& h4,
+	.h4 {
 		color: var(--color-neutral-9);
 		font-size: 0.813rem;
 		font-weight: 600;
@@ -59,10 +46,23 @@
 		margin-bottom: 0;
 	}
 
-	.h5,
-	h5 {
+	& h5,
+	.h5 {
 		color: var(--color-neutral-5);
 		margin-bottom: 0;
+	}
+
+	& h5,
+	p,
+	.h5 {
+		font-size: 0.813rem;
+		font-weight: 400;
+		line-height: 1rem;
+	}
+
+	& p {
+		color: var(--color-neutral-7);
+		margin-bottom: 0.5rem;
 	}
 }
 
@@ -101,13 +101,13 @@
 }
 
 .high-priority-contacts-modal {
-	.modal-content {
-		height: 21.75rem;
-	}
-
-	main {
+	& main {
 		max-height: 8.75rem;
 		overflow-y: scroll;
+	}
+
+	.modal-content {
+		height: 21.75rem;
 	}
 }
 

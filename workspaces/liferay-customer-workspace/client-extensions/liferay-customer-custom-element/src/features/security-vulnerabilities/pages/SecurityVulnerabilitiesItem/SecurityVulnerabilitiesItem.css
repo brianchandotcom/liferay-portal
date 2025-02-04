@@ -2,7 +2,7 @@
 	.sv-breadcrumbs {
 		font-size: var(--font-size-sm);
 		
-		a {
+		& a {
 			color: var(--color-neutral-0);
 		}
 	}

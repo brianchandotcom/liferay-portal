@@ -1,5 +1,5 @@
 .cp-team-members-table-wrapper {
-	thead {
+	& thead {
 		top: 0;
 		z-index: 999;
 	}
@@ -11,13 +11,13 @@
 	min-width: 13.625rem;
 	padding: 0.75rem;
 
-	.custom-checkbox {
-		margin-left: 0.625rem;
-	}
-
-	label {
+	& label {
 		font-size: 0.813rem;
 		padding-left: 0.625rem;
+	}
+
+	.custom-checkbox {
+		margin-left: 0.625rem;
 	}
 }
 
@@ -26,17 +26,17 @@
 }
 
 .remove-user-modal {
-	.modal-header,
-	.modal-footer,
-	.modal-body {
-		border-width: 0;
-	}
-
-	a:hover {
+	& a:hover {
 		text-decoration: none;
 	}
 
 	.custom-control {
 		margin-bottom: 0;
+	}
+	
+	.modal-header,
+	.modal-footer,
+	.modal-body {
+		border-width: 0;
 	}
 }

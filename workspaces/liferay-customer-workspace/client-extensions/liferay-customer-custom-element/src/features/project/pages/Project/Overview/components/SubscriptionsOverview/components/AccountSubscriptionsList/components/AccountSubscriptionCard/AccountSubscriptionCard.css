@@ -37,7 +37,7 @@
 	.cp-account-subscription-card-name {
 		height: 2.688rem;
 
-		p {
+		& p {
 			font-size: 1.438rem;
 		}
 	}

@@ -109,11 +109,8 @@ public class SystemFDSCreationMenuSerializerImplTest
 			_fdsSerializer.serialize("fdsName2", httpServletRequest));
 
 		creationMenuServiceRegistration1.unregister();
-
 		creationMenuServiceRegistration2.unregister();
-
 		systemFDSEntryServiceRegistration1.unregister();
-
 		systemFDSEntryServiceRegistration2.unregister();
 
 		// No creation menu
@@ -132,7 +129,6 @@ public class SystemFDSCreationMenuSerializerImplTest
 
 		systemFDSEntryServiceRegistration1 = registerSystemFDSEntry(
 			"fdsName1", "/app", "/endpoint", "schema");
-
 		systemFDSEntryServiceRegistration2 = registerSystemFDSEntry(
 			"fdsName2", "/app", "/endpoint", "schema");
 
@@ -144,7 +140,6 @@ public class SystemFDSCreationMenuSerializerImplTest
 
 		creationMenuServiceRegistration1 = _registerFDSCreationMenu(
 			creationMenu1, "fdsName1");
-
 		creationMenuServiceRegistration2 = _registerFDSCreationMenu(
 			creationMenu1, "fdsName2");
 
@@ -153,11 +148,8 @@ public class SystemFDSCreationMenuSerializerImplTest
 			_fdsSerializer.serialize("fdsName2", httpServletRequest));
 
 		creationMenuServiceRegistration1.unregister();
-
 		creationMenuServiceRegistration2.unregister();
-
 		systemFDSEntryServiceRegistration1.unregister();
-
 		systemFDSEntryServiceRegistration2.unregister();
 	}
 

@@ -6,6 +6,8 @@
 import {ClayButtonWithIcon} from '@clayui/button';
 import i18n from '~/utils/I18n';
 
+import './SwitchSLACardButton.css';
+
 const SwitchSLACardButton = ({handleClick}) => (
 	<ClayButtonWithIcon
 		aria-label={i18n.translate('switch-sla-card')}

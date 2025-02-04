@@ -16,6 +16,8 @@ import MenuItem from './components/MenuItem';
 import useCurrentKoroneikiAccount from '~/hooks/useCurrentKoroneikiAccount';
 import useMyUserAccountByAccountExternalReferenceCode from '~/features/project/pages/Project/TeamMembers/components/TeamMembersTable/hooks/useMyUserAccountByAccountExternalReferenceCode';
 
+import './SideMenu.css';
+
 const ACTIVATION_PATH = 'activation';
 
 const SideMenu = () => {

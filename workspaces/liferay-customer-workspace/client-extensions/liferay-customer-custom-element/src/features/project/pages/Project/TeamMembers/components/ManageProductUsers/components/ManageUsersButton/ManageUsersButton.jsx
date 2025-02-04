@@ -6,6 +6,8 @@
 import ClayIcon from '@clayui/icon';
 import PopoverIcon from '~/features/project/components/ActivationStatus/DXPCloud/components/PopoverIcon';
 
+import './ManageUsersButton.css';
+
 const ManageUsersButton = ({href, title}) => (
 	<a
 		className="align-items-center border border-secondary btn cp-manage-users-button d-flex mr-3 p-2 text-neutral-10 text-nowrap"

@@ -21,3 +21,7 @@
 .page-item.active .page-link {
 	z-index: 0;
 }
+
+.white-space {
+	white-space: pre-wrap;
+}

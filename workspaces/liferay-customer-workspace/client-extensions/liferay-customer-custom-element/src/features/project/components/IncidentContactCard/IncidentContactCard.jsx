@@ -20,6 +20,8 @@ import {
 import IncidentContactEditForm from './components/IncidentContactEditModal';
 import IncidentContactsButton from './components/IncidentContactsButton';
 
+import './IncidentContactCard.css';
+
 const IncidentContactCard = ({
 	accountSubscriptionGroupsNames,
 	hasActiveProduct,

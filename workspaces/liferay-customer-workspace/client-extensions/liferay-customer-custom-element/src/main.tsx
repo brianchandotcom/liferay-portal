@@ -10,7 +10,6 @@ import React from 'react';
 import {Root, createRoot} from 'react-dom/client';
 import {SWRConfig} from 'swr';
 
-import './styles/global.scss';
 import {AppPropertiesContext} from './contexts/AppPropertiesContext';
 import AttachmentFileUploader from './features/attachment-uploader';
 import Home from './features/home';
@@ -22,6 +21,8 @@ import useGlobalNetworkIndicator from './hooks/useGlobalNetworkIndicator';
 import {Liferay} from './services/liferay';
 import getIconSpriteMap from './utils/getIconSpriteMap';
 import swrCacheProvider from './utils/swrCacheProvider';
+
+import './main.css';
 
 const ELEMENT_ID = 'liferay-customer-custom-element';
 

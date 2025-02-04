@@ -10,6 +10,8 @@ import {useField} from 'formik';
 import {Badge} from '../..';
 import {required, validate} from '~/utils/validations.form';
 
+import './Select.css';
+
 const Select = ({
 	groupStyle,
 	helper,

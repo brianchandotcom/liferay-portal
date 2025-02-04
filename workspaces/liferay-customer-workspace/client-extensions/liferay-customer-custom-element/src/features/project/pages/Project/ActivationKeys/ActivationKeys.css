@@ -1,3 +1,7 @@
+.cp-activation-keys-commerce-table {
+	max-width: 742px;
+}
+
 .cp-activation-keys-drop-down-item:hover {
 	background-color: var(--color-action-primary-hover-lighten);
 	color: var(--color-action-primary-hover) !important;

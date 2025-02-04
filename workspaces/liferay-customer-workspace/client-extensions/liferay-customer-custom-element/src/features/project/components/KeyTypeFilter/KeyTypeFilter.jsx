@@ -13,6 +13,8 @@ import {useCallback, useEffect, useState} from 'react';
 
 import i18n from '~/utils/I18n';
 
+import './KeyTypeFilter.css';
+
 const INVALID_NODE_MESSAGE = i18n.translate('enter-a-valid-number');
 const INVALID_MIN_NODE_MESSAGE = i18n.translate(
 	'enter-a-minimum-node-value-greater-than-0'

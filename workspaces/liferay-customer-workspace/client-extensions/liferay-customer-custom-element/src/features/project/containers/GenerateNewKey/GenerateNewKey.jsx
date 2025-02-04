@@ -16,6 +16,8 @@ import RequiredInformation from './pages/RequiredInformation';
 import SelectSubscription from './pages/SelectSubscription';
 import {STEP_TYPES} from './utils/constants/stepType';
 
+import './GenerateNewKey.css';
+
 const ACTIVATION_ROOT_ROUTER = 'activation';
 
 const GenerateNewKey = ({

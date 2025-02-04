@@ -15,6 +15,8 @@ import {useOnboarding} from '~/features/onboarding/context';
 import {useCustomerPortal} from '~/features/project/context';
 import RadioRoles from '../RadioRoles';
 
+import './/RoleSelectorDropdown.css';
+
 const RoleSelectorDropdown = ({
 	isTeamMemberInviteForm,
 	onClick,

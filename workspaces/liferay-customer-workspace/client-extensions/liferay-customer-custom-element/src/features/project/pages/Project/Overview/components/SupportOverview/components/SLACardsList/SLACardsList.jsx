@@ -12,6 +12,8 @@ import SwitchSLACardButton from './components/SwitchSLACardButton';
 import useSLACardPosition from './hooks/useSLACardPosition';
 import useSLACards from './hooks/useSLACards';
 
+import './SLACardsList.css';
+
 const SLACardsList = ({koroneikiAccount, loading}) => {
 	const slaCards = useSLACards(koroneikiAccount);
 	const {changePosition, currentPosition, lastPosition} = useSLACardPosition(

@@ -10,6 +10,8 @@ import ProjectErrorMessage from '../../components/ProjectErrorMessage';
 import SideMenu from '../../containers/SideMenu';
 import {useCustomerPortal} from '~/features/project/context';
 
+import './Layout.css';
+
 const Layout = () => {
 	const [{userProjectAccess}] = useCustomerPortal();
 

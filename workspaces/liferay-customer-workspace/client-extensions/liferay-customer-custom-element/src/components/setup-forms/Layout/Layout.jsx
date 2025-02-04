@@ -7,6 +7,8 @@ import classNames from 'classnames';
 import Footer from './Footer';
 import Header from './Header';
 
+import './Layout.css';
+
 const Layout = ({
 	children,
 	className,

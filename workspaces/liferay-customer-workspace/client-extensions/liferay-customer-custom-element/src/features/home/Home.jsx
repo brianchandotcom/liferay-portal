@@ -8,7 +8,7 @@ import {useAppPropertiesContext} from '~/contexts/AppPropertiesContext';
 import ProjectList from './components/ProjectsList';
 import SearchHeader from './components/SearchHeader';
 
-import './app.scss';
+import './Home.css';
 
 import {useMemo, useState} from 'react';
 import useKoroneikiAccounts from '~/hooks/useKoroneikiAccounts';

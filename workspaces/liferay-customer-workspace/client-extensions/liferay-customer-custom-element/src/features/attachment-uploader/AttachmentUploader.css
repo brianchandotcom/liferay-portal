@@ -1,6 +1,3 @@
-@import './components/DropzoneUpload/dropzone_uploader';
-@import './components/FileList/file_list';
-
 .attachment-uploader {
 	width: 37.5rem;
 

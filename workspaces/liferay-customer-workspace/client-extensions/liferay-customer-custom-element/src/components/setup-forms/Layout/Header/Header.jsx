@@ -5,6 +5,8 @@
 
 import classNames from 'classnames';
 
+import './Header.css';
+
 const Header = ({greetings, headerClass, helper, title}) => {
 	return (
 		<header className={classNames('p-4', headerClass)}>

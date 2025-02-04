@@ -11,6 +11,8 @@ import i18n from '~/utils/I18n';
 import getKebabCase from '~/utils/getKebabCase';
 import getStyleFromTitle from './utils/getStyleFromTitle';
 
+import './SLACard.css';
+
 const SLACard = ({active, endDate, label, last, startDate, title, unique}) => {
 	const displayDate = `${startDate} - ${endDate}`;
 	const currentStyle = getStyleFromTitle(title);

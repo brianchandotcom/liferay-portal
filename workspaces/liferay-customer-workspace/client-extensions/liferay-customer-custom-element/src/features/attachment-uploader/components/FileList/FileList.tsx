@@ -10,6 +10,8 @@ import i18n from '~/utils/I18n';
 
 import {IAttachment} from '../../AttachmentUploader';
 
+import './FileList.css';
+
 interface IProps {
 	attachment: IAttachment;
 	onDelete: Function;

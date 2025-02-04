@@ -8,6 +8,8 @@ import ActivationKeysSkeleton from '~/features/project/layouts/ActivationKeysLay
 import Commerce from './Commerce';
 import EnterpriseSearch from './EnterpriseSearch';
 
+import './ActivationKeys.css';
+
 const ActivationKeys = {
 	Commerce,
 	EnterpriseSearch,

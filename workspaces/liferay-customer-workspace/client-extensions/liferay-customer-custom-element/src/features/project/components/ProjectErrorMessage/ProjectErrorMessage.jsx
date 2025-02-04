@@ -6,6 +6,8 @@
 import ClayIcon from '@clayui/icon';
 import i18n from '~/utils/I18n';
 
+import './ProjectErrorMessage.css';
+
 const ProjectErrorMessage = () => (
 	<div className="align-items-center cp-project-error-message-page d-flex flex-column justify-content-center">
 		<div className="cp-project-error-message-container">

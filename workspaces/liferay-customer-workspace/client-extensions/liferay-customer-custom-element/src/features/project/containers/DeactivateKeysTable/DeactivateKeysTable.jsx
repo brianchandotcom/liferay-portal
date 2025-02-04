@@ -29,6 +29,8 @@ import DeactivationKeysTableHeader from './components/Header';
 import useFilters from './components/Header/hooks/useFilters';
 import {DEACTIVATE_COLUMNS} from './utils/constants';
 
+import './DeactivateKeysTable.css';
+
 const DeactivateKeysTable = ({initialFilter, productName}) => {
 	const {data: myAccount} = useGetMyUserAccount();
 	const [oAuthToken, setOAuthToken] = useState();

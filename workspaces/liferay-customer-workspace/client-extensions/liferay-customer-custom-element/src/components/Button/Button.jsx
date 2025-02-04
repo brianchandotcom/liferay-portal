@@ -9,6 +9,8 @@ import classNames from 'classnames';
 import {forwardRef, useMemo} from 'react';
 import {navigationIcons} from '~/features/project/containers/SideMenu/utils/navigationIcons';
 
+import './Button.css';
+
 const ButtonBase = (
 	{
 		appendIcon,
@@ -82,5 +84,7 @@ const ButtonBase = (
 		</ClayButton>
 	);
 };
+
 const Button = forwardRef(ButtonBase);
+
 export default Button;

@@ -9,6 +9,8 @@ import {memo, useEffect, useState} from 'react';
 import i18n from '~/utils/I18n';
 import useDebounce from '~/hooks/useDebounce';
 
+import './SearchBar.css';
+
 const SearchBar = ({onSearchSubmit, search}) => {
 	const [term, setTerm] = useState('');
 	const debouncedTerm = useDebounce(term, 500);

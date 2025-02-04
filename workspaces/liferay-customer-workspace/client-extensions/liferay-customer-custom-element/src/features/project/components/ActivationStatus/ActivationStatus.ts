@@ -7,6 +7,8 @@ import AnalyticsCloud from './AnalyticsCloud';
 import DXPCloud from './DXPCloud';
 import LiferayExperienceCloud from './LiferayExperienceCloud';
 
+import './ActivationStatus.css';
+
 const ActivationStatus = {
 	AnalyticsCloud,
 	DXPCloud,

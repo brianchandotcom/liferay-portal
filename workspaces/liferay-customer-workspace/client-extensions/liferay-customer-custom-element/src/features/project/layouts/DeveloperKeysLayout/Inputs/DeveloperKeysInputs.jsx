@@ -20,6 +20,8 @@ import {
 	STATUS_CODE,
 } from '~/features/project/utils/constants';
 
+import './DeveloperKeysInputs.css';
+
 const ALERT_DEVELOPER_KEYS_DOWNLOAD_TEXT = {
 	[ALERT_DOWNLOAD_TYPE.danger]: 'Unable to download key, please try again.',
 	[ALERT_DOWNLOAD_TYPE.success]: 'Developer Key was downloaded successfully.',

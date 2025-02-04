@@ -33,6 +33,8 @@ import useUserAccountsByAccountExternalReferenceCode from './hooks/useUserAccoun
 import {getColumns} from './utils/getColumns';
 import getFilteredRoleBriefsByName from './utils/getFilteredRoleBriefsByName';
 
+import './TeamMembersTable.css';
+
 const MAXIMUM_SUPPORT_SEATS_DEFAULT = -1;
 const UNLIMITED_SUPPORT_SEATS = 9999;
 

@@ -29,6 +29,8 @@ import getProjectRoles from '~/utils/getProjectRoles';
 import Layout from '../Layout';
 import TeamMemberInputs from './TeamMemberInputs';
 
+import './InviteTeamMembersForm.css';
+
 const INITIAL_INVITES_COUNT = 1;
 const MAXIMUM_SUPPORT_SEATS_DEFAULT = -1;
 const MAXIMUM_INVITES_COUNT = 10;

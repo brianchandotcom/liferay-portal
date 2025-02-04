@@ -11,6 +11,8 @@ import ActivationKeysTable from '~/features/project/containers/ActivationKeysTab
 import {useCustomerPortal} from '~/features/project/context';
 import {getOrRequestToken} from '~/services/liferay/security/auth/getOrRequestToken';
 
+import './RenewTable.css';
+
 const RenewTable = ({hasComplimentaryKey, isDXPTable, isRenewTable}) => {
 	const productName = isDXPTable ? 'DXP' : 'Portal';
 

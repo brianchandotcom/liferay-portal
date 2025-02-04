@@ -25,6 +25,8 @@ import {useCustomerPortal} from '~/features/project/context';
 import {EXTENSION_FILE_TYPES, STATUS_CODE} from '~/features/project/utils/constants';
 import {getYearlyTerms} from '~/features/project/utils/getYearlyTerms';
 
+import './ActivationKeysInputs.css';
+
 const ActivationKeysInputs = ({
 	accountKey,
 	accountSubscriptionGroupName,

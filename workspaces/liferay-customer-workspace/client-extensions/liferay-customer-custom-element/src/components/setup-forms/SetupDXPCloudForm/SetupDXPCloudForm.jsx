@@ -43,6 +43,8 @@ import {isLowercaseAndNumbers} from '~/utils/validations.form';
 import Layout from '../Layout';
 import AdminInputs from './AdminInputs';
 
+import './SetupDXPCloudForm.css';
+
 const INITIAL_SETUP_ADMIN_COUNT = 1;
 const MAXIMUM_NUMBER_OF_CHARACTERS = 77;
 

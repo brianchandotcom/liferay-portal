@@ -17,6 +17,6 @@
 	transition: all 200ms ease-in-out;
 
 	&:hover {
-		box-shadow: $elevation-fluffy-3 !important;
+		box-shadow: var(--elevation-fluffy-3) !important;
 	}
 }

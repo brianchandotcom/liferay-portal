@@ -12,6 +12,7 @@
 		margin-top: 0.188rem;
 		width: 1.375rem;
 	}
+
 	.cp-account-subscription-card-iconSvg {
 		background: var(--brand-primary-lighten-lighten-5, #e7efff);
 		border-radius: 0.5rem;
@@ -29,8 +30,16 @@
 		width: 20%;
 	}
 
-	.cp-account-subscription-card-name p {
-		font-size: 1.438rem;
+	.cp-account-subscription-card-logo {
+		height: 2.813rem;
+	}
+
+	.cp-account-subscription-card-name {
+		height: 2.688rem;
+
+		p {
+			font-size: 1.438rem;
+		}
 	}
 
 	.description-info-bottom {
@@ -62,14 +71,6 @@
 		font-size: 0.813rem;
 		font-weight: 600;
 		line-height: 1rem;
-	}
-
-	#{&}-logo {
-		height: 2.813rem;
-	}
-
-	#{&}-name {
-		height: 2.688rem;
 	}
 }
 

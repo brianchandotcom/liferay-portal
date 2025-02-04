@@ -6,6 +6,8 @@
 import {Button as ClayButton} from '@clayui/core';
 import i18n from '~/utils/I18n';
 
+import './IncidentContactsButton.css';
+
 const IncidentContactsButton = ({onClick}) => {
 	return (
 		<ClayButton

@@ -14,6 +14,8 @@ import i18n from '~/utils/I18n';
 import {Badge} from '../..';
 import {validateEmailsArray} from '~/utils/validations.form';
 
+import './MultiSelect.css';
+
 const MultiSelect = ({
 	filteredSourceItems,
 	groupStyle,

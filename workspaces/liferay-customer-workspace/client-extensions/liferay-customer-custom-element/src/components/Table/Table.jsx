@@ -11,6 +11,8 @@ import TablePagination from './Pagination';
 import TableSkeleton from './TableSkeleton';
 import i18n from '~/utils/I18n';
 
+import './Table.css';
+
 const Table = ({
 	checkboxConfig = {checkboxesChecked: [], setCheckboxesChecked: () => {}},
 	columns,

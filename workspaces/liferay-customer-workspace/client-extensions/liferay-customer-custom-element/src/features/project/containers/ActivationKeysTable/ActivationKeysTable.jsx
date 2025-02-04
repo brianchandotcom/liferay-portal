@@ -32,6 +32,8 @@ import {downloadActivationLicenseKey} from './utils/downloadActivationLicenseKey
 import {getActivationKeyDownload} from './utils/getActivationKeyDownload';
 import {getTooltipContentRenderer} from './utils/getTooltipContentRenderer';
 
+import './ActivationKeysTable.css';
+
 const messageNewKeyGeneratedAlert = i18n.translate(
 	'activation-key-was-generated-successfully'
 );

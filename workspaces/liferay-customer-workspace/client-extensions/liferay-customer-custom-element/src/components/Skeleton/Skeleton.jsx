@@ -5,6 +5,8 @@
 
 import classNames from 'classnames';
 
+import './Skeleton.css';
+
 const Skeleton = ({align, count = 1, height, width, ...props}) => {
 	return (
 		<div {...props}>

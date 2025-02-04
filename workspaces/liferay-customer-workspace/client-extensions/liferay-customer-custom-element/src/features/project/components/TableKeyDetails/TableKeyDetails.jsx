@@ -21,6 +21,8 @@ import {
 	hasVirtualCluster,
 } from '../../containers/ActivationKeysTable/utils';
 
+import './TableKeyDetails';
+
 const HOST_NAME = i18n.translate('host-name');
 const IP_ADDRESSES = i18n.translate('ip-addresses');
 const MAC_ADDRESSES = i18n.translate('mac-addresses');

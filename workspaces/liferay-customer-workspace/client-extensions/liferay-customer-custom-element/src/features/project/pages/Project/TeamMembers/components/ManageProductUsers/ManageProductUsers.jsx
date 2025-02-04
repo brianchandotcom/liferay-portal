@@ -11,6 +11,8 @@ import {PRODUCT_TYPES} from '~/features/project/utils/constants/productTypes';
 import ManageUsersButton from './components/ManageUsersButton/ManageUsersButton';
 import useActiveAccountSubscriptionGroups from './hooks/useActiveAccountSubscriptionGroups';
 
+import './ManageProductUsers.css';
+
 const ManageProductUsers = ({koroneikiAccount, loading}) => {
 	const {
 		data,

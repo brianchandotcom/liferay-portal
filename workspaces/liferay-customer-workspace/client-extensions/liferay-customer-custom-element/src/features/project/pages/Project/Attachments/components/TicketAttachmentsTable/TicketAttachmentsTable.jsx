@@ -21,6 +21,8 @@ import getAttachmentDownloadUrl from './utils/getAttachmentDownloadUrl';
 import getAttachmentFormattedDateTime from './utils/getAttachmentFormattedDateTime';
 import {getColumns} from './utils/getColumns';
 
+import './TicketAttachmentsTable.css';
+
 const TicketAttachmentsTable = ({
 	koroneikiAccount,
 	loading: koroneikiAccountLoading,

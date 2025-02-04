@@ -13,6 +13,8 @@ import useKoroneikiAccounts from '~/hooks/useKoroneikiAccounts';
 import PopoverIcon from '../ActivationStatus/DXPCloud/components/PopoverIcon';
 import Dropdown from './components/Dropdown';
 
+import './ProjectBreadcrumb.css';
+
 const ProjectBreadcrumb = () => {
 	const [initialTotalCount, setInitialTotalCount] = useState(0);
 	const [projectStatus, setProjectStatus] = useState('');

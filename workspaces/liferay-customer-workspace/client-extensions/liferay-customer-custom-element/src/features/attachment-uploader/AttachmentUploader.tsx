@@ -12,7 +12,7 @@ import i18n from '~/utils/I18n';
 import DropzoneUpload from './components/DropzoneUpload';
 import FileList from './components/FileList';
 
-import './app.scss';
+import './AttachmentUploader.css';
 
 export interface IAttachment {
 	comment?: string;

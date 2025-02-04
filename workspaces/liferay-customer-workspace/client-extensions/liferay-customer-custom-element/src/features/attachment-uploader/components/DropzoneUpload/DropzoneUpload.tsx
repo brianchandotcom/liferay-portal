@@ -8,6 +8,8 @@ import classnames from 'classnames';
 import Dropzone from 'react-dropzone';
 import {Button} from '~/components';
 
+import './DropzoneUpload.css';
+
 interface IProps {
 	buttonText: string;
 	onDropAccepted: Function;

@@ -8,6 +8,8 @@ import {memo, useState} from 'react';
 import Skeleton from '../Skeleton';
 import i18n from '~/utils/I18n';
 
+import './NavSegment.css';
+
 const NavSegment = ({
 	disabled,
 	items,

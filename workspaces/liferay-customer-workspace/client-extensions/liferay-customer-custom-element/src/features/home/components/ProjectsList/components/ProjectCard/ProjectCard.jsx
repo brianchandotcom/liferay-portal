@@ -15,6 +15,8 @@ import {
 import getDateCustomFormat from '~/utils/getDateCustomFormat';
 import getKebabCase from '~/utils/getKebabCase';
 
+import './ProjectCard.css';
+
 const statusReport = {
 	[SLA_STATUS_TYPES.active]: i18n.translate('ends-on'),
 	[SLA_STATUS_TYPES.future]: i18n.translate('starts-on'),

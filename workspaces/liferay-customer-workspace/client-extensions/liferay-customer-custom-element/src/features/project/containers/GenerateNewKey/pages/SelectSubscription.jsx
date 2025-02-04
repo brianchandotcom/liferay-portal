@@ -10,7 +10,7 @@ import {useCallback, useEffect, useMemo, useState} from 'react';
 import {Link, useNavigate} from 'react-router-dom';
 import i18n from '~/utils/I18n';
 import {Button} from '~/components';
-import {Radio} from '~/components/Radio';
+import {Radio} from '~/components';
 import Layout from '~/components/setup-forms/Layout';
 import {useAppPropertiesContext} from '~/contexts/AppPropertiesContext';
 import useProvisioningLicenseKeys from '~/hooks/useProvisioningLicenseKeys';

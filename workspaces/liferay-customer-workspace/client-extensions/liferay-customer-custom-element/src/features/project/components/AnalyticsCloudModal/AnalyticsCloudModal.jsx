@@ -11,6 +11,8 @@ import {useAppPropertiesContext} from '~/contexts/AppPropertiesContext';
 import {ANALYTICS_STEPS_TYPES} from '~/features/project/utils/constants';
 import AlreadySubmittedModal from '../ActivationStatus/AlreadySubmittedModal';
 
+import './AnalyticsCloudModal.css';
+
 const submittedModalTexts = {
 	paragraph: i18n.translate(
 		'return-to-the-product-activation-page-to-view-the-current-activation-status'

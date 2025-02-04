@@ -23,6 +23,8 @@ import Filter from '../Filter';
 import RenewButton from '../RenewButton';
 import useGetAccountUserAccount from './hooks/useGetAccountUserAccount';
 
+import './ActivationKeysTableHeader.css';
+
 const ActivationKeysTableHeader = ({
 	activationKeysByStatusPaginatedChecked,
 	activationKeysState,

@@ -10,6 +10,8 @@ import ActivationStatus from '~/features/project/components/ActivationStatus';
 import {useCustomerPortal} from '~/features/project/context';
 import {PRODUCT_TYPES} from '~/features/project/utils/constants';
 
+import './LiferayExperienceCloud.css';
+
 const LiferayExperienceCloud = () => {
 	const [
 		{project, subscriptionGroups, userAccount},

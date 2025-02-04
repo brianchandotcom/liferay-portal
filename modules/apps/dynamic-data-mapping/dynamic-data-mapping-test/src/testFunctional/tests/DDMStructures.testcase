@@ -288,7 +288,7 @@ definition {
 			webContentText = "Test",
 			webContentTitle = "WC WebContent Title");
 
-		WebContent.publishWithPermissions();
+		PortletEntry.publish();
 
 		Navigator.openURL();
 
@@ -391,7 +391,7 @@ definition {
 			fieldName = "Image",
 			fieldValue = "Portuguese (Brazil) Image Description");
 
-		WebContent.submitForWorkflowWithPermission();
+		WebContent.publishWithPermissions();
 
 		WebContentAdmin.gotoEntry(entry = "English (United States) Title");
 

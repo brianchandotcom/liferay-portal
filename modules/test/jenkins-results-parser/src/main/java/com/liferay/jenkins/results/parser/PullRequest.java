@@ -66,6 +66,10 @@ public class PullRequest {
 	}
 
 	public Comment addComment(String body) {
+		if (!isUpdateEnabled()) {
+			return new Comment(new JSONObject());
+		}
+
 		body = body.replaceAll("(\\>)\\s+(\\<)", "$1$2");
 		body = body.replace("&quot;", "\\&quot;");
 
@@ -111,6 +115,10 @@ public class PullRequest {
 	}
 
 	public boolean addLabel(GitHubRemoteGitRepository.Label label) {
+		if (!isUpdateEnabled()) {
+			return false;
+		}
+
 		if ((label == null) || hasLabel(label.getName())) {
 			return true;
 		}
@@ -155,6 +163,10 @@ public class PullRequest {
 	}
 
 	public void close() {
+		if (!isUpdateEnabled()) {
+			return;
+		}
+
 		if (Objects.equals(getState(), "open")) {
 			JSONObject postContentJSONObject = new JSONObject();
 
@@ -179,6 +191,10 @@ public class PullRequest {
 		String commentBody, String consoleURL, String forwardReceiverUsername,
 		String forwardBranchName, String forwardSenderUsername,
 		File gitRepositoryDir) {
+
+		if (!isUpdateEnabled()) {
+			return null;
+		}
 
 		GitWorkingDirectory gitWorkingDirectory =
 			GitWorkingDirectoryFactory.newGitWorkingDirectory(
@@ -768,6 +784,29 @@ public class PullRequest {
 		return false;
 	}
 
+	public boolean isUpdateEnabled() {
+		Properties buildProperties = null;
+
+		try {
+			buildProperties = JenkinsResultsParserUtil.getBuildProperties();
+		}
+		catch (IOException ioException) {
+			throw new RuntimeException(ioException);
+		}
+
+		String githubPullRequestUpdateEnabled =
+			JenkinsResultsParserUtil.getProperty(
+				buildProperties, "github.pull.request.update.enabled");
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(
+				githubPullRequestUpdateEnabled)) {
+
+			return true;
+		}
+
+		return Boolean.parseBoolean(githubPullRequestUpdateEnabled);
+	}
+
 	public boolean isValidCIMergeFile() {
 		List<String> fileNames = getFileNames();
 
@@ -779,6 +818,10 @@ public class PullRequest {
 	}
 
 	public void lock() {
+		if (!isUpdateEnabled()) {
+			return;
+		}
+
 		try {
 			JenkinsResultsParserUtil.toString(
 				getIssueURL() + "/lock", false, HttpRequestMethod.PUT);
@@ -803,6 +846,10 @@ public class PullRequest {
 	}
 
 	public void removeComment(String id) {
+		if (!isUpdateEnabled()) {
+			return;
+		}
+
 		String editCommentURL = _jsonObject.getString("issue_url");
 
 		editCommentURL = editCommentURL.replaceFirst("issues/\\d+", "issues");
@@ -821,7 +868,7 @@ public class PullRequest {
 	}
 
 	public void removeLabel(String labelName) {
-		if (!hasLabel(labelName)) {
+		if (!isUpdateEnabled() || !hasLabel(labelName)) {
 			return;
 		}
 
@@ -865,6 +912,10 @@ public class PullRequest {
 	public void setTestSuiteStatus(
 		String testSuiteName, TestSuiteStatus testSuiteStatus, String targetURL,
 		String senderSHA) {
+
+		if (!isUpdateEnabled()) {
+			return;
+		}
 
 		StringBuilder sb = new StringBuilder();
 
@@ -967,6 +1018,10 @@ public class PullRequest {
 	}
 
 	public Comment updateComment(String body, String id) {
+		if (!isUpdateEnabled()) {
+			return null;
+		}
+
 		JSONObject jsonObject = new JSONObject();
 
 		body = body.replaceAll("(\\>)\\s+(\\<)", "$1$2");
@@ -1007,7 +1062,7 @@ public class PullRequest {
 		}
 
 		public String getBody() {
-			return _commentJSONObject.getString("body");
+			return _commentJSONObject.optString("body");
 		}
 
 		public Date getCreatedDate() {
@@ -1024,13 +1079,13 @@ public class PullRequest {
 		}
 
 		public String getId() {
-			return String.valueOf(_commentJSONObject.getLong("id"));
+			return String.valueOf(_commentJSONObject.optLong("id"));
 		}
 
 		public Date getModifiedDate() {
 			try {
 				return _UtcIso8601SimpleDateFormat.parse(
-					_commentJSONObject.getString("modified_at"));
+					_commentJSONObject.optString("modified_at"));
 			}
 			catch (ParseException parseException) {
 				throw new RuntimeException(
@@ -1042,7 +1097,7 @@ public class PullRequest {
 
 		public URL getURL() {
 			try {
-				return new URL(_commentJSONObject.getString("html_url"));
+				return new URL(_commentJSONObject.optString("html_url"));
 			}
 			catch (MalformedURLException malformedURLException) {
 				throw new RuntimeException(malformedURLException);

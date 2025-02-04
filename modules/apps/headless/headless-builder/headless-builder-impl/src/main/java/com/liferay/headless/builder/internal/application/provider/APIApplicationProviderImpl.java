@@ -436,7 +436,13 @@ public class APIApplicationProviderImpl implements APIApplicationProvider {
 
 			@Override
 			public String getVersion() {
-				return (String)properties.get("version");
+				String version = (String)properties.get("version");
+
+				if (Validator.isNotNull(version)) {
+					return version;
+				}
+
+				return "v1.0";
 			}
 
 		};

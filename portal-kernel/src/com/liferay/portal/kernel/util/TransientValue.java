@@ -34,11 +34,7 @@ public class TransientValue<V> implements Serializable {
 
 		TransientValue<?> transientValue = (TransientValue<?>)object;
 
-		if (Objects.equals(_value, transientValue._value)) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(_value, transientValue._value);
 	}
 
 	public V getValue() {

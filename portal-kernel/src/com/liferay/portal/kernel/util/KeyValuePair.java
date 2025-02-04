@@ -40,11 +40,7 @@ public class KeyValuePair implements Comparable<KeyValuePair>, Serializable {
 
 		KeyValuePair kvp = (KeyValuePair)object;
 
-		if (Objects.equals(_key, kvp._key)) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(_key, kvp._key);
 	}
 
 	public String getKey() {

@@ -41,11 +41,7 @@ public class Domain implements Serializable {
 
 		Domain domain = (Domain)object;
 
-		if (Objects.equals(_domainName, domain._domainName)) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(_domainName, domain._domainName);
 	}
 
 	public String getDomainName() {

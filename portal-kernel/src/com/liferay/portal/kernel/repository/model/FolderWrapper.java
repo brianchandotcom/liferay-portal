@@ -53,11 +53,7 @@ public class FolderWrapper implements Folder, ModelWrapper<Folder> {
 
 		FolderWrapper folderWrapper = (FolderWrapper)object;
 
-		if (Objects.equals(_folder, folderWrapper._folder)) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(_folder, folderWrapper._folder);
 	}
 
 	@Override

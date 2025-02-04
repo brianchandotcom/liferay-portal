@@ -113,11 +113,8 @@ public class DefaultWorkflowTask
 
 		String userClassName = User.class.getName();
 
-		if (userClassName.equals(workflowTaskAssignee.getAssigneeClassName())) {
-			return true;
-		}
-
-		return false;
+		return userClassName.equals(
+			workflowTaskAssignee.getAssigneeClassName());
 	}
 
 	@Override

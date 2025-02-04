@@ -34,11 +34,7 @@ public class ObjectValuePair<K, V> implements Serializable {
 
 		ObjectValuePair<K, V> kvp = (ObjectValuePair<K, V>)object;
 
-		if (Objects.equals(_key, kvp._key)) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(_key, kvp._key);
 	}
 
 	public K getKey() {

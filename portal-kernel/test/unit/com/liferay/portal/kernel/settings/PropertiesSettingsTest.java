@@ -116,11 +116,7 @@ public class PropertiesSettingsTest {
 
 			@Override
 			public boolean isLocationVariable(String value) {
-				if (value.equals(resolveString)) {
-					return true;
-				}
-
-				return false;
+				return value.equals(resolveString);
 			}
 
 			@Override

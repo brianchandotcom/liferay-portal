@@ -118,11 +118,7 @@ public class CompeteLatch {
 
 		@Override
 		protected boolean tryReleaseShared(int arg) {
-			if (compareAndSetState(1, 0)) {
-				return true;
-			}
-
-			return false;
+			return compareAndSetState(1, 0);
 		}
 
 		private boolean _isLocked() {
@@ -134,11 +130,7 @@ public class CompeteLatch {
 		}
 
 		private boolean _tryInitAcquireShared() {
-			if (compareAndSetState(0, 1)) {
-				return true;
-			}
-
-			return false;
+			return compareAndSetState(0, 1);
 		}
 
 	}

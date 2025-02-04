@@ -43,14 +43,9 @@ public class DisplayContextFactoryReference<T extends DisplayContextFactory>
 		DisplayContextFactoryReference<?> displayContextFactoryReference =
 			(DisplayContextFactoryReference<?>)object;
 
-		if (Objects.equals(
-				_serviceReference,
-				displayContextFactoryReference._serviceReference)) {
-
-			return true;
-		}
-
-		return false;
+		return Objects.equals(
+			_serviceReference,
+			displayContextFactoryReference._serviceReference);
 	}
 
 	public T getDisplayContextFactory() {

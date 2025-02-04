@@ -40,13 +40,8 @@ public class TagDynamicIncludeUtil {
 	public static boolean hasTagDynamicInclude(
 		String tagClassName, String tagDynamicId, String tagPoint) {
 
-		if (ListUtil.isEmpty(
-				getTagDynamicIncludes(tagClassName, tagDynamicId, tagPoint))) {
-
-			return false;
-		}
-
-		return true;
+		return !ListUtil.isEmpty(
+			getTagDynamicIncludes(tagClassName, tagDynamicId, tagPoint));
 	}
 
 	public static void include(

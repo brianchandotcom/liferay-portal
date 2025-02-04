@@ -38,13 +38,8 @@ public class SitesUtil {
 		UserGroup userGroup = UserGroupLocalServiceUtil.getUserGroup(
 			userGroupGroup.getClassPK());
 
-		if (UserLocalServiceUtil.hasUserGroupUser(
-				userGroup.getUserGroupId(), permissionChecker.getUserId())) {
-
-			return true;
-		}
-
-		return false;
+		return UserLocalServiceUtil.hasUserGroupUser(
+			userGroup.getUserGroupId(), permissionChecker.getUserId());
 	}
 
 }

@@ -38,11 +38,7 @@ public class ProtectedPrincipal implements Principal, Serializable {
 
 		String name = protectedPrincipal.getName();
 
-		if (name.equals(_name)) {
-			return true;
-		}
-
-		return false;
+		return name.equals(_name);
 	}
 
 	@Override

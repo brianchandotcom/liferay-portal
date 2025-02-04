@@ -26,11 +26,7 @@ public class BooleanClauseOccurImpl implements BooleanClauseOccur {
 
 		BooleanClauseOccur booleanClauseOccur = (BooleanClauseOccur)object;
 
-		if (_name.equals(booleanClauseOccur.getName())) {
-			return true;
-		}
-
-		return false;
+		return _name.equals(booleanClauseOccur.getName());
 	}
 
 	@Override

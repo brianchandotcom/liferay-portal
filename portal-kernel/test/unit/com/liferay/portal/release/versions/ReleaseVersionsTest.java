@@ -297,11 +297,7 @@ public class ReleaseVersionsTest {
 		Path gitCommitPath = dirPath.resolve(
 			"git-commit-" + String.valueOf(dirPath.getFileName()));
 
-		if (Files.exists(gitCommitPath)) {
-			return true;
-		}
-
-		return false;
+		return Files.exists(gitCommitPath);
 	}
 
 	private boolean _isInGitRepoReadOnly(Path dirPath) throws IOException {

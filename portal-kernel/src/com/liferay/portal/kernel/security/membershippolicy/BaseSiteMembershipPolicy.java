@@ -78,13 +78,8 @@ public abstract class BaseSiteMembershipPolicy implements SiteMembershipPolicy {
 		Role siteOwnerRole = RoleLocalServiceUtil.getRole(
 			permissionChecker.getCompanyId(), RoleConstants.SITE_OWNER);
 
-		if (UserGroupRoleLocalServiceUtil.hasUserGroupRole(
-				userId, groupId, siteOwnerRole.getRoleId())) {
-
-			return true;
-		}
-
-		return false;
+		return UserGroupRoleLocalServiceUtil.hasUserGroupRole(
+			userId, groupId, siteOwnerRole.getRoleId());
 	}
 
 	@Override
@@ -154,13 +149,8 @@ public abstract class BaseSiteMembershipPolicy implements SiteMembershipPolicy {
 			return false;
 		}
 
-		if (UserGroupRoleLocalServiceUtil.hasUserGroupRole(
-				userId, groupId, roleId)) {
-
-			return true;
-		}
-
-		return false;
+		return UserGroupRoleLocalServiceUtil.hasUserGroupRole(
+			userId, groupId, roleId);
 	}
 
 	@Override

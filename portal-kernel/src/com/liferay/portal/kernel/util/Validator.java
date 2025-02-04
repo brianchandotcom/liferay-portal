@@ -351,13 +351,8 @@ public class Validator {
 	 *         <code>false</code> otherwise
 	 */
 	public static boolean isContent(String s) {
-		if (isNotNull(
-				StringUtil.removeChars(s, CharPool.NEW_LINE, CharPool.TAB))) {
-
-			return true;
-		}
-
-		return false;
+		return isNotNull(
+			StringUtil.removeChars(s, CharPool.NEW_LINE, CharPool.TAB));
 	}
 
 	/**
@@ -609,11 +604,7 @@ public class Validator {
 	 * @see    #isNull(String)
 	 */
 	public static boolean isHex(String s) {
-		if (isNull(s)) {
-			return false;
-		}
-
-		return true;
+		return !isNull(s);
 	}
 
 	/**
@@ -1091,11 +1082,7 @@ public class Validator {
 
 		Matcher matcher = _variableNamePattern.matcher(variableName);
 
-		if (matcher.matches()) {
-			return true;
-		}
-
-		return false;
+		return matcher.matches();
 	}
 
 	/**

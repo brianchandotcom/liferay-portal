@@ -87,14 +87,8 @@ public abstract class BaseOrganizationMembershipPolicy
 		Role organizationOwnerRole = RoleLocalServiceUtil.getRole(
 			permissionChecker.getCompanyId(), RoleConstants.ORGANIZATION_OWNER);
 
-		if (UserGroupRoleLocalServiceUtil.hasUserGroupRole(
-				userId, group.getGroupId(),
-				organizationOwnerRole.getRoleId())) {
-
-			return true;
-		}
-
-		return false;
+		return UserGroupRoleLocalServiceUtil.hasUserGroupRole(
+			userId, group.getGroupId(), organizationOwnerRole.getRoleId());
 	}
 
 	@Override
@@ -173,13 +167,8 @@ public abstract class BaseOrganizationMembershipPolicy
 
 		Group group = organization.getGroup();
 
-		if (UserGroupRoleLocalServiceUtil.hasUserGroupRole(
-				userId, group.getGroupId(), role.getRoleId())) {
-
-			return true;
-		}
-
-		return false;
+		return UserGroupRoleLocalServiceUtil.hasUserGroupRole(
+			userId, group.getGroupId(), role.getRoleId());
 	}
 
 	@Override

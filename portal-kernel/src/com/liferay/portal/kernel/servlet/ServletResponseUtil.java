@@ -59,11 +59,7 @@ public class ServletResponseUtil {
 
 		String className = clazz.getName();
 
-		if (className.equals(_CLIENT_ABORT_EXCEPTION)) {
-			return true;
-		}
-
-		return false;
+		return className.equals(_CLIENT_ABORT_EXCEPTION);
 	}
 
 	public static void sendFile(

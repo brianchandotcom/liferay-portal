@@ -244,11 +244,7 @@ public class WorkflowHandlerRegistryUtil {
 			WorkflowInstanceManagerUtil.getWorkflowInstance(
 				companyId, workflowInstanceLink.getWorkflowInstanceId());
 
-		if (!workflowInstance.isComplete()) {
-			return true;
-		}
-
-		return false;
+		return !workflowInstance.isComplete();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

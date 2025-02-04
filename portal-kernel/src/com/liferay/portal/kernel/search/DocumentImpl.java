@@ -883,11 +883,7 @@ public class DocumentImpl implements Document {
 
 	@Override
 	public boolean hasField(String name) {
-		if (_fields.containsKey(name)) {
-			return true;
-		}
-
-		return false;
+		return _fields.containsKey(name);
 	}
 
 	@Override

@@ -50,11 +50,7 @@ public abstract class BaseUpgradeColumnImpl implements UpgradeColumn {
 
 	@Override
 	public boolean isApplicable(String name) {
-		if (_name.equals(name)) {
-			return true;
-		}
-
-		return false;
+		return _name.equals(name);
 	}
 
 	@Override

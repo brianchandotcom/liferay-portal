@@ -76,13 +76,8 @@ public class ConfigurationBeanSettingsTest {
 
 				@Override
 				public boolean isLocationVariable(String value) {
-					if (value.equals(
-							_configurationBean.locationVariableValue())) {
-
-						return true;
-					}
-
-					return false;
+					return value.equals(
+						_configurationBean.locationVariableValue());
 				}
 
 				@Override

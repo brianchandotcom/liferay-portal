@@ -47,11 +47,7 @@ public abstract class BaseModelWrapper<T extends BaseModel<T>>
 
 		BaseModelWrapper<?> baseModelWrapper = (BaseModelWrapper<?>)object;
 
-		if (Objects.equals(model, baseModelWrapper.model)) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(model, baseModelWrapper.model);
 	}
 
 	@Override

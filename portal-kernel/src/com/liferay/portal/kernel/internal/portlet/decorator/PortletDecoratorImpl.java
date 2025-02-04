@@ -50,14 +50,8 @@ public class PortletDecoratorImpl implements PortletDecorator {
 
 		PortletDecorator portletDecorator = (PortletDecorator)object;
 
-		if (Objects.equals(
-				getPortletDecoratorId(),
-				portletDecorator.getPortletDecoratorId())) {
-
-			return true;
-		}
-
-		return false;
+		return Objects.equals(
+			getPortletDecoratorId(), portletDecorator.getPortletDecoratorId());
 	}
 
 	@Override

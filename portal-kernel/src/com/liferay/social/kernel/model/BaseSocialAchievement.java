@@ -29,11 +29,7 @@ import java.util.Objects;
 public class BaseSocialAchievement implements SocialAchievement {
 
 	public boolean equals(SocialAchievement socialAchievement) {
-		if (Objects.equals(_name, socialAchievement.getName())) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(_name, socialAchievement.getName());
 	}
 
 	public int getCounterIncrement() {

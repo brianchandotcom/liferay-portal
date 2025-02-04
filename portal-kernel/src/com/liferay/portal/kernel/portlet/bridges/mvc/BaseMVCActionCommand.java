@@ -140,11 +140,7 @@ public abstract class BaseMVCActionCommand implements MVCActionCommand {
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(
 			themeDisplay.getCompanyId(), portletId);
 
-		if (portlet.isAddDefaultResource()) {
-			return true;
-		}
-
-		return false;
+		return portlet.isAddDefaultResource();
 	}
 
 	protected boolean redirectToLogin(

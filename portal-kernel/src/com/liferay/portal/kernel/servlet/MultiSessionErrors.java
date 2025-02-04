@@ -80,11 +80,7 @@ public class MultiSessionErrors {
 	}
 
 	private static boolean _isEmpty(HttpServletRequest httpServletRequest) {
-		if (SessionErrors.isEmpty(httpServletRequest)) {
-			return true;
-		}
-
-		return false;
+		return SessionErrors.isEmpty(httpServletRequest);
 	}
 
 	private static final Class<?>[] _CLASSES_HIDE_DEFAULT_ERROR_MESSAGE =

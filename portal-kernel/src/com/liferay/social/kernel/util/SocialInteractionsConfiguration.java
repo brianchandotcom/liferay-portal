@@ -24,11 +24,7 @@ public class SocialInteractionsConfiguration {
 	}
 
 	public boolean isSocialInteractionsAnyUserEnabled() {
-		if (_socialInteractionsType.equals(SocialInteractionsType.ALL_USERS)) {
-			return true;
-		}
-
-		return false;
+		return _socialInteractionsType.equals(SocialInteractionsType.ALL_USERS);
 	}
 
 	public boolean isSocialInteractionsFriendsEnabled() {
@@ -36,13 +32,8 @@ public class SocialInteractionsConfiguration {
 	}
 
 	public boolean isSocialInteractionsSelectUsersEnabled() {
-		if (_socialInteractionsType.equals(
-				SocialInteractionsType.SELECT_USERS)) {
-
-			return true;
-		}
-
-		return false;
+		return _socialInteractionsType.equals(
+			SocialInteractionsType.SELECT_USERS);
 	}
 
 	public boolean isSocialInteractionsSitesEnabled() {

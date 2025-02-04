@@ -44,11 +44,7 @@ public class FileVersionWrapper
 
 		FileVersionWrapper fileVersionWrapper = (FileVersionWrapper)object;
 
-		if (Objects.equals(_fileVersion, fileVersionWrapper._fileVersion)) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(_fileVersion, fileVersionWrapper._fileVersion);
 	}
 
 	@Override

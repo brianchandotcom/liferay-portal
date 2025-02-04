@@ -17,19 +17,11 @@ public class BrowserMetadata {
 	}
 
 	public boolean isAir() {
-		if (_userAgent.contains("adobeair")) {
-			return true;
-		}
-
-		return false;
+		return _userAgent.contains("adobeair");
 	}
 
 	public boolean isAndroid() {
-		if (_userAgent.contains("android")) {
-			return true;
-		}
-
-		return false;
+		return _userAgent.contains("android");
 	}
 
 	public boolean isChrome() {
@@ -37,19 +29,11 @@ public class BrowserMetadata {
 			return false;
 		}
 
-		if (_userAgent.contains("chrome")) {
-			return true;
-		}
-
-		return false;
+		return _userAgent.contains("chrome");
 	}
 
 	public boolean isEdge() {
-		if (_userAgent.contains("edge")) {
-			return true;
-		}
-
-		return false;
+		return _userAgent.contains("edge");
 	}
 
 	public boolean isFirefox() {
@@ -71,11 +55,7 @@ public class BrowserMetadata {
 			return false;
 		}
 
-		if (_userAgent.contains("gecko")) {
-			return true;
-		}
-
-		return false;
+		return _userAgent.contains("gecko");
 	}
 
 	public boolean isIe() {
@@ -109,27 +89,15 @@ public class BrowserMetadata {
 	}
 
 	public boolean isIphone() {
-		if (_userAgent.contains("iphone")) {
-			return true;
-		}
-
-		return false;
+		return _userAgent.contains("iphone");
 	}
 
 	public boolean isLinux() {
-		if (_userAgent.contains("linux")) {
-			return true;
-		}
-
-		return false;
+		return _userAgent.contains("linux");
 	}
 
 	public boolean isMac() {
-		if (_userAgent.contains("mac")) {
-			return true;
-		}
-
-		return false;
+		return _userAgent.contains("mac");
 	}
 
 	public boolean isMobile() {
@@ -149,19 +117,11 @@ public class BrowserMetadata {
 			return false;
 		}
 
-		if (_userAgent.contains("mozilla")) {
-			return true;
-		}
-
-		return false;
+		return _userAgent.contains("mozilla");
 	}
 
 	public boolean isOpera() {
-		if (_userAgent.contains("opera")) {
-			return true;
-		}
-
-		return false;
+		return _userAgent.contains("opera");
 	}
 
 	public boolean isRtf(String version) {
@@ -209,11 +169,7 @@ public class BrowserMetadata {
 	}
 
 	public boolean isSun() {
-		if (_userAgent.contains("sunos")) {
-			return true;
-		}
-
-		return false;
+		return _userAgent.contains("sunos");
 	}
 
 	public boolean isWebKit() {

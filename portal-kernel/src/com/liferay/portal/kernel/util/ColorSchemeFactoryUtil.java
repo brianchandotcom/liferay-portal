@@ -83,13 +83,8 @@ public class ColorSchemeFactoryUtil {
 
 			ColorScheme colorScheme = (ColorScheme)object;
 
-			if (Objects.equals(
-					getColorSchemeId(), colorScheme.getColorSchemeId())) {
-
-				return true;
-			}
-
-			return false;
+			return Objects.equals(
+				getColorSchemeId(), colorScheme.getColorSchemeId());
 		}
 
 		@Override

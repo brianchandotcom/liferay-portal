@@ -344,11 +344,7 @@ public class PortletContainerUtil {
 			return false;
 		}
 
-		if (queryString1.regionMatches(x1, queryString2, x2, length)) {
-			return true;
-		}
-
-		return false;
+		return queryString1.regionMatches(x1, queryString2, x2, length);
 	}
 
 	private static void _processEvents(

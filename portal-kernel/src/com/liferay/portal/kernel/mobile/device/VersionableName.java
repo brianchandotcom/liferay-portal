@@ -78,11 +78,7 @@ public class VersionableName
 
 		VersionableName versionableName = (VersionableName)object;
 
-		if (Objects.equals(_name, versionableName._name)) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(_name, versionableName._name);
 	}
 
 	public String getName() {

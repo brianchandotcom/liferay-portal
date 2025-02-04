@@ -138,11 +138,7 @@ public class DDMFormField implements Serializable {
 	}
 
 	public boolean isTransient() {
-		if (Validator.isNull(getDataType())) {
-			return true;
-		}
-
-		return false;
+		return Validator.isNull(getDataType());
 	}
 
 	public void setDataType(String dataType) {

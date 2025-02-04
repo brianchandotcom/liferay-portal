@@ -103,11 +103,7 @@ public class PortletCategory implements Serializable {
 	}
 
 	public boolean isHidden() {
-		if (_name.equals(PortletCategoryConstants.NAME_HIDDEN)) {
-			return true;
-		}
-
-		return false;
+		return _name.equals(PortletCategoryConstants.NAME_HIDDEN);
 	}
 
 	public void merge(PortletCategory newPortletCategory) {

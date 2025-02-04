@@ -70,13 +70,8 @@ public class DestinationConfiguration implements Serializable {
 		DestinationConfiguration destinationConfiguration =
 			(DestinationConfiguration)object;
 
-		if (Objects.equals(
-				_destinationName, destinationConfiguration._destinationName)) {
-
-			return true;
-		}
-
-		return false;
+		return Objects.equals(
+			_destinationName, destinationConfiguration._destinationName);
 	}
 
 	public String getDestinationName() {

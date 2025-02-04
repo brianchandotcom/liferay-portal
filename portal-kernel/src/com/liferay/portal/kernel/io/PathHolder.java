@@ -40,11 +40,7 @@ public class PathHolder implements Serializable {
 
 		PathHolder pathHolder = (PathHolder)object;
 
-		if (Objects.equals(toString(), pathHolder.toString())) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(toString(), pathHolder.toString());
 	}
 
 	public Path getPath() {

@@ -55,11 +55,7 @@ public class FileEntryWrapper implements FileEntry, ModelWrapper<FileEntry> {
 
 		FileEntryWrapper fileEntryWrapper = (FileEntryWrapper)object;
 
-		if (Objects.equals(_fileEntry, fileEntryWrapper._fileEntry)) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(_fileEntry, fileEntryWrapper._fileEntry);
 	}
 
 	@Override

@@ -83,11 +83,7 @@ public class DBInspector {
 		try (ResultSet resultSet = _getColumnsResultSet(
 				tableName, columnName)) {
 
-			if (!resultSet.next()) {
-				return false;
-			}
-
-			return true;
+			return resultSet.next();
 		}
 		catch (Exception exception) {
 			_log.error(exception);
@@ -298,13 +294,8 @@ public class DBInspector {
 	}
 
 	public boolean isPartitionedControlTable(String tableName) {
-		if (_partitionedControlTableNames.contains(
-				StringUtil.toLowerCase(tableName))) {
-
-			return true;
-		}
-
-		return false;
+		return _partitionedControlTableNames.contains(
+			StringUtil.toLowerCase(tableName));
 	}
 
 	public String normalizeName(String name) throws SQLException {
@@ -426,11 +417,7 @@ public class DBInspector {
 
 		typeName = StringUtil.toLowerCase(typeName);
 
-		if (typeName.endsWith("not null")) {
-			return false;
-		}
-
-		return true;
+		return !typeName.endsWith("not null");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(DBInspector.class);

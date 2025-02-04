@@ -38,11 +38,7 @@ public class NotificationEvent implements Serializable {
 
 		NotificationEvent notificationEvent = (NotificationEvent)object;
 
-		if (Objects.equals(getUuid(), notificationEvent.getUuid())) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(getUuid(), notificationEvent.getUuid());
 	}
 
 	public long getDeliverBy() {

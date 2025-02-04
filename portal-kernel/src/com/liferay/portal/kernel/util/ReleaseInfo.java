@@ -133,11 +133,7 @@ public class ReleaseInfo {
 	}
 
 	public static boolean isDXP() {
-		if (_NAME.contains("Community")) {
-			return false;
-		}
-
-		return true;
+		return !_NAME.contains("Community");
 	}
 
 	public static String getVendor() {

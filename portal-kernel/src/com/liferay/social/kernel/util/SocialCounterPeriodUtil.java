@@ -218,11 +218,7 @@ public class SocialCounterPeriodUtil {
 	}
 
 	private static boolean _isMonthlyPeriod() {
-		if (_SOCIAL_ACTIVITY_COUNTER_PERIOD_LENGTH.equals("month")) {
-			return true;
-		}
-
-		return false;
+		return _SOCIAL_ACTIVITY_COUNTER_PERIOD_LENGTH.equals("month");
 	}
 
 	private static boolean _isWithinPeriod(

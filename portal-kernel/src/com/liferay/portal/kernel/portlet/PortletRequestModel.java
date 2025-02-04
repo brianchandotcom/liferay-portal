@@ -877,11 +877,7 @@ public class PortletRequestModel implements Serializable {
 		String hashCode = StringPool.AT.concat(
 			StringUtil.toHexString(object.hashCode()));
 
-		if (objString.endsWith(hashCode)) {
-			return false;
-		}
-
-		return true;
+		return !objString.endsWith(hashCode);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -305,11 +305,7 @@ public class NavItem implements Serializable {
 	public boolean hasBrowsableChildren() throws Exception {
 		List<NavItem> browsableChildren = getBrowsableChildren();
 
-		if (!browsableChildren.isEmpty()) {
-			return true;
-		}
-
-		return false;
+		return !browsableChildren.isEmpty();
 	}
 
 	/**
@@ -323,11 +319,7 @@ public class NavItem implements Serializable {
 	public boolean hasChildren() throws Exception {
 		List<NavItem> children = getChildren();
 
-		if (!children.isEmpty()) {
-			return true;
-		}
-
-		return false;
+		return !children.isEmpty();
 	}
 
 	@Override
@@ -408,11 +400,7 @@ public class NavItem implements Serializable {
 		LayoutTypeController layoutTypeController =
 			layoutType.getLayoutTypeController();
 
-		if (layoutTypeController.isWorkflowEnabled()) {
-			return true;
-		}
-
-		return false;
+		return layoutTypeController.isWorkflowEnabled();
 	}
 
 	private NavItem(

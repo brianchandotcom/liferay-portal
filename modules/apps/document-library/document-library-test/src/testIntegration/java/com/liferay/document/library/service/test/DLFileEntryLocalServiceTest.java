@@ -38,7 +38,6 @@ import com.liferay.document.library.kernel.service.DLTrashLocalServiceUtil;
 import com.liferay.document.library.kernel.store.DLStoreRequest;
 import com.liferay.document.library.kernel.store.DLStoreUtil;
 import com.liferay.document.library.kernel.util.DLAppHelperThreadLocal;
-import com.liferay.document.library.service.test.util.DLFileEntryServiceTestUtil;
 import com.liferay.document.library.test.util.DLTestUtil;
 import com.liferay.document.library.util.DLFileEntryTypeUtil;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
@@ -178,8 +177,11 @@ public class DLFileEntryLocalServiceTest {
 		throws Exception {
 
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
-				DLFileEntryServiceTestUtil.getConfigurationTemporarySwapper(
-					"fileExtensions", new String[] {".doc"})) {
+				new ConfigurationTemporarySwapper(
+					DLConfiguration.class.getName(),
+					HashMapDictionaryBuilder.<String, Object>put(
+						"fileExtensions", new String[] {".doc"}
+					).build())) {
 
 			DLFileEntryLocalServiceUtil.addFileEntry(
 				null, TestPropsValues.getUserId(), _group.getGroupId(),
@@ -201,7 +203,7 @@ public class DLFileEntryLocalServiceTest {
 				new ConfigurationTemporarySwapper(
 					DLConfiguration.class.getName(),
 					HashMapDictionaryBuilder.<String, Object>put(
-						"fileExtensions", "png"
+						"fileExtensions", new String[] {".png"}
 					).build());
 			SafeCloseable safeCloseable =
 				DLAppHelperThreadLocal.setEnabledWithSafeCloseable(false)) {
@@ -228,7 +230,7 @@ public class DLFileEntryLocalServiceTest {
 				new ConfigurationTemporarySwapper(
 					DLConfiguration.class.getName(),
 					HashMapDictionaryBuilder.<String, Object>put(
-						"fileExtensions", "png"
+						"fileExtensions", new String[] {".png"}
 					).build());
 			SafeCloseable safeCloseable =
 				DLAppHelperThreadLocal.setEnabledWithSafeCloseable(true)) {
@@ -1249,7 +1251,7 @@ public class DLFileEntryLocalServiceTest {
 				new ConfigurationTemporarySwapper(
 					DLConfiguration.class.getName(),
 					HashMapDictionaryBuilder.<String, Object>put(
-						"fileExtensions", ".jpg"
+						"fileExtensions", new String[] {".jpg"}
 					).build())) {
 
 			DLFileEntryLocalServiceUtil.addFileEntry(
@@ -1719,8 +1721,11 @@ public class DLFileEntryLocalServiceTest {
 		throws Exception {
 
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
-				DLFileEntryServiceTestUtil.getConfigurationTemporarySwapper(
-					"fileExtensions", new String[] {".txt"})) {
+				new ConfigurationTemporarySwapper(
+					DLConfiguration.class.getName(),
+					HashMapDictionaryBuilder.<String, Object>put(
+						"fileExtensions", new String[] {".txt"}
+					).build())) {
 
 			ServiceContext serviceContext =
 				ServiceContextTestUtil.getServiceContext(

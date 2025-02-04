@@ -6,6 +6,8 @@
 package com.liferay.site.cms.site.initializer.internal.display.context;
 
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -31,6 +33,47 @@ public class AllSectionDisplayContext {
 
 	public List<DropdownItem> getBulkActionDropdownItems() {
 		return new ArrayList<>();
+	}
+
+	public CreationMenu getCreationMenu() {
+		return CreationMenuBuilder.addPrimaryDropdownItem(
+			dropdownItem -> {
+				dropdownItem.setIcon("forms");
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "basic-content"));
+			}
+		).addPrimaryDropdownItem(
+			dropdownItem -> {
+				dropdownItem.setIcon("upload");
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "single-file"));
+			}
+		).addPrimaryDropdownItem(
+			dropdownItem -> {
+				dropdownItem.setIcon("upload-multiple");
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "multiple-files"));
+			}
+		).addPrimaryDropdownItem(
+			dropdownItem -> {
+				dropdownItem.setIcon("blogs");
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "blog"));
+			}
+		).addPrimaryDropdownItem(
+			dropdownItem -> {
+				dropdownItem.setIcon("wiki");
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "knowledge-base"));
+			}
+		).addPrimaryDropdownItem(
+			dropdownItem -> {
+				dropdownItem.setIcon("video");
+				dropdownItem.setLabel(
+					LanguageUtil.get(
+						_httpServletRequest, "external-video-shortcut"));
+			}
+		).build();
 	}
 
 	public Map<String, Object> getEmptyState() {

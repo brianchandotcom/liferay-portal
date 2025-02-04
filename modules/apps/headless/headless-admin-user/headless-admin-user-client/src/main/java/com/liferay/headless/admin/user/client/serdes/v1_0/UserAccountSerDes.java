@@ -6,10 +6,12 @@
 package com.liferay.headless.admin.user.client.serdes.v1_0;
 
 import com.liferay.headless.admin.user.client.dto.v1_0.AccountBrief;
+import com.liferay.headless.admin.user.client.dto.v1_0.AssetLibraryBrief;
 import com.liferay.headless.admin.user.client.dto.v1_0.CustomField;
 import com.liferay.headless.admin.user.client.dto.v1_0.OrganizationBrief;
 import com.liferay.headless.admin.user.client.dto.v1_0.RoleBrief;
 import com.liferay.headless.admin.user.client.dto.v1_0.SiteBrief;
+import com.liferay.headless.admin.user.client.dto.v1_0.TaxonomyCategoryBrief;
 import com.liferay.headless.admin.user.client.dto.v1_0.UserAccount;
 import com.liferay.headless.admin.user.client.dto.v1_0.UserGroupBrief;
 import com.liferay.headless.admin.user.client.json.BaseJSONParser;
@@ -116,6 +118,29 @@ public class UserAccountSerDes {
 			sb.append("\"");
 		}
 
+		if (userAccount.getAssetLibraryBriefs() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"assetLibraryBriefs\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < userAccount.getAssetLibraryBriefs().length;
+				 i++) {
+
+				sb.append(
+					String.valueOf(userAccount.getAssetLibraryBriefs()[i]));
+
+				if ((i + 1) < userAccount.getAssetLibraryBriefs().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (userAccount.getBirthDate() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -129,6 +154,16 @@ public class UserAccountSerDes {
 				liferayToJSONDateFormat.format(userAccount.getBirthDate()));
 
 			sb.append("\"");
+		}
+
+		if (userAccount.getCreator() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"creator\": ");
+
+			sb.append(String.valueOf(userAccount.getCreator()));
 		}
 
 		if (userAccount.getCurrentPassword() != null) {
@@ -581,6 +616,29 @@ public class UserAccountSerDes {
 			sb.append("\"");
 		}
 
+		if (userAccount.getTaxonomyCategoryBriefs() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"taxonomyCategoryBriefs\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < userAccount.getTaxonomyCategoryBriefs().length;
+				 i++) {
+
+				sb.append(
+					String.valueOf(userAccount.getTaxonomyCategoryBriefs()[i]));
+
+				if ((i + 1) < userAccount.getTaxonomyCategoryBriefs().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (userAccount.getUserAccountContactInformation() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -668,6 +726,15 @@ public class UserAccountSerDes {
 				String.valueOf(userAccount.getAlternateName()));
 		}
 
+		if (userAccount.getAssetLibraryBriefs() == null) {
+			map.put("assetLibraryBriefs", null);
+		}
+		else {
+			map.put(
+				"assetLibraryBriefs",
+				String.valueOf(userAccount.getAssetLibraryBriefs()));
+		}
+
 		if (userAccount.getBirthDate() == null) {
 			map.put("birthDate", null);
 		}
@@ -675,6 +742,13 @@ public class UserAccountSerDes {
 			map.put(
 				"birthDate",
 				liferayToJSONDateFormat.format(userAccount.getBirthDate()));
+		}
+
+		if (userAccount.getCreator() == null) {
+			map.put("creator", null);
+		}
+		else {
+			map.put("creator", String.valueOf(userAccount.getCreator()));
 		}
 
 		if (userAccount.getCurrentPassword() == null) {
@@ -912,6 +986,15 @@ public class UserAccountSerDes {
 			map.put("status", String.valueOf(userAccount.getStatus()));
 		}
 
+		if (userAccount.getTaxonomyCategoryBriefs() == null) {
+			map.put("taxonomyCategoryBriefs", null);
+		}
+		else {
+			map.put(
+				"taxonomyCategoryBriefs",
+				String.valueOf(userAccount.getTaxonomyCategoryBriefs()));
+		}
+
 		if (userAccount.getUserAccountContactInformation() == null) {
 			map.put("userAccountContactInformation", null);
 		}
@@ -960,7 +1043,15 @@ public class UserAccountSerDes {
 			else if (Objects.equals(jsonParserFieldName, "alternateName")) {
 				return false;
 			}
+			else if (Objects.equals(
+						jsonParserFieldName, "assetLibraryBriefs")) {
+
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "birthDate")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "creator")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "currentPassword")) {
@@ -1062,6 +1153,11 @@ public class UserAccountSerDes {
 				return false;
 			}
 			else if (Objects.equals(
+						jsonParserFieldName, "taxonomyCategoryBriefs")) {
+
+				return false;
+			}
+			else if (Objects.equals(
 						jsonParserFieldName, "userAccountContactInformation")) {
 
 				return false;
@@ -1110,10 +1206,35 @@ public class UserAccountSerDes {
 					userAccount.setAlternateName((String)jsonParserFieldValue);
 				}
 			}
+			else if (Objects.equals(
+						jsonParserFieldName, "assetLibraryBriefs")) {
+
+				if (jsonParserFieldValue != null) {
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					AssetLibraryBrief[] assetLibraryBriefsArray =
+						new AssetLibraryBrief[jsonParserFieldValues.length];
+
+					for (int i = 0; i < assetLibraryBriefsArray.length; i++) {
+						assetLibraryBriefsArray[i] =
+							AssetLibraryBriefSerDes.toDTO(
+								(String)jsonParserFieldValues[i]);
+					}
+
+					userAccount.setAssetLibraryBriefs(assetLibraryBriefsArray);
+				}
+			}
 			else if (Objects.equals(jsonParserFieldName, "birthDate")) {
 				if (jsonParserFieldValue != null) {
 					userAccount.setBirthDate(
 						toDate((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "creator")) {
+				if (jsonParserFieldValue != null) {
+					userAccount.setCreator(
+						CreatorSerDes.toDTO((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "currentPassword")) {
@@ -1348,6 +1469,28 @@ public class UserAccountSerDes {
 					userAccount.setStatus(
 						UserAccount.Status.create(
 							(String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(
+						jsonParserFieldName, "taxonomyCategoryBriefs")) {
+
+				if (jsonParserFieldValue != null) {
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					TaxonomyCategoryBrief[] taxonomyCategoryBriefsArray =
+						new TaxonomyCategoryBrief[jsonParserFieldValues.length];
+
+					for (int i = 0; i < taxonomyCategoryBriefsArray.length;
+						 i++) {
+
+						taxonomyCategoryBriefsArray[i] =
+							TaxonomyCategoryBriefSerDes.toDTO(
+								(String)jsonParserFieldValues[i]);
+					}
+
+					userAccount.setTaxonomyCategoryBriefs(
+						taxonomyCategoryBriefsArray);
 				}
 			}
 			else if (Objects.equals(

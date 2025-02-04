@@ -4408,8 +4408,26 @@ public abstract class BaseOrganizationResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"assetLibraryBriefs", additionalAssertFieldName)) {
+
+				if (userAccount.getAssetLibraryBriefs() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("birthDate", additionalAssertFieldName)) {
 				if (userAccount.getBirthDate() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("creator", additionalAssertFieldName)) {
+				if (userAccount.getCreator() == null) {
 					valid = false;
 				}
 
@@ -4634,6 +4652,16 @@ public abstract class BaseOrganizationResourceTestCase {
 
 			if (Objects.equals("status", additionalAssertFieldName)) {
 				if (userAccount.getStatus() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"taxonomyCategoryBriefs", additionalAssertFieldName)) {
+
+				if (userAccount.getTaxonomyCategoryBriefs() == null) {
 					valid = false;
 				}
 
@@ -5091,10 +5119,33 @@ public abstract class BaseOrganizationResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals(
+					"assetLibraryBriefs", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						userAccount1.getAssetLibraryBriefs(),
+						userAccount2.getAssetLibraryBriefs())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("birthDate", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						userAccount1.getBirthDate(),
 						userAccount2.getBirthDate())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("creator", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						userAccount1.getCreator(), userAccount2.getCreator())) {
 
 					return false;
 				}
@@ -5427,6 +5478,19 @@ public abstract class BaseOrganizationResourceTestCase {
 			if (Objects.equals("status", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
 						userAccount1.getStatus(), userAccount2.getStatus())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"taxonomyCategoryBriefs", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						userAccount1.getTaxonomyCategoryBriefs(),
+						userAccount2.getTaxonomyCategoryBriefs())) {
 
 					return false;
 				}

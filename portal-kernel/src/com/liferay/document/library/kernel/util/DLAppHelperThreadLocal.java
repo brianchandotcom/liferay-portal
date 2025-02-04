@@ -6,6 +6,7 @@
 package com.liferay.document.library.kernel.util;
 
 import com.liferay.petra.lang.CentralizedThreadLocal;
+import com.liferay.petra.lang.SafeCloseable;
 
 /**
  * @author Eudaldo Alonso
@@ -20,7 +21,11 @@ public class DLAppHelperThreadLocal {
 		_enabled.set(enabled);
 	}
 
-	private static final ThreadLocal<Boolean> _enabled =
+	public static SafeCloseable setEnabledWithSafeCloseable(boolean enabled) {
+		return _enabled.setWithSafeCloseable(enabled);
+	}
+
+	private static final CentralizedThreadLocal<Boolean> _enabled =
 		new CentralizedThreadLocal<>(
 			DLAppHelperThreadLocal.class + "._enabled", () -> Boolean.TRUE);
 

@@ -73,15 +73,6 @@ test('LPD-47067 check that two forms on same page with simplecaptcha could refre
 
 	await addAndConfigureForms(formName, formWidgetPage, widgetPagePage);
 
-	/*
-	await addAndConfigureForms(
-		formWidgetPage.dropdownButton.last(),
-		formName,
-		formWidgetPage,
-		widgetPagePage
-	);
-*/
-
 	await refreshAndCheckCaptcha(page);
 
 	await performLogout(page);
@@ -95,20 +86,16 @@ async function addAndConfigureForms(formName, formWidgetPage, widgetPagePage) {
 	for (let count = 0; count < 2; count++) {
 		await widgetPagePage.addPortlet('Form');
 
-		await formWidgetPage.dropdownButton.nth(count).hover();
 		await formWidgetPage.dropdownButton.nth(count).click();
 		await formWidgetPage.configurationDropdownButton.first().click();
 
 		const formLink = formWidgetPage.getFormLink(formName);
-
 		await formLink.click();
 
 		await formWidgetPage.saveButton.click();
-
 		await formWidgetPage.page.keyboard.press('Escape');
 
 		await widgetPagePage.page.waitForLoadState();
-
 		await widgetPagePage.page.reload();
 	}
 }

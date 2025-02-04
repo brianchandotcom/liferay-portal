@@ -15,6 +15,7 @@ AllSectionDisplayContext allSectionDisplayContext = new AllSectionDisplayContext
 	<frontend-data-set:headless-display
 		apiURL="<%= allSectionDisplayContext.getAPIURL() %>"
 		bulkActionDropdownItems="<%= allSectionDisplayContext.getBulkActionDropdownItems() %>"
+		creationMenu="<%= allSectionDisplayContext.getCreationMenu() %>"
 		emptyState="<%= allSectionDisplayContext.getEmptyState() %>"
 		fdsActionDropdownItems="<%= allSectionDisplayContext.getFDSActionDropdownItems() %>"
 		formName="fm"

@@ -31,7 +31,7 @@ public class DBPartitionExtractVirtualInstanceOperationTest
 					"ExtractVirtualInstanceOperation",
 				LoggerTestUtil.ERROR)) {
 
-			deployConfiguration(_PID, "companyId=L\"0\"\n");
+			deployConfiguration(_PID, "extractCompanyId=L\"0\"\n");
 
 			assertLog(
 				logCapture,

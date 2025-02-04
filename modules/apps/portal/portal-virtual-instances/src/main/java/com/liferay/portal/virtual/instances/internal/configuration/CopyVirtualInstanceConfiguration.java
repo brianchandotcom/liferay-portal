@@ -22,9 +22,6 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface CopyVirtualInstanceConfiguration {
 
-	@Meta.AD(name = "source-company-id", type = Meta.Type.Long)
-	public long sourceCompanyId();
-
 	@Meta.AD(
 		name = "destination-company-id", required = false, type = Meta.Type.Long
 	)
@@ -32,6 +29,9 @@ public interface CopyVirtualInstanceConfiguration {
 
 	@Meta.AD(name = "name")
 	public String name();
+
+	@Meta.AD(name = "source-company-id", type = Meta.Type.Long)
+	public long sourceCompanyId();
 
 	@Meta.AD(name = "virtual-hostname")
 	public String virtualHostname();

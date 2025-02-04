@@ -46,7 +46,7 @@ public class ExtractVirtualInstanceOperation
 							properties);
 
 				long companyId =
-					extractVirtualInstanceConfiguration.companyId();
+					extractVirtualInstanceConfiguration.extractCompanyId();
 
 				if (_companyLocalService.fetchCompany(companyId) == null) {
 					_log.error(

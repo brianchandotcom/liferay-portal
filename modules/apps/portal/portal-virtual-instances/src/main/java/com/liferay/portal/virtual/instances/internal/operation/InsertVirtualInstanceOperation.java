@@ -51,7 +51,8 @@ public class InsertVirtualInstanceOperation
 							InsertVirtualInstanceConfiguration.class,
 							properties);
 
-				long companyId = insertVirtualInstanceConfiguration.companyId();
+				long companyId =
+					insertVirtualInstanceConfiguration.insertCompanyId();
 
 				if (_hasCompany(companyId)) {
 					_log.error(

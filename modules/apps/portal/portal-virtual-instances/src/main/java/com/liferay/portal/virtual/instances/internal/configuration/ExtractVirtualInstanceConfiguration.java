@@ -19,6 +19,6 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface ExtractVirtualInstanceConfiguration {
 
 	@Meta.AD(type = Meta.Type.Long)
-	public long companyId();
+	public long extractCompanyId();
 
 }

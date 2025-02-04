@@ -34,7 +34,7 @@ import org.osgi.framework.ServiceRegistration;
 /**
  * @author Daniel Sanz
  */
-public class SystemFDSBulkActionsSerializerImplTest
+public class BulkActionsSystemFDSSerializerImplTest
 	extends BaseSystemFDSSerializerTestCase {
 
 	@ClassRule
@@ -177,6 +177,6 @@ public class SystemFDSBulkActionsSerializerImplTest
 	private static final FDSBulkActionsRegistryImpl
 		_fdsBulkActionsRegistryImpl = new FDSBulkActionsRegistryImpl();
 	private static final FDSSerializer<List<FDSActionDropdownItem>>
-		_fdsSerializer = new SystemFDSBulkActionsSerializerImpl();
+		_fdsSerializer = new BulkActionsSystemFDSSerializerImpl();
 
 }

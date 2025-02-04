@@ -31,12 +31,6 @@ components:
                         The space's group external reference code.
                     readOnly: true
                     type: string
-                groupId:
-                    description:
-                        The space's groupId.
-                    format: int64
-                    readOnly: true
-                    type: integer
                 id:
                     description:
                         The space's ID.

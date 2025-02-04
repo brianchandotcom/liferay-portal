@@ -13,7 +13,6 @@ import com.liferay.headless.space.dto.v1_0.Space;
 import com.liferay.headless.space.internal.resource.v1_0.BaseSpaceResourceImpl;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.util.JaxRsLinkUtil;
@@ -52,7 +51,7 @@ public class SpaceDTOConverter implements DTOConverter<DepotEntry, Space> {
 	public Space toDTO(DTOConverterContext dtoConverterContext)
 		throws Exception {
 
-		DepotEntry depotEntry = _depotEntryLocalService.getDepotEntry(
+		DepotEntry depotEntry = _depotEntryLocalService.getGroupDepotEntry(
 			(Long)dtoConverterContext.getId());
 
 		Group group = depotEntry.getGroup();
@@ -69,24 +68,23 @@ public class SpaceDTOConverter implements DTOConverter<DepotEntry, Space> {
 						dtoConverterContext.isAcceptAllLanguages(),
 						group.getDescriptionMap()));
 				setExternalReferenceCode(group::getExternalReferenceCode);
-				setGroupId(group::getGroupId);
-				setId(depotEntry::getDepotEntryId);
+				setId(group::getGroupId);
 				setLinkedSiteIds(
 					() -> {
 						List<DepotEntryGroupRel> depotEntryGroupRels =
 							_depotEntryGroupRelLocalService.
 								getDepotEntryGroupRels(depotEntry);
 
-						Long[] groupIds = new Long[depotEntryGroupRels.size()];
+						List<Long> toGroupIds = new ArrayList<>(
+							depotEntryGroupRels.size());
 
 						for (DepotEntryGroupRel depotEntryGroupRel :
 								depotEntryGroupRels) {
 
-							groupIds = ArrayUtil.append(
-								groupIds, depotEntryGroupRel.getGroupId());
+							toGroupIds.add(depotEntryGroupRel.getToGroupId());
 						}
 
-						return groupIds;
+						return toGroupIds.toArray(new Long[0]);
 					});
 				setLinkedSitesExternalReferenceCodes(
 					() -> {

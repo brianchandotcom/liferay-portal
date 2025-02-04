@@ -43,19 +43,35 @@ public class SpaceResourceImpl extends BaseSpaceResourceImpl {
 
 	@Override
 	public void deleteSpace(Long spaceId) throws Exception {
-		DepotEntry depotEntry = _depotEntryService.getDepotEntry(spaceId);
+		DepotEntry depotEntry = _depotEntryService.getGroupDepotEntry(spaceId);
 
 		_depotEntryService.deleteDepotEntry(depotEntry.getDepotEntryId());
 	}
 
 	@Override
+	public Space deleteSpaceLinkToSite(Long spaceId, Long toSiteId)
+		throws Exception {
+
+		DepotEntry depotEntry = _depotEntryService.getGroupDepotEntry(spaceId);
+
+		DepotEntryGroupRel depotEntryGroupRel =
+			_depotEntryGroupRelService.getDepotEntryGroupRel(
+				depotEntry.getDepotEntryId(), toSiteId);
+
+		_depotEntryGroupRelService.deleteDepotEntryGroupRel(
+			depotEntryGroupRel.getDepotEntryGroupRelId());
+
+		return getSpace(spaceId);
+	}
+
+	@Override
 	public Space getSpace(Long spaceId) throws Exception {
-		return _toSpace(_depotEntryService.getDepotEntry(spaceId));
+		return _toSpace(_depotEntryService.getGroupDepotEntry(spaceId));
 	}
 
 	@Override
 	public Space patchSpace(Long spaceId, Space space) throws Exception {
-		DepotEntry depotEntry = _depotEntryService.getDepotEntry(spaceId);
+		DepotEntry depotEntry = _depotEntryService.getGroupDepotEntry(spaceId);
 
 		Group group = depotEntry.getGroup();
 
@@ -99,6 +115,18 @@ public class SpaceResourceImpl extends BaseSpaceResourceImpl {
 				_getServiceContext()));
 	}
 
+	@Override
+	public Space postSpaceLinkToSite(Long spaceId, Long toSiteId)
+		throws Exception {
+
+		DepotEntry depotEntry = _depotEntryService.getGroupDepotEntry(spaceId);
+
+		_depotEntryGroupRelService.addDepotEntryGroupRel(
+			depotEntry.getDepotEntryId(), toSiteId);
+
+		return getSpace(spaceId);
+	}
+
 	private ServiceContext _getServiceContext() throws Exception {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DepotEntry.class.getName(), contextHttpServletRequest);
@@ -123,7 +151,7 @@ public class SpaceResourceImpl extends BaseSpaceResourceImpl {
 					"update",
 					addAction(ActionKeys.UPDATE, depotEntry, "patchSpace")
 				).build(),
-				_dtoConverterRegistry, depotEntry.getDepotEntryId(),
+				_dtoConverterRegistry, depotEntry.getGroupId(),
 				contextAcceptLanguage.getPreferredLocale(), contextUriInfo,
 				contextUser));
 	}

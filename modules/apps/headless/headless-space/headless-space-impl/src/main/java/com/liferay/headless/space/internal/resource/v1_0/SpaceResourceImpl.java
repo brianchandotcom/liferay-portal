@@ -13,6 +13,7 @@ import com.liferay.depot.service.DepotEntryGroupRelService;
 import com.liferay.depot.service.DepotEntryService;
 import com.liferay.headless.space.dto.v1_0.Space;
 import com.liferay.headless.space.resource.v1_0.SpaceResource;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -43,6 +44,10 @@ public class SpaceResourceImpl extends BaseSpaceResourceImpl {
 
 	@Override
 	public void deleteSpace(Long spaceId) throws Exception {
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-32649")) {
+			throw new UnsupportedOperationException();
+		}
+
 		DepotEntry depotEntry = _depotEntryService.getGroupDepotEntry(spaceId);
 
 		_depotEntryService.deleteDepotEntry(depotEntry.getDepotEntryId());
@@ -51,6 +56,10 @@ public class SpaceResourceImpl extends BaseSpaceResourceImpl {
 	@Override
 	public Space deleteSpaceLinkToSite(Long spaceId, Long toSiteId)
 		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-32649")) {
+			throw new UnsupportedOperationException();
+		}
 
 		DepotEntry depotEntry = _depotEntryService.getGroupDepotEntry(spaceId);
 
@@ -66,11 +75,19 @@ public class SpaceResourceImpl extends BaseSpaceResourceImpl {
 
 	@Override
 	public Space getSpace(Long spaceId) throws Exception {
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-32649")) {
+			throw new UnsupportedOperationException();
+		}
+
 		return _toSpace(_depotEntryService.getGroupDepotEntry(spaceId));
 	}
 
 	@Override
 	public Space patchSpace(Long spaceId, Space space) throws Exception {
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-32649")) {
+			throw new UnsupportedOperationException();
+		}
+
 		DepotEntry depotEntry = _depotEntryService.getGroupDepotEntry(spaceId);
 
 		Group group = depotEntry.getGroup();
@@ -104,6 +121,10 @@ public class SpaceResourceImpl extends BaseSpaceResourceImpl {
 
 	@Override
 	public Space postSpace(Space space) throws Exception {
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-32649")) {
+			throw new UnsupportedOperationException();
+		}
+
 		return _toSpace(
 			_depotEntryService.addDepotEntry(
 				LocalizedMapUtil.getLocalizedMap(
@@ -118,6 +139,10 @@ public class SpaceResourceImpl extends BaseSpaceResourceImpl {
 	@Override
 	public Space postSpaceLinkToSite(Long spaceId, Long toSiteId)
 		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-32649")) {
+			throw new UnsupportedOperationException();
+		}
 
 		DepotEntry depotEntry = _depotEntryService.getGroupDepotEntry(spaceId);
 

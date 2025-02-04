@@ -76,31 +76,33 @@ public class SystemFDSItemsActionsSerializerImplTest
 		ServiceRegistration<SystemFDSEntry> systemFDSEntryServiceRegistration1 =
 			registerSystemFDSEntry("fdsName1", "/app", "/endpoint", "schema");
 
-		List<FDSActionDropdownItem> dropDownItemList1 = ListUtil.fromArray(
-			new FDSActionDropdownItem(
-				null, "trash", "delete", "delete", "delete", "delete",
-				"headless"));
+		List<FDSActionDropdownItem> fdsActionDropdownItems1 =
+			ListUtil.fromArray(
+				new FDSActionDropdownItem(
+					null, "trash", "delete", "delete", "delete", "delete",
+					"headless"));
 
 		ServiceRegistration<FDSItemsActions> itemsActionsServiceRegistration1 =
-			_registerItemsActions("fdsName1", dropDownItemList1);
+			_registerItemsActions("fdsName1", fdsActionDropdownItems1);
 
 		Assert.assertEquals(
-			dropDownItemList1,
+			fdsActionDropdownItems1,
 			_fdsSerializer.serialize("fdsName1", httpServletRequest));
 
 		ServiceRegistration<SystemFDSEntry> systemFDSEntryServiceRegistration2 =
 			registerSystemFDSEntry("fdsName2", "/app", "/endpoint", "schema");
 
-		List<FDSActionDropdownItem> dropDownItemList2 = ListUtil.fromArray(
-			new FDSActionDropdownItem(
-				null, "cog", "permissions", "permissions", "get", "permissions",
-				"modal-permissions"));
+		List<FDSActionDropdownItem> fdsActionDropdownItems2 =
+			ListUtil.fromArray(
+				new FDSActionDropdownItem(
+					null, "cog", "permissions", "permissions", "get",
+					"permissions", "modal-permissions"));
 
 		ServiceRegistration<FDSItemsActions> itemsActionsServiceRegistration2 =
-			_registerItemsActions("fdsName2", dropDownItemList2);
+			_registerItemsActions("fdsName2", fdsActionDropdownItems2);
 
 		Assert.assertEquals(
-			dropDownItemList2,
+			fdsActionDropdownItems2,
 			_fdsSerializer.serialize("fdsName2", httpServletRequest));
 
 		Assert.assertNotEquals(
@@ -135,16 +137,16 @@ public class SystemFDSItemsActionsSerializerImplTest
 		systemFDSEntryServiceRegistration2 = registerSystemFDSEntry(
 			"fdsName2", "/app", "/endpoint", "schema");
 
-		dropDownItemList1 = ListUtil.fromArray(
+		fdsActionDropdownItems1 = ListUtil.fromArray(
 			new FDSActionDropdownItem(
 				null, "trash", "delete", "delete", "delete", "delete",
 				"headless"));
 
 		itemsActionsServiceRegistration1 = _registerItemsActions(
-			"fdsName1", dropDownItemList1);
+			"fdsName1", fdsActionDropdownItems1);
 
 		itemsActionsServiceRegistration2 = _registerItemsActions(
-			"fdsName2", dropDownItemList1);
+			"fdsName2", fdsActionDropdownItems1);
 
 		Assert.assertEquals(
 			_fdsSerializer.serialize("fdsName1", httpServletRequest),

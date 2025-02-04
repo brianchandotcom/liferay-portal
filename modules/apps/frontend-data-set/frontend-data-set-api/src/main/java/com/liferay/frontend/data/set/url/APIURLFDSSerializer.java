@@ -10,7 +10,7 @@ import com.liferay.frontend.data.set.serializer.FDSSerializer;
 /**
  * @author Daniel Sanz
  */
-public interface FDSAPIURLSerializer extends FDSSerializer<String> {
+public interface APIURLFDSSerializer extends FDSSerializer<String> {
 
 	@Override
 	public default String getKey() {

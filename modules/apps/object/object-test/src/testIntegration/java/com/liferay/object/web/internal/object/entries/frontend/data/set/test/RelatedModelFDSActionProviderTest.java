@@ -139,7 +139,6 @@ public class RelatedModelFDSActionProviderTest {
 
 		mockHttpServletRequest.addParameter(
 			"objectEntryId", String.valueOf(objectEntryId));
-
 		mockHttpServletRequest.setAttribute(
 			WebKeys.CURRENT_URL, "http://localhost:8080/currentURL");
 

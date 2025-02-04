@@ -177,7 +177,7 @@ export function useSelectorCallback<Result>(
 
 		// We really want to call selector here just on component mount.
 		// This provides an initial value that will be recalculated when
-		// store suscription has been called.
+		// store subscription has been called.
 		// eslint-disable-next-line
 		[]
 	);

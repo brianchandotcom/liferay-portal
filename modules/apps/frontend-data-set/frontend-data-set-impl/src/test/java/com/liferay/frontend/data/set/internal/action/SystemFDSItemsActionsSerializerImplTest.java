@@ -104,17 +104,13 @@ public class SystemFDSItemsActionsSerializerImplTest
 		Assert.assertEquals(
 			fdsActionDropdownItems2,
 			_fdsSerializer.serialize("fdsName2", httpServletRequest));
-
 		Assert.assertNotEquals(
 			_fdsSerializer.serialize("fdsName1", httpServletRequest),
 			_fdsSerializer.serialize("fdsName2", httpServletRequest));
 
 		itemsActionsServiceRegistration1.unregister();
-
 		itemsActionsServiceRegistration2.unregister();
-
 		systemFDSEntryServiceRegistration1.unregister();
-
 		systemFDSEntryServiceRegistration2.unregister();
 
 		// No items actions
@@ -133,7 +129,6 @@ public class SystemFDSItemsActionsSerializerImplTest
 
 		systemFDSEntryServiceRegistration1 = registerSystemFDSEntry(
 			"fdsName1", "/app", "/endpoint", "schema");
-
 		systemFDSEntryServiceRegistration2 = registerSystemFDSEntry(
 			"fdsName2", "/app", "/endpoint", "schema");
 
@@ -144,7 +139,6 @@ public class SystemFDSItemsActionsSerializerImplTest
 
 		itemsActionsServiceRegistration1 = _registerItemsActions(
 			"fdsName1", fdsActionDropdownItems1);
-
 		itemsActionsServiceRegistration2 = _registerItemsActions(
 			"fdsName2", fdsActionDropdownItems1);
 
@@ -153,16 +147,13 @@ public class SystemFDSItemsActionsSerializerImplTest
 			_fdsSerializer.serialize("fdsName2", httpServletRequest));
 
 		itemsActionsServiceRegistration1.unregister();
-
 		itemsActionsServiceRegistration2.unregister();
-
 		systemFDSEntryServiceRegistration1.unregister();
-
 		systemFDSEntryServiceRegistration2.unregister();
 	}
 
 	private ServiceRegistration<FDSItemsActions> _registerItemsActions(
-		String fdsName, List<FDSActionDropdownItem> itemActions) {
+		String fdsName, List<FDSActionDropdownItem> fdsActionDropdownItems) {
 
 		return bundleContext.registerService(
 			FDSItemsActions.class,
@@ -172,7 +163,7 @@ public class SystemFDSItemsActionsSerializerImplTest
 				public List<FDSActionDropdownItem> getFDSActionDropdownItems(
 					HttpServletRequest httpServletRequest) {
 
-					return itemActions;
+					return fdsActionDropdownItems;
 				}
 
 			},

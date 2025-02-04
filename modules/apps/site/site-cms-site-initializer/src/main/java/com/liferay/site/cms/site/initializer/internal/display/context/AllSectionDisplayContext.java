@@ -80,7 +80,7 @@ public class AllSectionDisplayContext {
 		return HashMapBuilder.<String, Object>put(
 			"description",
 			LanguageUtil.get(
-				_httpServletRequest, "click-new-to-create-your-first-content")
+				_httpServletRequest, "click-new-to-create-your-first-asset")
 		).put(
 			"image", "/states/cms_empty_state.svg"
 		).put(

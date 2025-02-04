@@ -299,6 +299,22 @@ public class NavigationMenuResourceTest
 			"structuredContent", true);
 	}
 
+	@Test
+	public void testPostSiteNavigationMenuWithNavigationType()
+		throws Exception {
+
+		NavigationMenu navigationMenu = _randomNavigationMenu(false);
+
+		navigationMenu.setNavigationType(NavigationMenu.NavigationType.PRIMARY);
+
+		navigationMenu = navigationMenuResource.postSiteNavigationMenu(
+			testGroup.getGroupId(), navigationMenu);
+
+		Assert.assertEquals(
+			NavigationMenu.NavigationType.PRIMARY,
+			navigationMenu.getNavigationType());
+	}
+
 	@Override
 	protected boolean equals(
 		NavigationMenu navigationMenu1, NavigationMenu navigationMenu2) {

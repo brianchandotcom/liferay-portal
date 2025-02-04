@@ -6,6 +6,7 @@
 import {openModal, openToast} from 'frontend-js-web';
 
 import ServiceProvider from '../ServiceProvider/index';
+import {DEFAULT_ORDER_DETAILS_PORTLET_ID} from '../components/mini_cart/util/constants';
 import {liferayNavigate} from './index';
 
 const DeliveryCartAPI = ServiceProvider.DeliveryCartAPI('v1');
@@ -87,7 +88,7 @@ export function createCommerceCart({
 
 				if (orderTypeId) {
 					createOrderActionURL.searchParams.set(
-						'commerceOrderTypeId',
+						`_${DEFAULT_ORDER_DETAILS_PORTLET_ID}_commerceOrderTypeId`,
 						String(orderTypeId)
 					);
 				}

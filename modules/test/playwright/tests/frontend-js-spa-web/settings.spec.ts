@@ -106,12 +106,12 @@ test(
 			expect(await isSPAEnabled({page})).toBeTruthy();
 		});
 
-		await test.step('Change the default timeout from 30000ms to 30ms', async () => {
+		await test.step('Change the default timeout from 30000ms to 1ms', async () => {
 			await userNotificationTimeoutLabel.waitFor({state: 'visible'});
 			expect(userNotificationTimeoutLabel).toHaveValue('30000');
 
 			await userNotificationTimeoutLabel.click();
-			await userNotificationTimeoutLabel.fill('30');
+			await userNotificationTimeoutLabel.fill('1');
 
 			if (await saveButton.isVisible()) {
 				await saveButton.click();
@@ -128,6 +128,21 @@ test(
 
 			await userNotificationTimeoutLabel.waitFor({state: 'visible'});
 
+			// Install a Promise in the browser that resolves when endNavigate
+			// is fired. This is needed because endNavigate causes the alert to
+			// disappear so we cannot test it from Playwright code unless we
+			// intercept it in the browser.
+
+			await page.evaluate(() => {
+				window['alertPromise'] = new Promise((resolve) => {
+					Liferay.on('endNavigate', () => {
+						resolve(
+							document.querySelector('.alert-warning')?.innerHTML
+						);
+					});
+				});
+			});
+
 			if (await saveButton.isVisible()) {
 				await saveButton.click();
 			}
@@ -135,16 +150,21 @@ test(
 				await updateButton.click();
 			}
 
-			await waitForAlert(
-				page,
-				'Oops:It looks like this is taking longer than expected.',
-				{type: 'warning'}
+			// Wait for the Promise we installed a few lines above then return
+			// its value to Playwright domain.
+
+			const innerHTML = await page.evaluate(
+				async () => await window['alertPromise']
+			);
+
+			expect(innerHTML).toContain(
+				'It looks like this is taking longer than expected.'
 			);
 		});
 
 		await test.step('Change the timeout back to 30000ms', async () => {
 			await userNotificationTimeoutLabel.waitFor({state: 'visible'});
-			expect(userNotificationTimeoutLabel).toHaveValue('30');
+			expect(userNotificationTimeoutLabel).toHaveValue('1');
 
 			await userNotificationTimeoutLabel.click();
 			await userNotificationTimeoutLabel.fill('30000');

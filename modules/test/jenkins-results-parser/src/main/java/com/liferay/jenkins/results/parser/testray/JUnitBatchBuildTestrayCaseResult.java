@@ -153,7 +153,7 @@ public class JUnitBatchBuildTestrayCaseResult
 		}
 
 		if (!errorMessages.isEmpty()) {
-			if (sb.length() != 0) {
+			if (sb.length() > 0) {
 				sb.append("\n\n");
 			}
 
@@ -168,7 +168,7 @@ public class JUnitBatchBuildTestrayCaseResult
 					"\n     ", new ArrayList<>(errorMessages.keySet())));
 		}
 
-		if (sb.length() != 0) {
+		if (sb.length() > 0) {
 			return sb.toString();
 		}
 

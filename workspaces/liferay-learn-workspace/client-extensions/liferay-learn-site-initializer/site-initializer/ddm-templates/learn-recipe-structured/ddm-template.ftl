@@ -2,12 +2,14 @@
 	function checkScreenSize() {
 		var collapsibleContent = document.getElementById('collapsibleContent');
 
-		if (window.innerWidth >= 768) {
-			collapsibleContent.style.display = "block";
-			return;
-		}
+		if (collapsibleContent) {
+			if (window.innerWidth >= 768) {
+				collapsibleContent.style.display = "block";
+				return;
+			}
 
-		collapsibleContent.style.display = "none";
+			collapsibleContent.style.display = "none";
+		}
 	}
 
 	document.addEventListener('DOMContentLoaded', function() {

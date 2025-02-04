@@ -456,6 +456,7 @@ List<String> errorMessages = (List<String>)request.getAttribute(CommerceWebKeys.
 
 			<liferay-ui:icon
 				icon="print"
+				linkCssClass="dropdown-print-icon"
 				message="print"
 				target="_blank"
 				url="<%= commerceOrderContentDisplayContext.getExportCommerceOrderReportURL() %>"

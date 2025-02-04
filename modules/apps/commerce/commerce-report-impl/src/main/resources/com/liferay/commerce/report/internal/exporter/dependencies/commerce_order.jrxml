@@ -443,12 +443,12 @@
 				<textFieldExpression><![CDATA[$P{language}.get($P{locale}, "external-reference-code")]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement height="14" uuid="752f0505-9393-4c74-bb26-99d7ff2af666" width="167" x="354" y="150">
+				<reportElement height="14" uuid="752f0505-9393-4c74-bb26-99d7ff2af666" width="200" x="354" y="150">
 					<property name="com.jaspersoft.studio.unit.height" value="px" />
 					<property name="com.jaspersoft.studio.unit.width" value="px" />
 				</reportElement>
 				<textElement verticalAlignment="Middle">
-					<font size="9" />
+					<font size="8" />
 				</textElement>
 				<textFieldExpression><![CDATA[$P{externalReferenceCode}]]></textFieldExpression>
 			</textField>

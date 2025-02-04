@@ -11,6 +11,11 @@ html {
 	.dropdown-menu {
 		z-index: 999;
 	}
+
+	.dropdown-print-icon .c-inner {
+		display: inline;
+		margin-right: -0.75rem;
+	}
 }
 
 #minium {

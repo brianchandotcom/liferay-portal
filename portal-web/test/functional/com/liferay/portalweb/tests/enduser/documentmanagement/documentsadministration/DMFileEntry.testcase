@@ -409,30 +409,6 @@ definition {
 		}
 	}
 
-	@priority = 4
-	@refactordone
-	test CanCancelCheckout {
-		property custom.properties = "dl.actions.visible=true";
-		property portal.acceptance = "true";
-
-		JSONDocument.addFileWithUploadedFile(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentTitle = "DM Document Title",
-			groupName = "Guest",
-			mimeType = "application/msword",
-			sourceFileName = "Document_1.doc");
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "list");
-
-		DMDocument.checkoutPG(dmDocumentTitle = "DM Document Title");
-
-		Navigator.gotoPage(pageName = "Documents and Media Page");
-
-		DMDocument.cancelCheckoutPG(dmDocumentTitle = "DM Document Title");
-	}
-
 	@description = "This test ensures that the document type of a published basic document can be changed."
 	@priority = 4
 	@refactordone

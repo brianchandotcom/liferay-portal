@@ -26,4 +26,10 @@ public interface CMSSiteInitializerConfiguration {
 	)
 	public String[] contentClassNames();
 
+	@Meta.AD(
+		deflt = "com.liferay.document.library.kernel.model.DLFileEntry",
+		name = "files-class-names", required = false
+	)
+	public String[] filesClassNames();
+
 }

@@ -1,8 +1,8 @@
 {
-	"friendlyURL": "/media",
+	"friendlyURL": "/files",
 	"hidden": false,
 	"name_i18n": {
-		"en_US": "Media"
+		"en_US": "Files"
 	},
 	"private": false,
 	"system": false,

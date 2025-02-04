@@ -103,6 +103,7 @@ export class AccountsPage {
 		this.page = page;
 		this.pageTitle = page.getByTestId('headerTitle');
 		this.usersTab = page.getByRole('link', {
+			exact: true,
 			name: 'Users',
 		});
 	}
@@ -122,8 +123,8 @@ export class AccountsPage {
 		}
 	}
 
-	async goto() {
-		await this.applicationsMenuPage.goToAccounts();
+	async goto(forceReload = true) {
+		await this.applicationsMenuPage.goToAccounts(forceReload);
 	}
 
 	async gotoAccountAdmin() {

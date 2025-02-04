@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {expect, mergeTests} from '@playwright/test';
+import {Page, expect, mergeTests} from '@playwright/test';
 
 import {accountsPagesTest} from '../../fixtures/accountsPagesTest';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
@@ -12,8 +12,15 @@ import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {serverAdministrationPageTest} from '../../fixtures/serverAdministrationPageTest';
 import {usersAndOrganizationsPagesTest} from '../../fixtures/usersAndOrganizationsPagesTest';
+import {virtualInstancesPagesTest} from '../../fixtures/virtualInstancesPagesTest';
+import {AccountUserSelectorPage} from '../../pages/account-admin-web/AccountUserSelectorPage';
+import {AccountUsersPage} from '../../pages/account-admin-web/AccountUsersPage';
+import {AccountsPage} from '../../pages/account-admin-web/AccountsPage';
+import {EditAccountPage} from '../../pages/account-admin-web/EditAccountPage';
+import {EditUserPage} from '../../pages/users-admin-web/EditUserPage';
 import getRandomString from '../../utils/getRandomString';
 import {nextPage, setItemsPerPage} from '../../utils/pagination';
+import performLogin from '../../utils/performLogin';
 import {waitForAlert} from '../../utils/waitForAlert';
 
 export const test = mergeTests(
@@ -22,8 +29,9 @@ export const test = mergeTests(
 	applicationsMenuPageTest,
 	dataApiHelpersTest,
 	loginTest(),
+	serverAdministrationPageTest,
 	usersAndOrganizationsPagesTest,
-	serverAdministrationPageTest
+	virtualInstancesPagesTest
 );
 
 test(
@@ -165,7 +173,7 @@ test(
 
 		for (const index of [1, 3]) {
 			await (
-				await accountUsersPage.usersTable.rowCheckBox(users[index].name)
+				await accountUsersPage.usersTable.rowCheckbox(users[index].name)
 			).check();
 		}
 
@@ -941,10 +949,10 @@ test('LPD-47225 Can filter valid domain users and all users when assigning', asy
 		await page.waitForTimeout(100);
 
 		expect(
-			await accountUserSelectorPage.usersTable.rowCheckBox(user1.name)
+			await accountUserSelectorPage.usersTable.rowCheckbox(user1.name)
 		).toBeNull();
 		expect(
-			await accountUserSelectorPage.usersTable.rowCheckBox(user2.name)
+			await accountUserSelectorPage.usersTable.rowCheckbox(user2.name)
 		).toBeNull();
 
 		await accountUserSelectorPage.usersTable.filterButton.click();
@@ -955,16 +963,16 @@ test('LPD-47225 Can filter valid domain users and all users when assigning', asy
 		await page.waitForTimeout(100);
 
 		await expect(
-			await accountUserSelectorPage.usersTable.rowCheckBox(user1.name)
+			await accountUserSelectorPage.usersTable.rowCheckbox(user1.name)
 		).toBeVisible();
 		await expect(
-			await accountUserSelectorPage.usersTable.rowCheckBox(user1.name)
+			await accountUserSelectorPage.usersTable.rowCheckbox(user1.name)
 		).toBeEnabled();
 		await expect(
-			await accountUserSelectorPage.usersTable.rowCheckBox(user2.name)
+			await accountUserSelectorPage.usersTable.rowCheckbox(user2.name)
 		).toBeVisible();
 		await expect(
-			await accountUserSelectorPage.usersTable.rowCheckBox(user2.name)
+			await accountUserSelectorPage.usersTable.rowCheckbox(user2.name)
 		).toBeEnabled();
 
 		await accountUserSelectorPage.usersTable.selectAllItemsCheckbox.check();
@@ -1004,13 +1012,13 @@ test('LPD-47225 Can filter valid domain users and all users when assigning', asy
 		await page.waitForTimeout(100);
 
 		await expect(
-			await accountUserSelectorPage.usersTable.rowCheckBox(user1.name)
+			await accountUserSelectorPage.usersTable.rowCheckbox(user1.name)
 		).toBeVisible();
 		await expect(
-			await accountUserSelectorPage.usersTable.rowCheckBox(user1.name)
+			await accountUserSelectorPage.usersTable.rowCheckbox(user1.name)
 		).toBeEnabled();
 		expect(
-			await accountUserSelectorPage.usersTable.rowCheckBox(user2.name)
+			await accountUserSelectorPage.usersTable.rowCheckbox(user2.name)
 		).toBeNull();
 
 		await accountUserSelectorPage.usersTable.filterButton.click();
@@ -1021,16 +1029,16 @@ test('LPD-47225 Can filter valid domain users and all users when assigning', asy
 		await page.waitForTimeout(100);
 
 		await expect(
-			await accountUserSelectorPage.usersTable.rowCheckBox(user1.name)
+			await accountUserSelectorPage.usersTable.rowCheckbox(user1.name)
 		).toBeVisible();
 		await expect(
-			await accountUserSelectorPage.usersTable.rowCheckBox(user1.name)
+			await accountUserSelectorPage.usersTable.rowCheckbox(user1.name)
 		).toBeEnabled();
 		await expect(
-			await accountUserSelectorPage.usersTable.rowCheckBox(user2.name)
+			await accountUserSelectorPage.usersTable.rowCheckbox(user2.name)
 		).toBeVisible();
 		await expect(
-			await accountUserSelectorPage.usersTable.rowCheckBox(user2.name)
+			await accountUserSelectorPage.usersTable.rowCheckbox(user2.name)
 		).toBeDisabled();
 
 		await accountUserSelectorPage.usersTable.selectAllItemsCheckbox.check();
@@ -1409,4 +1417,120 @@ test('LPD-47225 Can view account users from manage users link', async ({
 	await expect(
 		accountUsersPage.usersTable.cell(randomString, false)
 	).toBeVisible();
+});
+
+test('LPD-47225 Blocked domain is scoped to a virtual instance', async ({
+	accountUserSelectorPage,
+	accountUsersPage,
+	accountsPage,
+	apiHelpers,
+	browser,
+	editAccountPage,
+	editUserPage,
+	emailDomainsInstanceSettingsPage,
+	page,
+	virtualInstancesPage,
+}) => {
+	test.setTimeout(600000);
+
+	const DEFAULT_VIRTUAL_INSTANCE_NAME = 'www.able.com';
+
+	await emailDomainsInstanceSettingsPage.enableEmailDomainValidation(
+		true,
+		'yahoo.com,blocked.com'
+	);
+
+	let newPage: Page;
+
+	try {
+		await accountsPage.goto(false);
+
+		await accountsPage.accountsTable.newButton.click();
+		await editAccountPage.createAccount(apiHelpers, {
+			name: getRandomString(),
+		});
+
+		await editAccountPage.usersLink.click();
+		await accountUsersPage.usersTable.newButton.click();
+		await accountUsersPage.assignUserMenuItem.click();
+		await accountUserSelectorPage.usersTable.newButton.click();
+
+		const randomString = getRandomString();
+
+		await editUserPage.emailAddressInput.fill(
+			`${getRandomString()}@blocked.com`
+		);
+		await editUserPage.firstNameInput.fill(randomString);
+		await editUserPage.lastNameInput.fill(randomString);
+		await editUserPage.screenNameInput.fill(randomString);
+
+		await expect(editUserPage.emailAddressError).toContainText(
+			'is a blocked domain.'
+		);
+
+		await editUserPage.saveButton.click();
+
+		await waitForAlert(page, 'Your request failed to complete', {
+			type: 'danger',
+		});
+
+		await virtualInstancesPage.addNewVirtualInstance(
+			DEFAULT_VIRTUAL_INSTANCE_NAME
+		);
+
+		newPage = await browser.newPage({
+			baseURL: `http://${DEFAULT_VIRTUAL_INSTANCE_NAME}:8080`,
+		});
+
+		accountUserSelectorPage = new AccountUserSelectorPage(newPage);
+		accountUsersPage = new AccountUsersPage(newPage);
+		accountsPage = new AccountsPage(newPage);
+		editAccountPage = new EditAccountPage(newPage);
+		editUserPage = new EditUserPage(newPage);
+
+		await performLogin(
+			newPage,
+			'test',
+			'',
+			`@${DEFAULT_VIRTUAL_INSTANCE_NAME}.com`
+		);
+
+		await accountsPage.goto(false);
+
+		await accountsPage.accountsTable.newButton.click();
+		await editAccountPage.createAccount(apiHelpers, {
+			name: getRandomString(),
+		});
+
+		await editAccountPage.usersLink.click();
+		await accountUsersPage.usersTable.newButton.click();
+		await accountUsersPage.assignUserMenuItem.click();
+		await accountUserSelectorPage.usersTable.newButton.click();
+
+		await editUserPage.emailAddressInput.fill(
+			`${getRandomString()}@blocked.com`
+		);
+		await editUserPage.firstNameInput.fill(randomString);
+		await editUserPage.lastNameInput.fill(randomString);
+		await editUserPage.screenNameInput.fill(randomString);
+
+		await expect(editUserPage.emailAddressError).toHaveCount(0);
+
+		await editUserPage.saveButton.click();
+
+		await waitForAlert(newPage);
+	}
+	finally {
+		if (newPage) {
+			await newPage.close();
+		}
+
+		await virtualInstancesPage.deleteVirtualInstance(
+			DEFAULT_VIRTUAL_INSTANCE_NAME
+		);
+		await emailDomainsInstanceSettingsPage.enableEmailDomainValidation(
+			false,
+			''
+		);
+	}
 });

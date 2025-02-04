@@ -58,7 +58,7 @@ export class DataTablePage {
 		colIndex?: number,
 		strictEqual?: boolean
 	) => Promise<Locator>;
-	readonly rowCheckBox: (
+	readonly rowCheckbox: (
 		value: string,
 		colIndex?: number,
 		strictEqual?: boolean
@@ -66,6 +66,9 @@ export class DataTablePage {
 	readonly searchButton: Locator;
 	readonly searchInput: Locator;
 	readonly selectAllItemsCheckbox: Locator;
+	readonly selectViewButton: Locator;
+	readonly selectViewListButton: Locator;
+	readonly selectViewTableButton: Locator;
 	readonly table: Locator;
 	readonly valueLink: (value: string, exact?: boolean) => Locator;
 
@@ -146,7 +149,7 @@ export class DataTablePage {
 
 			return null;
 		};
-		this.rowCheckBox = async (value, colIndex = 1, strictEqual = true) => {
+		this.rowCheckbox = async (value, colIndex = 1, strictEqual = true) => {
 			const row = await this.row(colIndex, value, strictEqual);
 
 			if (row && row.row) {
@@ -160,8 +163,25 @@ export class DataTablePage {
 		this.selectAllItemsCheckbox = page.getByLabel(
 			'Select All Items on the Page'
 		);
+		this.selectViewButton = page.getByLabel('Select View');
+		this.selectViewListButton = page.getByRole('menuitem', {name: 'List'});
+		this.selectViewTableButton = page.getByRole('menuitem', {
+			name: 'Table',
+		});
 		this.valueLink = (value, exact = true) =>
 			page.getByRole('link', {exact, name: value});
+	}
+
+	async changeView(view: string) {
+		await this.selectViewButton.click();
+
+		if (view === 'List') {
+			await this.selectViewListButton.click();
+
+			return;
+		}
+
+		await this.selectViewTableButton.click();
 	}
 
 	async search(value: string) {

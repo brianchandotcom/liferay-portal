@@ -33,7 +33,7 @@ export class AccountUserSelectorPage {
 		await expect(this.usersTable.searchInput).toBeEditable();
 
 		for (const name of names) {
-			await (await this.usersTable.rowCheckBox(name)).check();
+			await (await this.usersTable.rowCheckbox(name)).check();
 		}
 		await this.assignButton.click();
 

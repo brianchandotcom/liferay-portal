@@ -8,6 +8,7 @@ import {Locator, Page} from '@playwright/test';
 import {DataTablePage} from './DataTablePage';
 
 export class AccountUsersPage {
+	readonly assignRolesMenuItem: Locator;
 	readonly assignUserMenuItem: Locator;
 	readonly inviteUserMenuItem: Locator;
 	readonly page: Page;
@@ -15,6 +16,9 @@ export class AccountUsersPage {
 	readonly usersTable: DataTablePage;
 
 	constructor(page: Page) {
+		this.assignRolesMenuItem = page.getByRole('menuitem', {
+			name: 'Assign Roles',
+		});
 		this.assignUserMenuItem = page.getByRole('menuitem', {
 			name: 'Assign Users',
 		});

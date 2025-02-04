@@ -122,7 +122,7 @@ test('LPD-47225 Can add and remove organizations to an account in bulk', async (
 
 	for (const index of [1, 3]) {
 		await (
-			await accountOrganizationsPage.organizationsTable.rowCheckBox(
+			await accountOrganizationsPage.organizationsTable.rowCheckbox(
 				`Organization ${index}`
 			)
 		).check();

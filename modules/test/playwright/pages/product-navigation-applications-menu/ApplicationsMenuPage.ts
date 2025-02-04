@@ -269,8 +269,14 @@ export class ApplicationsMenuPage {
 		}
 	}
 
-	async goToAccounts() {
-		await this.goto();
+	async goToAccounts(forceReload = true) {
+		if (forceReload) {
+			await this.goto();
+		}
+		else {
+			await this.homePage.openApplicationMenu();
+		}
+
 		await this.controlPanelButton.click();
 		await this.accountsItem.click();
 	}

@@ -16,6 +16,8 @@ export class RoleDefinePermissionsPage {
 	readonly page: Page;
 	readonly permissionCheckbox: (permissionName: string) => Locator;
 	readonly portletResourceLabel: Locator;
+	readonly resourceName: (resourceName: string) => Locator;
+	readonly resourceRemoveLink: (resourceName: string) => Locator;
 	readonly resourceSection: (title: string) => Locator;
 	readonly saveButton: Locator;
 	readonly searchInput: Locator;
@@ -32,9 +34,17 @@ export class RoleDefinePermissionsPage {
 		};
 		this.page = page;
 		this.permissionCheckbox = (permissionName: string) => {
-			return page.getByLabel(permissionName);
+			return page
+				.getByLabel(permissionName)
+				.and(page.getByRole('checkbox'));
 		};
 		this.portletResourceLabel = page.getByTestId('portletResourceLabel');
+		this.resourceName = (resourceName) =>
+			page.getByRole('cell', {name: resourceName});
+		this.resourceRemoveLink = (resourceName) =>
+			this.resourceName(resourceName)
+				.locator('..')
+				.getByRole('link', {name: 'Remove'});
 		this.resourceSection = (title: string) => {
 			return page
 				.locator('.sheet-tertiary-title')

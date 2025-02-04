@@ -8,12 +8,14 @@ import {FrameLocator, Locator, Page} from '@playwright/test';
 import {searchTableRowByValue} from './UsersAndOrganizationsPage';
 
 export class EditUserPage {
+	readonly appsLink: Locator;
 	readonly confirmButton: Locator;
 	readonly customField: (fieldName: string) => Promise<Locator>;
 	readonly emailAddressError: Locator;
 	readonly emailAddressInput: Locator;
 	readonly firstNameInput: Locator;
 	readonly generateWebDAVPasswordButton: Locator;
+	readonly informationLink: Locator;
 	readonly lastNameInput: Locator;
 	readonly membershipsAccountsRemoveButton: (accountName: string) => Locator;
 	readonly membershipsAccountsTableRow: (
@@ -34,6 +36,9 @@ export class EditUserPage {
 	readonly page: Page;
 	readonly passwordConfirmationFrame: FrameLocator;
 	readonly passwordLink: Locator;
+	readonly profileAndDashboardLink: Locator;
+	readonly regularRoleCell: (name: string) => Locator;
+	readonly regularRoleCellButton: (name: string) => Locator;
 	readonly rolesLink: Locator;
 	readonly saveButton: Locator;
 	readonly screenNameInput: Locator;
@@ -54,6 +59,10 @@ export class EditUserPage {
 		value: string,
 		strictEqual?: boolean
 	) => Promise<{column: Locator; row: Locator}>;
+	readonly selectRegularRolesButton: Locator;
+	readonly selectRegularRolesChooseButton: (name: string) => Locator;
+	readonly selectRegularRolesFrame: FrameLocator;
+	readonly selectRegularRolesSearchInput: Locator;
 	readonly selectSiteRolesButton: Locator;
 	readonly selectSiteRolesFrame: FrameLocator;
 	readonly selectSiteRolesTable: Locator;
@@ -75,6 +84,10 @@ export class EditUserPage {
 	readonly yourPasswordInput: Locator;
 
 	constructor(page: Page) {
+		this.appsLink = page.getByRole('link', {
+			exact: true,
+			name: 'Apps',
+		});
 		this.customField = async (fieldName: string) => {
 			await page.getByText('Custom Fields').waitFor({timeout: 15 * 1000});
 
@@ -94,6 +107,10 @@ export class EditUserPage {
 		this.generateWebDAVPasswordButton = page.getByTestId(
 			'generateWebDAVPasswordButton'
 		);
+		this.informationLink = page.getByRole('link', {
+			exact: true,
+			name: 'Information',
+		});
 		this.lastNameInput = page.getByLabel('Last Name');
 		this.membershipsAccountsRemoveButton = (accountName) =>
 			page.getByLabel(`Remove ${accountName}`);
@@ -146,6 +163,13 @@ export class EditUserPage {
 			exact: true,
 			name: 'Password',
 		});
+		this.profileAndDashboardLink = page.getByRole('link', {
+			exact: true,
+			name: 'Profile and Dashboard',
+		});
+		this.regularRoleCell = (name) => page.getByRole('cell', {name});
+		this.regularRoleCellButton = (name) =>
+			this.regularRoleCell(name).locator('..').getByRole('button');
 		this.rolesLink = page.getByRole('link', {
 			exact: true,
 			name: 'Roles',
@@ -203,6 +227,16 @@ export class EditUserPage {
 				strictEqual
 			);
 		};
+		this.selectRegularRolesButton = page.getByLabel('Select Regular Roles');
+		this.selectRegularRolesChooseButton = (name) =>
+			this.selectRegularRolesFrame.getByLabel(`Choose ${name}`);
+		this.selectRegularRolesFrame = page.frameLocator(
+			'iframe[title="Select Regular Role"]'
+		);
+		this.selectRegularRolesSearchInput =
+			this.selectRegularRolesFrame.getByPlaceholder('Search for', {
+				exact: true,
+			});
 		this.selectSiteRolesButton = page.locator(
 			'#_com_liferay_users_admin_web_portlet_UsersAdminPortlet_selectSiteRoleLink'
 		);

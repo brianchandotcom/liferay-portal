@@ -5,20 +5,35 @@
 
 import {Locator, Page} from '@playwright/test';
 
+import {DataTablePage} from '../account-admin-web/DataTablePage';
 import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
 
 export class RolesPage {
+	readonly accountRolesLink: Locator;
 	readonly applicationsMenuPage: ApplicationsMenuPage;
-	readonly page: Page;
 	readonly deleteButton: Locator;
 	readonly optionsButton: Locator;
+	readonly page: Page;
+	readonly rolesTable: DataTablePage;
 	readonly userLink: Locator;
 
 	constructor(page: Page) {
+		this.accountRolesLink = page.getByRole('link', {
+			exact: true,
+			name: 'Account Roles',
+		});
 		this.applicationsMenuPage = new ApplicationsMenuPage(page);
-		this.page = page;
 		this.deleteButton = page.getByRole('menuitem', {name: 'Delete'});
 		this.optionsButton = page.getByLabel('Options', {exact: true});
+		this.page = page;
+		this.rolesTable = new DataTablePage(
+			page,
+			page
+				.locator(
+					'#portlet_com_liferay_roles_admin_web_portlet_RolesAdminPortlet div'
+				)
+				.first()
+		);
 		this.userLink = page.getByRole('link', {exact: true, name: 'User'});
 	}
 

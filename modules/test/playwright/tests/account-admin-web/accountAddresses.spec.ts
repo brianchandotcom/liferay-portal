@@ -346,10 +346,10 @@ test('LPD-46415 Can delete addresses of an account in bulk', async ({
 	).toBeVisible();
 
 	await (
-		await accountAddressesPage.addressesTable.rowCheckBox(addresses[0].name)
+		await accountAddressesPage.addressesTable.rowCheckbox(addresses[0].name)
 	).check();
 	await (
-		await accountAddressesPage.addressesTable.rowCheckBox(addresses[1].name)
+		await accountAddressesPage.addressesTable.rowCheckbox(addresses[1].name)
 	).check();
 
 	await accountAddressesPage.deleteButton.click();

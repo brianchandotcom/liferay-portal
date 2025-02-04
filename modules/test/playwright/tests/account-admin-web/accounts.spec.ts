@@ -439,7 +439,7 @@ test('LPD-44526 Can deactivate and activate accounts in bulk', async ({
 	];
 
 	for (const name of accountNames) {
-		await (await accountsPage.accountsTable.rowCheckBox(name)).click();
+		await (await accountsPage.accountsTable.rowCheckbox(name)).click();
 	}
 
 	page.on('dialog', async (dialog) => await dialog.accept());
@@ -466,7 +466,7 @@ test('LPD-44526 Can deactivate and activate accounts in bulk', async ({
 	}
 
 	for (const name of accountNames) {
-		await (await accountsPage.accountsTable.rowCheckBox(name)).click();
+		await (await accountsPage.accountsTable.rowCheckbox(name)).click();
 	}
 
 	await accountsPage.activateButton.click();
@@ -583,7 +583,7 @@ test('LPD-45897 Can delete accounts in bulk', async ({
 
 	for (const i of [1, 2, 4, 6]) {
 		await (
-			await accountsPage.accountsTable.rowCheckBox(`Account ${i}`)
+			await accountsPage.accountsTable.rowCheckbox(`Account ${i}`)
 		).click();
 	}
 
@@ -1451,4 +1451,92 @@ test('LPD-47225 Can add and remove tags to an account', async ({
 	await expect(editAccountPage.tagInput(tags[0].name)).toHaveCount(0);
 	await expect(editAccountPage.tagInput(tags[1].name)).toHaveCount(0);
 	await expect(editAccountPage.tagInput(tags[2].name)).toHaveCount(0);
+});
+
+test('LPD-47225 Smoke test', async ({
+	accountsPage,
+	apiHelpers,
+	editAccountPage,
+}) => {
+	const account = {
+		name: getRandomString(),
+		taxID: getRandomString(),
+	};
+
+	await accountsPage.goto();
+
+	await accountsPage.accountsTable.newButton.click();
+	await editAccountPage.createAccount(apiHelpers, account);
+	await editAccountPage.backButton.click();
+	await accountsPage.accountsTable.search(account.name);
+
+	await expect(accountsPage.accountsTable.cell(account.name)).toBeVisible();
+	await expect(
+		(await accountsPage.accountsTable.row(1, account.name, true)).row
+	).toContainText('Active');
+
+	await accountsPage.accountNameLink(account.name).click();
+
+	await expect(editAccountPage.accountNameInput).toHaveValue(account.name);
+	await expect(editAccountPage.taxIDInput).toHaveValue(account.taxID);
+});
+
+test('LPD-47225 Smoke test for service accounts', async ({
+	editUserPage,
+	page,
+	serviceAccountsPage,
+}) => {
+	const roleName = 'Portal Content Reviewer';
+
+	await serviceAccountsPage.goto();
+
+	await expect(
+		serviceAccountsPage.usersTable.cell('default-service-account')
+	).toBeVisible();
+
+	await (
+		await serviceAccountsPage.usersTable.cellLink(
+			'default-service-account',
+			1,
+			false
+		)
+	).click();
+
+	await expect(editUserPage.appsLink).toBeVisible();
+	await expect(editUserPage.informationLink).toBeVisible();
+	await expect(editUserPage.membershipsLink).toBeVisible();
+	await expect(editUserPage.organizationsLink).toBeVisible();
+	await expect(editUserPage.passwordLink).toHaveCount(0);
+	await expect(editUserPage.profileAndDashboardLink).toBeVisible();
+	await expect(editUserPage.rolesLink).toBeVisible();
+	await expect(editUserPage.screenNameInput).toBeDisabled();
+
+	await editUserPage.rolesLink.click();
+	await editUserPage.selectRegularRolesButton.click();
+
+	await expect(editUserPage.selectRegularRolesSearchInput).toBeEnabled();
+
+	await editUserPage.selectRegularRolesChooseButton(roleName).click();
+
+	await expect(editUserPage.regularRoleCell(roleName)).toBeVisible();
+
+	await editUserPage.saveButton.click();
+
+	await waitForAlert(page);
+
+	await page.reload();
+
+	await expect(editUserPage.regularRoleCell(roleName)).toBeVisible();
+
+	await editUserPage.regularRoleCellButton(roleName).click();
+
+	await expect(editUserPage.regularRoleCell(roleName)).toHaveCount(0);
+
+	await editUserPage.saveButton.click();
+
+	await waitForAlert(page);
+
+	await page.reload();
+
+	await expect(editUserPage.regularRoleCell(roleName)).toHaveCount(0);
 });

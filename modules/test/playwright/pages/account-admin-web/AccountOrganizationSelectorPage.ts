@@ -34,7 +34,7 @@ export class AccountOrganizationSelectorPage {
 
 		for (const organizationName of organizationNames) {
 			await (
-				await this.organizationsTable.rowCheckBox(organizationName)
+				await this.organizationsTable.rowCheckbox(organizationName)
 			).check();
 		}
 		await this.assignButton.click();

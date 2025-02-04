@@ -15,6 +15,7 @@ import {AccountManagementWidgetPage} from '../pages/account-admin-web/AccountMan
 import {AccountOrganizationSelectorPage} from '../pages/account-admin-web/AccountOrganizationSelectorPage';
 import {AccountOrganizationsPage} from '../pages/account-admin-web/AccountOrganizationsPage';
 import {AccountPersonUserSelectorPage} from '../pages/account-admin-web/AccountPersonUserSelectorPage';
+import {AccountRoleSelectorPage} from '../pages/account-admin-web/AccountRoleSelectorPage';
 import {AccountRolesPage} from '../pages/account-admin-web/AccountRolesPage';
 import {AccountTagSelectorPage} from '../pages/account-admin-web/AccountTagSelectorPage';
 import {AccountUserInvitePage} from '../pages/account-admin-web/AccountUserInvitePage';
@@ -29,6 +30,7 @@ import {EditAccountContactPage} from '../pages/account-admin-web/EditAccountCont
 import {EditAccountEmailAddressPage} from '../pages/account-admin-web/EditAccountEmailAddressPage';
 import {EditAccountPage} from '../pages/account-admin-web/EditAccountPage';
 import {EditAccountPhonePage} from '../pages/account-admin-web/EditAccountPhonePage';
+import {EditAccountRolePage} from '../pages/account-admin-web/EditAccountRolePage';
 import {EditAccountWebsitePage} from '../pages/account-admin-web/EditAccountWebsitePage';
 import {EmailDomainsInstanceSettingsPage} from '../pages/account-admin-web/EmailDomainsInstanceSettingsPage';
 
@@ -43,6 +45,7 @@ const accountsPagesTest = test.extend<{
 	accountOrganizationSelectorPage: AccountOrganizationSelectorPage;
 	accountOrganizationsPage: AccountOrganizationsPage;
 	accountPersonUserSelectorPage: AccountPersonUserSelectorPage;
+	accountRoleSelectorPage: AccountRoleSelectorPage;
 	accountRolesPage: AccountRolesPage;
 	accountTagSelectorPage: AccountTagSelectorPage;
 	accountUserInvitePage: AccountUserInvitePage;
@@ -57,6 +60,7 @@ const accountsPagesTest = test.extend<{
 	editAccountEmailAddressPage: EditAccountEmailAddressPage;
 	editAccountPage: EditAccountPage;
 	editAccountPhonePage: EditAccountPhonePage;
+	editAccountRolePage: EditAccountRolePage;
 	editAccountWebsitePage: EditAccountWebsitePage;
 	emailDomainsInstanceSettingsPage: EmailDomainsInstanceSettingsPage;
 }>({
@@ -89,6 +93,9 @@ const accountsPagesTest = test.extend<{
 	},
 	accountPersonUserSelectorPage: async ({page}, use) => {
 		await use(new AccountPersonUserSelectorPage(page));
+	},
+	accountRoleSelectorPage: async ({page}, use) => {
+		await use(new AccountRoleSelectorPage(page));
 	},
 	accountRolesPage: async ({page}, use) => {
 		await use(new AccountRolesPage(page));
@@ -131,6 +138,9 @@ const accountsPagesTest = test.extend<{
 	},
 	editAccountPhonePage: async ({page}, use) => {
 		await use(new EditAccountPhonePage(page));
+	},
+	editAccountRolePage: async ({page}, use) => {
+		await use(new EditAccountRolePage(page));
 	},
 	editAccountWebsitePage: async ({page}, use) => {
 		await use(new EditAccountWebsitePage(page));

@@ -5,16 +5,47 @@
 
 import {Locator, Page} from '@playwright/test';
 
+import {DataTablePage} from './DataTablePage';
+
 export class AccountRolesPage {
 	readonly addNewRoleButton: Locator;
+	readonly assignUsersButton: Locator;
+	readonly assignUsersTable: DataTablePage;
+	readonly backButton: Locator;
 	readonly editRoleButton: Locator;
 	readonly page: Page;
+	readonly removeButton: Locator;
+	readonly roleNameHeading: (roleName: string) => Locator;
+	readonly rolesTable: DataTablePage;
 	readonly searchInput: Locator;
 
 	constructor(page: Page) {
 		this.addNewRoleButton = page.getByTestId('creationMenuNewButton');
+		this.assignUsersButton = page.getByRole('menuitem', {
+			name: 'Assign Users',
+		});
+		this.assignUsersTable = new DataTablePage(
+			page,
+			page
+				.locator(
+					'#portlet_com_liferay_account_admin_web_internal_portlet_AccountEntriesAdminPortlet div'
+				)
+				.first()
+		);
+		this.backButton = page.getByRole('link', {exact: true, name: 'Back'});
 		this.editRoleButton = page.locator('svg.lexicon-icon-ellipsis-v');
 		this.page = page;
+		this.removeButton = page.getByRole('button', {name: 'Remove'});
+		this.roleNameHeading = (roleName) =>
+			page.getByRole('heading', {name: roleName});
+		this.rolesTable = new DataTablePage(
+			page,
+			page
+				.locator(
+					'#portlet_com_liferay_account_admin_web_internal_portlet_AccountEntriesAdminPortlet div'
+				)
+				.first()
+		);
 		this.searchInput = page.getByPlaceholder('Search for');
 	}
 

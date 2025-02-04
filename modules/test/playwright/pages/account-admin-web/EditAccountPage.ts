@@ -49,6 +49,7 @@ export class EditAccountPage {
 	readonly setBillingDefaultAddressButton: Locator;
 	readonly setShippingDefaultAddressButton: Locator;
 	readonly tagInput: (name: string) => Locator;
+	readonly taxIDInput: Locator;
 	readonly typeInput: Locator;
 	readonly uploadImageSelectImageButton: Locator;
 	readonly uploadImageDoneButton: Locator;
@@ -151,6 +152,7 @@ export class EditAccountPage {
 			.or(page.getByRole('link', {name: 'Change'}))
 			.locator('[data-type="shipping"]:scope');
 		this.tagInput = (name) => page.getByRole('row', {name});
+		this.taxIDInput = page.getByLabel('Tax ID');
 		this.typeInput = page.getByLabel('Type');
 		this.uploadImageSelectImageButton = page
 			.frameLocator('iframe[title="Upload Image"]')
@@ -177,6 +179,7 @@ export class EditAccountPage {
 			domains = [],
 			externalReferenceCode = '',
 			name = getRandomString(),
+			taxID = getRandomString(),
 			type = 'business',
 		}: {
 			avatar?: string;
@@ -184,11 +187,13 @@ export class EditAccountPage {
 			domains?: string[];
 			externalReferenceCode?: string;
 			name?: string;
+			taxID?: string;
 			type?: string;
 		}
 	) {
 		await this.accountNameInput.fill(name);
 		await this.descriptionInput.fill(description);
+		await this.taxIDInput.fill(taxID);
 		await this.typeInput.selectOption(type);
 
 		if (avatar) {

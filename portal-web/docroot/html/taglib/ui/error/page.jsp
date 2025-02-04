@@ -17,11 +17,13 @@ String alertTitle = (String)request.getAttribute("liferay-ui:error:alertTitle");
 <c:choose>
 	<c:when test='<%= GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:error:embed")) %>'>
 		<div class="alert alert-dismissible alert-<%= alertStyle %>" role="alert">
-			<button aria-label="<%= LanguageUtil.get(request, "close") %>" class="close" data-dismiss="liferay-alert" type="button">
-				<aui:icon image="times" markupView="lexicon" />
+			<liferay-ui:csp>
+				<button aria-label="<%= LanguageUtil.get(request, "close") %>" class="close" onclick="event.preventDefault();const container = event.delegateTarget.closest('.alert');if (container) {container.parentNode.removeChild(container);}" type="button">
+					<aui:icon image="times" markupView="lexicon" />
 
-				<span class="sr-only"><liferay-ui:message key="close" /></span>
-			</button>
+					<span class="sr-only"><liferay-ui:message key="close" /></span>
+				</button>
+			</liferay-ui:csp>
 
 			<span class="alert-indicator">
 				<svg aria-hidden="true" class="lexicon-icon lexicon-icon-<%= alertIcon %>">

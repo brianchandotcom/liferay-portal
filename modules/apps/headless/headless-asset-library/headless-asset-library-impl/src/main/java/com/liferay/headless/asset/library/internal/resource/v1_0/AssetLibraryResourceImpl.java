@@ -13,6 +13,7 @@ import com.liferay.depot.service.DepotEntryGroupRelService;
 import com.liferay.depot.service.DepotEntryService;
 import com.liferay.headless.asset.library.dto.v1_0.AssetLibrary;
 import com.liferay.headless.asset.library.resource.v1_0.AssetLibraryResource;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -43,6 +44,10 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 
 	@Override
 	public void deleteAssetLibrary(Long assetLibraryId) throws Exception {
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-32649")) {
+			throw new UnsupportedOperationException();
+		}
+
 		DepotEntry depotEntry = _depotEntryService.getGroupDepotEntry(
 			assetLibraryId);
 
@@ -53,6 +58,10 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 	public AssetLibrary deleteAssetLibraryLinkToSite(
 			Long assetLibraryId, Long toSiteId)
 		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-32649")) {
+			throw new UnsupportedOperationException();
+		}
 
 		DepotEntry depotEntry = _depotEntryService.getGroupDepotEntry(
 			assetLibraryId);
@@ -69,6 +78,10 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 
 	@Override
 	public AssetLibrary getAssetLibrary(Long assetLibraryId) throws Exception {
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-32649")) {
+			throw new UnsupportedOperationException();
+		}
+
 		return _toAssetLibrary(
 			_depotEntryService.getGroupDepotEntry(assetLibraryId));
 	}
@@ -77,6 +90,9 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 	public AssetLibrary patchAssetLibrary(
 			Long assetLibraryId, AssetLibrary assetLibrary)
 		throws Exception {
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-32649")) {
+			throw new UnsupportedOperationException();
+		}
 
 		DepotEntry depotEntry = _depotEntryService.getGroupDepotEntry(
 			assetLibraryId);
@@ -115,6 +131,10 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 	public AssetLibrary postAssetLibrary(AssetLibrary assetLibrary)
 		throws Exception {
 
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-32649")) {
+			throw new UnsupportedOperationException();
+		}
+
 		return _toAssetLibrary(
 			_depotEntryService.addDepotEntry(
 				LocalizedMapUtil.getLocalizedMap(
@@ -131,6 +151,9 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 	public AssetLibrary postAssetLibraryLinkToSite(
 			Long assetLibraryId, Long toSiteId)
 		throws Exception {
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-32649")) {
+			throw new UnsupportedOperationException();
+		}
 
 		DepotEntry depotEntry = _depotEntryService.getGroupDepotEntry(
 			assetLibraryId);

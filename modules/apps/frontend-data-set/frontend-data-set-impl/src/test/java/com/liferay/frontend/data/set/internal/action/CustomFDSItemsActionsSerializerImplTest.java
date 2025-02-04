@@ -56,17 +56,17 @@ public class CustomFDSItemsActionsSerializerImplTest {
 			_fdsSerializer.serialize("fdsName1", _httpServletRequest);
 
 		Assert.assertFalse(_containsLabel(fdsActionDropdownItems1, "New 2"));
-		Assert.assertTrue(fdsActionDropdownItems1.size() == 2);
 		Assert.assertTrue(_containsLabel(fdsActionDropdownItems1, "New 1.1"));
 		Assert.assertTrue(_containsLabel(fdsActionDropdownItems1, "New 1.2"));
+		Assert.assertTrue(fdsActionDropdownItems1.size() == 2);
 
 		List<FDSActionDropdownItem> fdsActionDropdownItems2 =
 			_fdsSerializer.serialize("fdsName2", _httpServletRequest);
 
 		Assert.assertFalse(_containsLabel(fdsActionDropdownItems2, "New 1.1"));
 		Assert.assertFalse(_containsLabel(fdsActionDropdownItems2, "New 1.2"));
-		Assert.assertTrue(fdsActionDropdownItems2.size() == 1);
 		Assert.assertTrue(_containsLabel(fdsActionDropdownItems2, "New 2"));
+		Assert.assertTrue(fdsActionDropdownItems2.size() == 1);
 
 		_resetSerializer();
 

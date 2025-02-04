@@ -47,11 +47,9 @@ public class LayoutTypeSettingsInspectorUtil {
 	public static boolean isCustomizableLayout(
 		UnicodeProperties typeSettingsUnicodeProperties) {
 
-		boolean customizableLayout = GetterUtil.getBoolean(
+		return GetterUtil.getBoolean(
 			typeSettingsUnicodeProperties.getProperty(
 				LayoutConstants.CUSTOMIZABLE_LAYOUT));
-
-		return customizableLayout;
 	}
 
 }

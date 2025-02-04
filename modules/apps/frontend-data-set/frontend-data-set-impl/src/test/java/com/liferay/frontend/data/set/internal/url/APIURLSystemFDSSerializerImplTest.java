@@ -38,7 +38,7 @@ import org.osgi.framework.ServiceRegistration;
 /**
  * @author Daniel Sanz
  */
-public class SystemFDSAPIURLSerializerImplTest
+public class APIURLSystemFDSSerializerImplTest
 	extends BaseSystemFDSSerializerTestCase {
 
 	@ClassRule
@@ -206,6 +206,6 @@ public class SystemFDSAPIURLSerializerImplTest
 	private static ServiceTrackerMap<String, ServiceWrapper<FDSAPIURLResolver>>
 		_fdsAPIURLResolverServiceTrackerMap;
 	private static final FDSSerializer<String> _fdsSerializer =
-		new SystemFDSAPIURLSerializerImpl();
+		new APIURLSystemFDSSerializerImpl();
 
 }

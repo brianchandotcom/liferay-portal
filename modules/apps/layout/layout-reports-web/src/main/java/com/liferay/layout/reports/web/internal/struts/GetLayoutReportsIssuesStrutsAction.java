@@ -260,13 +260,8 @@ public class GetLayoutReportsIssuesStrutsAction implements StrutsAction {
 			Layout layout, PermissionChecker permissionChecker)
 		throws Exception {
 
-		if (!LayoutPermissionUtil.contains(
-				permissionChecker, layout, ActionKeys.VIEW)) {
-
-			return false;
-		}
-
-		return true;
+		return LayoutPermissionUtil.contains(
+			permissionChecker, layout, ActionKeys.VIEW);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

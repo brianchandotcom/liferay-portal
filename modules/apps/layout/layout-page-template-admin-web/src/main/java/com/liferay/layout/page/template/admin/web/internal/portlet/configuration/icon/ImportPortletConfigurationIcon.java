@@ -99,14 +99,9 @@ public class ImportPortletConfigurationIcon
 			return false;
 		}
 
-		if (_portletResourcePermission.contains(
-				themeDisplay.getPermissionChecker(), scopeGroup.getGroupId(),
-				LayoutPageTemplateActionKeys.ADD_LAYOUT_PAGE_TEMPLATE_ENTRY)) {
-
-			return true;
-		}
-
-		return false;
+		return _portletResourcePermission.contains(
+			themeDisplay.getPermissionChecker(), scopeGroup.getGroupId(),
+			LayoutPageTemplateActionKeys.ADD_LAYOUT_PAGE_TEMPLATE_ENTRY);
 	}
 
 	@Override

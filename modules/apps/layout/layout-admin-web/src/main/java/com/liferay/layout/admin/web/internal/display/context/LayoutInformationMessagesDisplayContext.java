@@ -110,11 +110,7 @@ public class LayoutInformationMessagesDisplayContext {
 
 		Group sourceGroup = sourceLayout.getGroup();
 
-		if (sourceGroup.isUserGroup()) {
-			return true;
-		}
-
-		return false;
+		return sourceGroup.isUserGroup();
 	}
 
 	private final HttpServletRequest _httpServletRequest;

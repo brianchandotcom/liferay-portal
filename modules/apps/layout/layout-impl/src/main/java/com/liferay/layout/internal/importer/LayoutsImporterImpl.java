@@ -950,63 +950,37 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 	}
 
 	private boolean _isDisplayPageTemplateCollectionFile(String fileName) {
-		if (fileName.endsWith(
-				CharPool.SLASH +
-					LayoutPageTemplateExportImportConstants.
-						FILE_NAME_DISPLAY_PAGE_TEMPLATE_COLLECTION)) {
-
-			return true;
-		}
-
-		return false;
+		return fileName.endsWith(
+			CharPool.SLASH +
+				LayoutPageTemplateExportImportConstants.
+					FILE_NAME_DISPLAY_PAGE_TEMPLATE_COLLECTION);
 	}
 
 	private boolean _isDisplayPageTemplateFile(String fileName) {
-		if (fileName.endsWith(
-				CharPool.SLASH +
-					LayoutPageTemplateExportImportConstants.
-						FILE_NAME_DISPLAY_PAGE_TEMPLATE)) {
-
-			return true;
-		}
-
-		return false;
+		return fileName.endsWith(
+			CharPool.SLASH +
+				LayoutPageTemplateExportImportConstants.
+					FILE_NAME_DISPLAY_PAGE_TEMPLATE);
 	}
 
 	private boolean _isMasterPageFile(String fileName) {
-		if (fileName.endsWith(
-				CharPool.SLASH +
-					LayoutPageTemplateExportImportConstants.
-						FILE_NAME_MASTER_PAGE)) {
-
-			return true;
-		}
-
-		return false;
+		return fileName.endsWith(
+			CharPool.SLASH +
+				LayoutPageTemplateExportImportConstants.FILE_NAME_MASTER_PAGE);
 	}
 
 	private boolean _isPageTemplateCollectionFile(String fileName) {
-		if (fileName.endsWith(
-				CharPool.SLASH +
-					LayoutPageTemplateExportImportConstants.
-						FILE_NAME_PAGE_TEMPLATE_COLLECTION)) {
-
-			return true;
-		}
-
-		return false;
+		return fileName.endsWith(
+			CharPool.SLASH +
+				LayoutPageTemplateExportImportConstants.
+					FILE_NAME_PAGE_TEMPLATE_COLLECTION);
 	}
 
 	private boolean _isPageTemplateFile(String fileName) {
-		if (fileName.endsWith(
-				CharPool.SLASH +
-					LayoutPageTemplateExportImportConstants.
-						FILE_NAME_PAGE_TEMPLATE)) {
-
-			return true;
-		}
-
-		return false;
+		return fileName.endsWith(
+			CharPool.SLASH +
+				LayoutPageTemplateExportImportConstants.
+					FILE_NAME_PAGE_TEMPLATE);
 	}
 
 	private boolean _isRootFolder(List<String> entries, String fileName) {
@@ -1031,15 +1005,9 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 	}
 
 	private boolean _isUtilityPageTemplateFile(String fileName) {
-		if (fileName.endsWith(
-				CharPool.SLASH +
-					LayoutUtilityPageExportImportConstants.
-						FILE_NAME_UTILITY_PAGE)) {
-
-			return true;
-		}
-
-		return false;
+		return fileName.endsWith(
+			CharPool.SLASH +
+				LayoutUtilityPageExportImportConstants.FILE_NAME_UTILITY_PAGE);
 	}
 
 	private boolean _isValidBasicLayoutPageTemplateCollection(

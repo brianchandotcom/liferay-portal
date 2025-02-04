@@ -160,11 +160,7 @@ public class LayoutActionsHelper {
 			return false;
 		}
 
-		if (draftLayout.isDraft()) {
-			return true;
-		}
-
-		return false;
+		return draftLayout.isDraft();
 	}
 
 	public boolean isShowExportTranslationAction(Layout layout) {

@@ -199,11 +199,7 @@ public class LayoutAdaptiveMediaProcessorImpl
 			}
 		}
 
-		if (html.contains("--background-image-file-entry-id:")) {
-			return true;
-		}
-
-		return false;
+		return html.contains("--background-image-file-entry-id:");
 	}
 
 	private void _replaceCSSProperties(Document document)

@@ -361,11 +361,7 @@ public class DisplayPageDisplayContext {
 	}
 
 	public boolean isSearch() {
-		if (Validator.isNotNull(getKeywords())) {
-			return true;
-		}
-
-		return false;
+		return Validator.isNotNull(getKeywords());
 	}
 
 	private Map<Long, Long[]> _getAllowedClassNameIdsMap() {

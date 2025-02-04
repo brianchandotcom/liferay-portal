@@ -215,11 +215,7 @@ public class MasterLayoutDisplayContext {
 	}
 
 	public boolean isSearch() {
-		if (Validator.isNotNull(getKeywords())) {
-			return true;
-		}
-
-		return false;
+		return Validator.isNotNull(getKeywords());
 	}
 
 	private LayoutPageTemplateEntry _addBlankMasterLayout() {

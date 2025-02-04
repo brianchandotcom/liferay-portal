@@ -144,11 +144,7 @@ public class TitleProvider {
 		String mvcCommand = ParamUtil.getString(
 			httpServletRequest, "mvcRenderCommandName");
 
-		if (mvcCommand.equals("/layout_admin/edit_layout")) {
-			return true;
-		}
-
-		return false;
+		return mvcCommand.equals("/layout_admin/edit_layout");
 	}
 
 	private boolean _isEditMode(HttpServletRequest httpServletRequest) {
@@ -158,11 +154,7 @@ public class TitleProvider {
 		String layoutMode = ParamUtil.getString(
 			originalHttpServletRequest, "p_l_mode", Constants.VIEW);
 
-		if (layoutMode.equals(Constants.EDIT)) {
-			return true;
-		}
-
-		return false;
+		return layoutMode.equals(Constants.EDIT);
 	}
 
 	private final LayoutSEOLinkManager _layoutSEOLinkManager;

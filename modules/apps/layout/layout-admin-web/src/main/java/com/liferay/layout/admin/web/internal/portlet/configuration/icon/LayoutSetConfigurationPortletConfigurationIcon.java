@@ -89,11 +89,7 @@ public class LayoutSetConfigurationPortletConfigurationIcon
 
 		Group group = themeDisplay.getScopeGroup();
 
-		if (group.isPrivateLayoutsEnabled()) {
-			return false;
-		}
-
-		return true;
+		return !group.isPrivateLayoutsEnabled();
 	}
 
 	@Override

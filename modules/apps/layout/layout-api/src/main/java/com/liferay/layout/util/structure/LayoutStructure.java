@@ -1256,13 +1256,8 @@ public class LayoutStructure {
 		FormStyledLayoutStructureItem formStyledLayoutStructureItem =
 			(FormStyledLayoutStructureItem)layoutStructureItem;
 
-		if (Objects.equals(
-				formStyledLayoutStructureItem.getFormType(), "multistep")) {
-
-			return true;
-		}
-
-		return false;
+		return Objects.equals(
+			formStyledLayoutStructureItem.getFormType(), "multistep");
 	}
 
 	private void _updateColumnSizes(

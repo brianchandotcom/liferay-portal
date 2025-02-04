@@ -85,11 +85,7 @@ public class LayoutReportsGooglePageSpeedConfigurationProvider {
 					LayoutReportsGooglePageSpeedCompanyConfiguration.class,
 					companyId);
 
-		if (!layoutReportsGooglePageSpeedCompanyConfiguration.enabled()) {
-			return false;
-		}
-
-		return true;
+		return layoutReportsGooglePageSpeedCompanyConfiguration.enabled();
 	}
 
 	@Activate

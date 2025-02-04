@@ -166,13 +166,8 @@ public class SelectStylebookLayoutVerticalCard implements VerticalCard {
 		long styleBookEntryId = ParamUtil.getLong(
 			_renderRequest, "styleBookEntryId");
 
-		if (Objects.equals(
-				styleBookEntryId, _styleBookEntry.getStyleBookEntryId())) {
-
-			return true;
-		}
-
-		return false;
+		return Objects.equals(
+			styleBookEntryId, _styleBookEntry.getStyleBookEntryId());
 	}
 
 	private StyleBookEntry _defaultStyleBookEntry;

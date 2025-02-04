@@ -438,11 +438,7 @@ public class LayoutWarningMessageHelperImpl
 				themeDisplay);
 		}
 
-		if (_exceedsFileSize(fileEntryId)) {
-			return true;
-		}
-
-		return false;
+		return _exceedsFileSize(fileEntryId);
 	}
 
 	private boolean _showWarningMessage(

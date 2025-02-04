@@ -79,11 +79,7 @@ public class LockedLayoutDisplayContext {
 	}
 
 	public boolean isShowGoBackButton() {
-		if (Validator.isNotNull(getBackURL())) {
-			return true;
-		}
-
-		return false;
+		return Validator.isNotNull(getBackURL());
 	}
 
 	private String _backURL;

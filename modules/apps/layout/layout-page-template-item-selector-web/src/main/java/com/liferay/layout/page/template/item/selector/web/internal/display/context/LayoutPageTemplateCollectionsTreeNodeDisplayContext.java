@@ -79,16 +79,11 @@ public class LayoutPageTemplateCollectionsTreeNodeDisplayContext {
 				).put(
 					"disabled",
 					() -> {
-						if (ArrayUtil.contains(
-								_layoutPageTemplateCollectionTreeNodeItemSelectorCriterion.
-									getLayoutPageTemplateCollectionIds(),
-								layoutPageTemplateCollection.
-									getLayoutPageTemplateCollectionId())) {
-
-							return true;
-						}
-
-						return false;
+						return ArrayUtil.contains(
+							_layoutPageTemplateCollectionTreeNodeItemSelectorCriterion.
+								getLayoutPageTemplateCollectionIds(),
+							layoutPageTemplateCollection.
+								getLayoutPageTemplateCollectionId());
 					}
 				).put(
 					"id",

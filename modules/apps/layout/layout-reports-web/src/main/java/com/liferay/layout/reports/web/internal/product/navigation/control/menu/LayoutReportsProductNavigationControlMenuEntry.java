@@ -183,13 +183,8 @@ public class LayoutReportsProductNavigationControlMenuEntry
 			Layout layout, PermissionChecker permissionChecker)
 		throws PortalException {
 
-		if (!LayoutPermissionUtil.containsLayoutRestrictedUpdatePermission(
-				permissionChecker, layout)) {
-
-			return false;
-		}
-
-		return true;
+		return LayoutPermissionUtil.containsLayoutRestrictedUpdatePermission(
+			permissionChecker, layout);
 	}
 
 	private boolean _isShow(ThemeDisplay themeDisplay) {
@@ -247,11 +242,7 @@ public class LayoutReportsProductNavigationControlMenuEntry
 		boolean hidePanel = ParamUtil.getBoolean(
 			httpServletRequest, "hide-panel");
 
-		if (hidePanel) {
-			return false;
-		}
-
-		return true;
+		return !hidePanel;
 	}
 
 	private void _processBodyBottomTagBody(PageContext pageContext) {

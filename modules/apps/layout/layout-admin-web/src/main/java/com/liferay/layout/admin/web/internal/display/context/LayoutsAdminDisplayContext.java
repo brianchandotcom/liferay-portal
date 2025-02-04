@@ -1829,11 +1829,7 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	public boolean isSearch() {
-		if (Validator.isNotNull(getKeywords())) {
-			return true;
-		}
-
-		return false;
+		return Validator.isNotNull(getKeywords());
 	}
 
 	public boolean isShowAddChildPageAction(Layout layout)
@@ -1887,22 +1883,13 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	public boolean isShowFirstColumnConfigureAction() throws PortalException {
-		if (!GroupPermissionUtil.contains(
-				themeDisplay.getPermissionChecker(), getSelGroupId(),
-				ActionKeys.MANAGE_LAYOUTS)) {
-
-			return false;
-		}
-
-		return true;
+		return GroupPermissionUtil.contains(
+			themeDisplay.getPermissionChecker(), getSelGroupId(),
+			ActionKeys.MANAGE_LAYOUTS);
 	}
 
 	public boolean isShowFriendlyURLWarningMessage() throws PortalException {
-		if (Validator.isNotNull(getFriendlyURLWarningMessage())) {
-			return true;
-		}
-
-		return false;
+		return Validator.isNotNull(getFriendlyURLWarningMessage());
 	}
 
 	public boolean isShowPublicLayouts() {
@@ -1921,15 +1908,9 @@ public class LayoutsAdminDisplayContext {
 		UnicodeProperties typeSettingsUnicodeProperties =
 			selLayout.getTypeSettingsProperties();
 
-		if (GetterUtil.getBoolean(
-				typeSettingsUnicodeProperties.getProperty(
-					LayoutTypeSettingsConstants.
-						KEY_DESIGN_CONFIGURATION_MODIFIED))) {
-
-			return true;
-		}
-
-		return false;
+		return GetterUtil.getBoolean(
+			typeSettingsUnicodeProperties.getProperty(
+				LayoutTypeSettingsConstants.KEY_DESIGN_CONFIGURATION_MODIFIED));
 	}
 
 	public boolean isShowUserPrivateLayouts() throws PortalException {
@@ -2410,11 +2391,7 @@ public class LayoutsAdminDisplayContext {
 
 		LayoutSet layoutSet = getSelLayoutSet();
 
-		if (layoutSet.isLayoutSetPrototypeLinkEnabled()) {
-			return true;
-		}
-
-		return false;
+		return layoutSet.isLayoutSetPrototypeLinkEnabled();
 	}
 
 	private boolean _matchesHostname(

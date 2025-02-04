@@ -616,11 +616,7 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 		StagingGroupHelper stagingGroupHelper =
 			StagingGroupHelperUtil.getStagingGroupHelper();
 
-		if (stagingGroupHelper.isLiveGroup(group)) {
-			return true;
-		}
-
-		return false;
+		return stagingGroupHelper.isLiveGroup(group);
 	}
 
 	private boolean _isShowDiscardDraftAction() {
@@ -628,11 +624,7 @@ public class LayoutPageTemplateEntryActionDropdownItemsProvider {
 			return false;
 		}
 
-		if (_draftLayout.isDraft()) {
-			return true;
-		}
-
-		return false;
+		return _draftLayout.isDraft();
 	}
 
 	private final Layout _draftLayout;

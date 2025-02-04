@@ -189,11 +189,7 @@ public class LayoutSEOEntryCustomMetaTagUpgradeProcess extends UpgradeProcess {
 		DDMFormFieldValue childDDMFormFieldValue = nestedDDMFormFieldValues.get(
 			0);
 
-		if (Objects.equals(childDDMFormFieldValue.getName(), "property")) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(childDDMFormFieldValue.getName(), "property");
 	}
 
 	private final ClassNameLocalService _classNameLocalService;

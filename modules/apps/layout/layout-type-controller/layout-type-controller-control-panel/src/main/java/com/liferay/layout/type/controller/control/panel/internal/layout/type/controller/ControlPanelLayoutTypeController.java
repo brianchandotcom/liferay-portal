@@ -43,11 +43,7 @@ public class ControlPanelLayoutTypeController
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
-		if (!permissionChecker.isSignedIn()) {
-			return true;
-		}
-
-		return false;
+		return !permissionChecker.isSignedIn();
 	}
 
 	@Override

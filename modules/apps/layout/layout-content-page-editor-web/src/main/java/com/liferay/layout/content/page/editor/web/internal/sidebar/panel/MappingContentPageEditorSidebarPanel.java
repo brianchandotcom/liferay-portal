@@ -58,13 +58,8 @@ public class MappingContentPageEditorSidebarPanel
 		}
 
 		try {
-			if (_layoutPermission.containsLayoutRestrictedUpdatePermission(
-					permissionChecker, plid)) {
-
-				return true;
-			}
-
-			return false;
+			return _layoutPermission.containsLayoutRestrictedUpdatePermission(
+				permissionChecker, plid);
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {

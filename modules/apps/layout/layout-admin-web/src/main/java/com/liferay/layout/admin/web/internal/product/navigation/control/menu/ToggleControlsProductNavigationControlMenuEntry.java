@@ -167,14 +167,8 @@ public class ToggleControlsProductNavigationControlMenuEntry
 			return false;
 		}
 
-		if (LayoutPermissionUtil.contains(
-				themeDisplay.getPermissionChecker(), layout,
-				ActionKeys.CUSTOMIZE)) {
-
-			return true;
-		}
-
-		return false;
+		return LayoutPermissionUtil.contains(
+			themeDisplay.getPermissionChecker(), layout, ActionKeys.CUSTOMIZE);
 	}
 
 	private boolean _hasPortletConfigurationPermission(

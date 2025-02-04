@@ -68,14 +68,9 @@ public class ImportPortletConfigurationIcon
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		if (GroupPermissionUtil.contains(
-				themeDisplay.getPermissionChecker(),
-				LayoutUtilityPageActionKeys.ADD_LAYOUT_UTILITY_PAGE_ENTRY)) {
-
-			return true;
-		}
-
-		return false;
+		return GroupPermissionUtil.contains(
+			themeDisplay.getPermissionChecker(),
+			LayoutUtilityPageActionKeys.ADD_LAYOUT_UTILITY_PAGE_ENTRY);
 	}
 
 	@Override

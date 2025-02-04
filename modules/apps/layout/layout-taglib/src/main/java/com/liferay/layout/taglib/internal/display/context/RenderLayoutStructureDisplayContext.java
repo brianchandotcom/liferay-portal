@@ -656,13 +656,8 @@ public class RenderLayoutStructureDisplayContext {
 			return false;
 		}
 
-		if (stylesFragmentEntryEntryProcessorJSONObject.getBoolean(
-				"hasCommonStyles")) {
-
-			return true;
-		}
-
-		return false;
+		return stylesFragmentEntryEntryProcessorJSONObject.getBoolean(
+			"hasCommonStyles");
 	}
 
 	public boolean isIncludeContainer(

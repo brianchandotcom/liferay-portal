@@ -619,11 +619,7 @@ public class LayoutUtilityPageEntryActionDropdownItemsProvider {
 		StagingGroupHelper stagingGroupHelper =
 			StagingGroupHelperUtil.getStagingGroupHelper();
 
-		if (stagingGroupHelper.isLiveGroup(group)) {
-			return true;
-		}
-
-		return false;
+		return stagingGroupHelper.isLiveGroup(group);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

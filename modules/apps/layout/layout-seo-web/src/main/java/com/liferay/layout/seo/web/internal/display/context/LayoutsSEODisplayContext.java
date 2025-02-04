@@ -559,25 +559,15 @@ public class LayoutsSEODisplayContext {
 		UnicodeProperties layoutTypeSettingsUnicodeProperties =
 			selLayout.getTypeSettingsProperties();
 
-		if (GetterUtil.getBoolean(
-				layoutTypeSettingsUnicodeProperties.getProperty(
-					"sitemap-include-child-layouts",
-					Boolean.TRUE.toString()))) {
-
-			return true;
-		}
-
-		return false;
+		return GetterUtil.getBoolean(
+			layoutTypeSettingsUnicodeProperties.getProperty(
+				"sitemap-include-child-layouts", Boolean.TRUE.toString()));
 	}
 
 	public boolean isLayoutUtilityPageEntry() {
 		Layout layout = getSelLayout();
 
-		if (layout.isTypeUtility()) {
-			return true;
-		}
-
-		return false;
+		return layout.isTypeUtility();
 	}
 
 	public boolean isPrivateLayout() {
@@ -610,11 +600,7 @@ public class LayoutsSEODisplayContext {
 	public boolean showIncludeChildLayoutsInSitemap() {
 		Layout selLayout = getSelLayout();
 
-		if (selLayout.isTypeAssetDisplay()) {
-			return false;
-		}
-
-		return true;
+		return !selLayout.isTypeAssetDisplay();
 	}
 
 	private HashMap<String, Object> _getBaseSEOMappingData()

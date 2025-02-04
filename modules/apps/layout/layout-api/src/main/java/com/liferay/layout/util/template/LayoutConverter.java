@@ -17,11 +17,7 @@ public interface LayoutConverter {
 	public LayoutConversionResult convert(Layout layout, Locale locale);
 
 	public default boolean isConvertible(Layout layout) {
-		if (layout.isTypeContent()) {
-			return false;
-		}
-
-		return true;
+		return !layout.isTypeContent();
 	}
 
 }

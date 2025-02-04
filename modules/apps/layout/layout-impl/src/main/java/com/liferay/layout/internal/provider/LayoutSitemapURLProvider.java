@@ -49,13 +49,8 @@ public class LayoutSitemapURLProvider implements SitemapURLProvider {
 	public boolean isInclude(long companyId, long groupId)
 		throws PortalException {
 
-		if (_sitemapConfigurationManager.includePagesGroupEnabled(
-				companyId, groupId)) {
-
-			return true;
-		}
-
-		return false;
+		return _sitemapConfigurationManager.includePagesGroupEnabled(
+			companyId, groupId);
 	}
 
 	@Override

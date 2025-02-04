@@ -318,11 +318,7 @@ public class ContentPageLayoutEditorDisplayContext
 	}
 
 	private boolean _hasEditSegmentsEntryPermission() throws Exception {
-		if (Validator.isNull(_getEditSegmentsEntryURL())) {
-			return false;
-		}
-
-		return true;
+		return !Validator.isNull(_getEditSegmentsEntryURL());
 	}
 
 	private Boolean _isLockedSegmentsExperience(long segmentsExperienceId)

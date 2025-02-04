@@ -18,11 +18,7 @@ public class LayoutVisibilityManagerImpl implements LayoutVisibilityManager {
 
 	@Override
 	public boolean isPrivateLayoutsEnabled(long companyId) {
-		if (FeatureFlagManagerUtil.isEnabled(companyId, "LPD-38869")) {
-			return true;
-		}
-
-		return false;
+		return FeatureFlagManagerUtil.isEnabled(companyId, "LPD-38869");
 	}
 
 }

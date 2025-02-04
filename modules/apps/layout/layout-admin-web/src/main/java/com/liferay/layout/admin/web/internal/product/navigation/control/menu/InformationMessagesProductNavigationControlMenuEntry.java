@@ -63,14 +63,9 @@ public class InformationMessagesProductNavigationControlMenuEntry
 	public boolean hasUpdateLayoutPermission(ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		if (LayoutPermissionUtil.contains(
-				themeDisplay.getPermissionChecker(), themeDisplay.getLayout(),
-				ActionKeys.UPDATE)) {
-
-			return true;
-		}
-
-		return false;
+		return LayoutPermissionUtil.contains(
+			themeDisplay.getPermissionChecker(), themeDisplay.getLayout(),
+			ActionKeys.UPDATE);
 	}
 
 	@Override
@@ -165,14 +160,9 @@ public class InformationMessagesProductNavigationControlMenuEntry
 			(layout.isLayoutPrototypeLinkActive() &&
 			 !group.hasStagingGroup())) {
 
-			if (!LayoutPermissionUtil.containsWithoutViewableGroup(
-					themeDisplay.getPermissionChecker(), layout, false,
-					ActionKeys.UPDATE)) {
-
-				return false;
-			}
-
-			return true;
+			return LayoutPermissionUtil.containsWithoutViewableGroup(
+				themeDisplay.getPermissionChecker(), layout, false,
+				ActionKeys.UPDATE);
 		}
 
 		return false;

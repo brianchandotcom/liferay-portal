@@ -249,11 +249,7 @@ public class LayoutClassedModelUsageUpgradeProcess extends UpgradeProcess {
 			preparedStatement.setLong(5, plid);
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				if (resultSet.next()) {
-					return true;
-				}
-
-				return false;
+				return resultSet.next();
 			}
 		}
 	}
@@ -270,11 +266,7 @@ public class LayoutClassedModelUsageUpgradeProcess extends UpgradeProcess {
 			preparedStatement.setBoolean(3, true);
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				if (resultSet.next()) {
-					return true;
-				}
-
-				return false;
+				return resultSet.next();
 			}
 		}
 	}

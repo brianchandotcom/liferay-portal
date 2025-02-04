@@ -661,13 +661,8 @@ public class ContentPageEditorDisplayContext {
 					LayoutSet layoutSet = _layoutSetLocalService.fetchLayoutSet(
 						themeDisplay.getSiteGroupId(), false);
 
-					if (Objects.equals(
-							theme.getThemeId(), layoutSet.getThemeId())) {
-
-						return true;
-					}
-
-					return false;
+					return Objects.equals(
+						theme.getThemeId(), layoutSet.getThemeId());
 				}
 			).put(
 				"styleBookEntryId",

@@ -50,6 +50,11 @@ interface MultiSelectProps
 	value: string[];
 }
 
+interface MultiSelectBaseProps extends MultiSelectProps {
+	loading?: boolean;
+	onLoadMore: () => Promise<Option>;
+}
+
 interface Option<T> {
 	label: LocalizedValue<string>;
 	value: T;

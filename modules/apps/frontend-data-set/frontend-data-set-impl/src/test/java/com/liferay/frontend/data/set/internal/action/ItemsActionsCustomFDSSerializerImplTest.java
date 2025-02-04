@@ -32,7 +32,7 @@ import org.mockito.Mockito;
 /**
  * @author Daniel Sanz
  */
-public class CustomFDSItemsActionsSerializerImplTest {
+public class ItemsActionsCustomFDSSerializerImplTest {
 
 	@ClassRule
 	@Rule
@@ -143,7 +143,7 @@ public class CustomFDSItemsActionsSerializerImplTest {
 
 	private void _resetSerializer() throws Exception {
 		_fdsSerializer = Mockito.mock(
-			CustomFDSItemsActionsSerializerImpl.class);
+			ItemsActionsCustomFDSSerializerImpl.class);
 	}
 
 	private void _testSerialize(String fdsName, String[] labels)

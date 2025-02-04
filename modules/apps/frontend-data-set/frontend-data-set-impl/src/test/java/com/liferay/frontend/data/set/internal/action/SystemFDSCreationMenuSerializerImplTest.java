@@ -82,7 +82,7 @@ public class SystemFDSCreationMenuSerializerImplTest
 		).build();
 
 		ServiceRegistration<FDSCreationMenu> creationMenuServiceRegistration1 =
-			_registerCreationMenu(creationMenu1, "fdsName1");
+			_registerFDSCreationMenu(creationMenu1, "fdsName1");
 
 		Assert.assertEquals(
 			creationMenu1,
@@ -98,7 +98,7 @@ public class SystemFDSCreationMenuSerializerImplTest
 		).build();
 
 		ServiceRegistration<FDSCreationMenu> creationMenuServiceRegistration2 =
-			_registerCreationMenu(creationMenu2, "fdsName2");
+			_registerFDSCreationMenu(creationMenu2, "fdsName2");
 
 		Assert.assertEquals(
 			creationMenu2,
@@ -142,10 +142,10 @@ public class SystemFDSCreationMenuSerializerImplTest
 			).build()
 		).build();
 
-		creationMenuServiceRegistration1 = _registerCreationMenu(
+		creationMenuServiceRegistration1 = _registerFDSCreationMenu(
 			creationMenu1, "fdsName1");
 
-		creationMenuServiceRegistration2 = _registerCreationMenu(
+		creationMenuServiceRegistration2 = _registerFDSCreationMenu(
 			creationMenu1, "fdsName2");
 
 		Assert.assertEquals(
@@ -161,7 +161,7 @@ public class SystemFDSCreationMenuSerializerImplTest
 		systemFDSEntryServiceRegistration2.unregister();
 	}
 
-	private ServiceRegistration<FDSCreationMenu> _registerCreationMenu(
+	private ServiceRegistration<FDSCreationMenu> _registerFDSCreationMenu(
 		CreationMenu creationMenu, String fdsName) {
 
 		return bundleContext.registerService(

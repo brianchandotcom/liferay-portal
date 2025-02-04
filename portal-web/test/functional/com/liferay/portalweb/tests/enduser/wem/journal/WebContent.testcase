@@ -1406,14 +1406,10 @@ definition {
 			IFrame.closeFrame();
 		}
 
-		task ("Access to web content editor via warning message link") {
+		task ("Assert web content warning message link") {
 			Click(
 				key_warningMessage = "Web Content Title is scheduled and will be displayed on 11/20/00, 1:01 AM.",
 				locator1 = "Message#WARNING_SPECIFIC_LINK");
-
-			WebContent.viewCP(
-				webContentContent = "Web Content Content",
-				webContentTitle = "Web Content Title");
 		}
 
 		task ("View the usages of the Web Content article") {

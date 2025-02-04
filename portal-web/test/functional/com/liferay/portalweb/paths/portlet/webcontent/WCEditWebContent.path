@@ -139,6 +139,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SCHEDULE_DATE</td>
+	<td>//input[contains(@id,'displayDatePicker')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SCHEDULE_PUBLICATION_BUTTON</td>
 	<td>//button[contains(@class, 'dropdown-item') and contains(text(), 'Schedule Publication')]</td>
 	<td></td>

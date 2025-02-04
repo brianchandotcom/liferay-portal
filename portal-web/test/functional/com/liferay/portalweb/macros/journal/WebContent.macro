@@ -1814,7 +1814,7 @@ definition {
 		Click(locator1 = "WCEditWebContent#SCHEDULE_PUBLICATION_BUTTON");
 
 		Type.clickAtType(
-			locator1 = "TextInput#DISPLAY_DATE",
+			locator1 = "WCEditWebContent#SCHEDULE_DATE",
 			value1 = ${displayDate});
 
 		if (isSet(displayTime)) {

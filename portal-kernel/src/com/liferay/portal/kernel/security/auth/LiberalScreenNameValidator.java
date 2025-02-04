@@ -14,7 +14,7 @@ public class LiberalScreenNameValidator extends DefaultScreenNameValidator {
 
 	@Override
 	public boolean validate(long companyId, String screenName) {
-		return !Validator.isNull(screenName);
+		return Validator.isNotNull(screenName);
 	}
 
 }

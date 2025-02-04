@@ -33,7 +33,7 @@ public class DynamicIncludeUtil {
 	}
 
 	public static boolean hasDynamicInclude(String key) {
-		return !ListUtil.isEmpty(getDynamicIncludes(key));
+		return ListUtil.isNotEmpty(getDynamicIncludes(key));
 	}
 
 	public static void include(

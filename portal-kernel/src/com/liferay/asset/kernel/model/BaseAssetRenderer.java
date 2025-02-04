@@ -294,7 +294,7 @@ public abstract class BaseAssetRenderer<T> implements AssetRenderer<T> {
 
 	@Override
 	public boolean isCommentable() {
-		return !Validator.isNull(getDiscussionPath());
+		return Validator.isNotNull(getDiscussionPath());
 	}
 
 	@Override

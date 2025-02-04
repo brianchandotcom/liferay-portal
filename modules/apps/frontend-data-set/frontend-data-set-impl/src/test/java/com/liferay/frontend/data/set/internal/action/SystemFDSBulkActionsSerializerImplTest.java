@@ -76,31 +76,33 @@ public class SystemFDSBulkActionsSerializerImplTest
 		ServiceRegistration<SystemFDSEntry> systemFDSEntryServiceRegistration1 =
 			registerSystemFDSEntry("fdsName1", "/app", "/endpoint", "schema");
 
-		List<FDSActionDropdownItem> dropDownItemList1 = ListUtil.fromArray(
-			new FDSActionDropdownItem(
-				null, "trash", "delete", "delete", "delete", "delete",
-				"headless"));
+		List<FDSActionDropdownItem> fdsActionDropdownItems1 =
+			ListUtil.fromArray(
+				new FDSActionDropdownItem(
+					null, "trash", "delete", "delete", "delete", "delete",
+					"headless"));
 
 		ServiceRegistration<FDSBulkActions> bulkActionsServiceRegistration1 =
-			_registerBulkActions(dropDownItemList1, "fdsName1");
+			_registerFDSBulkActions(fdsActionDropdownItems1, "fdsName1");
 
 		Assert.assertEquals(
-			dropDownItemList1,
+			fdsActionDropdownItems1,
 			_fdsSerializer.serialize("fdsName1", httpServletRequest));
 
 		ServiceRegistration<SystemFDSEntry> systemFDSEntryServiceRegistration2 =
 			registerSystemFDSEntry("fdsName2", "/app", "/endpoint", "schema");
 
-		List<FDSActionDropdownItem> dropDownItemList2 = ListUtil.fromArray(
-			new FDSActionDropdownItem(
-				null, "cog", "permissions", "permissions", "get", "permissions",
-				"modal-permissions"));
+		List<FDSActionDropdownItem> fdsActionDropdownItems2 =
+			ListUtil.fromArray(
+				new FDSActionDropdownItem(
+					null, "cog", "permissions", "permissions", "get",
+					"permissions", "modal-permissions"));
 
 		ServiceRegistration<FDSBulkActions> bulkActionsServiceRegistration2 =
-			_registerBulkActions(dropDownItemList2, "fdsName2");
+			_registerFDSBulkActions(fdsActionDropdownItems2, "fdsName2");
 
 		Assert.assertEquals(
-			dropDownItemList2,
+			fdsActionDropdownItems2,
 			_fdsSerializer.serialize("fdsName2", httpServletRequest));
 
 		Assert.assertNotEquals(
@@ -108,11 +110,8 @@ public class SystemFDSBulkActionsSerializerImplTest
 			_fdsSerializer.serialize("fdsName2", httpServletRequest));
 
 		bulkActionsServiceRegistration1.unregister();
-
 		bulkActionsServiceRegistration2.unregister();
-
 		systemFDSEntryServiceRegistration1.unregister();
-
 		systemFDSEntryServiceRegistration2.unregister();
 
 		// No bulk actions
@@ -131,36 +130,31 @@ public class SystemFDSBulkActionsSerializerImplTest
 
 		systemFDSEntryServiceRegistration1 = registerSystemFDSEntry(
 			"fdsName1", "/app", "/endpoint", "schema");
-
 		systemFDSEntryServiceRegistration2 = registerSystemFDSEntry(
 			"fdsName2", "/app", "/endpoint", "schema");
 
-		dropDownItemList1 = ListUtil.fromArray(
+		fdsActionDropdownItems1 = ListUtil.fromArray(
 			new FDSActionDropdownItem(
 				null, "trash", "delete", "delete", "delete", "delete",
 				"headless"));
 
-		bulkActionsServiceRegistration1 = _registerBulkActions(
-			dropDownItemList1, "fdsName1");
-
-		bulkActionsServiceRegistration2 = _registerBulkActions(
-			dropDownItemList1, "fdsName2");
+		bulkActionsServiceRegistration1 = _registerFDSBulkActions(
+			fdsActionDropdownItems1, "fdsName1");
+		bulkActionsServiceRegistration2 = _registerFDSBulkActions(
+			fdsActionDropdownItems1, "fdsName2");
 
 		Assert.assertEquals(
 			_fdsSerializer.serialize("fdsName1", httpServletRequest),
 			_fdsSerializer.serialize("fdsName2", httpServletRequest));
 
 		bulkActionsServiceRegistration1.unregister();
-
 		bulkActionsServiceRegistration2.unregister();
-
 		systemFDSEntryServiceRegistration1.unregister();
-
 		systemFDSEntryServiceRegistration2.unregister();
 	}
 
-	private ServiceRegistration<FDSBulkActions> _registerBulkActions(
-		List<FDSActionDropdownItem> bulkActions, String fdsName) {
+	private ServiceRegistration<FDSBulkActions> _registerFDSBulkActions(
+		List<FDSActionDropdownItem> fdsActionDropdownItems, String fdsName) {
 
 		return bundleContext.registerService(
 			FDSBulkActions.class,
@@ -170,7 +164,7 @@ public class SystemFDSBulkActionsSerializerImplTest
 				public List<FDSActionDropdownItem> getFDSActionDropdownItems(
 					HttpServletRequest httpServletRequest) {
 
-					return bulkActions;
+					return fdsActionDropdownItems;
 				}
 
 			},

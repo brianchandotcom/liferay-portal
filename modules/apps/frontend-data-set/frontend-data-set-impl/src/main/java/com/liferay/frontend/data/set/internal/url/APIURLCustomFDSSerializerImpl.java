@@ -7,9 +7,9 @@ package com.liferay.frontend.data.set.internal.url;
 
 import com.liferay.frontend.data.set.internal.serializer.BaseCustomFDSSerializer;
 import com.liferay.frontend.data.set.serializer.FDSSerializer;
+import com.liferay.frontend.data.set.url.APIURLFDSSerializer;
 import com.liferay.frontend.data.set.url.FDSAPIURLBuilder;
 import com.liferay.frontend.data.set.url.FDSAPIURLBuilderFactory;
-import com.liferay.frontend.data.set.url.FDSAPIURLSerializer;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
@@ -28,10 +28,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = "frontend.data.set.serializer.type=" + FDSSerializer.TYPE_CUSTOM,
-	service = FDSAPIURLSerializer.class
+	service = FDSSerializer.class
 )
-public class CustomFDSAPIURLSerializerImpl
-	extends BaseCustomFDSSerializer implements FDSAPIURLSerializer {
+public class APIURLCustomFDSSerializerImpl
+	extends BaseCustomFDSSerializer implements APIURLFDSSerializer {
 
 	@Override
 	public String serialize(

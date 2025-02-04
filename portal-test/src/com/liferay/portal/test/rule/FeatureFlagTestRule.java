@@ -9,6 +9,7 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagListener;
+import com.liferay.portal.kernel.feature.flag.constants.FeatureFlagConstants;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.test.rule.AbstractTestRule;
@@ -108,21 +109,24 @@ public class FeatureFlagTestRule
 			List<FeatureFlagListener> featureFlagListeners =
 				serviceTrackerMap.getService(featureFlagKey);
 
-			if (featureFlagListeners != null) {
-				String featureFlagSystemKey =
-					"feature.flag." + featureFlagKey + ".system";
+			if (featureFlagListeners == null) {
+				return;
+			}
 
-				boolean system = GetterUtil.getBoolean(
-					PropsUtil.get(featureFlagSystemKey));
+			long companyId = CompanyConstants.SYSTEM;
 
-				for (FeatureFlagListener featureFlagListener :
-						featureFlagListeners) {
+			if (!GetterUtil.getBoolean(
+					PropsUtil.get(
+						FeatureFlagConstants.getKey(
+							featureFlagKey, "system")))) {
 
-					featureFlagListener.onValue(
-						system ? CompanyConstants.SYSTEM :
-							TestPropsValues.getCompanyId(),
-						featureFlagKey, enabled);
-				}
+				companyId = TestPropsValues.getCompanyId();
+			}
+
+			for (FeatureFlagListener featureFlagListener :
+					featureFlagListeners) {
+
+				featureFlagListener.onValue(companyId, featureFlagKey, enabled);
 			}
 		}
 	}

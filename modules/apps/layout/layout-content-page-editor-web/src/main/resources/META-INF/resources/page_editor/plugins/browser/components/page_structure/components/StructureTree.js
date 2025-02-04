@@ -85,8 +85,8 @@ export default function StructureTree() {
 			);
 		});
 
-		setExpandedKeys((previousExpanedKeys) => {
-			return [...new Set([...previousExpanedKeys, ...expandedKeys])];
+		setExpandedKeys((previousExpandedKeys) => {
+			return [...new Set([...previousExpandedKeys, ...expandedKeys])];
 		});
 	}, [activeItemIds, getAncestorsIds, layoutData, previousActiveItemIds]);
 
@@ -99,9 +99,9 @@ export default function StructureTree() {
 				return;
 			}
 
-			setExpandedKeys((previousExpanedKeys) => [
+			setExpandedKeys((previousExpandedKeys) => [
 				...new Set([
-					...previousExpanedKeys,
+					...previousExpandedKeys,
 					...getAncestorsIds(layoutDataTargetItem, layoutData),
 				]),
 			]);

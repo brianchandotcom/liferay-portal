@@ -12,6 +12,7 @@ import com.liferay.change.tracking.service.CTEntryLocalService;
 import com.liferay.change.tracking.spi.display.CTDisplayRendererRegistry;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
+import com.liferay.portal.kernel.change.tracking.sql.CTSQLModeThreadLocal;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -92,10 +93,15 @@ public class DiscardChangesMVCActionCommand
 			return;
 		}
 
+		CTSQLModeThreadLocal.CTSQLMode ctSQLMode =
+			_ctDisplayRendererRegistry.getCTSQLMode(ctCollectionId, ctEntry);
+
 		T model = _ctDisplayRendererRegistry.fetchCTModel(
+			ctEntry.getCtCollectionId(), ctSQLMode,
 			ctEntry.getModelClassNameId(), ctEntry.getModelClassPK());
 
-		if (!_ctDisplayRendererRegistry.isMovable(
+		if ((model == null) ||
+			!_ctDisplayRendererRegistry.isMovable(
 				model, ctEntry.getModelClassNameId())) {
 
 			return;

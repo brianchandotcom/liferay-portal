@@ -15,6 +15,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.SelectOption;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.change.tracking.sql.CTSQLModeThreadLocal;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -95,10 +96,16 @@ public class ViewRelatedEntriesDisplayContext {
 		for (long ctEntryId : _ctEntryIds) {
 			CTEntry ctEntry = _ctEntryLocalService.fetchCTEntry(ctEntryId);
 
+			CTSQLModeThreadLocal.CTSQLMode ctSQLMode =
+				_ctDisplayRendererRegistry.getCTSQLMode(
+					_ctCollectionId, ctEntry);
+
 			T model = _ctDisplayRendererRegistry.fetchCTModel(
+				ctEntry.getCtCollectionId(), ctSQLMode,
 				ctEntry.getModelClassNameId(), ctEntry.getModelClassPK());
 
-			if (!_ctDisplayRendererRegistry.isMovable(
+			if ((model == null) ||
+				!_ctDisplayRendererRegistry.isMovable(
 					model, ctEntry.getModelClassNameId())) {
 
 				continue;

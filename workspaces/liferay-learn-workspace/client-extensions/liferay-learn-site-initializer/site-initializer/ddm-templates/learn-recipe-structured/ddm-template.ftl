@@ -41,59 +41,18 @@
 		}
 	}
 
-	const _addEventListener = (btnThumbs) => {
-
-		document.querySelectorAll(btnThumbs).forEach((element) => {
+	window.addEventListener("load", function () {
+		document.querySelectorAll(".btn-thumbs-down").forEach((element) => {
 			element.addEventListener("click", (event) => {
-				event.preventDefault();
-
-				const isPressed = event.currentTarget.getAttribute("aria-pressed") === "true";
-				const currentValue = parseInt(event.currentTarget.getAttribute("value"), 10) || 0;
-
-				const newValue = isPressed ? currentValue - 1 : currentValue + 1;
-
-				document.querySelectorAll(btnThumbs).forEach((element) => {
-					element.setAttribute("aria-pressed", !isPressed);
-		  			element.setAttribute("value", newValue);
-		  			const counterSpan = element.querySelector(".current");
-		  			if (counterSpan) {
-						counterSpan.textContent = newValue;
-		  				}
-				});
-
-				let oppositeThumbsPressed = Array.from(
-					document.querySelectorAll(btnThumbs === ".btn-thumbs-up" ? ".btn-thumbs-down" : ".btn-thumbs-up")
-				).some(element => element.getAttribute("aria-pressed") === "true");
-
-				if (oppositeThumbsPressed) {
-					document.querySelectorAll(btnThumbs === ".btn-thumbs-up" ? ".btn-thumbs-down" : ".btn-thumbs-up").forEach((element) => {
-						const oppositeValue = parseInt(element.getAttribute("value"), 10) || 0;
-
-						const newOppositeValue = oppositeValue > 0 ? oppositeValue - 1 : 0;
-
-						element.setAttribute("aria-pressed", "false");
-						element.setAttribute("value", newOppositeValue);
-
-						const current = element.querySelector(".current");
-
-						if (current) {
-							current.textContent = newOppositeValue;
-						}
-					});
-				}
+				location.reload();
 			});
 		});
-	};
-
-	if (document.readyState === 'complete') {
-		callback();
-	} else {
-		window.addEventListener("load", function () {
-			_addEventListener(".btn-thumbs-up");
-			_addEventListener(".btn-thumbs-down");
+		document.querySelectorAll(".btn-thumbs-up").forEach((element) => {
+			element.addEventListener("click", (event) => {
+				location.reload();
+			});
 		});
-	}
-
+	});
 </script>
 
 <div class="learn-recipe-container">

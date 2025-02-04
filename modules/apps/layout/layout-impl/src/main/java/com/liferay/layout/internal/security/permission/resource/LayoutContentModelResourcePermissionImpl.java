@@ -8,7 +8,6 @@ package com.liferay.layout.internal.security.permission.resource;
 import com.liferay.layout.model.LayoutClassedModelUsage;
 import com.liferay.layout.security.permission.resource.LayoutContentModelResourcePermission;
 import com.liferay.layout.service.LayoutClassedModelUsageLocalService;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -69,10 +68,11 @@ public class LayoutContentModelResourcePermissionImpl
 				return true;
 			}
 		}
-		catch (PortalException portalException) {
-			_log.error(
-				"An error occurred while checking permissions",
-				portalException);
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"An error occurred while checking permissions", exception);
+			}
 		}
 
 		return false;

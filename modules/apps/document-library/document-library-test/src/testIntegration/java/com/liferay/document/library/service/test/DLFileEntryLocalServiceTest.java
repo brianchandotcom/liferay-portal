@@ -1766,19 +1766,6 @@ public class DLFileEntryLocalServiceTest {
 
 		Assert.assertNotNull("1.0", dlFileEntry.getVersion());
 
-		// No version increment
-
-		dlFileEntry = DLFileEntryLocalServiceUtil.updateFileEntry(
-			TestPropsValues.getUserId(), dlFileEntry.getFileEntryId(),
-			StringUtil.randomString(), ContentTypes.TEXT_PLAIN,
-			StringUtil.randomString(), StringUtil.randomString(),
-			StringPool.BLANK, StringPool.BLANK, DLVersionNumberIncrease.NONE,
-			dlFileEntry.getFileEntryTypeId(), null, null,
-			new ByteArrayInputStream(new byte[0]), 0, null, null, null,
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
-
-		Assert.assertNotNull("1.0", dlFileEntry.getVersion());
-
 		// Major version increment
 
 		dlFileEntry = DLFileEntryLocalServiceUtil.updateFileEntry(
@@ -1799,6 +1786,19 @@ public class DLFileEntryLocalServiceTest {
 			StringUtil.randomString(), ContentTypes.TEXT_PLAIN,
 			StringUtil.randomString(), StringUtil.randomString(),
 			StringPool.BLANK, StringPool.BLANK, DLVersionNumberIncrease.MINOR,
+			dlFileEntry.getFileEntryTypeId(), null, null,
+			new ByteArrayInputStream(new byte[0]), 0, null, null, null,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		Assert.assertNotNull("2.1", dlFileEntry.getVersion());
+
+		// No version increment
+
+		dlFileEntry = DLFileEntryLocalServiceUtil.updateFileEntry(
+			TestPropsValues.getUserId(), dlFileEntry.getFileEntryId(),
+			StringUtil.randomString(), ContentTypes.TEXT_PLAIN,
+			StringUtil.randomString(), StringUtil.randomString(),
+			StringPool.BLANK, StringPool.BLANK, DLVersionNumberIncrease.NONE,
 			dlFileEntry.getFileEntryTypeId(), null, null,
 			new ByteArrayInputStream(new byte[0]), 0, null, null, null,
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));

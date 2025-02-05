@@ -22,9 +22,14 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagListener;
+import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -45,8 +50,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -63,6 +71,16 @@ public class VulcanBatchEnginePortletDataHandlerTest {
 	@Rule
 	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
 		new LiferayIntegrationTestRule();
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		_invokeFeatureFlagListeners("LPD-35914", true);
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		_invokeFeatureFlagListeners("LPD-35914", false);
+	}
 
 	@Before
 	public void setUp() throws Exception {
@@ -102,6 +120,10 @@ public class VulcanBatchEnginePortletDataHandlerTest {
 			_objectDefinition1.getCompanyId());
 
 		_companyGroupId = companyGroup.getGroupId();
+	}
+
+	@After
+	public void tearDown() throws Exception {
 	}
 
 	@Test
@@ -182,6 +204,25 @@ public class VulcanBatchEnginePortletDataHandlerTest {
 			_objectEntryLocalService.getObjectEntry(
 				_objectEntry3.getExternalReferenceCode(),
 				_objectDefinition1.getObjectDefinitionId()));
+	}
+
+	private static void _invokeFeatureFlagListeners(
+			String featureFlagKey, boolean enabled)
+		throws Exception {
+
+		try (ServiceTrackerList<FeatureFlagListener> featureFlagListeners =
+				ServiceTrackerListFactory.open(
+					SystemBundleUtil.getBundleContext(),
+					FeatureFlagListener.class,
+					"(featureFlagKey=" + featureFlagKey + ")")) {
+
+			for (FeatureFlagListener featureFlagListener :
+					featureFlagListeners) {
+
+				featureFlagListener.onValue(
+					CompanyConstants.SYSTEM, featureFlagKey, enabled);
+			}
+		}
 	}
 
 	private ObjectEntry _addObjectEntry(

@@ -5,7 +5,7 @@
 
 package com.liferay.frontend.data.set.internal.url;
 
-import com.liferay.frontend.data.set.internal.serializer.BaseCustomFDSSerializer;
+import com.liferay.frontend.data.set.internal.serializer.BaseFDSSerializer;
 import com.liferay.frontend.data.set.serializer.FDSSerializer;
 import com.liferay.frontend.data.set.url.FDSAPIURLResolver;
 import com.liferay.frontend.data.set.url.FDSAPIURLResolverRegistry;
@@ -253,11 +253,11 @@ public class APIURLCustomFDSSerializerImplTest {
 			_fdsSerializer.serialize(fdsName, _httpServletRequest)
 		).thenCallRealMethod();
 
-		BaseCustomFDSSerializer baseCustomFDSSerializer =
-			(BaseCustomFDSSerializer)_fdsSerializer;
+		BaseFDSSerializer baseFDSSerializer =
+			(BaseFDSSerializer)_fdsSerializer;
 
 		Mockito.when(
-			baseCustomFDSSerializer.getDataSetObjectEntryProperties(
+			baseFDSSerializer.getDataSetObjectEntryProperties(
 				fdsName, _httpServletRequest)
 		).thenReturn(
 			HashMapBuilder.put(
@@ -271,7 +271,7 @@ public class APIURLCustomFDSSerializerImplTest {
 
 		if (ArrayUtil.isEmpty(fieldNames)) {
 			Mockito.when(
-				baseCustomFDSSerializer.getDataSetTableSectionObjectEntries(
+				baseFDSSerializer.getDataSetTableSectionObjectEntries(
 					fdsName, _httpServletRequest)
 			).thenReturn(
 				Collections.emptySet()
@@ -294,7 +294,7 @@ public class APIURLCustomFDSSerializerImplTest {
 		}
 
 		Mockito.when(
-			baseCustomFDSSerializer.getDataSetTableSectionObjectEntries(
+			baseFDSSerializer.getDataSetTableSectionObjectEntries(
 				fdsName, _httpServletRequest)
 		).thenReturn(
 			objectEntries
@@ -329,7 +329,7 @@ public class APIURLCustomFDSSerializerImplTest {
 	}
 
 	private void _resetSerializer() {
-		_fdsSerializer = Mockito.mock(APIURLCustomFDSSerializerImpl.class);
+		_fdsSerializer = Mockito.mock(APIURLFDSSerializerImpl.class);
 
 		ReflectionTestUtil.setFieldValue(
 			_fdsSerializer, "_fdsAPIURLBuilderFactory",

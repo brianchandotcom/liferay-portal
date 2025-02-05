@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Daniel Sanz
  */
-public abstract class BaseCustomFDSSerializer {
+public abstract class BaseFDSSerializer {
 
 	public Set<ObjectEntry> getCreationMenuObjectEntries(
 		String externalReferenceCode, HttpServletRequest httpServletRequest) {
@@ -225,7 +225,7 @@ public abstract class BaseCustomFDSSerializer {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		BaseCustomFDSSerializer.class);
+		BaseFDSSerializer.class);
 
 	private static class ObjectEntryComparator
 		implements Comparator<ObjectEntry> {

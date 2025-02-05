@@ -153,8 +153,6 @@ public class LayoutStructureRulesHelperTest {
 
 	@Test
 	public void testWithoutConditionsCompleted() throws Exception {
-		PermissionCheckerFactoryUtil.create(_user);
-
 		LayoutStructure layoutStructure = LayoutStructure.of(
 			_read("layout_data_rules_all.json"));
 		PermissionChecker permissionChecker =

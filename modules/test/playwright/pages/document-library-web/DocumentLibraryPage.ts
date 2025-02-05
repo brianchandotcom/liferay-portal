@@ -116,14 +116,6 @@ export class DocumentLibraryPage {
 		await this.page.getByRole('button', {name: 'Delete'}).click();
 	}
 
-	async deleteFileEntry(name: string) {
-		await this.goto();
-		await this.changeView('list');
-		await this.page.getByLabel(name).check();
-		await this.page.getByRole('button', {name: 'Delete'}).click();
-		await this.changeView('cards');
-	}
-
 	async deleteDocumentType(name: string) {
 		await this.goto();
 		await this.changeTab('Document Types');

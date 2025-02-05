@@ -281,20 +281,25 @@ test(
 	async ({
 		documentLibraryEditDocumentTypesPage,
 		documentLibraryEditFilePage,
-		documentLibraryPage,
+		site,
 	}) => {
 		const dTypeTitle = getRandomString();
 		const title = getRandomString();
 
 		await documentLibraryEditDocumentTypesPage.createNewDLTypeWithUploadField(
-			dTypeTitle
+			dTypeTitle,
+			site.friendlyUrlPath
 		);
 
 		await documentLibraryEditFilePage.publishNewFileWithoutGuestViewPermission(
-			title
+			title,
+			site.friendlyUrlPath
 		);
 
-		await documentLibraryEditFilePage.goToNewFileDifferentType(dTypeTitle);
+		await documentLibraryEditFilePage.goToNewFileDifferentType(
+			dTypeTitle,
+			site.friendlyUrlPath
+		);
 
 		await documentLibraryEditFilePage.selectForUpdateButton.click();
 
@@ -319,10 +324,6 @@ test(
 		await documentLibraryEditFilePage.assertPrivateFileIconInSelectPopUp(
 			'Document'
 		);
-
-		await documentLibraryPage.deleteFileEntry(title);
-
-		await documentLibraryPage.deleteDocumentType(dTypeTitle);
 	}
 );
 

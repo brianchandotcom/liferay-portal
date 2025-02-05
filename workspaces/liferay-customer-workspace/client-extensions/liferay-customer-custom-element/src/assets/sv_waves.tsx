@@ -3,7 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-const SVWaves = () => (
+import {SVGProps} from 'react';
+import {JSX} from 'react/jsx-runtime';
+
+const SVWaves = (
+	props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>
+) => (
 	<svg width="370" height="369" viewBox="0 0 370 369" fill="none" xmlns="http://www.w3.org/2000/svg">
 		<g clipPath="url(#clip0_4_9723)">
 			<path d="M447.352 114.243C293.312 -206.152 -195.251 364.453 144.735 429.787C459.012 490.217 521.178 267.775 447.357 114.243H447.352Z" fill="url(#paint0_linear_4_9723)" />

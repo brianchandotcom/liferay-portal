@@ -3,7 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-const PortalIcon = (props) => (
+import {SVGProps} from 'react';
+import {JSX} from 'react/jsx-runtime';
+
+const PortalIcon = (
+	props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>
+) => (
 	<svg
 		fill="none"
 		height="24"

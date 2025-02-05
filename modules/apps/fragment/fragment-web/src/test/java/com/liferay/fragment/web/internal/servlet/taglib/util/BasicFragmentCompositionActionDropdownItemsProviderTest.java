@@ -6,6 +6,7 @@
 package com.liferay.fragment.web.internal.servlet.taglib.util;
 
 import com.liferay.fragment.model.FragmentComposition;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.ClassRule;
@@ -39,6 +40,33 @@ public class BasicFragmentCompositionActionDropdownItemsProviderTest
 			basicFragmentCompositionActionDropdownItemsProvider.
 				getActionDropdownItems(),
 			"change-thumbnail", "rename", "export", "move", "delete");
+	}
+
+	@FeatureFlags("LPD-34938")
+	@Test
+	public void testMarketplaceFragmentCompositionGetActionDropdowns()
+		throws Exception {
+
+		setUpFragmentPermission(true);
+
+		FragmentComposition fragmentComposition = Mockito.mock(
+			FragmentComposition.class);
+
+		Mockito.when(
+			fragmentComposition.isMarketplace()
+		).thenReturn(
+			true
+		);
+
+		BasicFragmentCompositionActionDropdownItemsProvider
+			basicFragmentCompositionActionDropdownItemsProvider =
+				new BasicFragmentCompositionActionDropdownItemsProvider(
+					fragmentComposition, renderRequest, renderResponse);
+
+		assertDropdownItemsInCorrectOrder(
+			basicFragmentCompositionActionDropdownItemsProvider.
+				getActionDropdownItems(),
+			"move", "delete");
 	}
 
 }

@@ -296,7 +296,7 @@ public class CopyItemsMVCActionCommandTest {
 		_testErrorMessage(
 			_language.get(
 				_portal.getSiteDefaultLocale(_group),
-				"form-components-can-only-be-placed-inside-a-mapped-form-" +
+				"this-form-component-can-only-be-placed-inside-a-mapped-form-" +
 					"container"),
 			itemIds, jsonObject.getString("addedItemId"));
 

@@ -245,8 +245,8 @@ public class MoveFragmentEntryLinkMVCActionCommandTest {
 			Assert.assertEquals(
 				_language.get(
 					_portal.getSiteDefaultLocale(_group),
-					"form-components-can-only-be-placed-inside-a-mapped-form-" +
-						"container"),
+					"this-form-component-can-only-be-placed-inside-a-mapped-" +
+						"form-container"),
 				jsonObject.getString("error"));
 		}
 

@@ -41,13 +41,7 @@ public class ItemImportTaskPreActionTest {
 		_mockUser();
 		_mockUserLocalService();
 
-		_currentUserId = RandomTestUtil.randomLong();
-
-		PrincipalThreadLocal.setName(_currentUserId);
-
-		_importTaskContext = new ImportTaskContext();
-
-		_itemImportTaskPreAction = new ItemImportTaskPreAction();
+		PrincipalThreadLocal.setName(_CURRENT_USER_ID);
 
 		ReflectionTestUtil.setFieldValue(
 			_itemImportTaskPreAction, "_jsonFactory", new JSONFactoryImpl());
@@ -66,7 +60,7 @@ public class ItemImportTaskPreActionTest {
 		Assert.assertEquals(
 			String.valueOf(_user.getUserId()), PrincipalThreadLocal.getName());
 		Assert.assertEquals(
-			String.valueOf(_currentUserId),
+			String.valueOf(_CURRENT_USER_ID),
 			_importTaskContext.getOriginalUserId());
 	}
 
@@ -87,7 +81,7 @@ public class ItemImportTaskPreActionTest {
 			_importTaskContext);
 
 		Assert.assertEquals(
-			String.valueOf(_currentUserId), PrincipalThreadLocal.getName());
+			String.valueOf(_CURRENT_USER_ID), PrincipalThreadLocal.getName());
 		Assert.assertNull(_importTaskContext.getOriginalUserId());
 	}
 
@@ -96,7 +90,7 @@ public class ItemImportTaskPreActionTest {
 		_executeImportTask(RandomTestUtil.randomString(), _importTaskContext);
 
 		Assert.assertEquals(
-			String.valueOf(_currentUserId), PrincipalThreadLocal.getName());
+			String.valueOf(_CURRENT_USER_ID), PrincipalThreadLocal.getName());
 		Assert.assertNull(_importTaskContext.getOriginalUserId());
 	}
 
@@ -159,11 +153,14 @@ public class ItemImportTaskPreActionTest {
 		);
 	}
 
+	private static final long _CURRENT_USER_ID = RandomTestUtil.randomLong();
+
 	private final BatchEngineImportTask _batchEngineImportTask = Mockito.mock(
 		BatchEngineImportTask.class);
-	private long _currentUserId;
-	private ImportTaskContext _importTaskContext;
-	private ItemImportTaskPreAction _itemImportTaskPreAction;
+	private final ImportTaskContext _importTaskContext =
+		new ImportTaskContext();
+	private final ItemImportTaskPreAction _itemImportTaskPreAction =
+		new ItemImportTaskPreAction();
 	private TestEntity _testEntity;
 	private final User _user = Mockito.mock(User.class);
 	private final UserLocalService _userLocalService = Mockito.mock(

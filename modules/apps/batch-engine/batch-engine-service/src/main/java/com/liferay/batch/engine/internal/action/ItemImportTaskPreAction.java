@@ -5,7 +5,6 @@
 
 package com.liferay.batch.engine.internal.action;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
@@ -102,6 +101,23 @@ public class ItemImportTaskPreAction implements ImportTaskPreAction {
 		return user;
 	}
 
+	private String _toJSON(Object item) throws Exception {
+		ObjectMapper objectMapper = new ObjectMapper();
+
+		ObjectWriter objectWriter = objectMapper.writer(
+			new SimpleFilterProvider(
+			).addFilter(
+				"Liferay.Vulcan",
+				VulcanPropertyFilter.of(
+					Set.of(
+						"creator", "creator.externalReferenceCode",
+						"creator.id"),
+					null)
+			));
+
+		return objectWriter.writeValueAsString(item);
+	}
+
 	private JSONObject _toJSONObject(Object item) {
 		try {
 			String json = _toJSON(item);
@@ -117,25 +133,6 @@ public class ItemImportTaskPreAction implements ImportTaskPreAction {
 		}
 
 		return null;
-	}
-
-	private String _toJSON(Object item)
-		throws JsonProcessingException {
-
-		ObjectMapper objectMapper = new ObjectMapper();
-
-		ObjectWriter objectWriter = objectMapper.writer(
-			new SimpleFilterProvider(
-			).addFilter(
-				"Liferay.Vulcan",
-				VulcanPropertyFilter.of(
-					Set.of(
-						"creator", "creator.externalReferenceCode",
-						"creator.id"),
-					null)
-			));
-
-		return objectWriter.writeValueAsString(item);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

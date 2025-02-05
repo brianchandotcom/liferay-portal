@@ -845,6 +845,27 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 	private Object _parseValue(
 		String defaultValue, InfoField infoField, Locale locale, Object value) {
 
+		if (infoField.isLocalizable() &&
+			(value instanceof InfoLocalizedValue)) {
+
+			HashMap<Locale, Object> parsedValues = new HashMap<>();
+
+			InfoLocalizedValue<?> infoLocalizedValue =
+				(InfoLocalizedValue<?>)value;
+
+			Map<Locale, Object> values =
+				(Map<Locale, Object>)infoLocalizedValue.getValues();
+
+			for (Map.Entry<Locale, Object> entry : values.entrySet()) {
+				parsedValues.put(
+					entry.getKey(),
+					_parseValue(
+						defaultValue, infoField, locale, entry.getValue()));
+			}
+
+			return parsedValues;
+		}
+
 		if (infoField.getInfoFieldType() == DateInfoFieldType.INSTANCE) {
 			try {
 				DateFormat dateFormat =
@@ -980,27 +1001,6 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 			return ListUtil.toString(
 				_getSelectedOptions(optionInfoFieldTypes, values),
 				StringPool.BLANK);
-		}
-
-		if (infoField.isLocalizable() &&
-			(value instanceof InfoLocalizedValue)) {
-
-			HashMap<Locale, Object> parsedValues = new HashMap<>();
-
-			InfoLocalizedValue<?> infoLocalizedValue =
-				(InfoLocalizedValue<?>)value;
-
-			Map<Locale, Object> values =
-				(Map<Locale, Object>)infoLocalizedValue.getValues();
-
-			for (Map.Entry<Locale, Object> entry : values.entrySet()) {
-				parsedValues.put(
-					entry.getKey(),
-					_parseValue(
-						defaultValue, infoField, locale, entry.getValue()));
-			}
-
-			return parsedValues;
 		}
 
 		if (Validator.isNull(value)) {

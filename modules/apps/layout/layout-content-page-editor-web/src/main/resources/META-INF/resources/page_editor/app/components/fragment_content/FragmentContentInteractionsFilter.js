@@ -277,6 +277,13 @@ function FragmentContentInteractionsFilter({
 		event.preventDefault();
 		event.stopPropagation();
 
+		const isBeingEdited =
+			editable.itemId === fromControlsId(editableProcessorUniqueId);
+
+		if (isBeingEdited) {
+			return;
+		}
+
 		if (!isActive(editable.itemId)) {
 			selectItem(editable.itemId, {
 				itemType: ITEM_TYPES.editable,

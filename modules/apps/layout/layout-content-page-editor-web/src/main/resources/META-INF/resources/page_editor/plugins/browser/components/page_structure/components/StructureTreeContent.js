@@ -46,7 +46,7 @@ import usePageContents from '../../../../../app/utils/usePageContents';
 import StructureTreeNode from './StructureTreeNode';
 import StructureTreeNodeActions from './StructureTreeNodeActions';
 import VisibilityButton from './VisibilityButton';
-import visit from './visit';
+import getTreeNodes from './getTreeNodes';
 
 export default function StructureTreeContent({expandedKeys, setExpandedKeys}) {
 	const activeItemIds = useActiveItemIds();
@@ -89,7 +89,7 @@ export default function StructureTreeContent({expandedKeys, setExpandedKeys}) {
 
 	const nodes = useMemo(
 		() =>
-			visit(data.items[data.rootItems.main], data.items, {
+			getTreeNodes(data.items[data.rootItems.main], data.items, {
 				activeItemIds,
 				canUpdateEditables,
 				canUpdateItemConfiguration,

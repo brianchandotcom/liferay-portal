@@ -11,10 +11,13 @@ Import-Package:\
 	\
 	!com.jcraft.jzlib,\
 	\
+	!com.microsoft.*,\
+	\
 	!com.ning.compress.*,\
 	\
 	!com.oracle.svm.core.annotate,\
 	\
+	!com.sun.jna.*,\
 	!com.sun.net.httpserver,\
 	\
 	!io.micrometer.context.*,\

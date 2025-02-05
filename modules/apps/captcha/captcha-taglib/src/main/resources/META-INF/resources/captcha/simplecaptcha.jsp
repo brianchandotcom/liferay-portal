@@ -50,8 +50,10 @@ String url = (String)request.getAttribute("liferay-captcha:captcha:url");
 	</div>
 
 	<aui:script>
-		function attachEvent(refreshCaptchaElementId, captchaElementId) {
-			var refreshCaptcha = document.getElementById(refreshCaptchaElementId);
+		function <portlet:namespace />attachEvent() {
+			var refreshCaptcha = document.getElementById(
+				'<portlet:namespace />refreshCaptcha'
+			);
 
 			if (refreshCaptcha && !refreshCaptcha.hasEventAttached) {
 				refreshCaptcha.hasEventAttached = true;
@@ -61,7 +63,9 @@ String url = (String)request.getAttribute("liferay-captcha:captcha:url");
 						'<%= HtmlUtil.escapeJS(url) %>'
 					);
 
-					var captcha = document.getElementById(captchaElementId);
+					var captcha = document.getElementById(
+						'<portlet:namespace />captcha'
+					);
 
 					if (captcha) {
 						captcha.setAttribute('src', url);
@@ -70,16 +74,11 @@ String url = (String)request.getAttribute("liferay-captcha:captcha:url");
 			}
 		}
 
-		attachEvent(
-			'<portlet:namespace />refreshCaptcha',
-			'<portlet:namespace />captcha'
-		);
+		<portlet:namespace />attachEvent();
 
-		Liferay.on('<portlet:namespace />simplecaptcha_attachEvent', () => {
-			attachEvent(
-				'<portlet:namespace />refreshCaptcha',
-				'<portlet:namespace />captcha'
-			);
-		});
+		Liferay.on(
+			'<portlet:namespace />simplecaptcha_attachEvent',
+			<portlet:namespace />attachEvent
+		);
 	</aui:script>
 </c:if>

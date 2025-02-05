@@ -92,14 +92,14 @@ List<FragmentCollectionContributor> fragmentCollectionContributors = fragmentEnt
 												borderless="<%= true %>"
 												displayType="secondary"
 												icon="marketplace"
-												id='<%= liferayPortletResponse.getNamespace() + "marketplaceButton" %>'
+												id='<%= liferayPortletResponse.getNamespace() + "isMarketplaceButtonVisited" %>'
 												monospaced="<%= true %>"
 												propsTransformer="{MarketplaceButtonPropsTransformer} from fragment-web"
 												small="<%= true %>"
 												title='<%= LanguageUtil.get(request, "open-marketplace-explorer") %>'
 											/>
 
-											<c:if test='<%= Objects.equals(GetterUtil.getString(SessionClicks.get(request, liferayPortletResponse.getNamespace() + "marketplaceButton", "unvisited")), "unvisited") %>'>
+											<c:if test='<%= !GetterUtil.getBoolean(SessionClicks.get(request, liferayPortletResponse.getNamespace() + "isMarketplaceButtonVisited", "false")) %>'>
 												<span class="notification" id="<portlet:namespace />marketplaceBadge"></span>
 											</c:if>
 										</div>

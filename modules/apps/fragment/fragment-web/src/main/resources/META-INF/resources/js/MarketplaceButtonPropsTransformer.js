@@ -29,8 +29,8 @@ export default function propsTransformer({
 			});
 
 			Liferay.Util.Session.set(
-				portletNamespace + 'marketplaceButton',
-				'visited'
+				portletNamespace + 'isMarketplaceButtonVisited',
+				true
 			);
 
 			if (marketplaceBadge) {

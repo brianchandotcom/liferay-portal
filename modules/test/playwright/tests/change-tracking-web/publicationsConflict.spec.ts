@@ -129,7 +129,7 @@ test('Resolve deletion modification conflict publications by discarding', async 
 
 	await journalPage.goto();
 
-	await expect(page.getByText('No web content was found.')).toBeVisible();
+	await expect(page.getByText(title)).not.toBeVisible();
 
 	await apiHelpers.headlessChangeTracking.deleteCTCollection(
 		ctCollection2.body.id

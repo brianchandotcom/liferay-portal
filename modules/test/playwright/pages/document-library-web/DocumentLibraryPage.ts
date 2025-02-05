@@ -58,14 +58,12 @@ export class DocumentLibraryPage {
 		);
 	}
 
-	async assertPrivateFileIcon(frameLocator?: FrameLocator) {
-		const privateFileIcon = await (frameLocator ?? this.page)
-			.getByLabel('Not Visible to Guest Users')
-			.last();
-
-		await privateFileIcon.waitFor();
-
-		await expect(privateFileIcon).toBeVisible();
+	async assertPrivateFileIcon(parent: Page | FrameLocator = this.page) {
+		await expect(async () => {
+			await expect(
+				await parent.getByLabel('Not Visible to Guest Users').last()
+			).toBeVisible();
+		}).toPass();
 	}
 
 	async openInfoPanel(entryTitle: string, tabName: 'Details' | 'Versions') {

@@ -31,10 +31,12 @@
 	<#if productSpecifications?has_content>
 		<#assign developerNames = productSpecifications?filter(item -> stringUtil.equals(item.specificationKey, "developer-name")) />
 
-			<#if developerNames?has_content>
-		  		<#list developerNames as developerName>
-					<div class="bg-neutral-8">${developerName.value}</div>
-		  		</#list>
-			</#if>
+		<#if developerNames?has_content>
+			<#list developerNames as developerName>
+				<a class="bg-neutral-8" href="/?developer-name=${developerName.value}">
+					${developerName.value}
+				</a>
+			</#list>
+		</#if>
 	</#if>
 </div>

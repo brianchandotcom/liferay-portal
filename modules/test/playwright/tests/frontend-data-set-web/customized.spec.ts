@@ -18,6 +18,7 @@ const test = mergeTests(
 	apiHelpersTest,
 	fdsSamplePageTest,
 	featureFlagsTest({
+		'LPD-42570': {enabled: true},
 		'LPS-178052': {enabled: true},
 	}),
 	isolatedSiteTest,
@@ -438,6 +439,26 @@ test('Check behavior of item actions', async ({fdsSamplePage, page}) => {
 		await page.keyboard.press('Escape');
 
 		await expect(fdsSamplePage.sidePanel).toHaveClass(/is-hidden/);
+	});
+});
+
+test('Check bulk actions', async ({fdsSamplePage, page}) => {
+	await test.step('Select one of the items in the table', async () => {
+		await fdsSamplePage.table.container
+			.locator('tbody .cell-select-item')
+			.first()
+			.getByRole('checkbox')
+			.setChecked(true);
+	});
+
+	await test.step('Open ellipsis actions menu', async () => {
+		await page.locator('.bulk-actions').getByLabel('Actions').click();
+	});
+
+	await test.step('Check the bulk actions are listed', async () => {
+		await expect(
+			page.locator('.dropdown-menu.show').getByRole('menuitem')
+		).toHaveText('Label');
 	});
 });
 

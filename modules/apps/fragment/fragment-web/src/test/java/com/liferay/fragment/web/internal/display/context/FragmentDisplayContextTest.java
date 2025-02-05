@@ -47,9 +47,7 @@ public class FragmentDisplayContextTest {
 
 	@FeatureFlags("LPD-34938")
 	@Test
-	public void testGetAvailableActionsForMarketplaceFragments()
-		throws Exception {
-
+	public void testGetAvailableActionsForMarketplaceFragmentCompositionWithPermissions() {
 		_setUpFragmentPermission(true);
 
 		FragmentDisplayContext fragmentDisplayContext =
@@ -76,6 +74,16 @@ public class FragmentDisplayContextTest {
 		Assert.assertTrue(
 			availableActions.contains(
 				"moveFragmentCompositionsAndFragmentEntries"));
+	}
+
+	@FeatureFlags("LPD-34938")
+	@Test
+	public void testGetAvailableActionsForMarketplaceFragmentEntryWithPermissions() {
+		_setUpFragmentPermission(true);
+
+		FragmentDisplayContext fragmentDisplayContext =
+			new FragmentDisplayContext(
+				_httpServletRequest, _renderRequest, _renderResponse);
 
 		Mockito.when(
 			_fragmentEntry.isMarketplace()
@@ -83,7 +91,7 @@ public class FragmentDisplayContextTest {
 			true
 		);
 
-		availableActions = fragmentDisplayContext.getAvailableActions(
+		String availableActions = fragmentDisplayContext.getAvailableActions(
 			_fragmentEntry);
 
 		Assert.assertFalse(

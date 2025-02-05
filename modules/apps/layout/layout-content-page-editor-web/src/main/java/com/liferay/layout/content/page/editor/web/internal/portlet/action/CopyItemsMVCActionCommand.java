@@ -87,7 +87,7 @@ public class CopyItemsMVCActionCommand
 				_formItemManager.checkFormContainerParentItemRequired(
 					_fragmentEntryLinkManager.getChildrenFragmentEntryLinks(
 						ListUtil.fromArray(finalItemIds), layoutStructure),
-					layoutStructure, themeDisplay.getLocale(), parentItemId);
+					layoutStructure, parentItemId);
 
 				List<LayoutStructureItem> copiedLayoutStructureItems =
 					layoutStructure.copyLayoutStructureItems(

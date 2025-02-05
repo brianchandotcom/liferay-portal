@@ -5,7 +5,7 @@
 
 package com.liferay.frontend.data.set.internal.url;
 
-import com.liferay.frontend.data.set.internal.serializer.BaseCustomFDSSerializer;
+import com.liferay.frontend.data.set.internal.serializer.BaseFDSSerializer;
 import com.liferay.frontend.data.set.serializer.FDSSerializer;
 import com.liferay.frontend.data.set.url.APIURLFDSSerializer;
 import com.liferay.frontend.data.set.url.FDSAPIURLBuilder;
@@ -30,8 +30,8 @@ import org.osgi.service.component.annotations.Reference;
 	property = "frontend.data.set.serializer.type=" + FDSSerializer.TYPE_CUSTOM,
 	service = FDSSerializer.class
 )
-public class APIURLCustomFDSSerializerImpl
-	extends BaseCustomFDSSerializer implements APIURLFDSSerializer {
+public class APIURLFDSSerializerImpl
+	extends BaseFDSSerializer implements APIURLFDSSerializer {
 
 	@Override
 	public String serialize(

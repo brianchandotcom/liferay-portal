@@ -5,7 +5,7 @@
 
 package com.liferay.frontend.data.set.internal.action;
 
-import com.liferay.frontend.data.set.internal.serializer.BaseCustomFDSSerializer;
+import com.liferay.frontend.data.set.internal.serializer.BaseFDSSerializer;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.data.set.serializer.FDSSerializer;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
@@ -106,12 +106,12 @@ public class ItemsActionsCustomFDSSerializerImplTest {
 			_fdsSerializer.serialize(fdsName, _httpServletRequest)
 		).thenCallRealMethod();
 
-		BaseCustomFDSSerializer baseCustomFDSSerializer =
-			(BaseCustomFDSSerializer)_fdsSerializer;
+		BaseFDSSerializer baseFDSSerializer =
+			(BaseFDSSerializer)_fdsSerializer;
 
 		if (ArrayUtil.isEmpty(labels)) {
 			Mockito.when(
-				baseCustomFDSSerializer.getItemsActionsObjectEntries(
+				baseFDSSerializer.getItemsActionsObjectEntries(
 					fdsName, _httpServletRequest)
 			).thenReturn(
 				Collections.emptySet()
@@ -134,7 +134,7 @@ public class ItemsActionsCustomFDSSerializerImplTest {
 		}
 
 		Mockito.when(
-			baseCustomFDSSerializer.getItemsActionsObjectEntries(
+			baseFDSSerializer.getItemsActionsObjectEntries(
 				fdsName, _httpServletRequest)
 		).thenReturn(
 			objectEntries
@@ -143,7 +143,7 @@ public class ItemsActionsCustomFDSSerializerImplTest {
 
 	private void _resetSerializer() throws Exception {
 		_fdsSerializer = Mockito.mock(
-			ItemsActionsCustomFDSSerializerImpl.class);
+			ItemsActionsFDSSerializerImpl.class);
 	}
 
 	private void _testSerialize(String fdsName, String[] labels)

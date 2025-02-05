@@ -6,7 +6,7 @@
 package com.liferay.frontend.data.set.internal.action;
 
 import com.liferay.frontend.data.set.action.CreationMenuFDSSerializer;
-import com.liferay.frontend.data.set.internal.serializer.BaseCustomFDSSerializer;
+import com.liferay.frontend.data.set.internal.serializer.BaseFDSSerializer;
 import com.liferay.frontend.data.set.serializer.FDSSerializer;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
@@ -29,8 +29,8 @@ import org.osgi.service.component.annotations.Component;
 	property = "frontend.data.set.serializer.type=" + FDSSerializer.TYPE_CUSTOM,
 	service = FDSSerializer.class
 )
-public class CreationMenuCustomFDSSerializerImpl
-	extends BaseCustomFDSSerializer implements CreationMenuFDSSerializer {
+public class CreationMenuFDSSerializerImpl
+	extends BaseFDSSerializer implements CreationMenuFDSSerializer {
 
 	@Override
 	public CreationMenu serialize(

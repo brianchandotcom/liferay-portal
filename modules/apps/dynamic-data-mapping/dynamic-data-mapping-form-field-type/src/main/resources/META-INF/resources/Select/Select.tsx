@@ -273,7 +273,6 @@ const Main = ({
 					options={normalizedOptions}
 					predefinedValue={predefinedValueArray}
 					readOnly={readOnly}
-					required={otherProps.required}
 					value={
 						viewMode || !!multipleSelectValues.length
 							? multipleSelectValues
@@ -296,7 +295,6 @@ const Main = ({
 					placeholder={placeholder}
 					predefinedValue={newPredefinedValue}
 					readOnly={readOnly}
-					required={otherProps.required}
 					selectedKey={selectedKey ?? newValue}
 					showEmptyOption={showEmptyOption}
 					viewMode={viewMode}

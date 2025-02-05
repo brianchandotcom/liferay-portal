@@ -15,6 +15,7 @@ export class DiagramViewPage {
 	readonly saveWorkflowDefinitionButton: Locator;
 	readonly sourceViewButton: Locator;
 	readonly page: Page;
+	readonly workflowDefinitionTitle: Locator;
 
 	constructor(page: Page) {
 		this.backButton = page.getByRole('link', {name: 'Back'});
@@ -32,6 +33,7 @@ export class DiagramViewPage {
 		});
 		this.sourceViewButton = page.locator('button[title="Source View"]');
 		this.page = page;
+		this.workflowDefinitionTitle = page.locator('#definition-title');
 	}
 
 	async clickNode(nodeLabel: string) {

@@ -6,7 +6,7 @@
 import {readFileSync} from 'fs';
 import * as path from 'path';
 
-type fileNames = 'bcc-reception-type';
+type fileNames = 'basic' | 'bcc-reception-type';
 
 function getXMLContentFromFile(fileName: string) {
 	const absolutePath = path.resolve(__dirname, `../dependencies/${fileName}`);

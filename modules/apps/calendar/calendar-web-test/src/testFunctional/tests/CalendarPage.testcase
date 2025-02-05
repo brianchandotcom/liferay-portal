@@ -114,7 +114,7 @@ definition {
 			key_eventTitle = "Calendar Event Regular Title",
 			locator1 = "Calendar#SCHEDULER_EVENT",
 			locator2 = "background-color",
-			value1 = "rgba(102, 140, 217, 0.7)");
+			value1 = "rgba(102, 140, 217, 1)");
 
 		AssertCssValue(
 			key_eventTitle = "Calendar Event Regular Title",

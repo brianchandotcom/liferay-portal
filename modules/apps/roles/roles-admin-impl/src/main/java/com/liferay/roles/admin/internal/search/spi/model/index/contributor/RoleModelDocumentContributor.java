@@ -30,21 +30,21 @@ public class RoleModelDocumentContributor
 	@Override
 	public void contribute(Document document, Role role) {
 		try {
-			document.addKeyword("accountEntryId", 0);
 			document.addKeyword(Field.COMPANY_ID, role.getCompanyId());
 			document.addDate(Field.CREATE_DATE, role.getCreateDate());
 			document.addText(Field.DESCRIPTION, role.getDescription());
+			document.addDate(Field.MODIFIED_DATE, role.getModifiedDate());
+			document.addKeyword(Field.NAME, role.getName());
+			document.addText(Field.TITLE, role.getTitle());
+			document.addNumber(Field.TYPE, role.getType());
+			document.addKeyword(Field.USER_ID, role.getUserId());
+			document.addKeyword("accountEntryId", 0);
 			document.addKeyword(
 				"externalReferenceCode", role.getExternalReferenceCode());
 			document.addLocalizedText(
 				"localized_description", role.getDescriptionMap());
 			document.addLocalizedText("localized_title", role.getTitleMap());
-			document.addDate(Field.MODIFIED_DATE, role.getModifiedDate());
-			document.addKeyword(Field.NAME, role.getName());
 			document.addKeyword("subtype", role.getSubtype());
-			document.addText(Field.TITLE, role.getTitle());
-			document.addNumber(Field.TYPE, role.getType());
-			document.addKeyword(Field.USER_ID, role.getUserId());
 		}
 		catch (Exception exception) {
 			if (_log.isWarnEnabled()) {

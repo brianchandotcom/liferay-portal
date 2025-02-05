@@ -35,15 +35,15 @@ public class RoleKeywordQueryContributor implements KeywordQueryContributor {
 		_queryHelper.addSearchTerm(
 			booleanQuery, searchContext, Field.DESCRIPTION, true);
 		_queryHelper.addSearchTerm(
+			booleanQuery, searchContext, Field.NAME, false);
+		_queryHelper.addSearchTerm(
+			booleanQuery, searchContext, Field.TITLE, true);
+		_queryHelper.addSearchTerm(
 			booleanQuery, searchContext, "externalReferenceCode", false);
 		_queryHelper.addSearchTerm(
 			booleanQuery, searchContext, "localized_description", true);
 		_queryHelper.addSearchTerm(
 			booleanQuery, searchContext, "localized_title", true);
-		_queryHelper.addSearchTerm(
-			booleanQuery, searchContext, Field.NAME, false);
-		_queryHelper.addSearchTerm(
-			booleanQuery, searchContext, Field.TITLE, true);
 	}
 
 	@Reference

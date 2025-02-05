@@ -10,7 +10,7 @@ import {useEffect, useState} from 'react';
 import {useAppPropertiesContext} from '~/contexts/AppPropertiesContext';
 import PopoverIconButton from '~/features/project/components/PopoverIconButton';
 import i18n from '~/utils/I18n';
-import {DXPIcon} from '~/assets/navigation-menu';
+import {DXPIcon} from '~/assets/NavigationMenu';
 import {FORMAT_DATE_TYPES} from '~/utils/constants';
 import getDateCustomFormat from '~/utils/getDateCustomFormat';
 import {

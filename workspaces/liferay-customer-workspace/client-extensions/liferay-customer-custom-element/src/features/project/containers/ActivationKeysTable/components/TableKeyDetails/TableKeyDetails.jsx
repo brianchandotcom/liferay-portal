@@ -13,7 +13,7 @@ import i18n from '~/utils/I18n';
 import {
 	DXPIcon,
 	PortalIcon,
-} from '~/assets/navigation-menu';
+} from '~/assets/NavigationMenu';
 import {FORMAT_DATE_TYPES} from '~/utils/constants';
 import getDateCustomFormat from '~/utils/getDateCustomFormat';
 import {PRODUCT_TYPES} from '~/features/project/utils/constants';

@@ -7,7 +7,7 @@ import React from 'react';
 
 import './ContactBanner.css';
 
-import BannerWaves from '~/assets/banner-waves';
+import {BannerWaves} from '~/assets/BannerWaves';
 import {useCustomerPortal} from '~/features/project/context';
 import i18n from '~/utils/I18n';
 

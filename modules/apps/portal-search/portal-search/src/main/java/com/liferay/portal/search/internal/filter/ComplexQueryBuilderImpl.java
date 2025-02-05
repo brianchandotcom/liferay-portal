@@ -299,15 +299,11 @@ public class ComplexQueryBuilderImpl implements ComplexQueryBuilder {
 				return _queries.term(field, value);
 			}
 
-			if (Objects.equals(type, "wildcard")) {
-				if (Validator.isBlank(value)) {
-					return null;
-				}
-
-				return _queries.wildcard(field, value);
+			if (!Objects.equals(type, "wildcard") || Validator.isBlank(value)) {
+				return null;
 			}
 
-			return null;
+			return _queries.wildcard(field, value);
 		}
 
 		protected Query getNamedQuery(String name) {

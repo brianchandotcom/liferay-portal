@@ -64,7 +64,7 @@ public class CountryUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		_updateCounters();
+		_incrementCounters();
 
 		List<IndexMetadata> indexMetadatas = _dropIndexes();
 
@@ -107,11 +107,30 @@ public class CountryUpgradeProcess extends UpgradeProcess {
 				}
 			}
 
-			_updateCounters();
+			_incrementCounters();
 		}
 		finally {
-			_restoreIndexes(indexMetadatas);
+			_addIndexes(indexMetadatas);
 		}
+	}
+
+	private void _addIndexes(List<IndexMetadata> indexMetadatas)
+		throws Exception {
+
+		DB db = DBManagerUtil.getDB();
+
+		List<IndexMetadata> addIndexMetadatas = new ArrayList<>();
+
+		for (IndexMetadata indexMetadata : indexMetadatas) {
+			if (!hasIndex(
+					indexMetadata.getTableName(),
+					indexMetadata.getIndexName())) {
+
+				addIndexMetadatas.add(indexMetadata);
+			}
+		}
+
+		db.addIndexes(connection, addIndexMetadatas);
 	}
 
 	private List<IndexMetadata> _dropIndexes() throws Exception {
@@ -138,7 +157,7 @@ public class CountryUpgradeProcess extends UpgradeProcess {
 			}
 		}
 		catch (Exception exception) {
-			_restoreIndexes(droppedIndexMetadatas);
+			_addIndexes(droppedIndexMetadatas);
 
 			throw exception;
 		}
@@ -146,26 +165,7 @@ public class CountryUpgradeProcess extends UpgradeProcess {
 		return indexMetadatas;
 	}
 
-	private void _restoreIndexes(List<IndexMetadata> indexMetadatas)
-		throws Exception {
-
-		DB db = DBManagerUtil.getDB();
-
-		List<IndexMetadata> addIndexMetadatas = new ArrayList<>();
-
-		for (IndexMetadata indexMetadata : indexMetadatas) {
-			if (!hasIndex(
-					indexMetadata.getTableName(),
-					indexMetadata.getIndexName())) {
-
-				addIndexMetadatas.add(indexMetadata);
-			}
-		}
-
-		db.addIndexes(connection, addIndexMetadatas);
-	}
-
-	private void _updateCounter(
+	private void _incrementCounter(
 			String tableName, String columnName, String className)
 		throws Exception {
 
@@ -180,12 +180,12 @@ public class CountryUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
-	private void _updateCounters() throws Exception {
-		_updateCounter(
+	private void _incrementCounters() throws Exception {
+		_incrementCounter(
 			"CountryLocalization", "countryLocalizationId",
 			CountryLocalization.class.getName());
-		_updateCounter("Region", "regionId", Region.class.getName());
-		_updateCounter(
+		_incrementCounter("Region", "regionId", Region.class.getName());
+		_incrementCounter(
 			"RegionLocalization", "regionLocalizationId",
 			RegionLocalization.class.getName());
 

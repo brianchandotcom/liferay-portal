@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -55,7 +54,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -158,44 +156,27 @@ public class FragmentDisplayContext {
 	}
 
 	public String getAvailableActions(Object object) {
-		if (!FragmentPermission.contains(
+		List<String> availableActions = new ArrayList<>();
+
+		boolean marketplace = _isMarketplaceObject(object);
+
+		if (!marketplace) {
+			availableActions.add(
+				"exportFragmentCompositionsAndFragmentEntries");
+		}
+
+		if (FragmentPermission.contains(
 				_themeDisplay.getPermissionChecker(),
 				_themeDisplay.getScopeGroupId(),
 				FragmentActionKeys.MANAGE_FRAGMENT_ENTRIES)) {
 
-			return "exportFragmentCompositionsAndFragmentEntries";
-		}
-
-		List<String> availableActions = new ArrayList<>(
-			Arrays.asList(
-				"exportFragmentCompositionsAndFragmentEntries",
-				"deleteFragmentCompositionsAndFragmentEntries",
-				"moveFragmentCompositionsAndFragmentEntries"));
-
-		if (object instanceof FragmentEntry) {
-			availableActions.add("copySelectedFragmentEntries");
-
-			FragmentEntry fragmentEntry = (FragmentEntry)object;
-
-			if (FeatureFlagManagerUtil.isEnabled("LPD-34938") &&
-				fragmentEntry.isMarketplace()) {
-
-				availableActions.remove("copySelectedFragmentEntries");
-				availableActions.remove(
-					"exportFragmentCompositionsAndFragmentEntries");
+			if (!marketplace && (object instanceof FragmentEntry)) {
+				availableActions.add("copySelectedFragmentEntries");
 			}
-		}
 
-		if (object instanceof FragmentComposition) {
-			FragmentComposition fragmentComposition =
-				(FragmentComposition)object;
-
-			if (FeatureFlagManagerUtil.isEnabled("LPD-34938") &&
-				fragmentComposition.isMarketplace()) {
-
-				availableActions.remove(
-					"exportFragmentCompositionsAndFragmentEntries");
-			}
+			availableActions.add(
+				"deleteFragmentCompositionsAndFragmentEntries");
+			availableActions.add("moveFragmentCompositionsAndFragmentEntries");
 		}
 
 		return StringUtil.merge(availableActions, StringPool.COMMA);
@@ -956,6 +937,19 @@ public class FragmentDisplayContext {
 		_tabs1 = ParamUtil.getString(_httpServletRequest, "tabs1", "fragments");
 
 		return _tabs1;
+	}
+
+	private boolean _isMarketplaceObject(Object object) {
+		if (object instanceof FragmentComposition) {
+			FragmentComposition fragmentComposition =
+				(FragmentComposition)object;
+
+			return fragmentComposition.isMarketplace();
+		}
+
+		FragmentEntry fragmentEntry = (FragmentEntry)object;
+
+		return fragmentEntry.isMarketplace();
 	}
 
 	private boolean _isScopeGroup() {

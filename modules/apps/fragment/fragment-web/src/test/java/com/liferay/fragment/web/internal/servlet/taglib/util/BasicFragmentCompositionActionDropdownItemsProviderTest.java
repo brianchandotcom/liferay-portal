@@ -33,8 +33,7 @@ public class BasicFragmentCompositionActionDropdownItemsProviderTest
 		BasicFragmentCompositionActionDropdownItemsProvider
 			basicFragmentCompositionActionDropdownItemsProvider =
 				new BasicFragmentCompositionActionDropdownItemsProvider(
-					Mockito.mock(FragmentComposition.class), renderRequest,
-					renderResponse);
+					_fragmentComposition, renderRequest, renderResponse);
 
 		assertDropdownItemsInCorrectOrder(
 			basicFragmentCompositionActionDropdownItemsProvider.
@@ -49,11 +48,8 @@ public class BasicFragmentCompositionActionDropdownItemsProviderTest
 
 		setUpFragmentPermission(true);
 
-		FragmentComposition fragmentComposition = Mockito.mock(
-			FragmentComposition.class);
-
 		Mockito.when(
-			fragmentComposition.isMarketplace()
+			_fragmentComposition.isMarketplace()
 		).thenReturn(
 			true
 		);
@@ -61,12 +57,15 @@ public class BasicFragmentCompositionActionDropdownItemsProviderTest
 		BasicFragmentCompositionActionDropdownItemsProvider
 			basicFragmentCompositionActionDropdownItemsProvider =
 				new BasicFragmentCompositionActionDropdownItemsProvider(
-					fragmentComposition, renderRequest, renderResponse);
+					_fragmentComposition, renderRequest, renderResponse);
 
 		assertDropdownItemsInCorrectOrder(
 			basicFragmentCompositionActionDropdownItemsProvider.
 				getActionDropdownItems(),
 			"move", "delete");
 	}
+
+	private final FragmentComposition _fragmentComposition = Mockito.mock(
+		FragmentComposition.class);
 
 }

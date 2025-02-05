@@ -148,7 +148,7 @@ public class ObjectDefinitionExportImportTest extends BaseExportImportTestCase {
 	@Test
 	public void testExportImportObjectDefinition() throws Exception {
 
-		// Account Restricted Object Definition
+		// Account restricted object definition
 
 		String externalReferenceCode = RandomTestUtil.randomString();
 		String name = ObjectDefinitionTestUtil.getRandomName();
@@ -201,12 +201,12 @@ public class ObjectDefinitionExportImportTest extends BaseExportImportTestCase {
 			accountRestrictedObjectDefinitionJSONObject.toString(),
 			externalReferenceCode, name);
 
-		ObjectDefinition testAccountRestrictedObjectDefinition =
+		ObjectDefinition accountRestrictedObjectDefinition =
 			objectDefinitionResource.getObjectDefinitionByExternalReferenceCode(
 				externalReferenceCode);
 
 		Assert.assertTrue(
-			testAccountRestrictedObjectDefinition.getAccountEntryRestricted());
+			accountRestrictedObjectDefinition.getAccountEntryRestricted());
 
 		// Custom object definition
 

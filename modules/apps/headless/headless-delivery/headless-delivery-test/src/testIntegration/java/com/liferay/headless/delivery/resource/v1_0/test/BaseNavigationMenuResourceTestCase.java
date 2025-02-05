@@ -174,6 +174,7 @@ public abstract class BaseNavigationMenuResourceTestCase {
 
 		NavigationMenu navigationMenu = randomNavigationMenu();
 
+		navigationMenu.setExternalReferenceCode(regex);
 		navigationMenu.setName(regex);
 
 		String json = NavigationMenuSerDes.toJSON(navigationMenu);
@@ -182,6 +183,7 @@ public abstract class BaseNavigationMenuResourceTestCase {
 
 		navigationMenu = NavigationMenuSerDes.toDTO(json);
 
+		Assert.assertEquals(regex, navigationMenu.getExternalReferenceCode());
 		Assert.assertEquals(regex, navigationMenu.getName());
 	}
 
@@ -804,6 +806,303 @@ public abstract class BaseNavigationMenuResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteSiteNavigationMenuByExternalReferenceCode()
+		throws Exception {
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		NavigationMenu navigationMenu =
+			testDeleteSiteNavigationMenuByExternalReferenceCode_addNavigationMenu();
+
+		assertHttpResponseStatusCode(
+			204,
+			navigationMenuResource.
+				deleteSiteNavigationMenuByExternalReferenceCodeHttpResponse(
+					testDeleteSiteNavigationMenuByExternalReferenceCode_getSiteId(
+						navigationMenu),
+					navigationMenu.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			navigationMenuResource.
+				getSiteNavigationMenuByExternalReferenceCodeHttpResponse(
+					testDeleteSiteNavigationMenuByExternalReferenceCode_getSiteId(
+						navigationMenu),
+					navigationMenu.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			navigationMenuResource.
+				getSiteNavigationMenuByExternalReferenceCodeHttpResponse(
+					testDeleteSiteNavigationMenuByExternalReferenceCode_getSiteId(
+						navigationMenu),
+					navigationMenu.getExternalReferenceCode()));
+	}
+
+	protected Long
+			testDeleteSiteNavigationMenuByExternalReferenceCode_getSiteId(
+				NavigationMenu navigationMenu)
+		throws Exception {
+
+		return navigationMenu.getSiteId();
+	}
+
+	protected NavigationMenu
+			testDeleteSiteNavigationMenuByExternalReferenceCode_addNavigationMenu()
+		throws Exception {
+
+		return navigationMenuResource.postSiteNavigationMenu(
+			testGroup.getGroupId(), randomNavigationMenu());
+	}
+
+	@Test
+	public void testGetSiteNavigationMenuByExternalReferenceCode()
+		throws Exception {
+
+		NavigationMenu postNavigationMenu =
+			testGetSiteNavigationMenuByExternalReferenceCode_addNavigationMenu();
+
+		NavigationMenu getNavigationMenu =
+			navigationMenuResource.getSiteNavigationMenuByExternalReferenceCode(
+				testGetSiteNavigationMenuByExternalReferenceCode_getSiteId(
+					postNavigationMenu),
+				postNavigationMenu.getExternalReferenceCode());
+
+		assertEquals(postNavigationMenu, getNavigationMenu);
+		assertValid(getNavigationMenu);
+	}
+
+	protected Long testGetSiteNavigationMenuByExternalReferenceCode_getSiteId(
+			NavigationMenu navigationMenu)
+		throws Exception {
+
+		return navigationMenu.getSiteId();
+	}
+
+	protected NavigationMenu
+			testGetSiteNavigationMenuByExternalReferenceCode_addNavigationMenu()
+		throws Exception {
+
+		return navigationMenuResource.postSiteNavigationMenu(
+			testGroup.getGroupId(), randomNavigationMenu());
+	}
+
+	@Test
+	public void testGraphQLGetSiteNavigationMenuByExternalReferenceCode()
+		throws Exception {
+
+		NavigationMenu navigationMenu =
+			testGraphQLGetSiteNavigationMenuByExternalReferenceCode_addNavigationMenu();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				navigationMenu,
+				NavigationMenuSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"navigationMenuByExternalReferenceCode",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"siteKey",
+											"\"" +
+												testGraphQLGetSiteNavigationMenuByExternalReferenceCode_getSiteId(
+													navigationMenu) + "\"");
+
+										put(
+											"externalReferenceCode",
+											"\"" +
+												navigationMenu.
+													getExternalReferenceCode() +
+														"\"");
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data",
+						"Object/navigationMenuByExternalReferenceCode"))));
+
+		// Using the namespace headlessDelivery_v1_0
+
+		Assert.assertTrue(
+			equals(
+				navigationMenu,
+				NavigationMenuSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessDelivery_v1_0",
+								new GraphQLField(
+									"navigationMenuByExternalReferenceCode",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"siteKey",
+												"\"" +
+													testGraphQLGetSiteNavigationMenuByExternalReferenceCode_getSiteId(
+														navigationMenu) + "\"");
+
+											put(
+												"externalReferenceCode",
+												"\"" +
+													navigationMenu.
+														getExternalReferenceCode() +
+															"\"");
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+						"Object/navigationMenuByExternalReferenceCode"))));
+	}
+
+	protected Long
+			testGraphQLGetSiteNavigationMenuByExternalReferenceCode_getSiteId(
+				NavigationMenu navigationMenu)
+		throws Exception {
+
+		return navigationMenu.getSiteId();
+	}
+
+	@Test
+	public void testGraphQLGetSiteNavigationMenuByExternalReferenceCodeNotFound()
+		throws Exception {
+
+		String irrelevantExternalReferenceCode =
+			"\"" + RandomTestUtil.randomString() + "\"";
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"navigationMenuByExternalReferenceCode",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"siteKey",
+									"\"" + irrelevantGroup.getGroupId() + "\"");
+								put(
+									"externalReferenceCode",
+									irrelevantExternalReferenceCode);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessDelivery_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessDelivery_v1_0",
+						new GraphQLField(
+							"navigationMenuByExternalReferenceCode",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"siteKey",
+										"\"" + irrelevantGroup.getGroupId() +
+											"\"");
+									put(
+										"externalReferenceCode",
+										irrelevantExternalReferenceCode);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected NavigationMenu
+			testGraphQLGetSiteNavigationMenuByExternalReferenceCode_addNavigationMenu()
+		throws Exception {
+
+		return testGraphQLNavigationMenu_addNavigationMenu();
+	}
+
+	@Test
+	public void testPutSiteNavigationMenuByExternalReferenceCode()
+		throws Exception {
+
+		NavigationMenu postNavigationMenu =
+			testPutSiteNavigationMenuByExternalReferenceCode_addNavigationMenu();
+
+		NavigationMenu randomNavigationMenu = randomNavigationMenu();
+
+		NavigationMenu putNavigationMenu =
+			navigationMenuResource.putSiteNavigationMenuByExternalReferenceCode(
+				testPutSiteNavigationMenuByExternalReferenceCode_getSiteId(
+					postNavigationMenu),
+				postNavigationMenu.getExternalReferenceCode(),
+				randomNavigationMenu);
+
+		assertEquals(randomNavigationMenu, putNavigationMenu);
+		assertValid(putNavigationMenu);
+
+		NavigationMenu getNavigationMenu =
+			navigationMenuResource.getSiteNavigationMenuByExternalReferenceCode(
+				testPutSiteNavigationMenuByExternalReferenceCode_getSiteId(
+					putNavigationMenu),
+				putNavigationMenu.getExternalReferenceCode());
+
+		assertEquals(randomNavigationMenu, getNavigationMenu);
+		assertValid(getNavigationMenu);
+
+		NavigationMenu newNavigationMenu =
+			testPutSiteNavigationMenuByExternalReferenceCode_createNavigationMenu();
+
+		putNavigationMenu =
+			navigationMenuResource.putSiteNavigationMenuByExternalReferenceCode(
+				testPutSiteNavigationMenuByExternalReferenceCode_getSiteId(
+					newNavigationMenu),
+				newNavigationMenu.getExternalReferenceCode(),
+				newNavigationMenu);
+
+		assertEquals(newNavigationMenu, putNavigationMenu);
+		assertValid(putNavigationMenu);
+
+		getNavigationMenu =
+			navigationMenuResource.getSiteNavigationMenuByExternalReferenceCode(
+				testPutSiteNavigationMenuByExternalReferenceCode_getSiteId(
+					putNavigationMenu),
+				putNavigationMenu.getExternalReferenceCode());
+
+		assertEquals(newNavigationMenu, getNavigationMenu);
+
+		Assert.assertEquals(
+			newNavigationMenu.getExternalReferenceCode(),
+			putNavigationMenu.getExternalReferenceCode());
+	}
+
+	protected Long testPutSiteNavigationMenuByExternalReferenceCode_getSiteId(
+			NavigationMenu navigationMenu)
+		throws Exception {
+
+		return navigationMenu.getSiteId();
+	}
+
+	protected NavigationMenu
+			testPutSiteNavigationMenuByExternalReferenceCode_createNavigationMenu()
+		throws Exception {
+
+		return randomNavigationMenu();
+	}
+
+	protected NavigationMenu
+			testPutSiteNavigationMenuByExternalReferenceCode_addNavigationMenu()
+		throws Exception {
+
+		return navigationMenuResource.postSiteNavigationMenu(
+			testGroup.getGroupId(), randomNavigationMenu());
+	}
+
+	@Test
 	public void testGetSiteNavigationMenuPermissionsPage() throws Exception {
 		Page<Permission> page =
 			navigationMenuResource.getSiteNavigationMenuPermissionsPage(
@@ -951,6 +1250,8 @@ public abstract class BaseNavigationMenuResourceTestCase {
 
 		List<GraphQLField> graphQLFields = getGraphQLFields();
 
+		graphQLFields.add(new GraphQLField("externalReferenceCode"));
+
 		graphQLFields.add(new GraphQLField("id"));
 
 		return jsonDeserializer.deserialize(
@@ -1075,6 +1376,16 @@ public abstract class BaseNavigationMenuResourceTestCase {
 
 			if (Objects.equals("creator", additionalAssertFieldName)) {
 				if (navigationMenu.getCreator() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (navigationMenu.getExternalReferenceCode() == null) {
 					valid = false;
 				}
 
@@ -1271,6 +1582,19 @@ public abstract class BaseNavigationMenuResourceTestCase {
 				if (!Objects.deepEquals(
 						navigationMenu1.getDateModified(),
 						navigationMenu2.getDateModified())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					"externalReferenceCode", additionalAssertFieldName)) {
+
+				if (!Objects.deepEquals(
+						navigationMenu1.getExternalReferenceCode(),
+						navigationMenu2.getExternalReferenceCode())) {
 
 					return false;
 				}
@@ -1502,6 +1826,52 @@ public abstract class BaseNavigationMenuResourceTestCase {
 			return sb.toString();
 		}
 
+		if (entityFieldName.equals("externalReferenceCode")) {
+			Object object = navigationMenu.getExternalReferenceCode();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("id")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
@@ -1615,6 +1985,8 @@ public abstract class BaseNavigationMenuResourceTestCase {
 			{
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
+				externalReferenceCode = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
 				id = RandomTestUtil.randomLong();
 				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				siteId = testGroup.getGroupId();

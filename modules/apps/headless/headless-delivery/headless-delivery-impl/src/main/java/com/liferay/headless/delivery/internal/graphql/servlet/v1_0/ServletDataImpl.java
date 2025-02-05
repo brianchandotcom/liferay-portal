@@ -1445,6 +1445,16 @@ public class ServletDataImpl implements ServletData {
 							NavigationMenuResourceImpl.class,
 							"postSiteNavigationMenuBatch"));
 					put(
+						"mutation#deleteSiteNavigationMenuByExternalReferenceCode",
+						new ObjectValuePair<>(
+							NavigationMenuResourceImpl.class,
+							"deleteSiteNavigationMenuByExternalReferenceCode"));
+					put(
+						"mutation#updateSiteNavigationMenuByExternalReferenceCode",
+						new ObjectValuePair<>(
+							NavigationMenuResourceImpl.class,
+							"putSiteNavigationMenuByExternalReferenceCode"));
+					put(
 						"mutation#updateSiteNavigationMenuPermissionsPage",
 						new ObjectValuePair<>(
 							NavigationMenuResourceImpl.class,
@@ -2461,6 +2471,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							NavigationMenuResourceImpl.class,
 							"getSiteNavigationMenusPage"));
+					put(
+						"query#navigationMenuByExternalReferenceCode",
+						new ObjectValuePair<>(
+							NavigationMenuResourceImpl.class,
+							"getSiteNavigationMenuByExternalReferenceCode"));
 					put(
 						"query#siteNavigationMenuPermissions",
 						new ObjectValuePair<>(

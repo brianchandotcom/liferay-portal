@@ -140,6 +140,10 @@ public class LayoutStructureRulesHelperImpl
 			}
 		}
 
+		if (Objects.equals(layoutStructureRule.getConditionType(), "any")) {
+			return false;
+		}
+
 		return true;
 	}
 

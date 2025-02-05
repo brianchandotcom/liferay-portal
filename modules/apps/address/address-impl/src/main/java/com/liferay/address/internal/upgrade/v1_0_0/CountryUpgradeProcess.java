@@ -69,17 +69,6 @@ public class CountryUpgradeProcess extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		_updateCounters();
 
-		if (DBPartition.isPartitionEnabled()) {
-			new CompanyUpgradeProcess(
-				_companyLocalService.getCompany(
-					CompanyThreadLocal.getCompanyId())
-			).populateCompanyCountries();
-
-			_updateCounters();
-
-			return;
-		}
-
 		List<IndexMetadata> indexMetadatas = _dropIndexes();
 
 		try {

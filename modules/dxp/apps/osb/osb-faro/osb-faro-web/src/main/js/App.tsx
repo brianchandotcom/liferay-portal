@@ -100,9 +100,9 @@ const RoutesContainer = ({children}) => {
 
 	useEffect(() => {
 		if (currentUser?.id && project?.corpProjectName) {
-			const pendo = new Pendo({currentUser, project});
+			const pendo = new Pendo();
 
-			pendo.initialize();
+			pendo.initialize({currentUser, project});
 		}
 	}, [currentUser?.id, project?.corpProjectName]);
 

@@ -1,49 +1,42 @@
+import {FaroEnv} from './constants';
 import {Project, User} from './records';
 
 export class Pendo {
-	project: Project;
-	currentUser: User;
-
-	constructor({currentUser, project}: {currentUser: User; project: Project}) {
-		this.currentUser = currentUser;
-		this.project = project;
-	}
-
-	get data(): {
-		account: {
-			id?: string;
-			name: string;
-			planLevel: string;
-		};
-		visitor: {
-			email: string;
-			fullName: string;
-			id: string;
-			role: string;
-		};
-	} {
-		return {
+	initialize({currentUser, project}: {currentUser: User; project: Project}) {
+		const data = {
 			account: {
-				...(this.project.corpProjectUuid && {
-					id: this.project.corpProjectUuid
+				...(project.corpProjectUuid && {
+					id: project.corpProjectUuid
 				}),
-				name: this.project.corpProjectName,
-				planLevel: this.project.faroSubscription.get('name')
+				name: project.corpProjectName,
+				planLevel: project.faroSubscription.get('name')
 			},
 			visitor: {
-				email: this.currentUser.emailAddress,
-				fullName: this.currentUser.name,
-				id: this.currentUser.id,
-				role: this.currentUser.roleName
+				email: currentUser.emailAddress,
+				full_name: currentUser.name,
+				id: currentUser.id,
+				role: currentUser.roleName
 			}
 		};
-	}
 
-	initialize() {
 		if (pendo?.isReady?.()) {
-			return pendo.identify(this.data);
+			return pendo.identify(data);
 		}
 
-		return pendo.initialize(this.data);
+		return pendo.initialize(data);
+	}
+
+	get script() {
+		if (FARO_ENV === FaroEnv.Production) {
+			return `(function(apiKey){
+			(function(p,e,n,d,o){var v,w,x,y,z;o=p[d]=p[d]||{};o._q=o._q||[];
+				v=['initialize','identify','updateOptions','pageLoad','track'];for(w=0,x=v.length;w<x;++w)(function(m){
+					o[m]=o[m]||function(){o._q[m===v[0]?'unshift':'push']([m].concat([].slice.call(arguments,0)));};})(v[w]);
+				y=e.createElement(n);y.async=!0;y.src='https://cdn.pendo.io/agent/static/'+apiKey+'/pendo.js';
+				z=e.getElementsByTagName(n)[0];z.parentNode.insertBefore(y,z);})(window,document,'script','pendo');
+			})('${FARO_PENDO_API_KEY}')`;
+		}
+
+		return '(function(){window.pendo = {identify: () => {}, initialize: () => {}, isReady: () => {}}})()';
 	}
 }

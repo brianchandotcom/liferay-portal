@@ -36,7 +36,12 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -138,7 +143,34 @@ public class EvaluateLayoutStructureRulesStrutsActionTest {
 					).put(
 						"user", String.valueOf(TestPropsValues.getUserId())
 					).build()),
-				"all", segmentsExperienceId)
+				"all", segmentsExperienceId),
+			_addLayoutStructureRule(
+				_getActionsJSONArray(
+					LinkedHashMapBuilder.put(
+						inputTypesMap.get(TextInfoFieldType.INSTANCE.getName()),
+						"show"
+					).put(
+						inputTypesMap.get(
+							DefaultInputFragmentEntryConfigurationProvider.
+								FORM_INPUT_SUBMIT_BUTTON),
+						"disable"
+					).build()),
+				_getConditionsJSONArray(
+					LinkedHashMapBuilder.<String, Object>put(
+						inputTypesMap.get(
+							BooleanInfoFieldType.INSTANCE.getName()),
+						Boolean.FALSE
+					).put(
+						"role",
+						() -> {
+							Role role = _roleLocalService.getRole(
+								TestPropsValues.getCompanyId(),
+								RoleConstants.ADMINISTRATOR);
+
+							return String.valueOf(role.getRoleId());
+						}
+					).build()),
+				"any", segmentsExperienceId)
 		};
 
 		ContentLayoutTestUtil.publishLayout(_draftLayout, _layout);
@@ -158,6 +190,20 @@ public class EvaluateLayoutStructureRulesStrutsActionTest {
 					inputTypesMap.get(
 						DefaultInputFragmentEntryConfigurationProvider.
 							FORM_INPUT_SUBMIT_BUTTON)
+				),
+				JSONUtil.put(
+					"action", "show"
+				).put(
+					"itemId",
+					inputTypesMap.get(TextInfoFieldType.INSTANCE.getName())
+				),
+				JSONUtil.put(
+					"action", "disable"
+				).put(
+					"itemId",
+					inputTypesMap.get(
+						DefaultInputFragmentEntryConfigurationProvider.
+							FORM_INPUT_SUBMIT_BUTTON)
 				)),
 			JSONUtil.put(
 				inputTypesMap.get(BooleanInfoFieldType.INSTANCE.getName()),
@@ -165,9 +211,23 @@ public class EvaluateLayoutStructureRulesStrutsActionTest {
 			).put(
 				RandomTestUtil.randomString(), RandomTestUtil.randomString()
 			).toString(),
-			ruleIds);
+			ruleIds, TestPropsValues.getUser());
 		_testExecute(
 			JSONUtil.putAll(
+				JSONUtil.put(
+					"action", "show"
+				).put(
+					"itemId",
+					inputTypesMap.get(TextInfoFieldType.INSTANCE.getName())
+				),
+				JSONUtil.put(
+					"action", "disable"
+				).put(
+					"itemId",
+					inputTypesMap.get(
+						DefaultInputFragmentEntryConfigurationProvider.
+							FORM_INPUT_SUBMIT_BUTTON)
+				),
 				JSONUtil.put(
 					"action", "show"
 				).put(
@@ -188,7 +248,45 @@ public class EvaluateLayoutStructureRulesStrutsActionTest {
 			).put(
 				RandomTestUtil.randomString(), RandomTestUtil.randomString()
 			).toString(),
-			ruleIds);
+			ruleIds, TestPropsValues.getUser());
+		_testExecute(
+			JSONUtil.putAll(
+				JSONUtil.put(
+					"action", "show"
+				).put(
+					"itemId",
+					inputTypesMap.get(TextInfoFieldType.INSTANCE.getName())
+				),
+				JSONUtil.put(
+					"action", "disable"
+				).put(
+					"itemId",
+					inputTypesMap.get(
+						DefaultInputFragmentEntryConfigurationProvider.
+							FORM_INPUT_SUBMIT_BUTTON)
+				),
+				JSONUtil.put(
+					"action", "hide"
+				).put(
+					"itemId",
+					inputTypesMap.get(TextInfoFieldType.INSTANCE.getName())
+				),
+				JSONUtil.put(
+					"action", "enable"
+				).put(
+					"itemId",
+					inputTypesMap.get(
+						DefaultInputFragmentEntryConfigurationProvider.
+							FORM_INPUT_SUBMIT_BUTTON)
+				)),
+			JSONUtil.put(
+				inputTypesMap.get(BooleanInfoFieldType.INSTANCE.getName()),
+				Boolean.TRUE
+			).put(
+				RandomTestUtil.randomString(), RandomTestUtil.randomString()
+			).toString(),
+			ruleIds,
+			_userLocalService.getGuestUser(TestPropsValues.getCompanyId()));
 	}
 
 	private long _addFragmentEntryLinkToLayout(
@@ -386,7 +484,7 @@ public class EvaluateLayoutStructureRulesStrutsActionTest {
 	}
 
 	private HttpServletRequest _getMockHttpServletRequest(
-			String fieldValues, String[] ruleIds)
+			String fieldValues, String[] ruleIds, User user)
 		throws Exception {
 
 		MockHttpServletRequest mockHttpServletRequest =
@@ -395,10 +493,10 @@ public class EvaluateLayoutStructureRulesStrutsActionTest {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
 		themeDisplay.setPermissionChecker(
-			PermissionCheckerFactoryUtil.create(TestPropsValues.getUser()));
+			PermissionCheckerFactoryUtil.create(user));
 		themeDisplay.setPlid(_layout.getPlid());
 		themeDisplay.setScopeGroupId(_group.getGroupId());
-		themeDisplay.setUser(TestPropsValues.getUser());
+		themeDisplay.setUser(user);
 
 		mockHttpServletRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, themeDisplay);
@@ -415,14 +513,15 @@ public class EvaluateLayoutStructureRulesStrutsActionTest {
 	}
 
 	private void _testExecute(
-			JSONArray expectedJSONArray, String fieldValues, String[] ruleIds)
+			JSONArray expectedJSONArray, String fieldValues, String[] ruleIds,
+			User user)
 		throws Exception {
 
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
 
 		_evaluateLayoutStructureRulesStrutsAction.execute(
-			_getMockHttpServletRequest(fieldValues, ruleIds),
+			_getMockHttpServletRequest(fieldValues, ruleIds, user),
 			mockHttpServletResponse);
 
 		JSONArray actualJSONArray = _jsonFactory.createJSONArray(
@@ -478,6 +577,12 @@ public class EvaluateLayoutStructureRulesStrutsActionTest {
 	private Portal _portal;
 
 	@Inject
+	private RoleLocalService _roleLocalService;
+
+	@Inject
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

@@ -1,10 +1,17 @@
 <div class="date-input">
 	<div class="form-group [#if input.errorMessage?has_content]has-error[/#if] mb-0">
-		<label class="[#if !input.showLabel || !input.label?has_content]sr-only[/#if]" for="${fragmentEntryLinkNamespace}-date-input" id="${fragmentEntryLinkNamespace}-date-input-label">
+		<label class="[#if !input.showLabel || !input.label?has_content]sr-only[/#if]" data-localizable="${input.localizable?string('true', 'false')}" for="${fragmentEntryLinkNamespace}-date-input" id="${fragmentEntryLinkNamespace}-date-input-label">
 			${htmlUtil.escape(input.label)} [#if input.readOnly](${languageUtil.get(locale, "read-only")})[#elseif input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /][/#if]
 		</label>
 
-		<input aria-describedby="${fragmentEntryLinkNamespace}-date-input-help-text" aria-labelledby="${fragmentEntryLinkNamespace}-date-input-label[#if input.errorMessage?has_content] ${fragmentEntryLinkNamespace}-date-input-error-message[/#if]" class="form-control" id="${fragmentEntryLinkNamespace}-date-input" max="9999-12-31" name="${input.name}" [#if input.readOnly]readonly[/#if] ${input.required?then('required', '')} type="datetime-local" [#if input.value??]value="${input.value}"[/#if] />
+		<div class="d-flex">
+			<input aria-describedby="${fragmentEntryLinkNamespace}-date-input-help-text" aria-labelledby="${fragmentEntryLinkNamespace}-date-input-label[#if input.errorMessage?has_content] ${fragmentEntryLinkNamespace}-date-input-error-message[/#if]" class="form-control" id="${fragmentEntryLinkNamespace}-date-input" max="9999-12-31" name="${input.name}" [#if input.readOnly]readonly[/#if] ${input.required?then('required', '')} type="datetime-local" [#if input.value??]value="${input.value}"[/#if] />
+			[#if !input.localizable && input.attributes.unlocalizedFieldsMessage??]
+				<div aria-label="${input.attributes.unlocalizedFieldsMessage}" class="d-none lfr-portal-tooltip mt-1 pt-2" data-title="${input.attributes.unlocalizedFieldsMessage}" id="${fragmentEntryLinkNamespace}-unlocalized-info" tabindex="0">
+					[@clay["icon"] className="ml-2 mt-0 text-secondary" symbol="question-circle-full" /]
+				</div>
+			[/#if]
+		</div>
 
 		[#if input.errorMessage?has_content]
 			<p class="font-weight-semi-bold mt-1 text-danger" id="${fragmentEntryLinkNamespace}-date-input-error-message">

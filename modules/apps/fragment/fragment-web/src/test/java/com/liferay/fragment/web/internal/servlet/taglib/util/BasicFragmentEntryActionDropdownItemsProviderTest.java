@@ -7,6 +7,7 @@ package com.liferay.fragment.web.internal.servlet.taglib.util;
 
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.portal.kernel.test.TestInfo;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import org.junit.ClassRule;
@@ -112,6 +113,30 @@ public class BasicFragmentEntryActionDropdownItemsProviderTest
 			basicFragmentEntryActionDropdownItemsProvider.
 				getActionDropdownItems(),
 			"edit", "make-a-copy");
+	}
+
+	@FeatureFlags("LPD-34938")
+	@Test
+	public void testMarketplaceFragmentEntryGetActionDropdowns()
+		throws Exception {
+
+		setUpFragmentPermission(true);
+
+		Mockito.when(
+			_fragmentEntry.isMarketplace()
+		).thenReturn(
+			true
+		);
+
+		BasicFragmentEntryActionDropdownItemsProvider
+			basicFragmentEntryActionDropdownItemsProvider =
+				new BasicFragmentEntryActionDropdownItemsProvider(
+					_fragmentEntry, renderRequest, renderResponse);
+
+		assertDropdownItemsInCorrectOrder(
+			basicFragmentEntryActionDropdownItemsProvider.
+				getActionDropdownItems(),
+			"view-site-usages", "move", "delete");
 	}
 
 	private void _setUpFragmentEntry(

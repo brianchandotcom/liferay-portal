@@ -64,43 +64,24 @@ public class CountryUpgradeProcessTest {
 				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 					_company.getCompanyId())) {
 
-			int countryCount = 0;
-			int countryLocalizationCount = 0;
-			int regionCount = 0;
-			int regionLocalizationCount = 0;
+			int countryCount = _getCount("Country");
+			int countryLocalizationCount = _getCount("CountryLocalization");
+			int regionCount = _getCount("Region");
+			int regionLocalizationCount = _getCount("RegionLocalization");
 
-			try (Connection connection = DataAccess.getConnection()) {
-				countryCount = _getCount(connection, "Country");
-				countryLocalizationCount = _getCount(
-					connection, "CountryLocalization");
-				regionCount = _getCount(connection, "Region");
-				regionLocalizationCount = _getCount(
-					connection, "RegionLocalization");
-
-				_deleteByCompanyId(
-					connection, "Country", _company.getCompanyId());
-				_deleteByCompanyId(
-					connection, "CountryLocalization", _company.getCompanyId());
-				_deleteByCompanyId(
-					connection, "Region", _company.getCompanyId());
-				_deleteByCompanyId(
-					connection, "RegionLocalization", _company.getCompanyId());
-			}
+			_deleteByCompanyId("Country", _company.getCompanyId());
+			_deleteByCompanyId("CountryLocalization", _company.getCompanyId());
+			_deleteByCompanyId("Region", _company.getCompanyId());
+			_deleteByCompanyId("RegionLocalization", _company.getCompanyId());
 
 			_runUpgrade();
 
-			try (Connection connection = DataAccess.getConnection()) {
-				Assert.assertEquals(
-					countryCount, _getCount(connection, "Country"));
-				Assert.assertEquals(
-					countryLocalizationCount,
-					_getCount(connection, "CountryLocalization"));
-				Assert.assertEquals(
-					regionCount, _getCount(connection, "Region"));
-				Assert.assertEquals(
-					regionLocalizationCount,
-					_getCount(connection, "RegionLocalization"));
-			}
+			Assert.assertEquals(countryCount, _getCount("Country"));
+			Assert.assertEquals(
+				countryLocalizationCount, _getCount("CountryLocalization"));
+			Assert.assertEquals(regionCount, _getCount("Region"));
+			Assert.assertEquals(
+				regionLocalizationCount, _getCount("RegionLocalization"));
 
 			_assertCounter(
 				_countryLocalService, CountryLocalizationTable.INSTANCE,
@@ -135,11 +116,11 @@ public class CountryUpgradeProcessTest {
 			results.get(0) <= _counterLocalService.getCurrentId(className));
 	}
 
-	private void _deleteByCompanyId(
-			Connection connection, String tableName, long companyId)
+	private void _deleteByCompanyId(String tableName, long companyId)
 		throws Exception {
 
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
+		try (Connection connection = DataAccess.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
 					"delete from ", tableName, " where companyId = ",
 					companyId))) {
@@ -148,10 +129,9 @@ public class CountryUpgradeProcessTest {
 		}
 	}
 
-	private int _getCount(Connection connection, String tableName)
-		throws Exception {
-
-		try (PreparedStatement preparedStatement = connection.prepareStatement(
+	private int _getCount(String tableName) throws Exception {
+		try (Connection connection = DataAccess.getConnection();
+			PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
 					"select count(*) from ", tableName, " where companyId = ",
 					_company.getCompanyId()))) {

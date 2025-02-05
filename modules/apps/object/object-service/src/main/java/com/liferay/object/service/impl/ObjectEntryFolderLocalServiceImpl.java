@@ -175,6 +175,19 @@ public class ObjectEntryFolderLocalServiceImpl
 	}
 
 	@Override
+	public ObjectEntryFolder deleteObjectEntryFolder(
+			String externalReferenceCode, long companyId, long groupId)
+		throws PortalException {
+
+		ObjectEntryFolder objectEntryFolder =
+			objectEntryFolderPersistence.findByERC_G_C(
+				externalReferenceCode, groupId, companyId);
+
+		return objectEntryFolderLocalService.deleteObjectEntryFolder(
+			objectEntryFolder);
+	}
+
+	@Override
 	public ObjectEntryFolder updateObjectEntryFolder(
 			long userId, long objectEntryFolderId,
 			long parentObjectEntryFolderId, Map<Locale, String> labelMap,

@@ -42,6 +42,7 @@ import com.liferay.site.navigation.constants.SiteNavigationConstants;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.service.SiteNavigationMenuItemService;
+import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
 import com.liferay.site.navigation.service.SiteNavigationMenuService;
 import com.liferay.site.navigation.util.comparator.SiteNavigationMenuItemOrderComparator;
 
@@ -73,12 +74,32 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 	}
 
 	@Override
+	public void deleteSiteNavigationMenuByExternalReferenceCode(
+			Long siteId, String externalReferenceCode)
+		throws Exception {
+
+		_siteNavigationMenuService.deleteSiteNavigationMenu(
+			externalReferenceCode, siteId);
+	}
+
+	@Override
 	public NavigationMenu getNavigationMenu(Long navigationMenuId)
 		throws Exception {
 
 		return _toNavigationMenu(
 			_siteNavigationMenuService.fetchSiteNavigationMenu(
 				navigationMenuId));
+	}
+
+	@Override
+	public NavigationMenu getSiteNavigationMenuByExternalReferenceCode(
+			Long siteId, String externalReferenceCode)
+		throws Exception {
+
+		return _toNavigationMenu(
+			_siteNavigationMenuService.
+				getSiteNavigationMenuByExternalReferenceCode(
+					externalReferenceCode, siteId));
 	}
 
 	@Override
@@ -123,27 +144,8 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 			Long siteId, NavigationMenu navigationMenu)
 		throws Exception {
 
-		int type = SiteNavigationConstants.TYPE_DEFAULT;
-
-		NavigationMenu.NavigationType navigationType =
-			navigationMenu.getNavigationType();
-
-		if (navigationType != null) {
-			type = navigationType.ordinal() + 1;
-		}
-
-		SiteNavigationMenu siteNavigationMenu =
-			_siteNavigationMenuService.addSiteNavigationMenu(
-				null, siteId, navigationMenu.getName(), type, true,
-				ServiceContextBuilder.create(
-					siteId, contextHttpServletRequest, null
-				).build());
-
-		_createNavigationMenuItems(
-			navigationMenu.getNavigationMenuItems(), 0, siteId,
-			siteNavigationMenu.getSiteNavigationMenuId());
-
-		return _toNavigationMenu(siteNavigationMenu);
+		return _addNavigationMenu(
+			navigationMenu.getExternalReferenceCode(), siteId, navigationMenu);
 	}
 
 	@Override
@@ -155,27 +157,26 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 			_siteNavigationMenuService.fetchSiteNavigationMenu(
 				navigationMenuId);
 
-		_updateNavigationMenuItems(
-			navigationMenu.getNavigationMenuItems(), 0,
-			siteNavigationMenu.getGroupId(),
-			siteNavigationMenu.getSiteNavigationMenuId());
+		return _updateNavigationMenu(navigationMenu, siteNavigationMenu);
+	}
 
-		ServiceContext serviceContext = ServiceContextBuilder.create(
-			siteNavigationMenu.getGroupId(), contextHttpServletRequest, null
-		).build();
+	@Override
+	public NavigationMenu putSiteNavigationMenuByExternalReferenceCode(
+			Long siteId, String externalReferenceCode,
+			NavigationMenu navigationMenu)
+		throws Exception {
 
-		NavigationMenu.NavigationType navigationType =
-			navigationMenu.getNavigationType();
+		SiteNavigationMenu siteNavigationMenu =
+			_siteNavigationMenuLocalService.
+				fetchSiteNavigationMenuByExternalReferenceCode(
+					externalReferenceCode, siteId);
 
-		if (navigationType != null) {
-			_siteNavigationMenuService.updateSiteNavigationMenu(
-				navigationMenuId, navigationType.ordinal() + 1, true,
-				serviceContext);
+		if (siteNavigationMenu != null) {
+			return _updateNavigationMenu(navigationMenu, siteNavigationMenu);
 		}
 
-		return _toNavigationMenu(
-			_siteNavigationMenuService.updateSiteNavigationMenu(
-				navigationMenuId, navigationMenu.getName(), serviceContext));
+		return _addNavigationMenu(
+			externalReferenceCode, siteId, navigationMenu);
 	}
 
 	@Override
@@ -194,6 +195,35 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 	@Override
 	protected String getPermissionCheckerResourceName(Object id) {
 		return SiteNavigationMenu.class.getName();
+	}
+
+	private NavigationMenu _addNavigationMenu(
+			String externalReferenceCode, Long siteId,
+			NavigationMenu navigationMenu)
+		throws Exception {
+
+		int type = SiteNavigationConstants.TYPE_DEFAULT;
+
+		NavigationMenu.NavigationType navigationType =
+			navigationMenu.getNavigationType();
+
+		if (navigationType != null) {
+			type = navigationType.ordinal() + 1;
+		}
+
+		SiteNavigationMenu siteNavigationMenu =
+			_siteNavigationMenuService.addSiteNavigationMenu(
+				externalReferenceCode, siteId, navigationMenu.getName(), type,
+				true,
+				ServiceContextBuilder.create(
+					siteId, contextHttpServletRequest, null
+				).build());
+
+		_createNavigationMenuItems(
+			navigationMenu.getNavigationMenuItems(), 0, siteId,
+			siteNavigationMenu.getSiteNavigationMenuId());
+
+		return _toNavigationMenu(siteNavigationMenu);
 	}
 
 	private void _createNavigationMenuItem(
@@ -503,6 +533,8 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 							siteNavigationMenu.getUserId())));
 				setDateCreated(siteNavigationMenu::getCreateDate);
 				setDateModified(siteNavigationMenu::getModifiedDate);
+				setExternalReferenceCode(
+					siteNavigationMenu::getExternalReferenceCode);
 				setId(siteNavigationMenu::getSiteNavigationMenuId);
 				setName(siteNavigationMenu::getName);
 				setNavigationMenuItems(
@@ -716,6 +748,35 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 		return type;
 	}
 
+	private NavigationMenu _updateNavigationMenu(
+			NavigationMenu navigationMenu,
+			SiteNavigationMenu siteNavigationMenu)
+		throws Exception {
+
+		_updateNavigationMenuItems(
+			navigationMenu.getNavigationMenuItems(), 0,
+			siteNavigationMenu.getGroupId(),
+			siteNavigationMenu.getSiteNavigationMenuId());
+
+		ServiceContext serviceContext = ServiceContextBuilder.create(
+			siteNavigationMenu.getGroupId(), contextHttpServletRequest, null
+		).build();
+
+		NavigationMenu.NavigationType navigationType =
+			navigationMenu.getNavigationType();
+
+		if (navigationType != null) {
+			_siteNavigationMenuService.updateSiteNavigationMenu(
+				siteNavigationMenu.getSiteNavigationMenuId(),
+				navigationType.ordinal() + 1, true, serviceContext);
+		}
+
+		return _toNavigationMenu(
+			_siteNavigationMenuService.updateSiteNavigationMenu(
+				siteNavigationMenu.getSiteNavigationMenuId(),
+				navigationMenu.getName(), serviceContext));
+	}
+
 	private void _updateNavigationMenuItems(
 			NavigationMenuItem[] navigationMenuItems,
 			long parentSiteNavigationMenuId, Long siteId,
@@ -806,6 +867,9 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 
 	@Reference
 	private SiteNavigationMenuItemService _siteNavigationMenuItemService;
+
+	@Reference
+	private SiteNavigationMenuLocalService _siteNavigationMenuLocalService;
 
 	@Reference
 	private SiteNavigationMenuService _siteNavigationMenuService;

@@ -1,0 +1,19 @@
+{
+	"actions": {
+		"delete": {
+		},
+		"get": {
+		},
+		"permissions": {
+		},
+		"update": {
+		}
+	},
+	"externalReferenceCode": "8a5269c6-79b0-b741-ed1a-4cf13c4560e0",
+	"label": {
+		"en_US": "CMS Files"
+	},
+	"name": "CMSFiles",
+	"objectFolderItems": [
+	]
+}

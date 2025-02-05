@@ -11,7 +11,6 @@ import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.IndexMetadata;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
-import com.liferay.portal.kernel.db.partition.DBPartition;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -24,7 +23,6 @@ import com.liferay.portal.kernel.model.CountryLocalization;
 import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.model.RegionLocalization;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
@@ -46,7 +44,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicLong;
-import java.util.function.Consumer;
 
 /**
  * @author Mariano Álvaro Sáiz
@@ -72,20 +69,43 @@ public class CountryUpgradeProcess extends UpgradeProcess {
 		List<IndexMetadata> indexMetadatas = _dropIndexes();
 
 		try {
-			_forEachCompanyConcurrently(
-				company -> {
-					try {
-						new CompanyUpgradeProcess(
-							company
-						).populateCompanyCountries();
-					}
-					catch (Exception exception) {
-						_log.error(
-							"Unable to populate company " +
-								company.getCompanyId(),
-							exception);
-					}
-				});
+			Runtime runtime = Runtime.getRuntime();
+
+			ExecutorService executorService = Executors.newFixedThreadPool(
+				runtime.availableProcessors());
+
+			List<Future<Void>> futures = new ArrayList<>();
+
+			try {
+				_companyLocalService.forEachCompany(
+					company -> {
+						Future<Void> future = executorService.submit(
+							() -> {
+								try {
+									new CompanyUpgradeProcess(
+										company
+									).populateCompanyCountries();
+								}
+								catch (Exception exception) {
+									_log.error(
+										"Unable to populate company " +
+											company.getCompanyId(),
+										exception);
+								}
+
+								return null;
+							});
+
+						futures.add(future);
+					});
+			}
+			finally {
+				executorService.shutdown();
+
+				for (Future<Void> future : futures) {
+					future.get();
+				}
+			}
 
 			_updateCounters();
 		}
@@ -124,38 +144,6 @@ public class CountryUpgradeProcess extends UpgradeProcess {
 		}
 
 		return indexMetadatas;
-	}
-
-	private void _forEachCompanyConcurrently(Consumer<Company> consumer)
-		throws Exception {
-
-		Runtime runtime = Runtime.getRuntime();
-
-		ExecutorService executorService = Executors.newFixedThreadPool(
-			runtime.availableProcessors());
-
-		List<Future<Void>> futures = new ArrayList<>();
-
-		try {
-			_companyLocalService.forEachCompany(
-				company -> {
-					Future<Void> future = executorService.submit(
-						() -> {
-							consumer.accept(company);
-
-							return null;
-						});
-
-					futures.add(future);
-				});
-		}
-		finally {
-			executorService.shutdown();
-
-			for (Future<Void> future : futures) {
-				future.get();
-			}
-		}
 	}
 
 	private void _restoreIndexes(List<IndexMetadata> indexMetadatas)

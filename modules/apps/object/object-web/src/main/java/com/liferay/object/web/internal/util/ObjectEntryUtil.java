@@ -166,29 +166,8 @@ public class ObjectEntryUtil {
 
 			Object value = infoFieldValue.getValue();
 
-			if (Objects.equals(
-					DateInfoFieldType.INSTANCE, infoField.getInfoFieldType()) &&
-				(value instanceof Date)) {
-
-				Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(
-					"yyyy-MM-dd");
-
-				properties.put(infoField.getName(), format.format(value));
-			}
-			else if (Objects.equals(
-						DateTimeInfoFieldType.INSTANCE,
-						infoField.getInfoFieldType()) &&
-					 (value instanceof LocalDateTime)) {
-
-				DateTimeFormatter dateTimeFormatter =
-					DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-
-				properties.put(
-					infoField.getName(),
-					dateTimeFormatter.format((LocalDateTime)value));
-			}
-			else if (infoField.isLocalizable() &&
-					 (value instanceof InfoLocalizedValue)) {
+			if (infoField.isLocalizable() &&
+				(value instanceof InfoLocalizedValue)) {
 
 				InfoLocalizedValue<Object> infoLocalizedValue =
 					(InfoLocalizedValue<Object>)value;
@@ -199,16 +178,42 @@ public class ObjectEntryUtil {
 
 				values.forEach(
 					(locale, localizedValue) -> languageIdMap.put(
-						LocaleUtil.toLanguageId(locale), localizedValue));
+						LocaleUtil.toLanguageId(locale),
+						_parseValue(infoField, localizedValue)));
 
 				properties.put(infoField.getName() + "_i18n", languageIdMap);
 			}
 			else {
-				properties.put(infoField.getName(), value);
+				properties.put(
+					infoField.getName(), _parseValue(infoField, value));
 			}
 		}
 
 		return properties;
+	}
+
+	private static Object _parseValue(InfoField<?> infoField, Object value) {
+		if (Objects.equals(
+				DateInfoFieldType.INSTANCE, infoField.getInfoFieldType()) &&
+			(value instanceof Date)) {
+
+			Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(
+				"yyyy-MM-dd");
+
+			return format.format(value);
+		}
+		else if (Objects.equals(
+					DateTimeInfoFieldType.INSTANCE,
+					infoField.getInfoFieldType()) &&
+				 (value instanceof LocalDateTime)) {
+
+			DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(
+				"yyyy-MM-dd HH:mm");
+
+			return dateTimeFormatter.format((LocalDateTime)value);
+		}
+
+		return value;
 	}
 
 }

@@ -339,7 +339,7 @@ public class FormItemManager {
 
 	public void checkFormContainerParentItemRequired(
 			List<FragmentEntryLink> fragmentEntryLinks,
-			LayoutStructure layoutStructure, Locale locale, String parentItemId)
+			LayoutStructure layoutStructure, String parentItemId)
 		throws PortalException {
 
 		if (_hasParentFormStyledLayoutStructureItem(
@@ -348,7 +348,7 @@ public class FormItemManager {
 			return;
 		}
 
-		if (_hasTypeInputFragmentEntryLink(fragmentEntryLinks, locale)) {
+		if (_hasTypeInputFragmentEntryLink(fragmentEntryLinks)) {
 			throw new FormContainerParentItemRequiredException();
 		}
 	}
@@ -807,7 +807,7 @@ public class FormItemManager {
 	}
 
 	private boolean _hasTypeInputFragmentEntryLink(
-		List<FragmentEntryLink> fragmentEntryLinks, Locale locale) {
+		List<FragmentEntryLink> fragmentEntryLinks) {
 
 		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
 			if (!Objects.equals(
@@ -819,7 +819,7 @@ public class FormItemManager {
 
 			Set<String> fragmentEntryLinkFieldTypes =
 				_fragmentEntryLinkManager.getFragmentEntryLinkFieldTypes(
-					fragmentEntryLink.getFragmentEntryLinkId(), locale);
+					fragmentEntryLink.getFragmentEntryLinkId());
 
 			if (!fragmentEntryLinkFieldTypes.contains("localizationSelect")) {
 				return true;

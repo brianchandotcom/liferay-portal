@@ -99,8 +99,7 @@ public class MoveFragmentEntryLinkMVCActionCommand
 						_fragmentEntryLinkManager.getChildrenFragmentEntryLinks(
 							Collections.singletonList(finalItemIds[i]),
 							layoutStructure),
-						layoutStructure, themeDisplay.getLocale(),
-						finalParentItemIds[i]);
+						layoutStructure, finalParentItemIds[i]);
 
 					layoutStructure.moveLayoutStructureItem(
 						finalItemIds[i], finalParentItemIds[i],

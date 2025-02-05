@@ -133,7 +133,7 @@ public class FragmentEntryLinkManager {
 	}
 
 	public Set<String> getFragmentEntryLinkFieldTypes(
-		long fragmentEntryLinkId, Locale locale) {
+		long fragmentEntryLinkId) {
 
 		FragmentEntryLink fragmentEntryLink =
 			_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
@@ -144,7 +144,7 @@ public class FragmentEntryLinkManager {
 		}
 
 		FragmentEntry fragmentEntry = _getFragmentEntry(
-			fragmentEntryLink, locale);
+			fragmentEntryLink, LocaleUtil.getMostRelevantLocale());
 
 		if (fragmentEntry != null) {
 			return _getFieldTypes(fragmentEntry.getTypeOptions());

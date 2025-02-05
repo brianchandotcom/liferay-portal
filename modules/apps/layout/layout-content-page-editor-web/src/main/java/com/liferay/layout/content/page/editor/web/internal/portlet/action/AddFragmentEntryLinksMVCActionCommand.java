@@ -179,8 +179,7 @@ public class AddFragmentEntryLinksMVCActionCommand
 					segmentsExperienceId);
 
 			_formItemManager.checkFormContainerParentItemRequired(
-				fragmentEntryLinks, layoutStructure, themeDisplay.getLocale(),
-				parentItemId);
+				fragmentEntryLinks, layoutStructure, parentItemId);
 
 			for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
 				for (FragmentEntryLinkListener fragmentEntryLinkListener :

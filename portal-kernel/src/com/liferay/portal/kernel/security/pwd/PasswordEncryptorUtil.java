@@ -207,11 +207,12 @@ public class PasswordEncryptorUtil {
 
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"You may have forgotten to configure " +
-						"passwords.encryption.algorithm.legacy property");
+					"Property " +
+						PropsKeys.PASSWORDS_ENCRYPTION_ALGORITHM_LEGACY +
+							" is not set");
 			}
 
-			throw new PwdEncryptorAlgorithmException("Undefined algorithm");
+			throw new PwdEncryptorAlgorithmException();
 		}
 		else if (Validator.isNotNull(encryptedPassword) &&
 				 (encryptedPassword.charAt(0) == CharPool.OPEN_CURLY_BRACE)) {

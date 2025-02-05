@@ -7,7 +7,7 @@ import {ClayCheckbox} from '@clayui/form';
 import ClayMultiSelect from '@clayui/multi-select';
 import React, {useEffect, useState} from 'react';
 
-import {MultiSelectBaseProps, MultiSelectItem} from './select.d';
+import {MultiSelectItem, MultipleSelectBaseProps} from './select.d';
 
 const MultipleSelectBase = ({
 	errorMessage,
@@ -22,7 +22,7 @@ const MultipleSelectBase = ({
 	required,
 	tip,
 	value: values,
-}: MultiSelectBaseProps) => {
+}: MultipleSelectBaseProps<string[] | string>) => {
 	const [items, setItems] = useState<MultiSelectItem[]>([]);
 
 	const accessibleProps = {

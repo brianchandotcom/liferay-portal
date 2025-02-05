@@ -14,11 +14,16 @@ import FieldBase from '../FieldBase/ReactFieldBase.es';
 
 import {normalizeOptions, normalizeValue} from '../util/options';
 import {getTooltipTitle} from '../util/tooltip';
-import MultipleSelection from './MultipleSelect';
-import {MainProps, SelectProps} from './select.d';
+import MultipleSelection, {MultipleSelectionProps} from './MultipleSelect';
+import {SelectMainProps} from './select.d';
 import {toArray} from './selectOperations';
 
 import type {Locale} from '../types';
+
+interface SelectProps extends Omit<SelectMainProps, 'selectedKey' | 'value'> {
+	selectedKey?: string;
+	viewMode: unknown;
+}
 
 function Select({
 	errorMessage,
@@ -177,6 +182,7 @@ function Select({
 }
 
 const Main = ({
+	defaultLanguageId,
 	fixedOptions = [],
 	label,
 	localizedValue = {},
@@ -194,7 +200,7 @@ const Main = ({
 	value,
 	selectedKey,
 	...otherProps
-}: MainProps) => {
+}: SelectMainProps) => {
 	const {editingLanguageId}: {editingLanguageId: Locale} = useFormState();
 	const predefinedValueArray = toArray(predefinedValue);
 	const valueArray = toArray(value as string | string[]);
@@ -256,6 +262,9 @@ const Main = ({
 		}
 	}
 
+	const MultipleSelectionComponent =
+		MultipleSelection as React.FC<MultipleSelectionProps>;
+
 	return (
 		<FieldBase
 			label={label}
@@ -265,7 +274,8 @@ const Main = ({
 			{...otherProps}
 		>
 			{multiple ? (
-				<MultipleSelection
+				<MultipleSelectionComponent
+					defaultLanguageId={defaultLanguageId}
 					fixedOptions={[]}
 					label={label}
 					name={name}
@@ -282,6 +292,7 @@ const Main = ({
 				/>
 			) : (
 				<Select
+					defaultLanguageId={defaultLanguageId}
 					fixedOptions={fixedOptions}
 					id={id}
 					label={label}

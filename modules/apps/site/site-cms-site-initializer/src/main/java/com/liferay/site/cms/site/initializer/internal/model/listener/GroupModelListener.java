@@ -9,6 +9,7 @@ import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ModelListener;
@@ -31,7 +32,10 @@ public class GroupModelListener extends BaseModelListener<Group> {
 		try {
 			super.onAfterCreate(group);
 
-			if (!group.isDepot()) {
+			if (!FeatureFlagManagerUtil.isEnabled(
+					group.getCompanyId(), "LPD-17809") ||
+				!group.isDepot()) {
+
 				return;
 			}
 
@@ -66,7 +70,10 @@ public class GroupModelListener extends BaseModelListener<Group> {
 		try {
 			super.onBeforeRemove(group);
 
-			if (!group.isDepot()) {
+			if (!FeatureFlagManagerUtil.isEnabled(
+					group.getCompanyId(), "LPD-17809") ||
+				!group.isDepot()) {
+
 				return;
 			}
 

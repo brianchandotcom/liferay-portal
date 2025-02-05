@@ -69,10 +69,10 @@ public class CountryUpgradeProcessTest {
 			int regionCount = _getCount("Region");
 			int regionLocalizationCount = _getCount("RegionLocalization");
 
-			_deleteByCompanyId("Country", _company.getCompanyId());
-			_deleteByCompanyId("CountryLocalization", _company.getCompanyId());
-			_deleteByCompanyId("Region", _company.getCompanyId());
-			_deleteByCompanyId("RegionLocalization", _company.getCompanyId());
+			_delete("Country");
+			_delete("CountryLocalization");
+			_delete("Region");
+			_delete("RegionLocalization");
 
 			_runUpgrade();
 
@@ -116,14 +116,12 @@ public class CountryUpgradeProcessTest {
 			results.get(0) <= _counterLocalService.getCurrentId(className));
 	}
 
-	private void _deleteByCompanyId(String tableName, long companyId)
-		throws Exception {
-
+	private void _delete(String tableName) throws Exception {
 		try (Connection connection = DataAccess.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
 					"delete from ", tableName, " where companyId = ",
-					companyId))) {
+					_company.getCompanyId()))) {
 
 			preparedStatement.execute();
 		}

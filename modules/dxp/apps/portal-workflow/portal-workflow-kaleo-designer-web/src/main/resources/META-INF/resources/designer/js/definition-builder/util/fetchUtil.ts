@@ -38,7 +38,7 @@ export function retrieveDefinitionRequest(
 	definitionName: string,
 	versionNumber: number
 ) {
-	let url = `${workflowBaseURL}/workflow-definitions/by-name/${definitionName}?contentFormat=xml`;
+	let url = `${workflowBaseURL}/workflow-definitions/by-name/${encodeURIComponent(encodeURIComponent(definitionName))}?contentFormat=xml`;
 
 	if (versionNumber) {
 		url = `${url}&version=${versionNumber}`;

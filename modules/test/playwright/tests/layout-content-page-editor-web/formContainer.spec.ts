@@ -2025,6 +2025,170 @@ test.describe('Form Localization', () => {
 	);
 
 	test(
+		'Can translate date and date time form fields',
+		{tag: '@LPD-43805'},
+		async ({apiHelpers, page, pageEditorPage, site}) => {
+
+			// Create object definition
+
+			const objectDefinitionAPIClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+
+			const {body: objectDefinition} =
+				await objectDefinitionAPIClient.postObjectDefinition({
+					active: true,
+					enableLocalization: true,
+					externalReferenceCode: 'calendarERC',
+					label: {
+						en_US: 'Calendar',
+					},
+					name: 'Calendar',
+					objectFields: [
+						{
+							DBType: ObjectField.DBTypeEnum.Date,
+							businessType: ObjectField.BusinessTypeEnum.Date,
+							externalReferenceCode: 'dateERC',
+							indexed: true,
+							indexedAsKeyword: false,
+							label: {
+								en_US: 'Date',
+							},
+							localized: true,
+							name: 'date',
+							required: false,
+						},
+						{
+							DBType: ObjectField.DBTypeEnum.DateTime,
+							businessType: ObjectField.BusinessTypeEnum.DateTime,
+							externalReferenceCode: 'dateTimeERC',
+							indexed: true,
+							indexedAsKeyword: false,
+							label: {
+								en_US: 'Date Time',
+							},
+							localized: true,
+							name: 'dateTime',
+							objectFieldSettings: [
+								{
+									name: 'timeStorage',
+									value: 'convertToUTC',
+								} as any,
+							],
+							required: false,
+						},
+					],
+					pluralLabel: {
+						en_US: 'Calendars',
+					},
+					portlet: true,
+					scope: 'company',
+					status: {
+						code: 0,
+					},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			// Create a page with a Form fragment
+
+			const formId = getRandomString();
+
+			const formDefinition = getFormContainerDefinition({
+				id: formId,
+			});
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([formDefinition]),
+				siteId: site.id,
+				title: getRandomString(),
+			});
+
+			await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+			// Map the form to the Calendar object and publish the page
+
+			await pageEditorPage.mapFormFragment(formId, 'Calendar', 'all', {
+				addLocalizationSelect: true,
+			});
+
+			await pageEditorPage.publishPage();
+
+			// Go to view mode and fill the form
+
+			await page.goto(
+				`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
+
+			// Fill the form in spanish
+
+			await fillAndClickOutside(
+				page,
+				page.getByLabel('Date', {exact: true}),
+				'1970-01-01'
+			);
+
+			await fillAndClickOutside(
+				page,
+				page.getByLabel('Date Time', {exact: true}),
+				'1971-01-01T00:00'
+			);
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('option', {
+					name: 'Spanish (Spain) Language',
+				}),
+				trigger: page.getByLabel(
+					'Select a language, current language:'
+				),
+			});
+
+			await fillAndClickOutside(
+				page,
+				page.getByLabel('Date', {exact: true}),
+				'1970-01-02'
+			);
+			await fillAndClickOutside(
+				page,
+				page.getByLabel('Date Time', {exact: true}),
+				'1971-01-02T01:01'
+			);
+
+			// Submit the form
+
+			await page.getByRole('button', {name: 'Submit'}).click();
+
+			await expect(
+				page.getByText(
+					'Thank you. Your information was successfully received.'
+				)
+			).toBeVisible();
+
+			// Check the object entry
+
+			const {items} =
+				await apiHelpers.objectEntry.getObjectDefinitionObjectEntries(
+					'c/calendars'
+				);
+
+			const item = items[0];
+
+			expect(item.date_i18n).toStrictEqual({
+				en_US: '1970-01-01T00:00:00.000Z',
+				es_ES: '1970-01-02T00:00:00.000Z',
+			});
+
+			expect(item.dateTime_i18n).toStrictEqual({
+				en_US: '1971-01-01T00:00:00.000Z',
+				es_ES: '1971-01-02T01:01:00.000Z',
+			});
+		}
+	);
+
+	test(
 		'Shows a warning modal when the page is published and there is a Localization Select fragment but no localizable fields',
 		{tag: '@LPD-37927'},
 		async ({apiHelpers, page, pageEditorPage, pageManagementSite}) => {

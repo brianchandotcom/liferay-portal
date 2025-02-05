@@ -60,7 +60,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
@@ -286,7 +285,7 @@ public class FormItemManager {
 
 	public LayoutStructureItemChanges changeToSimpleFormType(
 		FormStyledLayoutStructureItem formStyledLayoutStructureItem,
-		LayoutStructure layoutStructure, long stepperFragmentEntryLinkId) {
+		LayoutStructure layoutStructure) {
 
 		LayoutStructureItem formStepContainerStyledLayoutStructureItem =
 			findFormStepContainerStyledLayoutStructureItem(
@@ -299,21 +298,8 @@ public class FormItemManager {
 		LayoutStructureItemChanges layoutStructureItemChanges =
 			new LayoutStructureItemChanges();
 
-		Map<Long, LayoutStructureItem> fragmentLayoutStructureItems =
-			layoutStructure.getFragmentLayoutStructureItems();
-
-		LayoutStructureItem stepperFragmentStyledLayoutStructureItem =
-			fragmentLayoutStructureItems.get(stepperFragmentEntryLinkId);
-
-		if (stepperFragmentStyledLayoutStructureItem != null) {
-			layoutStructure.markLayoutStructureItemForDeletion(
-				Collections.singletonList(
-					stepperFragmentStyledLayoutStructureItem.getItemId()),
-				Collections.emptyList());
-
-			layoutStructureItemChanges.addRemovedLayoutStructureItems(
-				stepperFragmentStyledLayoutStructureItem);
-		}
+		List<String> initialFormChildrenItemIds = new ArrayList<>(
+			formStyledLayoutStructureItem.getChildrenItemIds());
 
 		for (String childrenItemId :
 				new ArrayList<>(
@@ -341,12 +327,12 @@ public class FormItemManager {
 		}
 
 		layoutStructure.markLayoutStructureItemForDeletion(
-			Collections.singletonList(
-				formStepContainerStyledLayoutStructureItem.getItemId()),
-			Collections.emptyList());
+			initialFormChildrenItemIds, Collections.emptyList());
 
-		layoutStructureItemChanges.addRemovedLayoutStructureItems(
-			formStepContainerStyledLayoutStructureItem);
+		for (String childrenItemId : initialFormChildrenItemIds) {
+			layoutStructureItemChanges.addRemovedLayoutStructureItems(
+				layoutStructure.getLayoutStructureItem(childrenItemId));
+		}
 
 		return layoutStructureItemChanges;
 	}

@@ -406,8 +406,7 @@ public class UpdateFormItemConfigMVCActionCommand
 			}
 
 			return _formItemManager.changeToSimpleFormType(
-				formStyledLayoutStructureItem, layoutStructure,
-				stepperFragmentEntryLinkId);
+				formStyledLayoutStructureItem, layoutStructure);
 		}
 
 		if (numberOfSteps != previousNumberOfSteps) {

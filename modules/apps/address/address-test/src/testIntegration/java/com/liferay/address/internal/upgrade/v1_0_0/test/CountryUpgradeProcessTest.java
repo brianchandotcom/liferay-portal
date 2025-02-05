@@ -83,63 +83,45 @@ public class CountryUpgradeProcessTest {
 					_company.getCompanyId())) {
 
 			try (Connection connection = DataAccess.getConnection()) {
+				Assert.assertNotEquals(0, _getCount(connection, "Country"));
 				Assert.assertNotEquals(
-					0,
-					_getCountByCompanyId(
-						connection, "Country", _company.getCompanyId()));
+					0, _getCount(connection, "CountryLocalization"));
+				Assert.assertNotEquals(0, _getCount(connection, "Region"));
 				Assert.assertNotEquals(
-					0,
-					_getCountByCompanyId(
-						connection, "CountryLocalization",
-						_company.getCompanyId()));
-				Assert.assertNotEquals(
-					0,
-					_getCountByCompanyId(
-						connection, "Region", _company.getCompanyId()));
-				Assert.assertNotEquals(
-					0,
-					_getCountByCompanyId(
-						connection, "RegionLocalization",
-						_company.getCompanyId()));
+					0, _getCount(connection, "RegionLocalization"));
 			}
-		}
 
-		_assertCounter(
-			_countryLocalService, CountryLocalizationTable.INSTANCE,
-			CountryLocalizationTable.INSTANCE.countryLocalizationId,
-			CountryLocalization.class.getName(), _company.getCompanyId());
-		_assertCounter(
-			_regionLocalService, RegionTable.INSTANCE,
-			RegionTable.INSTANCE.regionId, Region.class.getName(),
-			_company.getCompanyId());
-		_assertCounter(
-			_regionLocalService, RegionLocalizationTable.INSTANCE,
-			RegionLocalizationTable.INSTANCE.regionLocalizationId,
-			RegionLocalization.class.getName(), _company.getCompanyId());
+			_assertCounter(
+				_countryLocalService, CountryLocalizationTable.INSTANCE,
+				CountryLocalizationTable.INSTANCE.countryLocalizationId,
+				CountryLocalization.class.getName());
+			_assertCounter(
+				_regionLocalService, RegionTable.INSTANCE,
+				RegionTable.INSTANCE.regionId, Region.class.getName());
+			_assertCounter(
+				_regionLocalService, RegionLocalizationTable.INSTANCE,
+				RegionLocalizationTable.INSTANCE.regionLocalizationId,
+				RegionLocalization.class.getName());
+		}
 	}
 
 	private void _assertCounter(
 		PersistedModelLocalService persistedModelLocalService,
-		BaseTable<?> table, Column<?, Long> column, String className,
-		long companyId) {
+		BaseTable<?> table, Column<?, Long> column, String className) {
 
-		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setCompanyIdWithSafeCloseable(companyId)) {
+		List<Long> results = persistedModelLocalService.dslQuery(
+			DSLQueryFactoryUtil.select(
+				DSLFunctionFactoryUtil.max(
+					column
+				).as(
+					"MAX_VALUE"
+				)
+			).from(
+				table
+			));
 
-			List<Long> results = persistedModelLocalService.dslQuery(
-				DSLQueryFactoryUtil.select(
-					DSLFunctionFactoryUtil.max(
-						column
-					).as(
-						"MAX_VALUE"
-					)
-				).from(
-					table
-				));
-
-			Assert.assertTrue(
-				results.get(0) <= _counterLocalService.getCurrentId(className));
-		}
+		Assert.assertTrue(
+			results.get(0) <= _counterLocalService.getCurrentId(className));
 	}
 
 	private void _deleteByCompanyId(
@@ -155,14 +137,13 @@ public class CountryUpgradeProcessTest {
 		}
 	}
 
-	private int _getCountByCompanyId(
-			Connection connection, String tableName, long companyId)
+	private int _getCount(Connection connection, String tableName)
 		throws Exception {
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
 					"select count(*) from ", tableName, " where companyId = ",
-					companyId))) {
+					_company.getCompanyId()))) {
 
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				resultSet.next();

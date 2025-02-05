@@ -1622,9 +1622,7 @@ public class TestrayImporter {
 		return element;
 	}
 
-	private Element _getJenkinsBuildIDElement(
-		String title, String name) {
-
+	private Element _getJenkinsBuildIDElement(String title, String name) {
 		Document document = DocumentHelper.createDocument();
 
 		Element element = document.addElement("code");
@@ -1645,7 +1643,6 @@ public class TestrayImporter {
 
 		return element;
 	}
-
 
 	private GitWorkingDirectory _getJenkinsGitWorkingDirectory() {
 		Properties buildProperties;

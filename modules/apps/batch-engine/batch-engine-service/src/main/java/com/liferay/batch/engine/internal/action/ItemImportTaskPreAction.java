@@ -54,7 +54,7 @@ public class ItemImportTaskPreAction implements ImportTaskPreAction {
 			return;
 		}
 
-		JSONObject jsonObject = _getJSONObjectForItem(item);
+		JSONObject jsonObject = _toJSONObject(item);
 
 		if (jsonObject == null) {
 			return;
@@ -102,9 +102,9 @@ public class ItemImportTaskPreAction implements ImportTaskPreAction {
 		return user;
 	}
 
-	private JSONObject _getJSONObjectForItem(Object item) {
+	private JSONObject _toJSONObject(Object item) {
 		try {
-			String json = _getJsonStringFromDTO(item);
+			String json = _toJSON(item);
 
 			if (Validator.isNull(json)) {
 				return null;
@@ -119,7 +119,7 @@ public class ItemImportTaskPreAction implements ImportTaskPreAction {
 		return null;
 	}
 
-	private String _getJsonStringFromDTO(Object item)
+	private String _toJSON(Object item)
 		throws JsonProcessingException {
 
 		ObjectMapper objectMapper = new ObjectMapper();

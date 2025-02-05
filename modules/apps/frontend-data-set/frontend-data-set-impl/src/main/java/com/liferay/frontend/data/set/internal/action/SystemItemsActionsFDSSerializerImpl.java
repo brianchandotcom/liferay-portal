@@ -7,7 +7,6 @@ package com.liferay.frontend.data.set.internal.action;
 
 import com.liferay.frontend.data.set.action.FDSItemsActions;
 import com.liferay.frontend.data.set.action.FDSItemsActionsRegistry;
-import com.liferay.frontend.data.set.action.ItemsActionsFDSSerializer;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.data.set.serializer.FDSSerializer;
 
@@ -26,8 +25,8 @@ import org.osgi.service.component.annotations.Reference;
 	property = "frontend.data.set.serializer.type=" + FDSSerializer.TYPE_SYSTEM,
 	service = FDSSerializer.class
 )
-public class ItemsActionsSystemFDSSerializerImpl
-	implements ItemsActionsFDSSerializer {
+public class SystemItemsActionsFDSSerializerImpl
+	extends BaseItemsActionsFDSSerializer {
 
 	@Override
 	public List<FDSActionDropdownItem> serialize(

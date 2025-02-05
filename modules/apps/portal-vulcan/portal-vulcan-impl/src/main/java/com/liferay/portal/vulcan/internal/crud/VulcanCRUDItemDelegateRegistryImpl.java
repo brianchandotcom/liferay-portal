@@ -27,22 +27,22 @@ public class VulcanCRUDItemDelegateRegistryImpl
 	public VulcanCRUDItemDelegate<?> getVulcanCRUDItemDelegate(
 		long companyId, String entityClassName) {
 
-		return _scopedServiceTrackerMap.getService(companyId, entityClassName);
+		return _serviceTrackerMap.getService(companyId, entityClassName);
 	}
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_scopedServiceTrackerMap = ScopedServiceTrackerMapFactory.create(
+		_serviceTrackerMap = ScopedServiceTrackerMapFactory.create(
 			bundleContext, null, "entity.class.name",
 			"(crud.item.delegate=true)", () -> null);
 	}
 
 	@Deactivate
 	protected void deactivate() {
-		_scopedServiceTrackerMap.close();
+		_serviceTrackerMap.close();
 	}
 
 	private ScopedServiceTrackerMap<VulcanCRUDItemDelegate<?>>
-		_scopedServiceTrackerMap;
+		_serviceTrackerMap;
 
 }

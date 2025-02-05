@@ -54,13 +54,22 @@ export default function MasterPage() {
 
 	const [, targetRef] = useDrop({
 		accept: Object.values(LAYOUT_DATA_ITEM_TYPES),
-		drop: () =>
+		drop: (_, monitor) => {
+			const {x, y} = monitor.getClientOffset();
+
+			const element = document.elementFromPoint(x, y);
+
+			if (element.closest('.page-editor')) {
+				return;
+			}
+
 			openToast({
 				message: Liferay.Language.get(
 					'fragments-and-widgets-cannot-be-placed-inside-this-area'
 				),
 				type: 'danger',
-			}),
+			});
+		},
 	});
 
 	return (

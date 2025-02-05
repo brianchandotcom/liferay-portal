@@ -52,6 +52,7 @@ definition {
 			dmDocumentTitle = "DM Document Title",
 			groupName = "Test Depot Name",
 			mimeType = "application/msword",
+			site = "false",
 			sourceFileName = "Document_1.doc");
 
 		DepotNavigator.openToDMEntryInDepot(

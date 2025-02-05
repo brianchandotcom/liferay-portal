@@ -50,7 +50,9 @@ definition {
 
 		Click(locator1 = "Dropdown#TRIGGER");
 
-		DropdownMenuItem.click(menuItem = ${assetType});
+		Click.javaScriptClick(
+			key_menuItem = ${assetType},
+			locator1 = "MenuItem#DROPDOWN_MENU_ITEM");
 
 		if (IsElementPresent(locator1 = "Button#UPDATE")) {
 			PortletEntry.update();

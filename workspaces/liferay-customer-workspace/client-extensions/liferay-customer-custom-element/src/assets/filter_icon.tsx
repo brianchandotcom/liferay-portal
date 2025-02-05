@@ -3,7 +3,13 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-const FilterIcon = ({columnName, handleSortChange}) => (
+const FilterIcon = ({
+	columnName,
+	handleSortChange,
+}: {
+	columnName: string;
+	handleSortChange: Function;
+}) => (
 	<svg
 		className="align-self-center"
 		fill="none"

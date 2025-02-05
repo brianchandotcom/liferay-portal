@@ -3022,37 +3022,64 @@ test.describe('Submit button', () => {
 		async ({
 			apiHelpers,
 			displayPageTemplatesPage,
-			objectDetailsPage,
 			page,
 			pageEditorPage,
 			pageManagementSite,
 		}) => {
-			const checkObjectEntryStatus = async (
-				value: string,
-				status: string
-			) => {
+			const getObjectEntry = async () => {
+				const {items} =
+					await apiHelpers.objectEntry.getObjectDefinitionObjectEntries(
+						'c/drafts'
+					);
 
-				// Go to entity
+				const item = items[0];
 
-				await goToObjectEntity({
-					entityName: 'Lemon',
-					page,
-				});
-
-				// Check the status of the object entry
-
-				const row = page.locator('.fds tr', {hasText: value});
-
-				await expect(row).toContainText(status);
+				return item;
 			};
 
-			await test.step('Set the "Allow Users to Save Entries as Draft" configuration of the Lemon object to true', async () => {
-				await objectDetailsPage.goto('Lemon');
+			// Create object definition
 
-				await objectDetailsPage.updateConfiguration({
-					fieldLabel: 'Allow Users to Save Entries as Draft',
-					value: true,
+			const objectDefinitionAPIClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+
+			const {body: objectDefinition} =
+				await objectDefinitionAPIClient.postObjectDefinition({
+					active: true,
+					enableLocalization: true,
+					enableObjectEntryDraft: true,
+					externalReferenceCode: 'draftERC',
+					label: {
+						en_US: 'Draft',
+					},
+					name: 'Draft',
+					objectFields: [
+						{
+							DBType: ObjectField.DBTypeEnum.String,
+							businessType: ObjectField.BusinessTypeEnum.Text,
+							externalReferenceCode: 'textERC',
+							indexed: true,
+							indexedAsKeyword: false,
+							label: {
+								en_US: 'Text',
+							},
+							localized: true,
+							name: 'text',
+							required: false,
+						},
+					],
+					pluralLabel: {
+						en_US: 'Drafts',
+					},
+					portlet: true,
+					scope: 'company',
+					status: {
+						code: 0,
+					},
 				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
 			});
 
 			const displayPageTemplateName = getRandomString();
@@ -3066,7 +3093,7 @@ test.describe('Submit button', () => {
 				);
 
 				await displayPageTemplatesPage.createTemplate({
-					contentType: 'Lemon',
+					contentType: 'Draft',
 					name: displayPageTemplateName,
 				});
 
@@ -3086,8 +3113,7 @@ test.describe('Submit button', () => {
 
 				await pageEditorPage.mapFormFragment(
 					fragmentId,
-					'Lemon (Default)',
-					['Lemon Weight']
+					'Draft (Default)'
 				);
 
 				// Add another submit button with the "Submitted Entry Status" configuration as Draft
@@ -3149,11 +3175,9 @@ test.describe('Submit button', () => {
 					pageManagementSite.friendlyUrlPath
 				);
 
-				// Map the form to Lemon Weight field
+				// Map the form to Draft object
 
-				await pageEditorPage.mapFormFragment(formId, 'Lemon', [
-					'Lemon Weight',
-				]);
+				await pageEditorPage.mapFormFragment(formId, 'Draft');
 
 				// Change the "Submitted Entry Status" configuration to Draft
 
@@ -3176,12 +3200,12 @@ test.describe('Submit button', () => {
 				await pageEditorPage.publishPage();
 			});
 
-			const input = page.getByLabel('Lemon Weight', {exact: true});
+			const input = page.getByLabel('Text', {exact: true});
 			const submitDraftButton = page.getByText('Submit as draft', {
 				exact: true,
 			});
 
-			await test.step('Go to view mode and save the Lemon Weight field value as draft', async () => {
+			await test.step('Go to view mode and save the Text field value as draft', async () => {
 				await page.goto(
 					`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
 				);
@@ -3195,62 +3219,35 @@ test.describe('Submit button', () => {
 						'Thank you. Your information was successfully received.'
 					)
 					.waitFor();
-
-				// Check the saved value
-
-				await checkObjectEntryStatus('100', 'Draft');
 			});
 
-			await test.step('Go to edit mode and map the Heading to the draft entry number and select the DPT created before as Field', async () => {
-				await pageEditorPage.goto(
-					layout,
-					pageManagementSite.friendlyUrlPath
+			// Check the saved value
+
+			const objectEntry = await getObjectEntry();
+
+			expect(objectEntry.text).toBe('100');
+			expect(objectEntry.status.label).toBe('draft');
+
+			// Go to display page
+
+			const objectDefinitionApiClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+
+			const {className: objectDefinitionClassName} = (
+				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
+					getObjectERC('Lemon')
+				)
+			).body;
+
+			const className =
+				await apiHelpers.jsonWebServicesClassName.fetchClassName(
+					objectDefinitionClassName
 				);
 
-				await pageEditorPage.changeEditableConfiguration({
-					editableId: 'element-text',
-					fieldLabel: 'Link',
-					fragmentId: headingId,
-					tab: 'Link',
-					value: 'Mapped URL',
-				});
-
-				await pageEditorPage.openMappingSelector();
-
-				const iframe = page.frameLocator('iframe[title="Select"]');
-
-				await iframe.getByPlaceholder('Search').waitFor();
-
-				await iframe.getByText('Lemons', {exact: true}).click();
-
-				await clickAndExpectToBeHidden({
-					target: iframe.locator('.lfr-item-viewer'),
-					trigger: iframe
-						.locator('.item-selector-list-row .entry')
-						.first(),
-				});
-
-				await pageEditorPage.changeConfiguration({
-					fieldLabel: 'Field',
-					tab: 'Link',
-					value: displayPageTemplateName,
-				});
-
-				await pageEditorPage.publishPage();
-			});
-
-			const headingFragment = page.getByText('Heading Example', {
-				exact: true,
-			});
-
-			await test.step('Go to view mode, click in the Heading and save the field value as Draft', async () => {
+			await test.step('Go to object display page and save the field value as Draft', async () => {
 				await page.goto(
-					`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+					`/web${pageManagementSite.friendlyUrlPath}/e/${displayPageTemplateName}/${className.classNameId}/${objectEntry.id}`
 				);
-
-				await headingFragment.click();
-
-				await expect(headingFragment).not.toBeAttached();
 
 				// Set new value and submit as draft
 
@@ -3266,17 +3263,16 @@ test.describe('Submit button', () => {
 
 				// Check the saved value
 
-				await checkObjectEntryStatus('200', 'Draft');
+				const updatedObjectEntry = await getObjectEntry();
+
+				expect(updatedObjectEntry.text).toBe('200');
+				expect(updatedObjectEntry.status.label).toBe('draft');
 			});
 
-			await test.step('Go to view mode, click in the Heading and save the field value as Approved', async () => {
+			await test.step('Go to object display page and save the field value as Approved', async () => {
 				await page.goto(
-					`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+					`/web${pageManagementSite.friendlyUrlPath}/e/${displayPageTemplateName}/${className.classNameId}/${objectEntry.id}`
 				);
-
-				await headingFragment.click();
-
-				await expect(headingFragment).not.toBeAttached();
 
 				// Set new value and submit as approved
 
@@ -3292,17 +3288,16 @@ test.describe('Submit button', () => {
 
 				// Check the saved value
 
-				await checkObjectEntryStatus('300', 'Approved');
+				const updatedObjectEntry = await getObjectEntry();
+
+				expect(updatedObjectEntry.text).toBe('300');
+				expect(updatedObjectEntry.status.label).toBe('approved');
 			});
 
 			await test.step('Go to view mode, click in the Heading and try to save the field value as Draft again', async () => {
 				await page.goto(
-					`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+					`/web${pageManagementSite.friendlyUrlPath}/e/${displayPageTemplateName}/${className.classNameId}/${objectEntry.id}`
 				);
-
-				await headingFragment.click();
-
-				await expect(headingFragment).not.toBeAttached();
 
 				// Set new value and submit as draft
 
@@ -3318,16 +3313,10 @@ test.describe('Submit button', () => {
 
 				// Check the saved value
 
-				await checkObjectEntryStatus('300', 'Approved');
-			});
+				const updatedObjectEntry = await getObjectEntry();
 
-			await test.step('Restore default value', async () => {
-				await objectDetailsPage.goto('Lemon');
-
-				await objectDetailsPage.updateConfiguration({
-					fieldLabel: 'Allow Users to Save Entries as Draft',
-					value: false,
-				});
+				expect(updatedObjectEntry.text).toBe('300');
+				expect(updatedObjectEntry.status.label).toBe('approved');
 			});
 		}
 	);

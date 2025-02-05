@@ -105,11 +105,9 @@ public class UpgradeImportsCheck extends BaseFileCheck {
 	private synchronized String _fixImports(String fileName, String content)
 		throws Exception {
 
-		List<String> importNames = _getImportNames(fileName, content);
-
 		Map<String, String> importsMap = _getMap("imports.txt");
 
-		for (String importName : importNames) {
+		for (String importName : _getImportNames(fileName, content)) {
 			String newImportName = importsMap.get(importName);
 
 			if (newImportName == null) {

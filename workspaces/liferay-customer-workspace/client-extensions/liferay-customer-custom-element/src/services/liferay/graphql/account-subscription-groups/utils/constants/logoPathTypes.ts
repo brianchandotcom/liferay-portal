@@ -9,7 +9,7 @@ import {
 	DXPIcon,
 	EnterpriseIcon,
 	PortalIcon,
-} from '~/assets/navigation-menu';
+} from '~/assets/NavigationMenu';
 import {PRODUCT_TYPES} from '~/features/project/utils/constants/productTypes';
 
 export const LOGO_PATH_TYPES = {

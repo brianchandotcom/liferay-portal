@@ -12,7 +12,7 @@ import SearchBuilder from '~/lib/SearchBuilder';
 import i18n from '~/utils/I18n';
 import {Button, ButtonDropDown} from '~/components';
 import {useAppPropertiesContext} from '~/contexts/AppPropertiesContext';
-import {AnalyticsIcon} from '~/assets/navigation-menu';
+import {AnalyticsIcon} from '~/assets/NavigationMenu';
 import {
 	getAccountSubscriptionGroups,
 	getCommerceOrderItems,

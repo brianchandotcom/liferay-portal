@@ -14,7 +14,7 @@ import i18n from '~/utils/I18n';
 import {Button, ButtonDropDown} from '~/components';
 import SetupDXPCloudForm from '~/components/setup-forms/SetupDXPCloudForm';
 import {useAppPropertiesContext} from '~/contexts/AppPropertiesContext';
-import {DXPIcon} from '~/assets/navigation-menu';
+import {DXPIcon} from '~/assets/NavigationMenu';
 import {
 	getAccountSubscriptionGroups,
 	getCommerceOrderItems,

@@ -4,7 +4,7 @@
  */
 
 import React from 'react';
-import PlusSquaresIcons from '~/assets/plus-squares-icon';
+import {PlusSquaresIcons} from '~/assets/PlusSquaresIcon';
 
 import './AddOnContent.css';
 

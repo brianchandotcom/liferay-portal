@@ -3,19 +3,19 @@ definition {
 	@summary = "Extracts an integrated DB Partition into a standalone partition"
 	macro extractDBPartition(partitionCompanyId = null) {
 		OSGiConfig.deployOSGiConfigFile(
-			osgiConfigFileName = "com.liferay.portal.db.partition.internal.configuration.DBPartitionExtractVirtualInstanceConfiguration.config",
-			osgiConfigs = "partitionCompanyId=L\"${partitionCompanyId}\"");
+			osgiConfigFileName = "com.liferay.portal.virtual.instances.internal.configuration.ExtractVirtualInstanceConfiguration.config",
+			osgiConfigs = "extractCompanyId=L\"${partitionCompanyId}\"");
 
-		OSGiConfig.waitForOSGiConfigDeleted(osgiConfigFileName = "com.liferay.portal.db.partition.internal.configuration.DBPartitionExtractVirtualInstanceConfiguration.config");
+		OSGiConfig.waitForOSGiConfigDeleted(osgiConfigFileName = "com.liferay.portal.virtual.instances.internal.configuration.ExtractVirtualInstanceConfiguration.config");
 	}
 
 	@summary = "Adds a standalone DB Partition as a new company"
 	macro insertDBPartition(partitionCompanyId = null) {
 		OSGiConfig.deployOSGiConfigFile(
-			osgiConfigFileName = "com.liferay.portal.db.partition.internal.configuration.DBPartitionInsertVirtualInstanceConfiguration.config",
-			osgiConfigs = "partitionCompanyId=L\"${partitionCompanyId}\"");
+			osgiConfigFileName = "com.liferay.portal.virtual.instances.internal.configuration.InsertVirtualInstanceConfiguration.config",
+			osgiConfigs = "insertCompanyId=L\"${partitionCompanyId}\"");
 
-		OSGiConfig.waitForOSGiConfigDeleted(osgiConfigFileName = "com.liferay.portal.db.partition.internal.configuration.DBPartitionInsertVirtualInstanceConfiguration.config");
+		OSGiConfig.waitForOSGiConfigDeleted(osgiConfigFileName = "com.liferay.portal.virtual.instances.internal.configuration.InsertVirtualInstanceConfiguration.config");
 	}
 
 	@summary = "Validates that the records are correctly tied to their partitions using the portal-tools-db-partition-schema-validator tool"

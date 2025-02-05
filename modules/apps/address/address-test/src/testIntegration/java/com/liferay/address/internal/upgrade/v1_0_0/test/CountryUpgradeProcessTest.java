@@ -57,7 +57,7 @@ public class CountryUpgradeProcessTest {
 		new LiferayIntegrationTestRule();
 
 	@Test
-	public void testUpgradeCountriesRegionsCreation() throws Exception {
+	public void testUpgradeProcess() throws Exception {
 		_company = CompanyTestUtil.addCompany();
 
 		try (SafeCloseable safeCloseable =

@@ -5,7 +5,6 @@
 
 package com.liferay.frontend.data.set.internal.action;
 
-import com.liferay.frontend.data.set.action.CreationMenuFDSSerializer;
 import com.liferay.frontend.data.set.action.FDSCreationMenu;
 import com.liferay.frontend.data.set.action.FDSCreationMenuRegistry;
 import com.liferay.frontend.data.set.serializer.FDSSerializer;
@@ -23,8 +22,8 @@ import org.osgi.service.component.annotations.Reference;
 	property = "frontend.data.set.serializer.type=" + FDSSerializer.TYPE_SYSTEM,
 	service = FDSSerializer.class
 )
-public class CreationMenuSystemFDSSerializerImpl
-	implements CreationMenuFDSSerializer {
+public class SystemCreationMenuFDSSerializerImpl
+	extends BaseCreationMenuFDSSerializer {
 
 	@Override
 	public CreationMenu serialize(

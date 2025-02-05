@@ -433,6 +433,14 @@ public class StyleBookEntryLocalServiceWrapper
 
 	@Override
 	public java.util.List<StyleBookEntry> getStyleBookEntries(
+		long groupId, String themeId) {
+
+		return _styleBookEntryLocalService.getStyleBookEntries(
+			groupId, themeId);
+	}
+
+	@Override
+	public java.util.List<StyleBookEntry> getStyleBookEntries(
 		long groupId, String name, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<StyleBookEntry>
 			orderByComparator) {

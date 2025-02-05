@@ -367,6 +367,25 @@ public class StyleBookEntryVersionPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_T() throws Exception {
+		_persistence.countByG_T(RandomTestUtil.nextLong(), "");
+
+		_persistence.countByG_T(0L, "null");
+
+		_persistence.countByG_T(0L, (String)null);
+	}
+
+	@Test
+	public void testCountByG_T_Version() throws Exception {
+		_persistence.countByG_T_Version(
+			RandomTestUtil.nextLong(), "", RandomTestUtil.nextInt());
+
+		_persistence.countByG_T_Version(0L, "null", 0);
+
+		_persistence.countByG_T_Version(0L, (String)null, 0);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		StyleBookEntryVersion newStyleBookEntryVersion =
 			addStyleBookEntryVersion();

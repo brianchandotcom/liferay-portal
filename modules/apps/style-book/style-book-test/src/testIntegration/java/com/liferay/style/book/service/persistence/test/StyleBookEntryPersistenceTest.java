@@ -499,6 +499,27 @@ public class StyleBookEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_T() throws Exception {
+		_persistence.countByG_T(RandomTestUtil.nextLong(), "");
+
+		_persistence.countByG_T(0L, "null");
+
+		_persistence.countByG_T(0L, (String)null);
+	}
+
+	@Test
+	public void testCountByG_T_Head() throws Exception {
+		_persistence.countByG_T_Head(
+			RandomTestUtil.nextLong(), "", RandomTestUtil.randomBoolean());
+
+		_persistence.countByG_T_Head(
+			0L, "null", RandomTestUtil.randomBoolean());
+
+		_persistence.countByG_T_Head(
+			0L, (String)null, RandomTestUtil.randomBoolean());
+	}
+
+	@Test
 	public void testCountByERC_G() throws Exception {
 		_persistence.countByERC_G("", RandomTestUtil.nextLong());
 

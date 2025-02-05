@@ -160,13 +160,13 @@ public class CategoryFacetSearchContributorImpl
 				sb.append(StringPool.PIPE);
 			}
 
-			if (sb.index() > 0) {
-				sb.setIndex(sb.index() - 1);
-
-				return sb.toString();
+			if (sb.index() == 0) {
+				return null;
 			}
 
-			return null;
+			sb.setIndex(sb.index() - 1);
+
+			return sb.toString();
 		}
 
 		private String[] _getSelections(long[] selectedCategoryIds) {

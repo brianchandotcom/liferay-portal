@@ -3481,6 +3481,24 @@
 		"to": "getListType(CompanyThreadLocal.getCompanyId(), param#0#, param#1#)"
 	},
 	{
+		"classNames": [
+			"SiteNavigationMenuItemService",
+			"SiteNavigationMenuItemServiceUtil"
+		],
+		"from": "addSiteNavigationMenuItem(long paramName, long paramName, long paramName, String paramName, String paramName, ServiceContext paramName)",
+		"issueKey": "LPD-47115",
+		"to": "addSiteNavigationMenuItem(null, param#0#, param#1#, param#2#, param#3#, param#4#, param#5#)"
+	},
+	{
+		"classNames": [
+			"SiteNavigationMenuItemLocalService",
+			"SiteNavigationMenuItemLocalServiceUtil"
+		],
+		"from": "addSiteNavigationMenuItem(long paramName, long paramName, long paramName, long paramName, String paramName, int paramName, String paramName, ServiceContext paramName)",
+		"issueKey": "LPD-47115",
+		"to": "addSiteNavigationMenuItem(null, param#0#, param#1#, param#2#, param#3#, param#4#, param#5#, param#6#, param#7#)"
+	},
+	{
 		"from": "CookieKeys.COMMERCE_CONTINUE_AS_GUEST",
 		"issueKey": "LPS-159679",
 		"newImports": [

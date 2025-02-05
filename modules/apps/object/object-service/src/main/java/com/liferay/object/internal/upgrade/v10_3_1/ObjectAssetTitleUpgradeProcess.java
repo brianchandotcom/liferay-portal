@@ -6,6 +6,7 @@
 package com.liferay.object.internal.upgrade.v10_3_1;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -24,18 +25,11 @@ public class ObjectAssetTitleUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		PreparedStatement preparedStatement1 = null;
-		PreparedStatement preparedStatement2 = null;
-		PreparedStatement preparedStatement3 = null;
-		ResultSet resultSet1 = null;
-		ResultSet resultSet2 = null;
+		Map<Long, Map<String, String>> titleMap = new HashMap<>();
+		Map<Long, String> xmlMap = new HashMap<>();
+		Map<Long, String> classNameMap = new HashMap<>();
 
-		try {
-			Map<Long, Map<String, String>> titleMap = new HashMap<>();
-			Map<Long, String> xmlMap = new HashMap<>();
-			Map<Long, String> classNameMap = new HashMap<>();
-
-			preparedStatement1 = connection.prepareStatement(
+		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				StringBundler.concat(
 					"select ObjectDefinition.companyId, ",
 					"ObjectDefinition.objectDefinitionId, ",
@@ -47,8 +41,7 @@ public class ObjectAssetTitleUpgradeProcess extends UpgradeProcess {
 					"ObjectDefinition.titleObjectFieldId where ",
 					"ObjectDefinition.enableLocalization = true and ",
 					"ObjectField.localized = true"));
-
-			resultSet1 = preparedStatement1.executeQuery();
+			ResultSet resultSet1 = preparedStatement1.executeQuery()) {
 
 			while (resultSet1.next()) {
 				Long companyId = resultSet1.getLong("companyId");
@@ -62,104 +55,63 @@ public class ObjectAssetTitleUpgradeProcess extends UpgradeProcess {
 					resultSet1.getString("pkObjectFieldDBColumnName"), " from ",
 					resultSet1.getString("dbTableName"), "_l");
 
-				preparedStatement2 = connection.prepareStatement(query);
+				try (PreparedStatement preparedStatement2 =
+						connection.prepareStatement(query)) {
 
-				resultSet2 = preparedStatement2.executeQuery();
+					ResultSet resultSet2 = preparedStatement2.executeQuery();
 
-				while (resultSet2.next()) {
-					String titleField = resultSet2.getString(
-						resultSet1.getString("dbColumnName"));
-					String languageId = resultSet2.getString("languageId");
+					while (resultSet2.next()) {
+						String titleField = resultSet2.getString(
+							resultSet1.getString("dbColumnName"));
+						String languageId = resultSet2.getString("languageId");
 
-					Long objectId = resultSet2.getLong(
-						resultSet1.getString("pkObjectFieldDBColumnName"));
+						Long objectId = resultSet2.getLong(
+							resultSet1.getString("pkObjectFieldDBColumnName"));
 
-					if (!titleMap.containsKey(objectId)) {
-						titleMap.put(objectId, new HashMap<>());
+						if (!titleMap.containsKey(objectId)) {
+							titleMap.put(objectId, new HashMap<>());
+						}
+
+						titleMap.get(
+							objectId
+						).put(
+							languageId, titleField
+						);
+
+						xmlMap.put(
+							objectId,
+							LocalizationUtil.getXml(
+								titleMap.get(objectId), defaultLanguageId,
+								"title"));
+						classNameMap.put(
+							objectId, resultSet1.getString("className"));
 					}
-
-					titleMap.get(
-						objectId
-					).put(
-						languageId, titleField
-					);
-
-					xmlMap.put(
-						objectId,
-						LocalizationUtil.getXml(
-							titleMap.get(objectId), defaultLanguageId,
-							"title"));
-					classNameMap.put(
-						objectId, resultSet1.getString("className"));
 				}
 			}
 
-			preparedStatement3 = connection.prepareStatement(
-				"update AssetEntry set title = ?, mimeType = ? where classPK " +
-					"= ? and classNameId = ?");
+			try (PreparedStatement preparedStatement3 =
+					AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+						connection,
+						"update AssetEntry set title = ?, mimeType = ? where " +
+							"classPK = ? and classNameId = ?")) {
 
-			for (Map.Entry<Long, String> entry : xmlMap.entrySet()) {
-				Long objectId = entry.getKey();
-				String localizedTitleXml = entry.getValue();
-				String mimeTypeValue = "text/html";
+				for (Map.Entry<Long, String> entry : xmlMap.entrySet()) {
+					Long objectId = entry.getKey();
+					String localizedTitleXml = entry.getValue();
+					String mimeTypeValue = "text/html";
 
-				String className = classNameMap.get(objectId);
+					String className = classNameMap.get(objectId);
 
-				Long classNameId = PortalUtil.getClassNameId(className);
+					preparedStatement3.setString(1, localizedTitleXml);
+					preparedStatement3.setString(2, mimeTypeValue);
+					preparedStatement3.setLong(3, objectId);
+					preparedStatement3.setLong(
+						4, PortalUtil.getClassNameId(className));
 
-				preparedStatement3.setString(1, localizedTitleXml);
-				preparedStatement3.setString(2, mimeTypeValue);
-				preparedStatement3.setLong(3, objectId);
-				preparedStatement3.setLong(4, classNameId);
-
-				int rowsUpdated = preparedStatement3.executeUpdate();
-
-				if (rowsUpdated > 0) {
-					String successMessage =
-						"Successfully updated AssetEntry for classPK=" +
-							objectId;
-
-					System.out.println(successMessage);
-				}
-				else {
-					String errorMessage = StringBundler.concat(
-						"No record found for classPK=", objectId,
-						" and classNameId=", classNameId);
-
-					System.out.println(errorMessage);
-				}
-			}
-		}
-		finally {
-			try {
-				if (resultSet2 != null) {
-					resultSet2.close();
+					preparedStatement3.addBatch();
 				}
 
-				if (preparedStatement2 != null) {
-					preparedStatement2.close();
-				}
-
-				if (resultSet1 != null) {
-					resultSet1.close();
-				}
-
-				if (preparedStatement1 != null) {
-					preparedStatement1.close();
-				}
-
-				if (preparedStatement3 != null) {
-					preparedStatement3.close();
-				}
-
-				if (connection != null) {
-					connection.close();
-				}
-			}
-			catch (Exception exception) {
-				String exceptionMessage = exception.getMessage();
-
-				System.out.println(exceptionMessage);
+				preparedStatement3.executeBatch();
 			}
 		}
 	}

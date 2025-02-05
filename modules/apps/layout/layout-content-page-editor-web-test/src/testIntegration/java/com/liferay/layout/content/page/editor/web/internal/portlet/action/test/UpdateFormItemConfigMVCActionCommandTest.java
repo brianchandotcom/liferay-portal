@@ -334,11 +334,11 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 			_mvcActionCommand, "_updateFormStyledLayoutStructureItemFormType",
 			new Class<?>[] {
 				FormStyledLayoutStructureItem.class, String.class,
-				LayoutStructure.class, Locale.class, int.class, String.class,
-				int.class
+				LayoutStructure.class, int.class, String.class, int.class,
+				long.class
 			},
-			formStyledLayoutStructureItem, "multistep", layoutStructure,
-			LocaleUtil.getSiteDefault(), 2, "simple", 2);
+			formStyledLayoutStructureItem, "multistep", layoutStructure, 2,
+			"simple", 2, 0);
 
 		List<String> childrenItemIds =
 			formStyledLayoutStructureItem.getChildrenItemIds();
@@ -390,21 +390,21 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 			_mvcActionCommand, "_updateFormStyledLayoutStructureItemFormType",
 			new Class<?>[] {
 				FormStyledLayoutStructureItem.class, String.class,
-				LayoutStructure.class, Locale.class, int.class, String.class,
-				int.class
+				LayoutStructure.class, int.class, String.class, int.class,
+				long.class
 			},
-			formStyledLayoutStructureItem, "multistep", layoutStructure,
-			LocaleUtil.getSiteDefault(), 2, "simple", 2);
+			formStyledLayoutStructureItem, "multistep", layoutStructure, 2,
+			"simple", 2, 0);
 
 		ReflectionTestUtil.invoke(
 			_mvcActionCommand, "_updateFormStyledLayoutStructureItemFormType",
 			new Class<?>[] {
 				FormStyledLayoutStructureItem.class, String.class,
-				LayoutStructure.class, Locale.class, int.class, String.class,
-				int.class
+				LayoutStructure.class, int.class, String.class, int.class,
+				long.class
 			},
-			formStyledLayoutStructureItem, "simple", layoutStructure,
-			LocaleUtil.getSiteDefault(), 2, "multistep", 2);
+			formStyledLayoutStructureItem, "simple", layoutStructure, 2,
+			"multistep", 2, 0);
 
 		List<String> childrenItemIds =
 			formStyledLayoutStructureItem.getChildrenItemIds();

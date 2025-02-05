@@ -331,6 +331,10 @@ public interface StyleBookEntryLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<StyleBookEntry> getStyleBookEntries(
+		long groupId, String themeId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<StyleBookEntry> getStyleBookEntries(
 		long groupId, String name, int start, int end,
 		OrderByComparator<StyleBookEntry> orderByComparator);
 

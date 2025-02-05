@@ -230,6 +230,13 @@ public class StyleBookEntryLocalServiceImpl
 
 	@Override
 	public List<StyleBookEntry> getStyleBookEntries(
+		long groupId, String themeId) {
+
+		return styleBookEntryPersistence.findByG_T(groupId, themeId);
+	}
+
+	@Override
+	public List<StyleBookEntry> getStyleBookEntries(
 		long groupId, String name, int start, int end,
 		OrderByComparator<StyleBookEntry> orderByComparator) {
 

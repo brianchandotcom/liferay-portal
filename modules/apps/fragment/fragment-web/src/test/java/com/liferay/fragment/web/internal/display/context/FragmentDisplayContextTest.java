@@ -33,6 +33,7 @@ import org.mockito.Mockito;
 /**
  * @author Bárbara Cabrera
  */
+@FeatureFlags("LPD-34938")
 public class FragmentDisplayContextTest {
 
 	@ClassRule
@@ -46,7 +47,6 @@ public class FragmentDisplayContextTest {
 		_setUpThemeDisplay();
 	}
 
-	@FeatureFlags("LPD-34938")
 	@Test
 	public void testGetAvailableActionsForMarketplaceFragmentCompositionWithoutPermissions() {
 		_setUpFragmentPermission(false);
@@ -67,7 +67,6 @@ public class FragmentDisplayContextTest {
 					_fragmentComposition)));
 	}
 
-	@FeatureFlags("LPD-34938")
 	@Test
 	public void testGetAvailableActionsForMarketplaceFragmentCompositionWithPermissions() {
 		_setUpFragmentPermission(true);
@@ -98,7 +97,6 @@ public class FragmentDisplayContextTest {
 				"moveFragmentCompositionsAndFragmentEntries"));
 	}
 
-	@FeatureFlags("LPD-34938")
 	@Test
 	public void testGetAvailableActionsForMarketplaceFragmentEntryWithoutPermissions() {
 		_setUpFragmentPermission(false);
@@ -118,7 +116,6 @@ public class FragmentDisplayContextTest {
 				fragmentDisplayContext.getAvailableActions(_fragmentEntry)));
 	}
 
-	@FeatureFlags("LPD-34938")
 	@Test
 	public void testGetAvailableActionsForMarketplaceFragmentEntryWithPermissions() {
 		_setUpFragmentPermission(true);

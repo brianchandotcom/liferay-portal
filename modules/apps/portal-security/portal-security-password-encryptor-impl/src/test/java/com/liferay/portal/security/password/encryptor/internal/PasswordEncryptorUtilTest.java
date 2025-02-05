@@ -266,16 +266,11 @@ public class PasswordEncryptorUtilTest {
 	}
 
 	@Test(expected = PwdEncryptorAlgorithmException.class)
-	public void testFindByPrimaryKeyMissing() throws Exception {
-		String encryptedPassword = RandomTestUtil.randomString();
-		String plainPassword = RandomTestUtil.randomString();
+	public void testLegacyEncryptWithoutLegacyAlgorithmProperty()
+		throws Exception {
 
-		try (SafeCloseable safeCloseable =
-				PropsValuesTestUtil.swapWithSafeCloseable(
-					"PASSWORDS_ENCRYPTION_ALGORITHM_LEGACY", null)) {
-
-			PasswordEncryptorUtil.encrypt(plainPassword, encryptedPassword);
-		}
+		testLegacyEncrypt(
+			null, RandomTestUtil.randomString(), RandomTestUtil.randomString());
 	}
 
 	protected void runTests(

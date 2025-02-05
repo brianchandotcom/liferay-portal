@@ -65,7 +65,11 @@ public interface InfoLocalizedValue<T> {
 		Map<Locale, T> values = new HashMap<>();
 
 		for (Locale locale : getAvailableLocales()) {
-			values.put(locale, getValue(locale));
+			T value = getValue(locale);
+
+			if (value != null) {
+				values.put(locale, value);
+			}
 		}
 
 		return values;

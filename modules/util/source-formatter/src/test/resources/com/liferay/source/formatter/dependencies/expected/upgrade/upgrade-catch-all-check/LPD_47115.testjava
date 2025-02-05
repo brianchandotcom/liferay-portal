@@ -1,0 +1,35 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.source.formatter.dependencies.upgrade;
+
+import org.osgi.service.component.annotations.Reference;
+
+/**
+ * @author Tiago Campelo
+ */
+public class LPD_47115 {
+
+	public void method(
+		long userId, long groupId, long siteNavigationMenuId,
+		long parentSiteNavigationMenuItemId, String type, int order,
+		String typeSettings, ServiceContext serviceContext) {
+
+		SiteNavigationMenuItemLocalServiceUtil.addSiteNavigationMenuItem(123, groupId, siteNavigationMenuId, parentSiteNavigationMenuItemId, type, order, typeSettings, serviceContext);
+		SiteNavigationMenuItemLocalServiceUtil.addSiteNavigationMenuItem(null, userId, groupId, siteNavigationMenuId, parentSiteNavigationMenuItemId, type, order, typeSettings, serviceContext);
+		SiteNavigationMenuItemServiceUtil.addSiteNavigationMenuItem(123, siteNavigationMenuId, parentSiteNavigationMenuItemId, type, typeSettings, serviceContext);
+		SiteNavigationMenuItemServiceUtil.addSiteNavigationMenuItem(null, groupId, siteNavigationMenuId, parentSiteNavigationMenuItemId, type, typeSettings, serviceContext);
+		_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(null, userId, groupId, siteNavigationMenuId, parentSiteNavigationMenuItemId, type, order, typeSettings, serviceContext);
+		_siteNavigationMenuItemService.addSiteNavigationMenuItem(null, groupId, siteNavigationMenuId, parentSiteNavigationMenuItemId, type, typeSettings, serviceContext);
+	}
+
+	@Reference
+	private SiteNavigationMenuItemLocalService
+		_siteNavigationMenuItemLocalService;
+
+	@Reference
+	private SiteNavigationMenuItemService _siteNavigationMenuItemService;
+
+}

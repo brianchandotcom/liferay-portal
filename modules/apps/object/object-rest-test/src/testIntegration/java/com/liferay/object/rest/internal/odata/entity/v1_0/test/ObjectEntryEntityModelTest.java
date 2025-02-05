@@ -105,8 +105,18 @@ public class ObjectEntryEntityModelTest {
 		ObjectDefinition relatedObjectDefinition = _publishObjectDefinition(
 			ObjectDefinitionTestUtil.getRandomName(), customObjectFields);
 
-		ObjectRelationship objectRelationship = _addObjectRelationship(
-			objectDefinition, relatedObjectDefinition);
+		ObjectRelationship manyToManyObjectRelationship =
+			_addObjectRelationship(
+				objectDefinition, relatedObjectDefinition,
+				ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+
+		ObjectRelationship manyToOneObjectRelationship = _addObjectRelationship(
+			relatedObjectDefinition, objectDefinition,
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		ObjectRelationship oneToManyObjectRelationship = _addObjectRelationship(
+			objectDefinition, relatedObjectDefinition,
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
 		_assertEquals(
 			HashMapBuilder.<String, EntityField>put(
@@ -147,16 +157,23 @@ public class ObjectEntryEntityModelTest {
 				"userId",
 				new IntegerEntityField("userId", locale -> Field.USER_ID)
 			).putAll(
-				_getExpectedEntityFieldsMap(
-					customObjectFields, objectRelationship,
-					relatedObjectDefinition)
+				_getExpectedObjectFieldsEntityFieldsMap(customObjectFields)
+			).putAll(
+				_getExpectedRelationshipFieldsEntityFieldsMap(
+					manyToManyObjectRelationship, relatedObjectDefinition)
+			).putAll(
+				_getExpectedRelationshipFieldsEntityFieldsMap(
+					manyToOneObjectRelationship, relatedObjectDefinition)
+			).putAll(
+				_getExpectedRelationshipFieldsEntityFieldsMap(
+					oneToManyObjectRelationship, relatedObjectDefinition)
 			).build(),
 			_getObjectDefinitionEntityFieldsMap(objectDefinition));
 	}
 
 	private ObjectRelationship _addObjectRelationship(
 			ObjectDefinition objectDefinition,
-			ObjectDefinition relatedObjectDefinition)
+			ObjectDefinition relatedObjectDefinition, String type)
 		throws Exception {
 
 		ObjectRelationship objectRelationship =
@@ -166,8 +183,7 @@ public class ObjectEntryEntityModelTest {
 				objectDefinition.getObjectDefinitionId(), 0,
 				ObjectRelationshipConstants.DELETION_TYPE_PREVENT, false,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				StringUtil.randomId(), false,
-				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, null);
+				StringUtil.randomId(), false, type, null);
 
 		_objectRelationships.add(objectRelationship);
 
@@ -209,10 +225,8 @@ public class ObjectEntryEntityModelTest {
 		).build();
 	}
 
-	private Map<String, EntityField> _getExpectedEntityFieldsMap(
-		List<ObjectField> customObjectFields,
-		ObjectRelationship objectRelationship,
-		ObjectDefinition relatedObjectDefinition) {
+	private Map<String, EntityField> _getExpectedObjectFieldsEntityFieldsMap(
+		List<ObjectField> customObjectFields) {
 
 		Map<String, EntityField> expectedEntityFieldsMap = new HashMap<>();
 
@@ -222,43 +236,80 @@ public class ObjectEntryEntityModelTest {
 			expectedEntityFieldsMap.put(entityField.getName(), entityField);
 		}
 
-		String pkObjectFieldName =
-			relatedObjectDefinition.getPKObjectFieldName();
-		String relationshipEntityFieldPrefix = StringBundler.concat(
-			"r_", objectRelationship.getName(), "_");
+		return expectedEntityFieldsMap;
+	}
 
-		String expectedObjectFieldName =
-			relationshipEntityFieldPrefix + pkObjectFieldName;
+	private Map<String, EntityField>
+		_getExpectedRelationshipFieldsEntityFieldsMap(
+			ObjectRelationship objectRelationship,
+			ObjectDefinition relatedObjectDefinition) {
 
-		expectedEntityFieldsMap.put(
-			expectedObjectFieldName,
-			new IdEntityField(
-				expectedObjectFieldName, locale -> expectedObjectFieldName,
-				String::valueOf));
+		Map<String, EntityField> expectedEntityFieldsMap = new HashMap<>();
 
-		String expectedObjectRelationshipERCObjectFieldName =
-			relationshipEntityFieldPrefix +
-				StringUtil.replaceLast(pkObjectFieldName, "Id", "ERC");
+		if (StringUtil.equals(
+				objectRelationship.getType(),
+				ObjectRelationshipConstants.TYPE_MANY_TO_MANY)) {
 
-		expectedEntityFieldsMap.put(
-			expectedObjectRelationshipERCObjectFieldName,
-			new StringEntityField(
-				expectedObjectRelationshipERCObjectFieldName,
-				locale -> expectedObjectFieldName));
+			expectedEntityFieldsMap.put(
+				objectRelationship.getName(),
+				new ComplexEntityField(
+					objectRelationship.getName(), Collections.emptyList()));
+		}
+		else if (StringUtil.equals(
+					objectRelationship.getType(),
+					ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
 
-		String expectedRelatedObjectDefinitionIdObjectFieldName =
-			pkObjectFieldName.replaceFirst("c_", "");
+			if (objectRelationship.getObjectDefinitionId1() ==
+					relatedObjectDefinition.getObjectDefinitionId()) {
 
-		expectedEntityFieldsMap.put(
-			expectedRelatedObjectDefinitionIdObjectFieldName,
-			new IdEntityField(
-				expectedRelatedObjectDefinitionIdObjectFieldName,
-				locale -> expectedObjectFieldName, String::valueOf));
+				String pkObjectFieldName =
+					relatedObjectDefinition.getPKObjectFieldName();
+				String relationshipEntityFieldPrefix = StringBundler.concat(
+					"r_", objectRelationship.getName(), "_");
 
-		expectedEntityFieldsMap.put(
-			objectRelationship.getName(),
-			new ComplexEntityField(
-				objectRelationship.getName(), Collections.emptyList()));
+				String expectedObjectFieldName =
+					relationshipEntityFieldPrefix + pkObjectFieldName;
+
+				expectedEntityFieldsMap.put(
+					expectedObjectFieldName,
+					new IdEntityField(
+						expectedObjectFieldName,
+						locale -> expectedObjectFieldName, String::valueOf));
+
+				String expectedObjectRelationshipERCObjectFieldName =
+					relationshipEntityFieldPrefix +
+						StringUtil.replaceLast(pkObjectFieldName, "Id", "ERC");
+
+				expectedEntityFieldsMap.put(
+					expectedObjectRelationshipERCObjectFieldName,
+					new StringEntityField(
+						expectedObjectRelationshipERCObjectFieldName,
+						locale -> expectedObjectFieldName));
+
+				String expectedRelatedObjectDefinitionIdObjectFieldName =
+					pkObjectFieldName.replaceFirst("c_", "");
+
+				expectedEntityFieldsMap.put(
+					expectedRelatedObjectDefinitionIdObjectFieldName,
+					new IdEntityField(
+						expectedRelatedObjectDefinitionIdObjectFieldName,
+						locale -> expectedObjectFieldName, String::valueOf));
+
+				expectedEntityFieldsMap.put(
+					objectRelationship.getName(),
+					new ComplexEntityField(
+						objectRelationship.getName(), Collections.emptyList()));
+			}
+			else {
+				expectedEntityFieldsMap.put(
+					objectRelationship.getName(),
+					new ComplexEntityField(
+						objectRelationship.getName(), Collections.emptyList()));
+			}
+		}
+		else {
+			throw new IllegalStateException();
+		}
 
 		return expectedEntityFieldsMap;
 	}

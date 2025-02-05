@@ -37,6 +37,14 @@ export function registerUnlocalizedInput({
 		else {
 			if (unlocalizedFieldsState === 'disabled') {
 				inputElement?.setAttribute('disabled', '');
+
+				inputElement?.closest('form')?.addEventListener(
+					'submit',
+					() => {
+						inputElement?.removeAttribute('disabled');
+					},
+					true
+				);
 			}
 			else {
 				inputElement?.setAttribute('readonly', '');

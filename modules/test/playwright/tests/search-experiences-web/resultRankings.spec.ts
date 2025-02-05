@@ -1,0 +1,173 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+import {expect, mergeTests} from '@playwright/test';
+
+import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
+import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
+import {loginTest} from '../../fixtures/loginTest';
+import {searchExperiencesPagesTest} from '../../fixtures/searchExperiencesPageTest';
+import {searchPageTest} from '../../fixtures/searchPageTest';
+import {getRandomInt} from '../../utils/getRandomInt';
+import {hoverAndExpectToBeVisible} from '../../utils/hoverAndExpectToBeVisible';
+import getBasicWebContentStructureId from '../../utils/structured-content/getBasicWebContentStructureId';
+
+export const test = mergeTests(
+	dataApiHelpersTest,
+	isolatedSiteTest,
+	loginTest(),
+	searchExperiencesPagesTest,
+	searchPageTest
+);
+
+test.describe('Result rankings can be added and reordered', () => {
+	test('Add result and reorder rankings', async ({
+		apiHelpers,
+		editResultRankingPage,
+		page,
+		resultRankingsViewPage,
+		searchPage,
+		site,
+	}) => {
+		const searchQuery = 'Article';
+		const webContentTitle1 = `Site Journal ${getRandomInt()}`;
+		const webContentTitle2 = `Site Article ${getRandomInt()}`;
+		const webContentTitle3 = `Site Article ${getRandomInt()}`;
+
+		await test.step('Create web content', async () => {
+			const basicWebContentStructureId =
+				await getBasicWebContentStructureId(apiHelpers);
+
+			await apiHelpers.jsonWebServicesJournal.addWebContent({
+				ddmStructureId: basicWebContentStructureId,
+				groupId: site.id,
+				titleMap: {en_US: webContentTitle1},
+			});
+
+			await apiHelpers.jsonWebServicesJournal.addWebContent({
+				ddmStructureId: basicWebContentStructureId,
+				groupId: site.id,
+				titleMap: {en_US: webContentTitle2},
+			});
+
+			await apiHelpers.jsonWebServicesJournal.addWebContent({
+				ddmStructureId: basicWebContentStructureId,
+				groupId: site.id,
+				titleMap: {en_US: webContentTitle3},
+			});
+		});
+
+		await test.step('Create a new result ranking', async () => {
+			await resultRankingsViewPage.goto();
+
+			await resultRankingsViewPage.createResultRanking(searchQuery);
+		});
+
+		await test.step('Add recent web content into result', async () => {
+			await resultRankingsViewPage.goto();
+
+			await resultRankingsViewPage.selectTableLink(searchQuery);
+
+			await editResultRankingPage.addResults('Site', [webContentTitle1]);
+		});
+
+		const resultRankingItem1 =
+			await editResultRankingPage.resultRankingItem(webContentTitle1);
+		const resultRankingItem2 =
+			await editResultRankingPage.resultRankingItem(webContentTitle2);
+		const resultRankingItem3 =
+			await editResultRankingPage.resultRankingItem(webContentTitle3);
+
+		await test.step('View pinned result and pin two other rankings', async () => {
+			await expect(resultRankingItem1).toBeVisible();
+
+			await hoverAndExpectToBeVisible({
+				autoClick: false,
+				target: resultRankingItem1.getByLabel('Unpin Result'),
+				trigger: resultRankingItem1,
+			});
+
+			await hoverAndExpectToBeVisible({
+				autoClick: true,
+				target: resultRankingItem2.getByLabel('Pin Result'),
+				trigger: resultRankingItem2,
+			});
+
+			await hoverAndExpectToBeVisible({
+				autoClick: true,
+				target: resultRankingItem3.getByLabel('Pin Result'),
+				trigger: resultRankingItem3,
+			});
+		});
+
+		await test.step('Reorder ranking and save', async () => {
+			await editResultRankingPage.dragAndDropResultRankingItem({
+				dragTarget: resultRankingItem1,
+				dropTarget: resultRankingItem3,
+			});
+
+			await expect(
+				page
+					.locator('.result-rankings-container .list-group-item')
+					.nth(2)
+					.getByRole('link', {name: webContentTitle1})
+			).toBeVisible();
+
+			await editResultRankingPage.saveButton.click();
+		});
+
+		await test.step('Add search bar and results to a search page', async () => {
+			const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+				groupId: site.id,
+				title: `Page${getRandomInt()}`,
+			});
+
+			await page.goto('/web' + site.friendlyUrlPath + layout.friendlyURL);
+
+			await searchPage.addPortlet('Search Bar', 'Search');
+
+			await searchPage.addPortlet('Search Results', 'Search');
+
+			await searchPage.openSearchPortletConfiguration('Search Bar', 1);
+
+			await searchPage.selectPortletConfigurationsSelect([
+				{
+					label: 'Scope',
+					value: 'Everything',
+				},
+			]);
+
+			await searchPage.savePortletConfiguration();
+		});
+
+		await test.step('Search for the query and assert rankings order', async () => {
+			await searchPage.searchKeywordInMainContent(searchQuery);
+
+			await expect(
+				searchPage.searchResultsItems
+					.nth(0)
+					.getByRole('link', {name: webContentTitle2})
+			).toBeVisible();
+
+			await expect(
+				searchPage.searchResultsItems
+					.nth(1)
+					.getByRole('link', {name: webContentTitle3})
+			).toBeVisible();
+
+			await expect(
+				searchPage.searchResultsItems
+					.nth(2)
+					.getByRole('link', {name: webContentTitle1})
+			).toBeVisible();
+		});
+
+		await test.step('Delete the created result ranking', async () => {
+			await resultRankingsViewPage.goto();
+
+			await resultRankingsViewPage.deleteResultRanking(searchQuery);
+		});
+	});
+});

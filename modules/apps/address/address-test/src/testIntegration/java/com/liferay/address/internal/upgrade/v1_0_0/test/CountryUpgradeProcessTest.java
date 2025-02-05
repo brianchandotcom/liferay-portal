@@ -64,7 +64,19 @@ public class CountryUpgradeProcessTest {
 				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 					_company.getCompanyId())) {
 
+			int countryCount = 0;
+			int countryLocalizationCount = 0;
+			int regionCount = 0;
+			int regionLocalizationCount = 0;
+
 			try (Connection connection = DataAccess.getConnection()) {
+				countryCount = _getCount(connection, "Country");
+				countryLocalizationCount = _getCount(
+					connection, "CountryLocalization");
+				regionCount = _getCount(connection, "Region");
+				regionLocalizationCount = _getCount(
+					connection, "RegionLocalization");
+
 				_deleteByCompanyId(
 					connection, "Country", _company.getCompanyId());
 				_deleteByCompanyId(
@@ -78,12 +90,16 @@ public class CountryUpgradeProcessTest {
 			_runUpgrade();
 
 			try (Connection connection = DataAccess.getConnection()) {
-				Assert.assertNotEquals(0, _getCount(connection, "Country"));
-				Assert.assertNotEquals(
-					0, _getCount(connection, "CountryLocalization"));
-				Assert.assertNotEquals(0, _getCount(connection, "Region"));
-				Assert.assertNotEquals(
-					0, _getCount(connection, "RegionLocalization"));
+				Assert.assertEquals(
+					countryCount, _getCount(connection, "Country"));
+				Assert.assertEquals(
+					countryLocalizationCount,
+					_getCount(connection, "CountryLocalization"));
+				Assert.assertEquals(
+					regionCount, _getCount(connection, "Region"));
+				Assert.assertEquals(
+					regionLocalizationCount,
+					_getCount(connection, "RegionLocalization"));
 			}
 
 			_assertCounter(

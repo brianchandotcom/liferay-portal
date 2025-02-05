@@ -3482,6 +3482,24 @@
 	},
 	{
 		"classNames": [
+			"DDMTemplateLocalService",
+			"DDMTemplateLocalServiceUtil"
+		],
+		"from": "addTemplate(long paramName, long paramName, long paramName, long paramName, long paramName, Map<Locale, String> paramName, Map<Locale, String> paramName, String paramName, String paramName, String paramName, String paramName, ServiceContext paramName)",
+		"issueKey": "LPD-46890",
+		"to": "addTemplate(null, param#0#, param#1#, param#2#, param#3#, param#4#, param#5#, param#6#, param#7#, param#8#, param#9#, param#10#, param#11#)"
+	},
+	{
+		"classNames": [
+			"DDMTemplateService",
+			"DDMTemplateServiceUtil"
+		],
+		"from": "addTemplate(long paramName, long paramName, long paramName, long paramName, Map<Locale, String> paramName, Map<Locale, String> paramName, String paramName, String paramName, String paramName, String paramName, ServiceContext paramName)",
+		"issueKey": "LPD-46890",
+		"to": "addTemplate(null, param#0#, param#1#, param#2#, param#3#, param#4#, param#5#, param#6#, param#7#, param#8#, param#9#, param#10#)"
+	},
+	{
+		"classNames": [
 			"SiteNavigationMenuItemLocalService",
 			"SiteNavigationMenuItemLocalServiceUtil"
 		],

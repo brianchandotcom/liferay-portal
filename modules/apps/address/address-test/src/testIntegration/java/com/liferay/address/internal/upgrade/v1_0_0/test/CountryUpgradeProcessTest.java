@@ -78,29 +78,67 @@ public class CountryUpgradeProcessTest {
 
 		_runUpgrade();
 
-		_assertCount(_company.getCompanyId());
-
-		_verifyCounters(_company.getCompanyId());
-	}
-
-	private void _assertCount(long companyId) throws Exception {
 		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setCompanyIdWithSafeCloseable(companyId)) {
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+					_company.getCompanyId())) {
 
 			try (Connection connection = DataAccess.getConnection()) {
 				Assert.assertNotEquals(
-					0, _getCountByCompanyId(connection, "Country", companyId));
+					0,
+					_getCountByCompanyId(
+						connection, "Country", _company.getCompanyId()));
 				Assert.assertNotEquals(
 					0,
 					_getCountByCompanyId(
-						connection, "CountryLocalization", companyId));
-				Assert.assertNotEquals(
-					0, _getCountByCompanyId(connection, "Region", companyId));
+						connection, "CountryLocalization",
+						_company.getCompanyId()));
 				Assert.assertNotEquals(
 					0,
 					_getCountByCompanyId(
-						connection, "RegionLocalization", companyId));
+						connection, "Region", _company.getCompanyId()));
+				Assert.assertNotEquals(
+					0,
+					_getCountByCompanyId(
+						connection, "RegionLocalization",
+						_company.getCompanyId()));
 			}
+		}
+
+		_assertCounter(
+			_countryLocalService, CountryLocalizationTable.INSTANCE,
+			CountryLocalizationTable.INSTANCE.countryLocalizationId,
+			CountryLocalization.class.getName(), _company.getCompanyId());
+		_assertCounter(
+			_regionLocalService, RegionTable.INSTANCE,
+			RegionTable.INSTANCE.regionId, Region.class.getName(),
+			_company.getCompanyId());
+		_assertCounter(
+			_regionLocalService, RegionLocalizationTable.INSTANCE,
+			RegionLocalizationTable.INSTANCE.regionLocalizationId,
+			RegionLocalization.class.getName(), _company.getCompanyId());
+	}
+
+	private void _assertCounter(
+		PersistedModelLocalService persistedModelLocalService,
+		BaseTable<?> table, Column<?, Long> column, String className,
+		long companyId) {
+
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(companyId)) {
+
+			List<Long> results = persistedModelLocalService.dslQuery(
+				DSLQueryFactoryUtil.select(
+					DSLFunctionFactoryUtil.max(
+						column
+					).as(
+						"MAX_VALUE"
+					)
+				).from(
+					table
+				));
+
+			Assert.assertTrue(
+				results.get(0) <= _counterLocalService.getCurrentId(className));
 		}
 	}
 
@@ -139,44 +177,6 @@ public class CountryUpgradeProcessTest {
 			_upgradeStepRegistrator, _CLASS_NAME);
 
 		upgradeProcess.upgrade();
-	}
-
-	private void _verifyCounter(
-		PersistedModelLocalService persistedModelLocalService,
-		BaseTable<?> table, Column<?, Long> column, String className,
-		long companyId) {
-
-		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setCompanyIdWithSafeCloseable(companyId)) {
-
-			List<Long> results = persistedModelLocalService.dslQuery(
-				DSLQueryFactoryUtil.select(
-					DSLFunctionFactoryUtil.max(
-						column
-					).as(
-						"MAX_VALUE"
-					)
-				).from(
-					table
-				));
-
-			Assert.assertTrue(
-				results.get(0) <= _counterLocalService.getCurrentId(className));
-		}
-	}
-
-	private void _verifyCounters(long companyId) {
-		_verifyCounter(
-			_countryLocalService, CountryLocalizationTable.INSTANCE,
-			CountryLocalizationTable.INSTANCE.countryLocalizationId,
-			CountryLocalization.class.getName(), companyId);
-		_verifyCounter(
-			_regionLocalService, RegionTable.INSTANCE,
-			RegionTable.INSTANCE.regionId, Region.class.getName(), companyId);
-		_verifyCounter(
-			_regionLocalService, RegionLocalizationTable.INSTANCE,
-			RegionLocalizationTable.INSTANCE.regionLocalizationId,
-			RegionLocalization.class.getName(), companyId);
 	}
 
 	private static final String _CLASS_NAME =

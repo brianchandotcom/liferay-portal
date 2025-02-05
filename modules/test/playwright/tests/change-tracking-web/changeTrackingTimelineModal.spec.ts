@@ -10,9 +10,8 @@ import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {changeTrackingPagesTest} from '../../fixtures/changeTrackingPagesTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
-import {getRandomInt} from '../../utils/getRandomInt';
 import getRandomString from '../../utils/getRandomString';
-import {waitForAlert} from '../../utils/waitForAlert';
+import getBasicWebContentStructureId from '../../utils/structured-content/getBasicWebContentStructureId';
 import {journalPagesTest} from '../journal-web/fixtures/journalPagesTest';
 import {JournalPage} from '../journal-web/pages/JournalPage';
 
@@ -27,40 +26,36 @@ export const test = mergeTests(
 
 const publicationCount = 6;
 let ctCollections = [];
-let articleTitle: string;
 let date;
 
-test.beforeEach(
-	async ({apiHelpers, changeTrackingPage, journalEditArticlePage, page}) => {
-		const ctCollectionNamePrefix = getRandomString();
-		ctCollections = [];
+test.beforeEach(async ({apiHelpers, changeTrackingPage}) => {
+	const ctCollectionNamePrefix = getRandomString();
+	ctCollections = [];
 
-		for (let i = 0; i <= publicationCount; i++) {
-			const ctCollectionName = ctCollectionNamePrefix + ' ' + i;
+	const site =
+		await apiHelpers.headlessAdminUser.getSiteByFriendlyUrlPath('guest');
+	const contentStructureId = await getBasicWebContentStructureId(apiHelpers);
 
-			const newCTCollection =
-				await apiHelpers.headlessChangeTracking.createCTCollection(
-					ctCollectionName
-				);
+	for (let i = 0; i <= publicationCount; i++) {
+		const ctCollectionName = ctCollectionNamePrefix + ' ' + i;
 
-			ctCollections.push(newCTCollection);
+		const newCTCollection =
+			await apiHelpers.headlessChangeTracking.createCTCollection(
+				ctCollectionName
+			);
 
-			await changeTrackingPage.workOnPublication(newCTCollection);
+		ctCollections.push(newCTCollection);
 
-			if (i !== publicationCount) {
-				articleTitle = 'Test ' + getRandomInt() + ' WC Article';
-				await journalEditArticlePage.goto();
-				await page.locator('div[data-qa-id="content"]').waitFor();
-				await journalEditArticlePage.fillTitle(articleTitle);
-				await journalEditArticlePage.publishArticle();
-				await waitForAlert(
-					page,
-					`Success:${articleTitle} was created successfully.`
-				);
-			}
+		await changeTrackingPage.workOnPublication(newCTCollection);
+
+		if (i !== publicationCount) {
+			await apiHelpers.jsonWebServicesJournal.addWebContent({
+				ddmStructureId: contentStructureId,
+				groupId: site.id,
+			});
 		}
 	}
-);
+});
 
 test.afterEach(async ({apiHelpers}) => {
 	for (let i = 0; i < ctCollections.length; i++) {

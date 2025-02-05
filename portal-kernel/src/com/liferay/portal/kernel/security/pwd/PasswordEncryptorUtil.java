@@ -82,7 +82,8 @@ public class PasswordEncryptorUtil {
 	}
 
 	public static String getEncryptedPasswordAlgorithmSettings(
-		String encryptedPassword) {
+			String encryptedPassword)
+		throws PwdEncryptorException {
 
 		PasswordEncryptor passwordEncryptor = _getPasswordEncryptor(
 			_getEncryptedPasswordAlgorithm(encryptedPassword));

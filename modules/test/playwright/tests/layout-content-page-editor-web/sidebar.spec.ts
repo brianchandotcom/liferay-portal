@@ -4,6 +4,8 @@
  */
 
 import {expect, mergeTests} from '@playwright/test';
+import {createReadStream} from 'fs';
+import path from 'path';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
@@ -2361,5 +2363,76 @@ test(
 		style = await getStyle();
 
 		expect(style).toBe('--sidebar-content-width: 280px;');
+	}
+);
+
+test(
+	'Check that structure tree does not render multiple times on hover or click',
+	{tag: ['@LPD-47993']},
+	async ({apiHelpers, page, pageEditorPage, site}) => {
+
+		// Add basic image document
+
+		const document = await apiHelpers.headlessDelivery.postDocument(
+			site.id,
+			createReadStream(
+				path.join(__dirname, '/dependencies/file_upload_image_1.jpg')
+			)
+		);
+
+		// Create a page with a image fragment
+
+		const imageId = getRandomString();
+
+		const imageFragment = getFragmentDefinition({
+			id: imageId,
+			key: 'BASIC_COMPONENT-image',
+		});
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([imageFragment]),
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		// Set up the image document
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		await pageEditorPage.selectDirectImage(document.title, imageId);
+
+		// Go to Browser tab
+
+		await pageEditorPage.goToSidebarTab('Browser');
+
+		// Start to check the requests
+
+		let requestWasMade = false;
+
+		page.on('request', (request) => {
+			if (request.url().includes(document.fileName)) {
+				requestWasMade = true;
+			}
+		});
+
+		// Hover and select the image fragment in structure tree
+
+		const selectImage = page.getByLabel('Select Image');
+
+		await selectImage.hover();
+
+		await selectImage.click();
+
+		// Hover and select the image fragment in layout
+
+		const fragment = pageEditorPage.getFragment(imageId, true);
+
+		await fragment.hover();
+
+		await fragment.click();
+
+		// Check if request was made
+
+		expect(requestWasMade).toBeFalsy();
 	}
 );

@@ -1,5 +1,5 @@
 <div class="forms-checkbox">
-	<div class="custom-checkbox custom-control d-flex align-items-center [#if input.errorMessage?has_content]has-error[/#if]">
+	<div class="align-items-center custom-checkbox custom-control d-flex [#if input.errorMessage?has_content]has-error[/#if]">
 		<input aria-describedby="${fragmentEntryLinkNamespace}-checkbox-help-text" aria-labelledby="${fragmentEntryLinkNamespace}-checkbox-label [#if input.errorMessage?has_content]${fragmentEntryLinkNamespace}-checkbox-error-message[/#if]" class="custom-control-input" id="${fragmentEntryLinkNamespace}-checkbox" name="${input.name}" [#if input.readOnly]readonly[/#if] ${input.required?then('required', '')} type="checkbox" [#if input.value?? && input.value == 'true']checked[/#if] />
 
 		<label class="custom-control-label" for="${fragmentEntryLinkNamespace}-checkbox" id="${fragmentEntryLinkNamespace}-checkbox-label">

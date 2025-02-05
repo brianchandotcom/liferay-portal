@@ -160,9 +160,8 @@ public class TestrayImporter {
 				_getJenkinsBuildDescriptionElement(
 					testrayBuildTitle, testrayBuild.getName(),
 					String.valueOf(testrayBuild.getURL())),
-				_getJenkinsBuildDescriptionElement(
-					"Testray Build ID",
-					"`" + String.valueOf(testrayBuild.getID()) + "`"));
+				_getJenkinsBuildIDElement(
+					"Testray Build ID", String.valueOf(testrayBuild.getID())));
 
 			i++;
 		}
@@ -1622,6 +1621,31 @@ public class TestrayImporter {
 
 		return element;
 	}
+
+	private Element _getJenkinsBuildIDElement(
+		String title, String name) {
+
+		Document document = DocumentHelper.createDocument();
+
+		Element element = document.addElement("code");
+
+		Element titleElement = element.addElement("strong");
+
+		titleElement.addText(title + ":");
+
+		Element spaceElement = element.addElement("span");
+
+		spaceElement.addText(" ");
+
+		Element codeElement = element.addElement("code");
+
+		codeElement.addText(name);
+
+		element.addElement("br");
+
+		return element;
+	}
+
 
 	private GitWorkingDirectory _getJenkinsGitWorkingDirectory() {
 		Properties buildProperties;

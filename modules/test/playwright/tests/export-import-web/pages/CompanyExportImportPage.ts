@@ -23,6 +23,7 @@ export class CompanyExportImportPage {
 
 	async export(
 		itemLabel: string,
+		defaultTaskName?: boolean,
 		includePermissions: boolean = false
 	): Promise<string> {
 		await this.applicationsMenuPage.goToExport();
@@ -31,9 +32,14 @@ export class CompanyExportImportPage {
 
 		await this.page.getByLabel(itemLabel).click();
 
-		const exportName = 'MyExport-' + getRandomString();
+		let exportName = 'MyExport-' + getRandomString();
 
-		await this.exportImportPage.title.fill(exportName);
+		if (defaultTaskName) {
+			exportName = 'Export';
+		}
+		else {
+			await this.exportImportPage.title.fill(exportName);
+		}
 
 		if (includePermissions) {
 			await this.exportImportPage.exportPermissionsButton.click();
@@ -46,6 +52,10 @@ export class CompanyExportImportPage {
 			.locator('../../..')
 			.getByText('Successful')
 			.waitFor();
+
+		if (defaultTaskName) {
+			exportName += '-';
+		}
 
 		return await this.exportImportPage.downloadExportProcess(exportName);
 	}

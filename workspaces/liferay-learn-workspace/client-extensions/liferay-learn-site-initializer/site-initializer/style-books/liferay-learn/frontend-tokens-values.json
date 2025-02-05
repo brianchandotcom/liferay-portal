@@ -1,7 +1,7 @@
 {
 	"borderRadiusLg": {
 		"cssVariableMapping": "border-radius-lg",
-		"value": "1rem"
+		"value": "0.75rem"
 	},
 	"colorAccent1": {
 		"cssVariableMapping": "color-accent-1",

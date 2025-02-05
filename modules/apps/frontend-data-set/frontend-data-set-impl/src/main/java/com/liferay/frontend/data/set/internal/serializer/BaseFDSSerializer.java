@@ -31,7 +31,6 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.function.Predicate;
@@ -44,18 +43,6 @@ import org.osgi.service.component.annotations.Reference;
  * @author Daniel Sanz
  */
 public abstract class BaseFDSSerializer {
-
-	public Set<ObjectEntry> getCreationMenuObjectEntries(
-		String externalReferenceCode, HttpServletRequest httpServletRequest) {
-
-		return _getSortedRelatedObjectEntries(
-			getDataSetObjectDefinition(httpServletRequest),
-			getDataSetObjectEntry(externalReferenceCode, httpServletRequest),
-			"creationActionsOrder",
-			(ObjectEntry objectEntry) -> Objects.equals(
-				_getType(objectEntry), "creation"),
-			"dataSetToDataSetActions");
-	}
 
 	public ObjectDefinition getDataSetObjectDefinition(
 		HttpServletRequest httpServletRequest) {
@@ -85,26 +72,42 @@ public abstract class BaseFDSSerializer {
 		return Collections.emptyMap();
 	}
 
-	public Set<ObjectEntry> getDataSetTableSectionObjectEntries(
-		String externalReferenceCode, HttpServletRequest httpServletRequest) {
+	public Set<ObjectEntry> getSortedRelatedObjectEntries(
+		String externalReferenceCode,
+		String dataSetObjectEntryComparatorIdsPropertyKey,
+		HttpServletRequest httpServletRequest, Predicate<ObjectEntry> predicate,
+		String... relationshipNames) {
 
-		return _getSortedRelatedObjectEntries(
-			getDataSetObjectDefinition(httpServletRequest),
-			getDataSetObjectEntry(externalReferenceCode, httpServletRequest),
-			"tableSectionsOrder", (Predicate)null,
-			"dataSetToDataSetTableSections");
+		ObjectDefinition dataSetObjectDefinition = getDataSetObjectDefinition(
+			httpServletRequest);
+
+		ObjectEntry dataSetObjectEntry = getDataSetObjectEntry(
+			externalReferenceCode, httpServletRequest);
+
+		Set<ObjectEntry> objectEntries = new TreeSet<>(
+			new ObjectEntryComparator(
+				ListUtil.toList(
+					ListUtil.fromString(
+						MapUtil.getString(
+							dataSetObjectEntry.getProperties(),
+							dataSetObjectEntryComparatorIdsPropertyKey),
+						StringPool.COMMA),
+					GetterUtil::getLong)));
+
+		for (String relationshipName : relationshipNames) {
+			objectEntries.addAll(
+				_getRelatedObjectEntries(
+					dataSetObjectDefinition, dataSetObjectEntry, predicate,
+					relationshipName));
+		}
+
+		return objectEntries;
 	}
 
-	public Set<ObjectEntry> getItemsActionsObjectEntries(
-		String externalReferenceCode, HttpServletRequest httpServletRequest) {
+	protected String getType(ObjectEntry objectEntry) {
+		Map<String, Object> properties = objectEntry.getProperties();
 
-		return _getSortedRelatedObjectEntries(
-			getDataSetObjectDefinition(httpServletRequest),
-			getDataSetObjectEntry(externalReferenceCode, httpServletRequest),
-			"itemActionsOrder",
-			(ObjectEntry objectEntry) -> Objects.equals(
-				_getType(objectEntry), "item"),
-			"dataSetToDataSetActions");
+		return GetterUtil.getString(properties.get("type"));
 	}
 
 	@Reference
@@ -190,38 +193,6 @@ public abstract class BaseFDSSerializer {
 		}
 
 		return objectEntries;
-	}
-
-	private Set<ObjectEntry> _getSortedRelatedObjectEntries(
-		ObjectDefinition dataSetObjectDefinition,
-		ObjectEntry dataSetObjectEntry,
-		String dataSetObjectEntryComparatorIdsPropertyKey,
-		Predicate<ObjectEntry> predicate, String... relationshipNames) {
-
-		Set<ObjectEntry> objectEntries = new TreeSet<>(
-			new ObjectEntryComparator(
-				ListUtil.toList(
-					ListUtil.fromString(
-						MapUtil.getString(
-							dataSetObjectEntry.getProperties(),
-							dataSetObjectEntryComparatorIdsPropertyKey),
-						StringPool.COMMA),
-					GetterUtil::getLong)));
-
-		for (String relationshipName : relationshipNames) {
-			objectEntries.addAll(
-				_getRelatedObjectEntries(
-					dataSetObjectDefinition, dataSetObjectEntry, predicate,
-					relationshipName));
-		}
-
-		return objectEntries;
-	}
-
-	private String _getType(ObjectEntry objectEntry) {
-		Map<String, Object> properties = objectEntry.getProperties();
-
-		return GetterUtil.getString(properties.get("type"));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -1090,7 +1090,8 @@ public class CTSQLTransformerTest {
 		long originalUserId = PrincipalThreadLocal.getUserId();
 
 		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setCompanyIdWithSafeCloseable(companyId);
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+					companyId, ctCollectionId);
 			Connection connection = DataAccess.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				_getSQL(inputSQLFile, expectedOutputSQLFile, ctCollectionId))) {
@@ -1149,7 +1150,8 @@ public class CTSQLTransformerTest {
 		long originalUserId = PrincipalThreadLocal.getUserId();
 
 		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setCompanyIdWithSafeCloseable(companyId);
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+					companyId, ctCollectionId);
 			Connection connection = DataAccess.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(
 				_getSQL(inputSQLFile, expectedOutputSQLFile, ctCollectionId))) {

@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -185,6 +186,23 @@ public class ObjectEntryFolderLocalServiceImpl
 
 		return objectEntryFolderLocalService.deleteObjectEntryFolder(
 			objectEntryFolder);
+	}
+
+	@Override
+	public List<ObjectEntryFolder> getObjectEntryFolders(
+		long groupId, long companyId, long parentObjectEntryFolderId, int start,
+		int end) {
+
+		return objectEntryFolderPersistence.findByG_C_P(
+			groupId, companyId, parentObjectEntryFolderId, start, end);
+	}
+
+	@Override
+	public int getObjectEntryFoldersCount(
+		long groupId, long companyId, long parentObjectEntryFolderId) {
+
+		return objectEntryFolderPersistence.countByG_C_P(
+			groupId, companyId, parentObjectEntryFolderId);
 	}
 
 	@Override

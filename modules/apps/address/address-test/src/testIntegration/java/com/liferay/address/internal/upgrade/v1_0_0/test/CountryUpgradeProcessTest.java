@@ -74,13 +74,8 @@ public class CountryUpgradeProcessTest {
 				_deleteByCompanyId(
 					connection, "RegionLocalization", _company.getCompanyId());
 			}
-		}
 
-		_runUpgrade();
-
-		try (SafeCloseable safeCloseable =
-				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
-					_company.getCompanyId())) {
+			_runUpgrade();
 
 			try (Connection connection = DataAccess.getConnection()) {
 				Assert.assertNotEquals(0, _getCount(connection, "Country"));

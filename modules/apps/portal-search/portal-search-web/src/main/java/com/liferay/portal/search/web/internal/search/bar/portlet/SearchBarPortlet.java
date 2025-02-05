@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.capabilities.SearchCapabilities;
@@ -74,7 +75,8 @@ public class SearchBarPortlet extends MVCPortlet {
 		try {
 			searchBarPortletDisplayContextFactory =
 				new SearchBarPortletDisplayContextFactory(
-					layoutLocalService, portal, renderRequest);
+					layoutLocalService, portal, renderRequest,
+					userLocalService);
 
 			SearchBarPortletDisplayContext searchBarPortletDisplayContext =
 				searchBarPortletDisplayContextFactory.create(
@@ -128,6 +130,9 @@ public class SearchBarPortlet extends MVCPortlet {
 
 	@Reference
 	protected SearchCapabilities searchCapabilities;
+
+	@Reference
+	protected UserLocalService userLocalService;
 
 	private static final String _ALIAS = "search-bar";
 

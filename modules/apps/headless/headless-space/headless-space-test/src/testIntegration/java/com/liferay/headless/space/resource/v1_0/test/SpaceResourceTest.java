@@ -66,13 +66,9 @@ public class SpaceResourceTest extends BaseSpaceResourceTestCase {
 
 	@Override
 	@Test
-	public void testPatchSpace() throws Exception {
-		super.testPatchSpace();
-	}
-
-	@Override
-	@Test
 	public void testPostSpaceLinkToSite() throws Exception {
+		super.testPostSpaceLinkToSite();
+
 		Space space = testPostSpaceLinkToSite_addSpace(randomSpace());
 
 		_assertLinkedSites(space);

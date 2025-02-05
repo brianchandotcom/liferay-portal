@@ -11,6 +11,7 @@ import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.web.internal.security.permission.resource.FragmentPermission;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -47,6 +48,27 @@ public class FragmentDisplayContextTest {
 
 	@FeatureFlags("LPD-34938")
 	@Test
+	public void testGetAvailableActionsForMarketplaceFragmentCompositionWithoutPermissions() {
+		_setUpFragmentPermission(false);
+
+		FragmentDisplayContext fragmentDisplayContext =
+			new FragmentDisplayContext(
+				_httpServletRequest, _renderRequest, _renderResponse);
+
+		Mockito.when(
+			_fragmentComposition.isMarketplace()
+		).thenReturn(
+			true
+		);
+
+		Assert.assertTrue(
+			Validator.isNull(
+				fragmentDisplayContext.getAvailableActions(
+					_fragmentComposition)));
+	}
+
+	@FeatureFlags("LPD-34938")
+	@Test
 	public void testGetAvailableActionsForMarketplaceFragmentCompositionWithPermissions() {
 		_setUpFragmentPermission(true);
 
@@ -74,6 +96,26 @@ public class FragmentDisplayContextTest {
 		Assert.assertTrue(
 			availableActions.contains(
 				"moveFragmentCompositionsAndFragmentEntries"));
+	}
+
+	@FeatureFlags("LPD-34938")
+	@Test
+	public void testGetAvailableActionsForMarketplaceFragmentEntryWithoutPermissions() {
+		_setUpFragmentPermission(false);
+
+		FragmentDisplayContext fragmentDisplayContext =
+			new FragmentDisplayContext(
+				_httpServletRequest, _renderRequest, _renderResponse);
+
+		Mockito.when(
+			_fragmentEntry.isMarketplace()
+		).thenReturn(
+			true
+		);
+
+		Assert.assertTrue(
+			Validator.isNull(
+				fragmentDisplayContext.getAvailableActions(_fragmentEntry)));
 	}
 
 	@FeatureFlags("LPD-34938")

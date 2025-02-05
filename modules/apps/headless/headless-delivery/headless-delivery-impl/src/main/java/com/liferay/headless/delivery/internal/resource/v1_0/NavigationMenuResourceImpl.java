@@ -779,13 +779,13 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 
 	private void _updateNavigationMenuItems(
 			NavigationMenuItem[] navigationMenuItems,
-			long parentSiteNavigationMenuId, Long siteId,
+			long parentSiteNavigationMenuItemId, Long siteId,
 			long siteNavigationMenuId)
 		throws Exception {
 
 		List<SiteNavigationMenuItem> siteNavigationMenuItems = new ArrayList<>(
 			_siteNavigationMenuItemService.getSiteNavigationMenuItems(
-				siteNavigationMenuId, parentSiteNavigationMenuId));
+				siteNavigationMenuId, parentSiteNavigationMenuItemId));
 
 		if (navigationMenuItems != null) {
 			for (NavigationMenuItem navigationMenuItem : navigationMenuItems) {
@@ -836,8 +836,8 @@ public class NavigationMenuResourceImpl extends BaseNavigationMenuResourceImpl {
 				}
 				else {
 					_createNavigationMenuItem(
-						navigationMenuItem, parentSiteNavigationMenuId, siteId,
-						siteNavigationMenuId);
+						navigationMenuItem, parentSiteNavigationMenuItemId,
+						siteId, siteNavigationMenuId);
 				}
 			}
 		}

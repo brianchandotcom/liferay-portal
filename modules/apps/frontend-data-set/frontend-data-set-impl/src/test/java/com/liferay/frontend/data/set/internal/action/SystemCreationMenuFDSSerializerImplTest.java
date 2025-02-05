@@ -33,7 +33,7 @@ import org.osgi.framework.ServiceRegistration;
 /**
  * @author Daniel Sanz
  */
-public class CreationMenuSystemFDSSerializerImplTest
+public class SystemCreationMenuFDSSerializerImplTest
 	extends BaseSystemFDSSerializerTestCase {
 
 	@ClassRule
@@ -178,6 +178,6 @@ public class CreationMenuSystemFDSSerializerImplTest
 	private static final FDSCreationMenuRegistryImpl
 		_fdsCreationMenuRegistryImpl = new FDSCreationMenuRegistryImpl();
 	private static final FDSSerializer<CreationMenu> _fdsSerializer =
-		new CreationMenuSystemFDSSerializerImpl();
+		new SystemCreationMenuFDSSerializerImpl();
 
 }

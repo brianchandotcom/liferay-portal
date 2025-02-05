@@ -5,17 +5,17 @@
 
 package com.liferay.frontend.data.set.internal.action;
 
-import com.liferay.frontend.data.set.action.CreationMenuFDSSerializer;
-import com.liferay.frontend.data.set.internal.serializer.BaseFDSSerializer;
 import com.liferay.frontend.data.set.serializer.FDSSerializer;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemBuilder;
+import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -29,8 +29,8 @@ import org.osgi.service.component.annotations.Component;
 	property = "frontend.data.set.serializer.type=" + FDSSerializer.TYPE_CUSTOM,
 	service = FDSSerializer.class
 )
-public class CreationMenuFDSSerializerImpl
-	extends BaseFDSSerializer implements CreationMenuFDSSerializer {
+public class CustomCreationMenuFDSSerializerImpl
+	extends BaseCreationMenuFDSSerializer {
 
 	@Override
 	public CreationMenu serialize(
@@ -51,7 +51,11 @@ public class CreationMenuFDSSerializerImpl
 		String fdsName, HttpServletRequest httpServletRequest) {
 
 		return TransformUtil.transform(
-			getCreationMenuObjectEntries(fdsName, httpServletRequest),
+			getSortedRelatedObjectEntries(
+				fdsName, "creationActionsOrder", httpServletRequest,
+				(ObjectEntry objectEntry) -> Objects.equals(
+					getType(objectEntry), "creation"),
+				"dataSetToDataSetActions"),
 			objectEntry -> {
 				Map<String, Object> properties = objectEntry.getProperties();
 

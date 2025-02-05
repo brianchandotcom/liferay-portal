@@ -56,6 +56,7 @@ import {config as frontendDataSetAdminWebConfig} from './tests/frontend-data-set
 import {config as frontendDataSetWebConfig} from './tests/frontend-data-set-web/config';
 import {config as frontendEditorCKEditorWebConfig} from './tests/frontend-editor-ckeditor-web/config';
 import {config as frontendJsSpaWebConfig} from './tests/frontend-js-spa-web/config';
+import {config as frontendJsWebConfig} from './tests/frontend-js-web/config';
 import {config as frontendTaglibClayConfig} from './tests/frontend-taglib-clay/config';
 import {config as frontendTaglibConfig} from './tests/frontend-taglib/config';
 import {config as frontendTheme} from './tests/frontend-theme/config';
@@ -183,6 +184,7 @@ export default defineConfig({
 		frontendDataSetWebConfig,
 		frontendEditorCKEditorWebConfig,
 		frontendJsSpaWebConfig,
+		frontendJsWebConfig,
 		frontendTaglibClayConfig,
 		frontendTaglibConfig,
 		frontendTheme,

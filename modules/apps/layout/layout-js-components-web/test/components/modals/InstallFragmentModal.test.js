@@ -4,7 +4,7 @@
  */
 
 import '@testing-library/jest-dom/extend-expect';
-import {act, render, screen} from '@testing-library/react';
+import {render, screen, waitFor} from '@testing-library/react';
 import React from 'react';
 
 import InstallFragmentModal from '../../../src/main/resources/META-INF/resources/js/components/modals/InstallFragmentModal';
@@ -13,23 +13,29 @@ const renderComponent = ({name} = {}) =>
 	render(<InstallFragmentModal name={name} />);
 
 describe('InstallFragmentModal', () => {
-	beforeAll(() => {
-		jest.useFakeTimers();
-	});
-
-	it('renders correctly', () => {
+	it('renders correctly', async () => {
 		renderComponent();
 
-		act(() => {
-			jest.runAllTimers();
+		await waitFor(() => {
+			expect(
+				document.querySelectorAll('.loading-animation-squares').length
+			).toBe(1);
+
+			expect(
+				screen.getByText(
+					'the-installation-process-is-ongoing-and-may-take-some-time',
+					{exact: false}
+				)
+			).toBeInTheDocument();
+
+			expect(
+				screen.getByText(
+					'closing-the-window-will-not-cancel-the-process',
+					{
+						exact: false,
+					}
+				)
+			).toBeInTheDocument();
 		});
-
-		expect(screen.getByText('installing-x')).toBeInTheDocument();
-
-		expect(
-			screen.getByText(
-				'the-installation-process-is-ongoing-and-may-take-a-few-minutes'
-			)
-		).toBeInTheDocument();
 	});
 });

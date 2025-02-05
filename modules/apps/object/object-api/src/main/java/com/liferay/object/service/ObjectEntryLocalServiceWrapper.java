@@ -315,6 +315,16 @@ public class ObjectEntryLocalServiceWrapper
 
 	@Override
 	public com.liferay.object.model.ObjectEntry fetchObjectEntry(
+		long groupId,
+		com.liferay.object.model.ObjectDefinition objectDefinition,
+		String urlTitle) {
+
+		return _objectEntryLocalService.fetchObjectEntry(
+			groupId, objectDefinition, urlTitle);
+	}
+
+	@Override
+	public com.liferay.object.model.ObjectEntry fetchObjectEntry(
 		String externalReferenceCode, long objectDefinitionId) {
 
 		return _objectEntryLocalService.fetchObjectEntry(

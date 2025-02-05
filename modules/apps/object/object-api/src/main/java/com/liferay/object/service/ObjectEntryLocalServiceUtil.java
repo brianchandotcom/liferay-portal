@@ -279,6 +279,15 @@ public class ObjectEntryLocalServiceUtil {
 	}
 
 	public static ObjectEntry fetchObjectEntry(
+		long groupId,
+		com.liferay.object.model.ObjectDefinition objectDefinition,
+		String urlTitle) {
+
+		return getService().fetchObjectEntry(
+			groupId, objectDefinition, urlTitle);
+	}
+
+	public static ObjectEntry fetchObjectEntry(
 		String externalReferenceCode, long objectDefinitionId) {
 
 		return getService().fetchObjectEntry(

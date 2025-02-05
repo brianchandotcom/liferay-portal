@@ -101,7 +101,6 @@
 						"type": "string"
 					}
 				},
-				"readOnly": true,
 				"type": "object",
 				"xml": {
 					"name": "Link"
@@ -401,6 +400,7 @@
 						"name": "type",
 						"required": true,
 						"schema": {
+							"pattern": "json|yaml",
 							"type": "string"
 						}
 					}

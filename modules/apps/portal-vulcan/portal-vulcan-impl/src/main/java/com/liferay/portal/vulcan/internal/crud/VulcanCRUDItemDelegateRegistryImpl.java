@@ -11,7 +11,6 @@ import com.liferay.portal.vulcan.crud.VulcanCRUDItemDelegate;
 import com.liferay.portal.vulcan.crud.VulcanCRUDItemDelegateRegistry;
 
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -32,9 +31,7 @@ public class VulcanCRUDItemDelegateRegistryImpl
 	}
 
 	@Activate
-	protected void activate(BundleContext bundleContext)
-		throws InvalidSyntaxException {
-
+	protected void activate(BundleContext bundleContext) {
 		_scopedServiceTrackerMap = ScopedServiceTrackerMapFactory.create(
 			bundleContext, null, "entity.class.name",
 			"(crud.item.delegate=true)", () -> null);

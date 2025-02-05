@@ -62,6 +62,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
@@ -220,35 +221,45 @@ public class ObjectEntryInfoItemValuesProviderUtil {
 			return;
 		}
 
-		Object infoFieldValue = StringPool.BLANK;
+		Object infoFieldValue = null;
 
-		if (Objects.equals(
-				ObjectFieldInfoFieldTypeUtil.getInfoFieldType(objectField),
-				ImageInfoFieldType.INSTANCE)) {
+		Locale locale = LocaleUtil.getSiteDefault();
 
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-				new String((byte[])value));
-
-			WebImage webImage = new WebImage(jsonObject.getString("url"));
-
-			webImage.setAlt(jsonObject.getString("alt"));
-
-			infoFieldValue = webImage;
+		if (themeDisplay != null) {
+			locale = themeDisplay.getLocale();
 		}
-		else if (objectField.compareBusinessType(
-					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
 
-			Long fileEntryId;
+		if (objectField.isLocalized()) {
+			if (value instanceof Map) {
+				Map<String, Object> map = (Map<String, Object>)value;
 
-			if (value instanceof Long) {
-				fileEntryId = (Long)value;
+				infoFieldValue = InfoLocalizedValue.function(
+					currentLocale -> _parseValue(
+						listTypeEntryLocalService, currentLocale, objectField,
+						objectEntryLocalService, objectRelationshipLocalService,
+						map.get(LanguageUtil.getLanguageId(currentLocale))));
 			}
-			else {
-				com.liferay.object.rest.dto.v1_0.FileEntry dtoFileEntry =
-					(com.liferay.object.rest.dto.v1_0.FileEntry)value;
+		}
+		else {
+			infoFieldValue = _parseValue(
+				listTypeEntryLocalService, locale, objectField,
+				objectEntryLocalService, objectRelationshipLocalService, value);
+		}
 
-				fileEntryId = dtoFileEntry.getId();
-			}
+		if (infoFieldValue == null) {
+			infoFieldValues.add(
+				new InfoFieldValue<>(
+					objectFieldInfoFieldConverter.getInfoField(
+						false, objectFieldNamespace, objectField),
+					StringPool.BLANK));
+
+			return;
+		}
+
+		if (objectField.compareBusinessType(
+				ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
+
+			Long fileEntryId = (Long)infoFieldValue;
 
 			try {
 				FileEntry fileEntry = dlAppLocalService.getFileEntry(
@@ -337,94 +348,6 @@ public class ObjectEntryInfoItemValuesProviderUtil {
 				}
 			}
 		}
-		else if (objectField.compareBusinessType(
-					ObjectFieldConstants.BUSINESS_TYPE_DATE) &&
-				 (themeDisplay != null)) {
-
-			infoFieldValue = DateUtil.parseDate(
-				"yyyy-MM-dd", value.toString(), themeDisplay.getLocale());
-		}
-		else if (objectField.compareBusinessType(
-					ObjectFieldConstants.BUSINESS_TYPE_DATE_TIME)) {
-
-			infoFieldValue = LocalDateTime.parse(
-				value.toString(),
-				DateTimeFormatter.ofPattern(
-					ObjectFieldUtil.getDateTimePattern(value.toString())));
-		}
-		else if (objectField.compareBusinessType(
-					ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST)) {
-
-			List<KeyLocalizedLabelPair> keyLocalizedLabelPairs =
-				new ArrayList<>();
-
-			List<Object> objects = new ArrayList<>();
-
-			if (value instanceof String) {
-				objects = ListUtil.fromArray(
-					StringUtil.split(
-						(String)value, StringPool.COMMA_AND_SPACE));
-			}
-			else {
-				objects = (List<Object>)value;
-			}
-
-			for (Object object : objects) {
-				KeyLocalizedLabelPair keyLocalizedLabelPair =
-					_getKeyLocalizedLabelPair(
-						listTypeEntryLocalService, object, objectField);
-
-				if (keyLocalizedLabelPair != null) {
-					keyLocalizedLabelPairs.add(keyLocalizedLabelPair);
-				}
-			}
-
-			if (ListUtil.isNotEmpty(keyLocalizedLabelPairs)) {
-				infoFieldValue = keyLocalizedLabelPairs;
-			}
-		}
-		else if (objectField.compareBusinessType(
-					ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
-
-			KeyLocalizedLabelPair keyLocalizedLabelPair =
-				_getKeyLocalizedLabelPair(
-					listTypeEntryLocalService, value, objectField);
-
-			if (keyLocalizedLabelPair != null) {
-				infoFieldValue = ListUtil.fromArray(keyLocalizedLabelPair);
-			}
-		}
-		else if (objectField.compareBusinessType(
-					ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP)) {
-
-			ObjectRelationship objectRelationship =
-				objectRelationshipLocalService.
-					fetchObjectRelationshipByObjectFieldId2(
-						objectField.getObjectFieldId());
-
-			try {
-				infoFieldValue = new KeyValuePair(
-					String.valueOf(value),
-					objectEntryLocalService.getTitleValue(
-						objectRelationship.getObjectDefinitionId1(),
-						GetterUtil.getLong(value)));
-			}
-			catch (Exception exception) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(exception);
-				}
-			}
-		}
-		else {
-			infoFieldValue = value;
-		}
-
-		if (value instanceof Map) {
-			Map<String, String> map = (Map<String, String>)value;
-
-			infoFieldValue = InfoLocalizedValue.function(
-				locale -> map.get(LanguageUtil.getLanguageId(locale)));
-		}
 
 		infoFieldValues.add(
 			new InfoFieldValue<>(
@@ -464,6 +387,143 @@ public class ObjectEntryInfoItemValuesProviderUtil {
 			).values(
 				listTypeEntry.getNameMap()
 			).build());
+	}
+
+	private static Object _parseValue(
+		ListTypeEntryLocalService listTypeEntryLocalService, Locale locale,
+		ObjectField objectField,
+		ObjectEntryLocalService objectEntryLocalService,
+		ObjectRelationshipLocalService objectRelationshipLocalService,
+		Object value) {
+
+		if (value == null) {
+			return null;
+		}
+
+		if (Objects.equals(
+				ObjectFieldInfoFieldTypeUtil.getInfoFieldType(objectField),
+				ImageInfoFieldType.INSTANCE)) {
+
+			try {
+				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
+					new String((byte[])value));
+
+				WebImage webImage = new WebImage(jsonObject.getString("url"));
+
+				webImage.setAlt(jsonObject.getString("alt"));
+
+				return webImage;
+			}
+			catch (Exception exception) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(exception);
+
+					return null;
+				}
+			}
+		}
+		else if (objectField.compareBusinessType(
+					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT)) {
+
+			if (value instanceof Long) {
+				return value;
+			}
+
+			com.liferay.object.rest.dto.v1_0.FileEntry dtoFileEntry =
+				(com.liferay.object.rest.dto.v1_0.FileEntry)value;
+
+			return dtoFileEntry.getId();
+		}
+		else if (objectField.compareBusinessType(
+					ObjectFieldConstants.BUSINESS_TYPE_DATE)) {
+
+			try {
+				return DateUtil.parseDate(
+					"yyyy-MM-dd", value.toString(), locale);
+			}
+			catch (Exception exception) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(exception);
+
+					return null;
+				}
+			}
+		}
+		else if (objectField.compareBusinessType(
+					ObjectFieldConstants.BUSINESS_TYPE_DATE_TIME)) {
+
+			return LocalDateTime.parse(
+				value.toString(),
+				DateTimeFormatter.ofPattern(
+					ObjectFieldUtil.getDateTimePattern(value.toString())));
+		}
+		else if (objectField.compareBusinessType(
+					ObjectFieldConstants.BUSINESS_TYPE_MULTISELECT_PICKLIST)) {
+
+			List<KeyLocalizedLabelPair> keyLocalizedLabelPairs =
+				new ArrayList<>();
+
+			List<Object> objects = new ArrayList<>();
+
+			if (value instanceof String) {
+				objects = ListUtil.fromArray(
+					StringUtil.split(
+						(String)value, StringPool.COMMA_AND_SPACE));
+			}
+			else {
+				objects = (List<Object>)value;
+			}
+
+			for (Object object : objects) {
+				KeyLocalizedLabelPair keyLocalizedLabelPair =
+					_getKeyLocalizedLabelPair(
+						listTypeEntryLocalService, object, objectField);
+
+				if (keyLocalizedLabelPair != null) {
+					keyLocalizedLabelPairs.add(keyLocalizedLabelPair);
+				}
+			}
+
+			if (ListUtil.isNotEmpty(keyLocalizedLabelPairs)) {
+				return keyLocalizedLabelPairs;
+			}
+		}
+		else if (objectField.compareBusinessType(
+					ObjectFieldConstants.BUSINESS_TYPE_PICKLIST)) {
+
+			KeyLocalizedLabelPair keyLocalizedLabelPair =
+				_getKeyLocalizedLabelPair(
+					listTypeEntryLocalService, value, objectField);
+
+			if (keyLocalizedLabelPair != null) {
+				return ListUtil.fromArray(keyLocalizedLabelPair);
+			}
+		}
+		else if (objectField.compareBusinessType(
+					ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP)) {
+
+			ObjectRelationship objectRelationship =
+				objectRelationshipLocalService.
+					fetchObjectRelationshipByObjectFieldId2(
+						objectField.getObjectFieldId());
+
+			try {
+				return new KeyValuePair(
+					String.valueOf(value),
+					objectEntryLocalService.getTitleValue(
+						objectRelationship.getObjectDefinitionId1(),
+						GetterUtil.getLong(value)));
+			}
+			catch (Exception exception) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(exception);
+
+					return null;
+				}
+			}
+		}
+
+		return value;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

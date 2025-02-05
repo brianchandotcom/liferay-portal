@@ -5,6 +5,7 @@
 
 package com.liferay.headless.space.internal.resource.v1_0;
 
+import com.liferay.depot.constants.DepotActionKeys;
 import com.liferay.depot.model.DepotAppCustomization;
 import com.liferay.depot.model.DepotEntry;
 import com.liferay.depot.model.DepotEntryGroupRel;
@@ -166,7 +167,10 @@ public class SpaceResourceImpl extends BaseSpaceResourceImpl {
 			new DefaultDTOConverterContext(
 				contextAcceptLanguage.isAcceptAllLanguages(),
 				HashMapBuilder.put(
-					"create", addAction("add", depotEntry, "postSpace")
+					"create",
+					addAction(
+						DepotActionKeys.ADD_DEPOT_ENTRY, depotEntry,
+						"postSpace")
 				).put(
 					"delete",
 					addAction(ActionKeys.DELETE, depotEntry, "deleteSpace")

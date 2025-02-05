@@ -63,10 +63,6 @@ public class APIURLCustomFDSSerializerImplTest {
 	public void setUp() throws Exception {
 		_bundleContext = SystemBundleUtil.getBundleContext();
 
-		ReflectionTestUtil.setFieldValue(
-			_fdsAPIURLBuilderFactoryImpl, "_fdsAPIURLResolverRegistry",
-			_fdsAPIURLResolverRegistry);
-
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			_bundleContext, FDSAPIURLResolver.class, "fds.rest.application.key",
 			ServiceTrackerCustomizerFactory.<FDSAPIURLResolver>serviceWrapper(
@@ -253,8 +249,15 @@ public class APIURLCustomFDSSerializerImplTest {
 			_fdsSerializer.serialize(fdsName, _httpServletRequest)
 		).thenCallRealMethod();
 
-		BaseFDSSerializer baseFDSSerializer =
-			(BaseFDSSerializer)_fdsSerializer;
+		BaseAPIURLFDSSerializer baseAPIURLFDSSerializer =
+			(BaseAPIURLFDSSerializer)_fdsSerializer;
+
+		Mockito.when(
+			baseAPIURLFDSSerializer.createFDSAPIURLBuilder(
+				_httpServletRequest, restApplication, restEndpoint, restSchema)
+		).thenCallRealMethod();
+
+		BaseFDSSerializer baseFDSSerializer = (BaseFDSSerializer)_fdsSerializer;
 
 		Mockito.when(
 			baseFDSSerializer.getDataSetObjectEntryProperties(
@@ -271,8 +274,9 @@ public class APIURLCustomFDSSerializerImplTest {
 
 		if (ArrayUtil.isEmpty(fieldNames)) {
 			Mockito.when(
-				baseFDSSerializer.getDataSetTableSectionObjectEntries(
-					fdsName, _httpServletRequest)
+				baseFDSSerializer.getSortedRelatedObjectEntries(
+					fdsName, "tableSectionsOrder", _httpServletRequest, null,
+					"dataSetToDataSetTableSections")
 			).thenReturn(
 				Collections.emptySet()
 			);
@@ -294,8 +298,9 @@ public class APIURLCustomFDSSerializerImplTest {
 		}
 
 		Mockito.when(
-			baseFDSSerializer.getDataSetTableSectionObjectEntries(
-				fdsName, _httpServletRequest)
+			baseFDSSerializer.getSortedRelatedObjectEntries(
+				fdsName, "tableSectionsOrder", _httpServletRequest, null,
+				"dataSetToDataSetTableSections")
 		).thenReturn(
 			objectEntries
 		);
@@ -329,19 +334,17 @@ public class APIURLCustomFDSSerializerImplTest {
 	}
 
 	private void _resetSerializer() {
-		_fdsSerializer = Mockito.mock(APIURLFDSSerializerImpl.class);
+		_fdsSerializer = Mockito.mock(APIURLCustomFDSSerializerImpl.class);
 
 		ReflectionTestUtil.setFieldValue(
-			_fdsSerializer, "_fdsAPIURLBuilderFactory",
-			_fdsAPIURLBuilderFactoryImpl);
+			_fdsSerializer, "fdsAPIURLResolverRegistry",
+			_fdsAPIURLResolverRegistry);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		APIURLCustomFDSSerializerImplTest.class);
 
 	private static BundleContext _bundleContext;
-	private static final FDSAPIURLBuilderFactoryImpl
-		_fdsAPIURLBuilderFactoryImpl = new FDSAPIURLBuilderFactoryImpl();
 	private static final FDSAPIURLResolverRegistry _fdsAPIURLResolverRegistry =
 		new FDSAPIURLResolverRegistryImpl();
 	private static FDSSerializer<String> _fdsSerializer;

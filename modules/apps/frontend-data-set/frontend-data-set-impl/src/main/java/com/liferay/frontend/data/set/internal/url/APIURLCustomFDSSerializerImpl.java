@@ -5,11 +5,7 @@
 
 package com.liferay.frontend.data.set.internal.url;
 
-import com.liferay.frontend.data.set.internal.serializer.BaseFDSSerializer;
 import com.liferay.frontend.data.set.serializer.FDSSerializer;
-import com.liferay.frontend.data.set.url.APIURLFDSSerializer;
-import com.liferay.frontend.data.set.url.FDSAPIURLBuilder;
-import com.liferay.frontend.data.set.url.FDSAPIURLBuilderFactory;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
@@ -17,11 +13,11 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Predicate;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Daniel Sanz
@@ -30,8 +26,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "frontend.data.set.serializer.type=" + FDSSerializer.TYPE_CUSTOM,
 	service = FDSSerializer.class
 )
-public class APIURLFDSSerializerImpl
-	extends BaseFDSSerializer implements APIURLFDSSerializer {
+public class APIURLCustomFDSSerializerImpl extends BaseAPIURLFDSSerializer {
 
 	@Override
 	public String serialize(
@@ -41,8 +36,10 @@ public class APIURLFDSSerializerImpl
 			fdsName, httpServletRequest);
 
 		return _addNestedFields(
-			getDataSetTableSectionObjectEntries(fdsName, httpServletRequest),
-			_fdsAPIURLBuilderFactory.create(
+			getSortedRelatedObjectEntries(
+				fdsName, "tableSectionsOrder", httpServletRequest,
+				(Predicate)null, "dataSetToDataSetTableSections"),
+			createFDSAPIURLBuilder(
 				httpServletRequest,
 				String.valueOf(properties.get("restApplication")),
 				String.valueOf(properties.get("restEndpoint")),
@@ -100,8 +97,5 @@ public class APIURLFDSSerializerImpl
 
 		return fdsAPIURLBuilder;
 	}
-
-	@Reference
-	private FDSAPIURLBuilderFactory _fdsAPIURLBuilderFactory;
 
 }

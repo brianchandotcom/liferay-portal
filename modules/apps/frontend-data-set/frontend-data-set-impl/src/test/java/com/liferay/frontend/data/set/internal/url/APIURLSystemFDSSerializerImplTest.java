@@ -50,10 +50,6 @@ public class APIURLSystemFDSSerializerImplTest
 	public void setUp() throws Exception {
 		super.setUp();
 
-		ReflectionTestUtil.setFieldValue(
-			_fdsAPIURLBuilderFactoryImpl, "_fdsAPIURLResolverRegistry",
-			_fdsAPIURLResolverRegistry);
-
 		_fdsAPIURLResolverServiceTrackerMap =
 			ServiceTrackerMapFactory.openSingleValueMap(
 				bundleContext, FDSAPIURLResolver.class,
@@ -74,8 +70,8 @@ public class APIURLSystemFDSSerializerImplTest
 		);
 
 		ReflectionTestUtil.setFieldValue(
-			_fdsSerializer, "_fdsAPIURLBuilderFactory",
-			_fdsAPIURLBuilderFactoryImpl);
+			_fdsSerializer, "fdsAPIURLResolverRegistry",
+			_fdsAPIURLResolverRegistry);
 		ReflectionTestUtil.setFieldValue(
 			_fdsSerializer, "_systemFDSEntryRegistry",
 			systemFDSEntryRegistryImpl);
@@ -199,8 +195,6 @@ public class APIURLSystemFDSSerializerImplTest
 				restApplication + "/" + restSchema));
 	}
 
-	private static final FDSAPIURLBuilderFactoryImpl
-		_fdsAPIURLBuilderFactoryImpl = new FDSAPIURLBuilderFactoryImpl();
 	private static final FDSAPIURLResolverRegistry _fdsAPIURLResolverRegistry =
 		new FDSAPIURLResolverRegistryImpl();
 	private static ServiceTrackerMap<String, ServiceWrapper<FDSAPIURLResolver>>

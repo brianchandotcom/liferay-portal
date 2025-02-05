@@ -37,7 +37,7 @@ import org.osgi.framework.ServiceRegistration;
 /**
  * @author Daniel Sanz
  */
-public class FDSAPIURLBuilderImplTest {
+public class BaseAPIURLFDSSerializerTest {
 
 	@ClassRule
 	@Rule
@@ -58,7 +58,7 @@ public class FDSAPIURLBuilderImplTest {
 			_serviceTrackerMap);
 
 		ReflectionTestUtil.setFieldValue(
-			_fdsAPIURLBuilderFactoryImpl, "_fdsAPIURLResolverRegistry",
+			_baseAPIURLFDSSerializer, "fdsAPIURLResolverRegistry",
 			_fdsAPIURLResolverRegistry);
 
 		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
@@ -101,7 +101,7 @@ public class FDSAPIURLBuilderImplTest {
 
 		Assert.assertEquals(
 			"/o/app/{foo}/endpoint",
-			_fdsAPIURLBuilderFactoryImpl.create(
+			_baseAPIURLFDSSerializer.createFDSAPIURLBuilder(
 				_httpServletRequest, "/app", "/{foo}/endpoint", "schema"
 			).build());
 
@@ -114,7 +114,7 @@ public class FDSAPIURLBuilderImplTest {
 	public void testURLSimple() throws Exception {
 		Assert.assertEquals(
 			"/o/app/endpoint",
-			_fdsAPIURLBuilderFactoryImpl.create(
+			_baseAPIURLFDSSerializer.createFDSAPIURLBuilder(
 				_httpServletRequest, "/app", "/endpoint", "schema"
 			).build());
 	}
@@ -123,7 +123,7 @@ public class FDSAPIURLBuilderImplTest {
 	public void testURLSimpleWithParametersAsKeyValue() throws Exception {
 		Assert.assertEquals(
 			"/o/app/endpoint?param1=value1&param2=value2",
-			_fdsAPIURLBuilderFactoryImpl.create(
+			_baseAPIURLFDSSerializer.createFDSAPIURLBuilder(
 				_httpServletRequest, "/app", "/endpoint", "schema"
 			).addParameter(
 				"param1", "value1"
@@ -139,7 +139,7 @@ public class FDSAPIURLBuilderImplTest {
 		Assert.assertEquals(
 			"/o/app/endpoint?param1=value1&param2=value2&param3=value3&" +
 				"param4=value4&param5=value5",
-			_fdsAPIURLBuilderFactoryImpl.create(
+			_baseAPIURLFDSSerializer.createFDSAPIURLBuilder(
 				_httpServletRequest, "/app", "/endpoint", "schema"
 			).addParameter(
 				"param1", "value1"
@@ -156,7 +156,7 @@ public class FDSAPIURLBuilderImplTest {
 	public void testURLSimpleWithParametersAsString() throws Exception {
 		Assert.assertEquals(
 			"/o/app/endpoint?param1=value1&param2=value2",
-			_fdsAPIURLBuilderFactoryImpl.create(
+			_baseAPIURLFDSSerializer.createFDSAPIURLBuilder(
 				_httpServletRequest, "/app", "/endpoint", "schema"
 			).addQueryString(
 				"param1=value1&param2=value2"
@@ -167,7 +167,7 @@ public class FDSAPIURLBuilderImplTest {
 	public void testURLSimpleWithVersionDuplication() throws Exception {
 		Assert.assertEquals(
 			"/o/app/v1.0/endpoint",
-			_fdsAPIURLBuilderFactoryImpl.create(
+			_baseAPIURLFDSSerializer.createFDSAPIURLBuilder(
 				_httpServletRequest, "/app/v1.0", "/v1.0/endpoint", "schema"
 			).build());
 	}
@@ -176,7 +176,7 @@ public class FDSAPIURLBuilderImplTest {
 	public void testURLSimpleWithVersionInRESTApplication() throws Exception {
 		Assert.assertEquals(
 			"/o/app/endpoint",
-			_fdsAPIURLBuilderFactoryImpl.create(
+			_baseAPIURLFDSSerializer.createFDSAPIURLBuilder(
 				_httpServletRequest, "/app/v1.0", "/endpoint", "schema"
 			).build());
 	}
@@ -185,7 +185,7 @@ public class FDSAPIURLBuilderImplTest {
 	public void testURLSimpleWithVersionInRESTEndpoint() throws Exception {
 		Assert.assertEquals(
 			"/o/app/v1.0/endpoint",
-			_fdsAPIURLBuilderFactoryImpl.create(
+			_baseAPIURLFDSSerializer.createFDSAPIURLBuilder(
 				_httpServletRequest, "/app", "/v1.0/endpoint", "schema"
 			).build());
 	}
@@ -198,7 +198,7 @@ public class FDSAPIURLBuilderImplTest {
 
 		Assert.assertEquals(
 			"/o/app/12345/bar/endpoint",
-			_fdsAPIURLBuilderFactoryImpl.create(
+			_baseAPIURLFDSSerializer.createFDSAPIURLBuilder(
 				_httpServletRequest, "/app", "/{siteId}/{foo}/endpoint",
 				"schema"
 			).build());
@@ -217,7 +217,7 @@ public class FDSAPIURLBuilderImplTest {
 
 		Assert.assertEquals(
 			"/o/app/12345/bar/54321/endpoint",
-			_fdsAPIURLBuilderFactoryImpl.create(
+			_baseAPIURLFDSSerializer.createFDSAPIURLBuilder(
 				_httpServletRequest, "/app",
 				"/{siteId}/{foo}/{userId}/endpoint", "schema"
 			).build());
@@ -229,7 +229,7 @@ public class FDSAPIURLBuilderImplTest {
 	public void testURLWithDefaultInterpolationOnly() throws Exception {
 		Assert.assertEquals(
 			"/o/app/67890/endpoint",
-			_fdsAPIURLBuilderFactoryImpl.create(
+			_baseAPIURLFDSSerializer.createFDSAPIURLBuilder(
 				_httpServletRequest, "/app", "/{userId}/endpoint", "schema"
 			).build());
 	}
@@ -242,7 +242,7 @@ public class FDSAPIURLBuilderImplTest {
 
 		Assert.assertEquals(
 			"/o/app/bar/endpoint?siteId=12345&foo=bar&bar=67890",
-			_fdsAPIURLBuilderFactoryImpl.create(
+			_baseAPIURLFDSSerializer.createFDSAPIURLBuilder(
 				_httpServletRequest, "/app", "/{foo}/endpoint", "schema"
 			).addParameter(
 				"siteId", "{siteId}"
@@ -263,7 +263,7 @@ public class FDSAPIURLBuilderImplTest {
 
 		Assert.assertEquals(
 			"/o/app/{xyz}/endpoint",
-			_fdsAPIURLBuilderFactoryImpl.create(
+			_baseAPIURLFDSSerializer.createFDSAPIURLBuilder(
 				_httpServletRequest, "/app", "/{xyz}/endpoint", "schema"
 			).build());
 
@@ -279,7 +279,7 @@ public class FDSAPIURLBuilderImplTest {
 
 		Assert.assertEquals(
 			"/o/app/bar/54321/endpoint",
-			_fdsAPIURLBuilderFactoryImpl.create(
+			_baseAPIURLFDSSerializer.createFDSAPIURLBuilder(
 				_httpServletRequest, "/app", "/{foo}/{userId}/endpoint",
 				"schema"
 			).build());
@@ -314,9 +314,19 @@ public class FDSAPIURLBuilderImplTest {
 				restApplication + "/" + restSchema));
 	}
 
+	private static final BaseAPIURLFDSSerializer _baseAPIURLFDSSerializer =
+		new BaseAPIURLFDSSerializer() {
+
+			@Override
+			public String serialize(
+				String fdsName, HttpServletRequest httpServletRequest) {
+
+				return "";
+			}
+
+		};
+
 	private static BundleContext _bundleContext;
-	private static final FDSAPIURLBuilderFactoryImpl
-		_fdsAPIURLBuilderFactoryImpl = new FDSAPIURLBuilderFactoryImpl();
 	private static final FDSAPIURLResolverRegistry _fdsAPIURLResolverRegistry =
 		new FDSAPIURLResolverRegistryImpl();
 	private static final HttpServletRequest _httpServletRequest = Mockito.mock(

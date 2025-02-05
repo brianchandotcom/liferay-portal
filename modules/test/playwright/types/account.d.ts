@@ -9,6 +9,7 @@ type TUserAccount = {
 	familyName?: string;
 	givenName?: string;
 	id?: string;
+	languageId?: string;
 	name?: string;
 	password?: string;
 };

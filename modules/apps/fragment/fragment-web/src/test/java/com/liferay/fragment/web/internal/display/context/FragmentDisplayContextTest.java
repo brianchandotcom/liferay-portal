@@ -65,17 +65,17 @@ public class FragmentDisplayContextTest {
 		String availableActions = fragmentDisplayContext.getAvailableActions(
 			_fragmentComposition);
 
+		Assert.assertFalse(
+			availableActions.contains("copySelectedFragmentEntries"));
 		Assert.assertTrue(
 			availableActions.contains(
 				"deleteFragmentCompositionsAndFragmentEntries"));
-		Assert.assertTrue(
-			availableActions.contains(
-				"moveFragmentCompositionsAndFragmentEntries"));
 		Assert.assertFalse(
 			availableActions.contains(
 				"exportFragmentCompositionsAndFragmentEntries"));
-		Assert.assertFalse(
-			availableActions.contains("copySelectedFragmentEntries"));
+		Assert.assertTrue(
+			availableActions.contains(
+				"moveFragmentCompositionsAndFragmentEntries"));
 
 		Mockito.when(
 			_fragmentEntry.isMarketplace()
@@ -86,17 +86,17 @@ public class FragmentDisplayContextTest {
 		availableActions = fragmentDisplayContext.getAvailableActions(
 			_fragmentEntry);
 
+		Assert.assertFalse(
+			availableActions.contains("copySelectedFragmentEntries"));
 		Assert.assertTrue(
 			availableActions.contains(
 				"deleteFragmentCompositionsAndFragmentEntries"));
-		Assert.assertTrue(
-			availableActions.contains(
-				"moveFragmentCompositionsAndFragmentEntries"));
 		Assert.assertFalse(
 			availableActions.contains(
 				"exportFragmentCompositionsAndFragmentEntries"));
-		Assert.assertFalse(
-			availableActions.contains("copySelectedFragmentEntries"));
+		Assert.assertTrue(
+			availableActions.contains(
+				"moveFragmentCompositionsAndFragmentEntries"));
 	}
 
 	private void _setUpFragmentPermission(boolean condition) {

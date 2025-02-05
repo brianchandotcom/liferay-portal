@@ -68,6 +68,7 @@ import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.service.ObjectValidationRuleLocalService;
+import com.liferay.object.system.JaxRsApplicationDescriptor;
 import com.liferay.object.system.SystemObjectDefinitionManager;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
@@ -5166,6 +5167,16 @@ public class ObjectEntryResourceTest {
 				_OBJECT_FIELD_NAME_2, String.valueOf(_OBJECT_FIELD_VALUE_2)
 			).build());
 
+		JaxRsApplicationDescriptor jaxRsApplicationDescriptor =
+			_systemObjectDefinitionManager.getJaxRsApplicationDescriptor();
+
+		_userAccountJSONObject = HTTPTestUtil.invokeToJSONObject(
+			null,
+			StringBundler.concat(
+				jaxRsApplicationDescriptor.getRESTContextPath(), "/",
+				_userAccountJSONObject.get("id"), "?nestedFields=permissions"),
+			Http.Method.GET);
+
 		_objectRelationship1 = _addObjectRelationshipAndRelateObjectEntries(
 			_objectDefinition1, _userSystemObjectDefinition,
 			_objectEntry1.getPrimaryKey(), _userAccountJSONObject.getLong("id"),
@@ -5290,10 +5301,10 @@ public class ObjectEntryResourceTest {
 			new JSONArray[] {
 				_getPermissionsJSONArray(
 					new String[] {ActionKeys.UPDATE, ActionKeys.VIEW}, role2),
-				null,
+				(JSONArray)_userAccountJSONObject.get("permissions"),
 				_getPermissionsJSONArray(
 					new String[] {ActionKeys.UPDATE, ActionKeys.VIEW}, role2),
-				null
+				(JSONArray)_userAccountJSONObject.get("permissions")
 			},
 			Type.MANY_TO_MANY);
 
@@ -5321,7 +5332,7 @@ public class ObjectEntryResourceTest {
 				_getPermissionsJSONArray(
 					new String[] {ActionKeys.DELETE, ActionKeys.PERMISSIONS},
 					role1),
-				null
+				(JSONArray)_userAccountJSONObject.get("permissions")
 			},
 			Type.MANY_TO_MANY);
 	}

@@ -386,6 +386,75 @@ public class FormItemManager {
 		}
 	}
 
+	public LayoutStructureItemChanges removeFormStepLayoutStructureItem(
+		FormStyledLayoutStructureItem formStyledLayoutStructureItem,
+		String itemId, LayoutStructure layoutStructure) {
+
+		LayoutStructureItemChanges layoutStructureItemChanges =
+			new LayoutStructureItemChanges();
+
+		int numberOfSteps = formStyledLayoutStructureItem.getNumberOfSteps();
+
+		if (numberOfSteps > 2) {
+			formStyledLayoutStructureItem.setNumberOfSteps(numberOfSteps - 1);
+
+			layoutStructure.markLayoutStructureItemForDeletion(
+				Collections.singletonList(itemId), Collections.emptyList());
+
+			layoutStructureItemChanges.addRemovedLayoutStructureItems(
+				layoutStructure.getLayoutStructureItem(itemId));
+
+			return layoutStructureItemChanges;
+		}
+
+		LayoutStructureItem formStepContainerStyledLayoutStructureItem =
+			_findFormStepContainerStyledLayoutStructureItem(
+				formStyledLayoutStructureItem, layoutStructure);
+
+		if (formStepContainerStyledLayoutStructureItem == null) {
+			return new LayoutStructureItemChanges();
+		}
+
+		formStyledLayoutStructureItem.setFormType("simple");
+		formStyledLayoutStructureItem.setNumberOfSteps(0);
+
+		List<String> initialFormChildrenItemIds = new ArrayList<>(
+			formStyledLayoutStructureItem.getChildrenItemIds());
+
+		List<String> formStepContainerChildrenItemIds =
+			formStepContainerStyledLayoutStructureItem.getChildrenItemIds();
+
+		LayoutStructureItem formStepLayoutStructureItem =
+			layoutStructure.getLayoutStructureItem(
+				formStepContainerChildrenItemIds.get(0));
+
+		for (String formStepLayoutStructureItemChildrenItemId :
+				new ArrayList<>(
+					formStepLayoutStructureItem.getChildrenItemIds())) {
+
+			LayoutStructureItem layoutStructureItem =
+				layoutStructure.getLayoutStructureItem(
+					formStepLayoutStructureItemChildrenItemId);
+
+			layoutStructureItemChanges.addMovedLayoutStructureItems(
+				layoutStructureItem.clone());
+
+			layoutStructure.moveLayoutStructureItem(
+				formStepLayoutStructureItemChildrenItemId,
+				formStyledLayoutStructureItem.getItemId(), -1);
+		}
+
+		layoutStructure.markLayoutStructureItemForDeletion(
+			initialFormChildrenItemIds, Collections.emptyList());
+
+		for (String childrenItemId : initialFormChildrenItemIds) {
+			layoutStructureItemChanges.addRemovedLayoutStructureItems(
+				layoutStructure.getLayoutStructureItem(childrenItemId));
+		}
+
+		return layoutStructureItemChanges;
+	}
+
 	public LayoutStructureItemChanges removeFormStepLayoutStructureItems(
 		FormStyledLayoutStructureItem formStyledLayoutStructureItem,
 		LayoutStructure layoutStructure, int numberOfSteps) {

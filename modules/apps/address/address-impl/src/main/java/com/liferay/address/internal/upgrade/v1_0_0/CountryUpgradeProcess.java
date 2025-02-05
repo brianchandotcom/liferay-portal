@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.model.CountryLocalization;
 import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.model.RegionLocalization;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
@@ -81,6 +82,9 @@ public class CountryUpgradeProcess extends UpgradeProcess {
 					company -> {
 						Future<Void> future = executorService.submit(
 							() -> {
+								CompanyThreadLocal.setCompanyId(
+									company.getCompanyId());
+
 								try {
 									new CompanyUpgradeProcess(
 										company

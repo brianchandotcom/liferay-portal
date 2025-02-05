@@ -21,6 +21,7 @@ import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -45,6 +46,11 @@ public class FragmentDisplayContextTest {
 	public void setUp() {
 		_setUpHttpServletRequest();
 		_setUpThemeDisplay();
+	}
+
+	@After
+	public void tearDown() {
+		_fragmentPermissionMockedStatic.close();
 	}
 
 	@Test

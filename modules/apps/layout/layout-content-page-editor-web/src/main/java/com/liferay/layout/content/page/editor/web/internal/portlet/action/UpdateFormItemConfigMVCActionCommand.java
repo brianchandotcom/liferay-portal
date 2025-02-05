@@ -42,7 +42,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -138,6 +137,8 @@ public class UpdateFormItemConfigMVCActionCommand
 			actionRequest, "segmentsExperienceId");
 		String itemConfig = ParamUtil.getString(actionRequest, "itemConfig");
 		String formItemId = ParamUtil.getString(actionRequest, "itemId");
+		long stepperFragmentEntryLinkId = ParamUtil.getLong(
+			actionRequest, "stepperFragmentEntryLinkId");
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
@@ -178,9 +179,9 @@ public class UpdateFormItemConfigMVCActionCommand
 			_updateFormStyledLayoutStructureItemFormType(
 				formStyledLayoutStructureItem,
 				formStyledLayoutStructureItem.getFormType(), layoutStructure,
-				themeDisplay.getLocale(),
 				formStyledLayoutStructureItem.getNumberOfSteps(),
-				previousFormType, previousNumberOfSteps));
+				previousFormType, previousNumberOfSteps,
+				stepperFragmentEntryLinkId));
 
 		if (!Objects.equals(
 				formStyledLayoutStructureItem.getClassNameId(),
@@ -337,9 +338,6 @@ public class UpdateFormItemConfigMVCActionCommand
 		).put(
 			"fragmentEntryLinks",
 			() -> {
-				long stepperFragmentEntryLinkId = ParamUtil.getLong(
-					actionRequest, "stepperFragmentEntryLinkId");
-
 				FragmentEntryLink stepperFragmentEntryLink =
 					_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
 						stepperFragmentEntryLinkId);
@@ -396,19 +394,20 @@ public class UpdateFormItemConfigMVCActionCommand
 	private FormItemManager.LayoutStructureItemChanges
 		_updateFormStyledLayoutStructureItemFormType(
 			FormStyledLayoutStructureItem formStyledLayoutStructureItem,
-			String formType, LayoutStructure layoutStructure, Locale locale,
-			int numberOfSteps, String previousFormType,
-			int previousNumberOfSteps) {
+			String formType, LayoutStructure layoutStructure, int numberOfSteps,
+			String previousFormType, int previousNumberOfSteps,
+			long stepperFragmentEntryLinkId) {
 
 		if (!Objects.equals(formType, previousFormType)) {
 			if (Objects.equals(formType, "multistep")) {
 				return _formItemManager.changeToMultistepFormType(
-					formStyledLayoutStructureItem, layoutStructure, locale,
-					numberOfSteps);
+					formStyledLayoutStructureItem, layoutStructure,
+					numberOfSteps, stepperFragmentEntryLinkId);
 			}
 
 			return _formItemManager.changeToSimpleFormType(
-				formStyledLayoutStructureItem, layoutStructure, locale);
+				formStyledLayoutStructureItem, layoutStructure,
+				stepperFragmentEntryLinkId);
 		}
 
 		if (numberOfSteps != previousNumberOfSteps) {

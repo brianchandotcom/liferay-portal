@@ -60,6 +60,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
@@ -228,7 +229,8 @@ public class FormItemManager {
 
 	public LayoutStructureItemChanges changeToMultistepFormType(
 		FormStyledLayoutStructureItem formStyledLayoutStructureItem,
-		LayoutStructure layoutStructure, Locale locale, int numberOfSteps) {
+		LayoutStructure layoutStructure, int numberOfSteps,
+		long stepperFragmentEntryLinkId) {
 
 		LayoutStructureItemChanges layoutStructureItemChanges =
 			new LayoutStructureItemChanges();
@@ -258,13 +260,10 @@ public class FormItemManager {
 					fragmentStyledLayoutStructureItem =
 						(FragmentStyledLayoutStructureItem)layoutStructureItem;
 
-				Set<String> fieldTypes =
-					_fragmentEntryLinkManager.getFragmentEntryLinkFieldTypes(
-						fragmentStyledLayoutStructureItem.
-							getFragmentEntryLinkId(),
-						locale);
+				long fragmentEntryLinkId =
+					fragmentStyledLayoutStructureItem.getFragmentEntryLinkId();
 
-				if (fieldTypes.contains("stepper")) {
+				if (fragmentEntryLinkId == stepperFragmentEntryLinkId) {
 					continue;
 				}
 			}
@@ -287,7 +286,7 @@ public class FormItemManager {
 
 	public LayoutStructureItemChanges changeToSimpleFormType(
 		FormStyledLayoutStructureItem formStyledLayoutStructureItem,
-		LayoutStructure layoutStructure, Locale locale) {
+		LayoutStructure layoutStructure, long stepperFragmentEntryLinkId) {
 
 		LayoutStructureItem formStepContainerStyledLayoutStructureItem =
 			findFormStepContainerStyledLayoutStructureItem(
@@ -300,38 +299,20 @@ public class FormItemManager {
 		LayoutStructureItemChanges layoutStructureItemChanges =
 			new LayoutStructureItemChanges();
 
-		for (String childrenItemId :
-				new ArrayList<>(
-					formStyledLayoutStructureItem.getChildrenItemIds())) {
+		Map<Long, LayoutStructureItem> fragmentLayoutStructureItems =
+			layoutStructure.getFragmentLayoutStructureItems();
 
-			LayoutStructureItem layoutStructureItem =
-				layoutStructure.getLayoutStructureItem(childrenItemId);
+		LayoutStructureItem stepperFragmentStyledLayoutStructureItem =
+			fragmentLayoutStructureItems.get(stepperFragmentEntryLinkId);
 
-			if (!(layoutStructureItem instanceof
-					FragmentStyledLayoutStructureItem)) {
-
-				continue;
-			}
-
-			FragmentStyledLayoutStructureItem
-				fragmentStyledLayoutStructureItem =
-					(FragmentStyledLayoutStructureItem)layoutStructureItem;
-
-			Set<String> fieldTypes =
-				_fragmentEntryLinkManager.getFragmentEntryLinkFieldTypes(
-					fragmentStyledLayoutStructureItem.getFragmentEntryLinkId(),
-					locale);
-
-			if (!fieldTypes.contains("stepper")) {
-				continue;
-			}
-
+		if (stepperFragmentStyledLayoutStructureItem != null) {
 			layoutStructure.markLayoutStructureItemForDeletion(
-				Collections.singletonList(childrenItemId),
+				Collections.singletonList(
+					stepperFragmentStyledLayoutStructureItem.getItemId()),
 				Collections.emptyList());
 
 			layoutStructureItemChanges.addRemovedLayoutStructureItems(
-				layoutStructureItem);
+				stepperFragmentStyledLayoutStructureItem);
 		}
 
 		for (String childrenItemId :

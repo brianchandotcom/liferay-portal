@@ -210,7 +210,8 @@ public class AddStepperFragmentEntryLinkMVCActionCommand
 				layoutStructureItemChanges =
 					_formItemManager.changeToMultistepFormType(
 						formStyledLayoutStructureItem, layoutStructure,
-						themeDisplay.getLocale(), numberOfSteps);
+						numberOfSteps,
+						stepperFragmentEntryLink.getFragmentEntryLinkId());
 
 			addedLayoutStructureItems.addAll(
 				layoutStructureItemChanges.getAddedLayoutStructureItems());

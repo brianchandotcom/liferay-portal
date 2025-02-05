@@ -117,13 +117,14 @@ public class CreationMenuCustomFDSSerializerImplTest {
 			_fdsSerializer.serialize(fdsName, _httpServletRequest)
 		).thenCallRealMethod();
 
-		BaseFDSSerializer baseFDSSerializer =
-			(BaseFDSSerializer)_fdsSerializer;
+		BaseFDSSerializer baseFDSSerializer = (BaseFDSSerializer)_fdsSerializer;
 
 		if (ArrayUtil.isEmpty(titles)) {
 			Mockito.when(
-				baseFDSSerializer.getCreationMenuObjectEntries(
-					fdsName, _httpServletRequest)
+				baseFDSSerializer.getSortedRelatedObjectEntries(
+					Mockito.eq(fdsName), Mockito.eq("creationActionsOrder"),
+					Mockito.eq(_httpServletRequest), Mockito.any(),
+					Mockito.eq("dataSetToDataSetActions"))
 			).thenReturn(
 				Collections.emptySet()
 			);
@@ -145,8 +146,10 @@ public class CreationMenuCustomFDSSerializerImplTest {
 		}
 
 		Mockito.when(
-			baseFDSSerializer.getCreationMenuObjectEntries(
-				fdsName, _httpServletRequest)
+			baseFDSSerializer.getSortedRelatedObjectEntries(
+				Mockito.eq(fdsName), Mockito.eq("creationActionsOrder"),
+				Mockito.eq(_httpServletRequest), Mockito.any(),
+				Mockito.eq("dataSetToDataSetActions"))
 		).thenReturn(
 			objectEntries
 		);
@@ -154,7 +157,7 @@ public class CreationMenuCustomFDSSerializerImplTest {
 
 	private void _resetSerializer() {
 		_fdsSerializer = Mockito.mock(
-			CreationMenuFDSSerializerImpl.class);
+			CreationMenuCustomFDSSerializerImpl.class);
 	}
 
 	private void _testSerialize(String fdsName, String[] titles)

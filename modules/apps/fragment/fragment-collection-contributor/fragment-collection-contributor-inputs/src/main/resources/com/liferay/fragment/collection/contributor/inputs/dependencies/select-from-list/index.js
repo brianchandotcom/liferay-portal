@@ -35,11 +35,6 @@ const valueInputElement = document.getElementById(
 	`${fragmentEntryLinkNamespace}-value-input`
 );
 
-if (layoutMode === 'edit') {
-	buttonElement.setAttribute('disabled', true);
-	uiInputElement.setAttribute('disabled', true);
-}
-
 buttonElement.addEventListener('click', toggleDropdown);
 buttonElement.addEventListener('blur', handleResultListBlur);
 uiInputElement.addEventListener('click', toggleDropdown);
@@ -58,24 +53,30 @@ window.addEventListener('scroll', handleWindowResizeOrScroll, {
 let lastSearchAbortController = new AbortController();
 let lastSearchQuery = null;
 
-if (input.value) {
-	const selectedOption = (input.attributes.options || []).find(
-		(option) => option.value === input.value
-	);
-
-	if (selectedOption) {
-		lastSearchQuery = selectedOption.label.toLowerCase();
-		valueInputElement.value = selectedOption.value;
-
-		const selectedOptionElement = optionListElement.querySelector(
-			'.active.dropdown-item'
+if (layoutMode === 'edit') {
+	buttonElement.setAttribute('disabled', true);
+	uiInputElement.setAttribute('disabled', true);
+}
+else {
+	if (input.value) {
+		const selectedOption = (input.attributes.options || []).find(
+			(option) => option.value === input.value
 		);
 
-		if (selectedOptionElement) {
-			optionListElement.setAttribute(
-				'aria-activedescendant',
-				selectedOptionElement.id
+		if (selectedOption) {
+			lastSearchQuery = selectedOption.label.toLowerCase();
+			valueInputElement.value = selectedOption.value;
+
+			const selectedOptionElement = optionListElement.querySelector(
+				'.active.dropdown-item'
 			);
+
+			if (selectedOptionElement) {
+				optionListElement.setAttribute(
+					'aria-activedescendant',
+					selectedOptionElement.id
+				);
+			}
 		}
 	}
 }

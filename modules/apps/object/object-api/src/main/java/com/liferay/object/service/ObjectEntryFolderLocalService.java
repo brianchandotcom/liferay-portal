@@ -124,6 +124,10 @@ public interface ObjectEntryFolderLocalService
 			ObjectEntryFolder objectEntryFolder)
 		throws PortalException;
 
+	public ObjectEntryFolder deleteObjectEntryFolder(
+			String externalReferenceCode, long companyId, long groupId)
+		throws PortalException;
+
 	/**
 	 * @throws PortalException
 	 */
@@ -265,6 +269,11 @@ public interface ObjectEntryFolderLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<ObjectEntryFolder> getObjectEntryFolders(int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ObjectEntryFolder> getObjectEntryFolders(
+		long companyId, long groupId, long parentObjectEntryFolderId, int start,
+		int end);
+
 	/**
 	 * Returns all the object entry folders matching the UUID and company.
 	 *
@@ -298,6 +307,10 @@ public interface ObjectEntryFolderLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getObjectEntryFoldersCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getObjectEntryFoldersCount(
+		long companyId, long groupId, long parentObjectEntryFolderId);
 
 	/**
 	 * Returns the OSGi service identifier.

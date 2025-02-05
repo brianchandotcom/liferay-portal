@@ -124,6 +124,14 @@ public class ObjectEntryFolderLocalServiceUtil {
 		return getService().deleteObjectEntryFolder(objectEntryFolder);
 	}
 
+	public static ObjectEntryFolder deleteObjectEntryFolder(
+			String externalReferenceCode, long companyId, long groupId)
+		throws PortalException {
+
+		return getService().deleteObjectEntryFolder(
+			externalReferenceCode, companyId, groupId);
+	}
+
 	/**
 	 * @throws PortalException
 	 */
@@ -306,6 +314,14 @@ public class ObjectEntryFolderLocalServiceUtil {
 		return getService().getObjectEntryFolders(start, end);
 	}
 
+	public static List<ObjectEntryFolder> getObjectEntryFolders(
+		long companyId, long groupId, long parentObjectEntryFolderId, int start,
+		int end) {
+
+		return getService().getObjectEntryFolders(
+			companyId, groupId, parentObjectEntryFolderId, start, end);
+	}
+
 	/**
 	 * Returns all the object entry folders matching the UUID and company.
 	 *
@@ -346,6 +362,13 @@ public class ObjectEntryFolderLocalServiceUtil {
 	 */
 	public static int getObjectEntryFoldersCount() {
 		return getService().getObjectEntryFoldersCount();
+	}
+
+	public static int getObjectEntryFoldersCount(
+		long companyId, long groupId, long parentObjectEntryFolderId) {
+
+		return getService().getObjectEntryFoldersCount(
+			companyId, groupId, parentObjectEntryFolderId);
 	}
 
 	/**

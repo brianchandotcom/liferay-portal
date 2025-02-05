@@ -126,6 +126,15 @@ public class ObjectEntryFolderLocalServiceWrapper
 			objectEntryFolder);
 	}
 
+	@Override
+	public com.liferay.object.model.ObjectEntryFolder deleteObjectEntryFolder(
+			String externalReferenceCode, long companyId, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectEntryFolderLocalService.deleteObjectEntryFolder(
+			externalReferenceCode, companyId, groupId);
+	}
+
 	/**
 	 * @throws PortalException
 	 */
@@ -340,6 +349,16 @@ public class ObjectEntryFolderLocalServiceWrapper
 		return _objectEntryFolderLocalService.getObjectEntryFolders(start, end);
 	}
 
+	@Override
+	public java.util.List<com.liferay.object.model.ObjectEntryFolder>
+		getObjectEntryFolders(
+			long companyId, long groupId, long parentObjectEntryFolderId,
+			int start, int end) {
+
+		return _objectEntryFolderLocalService.getObjectEntryFolders(
+			companyId, groupId, parentObjectEntryFolderId, start, end);
+	}
+
 	/**
 	 * Returns all the object entry folders matching the UUID and company.
 	 *
@@ -386,6 +405,14 @@ public class ObjectEntryFolderLocalServiceWrapper
 	@Override
 	public int getObjectEntryFoldersCount() {
 		return _objectEntryFolderLocalService.getObjectEntryFoldersCount();
+	}
+
+	@Override
+	public int getObjectEntryFoldersCount(
+		long companyId, long groupId, long parentObjectEntryFolderId) {
+
+		return _objectEntryFolderLocalService.getObjectEntryFoldersCount(
+			companyId, groupId, parentObjectEntryFolderId);
 	}
 
 	/**

@@ -44,26 +44,12 @@ import org.osgi.service.component.annotations.Reference;
  */
 public abstract class BaseFDSSerializer {
 
-	public ObjectDefinition getDataSetObjectDefinition(
-		HttpServletRequest httpServletRequest) {
-
-		return dataSetObjectDefinitionLocalService.fetchObjectDefinition(
-			portal.getCompanyId(httpServletRequest), "DataSet");
-	}
-
-	public ObjectEntry getDataSetObjectEntry(
-		String externalReferenceCode, HttpServletRequest httpServletRequest) {
-
-		return _getObjectEntry(
-			getDataSetObjectDefinition(httpServletRequest),
-			externalReferenceCode);
-	}
-
 	public Map<String, Object> getDataSetObjectEntryProperties(
 		String externalReferenceCode, HttpServletRequest httpServletRequest) {
 
-		ObjectEntry objectEntry = getDataSetObjectEntry(
-			externalReferenceCode, httpServletRequest);
+		ObjectEntry objectEntry = _getObjectEntry(
+			_getDataSetObjectDefinition(httpServletRequest),
+			externalReferenceCode);
 
 		if (objectEntry != null) {
 			return objectEntry.getProperties();
@@ -78,11 +64,11 @@ public abstract class BaseFDSSerializer {
 		HttpServletRequest httpServletRequest, Predicate<ObjectEntry> predicate,
 		String... relationshipNames) {
 
-		ObjectDefinition dataSetObjectDefinition = getDataSetObjectDefinition(
+		ObjectDefinition dataSetObjectDefinition = _getDataSetObjectDefinition(
 			httpServletRequest);
 
-		ObjectEntry dataSetObjectEntry = getDataSetObjectEntry(
-			externalReferenceCode, httpServletRequest);
+		ObjectEntry dataSetObjectEntry = _getObjectEntry(
+			dataSetObjectDefinition, externalReferenceCode);
 
 		Set<ObjectEntry> objectEntries = new TreeSet<>(
 			new ObjectEntryComparator(
@@ -118,6 +104,13 @@ public abstract class BaseFDSSerializer {
 
 	@Reference
 	protected Portal portal;
+
+	private ObjectDefinition _getDataSetObjectDefinition(
+		HttpServletRequest httpServletRequest) {
+
+		return dataSetObjectDefinitionLocalService.fetchObjectDefinition(
+			portal.getCompanyId(httpServletRequest), "DataSet");
+	}
 
 	private ObjectEntry _getObjectEntry(
 		ObjectDefinition dataSetObjectDefinition,

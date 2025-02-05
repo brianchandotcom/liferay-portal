@@ -32,7 +32,7 @@ import org.mockito.Mockito;
 /**
  * @author Daniel Sanz
  */
-public class ItemsActionsCustomFDSSerializerImplTest {
+public class CustomItemsActionsFDSSerializerImplTest {
 
 	@ClassRule
 	@Rule
@@ -106,13 +106,14 @@ public class ItemsActionsCustomFDSSerializerImplTest {
 			_fdsSerializer.serialize(fdsName, _httpServletRequest)
 		).thenCallRealMethod();
 
-		BaseFDSSerializer baseFDSSerializer =
-			(BaseFDSSerializer)_fdsSerializer;
+		BaseFDSSerializer baseFDSSerializer = (BaseFDSSerializer)_fdsSerializer;
 
 		if (ArrayUtil.isEmpty(labels)) {
 			Mockito.when(
-				baseFDSSerializer.getItemsActionsObjectEntries(
-					fdsName, _httpServletRequest)
+				baseFDSSerializer.getSortedRelatedObjectEntries(
+					Mockito.eq(fdsName), Mockito.eq("itemActionsOrder"),
+					Mockito.eq(_httpServletRequest), Mockito.any(),
+					Mockito.eq("dataSetToDataSetActions"))
 			).thenReturn(
 				Collections.emptySet()
 			);
@@ -134,8 +135,10 @@ public class ItemsActionsCustomFDSSerializerImplTest {
 		}
 
 		Mockito.when(
-			baseFDSSerializer.getItemsActionsObjectEntries(
-				fdsName, _httpServletRequest)
+			baseFDSSerializer.getSortedRelatedObjectEntries(
+				Mockito.eq(fdsName), Mockito.eq("itemActionsOrder"),
+				Mockito.eq(_httpServletRequest), Mockito.any(),
+				Mockito.eq("dataSetToDataSetActions"))
 		).thenReturn(
 			objectEntries
 		);
@@ -143,7 +146,7 @@ public class ItemsActionsCustomFDSSerializerImplTest {
 
 	private void _resetSerializer() throws Exception {
 		_fdsSerializer = Mockito.mock(
-			ItemsActionsFDSSerializerImpl.class);
+			CustomItemsActionsFDSSerializerImpl.class);
 	}
 
 	private void _testSerialize(String fdsName, String[] labels)

@@ -5,15 +5,15 @@
 
 package com.liferay.frontend.data.set.internal.action;
 
-import com.liferay.frontend.data.set.action.ItemsActionsFDSSerializer;
-import com.liferay.frontend.data.set.internal.serializer.BaseFDSSerializer;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.data.set.serializer.FDSSerializer;
+import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -27,15 +27,19 @@ import org.osgi.service.component.annotations.Component;
 	property = "frontend.data.set.serializer.type=" + FDSSerializer.TYPE_CUSTOM,
 	service = FDSSerializer.class
 )
-public class ItemsActionsFDSSerializerImpl
-	extends BaseFDSSerializer implements ItemsActionsFDSSerializer {
+public class CustomItemsActionsFDSSerializerImpl
+	extends BaseItemsActionsFDSSerializer {
 
 	@Override
 	public List<FDSActionDropdownItem> serialize(
 		String fdsName, HttpServletRequest httpServletRequest) {
 
 		return TransformUtil.transform(
-			getItemsActionsObjectEntries(fdsName, httpServletRequest),
+			getSortedRelatedObjectEntries(
+				fdsName, "itemActionsOrder", httpServletRequest,
+				(ObjectEntry objectEntry) -> Objects.equals(
+					getType(objectEntry), "item"),
+				"dataSetToDataSetActions"),
 			objectEntry -> {
 				Map<String, Object> properties = objectEntry.getProperties();
 

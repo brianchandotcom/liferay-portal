@@ -160,7 +160,7 @@ public class TestrayImporter {
 				_getJenkinsBuildDescriptionElement(
 					testrayBuildTitle, testrayBuild.getName(),
 					String.valueOf(testrayBuild.getURL())),
-				_getJenkinsBuildIDElement(
+				_getJenkinsBuildDescriptionCodeElement(
 					"Testray Build ID", String.valueOf(testrayBuild.getID())));
 
 			i++;
@@ -1586,6 +1586,30 @@ public class TestrayImporter {
 		return buildParameters.get(buildParameterName);
 	}
 
+	private Element _getJenkinsBuildDescriptionCodeElement(
+		String title, String name) {
+
+		Document document = DocumentHelper.createDocument();
+
+		Element element = document.addElement("code");
+
+		Element titleElement = element.addElement("strong");
+
+		titleElement.addText(title + ":");
+
+		Element spaceElement = element.addElement("span");
+
+		spaceElement.addText(" ");
+
+		Element codeElement = element.addElement("code");
+
+		codeElement.addText(name);
+
+		element.addElement("br");
+
+		return element;
+	}
+
 	private Element _getJenkinsBuildDescriptionElement(
 		String title, String name) {
 
@@ -1616,28 +1640,6 @@ public class TestrayImporter {
 		else {
 			element.addText(name);
 		}
-
-		element.addElement("br");
-
-		return element;
-	}
-
-	private Element _getJenkinsBuildIDElement(String title, String name) {
-		Document document = DocumentHelper.createDocument();
-
-		Element element = document.addElement("code");
-
-		Element titleElement = element.addElement("strong");
-
-		titleElement.addText(title + ":");
-
-		Element spaceElement = element.addElement("span");
-
-		spaceElement.addText(" ");
-
-		Element codeElement = element.addElement("code");
-
-		codeElement.addText(name);
 
 		element.addElement("br");
 

@@ -8,8 +8,6 @@ package com.liferay.frontend.data.set.internal.url;
 import com.liferay.frontend.data.set.SystemFDSEntry;
 import com.liferay.frontend.data.set.SystemFDSEntryRegistry;
 import com.liferay.frontend.data.set.serializer.FDSSerializer;
-import com.liferay.frontend.data.set.url.APIURLFDSSerializer;
-import com.liferay.frontend.data.set.url.FDSAPIURLBuilderFactory;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -23,7 +21,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "frontend.data.set.serializer.type=" + FDSSerializer.TYPE_SYSTEM,
 	service = FDSSerializer.class
 )
-public class APIURLSystemFDSSerializerImpl implements APIURLFDSSerializer {
+public class SystemAPIURLFDSSerializerImpl extends BaseAPIURLFDSSerializer {
 
 	@Override
 	public String serialize(
@@ -36,16 +34,13 @@ public class APIURLSystemFDSSerializerImpl implements APIURLFDSSerializer {
 			return null;
 		}
 
-		return _fdsAPIURLBuilderFactory.create(
+		return createFDSAPIURLBuilder(
 			httpServletRequest, systemFDSEntry.getRESTApplication(),
 			systemFDSEntry.getRESTEndpoint(), systemFDSEntry.getRESTSchema()
 		).addQueryString(
 			systemFDSEntry.getAdditionalAPIURLParameters()
 		).build();
 	}
-
-	@Reference
-	private FDSAPIURLBuilderFactory _fdsAPIURLBuilderFactory;
 
 	@Reference
 	private SystemFDSEntryRegistry _systemFDSEntryRegistry;

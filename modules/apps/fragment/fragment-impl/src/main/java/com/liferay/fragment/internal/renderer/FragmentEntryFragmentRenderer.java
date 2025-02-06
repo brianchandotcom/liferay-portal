@@ -20,7 +20,6 @@ import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.fragment.renderer.constants.FragmentRendererConstants;
 import com.liferay.fragment.service.FragmentEntryLocalService;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
-import com.liferay.info.form.InfoForm;
 import com.liferay.petra.io.unsync.UnsyncStringWriter;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -50,7 +49,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -167,13 +165,15 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 
 	private JSONObject _getInputJSONObject(
 		FragmentEntryLink fragmentEntryLink,
-		HttpServletRequest httpServletRequest, InfoForm infoForm,
-		Locale locale) {
+		FragmentRendererContext fragmentRendererContext,
+		HttpServletRequest httpServletRequest) {
 
 		InputTemplateNode inputTemplateNode =
 			_fragmentEntryInputTemplateNodeContextHelper.toInputTemplateNode(
+				fragmentRendererContext.getAttributes(),
 				_getFragmentEntryName(fragmentEntryLink), fragmentEntryLink,
-				httpServletRequest, infoForm, locale);
+				httpServletRequest, fragmentRendererContext.getInfoForm(),
+				fragmentRendererContext.getLocale());
 
 		return inputTemplateNode.toJSONObject();
 	}
@@ -346,9 +346,8 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 				sb.append(
 					JSONUtil.toString(
 						_getInputJSONObject(
-							fragmentEntryLink, httpServletRequest,
-							fragmentRendererContext.getInfoForm(),
-							fragmentRendererContext.getLocale())));
+							fragmentEntryLink, fragmentRendererContext,
+							httpServletRequest)));
 			}
 
 			sb.append("; const layoutMode = '");

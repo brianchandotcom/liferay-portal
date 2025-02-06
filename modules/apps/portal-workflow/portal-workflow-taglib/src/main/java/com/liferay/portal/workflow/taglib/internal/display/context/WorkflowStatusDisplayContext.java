@@ -116,26 +116,27 @@ public class WorkflowStatusDisplayContext {
 		Object bean = _getBean(httpServletRequest);
 		Class<?> modelClass = _getModelClass(httpServletRequest);
 
-		if ((bean != null) && (modelClass != null)) {
-			try {
-				WorkflowInstanceLink workflowInstanceLink =
-					WorkflowInstanceLinkLocalServiceUtil.
-						getWorkflowInstanceLink(
-							BeanPropertiesUtil.getLong(bean, "companyId"),
-							BeanPropertiesUtil.getLong(bean, "groupId"),
-							modelClass.getName(),
-							BeanPropertiesUtil.getLong(bean, "primaryKey"));
-
-				return workflowInstanceLink.getWorkflowInstanceId();
-			}
-			catch (PortalException portalException) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(portalException);
-				}
-			}
+		if ((bean == null) || (modelClass == null)) {
+			return null;
 		}
 
-		return null;
+		try {
+			WorkflowInstanceLink workflowInstanceLink =
+				WorkflowInstanceLinkLocalServiceUtil.getWorkflowInstanceLink(
+					BeanPropertiesUtil.getLong(bean, "companyId"),
+					BeanPropertiesUtil.getLong(bean, "groupId"),
+					modelClass.getName(),
+					BeanPropertiesUtil.getLong(bean, "primaryKey"));
+
+			return workflowInstanceLink.getWorkflowInstanceId();
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+
+			return null;
+		}
 	}
 
 	private Class<?> _getModelClass(HttpServletRequest httpServletRequest) {

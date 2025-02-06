@@ -5,7 +5,7 @@
 
 package com.liferay.frontend.data.set.internal.url;
 
-import com.liferay.frontend.data.set.serializer.FDSSerializer;
+import com.liferay.frontend.data.set.FDSSerializer;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;

@@ -5,9 +5,9 @@
 
 package com.liferay.frontend.data.set.internal.action;
 
-import com.liferay.frontend.data.set.internal.serializer.BaseFDSSerializer;
+import com.liferay.frontend.data.set.FDSSerializer;
+import com.liferay.frontend.data.set.internal.BaseFDSSerializer;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
-import com.liferay.frontend.data.set.serializer.FDSSerializer;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.portal.kernel.util.ArrayUtil;

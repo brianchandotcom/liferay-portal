@@ -5,9 +5,9 @@
 
 package com.liferay.frontend.data.set.internal.url;
 
+import com.liferay.frontend.data.set.FDSSerializer;
 import com.liferay.frontend.data.set.SystemFDSEntry;
 import com.liferay.frontend.data.set.SystemFDSEntryRegistry;
-import com.liferay.frontend.data.set.serializer.FDSSerializer;
 
 import javax.servlet.http.HttpServletRequest;
 

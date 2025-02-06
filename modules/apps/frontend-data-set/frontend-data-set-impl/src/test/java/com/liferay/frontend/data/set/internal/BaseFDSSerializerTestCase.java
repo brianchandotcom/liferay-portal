@@ -105,14 +105,13 @@ public abstract class BaseFDSSerializerTestCase {
 			MapUtil.singletonDictionary("frontend.data.set.name", fdsName));
 	}
 
-	protected static BundleContext bundleContext =
-		SystemBundleUtil.getBundleContext();
-	protected static final HttpServletRequest httpServletRequest = Mockito.mock(
+	protected BundleContext bundleContext = SystemBundleUtil.getBundleContext();
+	protected HttpServletRequest httpServletRequest = Mockito.mock(
 		HttpServletRequest.class);
-	protected static ServiceTrackerMap<String, ?> serviceTrackerMap;
-	protected static final SystemFDSEntryRegistryImpl
-		systemFDSEntryRegistryImpl = new SystemFDSEntryRegistryImpl();
-	protected static ServiceTrackerMap<String, SystemFDSEntry>
+	protected ServiceTrackerMap<String, ?> serviceTrackerMap;
+	protected SystemFDSEntryRegistryImpl systemFDSEntryRegistryImpl =
+		new SystemFDSEntryRegistryImpl();
+	protected ServiceTrackerMap<String, SystemFDSEntry>
 		systemFDSEntryserviceTrackerMap;
 
 }

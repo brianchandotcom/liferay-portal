@@ -41,13 +41,13 @@ public class LayoutStructureRulesHelperImpl
 		long groupId, LayoutStructure layoutStructure,
 		PermissionChecker permissionChecker, long[] segmentsEntryIds) {
 
-		Set<String> displayedItemIds = new HashSet<>();
-		Set<String> hiddenItemIds = new HashSet<>();
 		Map<String, List<String>> itemIdsMap = new HashMap<>();
 		Map<String, List<String>> layoutStructureRuleIdsMap = new HashMap<>();
 		LayoutStructureRulesContext layoutStructureRulesContext =
 			new LayoutStructureRulesContext(
 				groupId, permissionChecker, segmentsEntryIds);
+
+		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
 		for (LayoutStructureRule layoutStructureRule :
 				layoutStructure.getLayoutStructureRules()) {
@@ -55,25 +55,11 @@ public class LayoutStructureRulesHelperImpl
 			List<String> itemIds = _getItemIds(layoutStructureRule);
 
 			if (itemIds.isEmpty()) {
-				JSONArray actionsJSONArray = layoutStructureRule.getActionsJSONArray();
-
-				boolean negated = !_evaluateLayoutStructureRule(
-					Collections.emptyMap(), layoutStructureRule,
-					layoutStructureRulesContext);
-
-				for (int i = 0; i < actionsJSONArray.length(); i++) {
-					JSONObject actionsJSONObject = actionsJSONArray.getJSONObject(i);
-
-					if (Objects.equals(
-						_getAction(negated, actionsJSONObject.getString("type")),
-						Action.SHOW)) {
-
-						displayedItemIds.add(actionsJSONObject.getString("itemId"));
-					}
-					else {
-						hiddenItemIds.add(actionsJSONObject.getString("itemId"));
-					}
-				}
+				_processActions(
+					layoutStructureRule.getActionsJSONArray(), jsonArray,
+					!_evaluateLayoutStructureRule(
+						Collections.emptyMap(), layoutStructureRule,
+						layoutStructureRulesContext));
 
 				continue;
 			}
@@ -95,6 +81,22 @@ public class LayoutStructureRulesHelperImpl
 						itemId, key -> new ArrayList<>());
 
 				layoutStructureRuleIds.add(layoutStructureRule.getId());
+			}
+		}
+
+		Set<String> displayedItemIds = new HashSet<>();
+		Set<String> hiddenItemIds = new HashSet<>();
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			if (Objects.equals(
+					jsonObject.getString("action"), Action.SHOW.getValue())) {
+
+				displayedItemIds.add(jsonObject.getString("itemId"));
+			}
+			else {
+				hiddenItemIds.add(jsonObject.getString("itemId"));
 			}
 		}
 

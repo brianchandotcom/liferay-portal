@@ -151,9 +151,22 @@ export async function loadData(
 	}
 
 	if (sorts.length) {
+		const updatedSorts = sorts.map((sort) => {
+			const key = sort.key.includes('LANG')
+				? sort.key.split(',')[0]
+				: sort.key;
+
+			return {
+				...sort,
+				key,
+			};
+		});
+
 		url.searchParams.set(
 			'sort',
-			sorts.map((item) => `${item.key}:${item.direction}`).join(',')
+			updatedSorts
+				.map((item) => `${item.key}:${item.direction}`)
+				.join(',')
 		);
 	}
 

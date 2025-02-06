@@ -29,6 +29,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auth.GuestOrUserUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -159,7 +160,11 @@ public class JournalArticleInfoItemFieldValuesUpdater
 				fields, ddmStructure, importedLocaleContentMap, targetLocale);
 		}
 
-		User user = _userLocalService.getUser(latestArticle.getUserId());
+		User user = _userLocalService.fetchUser(journalArticle.getUserId());
+
+		if (user == null) {
+			user = _userLocalService.getUser(GuestOrUserUtil.getUserId());
+		}
 
 		int[] displayDateArray = _getDateArray(
 			user, latestArticle.getDisplayDate());
@@ -171,7 +176,7 @@ public class JournalArticleInfoItemFieldValuesUpdater
 		ServiceContext serviceContext = _getServiceContext(latestArticle);
 
 		return _journalArticleLocalService.updateArticle(
-			latestArticle.getUserId(), latestArticle.getGroupId(),
+			user.getUserId(), latestArticle.getGroupId(),
 			latestArticle.getFolderId(), latestArticle.getArticleId(),
 			latestArticle.getVersion(), titleMap, descriptionMap,
 			latestArticle.getFriendlyURLMap(),

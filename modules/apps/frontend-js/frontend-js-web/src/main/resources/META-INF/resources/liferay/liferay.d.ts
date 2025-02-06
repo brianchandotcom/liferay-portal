@@ -250,7 +250,9 @@ declare module Liferay {
 		export function getPortalURL(): string;
 		export function getTimeZone(): string;
 		export function getSiteGroupId(): number;
+		export function getUserId(): string;
 		export function isControlPanel(): boolean;
+		export function isImpersonated(): boolean;
 	}
 
 	namespace Util {

@@ -69,15 +69,18 @@ export type TProduct = {
 	active?: boolean;
 	catalogId: number;
 	categories?: TCategory[];
+	createDate?: string;
 	description?: {
 		[key: string]: string;
 	};
 	diagram?: TDiagram;
+	expirationDate?: string;
 	externalReferenceCode?: string;
 	id?: number;
 	name?: {
 		[key: string]: string;
 	};
+	neverExpire?: boolean;
 	productAccountGroupFilter?: boolean;
 	productAccountGroups?: {
 		accountGroupId: number;
@@ -125,7 +128,7 @@ export type TProductConfiguration = {
 	minStockQuantity?: number;
 	multipleOrderQuantity?: number;
 	productShippingConfiguration?: any;
-	productTaxConfiguration?: any;
+	productTaxConfiguration?: TProductTaxConfiguration;
 	purchasable?: boolean;
 	visible?: boolean;
 };
@@ -141,6 +144,11 @@ export type TProductConfigurationList = {
 	parentProductConfigurationListId?: number;
 	priority?: number;
 	productConfigurations?: TProductConfiguration[];
+};
+
+export type TProductTaxConfiguration = {
+	id: number;
+	taxable: boolean;
 };
 
 type TProductVirtualSettings = {
@@ -391,6 +399,18 @@ export class HeadlessCommerceAdminCatalogApiHelper {
 					en_US: 'Product' + getRandomInt(),
 				},
 				...(product || {}),
+			}
+		);
+	}
+
+	async patchProductTaxConfiguration(
+		productId: number,
+		productTaxConfiguration: TProductTaxConfiguration
+	) {
+		return this.apiHelpers.patch(
+			`${this.apiHelpers.baseUrl}${this.basePath}/products/${productId}/taxConfiguration`,
+			{
+				...(productTaxConfiguration || {}),
 			}
 		);
 	}

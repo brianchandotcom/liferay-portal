@@ -39,7 +39,14 @@ export class TaxCategoriesPage extends CommerceDNDTablePage {
 		};
 	}
 
-	async goto() {
-		await this.applicationsMenuPage.goToCommerceTaxCategories();
+	async goto(siteName?: string) {
+		if (siteName) {
+			await this.page.goto(
+				`/group/${siteName}/~/control_panel/manage?p_p_id=com_liferay_commerce_product_tax_category_web_internal_portlet_CPTaxCategoryPortlet`
+			);
+		}
+		else {
+			await this.applicationsMenuPage.goToCommerceTaxCategories();
+		}
 	}
 }

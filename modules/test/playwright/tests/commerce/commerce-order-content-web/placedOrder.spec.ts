@@ -9,17 +9,22 @@ import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTe
 import {commercePagesTest} from '../../../fixtures/commercePagesTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {instanceSettingsPagesTest} from '../../../fixtures/instanceSettingsPagesTest';
 import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {pageViewModePagesTest} from '../../../fixtures/pageViewModePagesTest';
 import {systemSettingsPageTest} from '../../../fixtures/systemSettingsPageTest';
 import {usersAndOrganizationsPagesTest} from '../../../fixtures/usersAndOrganizationsPagesTest';
 import getRandomString from '../../../utils/getRandomString';
 import performLogin, {
+	performLoginViaApi,
 	performLogout,
 	userData,
 } from '../../../utils/performLogin';
 import {waitForAlert} from '../../../utils/waitForAlert';
+import getPageDefinition from '../../layout-content-page-editor-web/utils/getPageDefinition';
+import getWidgetDefinition from '../../layout-content-page-editor-web/utils/getWidgetDefinition';
 import {miniumSetUp} from '../utils/commerce';
 import {
 	customFormatDateTimeYY,
@@ -27,6 +32,7 @@ import {
 	customFormatDateYY,
 	customFormatDateYYYY,
 	getDateCustomFormat,
+	twoDigitFormatDate,
 } from '../utils/date';
 
 export const test = mergeTests(
@@ -36,8 +42,10 @@ export const test = mergeTests(
 	featureFlagsTest({
 		'LPS-178052': {enabled: true},
 	}),
+	instanceSettingsPagesTest,
 	isolatedSiteTest,
 	loginTest(),
+	pageEditorPagesTest,
 	pageViewModePagesTest,
 	systemSettingsPageTest,
 	usersAndOrganizationsPagesTest
@@ -942,4 +950,253 @@ test('LPD-41952 Reorder from placed orders details page with different currency 
 			.locator('.col-md-3 > .commerce-panel > div:nth-child(2)')
 			.filter({hasText: '¥'})
 	).toBeVisible();
+});
+
+test('LPD-41398 Local date format', async ({
+	apiHelpers,
+	commerceInstanceSettingsPage,
+	page,
+	site,
+}) => {
+	let user;
+
+	try {
+		await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([
+				getWidgetDefinition({
+					id: getRandomString(),
+					widgetName:
+						'com_liferay_site_navigation_language_web_portlet_SiteNavigationLanguagePortlet',
+				}),
+				getWidgetDefinition({
+					id: getRandomString(),
+					widgetName:
+						'com_liferay_commerce_order_content_web_internal_portlet_CommerceOrderContentPortlet',
+				}),
+			]),
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		await commerceInstanceSettingsPage.goToInstanceSetting(
+			'Orders',
+			'Placed Orders'
+		);
+		await commerceInstanceSettingsPage
+			.checkboxPlacedOrders('Show Order Create Time')
+			.uncheck();
+		await commerceInstanceSettingsPage.submitConfigurationButton.click();
+
+		await waitForAlert(page);
+
+		await expect(
+			commerceInstanceSettingsPage.checkboxPlacedOrders(
+				'Show Order Create Time'
+			)
+		).not.toBeChecked();
+
+		const account = await apiHelpers.headlessAdminUser.postAccount({
+			type: 'person',
+		});
+
+		apiHelpers.data.push({id: account.id, type: 'account'});
+
+		user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+		userData[user.alternateName] = {
+			name: user.givenName,
+			password: 'test',
+			surname: user.familyName,
+		};
+
+		await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
+			account.id,
+			[user.emailAddress]
+		);
+
+		const rolesResponse =
+			await apiHelpers.headlessAdminUser.getAccountRoles(account.id);
+
+		const buyerAccountRole = rolesResponse?.items?.filter((role) => {
+			return role.name === 'Buyer';
+		});
+
+		await apiHelpers.headlessAdminUser.assignAccountRoles(
+			account.externalReferenceCode,
+			buyerAccountRole[0].id,
+			user.emailAddress
+		);
+
+		const catalog =
+			await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
+
+		const product =
+			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+				catalogId: catalog.id,
+			});
+		const productSkus = await apiHelpers.headlessCommerceAdminCatalog
+			.getProduct(product.productId)
+			.then((product) => {
+				return product.skus;
+			});
+
+		const sku = productSkus[0];
+
+		const address =
+			await apiHelpers.headlessCommerceAdminAccount.postAddress(
+				account.id,
+				{
+					phoneNumber: '12345',
+					regionISOCode: 'LA',
+				}
+			);
+
+		const channel =
+			await apiHelpers.headlessCommerceAdminChannel.postChannel({
+				name: getRandomString(),
+				siteGroupId: site.id,
+			});
+
+		const order = await apiHelpers.headlessCommerceAdminOrder.postOrder({
+			accountId: account.id,
+			billingAddressId: address.id,
+			channelId: channel.id,
+			orderItems: [
+				{
+					decimalQuantity: 10,
+					quantity: 2,
+					skuId: sku.id,
+				},
+			],
+			orderStatus: '0',
+			paymentMethod: 'paypal',
+			paymentStatus: '0',
+			shippingAddressId: address.id,
+		});
+
+		const siteRole =
+			await apiHelpers.headlessAdminUser.getRoleByName('Site Member');
+
+		await apiHelpers.headlessAdminUser.assignUserToSite(
+			siteRole.id,
+			site.id,
+			user.id
+		);
+
+		await performLogout(page);
+
+		await performLoginViaApi(page, user.alternateName);
+
+		await page.goto(`hu/web/${site.name}`);
+
+		await expect(
+			page.getByText(
+				getDateCustomFormat(
+					order.createDate,
+					await page.evaluate(() => {
+						return Liferay.ThemeDisplay.getBCP47LanguageId();
+					}),
+					customFormatDateYY.DATE_AND_TIME
+				)
+			)
+		).toBeVisible();
+
+		await page.getByRole('link', {name: order.id.toString()}).click();
+
+		await expect(
+			page.getByText(
+				getDateCustomFormat(
+					order.createDate,
+					await page.evaluate(() => {
+						return Liferay.ThemeDisplay.getBCP47LanguageId();
+					}),
+					customFormatDateYY.DATE_AND_TIME
+				)
+			)
+		).toBeVisible();
+
+		await page.getByRole('link', {name: 'Vissza a teljes oldalra'}).click();
+
+		await page.goto(`de/web/${site.name}`);
+
+		await expect(
+			page.getByText(
+				getDateCustomFormat(
+					order.createDate,
+					await page.evaluate(() => {
+						return Liferay.ThemeDisplay.getBCP47LanguageId();
+					}),
+					twoDigitFormatDate.DATE_AND_TIME
+				).replace(/,(?=[^,]*$)/, '')
+			)
+		).toBeVisible();
+
+		await page.getByRole('link', {name: order.id.toString()}).click();
+
+		await expect(
+			page.getByText(
+				getDateCustomFormat(
+					order.createDate,
+					await page.evaluate(() => {
+						return Liferay.ThemeDisplay.getBCP47LanguageId();
+					}),
+					twoDigitFormatDate.DATE_AND_TIME
+				).replace(/,(?=[^,]*$)/, '')
+			)
+		).toBeVisible();
+
+		await page.getByRole('link', {name: 'Zurück zur Seite'}).click();
+
+		await page.goto(`en/web/${site.name}`);
+
+		await expect(
+			page.getByText(
+				getDateCustomFormat(
+					order.createDate,
+					await page.evaluate(() => {
+						return Liferay.ThemeDisplay.getBCP47LanguageId();
+					}),
+					customFormatDateYY.DATE_AND_TIME
+				)
+			)
+		).toBeVisible();
+
+		await page.getByRole('link', {name: order.id.toString()}).click();
+
+		await expect(
+			page.getByText(
+				getDateCustomFormat(
+					order.createDate,
+					await page.evaluate(() => {
+						return Liferay.ThemeDisplay.getBCP47LanguageId();
+					}),
+					customFormatDateYY.DATE_AND_TIME
+				)
+			)
+		).toBeVisible();
+	}
+	finally {
+		await page.goto('/en');
+
+		await performLogout(page);
+
+		await performLoginViaApi(page, 'test');
+
+		await commerceInstanceSettingsPage.goToInstanceSetting(
+			'Orders',
+			'Placed Orders'
+		);
+		await commerceInstanceSettingsPage
+			.checkboxPlacedOrders('Show Order Create Time')
+			.check();
+		await commerceInstanceSettingsPage.submitConfigurationButton.click();
+
+		await waitForAlert(page);
+
+		await expect(
+			commerceInstanceSettingsPage.checkboxPlacedOrders(
+				'Show Order Create Time'
+			)
+		).toBeChecked();
+	}
 });

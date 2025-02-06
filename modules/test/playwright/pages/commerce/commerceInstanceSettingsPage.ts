@@ -10,6 +10,7 @@ import {ApplicationsMenuPage} from '../product-navigation-applications-menu/Appl
 export class CommerceInstanceSettingsPage {
 	readonly applicationsMenuPage: ApplicationsMenuPage;
 	readonly catalogLink: Locator;
+	readonly checkboxPlacedOrders: (checkboxName: string) => Locator;
 	readonly page: Page;
 	readonly productOptionMenuItem: Locator;
 	readonly showUnselectableOptionsCheckbox: Locator;
@@ -21,6 +22,8 @@ export class CommerceInstanceSettingsPage {
 			exact: true,
 			name: 'Catalog',
 		});
+		this.checkboxPlacedOrders = (checkboxName) =>
+			page.getByLabel(checkboxName, {exact: true});
 		this.page = page;
 		this.productOptionMenuItem = page.getByRole('menuitem', {
 			name: 'Product Options',

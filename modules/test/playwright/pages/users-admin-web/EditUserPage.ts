@@ -80,6 +80,7 @@ export class EditUserPage {
 		strictEqual?: boolean
 	) => Promise<{column: Locator; row: Locator}>;
 	readonly selectSitesTableRowButton: (siteName: string) => Promise<Locator>;
+	readonly selectUserLanguage: Locator;
 	readonly webDAVPasswordLabel: Locator;
 	readonly yourPasswordInput: Locator;
 
@@ -298,6 +299,7 @@ export class EditUserPage {
 
 			throw new Error(`Cannot locate user row with siteName ${siteName}`);
 		};
+		this.selectUserLanguage = page.getByLabel('Language');
 		this.webDAVPasswordLabel = page.locator(
 			'#_com_liferay_users_admin_web_portlet_UsersAdminPortlet_webDAVPassword'
 		);

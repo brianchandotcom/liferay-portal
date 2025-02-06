@@ -104,5 +104,3 @@ export class PlacedOrdersPage extends CommerceDNDTablePage {
 		await this.layoutsPage.goto();
 	}
 }
-
-// locator('#portlet_com_liferay_commerce_order_content_web_internal_portlet_CommerceOrderContentPortlet .fds table').getByText('Oct 18, 24 9:17:33 AM')

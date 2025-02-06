@@ -42,6 +42,12 @@ export class HeadlessCommerceAdminChannelApiHelper {
 		);
 	}
 
+	async getTaxCategories() {
+		return this.apiHelpers.get(
+			`${this.apiHelpers.baseUrl}${this.basePath}/tax-categories`
+		);
+	}
+
 	async patchChannelWithAccountId(accountId: number, channel: TChannel) {
 		await this.apiHelpers.patch(
 			`${this.apiHelpers.baseUrl}${this.basePath}/channels/${channel.id}`,

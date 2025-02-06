@@ -256,7 +256,9 @@ public class FragmentServiceUpgradeStepRegistrator
 			UpgradeProcessFactory.addColumns(
 				"FragmentComposition", "marketplace BOOLEAN"),
 			UpgradeProcessFactory.addColumns(
-				"FragmentEntry", "marketplace BOOLEAN"));
+				"FragmentEntry", "marketplace BOOLEAN"),
+			UpgradeProcessFactory.addColumns(
+				"FragmentEntryVersion", "marketplace BOOLEAN"));
 	}
 
 	@Reference

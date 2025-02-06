@@ -7,7 +7,7 @@ export * from './AnalyticsIcon';
 export * from './AnalyticsIconGray';
 export * from '../AttachmentsIcon';
 export * from './BusinessEventsIcon';
-export * from './BusinessEventsIconGray'
+export * from './BusinessEventsIconGray';
 export * from './CommerceIcon';
 export * from './CommerceIconGray';
 export * from './DXPIcon';

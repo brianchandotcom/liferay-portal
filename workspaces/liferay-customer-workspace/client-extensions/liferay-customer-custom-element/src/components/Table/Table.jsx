@@ -6,7 +6,7 @@
 import ClayTable from '@clayui/table';
 import classNames from 'classnames';
 import {useEffect, useState} from 'react';
-import {FilterIcon} from '../../assets/filter_icon';
+import {FilterIcon} from '../../assets/FilterIcon';
 import TablePagination from './Pagination';
 import TableSkeleton from './TableSkeleton';
 import i18n from '~/utils/I18n';

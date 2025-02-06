@@ -21,7 +21,7 @@ const ProjectUsageIcon = (
 			height="16"
 			id="mask0_1247_437"
 			maskUnits="userSpaceOnUse"
-			style={{ maskType: 'alpha' }}
+			style={{maskType: 'alpha'}}
 			width="16"
 			x="0"
 			y="0"
@@ -38,6 +38,6 @@ const ProjectUsageIcon = (
 			<rect fill="#004AD7" height="16" width="16" />
 		</g>
 	</svg>
-)
+);
 
 export {ProjectUsageIcon};

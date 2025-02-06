@@ -15,7 +15,7 @@ import './SecurityVulnerabilitiesList.css';
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar/lib/PaginationBarWithBasicItems';
 import {useMemo} from 'react';
 import {Link} from 'react-router-dom';
-import {SVWaves} from '~/assets/sv_waves';
+import {SVWaves} from '~/assets/SVWaves';
 import {getFormattedDate} from '~/features/project/utils/getFormattedDate';
 import {FILTER_OPTIONS} from '~/features/security-vulnerabilities/utils/constants/filterOptions';
 import {JiraEnum} from '~/features/security-vulnerabilities/utils/constants/jiraEnum';

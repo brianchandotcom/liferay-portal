@@ -7,6 +7,7 @@ package com.liferay.frontend.data.set.internal.action;
 
 import com.liferay.frontend.data.set.SystemFDSEntry;
 import com.liferay.frontend.data.set.action.FDSItemsActions;
+import com.liferay.frontend.data.set.action.FDSItemsActionsRegistry;
 import com.liferay.frontend.data.set.internal.BaseFDSSerializerTestCase;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.data.set.serializer.FDSSerializer;
@@ -45,13 +46,15 @@ public class SystemItemsActionsFDSSerializerTest
 	public void setUp() throws Exception {
 		super.setUp();
 
+		FDSItemsActionsRegistry fdsItemsActionsRegistry =
+			new FDSItemsActionsRegistryImpl();
+
 		ReflectionTestUtil.setFieldValue(
-			_fdsItemsActionsRegistryImpl, "_serviceTrackerMap",
-			serviceTrackerMap);
+			fdsItemsActionsRegistry, "_serviceTrackerMap", serviceTrackerMap);
 
 		ReflectionTestUtil.setFieldValue(
 			_fdsSerializer, "_fdsItemsActionsRegistry",
-			_fdsItemsActionsRegistryImpl);
+			fdsItemsActionsRegistry);
 	}
 
 	@Test
@@ -165,9 +168,7 @@ public class SystemItemsActionsFDSSerializerTest
 			MapUtil.singletonDictionary("frontend.data.set.name", fdsName));
 	}
 
-	private static final FDSItemsActionsRegistryImpl
-		_fdsItemsActionsRegistryImpl = new FDSItemsActionsRegistryImpl();
-	private static final FDSSerializer<List<FDSActionDropdownItem>>
-		_fdsSerializer = new SystemItemsActionsFDSSerializerImpl();
+	private final FDSSerializer<List<FDSActionDropdownItem>> _fdsSerializer =
+		new SystemItemsActionsFDSSerializerImpl();
 
 }

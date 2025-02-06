@@ -5,9 +5,9 @@
 
 package com.liferay.frontend.data.set.internal.action;
 
+import com.liferay.frontend.data.set.FDSSerializer;
 import com.liferay.frontend.data.set.action.FDSCreationMenu;
 import com.liferay.frontend.data.set.action.FDSCreationMenuRegistry;
-import com.liferay.frontend.data.set.serializer.FDSSerializer;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 
 import javax.servlet.http.HttpServletRequest;

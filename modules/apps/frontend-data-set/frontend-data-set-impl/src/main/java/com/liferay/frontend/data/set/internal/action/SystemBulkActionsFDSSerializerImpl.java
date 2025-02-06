@@ -5,10 +5,10 @@
 
 package com.liferay.frontend.data.set.internal.action;
 
+import com.liferay.frontend.data.set.FDSSerializer;
 import com.liferay.frontend.data.set.action.FDSBulkActions;
 import com.liferay.frontend.data.set.action.FDSBulkActionsRegistry;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
-import com.liferay.frontend.data.set.serializer.FDSSerializer;
 
 import java.util.Collections;
 import java.util.List;

@@ -5,9 +5,9 @@
 
 package com.liferay.frontend.data.set.internal.url;
 
+import com.liferay.frontend.data.set.FDSSerializer;
 import com.liferay.frontend.data.set.SystemFDSEntry;
 import com.liferay.frontend.data.set.internal.BaseFDSSerializerTestCase;
-import com.liferay.frontend.data.set.serializer.FDSSerializer;
 import com.liferay.frontend.data.set.url.FDSAPIURLResolver;
 import com.liferay.frontend.data.set.url.FDSAPIURLResolverRegistry;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory;

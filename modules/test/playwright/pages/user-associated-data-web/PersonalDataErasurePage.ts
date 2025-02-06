@@ -14,8 +14,13 @@ export class PersonalDataErasurePage {
 	readonly anonymizeButton: Locator;
 	readonly anonymizeMenuItem: Locator;
 	readonly applicationsMenuPage: ApplicationsMenuPage;
-	readonly blogCountLink: (blogCountNumber: string) => Locator;
+	readonly journalArticleCheckBox: (
+		articleId: string,
+		articleUrlTitle: string,
+		match: boolean
+	) => Locator;
 	readonly menuItemDelete: Locator;
+	readonly objectCountLink: (objectCountNumber: string) => Locator;
 	readonly page: Page;
 	readonly pageTitle: Locator;
 	readonly selectAllItemsOnPageCheckbox: Locator;
@@ -28,6 +33,7 @@ export class PersonalDataErasurePage {
 	readonly userAssociatedDataTableRowCheckBox: (
 		name: string
 	) => Promise<Locator>;
+	readonly objectLink: (objectName: string) => Locator;
 
 	constructor(page: Page) {
 		this.actionsButton = page.getByRole('button', {name: 'Actions'});
@@ -40,17 +46,42 @@ export class PersonalDataErasurePage {
 		this.anonymizeMenuItem = page.getByRole('menuitem', {
 			name: 'Anonymize',
 		});
-		this.blogCountLink = (blogCountNumber: string) => {
-			return page.getByRole('link', {name: blogCountNumber});
+		this.journalArticleCheckBox = (
+			articleId: string,
+			articleUrlTitle: string,
+			match: boolean
+		) => {
+			const articleIdLocator = page.locator(
+				`[value="${parseInt(articleId, 10) + 1}"]`
+			);
+
+			return match
+				? this.objectLink(articleUrlTitle)
+						.locator('../..')
+						.filter({has: articleIdLocator})
+						.getByRole('checkbox')
+				: this.objectLink(articleUrlTitle)
+						.locator('../..')
+						.filter({hasNot: articleIdLocator})
+						.getByRole('checkbox');
 		};
 		this.menuItemDelete = page.getByRole('menuitem', {name: 'Delete'});
+		this.objectCountLink = (objectCountNumber: string) => {
+			return page.getByRole('link', {name: objectCountNumber});
+		};
 		this.page = page;
 		this.selectAllItemsOnPageCheckbox = page.getByLabel(
 			'Select All Items on the Page'
 		);
-		this.userAssociatedDataTable = page.locator(
-			'#_com_liferay_user_associated_data_web_portlet_UserAssociatedData_uadEntities_com_liferay_blogs_uad'
-		);
+		this.userAssociatedDataTable = page
+			.locator(
+				'#_com_liferay_user_associated_data_web_portlet_UserAssociatedData_uadEntities_com_liferay_blogs_uad'
+			)
+			.or(
+				page.locator(
+					'#_com_liferay_user_associated_data_web_portlet_UserAssociatedData_uadEntities_com_liferay_journal_uad'
+				)
+			);
 		this.userAssociatedDataTableRow = async (
 			colPosition: number,
 			value: string,
@@ -64,17 +95,16 @@ export class PersonalDataErasurePage {
 			);
 		};
 		this.userAssociatedDataTableRowCheckBox = async (name: string) => {
-			const accountsTableRow = await this.userAssociatedDataTableRow(
-				1,
-				name,
-				true
-			);
+			const userAssociatedDataTableRow =
+				await this.userAssociatedDataTableRow(1, name, true);
 
-			if (accountsTableRow && accountsTableRow.row) {
-				return accountsTableRow.row.getByTitle('Select');
+			if (userAssociatedDataTableRow && userAssociatedDataTableRow.row) {
+				return userAssociatedDataTableRow.row.getByTitle('Select');
 			}
 
 			throw new Error(`Cannot locate account row with name ${name}`);
 		};
+		this.objectLink = (objectName: string) =>
+			page.getByRole('link', {name: objectName});
 	}
 }

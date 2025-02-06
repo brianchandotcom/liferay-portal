@@ -1,0 +1,26 @@
+{
+	"children": [
+	],
+	"config": {
+		"cssClasses": [
+		],
+		"fragmentEntryLinkId": "${fragmentEntryLinkId}",
+		"landscapeMobile": {
+			"styles": {
+			}
+		},
+		"portraitMobile": {
+			"styles": {
+			}
+		},
+		"styles": {
+		},
+		"tablet": {
+			"styles": {
+			}
+		}
+	},
+	"itemId": "${itemId}",
+	"parentId": "e8044581-0f0e-dfdd-d943-d66579ce8fba",
+	"type": "fragment"
+}

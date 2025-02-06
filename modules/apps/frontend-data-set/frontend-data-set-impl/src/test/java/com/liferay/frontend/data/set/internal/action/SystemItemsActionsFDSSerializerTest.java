@@ -41,14 +41,6 @@ public class SystemItemsActionsFDSSerializerTest
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
-	@Override
-	protected ServiceTrackerMap<String, ?> createServiceTrackerMap() {
-		return ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, FDSItemsActions.class, "frontend.data.set.name",
-			ServiceTrackerCustomizerFactory.<FDSItemsActions>serviceWrapper(
-				bundleContext));
-	}
-
 	@Before
 	public void setUp() throws Exception {
 		super.setUp();
@@ -145,6 +137,14 @@ public class SystemItemsActionsFDSSerializerTest
 		itemsActionsServiceRegistration2.unregister();
 		systemFDSEntryServiceRegistration1.unregister();
 		systemFDSEntryServiceRegistration2.unregister();
+	}
+
+	@Override
+	protected ServiceTrackerMap<String, ?> createServiceTrackerMap() {
+		return ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, FDSItemsActions.class, "frontend.data.set.name",
+			ServiceTrackerCustomizerFactory.<FDSItemsActions>serviceWrapper(
+				bundleContext));
 	}
 
 	private ServiceRegistration<FDSItemsActions> _registerFDSItemsActions(

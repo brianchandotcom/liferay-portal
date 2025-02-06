@@ -40,14 +40,6 @@ public class SystemCreationMenuFDSSerializerTest
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
-	@Override
-	protected ServiceTrackerMap<String, ?> createServiceTrackerMap() {
-		return ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, FDSCreationMenu.class, "frontend.data.set.name",
-			ServiceTrackerCustomizerFactory.<FDSCreationMenu>serviceWrapper(
-				bundleContext));
-	}
-
 	@Before
 	public void setUp() throws Exception {
 		super.setUp();
@@ -145,6 +137,14 @@ public class SystemCreationMenuFDSSerializerTest
 		creationMenuServiceRegistration2.unregister();
 		systemFDSEntryServiceRegistration1.unregister();
 		systemFDSEntryServiceRegistration2.unregister();
+	}
+
+	@Override
+	protected ServiceTrackerMap<String, ?> createServiceTrackerMap() {
+		return ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, FDSCreationMenu.class, "frontend.data.set.name",
+			ServiceTrackerCustomizerFactory.<FDSCreationMenu>serviceWrapper(
+				bundleContext));
 	}
 
 	private ServiceRegistration<FDSCreationMenu> _registerFDSCreationMenu(

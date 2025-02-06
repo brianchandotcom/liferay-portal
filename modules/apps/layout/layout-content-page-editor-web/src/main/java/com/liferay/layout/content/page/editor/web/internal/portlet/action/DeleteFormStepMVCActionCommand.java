@@ -106,7 +106,7 @@ public class DeleteFormStepMVCActionCommand
 					themeDisplay.getLocale(), "an-unexpected-error-occurred"));
 		}
 
-		FormItemManager.LayoutStructureItemChanges layoutStructureItemChange =
+		FormItemManager.LayoutStructureItemChanges layoutStructureItemChanges =
 			_formItemManager.removeFormStepLayoutStructureItem(
 				formStyledLayoutStructureItem, itemId, layoutStructure);
 
@@ -155,7 +155,7 @@ public class DeleteFormStepMVCActionCommand
 				JSONArray jsonArray = _jsonFactory.createJSONArray();
 
 				for (LayoutStructureItem movedLayoutStructureItem :
-						layoutStructureItemChange.
+						layoutStructureItemChanges.
 							getMovedLayoutStructureItems()) {
 
 					jsonArray.put(
@@ -173,7 +173,7 @@ public class DeleteFormStepMVCActionCommand
 			"removedItemIds",
 			_jsonFactory.createJSONArray(
 				TransformUtil.transform(
-					layoutStructureItemChange.getRemovedLayoutStructureItems(),
+					layoutStructureItemChanges.getRemovedLayoutStructureItems(),
 					LayoutStructureItem::getItemId))
 		);
 	}

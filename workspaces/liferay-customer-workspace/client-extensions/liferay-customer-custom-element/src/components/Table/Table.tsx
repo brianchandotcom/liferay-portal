@@ -8,7 +8,7 @@ import classNames from 'classnames';
 import {useEffect, useState} from 'react';
 import i18n from '~/utils/I18n';
 
-import {FilterIcon} from '../../assets/filter_icon';
+import {FilterIcon} from '../../assets/FilterIcon';
 import TablePagination from './TablePagination';
 import TableSkeleton from './TableSkeleton';
 

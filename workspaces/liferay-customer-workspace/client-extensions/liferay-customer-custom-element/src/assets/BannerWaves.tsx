@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-
 import {SVGProps} from 'react';
 import {JSX} from 'react/jsx-runtime';
 
@@ -16,6 +15,7 @@ const BannerWaves = (
 		viewBox="0 0 331 113"
 		width="331"
 		xmlns="http://www.w3.org/2000/svg"
+		{...props}
 	>
 		<g clipPath="url(#clip0_1125_10229)">
 			<path

@@ -14,7 +14,7 @@ import './SecurityVulnerabilitiesItem.css';
 
 import {ClayPaginationBarWithBasicItems} from '@clayui/pagination-bar/lib/PaginationBarWithBasicItems';
 import {useMemo} from 'react';
-import {SVWaves} from '~/assets/sv_waves';
+import {SVWaves} from '~/assets/SVWaves';
 import {
 	paginationDeltas,
 	paginationLabels,

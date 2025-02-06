@@ -65,8 +65,8 @@ const TablePagination: React.FC<IProps> = ({
 			<p className="mb-4 mx-4 pagination-results">
 				{i18n.sub('showing-x-to-x-of-x-entries', [
 					`${itemsPerPage * activePage + 1 - itemsPerPage}`,
-					totalItems,
-					totalItems,
+					totalItems as unknown as string,
+					totalItems as unknown as string,
 				])}
 			</p>
 		</>

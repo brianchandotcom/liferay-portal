@@ -145,6 +145,7 @@ public class FreeMarkerFragmentEntryProcessor
 				"input",
 				_fragmentEntryInputTemplateNodeContextHelper.
 					toInputTemplateNode(
+						fragmentEntryProcessorContext.getAttributes(),
 						_fragmentEntryLinkHelper.getFragmentEntryName(
 							fragmentEntryLink,
 							fragmentEntryProcessorContext.getLocale()),

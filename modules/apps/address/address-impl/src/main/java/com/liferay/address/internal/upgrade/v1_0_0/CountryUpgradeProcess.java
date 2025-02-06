@@ -142,14 +142,14 @@ public class CountryUpgradeProcess extends UpgradeProcess {
 
 		List<IndexMetadata> indexMetadatas = new ArrayList<>();
 
-		for (String tableName :
-				new String[] {
-					"CountryLocalization", "Region", "RegionLocalization"
-				}) {
-
-			indexMetadatas.addAll(
-				db.getIndexMetadatas(connection, tableName, null, false));
-		}
+		indexMetadatas.addAll(
+			db.getIndexMetadatas(
+				connection, "CountryLocalization", null, false));
+		indexMetadatas.addAll(
+			db.getIndexMetadatas(connection, "Region", null, false));
+		indexMetadatas.addAll(
+			db.getIndexMetadatas(
+				connection, "RegionLocalization", null, false));
 
 		List<IndexMetadata> droppedIndexMetadatas = new ArrayList<>();
 

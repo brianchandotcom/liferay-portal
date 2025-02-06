@@ -12,7 +12,11 @@ import com.liferay.info.item.InfoItemIdentifier;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
+import java.io.Serializable;
+
+import java.util.LinkedHashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
@@ -34,6 +38,16 @@ public class DefaultFragmentEntryProcessorContext
 		_locale = locale;
 
 		_fragmentElementId = "fragment-" + PortalUUIDUtil.generate();
+	}
+
+	@Override
+	public Serializable getAttribute(String name) {
+		return _attributes.get(name);
+	}
+
+	@Override
+	public Map<String, Serializable> getAttributes() {
+		return _attributes;
 	}
 
 	@Override
@@ -116,6 +130,14 @@ public class DefaultFragmentEntryProcessorContext
 		return Objects.equals(getMode(), FragmentEntryLinkConstants.VIEW);
 	}
 
+	public void setAttribute(String name, Serializable value) {
+		_attributes.put(name, value);
+	}
+
+	public void setAttributes(Map<String, Serializable> attributes) {
+		_attributes = attributes;
+	}
+
 	public void setContextInfoItemReference(
 		InfoItemReference infoItemReference) {
 
@@ -150,6 +172,7 @@ public class DefaultFragmentEntryProcessorContext
 		_segmentsEntryIds = segmentsEntryIds;
 	}
 
+	private Map<String, Serializable> _attributes = new LinkedHashMap<>();
 	private String _fragmentElementId;
 	private final HttpServletRequest _httpServletRequest;
 	private final HttpServletResponse _httpServletResponse;

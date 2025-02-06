@@ -9,7 +9,10 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemReference;
 
+import java.io.Serializable;
+
 import java.util.Locale;
+import java.util.Map;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -18,6 +21,10 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface FragmentRendererContext {
+
+	public Serializable getAttribute(String name);
+
+	public Map<String, Serializable> getAttributes();
 
 	public InfoItemReference getContextInfoItemReference();
 

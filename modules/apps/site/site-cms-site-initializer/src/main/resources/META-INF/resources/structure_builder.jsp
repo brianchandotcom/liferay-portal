@@ -7,4 +7,8 @@
 
 <%@ include file="/init.jsp" %>
 
-<div></div>
+<div>
+	<react:component
+		module="{StructureBuilder} from site-cms-site-initializer"
+	/>
+</div>

@@ -282,6 +282,13 @@ public class RenderLayoutStructureDisplayContext {
 		return defaultFragmentRendererContext;
 	}
 
+	public Set<String> getDisabledItemIds() {
+		LayoutStructureRulesHelper.LayoutStructureRulesResult
+			layoutStructureRulesResult = _getLayoutStructureRulesResult();
+
+		return layoutStructureRulesResult.getDisabledItemIds();
+	}
+
 	public Set<String> getDisplayedItemIds() {
 		LayoutStructureRulesHelper.LayoutStructureRulesResult
 			layoutStructureRulesResult = _getLayoutStructureRulesResult();
@@ -297,6 +304,13 @@ public class RenderLayoutStructureDisplayContext {
 		sb.append("/portal/edit_info_item");
 
 		return PortalUtil.addPreservedParameters(_themeDisplay, sb.toString());
+	}
+
+	public Set<String> getEnabledItemIds() {
+		LayoutStructureRulesHelper.LayoutStructureRulesResult
+			layoutStructureRulesResult = _getLayoutStructureRulesResult();
+
+		return layoutStructureRulesResult.getEnabledItemIds();
 	}
 
 	public String getErrorMessage(

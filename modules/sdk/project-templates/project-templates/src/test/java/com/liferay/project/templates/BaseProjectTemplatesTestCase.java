@@ -413,7 +413,26 @@ public interface BaseProjectTemplatesTestCase {
 
 		String gradleOutputFileName = gradleOutputFile.getName();
 
-		executeMaven(mavenProjectDir, mavenExecutor, MAVEN_GOAL_PACKAGE);
+		List<String> completeArgs = new ArrayList<>();
+
+		completeArgs.add(MAVEN_GOAL_PACKAGE);
+
+		String javaVersion = System.getProperty("java.version");
+
+		if (javaVersion.startsWith("17")) {
+			javaVersion = "17";
+		}
+
+		if (javaVersion.startsWith("21")) {
+			javaVersion = "21";
+		}
+
+		completeArgs.add("-Djava.compiler.source.version=" + javaVersion);
+		completeArgs.add("-Djava.compiler.target.version=" + javaVersion);
+
+		executeMaven(
+			mavenProjectDir, mavenExecutor,
+			completeArgs.toArray(new String[0]));
 
 		Path mavenOutputPath = FileTestUtil.getFile(
 			mavenOutputDir.toPath(), OUTPUT_FILE_NAME_GLOB_REGEX, 1);

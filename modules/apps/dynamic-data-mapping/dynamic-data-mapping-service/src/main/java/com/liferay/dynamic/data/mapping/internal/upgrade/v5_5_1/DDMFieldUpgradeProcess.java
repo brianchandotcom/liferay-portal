@@ -6,13 +6,15 @@
 package com.liferay.dynamic.data.mapping.internal.upgrade.v5_5_1;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.dao.orm.common.SQLTransformer;
+import com.liferay.portal.kernel.dao.db.DBType;
+import com.liferay.portal.kernel.dao.db.DBTypeToSQLMap;
 import com.liferay.portal.kernel.db.partition.DBPartition;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.ArrayUtil;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -38,7 +40,7 @@ public class DDMFieldUpgradeProcess extends UpgradeProcess {
 			return;
 		}
 
-		_upgrade();
+		_upgrade(companyIds);
 	}
 
 	private boolean _hasDDMFieldCompanyId0() throws Exception {
@@ -59,44 +61,45 @@ public class DDMFieldUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
-	private void _upgrade() throws Exception {
+	private void _upgrade(long[] companyIds) throws Exception {
 		if (!_hasDDMFieldCompanyId0()) {
 			return;
 		}
 
 		processConcurrently(
-			SQLTransformer.transform(
-				StringBundler.concat(
-					"select DDMField.ctCollectionId, DDMField.fieldId, ",
-					"DDMStructureVersion.companyId from DDMStructureVersion ",
-					"inner join DDMField on ",
+			ArrayUtil.toLongArray(companyIds),
+			companyId -> {
+				DBTypeToSQLMap dbTypeToSQLMap = new DBTypeToSQLMap(
+					StringBundler.concat(
+						"update DDMField set companyId = ", companyId,
+						" where exists (select 1 from DDMStructureVersion ",
+						"where DDMStructureVersion.structureVersionId = ",
+						"DDMField.structureVersionId and ",
+						"DDMStructureVersion.ctCollectionId = ",
+						"DDMField.ctCollectionId and ",
+						"DDMStructureVersion.companyId = ", companyId,
+						") and DDMField.companyId = 0"));
+
+				String sql = StringBundler.concat(
+					"update DDMField inner join DDMStructureVersion on ",
+					"DDMStructureVersion.structureVersionId = ",
+					"DDMField.structureVersionId and ",
 					"DDMStructureVersion.ctCollectionId = ",
 					"DDMField.ctCollectionId and ",
-					"DDMStructureVersion.structureVersionId = ",
-					"DDMField.structureVersionId where DDMField.companyId = ",
-					"0")),
-			"update DDMField set companyId = ? where ctCollectionId = ? and " +
-				"fieldId = ?",
-			resultSet -> new Object[] {
-				resultSet.getLong("ctCollectionId"),
-				resultSet.getLong("fieldId"), resultSet.getLong("companyId")
-			},
-			(values, preparedStatement) -> {
-				long companyId = (Long)values[2];
-				long fieldId = (Long)values[1];
+					"DDMStructureVersion.companyId = ", companyId,
+					" set DDMField.companyId = ", companyId,
+					" where DDMField.companyId = 0");
 
-				preparedStatement.setLong(1, companyId);
+				dbTypeToSQLMap.add(DBType.MARIADB, sql);
+				dbTypeToSQLMap.add(DBType.MYSQL, sql);
 
-				preparedStatement.setLong(2, (Long)values[0]);
-				preparedStatement.setLong(3, fieldId);
-
-				preparedStatement.addBatch();
+				runSQL(dbTypeToSQLMap);
 
 				if (_log.isInfoEnabled()) {
 					_log.info(
 						StringBundler.concat(
-							"Update company ID for dynamic data mapping field ",
-							fieldId, " from 0 to ", companyId));
+							"Update company IDs for dynamic data mapping ",
+							"fields from 0 to ", companyId));
 				}
 			},
 			"Unable to update company IDs for dynamic data mapping fields");

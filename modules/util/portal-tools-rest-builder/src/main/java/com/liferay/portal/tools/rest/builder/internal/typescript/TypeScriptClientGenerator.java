@@ -1,18 +1,26 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
 package com.liferay.portal.tools.rest.builder.internal.typescript;
 
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser.util.OpenAPIParserUtil;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.util.FreeMarkerUtil;
 import com.liferay.portal.tools.rest.builder.internal.util.FileUtil;
 import com.liferay.portal.tools.rest.builder.internal.yaml.YAMLUtil;
-
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Content;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.OpenAPIYAML;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Operation;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Parameter;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.PathItem;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.RequestBody;
+import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Response;
+import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.ResponseCode;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Schema;
 
 import java.io.File;
@@ -21,205 +29,337 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-import java.util.LinkedHashSet;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
+/**
+ * @author Daniel Raposo
+ */
 public class TypeScriptClientGenerator {
-	private final File baseDir;
-	private final File copyrightFile;
-	private final OpenAPIYAML openAPIYAML;
 
-	public TypeScriptClientGenerator(File baseDir, File openAPIYAMLFile, File copyrightFile) throws IOException {
-		this.baseDir = baseDir;
-		this.copyrightFile = copyrightFile;
-		this.openAPIYAML = YAMLUtil.loadOpenAPIYAML(FileUtil.read(openAPIYAMLFile));
+	public TypeScriptClientGenerator(
+			File baseDir, File openAPIYAMLFile, File copyrightFile)
+		throws IOException {
+
+		_baseDir = baseDir;
+		_copyrightFile = copyrightFile;
+
+		_openAPIYAML = YAMLUtil.loadOpenAPIYAML(FileUtil.read(openAPIYAMLFile));
 	}
 
 	public void generate() throws Exception {
-		Map<String, PathItem> pathItems = openAPIYAML.getPathItems();
-		if (pathItems == null) return;
+		Map<String, PathItem> pathItems = _openAPIYAML.getPathItems();
 
-		Files.createDirectories(Paths.get(baseDir.getPath(), "src", "node", "api"));
-		Files.createDirectories(Paths.get(baseDir.getPath(), "src", "node", "model"));
+		if (pathItems == null) {
+			return;
+		}
 
-		//Generate API files
-		Set<Map.Entry<String, Map<String, Object>>> apiContexts = _buildApiContexts(pathItems).entrySet();
+		Files.createDirectories(
+			Paths.get(_baseDir.getPath(), "src", "node", "api"));
+		Files.createDirectories(
+			Paths.get(_baseDir.getPath(), "src", "node", "model"));
+
+		// Generate API files
+
+		Set<Map.Entry<String, Map<String, Object>>> apiContexts =
+			_buildApiContexts(
+				pathItems
+			).entrySet();
+
 		for (Map.Entry<String, Map<String, Object>> apiContext : apiContexts) {
-			File apiFile = new File(baseDir.getPath() + "/src/node/api/" + StringUtil.lowerCaseFirstLetter(apiContext.getKey()) + "Api.ts");
+			File apiFile = new File(
+				StringBundler.concat(
+					_baseDir.getPath(), "/src/node/api/",
+					StringUtil.lowerCaseFirstLetter(apiContext.getKey()),
+					"Api.ts"));
+
 			FileUtil.write(
 				apiFile,
-				FreeMarkerUtil.processTemplate(copyrightFile, FileUtil.getCopyrightYear(apiFile), "ts/api", apiContext.getValue()));
+				FreeMarkerUtil.processTemplate(
+					_copyrightFile, FileUtil.getCopyrightYear(apiFile),
+					"ts/api", apiContext.getValue()));
 		}
 
 		//Generate node/api/apis.ts file
-		File apisFile = new File(baseDir.getPath() + "/src/node/api/apis.ts");
+		File apisFile = new File(_baseDir.getPath() + "/src/node/api/apis.ts");
+
 		FileUtil.write(
 			apisFile,
-			FreeMarkerUtil.processTemplate(copyrightFile, FileUtil.getCopyrightYear(apisFile), "ts/apis", Collections.singletonMap("apiContexts", apiContexts)));
+			FreeMarkerUtil.processTemplate(
+				_copyrightFile, FileUtil.getCopyrightYear(apisFile), "ts/apis",
+				Collections.singletonMap("apiContexts", apiContexts)));
 
 		// Generate Model files
-		Map<String, Schema> schemas = openAPIYAML.getComponents().getSchemas();
+
+		Map<String, Schema> schemas = _openAPIYAML.getComponents(
+		).getSchemas();
+
 		if (schemas != null) {
-			for (Map.Entry<String, Schema> entry : schemas.entrySet()) {
-				Map<String, Object> modelContext = _buildModelContext(entry.getKey(), entry.getValue());
-				File modelFile = new File(baseDir.getPath() + "/src/node/model/" + StringUtil.lowerCaseFirstLetter(entry.getKey()) + ".ts");
+			for (Map.Entry<String, Schema> schema : schemas.entrySet()) {
+				Map<String, Object> modelContext = _buildModelContext(
+					schema.getKey(), schema.getValue());
+				File modelFile = new File(
+					StringBundler.concat(
+						_baseDir.getPath(), "/src/node/model/",
+						StringUtil.lowerCaseFirstLetter(schema.getKey()),
+						".ts"));
+
 				FileUtil.write(
 					modelFile,
-					FreeMarkerUtil.processTemplate(copyrightFile, FileUtil.getCopyrightYear(modelFile), "ts/model", modelContext));
+					FreeMarkerUtil.processTemplate(
+						_copyrightFile, FileUtil.getCopyrightYear(modelFile),
+						"ts/model", modelContext));
 			}
 		}
 
 		// Generate node/model/models.ts file
-		File modelsFile = new File(baseDir.getPath() + "/src/node/model/models.ts");
+
+		File modelsFile = new File(
+			_baseDir.getPath() + "/src/node/model/models.ts");
+
 		FileUtil.write(
 			modelsFile,
-			FreeMarkerUtil.processTemplate(copyrightFile, FileUtil.getCopyrightYear(modelsFile), "ts/models", Collections.singletonMap("modelContexts", schemas)));
+			FreeMarkerUtil.processTemplate(
+				_copyrightFile, FileUtil.getCopyrightYear(modelsFile),
+				"ts/models",
+				Collections.singletonMap("modelContexts", schemas)));
 
 		// Generate node/api.ts file
-		File apiFile = new File(baseDir.getPath() + "/src/node/api.ts");
+
+		File apiGlobalFile = new File(_baseDir.getPath() + "/src/node/api.ts");
+
 		FileUtil.write(
-			apiFile,
-			FreeMarkerUtil.processTemplate(copyrightFile, FileUtil.getCopyrightYear(apiFile), "ts/api_global", null));
+			apiGlobalFile,
+			FreeMarkerUtil.processTemplate(
+				_copyrightFile, FileUtil.getCopyrightYear(apiGlobalFile),
+				"ts/api_global", null));
 	}
 
-	private Map<String, Map<String, Object>> _buildApiContexts(Map<String, PathItem> pathItems) {
-		Map<String, List<Map<String, Object>>> operationsByTag = new HashMap<>();
+	private Map<String, Map<String, Object>> _buildApiContexts(
+		Map<String, PathItem> pathItems) {
+
+		Map<String, List<Map<String, Object>>> operationsByTag =
+			new HashMap<>();
 
 		for (Map.Entry<String, PathItem> entry : pathItems.entrySet()) {
-			for (Operation operation : OpenAPIParserUtil.getOperations(entry.getValue())) {
-				String tag = operation.getTags().get(0);
-				List<Map<String, Object>> operations = operationsByTag.computeIfAbsent(tag, k -> new ArrayList<>());
+			for (Operation operation :
+					OpenAPIParserUtil.getOperations(entry.getValue())) {
+
+				String operationTag = operation.getTags(
+				).get(
+					0
+				);
+
+				List<Map<String, Object>> operations =
+					operationsByTag.computeIfAbsent(
+						operationTag, k -> new ArrayList<>());
+
 				operations.add(_buildOperationMap(operation, entry.getKey()));
 			}
 		}
+
 		Map<String, Map<String, Object>> apiContexts = new HashMap<>();
-		for (Map.Entry<String, List<Map<String, Object>>> entry : operationsByTag.entrySet()) {
-			Map<String, Object> apiContext = new HashMap<>();
-			apiContext.put("operations", entry.getValue());
-			apiContext.put("classname", entry.getKey() + "Api");
+
+		for (Map.Entry<String, List<Map<String, Object>>> tagOperations :
+				operationsByTag.entrySet()) {
+
+			Map<String, Object> apiContext = HashMapBuilder.<String, Object>put(
+				"classname", tagOperations.getKey() + "Api"
+			).put(
+				"operations", tagOperations.getValue()
+			).build();
 
 			// Collect all imports
-			Set<Map<String, String>> allImports = entry.getValue().stream()
-				.filter(op -> op.containsKey("imports"))
-				.flatMap(op -> ((Collection<Map<String, String>>) op.remove("imports")).stream())
-				.collect(Collectors.toCollection(LinkedHashSet::new));
+
+			Set<Map<String, String>> allImports = new LinkedHashSet<>();
+
+			for (Map<String, Object> tagOperation : tagOperations.getValue()) {
+				if (tagOperation.containsKey("imports")) {
+					Collection<Map<String, String>> imports =
+						(Collection<Map<String, String>>)tagOperation.remove(
+							"imports");
+
+					allImports.addAll(imports);
+				}
+			}
 
 			if (!allImports.isEmpty()) {
 				apiContext.put("imports", new ArrayList<>(allImports));
 			}
 
-			apiContexts.put(entry.getKey(), apiContext);
-
+			apiContexts.put(tagOperations.getKey(), apiContext);
 		}
 
 		return apiContexts;
 	}
 
-	private Map<String, Object> _buildModelContext(String modelName, Schema schema) {
-		Map<String, Object> context = new HashMap<>();
+	private Map<String, Object> _buildModelContext(
+		String modelName, Schema schema) {
+
+		Map<String, Object> modelContext = HashMapBuilder.<String, Object>put(
+			"description", schema.getDescription()
+		).put(
+			"modelName", modelName
+		).build();
+
 		Set<Map<String, String>> modelImports = new HashSet<>();
 
-		context.put("modelName", modelName);
-		context.put("description", schema.getDescription());
+		if (schema.getDiscriminator() != null) {
+			String discriminatorPropName = schema.getDiscriminator(
+			).getPropertyName();
 
-		if (schema.getDiscriminator() != null && schema.getDiscriminator().getPropertyName() != null) {
-			context.put("discriminator", schema.getDiscriminator().getPropertyName());
+			if (Validator.isNotNull(discriminatorPropName)) {
+				modelContext.put("discriminator", discriminatorPropName);
+			}
 		}
 
 		// Handle inheritance and properties
-		List<Map<String, Object>> properties = new ArrayList<>();
+
+		List<Map<String, Object>> schemaProperties = new ArrayList<>();
+
 		if (schema.getAllOfSchemas() != null) {
-			Schema parentSchema = schema.getAllOfSchemas().get(0);
+			Schema parentSchema = schema.getAllOfSchemas(
+			).get(
+				0
+			);
+
 			if (parentSchema.getReference() != null) {
-				String parentClass = parentSchema.getReference().substring(
-					parentSchema.getReference().lastIndexOf('/') + 1);
-				context.put("parent", parentClass);
-				modelImports.add(Collections.singletonMap("classname", parentClass));
+				String parentSchemaReference = parentSchema.getReference();
+
+				String parentClass = parentSchemaReference.substring(
+					parentSchemaReference.lastIndexOf('/') + 1);
+
+				modelContext.put("parent", parentClass);
+				modelImports.add(
+					Collections.singletonMap("classname", parentClass));
 
 				// Add properties from additional schemas in allOf
-				for (Schema additionalSchema: schema.getAllOfSchemas()){
+
+				for (Schema additionalSchema : schema.getAllOfSchemas()) {
 					if (additionalSchema.getPropertySchemas() != null) {
-						additionalSchema.getPropertySchemas().forEach((propName, propSchema) -> {
-							Map<String, Object> prop = new HashMap<>();
-							prop.put("name", propName);
-							String type = _getTypeScriptType(propSchema, modelImports);
-							prop.put("type", type);
-							prop.put("required", additionalSchema.getRequiredPropertySchemaNames() != null &&
-												 additionalSchema.getRequiredPropertySchemaNames().contains(propName));
-							properties.add(prop);
-						});
+						additionalSchema.getPropertySchemas(
+						).forEach(
+							(propName, propSchema) -> schemaProperties.add(
+								HashMapBuilder.<String, Object>put(
+									"name", propName
+								).put(
+									"type",
+									_getTypeScriptType(propSchema, modelImports)
+								).build())
+						);
 					}
 				}
 			}
 		}
 
 		if (schema.getPropertySchemas() != null) {
-			schema.getPropertySchemas().forEach((propName, propSchema) -> {
-				Map<String, Object> prop = new HashMap<>();
-				prop.put("name", propName);
-				String type = _getTypeScriptType(propSchema, modelImports);
-				prop.put("type", type);
-				prop.put("required", schema.getRequiredPropertySchemaNames() != null &&
-									 schema.getRequiredPropertySchemaNames().contains(propName));
-				properties.add(prop);
-			});
+			schema.getPropertySchemas(
+			).forEach(
+				(propName, propSchema) -> schemaProperties.add(
+					HashMapBuilder.<String, Object>put(
+						"name", propName
+					).put(
+						"type", _getTypeScriptType(propSchema, modelImports)
+					).build())
+			);
 		}
-		context.put("properties", properties);
+
+		modelContext.put("properties", schemaProperties);
 
 		if (!modelImports.isEmpty()) {
-			context.put("imports", new ArrayList<>(modelImports));
+			modelContext.put("imports", new ArrayList<>(modelImports));
 		}
 
-		return context;
+		return modelContext;
 	}
 
-	private Map<String, Object> _buildOperationMap(Operation operation, String path) {
-		Set<Map<String, String>> imports = new HashSet<>();
-		Map<String, Object> operationMap = new HashMap<>();
+	private Map<String, Object> _buildOperationMap(
+		Operation operation, String path) {
 
-		operationMap.put("nickname", operation.getOperationId());
-		operationMap.put("notes", operation.getDescription());
-		operationMap.put("path", path);
-		operationMap.put("httpMethod", OpenAPIParserUtil.getHTTPMethod(operation).toUpperCase());
+		Set<Map<String, String>> imports = new HashSet<>();
+
+		Map<String, Object> operationMap = HashMapBuilder.<String, Object>put(
+			"httpMethod",
+			OpenAPIParserUtil.getHTTPMethod(
+				operation
+			).toUpperCase()
+		).put(
+			"nickname", operation.getOperationId()
+		).put(
+			"notes", operation.getDescription()
+		).put(
+			"path", path
+		).build();
 
 		// Extract produces (media types) from responses.
+
 		if (operation.getResponses() != null) {
-			Set<String> produces = operation.getResponses().values().stream()
-				.flatMap(response -> response.getContent() != null
-					? response.getContent().keySet().stream()
-					: Stream.empty())
-				.collect(Collectors.toCollection(LinkedHashSet::new));
+			Set<String> produces = new LinkedHashSet<>();
+
+			for (Response response :
+					operation.getResponses(
+					).values()) {
+
+				if (response.getContent() != null) {
+					produces.addAll(
+						response.getContent(
+						).keySet());
+				}
+			}
 
 			if (!produces.isEmpty()) {
 				operationMap.put("produces", new ArrayList<>(produces));
 			}
 		}
 
-		Collection<Map<String, Object>> params = _getAllOperationParams(operation, operationMap, imports);
-		if (!params.isEmpty()) {
-			operationMap.put("allParams", params);
+		Collection<Map<String, Object>> operationParams =
+			_getAllOperationParams(operation, operationMap, imports);
+
+		if (!operationParams.isEmpty()) {
+			operationMap.put("allParams", operationParams);
 		}
 
-		if (operation.getResponses() == null) return null;
+		String returnType = null;
 
-		String returnType = operation.getResponses().entrySet().stream()
-			.filter(e -> e.getKey().getHttpCode() == 200)
-			.findFirst()
-			.map(e -> e.getValue().getContent())
-			.filter(content -> content != null && !content.isEmpty())
-			.map(content -> content.values().iterator().next())
-			.filter(c -> c != null && c.getSchema() != null)
-			.map(c -> _getTypeScriptType(c.getSchema(), imports))
-			.orElse(null);
+		if (operation.getResponses() != null) {
+			for (Map.Entry<ResponseCode, Response> response :
+					operation.getResponses(
+					).entrySet()) {
+
+				Integer httpCode = response.getKey(
+				).getHttpCode();
+
+				if (httpCode.equals(200)) {
+					Map<String, Content> responseContent = response.getValue(
+					).getContent();
+
+					if ((responseContent != null) &&
+						!responseContent.isEmpty()) {
+
+						Content firstContent = responseContent.values(
+						).iterator(
+						).next();
+
+						if ((firstContent != null) &&
+							(firstContent.getSchema() != null)) {
+
+							returnType = _getTypeScriptType(
+								firstContent.getSchema(), imports);
+						}
+					}
+
+					break;
+				}
+			}
+		}
+
 		operationMap.put("returnType", returnType);
 
 		if (!imports.isEmpty()) {
@@ -229,98 +369,197 @@ public class TypeScriptClientGenerator {
 		return operationMap;
 	}
 
-	private Collection<Map<String, Object>> _getAllOperationParams(Operation operation, Map<String, Object> operationMap, Set<Map<String, String>> imports) {
+	private Collection<Map<String, Object>> _getAllOperationParams(
+		Operation operation, Map<String, Object> operationMap,
+		Set<Map<String, String>> imports) {
+
 		List<Map<String, Object>> allParams = new ArrayList<>();
 		Map<String, List<Map<String, Object>>> paramsByType = new HashMap<>();
 
 		// Process regular parameters
+
 		if (operation.getParameters() != null) {
 			for (Parameter parameter : operation.getParameters()) {
-				Map<String, Object> paramMap = new HashMap<>();
-
-				paramMap.put("name", parameter.getName());
-				paramMap.put("required", Validator.isNotNull(parameter.isRequired()) && parameter.isRequired());
-				paramMap.put("dataType", _getTypeScriptType(parameter.getSchema(), imports));
+				Map<String, Object> paramMap =
+					HashMapBuilder.<String, Object>put(
+						"dataType",
+						_getTypeScriptType(parameter.getSchema(), imports)
+					).put(
+						"name", parameter.getName()
+					).put(
+						"required",
+						Validator.isNotNull(parameter.isRequired()) &&
+						parameter.isRequired()
+					).build();
 
 				allParams.add(paramMap);
 
-				String paramType = parameter.getIn() + "Params";
-				paramsByType.computeIfAbsent(paramType, k -> new ArrayList<>()).add(paramMap);
+				paramsByType.computeIfAbsent(
+					parameter.getIn() + "Params", k -> new ArrayList<>()
+				).add(
+					paramMap
+				);
 			}
 		}
 
 		// Process request body
+
 		RequestBody requestBody = operation.getRequestBody();
-		if (requestBody != null && requestBody.getContent() != null && !requestBody.getContent().isEmpty()) {
-			Content content = requestBody.getContent().values().iterator().next();
-			if (content != null && content.getSchema() != null) {
-				String dataType = _getTypeScriptType(content.getSchema(), imports);
-				Map<String, Object> bodyParam = new HashMap<>();
-				bodyParam.put("name", (Validator.isNull(content.getSchema().getReference())) ? "body" : dataType);
-				bodyParam.put("dataType", dataType);
-				bodyParam.put("required", false);	// I can't retrieve the 'required' property inside requestBody
+
+		if ((requestBody != null) && (requestBody.getContent() != null) &&
+			!requestBody.getContent(
+			).isEmpty()) {
+
+			Content firstBodyContent = requestBody.getContent(
+			).values(
+			).iterator(
+			).next();
+
+			if ((firstBodyContent != null) &&
+				(firstBodyContent.getSchema() != null)) {
+
+				String bodyParamName = _getTypeScriptType(
+					firstBodyContent.getSchema(), imports);
+
+				if (Validator.isNull(
+						firstBodyContent.getSchema(
+						).getReference())) {
+
+					bodyParamName = "body";
+				}
+
+				Map<String, Object> bodyParam =
+					HashMapBuilder.<String, Object>put(
+						"dataType",
+						_getTypeScriptType(firstBodyContent.getSchema(), imports)
+					).put(
+						"name", bodyParamName
+					).put(
+						"required",
+						false // TODO: Retrieve 'required' property inside requestBody
+					).build();
+
 				allParams.add(bodyParam);
 				operationMap.put("bodyParam", bodyParam);
 			}
 		}
 
 		// Add parameter lists to operation map
-		paramsByType.forEach((key, value) -> {
-			if (!value.isEmpty()) {
-				operationMap.put(key, value);
-			}
-		});
+
+		paramsByType.forEach(
+			(key, value) -> {
+				if (!value.isEmpty()) {
+					operationMap.put(key, value);
+				}
+			});
 
 		return allParams;
 	}
 
-	private String _getTypeScriptType(Schema schema, Set<Map<String, String>> imports) {
-		if (schema == null) return "any";
+	private String _getTypeScriptType(
+		Schema schema, Set<Map<String, String>> imports) {
+
+		if (schema == null) {
+			return "any";
+		}
 
 		if (schema.getReference() != null) {
-			String typeName = schema.getReference().substring(schema.getReference().lastIndexOf('/') + 1);
+			String schemaReference = schema.getReference();
+
+			String typeName = schemaReference.substring(
+				schemaReference.lastIndexOf('/') + 1);
+
 			if (imports != null) {
 				imports.add(Collections.singletonMap("classname", typeName));
 			}
+
 			return typeName;
 		}
 
-		String type = schema.getType();
-		if (type == null) return "any";
+		String schemaType = schema.getType();
 
-		switch (type) {
-			case "array":
-				return "Array<" + _getTypeScriptType(schema.getItems().toSchema(), imports) + ">";
-			case "object":
-				if (schema.getAdditionalPropertySchema() != null) {
-					Schema valueSchema = schema.getAdditionalPropertySchema();
-					if (valueSchema.getAdditionalPropertySchema() != null) {
-						Schema nestedValueSchema = valueSchema.getAdditionalPropertySchema();
-						return "{ [key: string]: { [key: string]: " + _getTypeScriptType(nestedValueSchema, imports) + "; }; }";
-					}
-					return "{ [key: string]: " + _getTypeScriptType(valueSchema, imports) + "; }";
-				}
-				return "object";
-			case "integer":
-			case "number":
-				return "number";
-			case "string":
-				if (schema.getEnumValues() != null && !schema.getEnumValues().isEmpty()) {
-					return schema.getEnumValues().stream()
-						.map(value -> "'" + value + "'")
-						.collect(Collectors.joining(" | "));
-				}
-				return "date".equals(schema.getFormat()) || "date-time".equals(schema.getFormat())
-					? "Date" : "string";
-			case "boolean":
-				return "boolean";
-			case "permission":
-				if (imports != null) {
-					imports.add(Collections.singletonMap("classname", "Permission"));
-				}
-				return "Permission";
-			default:
-				return "any";
+		if (schemaType.equals("array")) {
+			String nestedType = _getTypeScriptType(
+				schema.getItems(
+				).toSchema(),
+				imports);
+
+			return "Array<" + nestedType + ">";
 		}
+		else if (schemaType.equals("boolean")) {
+			return "boolean";
+		}
+		else if (schemaType.equals("integer") || schemaType.equals("number")) {
+			return "number";
+		}
+		else if (schemaType.equals("object")) {
+			if (schema.getAdditionalPropertySchema() != null) {
+				Schema valueSchema = schema.getAdditionalPropertySchema();
+
+				if (valueSchema.getAdditionalPropertySchema() != null) {
+					Schema nestedValueSchema =
+						valueSchema.getAdditionalPropertySchema();
+
+					return "{ [key: string]: { [key: string]: " +
+						_getTypeScriptType(nestedValueSchema, imports) +
+							"; }; }";
+				}
+
+				return "{ [key: string]: " +
+					_getTypeScriptType(valueSchema, imports) + "; }";
+			}
+
+			return "object";
+		}
+		else if (schemaType.equals("permission")) {
+			if (imports != null) {
+				imports.add(
+					Collections.singletonMap("classname", "Permission"));
+			}
+
+			return "Permission";
+		}
+		else if (schemaType.equals("string")) {
+			if ((schema.getEnumValues() != null) &&
+				!schema.getEnumValues(
+				).isEmpty()) {
+
+				StringBuilder enumValues = new StringBuilder();
+
+				for (String value : schema.getEnumValues()) {
+					if (enumValues.length() > 0) {
+						enumValues.append(" | ");
+					}
+
+					enumValues.append(
+						"'"
+					).append(
+						value
+					).append(
+						"'"
+					);
+				}
+
+				return enumValues.toString();
+			}
+
+			String schemaFormat = schema.getFormat();
+
+			if (Validator.isNotNull(schemaFormat) &&
+				(schemaFormat.equals("date") ||
+				 schemaFormat.equals("date-time"))) {
+
+				return "Date";
+			}
+
+			return "string";
+		}
+
+		return "any";
 	}
+
+	private final File _baseDir;
+	private final File _copyrightFile;
+	private final OpenAPIYAML _openAPIYAML;
+
 }

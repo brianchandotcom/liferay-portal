@@ -43,14 +43,6 @@ public class SystemAPIURLFDSSerializerTest extends BaseFDSSerializerTestCase {
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
-	@Override
-	protected ServiceTrackerMap<String, ?> createServiceTrackerMap() {
-		return ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, FDSAPIURLResolver.class, "fds.rest.application.key",
-			ServiceTrackerCustomizerFactory.<FDSAPIURLResolver>serviceWrapper(
-				bundleContext));
-	}
-
 	@Before
 	public void setUp() throws Exception {
 		super.setUp();
@@ -157,6 +149,14 @@ public class SystemAPIURLFDSSerializerTest extends BaseFDSSerializerTestCase {
 		fdsAPIURLServiceRegistration.unregister();
 		systemFDSEntryServiceRegistration1.unregister();
 		systemFDSEntryServiceRegistration2.unregister();
+	}
+
+	@Override
+	protected ServiceTrackerMap<String, ?> createServiceTrackerMap() {
+		return ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, FDSAPIURLResolver.class, "fds.rest.application.key",
+			ServiceTrackerCustomizerFactory.<FDSAPIURLResolver>serviceWrapper(
+				bundleContext));
 	}
 
 	private ServiceRegistration<FDSAPIURLResolver> _registerFDSAPIURLResolver(

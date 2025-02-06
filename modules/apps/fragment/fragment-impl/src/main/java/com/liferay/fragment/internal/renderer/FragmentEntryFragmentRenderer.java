@@ -409,6 +409,8 @@ public class FragmentEntryFragmentRenderer implements FragmentRenderer {
 					fragmentRendererContext.getMode(),
 					fragmentRendererContext.getLocale());
 
+		defaultFragmentEntryProcessorContext.setAttributes(
+			fragmentRendererContext.getAttributes());
 		defaultFragmentEntryProcessorContext.setContextInfoItemReference(
 			fragmentRendererContext.getContextInfoItemReference());
 		defaultFragmentEntryProcessorContext.setFragmentElementId(

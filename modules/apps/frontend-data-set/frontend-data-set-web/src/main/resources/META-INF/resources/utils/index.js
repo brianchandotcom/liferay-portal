@@ -21,15 +21,6 @@ export function getData(apiURL, query) {
 	}).then((data) => data.json());
 }
 
-export function getSchemaString(object, path) {
-	if (!Array.isArray(path)) {
-		return object[path];
-	}
-	else {
-		return path.reduce((acc, path) => acc[path], object);
-	}
-}
-
 export function isValuesArrayChanged(prevValue = [], newValue = []) {
 	if (prevValue.length !== newValue.length) {
 		return true;
@@ -69,22 +60,6 @@ export function formatItemChanges(itemChanges) {
 	);
 
 	return formattedChanges;
-}
-
-export function createSortingString(values) {
-	if (!values.length) {
-		return null;
-	}
-
-	return values
-		.map((value) => {
-			return `${
-				Array.isArray(value.fieldName)
-					? value.fieldName[0]
-					: value.fieldName
-			}:${value.direction}`;
-		})
-		.join(',');
 }
 
 export function getCurrentItemUpdates(

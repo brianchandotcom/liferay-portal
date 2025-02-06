@@ -180,6 +180,11 @@ public class BenchmarksPropsValues {
 	public static final int MAX_DL_FOLDER_DEPTH = GetterUtil.getInteger(
 		PropertiesHolder._get(BenchmarksPropsKeys.MAX_DL_FOLDER_DEPTH));
 
+	public static final int MAX_FRAGMENTS_PER_LAYOUT_COUNT =
+		GetterUtil.getInteger(
+			PropertiesHolder._get(
+				BenchmarksPropsKeys.MAX_FRAGMENTS_PER_LAYOUT_COUNT));
+
 	public static final int MAX_GROUP_COUNT = GetterUtil.getInteger(
 		PropertiesHolder._get(BenchmarksPropsKeys.MAX_GROUP_COUNT));
 

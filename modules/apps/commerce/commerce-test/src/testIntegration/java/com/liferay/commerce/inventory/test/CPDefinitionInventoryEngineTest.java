@@ -37,7 +37,6 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.math.BigDecimal;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -96,12 +95,6 @@ public class CPDefinitionInventoryEngineTest {
 				true, 0, "cpde", 1.0, true, true, true, 1.0, "lowstoc",
 				BigDecimal.TEN, BigDecimal.TEN, BigDecimal.ONE, BigDecimal.ONE,
 				true, true, 1.0, true, true, true, 1.0, 1.0);
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		_cpConfigurationListLocalService.deleteCPConfigurationLists(
-			_serviceContext.getCompanyId());
 	}
 
 	@Test
@@ -233,6 +226,7 @@ public class CPDefinitionInventoryEngineTest {
 	@Inject
 	private CPConfigurationEntryLocalService _cpConfigurationEntryLocalService;
 
+	@DeleteAfterTestRun
 	private CPConfigurationList _cpConfigurationList;
 
 	@Inject

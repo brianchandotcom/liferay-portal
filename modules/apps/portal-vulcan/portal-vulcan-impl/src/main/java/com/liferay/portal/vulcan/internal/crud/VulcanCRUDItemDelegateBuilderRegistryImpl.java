@@ -7,8 +7,10 @@ package com.liferay.portal.vulcan.internal.crud;
 
 import com.liferay.osgi.service.tracker.collections.map.ScopedServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ScopedServiceTrackerMapFactory;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.vulcan.crud.VulcanCRUDItemDelegate;
-import com.liferay.portal.vulcan.crud.VulcanCRUDItemDelegateRegistry;
+import com.liferay.portal.vulcan.crud.VulcanCRUDItemDelegateBuilder;
+import com.liferay.portal.vulcan.crud.VulcanCRUDItemDelegateBuilderRegistry;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -16,18 +18,26 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 
 /**
- * @author Marco Leo
  * @author Carlos Correa
  */
-@Component(service = VulcanCRUDItemDelegateRegistry.class)
-public class VulcanCRUDItemDelegateRegistryImpl
-	implements VulcanCRUDItemDelegateRegistry {
+@Component(service = VulcanCRUDItemDelegateBuilderRegistry.class)
+public class VulcanCRUDItemDelegateBuilderRegistryImpl
+	implements VulcanCRUDItemDelegateBuilderRegistry {
 
 	@Override
-	public VulcanCRUDItemDelegate<?> getVulcanCRUDItemDelegate(
-		long companyId, String entityClassName) {
+	public VulcanCRUDItemDelegateBuilder getVulcanCRUDItemDelegateBuilder(
+		Company company, String entityClassName) {
 
-		return _serviceTrackerMap.getService(companyId, entityClassName);
+		VulcanCRUDItemDelegate vulcanCRUDItemDelegate =
+			_serviceTrackerMap.getService(
+				company.getCompanyId(), entityClassName);
+
+		if (vulcanCRUDItemDelegate == null) {
+			return null;
+		}
+
+		return new VulcanCRUDItemDelegateBuilderImpl(
+			company, vulcanCRUDItemDelegate);
 	}
 
 	@Activate

@@ -84,25 +84,40 @@ public class LayoutStructureRulesHelperImpl
 			}
 		}
 
+		Set<String> disabledItemIds = new HashSet<>();
 		Set<String> displayedItemIds = new HashSet<>();
+		Set<String> enabledItemIds = new HashSet<>();
 		Set<String> hiddenItemIds = new HashSet<>();
 
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-			if (Objects.equals(
-					jsonObject.getString("action"), Action.SHOW.getValue())) {
+			String action = jsonObject.getString("action");
+			String itemId = jsonObject.getString("itemId");
 
-				displayedItemIds.add(jsonObject.getString("itemId"));
+			if (Objects.equals(action, Action.DISABLE.getValue())) {
+				disabledItemIds.add(itemId);
+			}
+			else if (Objects.equals(
+						jsonObject.getString("action"),
+						Action.SHOW.getValue())) {
+
+				displayedItemIds.add(itemId);
+			}
+			else if (Objects.equals(
+						jsonObject.getString("action"),
+						Action.ENABLE.getValue())) {
+
+				enabledItemIds.add(itemId);
 			}
 			else {
-				hiddenItemIds.add(jsonObject.getString("itemId"));
+				hiddenItemIds.add(itemId);
 			}
 		}
 
 		return new LayoutStructureRulesResult(
-			displayedItemIds, hiddenItemIds, itemIdsMap,
-			layoutStructureRuleIdsMap);
+			disabledItemIds, displayedItemIds, enabledItemIds, hiddenItemIds,
+			itemIdsMap, layoutStructureRuleIdsMap);
 	}
 
 	@Override

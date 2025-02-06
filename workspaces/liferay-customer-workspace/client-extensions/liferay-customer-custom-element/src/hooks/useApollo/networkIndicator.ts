@@ -11,7 +11,13 @@ const initialState = {
 	success: undefined,
 };
 
-const reducer = (state, action) => {
+const reducer = (
+	state: any,
+	action: {
+		payload: {networkError?: any; operation: any; result?: any};
+		type: any;
+	}
+) => {
 	if (isOperationType(action.payload.operation, 'subscription')) {
 		return state;
 	}
@@ -33,7 +39,7 @@ const reducer = (state, action) => {
 						error: {
 							operation,
 							response: result.errors.map(
-								(error) => error.extensions
+								(error: {extensions: any}) => error.extensions
 							),
 						},
 					};

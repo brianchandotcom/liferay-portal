@@ -4,12 +4,16 @@
  */
 
 export default function concatPageSizePagination(
-	clearOnFirstPage,
-	keyArgs = false
+	clearOnFirstPage?: boolean,
+	keyArgs?: boolean
 ) {
 	return {
 		keyArgs,
-		merge(existing = [], incoming, {variables}) {
+		merge(
+			existing: any[] = [],
+			incoming: any[],
+			{variables}: {variables?: {page?: number; pageSize?: number}}
+		) {
 			const merged = [...existing];
 
 			if (variables) {

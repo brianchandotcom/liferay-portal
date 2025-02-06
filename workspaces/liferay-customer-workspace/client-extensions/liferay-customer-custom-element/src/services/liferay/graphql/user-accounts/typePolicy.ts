@@ -18,7 +18,7 @@ export const userAccountsTypePolicy = {
 	RoleBrief: {
 		fields: {
 			name: {
-				read(name) {
+				read(name: string) {
 					if (name === 'Account Member') {
 						return 'User';
 					}
@@ -36,46 +36,51 @@ export const userAccountsTypePolicy = {
 	UserAccount: {
 		fields: {
 			dateCreated: {
-				read(dateCreated) {
+				read(dateCreated: string): Date {
 					return new Date(dateCreated);
 				},
 			},
 			isLiferayStaff: {
-				read(_, {readField}) {
-					return !!readField('organizationBriefs').some(
-						(organizationBrief) =>
+				read(_: unknown, {readField}: {readField: Function}): boolean {
+					return !!(readField('organizationBriefs') as any[]).some(
+						(organizationBrief: any) =>
 							readField('name', organizationBrief) ===
 							'Liferay Staff'
 					);
 				},
 			},
 			isLoggedUser: {
-				read(_, {readField}) {
+				read(_: unknown, {readField}: {readField: Function}): boolean {
 					return (
 						readField('id') === +Liferay.ThemeDisplay.getUserId()
 					);
 				},
 			},
-			isPartner: {
-				read(_, {readField}) {
-					return !!readField('roleBriefs')?.some(
-						(roleBrief) =>
-							readField('name', roleBrief) === 'Partner'
-					);
-				},
-			},
 			isProvisioning: {
-				read(_, {readField}) {
-					return !!readField('roleBriefs')?.some(
-						(roleBrief) =>
+				read(_: unknown, {readField}: {readField: Function}): boolean {
+					return !!(readField('roleBriefs') as any[]).some(
+						(roleBrief: any) =>
 							readField('name', roleBrief) === 'Provisioning'
 					);
 				},
 			},
 			selectedAccountSummary: {
-				read(_, {readField, variables: {externalReferenceCode}}) {
+				read(
+					_: unknown,
+					{
+						readField,
+						variables: {externalReferenceCode},
+					}: {
+						readField: Function;
+						variables: {externalReferenceCode: string};
+					}
+				): {
+					hasAdministratorRole: boolean;
+					hasSupportSeatRole: boolean;
+					roleBriefs: {id: string; name: string}[];
+				} {
 					const accountBriefRef = readField('accountBriefs')?.find(
-						(accountBrief) =>
+						(accountBrief: {externalReferenceCode: string}) =>
 							readField('externalReferenceCode', accountBrief) ===
 							externalReferenceCode
 					);
@@ -83,17 +88,17 @@ export const userAccountsTypePolicy = {
 					const roleBriefs = readField(
 						'roleBriefs',
 						accountBriefRef
-					)?.map((roleBrief) => ({
+					)?.map((roleBrief: {id: string; name: string}) => ({
 						id: readField('id', roleBrief),
 						name: readField('name', roleBrief),
 					}));
 
-					const hasAdministratorRole = roleBriefs?.some(({name}) =>
-						isAccountAdministrator(name)
+					const hasAdministratorRole = roleBriefs?.some(
+						({name}: {name: string}) => isAccountAdministrator(name)
 					);
 
-					const hasSupportSeatRole = roleBriefs?.some(({name}) =>
-						isSupportSeatRole(name)
+					const hasSupportSeatRole = roleBriefs?.some(
+						({name}: {name: string}) => isSupportSeatRole(name)
 					);
 
 					return {

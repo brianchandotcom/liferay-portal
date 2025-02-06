@@ -141,7 +141,7 @@ const useProjectUsageData = () => {
 					'liferay-customer-etc-spring-boot-oaua'
 				)
 					.fetch(`/accounts/${project?.externalReferenceCode}/usage`)
-					.then((response) => response.json())
+					.then((response: {json: () => any}) => response.json())
 					.catch(console.error);
 
 			if (response) {

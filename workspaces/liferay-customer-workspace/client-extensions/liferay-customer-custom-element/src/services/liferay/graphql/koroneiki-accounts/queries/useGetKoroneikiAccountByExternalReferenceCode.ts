@@ -26,7 +26,7 @@ const GET_KORONEIKI_ACCOUNT_BY_EXTERNAL_REFERENCE_CODE = gql`
 `;
 
 export function useGetKoroneikiAccountByExternalReferenceCode(
-	externalReferenceCode,
+	externalReferenceCode: string,
 	options = {
 		notifyOnNetworkStatusChange: false,
 		skip: false,

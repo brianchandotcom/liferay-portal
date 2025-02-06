@@ -47,7 +47,7 @@ const useJiraIssue = (issueKey?: string) => {
 					'liferay-customer-etc-spring-boot-oaua'
 				)
 					.fetch(`/jira/issue/${issueKey}`)
-					.then((response) => response.json());
+					.then((response: {json: () => any}) => response.json());
 
 			setJiraIssue(response);
 		}

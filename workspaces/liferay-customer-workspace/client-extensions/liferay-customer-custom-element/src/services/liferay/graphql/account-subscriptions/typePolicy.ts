@@ -7,7 +7,7 @@ export const accountSubscriptionsTypePolicy = {
 	C_AccountSubscription: {
 		fields: {
 			instanceSize: {
-				read(instanceSize) {
+				read(instanceSize: number) {
 					if (!instanceSize) {
 						return 0;
 					}

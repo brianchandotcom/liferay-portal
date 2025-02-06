@@ -11,7 +11,10 @@ export const koroneikiAccountsTypePolicy = {
 	C_KoroneikiAccount: {
 		fields: {
 			hasSLAGoldPlatinum: {
-				read(_, {readField}) {
+				read(
+					_: any,
+					{readField}: {readField: (arg: string) => any}
+				): boolean {
 					const slaCurrent = readField('slaCurrent');
 
 					return (
@@ -22,7 +25,10 @@ export const koroneikiAccountsTypePolicy = {
 				},
 			},
 			status: {
-				read(_, {readField}) {
+				read(
+					_: any,
+					{readField}: {readField: (arg: string) => any}
+				): string {
 					if (
 						readField('partnershipCurrent') ||
 						readField('slaCurrent')

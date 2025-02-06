@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {gql, useMutation} from '@apollo/client';
+import {OperationVariables, gql, useMutation} from '@apollo/client';
 
 export const UPDATE_ACCOUNT_SUBSCRIPTION_GROUP = gql`
 	mutation updateAccountSubscriptionGroup(
@@ -28,17 +28,14 @@ export const UPDATE_ACCOUNT_SUBSCRIPTION_GROUP = gql`
 `;
 
 export function useUpdateAccountSubscriptionGroup(
-	variables,
+	variables: OperationVariables,
 	options = {displaySuccess: false}
 ) {
-	return useMutation(
-		UPDATE_ACCOUNT_SUBSCRIPTION_GROUP,
-		{
-			context: {
-				displaySuccess: options.displaySuccess,
-				type: 'liferay-rest',
-			},
+	return useMutation(UPDATE_ACCOUNT_SUBSCRIPTION_GROUP, {
+		context: {
+			displaySuccess: options.displaySuccess,
+			type: 'liferay-rest',
 		},
-		variables
-	);
+		variables,
+	});
 }

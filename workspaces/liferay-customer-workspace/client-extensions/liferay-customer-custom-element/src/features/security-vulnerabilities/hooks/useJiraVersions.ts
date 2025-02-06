@@ -21,7 +21,7 @@ const useJiraVersions = () => {
 					'liferay-customer-etc-spring-boot-oaua'
 				)
 					.fetch('/jira/security-vulnerabilities/affected-versions')
-					.then((response) => response.json());
+					.then((response: {json: () => any}) => response.json());
 
 			setJiraVersions(response);
 		}

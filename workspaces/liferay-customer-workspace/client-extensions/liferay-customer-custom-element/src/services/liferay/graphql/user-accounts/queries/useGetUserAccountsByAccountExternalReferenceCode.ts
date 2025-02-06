@@ -53,10 +53,12 @@ const GET_USER_ACCOUNTS_BY_ACCOUNT_EXTERNAL_REFERENCE_CODE = gql`
 `;
 
 export function useGetUserAccountsByAccountExternalReferenceCode(
-	externalReferenceCode,
+	externalReferenceCode: string,
 	options = {
 		filter: '',
 		notifyOnNetworkStatusChange: false,
+		page: 1,
+		pageSize: 9999,
 		skip: false,
 	}
 ) {
@@ -71,8 +73,8 @@ export function useGetUserAccountsByAccountExternalReferenceCode(
 		variables: {
 			externalReferenceCode,
 			filter: options.filter || '',
-			page: options.page || 1,
-			pageSize: options.pageSize || 9999,
+			page: options.page,
+			pageSize: options.pageSize,
 		},
 	});
 }

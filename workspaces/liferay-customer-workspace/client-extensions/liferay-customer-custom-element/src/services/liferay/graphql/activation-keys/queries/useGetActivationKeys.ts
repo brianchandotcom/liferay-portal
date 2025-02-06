@@ -47,10 +47,10 @@ const GET_ACTIVATION_KEYS = gql`
 `;
 
 export function useGetActivationKeys(
-	accountKey,
-	filter,
-	page,
-	pageSize,
+	accountKey: string,
+	filter: string,
+	page: number,
+	pageSize: number,
 	options = {
 		notifyOnNetworkStatusChange: false,
 		skip: false,

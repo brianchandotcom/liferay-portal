@@ -9,7 +9,13 @@ import {fetcher} from './fetcher';
 const HEADLESS_DELIVERY_BASE_URL_ = `${window.location.origin}/o/headless-delivery/v1.0`;
 const HEADLESS_BASE_URL = `${window.location.origin}/o/`;
 
-const fetchHeadless = async ({resolveAsJson = true, url}) => {
+const fetchHeadless = async ({
+	resolveAsJson = true,
+	url,
+}: {
+	resolveAsJson?: boolean;
+	url: string;
+}) => {
 
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
 	const response = await fetch(`${HEADLESS_DELIVERY_BASE_URL_}${url}`, {
@@ -38,7 +44,7 @@ const getBusinessEvents = async () => {
 	});
 };
 
-const getHighPriorityContacts = async (filter) => {
+const getHighPriorityContacts = async (filter: string) => {
 
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
 	const response = await fetch(
@@ -55,7 +61,7 @@ const getHighPriorityContacts = async (filter) => {
 	return response.json();
 };
 
-const getTicketAttachments = async (filter) => {
+const getTicketAttachments = async (filter: string) => {
 	return fetcher(
 		`${HEADLESS_BASE_URL}${`c/ticketattachments?filter=${filter}`}`,
 		{

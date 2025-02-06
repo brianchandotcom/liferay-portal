@@ -455,9 +455,7 @@ public class PublishLayoutMVCActionCommandTest {
 			"com_liferay_commerce_order_content_web_internal_portlet_" +
 				"CommerceOrderContentPortlet",
 			"com_liferay_commerce_wish_list_web_internal_portlet_" +
-				"CommerceWishListContentPortlet",
-			"com_liferay_commerce_wish_list_web_internal_portlet_" +
-				"MyCommerceWishListsPortlet"
+				"CommerceWishListContentPortlet"
 		};
 
 		ContentLayoutTestUtil.publishLayout(_draftLayout, _layout);

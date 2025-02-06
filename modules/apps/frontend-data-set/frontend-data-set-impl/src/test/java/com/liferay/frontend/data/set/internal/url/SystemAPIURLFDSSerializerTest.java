@@ -6,12 +6,11 @@
 package com.liferay.frontend.data.set.internal.url;
 
 import com.liferay.frontend.data.set.SystemFDSEntry;
-import com.liferay.frontend.data.set.internal.BaseSystemFDSSerializerTestCase;
+import com.liferay.frontend.data.set.internal.BaseFDSSerializerTestCase;
 import com.liferay.frontend.data.set.serializer.FDSSerializer;
 import com.liferay.frontend.data.set.url.FDSAPIURLResolver;
 import com.liferay.frontend.data.set.url.FDSAPIURLResolverRegistry;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory.ServiceWrapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -24,7 +23,6 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -38,28 +36,28 @@ import org.osgi.framework.ServiceRegistration;
 /**
  * @author Daniel Sanz
  */
-public class SystemAPIURLFDSSerializerImplTest
-	extends BaseSystemFDSSerializerTestCase {
+public class SystemAPIURLFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 	@ClassRule
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
+	@Override
+	public ServiceTrackerMap<String, ?> createServiceTrackerMap() {
+		return ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, FDSAPIURLResolver.class, "fds.rest.application.key",
+			ServiceTrackerCustomizerFactory.<FDSAPIURLResolver>serviceWrapper(
+				bundleContext));
+	}
+
 	@Before
 	public void setUp() throws Exception {
 		super.setUp();
 
-		_fdsAPIURLResolverServiceTrackerMap =
-			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext, FDSAPIURLResolver.class,
-				"fds.rest.application.key",
-				ServiceTrackerCustomizerFactory.
-					<FDSAPIURLResolver>serviceWrapper(bundleContext));
-
 		ReflectionTestUtil.setFieldValue(
 			_fdsAPIURLResolverRegistry, "_serviceTrackerMap",
-			_fdsAPIURLResolverServiceTrackerMap);
+			serviceTrackerMap);
 
 		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
 
@@ -75,13 +73,6 @@ public class SystemAPIURLFDSSerializerImplTest
 		ReflectionTestUtil.setFieldValue(
 			_fdsSerializer, "_systemFDSEntryRegistry",
 			systemFDSEntryRegistryImpl);
-	}
-
-	@After
-	public void tearDown() {
-		super.tearDown();
-
-		_fdsAPIURLResolverServiceTrackerMap.close();
 	}
 
 	@Test
@@ -197,8 +188,6 @@ public class SystemAPIURLFDSSerializerImplTest
 
 	private static final FDSAPIURLResolverRegistry _fdsAPIURLResolverRegistry =
 		new FDSAPIURLResolverRegistryImpl();
-	private static ServiceTrackerMap<String, ServiceWrapper<FDSAPIURLResolver>>
-		_fdsAPIURLResolverServiceTrackerMap;
 	private static final FDSSerializer<String> _fdsSerializer =
 		new SystemAPIURLFDSSerializerImpl();
 

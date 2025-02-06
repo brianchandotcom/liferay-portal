@@ -33,7 +33,7 @@ import org.mockito.Mockito;
 /**
  * @author Daniel Sanz
  */
-public class CustomCreationMenuFDSSerializerImplTest {
+public class CustomCreationMenuFDSSerializerTest {
 
 	@ClassRule
 	@Rule

@@ -1,10 +1,10 @@
 {
-	"friendlyURL": "/collections",
+	"friendlyURL": "/admin",
 	"hidden": false,
 	"name_i18n": {
-		"en_US": "Collections"
+		"en_US": "Admin"
 	},
 	"private": false,
 	"system": false,
-	"type": "Content"
+	"type": "node"
 }

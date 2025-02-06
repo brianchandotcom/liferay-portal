@@ -123,9 +123,15 @@
 				}
 			}
 
-			.item-list-head .btn {
-				left: 0.5rem;
-				position: absolute;
+			.item-list-head {
+				.btn {
+					left: 0.5rem;
+					position: absolute;
+				}
+
+				.text-truncate-inline {
+					max-width: calc(100% - 48px);
+				}
 			}
 		}
 	}

@@ -57,14 +57,6 @@ public class RelatedModelFDSActionProvider implements FDSActionProvider {
 		RelatedModel relatedModel = (RelatedModel)model;
 
 		return DropdownItemListBuilder.add(
-			dropdownItem -> {
-				dropdownItem.setHref(
-					_getViewURL(relatedModel.getId(), httpServletRequest));
-				dropdownItem.setIcon("view");
-				dropdownItem.setLabel(
-					_language.get(httpServletRequest, Constants.VIEW));
-			}
-		).add(
 			() -> {
 				ObjectEntry objectEntry =
 					_objectEntryLocalService.getObjectEntry(
@@ -90,6 +82,14 @@ public class RelatedModelFDSActionProvider implements FDSActionProvider {
 				dropdownItem.setIcon("trash");
 				dropdownItem.setLabel(
 					_language.get(httpServletRequest, Constants.DELETE));
+			}
+		).add(
+			dropdownItem -> {
+				dropdownItem.setHref(
+					_getViewURL(relatedModel.getId(), httpServletRequest));
+				dropdownItem.setIcon("view");
+				dropdownItem.setLabel(
+					_language.get(httpServletRequest, Constants.VIEW));
 			}
 		).build();
 	}

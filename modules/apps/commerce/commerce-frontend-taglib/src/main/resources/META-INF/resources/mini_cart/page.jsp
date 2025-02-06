@@ -21,6 +21,8 @@
 				HashMapBuilder.<String, Object>put(
 					"accountId", accountEntryId
 				).put(
+					"baseOrderDetailURL", baseOrderDetailURL
+				).put(
 					"cartViews", cartViews
 				).put(
 					"checkoutURL", checkoutURL

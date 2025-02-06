@@ -23,6 +23,7 @@ page import="com.liferay.portal.kernel.util.PortalUtil" %>
 
 <%
 long accountEntryId = (long)request.getAttribute("liferay-commerce:cart:accountEntryId");
+String baseOrderDetailURL = (String)request.getAttribute("liferay-commerce:cart:baseOrderDetailURL");
 Map<String, String> cartViews = (Map<String, String>)request.getAttribute("liferay-commerce:cart:cartViews");
 String checkoutURL = (String)request.getAttribute("liferay-commerce:cart:checkoutURL");
 long commerceChannelGroupId = (long)request.getAttribute("liferay-commerce:cart:commerceChannelGroupId");

@@ -52,6 +52,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -329,30 +330,14 @@ public class FormItemManager {
 							(FragmentStyledLayoutStructureItem)
 								layoutStructureItem;
 
-					Set<String> fieldTypes =
-						_fragmentEntryLinkManager.
-							getFragmentEntryLinkFieldTypes(
-								fragmentStyledLayoutStructureItem.
-									getFragmentEntryLinkId());
+					String type = _getFragmentEntryLinkFormButtonType(
+						fragmentStyledLayoutStructureItem.
+							getFragmentEntryLinkId());
 
-					if (fieldTypes.contains("formButton")) {
-						FragmentEntryLink fragmentEntryLink =
-							_fragmentEntryLinkLocalService.
-								fetchFragmentEntryLink(
-									fragmentStyledLayoutStructureItem.
-										getFragmentEntryLinkId());
+					if (Objects.equals(type, "previous") ||
+						Objects.equals(type, "next")) {
 
-						Object value =
-							_fragmentEntryConfigurationParser.getFieldValue(
-								fragmentEntryLink.getConfiguration(),
-								fragmentEntryLink.getEditableValues(),
-								LocaleUtil.getMostRelevantLocale(), "type");
-
-						if (Objects.equals(value, "previous") ||
-							Objects.equals(value, "next")) {
-
-							continue;
-						}
+						continue;
 					}
 				}
 
@@ -753,6 +738,29 @@ public class FormItemManager {
 
 		return _fragmentEntryLocalService.fetchFragmentEntry(
 			group.getGroupId(), jsonObject.getString("key"));
+	}
+
+	private String _getFragmentEntryLinkFormButtonType(
+		long fragmentEntryLinkId) {
+
+		Set<String> fieldTypes =
+			_fragmentEntryLinkManager.getFragmentEntryLinkFieldTypes(
+				fragmentEntryLinkId);
+
+		if (!fieldTypes.contains("formButton")) {
+			return null;
+		}
+
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
+				fragmentEntryLinkId);
+
+		return GetterUtil.getString(
+			_fragmentEntryConfigurationParser.getFieldValue(
+				fragmentEntryLink.getConfiguration(),
+				fragmentEntryLink.getEditableValues(),
+				LocaleUtil.getMostRelevantLocale(), "type"),
+			null);
 	}
 
 	private List<InfoField<?>> _getInfoFields(

@@ -58,7 +58,8 @@ import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.portal.vulcan.crud.VulcanCRUDItemDelegate;
-import com.liferay.portal.vulcan.crud.VulcanCRUDItemDelegateRegistry;
+import com.liferay.portal.vulcan.crud.VulcanCRUDItemDelegateBuilder;
+import com.liferay.portal.vulcan.crud.VulcanCRUDItemDelegateBuilderRegistry;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -488,16 +489,20 @@ public class SearchResultResourceImpl extends BaseSearchResultResourceImpl {
 	private void _setEmbedded(
 		String entityClassName, Long entryClassPK, SearchResult searchResult) {
 
-		VulcanCRUDItemDelegate vulcanCRUDItemDelegate =
-			_vulcanCRUDItemDelegateRegistry.getVulcanCRUDItemDelegate(
-				contextCompany.getCompanyId(), entityClassName);
+		VulcanCRUDItemDelegateBuilder vulcanCRUDItemDelegateBuilder =
+			_vulcanCRUDItemDelegateBuilderRegistry.
+				getVulcanCRUDItemDelegateBuilder(
+					contextCompany, entityClassName);
 
-		if (vulcanCRUDItemDelegate != null) {
-			vulcanCRUDItemDelegate.setContextAcceptLanguage(
-				contextAcceptLanguage);
-			vulcanCRUDItemDelegate.setContextCompany(contextCompany);
-			vulcanCRUDItemDelegate.setContextUriInfo(contextUriInfo);
-			vulcanCRUDItemDelegate.setContextUser(contextUser);
+		if (vulcanCRUDItemDelegateBuilder != null) {
+			VulcanCRUDItemDelegate vulcanCRUDItemDelegate =
+				vulcanCRUDItemDelegateBuilder.acceptLanguage(
+					contextAcceptLanguage
+				).uriInfo(
+					contextUriInfo
+				).user(
+					contextUser
+				).build();
 
 			searchResult.setEmbedded(
 				() -> vulcanCRUDItemDelegate.getItem(entryClassPK));
@@ -660,6 +665,7 @@ public class SearchResultResourceImpl extends BaseSearchResultResourceImpl {
 		new SearchResultEntityModel();
 
 	@Reference
-	private VulcanCRUDItemDelegateRegistry _vulcanCRUDItemDelegateRegistry;
+	private VulcanCRUDItemDelegateBuilderRegistry
+		_vulcanCRUDItemDelegateBuilderRegistry;
 
 }

@@ -13,6 +13,7 @@ import com.liferay.commerce.constants.CommerceOrderConstants;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
+import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.product.constants.CommerceChannelConstants;
 import com.liferay.commerce.product.model.CPInstance;
@@ -21,8 +22,15 @@ import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.commerce.service.CommerceOrderItemLocalService;
+import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.term.model.CommerceTermEntry;
 import com.liferay.commerce.term.service.CommerceTermEntryLocalService;
+import com.liferay.commerce.test.util.CommerceTestUtil;
+import com.liferay.expando.kernel.model.ExpandoColumn;
+import com.liferay.expando.kernel.model.ExpandoColumnConstants;
+import com.liferay.expando.kernel.model.ExpandoTable;
+import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
+import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.Order;
 import com.liferay.headless.commerce.admin.order.client.dto.v1_0.OrderItem;
 import com.liferay.headless.commerce.admin.order.client.pagination.Page;
@@ -31,13 +39,19 @@ import com.liferay.headless.commerce.admin.order.client.resource.v1_0.OrderResou
 import com.liferay.headless.commerce.core.util.DateConfig;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.AddressLocalService;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CountryLocalService;
 import com.liferay.portal.kernel.service.RegionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
@@ -49,17 +63,22 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.test.rule.Inject;
 
+import java.io.Serializable;
+
 import java.math.BigDecimal;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -81,6 +100,9 @@ public class OrderResourceTest extends BaseOrderResourceTestCase {
 		super.setUp();
 
 		_user = UserTestUtil.addUser(testCompany);
+
+		_setUpPermissionThreadLocal();
+		_setUpPrincipalThreadLocal();
 
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			testCompany.getCompanyId(), testGroup.getGroupId(),
@@ -142,6 +164,16 @@ public class OrderResourceTest extends BaseOrderResourceTestCase {
 				RandomTestUtil.randomString(), RandomTestUtil.nextDouble(),
 				RandomTestUtil.randomString(), StringPool.BLANK,
 				_serviceContext);
+	}
+
+	@After
+	@Override
+	public void tearDown() throws Exception {
+		super.tearDown();
+
+		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
+
+		PrincipalThreadLocal.setName(_originalName);
 	}
 
 	@Ignore
@@ -320,6 +352,7 @@ public class OrderResourceTest extends BaseOrderResourceTestCase {
 	public void testPostOrder() throws Exception {
 		super.testPostOrder();
 
+		_testPostOrderWithDateCustomField();
 		_testPostOrderWithMoreExternalReferenceCodes();
 		_testPostOrderWithOrderItems(
 			CommerceOrderConstants.ORDER_STATUS_COMPLETED);
@@ -498,6 +531,20 @@ public class OrderResourceTest extends BaseOrderResourceTestCase {
 		return order;
 	}
 
+	private void _setUpPermissionThreadLocal() {
+		_originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(_user));
+	}
+
+	private void _setUpPrincipalThreadLocal() {
+		_originalName = PrincipalThreadLocal.getName();
+
+		PrincipalThreadLocal.setName(_user.getUserId());
+	}
+
 	private void _testPatchOrderByExternalReferenceCodeWithMoreExternalReferenceCodes()
 		throws Exception {
 
@@ -637,6 +684,47 @@ public class OrderResourceTest extends BaseOrderResourceTestCase {
 			getOrder.getShippingAddressExternalReferenceCode());
 	}
 
+	private void _testPostOrderWithDateCustomField() throws Exception {
+		User adminUser = UserTestUtil.getAdminUser(testGroup.getCompanyId());
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(adminUser));
+
+		PrincipalThreadLocal.setName(adminUser.getUserId());
+
+		CommerceOrder commerceOrder = CommerceTestUtil.addB2CCommerceOrder(
+			adminUser.getUserId(), _commerceChannel.getGroupId(),
+			_commerceCurrency);
+
+		ExpandoTable expandoTable = _expandoTableLocalService.addTable(
+			testGroup.getCompanyId(),
+			_classNameLocalService.getClassNameId(CommerceOrder.class),
+			"CUSTOM_FIELDS");
+
+		ExpandoColumn expandoColumn = _expandoColumnLocalService.addColumn(
+			expandoTable.getTableId(), "A" + RandomTestUtil.randomString(),
+			ExpandoColumnConstants.DATE);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(testGroup.getGroupId());
+
+		serviceContext.setExpandoBridgeAttributes(
+			HashMapBuilder.<String, Serializable>put(
+				expandoColumn.getName(), new Date()
+			).build());
+
+		commerceOrder.setExpandoBridgeAttributes(serviceContext);
+
+		commerceOrder = _commerceOrderLocalService.updateCommerceOrder(
+			commerceOrder);
+
+		Assert.assertNotNull(
+			_jsonFactory.createJSONObject(
+				String.valueOf(
+					orderResource.getOrder(
+						commerceOrder.getCommerceOrderId()))));
+	}
+
 	private void _testPostOrderWithMoreExternalReferenceCodes()
 		throws Exception {
 
@@ -726,6 +814,9 @@ public class OrderResourceTest extends BaseOrderResourceTestCase {
 	@Inject
 	private AddressLocalService _addressLocalService;
 
+	@Inject
+	private ClassNameLocalService _classNameLocalService;
+
 	private CommerceChannel _commerceChannel;
 
 	@Inject
@@ -739,6 +830,9 @@ public class OrderResourceTest extends BaseOrderResourceTestCase {
 	@Inject
 	private CommerceOrderItemLocalService _commerceOrderItemLocalService;
 
+	@Inject
+	private CommerceOrderLocalService _commerceOrderLocalService;
+
 	private CommerceTermEntry _commerceTermEntry;
 
 	@Inject
@@ -749,7 +843,18 @@ public class OrderResourceTest extends BaseOrderResourceTestCase {
 	@Inject
 	private CountryLocalService _countryLocalService;
 
+	@Inject
+	private ExpandoColumnLocalService _expandoColumnLocalService;
+
+	@Inject
+	private ExpandoTableLocalService _expandoTableLocalService;
+
+	@Inject
+	private JSONFactory _jsonFactory;
+
 	private Address _orderAddress;
+	private String _originalName;
+	private PermissionChecker _originalPermissionChecker;
 	private Region _region;
 
 	@Inject

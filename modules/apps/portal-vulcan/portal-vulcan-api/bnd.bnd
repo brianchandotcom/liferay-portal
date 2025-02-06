@@ -24,6 +24,7 @@ Export-Package:\
 	com.liferay.portal.vulcan.jackson.databind,\
 	com.liferay.portal.vulcan.jackson.databind.deser,\
 	com.liferay.portal.vulcan.jackson.databind.ser,\
+	com.liferay.portal.vulcan.jaxrs.context,\
 	com.liferay.portal.vulcan.jaxrs.exception.mapper,\
 	com.liferay.portal.vulcan.jaxrs.extension,\
 	com.liferay.portal.vulcan.jaxrs.serializer,\

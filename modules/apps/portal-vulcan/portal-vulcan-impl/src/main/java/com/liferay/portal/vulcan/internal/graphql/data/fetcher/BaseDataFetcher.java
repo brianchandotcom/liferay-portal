@@ -11,7 +11,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.vulcan.graphql.validation.GraphQLRequestContext;
 import com.liferay.portal.vulcan.graphql.validation.GraphQLRequestContextValidator;
 
-import graphql.kickstart.servlet.context.GraphQLServletContext;
+import graphql.GraphQLContext;
 
 import graphql.schema.DataFetcher;
 import graphql.schema.DataFetchingEnvironment;
@@ -67,19 +67,19 @@ public abstract class BaseDataFetcher implements DataFetcher<Object> {
 	private HttpServletRequest _getHttpServletRequest(
 		DataFetchingEnvironment dataFetchingEnvironment) {
 
-		GraphQLServletContext graphQLServletContext =
-			dataFetchingEnvironment.getContext();
+		GraphQLContext graphQLContext =
+			dataFetchingEnvironment.getGraphQlContext();
 
-		return graphQLServletContext.getHttpServletRequest();
+		return graphQLContext.get(HttpServletRequest.class);
 	}
 
 	private HttpServletResponse _getHttpServletResponse(
 		DataFetchingEnvironment dataFetchingEnvironment) {
 
-		GraphQLServletContext graphQLServletContext =
-			dataFetchingEnvironment.getContext();
+		GraphQLContext graphQLContext =
+			dataFetchingEnvironment.getGraphQlContext();
 
-		return graphQLServletContext.getHttpServletResponse();
+		return graphQLContext.get(HttpServletResponse.class);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

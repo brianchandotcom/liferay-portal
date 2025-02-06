@@ -6,6 +6,7 @@
 package com.liferay.captcha.configuration.admin.definition.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.captcha.recaptcha.ReCaptchaImpl;
 import com.liferay.captcha.simplecaptcha.SimpleCaptchaImpl;
 import com.liferay.configuration.admin.definition.ConfigurationFieldOptionsProvider;
 import com.liferay.portal.kernel.captcha.Captcha;
@@ -16,6 +17,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.util.List;
 import java.util.Objects;
 
 import org.junit.AfterClass;
@@ -60,20 +62,12 @@ public class CaptchaConfigurationFieldOptionsProviderTest {
 
 	@Test
 	public void testGetOptions() {
-		Assert.assertTrue(
-			ListUtil.exists(
-				_configurationFieldOptionsProvider.getOptions(),
-				option -> Objects.equals(
-					TestCaptcha.class.getName(), option.getValue())));
+		List<ConfigurationFieldOptionsProvider.Option> options =
+			_configurationFieldOptionsProvider.getOptions();
 
-		Captcha testCaptcha = new TestCaptcha();
-
-		Assert.assertTrue(
-			ListUtil.exists(
-				_configurationFieldOptionsProvider.getOptions(),
-				option -> Objects.equals(
-					testCaptcha.getName(),
-					option.getLabel(LocaleUtil.getDefault()))));
+		_assertContainsOption(new ReCaptchaImpl(), options);
+		_assertContainsOption(new SimpleCaptchaImpl(), options);
+		_assertContainsOption(new TestCaptcha(), options);
 	}
 
 	public static class TestCaptcha extends SimpleCaptchaImpl {
@@ -83,6 +77,28 @@ public class CaptchaConfigurationFieldOptionsProviderTest {
 			return "TestCaptcha";
 		}
 
+	}
+
+	private void _assertContainsOption(
+		Captcha captcha,
+		List<ConfigurationFieldOptionsProvider.Option> options) {
+
+		Assert.assertTrue(
+			ListUtil.exists(
+				options,
+				option -> {
+					Class<? extends Captcha> clazz = captcha.getClass();
+
+					if (Objects.equals(
+							captcha.getName(),
+							option.getLabel(LocaleUtil.getDefault())) &&
+						Objects.equals(clazz.getName(), option.getValue())) {
+
+						return true;
+					}
+
+					return false;
+				}));
 	}
 
 	private static ServiceRegistration<Captcha> _serviceRegistration;

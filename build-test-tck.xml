@@ -128,29 +128,21 @@
 			tofile="${tck.tests.xml}"
 		/>
 
-		<xmltask preserveType="true" source="${project.dir}/tools/tck/htmlunit-tests.xml">
-			<call path="//*[local-name()='entry'][@key]">
-				<param name="key" path="@key" />
-				<actions>
-					<replaceregexp
-						file="${tck.tests.xml}"
-						flags="gis"
-						match="&lt;entry[^&gt;]+key=&quot;@{key}&quot;[^&gt;]*&gt;[^&lt;]*&lt;/entry&gt;"
-						replace=""
-					/>
-				</actions>
-			</call>
-		</xmltask>
-
-		<var name="tck.login.url" value="http://localhost:8080/group/portlet-tck?SM_USER=test@liferay.com" />
-
-		<var name="tck.properties" value="-Dtest.context.base='${test.context.base[tck]}' -Dtest.server.username.id='${test.server.username.id[tck]}' -Dtest.server.username='${test.server.username[tck]}' -Dtest.server.password.id='${test.server.password.id[tck]}' -Dtest.server.password='${test.server.password[tck]}' -Dtest.timeout='${test.timeout[tck]}' -Dtest.ignore.list.file=${project.dir}/tools/tck/ignoredTestCases.xml -Dtest.non.exclusive.file=${project.dir}/tools/tck/nonExclusiveTestCases.xml -Dtest.server.login.url=${tck.login.url}" />
-
 		<local name="java.jdk.home" />
 		<local name="java.jdk.opts" />
 
 		<get-java-jdk-home architecture="x64" type="oracle" version="8" />
 		<get-java-jdk-opts architecture="x64" type="oracle" version="8" />
+
+		<exec dir="${project.dir}" executable="ant" failonerror="true">
+			<env key="JAVA_HOME" value="${java.jdk.home}" />
+			<env key="JAVA_OPTS" value="${java.jdk.opts}" />
+			<arg line="-f build-test-tck.xml -Dtck.tests.xml=${tck.tests.xml} split-test-list" />
+		</exec>
+
+		<var name="tck.login.url" value="http://localhost:8080/group/portlet-tck?SM_USER=test@liferay.com" />
+
+		<var name="tck.properties" value="-Dtest.context.base='${test.context.base[tck]}' -Dtest.server.username.id='${test.server.username.id[tck]}' -Dtest.server.username='${test.server.username[tck]}' -Dtest.server.password.id='${test.server.password.id[tck]}' -Dtest.server.password='${test.server.password[tck]}' -Dtest.timeout='${test.timeout[tck]}' -Dtest.ignore.list.file=${project.dir}/tools/tck/ignoredTestCases.xml -Dtest.non.exclusive.file=${project.dir}/tools/tck/nonExclusiveTestCases.xml -Dtest.server.login.url=${tck.login.url}" />
 
 		<exec dir="${tck.home}" executable="mvn" failonerror="true">
 			<env key="JAVA_HOME" value="${java.jdk.home}" />
@@ -201,5 +193,21 @@
 				<fail message="No TCK tests were run with ${browser.type[tck]}." />
 			</else>
 		</if>
+	</target>
+
+	<target name="split-test-list">
+		<xmltask preserveType="true" source="${project.dir}/tools/tck/htmlunit-tests.xml">
+			<call path="//*[local-name()='entry'][@key]">
+				<param name="key" path="@key" />
+				<actions>
+					<replaceregexp
+						file="${tck.tests.xml}"
+						flags="gis"
+						match="&lt;entry[^&gt;]+key=&quot;@{key}&quot;[^&gt;]*&gt;[^&lt;]*&lt;/entry&gt;"
+						replace=""
+					/>
+				</actions>
+			</call>
+		</xmltask>
 	</target>
 </project>

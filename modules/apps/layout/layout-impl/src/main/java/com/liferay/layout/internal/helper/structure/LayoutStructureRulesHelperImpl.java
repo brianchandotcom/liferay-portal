@@ -55,12 +55,25 @@ public class LayoutStructureRulesHelperImpl
 			List<String> itemIds = _getItemIds(layoutStructureRule);
 
 			if (itemIds.isEmpty()) {
-				_processActions(
-					layoutStructureRule.getActionsJSONArray(), displayedItemIds,
-					hiddenItemIds,
-					!_evaluateLayoutStructureRule(
-						Collections.emptyMap(), layoutStructureRule,
-						layoutStructureRulesContext));
+				JSONArray actionsJSONArray = layoutStructureRule.getActionsJSONArray();
+
+				boolean negated = !_evaluateLayoutStructureRule(
+					Collections.emptyMap(), layoutStructureRule,
+					layoutStructureRulesContext);
+
+				for (int i = 0; i < actionsJSONArray.length(); i++) {
+					JSONObject actionsJSONObject = actionsJSONArray.getJSONObject(i);
+
+					if (Objects.equals(
+						_getAction(negated, actionsJSONObject.getString("type")),
+						Action.SHOW)) {
+
+						displayedItemIds.add(actionsJSONObject.getString("itemId"));
+					}
+					else {
+						hiddenItemIds.add(actionsJSONObject.getString("itemId"));
+					}
+				}
 
 				continue;
 			}
@@ -299,25 +312,6 @@ public class LayoutStructureRulesHelperImpl
 				).put(
 					"itemId", actionsJSONObject.getString("itemId")
 				));
-		}
-	}
-
-	private void _processActions(
-		JSONArray actionsJSONArray, Set<String> displayedItemIds,
-		Set<String> hiddenItemIds, boolean negated) {
-
-		for (int i = 0; i < actionsJSONArray.length(); i++) {
-			JSONObject actionsJSONObject = actionsJSONArray.getJSONObject(i);
-
-			if (Objects.equals(
-					_getAction(negated, actionsJSONObject.getString("type")),
-					Action.SHOW)) {
-
-				displayedItemIds.add(actionsJSONObject.getString("itemId"));
-			}
-			else {
-				hiddenItemIds.add(actionsJSONObject.getString("itemId"));
-			}
 		}
 	}
 

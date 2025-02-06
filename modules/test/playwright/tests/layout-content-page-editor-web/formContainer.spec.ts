@@ -365,7 +365,7 @@ test.describe('Form Configuration', () => {
 
 			// Assert form is not redirected if there are validation errors
 
-			const input = page.getByLabel('Lemon Size', {exact: true});
+			const input = page.getByRole('textbox', {name: 'Lemon Size'});
 
 			await input.click();
 
@@ -2996,7 +2996,7 @@ test.describe('Text input field', () => {
 				'Maximum Number of Characters Exceeded: 290 / 280'
 			);
 
-			await page.getByLabel('Lemon Size', {exact: true}).click();
+			await page.getByRole('textbox', {name: 'Lemon Size'}).click();
 
 			await page.keyboard.type('a'.repeat(290));
 
@@ -3073,7 +3073,7 @@ test.describe('Text input field', () => {
 			);
 
 			await expect(
-				page.getByLabel('Potato Origin', {exact: true})
+				page.getByRole('textbox', {name: 'Potato Origin'})
 			).toHaveAttribute('required');
 		}
 	);
@@ -3341,7 +3341,7 @@ test.describe('Submit button', () => {
 				await pageEditorPage.publishPage();
 			});
 
-			const input = page.getByLabel('Text', {exact: true});
+			const input = page.getByRole('textbox', {name: 'Text'});
 			const submitDraftButton = page.getByText('Submit as draft', {
 				exact: true,
 			});
@@ -3494,9 +3494,7 @@ test.describe('Textarea input field', () => {
 				'Lemon History',
 			]);
 
-			const textareaInput = page.getByLabel('Lemon History', {
-				exact: true,
-			});
+			const textareaInput = page.locator('[name="lemonHistory"]');
 
 			// Check the role of the input is textbox
 
@@ -3661,7 +3659,7 @@ test.describe('Textarea input field', () => {
 				'Maximum Number of Characters Exceeded: 310 / 300'
 			);
 
-			await page.getByLabel('Lemon History', {exact: true}).click();
+			await page.getByRole('textbox', {name: 'Lemon History'}).click();
 
 			await page.keyboard.type('a'.repeat(310));
 
@@ -5355,7 +5353,7 @@ test.describe('Multistep', () => {
 
 			// Try to submit and check it takes to step 2 because field is required
 
-			const field = page.getByLabel('Potato Origin', {exact: true});
+			const field = page.getByRole('textbox', {name: 'Potato Origin'});
 
 			await submitForm();
 
@@ -5373,9 +5371,7 @@ test.describe('Multistep', () => {
 
 			// Fill field with correct value, submit and check it submits
 
-			await page
-				.getByLabel('Potato Origin', {exact: true})
-				.fill('Canary Islands');
+			await field.fill('Canary Islands');
 
 			await submitForm();
 
@@ -5869,11 +5865,11 @@ test.describe('Edit mode language changes', () => {
 
 		await pageEditorPage.switchLanguage('en-US');
 
-		const englishLabel = page.getByLabel('English Label', {exact: true});
+		const englishLabel = page.getByText('English Label');
 		const englishHelpText = page.getByText('English Help Text');
 		const englishPlaceholder = page.getByPlaceholder('English Placeholder');
 
-		const spanishLabel = page.getByLabel('Spanish Label', {exact: true});
+		const spanishLabel = page.getByText('Spanish Label');
 		const spanishHelpText = page.getByText('Spanish Help Text');
 		const spanishPlaceholder = page.getByPlaceholder('Spanish Placeholder');
 
@@ -6537,13 +6533,19 @@ test.describe('View mode form errors', () => {
 
 			// Assert first error message is shown when there are multiple error messages
 
-			await page.getByLabel('Lemon Size', {exact: true}).click();
+			const lemonSizeField = page.getByRole('textbox', {
+				name: 'Lemon Size',
+			});
+
+			const lemonWeightField = page.getByRole('textbox', {
+				name: 'Lemon Weight',
+			});
+
+			await lemonSizeField.click();
 
 			await page.keyboard.type('a'.repeat(290));
 
-			await page
-				.getByLabel('Lemon Weight', {exact: true})
-				.fill(getRandomString());
+			await lemonWeightField.fill(getRandomString());
 
 			await page.getByText('Submit', {exact: true}).click();
 
@@ -6561,9 +6563,9 @@ test.describe('View mode form errors', () => {
 
 			// Assert second error message
 
-			await page.getByLabel('Lemon Size', {exact: true}).clear();
+			await lemonSizeField.clear();
 
-			await page.getByLabel('Lemon Weight', {exact: true}).fill('-1');
+			await lemonWeightField.fill('-1');
 
 			await page.getByText('Submit', {exact: true}).click();
 

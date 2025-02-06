@@ -17,9 +17,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortParserProvider;
-import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineExportTaskResource;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineExportTaskResourceFactory;
-import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResourceFactory;
 import com.liferay.portal.vulcan.internal.accept.language.AcceptLanguageImpl;
 import com.liferay.portal.vulcan.internal.configuration.util.ConfigurationUtil;
@@ -30,14 +28,11 @@ import com.liferay.portal.vulcan.util.UriInfoUtil;
 
 import java.io.IOException;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
 
 import java.net.URI;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -290,108 +285,38 @@ public class ContextContainerRequestFilter
 				new AcceptLanguageImpl(httpServletRequest, _language, _portal)
 			).company(
 				_portal.getCompany(httpServletRequest)
+			).expressionConvert(
+				_expressionConvert
+			).filterParserProvider(
+				_filterParserProvider
+			).groupLocalService(
+				_groupLocalService
 			).httpServletRequest(
 				httpServletRequest
 			).httpServletResponse(
 				(HttpServletResponse)message.getContextualProperty(
 					"HTTP.RESPONSE")
+			).resourceActionLocalService(
+				_resourceActionLocalService
+			).resourcePermissionLocalService(
+				_resourcePermissionLocalService
+			).roleLocalService(
+				_roleLocalService
+			).scopeChecker(
+				_scopeChecker
+			).sortParserProvider(
+				_sortParserProvider
 			).uriInfo(
 				_getVulcanUriInfo(httpServletRequest, message)
 			).user(
 				_portal.getUser(httpServletRequest)
+			).vulcanBatchEngineExportTaskResource(
+				_vulcanBatchEngineExportTaskResourceFactory.create()
+			).vulcanBatchEngineImportTaskResource(
+				_vulcanBatchEngineImportTaskResourceFactory.create()
 			).build();
 
-		instance = contextDataInjector.inject(instance);
-
-		_setInstanceFields(instance.getClass(), instance);
-	}
-
-	private void _setInstanceFields(Class<?> clazz, Object instance)
-		throws Exception {
-
-		if (clazz == Object.class) {
-			return;
-		}
-
-		for (Field field : clazz.getDeclaredFields()) {
-			if (Modifier.isFinal(field.getModifiers()) ||
-				Modifier.isStatic(field.getModifiers())) {
-
-				continue;
-			}
-
-			Class<?> fieldClass = field.getType();
-
-			if (fieldClass.equals(Object.class) &&
-				Objects.equals(field.getName(), "contextScopeChecker")) {
-
-				field.setAccessible(true);
-
-				field.set(instance, _scopeChecker);
-
-				continue;
-			}
-
-			if (fieldClass.isAssignableFrom(ExpressionConvert.class)) {
-				field.setAccessible(true);
-
-				field.set(instance, _expressionConvert);
-			}
-			else if (fieldClass.isAssignableFrom(FilterParserProvider.class)) {
-				field.setAccessible(true);
-
-				field.set(instance, _filterParserProvider);
-			}
-			else if (fieldClass.isAssignableFrom(GroupLocalService.class)) {
-				field.setAccessible(true);
-
-				field.set(instance, _groupLocalService);
-			}
-			else if (fieldClass.isAssignableFrom(
-						ResourceActionLocalService.class)) {
-
-				field.setAccessible(true);
-
-				field.set(instance, _resourceActionLocalService);
-			}
-			else if (fieldClass.isAssignableFrom(
-						ResourcePermissionLocalService.class)) {
-
-				field.setAccessible(true);
-
-				field.set(instance, _resourcePermissionLocalService);
-			}
-			else if (fieldClass.isAssignableFrom(RoleLocalService.class)) {
-				field.setAccessible(true);
-
-				field.set(instance, _roleLocalService);
-			}
-			else if (fieldClass.isAssignableFrom(SortParserProvider.class)) {
-				field.setAccessible(true);
-
-				field.set(instance, _sortParserProvider);
-			}
-			else if (fieldClass.isAssignableFrom(
-						VulcanBatchEngineExportTaskResource.class)) {
-
-				field.setAccessible(true);
-
-				field.set(
-					instance,
-					_vulcanBatchEngineExportTaskResourceFactory.create());
-			}
-			else if (fieldClass.isAssignableFrom(
-						VulcanBatchEngineImportTaskResource.class)) {
-
-				field.setAccessible(true);
-
-				field.set(
-					instance,
-					_vulcanBatchEngineImportTaskResourceFactory.create());
-			}
-		}
-
-		_setInstanceFields(clazz.getSuperclass(), instance);
+		contextDataInjector.inject(instance);
 	}
 
 	private final ConfigurationAdmin _configurationAdmin;

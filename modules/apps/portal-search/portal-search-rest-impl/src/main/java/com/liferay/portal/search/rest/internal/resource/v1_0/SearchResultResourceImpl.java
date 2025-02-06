@@ -499,6 +499,20 @@ public class SearchResultResourceImpl extends BaseSearchResultResourceImpl {
 					VulcanCRUDItemDelegate vulcanCRUDItemDelegate =
 						vulcanCRUDItemDelegateBuilder.acceptLanguage(
 							contextAcceptLanguage
+						).groupLocalService(
+							groupLocalService
+						).httpServletRequest(
+							contextHttpServletRequest
+						).httpServletResponse(
+							contextHttpServletResponse
+						).resourceActionLocalService(
+							resourceActionLocalService
+						).resourcePermissionLocalService(
+							resourcePermissionLocalService
+						).roleLocalService(
+							roleLocalService
+						).scopeChecker(
+							contextScopeChecker
 						).uriInfo(
 							contextUriInfo
 						).user(

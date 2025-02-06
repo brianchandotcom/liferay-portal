@@ -7,11 +7,18 @@ package com.liferay.portal.vulcan.internal.crud;
 
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.ResourceActionLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.crud.VulcanCRUDItemDelegate;
 import com.liferay.portal.vulcan.crud.VulcanCRUDItemDelegateBuilder;
 import com.liferay.portal.vulcan.jaxrs.context.ContextDataInjector;
 import com.liferay.portal.vulcan.jaxrs.context.ContextDataInjectorBuilder;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import javax.ws.rs.core.UriInfo;
 
@@ -23,12 +30,26 @@ public class VulcanCRUDItemDelegateBuilderImpl
 			   VulcanCRUDItemDelegateBuilder.
 				   BuildStepVulcanCRUDItemDelegateBuilder,
 			   VulcanCRUDItemDelegateBuilder.
+				   GroupLocalServiceStepVulcanCRUDItemDelegateBuilder,
+			   VulcanCRUDItemDelegateBuilder.
+				   HttpServletRequestStepVulcanCRUDItemDelegateBuilder,
+			   VulcanCRUDItemDelegateBuilder.
+				   HttpServletResponseStepVulcanCRUDItemDelegateBuilder,
+			   VulcanCRUDItemDelegateBuilder.
+				   ResourceActionLocalServiceStepVulcanCRUDItemDelegateBuilder,
+			   VulcanCRUDItemDelegateBuilder.
+				   ResourcePermissionLocalServiceStepVulcanCRUDItemDelegateBuilder,
+			   VulcanCRUDItemDelegateBuilder.
+				   RoleLocalServiceStepVulcanCRUDItemDelegateBuilder,
+			   VulcanCRUDItemDelegateBuilder.
+				   ScopeCheckerStepVulcanCRUDItemDelegateBuilder,
+			   VulcanCRUDItemDelegateBuilder.
 				   UriInfoStepVulcanCRUDItemDelegateBuilder,
 			   VulcanCRUDItemDelegateBuilder.
 				   UserStepVulcanCRUDItemDelegateBuilder {
 
 	@Override
-	public UriInfoStepVulcanCRUDItemDelegateBuilder acceptLanguage(
+	public GroupLocalServiceStepVulcanCRUDItemDelegateBuilder acceptLanguage(
 		AcceptLanguage acceptLanguage) {
 
 		_acceptLanguage = acceptLanguage;
@@ -43,6 +64,20 @@ public class VulcanCRUDItemDelegateBuilderImpl
 				_acceptLanguage
 			).company(
 				_company
+			).groupLocalService(
+				_groupLocalService
+			).httpServletRequest(
+				_httpServletRequest
+			).httpServletResponse(
+				_httpServletResponse
+			).resourceActionLocalService(
+				_resourceActionLocalService
+			).resourcePermissionLocalService(
+				_resourcePermissionLocalService
+			).roleLocalService(
+				_roleLocalService
+			).scopeChecker(
+				_scopeChecker
 			).uriInfo(
 				_uriInfo
 			).user(
@@ -51,6 +86,71 @@ public class VulcanCRUDItemDelegateBuilderImpl
 
 		return (VulcanCRUDItemDelegate)contextDataInjector.inject(
 			_vulcanCRUDItemDelegate);
+	}
+
+	@Override
+	public HttpServletRequestStepVulcanCRUDItemDelegateBuilder
+		groupLocalService(GroupLocalService groupLocalService) {
+
+		_groupLocalService = groupLocalService;
+
+		return this;
+	}
+
+	@Override
+	public HttpServletResponseStepVulcanCRUDItemDelegateBuilder
+		httpServletRequest(HttpServletRequest httpServletRequest) {
+
+		_httpServletRequest = httpServletRequest;
+
+		return this;
+	}
+
+	@Override
+	public ResourceActionLocalServiceStepVulcanCRUDItemDelegateBuilder
+		httpServletResponse(HttpServletResponse httpServletResponse) {
+
+		_httpServletResponse = httpServletResponse;
+
+		return this;
+	}
+
+	@Override
+	public ResourcePermissionLocalServiceStepVulcanCRUDItemDelegateBuilder
+		resourceActionLocalService(
+			ResourceActionLocalService resourceActionLocalService) {
+
+		_resourceActionLocalService = resourceActionLocalService;
+
+		return this;
+	}
+
+	@Override
+	public RoleLocalServiceStepVulcanCRUDItemDelegateBuilder
+		resourcePermissionLocalService(
+			ResourcePermissionLocalService resourcePermissionLocalService) {
+
+		_resourcePermissionLocalService = resourcePermissionLocalService;
+
+		return this;
+	}
+
+	@Override
+	public ScopeCheckerStepVulcanCRUDItemDelegateBuilder roleLocalService(
+		RoleLocalService roleLocalService) {
+
+		_roleLocalService = roleLocalService;
+
+		return this;
+	}
+
+	@Override
+	public UriInfoStepVulcanCRUDItemDelegateBuilder scopeChecker(
+		Object scopeChecker) {
+
+		_scopeChecker = scopeChecker;
+
+		return this;
 	}
 
 	@Override
@@ -79,6 +179,13 @@ public class VulcanCRUDItemDelegateBuilderImpl
 	private AcceptLanguage _acceptLanguage;
 	private final Company _company;
 	private final ContextDataInjectorBuilder _contextDataInjectorBuilder;
+	private GroupLocalService _groupLocalService;
+	private HttpServletRequest _httpServletRequest;
+	private HttpServletResponse _httpServletResponse;
+	private ResourceActionLocalService _resourceActionLocalService;
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+	private RoleLocalService _roleLocalService;
+	private Object _scopeChecker;
 	private UriInfo _uriInfo;
 	private User _user;
 	private final VulcanCRUDItemDelegate _vulcanCRUDItemDelegate;

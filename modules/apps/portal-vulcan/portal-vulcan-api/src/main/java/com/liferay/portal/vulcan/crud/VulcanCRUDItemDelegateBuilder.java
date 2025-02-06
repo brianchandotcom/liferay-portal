@@ -6,7 +6,14 @@
 package com.liferay.portal.vulcan.crud;
 
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.ResourceActionLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import javax.ws.rs.core.UriInfo;
 
@@ -18,13 +25,73 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface VulcanCRUDItemDelegateBuilder {
 
-	public UriInfoStepVulcanCRUDItemDelegateBuilder acceptLanguage(
+	public GroupLocalServiceStepVulcanCRUDItemDelegateBuilder acceptLanguage(
 		AcceptLanguage acceptLanguage);
 
 	@ProviderType
 	public interface BuildStepVulcanCRUDItemDelegateBuilder {
 
 		public VulcanCRUDItemDelegate build() throws Exception;
+
+	}
+
+	@ProviderType
+	public interface GroupLocalServiceStepVulcanCRUDItemDelegateBuilder {
+
+		public HttpServletRequestStepVulcanCRUDItemDelegateBuilder
+			groupLocalService(GroupLocalService groupLocalService);
+
+	}
+
+	@ProviderType
+	public interface HttpServletRequestStepVulcanCRUDItemDelegateBuilder {
+
+		public HttpServletResponseStepVulcanCRUDItemDelegateBuilder
+			httpServletRequest(HttpServletRequest httpServletRequest);
+
+	}
+
+	@ProviderType
+	public interface HttpServletResponseStepVulcanCRUDItemDelegateBuilder {
+
+		public ResourceActionLocalServiceStepVulcanCRUDItemDelegateBuilder
+			httpServletResponse(HttpServletResponse httpServletResponse);
+
+	}
+
+	@ProviderType
+	public interface
+		ResourceActionLocalServiceStepVulcanCRUDItemDelegateBuilder {
+
+		public ResourcePermissionLocalServiceStepVulcanCRUDItemDelegateBuilder
+			resourceActionLocalService(
+				ResourceActionLocalService resourceActionLocalService);
+
+	}
+
+	@ProviderType
+	public interface
+		ResourcePermissionLocalServiceStepVulcanCRUDItemDelegateBuilder {
+
+		public RoleLocalServiceStepVulcanCRUDItemDelegateBuilder
+			resourcePermissionLocalService(
+				ResourcePermissionLocalService resourcePermissionLocalService);
+
+	}
+
+	@ProviderType
+	public interface RoleLocalServiceStepVulcanCRUDItemDelegateBuilder {
+
+		public ScopeCheckerStepVulcanCRUDItemDelegateBuilder roleLocalService(
+			RoleLocalService roleLocalService);
+
+	}
+
+	@ProviderType
+	public interface ScopeCheckerStepVulcanCRUDItemDelegateBuilder {
+
+		public UriInfoStepVulcanCRUDItemDelegateBuilder scopeChecker(
+			Object scopeChecker);
 
 	}
 

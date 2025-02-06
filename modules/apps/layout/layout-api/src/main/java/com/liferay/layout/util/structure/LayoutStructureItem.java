@@ -116,6 +116,10 @@ public abstract class LayoutStructureItem implements Cloneable {
 		return false;
 	}
 
+	public String getChildrenItemId(int index) {
+		return _childrenItemIds.get(index);
+	}
+
 	public List<String> getChildrenItemIds() {
 		return _childrenItemIds;
 	}

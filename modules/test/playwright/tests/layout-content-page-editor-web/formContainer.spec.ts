@@ -5629,9 +5629,9 @@ test.describe('Multistep', () => {
 					.getByLabel('Options'),
 			});
 
-			await page.getByText('Remove & Convert').waitFor();
+			await page.getByText('Remove and Convert').waitFor();
 
-			await page.getByText('Remove & Convert').click();
+			await page.getByText('Remove and Convert').click();
 
 			// Check the stepper is removed as the form is converted to simple
 

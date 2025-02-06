@@ -4,13 +4,13 @@
  */
 
 export async function getCommonLicenseKey(
-	accountKey,
-	dateEnd,
-	dateStart,
-	environment,
-	oAuthToken,
-	provisioningServerAPI,
-	productName
+	accountKey: string,
+	dateEnd: Date,
+	dateStart: Date,
+	environment: string,
+	oAuthToken: string,
+	provisioningServerAPI: string,
+	productName: string
 ) {
 
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
@@ -27,11 +27,11 @@ export async function getCommonLicenseKey(
 }
 
 export async function getDevelopmentLicenseKey(
-	accountKey,
-	oAuthToken,
-	provisioningServerAPI,
-	selectedVersion,
-	productName
+	accountKey: string,
+	oAuthToken: string,
+	provisioningServerAPI: string,
+	selectedVersion: string,
+	productName: string
 ) {
 
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
@@ -49,9 +49,9 @@ export async function getDevelopmentLicenseKey(
 }
 
 export async function getActivationDownloadKey(
-	licenseKey,
-	oAuthToken,
-	provisioningServerAPI
+	licenseKey: string,
+	oAuthToken: string,
+	provisioningServerAPI: string
 ) {
 
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
@@ -69,9 +69,9 @@ export async function getActivationDownloadKey(
 }
 
 export async function getAggregatedActivationDownloadKey(
-	selectedKeysIDs,
-	oAuthToken,
-	provisioningServerAPI
+	selectedKeysIDs: string,
+	oAuthToken: string,
+	provisioningServerAPI: string
 ) {
 
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
@@ -89,9 +89,9 @@ export async function getAggregatedActivationDownloadKey(
 }
 
 export async function getMultipleActivationDownloadKey(
-	selectedKeysIDs,
-	oAuthToken,
-	provisioningServerAPI
+	selectedKeysIDs: string,
+	oAuthToken: string,
+	provisioningServerAPI: string
 ) {
 
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
@@ -109,10 +109,10 @@ export async function getMultipleActivationDownloadKey(
 }
 
 export async function getExportedLicenseKeys(
-	accountKey,
-	oAuthToken,
-	provisioningServerAPI,
-	productName
+	accountKey: string,
+	oAuthToken: string,
+	provisioningServerAPI: string,
+	productName: string
 ) {
 
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
@@ -130,9 +130,9 @@ export async function getExportedLicenseKeys(
 }
 
 export async function getExportedSelectedLicenseKeys(
-	selectedKeysIDs,
-	oAuthToken,
-	provisioningServerAPI
+	selectedKeysIDs: string,
+	oAuthToken: string,
+	provisioningServerAPI: string
 ) {
 
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
@@ -149,15 +149,15 @@ export async function getExportedSelectedLicenseKeys(
 	return response;
 }
 
-export async function addContactRoleNameByEmailByProject({
-	accountKey,
-	emailURI,
-	firstName,
-	lastName,
-	oAuthToken,
-	provisioningServerAPI,
-	roleName,
-}) {
+export async function addContactRoleNameByEmailByProject(
+	accountKey: string,
+	emailURI: string,
+	firstName: string,
+	lastName: string,
+	oAuthToken: string,
+	provisioningServerAPI: string,
+	roleName: string
+) {
 
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
 	const response = await fetch(
@@ -177,13 +177,13 @@ export async function addContactRoleNameByEmailByProject({
 	return response;
 }
 
-export async function deleteContactRoleNameByEmailByProject({
-	accountKey,
-	emailURI,
-	oAuthToken,
-	provisioningServerAPI,
-	rolesToDelete,
-}) {
+export async function deleteContactRoleNameByEmailByProject(
+	accountKey: string,
+	emailURI: string,
+	oAuthToken: string,
+	provisioningServerAPI: string,
+	rolesToDelete: string
+) {
 
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
 	const response = await fetch(
@@ -200,9 +200,9 @@ export async function deleteContactRoleNameByEmailByProject({
 }
 
 export async function putDeactivateKeys(
-	oAuthToken,
-	provisioningServerAPI,
-	licenseKeyIds
+	oAuthToken: string,
+	provisioningServerAPI: string,
+	licenseKeyIds: string
 ) {
 
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
@@ -221,10 +221,10 @@ export async function putDeactivateKeys(
 }
 
 export async function getNewGenerateKeyFormValues(
-	accountKey,
-	oAuthToken,
-	provisioningServerAPI,
-	productGroupName
+	accountKey: string,
+	oAuthToken: string,
+	provisioningServerAPI: string,
+	productGroupName: string
 ) {
 
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
@@ -241,10 +241,10 @@ export async function getNewGenerateKeyFormValues(
 }
 
 export async function createNewGenerateKey(
-	accountKey,
-	oAuthToken,
-	provisioningServerAPI,
-	licenseKey
+	accountKey: string,
+	oAuthToken: string,
+	provisioningServerAPI: string,
+	licenseKey: string
 ) {
 
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
@@ -264,9 +264,9 @@ export async function createNewGenerateKey(
 }
 
 export async function putSubscriptionInKey(
-	oAuthToken,
-	provisioningServerAPI,
-	licenseKeyIds
+	oAuthToken: string,
+	provisioningServerAPI: string,
+	licenseKeyIds: string
 ) {
 
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
@@ -285,9 +285,9 @@ export async function putSubscriptionInKey(
 }
 
 export async function deleteSubscriptionInKey(
-	oAuthToken,
-	provisioningServerAPI,
-	licenseKeyIds
+	oAuthToken: string,
+	provisioningServerAPI: string,
+	licenseKeyIds: string
 ) {
 
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
@@ -306,9 +306,9 @@ export async function deleteSubscriptionInKey(
 }
 
 export async function getSubscriptionInKey(
-	oAuthToken,
-	provisioningServerAPI,
-	licenseKeyIds
+	oAuthToken: string,
+	provisioningServerAPI: string,
+	licenseKeyIds: string
 ) {
 
 	// eslint-disable-next-line @liferay/portal/no-global-fetch

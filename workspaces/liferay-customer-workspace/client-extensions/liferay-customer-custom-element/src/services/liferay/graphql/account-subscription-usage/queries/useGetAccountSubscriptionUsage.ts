@@ -30,10 +30,13 @@ const GET_ACCOUNT_SUBSCRIPTION_USAGE = gql`
 `;
 
 export function useGetAccountSubscriptionUsage(
-	accountKey,
-	productKey,
-	IsPortalOrDXP,
-	options = {
+	accountKey: string,
+	productKey: string,
+	IsPortalOrDXP: boolean,
+	options: {
+		notifyOnNetworkStatusChange: boolean;
+		skip: boolean;
+	} = {
 		notifyOnNetworkStatusChange: false,
 		skip: (!accountKey && !productKey) || !IsPortalOrDXP,
 	}

@@ -156,7 +156,7 @@ const useJiraSearch = (defaultParams?: IProps) => {
 						.fetch(
 							`/jira/security-vulnerabilities/search?${queryString}`
 						)
-						.then((response) => response.json());
+						.then((response: {json: () => any}) => response.json());
 
 				setJiraSearch(response);
 			}

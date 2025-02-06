@@ -21,7 +21,7 @@ import SearchBuilder from '~/lib/SearchBuilder';
 import NotificationQueueService from '~/services/actions/notificationAction';
 import {
 	useCreateAdminLiferayExperienceCloud,
-	useCreateLiferayExperienceCloudEnvironments,
+	useCreateLiferayExperienceCloudEnvironment,
 } from '~/services/liferay/graphql/liferay-experience-cloud-environments';
 import {
 	getLiferayExperienceCloudEnvironments,
@@ -44,7 +44,7 @@ export default function useSubmitLXCEnvironment(
 	const {featureFlags, provisioningServerAPI} = useAppPropertiesContext();
 
 	const [createLiferayExperienceCloudEnvironment] =
-		useCreateLiferayExperienceCloudEnvironments();
+		useCreateLiferayExperienceCloudEnvironment();
 
 	const [updateAccountSubscriptionGroupsInfo] = useMutation(
 		updateAccountSubscriptionGroups

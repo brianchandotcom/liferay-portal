@@ -10,11 +10,14 @@ export const orderItemsTypePolicy = {
 	OrderItem: {
 		fields: {
 			options: {
-				read(options) {
-					let finalOptions = options;
+				read(options: string | Record<string, any>) {
+					let finalOptions: Record<string, unknown> = {};
 
 					if (typeof options === 'string') {
 						finalOptions = JSON.parse(options);
+					}
+					else {
+						finalOptions = options;
 					}
 
 					if (!finalOptions.instanceSize) {
@@ -25,12 +28,15 @@ export const orderItemsTypePolicy = {
 				},
 			},
 			reducedCustomFields: {
-				read(_, {readField}) {
+				read(_: unknown, {readField}: {readField: Function}) {
 					const customFields = readField('customFields');
 
 					if (Array.isArray(customFields)) {
 						return customFields.reduce(
-							(customFieldsAccumulator, currentCustomField) => ({
+							(
+								customFieldsAccumulator: Record<string, any>,
+								currentCustomField: Record<string, any>
+							) => ({
 								...customFieldsAccumulator,
 								[readField('name', currentCustomField)]:
 									readField(

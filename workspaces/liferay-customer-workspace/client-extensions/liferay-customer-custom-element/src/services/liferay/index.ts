@@ -3,6 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+declare global {
+	interface Window {
+		Liferay?: any;
+	}
+}
+
 export const Liferay = window.Liferay || {
 	BREAKPOINTS: {
 		PHONE: 0,
@@ -10,10 +16,15 @@ export const Liferay = window.Liferay || {
 	},
 	FeatureFlags: {},
 	OAuth2Client: {
-		FromUserAgentApplication: (_userAgentApplicationId) => {
+		FromUserAgentApplication: (
+			_userAgentApplicationId: string
+		): {
+			_getOrRequestToken: () => Promise<string>;
+			fetch: (_url: string, _options?: RequestInit) => Promise<Response>;
+		} => {
 			return {
-				_getOrRequestToken: () => typeof string,
-				fetch: (_url, _options = {}) => fetch(_url, _options),
+				_getOrRequestToken: () => Promise.resolve(''),
+				fetch: (_url, _options = {}) => Promise.resolve(new Response()),
 			};
 		},
 	},
@@ -35,20 +46,34 @@ export const Liferay = window.Liferay || {
 			Types: {},
 		}),
 		isTablet: () => false,
-		navigate: (path) => window.location.assign(path),
-		openToast: (options) => alert(options),
+		navigate: (path: string | URL) => window.location.assign(path),
+		openToast: (options: {
+			message: string;
+			title?: string;
+			type?: 'danger' | 'info' | 'success' | 'warning';
+		}) => alert(options.message),
 	},
 	authToken: '',
-	detach: (type, callback) => window.removeEventListener(type, callback),
-	on: (type, callback) => window.addEventListener(type, callback),
-	once: (type, callback) =>
-		window.addEventListener(type, function handler() {
-			this.removeEventListener(type, handler);
+	detach: (type: string, callback: EventListenerOrEventListenerObject) =>
+		window.removeEventListener(type, callback),
+	on: (type: string, callback: EventListenerOrEventListenerObject) =>
+		window.addEventListener(type, callback),
+	once: (type: string, callback: EventListener) =>
+		window.addEventListener(
+			type,
+			function handler(this: any, event: Event) {
+				this.removeEventListener(type, handler);
 
-			callback();
-		}),
-	publish: (name, _options) => ({
-		fire: (data) =>
+				callback(event);
+			}
+		),
+	publish: (
+		name: string,
+		_options?: {
+			[key: string]: unknown;
+		}
+	) => ({
+		fire: (data?: CustomEventInit<unknown>) =>
 			window.dispatchEvent(
 				new CustomEvent(name, {
 					bubbles: true,

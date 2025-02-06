@@ -1,5 +1,5 @@
 {
-	"@generated": "29759a0d31913875f3881946866b38f6423579eb",
+	"@generated": "74f058a5ff5eac160f6ce3941e7702fd8216cc6b",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -12,6 +12,9 @@
 		"module": "es6",
 		"moduleResolution": "node",
 		"paths": {
+			"@liferay/frontend-icons-web": [
+				"../../../../../../../frontend-icons/frontend-icons-web/src/main/resources/META-INF/resources/js/index.ts"
+			],
 			"frontend-js-web": [
 				"../../../../../../frontend-js-web/src/main/resources/META-INF/resources/index.d.ts"
 			]
@@ -32,6 +35,9 @@
 		"../../../../../../../../global.d.ts"
 	],
 	"references": [
+		{
+			"path": "../../../../../../../frontend-icons/frontend-icons-web/src/main/resources/META-INF/resources/tsconfig.json"
+		},
 		{
 			"path": "../../../../../../frontend-js-web/src/main/resources/META-INF/resources/tsconfig.json"
 		}

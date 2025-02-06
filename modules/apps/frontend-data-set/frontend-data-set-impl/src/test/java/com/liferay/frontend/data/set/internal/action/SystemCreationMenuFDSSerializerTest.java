@@ -7,6 +7,7 @@ package com.liferay.frontend.data.set.internal.action;
 
 import com.liferay.frontend.data.set.SystemFDSEntry;
 import com.liferay.frontend.data.set.action.FDSCreationMenu;
+import com.liferay.frontend.data.set.action.FDSCreationMenuRegistry;
 import com.liferay.frontend.data.set.internal.BaseFDSSerializerTestCase;
 import com.liferay.frontend.data.set.serializer.FDSSerializer;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
@@ -44,13 +45,15 @@ public class SystemCreationMenuFDSSerializerTest
 	public void setUp() throws Exception {
 		super.setUp();
 
+		FDSCreationMenuRegistry fdsCreationMenuRegistry =
+			new FDSCreationMenuRegistryImpl();
+
 		ReflectionTestUtil.setFieldValue(
-			_fdsCreationMenuRegistryImpl, "_serviceTrackerMap",
-			serviceTrackerMap);
+			fdsCreationMenuRegistry, "_serviceTrackerMap", serviceTrackerMap);
 
 		ReflectionTestUtil.setFieldValue(
 			_fdsSerializer, "_fdsCreationMenuRegistry",
-			_fdsCreationMenuRegistryImpl);
+			fdsCreationMenuRegistry);
 	}
 
 	@Test
@@ -165,8 +168,6 @@ public class SystemCreationMenuFDSSerializerTest
 			MapUtil.singletonDictionary("frontend.data.set.name", fdsName));
 	}
 
-	private static final FDSCreationMenuRegistryImpl
-		_fdsCreationMenuRegistryImpl = new FDSCreationMenuRegistryImpl();
 	private static final FDSSerializer<CreationMenu> _fdsSerializer =
 		new SystemCreationMenuFDSSerializerImpl();
 

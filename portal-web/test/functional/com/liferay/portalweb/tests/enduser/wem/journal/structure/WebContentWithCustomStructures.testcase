@@ -189,6 +189,12 @@ definition {
 				value1 = "Contenido web Contenido");
 
 			WebContent.publishExistingWCArticleWithPermissions();
+
+			LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+			AssertElementPresent(
+				key_webContentTitle = "Web Content Title",
+				locator1 = "WC#ENTRY_LIST_TITLE");
 		}
 
 		task ("View web content is shown in English") {

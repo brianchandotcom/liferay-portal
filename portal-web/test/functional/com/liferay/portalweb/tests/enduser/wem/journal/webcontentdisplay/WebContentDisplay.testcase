@@ -525,6 +525,12 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 				navTab = "URL");
 
 			WebContent.publishExistingWCArticleWithPermissions();
+
+			LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+			AssertElementPresent(
+				key_webContentTitle = "Web Content Title",
+				locator1 = "WC#ENTRY_LIST_TITLE");
 		}
 
 		task ("Select the web content article in Web Content Display") {
@@ -568,6 +574,12 @@ Welcome to Liferay Community Edition Portal 7.4.0 CE GA1''';
 				uploadFileName = "Document_3.png");
 
 			WebContent.publishExistingWCArticleWithPermissions();
+
+			LexiconEntry.changeDisplayStyle(displayStyle = "list");
+
+			AssertElementPresent(
+				key_webContentTitle = "Web Content Title",
+				locator1 = "WC#ENTRY_LIST_TITLE");
 		}
 
 		task ("Select the web content article in Web Content Display") {

@@ -188,7 +188,7 @@ public class SystemAPIURLFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 	private static final FDSAPIURLResolverRegistry _fdsAPIURLResolverRegistry =
 		new FDSAPIURLResolverRegistryImpl();
-	private static final FDSSerializer<String> _fdsSerializer =
+	private final FDSSerializer<String> _fdsSerializer =
 		new SystemAPIURLFDSSerializerImpl();
 
 }

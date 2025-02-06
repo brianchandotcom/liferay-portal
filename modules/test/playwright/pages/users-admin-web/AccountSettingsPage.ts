@@ -11,6 +11,7 @@ export class AccountSettingsPage {
 	readonly accountSettingsMenuItem: Locator;
 	private readonly displayMenuItem: Locator;
 	readonly languageSelect: Locator;
+	readonly multiFactorAuthentitacionNavigationItem: Locator;
 	readonly page: Page;
 	private readonly preferencesNavigationItem: Locator;
 	readonly rolesMenuItem: Locator;
@@ -27,6 +28,12 @@ export class AccountSettingsPage {
 			name: 'Display Settings',
 		});
 		this.languageSelect = page.getByLabel('Language');
+		this.multiFactorAuthentitacionNavigationItem = page.locator(
+			'.nav-link',
+			{
+				hasText: 'Multi-Factor Authentication',
+			}
+		);
 		this.page = page;
 		this.preferencesNavigationItem = page.locator('.nav-link', {
 			hasText: 'Preferences',
@@ -39,7 +46,7 @@ export class AccountSettingsPage {
 		});
 		this.timeZoneSelect = page.getByLabel('Time Zone');
 		this.userDisplayData = page.getByText('User Display Data');
-		this.userPersonalMenuButton = page.getByTestId('userPersonalMenu');
+		this.userPersonalMenuButton = page.getByTitle('User Profile Menu');
 	}
 
 	async goToAccountSettings() {
@@ -65,6 +72,12 @@ export class AccountSettingsPage {
 		await this.preferencesNavigationItem.click();
 
 		await this.displayMenuItem.click();
+	}
+
+	async goToMultiFactorAuthenticationSettings() {
+		await this.goToAccountSettings();
+
+		await this.multiFactorAuthentitacionNavigationItem.click();
 	}
 
 	async selectAccountLanguage(option: string) {

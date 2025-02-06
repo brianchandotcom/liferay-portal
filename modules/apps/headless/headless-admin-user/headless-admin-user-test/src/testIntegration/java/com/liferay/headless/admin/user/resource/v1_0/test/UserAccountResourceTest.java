@@ -2244,6 +2244,19 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 	private void _testGetUserAccountWithNestedFields() throws Exception {
 		User user = UserTestUtil.addUser();
 
+		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
+			_classNameLocalService.getClassNameId(User.class),
+			user.getUserId());
+
+		AssetVocabulary assetVocabulary = AssetTestUtil.addVocabulary(
+			TestPropsValues.getGroupId());
+
+		AssetCategory assetCategory = AssetTestUtil.addCategory(
+			TestPropsValues.getGroupId(), assetVocabulary.getVocabularyId());
+
+		_assetEntryAssetCategoryRelLocalService.addAssetEntryAssetCategoryRel(
+			assetEntry.getEntryId(), assetCategory.getCategoryId());
+
 		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
 			HashMapBuilder.put(
 				LocaleUtil.getDefault(), RandomTestUtil.randomString()
@@ -2262,19 +2275,6 @@ public class UserAccountResourceTest extends BaseUserAccountResourceTestCase {
 			ResourceConstants.SCOPE_INDIVIDUAL,
 			String.valueOf(user.getUserId()), role.getRoleId(),
 			new String[] {ActionKeys.DELETE});
-
-		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
-			_classNameLocalService.getClassNameId(User.class),
-			user.getUserId());
-
-		AssetVocabulary assetVocabulary = AssetTestUtil.addVocabulary(
-			TestPropsValues.getGroupId());
-
-		AssetCategory assetCategory = AssetTestUtil.addCategory(
-			TestPropsValues.getGroupId(), assetVocabulary.getVocabularyId());
-
-		_assetEntryAssetCategoryRelLocalService.addAssetEntryAssetCategoryRel(
-			assetEntry.getEntryId(), assetCategory.getCategoryId());
 
 		UserAccountResource userAccountResource = UserAccountResource.builder(
 		).authentication(

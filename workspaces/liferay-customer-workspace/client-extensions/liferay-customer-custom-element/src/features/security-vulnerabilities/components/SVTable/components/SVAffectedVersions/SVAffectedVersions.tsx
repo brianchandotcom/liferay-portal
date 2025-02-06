@@ -39,7 +39,7 @@ const SVAffectedVersions = ({
 						title={remainingVersions.join('\n')}
 					>
 						{remainingCount > 1
-							? `+${i18n.sub('x-others', [remainingCount])}`
+							? `+${i18n.sub('x-others', [remainingCount as unknown as string])}`
 							: secondAffectedVersion}
 					</span>
 				</ClayTooltipProvider>

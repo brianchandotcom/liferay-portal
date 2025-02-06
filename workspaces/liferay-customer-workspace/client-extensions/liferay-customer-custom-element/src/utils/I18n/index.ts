@@ -10,20 +10,26 @@ import es_ES from './Language_es_ES.json';
 import ja_JP from './Language_ja_JP.json';
 import pt_BR from './Language_pt_BR.json';
 
-export const languages = {
+export const languages: {[s: string]: {[s: string]: string}} = {
 	en_US,
 	es_ES,
 	ja_JP,
 	pt_BR,
 };
 
-const translate = (word, languageId = Liferay.ThemeDisplay.getLanguageId()) => {
+const translate = (
+	word: string,
+	languageId = Liferay.ThemeDisplay.getLanguageId().toString()
+): string => {
 	const languageProperties = languages[languageId] || languages.en_US;
 
 	return languageProperties[word] || languages.en_US[word] || word;
 };
 
-const getKeyByValue = (word, dictionary) => {
+const getKeyByValue = (
+	word: string,
+	dictionary: {[s: string]: unknown} | ArrayLike<unknown>
+) => {
 	const wordTranslated = Object.entries(dictionary).find(
 		([_key, value]) => value === word
 	);
@@ -46,15 +52,15 @@ const getKeyByValue = (word, dictionary) => {
 };
 
 const translateForAPI = (
-	word,
+	word: string,
 	languageId = Liferay.ThemeDisplay.getLanguageId()
-) => {
+): string => {
 	const languageProperties = languages[languageId] || languages.en_US;
 
 	return getKeyByValue(word, languageProperties);
 };
 
-const sub = (word, words) => {
+const sub = (word: string, words: string[]) => {
 	if (!Array.isArray(words)) {
 		words = [words];
 	}
@@ -70,7 +76,7 @@ const sub = (word, words) => {
 	return translatedWord;
 };
 
-const pluralize = (count, word, plural = word + 's') => {
+const pluralize = (count: number, word: string, plural = word + 's') => {
 	return translate(count <= 1 ? word : plural);
 };
 

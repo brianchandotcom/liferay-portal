@@ -8,9 +8,9 @@ import i18n from '~/utils/I18n';
 import './SVPanel.css';
 
 interface IProps {
-	link: String;
-	linkText: String;
-	text: String;
+	link: string;
+	linkText: string;
+	text: string;
 }
 
 const SVPanel = ({link, linkText, text}: IProps) => {
@@ -20,14 +20,13 @@ const SVPanel = ({link, linkText, text}: IProps) => {
 				<p
 					className="align-items-start justify-content-start"
 					dangerouslySetInnerHTML={{
-						__html: i18n.sub(
-							text,
+						__html: i18n.sub(text, [
 							'<a href="' +
 								link +
 								'">' +
 								i18n.translate(linkText) +
-								'</a>'
-						),
+								'</a>',
+						]),
 					}}
 				/>
 			</div>

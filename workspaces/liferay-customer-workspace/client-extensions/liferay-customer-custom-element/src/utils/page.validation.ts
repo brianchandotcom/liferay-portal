@@ -3,7 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {getAccountFlags} from '../services/liferay/graphql/queries';
+import {ApolloClient} from '@apollo/client';
+import IUserAccount from '~/interfaces/userAccount';
+import {getAccountFlags} from '~/services/liferay/graphql/queries';
+
 import {API_BASE_URL, PAGE_ROUTER_TYPES, ROUTE_TYPES} from './constants';
 import getLiferaySiteName from './getLiferaySiteName';
 
@@ -11,18 +14,18 @@ const BASE_API = `${API_BASE_URL}/${getLiferaySiteName()}`;
 
 const getHomeLocation = () => BASE_API;
 
-const getOnboardingLocation = (externalReferenceCode) =>
+const getOnboardingLocation = (externalReferenceCode: string) =>
 	PAGE_ROUTER_TYPES.onboarding(externalReferenceCode);
 
-const getOverviewLocation = (externalReferenceCode) => {
+const getOverviewLocation = (externalReferenceCode: string) => {
 	return PAGE_ROUTER_TYPES.project(externalReferenceCode);
 };
 
 const isValidPage = async (
-	client,
-	userAccount,
-	externalReferenceCode,
-	pageKey
+	client: ApolloClient<any>,
+	userAccount: IUserAccount,
+	externalReferenceCode: string,
+	pageKey: string
 ) => {
 	const {data} = await client.query({
 		fetchPolicy: 'network-only',
@@ -39,7 +42,7 @@ const isValidPage = async (
 		if (pageKey === ROUTE_TYPES.onboarding) {
 			if (!(isAccountAdministrator && !hasAccountFlags)) {
 				window.location.href =
-					userAccount.accountBriefs.length === 1
+					userAccount.accountBriefs?.length === 1
 						? getOverviewLocation(externalReferenceCode)
 						: getHomeLocation();
 

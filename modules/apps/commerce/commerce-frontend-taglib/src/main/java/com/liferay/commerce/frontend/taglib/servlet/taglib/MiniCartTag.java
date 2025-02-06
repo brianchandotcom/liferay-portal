@@ -28,6 +28,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.portlet.PortletProvider;
@@ -74,6 +76,7 @@ public class MiniCartTag extends IncludeTag {
 
 		try {
 			if (commerceContext == null) {
+				_baseOrderDetailURL = StringPool.BLANK;
 				_commerceChannelId = 0;
 				_commerceChannelGroupId = 0;
 				_checkoutURL = StringPool.BLANK;
@@ -89,6 +92,8 @@ public class MiniCartTag extends IncludeTag {
 			if (accountEntry != null) {
 				_accountEntryId = accountEntry.getAccountEntryId();
 			}
+
+			_baseOrderDetailURL = _getBaseOrderDetailURL(themeDisplay);
 
 			PortletURL commerceCheckoutPortletURL =
 				PortletProviderUtil.getPortletURL(
@@ -138,6 +143,7 @@ public class MiniCartTag extends IncludeTag {
 		catch (PortalException portalException) {
 			_log.error(portalException);
 
+			_baseOrderDetailURL = StringPool.BLANK;
 			_commerceChannelId = 0;
 			_commerceChannelGroupId = 0;
 			_checkoutURL = StringPool.BLANK;
@@ -217,6 +223,7 @@ public class MiniCartTag extends IncludeTag {
 		super.cleanUp();
 
 		_accountEntryId = AccountConstants.ACCOUNT_ENTRY_ID_ANY;
+		_baseOrderDetailURL = StringPool.BLANK;
 		_checkoutURL = StringPool.BLANK;
 		_commerceChannelGroupId = 0;
 		_commerceChannelId = 0;
@@ -247,6 +254,8 @@ public class MiniCartTag extends IncludeTag {
 	protected void setAttributes(HttpServletRequest httpServletRequest) {
 		httpServletRequest.setAttribute(
 			"liferay-commerce:cart:accountEntryId", _accountEntryId);
+		httpServletRequest.setAttribute(
+			"liferay-commerce:cart:baseOrderDetailURL", _baseOrderDetailURL);
 		httpServletRequest.setAttribute(
 			"liferay-commerce:cart:cartViews", _views);
 		httpServletRequest.setAttribute(
@@ -292,25 +301,7 @@ public class MiniCartTag extends IncludeTag {
 			"liferay-commerce:cart:toggleable", _toggleable);
 	}
 
-	private int _getItemsQuantity(
-			CommerceOrder commerceOrder, HttpServletRequest httpServletRequest)
-		throws PortalException {
-
-		if (_displayTotalItemsQuantity) {
-			BigDecimal quantity =
-				_commerceOrderHttpHelper.getCommerceOrderItemsQuantity(
-					httpServletRequest);
-
-			return quantity.intValue();
-		}
-
-		List<CommerceOrderItem> commerceOrderItems =
-			commerceOrder.getCommerceOrderItems();
-
-		return commerceOrderItems.size();
-	}
-
-	private String _getSiteDefaultURL(ThemeDisplay themeDisplay)
+	private String _getBaseOrderDetailURL(ThemeDisplay themeDisplay)
 		throws PortalException {
 
 		if (_hasCommerceOpenOrderContentPortlet(themeDisplay.getRequest())) {
@@ -340,13 +331,40 @@ public class MiniCartTag extends IncludeTag {
 				"backURL",
 				ParamUtil.getString(themeDisplay.getRequest(), "backURL"));
 
-			return HtmlUtil.escape(portletURL.toString());
+			return portletURL.toString();
 		}
 
 		return HtmlUtil.escape(
 			CommerceOrderInfoItemUtil.getCommerceOrderFriendlyURL(
 				_friendlyURLSeparatorProviderSnapshot.get(),
 				themeDisplay.getRequest()));
+	}
+
+	private int _getItemsQuantity(
+			CommerceOrder commerceOrder, HttpServletRequest httpServletRequest)
+		throws PortalException {
+
+		if (_displayTotalItemsQuantity) {
+			BigDecimal quantity =
+				_commerceOrderHttpHelper.getCommerceOrderItemsQuantity(
+					httpServletRequest);
+
+			return quantity.intValue();
+		}
+
+		List<CommerceOrderItem> commerceOrderItems =
+			commerceOrder.getCommerceOrderItems();
+
+		return commerceOrderItems.size();
+	}
+
+	private String _getSiteDefaultURL(ThemeDisplay themeDisplay) {
+		Layout layout = themeDisplay.getLayout();
+
+		Group group = layout.getGroup();
+
+		return HtmlUtil.escape(
+			group.getDisplayURL(themeDisplay, layout.isPrivateLayout()));
 	}
 
 	private boolean _hasCommerceOpenOrderContentPortlet(
@@ -425,6 +443,7 @@ public class MiniCartTag extends IncludeTag {
 			MiniCartTag.class, FriendlyURLSeparatorProvider.class);
 
 	private long _accountEntryId = AccountConstants.ACCOUNT_ENTRY_ID_ANY;
+	private String _baseOrderDetailURL = StringPool.BLANK;
 	private String _checkoutURL = StringPool.BLANK;
 	private long _commerceChannelGroupId;
 	private long _commerceChannelId;

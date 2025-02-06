@@ -32,12 +32,13 @@ export class CompanyExportImportPage {
 
 		await this.page.getByLabel(itemLabel).click();
 
-		let exportName = 'MyExport-' + getRandomString();
+		let exportName;
 
 		if (defaultTaskName) {
 			exportName = 'Export';
 		}
 		else {
+			exportName = 'MyExport-' + getRandomString();
 			await this.exportImportPage.title.fill(exportName);
 		}
 

@@ -161,6 +161,10 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 			new HashSet<>();
 
 		for (String resourcePath : resourcePaths) {
+			if (!resourcePath.endsWith(".properties")) {
+				continue;
+			}
+
 			String languageId = StringPool.BLANK;
 
 			index = resourcePath.indexOf(StringPool.UNDERLINE, path.length());

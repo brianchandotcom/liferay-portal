@@ -2051,7 +2051,7 @@ definition {
 				locator1 = "CommerceEntry#CURRENT_LANGUAGE");
 
 			Click(
-				ariaLabel = "Transfer Item Right to Left",
+				ariaLabel = "Transfer Item Left to Right",
 				locator1 = "Button#ANY_WITH_ARIA_LABEL");
 
 			PortalSettings._saveDisplaySettings();

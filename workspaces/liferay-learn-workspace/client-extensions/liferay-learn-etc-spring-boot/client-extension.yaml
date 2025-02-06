@@ -1,5 +1,29 @@
 assemble:
     - fromTask: bootJar
+liferay-learn-etc-spring-boot-oauth-application-headless-server:
+    .serviceAddress: localhost:58081
+    .serviceScheme: http
+    name: Liferay Learn Etc Spring Boot OAuth Application Headless Server
+    scopes:
+        - c_article.everything
+        - c_attachment.everything
+        - c_badge.everything.read
+        - c_course.everything
+        - c_enrollment.everything
+        - c_externalmedia.everything
+        - c_learningpath.everything
+        - c_learningpathstep.everything
+        - c_lesson.everything
+        - c_module.everything
+        - c_quiz.everything
+        - c_quizanswer.everything.read
+        - c_quizquestion.everything.read
+        - c_quizresult.everything
+        - c_userbadge.everything
+        - Liferay.Headless.Admin.User.everything
+        - Liferay.Object.Admin.REST.everything.read
+    type: oAuthApplicationHeadlessServer
+    userAccountScreenName: default-service-account
 liferay-learn-etc-spring-boot-oauth-application-user-agent:
     .serviceAddress: localhost:58081
     .serviceScheme: http

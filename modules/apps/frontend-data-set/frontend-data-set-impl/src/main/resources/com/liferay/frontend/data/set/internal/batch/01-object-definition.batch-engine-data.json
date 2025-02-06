@@ -114,14 +114,15 @@
 				{
 					"DBType": "Boolean",
 					"businessType": "Boolean",
-					"externalReferenceCode": "INACTIVE",
+					"defaultValue": true,
+					"externalReferenceCode": "ACTIVE",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
-						"en_US": "Inactive"
+						"en_US": "Active"
 					},
 					"localized": false,
-					"name": "inactive",
+					"name": "active",
 					"required": false,
 					"state": false,
 					"system": true,
@@ -483,14 +484,15 @@
 				{
 					"DBType": "Boolean",
 					"businessType": "Boolean",
-					"externalReferenceCode": "INACTIVE",
+					"defaultValue": true,
+					"externalReferenceCode": "ACTIVE",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
-						"en_US": "Inactive"
+						"en_US": "Active"
 					},
 					"localized": false,
-					"name": "inactive",
+					"name": "active",
 					"required": false,
 					"state": false,
 					"system": true,
@@ -696,14 +698,15 @@
 				{
 					"DBType": "Boolean",
 					"businessType": "Boolean",
-					"externalReferenceCode": "INACTIVE",
+					"defaultValue": true,
+					"externalReferenceCode": "ACTIVE",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
-						"en_US": "Inactive"
+						"en_US": "Active"
 					},
 					"localized": false,
-					"name": "inactive",
+					"name": "active",
 					"required": false,
 					"state": false,
 					"system": true,
@@ -797,14 +800,15 @@
 				{
 					"DBType": "Boolean",
 					"businessType": "Boolean",
-					"externalReferenceCode": "INACTIVE",
+					"defaultValue": true,
+					"externalReferenceCode": "ACTIVE",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
-						"en_US": "Inactive"
+						"en_US": "Active"
 					},
 					"localized": false,
-					"name": "inactive",
+					"name": "active",
 					"required": false,
 					"state": false,
 					"system": true,
@@ -884,14 +888,15 @@
 				{
 					"DBType": "Boolean",
 					"businessType": "Boolean",
-					"externalReferenceCode": "INACTIVE",
+					"defaultValue": true,
+					"externalReferenceCode": "ACTIVE",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
-						"en_US": "Inactive"
+						"en_US": "Active"
 					},
 					"localized": false,
-					"name": "inactive",
+					"name": "active",
 					"required": false,
 					"state": false,
 					"system": true,
@@ -985,14 +990,15 @@
 				{
 					"DBType": "Boolean",
 					"businessType": "Boolean",
-					"externalReferenceCode": "INACTIVE",
+					"defaultValue": true,
+					"externalReferenceCode": "ACTIVE",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
-						"en_US": "Inactive"
+						"en_US": "Active"
 					},
 					"localized": false,
-					"name": "inactive",
+					"name": "active",
 					"required": false,
 					"state": false,
 					"system": true,
@@ -1070,14 +1076,15 @@
 				{
 					"DBType": "Boolean",
 					"businessType": "Boolean",
-					"externalReferenceCode": "INACTIVE",
+					"defaultValue": true,
+					"externalReferenceCode": "ACTIVE",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
-						"en_US": "Inactive"
+						"en_US": "Active"
 					},
 					"localized": false,
-					"name": "inactive",
+					"name": "active",
 					"required": false,
 					"state": false,
 					"system": true,
@@ -1317,14 +1324,15 @@
 				{
 					"DBType": "Boolean",
 					"businessType": "Boolean",
-					"externalReferenceCode": "INACTIVE",
+					"defaultValue": true,
+					"externalReferenceCode": "ACTIVE",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
-						"en_US": "Inactive"
+						"en_US": "Active"
 					},
 					"localized": false,
-					"name": "inactive",
+					"name": "active",
 					"required": false,
 					"state": false,
 					"system": true,
@@ -1404,14 +1412,15 @@
 				{
 					"DBType": "Boolean",
 					"businessType": "Boolean",
-					"externalReferenceCode": "INACTIVE",
+					"defaultValue": true,
+					"externalReferenceCode": "ACTIVE",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"label": {
-						"en_US": "Inactive"
+						"en_US": "Active"
 					},
 					"localized": false,
-					"name": "inactive",
+					"name": "active",
 					"required": false,
 					"state": false,
 					"system": true,

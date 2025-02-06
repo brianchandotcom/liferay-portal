@@ -1174,6 +1174,24 @@ public class LayoutStructureRenderer {
 							fragmentEntryLink, infoForm,
 							fragmentStyledLayoutStructureItem.getItemId());
 
+				Set<String> disabledItemIds =
+					_renderLayoutStructureDisplayContext.getDisabledItemIds();
+				Set<String> enabledItemIds =
+					_renderLayoutStructureDisplayContext.getEnabledItemIds();
+
+				if (disabledItemIds.contains(
+						fragmentStyledLayoutStructureItem.getItemId())) {
+
+					defaultFragmentRendererContext.setAttribute(
+						"disabled", Boolean.TRUE);
+				}
+				else if (enabledItemIds.contains(
+							fragmentStyledLayoutStructureItem.getItemId())) {
+
+					defaultFragmentRendererContext.setAttribute(
+						"	enabled", Boolean.TRUE);
+				}
+
 				FragmentRendererController fragmentRendererController =
 					ServletContextUtil.getFragmentRendererController();
 

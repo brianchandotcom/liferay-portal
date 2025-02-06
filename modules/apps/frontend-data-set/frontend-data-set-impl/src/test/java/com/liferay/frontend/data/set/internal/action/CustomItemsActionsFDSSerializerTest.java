@@ -32,7 +32,7 @@ import org.mockito.Mockito;
 /**
  * @author Daniel Sanz
  */
-public class CustomItemsActionsFDSSerializerImplTest {
+public class CustomItemsActionsFDSSerializerTest {
 
 	@ClassRule
 	@Rule

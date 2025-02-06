@@ -25,7 +25,7 @@ import org.osgi.framework.ServiceRegistration;
 /**
  * @author Daniel Sanz
  */
-public abstract class BaseSystemFDSSerializerTestCase {
+public abstract class BaseFDSSerializerTestCase {
 
 	@Before
 	public void setUp() throws Exception {
@@ -38,12 +38,17 @@ public abstract class BaseSystemFDSSerializerTestCase {
 		ReflectionTestUtil.setFieldValue(
 			systemFDSEntryRegistryImpl, "_serviceTrackerMap",
 			systemFDSEntryserviceTrackerMap);
+
+		serviceTrackerMap = createServiceTrackerMap();
 	}
 
 	@After
 	public void tearDown() {
 		systemFDSEntryserviceTrackerMap.close();
+		serviceTrackerMap.close();
 	}
+
+	protected abstract ServiceTrackerMap<String, ?> createServiceTrackerMap();
 
 	protected ServiceRegistration<SystemFDSEntry> registerSystemFDSEntry(
 		String fdsName, String restApplication, String restEndpoint,
@@ -104,6 +109,7 @@ public abstract class BaseSystemFDSSerializerTestCase {
 		SystemBundleUtil.getBundleContext();
 	protected static final HttpServletRequest httpServletRequest = Mockito.mock(
 		HttpServletRequest.class);
+	protected static ServiceTrackerMap<String, ?> serviceTrackerMap;
 	protected static final SystemFDSEntryRegistryImpl
 		systemFDSEntryRegistryImpl = new SystemFDSEntryRegistryImpl();
 	protected static ServiceTrackerMap<String, SystemFDSEntry>

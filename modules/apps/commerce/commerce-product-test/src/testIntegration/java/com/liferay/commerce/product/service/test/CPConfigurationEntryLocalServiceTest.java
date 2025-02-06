@@ -39,6 +39,7 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.math.BigDecimal;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -98,8 +99,10 @@ public class CPConfigurationEntryLocalServiceTest {
 
 	@After
 	public void tearDown() throws Exception {
-		_cpConfigurationListLocalService.deleteCPConfigurationLists(
-			_serviceContext.getCompanyId());
+		for (CPConfigurationList cpConfigurationList : _cpConfigurationLists) {
+			_cpConfigurationListLocalService.deleteCPConfigurationList(
+				_cpConfigurationList);
+		}
 	}
 
 	@Test
@@ -223,6 +226,8 @@ public class CPConfigurationEntryLocalServiceTest {
 				calendar.get(Calendar.YEAR), displayDateHour,
 				calendar.get(Calendar.MINUTE), 0, 0, 0, 0, 0, true);
 
+		_cpConfigurationLists.add(cpConfigurationList1);
+
 		Assert.assertTrue(
 			ListUtil.isEmpty(
 				_cpConfigurationEntryLocalService.getCPConfigurationEntries(
@@ -249,6 +254,8 @@ public class CPConfigurationEntryLocalServiceTest {
 				calendar.get(Calendar.DAY_OF_MONTH),
 				calendar.get(Calendar.YEAR), displayDateHour,
 				calendar.get(Calendar.MINUTE), 0, 0, 0, 0, 0, true);
+
+		_cpConfigurationLists.add(cpConfigurationList2);
 
 		Assert.assertTrue(
 			ListUtil.isEmpty(
@@ -307,6 +314,8 @@ public class CPConfigurationEntryLocalServiceTest {
 				calendar.get(Calendar.DAY_OF_MONTH),
 				calendar.get(Calendar.YEAR), displayDateHour,
 				calendar.get(Calendar.MINUTE), 0, 0, 0, 0, 0, true);
+
+		_cpConfigurationLists.add(cpConfigurationList3);
 
 		cpConfigurationEntrySetting =
 			_cpConfigurationEntrySettingLocalService.
@@ -455,6 +464,8 @@ public class CPConfigurationEntryLocalServiceTest {
 				calendar.get(Calendar.YEAR), displayDateHour,
 				calendar.get(Calendar.MINUTE), 0, 0, 0, 0, 0, true);
 
+		_cpConfigurationLists.add(cpConfigurationList);
+
 		Assert.assertTrue(
 			ListUtil.isEmpty(
 				_cpConfigurationEntryLocalService.getCPConfigurationEntries(
@@ -489,11 +500,14 @@ public class CPConfigurationEntryLocalServiceTest {
 	private CPConfigurationEntrySettingLocalService
 		_cpConfigurationEntrySettingLocalService;
 
+	@DeleteAfterTestRun
 	private CPConfigurationList _cpConfigurationList;
 
 	@Inject
 	private CPConfigurationListLocalService _cpConfigurationListLocalService;
 
+	private final List<CPConfigurationList> _cpConfigurationLists =
+		new ArrayList<>();
 	private CPDefinition _cpDefinition;
 
 	@DeleteAfterTestRun

@@ -18,8 +18,10 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.processor.DefaultFragmentEntryProcessorContext;
 import com.liferay.fragment.processor.FragmentEntryProcessorContext;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
+import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.service.FragmentEntryLinkService;
 import com.liferay.fragment.service.FragmentEntryLocalService;
+import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.info.field.InfoField;
 import com.liferay.info.field.type.InfoFieldType;
 import com.liferay.info.form.InfoForm;
@@ -38,6 +40,7 @@ import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructureItemUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -316,6 +319,42 @@ public class FormItemManager {
 				LayoutStructureItem layoutStructureItem =
 					layoutStructure.getLayoutStructureItem(
 						formStepLayoutStructureItemChildrenItemId);
+
+				if (FeatureFlagManagerUtil.isEnabled("LPD-31772") &&
+					(layoutStructureItem instanceof
+						FragmentStyledLayoutStructureItem)) {
+
+					FragmentStyledLayoutStructureItem
+						fragmentStyledLayoutStructureItem =
+							(FragmentStyledLayoutStructureItem)
+								layoutStructureItem;
+
+					Set<String> fieldTypes =
+						_fragmentEntryLinkManager.
+							getFragmentEntryLinkFieldTypes(
+								fragmentStyledLayoutStructureItem.
+									getFragmentEntryLinkId());
+
+					if (fieldTypes.contains("formButton")) {
+						FragmentEntryLink fragmentEntryLink =
+							_fragmentEntryLinkLocalService.
+								fetchFragmentEntryLink(
+									fragmentStyledLayoutStructureItem.
+										getFragmentEntryLinkId());
+
+						Object value =
+							_fragmentEntryConfigurationParser.getFieldValue(
+								fragmentEntryLink.getConfiguration(),
+								fragmentEntryLink.getEditableValues(),
+								LocaleUtil.getMostRelevantLocale(), "type");
+
+						if (Objects.equals(value, "previous") ||
+							Objects.equals(value, "next")) {
+
+							continue;
+						}
+					}
+				}
 
 				layoutStructureItemChanges.addMovedLayoutStructureItems(
 					layoutStructureItem.clone());
@@ -866,8 +905,14 @@ public class FormItemManager {
 		_fragmentCollectionContributorRegistry;
 
 	@Reference
+	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;
+
+	@Reference
 	private FragmentEntryLinkListenerRegistry
 		_fragmentEntryLinkListenerRegistry;
+
+	@Reference
+	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
 
 	@Reference
 	private FragmentEntryLinkManager _fragmentEntryLinkManager;

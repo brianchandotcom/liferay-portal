@@ -6,13 +6,15 @@
 package com.liferay.dynamic.data.mapping.internal.upgrade.v5_5_1;
 
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.dao.orm.common.SQLTransformer;
+import com.liferay.portal.kernel.dao.db.DBType;
+import com.liferay.portal.kernel.dao.db.DBTypeToSQLMap;
 import com.liferay.portal.kernel.db.partition.DBPartition;
 import com.liferay.portal.kernel.instance.PortalInstancePool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.ArrayUtil;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -38,7 +40,7 @@ public class DDMFieldAttributeUpgradeProcess extends UpgradeProcess {
 			return;
 		}
 
-		_upgrade();
+		_upgrade(companyIds);
 	}
 
 	private boolean _hasDDMFieldAttributeCompanyId0() throws Exception {
@@ -59,49 +61,48 @@ public class DDMFieldAttributeUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
-	private void _upgrade() throws Exception {
+	private void _upgrade(long[] companyIds) throws Exception {
 		if (!_hasDDMFieldAttributeCompanyId0()) {
 			return;
 		}
 
 		processConcurrently(
-			SQLTransformer.transform(
-				StringBundler.concat(
-					"select DDMFieldAttribute.ctCollectionId, ",
-					"DDMFieldAttribute.fieldAttributeId, ",
-					"DDMStructureVersion.companyId from DDMStructureVersion ",
-					"inner join DDMField on ",
-					"DDMStructureVersion.ctCollectionId = ",
-					"DDMField.ctCollectionId and ",
-					"DDMStructureVersion.structureVersionId = ",
-					"DDMField.structureVersionId inner join DDMFieldAttribute ",
-					"on DDMFieldAttribute.ctCollectionId = ",
-					"DDMField.ctCollectionId and DDMFieldAttribute.fieldId = ",
-					"DDMField.fieldId where DDMFieldAttribute.companyId = 0")),
-			"update DDMFieldAttribute set companyId = ? where ctCollectionId " +
-				"= ? and fieldAttributeId = ?",
-			resultSet -> new Object[] {
-				resultSet.getLong("ctCollectionId"),
-				resultSet.getLong("fieldAttributeId"),
-				resultSet.getLong("companyId")
-			},
-			(values, preparedStatement) -> {
-				long companyId = (Long)values[2];
-				long fieldAttributeId = (Long)values[1];
+			ArrayUtil.toLongArray(companyIds),
+			companyId -> {
+				DBTypeToSQLMap dbTypeToSQLMap = new DBTypeToSQLMap(
+					StringBundler.concat(
+						"update DDMFieldAttribute set companyId = ", companyId,
+						" where exists (select 1 from DDMField inner join ",
+						"DDMStructureVersion on DDMField.ctCollectionId = ",
+						"DDMStructureVersion.ctCollectionId and ",
+						"DDMField.structureVersionId = ",
+						"DDMStructureVersion.structureVersionId and ",
+						"DDMStructureVersion.companyId = ", companyId,
+						" and DDMField.fieldId = DDMFieldAttribute.fieldId) ",
+						"and DDMFieldAttribute.companyId = 0"));
 
-				preparedStatement.setLong(1, companyId);
+				String sql = StringBundler.concat(
+					"update DDMFieldAttribute inner join DDMField on ",
+					"DDMField.fieldId = DDMFieldAttribute.fieldId inner join ",
+					"DDMStructureVersion on DDMField.ctCollectionId = ",
+					"DDMStructureVersion.ctCollectionId and ",
+					"DDMField.structureVersionId = ",
+					"DDMStructureVersion.structureVersionId and ",
+					"DDMStructureVersion.companyId = ", companyId, " and ",
+					"DDMField.fieldId = DDMFieldAttribute.fieldId set ",
+					"DDMFieldAttribute.companyId = ", companyId,
+					" where DDMFieldAttribute.companyId = 0");
 
-				preparedStatement.setLong(2, (Long)values[0]);
-				preparedStatement.setLong(3, fieldAttributeId);
+				dbTypeToSQLMap.add(DBType.MARIADB, sql);
+				dbTypeToSQLMap.add(DBType.MYSQL, sql);
 
-				preparedStatement.addBatch();
+				runSQL(dbTypeToSQLMap);
 
 				if (_log.isInfoEnabled()) {
 					_log.info(
 						StringBundler.concat(
-							"Update company ID for dynamic data mapping field ",
-							"attribute ", fieldAttributeId, " from 0 to ",
-							companyId));
+							"Update company ID for dynamic data mapping ",
+							"fields from 0 to ", companyId));
 				}
 			},
 			"Unable to update company IDs for dynamic data mapping field " +

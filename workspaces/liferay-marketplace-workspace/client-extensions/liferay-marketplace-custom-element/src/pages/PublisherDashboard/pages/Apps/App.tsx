@@ -240,7 +240,7 @@ const App: React.FC<AppProps> = ({isAdministratorDashboard}) => {
 				</div>
 
 				{isAdministratorDashboard &&
-					myUserAccount.roleBriefs.some(
+					myUserAccount?.roleBriefs.some(
 						({name}) => name === 'Administrator'
 					) && (
 						<div className="app-details-page-app-info-buttons-container">

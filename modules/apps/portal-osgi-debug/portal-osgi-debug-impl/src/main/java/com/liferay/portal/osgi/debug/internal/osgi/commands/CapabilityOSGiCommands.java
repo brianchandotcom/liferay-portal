@@ -128,8 +128,7 @@ public class CapabilityOSGiCommands implements OSGiCommands {
 				 Map.Entry<Set<BundleCapability>, Set<BundleRequirement>>>
 					entry1 : map.entrySet()) {
 
-			System.out.println(
-				"\nNamespace: " + entry1.getKey() + "\n");
+			System.out.println("\nNamespace: " + entry1.getKey() + "\n");
 
 			Map.Entry<Set<BundleCapability>, Set<BundleRequirement>> entry2 =
 				entry1.getValue();

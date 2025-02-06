@@ -96,10 +96,10 @@ public class DeleteFormStepMVCActionCommand
 			_formItemManager.findFormStepContainerStyledLayoutStructureItem(
 				formStyledLayoutStructureItem, layoutStructure);
 
-		List<String> childrenItems =
+		List<String> childrenItemIds =
 			formStepContainerStyledLayoutStructureItem.getChildrenItemIds();
 
-		if (Objects.equals(childrenItems.get(0), itemId)) {
+		if (Objects.equals(childrenItemIds.get(0), itemId)) {
 			return JSONUtil.put(
 				"error",
 				_language.get(

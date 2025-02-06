@@ -88,6 +88,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -1828,10 +1829,19 @@ public class DefaultObjectEntryManagerImpl
 						(Serializable)localizedValues);
 				}
 				else if (value != null) {
+					String defaultLanguageId =
+						objectEntry.getDefaultLanguageId();
+
+					if (Validator.isNull(defaultLanguageId)) {
+						defaultLanguageId = _language.getLanguageId(
+							_portal.getSiteDefaultLocale(
+								GetterUtil.getLong(scopeKey)));
+					}
+
 					values.put(
 						objectField.getI18nObjectFieldName(),
 						HashMapBuilder.put(
-							_language.getLanguageId(locale),
+							defaultLanguageId,
 							_getValue(locale, objectField, value)
 						).build());
 				}
@@ -1925,6 +1935,9 @@ public class DefaultObjectEntryManagerImpl
 
 	@Reference
 	private ObjectRelationshipService _objectRelationshipService;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private Queries _queries;

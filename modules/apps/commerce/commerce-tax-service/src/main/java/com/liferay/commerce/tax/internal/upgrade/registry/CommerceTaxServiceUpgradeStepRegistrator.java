@@ -5,7 +5,9 @@
 
 package com.liferay.commerce.tax.internal.upgrade.registry;
 
+import com.liferay.commerce.tax.model.impl.CommerceTaxMethodModelImpl;
 import com.liferay.portal.kernel.upgrade.MVCCVersionUpgradeProcess;
+import com.liferay.portal.kernel.upgrade.UpgradeProcessFactory;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 
 import org.osgi.service.component.annotations.Component;
@@ -29,6 +31,12 @@ public class CommerceTaxServiceUpgradeStepRegistrator
 				}
 
 			});
+
+		registry.register(
+			"1.1.0", "1.2.0",
+			UpgradeProcessFactory.addColumns(
+				CommerceTaxMethodModelImpl.TABLE_NAME,
+				"typeSettings TEXT null"));
 	}
 
 }

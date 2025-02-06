@@ -6,9 +6,17 @@
 package com.liferay.frontend.js.tooltip.support.web.internal.servlet.taglib;
 
 import com.liferay.frontend.js.loader.modules.extender.esm.ESImportUtil;
+import com.liferay.frontend.js.tooltip.support.web.internal.configuration.JSTooltipSupportConfiguration;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.aui.JSFragment;
 import com.liferay.portal.kernel.servlet.taglib.aui.ScriptData;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.url.builder.AbsolutePortalURLBuilder;
 import com.liferay.portal.url.builder.AbsolutePortalURLBuilderFactory;
 
@@ -25,7 +33,10 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Chema Balsas
  */
-@Component(service = DynamicInclude.class)
+@Component(
+	configurationPid = "com.liferay.frontend.js.tooltip.support.web.internal.configuration.JSTooltipSupportConfiguration",
+	service = DynamicInclude.class
+)
 public class ClayTooltipBottomDynamicInclude implements DynamicInclude {
 
 	@Override
@@ -33,6 +44,30 @@ public class ClayTooltipBottomDynamicInclude implements DynamicInclude {
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, String key)
 		throws IOException {
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		Layout layout = themeDisplay.getLayout();
+
+		try {
+			if (!layout.isTypeControlPanel()) {
+				Group group = themeDisplay.getScopeGroup();
+
+				JSTooltipSupportConfiguration jsTooltipSupportConfiguration =
+					_configurationProvider.getGroupConfiguration(
+						JSTooltipSupportConfiguration.class,
+						group.getGroupId());
+
+				if (jsTooltipSupportConfiguration.enableNativeTooltip()) {
+					return;
+				}
+			}
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+		}
 
 		ScriptData scriptData = new ScriptData();
 
@@ -59,7 +94,13 @@ public class ClayTooltipBottomDynamicInclude implements DynamicInclude {
 		dynamicIncludeRegistry.register("/html/common/themes/bottom.jsp#post");
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		ClayTooltipBottomDynamicInclude.class);
+
 	@Reference
 	private AbsolutePortalURLBuilderFactory _absolutePortalURLBuilderFactory;
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 }

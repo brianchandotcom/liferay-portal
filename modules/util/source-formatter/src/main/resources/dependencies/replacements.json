@@ -3996,7 +3996,7 @@
 		"classNames": [
 			"CommerceAccountHelper"
 		],
-		"from": "getCurrentCommerceAccount(HttpServletRequest paramName)",
+		"from": "getCurrentAccountEntry(HttpServletRequest paramName)",
 		"issueKey": "LPS-196638",
 		"to": "getCurrentAccountEntry(0, param#0#)"
 	},

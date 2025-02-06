@@ -13,8 +13,8 @@ import org.osgi.service.component.annotations.Reference;
 public class LPS_196638 {
 
 	public void method(HttpServletRequest httpServletRequest) {
-		_commerceAccountHelper.getCurrentCommerceAccount(httpServletRequest);
-		_commerceAccountHelper.getCurrentCommerceAccount(null);
+		_commerceAccountHelper.getCurrentAccountEntry(httpServletRequest);
+		_commerceAccountHelper.getCurrentAccountEntry(null);
 	}
 
 	@Reference

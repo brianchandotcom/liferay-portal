@@ -14,7 +14,7 @@ public class LPS_196638 {
 
 	public void method(HttpServletRequest httpServletRequest) {
 		_commerceAccountHelper.getCurrentAccountEntry(0, httpServletRequest);
-		_commerceAccountHelper.getCurrentCommerceAccount(null);
+		_commerceAccountHelper.getCurrentAccountEntry(null);
 	}
 
 	@Reference

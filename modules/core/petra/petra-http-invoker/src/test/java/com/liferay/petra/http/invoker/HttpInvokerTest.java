@@ -11,10 +11,12 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import java.io.IOException;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 
 import java.net.HttpURLConnection;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Assert;
@@ -23,6 +25,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+
+import org.mockito.Mockito;
 
 /**
  * @author Drew Brokke
@@ -76,6 +80,24 @@ public class HttpInvokerTest {
 	public void testPathReplacement() {
 		_testPathReplacement("$");
 		_testPathReplacement("\\\\");
+	}
+
+	@Test
+	public void testReadResponseWithNullInputStream() throws Exception {
+		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
+
+		Class<?> clazz = httpInvoker.getClass();
+
+		Method method = clazz.getDeclaredMethod(
+			"_readResponse", HttpURLConnection.class);
+
+		method.setAccessible(true);
+
+		byte[] binaryContent = (byte[])method.invoke(
+			httpInvoker, Mockito.mock(HttpURLConnection.class));
+
+		Assert.assertEquals(
+			Arrays.toString(binaryContent), 0, binaryContent.length);
 	}
 
 	private void _testPathReplacement(String specialCharacter) {

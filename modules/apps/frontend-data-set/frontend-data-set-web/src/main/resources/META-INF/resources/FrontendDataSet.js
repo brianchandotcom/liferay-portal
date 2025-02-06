@@ -33,11 +33,8 @@ import SidePanel from './side_panel/SidePanel';
 import filterCreationActions from './utils/actionItems/filterCreationActions';
 import EVENTS from './utils/eventsDefinitions';
 import getRandomId from './utils/getRandomId';
-import {
-	formatItemChanges,
-	getCurrentItemUpdates,
-	loadData,
-} from './utils/index';
+import {formatItemChanges, getCurrentItemUpdates} from './utils/index';
+import {loadData} from './utils/loadData';
 import {logError} from './utils/logError';
 import ViewsContext from './views/ViewsContext';
 import getViewComponent from './views/getViewComponent';

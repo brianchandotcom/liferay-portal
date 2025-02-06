@@ -35,5 +35,7 @@ window.Liferay = {
 		...(window.Liferay.ThemeDisplay || {}),
 		getDefaultLanguageId: () => 'en_US',
 		getLanguageId: () => 'en_US',
+		getUserId: '12345',
+		isImpersonated: () => false,
 	},
 };

@@ -73,6 +73,7 @@ import {config as layoutSetPrototypeWebConfig} from './tests/layout-set-prototyp
 import {config as lockedItemsWebConfig} from './tests/locked-items-web/config';
 import {config as loginWebConfig} from './tests/login-web/config';
 import {config as messageBoardsWebConfig} from './tests/message-boards-web/config';
+import {config as multifactorAuthenticationConfig} from './tests/multi-factor-authentication-timebased-otp/config';
 import {config as nestedPortletsWebConfig} from './tests/nested-portlets-web/config';
 import {config as notificationWebConfig} from './tests/notification-web/config';
 import {config as notificationsWebConfig} from './tests/notifications-web/config';
@@ -122,7 +123,6 @@ import {config as customerConfig} from './tests/workspaces/liferay-customer-work
 import {config as commerceWorkspaceConfig} from './tests/workspaces/liferay-workspace-commerce/config';
 import {config as jethr0Config} from './tests/workspaces/liferay-workspace-jethr0/config';
 import {config as marketplaceConfig} from './tests/workspaces/liferay-workspace-marketplace/config';
-
 const setupProjects = [pageManagementSiteSetup, pageManagementSiteTeardown];
 
 export default defineConfig({
@@ -202,6 +202,7 @@ export default defineConfig({
 		loginWebConfig,
 		marketplaceConfig,
 		messageBoardsWebConfig,
+		multifactorAuthenticationConfig,
 		nestedPortletsWebConfig,
 		notificationWebConfig,
 		notificationsWebConfig,

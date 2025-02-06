@@ -1,0 +1,16 @@
+[
+	{
+		"active": true,
+		"conditionExpression": "",
+		"externalReferenceCode": "MKT-PRODUCT-SUBMIT-ACTION",
+		"label": {
+			"en_US": "Marketplace Product Submit"
+		},
+		"name": "MarketplaceProductSubmit",
+		"objectActionExecutorKey": "function#liferay-marketplace-etc-spring-boot-marketplace-product-submit",
+		"objectActionTriggerKey": "onAfterAdd",
+		"objectDefinitionId": "[$OBJECT_DEFINITION_ID:CPDefinition$]",
+		"parameters": {
+		}
+	}
+]

@@ -236,10 +236,10 @@ public class CountryUpgradeProcess extends UpgradeProcess {
 				return;
 			}
 
-			_companyAvailableLocales = LanguageUtil.getCompanyAvailableLocales(
+			_availableLocales = LanguageUtil.getCompanyAvailableLocales(
 				_company.getCompanyId());
-			_companyDate = new Date(System.currentTimeMillis());
-			_companyGuestUser = _company.getGuestUser();
+			_createDate = new Date(System.currentTimeMillis());
+			_guestUser = _company.getGuestUser();
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(
@@ -322,10 +322,10 @@ public class CountryUpgradeProcess extends UpgradeProcess {
 					_company.getCompanyId()));
 			_preparedStatement1.setLong(4, countryId);
 			_preparedStatement1.setLong(5, _company.getCompanyId());
-			_preparedStatement1.setLong(6, _companyGuestUser.getUserId());
-			_preparedStatement1.setString(7, _companyGuestUser.getFullName());
-			_preparedStatement1.setDate(8, _companyDate);
-			_preparedStatement1.setDate(9, _companyDate);
+			_preparedStatement1.setLong(6, _guestUser.getUserId());
+			_preparedStatement1.setString(7, _guestUser.getFullName());
+			_preparedStatement1.setDate(8, _createDate);
+			_preparedStatement1.setDate(9, _createDate);
 			_preparedStatement1.setString(
 				10, countryJSONObject.getString("a2"));
 			_preparedStatement1.setString(
@@ -344,11 +344,11 @@ public class CountryUpgradeProcess extends UpgradeProcess {
 			_preparedStatement1.setBoolean(20, false);
 			_preparedStatement1.setBoolean(
 				21, countryJSONObject.getBoolean("zipRequired"));
-			_preparedStatement1.setDate(22, _companyDate);
+			_preparedStatement1.setDate(22, _createDate);
 
 			_preparedStatement1.addBatch();
 
-			for (Locale locale : _companyAvailableLocales) {
+			for (Locale locale : _availableLocales) {
 				_preparedStatement2.setLong(1, 0L);
 				_preparedStatement2.setLong(
 					2, _countryLocalizationCounter.incrementAndGet());
@@ -380,10 +380,10 @@ public class CountryUpgradeProcess extends UpgradeProcess {
 					_company.getCompanyId()));
 			_preparedStatement3.setLong(4, regionId);
 			_preparedStatement3.setLong(5, _company.getCompanyId());
-			_preparedStatement3.setLong(6, _companyGuestUser.getUserId());
-			_preparedStatement3.setString(7, _companyGuestUser.getFullName());
-			_preparedStatement3.setDate(8, _companyDate);
-			_preparedStatement3.setDate(9, _companyDate);
+			_preparedStatement3.setLong(6, _guestUser.getUserId());
+			_preparedStatement3.setString(7, _guestUser.getFullName());
+			_preparedStatement3.setDate(8, _createDate);
+			_preparedStatement3.setDate(9, _createDate);
 			_preparedStatement3.setLong(10, countryId);
 			_preparedStatement3.setBoolean(11, true);
 			_preparedStatement3.setString(
@@ -391,7 +391,7 @@ public class CountryUpgradeProcess extends UpgradeProcess {
 			_preparedStatement3.setDouble(13, 0.0);
 			_preparedStatement3.setString(
 				14, regionJSONObject.getString("regionCode"));
-			_preparedStatement3.setDate(15, _companyDate);
+			_preparedStatement3.setDate(15, _createDate);
 
 			_preparedStatement3.addBatch();
 
@@ -401,7 +401,7 @@ public class CountryUpgradeProcess extends UpgradeProcess {
 			Map<String, String> titleMap = new HashMap<>();
 
 			if (localizationsJSONObject == null) {
-				for (Locale locale : _companyAvailableLocales) {
+				for (Locale locale : _availableLocales) {
 					titleMap.put(_getLanguageId(locale), regionName);
 				}
 			}
@@ -430,7 +430,7 @@ public class CountryUpgradeProcess extends UpgradeProcess {
 		}
 
 		private String _getLanguageId(Locale locale) {
-			return _localesLanguageIds.computeIfAbsent(
+			return _languageIds.computeIfAbsent(
 				locale, key -> LanguageUtil.getLanguageId(key));
 		}
 
@@ -489,11 +489,11 @@ public class CountryUpgradeProcess extends UpgradeProcess {
 			}
 		}
 
+		private Set<Locale> _availableLocales;
 		private final Company _company;
-		private Set<Locale> _companyAvailableLocales;
-		private Date _companyDate;
-		private User _companyGuestUser;
-		private final Map<Locale, String> _localesLanguageIds = new HashMap<>();
+		private Date _createDate;
+		private User _guestUser;
+		private final Map<Locale, String> _languageIds = new HashMap<>();
 		private PreparedStatement _preparedStatement1;
 		private PreparedStatement _preparedStatement2;
 		private PreparedStatement _preparedStatement3;

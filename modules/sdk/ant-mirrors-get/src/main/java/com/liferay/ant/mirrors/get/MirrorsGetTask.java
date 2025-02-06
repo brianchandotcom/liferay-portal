@@ -237,6 +237,24 @@ public class MirrorsGetTask extends Task {
 		}
 	}
 
+	private void _deleteFile(File file) {
+		if (!file.exists()) {
+			return;
+		}
+
+		if (!file.isDirectory()) {
+			file.delete();
+
+			return;
+		}
+
+		for (File childFile : file.listFiles()) {
+			_deleteFile(childFile);
+		}
+
+		file.delete();
+	}
+
 	private void _downloadFile(URL sourceURL, File targetFile)
 		throws IOException {
 
@@ -258,7 +276,7 @@ public class MirrorsGetTask extends Task {
 			size = _toFile(sourceURL, targetFile);
 		}
 		catch (IOException ioException) {
-			targetFile.delete();
+			_deleteFile(targetFile);
 
 			if (!_ignoreErrors) {
 				throw ioException;
@@ -282,7 +300,7 @@ public class MirrorsGetTask extends Task {
 		if (!_isValidMD5(
 				targetFile, new URL(sourceURL.toExternalForm() + ".md5"))) {
 
-			targetFile.delete();
+			_deleteFile(targetFile);
 
 			throw new IOException(
 				targetFile.getAbsolutePath() + " failed checksum");
@@ -291,21 +309,21 @@ public class MirrorsGetTask extends Task {
 		if (_isTarGzFileName(targetFile.getName()) &&
 			!_isTarGzFile(targetFile)) {
 
-			targetFile.delete();
+			_deleteFile(targetFile);
 
 			throw new IOException(
 				targetFile.getAbsolutePath() + " is an invalid TAR GZ file");
 		}
 
 		if (_isZipFileName(targetFile.getName()) && !_isZipFile(targetFile)) {
-			targetFile.delete();
+			_deleteFile(targetFile);
 
 			throw new IOException(
 				targetFile.getAbsolutePath() + " is an invalid ZIP file");
 		}
 
 		if (_is7zFileName(targetFile.getName()) && !_is7zFile(targetFile)) {
-			targetFile.delete();
+			_deleteFile(targetFile);
 
 			throw new IOException(
 				targetFile.getAbsolutePath() + " is an invalid 7z file");
@@ -450,11 +468,11 @@ public class MirrorsGetTask extends Task {
 		}
 
 		if (mirrorsCacheFile.exists() && _force) {
-			mirrorsCacheFile.delete();
+			_deleteFile(mirrorsCacheFile);
 		}
 
 		if (mirrorsCacheTempFile.exists()) {
-			mirrorsCacheTempFile.delete();
+			_deleteFile(mirrorsCacheTempFile);
 		}
 
 		if (!mirrorsCacheFile.exists()) {
@@ -1079,7 +1097,7 @@ public class MirrorsGetTask extends Task {
 
 	private int _toFile(URL url, File file) throws IOException {
 		if (file.exists()) {
-			file.delete();
+			_deleteFile(file);
 		}
 
 		File dir = file.getParentFile();
@@ -1095,7 +1113,7 @@ public class MirrorsGetTask extends Task {
 		}
 		catch (IOException ioException) {
 			if (file.exists()) {
-				file.delete();
+				_deleteFile(file);
 			}
 
 			throw ioException;

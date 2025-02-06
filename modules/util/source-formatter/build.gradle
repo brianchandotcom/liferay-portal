@@ -35,14 +35,12 @@ dependencies {
 		exclude group: "com.ibm.icu", module: "icu4j"
 	}
 	api group: "junit", name: "junit", version: "4.13.1"
-	api group: "org.antlr", name: "antlr4-runtime", version: "4.13.2"
 	api group: "org.apache.ant", name: "ant", version: "1.10.14"
 	api group: "org.apache.maven", name: "maven-artifact", version: "3.3.9"
 	api group: "org.dom4j", name: "dom4j", version: "2.1.3"
 	api group: "org.json", name: "json", version: "20231013"
 	api group: "org.reflections", name: "reflections", version: "0.10.2"
 	api group: "xerces", name: "xercesImpl", version: "2.12.2"
-
 	compileInclude group: "com.liferay", name: "com.liferay.petra.function", version: "5.5.0"
 	compileInclude group: "com.liferay", name: "com.liferay.petra.io", version: "5.0.6"
 	compileInclude group: "com.liferay", name: "com.liferay.petra.lang", version: "1.0.0"
@@ -52,7 +50,6 @@ dependencies {
 	compileInclude group: "org.apache.httpcomponents", name: "httpclient", version: "4.5.13"
 	compileInclude group: "org.apache.httpcomponents", name: "httpcore", version: "4.4.14"
 	compileInclude group: "org.codehaus.groovy", name: "groovy", version: "2.4.21"
-
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
 	compileOnly group: "com.liferay", name: "com.liferay.petra.concurrent", version: "1.1.0"
 	compileOnly group: "com.liferay", name: "com.liferay.petra.memory", version: "1.0.0"
@@ -64,6 +61,7 @@ dependencies {
 	compileOnly group: "com.liferay.portal", name: "com.liferay.util.java", version: "2.5.0"
 	compileOnly group: "org.apache.felix", name: "org.apache.felix.http.servlet-api", version: "1.1.2"
 	compileOnly group: "org.apache.maven", name: "maven-plugin-api", transitive: false, version: "3.0.4"
+	runtimeOnly group: "org.antlr", name: "antlr4-runtime", version: "4.13.2"
 
 	constraints {
 		compileOnly(group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "109.0.0") {

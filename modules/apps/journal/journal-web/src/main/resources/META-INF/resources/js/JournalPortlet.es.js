@@ -600,21 +600,23 @@ function attachFormChangeListener(
 		}
 	});
 
-	mutationObserver.observe(form, {
-		attributeFilter: ['value'],
-		attributeOldValue: true,
-		attributes: true,
-		childList: true,
-		subtree: true,
-	});
-
 	const handleFormChange = (event) => {
 		if (accentChangeEvent(event)) {
 			handleChange();
 		}
 	};
 
-	form.addEventListener('change', handleFormChange);
+	Liferay.componentReady(`${namespace}SelectAssetDisplayPage`).then(() => {
+		mutationObserver.observe(form, {
+			attributeFilter: ['value'],
+			attributeOldValue: true,
+			attributes: true,
+			childList: true,
+			subtree: true,
+		});
+
+		form.addEventListener('change', handleFormChange);
+	});
 
 	return {
 		detach() {

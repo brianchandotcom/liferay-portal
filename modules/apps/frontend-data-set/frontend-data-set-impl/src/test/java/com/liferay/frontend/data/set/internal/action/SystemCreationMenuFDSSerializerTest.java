@@ -41,7 +41,7 @@ public class SystemCreationMenuFDSSerializerTest
 		LiferayUnitTestRule.INSTANCE;
 
 	@Override
-	public ServiceTrackerMap<String, ?> createServiceTrackerMap() {
+	protected ServiceTrackerMap<String, ?> createServiceTrackerMap() {
 		return ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext, FDSCreationMenu.class, "frontend.data.set.name",
 			ServiceTrackerCustomizerFactory.<FDSCreationMenu>serviceWrapper(

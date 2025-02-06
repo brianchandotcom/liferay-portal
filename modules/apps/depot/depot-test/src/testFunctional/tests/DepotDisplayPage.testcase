@@ -899,7 +899,7 @@ definition {
 			webContentText = "WC WebContent Content",
 			webContentTitle = "WC Webcontent Title");
 
-		PortletEntry.publish();
+		WebContent.publishWithPermissions();
 
 		Navigator.gotoSitePage(
 			pageName = "Test Page Name",
@@ -1188,7 +1188,7 @@ definition {
 			webContentText = "WC WebContent Content",
 			webContentTitle = "WC Webcontent Title");
 
-		PortletEntry.publish();
+		WebContent.publishWithPermissions();
 
 		Navigator.gotoSitePage(
 			pageName = "Test Page Name",

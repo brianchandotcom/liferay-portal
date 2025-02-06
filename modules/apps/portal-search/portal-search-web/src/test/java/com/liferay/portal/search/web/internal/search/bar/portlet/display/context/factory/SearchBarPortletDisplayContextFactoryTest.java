@@ -12,9 +12,11 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -434,7 +436,8 @@ public class SearchBarPortletDisplayContextFactoryTest {
 		SearchBarPortletDisplayContextFactory
 			searchBarPortletDisplayContextFactory =
 				new SearchBarPortletDisplayContextFactory(
-					_layoutLocalService, _portal, renderRequest);
+					_layoutLocalService, _portal, renderRequest,
+					_userLocalService);
 
 		PortletPreferences portletPreferences = new PortletPreferencesImpl();
 
@@ -577,6 +580,24 @@ public class SearchBarPortletDisplayContextFactoryTest {
 		);
 
 		Mockito.when(
+			_themeDisplay.getUser()
+		).thenReturn(
+			_user
+		);
+
+		Mockito.when(
+			_themeDisplay.getScopeGroupId()
+		).thenReturn(
+			0L
+		);
+
+		Mockito.when(
+			_group.getClassPK()
+		).thenReturn(
+			34444L
+		);
+
+		Mockito.when(
 			_portletDisplay.getPortletResource()
 		).thenReturn(
 			"test"
@@ -681,5 +702,8 @@ public class SearchBarPortletDisplayContextFactoryTest {
 		_searchSuggestionsCompanyConfiguration = Mockito.mock(
 			SearchSuggestionsCompanyConfiguration.class);
 	private final ThemeDisplay _themeDisplay = Mockito.mock(ThemeDisplay.class);
+	private final User _user = Mockito.mock(User.class);
+	private final UserLocalService _userLocalService = Mockito.mock(
+		UserLocalService.class);
 
 }

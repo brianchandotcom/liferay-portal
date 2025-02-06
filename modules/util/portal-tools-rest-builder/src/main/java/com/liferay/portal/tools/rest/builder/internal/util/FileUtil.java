@@ -21,6 +21,7 @@ import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
 import java.text.SimpleDateFormat;
+
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -99,7 +100,7 @@ public class FileUtil {
 		String year = simpleDateFormat.format(new Date());
 
 		if (file.exists()) {
-			String content = FileUtil.read(file);
+			String content = read(file);
 
 			int x = content.indexOf("/**\n * SPDX-FileCopyrightText: (c) ");
 

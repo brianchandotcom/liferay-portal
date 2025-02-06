@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.servlet.InitialRequestSyncUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
@@ -71,7 +72,12 @@ public class PortletTCKBridge {
 
 		String configFile = portletTCKBridgeConfiguration.configFile();
 
-		_setUpPortletTCKSite(company, configFile);
+		InitialRequestSyncUtil.registerSyncCallable(
+			() -> {
+				_setUpPortletTCKSite(company, configFile);
+
+				return null;
+			});
 	}
 
 	private void _setUpPortletTCKSite(Company company, String configFile)

@@ -44,7 +44,7 @@ public class SystemAPIURLFDSSerializerTest extends BaseFDSSerializerTestCase {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Override
-	public ServiceTrackerMap<String, ?> createServiceTrackerMap() {
+	protected ServiceTrackerMap<String, ?> createServiceTrackerMap() {
 		return ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext, FDSAPIURLResolver.class, "fds.rest.application.key",
 			ServiceTrackerCustomizerFactory.<FDSAPIURLResolver>serviceWrapper(

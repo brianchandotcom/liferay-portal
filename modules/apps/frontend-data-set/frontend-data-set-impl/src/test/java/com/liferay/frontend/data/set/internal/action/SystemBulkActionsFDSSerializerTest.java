@@ -42,7 +42,7 @@ public class SystemBulkActionsFDSSerializerTest
 		LiferayUnitTestRule.INSTANCE;
 
 	@Override
-	public ServiceTrackerMap<String, ?> createServiceTrackerMap() {
+	protected ServiceTrackerMap<String, ?> createServiceTrackerMap() {
 		return ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext, FDSBulkActions.class, "frontend.data.set.name",
 			ServiceTrackerCustomizerFactory.<FDSBulkActions>serviceWrapper(

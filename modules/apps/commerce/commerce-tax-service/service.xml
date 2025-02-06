@@ -29,6 +29,7 @@
 		<column name="engineKey" type="String" />
 		<column name="percentage" type="boolean" />
 		<column name="active" type="boolean" />
+		<column name="typeSettings" type="String" />
 
 		<!-- Order -->
 

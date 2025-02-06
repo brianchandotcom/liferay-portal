@@ -28,12 +28,12 @@ import org.osgi.service.component.annotations.Component;
  * @author Shuyang Zhou
  */
 @Component(
-	property = {"osgi.command.function=listCap", "osgi.command.scope=system"},
+	property = {"osgi.command.function=listCapabilities", "osgi.command.scope=system"},
 	service = OSGiCommands.class
 )
 public class CapabilityOSGiCommands implements OSGiCommands {
 
-	public void listCap(long bundleId, String... namespaces) {
+	public void listCapabilities(long bundleId, String... namespaces) {
 		Bundle bundle = _bundleContext.getBundle(bundleId);
 
 		if (bundle == null) {
@@ -56,7 +56,7 @@ public class CapabilityOSGiCommands implements OSGiCommands {
 		_print(map);
 	}
 
-	public void listCap(String... namespaces) {
+	public void listCapabilities(String... namespaces) {
 		if (namespaces.length == 0) {
 			namespaces = new String[] {null};
 		}

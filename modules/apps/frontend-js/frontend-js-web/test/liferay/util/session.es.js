@@ -9,8 +9,13 @@ import {
 } from '../../../src/main/resources/META-INF/resources/liferay/util/session.es';
 
 describe('Session API', () => {
+	const sessionClickURL =
+		'http://localhost:8080/c/portal/session_click?p_l_id=1';
+
 	beforeEach(() => {
 		fetch.mockResponse('');
+
+		window.Liferay.ThemeDisplay.getPlid = () => 1;
 	});
 
 	describe('getSessionValue', () => {
@@ -20,7 +25,7 @@ describe('Session API', () => {
 			expect(fetch).toHaveBeenCalledTimes(1);
 
 			expect(fetch).toHaveBeenCalledWith(
-				'http://localhost:8080/c/portal/session_click',
+				sessionClickURL,
 				expect.anything()
 			);
 		});
@@ -53,9 +58,7 @@ describe('Session API', () => {
 
 			expect(fetch).toHaveBeenCalledTimes(1);
 
-			expect(fetch.mock.calls[0][0]).toBe(
-				'http://localhost:8080/c/portal/session_click'
-			);
+			expect(fetch.mock.calls[0][0]).toBe(sessionClickURL);
 
 			expect(fetch.mock.calls[0][1].body.get('key')).toBe('value');
 		});
@@ -68,9 +71,7 @@ describe('Session API', () => {
 
 			expect(fetch).toHaveBeenCalledTimes(1);
 
-			expect(fetch.mock.calls[0][0]).toBe(
-				'http://localhost:8080/c/portal/session_click'
-			);
+			expect(fetch.mock.calls[0][0]).toBe(sessionClickURL);
 
 			expect(fetch.mock.calls[0][1].body.get('key')).toBe(
 				'serialize://{"key1":"value1","key2":"value2"}'

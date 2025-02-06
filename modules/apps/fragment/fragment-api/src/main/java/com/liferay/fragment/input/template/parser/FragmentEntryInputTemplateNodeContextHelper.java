@@ -5,6 +5,8 @@
 
 package com.liferay.fragment.input.template.parser;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.info.form.InfoForm;
 
@@ -15,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Víctor Galán
  */
+@ProviderType
 public interface FragmentEntryInputTemplateNodeContextHelper {
 
 	public InputTemplateNode toInputTemplateNode(

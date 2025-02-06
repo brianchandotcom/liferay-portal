@@ -74,18 +74,22 @@ export function checkSameDate(dateFromApi: string, date2: string) {
 	const firstDate = new Date(dateFromApi);
 	const secondDate = new Date(date2);
 
-	if (
-		firstDate.getUTCDate() === secondDate.getDate() &&
-		firstDate.getUTCMonth() === secondDate.getMonth() &&
-		firstDate.getUTCFullYear() === secondDate.getFullYear() &&
-		firstDate.getUTCHours() === secondDate.getHours() &&
-		firstDate.getUTCMinutes() === secondDate.getMinutes()
-	) {
-		return true;
-	}
-	else {
-		return false;
-	}
+	return firstDate.getUTCDate() === secondDate.getDate() &&
+		   firstDate.getUTCMonth() === secondDate.getMonth() &&
+		   firstDate.getUTCFullYear() === secondDate.getFullYear() &&
+		   firstDate.getUTCHours() === secondDate.getHours() &&
+		   firstDate.getUTCMinutes() === secondDate.getMinutes();
+}
+
+export function checkLocalizedDate(dateFromApi: string, date2: string) {
+	const firstDate = new Date(dateFromApi);
+	const secondDate = new Date(date2);
+
+	return firstDate.getDate() === secondDate.getDate() &&
+		   firstDate.getMonth() === secondDate.getMonth() &&
+		   firstDate.getFullYear() === secondDate.getFullYear() &&
+		   firstDate.getHours() === secondDate.getHours() &&
+		   firstDate.getMinutes() === secondDate.getMinutes();
 }
 
 export function getDateFormatted(value: Date, locale: string) {

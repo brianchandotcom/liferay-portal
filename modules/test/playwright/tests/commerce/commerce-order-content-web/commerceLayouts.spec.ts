@@ -12,6 +12,7 @@ import {commercePagesTest} from '../../../fixtures/commercePagesTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {displayPageTemplatesPagesTest} from '../../../fixtures/displayPageTemplatesPagesTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import {liferayConfig} from '../../../liferay.config';
@@ -23,7 +24,7 @@ import getFragmentDefinition from '../../layout-content-page-editor-web/utils/ge
 import getPageDefinition from '../../layout-content-page-editor-web/utils/getPageDefinition';
 import getWidgetDefinition from '../../layout-content-page-editor-web/utils/getWidgetDefinition';
 import {commerceReturnSetUp} from '../utils/commerce';
-import {customFormatDate, getDateCustomFormat} from '../utils/date';
+import {checkLocalizedDate} from '../utils/date';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -36,6 +37,7 @@ export const test = mergeTests(
 		'LPS-178052': {enabled: true},
 	}),
 	pageEditorPagesTest,
+	isolatedSiteTest,
 	loginTest()
 );
 
@@ -1491,6 +1493,7 @@ test('LPD-33503 Order Details - Questions & Answers', async ({
 	displayPageTemplatesPage,
 	page,
 	pageEditorPage,
+	site,
 }) => {
 	const account = await apiHelpers.headlessAdminUser.postAccount({
 		name: getRandomString(),
@@ -1498,12 +1501,6 @@ test('LPD-33503 Order Details - Questions & Answers', async ({
 	});
 
 	apiHelpers.data.push({id: account.id, type: 'account'});
-
-	const site = await apiHelpers.headlessSite.createSite({
-		name: getRandomString(),
-	});
-
-	apiHelpers.data.push({id: site.id, type: 'site'});
 
 	await apiHelpers.headlessAdminUser.assignUserToAccountByEmailAddress(
 		account.id,
@@ -1536,14 +1533,28 @@ test('LPD-33503 Order Details - Questions & Answers', async ({
 		user.id
 	);
 
-	await displayPageTemplatesPage.goto(site.friendlyUrlPath);
+	const className = await apiHelpers.jsonWebServicesClassName.fetchClassName(
+		'com.liferay.commerce.model.CommerceOrder'
+	);
 
 	const displayPageTemplateName = getRandomString();
 
-	await displayPageTemplatesPage.createTemplate({
-		contentType: 'Order',
-		name: displayPageTemplateName,
-	});
+	const displayPage =
+		await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.addDisplayPageLayoutPageTemplateEntry(
+			{
+				classNameId: className.classNameId,
+				groupId: site.id,
+				name: displayPageTemplateName,
+			}
+		);
+
+	await apiHelpers.jsonWebServicesLayoutPageTemplateEntry.markAsDefaultDisplayPageLayoutPageTemplateEntry(
+		{
+			layoutPageTemplateEntryId: displayPage.layoutPageTemplateEntryId,
+		}
+	);
+
+	await displayPageTemplatesPage.goto(site.friendlyUrlPath);
 	await displayPageTemplatesPage.editTemplate(displayPageTemplateName);
 
 	await pageEditorPage.addFragment('Order', 'Info Box');
@@ -1576,15 +1587,6 @@ test('LPD-33503 Order Details - Questions & Answers', async ({
 	await pageEditorPage.waitForChangesSaved();
 
 	await displayPageTemplatesPage.publishTemplate();
-
-	await commerceLayoutsPage.moreActionsButton.click();
-	await commerceLayoutsPage.markAsDefaultMenuItem.click();
-
-	await waitForAlert(page);
-
-	await expect(
-		commerceLayoutsPage.defaultDisplayPageTemplateIcon
-	).toBeVisible();
 
 	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
 		siteGroupId: site.id,
@@ -1629,21 +1631,11 @@ test('LPD-33503 Order Details - Questions & Answers', async ({
 		cart.id
 	);
 
-	const commentDate = comment.items[0].modifiedDate;
+	let commentModifiedDate = await page.getByRole('paragraph').innerText();
 
-	const locale = await page.evaluate(() => {
-		return Liferay.ThemeDisplay.getBCP47LanguageId();
-	});
-
-	await expect(
-		page.getByText(
-			getDateCustomFormat(
-				commentDate,
-				locale,
-				customFormatDate.DATE_AND_TIME
-			).replace(',', '')
-		)
-	).toBeVisible();
+	expect(
+		checkLocalizedDate(comment.items[0].modifiedDate, commentModifiedDate)
+	).toBe(true);
 
 	await commerceLayoutsPage.infoBoxButton('Order notes').click();
 
@@ -1694,15 +1686,11 @@ test('LPD-33503 Order Details - Questions & Answers', async ({
 		cart.id
 	);
 
-	await expect(
-		page.getByText(
-			getDateCustomFormat(
-				comment.items[0].modifiedDate,
-				locale,
-				customFormatDate.DATE_AND_TIME
-			).replace(',', '')
-		)
-	).toBeVisible();
+	commentModifiedDate = await page.getByRole('paragraph').innerText();
+
+	expect(
+		checkLocalizedDate(comment.items[0].modifiedDate, commentModifiedDate)
+	).toBe(true);
 
 	await commerceLayoutsPage.infoBoxButton('Order notes').click();
 

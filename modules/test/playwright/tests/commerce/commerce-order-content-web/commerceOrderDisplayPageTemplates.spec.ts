@@ -30,19 +30,14 @@ export const test = mergeTests(
 
 test('LPD-30855 Can map order item information', async ({
 	apiHelpers,
-	applicationsMenuPage,
 	commerceAdminChannelsPage,
 	commerceAdminProductPage,
 	commerceLayoutsPage,
+	displayPageTemplatesPage,
 	page,
 	pageEditorPage,
+	site,
 }) => {
-	const site = await apiHelpers.headlessSite.createSite({
-		name: getRandomString(),
-	});
-
-	apiHelpers.data.push({id: site.id, type: 'site'});
-
 	const channel = await apiHelpers.headlessCommerceAdminChannel.postChannel({
 		name: getRandomString(),
 		siteGroupId: site.id,
@@ -86,7 +81,7 @@ test('LPD-30855 Can map order item information', async ({
 
 	const product = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
 		catalogId: catalog.id,
-		name: {en_US: 'Product1'},
+		name: {en_US: getRandomString()},
 		productOptions: [
 			{
 				fieldType: 'select',
@@ -125,6 +120,34 @@ test('LPD-30855 Can map order item information', async ({
 
 	const sku = productSkus.find((sku) => sku.sku === 'BLACK');
 
+	await displayPageTemplatesPage.goto(site.friendlyUrlPath);
+
+	const displayPageTemplateName = getRandomString();
+
+	await displayPageTemplatesPage.createTemplate({
+		contentType: 'Order',
+		name: displayPageTemplateName,
+	});
+	await displayPageTemplatesPage.editTemplate(displayPageTemplateName);
+
+	await pageEditorPage.addFragment('Content Display', 'Collection Display');
+	await pageEditorPage.selectFragment(
+		await pageEditorPage.getFragmentId('Collection Display')
+	);
+
+	await page.getByText('No Collection Selected Yet').click();
+
+	await pageEditorPage.chooseCollectionDisplayOption(
+		'Related Items Collection Providers',
+		'Order Items'
+	);
+	await pageEditorPage.waitForChangesSaved();
+	await pageEditorPage.addFragment(
+		'Basic Components',
+		'Heading',
+		page.locator('.page-editor__collection-item-old.empty').first()
+	);
+
 	const cart = await apiHelpers.headlessCommerceDeliveryCart.postCart(
 		{
 			accountId: account.id,
@@ -136,33 +159,6 @@ test('LPD-30855 Can map order item information', async ({
 			],
 		},
 		channel.id
-	);
-
-	await applicationsMenuPage.goToSite(site.name);
-
-	await commerceLayoutsPage.goToDisplayPageTemplates();
-	await commerceLayoutsPage.createDisplayPageTemplate(
-		'Test Commerce Order Display Page Template',
-		'Order',
-		site.name
-	);
-
-	await pageEditorPage.addFragment('Content Display', 'Collection Display');
-	await pageEditorPage.selectFragment(
-		await pageEditorPage.getFragmentId('Collection Display')
-	);
-
-	await page.getByText('No Collection Selected Yet').click();
-
-	await commerceLayoutsPage.selectCollectionButton.click();
-	await commerceLayoutsPage.selectRelatedItemsCollectionProviders.click();
-	await commerceLayoutsPage.orderItemCardButton.click();
-
-	await pageEditorPage.waitForChangesSaved();
-	await pageEditorPage.addFragment(
-		'Basic Components',
-		'Heading',
-		page.locator('.page-editor__collection-item.empty').last()
 	);
 
 	await commerceLayoutsPage.selectDisplayPageTemplatePreviewItem(
@@ -186,26 +182,28 @@ test('LPD-30855 Can map order item information', async ({
 	).toBeVisible();
 
 	await commerceLayoutsPage.labelField.selectOption('Create Date');
-	await commerceLayoutsPage.labelField.waitFor();
+
+	await expect(page.getByLabel('Configuration Panel', { exact: true }).getByLabel('Mapping')).toContainText('Field Type: Date');
 
 	const pageEditorCreateDate = await commerceLayoutsPage
 		.pageEditorElement('h1')
 		.first()
 		.innerText();
 
-	await expect(checkSameDate(cart.createDate, pageEditorCreateDate)).toBe(
+	expect(checkSameDate(cart.createDate, pageEditorCreateDate)).toBe(
 		true
 	);
 
 	await commerceLayoutsPage.labelField.selectOption('Modified Date');
-	await commerceLayoutsPage.labelField.waitFor();
+
+	await expect(page.getByLabel('Configuration Panel', { exact: true }).getByLabel('Mapping')).toContainText('Field Type: Date');
 
 	const pageEditorModifiedDate = await commerceLayoutsPage
 		.pageEditorElement('h1')
 		.first()
 		.innerText();
 
-	await expect(checkSameDate(cart.modifiedDate, pageEditorModifiedDate)).toBe(
+	expect(checkSameDate(cart.modifiedDate, pageEditorModifiedDate)).toBe(
 		true
 	);
 
@@ -263,15 +261,13 @@ test('LPD-30855 Can map order item information', async ({
 
 	await expect(commerceLayoutsPage.pageEditorText('Black')).toBeVisible();
 
-	await commerceLayoutsPage.publishButton.click();
-	await commerceLayoutsPage
-		.displayPageTemplateCheckBox('Select Test Commerce Order')
-		.check();
-	await commerceLayoutsPage.deletePageButton.click();
-	await commerceLayoutsPage.deleteEntriesButton.click();
+	await displayPageTemplatesPage.publishTemplate();
 
-	await waitForAlert(
-		page,
-		'You successfully deleted 1 display page templates and 0 folders.'
+	await displayPageTemplatesPage.deleteTemplate(
+		displayPageTemplateName
 	);
+
+	await expect(
+		page.getByText(displayPageTemplateName, {exact: true})
+	).not.toBeVisible();
 });

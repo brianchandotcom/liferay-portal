@@ -43,7 +43,9 @@ export class CommerceAdminProductPage {
 			.getByRole('button', {exact: true, name: 'Add File Entry'})
 			.first();
 		this.applicationsMenuPage = new ApplicationsMenuPage(page);
-		this.creationMenuNewButton = page.getByRole('button', {name: 'New'});
+		this.creationMenuNewButton = page.locator(
+			'[data-testid="fdsCreationActionButton"]'
+		);
 		this.generateSkusMenuItem = page.getByRole('menuitem', {
 			exact: true,
 			name: 'Generate All SKU Combinations',

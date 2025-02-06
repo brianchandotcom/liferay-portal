@@ -63,7 +63,9 @@ const CustomerPortalApp: React.FC<CustomerPortalAppProps> = ({
 	route,
 	...properties
 }) => {
-	const {client, networkStatus} = useApollo(apis.provisioningServerAPI);
+	const {client, networkStatus} = useApollo(
+		apis.provisioningServerAPI as string
+	);
 
 	useGlobalNetworkIndicator(networkStatus);
 

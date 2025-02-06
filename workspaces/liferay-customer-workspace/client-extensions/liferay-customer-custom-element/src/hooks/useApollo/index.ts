@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ApolloClient, InMemoryCache} from '@apollo/client';
+import {ApolloClient, InMemoryCache, TypePolicies} from '@apollo/client';
 import {BatchHttpLink} from '@apollo/client/link/batch-http';
 import {setContext} from '@apollo/client/link/context';
 import {onError} from '@apollo/client/link/error';
@@ -38,6 +38,10 @@ const liferayAuthLink = setContext((_, {headers, ...context}) => ({
 }));
 
 const raySourceErrorLink = onError(({forward, networkError, operation}) => {
+	if (!networkError || !('statusCode' in networkError)) {
+		return;
+	}
+
 	if (
 		networkError.statusCode === 401 ||
 		networkError.statusCode === 403 ||
@@ -60,21 +64,19 @@ const getRaysourceAuthLink = () =>
 		};
 	});
 
-const getRaysourceRestLink = (uri) =>
+const getRaysourceRestLink = (uri: string) =>
 	new RestLink({
 		uri,
 	});
 
-export default function useApollo(provisioningServerAPI) {
-	const [client, setClient] = useState();
+export default function useApollo(provisioningServerAPI: string) {
+	const [client, setClient] = useState<ApolloClient<any>>();
 	const networkStatus = useApolloNetworkStatusReducer(reducer, initialState);
 
 	useEffect(() => {
 		const init = async () => {
 			const cache = new InMemoryCache({
-				typePolicies: {
-					...liferayTypePolicies,
-				},
+				typePolicies: liferayTypePolicies as unknown as TypePolicies,
 			});
 
 			await persistCache({

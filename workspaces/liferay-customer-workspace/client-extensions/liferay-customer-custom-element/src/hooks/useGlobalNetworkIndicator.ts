@@ -21,7 +21,7 @@ const DEFAULT_SUCCESS = {
 	type: 'success',
 };
 
-export default function useGlobalNetworkIndicator(networkStatus) {
+export default function useGlobalNetworkIndicator(networkStatus: any) {
 	useEffect(() => {
 		const {error: errorStatus, success} = networkStatus;
 
@@ -44,23 +44,30 @@ export default function useGlobalNetworkIndicator(networkStatus) {
 				errorStatus.operation.getContext().displayErrors ?? true;
 
 			if (displayErrors) {
-				errorStatus.response.forEach((error) => {
-					let errorToast = DEFAULT_ERROR;
+				errorStatus.response.forEach(
+					(error: {exception: {errno: string | number}}) => {
+						let errorToast = DEFAULT_ERROR;
 
-					if (displayErrors && displayErrors[error.exception.errno]) {
-						const displayError =
-							displayErrors[error.exception.errno];
+						if (
+							displayErrors &&
+							displayErrors[error.exception.errno]
+						) {
+							const displayError =
+								displayErrors[error.exception.errno];
 
-						errorToast = {
-							message:
-								displayError.message || DEFAULT_ERROR.message,
-							title: displayError.title || DEFAULT_ERROR.title,
-							type: displayError.type || DEFAULT_ERROR.type,
-						};
+							errorToast = {
+								message:
+									displayError.message ||
+									DEFAULT_ERROR.message,
+								title:
+									displayError.title || DEFAULT_ERROR.title,
+								type: displayError.type || DEFAULT_ERROR.type,
+							};
+						}
+
+						Liferay.Util.openToast(errorToast);
 					}
-
-					Liferay.Util.openToast(errorToast);
-				});
+				);
 			}
 		}
 

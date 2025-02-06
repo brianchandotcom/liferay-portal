@@ -25,7 +25,13 @@ import com.liferay.headless.commerce.admin.order.client.resource.v1_0.OrderItemR
 import com.liferay.headless.commerce.admin.order.client.resource.v1_0.OrderResource;
 import com.liferay.marketplace.constants.MarketplaceConstants;
 import com.liferay.marketplace.util.MarketplaceUtil;
+import com.liferay.notification.rest.client.dto.v1_0.NotificationQueueEntry;
+import com.liferay.notification.rest.client.dto.v1_0.NotificationTemplate;
+import com.liferay.notification.rest.client.resource.v1_0.NotificationQueueEntryResource;
+import com.liferay.notification.rest.client.resource.v1_0.NotificationTemplateResource;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.net.URL;
 
@@ -280,6 +286,105 @@ public class MarketplaceService extends BaseService {
 		return userAccountResource.getUserAccountByEmailAddress(emailAddress);
 	}
 
+	public void postNotificationQueueEntry(
+			String emailAddress, String externalReferenceCode,
+			Map<String, String> map)
+		throws Exception {
+
+		String authorization =
+			_liferayOAuth2AccessTokenManager.getAuthorization(
+				"liferay-marketplace-etc-spring-boot-oauth-application-" +
+					"headless-server");
+		URL liferayDXPURL = new URL(
+			lxcDXPServerProtocol + "://" + lxcDXPMainDomain);
+
+		NotificationTemplateResource notificationTemplateResource =
+			NotificationTemplateResource.builder(
+			).endpoint(
+				liferayDXPURL
+			).header(
+				org.apache.http.HttpHeaders.AUTHORIZATION, authorization
+			).build();
+
+		NotificationTemplate notificationTemplate;
+
+		try {
+			notificationTemplate =
+				notificationTemplateResource.
+					getNotificationTemplateByExternalReferenceCode(
+						externalReferenceCode);
+		}
+		catch (Exception exception) {
+			_log.error(
+				"Unable to get notification template " + externalReferenceCode,
+				exception);
+
+			return;
+		}
+
+		NotificationQueueEntryResource notificationQueueEntryResource =
+			NotificationQueueEntryResource.builder(
+			).endpoint(
+				liferayDXPURL
+			).header(
+				org.apache.http.HttpHeaders.AUTHORIZATION, authorization
+			).build();
+
+		NotificationQueueEntry notificationQueueEntry =
+			new NotificationQueueEntry();
+
+		notificationQueueEntry.setBody(
+			() -> _replace(
+				notificationTemplate.getBody(
+				).get(
+					"en_US"
+				),
+				map));
+
+		JSONArray jsonArray = new JSONObject(
+			String.valueOf(notificationTemplate)
+		).getJSONArray(
+			"recipients"
+		);
+
+		JSONObject jsonObject = jsonArray.getJSONObject(0);
+
+		notificationQueueEntry.setRecipients(
+			() -> new Object[] {
+				new HashMapBuilder<String, Object>().put(
+					"from", jsonObject.getString("from")
+				).put(
+					"fromName",
+					jsonObject.getJSONObject(
+						"fromName"
+					).getString(
+						"en_US"
+					)
+				).put(
+					"to", emailAddress
+				).build()
+			});
+
+		notificationQueueEntry.setSubject(
+			() -> _replace(
+				notificationTemplate.getSubject(
+				).get(
+					"en_US"
+				),
+				map));
+		notificationQueueEntry.setType(notificationTemplate::getType);
+
+		notificationQueueEntryResource.postNotificationQueueEntry(
+			notificationQueueEntry);
+
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				StringBundler.concat(
+					"Sent ", externalReferenceCode, " notification to ",
+					emailAddress));
+		}
+	}
+
 	public void updateOrder(
 			Map<String, ?> customFields, long orderId, int orderStatus)
 		throws Exception {
@@ -353,6 +458,15 @@ public class MarketplaceService extends BaseService {
 				"liferay-marketplace-etc-spring-boot-oauth-application-" +
 					"headless-server")
 		).build();
+	}
+
+	private String _replace(String string, Map<String, String> map) {
+		for (Map.Entry<String, String> entry : map.entrySet()) {
+			string = StringUtil.replace(
+				string, entry.getKey(), entry.getValue());
+		}
+
+		return string;
 	}
 
 	private static final Log _log = LogFactory.getLog(MarketplaceService.class);

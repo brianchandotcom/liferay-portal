@@ -408,12 +408,10 @@ public class FormItemManager {
 		List<String> initialFormChildrenItemIds = new ArrayList<>(
 			formStyledLayoutStructureItem.getChildrenItemIds());
 
-		List<String> formStepContainerChildrenItemIds =
-			formStepContainerStyledLayoutStructureItem.getChildrenItemIds();
-
 		LayoutStructureItem formStepLayoutStructureItem =
 			layoutStructure.getLayoutStructureItem(
-				formStepContainerChildrenItemIds.get(0));
+				formStepContainerStyledLayoutStructureItem.getChildrenItemId(
+					0));
 
 		for (String formStepLayoutStructureItemChildrenItemId :
 				new ArrayList<>(
@@ -677,11 +675,8 @@ public class FormItemManager {
 				formStyledLayoutStructureItem.getItemId(), -1);
 		}
 		else {
-			List<String> childrenItemIds =
-				layoutStructureItem.getChildrenItemIds();
-
 			layoutStructureItem = layoutStructure.getLayoutStructureItem(
-				childrenItemIds.get(0));
+				layoutStructureItem.getChildrenItemId(0));
 
 			layoutStructure.addFragmentStyledLayoutStructureItem(
 				fragmentEntryLink.getFragmentEntryLinkId(),

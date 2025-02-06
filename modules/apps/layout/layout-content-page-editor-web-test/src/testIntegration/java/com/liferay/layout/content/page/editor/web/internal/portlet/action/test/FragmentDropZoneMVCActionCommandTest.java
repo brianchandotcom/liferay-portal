@@ -198,16 +198,13 @@ public class FragmentDropZoneMVCActionCommandTest {
 			layoutStructure.getLayoutStructureItemByFragmentEntryLinkId(
 				fragmentEntryLinkId);
 
-		List<String> childrenItemIds =
-			fragmentLayoutStructureItem.getChildrenItemIds();
-
 		mockLiferayPortletActionRequest = _getMockLiferayPortletActionRequest(
 			_group.getGroupId());
 
 		mockLiferayPortletActionRequest.addParameter(
 			"itemType", LayoutDataItemTypeConstants.TYPE_CONTAINER);
 		mockLiferayPortletActionRequest.addParameter(
-			"parentItemId", childrenItemIds.get(0));
+			"parentItemId", fragmentLayoutStructureItem.getChildrenItemId(0));
 		mockLiferayPortletActionRequest.addParameter("position", "0");
 
 		ReflectionTestUtil.invoke(
@@ -240,7 +237,8 @@ public class FragmentDropZoneMVCActionCommandTest {
 		LayoutStructureItem rootLayoutStructureItem =
 			layoutStructure.getMainLayoutStructureItem();
 
-		childrenItemIds = rootLayoutStructureItem.getChildrenItemIds();
+		List<String> childrenItemIds =
+			rootLayoutStructureItem.getChildrenItemIds();
 
 		Assert.assertEquals(
 			childrenItemIds.toString(), 2, childrenItemIds.size());
@@ -253,23 +251,17 @@ public class FragmentDropZoneMVCActionCommandTest {
 				fragmentLayoutStructureItem instanceof
 					FragmentStyledLayoutStructureItem);
 
-			List<String> fragmentChildrenItemIds =
-				fragmentLayoutStructureItem.getChildrenItemIds();
-
 			LayoutStructureItem fragmentDropZoneLayoutStructureItem =
 				layoutStructure.getLayoutStructureItem(
-					fragmentChildrenItemIds.get(0));
+					fragmentLayoutStructureItem.getChildrenItemId(0));
 
 			Assert.assertTrue(
 				fragmentDropZoneLayoutStructureItem instanceof
 					FragmentDropZoneLayoutStructureItem);
 
-			List<String> fragmentDropZoneChildrenItemIds =
-				fragmentDropZoneLayoutStructureItem.getChildrenItemIds();
-
 			LayoutStructureItem containerLayoutStructureItem =
 				layoutStructure.getLayoutStructureItem(
-					fragmentDropZoneChildrenItemIds.get(0));
+					fragmentDropZoneLayoutStructureItem.getChildrenItemId(0));
 
 			Assert.assertTrue(
 				containerLayoutStructureItem instanceof

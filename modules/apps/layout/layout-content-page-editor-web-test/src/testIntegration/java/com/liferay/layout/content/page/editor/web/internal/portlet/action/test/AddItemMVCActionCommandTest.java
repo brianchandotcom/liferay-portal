@@ -107,13 +107,9 @@ public class AddItemMVCActionCommandTest {
 			layoutStructure.getLayoutStructureItem(
 				layoutStructure.getMainItemId());
 
-		List<String> childrenItemIds =
-			rootLayoutStructureItem.getChildrenItemIds();
-
-		String itemId = childrenItemIds.get(0);
-
 		LayoutStructureItem layoutStructureItem =
-			layoutStructure.getLayoutStructureItem(itemId);
+			layoutStructure.getLayoutStructureItem(
+				rootLayoutStructureItem.getChildrenItemId(0));
 
 		Assert.assertEquals(
 			_layoutStructure.getMainItemId(),
@@ -159,13 +155,9 @@ public class AddItemMVCActionCommandTest {
 			layoutStructure.getLayoutStructureItem(
 				layoutStructure.getMainItemId());
 
-		List<String> childrenItemIds =
-			rootLayoutStructureItem.getChildrenItemIds();
-
-		String itemId = childrenItemIds.get(1);
-
 		LayoutStructureItem layoutStructureItem =
-			layoutStructure.getLayoutStructureItem(itemId);
+			layoutStructure.getLayoutStructureItem(
+				rootLayoutStructureItem.getChildrenItemId(1));
 
 		Assert.assertEquals(
 			_layoutStructure.getMainItemId(),
@@ -262,13 +254,9 @@ public class AddItemMVCActionCommandTest {
 			layoutStructure.getLayoutStructureItem(
 				layoutStructure.getMainItemId());
 
-		List<String> childrenItemIds =
-			rootLayoutStructureItem.getChildrenItemIds();
-
-		String itemId = childrenItemIds.get(0);
-
 		LayoutStructureItem layoutStructureItem =
-			layoutStructure.getLayoutStructureItem(itemId);
+			layoutStructure.getLayoutStructureItem(
+				rootLayoutStructureItem.getChildrenItemId(0));
 
 		Assert.assertEquals(
 			_layoutStructure.getMainItemId(),
@@ -345,11 +333,9 @@ public class AddItemMVCActionCommandTest {
 			layoutStructure.getLayoutStructureItem(
 				layoutStructure.getMainItemId());
 
-		List<String> childrenItemIds =
-			rootLayoutStructureItem.getChildrenItemIds();
-
 		LayoutStructureItem layoutStructureItem =
-			layoutStructure.getLayoutStructureItem(childrenItemIds.get(0));
+			layoutStructure.getLayoutStructureItem(
+				rootLayoutStructureItem.getChildrenItemId(0));
 
 		Assert.assertEquals(
 			_layoutStructure.getMainItemId(),

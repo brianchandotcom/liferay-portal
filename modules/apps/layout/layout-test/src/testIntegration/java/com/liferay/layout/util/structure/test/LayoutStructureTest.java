@@ -281,12 +281,9 @@ public class LayoutStructureTest {
 			layoutStructure.addCollectionStyledLayoutStructureItem(
 				rootLayoutStructureItem.getItemId(), 0);
 
-		List<String> childrenItemIds =
-			collectionStyledLayoutStructureItem.getChildrenItemIds();
-
 		layoutStructure.copyLayoutStructureItems(
 			Collections.singletonList(rootLayoutStructureItem.getItemId()),
-			childrenItemIds.get(0));
+			collectionStyledLayoutStructureItem.getChildrenItemId(0));
 	}
 
 	@Test(expected = UnsupportedOperationException.class)
@@ -348,12 +345,10 @@ public class LayoutStructureTest {
 					fragmentStyledLayoutStructureItem.getItemId()),
 				collectionStyledLayoutStructureItem.getItemId());
 
-		List<String> childrenItemIds =
-			collectionStyledLayoutStructureItem.getChildrenItemIds();
-
 		_assertParentLayoutStructureItem(
 			1, 1, 0, copiedLayoutStructureItems,
-			layoutStructure.getLayoutStructureItem(childrenItemIds.get(0)));
+			layoutStructure.getLayoutStructureItem(
+				collectionStyledLayoutStructureItem.getChildrenItemId(0)));
 	}
 
 	@Test

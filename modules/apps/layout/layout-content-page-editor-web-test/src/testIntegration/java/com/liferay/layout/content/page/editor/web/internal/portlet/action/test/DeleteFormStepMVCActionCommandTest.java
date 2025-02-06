@@ -381,10 +381,7 @@ public class DeleteFormStepMVCActionCommandTest {
 			if (layoutStructureItem instanceof
 					FormStepContainerStyledLayoutStructureItem) {
 
-				List<String> childrenItemIds =
-					layoutStructureItem.getChildrenItemIds();
-
-				return childrenItemIds.get(index);
+				return layoutStructureItem.getChildrenItemId(index);
 			}
 		}
 

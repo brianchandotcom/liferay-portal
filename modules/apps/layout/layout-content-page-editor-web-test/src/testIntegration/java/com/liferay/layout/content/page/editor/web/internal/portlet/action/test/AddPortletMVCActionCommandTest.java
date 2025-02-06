@@ -229,12 +229,9 @@ public class AddPortletMVCActionCommandTest {
 		LayoutStructureItem rootLayoutStructureItem =
 			layoutStructure.getMainLayoutStructureItem();
 
-		List<String> childrenItemIds =
-			rootLayoutStructureItem.getChildrenItemIds();
-
 		Assert.assertEquals(
 			fragmentStyledLayoutStructureItem.getItemId(),
-			childrenItemIds.get(0));
+			rootLayoutStructureItem.getChildrenItemId(0));
 	}
 
 	private MockLiferayPortletActionRequest

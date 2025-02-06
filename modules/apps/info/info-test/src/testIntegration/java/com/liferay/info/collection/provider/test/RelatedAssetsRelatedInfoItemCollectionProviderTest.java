@@ -80,7 +80,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -618,11 +617,10 @@ public class RelatedAssetsRelatedInfoItemCollectionProviderTest {
 				(CollectionStyledLayoutStructureItem)
 					layoutStructure.getLayoutStructureItem(itemId);
 
-		List<String> childrenItemIds =
-			collectionStyledLayoutStructureItem.getChildrenItemIds();
-
 		_addInfoFieldInCollectionDisplayToLayout(
-			draftLayout, childrenItemIds.get(0), segmentsExperienceId);
+			draftLayout,
+			collectionStyledLayoutStructureItem.getChildrenItemId(0),
+			segmentsExperienceId);
 
 		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
 	}

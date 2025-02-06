@@ -1517,52 +1517,37 @@ public class LayoutsImporterTest {
 			containerStyledLayoutStructureItem,
 			curContainerStyledLayoutStructureItem);
 
-		List<String> containerLayoutStructureItemChildrenItemIds =
-			containerStyledLayoutStructureItem.getChildrenItemIds();
-		List<String> curContainerLayoutStructureItemChildrenItemIds =
-			curContainerStyledLayoutStructureItem.getChildrenItemIds();
-
 		RowStyledLayoutStructureItem rowStyledLayoutStructureItem =
 			(RowStyledLayoutStructureItem)
 				layoutStructure.getLayoutStructureItem(
-					containerLayoutStructureItemChildrenItemIds.get(0));
+					containerStyledLayoutStructureItem.getChildrenItemId(0));
 		RowStyledLayoutStructureItem curRowStyledLayoutStructureItem =
 			(RowStyledLayoutStructureItem)
 				curLayoutStructure.getLayoutStructureItem(
-					curContainerLayoutStructureItemChildrenItemIds.get(0));
+					curContainerStyledLayoutStructureItem.getChildrenItemId(0));
 
 		_validateRowLayoutStructureItem(
 			rowStyledLayoutStructureItem, curRowStyledLayoutStructureItem);
 
-		List<String> rowLayoutStructureItemChildrenItemIds =
-			rowStyledLayoutStructureItem.getChildrenItemIds();
-		List<String> curRowLayoutStructureItemChildrenItemIds =
-			curRowStyledLayoutStructureItem.getChildrenItemIds();
-
 		ColumnLayoutStructureItem columnLayoutStructureItem =
 			(ColumnLayoutStructureItem)layoutStructure.getLayoutStructureItem(
-				rowLayoutStructureItemChildrenItemIds.get(0));
+				rowStyledLayoutStructureItem.getChildrenItemId(0));
 		ColumnLayoutStructureItem curColumnLayoutStructureItem =
 			(ColumnLayoutStructureItem)
 				curLayoutStructure.getLayoutStructureItem(
-					curRowLayoutStructureItemChildrenItemIds.get(0));
+					curRowStyledLayoutStructureItem.getChildrenItemId(0));
 
 		_validateColumnLayoutStructureItem(
 			columnLayoutStructureItem, curColumnLayoutStructureItem);
 
-		List<String> columnLayoutStructureItemChildrenItemIds =
-			columnLayoutStructureItem.getChildrenItemIds();
-		List<String> curColumnLayoutStructureItemChildrenItemIds =
-			curColumnLayoutStructureItem.getChildrenItemIds();
-
 		FragmentStyledLayoutStructureItem fragmentStyledLayoutStructureItem =
 			(FragmentStyledLayoutStructureItem)
 				layoutStructure.getLayoutStructureItem(
-					columnLayoutStructureItemChildrenItemIds.get(0));
+					columnLayoutStructureItem.getChildrenItemId(0));
 		FragmentStyledLayoutStructureItem curFragmentStyledLayoutStructureItem =
 			(FragmentStyledLayoutStructureItem)
 				curLayoutStructure.getLayoutStructureItem(
-					curColumnLayoutStructureItemChildrenItemIds.get(0));
+					curColumnLayoutStructureItem.getChildrenItemId(0));
 
 		_validateFragmentLayoutStructureItem(
 			fragmentStyledLayoutStructureItem,

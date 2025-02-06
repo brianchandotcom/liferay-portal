@@ -96,11 +96,19 @@ public class LayoutStructureRulesHelperImpl
 			String itemId = jsonObject.getString("itemId");
 
 			if (Objects.equals(action, Action.DISABLE.getValue())) {
+				if (enabledItemIds.contains(itemId)) {
+					enabledItemIds.remove(itemId);
+				}
+
 				disabledItemIds.add(itemId);
 			}
 			else if (Objects.equals(
 						jsonObject.getString("action"),
 						Action.SHOW.getValue())) {
+
+				if (hiddenItemIds.contains(itemId)) {
+					hiddenItemIds.remove(itemId);
+				}
 
 				displayedItemIds.add(itemId);
 			}
@@ -108,9 +116,17 @@ public class LayoutStructureRulesHelperImpl
 						jsonObject.getString("action"),
 						Action.ENABLE.getValue())) {
 
+				if (disabledItemIds.contains(itemId)) {
+					disabledItemIds.remove(itemId);
+				}
+
 				enabledItemIds.add(itemId);
 			}
 			else {
+				if (displayedItemIds.contains(itemId)) {
+					displayedItemIds.remove(itemId);
+				}
+
 				hiddenItemIds.add(itemId);
 			}
 		}

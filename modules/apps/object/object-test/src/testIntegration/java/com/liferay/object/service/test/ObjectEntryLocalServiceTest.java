@@ -3129,15 +3129,6 @@ public class ObjectEntryLocalServiceTest {
 		_objectEntryLocalService.deleteObjectEntry(
 			objectEntry1.getObjectEntryId());
 
-		AssertUtils.assertFailure(
-			NoSuchObjectEntryException.class,
-			"No ObjectEntry exists with the primary key " +
-				objectEntry1.getObjectEntryId(),
-			() -> _objectEntryLocalService.deleteObjectEntry(
-				objectEntry1.getObjectEntryId()));
-
-		_objectEntryLocalService.deleteObjectEntry(objectEntry1);
-
 		List<SystemEvent> systemEvents =
 			_systemEventLocalService.getSystemEvents(
 				0, _portal.getClassNameId(objectEntry1.getModelClassName()),
@@ -3150,6 +3141,13 @@ public class ObjectEntryLocalServiceTest {
 			systemEvent.getClassExternalReferenceCode());
 		Assert.assertEquals(
 			SystemEventConstants.TYPE_DELETE, systemEvent.getType());
+
+		AssertUtils.assertFailure(
+			NoSuchObjectEntryException.class,
+			"No ObjectEntry exists with the primary key " +
+				objectEntry1.getObjectEntryId(),
+			() -> _objectEntryLocalService.deleteObjectEntry(
+				objectEntry1.getObjectEntryId()));
 
 		AssertUtils.assertFailure(
 			NoSuchObjectEntryException.class,

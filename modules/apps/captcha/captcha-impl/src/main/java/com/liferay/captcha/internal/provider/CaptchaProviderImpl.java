@@ -62,9 +62,7 @@ public class CaptchaProviderImpl implements CaptchaProvider {
 	}
 
 	@Activate
-	protected void activate(
-		BundleContext bundleContext, Map<String, Object> properties) {
-
+	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			bundleContext, Captcha.class, "captcha.engine.impl");
 	}

@@ -1,0 +1,5 @@
+.structure-builder {
+	&__wrapper {
+		height: calc(100vh - (var(--control-menu-container-height)));
+	}
+}

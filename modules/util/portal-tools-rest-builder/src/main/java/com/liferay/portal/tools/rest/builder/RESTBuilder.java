@@ -27,6 +27,7 @@ import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parse
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser.util.OpenAPIParserUtil;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.util.FreeMarkerUtil;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.util.OpenAPIUtil;
+import com.liferay.portal.tools.rest.builder.internal.typescript.TypeScriptClientGenerator;
 import com.liferay.portal.tools.rest.builder.internal.util.FileUtil;
 import com.liferay.portal.tools.rest.builder.internal.yaml.YAMLUtil;
 import com.liferay.portal.tools.rest.builder.internal.yaml.config.Application;
@@ -68,17 +69,12 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.security.CodeSource;
 import java.security.ProtectionDomain;
 
-import java.text.SimpleDateFormat;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeMap;
 
@@ -378,7 +374,7 @@ public class RESTBuilder {
 			if (_configYAML.isGenerateClientJS() &&
 				Validator.isNotNull(_configYAML.getClientDir())) {
 
-				_invokeClientJSGenerator(yamlString);
+				_invokeClientTSGenerator(yamlString);
 			}
 		}
 
@@ -627,7 +623,7 @@ public class RESTBuilder {
 		FileUtil.write(
 			file,
 			FreeMarkerUtil.processTemplate(
-				_copyrightFile, _getCopyrightYear(file), "application",
+				_copyrightFile, FileUtil.getCopyrightYear(file), "application",
 				context));
 	}
 
@@ -648,7 +644,7 @@ public class RESTBuilder {
 		FileUtil.write(
 			file,
 			FreeMarkerUtil.processTemplate(
-				_copyrightFile, _getCopyrightYear(file),
+				_copyrightFile, FileUtil.getCopyrightYear(file),
 				"base_dto_action_metadata_provider", context));
 	}
 
@@ -669,7 +665,7 @@ public class RESTBuilder {
 		FileUtil.write(
 			file,
 			FreeMarkerUtil.processTemplate(
-				_copyrightFile, _getCopyrightYear(file), "base_resource_impl",
+				_copyrightFile, FileUtil.getCopyrightYear(file), "base_resource_impl",
 				context));
 	}
 
@@ -690,7 +686,7 @@ public class RESTBuilder {
 		FileUtil.write(
 			file,
 			FreeMarkerUtil.processTemplate(
-				_copyrightFile, _getCopyrightYear(file),
+				_copyrightFile, FileUtil.getCopyrightYear(file),
 				"base_resource_test_case", context));
 	}
 
@@ -708,7 +704,7 @@ public class RESTBuilder {
 		FileUtil.write(
 			file,
 			FreeMarkerUtil.processTemplate(
-				_copyrightFile, _getCopyrightYear(file), "client_aggregation",
+				_copyrightFile, FileUtil.getCopyrightYear(file), "client_aggregation",
 				context));
 	}
 
@@ -726,7 +722,7 @@ public class RESTBuilder {
 		FileUtil.write(
 			file,
 			FreeMarkerUtil.processTemplate(
-				_copyrightFile, _getCopyrightYear(file),
+				_copyrightFile, FileUtil.getCopyrightYear(file),
 				"client_base_json_parser", context));
 	}
 
@@ -746,7 +742,7 @@ public class RESTBuilder {
 		FileUtil.write(
 			file,
 			FreeMarkerUtil.processTemplate(
-				_copyrightFile, _getCopyrightYear(file), "client_dto",
+				_copyrightFile, FileUtil.getCopyrightYear(file), "client_dto",
 				context));
 	}
 
@@ -766,7 +762,7 @@ public class RESTBuilder {
 		FileUtil.write(
 			file,
 			FreeMarkerUtil.processTemplate(
-				_copyrightFile, _getCopyrightYear(file), "client_enum",
+				_copyrightFile, FileUtil.getCopyrightYear(file), "client_enum",
 				context));
 	}
 
@@ -784,7 +780,7 @@ public class RESTBuilder {
 		FileUtil.write(
 			file,
 			FreeMarkerUtil.processTemplate(
-				_copyrightFile, _getCopyrightYear(file), "client_facet",
+				_copyrightFile, FileUtil.getCopyrightYear(file), "client_facet",
 				context));
 	}
 
@@ -802,7 +798,7 @@ public class RESTBuilder {
 		FileUtil.write(
 			file,
 			FreeMarkerUtil.processTemplate(
-				_copyrightFile, _getCopyrightYear(file), "client_http_invoker",
+				_copyrightFile, FileUtil.getCopyrightYear(file), "client_http_invoker",
 				context));
 	}
 
@@ -820,7 +816,7 @@ public class RESTBuilder {
 		FileUtil.write(
 			file,
 			FreeMarkerUtil.processTemplate(
-				_copyrightFile, _getCopyrightYear(file), "client_page",
+				_copyrightFile, FileUtil.getCopyrightYear(file), "client_page",
 				context));
 	}
 
@@ -838,7 +834,7 @@ public class RESTBuilder {
 		FileUtil.write(
 			file,
 			FreeMarkerUtil.processTemplate(
-				_copyrightFile, _getCopyrightYear(file), "client_pagination",
+				_copyrightFile, FileUtil.getCopyrightYear(file), "client_pagination",
 				context));
 	}
 
@@ -856,7 +852,7 @@ public class RESTBuilder {
 		FileUtil.write(
 			file,
 			FreeMarkerUtil.processTemplate(
-				_copyrightFile, _getCopyrightYear(file), "client_permission",
+				_copyrightFile, FileUtil.getCopyrightYear(file), "client_permission",
 				context));
 	}
 
@@ -874,7 +870,7 @@ public class RESTBuilder {
 		FileUtil.write(
 			file,
 			FreeMarkerUtil.processTemplate(
-				_copyrightFile, _getCopyrightYear(file), "client_problem",
+				_copyrightFile, FileUtil.getCopyrightYear(file), "client_problem",
 				context));
 	}
 
@@ -895,7 +891,7 @@ public class RESTBuilder {
 		FileUtil.write(
 			file,
 			FreeMarkerUtil.processTemplate(
-				_copyrightFile, _getCopyrightYear(file), "client_resource",
+				_copyrightFile, FileUtil.getCopyrightYear(file), "client_resource",
 				context));
 	}
 
@@ -916,7 +912,7 @@ public class RESTBuilder {
 		FileUtil.write(
 			file,
 			FreeMarkerUtil.processTemplate(
-				_copyrightFile, _getCopyrightYear(file), "client_serdes",
+				_copyrightFile, FileUtil.getCopyrightYear(file), "client_serdes",
 				context));
 	}
 
@@ -934,7 +930,7 @@ public class RESTBuilder {
 		FileUtil.write(
 			file,
 			FreeMarkerUtil.processTemplate(
-				_copyrightFile, _getCopyrightYear(file),
+				_copyrightFile, FileUtil.getCopyrightYear(file),
 				"client_unsafe_supplier", context));
 	}
 
@@ -959,7 +955,7 @@ public class RESTBuilder {
 		FileUtil.write(
 			file,
 			FreeMarkerUtil.processTemplate(
-				_copyrightFile, _getCopyrightYear(file),
+				_copyrightFile, FileUtil.getCopyrightYear(file),
 				"dto_action_metadata_provider", context));
 	}
 
@@ -980,7 +976,7 @@ public class RESTBuilder {
 		FileUtil.write(
 			file,
 			FreeMarkerUtil.processTemplate(
-				_copyrightFile, _getCopyrightYear(file), "dto_action_provider",
+				_copyrightFile, FileUtil.getCopyrightYear(file), "dto_action_provider",
 				context));
 	}
 
@@ -1000,7 +996,7 @@ public class RESTBuilder {
 		FileUtil.write(
 			file,
 			FreeMarkerUtil.processTemplate(
-				_copyrightFile, _getCopyrightYear(file), "dto", context));
+				_copyrightFile, FileUtil.getCopyrightYear(file), "dto", context));
 	}
 
 	private void _createEnumFile(
@@ -1019,7 +1015,7 @@ public class RESTBuilder {
 		FileUtil.write(
 			file,
 			FreeMarkerUtil.processTemplate(
-				_copyrightFile, _getCopyrightYear(file), "enum", context));
+				_copyrightFile, FileUtil.getCopyrightYear(file), "enum", context));
 	}
 
 	private void _createExternalSchemaFiles(
@@ -1058,7 +1054,7 @@ public class RESTBuilder {
 		FileUtil.write(
 			file,
 			FreeMarkerUtil.processTemplate(
-				_copyrightFile, _getCopyrightYear(file), "graphql_mutation",
+				_copyrightFile, FileUtil.getCopyrightYear(file), "graphql_mutation",
 				context));
 	}
 
@@ -1077,7 +1073,7 @@ public class RESTBuilder {
 		FileUtil.write(
 			file,
 			FreeMarkerUtil.processTemplate(
-				_copyrightFile, _getCopyrightYear(file), "graphql_query",
+				_copyrightFile, FileUtil.getCopyrightYear(file), "graphql_query",
 				context));
 	}
 
@@ -1097,7 +1093,7 @@ public class RESTBuilder {
 		FileUtil.write(
 			file,
 			FreeMarkerUtil.processTemplate(
-				_copyrightFile, _getCopyrightYear(file), "graphql_servlet_data",
+				_copyrightFile, FileUtil.getCopyrightYear(file), "graphql_servlet_data",
 				context));
 	}
 
@@ -1116,7 +1112,7 @@ public class RESTBuilder {
 		FileUtil.write(
 			file,
 			FreeMarkerUtil.processTemplate(
-				_copyrightFile, _getCopyrightYear(file),
+				_copyrightFile, FileUtil.getCopyrightYear(file),
 				"liberal_permission_checker", context));
 	}
 
@@ -1136,7 +1132,7 @@ public class RESTBuilder {
 		FileUtil.write(
 			file,
 			FreeMarkerUtil.processTemplate(
-				_copyrightFile, _getCopyrightYear(file),
+				_copyrightFile, FileUtil.getCopyrightYear(file),
 				"openapi_resource_impl", context));
 	}
 
@@ -1175,7 +1171,7 @@ public class RESTBuilder {
 		FileUtil.write(
 			file,
 			FreeMarkerUtil.processTemplate(
-				_copyrightFile, _getCopyrightYear(file),
+				_copyrightFile, FileUtil.getCopyrightYear(file),
 				"resource_factory_impl", context));
 	}
 
@@ -1196,7 +1192,7 @@ public class RESTBuilder {
 		FileUtil.write(
 			file,
 			FreeMarkerUtil.processTemplate(
-				_copyrightFile, _getCopyrightYear(file), "resource", context));
+				_copyrightFile, FileUtil.getCopyrightYear(file), "resource", context));
 	}
 
 	private void _createResourceImplFile(
@@ -1220,7 +1216,7 @@ public class RESTBuilder {
 		FileUtil.write(
 			file,
 			FreeMarkerUtil.processTemplate(
-				_copyrightFile, _getCopyrightYear(file), "resource_impl",
+				_copyrightFile, FileUtil.getCopyrightYear(file), "resource_impl",
 				context));
 	}
 
@@ -1245,7 +1241,7 @@ public class RESTBuilder {
 		FileUtil.write(
 			file,
 			FreeMarkerUtil.processTemplate(
-				_copyrightFile, _getCopyrightYear(file), "resource_test",
+				_copyrightFile, FileUtil.getCopyrightYear(file), "resource_test",
 				context));
 	}
 
@@ -1975,24 +1971,6 @@ public class RESTBuilder {
 		}
 	}
 
-	private String _getCopyrightYear(File file) throws Exception {
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy");
-
-		String year = simpleDateFormat.format(new Date());
-
-		if (file.exists()) {
-			String content = FileUtil.read(file);
-
-			int x = content.indexOf("/**\n * SPDX-FileCopyrightText: (c) ");
-
-			if (x != -1) {
-				year = content.substring(x + 35, x + 39);
-			}
-		}
-
-		return year;
-	}
-
 	private int _getLineEndIndex(String s, int startIndex) {
 		int endIndex = s.indexOf("\n", startIndex);
 
@@ -2087,53 +2065,7 @@ public class RESTBuilder {
 		return freeMarkerTool.getSchemaVarName(reference.substring(index + 1));
 	}
 
-	private void _invokeClientJSGenerator(
-			File baseClientJSDir, File openAPIYAMLFile, String targetClientType)
-		throws Exception {
-
-		String outputPathString = StringBundler.concat(
-			baseClientJSDir.getPath(), "/src/", targetClientType);
-
-		ProcessBuilder processBuilder = new ProcessBuilder(
-			Arrays.asList(
-				_getNPMPathString(), "exec", "--prefix", _getNodePrefix(),
-				"--yes", "@openapitools/openapi-generator-cli@2.15.3", "--",
-				"generate",
-				"--additional-properties=modelPropertyNaming=original," +
-					"paramNaming=original",
-				"--generator-name", "typescript-" + targetClientType,
-				"--global-property",
-				"apis,models,supportingFiles=api.ts:apis.ts:models.ts",
-				"--input-spec", openAPIYAMLFile.getPath(), "--output",
-				outputPathString, "--skip-validate-spec"));
-
-		String nodeBinPathString = _getNodeBinPathString();
-
-		if (nodeBinPathString != null) {
-			_prependPath(processBuilder, nodeBinPathString);
-		}
-
-		Process process = processBuilder.start();
-
-		process.waitFor();
-
-		if (process.exitValue() > 0) {
-			Scanner scanner = new Scanner(process.getErrorStream());
-
-			scanner.useDelimiter("\n");
-
-			while (scanner.hasNext()) {
-				System.out.println(
-					"Unable to generate client JS: " + scanner.next());
-			}
-		}
-
-		Files.deleteIfExists(Paths.get("./openapitools.json"));
-
-		_deleteDir(Paths.get(outputPathString, ".openapi-generator"));
-	}
-
-	private void _invokeClientJSGenerator(String openAPIYAMLString)
+	private void _invokeClientTSGenerator(String openAPIYAMLString)
 		throws Exception {
 
 		File baseClientJSDir = new File(
@@ -2145,18 +2077,22 @@ public class RESTBuilder {
 		FileUtil.write(
 			new File(baseClientJSDir, "node-scripts.config.js"),
 			FreeMarkerUtil.processTemplate(
-				null, null, "node_scripts_config_js", null));
+				null, null, "ts/node_scripts_config_js", null));
 		FileUtil.write(
 			new File(baseClientJSDir, "package.json"),
 			FreeMarkerUtil.processTemplate(
-				null, null, "package_json",
+				null, null, "ts/package_json",
 				HashMapBuilder.<String, Object>put(
 					"clientName", baseClientJSDir.getName()
 				).build()));
 
 		File openAPIYAMLFile = _prepareForClientJSGenerator(openAPIYAMLString);
 
-		_invokeClientJSGenerator(baseClientJSDir, openAPIYAMLFile, "node");
+		TypeScriptClientGenerator
+			typeScriptClientGenerator = new TypeScriptClientGenerator(
+			baseClientJSDir, openAPIYAMLFile, _copyrightFile);
+
+		typeScriptClientGenerator.generate();
 
 		Files.delete(openAPIYAMLFile.toPath());
 	}

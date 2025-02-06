@@ -5,51 +5,72 @@
 
 import ClayCard from '@clayui/card';
 import classNames from 'classnames';
-import {memo} from 'react';
-import i18n from '~/utils/I18n';
+import {MouseEventHandler, memo} from 'react';
 import {Skeleton, StatusTag} from '~/components';
-import {
-	FORMAT_DATE_TYPES,
-	SLA_STATUS_TYPES,
-} from '~/utils/constants';
+import IKoroneikiAccount from '~/interfaces/koroneikiAccount';
+import i18n from '~/utils/I18n';
+import {FORMAT_DATE_TYPES, SLA_STATUS_TYPES} from '~/utils/constants';
 import getDateCustomFormat from '~/utils/getDateCustomFormat';
 import getKebabCase from '~/utils/getKebabCase';
 
 import './ProjectCard.css';
 
-const statusReport = {
-	[SLA_STATUS_TYPES.active]: i18n.translate('ends-on'),
-	[SLA_STATUS_TYPES.future]: i18n.translate('starts-on'),
-	[SLA_STATUS_TYPES.expired]: i18n.translate('ended-on'),
-};
+interface IProps {
+	compressed: boolean;
+	koroneikiAccount: IKoroneikiAccount | undefined;
+	loading: boolean;
+	onClick?: MouseEventHandler<HTMLDivElement>;
+}
 
-const ProjectCard = ({compressed, loading, onClick, ...koroneikiAccount}) => {
-	const showSLAStatus = Boolean(
-		koroneikiAccount.partnershipCurrent ||
-			koroneikiAccount.partnershipExpired ||
-			koroneikiAccount.partnershipFuture ||
-			koroneikiAccount.slaCurrent ||
-			koroneikiAccount.slaExpired ||
-			koroneikiAccount.slaFuture
-	);
-
-	const SLAStatus = () => {
-		if (loading) {
-			return <Skeleton height={20} width={54} />;
-		}
-
-		return <StatusTag currentStatus={koroneikiAccount.status} />;
+const ProjectCard: React.FC<IProps> = ({
+	compressed,
+	koroneikiAccount,
+	loading,
+	onClick,
+}) => {
+	const statusReport: Record<string, string> = {
+		[SLA_STATUS_TYPES.active]: i18n.translate('ends-on'),
+		[SLA_STATUS_TYPES.future]: i18n.translate('starts-on'),
+		[SLA_STATUS_TYPES.expired]: i18n.translate('ended-on'),
 	};
 
-	const SLAStatusDate = () => {
+	const renderSLAStatus = () => {
 		if (loading) {
-			return <Skeleton className="mt-1" height={20} width={100} />;
+			return <Skeleton align="left" height={20} width={54} />;
 		}
 
-		const displayDate = {
-			[SLA_STATUS_TYPES.active]: koroneikiAccount.slaCurrent ? koroneikiAccount.slaCurrentEndDate : koroneikiAccount.partnershipCurrentEndDate,
-			[SLA_STATUS_TYPES.future]: koroneikiAccount.slaFuture ? koroneikiAccount.slaFutureStartDate : koroneikiAccount.partnershipFutureStartDate,
-			[SLA_STATUS_TYPES.expired]: koroneikiAccount.slaExpired ? koroneikiAccount.slaExpiredEndDate : koroneikiAccount.partnershipExpiredEndDate,
+		return (
+			<StatusTag
+				currentStatus={koroneikiAccount?.status as unknown as string}
+			/>
+		);
+	};
+	const renderSLAStatusDate = () => {
+		if (loading) {
+			return (
+				<Skeleton
+					align="left"
+					className="mt-1"
+					height={20}
+					width={100}
+				/>
+			);
+		}
+
+		if (!koroneikiAccount) {
+			return null;
+		}
+
+		const displayDate: Record<string, string | Date | undefined> = {
+			[SLA_STATUS_TYPES.active]: koroneikiAccount.slaCurrent
+				? koroneikiAccount.slaCurrentEndDate
+				: koroneikiAccount.partnershipCurrentEndDate,
+			[SLA_STATUS_TYPES.future]: koroneikiAccount.slaFuture
+				? koroneikiAccount.slaFutureStartDate
+				: koroneikiAccount.partnershipFutureStartDate,
+			[SLA_STATUS_TYPES.expired]: koroneikiAccount.slaExpired
+				? koroneikiAccount.slaExpiredEndDate
+				: koroneikiAccount.partnershipExpiredEndDate,
 		};
 
 		return (
@@ -58,17 +79,27 @@ const ProjectCard = ({compressed, loading, onClick, ...koroneikiAccount}) => {
 
 				<span className="font-weight-bold ml-1 text-paragraph">
 					{getDateCustomFormat(
-						displayDate[koroneikiAccount.status],
+						displayDate[koroneikiAccount.status] as string,
 						FORMAT_DATE_TYPES.day2DMonthSYearN
 					)}
 				</span>
 			</div>
 		);
 	};
-
-	const SupportRegion = () => {
+	const renderSupportRegion = () => {
 		if (loading) {
-			return <Skeleton className="mt-1" height={20} width={120} />;
+			return (
+				<Skeleton
+					align="left"
+					className="mt-1"
+					height={20}
+					width={120}
+				/>
+			);
+		}
+
+		if (!koroneikiAccount) {
+			return null;
 		}
 
 		return (
@@ -76,11 +107,22 @@ const ProjectCard = ({compressed, loading, onClick, ...koroneikiAccount}) => {
 				{i18n.translate('support-region')}
 
 				<span className="font-weight-bold ml-1">
-					{i18n.translate(getKebabCase(koroneikiAccount.region))}
+					{i18n.translate(
+						getKebabCase(koroneikiAccount.region) as string
+					)}
 				</span>
 			</div>
 		);
 	};
+
+	const showSLAStatus = Boolean(
+		koroneikiAccount?.partnershipCurrent ||
+			koroneikiAccount?.partnershipExpired ||
+			koroneikiAccount?.partnershipFuture ||
+			koroneikiAccount?.slaCurrent ||
+			koroneikiAccount?.slaExpired ||
+			koroneikiAccount?.slaFuture
+	);
 
 	return (
 		<ClayCard
@@ -117,7 +159,7 @@ const ProjectCard = ({compressed, loading, onClick, ...koroneikiAccount}) => {
 									width={300}
 								/>
 							) : (
-								koroneikiAccount.name
+								koroneikiAccount?.name
 							)}
 						</h4>
 
@@ -130,23 +172,26 @@ const ProjectCard = ({compressed, loading, onClick, ...koroneikiAccount}) => {
 								/>
 							) : (
 								<div className="text-neutral-5 text-paragraph text-truncate text-uppercase">
-									{koroneikiAccount.code}
+									{koroneikiAccount?.code}
 								</div>
 							))}
 					</div>
 
 					<div
 						className={classNames({
-							'autofit-col text-right align-items-end h-100': compressed,
+							'autofit-col text-right align-items-end h-100':
+								compressed,
 							'd-block': !loading,
 							'mt-6 pt-3': !compressed,
 						})}
 					>
-						{showSLAStatus && <SLAStatus />}
-
-						{showSLAStatus && <SLAStatusDate />}
-
-						{compressed && <SupportRegion />}
+						{showSLAStatus && (
+							<>
+								{renderSLAStatus()}
+								{renderSLAStatusDate()}
+							</>
+						)}
+						{compressed && renderSupportRegion()}
 					</div>
 				</ClayCard.Row>
 			</ClayCard.Body>

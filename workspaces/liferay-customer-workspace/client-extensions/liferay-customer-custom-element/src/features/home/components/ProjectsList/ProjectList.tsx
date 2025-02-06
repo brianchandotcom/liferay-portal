@@ -6,56 +6,29 @@
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import classNames from 'classnames';
 import {useEffect} from 'react';
-import i18n from '~/utils/I18n';
 import useIntersectionObserver from '~/hooks/useIntersectionObserver';
+import IKoroneikiAccount from '~/interfaces/koroneikiAccount';
 import {Liferay} from '~/services/liferay';
+import i18n from '~/utils/I18n';
 import routerPath from '~/utils/routerPath';
+
 import ProjectCard from './components/ProjectCard';
 
-const RenderResults = ({compressed, koroneikiAccounts, loading}) => {
-	const pageRoutes = routerPath();
+interface IProps {
+	compressed: boolean;
+	fetching: boolean;
+	koroneikiAccounts: {
+		items: IKoroneikiAccount[];
+		lastPage: number;
+		page: number;
+		totalCount: number;
+	} | null;
+	loading: boolean;
+	maxCardsLoading?: number;
+	onIntersect: (page: number) => void;
+}
 
-	if (!koroneikiAccounts) {
-		return (
-			<p className="mx-auto">
-				{i18n.translate('sorry-there-are-no-results-found')}
-			</p>
-		);
-	}
-
-	if (koroneikiAccounts.totalCount) {
-		return (
-			<>
-				{koroneikiAccounts?.items.map((koroneikiAccount, index) => (
-					<ProjectCard
-						compressed={compressed}
-						key={`${koroneikiAccount.accountKey}-${index}`}
-						onClick={() =>
-							Liferay.Util.navigate(
-								pageRoutes.project(koroneikiAccount.accountKey)
-							)
-						}
-						{...koroneikiAccount}
-					/>
-				))}
-
-				{loading && (
-					<div className="mx-auto">
-						<ClayLoadingIndicator small />
-					</div>
-				)}
-			</>
-		);
-	}
-
-	return (
-		<p className="mx-auto">
-			{i18n.translate('no-projects-match-these-criteria')}
-		</p>
-	);
-};
-
-const ProjectList = ({
+const ProjectList: React.FC<IProps> = ({
 	compressed,
 	fetching,
 	koroneikiAccounts,
@@ -63,14 +36,75 @@ const ProjectList = ({
 	maxCardsLoading = 4,
 	onIntersect,
 }) => {
-	const [ref, isIntersecting] = useIntersectionObserver();
-
+	const [trackedRefCurrent, isIntersecting] = useIntersectionObserver();
 	const isLastPage = koroneikiAccounts?.page === koroneikiAccounts?.lastPage;
+
 	const allowFetching = !isLastPage && !fetching;
+
+	interface IRenderResultsProps {
+		compressed: boolean;
+		koroneikiAccounts: {
+			items: IKoroneikiAccount[];
+			lastPage: number;
+			page: number;
+			totalCount: number;
+		} | null;
+		loading: boolean;
+	}
+
+	const RenderResults: React.FC<IRenderResultsProps> = ({
+		compressed,
+		koroneikiAccounts,
+		loading,
+	}) => {
+		const pageRoutes = routerPath();
+
+		if (!koroneikiAccounts) {
+			return (
+				<p className="mx-auto">
+					{i18n.translate('sorry-there-are-no-results-found')}
+				</p>
+			);
+		}
+
+		if (koroneikiAccounts.totalCount) {
+			return (
+				<>
+					{koroneikiAccounts?.items.map((koroneikiAccount, index) => (
+						<ProjectCard
+							compressed={compressed}
+							key={`${koroneikiAccount.accountKey}-${index}`}
+							koroneikiAccount={koroneikiAccount}
+							loading={loading}
+							onClick={() =>
+								Liferay.Util.navigate(
+									pageRoutes.project(
+										koroneikiAccount.accountKey
+									)
+								)
+							}
+						/>
+					))}
+
+					{loading && (
+						<div className="mx-auto">
+							<ClayLoadingIndicator size="sm" />
+						</div>
+					)}
+				</>
+			);
+		}
+
+		return (
+			<p className="mx-auto">
+				{i18n.translate('no-projects-match-these-criteria')}
+			</p>
+		);
+	};
 
 	useEffect(() => {
 		if (isIntersecting && allowFetching) {
-			onIntersect(koroneikiAccounts?.page);
+			onIntersect(koroneikiAccounts?.page || 1);
 		}
 	}, [isIntersecting, koroneikiAccounts?.page, onIntersect, allowFetching]);
 
@@ -87,7 +121,8 @@ const ProjectList = ({
 						<ProjectCard
 							compressed={compressed}
 							key={index}
-							loading
+							koroneikiAccount={undefined}
+							loading={loading}
 						/>
 					))}
 				</>
@@ -99,7 +134,7 @@ const ProjectList = ({
 				/>
 			)}
 
-			<div ref={ref}></div>
+			<div ref={trackedRefCurrent as any}></div>
 		</div>
 	);
 };

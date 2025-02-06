@@ -59,15 +59,15 @@ export default function useKoroneikiAccounts({
 		});
 	}, [filter, refetch]);
 
-	const [search, onSearch] = useSearchTerm((searchTerm: string) =>
+	const [searchTerm, handleSearch] = useSearchTerm((onSearch) =>
 		refetch({
-			filter: searchTerm
+			filter: onSearch
 				? getFilter(
 						new SearchBuilder()
 							.group('OPEN')
-							.contains('name', searchTerm)
+							.contains('name', onSearch)
 							.or()
-							.contains('code', searchTerm)
+							.contains('code', onSearch)
 							.group('CLOSE')
 							.and()
 					).build()
@@ -81,11 +81,11 @@ export default function useKoroneikiAccounts({
 		fetchMore,
 		fetching: networkStatus === NetworkStatus.fetchMore,
 		firstKoroneikiAccountsTotal,
+		handleSearch,
 		loading: networkStatus === NetworkStatus.loading,
 		networkStatus,
-		onSearch,
 		refetch,
-		search,
+		searchTerm,
 		searching: networkStatus === NetworkStatus.setVariables,
 	};
 }

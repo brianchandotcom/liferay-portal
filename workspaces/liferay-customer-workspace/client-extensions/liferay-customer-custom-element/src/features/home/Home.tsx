@@ -5,23 +5,23 @@
 
 import ClayLayout from '@clayui/layout';
 import {useAppPropertiesContext} from '~/contexts/AppPropertiesContext';
+
 import ProjectList from './components/ProjectsList';
 import SearchHeader from './components/SearchHeader';
 
 import './Home.css';
 
-import {useMemo, useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import useKoroneikiAccounts from '~/hooks/useKoroneikiAccounts';
+
 import ProjectCategoryDropdown from './components/ProjectCategoryDropdown';
 import useProjectCategoryItems from './hooks/useProjectCategoryItems';
 
 const THRESHOLD_COUNT = 4;
 
-const Home = () => {
-	const [
-		selectedProjectCategoryKey,
-		setSelectedProjectCategoryKey,
-	] = useState('all-projects');
+const Home: React.FC = () => {
+	const [selectedProjectCategoryKey, setSelectedProjectCategoryKey] =
+		useState<string>('all-projects');
 
 	const projectCategoryItems = useProjectCategoryItems();
 
@@ -30,22 +30,24 @@ const Home = () => {
 		fetchMore,
 		fetching,
 		firstKoroneikiAccountsTotal,
+		handleSearch,
 		loading,
-		onSearch,
-		search,
+		searchTerm,
 		searching,
 	} = useKoroneikiAccounts({
 		selectedFilterCategory: {
-			...projectCategoryItems.find(
-				({key}) => key === selectedProjectCategoryKey
-			),
+			filter:
+				projectCategoryItems.find(
+					({key}) => key === selectedProjectCategoryKey
+				)?.filter || '',
+			key: selectedProjectCategoryKey,
+			label: '',
 			pageSize: 20,
 		},
 	});
 
-	const handleOnSelect = (key) => {
+	const handleOnSelect = (key: string): void => {
 		setSelectedProjectCategoryKey(key);
-		onSearch('');
 	};
 
 	const {featureFlags} = useAppPropertiesContext();
@@ -56,9 +58,9 @@ const Home = () => {
 	const koroneikiCount =
 		firstKoroneikiAccountsTotal[selectedProjectCategoryKey];
 
-	const hasManyProjects = koroneikiCount > THRESHOLD_COUNT;
+	const hasManyProjects: boolean = koroneikiCount > THRESHOLD_COUNT;
 
-	const hasAvailableCategoriesToDisplay = useMemo(
+	const hasAvailableCategoriesToDisplay: boolean = useMemo(
 		() =>
 			projectCategoryItems
 				.filter((projectCategoryItem) =>
@@ -72,7 +74,7 @@ const Home = () => {
 
 	return (
 		<>
-			{featureFlags.includes('LPS-191380') &&
+			{featureFlags?.includes('LPS-191380') &&
 				hasAvailableCategoriesToDisplay && (
 					<ProjectCategoryDropdown
 						loading={loading || koroneikiCount === null}
@@ -84,6 +86,10 @@ const Home = () => {
 
 			<ClayLayout.ContainerFluid
 				className="cp-home-wrapper"
+				hidden={!hasManyProjects || loading}
+				onPointerEnterCapture={() => {}}
+				onPointerLeaveCapture={() => {}}
+				placeholder=""
 				size={hasManyProjects && !loading ? 'md' : 'xl'}
 			>
 				<ClayLayout.Row>
@@ -91,9 +97,9 @@ const Home = () => {
 						{hasManyProjects && !loading && (
 							<SearchHeader
 								count={koroneikiAccountTotal}
+								handleSearch={handleSearch}
 								loading={searching}
-								onSearchSubmit={onSearch}
-								search={search}
+								searchTerm={searchTerm}
 							/>
 						)}
 
@@ -105,7 +111,7 @@ const Home = () => {
 								loading || searching || koroneikiCount === null
 							}
 							maxCardsLoading={THRESHOLD_COUNT}
-							onIntersect={(currentPage) => {
+							onIntersect={(currentPage: number) => {
 								fetchMore({
 									variables: {
 										page: currentPage + 1,

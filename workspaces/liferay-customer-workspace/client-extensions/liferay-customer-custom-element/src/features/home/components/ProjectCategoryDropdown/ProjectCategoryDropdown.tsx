@@ -3,13 +3,26 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Button, DropDown} from '@clayui/core';
+import {Button} from '@clayui/core';
+import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import {useState} from 'react';
-import i18n from '~/utils/I18n';
 import {Skeleton} from '~/components';
+import i18n from '~/utils/I18n';
 
-const ProjectCategoryDropdown = ({
+interface IProps {
+	loading: boolean;
+	onSelect: (key: string) => void;
+	projectCategoryItems: ProjectCategoryItem[];
+	selectedProjectCategoryKey: string;
+}
+
+interface ProjectCategoryItem {
+	key: string;
+	label: string;
+}
+
+const ProjectCategoryDropdown: React.FC<IProps> = ({
 	loading,
 	onSelect,
 	projectCategoryItems,
@@ -27,14 +40,18 @@ const ProjectCategoryDropdown = ({
 				)}
 			</div>
 
-			<DropDown
+			<ClayDropDown
 				active={active}
 				closeOnClickOutside
 				menuWidth="shrink"
 				onActiveChange={setActive}
 				trigger={
 					<Button
-						aria-label={selectedProjectCategoryKey?.label}
+						aria-label={
+							projectCategoryItems.find(
+								({key}) => key === selectedProjectCategoryKey
+							)?.label ?? ''
+						}
 						borderless
 						className="align-items-center d-flex px-2"
 						disabled={loading}
@@ -55,7 +72,7 @@ const ProjectCategoryDropdown = ({
 				}
 			>
 				{projectCategoryItems?.map((item, index) => (
-					<DropDown.Item
+					<ClayDropDown.Item
 						className="pr-6"
 						disabled={item.key === selectedProjectCategoryKey}
 						key={`${index}-${index}`}
@@ -64,13 +81,15 @@ const ProjectCategoryDropdown = ({
 							setActive(false);
 						}}
 						symbolRight={
-							item.key === selectedProjectCategoryKey && 'check'
+							item.key === selectedProjectCategoryKey
+								? 'check'
+								: undefined
 						}
 					>
 						{item.label}
-					</DropDown.Item>
+					</ClayDropDown.Item>
 				))}
-			</DropDown>
+			</ClayDropDown>
 		</div>
 	);
 };

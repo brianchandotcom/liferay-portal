@@ -60,6 +60,19 @@ public class Items {
 		_type = type;
 	}
 
+	public Schema toSchema() {
+		Schema schema = new Schema();
+
+		schema.setAdditionalPropertySchema(getAdditionalPropertySchema());
+		schema.setFormat(getFormat());
+		schema.setItems(getItems());
+		schema.setPropertySchemas(getPropertySchemas());
+		schema.setReference(getReference());
+		schema.setType(getType());
+
+		return schema;
+	}
+
 	private Schema _additionalPropertySchema;
 	private String _format;
 	private Items _items;

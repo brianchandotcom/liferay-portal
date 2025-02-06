@@ -735,6 +735,23 @@ public class TestrayImporter {
 					}
 				}
 			}
+
+			Properties buildProperties;
+
+			try {
+				buildProperties = JenkinsResultsParserUtil.getBuildProperties();
+
+				String testrayOverrideProjectName = buildProperties.getProperty(
+					"testray.override.project.name");
+
+				if (testrayOverrideProjectName != null) {
+					testrayProject = testrayServer.getTestrayProjectByName(
+						_replaceEnvVars(testrayOverrideProjectName, true));
+				}
+			}
+			catch (IOException ioException) {
+				throw new RuntimeException(ioException);
+			}
 		}
 		finally {
 			if (testrayProject != null) {
@@ -838,6 +855,23 @@ public class TestrayImporter {
 					testrayRoutine = testrayProject.createTestrayRoutine(
 						_replaceEnvVars(testrayRoutineName, true));
 				}
+			}
+
+			Properties buildProperties = null;
+
+			try {
+				buildProperties = JenkinsResultsParserUtil.getBuildProperties();
+
+				String testrayOverrideRoutineName = buildProperties.getProperty(
+					"testray.override.routine.name");
+
+				if (testrayOverrideRoutineName != null) {
+					testrayRoutine = testrayProject.createTestrayRoutine(
+						_replaceEnvVars(testrayRoutineName, true));
+				}
+			}
+			catch (IOException ioException) {
+				throw new RuntimeException(ioException);
 			}
 		}
 		finally {

@@ -1,10 +1,10 @@
 {
-	"friendlyURL": "/analytics",
+	"friendlyURL": "/spaces",
 	"hidden": false,
 	"name_i18n": {
-		"en_US": "Analytics"
+		"en_US": "Spaces"
 	},
 	"private": false,
 	"system": false,
-	"type": "Content"
+	"type": "node"
 }

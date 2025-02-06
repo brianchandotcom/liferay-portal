@@ -12,8 +12,9 @@ import org.osgi.service.component.annotations.Reference;
  */
 public class LPS_187663 {
 
-	public void method() {
-		_countryService.fetchCountryByA2(123, "test123");
+	public void method(long companyId, String twoLettersISOCode) {
+		_countryService.fetchCountry(123, "test123");
+		_countryService.fetchCountryByA2(companyId, twoLettersISOCode);
 	}
 
 	@Reference

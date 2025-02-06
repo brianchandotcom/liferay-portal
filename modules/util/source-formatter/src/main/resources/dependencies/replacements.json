@@ -3661,9 +3661,9 @@
 		"classNames": [
 			"CountryService"
 		],
-		"from": "fetchCommerceCountry",
+		"from": "fetchCountry(long param, String param)",
 		"issueKey": "LPS-187663",
-		"to": "fetchCountryByA2"
+		"to": "fetchCountryByA2(param#0#, param#1#)"
 	},
 	{
 		"from": "CommerceShippingOption(String paramName, String paramName, BigDecimal paramName)",

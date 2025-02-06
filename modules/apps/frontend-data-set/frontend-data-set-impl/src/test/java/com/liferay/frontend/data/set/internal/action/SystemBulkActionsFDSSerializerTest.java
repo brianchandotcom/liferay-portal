@@ -167,7 +167,7 @@ public class SystemBulkActionsFDSSerializerTest
 			MapUtil.singletonDictionary("frontend.data.set.name", fdsName));
 	}
 
-	private static final FDSSerializer<List<FDSActionDropdownItem>>
+	private final FDSSerializer<List<FDSActionDropdownItem>>
 		_fdsSerializer = new SystemBulkActionsFDSSerializerImpl();
 
 }

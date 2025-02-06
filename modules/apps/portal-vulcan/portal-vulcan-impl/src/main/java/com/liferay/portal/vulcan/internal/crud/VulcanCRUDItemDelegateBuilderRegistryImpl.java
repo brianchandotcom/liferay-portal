@@ -11,11 +11,13 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.vulcan.crud.VulcanCRUDItemDelegate;
 import com.liferay.portal.vulcan.crud.VulcanCRUDItemDelegateBuilder;
 import com.liferay.portal.vulcan.crud.VulcanCRUDItemDelegateBuilderRegistry;
+import com.liferay.portal.vulcan.jaxrs.context.ContextDataInjectorBuilderFactory;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Carlos Correa
@@ -25,7 +27,7 @@ public class VulcanCRUDItemDelegateBuilderRegistryImpl
 	implements VulcanCRUDItemDelegateBuilderRegistry {
 
 	@Override
-	public VulcanCRUDItemDelegateBuilder getVulcanCRUDItemDelegateBuilder(
+	public VulcanCRUDItemDelegateBuilder builder(
 		Company company, String entityClassName) {
 
 		VulcanCRUDItemDelegate vulcanCRUDItemDelegate =
@@ -37,7 +39,8 @@ public class VulcanCRUDItemDelegateBuilderRegistryImpl
 		}
 
 		return new VulcanCRUDItemDelegateBuilderImpl(
-			company, vulcanCRUDItemDelegate);
+			company, _contextDataInjectorBuilderFactory.builder(),
+			vulcanCRUDItemDelegate);
 	}
 
 	@Activate
@@ -51,6 +54,10 @@ public class VulcanCRUDItemDelegateBuilderRegistryImpl
 	protected void deactivate() {
 		_serviceTrackerMap.close();
 	}
+
+	@Reference
+	private ContextDataInjectorBuilderFactory
+		_contextDataInjectorBuilderFactory;
 
 	private ScopedServiceTrackerMap<VulcanCRUDItemDelegate<?>>
 		_serviceTrackerMap;

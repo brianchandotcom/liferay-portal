@@ -5,12 +5,6 @@
 
 package com.liferay.portal.vulcan.crud;
 
-import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
-
-import javax.ws.rs.core.UriInfo;
-
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -21,13 +15,5 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface VulcanCRUDItemDelegate<T> {
 
 	public T getItem(Long id) throws Exception;
-
-	public void setContextAcceptLanguage(AcceptLanguage acceptLanguage);
-
-	public void setContextCompany(Company company);
-
-	public void setContextUriInfo(UriInfo uriInfo);
-
-	public void setContextUser(User user);
 
 }

@@ -24,7 +24,7 @@ public interface VulcanCRUDItemDelegateBuilder {
 	@ProviderType
 	public interface BuildStepVulcanCRUDItemDelegateBuilder {
 
-		public VulcanCRUDItemDelegate build();
+		public VulcanCRUDItemDelegate build() throws Exception;
 
 	}
 

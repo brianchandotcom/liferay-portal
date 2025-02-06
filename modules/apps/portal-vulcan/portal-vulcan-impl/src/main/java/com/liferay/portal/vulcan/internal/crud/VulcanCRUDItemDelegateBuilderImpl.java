@@ -10,6 +10,8 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.crud.VulcanCRUDItemDelegate;
 import com.liferay.portal.vulcan.crud.VulcanCRUDItemDelegateBuilder;
+import com.liferay.portal.vulcan.jaxrs.context.ContextDataInjector;
+import com.liferay.portal.vulcan.jaxrs.context.ContextDataInjectorBuilder;
 
 import javax.ws.rs.core.UriInfo;
 
@@ -29,38 +31,56 @@ public class VulcanCRUDItemDelegateBuilderImpl
 	public UriInfoStepVulcanCRUDItemDelegateBuilder acceptLanguage(
 		AcceptLanguage acceptLanguage) {
 
-		_vulcanCRUDItemDelegate.setContextAcceptLanguage(acceptLanguage);
+		_acceptLanguage = acceptLanguage;
 
 		return this;
 	}
 
 	@Override
-	public VulcanCRUDItemDelegate build() {
-		return _vulcanCRUDItemDelegate;
+	public VulcanCRUDItemDelegate build() throws Exception {
+		ContextDataInjector contextDataInjector =
+			_contextDataInjectorBuilder.acceptLanguage(
+				_acceptLanguage
+			).company(
+				_company
+			).uriInfo(
+				_uriInfo
+			).user(
+				_user
+			).build();
+
+		return (VulcanCRUDItemDelegate)contextDataInjector.inject(
+			_vulcanCRUDItemDelegate);
 	}
 
 	@Override
 	public UserStepVulcanCRUDItemDelegateBuilder uriInfo(UriInfo uriInfo) {
-		_vulcanCRUDItemDelegate.setContextUriInfo(uriInfo);
+		_uriInfo = uriInfo;
 
 		return this;
 	}
 
 	@Override
 	public BuildStepVulcanCRUDItemDelegateBuilder user(User user) {
-		_vulcanCRUDItemDelegate.setContextUser(user);
+		_user = user;
 
 		return this;
 	}
 
 	protected VulcanCRUDItemDelegateBuilderImpl(
-		Company company, VulcanCRUDItemDelegate vulcanCRUDItemDelegate) {
+		Company company, ContextDataInjectorBuilder contextDataInjectorBuilder,
+		VulcanCRUDItemDelegate vulcanCRUDItemDelegate) {
 
-		vulcanCRUDItemDelegate.setContextCompany(company);
-
+		_company = company;
+		_contextDataInjectorBuilder = contextDataInjectorBuilder;
 		_vulcanCRUDItemDelegate = vulcanCRUDItemDelegate;
 	}
 
+	private AcceptLanguage _acceptLanguage;
+	private final Company _company;
+	private final ContextDataInjectorBuilder _contextDataInjectorBuilder;
+	private UriInfo _uriInfo;
+	private User _user;
 	private final VulcanCRUDItemDelegate _vulcanCRUDItemDelegate;
 
 }

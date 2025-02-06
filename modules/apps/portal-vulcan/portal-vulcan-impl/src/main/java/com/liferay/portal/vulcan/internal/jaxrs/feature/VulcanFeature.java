@@ -73,6 +73,7 @@ import com.liferay.portal.vulcan.internal.jaxrs.writer.interceptor.NestedFieldsW
 import com.liferay.portal.vulcan.internal.jaxrs.writer.interceptor.PageEntityExtensionWriterInterceptor;
 import com.liferay.portal.vulcan.internal.jaxrs.writer.interceptor.ProblemWriterInterceptor;
 import com.liferay.portal.vulcan.internal.param.converter.provider.DateParamConverterProvider;
+import com.liferay.portal.vulcan.jaxrs.context.ContextDataInjectorBuilderFactory;
 import com.liferay.portal.vulcan.pagination.provider.PaginationProvider;
 
 import javax.ws.rs.Priorities;
@@ -162,10 +163,11 @@ public class VulcanFeature implements Feature {
 		featureContext.register(new CompanyContextProvider(_portal));
 		featureContext.register(
 			new ContextContainerRequestFilter(
-				_configurationAdmin, _expressionConvert, _filterParserProvider,
-				_groupLocalService, _language, _portal,
-				_resourceActionLocalService, _resourcePermissionLocalService,
-				_roleLocalService, _getScopeChecker(), _sortParserProvider,
+				_configurationAdmin, _contextDataInjectorBuilderFactory,
+				_expressionConvert, _filterParserProvider, _groupLocalService,
+				_language, _portal, _resourceActionLocalService,
+				_resourcePermissionLocalService, _roleLocalService,
+				_getScopeChecker(), _sortParserProvider,
 				_vulcanBatchEngineExportTaskResourceFactory,
 				_vulcanBatchEngineImportTaskResourceFactory));
 		featureContext.register(
@@ -221,6 +223,10 @@ public class VulcanFeature implements Feature {
 
 	@Reference
 	private ConfigurationAdmin _configurationAdmin;
+
+	@Reference
+	private ContextDataInjectorBuilderFactory
+		_contextDataInjectorBuilderFactory;
 
 	@Reference
 	private DepotEntryLocalService _depotEntryLocalService;

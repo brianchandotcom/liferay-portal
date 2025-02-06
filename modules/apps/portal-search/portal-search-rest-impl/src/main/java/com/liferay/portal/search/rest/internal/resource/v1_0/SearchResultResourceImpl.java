@@ -490,22 +490,23 @@ public class SearchResultResourceImpl extends BaseSearchResultResourceImpl {
 		String entityClassName, Long entryClassPK, SearchResult searchResult) {
 
 		VulcanCRUDItemDelegateBuilder vulcanCRUDItemDelegateBuilder =
-			_vulcanCRUDItemDelegateBuilderRegistry.
-				getVulcanCRUDItemDelegateBuilder(
-					contextCompany, entityClassName);
+			_vulcanCRUDItemDelegateBuilderRegistry.builder(
+				contextCompany, entityClassName);
 
 		if (vulcanCRUDItemDelegateBuilder != null) {
-			VulcanCRUDItemDelegate vulcanCRUDItemDelegate =
-				vulcanCRUDItemDelegateBuilder.acceptLanguage(
-					contextAcceptLanguage
-				).uriInfo(
-					contextUriInfo
-				).user(
-					contextUser
-				).build();
-
 			searchResult.setEmbedded(
-				() -> vulcanCRUDItemDelegate.getItem(entryClassPK));
+				() -> {
+					VulcanCRUDItemDelegate vulcanCRUDItemDelegate =
+						vulcanCRUDItemDelegateBuilder.acceptLanguage(
+							contextAcceptLanguage
+						).uriInfo(
+							contextUriInfo
+						).user(
+							contextUser
+						).build();
+
+					return vulcanCRUDItemDelegate.getItem(entryClassPK);
+				});
 		}
 	}
 

@@ -12,7 +12,7 @@ import com.liferay.portal.kernel.model.Company;
  */
 public interface VulcanCRUDItemDelegateBuilderRegistry {
 
-	public VulcanCRUDItemDelegateBuilder getVulcanCRUDItemDelegateBuilder(
+	public VulcanCRUDItemDelegateBuilder builder(
 		Company company, String entityClassName);
 
 }

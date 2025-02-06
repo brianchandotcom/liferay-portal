@@ -6,8 +6,8 @@
 package com.liferay.frontend.data.set.internal.action;
 
 import com.liferay.frontend.data.set.SystemFDSEntry;
-import com.liferay.frontend.data.set.action.FDSItemsActions;
-import com.liferay.frontend.data.set.internal.BaseSystemFDSSerializerTestCase;
+import com.liferay.frontend.data.set.action.FDSBulkActions;
+import com.liferay.frontend.data.set.internal.BaseFDSSerializerTestCase;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.data.set.serializer.FDSSerializer;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory;
@@ -22,7 +22,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -34,44 +33,39 @@ import org.osgi.framework.ServiceRegistration;
 /**
  * @author Daniel Sanz
  */
-public class SystemItemsActionsFDSSerializerImplTest
-	extends BaseSystemFDSSerializerTestCase {
+public class SystemBulkActionsFDSSerializerTest
+	extends BaseFDSSerializerTestCase {
 
 	@ClassRule
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
+	@Override
+	public ServiceTrackerMap<String, ?> createServiceTrackerMap() {
+		return ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, FDSBulkActions.class, "frontend.data.set.name",
+			ServiceTrackerCustomizerFactory.<FDSBulkActions>serviceWrapper(
+				bundleContext));
+	}
+
 	@Before
 	public void setUp() throws Exception {
 		super.setUp();
 
-		_itemsActionsServiceTrackerMap =
-			ServiceTrackerMapFactory.openSingleValueMap(
-				bundleContext, FDSItemsActions.class, "frontend.data.set.name",
-				ServiceTrackerCustomizerFactory.<FDSItemsActions>serviceWrapper(
-					bundleContext));
+		ReflectionTestUtil.setFieldValue(
+			_fdsBulkActionsRegistryImpl, "_serviceTrackerMap",
+			serviceTrackerMap);
 
 		ReflectionTestUtil.setFieldValue(
-			_fdsItemsActionsRegistryImpl, "_serviceTrackerMap",
-			_itemsActionsServiceTrackerMap);
-
-		ReflectionTestUtil.setFieldValue(
-			_fdsSerializer, "_fdsItemsActionsRegistry",
-			_fdsItemsActionsRegistryImpl);
-	}
-
-	@After
-	public void tearDown() {
-		super.tearDown();
-
-		_itemsActionsServiceTrackerMap.close();
+			_fdsSerializer, "_fdsBulkActionsRegistry",
+			_fdsBulkActionsRegistryImpl);
 	}
 
 	@Test
 	public void testSerialize() throws Exception {
 
-		// Different items actions
+		// Different bulk actions
 
 		ServiceRegistration<SystemFDSEntry> systemFDSEntryServiceRegistration1 =
 			registerSystemFDSEntry("fdsName1", "/app", "/endpoint", "schema");
@@ -82,8 +76,8 @@ public class SystemItemsActionsFDSSerializerImplTest
 					null, "trash", "delete", "delete", "delete", "delete",
 					"headless"));
 
-		ServiceRegistration<FDSItemsActions> itemsActionsServiceRegistration1 =
-			_registerFDSItemsActions(fdsActionDropdownItems1, "fdsName1");
+		ServiceRegistration<FDSBulkActions> bulkActionsServiceRegistration1 =
+			_registerFDSBulkActions(fdsActionDropdownItems1, "fdsName1");
 
 		Assert.assertEquals(
 			fdsActionDropdownItems1,
@@ -98,8 +92,8 @@ public class SystemItemsActionsFDSSerializerImplTest
 					null, "cog", "permissions", "permissions", "get",
 					"permissions", "modal-permissions"));
 
-		ServiceRegistration<FDSItemsActions> itemsActionsServiceRegistration2 =
-			_registerFDSItemsActions(fdsActionDropdownItems2, "fdsName2");
+		ServiceRegistration<FDSBulkActions> bulkActionsServiceRegistration2 =
+			_registerFDSBulkActions(fdsActionDropdownItems2, "fdsName2");
 
 		Assert.assertEquals(
 			fdsActionDropdownItems2,
@@ -109,12 +103,12 @@ public class SystemItemsActionsFDSSerializerImplTest
 			_fdsSerializer.serialize("fdsName1", httpServletRequest),
 			_fdsSerializer.serialize("fdsName2", httpServletRequest));
 
-		itemsActionsServiceRegistration1.unregister();
-		itemsActionsServiceRegistration2.unregister();
+		bulkActionsServiceRegistration1.unregister();
+		bulkActionsServiceRegistration2.unregister();
 		systemFDSEntryServiceRegistration1.unregister();
 		systemFDSEntryServiceRegistration2.unregister();
 
-		// No items actions
+		// No bulk actions
 
 		systemFDSEntryServiceRegistration1 = registerSystemFDSEntry(
 			"fdsName", "/app", "/endpoint", "schema");
@@ -126,7 +120,7 @@ public class SystemItemsActionsFDSSerializerImplTest
 
 		systemFDSEntryServiceRegistration1.unregister();
 
-		// Shared items actions
+		// Shared bulk actions
 
 		systemFDSEntryServiceRegistration1 = registerSystemFDSEntry(
 			"fdsName1", "/app", "/endpoint", "schema");
@@ -138,27 +132,27 @@ public class SystemItemsActionsFDSSerializerImplTest
 				null, "trash", "delete", "delete", "delete", "delete",
 				"headless"));
 
-		itemsActionsServiceRegistration1 = _registerFDSItemsActions(
+		bulkActionsServiceRegistration1 = _registerFDSBulkActions(
 			fdsActionDropdownItems1, "fdsName1");
-		itemsActionsServiceRegistration2 = _registerFDSItemsActions(
+		bulkActionsServiceRegistration2 = _registerFDSBulkActions(
 			fdsActionDropdownItems1, "fdsName2");
 
 		Assert.assertEquals(
 			_fdsSerializer.serialize("fdsName1", httpServletRequest),
 			_fdsSerializer.serialize("fdsName2", httpServletRequest));
 
-		itemsActionsServiceRegistration1.unregister();
-		itemsActionsServiceRegistration2.unregister();
+		bulkActionsServiceRegistration1.unregister();
+		bulkActionsServiceRegistration2.unregister();
 		systemFDSEntryServiceRegistration1.unregister();
 		systemFDSEntryServiceRegistration2.unregister();
 	}
 
-	private ServiceRegistration<FDSItemsActions> _registerFDSItemsActions(
+	private ServiceRegistration<FDSBulkActions> _registerFDSBulkActions(
 		List<FDSActionDropdownItem> fdsActionDropdownItems, String fdsName) {
 
 		return bundleContext.registerService(
-			FDSItemsActions.class,
-			new FDSItemsActions() {
+			FDSBulkActions.class,
+			new FDSBulkActions() {
 
 				@Override
 				public List<FDSActionDropdownItem> getFDSActionDropdownItems(
@@ -171,13 +165,9 @@ public class SystemItemsActionsFDSSerializerImplTest
 			MapUtil.singletonDictionary("frontend.data.set.name", fdsName));
 	}
 
-	private static final FDSItemsActionsRegistryImpl
-		_fdsItemsActionsRegistryImpl = new FDSItemsActionsRegistryImpl();
+	private static final FDSBulkActionsRegistryImpl
+		_fdsBulkActionsRegistryImpl = new FDSBulkActionsRegistryImpl();
 	private static final FDSSerializer<List<FDSActionDropdownItem>>
-		_fdsSerializer = new SystemItemsActionsFDSSerializerImpl();
-	private static ServiceTrackerMap
-		<String,
-		 ServiceTrackerCustomizerFactory.ServiceWrapper<FDSItemsActions>>
-			_itemsActionsServiceTrackerMap;
+		_fdsSerializer = new SystemBulkActionsFDSSerializerImpl();
 
 }

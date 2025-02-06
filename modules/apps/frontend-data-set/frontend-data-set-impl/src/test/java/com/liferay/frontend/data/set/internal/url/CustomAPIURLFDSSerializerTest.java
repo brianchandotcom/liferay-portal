@@ -52,7 +52,7 @@ import org.osgi.framework.ServiceRegistration;
 /**
  * @author Daniel Sanz
  */
-public class CustomAPIURLFDSSerializerImplTest {
+public class CustomAPIURLFDSSerializerTest {
 
 	@ClassRule
 	@Rule
@@ -342,7 +342,7 @@ public class CustomAPIURLFDSSerializerImplTest {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		CustomAPIURLFDSSerializerImplTest.class);
+		CustomAPIURLFDSSerializerTest.class);
 
 	private static BundleContext _bundleContext;
 	private static final FDSAPIURLResolverRegistry _fdsAPIURLResolverRegistry =

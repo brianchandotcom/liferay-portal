@@ -266,10 +266,8 @@ public class PasswordEncryptorUtilTest {
 	}
 
 	@Test(expected = PwdEncryptorAlgorithmException.class)
-	public void testLegacyEncryptWithoutLegacyAlgorithmProperty()
-		throws Exception {
-
-		_testLegacyEncrypt(
+	public void testEncryptWithLegacyAlgorithm() throws Exception {
+		_testEncryptWithLegacyAlgorithm(
 			null, RandomTestUtil.randomString(), RandomTestUtil.randomString());
 	}
 
@@ -286,7 +284,8 @@ public class PasswordEncryptorUtilTest {
 				CharPool.OPEN_CURLY_BRACE, prependedAlgorithm,
 				CharPool.CLOSE_CURLY_BRACE, encryptedPassword));
 
-		_testLegacyEncrypt(algorithm, plainPassword, encryptedPassword);
+		_testEncryptWithLegacyAlgorithm(
+			algorithm, plainPassword, encryptedPassword);
 	}
 
 	private void _testEncrypt(String algorithm) throws Exception {
@@ -319,7 +318,7 @@ public class PasswordEncryptorUtilTest {
 		}
 	}
 
-	private void _testLegacyEncrypt(
+	private void _testEncryptWithLegacyAlgorithm(
 			String legacyAlgorithm, String plainPassword,
 			String expectedPassword)
 		throws Exception {

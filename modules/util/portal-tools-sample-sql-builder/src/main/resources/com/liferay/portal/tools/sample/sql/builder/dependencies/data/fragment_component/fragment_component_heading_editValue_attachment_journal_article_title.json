@@ -1,0 +1,19 @@
+{
+	"com.liferay.fragment.entry.processor.editable.EditableFragmentEntryProcessor": {
+		"element-text": {
+			"className": "com.liferay.journal.model.JournalArticle",
+			"classNameId": "${journalArticleClassNameId}",
+			"classPK": "${journalArticleClassPK}",
+			"config": {
+			},
+			"defaultValue": "Heading Example",
+			"fieldId": "JournalArticle_title",
+			"itemSubtype": "Basic Web Content",
+			"itemType": "Web Content Article",
+			"title": "${journalArticleTitle}"
+		}
+	},
+	"com.liferay.fragment.entry.processor.freemarker.FreeMarkerFragmentEntryProcessor": {
+		"headingLevel": "h1"
+	}
+}

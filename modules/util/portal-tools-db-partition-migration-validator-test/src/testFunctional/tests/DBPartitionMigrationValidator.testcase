@@ -65,11 +65,11 @@ definition {
 		task ("Then the tool stops immediately with some ERROR and WARN console messages") {
 			DBPartitionMigrationValidator.validateOutput(outputMessage = "[ERROR] Company ID ${newCompanyId} already exists in the target database");
 
-			DBPartitionMigrationValidator.validateOutput(outputMessage = "[WARN] Company name www.able.com already exists in the target database. You must set a different value in DBPartitionInsertVirtualInstanceConfiguration.config.");
+			DBPartitionMigrationValidator.validateOutput(outputMessage = "[WARN] Company name www.able.com already exists in the target database. You must set a different value in InsertVirtualInstanceConfiguration.config.");
 
-			DBPartitionMigrationValidator.validateOutput(outputMessage = "[WARN] Virtual host www.able.com already exists in the target database. You must set a different value in DBPartitionInsertVirtualInstanceConfiguration.config.");
+			DBPartitionMigrationValidator.validateOutput(outputMessage = "[WARN] Virtual host www.able.com already exists in the target database. You must set a different value in InsertVirtualInstanceConfiguration.config.");
 
-			DBPartitionMigrationValidator.validateOutput(outputMessage = "[WARN] Web ID www.able.com already exists in the target database. You must set a different value in DBPartitionInsertVirtualInstanceConfiguration.config.");
+			DBPartitionMigrationValidator.validateOutput(outputMessage = "[WARN] Web ID www.able.com already exists in the target database. You must set a different value in InsertVirtualInstanceConfiguration.config.");
 
 			DBPartitionMigrationValidator.clean();
 		}

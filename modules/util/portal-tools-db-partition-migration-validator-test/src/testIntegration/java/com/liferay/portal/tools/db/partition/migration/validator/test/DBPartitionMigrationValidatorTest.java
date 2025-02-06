@@ -95,16 +95,16 @@ public class DBPartitionMigrationValidatorTest extends BaseDBPartitionTestCase {
 			_company.getName() +
 				" already exists in the target database. You must set a " +
 					"different value in " +
-						"DBPartitionInsertVirtualInstanceConfiguration.config.",
+						"InsertVirtualInstanceConfiguration.config.",
 			"[WARN] Virtual host " + _company.getVirtualHostname() +
 				" already exists in the target database. You must set a " +
 					"different value in " +
-						"DBPartitionInsertVirtualInstanceConfiguration.config.",
+						"InsertVirtualInstanceConfiguration.config.",
 			"[WARN] Web ID ",
 			_company.getWebId() +
 				" already exists in the target database. You must set a " +
 					"different value in " +
-						"DBPartitionInsertVirtualInstanceConfiguration.config."
+						"InsertVirtualInstanceConfiguration.config."
 		};
 
 		_testValidate(

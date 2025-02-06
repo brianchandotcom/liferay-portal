@@ -85,7 +85,7 @@ public class ValidatorUtil {
 					"Company name ", sourceCompany.getCompanyName(),
 					" already exists in the target database. You must set a ",
 					"different value in ",
-					"DBPartitionInsertVirtualInstanceConfiguration.config."));
+					"InsertVirtualInstanceConfiguration.config."));
 		}
 
 		if (Objects.equals(
@@ -97,7 +97,7 @@ public class ValidatorUtil {
 					"Virtual host ", sourceCompany.getVirtualHostname(),
 					" already exists in the target database. You must set a ",
 					"different value in ",
-					"DBPartitionInsertVirtualInstanceConfiguration.config."));
+					"InsertVirtualInstanceConfiguration.config."));
 		}
 
 		if (Objects.equals(company.getWebId(), sourceCompany.getWebId())) {
@@ -106,7 +106,7 @@ public class ValidatorUtil {
 					"Web ID ", sourceCompany.getWebId(),
 					" already exists in the target database. You must set a ",
 					"different value in ",
-					"DBPartitionInsertVirtualInstanceConfiguration.config."));
+					"InsertVirtualInstanceConfiguration.config."));
 		}
 	}
 

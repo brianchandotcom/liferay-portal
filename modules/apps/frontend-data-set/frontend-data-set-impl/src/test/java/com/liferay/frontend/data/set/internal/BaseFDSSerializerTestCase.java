@@ -44,8 +44,8 @@ public abstract class BaseFDSSerializerTestCase {
 
 	@After
 	public void tearDown() {
-		systemFDSEntryserviceTrackerMap.close();
 		serviceTrackerMap.close();
+		systemFDSEntryserviceTrackerMap.close();
 	}
 
 	protected abstract ServiceTrackerMap<String, ?> createServiceTrackerMap();

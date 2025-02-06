@@ -168,7 +168,7 @@ public class SystemCreationMenuFDSSerializerTest
 			MapUtil.singletonDictionary("frontend.data.set.name", fdsName));
 	}
 
-	private static final FDSSerializer<CreationMenu> _fdsSerializer =
+	private final FDSSerializer<CreationMenu> _fdsSerializer =
 		new SystemCreationMenuFDSSerializerImpl();
 
 }

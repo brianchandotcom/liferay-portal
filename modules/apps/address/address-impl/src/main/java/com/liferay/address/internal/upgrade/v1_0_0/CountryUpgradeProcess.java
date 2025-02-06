@@ -188,16 +188,20 @@ public class CountryUpgradeProcess extends UpgradeProcess {
 		_incrementCounter(
 			"CountryLocalization", "countryLocalizationId",
 			CountryLocalization.class.getName());
-		_incrementCounter("Region", "regionId", Region.class.getName());
-		_incrementCounter(
-			"RegionLocalization", "regionLocalizationId",
-			RegionLocalization.class.getName());
 
 		_countryLocalizationCounter = new AtomicLong(
 			_counterLocalService.getCurrentId(
 				CountryLocalization.class.getName()));
+
+		_incrementCounter("Region", "regionId", Region.class.getName());
+
 		_regionCounter = new AtomicLong(
 			_counterLocalService.getCurrentId(Region.class.getName()));
+
+		_incrementCounter(
+			"RegionLocalization", "regionLocalizationId",
+			RegionLocalization.class.getName());
+
 		_regionLocalizationCounter = new AtomicLong(
 			_counterLocalService.getCurrentId(
 				RegionLocalization.class.getName()));

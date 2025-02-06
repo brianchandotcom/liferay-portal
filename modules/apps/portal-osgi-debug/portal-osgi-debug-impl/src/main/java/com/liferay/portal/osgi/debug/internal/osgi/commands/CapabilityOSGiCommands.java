@@ -129,7 +129,7 @@ public class CapabilityOSGiCommands implements OSGiCommands {
 					entry1 : map.entrySet()) {
 
 			System.out.println(
-				"\n==== Namespace: " + entry1.getKey() + " ====\n");
+				"\nNamespace: " + entry1.getKey() + "\n");
 
 			Map.Entry<Set<BundleCapability>, Set<BundleRequirement>> entry2 =
 				entry1.getValue();

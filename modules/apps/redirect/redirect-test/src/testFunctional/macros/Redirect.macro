@@ -560,13 +560,6 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro viewActiveTabInSystemSettings() {
-		AssertVisible(
-			key_tab = "Redirection",
-			locator1 = "NavTab#ACTIVE_TAB_LINK");
-	}
-
-	@summary = "Default summary"
 	macro viewDefault() {
 		AssertTextEquals(
 			locator1 = "Message#EMPTY_INFO_TAGLIB",

@@ -17,5 +17,8 @@
 		<field name="engineKey" type="String" />
 		<field name="percentage" type="boolean" />
 		<field name="active" type="boolean" />
+		<field name="typeSettings" type="String">
+			<hint-collection name="CLOB" />
+		</field>
 	</model>
 </model-hints>

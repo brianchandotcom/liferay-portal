@@ -5,8 +5,8 @@
 
 package com.liferay.frontend.data.set.internal.url;
 
-import com.liferay.frontend.data.set.internal.serializer.BaseFDSSerializer;
-import com.liferay.frontend.data.set.serializer.FDSSerializer;
+import com.liferay.frontend.data.set.FDSSerializer;
+import com.liferay.frontend.data.set.internal.BaseFDSSerializer;
 import com.liferay.frontend.data.set.url.FDSAPIURLResolver;
 import com.liferay.frontend.data.set.url.FDSAPIURLResolverRegistry;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;

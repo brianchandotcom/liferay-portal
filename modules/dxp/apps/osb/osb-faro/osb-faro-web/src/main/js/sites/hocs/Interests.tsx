@@ -72,7 +72,7 @@ const TableWithData = withTableData(withData, {
 	}) => [
 		compositionListColumns.getName({
 			label: Liferay.Language.get('topic'),
-			maxWidth: null,
+			maxWidth: 200,
 			routeFn: ({data: {name}}) =>
 				name &&
 				setUriQueryValues(

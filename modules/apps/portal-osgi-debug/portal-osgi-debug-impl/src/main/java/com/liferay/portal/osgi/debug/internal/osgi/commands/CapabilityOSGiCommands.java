@@ -33,11 +33,11 @@ import org.osgi.service.component.annotations.Component;
 )
 public class CapabilityOSGiCommands implements OSGiCommands {
 
-	public void listCap(long bundlId, String... namespaces) {
-		Bundle bundle = _bundleContext.getBundle(bundlId);
+	public void listCap(long bundleId, String... namespaces) {
+		Bundle bundle = _bundleContext.getBundle(bundleId);
 
 		if (bundle == null) {
-			System.out.println("No such bundle with id : " + bundlId);
+			System.out.println("No such bundle with id : " + bundleId);
 
 			return;
 		}

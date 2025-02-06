@@ -5,10 +5,14 @@
 
 import React from 'react';
 
+import ManagementBar from './ManagementBar';
+
 import '../../../css/structure_builder/StructureBuilder.scss';
 
 export default function StructureBuilder() {
 	return (
-		<div className="d-flex flex-column structure-builder__wrapper"></div>
+		<div className="d-flex flex-column structure-builder__wrapper">
+			<ManagementBar />
+		</div>
 	);
 }

@@ -66,7 +66,7 @@ public class ValidatorUtilTest {
 					"[WARN] Company name ", company.getCompanyName(),
 					" already exists in the target database. You must set a ",
 					"different value in ",
-					"DBPartitionInsertVirtualInstanceConfiguration.config.")));
+					"InsertPortalInstanceConfiguration.config.")));
 		_testValidateCompany(
 			true, true, false, true, company,
 			() -> _assertValidateDatabases(
@@ -75,7 +75,7 @@ public class ValidatorUtilTest {
 					"[WARN] Virtual host ", company.getVirtualHostname(),
 					" already exists in the target database. You must set a ",
 					"different value in ",
-					"DBPartitionInsertVirtualInstanceConfiguration.config.")));
+					"InsertPortalInstanceConfiguration.config.")));
 		_testValidateCompany(
 			true, true, true, false, company,
 			() -> _assertValidateDatabases(
@@ -84,7 +84,7 @@ public class ValidatorUtilTest {
 					"[WARN] Web ID ", company.getWebId(),
 					" already exists in the target database. You must set a ",
 					"different value in ",
-					"DBPartitionInsertVirtualInstanceConfiguration.config.")));
+					"InsertPortalInstanceConfiguration.config.")));
 	}
 
 	@Test

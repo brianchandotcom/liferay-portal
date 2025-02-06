@@ -1128,7 +1128,7 @@ test.describe('Object Display page', () => {
 			// Edit only the lemon size field
 
 			await page
-				.getByLabel('Lemon Size', {exact: true})
+				.getByRole('textbox', {name: 'Lemon Size'})
 				.fill('lemonSize2');
 
 			await page.getByRole('button', {name: 'Submit'}).click();

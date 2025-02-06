@@ -49,6 +49,7 @@ components:
                     type: integer
                 link:
                     $ref: "#/components/schemas/Link"
+                    readOnly: true
                 name:
                     type: string
                 scope:

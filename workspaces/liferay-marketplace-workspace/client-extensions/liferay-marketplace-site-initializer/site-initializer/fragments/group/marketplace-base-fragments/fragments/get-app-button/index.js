@@ -16,6 +16,13 @@ const getAppDescriptionElement = fragmentElement.querySelector(
 );
 const tooltipElement = fragmentElement.querySelector('.clay-tooltip-bottom');
 
+const isFragmentApp = (productSpecifications = []) =>
+	productSpecifications.some(
+		(productSpecification) =>
+			productSpecification.specificationKey === 'type' &&
+			productSpecification.value === 'fragment'
+	);
+
 const isFreeApp = (productSpecifications = []) =>
 	productSpecifications.some(
 		(productSpecification) =>
@@ -36,46 +43,33 @@ const productId = fragmentElement
 	.innerText.replace(/[\n\r]+|[\s]{2,}/g, ' ')
 	.trim();
 
-const getProductPrice = (product) => {
-	const {productSpecifications = []} = product;
+const getFragmentModal = () => `
+<div class="mb-5">
+	<p class="pb-3" style="color: #54555F;">Currently, it is not possible to install a fragment directly from the Marketplace. To do so, you need to use the DXP. Click link below to learn how to proceed.</p>
 
-	if (isFreeApp(productSpecifications)) {
-		return 'Free';
-	}
+	<a href="https://learn.liferay.com/w/dxp/site-building/creating-pages/page-fragments-and-widgets/using-fragments/using-fragments-from-the-marketplace">https://learn.liferay.com</a>
+</div>
+`;
 
-	const skus = product.skus.filter(({purchasable}) => purchasable);
-
-	const hasTrialSku = skus.some(({skuOptions}) =>
-		skuOptions.find((skuOption) =>
-			['trial', 'yes'].includes(skuOption.skuOptionValueKey)
-		)
-	);
-
-	const standardSku = skus.find(({skuOptions}) =>
-		skuOptions.some((skuOption) =>
-			['standard', 'no'].includes(skuOption.skuOptionValueKey)
-		)
-	);
-
-	const licenseType = productSpecifications.find(
-		(productSpecification) =>
-			productSpecification.specificationKey === 'license-type'
-	);
-
-	const licenseTypeText =
-		licenseType?.value === 'Perpetual' ? 'One-Time' : 'Annually';
-
-	const standardPrice = standardSku
-		? standardSku?.price?.priceFormatted?.replace(' ', '').replace(',', '.')
-		: '';
-
-	const price = `${hasTrialSku ? '30-day trial or' : ''} ${standardPrice}`;
-
-	return `${price} ${licenseTypeText}`;
+const openFragmentModal = () => {
+	Liferay.Util.openModal({
+		bodyHTML: getFragmentModal(),
+		center: true,
+		headerHTML: 'How to Install a Fragment',
+		size: 'md',
+	});
 };
 
 const customizeGetAppButton = (product) => {
 	getAppButtonElement.onclick = () => {
+		const isFragment = isFragmentApp(product.productSpecifications);
+
+		if (isFragment) {
+			openFragmentModal();
+
+			return;
+		}
+
 		trackAnalytics('Click on Get App Button', {
 			isFree: isFreeApp(product.productSpecifications),
 			productName: product.name,

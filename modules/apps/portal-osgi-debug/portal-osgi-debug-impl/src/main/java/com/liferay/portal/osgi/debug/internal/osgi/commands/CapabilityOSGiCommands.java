@@ -28,7 +28,9 @@ import org.osgi.service.component.annotations.Component;
  * @author Shuyang Zhou
  */
 @Component(
-	property = {"osgi.command.function=listCapabilities", "osgi.command.scope=system"},
+	property = {
+		"osgi.command.function=listCapabilities", "osgi.command.scope=system"
+	},
 	service = OSGiCommands.class
 )
 public class CapabilityOSGiCommands implements OSGiCommands {

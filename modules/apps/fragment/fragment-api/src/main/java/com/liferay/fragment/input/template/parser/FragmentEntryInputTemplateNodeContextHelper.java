@@ -10,7 +10,10 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.info.form.InfoForm;
 
+import java.io.Serializable;
+
 import java.util.Locale;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -21,7 +24,8 @@ import javax.servlet.http.HttpServletRequest;
 public interface FragmentEntryInputTemplateNodeContextHelper {
 
 	public InputTemplateNode toInputTemplateNode(
-		String defaultInputLabel, FragmentEntryLink fragmentEntryLink,
+		Map<String, Serializable> attributes, String defaultInputLabel,
+		FragmentEntryLink fragmentEntryLink,
 		HttpServletRequest httpServletRequest, InfoForm infoForm,
 		Locale locale);
 

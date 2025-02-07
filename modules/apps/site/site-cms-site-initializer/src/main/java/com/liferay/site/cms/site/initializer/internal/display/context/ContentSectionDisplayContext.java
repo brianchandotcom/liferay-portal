@@ -10,6 +10,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.site.configuration.CMSClassNamesConfiguration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,13 +20,22 @@ import java.util.List;
  */
 public class ContentSectionDisplayContext {
 
+	public ContentSectionDisplayContext(
+		CMSClassNamesConfiguration cmsClassNamesConfiguration) {
+
+		_cmsClassNamesConfiguration = cmsClassNamesConfiguration;
+	}
+
 	public String getAPIURL() {
 		StringBundler sb = new StringBundler(3);
 
 		sb.append("/o/search/v1.0/search?emptySearch=true");
 		sb.append("&nestedFields=embedded&entryClassNames=");
 
-		sb.append(ArrayUtil.toString(_CONTENT_CLASS_NAMES, StringPool.BLANK));
+		sb.append(
+			ArrayUtil.toString(
+				_cmsClassNamesConfiguration.contentClassNames(),
+				StringPool.BLANK));
 
 		return sb.toString();
 	}
@@ -38,19 +48,6 @@ public class ContentSectionDisplayContext {
 		return new ArrayList<>();
 	}
 
-	private static final String[] _CONTENT_CLASS_NAMES = {
-		"com.liferay.blogs.model.BlogsEntry",
-		"com.liferay.bookmarks.model.BookmarksEntry",
-		"com.liferay.bookmarks.model.BookmarksFolder",
-		"com.liferay.document.library.kernel.model.DLFileShortcut",
-		"com.liferay.document.library.kernel.model.DLFolder",
-		"com.liferay.dynamic.data.mapping.model.DDMFormInstance",
-		"com.liferay.journal.model.JournalArticle",
-		"com.liferay.journal.model.JournalFolder",
-		"com.liferay.knowledge.base.model.KBArticle",
-		"com.liferay.knowledge.base.model.KBFolder",
-		"com.liferay.message.boards.model.MBCategory",
-		"com.liferay.message.boards.model.MBThread"
-	};
+	private final CMSClassNamesConfiguration _cmsClassNamesConfiguration;
 
 }

@@ -8,7 +8,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-ContentSectionDisplayContext contentSectionDisplayContext = new ContentSectionDisplayContext();
+ContentSectionDisplayContext contentSectionDisplayContext = (ContentSectionDisplayContext)request.getAttribute(ContentSectionDisplayContext.class.getName());
 %>
 
 <frontend-data-set:headless-display

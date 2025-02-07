@@ -46,7 +46,7 @@ public class VulcanCRUDItemDelegateBuilderRegistryImpl
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_serviceTrackerMap = ScopedServiceTrackerMapFactory.create(
-			bundleContext, null, "entity.class.name",
+			bundleContext, null, "crud.entity.class.name",
 			"(crud.item.delegate=true)", () -> null);
 	}
 

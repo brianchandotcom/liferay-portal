@@ -21,6 +21,7 @@ batch.planner.export.enabled=${freeMarkerTool.hasReadVulcanBatchImplementation(j
 batch.planner.import.enabled=${freeMarkerTool.getVulcanBatchImplementationCreateStrategies(javaMethodSignatures, freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, schema, allSchemas))?has_content?c}
 </#if>
 <#if generateCRUD>
+crud.entity.class.name=${javaDataType}
 crud.item.delegate=true
 </#if>
 <#if javaDataType?has_content>

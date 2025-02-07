@@ -33,8 +33,8 @@ const stockObjectDefinition: ObjectDefinition = {
 	name: 'Stock',
 	objectFields: [
 		{
-			DBType: "String",
-			businessType: "Text",
+			DBType: 'String',
+			businessType: 'Text',
 			externalReferenceCode: 'nameERC',
 			indexed: true,
 			indexedAsKeyword: true,
@@ -195,8 +195,8 @@ test('can export as JSON with all field types mapped', async ({
 			name: 'Stock',
 			objectFields: [
 				{
-					DBType: "String",
-					businessType: "Text",
+					DBType: 'String',
+					businessType: 'Text',
 					externalReferenceCode: 'nameERC',
 					indexed: true,
 					indexedAsKeyword: true,
@@ -207,8 +207,8 @@ test('can export as JSON with all field types mapped', async ({
 					required: true,
 				},
 				{
-					DBType: "Boolean",
-					businessType: "Boolean",
+					DBType: 'Boolean',
+					businessType: 'Boolean',
 					externalReferenceCode: 'customBoolean',
 					indexed: true,
 					indexedAsKeyword: false,
@@ -218,11 +218,11 @@ test('can export as JSON with all field types mapped', async ({
 					name: 'customBoolean',
 					required: false,
 					system: false,
-					type: "Boolean",
+					type: 'Boolean',
 				},
 				{
-					DBType: "Clob",
-					businessType: "LongText",
+					DBType: 'Clob',
+					businessType: 'LongText',
 					externalReferenceCode: 'customLongText',
 					indexed: true,
 					indexedAsKeyword: false,
@@ -232,11 +232,11 @@ test('can export as JSON with all field types mapped', async ({
 					name: 'customLongText',
 					required: false,
 					system: false,
-					type: "Clob",
+					type: 'Clob',
 				},
 				{
-					DBType: "BigDecimal",
-					businessType: "PrecisionDecimal",
+					DBType: 'BigDecimal',
+					businessType: 'PrecisionDecimal',
 					externalReferenceCode: 'customPrecisionDecimal',
 					indexed: true,
 					indexedAsKeyword: false,
@@ -246,11 +246,11 @@ test('can export as JSON with all field types mapped', async ({
 					name: 'customPrecisionDecimal',
 					required: false,
 					system: false,
-					type: "BigDecimal",
+					type: 'BigDecimal',
 				},
 				{
-					DBType: "String",
-					businessType: "Picklist",
+					DBType: 'String',
+					businessType: 'Picklist',
 					externalReferenceCode: 'customPicklist',
 					indexed: true,
 					indexedAsKeyword: false,
@@ -265,8 +265,8 @@ test('can export as JSON with all field types mapped', async ({
 					state: false,
 				},
 				{
-					DBType: "Long",
-					businessType: "Attachment",
+					DBType: 'Long',
+					businessType: 'Attachment',
 					indexed: true,
 					indexedAsKeyword: false,
 					label: {
@@ -288,7 +288,7 @@ test('can export as JSON with all field types mapped', async ({
 						} as any,
 					],
 					required: false,
-					type: "Long",
+					type: 'Long',
 				},
 			],
 			pluralLabel: {

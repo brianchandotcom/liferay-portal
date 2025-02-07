@@ -227,7 +227,7 @@ test.describe('Manage object fields through Model Builder', () => {
 		await objectFieldApiClient.postObjectDefinitionByExternalReferenceCodeObjectField(
 			objectDefinition.externalReferenceCode,
 			{
-				DBType: "Integer",
+				DBType: 'Integer',
 				label: {
 					en_US: 'intField',
 				},
@@ -236,7 +236,7 @@ test.describe('Manage object fields through Model Builder', () => {
 				localized: false,
 				name: 'intField',
 				objectFieldSettings: [],
-				readOnly: "false",
+				readOnly: 'false',
 				readOnlyConditionExpression: '',
 				required: false,
 				state: false,
@@ -301,8 +301,8 @@ test.describe('Manage object fields through Model Builder', () => {
 		await objectFieldApiClient.postObjectDefinitionByExternalReferenceCodeObjectField(
 			draftObjectDefinition.externalReferenceCode,
 			{
-				DBType: "String",
-				businessType: "Picklist",
+				DBType: 'String',
+				businessType: 'Picklist',
 				externalReferenceCode: picklistFieldName,
 				indexed: true,
 				indexedAsKeyword: false,
@@ -313,7 +313,7 @@ test.describe('Manage object fields through Model Builder', () => {
 				listTypeDefinitionId: listTypeDefinition.id,
 				localized: false,
 				name: picklistFieldName,
-				readOnly: "false",
+				readOnly: 'false',
 				required: false,
 				state: false,
 				system: false,
@@ -532,8 +532,8 @@ test.describe('Manage object fields through Model Builder', () => {
 		await objectFieldApiClient.postObjectDefinitionByExternalReferenceCodeObjectField(
 			objectDefinition.externalReferenceCode,
 			{
-				DBType: "Integer",
-				businessType: "Integer",
+				DBType: 'Integer',
+				businessType: 'Integer',
 				externalReferenceCode: integerFieldName,
 				indexed: true,
 				indexedAsKeyword: false,
@@ -542,7 +542,7 @@ test.describe('Manage object fields through Model Builder', () => {
 				listTypeDefinitionId: 0,
 				localized: false,
 				name: integerFieldName,
-				readOnly: "false",
+				readOnly: 'false',
 				required: false,
 				state: false,
 				system: false,
@@ -552,8 +552,8 @@ test.describe('Manage object fields through Model Builder', () => {
 		await objectFieldApiClient.postObjectDefinitionByExternalReferenceCodeObjectField(
 			objectDefinition.externalReferenceCode,
 			{
-				DBType: "Date",
-				businessType: "Date",
+				DBType: 'Date',
+				businessType: 'Date',
 				externalReferenceCode: dateFieldName,
 				indexed: true,
 				indexedAsKeyword: false,
@@ -562,7 +562,7 @@ test.describe('Manage object fields through Model Builder', () => {
 				listTypeDefinitionId: 0,
 				localized: false,
 				name: dateFieldName,
-				readOnly: "false",
+				readOnly: 'false',
 				required: false,
 				state: false,
 				system: false,
@@ -613,8 +613,8 @@ test.describe('Manage object fields through Model Builder', () => {
 		await objectFieldApiClient.postObjectDefinitionByExternalReferenceCodeObjectField(
 			objectDefinition.externalReferenceCode,
 			{
-				DBType: "Integer",
-				businessType: "Integer",
+				DBType: 'Integer',
+				businessType: 'Integer',
 				externalReferenceCode: integerFieldName,
 				indexed: true,
 				indexedAsKeyword: false,
@@ -623,7 +623,7 @@ test.describe('Manage object fields through Model Builder', () => {
 				listTypeDefinitionId: 0,
 				localized: false,
 				name: integerFieldName,
-				readOnly: "false",
+				readOnly: 'false',
 				required: false,
 				state: false,
 				system: false,
@@ -659,7 +659,7 @@ test.describe('Manage object fields through Model Builder', () => {
 						value: integerFieldName,
 					} as any,
 				],
-				outputType: "fullValidation",
+				outputType: 'fullValidation',
 				script: '',
 				system: false,
 			}
@@ -911,8 +911,8 @@ test.describe('Manage objectFields through Objects Admin UI', () => {
 		await objectFieldApiClient.postObjectDefinitionByExternalReferenceCodeObjectField(
 			objectDefinition.externalReferenceCode,
 			{
-				DBType: "Integer",
-				businessType: "Integer",
+				DBType: 'Integer',
+				businessType: 'Integer',
 				externalReferenceCode: integerFieldName,
 				indexed: true,
 				indexedAsKeyword: false,
@@ -921,7 +921,7 @@ test.describe('Manage objectFields through Objects Admin UI', () => {
 				listTypeDefinitionId: 0,
 				localized: false,
 				name: integerFieldName,
-				readOnly: "false",
+				readOnly: 'false',
 				required: false,
 				state: false,
 				system: false,
@@ -957,7 +957,7 @@ test.describe('Manage objectFields through Objects Admin UI', () => {
 						value: integerFieldName,
 					} as any,
 				],
-				outputType: "fullValidation",
+				outputType: 'fullValidation',
 				script: '',
 				system: false,
 			}

@@ -90,8 +90,8 @@ test.beforeEach(
 					name: apiHeadlessName,
 					objectFields: [
 						{
-							DBType: "String",
-							businessType: "Text",
+							DBType: 'String',
+							businessType: 'Text',
 							indexed: true,
 							indexedAsKeyword: true,
 							label: {

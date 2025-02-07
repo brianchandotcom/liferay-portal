@@ -41,8 +41,8 @@ const objectDefinitionData: ObjectDefinition = {
 	name: `ObjectDefinition`,
 	objectFields: [
 		{
-			DBType: "String",
-			businessType: "Text",
+			DBType: 'String',
+			businessType: 'Text',
 			externalReferenceCode: 'ObjectFieldERC',
 			indexed: true,
 			indexedAsKeyword: false,
@@ -55,7 +55,7 @@ const objectDefinitionData: ObjectDefinition = {
 			required: false,
 			state: false,
 			system: false,
-			type: "String",
+			type: 'String',
 		},
 	],
 	pluralLabel: {
@@ -77,8 +77,8 @@ const objectDefinition1Data: ObjectDefinition = {
 	name: `ObjectDefinition1`,
 	objectFields: [
 		{
-			DBType: "String",
-			businessType: "Text",
+			DBType: 'String',
+			businessType: 'Text',
 			externalReferenceCode: 'ObjectField1ERC',
 			indexed: true,
 			indexedAsKeyword: false,
@@ -91,12 +91,12 @@ const objectDefinition1Data: ObjectDefinition = {
 			required: false,
 			state: false,
 			system: false,
-			type: "String",
+			type: 'String',
 		},
 	],
 	objectRelationships: [
 		{
-			deletionType: "cascade",
+			deletionType: 'cascade',
 			externalReferenceCode: 'modifiable-system',
 			label: {
 				en_US: 'Test Modifiable System Object',
@@ -109,10 +109,10 @@ const objectDefinition1Data: ObjectDefinition = {
 			parameterObjectFieldName: '',
 			reverse: false,
 			system: false,
-			type: "oneToMany",
+			type: 'oneToMany',
 		},
 		{
-			deletionType: "cascade",
+			deletionType: 'cascade',
 			externalReferenceCode: 'unmodifiable-system',
 			label: {
 				en_US: 'Test Unmodifiable System Object',
@@ -125,10 +125,10 @@ const objectDefinition1Data: ObjectDefinition = {
 			parameterObjectFieldName: '',
 			reverse: false,
 			system: false,
-			type: "oneToMany",
+			type: 'oneToMany',
 		},
 		{
-			deletionType: "cascade",
+			deletionType: 'cascade',
 			externalReferenceCode: 'unmodifiable-system-allowed',
 			label: {
 				en_US: 'Test Unmodifiable Allowed System Object',
@@ -141,10 +141,10 @@ const objectDefinition1Data: ObjectDefinition = {
 			parameterObjectFieldName: '',
 			reverse: false,
 			system: false,
-			type: "oneToMany",
+			type: 'oneToMany',
 		},
 		{
-			deletionType: "cascade",
+			deletionType: 'cascade',
 			externalReferenceCode: 'custom',
 			label: {
 				en_US: 'Test Custom Object',
@@ -157,7 +157,7 @@ const objectDefinition1Data: ObjectDefinition = {
 			parameterObjectFieldName: '',
 			reverse: false,
 			system: false,
-			type: "oneToMany",
+			type: 'oneToMany',
 		},
 	],
 	pluralLabel: {
@@ -205,8 +205,8 @@ testFeatureFlagsDisabled(
 					name: `ObjectDefinition${i}`,
 					objectFields: [
 						{
-							DBType: "String",
-							businessType: "Text",
+							DBType: 'String',
+							businessType: 'Text',
 							externalReferenceCode: 'ObjectFieldERC',
 							indexed: true,
 							indexedAsKeyword: false,
@@ -219,7 +219,7 @@ testFeatureFlagsDisabled(
 							required: false,
 							state: false,
 							system: false,
-							type: "String",
+							type: 'String',
 						},
 					],
 					pluralLabel: {

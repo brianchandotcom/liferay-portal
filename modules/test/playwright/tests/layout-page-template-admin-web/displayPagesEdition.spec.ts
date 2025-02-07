@@ -879,8 +879,8 @@ test.describe('Object Display page', () => {
 					name: 'Ticket',
 					objectFields: [
 						{
-							DBType: ObjectField.DBTypeEnum.String,
-							businessType: ObjectField.BusinessTypeEnum.Text,
+							DBType: "String",
+							businessType: "Text",
 							externalReferenceCode: 'textERC',
 							indexed: true,
 							indexedAsKeyword: false,
@@ -1172,9 +1172,9 @@ test.describe('Object Display page', () => {
 					name: 'Attachment',
 					objectFields: [
 						{
-							DBType: ObjectField.DBTypeEnum.Long,
+							DBType: "Long",
 							businessType:
-								ObjectField.BusinessTypeEnum.Attachment,
+								"Attachment",
 							indexed: true,
 							indexedAsKeyword: false,
 							label: {
@@ -1196,7 +1196,7 @@ test.describe('Object Display page', () => {
 								} as any,
 							],
 							required: false,
-							type: ObjectField.TypeEnum.Long,
+							type: "Long",
 						},
 					],
 					pluralLabel: {
@@ -1358,10 +1358,8 @@ test.describe('Object Display page', () => {
 					name: 'Film',
 					objectFields: [
 						{
-							DBType: ObjectField.DBTypeEnum.String,
-							businessType:
-								ObjectField.BusinessTypeEnum
-									.MultiselectPicklist,
+							DBType: "String",
+							businessType: "MultiselectPicklist",
 							externalReferenceCode: 'genreERC',
 							indexed: true,
 							indexedAsKeyword: false,
@@ -1373,8 +1371,8 @@ test.describe('Object Display page', () => {
 							name: 'genre',
 						},
 						{
-							DBType: ObjectField.DBTypeEnum.String,
-							businessType: ObjectField.BusinessTypeEnum.Picklist,
+							DBType: "String",
+							businessType: "Picklist",
 							externalReferenceCode: 'originERC',
 							indexed: true,
 							indexedAsKeyword: false,
@@ -1386,7 +1384,7 @@ test.describe('Object Display page', () => {
 							name: 'origin',
 						},
 						{
-							DBType: ObjectField.DBTypeEnum.DateTime,
+							DBType: "DateTime",
 							externalReferenceCode: 'releaseDateERC',
 							indexed: true,
 							indexedAsKeyword: false,

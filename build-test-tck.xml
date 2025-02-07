@@ -63,9 +63,20 @@
 			<arg value="${project.dir}/tools/tck/pluto-patch.diff" />
 		</exec>
 
-		<execute dir="${tck.home}/..">
-			mvn -P all,liferay clean install
-		</execute>
+		<local name="java.jdk.home" />
+		<local name="java.jdk.opts" />
+
+		<get-java-jdk-home architecture="x64" type="oracle" version="8" />
+		<get-java-jdk-opts architecture="x64" type="oracle" version="8" />
+
+		<exec dir="${tck.home}/.." executable="mvn" failonerror="true">
+			<env key="JAVA_HOME" value="${java.jdk.home}" />
+			<env key="JAVA_OPTS" value="${java.jdk.opts}" />
+			<arg value="-P" />
+			<arg value="all,liferay" />
+			<arg value="clean" />
+			<arg value="install" />
+		</exec>
 
 		<copy
 			flatten="true"
@@ -135,9 +146,17 @@
 
 		<var name="tck.properties" value="-Dtest.context.base='${test.context.base[tck]}' -Dtest.server.username.id='${test.server.username.id[tck]}' -Dtest.server.username='${test.server.username[tck]}' -Dtest.server.password.id='${test.server.password.id[tck]}' -Dtest.server.password='${test.server.password[tck]}' -Dtest.timeout='${test.timeout[tck]}' -Dtest.ignore.list.file=${project.dir}/tools/tck/ignoredTestCases.xml -Dtest.non.exclusive.file=${project.dir}/tools/tck/nonExclusiveTestCases.xml -Dtest.server.login.url=${tck.login.url}" />
 
-		<execute dir="${tck.home}" failonerror="true">
-			mvn -Pliferay,run-tck -Djava.awt.headless=true ${tck.properties} -Dtest.browser=htmlunit -Dtest.browser.binary= -Dtest.browser.webDriver= -Dtest.list.file=${project.dir}/tools/tck/htmlunit-tests.xml test
-		</execute>
+		<local name="java.jdk.home" />
+		<local name="java.jdk.opts" />
+
+		<get-java-jdk-home architecture="x64" type="oracle" version="8" />
+		<get-java-jdk-opts architecture="x64" type="oracle" version="8" />
+
+		<exec dir="${tck.home}" executable="mvn" failonerror="true">
+			<env key="JAVA_HOME" value="${java.jdk.home}" />
+			<env key="JAVA_OPTS" value="${java.jdk.opts}" />
+			<arg line="-Pliferay,run-tck -Djava.awt.headless=true ${tck.properties} -Dtest.browser=htmlunit -Dtest.browser.binary= -Dtest.browser.webDriver= -Dtest.list.file=${project.dir}/tools/tck/htmlunit-tests.xml test" />
+		</exec>
 
 		<if>
 			<available file="${tck.home}/driver/target/surefire-reports/TEST-javax.portlet.tck.driver.TCKLiferayTestDriver.xml" />
@@ -162,9 +181,11 @@
 
 		<propertycopy from="selenium.${browser.type[tck]}.driver.executable" name="tck.selenium.browser.driver.executable" silent="true" />
 
-		<execute dir="${tck.home}" failonerror="true">
-			mvn -Pliferay,run-tck -Djava.awt.headless=true ${tck.properties} -Dtest.browser=${browser.type[tck]} -Dtest.browser.binary=${tck.browser.bin.file} -Dtest.browser.webDriver=${project.dir}/tools/tck/../${selenium.executable.dir.name}${tck.selenium.browser.driver.executable} -Dtest.list.file=${tck.tests.xml} -Dtest.server.login.url=${tck.login.url} test
-		</execute>
+		<exec dir="${tck.home}" executable="mvn" failonerror="true">
+			<env key="JAVA_HOME" value="${java.jdk.home}" />
+			<env key="JAVA_OPTS" value="${java.jdk.opts}" />
+			<arg line="-Pliferay,run-tck -Djava.awt.headless=true ${tck.properties} -Dtest.browser=${browser.type[tck]} -Dtest.browser.binary=${tck.browser.bin.file} -Dtest.browser.webDriver=${project.dir}/tools/tck/../${selenium.executable.dir.name}${tck.selenium.browser.driver.executable} -Dtest.list.file=${tck.tests.xml} -Dtest.server.login.url=${tck.login.url} test" />
+		</exec>
 
 		<if>
 			<available file="${tck.home}/driver/target/surefire-reports/TEST-javax.portlet.tck.driver.TCKLiferayTestDriver.xml" />

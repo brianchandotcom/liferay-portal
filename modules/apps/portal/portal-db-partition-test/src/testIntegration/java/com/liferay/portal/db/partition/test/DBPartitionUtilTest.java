@@ -323,11 +323,20 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 			for (long companyId : COMPANY_IDS) {
 				List<String> views = viewNames.get(companyId);
 
+				String schemaName = DBPartitionUtil.getExtractedPartitionName(
+					companyId);
+
 				Assert.assertEquals(
 					tablesCount.get(companyId) + views.size(),
+					_getTablesCount(schemaName));
+
+				Assert.assertEquals(0, _getViewsCount(schemaName));
+
+				Assert.assertEquals(
+					(int)tablesCount.get(companyId),
 					_getTablesCount(companyId));
 
-				Assert.assertEquals(0, _getViewsCount(companyId));
+				Assert.assertEquals(views.size(), _getViewsCount(companyId));
 
 				for (String viewName : viewNames.get(companyId)) {
 					if (!isCopyableQuartzTable(viewName)) {
@@ -336,7 +345,7 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 							_getCount(
 								PortalInstancePool.getDefaultCompanyId(),
 								viewName),
-							_getCount(companyId, viewName));
+							_getCount(companyId, schemaName, viewName));
 					}
 					else if (StringUtil.equalsIgnoreCase(
 								viewName, "QUARTZ_JOB_DETAILS") ||
@@ -347,20 +356,25 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 
 						Assert.assertEquals(
 							viewName + " count", 1,
-							_getCount(companyId, viewName));
+							_getCount(companyId, schemaName, viewName));
 					}
 					else {
 						Assert.assertEquals(
 							viewName + " count", 0,
-							_getCount(companyId, viewName));
+							_getCount(companyId, schemaName, viewName));
 					}
 				}
 
-				Assert.assertEquals(
-					1, _getJobsCount(getPartitionName(companyId)));
+				Assert.assertEquals(1, _getJobsCount(schemaName));
 			}
 		}
 		finally {
+			for (long companyId : COMPANY_IDS) {
+				db.runSQL(
+					dbPartitionDB.getDropPartitionSQL(
+						DBPartitionUtil.getExtractedPartitionName(companyId)));
+			}
+
 			deletePartitionRequiredData();
 
 			removeDBPartitions();
@@ -466,6 +480,13 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 	}
 
 	private int _getCount(long companyId, String tableName) throws Exception {
+		return _getCount(companyId, getPartitionName(companyId), tableName);
+	}
+
+	private int _getCount(
+			long companyId, String partitionName, String tableName)
+		throws Exception {
+
 		String whereClause = StringPool.BLANK;
 
 		if (dbInspector.hasColumn(tableName, "companyId")) {
@@ -474,8 +495,8 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
-					"select count(1) from ", getPartitionName(companyId),
-					StringPool.PERIOD, tableName, whereClause));
+					"select count(1) from ", partitionName, StringPool.PERIOD,
+					tableName, whereClause));
 			ResultSet resultSet = preparedStatement.executeQuery()) {
 
 			if (resultSet.next()) {
@@ -534,10 +555,16 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 	private List<String> _getObjectNames(String objectType, long companyId)
 		throws Exception {
 
+		return _getObjectNames(objectType, getPartitionName(companyId));
+	}
+
+	private List<String> _getObjectNames(
+			String objectType, String partitionName)
+		throws Exception {
+
 		List<String> objectNames = new ArrayList<>();
 
 		DatabaseMetaData databaseMetaData = connection.getMetaData();
-		String partitionName = getPartitionName(companyId);
 
 		try (ResultSet resultSet = databaseMetaData.getTables(
 				dbPartitionDB.getCatalog(connection, partitionName),
@@ -558,8 +585,20 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 		return tableNames.size();
 	}
 
+	private int _getTablesCount(String partitionName) throws Exception {
+		List<String> tableNames = _getObjectNames("TABLE", partitionName);
+
+		return tableNames.size();
+	}
+
 	private int _getViewsCount(long companyId) throws Exception {
 		List<String> viewNames = _getObjectNames("VIEW", companyId);
+
+		return viewNames.size();
+	}
+
+	private int _getViewsCount(String partitionName) throws Exception {
+		List<String> viewNames = _getObjectNames("VIEW", partitionName);
 
 		return viewNames.size();
 	}

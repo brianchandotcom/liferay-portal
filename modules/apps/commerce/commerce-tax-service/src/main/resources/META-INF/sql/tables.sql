@@ -11,5 +11,6 @@ create table CommerceTaxMethod (
 	description STRING null,
 	engineKey VARCHAR(75) null,
 	percentage BOOLEAN,
-	active_ BOOLEAN
+	active_ BOOLEAN,
+	typeSettings TEXT null
 );

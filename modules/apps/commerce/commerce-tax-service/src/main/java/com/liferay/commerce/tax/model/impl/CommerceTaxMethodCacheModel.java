@@ -69,7 +69,7 @@ public class CommerceTaxMethodCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -97,6 +97,8 @@ public class CommerceTaxMethodCacheModel
 		sb.append(percentage);
 		sb.append(", active=");
 		sb.append(active);
+		sb.append(", typeSettings=");
+		sb.append(typeSettings);
 		sb.append("}");
 
 		return sb.toString();
@@ -158,13 +160,22 @@ public class CommerceTaxMethodCacheModel
 		commerceTaxMethodImpl.setPercentage(percentage);
 		commerceTaxMethodImpl.setActive(active);
 
+		if (typeSettings == null) {
+			commerceTaxMethodImpl.setTypeSettings("");
+		}
+		else {
+			commerceTaxMethodImpl.setTypeSettings(typeSettings);
+		}
+
 		commerceTaxMethodImpl.resetOriginalValues();
 
 		return commerceTaxMethodImpl;
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
 		mvccVersion = objectInput.readLong();
 
 		commerceTaxMethodId = objectInput.readLong();
@@ -184,6 +195,7 @@ public class CommerceTaxMethodCacheModel
 		percentage = objectInput.readBoolean();
 
 		active = objectInput.readBoolean();
+		typeSettings = (String)objectInput.readObject();
 	}
 
 	@Override
@@ -232,6 +244,13 @@ public class CommerceTaxMethodCacheModel
 		objectOutput.writeBoolean(percentage);
 
 		objectOutput.writeBoolean(active);
+
+		if (typeSettings == null) {
+			objectOutput.writeObject("");
+		}
+		else {
+			objectOutput.writeObject(typeSettings);
+		}
 	}
 
 	public long mvccVersion;
@@ -247,5 +266,6 @@ public class CommerceTaxMethodCacheModel
 	public String engineKey;
 	public boolean percentage;
 	public boolean active;
+	public String typeSettings;
 
 }

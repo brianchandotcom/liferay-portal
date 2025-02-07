@@ -755,8 +755,8 @@ test.describe('Localized object entries are saved correctly', () => {
 
 		for (const {businessType, label, name} of objectFields) {
 			if (
-				businessType === ObjectField.BusinessTypeEnum.Decimal ||
-				businessType === ObjectField.BusinessTypeEnum.PrecisionDecimal
+				businessType === "Decimal" ||
+				businessType === "PrecisionDecimal"
 			) {
 				englishValues = {
 					...englishValues,
@@ -820,8 +820,8 @@ test.describe('Localized object entries are saved correctly', () => {
 			).toBeTruthy();
 
 			if (
-				businessType === ObjectField.BusinessTypeEnum.Decimal ||
-				businessType === ObjectField.BusinessTypeEnum.PrecisionDecimal
+				businessType === "Decimal" ||
+				businessType === "PrecisionDecimal"
 			) {
 				catalanValues = {
 					...catalanValues,

@@ -265,8 +265,8 @@ test('can list site scoped endpoint', async ({
 			name: 'Student',
 			objectFields: [
 				{
-					DBType: ObjectField.DBTypeEnum.String,
-					businessType: ObjectField.BusinessTypeEnum.Text,
+					DBType: "String",
+					businessType: "Text",
 					externalReferenceCode: 'student-name-field',
 					indexed: true,
 					indexedAsKeyword: false,
@@ -279,7 +279,7 @@ test('can list site scoped endpoint', async ({
 					required: true,
 					state: false,
 					system: false,
-					type: ObjectField.TypeEnum.String,
+					type: "String",
 				},
 			],
 			pluralLabel: {

@@ -8,8 +8,6 @@ package com.liferay.portal.search.rest.internal.resource.v1_0;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
-import com.liferay.object.model.ObjectDefinition;
-import com.liferay.object.model.ObjectEntry;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -193,16 +191,6 @@ public class SearchResultResourceImpl extends BaseSearchResultResourceImpl {
 		catch (Exception exception) {
 			throw new RuntimeException(exception);
 		}
-	}
-
-	private String _getDTOClassName(String entryClassName) {
-		if (entryClassName.startsWith(ObjectDefinition.class.getName()) &&
-			!entryClassName.equals(ObjectDefinition.class.getName())) {
-
-			return ObjectEntry.class.getName();
-		}
-
-		return entryClassName;
 	}
 
 	private String _getEntryClassName(Document document) {
@@ -469,7 +457,7 @@ public class SearchResultResourceImpl extends BaseSearchResultResourceImpl {
 
 		if (embedded || _isEmptyOrContains(fields, "itemURL")) {
 			dtoConverter = _dtoConverterRegistry.getDTOConverter(
-				_getDTOClassName(entryClassName));
+				entryClassName);
 		}
 
 		if (dtoConverter == null) {

@@ -131,7 +131,7 @@ test.describe('Script management container', () => {
 					en_US: objectValidationName,
 				},
 				objectValidationRuleSettings: [],
-				outputType: ObjectValidationRule.OutputTypeEnum.FullValidation,
+				outputType: "fullValidation",
 				script: 'test',
 				system: false,
 			}

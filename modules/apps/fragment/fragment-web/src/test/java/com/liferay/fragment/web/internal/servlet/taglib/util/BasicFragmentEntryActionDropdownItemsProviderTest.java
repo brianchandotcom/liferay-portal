@@ -28,43 +28,9 @@ public class BasicFragmentEntryActionDropdownItemsProviderTest
 		LiferayUnitTestRule.INSTANCE;
 
 	@Test
-	public void testGetActionDropdownsWithManageFragmentEntries()
+	public void testGetActionDropdownItemsForDraftFragmentEntry()
 		throws Exception {
 
-		setUpFragmentPermission(true);
-		_setUpFragmentEntry(false, false, false);
-
-		BasicFragmentEntryActionDropdownItemsProvider
-			basicFragmentEntryActionDropdownItemsProvider =
-				new BasicFragmentEntryActionDropdownItemsProvider(
-					_fragmentEntry, renderRequest, renderResponse);
-
-		assertDropdownItemsInCorrectOrder(
-			basicFragmentEntryActionDropdownItemsProvider.
-				getActionDropdownItems(),
-			"edit", "change-thumbnail", "rename", "mark-as-cacheable",
-			"view-site-usages", "export", "make-a-copy", "move", "delete");
-	}
-
-	@Test
-	public void testGetActionDropdownsWithoutManageFragmentEntries()
-		throws Exception {
-
-		setUpFragmentPermission(false);
-		_setUpFragmentEntry(false, false, false);
-
-		BasicFragmentEntryActionDropdownItemsProvider
-			basicFragmentEntryActionDropdownItemsProvider =
-				new BasicFragmentEntryActionDropdownItemsProvider(
-					_fragmentEntry, renderRequest, renderResponse);
-
-		assertDropdownItemsInCorrectOrder(
-			basicFragmentEntryActionDropdownItemsProvider.
-				getActionDropdownItems());
-	}
-
-	@Test
-	public void testGetDraftFragmentEntryActionDropdowns() throws Exception {
 		setUpFragmentPermission(true);
 		_setUpFragmentEntry(true, false, false);
 
@@ -83,7 +49,9 @@ public class BasicFragmentEntryActionDropdownItemsProviderTest
 
 	@Test
 	@TestInfo({"LPS-122082", "LPS-122641"})
-	public void testGetReactFragmentEntryActionDropdowns() throws Exception {
+	public void testGetActionDropdownItemsForReactFragmentEntry()
+		throws Exception {
+
 		setUpFragmentPermission(true);
 		_setUpFragmentEntry(false, false, true);
 
@@ -100,7 +68,9 @@ public class BasicFragmentEntryActionDropdownItemsProviderTest
 	}
 
 	@Test
-	public void testGetReadonlyFragmentEntryActionDropdowns() throws Exception {
+	public void testGetActionDropdownItemsForReadonlyFragmentEntry()
+		throws Exception {
+
 		setUpFragmentPermission(true);
 		_setUpFragmentEntry(false, true, false);
 
@@ -117,7 +87,7 @@ public class BasicFragmentEntryActionDropdownItemsProviderTest
 
 	@FeatureFlags("LPD-34938")
 	@Test
-	public void testMarketplaceFragmentEntryGetActionDropdowns()
+	public void testGetActionDropdownItemstForMarketplaceFragmentEntry()
 		throws Exception {
 
 		setUpFragmentPermission(true);
@@ -137,6 +107,42 @@ public class BasicFragmentEntryActionDropdownItemsProviderTest
 			basicFragmentEntryActionDropdownItemsProvider.
 				getActionDropdownItems(),
 			"view-site-usages", "move", "delete");
+	}
+
+	@Test
+	public void testGetActionDropdownItemsWithManageFragmentEntries()
+		throws Exception {
+
+		setUpFragmentPermission(true);
+		_setUpFragmentEntry(false, false, false);
+
+		BasicFragmentEntryActionDropdownItemsProvider
+			basicFragmentEntryActionDropdownItemsProvider =
+				new BasicFragmentEntryActionDropdownItemsProvider(
+					_fragmentEntry, renderRequest, renderResponse);
+
+		assertDropdownItemsInCorrectOrder(
+			basicFragmentEntryActionDropdownItemsProvider.
+				getActionDropdownItems(),
+			"edit", "change-thumbnail", "rename", "mark-as-cacheable",
+			"view-site-usages", "export", "make-a-copy", "move", "delete");
+	}
+
+	@Test
+	public void testGetActionDropdownItemsWithoutManageFragmentEntries()
+		throws Exception {
+
+		setUpFragmentPermission(false);
+		_setUpFragmentEntry(false, false, false);
+
+		BasicFragmentEntryActionDropdownItemsProvider
+			basicFragmentEntryActionDropdownItemsProvider =
+				new BasicFragmentEntryActionDropdownItemsProvider(
+					_fragmentEntry, renderRequest, renderResponse);
+
+		assertDropdownItemsInCorrectOrder(
+			basicFragmentEntryActionDropdownItemsProvider.
+				getActionDropdownItems());
 	}
 
 	private void _setUpFragmentEntry(

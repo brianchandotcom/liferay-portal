@@ -7,9 +7,9 @@ import {Locator, Page} from '@playwright/test';
 
 export class SourceViewPage {
 	readonly diagramViewButton: Locator;
+	readonly page: Page;
 	readonly saveButton: Locator;
 	readonly xmlFirstLine: Locator;
-	readonly page: Page;
 
 	constructor(page: Page) {
 		this.diagramViewButton = page

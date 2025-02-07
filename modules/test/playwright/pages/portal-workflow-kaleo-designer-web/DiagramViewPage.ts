@@ -11,10 +11,10 @@ export class DiagramViewPage {
 	readonly deleteButton: Locator;
 	readonly diagramArea: Locator;
 	readonly diagramNodes: Locator;
+	readonly page: Page;
 	readonly publishWorkflowDefinitionButton: Locator;
 	readonly saveWorkflowDefinitionButton: Locator;
 	readonly sourceViewButton: Locator;
-	readonly page: Page;
 	readonly workflowDefinitionTitle: Locator;
 
 	constructor(page: Page) {
@@ -25,6 +25,7 @@ export class DiagramViewPage {
 		this.deleteButton = page.getByTitle('Delete').last();
 		this.diagramArea = page.locator('.react-flow');
 		this.diagramNodes = page.locator('.react-flow__node');
+		this.page = page;
 		this.publishWorkflowDefinitionButton = page.getByRole('button', {
 			name: 'Publish',
 		});
@@ -32,7 +33,6 @@ export class DiagramViewPage {
 			name: 'Save',
 		});
 		this.sourceViewButton = page.locator('button[title="Source View"]');
-		this.page = page;
 		this.workflowDefinitionTitle = page.locator('#definition-title');
 	}
 

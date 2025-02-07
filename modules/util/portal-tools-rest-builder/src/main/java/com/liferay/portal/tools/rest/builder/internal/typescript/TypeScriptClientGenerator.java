@@ -6,6 +6,7 @@
 package com.liferay.portal.tools.rest.builder.internal.typescript;
 
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -248,7 +249,9 @@ public class TypeScriptClientGenerator {
 						).forEach(
 							(propName, propSchema) -> schemaProperties.add(
 								HashMapBuilder.<String, Object>put(
-									"name", propName
+									"name",
+									StringUtil.replace(
+										propName, '-', StringPool.UNDERLINE)
 								).put(
 									"type",
 									_getTypeScriptType(propSchema, modelImports)
@@ -264,7 +267,8 @@ public class TypeScriptClientGenerator {
 			).forEach(
 				(propName, propSchema) -> schemaProperties.add(
 					HashMapBuilder.<String, Object>put(
-						"name", propName
+						"name",
+						StringUtil.replace(propName, '-', StringPool.UNDERLINE)
 					).put(
 						"type", _getTypeScriptType(propSchema, modelImports)
 					).build())
@@ -385,7 +389,9 @@ public class TypeScriptClientGenerator {
 						"dataType",
 						_getTypeScriptType(parameter.getSchema(), imports)
 					).put(
-						"name", parameter.getName()
+						"name",
+						StringUtil.replace(
+							parameter.getName(), '-', StringPool.UNDERLINE)
 					).put(
 						"required",
 						Validator.isNotNull(parameter.isRequired()) &&
@@ -433,7 +439,8 @@ public class TypeScriptClientGenerator {
 						"dataType",
 						_getTypeScriptType(firstBodyContent.getSchema(), imports)
 					).put(
-						"name", bodyParamName
+						"name", StringUtil.replace(
+							bodyParamName, '-', StringPool.UNDERLINE)
 					).put(
 						"required",
 						false // TODO: Retrieve 'required' property inside requestBody

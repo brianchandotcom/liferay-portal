@@ -186,14 +186,10 @@ public class AddStepperFragmentEntryLinkMVCActionCommand
 				themeDisplay.getScopeGroupId(), themeDisplay.getPlid(),
 				segmentsExperienceId);
 
-		LayoutStructureItem layoutStructureItem =
+		addedLayoutStructureItems.add(
 			layoutStructure.addFragmentStyledLayoutStructureItem(
 				stepperFragmentEntryLink.getFragmentEntryLinkId(), parentItemId,
-				position);
-
-		jsonObject.put("addedItemId", layoutStructureItem.getItemId());
-
-		addedLayoutStructureItems.add(layoutStructureItem);
+				position));
 
 		FormStyledLayoutStructureItem formStyledLayoutStructureItem =
 			(FormStyledLayoutStructureItem)

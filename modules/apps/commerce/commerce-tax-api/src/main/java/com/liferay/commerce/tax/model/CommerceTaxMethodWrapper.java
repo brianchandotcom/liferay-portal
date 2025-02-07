@@ -46,6 +46,7 @@ public class CommerceTaxMethodWrapper
 		attributes.put("engineKey", getEngineKey());
 		attributes.put("percentage", isPercentage());
 		attributes.put("active", isActive());
+		attributes.put("typeSettings", getTypeSettings());
 
 		return attributes;
 	}
@@ -128,6 +129,12 @@ public class CommerceTaxMethodWrapper
 
 		if (active != null) {
 			setActive(active);
+		}
+
+		String typeSettings = (String)attributes.get("typeSettings");
+
+		if (typeSettings != null) {
+			setTypeSettings(typeSettings);
 		}
 	}
 
@@ -396,6 +403,23 @@ public class CommerceTaxMethodWrapper
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
+	}
+
+	/**
+	 * Returns the type settings of this commerce tax method.
+	 *
+	 * @return the type settings of this commerce tax method
+	 */
+	@Override
+	public String getTypeSettings() {
+		return model.getTypeSettings();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.util.UnicodeProperties
+		getTypeSettingsUnicodeProperties() {
+
+		return model.getTypeSettingsUnicodeProperties();
 	}
 
 	/**
@@ -696,6 +720,24 @@ public class CommerceTaxMethodWrapper
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
+	}
+
+	/**
+	 * Sets the type settings of this commerce tax method.
+	 *
+	 * @param typeSettings the type settings of this commerce tax method
+	 */
+	@Override
+	public void setTypeSettings(String typeSettings) {
+		model.setTypeSettings(typeSettings);
+	}
+
+	@Override
+	public void setTypeSettingsUnicodeProperties(
+		com.liferay.portal.kernel.util.UnicodeProperties
+			typeSettingsUnicodeProperties) {
+
+		model.setTypeSettingsUnicodeProperties(typeSettingsUnicodeProperties);
 	}
 
 	/**

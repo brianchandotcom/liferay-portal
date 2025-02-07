@@ -71,8 +71,8 @@ export class ObjectAdminApiHelper {
 			name: objectDefinitionExternalReferenceCode,
 			objectFields: objectFields ?? [
 				{
-					DBType: "String",
-					businessType: "Text",
+					DBType: 'String',
+					businessType: 'Text',
 					externalReferenceCode: 'textField',
 					indexed: true,
 					indexedAsKeyword: false,
@@ -83,7 +83,7 @@ export class ObjectAdminApiHelper {
 					name: 'textField',
 					required: false,
 					system: false,
-					type: "String",
+					type: 'String',
 				},
 			],
 			objectFolderExternalReferenceCode,

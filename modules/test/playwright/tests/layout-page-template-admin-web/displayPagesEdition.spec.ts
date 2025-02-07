@@ -883,8 +883,8 @@ test.describe('Object Display page', () => {
 					name: 'Ticket',
 					objectFields: [
 						{
-							DBType: "String",
-							businessType: "Text",
+							DBType: 'String',
+							businessType: 'Text',
 							externalReferenceCode: 'textERC',
 							indexed: true,
 							indexedAsKeyword: false,
@@ -1176,9 +1176,8 @@ test.describe('Object Display page', () => {
 					name: 'Attachment',
 					objectFields: [
 						{
-							DBType: "Long",
-							businessType:
-								"Attachment",
+							DBType: 'Long',
+							businessType: 'Attachment',
 							indexed: true,
 							indexedAsKeyword: false,
 							label: {
@@ -1200,7 +1199,7 @@ test.describe('Object Display page', () => {
 								} as any,
 							],
 							required: false,
-							type: "Long",
+							type: 'Long',
 						},
 					],
 					pluralLabel: {
@@ -1362,8 +1361,8 @@ test.describe('Object Display page', () => {
 					name: 'Film',
 					objectFields: [
 						{
-							DBType: "String",
-							businessType: "MultiselectPicklist",
+							DBType: 'String',
+							businessType: 'MultiselectPicklist',
 							externalReferenceCode: 'genreERC',
 							indexed: true,
 							indexedAsKeyword: false,
@@ -1375,8 +1374,8 @@ test.describe('Object Display page', () => {
 							name: 'genre',
 						},
 						{
-							DBType: "String",
-							businessType: "Picklist",
+							DBType: 'String',
+							businessType: 'Picklist',
 							externalReferenceCode: 'originERC',
 							indexed: true,
 							indexedAsKeyword: false,
@@ -1388,7 +1387,7 @@ test.describe('Object Display page', () => {
 							name: 'origin',
 						},
 						{
-							DBType: "DateTime",
+							DBType: 'DateTime',
 							externalReferenceCode: 'releaseDateERC',
 							indexed: true,
 							indexedAsKeyword: false,

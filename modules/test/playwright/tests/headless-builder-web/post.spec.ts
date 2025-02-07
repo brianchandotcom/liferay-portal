@@ -156,8 +156,8 @@ test('can create post endpoint with different request and response schema', asyn
 			name: 'Subject',
 			objectFields: [
 				{
-					DBType: "String",
-					businessType: "Text",
+					DBType: 'String',
+					businessType: 'Text',
 					externalReferenceCode: 'subject-name-field',
 					indexed: true,
 					indexedAsKeyword: false,
@@ -170,7 +170,7 @@ test('can create post endpoint with different request and response schema', asyn
 					required: false,
 					state: false,
 					system: false,
-					type: "String",
+					type: 'String',
 				},
 			],
 			panelCategoryKey: 'control_panel.object',
@@ -197,8 +197,8 @@ test('can create post endpoint with different request and response schema', asyn
 			name: 'Student',
 			objectFields: [
 				{
-					DBType: "String",
-					businessType: "Text",
+					DBType: 'String',
+					businessType: 'Text',
 					externalReferenceCode: 'student-name-field',
 					indexed: true,
 					indexedAsKeyword: false,
@@ -211,12 +211,12 @@ test('can create post endpoint with different request and response schema', asyn
 					required: true,
 					state: false,
 					system: false,
-					type: "String",
+					type: 'String',
 				},
 			],
 			objectRelationships: [
 				{
-					deletionType: "cascade",
+					deletionType: 'cascade',
 					externalReferenceCode: 'student-subjects-relationship',
 					label: {
 						en_US: 'Student subjects',
@@ -230,8 +230,8 @@ test('can create post endpoint with different request and response schema', asyn
 					objectDefinitionName2: 'Subject',
 					objectDefinitionSystem2: false,
 					objectField: {
-						DBType: "Long",
-						businessType: "Relationship",
+						DBType: 'Long',
+						businessType: 'Relationship',
 						externalReferenceCode:
 							'student-subjects-relationship-field',
 						indexed: true,
@@ -251,19 +251,18 @@ test('can create post endpoint with different request and response schema', asyn
 								value: 'r_studentSubjects_c_studentERC',
 							} as any,
 						],
-						relationshipType:
-							"oneToMany",
+						relationshipType: 'oneToMany',
 						required: false,
 						state: false,
 						system: false,
-						type: "Long",
+						type: 'Long',
 						unique: false,
 					},
 					parameterObjectFieldId: 0,
 					parameterObjectFieldName: '',
 					reverse: false,
 					system: false,
-					type: "oneToMany",
+					type: 'oneToMany',
 				},
 			],
 			panelCategoryKey: 'control_panel.object',

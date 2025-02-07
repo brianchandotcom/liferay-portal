@@ -715,8 +715,7 @@ test.describe('Checkbox Fragment', () => {
 								value: 'boolean-erc',
 							} as any,
 						],
-						outputType:
-							"partialValidation",
+						outputType: 'partialValidation',
 						script: 'boolean == true',
 						system: false,
 					}
@@ -907,8 +906,7 @@ test.describe('Date Fragment', () => {
 								value: 'date-erc',
 							} as any,
 						],
-						outputType:
-							"partialValidation",
+						outputType: 'partialValidation',
 						script: "futureDates(date, '2022-06-01')",
 						system: false,
 					}
@@ -1860,9 +1858,8 @@ test.describe('Form Localization', () => {
 					name: 'Numeric',
 					objectFields: [
 						{
-							DBType: "Long",
-							businessType:
-								"LongInteger",
+							DBType: 'Long',
+							businessType: 'LongInteger',
 							externalReferenceCode: 'longIntegerERC',
 							indexed: true,
 							indexedAsKeyword: false,
@@ -1874,8 +1871,8 @@ test.describe('Form Localization', () => {
 							required: false,
 						},
 						{
-							DBType: "Integer",
-							businessType: "Integer",
+							DBType: 'Integer',
+							businessType: 'Integer',
 							externalReferenceCode: 'integerERC',
 							indexed: true,
 							indexedAsKeyword: false,
@@ -1887,9 +1884,8 @@ test.describe('Form Localization', () => {
 							required: false,
 						},
 						{
-							DBType: "BigDecimal",
-							businessType:
-								"PrecisionDecimal",
+							DBType: 'BigDecimal',
+							businessType: 'PrecisionDecimal',
 							externalReferenceCode: 'precisionDecimalERC',
 							indexed: true,
 							indexedAsKeyword: false,
@@ -1901,8 +1897,8 @@ test.describe('Form Localization', () => {
 							required: false,
 						},
 						{
-							DBType: "Double",
-							businessType: "Decimal",
+							DBType: 'Double',
+							businessType: 'Decimal',
 							externalReferenceCode: 'decimalERC',
 							indexed: true,
 							indexedAsKeyword: false,
@@ -2555,8 +2551,8 @@ test.describe('Form Localization', () => {
 					name: 'Plant',
 					objectFields: [
 						{
-							DBType: "String",
-							businessType: "Text",
+							DBType: 'String',
+							businessType: 'Text',
 							externalReferenceCode: 'countryERC',
 							indexed: true,
 							indexedAsKeyword: false,
@@ -2568,8 +2564,8 @@ test.describe('Form Localization', () => {
 							required: false,
 						},
 						{
-							DBType: "Clob",
-							businessType: "RichText",
+							DBType: 'Clob',
+							businessType: 'RichText',
 							externalReferenceCode: 'descriptionERC',
 							indexed: true,
 							indexedAsKeyword: false,
@@ -2607,8 +2603,8 @@ test.describe('Form Localization', () => {
 							required: false,
 						},
 						{
-							DBType: "Boolean",
-							businessType: "Boolean",
+							DBType: 'Boolean',
+							businessType: 'Boolean',
 							externalReferenceCode: 'evergreen',
 							indexed: true,
 							indexedAsKeyword: false,
@@ -2870,8 +2866,8 @@ test.describe('Form Localization', () => {
 					name: 'TranslationFieldsGroup',
 					objectFields: [
 						{
-							DBType: "Clob",
-							businessType: "RichText",
+							DBType: 'Clob',
+							businessType: 'RichText',
 							externalReferenceCode: 'richTextERC',
 							indexed: true,
 							indexedAsKeyword: false,
@@ -2883,8 +2879,8 @@ test.describe('Form Localization', () => {
 							required: false,
 						},
 						{
-							DBType: "Clob",
-							businessType: "LongText",
+							DBType: 'Clob',
+							businessType: 'LongText',
 							externalReferenceCode: 'longTextERC',
 							indexed: true,
 							indexedAsKeyword: false,
@@ -2896,8 +2892,8 @@ test.describe('Form Localization', () => {
 							required: false,
 						},
 						{
-							DBType: "String",
-							businessType: "Text",
+							DBType: 'String',
+							businessType: 'Text',
 							externalReferenceCode: 'text',
 							indexed: true,
 							indexedAsKeyword: false,
@@ -2909,8 +2905,8 @@ test.describe('Form Localization', () => {
 							required: false,
 						},
 						{
-							DBType: "Boolean",
-							businessType: "Boolean",
+							DBType: 'Boolean',
+							businessType: 'Boolean',
 							externalReferenceCode: 'booleanERC',
 							indexed: true,
 							indexedAsKeyword: false,
@@ -3696,8 +3692,8 @@ test.describe('Submit button', () => {
 					name: 'Draft',
 					objectFields: [
 						{
-							DBType: "String",
-							businessType: "Text",
+							DBType: 'String',
+							businessType: 'Text',
 							externalReferenceCode: 'textERC',
 							indexed: true,
 							indexedAsKeyword: false,
@@ -4229,8 +4225,8 @@ test.describe('Picklist input field', () => {
 					name: 'Plant',
 					objectFields: [
 						{
-							DBType: "String",
-							businessType: "Picklist",
+							DBType: 'String',
+							businessType: 'Picklist',
 							externalReferenceCode: 'countryERC',
 							indexed: true,
 							indexedAsKeyword: false,
@@ -4649,8 +4645,7 @@ test.describe('Rich Text Fragment', () => {
 								value: 'rich-text-erc',
 							} as any,
 						],
-						outputType:
-							"partialValidation",
+						outputType: 'partialValidation',
 						script: 'NOT(isEmpty(richText))',
 						system: false,
 					}
@@ -6536,8 +6531,8 @@ test.describe('Edit mode form errors', () => {
 					name: 'Student',
 					objectFields: [
 						{
-							DBType: "String",
-							businessType: "Text",
+							DBType: 'String',
+							businessType: 'Text',
 							externalReferenceCode: 'nameERC',
 							indexed: true,
 							indexedAsKeyword: true,
@@ -6549,8 +6544,8 @@ test.describe('Edit mode form errors', () => {
 							required: true,
 						},
 						{
-							DBType: "Integer",
-							businessType: "Integer",
+							DBType: 'Integer',
+							businessType: 'Integer',
 							externalReferenceCode: 'ageERC',
 							indexed: true,
 							indexedAsKeyword: false,
@@ -7112,7 +7107,7 @@ test(
 				name: 'ReadOnlyObject',
 				objectFields: [
 					{
-						DBType: "Boolean",
+						DBType: 'Boolean',
 						externalReferenceCode: 'boolean-erc',
 						indexed: true,
 						indexedAsKeyword: true,
@@ -7122,7 +7117,7 @@ test(
 						name: 'boolean',
 					},
 					{
-						DBType: "DateTime",
+						DBType: 'DateTime',
 						externalReferenceCode: 'date-time-erc',
 						indexed: true,
 						indexedAsKeyword: false,
@@ -7138,7 +7133,7 @@ test(
 						],
 					},
 					{
-						DBType: "Date",
+						DBType: 'Date',
 						externalReferenceCode: 'date-erc',
 						indexed: true,
 						indexedAsKeyword: false,
@@ -7148,7 +7143,7 @@ test(
 						name: 'date',
 					},
 					{
-						DBType: "Clob",
+						DBType: 'Clob',
 						externalReferenceCode: 'long-text-erc',
 						indexed: true,
 						indexedAsKeyword: false,
@@ -7158,8 +7153,8 @@ test(
 						name: 'longText',
 					},
 					{
-						DBType: "Long",
-						businessType: "Attachment",
+						DBType: 'Long',
+						businessType: 'Attachment',
 						externalReferenceCode: 'dl-file-upload-erc',
 						indexed: true,
 						indexedAsKeyword: false,
@@ -7182,10 +7177,10 @@ test(
 								value: 'documentsAndMedia',
 							},
 						] as any,
-						type: "Long",
+						type: 'Long',
 					},
 					{
-						DBType: "String",
+						DBType: 'String',
 						externalReferenceCode: 'text-erc',
 						indexed: true,
 						indexedAsKeyword: true,
@@ -7195,8 +7190,8 @@ test(
 						name: 'text',
 					},
 					{
-						DBType: "Clob",
-						businessType: "RichText",
+						DBType: 'Clob',
+						businessType: 'RichText',
 						externalReferenceCode: 'rich-text-erc',
 						indexed: true,
 						indexedAsKeyword: false,
@@ -7206,8 +7201,8 @@ test(
 						name: 'richText',
 					},
 					{
-						DBType: "String",
-						businessType: "Picklist",
+						DBType: 'String',
+						businessType: 'Picklist',
 						externalReferenceCode: 'picklist-erc',
 						indexed: true,
 						indexedAsKeyword: false,
@@ -7219,9 +7214,8 @@ test(
 						name: 'picklist',
 					},
 					{
-						DBType: "String",
-						businessType:
-							"MultiselectPicklist",
+						DBType: 'String',
+						businessType: 'MultiselectPicklist',
 						externalReferenceCode: 'multiselect-picklist-erc',
 						indexed: true,
 						indexedAsKeyword: false,
@@ -7233,7 +7227,7 @@ test(
 						name: 'multiSelectPicklist',
 					},
 					{
-						DBType: "Integer",
+						DBType: 'Integer',
 						externalReferenceCode: 'numeric-erc',
 						indexed: true,
 						indexedAsKeyword: false,
@@ -7261,7 +7255,7 @@ test(
 		for (const objectField of objectDefinition.objectFields) {
 			await objectFieldApiClient.putObjectField(objectField.id, {
 				...objectField,
-				readOnly: "true",
+				readOnly: 'true',
 			});
 		}
 

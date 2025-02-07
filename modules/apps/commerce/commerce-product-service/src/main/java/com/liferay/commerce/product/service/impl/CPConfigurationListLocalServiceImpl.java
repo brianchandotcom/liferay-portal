@@ -34,6 +34,7 @@ import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.sql.dsl.query.FromStep;
 import com.liferay.petra.sql.dsl.query.GroupByStep;
 import com.liferay.petra.sql.dsl.query.JoinStep;
+import com.liferay.petra.sql.dsl.query.sort.OrderByExpression;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
@@ -54,6 +55,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.math.BigDecimal;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -335,7 +337,58 @@ public class CPConfigurationListLocalServiceImpl
 				commerceChannelId, commerceOrderTypeId,
 				DSLQueryFactoryUtil.select(CPConfigurationListTable.INSTANCE)
 			).orderBy(
-				CPConfigurationListTable.INSTANCE.priority.ascending()
+				orderByStep -> {
+					List<OrderByExpression> orderByExpressions =
+						new ArrayList<>();
+
+					orderByExpressions.add(
+						CPConfigurationListTable.INSTANCE.priority.ascending());
+
+					if (accountEntryId > 0) {
+						CPConfigurationListRelTable
+							accountEntryCPConfigurationListRel =
+								CPConfigurationListRelTable.INSTANCE.as(
+									"-accountEntryCPConfigurationListRel");
+
+						orderByExpressions.add(
+							accountEntryCPConfigurationListRel.classPK.
+								descending());
+					}
+
+					if (accountGroupIds.length > 0) {
+						CPConfigurationListRelTable
+							accountGroupCPConfigurationListRel =
+								CPConfigurationListRelTable.INSTANCE.as(
+									"-accountGroupCPConfigurationListRel");
+
+						orderByExpressions.add(
+							accountGroupCPConfigurationListRel.classPK.
+								descending());
+					}
+
+					if (commerceChannelId > 0) {
+						CommerceChannelRelTable commerceChannelRel =
+							CommerceChannelRelTable.INSTANCE.as(
+								"-CommerceChannelRel");
+
+						orderByExpressions.add(
+							commerceChannelRel.commerceChannelId.descending());
+					}
+
+					if (commerceOrderTypeId > 0) {
+						CPConfigurationListRelTable
+							commerceOrderTypeCPConfigurationListRel =
+								CPConfigurationListRelTable.INSTANCE.as(
+									"-commerceOrderTypeCPConfigurationListRel");
+
+						orderByExpressions.add(
+							commerceOrderTypeCPConfigurationListRel.classPK.
+								descending());
+					}
+
+					return orderByStep.orderBy(
+						orderByExpressions.toArray(new OrderByExpression[0]));
+				}
 			));
 	}
 

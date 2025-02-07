@@ -1049,7 +1049,7 @@ private synchronized FileCollection _transformToJakarta(File jakartaOutputDir, C
 		PrintStream errorPrintStream = new PrintStream(new ByteArrayOutputStream())
 		PrintStream standardPrintStream = new PrintStream(new ByteArrayOutputStream())
 
-		Object resultCode = runMethod.invoke(jakartaTransformerCLIClassConstructor.newInstance(standardPrintStream, errorPrintStream, ["--versions", jakartaVersionsPropertiesFile.absolutePath, jarFile.absolutePath, file.absolutePath] as String[]))
+		Object resultCode = runMethod.invoke(jakartaTransformerCLIClassConstructor.newInstance(standardPrintStream, errorPrintStream, ["--quiet", "--versions", jakartaVersionsPropertiesFile.absolutePath, jarFile.absolutePath, file.absolutePath] as String[]))
 
 		if (resultCode.toString() == "Success") {
 			task.logger.lifecycle "Jakarta: ${task.project.name}:${task.name} ${FileUtil.relativize(jarFile, jakartaOutputDir.parentFile.parentFile.parentFile)} -> ${FileUtil.relativize(file, jakartaOutputDir.parentFile.parentFile.parentFile)}"

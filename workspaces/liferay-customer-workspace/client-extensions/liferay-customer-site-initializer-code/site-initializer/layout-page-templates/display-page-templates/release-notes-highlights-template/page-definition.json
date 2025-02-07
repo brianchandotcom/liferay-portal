@@ -143,7 +143,7 @@
 								"pageElements": [
 									{
 										"definition": {
-											"customCSS": ".[$FRAGMENT_CLASS$] .btn {\n    background-color: var(--color-neutral-0) !important;\n    border-color: var(--color-brand-primary) !important;\n    color: var(--color-brand-primary) !important;\n}\n\n.[$FRAGMENT_CLASS$] p {\n    margin-bottom: 0;\n}",
+											"customCSS": ".[$FRAGMENT_CLASS$] .btn {\n    background-color: var(--color-neutral-0) !important;\n    border-color: var(--color-brand-primary) !important;\n    color: var(--color-brand-primary) !important;\nwidth: 10.1075rem;\n}\n\n.[$FRAGMENT_CLASS$] p {\n    margin-bottom: 0;\n}",
 											"fragment": {
 												"key": "BASIC_COMPONENT-button"
 											},
@@ -167,7 +167,7 @@
 														},
 														"text": {
 															"value_i18n": {
-																"en_US": "<p>Download 2023.Q4&nbsp; &nbsp;➜</p>\n"
+																"en_US": "Downloads"
 															}
 														}
 													}

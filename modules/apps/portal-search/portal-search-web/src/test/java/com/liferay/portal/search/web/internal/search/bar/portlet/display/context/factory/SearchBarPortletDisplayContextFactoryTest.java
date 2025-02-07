@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -39,6 +40,8 @@ import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchRe
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portlet.PortletPreferencesImpl;
+
+import java.util.Collections;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
@@ -176,6 +179,37 @@ public class SearchBarPortletDisplayContextFactoryTest {
 		String layoutFriendlyURL = RandomTestUtil.randomString();
 
 		_whenPortalGetLayoutFriendlyURL(layout, layoutFriendlyURL);
+
+		SearchBarPortletDisplayContextFactory
+			searchBarPortletDisplayContextFactory =
+				_createSearchBarPortletDisplayContextFactory(destination);
+
+		SearchBarPortletDisplayContext searchBarPortletDisplayContext =
+			searchBarPortletDisplayContextFactory.create(
+				_portletPreferencesLookup, _portletSharedSearchRequest,
+				_searchBarPrecedenceHelper, _searchCapabilities);
+
+		Assert.assertEquals(
+			layoutFriendlyURL, searchBarPortletDisplayContext.getSearchURL());
+
+		Assert.assertFalse(
+			searchBarPortletDisplayContext.isDestinationUnreachable());
+	}
+
+	@Test
+	public void testDestinationWithoutThemeDisplayUser() throws Exception {
+		String destination = RandomTestUtil.randomString();
+
+		Layout layout = Mockito.mock(Layout.class);
+
+		_whenLayoutLocalServiceFetchLayoutByFriendlyURLWithGroupId(
+			destination, layout);
+
+		String layoutFriendlyURL = RandomTestUtil.randomString();
+
+		_whenPortalGetLayoutFriendlyURL(layout, layoutFriendlyURL);
+
+		_whenUserLocalServiceFetchUserById();
 
 		SearchBarPortletDisplayContextFactory
 			searchBarPortletDisplayContextFactory =
@@ -594,7 +628,7 @@ public class SearchBarPortletDisplayContextFactoryTest {
 		Mockito.when(
 			_group.getClassPK()
 		).thenReturn(
-			34444L
+			_CLASS_PK
 		);
 
 		Mockito.when(
@@ -663,6 +697,22 @@ public class SearchBarPortletDisplayContextFactoryTest {
 		);
 	}
 
+	private void _whenLayoutLocalServiceFetchLayoutByFriendlyURLWithGroupId(
+		String friendlyURL, Layout layout) {
+
+		if (!StringUtil.startsWith(friendlyURL, CharPool.SLASH)) {
+			friendlyURL = StringPool.SLASH.concat(friendlyURL);
+		}
+
+		Mockito.doReturn(
+			layout
+		).when(
+			_layoutLocalService
+		).fetchLayoutByFriendlyURL(
+			_GROUP_ID, false, friendlyURL
+		);
+	}
+
 	private void _whenPortalGetLayoutFriendlyURL(
 			Layout layout, String layoutFriendlyURL)
 		throws Exception {
@@ -676,7 +726,33 @@ public class SearchBarPortletDisplayContextFactoryTest {
 		);
 	}
 
+	private void _whenUserLocalServiceFetchUserById() throws Exception {
+		Mockito.doReturn(
+			_user
+		).when(
+			_userLocalService
+		).fetchUserById(
+			_CLASS_PK
+		);
+
+		Mockito.doReturn(
+			Collections.singletonList(_userGroup)
+		).when(
+			_user
+		).getUserGroups();
+
+		Mockito.doReturn(
+			_GROUP_ID
+		).when(
+			_userGroup
+		).getGroupId();
+	}
+
+	private static final long _CLASS_PK = RandomTestUtil.randomLong();
+
 	private static final String _DEFAULT_SCOPE_PARAMETER_NAME = "scope";
+
+	private static final long _GROUP_ID = RandomTestUtil.randomLong();
 
 	private static MockedStatic<ConfigurationProviderUtil>
 		_configurationProviderUtilMockedStatic;
@@ -703,6 +779,7 @@ public class SearchBarPortletDisplayContextFactoryTest {
 			SearchSuggestionsCompanyConfiguration.class);
 	private final ThemeDisplay _themeDisplay = Mockito.mock(ThemeDisplay.class);
 	private final User _user = Mockito.mock(User.class);
+	private final UserGroup _userGroup = Mockito.mock(UserGroup.class);
 	private final UserLocalService _userLocalService = Mockito.mock(
 		UserLocalService.class);
 

@@ -610,6 +610,7 @@ definition {
 	@description = "Forms visitor behavior card shows expected amount of views"
 	@priority = 5
 	test VisitorBehaviorCardShowsExpectedAmountOfViews {
+		property analytics.cloud.acceptance = "true";
 		property portal.acceptance = "true";
 		property portal.release = "true";
 		property test.run.type = "single";

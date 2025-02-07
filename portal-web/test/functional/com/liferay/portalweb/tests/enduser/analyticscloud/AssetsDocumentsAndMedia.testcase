@@ -947,6 +947,7 @@ definition {
 	@description = "Documents visitor behavior card shows expected amount of views"
 	@priority = 5
 	test VisitorBehaviorCardShowsExpectedAmountOfPreviewsInDM {
+		property analytics.cloud.acceptance = "true";
 		property portal.acceptance = "true";
 		property portal.release = "true";
 

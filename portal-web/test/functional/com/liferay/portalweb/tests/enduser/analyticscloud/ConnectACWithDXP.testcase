@@ -159,6 +159,7 @@ definition {
 	@description = "Story: LRAC-11860 | Automation ID: LRAC-12438 | Test Summary: Connect AC Token Authentication Passes"
 	@priority = 5
 	test CheckIsPossibleConnectACWithValidToken {
+		property analytics.cloud.acceptance = "true";
 		property analytics.cloud.smoke = "true";
 		property portal.release = "true";
 
@@ -198,6 +199,7 @@ definition {
 	@description = "Validate if the user can connect AC to DXP"
 	@priority = 5
 	test ConnectACToDXPAndSyncSitesAndContacts {
+		property analytics.cloud.acceptance = "true";
 		property portal.release = "true";
 
 		// Maybe this test will be covered by another one in the future of new stories

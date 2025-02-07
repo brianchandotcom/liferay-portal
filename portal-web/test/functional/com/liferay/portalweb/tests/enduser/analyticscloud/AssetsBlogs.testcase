@@ -786,6 +786,7 @@ definition {
 	@description = "View all blogs in the property in assets"
 	@priority = 5
 	test ViewAllBlogsShownInAssetList {
+		property analytics.cloud.acceptance = "true";
 		property portal.acceptance = "true";
 		property portal.release = "true";
 

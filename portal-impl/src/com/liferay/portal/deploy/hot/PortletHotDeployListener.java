@@ -146,15 +146,8 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 			"/WEB-INF/classes/".concat(resourceBundle), CharPool.PERIOD,
 			CharPool.SLASH);
 
-		String parentPath = path;
-
-		int index = path.lastIndexOf(StringPool.SLASH);
-
-		if (index > 0) {
-			parentPath = path.substring(0, index);
-		}
-
-		Set<String> resourcePaths = servletContext.getResourcePaths(parentPath);
+		Set<String> resourcePaths = servletContext.getResourcePaths(
+			path.substring(0, path.lastIndexOf(StringPool.SLASH)));
 
 		if (resourcePaths == null) {
 			return;

@@ -6,8 +6,6 @@
 import {
 	ObjectDefinition,
 	ObjectDefinitionApi,
-	ObjectField,
-	ObjectRelationship,
 	ObjectRelationshipApi,
 } from '@liferay/object-admin-rest-client-js';
 import {expect, mergeTests} from '@playwright/test';

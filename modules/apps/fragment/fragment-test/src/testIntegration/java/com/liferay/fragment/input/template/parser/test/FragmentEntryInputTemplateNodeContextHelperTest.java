@@ -31,6 +31,7 @@ import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.field.builder.AttachmentObjectFieldBuilder;
+import com.liferay.object.field.builder.DateObjectFieldBuilder;
 import com.liferay.object.field.builder.DateTimeObjectFieldBuilder;
 import com.liferay.object.field.builder.MultiselectPicklistObjectFieldBuilder;
 import com.liferay.object.field.builder.PicklistObjectFieldBuilder;
@@ -63,10 +64,15 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -75,9 +81,16 @@ import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.io.Serializable;
 
+import java.sql.Timestamp;
+
+import java.text.DateFormat;
+
+import java.time.format.DateTimeFormatter;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -340,6 +353,164 @@ public class FragmentEntryInputTemplateNodeContextHelperTest {
 		}
 	}
 
+	@FeatureFlags({"LPD-32050", "LPD-37927"})
+	@Test
+	public void testToInputTemplateNodeLocalizedInputValue() throws Exception {
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				ListUtil.fromArray(
+					new DateObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).name(
+						"myDate"
+					).objectFieldSettings(
+						Collections.emptyList()
+					).build(),
+					new DateTimeObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).name(
+						"myDateTime"
+					).objectFieldSettings(
+						Collections.singletonList(
+							_createObjectFieldSetting(
+								ObjectFieldSettingConstants.NAME_TIME_STORAGE,
+								ObjectFieldSettingConstants.
+									VALUE_CONVERT_TO_UTC))
+					).build(),
+					new DateObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).name(
+						"myLocalizedDate"
+					).localized(
+						true
+					).objectFieldSettings(
+						Collections.emptyList()
+					).build(),
+					new DateTimeObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).name(
+						"myLocalizedDateTime"
+					).localized(
+						true
+					).objectFieldSettings(
+						Collections.singletonList(
+							_createObjectFieldSetting(
+								ObjectFieldSettingConstants.NAME_TIME_STORAGE,
+								ObjectFieldSettingConstants.
+									VALUE_CONVERT_TO_UTC))
+					).build()),
+				ObjectDefinitionConstants.SCOPE_SITE);
+
+		Date enDate = DateUtil.parseDate(
+			"yyyy-MM-dd", "2021-05-31", LocaleUtil.US);
+
+		Timestamp enTimestamp = new Timestamp(enDate.getTime());
+
+		Date esDate = new Date(System.currentTimeMillis());
+
+		Timestamp esTimestamp = new Timestamp(esDate.getTime());
+
+		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			objectDefinition.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				"myDate", enDate
+			).put(
+				"myDateTime", enTimestamp
+			).put(
+				"myLocalizedDate_i18n",
+				HashMapBuilder.put(
+					LocaleUtil.toLanguageId(LocaleUtil.US), enDate
+				).put(
+					LocaleUtil.toLanguageId(LocaleUtil.SPAIN), esDate
+				).build()
+			).put(
+				"myLocalizedDateTime_i18n",
+				HashMapBuilder.put(
+					LocaleUtil.toLanguageId(LocaleUtil.US), enTimestamp
+				).put(
+					LocaleUtil.toLanguageId(LocaleUtil.SPAIN), esTimestamp
+				).build()
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		DateFormat enDateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+			"yyyy-MM-dd", LocaleUtil.US);
+
+		String enValue = enDateFormat.format(enDate);
+
+		_testToInputTemplateNodeLocalizedInputValue(
+			objectDefinition.getClassName(), "ObjectField_myDate", objectEntry,
+			HashMapBuilder.put(
+				LocaleUtil.SPAIN, enValue
+			).put(
+				LocaleUtil.US, enValue
+			).build(),
+			Collections.emptyMap());
+
+		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(
+			"yyyy-MM-dd'T'HH:mm");
+
+		enValue = dateTimeFormatter.format(enTimestamp.toLocalDateTime());
+
+		_testToInputTemplateNodeLocalizedInputValue(
+			objectDefinition.getClassName(), "ObjectField_myDateTime",
+			objectEntry,
+			HashMapBuilder.put(
+				LocaleUtil.SPAIN, enValue
+			).put(
+				LocaleUtil.US, enValue
+			).build(),
+			Collections.emptyMap());
+
+		enValue = enDateFormat.format(enDate);
+
+		DateFormat esDateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+			"yyyy-MM-dd", LocaleUtil.SPAIN);
+
+		String esValue = esDateFormat.format(esDate);
+
+		_testToInputTemplateNodeLocalizedInputValue(
+			objectDefinition.getClassName(), "ObjectField_myLocalizedDate",
+			objectEntry,
+			HashMapBuilder.put(
+				LocaleUtil.SPAIN, esValue
+			).put(
+				LocaleUtil.US, enValue
+			).build(),
+			HashMapBuilder.put(
+				LocaleUtil.SPAIN, esValue
+			).put(
+				LocaleUtil.US, enValue
+			).build());
+
+		enValue = dateTimeFormatter.format(enTimestamp.toLocalDateTime());
+
+		esValue = dateTimeFormatter.format(esTimestamp.toLocalDateTime());
+
+		_testToInputTemplateNodeLocalizedInputValue(
+			objectDefinition.getClassName(), "ObjectField_myLocalizedDateTime",
+			objectEntry,
+			HashMapBuilder.put(
+				LocaleUtil.SPAIN, esValue
+			).put(
+				LocaleUtil.US, enValue
+			).build(),
+			HashMapBuilder.put(
+				LocaleUtil.SPAIN, esValue
+			).put(
+				LocaleUtil.US, enValue
+			).build());
+	}
+
 	private FragmentEntryLink _addInputFragmentEntryLink(String inputFieldId)
 		throws Exception {
 
@@ -576,6 +747,78 @@ public class FragmentEntryInputTemplateNodeContextHelperTest {
 		themeDisplay.setUser(TestPropsValues.getUser());
 
 		return themeDisplay;
+	}
+
+	private void _testToInputTemplateNodeLocalizedInputValue(
+			String className, String inputFieldId, ObjectEntry objectEntry,
+			Map<Locale, String> valueI18nMap, Map<Locale, String> values)
+		throws Exception {
+
+		HttpServletRequest httpServletRequest = new MockHttpServletRequest();
+
+		ThemeDisplay themeDisplay = _getThemeDisplay();
+
+		httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
+
+		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
+			_layoutDisplayPageProviderRegistry.
+				getLayoutDisplayPageProviderByClassName(className);
+
+		httpServletRequest.setAttribute(
+			LayoutDisplayPageWebKeys.LAYOUT_DISPLAY_PAGE_OBJECT_PROVIDER,
+			layoutDisplayPageProvider.getLayoutDisplayPageObjectProvider(
+				new InfoItemReference(
+					className, objectEntry.getObjectEntryId())));
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group, TestPropsValues.getUserId());
+
+		serviceContext.setRequest(httpServletRequest);
+
+		InfoItemFormProvider<?> infoItemFormProvider =
+			_infoItemServiceRegistry.getFirstInfoItemService(
+				InfoItemFormProvider.class, className);
+
+		try {
+			ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+			for (Map.Entry<Locale, String> entry : values.entrySet()) {
+				Locale locale = entry.getKey();
+
+				themeDisplay.setLocale(locale);
+
+				InputTemplateNode inputTemplateNode =
+					_fragmentEntryInputTemplateNodeContextHelper.
+						toInputTemplateNode(
+							"Default", _addInputFragmentEntryLink(inputFieldId),
+							httpServletRequest,
+							infoItemFormProvider.getInfoForm(
+								StringPool.BLANK, _group.getGroupId()),
+							locale);
+
+				Assert.assertEquals(
+					entry.getValue(), inputTemplateNode.getInputValue());
+
+				Map<Locale, String> actualValueI18nMap =
+					inputTemplateNode.getValueI18n();
+
+				Assert.assertEquals(
+					MapUtil.toString(actualValueI18nMap), valueI18nMap.size(),
+					actualValueI18nMap.size());
+
+				for (Map.Entry<Locale, String> curEntry :
+						valueI18nMap.entrySet()) {
+
+					Assert.assertEquals(
+						curEntry.getValue(),
+						actualValueI18nMap.get(curEntry.getKey()));
+				}
+			}
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
 	}
 
 	@Inject

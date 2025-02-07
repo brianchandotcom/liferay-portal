@@ -69,7 +69,9 @@ public class FrontendTokenDefinitionRegistryImpl
 
 		return _getFrontendTokenDefinition(
 			layoutSet.getCompanyId(),
-			_getCETExternalReferenceCode(layoutSet.getLayoutSetId()),
+			_getCETExternalReferenceCode(
+				_portal.getClassNameId(LayoutSet.class),
+				layoutSet.getLayoutSetId()),
 			layoutSet.getThemeId());
 	}
 
@@ -304,10 +306,12 @@ public class FrontendTokenDefinitionRegistryImpl
 		}
 	}
 
-	private String _getCETExternalReferenceCode(long layoutSetId) {
+	private String _getCETExternalReferenceCode(
+		long classNameId, long classPK) {
+
 		ClientExtensionEntryRel clientExtensionEntryRel =
 			_clientExtensionEntryRelLocalService.fetchClientExtensionEntryRel(
-				_portal.getClassNameId(LayoutSet.class), layoutSetId,
+				classNameId, classPK,
 				ClientExtensionEntryConstants.TYPE_THEME_CSS);
 
 		if (clientExtensionEntryRel == null) {

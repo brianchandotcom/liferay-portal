@@ -6,19 +6,15 @@
 package com.liferay.fragment.input.template.parser.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
 import com.liferay.fragment.input.template.parser.FragmentEntryInputTemplateNodeContextHelper;
 import com.liferay.fragment.input.template.parser.InputTemplateNode;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
-import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.info.item.InfoItemReference;
 import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.item.provider.InfoItemFormProvider;
-import com.liferay.info.search.InfoSearchClassMapperRegistry;
-import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProviderRegistry;
 import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
@@ -825,12 +821,6 @@ public class FragmentEntryInputTemplateNodeContextHelperTest {
 	private CompanyLocalService _companyLocalService;
 
 	@Inject
-	private DLAppLocalService _dlAppLocalService;
-
-	@Inject
-	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;
-
-	@Inject
 	private FragmentEntryInputTemplateNodeContextHelper
 		_fragmentEntryInputTemplateNodeContextHelper;
 
@@ -842,12 +832,6 @@ public class FragmentEntryInputTemplateNodeContextHelperTest {
 
 	@Inject
 	private InfoItemServiceRegistry _infoItemServiceRegistry;
-
-	@Inject
-	private InfoSearchClassMapperRegistry _infoSearchClassMapperRegistry;
-
-	@Inject
-	private ItemSelector _itemSelector;
 
 	private Layout _layout;
 

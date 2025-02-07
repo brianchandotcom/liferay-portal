@@ -966,14 +966,14 @@ public abstract class FragmentEntryLocalServiceBaseImpl
 		draftFragmentEntry.setConfiguration(
 			publishedFragmentEntry.getConfiguration());
 		draftFragmentEntry.setIcon(publishedFragmentEntry.getIcon());
-		draftFragmentEntry.setMarketplace(
-			publishedFragmentEntry.getMarketplace());
 		draftFragmentEntry.setPreviewFileEntryId(
 			publishedFragmentEntry.getPreviewFileEntryId());
 		draftFragmentEntry.setReadOnly(publishedFragmentEntry.getReadOnly());
 		draftFragmentEntry.setType(publishedFragmentEntry.getType());
 		draftFragmentEntry.setTypeOptions(
 			publishedFragmentEntry.getTypeOptions());
+		draftFragmentEntry.setMarketplace(
+			publishedFragmentEntry.getMarketplace());
 		draftFragmentEntry.setLastPublishDate(
 			publishedFragmentEntry.getLastPublishDate());
 		draftFragmentEntry.setStatus(publishedFragmentEntry.getStatus());

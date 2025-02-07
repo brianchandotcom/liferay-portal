@@ -420,27 +420,6 @@ public interface FragmentEntryVersionModel
 	public void setIcon(String icon);
 
 	/**
-	 * Returns the marketplace of this fragment entry version.
-	 *
-	 * @return the marketplace of this fragment entry version
-	 */
-	public boolean getMarketplace();
-
-	/**
-	 * Returns <code>true</code> if this fragment entry version is marketplace.
-	 *
-	 * @return <code>true</code> if this fragment entry version is marketplace; <code>false</code> otherwise
-	 */
-	public boolean isMarketplace();
-
-	/**
-	 * Sets whether this fragment entry version is marketplace.
-	 *
-	 * @param marketplace the marketplace of this fragment entry version
-	 */
-	public void setMarketplace(boolean marketplace);
-
-	/**
 	 * Returns the preview file entry ID of this fragment entry version.
 	 *
 	 * @return the preview file entry ID of this fragment entry version
@@ -503,6 +482,27 @@ public interface FragmentEntryVersionModel
 	 * @param typeOptions the type options of this fragment entry version
 	 */
 	public void setTypeOptions(String typeOptions);
+
+	/**
+	 * Returns the marketplace of this fragment entry version.
+	 *
+	 * @return the marketplace of this fragment entry version
+	 */
+	public boolean getMarketplace();
+
+	/**
+	 * Returns <code>true</code> if this fragment entry version is marketplace.
+	 *
+	 * @return <code>true</code> if this fragment entry version is marketplace; <code>false</code> otherwise
+	 */
+	public boolean isMarketplace();
+
+	/**
+	 * Sets whether this fragment entry version is marketplace.
+	 *
+	 * @param marketplace the marketplace of this fragment entry version
+	 */
+	public void setMarketplace(boolean marketplace);
 
 	/**
 	 * Returns the last publish date of this fragment entry version.

@@ -115,8 +115,6 @@ public class FragmentEntryVersionCacheModel
 		sb.append(configuration);
 		sb.append(", icon=");
 		sb.append(icon);
-		sb.append(", marketplace=");
-		sb.append(marketplace);
 		sb.append(", previewFileEntryId=");
 		sb.append(previewFileEntryId);
 		sb.append(", readOnly=");
@@ -125,6 +123,8 @@ public class FragmentEntryVersionCacheModel
 		sb.append(type);
 		sb.append(", typeOptions=");
 		sb.append(typeOptions);
+		sb.append(", marketplace=");
+		sb.append(marketplace);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
 		sb.append(", status=");
@@ -245,7 +245,6 @@ public class FragmentEntryVersionCacheModel
 			fragmentEntryVersionImpl.setIcon(icon);
 		}
 
-		fragmentEntryVersionImpl.setMarketplace(marketplace);
 		fragmentEntryVersionImpl.setPreviewFileEntryId(previewFileEntryId);
 		fragmentEntryVersionImpl.setReadOnly(readOnly);
 		fragmentEntryVersionImpl.setType(type);
@@ -256,6 +255,8 @@ public class FragmentEntryVersionCacheModel
 		else {
 			fragmentEntryVersionImpl.setTypeOptions(typeOptions);
 		}
+
+		fragmentEntryVersionImpl.setMarketplace(marketplace);
 
 		if (lastPublishDate == Long.MIN_VALUE) {
 			fragmentEntryVersionImpl.setLastPublishDate(null);
@@ -323,14 +324,14 @@ public class FragmentEntryVersionCacheModel
 		configuration = (String)objectInput.readObject();
 		icon = objectInput.readUTF();
 
-		marketplace = objectInput.readBoolean();
-
 		previewFileEntryId = objectInput.readLong();
 
 		readOnly = objectInput.readBoolean();
 
 		type = objectInput.readInt();
 		typeOptions = (String)objectInput.readObject();
+
+		marketplace = objectInput.readBoolean();
 		lastPublishDate = objectInput.readLong();
 
 		status = objectInput.readInt();
@@ -435,8 +436,6 @@ public class FragmentEntryVersionCacheModel
 			objectOutput.writeUTF(icon);
 		}
 
-		objectOutput.writeBoolean(marketplace);
-
 		objectOutput.writeLong(previewFileEntryId);
 
 		objectOutput.writeBoolean(readOnly);
@@ -450,6 +449,7 @@ public class FragmentEntryVersionCacheModel
 			objectOutput.writeObject(typeOptions);
 		}
 
+		objectOutput.writeBoolean(marketplace);
 		objectOutput.writeLong(lastPublishDate);
 
 		objectOutput.writeInt(status);
@@ -488,11 +488,11 @@ public class FragmentEntryVersionCacheModel
 	public boolean cacheable;
 	public String configuration;
 	public String icon;
-	public boolean marketplace;
 	public long previewFileEntryId;
 	public boolean readOnly;
 	public int type;
 	public String typeOptions;
+	public boolean marketplace;
 	public long lastPublishDate;
 	public int status;
 	public long statusByUserId;

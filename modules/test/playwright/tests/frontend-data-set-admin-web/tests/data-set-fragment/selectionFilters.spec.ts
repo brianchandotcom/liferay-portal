@@ -89,8 +89,8 @@ test.beforeEach(
 					name: apiHeadlessName,
 					objectFields: [
 						{
-							DBType: ObjectField.DBTypeEnum.String,
-							businessType: ObjectField.BusinessTypeEnum.Text,
+							DBType: "String",
+							businessType: "Text",
 							indexed: true,
 							indexedAsKeyword: true,
 							label: {

@@ -812,8 +812,8 @@ test.describe('UI', () => {
 				name: 'Stock',
 				objectFields: [
 					{
-						DBType: ObjectField.DBTypeEnum.String,
-						businessType: ObjectField.BusinessTypeEnum.Text,
+						DBType: "String",
+						businessType: "Text",
 						externalReferenceCode: 'nameERC',
 						indexed: true,
 						indexedAsKeyword: true,

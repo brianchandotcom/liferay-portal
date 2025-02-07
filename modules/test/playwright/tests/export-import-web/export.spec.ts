@@ -44,8 +44,8 @@ test('cannot export site scoped custom object entries at instance level', async 
 			name: 'Test',
 			objectFields: [
 				{
-					DBType: ObjectField.DBTypeEnum.String,
-					businessType: ObjectField.BusinessTypeEnum.Text,
+					DBType: "String",
+					businessType: "Text",
 					indexed: true,
 					indexedAsKeyword: true,
 					label: {
@@ -96,8 +96,8 @@ test('can export custom object entries at instance level with permissions', asyn
 			name: 'Test',
 			objectFields: [
 				{
-					DBType: ObjectField.DBTypeEnum.String,
-					businessType: ObjectField.BusinessTypeEnum.Text,
+					DBType: "String",
+					businessType: "Text",
 					indexed: true,
 					indexedAsKeyword: true,
 					label: {

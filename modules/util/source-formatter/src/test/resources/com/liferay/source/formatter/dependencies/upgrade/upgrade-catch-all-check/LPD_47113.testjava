@@ -17,7 +17,9 @@ public class LPD_47113 {
         ServiceContext serviceContext) {
 
         SiteNavigationMenuLocalServiceUtil.addSiteNavigationMenu(123, groupId, name, type, auto, serviceContext);
+        SiteNavigationMenuLocalServiceUtil.addSiteNavigationMenu(userId, groupId, name, type, auto, serviceContext);
         SiteNavigationMenuServiceUtil.addSiteNavigationMenu(123, name, type, auto, serviceContext);
+        SiteNavigationMenuServiceUtil.addSiteNavigationMenu(groupId, name, type, auto, serviceContext);
         _siteNavigationMenuLocalService.addSiteNavigationMenu(userId, groupId, name, type, auto, serviceContext);
         _siteNavigationMenuService.addSiteNavigationMenu(groupId, name, type, auto, serviceContext);
     }

@@ -68,8 +68,8 @@ test.describe('Object Unique Composite Key Validation', () => {
 		await objectFieldApiClient.postObjectDefinitionByExternalReferenceCodeObjectField(
 			objectDefinition1.externalReferenceCode,
 			{
-				DBType: "Integer",
-				businessType: "Integer",
+				DBType: 'Integer',
+				businessType: 'Integer',
 				externalReferenceCode: 'integerField',
 				indexed: true,
 				indexedAsKeyword: false,
@@ -78,7 +78,7 @@ test.describe('Object Unique Composite Key Validation', () => {
 				listTypeDefinitionId: 0,
 				localized: false,
 				name: 'integerField',
-				readOnly: "false",
+				readOnly: 'false',
 				required: false,
 				state: false,
 				system: false,
@@ -126,8 +126,8 @@ test.describe('Object Unique Composite Key Validation', () => {
 		await objectFieldApiClient.postObjectDefinitionByExternalReferenceCodeObjectField(
 			objectDefinition1.externalReferenceCode,
 			{
-				DBType: "Integer",
-				businessType: "Integer",
+				DBType: 'Integer',
+				businessType: 'Integer',
 				externalReferenceCode: integerFieldName,
 				indexed: true,
 				indexedAsKeyword: false,
@@ -136,7 +136,7 @@ test.describe('Object Unique Composite Key Validation', () => {
 				listTypeDefinitionId: 0,
 				localized: false,
 				name: integerFieldName,
-				readOnly: "false",
+				readOnly: 'false',
 				required: false,
 				state: false,
 				system: false,
@@ -172,7 +172,7 @@ test.describe('Object Unique Composite Key Validation', () => {
 						value: integerFieldName,
 					} as any,
 				],
-				outputType: "fullValidation",
+				outputType: 'fullValidation',
 				script: '',
 				system: false,
 			}
@@ -251,8 +251,8 @@ test.describe('Object Unique Composite Key Validation', () => {
 		await objectFieldApiClient.postObjectDefinitionByExternalReferenceCodeObjectField(
 			objectDefinition1.externalReferenceCode,
 			{
-				DBType: "String",
-				businessType: "AutoIncrement",
+				DBType: 'String',
+				businessType: 'AutoIncrement',
 				externalReferenceCode: autoIncrementFieldName,
 				indexed: true,
 				indexedAsKeyword: false,
@@ -267,7 +267,7 @@ test.describe('Object Unique Composite Key Validation', () => {
 						value: '1234',
 					} as any,
 				],
-				readOnly: "false",
+				readOnly: 'false',
 				required: false,
 				state: false,
 				system: false,
@@ -277,8 +277,8 @@ test.describe('Object Unique Composite Key Validation', () => {
 		await objectFieldApiClient.postObjectDefinitionByExternalReferenceCodeObjectField(
 			objectDefinition1.externalReferenceCode,
 			{
-				DBType: "Date",
-				businessType: "Date",
+				DBType: 'Date',
+				businessType: 'Date',
 				externalReferenceCode: dateFieldName,
 				indexed: true,
 				indexedAsKeyword: false,
@@ -287,7 +287,7 @@ test.describe('Object Unique Composite Key Validation', () => {
 				listTypeDefinitionId: 0,
 				localized: false,
 				name: dateFieldName,
-				readOnly: "false",
+				readOnly: 'false',
 				required: false,
 				state: false,
 				system: false,
@@ -297,8 +297,8 @@ test.describe('Object Unique Composite Key Validation', () => {
 		await objectFieldApiClient.postObjectDefinitionByExternalReferenceCodeObjectField(
 			objectDefinition1.externalReferenceCode,
 			{
-				DBType: "Integer",
-				businessType: "Integer",
+				DBType: 'Integer',
+				businessType: 'Integer',
 				externalReferenceCode: integerFieldName,
 				indexed: true,
 				indexedAsKeyword: false,
@@ -307,7 +307,7 @@ test.describe('Object Unique Composite Key Validation', () => {
 				listTypeDefinitionId: 0,
 				localized: false,
 				name: integerFieldName,
-				readOnly: "false",
+				readOnly: 'false',
 				required: false,
 				state: false,
 				system: false,
@@ -332,7 +332,7 @@ test.describe('Object Unique Composite Key Validation', () => {
 				objectDefinitionId1: objectDefinition2.id,
 				objectDefinitionId2: objectDefinition1.id,
 				objectDefinitionName2: objectDefinition1.name,
-				type: "oneToMany",
+				type: 'oneToMany',
 			}
 		);
 
@@ -342,8 +342,8 @@ test.describe('Object Unique Composite Key Validation', () => {
 		await objectFieldApiClient.postObjectDefinitionByExternalReferenceCodeObjectField(
 			objectDefinition1.externalReferenceCode,
 			{
-				DBType: "String",
-				businessType: "Picklist",
+				DBType: 'String',
+				businessType: 'Picklist',
 				externalReferenceCode: picklistFieldName,
 				indexed: true,
 				indexedAsKeyword: false,
@@ -354,7 +354,7 @@ test.describe('Object Unique Composite Key Validation', () => {
 				listTypeDefinitionId: listTypeDefinition.id,
 				localized: false,
 				name: picklistFieldName,
-				readOnly: "false",
+				readOnly: 'false',
 				required: false,
 				state: false,
 				system: false,
@@ -409,8 +409,8 @@ test.describe('Object Unique Composite Key Validation', () => {
 		await objectFieldApiClient.postObjectDefinitionByExternalReferenceCodeObjectField(
 			objectDefinition1.externalReferenceCode,
 			{
-				DBType: "Integer",
-				businessType: "Integer",
+				DBType: 'Integer',
+				businessType: 'Integer',
 				externalReferenceCode: 'integerField',
 				indexed: true,
 				indexedAsKeyword: false,
@@ -419,7 +419,7 @@ test.describe('Object Unique Composite Key Validation', () => {
 				listTypeDefinitionId: 0,
 				localized: false,
 				name: 'integerField',
-				readOnly: "false",
+				readOnly: 'false',
 				required: false,
 				state: false,
 				system: false,

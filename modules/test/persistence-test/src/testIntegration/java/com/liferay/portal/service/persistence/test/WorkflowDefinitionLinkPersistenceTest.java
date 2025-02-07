@@ -670,32 +670,6 @@ public class WorkflowDefinitionLinkPersistenceTest {
 				new Class<?>[] {String.class}, "groupId"));
 
 		Assert.assertEquals(
-			Long.valueOf(workflowDefinitionLink.getGroupId()),
-			ReflectionTestUtil.<Long>invoke(
-				workflowDefinitionLink, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "groupId"));
-		Assert.assertEquals(
-			Long.valueOf(workflowDefinitionLink.getCompanyId()),
-			ReflectionTestUtil.<Long>invoke(
-				workflowDefinitionLink, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "companyId"));
-		Assert.assertEquals(
-			Long.valueOf(workflowDefinitionLink.getClassNameId()),
-			ReflectionTestUtil.<Long>invoke(
-				workflowDefinitionLink, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "classNameId"));
-		Assert.assertEquals(
-			Long.valueOf(workflowDefinitionLink.getClassPK()),
-			ReflectionTestUtil.<Long>invoke(
-				workflowDefinitionLink, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "classPK"));
-		Assert.assertEquals(
-			Long.valueOf(workflowDefinitionLink.getTypePK()),
-			ReflectionTestUtil.<Long>invoke(
-				workflowDefinitionLink, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "typePK"));
-
-		Assert.assertEquals(
 			workflowDefinitionLink.getExternalReferenceCode(),
 			ReflectionTestUtil.invoke(
 				workflowDefinitionLink, "getColumnOriginalValue",

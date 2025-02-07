@@ -61,6 +61,10 @@ export async function disconnectFromAnalyticsCloud(page: Page) {
 		});
 
 		await confirmationButton.click();
+
+		await expect(
+			page.getByText('Success:Workspace disconnected.')
+		).toBeVisible();
 	}
 }
 
@@ -364,4 +368,8 @@ export async function syncSite({
 
 export async function goNextStep(page) {
 	await page.getByRole('button', {exact: true, name: 'Next'}).click();
+}
+
+export async function goPreviousStep(page: Page) {
+	await page.getByRole('button', {exact: true, name: 'Previous'}).click();
 }

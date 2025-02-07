@@ -59,7 +59,7 @@ test('LPD-26363 Can delete ctEntries in bulk', async ({
 
 	await page.getByTitle('Select Items').check();
 
-	await expect(page.getByText('Items Selected')).toBeVisible();
+	await expect(page.getByText('All Selected')).toBeVisible();
 
 	await expect(changeTrackingPage.bulkDeleteButton).toBeVisible();
 
@@ -77,19 +77,11 @@ test('LPD-26363 Can delete ctEntries in bulk', async ({
 
 	await publicationActionMenu.click();
 
-	const notificationsOption = page.getByRole('menuitem', {
-		name: 'Show System Changes',
-	});
-
-	await notificationsOption.click();
-
-	await publicationActionMenu.click();
-
-	await expect(
-		page.getByRole('menuitem', {
-			name: 'Hide System Changes',
+	await page
+		.getByRole('menuitem', {
+			name: 'Show System Changes',
 		})
-	).toBeVisible();
+		.click();
 
 	await expect(page.getByText('No Results Found')).toBeVisible();
 });
@@ -113,7 +105,7 @@ test('LPD-46060 Can move ctEntries in bulk', async ({
 
 	await page.getByTitle('Select Items').check();
 
-	await expect(page.getByText('Items Selected')).toBeVisible();
+	await expect(page.getByText('All Selected')).toBeVisible();
 
 	const bulkMoveButton = page
 		.locator('.bulk-actions')
@@ -144,19 +136,11 @@ test('LPD-46060 Can move ctEntries in bulk', async ({
 
 	await publicationActionMenu.click();
 
-	const notificationsOption = page.getByRole('menuitem', {
-		name: 'Show System Changes',
-	});
-
-	await notificationsOption.click();
-
-	await publicationActionMenu.click();
-
-	await expect(
-		page.getByRole('menuitem', {
-			name: 'Hide System Changes',
+	await page
+		.getByRole('menuitem', {
+			name: 'Show System Changes',
 		})
-	).toBeVisible();
+		.click();
 
 	await expect(page.getByText('No Results Found')).toBeVisible();
 

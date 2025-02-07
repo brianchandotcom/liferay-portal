@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortParserProvider;
@@ -22,6 +23,7 @@ import com.liferay.portal.vulcan.jaxrs.context.ContextDataInjectorBuilder;
 import com.liferay.portal.vulcan.jaxrs.context.ContextDataInjectorBuilderFactory;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
 import java.util.Objects;
@@ -202,6 +204,8 @@ public class ContextDataInjectorBuilderFactoryImpl
 					return instance;
 				}
 
+				Method[] methods = clazz.getDeclaredMethods();
+
 				for (Field field : clazz.getDeclaredFields()) {
 					if (Modifier.isFinal(field.getModifiers()) ||
 						Modifier.isStatic(field.getModifiers())) {
@@ -215,147 +219,122 @@ public class ContextDataInjectorBuilderFactoryImpl
 						Objects.equals(
 							field.getName(), "contextScopeChecker")) {
 
-						if (_scopeChecker != null) {
-							field.setAccessible(true);
-
-							field.set(instance, _scopeChecker);
-						}
+						_setValue(instance, field, methods, _scopeChecker);
 					}
 					else if (fieldClass.isAssignableFrom(
 								AcceptLanguage.class)) {
 
-						if (_acceptLanguage != null) {
-							field.setAccessible(true);
-
-							field.set(instance, _acceptLanguage);
-						}
+						_setValue(instance, field, methods, _acceptLanguage);
 					}
 					else if (fieldClass.isAssignableFrom(Company.class)) {
-						if (_company != null) {
-							field.setAccessible(true);
-
-							field.set(instance, _company);
-						}
+						_setValue(instance, field, methods, _company);
 					}
 					else if (fieldClass.isAssignableFrom(
 								ExpressionConvert.class)) {
 
-						if (_expressionConvert != null) {
-							field.setAccessible(true);
-
-							field.set(instance, _expressionConvert);
-						}
+						_setValue(instance, field, methods, _expressionConvert);
 					}
 					else if (fieldClass.isAssignableFrom(
 								FilterParserProvider.class)) {
 
-						if (_filterParserProvider != null) {
-							field.setAccessible(true);
-
-							field.set(instance, _filterParserProvider);
-						}
+						_setValue(
+							instance, field, methods, _filterParserProvider);
 					}
 					else if (fieldClass.isAssignableFrom(
 								GroupLocalService.class)) {
 
-						if (_groupLocalService != null) {
-							field.setAccessible(true);
-
-							field.set(instance, _groupLocalService);
-						}
+						_setValue(instance, field, methods, _groupLocalService);
 					}
 					else if (fieldClass.isAssignableFrom(
 								HttpServletRequest.class)) {
 
-						if (_httpServletRequest != null) {
-							field.setAccessible(true);
-
-							field.set(instance, _httpServletRequest);
-						}
+						_setValue(
+							instance, field, methods, _httpServletRequest);
 					}
 					else if (fieldClass.isAssignableFrom(
 								HttpServletResponse.class)) {
 
-						if (_httpServletResponse != null) {
-							field.setAccessible(true);
-
-							field.set(instance, _httpServletResponse);
-						}
+						_setValue(
+							instance, field, methods, _httpServletResponse);
 					}
 					else if (fieldClass.isAssignableFrom(
 								ResourceActionLocalService.class)) {
 
-						if (_resourceActionLocalService != null) {
-							field.setAccessible(true);
-
-							field.set(instance, _resourceActionLocalService);
-						}
+						_setValue(
+							instance, field, methods,
+							_resourceActionLocalService);
 					}
 					else if (fieldClass.isAssignableFrom(
 								ResourcePermissionLocalService.class)) {
 
-						if (_resourcePermissionLocalService != null) {
-							field.setAccessible(true);
-
-							field.set(
-								instance, _resourcePermissionLocalService);
-						}
+						_setValue(
+							instance, field, methods,
+							_resourcePermissionLocalService);
 					}
 					else if (fieldClass.isAssignableFrom(
 								RoleLocalService.class)) {
 
-						if (_roleLocalService != null) {
-							field.setAccessible(true);
-
-							field.set(instance, _roleLocalService);
-						}
+						_setValue(instance, field, methods, _roleLocalService);
 					}
 					else if (fieldClass.isAssignableFrom(
 								SortParserProvider.class)) {
 
-						if (_sortParserProvider != null) {
-							field.setAccessible(true);
-
-							field.set(instance, _sortParserProvider);
-						}
+						_setValue(
+							instance, field, methods, _sortParserProvider);
 					}
 					else if (fieldClass.isAssignableFrom(UriInfo.class)) {
-						if (_uriInfo != null) {
-							field.setAccessible(true);
-
-							field.set(instance, _uriInfo);
-						}
+						_setValue(instance, field, methods, _uriInfo);
 					}
 					else if (fieldClass.isAssignableFrom(User.class)) {
-						if (_user != null) {
-							field.setAccessible(true);
-
-							field.set(instance, _user);
-						}
+						_setValue(instance, field, methods, _user);
 					}
 					else if (fieldClass.isAssignableFrom(
 								VulcanBatchEngineExportTaskResource.class)) {
 
-						if (_vulcanBatchEngineExportTaskResource != null) {
-							field.setAccessible(true);
-
-							field.set(
-								instance, _vulcanBatchEngineExportTaskResource);
-						}
+						_setValue(
+							instance, field, methods,
+							_vulcanBatchEngineExportTaskResource);
 					}
 					else if (fieldClass.isAssignableFrom(
 								VulcanBatchEngineImportTaskResource.class)) {
 
-						if (_vulcanBatchEngineImportTaskResource != null) {
-							field.setAccessible(true);
-
-							field.set(
-								instance, _vulcanBatchEngineImportTaskResource);
-						}
+						_setValue(
+							instance, field, methods,
+							_vulcanBatchEngineImportTaskResource);
 					}
 				}
 
 				return _setInstanceFields(clazz.getSuperclass(), instance);
+			}
+
+			private void _setValue(
+					Object instance, Field field, Method[] methods,
+					Object value)
+				throws Exception {
+
+				if (value == null) {
+					return;
+				}
+
+				for (Method method : methods) {
+					String setterMethodName =
+						"set" +
+							StringUtil.upperCaseFirstLetter(field.getName());
+
+					if (StringUtil.equals(method.getName(), setterMethodName) &&
+						(method.getParameterCount() == 1) &&
+						method.getParameterTypes()[0].isInstance(value) &&
+						(method.getReturnType() == void.class)) {
+
+						method.invoke(instance, value);
+
+						return;
+					}
+				}
+
+				field.setAccessible(true);
+
+				field.set(instance, value);
 			}
 
 			private AcceptLanguage _acceptLanguage;

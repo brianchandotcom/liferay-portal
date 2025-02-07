@@ -14294,8 +14294,8 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 
 				<if>
 					<or>
-						<matches pattern="https?://" string="${test.build.bundle.zip.url}" />
 						<matches pattern="gs://" string="${test.build.bundle.zip.url}" />
+						<matches pattern="https?://" string="${test.build.bundle.zip.url}" />
 					</or>
 					<then>
 						<property name="bundle.zip.url" value="${test.build.bundle.zip.url}" />

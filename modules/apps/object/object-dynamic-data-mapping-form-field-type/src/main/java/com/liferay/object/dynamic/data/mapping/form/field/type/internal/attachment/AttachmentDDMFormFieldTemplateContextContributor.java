@@ -73,6 +73,12 @@ public class AttachmentDDMFormFieldTemplateContextContributor
 			"acceptedFileExtensions",
 			ddmFormField.getProperty("acceptedFileExtensions")
 		).put(
+			"fileEntryProperties",
+			_getFileEntryProperties(
+				ddmFormField,
+				ddmFormFieldRenderingContext.getHttpServletRequest(),
+				GetterUtil.getLong(ddmFormFieldRenderingContext.getValue()))
+		).put(
 			"fileSource", ddmFormField.getProperty("fileSource")
 		).put(
 			"localizedObjectField", localizedObjectField
@@ -95,11 +101,6 @@ public class AttachmentDDMFormFieldTemplateContextContributor
 		).putAll(
 			DDMFormFieldTemplateContextContributorUtil.getLocaleMap(
 				ddmForm.getDefaultLocale())
-		).putAll(
-			_getFileEntryProperties(
-				ddmFormField,
-				ddmFormFieldRenderingContext.getHttpServletRequest(),
-				GetterUtil.getLong(ddmFormFieldRenderingContext.getValue()))
 		).build();
 	}
 

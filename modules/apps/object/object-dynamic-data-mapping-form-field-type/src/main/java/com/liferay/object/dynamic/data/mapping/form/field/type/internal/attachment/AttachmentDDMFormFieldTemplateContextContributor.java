@@ -8,8 +8,10 @@ package com.liferay.object.dynamic.data.mapping.form.field.type.internal.attachm
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTemplateContextContributor;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
+import com.liferay.dynamic.data.mapping.util.DDMFormFieldTemplateContextContributorUtil;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion;
@@ -61,6 +63,9 @@ public class AttachmentDDMFormFieldTemplateContextContributor
 		DDMFormField ddmFormField,
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
 
+		DDMForm ddmForm = ddmFormField.getDDMForm();
+		boolean localizedObjectField = GetterUtil.getBoolean(
+			ddmFormField.getProperty("localizedObjectField"));
 		int maximumFileSize = _getMaximumFileSize(
 			ddmFormField, ddmFormFieldRenderingContext.getHttpServletRequest());
 
@@ -69,6 +74,8 @@ public class AttachmentDDMFormFieldTemplateContextContributor
 			ddmFormField.getProperty("acceptedFileExtensions")
 		).put(
 			"fileSource", ddmFormField.getProperty("fileSource")
+		).put(
+			"localizedObjectField", localizedObjectField
 		).put(
 			"maximumFileSize", maximumFileSize
 		).put(
@@ -85,6 +92,9 @@ public class AttachmentDDMFormFieldTemplateContextContributor
 				})
 		).put(
 			"url", _getURL(ddmFormField, ddmFormFieldRenderingContext)
+		).putAll(
+			DDMFormFieldTemplateContextContributorUtil.getLocaleMap(
+				ddmForm.getDefaultLocale())
 		).putAll(
 			_getFileEntryProperties(
 				ddmFormField,

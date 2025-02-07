@@ -334,8 +334,8 @@ test.describe('Manage object entries through Page Templates', () => {
 	}) => {
 		const objectFields: ObjectField[] = [
 			{
-				DBType: "Boolean",
-				businessType: "Boolean",
+				DBType: 'Boolean',
+				businessType: 'Boolean',
 				externalReferenceCode: 'booleanField',
 				indexed: true,
 				indexedAsKeyword: false,
@@ -346,11 +346,11 @@ test.describe('Manage object entries through Page Templates', () => {
 				name: 'booleanField',
 				required: false,
 				system: false,
-				type: "Boolean",
+				type: 'Boolean',
 			},
 			{
-				DBType: "String",
-				businessType: "Text",
+				DBType: 'String',
+				businessType: 'Text',
 				externalReferenceCode: 'textField',
 				indexed: true,
 				indexedAsKeyword: false,
@@ -361,7 +361,7 @@ test.describe('Manage object entries through Page Templates', () => {
 				name: 'textField',
 				required: false,
 				system: false,
-				type: "String",
+				type: 'String',
 			},
 		];
 
@@ -430,7 +430,7 @@ test.describe('Manage object entries through Page Templates', () => {
 				objectDefinitionId1: objectDefinition1.id,
 				objectDefinitionId2: objectDefinition2.id,
 				objectDefinitionName2: objectDefinition2.name,
-				type: "oneToMany",
+				type: 'oneToMany',
 			}
 		);
 
@@ -608,12 +608,12 @@ test.describe('Manage object entries through Page Templates', () => {
 			let matchString: string;
 
 			switch (objectField.businessType) {
-				case "AutoIncrement": {
+				case 'AutoIncrement': {
 					matchString = '1';
 
 					break;
 				}
-				case "Date": {
+				case 'Date': {
 					const date = new Date(
 						Date.parse(objectEntry[objectField.name])
 					);
@@ -624,14 +624,14 @@ test.describe('Manage object entries through Page Templates', () => {
 
 					continue overloop;
 				}
-				case "Picklist": {
+				case 'Picklist': {
 					matchString = (
 						objectEntry[objectField.name] as {key: string}
 					).key;
 
 					break;
 				}
-				case "MultiselectPicklist": {
+				case 'MultiselectPicklist': {
 					(objectEntry[objectField.name] as string[]).forEach(
 						(listTypeEntry, index) => {
 							index < 1
@@ -727,14 +727,14 @@ test.describe('Manage object entries through View Object Entries', () => {
 
 		for (const objectField of objectFields) {
 			switch (objectField.businessType) {
-				case "Attachment": {
+				case 'Attachment': {
 					await viewObjectEntriesPage.selectFileFromDocumentsAndMedia(
 						ATTACHMENT_FILE_NAME
 					);
 
 					break;
 				}
-				case "Boolean": {
+				case 'Boolean': {
 					objectEntry[objectField.name]
 						? await page
 								.getByLabel(objectField.label['en_US'])
@@ -745,7 +745,7 @@ test.describe('Manage object entries through View Object Entries', () => {
 
 					break;
 				}
-				case "Picklist": {
+				case 'Picklist': {
 					await viewObjectEntriesPage.selectDropdownItem(
 						objectField.label['en_US'],
 						objectEntry[objectField.name].key.toString()
@@ -774,29 +774,29 @@ test.describe('Manage object entries through View Object Entries', () => {
 			let matchString: string;
 
 			switch (businessType) {
-				case "Attachment": {
+				case 'Attachment': {
 					matchString = ATTACHMENT_FILE_NAME;
 
 					break;
 				}
-				case "Boolean": {
+				case 'Boolean': {
 					matchString = objectEntry[name] ? 'Yes' : 'No';
 
 					break;
 				}
-				case "Date": {
+				case 'Date': {
 					const date = new Date(objectEntry[name]);
 
 					matchString = getFDSDateFormat(date);
 
 					break;
 				}
-				case "Picklist": {
+				case 'Picklist': {
 					matchString = (objectEntry[name] as {key: string}).key;
 
 					break;
 				}
-				case "MultiselectPicklist": {
+				case 'MultiselectPicklist': {
 					(objectEntry[name] as string[]).forEach(
 						(listTypeEntry, index) => {
 							index < 1
@@ -807,7 +807,7 @@ test.describe('Manage object entries through View Object Entries', () => {
 
 					break;
 				}
-				case "RichText": {
+				case 'RichText': {
 					matchString = objectEntry[name].substring(0, 35);
 
 					break;
@@ -895,9 +895,7 @@ test.describe('Manage object entries through View Object Entries', () => {
 		await page.getByPlaceholder(placeHolderText).click();
 
 		const multiselectPicklistField = objectFields.find(
-			({businessType}) =>
-				businessType ===
-				"MultiselectPicklist"
+			({businessType}) => businessType === 'MultiselectPicklist'
 		);
 
 		const firstOptionName = objectEntry[multiselectPicklistField.name][0];
@@ -1054,7 +1052,7 @@ test.describe('Manage object entries through View Object Entries', () => {
 				objectDefinitionId1: objectDefinition1.id,
 				objectDefinitionId2: objectDefinition2.id,
 				objectDefinitionName2: objectDefinition2.name,
-				type: "oneToMany",
+				type: 'oneToMany',
 			}
 		);
 
@@ -1142,7 +1140,7 @@ test.describe('Manage object entries through View Object Entries', () => {
 			objectDefinitionId1: objectDefinition1.id,
 			objectDefinitionId2: objectDefinition2.id,
 			objectDefinitionName2: objectDefinition2.name,
-			type: "manyToMany",
+			type: 'manyToMany',
 		};
 
 		await objectRelationshipApiClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
@@ -1202,7 +1200,7 @@ test.describe('Manage object entries through View Object Entries', () => {
 		);
 
 		await viewObjectEntriesPage.fillObjectEntry({
-			objectFieldBusinessType: "Text",
+			objectFieldBusinessType: 'Text',
 			objectFieldLabel: objectField,
 			objectFieldValue: 'tests',
 		});
@@ -1311,7 +1309,7 @@ test.describe('Manage object entries through View Object Entries', () => {
 		await objectRelationshipApiClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
 			objectDefinition.externalReferenceCode,
 			{
-				deletionType: "disassociate",
+				deletionType: 'disassociate',
 				label: {
 					en_US: 'Relationship',
 				},
@@ -1322,7 +1320,7 @@ test.describe('Manage object entries through View Object Entries', () => {
 					objectDefinition.externalReferenceCode,
 				objectDefinitionId1: objectDefinition.id,
 				objectDefinitionId2: objectDefinition.id,
-				type: "oneToMany",
+				type: 'oneToMany',
 			}
 		);
 
@@ -1630,7 +1628,7 @@ test.describe('Manage object entries through Workflow', () => {
 		const objectFieldValue = getRandomString();
 
 		await viewObjectEntriesPage.fillObjectEntry({
-			objectFieldBusinessType: "Text",
+			objectFieldBusinessType: 'Text',
 			objectFieldLabel: objectDefinition.titleObjectFieldName,
 			objectFieldValue,
 		});

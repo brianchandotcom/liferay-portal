@@ -45,6 +45,8 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -146,114 +148,124 @@ public class CommercePaymentServletTest {
 			"The order payment status should stay complete"
 		);
 
-		CommerceOrder commerceOrder = CommerceTestUtil.addB2CCommerceOrder(
-			_user.getUserId(), _commerceChannel.getGroupId(),
-			_commerceCurrency);
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.commerce.payment.internal.servlet." +
+					"CommercePaymentServlet",
+				LoggerTestUtil.OFF)) {
 
-		_commerceOrders.add(commerceOrder);
+			CommerceOrder commerceOrder = CommerceTestUtil.addB2CCommerceOrder(
+				_user.getUserId(), _commerceChannel.getGroupId(),
+				_commerceCurrency);
 
-		commerceOrder.setCommercePaymentMethodKey(
-			TestCommercePaymentMethod.KEY);
+			_commerceOrders.add(commerceOrder);
 
-		commerceOrder = _commerceOrderLocalService.updateCommerceOrder(
-			commerceOrder);
+			commerceOrder.setCommercePaymentMethodKey(
+				TestCommercePaymentMethod.KEY);
 
-		CommerceCatalog commerceCatalog =
-			CommerceCatalogLocalServiceUtil.addCommerceCatalog(
-				null, RandomTestUtil.randomString(),
-				_commerceCurrency.getCode(),
-				LocaleUtil.toLanguageId(LocaleUtil.US), _serviceContext);
+			commerceOrder = _commerceOrderLocalService.updateCommerceOrder(
+				commerceOrder);
 
-		CommercePriceList commercePriceList =
-			_commercePriceListLocalService.fetchCatalogBaseCommercePriceList(
-				commerceCatalog.getGroupId());
+			CommerceCatalog commerceCatalog =
+				CommerceCatalogLocalServiceUtil.addCommerceCatalog(
+					null, RandomTestUtil.randomString(),
+					_commerceCurrency.getCode(),
+					LocaleUtil.toLanguageId(LocaleUtil.US), _serviceContext);
 
-		CPInstance cpInstance =
-			CPTestUtil.addCPInstanceWithRandomSkuFromCatalog(
-				commerceCatalog.getGroupId());
+			CommercePriceList commercePriceList =
+				_commercePriceListLocalService.
+					fetchCatalogBaseCommercePriceList(
+						commerceCatalog.getGroupId());
 
-		CPDefinition cpDefinition = cpInstance.getCPDefinition();
+			CPInstance cpInstance =
+				CPTestUtil.addCPInstanceWithRandomSkuFromCatalog(
+					commerceCatalog.getGroupId());
 
-		_commercePriceEntryLocalService.addCommercePriceEntry(
-			null, cpDefinition.getCProductId(), cpInstance.getCPInstanceUuid(),
-			commercePriceList.getCommercePriceListId(), BigDecimal.ZERO, false,
-			BigDecimal.ZERO, null,
-			ServiceContextTestUtil.getServiceContext(_user.getGroupId()));
+			CPDefinition cpDefinition = cpInstance.getCPDefinition();
 
-		CommerceInventoryWarehouse commerceInventoryWarehouse =
-			CommerceInventoryTestUtil.addCommerceInventoryWarehouse(
-				_serviceContext);
+			_commercePriceEntryLocalService.addCommercePriceEntry(
+				null, cpDefinition.getCProductId(),
+				cpInstance.getCPInstanceUuid(),
+				commercePriceList.getCommercePriceListId(), BigDecimal.ZERO,
+				false, BigDecimal.ZERO, null,
+				ServiceContextTestUtil.getServiceContext(_user.getGroupId()));
 
-		CommerceInventoryTestUtil.addCommerceInventoryWarehouseItem(
-			_user.getUserId(), commerceInventoryWarehouse, BigDecimal.TEN,
-			cpInstance.getSku(), StringPool.BLANK);
+			CommerceInventoryWarehouse commerceInventoryWarehouse =
+				CommerceInventoryTestUtil.addCommerceInventoryWarehouse(
+					_serviceContext);
 
-		CommerceTestUtil.addWarehouseCommerceChannelRel(
-			commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
-			_commerceChannel.getCommerceChannelId());
+			CommerceInventoryTestUtil.addCommerceInventoryWarehouseItem(
+				_user.getUserId(), commerceInventoryWarehouse, BigDecimal.TEN,
+				cpInstance.getSku(), StringPool.BLANK);
 
-		CommerceTestUtil.addCommerceOrderItem(
-			commerceOrder.getCommerceOrderId(), cpInstance.getCPInstanceId(),
-			BigDecimal.ONE);
+			CommerceTestUtil.addWarehouseCommerceChannelRel(
+				commerceInventoryWarehouse.getCommerceInventoryWarehouseId(),
+				_commerceChannel.getCommerceChannelId());
 
-		CommerceOrder checkoutCommerceOrder =
-			_commerceOrderEngine.checkoutCommerceOrder(
-				commerceOrder, _user.getUserId());
+			CommerceTestUtil.addCommerceOrderItem(
+				commerceOrder.getCommerceOrderId(),
+				cpInstance.getCPInstanceId(), BigDecimal.ONE);
 
-		_mockHttpServletRequest = new MockHttpServletRequest("GET", "");
+			CommerceOrder checkoutCommerceOrder =
+				_commerceOrderEngine.checkoutCommerceOrder(
+					commerceOrder, _user.getUserId());
 
-		_mockHttpServletRequest.setAttribute("LOCALE", LocaleUtil.ITALY);
+			_mockHttpServletRequest = new MockHttpServletRequest("GET", "");
 
-		_commercePaymentEngine.processPayment(
-			commerceOrder.getCommerceOrderId(), null, _mockHttpServletRequest);
+			_mockHttpServletRequest.setAttribute("LOCALE", LocaleUtil.ITALY);
 
-		CommerceOrder paymentCommerceOrder =
-			_commerceOrderLocalService.getCommerceOrder(
+			_commercePaymentEngine.processPayment(
+				commerceOrder.getCommerceOrderId(), null,
+				_mockHttpServletRequest);
+
+			CommerceOrder paymentCommerceOrder =
+				_commerceOrderLocalService.getCommerceOrder(
+					checkoutCommerceOrder.getCommerceOrderId());
+
+			Assert.assertEquals(
+				CommerceOrderPaymentConstants.STATUS_AUTHORIZED,
+				paymentCommerceOrder.getPaymentStatus());
+
+			Assert.assertNotNull(paymentCommerceOrder.getTransactionId());
+
+			_commercePaymentEngine.completePayment(
+				paymentCommerceOrder.getCommerceOrderId(),
+				paymentCommerceOrder.getTransactionId(),
+				_mockHttpServletRequest);
+
+			paymentCommerceOrder = _commerceOrderLocalService.getCommerceOrder(
 				checkoutCommerceOrder.getCommerceOrderId());
 
-		Assert.assertEquals(
-			CommerceOrderPaymentConstants.STATUS_AUTHORIZED,
-			paymentCommerceOrder.getPaymentStatus());
+			Assert.assertEquals(
+				CommerceOrderPaymentConstants.STATUS_COMPLETED,
+				paymentCommerceOrder.getPaymentStatus());
 
-		Assert.assertNotNull(paymentCommerceOrder.getTransactionId());
+			_mockHttpServletRequest = new MockHttpServletRequest(
+				"GET", "/o/payment");
 
-		_commercePaymentEngine.completePayment(
-			paymentCommerceOrder.getCommerceOrderId(),
-			paymentCommerceOrder.getTransactionId(), _mockHttpServletRequest);
+			User user = UserTestUtil.addUser();
 
-		paymentCommerceOrder = _commerceOrderLocalService.getCommerceOrder(
-			checkoutCommerceOrder.getCommerceOrderId());
+			PermissionThreadLocal.setPermissionChecker(
+				PermissionCheckerFactoryUtil.create(user));
 
-		Assert.assertEquals(
-			CommerceOrderPaymentConstants.STATUS_COMPLETED,
-			paymentCommerceOrder.getPaymentStatus());
+			PrincipalThreadLocal.setName(user.getUserId());
 
-		_mockHttpServletRequest = new MockHttpServletRequest(
-			"GET", "/o/payment");
+			_mockHttpServletRequest.setAttribute(WebKeys.USER, user);
 
-		User user = UserTestUtil.addUser();
+			_mockHttpServletRequest.addParameter(
+				"groupId", String.valueOf(_commerceChannel.getGroupId()));
+			_mockHttpServletRequest.addParameter(
+				"uuid", String.valueOf(commerceOrder.getUuid()));
 
-		PermissionThreadLocal.setPermissionChecker(
-			PermissionCheckerFactoryUtil.create(user));
+			_servlet.service(
+				_mockHttpServletRequest, new MockHttpServletResponse());
 
-		PrincipalThreadLocal.setName(user.getUserId());
+			paymentCommerceOrder = _commerceOrderLocalService.getCommerceOrder(
+				checkoutCommerceOrder.getCommerceOrderId());
 
-		_mockHttpServletRequest.setAttribute(WebKeys.USER, user);
-
-		_mockHttpServletRequest.addParameter(
-			"groupId", String.valueOf(_commerceChannel.getGroupId()));
-		_mockHttpServletRequest.addParameter(
-			"uuid", String.valueOf(commerceOrder.getUuid()));
-
-		_servlet.service(
-			_mockHttpServletRequest, new MockHttpServletResponse());
-
-		paymentCommerceOrder = _commerceOrderLocalService.getCommerceOrder(
-			checkoutCommerceOrder.getCommerceOrderId());
-
-		Assert.assertEquals(
-			CommerceOrderPaymentConstants.STATUS_COMPLETED,
-			paymentCommerceOrder.getPaymentStatus());
+			Assert.assertEquals(
+				CommerceOrderPaymentConstants.STATUS_COMPLETED,
+				paymentCommerceOrder.getPaymentStatus());
+		}
 	}
 
 	@Rule

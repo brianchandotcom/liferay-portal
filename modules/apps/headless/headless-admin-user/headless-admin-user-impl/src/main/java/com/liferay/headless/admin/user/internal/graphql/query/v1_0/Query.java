@@ -1346,7 +1346,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {roleByExternalReferenceCode(externalReferenceCode: ___){actions, availableLanguages, creator, dateCreated, dateModified, description, description_i18n, externalReferenceCode, id, name, name_i18n, rolePermissions, roleType}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {roleByExternalReferenceCode(externalReferenceCode: ___){actions, availableLanguages, creator, dateCreated, dateModified, description, description_i18n, externalReferenceCode, id, name, name_i18n, permissions, rolePermissions, roleType}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
 		description = "Retrieves the role by its external reference code."
@@ -1365,7 +1365,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {role(roleId: ___){actions, availableLanguages, creator, dateCreated, dateModified, description, description_i18n, externalReferenceCode, id, name, name_i18n, rolePermissions, roleType}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {role(roleId: ___){actions, availableLanguages, creator, dateCreated, dateModified, description, description_i18n, externalReferenceCode, id, name, name_i18n, permissions, rolePermissions, roleType}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(description = "Retrieves the role.")
 	public Role role(@GraphQLName("roleId") Long roleId) throws Exception {

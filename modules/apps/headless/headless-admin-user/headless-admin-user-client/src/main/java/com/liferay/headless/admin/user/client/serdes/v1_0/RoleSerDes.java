@@ -191,6 +191,26 @@ public class RoleSerDes {
 			sb.append(_toJSON(role.getName_i18n()));
 		}
 
+		if (role.getPermissions() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"permissions\": ");
+
+			sb.append("[");
+
+			for (int i = 0; i < role.getPermissions().length; i++) {
+				sb.append(role.getPermissions()[i]);
+
+				if ((i + 1) < role.getPermissions().length) {
+					sb.append(", ");
+				}
+			}
+
+			sb.append("]");
+		}
+
 		if (role.getRolePermissions() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -332,6 +352,13 @@ public class RoleSerDes {
 			map.put("name_i18n", String.valueOf(role.getName_i18n()));
 		}
 
+		if (role.getPermissions() == null) {
+			map.put("permissions", null);
+		}
+		else {
+			map.put("permissions", String.valueOf(role.getPermissions()));
+		}
+
 		if (role.getRolePermissions() == null) {
 			map.put("rolePermissions", null);
 		}
@@ -400,6 +427,9 @@ public class RoleSerDes {
 			}
 			else if (Objects.equals(jsonParserFieldName, "name_i18n")) {
 				return true;
+			}
+			else if (Objects.equals(jsonParserFieldName, "permissions")) {
+				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "rolePermissions")) {
 				return false;
@@ -478,6 +508,26 @@ public class RoleSerDes {
 				if (jsonParserFieldValue != null) {
 					role.setName_i18n(
 						(Map<String, String>)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "permissions")) {
+				if (jsonParserFieldValue != null) {
+					Object[] jsonParserFieldValues =
+						(Object[])jsonParserFieldValue;
+
+					com.liferay.headless.admin.user.client.permission.
+						Permission[] permissionsArray = new
+						com.liferay.headless.admin.user.client.permission.
+							Permission[jsonParserFieldValues.length];
+
+					for (int i = 0; i < permissionsArray.length; i++) {
+						permissionsArray[i] =
+							com.liferay.headless.admin.user.client.permission.
+								Permission.toDTO(
+									(String)jsonParserFieldValues[i]);
+					}
+
+					role.setPermissions(permissionsArray);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "rolePermissions")) {

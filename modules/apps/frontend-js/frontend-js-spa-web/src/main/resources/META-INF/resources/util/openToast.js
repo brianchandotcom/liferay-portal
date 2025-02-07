@@ -35,8 +35,8 @@ export function openToast(type, title, message) {
 <div class="alert-container cadmin container">
 	<div class="alert-notifications alert-notifications-fixed" id="ToastAlertContainer">
 		<div class="lfr-tooltip-scope">
-			<div class="mb-3 alert alert-dismissible alert-${CLASS_NAME_MAP[type]}">
-				<div role="alert" class="alert-autofit-row autofit-row">
+			<div class="alert alert-dismissible alert-${CLASS_NAME_MAP[type]} mb-3">
+				<div class="alert-autofit-row autofit-row" role="alert">
 					<div class="autofit-col">
 						<div class="autofit-section">
 							<span class="alert-indicator">

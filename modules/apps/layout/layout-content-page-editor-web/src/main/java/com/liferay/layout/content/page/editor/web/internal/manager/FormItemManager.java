@@ -583,19 +583,25 @@ public class FormItemManager {
 		public void addAddedLayoutStructureItems(
 			LayoutStructureItem layoutStructureItem) {
 
-			_addedLayoutStructureItems.add(layoutStructureItem);
+			if (layoutStructureItem != null) {
+				_addedLayoutStructureItems.add(layoutStructureItem);
+			}
 		}
 
 		public void addMovedLayoutStructureItems(
 			LayoutStructureItem layoutStructureItem) {
 
-			_movedLayoutStructureItems.add(layoutStructureItem);
+			if (layoutStructureItem != null) {
+				_movedLayoutStructureItems.add(layoutStructureItem);
+			}
 		}
 
 		public void addRemovedLayoutStructureItems(
 			LayoutStructureItem layoutStructureItem) {
 
-			_removedLayoutStructureItems.add(layoutStructureItem);
+			if (layoutStructureItem != null) {
+				_removedLayoutStructureItems.add(layoutStructureItem);
+			}
 		}
 
 		public List<LayoutStructureItem> getAddedLayoutStructureItems() {

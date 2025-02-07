@@ -41,7 +41,7 @@ public class CustomItemsActionsFDSSerializerTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_resetSerializer();
+		_resetFDSSerializer();
 	}
 
 	@Test
@@ -68,7 +68,7 @@ public class CustomItemsActionsFDSSerializerTest {
 		Assert.assertTrue(_containsLabel(fdsActionDropdownItems2, "New 2"));
 		Assert.assertTrue(fdsActionDropdownItems2.size() == 1);
 
-		_resetSerializer();
+		_resetFDSSerializer();
 
 		// No items actions
 
@@ -79,7 +79,7 @@ public class CustomItemsActionsFDSSerializerTest {
 				"fdsName", _httpServletRequest
 			).isEmpty());
 
-		_resetSerializer();
+		_resetFDSSerializer();
 
 		// Shared items actions
 
@@ -144,7 +144,7 @@ public class CustomItemsActionsFDSSerializerTest {
 		);
 	}
 
-	private void _resetSerializer() throws Exception {
+	private void _resetFDSSerializer() throws Exception {
 		_fdsSerializer = Mockito.mock(
 			CustomItemsActionsFDSSerializerImpl.class);
 	}

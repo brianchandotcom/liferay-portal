@@ -130,10 +130,10 @@ function MiniCart({
 						...currentURLs,
 						orderDetailURL: !orderDetailURL
 							? regenerateOrderDetailURL(
+									currentURLs.baseOrderDetailURL,
 									hasCommerceOpenOrderContentPortlet,
 									updatedCart.id,
-									updatedCart.orderUUID,
-									currentURLs.siteDefaultURL
+									updatedCart.orderUUID
 								)
 							: new URL(orderDetailURL),
 					};
@@ -279,6 +279,7 @@ MiniCart.defaultProps = {
 
 MiniCart.propTypes = {
 	cartActionURLs: PropTypes.shape({
+		baseOrderDetailURL: PropTypes.string,
 		checkoutURL: PropTypes.string,
 		orderDetailURL: PropTypes.string,
 		productURLSeparator: PropTypes.string,

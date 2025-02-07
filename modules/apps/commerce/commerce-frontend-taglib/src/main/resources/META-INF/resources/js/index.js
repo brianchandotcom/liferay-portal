@@ -208,6 +208,7 @@ export function requestQuote({
 
 export function cart({
 	accountId,
+	baseOrderDetailURL,
 	cartViews,
 	checkoutURL,
 	currencyCode,
@@ -232,6 +233,7 @@ export function cart({
 	const props = {
 		accountId: Number(accountId),
 		cartActionURLs: {
+			baseOrderDetailURL,
 			checkoutURL,
 			orderDetailURL,
 			productURLSeparator,

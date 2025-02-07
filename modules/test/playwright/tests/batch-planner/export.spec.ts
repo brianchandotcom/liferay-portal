@@ -33,8 +33,8 @@ const stockObjectDefinition: ObjectDefinition = {
 	name: 'Stock',
 	objectFields: [
 		{
-			DBType: ObjectField.DBTypeEnum.String,
-			businessType: ObjectField.BusinessTypeEnum.Text,
+			DBType: "String",
+			businessType: "Text",
 			externalReferenceCode: 'nameERC',
 			indexed: true,
 			indexedAsKeyword: true,
@@ -195,8 +195,8 @@ test('can export as JSON with all field types mapped', async ({
 			name: 'Stock',
 			objectFields: [
 				{
-					DBType: ObjectField.DBTypeEnum.String,
-					businessType: ObjectField.BusinessTypeEnum.Text,
+					DBType: "String",
+					businessType: "Text",
 					externalReferenceCode: 'nameERC',
 					indexed: true,
 					indexedAsKeyword: true,
@@ -207,8 +207,8 @@ test('can export as JSON with all field types mapped', async ({
 					required: true,
 				},
 				{
-					DBType: ObjectField.DBTypeEnum.Boolean,
-					businessType: ObjectField.BusinessTypeEnum.Boolean,
+					DBType: "Boolean",
+					businessType: "Boolean",
 					externalReferenceCode: 'customBoolean',
 					indexed: true,
 					indexedAsKeyword: false,
@@ -218,11 +218,11 @@ test('can export as JSON with all field types mapped', async ({
 					name: 'customBoolean',
 					required: false,
 					system: false,
-					type: ObjectField.TypeEnum.Boolean,
+					type: "Boolean",
 				},
 				{
-					DBType: ObjectField.DBTypeEnum.Clob,
-					businessType: ObjectField.BusinessTypeEnum.LongText,
+					DBType: "Clob",
+					businessType: "LongText",
 					externalReferenceCode: 'customLongText',
 					indexed: true,
 					indexedAsKeyword: false,
@@ -232,11 +232,11 @@ test('can export as JSON with all field types mapped', async ({
 					name: 'customLongText',
 					required: false,
 					system: false,
-					type: ObjectField.TypeEnum.Clob,
+					type: "Clob",
 				},
 				{
-					DBType: ObjectField.DBTypeEnum.BigDecimal,
-					businessType: ObjectField.BusinessTypeEnum.PrecisionDecimal,
+					DBType: "BigDecimal",
+					businessType: "PrecisionDecimal",
 					externalReferenceCode: 'customPrecisionDecimal',
 					indexed: true,
 					indexedAsKeyword: false,
@@ -246,11 +246,11 @@ test('can export as JSON with all field types mapped', async ({
 					name: 'customPrecisionDecimal',
 					required: false,
 					system: false,
-					type: ObjectField.TypeEnum.BigDecimal,
+					type: "BigDecimal",
 				},
 				{
-					DBType: ObjectField.DBTypeEnum.String,
-					businessType: ObjectField.BusinessTypeEnum.Picklist,
+					DBType: "String",
+					businessType: "Picklist",
 					externalReferenceCode: 'customPicklist',
 					indexed: true,
 					indexedAsKeyword: false,
@@ -265,8 +265,8 @@ test('can export as JSON with all field types mapped', async ({
 					state: false,
 				},
 				{
-					DBType: ObjectField.DBTypeEnum.Long,
-					businessType: ObjectField.BusinessTypeEnum.Attachment,
+					DBType: "Long",
+					businessType: "Attachment",
 					indexed: true,
 					indexedAsKeyword: false,
 					label: {
@@ -288,7 +288,7 @@ test('can export as JSON with all field types mapped', async ({
 						} as any,
 					],
 					required: false,
-					type: ObjectField.TypeEnum.Long,
+					type: "Long",
 				},
 			],
 			pluralLabel: {

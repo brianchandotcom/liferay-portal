@@ -28,6 +28,7 @@ import com.liferay.exportimport.kernel.exception.LARFileException;
 import com.liferay.exportimport.kernel.exception.LARFileSizeException;
 import com.liferay.exportimport.kernel.exception.LARTypeException;
 import com.liferay.exportimport.kernel.exception.LayoutImportException;
+import com.liferay.exportimport.kernel.exception.MissingObjectDefinitionException;
 import com.liferay.exportimport.kernel.exception.MissingReferenceException;
 import com.liferay.exportimport.kernel.exception.RemoteExportException;
 import com.liferay.exportimport.kernel.lar.ExportImportClassedModelUtil;
@@ -1311,6 +1312,16 @@ public class StagingImpl implements Staging {
 						StringPool.COMMA_AND_SPACE)
 				},
 				false);
+
+			errorType = ServletResponseConstants.SC_FILE_CUSTOM_EXCEPTION;
+		}
+		else if (exception instanceof MissingObjectDefinitionException) {
+			MissingObjectDefinitionException missingObjectDefinitionException =
+				(MissingObjectDefinitionException)exception;
+
+			errorMessage = _language.format(
+				locale, "the-object-definition-portlet-with-id-x-is-missing",
+				missingObjectDefinitionException.getPortletId());
 
 			errorType = ServletResponseConstants.SC_FILE_CUSTOM_EXCEPTION;
 		}

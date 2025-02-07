@@ -15,6 +15,7 @@ import com.liferay.exportimport.kernel.controller.ImportController;
 import com.liferay.exportimport.kernel.exception.LARFileException;
 import com.liferay.exportimport.kernel.exception.LARTypeException;
 import com.liferay.exportimport.kernel.exception.LayoutImportException;
+import com.liferay.exportimport.kernel.exception.MissingObjectDefinitionException;
 import com.liferay.exportimport.kernel.exception.MissingReferenceException;
 import com.liferay.exportimport.kernel.lar.ExportImportHelper;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
@@ -618,6 +619,13 @@ public class LayoutImportController implements ImportController {
 				_portletDataHandlerProvider.provide(companyId, portletId);
 
 			if (portletDataHandler == null) {
+				if (portletId.startsWith(
+						"com_liferay_object_web_internal_object_definition" +
+							"s_portlet_ObjectDefinitionsPortlet_")) {
+
+					throw new MissingObjectDefinitionException(portletId);
+				}
+
 				continue;
 			}
 

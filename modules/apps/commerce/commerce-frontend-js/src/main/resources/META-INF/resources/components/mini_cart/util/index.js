@@ -244,6 +244,45 @@ export function hasPriceOnApplication(cartItems) {
 	return cartItems.some(({price}) => price.priceOnApplication);
 }
 
+export function regenerateOrderDetailURL(
+	baseOrderDetailURL,
+	hasCommerceOpenOrderContentPortlet,
+	orderId,
+	orderUUID
+) {
+	if (!baseOrderDetailURL) {
+		throw new Error(
+			'Cannot generate a new Order Detail URL. Invalid "baseOrderDetailURL"'
+		);
+	}
+
+	if (hasCommerceOpenOrderContentPortlet) {
+		if (!orderUUID) {
+			throw new Error(
+				'Cannot generate a new Order Detail URL. Invalid "orderUUID"'
+			);
+		}
+
+		const orderDetailURL = new URL(baseOrderDetailURL);
+
+		orderDetailURL.searchParams.append(
+			`_${DEFAULT_ORDER_DETAILS_PORTLET_ID}_${ORDER_UUID_PARAMETER}`,
+			orderUUID
+		);
+
+		return orderDetailURL.toString();
+	}
+	else {
+		if (!orderId) {
+			throw new Error(
+				'Cannot generate a new Order Detail URL. Invalid "orderId"'
+			);
+		}
+
+		return `${baseOrderDetailURL}${orderId}`;
+	}
+}
+
 export function parseOptions(options) {
 	return Array.isArray(options)
 		? options.map(({value}) => `${value}`).join(', ')
@@ -267,45 +306,6 @@ export function parseValue(value) {
 	return Array.isArray(value)
 		? value.filter((item) => item === 0 || item).join(', ')
 		: value;
-}
-
-export function regenerateOrderDetailURL(
-	hasCommerceOpenOrderContentPortlet,
-	orderId,
-	orderUUID,
-	siteDefaultURL
-) {
-	if (!siteDefaultURL) {
-		throw new Error(
-			'Cannot generate a new Order Detail URL. Invalid "siteDefaultURL"'
-		);
-	}
-
-	if (hasCommerceOpenOrderContentPortlet) {
-		if (!orderUUID) {
-			throw new Error(
-				'Cannot generate a new Order Detail URL. Invalid "orderUUID"'
-			);
-		}
-
-		const orderDetailURL = new URL(siteDefaultURL);
-
-		orderDetailURL.searchParams.append(
-			`_${DEFAULT_ORDER_DETAILS_PORTLET_ID}_${ORDER_UUID_PARAMETER}`,
-			orderUUID
-		);
-
-		return orderDetailURL.toString();
-	}
-	else {
-		if (!orderId) {
-			throw new Error(
-				'Cannot generate a new Order Detail URL. Invalid "orderId"'
-			);
-		}
-
-		return `${siteDefaultURL}${orderId}`;
-	}
 }
 
 export function summaryDataMapper({

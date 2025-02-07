@@ -8,6 +8,7 @@ package com.liferay.commerce.tax.model;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.base.BaseTable;
 
+import java.sql.Clob;
 import java.sql.Types;
 
 import java.util.Date;
@@ -57,6 +58,9 @@ public class CommerceTaxMethodTable extends BaseTable<CommerceTaxMethodTable> {
 			"percentage", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
 	public final Column<CommerceTaxMethodTable, Boolean> active = createColumn(
 		"active_", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
+	public final Column<CommerceTaxMethodTable, Clob> typeSettings =
+		createColumn(
+			"typeSettings", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 
 	private CommerceTaxMethodTable() {
 		super("CommerceTaxMethod", CommerceTaxMethodTable::new);

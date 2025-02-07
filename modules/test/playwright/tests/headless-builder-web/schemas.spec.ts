@@ -41,8 +41,8 @@ const objectDefinitionData: ObjectDefinition = {
 	name: `ObjectDefinition`,
 	objectFields: [
 		{
-			DBType: ObjectField.DBTypeEnum.String,
-			businessType: ObjectField.BusinessTypeEnum.Text,
+			DBType: "String",
+			businessType: "Text",
 			externalReferenceCode: 'ObjectFieldERC',
 			indexed: true,
 			indexedAsKeyword: false,
@@ -55,7 +55,7 @@ const objectDefinitionData: ObjectDefinition = {
 			required: false,
 			state: false,
 			system: false,
-			type: ObjectField.TypeEnum.String,
+			type: "String",
 		},
 	],
 	pluralLabel: {
@@ -77,8 +77,8 @@ const objectDefinition1Data: ObjectDefinition = {
 	name: `ObjectDefinition1`,
 	objectFields: [
 		{
-			DBType: ObjectField.DBTypeEnum.String,
-			businessType: ObjectField.BusinessTypeEnum.Text,
+			DBType: "String",
+			businessType: "Text",
 			externalReferenceCode: 'ObjectField1ERC',
 			indexed: true,
 			indexedAsKeyword: false,
@@ -91,12 +91,12 @@ const objectDefinition1Data: ObjectDefinition = {
 			required: false,
 			state: false,
 			system: false,
-			type: ObjectField.TypeEnum.String,
+			type: "String",
 		},
 	],
 	objectRelationships: [
 		{
-			deletionType: ObjectRelationship.DeletionTypeEnum.Cascade,
+			deletionType: "cascade",
 			externalReferenceCode: 'modifiable-system',
 			label: {
 				en_US: 'Test Modifiable System Object',
@@ -109,10 +109,10 @@ const objectDefinition1Data: ObjectDefinition = {
 			parameterObjectFieldName: '',
 			reverse: false,
 			system: false,
-			type: ObjectRelationship.TypeEnum.OneToMany,
+			type: "oneToMany",
 		},
 		{
-			deletionType: ObjectRelationship.DeletionTypeEnum.Cascade,
+			deletionType: "cascade",
 			externalReferenceCode: 'unmodifiable-system',
 			label: {
 				en_US: 'Test Unmodifiable System Object',
@@ -125,10 +125,10 @@ const objectDefinition1Data: ObjectDefinition = {
 			parameterObjectFieldName: '',
 			reverse: false,
 			system: false,
-			type: ObjectRelationship.TypeEnum.OneToMany,
+			type: "oneToMany",
 		},
 		{
-			deletionType: ObjectRelationship.DeletionTypeEnum.Cascade,
+			deletionType: "cascade",
 			externalReferenceCode: 'unmodifiable-system-allowed',
 			label: {
 				en_US: 'Test Unmodifiable Allowed System Object',
@@ -141,10 +141,10 @@ const objectDefinition1Data: ObjectDefinition = {
 			parameterObjectFieldName: '',
 			reverse: false,
 			system: false,
-			type: ObjectRelationship.TypeEnum.OneToMany,
+			type: "oneToMany",
 		},
 		{
-			deletionType: ObjectRelationship.DeletionTypeEnum.Cascade,
+			deletionType: "cascade",
 			externalReferenceCode: 'custom',
 			label: {
 				en_US: 'Test Custom Object',
@@ -157,7 +157,7 @@ const objectDefinition1Data: ObjectDefinition = {
 			parameterObjectFieldName: '',
 			reverse: false,
 			system: false,
-			type: ObjectRelationship.TypeEnum.OneToMany,
+			type: "oneToMany",
 		},
 	],
 	pluralLabel: {
@@ -205,8 +205,8 @@ testFeatureFlagsDisabled(
 					name: `ObjectDefinition${i}`,
 					objectFields: [
 						{
-							DBType: ObjectField.DBTypeEnum.String,
-							businessType: ObjectField.BusinessTypeEnum.Text,
+							DBType: "String",
+							businessType: "Text",
 							externalReferenceCode: 'ObjectFieldERC',
 							indexed: true,
 							indexedAsKeyword: false,
@@ -219,7 +219,7 @@ testFeatureFlagsDisabled(
 							required: false,
 							state: false,
 							system: false,
-							type: ObjectField.TypeEnum.String,
+							type: "String",
 						},
 					],
 					pluralLabel: {

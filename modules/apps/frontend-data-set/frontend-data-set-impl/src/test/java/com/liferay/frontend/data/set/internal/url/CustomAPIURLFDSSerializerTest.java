@@ -80,7 +80,7 @@ public class CustomAPIURLFDSSerializerTest {
 			themeDisplay
 		);
 
-		_resetSerializer();
+		_resetFDSSerializer();
 	}
 
 	@After
@@ -105,7 +105,7 @@ public class CustomAPIURLFDSSerializerTest {
 
 		serviceRegistration.unregister();
 
-		_resetSerializer();
+		_resetFDSSerializer();
 
 		// REST application: /app1 and /app2
 
@@ -124,7 +124,7 @@ public class CustomAPIURLFDSSerializerTest {
 
 		serviceRegistration.unregister();
 
-		_resetSerializer();
+		_resetFDSSerializer();
 
 		// REST application: /app
 
@@ -143,7 +143,7 @@ public class CustomAPIURLFDSSerializerTest {
 
 		serviceRegistration.unregister();
 
-		_resetSerializer();
+		_resetFDSSerializer();
 
 		// Nested fields: creator.name
 
@@ -155,7 +155,7 @@ public class CustomAPIURLFDSSerializerTest {
 			"/o/app/endpoint?nestedFields=creator",
 			_fdsSerializer.serialize("fdsName", _httpServletRequest));
 
-		_resetSerializer();
+		_resetFDSSerializer();
 
 		// Nested fields: creator.name and status.id
 
@@ -175,7 +175,7 @@ public class CustomAPIURLFDSSerializerTest {
 		Assert.assertTrue(nestedFields.contains("status"));
 		Assert.assertTrue(nestedFields.split(",").length == 2);
 
-		_resetSerializer();
+		_resetFDSSerializer();
 
 		// Nested fields depth
 
@@ -333,7 +333,7 @@ public class CustomAPIURLFDSSerializerTest {
 				restApplication + "/" + restSchema));
 	}
 
-	private void _resetSerializer() {
+	private void _resetFDSSerializer() {
 		_fdsSerializer = Mockito.mock(CustomAPIURLFDSSerializerImpl.class);
 
 		ReflectionTestUtil.setFieldValue(

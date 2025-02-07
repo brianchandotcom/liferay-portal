@@ -1,0 +1,29 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.site.configuration;
+
+import aQute.bnd.annotation.metatype.Meta;
+
+import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
+
+/**
+ * @author Sam Ziemer
+ */
+@ExtendedObjectClassDefinition(category = "assets")
+@Meta.OCD(
+	id = "com.liferay.site.configuration.CMSClassNamesConfiguration",
+	localization = "content/Language",
+	name = "cms-class-names-configuration-name"
+)
+public interface CMSClassNamesConfiguration {
+
+	@Meta.AD(
+		deflt = "com.liferay.blogs.model.BlogsEntry|com.liferay.bookmarks.model.BookmarksEntry|com.liferay.bookmarks.model.BookmarksFolder|com.liferay.document.library.kernel.model.DLFileShortcut|com.liferay.document.library.kernel.model.DLFolder|com.liferay.dynamic.data.mapping.model.DDMFormInstance|com.liferay.journal.model.JournalArticle|com.liferay.journal.model.JournalFolder|com.liferay.knowledge.base.model.KBArticle|com.liferay.knowledge.base.model.KBFolder|com.liferay.message.boards.model.MBCategory|com.liferay.message.boards.model.MBThread",
+		name = "content-class-names", required = false
+	)
+	public String[] contentClassNames();
+
+}

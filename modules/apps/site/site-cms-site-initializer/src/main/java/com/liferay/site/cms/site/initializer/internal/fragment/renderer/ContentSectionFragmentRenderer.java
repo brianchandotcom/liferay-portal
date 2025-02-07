@@ -7,6 +7,7 @@ package com.liferay.site.cms.site.initializer.internal.fragment.renderer;
 
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
@@ -14,10 +15,13 @@ import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.site.cms.site.initializer.internal.display.context.ContentSectionDisplayContext;
+import com.liferay.site.configuration.CMSClassNamesConfiguration;
 
 import java.io.IOException;
 
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 
 import javax.servlet.RequestDispatcher;
@@ -25,13 +29,18 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Sam Ziemer
  */
-@Component(service = FragmentRenderer.class)
+@Component(
+	configurationPid = "com.liferay.site.configuration.CMSClassNamesConfiguration",
+	service = FragmentRenderer.class
+)
 public class ContentSectionFragmentRenderer implements FragmentRenderer {
 
 	@Override
@@ -76,6 +85,13 @@ public class ContentSectionFragmentRenderer implements FragmentRenderer {
 		throws IOException {
 
 		try {
+			ContentSectionDisplayContext contentSectionDisplayContext =
+				new ContentSectionDisplayContext(_cmsClassNamesConfiguration);
+
+			httpServletRequest.setAttribute(
+				ContentSectionDisplayContext.class.getName(),
+				contentSectionDisplayContext);
+
 			RequestDispatcher requestDispatcher =
 				_servletContext.getRequestDispatcher("/content_section.jsp");
 
@@ -85,6 +101,15 @@ public class ContentSectionFragmentRenderer implements FragmentRenderer {
 			throw new RuntimeException(exception);
 		}
 	}
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_cmsClassNamesConfiguration = ConfigurableUtil.createConfigurable(
+			CMSClassNamesConfiguration.class, properties);
+	}
+
+	private volatile CMSClassNamesConfiguration _cmsClassNamesConfiguration;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

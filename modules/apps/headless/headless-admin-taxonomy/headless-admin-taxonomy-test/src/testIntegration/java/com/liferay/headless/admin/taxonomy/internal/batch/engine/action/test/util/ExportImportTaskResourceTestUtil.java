@@ -12,13 +12,16 @@ import com.liferay.headless.batch.engine.client.serdes.v1_0.ExportTaskSerDes;
 import com.liferay.headless.batch.engine.client.serdes.v1_0.ImportTaskSerDes;
 import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.InputStream;
 
+import java.util.Map;
 import java.util.Objects;
 import java.util.zip.ZipInputStream;
 
@@ -32,14 +35,32 @@ public class ExportImportTaskResourceTestUtil {
 	public static String executeExportTask(String className, long groupId)
 		throws Exception {
 
+		return executeExportTask(className, groupId, null);
+	}
+
+	public static String executeExportTask(
+			String className, long groupId, Map<String, String> parameters)
+		throws Exception {
+
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
 		httpInvoker.header(HttpHeaders.ACCEPT, ContentTypes.APPLICATION_JSON);
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
-		httpInvoker.path(
-			StringBundler.concat(
-				"http://localhost:8080/o/headless-batch-engine/v1.0",
-				"/export-task/", className, "/JSON?siteId=", groupId));
+
+		String path = StringBundler.concat(
+			"http://localhost:8080/o/headless-batch-engine/v1.0/export-task/",
+			className, "/JSON?siteId=", groupId);
+
+		if (MapUtil.isNotEmpty(parameters)) {
+			for (Map.Entry<String, String> entry : parameters.entrySet()) {
+				path = StringBundler.concat(
+					path, StringPool.AMPERSAND, entry.getKey(),
+					StringPool.EQUAL, entry.getValue());
+			}
+		}
+
+		httpInvoker.path(path);
+
 		httpInvoker.userNameAndPassword(
 			"test@liferay.com:" + PropsValues.DEFAULT_ADMIN_PASSWORD);
 
@@ -97,19 +118,40 @@ public class ExportImportTaskResourceTestUtil {
 
 	public static void executeImportTask(
 			String className, String createStrategy, long groupId,
-			String importCreatorStrategy, String jsonString)
+			String importCreatorStrategy, String json)
+		throws Exception {
+
+		executeImportTask(
+			className, createStrategy, groupId, importCreatorStrategy, json,
+			null);
+	}
+
+	public static void executeImportTask(
+			String className, String createStrategy, long groupId,
+			String importCreatorStrategy, String json,
+			Map<String, String> parameters)
 		throws Exception {
 
 		HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
 
-		httpInvoker.body(jsonString, "application/json");
+		httpInvoker.body(json, "application/json");
 		httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
-		httpInvoker.path(
-			StringBundler.concat(
-				"http://localhost:8080/o/headless-batch-engine/v1.0",
-				"/import-task/", className, "?createStrategy=", createStrategy,
-				"&importCreatorStrategy=", importCreatorStrategy, "&siteId=",
-				groupId));
+
+		String path = StringBundler.concat(
+			"http://localhost:8080/o/headless-batch-engine/v1.0/import-task/",
+			className, "?createStrategy=", createStrategy,
+			"&importCreatorStrategy=", importCreatorStrategy, "&siteId=",
+			groupId);
+
+		if (MapUtil.isNotEmpty(parameters)) {
+			for (Map.Entry<String, String> entry : parameters.entrySet()) {
+				path = StringBundler.concat(
+					path, StringPool.AMPERSAND, entry.getKey(),
+					StringPool.EQUAL, entry.getValue());
+			}
+		}
+
+		httpInvoker.path(path);
 		httpInvoker.userNameAndPassword(
 			"test@liferay.com:" + PropsValues.DEFAULT_ADMIN_PASSWORD);
 

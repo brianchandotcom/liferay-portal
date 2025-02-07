@@ -958,6 +958,8 @@ public abstract class FragmentEntryLocalServiceBaseImpl
 			publishedFragmentEntry.getFragmentCollectionId());
 		draftFragmentEntry.setFragmentEntryKey(
 			publishedFragmentEntry.getFragmentEntryKey());
+		draftFragmentEntry.setMarketplace(
+			publishedFragmentEntry.getMarketplace());
 		draftFragmentEntry.setName(publishedFragmentEntry.getName());
 		draftFragmentEntry.setCss(publishedFragmentEntry.getCss());
 		draftFragmentEntry.setHtml(publishedFragmentEntry.getHtml());
@@ -966,8 +968,6 @@ public abstract class FragmentEntryLocalServiceBaseImpl
 		draftFragmentEntry.setConfiguration(
 			publishedFragmentEntry.getConfiguration());
 		draftFragmentEntry.setIcon(publishedFragmentEntry.getIcon());
-		draftFragmentEntry.setMarketplace(
-			publishedFragmentEntry.getMarketplace());
 		draftFragmentEntry.setPreviewFileEntryId(
 			publishedFragmentEntry.getPreviewFileEntryId());
 		draftFragmentEntry.setReadOnly(publishedFragmentEntry.getReadOnly());

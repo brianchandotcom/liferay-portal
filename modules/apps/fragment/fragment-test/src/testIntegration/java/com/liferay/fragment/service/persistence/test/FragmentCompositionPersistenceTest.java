@@ -145,6 +145,8 @@ public class FragmentCompositionPersistenceTest {
 		newFragmentComposition.setFragmentCompositionKey(
 			RandomTestUtil.randomString());
 
+		newFragmentComposition.setMarketplace(RandomTestUtil.randomBoolean());
+
 		newFragmentComposition.setName(RandomTestUtil.randomString());
 
 		newFragmentComposition.setDescription(RandomTestUtil.randomString());
@@ -152,8 +154,6 @@ public class FragmentCompositionPersistenceTest {
 		newFragmentComposition.setData(RandomTestUtil.randomString());
 
 		newFragmentComposition.setPreviewFileEntryId(RandomTestUtil.nextLong());
-
-		newFragmentComposition.setMarketplace(RandomTestUtil.randomBoolean());
 
 		newFragmentComposition.setLastPublishDate(RandomTestUtil.nextDate());
 
@@ -213,6 +213,9 @@ public class FragmentCompositionPersistenceTest {
 			existingFragmentComposition.getFragmentCompositionKey(),
 			newFragmentComposition.getFragmentCompositionKey());
 		Assert.assertEquals(
+			existingFragmentComposition.isMarketplace(),
+			newFragmentComposition.isMarketplace());
+		Assert.assertEquals(
 			existingFragmentComposition.getName(),
 			newFragmentComposition.getName());
 		Assert.assertEquals(
@@ -224,9 +227,6 @@ public class FragmentCompositionPersistenceTest {
 		Assert.assertEquals(
 			existingFragmentComposition.getPreviewFileEntryId(),
 			newFragmentComposition.getPreviewFileEntryId());
-		Assert.assertEquals(
-			existingFragmentComposition.isMarketplace(),
-			newFragmentComposition.isMarketplace());
 		Assert.assertEquals(
 			Time.getShortTimestamp(
 				existingFragmentComposition.getLastPublishDate()),
@@ -397,8 +397,8 @@ public class FragmentCompositionPersistenceTest {
 			"fragmentCompositionId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "fragmentCollectionId", true,
-			"fragmentCompositionKey", true, "name", true, "description", true,
-			"previewFileEntryId", true, "marketplace", true, "lastPublishDate",
+			"fragmentCompositionKey", true, "marketplace", true, "name", true,
+			"description", true, "previewFileEntryId", true, "lastPublishDate",
 			true, "status", true, "statusByUserId", true, "statusByUserName",
 			true, "statusDate", true);
 	}
@@ -748,6 +748,8 @@ public class FragmentCompositionPersistenceTest {
 		fragmentComposition.setFragmentCompositionKey(
 			RandomTestUtil.randomString());
 
+		fragmentComposition.setMarketplace(RandomTestUtil.randomBoolean());
+
 		fragmentComposition.setName(RandomTestUtil.randomString());
 
 		fragmentComposition.setDescription(RandomTestUtil.randomString());
@@ -755,8 +757,6 @@ public class FragmentCompositionPersistenceTest {
 		fragmentComposition.setData(RandomTestUtil.randomString());
 
 		fragmentComposition.setPreviewFileEntryId(RandomTestUtil.nextLong());
-
-		fragmentComposition.setMarketplace(RandomTestUtil.randomBoolean());
 
 		fragmentComposition.setLastPublishDate(RandomTestUtil.nextDate());
 

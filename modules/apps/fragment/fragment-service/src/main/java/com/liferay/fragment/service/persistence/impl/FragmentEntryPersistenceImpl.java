@@ -16870,6 +16870,7 @@ public class FragmentEntryPersistenceImpl
 		ctIgnoreColumnNames.add("modifiedDate");
 		ctMergeColumnNames.add("fragmentCollectionId");
 		ctMergeColumnNames.add("fragmentEntryKey");
+		ctMergeColumnNames.add("marketplace");
 		ctMergeColumnNames.add("name");
 		ctMergeColumnNames.add("css");
 		ctMergeColumnNames.add("html");
@@ -16877,7 +16878,6 @@ public class FragmentEntryPersistenceImpl
 		ctMergeColumnNames.add("cacheable");
 		ctMergeColumnNames.add("configuration");
 		ctMergeColumnNames.add("icon");
-		ctMergeColumnNames.add("marketplace");
 		ctMergeColumnNames.add("previewFileEntryId");
 		ctMergeColumnNames.add("readOnly");
 		ctMergeColumnNames.add("type_");

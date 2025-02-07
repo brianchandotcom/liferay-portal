@@ -66,6 +66,9 @@ public class FragmentCompositionTable
 		fragmentCompositionKey = createColumn(
 			"fragmentCompositionKey", String.class, Types.VARCHAR,
 			Column.FLAG_DEFAULT);
+	public final Column<FragmentCompositionTable, Boolean> marketplace =
+		createColumn(
+			"marketplace", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
 	public final Column<FragmentCompositionTable, String> name = createColumn(
 		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<FragmentCompositionTable, String> description =
@@ -77,9 +80,6 @@ public class FragmentCompositionTable
 		createColumn(
 			"previewFileEntryId", Long.class, Types.BIGINT,
 			Column.FLAG_DEFAULT);
-	public final Column<FragmentCompositionTable, Boolean> marketplace =
-		createColumn(
-			"marketplace", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
 	public final Column<FragmentCompositionTable, Date> lastPublishDate =
 		createColumn(
 			"lastPublishDate", Date.class, Types.TIMESTAMP,

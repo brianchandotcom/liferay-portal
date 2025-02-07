@@ -6340,11 +6340,11 @@ public class FragmentCompositionPersistenceImpl
 		ctIgnoreColumnNames.add("modifiedDate");
 		ctMergeColumnNames.add("fragmentCollectionId");
 		ctMergeColumnNames.add("fragmentCompositionKey");
+		ctMergeColumnNames.add("marketplace");
 		ctMergeColumnNames.add("name");
 		ctMergeColumnNames.add("description");
 		ctMergeColumnNames.add("data_");
 		ctMergeColumnNames.add("previewFileEntryId");
-		ctMergeColumnNames.add("marketplace");
 		ctMergeColumnNames.add("lastPublishDate");
 		ctMergeColumnNames.add("status");
 		ctMergeColumnNames.add("statusByUserId");

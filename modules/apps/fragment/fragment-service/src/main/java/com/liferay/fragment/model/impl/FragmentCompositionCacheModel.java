@@ -97,6 +97,8 @@ public class FragmentCompositionCacheModel
 		sb.append(fragmentCollectionId);
 		sb.append(", fragmentCompositionKey=");
 		sb.append(fragmentCompositionKey);
+		sb.append(", marketplace=");
+		sb.append(marketplace);
 		sb.append(", name=");
 		sb.append(name);
 		sb.append(", description=");
@@ -105,8 +107,6 @@ public class FragmentCompositionCacheModel
 		sb.append(data);
 		sb.append(", previewFileEntryId=");
 		sb.append(previewFileEntryId);
-		sb.append(", marketplace=");
-		sb.append(marketplace);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
 		sb.append(", status=");
@@ -181,6 +181,8 @@ public class FragmentCompositionCacheModel
 				fragmentCompositionKey);
 		}
 
+		fragmentCompositionImpl.setMarketplace(marketplace);
+
 		if (name == null) {
 			fragmentCompositionImpl.setName("");
 		}
@@ -203,7 +205,6 @@ public class FragmentCompositionCacheModel
 		}
 
 		fragmentCompositionImpl.setPreviewFileEntryId(previewFileEntryId);
-		fragmentCompositionImpl.setMarketplace(marketplace);
 
 		if (lastPublishDate == Long.MIN_VALUE) {
 			fragmentCompositionImpl.setLastPublishDate(null);
@@ -258,13 +259,13 @@ public class FragmentCompositionCacheModel
 
 		fragmentCollectionId = objectInput.readLong();
 		fragmentCompositionKey = objectInput.readUTF();
+
+		marketplace = objectInput.readBoolean();
 		name = objectInput.readUTF();
 		description = objectInput.readUTF();
 		data = (String)objectInput.readObject();
 
 		previewFileEntryId = objectInput.readLong();
-
-		marketplace = objectInput.readBoolean();
 		lastPublishDate = objectInput.readLong();
 
 		status = objectInput.readInt();
@@ -321,6 +322,8 @@ public class FragmentCompositionCacheModel
 			objectOutput.writeUTF(fragmentCompositionKey);
 		}
 
+		objectOutput.writeBoolean(marketplace);
+
 		if (name == null) {
 			objectOutput.writeUTF("");
 		}
@@ -343,8 +346,6 @@ public class FragmentCompositionCacheModel
 		}
 
 		objectOutput.writeLong(previewFileEntryId);
-
-		objectOutput.writeBoolean(marketplace);
 		objectOutput.writeLong(lastPublishDate);
 
 		objectOutput.writeInt(status);
@@ -374,11 +375,11 @@ public class FragmentCompositionCacheModel
 	public long modifiedDate;
 	public long fragmentCollectionId;
 	public String fragmentCompositionKey;
+	public boolean marketplace;
 	public String name;
 	public String description;
 	public String data;
 	public long previewFileEntryId;
-	public boolean marketplace;
 	public long lastPublishDate;
 	public int status;
 	public long statusByUserId;

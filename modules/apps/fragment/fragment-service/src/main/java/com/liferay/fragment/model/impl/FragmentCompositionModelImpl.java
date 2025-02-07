@@ -73,9 +73,10 @@ public class FragmentCompositionModelImpl
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
 		{"modifiedDate", Types.TIMESTAMP},
 		{"fragmentCollectionId", Types.BIGINT},
-		{"fragmentCompositionKey", Types.VARCHAR}, {"name", Types.VARCHAR},
+		{"fragmentCompositionKey", Types.VARCHAR},
+		{"marketplace", Types.BOOLEAN}, {"name", Types.VARCHAR},
 		{"description", Types.VARCHAR}, {"data_", Types.CLOB},
-		{"previewFileEntryId", Types.BIGINT}, {"marketplace", Types.BOOLEAN},
+		{"previewFileEntryId", Types.BIGINT},
 		{"lastPublishDate", Types.TIMESTAMP}, {"status", Types.INTEGER},
 		{"statusByUserId", Types.BIGINT}, {"statusByUserName", Types.VARCHAR},
 		{"statusDate", Types.TIMESTAMP}
@@ -98,11 +99,11 @@ public class FragmentCompositionModelImpl
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("fragmentCollectionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("fragmentCompositionKey", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("marketplace", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("data_", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("previewFileEntryId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("marketplace", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("statusByUserId", Types.BIGINT);
@@ -111,7 +112,7 @@ public class FragmentCompositionModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table FragmentComposition (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,fragmentCompositionId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,fragmentCollectionId LONG,fragmentCompositionKey VARCHAR(75) null,name VARCHAR(75) null,description STRING null,data_ TEXT null,previewFileEntryId LONG,marketplace BOOLEAN,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,primary key (fragmentCompositionId, ctCollectionId))";
+		"create table FragmentComposition (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,fragmentCompositionId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,fragmentCollectionId LONG,fragmentCompositionKey VARCHAR(75) null,marketplace BOOLEAN,name VARCHAR(75) null,description STRING null,data_ TEXT null,previewFileEntryId LONG,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,primary key (fragmentCompositionId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP =
 		"drop table FragmentComposition";
@@ -315,6 +316,8 @@ public class FragmentCompositionModelImpl
 			attributeGetterFunctions.put(
 				"fragmentCompositionKey",
 				FragmentComposition::getFragmentCompositionKey);
+			attributeGetterFunctions.put(
+				"marketplace", FragmentComposition::getMarketplace);
 			attributeGetterFunctions.put("name", FragmentComposition::getName);
 			attributeGetterFunctions.put(
 				"description", FragmentComposition::getDescription);
@@ -322,8 +325,6 @@ public class FragmentCompositionModelImpl
 			attributeGetterFunctions.put(
 				"previewFileEntryId",
 				FragmentComposition::getPreviewFileEntryId);
-			attributeGetterFunctions.put(
-				"marketplace", FragmentComposition::getMarketplace);
 			attributeGetterFunctions.put(
 				"lastPublishDate", FragmentComposition::getLastPublishDate);
 			attributeGetterFunctions.put(
@@ -406,6 +407,10 @@ public class FragmentCompositionModelImpl
 				(BiConsumer<FragmentComposition, String>)
 					FragmentComposition::setFragmentCompositionKey);
 			attributeSetterBiConsumers.put(
+				"marketplace",
+				(BiConsumer<FragmentComposition, Boolean>)
+					FragmentComposition::setMarketplace);
+			attributeSetterBiConsumers.put(
 				"name",
 				(BiConsumer<FragmentComposition, String>)
 					FragmentComposition::setName);
@@ -421,10 +426,6 @@ public class FragmentCompositionModelImpl
 				"previewFileEntryId",
 				(BiConsumer<FragmentComposition, Long>)
 					FragmentComposition::setPreviewFileEntryId);
-			attributeSetterBiConsumers.put(
-				"marketplace",
-				(BiConsumer<FragmentComposition, Boolean>)
-					FragmentComposition::setMarketplace);
 			attributeSetterBiConsumers.put(
 				"lastPublishDate",
 				(BiConsumer<FragmentComposition, Date>)
@@ -747,6 +748,27 @@ public class FragmentCompositionModelImpl
 
 	@JSON
 	@Override
+	public boolean getMarketplace() {
+		return _marketplace;
+	}
+
+	@JSON
+	@Override
+	public boolean isMarketplace() {
+		return _marketplace;
+	}
+
+	@Override
+	public void setMarketplace(boolean marketplace) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_marketplace = marketplace;
+	}
+
+	@JSON
+	@Override
 	public String getName() {
 		if (_name == null) {
 			return "";
@@ -827,27 +849,6 @@ public class FragmentCompositionModelImpl
 		}
 
 		_previewFileEntryId = previewFileEntryId;
-	}
-
-	@JSON
-	@Override
-	public boolean getMarketplace() {
-		return _marketplace;
-	}
-
-	@JSON
-	@Override
-	public boolean isMarketplace() {
-		return _marketplace;
-	}
-
-	@Override
-	public void setMarketplace(boolean marketplace) {
-		if (_columnOriginalValues == Collections.EMPTY_MAP) {
-			_setColumnOriginalValues();
-		}
-
-		_marketplace = marketplace;
 	}
 
 	@JSON
@@ -1117,11 +1118,11 @@ public class FragmentCompositionModelImpl
 			getFragmentCollectionId());
 		fragmentCompositionImpl.setFragmentCompositionKey(
 			getFragmentCompositionKey());
+		fragmentCompositionImpl.setMarketplace(isMarketplace());
 		fragmentCompositionImpl.setName(getName());
 		fragmentCompositionImpl.setDescription(getDescription());
 		fragmentCompositionImpl.setData(getData());
 		fragmentCompositionImpl.setPreviewFileEntryId(getPreviewFileEntryId());
-		fragmentCompositionImpl.setMarketplace(isMarketplace());
 		fragmentCompositionImpl.setLastPublishDate(getLastPublishDate());
 		fragmentCompositionImpl.setStatus(getStatus());
 		fragmentCompositionImpl.setStatusByUserId(getStatusByUserId());
@@ -1164,6 +1165,8 @@ public class FragmentCompositionModelImpl
 			this.<Long>getColumnOriginalValue("fragmentCollectionId"));
 		fragmentCompositionImpl.setFragmentCompositionKey(
 			this.<String>getColumnOriginalValue("fragmentCompositionKey"));
+		fragmentCompositionImpl.setMarketplace(
+			this.<Boolean>getColumnOriginalValue("marketplace"));
 		fragmentCompositionImpl.setName(
 			this.<String>getColumnOriginalValue("name"));
 		fragmentCompositionImpl.setDescription(
@@ -1172,8 +1175,6 @@ public class FragmentCompositionModelImpl
 			this.<String>getColumnOriginalValue("data_"));
 		fragmentCompositionImpl.setPreviewFileEntryId(
 			this.<Long>getColumnOriginalValue("previewFileEntryId"));
-		fragmentCompositionImpl.setMarketplace(
-			this.<Boolean>getColumnOriginalValue("marketplace"));
 		fragmentCompositionImpl.setLastPublishDate(
 			this.<Date>getColumnOriginalValue("lastPublishDate"));
 		fragmentCompositionImpl.setStatus(
@@ -1334,6 +1335,8 @@ public class FragmentCompositionModelImpl
 			fragmentCompositionCacheModel.fragmentCompositionKey = null;
 		}
 
+		fragmentCompositionCacheModel.marketplace = isMarketplace();
+
 		fragmentCompositionCacheModel.name = getName();
 
 		String name = fragmentCompositionCacheModel.name;
@@ -1360,8 +1363,6 @@ public class FragmentCompositionModelImpl
 
 		fragmentCompositionCacheModel.previewFileEntryId =
 			getPreviewFileEntryId();
-
-		fragmentCompositionCacheModel.marketplace = isMarketplace();
 
 		Date lastPublishDate = getLastPublishDate();
 
@@ -1471,11 +1472,11 @@ public class FragmentCompositionModelImpl
 	private boolean _setModifiedDate;
 	private long _fragmentCollectionId;
 	private String _fragmentCompositionKey;
+	private boolean _marketplace;
 	private String _name;
 	private String _description;
 	private String _data;
 	private long _previewFileEntryId;
-	private boolean _marketplace;
 	private Date _lastPublishDate;
 	private int _status;
 	private long _statusByUserId;
@@ -1529,11 +1530,11 @@ public class FragmentCompositionModelImpl
 			"fragmentCollectionId", _fragmentCollectionId);
 		_columnOriginalValues.put(
 			"fragmentCompositionKey", _fragmentCompositionKey);
+		_columnOriginalValues.put("marketplace", _marketplace);
 		_columnOriginalValues.put("name", _name);
 		_columnOriginalValues.put("description", _description);
 		_columnOriginalValues.put("data_", _data);
 		_columnOriginalValues.put("previewFileEntryId", _previewFileEntryId);
-		_columnOriginalValues.put("marketplace", _marketplace);
 		_columnOriginalValues.put("lastPublishDate", _lastPublishDate);
 		_columnOriginalValues.put("status", _status);
 		_columnOriginalValues.put("statusByUserId", _statusByUserId);
@@ -1589,15 +1590,15 @@ public class FragmentCompositionModelImpl
 
 		columnBitmasks.put("fragmentCompositionKey", 4096L);
 
-		columnBitmasks.put("name", 8192L);
+		columnBitmasks.put("marketplace", 8192L);
 
-		columnBitmasks.put("description", 16384L);
+		columnBitmasks.put("name", 16384L);
 
-		columnBitmasks.put("data_", 32768L);
+		columnBitmasks.put("description", 32768L);
 
-		columnBitmasks.put("previewFileEntryId", 65536L);
+		columnBitmasks.put("data_", 65536L);
 
-		columnBitmasks.put("marketplace", 131072L);
+		columnBitmasks.put("previewFileEntryId", 131072L);
 
 		columnBitmasks.put("lastPublishDate", 262144L);
 

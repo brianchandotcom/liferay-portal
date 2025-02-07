@@ -98,6 +98,8 @@ public class FragmentEntryCacheModel
 		sb.append(fragmentCollectionId);
 		sb.append(", fragmentEntryKey=");
 		sb.append(fragmentEntryKey);
+		sb.append(", marketplace=");
+		sb.append(marketplace);
 		sb.append(", name=");
 		sb.append(name);
 		sb.append(", css=");
@@ -112,8 +114,6 @@ public class FragmentEntryCacheModel
 		sb.append(configuration);
 		sb.append(", icon=");
 		sb.append(icon);
-		sb.append(", marketplace=");
-		sb.append(marketplace);
 		sb.append(", previewFileEntryId=");
 		sb.append(previewFileEntryId);
 		sb.append(", readOnly=");
@@ -195,6 +195,8 @@ public class FragmentEntryCacheModel
 			fragmentEntryImpl.setFragmentEntryKey(fragmentEntryKey);
 		}
 
+		fragmentEntryImpl.setMarketplace(marketplace);
+
 		if (name == null) {
 			fragmentEntryImpl.setName("");
 		}
@@ -239,7 +241,6 @@ public class FragmentEntryCacheModel
 			fragmentEntryImpl.setIcon(icon);
 		}
 
-		fragmentEntryImpl.setMarketplace(marketplace);
 		fragmentEntryImpl.setPreviewFileEntryId(previewFileEntryId);
 		fragmentEntryImpl.setReadOnly(readOnly);
 		fragmentEntryImpl.setType(type);
@@ -307,6 +308,8 @@ public class FragmentEntryCacheModel
 
 		fragmentCollectionId = objectInput.readLong();
 		fragmentEntryKey = objectInput.readUTF();
+
+		marketplace = objectInput.readBoolean();
 		name = objectInput.readUTF();
 		css = (String)objectInput.readObject();
 		html = (String)objectInput.readObject();
@@ -315,8 +318,6 @@ public class FragmentEntryCacheModel
 		cacheable = objectInput.readBoolean();
 		configuration = (String)objectInput.readObject();
 		icon = objectInput.readUTF();
-
-		marketplace = objectInput.readBoolean();
 
 		previewFileEntryId = objectInput.readLong();
 
@@ -384,6 +385,8 @@ public class FragmentEntryCacheModel
 			objectOutput.writeUTF(fragmentEntryKey);
 		}
 
+		objectOutput.writeBoolean(marketplace);
+
 		if (name == null) {
 			objectOutput.writeUTF("");
 		}
@@ -427,8 +430,6 @@ public class FragmentEntryCacheModel
 		else {
 			objectOutput.writeUTF(icon);
 		}
-
-		objectOutput.writeBoolean(marketplace);
 
 		objectOutput.writeLong(previewFileEntryId);
 
@@ -474,6 +475,7 @@ public class FragmentEntryCacheModel
 	public long modifiedDate;
 	public long fragmentCollectionId;
 	public String fragmentEntryKey;
+	public boolean marketplace;
 	public String name;
 	public String css;
 	public String html;
@@ -481,7 +483,6 @@ public class FragmentEntryCacheModel
 	public boolean cacheable;
 	public String configuration;
 	public String icon;
-	public boolean marketplace;
 	public long previewFileEntryId;
 	public boolean readOnly;
 	public int type;

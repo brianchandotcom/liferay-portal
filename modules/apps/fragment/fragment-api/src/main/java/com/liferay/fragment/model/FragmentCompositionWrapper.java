@@ -49,11 +49,11 @@ public class FragmentCompositionWrapper
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("fragmentCollectionId", getFragmentCollectionId());
 		attributes.put("fragmentCompositionKey", getFragmentCompositionKey());
+		attributes.put("marketplace", isMarketplace());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
 		attributes.put("data", getData());
 		attributes.put("previewFileEntryId", getPreviewFileEntryId());
-		attributes.put("marketplace", isMarketplace());
 		attributes.put("lastPublishDate", getLastPublishDate());
 		attributes.put("status", getStatus());
 		attributes.put("statusByUserId", getStatusByUserId());
@@ -147,6 +147,12 @@ public class FragmentCompositionWrapper
 			setFragmentCompositionKey(fragmentCompositionKey);
 		}
 
+		Boolean marketplace = (Boolean)attributes.get("marketplace");
+
+		if (marketplace != null) {
+			setMarketplace(marketplace);
+		}
+
 		String name = (String)attributes.get("name");
 
 		if (name != null) {
@@ -169,12 +175,6 @@ public class FragmentCompositionWrapper
 
 		if (previewFileEntryId != null) {
 			setPreviewFileEntryId(previewFileEntryId);
-		}
-
-		Boolean marketplace = (Boolean)attributes.get("marketplace");
-
-		if (marketplace != null) {
-			setMarketplace(marketplace);
 		}
 
 		Date lastPublishDate = (Date)attributes.get("lastPublishDate");

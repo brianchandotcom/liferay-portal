@@ -280,6 +280,27 @@ public interface FragmentCompositionModel
 	public void setFragmentCompositionKey(String fragmentCompositionKey);
 
 	/**
+	 * Returns the marketplace of this fragment composition.
+	 *
+	 * @return the marketplace of this fragment composition
+	 */
+	public boolean getMarketplace();
+
+	/**
+	 * Returns <code>true</code> if this fragment composition is marketplace.
+	 *
+	 * @return <code>true</code> if this fragment composition is marketplace; <code>false</code> otherwise
+	 */
+	public boolean isMarketplace();
+
+	/**
+	 * Sets whether this fragment composition is marketplace.
+	 *
+	 * @param marketplace the marketplace of this fragment composition
+	 */
+	public void setMarketplace(boolean marketplace);
+
+	/**
 	 * Returns the name of this fragment composition.
 	 *
 	 * @return the name of this fragment composition
@@ -337,27 +358,6 @@ public interface FragmentCompositionModel
 	 * @param previewFileEntryId the preview file entry ID of this fragment composition
 	 */
 	public void setPreviewFileEntryId(long previewFileEntryId);
-
-	/**
-	 * Returns the marketplace of this fragment composition.
-	 *
-	 * @return the marketplace of this fragment composition
-	 */
-	public boolean getMarketplace();
-
-	/**
-	 * Returns <code>true</code> if this fragment composition is marketplace.
-	 *
-	 * @return <code>true</code> if this fragment composition is marketplace; <code>false</code> otherwise
-	 */
-	public boolean isMarketplace();
-
-	/**
-	 * Sets whether this fragment composition is marketplace.
-	 *
-	 * @param marketplace the marketplace of this fragment composition
-	 */
-	public void setMarketplace(boolean marketplace);
 
 	/**
 	 * Returns the last publish date of this fragment composition.

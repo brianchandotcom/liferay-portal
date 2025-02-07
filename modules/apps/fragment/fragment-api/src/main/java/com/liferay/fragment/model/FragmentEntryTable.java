@@ -61,6 +61,8 @@ public class FragmentEntryTable extends BaseTable<FragmentEntryTable> {
 		createColumn(
 			"fragmentEntryKey", String.class, Types.VARCHAR,
 			Column.FLAG_DEFAULT);
+	public final Column<FragmentEntryTable, Boolean> marketplace = createColumn(
+		"marketplace", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
 	public final Column<FragmentEntryTable, String> name = createColumn(
 		"name", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<FragmentEntryTable, Clob> css = createColumn(
@@ -75,8 +77,6 @@ public class FragmentEntryTable extends BaseTable<FragmentEntryTable> {
 		"configuration", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
 	public final Column<FragmentEntryTable, String> icon = createColumn(
 		"icon", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<FragmentEntryTable, Boolean> marketplace = createColumn(
-		"marketplace", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
 	public final Column<FragmentEntryTable, Long> previewFileEntryId =
 		createColumn(
 			"previewFileEntryId", Long.class, Types.BIGINT,

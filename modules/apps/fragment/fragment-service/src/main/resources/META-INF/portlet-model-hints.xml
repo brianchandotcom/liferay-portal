@@ -36,6 +36,7 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="fragmentCollectionId" type="long" />
 		<field name="fragmentCompositionKey" type="String" />
+		<field name="marketplace" type="boolean" />
 		<field name="name" type="String" />
 		<field name="description" type="String">
 			<hint-collection name="TEXTAREA" />
@@ -44,7 +45,6 @@
 			<hint-collection name="CLOB" />
 		</field>
 		<field name="previewFileEntryId" type="long" />
-		<field name="marketplace" type="boolean" />
 		<field name="lastPublishDate" type="Date" />
 		<field name="status" type="int" />
 		<field name="statusByUserId" type="long" />
@@ -66,6 +66,7 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="fragmentCollectionId" type="long" />
 		<field name="fragmentEntryKey" type="String" />
+		<field name="marketplace" type="boolean" />
 		<field name="name" type="String">
 			<validator name="required" />
 		</field>
@@ -83,7 +84,6 @@
 			<hint-collection name="CLOB" />
 		</field>
 		<field name="icon" type="String" />
-		<field name="marketplace" type="boolean" />
 		<field name="previewFileEntryId" type="long" />
 		<field name="readOnly" type="boolean" />
 		<field name="type" type="int" />
@@ -155,6 +155,7 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="fragmentCollectionId" type="long" />
 		<field name="fragmentEntryKey" type="String" />
+		<field name="marketplace" type="boolean" />
 		<field name="name" type="String">
 			<validator name="required" />
 		</field>
@@ -172,7 +173,6 @@
 			<hint-collection name="CLOB" />
 		</field>
 		<field name="icon" type="String" />
-		<field name="marketplace" type="boolean" />
 		<field name="previewFileEntryId" type="long" />
 		<field name="readOnly" type="boolean" />
 		<field name="type" type="int" />

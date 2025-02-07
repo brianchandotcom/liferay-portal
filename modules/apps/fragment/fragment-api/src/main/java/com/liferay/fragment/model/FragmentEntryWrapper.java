@@ -50,6 +50,7 @@ public class FragmentEntryWrapper
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("fragmentCollectionId", getFragmentCollectionId());
 		attributes.put("fragmentEntryKey", getFragmentEntryKey());
+		attributes.put("marketplace", isMarketplace());
 		attributes.put("name", getName());
 		attributes.put("css", getCss());
 		attributes.put("html", getHtml());
@@ -57,7 +58,6 @@ public class FragmentEntryWrapper
 		attributes.put("cacheable", isCacheable());
 		attributes.put("configuration", getConfiguration());
 		attributes.put("icon", getIcon());
-		attributes.put("marketplace", isMarketplace());
 		attributes.put("previewFileEntryId", getPreviewFileEntryId());
 		attributes.put("readOnly", isReadOnly());
 		attributes.put("type", getType());
@@ -159,6 +159,12 @@ public class FragmentEntryWrapper
 			setFragmentEntryKey(fragmentEntryKey);
 		}
 
+		Boolean marketplace = (Boolean)attributes.get("marketplace");
+
+		if (marketplace != null) {
+			setMarketplace(marketplace);
+		}
+
 		String name = (String)attributes.get("name");
 
 		if (name != null) {
@@ -199,12 +205,6 @@ public class FragmentEntryWrapper
 
 		if (icon != null) {
 			setIcon(icon);
-		}
-
-		Boolean marketplace = (Boolean)attributes.get("marketplace");
-
-		if (marketplace != null) {
-			setMarketplace(marketplace);
 		}
 
 		Long previewFileEntryId = (Long)attributes.get("previewFileEntryId");

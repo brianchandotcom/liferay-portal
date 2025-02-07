@@ -912,6 +912,10 @@ components:
                     additionalProperties:
                         type: string
                     type: object
+                permissions:
+                    items:
+                        type: permission
+                    type: array
                 rolePermissions:
                     items:
                         $ref: "#/components/schemas/RolePermission"

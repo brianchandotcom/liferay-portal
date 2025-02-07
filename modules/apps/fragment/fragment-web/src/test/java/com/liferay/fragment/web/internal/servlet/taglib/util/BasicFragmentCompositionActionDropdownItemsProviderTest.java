@@ -27,7 +27,9 @@ public class BasicFragmentCompositionActionDropdownItemsProviderTest
 		LiferayUnitTestRule.INSTANCE;
 
 	@Test
-	public void testGetActionDropdowns() throws Exception {
+	public void testGetNoMarketplaceFragmentCompositionActionDropdowns()
+		throws Exception {
+
 		setUpFragmentPermission(true);
 
 		BasicFragmentCompositionActionDropdownItemsProvider
@@ -43,7 +45,7 @@ public class BasicFragmentCompositionActionDropdownItemsProviderTest
 
 	@FeatureFlags("LPD-34938")
 	@Test
-	public void testMarketplaceFragmentCompositionGetActionDropdowns()
+	public void testGetMarketplaceFragmentCompositionActionDropdowns()
 		throws Exception {
 
 		setUpFragmentPermission(true);

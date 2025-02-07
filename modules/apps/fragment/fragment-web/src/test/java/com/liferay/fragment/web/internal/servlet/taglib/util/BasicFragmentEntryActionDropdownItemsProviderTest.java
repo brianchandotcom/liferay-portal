@@ -117,7 +117,7 @@ public class BasicFragmentEntryActionDropdownItemsProviderTest
 
 	@FeatureFlags("LPD-34938")
 	@Test
-	public void testMarketplaceFragmentEntryGetActionDropdowns()
+	public void testGetMarketplaceFragmentEntryActionDropdowns()
 		throws Exception {
 
 		setUpFragmentPermission(true);

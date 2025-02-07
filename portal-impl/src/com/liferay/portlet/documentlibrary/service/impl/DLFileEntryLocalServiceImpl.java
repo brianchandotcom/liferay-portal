@@ -262,8 +262,9 @@ public class DLFileEntryLocalServiceImpl
 			fileEntryTypeId);
 
 		_validateFile(
-			groupId, folderId, 0, fileEntryTypeId, fileName, extension,
-			inputStreamExtension, title, displayDate, expirationDate);
+			user.getCompanyId(), groupId, folderId, 0, fileEntryTypeId,
+			fileName, extension, inputStreamExtension, mimeType, title,
+			displayDate, expirationDate);
 
 		long fileEntryId = counterLocalService.increment();
 
@@ -3814,10 +3815,10 @@ public class DLFileEntryLocalServiceImpl
 			Date date = new Date();
 
 			_validateFile(
-				dlFileEntry.getGroupId(), dlFileEntry.getFolderId(),
-				dlFileEntry.getFileEntryId(), fileEntryTypeId, fileName,
-				extension, inputStreamExtension, title, displayDate,
-				expirationDate);
+				user.getCompanyId(), dlFileEntry.getGroupId(),
+				dlFileEntry.getFolderId(), dlFileEntry.getFileEntryId(),
+				fileEntryTypeId, fileName, extension, inputStreamExtension,
+				mimeType, title, displayDate, expirationDate);
 
 			// File version
 
@@ -3993,9 +3994,10 @@ public class DLFileEntryLocalServiceImpl
 	}
 
 	private void _validateFile(
-			long groupId, long folderId, long fileEntryId, long fileEntryTypeId,
-			String fileName, String extension, String inputStreamExtension,
-			String title, Date displayDate, Date expirationDate)
+			long companyId, long groupId, long folderId, long fileEntryId,
+			long fileEntryTypeId, String fileName, String extension,
+			String inputStreamExtension, String mimeType, String title,
+			Date displayDate, Date expirationDate)
 		throws PortalException {
 
 		DLValidatorUtil.validateFileName(fileName);
@@ -4008,6 +4010,13 @@ public class DLFileEntryLocalServiceImpl
 			Validator.isNotNull(extension)) {
 
 			_validateFileExtension(fileName, extension, inputStreamExtension);
+		}
+
+		if ((dlFileEntryType.getScope() !=
+				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_SCOPE_SYSTEM) &&
+			Validator.isNotNull(mimeType)) {
+
+			_validateFileMimeType(companyId, mimeType);
 		}
 
 		validateFile(groupId, folderId, fileEntryId, fileName, title);
@@ -4078,6 +4087,16 @@ public class DLFileEntryLocalServiceImpl
 					extension, " of file ", fileName, " exceeds max length of ",
 					maxLength));
 		}
+	}
+
+	private void _validateFileMimeType(long companyId, String mimeType)
+		throws PortalException {
+
+		if (!DLAppHelperThreadLocal.isEnabled()) {
+			return;
+		}
+
+		DLValidatorUtil.validateFileMimeType(companyId, mimeType);
 	}
 
 	private void _validateFolder(long groupId, long folderId, String title)

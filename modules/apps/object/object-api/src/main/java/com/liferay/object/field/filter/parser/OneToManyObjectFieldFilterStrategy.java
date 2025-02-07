@@ -113,7 +113,9 @@ public class OneToManyObjectFieldFilterStrategy
 		}
 
 		return new OneToManySelectionFDSFilter(
-			parse(), restContextPath, titleObjectField.getLabel(locale),
+			parse(), restContextPath,
+			_objectField.getLabel(locale) + StringPool.SPACE +
+				titleObjectField.getLabel(locale),
 			_objectField.getName(), titleObjectField.getName());
 	}
 

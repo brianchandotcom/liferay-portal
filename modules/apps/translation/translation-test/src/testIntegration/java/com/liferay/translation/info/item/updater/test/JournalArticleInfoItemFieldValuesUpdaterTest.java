@@ -46,6 +46,12 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.translation.importer.TranslationInfoItemFieldValuesImporter;
 import com.liferay.translation.service.TranslationEntryLocalService;
 import com.liferay.translation.test.util.TranslationTestUtil;
+
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -55,11 +61,6 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * @author Alicia García
@@ -80,14 +81,19 @@ public class JournalArticleInfoItemFieldValuesUpdaterTest {
 		PrincipalThreadLocal.setName(TestPropsValues.getUserId());
 	}
 
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		PrincipalThreadLocal.setName(_originalName);
+	}
+
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
 		User user = TestPropsValues.getUser();
-		long companyId = TestPropsValues.getCompanyId();
 
-		_company = _companyLocalService.getCompany(companyId);
+		_company = _companyLocalService.getCompany(
+			TestPropsValues.getCompanyId());
 
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			_group, user.getUserId());
@@ -100,9 +106,50 @@ public class JournalArticleInfoItemFieldValuesUpdaterTest {
 		ServiceContextThreadLocal.popServiceContext();
 	}
 
-	@AfterClass
-	public static void tearDownClass() throws Exception {
-		PrincipalThreadLocal.setName(_originalName);
+	@Test
+	public void testUpdateJournalArticleAfterUserDeletion() throws Exception {
+		User user = UserTestUtil.addCompanyAdminUser(_company);
+
+		ServiceContext userServiceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), user.getUserId());
+
+		ServiceContextThreadLocal.pushServiceContext(userServiceContext);
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(), 0,
+			PortalUtil.getClassNameId(JournalArticle.class),
+			HashMapBuilder.put(
+				LocaleUtil.US, RandomTestUtil.randomString()
+			).build(),
+			HashMapBuilder.put(
+				LocaleUtil.US, RandomTestUtil.randomString()
+			).build(),
+			HashMapBuilder.put(
+				LocaleUtil.US, "<p>This is the content</p>"
+			).build(),
+			LocaleUtil.getSiteDefault(), false, true, userServiceContext);
+
+		InfoItemFieldValues infoItemFieldValues =
+			_xliffTranslationInfoItemFieldValuesImporter.
+				importInfoItemFieldValues(
+					_group.getGroupId(),
+					new InfoItemReference(JournalArticle.class.getName(), 122),
+					TranslationTestUtil.readFileToInputStream(
+						"test-journal-article-122.xlf"));
+
+		_userLocalService.deleteUser(user);
+
+		journalArticle =
+			_journalArticleInfoItemFieldValuesUpdater.
+				updateFromInfoItemFieldValues(
+					journalArticle, infoItemFieldValues);
+
+		Assert.assertEquals(
+			TestPropsValues.getUserId(), journalArticle.getStatusByUserId());
+
+		Assert.assertEquals(
+			"Este es el titulo", journalArticle.getTitle(LocaleUtil.SPAIN));
 	}
 
 	@Test
@@ -273,50 +320,6 @@ public class JournalArticleInfoItemFieldValuesUpdaterTest {
 	}
 
 	@Test
-	public void testUpdateJournalArticleAfterUserDeletion() throws Exception {
-		User user = UserTestUtil.addCompanyAdminUser(_company);
-
-		ServiceContext userServiceContext = ServiceContextTestUtil.getServiceContext(
-			_group.getGroupId(), user.getUserId());
-
-		ServiceContextThreadLocal.pushServiceContext(userServiceContext);
-
-		JournalArticle journalArticle = JournalTestUtil.addArticle(
-			_group.getGroupId(), 0,
-			PortalUtil.getClassNameId(JournalArticle.class),
-			HashMapBuilder.put(
-				LocaleUtil.US, RandomTestUtil.randomString()
-			).build(),
-			HashMapBuilder.put(
-				LocaleUtil.US, RandomTestUtil.randomString()
-			).build(),
-			HashMapBuilder.put(
-				LocaleUtil.US, "<p>This is the content</p>"
-			).build(),
-			LocaleUtil.getSiteDefault(), false, true, userServiceContext);
-
-		InfoItemFieldValues infoItemFieldValues =
-			_xliffTranslationInfoItemFieldValuesImporter.
-				importInfoItemFieldValues(
-					_group.getGroupId(),
-					new InfoItemReference(JournalArticle.class.getName(), 122),
-					TranslationTestUtil.readFileToInputStream(
-						"test-journal-article-122.xlf"));
-
-		_userLocalService.deleteUser(user);
-
-		journalArticle =
-			_journalArticleInfoItemFieldValuesUpdater.updateFromInfoItemFieldValues(
-				journalArticle, infoItemFieldValues);
-
-		Assert.assertEquals(
-			TestPropsValues.getUserId(), journalArticle.getStatusByUserId());
-
-		Assert.assertEquals(
-			"Este es el titulo", journalArticle.getTitle(LocaleUtil.SPAIN));
-	}
-
-	@Test
 	public void testUpdateJournalArticleFromInfoItemFieldValuesUpdatesTranslations()
 		throws Exception {
 
@@ -467,6 +470,13 @@ public class JournalArticleInfoItemFieldValuesUpdaterTest {
 			ddmStructure.getStructureKey(), null);
 	}
 
+	@Inject
+	private static CompanyLocalService _companyLocalService;
+
+	private static String _originalName;
+
+	private Company _company;
+
 	@Inject(filter = "ddm.form.deserializer.type=json")
 	private DDMFormDeserializer _ddmFormDeserializer;
 
@@ -485,18 +495,11 @@ public class JournalArticleInfoItemFieldValuesUpdaterTest {
 	@Inject
 	private TranslationEntryLocalService _translationEntryLocalService;
 
-	@Inject(filter = "content.type=application/xliff+xml")
-	private TranslationInfoItemFieldValuesImporter
-		_xliffTranslationInfoItemFieldValuesImporter;
-
-	private Company _company;
-
 	@Inject
 	private UserLocalService _userLocalService;
 
-	@Inject
-	private static CompanyLocalService _companyLocalService;
-
-	private static String _originalName;
+	@Inject(filter = "content.type=application/xliff+xml")
+	private TranslationInfoItemFieldValuesImporter
+		_xliffTranslationInfoItemFieldValuesImporter;
 
 }

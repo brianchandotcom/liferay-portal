@@ -101,9 +101,9 @@ public class ExpandoColumnAnalyticsDXPEntityBatchEngineTaskItemDelegate
 		DynamicQuery dynamicQuery = _expandoColumnLocalService.dynamicQuery();
 
 		Property tableIdProperty = PropertyFactoryUtil.forName("tableId");
-		
+
 		Property nameProperty = PropertyFactoryUtil.forName("name");
-		
+
 		AnalyticsConfiguration analyticsConfiguration =
 			_analyticsConfigurationRegistry.getAnalyticsConfiguration(
 				companyId);
@@ -114,7 +114,8 @@ public class ExpandoColumnAnalyticsDXPEntityBatchEngineTaskItemDelegate
 					tableIdProperty.eq(organizationExpandoTable.getTableId()),
 					RestrictionsFactoryUtil.and(
 						tableIdProperty.eq(userExpandoTable.getTableId()),
-						nameProperty.in(analyticsConfiguration.syncedUserFieldNames()))));
+						nameProperty.in(
+							analyticsConfiguration.syncedUserFieldNames()))));
 		}
 		else if (organizationExpandoTable != null) {
 			dynamicQuery.add(

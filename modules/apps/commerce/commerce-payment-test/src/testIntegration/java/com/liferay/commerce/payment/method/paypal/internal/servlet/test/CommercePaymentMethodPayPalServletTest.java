@@ -13,6 +13,8 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -43,29 +45,35 @@ public class CommercePaymentMethodPayPalServletTest {
 
 	@Test
 	public void testCrossOriginRedirect() throws Exception {
-		MockHttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest("GET", "/mercanet-payment");
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.commerce.payment.method.mercanet.internal." +
+					"servlet.MercanetServlet",
+				LoggerTestUtil.OFF)) {
 
-		String redirect = "https://www.google.com";
+			MockHttpServletRequest mockHttpServletRequest =
+				new MockHttpServletRequest("GET", "/mercanet-payment");
 
-		mockHttpServletRequest.addParameter("redirect", redirect);
+			String redirect = "https://www.google.com";
 
-		User user = UserTestUtil.addUser();
+			mockHttpServletRequest.addParameter("redirect", redirect);
 
-		PermissionThreadLocal.setPermissionChecker(
-			PermissionCheckerFactoryUtil.create(user));
+			User user = UserTestUtil.addUser();
 
-		PrincipalThreadLocal.setName(user.getUserId());
+			PermissionThreadLocal.setPermissionChecker(
+				PermissionCheckerFactoryUtil.create(user));
 
-		mockHttpServletRequest.setAttribute(WebKeys.USER, user);
+			PrincipalThreadLocal.setName(user.getUserId());
 
-		MockHttpServletResponse mockHttpServletResponse =
-			new MockHttpServletResponse();
+			mockHttpServletRequest.setAttribute(WebKeys.USER, user);
 
-		_servlet.service(mockHttpServletRequest, mockHttpServletResponse);
+			MockHttpServletResponse mockHttpServletResponse =
+				new MockHttpServletResponse();
 
-		Assert.assertNotEquals(
-			redirect, mockHttpServletResponse.getRedirectedUrl());
+			_servlet.service(mockHttpServletRequest, mockHttpServletResponse);
+
+			Assert.assertNotEquals(
+				redirect, mockHttpServletResponse.getRedirectedUrl());
+		}
 	}
 
 	@Inject(

@@ -70,11 +70,11 @@
 
 		<column name="fragmentCollectionId" type="long" />
 		<column name="fragmentCompositionKey" type="String" />
+		<column name="marketplace" type="boolean" />
 		<column name="name" type="String" />
 		<column name="description" type="String" />
 		<column name="data" type="String" />
 		<column name="previewFileEntryId" type="long" />
-		<column name="marketplace" type="boolean" />
 		<column name="lastPublishDate" type="Date" />
 		<column name="status" type="int" />
 		<column name="statusByUserId" type="long" />
@@ -142,6 +142,7 @@
 
 		<column name="fragmentCollectionId" type="long" />
 		<column name="fragmentEntryKey" type="String" />
+		<column name="marketplace" type="boolean" />
 		<column name="name" type="String" />
 		<column name="css" type="String" />
 		<column name="html" type="String" />
@@ -149,7 +150,6 @@
 		<column name="cacheable" type="boolean" />
 		<column name="configuration" type="String" />
 		<column name="icon" type="String" />
-		<column name="marketplace" type="boolean" />
 		<column name="previewFileEntryId" type="long" />
 		<column name="readOnly" type="boolean" />
 		<column name="type" type="int" />

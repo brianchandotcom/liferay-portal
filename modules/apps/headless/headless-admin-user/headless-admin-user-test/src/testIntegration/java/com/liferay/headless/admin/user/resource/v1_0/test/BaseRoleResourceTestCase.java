@@ -1443,6 +1443,14 @@ public abstract class BaseRoleResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("permissions", additionalAssertFieldName)) {
+				if (role.getPermissions() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("rolePermissions", additionalAssertFieldName)) {
 				if (role.getRolePermissions() == null) {
 					valid = false;
@@ -1678,6 +1686,16 @@ public abstract class BaseRoleResourceTestCase {
 			if (Objects.equals("name_i18n", additionalAssertFieldName)) {
 				if (!equals(
 						(Map)role1.getName_i18n(), (Map)role2.getName_i18n())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("permissions", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						role1.getPermissions(), role2.getPermissions())) {
 
 					return false;
 				}
@@ -2039,6 +2057,11 @@ public abstract class BaseRoleResourceTestCase {
 		}
 
 		if (entityFieldName.equals("name_i18n")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("permissions")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}

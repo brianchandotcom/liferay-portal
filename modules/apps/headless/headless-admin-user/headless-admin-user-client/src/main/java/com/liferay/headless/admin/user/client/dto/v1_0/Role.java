@@ -257,6 +257,35 @@ public class Role implements Cloneable, Serializable {
 
 	protected Map<String, String> name_i18n;
 
+	public com.liferay.headless.admin.user.client.permission.Permission[]
+		getPermissions() {
+
+		return permissions;
+	}
+
+	public void setPermissions(
+		com.liferay.headless.admin.user.client.permission.Permission[]
+			permissions) {
+
+		this.permissions = permissions;
+	}
+
+	public void setPermissions(
+		UnsafeSupplier
+			<com.liferay.headless.admin.user.client.permission.Permission[],
+			 Exception> permissionsUnsafeSupplier) {
+
+		try {
+			permissions = permissionsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected com.liferay.headless.admin.user.client.permission.Permission[]
+		permissions;
+
 	public RolePermission[] getRolePermissions() {
 		return rolePermissions;
 	}

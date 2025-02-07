@@ -98,7 +98,7 @@ public class IGDisplayExportImportPortletPreferencesProcessor
 			return portletPreferences;
 		}
 
-		// Root folder ID is set, only export that
+		// Root folder ID is set
 
 		long rootFolderId = GetterUtil.getLong(
 			portletPreferences.getValue("rootFolderId", null));
@@ -152,7 +152,7 @@ public class IGDisplayExportImportPortletPreferencesProcessor
 			return portletPreferences;
 		}
 
-		// Root folder ID is not set, we need to export everything
+		// Root folder ID is not set, export everything
 
 		try {
 			portletDataContext.addPortletPermissions(DLConstants.RESOURCE_NAME);

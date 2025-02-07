@@ -208,10 +208,10 @@ public class CustomAPIURLFDSSerializerTest {
 		try {
 			String query = relativeURL.split("\\?")[1];
 
-			String[] pairs = query.split("&");
+			String[] queryParts = query.split("&");
 
-			for (String pair : pairs) {
-				String[] keyValue = pair.split("=");
+			for (String queryPart : queryParts) {
+				String[] keyValue = queryPart.split("=");
 
 				String key = keyValue[0];
 

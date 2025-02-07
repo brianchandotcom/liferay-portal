@@ -793,15 +793,12 @@ public class CompanyLocalServiceDBPartitionTest
 			RepositoryClassDefinitionCatalogUtil.getRepositoryClassDefinition(
 				companyId, CompanyLocalServiceDBPartitionTest.class.getName());
 
-		Assert.assertNotNull(repositoryClassDefinition);
-
 		Assert.assertEquals(
 			cached,
 			MapUtil.isNotEmpty(
 				(Map<Long, Map<Long, LocalRepository>>)
 					ReflectionTestUtil.getFieldValue(
 						repositoryClassDefinition, "_localRepositoriesMap")));
-
 		Assert.assertEquals(
 			cached,
 			MapUtil.isNotEmpty(

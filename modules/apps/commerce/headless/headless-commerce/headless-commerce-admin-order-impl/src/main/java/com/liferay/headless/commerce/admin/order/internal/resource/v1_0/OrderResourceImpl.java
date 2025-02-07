@@ -471,12 +471,12 @@ public class OrderResourceImpl extends BaseOrderResourceImpl {
 
 		// Expando
 
-		Map<String, ?> customFields = order.getCustomFields();
+		Map<String, ?> expandoAttributes = _getExpandoBridgeAttributes(order);
 
-		if ((customFields != null) && !customFields.isEmpty()) {
+		if (MapUtil.isNotEmpty(expandoAttributes)) {
 			ExpandoUtil.updateExpando(
 				contextCompany.getCompanyId(), CommerceOrder.class,
-				commerceOrder.getPrimaryKey(), customFields);
+				commerceOrder.getPrimaryKey(), expandoAttributes);
 		}
 
 		// Update nested resources
@@ -526,6 +526,13 @@ public class OrderResourceImpl extends BaseOrderResourceImpl {
 		}
 
 		return commerceOrderType.getCommerceOrderTypeId();
+	}
+
+	private Map<String, Serializable> _getExpandoBridgeAttributes(Order order) {
+		return CustomFieldsUtil.toMap(
+			CommerceOrder.class.getName(), contextCompany.getCompanyId(),
+			order.getCustomFields(),
+			contextAcceptLanguage.getPreferredLocale());
 	}
 
 	private Map<String, Serializable> _getExpandoBridgeAttributes(
@@ -976,12 +983,12 @@ public class OrderResourceImpl extends BaseOrderResourceImpl {
 				paymentTermId, contextAcceptLanguage.getPreferredLanguageId());
 		}
 
-		Map<String, ?> customFields = order.getCustomFields();
+		Map<String, ?> expandoAttributes = _getExpandoBridgeAttributes(order);
 
-		if ((customFields != null) && !customFields.isEmpty()) {
+		if (MapUtil.isNotEmpty(expandoAttributes)) {
 			ExpandoUtil.updateExpando(
 				contextCompany.getCompanyId(), CommerceOrder.class,
-				commerceOrder.getPrimaryKey(), customFields);
+				commerceOrder.getPrimaryKey(), expandoAttributes);
 		}
 
 		commerceOrder = _updateNestedResources(

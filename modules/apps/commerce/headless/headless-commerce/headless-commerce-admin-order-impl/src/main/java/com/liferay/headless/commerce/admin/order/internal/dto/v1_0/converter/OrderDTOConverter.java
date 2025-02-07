@@ -24,9 +24,9 @@ import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.service.CommerceOrderTypeService;
 import com.liferay.commerce.term.model.CommerceTermEntry;
 import com.liferay.commerce.term.service.CommerceTermEntryLocalService;
-import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.Order;
 import com.liferay.headless.commerce.admin.order.dto.v1_0.Status;
+import com.liferay.headless.commerce.admin.order.internal.dto.v1_0.util.CustomFieldsUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.User;
@@ -126,12 +126,12 @@ public class OrderDTOConverter implements DTOConverter<CommerceOrder, Order> {
 					commerceCurrency::getExternalReferenceCode);
 				setCurrencyId(commerceCurrency::getCommerceCurrencyId);
 				setCustomFields(
-					() -> {
-						ExpandoBridge expandoBridge =
-							commerceOrder.getExpandoBridge();
-
-						return expandoBridge.getAttributes();
-					});
+					() -> CustomFieldsUtil.toCustomFields(
+						dtoConverterContext.isAcceptAllLanguages(),
+						CommerceOrder.class.getName(),
+						commerceOrder.getCommerceOrderId(),
+						commerceOrder.getCompanyId(),
+						dtoConverterContext.getLocale()));
 				setDeliveryTermDescription(
 					commerceOrder::getDeliveryCommerceTermEntryDescription);
 				setDeliveryTermExternalReferenceCode(

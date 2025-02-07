@@ -179,8 +179,6 @@ public class AddStepperFragmentEntryLinkMVCActionCommand
 			actionRequest, "numberOfSteps");
 		int position = ParamUtil.getInteger(actionRequest, "position");
 
-		JSONObject jsonObject = _jsonFactory.createJSONObject();
-
 		LayoutStructure layoutStructure =
 			LayoutStructureUtil.getLayoutStructure(
 				themeDisplay.getScopeGroupId(), themeDisplay.getPlid(),
@@ -234,7 +232,7 @@ public class AddStepperFragmentEntryLinkMVCActionCommand
 			actionRequest, actionResponse, numberOfSteps,
 			stepperFragmentEntryLink);
 
-		return jsonObject.put(
+		return JSONUtil.put(
 			"addedItemIds",
 			_jsonFactory.createJSONArray(
 				TransformUtil.transform(

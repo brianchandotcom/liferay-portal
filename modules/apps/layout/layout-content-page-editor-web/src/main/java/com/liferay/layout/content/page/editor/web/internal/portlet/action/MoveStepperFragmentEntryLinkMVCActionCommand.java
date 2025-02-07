@@ -70,8 +70,6 @@ public class MoveStepperFragmentEntryLinkMVCActionCommand
 			actionRequest, "parentItemId");
 		int position = ParamUtil.getInteger(actionRequest, "position");
 
-		JSONObject jsonObject = _jsonFactory.createJSONObject();
-
 		LayoutStructure layoutStructure =
 			LayoutStructureUtil.getLayoutStructure(
 				themeDisplay.getScopeGroupId(), themeDisplay.getPlid(),
@@ -118,7 +116,7 @@ public class MoveStepperFragmentEntryLinkMVCActionCommand
 			_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
 				fragmentEntryLinkId));
 
-		return jsonObject.put(
+		return JSONUtil.put(
 			"addedItemIds",
 			_jsonFactory.createJSONArray(
 				TransformUtil.transform(

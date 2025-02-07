@@ -47,11 +47,11 @@ public class SystemAPIURLFDSSerializerTest extends BaseFDSSerializerTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 
-		FDSAPIURLResolverRegistry fdsapiurlResolverRegistry =
+		FDSAPIURLResolverRegistry fdsAPIURLResolverRegistry =
 			new FDSAPIURLResolverRegistryImpl();
 
 		ReflectionTestUtil.setFieldValue(
-			fdsapiurlResolverRegistry, "_serviceTrackerMap", serviceTrackerMap);
+			fdsAPIURLResolverRegistry, "_serviceTrackerMap", serviceTrackerMap);
 
 		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
 
@@ -63,7 +63,7 @@ public class SystemAPIURLFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		ReflectionTestUtil.setFieldValue(
 			_fdsSerializer, "fdsAPIURLResolverRegistry",
-			fdsapiurlResolverRegistry);
+			fdsAPIURLResolverRegistry);
 
 		ReflectionTestUtil.setFieldValue(
 			_fdsSerializer, "_systemFDSEntryRegistry",

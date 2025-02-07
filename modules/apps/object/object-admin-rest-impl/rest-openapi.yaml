@@ -1203,6 +1203,7 @@ paths:
                             schema:
                                 items:
                                     $ref: "#/components/schemas/ObjectValidationRule"
+                                type: array
                         application/xml:
                             schema:
                                 items:

@@ -245,8 +245,8 @@ public class LayoutSetLocalServiceWrapper
 	}
 
 	@Override
-	public LayoutSet fetchLayoutSetByLogoId(boolean privateLayout, long logoId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public LayoutSet fetchLayoutSetByLogoId(
+		boolean privateLayout, long logoId) {
 
 		return _layoutSetLocalService.fetchLayoutSetByLogoId(
 			privateLayout, logoId);

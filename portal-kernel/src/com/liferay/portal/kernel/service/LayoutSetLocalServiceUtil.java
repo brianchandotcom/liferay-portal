@@ -225,8 +225,7 @@ public class LayoutSetLocalServiceUtil {
 	}
 
 	public static LayoutSet fetchLayoutSetByLogoId(
-			boolean privateLayout, long logoId)
-		throws PortalException {
+		boolean privateLayout, long logoId) {
 
 		return getService().fetchLayoutSetByLogoId(privateLayout, logoId);
 	}

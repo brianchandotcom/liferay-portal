@@ -7,15 +7,20 @@ import {Locator, Page, expect} from '@playwright/test';
 
 export class EditResultRankingPage {
 	readonly addResultButton: Locator;
-	readonly addResultModal: Locator;
-	readonly addResultModalAddButton: Locator;
-	readonly addResultModalSearch: Locator;
-	readonly addResultModalSearchItem: (
-		resultTitle: string
-	) => Promise<Locator>;
 	readonly page: Page;
-	readonly resultRankingItem: (label: string) => Promise<Locator>;
 	readonly saveButton: Locator;
+
+	readonly addResultModal: {
+		readonly addButton: Locator;
+		readonly container: Locator;
+		readonly searchInput: Locator;
+		readonly searchResultItem: (resultTitle: string) => Promise<Locator>;
+	};
+
+	readonly results: {
+		readonly container: Locator;
+		readonly item: (resultTitle: string) => Promise<Locator>;
+	};
 
 	constructor(page: Page) {
 		this.addResultButton = page.getByLabel('Add Result');
@@ -23,58 +28,82 @@ export class EditResultRankingPage {
 
 		this.page = page;
 
-		// Add Result Modal
+		const addResultModalContainer = page.locator('.add-result-modal-root');
 
-		this.addResultModal = page.locator('.add-result-modal-root');
-		this.addResultModalSearch =
-			this.addResultModal.getByPlaceholder('Search the engine');
-		this.addResultModalAddButton = this.addResultModal.getByRole('button', {
-			name: 'Add',
-		});
-		this.addResultModalSearchItem = async (resultTitle: string) => {
-			return page
-				.locator('.add-result-modal-root .list-group-item')
-				.filter({
-					has: page.getByRole('link', {
-						exact: true,
-						name: resultTitle,
-					}),
-				});
+		this.addResultModal = {
+			addButton: addResultModalContainer.getByRole('button', {
+				name: 'Add',
+			}),
+			container: addResultModalContainer,
+			searchInput:
+				addResultModalContainer.getByPlaceholder('Search the engine'),
+			searchResultItem: async (resultTitle: string) => {
+				return addResultModalContainer
+					.locator('.list-group-item')
+					.filter({
+						has: page.getByRole('link', {
+							exact: true,
+							name: resultTitle,
+						}),
+					});
+			},
 		};
 
-		// Result Ranking List
+		const resultsContainer = page.locator(
+			'.result-rankings-container .form-section-results-list'
+		);
 
-		this.resultRankingItem = async (resultTitle: string) => {
-			return page
-				.locator('.result-rankings-container .list-group-item')
-				.filter({
+		this.results = {
+			container: resultsContainer,
+			item: async (resultTitle: string) => {
+				return resultsContainer.locator('.list-group-item').filter({
 					has: page.getByRole('link', {
 						exact: true,
 						name: resultTitle,
 					}),
 				});
+			},
 		};
 	}
 
-	async addResults(searchQuery: string, titles: string[]) {
+	async addResults({
+		searchQuery,
+		titles,
+	}: {
+		searchQuery: string;
+		titles: string[];
+	}) {
 		await this.addResultButton.click();
 
-		await this.addResultModalSearch.fill(searchQuery);
+		await this.addResultModal.searchInput.fill(searchQuery);
 
-		await this.addResultModalSearch.press('Enter');
+		await this.addResultModal.searchInput.press('Enter');
 
 		for (const title of titles) {
-			const searchResultItem = await this.addResultModalSearchItem(title);
+			const addResultSearchItem =
+				await this.addResultModal.searchResultItem(title);
 
-			await expect(searchResultItem).toBeVisible();
+			await expect(addResultSearchItem).toBeVisible();
 
-			await searchResultItem.getByLabel('Select').click();
+			await addResultSearchItem.getByLabel('Select').click();
 		}
 
-		await this.addResultModalAddButton.click();
+		await this.addResultModal.addButton.click();
+
+		for (const title of titles) {
+			const resultsItem = await this.results.item(title);
+
+			await expect(resultsItem).toBeVisible();
+		}
 	}
 
-	async dragAndDropResultRankingItem({dragTarget, dropTarget}) {
+	async dragAndDropResultsItem({
+		dragTarget,
+		dropTarget,
+	}: {
+		dragTarget: Locator;
+		dropTarget: Locator;
+	}) {
 		const boundingClientRect = await dropTarget.evaluate((element) =>
 			element.getBoundingClientRect()
 		);

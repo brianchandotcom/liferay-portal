@@ -9,40 +9,47 @@ import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
 
 export class ResultRankingsViewPage {
-	readonly addResultRankingButton: Locator;
+	readonly addButton: Locator;
 	readonly applicationsMenuPage: ApplicationsMenuPage;
 	readonly page: Page;
-	readonly resultRankingsTable: Locator;
-	readonly resultRankingItem: (label: string) => Promise<Locator>;
 	readonly navBar: Locator;
 
+	readonly table: {
+		readonly container: Locator;
+		readonly link: (searchQuery: string) => Promise<Locator>;
+		readonly row: (searchQuery: string) => Promise<Locator>;
+	};
+
 	constructor(page: Page) {
-		this.addResultRankingButton = page.getByRole('link', {
+		this.addButton = page.getByRole('link', {
 			name: 'New Ranking',
 		});
 		this.applicationsMenuPage = new ApplicationsMenuPage(page);
 		this.navBar = page.locator('nav');
-		this.resultRankingsTable = page.getByRole('table');
 
 		this.page = page;
 
-		// Result Rankings Table
+		const tableContainer = page.getByRole('table');
 
-		this.resultRankingItem = async (searchQuery: string) => {
-			return this.resultRankingsTable.locator('tr').filter({
-				has: page.getByRole('link', {name: searchQuery}),
-			});
+		this.table = {
+			container: tableContainer,
+			link: async (searchQuery: string) => {
+				return tableContainer.getByRole('link', {name: searchQuery});
+			},
+			row: async (searchQuery: string) => {
+				return tableContainer.locator('tr').filter({
+					has: page.getByRole('link', {name: searchQuery}),
+				});
+			},
 		};
 	}
-
-	// Navigation
 
 	async goto() {
 		await this.applicationsMenuPage.goToResultRankings();
 	}
 
 	async createResultRanking(searchQuery: string) {
-		await this.addResultRankingButton.click();
+		await this.addButton.click();
 
 		await this.page.getByLabel('Search Query').fill(searchQuery);
 
@@ -53,8 +60,6 @@ export class ResultRankingsViewPage {
 		await expect(
 			this.page.getByRole('heading', {name: searchQuery})
 		).toBeVisible();
-
-		await this.page.getByRole('button', {name: 'Save'}).click();
 	}
 
 	async deleteAllResultRankings() {
@@ -74,32 +79,28 @@ export class ResultRankingsViewPage {
 
 		await this.selectTableMenuOption(searchQuery, 'Delete');
 
-		await expect(
-			await this.resultRankingItem(searchQuery)
-		).not.toBeVisible();
+		await expect(await this.table.row(searchQuery)).not.toBeVisible();
 	}
 
 	async selectTableLink(searchQuery: string) {
-		await expect(this.resultRankingsTable).toBeVisible();
+		await expect(this.table.container).toBeVisible();
 
-		const itemLink = this.resultRankingsTable.getByRole('link', {
-			name: searchQuery,
-		});
+		const tableLink = await this.table.link(searchQuery);
 
-		await itemLink.click();
+		await tableLink.click();
 	}
 
 	async selectTableMenuOption(searchQuery: string, option: string) {
-		await expect(this.resultRankingsTable).toBeVisible();
+		await expect(this.table.container).toBeVisible();
 
-		const itemRow = await this.resultRankingItem(searchQuery);
+		const tableRow = await this.table.row(searchQuery);
 
 		await clickAndExpectToBeVisible({
 			autoClick: true,
 			target: this.page
 				.locator('.dropdown-menu')
 				.getByRole('link', {name: option}),
-			trigger: itemRow.locator('.component-action.dropdown-toggle'),
+			trigger: tableRow.locator('.component-action.dropdown-toggle'),
 		});
 	}
 }

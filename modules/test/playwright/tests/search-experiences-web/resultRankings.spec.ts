@@ -36,7 +36,7 @@ test.describe('Result rankings can be added and reordered', () => {
 		const webContentTitle2 = `Site Article ${getRandomInt()}`;
 		const webContentTitle3 = `Site Article ${getRandomInt()}`;
 
-		await test.step('Create web content', async () => {
+		await test.step('Create web content for the new site', async () => {
 			const basicWebContentStructureId =
 				await getBasicWebContentStructureId(apiHelpers);
 
@@ -59,36 +59,35 @@ test.describe('Result rankings can be added and reordered', () => {
 			});
 		});
 
-		await test.step('Create a new result ranking', async () => {
+		await test.step('Create result ranking for search query', async () => {
 			await resultRankingsViewPage.goto();
 
 			await resultRankingsViewPage.createResultRanking(searchQuery);
 		});
 
-		await test.step('Add recent web content into result', async () => {
-			await resultRankingsViewPage.goto();
-
-			await resultRankingsViewPage.selectTableLink(searchQuery);
-
-			await editResultRankingPage.addResults('Site', [webContentTitle1]);
+		await test.step('Use the Add Results modal to add a web content', async () => {
+			await editResultRankingPage.addResults({
+				searchQuery: 'Site',
+				titles: [webContentTitle1],
+			});
 		});
 
 		const resultRankingItem1 =
-			await editResultRankingPage.resultRankingItem(webContentTitle1);
+			await editResultRankingPage.results.item(webContentTitle1);
 		const resultRankingItem2 =
-			await editResultRankingPage.resultRankingItem(webContentTitle2);
+			await editResultRankingPage.results.item(webContentTitle2);
 		const resultRankingItem3 =
-			await editResultRankingPage.resultRankingItem(webContentTitle3);
+			await editResultRankingPage.results.item(webContentTitle3);
 
-		await test.step('View pinned result and pin two other rankings', async () => {
-			await expect(resultRankingItem1).toBeVisible();
-
+		await test.step('View that the added result is pinned', async () => {
 			await hoverAndExpectToBeVisible({
 				autoClick: false,
 				target: resultRankingItem1.getByLabel('Unpin Result'),
 				trigger: resultRankingItem1,
 			});
+		});
 
+		await test.step('Pin the recently created web content articles', async () => {
 			await hoverAndExpectToBeVisible({
 				autoClick: true,
 				target: resultRankingItem2.getByLabel('Pin Result'),
@@ -102,8 +101,8 @@ test.describe('Result rankings can be added and reordered', () => {
 			});
 		});
 
-		await test.step('Reorder ranking and save', async () => {
-			await editResultRankingPage.dragAndDropResultRankingItem({
+		await test.step('Reorder first result ranking to third position', async () => {
+			await editResultRankingPage.dragAndDropResultsItem({
 				dragTarget: resultRankingItem1,
 				dropTarget: resultRankingItem3,
 			});
@@ -114,54 +113,69 @@ test.describe('Result rankings can be added and reordered', () => {
 					.nth(2)
 					.getByRole('link', {name: webContentTitle1})
 			).toBeVisible();
+		});
 
+		await test.step('Save the result ranking', async () => {
 			await editResultRankingPage.saveButton.click();
 		});
 
-		await test.step('Add search bar and results to a search page', async () => {
-			const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
-				groupId: site.id,
-				title: `Page${getRandomInt()}`,
+		await test.step('Check the ranking results are being applied on a page', async () => {
+			await test.step('Create a new page and navigate to it', async () => {
+				const layout = await apiHelpers.jsonWebServicesLayout.addLayout(
+					{
+						groupId: site.id,
+						title: `Page${getRandomInt()}`,
+					}
+				);
+
+				await page.goto(
+					'/web' + site.friendlyUrlPath + layout.friendlyURL
+				);
 			});
 
-			await page.goto('/web' + site.friendlyUrlPath + layout.friendlyURL);
+			await test.step('Add search bar and search results widgets to the page', async () => {
+				await searchPage.addPortlet('Search Bar', 'Search');
 
-			await searchPage.addPortlet('Search Bar', 'Search');
+				await searchPage.addPortlet('Search Results', 'Search');
+			});
 
-			await searchPage.addPortlet('Search Results', 'Search');
+			await test.step('Configure the search bar scope to "Everything"', async () => {
+				await searchPage.openSearchPortletConfiguration(
+					'Search Bar',
+					1
+				);
 
-			await searchPage.openSearchPortletConfiguration('Search Bar', 1);
+				await searchPage.selectPortletConfigurationsSelect([
+					{
+						label: 'Scope',
+						value: 'Everything',
+					},
+				]);
 
-			await searchPage.selectPortletConfigurationsSelect([
-				{
-					label: 'Scope',
-					value: 'Everything',
-				},
-			]);
+				await searchPage.savePortletConfiguration();
+			});
 
-			await searchPage.savePortletConfiguration();
-		});
+			await test.step('Search for the query and check the rankings order', async () => {
+				await searchPage.searchKeywordInMainContent(searchQuery);
 
-		await test.step('Search for the query and assert rankings order', async () => {
-			await searchPage.searchKeywordInMainContent(searchQuery);
+				await expect(
+					searchPage.searchResultsItems
+						.nth(0)
+						.getByRole('link', {name: webContentTitle2})
+				).toBeVisible();
 
-			await expect(
-				searchPage.searchResultsItems
-					.nth(0)
-					.getByRole('link', {name: webContentTitle2})
-			).toBeVisible();
+				await expect(
+					searchPage.searchResultsItems
+						.nth(1)
+						.getByRole('link', {name: webContentTitle3})
+				).toBeVisible();
 
-			await expect(
-				searchPage.searchResultsItems
-					.nth(1)
-					.getByRole('link', {name: webContentTitle3})
-			).toBeVisible();
-
-			await expect(
-				searchPage.searchResultsItems
-					.nth(2)
-					.getByRole('link', {name: webContentTitle1})
-			).toBeVisible();
+				await expect(
+					searchPage.searchResultsItems
+						.nth(2)
+						.getByRole('link', {name: webContentTitle1})
+				).toBeVisible();
+			});
 		});
 
 		await test.step('Delete the created result ranking', async () => {

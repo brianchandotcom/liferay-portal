@@ -2297,21 +2297,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Returns the user with the OpenID.
-	 *
-	 * @param      companyId the primary key of the user's company
-	 * @param      openId the user's OpenID
-	 * @return     the user with the OpenID, or <code>null</code> if a user with
-	 *             the OpenID could not be found
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public User fetchUserByOpenId(long companyId, String openId) {
-		return userPersistence.fetchByC_O(companyId, openId);
-	}
-
-	/**
 	 * Returns the user with the portrait ID.
 	 *
 	 * @param  portraitId the user's portrait ID
@@ -2971,22 +2956,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		throws PortalException {
 
 		return userPersistence.findByC_U(companyId, userId);
-	}
-
-	/**
-	 * Returns the user with the OpenID.
-	 *
-	 * @param      companyId the primary key of the user's company
-	 * @param      openId the user's OpenID
-	 * @return     the user with the OpenID
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public User getUserByOpenId(long companyId, String openId)
-		throws PortalException {
-
-		return userPersistence.findByC_O(companyId, openId);
 	}
 
 	/**

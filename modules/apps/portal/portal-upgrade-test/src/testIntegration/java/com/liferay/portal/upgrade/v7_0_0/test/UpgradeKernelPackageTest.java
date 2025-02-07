@@ -143,7 +143,7 @@ public class UpgradeKernelPackageTest extends UpgradeKernelPackage {
 			_insertData(10, _PREFIX_POSTFIX_CLASS_NAME_OLD, "");
 			_insertData(11, _PREFIX_POSTFIX_CLASS_NAME_NEW, "");
 			_insertData(
-				12, _PREFIX_POSTFIX_CLASS_NAME_NEW, "nonDuplicatedTextData");
+				12, _PREFIX_POSTFIX_CLASS_NAME_NEW, "uniqueTextData");
 
 			_db.runSQL(
 				"create unique index IX_TEMP on UpgradeKernelPackageTest " +
@@ -157,7 +157,7 @@ public class UpgradeKernelPackageTest extends UpgradeKernelPackage {
 				_assertData(10, "data", _PREFIX_POSTFIX_CLASS_NAME_NEW);
 				_assertData(11, "data", null);
 				_assertData(12, "data", _PREFIX_POSTFIX_CLASS_NAME_NEW);
-				_assertData(12, "textData", "nonDuplicatedTextData");
+				_assertData(12, "textData", "uniqueTextData");
 			}
 			finally {
 				_db.runSQL("drop index IX_TEMP on UpgradeKernelPackageTest");

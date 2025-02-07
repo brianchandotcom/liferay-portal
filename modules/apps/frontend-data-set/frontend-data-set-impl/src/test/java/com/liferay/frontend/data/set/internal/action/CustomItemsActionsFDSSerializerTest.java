@@ -144,7 +144,7 @@ public class CustomItemsActionsFDSSerializerTest {
 		);
 	}
 
-	private void _resetFDSSerializer() throws Exception {
+	private void _resetFDSSerializer() {
 		_fdsSerializer = Mockito.mock(
 			CustomItemsActionsFDSSerializerImpl.class);
 	}

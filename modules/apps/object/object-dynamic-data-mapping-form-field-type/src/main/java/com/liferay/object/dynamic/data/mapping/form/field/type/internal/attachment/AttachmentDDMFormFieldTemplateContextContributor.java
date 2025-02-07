@@ -12,6 +12,7 @@ import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.dynamic.data.mapping.util.DDMFormFieldTemplateContextContributorUtil;
+import com.liferay.dynamic.data.mapping.util.DDMFormFieldValueUtil;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion;
@@ -20,6 +21,8 @@ import com.liferay.object.dynamic.data.mapping.form.field.type.constants.ObjectD
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -74,10 +77,36 @@ public class AttachmentDDMFormFieldTemplateContextContributor
 			ddmFormField.getProperty("acceptedFileExtensions")
 		).put(
 			"fileEntryProperties",
-			_getFileEntryProperties(
-				ddmFormField,
-				ddmFormFieldRenderingContext.getHttpServletRequest(),
-				GetterUtil.getLong(ddmFormFieldRenderingContext.getValue()))
+			() -> {
+				if (localizedObjectField) {
+					JSONObject localizedValueJSONObject =
+						DDMFormFieldValueUtil.getValueJSONObject(
+							ddmFormFieldRenderingContext);
+
+					Map<String, Object> localizedValue =
+						localizedValueJSONObject.toMap();
+
+					for (Map.Entry<String, Object> entry :
+							localizedValue.entrySet()) {
+
+						localizedValue.put(
+							entry.getKey(),
+							_getFileEntryProperties(
+								ddmFormField,
+								ddmFormFieldRenderingContext.
+									getHttpServletRequest(),
+								GetterUtil.getLong(entry.getValue())));
+					}
+
+					return _jsonFactory.createJSONObject(localizedValue);
+				}
+
+				return _getFileEntryProperties(
+					ddmFormField,
+					ddmFormFieldRenderingContext.getHttpServletRequest(),
+					GetterUtil.getLong(
+						ddmFormFieldRenderingContext.getValue()));
+			}
 		).put(
 			"fileSource", ddmFormField.getProperty("fileSource")
 		).put(
@@ -275,6 +304,9 @@ public class AttachmentDDMFormFieldTemplateContextContributor
 
 	@Reference
 	private ItemSelector _itemSelector;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private Language _language;

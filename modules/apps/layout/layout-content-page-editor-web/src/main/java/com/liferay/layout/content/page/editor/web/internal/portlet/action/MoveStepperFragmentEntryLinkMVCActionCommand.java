@@ -5,19 +5,9 @@
 
 package com.liferay.layout.content.page.editor.web.internal.portlet.action;
 
-import com.liferay.fragment.constants.FragmentEntryLinkConstants;
-import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
-import com.liferay.fragment.listener.FragmentEntryLinkListener;
-import com.liferay.fragment.listener.FragmentEntryLinkListenerRegistry;
-import com.liferay.fragment.model.FragmentEntryLink;
-import com.liferay.fragment.processor.DefaultFragmentEntryProcessorContext;
-import com.liferay.fragment.processor.FragmentEntryProcessorContext;
-import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
-import com.liferay.fragment.service.FragmentEntryLinkService;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.manager.FormItemManager;
-import com.liferay.layout.content.page.editor.web.internal.manager.FragmentEntryLinkManager;
 import com.liferay.layout.content.page.editor.web.internal.util.layout.structure.LayoutStructureUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureService;
 import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
@@ -30,9 +20,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
@@ -126,56 +114,10 @@ public class MoveStepperFragmentEntryLinkMVCActionCommand
 				themeDisplay.getScopeGroupId(), themeDisplay.getPlid(),
 				segmentsExperienceId, layoutStructure.toString());
 
-		FragmentEntryLink stepperFragmentEntryLink =
+		_formItemManager.updateNumberOfStepps(
+			actionRequest, actionResponse, numberOfSteps,
 			_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
-				fragmentEntryLinkId);
-
-		JSONObject editableValuesJSONObject =
-			_fragmentEntryLinkManager.mergeEditableValuesJSONObject(
-				_jsonFactory.createJSONObject(
-					stepperFragmentEntryLink.getEditableValues()),
-				JSONUtil.put(
-					FragmentEntryProcessorConstants.
-						KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
-					JSONUtil.put("numberOfSteps", numberOfSteps)));
-
-		stepperFragmentEntryLink =
-			_fragmentEntryLinkService.updateFragmentEntryLink(
-				stepperFragmentEntryLink.getFragmentEntryLinkId(),
-				editableValuesJSONObject.toString());
-
-		FragmentEntryProcessorContext fragmentEntryProcessorContext =
-			new DefaultFragmentEntryProcessorContext(
-				_portal.getHttpServletRequest(actionRequest),
-				_portal.getHttpServletResponse(actionResponse),
-				FragmentEntryLinkConstants.EDIT,
-				LocaleUtil.getMostRelevantLocale());
-
-		String processedHTML =
-			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
-				stepperFragmentEntryLink, fragmentEntryProcessorContext);
-
-		JSONObject newEditableValuesJSONObject =
-			_fragmentEntryLinkManager.mergeEditableValuesJSONObject(
-				_fragmentEntryProcessorRegistry.
-					getDefaultEditableValuesJSONObject(
-						processedHTML,
-						stepperFragmentEntryLink.getConfiguration()),
-				editableValuesJSONObject);
-
-		stepperFragmentEntryLink =
-			_fragmentEntryLinkService.updateFragmentEntryLink(
-				stepperFragmentEntryLink.getFragmentEntryLinkId(),
-				newEditableValuesJSONObject.toString());
-
-		for (FragmentEntryLinkListener fragmentEntryLinkListener :
-				_fragmentEntryLinkListenerRegistry.
-					getFragmentEntryLinkListeners()) {
-
-			fragmentEntryLinkListener.
-				onUpdateFragmentEntryLinkConfigurationValues(
-					stepperFragmentEntryLink);
-		}
+				fragmentEntryLinkId));
 
 		return jsonObject.put(
 			"addedItemIds",
@@ -216,20 +158,7 @@ public class MoveStepperFragmentEntryLinkMVCActionCommand
 	private FormItemManager _formItemManager;
 
 	@Reference
-	private FragmentEntryLinkListenerRegistry
-		_fragmentEntryLinkListenerRegistry;
-
-	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
-
-	@Reference
-	private FragmentEntryLinkManager _fragmentEntryLinkManager;
-
-	@Reference
-	private FragmentEntryLinkService _fragmentEntryLinkService;
-
-	@Reference
-	private FragmentEntryProcessorRegistry _fragmentEntryProcessorRegistry;
 
 	@Reference
 	private JSONFactory _jsonFactory;
@@ -237,8 +166,5 @@ public class MoveStepperFragmentEntryLinkMVCActionCommand
 	@Reference
 	private LayoutPageTemplateStructureService
 		_layoutPageTemplateStructureService;
-
-	@Reference
-	private Portal _portal;
 
 }

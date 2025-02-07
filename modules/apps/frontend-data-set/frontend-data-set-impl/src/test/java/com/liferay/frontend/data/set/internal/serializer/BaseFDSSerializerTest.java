@@ -3,8 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.frontend.data.set.internal.url;
+package com.liferay.frontend.data.set.internal.serializer;
 
+import com.liferay.frontend.data.set.internal.url.FDSAPIURLResolverRegistryImpl;
 import com.liferay.frontend.data.set.url.FDSAPIURLResolver;
 import com.liferay.frontend.data.set.url.FDSAPIURLResolverRegistry;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory;
@@ -37,7 +38,7 @@ import org.osgi.framework.ServiceRegistration;
 /**
  * @author Daniel Sanz
  */
-public class BaseAPIURLFDSSerializerTest {
+public class BaseFDSSerializerTest {
 
 	@ClassRule
 	@Rule
@@ -58,7 +59,7 @@ public class BaseAPIURLFDSSerializerTest {
 			_serviceTrackerMap);
 
 		ReflectionTestUtil.setFieldValue(
-			_baseAPIURLFDSSerializer, "fdsAPIURLResolverRegistry",
+			_baseFDSSerializer, "fdsAPIURLResolverRegistry",
 			_fdsAPIURLResolverRegistry);
 
 		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
@@ -101,7 +102,7 @@ public class BaseAPIURLFDSSerializerTest {
 
 		Assert.assertEquals(
 			"/o/app/{foo}/endpoint",
-			_baseAPIURLFDSSerializer.createFDSAPIURLBuilder(
+			_baseFDSSerializer.createFDSAPIURLBuilder(
 				_httpServletRequest, "/app", "/{foo}/endpoint", "schema"
 			).build());
 
@@ -114,7 +115,7 @@ public class BaseAPIURLFDSSerializerTest {
 	public void testURLSimple() throws Exception {
 		Assert.assertEquals(
 			"/o/app/endpoint",
-			_baseAPIURLFDSSerializer.createFDSAPIURLBuilder(
+			_baseFDSSerializer.createFDSAPIURLBuilder(
 				_httpServletRequest, "/app", "/endpoint", "schema"
 			).build());
 	}
@@ -123,7 +124,7 @@ public class BaseAPIURLFDSSerializerTest {
 	public void testURLSimpleWithParametersAsKeyValue() throws Exception {
 		Assert.assertEquals(
 			"/o/app/endpoint?param1=value1&param2=value2",
-			_baseAPIURLFDSSerializer.createFDSAPIURLBuilder(
+			_baseFDSSerializer.createFDSAPIURLBuilder(
 				_httpServletRequest, "/app", "/endpoint", "schema"
 			).addParameter(
 				"param1", "value1"
@@ -139,7 +140,7 @@ public class BaseAPIURLFDSSerializerTest {
 		Assert.assertEquals(
 			"/o/app/endpoint?param1=value1&param2=value2&param3=value3&" +
 				"param4=value4&param5=value5",
-			_baseAPIURLFDSSerializer.createFDSAPIURLBuilder(
+			_baseFDSSerializer.createFDSAPIURLBuilder(
 				_httpServletRequest, "/app", "/endpoint", "schema"
 			).addParameter(
 				"param1", "value1"
@@ -156,7 +157,7 @@ public class BaseAPIURLFDSSerializerTest {
 	public void testURLSimpleWithParametersAsString() throws Exception {
 		Assert.assertEquals(
 			"/o/app/endpoint?param1=value1&param2=value2",
-			_baseAPIURLFDSSerializer.createFDSAPIURLBuilder(
+			_baseFDSSerializer.createFDSAPIURLBuilder(
 				_httpServletRequest, "/app", "/endpoint", "schema"
 			).addQueryString(
 				"param1=value1&param2=value2"
@@ -167,7 +168,7 @@ public class BaseAPIURLFDSSerializerTest {
 	public void testURLSimpleWithVersionDuplication() throws Exception {
 		Assert.assertEquals(
 			"/o/app/v1.0/endpoint",
-			_baseAPIURLFDSSerializer.createFDSAPIURLBuilder(
+			_baseFDSSerializer.createFDSAPIURLBuilder(
 				_httpServletRequest, "/app/v1.0", "/v1.0/endpoint", "schema"
 			).build());
 	}
@@ -176,7 +177,7 @@ public class BaseAPIURLFDSSerializerTest {
 	public void testURLSimpleWithVersionInRESTApplication() throws Exception {
 		Assert.assertEquals(
 			"/o/app/endpoint",
-			_baseAPIURLFDSSerializer.createFDSAPIURLBuilder(
+			_baseFDSSerializer.createFDSAPIURLBuilder(
 				_httpServletRequest, "/app/v1.0", "/endpoint", "schema"
 			).build());
 	}
@@ -185,7 +186,7 @@ public class BaseAPIURLFDSSerializerTest {
 	public void testURLSimpleWithVersionInRESTEndpoint() throws Exception {
 		Assert.assertEquals(
 			"/o/app/v1.0/endpoint",
-			_baseAPIURLFDSSerializer.createFDSAPIURLBuilder(
+			_baseFDSSerializer.createFDSAPIURLBuilder(
 				_httpServletRequest, "/app", "/v1.0/endpoint", "schema"
 			).build());
 	}
@@ -198,7 +199,7 @@ public class BaseAPIURLFDSSerializerTest {
 
 		Assert.assertEquals(
 			"/o/app/12345/bar/endpoint",
-			_baseAPIURLFDSSerializer.createFDSAPIURLBuilder(
+			_baseFDSSerializer.createFDSAPIURLBuilder(
 				_httpServletRequest, "/app", "/{siteId}/{foo}/endpoint",
 				"schema"
 			).build());
@@ -217,7 +218,7 @@ public class BaseAPIURLFDSSerializerTest {
 
 		Assert.assertEquals(
 			"/o/app/12345/bar/54321/endpoint",
-			_baseAPIURLFDSSerializer.createFDSAPIURLBuilder(
+			_baseFDSSerializer.createFDSAPIURLBuilder(
 				_httpServletRequest, "/app",
 				"/{siteId}/{foo}/{userId}/endpoint", "schema"
 			).build());
@@ -229,7 +230,7 @@ public class BaseAPIURLFDSSerializerTest {
 	public void testURLWithDefaultInterpolationOnly() throws Exception {
 		Assert.assertEquals(
 			"/o/app/67890/endpoint",
-			_baseAPIURLFDSSerializer.createFDSAPIURLBuilder(
+			_baseFDSSerializer.createFDSAPIURLBuilder(
 				_httpServletRequest, "/app", "/{userId}/endpoint", "schema"
 			).build());
 	}
@@ -242,7 +243,7 @@ public class BaseAPIURLFDSSerializerTest {
 
 		Assert.assertEquals(
 			"/o/app/bar/endpoint?siteId=12345&foo=bar&bar=67890",
-			_baseAPIURLFDSSerializer.createFDSAPIURLBuilder(
+			_baseFDSSerializer.createFDSAPIURLBuilder(
 				_httpServletRequest, "/app", "/{foo}/endpoint", "schema"
 			).addParameter(
 				"siteId", "{siteId}"
@@ -263,7 +264,7 @@ public class BaseAPIURLFDSSerializerTest {
 
 		Assert.assertEquals(
 			"/o/app/{xyz}/endpoint",
-			_baseAPIURLFDSSerializer.createFDSAPIURLBuilder(
+			_baseFDSSerializer.createFDSAPIURLBuilder(
 				_httpServletRequest, "/app", "/{xyz}/endpoint", "schema"
 			).build());
 
@@ -279,7 +280,7 @@ public class BaseAPIURLFDSSerializerTest {
 
 		Assert.assertEquals(
 			"/o/app/bar/54321/endpoint",
-			_baseAPIURLFDSSerializer.createFDSAPIURLBuilder(
+			_baseFDSSerializer.createFDSAPIURLBuilder(
 				_httpServletRequest, "/app", "/{foo}/{userId}/endpoint",
 				"schema"
 			).build());
@@ -314,18 +315,8 @@ public class BaseAPIURLFDSSerializerTest {
 				restApplication + "/" + restSchema));
 	}
 
-	private static final BaseAPIURLFDSSerializer _baseAPIURLFDSSerializer =
-		new BaseAPIURLFDSSerializer() {
-
-			@Override
-			public String serialize(
-				String fdsName, HttpServletRequest httpServletRequest) {
-
-				return "";
-			}
-
-		};
-
+	private static final BaseFDSSerializer _baseFDSSerializer =
+		new SystemFDSSerializer();
 	private static BundleContext _bundleContext;
 	private static final FDSAPIURLResolverRegistry _fdsAPIURLResolverRegistry =
 		new FDSAPIURLResolverRegistryImpl();

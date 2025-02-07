@@ -68,7 +68,18 @@ public class UpgradeImportsCheck extends BaseTableClayDataSetDisplayView {
 		return clayTableSchemaBuilder.build();
 	}
 
+	public method(){
+		_testGroupPermission.check(null, null, null);
+		groupPermission.check(null, null, null);
+	}
+
+	@Reference
+	private GroupPermission _testGroupPermission;
+
 	@Reference
 	private ClayTableSchemaBuilderFactory _clayTableSchemaBuilderFactory;
+
+	@Reference
+	private GroupPermission groupPermission;
 
 }

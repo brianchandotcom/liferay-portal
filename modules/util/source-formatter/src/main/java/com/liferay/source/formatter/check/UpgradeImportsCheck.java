@@ -43,6 +43,31 @@ public class UpgradeImportsCheck extends BaseFileCheck {
 		return _fixImports(fileName, content);
 	}
 
+	private static String _fixUtilityClassesReference(
+		String className, String newClassName, String content,
+		String variableRegex) {
+
+		if (className.endsWith("Util") || !newClassName.endsWith("Util")) {
+			return content;
+		}
+
+		content = content.replaceAll(variableRegex, newClassName);
+
+		String regex = StringBundler.concat(
+			"\\n?\\t@Reference\\s+\\w+\\s+", newClassName, "\\s+[_a-z]*\\w*",
+			newClassName, ";\\n?");
+
+		Pattern pattern = Pattern.compile(regex);
+
+		Matcher matcher = pattern.matcher(content);
+
+		if (matcher.find()) {
+			content = content.replaceAll(regex, "");
+		}
+
+		return content;
+	}
+
 	private static List<String> _getImportNames(String fileName, String content)
 		throws Exception {
 
@@ -80,22 +105,29 @@ public class UpgradeImportsCheck extends BaseFileCheck {
 			ArrayUtil.toStringArray(variablesMap.values()), true);
 
 		for (Map.Entry<String, String> entry : variablesMap.entrySet()) {
+			String className = entry.getKey();
+
 			String regex = StringBundler.concat(
-				"\\b([_a-z]\\w*)", entry.getKey(), "\\b");
+				"\\b([_a-z]\\w*)", className, "\\b");
 
 			Pattern pattern = Pattern.compile(regex);
 
-			Matcher variableMatcher = pattern.matcher(newContent);
+			Matcher matcher = pattern.matcher(newContent);
 
 			String newClassName = entry.getValue();
 
-			if (variableMatcher.find() &&
+			if (newContent.contains("@Reference")) {
+				newContent = _fixUtilityClassesReference(
+					className, newClassName, newContent, regex);
+			}
+
+			if (matcher.find() &&
 				!StringUtil.equals(
-					variableMatcher.group(),
+					matcher.group(),
 					StringUtil.lowerCaseFirstLetter(newClassName))) {
 
 				newContent = newContent.replaceAll(
-					regex, variableMatcher.group(1) + newClassName);
+					regex, matcher.group(1) + newClassName);
 			}
 		}
 
@@ -173,6 +205,17 @@ public class UpgradeImportsCheck extends BaseFileCheck {
 
 			if (!className.equals(newClassName)) {
 				variablesMap.put(className, newClassName);
+
+				if (!className.endsWith("Util") &&
+					newClassName.endsWith("Util")) {
+
+					variablesMap.put(
+						StringUtil.lowerCaseFirstLetter(className),
+						newClassName);
+
+					continue;
+				}
+
 				variablesMap.put(
 					StringUtil.lowerCaseFirstLetter(className),
 					StringUtil.lowerCaseFirstLetter(newClassName));

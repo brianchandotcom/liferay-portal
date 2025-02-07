@@ -6,11 +6,16 @@
 import classNames from 'classnames';
 import React from 'react';
 
-export default function ItemList({children, expand, ...otherProps}: IProps) {
+export default function ItemList({
+	children,
+	className,
+	expand,
+	...otherProps
+}: IProps) {
 	return (
 		<ul
 			{...otherProps}
-			className={classNames('navbar-nav', {
+			className={classNames('navbar-nav', className, {
 				'navbar-nav-expand': expand,
 			})}
 		>
@@ -19,7 +24,6 @@ export default function ItemList({children, expand, ...otherProps}: IProps) {
 	);
 }
 
-interface IProps {
-	children?: React.ReactNode;
+interface IProps extends React.HTMLAttributes<HTMLElement> {
 	expand?: boolean;
 }

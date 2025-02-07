@@ -142,3 +142,26 @@ test(
 		).toBeVisible();
 	}
 );
+
+test(
+	'Validate Modified Date format in Table View',
+	{
+		tag: '@LPD-48258',
+	},
+	async ({apiHelpers, journalPage, page, site}) => {
+		const basicWebContentStructureId =
+			await getBasicWebContentStructureId(apiHelpers);
+
+		await apiHelpers.jsonWebServicesJournal.addWebContent({
+			ddmStructureId: basicWebContentStructureId,
+			groupId: site.id,
+			titleMap: {en_US: 'First Web content'},
+		});
+
+		await journalPage.goto(site.friendlyUrlPath);
+
+		expect(
+			page.getByRole('row', {name: /\d+ .* ago by .*/i})
+		).toBeVisible();
+	}
+);

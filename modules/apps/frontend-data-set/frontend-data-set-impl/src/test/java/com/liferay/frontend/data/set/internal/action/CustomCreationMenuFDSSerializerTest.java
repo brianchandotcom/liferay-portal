@@ -42,7 +42,7 @@ public class CustomCreationMenuFDSSerializerTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_resetSerializer();
+		_resetFDSSerializer();
 	}
 
 	@Test
@@ -50,8 +50,8 @@ public class CustomCreationMenuFDSSerializerTest {
 
 		// Different creation menu
 
-		_mockFDSCreationMenu("fdsName1", new String[] {"New 1.1", "New 1.2"});
-		_mockFDSCreationMenu("fdsName2", new String[] {"New 2"});
+		_mockFDSSerializer("fdsName1", new String[] {"New 1.1", "New 1.2"});
+		_mockFDSSerializer("fdsName2", new String[] {"New 2"});
 
 		CreationMenu creationMenu1 = _fdsSerializer.serialize(
 			"fdsName1", _httpServletRequest);
@@ -69,18 +69,18 @@ public class CustomCreationMenuFDSSerializerTest {
 		Assert.assertFalse(_containsTitle(creationMenu2, "New 1.2"));
 		Assert.assertTrue(_containsTitle(creationMenu2, "New 2"));
 
-		_resetSerializer();
+		_resetFDSSerializer();
 
 		// No creation menu
 
-		_mockFDSCreationMenu("fdsName", null);
+		_mockFDSSerializer("fdsName", null);
 
 		Assert.assertTrue(
 			_fdsSerializer.serialize(
 				"fdsName", _httpServletRequest
 			).isEmpty());
 
-		_resetSerializer();
+		_resetFDSSerializer();
 
 		// Shared creation menu
 
@@ -112,7 +112,7 @@ public class CustomCreationMenuFDSSerializerTest {
 		return dropdownItems.size();
 	}
 
-	private void _mockFDSCreationMenu(String fdsName, String[] titles) {
+	private void _mockFDSSerializer(String fdsName, String[] titles) {
 		Mockito.when(
 			_fdsSerializer.serialize(fdsName, _httpServletRequest)
 		).thenCallRealMethod();
@@ -155,7 +155,7 @@ public class CustomCreationMenuFDSSerializerTest {
 		);
 	}
 
-	private void _resetSerializer() {
+	private void _resetFDSSerializer() {
 		_fdsSerializer = Mockito.mock(
 			CustomCreationMenuFDSSerializerImpl.class);
 	}
@@ -163,7 +163,7 @@ public class CustomCreationMenuFDSSerializerTest {
 	private void _testSerialize(String fdsName, String[] titles)
 		throws Exception {
 
-		_mockFDSCreationMenu(fdsName, titles);
+		_mockFDSSerializer(fdsName, titles);
 
 		CreationMenu creationMenu = _fdsSerializer.serialize(
 			fdsName, _httpServletRequest);

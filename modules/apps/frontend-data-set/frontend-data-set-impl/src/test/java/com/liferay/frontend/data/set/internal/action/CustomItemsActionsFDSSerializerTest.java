@@ -49,8 +49,8 @@ public class CustomItemsActionsFDSSerializerTest {
 
 		// Different items actions
 
-		_mockFDSItemsActions("fdsName1", new String[] {"New 1.1", "New 1.2"});
-		_mockFDSItemsActions("fdsName2", new String[] {"New 2"});
+		_mockFDSSerializer("fdsName1", new String[] {"New 1.1", "New 1.2"});
+		_mockFDSSerializer("fdsName2", new String[] {"New 2"});
 
 		List<FDSActionDropdownItem> fdsActionDropdownItems1 =
 			_fdsSerializer.serialize("fdsName1", _httpServletRequest);
@@ -72,7 +72,7 @@ public class CustomItemsActionsFDSSerializerTest {
 
 		// No items actions
 
-		_mockFDSItemsActions("fdsName", null);
+		_mockFDSSerializer("fdsName", null);
 
 		Assert.assertTrue(
 			_fdsSerializer.serialize(
@@ -101,7 +101,7 @@ public class CustomItemsActionsFDSSerializerTest {
 		return false;
 	}
 
-	private void _mockFDSItemsActions(String fdsName, String[] labels) {
+	private void _mockFDSSerializer(String fdsName, String[] labels) {
 		Mockito.when(
 			_fdsSerializer.serialize(fdsName, _httpServletRequest)
 		).thenCallRealMethod();
@@ -152,7 +152,7 @@ public class CustomItemsActionsFDSSerializerTest {
 	private void _testSerialize(String fdsName, String[] labels)
 		throws Exception {
 
-		_mockFDSItemsActions(fdsName, labels);
+		_mockFDSSerializer(fdsName, labels);
 
 		List<FDSActionDropdownItem> fdsActionDropdownItems =
 			_fdsSerializer.serialize(fdsName, _httpServletRequest);

@@ -72,11 +72,24 @@ definition {
 		var folderId = JSONWebcontentSetter.setFolderId(
 			folderName = ${folderName},
 			groupId = ${groupId});
-		var serviceContext = JSONWebcontentSetter.setServiceContext(
-			assetCategoryIds = ${assetCategoryIds},
-			assetTagNames = ${assetTagNames},
-			serviceContext = ${serviceContext},
-			workflowAction = ${workflowAction});
+
+		if (isSet(site) && (${site} == "false")) {
+			var serviceContext = JSONWebcontentSetter.setServiceContext(
+				assetCategoryIds = ${assetCategoryIds},
+				assetTagNames = ${assetTagNames},
+				groupName = ${groupName},
+				serviceContext = ${serviceContext},
+				site = ${site},
+				workflowAction = ${workflowAction});
+		}
+		else {
+			var serviceContext = JSONWebcontentSetter.setServiceContext(
+				assetCategoryIds = ${assetCategoryIds},
+				assetTagNames = ${assetTagNames},
+				serviceContext = ${serviceContext},
+				workflowAction = ${workflowAction});
+		}
+
 		var titleMap = JSONWebcontentSetter.setTitleMap(title = ${title});
 
 		JSONWebcontentAPI._addWebContent(

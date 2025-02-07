@@ -1107,7 +1107,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 	@Override
 	public Layout fetchLayout(long classNameId, long classPK) {
-		return layoutPersistence.fetchByC_C(classNameId, classPK);
+		return layoutPersistence.fetchByC_C_Last(classNameId, classPK, null);
 	}
 
 	@Override
@@ -1129,10 +1129,10 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 	@Override
 	public Layout fetchLayoutByIconImageId(
-			boolean privateLayout, long iconImageId)
-		throws PortalException {
+		boolean privateLayout, long iconImageId) {
 
-		return layoutPersistence.fetchByP_I(privateLayout, iconImageId);
+		return layoutPersistence.fetchByP_I_Last(
+			privateLayout, iconImageId, null);
 	}
 
 	/**

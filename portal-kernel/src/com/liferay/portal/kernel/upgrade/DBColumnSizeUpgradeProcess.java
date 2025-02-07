@@ -7,7 +7,6 @@ package com.liferay.portal.kernel.upgrade;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
@@ -21,9 +20,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author Preston Crary
@@ -73,32 +70,6 @@ public class DBColumnSizeUpgradeProcess extends UpgradeProcess {
 				String tableName = dbInspector.normalizeName(
 					tableResultSet.getString("TABLE_NAME"));
 
-				Set<String> invalidColumnNames = new HashSet<>();
-
-				try (ResultSet primaryKeyResultSet =
-						databaseMetaData.getPrimaryKeys(
-							catalog, schema, tableName)) {
-
-					while (primaryKeyResultSet.next()) {
-						String primaryKeyName = StringUtil.toUpperCase(
-							primaryKeyResultSet.getString("COLUMN_NAME"));
-
-						invalidColumnNames.add(primaryKeyName);
-					}
-				}
-
-				DB db = DBManagerUtil.getDB();
-
-				try (ResultSet indexResultSet = db.getIndexResultSet(
-						connection, tableName, false)) {
-
-					while (indexResultSet.next()) {
-						invalidColumnNames.add(
-							StringUtil.toUpperCase(
-								indexResultSet.getString("COLUMN_NAME")));
-					}
-				}
-
 				try (ResultSet columnResultSet = databaseMetaData.getColumns(
 						catalog, schema, tableName, null)) {
 
@@ -116,12 +87,6 @@ public class DBColumnSizeUpgradeProcess extends UpgradeProcess {
 
 							String columnName = columnResultSet.getString(
 								"COLUMN_NAME");
-
-							if (invalidColumnNames.contains(
-									StringUtil.toUpperCase(columnName))) {
-
-								continue;
-							}
 
 							tableColumns.add(
 								tableName + StringPool.PERIOD + columnName);

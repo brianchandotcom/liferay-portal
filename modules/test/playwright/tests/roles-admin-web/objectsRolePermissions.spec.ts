@@ -51,8 +51,8 @@ const generateRandomObjectDefinition = ({
 		name: objectDefinitionName,
 		objectFields: [
 			{
-				DBType: "String",
-				businessType: "Text",
+				DBType: 'String',
+				businessType: 'Text',
 				externalReferenceCode: 'textField',
 				indexed: true,
 				indexedAsKeyword: false,
@@ -62,7 +62,7 @@ const generateRandomObjectDefinition = ({
 				name: 'textField',
 				required: false,
 				system: false,
-				type: "String",
+				type: 'String',
 			},
 		],
 		objectRelationships,
@@ -165,7 +165,7 @@ test.skip('LPD-26733 Show object in role permissions page', async ({
 		await objectRelationshipApiClient.postObjectDefinitionByExternalReferenceCodeObjectRelationship(
 			objectDefinition5.externalReferenceCode,
 			{
-				deletionType: "cascade",
+				deletionType: 'cascade',
 				edge: true,
 				label: {
 					en_US: objectDefinition6.name,
@@ -180,7 +180,7 @@ test.skip('LPD-26733 Show object in role permissions page', async ({
 				objectDefinitionName2: objectDefinition6.name,
 				reverse: false,
 				system: false,
-				type: "oneToMany",
+				type: 'oneToMany',
 			}
 		);
 

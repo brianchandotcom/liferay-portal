@@ -168,7 +168,7 @@ test.describe('Manage root model elements through View Object Entries', () => {
 						objectDefinitionId1: 32183,
 						objectDefinitionId2: objectDefinition1.id,
 						objectDefinitionName2: objectDefinition1.name,
-						type: "oneToMany",
+						type: 'oneToMany',
 					}
 				);
 
@@ -197,7 +197,7 @@ test.describe('Manage root model elements through View Object Entries', () => {
 						objectDefinitionId1: objectDefinition1.id,
 						objectDefinitionId2: objectDefinition2.id,
 						objectDefinitionName2: objectDefinition2.name,
-						type: "oneToMany",
+						type: 'oneToMany',
 					}
 				);
 
@@ -414,7 +414,7 @@ test.describe('Manage root models elements through Objects Admin', () => {
 						objectDefinitionId1: objectDefinition1.id,
 						objectDefinitionId2: objectDefinition2.id,
 						objectDefinitionName2: objectDefinition2.name,
-						type: "oneToMany",
+						type: 'oneToMany',
 					}
 				);
 
@@ -511,7 +511,7 @@ test.describe('Manage root models elements through Objects Admin', () => {
 						objectDefinitionId1: objectDefinition1.id,
 						objectDefinitionId2: objectDefinition2.id,
 						objectDefinitionName2: objectDefinition2.name,
-						type: "oneToMany",
+						type: 'oneToMany',
 					}
 				);
 
@@ -609,7 +609,7 @@ test.describe('Manage root models elements through Objects Admin', () => {
 						objectDefinitionId1: objectDefinition1.id,
 						objectDefinitionId2: objectDefinition2.id,
 						objectDefinitionName2: objectDefinition2.name,
-						type: "oneToMany",
+						type: 'oneToMany',
 					}
 				);
 
@@ -642,7 +642,7 @@ test.describe('Manage root models elements through Objects Admin', () => {
 						objectDefinitionId1: objectDefinition1.id,
 						objectDefinitionId2: objectDefinition2.id,
 						objectDefinitionName2: objectDefinition2.name,
-						type: "oneToMany",
+						type: 'oneToMany',
 					}
 				);
 
@@ -933,7 +933,7 @@ test.describe('Manage root models elements through Model Builder', () => {
 					objectDefinitionId1: objectDefinition1.id,
 					objectDefinitionId2: objectDefinition2.id,
 					objectDefinitionName2: objectDefinition2.name,
-					type: "oneToMany",
+					type: 'oneToMany',
 				}
 			);
 

@@ -584,8 +584,8 @@ test(
 				name: 'PotatoProvider',
 				objectFields: [
 					{
-						DBType: "String",
-						businessType: "Text",
+						DBType: 'String',
+						businessType: 'Text',
 						externalReferenceCode: 'nameERC',
 						indexed: true,
 						indexedAsKeyword: false,
@@ -597,8 +597,8 @@ test(
 						required: false,
 					},
 					{
-						DBType: "String",
-						businessType: "Text",
+						DBType: 'String',
+						businessType: 'Text',
 						externalReferenceCode: 'locationERC',
 						indexed: true,
 						indexedAsKeyword: false,

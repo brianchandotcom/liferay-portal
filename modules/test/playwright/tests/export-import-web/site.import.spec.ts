@@ -305,8 +305,8 @@ test('can see corresponding elements at site level', async ({
 			name: 'Test',
 			objectFields: [
 				{
-					DBType: "String",
-					businessType: "Text",
+					DBType: 'String',
+					businessType: 'Text',
 					indexed: true,
 					indexedAsKeyword: true,
 					label: {

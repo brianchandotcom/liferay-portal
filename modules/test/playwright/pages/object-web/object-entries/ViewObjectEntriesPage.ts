@@ -111,7 +111,7 @@ export class ViewObjectEntriesPage {
 		objectFieldLabel?: string;
 		objectFieldValue: string;
 	}) {
-		if (objectFieldBusinessType === "RichText") {
+		if (objectFieldBusinessType === 'RichText') {
 			await this.page.waitForSelector('iframe');
 
 			await this.richTextInput.fill(objectFieldValue);

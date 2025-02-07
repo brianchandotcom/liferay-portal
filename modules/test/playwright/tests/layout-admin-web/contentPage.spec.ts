@@ -367,8 +367,8 @@ test(
 				name: 'Papa',
 				objectFields: [
 					{
-						DBType: "String",
-						businessType: "Text",
+						DBType: 'String',
+						businessType: 'Text',
 						externalReferenceCode: 'nameERC',
 						indexed: true,
 						indexedAsKeyword: true,
@@ -379,8 +379,8 @@ test(
 						required: false,
 					},
 					{
-						DBType: "Clob",
-						businessType: "RichText",
+						DBType: 'Clob',
+						businessType: 'RichText',
 						externalReferenceCode: 'contentERC',
 						indexed: true,
 						indexedAsKeyword: false,

@@ -118,11 +118,21 @@ import org.osgi.service.component.annotations.Reference;
  * @author Javier de Arcos
  */
 @Component(
-	property = "dto.class.name=com.liferay.object.model.ObjectEntry",
+	property = {
+		"dto.class.name=com.liferay.object.model.ObjectEntry",
+		"service.ranking:Integer=100"
+	},
 	service = DTOConverter.class
 )
 public class ObjectEntryDTOConverter
 	implements DTOConverter<com.liferay.object.model.ObjectEntry, ObjectEntry> {
+
+	public ObjectEntryDTOConverter() {
+	}
+
+	public ObjectEntryDTOConverter(ObjectDefinition objectDefinition) {
+		_objectDefinition = objectDefinition;
+	}
 
 	@Override
 	public String getContentType() {
@@ -130,12 +140,33 @@ public class ObjectEntryDTOConverter
 	}
 
 	@Override
+	public String getDTOClassName() {
+		if (_objectDefinition != null) {
+			return _objectDefinition.getClassName();
+		}
+
+		return DTOConverter.super.getDTOClassName();
+	}
+
+	@Override
+	public String getExternalDTOClassName() {
+		if (_objectDefinition != null) {
+			return StringUtil.replace(
+				_objectDefinition.getClassName(),
+				ObjectDefinition.class.getName(),
+				com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition.class.
+					getName());
+		}
+
+		return DTOConverter.super.getExternalDTOClassName();
+	}
+
+	@Override
 	public ObjectEntry toDTO(DTOConverterContext dtoConverterContext)
 		throws Exception {
 
-		ObjectDefinition objectDefinition =
-			(ObjectDefinition)dtoConverterContext.getAttribute(
-				"objectDefinition");
+		ObjectDefinition objectDefinition = _getObjectDefinition(
+			dtoConverterContext);
 
 		ObjectEntry objectEntry = ObjectEntry.unsafeToDTO(
 			(String)dtoConverterContext.getAttribute("payload"));
@@ -692,9 +723,24 @@ public class ObjectEntryDTOConverter
 	}
 
 	private ObjectDefinition _getObjectDefinition(
+		DTOConverterContext dtoConverterContext) {
+
+		if (_objectDefinition != null) {
+			return _objectDefinition;
+		}
+
+		return (ObjectDefinition)dtoConverterContext.getAttribute(
+			"objectDefinition");
+	}
+
+	private ObjectDefinition _getObjectDefinition(
 			DTOConverterContext dtoConverterContext,
 			com.liferay.object.model.ObjectEntry objectEntry)
 		throws Exception {
+
+		if (_objectDefinition != null) {
+			return _objectDefinition;
+		}
 
 		ObjectDefinition objectDefinition =
 			(ObjectDefinition)dtoConverterContext.getAttribute(
@@ -1096,6 +1142,8 @@ public class ObjectEntryDTOConverter
 
 	@Reference
 	private ListTypeEntryLocalService _listTypeEntryLocalService;
+
+	private ObjectDefinition _objectDefinition;
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

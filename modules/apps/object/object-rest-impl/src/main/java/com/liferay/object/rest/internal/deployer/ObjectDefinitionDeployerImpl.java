@@ -12,6 +12,7 @@ import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.related.models.ObjectRelatedModelsProviderRegistry;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
+import com.liferay.object.rest.internal.dto.v1_0.converter.ObjectEntryDTOConverter;
 import com.liferay.object.rest.internal.graphql.dto.v1_0.ObjectDefinitionGraphQLDTOContributor;
 import com.liferay.object.rest.internal.jaxrs.application.ObjectEntryApplication;
 import com.liferay.object.rest.internal.jaxrs.context.provider.ObjectDefinitionContextProvider;
@@ -74,6 +75,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortParserProvider;
+import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.extension.ExtensionProviderRegistry;
 import com.liferay.portal.vulcan.graphql.dto.GraphQLDTOContributor;
@@ -384,6 +386,13 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 				serviceRegistrationsMap.computeIfAbsent(
 					objectDefinition.getCompanyId(),
 					key2 -> Arrays.asList(
+						_bundleContext.registerService(
+							DTOConverter.class,
+							new ObjectEntryDTOConverter(objectDefinition),
+							HashMapDictionaryBuilder.put(
+								"dto.class.name",
+								objectDefinition.getClassName()
+							).build()),
 						_bundleContext.registerService(
 							ObjectEntryOpenAPIResource.class,
 							new ObjectEntryOpenAPIResourceImpl(

@@ -6,12 +6,12 @@
 import {Locator, Page} from '@playwright/test';
 
 export class DefinitionInfoPage {
-	readonly revisionHistoryTabButton: Locator;
 	readonly page: Page;
+	readonly revisionHistoryTabButton: Locator;
 
 	constructor(page: Page) {
-		this.revisionHistoryTabButton = page.getByText('Revision History');
 		this.page = page;
+		this.revisionHistoryTabButton = page.getByText('Revision History');
 	}
 
 	getDateAndUserFromVersion(date: string, user: string) {

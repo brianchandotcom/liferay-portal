@@ -7,7 +7,6 @@ import {
 	ObjectActionApi,
 	ObjectDefinition,
 	ObjectDefinitionApi,
-	ObjectValidationRule,
 	ObjectValidationRuleApi,
 } from '@liferay/object-admin-rest-client-js';
 import {expect, mergeTests} from '@playwright/test';

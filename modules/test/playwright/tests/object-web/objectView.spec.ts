@@ -65,7 +65,7 @@ test('can create an object custom view using object relationship entry', async (
 			objectDefinitionId1: objectDefinition1.id,
 			objectDefinitionId2: objectDefinition2.id,
 			objectDefinitionName2: objectDefinition2.name,
-			type: ObjectRelationship.TypeEnum.OneToMany,
+			type: "oneToMany",
 		}
 	);
 
@@ -125,9 +125,9 @@ test('cannot create an object custom view using empty multiselectpicklist entry'
 		await apiHelpers.objectAdmin.postRandomObjectDefinition({
 			objectFields: [
 				{
-					DBType: ObjectField.DBTypeEnum.String,
+					DBType: "String",
 					businessType:
-						ObjectField.BusinessTypeEnum.MultiselectPicklist,
+						"MultiselectPicklist",
 					externalReferenceCode: 'customPicklist',
 					indexed: true,
 					indexedAsKeyword: false,

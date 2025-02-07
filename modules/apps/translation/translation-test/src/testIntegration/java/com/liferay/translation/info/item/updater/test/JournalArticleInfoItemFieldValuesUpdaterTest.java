@@ -21,16 +21,21 @@ import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -41,19 +46,20 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.translation.importer.TranslationInfoItemFieldValuesImporter;
 import com.liferay.translation.service.TranslationEntryLocalService;
 import com.liferay.translation.test.util.TranslationTestUtil;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * @author Alicia García
@@ -67,11 +73,21 @@ public class JournalArticleInfoItemFieldValuesUpdaterTest {
 		new LiferayIntegrationTestRule(),
 		PermissionCheckerMethodTestRule.INSTANCE);
 
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		_originalName = PrincipalThreadLocal.getName();
+
+		PrincipalThreadLocal.setName(TestPropsValues.getUserId());
+	}
+
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
 		User user = TestPropsValues.getUser();
+		long companyId = TestPropsValues.getCompanyId();
+
+		_company = _companyLocalService.getCompany(companyId);
 
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			_group, user.getUserId());
@@ -82,6 +98,11 @@ public class JournalArticleInfoItemFieldValuesUpdaterTest {
 	@After
 	public void tearDown() throws Exception {
 		ServiceContextThreadLocal.popServiceContext();
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		PrincipalThreadLocal.setName(_originalName);
 	}
 
 	@Test
@@ -249,6 +270,50 @@ public class JournalArticleInfoItemFieldValuesUpdaterTest {
 			StringPool.BLANK,
 			_getContent(
 				journalArticle, "name", LocaleUtil.US, LocaleUtil.SPAIN));
+	}
+
+	@Test
+	public void testUpdateJournalArticleAfterUserDeletion() throws Exception {
+		User user = UserTestUtil.addCompanyAdminUser(_company);
+
+		ServiceContext userServiceContext = ServiceContextTestUtil.getServiceContext(
+			_group.getGroupId(), user.getUserId());
+
+		ServiceContextThreadLocal.pushServiceContext(userServiceContext);
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(), 0,
+			PortalUtil.getClassNameId(JournalArticle.class),
+			HashMapBuilder.put(
+				LocaleUtil.US, RandomTestUtil.randomString()
+			).build(),
+			HashMapBuilder.put(
+				LocaleUtil.US, RandomTestUtil.randomString()
+			).build(),
+			HashMapBuilder.put(
+				LocaleUtil.US, "<p>This is the content</p>"
+			).build(),
+			LocaleUtil.getSiteDefault(), false, true, userServiceContext);
+
+		InfoItemFieldValues infoItemFieldValues =
+			_xliffTranslationInfoItemFieldValuesImporter.
+				importInfoItemFieldValues(
+					_group.getGroupId(),
+					new InfoItemReference(JournalArticle.class.getName(), 122),
+					TranslationTestUtil.readFileToInputStream(
+						"test-journal-article-122.xlf"));
+
+		_userLocalService.deleteUser(user);
+
+		journalArticle =
+			_journalArticleInfoItemFieldValuesUpdater.updateFromInfoItemFieldValues(
+				journalArticle, infoItemFieldValues);
+
+		Assert.assertEquals(
+			TestPropsValues.getUserId(), journalArticle.getStatusByUserId());
+
+		Assert.assertEquals(
+			"Este es el titulo", journalArticle.getTitle(LocaleUtil.SPAIN));
 	}
 
 	@Test
@@ -423,5 +488,15 @@ public class JournalArticleInfoItemFieldValuesUpdaterTest {
 	@Inject(filter = "content.type=application/xliff+xml")
 	private TranslationInfoItemFieldValuesImporter
 		_xliffTranslationInfoItemFieldValuesImporter;
+
+	private Company _company;
+
+	@Inject
+	private UserLocalService _userLocalService;
+
+	@Inject
+	private static CompanyLocalService _companyLocalService;
+
+	private static String _originalName;
 
 }

@@ -813,8 +813,8 @@ test.describe('UI', () => {
 				name: 'Stock',
 				objectFields: [
 					{
-						DBType: "String",
-						businessType: "Text",
+						DBType: 'String',
+						businessType: 'Text',
 						externalReferenceCode: 'nameERC',
 						indexed: true,
 						indexedAsKeyword: true,

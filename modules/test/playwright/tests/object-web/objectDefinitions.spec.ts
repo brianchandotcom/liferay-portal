@@ -372,7 +372,7 @@ test.describe('Manage object definitions through Model Builder', () => {
 				objectDefinitionId1: objectDefinition1.id,
 				objectDefinitionId2: objectDefinition2.id,
 				objectDefinitionName2: objectDefinition2.name,
-				type: "oneToMany",
+				type: 'oneToMany',
 			}
 		);
 

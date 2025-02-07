@@ -5,7 +5,6 @@
 
 import getAllEditables from '../../../../../app/components/fragment_content/getAllEditables';
 import getAllPortals from '../../../../../app/components/layout_data_items/getAllPortals';
-import {config} from '../../../../../app/config';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../app/config/constants/editableFragmentEntryProcessor';
 import {EDITABLE_TYPE_LABELS} from '../../../../../app/config/constants/editableTypeLabels';
 import {EDITABLE_TYPES} from '../../../../../app/config/constants/editableTypes';
@@ -13,6 +12,7 @@ import {FRAGMENT_ENTRY_TYPES} from '../../../../../app/config/constants/fragment
 import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../app/config/constants/freemarkerFragmentEntryProcessor';
 import {ITEM_TYPES} from '../../../../../app/config/constants/itemTypes';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../app/config/constants/layoutDataItemTypes';
+import {config} from '../../../../../app/config/index';
 import selectLayoutDataItemLabel from '../../../../../app/selectors/selectLayoutDataItemLabel';
 import canActivateEditable from '../../../../../app/utils/canActivateEditable';
 import isMapped from '../../../../../app/utils/editable_value/isMapped';

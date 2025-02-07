@@ -192,25 +192,6 @@ public class FragmentEntryInputTemplateNodeContextHelperTest {
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
 
-		FragmentEntryLink fragmentEntryLink =
-			_fragmentEntryLinkLocalService.addFragmentEntryLink(
-				null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
-				RandomTestUtil.randomLong(),
-				_segmentsExperienceLocalService.
-					fetchDefaultSegmentsExperienceId(_layout.getPlid()),
-				_layout.getPlid(), StringPool.BLANK, StringPool.BLANK,
-				StringPool.BLANK, StringPool.BLANK,
-				JSONUtil.put(
-					FragmentEntryProcessorConstants.
-						KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
-					JSONUtil.put(
-						"inputFieldId",
-						"ObjectField_" + relationshipObjectFieldName)
-				).toString(),
-				StringPool.BLANK, 0, StringPool.BLANK,
-				FragmentConstants.TYPE_INPUT,
-				ServiceContextTestUtil.getServiceContext());
-
 		HttpServletRequest httpServletRequest = _getHttpServletRequest();
 
 		LayoutDisplayPageProvider<?> layoutDisplayPageProvider =
@@ -241,7 +222,10 @@ public class FragmentEntryInputTemplateNodeContextHelperTest {
 			InputTemplateNode inputTemplateNode =
 				_fragmentEntryInputTemplateNodeContextHelper.
 					toInputTemplateNode(
-						"Default", fragmentEntryLink, httpServletRequest,
+						"Default",
+						_addInputFragmentEntryLink(
+							"ObjectField_" + relationshipObjectFieldName),
+						httpServletRequest,
 						infoItemFormProvider.getInfoForm(
 							StringPool.BLANK, _group.getGroupId()),
 						LocaleUtil.getSiteDefault());
@@ -263,23 +247,6 @@ public class FragmentEntryInputTemplateNodeContextHelperTest {
 	@Test
 	public void testGetRichTextSelectInfoFieldTypeValueWithInfoParametersMap()
 		throws Exception {
-
-		FragmentEntryLink fragmentEntryLink =
-			_fragmentEntryLinkLocalService.addFragmentEntryLink(
-				null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
-				RandomTestUtil.randomLong(),
-				_segmentsExperienceLocalService.
-					fetchDefaultSegmentsExperienceId(_layout.getPlid()),
-				_layout.getPlid(), StringPool.BLANK, StringPool.BLANK,
-				StringPool.BLANK, StringPool.BLANK,
-				JSONUtil.put(
-					FragmentEntryProcessorConstants.
-						KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
-					JSONUtil.put("inputFieldId", "myRichText")
-				).toString(),
-				StringPool.BLANK, 0, StringPool.BLANK,
-				FragmentConstants.TYPE_INPUT,
-				ServiceContextTestUtil.getServiceContext());
 
 		HttpServletRequest httpServletRequest = _getHttpServletRequest();
 
@@ -311,7 +278,8 @@ public class FragmentEntryInputTemplateNodeContextHelperTest {
 			InputTemplateNode inputTemplateNode =
 				_fragmentEntryInputTemplateNodeContextHelper.
 					toInputTemplateNode(
-						"Default", fragmentEntryLink, httpServletRequest,
+						"Default", _addInputFragmentEntryLink("myRichText"),
+						httpServletRequest,
 						infoItemFormProvider.getInfoForm(
 							StringPool.BLANK, _group.getGroupId()),
 						LocaleUtil.getSiteDefault());
@@ -329,23 +297,6 @@ public class FragmentEntryInputTemplateNodeContextHelperTest {
 	@Test
 	public void testGetTextSelectInfoFieldTypeValueWithInfoParametersMap()
 		throws Exception {
-
-		FragmentEntryLink fragmentEntryLink =
-			_fragmentEntryLinkLocalService.addFragmentEntryLink(
-				null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
-				RandomTestUtil.randomLong(),
-				_segmentsExperienceLocalService.
-					fetchDefaultSegmentsExperienceId(_layout.getPlid()),
-				_layout.getPlid(), StringPool.BLANK, StringPool.BLANK,
-				StringPool.BLANK, StringPool.BLANK,
-				JSONUtil.put(
-					FragmentEntryProcessorConstants.
-						KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
-					JSONUtil.put("inputFieldId", "myText")
-				).toString(),
-				StringPool.BLANK, 0, StringPool.BLANK,
-				FragmentConstants.TYPE_INPUT,
-				ServiceContextTestUtil.getServiceContext());
 
 		HttpServletRequest httpServletRequest = _getHttpServletRequest();
 
@@ -373,7 +324,8 @@ public class FragmentEntryInputTemplateNodeContextHelperTest {
 			InputTemplateNode inputTemplateNode =
 				_fragmentEntryInputTemplateNodeContextHelper.
 					toInputTemplateNode(
-						"Default", fragmentEntryLink, httpServletRequest,
+						"Default", _addInputFragmentEntryLink("myText"),
+						httpServletRequest,
 						infoItemFormProvider.getInfoForm(
 							StringPool.BLANK, _group.getGroupId()),
 						LocaleUtil.getSiteDefault());
@@ -386,6 +338,25 @@ public class FragmentEntryInputTemplateNodeContextHelperTest {
 		finally {
 			ServiceContextThreadLocal.popServiceContext();
 		}
+	}
+
+	private FragmentEntryLink _addInputFragmentEntryLink(String inputFieldId)
+		throws Exception {
+
+		return _fragmentEntryLinkLocalService.addFragmentEntryLink(
+			null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
+			RandomTestUtil.randomLong(),
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				_layout.getPlid()),
+			_layout.getPlid(), StringPool.BLANK, StringPool.BLANK,
+			StringPool.BLANK, StringPool.BLANK,
+			JSONUtil.put(
+				FragmentEntryProcessorConstants.
+					KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+				JSONUtil.put("inputFieldId", inputFieldId)
+			).toString(),
+			StringPool.BLANK, 0, StringPool.BLANK, FragmentConstants.TYPE_INPUT,
+			ServiceContextTestUtil.getServiceContext());
 	}
 
 	private ObjectDefinition _addObjectDefinition() throws Exception {
@@ -528,23 +499,6 @@ public class FragmentEntryInputTemplateNodeContextHelperTest {
 			String expectedValue, String inputFieldId)
 		throws Exception {
 
-		FragmentEntryLink fragmentEntryLink =
-			_fragmentEntryLinkLocalService.addFragmentEntryLink(
-				null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
-				RandomTestUtil.randomLong(),
-				_segmentsExperienceLocalService.
-					fetchDefaultSegmentsExperienceId(_layout.getPlid()),
-				_layout.getPlid(), StringPool.BLANK, StringPool.BLANK,
-				StringPool.BLANK, StringPool.BLANK,
-				JSONUtil.put(
-					FragmentEntryProcessorConstants.
-						KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
-					JSONUtil.put("inputFieldId", inputFieldId)
-				).toString(),
-				StringPool.BLANK, 0, StringPool.BLANK,
-				FragmentConstants.TYPE_INPUT,
-				ServiceContextTestUtil.getServiceContext());
-
 		HttpServletRequest httpServletRequest = _getHttpServletRequest();
 
 		ServiceContext serviceContext =
@@ -563,7 +517,8 @@ public class FragmentEntryInputTemplateNodeContextHelperTest {
 			InputTemplateNode inputTemplateNode =
 				_fragmentEntryInputTemplateNodeContextHelper.
 					toInputTemplateNode(
-						"Default", fragmentEntryLink, httpServletRequest,
+						"Default", _addInputFragmentEntryLink(inputFieldId),
+						httpServletRequest,
 						infoItemFormProvider.getInfoForm(
 							StringPool.BLANK, _group.getGroupId()),
 						LocaleUtil.getSiteDefault());

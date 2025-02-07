@@ -70,15 +70,15 @@ test('Select from list with multiple selections allowed is auto-filled by data p
 	test.slow();
 
 	const baseObjectField: Partial<ObjectField> = {
-		DBType: ObjectField.DBTypeEnum.String,
-		businessType: ObjectField.BusinessTypeEnum.Text,
+		DBType: "String",
+		businessType: "Text",
 		indexed: true,
 		indexedAsKeyword: false,
 		indexedLanguageId: '',
 		localized: false,
 		required: false,
 		system: false,
-		type: ObjectField.TypeEnum.String,
+		type: "String",
 	};
 
 	const objectFields = [

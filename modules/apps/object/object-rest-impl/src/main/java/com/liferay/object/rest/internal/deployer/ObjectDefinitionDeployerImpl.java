@@ -456,6 +456,13 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 								"companyId",
 								String.valueOf(objectDefinition.getCompanyId())
 							).put(
+								"crud.entity.class.name",
+								StringUtil.replace(
+									objectDefinition.getClassName(),
+									ObjectDefinition.class.getName(),
+									com.liferay.object.admin.rest.dto.v1_0.
+										ObjectDefinition.class.getName())
+							).put(
 								"crud.item.delegate", "true"
 							).build()),
 						_bundleContext.registerService(

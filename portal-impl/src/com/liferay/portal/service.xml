@@ -1532,7 +1532,7 @@
 		<finder name="OwnerType" return-type="Collection">
 			<finder-column name="ownerType" />
 		</finder>
-		<finder name="O_O" return-type="PortalPreferences">
+		<finder name="O_O" return-type="PortalPreferences" unique="true">
 			<finder-column name="ownerId" />
 			<finder-column name="ownerType" />
 		</finder>

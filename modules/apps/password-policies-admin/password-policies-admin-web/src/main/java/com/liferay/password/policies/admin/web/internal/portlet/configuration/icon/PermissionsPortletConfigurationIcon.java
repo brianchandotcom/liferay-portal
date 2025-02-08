@@ -83,14 +83,9 @@ public class PermissionsPortletConfigurationIcon
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		if (PasswordPolicyPermissionUtil.contains(
-				themeDisplay.getPermissionChecker(),
-				_getPasswordPolicyId(portletRequest), ActionKeys.PERMISSIONS)) {
-
-			return true;
-		}
-
-		return false;
+		return PasswordPolicyPermissionUtil.contains(
+			themeDisplay.getPermissionChecker(),
+			_getPasswordPolicyId(portletRequest), ActionKeys.PERMISSIONS);
 	}
 
 	@Override

@@ -70,14 +70,9 @@ public class EditPasswordPolicyPortletConfigurationIcon
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		if (PasswordPolicyPermissionUtil.contains(
-				themeDisplay.getPermissionChecker(),
-				_getPasswordPolicyId(portletRequest), ActionKeys.UPDATE)) {
-
-			return true;
-		}
-
-		return false;
+		return PasswordPolicyPermissionUtil.contains(
+			themeDisplay.getPermissionChecker(),
+			_getPasswordPolicyId(portletRequest), ActionKeys.UPDATE);
 	}
 
 	private long _getPasswordPolicyId(PortletRequest portletRequest) {

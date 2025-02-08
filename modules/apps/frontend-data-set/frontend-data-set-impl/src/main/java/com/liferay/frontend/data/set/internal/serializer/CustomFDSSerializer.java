@@ -72,9 +72,37 @@ public class CustomFDSSerializer
 
 		CreationMenu creationMenu = new CreationMenu();
 
-		for (DropdownItem dropdownItem :
-				_getCreationMenuDropdownItems(fdsName, httpServletRequest)) {
+		List<DropdownItem> dropdownItems = TransformUtil.transform(
+			getSortedRelatedObjectEntries(
+				fdsName, "creationActionsOrder", httpServletRequest,
+				(ObjectEntry objectEntry) -> Objects.equals(
+					getType(objectEntry), "creation"),
+				"dataSetToDataSetActions"),
+			objectEntry -> {
+				Map<String, Object> properties = objectEntry.getProperties();
 
+				return DropdownItemBuilder.putData(
+					"disableHeader",
+					String.valueOf(Validator.isNull(properties.get("title")))
+				).putData(
+					"permissionKey",
+					String.valueOf(properties.get("permissionKey"))
+				).putData(
+					"size", String.valueOf(properties.get("modalSize"))
+				).putData(
+					"title", String.valueOf(properties.get("title"))
+				).setHref(
+					properties.get("url")
+				).setIcon(
+					String.valueOf(properties.get("icon"))
+				).setLabel(
+					String.valueOf(properties.get("label"))
+				).setTarget(
+					String.valueOf(properties.get("target"))
+				).build();
+			});
+
+		for (DropdownItem dropdownItem : dropdownItems) {
 			creationMenu.addPrimaryDropdownItem(dropdownItem);
 		}
 
@@ -172,40 +200,6 @@ public class CustomFDSSerializer
 		}
 
 		return fdsAPIURLBuilder;
-	}
-
-	private List<DropdownItem> _getCreationMenuDropdownItems(
-		String fdsName, HttpServletRequest httpServletRequest) {
-
-		return TransformUtil.transform(
-			getSortedRelatedObjectEntries(
-				fdsName, "creationActionsOrder", httpServletRequest,
-				(ObjectEntry objectEntry) -> Objects.equals(
-					getType(objectEntry), "creation"),
-				"dataSetToDataSetActions"),
-			objectEntry -> {
-				Map<String, Object> properties = objectEntry.getProperties();
-
-				return DropdownItemBuilder.putData(
-					"disableHeader",
-					String.valueOf(Validator.isNull(properties.get("title")))
-				).putData(
-					"permissionKey",
-					String.valueOf(properties.get("permissionKey"))
-				).putData(
-					"size", String.valueOf(properties.get("modalSize"))
-				).putData(
-					"title", String.valueOf(properties.get("title"))
-				).setHref(
-					properties.get("url")
-				).setIcon(
-					String.valueOf(properties.get("icon"))
-				).setLabel(
-					String.valueOf(properties.get("label"))
-				).setTarget(
-					String.valueOf(properties.get("target"))
-				).build();
-			});
 	}
 
 }

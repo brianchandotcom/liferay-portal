@@ -40,9 +40,7 @@ public interface SAQConfiguration {
 	)
 	public long intervalMillis();
 
-	@Meta.AD(
-		deflt = "", name = "metrics", required = false
-	)
+	@Meta.AD(deflt = "", name = "metrics", required = false)
 	public String[] metrics();
 
 }

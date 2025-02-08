@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.exception.CompanyMaxUsersException;
 import com.liferay.portal.kernel.exception.ContactBirthdayException;
 import com.liferay.portal.kernel.exception.ContactNameException;
 import com.liferay.portal.kernel.exception.DuplicateGoogleUserIdException;
-import com.liferay.portal.kernel.exception.DuplicateOpenIdException;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.NoSuchImageException;
 import com.liferay.portal.kernel.exception.NoSuchOrganizationException;
@@ -1230,8 +1229,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		validate(
 			companyId, userId, autoPassword, password1, password2,
-			autoScreenName, screenName, emailAddress, ldapServerId, null,
-			firstName, middleName, lastName, organizationIds, locale);
+			autoScreenName, screenName, emailAddress, ldapServerId, firstName,
+			middleName, lastName, organizationIds, locale);
 
 		if (Validator.isNull(password1)) {
 			if (!autoPassword) {
@@ -4812,7 +4811,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 			validate(
 				companyId, user.getUserId(), autoPassword, password1, password2,
-				autoScreenName, screenName, emailAddress, -1, null, firstName,
+				autoScreenName, screenName, emailAddress, -1, firstName,
 				middleName, lastName, null, locale);
 
 			if (!autoPassword &&
@@ -5553,8 +5552,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		Locale locale = LocaleUtil.fromLanguageId(languageId);
 
 		validate(
-			userId, screenName, emailAddress, null, firstName, middleName,
-			lastName, smsSn, locale);
+			userId, screenName, emailAddress, firstName, middleName, lastName,
+			smsSn, locale);
 
 		User user = userPersistence.findByPrimaryKey(userId);
 
@@ -6999,9 +6998,9 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	protected void validate(
 			long companyId, long userId, boolean autoPassword, String password1,
 			String password2, boolean autoScreenName, String screenName,
-			String emailAddress, long ldapServerId, String openId,
-			String firstName, String middleName, String lastName,
-			long[] organizationIds, Locale locale)
+			String emailAddress, long ldapServerId, String firstName,
+			String middleName, String lastName, long[] organizationIds,
+			Locale locale)
 		throws PortalException {
 
 		validateMaxUsers(companyId);
@@ -7035,8 +7034,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			}
 		}
 
-		validateOpenId(companyId, userId, openId);
-
 		validateFullName(companyId, firstName, middleName, lastName, locale);
 
 		if (organizationIds != null) {
@@ -7053,7 +7050,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	}
 
 	protected void validate(
-			long userId, String screenName, String emailAddress, String openId,
+			long userId, String screenName, String emailAddress,
 			String firstName, String middleName, String lastName, String smsSn,
 			Locale locale)
 		throws PortalException {
@@ -7065,8 +7062,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		}
 
 		validateEmailAddress(user.getCompanyId(), emailAddress);
-
-		validateOpenId(user.getCompanyId(), userId, openId);
 
 		if (!user.isGuestUser()) {
 			if (Validator.isNotNull(emailAddress) &&
@@ -7213,20 +7208,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 					"New user ", userId, " conflicts with existing user ",
 					userId, " who is already associated with Google user ID ",
 					googleUserId));
-		}
-	}
-
-	protected void validateOpenId(long companyId, long userId, String openId)
-		throws PortalException {
-
-		if (Validator.isNull(openId)) {
-			return;
-		}
-
-		User user = userPersistence.fetchByC_O(companyId, openId);
-
-		if ((user != null) && (user.getUserId() != userId)) {
-			throw new DuplicateOpenIdException("{userId=" + userId + "}");
 		}
 	}
 

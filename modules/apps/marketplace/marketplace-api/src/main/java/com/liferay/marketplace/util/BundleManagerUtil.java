@@ -107,11 +107,7 @@ public class BundleManagerUtil {
 	}
 
 	public static boolean isInstalled(Bundle bundle) {
-		if (ArrayUtil.contains(_INSTALLED_BUNDLE_STATES, bundle.getState())) {
-			return true;
-		}
-
-		return false;
+		return ArrayUtil.contains(_INSTALLED_BUNDLE_STATES, bundle.getState());
 	}
 
 	public static boolean isInstalled(String symbolicName, String version) {

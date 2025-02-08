@@ -64,11 +64,7 @@ public class UploadConfigurationIcon extends BasePortletConfigurationIcon {
 
 		User user = themeDisplay.getUser();
 
-		if (user.isGuestUser()) {
-			return false;
-		}
-
-		return true;
+		return !user.isGuestUser();
 	}
 
 	@Override

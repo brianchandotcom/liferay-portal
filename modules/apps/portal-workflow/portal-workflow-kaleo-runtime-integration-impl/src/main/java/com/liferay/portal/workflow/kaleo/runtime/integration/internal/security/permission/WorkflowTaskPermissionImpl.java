@@ -216,13 +216,8 @@ public class WorkflowTaskPermissionImpl implements WorkflowTaskPermission {
 			return false;
 		}
 
-		if (ArrayUtil.contains(
-				roleIds, workflowTaskAssignee.getAssigneeClassPK())) {
-
-			return true;
-		}
-
-		return false;
+		return ArrayUtil.contains(
+			roleIds, workflowTaskAssignee.getAssigneeClassPK());
 	}
 
 	private boolean _isWorkflowTaskAssignableToUser(

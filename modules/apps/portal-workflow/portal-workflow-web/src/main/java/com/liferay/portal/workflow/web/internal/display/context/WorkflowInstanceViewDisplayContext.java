@@ -240,35 +240,19 @@ public class WorkflowInstanceViewDisplayContext
 	}
 
 	public boolean isNavigationAll() {
-		if (Objects.equals(getNavigation(), "all")) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(getNavigation(), "all");
 	}
 
 	public boolean isNavigationCompleted() {
-		if (Objects.equals(getNavigation(), "completed")) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(getNavigation(), "completed");
 	}
 
 	public boolean isNavigationPending() {
-		if (Objects.equals(getNavigation(), "pending")) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(getNavigation(), "pending");
 	}
 
 	public boolean isSearch() {
-		if (Validator.isNotNull(getKeywords())) {
-			return true;
-		}
-
-		return false;
+		return Validator.isNotNull(getKeywords());
 	}
 
 	public boolean isShowExtraInfo() {

@@ -52,11 +52,7 @@ public abstract class Node implements ActionAware, NotificationAware {
 
 		Node node = (Node)object;
 
-		if (!Objects.equals(_name, node._name)) {
-			return false;
-		}
-
-		return true;
+		return Objects.equals(_name, node._name);
 	}
 
 	@Override

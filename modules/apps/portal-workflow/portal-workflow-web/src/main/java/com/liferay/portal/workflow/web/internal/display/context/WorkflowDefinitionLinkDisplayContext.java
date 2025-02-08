@@ -333,14 +333,8 @@ public class WorkflowDefinitionLinkDisplayContext {
 	}
 
 	public boolean isControlPanelPortlet() {
-		if (Objects.equals(
-				_getPortletName(),
-				WorkflowPortletKeys.CONTROL_PANEL_WORKFLOW)) {
-
-			return true;
-		}
-
-		return false;
+		return Objects.equals(
+			_getPortletName(), WorkflowPortletKeys.CONTROL_PANEL_WORKFLOW);
 	}
 
 	public boolean isWorkflowDefinitionEquals(

@@ -51,11 +51,7 @@ public class BundleUtil {
 
 		String fragmentHost = headers.get(Constants.FRAGMENT_HOST);
 
-		if (Validator.isNotNull(fragmentHost)) {
-			return true;
-		}
-
-		return false;
+		return Validator.isNotNull(fragmentHost);
 	}
 
 }

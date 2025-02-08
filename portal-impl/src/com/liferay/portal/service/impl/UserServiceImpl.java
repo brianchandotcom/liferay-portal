@@ -2351,25 +2351,6 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 	}
 
 	/**
-	 * Updates the user's OpenID.
-	 *
-	 * @param      userId the primary key of the user
-	 * @param      openId the new OpenID
-	 * @return     the user
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	@Override
-	public User updateOpenId(long userId, String openId)
-		throws PortalException {
-
-		UserPermissionUtil.check(
-			getPermissionChecker(), userId, ActionKeys.UPDATE);
-
-		return userLocalService.updateOpenId(userId, openId);
-	}
-
-	/**
 	 * Sets the organizations that the user is in, removing and adding
 	 * organizations as necessary.
 	 *

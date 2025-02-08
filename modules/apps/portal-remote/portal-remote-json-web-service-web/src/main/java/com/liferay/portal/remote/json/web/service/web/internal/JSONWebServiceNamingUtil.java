@@ -181,11 +181,7 @@ public class JSONWebServiceNamingUtil {
 	}
 
 	public static boolean isValidHttpMethod(String httpMethod) {
-		if (_invalidHttpMethods.contains(httpMethod)) {
-			return false;
-		}
-
-		return true;
+		return !_invalidHttpMethods.contains(httpMethod);
 	}
 
 	private static String _getMethodNamePrefix(String methodName) {

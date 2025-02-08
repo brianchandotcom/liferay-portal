@@ -70,11 +70,7 @@ public class PortalCORSServletFilter extends BaseFilter {
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
 
-		if (CORSSupport.isCORSRequest(httpServletRequest::getHeader)) {
-			return true;
-		}
-
-		return false;
+		return CORSSupport.isCORSRequest(httpServletRequest::getHeader);
 	}
 
 	@Activate

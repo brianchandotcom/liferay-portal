@@ -121,11 +121,8 @@ public class JSONWebServiceActionConfig
 		JSONWebServiceActionConfig jsonWebServiceActionConfig =
 			(JSONWebServiceActionConfig)object;
 
-		if (Objects.equals(_signature, jsonWebServiceActionConfig._signature)) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(
+			_signature, jsonWebServiceActionConfig._signature);
 	}
 
 	@Override

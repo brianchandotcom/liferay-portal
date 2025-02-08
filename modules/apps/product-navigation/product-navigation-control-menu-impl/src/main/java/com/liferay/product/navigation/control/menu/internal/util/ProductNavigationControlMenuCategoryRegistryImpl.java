@@ -86,11 +86,7 @@ public class ProductNavigationControlMenuCategoryRegistryImpl
 									productNavigationControlMenuCategory,
 									httpServletRequest);
 
-					if (productNavigationControlMenuEntries.isEmpty()) {
-						return false;
-					}
-
-					return true;
+					return !productNavigationControlMenuEntries.isEmpty();
 				}
 				catch (PortalException portalException) {
 					_log.error(portalException);

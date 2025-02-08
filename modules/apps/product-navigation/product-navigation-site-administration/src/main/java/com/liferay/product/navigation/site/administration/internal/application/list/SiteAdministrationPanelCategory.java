@@ -102,14 +102,8 @@ public class SiteAdministrationPanelCategory extends BaseJSPPanelCategory {
 			return false;
 		}
 
-		if (GroupPermissionUtil.contains(
-				permissionChecker, group,
-				ActionKeys.VIEW_SITE_ADMINISTRATION)) {
-
-			return true;
-		}
-
-		return false;
+		return GroupPermissionUtil.contains(
+			permissionChecker, group, ActionKeys.VIEW_SITE_ADMINISTRATION);
 	}
 
 	@Override

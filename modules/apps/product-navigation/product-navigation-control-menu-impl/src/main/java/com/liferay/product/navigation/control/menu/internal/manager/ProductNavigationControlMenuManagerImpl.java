@@ -130,14 +130,9 @@ public class ProductNavigationControlMenuManagerImpl
 			_portal.getPortletNamespace(LayoutAdminPortletKeys.GROUP_PAGES) +
 				"mvcRenderCommandName";
 
-		if (Objects.equals(
-				ParamUtil.getString(httpServletRequest, mvcRenderCommandName),
-				"/layout_admin/locked_layout")) {
-
-			return true;
-		}
-
-		return false;
+		return Objects.equals(
+			ParamUtil.getString(httpServletRequest, mvcRenderCommandName),
+			"/layout_admin/locked_layout");
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

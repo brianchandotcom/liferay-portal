@@ -38,13 +38,8 @@ public abstract class BaseProductNavigationControlMenuEntry
 		ProductNavigationControlMenuEntry productNavigationControlMenuEntry =
 			(ProductNavigationControlMenuEntry)object;
 
-		if (Objects.equals(
-				getKey(), productNavigationControlMenuEntry.getKey())) {
-
-			return true;
-		}
-
-		return false;
+		return Objects.equals(
+			getKey(), productNavigationControlMenuEntry.getKey());
 	}
 
 	@Override
@@ -109,11 +104,7 @@ public abstract class BaseProductNavigationControlMenuEntry
 		String panelState = SessionClicks.get(
 			httpServletRequest, key, "closed");
 
-		if (Objects.equals(panelState, "open")) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(panelState, "open");
 	}
 
 	@Override

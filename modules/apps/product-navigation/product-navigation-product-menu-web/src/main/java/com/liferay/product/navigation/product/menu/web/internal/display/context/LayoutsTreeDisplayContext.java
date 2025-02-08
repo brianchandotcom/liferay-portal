@@ -310,11 +310,7 @@ public class LayoutsTreeDisplayContext {
 				() -> {
 					Group scopeGroup = _themeDisplay.getScopeGroup();
 
-					if (scopeGroup.hasLocalOrRemoteStagingGroup()) {
-						return true;
-					}
-
-					return false;
+					return scopeGroup.hasLocalOrRemoteStagingGroup();
 				}
 			).build());
 
@@ -778,14 +774,9 @@ public class LayoutsTreeDisplayContext {
 	}
 
 	private boolean _hasAddLayoutPermission() throws PortalException {
-		if (GroupPermissionUtil.contains(
-				_themeDisplay.getPermissionChecker(),
-				_themeDisplay.getScopeGroup(), ActionKeys.ADD_LAYOUT)) {
-
-			return true;
-		}
-
-		return false;
+		return GroupPermissionUtil.contains(
+			_themeDisplay.getPermissionChecker(), _themeDisplay.getScopeGroup(),
+			ActionKeys.ADD_LAYOUT);
 	}
 
 	private boolean _hasAdministrationPortletPermission() throws Exception {
@@ -799,25 +790,15 @@ public class LayoutsTreeDisplayContext {
 		ControlPanelEntry controlPanelEntry =
 			portlet.getControlPanelEntryInstance();
 
-		if (!controlPanelEntry.hasAccessPermission(
-				_themeDisplay.getPermissionChecker(),
-				_themeDisplay.getScopeGroup(), portlet)) {
-
-			return false;
-		}
-
-		return true;
+		return controlPanelEntry.hasAccessPermission(
+			_themeDisplay.getPermissionChecker(), _themeDisplay.getScopeGroup(),
+			portlet);
 	}
 
 	private boolean _hasConfigureLayoutPermission() throws PortalException {
-		if (GroupPermissionUtil.contains(
-				_themeDisplay.getPermissionChecker(),
-				_themeDisplay.getScopeGroup(), ActionKeys.MANAGE_LAYOUTS)) {
-
-			return true;
-		}
-
-		return false;
+		return GroupPermissionUtil.contains(
+			_themeDisplay.getPermissionChecker(), _themeDisplay.getScopeGroup(),
+			ActionKeys.MANAGE_LAYOUTS);
 	}
 
 	private boolean _isPageHierarchyOption(String pageTypeOption) {

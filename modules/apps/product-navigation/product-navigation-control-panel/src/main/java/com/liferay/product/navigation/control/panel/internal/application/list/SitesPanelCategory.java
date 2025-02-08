@@ -46,13 +46,8 @@ public class SitesPanelCategory extends BasePanelCategory {
 	public boolean isShow(PermissionChecker permissionChecker, Group group)
 		throws PortalException {
 
-		if (PortalPermissionUtil.contains(
-				permissionChecker, ActionKeys.VIEW_CONTROL_PANEL)) {
-
-			return true;
-		}
-
-		return false;
+		return PortalPermissionUtil.contains(
+			permissionChecker, ActionKeys.VIEW_CONTROL_PANEL);
 	}
 
 	@Reference

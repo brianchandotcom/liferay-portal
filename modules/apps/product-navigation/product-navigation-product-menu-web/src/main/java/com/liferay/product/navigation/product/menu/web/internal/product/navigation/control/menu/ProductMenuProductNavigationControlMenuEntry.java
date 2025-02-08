@@ -200,13 +200,8 @@ public class ProductMenuProductNavigationControlMenuEntry
 	public boolean isShow(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		if (_productNavigationProductMenuHelper.isShowProductMenu(
-				httpServletRequest)) {
-
-			return true;
-		}
-
-		return false;
+		return _productNavigationProductMenuHelper.isShowProductMenu(
+			httpServletRequest);
 	}
 
 	private static final String _TMPL_CONTENT = StringUtil.read(

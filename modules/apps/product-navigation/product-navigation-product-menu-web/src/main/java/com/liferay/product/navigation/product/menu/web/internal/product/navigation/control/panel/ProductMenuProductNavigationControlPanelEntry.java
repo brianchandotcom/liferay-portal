@@ -58,11 +58,7 @@ public class ProductMenuProductNavigationControlPanelEntry
 			return false;
 		}
 
-		if (themeDisplay.isImpersonated()) {
-			return true;
-		}
-
-		return false;
+		return themeDisplay.isImpersonated();
 	}
 
 }

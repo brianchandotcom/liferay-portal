@@ -424,14 +424,9 @@ public class SiteAdministrationPanelCategoryDisplayContext {
 			return false;
 		}
 
-		if (GroupPermissionUtil.contains(
-				_themeDisplay.getPermissionChecker(), group,
-				ActionKeys.VIEW_SITE_ADMINISTRATION)) {
-
-			return true;
-		}
-
-		return false;
+		return GroupPermissionUtil.contains(
+			_themeDisplay.getPermissionChecker(), group,
+			ActionKeys.VIEW_SITE_ADMINISTRATION);
 	}
 
 	public boolean isShowSiteSelector() throws PortalException {
@@ -444,11 +439,7 @@ public class SiteAdministrationPanelCategoryDisplayContext {
 		List<Group> recentSites = _recentGroupManager.getRecentGroups(
 			PortalUtil.getHttpServletRequest(_portletRequest));
 
-		if (!recentSites.isEmpty()) {
-			return true;
-		}
-
-		return false;
+		return !recentSites.isEmpty();
 	}
 
 	public boolean isShowStagingInfo() throws PortalException {

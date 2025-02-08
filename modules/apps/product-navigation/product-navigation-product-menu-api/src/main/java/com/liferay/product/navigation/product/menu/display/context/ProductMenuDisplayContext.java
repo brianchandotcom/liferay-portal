@@ -188,11 +188,7 @@ public class ProductMenuDisplayContext {
 
 		List<PanelCategory> childPanelCategories = getChildPanelCategories();
 
-		if (childPanelCategories.isEmpty()) {
-			return false;
-		}
-
-		return true;
+		return !childPanelCategories.isEmpty();
 	}
 
 	private List<PanelCategory> _filterPanelCategories(
@@ -223,14 +219,9 @@ public class ProductMenuDisplayContext {
 		ControlPanelEntry controlPanelEntry =
 			portlet.getControlPanelEntryInstance();
 
-		if (!controlPanelEntry.hasAccessPermission(
-				_themeDisplay.getPermissionChecker(),
-				_themeDisplay.getScopeGroup(), portlet)) {
-
-			return false;
-		}
-
-		return true;
+		return controlPanelEntry.hasAccessPermission(
+			_themeDisplay.getPermissionChecker(), _themeDisplay.getScopeGroup(),
+			portlet);
 	}
 
 	private boolean _isEnableApplicationsMenu() {

@@ -62,13 +62,8 @@ public class ApplicationsMenuApplicationMenuProductNavigationControlMenuEntry
 			return false;
 		}
 
-		if (ApplicationsMenuUtil.hasChildPanelApps(
-				_panelAppRegistry, themeDisplay)) {
-
-			return true;
-		}
-
-		return false;
+		return ApplicationsMenuUtil.hasChildPanelApps(
+			_panelAppRegistry, themeDisplay);
 	}
 
 	@Override

@@ -85,11 +85,7 @@ public abstract class BasePersonalMenuEntry implements PersonalMenuEntry {
 			return false;
 		}
 
-		if (portletId.equals(getPortletId())) {
-			return true;
-		}
-
-		return false;
+		return portletId.equals(getPortletId());
 	}
 
 	@Override

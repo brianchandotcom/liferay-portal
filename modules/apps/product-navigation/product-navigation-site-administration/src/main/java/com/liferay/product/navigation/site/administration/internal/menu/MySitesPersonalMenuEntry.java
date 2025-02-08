@@ -126,11 +126,7 @@ public class MySitesPersonalMenuEntry implements PersonalMenuEntry {
 		List<Group> recentGroups = _recentGroupManager.getRecentGroups(
 			_portal.getHttpServletRequest(portletRequest));
 
-		if (!recentGroups.isEmpty()) {
-			return true;
-		}
-
-		return false;
+		return !recentGroups.isEmpty();
 	}
 
 	@Reference

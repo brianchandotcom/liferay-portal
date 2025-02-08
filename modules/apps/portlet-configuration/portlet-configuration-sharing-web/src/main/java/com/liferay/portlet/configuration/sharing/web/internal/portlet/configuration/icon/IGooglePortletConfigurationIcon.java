@@ -87,11 +87,9 @@ public class IGooglePortletConfigurationIcon
 		PortletPreferences portletPreferences =
 			portletDisplay.getPortletPreferences();
 
-		boolean lfrIgoogleShowAddAppLink = GetterUtil.getBoolean(
+		return GetterUtil.getBoolean(
 			portletPreferences.getValue(
 				"lfrIgoogleShowAddAppLink", StringPool.BLANK));
-
-		return lfrIgoogleShowAddAppLink;
 	}
 
 	@Override

@@ -81,11 +81,9 @@ public class NetvibesPortletConfigurationIcon
 		PortletPreferences portletPreferences =
 			portletDisplay.getPortletPreferences();
 
-		boolean lfrNetvibesShowAddAppLink = GetterUtil.getBoolean(
+		return GetterUtil.getBoolean(
 			portletPreferences.getValue(
 				"lfrNetvibesShowAddAppLink", StringPool.BLANK));
-
-		return lfrNetvibesShowAddAppLink;
 	}
 
 	@Override

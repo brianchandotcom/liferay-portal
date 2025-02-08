@@ -81,11 +81,9 @@ public class WidgetPortletConfigurationIcon
 		PortletPreferences portletPreferences =
 			portletDisplay.getPortletPreferences();
 
-		boolean lfrWidgetShowAddAppLink = GetterUtil.getBoolean(
+		return GetterUtil.getBoolean(
 			portletPreferences.getValue("lfrWidgetShowAddAppLink", null),
 			PropsValues.THEME_PORTLET_SHARING_DEFAULT);
-
-		return lfrWidgetShowAddAppLink;
 	}
 
 	@Override

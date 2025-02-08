@@ -5,6 +5,7 @@
 
 package com.liferay.frontend.data.set.internal.serializer;
 
+import com.liferay.frontend.data.set.internal.url.FDSAPIURLBuilder;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.data.set.serializer.FDSSerializer;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;

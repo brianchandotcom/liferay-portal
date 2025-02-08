@@ -61,7 +61,7 @@ import org.osgi.service.component.annotations.Reference;
 public class CustomFDSSerializer
 	extends BaseFDSSerializer implements FDSSerializer {
 
-	public Map<String, Object> getDataSetObjectEntryProperties(
+	protected Map<String, Object> getDataSetObjectEntryProperties(
 		String externalReferenceCode, HttpServletRequest httpServletRequest) {
 
 		ObjectEntry objectEntry = _getObjectEntry(
@@ -75,7 +75,7 @@ public class CustomFDSSerializer
 		return Collections.emptyMap();
 	}
 
-	public Set<ObjectEntry> getSortedRelatedObjectEntries(
+	protected Set<ObjectEntry> getSortedRelatedObjectEntries(
 		String externalReferenceCode,
 		String dataSetObjectEntryComparatorIdsPropertyKey,
 		HttpServletRequest httpServletRequest, Predicate<ObjectEntry> predicate,

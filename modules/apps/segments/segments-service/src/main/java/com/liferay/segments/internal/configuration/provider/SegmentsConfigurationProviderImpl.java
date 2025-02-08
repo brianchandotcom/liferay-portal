@@ -137,11 +137,7 @@ public class SegmentsConfigurationProviderImpl
 			_configurationProvider.getCompanyConfiguration(
 				SegmentsCompanyConfiguration.class, companyId);
 
-		if (!segmentsCompanyConfiguration.roleSegmentationEnabled()) {
-			return false;
-		}
-
-		return true;
+		return segmentsCompanyConfiguration.roleSegmentationEnabled();
 	}
 
 	@Override
@@ -165,11 +161,7 @@ public class SegmentsConfigurationProviderImpl
 			_configurationProvider.getCompanyConfiguration(
 				SegmentsCompanyConfiguration.class, companyId);
 
-		if (!segmentsCompanyConfiguration.segmentationEnabled()) {
-			return false;
-		}
-
-		return true;
+		return segmentsCompanyConfiguration.segmentationEnabled();
 	}
 
 	@Override

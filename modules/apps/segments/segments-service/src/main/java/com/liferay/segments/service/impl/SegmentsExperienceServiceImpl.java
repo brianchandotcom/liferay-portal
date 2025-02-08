@@ -351,13 +351,8 @@ public class SegmentsExperienceServiceImpl
 			return false;
 		}
 
-		if (_layoutPermission.containsLayoutRestrictedUpdatePermission(
-				getPermissionChecker(), layout)) {
-
-			return true;
-		}
-
-		return false;
+		return _layoutPermission.containsLayoutRestrictedUpdatePermission(
+			getPermissionChecker(), layout);
 	}
 
 	@Reference

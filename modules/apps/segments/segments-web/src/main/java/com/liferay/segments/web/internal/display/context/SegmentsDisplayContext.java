@@ -572,11 +572,7 @@ public class SegmentsDisplayContext {
 	}
 
 	private boolean _isSearch() {
-		if (Validator.isNotNull(_getKeywords())) {
-			return true;
-		}
-
-		return false;
+		return Validator.isNotNull(_getKeywords());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

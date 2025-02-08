@@ -29,11 +29,7 @@ public class SearchWebConfigurationVisibilityController
 	public boolean isVisible(
 		ExtendedObjectClassDefinition.Scope scope, Serializable scopePK) {
 
-		if (FeatureFlagManagerUtil.isEnabled("LPD-13778")) {
-			return true;
-		}
-
-		return false;
+		return FeatureFlagManagerUtil.isEnabled("LPD-13778");
 	}
 
 }

@@ -213,11 +213,7 @@ public class AssetCategoriesSearchFacetDisplayContextBuilder
 	}
 
 	protected boolean isNothingSelected() {
-		if (_selectedCategoryIds.isEmpty()) {
-			return true;
-		}
-
-		return false;
+		return _selectedCategoryIds.isEmpty();
 	}
 
 	protected boolean isRenderNothing() {
@@ -229,11 +225,7 @@ public class AssetCategoriesSearchFacetDisplayContextBuilder
 	}
 
 	protected boolean isSelected(long categoryId) {
-		if (_selectedCategoryIds.contains(categoryId)) {
-			return true;
-		}
-
-		return false;
+		return _selectedCategoryIds.contains(categoryId);
 	}
 
 	private List<Tuple> _collectBuckets(Facet facet) {

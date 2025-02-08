@@ -145,11 +145,7 @@ public class ExpectedLogMethodTestRule extends MethodTestRule<Void> {
 
 		@Override
 		protected boolean matchesSafely(T logEntries) {
-			if (matcher.matches(toString(logEntries))) {
-				return true;
-			}
-
-			return false;
+			return matcher.matches(toString(logEntries));
 		}
 
 		protected String toString(T logEntries) {
@@ -185,11 +181,7 @@ public class ExpectedLogMethodTestRule extends MethodTestRule<Void> {
 		}
 
 		protected boolean isAnythingExpected() {
-			if (matchers.isEmpty()) {
-				return false;
-			}
-
-			return true;
+			return !matchers.isEmpty();
 		}
 
 		protected final List<Matcher<T>> matchers = new ArrayList<>();

@@ -115,11 +115,7 @@ public class AssetEntriesSearchFacetDisplayContextBuilder
 	}
 
 	public boolean isNothingSelected() {
-		if (_parameterValues.isEmpty()) {
-			return true;
-		}
-
-		return false;
+		return _parameterValues.isEmpty();
 	}
 
 	public void setClassNames(String[] classNames) {

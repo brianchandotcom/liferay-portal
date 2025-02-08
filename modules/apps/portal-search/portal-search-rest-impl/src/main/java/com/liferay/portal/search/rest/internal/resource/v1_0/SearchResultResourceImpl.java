@@ -289,14 +289,9 @@ public class SearchResultResourceImpl extends BaseSearchResultResourceImpl {
 	}
 
 	private boolean _isEmbedded() {
-		if (StringUtil.contains(
-				ParamUtil.getString(contextHttpServletRequest, "nestedFields"),
-				"embedded")) {
-
-			return true;
-		}
-
-		return false;
+		return StringUtil.contains(
+			ParamUtil.getString(contextHttpServletRequest, "nestedFields"),
+			"embedded");
 	}
 
 	private boolean _isEmptyOrContains(List<String> list, String... strings) {

@@ -191,19 +191,11 @@ public class UserSearchFacetDisplayContextBuilder {
 	}
 
 	protected boolean isNothingSelected() {
-		if (_paramValues.isEmpty()) {
-			return true;
-		}
-
-		return false;
+		return _paramValues.isEmpty();
 	}
 
 	protected boolean isSelected(String value) {
-		if (_paramValues.contains(value)) {
-			return true;
-		}
-
-		return false;
+		return _paramValues.contains(value);
 	}
 
 	private List<BucketDisplayContext> _buildBucketDisplayContexts(

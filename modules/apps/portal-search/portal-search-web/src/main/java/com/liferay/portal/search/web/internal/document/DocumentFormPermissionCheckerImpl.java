@@ -23,11 +23,7 @@ public class DocumentFormPermissionCheckerImpl
 		PermissionChecker permissionChecker =
 			_themeDisplay.getPermissionChecker();
 
-		if (permissionChecker.isCompanyAdmin()) {
-			return true;
-		}
-
-		return false;
+		return permissionChecker.isCompanyAdmin();
 	}
 
 	private final ThemeDisplay _themeDisplay;

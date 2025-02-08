@@ -105,14 +105,9 @@ public class SearchBarPrecedenceHelper {
 		SearchBarPortletPreferences searchBarPortletPreferences2 =
 			_getSearchBarPortletPreferences(portletId, themeDisplay);
 
-		if (!Objects.equals(
-				searchBarPortletPreferences1.getFederatedSearchKey(),
-				searchBarPortletPreferences2.getFederatedSearchKey())) {
-
-			return false;
-		}
-
-		return true;
+		return Objects.equals(
+			searchBarPortletPreferences1.getFederatedSearchKey(),
+			searchBarPortletPreferences2.getFederatedSearchKey());
 	}
 
 	private List<Portlet> _getPortlets(ThemeDisplay themeDisplay) {
@@ -156,11 +151,7 @@ public class SearchBarPrecedenceHelper {
 	}
 
 	private boolean _isSamePortlet(Portlet portlet, String portletId) {
-		if (Objects.equals(portlet.getPortletId(), portletId)) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(portlet.getPortletId(), portletId);
 	}
 
 	@Reference

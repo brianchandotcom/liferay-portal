@@ -469,11 +469,7 @@ public class SearchDisplayContext {
 
 		Group group = themeDisplay.getScopeGroup();
 
-		if (group.isStagingGroup()) {
-			return false;
-		}
-
-		return true;
+		return !group.isStagingGroup();
 	}
 
 	public boolean isSearchScopePreferenceLetTheUserChoose() {

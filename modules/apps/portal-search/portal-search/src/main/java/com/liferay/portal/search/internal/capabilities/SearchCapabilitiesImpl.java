@@ -21,75 +21,42 @@ public class SearchCapabilitiesImpl implements SearchCapabilities {
 
 	@Override
 	public boolean isAnalyticsSupported() {
-		if (_isSearchEngineSolr()) {
-			return false;
-		}
-
-		return true;
+		return !_isSearchEngineSolr();
 	}
 
 	@Override
 	public boolean isCommerceSupported() {
-		if (_isSearchEngineSolr()) {
-			return false;
-		}
-
-		return true;
+		return !_isSearchEngineSolr();
 	}
 
 	@Override
 	public boolean isConcurrentModeSupported() {
-		if (_isSearchEngineSolr()) {
-			return false;
-		}
-
-		return true;
+		return !_isSearchEngineSolr();
 	}
 
 	@Override
 	public boolean isResultRankingsSupported() {
-		if (_isSearchEngineSolr()) {
-			return false;
-		}
-
-		return true;
+		return !_isSearchEngineSolr();
 	}
 
 	@Override
 	public boolean isSearchExperiencesSupported() {
-		if (_isSearchEngineSolr()) {
-			return false;
-		}
-
-		return true;
+		return !_isSearchEngineSolr();
 	}
 
 	@Override
 	public boolean isSynonymsSupported() {
-		if (_isSearchEngineSolr()) {
-			return false;
-		}
-
-		return true;
+		return !_isSearchEngineSolr();
 	}
 
 	@Override
 	public boolean isWorkflowMetricsSupported() {
-		if (_isSearchEngineSolr()) {
-			return false;
-		}
-
-		return true;
+		return !_isSearchEngineSolr();
 	}
 
 	private boolean _isSearchEngineSolr() {
-		if (Objects.equals(
-				_searchEngineInformation.getVendorString(), "Solr")) {
-
-			return true;
-		}
-
-		return false;
+		return Objects.equals(
+			_searchEngineInformation.getVendorString(), "Solr");
 	}
 
 	@Reference

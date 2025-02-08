@@ -28,11 +28,7 @@ public class SearchPortletManager implements PortletManager {
 
 	@Override
 	public boolean isVisible(Layout layout) {
-		if (FeatureFlagManagerUtil.isEnabled("LPD-13778")) {
-			return true;
-		}
-
-		return false;
+		return FeatureFlagManagerUtil.isEnabled("LPD-13778");
 	}
 
 }

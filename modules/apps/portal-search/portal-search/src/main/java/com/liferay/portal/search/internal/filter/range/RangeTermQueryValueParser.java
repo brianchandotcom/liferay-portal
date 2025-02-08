@@ -36,21 +36,13 @@ public class RangeTermQueryValueParser {
 	protected boolean isIncludesLower(Matcher matcher) {
 		String lowerBracket = matcher.group("lowerBracket");
 
-		if (lowerBracket.equals(StringPool.OPEN_BRACKET)) {
-			return true;
-		}
-
-		return false;
+		return lowerBracket.equals(StringPool.OPEN_BRACKET);
 	}
 
 	protected boolean isIncludesUpper(Matcher matcher) {
 		String upperBracket = matcher.group("upperBracket");
 
-		if (upperBracket.equals(StringPool.CLOSE_BRACKET)) {
-			return true;
-		}
-
-		return false;
+		return upperBracket.equals(StringPool.CLOSE_BRACKET);
 	}
 
 	private static final Pattern _pattern = Pattern.compile(

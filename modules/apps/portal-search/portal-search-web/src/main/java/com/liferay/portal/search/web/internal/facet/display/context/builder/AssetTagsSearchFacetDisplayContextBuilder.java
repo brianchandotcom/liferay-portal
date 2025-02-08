@@ -211,11 +211,7 @@ public class AssetTagsSearchFacetDisplayContextBuilder {
 	}
 
 	protected boolean isNothingSelected() {
-		if (_selectedTags.isEmpty()) {
-			return true;
-		}
-
-		return false;
+		return _selectedTags.isEmpty();
 	}
 
 	protected boolean isRenderNothing() {
@@ -229,11 +225,7 @@ public class AssetTagsSearchFacetDisplayContextBuilder {
 	}
 
 	protected boolean isSelected(String value) {
-		if (_selectedTags.contains(value)) {
-			return true;
-		}
-
-		return false;
+		return _selectedTags.contains(value);
 	}
 
 	private List<BucketDisplayContext> _buildBucketDisplayContexts() {

@@ -169,11 +169,7 @@ public class FolderSearchFacetDisplayContextBuilder {
 	}
 
 	protected boolean isNothingSelected() {
-		if (_selectedFolderIds.isEmpty()) {
-			return true;
-		}
-
-		return false;
+		return _selectedFolderIds.isEmpty();
 	}
 
 	protected boolean isRenderNothing(
@@ -190,11 +186,7 @@ public class FolderSearchFacetDisplayContextBuilder {
 	}
 
 	protected boolean isSelected(long folderId) {
-		if (_selectedFolderIds.contains(folderId)) {
-			return true;
-		}
-
-		return false;
+		return _selectedFolderIds.contains(folderId);
 	}
 
 	private BucketDisplayContext _buildBucketDisplayContext(

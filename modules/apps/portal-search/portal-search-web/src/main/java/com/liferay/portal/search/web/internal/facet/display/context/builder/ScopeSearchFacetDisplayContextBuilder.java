@@ -222,11 +222,7 @@ public class ScopeSearchFacetDisplayContextBuilder {
 	}
 
 	protected boolean isNothingSelected() {
-		if (_selectedGroupIds.isEmpty()) {
-			return true;
-		}
-
-		return false;
+		return _selectedGroupIds.isEmpty();
 	}
 
 	protected boolean isRenderNothing() {
@@ -240,19 +236,11 @@ public class ScopeSearchFacetDisplayContextBuilder {
 
 		List<TermCollector> termCollectors = getTermCollectors();
 
-		if (!termCollectors.isEmpty()) {
-			return false;
-		}
-
-		return true;
+		return termCollectors.isEmpty();
 	}
 
 	protected boolean isSelected(Long groupId) {
-		if (_selectedGroupIds.contains(groupId)) {
-			return true;
-		}
-
-		return false;
+		return _selectedGroupIds.contains(groupId);
 	}
 
 	private List<BucketDisplayContext> _buildBucketDisplayContexts(

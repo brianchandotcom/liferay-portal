@@ -33,11 +33,7 @@ public class FacetBucketUtil {
 			return _isRangeValueInBucket(field, term);
 		}
 
-		if (ArrayUtil.contains(field.getValues(), term, false)) {
-			return true;
-		}
-
-		return false;
+		return ArrayUtil.contains(field.getValues(), term, false);
 	}
 
 	private static boolean _containsFieldNameFieldValue(

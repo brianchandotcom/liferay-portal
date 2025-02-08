@@ -28,75 +28,81 @@ const test = mergeTests(
 	pageEditorPagesTest
 );
 
-test('Saves edited contend when leaving page while editing', async ({
-	apiHelpers,
-	page,
-	pageEditorPage,
-	site,
-}) => {
+test(
+	'Saves edited contend when leaving page while editing',
+	{
+		tag: ['@LPD-40982', '@LPD-48256'],
+	},
+	async ({apiHelpers, page, pageEditorPage, site}) => {
 
-	// Create a page with a Paragraph fragment and go to view mode
+		// Create a page with a Paragraph fragment and go to view mode
 
-	const paragraphId = getRandomString();
-	const paragraphDefinition = getFragmentDefinition({
-		id: paragraphId,
-		key: 'BASIC_COMPONENT-paragraph',
-	});
+		const paragraphId = getRandomString();
+		const paragraphDefinition = getFragmentDefinition({
+			id: paragraphId,
+			key: 'BASIC_COMPONENT-paragraph',
+		});
 
-	const layout = await apiHelpers.headlessDelivery.createSitePage({
-		pageDefinition: getPageDefinition([paragraphDefinition]),
-		siteId: site.id,
-		title: getRandomString(),
-	});
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([paragraphDefinition]),
+			siteId: site.id,
+			title: getRandomString(),
+		});
 
-	await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`);
+		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`);
 
-	// Go to edit mode
+		// Go to edit mode
 
-	await page
-		.getByLabel('Control Menu')
-		.getByText('Edit', {exact: true})
-		.click();
+		await page
+			.getByLabel('Control Menu')
+			.getByText('Edit', {exact: true})
+			.click();
 
-	await page.locator('.page-editor').waitFor();
+		await page.locator('.page-editor').waitFor();
 
-	// Write text in editable
+		// Write text in editable
 
-	await pageEditorPage.selectFragment(paragraphId);
+		await pageEditorPage.selectFragment(paragraphId);
 
-	await pageEditorPage.selectEditable(paragraphId, 'element-text');
+		await pageEditorPage.selectEditable(paragraphId, 'element-text');
 
-	const editable = pageEditorPage.getEditable({
-		editableId: 'element-text',
-		fragmentId: paragraphId,
-	});
+		const editable = pageEditorPage.getEditable({
+			editableId: 'element-text',
+			fragmentId: paragraphId,
+		});
 
-	await editable.click();
+		await editable.click();
 
-	await editable.locator('.cke_editable_inline').waitFor();
+		await editable.locator('.cke_editable_inline').waitFor();
 
-	await editable.locator('.cke_editable_inline').click();
+		await editable.locator('.cke_editable_inline').click();
 
-	// Clear current content and fill with new one
+		// Clear current content and fill with new one
 
-	await page.keyboard.press('Control+KeyA');
-	await page.keyboard.press('Backspace');
+		await page.keyboard.press('Control+KeyA');
 
-	await page.keyboard.type('Papa');
+		// Check toolbar appears
 
-	// Leave page while editing
+		await expect(page.locator('.ae-toolbar-styles')).toBeVisible();
 
-	await page.getByLabel('Control Menu').locator('.lfr-back-link').click();
+		await page.keyboard.press('Backspace');
 
-	// Go back to edit mode and check value was saved
+		await page.keyboard.type('Papa');
 
-	await page
-		.getByLabel('Control Menu')
-		.getByText('Edit', {exact: true})
-		.click();
+		// Leave page while editing
 
-	await expect(page.getByText('Papa')).toBeVisible();
-});
+		await page.getByLabel('Control Menu').locator('.lfr-back-link').click();
+
+		// Go back to edit mode and check value was saved
+
+		await page
+			.getByLabel('Control Menu')
+			.getByText('Edit', {exact: true})
+			.click();
+
+		await expect(page.getByText('Papa')).toBeVisible();
+	}
+);
 
 test(
 	'Value of editable field should be reset when the mapped content is missing',

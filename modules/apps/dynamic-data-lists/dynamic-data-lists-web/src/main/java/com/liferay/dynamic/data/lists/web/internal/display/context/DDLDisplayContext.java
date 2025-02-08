@@ -585,11 +585,7 @@ public class DDLDisplayContext {
 	}
 
 	public boolean isShowCancelButton() {
-		if (isFormView()) {
-			return false;
-		}
-
-		return true;
+		return !isFormView();
 	}
 
 	public boolean isShowConfigurationIcon() throws PortalException {
@@ -763,11 +759,7 @@ public class DDLDisplayContext {
 	}
 
 	protected boolean isSearch() {
-		if (Validator.isNotNull(getKeywords())) {
-			return true;
-		}
-
-		return false;
+		return Validator.isNotNull(getKeywords());
 	}
 
 	private DDMTemplate _fetchDisplayDDMTemplate() {

@@ -1160,11 +1160,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 		Map<String, Serializable> latestAttributes =
 			latestExpandoBridge.getAttributes();
 
-		if (!lastAttributes.equals(latestAttributes)) {
-			return false;
-		}
-
-		return true;
+		return lastAttributes.equals(latestAttributes);
 	}
 
 	protected Fields toFields(

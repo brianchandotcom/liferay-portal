@@ -124,11 +124,7 @@ public class GroupSelectorDisplayContext {
 	}
 
 	public boolean isGroupTypeActive(String groupType) {
-		if (groupType.equals(_getGroupType())) {
-			return true;
-		}
-
-		return false;
+		return groupType.equals(_getGroupType());
 	}
 
 	protected GroupSelectorDisplayContext(

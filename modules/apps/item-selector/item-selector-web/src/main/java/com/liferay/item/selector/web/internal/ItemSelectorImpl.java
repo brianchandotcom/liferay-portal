@@ -437,11 +437,7 @@ public class ItemSelectorImpl implements ItemSelector {
 	private boolean _isSearch(Map<String, String[]> parameters) {
 		String keywords = getValue(parameters, "keywords");
 
-		if (Validator.isNotNull(keywords)) {
-			return true;
-		}
-
-		return false;
+		return Validator.isNotNull(keywords);
 	}
 
 	private static final Pattern _itemSelectorURLPattern = Pattern.compile(

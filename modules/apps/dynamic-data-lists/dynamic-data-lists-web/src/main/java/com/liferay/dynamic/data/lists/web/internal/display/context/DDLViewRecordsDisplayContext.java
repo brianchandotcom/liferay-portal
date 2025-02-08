@@ -531,11 +531,7 @@ public class DDLViewRecordsDisplayContext {
 	}
 
 	protected boolean isSearch() {
-		if (Validator.isNotNull(getKeywords())) {
-			return true;
-		}
-
-		return false;
+		return Validator.isNotNull(getKeywords());
 	}
 
 	protected boolean isShowAddRecordButton() throws PortalException {
@@ -592,11 +588,7 @@ public class DDLViewRecordsDisplayContext {
 	}
 
 	private boolean _isDDMFormFieldTransient(DDMFormField ddmFormField) {
-		if (Validator.isNull(ddmFormField.getDataType())) {
-			return true;
-		}
-
-		return false;
+		return Validator.isNull(ddmFormField.getDataType());
 	}
 
 	private void _putDDMFormFieldValue(

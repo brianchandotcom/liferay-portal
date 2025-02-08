@@ -25,11 +25,7 @@ public class MarketplacePermission {
 	public static boolean contains(PermissionChecker permissionChecker)
 		throws PortalException {
 
-		if (!permissionChecker.isOmniadmin()) {
-			return false;
-		}
-
-		return true;
+		return permissionChecker.isOmniadmin();
 	}
 
 }

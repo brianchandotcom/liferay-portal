@@ -1180,27 +1180,15 @@ public class WorkflowTaskDisplayContext {
 	}
 
 	private boolean _isAssignedToMyRolesTabSelected() {
-		if (Objects.equals(_getTabs1(), "assigned-to-my-roles")) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(_getTabs1(), "assigned-to-my-roles");
 	}
 
 	private boolean _isNavigationAll() {
-		if (Objects.equals(_getNavigation(), "all")) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(_getNavigation(), "all");
 	}
 
 	private boolean _isNavigationCompleted() {
-		if (Objects.equals(_getNavigation(), "completed")) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(_getNavigation(), "completed");
 	}
 
 	private void _setWorkflowTaskSearchEmptyResultsMessage(

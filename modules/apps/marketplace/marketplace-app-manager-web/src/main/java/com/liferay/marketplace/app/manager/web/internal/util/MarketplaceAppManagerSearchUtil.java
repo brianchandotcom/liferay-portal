@@ -62,11 +62,7 @@ public class MarketplaceAppManagerSearchUtil {
 
 		Matcher matcher = pattern.matcher(string);
 
-		if (matcher.find()) {
-			return true;
-		}
-
-		return false;
+		return matcher.find();
 	}
 
 	private static String _getKeywordsRegex(String keywords) {
@@ -111,11 +107,7 @@ public class MarketplaceAppManagerSearchUtil {
 
 		String bundleName = headers.get(Constants.BUNDLE_NAME);
 
-		if (_containsMatches(keywordsRegex, bundleName)) {
-			return true;
-		}
-
-		return false;
+		return _containsMatches(keywordsRegex, bundleName);
 	}
 
 }

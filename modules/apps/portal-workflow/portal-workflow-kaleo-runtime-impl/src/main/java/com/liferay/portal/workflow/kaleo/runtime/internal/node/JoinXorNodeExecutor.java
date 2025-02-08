@@ -229,11 +229,7 @@ public class JoinXorNodeExecutor extends BaseNodeExecutor {
 
 		KaleoNode kaleoNode = kaleoInstanceToken.getCurrentKaleoNode();
 
-		if (kaleoNode.isTerminal()) {
-			return true;
-		}
-
-		return false;
+		return kaleoNode.isTerminal();
 	}
 
 	@Reference

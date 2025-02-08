@@ -171,11 +171,7 @@ public class EditRedirectEntryDisplayContext {
 	}
 
 	public boolean isRedirectEntryTemporary() {
-		if (isRedirectEntryPermanent()) {
-			return false;
-		}
-
-		return true;
+		return !isRedirectEntryPermanent();
 	}
 
 	public boolean isShowAlertMessage() {

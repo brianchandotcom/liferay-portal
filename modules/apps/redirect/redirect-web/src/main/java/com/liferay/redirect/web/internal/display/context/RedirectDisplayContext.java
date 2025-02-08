@@ -66,38 +66,22 @@ public class RedirectDisplayContext {
 	}
 
 	public boolean isShowRedirectEntries() {
-		if (_isShowNavigationPanel("aliases")) {
-			return true;
-		}
-
-		return false;
+		return _isShowNavigationPanel("aliases");
 	}
 
 	public boolean isShowRedirectNotFoundEntries() {
-		if (_isShowNavigationPanel("404-urls")) {
-			return true;
-		}
-
-		return false;
+		return _isShowNavigationPanel("404-urls");
 	}
 
 	private boolean _isShowNavigationPanel(String name) {
 		String navigation = ParamUtil.getString(
 			_httpServletRequest, "navigation", "aliases");
 
-		if (navigation.equals(name)) {
-			return true;
-		}
-
-		return false;
+		return navigation.equals(name);
 	}
 
 	private boolean _isShowRedirectPatterns() {
-		if (_isShowNavigationPanel("patterns")) {
-			return true;
-		}
-
-		return false;
+		return _isShowNavigationPanel("patterns");
 	}
 
 	private final HttpServletRequest _httpServletRequest;

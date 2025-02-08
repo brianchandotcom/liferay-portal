@@ -123,11 +123,7 @@ public class RedirectEntryInfoPanelDisplayContext {
 	}
 
 	public boolean isEmptyRedirectEntries() {
-		if (_redirectEntries.isEmpty()) {
-			return true;
-		}
-
-		return false;
+		return _redirectEntries.isEmpty();
 	}
 
 	public boolean isSingletonRedirectEntry() {

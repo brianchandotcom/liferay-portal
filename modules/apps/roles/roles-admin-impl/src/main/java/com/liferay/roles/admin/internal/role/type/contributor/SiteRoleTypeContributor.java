@@ -79,11 +79,7 @@ public class SiteRoleTypeContributor implements RoleTypeContributor {
 
 	@Override
 	public boolean isAutomaticallyAssigned(Role role) {
-		if (Objects.equals(RoleConstants.SITE_MEMBER, role.getName())) {
-			return true;
-		}
-
-		return false;
+		return Objects.equals(RoleConstants.SITE_MEMBER, role.getName());
 	}
 
 	@Reference

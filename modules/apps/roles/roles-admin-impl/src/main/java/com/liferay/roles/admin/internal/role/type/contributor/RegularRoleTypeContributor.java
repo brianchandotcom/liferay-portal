@@ -58,13 +58,8 @@ public class RegularRoleTypeContributor implements RoleTypeContributor {
 
 	@Override
 	public boolean isAllowAssignMembers(Role role) {
-		if (ArrayUtil.contains(
-				_AUTOMATICALLY_ASSIGNED_ROLE_NAMES, role.getName())) {
-
-			return false;
-		}
-
-		return true;
+		return !ArrayUtil.contains(
+			_AUTOMATICALLY_ASSIGNED_ROLE_NAMES, role.getName());
 	}
 
 	@Override
@@ -92,13 +87,8 @@ public class RegularRoleTypeContributor implements RoleTypeContributor {
 
 	@Override
 	public boolean isAutomaticallyAssigned(Role role) {
-		if (ArrayUtil.contains(
-				_AUTOMATICALLY_ASSIGNED_ROLE_NAMES, role.getName())) {
-
-			return true;
-		}
-
-		return false;
+		return ArrayUtil.contains(
+			_AUTOMATICALLY_ASSIGNED_ROLE_NAMES, role.getName());
 	}
 
 	private static final String[] _AUTOMATICALLY_ASSIGNED_ROLE_NAMES = {

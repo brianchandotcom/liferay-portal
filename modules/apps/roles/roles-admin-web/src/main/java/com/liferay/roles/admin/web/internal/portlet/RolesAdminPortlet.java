@@ -603,11 +603,7 @@ public class RolesAdminPortlet extends MVCPortlet {
 		try {
 			Group group = _groupService.getGroup(groupId);
 
-			if (group.isDepot()) {
-				return true;
-			}
-
-			return false;
+			return group.isDepot();
 		}
 		catch (PortalException portalException) {
 			return ReflectionUtil.throwException(portalException);

@@ -224,11 +224,7 @@ public class EditRolePermissionsResourceDisplayContext {
 
 		Set<String> portletIds = hiddenPortletCategory.getPortletIds();
 
-		if (portletIds.contains(portlet.getPortletId())) {
-			return true;
-		}
-
-		return false;
+		return portletIds.contains(portlet.getPortletId());
 	}
 
 	private void _updateSearchContainerResultRows() throws PortalException {

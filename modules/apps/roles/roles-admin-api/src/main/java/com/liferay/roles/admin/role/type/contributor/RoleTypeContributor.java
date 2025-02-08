@@ -131,11 +131,7 @@ public interface RoleTypeContributor {
 	 *         granted by the role; <code>false</code> otherwise
 	 */
 	public default boolean isAllowDefinePermissions(Role role) {
-		if (ArrayUtil.contains(getExcludedRoleNames(), role.getName())) {
-			return false;
-		}
-
-		return true;
+		return !ArrayUtil.contains(getExcludedRoleNames(), role.getName());
 	}
 
 	/**

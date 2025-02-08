@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {debounce} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useMemo} from 'react';
 
@@ -256,6 +257,11 @@ function FragmentContentInteractionsFilter({
 		}
 	};
 
+	const debouncedSetEditableProcessorUniqueId = debounce(
+		setEditableProcessorUniqueId,
+		100
+	);
+
 	const onClickCapture = (event) => {
 		if (!canUpdateEditables) {
 			return;
@@ -304,7 +310,7 @@ function FragmentContentInteractionsFilter({
 			clientY: event.clientY,
 		};
 
-		setEditableProcessorUniqueId(
+		debouncedSetEditableProcessorUniqueId(
 			toControlsId(editable.itemId),
 			editableClickPosition
 		);

@@ -513,7 +513,9 @@ definition {
 
 		UserBar.gotoDropdownItem(dropdownItem = "Notifications");
 
-		WorkflowAsset.viewNotification(contentBody = "Test Test sent you a Web Content Article for review in the workflow. Select production to review the change.");
+		AssertElementPresent(
+			key_message = "Test Test sent you a Web Content Article for review in the workflow. Select production to review the change.",
+			locator1 = "Notifications#NOTIFICATIONS_WORKFLOW_TEXT");
 
 		Navigator.openURL();
 
@@ -546,11 +548,15 @@ definition {
 
 		Publications.selectPublication(publicationName = "Publication 2 Name");
 
-		WorkflowAsset.viewNotification(contentBody = "userfn userln sent you a Web Content Article for review in the workflow. Select the publication Publication 1 Name to review the change.");
+		AssertElementPresent(
+			key_message = "userfn userln sent you a Web Content Article for review in the workflow. Select the publication Publication 1 Name to review the change.",
+			locator1 = "Notifications#NOTIFICATIONS_WORKFLOW_TEXT");
 
 		Publications.workOnProduction();
 
-		WorkflowAsset.viewNotification(contentBody = "userfn userln sent you a Web Content Article for review in the workflow. Select the publication Publication 1 Name to review the change.");
+		AssertElementPresent(
+			key_message = "userfn userln sent you a Web Content Article for review in the workflow. Select the publication Publication 1 Name to review the change.",
+			locator1 = "Notifications#NOTIFICATIONS_WORKFLOW_TEXT");
 	}
 
 }

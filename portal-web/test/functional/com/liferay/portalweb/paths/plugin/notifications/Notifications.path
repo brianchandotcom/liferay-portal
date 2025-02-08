@@ -74,6 +74,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NOTIFICATIONS_WORKFLOW_TEXT</td>
+	<td>//div[@class='user-notifications']//div[contains(@data-qa-id,'rowItemContent') and contains(.,'${key_message}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NOTIFICATIONS_WORKFLOW_TITLE</td>
 	<td>//div[@class='user-notifications']//div[contains(@data-qa-id,'rowItemContent')]//a</td>
 	<td></td>

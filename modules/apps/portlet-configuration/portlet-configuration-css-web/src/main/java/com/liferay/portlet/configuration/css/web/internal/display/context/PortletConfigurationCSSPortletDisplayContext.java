@@ -250,14 +250,9 @@ public class PortletConfigurationCSSPortletDisplayContext {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		if (!PortletPermissionUtil.contains(
-				themeDisplay.getPermissionChecker(), themeDisplay.getLayout(),
-				getPortletResource(), ActionKeys.CONFIGURATION)) {
-
-			return false;
-		}
-
-		return true;
+		return PortletPermissionUtil.contains(
+			themeDisplay.getPermissionChecker(), themeDisplay.getLayout(),
+			getPortletResource(), ActionKeys.CONFIGURATION);
 	}
 
 	public boolean isBorderSameForAll(String property) {

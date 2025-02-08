@@ -91,11 +91,7 @@ public class IGooglePortletConfigurationIcon
 			portletPreferences.getValue(
 				"lfrIgoogleShowAddAppLink", StringPool.BLANK));
 
-		if (lfrIgoogleShowAddAppLink) {
-			return true;
-		}
-
-		return false;
+		return lfrIgoogleShowAddAppLink;
 	}
 
 	@Override

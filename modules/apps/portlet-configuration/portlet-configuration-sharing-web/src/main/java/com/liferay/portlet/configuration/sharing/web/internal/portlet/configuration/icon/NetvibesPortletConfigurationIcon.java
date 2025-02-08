@@ -85,11 +85,7 @@ public class NetvibesPortletConfigurationIcon
 			portletPreferences.getValue(
 				"lfrNetvibesShowAddAppLink", StringPool.BLANK));
 
-		if (lfrNetvibesShowAddAppLink) {
-			return true;
-		}
-
-		return false;
+		return lfrNetvibesShowAddAppLink;
 	}
 
 	@Override

@@ -85,11 +85,7 @@ public class WidgetPortletConfigurationIcon
 			portletPreferences.getValue("lfrWidgetShowAddAppLink", null),
 			PropsValues.THEME_PORTLET_SHARING_DEFAULT);
 
-		if (lfrWidgetShowAddAppLink) {
-			return true;
-		}
-
-		return false;
+		return lfrWidgetShowAddAppLink;
 	}
 
 	@Override

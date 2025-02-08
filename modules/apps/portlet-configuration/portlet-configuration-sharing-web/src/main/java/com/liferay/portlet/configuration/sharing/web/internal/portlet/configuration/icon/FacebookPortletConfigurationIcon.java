@@ -82,11 +82,7 @@ public class FacebookPortletConfigurationIcon
 			facebookShowAddAppLink = false;
 		}
 
-		if (facebookShowAddAppLink) {
-			return true;
-		}
-
-		return false;
+		return facebookShowAddAppLink;
 	}
 
 	@Reference

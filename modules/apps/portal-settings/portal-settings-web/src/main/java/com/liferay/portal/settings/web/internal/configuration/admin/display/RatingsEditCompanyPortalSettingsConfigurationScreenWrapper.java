@@ -82,11 +82,7 @@ public class RatingsEditCompanyPortalSettingsConfigurationScreenWrapper
 					PortletRatingsDefinitionUtil.
 						getPortletRatingsDefinitionValuesMap();
 
-			if (portletRatingsDefinitionValuesMap.isEmpty()) {
-				return false;
-			}
-
-			return true;
+			return !portletRatingsDefinitionValuesMap.isEmpty();
 		}
 
 	}

@@ -110,11 +110,7 @@ public class OpenSSOPortalSettingsConfigurationScreenWrapper
 
 		@Override
 		public boolean isVisible() {
-			if (FeatureFlagManagerUtil.isEnabled("LPD-36719")) {
-				return true;
-			}
-
-			return false;
+			return FeatureFlagManagerUtil.isEnabled("LPD-36719");
 		}
 
 	}

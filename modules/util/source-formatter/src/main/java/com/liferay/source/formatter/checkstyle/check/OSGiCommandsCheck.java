@@ -58,16 +58,15 @@ public class OSGiCommandsCheck extends BaseCheck {
 
 		_checkClassDeclaration(detailAST);
 
-		if (!importNames.contains(
+		if (importNames.contains(
 				"org.osgi.service.component.annotations.Reference")) {
 
-			return;
-		}
+			for (DetailAST variableDefinitionDetailAST :
+					getAllChildTokens(
+						detailAST, true, TokenTypes.VARIABLE_DEF)) {
 
-		for (DetailAST variableDefinitionDetailAST :
-				getAllChildTokens(detailAST, true, TokenTypes.VARIABLE_DEF)) {
-
-			_checkVariableDeclaration(variableDefinitionDetailAST);
+				_checkVariableDeclaration(variableDefinitionDetailAST);
+			}
 		}
 	}
 

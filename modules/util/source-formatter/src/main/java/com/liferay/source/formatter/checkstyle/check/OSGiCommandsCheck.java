@@ -12,9 +12,8 @@ import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 import com.puppycrawl.tools.checkstyle.utils.AnnotationUtil;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author Kevin Lee
@@ -94,15 +93,23 @@ public class OSGiCommandsCheck extends BaseCheck {
 			return;
 		}
 
-		Set<String> osgiCommandFunctions = _getOSGiCommandFunctions(
+		List<String> osgiCommandFunctions = _getOSGiCommandFunctions(
 			annotationArrayInitDetailAST);
 
 		if (osgiCommandFunctions.isEmpty()) {
 			return;
 		}
 
+		DetailAST objBlockDetailAST = detailAST.findFirstToken(
+			TokenTypes.OBJBLOCK);
+
+		if (objBlockDetailAST == null) {
+			return;
+		}
+
 		for (DetailAST methodDefinitionDetailAST :
-				getAllChildTokens(detailAST, true, TokenTypes.METHOD_DEF)) {
+				getAllChildTokens(
+					objBlockDetailAST, false, TokenTypes.METHOD_DEF)) {
 
 			osgiCommandFunctions.remove(getName(methodDefinitionDetailAST));
 		}
@@ -124,10 +131,10 @@ public class OSGiCommandsCheck extends BaseCheck {
 		}
 	}
 
-	private Set<String> _getOSGiCommandFunctions(
+	private List<String> _getOSGiCommandFunctions(
 		DetailAST annotationArrayInitDetailAST) {
 
-		Set<String> osgiCommandFunctions = new HashSet<>();
+		List<String> osgiCommandFunctions = new ArrayList<>();
 
 		for (DetailAST expressionDetailAST :
 				getAllChildTokens(

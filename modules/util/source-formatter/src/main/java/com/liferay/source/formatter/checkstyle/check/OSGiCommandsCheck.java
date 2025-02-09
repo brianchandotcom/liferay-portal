@@ -94,26 +94,8 @@ public class OSGiCommandsCheck extends BaseCheck {
 			return;
 		}
 
-		Set<String> osgiCommandFunctions = new HashSet<>();
-
-		for (DetailAST expressionDetailAST :
-				getAllChildTokens(
-					annotationArrayInitDetailAST, false, TokenTypes.EXPR)) {
-
-			DetailAST firstChildDetailAST = expressionDetailAST.getFirstChild();
-
-			if (firstChildDetailAST.getType() != TokenTypes.STRING_LITERAL) {
-				continue;
-			}
-
-			String[] property = StringUtil.split(
-				StringUtil.unquote(firstChildDetailAST.getText()),
-				CharPool.EQUAL);
-
-			if (property[0].equals("osgi.command.function")) {
-				osgiCommandFunctions.add(property[1]);
-			}
-		}
+		Set<String> osgiCommandFunctions = _getOSGiCommandFunctions(
+			annotationArrayInitDetailAST);
 
 		if (osgiCommandFunctions.isEmpty()) {
 			return;
@@ -140,6 +122,33 @@ public class OSGiCommandsCheck extends BaseCheck {
 		if (typeName.endsWith("OSGiCommands")) {
 			log(detailAST, _MSG_OSGI_REFERENCE_AVOID);
 		}
+	}
+
+	private Set<String> _getOSGiCommandFunctions(
+		DetailAST annotationArrayInitDetailAST) {
+
+		Set<String> osgiCommandFunctions = new HashSet<>();
+
+		for (DetailAST expressionDetailAST :
+				getAllChildTokens(
+					annotationArrayInitDetailAST, false, TokenTypes.EXPR)) {
+
+			DetailAST firstChildDetailAST = expressionDetailAST.getFirstChild();
+
+			if (firstChildDetailAST.getType() != TokenTypes.STRING_LITERAL) {
+				continue;
+			}
+
+			String[] property = StringUtil.split(
+				StringUtil.unquote(firstChildDetailAST.getText()),
+				CharPool.EQUAL);
+
+			if (property[0].equals("osgi.command.function")) {
+				osgiCommandFunctions.add(property[1]);
+			}
+		}
+
+		return osgiCommandFunctions;
 	}
 
 	private static final String _MSG_COMMAND_FUNCTION_MISSING =

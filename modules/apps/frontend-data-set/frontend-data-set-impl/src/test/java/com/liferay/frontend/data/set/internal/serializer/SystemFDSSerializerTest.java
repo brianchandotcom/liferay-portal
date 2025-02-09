@@ -120,10 +120,10 @@ public class SystemFDSSerializerTest {
 				new String[] {"bar"});
 		ServiceRegistration<SystemFDSEntry> systemFDSEntryServiceRegistration1 =
 			_registerSystemFDSEntry(
-				"fdsName1", "/app1", "/endpoint/{foo}", "schema");
+				null, "fdsName1", "/app1", "/endpoint/{foo}", "schema");
 		ServiceRegistration<SystemFDSEntry> systemFDSEntryServiceRegistration2 =
 			_registerSystemFDSEntry(
-				"fdsName2", "/app2", "/endpoint/{foo}", "schema");
+				null, "fdsName2", "/app2", "/endpoint/{foo}", "schema");
 
 		Assert.assertEquals(
 			"/o/app1/endpoint/bar",
@@ -139,7 +139,7 @@ public class SystemFDSSerializerTest {
 		// No resolver, URL
 
 		systemFDSEntryServiceRegistration1 = _registerSystemFDSEntry(
-			"fdsName", "/app", "/endpoint", "schema");
+			null, "fdsName", "/app", "/endpoint", "schema");
 
 		Assert.assertEquals(
 			"/o/app/endpoint",
@@ -177,9 +177,9 @@ public class SystemFDSSerializerTest {
 		fdsAPIURLServiceRegistration = _registerFDSAPIURLResolver(
 			"/app", "schema", new String[] {"{foo}"}, new String[] {"bar"});
 		systemFDSEntryServiceRegistration1 = _registerSystemFDSEntry(
-			"fdsName1", "/app", "/endpoint/{foo}", "schema");
+			null, "fdsName1", "/app", "/endpoint/{foo}", "schema");
 		systemFDSEntryServiceRegistration2 = _registerSystemFDSEntry(
-			"fdsName2", "/app", "/endpoint/{foo}", "schema");
+			null, "fdsName2", "/app", "/endpoint/{foo}", "schema");
 
 		Assert.assertEquals(
 			"/o/app/endpoint/bar",
@@ -218,7 +218,8 @@ public class SystemFDSSerializerTest {
 		// Different bulk actions
 
 		ServiceRegistration<SystemFDSEntry> systemFDSEntryServiceRegistration1 =
-			_registerSystemFDSEntry("fdsName1", "/app", "/endpoint", "schema");
+			_registerSystemFDSEntry(
+				null, "fdsName1", "/app", "/endpoint", "schema");
 
 		List<FDSActionDropdownItem> fdsActionDropdownItems1 =
 			ListUtil.fromArray(
@@ -235,7 +236,8 @@ public class SystemFDSSerializerTest {
 				"fdsName1", _httpServletRequest));
 
 		ServiceRegistration<SystemFDSEntry> systemFDSEntryServiceRegistration2 =
-			_registerSystemFDSEntry("fdsName2", "/app", "/endpoint", "schema");
+			_registerSystemFDSEntry(
+				null, "fdsName2", "/app", "/endpoint", "schema");
 
 		List<FDSActionDropdownItem> fdsActionDropdownItems2 =
 			ListUtil.fromArray(
@@ -265,7 +267,7 @@ public class SystemFDSSerializerTest {
 		// No bulk actions
 
 		systemFDSEntryServiceRegistration1 = _registerSystemFDSEntry(
-			"fdsName", "/app", "/endpoint", "schema");
+			null, "fdsName", "/app", "/endpoint", "schema");
 
 		Assert.assertTrue(
 			_fdsSerializer.serializeBulkActions(
@@ -277,9 +279,9 @@ public class SystemFDSSerializerTest {
 		// Shared bulk actions
 
 		systemFDSEntryServiceRegistration1 = _registerSystemFDSEntry(
-			"fdsName1", "/app", "/endpoint", "schema");
+			null, "fdsName1", "/app", "/endpoint", "schema");
 		systemFDSEntryServiceRegistration2 = _registerSystemFDSEntry(
-			"fdsName2", "/app", "/endpoint", "schema");
+			null, "fdsName2", "/app", "/endpoint", "schema");
 
 		fdsActionDropdownItems1 = ListUtil.fromArray(
 			new FDSActionDropdownItem(
@@ -329,7 +331,8 @@ public class SystemFDSSerializerTest {
 		// Different creation menu
 
 		ServiceRegistration<SystemFDSEntry> systemFDSEntryServiceRegistration1 =
-			_registerSystemFDSEntry("fdsName1", "/app", "/endpoint", "schema");
+			_registerSystemFDSEntry(
+				null, "fdsName1", "/app", "/endpoint", "schema");
 
 		CreationMenu creationMenu1 = CreationMenuBuilder.addDropdownItem(
 			DropdownItemBuilder.setIcon(
@@ -346,7 +349,8 @@ public class SystemFDSSerializerTest {
 				"fdsName1", _httpServletRequest));
 
 		ServiceRegistration<SystemFDSEntry> systemFDSEntryServiceRegistration2 =
-			_registerSystemFDSEntry("fdsName2", "/app", "/endpoint", "schema");
+			_registerSystemFDSEntry(
+				null, "fdsName2", "/app", "/endpoint", "schema");
 
 		CreationMenu creationMenu2 = CreationMenuBuilder.addDropdownItem(
 			DropdownItemBuilder.setIcon(
@@ -376,7 +380,7 @@ public class SystemFDSSerializerTest {
 		// No creation menu
 
 		systemFDSEntryServiceRegistration1 = _registerSystemFDSEntry(
-			"fdsName", "/app", "/endpoint", "schema");
+			null, "fdsName", "/app", "/endpoint", "schema");
 
 		Assert.assertTrue(
 			_fdsSerializer.serializeCreationMenu(
@@ -388,9 +392,9 @@ public class SystemFDSSerializerTest {
 		// Shared creation menu
 
 		systemFDSEntryServiceRegistration1 = _registerSystemFDSEntry(
-			"fdsName1", "/app", "/endpoint", "schema");
+			null, "fdsName1", "/app", "/endpoint", "schema");
 		systemFDSEntryServiceRegistration2 = _registerSystemFDSEntry(
-			"fdsName2", "/app", "/endpoint", "schema");
+			null, "fdsName2", "/app", "/endpoint", "schema");
 
 		creationMenu1 = CreationMenuBuilder.addDropdownItem(
 			DropdownItemBuilder.setIcon(
@@ -441,7 +445,8 @@ public class SystemFDSSerializerTest {
 		// Different items actions
 
 		ServiceRegistration<SystemFDSEntry> systemFDSEntryServiceRegistration1 =
-			_registerSystemFDSEntry("fdsName1", "/app", "/endpoint", "schema");
+			_registerSystemFDSEntry(
+				null, "fdsName1", "/app", "/endpoint", "schema");
 
 		List<FDSActionDropdownItem> fdsActionDropdownItems1 =
 			ListUtil.fromArray(
@@ -458,7 +463,8 @@ public class SystemFDSSerializerTest {
 				"fdsName1", _httpServletRequest));
 
 		ServiceRegistration<SystemFDSEntry> systemFDSEntryServiceRegistration2 =
-			_registerSystemFDSEntry("fdsName2", "/app", "/endpoint", "schema");
+			_registerSystemFDSEntry(
+				null, "fdsName2", "/app", "/endpoint", "schema");
 
 		List<FDSActionDropdownItem> fdsActionDropdownItems2 =
 			ListUtil.fromArray(
@@ -488,7 +494,7 @@ public class SystemFDSSerializerTest {
 		// No items actions
 
 		systemFDSEntryServiceRegistration1 = _registerSystemFDSEntry(
-			"fdsName", "/app", "/endpoint", "schema");
+			null, "fdsName", "/app", "/endpoint", "schema");
 
 		Assert.assertTrue(
 			_fdsSerializer.serializeItemsActions(
@@ -500,9 +506,9 @@ public class SystemFDSSerializerTest {
 		// Shared items actions
 
 		systemFDSEntryServiceRegistration1 = _registerSystemFDSEntry(
-			"fdsName1", "/app", "/endpoint", "schema");
+			null, "fdsName1", "/app", "/endpoint", "schema");
 		systemFDSEntryServiceRegistration2 = _registerSystemFDSEntry(
-			"fdsName2", "/app", "/endpoint", "schema");
+			null, "fdsName2", "/app", "/endpoint", "schema");
 
 		fdsActionDropdownItems1 = ListUtil.fromArray(
 			new FDSActionDropdownItem(
@@ -607,14 +613,6 @@ public class SystemFDSSerializerTest {
 
 			},
 			MapUtil.singletonDictionary("frontend.data.set.name", fdsName));
-	}
-
-	private ServiceRegistration<SystemFDSEntry> _registerSystemFDSEntry(
-		String fdsName, String restApplication, String restEndpoint,
-		String restSchema) {
-
-		return _registerSystemFDSEntry(
-			null, fdsName, restApplication, restEndpoint, restSchema);
 	}
 
 	private ServiceRegistration<SystemFDSEntry> _registerSystemFDSEntry(

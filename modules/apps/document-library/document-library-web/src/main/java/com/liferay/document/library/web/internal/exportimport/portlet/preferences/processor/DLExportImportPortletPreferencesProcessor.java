@@ -408,7 +408,8 @@ public class DLExportImportPortletPreferencesProcessor
 			}
 		}
 
-		// Root folder is not set, need to import everything
+		// Root folder external reference code is not set, need to import
+		// everything
 
 		try {
 			portletDataContext.importPortletPermissions(

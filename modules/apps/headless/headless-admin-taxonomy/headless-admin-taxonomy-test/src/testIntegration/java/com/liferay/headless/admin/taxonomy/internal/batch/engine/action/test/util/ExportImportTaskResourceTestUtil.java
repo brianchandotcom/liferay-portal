@@ -152,6 +152,7 @@ public class ExportImportTaskResourceTestUtil {
 		}
 
 		httpInvoker.path(path);
+
 		httpInvoker.userNameAndPassword(
 			"test@liferay.com:" + PropsValues.DEFAULT_ADMIN_PASSWORD);
 

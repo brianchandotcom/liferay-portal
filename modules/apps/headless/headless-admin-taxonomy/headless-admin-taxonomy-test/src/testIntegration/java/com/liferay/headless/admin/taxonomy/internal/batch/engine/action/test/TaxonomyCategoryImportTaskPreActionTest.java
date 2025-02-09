@@ -51,7 +51,6 @@ public class TaxonomyCategoryImportTaskPreActionTest {
 	public void setUp() throws Exception {
 		_localGroup = GroupTestUtil.addGroup();
 		_targetGroup = GroupTestUtil.addGroup();
-
 		_user = UserTestUtil.addUser();
 
 		_localAssetVocabulary = _assetVocabularyLocalService.addVocabulary(

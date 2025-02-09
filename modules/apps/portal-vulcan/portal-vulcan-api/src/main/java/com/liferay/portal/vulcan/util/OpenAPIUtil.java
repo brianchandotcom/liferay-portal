@@ -37,15 +37,15 @@ public class OpenAPIUtil {
 	public static String[] getBatchUnsupportedFormats(
 		Map<String, Object> extensions) {
 
-		if (MapUtil.isNotEmpty(extensions) &&
-			extensions.containsKey("x-batch-unsupported-formats")) {
+		if (MapUtil.isEmpty(extensions) ||
+			!extensions.containsKey("x-batch-unsupported-formats")) {
 
-			return StringUtil.split(
-				GetterUtil.getString(
-					extensions.get("x-batch-unsupported-formats")));
+			return null;
 		}
 
-		return null;
+		return StringUtil.split(
+			GetterUtil.getString(
+				extensions.get("x-batch-unsupported-formats")));
 	}
 
 	public static List<String> getCreateEntityScopes(

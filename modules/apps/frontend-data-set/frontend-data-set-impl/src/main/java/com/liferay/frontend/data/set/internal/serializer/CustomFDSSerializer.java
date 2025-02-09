@@ -280,7 +280,7 @@ public class CustomFDSSerializer
 
 		DefaultObjectEntryManager defaultObjectEntryManager =
 			DefaultObjectEntryManagerProvider.provide(
-				_dataSetObjectEntryManagerRegistry.getObjectEntryManager(
+				_objectEntryManagerRegistry.getObjectEntryManager(
 					objectDefinition.getStorageType()));
 
 		try {
@@ -313,7 +313,7 @@ public class CustomFDSSerializer
 
 		DefaultObjectEntryManager defaultObjectEntryManager =
 			DefaultObjectEntryManagerProvider.provide(
-				_dataSetObjectEntryManagerRegistry.getObjectEntryManager(
+				_objectEntryManagerRegistry.getObjectEntryManager(
 					objectDefinition.getStorageType()));
 
 		try {
@@ -352,10 +352,10 @@ public class CustomFDSSerializer
 		CustomFDSSerializer.class);
 
 	@Reference
-	private ObjectEntryManagerRegistry _dataSetObjectEntryManagerRegistry;
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Reference
-	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+	private ObjectEntryManagerRegistry _objectEntryManagerRegistry;
 
 	@Reference
 	private Portal _portal;

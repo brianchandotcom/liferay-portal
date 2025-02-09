@@ -59,25 +59,18 @@ public class OSGiCommandsCheck extends BaseCheck {
 		if (importNames.contains(
 				"org.osgi.service.component.annotations.Component")) {
 
-			List<DetailAST> methodDefinitionDetailASTList = getAllChildTokens(
-				objBlockDetailAST, false, TokenTypes.METHOD_DEF);
-
-			_checkMissingUnimplementedMethod(
-				detailAST, methodDefinitionDetailASTList);
+			_checkMissingUnimplementedMethod(detailAST, objBlockDetailAST);
 		}
 
 		if (importNames.contains(
 				"org.osgi.service.component.annotations.Reference")) {
 
-			List<DetailAST> variableDefinitionDetailASTList = getAllChildTokens(
-				objBlockDetailAST, false, TokenTypes.VARIABLE_DEF);
-
-			_checkVariableDeclaration(variableDefinitionDetailASTList);
+			_checkVariableDeclaration(objBlockDetailAST);
 		}
 	}
 
 	private void _checkMissingUnimplementedMethod(
-		DetailAST detailAST, List<DetailAST> methodDefinitionDetailASTList) {
+		DetailAST detailAST, DetailAST objBlockDetailAST) {
 
 		DetailAST annotationDetailAST = AnnotationUtil.getAnnotation(
 			detailAST, "Component");
@@ -109,6 +102,9 @@ public class OSGiCommandsCheck extends BaseCheck {
 			return;
 		}
 
+		List<DetailAST> methodDefinitionDetailASTList = getAllChildTokens(
+			objBlockDetailAST, false, TokenTypes.METHOD_DEF);
+
 		for (DetailAST methodDefinitionDetailAST :
 				methodDefinitionDetailASTList) {
 
@@ -120,8 +116,9 @@ public class OSGiCommandsCheck extends BaseCheck {
 		}
 	}
 
-	private void _checkVariableDeclaration(
-		List<DetailAST> variableDefinitionDetailASTList) {
+	private void _checkVariableDeclaration(DetailAST objBlockDetailAST) {
+		List<DetailAST> variableDefinitionDetailASTList = getAllChildTokens(
+			objBlockDetailAST, false, TokenTypes.VARIABLE_DEF);
 
 		for (DetailAST variableDefinitionDetailAST :
 				variableDefinitionDetailASTList) {

@@ -96,7 +96,6 @@ public class OSGiCommandsCheck extends BaseCheck {
 			return;
 		}
 
-		boolean osgiCommandsClass = false;
 		Set<String> osgiCommandFunctions = new HashSet<>();
 
 		for (DetailAST expressionDetailAST :
@@ -114,12 +113,11 @@ public class OSGiCommandsCheck extends BaseCheck {
 				CharPool.EQUAL);
 
 			if (property[0].equals("osgi.command.function")) {
-				osgiCommandsClass = true;
 				osgiCommandFunctions.add(property[1]);
 			}
 		}
 
-		if (!osgiCommandsClass) {
+		if (osgiCommandFunctions.isEmpty()) {
 			return;
 		}
 

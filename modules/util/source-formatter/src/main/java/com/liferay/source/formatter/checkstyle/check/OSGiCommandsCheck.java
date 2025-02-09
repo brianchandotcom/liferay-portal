@@ -56,7 +56,7 @@ public class OSGiCommandsCheck extends BaseCheck {
 			return;
 		}
 
-		_checkClassDeclaration(detailAST);
+		_checkMissingUnimplementedMethod(detailAST);
 
 		if (importNames.contains(
 				"org.osgi.service.component.annotations.Reference")) {
@@ -70,7 +70,7 @@ public class OSGiCommandsCheck extends BaseCheck {
 		}
 	}
 
-	private void _checkClassDeclaration(DetailAST detailAST) {
+	private void _checkMissingUnimplementedMethod(DetailAST detailAST) {
 		DetailAST annotationDetailAST = AnnotationUtil.getAnnotation(
 			detailAST, "Component");
 

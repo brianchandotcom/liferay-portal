@@ -14,7 +14,6 @@ import com.puppycrawl.tools.checkstyle.utils.AnnotationUtil;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -38,14 +37,14 @@ public class OSGiCommandsCheck extends BaseCheck {
 		DetailAST implementsClauseDetailAST = detailAST.findFirstToken(
 			TokenTypes.IMPLEMENTS_CLAUSE);
 
-		for (DetailAST childDetailAST :
-				getAllChildTokens(
-					implementsClauseDetailAST, false, TokenTypes.IDENT)) {
+		if (implementsClauseDetailAST == null) {
+			return;
+		}
 
-			if (Objects.equals(childDetailAST.getText(), "OSGiCommands")) {
-				break;
-			}
+		List<String> implementedClassNames = getNames(
+			implementsClauseDetailAST, false);
 
+		if (!implementedClassNames.contains("OSGiCommands")) {
 			return;
 		}
 

@@ -69,12 +69,11 @@ public class VulcanBatchEngineTaskItemDelegateRegistryImpl
 				_companyScopedVulcanBatchEngineTaskItemDelegatesMap.get(
 					companyId);
 
-		if (companyVulcanBatchEngineTaskItemDelegates != null) {
-			return companyVulcanBatchEngineTaskItemDelegates.get(
-				entityClassName);
+		if (companyVulcanBatchEngineTaskItemDelegates == null) {
+			return null;
 		}
 
-		return null;
+		return companyVulcanBatchEngineTaskItemDelegates.get(entityClassName);
 	}
 
 	@Override

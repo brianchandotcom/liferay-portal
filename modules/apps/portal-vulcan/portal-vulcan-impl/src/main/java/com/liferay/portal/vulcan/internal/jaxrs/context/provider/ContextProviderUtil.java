@@ -40,15 +40,14 @@ public class ContextProviderUtil {
 	public static EntityModel getEntityModel(Message message) throws Exception {
 		Object matchedResource = getMatchedResource(message);
 
-		if (matchedResource instanceof EntityModelResource) {
-			EntityModelResource entityModelResource =
-				(EntityModelResource)matchedResource;
-
-			return entityModelResource.getEntityModel(
-				_getPathParameters(message));
+		if (!(matchedResource instanceof EntityModelResource)) {
+			return null;
 		}
 
-		return null;
+		EntityModelResource entityModelResource =
+			(EntityModelResource)matchedResource;
+
+		return entityModelResource.getEntityModel(_getPathParameters(message));
 	}
 
 	public static HttpServletRequest getHttpServletRequest(Message message) {

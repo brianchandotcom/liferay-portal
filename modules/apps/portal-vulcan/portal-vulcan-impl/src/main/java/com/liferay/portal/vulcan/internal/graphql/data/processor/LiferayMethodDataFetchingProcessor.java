@@ -621,15 +621,14 @@ public class LiferayMethodDataFetchingProcessor {
 			Object resource, Map<String, String[]> parameterMap)
 		throws Exception {
 
-		if (resource instanceof EntityModelResource) {
-			EntityModelResource entityModelResource =
-				(EntityModelResource)resource;
-
-			return entityModelResource.getEntityModel(
-				ContextProviderUtil.getMultivaluedHashMap(parameterMap));
+		if (!(resource instanceof EntityModelResource)) {
+			return null;
 		}
 
-		return null;
+		EntityModelResource entityModelResource = (EntityModelResource)resource;
+
+		return entityModelResource.getEntityModel(
+			ContextProviderUtil.getMultivaluedHashMap(parameterMap));
 	}
 
 	private Filter _getFilter(

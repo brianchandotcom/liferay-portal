@@ -7,6 +7,8 @@ package com.liferay.layout.content.page.editor.web.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
+import com.liferay.fragment.entry.processor.constants.FragmentEntryProcessorConstants;
+import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.fragment.util.configuration.FragmentConfigurationField;
@@ -75,6 +77,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -82,6 +85,7 @@ import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 import java.util.TreeSet;
 
@@ -125,9 +129,11 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 
 		_layout = LayoutTestUtil.addTypeContentLayout(_group);
 
+		_draftLayout = _layout.fetchDraftLayout();
+
 		_segmentsExperienceId =
 			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
-				_layout.getPlid());
+				_draftLayout.getPlid());
 
 		_prepareServiceContext();
 	}
@@ -417,6 +423,114 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 
 		Assert.assertTrue(
 			layoutStructureItem instanceof ContainerStyledLayoutStructureItem);
+	}
+
+	@FeatureFlags("LPD-31772")
+	@Test
+	public void testUpdateFormItemConfigMVCActionCommandMappingFormChangingFormTypeSimpleWithFeatureFlagEnabled()
+		throws Exception {
+
+		LayoutStructure layoutStructure = new LayoutStructure();
+
+		LayoutStructureItem rootLayoutStructureItem =
+			layoutStructure.addRootLayoutStructureItem();
+
+		FormStyledLayoutStructureItem formStyledLayoutStructureItem =
+			(FormStyledLayoutStructureItem)
+				layoutStructure.addFormStyledLayoutStructureItem(
+					rootLayoutStructureItem.getItemId(), 0);
+
+		formStyledLayoutStructureItem.setNumberOfSteps(3);
+		formStyledLayoutStructureItem.setFormType("multiple");
+
+		LayoutStructureItem formStepContainerStyledLayoutStructureItem =
+			layoutStructure.addFormStepContainerStyledLayoutStructureItem(
+				formStyledLayoutStructureItem.getItemId(), 0);
+
+		for (int i = 0; i < 3; i++) {
+			LayoutStructureItem formStepLayoutStructureItem =
+				layoutStructure.addFormStepLayoutStructureItem(
+					formStepContainerStyledLayoutStructureItem.getItemId(), 0);
+
+			layoutStructure.addFragmentStyledLayoutStructureItem(
+				_addSubmitButtonFragmentEntryLink("submit"),
+				formStepLayoutStructureItem.getItemId(), 0);
+			layoutStructure.addFragmentStyledLayoutStructureItem(
+				_addSubmitButtonFragmentEntryLink("previous"),
+				formStepLayoutStructureItem.getItemId(), 0);
+			layoutStructure.addFragmentStyledLayoutStructureItem(
+				_addSubmitButtonFragmentEntryLink("next"),
+				formStepLayoutStructureItem.getItemId(), 0);
+		}
+
+		ReflectionTestUtil.invoke(
+			_mvcActionCommand, "_updateFormStyledLayoutStructureItemFormType",
+			new Class<?>[] {
+				FormStyledLayoutStructureItem.class, String.class,
+				LayoutStructure.class, int.class, String.class, int.class,
+				long.class
+			},
+			formStyledLayoutStructureItem, "simple", layoutStructure, 0,
+			"multistep", 0, 0);
+
+		List<String> childrenItemIds =
+			formStyledLayoutStructureItem.getChildrenItemIds();
+
+		Assert.assertEquals(
+			childrenItemIds.toString(), 3, childrenItemIds.size());
+
+		for (String childrenItemId : childrenItemIds) {
+			FragmentStyledLayoutStructureItem
+				fragmentStyledLayoutStructureItem =
+					(FragmentStyledLayoutStructureItem)
+						layoutStructure.getLayoutStructureItem(childrenItemId);
+
+			FragmentEntryLink fragmentEntryLink =
+				_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
+					fragmentStyledLayoutStructureItem.getFragmentEntryLinkId());
+
+			Assert.assertEquals(
+				"submit",
+				_fragmentEntryConfigurationParser.getFieldValue(
+					fragmentEntryLink.getConfiguration(),
+					fragmentEntryLink.getEditableValues(),
+					LocaleUtil.getMostRelevantLocale(), "type"));
+		}
+
+		Map<Long, LayoutStructureItem> fragmentLayoutStructureItems =
+			layoutStructure.getFragmentLayoutStructureItems();
+
+		for (LayoutStructureItem layoutStructureItem :
+				fragmentLayoutStructureItems.values()) {
+
+			FragmentStyledLayoutStructureItem
+				fragmentStyledLayoutStructureItem =
+					(FragmentStyledLayoutStructureItem)layoutStructureItem;
+
+			FragmentEntryLink fragmentEntryLink =
+				_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
+					fragmentStyledLayoutStructureItem.getFragmentEntryLinkId());
+
+			Object value = _fragmentEntryConfigurationParser.getFieldValue(
+				fragmentEntryLink.getConfiguration(),
+				fragmentEntryLink.getEditableValues(),
+				LocaleUtil.getMostRelevantLocale(), "type");
+
+			if (Objects.equals(value, "previous") ||
+				Objects.equals(value, "next")) {
+
+				Assert.assertTrue(fragmentEntryLink.isDeleted());
+				Assert.assertTrue(
+					layoutStructure.isItemMarkedForDeletion(
+						fragmentStyledLayoutStructureItem.getItemId()));
+			}
+			else {
+				Assert.assertFalse(fragmentEntryLink.isDeleted());
+				Assert.assertFalse(
+					layoutStructure.isItemMarkedForDeletion(
+						fragmentStyledLayoutStructureItem.getItemId()));
+			}
+		}
 	}
 
 	@Test
@@ -954,6 +1068,32 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 		).build();
 	}
 
+	private long _addSubmitButtonFragmentEntryLink(String type)
+		throws Exception {
+
+		FragmentEntry fragmentEntry =
+			_fragmentCollectionContributorRegistry.getFragmentEntry(
+				"INPUTS-submit-button");
+
+		JSONObject editableValuesJSONObject = JSONUtil.put(
+			FragmentEntryProcessorConstants.
+				KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+			JSONUtil.put("type", type));
+
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkLocalService.addFragmentEntryLink(
+				null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
+				fragmentEntry.getFragmentEntryId(), _segmentsExperienceId,
+				_draftLayout.getPlid(), fragmentEntry.getCss(),
+				fragmentEntry.getHtml(), fragmentEntry.getJs(),
+				fragmentEntry.getConfiguration(),
+				editableValuesJSONObject.toString(), StringPool.BLANK, 0,
+				fragmentEntry.getFragmentEntryKey(), fragmentEntry.getType(),
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		return fragmentEntryLink.getFragmentEntryLinkId();
+	}
+
 	private void _assertFormStyledLayoutStructureItem(
 			long expectedClassNameId, int expectedChildrenSize,
 			String formItemId, InfoField<?>[] infoFields,
@@ -1207,6 +1347,8 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
+
+	private Layout _draftLayout;
 
 	@Inject(
 		filter = "info.item.capability.key=" + EditPageInfoItemCapability.KEY

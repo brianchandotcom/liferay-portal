@@ -336,19 +336,19 @@ public class CustomFDSSerializerTest {
 		Map<String, String> parameterMap = new HashMap<>();
 
 		try {
-			String query = relativeURL.split("\\?")[1];
+			String queryString = relativeURL.split("\\?")[1];
 
-			String[] queryParts = query.split("&");
+			String[] queryStringParts = queryString.split("&");
 
-			for (String queryPart : queryParts) {
-				String[] keyValue = queryPart.split("=");
+			for (String queryStringPart : queryStringParts) {
+				String[] keyValuePair = queryStringPart.split("=");
 
-				String key = keyValue[0];
+				String key = keyValuePair[0];
 
 				String value = "";
 
-				if (keyValue.length > 1) {
-					value = URLDecoder.decode(keyValue[1], "UTF-8");
+				if (keyValuePair.length > 1) {
+					value = URLDecoder.decode(keyValuePair[1], "UTF-8");
 				}
 
 				parameterMap.put(key, value);

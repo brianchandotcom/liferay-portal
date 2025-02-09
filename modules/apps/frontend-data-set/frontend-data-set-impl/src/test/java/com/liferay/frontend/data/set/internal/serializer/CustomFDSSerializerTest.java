@@ -109,27 +109,6 @@ public class CustomFDSSerializerTest {
 
 		_resetFDSSerializer();
 
-		// REST application: /app1 and /app2
-
-		_mockSerializeAPIURL("fdsName1", "/app1", "/endpoint/{foo}", "schema");
-		_mockSerializeAPIURL("fdsName2", "/app2", "/endpoint/{foo}", "schema");
-
-		serviceRegistration = _registerFDSAPIURLResolver(
-			"/app1", "schema", new String[] {"{foo}"}, new String[] {"bar"});
-
-		Assert.assertEquals(
-			"/o/app1/endpoint/bar",
-			_customFDSSerializer.serializeAPIURL(
-				"fdsName1", _httpServletRequest));
-		Assert.assertEquals(
-			"/o/app2/endpoint/{foo}",
-			_customFDSSerializer.serializeAPIURL(
-				"fdsName2", _httpServletRequest));
-
-		serviceRegistration.unregister();
-
-		_resetFDSSerializer();
-
 		// REST application: /app
 
 		_mockSerializeAPIURL("fdsName1", "/app", "/endpoint/{foo}", "schema");
@@ -144,6 +123,27 @@ public class CustomFDSSerializerTest {
 				"fdsName1", _httpServletRequest));
 		Assert.assertEquals(
 			"/o/app/endpoint/bar",
+			_customFDSSerializer.serializeAPIURL(
+				"fdsName2", _httpServletRequest));
+
+		serviceRegistration.unregister();
+
+		_resetFDSSerializer();
+
+		// REST application: /app1 and /app2
+
+		_mockSerializeAPIURL("fdsName1", "/app1", "/endpoint/{foo}", "schema");
+		_mockSerializeAPIURL("fdsName2", "/app2", "/endpoint/{foo}", "schema");
+
+		serviceRegistration = _registerFDSAPIURLResolver(
+			"/app1", "schema", new String[] {"{foo}"}, new String[] {"bar"});
+
+		Assert.assertEquals(
+			"/o/app1/endpoint/bar",
+			_customFDSSerializer.serializeAPIURL(
+				"fdsName1", _httpServletRequest));
+		Assert.assertEquals(
+			"/o/app2/endpoint/{foo}",
 			_customFDSSerializer.serializeAPIURL(
 				"fdsName2", _httpServletRequest));
 

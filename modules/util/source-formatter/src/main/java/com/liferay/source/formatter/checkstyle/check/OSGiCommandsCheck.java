@@ -47,29 +47,38 @@ public class OSGiCommandsCheck extends BaseCheck {
 			return;
 		}
 
-		List<String> importNames = getImportNames(detailAST);
+		DetailAST objBlockDetailAST = detailAST.findFirstToken(
+			TokenTypes.OBJBLOCK);
 
-		if (!importNames.contains(
-				"org.osgi.service.component.annotations.Component")) {
-
+		if (objBlockDetailAST == null) {
 			return;
 		}
 
-		_checkMissingUnimplementedMethod(detailAST);
+		List<String> importNames = getImportNames(detailAST);
+
+		if (importNames.contains(
+				"org.osgi.service.component.annotations.Component")) {
+
+			List<DetailAST> methodDefinitionDetailASTList = getAllChildTokens(
+				objBlockDetailAST, false, TokenTypes.METHOD_DEF);
+
+			_checkMissingUnimplementedMethod(
+				detailAST, methodDefinitionDetailASTList);
+		}
 
 		if (importNames.contains(
 				"org.osgi.service.component.annotations.Reference")) {
 
-			for (DetailAST variableDefinitionDetailAST :
-					getAllChildTokens(
-						detailAST, true, TokenTypes.VARIABLE_DEF)) {
+			List<DetailAST> variableDefinitionDetailASTList = getAllChildTokens(
+				objBlockDetailAST, false, TokenTypes.VARIABLE_DEF);
 
-				_checkVariableDeclaration(variableDefinitionDetailAST);
-			}
+			_checkVariableDeclaration(variableDefinitionDetailASTList);
 		}
 	}
 
-	private void _checkMissingUnimplementedMethod(DetailAST detailAST) {
+	private void _checkMissingUnimplementedMethod(
+		DetailAST detailAST, List<DetailAST> methodDefinitionDetailASTList) {
+
 		DetailAST annotationDetailAST = AnnotationUtil.getAnnotation(
 			detailAST, "Component");
 
@@ -100,16 +109,8 @@ public class OSGiCommandsCheck extends BaseCheck {
 			return;
 		}
 
-		DetailAST objBlockDetailAST = detailAST.findFirstToken(
-			TokenTypes.OBJBLOCK);
-
-		if (objBlockDetailAST == null) {
-			return;
-		}
-
 		for (DetailAST methodDefinitionDetailAST :
-				getAllChildTokens(
-					objBlockDetailAST, false, TokenTypes.METHOD_DEF)) {
+				methodDefinitionDetailASTList) {
 
 			osgiCommandFunctions.remove(getName(methodDefinitionDetailAST));
 		}
@@ -119,15 +120,23 @@ public class OSGiCommandsCheck extends BaseCheck {
 		}
 	}
 
-	private void _checkVariableDeclaration(DetailAST detailAST) {
-		if (!AnnotationUtil.containsAnnotation(detailAST, "Reference")) {
-			return;
-		}
+	private void _checkVariableDeclaration(
+		List<DetailAST> variableDefinitionDetailASTList) {
 
-		String typeName = getTypeName(detailAST, false);
+		for (DetailAST variableDefinitionDetailAST :
+				variableDefinitionDetailASTList) {
 
-		if (typeName.endsWith("OSGiCommands")) {
-			log(detailAST, _MSG_OSGI_REFERENCE_AVOID);
+			if (!AnnotationUtil.containsAnnotation(
+					variableDefinitionDetailAST, "Reference")) {
+
+				continue;
+			}
+
+			String typeName = getTypeName(variableDefinitionDetailAST, false);
+
+			if (typeName.endsWith("OSGiCommands")) {
+				log(variableDefinitionDetailAST, _MSG_OSGI_REFERENCE_AVOID);
+			}
 		}
 	}
 

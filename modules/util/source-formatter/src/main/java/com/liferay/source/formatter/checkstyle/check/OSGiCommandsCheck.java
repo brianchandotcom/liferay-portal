@@ -126,7 +126,7 @@ public class OSGiCommandsCheck extends BaseCheck {
 		}
 
 		for (String osgiCommandFunction : osgiCommandFunctions) {
-			log(detailAST, _MSG_MISSING_COMMAND_FUNCTION, osgiCommandFunction);
+			log(detailAST, _MSG_COMMAND_FUNCTION_MISSING, osgiCommandFunction);
 		}
 	}
 
@@ -138,13 +138,14 @@ public class OSGiCommandsCheck extends BaseCheck {
 		String typeName = getTypeName(detailAST, false);
 
 		if (typeName.endsWith("OSGiCommands")) {
-			log(detailAST, _MSG_BAD_OSGI_REFERENCE);
+			log(detailAST, _MSG_OSGI_REFERENCE_AVOID);
 		}
 	}
 
-	private static final String _MSG_BAD_OSGI_REFERENCE = "bad.osgi.reference";
+	private static final String _MSG_COMMAND_FUNCTION_MISSING =
+		"command.function.missing";
 
-	private static final String _MSG_MISSING_COMMAND_FUNCTION =
-		"missing.command.function";
+	private static final String _MSG_OSGI_REFERENCE_AVOID =
+		"osgi.reference.avoid";
 
 }

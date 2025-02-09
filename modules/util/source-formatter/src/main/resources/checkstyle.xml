@@ -690,8 +690,8 @@
 			<property name="category" value="Bug Prevention" />
 			<property name="description" value="Perform several checks on `*OSGiCommands` classes." />
 			<property name="enabled" value="false" />
-			<message key="bad.osgi.reference" value="OSGi references to &quot;*OSGiCommands&quot; classes are not allowed" />
-			<message key="missing.command.function" value="OSGi command &quot;{0}&quot; is missing a method that implements it" />
+			<message key="command.function.missing" value="OSGi command &quot;{0}&quot; is missing a method that implements it" />
+			<message key="osgi.reference.avoid" value="OSGi references to &quot;*OSGiCommands&quot; classes are not allowed" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.OSGiResourceBuilderCheck">
 			<property name="category" value="Styling" />

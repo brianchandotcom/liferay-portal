@@ -3142,7 +3142,6 @@ public class ObjectEntryLocalServiceTest {
 				objectEntry1.getObjectEntryId(),
 			() -> _objectEntryLocalService.deleteObjectEntry(
 				objectEntry1.getObjectEntryId()));
-
 		AssertUtils.assertFailure(
 			NoSuchObjectEntryException.class,
 			"No ObjectEntry exists with the primary key " +

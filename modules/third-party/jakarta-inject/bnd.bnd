@@ -1,4 +1,4 @@
-Bundle-SymbolicName: jakarta.inject.api
+Bundle-SymbolicName: jakarta.inject
 Bundle-Version: 1.0.5.LIFERAY-PATCHED-1
 Export-Package: javax.inject.*
 Provide-Capability:\

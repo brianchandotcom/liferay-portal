@@ -84,7 +84,7 @@ public class FDSAPIURLBuilderTest {
 	}
 
 	@Test
-	public void testBuildNotAffectedByRegisteredResolvers() throws Exception {
+	public void testBuildWithTwoResolvers() throws Exception {
 		ServiceRegistration<FDSAPIURLResolver> serviceRegistration1 =
 			_registerFDSAPIURLResolver(
 				"/app2", "schema", new String[] {"{foo}"},

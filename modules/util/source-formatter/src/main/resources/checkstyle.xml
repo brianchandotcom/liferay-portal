@@ -690,7 +690,6 @@
 			<property name="category" value="Bug Prevention" />
 			<property name="description" value="Perform several checks on `*OSGiCommands` classes." />
 			<property name="enabled" value="false" />
-			<message key="bad.class.name" value="The names of classes that implement OSGi commands must end with &quot;OSGiCommands&quot;" />
 			<message key="bad.osgi.reference" value="OSGi references to `*OSGiCommands` classes are not allowed" />
 			<message key="missing.command.function" value="OSGi command &quot;{0}&quot; is missing a method that implements it" />
 		</module>

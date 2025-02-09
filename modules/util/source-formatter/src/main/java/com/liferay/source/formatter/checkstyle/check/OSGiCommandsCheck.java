@@ -14,6 +14,7 @@ import com.puppycrawl.tools.checkstyle.utils.AnnotationUtil;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -28,6 +29,26 @@ public class OSGiCommandsCheck extends BaseCheck {
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
+		DetailAST parentDetailAST = detailAST.getParent();
+
+		if (parentDetailAST != null) {
+			return;
+		}
+
+		DetailAST implementsClauseDetailAST = detailAST.findFirstToken(
+			TokenTypes.IMPLEMENTS_CLAUSE);
+
+		for (DetailAST childDetailAST :
+				getAllChildTokens(
+					implementsClauseDetailAST, false, TokenTypes.IDENT)) {
+
+			if (Objects.equals(childDetailAST.getText(), "OSGiCommands")) {
+				break;
+			}
+
+			return;
+		}
+
 		List<String> importNames = getImportNames(detailAST);
 
 		if (!importNames.contains(
@@ -102,12 +123,6 @@ public class OSGiCommandsCheck extends BaseCheck {
 			return;
 		}
 
-		String className = getName(detailAST);
-
-		if (!className.endsWith("OSGiCommands")) {
-			log(detailAST, _MSG_BAD_CLASS_NAME);
-		}
-
 		for (DetailAST methodDefinitionDetailAST :
 				getAllChildTokens(detailAST, true, TokenTypes.METHOD_DEF)) {
 
@@ -130,8 +145,6 @@ public class OSGiCommandsCheck extends BaseCheck {
 			log(detailAST, _MSG_BAD_OSGI_REFERENCE);
 		}
 	}
-
-	private static final String _MSG_BAD_CLASS_NAME = "bad.class.name";
 
 	private static final String _MSG_BAD_OSGI_REFERENCE = "bad.osgi.reference";
 

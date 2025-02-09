@@ -399,10 +399,6 @@ public class CustomFDSSerializerTest {
 			).build()
 		);
 
-		Mockito.when(
-			_customFDSSerializer.serializeAPIURL(fdsName, _httpServletRequest)
-		).thenCallRealMethod();
-
 		List<ObjectEntry> objectEntries = TransformUtil.transformToList(
 			fieldNames,
 			fieldName -> {
@@ -423,14 +419,13 @@ public class CustomFDSSerializerTest {
 		).thenReturn(
 			objectEntries
 		);
+
+		Mockito.when(
+			_customFDSSerializer.serializeAPIURL(fdsName, _httpServletRequest)
+		).thenCallRealMethod();
 	}
 
 	private void _mockSerializeCreationMenu(String fdsName, String[] titles) {
-		Mockito.when(
-			_customFDSSerializer.serializeCreationMenu(
-				fdsName, _httpServletRequest)
-		).thenCallRealMethod();
-
 		List<ObjectEntry> objectEntries = TransformUtil.transformToList(
 			titles,
 			title -> {
@@ -452,14 +447,14 @@ public class CustomFDSSerializerTest {
 		).thenReturn(
 			objectEntries
 		);
+
+		Mockito.when(
+			_customFDSSerializer.serializeCreationMenu(
+				fdsName, _httpServletRequest)
+		).thenCallRealMethod();
 	}
 
 	private void _mockSerializeItemsActions(String fdsName, String[] labels) {
-		Mockito.when(
-			_customFDSSerializer.serializeItemsActions(
-				fdsName, _httpServletRequest)
-		).thenCallRealMethod();
-
 		List<ObjectEntry> objectEntries = TransformUtil.transformToList(
 			labels,
 			label -> {
@@ -481,6 +476,11 @@ public class CustomFDSSerializerTest {
 		).thenReturn(
 			objectEntries
 		);
+
+		Mockito.when(
+			_customFDSSerializer.serializeItemsActions(
+				fdsName, _httpServletRequest)
+		).thenCallRealMethod();
 	}
 
 	private ServiceRegistration<FDSAPIURLResolver> _registerFDSAPIURLResolver(

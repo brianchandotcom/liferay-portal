@@ -7,19 +7,29 @@ package com.liferay.dynamic.data.mapping.form.web.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.dynamic.data.mapping.constants.DDMFormConstants;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormInstanceTestUtil;
+import com.liferay.dynamic.data.mapping.util.DDMFormUtil;
 import com.liferay.petra.memory.DeleteFileFinalizeAction;
 import com.liferay.petra.memory.FinalizeManager;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Repository;
+import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
+import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
@@ -28,6 +38,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.FileItem;
@@ -105,6 +116,21 @@ public class UploadFileEntryMVCActionCommandTest {
 							new HashMap<>()),
 						null, RandomTestUtil.randomString());
 				}));
+
+		User user = DDMFormUtil.getDDMFormDefaultUser(
+			TestPropsValues.getCompanyId());
+
+		Repository repository = _portletFileRepository.addPortletRepository(
+			_group.getGroupId(), DDMFormConstants.SERVICE_NAME,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		Folder folder = _portletFileRepository.addPortletFolder(
+			user.getUserId(), repository.getRepositoryId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			DDMFormConstants.DDM_FORM_UPLOADED_FILES_FOLDER_NAME,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		_folderId = folder.getFolderId();
 	}
 
 	@After
@@ -140,6 +166,16 @@ public class UploadFileEntryMVCActionCommandTest {
 			TestPropsValues.getCompanyId());
 
 		Assert.assertEquals(user.getUserId(), dlFileEntry.getUserId());
+
+		Assert.assertFalse(
+			_resourcePermissionLocalService.hasResourcePermission(
+				TestPropsValues.getCompanyId(), DLFileEntry.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(dlFileEntry.getFileEntryId()),
+				RoleLocalServiceUtil.getRole(
+					TestPropsValues.getCompanyId(), RoleConstants.GUEST
+				).getRoleId(),
+				ActionKeys.VIEW));
 	}
 
 	private FileItem _getFileItem() throws Exception {
@@ -189,6 +225,8 @@ public class UploadFileEntryMVCActionCommandTest {
 			new MockMultipartHttpServletRequest();
 
 		mockMultipartHttpServletRequest.addParameter(
+			"folderId", String.valueOf(_folderId));
+		mockMultipartHttpServletRequest.addParameter(
 			"formInstanceId",
 			String.valueOf(_ddmFormInstance.getFormInstanceId()));
 		mockMultipartHttpServletRequest.addParameter(
@@ -219,6 +257,8 @@ public class UploadFileEntryMVCActionCommandTest {
 	@Inject
 	private DLFileEntryLocalService _dlFileEntryLocalService;
 
+	private long _folderId;
+
 	@DeleteAfterTestRun
 	private Group _group;
 
@@ -232,6 +272,12 @@ public class UploadFileEntryMVCActionCommandTest {
 
 	@Inject
 	private Portal _portal;
+
+	@Inject
+	private PortletFileRepository _portletFileRepository;
+
+	@Inject
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
 
 	private UploadHandler _uploadHandler;
 

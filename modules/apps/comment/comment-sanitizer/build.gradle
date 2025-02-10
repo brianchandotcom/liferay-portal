@@ -3,7 +3,6 @@ dependencies {
 	compileOnly group: "com.google.guava", name: "guava", version: "32.0.1-jre"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
-	compileOnly group: "org.codehaus.mojo", name: "animal-sniffer-annotations", version: "1.17"
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
 	compileOnly project(":core:petra:petra-string")
 }

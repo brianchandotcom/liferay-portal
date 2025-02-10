@@ -2352,10 +2352,10 @@
 
 		<!-- Other fields -->
 
+		<column name="classExternalReferenceCode" type="String" />
 		<column name="classNameId" type="long" />
 		<column name="classPK" type="long" />
 		<column name="classUuid" type="String" />
-		<column name="classExternalReferenceCode" type="String" />
 		<column name="referrerClassNameId" type="long" />
 		<column name="parentSystemEventId" type="long" />
 		<column name="systemEventSetKey" type="long" />

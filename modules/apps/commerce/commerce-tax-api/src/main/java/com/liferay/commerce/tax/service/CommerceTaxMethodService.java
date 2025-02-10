@@ -97,6 +97,10 @@ public interface CommerceTaxMethodService extends BaseService {
 		throws PortalException;
 
 	public CommerceTaxMethod updateCommerceTaxMethod(
+			CommerceTaxMethod commerceTaxMethod)
+		throws PortalException;
+
+	public CommerceTaxMethod updateCommerceTaxMethod(
 			long commerceTaxMethodId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, boolean percentage,
 			boolean active)

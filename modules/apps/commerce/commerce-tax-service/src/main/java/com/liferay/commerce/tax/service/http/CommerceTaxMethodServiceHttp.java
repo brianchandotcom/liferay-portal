@@ -419,6 +419,49 @@ public class CommerceTaxMethodServiceHttp {
 
 	public static com.liferay.commerce.tax.model.CommerceTaxMethod
 			updateCommerceTaxMethod(
+				HttpPrincipal httpPrincipal,
+				com.liferay.commerce.tax.model.CommerceTaxMethod
+					commerceTaxMethod)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				CommerceTaxMethodServiceUtil.class, "updateCommerceTaxMethod",
+				_updateCommerceTaxMethodParameterTypes9);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, commerceTaxMethod);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+
+			return (com.liferay.commerce.tax.model.CommerceTaxMethod)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
+	public static com.liferay.commerce.tax.model.CommerceTaxMethod
+			updateCommerceTaxMethod(
 				HttpPrincipal httpPrincipal, long commerceTaxMethodId,
 				java.util.Map<java.util.Locale, String> nameMap,
 				java.util.Map<java.util.Locale, String> descriptionMap,
@@ -428,7 +471,7 @@ public class CommerceTaxMethodServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(
 				CommerceTaxMethodServiceUtil.class, "updateCommerceTaxMethod",
-				_updateCommerceTaxMethodParameterTypes9);
+				_updateCommerceTaxMethodParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, commerceTaxMethodId, nameMap, descriptionMap,
@@ -492,6 +535,8 @@ public class CommerceTaxMethodServiceHttp {
 		long.class, boolean.class
 	};
 	private static final Class<?>[] _updateCommerceTaxMethodParameterTypes9 =
+		new Class[] {com.liferay.commerce.tax.model.CommerceTaxMethod.class};
+	private static final Class<?>[] _updateCommerceTaxMethodParameterTypes10 =
 		new Class[] {
 			long.class, java.util.Map.class, java.util.Map.class, boolean.class,
 			boolean.class

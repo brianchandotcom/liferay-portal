@@ -5598,7 +5598,11 @@ public class ObjectEntryLocalServiceImpl
 					objectField.getDBType(),
 					ObjectFieldConstants.DB_TYPE_STRING)) {
 
-			_validateTextMaxLength280(objectField, GetterUtil.getString(value));
+			_validateTextMaxLength(
+				DynamicObjectDefinitionTableUtil.getMaxLength(
+					objectField.getBusinessType()),
+				GetterUtil.getString(value), objectField.getObjectFieldId(),
+				objectField.getName());
 		}
 
 		if (objectField.getListTypeDefinitionId() != 0) {

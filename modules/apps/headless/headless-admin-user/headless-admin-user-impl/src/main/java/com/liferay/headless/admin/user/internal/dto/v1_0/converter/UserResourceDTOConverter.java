@@ -35,6 +35,7 @@ import com.liferay.headless.admin.user.internal.dto.v1_0.util.EmailAddressUtil;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.PermissionUtil;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.PhoneUtil;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.PostalAddressUtil;
+import com.liferay.headless.admin.user.internal.dto.v1_0.util.RoleBriefUtil;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.ServiceBuilderListTypeUtil;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.TaxonomyCategoryBriefUtil;
 import com.liferay.headless.admin.user.internal.dto.v1_0.util.WebUrlUtil;
@@ -510,22 +511,6 @@ public class UserResourceDTOConverter
 		};
 	}
 
-	private RoleBrief _toRoleBrief(
-		DTOConverterContext dtoConverterContext, Role role) {
-
-		return new RoleBrief() {
-			{
-				setExternalReferenceCode(role::getExternalReferenceCode);
-				setId(role::getRoleId);
-				setName(() -> role.getTitle(dtoConverterContext.getLocale()));
-				setName_i18n(
-					() -> LocalizedMapUtil.getI18nMap(
-						dtoConverterContext.isAcceptAllLanguages(),
-						role.getTitleMap()));
-			}
-		};
-	}
-
 	private RoleBrief[] _toRoleBriefs(
 		DTOConverterContext dtoConverterContext, Collection<Role> roles) {
 
@@ -539,7 +524,7 @@ public class UserResourceDTOConverter
 					return null;
 				}
 
-				return _toRoleBrief(dtoConverterContext, role);
+				return RoleBriefUtil.toRoleBrief(dtoConverterContext, role);
 			},
 			RoleBrief.class);
 	}

@@ -8,6 +8,10 @@
 		font-size: 1rem;
 	}
 
+	.custom-checkbox label {
+		padding-top:0.125rem;
+	}
+
 	.product-category {
 		font-size: 0.8rem;
 	}
@@ -15,10 +19,6 @@
 	.suggested {
 		background-color: #2e5aac !important;
 		color: #ffffff !important;
-	}
-
-	.custom-checkbox label {
-		padding-top:0.125rem;
 	}
 </style>
 

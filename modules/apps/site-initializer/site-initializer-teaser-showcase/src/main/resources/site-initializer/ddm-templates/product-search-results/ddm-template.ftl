@@ -1,10 +1,15 @@
 <style>
 	.badge {
+		padding: 10px;
 		font-size: .8rem;
 	}
 
 	.card-title {
 		font-size: 1rem;
+	}
+
+	.custom-checkbox label {
+		padding-top:0.125rem;
 	}
 
 	.product-category {
@@ -14,10 +19,6 @@
 	.suggested {
 		background-color: #2e5aac !important;
 		color: #ffffff !important;
-	}
-
-	.custom-checkbox label {
-		padding-top:0.125rem;
 	}
 </style>
 <#assign

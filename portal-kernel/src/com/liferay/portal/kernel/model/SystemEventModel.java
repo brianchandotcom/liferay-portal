@@ -184,6 +184,22 @@ public interface SystemEventModel
 	public void setCreateDate(Date createDate);
 
 	/**
+	 * Returns the class external reference code of this system event.
+	 *
+	 * @return the class external reference code of this system event
+	 */
+	@AutoEscape
+	public String getClassExternalReferenceCode();
+
+	/**
+	 * Sets the class external reference code of this system event.
+	 *
+	 * @param classExternalReferenceCode the class external reference code of this system event
+	 */
+	public void setClassExternalReferenceCode(
+		String classExternalReferenceCode);
+
+	/**
 	 * Returns the fully qualified class name of this system event.
 	 *
 	 * @return the fully qualified class name of this system event
@@ -239,22 +255,6 @@ public interface SystemEventModel
 	 * @param classUuid the class uuid of this system event
 	 */
 	public void setClassUuid(String classUuid);
-
-	/**
-	 * Returns the class external reference code of this system event.
-	 *
-	 * @return the class external reference code of this system event
-	 */
-	@AutoEscape
-	public String getClassExternalReferenceCode();
-
-	/**
-	 * Sets the class external reference code of this system event.
-	 *
-	 * @param classExternalReferenceCode the class external reference code of this system event
-	 */
-	public void setClassExternalReferenceCode(
-		String classExternalReferenceCode);
 
 	/**
 	 * Returns the referrer class name ID of this system event.

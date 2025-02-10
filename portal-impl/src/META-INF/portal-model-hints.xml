@@ -1468,10 +1468,10 @@
 		<field name="userId" type="long" />
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
+		<field name="classExternalReferenceCode" type="String" />
 		<field name="classNameId" type="long" />
 		<field name="classPK" type="long" />
 		<field name="classUuid" type="String" />
-		<field name="classExternalReferenceCode" type="String" />
 		<field name="referrerClassNameId" type="long" />
 		<field name="parentSystemEventId" type="long" />
 		<field name="systemEventSetKey" type="long" />

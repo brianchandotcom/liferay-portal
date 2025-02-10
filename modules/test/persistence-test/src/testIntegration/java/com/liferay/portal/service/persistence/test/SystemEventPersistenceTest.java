@@ -126,14 +126,14 @@ public class SystemEventPersistenceTest {
 
 		newSystemEvent.setCreateDate(RandomTestUtil.nextDate());
 
+		newSystemEvent.setClassExternalReferenceCode(
+			RandomTestUtil.randomString());
+
 		newSystemEvent.setClassNameId(RandomTestUtil.nextLong());
 
 		newSystemEvent.setClassPK(RandomTestUtil.nextLong());
 
 		newSystemEvent.setClassUuid(RandomTestUtil.randomString());
-
-		newSystemEvent.setClassExternalReferenceCode(
-			RandomTestUtil.randomString());
 
 		newSystemEvent.setReferrerClassNameId(RandomTestUtil.nextLong());
 
@@ -171,15 +171,15 @@ public class SystemEventPersistenceTest {
 			Time.getShortTimestamp(existingSystemEvent.getCreateDate()),
 			Time.getShortTimestamp(newSystemEvent.getCreateDate()));
 		Assert.assertEquals(
+			existingSystemEvent.getClassExternalReferenceCode(),
+			newSystemEvent.getClassExternalReferenceCode());
+		Assert.assertEquals(
 			existingSystemEvent.getClassNameId(),
 			newSystemEvent.getClassNameId());
 		Assert.assertEquals(
 			existingSystemEvent.getClassPK(), newSystemEvent.getClassPK());
 		Assert.assertEquals(
 			existingSystemEvent.getClassUuid(), newSystemEvent.getClassUuid());
-		Assert.assertEquals(
-			existingSystemEvent.getClassExternalReferenceCode(),
-			newSystemEvent.getClassExternalReferenceCode());
 		Assert.assertEquals(
 			existingSystemEvent.getReferrerClassNameId(),
 			newSystemEvent.getReferrerClassNameId());
@@ -255,10 +255,11 @@ public class SystemEventPersistenceTest {
 		return OrderByComparatorFactoryUtil.create(
 			"SystemEvent", "mvccVersion", true, "ctCollectionId", true,
 			"systemEventId", true, "groupId", true, "companyId", true, "userId",
-			true, "userName", true, "createDate", true, "classNameId", true,
-			"classPK", true, "classUuid", true, "classExternalReferenceCode",
-			true, "referrerClassNameId", true, "parentSystemEventId", true,
-			"systemEventSetKey", true, "type", true);
+			true, "userName", true, "createDate", true,
+			"classExternalReferenceCode", true, "classNameId", true, "classPK",
+			true, "classUuid", true, "referrerClassNameId", true,
+			"parentSystemEventId", true, "systemEventSetKey", true, "type",
+			true);
 	}
 
 	@Test
@@ -489,14 +490,14 @@ public class SystemEventPersistenceTest {
 
 		systemEvent.setCreateDate(RandomTestUtil.nextDate());
 
+		systemEvent.setClassExternalReferenceCode(
+			RandomTestUtil.randomString());
+
 		systemEvent.setClassNameId(RandomTestUtil.nextLong());
 
 		systemEvent.setClassPK(RandomTestUtil.nextLong());
 
 		systemEvent.setClassUuid(RandomTestUtil.randomString());
-
-		systemEvent.setClassExternalReferenceCode(
-			RandomTestUtil.randomString());
 
 		systemEvent.setReferrerClassNameId(RandomTestUtil.nextLong());
 

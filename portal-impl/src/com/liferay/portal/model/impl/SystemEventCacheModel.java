@@ -86,14 +86,14 @@ public class SystemEventCacheModel
 		sb.append(userName);
 		sb.append(", createDate=");
 		sb.append(createDate);
+		sb.append(", classExternalReferenceCode=");
+		sb.append(classExternalReferenceCode);
 		sb.append(", classNameId=");
 		sb.append(classNameId);
 		sb.append(", classPK=");
 		sb.append(classPK);
 		sb.append(", classUuid=");
 		sb.append(classUuid);
-		sb.append(", classExternalReferenceCode=");
-		sb.append(classExternalReferenceCode);
 		sb.append(", referrerClassNameId=");
 		sb.append(referrerClassNameId);
 		sb.append(", parentSystemEventId=");
@@ -134,6 +134,14 @@ public class SystemEventCacheModel
 			systemEventImpl.setCreateDate(new Date(createDate));
 		}
 
+		if (classExternalReferenceCode == null) {
+			systemEventImpl.setClassExternalReferenceCode("");
+		}
+		else {
+			systemEventImpl.setClassExternalReferenceCode(
+				classExternalReferenceCode);
+		}
+
 		systemEventImpl.setClassNameId(classNameId);
 		systemEventImpl.setClassPK(classPK);
 
@@ -142,14 +150,6 @@ public class SystemEventCacheModel
 		}
 		else {
 			systemEventImpl.setClassUuid(classUuid);
-		}
-
-		if (classExternalReferenceCode == null) {
-			systemEventImpl.setClassExternalReferenceCode("");
-		}
-		else {
-			systemEventImpl.setClassExternalReferenceCode(
-				classExternalReferenceCode);
 		}
 
 		systemEventImpl.setReferrerClassNameId(referrerClassNameId);
@@ -186,12 +186,12 @@ public class SystemEventCacheModel
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
+		classExternalReferenceCode = objectInput.readUTF();
 
 		classNameId = objectInput.readLong();
 
 		classPK = objectInput.readLong();
 		classUuid = objectInput.readUTF();
-		classExternalReferenceCode = objectInput.readUTF();
 
 		referrerClassNameId = objectInput.readLong();
 
@@ -226,6 +226,13 @@ public class SystemEventCacheModel
 
 		objectOutput.writeLong(createDate);
 
+		if (classExternalReferenceCode == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(classExternalReferenceCode);
+		}
+
 		objectOutput.writeLong(classNameId);
 
 		objectOutput.writeLong(classPK);
@@ -235,13 +242,6 @@ public class SystemEventCacheModel
 		}
 		else {
 			objectOutput.writeUTF(classUuid);
-		}
-
-		if (classExternalReferenceCode == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(classExternalReferenceCode);
 		}
 
 		objectOutput.writeLong(referrerClassNameId);
@@ -268,10 +268,10 @@ public class SystemEventCacheModel
 	public long userId;
 	public String userName;
 	public long createDate;
+	public String classExternalReferenceCode;
 	public long classNameId;
 	public long classPK;
 	public String classUuid;
-	public String classExternalReferenceCode;
 	public long referrerClassNameId;
 	public long parentSystemEventId;
 	public long systemEventSetKey;

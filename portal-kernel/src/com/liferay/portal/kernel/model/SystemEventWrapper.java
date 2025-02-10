@@ -42,11 +42,11 @@ public class SystemEventWrapper
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
+		attributes.put(
+			"classExternalReferenceCode", getClassExternalReferenceCode());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
 		attributes.put("classUuid", getClassUuid());
-		attributes.put(
-			"classExternalReferenceCode", getClassExternalReferenceCode());
 		attributes.put("referrerClassNameId", getReferrerClassNameId());
 		attributes.put("parentSystemEventId", getParentSystemEventId());
 		attributes.put("systemEventSetKey", getSystemEventSetKey());
@@ -106,6 +106,13 @@ public class SystemEventWrapper
 			setCreateDate(createDate);
 		}
 
+		String classExternalReferenceCode = (String)attributes.get(
+			"classExternalReferenceCode");
+
+		if (classExternalReferenceCode != null) {
+			setClassExternalReferenceCode(classExternalReferenceCode);
+		}
+
 		Long classNameId = (Long)attributes.get("classNameId");
 
 		if (classNameId != null) {
@@ -122,13 +129,6 @@ public class SystemEventWrapper
 
 		if (classUuid != null) {
 			setClassUuid(classUuid);
-		}
-
-		String classExternalReferenceCode = (String)attributes.get(
-			"classExternalReferenceCode");
-
-		if (classExternalReferenceCode != null) {
-			setClassExternalReferenceCode(classExternalReferenceCode);
 		}
 
 		Long referrerClassNameId = (Long)attributes.get("referrerClassNameId");

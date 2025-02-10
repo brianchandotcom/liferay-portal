@@ -479,6 +479,14 @@ public class CPDefinitionLocalServiceWrapper
 			cProductId);
 	}
 
+	@Override
+	public CPDefinition fetchCPDefinitionByFriendlyURLPath(
+		long groupId, String friendlyURLPath) {
+
+		return _cpDefinitionLocalService.fetchCPDefinitionByFriendlyURLPath(
+			groupId, friendlyURLPath);
+	}
+
 	/**
 	 * Returns the cp definition matching the UUID and group.
 	 *

@@ -634,7 +634,7 @@ public class DisplayPageTemplateResourceTest
 					null, TestPropsValues.getUserId(), groupId,
 					LayoutPageTemplateConstants.
 						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-					RandomTestUtil.randomString(),
+					null, RandomTestUtil.randomString(),
 					RandomTestUtil.randomString(),
 					LayoutPageTemplateCollectionTypeConstants.DISPLAY_PAGE,
 					ServiceContextTestUtil.getServiceContext(
@@ -808,7 +808,7 @@ public class DisplayPageTemplateResourceTest
 					null, TestPropsValues.getUserId(), testGroup.getGroupId(),
 					LayoutPageTemplateConstants.
 						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-					RandomTestUtil.randomString(),
+					null, RandomTestUtil.randomString(),
 					RandomTestUtil.randomString(),
 					LayoutPageTemplateCollectionTypeConstants.DISPLAY_PAGE,
 					ServiceContextTestUtil.getServiceContext(
@@ -863,7 +863,7 @@ public class DisplayPageTemplateResourceTest
 					null, TestPropsValues.getUserId(), testGroup.getGroupId(),
 					LayoutPageTemplateConstants.
 						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-					RandomTestUtil.randomString(),
+					null, RandomTestUtil.randomString(),
 					RandomTestUtil.randomString(),
 					LayoutPageTemplateCollectionTypeConstants.DISPLAY_PAGE,
 					ServiceContextTestUtil.getServiceContext(

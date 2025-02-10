@@ -45,7 +45,7 @@ public class LayoutPageTemplateCollectionTableReferenceDefinitionTest
 				null, TestPropsValues.getUserId(), group.getGroupId(),
 				LayoutPageTemplateConstants.
 					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-				RandomTestUtil.randomString(), StringPool.BLANK,
+				null, RandomTestUtil.randomString(), StringPool.BLANK,
 				LayoutPageTemplateCollectionTypeConstants.BASIC,
 				ServiceContextTestUtil.getServiceContext());
 	}

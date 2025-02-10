@@ -111,7 +111,7 @@ public class
 					null, TestPropsValues.getUserId(), _group.getGroupId(),
 					LayoutPageTemplateConstants.
 						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-					StringUtil.randomString(), StringPool.BLANK,
+					null, StringUtil.randomString(), StringPool.BLANK,
 					LayoutPageTemplateCollectionTypeConstants.DISPLAY_PAGE,
 					_serviceContext);
 

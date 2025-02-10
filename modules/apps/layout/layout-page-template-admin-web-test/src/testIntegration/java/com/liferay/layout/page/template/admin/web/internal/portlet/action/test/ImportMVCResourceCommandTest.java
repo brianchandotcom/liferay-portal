@@ -101,7 +101,7 @@ public class ImportMVCResourceCommandTest {
 				null, TestPropsValues.getUserId(), _group.getGroupId(),
 				LayoutPageTemplateConstants.
 					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-				"imported", StringPool.BLANK,
+				null, "imported", StringPool.BLANK,
 				LayoutPageTemplateCollectionTypeConstants.BASIC,
 				_serviceContext);
 
@@ -152,7 +152,7 @@ public class ImportMVCResourceCommandTest {
 				null, TestPropsValues.getUserId(), _group.getGroupId(),
 				LayoutPageTemplateConstants.
 					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-				"imported", StringPool.BLANK,
+				null, "imported", StringPool.BLANK,
 				LayoutPageTemplateCollectionTypeConstants.BASIC,
 				_serviceContext);
 

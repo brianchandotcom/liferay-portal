@@ -1,0 +1,20 @@
+<svg fill="none" height="162" width="250" xmlns="http://www.w3.org/2000/svg">
+	<rect fill="#F0F5FF" height="114.55" rx="5.075" stroke="#5791FF" stroke-width="1.45" width="44.95" x="25.725" y="23.725" />
+	<rect fill="#fff" height="36.25" rx="5.075" stroke="#5791FF" stroke-width="1.45" width="114.55" x="77.925" y="23.725" />
+	<path d="M101.85 34.6h36.25v4.35h-36.25z" fill="#80ACFF" />
+	<path d="M88.8 34.6h4.35v4.35H88.8z" fill="#0053F0" opacity=".7" />
+	<path d="M101.85 44.75h59.45v4.35h-59.45z" fill="#80ACFF" />
+	<path d="M88.8 44.75h4.35v4.35H88.8z" fill="#0053F0" opacity=".7" />
+	<rect fill="#F0F5FF" height="71.05" rx="5.075" stroke="#5791FF" stroke-width="1.45" width="114.55" x="77.925" y="67.225" />
+	<rect fill="#fff" height="37.7" rx="7.25" stroke="#B3CDFF" stroke-width="2.9" width="139.2" x="87.35" y="91.15" />
+	<rect fill="#0B5FFF" height="23.2" rx="5.8" width="22.97" x="94.543" y="98.4" />
+	<mask height="12" id="_Illustration_structure_fields__a" maskUnits="userSpaceOnUse" style="mask-type:alpha" width="12" x="100" y="104">
+		<path d="M109.589 104.2v.725h-.718v10.15h.718v.725h-2.872v-.725h.718v-10.15h-.718v-.725h2.872Zm-6.461 5.075h2.154c.933 0 .933 1.45 0 1.45h-2.154c-.933-.072-.933-1.45 0-1.45Z" fill="#6B6C7E" />
+		<path d="M106.717 112.175h-5.025v-4.35h5.025v-1.45h-5.742c-.431 0-.718.29-.718.725v5.8c0 .435.287.725.718.725h5.742v-1.45Zm2.872-5.8h1.435c.431 0 .718.29.718.725v5.8c0 .435-.287.725-.718.725h-1.435v-1.45h.717v-4.35h-.717v-1.45Z" fill="#6B6C7E" />
+	</mask>
+	<g mask="url(#_Illustration_structure_fields__a)">
+		<path d="M100.257 104.2h11.485v11.6h-11.485z" fill="#fff" />
+	</g>
+	<path d="M128.998 102.75h46.4v5.8h-46.4z" fill="#80ACFF" />
+	<path d="M128.998 114.35h86.139v2.9h-86.139z" fill="#80ACFF" opacity=".5" />
+</svg>

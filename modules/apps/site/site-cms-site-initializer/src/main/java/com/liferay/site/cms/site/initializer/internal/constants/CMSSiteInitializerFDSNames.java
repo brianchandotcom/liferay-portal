@@ -19,4 +19,7 @@ public class CMSSiteInitializerFDSNames {
 	public static final String FILES_SECTION =
 		CMSSiteInitializerConstants.BUNDLE_SYMBOLIC_NAME + "-filesSection";
 
+	public static final String STRUCTURES_SECTION =
+		CMSSiteInitializerConstants.BUNDLE_SYMBOLIC_NAME + "-structuresSection";
+
 }

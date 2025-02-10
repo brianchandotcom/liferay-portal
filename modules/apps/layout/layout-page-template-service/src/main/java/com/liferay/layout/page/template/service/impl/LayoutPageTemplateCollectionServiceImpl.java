@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
 
@@ -235,6 +236,11 @@ public class LayoutPageTemplateCollectionServiceImpl
 		long groupId, String name, int type, int start, int end,
 		OrderByComparator<LayoutPageTemplateCollection> orderByComparator) {
 
+		if (Validator.isNull(name)) {
+			return layoutPageTemplateCollectionPersistence.filterFindByG_T(
+				groupId, type, start, end, orderByComparator);
+		}
+
 		return layoutPageTemplateCollectionPersistence.filterFindByG_LikeN_T(
 			groupId, _customSQL.keywords(name, false, WildcardMode.SURROUND)[0],
 			type, start, end, orderByComparator);
@@ -249,6 +255,11 @@ public class LayoutPageTemplateCollectionServiceImpl
 	@Override
 	public int getLayoutPageTemplateCollectionsCount(
 		long groupId, String name, int type) {
+
+		if (Validator.isNull(name)) {
+			return layoutPageTemplateCollectionPersistence.filterCountByG_T(
+				groupId, type);
+		}
 
 		return layoutPageTemplateCollectionPersistence.filterCountByG_LikeN_T(
 			groupId, _customSQL.keywords(name, false, WildcardMode.SURROUND)[0],

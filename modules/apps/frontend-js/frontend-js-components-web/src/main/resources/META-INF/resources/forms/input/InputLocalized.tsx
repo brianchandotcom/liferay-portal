@@ -5,7 +5,7 @@
 
 import ClayLocalizedInput from '@clayui/localized-input';
 import classNames from 'classnames';
-import React, {FocusEventHandler, useEffect, useState} from 'react';
+import React, {FocusEventHandler, useEffect, useMemo, useState} from 'react';
 
 import FieldBase from '../common/FieldBase';
 
@@ -42,15 +42,6 @@ interface InputLocale {
 	symbol: string;
 }
 
-const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
-
-const availableLocales = Object.keys(Liferay.Language.available)
-	.sort((languageId) => (languageId === defaultLanguageId ? -1 : 1))
-	.map((language) => ({
-		label: language as Liferay.Language.Locale,
-		symbol: language.replace(/_/g, '-').toLowerCase(),
-	}));
-
 export function translationsNormalizer(
 	translations: Liferay.Language.LocalizedValue<string>
 ): Liferay.Language.LocalizedValue<string> {
@@ -85,6 +76,19 @@ export default function InputLocalized({
 	translations: initialTranslations,
 	...otherProps
 }: InputLocalizedProps) {
+	const availableLocales = useMemo(() => {
+		return Object.keys(Liferay.Language.available)
+			.sort((languageId: string) =>
+				languageId === Liferay.ThemeDisplay.getDefaultLanguageId()
+					? -1
+					: 1
+			)
+			.map((languageId: string) => ({
+				label: languageId as Liferay.Language.Locale,
+				symbol: languageId.replace(/_/g, '-').toLowerCase(),
+			}));
+	}, []);
+
 	const [locale, setLocale] = useState<InputLocale>(availableLocales[0]);
 	const translations = translationsNormalizer(initialTranslations);
 
@@ -92,8 +96,9 @@ export default function InputLocalized({
 		const locale =
 			availableLocales.find(({label}) => label === selectedLocale)! ??
 			availableLocales[0];
+
 		setLocale(locale);
-	}, [selectedLocale]);
+	}, [availableLocales, selectedLocale]);
 
 	return (
 		<FieldBase

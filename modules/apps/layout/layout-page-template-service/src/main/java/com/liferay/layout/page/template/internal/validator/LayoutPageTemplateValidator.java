@@ -5,13 +5,20 @@
 
 package com.liferay.layout.page.template.internal.validator;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * @author Mariano Álvaro Sáiz
  */
 public class LayoutPageTemplateValidator {
+
+	public static Character getBlacklistCharacter(String name) {
+		for (char c : _BLACKLIST_CHAR) {
+			if (name.indexOf(c) >= 0) {
+				return c;
+			}
+		}
+
+		return null;
+	}
 
 	public static boolean isBlacklistedChar(char c) {
 		for (char blacklistedChar : _BLACKLIST_CHAR) {
@@ -31,18 +38,6 @@ public class LayoutPageTemplateValidator {
 		}
 
 		return true;
-	}
-
-	public static void validateNameCharacters(
-			String layoutPageTemplateEntryName)
-		throws LayoutPageTemplateEntryNameException {
-
-		for (char c : _BLACKLIST_CHAR) {
-			if (layoutPageTemplateEntryName.indexOf(c) >= 0) {
-				throw new LayoutPageTemplateEntryNameException.
-					MustNotContainInvalidCharacters(c);
-			}
-		}
 	}
 
 	private static final char[] _BLACKLIST_CHAR = {

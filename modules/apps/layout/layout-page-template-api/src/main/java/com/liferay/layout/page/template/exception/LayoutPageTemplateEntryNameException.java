@@ -55,13 +55,13 @@ public class LayoutPageTemplateEntryNameException extends PortalException {
 	public static class MustNotContainInvalidCharacters
 		extends LayoutPageTemplateEntryNameException {
 
-		public MustNotContainInvalidCharacters(char character) {
+		public MustNotContainInvalidCharacters(Character character) {
 			super("Invalid character in name " + character);
 
 			this.character = character;
 		}
 
-		public final char character;
+		public final Character character;
 
 	}
 

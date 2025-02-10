@@ -12,7 +12,6 @@ import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.fragment.renderer.FragmentRendererController;
 import com.liferay.fragment.service.FragmentCollectionService;
-import com.liferay.fragment.validator.FragmentEntryValidator;
 import com.liferay.fragment.web.internal.configuration.FragmentPortletConfiguration;
 import com.liferay.fragment.web.internal.constants.FragmentWebKeys;
 import com.liferay.item.selector.ItemSelector;
@@ -107,8 +106,6 @@ public class FragmentPortlet extends MVCPortlet {
 			FragmentEntryProcessorRegistry.class.getName(),
 			_fragmentEntryProcessorRegistry);
 		renderRequest.setAttribute(
-			FragmentEntryValidator.class.getName(), _fragmentEntryValidator);
-		renderRequest.setAttribute(
 			FragmentPortletConfiguration.class.getName(),
 			fragmentPortletConfiguration);
 		renderRequest.setAttribute(
@@ -171,9 +168,6 @@ public class FragmentPortlet extends MVCPortlet {
 
 	@Reference
 	private FragmentEntryProcessorRegistry _fragmentEntryProcessorRegistry;
-
-	@Reference
-	private FragmentEntryValidator _fragmentEntryValidator;
 
 	@Reference
 	private FragmentRendererController _fragmentRendererController;

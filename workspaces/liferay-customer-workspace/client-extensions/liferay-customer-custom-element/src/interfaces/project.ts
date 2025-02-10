@@ -8,7 +8,10 @@ export default interface IProject {
 	accountKey?: string;
 	code?: string;
 	dxpVersion?: string;
+	externalReferenceCode?: string;
 	id?: number;
+	liferayContactEmailAddress?: string;
+	liferayContactName?: string;
 	maxRequestors?: number;
 	name: string;
 	partner?: any;

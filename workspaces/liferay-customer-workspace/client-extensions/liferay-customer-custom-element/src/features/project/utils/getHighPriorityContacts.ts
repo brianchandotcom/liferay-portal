@@ -3,6 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {ApolloClient, FetchResult} from '@apollo/client';
+import IAccountRole from '~/interfaces/accountRole';
+import IProject from '~/interfaces/project';
 import {
 	createAccountUserRoles,
 	deleteAccountUserRoles,
@@ -14,7 +17,19 @@ import {
 } from '~/services/liferay/rest/raysource/LicenseKeys';
 import i18n from '~/utils/I18n';
 
-const addContactRoleLiferay = async (item, project, client) => {
+interface IContact {
+	category: {role: string};
+	email: string;
+	filter?: string[];
+	filterId?: string;
+	label: string;
+}
+
+const addContactRoleLiferay = async (
+	item: IContact,
+	project: IProject,
+	client: ApolloClient<object>
+): Promise<FetchResult> => {
 	return client.mutate({
 		context: {
 			displaySuccess: false,
@@ -29,23 +44,26 @@ const addContactRoleLiferay = async (item, project, client) => {
 };
 
 const addContactRoleRaysource = (
-	item,
-	oAuthToken,
-	project,
-	provisioningServerAPI
-) => {
-	return addContactRoleNameByEmailByProject({
-		accountKey: project.accountKey,
-		emailURI: encodeURI(item.email),
-		firstName: item.label,
-		lastName: item.label,
+	item: IContact,
+	oAuthToken: string,
+	project: IProject,
+	provisioningServerAPI: string
+): Promise<Response> => {
+	return addContactRoleNameByEmailByProject(
+		project.accountKey as string,
+		encodeURI(item.email),
+		item.label,
+		item.label,
 		oAuthToken,
 		provisioningServerAPI,
-		roleName: item.category.role,
-	});
+		item.category.role
+	);
 };
 
-const getAccountRolesId = async (project, client) => {
+const getAccountRolesId = async (
+	project: IProject,
+	client: ApolloClient<object>
+): Promise<IAccountRole[]> => {
 	const result = await client.query({
 		context: {
 			displaySuccess: false,
@@ -59,7 +77,7 @@ const getAccountRolesId = async (project, client) => {
 	return result.data.accountAccountRolesByExternalReferenceCode.items;
 };
 
-const getContactRoleByFilter = (filter) => {
+const getContactRoleByFilter = (filter: string): string | undefined => {
 	if (filter.includes('privacy')) {
 		return 'Data Breach Contact';
 	}
@@ -71,6 +89,8 @@ const getContactRoleByFilter = (filter) => {
 	if (filter.includes('critical')) {
 		return 'Critical Incident Contact';
 	}
+
+	return undefined;
 };
 
 const HIGH_PRIORITY_CONTACT_CATEGORIES = {
@@ -79,7 +99,11 @@ const HIGH_PRIORITY_CONTACT_CATEGORIES = {
 	securityBreach: i18n.translate('security-breach'),
 };
 
-const removeContactRoleLiferay = async (item, project, client) => {
+const removeContactRoleLiferay = async (
+	item: IContact,
+	project: IProject,
+	client: ApolloClient<object>
+): Promise<FetchResult> => {
 	return client.mutate({
 		context: {
 			displaySuccess: false,
@@ -94,18 +118,18 @@ const removeContactRoleLiferay = async (item, project, client) => {
 };
 
 const removeContactRoleRaysource = async (
-	item,
-	oAuthToken,
-	project,
-	provisioningServerAPI
-) => {
-	return await deleteContactRoleNameByEmailByProject({
-		accountKey: project.accountKey,
-		emailURI: encodeURI(item.email),
+	item: IContact,
+	oAuthToken: string,
+	project: IProject,
+	provisioningServerAPI: string
+): Promise<Response> => {
+	return await deleteContactRoleNameByEmailByProject(
+		project.accountKey as string,
+		encodeURI(item.email),
 		oAuthToken,
 		provisioningServerAPI,
-		rolesToDelete: item.filter,
-	});
+		item.filter?.toString() as string
+	);
 };
 
 const rolesHighPriorityContacts = [
@@ -114,21 +138,37 @@ const rolesHighPriorityContacts = [
 	'Critical Incident Contact',
 ];
 
-const updateLiferayContact = (items, fn, project, client) =>
-	Promise.all(items?.map((item) => fn(item, project, client)));
+const updateLiferayContact = (
+	items: IContact[] | undefined,
+	fn: (
+		item: IContact,
+		project: IProject,
+		client: ApolloClient<object>
+	) => Promise<FetchResult>,
+	project: IProject,
+	client: ApolloClient<object>
+): Promise<any[]> => {
+	return Promise.all(items?.map((item) => fn(item, project, client)) || []);
+};
 
 const updateRaysourceContact = (
-	fn,
-	contacts,
-	oAuthToken,
-	project,
-	provisioningServerAPI
-) =>
-	Promise.all(
+	fn: (
+		item: IContact,
+		oAuthToken: string,
+		project: IProject,
+		provisioningServerAPI: string
+	) => Promise<any>,
+	contacts: IContact[] | undefined,
+	oAuthToken: string,
+	project: IProject,
+	provisioningServerAPI: string
+): Promise<any[]> => {
+	return Promise.all(
 		contacts?.map((item) =>
 			fn(item, oAuthToken, project, provisioningServerAPI)
-		)
+		) || []
 	);
+};
 
 export {
 	addContactRoleLiferay,

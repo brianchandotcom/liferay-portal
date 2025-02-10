@@ -3,7 +3,13 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-const getYearlyTerms = ({endDate, startDate}) => {
+const getYearlyTerms = ({
+	endDate,
+	startDate,
+}: {
+	endDate: string | Date;
+	startDate: string | Date;
+}) => {
 	endDate = new Date(endDate);
 	startDate = new Date(startDate);
 
@@ -11,9 +17,9 @@ const getYearlyTerms = ({endDate, startDate}) => {
 	const startDateYear = startDate.getFullYear();
 	const yearlyTerms = [];
 
-	const isExactlyOneYearApart = (startDate, endDate) => {
+	const isExactlyOneYearApart = (startDate: Date, endDate: Date): boolean => {
 		const oneYearLater = new Date(startDate);
-		oneYearLater.setFullYear(startDate.getFullYear() + 1);
+		oneYearLater.setFullYear(oneYearLater.getFullYear() + 1);
 
 		return (
 			endDate.getFullYear() === oneYearLater.getFullYear() &&
@@ -35,7 +41,7 @@ const getYearlyTerms = ({endDate, startDate}) => {
 			startDate.getMonth(),
 			startDate.getDate() - 1
 		);
-		const startDateIterationYear = new Date(startDate.setFullYear(year));
+		const startDateIterationYear = new Date(startDate);
 
 		if (startDateIterationYear > endDate) {
 			break;

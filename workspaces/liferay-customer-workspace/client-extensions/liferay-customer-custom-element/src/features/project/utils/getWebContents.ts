@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import IAccountSubscriptionGroup from '~/interfaces/accountSubscriptionGroup';
 import {SLA_TYPES} from '~/utils/constants/slaTypes';
 
 import {
@@ -11,14 +12,17 @@ import {
 	WEB_CONTENT_DXP_VERSION_TYPES,
 } from './constants';
 
-export function getWebContents(dxpVersion, slaCurrent, subscriptionGroups) {
-	const webContents = [];
+export function getWebContents(
+	dxpVersion: keyof typeof WEB_CONTENT_DXP_VERSION_TYPES | undefined,
+	slaCurrent: string | undefined | null,
+	subscriptionGroups: IAccountSubscriptionGroup[] | undefined
+): string[] {
+	const webContents: string[] = [];
 	const hasProjectSLA = Object.values(SLA_TYPES).some((slaType) =>
 		slaCurrent?.includes(slaType)
 	);
 
 	const allProductsNames = Object.values(PRODUCT_TYPES);
-
 	const allProductsKeys = Object.keys(PRODUCT_TYPES);
 
 	const initialSubscriptions = allProductsKeys.map((productKey) => [
@@ -26,37 +30,42 @@ export function getWebContents(dxpVersion, slaCurrent, subscriptionGroups) {
 		false,
 	]);
 
-	const hasSubscriptionGroup = subscriptionGroups?.reduce(
-		(subscriptionGroupsAccumulator, subscriptionGroup) => {
-			const currentProductIndex = allProductsNames.findIndex(
-				(productName) => productName === subscriptionGroup?.name
-			);
+	const hasSubscriptionGroup = subscriptionGroups
+		? subscriptionGroups.reduce(
+				(subscriptionGroupsAccumulator, subscriptionGroup) => {
+					const currentProductIndex = allProductsNames.findIndex(
+						(productName) => productName === subscriptionGroup?.name
+					);
 
-			if (currentProductIndex !== -1) {
-				const productKey = allProductsKeys[currentProductIndex];
-				subscriptionGroupsAccumulator[productKey] = true;
-			}
+					if (currentProductIndex !== -1) {
+						const productKey = allProductsKeys[currentProductIndex];
+						subscriptionGroupsAccumulator[productKey] = true;
+					}
 
-			return subscriptionGroupsAccumulator;
-		},
-		Object.fromEntries(initialSubscriptions)
-	);
+					return subscriptionGroupsAccumulator;
+				},
+				Object.fromEntries(initialSubscriptions) as Record<
+					string,
+					boolean
+				>
+			)
+		: (Object.fromEntries(initialSubscriptions) as Record<string, boolean>);
 
-	const hasAnalyticsCloudNotActive = subscriptionGroups.find(
+	const hasAnalyticsCloudNotActive = subscriptionGroups?.find(
 		(subscriptionGroup) =>
 			subscriptionGroup.name === PRODUCT_TYPES.analyticsCloud &&
 			(subscriptionGroup.activationStatus === 'In-Progress' ||
 				!subscriptionGroup.activationStatus)
 	);
 
-	const hasPortalOrPartnershipNotActive = subscriptionGroups.find(
+	const hasPortalOrPartnershipNotActive = subscriptionGroups?.find(
 		(subscriptionGroup) =>
 			subscriptionGroup.name === PRODUCT_TYPES.portal ||
 			(subscriptionGroup.name === PRODUCT_TYPES.partnership &&
 				(subscriptionGroup.activationStatus === 'In-Progress' ||
 					!subscriptionGroup.activationStatus))
 	);
-	const hasDXPOrDXPCloudActive = subscriptionGroups.find(
+	const hasDXPOrDXPCloudActive = subscriptionGroups?.find(
 		(subscriptionGroup) =>
 			subscriptionGroup.name === PRODUCT_TYPES.dxp ||
 			(subscriptionGroup.name === PRODUCT_TYPES.dxpCloud &&
@@ -93,7 +102,7 @@ export function getWebContents(dxpVersion, slaCurrent, subscriptionGroups) {
 	}
 	if (hasSubscriptionGroup.dxp || hasSubscriptionGroup.dxpCloud) {
 		webContents.push(
-			dxpVersion
+			dxpVersion && WEB_CONTENT_DXP_VERSION_TYPES[dxpVersion]
 				? WEB_CONTENT_DXP_VERSION_TYPES[dxpVersion]
 				: WEB_CONTENT_DXP_VERSION_TYPES['7.4']
 		);

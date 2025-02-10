@@ -3,6 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import IAccountSubscriptionGroup from '~/interfaces/accountSubscriptionGroup';
+import IProject from '~/interfaces/project';
+import IUserAccount from '~/interfaces/userAccount';
+
 export const actionTypes = {
 	UPDATE_PAGE: 'UPDATE_PAGE',
 	UPDATE_PROJECT: 'UPDATE_PROJECT',
@@ -11,62 +15,78 @@ export const actionTypes = {
 	UPDATE_STRUCTURED_CONTENTS: 'UPDATE_STRUCTURED_CONTENTS',
 	UPDATE_SUBSCRIPTION_GROUPS: 'UPDATE_SUBSCRIPTION_GROUPS',
 	UPDATE_USER_ACCOUNT: 'UPDATE_USER_ACCOUNT',
-	UPDATE_USER_PROJECT_ACCESS: 'UPDATE_USER_PROJECT_ACCESS'
+	UPDATE_USER_PROJECT_ACCESS: 'UPDATE_USER_PROJECT_ACCESS',
 };
 
-const reducer = (state, action) => {
+export type ActionPayload =
+	| string
+	| IAccountSubscriptionGroup[]
+	| IUserAccount
+	| IProject
+	| boolean
+	| undefined;
+
+export interface IAction {
+	payload: ActionPayload;
+	type: keyof typeof actionTypes;
+}
+
+export interface IState {
+	isQuickLinksExpanded: boolean;
+	page: string | undefined;
+	project: IProject | undefined;
+	quickLinks: string | undefined;
+	structuredContents: string | undefined;
+	subscriptionGroups: IAccountSubscriptionGroup[] | undefined;
+	userAccount: IUserAccount | undefined;
+	userProjectAccess: boolean | undefined;
+}
+
+const reducer = (state: IState, action: IAction): IState => {
 	switch (action.type) {
-		case actionTypes.UPDATE_USER_ACCOUNT: {
+		case actionTypes.UPDATE_USER_ACCOUNT:
 			return {
 				...state,
-				userAccount: action.payload,
+				userAccount: action.payload as IUserAccount,
 			};
-		}
-		case actionTypes.UPDATE_PROJECT: {
+		case actionTypes.UPDATE_PROJECT:
 			return {
 				...state,
-				project: action.payload,
+				project: action.payload as IProject,
 			};
-		}
-		case actionTypes.UPDATE_QUICK_LINKS: {
+		case actionTypes.UPDATE_QUICK_LINKS:
 			return {
 				...state,
-				quickLinks: action.payload,
+				quickLinks: action.payload as string,
 			};
-		}
-		case actionTypes.UPDATE_QUICK_LINKS_EXPANDED_PANEL: {
+		case actionTypes.UPDATE_QUICK_LINKS_EXPANDED_PANEL:
 			return {
 				...state,
-				isQuickLinksExpanded: action.payload,
+				isQuickLinksExpanded: action.payload as boolean,
 			};
-		}
-		case actionTypes.UPDATE_STRUCTURED_CONTENTS: {
+		case actionTypes.UPDATE_STRUCTURED_CONTENTS:
 			return {
 				...state,
-				structuredContents: action.payload,
+				structuredContents: action.payload as string,
 			};
-		}
-		case actionTypes.UPDATE_SUBSCRIPTION_GROUPS: {
+		case actionTypes.UPDATE_SUBSCRIPTION_GROUPS:
 			return {
 				...state,
-				subscriptionGroups: action.payload,
+				subscriptionGroups:
+					action.payload as unknown as IAccountSubscriptionGroup[],
 			};
-		}
-		case actionTypes.UPDATE_PAGE: {
+		case actionTypes.UPDATE_PAGE:
 			return {
 				...state,
-				page: action.payload,
+				page: action.payload as string,
 			};
-		}
-		case actionTypes.UPDATE_USER_PROJECT_ACCESS: {
+		case actionTypes.UPDATE_USER_PROJECT_ACCESS:
 			return {
 				...state,
-				userProjectAccess: action.payload
-			}
-		}
-		default: {
+				userProjectAccess: action.payload as boolean,
+			};
+		default:
 			return state;
-		}
 	}
 };
 

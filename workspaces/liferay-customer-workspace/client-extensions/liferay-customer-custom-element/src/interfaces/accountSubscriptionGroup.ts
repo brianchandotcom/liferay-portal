@@ -5,5 +5,6 @@
 
 export default interface IAccountSubscriptionGroup {
 	accountSubscriptionGroupId?: number;
+	activationStatus: string;
 	name?: string;
 }

@@ -269,10 +269,6 @@ public class ObjectEntryLocalServiceTest {
 					ObjectFieldConstants.DB_TYPE_STRING,
 					RandomTestUtil.randomString(), StringUtil.randomId())));
 
-		_javaDelegateEngineKey =
-			ObjectValidationRuleConstants.ENGINE_TYPE_JAVA_DELEGATE_PREFIX +
-				RandomTestUtil.randomString();
-
 		_listTypeDefinition =
 			_listTypeDefinitionLocalService.addListTypeDefinition(
 				null, TestPropsValues.getUserId(),
@@ -4026,7 +4022,7 @@ public class ObjectEntryLocalServiceTest {
 	}
 
 	@Test
-	public void testUpdateCommerceOrderSystemObjectWithJavaDelegateObjectValidationRule()
+	public void testUpdateCommerceOrderSystemObjectDefinitionWithJavaDelegateObjectValidationRule()
 		throws Exception {
 
 		Consumer<Map<String, Object>> consumer = inputObjects -> {
@@ -4037,7 +4033,7 @@ public class ObjectEntryLocalServiceTest {
 		};
 
 		try (Closeable closeable = _registerTestObjectValidationRuleEngine(
-				consumer, _javaDelegateEngineKey)) {
+				consumer, _OBJECT_VALIDATION_RULE_KEY)) {
 
 			ExpandoTable expandoTable = ExpandoTestUtil.addTable(
 				PortalUtil.getClassNameId(CommerceOrder.class),
@@ -4065,7 +4061,8 @@ public class ObjectEntryLocalServiceTest {
 
 			ObjectValidationRule objectValidationRule =
 				_addObjectValidationRule(
-					_javaDelegateEngineKey, objectDefinition, StringPool.BLANK);
+					_OBJECT_VALIDATION_RULE_KEY, objectDefinition,
+					StringPool.BLANK);
 
 			CommerceOrderLocalServiceUtil.updateCommerceOrder(commerceOrder);
 
@@ -4603,7 +4600,7 @@ public class ObjectEntryLocalServiceTest {
 		};
 
 		try (Closeable closeable = _registerTestObjectValidationRuleEngine(
-				consumer, _javaDelegateEngineKey)) {
+				consumer, _OBJECT_VALIDATION_RULE_KEY)) {
 
 			ExpandoTable expandoTable = ExpandoTestUtil.addTable(
 				PortalUtil.getClassNameId(User.class),
@@ -4654,7 +4651,8 @@ public class ObjectEntryLocalServiceTest {
 
 			ObjectValidationRule objectValidationRule =
 				_addObjectValidationRule(
-					_javaDelegateEngineKey, objectDefinition, StringPool.BLANK);
+					_OBJECT_VALIDATION_RULE_KEY, objectDefinition,
+					StringPool.BLANK);
 
 			UserTestUtil.updateUser(user);
 
@@ -5699,7 +5697,9 @@ public class ObjectEntryLocalServiceTest {
 			objectValidationRule);
 	}
 
-	private static String _javaDelegateEngineKey;
+	private static final String _OBJECT_VALIDATION_RULE_KEY =
+		ObjectValidationRuleConstants.ENGINE_TYPE_JAVA_DELEGATE_PREFIX +
+			RandomTestUtil.randomString();
 
 	@Inject
 	private AssetEntryLocalService _assetEntryLocalService;

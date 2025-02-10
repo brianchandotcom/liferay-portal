@@ -88,6 +88,9 @@ export function PaginationControls({
 				<ClayButton
 					className="float-left"
 					id="ddm-form-submit"
+					onClick={() => {
+						Liferay.fire('paginationControlsSubmitButtonClicked');
+					}}
 					type="submit"
 				>
 					{submitLabel}

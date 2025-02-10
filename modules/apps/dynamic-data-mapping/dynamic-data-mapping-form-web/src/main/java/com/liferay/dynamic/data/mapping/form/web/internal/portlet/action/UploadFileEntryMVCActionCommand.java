@@ -10,9 +10,11 @@ import com.liferay.document.library.kernel.exception.FileNameException;
 import com.liferay.document.library.kernel.exception.FileSizeException;
 import com.liferay.document.library.kernel.exception.InvalidFileException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.dynamic.data.mapping.constants.DDMActionKeys;
 import com.liferay.dynamic.data.mapping.constants.DDMFormConstants;
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
+import com.liferay.dynamic.data.mapping.form.web.internal.portlet.action.util.DLFileEntryUtil;
 import com.liferay.dynamic.data.mapping.form.web.internal.security.permission.resource.DDMFormInstancePermission;
 import com.liferay.dynamic.data.mapping.form.web.internal.upload.DDMFormUploadValidator;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
@@ -100,6 +102,9 @@ public class UploadFileEntryMVCActionCommand extends BaseMVCActionCommand {
 	private UploadResponseHandler _defaultUploadResponseHandler;
 
 	@Reference
+	private DLFileEntryLocalService _dlFileEntryLocalService;
+
+	@Reference
 	private Language _language;
 
 	@Reference
@@ -120,6 +125,10 @@ public class UploadFileEntryMVCActionCommand extends BaseMVCActionCommand {
 		@Override
 		public FileEntry upload(UploadPortletRequest uploadPortletRequest)
 			throws IOException, PortalException {
+
+			DLFileEntryUtil.deleteDLFileEntry(
+				uploadPortletRequest.getPortletRequest(),
+				_dlFileEntryLocalService);
 
 			File file = null;
 

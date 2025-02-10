@@ -15,7 +15,7 @@ import {
 	useFormState,
 } from 'data-engine-js-components-web';
 import {formatStorage, openSelectionModal, sub} from 'frontend-js-web';
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 
 import FieldBase from '../FieldBase/ReactFieldBase.es';
 
@@ -257,6 +257,7 @@ const Main = ({
 	editingLanguageId,
 	errorMessage: initialErrorMessage,
 	fieldName,
+	fileEntryDeleteURL,
 	fileEntryTitle,
 	fileEntryURL,
 	guestUploadURL,
@@ -285,6 +286,7 @@ const Main = ({
 	const [displayErrors, setDisplayErrors] = useState(initialDisplayErrors);
 	const [valid, setValid] = useState(initialValid);
 	const [progress, setProgress] = useState(0);
+	const [submitButtonClicked, setSubmitButtonClicked] = useState(false);
 
 	const isSignedIn = Liferay.ThemeDisplay.isSignedIn();
 
@@ -473,9 +475,73 @@ const Main = ({
 		return true;
 	};
 
-	const handleUploadSelectButtonClicked = (event) => {
+	const deleteFileEntry = useCallback(() => {
+		const request = new XMLHttpRequest();
+
+		let oldFileEntryId = 0;
+
+		try {
+			const fileEntry = JSON.parse(value);
+
+			oldFileEntryId = fileEntry.fileEntryId;
+		}
+		catch (error) {
+			console.error('Unable to parse JSON', value);
+		}
+
+		request.open('POST', fileEntryDeleteURL);
+		request.send(
+			convertToFormData({
+				[`${portletNamespace}oldFileEntryId`]: oldFileEntryId,
+			})
+		);
+	}, [fileEntryDeleteURL, portletNamespace, value]);
+
+	const handleOnClearButtonClicked = (event, isSignedIn) => {
 		onFocus(event);
 
+		deleteFileEntry();
+
+		setCurrentValue(null);
+
+		onChange(event, '{}');
+
+		if (!isSignedIn) {
+			const guestUploadInput = document.getElementById(
+				`${name}inputFileGuestUpload`
+			);
+
+			if (guestUploadInput) {
+				guestUploadInput.value = '';
+			}
+
+			onBlur(event);
+		}
+	};
+
+	const handleUploadSelectButtonClicked = (event, currentValue) => {
+		onFocus(event);
+
+		let oldFileEntryId = 0;
+
+		if (currentValue) {
+			try {
+				const fileEntry = JSON.parse(currentValue);
+
+				oldFileEntryId = fileEntry.fileEntryId;
+
+				uploadFileEntry(event, oldFileEntryId);
+			}
+			catch (error) {
+				console.error('Unable to parse JSON', currentValue);
+			}
+		}
+		else {
+			uploadFileEntry(event, oldFileEntryId);
+		}
+	};
+
+	const uploadFileEntry = (event, oldFileEntryId) => {
 		const file = event.target.files[0];
 
 		if (isExceededUploadRequestSizeLimit(file.size)) {
@@ -529,6 +595,7 @@ const Main = ({
 		request.send(
 			convertToFormData({
 				[`${portletNamespace}file`]: file,
+				[`${portletNamespace}oldFileEntryId`]: oldFileEntryId,
 			})
 		);
 	};
@@ -537,6 +604,32 @@ const Main = ({
 		(!isSignedIn && !allowGuestUsers) ||
 		maximumSubmissionLimitReached ||
 		showUploadPermissionMessage;
+
+	useEffect(() => {
+		window.onbeforeunload = function () {
+			if (!submitButtonClicked) {
+				deleteFileEntry();
+			}
+		};
+
+		return () => {
+			window.onbeforeunload = null;
+		};
+	}, [deleteFileEntry, submitButtonClicked]);
+
+	useEffect(() => {
+		Liferay.on(
+			'paginationControlsSubmitButtonClicked',
+
+			() => {
+				setSubmitButtonClicked(true);
+			}
+		);
+
+		return () => {
+			Liferay.detach('paginationControlsSubmitButtonClicked');
+		};
+	}, []);
 
 	return (
 		<FieldBase
@@ -559,25 +652,11 @@ const Main = ({
 					name={name}
 					onBlur={onBlur}
 					onClearButtonClicked={(event) => {
-						onFocus(event);
-
-						setCurrentValue(null);
-
-						onChange(event, '{}');
-
-						const guestUploadInput = document.getElementById(
-							`${name}inputFileGuestUpload`
-						);
-
-						if (guestUploadInput) {
-							guestUploadInput.value = '';
-						}
-
-						onBlur(event);
+						handleOnClearButtonClicked(event, value, isSignedIn);
 					}}
 					onFocus={onFocus}
 					onUploadSelectButtonClicked={(event) =>
-						handleUploadSelectButtonClicked(event)
+						handleUploadSelectButtonClicked(event, currentValue)
 					}
 					placeholder={placeholder}
 					progress={progress}
@@ -596,9 +675,7 @@ const Main = ({
 					message={message}
 					name={name}
 					onClearButtonClicked={(event) => {
-						setCurrentValue(null);
-
-						onChange(event, '{}');
+						handleOnClearButtonClicked(event, value, isSignedIn);
 					}}
 					onSelectButtonClicked={(event) =>
 						handleSelectButtonClicked(

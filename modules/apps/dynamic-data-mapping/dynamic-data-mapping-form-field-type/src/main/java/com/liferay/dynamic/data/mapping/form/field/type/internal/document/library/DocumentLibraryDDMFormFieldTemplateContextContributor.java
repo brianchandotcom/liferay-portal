@@ -107,6 +107,25 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributor
 				return ddmFormInstanceRecordId;
 			}
 		).put(
+			"fileEntryDeleteURL",
+			() -> {
+				HttpServletRequest httpServletRequest =
+					ddmFormFieldRenderingContext.getHttpServletRequest();
+
+				RequestBackedPortletURLFactory requestBackedPortletURLFactory =
+					RequestBackedPortletURLFactoryUtil.create(
+						httpServletRequest);
+
+				return PortletURLBuilder.create(
+					requestBackedPortletURLFactory.createActionURL(
+						GetterUtil.getString(
+							_portal.getPortletId(httpServletRequest),
+							DDMPortletKeys.DYNAMIC_DATA_MAPPING_FORM))
+				).setActionName(
+					"/dynamic_data_mapping_form/delete_file_entry"
+				).buildString();
+			}
+		).put(
 			"groupId", ddmFormFieldRenderingContext.getProperty("groupId")
 		).put(
 			"maximumRepetitions",

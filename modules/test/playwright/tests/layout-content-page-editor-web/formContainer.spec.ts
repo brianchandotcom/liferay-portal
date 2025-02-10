@@ -2025,6 +2025,137 @@ test.describe('Form Localization', () => {
 	);
 
 	test(
+		'Can translate checkbox form field',
+		{tag: '@LPD-46483'},
+		async ({apiHelpers, page, pageEditorPage, site}) => {
+
+			// Create object definition with a localized boolean
+
+			const objectDefinitionAPIClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+
+			const {body: objectDefinition} =
+				await objectDefinitionAPIClient.postObjectDefinition({
+					active: true,
+					enableLocalization: true,
+					externalReferenceCode: 'booleanERC',
+					label: {
+						en_US: 'Boolean',
+					},
+					name: 'Boolean',
+					objectFields: [
+						{
+							DBType: ObjectField.DBTypeEnum.Boolean,
+							businessType: ObjectField.BusinessTypeEnum.Boolean,
+							externalReferenceCode: 'legalThingsERC',
+							indexed: true,
+							indexedAsKeyword: false,
+							label: {
+								en_US: 'Legal Things',
+							},
+							localized: true,
+							name: 'legalThings',
+							required: false,
+						},
+					],
+					pluralLabel: {
+						en_US: 'Booleans',
+					},
+					portlet: true,
+					scope: 'company',
+					status: {
+						code: 0,
+					},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			// Create a page with a Form fragment
+
+			const formId = getRandomString();
+
+			const formDefinition = getFormContainerDefinition({
+				id: formId,
+			});
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([formDefinition]),
+				siteId: site.id,
+				title: getRandomString(),
+			});
+
+			await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+			// Map the form to the Boolean object
+
+			await pageEditorPage.mapFormFragment(formId, 'Boolean', 'all', {
+				addLocalizationSelect: true,
+			});
+
+			await pageEditorPage.publishPage();
+
+			await page.goto(
+				`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
+
+			await page.getByLabel('Legal Things').check();
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('option', {
+					name: 'Spanish (Spain) Language',
+				}),
+				trigger: page.getByLabel(
+					'Select a language, current language:'
+				),
+			});
+
+			await page.getByLabel('Legal Things').uncheck();
+
+			// Check the translation in the localization select
+
+			await page
+				.getByLabel('Select a language, current language:')
+				.click();
+
+			expect(
+				page.getByRole('option', {
+					name: 'Spanish (Spain) Language',
+				})
+			).toContainText(/Translated/);
+
+			await page.keyboard.press('Escape');
+
+			// Save the form and publish the page
+
+			await page.getByRole('button', {name: 'Submit'}).click();
+
+			await expect(
+				page.getByText(
+					'Thank you. Your information was successfully received.'
+				)
+			).toBeVisible();
+
+			// Check the object entry
+
+			const {items} =
+				await apiHelpers.objectEntry.getObjectDefinitionObjectEntries(
+					'c/booleans'
+				);
+
+			const item = items[0];
+
+			expect(item.legalThings_i18n).toStrictEqual({
+				en_US: true,
+				es_ES: false,
+			});
+		}
+	);
+
+	test(
 		'Can translate date and date time form fields',
 		{tag: '@LPD-43805'},
 		async ({apiHelpers, page, pageEditorPage, site}) => {

@@ -124,16 +124,6 @@ public class DisplayPageTemplateFolderResourceTest
 	@Ignore
 	@Override
 	@Test
-	public void testGetSiteSiteByExternalReferenceCodeDisplayPageTemplateFoldersPageWithPagination()
-		throws Exception {
-
-		super.
-			testGetSiteSiteByExternalReferenceCodeDisplayPageTemplateFoldersPageWithPagination();
-	}
-
-	@Ignore
-	@Override
-	@Test
 	public void testGetSiteSiteExternalReferenceCodeDisplayPageTemplateFolderPermissionsPage()
 		throws Exception {
 

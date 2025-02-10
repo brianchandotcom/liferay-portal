@@ -6,19 +6,20 @@
 package com.liferay.fragment.web.internal.frontend.taglib.clay.servlet.taglib;
 
 import com.liferay.fragment.model.FragmentEntry;
-import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
-import com.liferay.fragment.validator.FragmentEntryValidator;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.test.TestInfo;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.List;
+import java.util.Locale;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -32,6 +33,7 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import org.mockito.Mockito;
+import org.mockito.stubbing.Answer;
 
 /**
  * @author Diego Hu
@@ -58,7 +60,7 @@ public class BasicFragmentEntryVerticalCardTest {
 			WorkflowConstants.STATUS_DRAFT
 		);
 
-		Assert.assertEquals(1, _getLabelsSize());
+		_testGetLabels("draft");
 
 		Mockito.when(
 			_fragmentEntry.isCacheable()
@@ -66,7 +68,7 @@ public class BasicFragmentEntryVerticalCardTest {
 			true
 		);
 
-		Assert.assertEquals(2, _getLabelsSize());
+		_testGetLabels("cached", "draft");
 
 		Mockito.when(
 			_fragmentEntry.isApproved()
@@ -80,14 +82,42 @@ public class BasicFragmentEntryVerticalCardTest {
 			Mockito.mock(FragmentEntry.class)
 		);
 
-		Assert.assertEquals(3, _getLabelsSize());
+		_testGetLabels("approved", "cached", "draft");
 	}
 
-	private int _getLabelsSize() {
+	private void _setUpLanguageUtil() {
+		LanguageUtil languageUtil = new LanguageUtil();
+
+		Language language = Mockito.mock(Language.class);
+
+		Mockito.when(
+			language.get(Mockito.eq(_httpServletRequest), Mockito.anyString())
+		).thenAnswer(
+			(Answer<String>)invocationOnMock -> invocationOnMock.getArgument(
+				1, String.class)
+		);
+
+		Mockito.when(
+			language.get(Mockito.any(Locale.class), Mockito.anyString())
+		).thenAnswer(
+			(Answer<String>)invocationOnMock -> invocationOnMock.getArgument(
+				1, String.class)
+		);
+
+		languageUtil.setLanguage(language);
+	}
+
+	private void _setUpPortalUtil() {
+		PortalUtil portalUtil = new PortalUtil();
+
+		portalUtil.setPortal(_portal);
+	}
+
+	private void _testGetLabels(String... expectedLabels) {
 		RenderRequest renderRequest = Mockito.mock(RenderRequest.class);
 
 		Mockito.when(
-			PortalUtil.getHttpServletRequest(renderRequest)
+			_portal.getHttpServletRequest(renderRequest)
 		).thenReturn(
 			_httpServletRequest
 		);
@@ -98,21 +128,16 @@ public class BasicFragmentEntryVerticalCardTest {
 				Mockito.mock(RenderResponse.class),
 				Mockito.mock(RowChecker.class));
 
-		List<LabelItem> labels = basicFragmentEntryVerticalCard.getLabels();
+		List<String> labels = TransformUtil.transform(
+			basicFragmentEntryVerticalCard.getLabels(),
+			labelItem -> GetterUtil.getString(labelItem.get("label"), null));
 
-		return labels.size();
-	}
+		Assert.assertEquals(
+			labels.toString(), expectedLabels.length, labels.size());
 
-	private void _setUpLanguageUtil() {
-		LanguageUtil languageUtil = new LanguageUtil();
-
-		languageUtil.setLanguage(Mockito.mock(Language.class));
-	}
-
-	private void _setUpPortalUtil() {
-		PortalUtil portalUtil = new PortalUtil();
-
-		portalUtil.setPortal(_portal);
+		Assert.assertTrue(
+			labels.toString(),
+			labels.containsAll(ListUtil.fromArray(expectedLabels)));
 	}
 
 	private final FragmentEntry _fragmentEntry = Mockito.mock(

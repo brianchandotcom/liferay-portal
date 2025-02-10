@@ -41,8 +41,11 @@ const ConnectionsTable = () => {
 				<div className="dxp-connections-table-no-connection">
 					<p>
 						No connection was found, to learn how to create the
-						connection please check this{' '}
-						<a href="https://learn.liferay.com/w/dxp/liferay-development/marketplace/connecting-liferay-dxp-to-marketplace">
+						connection please check this
+						<a
+							className="ml-1"
+							href="https://learn.liferay.com/w/dxp/liferay-development/marketplace/connecting-liferay-dxp-to-marketplace"
+						>
 							help page
 						</a>
 					</p>

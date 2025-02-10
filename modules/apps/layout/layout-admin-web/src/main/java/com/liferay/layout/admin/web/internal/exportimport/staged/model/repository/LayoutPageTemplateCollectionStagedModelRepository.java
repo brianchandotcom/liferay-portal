@@ -53,7 +53,7 @@ public class LayoutPageTemplateCollectionStagedModelRepository
 				serviceContext.getScopeGroupId(),
 				layoutPageTemplateCollection.
 					getParentLayoutPageTemplateCollectionId(),
-				layoutPageTemplateCollection.getName(),
+				null, layoutPageTemplateCollection.getName(),
 				layoutPageTemplateCollection.getDescription(),
 				layoutPageTemplateCollection.getType(), serviceContext);
 	}

@@ -511,7 +511,7 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 			if (layoutPageTemplateCollection == null) {
 				return _layoutPageTemplateCollectionService.
 					addLayoutPageTemplateCollection(
-						null, groupId, layoutPageTemplateCollectionId,
+						null, groupId, layoutPageTemplateCollectionId, null,
 						pageTemplateCollection.getName(),
 						pageTemplateCollection.getDescription(),
 						LayoutPageTemplateCollectionTypeConstants.BASIC,
@@ -525,7 +525,7 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 			return _layoutPageTemplateCollectionService.
 				addLayoutPageTemplateCollection(
 					pageTemplateCollection.getUuid(), groupId,
-					layoutPageTemplateCollectionId,
+					layoutPageTemplateCollectionId, null,
 					_layoutPageTemplateCollectionLocalService.
 						getUniqueLayoutPageTemplateCollectionName(
 							groupId, layoutPageTemplateCollectionId,
@@ -586,7 +586,7 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 		if (layoutPageTemplateCollection == null) {
 			return _layoutPageTemplateCollectionService.
 				addLayoutPageTemplateCollection(
-					null, groupId, layoutPageTemplateCollectionId,
+					null, groupId, layoutPageTemplateCollectionId, null,
 					pageTemplateCollection.getName(),
 					pageTemplateCollection.getDescription(),
 					LayoutPageTemplateCollectionTypeConstants.DISPLAY_PAGE,
@@ -598,7 +598,7 @@ public class LayoutsImporterImpl implements LayoutsImporter {
 
 			return _layoutPageTemplateCollectionService.
 				addLayoutPageTemplateCollection(
-					null, groupId, layoutPageTemplateCollectionId,
+					null, groupId, layoutPageTemplateCollectionId, null,
 					_layoutPageTemplateCollectionLocalService.
 						getUniqueLayoutPageTemplateCollectionName(
 							groupId, layoutPageTemplateCollectionId,

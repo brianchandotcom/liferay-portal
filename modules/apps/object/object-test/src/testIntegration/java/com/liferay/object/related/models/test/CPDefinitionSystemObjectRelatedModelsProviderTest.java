@@ -10,17 +10,31 @@ import com.liferay.commerce.product.exception.NoSuchCPDefinitionException;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
+import com.liferay.commerce.product.service.CPDefinitionLocalServiceUtil;
 import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.commerce.product.test.util.CPTestUtil;
+import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.related.models.test.util.ObjectEntryTestUtil;
+import com.liferay.object.related.models.test.util.ObjectRelationshipTestUtil;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.portal.kernel.test.AssertUtils;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 
+import java.util.Collections;
+
+import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -29,6 +43,77 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class CPDefinitionSystemObjectRelatedModelsProviderTest
 	extends BaseSystemObjectRelatedModelsProviderTestCase {
+
+	@Before
+	@Override
+	public void setUp() throws Exception {
+		super.setUp();
+
+		_cpDefinitionIds = addBaseModels(2);
+
+		CPDefinition cpDefinition1 =
+			CPDefinitionLocalServiceUtil.getCPDefinition(_cpDefinitionIds[0]);
+
+		_cpDefinitionLocalService.updateCPDefinitionLocalization(
+			cpDefinition1, cpDefinition1.getDefaultLanguageId(),
+			"CP" + RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString());
+
+		CPDefinition cpDefinition2 =
+			CPDefinitionLocalServiceUtil.getCPDefinition(_cpDefinitionIds[1]);
+
+		_cpDefinitionLocalService.updateCPDefinitionLocalization(
+			cpDefinition2, cpDefinition2.getDefaultLanguageId(),
+			"CP" + RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString());
+
+		_objectDefinition = ObjectDefinitionTestUtil.publishObjectDefinition();
+		_systemObjectDefinition = getSystemObjectDefinition();
+	}
+
+	@Override
+	@Test
+	public void testSystemObjectEntry1toMObjectRelatedModels()
+		throws Exception {
+
+		super.testSystemObjectEntry1toMObjectRelatedModels();
+
+		_testSystemObjectEntryObjectRelatedModels(
+			0, ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+
+		_objectDefinition.setScope(ObjectDefinitionConstants.SCOPE_SITE);
+
+		_objectDefinition =
+			_objectDefinitionLocalService.updateObjectDefinition(
+				_objectDefinition);
+
+		_testSystemObjectEntryObjectRelatedModels(
+			TestPropsValues.getGroupId(),
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
+	}
+
+	@Override
+	@Test
+	public void testSystemObjectEntryMtoMObjectRelatedModels()
+		throws Exception {
+
+		super.testSystemObjectEntryMtoMObjectRelatedModels();
+
+		_testSystemObjectEntryObjectRelatedModels(
+			0, ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+
+		_objectDefinition.setScope(ObjectDefinitionConstants.SCOPE_SITE);
+
+		_objectDefinition =
+			_objectDefinitionLocalService.updateObjectDefinition(
+				_objectDefinition);
+
+		_testSystemObjectEntryObjectRelatedModels(
+			TestPropsValues.getGroupId(),
+			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+	}
 
 	@Override
 	protected long[] addBaseModels(int count) throws Exception {
@@ -81,13 +166,72 @@ public class CPDefinitionSystemObjectRelatedModelsProviderTest
 			TestPropsValues.getCompanyId(), CPDefinition.class.getName());
 	}
 
+	private void _testSystemObjectEntryObjectRelatedModels(
+			long groupId, String objectRelationshipType)
+		throws Exception {
+
+		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
+			groupId, _objectDefinition.getObjectDefinitionId(),
+			Collections.emptyMap());
+
+		ObjectRelationship objectRelationship = addObjectRelationship(
+			_objectDefinition, _systemObjectDefinition,
+			ObjectRelationshipConstants.DELETION_TYPE_PREVENT,
+			objectRelationshipType);
+
+		if (objectRelationshipType.equals(
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY)) {
+
+			insertIntoOrUpdateExtensionTable(
+				objectEntry.getObjectEntryId(), _cpDefinitionIds[0],
+				_systemObjectDefinition.getObjectDefinitionId());
+			insertIntoOrUpdateExtensionTable(
+				objectEntry.getObjectEntryId(), _cpDefinitionIds[1],
+				_systemObjectDefinition.getObjectDefinitionId());
+		}
+		else {
+			ObjectRelationshipTestUtil.addObjectRelationshipMappingTableValues(
+				objectRelationship.getObjectRelationshipId(),
+				objectEntry.getPrimaryKey(), _cpDefinitionIds[0]);
+			ObjectRelationshipTestUtil.addObjectRelationshipMappingTableValues(
+				objectRelationship.getObjectRelationshipId(),
+				objectEntry.getPrimaryKey(), _cpDefinitionIds[1]);
+		}
+
+		CPDefinition cpDefinition =
+			CPDefinitionLocalServiceUtil.getCPDefinition(_cpDefinitionIds[0]);
+
+		ObjectRelationshipTestUtil.assertSearchRelatedModels(
+			0, objectRelatedModelsProvider,
+			objectRelationship.getObjectRelationshipId(),
+			objectEntry.getPrimaryKey(), StringUtil.randomString());
+		ObjectRelationshipTestUtil.assertSearchRelatedModels(
+			1, objectRelatedModelsProvider,
+			objectRelationship.getObjectRelationshipId(),
+			objectEntry.getPrimaryKey(), cpDefinition.getName());
+		ObjectRelationshipTestUtil.assertSearchRelatedModels(
+			2, objectRelatedModelsProvider,
+			objectRelationship.getObjectRelationshipId(),
+			objectEntry.getPrimaryKey(), "CP");
+
+		objectRelationshipLocalService.deleteObjectRelationship(
+			objectRelationship.getObjectRelationshipId());
+	}
+
 	@Inject
 	private CommerceCatalogLocalService _commerceCatalogLocalService;
+
+	private long[] _cpDefinitionIds;
 
 	@Inject
 	private CPDefinitionLocalService _cpDefinitionLocalService;
 
+	@DeleteAfterTestRun
+	private ObjectDefinition _objectDefinition;
+
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	private ObjectDefinition _systemObjectDefinition;
 
 }

@@ -54,7 +54,8 @@ public class LayoutPageTemplateCollectionLocalServiceImpl
 	@Override
 	public LayoutPageTemplateCollection addLayoutPageTemplateCollection(
 			String externalReferenceCode, long userId, long groupId,
-			long parentLayoutPageTemplateCollectionId, String name,
+			long parentLayoutPageTemplateCollectionId,
+			String layoutPageTemplateCollectionKey, String name,
 			String description, int type, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -89,8 +90,14 @@ public class LayoutPageTemplateCollectionLocalServiceImpl
 			serviceContext.getModifiedDate(new Date()));
 		layoutPageTemplateCollection.setParentLayoutPageTemplateCollectionId(
 			parentLayoutPageTemplateCollectionId);
+
+		if (Validator.isNull(layoutPageTemplateCollectionKey)) {
+			layoutPageTemplateCollectionKey =
+				_generateLayoutPageTemplateCollectionKey(groupId, name, type);
+		}
+
 		layoutPageTemplateCollection.setLayoutPageTemplateCollectionKey(
-			_generateLayoutPageTemplateCollectionKey(groupId, name, type));
+			layoutPageTemplateCollectionKey);
 		layoutPageTemplateCollection.setName(name);
 		layoutPageTemplateCollection.setDescription(description);
 		layoutPageTemplateCollection.setType(type);

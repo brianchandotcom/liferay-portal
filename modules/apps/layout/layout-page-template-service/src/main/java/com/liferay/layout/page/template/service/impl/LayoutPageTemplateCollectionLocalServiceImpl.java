@@ -7,7 +7,9 @@ package com.liferay.layout.page.template.service.impl;
 
 import com.liferay.layout.page.template.exception.DuplicateLayoutPageTemplateCollectionException;
 import com.liferay.layout.page.template.exception.LayoutPageTemplateCollectionGroupIdException;
+import com.liferay.layout.page.template.exception.LayoutPageTemplateCollectionLayoutPageTemplateCollectionKeyException;
 import com.liferay.layout.page.template.exception.LayoutPageTemplateCollectionNameException;
+import com.liferay.layout.page.template.internal.validator.LayoutPageTemplateValidator;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
@@ -71,6 +73,15 @@ public class LayoutPageTemplateCollectionLocalServiceImpl
 
 		_validate(groupId, name, parentLayoutPageTemplateCollectionId, type);
 
+		if (Validator.isNull(layoutPageTemplateCollectionKey)) {
+			layoutPageTemplateCollectionKey =
+				_generateLayoutPageTemplateCollectionKey(groupId, name, type);
+		}
+		else {
+			_validateLayoutPageTemplateCollectionKey(
+				groupId, layoutPageTemplateCollectionKey, type);
+		}
+
 		long layoutPageTemplateId = counterLocalService.increment();
 
 		LayoutPageTemplateCollection layoutPageTemplateCollection =
@@ -90,12 +101,6 @@ public class LayoutPageTemplateCollectionLocalServiceImpl
 			serviceContext.getModifiedDate(new Date()));
 		layoutPageTemplateCollection.setParentLayoutPageTemplateCollectionId(
 			parentLayoutPageTemplateCollectionId);
-
-		if (Validator.isNull(layoutPageTemplateCollectionKey)) {
-			layoutPageTemplateCollectionKey =
-				_generateLayoutPageTemplateCollectionKey(groupId, name, type);
-		}
-
 		layoutPageTemplateCollection.setLayoutPageTemplateCollectionKey(
 			layoutPageTemplateCollectionKey);
 		layoutPageTemplateCollection.setName(name);
@@ -529,6 +534,40 @@ public class LayoutPageTemplateCollectionLocalServiceImpl
 
 		if (layoutPageTemplateCollection != null) {
 			throw new DuplicateLayoutPageTemplateCollectionException(name);
+		}
+	}
+
+	private void _validateLayoutPageTemplateCollectionKey(
+			long groupId, String layoutPageTemplateCollectionKey, int type)
+		throws PortalException {
+
+		if (LayoutPageTemplateValidator.hasBlacklistedChar(
+				layoutPageTemplateCollectionKey)) {
+
+			throw new LayoutPageTemplateCollectionLayoutPageTemplateCollectionKeyException.MustNotContainInvalidCharacters(
+				layoutPageTemplateCollectionKey);
+		}
+
+		int layoutPageTemplateCollectionKeyMaxLength =
+			ModelHintsUtil.getMaxLength(
+				LayoutPageTemplateCollection.class.getName(),
+				"layoutPageTemplateCollectionKey");
+
+		if (layoutPageTemplateCollectionKey.length() >
+				layoutPageTemplateCollectionKeyMaxLength) {
+
+			throw new LayoutPageTemplateCollectionLayoutPageTemplateCollectionKeyException.MustNotExceedMaximumSize(
+				layoutPageTemplateCollectionKey,
+				layoutPageTemplateCollectionKeyMaxLength);
+		}
+
+		LayoutPageTemplateCollection layoutPageTemplateCollection =
+			layoutPageTemplateCollectionPersistence.fetchByG_LPTCK_T(
+				groupId, layoutPageTemplateCollectionKey, type);
+
+		if (layoutPageTemplateCollection != null) {
+			throw new LayoutPageTemplateCollectionLayoutPageTemplateCollectionKeyException.MustNotBeDuplicate(
+				groupId, layoutPageTemplateCollectionKey);
 		}
 	}
 

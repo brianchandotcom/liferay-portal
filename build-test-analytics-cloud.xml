@@ -535,8 +535,8 @@ OSB_FARO_FRONTEND_URL=${analytics.cloud.faro.frontend.url}</echo>
 					<local name="java.jdk.home" />
 					<local name="java.jdk.opts" />
 
-					<get-java-jdk-home architecture="x64" type="zulu" version="17" />
-					<get-java-jdk-opts architecture="x64" type="zulu" version="17" />
+					<get-java-jdk-home architecture="x64" type="zulu" version="21" />
+					<get-java-jdk-opts architecture="x64" type="zulu" version="21" />
 
 					<propertyregex
 						input="${env.PATH}"

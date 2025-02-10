@@ -52,6 +52,10 @@ public interface ProductResource {
 			Pagination pagination, Sort[] sorts)
 		throws Exception;
 
+	public Product getChannelProductByFriendlyUrlPath(
+			Long channelId, String friendlyUrlPath, Long accountId)
+		throws Exception;
+
 	public Product getChannelProduct(
 			Long channelId, Long productId, Long accountId)
 		throws Exception;

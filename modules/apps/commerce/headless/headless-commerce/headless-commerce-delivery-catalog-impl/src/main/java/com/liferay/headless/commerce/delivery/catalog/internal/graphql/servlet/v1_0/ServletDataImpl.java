@@ -266,6 +266,11 @@ public class ServletDataImpl implements ServletData {
 							ProductResourceImpl.class,
 							"getChannelProductsPage"));
 					put(
+						"query#channelProductByFriendlyUrlPath",
+						new ObjectValuePair<>(
+							ProductResourceImpl.class,
+							"getChannelProductByFriendlyUrlPath"));
+					put(
 						"query#channelProduct",
 						new ObjectValuePair<>(
 							ProductResourceImpl.class, "getChannelProduct"));

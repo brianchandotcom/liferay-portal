@@ -20,7 +20,7 @@ import com.liferay.layout.page.template.exception.LayoutPageTemplateEntryGroupId
 import com.liferay.layout.page.template.exception.LayoutPageTemplateEntryLayoutPageTemplateCollectionIdException;
 import com.liferay.layout.page.template.exception.LayoutPageTemplateEntryNameException;
 import com.liferay.layout.page.template.exception.NoSuchPageTemplateEntryException;
-import com.liferay.layout.page.template.internal.validator.LayoutPageTemplateEntryValidator;
+import com.liferay.layout.page.template.internal.validator.LayoutPageTemplateValidator;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.base.LayoutPageTemplateEntryLocalServiceBaseImpl;
 import com.liferay.petra.string.CharPool;
@@ -1186,6 +1186,8 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 		if (Validator.isNull(name)) {
 			throw new LayoutPageTemplateEntryNameException.MustNotBeNull();
 		}
+
+		LayoutPageTemplateValidator.validateNameCharacters(name);
 
 		LayoutPageTemplateEntryValidator.validateNameCharacters(name);
 

@@ -5,12 +5,13 @@
 
 package com.liferay.layout.page.template.internal.validator;
 
-import com.liferay.layout.page.template.exception.LayoutPageTemplateEntryNameException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Mariano Álvaro Sáiz
  */
-public class LayoutPageTemplateEntryValidator {
+public class LayoutPageTemplateValidator {
 
 	public static boolean isBlacklistedChar(char c) {
 		for (char blacklistedChar : _BLACKLIST_CHAR) {
@@ -22,9 +23,9 @@ public class LayoutPageTemplateEntryValidator {
 		return false;
 	}
 
-	public static boolean isValidName(String layoutPageTemplateEntryName) {
+	public static boolean isValidName(String name) {
 		for (char c : _BLACKLIST_CHAR) {
-			if (layoutPageTemplateEntryName.indexOf(c) >= 0) {
+			if (name.indexOf(c) >= 0) {
 				return false;
 			}
 		}

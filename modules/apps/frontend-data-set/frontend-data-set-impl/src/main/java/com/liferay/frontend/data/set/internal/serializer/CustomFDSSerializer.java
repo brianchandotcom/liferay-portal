@@ -5,12 +5,20 @@
 
 package com.liferay.frontend.data.set.internal.serializer;
 
+import com.liferay.client.extension.type.FDSFilterCET;
+import com.liferay.client.extension.type.manager.CETManager;
+import com.liferay.frontend.data.set.constants.FDSEntityFieldTypes;
+import com.liferay.frontend.data.set.filter.FDSFilter;
 import com.liferay.frontend.data.set.internal.url.FDSAPIURLBuilder;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.data.set.serializer.FDSSerializer;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemBuilder;
+import com.liferay.list.type.model.ListTypeDefinition;
+import com.liferay.list.type.model.ListTypeEntry;
+import com.liferay.list.type.service.ListTypeDefinitionLocalService;
+import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManager;
@@ -19,10 +27,17 @@ import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -30,17 +45,22 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 
+import java.time.Instant;
+
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Predicate;
@@ -175,6 +195,253 @@ public class CustomFDSSerializer
 	}
 
 	@Override
+	public JSONArray serializeFilters(
+		String fdsName, HttpServletRequest httpServletRequest) {
+
+		try {
+			return JSONUtil.toJSONArray(
+				getSortedRelatedObjectEntries(
+					fdsName, httpServletRequest, (Predicate)null,
+					"filtersOrder", "dataSetToDataSetClientExtensionFilters",
+					"dataSetToDataSetDateFilters",
+					"dataSetToDataSetSelectionFilters"),
+				(ObjectEntry objectEntry) -> {
+					Map<String, Object> properties =
+						objectEntry.getProperties();
+
+					String fieldName = String.valueOf(
+						properties.get("fieldName"));
+
+					fieldName = fieldName.replaceAll(
+						"(\\[\\]|\\.)", StringPool.FORWARD_SLASH);
+
+					String type = MapUtil.getString(properties, "type");
+
+					if (Objects.equals(type, "date") ||
+						Objects.equals(type, "date-time")) {
+
+						JSONObject fromJSONObject = _getDateJSONObject(
+							properties.get("from"));
+						JSONObject toJSONObject = _getDateJSONObject(
+							properties.get("to"));
+
+						boolean hasPreloadedData =
+							(fromJSONObject != null) || (toJSONObject != null);
+
+						return JSONUtil.put(
+							"active", hasPreloadedData
+						).put(
+							"entityFieldType",
+							Objects.equals(type, "date") ?
+								FDSEntityFieldTypes.DATE :
+									FDSEntityFieldTypes.DATE_TIME
+						).put(
+							"id", fieldName
+						).put(
+							"label",
+							getLabelValue("label", "fieldName", properties)
+						).put(
+							"preloadedData",
+							() -> {
+								if (!hasPreloadedData) {
+									return null;
+								}
+
+								return JSONUtil.put(
+									"from", fromJSONObject
+								).put(
+									"to", toJSONObject
+								);
+							}
+						).put(
+							"type", "dateRange"
+						);
+					}
+
+					String source = MapUtil.getString(properties, "source");
+
+					if (Validator.isNotNull(source)) {
+						String finalFieldName = fieldName;
+						String sourceType = MapUtil.getString(
+							properties, "sourceType");
+
+						JSONObject selectionFilterJSONObject = JSONUtil.put(
+							"autocompleteEnabled", true
+						).put(
+							"entityFieldType", FDSEntityFieldTypes.STRING
+						).put(
+							"id",
+							() -> {
+								if (Objects.equals(
+										sourceType, "API_REST_APPLICATION")) {
+
+									return finalFieldName;
+								}
+
+								int index = finalFieldName.lastIndexOf(
+									StringPool.FORWARD_SLASH);
+
+								if (index <= 0) {
+									return finalFieldName;
+								}
+
+								return finalFieldName.substring(0, index);
+							}
+						).put(
+							"label",
+							getLabelValue("label", "fieldName", properties)
+						).put(
+							"multiple", properties.get("multiple")
+						).put(
+							"type", "selection"
+						);
+
+						if (Validator.isNotNull(sourceType) &&
+							Objects.equals(
+								sourceType, "API_REST_APPLICATION")) {
+
+							return selectionFilterJSONObject.put(
+								"apiURL", source
+							).put(
+								"itemKey", properties.get("itemKey")
+							).put(
+								"itemLabel", properties.get("itemLabel")
+							).put(
+								"preloadedData",
+								() -> {
+									JSONArray selectedItemsJSONArray =
+										_jsonFactory.createJSONArray(
+											MapUtil.getString(
+												properties,
+												"preselectedValues"));
+
+									if (JSONUtil.isEmpty(
+											selectedItemsJSONArray)) {
+
+										return null;
+									}
+
+									return JSONUtil.put(
+										"exclude",
+										() -> Boolean.FALSE.equals(
+											(Boolean)properties.get("include"))
+									).put(
+										"selectedItems", selectedItemsJSONArray
+									);
+								}
+							);
+						}
+
+						ThemeDisplay themeDisplay =
+							(ThemeDisplay)httpServletRequest.getAttribute(
+								WebKeys.THEME_DISPLAY);
+
+						ListTypeDefinition listTypeDefinition =
+							_listTypeDefinitionLocalService.
+								getListTypeDefinitionByExternalReferenceCode(
+									source, themeDisplay.getCompanyId());
+
+						List<ListTypeEntry> listTypeEntries =
+							_listTypeEntryLocalService.getListTypeEntries(
+								listTypeDefinition.getListTypeDefinitionId());
+
+						return selectionFilterJSONObject.put(
+							"items",
+							JSONUtil.toJSONArray(
+								listTypeEntries,
+								listTypeEntry -> JSONUtil.put(
+									"key", listTypeEntry.getKey()
+								).put(
+									"label",
+									listTypeEntry.getName(
+										themeDisplay.getLocale())
+								).put(
+									"value", listTypeEntry.getKey()
+								))
+						).put(
+							"preloadedData",
+							() -> {
+								JSONArray selectedItemsJSONArray =
+									_getSelectedItemsJSONArray(
+										listTypeEntries,
+										themeDisplay.getLocale(),
+										MapUtil.getString(
+											properties, "preselectedValues"));
+
+								if (JSONUtil.isEmpty(selectedItemsJSONArray)) {
+									return null;
+								}
+
+								return JSONUtil.put(
+									"exclude",
+									() -> Boolean.FALSE.equals(
+										(Boolean)properties.get("include"))
+								).put(
+									"selectedItems", selectedItemsJSONArray
+								);
+							}
+						);
+					}
+
+					String clientExtensionEntryERC = MapUtil.getString(
+						properties, "clientExtensionEntryERC");
+
+					if (Validator.isNotNull(clientExtensionEntryERC)) {
+						ThemeDisplay themeDisplay =
+							(ThemeDisplay)httpServletRequest.getAttribute(
+								WebKeys.THEME_DISPLAY);
+
+						FDSFilterCET fdsFilterCET =
+							(FDSFilterCET)_cetManager.getCET(
+								themeDisplay.getCompanyId(),
+								clientExtensionEntryERC);
+
+						if (fdsFilterCET == null) {
+							_log.error(
+								StringBundler.concat(
+									"No frontend data set filter client ",
+									"extension exists with the external ",
+									"reference code ",
+									clientExtensionEntryERC));
+
+							return null;
+						}
+
+						return JSONUtil.put(
+							"clientExtensionFilterURL", fdsFilterCET.getURL()
+						).put(
+							"entityFieldType", FDSEntityFieldTypes.STRING
+						).put(
+							"id", fieldName
+						).put(
+							"label",
+							getLabelValue("label", "fieldName", properties)
+						).put(
+							"type", "clientExtension"
+						);
+					}
+
+					return null;
+				});
+		}
+		catch (Exception exception) {
+			_log.error("Failed to serialize filter", exception);
+
+			return _jsonFactory.createJSONArray();
+		}
+	}
+
+	@Override
+	public JSONArray serializeFilters(
+		String fdsName, List<FDSFilter> fdsFilters,
+		HttpServletRequest httpServletRequest) {
+
+		// for custom data sets, there are no additional filters
+
+		return serializeFilters(fdsName, httpServletRequest);
+	}
+
+	@Override
 	public List<FDSActionDropdownItem> serializeItemsActions(
 		String fdsName, HttpServletRequest httpServletRequest) {
 
@@ -229,6 +496,20 @@ public class CustomFDSSerializer
 		return Collections.emptyMap();
 	}
 
+	protected String getLabelValue(
+		String defaultKey, String fallbackKey,
+		Map<String, Object> dataSetTableSectionProperties) {
+
+		String value = String.valueOf(
+			dataSetTableSectionProperties.get(defaultKey));
+
+		if (Validator.isNotNull(value)) {
+			return value;
+		}
+
+		return String.valueOf(dataSetTableSectionProperties.get(fallbackKey));
+	}
+
 	protected List<ObjectEntry> getSortedRelatedObjectEntries(
 		String externalReferenceCode, HttpServletRequest httpServletRequest,
 		Predicate<ObjectEntry> predicate, String propertyKey,
@@ -259,6 +540,24 @@ public class CustomFDSSerializer
 					GetterUtil::getLong)));
 
 		return objectEntries;
+	}
+
+	private JSONObject _getDateJSONObject(Object isoDate) {
+		if (isoDate == null) {
+			return null;
+		}
+
+		Calendar calendar = Calendar.getInstance();
+
+		calendar.setTime(Date.from(Instant.parse(String.valueOf(isoDate))));
+
+		return JSONUtil.put(
+			"day", calendar.get(Calendar.DATE)
+		).put(
+			"month", calendar.get(Calendar.MONTH) + 1
+		).put(
+			"year", calendar.get(Calendar.YEAR)
+		);
 	}
 
 	private ObjectDefinition _getObjectDefinition(
@@ -340,6 +639,39 @@ public class CustomFDSSerializer
 		return objectEntries;
 	}
 
+	private JSONArray _getSelectedItemsJSONArray(
+			List<ListTypeEntry> listTypeEntries, Locale locale,
+			String preselectedValues)
+		throws JSONException {
+
+		JSONArray jsonArray = _jsonFactory.createJSONArray();
+
+		JSONArray preselectedValuesJSONArray = _jsonFactory.createJSONArray(
+			preselectedValues);
+
+		for (int i = 0; i < preselectedValuesJSONArray.length(); i++) {
+			JSONObject jsonObject = preselectedValuesJSONArray.getJSONObject(i);
+
+			for (ListTypeEntry listTypeEntry : listTypeEntries) {
+				if (Objects.equals(
+						listTypeEntry.getExternalReferenceCode(),
+						jsonObject.getString("value"))) {
+
+					jsonArray.put(
+						JSONUtil.put(
+							"label", listTypeEntry.getName(locale)
+						).put(
+							"value", listTypeEntry.getKey()
+						));
+
+					break;
+				}
+			}
+		}
+
+		return jsonArray;
+	}
+
 	private String _getType(ObjectEntry objectEntry) {
 		Map<String, Object> properties = objectEntry.getProperties();
 
@@ -348,6 +680,18 @@ public class CustomFDSSerializer
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CustomFDSSerializer.class);
+
+	@Reference
+	private CETManager _cetManager;
+
+	@Reference
+	private JSONFactory _jsonFactory;
+
+	@Reference
+	private ListTypeDefinitionLocalService _listTypeDefinitionLocalService;
+
+	@Reference
+	private ListTypeEntryLocalService _listTypeEntryLocalService;
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;

@@ -7,6 +7,7 @@
 		[#if input.readOnly]
 			<input aria-describedby="${fragmentEntryLinkNamespace}-help-text" aria-labelledby="${fragmentEntryLinkNamespace}-select-from-list-input-label [#if  input.errorMessage?has_content]${fragmentEntryLinkNamespace}-select-from-list-input-error-message[/#if]" class="form-control" id="${fragmentEntryLinkNamespace}-select-from-list-input" name="${input.name}" placeholder="${languageUtil.get(locale, "choose-an-option")}" [#if input.readOnly]readonly[/#if] ${input.required?then('required', '')} type="text" [#if input.value??]value="${input.value}"[/#if] />
 		[#else]
+		<div class="d-flex">
 			<div class="align-items-end input-group">
 				<div class="input-group-item input-group-prepend">
 					<input aria-autocomplete="list" aria-controls="${fragmentEntryLinkNamespace}-listbox" aria-expanded="false" aria-labelledby="${fragmentEntryLinkNamespace}-select-from-list-input-label [#if  input.errorMessage?has_content]${fragmentEntryLinkNamespace}-select-from-list-input-error-message[/#if]" class="form-control" id="${fragmentEntryLinkNamespace}-select-from-list-input" name="" placeholder="${languageUtil.get(locale, "choose-an-option")}" role="combobox" type="text" ${input.required?then('required', '')} [#if input.attributes.selectedOptionLabel??]value="${input.attributes.selectedOptionLabel}"[/#if] />
@@ -20,6 +21,12 @@
 						[@clay["icon"] symbol="caret-double" /]
 					</button>
 				</span>
+
+				[#if !input.localizable && input.attributes.unlocalizedFieldsMessage??]
+					<div aria-label="${input.attributes.unlocalizedFieldsMessage}" class="align-self-center d-none lfr-portal-tooltip" data-title="${input.attributes.unlocalizedFieldsMessage}" id="${fragmentEntryLinkNamespace}-unlocalized-info" tabindex="0">
+						[@clay["icon"] className="ml-2 mt-0 text-secondary" symbol="question-circle-full" /]
+					</div>
+				[/#if]
 
 				<div class="d-none dropdown-menu select-from-list__dropdown-menu" id="${fragmentEntryLinkNamespace}-dropdown">
 					<p class="mb-0 px-3 py-2 text-muted" id="${fragmentEntryLinkNamespace}-choose-option-message">
@@ -63,6 +70,7 @@
 					</ul>
 				</div>
 			</div>
+		</div>
 		[/#if]
 
 		[#if input.errorMessage?has_content]

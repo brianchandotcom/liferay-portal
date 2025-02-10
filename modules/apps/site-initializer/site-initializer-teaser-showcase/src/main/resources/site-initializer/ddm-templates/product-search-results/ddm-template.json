@@ -1,0 +1,6 @@
+{
+	"className": "com.liferay.commerce.product.content.search.web.internal.portlet.CPSearchResultsPortlet",
+	"ddmTemplateKey": "PRODUCT SEARCH RESULTS",
+	"name": "Product Search Results",
+	"resourceClassName": "com.liferay.portlet.display.template.PortletDisplayTemplate"
+}

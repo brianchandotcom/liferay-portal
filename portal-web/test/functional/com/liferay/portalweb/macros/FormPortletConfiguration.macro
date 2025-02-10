@@ -36,7 +36,9 @@ definition {
 			var formName = ${formTitle};
 		}
 
-		Navigator.gotoNavItem(navItem = "Setup");
+		if (IsElementPresent(key_navItem = "Setup", locator1 = "NavBar#NAV_ITEM_LINK")) {
+			Navigator.gotoNavItem(navItem = "Setup");
+		}
 
 		AssertClick(
 			key_formName = ${formName},

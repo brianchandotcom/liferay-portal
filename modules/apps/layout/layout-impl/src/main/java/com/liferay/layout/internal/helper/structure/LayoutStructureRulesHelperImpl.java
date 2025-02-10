@@ -59,6 +59,15 @@ public class LayoutStructureRulesHelperImpl
 				continue;
 			}
 
+			itemIds = ListUtil.filter(
+				ListUtil.unique(itemIds),
+				itemId ->
+					layoutStructure.getLayoutStructureItem(itemId) != null);
+
+			if (itemIds.isEmpty()) {
+				continue;
+			}
+
 			layoutStructureRuleIdsMap.put(layoutStructureRule.getId(), itemIds);
 
 			for (String itemId : itemIds) {

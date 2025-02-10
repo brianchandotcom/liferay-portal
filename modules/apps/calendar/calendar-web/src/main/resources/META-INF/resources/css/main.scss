@@ -258,6 +258,12 @@
 	.scheduler-view-table-data-col-title-today {
 		color: $primary-d2;
 	}
+
+	.taglib-custom-attributes-list {
+		.control-label {
+			font-weight: 700;
+		}
+	}
 }
 
 .calendar-event-answer {

@@ -309,8 +309,8 @@ public class DeleteFormStepMVCActionCommandTest {
 				layoutStructure.addFormStyledLayoutStructureItem(
 					rootLayoutStructureItem.getItemId(), 0);
 
-		formStyledLayoutStructureItem.setNumberOfSteps(numberOfSteps);
 		formStyledLayoutStructureItem.setFormType("multiple");
+		formStyledLayoutStructureItem.setNumberOfSteps(numberOfSteps);
 
 		Map<String, FragmentEntry> fragmentEntries =
 			_fragmentCollectionContributorRegistry.getFragmentEntries(

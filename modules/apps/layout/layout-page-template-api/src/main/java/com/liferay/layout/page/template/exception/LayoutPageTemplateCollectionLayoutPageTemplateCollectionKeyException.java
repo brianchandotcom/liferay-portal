@@ -2,6 +2,7 @@
  * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
+
 package com.liferay.layout.page.template.exception;
 
 import com.liferay.portal.kernel.exception.PortalException;
@@ -9,20 +10,28 @@ import com.liferay.portal.kernel.exception.PortalException;
 /**
  * @author Brian Wing Shun Chan
  */
-public class LayoutPageTemplateCollectionLayoutPageTemplateCollectionKeyException extends PortalException {
+public class
+	LayoutPageTemplateCollectionLayoutPageTemplateCollectionKeyException
+		extends PortalException {
 
 	public LayoutPageTemplateCollectionLayoutPageTemplateCollectionKeyException() {
 	}
 
-	public LayoutPageTemplateCollectionLayoutPageTemplateCollectionKeyException(String msg) {
+	public LayoutPageTemplateCollectionLayoutPageTemplateCollectionKeyException(
+		String msg) {
+
 		super(msg);
 	}
 
-	public LayoutPageTemplateCollectionLayoutPageTemplateCollectionKeyException(String msg, Throwable throwable) {
+	public LayoutPageTemplateCollectionLayoutPageTemplateCollectionKeyException(
+		String msg, Throwable throwable) {
+
 		super(msg, throwable);
 	}
 
-	public LayoutPageTemplateCollectionLayoutPageTemplateCollectionKeyException(Throwable throwable) {
+	public LayoutPageTemplateCollectionLayoutPageTemplateCollectionKeyException(
+		Throwable throwable) {
+
 		super(throwable);
 	}
 

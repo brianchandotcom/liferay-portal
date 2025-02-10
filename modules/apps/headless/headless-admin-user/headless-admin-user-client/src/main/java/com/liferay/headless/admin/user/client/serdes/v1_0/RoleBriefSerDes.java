@@ -92,6 +92,16 @@ public class RoleBriefSerDes {
 			sb.append(_toJSON(roleBrief.getName_i18n()));
 		}
 
+		if (roleBrief.getRoleType() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"roleType\": ");
+
+			sb.append(roleBrief.getRoleType());
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -140,6 +150,13 @@ public class RoleBriefSerDes {
 			map.put("name_i18n", String.valueOf(roleBrief.getName_i18n()));
 		}
 
+		if (roleBrief.getRoleType() == null) {
+			map.put("roleType", null);
+		}
+		else {
+			map.put("roleType", String.valueOf(roleBrief.getRoleType()));
+		}
+
 		return map;
 	}
 
@@ -168,6 +185,9 @@ public class RoleBriefSerDes {
 			}
 			else if (Objects.equals(jsonParserFieldName, "name_i18n")) {
 				return true;
+			}
+			else if (Objects.equals(jsonParserFieldName, "roleType")) {
+				return false;
 			}
 
 			return false;
@@ -198,6 +218,12 @@ public class RoleBriefSerDes {
 				if (jsonParserFieldValue != null) {
 					roleBrief.setName_i18n(
 						(Map<String, String>)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "roleType")) {
+				if (jsonParserFieldValue != null) {
+					roleBrief.setRoleType(
+						Integer.valueOf((String)jsonParserFieldValue));
 				}
 			}
 		}

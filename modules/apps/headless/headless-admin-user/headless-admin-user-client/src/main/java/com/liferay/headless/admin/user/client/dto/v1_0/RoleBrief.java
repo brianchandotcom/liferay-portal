@@ -107,6 +107,27 @@ public class RoleBrief implements Cloneable, Serializable {
 
 	protected Map<String, String> name_i18n;
 
+	public Integer getRoleType() {
+		return roleType;
+	}
+
+	public void setRoleType(Integer roleType) {
+		this.roleType = roleType;
+	}
+
+	public void setRoleType(
+		UnsafeSupplier<Integer, Exception> roleTypeUnsafeSupplier) {
+
+		try {
+			roleType = roleTypeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Integer roleType;
+
 	@Override
 	public RoleBrief clone() throws CloneNotSupportedException {
 		return (RoleBrief)super.clone();

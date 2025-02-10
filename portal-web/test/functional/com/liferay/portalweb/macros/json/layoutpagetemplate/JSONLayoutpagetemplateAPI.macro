@@ -56,6 +56,7 @@ definition {
 				-d externalReferenceCode='' \
 				-d groupId=${groupId} \
 				-d parentLayoutPageTemplateCollectionId=0 \
+				-d layoutPageTemplateCollectionKey='' \
 				-d name=${layoutPageTemplateCollectionName} \
 				-d description=${description} \
 				-d type=${type} \

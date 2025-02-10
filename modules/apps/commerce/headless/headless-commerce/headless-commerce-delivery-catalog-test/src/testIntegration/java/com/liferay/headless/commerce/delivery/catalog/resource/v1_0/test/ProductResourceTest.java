@@ -95,6 +95,29 @@ public class ProductResourceTest extends BaseProductResourceTestCase {
 	}
 
 	@Override
+	protected Product testGetChannelProductByFriendlyUrlPath_addProduct()
+		throws Exception {
+
+		return _addCPDefinition(randomProduct());
+	}
+
+	@Override
+	protected Long testGetChannelProductByFriendlyUrlPath_getChannelId()
+		throws Exception {
+
+		return _commerceChannel.getCommerceChannelId();
+	}
+
+	@Override
+	protected String testGetChannelProductByFriendlyUrlPath_getFriendlyUrlPath()
+		throws Exception {
+
+		return _addCPDefinition(
+			randomProduct()
+		).getSlug();
+	}
+
+	@Override
 	protected Product testGetChannelProductsPage_addProduct(
 			Long channelId, Product product)
 		throws Exception {
@@ -112,6 +135,30 @@ public class ProductResourceTest extends BaseProductResourceTestCase {
 		throws Exception {
 
 		return _commerceChannel.getCommerceChannelId();
+	}
+
+	@Override
+	protected Product testGraphQLGetChannelProductByFriendlyUrlPath_addProduct()
+		throws Exception {
+
+		return _addCPDefinition(randomProduct());
+	}
+
+	@Override
+	protected Long testGraphQLGetChannelProductByFriendlyUrlPath_getChannelId()
+		throws Exception {
+
+		return _commerceChannel.getCommerceChannelId();
+	}
+
+	@Override
+	protected String
+			testGraphQLGetChannelProductByFriendlyUrlPath_getFriendlyUrlPath()
+		throws Exception {
+
+		return _addCPDefinition(
+			randomProduct()
+		).getSlug();
 	}
 
 	@Override
@@ -165,6 +212,8 @@ public class ProductResourceTest extends BaseProductResourceTestCase {
 				productId = cpDefinition2.getCProductId();
 				productType = cpDefinition2.getProductTypeName();
 				shortDescription = product.getShortDescription();
+				slug = cpDefinition2.getURL(
+					LocaleUtil.toLanguageId(siteDefaultLocale));
 			}
 		};
 	}

@@ -70,8 +70,9 @@ public class DefaultDLEditFileEntryDisplayContext
 		HttpServletRequest httpServletRequest) {
 
 		this(
-			httpServletRequest, configurationProvider, dlFileEntryType,
-			dlValidator, null, ddmFormValuesFactory, ddmStorageEngineManager);
+			configurationProvider, ddmFormValuesFactory,
+			ddmStorageEngineManager, dlFileEntryType, dlValidator, null,
+			httpServletRequest);
 	}
 
 	public DefaultDLEditFileEntryDisplayContext(
@@ -82,9 +83,9 @@ public class DefaultDLEditFileEntryDisplayContext
 		HttpServletRequest httpServletRequest) {
 
 		this(
-			httpServletRequest, configurationProvider, (DLFileEntryType)null,
-			dlValidator, fileEntry, ddmFormValuesFactory,
-			ddmStorageEngineManager);
+			configurationProvider, ddmFormValuesFactory,
+			ddmStorageEngineManager, (DLFileEntryType)null, dlValidator,
+			fileEntry, httpServletRequest);
 	}
 
 	@Override
@@ -358,26 +359,26 @@ public class DefaultDLEditFileEntryDisplayContext
 	}
 
 	private DefaultDLEditFileEntryDisplayContext(
-		HttpServletRequest httpServletRequest,
 		ConfigurationProvider configurationProvider,
+		DDMFormValuesFactory ddmFormValuesFactory,
+		DDMStorageEngineManager ddmStorageEngineManager,
 		DLFileEntryType dlFileEntryType, DLValidator dlValidator,
-		FileEntry fileEntry, DDMFormValuesFactory ddmFormValuesFactory,
-		DDMStorageEngineManager ddmStorageEngineManager) {
+		FileEntry fileEntry, HttpServletRequest httpServletRequest) {
 
 		try {
-			_httpServletRequest = httpServletRequest;
 			_configurationProvider = configurationProvider;
-			_dlValidator = dlValidator;
-			_fileEntry = fileEntry;
 			_ddmFormValuesFactory = ddmFormValuesFactory;
 			_ddmStorageEngineManager = ddmStorageEngineManager;
+			_dlValidator = dlValidator;
+			_fileEntry = fileEntry;
+			_httpServletRequest = httpServletRequest;
 
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)httpServletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
 			_dlFileEntryFriendlyURLConfiguration =
-				_configurationProvider.getCompanyConfiguration(
+				configurationProvider.getCompanyConfiguration(
 					DLFileEntryFriendlyURLConfiguration.class,
 					themeDisplay.getCompanyId());
 

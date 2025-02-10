@@ -24,7 +24,6 @@ public class CommerceInventoryScreenNavigationConstants {
 		SCREEN_NAVIGATION_KEY_COMMERCE_INVENTORY_REPLENISHMENT = "incoming";
 
 	public static final String
-		SCREEN_NAVIGATION_KEY_COMMERCE_INVENTORY_WAREHOUSES =
-			"inventory-overview";
+		SCREEN_NAVIGATION_KEY_COMMERCE_INVENTORY_WAREHOUSES = "overview";
 
 }

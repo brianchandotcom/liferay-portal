@@ -58,6 +58,7 @@ import com.liferay.object.field.builder.FormulaObjectFieldBuilder;
 import com.liferay.object.field.builder.IntegerObjectFieldBuilder;
 import com.liferay.object.field.builder.LongIntegerObjectFieldBuilder;
 import com.liferay.object.field.builder.LongTextObjectFieldBuilder;
+import com.liferay.object.field.builder.MultiselectPicklistObjectFieldBuilder;
 import com.liferay.object.field.builder.PicklistObjectFieldBuilder;
 import com.liferay.object.field.builder.PrecisionDecimalObjectFieldBuilder;
 import com.liferay.object.field.builder.RichTextObjectFieldBuilder;
@@ -104,6 +105,8 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.audit.AuditMessage;
 import com.liferay.portal.kernel.audit.AuditRouter;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -2039,6 +2042,65 @@ public class ObjectEntryLocalServiceTest {
 				objectDefinitionAAA.getName()
 			},
 			_objectEntryLocalService, _objectRelationshipLocalService);
+	}
+
+	@Test
+	public void testAddObjectEntryWithMultiselectPicklistObjectField()
+		throws Exception {
+
+		String prefixKey = RandomTestUtil.randomString(60);
+
+		ListTypeDefinition listTypeDefinition =
+			_listTypeDefinitionLocalService.addListTypeDefinition(
+				null, TestPropsValues.getUserId(),
+				Collections.singletonMap(
+					LocaleUtil.getDefault(), RandomTestUtil.randomString()),
+				false,
+				_createListTypeEntries(
+					prefixKey, RandomTestUtil.randomString(), 100));
+
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				Collections.singletonList(
+					new MultiselectPicklistObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).listTypeDefinitionId(
+						listTypeDefinition.getListTypeDefinitionId()
+					).name(
+						"multiselectPicklistObjectField"
+					).build()));
+
+		_objectEntryLocalService.addObjectEntry(
+			TestPropsValues.getUserId(), 0,
+			objectDefinition.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				"multiselectPicklistObjectField",
+				_getMultiselectPicklistObjectFieldValue(prefixKey, 10)
+			).build(),
+			new ServiceContext());
+
+		int expectedMaxLength = 5000;
+
+		if (DBManagerUtil.getDBType() == DBType.SQLSERVER) {
+			expectedMaxLength = 4000;
+		}
+
+		AssertUtils.assertFailure(
+			ObjectEntryValuesException.ExceedsTextMaxLength.class,
+			StringBundler.concat(
+				"Object entry value exceeds the maximum length of ",
+				expectedMaxLength, " characters for object field ",
+				"\"multiselectPicklistObjectField\""),
+			() -> _objectEntryLocalService.addObjectEntry(
+				TestPropsValues.getUserId(), 0,
+				objectDefinition.getObjectDefinitionId(),
+				HashMapBuilder.<String, Serializable>put(
+					"multiselectPicklistObjectField",
+					_getMultiselectPicklistObjectFieldValue(prefixKey, 100)
+				).build(),
+				new ServiceContext()));
 	}
 
 	@Test
@@ -4979,6 +5041,22 @@ public class ObjectEntryLocalServiceTest {
 
 	private BigDecimal _getBigDecimal(long value) {
 		return BigDecimalUtil.stripTrailingZeros(BigDecimal.valueOf(value));
+	}
+
+	private String _getMultiselectPicklistObjectFieldValue(
+		String prefixKey, int size) {
+
+		StringBundler sb = new StringBundler();
+
+		for (int i = 1; i <= size; i++) {
+			sb.append(prefixKey + i);
+
+			if (i < size) {
+				sb.append(StringPool.COMMA_AND_SPACE);
+			}
+		}
+
+		return sb.toString();
 	}
 
 	private String _getNoSuchAlgorithmExceptionMessage() {

@@ -25,7 +25,6 @@ public class ObjectAssetTitleUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				StringBundler.concat(
 					"select ObjectDefinition.companyId, ",
@@ -45,11 +44,6 @@ public class ObjectAssetTitleUpgradeProcess extends UpgradeProcess {
 			Map<Long, String> xmlMap = new HashMap<>();
 
 			while (resultSet1.next()) {
-				Long companyId = resultSet1.getLong("companyId");
-
-				String defaultLanguageId =
-					UpgradeProcessUtil.getDefaultLanguageId(companyId);
-
 				String query = StringBundler.concat(
 					"select ", resultSet1.getString("dbColumnName"),
 					", languageId, ",
@@ -61,10 +55,6 @@ public class ObjectAssetTitleUpgradeProcess extends UpgradeProcess {
 					ResultSet resultSet2 = preparedStatement2.executeQuery()) {
 
 					while (resultSet2.next()) {
-						String titleField = resultSet2.getString(
-							resultSet1.getString("dbColumnName"));
-						String languageId = resultSet2.getString("languageId");
-
 						Long objectId = resultSet2.getLong(
 							resultSet1.getString("pkObjectFieldDBColumnName"));
 
@@ -75,13 +65,17 @@ public class ObjectAssetTitleUpgradeProcess extends UpgradeProcess {
 						titleMap.get(
 							objectId
 						).put(
-							languageId, titleField
+							resultSet2.getString("languageId"),
+							resultSet2.getString(
+								resultSet1.getString("dbColumnName"))
 						);
 
 						xmlMap.put(
 							objectId,
 							LocalizationUtil.getXml(
-								titleMap.get(objectId), defaultLanguageId,
+								titleMap.get(objectId),
+								UpgradeProcessUtil.getDefaultLanguageId(
+									resultSet1.getLong("companyId")),
 								"title"));
 						classNameMap.put(
 							objectId, resultSet1.getString("className"));
@@ -97,16 +91,13 @@ public class ObjectAssetTitleUpgradeProcess extends UpgradeProcess {
 
 				for (Map.Entry<Long, String> entry : xmlMap.entrySet()) {
 					Long objectId = entry.getKey();
-					String localizedTitleXml = entry.getValue();
-					String mimeTypeValue = "text/html";
 
-					String className = classNameMap.get(objectId);
-
-					preparedStatement3.setString(1, localizedTitleXml);
-					preparedStatement3.setString(2, mimeTypeValue);
+					preparedStatement3.setString(1, entry.getValue());
+					preparedStatement3.setString(2, "text/html");
 					preparedStatement3.setLong(3, objectId);
 					preparedStatement3.setLong(
-						4, PortalUtil.getClassNameId(className));
+						4,
+						PortalUtil.getClassNameId(classNameMap.get(objectId)));
 
 					preparedStatement3.addBatch();
 				}

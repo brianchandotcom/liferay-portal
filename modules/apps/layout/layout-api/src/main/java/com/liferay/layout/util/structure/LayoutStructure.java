@@ -343,6 +343,8 @@ public class LayoutStructure {
 
 		_updateLayoutStructure(formStyledLayoutStructureItem, position);
 
+		_formStyledLayoutStructureItems.add(formStyledLayoutStructureItem);
+
 		return formStyledLayoutStructureItem;
 	}
 

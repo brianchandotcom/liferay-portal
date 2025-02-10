@@ -339,6 +339,47 @@ public class AccountRole implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _roleIdSupplier;
 
+	@Schema(description = "The role's type.")
+	public Integer getRoleType() {
+		if (_roleTypeSupplier != null) {
+			roleType = _roleTypeSupplier.get();
+
+			_roleTypeSupplier = null;
+		}
+
+		return roleType;
+	}
+
+	public void setRoleType(Integer roleType) {
+		this.roleType = roleType;
+
+		_roleTypeSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setRoleType(
+		UnsafeSupplier<Integer, Exception> roleTypeUnsafeSupplier) {
+
+		_roleTypeSupplier = () -> {
+			try {
+				return roleTypeUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(description = "The role's type.")
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Integer roleType;
+
+	@JsonIgnore
+	private Supplier<Integer> _roleTypeSupplier;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -464,6 +505,18 @@ public class AccountRole implements Serializable {
 			sb.append("\"roleId\": ");
 
 			sb.append(roleId);
+		}
+
+		Integer roleType = getRoleType();
+
+		if (roleType != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"roleType\": ");
+
+			sb.append(roleType);
 		}
 
 		sb.append("}");

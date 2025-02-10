@@ -22,7 +22,7 @@ CommerceChannelAccountEntryRelDisplayContext commerceChannelAccountEntryRelDispl
 			containerElement="span"
 			expand="<%= true %>"
 		>
-			<span class="heading-text"><liferay-ui:message key="default-account-commerce-payment-methods" /></span>
+			<span class="heading-text"><liferay-ui:message key="payment-methods" /></span>
 		</clay:content-col>
 	</clay:content-row>
 

@@ -44,7 +44,6 @@
 								</@clay.button>
 							</span>
 						</#if>
-
 						<#if selectable>
 							<span class="autofit-col autofit-col-expand">
 								<div class="custom-checkbox custom-control">
@@ -58,11 +57,9 @@
 											onChange="Liferay.Search.FacetUtil.changeSelection(event);"
 											type="checkbox"
 										/>
-
 										<span class="custom-control-label">
 											<span class="custom-control-label-text">
 												${name}
-
 												<#if frequencyVisible>
 													(${frequency})
 												</#if>
@@ -93,19 +90,18 @@
 				</span>
 			</div>
 		</#if>
-
 		<#if termDisplayContexts?has_content>
 			<div class="collapse show" id="${namespace}treeItem${id}">
 				<ul class="treeview-group" role="group">
 					<#list termDisplayContexts as termDisplayContext>
 						<@treeview_item
-							cssClassTreeItem="tree-item-category"
-							frequency=termDisplayContext.getFrequency()
-							frequencyVisible=termDisplayContext.isFrequencyVisible()
-							id=termDisplayContext.getFilterValue()
-							name=htmlUtil.escape(termDisplayContext.getBucketText())
-							selectable=true
-							selected=termDisplayContext.isSelected()
+							cssClassTreeItem = "tree-item-category"
+							frequency = termDisplayContext.getFrequency()
+							frequencyVisible = termDisplayContext.isFrequencyVisible()
+							id = termDisplayContext.getFilterValue()
+							name = htmlUtil.escape(termDisplayContext.getBucketText())
+							selectable = true
+							selected = termDisplayContext.isSelected()
 						/>
 					</#list>
 				</ul>
@@ -113,7 +109,6 @@
 		</#if>
 	</li>
 </#macro>
-
 <@liferay_ui["panel-container"]
 	extended=true
 	id="${namespace + 'facetAssetCategoriesPanelContainer'}"
@@ -121,7 +116,6 @@
 	persistState=true
 >
 	<#assign vocabularyNames = assetCategoriesSearchFacetDisplayContext.getVocabularyNames()![] />
-
 	<@liferay_ui.panel
 		collapsible=true
 		cssClass="search-facet search-facet-display-vocabulary bg-light"
@@ -140,27 +134,24 @@
 				<strong>${languageUtil.get(locale, "clear")}</strong>
 			</@clay.button>
 		</#if>
-
 		<#if vocabularyNames?has_content>
 			<ul class="treeview treeview-light treeview-nested treeview-vocabulary-display" role="tree">
 				<#list vocabularyNames as vocabularyName>
 					<@treeview_item
-						cssClassTreeItem="tree-item-vocabulary"
-						frequencyVisible=false
-						id=vocabularyName?replace("[^\\w]|_", '', 'r') + vocabularyName?index
-						name="${(vocabularyNames?size == 1)?then('', htmlUtil.escape(vocabularyName))}"
-						termDisplayContexts=assetCategoriesSearchFacetDisplayContext.getBucketDisplayContexts(vocabularyName)
+						cssClassTreeItem = "tree-item-vocabulary"
+						frequencyVisible = false
+						id = vocabularyName?replace("[^\\w]|_", '', 'r') + vocabularyName?index
+						name = "${(vocabularyNames?size == 1)?then('', htmlUtil.escape(vocabularyName))}"
+						termDisplayContexts = assetCategoriesSearchFacetDisplayContext.getBucketDisplayContexts(vocabularyName)
 					/>
 				</#list>
 			</ul>
 		</#if>
 	</@>
 </@>
-
 <@liferay_aui.script>
 	function ${namespace}toggleTreeItem(dataTarget) {
 		const dataTargetElements = document.querySelectorAll("[data-target=\"#" + dataTarget + "\"]");
-
 		dataTargetElements.forEach(
 			element => {
 				if (element.classList.contains('collapsed')) {
@@ -173,9 +164,7 @@
 				}
 			}
 		);
-
 		const subtreeCategoryTreeElement = document.getElementById(dataTarget);
-
 		if (subtreeCategoryTreeElement) {
 			if (subtreeCategoryTreeElement.classList.contains('show')) {
 				subtreeCategoryTreeElement.classList.remove('show');

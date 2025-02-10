@@ -161,7 +161,8 @@ public class PageTemplateSetResourceImpl
 				pageTemplateSet.getExternalReferenceCode(), groupId,
 				LayoutPageTemplateConstants.
 					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-				pageTemplateSet.getName(), pageTemplateSet.getDescription(),
+				pageTemplateSet.getKey(), pageTemplateSet.getName(),
+				pageTemplateSet.getDescription(),
 				LayoutPageTemplateCollectionTypeConstants.BASIC,
 				_getServiceContext(groupId, pageTemplateSet));
 	}

@@ -193,6 +193,7 @@ public class DisplayPageTemplateFolderResourceImpl
 					groupId,
 					_getParentLayoutPageTemplateCollectionId(
 						displayPageTemplateFolder, groupId),
+					displayPageTemplateFolder.getKey(),
 					displayPageTemplateFolder.getName(),
 					displayPageTemplateFolder.getDescription(),
 					LayoutPageTemplateCollectionTypeConstants.DISPLAY_PAGE,

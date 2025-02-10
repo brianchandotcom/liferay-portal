@@ -25,9 +25,6 @@ public class ObjectAssetTitleUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		Map<Long, Map<String, String>> titleMap = new HashMap<>();
-		Map<Long, String> xmlMap = new HashMap<>();
-		Map<Long, String> classNameMap = new HashMap<>();
 
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				StringBundler.concat(
@@ -42,6 +39,10 @@ public class ObjectAssetTitleUpgradeProcess extends UpgradeProcess {
 					"ObjectDefinition.enableLocalization = true and ",
 					"ObjectField.localized = true"));
 			ResultSet resultSet1 = preparedStatement1.executeQuery()) {
+
+			Map<Long, String> classNameMap = new HashMap<>();
+			Map<Long, Map<String, String>> titleMap = new HashMap<>();
+			Map<Long, String> xmlMap = new HashMap<>();
 
 			while (resultSet1.next()) {
 				Long companyId = resultSet1.getLong("companyId");

@@ -12,6 +12,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.Locale;
@@ -85,7 +86,7 @@ public class ObjectEntryLayoutDisplayPageObjectProvider
 		}
 
 		try {
-			return _objectEntry.getTitleValue();
+			return _objectEntry.getTitleValue(LocaleUtil.toLanguageId(locale));
 		}
 		catch (PortalException portalException) {
 			if (_log.isDebugEnabled()) {

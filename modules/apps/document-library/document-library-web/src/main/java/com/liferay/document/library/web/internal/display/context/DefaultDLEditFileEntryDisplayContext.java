@@ -28,7 +28,7 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.DDMStorageEngineManager;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -63,25 +63,28 @@ public class DefaultDLEditFileEntryDisplayContext
 	implements DLEditFileEntryDisplayContext {
 
 	public DefaultDLEditFileEntryDisplayContext(
+		ConfigurationProvider configurationProvider,
 		DDMFormValuesFactory ddmFormValuesFactory,
 		DDMStorageEngineManager ddmStorageEngineManager,
 		DLFileEntryType dlFileEntryType, DLValidator dlValidator,
 		HttpServletRequest httpServletRequest) {
 
 		this(
-			httpServletRequest, dlFileEntryType, dlValidator, null,
-			ddmFormValuesFactory, ddmStorageEngineManager);
+			httpServletRequest, configurationProvider, dlFileEntryType,
+			dlValidator, null, ddmFormValuesFactory, ddmStorageEngineManager);
 	}
 
 	public DefaultDLEditFileEntryDisplayContext(
+		ConfigurationProvider configurationProvider,
 		DDMFormValuesFactory ddmFormValuesFactory,
 		DDMStorageEngineManager ddmStorageEngineManager,
 		DLValidator dlValidator, FileEntry fileEntry,
 		HttpServletRequest httpServletRequest) {
 
 		this(
-			httpServletRequest, (DLFileEntryType)null, dlValidator, fileEntry,
-			ddmFormValuesFactory, ddmStorageEngineManager);
+			httpServletRequest, configurationProvider, (DLFileEntryType)null,
+			dlValidator, fileEntry, ddmFormValuesFactory,
+			ddmStorageEngineManager);
 	}
 
 	@Override
@@ -355,13 +358,15 @@ public class DefaultDLEditFileEntryDisplayContext
 	}
 
 	private DefaultDLEditFileEntryDisplayContext(
-		HttpServletRequest httpServletRequest, DLFileEntryType dlFileEntryType,
-		DLValidator dlValidator, FileEntry fileEntry,
-		DDMFormValuesFactory ddmFormValuesFactory,
+		HttpServletRequest httpServletRequest,
+		ConfigurationProvider configurationProvider,
+		DLFileEntryType dlFileEntryType, DLValidator dlValidator,
+		FileEntry fileEntry, DDMFormValuesFactory ddmFormValuesFactory,
 		DDMStorageEngineManager ddmStorageEngineManager) {
 
 		try {
 			_httpServletRequest = httpServletRequest;
+			_configurationProvider = configurationProvider;
 			_dlValidator = dlValidator;
 			_fileEntry = fileEntry;
 			_ddmFormValuesFactory = ddmFormValuesFactory;
@@ -372,7 +377,7 @@ public class DefaultDLEditFileEntryDisplayContext
 					WebKeys.THEME_DISPLAY);
 
 			_dlFileEntryFriendlyURLConfiguration =
-				ConfigurationProviderUtil.getCompanyConfiguration(
+				_configurationProvider.getCompanyConfiguration(
 					DLFileEntryFriendlyURLConfiguration.class,
 					themeDisplay.getCompanyId());
 
@@ -492,6 +497,7 @@ public class DefaultDLEditFileEntryDisplayContext
 	private static final UUID _UUID = UUID.fromString(
 		"63326141-02F6-42B5-AE38-ABC73FA72BB5");
 
+	private final ConfigurationProvider _configurationProvider;
 	private final DDMFormValuesFactory _ddmFormValuesFactory;
 	private final DDMStorageEngineManager _ddmStorageEngineManager;
 	private final DLFileEntryFriendlyURLConfiguration

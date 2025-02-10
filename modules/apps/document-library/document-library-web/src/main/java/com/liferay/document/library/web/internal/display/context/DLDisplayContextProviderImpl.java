@@ -23,6 +23,7 @@ import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.module.service.Snapshot;
@@ -55,8 +56,9 @@ public class DLDisplayContextProviderImpl implements DLDisplayContextProvider {
 
 		DLEditFileEntryDisplayContext dlEditFileEntryDisplayContext =
 			new DefaultDLEditFileEntryDisplayContext(
-				_ddmFormValuesFactory, _ddmStorageEngineManager,
-				dlFileEntryType, _dlValidator, httpServletRequest);
+				_configurationProvider, _ddmFormValuesFactory,
+				_ddmStorageEngineManager, dlFileEntryType, _dlValidator,
+				httpServletRequest);
 
 		for (DLDisplayContextFactory dlDisplayContextFactory :
 				_dlDisplayContextFactories) {
@@ -77,8 +79,9 @@ public class DLDisplayContextProviderImpl implements DLDisplayContextProvider {
 
 		DLEditFileEntryDisplayContext dlEditFileEntryDisplayContext =
 			new DefaultDLEditFileEntryDisplayContext(
-				_ddmFormValuesFactory, _ddmStorageEngineManager, _dlValidator,
-				fileEntry, httpServletRequest);
+				_configurationProvider, _ddmFormValuesFactory,
+				_ddmStorageEngineManager, _dlValidator, fileEntry,
+				httpServletRequest);
 
 		for (DLDisplayContextFactory dlDisplayContextFactory :
 				_dlDisplayContextFactories) {
@@ -216,6 +219,9 @@ public class DLDisplayContextProviderImpl implements DLDisplayContextProvider {
 		_dlMimeTypeDisplayContextSnapshot = new Snapshot<>(
 			DLDisplayContextProviderImpl.class, DLMimeTypeDisplayContext.class,
 			null, true);
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private DDMFormValuesFactory _ddmFormValuesFactory;

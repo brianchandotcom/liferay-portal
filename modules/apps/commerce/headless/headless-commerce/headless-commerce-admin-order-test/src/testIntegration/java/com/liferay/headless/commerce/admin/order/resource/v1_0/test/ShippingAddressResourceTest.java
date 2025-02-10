@@ -167,7 +167,6 @@ public class ShippingAddressResourceTest
 		super.tearDown();
 
 		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
-
 		PrincipalThreadLocal.setName(_originalName);
 	}
 

@@ -63,6 +63,9 @@ public class ShippingMethodResourceTest
 
 		_user = UserTestUtil.addUser(testCompany);
 
+		_setUpPermissionThreadLocal();
+		_setUpPrincipalThreadLocal();
+
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			testCompany.getCompanyId(), testGroup.getGroupId(),
 			_user.getUserId());
@@ -74,9 +77,6 @@ public class ShippingMethodResourceTest
 			testGroup.getGroupId(), _commerceCurrency.getCode());
 
 		_siteAdminUser = UserTestUtil.addGroupAdminUser(testGroup);
-
-		_setUpPermissionThreadLocal();
-		_setUpPrincipalThreadLocal();
 	}
 
 	@After
@@ -90,7 +90,6 @@ public class ShippingMethodResourceTest
 		}
 
 		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
-
 		PrincipalThreadLocal.setName(_originalName);
 	}
 

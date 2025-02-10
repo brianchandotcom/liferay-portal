@@ -172,7 +172,6 @@ public class OrderResourceTest extends BaseOrderResourceTestCase {
 		super.tearDown();
 
 		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
-
 		PrincipalThreadLocal.setName(_originalName);
 	}
 

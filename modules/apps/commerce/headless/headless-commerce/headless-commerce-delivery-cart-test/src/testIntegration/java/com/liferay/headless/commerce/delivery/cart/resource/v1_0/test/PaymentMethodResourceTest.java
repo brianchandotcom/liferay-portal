@@ -60,6 +60,11 @@ public class PaymentMethodResourceTest
 	public void setUp() throws Exception {
 		super.setUp();
 
+		_user = UserTestUtil.addUser(testCompany);
+
+		_setUpPermissionThreadLocal();
+		_setUpPrincipalThreadLocal();
+
 		_commerceCurrency = CommerceCurrencyTestUtil.addCommerceCurrency(
 			testGroup.getCompanyId());
 
@@ -72,14 +77,9 @@ public class PaymentMethodResourceTest
 				"test-payment-method"));
 		_siteAdminUser = UserTestUtil.addGroupAdminUser(testGroup);
 
-		_user = UserTestUtil.addUser(testCompany);
-
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			testCompany.getCompanyId(), testGroup.getGroupId(),
 			_user.getUserId());
-
-		_setUpPermissionThreadLocal();
-		_setUpPrincipalThreadLocal();
 	}
 
 	@After
@@ -88,7 +88,6 @@ public class PaymentMethodResourceTest
 		super.tearDown();
 
 		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
-
 		PrincipalThreadLocal.setName(_originalName);
 	}
 

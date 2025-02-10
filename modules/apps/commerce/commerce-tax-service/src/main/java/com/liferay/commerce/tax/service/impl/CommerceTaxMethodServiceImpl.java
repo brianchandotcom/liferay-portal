@@ -154,6 +154,17 @@ public class CommerceTaxMethodServiceImpl
 
 	@Override
 	public CommerceTaxMethod updateCommerceTaxMethod(
+			CommerceTaxMethod commerceTaxMethod)
+		throws PortalException {
+
+		_checkCommerceChannel(commerceTaxMethod.getGroupId());
+
+		return commerceTaxMethodLocalService.updateCommerceTaxMethod(
+			commerceTaxMethod);
+	}
+
+	@Override
+	public CommerceTaxMethod updateCommerceTaxMethod(
 			long commerceTaxMethodId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, boolean percentage,
 			boolean active)

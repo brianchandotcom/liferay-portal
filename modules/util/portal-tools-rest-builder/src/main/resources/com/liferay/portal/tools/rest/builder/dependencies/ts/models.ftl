@@ -13,8 +13,6 @@ export interface RequestDetailedFile {
 	}
 }
 
-export type RequestFile = string | Buffer | fs.ReadStream | RequestDetailedFile;
-
 <#list modelContexts?keys?sort as key>
 import { ${key} } from './${key?uncap_first}';
 </#list>

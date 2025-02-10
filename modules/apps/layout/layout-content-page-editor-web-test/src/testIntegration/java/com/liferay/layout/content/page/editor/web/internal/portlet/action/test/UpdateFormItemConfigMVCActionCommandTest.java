@@ -430,42 +430,14 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 	public void testUpdateFormItemConfigMVCActionCommandMappingFormChangingFormTypeSimpleWithFeatureFlagEnabled()
 		throws Exception {
 
-		LayoutStructure layoutStructure = new LayoutStructure();
+		LayoutStructure layoutStructure =
+			_addLayoutStructureWithFormStyledLayoutStructureItem();
 
-		LayoutStructureItem rootLayoutStructureItem =
-			layoutStructure.addRootLayoutStructureItem();
+		List<FormStyledLayoutStructureItem> formStyledLayoutStructureItems =
+			layoutStructure.getFormStyledLayoutStructureItems();
 
 		FormStyledLayoutStructureItem formStyledLayoutStructureItem =
-			(FormStyledLayoutStructureItem)
-				layoutStructure.addFormStyledLayoutStructureItem(
-					rootLayoutStructureItem.getItemId(), 0);
-
-		formStyledLayoutStructureItem.setNumberOfSteps(3);
-		formStyledLayoutStructureItem.setFormType("multiple");
-
-		LayoutStructureItem formStepContainerStyledLayoutStructureItem =
-			layoutStructure.addFormStepContainerStyledLayoutStructureItem(
-				formStyledLayoutStructureItem.getItemId(), 0);
-
-		for (int i = 0; i < 3; i++) {
-			LayoutStructureItem formStepLayoutStructureItem =
-				layoutStructure.addFormStepLayoutStructureItem(
-					formStepContainerStyledLayoutStructureItem.getItemId(), 0);
-
-			LayoutStructureItem containerStyledLayoutStructureItem =
-				layoutStructure.addContainerStyledLayoutStructureItem(
-					formStepLayoutStructureItem.getItemId(), 0);
-
-			layoutStructure.addFragmentStyledLayoutStructureItem(
-				_addSubmitButtonFragmentEntryLink("submit"),
-				containerStyledLayoutStructureItem.getItemId(), 0);
-			layoutStructure.addFragmentStyledLayoutStructureItem(
-				_addSubmitButtonFragmentEntryLink("previous"),
-				containerStyledLayoutStructureItem.getItemId(), 0);
-			layoutStructure.addFragmentStyledLayoutStructureItem(
-				_addSubmitButtonFragmentEntryLink("next"),
-				containerStyledLayoutStructureItem.getItemId(), 0);
-		}
+			formStyledLayoutStructureItems.get(0);
 
 		ReflectionTestUtil.invoke(
 			_mvcActionCommand, "_updateFormStyledLayoutStructureItemFormType",
@@ -1077,6 +1049,50 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 		).localizable(
 			true
 		).build();
+	}
+
+	private LayoutStructure
+			_addLayoutStructureWithFormStyledLayoutStructureItem()
+		throws Exception {
+
+		LayoutStructure layoutStructure = new LayoutStructure();
+
+		LayoutStructureItem rootLayoutStructureItem =
+			layoutStructure.addRootLayoutStructureItem();
+
+		FormStyledLayoutStructureItem formStyledLayoutStructureItem =
+			(FormStyledLayoutStructureItem)
+				layoutStructure.addFormStyledLayoutStructureItem(
+					rootLayoutStructureItem.getItemId(), 0);
+
+		formStyledLayoutStructureItem.setNumberOfSteps(3);
+		formStyledLayoutStructureItem.setFormType("multiple");
+
+		LayoutStructureItem formStepContainerStyledLayoutStructureItem =
+			layoutStructure.addFormStepContainerStyledLayoutStructureItem(
+				formStyledLayoutStructureItem.getItemId(), 0);
+
+		for (int i = 0; i < 3; i++) {
+			LayoutStructureItem formStepLayoutStructureItem =
+				layoutStructure.addFormStepLayoutStructureItem(
+					formStepContainerStyledLayoutStructureItem.getItemId(), 0);
+
+			LayoutStructureItem containerStyledLayoutStructureItem =
+				layoutStructure.addContainerStyledLayoutStructureItem(
+					formStepLayoutStructureItem.getItemId(), 0);
+
+			layoutStructure.addFragmentStyledLayoutStructureItem(
+				_addSubmitButtonFragmentEntryLink("submit"),
+				containerStyledLayoutStructureItem.getItemId(), 0);
+			layoutStructure.addFragmentStyledLayoutStructureItem(
+				_addSubmitButtonFragmentEntryLink("previous"),
+				containerStyledLayoutStructureItem.getItemId(), 0);
+			layoutStructure.addFragmentStyledLayoutStructureItem(
+				_addSubmitButtonFragmentEntryLink("next"),
+				containerStyledLayoutStructureItem.getItemId(), 0);
+		}
+
+		return layoutStructure;
 	}
 
 	private long _addSubmitButtonFragmentEntryLink(String type)

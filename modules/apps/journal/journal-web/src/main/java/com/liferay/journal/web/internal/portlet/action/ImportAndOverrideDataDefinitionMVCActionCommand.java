@@ -69,10 +69,11 @@ public class ImportAndOverrideDataDefinitionMVCActionCommand
 			DataDefinition dataDefinition = DataDefinition.toDTO(
 				FileUtil.read(uploadPortletRequest.getFile("jsonFile")));
 
-			DataDefinitionUtil.validateDefinitionFields(dataDefinition);
-
 			DDMStructure ddmStructure =
 				_ddmStructureLocalService.getDDMStructure(dataDefinitionId);
+
+			DataDefinitionUtil.validateDefinitionFields(
+				dataDefinition, ddmStructure);
 
 			dataDefinition.setExternalReferenceCode(
 				ddmStructure::getExternalReferenceCode);

@@ -127,6 +127,8 @@ public class OpenAPIResourceImpl {
 
 			add(NavigationMenuResourceImpl.class);
 
+			add(ObjectEntryFolderResourceImpl.class);
+
 			add(SitePageResourceImpl.class);
 
 			add(StructuredContentResourceImpl.class);

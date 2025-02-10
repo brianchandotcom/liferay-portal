@@ -43,6 +43,7 @@ import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
+import com.liferay.layout.util.structure.LayoutStructureItemUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -141,6 +142,86 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 	@After
 	public void tearDown() {
 		ServiceContextThreadLocal.popServiceContext();
+	}
+
+	@FeatureFlags("LPD-31772")
+	@Test
+	public void testUpdateFormItemConfigMVCActionCommandDecreasingNumberOfStepsWithFeatureFlagEnabled()
+		throws Exception {
+
+		LayoutStructure layoutStructure =
+			_addLayoutStructureWithFormStyledLayoutStructureItem();
+
+		List<FormStyledLayoutStructureItem> formStyledLayoutStructureItems =
+			layoutStructure.getFormStyledLayoutStructureItems();
+
+		FormStyledLayoutStructureItem formStyledLayoutStructureItem =
+			formStyledLayoutStructureItems.get(0);
+
+		ReflectionTestUtil.invoke(
+			_mvcActionCommand, "_updateFormStyledLayoutStructureItemFormType",
+			new Class<?>[] {
+				FormStyledLayoutStructureItem.class, String.class,
+				LayoutStructure.class, int.class, String.class, int.class,
+				long.class
+			},
+			formStyledLayoutStructureItem, "multistep", layoutStructure, 2,
+			"multistep", 3, 0);
+
+		LayoutStructureItem formStepContainerStyledLayoutStructureItem =
+			layoutStructure.getLayoutStructureItem(
+				formStyledLayoutStructureItem.getChildrenItemId(0));
+
+		for (String childrenItemId :
+				LayoutStructureItemUtil.getChildrenItemIds(
+					formStepContainerStyledLayoutStructureItem.
+						getChildrenItemId(1),
+					layoutStructure)) {
+
+			LayoutStructureItem layoutStructureItem =
+				layoutStructure.getLayoutStructureItem(childrenItemId);
+
+			if (!(layoutStructureItem instanceof
+					FragmentStyledLayoutStructureItem)) {
+
+				continue;
+			}
+
+			FragmentStyledLayoutStructureItem
+				fragmentStyledLayoutStructureItem =
+					(FragmentStyledLayoutStructureItem)
+						layoutStructure.getLayoutStructureItem(childrenItemId);
+
+			FragmentEntryLink fragmentEntryLink =
+				_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
+					fragmentStyledLayoutStructureItem.getFragmentEntryLinkId());
+
+			Object value = _fragmentEntryConfigurationParser.getFieldValue(
+				fragmentEntryLink.getConfiguration(),
+				fragmentEntryLink.getEditableValues(),
+				LocaleUtil.getMostRelevantLocale(), "type");
+
+			Assert.assertTrue(
+				ArrayUtil.contains(new String[] {"previous", "submit"}, value));
+		}
+
+		List<FragmentEntryLink> fragmentEntryLinks =
+			_fragmentEntryLinkLocalService.
+				getFragmentEntryLinksBySegmentsExperienceId(
+					_group.getGroupId(), _segmentsExperienceId,
+					_draftLayout.getPlid(), true);
+
+		Assert.assertEquals(
+			fragmentEntryLinks.toString(), 2, fragmentEntryLinks.size());
+
+		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
+			Assert.assertEquals(
+				"next",
+				_fragmentEntryConfigurationParser.getFieldValue(
+					fragmentEntryLink.getConfiguration(),
+					fragmentEntryLink.getEditableValues(),
+					LocaleUtil.getMostRelevantLocale(), "type"));
+		}
 	}
 
 	@Test

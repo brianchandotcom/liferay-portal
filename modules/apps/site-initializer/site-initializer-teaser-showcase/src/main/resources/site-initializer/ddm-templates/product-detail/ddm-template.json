@@ -1,6 +1,6 @@
 {
 	"className": "com.liferay.commerce.product.content.web.internal.portlet.CPContentPortlet",
-	"ddmTemplateKey": "PRODUCT DETAIL",
+	"ddmTemplateKey": "PRODUCT-DETAIL",
 	"name": "Product Detail",
 	"resourceClassName": "com.liferay.portlet.display.template.PortletDisplayTemplate"
 }

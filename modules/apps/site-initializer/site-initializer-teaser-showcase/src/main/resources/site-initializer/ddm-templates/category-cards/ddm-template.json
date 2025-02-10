@@ -1,0 +1,6 @@
+{
+	"className": "com.liferay.commerce.product.asset.categories.navigation.web.internal.portlet.CPAssetCategoriesNavigationPortlet",
+	"ddmTemplateKey": "CATEGORY CARDS",
+	"name": "Category Cards",
+	"resourceClassName": "com.liferay.portlet.display.template.PortletDisplayTemplate"
+}

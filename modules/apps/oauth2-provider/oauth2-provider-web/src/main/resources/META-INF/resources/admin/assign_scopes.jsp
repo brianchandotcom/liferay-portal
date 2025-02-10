@@ -49,18 +49,18 @@ AssignScopesDisplayContext assignScopesDisplayContext = (AssignScopesDisplayCont
 				<div class="sheet">
 					<ul class="hidden nav nav-tabs" id="<portlet:namespace />navScopeTypes" role="tablist">
 						<li class="nav-item">
-							<a aria-controls="<portlet:namespace />navResourceScopes" aria-expanded="true" class="active nav-link" data-toggle="liferay-tab" href="#<portlet:namespace />navResourceScopes" id="<portlet:namespace />navResourceScopesTab" role="tab">
+							<a aria-controls="<portlet:namespace />navResourceScopes" aria-expanded="true" class="active nav-link" href="#<portlet:namespace />navResourceScopes" id="<portlet:namespace />navResourceScopesTab" role="tab">
 								<liferay-ui:message key="resource-scopes" />
 							</a>
 						</li>
 						<li class="nav-item">
-							<a aria-controls="<portlet:namespace />navGlobalScopes" class="nav-link" data-toggle="liferay-tab" href="#<portlet:namespace />navGlobalScopes" id="<portlet:namespace />navGlobalScopesTab" role="tab">
+							<a aria-controls="<portlet:namespace />navGlobalScopes" class="nav-link" href="#<portlet:namespace />navGlobalScopes" id="<portlet:namespace />navGlobalScopesTab" role="tab">
 								<liferay-ui:message key="global-scopes" />
 							</a>
 						</li>
 					</ul>
 
-					<div class="hidden tab-content" id="<portlet:namespace />navScopeTypesTabContents">
+					<div class="tab-content" id="<portlet:namespace />navScopeTypesTabContents">
 						<div aria-labelledby="navResourceScopesTab" class="active fade show tab-pane" id="<portlet:namespace />navResourceScopes" role="tabpanel">
 							<%@ include file="/admin/assign_scopes_tab1.jspf" %>
 						</div>
@@ -84,6 +84,55 @@ AssignScopesDisplayContext assignScopesDisplayContext = (AssignScopesDisplayCont
 </clay:container-fluid>
 
 <aui:script use="aui-base,aui-io-request,aui-modal,aui-node-base,liferay-util">
+	const resourceScopesTab = document.getElementById(
+		'<portlet:namespace />navResourceScopesTab'
+	);
+	const globalScopesTab = document.getElementById(
+		'<portlet:namespace />navGlobalScopesTab'
+	);
+	const resourceScopesTabContents = document.getElementById(
+		'<portlet:namespace />navResourceScopes'
+	);
+	const globalScopesTabContents = document.getElementById(
+		'<portlet:namespace />navGlobalScopes'
+	);
+
+	resourceScopesTab.addEventListener('click', (event) => {
+		event.preventDefault();
+
+		if (!resourceScopesTab.classList.contains('active')) {
+			resourceScopesTab.classList.add('active');
+			resourceScopesTab.setAttribute('aria-selected', true);
+
+			globalScopesTab.classList.remove('active');
+			globalScopesTab.setAttribute('aria-selected', false);
+
+			resourceScopesTabContents.classList.add('active');
+			resourceScopesTabContents.classList.add('show');
+
+			globalScopesTabContents.classList.remove('active');
+			globalScopesTabContents.classList.remove('show');
+		}
+	});
+
+	globalScopesTab.addEventListener('click', (event) => {
+		event.preventDefault();
+
+		if (!globalScopesTab.classList.contains('active')) {
+			globalScopesTab.classList.add('active');
+			globalScopesTab.setAttribute('aria-selected', true);
+
+			resourceScopesTab.classList.remove('active');
+			resourceScopesTab.setAttribute('aria-selected', false);
+
+			globalScopesTabContents.classList.add('active');
+			globalScopesTabContents.classList.add('show');
+
+			resourceScopesTabContents.classList.remove('active');
+			resourceScopesTabContents.classList.remove('show');
+		}
+	});
+
 	if (A.all('#<portlet:namespace />navGlobalScopes .panel').size() > 0) {
 		A.one('#<portlet:namespace />navScopeTypes').toggleClass('hidden', false);
 	}

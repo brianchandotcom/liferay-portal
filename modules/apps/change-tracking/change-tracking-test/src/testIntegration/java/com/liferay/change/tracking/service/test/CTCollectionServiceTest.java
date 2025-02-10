@@ -211,9 +211,6 @@ public class CTCollectionServiceTest {
 
 		CTProcess ctProcess = ctProcesses.get(0);
 
-		Assert.assertEquals(
-			_ctCollection.getCtCollectionId(), ctProcess.getCtCollectionId());
-
 		BackgroundTask backgroundTask =
 			_backgroundTaskLocalService.getBackgroundTask(
 				ctProcess.getBackgroundTaskId());
@@ -223,6 +220,9 @@ public class CTCollectionServiceTest {
 				backgroundTask.getBackgroundTaskId());
 
 		Assert.assertEquals(100, backgroundTaskDisplay.getPercentage());
+
+		Assert.assertEquals(
+			_ctCollection.getCtCollectionId(), ctProcess.getCtCollectionId());
 	}
 
 	@Inject

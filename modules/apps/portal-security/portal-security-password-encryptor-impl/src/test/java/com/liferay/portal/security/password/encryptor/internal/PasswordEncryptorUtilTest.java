@@ -9,7 +9,7 @@ import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PwdEncryptorAlgorithmException;
+import com.liferay.portal.kernel.exception.PwdEncryptorException;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.security.pwd.PasswordEncryptor;
 import com.liferay.portal.kernel.security.pwd.PasswordEncryptorUtil;
@@ -265,7 +265,7 @@ public class PasswordEncryptorUtilTest {
 			PasswordEncryptor.TYPE_UFC_CRYPT);
 	}
 
-	@Test(expected = PwdEncryptorAlgorithmException.class)
+	@Test(expected = PwdEncryptorException.MustSetLegacyAlgorithmProperty.class)
 	public void testEncryptWithLegacyAlgorithm() throws Exception {
 		_testEncryptWithLegacyAlgorithm(
 			null, RandomTestUtil.randomString(), RandomTestUtil.randomString());

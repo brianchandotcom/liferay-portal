@@ -25,20 +25,21 @@ public class PwdEncryptorException extends PortalException {
 		super(throwable);
 	}
 
-	public static class PwdEncryptorAlgorithmException extends PwdEncryptorException {
+	public static class MustSetLegacyAlgorithmProperty
+		extends PwdEncryptorException {
 
-		public PwdEncryptorAlgorithmException() {
+		public MustSetLegacyAlgorithmProperty() {
 		}
 
-		public PwdEncryptorAlgorithmException(String msg) {
+		public MustSetLegacyAlgorithmProperty(String msg) {
 			super(msg);
 		}
 
-		public PwdEncryptorAlgorithmException(String msg, Throwable throwable) {
+		public MustSetLegacyAlgorithmProperty(String msg, Throwable throwable) {
 			super(msg, throwable);
 		}
 
-		public PwdEncryptorAlgorithmException(Throwable throwable) {
+		public MustSetLegacyAlgorithmProperty(Throwable throwable) {
 			super(throwable);
 		}
 

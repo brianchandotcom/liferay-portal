@@ -11,6 +11,4 @@ export class HttpError extends Error {
 	}
 }
 
-export { RequestFile } from '../model/models';
-
 export const APIS = [<#list apiContexts?sort_by("key") as apiContext>${apiContext.value.classname}<#if apiContext_has_next>, </#if></#list>];

@@ -22,6 +22,7 @@
 	accountId = account.getAccountEntryId()
 	chanelId = commerceContext.getCommerceChannelId()
 />
+
 <div class="product-card-tiles">
 	<#if entries?has_content>
 		<#list entries as curCPCatalogEntry>
@@ -56,7 +57,9 @@
 			<a href="${friendlyURL}">
 				<div class="card d-flex flex-column product-card shadow-none mb-4 mx-3">
 					<img class="card-img-top rounded mb-3" src="${defaultImageURL}" alt="${productName}" />
+
 					<h5 class="card-title mb-1">${productName}</h5>
+
 					<p>Product</p>åå
 					<#list specifications as spec>
 						<#if spec??>

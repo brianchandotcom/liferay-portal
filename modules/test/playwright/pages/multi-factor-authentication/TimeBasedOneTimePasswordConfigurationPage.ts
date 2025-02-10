@@ -4,35 +4,29 @@
  */
 
 import {Locator, Page} from '@playwright/test';
-
 import {InstanceSettingsPage} from '../configuration-admin-web/InstanceSettingsPage';
 
 export class TimeBasedOneTimePasswordConfigurationPage {
 	readonly enabledCheckBox: Locator;
-	readonly saveButton: Locator;
-	readonly page: Page;
 	readonly instanceSettingsPage: InstanceSettingsPage;
-	readonly successMessage: Locator;
-	readonly updateButton: Locator;
+	readonly page: Page;
+	readonly saveButton: Locator;
+	readonly updateButton: Locator;	
 
 	constructor(page: Page) {
 		this.page = page;
+		this.instanceSettingsPage = new InstanceSettingsPage(page);
 		this.enabledCheckBox = this.page.getByText('Enabled');
 		this.saveButton = this.page.getByRole('button', {name: 'Save'});
-		this.instanceSettingsPage = new InstanceSettingsPage(page);
 		this.updateButton = this.page.getByRole('button', {name: 'Update'});
-		this.successMessage = page.getByText(
-			'Your request completed successfully'
-		);
 	}
 
-	async goTo() {
-		await this.instanceSettingsPage.goToInstanceSetting(
-			'Multi-Factor Authentication',
-			'Time-Based One-Time Password Configuration'
-		);
-
+	async disable() {
 		await this.enabledCheckBox.waitFor();
+
+		await this.enabledCheckBox.uncheck();
+
+		await this.updateButton.click();
 	}
 
 	async enable() {
@@ -48,11 +42,12 @@ export class TimeBasedOneTimePasswordConfigurationPage {
 		}
 	}
 
-	async disable() {
+	async goTo() {
+		await this.instanceSettingsPage.goToInstanceSetting(
+			'Multi-Factor Authentication',
+			'Time-Based One-Time Password Configuration'
+		);
+
 		await this.enabledCheckBox.waitFor();
-
-		await this.enabledCheckBox.uncheck();
-
-		await this.updateButton.click();
 	}
 }

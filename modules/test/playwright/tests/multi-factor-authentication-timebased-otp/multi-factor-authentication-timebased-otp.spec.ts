@@ -3,13 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {AccountSettingsPage} from '../../pages/users-admin-web/AccountSettingsPage';
 import {expect, mergeTests} from '@playwright/test';
-
+import {HomePage} from '../../pages/portal-web/HomePage';
 import {loginTest} from '../../fixtures/loginTest';
 import {MultiFactorAuthenticationConfigurationPage} from '../../pages/multi-factor-authentication/MultiFactorAuthenticationConfigurationPage';
 import {TimeBasedOneTimePasswordConfigurationPage} from '../../pages/multi-factor-authentication/TimeBasedOneTimePasswordConfigurationPage';
-import {HomePage} from '../../pages/portal-web/HomePage';
-import {AccountSettingsPage} from '../../pages/users-admin-web/AccountSettingsPage';
 
 export const test = mergeTests(loginTest());
 

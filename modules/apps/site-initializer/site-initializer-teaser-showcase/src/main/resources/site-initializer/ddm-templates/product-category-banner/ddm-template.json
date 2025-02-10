@@ -1,0 +1,6 @@
+{
+	"className": "com.liferay.commerce.product.content.category.web.internal.portlet.CPCategoryContentPortlet",
+	"ddmTemplateKey": "PRODUCT CATEGORY BANNER",
+	"name": "Product Category Banner",
+	"resourceClassName": "com.liferay.portlet.display.template.PortletDisplayTemplate"
+}

@@ -410,7 +410,7 @@ public class LayoutsImporterTest {
 					organizationSite.getGroupId(),
 					LayoutPageTemplateConstants.
 						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-					RandomTestUtil.randomString(), StringPool.BLANK,
+					null, RandomTestUtil.randomString(), StringPool.BLANK,
 					LayoutPageTemplateCollectionTypeConstants.BASIC,
 					_serviceContext1);
 
@@ -718,7 +718,7 @@ public class LayoutsImporterTest {
 				null, TestPropsValues.getUserId(), _group1.getGroupId(),
 				LayoutPageTemplateConstants.
 					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-				"Child Display Page Collection", StringPool.BLANK,
+				null, "Child Display Page Collection", StringPool.BLANK,
 				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE,
 				ServiceContextTestUtil.getServiceContext(_group1.getGroupId()));
 
@@ -739,7 +739,7 @@ public class LayoutsImporterTest {
 				null, TestPropsValues.getUserId(), _group1.getGroupId(),
 				LayoutPageTemplateConstants.
 					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-				"Page Template Set", StringPool.BLANK,
+				null, "Page Template Set", StringPool.BLANK,
 				LayoutPageTemplateEntryTypeConstants.BASIC,
 				ServiceContextTestUtil.getServiceContext(_group1.getGroupId()));
 
@@ -783,7 +783,7 @@ public class LayoutsImporterTest {
 					null, TestPropsValues.getUserId(), _group1.getGroupId(),
 					LayoutPageTemplateConstants.
 						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-					RandomTestUtil.randomString(), StringPool.BLANK,
+					null, RandomTestUtil.randomString(), StringPool.BLANK,
 					LayoutPageTemplateEntryTypeConstants.BASIC,
 					_serviceContext1);
 
@@ -799,7 +799,7 @@ public class LayoutsImporterTest {
 					null, TestPropsValues.getUserId(), _group1.getGroupId(),
 					LayoutPageTemplateConstants.
 						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-					RandomTestUtil.randomString(), StringPool.BLANK,
+					null, RandomTestUtil.randomString(), StringPool.BLANK,
 					LayoutPageTemplateEntryTypeConstants.BASIC,
 					_serviceContext1);
 
@@ -820,7 +820,7 @@ public class LayoutsImporterTest {
 				null, TestPropsValues.getUserId(), _group1.getGroupId(),
 				LayoutPageTemplateConstants.
 					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-				"Display Page Collection", StringPool.BLANK,
+				null, "Display Page Collection", StringPool.BLANK,
 				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE,
 				ServiceContextTestUtil.getServiceContext(_group1.getGroupId()));
 
@@ -842,7 +842,7 @@ public class LayoutsImporterTest {
 					null, TestPropsValues.getUserId(), _group1.getGroupId(),
 					LayoutPageTemplateConstants.
 						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-					RandomTestUtil.randomString(), StringPool.BLANK,
+					null, RandomTestUtil.randomString(), StringPool.BLANK,
 					LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE,
 					ServiceContextTestUtil.getServiceContext(
 						_group1.getGroupId()));
@@ -852,7 +852,7 @@ public class LayoutsImporterTest {
 				null, TestPropsValues.getUserId(), _group1.getGroupId(),
 				layoutPageTemplateCollection.
 					getLayoutPageTemplateCollectionId(),
-				"Display Page Collection", StringPool.BLANK,
+				null, "Display Page Collection", StringPool.BLANK,
 				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE,
 				ServiceContextTestUtil.getServiceContext(_group1.getGroupId()));
 
@@ -874,7 +874,7 @@ public class LayoutsImporterTest {
 					null, TestPropsValues.getUserId(), _group1.getGroupId(),
 					LayoutPageTemplateConstants.
 						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-					RandomTestUtil.randomString(), StringPool.BLANK,
+					null, RandomTestUtil.randomString(), StringPool.BLANK,
 					LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE,
 					ServiceContextTestUtil.getServiceContext(
 						_group1.getGroupId()));
@@ -884,7 +884,7 @@ public class LayoutsImporterTest {
 				null, TestPropsValues.getUserId(), _group1.getGroupId(),
 				layoutPageTemplateCollection.
 					getLayoutPageTemplateCollectionId(),
-				"Display Page Collection", StringPool.BLANK,
+				null, "Display Page Collection", StringPool.BLANK,
 				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE,
 				ServiceContextTestUtil.getServiceContext(_group1.getGroupId()));
 
@@ -935,7 +935,7 @@ public class LayoutsImporterTest {
 					null, TestPropsValues.getUserId(), _group1.getGroupId(),
 					LayoutPageTemplateConstants.
 						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-					RandomTestUtil.randomString(), StringPool.BLANK,
+					null, RandomTestUtil.randomString(), StringPool.BLANK,
 					LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE,
 					ServiceContextTestUtil.getServiceContext(
 						_group1.getGroupId()));
@@ -1159,7 +1159,7 @@ public class LayoutsImporterTest {
 					null, _serviceContext1.getUserId(), _group1.getGroupId(),
 					LayoutPageTemplateConstants.
 						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-					RandomTestUtil.randomString(), StringPool.BLANK,
+					null, RandomTestUtil.randomString(), StringPool.BLANK,
 					LayoutPageTemplateCollectionTypeConstants.BASIC,
 					_serviceContext1);
 

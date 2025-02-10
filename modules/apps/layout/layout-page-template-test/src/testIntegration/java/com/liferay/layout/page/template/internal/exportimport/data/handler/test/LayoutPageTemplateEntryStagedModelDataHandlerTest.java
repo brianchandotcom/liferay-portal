@@ -258,7 +258,7 @@ public class LayoutPageTemplateEntryStagedModelDataHandlerTest
 					null, userId, group.getGroupId(),
 					LayoutPageTemplateConstants.
 						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-					"Test Collection", StringPool.BLANK,
+					null, "Test Collection", StringPool.BLANK,
 					LayoutPageTemplateCollectionTypeConstants.BASIC,
 					serviceContext);
 

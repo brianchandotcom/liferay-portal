@@ -90,7 +90,7 @@ public class ExportLayoutPageTemplateEntriesMVCResourceCommandTest {
 					null, TestPropsValues.getUserId(), _group.getGroupId(),
 					LayoutPageTemplateConstants.
 						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-					"Page Template Collection One", StringPool.BLANK,
+					null, "Page Template Collection One", StringPool.BLANK,
 					LayoutPageTemplateCollectionTypeConstants.BASIC,
 					_serviceContext);
 
@@ -157,7 +157,7 @@ public class ExportLayoutPageTemplateEntriesMVCResourceCommandTest {
 					null, TestPropsValues.getUserId(), _group.getGroupId(),
 					LayoutPageTemplateConstants.
 						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-					"Page Template Collection One", StringPool.BLANK,
+					null, "Page Template Collection One", StringPool.BLANK,
 					LayoutPageTemplateCollectionTypeConstants.BASIC,
 					_serviceContext);
 
@@ -192,7 +192,7 @@ public class ExportLayoutPageTemplateEntriesMVCResourceCommandTest {
 					null, TestPropsValues.getUserId(), _group.getGroupId(),
 					LayoutPageTemplateConstants.
 						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-					"Page Template Collection One", StringPool.BLANK,
+					null, "Page Template Collection One", StringPool.BLANK,
 					LayoutPageTemplateCollectionTypeConstants.BASIC,
 					_serviceContext);
 
@@ -237,7 +237,7 @@ public class ExportLayoutPageTemplateEntriesMVCResourceCommandTest {
 					null, TestPropsValues.getUserId(), _group.getGroupId(),
 					LayoutPageTemplateConstants.
 						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-					RandomTestUtil.randomString(10), StringPool.BLANK,
+					null, RandomTestUtil.randomString(10), StringPool.BLANK,
 					LayoutPageTemplateCollectionTypeConstants.BASIC,
 					_serviceContext);
 

@@ -58,7 +58,7 @@ public class LayoutPageTemplateCollectionLocalServiceTest {
 				_group.getGroupId(),
 				LayoutPageTemplateConstants.
 					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-				RandomTestUtil.randomString(), null,
+				null, RandomTestUtil.randomString(), null,
 				LayoutPageTemplateCollectionTypeConstants.BASIC,
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
@@ -74,7 +74,7 @@ public class LayoutPageTemplateCollectionLocalServiceTest {
 					_group.getGroupId(),
 					LayoutPageTemplateConstants.
 						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-					RandomTestUtil.randomString(), null,
+					null, RandomTestUtil.randomString(), null,
 					LayoutPageTemplateCollectionTypeConstants.BASIC,
 					ServiceContextTestUtil.getServiceContext(
 						_group.getGroupId()));
@@ -100,7 +100,7 @@ public class LayoutPageTemplateCollectionLocalServiceTest {
 					companyGroup.getGroupId(),
 					LayoutPageTemplateConstants.
 						PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-					RandomTestUtil.randomString(), null,
+					null, RandomTestUtil.randomString(), null,
 					LayoutPageTemplateCollectionTypeConstants.BASIC,
 					ServiceContextTestUtil.getServiceContext(
 						companyGroup.getGroupId()));
@@ -128,7 +128,7 @@ public class LayoutPageTemplateCollectionLocalServiceTest {
 				_group.getGroupId(),
 				LayoutPageTemplateConstants.
 					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-				RandomTestUtil.randomString(), null,
+				null, RandomTestUtil.randomString(), null,
 				LayoutPageTemplateCollectionTypeConstants.BASIC,
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 

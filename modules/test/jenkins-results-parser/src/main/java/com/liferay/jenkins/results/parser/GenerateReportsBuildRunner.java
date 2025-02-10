@@ -417,6 +417,8 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 				filePath + "/js/testray-data.js");
 		}
 
+		_mergeHTMLFiles(filePath);
+
 		_updateReport(filePath);
 
 		_updateNodeDataFile(filePath);

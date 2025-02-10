@@ -45,6 +45,7 @@ export class ApplicationsMenuPage {
 	private readonly objectsMenuItem: Locator;
 	private readonly metricsItem: Locator;
 	private readonly page: Page;
+	private readonly passwordPoliciesAdminItem: Locator;
 	private readonly paymentsMenuItem: Locator;
 	private readonly picklistsMenuItem: Locator;
 	private readonly processBuilderItem: Locator;
@@ -201,6 +202,10 @@ export class ApplicationsMenuPage {
 			name: 'Objects',
 		});
 		this.page = page;
+		this.passwordPoliciesAdminItem = page.getByRole('menuitem', {
+			exact: true,
+			name: 'Password Policies',
+		});
 		this.paymentsMenuItem = page.getByRole('menuitem', {
 			exact: true,
 			name: 'Payments',
@@ -505,6 +510,11 @@ export class ApplicationsMenuPage {
 		await this.goto();
 		await this.goToCommercePanel(checkTabVisibility);
 		await this.commerceTaxCategoriesMenuItem.click();
+	}
+
+	async goToPasswordPolicies() {
+		await this.goToControlPanel();
+		await this.passwordPoliciesAdminItem.click();
 	}
 
 	async goToPayments(checkTabVisibility = true) {

@@ -3,9 +3,11 @@
 		min-height: 96px;
 	}
 </style>
+
 <#if currentURL?has_content>
 	<#assign groupKey = currentURL?substring(currentURL?index_of('/web/') + 5, currentURL?index_of('/products')) />
 </#if>
+
 <#assign
 	contactsImage = "/documents/d/${groupKey}/contacts-png"
 	eyeglassesImage = "/documents/d/${groupKey}/eyeglasses-png"
@@ -30,6 +32,7 @@
 					<#assign categoryImage = sunglassesImage />
 					<#break>
 			</#switch>
+
 			<#assign
 				categoryId = currentCategory.getCategoryId()
 				categoryName = currentCategory.getName()
@@ -37,11 +40,13 @@
 				.getFriendlyURL(currentCategory.getCategoryId(), themeDisplay)
 				propertyName = "alphaCode"
 			/>
+
 			<#if cpAssetCategoriesNavigationDisplayContext.getDefaultImageSrc(categoryId)??>
 				<#assign cardImage = true />
 			<#else>
 				<#assign cardImage = false />
 			</#if>
+
 			<div class="col-lg-4">
 				<div class="card">
 					<div class="card-header">

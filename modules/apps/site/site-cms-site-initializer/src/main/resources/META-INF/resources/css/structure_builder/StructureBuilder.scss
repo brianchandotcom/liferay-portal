@@ -2,4 +2,8 @@
 	&__wrapper {
 		height: calc(100vh - (var(--control-menu-container-height)));
 	}
+
+	&__title-input {
+		font-size: 28px;
+	}
 }

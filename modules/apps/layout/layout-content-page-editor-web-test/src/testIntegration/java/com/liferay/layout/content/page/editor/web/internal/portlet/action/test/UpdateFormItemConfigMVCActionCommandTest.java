@@ -452,15 +452,19 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 				layoutStructure.addFormStepLayoutStructureItem(
 					formStepContainerStyledLayoutStructureItem.getItemId(), 0);
 
+			LayoutStructureItem containerStyledLayoutStructureItem =
+				layoutStructure.addContainerStyledLayoutStructureItem(
+					formStepLayoutStructureItem.getItemId(), 0);
+
 			layoutStructure.addFragmentStyledLayoutStructureItem(
 				_addSubmitButtonFragmentEntryLink("submit"),
-				formStepLayoutStructureItem.getItemId(), 0);
+				containerStyledLayoutStructureItem.getItemId(), 0);
 			layoutStructure.addFragmentStyledLayoutStructureItem(
 				_addSubmitButtonFragmentEntryLink("previous"),
-				formStepLayoutStructureItem.getItemId(), 0);
+				containerStyledLayoutStructureItem.getItemId(), 0);
 			layoutStructure.addFragmentStyledLayoutStructureItem(
 				_addSubmitButtonFragmentEntryLink("next"),
-				formStepLayoutStructureItem.getItemId(), 0);
+				containerStyledLayoutStructureItem.getItemId(), 0);
 		}
 
 		ReflectionTestUtil.invoke(
@@ -480,10 +484,17 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 			childrenItemIds.toString(), 3, childrenItemIds.size());
 
 		for (String childrenItemId : childrenItemIds) {
+			ContainerStyledLayoutStructureItem
+				containerStyledLayoutStructureItem =
+					(ContainerStyledLayoutStructureItem)
+						layoutStructure.getLayoutStructureItem(childrenItemId);
+
 			FragmentStyledLayoutStructureItem
 				fragmentStyledLayoutStructureItem =
 					(FragmentStyledLayoutStructureItem)
-						layoutStructure.getLayoutStructureItem(childrenItemId);
+						layoutStructure.getLayoutStructureItem(
+							containerStyledLayoutStructureItem.
+								getChildrenItemId(0));
 
 			FragmentEntryLink fragmentEntryLink =
 				_fragmentEntryLinkLocalService.fetchFragmentEntryLink(

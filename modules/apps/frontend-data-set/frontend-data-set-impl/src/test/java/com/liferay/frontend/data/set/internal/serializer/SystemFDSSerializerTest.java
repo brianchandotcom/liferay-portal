@@ -13,10 +13,23 @@ import com.liferay.frontend.data.set.action.FDSCreationMenu;
 import com.liferay.frontend.data.set.action.FDSCreationMenuRegistry;
 import com.liferay.frontend.data.set.action.FDSItemsActions;
 import com.liferay.frontend.data.set.action.FDSItemsActionsRegistry;
+import com.liferay.frontend.data.set.constants.FDSEntityFieldTypes;
+import com.liferay.frontend.data.set.filter.BaseClientExtensionFDSFilter;
+import com.liferay.frontend.data.set.filter.BaseDateRangeFDSFilter;
+import com.liferay.frontend.data.set.filter.BaseSelectionFDSFilter;
+import com.liferay.frontend.data.set.filter.DateFDSFilterItem;
+import com.liferay.frontend.data.set.filter.FDSFilter;
+import com.liferay.frontend.data.set.filter.FDSFilterContextContributor;
+import com.liferay.frontend.data.set.filter.SelectionFDSFilterItem;
 import com.liferay.frontend.data.set.internal.SystemFDSEntryRegistryImpl;
 import com.liferay.frontend.data.set.internal.action.FDSBulkActionsRegistryImpl;
 import com.liferay.frontend.data.set.internal.action.FDSCreationMenuRegistryImpl;
 import com.liferay.frontend.data.set.internal.action.FDSItemsActionsRegistryImpl;
+import com.liferay.frontend.data.set.internal.filter.ClientExtensionFDSFilterContextContributor;
+import com.liferay.frontend.data.set.internal.filter.DateRangeFDSFilterContextContributor;
+import com.liferay.frontend.data.set.internal.filter.FDSFilterContextContributorRegistryImpl;
+import com.liferay.frontend.data.set.internal.filter.FDSFilterRegistryImpl;
+import com.liferay.frontend.data.set.internal.filter.SelectionFDSFilterContextContributor;
 import com.liferay.frontend.data.set.internal.url.FDSAPIURLResolverRegistryImpl;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.data.set.serializer.FDSSerializer;
@@ -28,17 +41,31 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemBuilder;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
+import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
+import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -53,6 +80,9 @@ import org.mockito.Mockito;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
+
+import org.skyscreamer.jsonassert.JSONAssert;
+import org.skyscreamer.jsonassert.JSONCompareMode;
 
 /**
  * @author Daniel Sanz
@@ -422,6 +452,565 @@ public class SystemFDSSerializerTest {
 	}
 
 	@Test
+	public void testSerializeFilters() throws Exception {
+		_filterServiceTrackerMap = ServiceTrackerMapFactory.openMultiValueMap(
+			_bundleContext, FDSFilter.class, "frontend.data.set.name",
+			ServiceTrackerCustomizerFactory.<FDSFilter>serviceWrapper(
+				_bundleContext));
+
+		_filterContextContributorServiceTrackerMap =
+			ServiceTrackerMapFactory.openMultiValueMap(
+				_bundleContext, FDSFilterContextContributor.class,
+				"frontend.data.set.filter.type",
+				ServiceTrackerCustomizerFactory.
+					<FDSFilterContextContributor>serviceWrapper(
+						_bundleContext));
+
+		ReflectionTestUtil.setFieldValue(
+			_fdsFilterRegistryImpl, "_serviceTrackerMap",
+			_filterServiceTrackerMap);
+
+		ReflectionTestUtil.setFieldValue(
+			_fdsFilterContextContributorRegistryImpl, "_serviceTrackerMap",
+			_filterContextContributorServiceTrackerMap);
+
+		ReflectionTestUtil.setFieldValue(
+			_fdsSerializer, "_fdsFilterRegistry", _fdsFilterRegistryImpl);
+
+		ReflectionTestUtil.setFieldValue(
+			_fdsSerializer, "_fdsFilterContextContributorRegistry",
+			_fdsFilterContextContributorRegistryImpl);
+
+		ReflectionTestUtil.setFieldValue(
+			_fdsSerializer, "_jsonFactory", _jsonFactory);
+
+		ReflectionTestUtil.setFieldValue(
+			_fdsSerializer, "_language", _language);
+
+		ReflectionTestUtil.setFieldValue(_fdsSerializer, "_portal", _portal);
+
+		ReflectionTestUtil.setFieldValue(
+			_dateRangeFDSFilterContextContributor, "_jsonFactory",
+			_jsonFactory);
+
+		ReflectionTestUtil.setFieldValue(
+			_selectionFDSFilterContextContributor, "_jsonFactory",
+			_jsonFactory);
+
+		ReflectionTestUtil.setFieldValue(
+			_selectionFDSFilterContextContributor, "_language", _language);
+
+		_clientExtensionFDSFilterContextContributorServiceRegistration =
+			_bundleContext.registerService(
+				FDSFilterContextContributor.class,
+				_clientExtensionFDSFilterContextContributor,
+				MapUtil.singletonDictionary(
+					"frontend.data.set.filter.type", "clientExtension"));
+
+		_dateRangeFDSFilterContextContributorServiceRegistration =
+			_bundleContext.registerService(
+				FDSFilterContextContributor.class,
+				_dateRangeFDSFilterContextContributor,
+				MapUtil.singletonDictionary(
+					"frontend.data.set.filter.type", "dateRange"));
+
+		_selectionFDSFilterContextContributorServiceRegistration =
+			_bundleContext.registerService(
+				FDSFilterContextContributor.class,
+				_selectionFDSFilterContextContributor,
+				MapUtil.singletonDictionary(
+					"frontend.data.set.filter.type", "selection"));
+
+		ResourceBundleLoader resourceBundleLoader = Mockito.mock(
+			ResourceBundleLoader.class);
+
+		ResourceBundleLoaderUtil.setPortalResourceBundleLoader(
+			resourceBundleLoader);
+
+		Mockito.when(
+			resourceBundleLoader.loadResourceBundle(
+				Mockito.nullable(Locale.class))
+		).thenReturn(
+			ResourceBundleUtil.EMPTY_RESOURCE_BUNDLE
+		);
+
+		LanguageUtil languageUtil = new LanguageUtil();
+
+		languageUtil.setLanguage(_language);
+
+		Mockito.when(
+			_portal.getLocale(_httpServletRequest)
+		).thenReturn(
+			LocaleUtil.US
+		);
+
+		Mockito.when(
+			_language.get(LocaleUtil.US, null)
+		).thenReturn(
+			StringPool.BLANK
+		);
+
+		Mockito.when(
+			_language.get(Mockito.eq(LocaleUtil.US), Mockito.anyString())
+		).thenAnswer(
+			invocation -> invocation.getArgument(1, String.class)
+		);
+
+		Mockito.when(
+			_language.get(
+				Mockito.eq(ResourceBundleUtil.EMPTY_RESOURCE_BUNDLE),
+				Mockito.anyString())
+		).thenAnswer(
+			invocation -> invocation.getArgument(1, String.class)
+		);
+
+		// Client extension filter
+
+		ServiceRegistration<SystemFDSEntry> systemFDSEntryServiceRegistration1 =
+			_registerSystemFDSEntry(
+				null, "fdsName", "/app", "/endpoint", "schema");
+
+		ServiceRegistration<FDSFilter>
+			clientExtensionFilterServiceRegistration = _registerFilter(
+				"fdsName",
+				_createClientExtensionFilter(
+					"fooField", "Foo label", "/o/foo-filter/bar.js",
+					new HashMapBuilder<>().<String, Object>put(
+						"fooParam1", "bar1"
+					).put(
+						"fooParam2", "bar2"
+					).build()));
+
+		JSONAssert.assertEquals(
+			JSONUtil.putAll(
+				JSONUtil.put(
+					"clientExtensionFilterURL", "/o/foo-filter/bar.js"
+				).put(
+					"id", "fooField"
+				).put(
+					"label", "Foo label"
+				).put(
+					"preloadedData",
+					JSONUtil.put(
+						"fooParam1", "bar1"
+					).put(
+						"fooParam2", "bar2"
+					)
+				).put(
+					"type", "clientExtension"
+				)
+			).toString(),
+			_fdsSerializer.serializeFilters(
+				"fdsName", _httpServletRequest
+			).toString(),
+			JSONCompareMode.STRICT);
+
+		clientExtensionFilterServiceRegistration.unregister();
+
+		systemFDSEntryServiceRegistration1.unregister();
+
+		// Date range filter
+
+		systemFDSEntryServiceRegistration1 = _registerSystemFDSEntry(
+			null, "fdsName", "/app", "/endpoint", "schema");
+
+		ServiceRegistration<FDSFilter> dateRangeFilterServiceRegistration1 =
+			_registerFilter(
+				"fdsName",
+				_createDateRangeFilter(
+					"createDate", "By Creation Date", FDSEntityFieldTypes.DATE,
+					new HashMapBuilder<>().<String, Object>put(
+						"from", new DateFDSFilterItem(30, 11, 1985)
+					).put(
+						"to", new DateFDSFilterItem(27, 5, 1995)
+					).build(),
+					new DateFDSFilterItem(0, 0, 0),
+					new DateFDSFilterItem(16, 3, 1977)));
+
+		JSONAssert.assertEquals(
+			JSONUtil.putAll(
+				JSONUtil.put(
+					"entityFieldType", "date"
+				).put(
+					"id", "createDate"
+				).put(
+					"label", "By Creation Date"
+				).put(
+					"max",
+					JSONUtil.put(
+						"day", 16
+					).put(
+						"month", 3
+					).put(
+						"year", 1977
+					)
+				).put(
+					"min",
+					JSONUtil.put(
+						"day", 0
+					).put(
+						"month", 0
+					).put(
+						"year", 0
+					)
+				).put(
+					"preloadedData",
+					JSONUtil.put(
+						"from",
+						JSONUtil.put(
+							"day", 30
+						).put(
+							"month", 11
+						).put(
+							"year", 1985
+						)
+					).put(
+						"to",
+						JSONUtil.put(
+							"day", 27
+						).put(
+							"month", 5
+						).put(
+							"year", 1995
+						)
+					)
+				).put(
+					"type", "dateRange"
+				)
+			).toString(),
+			_fdsSerializer.serializeFilters(
+				"fdsName", _httpServletRequest
+			).toString(),
+			JSONCompareMode.STRICT);
+
+		dateRangeFilterServiceRegistration1.unregister();
+
+		systemFDSEntryServiceRegistration1.unregister();
+
+		// Different filters
+
+		systemFDSEntryServiceRegistration1 = _registerSystemFDSEntry(
+			null, "fdsName1", "/app", "/endpoint", "schema");
+
+		ServiceRegistration<SystemFDSEntry> systemFDSEntryServiceRegistration2 =
+			_registerSystemFDSEntry(
+				null, "fdsName2", "/app", "/endpoint", "schema");
+
+		dateRangeFilterServiceRegistration1 = _registerFilter(
+			"fdsName1",
+			_createDateRangeFilter(
+				"createDate", "By Creation Date", FDSEntityFieldTypes.DATE,
+				null, new DateFDSFilterItem(0, 0, 0),
+				new DateFDSFilterItem(1, 1, 1980)));
+
+		ServiceRegistration<FDSFilter> dateRangeFilterServiceRegistration2 =
+			_registerFilter(
+				"fdsName2",
+				_createDateRangeFilter(
+					"modifiedDate", "By Modification Date",
+					FDSEntityFieldTypes.DATE, null,
+					new DateFDSFilterItem(0, 0, 0),
+					new DateFDSFilterItem(1, 1, 1980)));
+
+		String dateRangeFilterSerialized1 = _fdsSerializer.serializeFilters(
+			"fdsName1", _httpServletRequest
+		).toString();
+
+		String dateRangeFilterSerialized2 = _fdsSerializer.serializeFilters(
+			"fdsName2", _httpServletRequest
+		).toString();
+
+		JSONAssert.assertNotEquals(
+			dateRangeFilterSerialized1, dateRangeFilterSerialized2,
+			JSONCompareMode.STRICT);
+
+		JSONAssert.assertEquals(
+			JSONUtil.putAll(
+				JSONUtil.put(
+					"entityFieldType", "date"
+				).put(
+					"id", "createDate"
+				).put(
+					"label", "By Creation Date"
+				).put(
+					"max",
+					JSONUtil.put(
+						"day", 1
+					).put(
+						"month", 1
+					).put(
+						"year", 1980
+					)
+				).put(
+					"min",
+					JSONUtil.put(
+						"day", 0
+					).put(
+						"month", 0
+					).put(
+						"year", 0
+					)
+				).put(
+					"type", "dateRange"
+				)
+			).toString(),
+			dateRangeFilterSerialized1, JSONCompareMode.STRICT);
+
+		JSONAssert.assertEquals(
+			JSONUtil.putAll(
+				JSONUtil.put(
+					"entityFieldType", "date"
+				).put(
+					"id", "modifiedDate"
+				).put(
+					"label", "By Modification Date"
+				).put(
+					"max",
+					JSONUtil.put(
+						"day", 1
+					).put(
+						"month", 1
+					).put(
+						"year", 1980
+					)
+				).put(
+					"min",
+					JSONUtil.put(
+						"day", 0
+					).put(
+						"month", 0
+					).put(
+						"year", 0
+					)
+				).put(
+					"type", "dateRange"
+				)
+			).toString(),
+			dateRangeFilterSerialized2, JSONCompareMode.STRICT);
+
+		dateRangeFilterServiceRegistration1.unregister();
+
+		dateRangeFilterServiceRegistration2.unregister();
+
+		systemFDSEntryServiceRegistration1.unregister();
+
+		systemFDSEntryServiceRegistration2.unregister();
+
+		// Disabled filter
+
+		systemFDSEntryServiceRegistration1 = _registerSystemFDSEntry(
+			null, "fdsName", "/app", "/endpoint", "schema");
+
+		ServiceRegistration<FDSFilter> fdsFilterServiceRegistration =
+			_registerFilter(
+				"fdsName",
+				new FDSFilter() {
+
+					@Override
+					public String getId() {
+						return "id";
+					}
+
+					@Override
+					public String getLabel() {
+						return "label";
+					}
+
+					@Override
+					public String getType() {
+						return "type";
+					}
+
+					@Override
+					public boolean isEnabled() {
+						return false;
+					}
+
+				});
+
+		JSONAssert.assertEquals(
+			"[]",
+			_fdsSerializer.serializeFilters(
+				"fdsName", _httpServletRequest
+			).toString(),
+			JSONCompareMode.STRICT);
+
+		systemFDSEntryServiceRegistration1.unregister();
+
+		fdsFilterServiceRegistration.unregister();
+
+		// No filter
+
+		systemFDSEntryServiceRegistration1 = _registerSystemFDSEntry(
+			null, "fdsName", "/app", "/endpoint", "schema");
+
+		JSONAssert.assertEquals(
+			"[]",
+			_fdsSerializer.serializeFilters(
+				"fdsName", _httpServletRequest
+			).toString(),
+			JSONCompareMode.STRICT);
+
+		systemFDSEntryServiceRegistration1.unregister();
+
+		// Selection filter, with API URL
+
+		systemFDSEntryServiceRegistration1 = _registerSystemFDSEntry(
+			null, "fdsName", "/app", "/endpoint", "schema");
+
+		ServiceRegistration<FDSFilter> selectionFilterServiceRegistration =
+			_registerFilter(
+				"fdsName",
+				_createSelectionFilter(
+					"categoryIds", "By Category",
+					FDSEntityFieldTypes.COLLECTION,
+					new HashMapBuilder<>().<String, Object>put(
+						"exclude", false
+					).build(),
+					"/o/headless-admin-taxonomy/v1.0/taxonomy-categories/0" +
+						"/taxonomy-categories?sort=name:asc",
+					"id", "label", false));
+
+		JSONAssert.assertEquals(
+			JSONUtil.putAll(
+				JSONUtil.put(
+					"apiURL",
+					"/o/headless-admin-taxonomy/v1.0/taxonomy-" +
+						"categories/0/taxonomy-categories?sort=name:asc"
+				).put(
+					"autocompleteEnabled", true
+				).put(
+					"entityFieldType", "collection"
+				).put(
+					"id", "categoryIds"
+				).put(
+					"inputPlaceholder", "search"
+				).put(
+					"itemKey", "id"
+				).put(
+					"itemLabel", "label"
+				).put(
+					"items", JSONUtil.putAll()
+				).put(
+					"label", "By Category"
+				).put(
+					"multiple", false
+				).put(
+					"preloadedData", JSONUtil.put("exclude", false)
+				).put(
+					"type", "selection"
+				)
+			).toString(),
+			_fdsSerializer.serializeFilters(
+				"fdsName", _httpServletRequest
+			).toString(),
+			JSONCompareMode.STRICT);
+
+		selectionFilterServiceRegistration.unregister();
+
+		systemFDSEntryServiceRegistration1.unregister();
+
+		// Selection filter, with items
+
+		systemFDSEntryServiceRegistration1 = _registerSystemFDSEntry(
+			null, "fdsName", "/app", "/endpoint", "schema");
+
+		selectionFilterServiceRegistration = _registerFilter(
+			"fdsName",
+			_createSelectionFilter(
+				"categoryIds", "By Category", FDSEntityFieldTypes.COLLECTION,
+				new HashMapBuilder<>().<String, Object>put(
+					"exclude", true
+				).build(),
+				ListUtil.fromArray(
+					new SelectionFDSFilterItem("animal", 1),
+					new SelectionFDSFilterItem("vegetable", 2)),
+				"id", "label", false, true));
+
+		JSONAssert.assertEquals(
+			JSONUtil.putAll(
+				JSONUtil.put(
+					"autocompleteEnabled", false
+				).put(
+					"entityFieldType", "collection"
+				).put(
+					"id", "categoryIds"
+				).put(
+					"items",
+					JSONUtil.putAll(
+						JSONUtil.put(
+							"label", "animal"
+						).put(
+							"value", 1
+						),
+						JSONUtil.put(
+							"label", "vegetable"
+						).put(
+							"value", 2
+						))
+				).put(
+					"label", "By Category"
+				).put(
+					"multiple", true
+				).put(
+					"preloadedData", JSONUtil.put("exclude", true)
+				).put(
+					"type", "selection"
+				)
+			).toString(),
+			_fdsSerializer.serializeFilters(
+				"fdsName", _httpServletRequest
+			).toString(),
+			JSONCompareMode.STRICT);
+
+		selectionFilterServiceRegistration.unregister();
+
+		systemFDSEntryServiceRegistration1.unregister();
+
+		// Shared filters
+
+		systemFDSEntryServiceRegistration1 = _registerSystemFDSEntry(
+			null, "fdsName1", "/app", "/endpoint", "schema");
+
+		systemFDSEntryServiceRegistration2 = _registerSystemFDSEntry(
+			null, "fdsName2", "/app", "/endpoint", "schema");
+
+		FDSFilter dateRangeFilter = _createDateRangeFilter(
+			"createDate", "By Creation Date", FDSEntityFieldTypes.DATE, null,
+			new DateFDSFilterItem(0, 0, 0), new DateFDSFilterItem(1, 1, 1980));
+
+		dateRangeFilterServiceRegistration1 = _registerFilter(
+			"fdsName1", dateRangeFilter);
+
+		dateRangeFilterServiceRegistration2 = _registerFilter(
+			"fdsName2", dateRangeFilter);
+
+		JSONAssert.assertEquals(
+			_fdsSerializer.serializeFilters(
+				"fdsName1", _httpServletRequest
+			).toString(),
+			_fdsSerializer.serializeFilters(
+				"fdsName2", _httpServletRequest
+			).toString(),
+			JSONCompareMode.STRICT);
+
+		dateRangeFilterServiceRegistration1.unregister();
+
+		dateRangeFilterServiceRegistration2.unregister();
+
+		systemFDSEntryServiceRegistration1.unregister();
+
+		systemFDSEntryServiceRegistration2.unregister();
+
+		_clientExtensionFDSFilterContextContributorServiceRegistration.
+			unregister();
+		_dateRangeFDSFilterContextContributorServiceRegistration.unregister();
+		_selectionFDSFilterContextContributorServiceRegistration.unregister();
+
+		_filterServiceTrackerMap.close();
+	}
+
+	@Test
 	public void testSerializeItemsActions() throws Exception {
 		ServiceTrackerMap
 			<String,
@@ -534,6 +1123,188 @@ public class SystemFDSSerializerTest {
 		serviceTrackerMap.close();
 	}
 
+	private FDSFilter _createClientExtensionFilter(
+		String id, String label, String moduleURL,
+		Map<String, Object> preloadedData) {
+
+		return new BaseClientExtensionFDSFilter() {
+
+			@Override
+			public String getId() {
+				return id;
+			}
+
+			@Override
+			public String getLabel() {
+				return label;
+			}
+
+			@Override
+			public String getModuleURL() {
+				return moduleURL;
+			}
+
+			@Override
+			public Map<String, Object> getPreloadedData() {
+				return preloadedData;
+			}
+
+		};
+	}
+
+	private FDSFilter _createDateRangeFilter(
+		String id, String label, String entityFieldType,
+		Map<String, Object> preloadedData, DateFDSFilterItem min,
+		DateFDSFilterItem max) {
+
+		return new BaseDateRangeFDSFilter() {
+
+			@Override
+			public String getEntityFieldType() {
+				return entityFieldType;
+			}
+
+			@Override
+			public String getId() {
+				return id;
+			}
+
+			@Override
+			public String getLabel() {
+				return label;
+			}
+
+			@Override
+			public DateFDSFilterItem getMaxDateFDSFilterItem() {
+				return max;
+			}
+
+			@Override
+			public DateFDSFilterItem getMinDateFDSFilterItem() {
+				return min;
+			}
+
+			@Override
+			public Map<String, Object> getPreloadedData() {
+				return preloadedData;
+			}
+
+		};
+	}
+
+	private FDSFilter _createSelectionFilter(
+		String id, String label, String entityFieldType,
+		Map<String, Object> preloadedData,
+		List<SelectionFDSFilterItem> selectionFDSFilterItems, String itemKey,
+		String itemLabel, boolean autocompleteEnabled, boolean multiple) {
+
+		return new BaseSelectionFDSFilter() {
+
+			@Override
+			public String getEntityFieldType() {
+				return entityFieldType;
+			}
+
+			@Override
+			public String getId() {
+				return id;
+			}
+
+			@Override
+			public String getItemKey() {
+				return itemKey;
+			}
+
+			@Override
+			public String getItemLabel() {
+				return itemLabel;
+			}
+
+			@Override
+			public String getLabel() {
+				return label;
+			}
+
+			@Override
+			public Map<String, Object> getPreloadedData() {
+				return preloadedData;
+			}
+
+			@Override
+			public List<SelectionFDSFilterItem> getSelectionFDSFilterItems(
+				Locale locale) {
+
+				return selectionFDSFilterItems;
+			}
+
+			@Override
+			public boolean isAutocompleteEnabled() {
+				return autocompleteEnabled;
+			}
+
+			@Override
+			public boolean isMultiple() {
+				return multiple;
+			}
+
+		};
+	}
+
+	private FDSFilter _createSelectionFilter(
+		String id, String label, String entityFieldType,
+		Map<String, Object> preloadedData, String apiURL, String itemKey,
+		String itemLabel, boolean multiple) {
+
+		return new BaseSelectionFDSFilter() {
+
+			@Override
+			public String getAPIURL() {
+				return apiURL;
+			}
+
+			@Override
+			public String getEntityFieldType() {
+				return entityFieldType;
+			}
+
+			@Override
+			public String getId() {
+				return id;
+			}
+
+			@Override
+			public String getItemKey() {
+				return itemKey;
+			}
+
+			@Override
+			public String getItemLabel() {
+				return itemLabel;
+			}
+
+			@Override
+			public String getLabel() {
+				return label;
+			}
+
+			@Override
+			public Map<String, Object> getPreloadedData() {
+				return preloadedData;
+			}
+
+			@Override
+			public boolean isAutocompleteEnabled() {
+				return true;
+			}
+
+			@Override
+			public boolean isMultiple() {
+				return multiple;
+			}
+
+		};
+	}
+
 	private ServiceRegistration<FDSAPIURLResolver> _registerFDSAPIURLResolver(
 		String restApplication, String restSchema, String[] tokens,
 		String[] values) {
@@ -615,6 +1386,14 @@ public class SystemFDSSerializerTest {
 			MapUtil.singletonDictionary("frontend.data.set.name", fdsName));
 	}
 
+	private ServiceRegistration<FDSFilter> _registerFilter(
+		String fdsName, FDSFilter fdsFilter) {
+
+		return _bundleContext.registerService(
+			FDSFilter.class, fdsFilter,
+			MapUtil.singletonDictionary("frontend.data.set.name", fdsName));
+	}
+
 	private ServiceRegistration<SystemFDSEntry> _registerSystemFDSEntry(
 		String additionalURLParameters, String fdsName, String restApplication,
 		String restEndpoint, String restSchema) {
@@ -662,10 +1441,44 @@ public class SystemFDSSerializerTest {
 			MapUtil.singletonDictionary("frontend.data.set.name", fdsName));
 	}
 
+	private static final ClientExtensionFDSFilterContextContributor
+		_clientExtensionFDSFilterContextContributor =
+			new ClientExtensionFDSFilterContextContributor();
+	private static final DateRangeFDSFilterContextContributor
+		_dateRangeFDSFilterContextContributor =
+			new DateRangeFDSFilterContextContributor();
+	private static final FDSFilterRegistryImpl _fdsFilterRegistryImpl =
+		new FDSFilterRegistryImpl();
+	private static ServiceTrackerMap
+		<String,
+		 List<ServiceTrackerCustomizerFactory.ServiceWrapper<FDSFilter>>>
+			_filterServiceTrackerMap;
+	private static final JSONFactory _jsonFactory = new JSONFactoryImpl();
+	private static final SelectionFDSFilterContextContributor
+		_selectionFDSFilterContextContributor =
+			new SelectionFDSFilterContextContributor();
+
 	private BundleContext _bundleContext = SystemBundleUtil.getBundleContext();
+	private ServiceRegistration<FDSFilterContextContributor>
+		_clientExtensionFDSFilterContextContributorServiceRegistration;
+	private ServiceRegistration<FDSFilterContextContributor>
+		_dateRangeFDSFilterContextContributorServiceRegistration;
+	private final FDSFilterContextContributorRegistryImpl
+		_fdsFilterContextContributorRegistryImpl =
+			new FDSFilterContextContributorRegistryImpl();
 	private final FDSSerializer _fdsSerializer = new SystemFDSSerializer();
+	private ServiceTrackerMap
+		<String,
+		 List
+			 <ServiceTrackerCustomizerFactory.ServiceWrapper
+				 <FDSFilterContextContributor>>>
+					_filterContextContributorServiceTrackerMap;
 	private final HttpServletRequest _httpServletRequest = Mockito.mock(
 		HttpServletRequest.class);
+	private final Language _language = Mockito.mock(Language.class);
+	private final Portal _portal = Mockito.mock(Portal.class);
+	private ServiceRegistration<FDSFilterContextContributor>
+		_selectionFDSFilterContextContributorServiceRegistration;
 	private ServiceTrackerMap<String, SystemFDSEntry> _serviceTrackerMap;
 	private final SystemFDSEntryRegistry _systemFDSEntryRegistry =
 		new SystemFDSEntryRegistryImpl();

@@ -37,12 +37,7 @@ export function registerLocalizedInput({
 				namespace
 			);
 
-			if (input.type === 'checkbox') {
-				input.checked = value;
-			}
-			else {
-				input.value = value;
-			}
+			input.value = value;
 		});
 	}
 
@@ -61,7 +56,14 @@ export function registerLocalizedInput({
 		if (translationInput.getAttribute('value') !== null) {
 			onLocaleChange?.({languageId, value: translationInput.value});
 
-			if (inputElement) {
+			if (!inputElement) {
+				return;
+			}
+
+			if (inputElement.type === 'checkbox') {
+				inputElement.checked = translationInput.value === 'true';
+			}
+			else {
 				inputElement.value = translationInput.value;
 			}
 		}

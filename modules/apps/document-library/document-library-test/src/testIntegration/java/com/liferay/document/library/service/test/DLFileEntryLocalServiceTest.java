@@ -2143,6 +2143,81 @@ public class DLFileEntryLocalServiceTest {
 		}
 	}
 
+	@Test(expected = FileMimeTypeException.class)
+	public void testUpdateFileEntryWithMimeTypeNotSupportedWithContent()
+		throws Exception {
+
+		DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.addFileEntry(
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
+			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			"file.txt", ContentTypes.TEXT_PLAIN, "file",
+			StringUtil.randomString(), StringPool.BLANK, StringPool.BLANK, -1,
+			new HashMap<>(), null, new ByteArrayInputStream(new byte[0]), 0,
+			null, null, null,
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId()));
+
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						TestPropsValues.getCompanyId(),
+						DLFileEntryMimeTypeConfiguration.class.getName(),
+						HashMapDictionaryBuilder.<String, Object>put(
+							"fileMimeTypes", new String[] {"text/html"}
+						).build())) {
+
+			DLFileEntryLocalServiceUtil.updateFileEntry(
+				TestPropsValues.getUserId(), dlFileEntry.getFileEntryId(),
+				dlFileEntry.getFileName(), ContentTypes.TEXT_PLAIN,
+				StringUtil.randomString(), StringUtil.randomString(),
+				StringPool.BLANK, StringPool.BLANK,
+				DLVersionNumberIncrease.AUTOMATIC,
+				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
+				new HashMap<>(), null, new ByteArrayInputStream(new byte[0]), 0,
+				dlFileEntry.getDisplayDate(), dlFileEntry.getExpirationDate(),
+				dlFileEntry.getReviewDate(),
+				ServiceContextTestUtil.getServiceContext(
+					_group.getGroupId(), TestPropsValues.getUserId()));
+		}
+	}
+
+	@Test
+	public void testUpdateFileEntryWithMimeTypeNotSupportedWithoutContent()
+		throws Exception {
+
+		DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.addFileEntry(
+			null, TestPropsValues.getUserId(), _group.getGroupId(),
+			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			"file.txt", ContentTypes.TEXT_PLAIN, "file",
+			StringUtil.randomString(), StringPool.BLANK, StringPool.BLANK, -1,
+			new HashMap<>(), null, new ByteArrayInputStream(new byte[0]), 0,
+			null, null, null,
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId()));
+
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						TestPropsValues.getCompanyId(),
+						DLFileEntryMimeTypeConfiguration.class.getName(),
+						HashMapDictionaryBuilder.<String, Object>put(
+							"fileMimeTypes", new String[] {"text/html"}
+						).build())) {
+
+			DLFileEntryLocalServiceUtil.updateFileEntry(
+				TestPropsValues.getUserId(), dlFileEntry.getFileEntryId(),
+				dlFileEntry.getFileName(), ContentTypes.TEXT_PLAIN,
+				dlFileEntry.getTitle(), "description modified",
+				StringPool.BLANK, StringPool.BLANK,
+				DLVersionNumberIncrease.AUTOMATIC,
+				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT,
+				new HashMap<>(), null, null, 0, dlFileEntry.getDisplayDate(),
+				dlFileEntry.getExpirationDate(), dlFileEntry.getReviewDate(),
+				ServiceContextTestUtil.getServiceContext(
+					_group.getGroupId(), TestPropsValues.getUserId()));
+		}
+	}
+
 	@Test(expected = DuplicateFolderNameException.class)
 	public void testValidateFileFailsWithAnExistingFolder() throws Exception {
 		Folder folder = DLAppServiceUtil.addFolder(

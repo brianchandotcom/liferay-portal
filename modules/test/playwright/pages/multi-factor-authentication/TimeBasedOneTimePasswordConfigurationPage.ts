@@ -46,8 +46,6 @@ export class TimeBasedOneTimePasswordConfigurationPage {
 		else {
 			await this.saveButton.click();
 		}
-
-		await this.page.waitForTimeout(500);
 	}
 
 	async disable() {
@@ -55,13 +53,6 @@ export class TimeBasedOneTimePasswordConfigurationPage {
 
 		await this.enabledCheckBox.uncheck();
 
-		if (await this.page.isVisible('button:has-text("Update")')) {
-			await this.updateButton.click();
-		}
-		else {
-			await this.saveButton.click();
-		}
-
-		await this.page.waitForTimeout(500);
+		await this.updateButton.click();
 	}
 }

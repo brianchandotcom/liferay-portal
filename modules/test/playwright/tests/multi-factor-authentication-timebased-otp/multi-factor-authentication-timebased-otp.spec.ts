@@ -38,8 +38,6 @@ test('LPD-48214 verify that qr code is visible', async ({page}) => {
 
 	await accountSettingsPage.goToMultiFactorAuthenticationSettings();
 
-	await page.waitForTimeout(500);
-
 	await expect(
 		await page.getByAltText('otp-configuration-qrcode').getAttribute('src')
 	).not.toBeNull();

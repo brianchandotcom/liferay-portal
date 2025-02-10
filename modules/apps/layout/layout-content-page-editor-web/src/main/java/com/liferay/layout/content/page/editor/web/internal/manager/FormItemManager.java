@@ -363,8 +363,8 @@ public class FormItemManager {
 			String type = _getFragmentEntryLinkFormButtonType(
 				fragmentStyledLayoutStructureItem.getFragmentEntryLinkId());
 
-			if (Objects.equals(type, "previous") ||
-				Objects.equals(type, "next")) {
+			if (Objects.equals(type, "next") ||
+				Objects.equals(type, "previous")) {
 
 				layoutStructure.markLayoutStructureItemForDeletion(
 					Collections.singletonList(childrenItemId),

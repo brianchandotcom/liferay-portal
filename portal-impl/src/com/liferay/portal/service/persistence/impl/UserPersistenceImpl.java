@@ -5188,225 +5188,6 @@ public class UserPersistenceImpl
 	private static final String _FINDER_COLUMN_C_GUID_GOOGLEUSERID_3 =
 		"(user.googleUserId IS NULL OR user.googleUserId = '')";
 
-	private FinderPath _finderPathFetchByC_O;
-
-	/**
-	 * Returns the user where companyId = &#63; and openId = &#63; or throws a <code>NoSuchUserException</code> if it could not be found.
-	 *
-	 * @param companyId the company ID
-	 * @param openId the open ID
-	 * @return the matching user
-	 * @throws NoSuchUserException if a matching user could not be found
-	 */
-	@Override
-	public User findByC_O(long companyId, String openId)
-		throws NoSuchUserException {
-
-		User user = fetchByC_O(companyId, openId);
-
-		if (user == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("companyId=");
-			sb.append(companyId);
-
-			sb.append(", openId=");
-			sb.append(openId);
-
-			sb.append("}");
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
-			}
-
-			throw new NoSuchUserException(sb.toString());
-		}
-
-		return user;
-	}
-
-	/**
-	 * Returns the user where companyId = &#63; and openId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param companyId the company ID
-	 * @param openId the open ID
-	 * @return the matching user, or <code>null</code> if a matching user could not be found
-	 */
-	@Override
-	public User fetchByC_O(long companyId, String openId) {
-		return fetchByC_O(companyId, openId, true);
-	}
-
-	/**
-	 * Returns the user where companyId = &#63; and openId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param companyId the company ID
-	 * @param openId the open ID
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the matching user, or <code>null</code> if a matching user could not be found
-	 */
-	@Override
-	public User fetchByC_O(
-		long companyId, String openId, boolean useFinderCache) {
-
-		try (SafeCloseable safeCloseable =
-				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
-					User.class)) {
-
-			openId = Objects.toString(openId, "");
-
-			Object[] finderArgs = null;
-
-			if (useFinderCache) {
-				finderArgs = new Object[] {companyId, openId};
-			}
-
-			Object result = null;
-
-			if (useFinderCache) {
-				result = FinderCacheUtil.getResult(
-					_finderPathFetchByC_O, finderArgs, this);
-			}
-
-			if (result instanceof User) {
-				User user = (User)result;
-
-				if ((companyId != user.getCompanyId()) ||
-					!Objects.equals(openId, user.getOpenId())) {
-
-					result = null;
-				}
-			}
-
-			if (result == null) {
-				StringBundler sb = new StringBundler(4);
-
-				sb.append(_SQL_SELECT_USER_WHERE);
-
-				sb.append(_FINDER_COLUMN_C_O_COMPANYID_2);
-
-				boolean bindOpenId = false;
-
-				if (openId.isEmpty()) {
-					sb.append(_FINDER_COLUMN_C_O_OPENID_3);
-				}
-				else {
-					bindOpenId = true;
-
-					sb.append(_FINDER_COLUMN_C_O_OPENID_2);
-				}
-
-				String sql = sb.toString();
-
-				Session session = null;
-
-				try {
-					session = openSession();
-
-					Query query = session.createQuery(sql);
-
-					QueryPos queryPos = QueryPos.getInstance(query);
-
-					queryPos.add(companyId);
-
-					if (bindOpenId) {
-						queryPos.add(openId);
-					}
-
-					List<User> list = query.list();
-
-					if (list.isEmpty()) {
-						if (useFinderCache) {
-							FinderCacheUtil.putResult(
-								_finderPathFetchByC_O, finderArgs, list);
-						}
-					}
-					else {
-						if (list.size() > 1) {
-							Collections.sort(list, Collections.reverseOrder());
-
-							if (_log.isWarnEnabled()) {
-								if (!useFinderCache) {
-									finderArgs = new Object[] {
-										companyId, openId
-									};
-								}
-
-								_log.warn(
-									"UserPersistenceImpl.fetchByC_O(long, String, boolean) with parameters (" +
-										StringUtil.merge(finderArgs) +
-											") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
-							}
-						}
-
-						User user = list.get(0);
-
-						result = user;
-
-						cacheResult(user);
-					}
-				}
-				catch (Exception exception) {
-					throw processException(exception);
-				}
-				finally {
-					closeSession(session);
-				}
-			}
-
-			if (result instanceof List<?>) {
-				return null;
-			}
-			else {
-				return (User)result;
-			}
-		}
-	}
-
-	/**
-	 * Removes the user where companyId = &#63; and openId = &#63; from the database.
-	 *
-	 * @param companyId the company ID
-	 * @param openId the open ID
-	 * @return the user that was removed
-	 */
-	@Override
-	public User removeByC_O(long companyId, String openId)
-		throws NoSuchUserException {
-
-		User user = findByC_O(companyId, openId);
-
-		return remove(user);
-	}
-
-	/**
-	 * Returns the number of users where companyId = &#63; and openId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param openId the open ID
-	 * @return the number of matching users
-	 */
-	@Override
-	public int countByC_O(long companyId, String openId) {
-		User user = fetchByC_O(companyId, openId);
-
-		if (user == null) {
-			return 0;
-		}
-
-		return 1;
-	}
-
-	private static final String _FINDER_COLUMN_C_O_COMPANYID_2 =
-		"user.companyId = ? AND ";
-
-	private static final String _FINDER_COLUMN_C_O_OPENID_2 = "user.openId = ?";
-
-	private static final String _FINDER_COLUMN_C_O_OPENID_3 =
-		"(user.openId IS NULL OR user.openId = '')";
-
 	private FinderPath _finderPathWithPaginationFindByC_T;
 	private FinderPath _finderPathWithoutPaginationFindByC_T;
 	private FinderPath _finderPathCountByC_T;
@@ -8004,10 +7785,6 @@ public class UserPersistenceImpl
 				user);
 
 			FinderCacheUtil.putResult(
-				_finderPathFetchByC_O,
-				new Object[] {user.getCompanyId(), user.getOpenId()}, user);
-
-			FinderCacheUtil.putResult(
 				_finderPathFetchByERC_C,
 				new Object[] {
 					user.getExternalReferenceCode(), user.getCompanyId()
@@ -8145,13 +7922,6 @@ public class UserPersistenceImpl
 
 			FinderCacheUtil.putResult(
 				_finderPathFetchByC_GUID, args, userModelImpl);
-
-			args = new Object[] {
-				userModelImpl.getCompanyId(), userModelImpl.getOpenId()
-			};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByC_O, args, userModelImpl);
 
 			args = new Object[] {
 				userModelImpl.getExternalReferenceCode(),
@@ -10789,11 +10559,6 @@ public class UserPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_GUID",
 			new String[] {Long.class.getName(), String.class.getName()},
 			new String[] {"companyId", "googleUserId"}, true);
-
-		_finderPathFetchByC_O = new FinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_O",
-			new String[] {Long.class.getName(), String.class.getName()},
-			new String[] {"companyId", "openId"}, true);
 
 		_finderPathWithPaginationFindByC_T = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_T",

@@ -1754,69 +1754,6 @@ public class UserUtil {
 	}
 
 	/**
-	 * Returns the user where companyId = &#63; and openId = &#63; or throws a <code>NoSuchUserException</code> if it could not be found.
-	 *
-	 * @param companyId the company ID
-	 * @param openId the open ID
-	 * @return the matching user
-	 * @throws NoSuchUserException if a matching user could not be found
-	 */
-	public static User findByC_O(long companyId, String openId)
-		throws com.liferay.portal.kernel.exception.NoSuchUserException {
-
-		return getPersistence().findByC_O(companyId, openId);
-	}
-
-	/**
-	 * Returns the user where companyId = &#63; and openId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param companyId the company ID
-	 * @param openId the open ID
-	 * @return the matching user, or <code>null</code> if a matching user could not be found
-	 */
-	public static User fetchByC_O(long companyId, String openId) {
-		return getPersistence().fetchByC_O(companyId, openId);
-	}
-
-	/**
-	 * Returns the user where companyId = &#63; and openId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param companyId the company ID
-	 * @param openId the open ID
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the matching user, or <code>null</code> if a matching user could not be found
-	 */
-	public static User fetchByC_O(
-		long companyId, String openId, boolean useFinderCache) {
-
-		return getPersistence().fetchByC_O(companyId, openId, useFinderCache);
-	}
-
-	/**
-	 * Removes the user where companyId = &#63; and openId = &#63; from the database.
-	 *
-	 * @param companyId the company ID
-	 * @param openId the open ID
-	 * @return the user that was removed
-	 */
-	public static User removeByC_O(long companyId, String openId)
-		throws com.liferay.portal.kernel.exception.NoSuchUserException {
-
-		return getPersistence().removeByC_O(companyId, openId);
-	}
-
-	/**
-	 * Returns the number of users where companyId = &#63; and openId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param openId the open ID
-	 * @return the number of matching users
-	 */
-	public static int countByC_O(long companyId, String openId) {
-		return getPersistence().countByC_O(companyId, openId);
-	}
-
-	/**
 	 * Returns all the users where companyId = &#63; and type = &#63;.
 	 *
 	 * @param companyId the company ID

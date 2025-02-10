@@ -1396,56 +1396,6 @@ public interface UserPersistence
 	public int countByC_GUID(long companyId, String googleUserId);
 
 	/**
-	 * Returns the user where companyId = &#63; and openId = &#63; or throws a <code>NoSuchUserException</code> if it could not be found.
-	 *
-	 * @param companyId the company ID
-	 * @param openId the open ID
-	 * @return the matching user
-	 * @throws NoSuchUserException if a matching user could not be found
-	 */
-	public User findByC_O(long companyId, String openId)
-		throws NoSuchUserException;
-
-	/**
-	 * Returns the user where companyId = &#63; and openId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param companyId the company ID
-	 * @param openId the open ID
-	 * @return the matching user, or <code>null</code> if a matching user could not be found
-	 */
-	public User fetchByC_O(long companyId, String openId);
-
-	/**
-	 * Returns the user where companyId = &#63; and openId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param companyId the company ID
-	 * @param openId the open ID
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the matching user, or <code>null</code> if a matching user could not be found
-	 */
-	public User fetchByC_O(
-		long companyId, String openId, boolean useFinderCache);
-
-	/**
-	 * Removes the user where companyId = &#63; and openId = &#63; from the database.
-	 *
-	 * @param companyId the company ID
-	 * @param openId the open ID
-	 * @return the user that was removed
-	 */
-	public User removeByC_O(long companyId, String openId)
-		throws NoSuchUserException;
-
-	/**
-	 * Returns the number of users where companyId = &#63; and openId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param openId the open ID
-	 * @return the number of matching users
-	 */
-	public int countByC_O(long companyId, String openId);
-
-	/**
 	 * Returns all the users where companyId = &#63; and type = &#63;.
 	 *
 	 * @param companyId the company ID

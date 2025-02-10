@@ -3661,6 +3661,94 @@ components:
                     description:
                         The localized text to display when an action is executed.
             type: object
+        ObjectEntryFolder:
+            description:
+                Represents a object entry folder that contains objects entries and other object entry folders.
+            properties:
+                actions:
+                    additionalProperties:
+                        additionalProperties:
+                            type: string
+                        type: object
+                    # @review
+                    description:
+                        Block of actions allowed by the user making the request.
+                    readOnly: true
+                    type: object
+                assetLibraryKey:
+                    # @review
+                    description:
+                        The key of the asset library to which the object entry folder is scoped.
+                    readOnly: true
+                    type: string
+                creator:
+                    $ref: "#/components/schemas/Creator"
+                    description:
+                        The object entry folder's creator.
+                    readOnly: true
+                dateCreated:
+                    description:
+                        The object entry folder's creation date.
+                    format: date-time
+                    readOnly: true
+                    type: string
+                dateModified:
+                    description:
+                        The last time a field of the folder changed.
+                    format: date-time
+                    readOnly: true
+                    type: string
+                externalReferenceCode:
+                    # @review
+                    description:
+                        The object entry folder's external reference code.
+                    type: string
+                id:
+                    description:
+                        The object entry folder's ID.
+                    format: int64
+                    readOnly: true
+                    type: integer
+                label:
+                    description:
+                        The object entry folder's label.
+                    readOnly: true
+                    type: string
+                label_i18n:
+                    additionalProperties:
+                        type: string
+                    description:
+                        The localized object entry folder's label.
+                    type: object
+                name:
+                    description:
+                        The object entry folder's main title/name.
+                    type: string
+                numberOfObjectEntries:
+                    description:
+                        The number of object entries in this object entry folder.
+                    readOnly: true
+                    type: integer
+                numberOfObjectEntryFolders:
+                    description:
+                        The number of this object entry folder's child object entry folders.
+                    readOnly: true
+                    type: integer
+                parentObjectEntryFolderId:
+                    # @review
+                    description:
+                        The ID of the object entry folder's parent, if it exists.
+                    format: int64
+                    type: integer
+                viewableBy:
+                    description:
+                        A write-only property that specifies the object entry folder's default permissions.
+                    enum: [Anyone, Members, Owner]
+                    type: string
+                    writeOnly: true
+            required:
+                - name
+            type: object
         OpenGraphSettings:
             # @review
             description:

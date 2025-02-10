@@ -85,7 +85,7 @@ public class TypeScriptClientGenerator {
 				apiFile,
 				FreeMarkerUtil.processTemplate(
 					_copyrightFile, FileUtil.getCopyrightYear(apiFile),
-					"ts/api", apiContext.getValue()));
+					"typescript/api", apiContext.getValue()));
 		}
 
 		//Generate node/api/apis.ts file
@@ -94,7 +94,7 @@ public class TypeScriptClientGenerator {
 		FileUtil.write(
 			apisFile,
 			FreeMarkerUtil.processTemplate(
-				_copyrightFile, FileUtil.getCopyrightYear(apisFile), "ts/apis",
+				_copyrightFile, FileUtil.getCopyrightYear(apisFile), "typescript/apis",
 				Collections.singletonMap("apiContexts", apiContexts)));
 
 		// Generate Model files
@@ -116,7 +116,7 @@ public class TypeScriptClientGenerator {
 					modelFile,
 					FreeMarkerUtil.processTemplate(
 						_copyrightFile, FileUtil.getCopyrightYear(modelFile),
-						"ts/model", modelContext));
+						"typescript/model", modelContext));
 			}
 		}
 
@@ -129,7 +129,7 @@ public class TypeScriptClientGenerator {
 			modelsFile,
 			FreeMarkerUtil.processTemplate(
 				_copyrightFile, FileUtil.getCopyrightYear(modelsFile),
-				"ts/models",
+				"typescript/models",
 				Collections.singletonMap("modelContexts", schemas)));
 
 		// Generate node/api.ts file
@@ -140,7 +140,7 @@ public class TypeScriptClientGenerator {
 			apiGlobalFile,
 			FreeMarkerUtil.processTemplate(
 				_copyrightFile, FileUtil.getCopyrightYear(apiGlobalFile),
-				"ts/api_global", null));
+				"typescript/api_global", null));
 	}
 
 	private Map<String, Map<String, Object>> _buildApiContexts(

@@ -2156,6 +2156,165 @@ test.describe('Form Localization', () => {
 	);
 
 	test(
+		'Can translate select form field',
+		{tag: '@LPD-46485'},
+		async ({apiHelpers, page, pageEditorPage, site}) => {
+
+			// Create object definition with a localized select
+
+			const objectDefinitionApiClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+
+			const listTypeDefinition =
+				await apiHelpers.listTypeAdmin.postRandomListTypeDefinition();
+
+			const options = ['Spain', 'Italy', 'Germany', 'Brasil'];
+
+			for (const option of options) {
+				await apiHelpers.listTypeAdmin.postListTypeEntry(
+					listTypeDefinition.externalReferenceCode,
+					option
+				);
+			}
+
+			const {body: objectDefinition} =
+				await objectDefinitionApiClient.postObjectDefinition({
+					active: true,
+					enableLocalization: true,
+					externalReferenceCode: 'SelectERC',
+					label: {
+						en_US: 'Select',
+					},
+					name: 'Select',
+					objectFields: [
+						{
+							DBType: ObjectField.DBTypeEnum.String,
+							businessType: ObjectField.BusinessTypeEnum.Picklist,
+							externalReferenceCode: 'selectCountryERC',
+							indexed: true,
+							indexedAsKeyword: false,
+							label: {
+								en_US: 'Select a Country',
+							},
+							listTypeDefinitionExternalReferenceCode:
+								listTypeDefinition.externalReferenceCode,
+							listTypeDefinitionId: listTypeDefinition.id,
+							localized: true,
+							name: 'selectCountry',
+							required: false,
+						},
+					],
+					panelCategoryKey: 'control_panel.object',
+					pluralLabel: {
+						en_US: 'Select',
+					},
+					portlet: true,
+					scope: 'company',
+					status: {
+						code: 0,
+					},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			// Create a page with a Form fragment
+
+			const formId = getRandomString();
+
+			const formDefinition = getFormContainerDefinition({
+				id: formId,
+			});
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([formDefinition]),
+				siteId: site.id,
+				title: getRandomString(),
+			});
+
+			await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+			// Map the form to the Boolean object
+
+			await pageEditorPage.mapFormFragment(formId, 'Select', 'all', {
+				addLocalizationSelect: true,
+			});
+
+			await pageEditorPage.publishPage();
+
+			await page.goto(
+				`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('option', {
+					name: 'Italy',
+				}),
+				trigger: page.getByPlaceholder('Choose an Option'),
+			});
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('option', {
+					name: 'Spanish (Spain) Language',
+				}),
+				trigger: page.getByLabel(
+					'Select a language, current language:'
+				),
+			});
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('option', {
+					name: 'Germany',
+				}),
+				trigger: page.getByPlaceholder('Choose an Option'),
+			});
+
+			// Check the translation in the localization select
+
+			await page
+				.getByLabel('Select a language, current language:')
+				.click();
+
+			expect(
+				page.getByRole('option', {
+					name: 'Spanish (Spain) Language',
+				})
+			).toContainText(/Translated/);
+
+			await page.keyboard.press('Escape');
+
+			// Save the form and publish the page
+
+			await page.getByRole('button', {name: 'Submit'}).click();
+
+			await expect(
+				page.getByText(
+					'Thank you. Your information was successfully received.'
+				)
+			).toBeVisible();
+
+			// Check the object entry
+
+			const {items} =
+				await apiHelpers.objectEntry.getObjectDefinitionObjectEntries(
+					'c/selects'
+				);
+
+			const item = items[0];
+
+			expect(item.selectCountry_i18n).toStrictEqual({
+				en_US: {key: 'italy', name: 'Italy'},
+				es_ES: {key: 'germany', name: 'Germany'},
+			});
+		}
+	);
+
+	test(
 		'Can translate date and date time form fields',
 		{tag: '@LPD-43805'},
 		async ({apiHelpers, page, pageEditorPage, site}) => {

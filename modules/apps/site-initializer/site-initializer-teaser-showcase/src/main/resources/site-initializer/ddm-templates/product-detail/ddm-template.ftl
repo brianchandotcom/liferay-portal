@@ -268,6 +268,6 @@
 	</script>
 <#else>
 	<div class="alert alert-info text-center my-7 mx-4">
-	   We're sorry but we were unable to find that product.
+	   We are sorry, but we were unable to find that product.
 	</div>
 </#if>

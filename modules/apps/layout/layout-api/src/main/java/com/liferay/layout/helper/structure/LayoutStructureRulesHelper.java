@@ -31,18 +31,29 @@ public interface LayoutStructureRulesHelper {
 	public static class LayoutStructureRulesResult {
 
 		public LayoutStructureRulesResult(
-			Set<String> displayedItemIds, Set<String> hiddenItemIds,
+			Set<String> disabledItemIds, Set<String> displayedItemIds,
+			Set<String> enabledItemIds, Set<String> hiddenItemIds,
 			Map<String, List<String>> itemIdsMap,
 			Map<String, List<String>> layoutStructureRuleIdsMap) {
 
+			_disabledItemIds = disabledItemIds;
 			_displayedItemIds = displayedItemIds;
+			_enabledItemIds = enabledItemIds;
 			_hiddenItemIds = hiddenItemIds;
 			_itemIdsMap = itemIdsMap;
 			_layoutStructureRuleIdsMap = layoutStructureRuleIdsMap;
 		}
 
+		public Set<String> getDisabledItemIds() {
+			return _disabledItemIds;
+		}
+
 		public Set<String> getDisplayedItemIds() {
 			return _displayedItemIds;
+		}
+
+		public Set<String> getEnabledItemIds() {
+			return _enabledItemIds;
 		}
 
 		public Set<String> getHiddenItemIds() {
@@ -57,7 +68,9 @@ public interface LayoutStructureRulesHelper {
 			return _layoutStructureRuleIdsMap;
 		}
 
+		private final Set<String> _disabledItemIds;
 		private final Set<String> _displayedItemIds;
+		private final Set<String> _enabledItemIds;
 		private final Set<String> _hiddenItemIds;
 		private final Map<String, List<String>> _itemIdsMap;
 		private final Map<String, List<String>> _layoutStructureRuleIdsMap;

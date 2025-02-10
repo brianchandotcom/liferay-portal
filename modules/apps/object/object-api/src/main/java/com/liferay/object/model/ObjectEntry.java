@@ -61,6 +61,9 @@ public interface ObjectEntry
 	public String getTitleValue()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	public String getTitleValue(String languageId)
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 	public String getURLTitle(java.util.Locale locale)
 		throws com.liferay.portal.kernel.exception.PortalException;
 

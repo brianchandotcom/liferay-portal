@@ -6,6 +6,9 @@
 import {useFormState} from 'data-engine-js-components-web';
 import React, {useCallback, useEffect, useState} from 'react';
 
+import MultipleSelectLocalizedObjectField, {
+	MultipleSelectLocalizedObjectFieldProps,
+} from '../localizedObjectFields/MultipleSelectLocalizedObjectField';
 import {MultipleSelectBase} from './MultipleSelectBase';
 import {MultipleSelectBaseProps} from './select.d';
 
@@ -65,8 +68,19 @@ const MultipleSelection = ({
 	);
 };
 
-const Main = (props: MultipleSelectBaseProps) => {
-	return <MultipleSelection {...props} />;
+const Main = (
+	props: MultipleSelectionProps | MultipleSelectLocalizedObjectFieldProps
+) => {
+	const isLocalizedObjectField: boolean =
+		Liferay.FeatureFlags['LPD-32050'] && !!props.localizedObjectField;
+
+	return !isLocalizedObjectField ? (
+		<MultipleSelection {...(props as MultipleSelectionProps)} />
+	) : (
+		<MultipleSelectLocalizedObjectField
+			{...(props as MultipleSelectLocalizedObjectFieldProps)}
+		/>
+	);
 };
 
 export default Main;

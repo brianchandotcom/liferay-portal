@@ -57,6 +57,7 @@
 											onChange="Liferay.Search.FacetUtil.changeSelection(event);"
 											type="checkbox"
 										/>
+
 										<span class="custom-control-label">
 											<span class="custom-control-label-text">
 												${name}

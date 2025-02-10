@@ -1,17 +1,19 @@
 <#if cpCatalogEntry??>
-	<#assign 
+	<#assign
 		cpDefinitionId = cpCatalogEntry.getCPDefinitionId()productName = cpCatalogEntry.getName()
-		productSkus=cpCatalogEntry.getCPSkus() productShortDescription=cpCatalogEntry.getShortDescription()
-		productDescription=cpCatalogEntry.getDescription() commerceContext=renderRequest.getAttribute("COMMERCE_CONTEXT")
-		account=commerceContext.getAccountEntry() accountId=account.getAccountEntryId()
-		defaultImageURL=cpContentHelper.getDefaultImageFileURL(accountId, cpDefinitionId)
-		productImages=cpContentHelper.getImages(cpDefinitionId, true, themeDisplay)
-		cpAttachmentFileEntries=cpContentHelper.getCPMedias(cpDefinitionId, themeDisplay)
-		cpDefinitionSpecificationOptionValues=cpContentHelper.getCPDefinitionSpecificationOptionValues(cpDefinitionId)
-		cpOptionCategories=cpContentHelper.getCPOptionCategories(themeDisplay.getCompanyId())
-		stockQuantity=cpContentHelper.getStockQuantity(request)
+		productSkus = cpCatalogEntry.getCPSkus()productShortDescription = cpCatalogEntry.getShortDescription()
+		productDescription = cpCatalogEntry.getDescription()commerceContext = renderRequest.getAttribute("COMMERCE_CONTEXT")
+		account = commerceContext.getAccountEntry()accountId = account.getAccountEntryId()
+		defaultImageURL = cpContentHelper.getDefaultImageFileURL(accountId, cpDefinitionId)
+		productImages = cpContentHelper.getImages(cpDefinitionId, true, themeDisplay)
+		cpAttachmentFileEntries = cpContentHelper.getCPMedias(cpDefinitionId, themeDisplay)
+		cpDefinitionSpecificationOptionValues = cpContentHelper.getCPDefinitionSpecificationOptionValues(cpDefinitionId)
+		cpOptionCategories = cpContentHelper.getCPOptionCategories(themeDisplay.getCompanyId())
+		stockQuantity = cpContentHelper.getStockQuantity(request)
 	/>
+
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+
 	<style>
 		.thumbnail_images ul {
 			list-style: none;
@@ -71,6 +73,7 @@
 			padding-top: 1rem;
 		}
 	</style>
+
 	<div class="container mt-5 mb-5">
 		<div class="">
 			<div class="row g-0">
@@ -93,6 +96,7 @@
 						</div>
 					</div>
 				</div>
+
 				<div class="col-md-6">
 					<div class="p-3 right-side">
 						<header>
@@ -104,6 +108,7 @@
 								<@liferay.language_format arguments="${stockQuantity}" key="x-in-stock" />
 							</div>
 						</header>
+
 						<div class="d-block justify-content-between align-items-center">
 							<h4>${productName}</h4>
 
@@ -115,6 +120,7 @@
 								</#if>
 							</div>
 						</div>
+
 						<div class="mt-3 mb-5 pr-3 content">${productShortDescription}</div>
 						<div class="mt-3 mb-5 pr-3 content">${productDescription}</div>
 						<@liferay_commerce_ui["price"] CPCatalogEntry=cpCatalogEntry />
@@ -124,6 +130,7 @@
 			</div>
 		</div>
 	</div>
+
 	<div class="container mt-5 mb-5">
 		<div class="card prdct mb-7">
 			<div class="row">
@@ -131,8 +138,10 @@
 					<div class="sheet-example">
 						<h5 class="pb-0 pl-5 pt-5">Specifications</h5>
 					</div>
+
 					<div aria-labelledby="navUnderlineSpecificationsTab" class="tab-pane" id="navUnderlineSpecifications" role="tabpanel">
 						<#assign cont = 0 />
+
 						<dl class="p-4 specification-list">
 						<#if cpDefinitionSpecificationOptionValues?has_content>
 							<table class="p-4 table table-sm">
@@ -162,14 +171,15 @@
 									<#list cpOptionCategories as cpOptionCategory>
 										<#assign
 											categorizedCPDefinitionSpecificationOptionValues = cpContentHelper.getCategorizedCPDefinitionSpecificationOptionValues(cpDefinitionId,
-											cpOptionCategory.getCPOptionCategoryId()) 
+											cpOptionCategory.getCPOptionCategoryId())
 										/>
 										<#if categorizedCPDefinitionSpecificationOptionValues?has_content>
 											<#assign cont = 1 />
 											<#list categorizedCPDefinitionSpecificationOptionValues as cpDefinitionSpecificationOptionValue>
 												<#assign
-													cpSpecificationOption = cpDefinitionSpecificationOptionValue.getCPSpecificationOption() 
+													cpSpecificationOption = cpDefinitionSpecificationOptionValue.getCPSpecificationOption()
 												/>
+
 												<tr>
 													<td class="specification-term table-cell-minw-150 table-title prdct"></td>
 													<td class="specification-term">
@@ -196,6 +206,7 @@
 			</div>
 		</div>
 	</div>
+
 	<div class="container mt-5 mb-5">
 		<div class="card prdct mb-7">
 			<div class="row">
@@ -203,6 +214,7 @@
 					<div class="sheet-example">
 						<h5 class="pb-0 pl-5 pt-5">Attachments</h5>
 					</div>
+
 					<div aria-labelledby="navUnderlineDocumentsTab" class="tab-pane" id="navUnderlineDocuments" role="tabpanel">
 						<#if cpAttachmentFileEntries?has_content>
 							<dl class="p-4 specification-list">
@@ -234,6 +246,7 @@
 			</div>
 		</div>
 	</div>
+
 	<script>
 		function changeImage(element) {
 			var main_prodcut_image = document.getElementById('main_product_image');

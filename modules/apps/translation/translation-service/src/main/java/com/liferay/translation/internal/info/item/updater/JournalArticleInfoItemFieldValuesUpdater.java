@@ -160,7 +160,7 @@ public class JournalArticleInfoItemFieldValuesUpdater
 				fields, ddmStructure, importedLocaleContentMap, targetLocale);
 		}
 
-		User user = _userLocalService.fetchUser(journalArticle.getUserId());
+		User user = _userLocalService.fetchUser(latestArticle.getUserId());
 
 		if (user == null) {
 			user = _userLocalService.getUser(GuestOrUserUtil.getUserId());

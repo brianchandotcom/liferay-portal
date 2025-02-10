@@ -18,8 +18,7 @@ public class CommerceInventoryScreenNavigationConstants {
 			"inventory-changelog";
 
 	public static final String
-		SCREEN_NAVIGATION_KEY_COMMERCE_INVENTORY_ON_ORDER =
-			"inventory-on-order";
+		SCREEN_NAVIGATION_KEY_COMMERCE_INVENTORY_ON_ORDER = "on-order";
 
 	public static final String
 		SCREEN_NAVIGATION_KEY_COMMERCE_INVENTORY_REPLENISHMENT = "incoming";

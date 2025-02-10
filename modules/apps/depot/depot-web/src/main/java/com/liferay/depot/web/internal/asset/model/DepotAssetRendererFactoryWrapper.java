@@ -292,12 +292,18 @@ public class DepotAssetRendererFactoryWrapper<T>
 	}
 
 	private Group _getGroup(Group fallbackGroup) {
-		ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
 
 		if (serviceContext == null) {
-			Group group = _groupLocalService.fetchGroup(GroupThreadLocal.getGroupId());
+			Group group = _groupLocalService.fetchGroup(
+				GroupThreadLocal.getGroupId());
 
-			return (group != null) ? group : fallbackGroup;
+			if (group != null) {
+				return group;
+			}
+
+			return fallbackGroup;
 		}
 
 		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();

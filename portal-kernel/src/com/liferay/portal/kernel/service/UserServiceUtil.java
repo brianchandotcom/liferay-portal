@@ -1490,21 +1490,6 @@ public class UserServiceUtil {
 	}
 
 	/**
-	 * Updates the user's OpenID.
-	 *
-	 * @param userId the primary key of the user
-	 * @param openId the new OpenID
-	 * @return the user
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static User updateOpenId(long userId, String openId)
-		throws PortalException {
-
-		return getService().updateOpenId(userId, openId);
-	}
-
-	/**
 	 * Sets the organizations that the user is in, removing and adding
 	 * organizations as necessary.
 	 *

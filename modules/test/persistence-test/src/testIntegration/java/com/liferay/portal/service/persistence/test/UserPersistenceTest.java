@@ -431,15 +431,6 @@ public class UserPersistenceTest {
 	}
 
 	@Test
-	public void testCountByC_O() throws Exception {
-		_persistence.countByC_O(RandomTestUtil.nextLong(), "");
-
-		_persistence.countByC_O(0L, "null");
-
-		_persistence.countByC_O(0L, (String)null);
-	}
-
-	@Test
 	public void testCountByC_T() throws Exception {
 		_persistence.countByC_T(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextInt());
@@ -839,17 +830,6 @@ public class UserPersistenceTest {
 			ReflectionTestUtil.invoke(
 				user, "getColumnOriginalValue", new Class<?>[] {String.class},
 				"googleUserId"));
-
-		Assert.assertEquals(
-			Long.valueOf(user.getCompanyId()),
-			ReflectionTestUtil.<Long>invoke(
-				user, "getColumnOriginalValue", new Class<?>[] {String.class},
-				"companyId"));
-		Assert.assertEquals(
-			user.getOpenId(),
-			ReflectionTestUtil.invoke(
-				user, "getColumnOriginalValue", new Class<?>[] {String.class},
-				"openId"));
 
 		Assert.assertEquals(
 			user.getExternalReferenceCode(),

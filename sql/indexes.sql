@@ -471,7 +471,6 @@ create unique index IX_6B7C3D77 on User_ (companyId, ctCollectionId, screenName[
 create index IX_1D731F03 on User_ (companyId, facebookId);
 create index IX_B6E3AE1 on User_ (companyId, googleUserId[$COLUMN_LENGTH:75$]);
 create index IX_EE8ABD19 on User_ (companyId, modifiedDate);
-create index IX_89509087 on User_ (companyId, openId[$COLUMN_LENGTH:1024$]);
 create index IX_F6039434 on User_ (companyId, status);
 create index IX_FD06BAAD on User_ (companyId, type_, status);
 create unique index IX_E902F853 on User_ (ctCollectionId, contactId);

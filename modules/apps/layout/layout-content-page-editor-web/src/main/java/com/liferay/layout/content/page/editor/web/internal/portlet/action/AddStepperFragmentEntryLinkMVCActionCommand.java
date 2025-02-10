@@ -197,7 +197,6 @@ public class AddStepperFragmentEntryLinkMVCActionCommand
 				formStyledLayoutStructureItem.getFormType(), "simple")) {
 
 			formStyledLayoutStructureItem.setFormType("multistep");
-
 			formStyledLayoutStructureItem.setNumberOfSteps(numberOfSteps);
 
 			FormItemManager.LayoutStructureItemChanges

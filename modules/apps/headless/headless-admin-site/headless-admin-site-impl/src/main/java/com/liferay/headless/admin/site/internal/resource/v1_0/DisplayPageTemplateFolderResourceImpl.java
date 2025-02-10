@@ -13,7 +13,6 @@ import com.liferay.layout.page.template.constants.LayoutPageTemplateCollectionTy
 import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionService;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -91,17 +90,24 @@ public class DisplayPageTemplateFolderResourceImpl
 			throw new UnsupportedOperationException();
 		}
 
+		long groupId = GroupUtil.getGroupId(
+			true, contextCompany.getCompanyId(), siteExternalReferenceCode);
+
 		return Page.of(
 			transform(
 				_layoutPageTemplateCollectionService.
 					getLayoutPageTemplateCollections(
-						GroupUtil.getGroupId(
-							true, contextCompany.getCompanyId(),
-							siteExternalReferenceCode),
+						groupId, search,
 						LayoutPageTemplateCollectionTypeConstants.DISPLAY_PAGE,
-						QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
+						pagination.getStartPosition(),
+						pagination.getEndPosition(), null),
 				layoutPageTemplateCollection -> _toDisplayPageTemplateFolder(
-					layoutPageTemplateCollection)));
+					layoutPageTemplateCollection)),
+			pagination,
+			_layoutPageTemplateCollectionService.
+				getLayoutPageTemplateCollectionsCount(
+					groupId, search,
+					LayoutPageTemplateCollectionTypeConstants.DISPLAY_PAGE));
 	}
 
 	@Override

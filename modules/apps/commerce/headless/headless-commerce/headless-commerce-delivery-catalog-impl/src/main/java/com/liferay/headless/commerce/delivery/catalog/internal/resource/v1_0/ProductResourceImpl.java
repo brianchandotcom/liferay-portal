@@ -36,6 +36,7 @@ import com.liferay.headless.common.spi.odata.entity.EntityFieldsUtil;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.BooleanClauseFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
@@ -49,6 +50,7 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.MatchAllQuery;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -73,6 +75,7 @@ import org.osgi.service.component.annotations.ServiceScope;
 /**
  * @author Andrea Sbarra
  * @author Alessio Antonio Rendina
+ * @author Eduardo Diniz
  */
 @Component(
 	properties = "OSGI-INF/liferay/rest/v1_0/product.properties",
@@ -122,6 +125,45 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 		}
 
 		return _toProduct(commerceContext, cpDefinition);
+	}
+
+	@Override
+	public Product getChannelProductByFriendlyUrlPath(
+			Long channelId, String friendlyUrlPath, Long accountId)
+		throws Exception {
+
+		CommerceChannel commerceChannel =
+			_commerceChannelLocalService.getCommerceChannel(channelId);
+
+		Long commerceAccountId = _getCommerceAccountId(
+			accountId, commerceChannel);
+
+		if (!_isAccountEntryEligible(
+				commerceAccountId, commerceChannel.getCommerceChannelId())) {
+
+			return null;
+		}
+
+		Group group = _groupLocalService.getCompanyGroup(
+			commerceChannel.getCompanyId());
+
+		CPDefinition cpDefinition =
+			_cpDefinitionLocalService.fetchCPDefinitionByFriendlyURL(
+				group.getGroupId(), friendlyUrlPath);
+
+		if (cpDefinition == null) {
+			throw new NoSuchCProductException();
+		}
+
+		_commerceProductViewPermission.check(
+			PermissionThreadLocal.getPermissionChecker(), commerceAccountId,
+			commerceChannel.getGroupId(), cpDefinition.getCPDefinitionId());
+
+		return _toProduct(
+			_commerceContextFactory.create(
+				contextCompany.getCompanyId(), commerceChannel.getGroupId(),
+				contextUser.getUserId(), 0, commerceAccountId),
+			cpDefinition);
 	}
 
 	@Override
@@ -353,6 +395,9 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 
 	@Reference
 	private ExpandoTableLocalService _expandoTableLocalService;
+
+	@Reference
+	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private Portal _portal;

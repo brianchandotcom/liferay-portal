@@ -10,7 +10,6 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PwdEncryptorAlgorithmException;
 import com.liferay.portal.kernel.exception.PwdEncryptorException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -213,7 +212,7 @@ public class PasswordEncryptorUtil {
 							" is not set");
 			}
 
-			throw new PwdEncryptorAlgorithmException();
+			throw new PwdEncryptorException.MustSetLegacyAlgorithmProperty();
 		}
 		else if (Validator.isNotNull(encryptedPassword) &&
 				 (encryptedPassword.charAt(0) == CharPool.OPEN_CURLY_BRACE)) {

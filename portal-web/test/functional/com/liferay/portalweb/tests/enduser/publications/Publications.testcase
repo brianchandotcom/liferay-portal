@@ -856,30 +856,38 @@ definition {
 			JSONPublications.selectPublication(publicationName = "Test Publication");
 		}
 
-		task ("Add an Image fragment with an image to the Content Page") {
+		task ("Add a web content display widget showing Web Content 1") {
+			JSONWebcontent.addWebContent(
+				content = "WC Content 1",
+				groupName = "Guest",
+				title = "WC Title 1");
+
 			ContentPagesNavigator.openEditContentPage(
 				pageName = "Test Content Page",
 				siteName = "Guest");
 
-			PageEditor.addFragment(
-				collectionName = "Basic Components",
-				fragmentName = "Image");
+			PageEditor.addWidget(
+				collectionName = "Content Management",
+				portletName = "Web Content Display");
 
-			PageEditor.editFragmentImage(
-				fileName = "Document_1.jpg",
-				fragmentName = "Image",
-				id = "image-square");
+			WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC Title 1");
+
+			IFrame.closeFrame();
 		}
 
-		task ("Add a new Experience, change the image fragment with another image and publish the page") {
+		task ("Add a new Experience, change the web content display widget to show Web Content 2") {
+			JSONWebcontent.addWebContent(
+				content = "WC Content 2",
+				groupName = "Guest",
+				title = "WC Title 2");
+
 			PageEditor.addExperience(
 				experienceName = "New Experience",
 				segmentName = "Anyone");
 
-			PageEditor.editFragmentImage(
-				fileName = "Document_2.jpg",
-				fragmentName = "Image",
-				id = "image-square");
+			WebContentDisplayPortlet.selectWebContent(webContentTitle = "WC Title 2");
+
+			IFrame.closeFrame();
 
 			PageEditor.publish();
 		}
@@ -1262,9 +1270,9 @@ definition {
 				pageName = "Home",
 				siteName = "Guest");
 
-			PageEditor.addFragment(
+			PageEditor.addWidget(
 				collectionName = "Basic Components",
-				fragmentName = "Button",
+				portletName = "Button",
 				targetFragmentName = "Image");
 
 			PageEditor.publish();
@@ -1591,9 +1599,9 @@ definition {
 				pageName = "Test Page Name",
 				siteName = "Site Name");
 
-			PageEditor.addFragment(
+			PageEditor.addWidget(
 				collectionName = "Basic Components",
-				fragmentName = "Button");
+				portletName = "Button");
 
 			PageEditor.publish();
 		}

@@ -56,9 +56,8 @@ public class ObjectAssetTitleUpgradeProcess extends UpgradeProcess {
 					resultSet1.getString("dbTableName"), "_l");
 
 				try (PreparedStatement preparedStatement2 =
-						connection.prepareStatement(query)) {
-
-					ResultSet resultSet2 = preparedStatement2.executeQuery();
+						connection.prepareStatement(query);
+					ResultSet resultSet2 = preparedStatement2.executeQuery()) {
 
 					while (resultSet2.next()) {
 						String titleField = resultSet2.getString(

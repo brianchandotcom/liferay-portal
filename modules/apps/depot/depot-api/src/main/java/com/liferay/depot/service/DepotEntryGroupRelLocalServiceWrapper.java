@@ -314,6 +314,14 @@ public class DepotEntryGroupRelLocalServiceWrapper
 			depotEntryGroupRelId);
 	}
 
+	@Override
+	public DepotEntryGroupRel getDepotEntryGroupRel(
+		long depotEntryId, long toGroupId) {
+
+		return _depotEntryGroupRelLocalService.getDepotEntryGroupRel(
+			depotEntryId, toGroupId);
+	}
+
 	/**
 	 * Returns the depot entry group rel matching the UUID and group.
 	 *

@@ -248,6 +248,10 @@ public interface DepotEntryGroupRelLocalService
 	public DepotEntryGroupRel getDepotEntryGroupRel(long depotEntryGroupRelId)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DepotEntryGroupRel getDepotEntryGroupRel(
+		long depotEntryId, long toGroupId);
+
 	/**
 	 * Returns the depot entry group rel matching the UUID and group.
 	 *

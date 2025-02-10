@@ -3564,6 +3564,14 @@
 		"to": "addRole(null, param#0#, param#1#, param#2#, param#3#, param#4#, param#5#, param#6#, param#7#)"
 	},
 	{
+		"classNames": [
+			"PortletDisplay"
+		],
+		"from": "regex:(?<variableName>\\w+)\\.(?<prefixMethodName>getPortlet|setPortlet)Setup",
+		"issueKey": "LPD-47124",
+		"to": "${variableName}.${prefixMethodName}Preferences"
+	},
+	{
 		"from": "CookieKeys.COMMERCE_CONTINUE_AS_GUEST",
 		"issueKey": "LPS-159679",
 		"newImports": [

@@ -324,9 +324,7 @@ public class DefaultDLEditFileEntryDisplayContext
 
 	@Override
 	public boolean isPublishButtonDisabled() {
-		if (_fileEntryDisplayContextHelper.isCheckedOutByOther() ||
-			_fileVersionDisplayContextHelper.isPending()) {
-
+		if (_fileEntryDisplayContextHelper.isCheckedOutByOther()) {
 			return true;
 		}
 

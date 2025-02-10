@@ -95,7 +95,7 @@ public class DepotAssetRendererFactoryWrapper<T>
 			return assetRenderer;
 		}
 
-		Group group = _getGroup();
+		Group group = _getGroup(assetRendererGroup);
 
 		if (group == null) {
 			return null;
@@ -264,7 +264,7 @@ public class DepotAssetRendererFactoryWrapper<T>
 
 	@Override
 	public boolean isSelectable() {
-		Group group = _getGroup();
+		Group group = _getGroup(null);
 
 		if ((group != null) && group.isDepot() &&
 			!_depotApplicationController.isClassNameEnabled(
@@ -291,12 +291,13 @@ public class DepotAssetRendererFactoryWrapper<T>
 		_assetRendererFactory.setPortletId(portletId);
 	}
 
-	private Group _getGroup() {
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
+	private Group _getGroup(Group fallbackGroup) {
+		ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
 
 		if (serviceContext == null) {
-			return _groupLocalService.fetchGroup(GroupThreadLocal.getGroupId());
+			Group group = _groupLocalService.fetchGroup(GroupThreadLocal.getGroupId());
+
+			return (group != null) ? group : fallbackGroup;
 		}
 
 		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();

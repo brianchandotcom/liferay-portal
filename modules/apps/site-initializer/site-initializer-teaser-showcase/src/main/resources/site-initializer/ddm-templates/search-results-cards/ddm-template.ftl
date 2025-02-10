@@ -23,6 +23,7 @@
 	accountId = account.getAccountEntryId()
 	chanelId = commerceContext.getCommerceChannelId()
 />
+
 <div class="product-card-tiles">
 	<#if entries?has_content>
 		<#list entries as curCPCatalogEntry>
@@ -61,6 +62,7 @@
 								<img src="${defaultImageURL}" class="card-img-top" alt="${productName}" />
 							</a>
 						</div>
+
 						<div class="card-body d-flex flex-column justify-content-between py-2 ${suggestedClass}">
 							<div class="cp-information">
 								<p class="card-title ${suggestedClass}" title="${productName}">
@@ -90,6 +92,7 @@
 								</#list>
 							</#if>
 						</div>
+
 						<div class="autofit-float autofit-row autofit-row-center compare-wishlist">
 							<div class="autofit-col autofit-col-expand compare-checkbox">
 								<div class="autofit-section">
@@ -103,6 +106,7 @@
 									</div>
 								</div>
 							</div>
+
 							<div class="autofit-col">
 								<div class="autofit-section">
 									<@liferay_commerce_ui["add-to-wish-list"]

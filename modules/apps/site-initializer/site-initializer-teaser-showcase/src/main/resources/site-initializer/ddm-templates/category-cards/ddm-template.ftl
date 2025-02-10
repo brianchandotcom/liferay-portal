@@ -6,12 +6,13 @@
 <#if currentURL?has_content>
 	<#assign groupKey = currentURL?substring(currentURL?index_of('/web/') + 5, currentURL?index_of('/products')) />
 </#if>
-<#assign 
+<#assign
 	contactsImage = "/documents/d/${groupKey}/contacts-png"
-	eyeglassesImage="/documents/d/${groupKey}/eyeglasses-png"
-	lensesImage="/documents/d/${groupKey}/lenses-png"
-	sunglassesImage="/documents/d/${groupKey}/sunglasses-png"
+	eyeglassesImage = "/documents/d/${groupKey}/eyeglasses-png"
+	lensesImage = "/documents/d/${groupKey}/lenses-png"
+	sunglassesImage = "/documents/d/${groupKey}/sunglasses-png"
 />
+
 <div class="row widget-mode-card">
 	<#if entries?has_content>
 		<#list entries as currentCategory>
@@ -52,6 +53,7 @@
 								</a>
 							</div>
 					</div>
+
 					<div class="card-body widget-topbar">
 						<div class="autofit-row card-title">
 							<div class="autofit-col autofit-col-expand">

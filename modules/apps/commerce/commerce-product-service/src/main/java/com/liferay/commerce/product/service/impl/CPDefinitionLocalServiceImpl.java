@@ -1523,6 +1523,23 @@ public class CPDefinitionLocalServiceImpl
 	}
 
 	@Override
+	public CPDefinition fetchCPDefinitionByFriendlyURLPath(
+		long groupId, String friendlyURLPath) {
+
+		FriendlyURLEntry friendlyURLEntry =
+			_friendlyURLEntryLocalService.fetchFriendlyURLEntry(
+				groupId, _classNameLocalService.getClassNameId(CProduct.class),
+				friendlyURLPath);
+
+		if (friendlyURLEntry == null) {
+			return null;
+		}
+
+		return cpDefinitionLocalService.fetchCPDefinitionByCProductId(
+			friendlyURLEntry.getClassPK());
+	}
+
+	@Override
 	public Map<Locale, String> getCPDefinitionDescriptionMap(
 		long cpDefinitionId) {
 

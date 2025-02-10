@@ -15,6 +15,55 @@
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 
 	<style>
+		.content {
+				font-size: 1rem;
+		}
+
+		.content p {
+			font-size: 12px;
+		}
+
+		.heart {
+			height: 29px;
+			width: 29px;
+			background-color: #eaeaea;
+			border-radius: 50%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+
+		.main_image {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			border-bottom: 1px solid #eee;
+			height: 400px;
+			width: 100%;
+			overflow: hidden;
+		}
+
+		.price.lfr-tooltip-scope {
+			margin-bottom: 0.8rem;
+		}
+
+		.price-label {
+			font-size: 1rem;
+			font-weight: bold;
+		}
+
+		.right-side {
+			position: relative;
+		}
+
+		.skus h6 {
+			color: gray;
+		}
+
+		.tab-pane {
+			padding-top: 1rem;
+		}
+
 		.thumbnail_images ul {
 			list-style: none;
 			justify-content: center;
@@ -33,55 +82,6 @@
 
 		.thumbnail_images ul li:hover {
 			border: 2px solid #000;
-		}
-
-		.main_image {
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			border-bottom: 1px solid #eee;
-			height: 400px;
-			width: 100%;
-			overflow: hidden;
-		}
-
-		.heart {
-			height: 29px;
-			width: 29px;
-			background-color: #eaeaea;
-			border-radius: 50%;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-		}
-
-		.content {
-			font-size: 1rem;
-		}
-
-		.content p {
-			font-size: 12px;
-		}
-
-		.skus h6 {
-			color: gray;
-		}
-
-		.price.lfr-tooltip-scope {
-			margin-bottom: 0.8rem;
-		}
-
-		.price-label {
-			font-size: 1rem;
-			font-weight: bold;
-		}
-
-		.right-side {
-			position: relative;
-		}
-
-		.tab-pane {
-			padding-top: 1rem;
 		}
 	</style>
 

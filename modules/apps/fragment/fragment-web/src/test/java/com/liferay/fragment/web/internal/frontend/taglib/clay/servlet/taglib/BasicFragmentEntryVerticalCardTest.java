@@ -12,6 +12,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -49,50 +50,12 @@ public class BasicFragmentEntryVerticalCardTest {
 	}
 
 	@Test
-	public void testGetLabelsForApprovedFragmentEntry() {
-		Mockito.when(
-			_fragmentEntry.isApproved()
-		).thenReturn(
-			true
-		);
-
-		Mockito.when(
-			_fragmentEntry.fetchDraftFragmentEntry()
-		).thenReturn(
-			Mockito.mock(FragmentEntry.class)
-		);
-
-		Assert.assertEquals(2, _getLabelsSize());
-
-		Mockito.when(
-			_fragmentEntry.isCacheable()
-		).thenReturn(
-			true
-		);
-
-		Assert.assertEquals(3, _getLabelsSize());
-	}
-
-	@Test
-	public void testGetLabelsWithoutWarnings() {
+	@TestInfo("LPD-48427")
+	public void testGetLabels() {
 		Mockito.when(
 			_fragmentEntry.getStatus()
 		).thenReturn(
 			WorkflowConstants.STATUS_DRAFT
-		);
-
-		Mockito.when(
-			_httpServletRequest.getAttribute(
-				FragmentEntryProcessorRegistry.class.getName())
-		).thenReturn(
-			Mockito.mock(FragmentEntryProcessorRegistry.class)
-		);
-
-		Mockito.when(
-			_httpServletRequest.getAttribute(
-				FragmentEntryValidator.class.getName())
-		).thenReturn(
-			Mockito.mock(FragmentEntryValidator.class)
 		);
 
 		Assert.assertEquals(1, _getLabelsSize());
@@ -104,22 +67,17 @@ public class BasicFragmentEntryVerticalCardTest {
 		);
 
 		Assert.assertEquals(2, _getLabelsSize());
-	}
-
-	@Test
-	public void testGetLabelsWithWarnings() {
-		Mockito.when(
-			_fragmentEntry.getStatus()
-		).thenReturn(
-			WorkflowConstants.STATUS_DRAFT
-		);
-
-		Assert.assertEquals(2, _getLabelsSize());
 
 		Mockito.when(
-			_fragmentEntry.isCacheable()
+			_fragmentEntry.isApproved()
 		).thenReturn(
 			true
+		);
+
+		Mockito.when(
+			_fragmentEntry.fetchDraftFragmentEntry()
+		).thenReturn(
+			Mockito.mock(FragmentEntry.class)
 		);
 
 		Assert.assertEquals(3, _getLabelsSize());

@@ -321,26 +321,6 @@ public class FormItemManager {
 					layoutStructure.getLayoutStructureItem(
 						formStepLayoutStructureItemChildrenItemId);
 
-				if (FeatureFlagManagerUtil.isEnabled("LPD-31772") &&
-					(layoutStructureItem instanceof
-						FragmentStyledLayoutStructureItem)) {
-
-					FragmentStyledLayoutStructureItem
-						fragmentStyledLayoutStructureItem =
-							(FragmentStyledLayoutStructureItem)
-								layoutStructureItem;
-
-					String type = _getFragmentEntryLinkFormButtonType(
-						fragmentStyledLayoutStructureItem.
-							getFragmentEntryLinkId());
-
-					if (Objects.equals(type, "previous") ||
-						Objects.equals(type, "next")) {
-
-						continue;
-					}
-				}
-
 				layoutStructureItemChanges.addMovedLayoutStructureItems(
 					layoutStructureItem.clone());
 
@@ -356,6 +336,43 @@ public class FormItemManager {
 		for (String childrenItemId : initialFormChildrenItemIds) {
 			layoutStructureItemChanges.addRemovedLayoutStructureItems(
 				layoutStructure.getLayoutStructureItem(childrenItemId));
+		}
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-31772")) {
+			return layoutStructureItemChanges;
+		}
+
+		for (String childrenItemId :
+				LayoutStructureItemUtil.getChildrenItemIds(
+					formStyledLayoutStructureItem.getItemId(),
+					layoutStructure)) {
+
+			LayoutStructureItem layoutStructureItem =
+				layoutStructure.getLayoutStructureItem(childrenItemId);
+
+			if (!(layoutStructureItem instanceof
+					FragmentStyledLayoutStructureItem)) {
+
+				continue;
+			}
+
+			FragmentStyledLayoutStructureItem
+				fragmentStyledLayoutStructureItem =
+					(FragmentStyledLayoutStructureItem)layoutStructureItem;
+
+			String type = _getFragmentEntryLinkFormButtonType(
+				fragmentStyledLayoutStructureItem.getFragmentEntryLinkId());
+
+			if (Objects.equals(type, "previous") ||
+				Objects.equals(type, "next")) {
+
+				layoutStructure.markLayoutStructureItemForDeletion(
+					Collections.singletonList(childrenItemId),
+					Collections.emptyList());
+
+				layoutStructureItemChanges.addRemovedLayoutStructureItems(
+					layoutStructureItem);
+			}
 		}
 
 		return layoutStructureItemChanges;

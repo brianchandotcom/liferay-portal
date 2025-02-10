@@ -137,9 +137,10 @@ public class WorkflowDefinitionLinkLocalServiceImpl
 			long companyId, String className, long classPK, long typePK)
 		throws PortalException {
 
-		return workflowDefinitionLinkPersistence.findByG_C_C_C_T(
+		return workflowDefinitionLinkPersistence.findByG_C_C_C_T_Last(
 			WorkflowConstants.DEFAULT_GROUP_ID, companyId,
-			_classNameLocalService.getClassNameId(className), classPK, typePK);
+			_classNameLocalService.getClassNameId(className), classPK, typePK,
+			null);
 	}
 
 	@Override
@@ -431,9 +432,10 @@ public class WorkflowDefinitionLinkLocalServiceImpl
 		long groupId, long companyId, String className, long classPK,
 		long typePK) {
 
-		return workflowDefinitionLinkPersistence.fetchByG_C_C_C_T(
+		return workflowDefinitionLinkPersistence.fetchByG_C_C_C_T_Last(
 			groupId, companyId,
-			_classNameLocalService.getClassNameId(className), classPK, typePK);
+			_classNameLocalService.getClassNameId(className), classPK, typePK,
+			null);
 	}
 
 	@BeanReference(type = ClassNameLocalService.class)

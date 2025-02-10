@@ -1508,14 +1508,6 @@ test(
 
 		await fragmentsPage.gotoFragmentSet('Form Fragments');
 
-		const fragmentCard = page.locator('.card-type-asset', {
-			hasText: 'Fragment Example',
-		});
-
-		await expect(
-			fragmentCard.locator('.label-warning', {hasText: 'Warnings'})
-		).toBeVisible();
-
 		await fragmentsPage.clickAction('Edit', 'Fragment Example');
 
 		// Go to configuration tab

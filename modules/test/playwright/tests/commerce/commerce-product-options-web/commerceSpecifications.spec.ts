@@ -19,6 +19,90 @@ export const test = mergeTests(
 	dataApiHelpersTest,
 	loginTest()
 );
+test(
+	'Key is not automatically generated when writing new Specifications label',
+	{tag: '@LPD-28891'},
+	async ({apiHelpers, applicationsMenuPage, commerceSpecificationsPage}) => {
+		try {
+			await applicationsMenuPage.goToCommerceSpecifications();
+
+			await expect(
+				commerceSpecificationsPage.createNewSpecificationsProduct
+			).toBeVisible();
+
+			await commerceSpecificationsPage.createNewSpecificationsProduct.click();
+			await commerceSpecificationsPage.waitForKey('Specification 1');
+			await commerceSpecificationsPage.addDescriptionSpecifications.fill(
+				'Specification-1 Description'
+			);
+
+			await expect(
+				commerceSpecificationsPage.addDescriptionSpecifications
+			).toBeVisible();
+
+			await commerceSpecificationsPage.keyContent.fill('specification-1');
+
+			await expect(commerceSpecificationsPage.keyContent).toHaveValue(
+				'specification-1'
+			);
+
+			await commerceSpecificationsPage.saveButton.click();
+
+			await expect(
+				commerceSpecificationsPage.successMessage
+			).toBeVisible();
+
+			await commerceSpecificationsPage.goBack.click();
+			await commerceSpecificationsPage.goToSpecificationGroup.click();
+			await commerceSpecificationsPage.createNewSpecificationsProductGroup.click();
+			await commerceSpecificationsPage.addNewProductSpecificationsGroup.fill(
+				'Specification group'
+			);
+			await commerceSpecificationsPage.addDescriptionSpecificationsGroup.fill(
+				'Specification group Description'
+			);
+
+			await expect(commerceSpecificationsPage.keyContent).toHaveValue(
+				'Specification group'
+			);
+
+			await commerceSpecificationsPage.saveButton.click();
+
+			await expect(
+				commerceSpecificationsPage.successMessage
+			).toBeVisible();
+		}
+		finally {
+			const specifications =
+				await apiHelpers.headlessCommerceAdminCatalog.getSpecifications();
+
+			for (let i = 0; i < specifications.totalCount; i++) {
+				if (specifications.items[i].title.en_US === 'Specification 1') {
+					apiHelpers.data.push({
+						id: specifications.items[i].id,
+						type: 'specification',
+					});
+				}
+			}
+
+			const optionCategory =
+				await apiHelpers.headlessCommerceAdminCatalog.getOptionCategories();
+
+			for (let i = 0; i < optionCategory.totalCount; i++) {
+				if (
+					optionCategory.items[i].title.en_US ===
+					'Specification group'
+				) {
+					apiHelpers.data.push({
+						id: optionCategory.items[i].id,
+						type: 'optionCategory',
+					});
+				}
+			}
+		}
+	}
+);
+
 test('LPD-46948 Unable to delete specification picklist items', async ({
 	apiHelpers,
 	applicationsMenuPage,

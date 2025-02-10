@@ -2738,6 +2738,10 @@ test.describe('Form Localization', () => {
 
 			const objectEntry = await apiHelpers.objectEntry.postObjectEntry(
 				{
+					boolean_i18n: {
+						en_US: true,
+						es_ES: false,
+					},
 					longText_i18n: {
 						en_US: 'long text english',
 						es_ES: 'long text spanish',
@@ -2818,7 +2822,7 @@ test.describe('Form Localization', () => {
 				name: 'Text',
 			});
 
-			await expect(checkboxField).not.toBeChecked();
+			await expect(checkboxField).toBeChecked();
 
 			await expect(longTextField).toHaveValue('long text english');
 
@@ -2830,7 +2834,7 @@ test.describe('Form Localization', () => {
 
 			// Fill new values for the translation
 
-			await checkboxField.check();
+			await checkboxField.uncheck();
 
 			await longTextField.fill('long text english 1');
 
@@ -2854,7 +2858,7 @@ test.describe('Form Localization', () => {
 				),
 			});
 
-			await expect(checkboxField).toBeChecked();
+			await expect(checkboxField).not.toBeChecked();
 
 			await expect(longTextField).toHaveValue('long text spanish');
 
@@ -2866,7 +2870,7 @@ test.describe('Form Localization', () => {
 
 			// Fill new values
 
-			await checkboxField.uncheck();
+			await checkboxField.check();
 
 			await longTextField.fill('long text spanish 1');
 
@@ -2910,7 +2914,7 @@ test.describe('Form Localization', () => {
 
 			await longTextField.waitFor();
 
-			await expect(checkboxField).toBeChecked();
+			await expect(checkboxField).not.toBeChecked();
 
 			await expect(page.getByText('long text english 1')).toBeVisible();
 
@@ -2930,7 +2934,7 @@ test.describe('Form Localization', () => {
 				trigger: page.getByTestId('triggerButton').first(),
 			});
 
-			await expect(checkboxField).not.toBeChecked();
+			await expect(checkboxField).toBeChecked();
 
 			await expect(page.getByText('long text spanish 1')).toBeVisible();
 

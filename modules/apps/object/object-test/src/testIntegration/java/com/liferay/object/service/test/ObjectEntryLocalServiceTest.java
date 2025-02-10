@@ -4056,8 +4056,9 @@ public class ObjectEntryLocalServiceTest {
 				TestPropsValues.getUserId(), commerceChannel.getGroupId(),
 				commerceCurrency);
 
-			ObjectDefinition objectDefinition = _fetchSystemObjectDefinition(
-				"CommerceOrder");
+			ObjectDefinition objectDefinition =
+				_objectDefinitionLocalService.fetchSystemObjectDefinition(
+					TestPropsValues.getCompanyId(), "CommerceOrder");
 
 			ObjectValidationRule objectValidationRule =
 				_addObjectValidationRule(
@@ -4626,8 +4627,9 @@ public class ObjectEntryLocalServiceTest {
 				RandomTestUtil.randomString(),
 				new long[] {serviceContext.getScopeGroupId()}, serviceContext);
 
-			ObjectDefinition objectDefinition = _fetchSystemObjectDefinition(
-				"User");
+			ObjectDefinition objectDefinition =
+				_objectDefinitionLocalService.fetchSystemObjectDefinition(
+					TestPropsValues.getCompanyId(), "User");
 
 			ObjectField objectField = _addCustomObjectField(
 				new TextObjectFieldBuilder(
@@ -4973,13 +4975,6 @@ public class ObjectEntryLocalServiceTest {
 		}
 
 		return listTypeEntries;
-	}
-
-	private ObjectDefinition _fetchSystemObjectDefinition(String name)
-		throws PortalException {
-
-		return _objectDefinitionLocalService.fetchSystemObjectDefinition(
-			TestPropsValues.getCompanyId(), name);
 	}
 
 	private BigDecimal _getBigDecimal(long value) {

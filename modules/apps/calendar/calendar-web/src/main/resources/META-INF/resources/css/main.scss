@@ -173,6 +173,7 @@
 		}
 
 		.scheduler-event {
+			opacity: 1;
 			z-index: 99;
 
 			&::before {
@@ -238,10 +239,6 @@
 		font-size: inherit;
 		line-height: inherit;
 		padding: 2px 4px;
-	}
-
-	.scheduler-event-past {
-		opacity: 0.8;
 	}
 
 	.scheduler-view-agenda-info-container {
@@ -471,7 +468,7 @@
 	}
 
 	.scheduler-event-disabled {
-		opacity: 1;
+		opacity: 0.8;
 	}
 }
 

@@ -12,6 +12,7 @@ type TAccount = {
 	externalReferenceCode?: string;
 	id?: number;
 	name?: string;
+	status?: number;
 	type?: string;
 };
 
@@ -213,6 +214,14 @@ export class HeadlessAdminUserApiHelper {
 		);
 
 		return accountResponse?.items?.at(0);
+	}
+
+	async getAccountGroupByExternalReferenceCode(
+		externalReferenceCode: string
+	): Promise<TAccountGroup> {
+		return this.apiHelpers.get(
+			`${this.apiHelpers.baseUrl}${this.basePath}/account-groups/by-external-reference-code/${externalReferenceCode}`
+		);
 	}
 
 	async getMyUserAccount(): Promise<TAccount> {

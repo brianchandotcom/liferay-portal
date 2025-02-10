@@ -8,6 +8,8 @@ import {Locator, Page, expect} from '@playwright/test';
 import {HomePage} from '../portal-web/HomePage';
 
 export class ApplicationsMenuPage {
+	private readonly accountGroupsItem: Locator;
+	š;
 	private readonly accountsItem: Locator;
 	private readonly aiCreatorLink: Locator;
 	private readonly announcementsItem: Locator;
@@ -61,6 +63,10 @@ export class ApplicationsMenuPage {
 	private readonly virtualInstancesItem: Locator;
 
 	constructor(page: Page) {
+		this.accountGroupsItem = page.getByRole('menuitem', {
+			exact: true,
+			name: 'Account Groups',
+		});
 		this.accountsItem = page.getByRole('menuitem', {
 			exact: true,
 			name: 'Accounts',
@@ -267,6 +273,18 @@ export class ApplicationsMenuPage {
 		if (checkTabVisibility) {
 			await expect(this.applicationsMenuTabButton).toBeVisible();
 		}
+	}
+
+	async goToAccountGroups(forceReload = true) {
+		if (forceReload) {
+			await this.goto();
+		}
+		else {
+			await this.homePage.openApplicationMenu();
+		}
+
+		await this.controlPanelButton.click();
+		await this.accountGroupsItem.click();
 	}
 
 	async goToAccounts(forceReload = true) {

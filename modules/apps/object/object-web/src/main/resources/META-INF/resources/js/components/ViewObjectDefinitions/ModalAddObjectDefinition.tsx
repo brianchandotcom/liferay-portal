@@ -13,6 +13,7 @@ import {
 	Input,
 	SingleSelect,
 	constantsUtils,
+	objectDefinitionUtils,
 	openToast,
 	useForm,
 } from '@liferay/object-js-components-web';
@@ -23,7 +24,6 @@ import React, {useState} from 'react';
 import {defaultLanguageId} from '../../utils/constants';
 
 import './ModalAddObjectDefinition.scss';
-import {normalizeName} from './objectDefinitionUtil';
 
 interface ModalAddObjectDefinitionProps {
 	handleOnClose: () => void;
@@ -88,7 +88,7 @@ export function ModalAddObjectDefinition({
 			label: {
 				[defaultLanguageId]: label,
 			},
-			name: name || normalizeName(label),
+			name: name || objectDefinitionUtils.normalizeName(label),
 			objectFields: [],
 			pluralLabel: {
 				[defaultLanguageId]: pluralLabel,
@@ -190,7 +190,12 @@ export function ModalAddObjectDefinition({
 							name="name"
 							onChange={handleChange}
 							required
-							value={values.name ?? normalizeName(values.label)}
+							value={
+								values.name ??
+								objectDefinitionUtils.normalizeName(
+									values.label
+								)
+							}
 						/>
 
 						{Liferay.FeatureFlags['LPS-135430'] && (

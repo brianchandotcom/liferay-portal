@@ -7,6 +7,13 @@ const defaultLanguageId = Liferay.ThemeDisplay.getDefaultLanguageId();
 const userLanguageId = Liferay.ThemeDisplay.getLanguageId();
 
 /**
+ * Transform first letter in uppercase
+ */
+export function firstLetterUppercase(str: string): string {
+	return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+/**
  * Get the label according to the locale
  */
 
@@ -27,6 +34,13 @@ export function getLocalizableLabel(
 		labels['en_US'] ??
 		''
 	);
+}
+
+/**
+ * Format string removing spaces and special characters
+ */
+export function removeAllSpecialCharacters(str: string): string {
+	return str.replace(/[^A-Z0-9]/gi, '');
 }
 
 /**

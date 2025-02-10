@@ -9,10 +9,6 @@ import {SetStateAction} from 'react';
 
 import {exportObjectEntity} from '../../utils/exportObjectEntity';
 import {formatActionURL} from '../../utils/fds';
-import {
-	firstLetterUppercase,
-	removeAllSpecialCharacters,
-} from '../../utils/string';
 import {TYPES} from '../ModelBuilder/ModelBuilderContext/typesEnum';
 import {DropDownItems, TAction} from '../ModelBuilder/types';
 import {ModalImportProperties} from './ViewObjectDefinitions';
@@ -590,14 +586,4 @@ export async function getUpdatedModelBuilderStructurePayload(
 		objectFolders: [],
 		selectedObjectFolderName: '',
 	};
-}
-
-export function normalizeName(str: string) {
-	const split = str.split(' ');
-	const capitalizeFirstLetters = split.map((str: string) =>
-		firstLetterUppercase(str)
-	);
-	const join = capitalizeFirstLetters.join('');
-
-	return removeAllSpecialCharacters(join);
 }

@@ -3,18 +3,13 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {stringUtils} from '@liferay/object-js-components-web';
+
 /**
  * Transform first letter in lowercase
  */
 export function firstLetterLowercase(str: string): string {
 	return str.charAt(0).toLowerCase() + str.slice(1);
-}
-
-/**
- * Transform first letter in uppercase
- */
-export function firstLetterUppercase(str: string): string {
-	return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
 /**
@@ -35,13 +30,6 @@ export function normalizeLanguageId(languageId: string): string {
 }
 
 /**
- * Format string removing spaces and special characters
- */
-export function removeAllSpecialCharacters(str: string): string {
-	return str.replace(/[^A-Z0-9]/gi, '');
-}
-
-/**
  * Separate CamelCase string
  */
 export function separateCamelCase(str: string): string {
@@ -54,7 +42,7 @@ export function separateCamelCase(str: string): string {
  * Verify if string contains any special characters
  */
 export function specialCharactersInString(str: string) {
-	const replaceString = removeAllSpecialCharacters(str);
+	const replaceString = stringUtils.removeAllSpecialCharacters(str);
 
 	if (replaceString.normalize() === str.normalize()) {
 		return false;
@@ -77,12 +65,12 @@ export function toCamelCase(
 			return str;
 		}
 
-		return firstLetterUppercase(str);
+		return stringUtils.firstLetterUppercase(str);
 	});
 	let text = capitalizeFirstLetters.join('');
 
 	if (removeSpecialCharacters) {
-		text = removeAllSpecialCharacters(text);
+		text = stringUtils.removeAllSpecialCharacters(text);
 	}
 
 	return keepFirstLetterCase ? text : firstLetterLowercase(text);

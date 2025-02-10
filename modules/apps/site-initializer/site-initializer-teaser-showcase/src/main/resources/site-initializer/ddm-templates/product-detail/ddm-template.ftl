@@ -154,63 +154,65 @@
 						<#assign cont = 0 />
 
 						<dl class="p-4 specification-list">
-						<#if cpDefinitionSpecificationOptionValues?has_content>
-							<table class="p-4 table table-sm">
-								<tbody>
-									<#if cpDefinitionSpecificationOptionValues?has_content>
-										<#assign cont = 1 />
-										<#list cpDefinitionSpecificationOptionValues as cpDefinitionSpecificationOptionValue>
-										<#assign
-											cpSpecificationOption = cpDefinitionSpecificationOptionValue.getCPSpecificationOption() />
-											<tr>
-												<td class="specification-term table-cell-minw-150 table-title prdct"></td>
-												<td class="specification-term">
-													${cpSpecificationOption.getTitle(locale)}
-												</td>
-												<td class="specification-desc table-cell-expand prdct">
-													${cpDefinitionSpecificationOptionValue.getValue(locale)}
-												</td>
-											</tr>
-										</#list>
-									</#if>
-								</tbody>
-							</table>
-						</#if>
-						<#if cpOptionCategories?has_content>
-							<table class="table table-sm">
-								<tbody>
-									<#list cpOptionCategories as cpOptionCategory>
-										<#assign
-											categorizedCPDefinitionSpecificationOptionValues = cpContentHelper.getCategorizedCPDefinitionSpecificationOptionValues(cpDefinitionId,
-											cpOptionCategory.getCPOptionCategoryId())
-										/>
-										<#if categorizedCPDefinitionSpecificationOptionValues?has_content>
+							<#if cpDefinitionSpecificationOptionValues?has_content>
+								<table class="p-4 table table-sm">
+									<tbody>
+										<#if cpDefinitionSpecificationOptionValues?has_content>
 											<#assign cont = 1 />
-											<#list categorizedCPDefinitionSpecificationOptionValues as cpDefinitionSpecificationOptionValue>
-												<#assign
-													cpSpecificationOption = cpDefinitionSpecificationOptionValue.getCPSpecificationOption()
-												/>
-
+											<#list cpDefinitionSpecificationOptionValues as cpDefinitionSpecificationOptionValue>
+											<#assign
+												cpSpecificationOption = cpDefinitionSpecificationOptionValue.getCPSpecificationOption() />
 												<tr>
 													<td class="specification-term table-cell-minw-150 table-title prdct"></td>
 													<td class="specification-term">
 														${cpSpecificationOption.getTitle(locale)}
 													</td>
 													<td class="specification-desc table-cell-expand prdct">
-															${cpDefinitionSpecificationOptionValue.getValue(locale)}
+														${cpDefinitionSpecificationOptionValue.getValue(locale)}
 													</td>
 												</tr>
 											</#list>
 										</#if>
-									</#list>
-								</tbody>
-							</table>
-						</#if>
-						<#if cont=0>
-							<dl class="p-4 m-3 specification-list text-center bg-w">
-								No Specifications
-							</dl>
-						</#if>
+									</tbody>
+								</table>
+							</#if>
+
+							<#if cpOptionCategories?has_content>
+								<table class="table table-sm">
+									<tbody>
+										<#list cpOptionCategories as cpOptionCategory>
+											<#assign
+												categorizedCPDefinitionSpecificationOptionValues = cpContentHelper.getCategorizedCPDefinitionSpecificationOptionValues(cpDefinitionId,
+												cpOptionCategory.getCPOptionCategoryId())
+											/>
+											<#if categorizedCPDefinitionSpecificationOptionValues?has_content>
+												<#assign cont = 1 />
+												<#list categorizedCPDefinitionSpecificationOptionValues as cpDefinitionSpecificationOptionValue>
+													<#assign
+														cpSpecificationOption = cpDefinitionSpecificationOptionValue.getCPSpecificationOption()
+													/>
+
+													<tr>
+														<td class="specification-term table-cell-minw-150 table-title prdct"></td>
+														<td class="specification-term">
+															${cpSpecificationOption.getTitle(locale)}
+														</td>
+														<td class="specification-desc table-cell-expand prdct">
+																${cpDefinitionSpecificationOptionValue.getValue(locale)}
+														</td>
+													</tr>
+												</#list>
+											</#if>
+										</#list>
+									</tbody>
+								</table>
+							</#if>
+
+							<#if cont=0>
+								<dl class="p-4 m-3 specification-list text-center bg-w">
+									No Specifications
+								</dl>
+							</#if>
 						</dl>
 					</div>
 				</div>

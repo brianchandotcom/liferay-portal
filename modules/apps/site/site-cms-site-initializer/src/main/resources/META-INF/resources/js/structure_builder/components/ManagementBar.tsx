@@ -6,10 +6,38 @@
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
+import {API} from '@liferay/object-js-components-web';
 import {ManagementToolbar} from 'frontend-js-components-web';
-import React from 'react';
+import {openToast} from 'frontend-js-web';
+import React, {useContext} from 'react';
+
+import {StructureSettingsContext} from '../contexts/StructureSettingsContext';
+import StructureService from '../services/StructureService';
 
 export default function ManagementBar() {
+	const {name, setError} = useContext(StructureSettingsContext);
+
+	const onSave = async () => {
+		try {
+			await StructureService.saveStructure({name});
+
+			openToast({
+				message: Liferay.Util.sub(
+					Liferay.Language.get('x-was-created-successfully'),
+					name
+				),
+				type: 'success',
+			});
+
+			setError(null);
+		}
+		catch (error) {
+			const {message} = error as API.ErrorDetails;
+
+			setError(message);
+		}
+	};
+
 	return (
 		<ManagementToolbar.Container className="border">
 			<ManagementToolbar.ItemList className="c-gap-3" expand>
@@ -39,7 +67,11 @@ export default function ManagementBar() {
 				</ManagementToolbar.Item>
 
 				<ManagementToolbar.Item>
-					<ClayButton displayType="secondary" size="sm">
+					<ClayButton
+						displayType="secondary"
+						onClick={onSave}
+						size="sm"
+					>
 						{Liferay.Language.get('save')}
 					</ClayButton>
 				</ManagementToolbar.Item>

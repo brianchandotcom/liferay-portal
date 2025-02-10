@@ -5,7 +5,7 @@
 
 package com.liferay.layout.page.template.internal.upgrade.v3_3_1;
 
-import com.liferay.layout.page.template.internal.validator.LayoutPageTemplateEntryValidator;
+import com.liferay.layout.page.template.internal.validator.LayoutPageTemplateValidator;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -51,7 +51,7 @@ public class LayoutPageTemplateEntryUpgradeProcess extends UpgradeProcess {
 		for (int i = 0; i < value.length(); i++) {
 			char c = value.charAt(i);
 
-			if (LayoutPageTemplateEntryValidator.isBlacklistedChar(c)) {
+			if (LayoutPageTemplateValidator.isBlacklistedChar(c)) {
 				sb.append(CharPool.DASH);
 			}
 			else {
@@ -156,7 +156,7 @@ public class LayoutPageTemplateEntryUpgradeProcess extends UpgradeProcess {
 			while (resultSet.next()) {
 				String name = resultSet.getString("name");
 
-				if (LayoutPageTemplateEntryValidator.isValidName(name)) {
+				if (LayoutPageTemplateValidator.isValidName(name)) {
 					continue;
 				}
 

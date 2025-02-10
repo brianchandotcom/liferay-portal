@@ -58,6 +58,8 @@ definition {
 
 		PublicationsNavigator.gotoReviewChanges();
 
+		Search.searchCP(searchTerm = '''"Child Site Name"''');
+
 		PublicationsChanges.viewChanges(
 			changeCategory = "Site",
 			changeSite = "Site Name",

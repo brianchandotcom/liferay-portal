@@ -117,14 +117,14 @@ public class FragmentEntryVersionCacheModel
 		sb.append(icon);
 		sb.append(", previewFileEntryId=");
 		sb.append(previewFileEntryId);
+		sb.append(", marketplace=");
+		sb.append(marketplace);
 		sb.append(", readOnly=");
 		sb.append(readOnly);
 		sb.append(", type=");
 		sb.append(type);
 		sb.append(", typeOptions=");
 		sb.append(typeOptions);
-		sb.append(", marketplace=");
-		sb.append(marketplace);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
 		sb.append(", status=");
@@ -246,6 +246,7 @@ public class FragmentEntryVersionCacheModel
 		}
 
 		fragmentEntryVersionImpl.setPreviewFileEntryId(previewFileEntryId);
+		fragmentEntryVersionImpl.setMarketplace(marketplace);
 		fragmentEntryVersionImpl.setReadOnly(readOnly);
 		fragmentEntryVersionImpl.setType(type);
 
@@ -255,8 +256,6 @@ public class FragmentEntryVersionCacheModel
 		else {
 			fragmentEntryVersionImpl.setTypeOptions(typeOptions);
 		}
-
-		fragmentEntryVersionImpl.setMarketplace(marketplace);
 
 		if (lastPublishDate == Long.MIN_VALUE) {
 			fragmentEntryVersionImpl.setLastPublishDate(null);
@@ -326,12 +325,12 @@ public class FragmentEntryVersionCacheModel
 
 		previewFileEntryId = objectInput.readLong();
 
+		marketplace = objectInput.readBoolean();
+
 		readOnly = objectInput.readBoolean();
 
 		type = objectInput.readInt();
 		typeOptions = (String)objectInput.readObject();
-
-		marketplace = objectInput.readBoolean();
 		lastPublishDate = objectInput.readLong();
 
 		status = objectInput.readInt();
@@ -438,6 +437,8 @@ public class FragmentEntryVersionCacheModel
 
 		objectOutput.writeLong(previewFileEntryId);
 
+		objectOutput.writeBoolean(marketplace);
+
 		objectOutput.writeBoolean(readOnly);
 
 		objectOutput.writeInt(type);
@@ -449,7 +450,6 @@ public class FragmentEntryVersionCacheModel
 			objectOutput.writeObject(typeOptions);
 		}
 
-		objectOutput.writeBoolean(marketplace);
 		objectOutput.writeLong(lastPublishDate);
 
 		objectOutput.writeInt(status);
@@ -489,10 +489,10 @@ public class FragmentEntryVersionCacheModel
 	public String configuration;
 	public String icon;
 	public long previewFileEntryId;
+	public boolean marketplace;
 	public boolean readOnly;
 	public int type;
 	public String typeOptions;
-	public boolean marketplace;
 	public long lastPublishDate;
 	public int status;
 	public long statusByUserId;

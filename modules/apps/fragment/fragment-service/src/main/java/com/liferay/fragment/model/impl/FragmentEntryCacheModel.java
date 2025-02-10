@@ -114,14 +114,14 @@ public class FragmentEntryCacheModel
 		sb.append(icon);
 		sb.append(", previewFileEntryId=");
 		sb.append(previewFileEntryId);
+		sb.append(", marketplace=");
+		sb.append(marketplace);
 		sb.append(", readOnly=");
 		sb.append(readOnly);
 		sb.append(", type=");
 		sb.append(type);
 		sb.append(", typeOptions=");
 		sb.append(typeOptions);
-		sb.append(", marketplace=");
-		sb.append(marketplace);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
 		sb.append(", status=");
@@ -240,6 +240,7 @@ public class FragmentEntryCacheModel
 		}
 
 		fragmentEntryImpl.setPreviewFileEntryId(previewFileEntryId);
+		fragmentEntryImpl.setMarketplace(marketplace);
 		fragmentEntryImpl.setReadOnly(readOnly);
 		fragmentEntryImpl.setType(type);
 
@@ -249,8 +250,6 @@ public class FragmentEntryCacheModel
 		else {
 			fragmentEntryImpl.setTypeOptions(typeOptions);
 		}
-
-		fragmentEntryImpl.setMarketplace(marketplace);
 
 		if (lastPublishDate == Long.MIN_VALUE) {
 			fragmentEntryImpl.setLastPublishDate(null);
@@ -319,12 +318,12 @@ public class FragmentEntryCacheModel
 
 		previewFileEntryId = objectInput.readLong();
 
+		marketplace = objectInput.readBoolean();
+
 		readOnly = objectInput.readBoolean();
 
 		type = objectInput.readInt();
 		typeOptions = (String)objectInput.readObject();
-
-		marketplace = objectInput.readBoolean();
 		lastPublishDate = objectInput.readLong();
 
 		status = objectInput.readInt();
@@ -431,6 +430,8 @@ public class FragmentEntryCacheModel
 
 		objectOutput.writeLong(previewFileEntryId);
 
+		objectOutput.writeBoolean(marketplace);
+
 		objectOutput.writeBoolean(readOnly);
 
 		objectOutput.writeInt(type);
@@ -442,7 +443,6 @@ public class FragmentEntryCacheModel
 			objectOutput.writeObject(typeOptions);
 		}
 
-		objectOutput.writeBoolean(marketplace);
 		objectOutput.writeLong(lastPublishDate);
 
 		objectOutput.writeInt(status);
@@ -482,10 +482,10 @@ public class FragmentEntryCacheModel
 	public String configuration;
 	public String icon;
 	public long previewFileEntryId;
+	public boolean marketplace;
 	public boolean readOnly;
 	public int type;
 	public String typeOptions;
-	public boolean marketplace;
 	public long lastPublishDate;
 	public int status;
 	public long statusByUserId;

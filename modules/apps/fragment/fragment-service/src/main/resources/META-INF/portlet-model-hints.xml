@@ -84,12 +84,12 @@
 		</field>
 		<field name="icon" type="String" />
 		<field name="previewFileEntryId" type="long" />
+		<field name="marketplace" type="boolean" />
 		<field name="readOnly" type="boolean" />
 		<field name="type" type="int" />
 		<field name="typeOptions" type="String">
 			<hint-collection name="CLOB" />
 		</field>
-		<field name="marketplace" type="boolean" />
 		<field name="lastPublishDate" type="Date" />
 		<field name="status" type="int" />
 		<field name="statusByUserId" type="long" />
@@ -173,12 +173,12 @@
 		</field>
 		<field name="icon" type="String" />
 		<field name="previewFileEntryId" type="long" />
+		<field name="marketplace" type="boolean" />
 		<field name="readOnly" type="boolean" />
 		<field name="type" type="int" />
 		<field name="typeOptions" type="String">
 			<hint-collection name="CLOB" />
 		</field>
-		<field name="marketplace" type="boolean" />
 		<field name="lastPublishDate" type="Date" />
 		<field name="status" type="int" />
 		<field name="statusByUserId" type="long" />

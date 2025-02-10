@@ -60,10 +60,10 @@ public class FragmentEntryVersionWrapper
 		attributes.put("configuration", getConfiguration());
 		attributes.put("icon", getIcon());
 		attributes.put("previewFileEntryId", getPreviewFileEntryId());
+		attributes.put("marketplace", isMarketplace());
 		attributes.put("readOnly", isReadOnly());
 		attributes.put("type", getType());
 		attributes.put("typeOptions", getTypeOptions());
-		attributes.put("marketplace", isMarketplace());
 		attributes.put("lastPublishDate", getLastPublishDate());
 		attributes.put("status", getStatus());
 		attributes.put("statusByUserId", getStatusByUserId());
@@ -216,6 +216,12 @@ public class FragmentEntryVersionWrapper
 			setPreviewFileEntryId(previewFileEntryId);
 		}
 
+		Boolean marketplace = (Boolean)attributes.get("marketplace");
+
+		if (marketplace != null) {
+			setMarketplace(marketplace);
+		}
+
 		Boolean readOnly = (Boolean)attributes.get("readOnly");
 
 		if (readOnly != null) {
@@ -232,12 +238,6 @@ public class FragmentEntryVersionWrapper
 
 		if (typeOptions != null) {
 			setTypeOptions(typeOptions);
-		}
-
-		Boolean marketplace = (Boolean)attributes.get("marketplace");
-
-		if (marketplace != null) {
-			setMarketplace(marketplace);
 		}
 
 		Date lastPublishDate = (Date)attributes.get("lastPublishDate");

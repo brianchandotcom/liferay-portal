@@ -79,14 +79,14 @@ public class FragmentEntryTable extends BaseTable<FragmentEntryTable> {
 		createColumn(
 			"previewFileEntryId", Long.class, Types.BIGINT,
 			Column.FLAG_DEFAULT);
+	public final Column<FragmentEntryTable, Boolean> marketplace = createColumn(
+		"marketplace", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
 	public final Column<FragmentEntryTable, Boolean> readOnly = createColumn(
 		"readOnly", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
 	public final Column<FragmentEntryTable, Integer> type = createColumn(
 		"type_", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
 	public final Column<FragmentEntryTable, Clob> typeOptions = createColumn(
 		"typeOptions", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
-	public final Column<FragmentEntryTable, Boolean> marketplace = createColumn(
-		"marketplace", Boolean.class, Types.BOOLEAN, Column.FLAG_DEFAULT);
 	public final Column<FragmentEntryTable, Date> lastPublishDate =
 		createColumn(
 			"lastPublishDate", Date.class, Types.TIMESTAMP,

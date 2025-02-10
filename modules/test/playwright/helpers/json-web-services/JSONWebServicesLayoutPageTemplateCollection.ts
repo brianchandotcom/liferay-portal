@@ -19,11 +19,13 @@ export class JSONWebServicesLayoutPageTemplateCollectionApiHelper {
 	async addLayoutPageTemplateCollection({
 		externalReferenceCode = '',
 		groupId,
+		layoutPageTemplateCollectionKey = '',
 		name,
 		type = 'basic',
 	}: {
 		externalReferenceCode?: string;
 		groupId: string;
+		layoutPageTemplateCollectionKey?: string;
 		name: string;
 		type?: LayoutPageTemplateEntryType;
 	}): Promise<LayoutPageTemplateCollection> {
@@ -32,6 +34,10 @@ export class JSONWebServicesLayoutPageTemplateCollectionApiHelper {
 		urlSearchParams.append('externalReferenceCode', externalReferenceCode);
 		urlSearchParams.append('groupId', groupId);
 		urlSearchParams.append('parentLayoutPageTemplateCollectionId', '0');
+		urlSearchParams.append(
+			'layoutPageTemplateCollectionKey',
+			layoutPageTemplateCollectionKey
+		);
 		urlSearchParams.append('name', name);
 		urlSearchParams.append('description', '');
 		urlSearchParams.append('type', LAYOUT_PAGE_TEMPLATE_ENTRY_TYPES[type]);

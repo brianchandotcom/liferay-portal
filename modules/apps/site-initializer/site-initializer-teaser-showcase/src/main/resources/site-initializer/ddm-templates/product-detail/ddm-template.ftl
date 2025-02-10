@@ -22,6 +22,7 @@
 			align-items: center;
 			margin-top: 10px;
 		}
+
 		.thumbnail_images ul li {
 			margin: 5px;
 			padding: 10px;
@@ -29,9 +30,11 @@
 			cursor: pointer;
 			transition: all 0.5s;
 		}
+
 		.thumbnail_images ul li:hover {
 			border: 2px solid #000;
 		}
+
 		.main_image {
 			display: flex;
 			justify-content: center;
@@ -41,6 +44,7 @@
 			width: 100%;
 			overflow: hidden;
 		}
+
 		.heart {
 			height: 29px;
 			width: 29px;
@@ -50,25 +54,32 @@
 			justify-content: center;
 			align-items: center;
 		}
+
 		.content {
 			font-size: 1rem;
 		}
+
 		.content p {
 			font-size: 12px;
 		}
+
 		.skus h6 {
 			color: gray;
 		}
+
 		.price.lfr-tooltip-scope {
 			margin-bottom: 0.8rem;
 		}
+
 		.price-label {
 			font-size: 1rem;
 			font-weight: bold;
 		}
+
 		.right-side {
 			position: relative;
 		}
+
 		.tab-pane {
 			padding-top: 1rem;
 		}

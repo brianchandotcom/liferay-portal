@@ -3,17 +3,20 @@
 	title = ''
 	description = ''
 />
+
 <#if cpCategoryContentDisplayContext.getDefaultImageSrc()??>
 	<#assign
 		image = cpCategoryContentDisplayContext.getDefaultImageSrc()
 	/>
 </#if>
+
 <#if assetCategory??>
 	<#assign
 		title = assetCategory.getTitle(locale)
 		description = assetCategory.getDescription(locale)
 	/>
 </#if>
+
 <style>
 	.product-category-banner__background {
 		height: 280px;

@@ -61,11 +61,7 @@ public class UpgradeImportsCheck extends BaseFileCheck {
 
 		Matcher matcher = pattern.matcher(content);
 
-		if (matcher.find()) {
-			content = content.replaceAll(regex, "");
-		}
-
-		return content;
+		return matcher.replaceAll("");
 	}
 
 	private static List<String> _getImportNames(String fileName, String content)
@@ -110,10 +106,6 @@ public class UpgradeImportsCheck extends BaseFileCheck {
 			String regex = StringBundler.concat(
 				"\\b([_a-z]\\w*)", className, "\\b");
 
-			Pattern pattern = Pattern.compile(regex);
-
-			Matcher matcher = pattern.matcher(newContent);
-
 			String newClassName = entry.getValue();
 
 			if (newContent.contains("@Reference")) {
@@ -121,13 +113,17 @@ public class UpgradeImportsCheck extends BaseFileCheck {
 					className, newClassName, newContent, regex);
 			}
 
+			Pattern pattern = Pattern.compile(regex);
+
+			Matcher matcher = pattern.matcher(newContent);
+
 			if (matcher.find() &&
 				!StringUtil.equals(
 					matcher.group(),
 					StringUtil.lowerCaseFirstLetter(newClassName))) {
 
-				newContent = newContent.replaceAll(
-					regex, matcher.group(1) + newClassName);
+				newContent = matcher.replaceAll(
+					matcher.group(1) + newClassName);
 			}
 		}
 

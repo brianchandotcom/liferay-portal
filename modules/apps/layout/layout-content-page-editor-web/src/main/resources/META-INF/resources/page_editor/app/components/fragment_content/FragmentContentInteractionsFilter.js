@@ -247,10 +247,12 @@ function FragmentContentInteractionsFilter({
 		const isBeingEdited =
 			editable?.itemId === fromControlsId(editableProcessorUniqueId);
 
-		if (editable && !isBeingEdited) {
+		if (editable) {
 			event.stopPropagation();
 
-			hoverItem(editable.itemId, {itemType: ITEM_TYPES.editable});
+			if (!isBeingEdited) {
+				hoverItem(editable.itemId, {itemType: ITEM_TYPES.editable});
+			}
 		}
 	};
 

@@ -10,6 +10,8 @@ import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTe
 import {commercePagesTest} from '../../../fixtures/commercePagesTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import getRandomString from '../../../utils/getRandomString';
+import {waitForAlert} from '../../../utils/waitForAlert';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -18,82 +20,66 @@ export const test = mergeTests(
 	dataApiHelpersTest,
 	loginTest()
 );
-test('LPD-28891 Key is not automatically generated when writing new Specifications label', async ({
-	apiHelpers,
-	applicationsMenuPage,
-	commerceSpecificationsPage,
-}) => {
-	await applicationsMenuPage.goToCommerceSpecifications();
-
-	await expect(
-		commerceSpecificationsPage.createNewSpecificationsProduct
-	).toBeVisible();
-
-	await commerceSpecificationsPage.createNewSpecificationsProduct.click();
-
-	await commerceSpecificationsPage.waitForKey('Specification 1');
-
-	await commerceSpecificationsPage.addDescriptionSpecifications.fill(
-		'Specification-1 Description'
-	);
-
-	await expect(
-		commerceSpecificationsPage.addDescriptionSpecifications
-	).toBeVisible();
-
-	await commerceSpecificationsPage.keyContent.fill('specification-1');
-
-	await expect(commerceSpecificationsPage.keyContent).toHaveValue(
-		'specification-1'
-	);
-
-	await commerceSpecificationsPage.saveButton.click();
-
-	await expect(commerceSpecificationsPage.successMessage).toBeVisible();
-
-	await commerceSpecificationsPage.goBack.click();
-
-	await commerceSpecificationsPage.goToSpecificationGroup.click();
-
-	await commerceSpecificationsPage.createNewSpecificationsProductGroup.click();
-
-	await commerceSpecificationsPage.addNewProductSpecificationsGroup.fill(
-		'Specification group'
-	);
-
-	await commerceSpecificationsPage.addDescriptionSpecificationsGroup.fill(
-		'Specification group Description'
-	);
-
-	await expect(commerceSpecificationsPage.keyContent).toHaveValue(
-		'Specification group'
-	);
-
-	await commerceSpecificationsPage.saveButton.click();
-
-	await expect(commerceSpecificationsPage.successMessage).toBeVisible();
-
-	const specifications =
-		await apiHelpers.headlessCommerceAdminCatalog.getSpecifications();
-
-	for (let i = 0; i < specifications.totalCount; i++) {
-		if (specifications.items[i].title.en_US === 'Specification 1') {
-			apiHelpers.data.push({
-				id: specifications.items[i].id,
-				type: 'specification',
+test(
+	'Recursive Product Window Reopens When Saving Specification Value',
+	{tag: '@LPD-46276'},
+	async ({
+		apiHelpers,
+		commerceAdminProductPage,
+		page,
+		productDetailsPage,
+	}) => {
+		const catalog =
+			await apiHelpers.headlessCommerceAdminCatalog.postCatalog({
+				name: getRandomString(),
 			});
-		}
-	}
 
-	const optionCategory =
-		await apiHelpers.headlessCommerceAdminCatalog.getOptionCategories();
+		apiHelpers.data.push({id: catalog.id, type: 'catalog'});
 
-	for (let i = 0; i < optionCategory.totalCount; i++) {
-		if (optionCategory.items[i].title.en_US === 'Specification group') {
-			apiHelpers.data.push({
-				id: optionCategory.items[i].id,
-				type: 'optionCategory',
+		const specification =
+			await apiHelpers.headlessCommerceAdminCatalog.postSpecification();
+
+		const product =
+			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+				catalogId: catalog.id,
+				name: {en_US: getRandomString()},
+				productSpecifications: [
+					{
+						specificationKey: specification.key,
+						value: {
+							en_US: getRandomString(),
+						},
+					},
+				],
 			});
-		}
+
+		apiHelpers.data.push({id: product.id, type: 'product'});
+
+		await commerceAdminProductPage.gotoProduct(product.name['en_US']);
+
+		await expect(
+			await productDetailsPage.checkSpecificationProduct(
+				specification.title.en_US
+			)
+		).toBeVisible();
+
+		await productDetailsPage.ellipsisProductSpecification.click();
+		await productDetailsPage.dropdownProductSpecification('Edit').click();
+
+		const randomSpecificationValue = getRandomString();
+
+		await productDetailsPage.editFrameSpecificationProductValue.fill(
+			randomSpecificationValue
+		);
+
+		await productDetailsPage.saveButtonEditFrame.click();
+
+		await waitForAlert(
+			productDetailsPage.ellipsisFrameProductSpecification
+		);
+
+		await productDetailsPage.closeEditFrame.click();
+
+		await expect(page.getByText(randomSpecificationValue)).toBeVisible();
 	}
-});
+);

@@ -50,7 +50,7 @@ public class CommerceWishListLocalServiceTest {
 	public void testDeleteCommerceWishList() throws Exception {
 		CommerceWishList commerceWishList =
 			_commerceWishListService.addCommerceWishList(
-				_group.getCompanyId(), RandomTestUtil.randomString(), true);
+				_group.getGroupId(), RandomTestUtil.randomString(), true);
 
 		_commerceWishListService.deleteCommerceWishList(
 			commerceWishList.getCommerceWishListId());

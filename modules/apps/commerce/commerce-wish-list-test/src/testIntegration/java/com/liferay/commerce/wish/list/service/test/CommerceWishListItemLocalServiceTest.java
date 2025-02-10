@@ -58,7 +58,7 @@ public class CommerceWishListItemLocalServiceTest {
 	public void testAddOrUpdateCommerceWishListItem() throws Exception {
 		CommerceWishList commerceWishList =
 			_commerceWishListService.addCommerceWishList(
-				_group.getCompanyId(), RandomTestUtil.randomString(), true);
+				_group.getGroupId(), RandomTestUtil.randomString(), true);
 
 		CPDefinition cpDefinition = _cpInstance.getCPDefinition();
 

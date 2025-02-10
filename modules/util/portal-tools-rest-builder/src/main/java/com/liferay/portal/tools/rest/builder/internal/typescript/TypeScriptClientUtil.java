@@ -13,7 +13,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.parser.util.OpenAPIParserUtil;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.util.FreeMarkerUtil;
 import com.liferay.portal.tools.rest.builder.internal.util.FileUtil;
-import com.liferay.portal.tools.rest.builder.internal.yaml.YAMLUtil;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Content;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.OpenAPIYAML;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Operation;
@@ -25,7 +24,6 @@ import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.ResponseCode;
 import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Schema;
 
 import java.io.File;
-import java.io.IOException;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -43,29 +41,42 @@ import java.util.Set;
 /**
  * @author Daniel Raposo
  */
-public class TypeScriptClientGenerator {
+public class TypeScriptClientUtil {
 
-	public TypeScriptClientGenerator(
-			File baseDir, File openAPIYAMLFile, File copyrightFile)
-		throws IOException {
+	public static void generateTypeScriptClient(
+			OpenAPIYAML openAPIYAML, File implModule, File copyrightFile)
+		throws Exception {
 
-		_baseDir = baseDir;
-		_copyrightFile = copyrightFile;
+		File baseClientTSDir = new File(
+			StringUtil.removeLast(implModule.getPath(), "-impl") +
+				"-client-js");
 
-		_openAPIYAML = YAMLUtil.loadOpenAPIYAML(FileUtil.read(openAPIYAMLFile));
-	}
+		FileUtil.write(
+			new File(baseClientTSDir, "build.gradle"), StringPool.BLANK);
 
-	public void generate() throws Exception {
-		Map<String, PathItem> pathItems = _openAPIYAML.getPathItems();
+		FileUtil.write(
+			new File(baseClientTSDir, "node-scripts.config.js"),
+			FreeMarkerUtil.processTemplate(
+				null, null, "typescript/node_scripts_config_js", null));
+
+		FileUtil.write(
+			new File(baseClientTSDir, "package.json"),
+			FreeMarkerUtil.processTemplate(
+				null, null, "typescript/package_json",
+				HashMapBuilder.<String, Object>put(
+					"clientName", baseClientTSDir.getName()
+				).build()));
+
+		Map<String, PathItem> pathItems = openAPIYAML.getPathItems();
 
 		if (pathItems == null) {
 			return;
 		}
 
 		Files.createDirectories(
-			Paths.get(_baseDir.getPath(), "src", "node", "api"));
+			Paths.get(baseClientTSDir.getPath(), "src", "node", "api"));
 		Files.createDirectories(
-			Paths.get(_baseDir.getPath(), "src", "node", "model"));
+			Paths.get(baseClientTSDir.getPath(), "src", "node", "model"));
 
 		// Generate API files
 
@@ -77,29 +88,31 @@ public class TypeScriptClientGenerator {
 		for (Map.Entry<String, Map<String, Object>> apiContext : apiContexts) {
 			File apiFile = new File(
 				StringBundler.concat(
-					_baseDir.getPath(), "/src/node/api/",
+					baseClientTSDir.getPath(), "/src/node/api/",
 					StringUtil.lowerCaseFirstLetter(apiContext.getKey()),
 					"Api.ts"));
 
 			FileUtil.write(
 				apiFile,
 				FreeMarkerUtil.processTemplate(
-					_copyrightFile, FileUtil.getCopyrightYear(apiFile),
+					copyrightFile, FileUtil.getCopyrightYear(apiFile),
 					"typescript/api", apiContext.getValue()));
 		}
 
 		//Generate node/api/apis.ts file
-		File apisFile = new File(_baseDir.getPath() + "/src/node/api/apis.ts");
+		File apisFile = new File(
+			baseClientTSDir.getPath() + "/src/node/api/apis.ts");
 
 		FileUtil.write(
 			apisFile,
 			FreeMarkerUtil.processTemplate(
-				_copyrightFile, FileUtil.getCopyrightYear(apisFile), "typescript/apis",
+				copyrightFile, FileUtil.getCopyrightYear(apisFile),
+				"typescript/apis",
 				Collections.singletonMap("apiContexts", apiContexts)));
 
 		// Generate Model files
 
-		Map<String, Schema> schemas = _openAPIYAML.getComponents(
+		Map<String, Schema> schemas = openAPIYAML.getComponents(
 		).getSchemas();
 
 		if (schemas != null) {
@@ -108,14 +121,14 @@ public class TypeScriptClientGenerator {
 					schema.getKey(), schema.getValue());
 				File modelFile = new File(
 					StringBundler.concat(
-						_baseDir.getPath(), "/src/node/model/",
+						baseClientTSDir.getPath(), "/src/node/model/",
 						StringUtil.lowerCaseFirstLetter(schema.getKey()),
 						".ts"));
 
 				FileUtil.write(
 					modelFile,
 					FreeMarkerUtil.processTemplate(
-						_copyrightFile, FileUtil.getCopyrightYear(modelFile),
+						copyrightFile, FileUtil.getCopyrightYear(modelFile),
 						"typescript/model", modelContext));
 			}
 		}
@@ -123,27 +136,28 @@ public class TypeScriptClientGenerator {
 		// Generate node/model/models.ts file
 
 		File modelsFile = new File(
-			_baseDir.getPath() + "/src/node/model/models.ts");
+			baseClientTSDir.getPath() + "/src/node/model/models.ts");
 
 		FileUtil.write(
 			modelsFile,
 			FreeMarkerUtil.processTemplate(
-				_copyrightFile, FileUtil.getCopyrightYear(modelsFile),
+				copyrightFile, FileUtil.getCopyrightYear(modelsFile),
 				"typescript/models",
 				Collections.singletonMap("modelContexts", schemas)));
 
 		// Generate node/api.ts file
 
-		File apiGlobalFile = new File(_baseDir.getPath() + "/src/node/api.ts");
+		File apiGlobalFile = new File(
+			baseClientTSDir.getPath() + "/src/node/api.ts");
 
 		FileUtil.write(
 			apiGlobalFile,
 			FreeMarkerUtil.processTemplate(
-				_copyrightFile, FileUtil.getCopyrightYear(apiGlobalFile),
+				copyrightFile, FileUtil.getCopyrightYear(apiGlobalFile),
 				"typescript/api_global", null));
 	}
 
-	private Map<String, Map<String, Object>> _buildApiContexts(
+	private static Map<String, Map<String, Object>> _buildApiContexts(
 		Map<String, PathItem> pathItems) {
 
 		Map<String, List<Map<String, Object>>> operationsByTag =
@@ -201,7 +215,7 @@ public class TypeScriptClientGenerator {
 		return apiContexts;
 	}
 
-	private Map<String, Object> _buildModelContext(
+	private static Map<String, Object> _buildModelContext(
 		String modelName, Schema schema) {
 
 		Map<String, Object> modelContext = HashMapBuilder.<String, Object>put(
@@ -284,7 +298,7 @@ public class TypeScriptClientGenerator {
 		return modelContext;
 	}
 
-	private Map<String, Object> _buildOperationMap(
+	private static Map<String, Object> _buildOperationMap(
 		Operation operation, String path) {
 
 		Set<Map<String, String>> imports = new HashSet<>();
@@ -373,7 +387,7 @@ public class TypeScriptClientGenerator {
 		return operationMap;
 	}
 
-	private Collection<Map<String, Object>> _getAllOperationParams(
+	private static Collection<Map<String, Object>> _getAllOperationParams(
 		Operation operation, Map<String, Object> operationMap,
 		Set<Map<String, String>> imports) {
 
@@ -463,7 +477,7 @@ public class TypeScriptClientGenerator {
 		return allParams;
 	}
 
-	private String _getTypeScriptType(
+	private static String _getTypeScriptType(
 		Schema schema, Set<Map<String, String>> imports) {
 
 		if (schema == null) {
@@ -564,9 +578,5 @@ public class TypeScriptClientGenerator {
 
 		return "any";
 	}
-
-	private final File _baseDir;
-	private final File _copyrightFile;
-	private final OpenAPIYAML _openAPIYAML;
 
 }

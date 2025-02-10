@@ -531,6 +531,41 @@ public class FormItemManager {
 				Collections.emptyList());
 		}
 
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-31772")) {
+			return layoutStructureItemChanges;
+		}
+
+		for (String childrenItemId :
+				LayoutStructureItemUtil.getChildrenItemIds(
+					previousFormStepLayoutStructureItem.getItemId(),
+					layoutStructure)) {
+
+			LayoutStructureItem layoutStructureItem =
+				layoutStructure.getLayoutStructureItem(childrenItemId);
+
+			if (!(layoutStructureItem instanceof
+					FragmentStyledLayoutStructureItem)) {
+
+				continue;
+			}
+
+			FragmentStyledLayoutStructureItem
+				fragmentStyledLayoutStructureItem =
+					(FragmentStyledLayoutStructureItem)layoutStructureItem;
+
+			String type = _getFragmentEntryLinkFormButtonType(
+				fragmentStyledLayoutStructureItem.getFragmentEntryLinkId());
+
+			if (Objects.equals(type, "next")) {
+				layoutStructure.markLayoutStructureItemForDeletion(
+					Collections.singletonList(childrenItemId),
+					Collections.emptyList());
+
+				layoutStructureItemChanges.addRemovedLayoutStructureItems(
+					layoutStructureItem);
+			}
+		}
+
 		return layoutStructureItemChanges;
 	}
 

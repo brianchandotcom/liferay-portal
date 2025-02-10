@@ -5,6 +5,7 @@
 
 package com.liferay.layout.page.template.exception;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
@@ -14,22 +15,69 @@ public class
 	LayoutPageTemplateCollectionLayoutPageTemplateCollectionKeyException
 		extends PortalException {
 
-	public LayoutPageTemplateCollectionLayoutPageTemplateCollectionKeyException() {
+	public static class MustNotBeDuplicate
+		extends LayoutPageTemplateCollectionLayoutPageTemplateCollectionKeyException {
+
+		public MustNotBeDuplicate(
+			long groupId, String layoutPageTemplateCollectionKey) {
+
+			super(
+				StringBundler.concat(
+					"Duplicate layout page template for group ", groupId,
+					" with layout page template collection key ",
+					layoutPageTemplateCollectionKey));
+		}
+
 	}
 
-	public LayoutPageTemplateCollectionLayoutPageTemplateCollectionKeyException(
+	public static class MustNotContainInvalidCharacters
+		extends LayoutPageTemplateCollectionLayoutPageTemplateCollectionKeyException {
+
+		public MustNotContainInvalidCharacters(
+			String layoutPageTemplateCollectionKey) {
+
+			super(
+				StringBundler.concat(
+					"Layout page template collection key ",
+					layoutPageTemplateCollectionKey,
+					" must contain only alphanumeric characters, dashes, and ",
+					"underscores"));
+		}
+
+	}
+
+	public static class MustNotExceedMaximumSize
+		extends LayoutPageTemplateCollectionLayoutPageTemplateCollectionKeyException {
+
+		public MustNotExceedMaximumSize(
+			String layoutPageTemplateCollectionKey,
+			int layoutPageTemplateCollectionKeyMaxSize) {
+
+			super(
+				StringBundler.concat(
+					"Layout page template collection key ",
+					layoutPageTemplateCollectionKey, " must have fewer than ",
+					layoutPageTemplateCollectionKeyMaxSize, " characters"));
+		}
+
+	}
+
+	private LayoutPageTemplateCollectionLayoutPageTemplateCollectionKeyException() {
+	}
+
+	private LayoutPageTemplateCollectionLayoutPageTemplateCollectionKeyException(
 		String msg) {
 
 		super(msg);
 	}
 
-	public LayoutPageTemplateCollectionLayoutPageTemplateCollectionKeyException(
+	private LayoutPageTemplateCollectionLayoutPageTemplateCollectionKeyException(
 		String msg, Throwable throwable) {
 
 		super(msg, throwable);
 	}
 
-	public LayoutPageTemplateCollectionLayoutPageTemplateCollectionKeyException(
+	private LayoutPageTemplateCollectionLayoutPageTemplateCollectionKeyException(
 		Throwable throwable) {
 
 		super(throwable);

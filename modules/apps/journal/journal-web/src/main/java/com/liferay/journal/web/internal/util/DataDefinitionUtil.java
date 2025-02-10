@@ -11,22 +11,41 @@ import com.liferay.data.engine.rest.dto.v2_0.DataLayout;
 import com.liferay.data.engine.rest.dto.v2_0.DataLayoutColumn;
 import com.liferay.data.engine.rest.dto.v2_0.DataLayoutPage;
 import com.liferay.data.engine.rest.dto.v2_0.DataLayoutRow;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.util.DDMFormFieldUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+
+import java.util.Map;
 
 /**
  * @author Attila Bakay
  */
 public class DataDefinitionUtil {
 
-	public static void validateDefinitionFields(DataDefinition dataDefinition) {
+	public static boolean isValidFieldName(String fieldName) {
+		int index = fieldName.length() - 8;
+
+		if ((index >= 0) && Validator.isNumber(fieldName.substring(index))) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public static void validateDefinitionFields(
+		DataDefinition dataDefinition, DDMStructure ddmStructure) {
+
 		for (DataDefinitionField dataDefinitionField :
 				dataDefinition.getDataDefinitionFields()) {
 
 			String oldFieldName = dataDefinitionField.getName();
 
-			String newFieldName = _getFieldName(oldFieldName);
+			String newFieldName = _getFieldName(
+				dataDefinitionField, ddmStructure, oldFieldName);
 
 			if (StringUtil.equals(newFieldName, oldFieldName)) {
 				continue;
@@ -40,11 +59,53 @@ public class DataDefinitionUtil {
 		}
 	}
 
-	private static String _getFieldName(String fieldName) {
-		int index = fieldName.length() - 8;
+	private static String _getExistingFieldName(
+		DataDefinitionField dataDefinitionField, DDMStructure ddmStructure) {
 
-		if ((index >= 0) && Validator.isNumber(fieldName.substring(index))) {
+		Map<String, Object> customProperties =
+			dataDefinitionField.getCustomProperties();
+
+		if ((customProperties != null) &&
+			customProperties.containsKey("fieldReference")) {
+
+			String fieldReference = GetterUtil.getString(
+				customProperties.get("fieldReference"));
+
+			DDMForm ddmForm = ddmStructure.getDDMForm();
+
+			Map<String, DDMFormField> ddmFormFieldsReferencesMap =
+				ddmForm.getDDMFormFieldsReferencesMap(true);
+
+			if (ddmFormFieldsReferencesMap.containsKey(fieldReference)) {
+				DDMFormField ddmFormField = ddmFormFieldsReferencesMap.get(
+					fieldReference);
+
+				return ddmFormField.getName();
+			}
+		}
+
+		return null;
+	}
+
+	private static String _getFieldName(
+		DataDefinitionField dataDefinitionField, DDMStructure ddmStructure,
+		String fieldName) {
+
+		if (isValidFieldName(fieldName)) {
 			return fieldName;
+		}
+
+		if (ddmStructure != null) {
+			String existingFieldName = _getExistingFieldName(
+				dataDefinitionField, ddmStructure);
+
+			if (existingFieldName != null) {
+				if (isValidFieldName(existingFieldName)) {
+					return existingFieldName;
+				}
+
+				fieldName = existingFieldName;
+			}
 		}
 
 		return DDMFormFieldUtil.getDDMFormFieldName(fieldName);

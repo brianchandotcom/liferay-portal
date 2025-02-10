@@ -44,6 +44,7 @@
 								</@clay.button>
 							</span>
 						</#if>
+
 						<#if selectable>
 							<span class="autofit-col autofit-col-expand">
 								<div class="custom-checkbox custom-control">
@@ -82,6 +83,7 @@
 											<#if frequencyVisible>
 												(${frequency})
 											</#if>
+
 										</span>
 									</span>
 								</span>
@@ -91,6 +93,7 @@
 				</span>
 			</div>
 		</#if>
+
 		<#if termDisplayContexts?has_content>
 			<div class="collapse show" id="${namespace}treeItem${id}">
 				<ul class="treeview-group" role="group">
@@ -110,6 +113,7 @@
 		</#if>
 	</li>
 </#macro>
+
 <@liferay_ui["panel-container"]
 	extended=true
 	id="${namespace + 'facetAssetCategoriesPanelContainer'}"
@@ -117,14 +121,14 @@
 	persistState=true
 >
 	<#assign vocabularyNames = assetCategoriesSearchFacetDisplayContext.getVocabularyNames()![] />
+
 	<@liferay_ui.panel
 		collapsible=true
 		cssClass="search-facet search-facet-display-vocabulary bg-light"
 		id="${namespace + 'facetAssetCategoriesPanel'}"
 		markupView="lexicon"
 		persistState=true
-		title="${(vocabularyNames?size == 1)?then(vocabularyNames[0]!'', 'category')}"
-	>
+		title="${(vocabularyNames?size == 1)?then(vocabularyNames[0]!'', 'category')}">
 		<#if !assetCategoriesSearchFacetDisplayContext.isNothingSelected()>
 			<@clay.button
 				cssClass="btn-unstyled c-mb-4 facet-clear-btn"
@@ -135,6 +139,7 @@
 				<strong>${languageUtil.get(locale, "clear")}</strong>
 			</@clay.button>
 		</#if>
+
 		<#if vocabularyNames?has_content>
 			<ul class="treeview treeview-light treeview-nested treeview-vocabulary-display" role="tree">
 				<#list vocabularyNames as vocabularyName>
@@ -150,6 +155,7 @@
 		</#if>
 	</@>
 </@>
+
 <@liferay_aui.script>
 	function ${namespace}toggleTreeItem(dataTarget) {
 		const dataTargetElements = document.querySelectorAll("[data-target=\"#" + dataTarget + "\"]");
@@ -166,6 +172,7 @@
 			}
 		);
 		const subtreeCategoryTreeElement = document.getElementById(dataTarget);
+
 		if (subtreeCategoryTreeElement) {
 			if (subtreeCategoryTreeElement.classList.contains('show')) {
 				subtreeCategoryTreeElement.classList.remove('show');

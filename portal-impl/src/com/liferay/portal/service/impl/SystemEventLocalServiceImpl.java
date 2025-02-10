@@ -221,10 +221,10 @@ public class SystemEventLocalServiceImpl
 		systemEvent.setUserId(userId);
 		systemEvent.setUserName(userName);
 		systemEvent.setCreateDate(new Date());
+		systemEvent.setClassExternalReferenceCode(classExternalReferenceCode);
 		systemEvent.setClassName(className);
 		systemEvent.setClassPK(classPK);
 		systemEvent.setClassUuid(classUuid);
-		systemEvent.setClassExternalReferenceCode(classExternalReferenceCode);
 		systemEvent.setReferrerClassName(referrerClassName);
 
 		long parentSystemEventId = 0;

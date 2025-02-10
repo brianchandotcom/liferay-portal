@@ -159,9 +159,12 @@
 									<tbody>
 										<#if cpDefinitionSpecificationOptionValues?has_content>
 											<#assign cont = 1 />
+
 											<#list cpDefinitionSpecificationOptionValues as cpDefinitionSpecificationOptionValue>
-											<#assign
-												cpSpecificationOption = cpDefinitionSpecificationOptionValue.getCPSpecificationOption() />
+												<#assign
+													cpSpecificationOption = cpDefinitionSpecificationOptionValue.getCPSpecificationOption()
+												/>
+												
 												<tr>
 													<td class="specification-term table-cell-minw-150 table-title prdct"></td>
 													<td class="specification-term">
@@ -185,8 +188,10 @@
 												categorizedCPDefinitionSpecificationOptionValues = cpContentHelper.getCategorizedCPDefinitionSpecificationOptionValues(cpDefinitionId,
 												cpOptionCategory.getCPOptionCategoryId())
 											/>
+											
 											<#if categorizedCPDefinitionSpecificationOptionValues?has_content>
 												<#assign cont = 1 />
+
 												<#list categorizedCPDefinitionSpecificationOptionValues as cpDefinitionSpecificationOptionValue>
 													<#assign
 														cpSpecificationOption = cpDefinitionSpecificationOptionValue.getCPSpecificationOption()

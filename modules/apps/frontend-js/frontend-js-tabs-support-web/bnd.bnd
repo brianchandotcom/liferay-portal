@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Frontend JS Tabs Support Web
-Bundle-SymbolicName: com.liferay.frontend.js.tabs.support.web
-Bundle-Version: 2.0.25
-Web-ContextPath: /frontend-js-tabs-support-web

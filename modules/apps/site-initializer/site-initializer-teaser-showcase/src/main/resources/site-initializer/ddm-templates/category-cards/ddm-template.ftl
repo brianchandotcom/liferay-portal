@@ -58,7 +58,6 @@
 								</a>
 							</div>
 					</div>
-
 					<div class="card-body widget-topbar">
 						<div class="autofit-row card-title">
 							<div class="autofit-col autofit-col-expand">
@@ -67,8 +66,10 @@
 								</h3>
 							</div>
 						</div>
+
 						<#if validator.isNotNull(currentCategory.getDescription())>
 							<#assign content = currentCategory.getDescription() />
+
 							<#if cardImage>
 								<p class="widget-resume">${stringUtil.shorten(htmlUtil.stripHtml(content), 150)}</p>
 							<#else>

@@ -2,16 +2,20 @@
 	.badge {
 		font-size: .8rem;
 	}
+
 	.card-title {
 		font-size: 1rem;
 	}
+
 	.product-category {
 		font-size: 0.8rem;
 	}
+
 	.suggested {
 		background-color: #2e5aac !important;
 		color: #ffffff !important;
 	}
+	
 	.custom-checkbox label {
 		padding-top:0.125rem;
 	}
@@ -43,17 +47,20 @@
 				isSuggested = false
 				suggestedClass = ""
 			/>
+
 			<#if cpContentHelper.getDefaultCPSku(curCPCatalogEntry)?has_content>
 				<#assign sku = cpContentHelper.getDefaultCPSku(curCPCatalogEntry).getSku() />
 			<#else>
 				<#assign sku = "" />
 			</#if>
+
 			<#if tags?seq_contains("suggested")>
 				<#assign
 					isSuggested = true
 					suggestedClass = "suggested"
 				/>
 			</#if>
+
 			<a href="${friendlyURL}">
 				<div class="card d-flex flex-column product-card shadow-none mb-4 mx-3">
 					<img class="card-img-top rounded mb-3" src="${defaultImageURL}" alt="${productName}" />
@@ -61,6 +68,7 @@
 					<h5 class="card-title mb-1">${productName}</h5>
 
 					<p>Product</p>åå
+
 					<#list specifications as spec>
 						<#if spec??>
 							<div>${spec}</div>

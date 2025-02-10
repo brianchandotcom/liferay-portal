@@ -80,38 +80,81 @@ else {
 	}
 
 	if (Liferay.FeatureFlags['LPD-37927']) {
-		import('@liferay/fragment-impl').then(({registerLocalizedInput}) => {
-			if (input.localizable) {
-				const optionValues = Object.fromEntries(
-					Object.values(input.valueI18n).map((value) => [
-						value,
-						input.attributes.options.find(
-							(option) => option.value === value
-						).label,
-					])
-				);
+		import('@liferay/fragment-impl').then(
+			({registerLocalizedInput, registerUnlocalizedInput}) => {
+				const defaultLanguageId = themeDisplay.getDefaultLanguageId();
 
-				const {onChange} = registerLocalizedInput({
-					defaultLanguageId: themeDisplay.getDefaultLanguageId(),
-					initialValues: input.valueI18n,
-					inputElement: uiInputElement,
-					inputName: input.name,
-					localizationInputsContainer: uiInputElement.parentNode,
-					namespace: fragmentNamespace,
-					optionValues,
-				});
+				if (input.localizable) {
+					const optionValues = Object.fromEntries(
+						Object.values(input.valueI18n).map((value) => [
+							value,
+							input.attributes.options.find(
+								(option) => option.value === value
+							).label,
+						])
+					);
 
-				optionListElement.addEventListener('click', (event) => {
-					handleResultListClick(event, onChange);
-				});
+					const {onChange} = registerLocalizedInput({
+						defaultLanguageId,
+						initialValues: input.valueI18n,
+						inputElement: uiInputElement,
+						inputName: input.name,
+						localizationInputsContainer: uiInputElement.parentNode,
+						namespace: fragmentNamespace,
+						optionValues,
+					});
+
+					optionListElement.addEventListener('click', (event) => {
+						handleResultListClick(event, onChange);
+					});
+				}
+				else {
+					registerUnlocalizedInput({
+						defaultLanguageId,
+						inputElement: uiInputElement,
+						onLocaleChange: (languageId) => {
+							if (defaultLanguageId === languageId) {
+								uiInputElement.addEventListener(
+									'click',
+									toggleDropdown
+								);
+								uiInputElement.addEventListener(
+									'keydown',
+									handleInputKeyDown
+								);
+
+								buttonElement.classList.remove('d-none');
+							}
+							else {
+								uiInputElement.removeEventListener(
+									'click',
+									toggleDropdown
+								);
+								uiInputElement.removeEventListener(
+									'keydown',
+									handleInputKeyDown
+								);
+
+								buttonElement.classList.add('d-none');
+							}
+						},
+						readOnlyInputLabel: document.getElementById(
+							`${fragmentNamespace}-select-from-list-read-only`
+						),
+						unlocalizedFieldsState:
+							input.attributes.unlocalizedFieldsState,
+						unlocalizedMessageContainer: document.getElementById(
+							`${fragmentNamespace}-unlocalized-info`
+						),
+					});
+
+					optionListElement.addEventListener(
+						'click',
+						handleResultListClick
+					);
+				}
 			}
-			else {
-				optionListElement.addEventListener(
-					'click',
-					handleResultListClick
-				);
-			}
-		});
+		);
 	}
 	else {
 		optionListElement.addEventListener('click', handleResultListClick);

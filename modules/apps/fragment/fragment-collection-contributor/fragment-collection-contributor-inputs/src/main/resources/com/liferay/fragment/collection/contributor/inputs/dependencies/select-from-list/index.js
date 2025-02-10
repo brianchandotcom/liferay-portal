@@ -41,7 +41,6 @@ uiInputElement.addEventListener('click', toggleDropdown);
 uiInputElement.addEventListener('input', debounce(handleInputChange, 1000));
 uiInputElement.addEventListener('blur', handleInputBlur);
 uiInputElement.addEventListener('keydown', handleInputKeyDown);
-optionListElement.addEventListener('click', handleResultListClick);
 
 window.addEventListener('resize', handleWindowResizeOrScroll, {
 	passive: true,
@@ -79,6 +78,34 @@ else {
 			}
 		}
 	}
+
+	if (Liferay.FeatureFlags['LPD-37927']) {
+		import('@liferay/fragment-impl').then(({registerLocalizedInput}) => {
+			if (input.localizable) {
+				const {onChange} = registerLocalizedInput({
+					defaultLanguageId: themeDisplay.getDefaultLanguageId(),
+					initialValues: input.valueI18n,
+					inputElement: uiInputElement,
+					inputName: input.name,
+					localizationInputsContainer: uiInputElement.parentNode,
+					namespace: fragmentNamespace,
+				});
+
+				optionListElement.addEventListener('click', (event) => {
+					handleResultListClick(event, onChange);
+				});
+			}
+			else {
+				optionListElement.addEventListener(
+					'click',
+					handleResultListClick
+				);
+			}
+		});
+	}
+	else {
+		optionListElement.addEventListener('click', handleResultListClick);
+	}
 }
 
 const KEYS = {
@@ -95,7 +122,7 @@ const optionList = (input.attributes.options || []).map((option) => ({
 	value: option.value,
 }));
 
-function handleResultListClick(event) {
+function handleResultListClick(event, onChange) {
 	let selectedOptionElement = null;
 
 	if (event.target.matches('.dropdown-item')) {
@@ -108,6 +135,13 @@ function handleResultListClick(event) {
 	if (selectedOptionElement) {
 		setFocusedOption(selectedOptionElement, {scrollToElement: false});
 		setSelectedOption(selectedOptionElement);
+
+		if (onChange) {
+			onChange(
+				selectedOptionElement.dataset.optionValue,
+				selectedOptionElement.dataset.optionLabel
+			);
+		}
 	}
 }
 

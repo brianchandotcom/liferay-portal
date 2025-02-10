@@ -63,6 +63,9 @@ export function registerLocalizedInput({
 			if (inputElement.type === 'checkbox') {
 				inputElement.checked = translationInput.value === 'true';
 			}
+			else if (inputElement.getAttribute('role') === 'combobox') {
+				inputElement.value = translationInput.dataset.label || '';
+			}
 			else {
 				inputElement.value = translationInput.value;
 			}
@@ -77,14 +80,21 @@ export function registerLocalizedInput({
 
 			onLocaleChange?.({languageId, value: defaultLanguageInput.value});
 
-			if (inputElement) {
+			if (!inputElement) {
+				return;
+			}
+
+			if (inputElement.getAttribute('role') === 'combobox') {
+				inputElement.value = defaultLanguageInput.dataset.label || '';
+			}
+			else {
 				inputElement.value = defaultLanguageInput.value;
 			}
 		}
 	});
 
 	return {
-		onChange: (value: string) => {
+		onChange: (value: string, label?: string) => {
 			const translationInput = getOrCreateTranslationInput(
 				inputName,
 				currentLanguageId,
@@ -93,6 +103,10 @@ export function registerLocalizedInput({
 			);
 
 			translationInput.value = value;
+
+			if (label) {
+				translationInput.dataset.label = label;
+			}
 
 			Liferay.fire('localizationSelect:updateTranslationStatus', {
 				languageId: currentLanguageId,

@@ -6,10 +6,10 @@
 package com.liferay.frontend.data.set.taglib.servlet.taglib;
 
 import com.liferay.frontend.data.set.filter.FDSFilter;
-import com.liferay.frontend.data.set.filter.FDSFilterSerializer;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.data.set.model.FDSSortItem;
 import com.liferay.frontend.data.set.model.FDSSortItemList;
+import com.liferay.frontend.data.set.serializer.FDSSerializer;
 import com.liferay.frontend.data.set.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.frontend.data.set.view.FDSViewSerializer;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
@@ -199,7 +199,7 @@ public class HeadlessDisplayTag extends BaseDisplayTag {
 	public void setPageContext(PageContext pageContext) {
 		_fdsViewSerializer = ServletContextUtil.getFDSViewSerializer();
 
-		_fdsFilterSerializer = ServletContextUtil.getFDSFilterSerializer();
+		_fdsSerializer = ServletContextUtil.getFDSSerializer();
 
 		super.setPageContext(pageContext);
 
@@ -257,7 +257,7 @@ public class HeadlessDisplayTag extends BaseDisplayTag {
 		_fdsActionDropdownItems = new ArrayList<>();
 		_fdsFilters = new ArrayList<>();
 		_fdsFiltersContext = null;
-		_fdsFilterSerializer = null;
+		_fdsSerializer = null;
 		_fdsSortItemList = new FDSSortItemList();
 		_fdsViewsContext = null;
 		_fdsViewSerializer = null;
@@ -352,8 +352,8 @@ public class HeadlessDisplayTag extends BaseDisplayTag {
 	}
 
 	private void _setFDSFiltersContext() {
-		_fdsFiltersContext = _fdsFilterSerializer.serialize(
-			getId(), getFdsFilters(), PortalUtil.getLocale(getRequest()));
+		_fdsFiltersContext = _fdsSerializer.serializeFilters(
+			getId(), getFdsFilters(), getRequest());
 	}
 
 	private void _setFDSViewsContext() {
@@ -383,7 +383,7 @@ public class HeadlessDisplayTag extends BaseDisplayTag {
 		new ArrayList<>();
 	private List<FDSFilter> _fdsFilters = new ArrayList<>();
 	private Object _fdsFiltersContext;
-	private FDSFilterSerializer _fdsFilterSerializer;
+	private FDSSerializer _fdsSerializer;
 	private FDSSortItemList _fdsSortItemList = new FDSSortItemList();
 	private Object _fdsViewsContext;
 	private FDSViewSerializer _fdsViewSerializer;

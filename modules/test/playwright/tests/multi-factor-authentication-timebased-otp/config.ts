@@ -6,5 +6,4 @@
 export const config = {
 	name: 'multi-factor-authentication-timebased-otp',
 	testDir: 'tests/multi-factor-authentication-timebased-otp',
-	timeout: 480 * 1000,
 };

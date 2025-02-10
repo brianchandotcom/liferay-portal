@@ -7,7 +7,9 @@ package com.liferay.layout.page.template.service.impl;
 
 import com.liferay.layout.page.template.exception.DuplicateLayoutPageTemplateCollectionException;
 import com.liferay.layout.page.template.exception.LayoutPageTemplateCollectionGroupIdException;
+import com.liferay.layout.page.template.exception.LayoutPageTemplateCollectionLayoutPageTemplateCollectionKeyException;
 import com.liferay.layout.page.template.exception.LayoutPageTemplateCollectionNameException;
+import com.liferay.layout.page.template.internal.validator.LayoutPageTemplateValidator;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
@@ -55,7 +57,7 @@ public class LayoutPageTemplateCollectionLocalServiceImpl
 	public LayoutPageTemplateCollection addLayoutPageTemplateCollection(
 			String externalReferenceCode, long userId, long groupId,
 			long parentLayoutPageTemplateCollectionId,
-			String layoutPageTemplateCollectionKey,	String name,
+			String layoutPageTemplateCollectionKey, String name,
 			String description, int type, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -70,6 +72,15 @@ public class LayoutPageTemplateCollectionLocalServiceImpl
 		User user = _userLocalService.getUser(userId);
 
 		_validate(groupId, name, parentLayoutPageTemplateCollectionId, type);
+
+		if (Validator.isNull(layoutPageTemplateCollectionKey)) {
+			layoutPageTemplateCollectionKey =
+				_generateLayoutPageTemplateCollectionKey(groupId, name, type);
+		}
+		else {
+			_validateLayoutPageTemplateCollectionKey(
+				groupId, layoutPageTemplateCollectionKey, type);
+		}
 
 		long layoutPageTemplateId = counterLocalService.increment();
 
@@ -90,11 +101,6 @@ public class LayoutPageTemplateCollectionLocalServiceImpl
 			serviceContext.getModifiedDate(new Date()));
 		layoutPageTemplateCollection.setParentLayoutPageTemplateCollectionId(
 			parentLayoutPageTemplateCollectionId);
-
-		if (Validator.isNull(layoutPageTemplateCollectionKey)) {
-			layoutPageTemplateCollectionKey = _generateLayoutPageTemplateCollectionKey(
-				groupId, name, type);
-		}
 
 		layoutPageTemplateCollection.setLayoutPageTemplateCollectionKey(
 			layoutPageTemplateCollectionKey);
@@ -529,6 +535,37 @@ public class LayoutPageTemplateCollectionLocalServiceImpl
 
 		if (layoutPageTemplateCollection != null) {
 			throw new DuplicateLayoutPageTemplateCollectionException(name);
+		}
+	}
+
+	private void _validateLayoutPageTemplateCollectionKey(
+			long groupId, String layoutPageTemplateCollectionKey, int type)
+		throws PortalException {
+
+		Character character = LayoutPageTemplateValidator.getBlacklistCharacter(
+			layoutPageTemplateCollectionKey);
+
+		if (character != null) {
+			throw new LayoutPageTemplateCollectionLayoutPageTemplateCollectionKeyException.MustNotContainInvalidCharacters(
+				character);
+		}
+
+		int nameMaxLength = ModelHintsUtil.getMaxLength(
+			LayoutPageTemplateCollection.class.getName(),
+			"layoutPageTemplateCollectionKey");
+
+		if (layoutPageTemplateCollectionKey.length() > nameMaxLength) {
+			throw new LayoutPageTemplateCollectionLayoutPageTemplateCollectionKeyException.MustNotExceedMaximumSize(
+				nameMaxLength);
+		}
+
+		LayoutPageTemplateCollection layoutPageTemplateCollection =
+			layoutPageTemplateCollectionPersistence.fetchByG_LPTCK_T(
+				groupId, layoutPageTemplateCollectionKey, type);
+
+		if (layoutPageTemplateCollection != null) {
+			throw new LayoutPageTemplateCollectionLayoutPageTemplateCollectionKeyException.MustNotBeDuplicate(
+				groupId, layoutPageTemplateCollectionKey);
 		}
 	}
 

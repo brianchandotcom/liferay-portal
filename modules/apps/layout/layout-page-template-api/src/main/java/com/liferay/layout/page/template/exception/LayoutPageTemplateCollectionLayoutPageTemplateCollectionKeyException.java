@@ -5,6 +5,7 @@
 
 package com.liferay.layout.page.template.exception;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
@@ -14,22 +15,64 @@ public class
 	LayoutPageTemplateCollectionLayoutPageTemplateCollectionKeyException
 		extends PortalException {
 
-	public LayoutPageTemplateCollectionLayoutPageTemplateCollectionKeyException() {
+	public static class MustNotBeDuplicate
+		extends LayoutPageTemplateCollectionLayoutPageTemplateCollectionKeyException {
+
+		public MustNotBeDuplicate(
+			long groupId, String layoutPageTemplateCollectionKey) {
+
+			super(
+				String.format(
+					StringBundler.concat(
+						"Duplicate layout page template for group ", groupId,
+						" with layoutPageTemplateCollectionKey ",
+						layoutPageTemplateCollectionKey)));
+		}
+
 	}
 
-	public LayoutPageTemplateCollectionLayoutPageTemplateCollectionKeyException(
+	public static class MustNotContainInvalidCharacters
+		extends LayoutPageTemplateCollectionLayoutPageTemplateCollectionKeyException {
+
+		public MustNotContainInvalidCharacters(Character character) {
+			super(
+				"Invalid character in layoutPageTemplateCollectionKey " +
+					character);
+
+			this.character = character;
+		}
+
+		public final Character character;
+
+	}
+
+	public static class MustNotExceedMaximumSize
+		extends LayoutPageTemplateCollectionLayoutPageTemplateCollectionKeyException {
+
+		public MustNotExceedMaximumSize(int maxLength) {
+			super(
+				"Maximum length of layoutPageTemplateCollectionKey exceeded " +
+					maxLength);
+		}
+
+	}
+
+	private LayoutPageTemplateCollectionLayoutPageTemplateCollectionKeyException() {
+	}
+
+	private LayoutPageTemplateCollectionLayoutPageTemplateCollectionKeyException(
 		String msg) {
 
 		super(msg);
 	}
 
-	public LayoutPageTemplateCollectionLayoutPageTemplateCollectionKeyException(
+	private LayoutPageTemplateCollectionLayoutPageTemplateCollectionKeyException(
 		String msg, Throwable throwable) {
 
 		super(msg, throwable);
 	}
 
-	public LayoutPageTemplateCollectionLayoutPageTemplateCollectionKeyException(
+	private LayoutPageTemplateCollectionLayoutPageTemplateCollectionKeyException(
 		Throwable throwable) {
 
 		super(throwable);

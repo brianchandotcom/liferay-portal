@@ -130,8 +130,6 @@ public class ContactIndexerIndexedFieldsTest {
 	protected void setUpContactFixture() throws Exception {
 		contactFixture = new ContactFixture(contactLocalService);
 
-		contactFixture.setUp();
-
 		contactFixture.setUser(user);
 		contactFixture.setGroup(group);
 

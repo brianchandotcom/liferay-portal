@@ -44,6 +44,7 @@ import com.liferay.commerce.test.util.order.status.Test1CommerceOrderStatusImpl;
 import com.liferay.commerce.test.util.order.status.Test2CommerceOrderStatusImpl;
 import com.liferay.commerce.test.util.order.status.Test3CommerceOrderStatusImpl;
 import com.liferay.petra.lang.CentralizedThreadLocal;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
@@ -103,9 +104,8 @@ public class CommerceOrderEngineTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_originalCompanyId = CompanyThreadLocal.getCompanyId();
-
-		CompanyThreadLocal.setCompanyId(TestPropsValues.getCompanyId());
+		_safeCloseable = CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+			TestPropsValues.getCompanyId());
 
 		_group = GroupTestUtil.addGroup();
 
@@ -159,6 +159,8 @@ public class CommerceOrderEngineTest {
 		_commerceOrderLocalService.deleteCommerceOrder(_commerceOrder);
 
 		CentralizedThreadLocal.clearShortLivedCentralizedThreadLocals();
+
+		_safeCloseable.close();
 	}
 
 	@Test
@@ -1177,6 +1179,7 @@ public class CommerceOrderEngineTest {
 	@Rule
 	public FrutillaRule frutillaRule = new FrutillaRule();
 
+	private static SafeCloseable _safeCloseable;
 	private static User _user;
 
 	private AccountEntry _accountEntry;
@@ -1214,7 +1217,6 @@ public class CommerceOrderEngineTest {
 	private CommerceShipmentLocalService _commerceShipmentLocalService;
 
 	private Group _group;
-	private long _originalCompanyId;
 	private PermissionChecker _permissionChecker;
 
 	@Inject

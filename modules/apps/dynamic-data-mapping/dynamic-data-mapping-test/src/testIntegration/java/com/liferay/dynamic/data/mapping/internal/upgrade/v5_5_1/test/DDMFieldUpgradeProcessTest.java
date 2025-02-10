@@ -20,6 +20,7 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.util.DDM;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.db.partition.DBPartition;
@@ -72,16 +73,15 @@ public class DDMFieldUpgradeProcessTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
-		_originalCompanyId = CompanyThreadLocal.getCompanyId();
-
-		CompanyThreadLocal.setCompanyId(CompanyConstants.SYSTEM);
+		_safeCloseable = CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+			CompanyConstants.SYSTEM);
 	}
 
 	@After
 	public void tearDown() throws Exception {
 		_ddmFieldLocalService.deleteDDMFormValues(_STORAGE_ID);
 
-		CompanyThreadLocal.setCompanyId(_originalCompanyId);
+		_safeCloseable.close();
 	}
 
 	@Test
@@ -173,6 +173,8 @@ public class DDMFieldUpgradeProcessTest {
 
 	private static final long _STORAGE_ID = 0;
 
+	private static SafeCloseable _safeCloseable;
+
 	@Inject(
 		filter = "(&(component.name=com.liferay.dynamic.data.mapping.internal.upgrade.registry.DDMServiceUpgradeStepRegistrator))"
 	)
@@ -204,7 +206,5 @@ public class DDMFieldUpgradeProcessTest {
 
 	@Inject
 	private MultiVMPool _multiVMPool;
-
-	private long _originalCompanyId;
 
 }

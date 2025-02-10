@@ -9,11 +9,9 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ContactLocalService;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -69,10 +67,6 @@ public class ContactFixture {
 
 	public void setGroup(Group group) {
 		_group = group;
-	}
-
-	public void setUp() throws Exception {
-		CompanyThreadLocal.setCompanyId(TestPropsValues.getCompanyId());
 	}
 
 	public void setUser(User user) {

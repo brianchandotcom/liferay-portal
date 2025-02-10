@@ -53,7 +53,6 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.PortalPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -121,8 +120,6 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 		UserTestUtil.setUser(TestPropsValues.getUser());
 
 		super.setUp();
-
-		CompanyThreadLocal.setCompanyId(TestPropsValues.getCompanyId());
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext();

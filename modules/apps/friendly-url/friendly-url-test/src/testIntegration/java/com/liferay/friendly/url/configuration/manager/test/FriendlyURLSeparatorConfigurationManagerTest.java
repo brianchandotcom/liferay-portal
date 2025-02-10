@@ -9,6 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.friendly.url.configuration.FriendlyURLSeparatorCompanyConfiguration;
 import com.liferay.friendly.url.configuration.manager.FriendlyURLSeparatorConfigurationManager;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -50,14 +51,14 @@ public class FriendlyURLSeparatorConfigurationManagerTest {
 	@Before
 	public void setUp() throws Exception {
 		_companyId = RandomTestUtil.randomLong();
-		_originalCompanyId = CompanyThreadLocal.getCompanyId();
 
-		CompanyThreadLocal.setCompanyId(_companyId);
+		_safeCloseable = CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+			_companyId);
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		CompanyThreadLocal.setCompanyId(_originalCompanyId);
+		_safeCloseable.close();
 	}
 
 	@Test
@@ -135,6 +136,8 @@ public class FriendlyURLSeparatorConfigurationManagerTest {
 	@Inject
 	private static ConfigurationAdmin _configurationAdmin;
 
+	private static SafeCloseable _safeCloseable;
+
 	private long _companyId;
 
 	@Inject
@@ -146,7 +149,5 @@ public class FriendlyURLSeparatorConfigurationManagerTest {
 
 	@Inject
 	private JSONFactory _jsonFactory;
-
-	private long _originalCompanyId;
 
 }

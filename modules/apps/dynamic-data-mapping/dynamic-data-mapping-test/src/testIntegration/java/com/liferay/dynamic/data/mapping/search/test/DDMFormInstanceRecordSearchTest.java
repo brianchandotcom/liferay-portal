@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -73,8 +72,6 @@ public class DDMFormInstanceRecordSearchTest {
 		_group = GroupTestUtil.addGroup();
 
 		_user = UserTestUtil.addGroupAdminUser(_group);
-
-		CompanyThreadLocal.setCompanyId(TestPropsValues.getCompanyId());
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext();

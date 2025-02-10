@@ -35,6 +35,7 @@ import com.liferay.commerce.test.util.context.TestCustomCommerceContextFactory;
 import com.liferay.commerce.test.util.context.TestCustomCommerceContextHttp;
 import com.liferay.commerce.util.CommerceAccountHelper;
 import com.liferay.petra.lang.CentralizedThreadLocal;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Country;
@@ -120,9 +121,8 @@ public class CommerceOrderTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_originalCompanyId = CompanyThreadLocal.getCompanyId();
-
-		CompanyThreadLocal.setCompanyId(TestPropsValues.getCompanyId());
+		_safeCloseable = CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+			TestPropsValues.getCompanyId());
 
 		_group = GroupTestUtil.addGroup();
 		_user = UserTestUtil.addUser(true);
@@ -173,7 +173,7 @@ public class CommerceOrderTest {
 
 		voidPromise.getValue();
 
-		CompanyThreadLocal.setCompanyId(_originalCompanyId);
+		_safeCloseable.close();
 	}
 
 	@Test
@@ -1158,6 +1158,8 @@ public class CommerceOrderTest {
 
 	private static final int _MAX_CLAUSES_COUNT = 1024;
 
+	private static SafeCloseable _safeCloseable;
+
 	@Inject
 	private static ServiceComponentRuntime _serviceComponentRuntime;
 
@@ -1208,7 +1210,6 @@ public class CommerceOrderTest {
 	@Inject
 	private OrganizationLocalService _organizationLocalService;
 
-	private long _originalCompanyId;
 	private Region _region;
 
 	@Inject

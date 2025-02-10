@@ -402,8 +402,6 @@ public class FragmentCollectionContributorPropagationTest {
 		Company company = _companyLocalService.getCompany(
 			TestPropsValues.getCompanyId());
 
-		CompanyThreadLocal.setCompanyId(company.getCompanyId());
-
 		Group group = _groupLocalService.getGroup(
 			company.getCompanyId(), GroupConstants.GUEST);
 

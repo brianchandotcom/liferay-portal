@@ -83,17 +83,16 @@ public class ServicePreActionTest {
 	public static void setUpClass() throws Exception {
 		_company = CompanyTestUtil.addCompany();
 
-		_companyThreadLocalCompanyId = CompanyThreadLocal.getCompanyId();
-
-		CompanyThreadLocal.setCompanyId(_company.getCompanyId());
+		_safeCloseable = CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+			_company.getCompanyId());
 	}
 
 	@AfterClass
 	public static void tearDownClass() throws Exception {
-		CompanyThreadLocal.setCompanyId(_companyThreadLocalCompanyId);
+		_safeCloseable.close();
 
 		UserTestUtil.setUser(
-			UserTestUtil.getAdminUser(_companyThreadLocalCompanyId));
+			UserTestUtil.getAdminUser(CompanyThreadLocal.getCompanyId()));
 
 		CompanyLocalServiceUtil.deleteCompany(_company.getCompanyId());
 	}
@@ -465,7 +464,7 @@ public class ServicePreActionTest {
 	}
 
 	private static Company _company;
-	private static long _companyThreadLocalCompanyId;
+	private static SafeCloseable _safeCloseable;
 
 	@DeleteAfterTestRun
 	private Group _group;

@@ -83,7 +83,6 @@
 											<#if frequencyVisible>
 												(${frequency})
 											</#if>
-
 										</span>
 									</span>
 								</span>
@@ -128,7 +127,8 @@
 		id="${namespace + 'facetAssetCategoriesPanel'}"
 		markupView="lexicon"
 		persistState=true
-		title="${(vocabularyNames?size == 1)?then(vocabularyNames[0]!'', 'category')}">
+		title="${(vocabularyNames?size == 1)?then(vocabularyNames[0]!'', 'category')}"
+	>
 		<#if !assetCategoriesSearchFacetDisplayContext.isNothingSelected()>
 			<@clay.button
 				cssClass="btn-unstyled c-mb-4 facet-clear-btn"

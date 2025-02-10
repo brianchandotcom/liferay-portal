@@ -15,7 +15,7 @@
 		background-color: #2e5aac !important;
 		color: #ffffff !important;
 	}
-	
+
 	.custom-checkbox label {
 		padding-top:0.125rem;
 	}

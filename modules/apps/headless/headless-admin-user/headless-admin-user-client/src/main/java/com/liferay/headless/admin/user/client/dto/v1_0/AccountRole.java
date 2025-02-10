@@ -168,6 +168,27 @@ public class AccountRole implements Cloneable, Serializable {
 
 	protected Long roleId;
 
+	public Integer getRoleType() {
+		return roleType;
+	}
+
+	public void setRoleType(Integer roleType) {
+		this.roleType = roleType;
+	}
+
+	public void setRoleType(
+		UnsafeSupplier<Integer, Exception> roleTypeUnsafeSupplier) {
+
+		try {
+			roleType = roleTypeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Integer roleType;
+
 	@Override
 	public AccountRole clone() throws CloneNotSupportedException {
 		return (AccountRole)super.clone();

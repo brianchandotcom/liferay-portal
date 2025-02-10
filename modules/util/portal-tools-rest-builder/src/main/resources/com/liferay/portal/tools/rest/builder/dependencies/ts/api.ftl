@@ -9,7 +9,7 @@ import { ${import.classname} } from '../model/${import.classname?uncap_first}';
 </#list>
 </#if>
 
-import { HttpError, RequestFile } from './apis';
+import { HttpError } from './apis';
 
 import { ObjectSerializer, Authentication, VoidAuth, Interceptor } from '../model/models';
 let defaultBasePath = 'http://localhost';

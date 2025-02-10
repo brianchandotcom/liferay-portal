@@ -294,7 +294,9 @@ public class OrganizationResourceDTOConverter
 						fieldName -> TransformUtil.transformToArray(
 							_roleService.getGroupRoles(
 								organization.getGroupId()),
-							RoleBriefUtil::toRoleBrief, RoleBrief.class)));
+							role -> RoleBriefUtil.toRoleBrief(
+								dtoConverterContext, role),
+							RoleBrief.class)));
 				setServices(
 					() -> TransformUtil.transformToArray(
 						_orgLaborService.getOrgLabors(

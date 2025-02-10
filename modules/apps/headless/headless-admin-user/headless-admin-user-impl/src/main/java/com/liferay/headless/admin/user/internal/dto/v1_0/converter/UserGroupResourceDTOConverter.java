@@ -99,7 +99,9 @@ public class UserGroupResourceDTOConverter
 						"roleBriefs",
 						fieldName -> TransformUtil.transformToArray(
 							_roleService.getGroupRoles(userGroup.getGroupId()),
-							RoleBriefUtil::toRoleBrief, RoleBrief.class)));
+							role -> RoleBriefUtil.toRoleBrief(
+								dtoConverterContext, role),
+							RoleBrief.class)));
 				setUserAccountBriefs(
 					() -> NestedFieldsSupplier.supply(
 						"userAccountBriefs",

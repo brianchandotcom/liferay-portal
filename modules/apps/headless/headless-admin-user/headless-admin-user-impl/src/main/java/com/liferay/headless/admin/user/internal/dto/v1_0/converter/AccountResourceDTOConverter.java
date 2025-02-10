@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -48,6 +49,7 @@ import com.liferay.portal.kernel.service.ListTypeLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.PermissionService;
 import com.liferay.portal.kernel.service.ResourceActionLocalService;
+import com.liferay.portal.kernel.service.RoleService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -376,6 +378,13 @@ public class AccountResourceDTOConverter
 				setId(accountRole::getRoleId);
 				setName(accountRole::getRoleName);
 				setRoleId(accountRole::getRoleId);
+				setRoleType(
+					() -> {
+						Role role = _roleService.getRole(
+							accountRole.getRoleId());
+
+						return role.getType();
+					});
 			}
 		};
 	}
@@ -425,6 +434,9 @@ public class AccountResourceDTOConverter
 
 	@Reference
 	private ResourceActionLocalService _resourceActionLocalService;
+
+	@Reference
+	private RoleService _roleService;
 
 	@Reference
 	private UserLocalService _userLocalService;

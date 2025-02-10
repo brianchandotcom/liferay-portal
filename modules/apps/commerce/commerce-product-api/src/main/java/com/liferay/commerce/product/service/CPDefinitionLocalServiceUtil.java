@@ -444,6 +444,13 @@ public class CPDefinitionLocalServiceUtil {
 		return getService().fetchCPDefinitionByCProductId(cProductId);
 	}
 
+	public static CPDefinition fetchCPDefinitionByFriendlyURL(
+		long groupId, String friendlyURL) {
+
+		return getService().fetchCPDefinitionByFriendlyURL(
+			groupId, friendlyURL);
+	}
+
 	/**
 	 * Returns the cp definition matching the UUID and group.
 	 *

@@ -100,7 +100,7 @@ public class CreateLayoutPageTemplateEntryMVCActionCommand
 						null, themeDisplay.getScopeGroupId(),
 						LayoutPageTemplateConstants.
 							PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-						layoutPageTemplateCollectionName,
+						null, layoutPageTemplateCollectionName,
 						layoutPageTemplateCollectionDescription,
 						LayoutPageTemplateCollectionTypeConstants.BASIC,
 						serviceContext);

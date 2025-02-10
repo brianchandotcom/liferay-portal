@@ -134,7 +134,7 @@ public class LayoutPageTemplateCollectionLocalServiceImpl
 		LayoutPageTemplateCollection targetLayoutPageTemplateCollection =
 			addLayoutPageTemplateCollection(
 				null, userId, sourceLayoutPageTemplateCollection.getGroupId(),
-				layoutParentPageTemplateCollectionId,
+				layoutParentPageTemplateCollectionId, null,
 				getUniqueLayoutPageTemplateCollectionName(
 					groupId, layoutParentPageTemplateCollectionId,
 					sourceLayoutPageTemplateCollection.getName(),

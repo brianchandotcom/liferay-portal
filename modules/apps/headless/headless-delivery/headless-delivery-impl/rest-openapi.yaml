@@ -7481,6 +7481,33 @@ paths:
                                     $ref: "#/components/schemas/ObjectEntryFolder"
                                 type: array
             tags: ["ObjectEntryFolder"]
+        post:
+            operationId: postAssetLibraryObjectEntryFolder
+            parameters:
+                - in: path
+                  name: assetLibraryId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ObjectEntryFolder"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/ObjectEntryFolder"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/ObjectEntryFolder"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/ObjectEntryFolder"
+            tags: ["ObjectEntryFolder"]
     "/asset-libraries/{assetLibraryId}/structured-content-folders":
         get:
             operationId: getAssetLibraryStructuredContentFoldersPage

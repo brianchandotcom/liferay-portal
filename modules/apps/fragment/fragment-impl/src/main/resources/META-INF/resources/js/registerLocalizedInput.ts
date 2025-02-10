@@ -17,6 +17,7 @@ type Args = {
 		languageId: string;
 		value: string;
 	}) => void;
+	optionValues: Record<string, string>;
 };
 
 export function registerLocalizedInput({
@@ -27,6 +28,7 @@ export function registerLocalizedInput({
 	localizationInputsContainer,
 	namespace,
 	onLocaleChange,
+	optionValues,
 }: Args) {
 	if (initialValues) {
 		Object.entries(initialValues).forEach(([languageId, value]) => {
@@ -38,6 +40,10 @@ export function registerLocalizedInput({
 			);
 
 			input.value = value;
+
+			if (optionValues) {
+				input.dataset.label = optionValues[value];
+			}
 		});
 	}
 

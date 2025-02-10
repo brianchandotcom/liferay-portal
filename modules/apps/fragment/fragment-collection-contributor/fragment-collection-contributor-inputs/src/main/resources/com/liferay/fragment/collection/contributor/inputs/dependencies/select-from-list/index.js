@@ -82,6 +82,15 @@ else {
 	if (Liferay.FeatureFlags['LPD-37927']) {
 		import('@liferay/fragment-impl').then(({registerLocalizedInput}) => {
 			if (input.localizable) {
+				const optionValues = Object.fromEntries(
+					Object.values(input.valueI18n).map((value) => [
+						value,
+						input.attributes.options.find(
+							(option) => option.value === value
+						).label,
+					])
+				);
+
 				const {onChange} = registerLocalizedInput({
 					defaultLanguageId: themeDisplay.getDefaultLanguageId(),
 					initialValues: input.valueI18n,
@@ -89,6 +98,7 @@ else {
 					inputName: input.name,
 					localizationInputsContainer: uiInputElement.parentNode,
 					namespace: fragmentNamespace,
+					optionValues,
 				});
 
 				optionListElement.addEventListener('click', (event) => {

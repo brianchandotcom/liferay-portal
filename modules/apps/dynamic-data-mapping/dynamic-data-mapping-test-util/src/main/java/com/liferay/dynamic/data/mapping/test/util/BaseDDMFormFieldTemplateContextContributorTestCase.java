@@ -57,6 +57,12 @@ public abstract class BaseDDMFormFieldTemplateContextContributorTestCase {
 			themeDisplay
 		).getPlid();
 
+		Mockito.when(
+			themeDisplay.isSignedIn()
+		).thenReturn(
+			true
+		);
+
 		httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
 
 		ddmFormFieldRenderingContext.setHttpServletRequest(httpServletRequest);

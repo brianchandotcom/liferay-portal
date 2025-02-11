@@ -56,7 +56,7 @@ public class PortletDisplayTest {
 	}
 
 	@Test
-	public void testShowPortletTitle() {
+	public void testIsShowPortletTitle() {
 		PortletDisplay portletDisplay = new PortletDisplay();
 
 		portletDisplay.setPortletDecoratorId("borderless");

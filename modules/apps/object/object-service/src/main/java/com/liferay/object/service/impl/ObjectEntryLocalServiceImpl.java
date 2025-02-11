@@ -972,6 +972,14 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	@Override
+	public int getObjectEntriesByObjectEntryFolderIdCount(
+		long groupId, long objectEntryFolderId) {
+
+		return objectEntryPersistence.countByG_OEFI(
+			groupId, objectEntryFolderId);
+	}
+
+	@Override
 	public int getObjectEntriesCount(long objectDefinitionId) {
 		return objectEntryPersistence.countByObjectDefinitionId(
 			objectDefinitionId);

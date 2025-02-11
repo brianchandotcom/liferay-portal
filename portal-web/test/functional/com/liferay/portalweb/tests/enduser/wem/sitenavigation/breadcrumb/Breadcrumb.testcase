@@ -29,68 +29,6 @@ definition {
 		}
 	}
 
-	@description = "Disable Show Parent Site in Breadcrumb widget."
-	@priority = 4
-	@uitest
-	test DisableShowParentSite {
-		task ("Add a child site") {
-			HeadlessSite.addSite(
-				parentSiteName = "Test Site Name",
-				siteName = "Child SiteName");
-		}
-
-		task ("Add a parent widget page in child site") {
-			JSONLayout.addPublicLayout(
-				groupName = "Child SiteName",
-				layoutName = "Parent Page Name",
-				parentGroupName = "Test Site Name");
-		}
-
-		task ("Add a child widget page") {
-			JSONLayout.addPublicLayout(
-				groupName = "Child SiteName",
-				layoutName = "Child Page Name",
-				parentGroupName = "Test Site Name",
-				parentLayoutName = "Parent Page Name");
-		}
-
-		task ("Add a Breadcrumb widget to child page") {
-			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Child SiteName",
-				layoutName = "Child Page Name",
-				parentGroupName = "Test Site Name",
-				widgetName = "Breadcrumb");
-		}
-
-		task ("Disable Show Parent Site") {
-			Navigator.openSitePage(
-				pageName = "Child Page Name",
-				siteName = "Child SiteName");
-
-			Portlet.gotoPortletOptions(portletOption = "Configuration");
-
-			Breadcrumb.viewConfigurationPreview(breadcrumbListVisible = "Test Site Name,Child SiteName,Parent Page Name,Child Page Name");
-
-			Breadcrumb.configureBreadcrumb(uncheckSetupName = "Show Parent Site");
-
-			Breadcrumb.viewConfigurationPreview(breadcrumbListVisible = "Child SiteName,Parent Page Name,Child Page Name");
-
-			Breadcrumb.saveDisplayPreview();
-
-			Breadcrumb.viewConfigurationPreview(breadcrumbListVisible = "Child SiteName,Parent Page Name,Child Page Name");
-		}
-
-		task ("View displayed content in Breadcrumb widget") {
-			Navigator.openSitePage(
-				pageName = "Child Page Name",
-				siteName = "Child SiteName");
-
-			Breadcrumb.viewPG(
-				breadcrumbListNotVisible = "Test Site Name",
-				breadcrumbListVisible = "Child SiteName,Parent Page Name,Child Page Name");
-		}
-	}
-
 	@description = "Enable Show Guest Site in Breadcrumb widget."
 	@priority = 4
 	@uitest

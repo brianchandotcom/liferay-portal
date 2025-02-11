@@ -232,3 +232,54 @@ test('Configure Show Page in Breadcrumb widget', async ({
 		expect.arrayContaining([site.name])
 	);
 });
+
+test('Configure Show Parent Sites in Breadcrumb widget', async ({
+	apiHelpers,
+	breadcrumbWidgetPage,
+	page,
+	site,
+	widgetPagePage,
+}) => {
+	const childSite = await apiHelpers.headlessSite.createSite({
+		name: getRandomString(),
+		parentSiteKey: site.name,
+	});
+
+	const layout = await breadcrumbWidgetPage.addBreadcrumbPortlet(childSite);
+
+	let breadcrumbEntries = await page
+		.locator('.breadcrumb-text-truncate')
+		.allInnerTexts();
+
+	await expect(breadcrumbEntries.length).toBe(3);
+
+	await expect(breadcrumbEntries).toEqual(
+		expect.arrayContaining([
+			site.name,
+			childSite.name,
+			layout.nameCurrentValue,
+		])
+	);
+
+	await widgetPagePage.clickOnAction('Breadcrumb', 'Configuration');
+
+	const configurationIFrame = page.frameLocator(
+		'iframe[title*="Breadcrumb"]'
+	);
+
+	await configurationIFrame.getByLabel('Show Parent Sites').click();
+
+	await widgetPagePage.saveAndClose('Breadcrumb');
+
+	breadcrumbEntries = await page
+		.locator('.breadcrumb-text-truncate')
+		.allInnerTexts();
+
+	await expect(breadcrumbEntries.length).toBe(2);
+
+	await expect(breadcrumbEntries).toEqual(
+		expect.arrayContaining([childSite.name, layout.nameCurrentValue])
+	);
+
+	await apiHelpers.headlessSite.deleteSite(childSite.id);
+});

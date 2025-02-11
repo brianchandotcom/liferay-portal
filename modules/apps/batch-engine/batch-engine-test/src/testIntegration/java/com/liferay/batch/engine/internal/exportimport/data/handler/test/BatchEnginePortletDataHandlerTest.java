@@ -50,7 +50,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
@@ -73,12 +72,12 @@ public class BatchEnginePortletDataHandlerTest {
 		new LiferayIntegrationTestRule();
 
 	@BeforeClass
-	public static void setUpClass() throws Exception {
+	public static void setUpClass() {
 		_invokeFeatureFlagListeners("LPD-35914", true);
 	}
 
 	@AfterClass
-	public static void tearDownClass() throws Exception {
+	public static void tearDownClass() {
 		_invokeFeatureFlagListeners("LPD-35914", false);
 	}
 
@@ -120,10 +119,6 @@ public class BatchEnginePortletDataHandlerTest {
 			_objectDefinition.getCompanyId());
 
 		_companyGroupId = companyGroup.getGroupId();
-	}
-
-	@After
-	public void tearDown() throws Exception {
 	}
 
 	@Test
@@ -207,8 +202,7 @@ public class BatchEnginePortletDataHandlerTest {
 	}
 
 	private static void _invokeFeatureFlagListeners(
-			String featureFlagKey, boolean enabled)
-		throws Exception {
+		String featureFlagKey, boolean enabled) {
 
 		try (ServiceTrackerList<FeatureFlagListener> featureFlagListeners =
 				ServiceTrackerListFactory.open(
@@ -232,7 +226,7 @@ public class BatchEnginePortletDataHandlerTest {
 
 		return _objectEntryLocalService.addObjectEntry(
 			user.getUserId(), 0L, objectDefinition.getObjectDefinitionId(),
-			HashMapBuilder.<String, Serializable>put(
+			HashMapBuilder.put(
 				objectFieldName, objectFieldValue
 			).build(),
 			ServiceContextTestUtil.getServiceContext());

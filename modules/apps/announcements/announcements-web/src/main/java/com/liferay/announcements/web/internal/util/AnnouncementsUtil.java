@@ -46,7 +46,6 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.security.permission.UserBagFactoryUtil;
 import com.liferay.portal.service.permission.UserGroupPermissionUtil;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Set;
@@ -163,23 +162,20 @@ public class AnnouncementsUtil {
 	public static List<Group> getGroups(ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		List<Group> filteredGroups = new ArrayList<>();
+		return TransformUtil.transform(
+			GroupLocalServiceUtil.getUserGroups(themeDisplay.getUserId(), true),
+			group -> {
+				if (((group.isOrganization() && group.isSite()) ||
+					 group.isRegularSite()) &&
+					GroupPermissionUtil.contains(
+						themeDisplay.getPermissionChecker(), group.getGroupId(),
+						ActionKeys.MANAGE_ANNOUNCEMENTS)) {
 
-		List<Group> groups = GroupLocalServiceUtil.getUserGroups(
-			themeDisplay.getUserId(), true);
+					return group;
+				}
 
-		for (Group group : groups) {
-			if (((group.isOrganization() && group.isSite()) ||
-				 group.isRegularSite()) &&
-				GroupPermissionUtil.contains(
-					themeDisplay.getPermissionChecker(), group.getGroupId(),
-					ActionKeys.MANAGE_ANNOUNCEMENTS)) {
-
-				filteredGroups.add(group);
-			}
-		}
-
-		return filteredGroups;
+				return null;
+			});
 	}
 
 	public static List<Organization> getOrganizations(ThemeDisplay themeDisplay)

@@ -47,7 +47,7 @@ dependencies {
 	compileOnly group: "io.netty", name: "netty-transport-native-unix-common", version: "4.1.117.Final"
 	compileOnly group: "net.minidev", name: "accessors-smart", version: "2.4.9"
 	compileOnly group: "net.minidev", name: "json-smart", version: "2.4.10"
-	compileOnly group: "org.codehaus.woodstox", name: "stax2-api", version: "4.2.1"
+	compileOnly group: "org.codehaus.woodstox", name: "stax2-api", version: "4.2.2"
 	compileOnly group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.4.0"
 	compileOnly group: "org.osgi", name: "osgi.core", version: "6.0.0"
 	compileOnly group: "org.ow2.asm", name: "asm", version: "9.7"

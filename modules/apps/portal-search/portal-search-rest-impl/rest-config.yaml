@@ -5,6 +5,7 @@ application:
     className: "PortalSearchRESTApplication"
     name: "Liferay.Portal.Search.REST"
 author: "Petteri Karttunen"
+changeTrackingEnabled: true
 clientDir: "../portal-search-rest-client/src/main/java"
 compatibilityVersion: 6
 forcePredictableOperationId: true

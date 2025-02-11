@@ -10,15 +10,11 @@ import {ApplicationsMenuPage} from '../product-navigation-applications-menu/Appl
 
 export class PasswordPoliciesAdminPage {
 	readonly applicationsMenuPage: ApplicationsMenuPage;
-	readonly page: Page;
-	readonly newButton: Locator;
-	readonly name: Locator;
-	readonly description: Locator;
 	readonly changeableToggle: Locator;
-	readonly resetTicketMaxAge: Locator;
 	readonly checkSyntaxToggle: Locator;
-	readonly historyToggle: Locator;
+	readonly description: Locator;
 	readonly expireable: Locator;
+	readonly historyToggle: Locator;
 	readonly lockout: Locator;
 	readonly minAlphanumeric: Locator;
 	readonly minLength: Locator;
@@ -26,33 +22,33 @@ export class PasswordPoliciesAdminPage {
 	readonly minNumbers: Locator;
 	readonly minSymbols: Locator;
 	readonly minUpperCase: Locator;
+	readonly name: Locator;
+	readonly newButton: Locator;
+	readonly page: Page;
 	readonly regex: Locator;
+	readonly resetTicketMaxAge: Locator;
 	readonly saveButton: Locator;
 	readonly successMessage: Locator;
 
 	constructor(page: Page) {
 		this.applicationsMenuPage = new ApplicationsMenuPage(page);
-		this.page = page;
-		this.newButton = page.getByRole('link', {name: 'Add'});
-		this.name = page.getByLabel('Name');
-		this.description = page.locator(
-			'[id="_com_liferay_password_policies_admin_web_portlet_PasswordPoliciesAdminPortlet_description"]'
-		);
 		this.changeableToggle = page.getByLabel(
 			'Changeable If this is checked, the user can change their password.',
 			{exact: true}
 		);
-		this.resetTicketMaxAge = page.getByLabel('Reset Ticket Max Age');
 		this.checkSyntaxToggle = page.getByLabel(
 			'Enable Syntax Checking If this is checked, the password is read for certain words and/or a certain length.',
 			{exact: true}
 		);
-		this.historyToggle = page.getByLabel(
-			"Enable History If this is checked, the portal keeps a history of the user's previous passwords and prevents them from reusing an old password.",
-			{exact: true}
+		this.description = page.locator(
+			'[id="_com_liferay_password_policies_admin_web_portlet_PasswordPoliciesAdminPortlet_description"]'
 		);
 		this.expireable = page.getByLabel(
 			'Enable Expiration If this is checked, the user must change their password after a given amount of time.',
+			{exact: true}
+		);
+		this.historyToggle = page.getByLabel(
+			"Enable History If this is checked, the portal keeps a history of the user's previous passwords and prevents them from reusing an old password.",
 			{exact: true}
 		);
 		this.lockout = page.getByLabel(
@@ -83,11 +79,15 @@ export class PasswordPoliciesAdminPage {
 			"Minimum Upper Case This determines the minimum number of uppercase letters in the user's password.",
 			{exact: true}
 		);
+		this.name = page.getByLabel('Name');
+		this.newButton = page.getByRole('link', {name: 'Add'});
+		this.page = page;
 		this.regex = page
 			.getByLabel(
 				"Enable Syntax Checking If this is checked, the password is read for certain words and/or a certain length. Allow Dictionary Words If this is checked, common dictionary words are allowed as the user's passwords. Minimum Alpha Numeric This determines the minimum number of alpha numeric letters in the user's password. Minimum Length This determines the minimum length of the user's password. Minimum Lower Case This determines the minimum number of lowercase letters in the user's password. Minimum Numbers This determines the minimum number of numbers in the user's password. Minimum Symbols This determines the minimum number of symbols in the user's password. Minimum Upper Case This determines the minimum number of uppercase letters in the user's password. Regular Expression This defines the regular expression used to validate the user's password. Characters Maximum: 4000 0/"
 			)
 			.getByLabel('Characters Maximum:');
+		this.resetTicketMaxAge = page.getByLabel('Reset Ticket Max Age');
 		this.saveButton = page.getByRole('button', {name: 'Save'});
 		this.successMessage = page.getByText(
 			'Your request completed successfully'
@@ -175,6 +175,10 @@ export class PasswordPoliciesAdminPage {
 		await expect(await this.successMessage).toBeVisible();
 	}
 
+	async goTo() {
+		await this.applicationsMenuPage.goToPasswordPolicies();
+	}
+
 	async resetDefaultPasswordPolicy() {
 		await this.page
 			.getByRole('link', {name: 'Default Password Policy'})
@@ -187,9 +191,5 @@ export class PasswordPoliciesAdminPage {
 		await this.saveButton.click();
 
 		await expect(this.successMessage).toBeVisible();
-	}
-
-	async goTo() {
-		await this.applicationsMenuPage.goToPasswordPolicies();
 	}
 }

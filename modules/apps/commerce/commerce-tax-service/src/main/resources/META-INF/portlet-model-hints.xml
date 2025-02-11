@@ -1,6 +1,20 @@
 <?xml version="1.0"?>
 
 <model-hints>
+	<model name="com.liferay.commerce.tax.model.CommerceTaxCategoryMapping">
+		<field name="mvccVersion" type="long" />
+		<field name="uuid" type="String" />
+		<field name="externalReferenceCode" type="String" />
+		<field name="commerceTaxCategoryMappingId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="commerceTaxMethodId" type="long" />
+		<field name="CPTaxCategoryId" type="long" />
+	</model>
 	<model name="com.liferay.commerce.tax.model.CommerceTaxMethod">
 		<field name="mvccVersion" type="long" />
 		<field name="commerceTaxMethodId" type="long" />

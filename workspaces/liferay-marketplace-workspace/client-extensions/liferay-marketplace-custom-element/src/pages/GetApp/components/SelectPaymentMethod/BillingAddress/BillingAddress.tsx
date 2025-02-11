@@ -246,7 +246,7 @@ export function BillingAddress({
 
 						<div className="d-flex">
 							<ClayCheckbox
-								checked={billingAddress?.saveAddress}
+								checked={!!billingAddress?.saveAddress}
 								onChange={() =>
 									setBillingAddress({
 										...billingAddress,

@@ -65,7 +65,7 @@ interface IAction extends IOrderable {
 	errorMessage_i18n?: {
 		[key: string]: string;
 	};
-	externalReferenceCode?: string;
+	externalReferenceCode: string;
 	icon: string;
 	label: string;
 	label_i18n: {

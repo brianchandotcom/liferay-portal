@@ -11,10 +11,12 @@ import com.liferay.headless.admin.site.client.dto.v1_0.PageTemplateSet;
 import com.liferay.headless.admin.site.client.problem.Problem;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
 import com.liferay.petra.function.UnsafeRunnable;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -173,6 +175,31 @@ public class PageTemplateSetResourceTest
 
 	@Override
 	@Test
+	public void testPostSiteSiteByExternalReferenceCodePageTemplateSet()
+		throws Exception {
+
+		PageTemplateSet randomPageTemplateSet = randomPageTemplateSet();
+
+		randomPageTemplateSet.setKey(StringPool.BLANK);
+
+		PageTemplateSet postPageTemplateSet =
+			_testPostSiteSiteByExternalReferenceCodePageTemplateSet(
+				randomPageTemplateSet);
+
+		Assert.assertTrue(Validator.isNotNull(postPageTemplateSet.getKey()));
+
+		randomPageTemplateSet = randomPageTemplateSet();
+
+		postPageTemplateSet =
+			_testPostSiteSiteByExternalReferenceCodePageTemplateSet(
+				randomPageTemplateSet);
+
+		Assert.assertEquals(
+			randomPageTemplateSet.getKey(), postPageTemplateSet.getKey());
+	}
+
+	@Override
+	@Test
 	public void testPutSiteSiteByExternalReferenceCodePageTemplateSet()
 		throws Exception {
 
@@ -294,6 +321,21 @@ public class PageTemplateSetResourceTest
 
 		assertEquals(pageTemplateSet, getPageTemplateSet);
 		assertValid(getPageTemplateSet);
+	}
+
+	private PageTemplateSet
+			_testPostSiteSiteByExternalReferenceCodePageTemplateSet(
+				PageTemplateSet pageTemplateSet)
+		throws Exception {
+
+		PageTemplateSet postPageTemplateSet =
+			testPostSiteSiteByExternalReferenceCodePageTemplateSet_addPageTemplateSet(
+				pageTemplateSet);
+
+		assertEquals(pageTemplateSet, postPageTemplateSet);
+		assertValid(postPageTemplateSet);
+
+		return postPageTemplateSet;
 	}
 
 	@Inject

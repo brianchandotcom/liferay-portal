@@ -125,7 +125,7 @@ public class BatchEnginePortletDataHandlerTest {
 	public void testExportImportInstanceLevelOnFailureNothingIsImported()
 		throws Exception {
 
-		_exportInstanceLevel();
+		File larFile = _exportInstanceLevel();
 
 		String existingValue = (String)_objectEntry2.getValues(
 		).get(
@@ -150,7 +150,7 @@ public class BatchEnginePortletDataHandlerTest {
 						"BatchEngineImportTaskExecutorImpl",
 					LoggerTestUtil.OFF)) {
 
-				_importInstanceLevel();
+				_importInstanceLevel(larFile);
 			}
 
 			Assert.fail("Import process should fail");
@@ -179,13 +179,13 @@ public class BatchEnginePortletDataHandlerTest {
 
 	@Test
 	public void testExportImportInstanceLevelSuccess() throws Exception {
-		_exportInstanceLevel();
+		File larFile = _exportInstanceLevel();
 
 		_objectEntryLocalService.deleteObjectEntry(_objectEntry1);
 		_objectEntryLocalService.deleteObjectEntry(_objectEntry2);
 		_objectEntryLocalService.deleteObjectEntry(_objectEntry3);
 
-		_importInstanceLevel();
+		_importInstanceLevel(larFile);
 
 		Assert.assertNotNull(
 			_objectEntryLocalService.getObjectEntry(
@@ -232,7 +232,7 @@ public class BatchEnginePortletDataHandlerTest {
 			ServiceContextTestUtil.getServiceContext());
 	}
 
-	private void _exportInstanceLevel() throws Exception {
+	private File _exportInstanceLevel() throws Exception {
 		User user = TestPropsValues.getUser();
 
 		Map<String, Serializable> exportLayoutSettingsMap =
@@ -248,7 +248,7 @@ public class BatchEnginePortletDataHandlerTest {
 					ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
 					exportLayoutSettingsMap);
 
-		_larFile = _exportImportLocalService.exportLayoutsAsFile(
+		return _exportImportLocalService.exportLayoutsAsFile(
 			exportImportConfiguration);
 	}
 
@@ -276,7 +276,7 @@ public class BatchEnginePortletDataHandlerTest {
 		return _getExportParameterMap();
 	}
 
-	private void _importInstanceLevel() throws Exception {
+	private void _importInstanceLevel(File larFile) throws Exception {
 		User user = TestPropsValues.getUser();
 
 		Map<String, Serializable> importLayoutSettingsMap =
@@ -293,7 +293,7 @@ public class BatchEnginePortletDataHandlerTest {
 					importLayoutSettingsMap);
 
 		_exportImportLocalService.importLayouts(
-			exportImportConfiguration, _larFile);
+			exportImportConfiguration, larFile);
 	}
 
 	private static final String _OBJECT_FIELD_NAME_TEXT = "testFieldName";
@@ -307,7 +307,6 @@ public class BatchEnginePortletDataHandlerTest {
 	@Inject
 	private ExportImportLocalService _exportImportLocalService;
 
-	private File _larFile;
 	private ObjectDefinition _objectDefinition;
 	private ObjectEntry _objectEntry1;
 	private ObjectEntry _objectEntry2;

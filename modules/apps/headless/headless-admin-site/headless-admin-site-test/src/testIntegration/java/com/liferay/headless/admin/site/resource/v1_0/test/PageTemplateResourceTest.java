@@ -794,6 +794,9 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 				setDescription(layoutPageTemplateCollection::getDescription);
 				setExternalReferenceCode(
 					layoutPageTemplateCollection::getExternalReferenceCode);
+				setKey(
+					layoutPageTemplateCollection::
+						getLayoutPageTemplateCollectionKey);
 				setName(layoutPageTemplateCollection::getName);
 			}
 		};

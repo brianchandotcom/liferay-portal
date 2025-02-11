@@ -13,7 +13,6 @@ import com.liferay.fragment.util.configuration.FragmentConfigurationField;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.manager.FormItemManager;
-import com.liferay.layout.content.page.editor.web.internal.manager.FragmentEntryLinkManager;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureService;
@@ -22,11 +21,8 @@ import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructureItemUtil;
-import com.liferay.petra.function.transform.TransformUtil;
-import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -68,7 +64,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = MVCActionCommand.class
 )
 public class UpdateFormItemConfigMVCActionCommand
-	extends BaseContentPageEditorTransactionalMVCActionCommand {
+	extends BaseItemFormConfigMVCActionCommand {
 
 	@Override
 	protected JSONObject doTransactionalCommand(
@@ -276,11 +272,10 @@ public class UpdateFormItemConfigMVCActionCommand
 			}
 		}
 
-		layoutPageTemplateStructure =
-			_layoutPageTemplateStructureService.
-				updateLayoutPageTemplateStructureData(
-					themeDisplay.getScopeGroupId(), themeDisplay.getPlid(),
-					segmentsExperienceId, layoutStructure.toString());
+		_layoutPageTemplateStructureService.
+			updateLayoutPageTemplateStructureData(
+				themeDisplay.getScopeGroupId(), themeDisplay.getPlid(),
+				segmentsExperienceId, layoutStructure.toString());
 
 		for (FragmentEntryLink addedFragmentEntryLink :
 				addedFragmentEntryLinks) {
@@ -294,108 +289,23 @@ public class UpdateFormItemConfigMVCActionCommand
 			}
 		}
 
-		HttpServletResponse httpServletResponse =
-			_portal.getHttpServletResponse(actionResponse);
+		FragmentEntryLink stepperFragmentEntryLink =
+			fragmentEntryLinkLocalService.fetchFragmentEntryLink(
+				stepperFragmentEntryLinkId);
 
-		LayoutStructure updatedLayoutStructure = LayoutStructure.of(
-			layoutPageTemplateStructure.getData(segmentsExperienceId));
-
-		List<LayoutStructureItem> addedLayoutStructureItems = new ArrayList<>();
-		List<LayoutStructureItem> movedLayoutStructureItems = new ArrayList<>();
-		List<LayoutStructureItem> removedLayoutStructureItems =
-			new ArrayList<>();
-		JSONObject addedFragmentEntryLinksJSONObject =
-			_jsonFactory.createJSONObject();
-
-		for (FragmentEntryLink addedFragmentEntryLink :
-				addedFragmentEntryLinks) {
-
-			LayoutStructureItem layoutStructureItem =
-				layoutStructure.getLayoutStructureItemByFragmentEntryLinkId(
-					addedFragmentEntryLink.getFragmentEntryLinkId());
-
-			addedFragmentEntryLinksJSONObject.put(
-				String.valueOf(addedFragmentEntryLink.getFragmentEntryLinkId()),
-				_fragmentEntryLinkManager.getFragmentEntryLinkJSONObject(
-					addedFragmentEntryLink, httpServletRequest,
-					httpServletResponse, updatedLayoutStructure));
-
-			addedLayoutStructureItems.add(layoutStructureItem);
+		if (stepperFragmentEntryLink != null) {
+			stepperFragmentEntryLink = formItemManager.updateNumberOfStepps(
+				httpServletRequest,
+				_portal.getHttpServletResponse(actionResponse),
+				formStyledLayoutStructureItem.getNumberOfSteps(),
+				stepperFragmentEntryLink);
 		}
 
-		for (FormItemManager.LayoutStructureItemChanges
-				layoutStructureItemChange : layoutStructureItemChanges) {
-
-			addedLayoutStructureItems.addAll(
-				layoutStructureItemChange.getAddedLayoutStructureItems());
-			movedLayoutStructureItems.addAll(
-				layoutStructureItemChange.getMovedLayoutStructureItems());
-			removedLayoutStructureItems.addAll(
-				layoutStructureItemChange.getRemovedLayoutStructureItems());
-		}
-
-		return jsonObject.put(
-			"addedFragmentEntryLinks", addedFragmentEntryLinksJSONObject
-		).put(
-			"addedItemIds",
-			_jsonFactory.createJSONArray(
-				TransformUtil.transform(
-					addedLayoutStructureItems, LayoutStructureItem::getItemId))
-		).put(
-			"fragmentEntryLinks",
-			() -> {
-				FragmentEntryLink stepperFragmentEntryLink =
-					_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
-						stepperFragmentEntryLinkId);
-
-				if (stepperFragmentEntryLink == null) {
-					return null;
-				}
-
-				stepperFragmentEntryLink =
-					_formItemManager.updateNumberOfStepps(
-						_portal.getHttpServletRequest(actionRequest),
-						_portal.getHttpServletResponse(actionResponse),
-						formStyledLayoutStructureItem.getNumberOfSteps(),
-						stepperFragmentEntryLink);
-
-				return JSONUtil.put(
-					String.valueOf(
-						stepperFragmentEntryLink.getFragmentEntryLinkId()),
-					_fragmentEntryLinkManager.getFragmentEntryLinkJSONObject(
-						stepperFragmentEntryLink,
-						_portal.getHttpServletRequest(actionRequest),
-						_portal.getHttpServletResponse(actionResponse),
-						layoutStructure));
-			}
-		).put(
-			"layoutData", updatedLayoutStructure.toJSONObject()
-		).put(
-			"movedItemIds",
-			() -> {
-				JSONArray jsonArray = _jsonFactory.createJSONArray();
-
-				for (LayoutStructureItem movedLayoutStructureItem :
-						movedLayoutStructureItems) {
-
-					jsonArray.put(
-						JSONUtil.put(
-							"itemId", movedLayoutStructureItem.getItemId()
-						).put(
-							"parentId",
-							movedLayoutStructureItem.getParentItemId()
-						));
-				}
-
-				return jsonArray;
-			}
-		).put(
-			"removedItemIds",
-			_jsonFactory.createJSONArray(
-				TransformUtil.transform(
-					removedLayoutStructureItems,
-					LayoutStructureItem::getItemId))
-		);
+		return getLayoutStructureItemChangesJSONObject(
+			addedFragmentEntryLinks, httpServletRequest,
+			_portal.getHttpServletResponse(actionResponse), jsonObject,
+			layoutStructure, layoutStructureItemChanges,
+			stepperFragmentEntryLink);
 	}
 
 	private FormItemManager.LayoutStructureItemChanges
@@ -451,9 +361,6 @@ public class UpdateFormItemConfigMVCActionCommand
 
 	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
-
-	@Reference
-	private FragmentEntryLinkManager _fragmentEntryLinkManager;
 
 	@Reference
 	private JSONFactory _jsonFactory;

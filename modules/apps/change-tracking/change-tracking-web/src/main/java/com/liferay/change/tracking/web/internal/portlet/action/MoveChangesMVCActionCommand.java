@@ -10,12 +10,8 @@ import com.liferay.change.tracking.constants.CTPortletKeys;
 import com.liferay.change.tracking.model.CTEntry;
 import com.liferay.change.tracking.service.CTCollectionService;
 import com.liferay.change.tracking.service.CTEntryLocalService;
-import com.liferay.change.tracking.spi.display.CTDisplayRendererRegistry;
-import com.liferay.petra.lang.SafeCloseable;
-import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalMVCActionCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -23,9 +19,11 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -40,23 +38,10 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = MVCActionCommand.class
 )
-public class MoveChangesMVCActionCommand
-	extends BaseTransactionalMVCActionCommand {
+public class MoveChangesMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
-	public boolean processAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws PortletException {
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setProductionModeWithSafeCloseable()) {
-
-			return super.processAction(actionRequest, actionResponse);
-		}
-	}
-
-	@Override
-	protected void doTransactionalCommand(
+	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
@@ -76,18 +61,22 @@ public class MoveChangesMVCActionCommand
 
 			try {
 				if ((modelClassNameId > 0) && (modelClassPK > 0)) {
-					CTEntry ctEntry = _ctEntryLocalService.fetchCTEntry(
-						fromCTCollectionId, modelClassNameId, modelClassPK);
-
-					_moveCTEntry(ctEntry, fromCTCollectionId, toCTCollectionId);
+					_ctCollectionService.moveCTEntry(
+						fromCTCollectionId, toCTCollectionId, modelClassNameId,
+						modelClassPK);
 				}
+
+				List<CTEntry> ctEntries = new ArrayList<>();
 
 				for (long ctEntryId : ctEntryIds) {
 					CTEntry ctEntry = _ctEntryLocalService.fetchCTEntry(
 						ctEntryId);
 
-					_moveCTEntry(ctEntry, fromCTCollectionId, toCTCollectionId);
+					ctEntries.add(ctEntry);
 				}
+
+				_ctCollectionService.moveCTEntries(
+					fromCTCollectionId, toCTCollectionId, ctEntries);
 			}
 			catch (PortalException portalException) {
 				SessionErrors.add(actionRequest, portalException.getClass());
@@ -115,7 +104,7 @@ public class MoveChangesMVCActionCommand
 			).setParameter(
 				"ctCollectionId", fromCTCollectionId
 			).setParameter(
-				"ctEntryIds", StringUtil.merge(ctEntryIds)
+				"id", StringUtil.merge(ctEntryIds)
 			).setParameter(
 				"modelClassNameId", modelClassNameId
 			).setParameter(
@@ -126,35 +115,8 @@ public class MoveChangesMVCActionCommand
 		actionResponse.sendRedirect(redirect);
 	}
 
-	private <T extends BaseModel<T>> void _moveCTEntry(
-			CTEntry ctEntry, long fromCTCollectionId, long toCTCollectionId)
-		throws PortalException {
-
-		if (ctEntry == null) {
-			return;
-		}
-
-		T model = _ctDisplayRendererRegistry.fetchCTModel(
-			ctEntry.getModelClassNameId(), ctEntry.getModelClassPK());
-
-		if (!_ctDisplayRendererRegistry.isMovable(
-				model, ctEntry.getModelClassNameId())) {
-
-			return;
-		}
-
-		if (ctEntry.getCtCollectionId() == fromCTCollectionId) {
-			_ctCollectionService.moveCTEntry(
-				ctEntry.getCtCollectionId(), toCTCollectionId,
-				ctEntry.getModelClassNameId(), ctEntry.getModelClassPK());
-		}
-	}
-
 	@Reference
 	private CTCollectionService _ctCollectionService;
-
-	@Reference
-	private CTDisplayRendererRegistry _ctDisplayRendererRegistry;
 
 	@Reference
 	private CTEntryLocalService _ctEntryLocalService;

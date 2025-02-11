@@ -360,6 +360,11 @@ public interface CTCollectionLocalService
 	public boolean isCTEntryEnclosed(
 		long ctCollectionId, long modelClassNameId, long modelClassPK);
 
+	public void moveCTEntries(
+			long fromCTCollectionId, long toCTCollectionId,
+			List<CTEntry> ctEntries)
+		throws PortalException;
+
 	public void moveCTEntry(
 			long fromCTCollectionId, long toCTCollectionId,
 			long modelClassNameId, long modelClassPK)

@@ -13,6 +13,7 @@ import com.liferay.headless.admin.site.dto.v1_0.FriendlyUrlHistory;
 import com.liferay.headless.admin.site.dto.v1_0.SitePage;
 import com.liferay.headless.admin.site.dto.v1_0.UtilityPage;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.GroupUtil;
+import com.liferay.headless.admin.site.internal.resource.v1_0.util.LayoutUtil;
 import com.liferay.headless.admin.site.resource.v1_0.FriendlyUrlHistoryResource;
 import com.liferay.layout.friendly.url.LayoutFriendlyURLEntryHelper;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
@@ -71,8 +72,11 @@ public class FriendlyUrlHistoryResourceImpl
 						true, contextCompany.getCompanyId(),
 						siteExternalReferenceCode));
 
-		if (layoutPageTemplateEntry.getType() !=
-				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE) {
+		if (!LayoutUtil.isPublished(
+				_layoutLocalService.getLayout(
+					layoutPageTemplateEntry.getPlid())) ||
+			(layoutPageTemplateEntry.getType() !=
+				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE)) {
 
 			throw new UnsupportedOperationException();
 		}
@@ -137,6 +141,13 @@ public class FriendlyUrlHistoryResourceImpl
 					GroupUtil.getGroupId(
 						true, contextCompany.getCompanyId(),
 						siteExternalReferenceCode));
+
+		if (!LayoutUtil.isPublished(
+				_layoutLocalService.getLayout(
+					layoutUtilityPageEntry.getPlid()))) {
+
+			throw new UnsupportedOperationException();
+		}
 
 		return _toFriendlyUrlHistory(
 			_layoutLocalService.getLayout(layoutUtilityPageEntry.getPlid()));

@@ -160,6 +160,7 @@ public class AddStepperFragmentEntryLinkMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		List<FragmentEntryLink> addedFragmentEntryLinks = new ArrayList<>();
 		List<LayoutStructureItem> addedLayoutStructureItems = new ArrayList<>();
 		List<LayoutStructureItem> movedLayoutStructureItems = new ArrayList<>();
 		List<LayoutStructureItem> removedLayoutStructureItems =
@@ -167,6 +168,8 @@ public class AddStepperFragmentEntryLinkMVCActionCommand
 
 		FragmentEntryLink stepperFragmentEntryLink = addFragmentEntryLink(
 			actionRequest);
+
+		addedFragmentEntryLinks.add(stepperFragmentEntryLink);
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -202,8 +205,12 @@ public class AddStepperFragmentEntryLinkMVCActionCommand
 			FormItemManager.LayoutStructureItemChanges
 				layoutStructureItemChanges =
 					_formItemManager.changeToMultistepFormType(
-						formStyledLayoutStructureItem, layoutStructure,
-						numberOfSteps,
+						addedFragmentEntryLinks, formStyledLayoutStructureItem,
+						_portal.getHttpServletRequest(actionRequest),
+						_portal.getHttpServletResponse(actionResponse),
+						themeDisplay.getLayout(), layoutStructure,
+						numberOfSteps, segmentsExperienceId,
+						ServiceContextFactory.getInstance(actionRequest),
 						stepperFragmentEntryLink.getFragmentEntryLinkId());
 
 			addedLayoutStructureItems.addAll(
@@ -219,16 +226,21 @@ public class AddStepperFragmentEntryLinkMVCActionCommand
 				themeDisplay.getScopeGroupId(), themeDisplay.getPlid(),
 				segmentsExperienceId, layoutStructure.toString());
 
-		for (FragmentEntryLinkListener fragmentEntryLinkListener :
-				_fragmentEntryLinkListenerRegistry.
-					getFragmentEntryLinkListeners()) {
+		for (FragmentEntryLink addedFragmentEntryLink :
+				addedFragmentEntryLinks) {
 
-			fragmentEntryLinkListener.onAddFragmentEntryLink(
-				stepperFragmentEntryLink);
+			for (FragmentEntryLinkListener fragmentEntryLinkListener :
+					_fragmentEntryLinkListenerRegistry.
+						getFragmentEntryLinkListeners()) {
+
+				fragmentEntryLinkListener.onAddFragmentEntryLink(
+					addedFragmentEntryLink);
+			}
 		}
 
 		stepperFragmentEntryLink = _formItemManager.updateNumberOfStepps(
-			actionRequest, actionResponse, numberOfSteps,
+			_portal.getHttpServletRequest(actionRequest),
+			_portal.getHttpServletResponse(actionResponse), numberOfSteps,
 			stepperFragmentEntryLink);
 
 		return JSONUtil.put(

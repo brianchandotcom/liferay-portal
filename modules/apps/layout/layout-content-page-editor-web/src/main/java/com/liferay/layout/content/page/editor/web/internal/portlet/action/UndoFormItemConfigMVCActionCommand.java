@@ -83,7 +83,8 @@ public class UndoFormItemConfigMVCActionCommand
 
 				stepperFragmentEntryLink =
 					_formItemManager.updateNumberOfStepps(
-						actionRequest, actionResponse,
+						_portal.getHttpServletRequest(actionRequest),
+						_portal.getHttpServletResponse(actionResponse),
 						configJSONObject.getInt("numberOfSteps"),
 						stepperFragmentEntryLink);
 

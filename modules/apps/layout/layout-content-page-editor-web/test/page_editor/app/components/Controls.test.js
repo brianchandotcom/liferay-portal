@@ -493,6 +493,32 @@ describe('Reducer', () => {
 
 				Liferay.FeatureFlags['LPD-18221'] = false;
 			});
+
+			it('selects parents when range end is an editable', () => {
+				Liferay.FeatureFlags['LPD-18221'] = true;
+
+				const action = {
+					...ACTION,
+					itemId: 'editable02',
+					layoutData: LAYOUT_DATA,
+					multiSelect: 'range',
+					parentId: 'fragment02',
+					type: SELECT_ITEM,
+				};
+
+				const state = {
+					...STATE,
+					activeItemIds: ['fragment01'],
+				};
+
+				expect(reducer(state, action)).toEqual(
+					expect.objectContaining({
+						activeItemIds: ['fragment01', 'fragment02'],
+					})
+				);
+
+				Liferay.FeatureFlags['LPD-18221'] = false;
+			});
 		});
 	});
 

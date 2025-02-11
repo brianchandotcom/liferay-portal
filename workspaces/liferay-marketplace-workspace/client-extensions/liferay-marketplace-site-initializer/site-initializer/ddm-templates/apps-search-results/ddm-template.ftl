@@ -35,6 +35,38 @@
 		display: flex;
 		height: 289px;
 		padding: 16px;
+		position: relative;
+	}
+
+	.app-type-label {
+		border-radius: 2px 2px 8px 8px;
+		font-size: 11px;
+		font-weight: bold;
+		height: 20px;
+		line-height: 20;
+		position: absolute;
+		right: 24px;
+		top: -8px;
+	}
+
+	.app-type-label-cloud {
+		background-color: #D1EEDC;
+		color: #0E7835;
+	}
+
+	.app-type-label-cx {
+		background-color: #FFE6C6;
+		color: #9D4C00;
+	}
+
+	.app-type-label-dxp {
+		background-color: #D1ECFA;
+		color: #166E9E;
+	}
+
+	.app-type-label-fragment {
+		background-color: #DCD7E9;
+		color: #503690;
 	}
 
 	.banner__product-tag {
@@ -91,6 +123,13 @@
 		}
 	}
 </style>
+
+<#assign appTypeClasses = {
+	"Client Extension": "app-type-label-cx"
+	"Cloud App": "app-type-label-cloud",
+	"DXP App": "app-type-label-dxp",
+	"Fragment": "app-type-label-fragment",
+} />
 
 <#if searchContainer?has_content>
 	<div class="color-neutral-3 d-md-block d-none pb-4 pt-2">
@@ -170,6 +209,33 @@
 
 					<a class="app-search-results-card bg-white border-radius-medium d-flex flex-column mb-0 text-dark text-decoration-none" href=${productURL}>
 						<div class="align-items-center card-image-title-container d-flex">
+							<#if product.productSpecifications?has_content>
+								<#assign
+									appType = ""
+									productType = product.productSpecifications?filter(item -> stringUtil.equals(item.specificationKey, "type"))
+								/>
+
+								<#list productType as type>
+									<#if type.value?has_content>
+										<#if stringUtil.equals(type.value, "dxp")>
+											<#assign appType = "DXP App" />
+										<#elseif stringUtil.equals(type.value, "cloud")>
+											<#assign appType = "Cloud App" />
+										<#elseif stringUtil.equals(type.value, "fragment")>
+											<#assign appType = "Fragment" />
+										<#elseif stringUtil.equals(type.value, "client-extension")>
+											<#assign appType = "Client Extension" />
+										</#if>
+									</#if>
+								</#list>
+
+								<#if appType?has_content>
+									<div class="app-type-label ${appTypeClasses[appType]!} align-items-center d-flex justify-content-center px-2">
+										${appType}
+									</div>
+								</#if>
+							</#if>
+
 							<div class="image-container mr-2 rounded">
 								<img alt="${productName}" class="app-search-image" src="${productThumbnail1}" />
 							</div>

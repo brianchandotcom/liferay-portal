@@ -6,6 +6,7 @@
 import React from 'react';
 
 import OrderableTable from '../../../components/OrderableTable';
+import ToggleStatus from '../../../components/ToggleStatus';
 import {IAction} from '../Actions';
 
 const ActionList = ({
@@ -15,6 +16,7 @@ const ActionList = ({
 	deleteAction,
 	editAction,
 	noItemsButtonLabel,
+	toggleChange,
 	updateActionsOrder,
 }: {
 	actions: Array<IAction>;
@@ -23,6 +25,7 @@ const ActionList = ({
 	deleteAction: ({item}: {item: IAction}) => void;
 	editAction: ({item}: {item: IAction}) => void;
 	noItemsButtonLabel: string;
+	toggleChange: (item: IAction) => void;
 	updateActionsOrder: ({order}: {order: string}) => void;
 }) => {
 	return (
@@ -58,6 +61,17 @@ const ActionList = ({
 				{
 					label: Liferay.Language.get('type'),
 					name: 'target',
+				},
+				{
+					contentRenderer: {
+						component: ({item}) =>
+							ToggleStatus({
+								item,
+								toggleChange,
+							}),
+					},
+					label: Liferay.Language.get('status'),
+					name: 'active',
 				},
 			]}
 			items={actions}

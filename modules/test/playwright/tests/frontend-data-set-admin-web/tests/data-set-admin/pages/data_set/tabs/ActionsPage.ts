@@ -31,10 +31,12 @@ export class ActionsPage {
 		urlInput: Locator;
 		variantSelect: Locator;
 	};
+	readonly activeToggle: Locator;
 	readonly creationActionsTab: Locator;
 	readonly creationActionsTable: Locator;
 	readonly dataSetPage: DataSetPage;
 	readonly deletionConfirmationModal: Locator;
+	readonly inactiveToggle: Locator;
 	readonly itemActionsTab: Locator;
 	readonly itemActionsTable: Locator;
 	readonly newItemActionPlusButton: Locator;
@@ -76,6 +78,7 @@ export class ActionsPage {
 			urlInput: page.getByPlaceholder('Add a URL here.'),
 			variantSelect: page.getByLabel('VariantRequired', {exact: true}),
 		};
+		this.activeToggle = page.getByLabel('Active', {exact: true});
 		this.creationActionsTab = page.getByRole('tab', {
 			name: 'Creation Actions',
 		});
@@ -86,6 +89,7 @@ export class ActionsPage {
 		this.deletionConfirmationModal = page
 			.getByRole('dialog')
 			.and(page.getByLabel('Delete Action'));
+		this.inactiveToggle = page.getByLabel('Inactive', {exact: true});
 		this.itemActionsTab = page.getByRole('tab', {name: 'Item Actions'});
 		this.itemActionsTable = page.locator('.item-actions-tab-pane table');
 		this.newItemActionPlusButton = page.getByTitle('New Item Action');

@@ -55,6 +55,7 @@ interface IAction extends IOrderable {
 			method: string;
 		};
 	};
+	active: boolean;
 	confirmationMessage?: string;
 	confirmationMessageType?: string;
 	confirmationMessage_i18n?: {
@@ -64,6 +65,7 @@ interface IAction extends IOrderable {
 	errorMessage_i18n?: {
 		[key: string]: string;
 	};
+	externalReferenceCode?: string;
 	icon: string;
 	label: string;
 	label_i18n: {
@@ -280,6 +282,42 @@ const Actions = ({dataSet, namespace, spritemap}: IDataSetSectionProps) => {
 		}
 	};
 
+	const updateStatus = async (item: IAction) => {
+		const response = await fetch(
+			`${API_URL.ACTIONS}/by-external-reference-code/${item.externalReferenceCode}`,
+			{
+				body: JSON.stringify({active: !item.active}),
+				headers: DEFAULT_FETCH_HEADERS,
+				method: 'PATCH',
+			}
+		);
+
+		if (!response.ok) {
+			openDefaultFailureToast();
+
+			return;
+		}
+
+		const dataSetAction: IAction = await response.json();
+
+		if (dataSetAction?.id) {
+			const updatedActions = actions.map((action) => {
+				if (action.id === dataSetAction.id) {
+					action = {...action, ...dataSetAction};
+				}
+
+				return action;
+			});
+
+			setActions(updatedActions);
+
+			openDefaultSuccessToast();
+		}
+		else {
+			openDefaultFailureToast();
+		}
+	};
+
 	useEffect(() => {
 		loadActions({activeTab: 0});
 
@@ -339,6 +377,7 @@ const Actions = ({dataSet, namespace, spritemap}: IDataSetSectionProps) => {
 									noItemsButtonLabel={Liferay.Language.get(
 										'new-item-action'
 									)}
+									toggleChange={updateStatus}
 									updateActionsOrder={updateActionsOrder}
 								/>
 							</ClayTabs.TabPane>
@@ -360,6 +399,7 @@ const Actions = ({dataSet, namespace, spritemap}: IDataSetSectionProps) => {
 									noItemsButtonLabel={Liferay.Language.get(
 										'new-creation-action'
 									)}
+									toggleChange={updateStatus}
 									updateActionsOrder={updateActionsOrder}
 								/>
 							</ClayTabs.TabPane>

@@ -1229,3 +1229,89 @@ test(
 		});
 	}
 );
+
+test(
+	'Deactivate and activate an item action',
+	{tag: '@LPD-39965'},
+	async ({actionsPage, dataSetManagerApiHelpers, page}) => {
+		const icon: string = 'arrow-right-full';
+		const label: string = getRandomString();
+		const type: EItemActionTarget = EItemActionTarget.LINK;
+
+		await test.step('Create an item action with API', async () => {
+			await dataSetManagerApiHelpers.createDataSetItemAction({
+				dataSetERC,
+				icon,
+				label_i18n: {en_US: label},
+				target: EItemActionTarget.LINK,
+			});
+		});
+
+		await test.step('Go to Item actions tab', async () => {
+			await actionsPage.gotoItemActionsTab({dataSetLabel});
+		});
+
+		let actionRow: Locator;
+
+		await test.step('New item action is displayed on the table and is "Active" by default', async () => {
+			await expect(actionsPage.itemActionsTab).toBeInViewport();
+
+			actionRow = await getRowByText({
+				page,
+				table: actionsPage.itemActionsTable,
+				text: label,
+			});
+
+			await expect(actionRow.getByRole('cell')).toContainText([
+				icon,
+				label,
+				type,
+				'Active',
+			]);
+
+			await expect(actionsPage.activeToggle.first()).toBeVisible();
+		});
+
+		await test.step('Deactivate the creation action', async () => {
+			actionRow = await getRowByText({
+				page,
+				table: actionsPage.itemActionsTable,
+				text: label,
+			});
+
+			await actionsPage.activeToggle.first().click();
+
+			await waitForAlert(page);
+
+			await expect(actionRow.getByRole('cell')).toContainText([
+				icon,
+				label,
+				type,
+				'Inactive',
+			]);
+
+			await expect(actionsPage.inactiveToggle.first()).toBeVisible();
+		});
+
+		await test.step('Activate the creation action', async () => {
+			actionRow = await getRowByText({
+				page,
+				table: actionsPage.itemActionsTable,
+				text: label,
+			});
+
+			await actionsPage.inactiveToggle.first().click();
+
+			await waitForAlert(page);
+
+			await expect(actionRow.getByRole('cell')).toContainText([
+				icon,
+				label,
+				type,
+				'Active',
+			]);
+
+			await expect(actionsPage.activeToggle.first()).toBeVisible();
+		});
+	}
+);

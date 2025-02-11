@@ -18,7 +18,7 @@ interface MultiSelectOption {
 	value: string;
 }
 
-type Values = string[] | LocalizedValue<string[]>;
+type Values = string | string[] | LocalizedValue<string[]>;
 
 interface MultiSelectPicklistProps {
 	availableLocales: AvailableLocale[];
@@ -39,6 +39,17 @@ interface MultiSelectPicklistProps {
 	tip?: string;
 	value: Values;
 }
+
+const normalizeValues = (value: Values) => {
+	if (value === '') {
+		return [];
+	}
+	else if (typeof value === 'string') {
+		return JSON.parse(value);
+	}
+
+	return value;
+};
 
 export default function MultiSelectPicklist({
 	errorMessage,
@@ -80,7 +91,7 @@ export default function MultiSelectPicklist({
 				readOnly={readOnly}
 				required={required}
 				tip={tip}
-				value={value}
+				value={normalizeValues(value)}
 			/>
 		</FieldBase>
 	);

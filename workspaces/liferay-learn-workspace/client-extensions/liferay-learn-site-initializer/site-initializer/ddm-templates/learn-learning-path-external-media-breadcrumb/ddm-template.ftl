@@ -74,11 +74,11 @@
 				background-size: cover;
 				content: '';
 				display: inline-block;
-				height: 16px;
-				margin-bottom: 4px;
-				margin-right: 4px;
+				height: 1rem;
+				margin-bottom: 0.25rem;
+				margin-right: 0.25rem;
 				vertical-align: middle;
-				width: 16px;
+				width: 1rem;
 			}
 		}
 	}

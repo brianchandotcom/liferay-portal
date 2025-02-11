@@ -22,6 +22,7 @@ create unique index IX_BB97A04 on ObjectDefinitionSetting (objectDefinitionId, n
 create index IX_89F99D10 on ObjectDefinitionSetting (uuid_[$COLUMN_LENGTH:75$]);
 
 create unique index IX_E60FE3FC on ObjectEntry (groupId, externalReferenceCode[$COLUMN_LENGTH:1000$], companyId);
+create index IX_4F10AA1B on ObjectEntry (groupId, objectEntryFolderId);
 create unique index IX_28B2B723 on ObjectEntry (groupId, uuid_[$COLUMN_LENGTH:75$]);
 create unique index IX_5979B105 on ObjectEntry (objectDefinitionId, externalReferenceCode[$COLUMN_LENGTH:1000$], companyId);
 create index IX_622DB416 on ObjectEntry (objectDefinitionId, groupId, status);

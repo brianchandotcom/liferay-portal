@@ -681,6 +681,161 @@ public interface ObjectEntryPersistence extends BasePersistence<ObjectEntry> {
 	public int countByG_ODI(long groupId, long objectDefinitionId);
 
 	/**
+	 * Returns all the object entries where groupId = &#63; and objectEntryFolderId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param objectEntryFolderId the object entry folder ID
+	 * @return the matching object entries
+	 */
+	public java.util.List<ObjectEntry> findByG_OEFI(
+		long groupId, long objectEntryFolderId);
+
+	/**
+	 * Returns a range of all the object entries where groupId = &#63; and objectEntryFolderId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param objectEntryFolderId the object entry folder ID
+	 * @param start the lower bound of the range of object entries
+	 * @param end the upper bound of the range of object entries (not inclusive)
+	 * @return the range of matching object entries
+	 */
+	public java.util.List<ObjectEntry> findByG_OEFI(
+		long groupId, long objectEntryFolderId, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the object entries where groupId = &#63; and objectEntryFolderId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param objectEntryFolderId the object entry folder ID
+	 * @param start the lower bound of the range of object entries
+	 * @param end the upper bound of the range of object entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching object entries
+	 */
+	public java.util.List<ObjectEntry> findByG_OEFI(
+		long groupId, long objectEntryFolderId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<ObjectEntry>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the object entries where groupId = &#63; and objectEntryFolderId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectEntryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param objectEntryFolderId the object entry folder ID
+	 * @param start the lower bound of the range of object entries
+	 * @param end the upper bound of the range of object entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching object entries
+	 */
+	public java.util.List<ObjectEntry> findByG_OEFI(
+		long groupId, long objectEntryFolderId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<ObjectEntry>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first object entry in the ordered set where groupId = &#63; and objectEntryFolderId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param objectEntryFolderId the object entry folder ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching object entry
+	 * @throws NoSuchObjectEntryException if a matching object entry could not be found
+	 */
+	public ObjectEntry findByG_OEFI_First(
+			long groupId, long objectEntryFolderId,
+			com.liferay.portal.kernel.util.OrderByComparator<ObjectEntry>
+				orderByComparator)
+		throws NoSuchObjectEntryException;
+
+	/**
+	 * Returns the first object entry in the ordered set where groupId = &#63; and objectEntryFolderId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param objectEntryFolderId the object entry folder ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching object entry, or <code>null</code> if a matching object entry could not be found
+	 */
+	public ObjectEntry fetchByG_OEFI_First(
+		long groupId, long objectEntryFolderId,
+		com.liferay.portal.kernel.util.OrderByComparator<ObjectEntry>
+			orderByComparator);
+
+	/**
+	 * Returns the last object entry in the ordered set where groupId = &#63; and objectEntryFolderId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param objectEntryFolderId the object entry folder ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching object entry
+	 * @throws NoSuchObjectEntryException if a matching object entry could not be found
+	 */
+	public ObjectEntry findByG_OEFI_Last(
+			long groupId, long objectEntryFolderId,
+			com.liferay.portal.kernel.util.OrderByComparator<ObjectEntry>
+				orderByComparator)
+		throws NoSuchObjectEntryException;
+
+	/**
+	 * Returns the last object entry in the ordered set where groupId = &#63; and objectEntryFolderId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param objectEntryFolderId the object entry folder ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching object entry, or <code>null</code> if a matching object entry could not be found
+	 */
+	public ObjectEntry fetchByG_OEFI_Last(
+		long groupId, long objectEntryFolderId,
+		com.liferay.portal.kernel.util.OrderByComparator<ObjectEntry>
+			orderByComparator);
+
+	/**
+	 * Returns the object entries before and after the current object entry in the ordered set where groupId = &#63; and objectEntryFolderId = &#63;.
+	 *
+	 * @param objectEntryId the primary key of the current object entry
+	 * @param groupId the group ID
+	 * @param objectEntryFolderId the object entry folder ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next object entry
+	 * @throws NoSuchObjectEntryException if a object entry with the primary key could not be found
+	 */
+	public ObjectEntry[] findByG_OEFI_PrevAndNext(
+			long objectEntryId, long groupId, long objectEntryFolderId,
+			com.liferay.portal.kernel.util.OrderByComparator<ObjectEntry>
+				orderByComparator)
+		throws NoSuchObjectEntryException;
+
+	/**
+	 * Removes all the object entries where groupId = &#63; and objectEntryFolderId = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param objectEntryFolderId the object entry folder ID
+	 */
+	public void removeByG_OEFI(long groupId, long objectEntryFolderId);
+
+	/**
+	 * Returns the number of object entries where groupId = &#63; and objectEntryFolderId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param objectEntryFolderId the object entry folder ID
+	 * @return the number of matching object entries
+	 */
+	public int countByG_OEFI(long groupId, long objectEntryFolderId);
+
+	/**
 	 * Returns all the object entries where userId = &#63; and objectDefinitionId = &#63;.
 	 *
 	 * @param userId the user ID

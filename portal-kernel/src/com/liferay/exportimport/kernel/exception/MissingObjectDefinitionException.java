@@ -12,14 +12,14 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public class MissingObjectDefinitionException extends PortalException {
 
-	public MissingObjectDefinitionException(String portletId) {
-		_portletId = portletId;
+	public MissingObjectDefinitionException(String portletDisplayName) {
+		_portletDisplayName = portletDisplayName;
 	}
 
 	public String getPortletId() {
-		return _portletId;
+		return _portletDisplayName;
 	}
 
-	private final String _portletId;
+	private final String _portletDisplayName;
 
 }

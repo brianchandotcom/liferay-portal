@@ -623,7 +623,9 @@ public class LayoutImportController implements ImportController {
 						"com_liferay_object_web_internal_object_definition" +
 							"s_portlet_ObjectDefinitionsPortlet_")) {
 
-					throw new MissingObjectDefinitionException(portletId);
+					throw new MissingObjectDefinitionException(
+						GetterUtil.getString(
+							portletElement.attributeValue("display-name")));
 				}
 
 				continue;

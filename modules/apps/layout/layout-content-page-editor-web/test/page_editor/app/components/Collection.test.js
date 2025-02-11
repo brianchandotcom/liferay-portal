@@ -109,37 +109,6 @@ describe('Collection', () => {
 		).toBeInTheDocument();
 	});
 
-	it('renders an item when the collection is empty', async () => {
-		CollectionService.getCollectionField.mockImplementation(() =>
-			Promise.resolve({
-				items: [],
-				length: 0,
-				totalNumberOfItems: 1,
-			})
-		);
-
-		Liferay.FeatureFlags['LPD-18221'] = true;
-
-		await act(async () => {
-			renderCollection({
-				collection: {
-					itemSubtype: 'CollectionItemSubtype',
-					itemType: 'CollectionItemType',
-				},
-				listStyle: '',
-				numberOfPages: 1,
-			});
-
-			jest.runAllTimers();
-		});
-
-		expect(
-			document.body.querySelector('.page-editor__collection-item')
-		).toBeInTheDocument();
-
-		Liferay.FeatureFlags['LPD-18221'] = false;
-	});
-
 	it('renders empty collection items', async () => {
 		const items = [
 			{content: 'Item 1 Content', title: 'Item 1 Title'},

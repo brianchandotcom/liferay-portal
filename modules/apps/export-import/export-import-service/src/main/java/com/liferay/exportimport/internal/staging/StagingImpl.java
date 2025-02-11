@@ -1320,7 +1320,7 @@ public class StagingImpl implements Staging {
 				(MissingObjectDefinitionException)exception;
 
 			errorMessage = _language.format(
-				locale, "the-object-definition-portlet-with-id-x-is-missing",
+				locale, "the-object-definition-x-does-not-exist",
 				missingObjectDefinitionException.getPortletId());
 
 			errorType = ServletResponseConstants.SC_FILE_CUSTOM_EXCEPTION;

@@ -527,6 +527,7 @@ public class PortletExportControllerImpl implements PortletExportController {
 
 		Element element = parentElement.addElement("portlet");
 
+		element.addAttribute("display-name", portlet.getDisplayName());
 		element.addAttribute("portlet-id", portlet.getPortletId());
 		element.addAttribute("layout-id", String.valueOf(layoutId));
 		element.addAttribute("path", path);

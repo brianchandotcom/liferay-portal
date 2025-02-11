@@ -91,6 +91,7 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 	public AssetLibrary patchAssetLibrary(
 			Long assetLibraryId, AssetLibrary assetLibrary)
 		throws Exception {
+
 		if (!FeatureFlagManagerUtil.isEnabled("LPD-32649")) {
 			throw new UnsupportedOperationException();
 		}
@@ -152,6 +153,7 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 	public AssetLibrary postAssetLibraryLinkToSite(
 			Long assetLibraryId, Long toSiteId)
 		throws Exception {
+
 		if (!FeatureFlagManagerUtil.isEnabled("LPD-32649")) {
 			throw new UnsupportedOperationException();
 		}

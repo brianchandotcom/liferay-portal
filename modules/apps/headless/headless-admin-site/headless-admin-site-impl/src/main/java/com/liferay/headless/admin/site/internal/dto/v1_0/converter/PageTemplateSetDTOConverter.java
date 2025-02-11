@@ -40,6 +40,9 @@ public class PageTemplateSetDTOConverter
 				setDescription(layoutPageTemplateCollection::getDescription);
 				setExternalReferenceCode(
 					layoutPageTemplateCollection::getExternalReferenceCode);
+				setKey(
+					layoutPageTemplateCollection::
+						getLayoutPageTemplateCollectionKey);
 				setName(layoutPageTemplateCollection::getName);
 			}
 		};

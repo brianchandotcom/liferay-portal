@@ -9,7 +9,6 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.content.page.editor.constants.ContentPageEditorPortletKeys;
 import com.liferay.layout.content.page.editor.web.internal.manager.FormItemManager;
-import com.liferay.layout.content.page.editor.web.internal.manager.FragmentEntryLinkManager;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureService;
@@ -18,8 +17,6 @@ import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructureItemUtil;
-import com.liferay.petra.function.transform.TransformUtil;
-import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -30,10 +27,15 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -49,7 +51,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = MVCActionCommand.class
 )
 public class DeleteFormStepMVCActionCommand
-	extends BaseContentPageEditorTransactionalMVCActionCommand {
+	extends BaseItemFormConfigMVCActionCommand {
 
 	@Override
 	protected JSONObject doTransactionalCommand(
@@ -105,77 +107,40 @@ public class DeleteFormStepMVCActionCommand
 					themeDisplay.getLocale(), "an-unexpected-error-occurred"));
 		}
 
-		FormItemManager.LayoutStructureItemChanges layoutStructureItemChanges =
+		List<FormItemManager.LayoutStructureItemChanges>
+			layoutStructureItemChanges = new ArrayList<>();
+
+		layoutStructureItemChanges.add(
 			_formItemManager.removeFormStepLayoutStructureItem(
-				formStyledLayoutStructureItem, itemId, layoutStructure);
+				formStyledLayoutStructureItem, itemId, layoutStructure));
 
-		layoutPageTemplateStructure =
-			_layoutPageTemplateStructureService.
-				updateLayoutPageTemplateStructureData(
-					themeDisplay.getScopeGroupId(), themeDisplay.getPlid(),
-					segmentsExperienceId, layoutStructure.toString());
+		_layoutPageTemplateStructureService.
+			updateLayoutPageTemplateStructureData(
+				themeDisplay.getScopeGroupId(), themeDisplay.getPlid(),
+				segmentsExperienceId, layoutStructure.toString());
 
-		LayoutStructure updatedLayoutStructure = LayoutStructure.of(
-			layoutPageTemplateStructure.getData(segmentsExperienceId));
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
+			actionRequest);
+		HttpServletResponse httpServletResponse =
+			_portal.getHttpServletResponse(actionResponse);
 
-		return JSONUtil.put(
-			"fragmentEntryLinks",
-			() -> {
-				long stepperFragmentEntryLinkId = ParamUtil.getLong(
-					actionRequest, "stepperFragmentEntryLinkId");
+		long stepperFragmentEntryLinkId = ParamUtil.getLong(
+			actionRequest, "stepperFragmentEntryLinkId");
 
-				FragmentEntryLink stepperFragmentEntryLink =
-					_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
-						stepperFragmentEntryLinkId);
+		FragmentEntryLink stepperFragmentEntryLink =
+			_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
+				stepperFragmentEntryLinkId);
 
-				if (stepperFragmentEntryLink == null) {
-					return null;
-				}
+		if (stepperFragmentEntryLink != null) {
+			stepperFragmentEntryLink = _formItemManager.updateNumberOfStepps(
+				httpServletRequest, httpServletResponse, numberOfSteps - 1,
+				stepperFragmentEntryLink);
+		}
 
-				stepperFragmentEntryLink =
-					_formItemManager.updateNumberOfStepps(
-						_portal.getHttpServletRequest(actionRequest),
-						_portal.getHttpServletResponse(actionResponse),
-						numberOfSteps - 1, stepperFragmentEntryLink);
-
-				return JSONUtil.put(
-					String.valueOf(
-						stepperFragmentEntryLink.getFragmentEntryLinkId()),
-					_fragmentEntryLinkManager.getFragmentEntryLinkJSONObject(
-						stepperFragmentEntryLink,
-						_portal.getHttpServletRequest(actionRequest),
-						_portal.getHttpServletResponse(actionResponse),
-						updatedLayoutStructure));
-			}
-		).put(
-			"layoutData", updatedLayoutStructure.toJSONObject()
-		).put(
-			"movedItemIds",
-			() -> {
-				JSONArray jsonArray = _jsonFactory.createJSONArray();
-
-				for (LayoutStructureItem movedLayoutStructureItem :
-						layoutStructureItemChanges.
-							getMovedLayoutStructureItems()) {
-
-					jsonArray.put(
-						JSONUtil.put(
-							"itemId", movedLayoutStructureItem.getItemId()
-						).put(
-							"parentId",
-							movedLayoutStructureItem.getParentItemId()
-						));
-				}
-
-				return jsonArray;
-			}
-		).put(
-			"removedItemIds",
-			_jsonFactory.createJSONArray(
-				TransformUtil.transform(
-					layoutStructureItemChanges.getRemovedLayoutStructureItems(),
-					LayoutStructureItem::getItemId))
-		);
+		return getLayoutStructureItemChangesJSONObject(
+			new ArrayList<>(), httpServletRequest, httpServletResponse,
+			_jsonFactory.createJSONObject(), layoutStructure,
+			layoutStructureItemChanges, stepperFragmentEntryLink);
 	}
 
 	@Reference
@@ -183,9 +148,6 @@ public class DeleteFormStepMVCActionCommand
 
 	@Reference
 	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
-
-	@Reference
-	private FragmentEntryLinkManager _fragmentEntryLinkManager;
 
 	@Reference
 	private JSONFactory _jsonFactory;

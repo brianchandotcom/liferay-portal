@@ -22,12 +22,9 @@ import com.liferay.layout.content.page.editor.web.internal.util.layout.structure
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureService;
 import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
-import com.liferay.layout.util.structure.LayoutStructureItem;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.LockedLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -48,6 +45,9 @@ import java.util.Objects;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -62,7 +62,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = MVCActionCommand.class
 )
 public class AddStepperFragmentEntryLinkMVCActionCommand
-	extends BaseContentPageEditorTransactionalMVCActionCommand {
+	extends BaseItemFormConfigMVCActionCommand {
 
 	protected FragmentEntryLink addFragmentEntryLink(
 			ActionRequest actionRequest)
@@ -160,17 +160,6 @@ public class AddStepperFragmentEntryLinkMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		List<FragmentEntryLink> addedFragmentEntryLinks = new ArrayList<>();
-		List<LayoutStructureItem> addedLayoutStructureItems = new ArrayList<>();
-		List<LayoutStructureItem> movedLayoutStructureItems = new ArrayList<>();
-		List<LayoutStructureItem> removedLayoutStructureItems =
-			new ArrayList<>();
-
-		FragmentEntryLink stepperFragmentEntryLink = addFragmentEntryLink(
-			actionRequest);
-
-		addedFragmentEntryLinks.add(stepperFragmentEntryLink);
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -182,15 +171,29 @@ public class AddStepperFragmentEntryLinkMVCActionCommand
 			actionRequest, "numberOfSteps");
 		int position = ParamUtil.getInteger(actionRequest, "position");
 
+		List<FragmentEntryLink> addedFragmentEntryLinks = new ArrayList<>();
+		List<FormItemManager.LayoutStructureItemChanges>
+			layoutStructureItemChangesList = new ArrayList<>();
+
+		FragmentEntryLink stepperFragmentEntryLink = addFragmentEntryLink(
+			actionRequest);
+
+		addedFragmentEntryLinks.add(stepperFragmentEntryLink);
+
+		FormItemManager.LayoutStructureItemChanges layoutStructureItemChanges =
+			new FormItemManager.LayoutStructureItemChanges();
+
 		LayoutStructure layoutStructure =
 			LayoutStructureUtil.getLayoutStructure(
 				themeDisplay.getScopeGroupId(), themeDisplay.getPlid(),
 				segmentsExperienceId);
 
-		addedLayoutStructureItems.add(
+		layoutStructureItemChanges.addAddedLayoutStructureItems(
 			layoutStructure.addFragmentStyledLayoutStructureItem(
 				stepperFragmentEntryLink.getFragmentEntryLinkId(), parentItemId,
 				position));
+
+		layoutStructureItemChangesList.add(layoutStructureItemChanges);
 
 		FormStyledLayoutStructureItem formStyledLayoutStructureItem =
 			(FormStyledLayoutStructureItem)
@@ -202,23 +205,15 @@ public class AddStepperFragmentEntryLinkMVCActionCommand
 			formStyledLayoutStructureItem.setFormType("multistep");
 			formStyledLayoutStructureItem.setNumberOfSteps(numberOfSteps);
 
-			FormItemManager.LayoutStructureItemChanges
-				layoutStructureItemChanges =
-					_formItemManager.changeToMultistepFormType(
-						addedFragmentEntryLinks, formStyledLayoutStructureItem,
-						_portal.getHttpServletRequest(actionRequest),
-						_portal.getHttpServletResponse(actionResponse),
-						themeDisplay.getLayout(), layoutStructure,
-						numberOfSteps, segmentsExperienceId,
-						ServiceContextFactory.getInstance(actionRequest),
-						stepperFragmentEntryLink.getFragmentEntryLinkId());
-
-			addedLayoutStructureItems.addAll(
-				layoutStructureItemChanges.getAddedLayoutStructureItems());
-			movedLayoutStructureItems.addAll(
-				layoutStructureItemChanges.getMovedLayoutStructureItems());
-			removedLayoutStructureItems.addAll(
-				layoutStructureItemChanges.getRemovedLayoutStructureItems());
+			layoutStructureItemChangesList.add(
+				_formItemManager.changeToMultistepFormType(
+					addedFragmentEntryLinks, formStyledLayoutStructureItem,
+					_portal.getHttpServletRequest(actionRequest),
+					_portal.getHttpServletResponse(actionResponse),
+					themeDisplay.getLayout(), layoutStructure, numberOfSteps,
+					segmentsExperienceId,
+					ServiceContextFactory.getInstance(actionRequest),
+					stepperFragmentEntryLink.getFragmentEntryLinkId()));
 		}
 
 		_layoutPageTemplateStructureService.
@@ -238,54 +233,19 @@ public class AddStepperFragmentEntryLinkMVCActionCommand
 			}
 		}
 
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
+			actionRequest);
+		HttpServletResponse httpServletResponse =
+			_portal.getHttpServletResponse(actionResponse);
+
 		stepperFragmentEntryLink = _formItemManager.updateNumberOfStepps(
-			_portal.getHttpServletRequest(actionRequest),
-			_portal.getHttpServletResponse(actionResponse), numberOfSteps,
+			httpServletRequest, httpServletResponse, numberOfSteps,
 			stepperFragmentEntryLink);
 
-		return JSONUtil.put(
-			"addedItemIds",
-			_jsonFactory.createJSONArray(
-				TransformUtil.transform(
-					addedLayoutStructureItems, LayoutStructureItem::getItemId))
-		).put(
-			"fragmentEntryLinks",
-			JSONUtil.put(
-				String.valueOf(
-					stepperFragmentEntryLink.getFragmentEntryLinkId()),
-				_fragmentEntryLinkManager.getFragmentEntryLinkJSONObject(
-					stepperFragmentEntryLink,
-					_portal.getHttpServletRequest(actionRequest),
-					_portal.getHttpServletResponse(actionResponse),
-					layoutStructure))
-		).put(
-			"layoutData", layoutStructure.toJSONObject()
-		).put(
-			"movedItemIds",
-			() -> {
-				JSONArray jsonArray = _jsonFactory.createJSONArray();
-
-				for (LayoutStructureItem movedLayoutStructureItem :
-						movedLayoutStructureItems) {
-
-					jsonArray.put(
-						JSONUtil.put(
-							"itemId", movedLayoutStructureItem.getItemId()
-						).put(
-							"parentId",
-							movedLayoutStructureItem.getParentItemId()
-						));
-				}
-
-				return jsonArray;
-			}
-		).put(
-			"removedItemIds",
-			_jsonFactory.createJSONArray(
-				TransformUtil.transform(
-					removedLayoutStructureItems,
-					LayoutStructureItem::getItemId))
-		);
+		return getLayoutStructureItemChangesJSONObject(
+			addedFragmentEntryLinks, httpServletRequest, httpServletResponse,
+			_jsonFactory.createJSONObject(), layoutStructure,
+			layoutStructureItemChangesList, stepperFragmentEntryLink);
 	}
 
 	@Reference

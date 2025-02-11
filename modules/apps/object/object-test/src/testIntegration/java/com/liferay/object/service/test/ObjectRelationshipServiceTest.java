@@ -11,28 +11,46 @@ import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.service.ObjectRelationshipService;
+import com.liferay.object.test.util.ObjectDefinitionTestUtil;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.RoleTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Objects;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -51,7 +69,9 @@ public class ObjectRelationshipServiceTest {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new LiferayIntegrationTestRule();
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(),
+			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Before
 	public void setUp() throws Exception {
@@ -124,6 +144,14 @@ public class ObjectRelationshipServiceTest {
 		}
 
 		_testAddObjectRelationship(_user);
+	}
+
+	@Test
+	public void testAddObjectRelationshipMappingTableValues() throws Exception {
+		_testAddObjectRelationshipMappingTableValues(
+			ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
+		_testAddObjectRelationshipMappingTableValues(
+			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 	}
 
 	@Test
@@ -243,6 +271,111 @@ public class ObjectRelationshipServiceTest {
 		}
 	}
 
+	private void _testAddObjectRelationshipMappingTableValues(
+			String objectRelationshipType)
+		throws Exception {
+
+		ObjectDefinition objectDefinition1 =
+			ObjectDefinitionTestUtil.publishObjectDefinition();
+
+		ObjectDefinition objectDefinition2 =
+			ObjectDefinitionTestUtil.publishObjectDefinition();
+
+		ObjectRelationship objectRelationship =
+			_objectRelationshipLocalService.addObjectRelationship(
+				null, TestPropsValues.getUserId(),
+				objectDefinition1.getObjectDefinitionId(),
+				objectDefinition2.getObjectDefinitionId(), 0,
+				ObjectRelationshipConstants.DELETION_TYPE_CASCADE, false,
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				StringUtil.randomId(), false, objectRelationshipType, null);
+
+		ObjectEntry objectEntry1 = _objectEntryLocalService.addObjectEntry(
+			TestPropsValues.getUserId(), 0,
+			objectDefinition1.getObjectDefinitionId(), Collections.emptyMap(),
+			ServiceContextTestUtil.getServiceContext());
+
+		ObjectEntry objectEntry2 = _objectEntryLocalService.addObjectEntry(
+			TestPropsValues.getUserId(), 0,
+			objectDefinition2.getObjectDefinitionId(), Collections.emptyMap(),
+			ServiceContextTestUtil.getServiceContext());
+
+		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		_resourcePermissionLocalService.setResourcePermissions(
+			TestPropsValues.getCompanyId(), objectDefinition2.getClassName(),
+			ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(TestPropsValues.getCompanyId()), role.getRoleId(),
+			new String[] {ActionKeys.VIEW});
+
+		User user = UserTestUtil.addUser();
+
+		_userLocalService.addRoleUser(role.getRoleId(), user);
+
+		_setUser(user);
+
+		AssertUtils.assertFailure(
+			PrincipalException.MustHavePermission.class,
+			StringBundler.concat(
+				"User ", user.getUserId(), " must have UPDATE permission for ",
+				objectDefinition2.getClassName(), StringPool.SPACE,
+				objectEntry2.getObjectEntryId()),
+			() ->
+				_objectRelationshipService.
+					addObjectRelationshipMappingTableValues(
+						objectRelationship.getObjectRelationshipId(),
+						objectEntry1.getObjectEntryId(),
+						objectEntry2.getObjectEntryId(), new ServiceContext()));
+
+		_resourcePermissionLocalService.setResourcePermissions(
+			TestPropsValues.getCompanyId(), objectDefinition2.getClassName(),
+			ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(TestPropsValues.getCompanyId()), role.getRoleId(),
+			new String[] {ActionKeys.UPDATE, ActionKeys.VIEW});
+
+		if (Objects.equals(
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY,
+				objectRelationshipType)) {
+
+			_objectRelationshipService.addObjectRelationshipMappingTableValues(
+				objectRelationship.getObjectRelationshipId(),
+				objectEntry1.getObjectEntryId(),
+				objectEntry2.getObjectEntryId(), new ServiceContext());
+
+			return;
+		}
+
+		_resourcePermissionLocalService.setResourcePermissions(
+			TestPropsValues.getCompanyId(), objectDefinition1.getClassName(),
+			ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(TestPropsValues.getCompanyId()), role.getRoleId(),
+			new String[] {ActionKeys.VIEW});
+
+		AssertUtils.assertFailure(
+			PrincipalException.MustHavePermission.class,
+			StringBundler.concat(
+				"User ", user.getUserId(), " must have UPDATE permission for ",
+				objectDefinition1.getClassName(), StringPool.SPACE,
+				objectEntry1.getObjectEntryId()),
+			() ->
+				_objectRelationshipService.
+					addObjectRelationshipMappingTableValues(
+						objectRelationship.getObjectRelationshipId(),
+						objectEntry1.getObjectEntryId(),
+						objectEntry2.getObjectEntryId(), new ServiceContext()));
+
+		_resourcePermissionLocalService.setResourcePermissions(
+			TestPropsValues.getCompanyId(), objectDefinition1.getClassName(),
+			ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(TestPropsValues.getCompanyId()), role.getRoleId(),
+			new String[] {ActionKeys.UPDATE, ActionKeys.VIEW});
+
+		_objectRelationshipService.addObjectRelationshipMappingTableValues(
+			objectRelationship.getObjectRelationshipId(),
+			objectEntry1.getObjectEntryId(), objectEntry2.getObjectEntryId(),
+			new ServiceContext());
+	}
+
 	private void _testDeleteObjectRelationship(User user) throws Exception {
 		ObjectRelationship deleteObjectRelationship = null;
 		ObjectRelationship objectRelationship = null;
@@ -338,6 +471,9 @@ public class ObjectRelationshipServiceTest {
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
 	@Inject
+	private ObjectEntryLocalService _objectEntryLocalService;
+
+	@Inject
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;
 
 	@Inject
@@ -345,6 +481,10 @@ public class ObjectRelationshipServiceTest {
 
 	private String _originalName;
 	private PermissionChecker _originalPermissionChecker;
+
+	@Inject
+	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
 	private User _user;
 
 	@Inject(type = UserLocalService.class)

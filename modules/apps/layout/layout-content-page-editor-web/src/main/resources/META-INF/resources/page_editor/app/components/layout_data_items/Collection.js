@@ -12,6 +12,7 @@ import classNames from 'classnames';
 import {sub} from 'frontend-js-web';
 import React, {useContext, useEffect, useMemo, useState} from 'react';
 
+import CollectionSelector from '../../../common/components/CollectionSelector';
 import {COLUMN_SIZE_MODULE_PER_ROW_SIZES} from '../../config/constants/columnSizes';
 import {CONTENT_DISPLAY_OPTIONS} from '../../config/constants/contentDisplayOptions';
 import {config} from '../../config/index';
@@ -25,12 +26,15 @@ import {useDispatch, useSelector} from '../../contexts/StoreContext';
 import selectLanguageId from '../../selectors/selectLanguageId';
 import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperienceId';
 import CollectionService from '../../services/CollectionService';
+import updateCollectionDisplayCollection from '../../thunks/updateCollectionDisplayCollection';
 import updateItemConfig from '../../thunks/updateItemConfig';
 import {deepEqual} from '../../utils/checkDeepEqual';
 import {collectionIsMapped} from '../../utils/collectionIsMapped';
+import {COLLECTION_LIST_STYLES} from '../../utils/collectionListStyles';
 import getLayoutDataItemClassName from '../../utils/getLayoutDataItemClassName';
 import getLayoutDataItemUniqueClassName from '../../utils/getLayoutDataItemUniqueClassName';
 import {getResponsiveConfig} from '../../utils/getResponsiveConfig';
+import {ITEM_SELECTOR_VARIANTS} from '../../utils/itemSelectorVariants';
 import UnsafeHTML from '../UnsafeHTML';
 import CollectionPagination from './CollectionPagination';
 
@@ -90,6 +94,38 @@ const NotCollectionSelectedMessage = () => (
 		{Liferay.Language.get('no-collection-selected-yet')}
 	</div>
 );
+
+const NotCollectionSelected = ({collection, dispatch, item}) => {
+	const handleCollectionSelect = (collection = {}) => {
+		dispatch(
+			updateCollectionDisplayCollection({
+				collection: Object.keys(collection).length ? collection : null,
+				itemId: item.itemId,
+				listStyle: COLLECTION_LIST_STYLES.grid,
+			})
+		);
+	};
+
+	return (
+		<div className="align-items-center bg-lighter d-flex flex-column page-editor__form-unmapped-state page-editor__no-fragments-state">
+			<p className="page-editor__no-fragments-state__title">
+				{Liferay.Language.get('map-your-collection')}
+			</p>
+
+			<p className="mb-3 page-editor__no-fragments-state__message">
+				{Liferay.Language.get('select-a-collection-to-display')}
+			</p>
+
+			<CollectionSelector
+				collectionItem={collection}
+				itemSelectorURL={config.collectionSelectorURL}
+				label={Liferay.Language.get('select-collection')}
+				onCollectionSelect={handleCollectionSelect}
+				variant={ITEM_SELECTOR_VARIANTS.button}
+			/>
+		</div>
+	);
+};
 
 const EmptyCollectionMessage = () => (
 	<div className="page-editor__collection__message">
@@ -475,7 +511,15 @@ const Collection = React.memo(
 			CollectionContent = <ClayLoadingIndicator />;
 		}
 		else if (!collectionIsMapped(collectionConfig)) {
-			CollectionContent = <NotCollectionSelectedMessage />;
+			CollectionContent = Liferay.FeatureFlags['LPD-18221'] ? (
+				<NotCollectionSelected
+					collection={collection}
+					dispatch={dispatch}
+					item={item}
+				/>
+			) : (
+				<NotCollectionSelectedMessage />
+			);
 		}
 		else if (showEmptyMessage) {
 			CollectionContent = <EmptyCollectionMessage />;

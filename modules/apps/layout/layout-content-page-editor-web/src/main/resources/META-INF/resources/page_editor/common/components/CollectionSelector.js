@@ -9,6 +9,7 @@ import React from 'react';
 
 import {config} from '../../app/config/index';
 import {useCustomCollectionSelectorURL} from '../../app/contexts/CollectionItemContext';
+import {ITEM_SELECTOR_VARIANTS} from '../../app/utils/itemSelectorVariants';
 import itemSelectorValueToCollection from '../../app/utils/item_selector_value/itemSelectorValueToCollection';
 import ItemSelector from './ItemSelector';
 
@@ -21,6 +22,7 @@ export default function CollectionSelector({
 	onBeforeCollectionSelect,
 	onCollectionSelect,
 	optionsMenuItems = DEFAULT_OPTION_MENU_ITEMS,
+	variant = ITEM_SELECTOR_VARIANTS.input,
 }) {
 	const eventName = `${config.portletNamespace}selectInfoList`;
 
@@ -52,6 +54,7 @@ export default function CollectionSelector({
 					!!config.selectedMappingTypes?.linkedCollection
 				}
 				transformValueCallback={itemSelectorValueToCollection}
+				variant={variant}
 			/>
 
 			{isPrefiltered && (

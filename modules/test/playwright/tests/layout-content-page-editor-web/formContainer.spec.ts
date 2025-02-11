@@ -4347,7 +4347,9 @@ test.describe('Picklist input field', () => {
 			`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
 		);
 
-		await page.getByLabel('Lemon Basket to Lemons').click();
+		await page
+			.getByRole('combobox', {name: 'Lemon Basket to Lemons'})
+			.click();
 
 		await expect(page.getByText('Plastic', {exact: true})).toBeVisible();
 		await expect(page.getByText('Carton', {exact: true})).toBeVisible();
@@ -4396,11 +4398,15 @@ test.describe('Picklist input field', () => {
 
 			// Check that the value after selecting the item is correct
 
-			await page.getByLabel('Material').click();
+			const materialField = page.getByRole('combobox', {
+				name: 'Material',
+			});
+
+			await materialField.click();
 
 			await page.getByText('carton').click();
 
-			await expect(page.getByLabel('Material')).toHaveValue('Carton');
+			await expect(materialField).toHaveValue('Carton');
 		}
 	);
 

@@ -5,9 +5,12 @@
 
 package com.liferay.object.service.impl;
 
+import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.base.ObjectRelationshipServiceBaseImpl;
 import com.liferay.object.service.persistence.ObjectDefinitionPersistence;
 import com.liferay.portal.aop.AopService;
@@ -19,6 +22,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -68,9 +72,27 @@ public class ObjectRelationshipServiceImpl
 			objectRelationshipPersistence.findByPrimaryKey(
 				objectRelationshipId);
 
-		_objectDefinitionModelResourcePermission.check(
-			getPermissionChecker(), objectRelationship.getObjectDefinitionId1(),
-			ActionKeys.UPDATE);
+		ModelResourcePermission<ObjectEntry> modelResourcePermission =
+			_objectEntryService.getModelResourcePermission(
+				objectRelationship.getObjectDefinitionId2());
+
+		modelResourcePermission.check(
+			getPermissionChecker(),
+			_objectEntryService.getObjectEntry(primaryKey2), ActionKeys.UPDATE);
+
+		if (Objects.equals(
+				objectRelationship.getType(),
+				ObjectRelationshipConstants.TYPE_MANY_TO_MANY)) {
+
+			modelResourcePermission =
+				_objectEntryService.getModelResourcePermission(
+					objectRelationship.getObjectDefinitionId1());
+
+			modelResourcePermission.check(
+				getPermissionChecker(),
+				_objectEntryService.getObjectEntry(primaryKey1),
+				ActionKeys.UPDATE);
+		}
 
 		objectRelationshipLocalService.addObjectRelationshipMappingTableValues(
 			getUserId(), objectRelationshipId, primaryKey1, primaryKey2,
@@ -185,5 +207,8 @@ public class ObjectRelationshipServiceImpl
 
 	@Reference
 	private ObjectDefinitionPersistence _objectDefinitionPersistence;
+
+	@Reference
+	private ObjectEntryService _objectEntryService;
 
 }

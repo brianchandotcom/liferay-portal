@@ -3426,6 +3426,17 @@
 		"to": "HtmlUtil_IW.getInstance"
 	},
 	{
+		"classNames": [
+			"ArchivedSettingsFactory"
+		],
+		"from": "getSettings(SettingsLocator paramName)",
+		"issueKey": "LPD-38353",
+		"newImports": [
+			"com.liferay.portal.kernel.settings.FallbackKeysSettingsUtil"
+		],
+		"to": "FallbackKeysSettingsUtil.getSettings(param#0#)"
+	},
+	{
 		"classNames": "CommercePaymentMethodGroupRel",
 		"from": "getEngineKey",
 		"issueKey": "LPD-40549",

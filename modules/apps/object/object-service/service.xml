@@ -260,6 +260,10 @@
 			<finder-column name="groupId" />
 			<finder-column name="objectDefinitionId" />
 		</finder>
+		<finder name="G_OEFI" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="objectEntryFolderId" />
+		</finder>
 		<finder name="U_ODI" return-type="Collection">
 			<finder-column name="userId" />
 			<finder-column name="objectDefinitionId" />

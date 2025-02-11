@@ -8,11 +8,17 @@ import {expect, mergeTests} from '@playwright/test';
 import {breadcrumbWidgetPagesTest} from '../../fixtures/breadcrumbWidgetPagesTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {pageViewModePagesTest} from '../../fixtures/pageViewModePagesTest';
+import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
+import getRandomString from '../../utils/getRandomString';
+import {templatesPageTest} from '../template-web/fixtures/templatesPageTest';
 
 export const test = mergeTests(
 	breadcrumbWidgetPagesTest,
 	isolatedSiteTest,
-	loginTest()
+	loginTest(),
+	pageViewModePagesTest,
+	templatesPageTest
 );
 
 test(
@@ -28,3 +34,47 @@ test(
 		).toHaveAttribute('aria-current', 'page');
 	}
 );
+
+test('Select widget template in Breadcrumb widget configuration', async ({
+	breadcrumbWidgetPage,
+	page,
+	site,
+	templatesPage,
+	widgetPagePage,
+}) => {
+	await templatesPage.gotoWidgetTemplates(site.friendlyUrlPath);
+
+	const widgetTemplateName = getRandomString();
+
+	await templatesPage.createWidgetTemplate(
+		widgetTemplateName,
+		'Breadcrumb Template'
+	);
+
+	await breadcrumbWidgetPage.addBreadcrumbPortlet(site);
+
+	await widgetPagePage.clickOnAction('Breadcrumb', 'Configuration');
+
+	const configurationIFrame = page.frameLocator(
+		'iframe[title*="Breadcrumb"]'
+	);
+
+	await clickAndExpectToBeVisible({
+		autoClick: true,
+		target: configurationIFrame.getByRole('option', {
+			exact: true,
+			name: widgetTemplateName,
+		}),
+		trigger: configurationIFrame.getByLabel('Display Template'),
+	});
+
+	await widgetPagePage.saveAndClose('Breadcrumb');
+
+	await widgetPagePage.clickOnAction('Breadcrumb', 'Configuration');
+
+	await configurationIFrame.getByLabel('Display Template').click();
+
+	await expect(
+		configurationIFrame.locator('button[aria-selected="true"]')
+	).toHaveText(widgetTemplateName);
+});

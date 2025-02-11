@@ -33,7 +33,7 @@ public class DefaultStyleBookEntryUtil {
 		if (styleBookEntry == null) {
 			styleBookEntry =
 				StyleBookEntryLocalServiceUtil.fetchDefaultStyleBookEntry(
-					StagingUtil.getLiveGroupId(layout.getGroupId()));
+					StagingUtil.getLiveGroupId(layout.getGroupId()), "");
 		}
 
 		return styleBookEntry;

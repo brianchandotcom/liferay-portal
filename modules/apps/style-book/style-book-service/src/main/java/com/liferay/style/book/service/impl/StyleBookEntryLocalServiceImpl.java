@@ -12,6 +12,7 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.WildcardMode;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.model.Repository;
@@ -168,7 +169,14 @@ public class StyleBookEntryLocalServiceImpl
 	}
 
 	@Override
-	public StyleBookEntry fetchDefaultStyleBookEntry(long groupId) {
+	public StyleBookEntry fetchDefaultStyleBookEntry(
+		long groupId, String themeId) {
+
+		if (FeatureFlagManagerUtil.isEnabled("LPD-30204")) {
+			return styleBookEntryPersistence.fetchByG_D_T_First(
+				groupId, true, themeId, null);
+		}
+
 		return styleBookEntryPersistence.fetchByG_D_Head_First(
 			groupId, true, true, null);
 	}
@@ -275,9 +283,19 @@ public class StyleBookEntryLocalServiceImpl
 			return null;
 		}
 
-		StyleBookEntry oldDefaultStyleBookEntry =
-			styleBookEntryPersistence.fetchByG_D_First(
-				styleBookEntry.getGroupId(), true, null);
+		StyleBookEntry oldDefaultStyleBookEntry = null;
+
+		if (FeatureFlagManagerUtil.isEnabled("LPD-30204")) {
+			oldDefaultStyleBookEntry =
+				styleBookEntryPersistence.fetchByG_D_T_First(
+					styleBookEntry.getGroupId(), true,
+					styleBookEntry.getThemeId(), null);
+		}
+		else {
+			oldDefaultStyleBookEntry =
+				styleBookEntryPersistence.fetchByG_D_First(
+					styleBookEntry.getGroupId(), true, null);
+		}
 
 		if (defaultStyleBookEntry && (oldDefaultStyleBookEntry != null) &&
 			(oldDefaultStyleBookEntry.getStyleBookEntryId() !=

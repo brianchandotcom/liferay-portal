@@ -84,6 +84,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -92,6 +93,9 @@ import java.util.TreeSet;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -161,12 +165,16 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 		ReflectionTestUtil.invoke(
 			_mvcActionCommand, "_updateFormStyledLayoutStructureItemFormType",
 			new Class<?>[] {
-				FormStyledLayoutStructureItem.class, String.class,
-				LayoutStructure.class, int.class, String.class, int.class,
+				List.class, FormStyledLayoutStructureItem.class,
+				HttpServletRequest.class, HttpServletResponse.class,
+				String.class, Layout.class, LayoutStructure.class, int.class,
+				String.class, int.class, long.class, ServiceContext.class,
 				long.class
 			},
-			formStyledLayoutStructureItem, "multistep", layoutStructure, 2,
-			"multistep", 3, 0);
+			new ArrayList<>(), formStyledLayoutStructureItem, null, null,
+			"multistep", _draftLayout, layoutStructure, 2, "multistep", 3,
+			_segmentsExperienceId,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()), 0);
 
 		LayoutStructureItem formStepContainerStyledLayoutStructureItem =
 			layoutStructure.getLayoutStructureItem(
@@ -420,12 +428,16 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 		ReflectionTestUtil.invoke(
 			_mvcActionCommand, "_updateFormStyledLayoutStructureItemFormType",
 			new Class<?>[] {
-				FormStyledLayoutStructureItem.class, String.class,
-				LayoutStructure.class, int.class, String.class, int.class,
+				List.class, FormStyledLayoutStructureItem.class,
+				HttpServletRequest.class, HttpServletResponse.class,
+				String.class, Layout.class, LayoutStructure.class, int.class,
+				String.class, int.class, long.class, ServiceContext.class,
 				long.class
 			},
-			formStyledLayoutStructureItem, "multistep", layoutStructure, 2,
-			"simple", 2, 0);
+			new ArrayList<>(), formStyledLayoutStructureItem, null, null,
+			"multistep", _draftLayout, layoutStructure, 2, "simple", 2,
+			_segmentsExperienceId,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()), 0);
 
 		List<String> childrenItemIds =
 			formStyledLayoutStructureItem.getChildrenItemIds();
@@ -476,22 +488,30 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 		ReflectionTestUtil.invoke(
 			_mvcActionCommand, "_updateFormStyledLayoutStructureItemFormType",
 			new Class<?>[] {
-				FormStyledLayoutStructureItem.class, String.class,
-				LayoutStructure.class, int.class, String.class, int.class,
+				List.class, FormStyledLayoutStructureItem.class,
+				HttpServletRequest.class, HttpServletResponse.class,
+				String.class, Layout.class, LayoutStructure.class, int.class,
+				String.class, int.class, long.class, ServiceContext.class,
 				long.class
 			},
-			formStyledLayoutStructureItem, "multistep", layoutStructure, 2,
-			"simple", 2, 0);
+			new ArrayList<>(), formStyledLayoutStructureItem, null, null,
+			"multistep", _draftLayout, layoutStructure, 2, "simple", 2,
+			_segmentsExperienceId,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()), 0);
 
 		ReflectionTestUtil.invoke(
 			_mvcActionCommand, "_updateFormStyledLayoutStructureItemFormType",
 			new Class<?>[] {
-				FormStyledLayoutStructureItem.class, String.class,
-				LayoutStructure.class, int.class, String.class, int.class,
+				List.class, FormStyledLayoutStructureItem.class,
+				HttpServletRequest.class, HttpServletResponse.class,
+				String.class, Layout.class, LayoutStructure.class, int.class,
+				String.class, int.class, long.class, ServiceContext.class,
 				long.class
 			},
-			formStyledLayoutStructureItem, "simple", layoutStructure, 2,
-			"multistep", 2, 0);
+			new ArrayList<>(), formStyledLayoutStructureItem, null, null,
+			"simple", _draftLayout, layoutStructure, 2, "multistep", 2,
+			_segmentsExperienceId,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()), 0);
 
 		List<String> childrenItemIds =
 			formStyledLayoutStructureItem.getChildrenItemIds();
@@ -523,12 +543,16 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 		ReflectionTestUtil.invoke(
 			_mvcActionCommand, "_updateFormStyledLayoutStructureItemFormType",
 			new Class<?>[] {
-				FormStyledLayoutStructureItem.class, String.class,
-				LayoutStructure.class, int.class, String.class, int.class,
+				List.class, FormStyledLayoutStructureItem.class,
+				HttpServletRequest.class, HttpServletResponse.class,
+				String.class, Layout.class, LayoutStructure.class, int.class,
+				String.class, int.class, long.class, ServiceContext.class,
 				long.class
 			},
-			formStyledLayoutStructureItem, "simple", layoutStructure, 0,
-			"multistep", 0, 0);
+			new ArrayList<>(), formStyledLayoutStructureItem, null, null,
+			"simple", _draftLayout, layoutStructure, 0, "multistep", 0,
+			_segmentsExperienceId,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()), 0);
 
 		List<String> childrenItemIds =
 			formStyledLayoutStructureItem.getChildrenItemIds();

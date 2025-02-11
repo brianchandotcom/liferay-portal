@@ -119,7 +119,7 @@ String notificationTemplateBody = BeanPropertiesUtil.getString(calendarNotificat
 				[$EVENT_TITLE$]
 			</dt>
 			<dd>
-				<liferay-ui:message key="the-calendar-booking-title" />
+				<liferay-ui:message key="the-event-title" />
 			</dd>
 
 			<c:if test="<%= notificationTemplateType == NotificationTemplateType.INVITE %>">

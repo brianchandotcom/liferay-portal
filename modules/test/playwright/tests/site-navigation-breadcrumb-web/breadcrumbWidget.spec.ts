@@ -6,6 +6,7 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
+import {breadcrumbPagesTest} from '../../fixtures/breadcrumbPagesTest';
 import {breadcrumbWidgetPagesTest} from '../../fixtures/breadcrumbWidgetPagesTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
@@ -16,6 +17,7 @@ import {templatesPageTest} from '../template-web/fixtures/templatesPageTest';
 
 export const test = mergeTests(
 	apiHelpersTest,
+	breadcrumbPagesTest,
 	breadcrumbWidgetPagesTest,
 	isolatedSiteTest,
 	loginTest(),
@@ -118,6 +120,7 @@ test(
 
 test('Configure Show Application in Breadcrumb widget', async ({
 	apiHelpers,
+	breadcrumbPage,
 	breadcrumbWidgetPage,
 	page,
 	site,
@@ -134,111 +137,62 @@ test('Configure Show Application in Breadcrumb widget', async ({
 
 	await page.waitForTimeout(2000);
 
-	await expect(
-		page.locator(
-			'[id^="_com_liferay_site_navigation_breadcrumb_web_portlet_SiteNavigationBreadcrumbPortlet_INSTANCE_"] .active.breadcrumb-text-truncate'
-		)
-	).toHaveText(folder.name);
+	await breadcrumbPage.assertBreadcrumbEntries(4, [
+		site.name,
+		layout.nameCurrentValue,
+		'Home',
+		folder.name,
+	]);
 
-	await widgetPagePage.clickOnAction('Breadcrumb', 'Configuration');
-
-	const configurationIFrame = page.frameLocator(
-		'iframe[title*="Breadcrumb"]'
+	await breadcrumbPage.toggleBreadcrumbConfiguration(
+		'Show Application Breadcrumb'
 	);
 
-	await configurationIFrame.getByLabel('Show Application Breadcrumb').click();
-
-	await widgetPagePage.saveAndClose('Breadcrumb');
-
-	await expect(page.locator('.active.breadcrumb-text-truncate')).toHaveText(
-		layout.nameCurrentValue
-	);
+	await breadcrumbPage.assertBreadcrumbEntries(2, [
+		site.name,
+		layout.nameCurrentValue,
+	]);
 });
 
 test('Configure Show Current Site in Breadcrumb widget', async ({
+	breadcrumbPage,
 	breadcrumbWidgetPage,
-	page,
 	site,
-	widgetPagePage,
 }) => {
 	const layout = await breadcrumbWidgetPage.addBreadcrumbPortlet(site);
 
-	let breadcrumbEntries = await page
-		.locator('.breadcrumb-text-truncate')
-		.allInnerTexts();
+	await breadcrumbPage.assertBreadcrumbEntries(2, [
+		site.name,
+		layout.nameCurrentValue,
+	]);
 
-	await expect(breadcrumbEntries.length).toBe(2);
+	await breadcrumbPage.toggleBreadcrumbConfiguration('Show Current Site');
 
-	await expect(breadcrumbEntries).toEqual(
-		expect.arrayContaining([site.name, layout.nameCurrentValue])
-	);
-
-	await widgetPagePage.clickOnAction('Breadcrumb', 'Configuration');
-
-	const configurationIFrame = page.frameLocator(
-		'iframe[title*="Breadcrumb"]'
-	);
-
-	await configurationIFrame.getByLabel('Show Current Site').click();
-
-	await widgetPagePage.saveAndClose('Breadcrumb');
-
-	breadcrumbEntries = await page
-		.locator('.breadcrumb-text-truncate')
-		.allInnerTexts();
-
-	await expect(breadcrumbEntries.length).toBe(1);
-
-	await expect(breadcrumbEntries).toEqual(
-		expect.arrayContaining([layout.nameCurrentValue])
-	);
+	await breadcrumbPage.assertBreadcrumbEntries(1, [layout.nameCurrentValue]);
 });
 
 test('Configure Show Page in Breadcrumb widget', async ({
+	breadcrumbPage,
 	breadcrumbWidgetPage,
-	page,
 	site,
-	widgetPagePage,
 }) => {
 	const layout = await breadcrumbWidgetPage.addBreadcrumbPortlet(site);
 
-	let breadcrumbEntries = await page
-		.locator('.breadcrumb-text-truncate')
-		.allInnerTexts();
+	await breadcrumbPage.assertBreadcrumbEntries(2, [
+		site.name,
+		layout.nameCurrentValue,
+	]);
 
-	await expect(breadcrumbEntries.length).toBe(2);
+	await breadcrumbPage.toggleBreadcrumbConfiguration('Show Page');
 
-	await expect(breadcrumbEntries).toEqual(
-		expect.arrayContaining([site.name, layout.nameCurrentValue])
-	);
-
-	await widgetPagePage.clickOnAction('Breadcrumb', 'Configuration');
-
-	const configurationIFrame = page.frameLocator(
-		'iframe[title*="Breadcrumb"]'
-	);
-
-	await configurationIFrame.getByLabel('Show Page').click();
-
-	await widgetPagePage.saveAndClose('Breadcrumb');
-
-	breadcrumbEntries = await page
-		.locator('.breadcrumb-text-truncate')
-		.allInnerTexts();
-
-	await expect(breadcrumbEntries.length).toBe(1);
-
-	await expect(breadcrumbEntries).toEqual(
-		expect.arrayContaining([site.name])
-	);
+	await breadcrumbPage.assertBreadcrumbEntries(1, [site.name]);
 });
 
 test('Configure Show Parent Sites in Breadcrumb widget', async ({
 	apiHelpers,
+	breadcrumbPage,
 	breadcrumbWidgetPage,
-	page,
 	site,
-	widgetPagePage,
 }) => {
 	const childSite = await apiHelpers.headlessSite.createSite({
 		name: getRandomString(),
@@ -247,82 +201,39 @@ test('Configure Show Parent Sites in Breadcrumb widget', async ({
 
 	const layout = await breadcrumbWidgetPage.addBreadcrumbPortlet(childSite);
 
-	let breadcrumbEntries = await page
-		.locator('.breadcrumb-text-truncate')
-		.allInnerTexts();
+	await breadcrumbPage.assertBreadcrumbEntries(3, [
+		site.name,
+		childSite.name,
+		layout.nameCurrentValue,
+	]);
 
-	await expect(breadcrumbEntries.length).toBe(3);
+	await breadcrumbPage.toggleBreadcrumbConfiguration('Show Parent Sites');
 
-	await expect(breadcrumbEntries).toEqual(
-		expect.arrayContaining([
-			site.name,
-			childSite.name,
-			layout.nameCurrentValue,
-		])
-	);
-
-	await widgetPagePage.clickOnAction('Breadcrumb', 'Configuration');
-
-	const configurationIFrame = page.frameLocator(
-		'iframe[title*="Breadcrumb"]'
-	);
-
-	await configurationIFrame.getByLabel('Show Parent Sites').click();
-
-	await widgetPagePage.saveAndClose('Breadcrumb');
-
-	breadcrumbEntries = await page
-		.locator('.breadcrumb-text-truncate')
-		.allInnerTexts();
-
-	await expect(breadcrumbEntries.length).toBe(2);
-
-	await expect(breadcrumbEntries).toEqual(
-		expect.arrayContaining([childSite.name, layout.nameCurrentValue])
-	);
+	await breadcrumbPage.assertBreadcrumbEntries(2, [
+		childSite.name,
+		layout.nameCurrentValue,
+	]);
 
 	await apiHelpers.headlessSite.deleteSite(childSite.id);
 });
 
 test('Configure Show Guest Site in Breadcrumb widget', async ({
+	breadcrumbPage,
 	breadcrumbWidgetPage,
-	page,
 	site,
-	widgetPagePage,
 }) => {
 	const layout = await breadcrumbWidgetPage.addBreadcrumbPortlet(site);
 
-	let breadcrumbEntries = await page
-		.locator('.breadcrumb-text-truncate')
-		.allInnerTexts();
+	await breadcrumbPage.assertBreadcrumbEntries(2, [
+		site.name,
+		layout.nameCurrentValue,
+	]);
 
-	await expect(breadcrumbEntries.length).toBe(2);
+	await breadcrumbPage.toggleBreadcrumbConfiguration('Show Guest Site');
 
-	await expect(breadcrumbEntries).toEqual(
-		expect.arrayContaining([site.name, layout.nameCurrentValue])
-	);
-
-	await widgetPagePage.clickOnAction('Breadcrumb', 'Configuration');
-
-	const configurationIFrame = page.frameLocator(
-		'iframe[title*="Breadcrumb"]'
-	);
-
-	await configurationIFrame.getByLabel('Show Guest Site').click();
-
-	await widgetPagePage.saveAndClose('Breadcrumb');
-
-	breadcrumbEntries = await page
-		.locator('.breadcrumb-text-truncate')
-		.allInnerTexts();
-
-	await expect(breadcrumbEntries.length).toBe(3);
-
-	await expect(breadcrumbEntries).toEqual(
-		expect.arrayContaining([
-			'Liferay DXP',
-			site.name,
-			layout.nameCurrentValue,
-		])
-	);
+	await breadcrumbPage.assertBreadcrumbEntries(3, [
+		'Liferay DXP',
+		site.name,
+		layout.nameCurrentValue,
+	]);
 });

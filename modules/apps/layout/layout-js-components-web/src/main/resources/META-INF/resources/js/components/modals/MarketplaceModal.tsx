@@ -10,6 +10,13 @@ import React from 'react';
 
 import './MarketplaceModal.scss';
 
+import {
+	Marketplace,
+	MarketplaceContextProvider,
+	MarketplaceRest,
+	MarketplaceViews,
+} from '@liferay/marketplace-js-components-web';
+
 interface Props {
 	body: string;
 	heading: string;
@@ -45,19 +52,35 @@ function MarketplaceModal({body, heading, onCloseModal}: Props) {
 							{Liferay.Language.get('cancel')}
 						</ClayButton>
 
-						<ClayButton
-							aria-label={Liferay.Language.get(
-								'explore-marketplace'
-							)}
-							displayType="primary"
-							title={Liferay.Language.get('explore-marketplace')}
+						<MarketplaceContextProvider
+							baseResourceURL={MarketplaceRest.getBaseResourceURL()}
+							settings={{productFilter: 'fragments'}}
 						>
-							<span className="inline-item inline-item-before">
-								<ClayIcon symbol="marketplace" />
-							</span>
+							<Marketplace.Modal
+								trigger={
+									<ClayButton
+										aria-label={Liferay.Language.get(
+											'explore-marketplace'
+										)}
+										displayType="primary"
+										title={Liferay.Language.get(
+											'explore-marketplace'
+										)}
+									>
+										<ClayIcon
+											className="inline-item inline-item-before"
+											symbol="marketplace"
+										/>
 
-							{Liferay.Language.get('explore-marketplace')}
-						</ClayButton>
+										{Liferay.Language.get(
+											'explore-marketplace'
+										)}
+									</ClayButton>
+								}
+							>
+								<MarketplaceViews />
+							</Marketplace.Modal>
+						</MarketplaceContextProvider>
 					</ClayButton.Group>
 				}
 			/>

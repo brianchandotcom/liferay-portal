@@ -59,46 +59,38 @@ const ProjectList: React.FC<IProps> = ({
 	}) => {
 		const pageRoutes = routerPath();
 
-		if (!koroneikiAccounts) {
+		if (loading) {
+			return (
+				<div className="mx-auto">
+					<ClayLoadingIndicator size="sm" />
+				</div>
+			);
+		}
+
+		if (!koroneikiAccounts || !koroneikiAccounts.totalCount) {
 			return (
 				<p className="mx-auto">
-					{i18n.translate('sorry-there-are-no-results-found')}
+					{i18n.translate('no-projects-match-these-criteria')}
 				</p>
 			);
 		}
 
-		if (koroneikiAccounts.totalCount) {
-			return (
-				<>
-					{koroneikiAccounts?.items.map((koroneikiAccount, index) => (
-						<ProjectCard
-							compressed={compressed}
-							key={`${koroneikiAccount.accountKey}-${index}`}
-							koroneikiAccount={koroneikiAccount}
-							loading={loading}
-							onClick={() =>
-								Liferay.Util.navigate(
-									pageRoutes.project(
-										koroneikiAccount.accountKey
-									)
-								)
-							}
-						/>
-					))}
-
-					{loading && (
-						<div className="mx-auto">
-							<ClayLoadingIndicator size="sm" />
-						</div>
-					)}
-				</>
-			);
-		}
-
 		return (
-			<p className="mx-auto">
-				{i18n.translate('no-projects-match-these-criteria')}
-			</p>
+			<>
+				{koroneikiAccounts?.items.map((koroneikiAccount, index) => (
+					<ProjectCard
+						compressed={compressed}
+						key={`${koroneikiAccount.accountKey}-${index}`}
+						koroneikiAccount={koroneikiAccount}
+						loading={loading}
+						onClick={() =>
+							Liferay.Util.navigate(
+								pageRoutes.project(koroneikiAccount.accountKey)
+							)
+						}
+					/>
+				))}
+			</>
 		);
 	};
 
@@ -110,7 +102,7 @@ const ProjectList: React.FC<IProps> = ({
 
 	return (
 		<div
-			className={classNames('d-flex', {
+			className={classNames('d-flex justify-content-center', {
 				'flex-column': compressed,
 				'flex-wrap pl-3': !compressed,
 			})}

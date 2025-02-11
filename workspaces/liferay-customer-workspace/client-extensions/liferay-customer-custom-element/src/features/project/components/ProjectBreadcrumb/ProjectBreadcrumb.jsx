@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {NetworkStatus} from '@apollo/client';
 import classNames from 'classnames';
 import {useEffect, useState} from 'react';
 import {IconBreadcrumbs} from '~/assets';
@@ -30,15 +31,10 @@ const ProjectBreadcrumb = () => {
 	const {
 		data,
 		fetchMore,
-		fetching,
-		loading,
-		onSearch,
-		searching,
+		networkStatus,
 	} = useKoroneikiAccounts({
-		selectedFilterCategory: {
-			filter: (searchBuilder) => searchBuilder,
-			pageSize: 5,
-		},
+		filter: (searchBuilder) => searchBuilder,
+		pageSize: 5,
 	});
 
 	useEffect(() => {
@@ -53,7 +49,7 @@ const ProjectBreadcrumb = () => {
 		selectedKoroneikiAccount?.status,
 	]);
 
-	if (currentKoroneikiAccountLoading || loading) {
+	if (currentKoroneikiAccountLoading || networkStatus === NetworkStatus.loading) {
 		return <Skeleton height={30} width={264} />;
 	}
 
@@ -65,7 +61,7 @@ const ProjectBreadcrumb = () => {
 
 			<div className="cp-breadcrumbs-dropdown">
 				<Dropdown
-					fetching={fetching}
+					fetching={networkStatus === NetworkStatus.fetchMore}
 					initialTotalCount={initialTotalCount}
 					koroneikiAccounts={data?.c.koroneikiAccounts}
 					onIntersecting={() =>
@@ -76,7 +72,7 @@ const ProjectBreadcrumb = () => {
 						})
 					}
 					onSearch={onSearch}
-					searching={searching}
+					searching={networkStatus === NetworkStatus.refetch}
 					selectedKoroneikiAccount={selectedKoroneikiAccount}
 				/>
 

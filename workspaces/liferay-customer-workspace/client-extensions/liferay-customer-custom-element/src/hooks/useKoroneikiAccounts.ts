@@ -3,89 +3,24 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {NetworkStatus} from '@apollo/client';
-import {useEffect, useMemo, useState} from 'react';
-
-import SearchBuilder from '../lib/SearchBuilder';
 import {useGetKoroneikiAccounts} from '../services/liferay/graphql/koroneiki-accounts';
-import useSearchTerm from './useSearchTerm';
 
-type UseKoroneikiAccountsProps = {
-	selectedFilterCategory: {
-		filter: any;
-		key: string;
-		label: string;
-		pageSize: number;
-	};
-};
+interface IProps {
+	filter: string;
+	pageSize?: number;
+}
 
-export default function useKoroneikiAccounts({
-	selectedFilterCategory,
-}: UseKoroneikiAccountsProps) {
-	const [firstKoroneikiAccountsTotal, setFirstKoroneikiAccountsTotal] =
-		useState<any>({[selectedFilterCategory.key]: null});
-
+export default function useKoroneikiAccounts({filter, pageSize}: IProps) {
 	const {data, fetchMore, networkStatus, refetch} = useGetKoroneikiAccounts({
+		filter,
 		notifyOnNetworkStatusChange: true,
-		onComplete: (response) => {
-			if (!firstKoroneikiAccountsTotal[selectedFilterCategory.key]) {
-				setFirstKoroneikiAccountsTotal((prevValue: any) => ({
-					...prevValue,
-					[selectedFilterCategory.key]:
-						response?.c?.koroneikiAccounts?.totalCount,
-				}));
-			}
-		},
-		pageSize: selectedFilterCategory.pageSize ?? 20,
+		pageSize: pageSize ?? 20,
 	});
-
-	const getFilter = useMemo(
-		() =>
-			selectedFilterCategory?.filter ??
-			function () {
-				return new SearchBuilder();
-			},
-		[selectedFilterCategory?.filter]
-	);
-
-	const filter = useMemo(
-		() => getFilter(new SearchBuilder()).build(),
-		[getFilter]
-	);
-
-	useEffect(() => {
-		refetch({
-			filter,
-		});
-	}, [filter, refetch]);
-
-	const [searchTerm, handleSearch] = useSearchTerm((onSearch) =>
-		refetch({
-			filter: onSearch
-				? getFilter(
-						new SearchBuilder()
-							.group('OPEN')
-							.contains('name', onSearch)
-							.or()
-							.contains('code', onSearch)
-							.group('CLOSE')
-							.and()
-					).build()
-				: filter,
-			page: 1,
-		})
-	);
 
 	return {
 		data,
 		fetchMore,
-		fetching: networkStatus === NetworkStatus.fetchMore,
-		firstKoroneikiAccountsTotal,
-		handleSearch,
-		loading: networkStatus === NetworkStatus.loading,
 		networkStatus,
 		refetch,
-		searchTerm,
-		searching: networkStatus === NetworkStatus.setVariables,
 	};
 }

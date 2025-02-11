@@ -4,6 +4,7 @@
  */
 
 import ClayLayout from '@clayui/layout';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {useAppPropertiesContext} from '~/contexts/AppPropertiesContext';
 
 import ProjectList from './components/ProjectsList';
@@ -11,8 +12,9 @@ import SearchHeader from './components/SearchHeader';
 
 import './Home.css';
 
-import React, {useMemo, useState} from 'react';
+import {NetworkStatus} from '@apollo/client';
 import useKoroneikiAccounts from '~/hooks/useKoroneikiAccounts';
+import SearchBuilder from '~/lib/SearchBuilder';
 
 import ProjectCategoryDropdown from './components/ProjectCategoryDropdown';
 import useProjectCategoryItems from './hooks/useProjectCategoryItems';
@@ -20,55 +22,75 @@ import useProjectCategoryItems from './hooks/useProjectCategoryItems';
 const THRESHOLD_COUNT = 4;
 
 const Home: React.FC = () => {
+	const [accountTotal, setAccountTotal] = useState<number | null>(null);
+	const [filter, setFilter] = useState('');
 	const [selectedProjectCategoryKey, setSelectedProjectCategoryKey] =
 		useState<string>('all-projects');
 
 	const projectCategoryItems = useProjectCategoryItems();
 
-	const {
-		data,
-		fetchMore,
-		fetching,
-		firstKoroneikiAccountsTotal,
-		handleSearch,
-		loading,
-		searchTerm,
-		searching,
-	} = useKoroneikiAccounts({
-		selectedFilterCategory: {
-			filter:
-				projectCategoryItems.find(
-					({key}) => key === selectedProjectCategoryKey
-				)?.filter || '',
-			key: selectedProjectCategoryKey,
-			label: '',
-			pageSize: 20,
+	const getFilter = useCallback(
+		(searchTerm: string) => {
+			const categoryItem = projectCategoryItems.find(
+				({key}) => key === selectedProjectCategoryKey
+			);
+			let searchBuilder = new SearchBuilder();
+
+			if (
+				categoryItem?.filter &&
+				typeof categoryItem.filter === 'function'
+			) {
+				searchBuilder = categoryItem.filter(searchBuilder);
+			}
+
+			if (searchTerm) {
+				searchBuilder.contains('name', searchTerm);
+				searchBuilder.or();
+				searchBuilder.contains('code', searchTerm);
+			}
+
+			return searchBuilder.build();
 		},
+		[projectCategoryItems, selectedProjectCategoryKey]
+	);
+
+	const {data, fetchMore, networkStatus, refetch} = useKoroneikiAccounts({
+		filter,
 	});
 
-	const handleOnSelect = (key: string): void => {
+	useEffect(() => {
+		refetch({filter});
+
+		if (accountTotal === null && data?.c?.koroneikiAccounts?.totalCount) {
+			setAccountTotal(data.c.koroneikiAccounts.totalCount);
+		}
+	}, [data?.c?.koroneikiAccounts?.totalCount, filter, accountTotal, refetch]);
+
+	const handleOnSelect = useCallback((key: string): void => {
 		setSelectedProjectCategoryKey(key);
-	};
+	}, []);
+
+	const handleSearch = useCallback(
+		(searchTerm: string) => {
+			setFilter(getFilter(searchTerm));
+		},
+		[getFilter]
+	);
 
 	const {featureFlags} = useAppPropertiesContext();
-
 	const koroneikiAccounts = data?.c?.koroneikiAccounts;
 	const koroneikiAccountTotal = koroneikiAccounts?.totalCount;
 
-	const koroneikiCount =
-		firstKoroneikiAccountsTotal[selectedProjectCategoryKey];
-
-	const hasManyProjects: boolean = koroneikiCount > THRESHOLD_COUNT;
-
-	const hasAvailableCategoriesToDisplay: boolean = useMemo(
+	const hasManyProjects: boolean = accountTotal
+		? accountTotal > THRESHOLD_COUNT
+		: false;
+	const hasAvailableCategoriesToDisplay = useMemo(
 		() =>
-			projectCategoryItems
-				.filter((projectCategoryItem) =>
-					['liferay-contact', 'fls-partner'].includes(
-						projectCategoryItem.key
-					)
-				)
-				.some(({disabled}) => !disabled),
+			projectCategoryItems.some(
+				({disabled, key}) =>
+					['liferay-contact', 'fls-partner'].includes(key) &&
+					!disabled
+			),
 		[projectCategoryItems]
 	);
 
@@ -77,7 +99,7 @@ const Home: React.FC = () => {
 			{featureFlags?.includes('LPS-191380') &&
 				hasAvailableCategoriesToDisplay && (
 					<ProjectCategoryDropdown
-						loading={loading || koroneikiCount === null}
+						loading={networkStatus === NetworkStatus.loading}
 						onSelect={handleOnSelect}
 						projectCategoryItems={projectCategoryItems}
 						selectedProjectCategoryKey={selectedProjectCategoryKey}
@@ -86,36 +108,36 @@ const Home: React.FC = () => {
 
 			<ClayLayout.ContainerFluid
 				className="cp-home-wrapper"
-				hidden={!hasManyProjects || loading}
 				onPointerEnterCapture={() => {}}
 				onPointerLeaveCapture={() => {}}
 				placeholder=""
-				size={hasManyProjects && !loading ? 'md' : 'xl'}
+				size={
+					hasManyProjects && networkStatus !== NetworkStatus.loading
+						? 'md'
+						: 'xl'
+				}
 			>
 				<ClayLayout.Row>
 					<ClayLayout.Col>
-						{hasManyProjects && !loading && (
+						{hasManyProjects && (
 							<SearchHeader
 								count={koroneikiAccountTotal}
 								handleSearch={handleSearch}
-								loading={searching}
-								searchTerm={searchTerm}
 							/>
 						)}
 
 						<ProjectList
-							compressed={hasManyProjects && !loading}
-							fetching={fetching}
-							koroneikiAccounts={koroneikiAccounts}
-							loading={
-								loading || searching || koroneikiCount === null
+							compressed={
+								hasManyProjects &&
+								networkStatus !== NetworkStatus.loading
 							}
+							fetching={networkStatus === NetworkStatus.fetchMore}
+							koroneikiAccounts={koroneikiAccounts}
+							loading={networkStatus === NetworkStatus.loading}
 							maxCardsLoading={THRESHOLD_COUNT}
 							onIntersect={(currentPage: number) => {
 								fetchMore({
-									variables: {
-										page: currentPage + 1,
-									},
+									variables: {page: currentPage + 1},
 								});
 							}}
 						/>

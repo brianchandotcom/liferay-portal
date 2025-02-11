@@ -5,43 +5,35 @@
 
 import {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import {memo, useEffect, useState} from 'react';
-import useDebounce from '~/hooks/useDebounce';
+import {ChangeEvent, memo, useEffect, useState} from 'react';
 import i18n from '~/utils/I18n';
 
 import './SearchBar.css';
 
+import useDebounce from '~/hooks/useDebounce';
+
 interface IProps {
-	handleSearch: (onSearchTerm: string) => void;
-	searchTerm: string;
+	handleSearch: (searchTerm: string) => void;
 }
 
-const SearchBar: React.FC<IProps> = ({handleSearch, searchTerm}) => {
-	const [onSearchTerm, setOnSearchTerm] = useState<string>('');
-	const debouncedTerm = useDebounce(onSearchTerm, 500);
-
-	useEffect(() => {
-		if (!searchTerm) {
-			setOnSearchTerm(searchTerm);
-		}
-	}, [searchTerm]);
+const SearchBar: React.FC<IProps> = ({handleSearch}) => {
+	const [term, setTerm] = useState('');
+	const debouncedTerm = useDebounce(term, 500);
 
 	useEffect(() => handleSearch(debouncedTerm), [debouncedTerm, handleSearch]);
 
-	const handleChange: React.ChangeEventHandler<HTMLInputElement> = (
-		event
-	) => {
-		setOnSearchTerm(event.target.value);
+	const handleOnChange = (event: ChangeEvent<HTMLInputElement>): void => {
+		setTerm(event.target.value);
 	};
 
 	return (
 		<div className="flex-grow-1 mr-3 position-relative">
 			<ClayInput
 				className="border border-brand-primary-lighten-4 cp-search-bar font-weight-semi-bold px-5 py-3 rounded-pill shadow-lg"
-				onChange={handleChange}
+				onChange={handleOnChange}
 				placeholder={i18n.translate('find-a-project')}
 				type="text"
-				value={onSearchTerm}
+				value={term}
 			/>
 
 			<ClayIcon

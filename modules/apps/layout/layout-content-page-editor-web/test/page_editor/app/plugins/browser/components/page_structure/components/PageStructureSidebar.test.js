@@ -364,7 +364,7 @@ describe('PageStructureSidebar', () => {
 		});
 		const button = screen.getByLabelText('select-module');
 		await userEvent.click(button);
-		expect(button.parentElement).toHaveAttribute('aria-selected', 'false');
+		expect(button.parentElement).toHaveAttribute('aria-selected', 'true');
 	});
 
 	it('does not allow removing items if user has no permissions', () => {

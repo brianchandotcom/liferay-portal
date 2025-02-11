@@ -517,6 +517,97 @@ test.describe('Sorting in Data Set Manager', () => {
 		}
 	);
 
+	test(
+		'Sorting can be deactivated and activated',
+		{
+			tag: '@LPD-39965',
+		},
+		async ({page, sortingPage}) => {
+			await test.step('Navigate to Sorting section', async () => {
+				await sortingPage.goto({
+					dataSetLabel,
+				});
+			});
+
+			await test.step('Open new sort modal', async () => {
+				await sortingPage.openAddSortingModal();
+			});
+
+			await test.step('Fill sorting values', async () => {
+				await page.getByLabel('Label').fill('Date Modified');
+				await page.getByLabel('Sort By').selectOption('dateModified');
+				await page.getByLabel('Use as Default Sorting').check();
+			});
+
+			await test.step('Save changes', async () => {
+				await saveFromModal({
+					page,
+				});
+			});
+
+			await test.step('New sort is displayed on the table and is "Active" by default', async () => {
+				await expect(
+					page.getByText('Date Modified').first()
+				).toBeVisible();
+				await expect(
+					page.getByText('dateModified').first()
+				).toBeVisible();
+				await expect(page.getByText('Yes').first()).toBeVisible();
+				await expect(sortingPage.activeToggle.first()).toBeVisible();
+			});
+
+			await test.step('Deactivate the sort', async () => {
+				const tableRow = sortingPage.sortingTable.locator('tr', {
+					has: page.locator('text="Date Modified"'),
+				});
+
+				await tableRow.getByLabel('Active', {exact: true}).click();
+
+				await waitForAlert(page);
+
+				await expect(sortingPage.inactiveToggle.first()).toBeVisible();
+			});
+
+			await test.step('Navigate to another section, go back and check that the sort is "Inactive"', async () => {
+				await sortingPage.selectTab('Filters');
+				await sortingPage.selectTab('Sorting');
+
+				await expect(sortingPage.inactiveToggle.first()).toBeVisible();
+			});
+
+			await test.step('Activate the sort', async () => {
+				const tableRow = sortingPage.sortingTable.locator('tr', {
+					has: page.locator('text="Date Modified"'),
+				});
+
+				await tableRow.getByLabel('Inactive', {exact: true}).click();
+
+				await waitForAlert(page);
+
+				await expect(sortingPage.activeToggle.first()).toBeVisible();
+			});
+
+			await test.step('Delete sort', async () => {
+				const tableRow = sortingPage.sortingTable.locator('tr', {
+					has: page.locator('text="Date Modified"'),
+				});
+
+				await tableRow
+					.getByRole('cell', {name: 'Actions'})
+					.getByRole('button')
+					.click();
+
+				await page.getByRole('menuitem', {name: 'Delete'}).click();
+
+				await page.getByRole('button', {name: 'Delete'}).click();
+
+				await expect(
+					page.getByText('Date Modified').first()
+				).not.toBeVisible();
+			});
+		}
+	);
+
 	test('Unmark default sorting when a new one is marked and saved @LPD-25392', async ({
 		page,
 		sortingPage,

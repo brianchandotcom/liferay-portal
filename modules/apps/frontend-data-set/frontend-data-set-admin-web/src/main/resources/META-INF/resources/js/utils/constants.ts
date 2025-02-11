@@ -7,7 +7,7 @@ import {IBaseVisualizationMode} from './types';
 
 const API_URL_PREFIX = '/o/data-set-admin/data-sets';
 
-const API_URL = {
+const API_URL: Record<string, string> = {
 	ACTIONS: `${API_URL_PREFIX}/actions`,
 	CARDS_SECTIONS: `${API_URL_PREFIX}/cards-sections`,
 	CLIENT_EXTENSION_FILTERS: `${API_URL_PREFIX}/client-extension-filters`,

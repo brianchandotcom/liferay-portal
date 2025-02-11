@@ -54,6 +54,7 @@ export interface IDataSet {
 			method: string;
 		};
 	};
+	active: boolean;
 	additionalAPIURLParameters?: string;
 	creationActionsOrder?: string;
 	defaultItemsPerPage: number;
@@ -154,6 +155,7 @@ export interface IListTypeEntry {
 }
 
 export interface IOrderable {
+	active: boolean;
 	dateCreated: string;
 	id: number;
 }

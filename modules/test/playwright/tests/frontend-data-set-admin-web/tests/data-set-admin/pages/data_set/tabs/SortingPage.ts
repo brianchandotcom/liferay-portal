@@ -8,8 +8,10 @@ import {Locator, Page} from '@playwright/test';
 import {DataSetPage} from '../DataSetPage';
 
 export class SortingPage {
+	readonly activeToggle: Locator;
 	private readonly addSortingButton: Locator;
 	private readonly dataSetPage: DataSetPage;
+	readonly inactiveToggle: Locator;
 	readonly sortingTable: Locator;
 	private readonly addSortingDialog: {
 		cancelButton: Locator;
@@ -21,8 +23,12 @@ export class SortingPage {
 	readonly page: Page;
 
 	constructor(page: Page) {
+		this.activeToggle = page.getByLabel('Active', {exact: true});
 		this.addSortingButton = page.getByLabel('New Sort');
 		this.dataSetPage = new DataSetPage(page);
+		this.inactiveToggle = page.getByLabel('Inactive', {
+			exact: true,
+		});
 		this.sortingTable = page.locator('.table-responsive');
 		this.addSortingDialog = {
 			cancelButton: page.getByRole('button', {name: 'Cancel'}),

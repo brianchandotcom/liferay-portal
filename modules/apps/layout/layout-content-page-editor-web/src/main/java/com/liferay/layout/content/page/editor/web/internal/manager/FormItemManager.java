@@ -55,7 +55,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
@@ -68,8 +67,8 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
 
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -81,8 +80,13 @@ import org.osgi.service.component.annotations.Reference;
 public class FormItemManager {
 
 	public LayoutStructureItemChanges addFormStepLayoutStructureItems(
-		FormStyledLayoutStructureItem formStyledLayoutStructureItem,
-		LayoutStructure layoutStructure, int numberOfSteps) {
+			List<FragmentEntryLink> addedFragmentEntryLinks,
+			FormStyledLayoutStructureItem formStyledLayoutStructureItem,
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, Layout layout,
+			LayoutStructure layoutStructure, int numberOfSteps,
+			long segmentsExperienceId, ServiceContext serviceContext)
+		throws PortalException {
 
 		LayoutStructureItem formStepContainerStyledLayoutStructureItem =
 			findFormStepContainerStyledLayoutStructureItem(
@@ -98,16 +102,14 @@ public class FormItemManager {
 		List<String> childrenItemIds =
 			formStepContainerStyledLayoutStructureItem.getChildrenItemIds();
 
-		int numberOfStepsNeeded = numberOfSteps - childrenItemIds.size();
-
-		for (int i = 0; i < numberOfStepsNeeded; i++) {
-			LayoutStructureItem layoutStructureItem =
-				layoutStructure.addFormStepLayoutStructureItem(
-					formStepContainerStyledLayoutStructureItem.getItemId(), -1);
-
-			layoutStructureItemChanges.addAddedLayoutStructureItems(
-				layoutStructureItem);
-		}
+		_addFormStepLayoutStructureItems(
+			addedFragmentEntryLinks, formStepContainerStyledLayoutStructureItem,
+			httpServletRequest, httpServletResponse,
+			layoutStructure.getLayoutStructureItem(
+				childrenItemIds.get(childrenItemIds.size() - 1)),
+			layout, layoutStructure, layoutStructureItemChanges,
+			numberOfSteps - childrenItemIds.size(), segmentsExperienceId,
+			serviceContext);
 
 		return layoutStructureItemChanges;
 	}
@@ -231,9 +233,14 @@ public class FormItemManager {
 	}
 
 	public LayoutStructureItemChanges changeToMultistepFormType(
-		FormStyledLayoutStructureItem formStyledLayoutStructureItem,
-		LayoutStructure layoutStructure, int numberOfSteps,
-		long stepperFragmentEntryLinkId) {
+			List<FragmentEntryLink> addedFragmentEntryLinks,
+			FormStyledLayoutStructureItem formStyledLayoutStructureItem,
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, Layout layout,
+			LayoutStructure layoutStructure, int numberOfSteps,
+			long segmentsExperienceId, ServiceContext serviceContext,
+			long stepperFragmentEntryLinkId)
+		throws PortalException {
 
 		LayoutStructureItemChanges layoutStructureItemChanges =
 			new LayoutStructureItemChanges();
@@ -279,10 +286,12 @@ public class FormItemManager {
 				-1);
 		}
 
-		for (int i = 1; i < numberOfSteps; i++) {
-			layoutStructure.addFormStepLayoutStructureItem(
-				formStepContainerStyledLayoutStructureItem.getItemId(), i);
-		}
+		_addFormStepLayoutStructureItems(
+			addedFragmentEntryLinks, formStepContainerStyledLayoutStructureItem,
+			httpServletRequest, httpServletResponse,
+			firstFormStepLayoutStructureItem, layout, layoutStructure,
+			layoutStructureItemChanges, numberOfSteps - 1, segmentsExperienceId,
+			serviceContext);
 
 		return layoutStructureItemChanges;
 	}
@@ -598,8 +607,9 @@ public class FormItemManager {
 	}
 
 	public FragmentEntryLink updateNumberOfStepps(
-			ActionRequest actionRequest, ActionResponse actionResponse,
-			int numberOfSteps, FragmentEntryLink stepperFragmentEntryLink)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, int numberOfSteps,
+			FragmentEntryLink stepperFragmentEntryLink)
 		throws Exception {
 
 		JSONObject editableValuesJSONObject =
@@ -618,8 +628,7 @@ public class FormItemManager {
 
 		FragmentEntryProcessorContext fragmentEntryProcessorContext =
 			new DefaultFragmentEntryProcessorContext(
-				_portal.getHttpServletRequest(actionRequest),
-				_portal.getHttpServletResponse(actionResponse),
+				httpServletRequest, httpServletResponse,
 				FragmentEntryLinkConstants.EDIT,
 				LocaleUtil.getMostRelevantLocale());
 
@@ -697,6 +706,139 @@ public class FormItemManager {
 		private final List<LayoutStructureItem> _removedLayoutStructureItems =
 			new ArrayList<>();
 
+	}
+
+	private LayoutStructureItem _addFormButtonFragmentStyledLayoutStructureItem(
+			List<FragmentEntryLink> addedFragmentEntryLinks,
+			JSONObject defaultInputFragmentEntryKeysJSONObject,
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, Layout layout,
+			LayoutStructure layoutStructure,
+			LayoutStructureItem parentLayoutStructureItem,
+			long segmentsExperienceId, ServiceContext serviceContext,
+			String type)
+		throws PortalException {
+
+		FragmentEntry fragmentEntry = _getFragmentEntry(
+			layout.getCompanyId(), defaultInputFragmentEntryKeysJSONObject,
+			DefaultInputFragmentEntryConfigurationProvider.
+				FORM_INPUT_SUBMIT_BUTTON);
+
+		if ((fragmentEntry == null) ||
+			!_isAllowedFragmentEntryKey(
+				fragmentEntry.getFragmentEntryKey(),
+				_getMasterDropZoneLayoutStructureItem(layout))) {
+
+			return null;
+		}
+
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkService.addFragmentEntryLink(
+				null, layout.getGroupId(), 0,
+				fragmentEntry.getFragmentEntryId(), segmentsExperienceId,
+				layout.getPlid(), fragmentEntry.getCss(),
+				fragmentEntry.getHtml(), fragmentEntry.getJs(),
+				fragmentEntry.getConfiguration(), null, StringPool.BLANK, 0,
+				fragmentEntry.getFragmentEntryKey(), fragmentEntry.getType(),
+				serviceContext);
+
+		JSONObject editableValuesJSONObject =
+			_fragmentEntryLinkManager.mergeEditableValuesJSONObject(
+				_jsonFactory.createJSONObject(
+					fragmentEntryLink.getEditableValues()),
+				JSONUtil.put(
+					FragmentEntryProcessorConstants.
+						KEY_FREEMARKER_FRAGMENT_ENTRY_PROCESSOR,
+					JSONUtil.put("type", type)));
+
+		fragmentEntryLink = _fragmentEntryLinkService.updateFragmentEntryLink(
+			fragmentEntryLink.getFragmentEntryLinkId(),
+			editableValuesJSONObject.toString());
+
+		FragmentEntryProcessorContext fragmentEntryProcessorContext =
+			new DefaultFragmentEntryProcessorContext(
+				httpServletRequest, httpServletResponse,
+				FragmentEntryLinkConstants.EDIT,
+				LocaleUtil.getMostRelevantLocale());
+
+		String processedHTML =
+			_fragmentEntryProcessorRegistry.processFragmentEntryLinkHTML(
+				fragmentEntryLink, fragmentEntryProcessorContext);
+
+		JSONObject newEditableValuesJSONObject =
+			_fragmentEntryLinkManager.mergeEditableValuesJSONObject(
+				_fragmentEntryProcessorRegistry.
+					getDefaultEditableValuesJSONObject(
+						processedHTML, fragmentEntryLink.getConfiguration()),
+				editableValuesJSONObject);
+
+		fragmentEntryLink = _fragmentEntryLinkService.updateFragmentEntryLink(
+			fragmentEntryLink.getFragmentEntryLinkId(),
+			newEditableValuesJSONObject.toString());
+
+		addedFragmentEntryLinks.add(fragmentEntryLink);
+
+		return layoutStructure.addFragmentStyledLayoutStructureItem(
+			fragmentEntryLink.getFragmentEntryLinkId(),
+			parentLayoutStructureItem.getItemId(), -1);
+	}
+
+	private void _addFormStepLayoutStructureItems(
+			List<FragmentEntryLink> addedFragmentEntryLinks,
+			LayoutStructureItem formStepContainerStyledLayoutStructureItem,
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse,
+			LayoutStructureItem lastFormStepLayoutStructureItem, Layout layout,
+			LayoutStructure layoutStructure,
+			LayoutStructureItemChanges layoutStructureItemChanges,
+			int numberOfSteps, long segmentsExperienceId,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		JSONObject defaultInputFragmentEntryKeysJSONObject =
+			_defaultInputFragmentEntryConfigurationProvider.
+				getDefaultInputFragmentEntryKeysJSONObject(layout.getGroupId());
+
+		if (FeatureFlagManagerUtil.isEnabled("LPD-31772")) {
+			layoutStructureItemChanges.addAddedLayoutStructureItems(
+				_addFormButtonFragmentStyledLayoutStructureItem(
+					addedFragmentEntryLinks,
+					defaultInputFragmentEntryKeysJSONObject, httpServletRequest,
+					httpServletResponse, layout, layoutStructure,
+					lastFormStepLayoutStructureItem, segmentsExperienceId,
+					serviceContext, "next"));
+		}
+
+		for (int i = 0; i < numberOfSteps; i++) {
+			LayoutStructureItem layoutStructureItem =
+				layoutStructure.addFormStepLayoutStructureItem(
+					formStepContainerStyledLayoutStructureItem.getItemId(), -1);
+
+			layoutStructureItemChanges.addAddedLayoutStructureItems(
+				layoutStructureItem);
+
+			if (!FeatureFlagManagerUtil.isEnabled("LPD-31772")) {
+				continue;
+			}
+
+			layoutStructureItemChanges.addAddedLayoutStructureItems(
+				_addFormButtonFragmentStyledLayoutStructureItem(
+					addedFragmentEntryLinks,
+					defaultInputFragmentEntryKeysJSONObject, httpServletRequest,
+					httpServletResponse, layout, layoutStructure,
+					layoutStructureItem, segmentsExperienceId, serviceContext,
+					"previous"));
+
+			if (i < (numberOfSteps - 1)) {
+				layoutStructureItemChanges.addAddedLayoutStructureItems(
+					_addFormButtonFragmentStyledLayoutStructureItem(
+						addedFragmentEntryLinks,
+						defaultInputFragmentEntryKeysJSONObject,
+						httpServletRequest, httpServletResponse, layout,
+						layoutStructure, layoutStructureItem,
+						segmentsExperienceId, serviceContext, "next"));
+			}
+		}
 	}
 
 	private FragmentEntryLink _addFragmentEntryLink(
@@ -1000,8 +1142,5 @@ public class FormItemManager {
 
 	@Reference
 	private Language _language;
-
-	@Reference
-	private Portal _portal;
 
 }

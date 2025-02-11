@@ -134,8 +134,9 @@ public class DeleteFormStepMVCActionCommand
 
 				stepperFragmentEntryLink =
 					_formItemManager.updateNumberOfStepps(
-						actionRequest, actionResponse, numberOfSteps - 1,
-						stepperFragmentEntryLink);
+						_portal.getHttpServletRequest(actionRequest),
+						_portal.getHttpServletResponse(actionResponse),
+						numberOfSteps - 1, stepperFragmentEntryLink);
 
 				return JSONUtil.put(
 					String.valueOf(

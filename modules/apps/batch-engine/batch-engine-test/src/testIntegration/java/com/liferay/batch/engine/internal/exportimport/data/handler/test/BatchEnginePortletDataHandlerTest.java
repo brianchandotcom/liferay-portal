@@ -271,10 +271,6 @@ public class BatchEnginePortletDataHandlerTest {
 		).build();
 	}
 
-	private Map<String, String[]> _getImportParameterMap() {
-		return _getExportParameterMap();
-	}
-
 	private void _importInstanceLevel(File larFile) throws Exception {
 		User user = TestPropsValues.getUser();
 
@@ -282,7 +278,7 @@ public class BatchEnginePortletDataHandlerTest {
 			ExportImportConfigurationSettingsMapFactoryUtil.
 				buildImportLayoutSettingsMap(
 					user, _companyGroupId, false, null,
-					_getImportParameterMap());
+					_getExportParameterMap());
 
 		ExportImportConfiguration exportImportConfiguration =
 			_exportImportConfigurationLocalService.

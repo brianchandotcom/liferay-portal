@@ -27,6 +27,7 @@ export const test = mergeTests(
 	dataApiHelpersTest,
 	displayPageTemplatesPagesTest,
 	featureFlagsTest({
+		'LPD-18221': {enabled: true},
 		'LPD-20379': {enabled: true},
 	}),
 	instanceSettingsPagesTest,
@@ -143,7 +144,7 @@ test('LPD-30855 Can map order item information', async ({
 		await pageEditorPage.getFragmentId('Collection Display')
 	);
 
-	await page.getByText('No Collection Selected Yet').click();
+	await page.getByText('Select a collection to display.').click();
 
 	await pageEditorPage.chooseCollectionDisplayOption(
 		'Related Items Collection Providers',
@@ -153,7 +154,7 @@ test('LPD-30855 Can map order item information', async ({
 	await pageEditorPage.addFragment(
 		'Basic Components',
 		'Heading',
-		page.locator('.page-editor__collection-item-old.empty').first()
+		page.locator('.page-editor__collection-item.empty').first()
 	);
 
 	const cart = await apiHelpers.headlessCommerceDeliveryCart.postCart(

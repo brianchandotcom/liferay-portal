@@ -78,3 +78,38 @@ test('Select widget template in Breadcrumb widget configuration', async ({
 		configurationIFrame.locator('button[aria-selected="true"]')
 	).toHaveText(widgetTemplateName);
 });
+
+test(
+	'Breadcrumb widget configuration remains unchanged without clicking save',
+	{
+		tag: '@LPS-150908',
+	},
+	async ({breadcrumbWidgetPage, page, site, widgetPagePage}) => {
+		const layout = await breadcrumbWidgetPage.addBreadcrumbPortlet(site);
+
+		await widgetPagePage.clickOnAction('Breadcrumb', 'Configuration');
+
+		const configurationIFrame = page.frameLocator(
+			'iframe[title*="Breadcrumb"]'
+		);
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: configurationIFrame.getByRole('option', {
+				exact: true,
+				name: 'Arrows',
+			}),
+			trigger: configurationIFrame.getByLabel('Display Template'),
+		});
+
+		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
+
+		await widgetPagePage.clickOnAction('Breadcrumb', 'Configuration');
+
+		await configurationIFrame.getByLabel('Display Template').click();
+
+		await expect(
+			configurationIFrame.locator('button[aria-selected="true"]')
+		).toHaveText('Horizontal');
+	}
+);

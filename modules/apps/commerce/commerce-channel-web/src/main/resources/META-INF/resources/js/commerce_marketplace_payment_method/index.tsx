@@ -13,8 +13,6 @@ import {
 } from '@liferay/marketplace-js-components-web';
 import React from 'react';
 
-import './style/index.scss';
-
 const CommerceChannelAddPaymentMethod = () => (
 	<MarketplaceContextProvider
 		baseResourceURL={MarketplaceRest.getBaseResourceURL()}

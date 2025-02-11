@@ -17,6 +17,7 @@ const test = mergeTests(
 	dataSetManagerApiHelpersTest,
 	filtersPageTest,
 	featureFlagsTest({
+		'LPD-37531': {enabled: true},
 		'LPS-178052': {enabled: true},
 	}),
 	loginTest(),
@@ -78,9 +79,7 @@ test('Can not create a Client Extension Filter in DSM', async ({
 
 		await filtersPage.saveAddFilterForm();
 
-		await expect(page.getByText('This field is required.')).toHaveCount(
-			3
-		);
+		await expect(page.getByText('This field is required.')).toHaveCount(3);
 
 		await filtersPage.newClientExtensionFilterForm.nameInput.click();
 		await filtersPage.newClientExtensionFilterForm.nameInput.fill(
@@ -88,9 +87,7 @@ test('Can not create a Client Extension Filter in DSM', async ({
 		);
 		await filtersPage.saveAddFilterForm();
 
-		await expect(page.getByText('This field is required.')).toHaveCount(
-			2
-		);
+		await expect(page.getByText('This field is required.')).toHaveCount(2);
 
 		await filtersPage.newClientExtensionFilterForm.filterBySelectButton.click();
 
@@ -100,16 +97,12 @@ test('Can not create a Client Extension Filter in DSM', async ({
 
 		await filtersPage.fieldSelectModalPage.saveAddFieldsModal();
 
-		await expect(page.getByText('This field is required.')).toHaveCount(
-			1
-		);
+		await expect(page.getByText('This field is required.')).toHaveCount(1);
 
 		await filtersPage.newClientExtensionFilterForm.clientExtensionDropdown.click();
 		await page.getByRole('option', {name: clientExtensionName}).click();
 
-		await expect(page.getByText('This field is required.')).toHaveCount(
-			0
-		);
+		await expect(page.getByText('This field is required.')).toHaveCount(0);
 
 		await filtersPage.cancelAddFilterForm();
 	});

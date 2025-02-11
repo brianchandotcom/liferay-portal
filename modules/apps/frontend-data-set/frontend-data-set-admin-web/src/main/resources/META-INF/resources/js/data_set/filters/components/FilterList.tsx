@@ -59,17 +59,21 @@ const FilterList = ({
 					label: Liferay.Language.get('type'),
 					name: 'displayType',
 				},
-				{
-					contentRenderer: {
-						component: ({item}) =>
-							ToggleStatus({
-								item,
-								toggleChange,
-							}),
-					},
-					label: Liferay.Language.get('status'),
-					name: 'active',
-				},
+				...(Liferay.FeatureFlags['LPD-37531']
+					? [
+							{
+								contentRenderer: {
+									component: ({item}: any) =>
+										ToggleStatus({
+											item,
+											toggleChange,
+										}),
+								},
+								label: Liferay.Language.get('status'),
+								name: 'active',
+							},
+						]
+					: []),
 			]}
 			items={filters}
 			noItemsButtonLabel={Liferay.Language.get('new-filter')}

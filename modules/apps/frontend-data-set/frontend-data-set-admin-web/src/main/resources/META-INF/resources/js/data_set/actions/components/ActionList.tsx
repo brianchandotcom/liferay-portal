@@ -62,17 +62,21 @@ const ActionList = ({
 					label: Liferay.Language.get('type'),
 					name: 'target',
 				},
-				{
-					contentRenderer: {
-						component: ({item}) =>
-							ToggleStatus({
-								item,
-								toggleChange,
-							}),
-					},
-					label: Liferay.Language.get('status'),
-					name: 'active',
-				},
+				...(Liferay.FeatureFlags['LPD-37531']
+					? [
+							{
+								contentRenderer: {
+									component: ({item}: any) =>
+										ToggleStatus({
+											item,
+											toggleChange,
+										}),
+								},
+								label: Liferay.Language.get('status'),
+								name: 'active',
+							},
+						]
+					: []),
 			]}
 			items={actions}
 			noItemsButtonLabel={noItemsButtonLabel}

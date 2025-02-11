@@ -232,17 +232,23 @@ function BulkActions({
 						)}
 					>
 						<ul className="navbar-nav">
-							{!!total && selectable && (
-								<li className="nav-item">
-									<SelectionCheckbox
-										handleCheckboxClick={
-											handleCheckboxClick
-										}
-										items={items}
-										selectedItemsValue={selectedItemsValue}
-									/>
-								</li>
-							)}
+							{!!total &&
+								selectable &&
+								(Liferay.FeatureFlags['LPD-42570'] ? (
+									<li className="nav-item">
+										<SelectionCheckbox
+											handleCheckboxClick={
+												handleCheckboxClick
+											}
+											items={items}
+											selectedItemsValue={
+												selectedItemsValue
+											}
+										/>
+									</li>
+								) : (
+									<li className="ml-3 nav-item"></li>
+								))}
 
 							<li className="nav-item">
 								<span className="text-truncate">

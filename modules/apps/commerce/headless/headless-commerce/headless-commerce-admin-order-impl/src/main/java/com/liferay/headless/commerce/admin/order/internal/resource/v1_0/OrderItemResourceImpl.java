@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.odata.entity.EntityModel;
@@ -636,6 +637,11 @@ public class OrderItemResourceImpl extends BaseOrderItemResourceImpl {
 
 		BigDecimal quantity = commerceOrderItem.getQuantity();
 
+		ServiceContext serviceContext = _serviceContextHelper.getServiceContext(
+			commerceOrderItem.getGroupId());
+
+		serviceContext.setAttribute("validateOrder", Boolean.FALSE);
+
 		commerceOrderItem = _commerceOrderItemService.updateCommerceOrderItem(
 			commerceOrderItem.getCommerceOrderItemId(),
 			GetterUtil.getString(
@@ -646,8 +652,7 @@ public class OrderItemResourceImpl extends BaseOrderItemResourceImpl {
 				contextCompany.getCompanyId(), commerceOrder.getGroupId(),
 				contextUser.getUserId(), commerceOrder.getCommerceOrderId(),
 				commerceOrder.getCommerceAccountId()),
-			_serviceContextHelper.getServiceContext(
-				commerceOrderItem.getGroupId()));
+			serviceContext);
 
 		// Pricing
 

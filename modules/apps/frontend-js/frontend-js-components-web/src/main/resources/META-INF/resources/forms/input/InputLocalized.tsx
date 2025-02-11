@@ -90,6 +90,7 @@ export default function InputLocalized({
 	}, []);
 
 	const [locale, setLocale] = useState<InputLocale>(availableLocales[0]);
+
 	const translations = translationsNormalizer(initialTranslations);
 
 	useEffect(() => {
@@ -125,7 +126,9 @@ export default function InputLocalized({
 				onBlur={onBlur}
 				onSelectedLocaleChange={(locale) => {
 					setLocale(locale as InputLocale);
+
 					onChange(translations, locale as InputLocale);
+
 					if (onSelectedLocaleChange) {
 						onSelectedLocaleChange((locale as InputLocale).label);
 					}

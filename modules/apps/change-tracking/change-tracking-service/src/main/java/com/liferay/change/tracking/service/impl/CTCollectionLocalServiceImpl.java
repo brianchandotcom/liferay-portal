@@ -46,6 +46,7 @@ import com.liferay.change.tracking.service.persistence.CTMessagePersistence;
 import com.liferay.change.tracking.service.persistence.CTPreferencesPersistence;
 import com.liferay.change.tracking.service.persistence.CTScorePersistence;
 import com.liferay.change.tracking.spi.display.CTDisplayRenderer;
+import com.liferay.change.tracking.spi.display.CTDisplayRendererRegistry;
 import com.liferay.change.tracking.spi.resolver.ConstraintResolver;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
@@ -60,11 +61,13 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.change.tracking.CTColumnResolutionType;
+import com.liferay.portal.kernel.change.tracking.sql.CTSQLModeThreadLocal;
 import com.liferay.portal.kernel.dao.jdbc.CurrentConnection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.ClassName;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupedModel;
@@ -83,6 +86,7 @@ import com.liferay.portal.kernel.service.change.tracking.CTService;
 import com.liferay.portal.kernel.service.persistence.change.tracking.CTPersistence;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -858,6 +862,105 @@ public class CTCollectionLocalServiceImpl
 	}
 
 	@Override
+	public void moveCTEntries(
+			long fromCTCollectionId, long toCTCollectionId,
+			List<CTEntry> ctEntries)
+		throws PortalException {
+
+		CTCollection fromCTCollection =
+			ctCollectionPersistence.findByPrimaryKey(fromCTCollectionId);
+
+		if ((fromCTCollection.getStatus() != WorkflowConstants.STATUS_DRAFT) &&
+			(fromCTCollection.getStatus() !=
+				WorkflowConstants.STATUS_EXPIRED) &&
+			(fromCTCollection.getStatus() !=
+				WorkflowConstants.STATUS_PENDING)) {
+
+			throw new CTCollectionStatusException(
+				"Change tracking collection " + fromCTCollection +
+					" is read only");
+		}
+
+		CTCollection toCTCollection = ctCollectionPersistence.findByPrimaryKey(
+			toCTCollectionId);
+
+		if (toCTCollection.isReadOnly()) {
+			throw new CTCollectionStatusException(
+				"Change tracking collection " + toCTCollection +
+					" is read only");
+		}
+
+		Map<Long, List<CTEntry>> relatedCTEntriesMap = new HashMap<>();
+
+		for (CTEntry ctEntry : ctEntries) {
+			if (!_isMovable(fromCTCollectionId, ctEntry)) {
+				return;
+			}
+
+			Map<Long, List<CTEntry>> currentRelatedCTEntriesMap =
+				_getRelatedCTEntriesMap(
+					fromCTCollection, ctEntry.getModelClassNameId(),
+					ctEntry.getModelClassPK());
+
+			currentRelatedCTEntriesMap.forEach(
+				(key, value) -> relatedCTEntriesMap.merge(
+					key, value, (v1, v2) -> ListUtil.concat(v1, v2)));
+		}
+
+		List<CTEntry> combinedCTEntries = new ArrayList<>();
+
+		for (List<CTEntry> curCTEntries : relatedCTEntriesMap.values()) {
+			combinedCTEntries.addAll(curCTEntries);
+		}
+
+		Map<Long, List<ConflictInfo>> conflictInfoMap = checkConflicts(
+			fromCTCollection.getCompanyId(), combinedCTEntries,
+			fromCTCollectionId, fromCTCollection.getName(), toCTCollectionId,
+			toCTCollection.getName());
+
+		if (!conflictInfoMap.isEmpty()) {
+			throw new CTPublishConflictException("Conflict detected");
+		}
+
+		for (Map.Entry<Long, List<CTEntry>> entry :
+				relatedCTEntriesMap.entrySet()) {
+
+			_moveCTEntries(
+				fromCTCollection.getCompanyId(), fromCTCollectionId,
+				toCTCollectionId, entry.getKey(), entry.getValue());
+		}
+
+		for (CTEntry ctEntry : ctEntries) {
+			Map<Long, List<CTEntry>> currentRelatedCTEntriesMap =
+				_getRelatedCTEntriesMap(
+					toCTCollection, ctEntry.getModelClassNameId(),
+					ctEntry.getModelClassPK());
+
+			currentRelatedCTEntriesMap.forEach(
+				(key, value) -> relatedCTEntriesMap.merge(
+					key, value, (v1, v2) -> ListUtil.concat(v1, v2)));
+		}
+
+		combinedCTEntries = new ArrayList<>();
+
+		for (List<CTEntry> curCTEntries : relatedCTEntriesMap.values()) {
+			combinedCTEntries.addAll(curCTEntries);
+		}
+
+		conflictInfoMap = checkConflicts(
+			fromCTCollection.getCompanyId(), combinedCTEntries,
+			toCTCollectionId, toCTCollection.getName(),
+			CTConstants.CT_COLLECTION_ID_PRODUCTION, "Production");
+
+		if (!conflictInfoMap.isEmpty()) {
+			throw new CTPublishConflictException("Conflict detected");
+		}
+
+		_ctClosureFactory.clearCache(fromCTCollectionId);
+		_ctClosureFactory.clearCache(toCTCollectionId);
+	}
+
+	@Override
 	public void moveCTEntry(
 			long fromCTCollectionId, long toCTCollectionId,
 			long modelClassNameId, long modelClassPK)
@@ -884,6 +987,13 @@ public class CTCollectionLocalServiceImpl
 			throw new CTCollectionStatusException(
 				"Change tracking collection " + toCTCollection +
 					" is read only");
+		}
+
+		CTEntry ctEntry = _ctEntryPersistence.findByC_MCNI_MCPK(
+			fromCTCollectionId, modelClassNameId, modelClassPK);
+
+		if (!_isMovable(fromCTCollectionId, ctEntry)) {
+			return;
 		}
 
 		Map<Long, List<CTEntry>> relatedCTEntriesMap = _getRelatedCTEntriesMap(
@@ -1338,6 +1448,26 @@ public class CTCollectionLocalServiceImpl
 		};
 	}
 
+	private <T extends BaseModel<T>> boolean _isMovable(
+		long ctCollectionId, CTEntry ctEntry) {
+
+		CTSQLModeThreadLocal.CTSQLMode ctSQLMode =
+			_ctDisplayRendererRegistry.getCTSQLMode(ctCollectionId, ctEntry);
+
+		T model = _ctDisplayRendererRegistry.fetchCTModel(
+			ctEntry.getCtCollectionId(), ctSQLMode,
+			ctEntry.getModelClassNameId(), ctEntry.getModelClassPK());
+
+		if ((model == null) ||
+			!_ctDisplayRendererRegistry.isMovable(
+				model, ctEntry.getModelClassNameId())) {
+
+			return false;
+		}
+
+		return true;
+	}
+
 	private void _moveCTEntries(
 		long companyId, long fromCTCollectionId, long toCTCollectionId,
 		long classNameId, List<CTEntry> ctEntries) {
@@ -1628,6 +1758,9 @@ public class CTCollectionLocalServiceImpl
 
 	@Reference
 	private CTCommentPersistence _ctCommentPersistence;
+
+	@Reference
+	private CTDisplayRendererRegistry _ctDisplayRendererRegistry;
 
 	private ServiceTrackerMap<String, CTDisplayRenderer<?>>
 		_ctDisplayRendererServiceTrackerMap;

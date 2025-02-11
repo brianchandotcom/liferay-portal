@@ -103,6 +103,16 @@ public class CTCollectionServiceWrapper
 	}
 
 	@Override
+	public void moveCTEntries(
+			long fromCTCollectionId, long toCTCollectionId,
+			java.util.List<com.liferay.change.tracking.model.CTEntry> ctEntries)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		_ctCollectionService.moveCTEntries(
+			fromCTCollectionId, toCTCollectionId, ctEntries);
+	}
+
+	@Override
 	public void moveCTEntry(
 			long fromCTCollectionId, long toCTCollectionId,
 			long modelClassNameId, long modelClassPK)

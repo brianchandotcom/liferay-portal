@@ -19,8 +19,6 @@ else {
 	group = (Group)request.getAttribute(WebKeys.GROUP);
 }
 
-boolean companyGroup = stagingGroupHelper.isCompanyGroup(group);
-
 FileEntry fileEntry = ExportImportHelperUtil.getTempFileEntry(groupId, themeDisplay.getUserId(), ExportImportHelper.TEMP_FOLDER_NAME);
 
 ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user.getUserId(), themeDisplay.getSiteGroupId(), new HashMap<String, String[]>(), fileEntry);
@@ -363,7 +361,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 
 										</ul>
 
-										<c:if test="<%= !companyGroup %>">
+										<c:if test="<%= !stagingGroupHelper.isCompanyGroup(group) %>">
 											<aui:fieldset cssClass="content-options" label="for-each-of-the-selected-content-types,-import-their">
 												<span class="selected-labels" id="<portlet:namespace />selectedContentOptions"></span>
 

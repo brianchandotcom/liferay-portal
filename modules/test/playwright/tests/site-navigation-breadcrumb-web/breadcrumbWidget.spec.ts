@@ -5,19 +5,12 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
+import {breadcrumbWidgetPagesTest} from '../../fixtures/breadcrumbWidgetPagesTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
-import getRandomString from '../../utils/getRandomString';
-import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDefinition';
-import getWidgetDefinition from '../layout-content-page-editor-web/utils/getWidgetDefinition';
 
 export const test = mergeTests(
-	apiHelpersTest,
-	featureFlagsTest({
-		'LPS-178052': {enabled: true},
-	}),
+	breadcrumbWidgetPagesTest,
 	isolatedSiteTest,
 	loginTest()
 );
@@ -27,20 +20,8 @@ test(
 	{
 		tag: '@LPD-40431',
 	},
-	async ({apiHelpers, page, site}) => {
-		const layout = await apiHelpers.headlessDelivery.createSitePage({
-			pageDefinition: getPageDefinition([
-				getWidgetDefinition({
-					id: getRandomString(),
-					widgetName:
-						'com_liferay_site_navigation_breadcrumb_web_portlet_SiteNavigationBreadcrumbPortlet',
-				}),
-			]),
-			siteId: site.id,
-			title: getRandomString(),
-		});
-
-		await page.goto(`/web/${site.name}/${layout.friendlyUrlPath}`);
+	async ({breadcrumbWidgetPage, page, site}) => {
+		await breadcrumbWidgetPage.addBreadcrumbPortlet(site);
 
 		await expect(
 			page.locator('.active.breadcrumb-text-truncate')

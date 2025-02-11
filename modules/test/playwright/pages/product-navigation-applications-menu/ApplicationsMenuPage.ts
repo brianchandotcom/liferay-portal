@@ -9,7 +9,6 @@ import {HomePage} from '../portal-web/HomePage';
 
 export class ApplicationsMenuPage {
 	private readonly accountGroupsItem: Locator;
-	š;
 	private readonly accountsItem: Locator;
 	private readonly aiCreatorLink: Locator;
 	private readonly announcementsItem: Locator;

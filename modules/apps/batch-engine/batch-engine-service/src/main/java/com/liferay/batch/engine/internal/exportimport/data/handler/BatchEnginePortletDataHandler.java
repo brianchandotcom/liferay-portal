@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.portal.vulcan.internal.exportimport.data.handler;
+package com.liferay.batch.engine.internal.exportimport.data.handler;
 
 import com.liferay.batch.engine.BatchEngineExportTaskExecutor;
 import com.liferay.batch.engine.BatchEngineImportTaskExecutor;
@@ -45,12 +45,11 @@ import javax.portlet.PortletPreferences;
  * @author Vendel Toreki
  * @author Alejandro Tardín
  */
-public class VulcanBatchEnginePortletDataHandler
-	extends BasePortletDataHandler {
+public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 
 	public static final String SCHEMA_VERSION = "4.0.0";
 
-	public VulcanBatchEnginePortletDataHandler(
+	public BatchEnginePortletDataHandler(
 		BatchEngineExportTaskExecutor batchEngineExportTaskExecutor,
 		BatchEngineExportTaskService batchEngineExportTaskService,
 		BatchEngineImportTaskExecutor batchEngineImportTaskExecutor,

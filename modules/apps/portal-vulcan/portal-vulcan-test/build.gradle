@@ -8,11 +8,8 @@ dependencies {
 	testIntegrationImplementation group: "org.apache.felix", name: "org.apache.felix.http.servlet-api", version: "1.1.2"
 	testIntegrationImplementation group: "org.skyscreamer", name: "jsonassert", version: "1.2.3"
 	testIntegrationImplementation group: "org.springframework", name: "spring-test", version: "5.3.39"
-	testIntegrationImplementation project(":apps:object:object-api")
-	testIntegrationImplementation project(":apps:object:object-test-util")
 	testIntegrationImplementation project(":apps:portal-configuration:portal-configuration-test-util")
 	testIntegrationImplementation project(":apps:portal-odata:portal-odata-api")
 	testIntegrationImplementation project(":apps:portal-vulcan:portal-vulcan-api")
-	testIntegrationImplementation project(":apps:staging:staging-api")
 	testIntegrationImplementation project(":test:arquillian-extension-junit-bridge")
 }

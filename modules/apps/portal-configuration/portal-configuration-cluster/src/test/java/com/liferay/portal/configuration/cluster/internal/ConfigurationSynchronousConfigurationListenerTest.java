@@ -7,6 +7,8 @@ package com.liferay.portal.configuration.cluster.internal;
 
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.configuration.persistence.ReloadablePersistenceManager;
+import com.liferay.portal.kernel.module.service.Snapshot;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
@@ -17,18 +19,23 @@ import java.util.Dictionary;
 import java.util.EnumSet;
 import java.util.Set;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 
 import org.mockito.Mock;
+import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.cm.ConfigurationEvent;
+import org.osgi.service.cm.SynchronousConfigurationListener;
 
 /**
  * @author Raymond Augé
@@ -53,6 +60,83 @@ public class ConfigurationSynchronousConfigurationListenerTest {
 		ReflectionTestUtil.setFieldValue(
 			_configurationSynchronousConfigurationListener,
 			"_reloadablePersistenceManager", _reloadablePersistenceManager);
+
+		Snapshot<SynchronousConfigurationListener> snapshot = Mockito.mock(
+			Snapshot.class);
+
+		Mockito.when(
+			snapshot.get()
+		).thenReturn(
+			_configurationSynchronousConfigurationListener
+		);
+
+		ReflectionTestUtil.setFieldValue(
+			_configurationSynchronousConfigurationListener, "_snapshot",
+			snapshot);
+	}
+
+	@Test
+	public void testOnNotifySetsCompanyThreadLocal() throws Exception {
+		try (MockedStatic<CompanyThreadLocal> companyThreadLocalMockedStatic =
+				Mockito.mockStatic(CompanyThreadLocal.class)) {
+
+			companyThreadLocalMockedStatic.when(
+				() -> CompanyThreadLocal.setCompanyIdWithSafeCloseable(1L)
+			).thenAnswer(
+				new Answer<Void>() {
+
+					@Override
+					public Void answer(InvocationOnMock invocationOnMock)
+						throws Throwable {
+
+						_companyId = (Long)invocationOnMock.getArgument(0);
+
+						return null;
+					}
+
+				}
+			);
+
+			companyThreadLocalMockedStatic.when(
+				CompanyThreadLocal::getCompanyId
+			).thenAnswer(
+				new Answer<Long>() {
+
+					@Override
+					public Long answer(InvocationOnMock invocationOnMock)
+						throws Throwable {
+
+						return _companyId;
+					}
+
+				}
+			);
+
+			Mockito.when(
+				_configurationAdmin.listConfigurations(Mockito.anyString())
+			).thenAnswer(
+				new Answer<Configuration[]>() {
+
+					@Override
+					public Configuration[] answer(
+							InvocationOnMock invocationOnMock)
+						throws Throwable {
+
+						_actualCompanyId = CompanyThreadLocal.getCompanyId();
+
+						return null;
+					}
+
+				}
+			);
+
+			ReflectionTestUtil.invoke(
+				_configurationSynchronousConfigurationListener, "_onNotify",
+				new Class<?>[] {String.class, int.class, long.class}, "test",
+				ConfigurationEvent.CM_UPDATED, 1L);
+
+			Assert.assertEquals(1L, _actualCompanyId);
+		}
 	}
 
 	@Test
@@ -203,6 +287,9 @@ public class ConfigurationSynchronousConfigurationListenerTest {
 
 		unsafeConsumer.accept(configuration);
 	}
+
+	private long _actualCompanyId;
+	private long _companyId;
 
 	@Mock
 	private ConfigurationAdmin _configurationAdmin;

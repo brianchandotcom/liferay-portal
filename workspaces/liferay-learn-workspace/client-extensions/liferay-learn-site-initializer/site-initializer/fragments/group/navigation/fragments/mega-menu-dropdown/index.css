@@ -55,7 +55,6 @@
 		> lfr-drop-zone > div > div > div {
 			display: grid;
 			gap: 40px;
-			grid-template-columns: 1fr 1fr 1fr 1fr;
 			margin: auto;
 			max-width: var(--container-max-xl, 1600px);
 

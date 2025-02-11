@@ -21,7 +21,9 @@ public class DefaultWorkflowTransition implements WorkflowTransition {
 	@Override
 	public String getLabel(Locale locale) {
 		if (MapUtil.isNotEmpty(_labelMap) && (_labelMap.get(locale) != null)) {
-			return HtmlUtil.escape(_labelMap.get(locale));
+			String label = HtmlUtil.escape(_labelMap.get(locale));
+
+			return label.trim();
 		}
 
 		if (_name == null) {
@@ -41,7 +43,7 @@ public class DefaultWorkflowTransition implements WorkflowTransition {
 		}
 
 		if (label != null) {
-			return HtmlUtil.escape(label);
+			return HtmlUtil.escape(label.trim());
 		}
 
 		return _name;

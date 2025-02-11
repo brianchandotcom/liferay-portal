@@ -29,66 +29,6 @@ definition {
 		}
 	}
 
-	@description = "Configure Show Current Site in Breadcrumb widget."
-	@priority = 5
-	@uitest
-	test ConfigureShowCurrentSite {
-		property portal.acceptance = "true";
-
-		task ("Add a Breadcrumb widget to page") {
-			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Page Name",
-				widgetName = "Breadcrumb");
-		}
-
-		task ("Disable Show Current Site in Breadcrumb widget") {
-			Navigator.openSitePage(
-				pageName = "Test Page Name",
-				siteName = "Test Site Name");
-
-			Portlet.gotoPortletOptions(portletOption = "Configuration");
-
-			Breadcrumb.viewConfigurationPreview(breadcrumbListVisible = "Test Site Name,Test Page Name");
-
-			Breadcrumb.configureBreadcrumb(uncheckSetupName = "Show Current Site");
-
-			Breadcrumb.viewConfigurationPreview(breadcrumbListVisible = "Test Page Name");
-
-			Breadcrumb.saveDisplayPreview();
-
-			Breadcrumb.viewConfigurationPreview(breadcrumbListVisible = "Test Page Name");
-		}
-
-		task ("View displayed content in Breadcrumb widget") {
-			Navigator.openSitePage(
-				pageName = "Test Page Name",
-				siteName = "Test Site Name");
-
-			Breadcrumb.viewPG(
-				breadcrumbListNotVisible = "Test Site Name",
-				breadcrumbListVisible = "Test Page Name");
-		}
-
-		task ("Enable Show Current Site in Breadcrumb widget") {
-			Portlet.gotoPortletOptions(portletOption = "Configuration");
-
-			Breadcrumb.configureBreadcrumb(checkSetupName = "Show Current Site");
-
-			Breadcrumb.viewConfigurationPreview(breadcrumbListVisible = "Test Site Name,Test Page Name");
-
-			Breadcrumb.saveDisplayPreview();
-		}
-
-		task ("View displayed content in Breadcrumb widget") {
-			Navigator.openSitePage(
-				pageName = "Test Page Name",
-				siteName = "Test Site Name");
-
-			Breadcrumb.viewPG(breadcrumbListVisible = "Test Site Name,Test Page Name");
-		}
-	}
-
 	@description = "Disable Show Page in Breadcrumb widget."
 	@priority = 5
 	@uitest

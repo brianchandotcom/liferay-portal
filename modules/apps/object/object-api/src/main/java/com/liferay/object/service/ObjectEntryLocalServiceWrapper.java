@@ -457,6 +457,15 @@ public class ObjectEntryLocalServiceWrapper
 			groupId, objectDefinitionId, status, start, end);
 	}
 
+	@Override
+	public int getObjectEntriesByObjectEntryFolderIdCount(
+		long groupId, long objectEntryFolderId) {
+
+		return _objectEntryLocalService.
+			getObjectEntriesByObjectEntryFolderIdCount(
+				groupId, objectEntryFolderId);
+	}
+
 	/**
 	 * Returns all the object entries matching the UUID and company.
 	 *

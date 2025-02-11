@@ -319,6 +319,10 @@ public interface ObjectEntryLocalService
 	public List<ObjectEntry> getObjectEntries(
 		long groupId, long objectDefinitionId, int status, int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getObjectEntriesByObjectEntryFolderIdCount(
+		long groupId, long objectEntryFolderId);
+
 	/**
 	 * Returns all the object entries matching the UUID and company.
 	 *

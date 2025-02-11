@@ -9,6 +9,7 @@ import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.service.Snapshot;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -54,6 +55,23 @@ public class ObjectEntryFolderServiceUtil {
 		throws PortalException {
 
 		return getService().getObjectEntryFolder(objectEntryFolderId);
+	}
+
+	public static List<ObjectEntryFolder> getObjectEntryFolders(
+			long groupId, long companyId, long parentObjectEntryFolderId,
+			int start, int end)
+		throws PortalException {
+
+		return getService().getObjectEntryFolders(
+			groupId, companyId, parentObjectEntryFolderId, start, end);
+	}
+
+	public static int getObjectEntryFoldersCount(
+			long groupId, long companyId, long parentObjectEntryFolderId)
+		throws PortalException {
+
+		return getService().getObjectEntryFoldersCount(
+			groupId, companyId, parentObjectEntryFolderId);
 	}
 
 	/**

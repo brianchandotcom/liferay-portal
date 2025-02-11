@@ -86,7 +86,7 @@ public class OrderItemResourceImpl extends BaseOrderItemResourceImpl {
 				contextUser.getUserId(), commerceOrder.getCommerceOrderId(),
 				commerceOrder.getCommerceAccountId()));
 
-		Response.ResponseBuilder responseBuilder = Response.ok();
+		Response.ResponseBuilder responseBuilder = Response.noContent();
 
 		return responseBuilder.build();
 	}

@@ -56,6 +56,47 @@ public class AssetLibrary implements Serializable {
 		return ObjectMapperUtil.unsafeReadValue(AssetLibrary.class, json);
 	}
 
+	@Schema(description = "The asset library's ID.")
+	public Long getAssetLibraryId() {
+		if (_assetLibraryIdSupplier != null) {
+			assetLibraryId = _assetLibraryIdSupplier.get();
+
+			_assetLibraryIdSupplier = null;
+		}
+
+		return assetLibraryId;
+	}
+
+	public void setAssetLibraryId(Long assetLibraryId) {
+		this.assetLibraryId = assetLibraryId;
+
+		_assetLibraryIdSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setAssetLibraryId(
+		UnsafeSupplier<Long, Exception> assetLibraryIdUnsafeSupplier) {
+
+		_assetLibraryIdSupplier = () -> {
+			try {
+				return assetLibraryIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(description = "The asset library's ID.")
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Long assetLibraryId;
+
+	@JsonIgnore
+	private Supplier<Long> _assetLibraryIdSupplier;
+
 	@Schema(description = "The asset library's creation date.")
 	public Date getDateCreated() {
 		if (_dateCreatedSupplier != null) {
@@ -267,7 +308,7 @@ public class AssetLibrary implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _externalReferenceCodeSupplier;
 
-	@Schema(description = "The asset library's ID.")
+	@Schema(description = "The asset library's group ID.")
 	public Long getId() {
 		if (_idSupplier != null) {
 			id = _idSupplier.get();
@@ -299,7 +340,7 @@ public class AssetLibrary implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "The asset library's ID.")
+	@GraphQLField(description = "The asset library's group ID.")
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	protected Long id;
 
@@ -508,6 +549,18 @@ public class AssetLibrary implements Serializable {
 
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+		Long assetLibraryId = getAssetLibraryId();
+
+		if (assetLibraryId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"assetLibraryId\": ");
+
+			sb.append(assetLibraryId);
+		}
 
 		Date dateCreated = getDateCreated();
 

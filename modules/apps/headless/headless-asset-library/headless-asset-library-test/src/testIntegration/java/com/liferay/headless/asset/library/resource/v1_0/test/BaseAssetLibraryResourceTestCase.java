@@ -216,6 +216,96 @@ public abstract class BaseAssetLibraryResourceTestCase {
 	}
 
 	@Test
+	public void testDeleteAssetLibraryBySite() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		AssetLibrary assetLibrary =
+			testDeleteAssetLibraryBySite_addAssetLibrary();
+
+		assertHttpResponseStatusCode(
+			204,
+			assetLibraryResource.deleteAssetLibraryBySiteHttpResponse(
+				testDeleteAssetLibraryBySite_getSiteId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			assetLibraryResource.getAssetLibraryBySiteHttpResponse(
+				testDeleteAssetLibraryBySite_getSiteId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			assetLibraryResource.getAssetLibraryBySiteHttpResponse(
+				testDeleteAssetLibraryBySite_getSiteId()));
+	}
+
+	protected Long testDeleteAssetLibraryBySite_getSiteId() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected AssetLibrary testDeleteAssetLibraryBySite_addAssetLibrary()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGetAssetLibraryBySite() throws Exception {
+		AssetLibrary postAssetLibrary =
+			testGetAssetLibraryBySite_addAssetLibrary();
+
+		AssetLibrary getAssetLibrary =
+			assetLibraryResource.getAssetLibraryBySite(
+				testGetAssetLibraryBySite_getSiteId());
+
+		assertEquals(postAssetLibrary, getAssetLibrary);
+		assertValid(getAssetLibrary);
+	}
+
+	protected Long testGetAssetLibraryBySite_getSiteId() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected AssetLibrary testGetAssetLibraryBySite_addAssetLibrary()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPatchAssetLibraryBySite() throws Exception {
+		AssetLibrary postAssetLibrary =
+			testPatchAssetLibraryBySite_addAssetLibrary();
+
+		AssetLibrary randomPatchAssetLibrary = randomPatchAssetLibrary();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		AssetLibrary patchAssetLibrary =
+			assetLibraryResource.patchAssetLibraryBySite(
+				null, randomPatchAssetLibrary);
+
+		AssetLibrary expectedPatchAssetLibrary = postAssetLibrary.clone();
+
+		BeanTestUtil.copyProperties(
+			randomPatchAssetLibrary, expectedPatchAssetLibrary);
+
+		AssetLibrary getAssetLibrary =
+			assetLibraryResource.getAssetLibraryBySite(null);
+
+		assertEquals(expectedPatchAssetLibrary, getAssetLibrary);
+		assertValid(getAssetLibrary);
+	}
+
+	protected AssetLibrary testPatchAssetLibraryBySite_addAssetLibrary()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testDeleteAssetLibrary() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		AssetLibrary assetLibrary = testDeleteAssetLibrary_addAssetLibrary();
@@ -429,6 +519,14 @@ public abstract class BaseAssetLibraryResourceTestCase {
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
 
+			if (Objects.equals("assetLibraryId", additionalAssertFieldName)) {
+				if (assetLibrary.getAssetLibraryId() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("description", additionalAssertFieldName)) {
 				if (assetLibrary.getDescription() == null) {
 					valid = false;
@@ -610,6 +708,17 @@ public abstract class BaseAssetLibraryResourceTestCase {
 
 		for (String additionalAssertFieldName :
 				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals("assetLibraryId", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						assetLibrary1.getAssetLibraryId(),
+						assetLibrary2.getAssetLibraryId())) {
+
+					return false;
+				}
+
+				continue;
+			}
 
 			if (Objects.equals("dateCreated", additionalAssertFieldName)) {
 				if (!Objects.deepEquals(
@@ -830,6 +939,11 @@ public abstract class BaseAssetLibraryResourceTestCase {
 		sb.append(" ");
 		sb.append(operator);
 		sb.append(" ");
+
+		if (entityFieldName.equals("assetLibraryId")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
 
 		if (entityFieldName.equals("dateCreated")) {
 			if (operator.equals("between")) {
@@ -1101,6 +1215,7 @@ public abstract class BaseAssetLibraryResourceTestCase {
 	protected AssetLibrary randomAssetLibrary() throws Exception {
 		return new AssetLibrary() {
 			{
+				assetLibraryId = RandomTestUtil.randomLong();
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
 				description = StringUtil.toLowerCase(

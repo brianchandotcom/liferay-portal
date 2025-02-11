@@ -52,6 +52,16 @@ public class AssetLibrarySerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ssXX");
 
+		if (assetLibrary.getAssetLibraryId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"assetLibraryId\": ");
+
+			sb.append(assetLibrary.getAssetLibraryId());
+		}
+
 		if (assetLibrary.getDateCreated() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -224,6 +234,15 @@ public class AssetLibrarySerDes {
 		DateFormat liferayToJSONDateFormat = new SimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ssXX");
 
+		if (assetLibrary.getAssetLibraryId() == null) {
+			map.put("assetLibraryId", null);
+		}
+		else {
+			map.put(
+				"assetLibraryId",
+				String.valueOf(assetLibrary.getAssetLibraryId()));
+		}
+
 		if (assetLibrary.getDateCreated() == null) {
 			map.put("dateCreated", null);
 		}
@@ -326,7 +345,10 @@ public class AssetLibrarySerDes {
 
 		@Override
 		protected boolean parseMaps(String jsonParserFieldName) {
-			if (Objects.equals(jsonParserFieldName, "dateCreated")) {
+			if (Objects.equals(jsonParserFieldName, "assetLibraryId")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "dateModified")) {
@@ -370,7 +392,13 @@ public class AssetLibrarySerDes {
 			AssetLibrary assetLibrary, String jsonParserFieldName,
 			Object jsonParserFieldValue) {
 
-			if (Objects.equals(jsonParserFieldName, "dateCreated")) {
+			if (Objects.equals(jsonParserFieldName, "assetLibraryId")) {
+				if (jsonParserFieldValue != null) {
+					assetLibrary.setAssetLibraryId(
+						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {
 				if (jsonParserFieldValue != null) {
 					assetLibrary.setDateCreated(
 						toDate((String)jsonParserFieldValue));

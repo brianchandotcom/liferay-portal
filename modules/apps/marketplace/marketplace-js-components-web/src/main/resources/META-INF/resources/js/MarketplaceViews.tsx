@@ -4,6 +4,9 @@
  */
 
 import ClayButton from '@clayui/button';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
+
+import {MarketplacePurchase, States} from './MarketplacePurchase';
 import {
 	CloudUserProject,
 	Marketplace,
@@ -12,10 +15,7 @@ import {
 	PlacedOrder,
 	Product,
 	useMarketplaceContext,
-} from '@liferay/marketplace-js-components-web';
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
-
-import {MarketplacePurchase, States} from './MarketplacePurchase';
+} from './index';
 
 export default function MarketplaceViews() {
 	const [cloudUserProject, setCloudUserProject] =

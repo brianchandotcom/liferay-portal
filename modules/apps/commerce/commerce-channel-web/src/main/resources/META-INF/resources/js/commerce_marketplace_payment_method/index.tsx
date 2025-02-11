@@ -9,11 +9,11 @@ import {
 	Marketplace,
 	MarketplaceContextProvider,
 	MarketplaceRest,
+	MarketplaceViews,
 } from '@liferay/marketplace-js-components-web';
 import React from 'react';
 
 import './style/index.scss';
-import MarketplaceViews from './MarketplaceViews';
 
 const CommerceChannelAddPaymentMethod = () => (
 	<MarketplaceContextProvider

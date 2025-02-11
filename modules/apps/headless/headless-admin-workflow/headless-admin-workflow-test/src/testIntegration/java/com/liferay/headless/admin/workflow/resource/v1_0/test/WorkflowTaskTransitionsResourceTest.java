@@ -62,17 +62,33 @@ public class WorkflowTaskTransitionsResourceTest
 			(WorkflowTaskTransition)ArrayUtil.getValue(
 				workflowTaskTransitions.getWorkflowTaskTransitions(), 0);
 
-		Transition[] transitions = workflowTaskTransition.getTransitions();
+		Transition[] actualTransitions =
+			workflowTaskTransition.getTransitions();
 
 		Assert.assertEquals(
-			Arrays.toString(transitions), 2, transitions.length);
+			Arrays.toString(actualTransitions), 2, actualTransitions.length);
 
-		String[] expectedTransitionNames = {"approve", "reject"};
+		Transition[] expectedTransitions = {
+			new Transition() {
+				{
+					label = "Approve";
+					name = "approve";
+					sourceNodeName = "review";
+					targetNodeName = "approved";
+				}
+			},
+			new Transition() {
+				{
+					label = "Reject";
+					name = "reject";
+					sourceNodeName = "review";
+					targetNodeName = "update";
+				}
+			}
+		};
 
-		for (Transition transition : transitions) {
-			Assert.assertTrue(
-				ArrayUtil.contains(
-					expectedTransitionNames, transition.getName()));
+		for (int i = 0; i < expectedTransitions.length; i++) {
+			Assert.assertEquals(expectedTransitions[i], actualTransitions[i]);
 		}
 	}
 

@@ -29,48 +29,6 @@ definition {
 		}
 	}
 
-	@description = "Enable Show Guest Site in Breadcrumb widget."
-	@priority = 4
-	@uitest
-	test EnableShowGuestSite {
-		task ("Add a Breadcrumb widget to page") {
-			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Page Name",
-				widgetName = "Breadcrumb");
-		}
-
-		task ("Enable Show Guest Site") {
-			Navigator.openSitePage(
-				pageName = "Test Page Name",
-				siteName = "Test Site Name");
-
-			Portlet.gotoPortletOptions(portletOption = "Configuration");
-
-			Breadcrumb.viewConfigurationPreview(breadcrumbListVisible = "Test Site Name,Test Page Name");
-
-			var siteName = TestCase.getSiteName(siteName = ${siteName});
-
-			Breadcrumb.viewConfigurationPreview(breadcrumbListNotVisible = ${siteName});
-
-			Breadcrumb.configureBreadcrumb(checkSetupName = "Show Guest Site");
-
-			Breadcrumb.viewConfigurationPreview(breadcrumbListVisible = "${siteName},Test Site Name,Test Page Name");
-
-			Breadcrumb.saveDisplayPreview();
-
-			Breadcrumb.viewConfigurationPreview(breadcrumbListVisible = "${siteName},Test Site Name,Test Page Name");
-		}
-
-		task ("View the displayed content in Breadcrumb widget") {
-			Navigator.openSitePage(
-				pageName = "Test Page Name",
-				siteName = "Test Site Name");
-
-			Breadcrumb.viewPG(breadcrumbListVisible = "${siteName},Test Site Name,Test Page Name");
-		}
-	}
-
 	@description = "View Breadcrumb when navigate to page via IP address."
 	@priority = 4
 	test ViewBreadcrumbWhenNavigateToPageViaIPAddress {

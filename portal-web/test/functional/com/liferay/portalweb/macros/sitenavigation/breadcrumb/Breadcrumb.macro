@@ -43,31 +43,11 @@ definition {
 		SelectFrame(value1 = "relative=top");
 	}
 
-	@summary = "Default summary"
-	macro displayTemplatePreview(displayStyle = null) {
-		SelectFrame(locator1 = "IFrame#CONFIGURATION");
-
-		Click(locator1 = "Select#DISPLAY_TEMPLATE");
-
-		MenuItem.click(menuItem = ${displayStyle});
-
-		SelectFrame(value1 = "relative=top");
-	}
-
 	@summary = "Go to breadcrumb entry"
 	macro gotoEntry(breadcrumbName = null) {
 		Click(
 			key_breadcrumbName = ${breadcrumbName},
 			locator1 = "Breadcrumb#BREADCRUMB_ENTRY_LINK");
-	}
-
-	@summary = "Default summary"
-	macro saveDisplayPreview() {
-		SelectFrame(locator1 = "IFrame#CONFIGURATION");
-
-		PortletEntry.save();
-
-		SelectFrame(value1 = "relative=top");
 	}
 
 	@summary = "Default summary"
@@ -122,39 +102,6 @@ definition {
 				var key_checkSetupName = ${uncheckSetupName};
 
 				AssertNotChecked.assertNotCheckedNotVisible(locator1 = "ToggleSwitch#SHOW_SPECIFIC_TOGGLE_SWITCH");
-			}
-		}
-
-		SelectFrame(value1 = "relative=top");
-	}
-
-	@summary = "Default summary"
-	macro viewConfigurationPreview(breadcrumbListVisible = null, breadcrumbListNotVisible = null) {
-		SelectFrame(locator1 = "IFrame#CONFIGURATION");
-
-		if (isSet(breadcrumbListVisible)) {
-			if (IsElementPresent(key_infoMessage = "This change will only be shown after you refresh the current page.", locator1 = "Message#INFO_SPECIFIC")) {
-				Refresh();
-
-				Portlet.gotoPortletOptions(
-					portletName = "Breadcrumb",
-					portletOption = "Configuration");
-
-				SelectFrame(locator1 = "IFrame#CONFIGURATION");
-			}
-
-			for (var breadcrumbName : list ${breadcrumbListVisible}) {
-				Breadcrumb.viewEntry(breadcrumbName = ${breadcrumbName});
-			}
-		}
-
-		if (isSet(breadcrumbListNotVisible)) {
-			for (var breadcrumbName : list ${breadcrumbListNotVisible}) {
-				var key_breadcrumbName = ${breadcrumbName};
-
-				AssertElementNotPresent(
-					key_breadcrumbName = ${breadcrumbName},
-					locator1 = "BreadcrumbPortlet#BREADCRUMB_SPECIFIC_ENTRY");
 			}
 		}
 

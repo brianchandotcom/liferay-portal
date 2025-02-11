@@ -283,3 +283,46 @@ test('Configure Show Parent Sites in Breadcrumb widget', async ({
 
 	await apiHelpers.headlessSite.deleteSite(childSite.id);
 });
+
+test('Configure Show Guest Site in Breadcrumb widget', async ({
+	breadcrumbWidgetPage,
+	page,
+	site,
+	widgetPagePage,
+}) => {
+	const layout = await breadcrumbWidgetPage.addBreadcrumbPortlet(site);
+
+	let breadcrumbEntries = await page
+		.locator('.breadcrumb-text-truncate')
+		.allInnerTexts();
+
+	await expect(breadcrumbEntries.length).toBe(2);
+
+	await expect(breadcrumbEntries).toEqual(
+		expect.arrayContaining([site.name, layout.nameCurrentValue])
+	);
+
+	await widgetPagePage.clickOnAction('Breadcrumb', 'Configuration');
+
+	const configurationIFrame = page.frameLocator(
+		'iframe[title*="Breadcrumb"]'
+	);
+
+	await configurationIFrame.getByLabel('Show Guest Site').click();
+
+	await widgetPagePage.saveAndClose('Breadcrumb');
+
+	breadcrumbEntries = await page
+		.locator('.breadcrumb-text-truncate')
+		.allInnerTexts();
+
+	await expect(breadcrumbEntries.length).toBe(3);
+
+	await expect(breadcrumbEntries).toEqual(
+		expect.arrayContaining([
+			'Liferay DXP',
+			site.name,
+			layout.nameCurrentValue,
+		])
+	);
+});

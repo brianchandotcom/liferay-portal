@@ -15,7 +15,7 @@ export type TPasswordPolicy = {
 	minLowerCase?: number;
 	minNumbers?: number;
 	minUpperCase?: number;
-	name: string;
+	name?: string;
 	regex?: string;
 	resetTicketMaxAge?: boolean;
 };

@@ -63,14 +63,15 @@ test(
 		const passwordPolicy: TPasswordPolicy = {
 			checkSyntaxToggle: true,
 			minLowerCase: 1,
-			name: getRandomString()
 		};
 		await passwordPoliciesAdminConfigPage.goTo();
 		await passwordPoliciesAdminConfigPage.editDefaultPasswordPolicy(
 			passwordPolicy
 		);
 
-		performLogout(page);
+		await performLogout(page);
+
+		await page.goto(liferayConfig.environment.baseUrl);
 
 		await page.getByRole('button', {name: 'Sign In'}).click();
 

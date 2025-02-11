@@ -186,6 +186,11 @@ export class PasswordPoliciesAdminPage {
 		await this.page
 			.getByRole('button', {name: 'Password Syntax Checking'})
 			.click();
+		await this.minLength.fill(String(6));
+		await this.minLowerCase.fill(String(0));
+		await this.minNumbers.fill(String(1));
+		await this.minSymbols.fill(String(0));
+		await this.minUpperCase.fill(String(1));
 		await this.checkSyntaxToggle.uncheck();
 
 		await this.saveButton.click();

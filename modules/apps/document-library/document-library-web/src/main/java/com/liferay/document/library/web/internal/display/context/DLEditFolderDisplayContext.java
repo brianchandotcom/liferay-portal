@@ -216,6 +216,33 @@ public class DLEditFolderDisplayContext {
 		return _workflowDefinitions;
 	}
 
+	public boolean hasAdvancedUpdateDLFolderPermission()
+		throws PortalException {
+
+		if (_advancedUpdateDLFolderPermission != null) {
+			return _advancedUpdateDLFolderPermission;
+		}
+
+		_advancedUpdateDLFolderPermission = DLFolderPermission.contains(
+			_themeDisplay.getPermissionChecker(),
+			_themeDisplay.getScopeGroupId(), getFolderId(),
+			ActionKeys.ADVANCE_UPDATE);
+
+		return _advancedUpdateDLFolderPermission;
+	}
+
+	public boolean hasUpdateDLFolderPermission() throws PortalException {
+		if (_updateDLFolderPermission != null) {
+			return _updateDLFolderPermission;
+		}
+
+		_updateDLFolderPermission = DLFolderPermission.contains(
+			_themeDisplay.getPermissionChecker(),
+			_themeDisplay.getScopeGroupId(), getFolderId(), ActionKeys.UPDATE);
+
+		return _updateDLFolderPermission;
+	}
+
 	public boolean isFileEntryTypeSelected(DLFileEntryType dlFileEntryType) {
 		DLFolder dlFolder = _getDLFolder();
 
@@ -363,10 +390,14 @@ public class DLEditFolderDisplayContext {
 				DLFileEntry.class.getName());
 
 		if ((workflowHandler != null) &&
-			DLFolderPermission.contains(
+			(DLFolderPermission.contains(
 				_themeDisplay.getPermissionChecker(),
 				_themeDisplay.getScopeGroupId(), getFolderId(),
-				ActionKeys.UPDATE) &&
+				ActionKeys.ADVANCE_UPDATE) ||
+			 DLFolderPermission.contains(
+				 _themeDisplay.getPermissionChecker(),
+				 _themeDisplay.getScopeGroupId(), getFolderId(),
+				 ActionKeys.UPDATE)) &&
 			!scopeGroup.isLayoutSetPrototype()) {
 
 			_workflowEnabled = true;
@@ -416,6 +447,7 @@ public class DLEditFolderDisplayContext {
 	private static final Log _log = LogFactoryUtil.getLog(
 		DLEditFolderDisplayContext.class);
 
+	private Boolean _advancedUpdateDLFolderPermission;
 	private List<DLFileEntryType> _dlFileEntryTypes;
 	private Folder _folder;
 	private Long _folderId;
@@ -425,6 +457,7 @@ public class DLEditFolderDisplayContext {
 	private String _redirect;
 	private Long _repositoryId;
 	private final ThemeDisplay _themeDisplay;
+	private Boolean _updateDLFolderPermission;
 	private List<WorkflowDefinition> _workflowDefinitions;
 	private Boolean _workflowEnabled;
 

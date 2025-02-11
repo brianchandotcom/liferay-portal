@@ -62,13 +62,8 @@ test(
 	async ({page, passwordPoliciesAdminConfigPage}) => {
 		const passwordPolicy: TPasswordPolicy = {
 			checkSyntaxToggle: true,
-			minAlphanumeric: 1,
-			minLength: 8,
 			minLowerCase: 1,
-			minNumbers: 1,
-			minUpperCase: 1,
-			name: getRandomString(),
-			regex: '(?=.{4})(?:[a-zA-Z0-9]*)',
+			name: getRandomString()
 		};
 		await passwordPoliciesAdminConfigPage.goTo();
 		await passwordPoliciesAdminConfigPage.editDefaultPasswordPolicy(

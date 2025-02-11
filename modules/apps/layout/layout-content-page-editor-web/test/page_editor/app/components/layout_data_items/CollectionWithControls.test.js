@@ -23,6 +23,13 @@ import getLayoutDataItemUniqueClassName from '../../../../../src/main/resources/
 
 const COLLECTION_ID = 'COLLECTION_ID';
 
+jest.mock(
+	'../../../../../src/main/resources/META-INF/resources/page_editor/app/services/InfoItemService',
+	() => ({
+		getPageContents: jest.fn(() => Promise.resolve()),
+	})
+);
+
 const renderCollection = ({
 	isActive = true,
 	collectionConfig = {styles: {}},

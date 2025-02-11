@@ -330,8 +330,6 @@ describe('ShortcutManager', () => {
 	});
 
 	it('sets the item Id and calls deleteItem to be cut when pressing ctrl + X', () => {
-		Liferay.FeatureFlags['LPD-18221'] = true;
-
 		const setClipboard = useSetClipboard();
 
 		renderComponent({
@@ -352,13 +350,9 @@ describe('ShortcutManager', () => {
 		);
 
 		expect(setClipboard).toBeCalledWith(['fragment01']);
-
-		Liferay.FeatureFlags['LPD-18221'] = false;
 	});
 
 	it('sets the item id to be copied when pressing ctrl + C', () => {
-		Liferay.FeatureFlags['LPD-18221'] = true;
-
 		const setClipboard = useSetClipboard();
 
 		renderComponent({
@@ -374,13 +368,9 @@ describe('ShortcutManager', () => {
 		);
 
 		expect(setClipboard).toBeCalledWith(['fragment01']);
-
-		Liferay.FeatureFlags['LPD-18221'] = false;
 	});
 
 	it('calls pasteItems when pressing ctrl + V', () => {
-		Liferay.FeatureFlags['LPD-18221'] = true;
-
 		renderComponent({
 			activeItemIds: ['fragment01'],
 		});
@@ -398,13 +388,9 @@ describe('ShortcutManager', () => {
 				parentItemId: 'fragment01',
 			})
 		);
-
-		Liferay.FeatureFlags['LPD-18221'] = false;
 	});
 
 	it('item id will be copied to the root because no parents are selected', () => {
-		Liferay.FeatureFlags['LPD-18221'] = true;
-
 		renderComponent({
 			activeItemIds: [],
 		});
@@ -423,13 +409,9 @@ describe('ShortcutManager', () => {
 				parentItemId: 'root01',
 			})
 		);
-
-		Liferay.FeatureFlags['LPD-18221'] = false;
 	});
 
 	it.skip('cannot paste items because multiple parents are selected', () => {
-		Liferay.FeatureFlags['LPD-18221'] = true;
-
 		renderComponent({
 			activeItemIds: ['fragment01', 'fragment02'],
 		});
@@ -443,8 +425,6 @@ describe('ShortcutManager', () => {
 		);
 
 		expect(pasteItems).toBeCalledTimes(0);
-
-		Liferay.FeatureFlags['LPD-18221'] = false;
 	});
 
 	it('calls duplicateItem when pressing ctrl + alt + D', () => {

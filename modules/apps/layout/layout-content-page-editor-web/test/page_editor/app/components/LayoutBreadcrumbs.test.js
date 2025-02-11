@@ -133,8 +133,6 @@ const renderComponent = ({
 
 describe('LayoutBreadcrumbs', () => {
 	beforeAll(() => {
-		Liferay.FeatureFlags['LPD-18221'] = true;
-
 		const wrapper = document.createElement('div');
 		wrapper.setAttribute('id', 'wrapper');
 		document.body.appendChild(wrapper);
@@ -143,8 +141,6 @@ describe('LayoutBreadcrumbs', () => {
 	afterAll(() => {
 		const wrapper = document.getElementById('wrapper');
 		document.body.removeChild(wrapper);
-
-		Liferay.FeatureFlags['LPD-18221'] = false;
 	});
 
 	it('renders item in breadcrumbs when selecting it', () => {

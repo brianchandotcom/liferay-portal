@@ -329,8 +329,6 @@ describe('Reducer', () => {
 
 		describe('Simple selection', () => {
 			it('selects multiple items', () => {
-				Liferay.FeatureFlags['LPD-18221'] = true;
-
 				const action = {
 					...ACTION,
 					itemId: 'fragment01',
@@ -351,13 +349,9 @@ describe('Reducer', () => {
 						],
 					})
 				);
-
-				Liferay.FeatureFlags['LPD-18221'] = false;
 			});
 
 			it('deselects an item if it is already selected', () => {
-				Liferay.FeatureFlags['LPD-18221'] = true;
-
 				const action = {
 					...ACTION,
 					itemId: 'fragment02',
@@ -374,15 +368,11 @@ describe('Reducer', () => {
 						activeItemIds: ['fragment04'],
 					})
 				);
-
-				Liferay.FeatureFlags['LPD-18221'] = false;
 			});
 		});
 
 		describe('Range selection', () => {
 			it('selects in range when only one range limit is selected and there are more items selected', () => {
-				Liferay.FeatureFlags['LPD-18221'] = true;
-
 				const action = {
 					...ACTION,
 					itemId: 'fragment01',
@@ -406,13 +396,9 @@ describe('Reducer', () => {
 						],
 					})
 				);
-
-				Liferay.FeatureFlags['LPD-18221'] = false;
 			});
 
 			it('selects in range when 2 range limits are selected and there are more items selected', () => {
-				Liferay.FeatureFlags['LPD-18221'] = true;
-
 				const action = {
 					...ACTION,
 					itemId: 'container02',
@@ -441,13 +427,9 @@ describe('Reducer', () => {
 						],
 					})
 				);
-
-				Liferay.FeatureFlags['LPD-18221'] = false;
 			});
 
 			it('selects the item when the range multiselection is activated before there are any items selected', () => {
-				Liferay.FeatureFlags['LPD-18221'] = true;
-
 				const action = {
 					...ACTION,
 					itemId: 'fragment01',
@@ -465,13 +447,9 @@ describe('Reducer', () => {
 						activeItemIds: ['fragment01'],
 					})
 				);
-
-				Liferay.FeatureFlags['LPD-18221'] = false;
 			});
 
 			it('selects a single item when the start and the end of the range are the same id', () => {
-				Liferay.FeatureFlags['LPD-18221'] = true;
-
 				const action = {
 					...ACTION,
 					itemId: 'fragment01',
@@ -490,13 +468,9 @@ describe('Reducer', () => {
 						activeItemIds: ['fragment01'],
 					})
 				);
-
-				Liferay.FeatureFlags['LPD-18221'] = false;
 			});
 
 			it('selects parents when range end is an editable', () => {
-				Liferay.FeatureFlags['LPD-18221'] = true;
-
 				const action = {
 					...ACTION,
 					itemId: 'editable02',
@@ -516,8 +490,6 @@ describe('Reducer', () => {
 						activeItemIds: ['fragment01', 'fragment02'],
 					})
 				);
-
-				Liferay.FeatureFlags['LPD-18221'] = false;
 			});
 		});
 	});

@@ -128,16 +128,8 @@ const renderComponent = ({
 	);
 
 describe('PageStructureSidebarToolbar', () => {
-	beforeAll(() => {
-		Liferay.FeatureFlags['LPD-18221'] = true;
-	});
-
 	beforeEach(() => {
 		jest.clearAllMocks();
-	});
-
-	afterAll(() => {
-		Liferay.FeatureFlags['LPD-18221'] = false;
 	});
 
 	it('shows the number of selected items', () => {

@@ -144,7 +144,5 @@ describe('duplicateItem', () => {
 		expect(selectItems).toBeCalledWith(['heading02', 'button02'], {
 			origin: 'itemActions',
 		});
-
-		Liferay.FeatureFlags['LPD-18221'] = false;
 	});
 });

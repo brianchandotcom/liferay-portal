@@ -26,14 +26,6 @@ const renderComponent = ({activeItemIds = []} = {}) =>
 	);
 
 describe('CommentsSidebar', () => {
-	beforeAll(() => {
-		Liferay.FeatureFlags['LPD-18221'] = true;
-	});
-
-	afterAll(() => {
-		Liferay.FeatureFlags['LPD-18221'] = false;
-	});
-
 	it('renders comments sidebar', () => {
 		renderComponent();
 

@@ -139,8 +139,6 @@ describe('Topper', () => {
 	});
 
 	it('disables options when multiple items are selected', () => {
-		Liferay.FeatureFlags['LPD-18221'] = true;
-
 		const layoutData = {
 			items: {
 				'item-1': {
@@ -175,8 +173,6 @@ describe('Topper', () => {
 		});
 
 		expect(screen.getByLabelText('options')).toBeDisabled();
-
-		Liferay.FeatureFlags['LPD-18221'] = false;
 	});
 
 	describe('Ensures that selectItem() is not called when the topper buttons are clicked', () => {

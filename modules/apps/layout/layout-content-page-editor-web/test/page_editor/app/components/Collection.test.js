@@ -38,6 +38,16 @@ jest.mock(
 	})
 );
 
+jest.mock(
+	'../../../../src/main/resources/META-INF/resources/page_editor/app/services/serviceFetch',
+	() => jest.fn(() => Promise.resolve({}))
+);
+
+jest.mock(
+	'../../../../src/main/resources/META-INF/resources/page_editor/common/components/ItemSelector.js',
+	() => () => <div />
+);
+
 function renderCollection(itemConfig = {}) {
 	const state = {
 		permissions: {
@@ -96,16 +106,12 @@ describe('Collection', () => {
 	});
 
 	it('renders not collection message when no collection is selected', async () => {
-		CollectionService.getCollectionField.mockImplementation(() =>
-			Promise.resolve()
-		);
-
 		await act(async () => {
 			renderCollection();
 		});
 
 		expect(
-			screen.getByText('no-collection-selected-yet')
+			screen.getByText('select-a-collection-to-display')
 		).toBeInTheDocument();
 	});
 

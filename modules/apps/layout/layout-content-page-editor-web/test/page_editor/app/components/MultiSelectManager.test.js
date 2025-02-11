@@ -38,14 +38,6 @@ const renderComponent = () =>
 	);
 
 describe('MultiSelectManager', () => {
-	beforeAll(() => {
-		Liferay.FeatureFlags['LPD-18221'] = true;
-	});
-
-	afterAll(() => {
-		Liferay.FeatureFlags['LPD-18221'] = false;
-	});
-
 	afterEach(() => {
 		jest.clearAllMocks();
 	});

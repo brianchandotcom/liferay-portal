@@ -89,11 +89,13 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 	}
 
 	async createDataSetClientExtensionFilter({
+		active,
 		clientExtensionEntryERC,
 		dataSetId,
 		fieldName,
 		label_i18n = {en_US: 'Title'},
 	}: {
+		active?: boolean;
 		clientExtensionEntryERC: string;
 		dataSetId: string;
 		fieldName: string;
@@ -103,6 +105,7 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 
 		const data = {
 			[CLIENT_EXTENSION_FILTER_DATA_SET_RELATIONSHIP]: dataSetId,
+			active,
 			clientExtensionEntryERC,
 			fieldName,
 			label_i18n,
@@ -112,6 +115,7 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 	}
 
 	async createDataSetCreationAction({
+		active,
 		dataSetERC = DEFAULT_DATA_SET_ERC,
 		icon,
 		label_i18n = {en_US: 'Default Creation Action'},
@@ -121,6 +125,7 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 		target = ECreationActionTarget.LINK,
 		url = liferayConfig.environment.baseUrl,
 	}: {
+		active?: boolean;
 		dataSetERC?: string;
 		icon?: string;
 		label_i18n?: {[key: string]: string};
@@ -134,6 +139,7 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 
 		const data = {
 			[ACTION_DATA_SET_RELATIONSHIP]: dataSetERC,
+			active,
 			icon,
 			label_i18n,
 			modalSize,
@@ -183,6 +189,7 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 	}
 
 	async createDataSetDateFilter({
+		active,
 		dataSetERC = DEFAULT_DATA_SET_ERC,
 		fieldName,
 		from = '',
@@ -190,6 +197,7 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 		to = '',
 		type,
 	}: {
+		active?: boolean;
 		dataSetERC?: string;
 		fieldName: string;
 		from?: string;
@@ -201,6 +209,7 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 
 		const data = {
 			[DATE_FILTER_DATA_SET_RELATIONSHIP]: dataSetERC,
+			active,
 			fieldName,
 			from,
 			label_i18n,
@@ -212,6 +221,7 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 	}
 
 	async createDataSetSelectionFilter({
+		active,
 		dataSetERC = DEFAULT_DATA_SET_ERC,
 		fieldName,
 		include = true,
@@ -223,6 +233,7 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 		source,
 		sourceType,
 	}: {
+		active?: boolean;
 		dataSetERC?: string;
 		fieldName: string;
 		include?: boolean;
@@ -238,6 +249,7 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 
 		const data = {
 			[SELECTION_FILTER_DATA_SET_RELATIONSHIP]: dataSetERC,
+			active,
 			fieldName,
 			include,
 			itemKey,
@@ -253,6 +265,7 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 	}
 
 	async createDataSetItemAction({
+		active,
 		confirmationMessage_i18n,
 		confirmationMessageType,
 		dataSetERC = DEFAULT_DATA_SET_ERC,
@@ -268,6 +281,7 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 		target = EItemActionTarget.LINK,
 		url = liferayConfig.environment.baseUrl,
 	}: {
+		active?: boolean;
 		confirmationMessageType?: string;
 		confirmationMessage_i18n?: {[key: string]: string};
 		dataSetERC?: string;
@@ -287,6 +301,7 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 
 		const data = {
 			[ACTION_DATA_SET_RELATIONSHIP]: dataSetERC,
+			active,
 			confirmationMessage_i18n,
 			confirmationMessageType,
 			errorMessage_i18n,
@@ -307,12 +322,14 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 	}
 
 	async createDataSetSort({
+		active,
 		dataSetERC = DEFAULT_DATA_SET_ERC,
 		defaultValue = false,
 		fieldName = 'dateCreated',
 		label_i18n = {en_US: 'Date Created'},
 		orderType = 'asc',
 	}: {
+		active?: boolean;
 		dataSetERC?: string;
 		defaultValue?: boolean;
 		fieldName?: string;
@@ -323,6 +340,7 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 
 		const data = {
 			[SORT_DATA_SET_RELATIONSHIP]: dataSetERC,
+			active,
 			default: defaultValue,
 			fieldName,
 			label_i18n,
@@ -390,6 +408,7 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 	}
 
 	async updateDataSetSelectionFilter({
+		active,
 		erc,
 		fieldName,
 		include,
@@ -399,6 +418,7 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 		multiple,
 		preselectedValues,
 	}: {
+		active?: boolean;
 		erc: string;
 		fieldName?: string;
 		include?: boolean;
@@ -411,6 +431,7 @@ export class DataSetManagerApiHelpers extends ApiHelpers {
 		const url = `${this.baseUrl}${API_ENDPOINT_PATH}/selection-filters/by-external-reference-code/${erc}`;
 
 		const data = {
+			active,
 			fieldName,
 			include,
 			itemKey,

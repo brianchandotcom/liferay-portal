@@ -21,6 +21,7 @@ export const test = mergeTests(
 	apiHelpersTest,
 	dataSetManagerApiHelpersTest,
 	featureFlagsTest({
+		'LPD-37531': {enabled: true},
 		'LPS-178052': {enabled: true},
 	}),
 	isolatedLayoutTest({publish: false}),
@@ -296,3 +297,77 @@ test('Filters are displayed in the order stored in the filtersOrder field', asyn
 		await expect(filterDropdownItems.nth(1)).toHaveText(filter1Label);
 	});
 });
+
+test(
+	'Only "active" Date filters are displayed the fragment',
+	{tag: '@LPD-39965'},
+	async ({dataSetFragmentPage, dataSetManagerApiHelpers, layout}) => {
+		const fieldLabel = getRandomString();
+		const filter1Label = getRandomString();
+		const filter2Label = getRandomString();
+		const modifiedDateField = 'dateModified';
+		const filterIds = [];
+
+		await test.step('Create a couple of new date-time filters', async () => {
+			const filter1 =
+				await dataSetManagerApiHelpers.createDataSetDateFilter({
+					dataSetERC,
+					fieldName: DATE_FIELD_NAME,
+					from: '',
+					label_i18n: {en_US: filter1Label},
+					to: '',
+					type: 'date-time',
+				});
+
+			const filter2 =
+				await dataSetManagerApiHelpers.createDataSetDateFilter({
+					active: false,
+					dataSetERC,
+					fieldName: modifiedDateField,
+					from: '',
+					label_i18n: {en_US: filter2Label},
+					to: '',
+					type: 'date-time',
+				});
+
+			filterIds.push(filter1.id, filter2.id);
+		});
+
+		await test.step('Add a field, so FDS has something to show', async () => {
+			await dataSetManagerApiHelpers.createDataSetTableSection({
+				dataSetERC,
+				fieldName: 'renderer',
+				label_i18n: {en_US: fieldLabel},
+				type: 'string',
+			});
+		});
+
+		await test.step('Configure Data Set fragment', async () => {
+			await dataSetFragmentPage.configureDataSetFragment({
+				dataSetLabel,
+				layout,
+			});
+		});
+
+		const filterDropdownId =
+			await dataSetFragmentPage.filterButton.getAttribute(
+				'aria-controls'
+			);
+
+		await test.step('Assert that only "active" date filters are in the UI', async () => {
+			await expect(dataSetFragmentPage.filterButton).toBeVisible();
+
+			await dataSetFragmentPage.filterButton.click();
+			await dataSetFragmentPage.page
+				.locator(`#${filterDropdownId}`)
+				.waitFor({state: 'visible'});
+			const filtersDropdown = dataSetFragmentPage.page.locator(
+				`#${filterDropdownId}`
+			);
+			const filterDropdownItems = filtersDropdown.getByRole('menuitem');
+			await expect(filterDropdownItems).toHaveCount(1);
+
+			await expect(filterDropdownItems.nth(0)).toHaveText(filter1Label);
+		});
+	}
+);

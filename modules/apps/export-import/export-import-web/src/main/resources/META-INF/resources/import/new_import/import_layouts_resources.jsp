@@ -19,6 +19,8 @@ else {
 	group = (Group)request.getAttribute(WebKeys.GROUP);
 }
 
+boolean companyGroup = stagingGroupHelper.isCompanyGroup(group);
+
 FileEntry fileEntry = ExportImportHelperUtil.getTempFileEntry(groupId, themeDisplay.getUserId(), ExportImportHelper.TEMP_FOLDER_NAME);
 
 ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user.getUserId(), themeDisplay.getSiteGroupId(), new HashMap<String, String[]>(), fileEntry);
@@ -361,37 +363,39 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 
 										</ul>
 
-										<aui:fieldset cssClass="content-options" label="for-each-of-the-selected-content-types,-import-their">
-											<span class="selected-labels" id="<portlet:namespace />selectedContentOptions"></span>
+										<c:if test="<%= !companyGroup %>">
+											<aui:fieldset cssClass="content-options" label="for-each-of-the-selected-content-types,-import-their">
+												<span class="selected-labels" id="<portlet:namespace />selectedContentOptions"></span>
 
-											<clay:button
-												cssClass="modify-link options-link pr-1"
-												displayType="link"
-												id='<%= liferayPortletResponse.getNamespace() + "contentOptionsLink" %>'
-												label="change"
-											/>
-
-											<span id="<portlet:namespace />rightContentOptionsArrow">
-												<clay:icon
-													symbol="angle-right-small"
+												<clay:button
+													cssClass="modify-link options-link pr-1"
+													displayType="link"
+													id='<%= liferayPortletResponse.getNamespace() + "contentOptionsLink" %>'
+													label="change"
 												/>
-											</span>
-											<span class="hide" id="<portlet:namespace />downContentOptionsArrow">
-												<clay:icon
-													symbol="angle-down-small"
-												/>
-											</span>
 
-											<div class="hide" id="<portlet:namespace />contentOptions">
-												<ul class="lfr-tree list-unstyled">
-													<li class="tree-item">
-														<aui:input label="comments" name="<%= PortletDataHandlerKeys.COMMENTS %>" type="checkbox" value="<%= true %>" />
+												<span id="<portlet:namespace />rightContentOptionsArrow">
+													<clay:icon
+														symbol="angle-right-small"
+													/>
+												</span>
+												<span class="hide" id="<portlet:namespace />downContentOptionsArrow">
+													<clay:icon
+														symbol="angle-down-small"
+													/>
+												</span>
 
-														<aui:input label="ratings" name="<%= PortletDataHandlerKeys.RATINGS %>" type="checkbox" value="<%= true %>" />
-													</li>
-												</ul>
-											</div>
-										</aui:fieldset>
+												<div class="hide" id="<portlet:namespace />contentOptions">
+													<ul class="lfr-tree list-unstyled">
+														<li class="tree-item">
+															<aui:input label="comments" name="<%= PortletDataHandlerKeys.COMMENTS %>" type="checkbox" value="<%= true %>" />
+
+															<aui:input label="ratings" name="<%= PortletDataHandlerKeys.RATINGS %>" type="checkbox" value="<%= true %>" />
+														</li>
+													</ul>
+												</div>
+											</aui:fieldset>
+										</c:if>
 									</li>
 								</ul>
 							</li>

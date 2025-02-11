@@ -5,6 +5,7 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
+import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {breadcrumbWidgetPagesTest} from '../../fixtures/breadcrumbWidgetPagesTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
@@ -14,6 +15,7 @@ import getRandomString from '../../utils/getRandomString';
 import {templatesPageTest} from '../template-web/fixtures/templatesPageTest';
 
 export const test = mergeTests(
+	apiHelpersTest,
 	breadcrumbWidgetPagesTest,
 	isolatedSiteTest,
 	loginTest(),
@@ -113,3 +115,42 @@ test(
 		).toHaveText('Horizontal');
 	}
 );
+
+test('Configure Show Application in Breadcrumb widget', async ({
+	apiHelpers,
+	breadcrumbWidgetPage,
+	page,
+	site,
+	widgetPagePage,
+}) => {
+	const folder = await apiHelpers.headlessDelivery.postDocumentFolder(
+		site.id
+	);
+	const layout = await breadcrumbWidgetPage.addBreadcrumbPortlet(site);
+
+	await widgetPagePage.addPortlet('Documents and Media');
+
+	await page.getByRole('link', {name: folder.name}).click();
+
+	await page.waitForTimeout(2000);
+
+	await expect(
+		page.locator(
+			'[id^="_com_liferay_site_navigation_breadcrumb_web_portlet_SiteNavigationBreadcrumbPortlet_INSTANCE_"] .active.breadcrumb-text-truncate'
+		)
+	).toHaveText(folder.name);
+
+	await widgetPagePage.clickOnAction('Breadcrumb', 'Configuration');
+
+	const configurationIFrame = page.frameLocator(
+		'iframe[title*="Breadcrumb"]'
+	);
+
+	await configurationIFrame.getByLabel('Show Application Breadcrumb').click();
+
+	await widgetPagePage.saveAndClose('Breadcrumb');
+
+	await expect(page.locator('.active.breadcrumb-text-truncate')).toHaveText(
+		layout.nameCurrentValue
+	);
+});

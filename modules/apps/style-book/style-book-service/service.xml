@@ -57,6 +57,11 @@
 			<finder-column name="groupId" />
 			<finder-column name="themeId" />
 		</finder>
+		<finder name="G_D_T" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="defaultStyleBookEntry" />
+			<finder-column name="themeId" />
+		</finder>
 	</entity>
 	<exceptions>
 		<exception>DuplicateStyleBookEntryKey</exception>

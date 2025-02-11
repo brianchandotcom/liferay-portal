@@ -53,24 +53,6 @@ const FILTER_IMPLEMENTATIONS = {
 	selection: selectionFilterImplementation,
 };
 
-// @ts-ignore
-
-const getComponent = Liferay.Loader?.require ? loadModule : getFakeComponent;
-
-function getFakeComponent() {
-	return new Promise((resolve) => {
-		setTimeout(
-			() =>
-				resolve(() => (
-					<div className="custom-component">
-						fakely fetched component
-					</div>
-				)),
-			3000
-		);
-	});
-}
-
 const Filter = ({id, moduleURL, type, ...otherProps}: FilterComponentArgs) => {
 	const [{filters}, viewsDispatch] = useContext(ViewsContext);
 
@@ -86,7 +68,7 @@ const Filter = ({id, moduleURL, type, ...otherProps}: FilterComponentArgs) => {
 
 	useEffect(() => {
 		if (moduleURL) {
-			getComponent(moduleURL).then((FetchedComponent: React.Component) =>
+			loadModule(moduleURL).then((FetchedComponent: React.Component) =>
 				setComponent(() => FetchedComponent)
 			);
 		}

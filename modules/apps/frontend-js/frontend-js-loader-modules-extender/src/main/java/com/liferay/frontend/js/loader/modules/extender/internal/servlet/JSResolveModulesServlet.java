@@ -10,6 +10,7 @@ import com.liferay.frontend.js.loader.modules.extender.internal.resolution.Brows
 import com.liferay.frontend.js.loader.modules.extender.internal.resolution.BrowserModulesResolver;
 import com.liferay.frontend.js.loader.modules.extender.internal.servlet.util.JSLoaderModulesUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -50,6 +51,10 @@ public class JSResolveModulesServlet extends HttpServlet {
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)
 		throws IOException {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-48372")) {
+			return;
+		}
 
 		if (JSLoaderModulesUtil.eTagEquals(
 				httpServletRequest.getHeader(HttpHeaders.IF_NONE_MATCH))) {

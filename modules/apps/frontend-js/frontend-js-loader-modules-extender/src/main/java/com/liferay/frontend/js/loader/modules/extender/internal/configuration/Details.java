@@ -12,7 +12,9 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Raymond Augé
  */
-@ExtendedObjectClassDefinition(category = "infrastructure")
+@ExtendedObjectClassDefinition(
+	category = "infrastructure", featureFlagKey = "LPD-48372"
+)
 @Meta.OCD(
 	id = "com.liferay.frontend.js.loader.modules.extender.internal.configuration.Details",
 	localization = "content/Language", name = "details-configuration-name"

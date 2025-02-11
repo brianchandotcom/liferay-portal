@@ -432,7 +432,7 @@
 		<finder name="CompanyId" return-type="Collection">
 			<finder-column name="companyId" />
 		</finder>
-		<finder name="LiveGroupId" return-type="Group">
+		<finder name="LiveGroupId" return-type="Collection">
 			<finder-column name="liveGroupId" />
 		</finder>
 		<finder name="C_C" return-type="Collection">

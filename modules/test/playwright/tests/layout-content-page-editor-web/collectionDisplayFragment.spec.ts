@@ -1206,3 +1206,48 @@ testWithIsolatedSite(
 		});
 	}
 );
+
+testWithIsolatedSite(
+	'Can select collection from the layout',
+	{
+		tag: '@LPD-45724',
+	},
+	async ({apiHelpers, page, pageEditorPage, site}) => {
+
+		// Create definition for a collection
+
+		const collectionId = getRandomString();
+
+		const collectionDefinition = getCollectionDefinition({
+			id: collectionId,
+		});
+
+		// Create a content page and go to edit mode
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([collectionDefinition]),
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		await page
+			.getByText('Select a Page Element', {
+				exact: true,
+			})
+			.waitFor();
+
+		// Assert collection can be selected from layout
+
+		await expect(
+			page.getByRole('button', {name: 'Select Collection'})
+		).toBeVisible();
+
+		await clickAndExpectToBeVisible({
+			target: page.locator('.modal-title', {hasText: 'Select'}),
+			timeout: 1000,
+			trigger: page.getByRole('button', {name: 'Select Collection'}),
+		});
+	}
+);

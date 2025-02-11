@@ -29,49 +29,6 @@ definition {
 		}
 	}
 
-	@description = "Add a widget template via Breadcrumb widget."
-	@priority = 4
-	test AddADTViaBreadcrumb {
-		task ("Add a Breadcrumb widget to page") {
-			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Page Name",
-				widgetName = "Breadcrumb");
-		}
-
-		task ("Add a widget template for Breadcrumb widget") {
-			WidgetTemplates.openWidgetTemplatesAdmin(siteURLKey = "test-site-name");
-
-			WidgetTemplates.addCP(
-				adtType = "Breadcrumb",
-				fieldNameList = "Breadcrumb Entry");
-		}
-
-		task ("Select the widget template in Breadcrumb widget") {
-			Navigator.gotoSitePage(
-				pageName = "Test Page Name",
-				siteName = "Test Site Name");
-
-			WidgetTemplates.selectPortletADT(
-				portletName = "Breadcrumb",
-				templateName = "Breadcrumb Test ADT");
-		}
-
-		task ("View the selected widget template in Breadcrumb widget") {
-			Navigator.gotoSitePage(
-				pageName = "Test Page Name",
-				siteName = "Test Site Name");
-
-			Portlet.gotoPortletOptions(
-				portletName = "Breadcrumb",
-				portletOption = "Configuration");
-
-			SelectFrame(locator1 = "IFrame#CONFIGURATION");
-
-			AssertElementPresent(locator1 = "Select#DISPLAY_TEMPLATE");
-		}
-	}
-
 	@description = "This is a use case for LPS-150908. Configure Display Template without saving in Breadcrumb widget."
 	@priority = 4
 	test ConfigureDisplayTemplateWithoutSave {

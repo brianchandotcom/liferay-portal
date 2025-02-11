@@ -15,11 +15,11 @@ export class MultiFactorAuthenticationConfigurationPage {
 	readonly updateButton: Locator;
 
 	constructor(page: Page) {
-		this.page = page;
+		this.enabledCheckBox = page.getByText('Enabled');
 		this.instanceSettingsPage = new InstanceSettingsPage(page);
-		this.enabledCheckBox = this.page.getByText('Enabled');
-		this.saveButton = this.page.getByRole('button', {name: 'Save'});
-		this.updateButton = this.page.getByRole('button', {name: 'Update'});
+		this.page = page;
+		this.saveButton = page.getByRole('button', {name: 'Save'});
+		this.updateButton = page.getByRole('button', {name: 'Update'});
 	}
 
 	async disable() {

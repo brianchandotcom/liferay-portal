@@ -84,7 +84,7 @@ public class BatchEnginePortletDataHandlerTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_objectDefinition1 = ObjectDefinitionTestUtil.publishObjectDefinition(
+		_objectDefinition = ObjectDefinitionTestUtil.publishObjectDefinition(
 			ObjectDefinitionTestUtil.getRandomName(),
 			Arrays.asList(
 				ObjectFieldUtil.createObjectField(
@@ -102,22 +102,22 @@ public class BatchEnginePortletDataHandlerTest {
 			ObjectDefinitionConstants.SCOPE_COMPANY);
 
 		_objectEntry1 = _addObjectEntry(
-			_objectDefinition1, _OBJECT_FIELD_NAME_TEXT,
+			_objectDefinition, _OBJECT_FIELD_NAME_TEXT,
 			RandomTestUtil.randomString(), TestPropsValues.getUser());
 
 		_objectEntry2 = _addObjectEntry(
-			_objectDefinition1, _OBJECT_FIELD_NAME_TEXT,
+			_objectDefinition, _OBJECT_FIELD_NAME_TEXT,
 			RandomTestUtil.randomString(), TestPropsValues.getUser());
 
 		_objectEntry3 = _addObjectEntry(
-			_objectDefinition1, _OBJECT_FIELD_NAME_TEXT,
+			_objectDefinition, _OBJECT_FIELD_NAME_TEXT,
 			RandomTestUtil.randomString(), TestPropsValues.getUser());
 
 		PermissionThreadLocal.setPermissionChecker(
 			PermissionCheckerFactoryUtil.create(TestPropsValues.getUser()));
 
 		Group companyGroup = _stagingGroupHelper.fetchCompanyGroup(
-			_objectDefinition1.getCompanyId());
+			_objectDefinition.getCompanyId());
 
 		_companyGroupId = companyGroup.getGroupId();
 	}
@@ -142,7 +142,7 @@ public class BatchEnginePortletDataHandlerTest {
 		_objectEntryLocalService.deleteObjectEntry(_objectEntry3);
 
 		ObjectEntry duplicateObjectEntry = _addObjectEntry(
-			_objectDefinition1, _OBJECT_FIELD_NAME_TEXT, existingValue,
+			_objectDefinition, _OBJECT_FIELD_NAME_TEXT, existingValue,
 			TestPropsValues.getUser());
 
 		try {
@@ -168,14 +168,14 @@ public class BatchEnginePortletDataHandlerTest {
 
 		List<ObjectEntry> objectEntries =
 			_objectEntryLocalService.getObjectEntries(
-				0, _objectDefinition1.getObjectDefinitionId(),
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+				0, _objectDefinition.getObjectDefinitionId(), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
 
 		Assert.assertEquals(objectEntries.toString(), 1, objectEntries.size());
 
 		duplicateObjectEntry = _objectEntryLocalService.getObjectEntry(
 			duplicateObjectEntry.getExternalReferenceCode(),
-			_objectDefinition1.getObjectDefinitionId());
+			_objectDefinition.getObjectDefinitionId());
 
 		Assert.assertNotEquals(
 			_objectEntry2.getExternalReferenceCode(),
@@ -195,15 +195,15 @@ public class BatchEnginePortletDataHandlerTest {
 		Assert.assertNotNull(
 			_objectEntryLocalService.getObjectEntry(
 				_objectEntry1.getExternalReferenceCode(),
-				_objectDefinition1.getObjectDefinitionId()));
+				_objectDefinition.getObjectDefinitionId()));
 		Assert.assertNotNull(
 			_objectEntryLocalService.getObjectEntry(
 				_objectEntry2.getExternalReferenceCode(),
-				_objectDefinition1.getObjectDefinitionId()));
+				_objectDefinition.getObjectDefinitionId()));
 		Assert.assertNotNull(
 			_objectEntryLocalService.getObjectEntry(
 				_objectEntry3.getExternalReferenceCode(),
-				_objectDefinition1.getObjectDefinitionId()));
+				_objectDefinition.getObjectDefinitionId()));
 	}
 
 	private static void _invokeFeatureFlagListeners(
@@ -270,7 +270,7 @@ public class BatchEnginePortletDataHandlerTest {
 			new String[] {Boolean.TRUE.toString()}
 		).put(
 			PortletDataHandlerKeys.PORTLET_DATA + "_" +
-				_objectDefinition1.getPortletId(),
+				_objectDefinition.getPortletId(),
 			new String[] {Boolean.TRUE.toString()}
 		).put(
 			PortletDataHandlerKeys.PORTLET_SETUP_ALL,
@@ -314,7 +314,7 @@ public class BatchEnginePortletDataHandlerTest {
 	private ExportImportLocalService _exportImportLocalService;
 
 	private File _larFile;
-	private ObjectDefinition _objectDefinition1;
+	private ObjectDefinition _objectDefinition;
 	private ObjectEntry _objectEntry1;
 	private ObjectEntry _objectEntry2;
 	private ObjectEntry _objectEntry3;

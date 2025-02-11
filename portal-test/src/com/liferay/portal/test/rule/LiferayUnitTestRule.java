@@ -24,7 +24,8 @@ public class LiferayUnitTestRule extends AggregateTestRule {
 
 	private static TestRule[] _getTestRules() {
 		return new TestRule[] {
-			FeatureFlagTestRule.INSTANCE, InitializeKernelUtilTestRule.INSTANCE,
+			new FeatureFlagTestRule(false),
+			InitializeKernelUtilTestRule.INSTANCE,
 			AspectJNewEnvTestRule.INSTANCE, NewEnvTestRule.INSTANCE
 		};
 	}

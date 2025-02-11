@@ -21,13 +21,8 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
-import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
-import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagListener;
-import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -48,10 +43,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -70,16 +63,6 @@ public class BatchEnginePortletDataHandlerTest {
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
-
-	@BeforeClass
-	public static void setUpClass() {
-		_invokeFeatureFlagListeners("LPD-35914", true);
-	}
-
-	@AfterClass
-	public static void tearDownClass() {
-		_invokeFeatureFlagListeners("LPD-35914", false);
-	}
 
 	@Before
 	public void setUp() throws Exception {
@@ -186,24 +169,6 @@ public class BatchEnginePortletDataHandlerTest {
 		Assert.assertNotEquals(
 			_objectEntry2.getExternalReferenceCode(),
 			duplicateObjectEntry.getExternalReferenceCode());
-	}
-
-	private static void _invokeFeatureFlagListeners(
-		String featureFlagKey, boolean enabled) {
-
-		try (ServiceTrackerList<FeatureFlagListener> featureFlagListeners =
-				ServiceTrackerListFactory.open(
-					SystemBundleUtil.getBundleContext(),
-					FeatureFlagListener.class,
-					"(featureFlagKey=" + featureFlagKey + ")")) {
-
-			for (FeatureFlagListener featureFlagListener :
-					featureFlagListeners) {
-
-				featureFlagListener.onValue(
-					CompanyConstants.SYSTEM, featureFlagKey, enabled);
-			}
-		}
 	}
 
 	private ObjectEntry _addObjectEntry(Serializable objectFieldValue)

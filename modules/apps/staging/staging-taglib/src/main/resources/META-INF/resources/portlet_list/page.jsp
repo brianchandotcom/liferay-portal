@@ -7,6 +7,12 @@
 
 <%@ include file="/portlet_list/init.jsp" %>
 
+<%
+StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHelper();
+
+boolean companyGroup = stagingGroupHelper.isCompanyGroup(group);
+%>
+
 <liferay-util:buffer
 	var="html"
 >
@@ -25,13 +31,7 @@
 
 		PortletDataHandler portletDataHandler = portlet.getPortletDataHandlerInstance();
 
-		if (!portletDataHandler.isEnabled(company.getCompanyId())) {
-			continue;
-		}
-
-		StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHelper();
-
-		if (portletDataHandler.isCompany() != stagingGroupHelper.isCompanyGroup(group)) {
+		if (!portletDataHandler.isEnabled(company.getCompanyId()) || (portletDataHandler.isCompany() != companyGroup)) {
 			continue;
 		}
 
@@ -114,8 +114,8 @@
 					<span <%= !disableInputs ? StringPool.BLANK : "class=\"hide\"" %>>
 						<clay:button
 							cssClass="content-link modify-link pr-1"
+							data-porftlettitle="<%= portletTitle %>"
 							data-portletid="<%= portletId %>"
-							data-portlettitle="<%= portletTitle %>"
 							displayType="link"
 							id='<%= liferayPortletResponse.getNamespace() + "contentLink_" + portlet.getPortletId() %>'
 							label="change"

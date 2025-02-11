@@ -2533,6 +2533,16 @@ test.describe('Form Localization', () => {
 
 			// Create object definition
 
+			const listTypeDefinition =
+				await apiHelpers.listTypeAdmin.postRandomListTypeDefinition();
+
+			for (const option of ['Spain', 'Italy']) {
+				await apiHelpers.listTypeAdmin.postListTypeEntry(
+					listTypeDefinition.externalReferenceCode,
+					option
+				);
+			}
+
 			const objectDefinitionAPIClient =
 				await apiHelpers.buildRestClient(ObjectDefinitionApi);
 
@@ -2611,6 +2621,22 @@ test.describe('Form Localization', () => {
 							name: 'evergreen',
 							required: false,
 						},
+						{
+							DBType: ObjectField.DBTypeEnum.String,
+							businessType: ObjectField.BusinessTypeEnum.Picklist,
+							externalReferenceCode: 'selectOriginERC',
+							indexed: true,
+							indexedAsKeyword: false,
+							label: {
+								en_US: 'Select Origin',
+							},
+							listTypeDefinitionExternalReferenceCode:
+								listTypeDefinition.externalReferenceCode,
+							listTypeDefinitionId: listTypeDefinition.id,
+							localized: false,
+							name: 'selectOrigin',
+							required: false,
+						},
 					],
 					pluralLabel: {
 						en_US: 'Plants',
@@ -2687,6 +2713,10 @@ test.describe('Form Localization', () => {
 				page.getByLabel('Scientific Name field cannot be localized')
 			).toBeVisible();
 
+			await expect(
+				page.getByLabel('Select Origin field cannot be localized')
+			).toBeVisible();
+
 			// Check that unlocalized fields are disabled
 
 			await expect(
@@ -2708,11 +2738,16 @@ test.describe('Form Localization', () => {
 					.locator('body')
 			).toHaveAttribute('aria-disabled', 'true');
 
-			await expect(page.locator('.rich-text-input--disabled'))
-				.toBeAttached;
+			await expect(
+				page.locator('.rich-text-input--disabled')
+			).toBeAttached();
 
 			await expect(
 				page.getByRole('textbox', {name: 'Scientific Name'})
+			).toBeDisabled();
+
+			await expect(
+				page.getByPlaceholder('Choose an option')
 			).toBeDisabled();
 
 			// Check that the read only labels are not visibles
@@ -2729,9 +2764,14 @@ test.describe('Form Localization', () => {
 				.getByText('Scientific Name')
 				.getByText('(Read Only)');
 
+			const selectReadOnlyLabel = page
+				.getByText('Select Origin')
+				.getByText('(Read Only)');
+
 			await expect(checkboxReadOnlyLabel).not.toBeVisible();
 			await expect(inputTextReadOnlyLabel).not.toBeVisible();
 			await expect(textareaReadOnlyLabel).not.toBeVisible();
+			await expect(selectReadOnlyLabel).not.toBeVisible();
 
 			// Go to edit mode and change unlocalized field configuration to read only
 
@@ -2775,11 +2815,12 @@ test.describe('Form Localization', () => {
 
 			await expect(
 				page.getByLabel('field is not localizable message')
-			).toHaveCount(4);
+			).toHaveCount(5);
 
 			await expect(checkboxReadOnlyLabel).toBeVisible();
 			await expect(inputTextReadOnlyLabel).toBeVisible();
 			await expect(textareaReadOnlyLabel).toBeVisible();
+			await expect(selectReadOnlyLabel).toBeVisible();
 
 			await expect(page.getByLabel('Country')).toHaveAttribute(
 				'readonly'
@@ -2795,6 +2836,10 @@ test.describe('Form Localization', () => {
 			).toHaveAttribute('aria-readonly', 'true');
 
 			await expect(page.getByLabel('Scientific Name')).toHaveAttribute(
+				'readonly'
+			);
+
+			await expect(page.getByLabel('Select Origin')).toHaveAttribute(
 				'readonly'
 			);
 		}

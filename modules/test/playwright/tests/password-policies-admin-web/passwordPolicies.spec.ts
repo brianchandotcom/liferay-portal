@@ -86,7 +86,7 @@ test(
 
 		await page.getByLabel('Last Name').fill(getRandomString());
 
-		const password = '12345678';
+		const password = 'ABC123';
 
 		await page
 			.getByLabel('Password Required', {exact: true})

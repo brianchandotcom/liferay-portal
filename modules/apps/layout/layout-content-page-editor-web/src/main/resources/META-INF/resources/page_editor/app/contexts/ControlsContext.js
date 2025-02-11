@@ -182,14 +182,6 @@ const reducer = (state, action) => {
 			}
 		}
 		else if (multiSelect === MULTI_SELECT_TYPES.range) {
-
-			// Avoid selection in range when directly selecting an item that
-			// is not a layout data item, such as editables.
-
-			if (!layoutData.items[itemId]) {
-				return nextState;
-			}
-
 			let initialActiveItemIds = state.activeItemIds;
 
 			// The last active item id is taken when the first item in the
@@ -215,7 +207,7 @@ const reducer = (state, action) => {
 				);
 			}
 
-			rangeLimitIds = {end: itemId, start: startLimitId};
+			rangeLimitIds = {end: parentId || itemId, start: startLimitId};
 
 			if (
 				!rangeLimitIds.start ||
@@ -225,7 +217,7 @@ const reducer = (state, action) => {
 				// If the start and end of the range are the same id, only
 				// this item is selected
 
-				nextActiveItemIds = [itemId];
+				nextActiveItemIds = [parentId || itemId];
 			}
 			else {
 				const root = layoutData.items[layoutData.rootItems.main];

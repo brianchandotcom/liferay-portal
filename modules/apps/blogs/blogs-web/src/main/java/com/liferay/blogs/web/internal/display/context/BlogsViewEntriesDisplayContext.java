@@ -13,6 +13,7 @@ import com.liferay.blogs.service.BlogsEntryServiceUtil;
 import com.liferay.blogs.web.internal.frontend.taglib.clay.servlet.taglib.BlogsEntryVerticalCard;
 import com.liferay.blogs.web.internal.security.permission.resource.BlogsEntryPermission;
 import com.liferay.blogs.web.internal.util.BlogsUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -322,25 +323,10 @@ public class BlogsViewEntriesDisplayContext {
 			Hits hits = indexer.search(searchContext);
 
 			searchContainer.setResultsAndTotal(
-				() -> {
-					List<BlogsEntry> blogsEntries = new ArrayList<>();
-
-					List<SearchResult> searchResults =
-						SearchResultUtil.getSearchResults(
-							hits, LocaleUtil.getDefault());
-
-					for (SearchResult searchResult : searchResults) {
-						BlogsEntry blogsEntry = _toBlogsEntry(searchResult);
-
-						if (blogsEntry == null) {
-							continue;
-						}
-
-						blogsEntries.add(blogsEntry);
-					}
-
-					return blogsEntries;
-				},
+				() -> TransformUtil.transform(
+					SearchResultUtil.getSearchResults(
+						hits, LocaleUtil.getDefault()),
+					searchResult -> _toBlogsEntry(searchResult)),
 				hits.getLength());
 		}
 	}

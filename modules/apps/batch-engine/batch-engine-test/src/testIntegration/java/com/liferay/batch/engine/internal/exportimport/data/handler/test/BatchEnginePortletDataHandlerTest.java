@@ -295,7 +295,8 @@ public class BatchEnginePortletDataHandlerTest {
 			exportImportConfiguration, larFile);
 	}
 
-	private static final String _OBJECT_FIELD_NAME_TEXT = "testFieldName";
+	private static final String _OBJECT_FIELD_NAME_TEXT =
+		"a" + RandomTestUtil.randomString();
 
 	private long _companyGroupId;
 

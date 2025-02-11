@@ -14,13 +14,15 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
+
+import java.util.function.Consumer;
+
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-import org.mockito.Mockito;
 
-import java.util.function.Consumer;
+import org.mockito.Mockito;
 
 /**
  * @author Adolfo Pérez
@@ -31,6 +33,50 @@ public class DepotAssetRendererFactoryWrapperTest {
 	@Rule
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
+
+	@Test
+	public void testAssetRendererReturnsFallbackGroupWhenNoContext()
+		throws Exception {
+
+		AssetRenderer<Object> assetRenderer = Mockito.mock(AssetRenderer.class);
+
+		Mockito.when(
+			_assetRendererFactory.getAssetRenderer(Mockito.anyLong())
+		).thenReturn(
+			assetRenderer
+		);
+
+		long depotGroupId = _setUpDepotGroup();
+
+		Mockito.when(
+			assetRenderer.getGroupId()
+		).thenReturn(
+			depotGroupId
+		);
+
+		long groupId = _setUpGroup();
+
+		Mockito.when(
+			_siteConnectedGroupGroupProvider.
+				getCurrentAndAncestorSiteAndDepotGroupIds(Mockito.anyLong())
+		).thenReturn(
+			new long[] {depotGroupId, groupId}
+		);
+
+		DepotAssetRendererFactoryWrapper depotAssetRendererFactoryWrapper =
+			new DepotAssetRendererFactoryWrapper(
+				_assetRendererFactory, null, null, _groupLocalService, null,
+				null, _siteConnectedGroupGroupProvider);
+
+		try (SafeCloseable safeCloseable =
+				GroupThreadLocal.setGroupIdWithSafeCloseable(-1)) {
+
+			Assert.assertSame(
+				assetRenderer,
+				depotAssetRendererFactoryWrapper.getAssetRenderer(
+					RandomTestUtil.randomLong()));
+		}
+	}
 
 	@Test
 	public void testAssetRenderIsNotReturnedForUnconnectedGroup()
@@ -63,48 +109,6 @@ public class DepotAssetRendererFactoryWrapperTest {
 				GroupThreadLocal.setGroupIdWithSafeCloseable(groupId)) {
 
 			Assert.assertNull(
-				depotAssetRendererFactoryWrapper.getAssetRenderer(
-					RandomTestUtil.randomLong()));
-		}
-	}
-
-	@Test
-	public void testAssetRendererReturnsFallbackGroupWhenNoContext() throws Exception {
-		AssetRenderer<Object> assetRenderer = Mockito.mock(AssetRenderer.class);
-
-		Mockito.when(
-			_assetRendererFactory.getAssetRenderer(Mockito.anyLong())
-		).thenReturn(
-			assetRenderer
-		);
-
-		long depotGroupId = _setUpDepotGroup();
-
-		Mockito.when(
-			assetRenderer.getGroupId()
-		).thenReturn(
-			depotGroupId
-		);
-
-		long groupId = _setUpGroup();
-
-		Mockito.when(
-			_siteConnectedGroupGroupProvider.
-				getCurrentAndAncestorSiteAndDepotGroupIds(Mockito.anyLong())
-		).thenReturn(
-			new long[] {depotGroupId, groupId}
-		);
-
-		DepotAssetRendererFactoryWrapper depotAssetRendererFactoryWrapper =
-			new DepotAssetRendererFactoryWrapper(
-				_assetRendererFactory, null, null, _groupLocalService, null,
-				null, _siteConnectedGroupGroupProvider);
-
-		try (SafeCloseable safeCloseable =
-				 GroupThreadLocal.setGroupIdWithSafeCloseable(-1)) {
-
-			Assert.assertSame(
-				assetRenderer,
 				depotAssetRendererFactoryWrapper.getAssetRenderer(
 					RandomTestUtil.randomLong()));
 		}

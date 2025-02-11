@@ -139,4 +139,24 @@ export class ExportImportPage {
 		await this.productMenuPage.openProductMenuIfClosed();
 		await this.productMenuPage.goToPublishingImport();
 	}
+
+	async goToImportOptions(folderPath: string) {
+		await this.productMenuPage.openProductMenuIfClosed();
+		await this.productMenuPage.goToPublishingImport();
+
+		await this.newImportButton.click();
+
+		const fileChooserPromise = this.page.waitForEvent('filechooser');
+
+		await this.fileSelector.click();
+
+		const fileChooser = await fileChooserPromise;
+
+		await fileChooser.setFiles(folderPath);
+
+		await this.continueButton.click();
+
+		await this.page.waitForLoadState('domcontentloaded');
+		await this.page.waitForTimeout(1000);
+	}
 }

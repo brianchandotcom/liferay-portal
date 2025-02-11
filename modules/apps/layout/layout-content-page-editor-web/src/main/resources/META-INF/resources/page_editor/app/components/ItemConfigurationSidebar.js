@@ -27,7 +27,7 @@ export default function ItemConfigurationSidebar() {
 	const itemConfigurationOpen = useSelector(selectItemConfigurationOpen);
 
 	const ItemConfigurationSidebarContent = () => {
-		if (Liferay.FeatureFlags['LPD-18221'] && activeItemIds.length > 1) {
+		if (activeItemIds.length > 1) {
 			return <MultiSelectMessage />;
 		}
 		else if (activeItemId) {

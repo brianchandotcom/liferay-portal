@@ -17,7 +17,7 @@ import FragmentEntryLinksWithComments from './FragmentEntryLinksWithComments';
 export default function CommentsSidebar() {
 	const activeItemIds = useActiveItemIds();
 
-	if (Liferay.FeatureFlags['LPD-18221'] && activeItemIds.length > 1) {
+	if (activeItemIds.length > 1) {
 		return <MultiSelectMessage />;
 	}
 	else {

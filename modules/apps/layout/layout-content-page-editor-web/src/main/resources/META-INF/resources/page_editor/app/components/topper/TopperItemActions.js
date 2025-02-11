@@ -14,10 +14,7 @@ import {getLayoutDataItemPropTypes} from '../../../prop_types/index';
 import {FRAGMENT_ENTRY_TYPES} from '../../config/constants/fragmentEntryTypes';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 import {useClipboard, useSetClipboard} from '../../contexts/ClipboardContext';
-import {
-	useSelectItem,
-	useSelectMultipleItems,
-} from '../../contexts/ControlsContext';
+import {useSelectMultipleItems} from '../../contexts/ControlsContext';
 import {
 	useDispatch,
 	useSelector,
@@ -49,16 +46,13 @@ import hasDropZoneChild from '../layout_data_items/hasDropZoneChild';
 export default function TopperItemActions({disabled, item}) {
 	const dispatch = useDispatch();
 	const hasRequiredChild = useHasRequiredChild(item.itemId);
-	const selectItem = useSelectItem();
 	const selectMultipleItems = useSelectMultipleItems();
 	const getWidgets = useGetWidgets();
 
 	const clipboard = useClipboard();
 	const setClipboard = useSetClipboard();
 
-	const selectItems = Liferay.FeatureFlags['LPD-18221']
-		? selectMultipleItems
-		: selectItem;
+	const selectItems = selectMultipleItems;
 
 	const {fragmentEntryLinks, layoutData, selectedViewportSize} = useSelector(
 		(state) => state
@@ -175,10 +169,7 @@ export default function TopperItemActions({disabled, item}) {
 			});
 		}
 
-		if (
-			Liferay.FeatureFlags['LPD-18221'] &&
-			!isStepper(fragmentEntryLinks[item.config.fragmentEntryLinkId])
-		) {
+		if (!isStepper(fragmentEntryLinks[item.config.fragmentEntryLinkId])) {
 			items.push({
 				action: () => {
 					if (

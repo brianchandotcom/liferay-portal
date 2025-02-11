@@ -49,18 +49,11 @@ export default function ({activable = true, children, ...props}) {
 	const canUpdatePageStructure = useSelector(selectCanUpdatePageStructure);
 	const collectionItemIndex = useCollectionItemIndex();
 
-	if (
-		!canUpdatePageStructure ||
-		(collectionItemIndex > 0 && Liferay.FeatureFlags['LPD-18221'])
-	) {
+	if (!canUpdatePageStructure || collectionItemIndex > 0) {
 		return children;
 	}
 
-	if (
-		(Liferay.FeatureFlags['LPD-18221'] ||
-			Liferay.FeatureFlags['LPD-31772']) &&
-		activable
-	) {
+	if (activable) {
 		return (
 			<ActivableTopperEmptyWrapper {...props}>
 				{children}

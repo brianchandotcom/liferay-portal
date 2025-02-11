@@ -58,10 +58,6 @@ export default function MultiSelectManager() {
 	};
 
 	useEffect(() => {
-		if (!Liferay.FeatureFlags['LPD-18221']) {
-			return;
-		}
-
 		const onClick = (event) => {
 			const multiSelection = Object.values(keymapRef.current).find(
 				(multiSelection) =>

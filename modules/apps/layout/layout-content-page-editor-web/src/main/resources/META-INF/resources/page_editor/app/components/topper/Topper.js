@@ -229,7 +229,7 @@ function TopperContent({
 
 	const {elementRef, isFocusable} = useLayoutKeyboardNavigation(item);
 
-	if (collectionItemIndex > 0 && Liferay.FeatureFlags['LPD-18221']) {
+	if (collectionItemIndex > 0) {
 		return children;
 	}
 

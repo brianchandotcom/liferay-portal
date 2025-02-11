@@ -15,10 +15,6 @@ export function useMultiSelectReady() {
 	const [multiSelectReady, setMultiSelectReady] = useState(false);
 
 	useEffect(() => {
-		if (!Liferay.FeatureFlags['LPD-18221']) {
-			return;
-		}
-
 		const isMultiSelectReady = (event) => {
 			return (
 				event.key === CONTROL_KEY_CODE || event.key === META_KEY_CODE

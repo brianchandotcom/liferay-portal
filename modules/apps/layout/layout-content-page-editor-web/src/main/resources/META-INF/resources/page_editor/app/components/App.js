@@ -123,7 +123,7 @@ function KeyboardManager() {
 	) : (
 		<>
 			<ShortcutManager />
-			{Liferay.FeatureFlags['LPD-18221'] ? <MultiSelectManager /> : null}
+			<MultiSelectManager />
 		</>
 	);
 }

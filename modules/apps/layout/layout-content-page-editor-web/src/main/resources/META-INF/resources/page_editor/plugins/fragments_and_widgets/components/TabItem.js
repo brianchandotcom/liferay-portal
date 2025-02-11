@@ -15,10 +15,7 @@ import React, {useCallback, useState} from 'react';
 import {FRAGMENTS_DISPLAY_STYLES} from '../../../app/config/constants/fragmentsDisplayStyles';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../app/config/constants/layoutDataItemTypes';
 import {LIST_ITEM_TYPES} from '../../../app/config/constants/listItemTypes';
-import {
-	useSelectItem,
-	useSelectMultipleItems,
-} from '../../../app/contexts/ControlsContext';
+import {useSelectMultipleItems} from '../../../app/contexts/ControlsContext';
 import {
 	useDisableKeyboardMovement,
 	useSetMovementSources,
@@ -46,7 +43,6 @@ export default function TabItem({displayStyle, item, onRemoveHighlighted}) {
 	const dispatch = useDispatch();
 	const [disabled, setDisabled] = useState(item.disabled);
 	const setMovementSources = useSetMovementSources();
-	const selectItem = useSelectItem();
 	const selectMultipleItems = useSelectMultipleItems();
 
 	const onMovementSource = (event) => {
@@ -128,9 +124,7 @@ export default function TabItem({displayStyle, item, onRemoveHighlighted}) {
 					itemType: item.type,
 					parentItemId: parentId,
 					position,
-					selectItems: Liferay.FeatureFlags['LPD-18221']
-						? selectMultipleItems
-						: selectItem,
+					selectItems: selectMultipleItems,
 				})
 			)
 				.then(() => {

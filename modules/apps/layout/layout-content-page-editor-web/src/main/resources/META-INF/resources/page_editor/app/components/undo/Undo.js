@@ -6,10 +6,7 @@
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import React from 'react';
 
-import {
-	useSelectItem,
-	useSelectMultipleItems,
-} from '../../contexts/ControlsContext';
+import {useSelectMultipleItems} from '../../contexts/ControlsContext';
 import {useSelector} from '../../contexts/StoreContext';
 import UndoHistory from './UndoHistory';
 import useUndoRedoActions from './useUndoRedoActions';
@@ -30,12 +27,9 @@ export default function Undo() {
 	const disabledRedo = useDisabledRedo();
 	const disabledUndo = useDisabledUndo();
 	const {onRedo, onUndo} = useUndoRedoActions();
-	const selectItem = useSelectItem();
 	const selectMultipleItems = useSelectMultipleItems();
 
-	const selectItems = Liferay.FeatureFlags['LPD-18221']
-		? selectMultipleItems
-		: selectItem;
+	const selectItems = selectMultipleItems;
 
 	return (
 		<>

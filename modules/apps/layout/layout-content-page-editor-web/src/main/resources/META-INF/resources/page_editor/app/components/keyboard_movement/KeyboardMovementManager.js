@@ -81,9 +81,7 @@ export default function KeyboardMovementManager() {
 
 	const getWidgets = useGetWidgets();
 
-	const selectItems = Liferay.FeatureFlags['LPD-18221']
-		? selectMultipleItems
-		: selectItem;
+	const selectItems = selectMultipleItems;
 
 	keymapRef.current = {
 		disableMovement: {

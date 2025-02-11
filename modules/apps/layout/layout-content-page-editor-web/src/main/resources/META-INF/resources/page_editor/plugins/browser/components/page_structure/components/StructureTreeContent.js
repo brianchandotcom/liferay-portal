@@ -170,8 +170,7 @@ export default function StructureTreeContent({expandedKeys, setExpandedKeys}) {
 		const editedNodeId = useEditedNodeId();
 		const dispatch = useDispatch();
 		const hoveredItemId = useHoveredItemId();
-		const isMultiSelect =
-			Liferay.FeatureFlags['LPD-18221'] && activeItemIds.length > 1;
+		const isMultiSelect = activeItemIds.length > 1;
 		const isSelected = fromControlsId(activeItemIds).includes(item.id);
 		const isHovered = item.id === fromControlsId(hoveredItemId);
 		const canUpdatePageStructure = useSelector(

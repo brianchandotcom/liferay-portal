@@ -373,10 +373,6 @@ export default function getTreeNodes(
 
 	return {
 		activable:
-			(Liferay.FeatureFlags['LPD-18221'] ||
-				(item.type !== LAYOUT_DATA_ITEM_TYPES.formStep &&
-					item.type !== LAYOUT_DATA_ITEM_TYPES.column &&
-					item.type !== LAYOUT_DATA_ITEM_TYPES.fragmentDropZone)) &&
 			item.type !== LAYOUT_DATA_ITEM_TYPES.collectionItem &&
 			canUpdateItemConfiguration,
 		children,

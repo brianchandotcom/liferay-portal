@@ -7,10 +7,7 @@ import {ClayButtonWithIcon} from '@clayui/button';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
 import React from 'react';
 
-import {
-	useSelectItem,
-	useSelectMultipleItems,
-} from '../contexts/ControlsContext';
+import {useSelectMultipleItems} from '../contexts/ControlsContext';
 import {useSelector} from '../contexts/StoreContext';
 import {onDiscardDraft} from './DiscardDraftButton';
 import {useDisabledRedo, useDisabledUndo} from './undo/Undo';
@@ -28,14 +25,11 @@ export default function ToolbarActionsDropdown({discardDraftFormRef}) {
 	const {loadingHistory, onHistoryItemClick} = useOnHistoryItemClick();
 	const {onRedo, onUndo} = useUndoRedoActions();
 	const onToggleSidebars = useOnToggleSidebars();
-	const selectItem = useSelectItem();
 	const selectMultipleItems = useSelectMultipleItems();
 	const sidebarHidden = useSelector((state) => state.sidebar.hidden);
 	const undoHistory = useSelector((state) => state.undoHistory);
 
-	const selectItems = Liferay.FeatureFlags['LPD-18221']
-		? selectMultipleItems
-		: selectItem;
+	const selectItems = selectMultipleItems;
 
 	return (
 		<>

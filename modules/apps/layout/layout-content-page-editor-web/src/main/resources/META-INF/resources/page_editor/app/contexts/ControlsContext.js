@@ -143,19 +143,12 @@ const reducer = (state, action) => {
 			hoveredItemType: itemType,
 		};
 	}
-	else if (
-		type === SELECT_ITEM &&
-		(Liferay.FeatureFlags['LPD-18221'] ||
-			itemId !== nextState.activeItemIds[0])
-	) {
+	else if (type === SELECT_ITEM) {
 		let rangeLimitIds = {};
 		let nextActiveItemIds = [itemId];
 		let nextItemType = itemType;
 
-		if (
-			!Liferay.FeatureFlags['LPD-18221'] ||
-			state.activeItemType === ITEM_TYPES.editable
-		) {
+		if (state.activeItemType === ITEM_TYPES.editable) {
 			nextActiveItemIds = itemId ? [itemId] : [];
 		}
 		else if (!itemId) {

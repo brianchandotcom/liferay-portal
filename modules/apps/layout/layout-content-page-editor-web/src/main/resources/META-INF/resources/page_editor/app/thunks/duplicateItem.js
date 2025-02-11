@@ -41,14 +41,9 @@ export default function duplicateItem({itemIds, selectItems = () => {}}) {
 						})
 					);
 
-					selectItems(
-						Liferay.FeatureFlags['LPD-18221']
-							? itemIds
-							: itemIds[0],
-						{
-							origin: ITEM_ACTIVATION_ORIGINS.itemActions,
-						}
-					);
+					selectItems(itemIds, {
+						origin: ITEM_ACTIVATION_ORIGINS.itemActions,
+					});
 				}
 			}
 		);

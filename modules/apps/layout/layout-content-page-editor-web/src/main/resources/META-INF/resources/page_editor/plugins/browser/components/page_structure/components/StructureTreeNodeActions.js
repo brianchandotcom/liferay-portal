@@ -155,9 +155,7 @@ const ActionList = ({item, setActive, setOpenSaveModal}) => {
 	const clipboard = useClipboard();
 	const setClipboard = useSetClipboard();
 
-	const selectItems = Liferay.FeatureFlags['LPD-18221']
-		? selectMultipleItems
-		: selectItem;
+	const selectItems = selectMultipleItems;
 
 	const {fragmentEntryLinks, layoutData, selectedViewportSize} = useSelector(
 		(state) => state
@@ -250,7 +248,6 @@ const ActionList = ({item, setActive, setOpenSaveModal}) => {
 		}
 
 		if (
-			Liferay.FeatureFlags['LPD-18221'] &&
 			canBeDuplicated(
 				fragmentEntryLinks,
 				layoutDataItem,
@@ -294,11 +291,10 @@ const ActionList = ({item, setActive, setOpenSaveModal}) => {
 		}
 
 		if (
-			Liferay.FeatureFlags['LPD-18221'] &&
-			(!isStepper(fragmentEntryLinks[item.config.fragmentEntryLinkId]) ||
-				item.type === LAYOUT_DATA_ITEM_TYPES.column ||
-				item.type === LAYOUT_DATA_ITEM_TYPES.fragmentDropZone ||
-				item.type === LAYOUT_DATA_ITEM_TYPES.formStep)
+			!isStepper(fragmentEntryLinks[item.config.fragmentEntryLinkId]) ||
+			item.type === LAYOUT_DATA_ITEM_TYPES.column ||
+			item.type === LAYOUT_DATA_ITEM_TYPES.fragmentDropZone ||
+			item.type === LAYOUT_DATA_ITEM_TYPES.formStep
 		) {
 			items.push({
 				action: () => {

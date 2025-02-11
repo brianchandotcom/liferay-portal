@@ -89,12 +89,6 @@ export function fromControlsId(controlsItemId) {
 	}
 }
 
-const NotCollectionSelectedMessage = () => (
-	<div className="page-editor__collection__message">
-		{Liferay.Language.get('no-collection-selected-yet')}
-	</div>
-);
-
 const NotCollectionSelected = ({collection, dispatch, item}) => {
 	const handleCollectionSelect = (collection = {}) => {
 		dispatch(
@@ -511,14 +505,12 @@ const Collection = React.memo(
 			CollectionContent = <ClayLoadingIndicator />;
 		}
 		else if (!collectionIsMapped(collectionConfig)) {
-			CollectionContent = Liferay.FeatureFlags['LPD-18221'] ? (
+			CollectionContent = (
 				<NotCollectionSelected
 					collection={collection}
 					dispatch={dispatch}
 					item={item}
 				/>
-			) : (
-				<NotCollectionSelectedMessage />
 			);
 		}
 		else if (showEmptyMessage) {

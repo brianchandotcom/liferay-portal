@@ -17,7 +17,6 @@ export default function isCuttable(
 	const item = layoutData.items[itemId];
 
 	return (
-		Liferay.FeatureFlags['LPD-18221'] &&
 		canBeRemoved(item, layoutData) &&
 		!(
 			isFragment(item) &&

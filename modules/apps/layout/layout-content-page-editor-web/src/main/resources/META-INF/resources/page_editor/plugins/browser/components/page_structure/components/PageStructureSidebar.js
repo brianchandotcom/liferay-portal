@@ -14,7 +14,7 @@ export default function PageStructureSidebar() {
 
 	return (
 		<div className="page-editor__page-structure">
-			{Liferay.FeatureFlags['LPD-18221'] && activeItemIds.length > 1 ? (
+			{activeItemIds.length > 1 ? (
 				<PageStructureSidebarToolbar activeItemIds={activeItemIds} />
 			) : null}
 

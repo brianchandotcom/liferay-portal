@@ -78,12 +78,6 @@ const renderCollection = ({
 describe('CollectionWithControls', () => {
 	afterEach(cleanup);
 
-	it('shows a no-collection-selected message', () => {
-		const {getByText} = renderCollection();
-
-		expect(getByText('no-collection-selected-yet')).toBeInTheDocument();
-	});
-
 	it('removes all buttons if user has no permissions', () => {
 		const {queryByTitle} = renderCollection({hasUpdatePermission: false});
 

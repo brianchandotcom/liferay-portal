@@ -50,6 +50,16 @@ export class CompanyExportImportPage {
 		return await this.exportImportPage.downloadExportProcess(exportName);
 	}
 
+	async goToImportOptions(filePath: string) {
+		await this.applicationsMenuPage.goToImport();
+
+		await this.exportImportPage.newImportButton.click();
+
+		await this.page.locator('input[type="file"]').setInputFiles(filePath);
+
+		await this.exportImportPage.continueButton.click();
+	}
+
 	async import(
 		filePath: string,
 		includePermissions: boolean = false

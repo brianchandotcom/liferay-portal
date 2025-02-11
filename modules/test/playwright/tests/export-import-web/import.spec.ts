@@ -20,6 +20,7 @@ import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {pageTemplatesPagesTest} from '../../fixtures/pageTemplatesPagesTest';
+import {productMenuPageTest} from '../../fixtures/productMenuPageTest';
 import {wikiPagesTest} from '../../fixtures/wikiPagesTest';
 import getRandomString from '../../utils/getRandomString';
 import {getTempDir} from '../../utils/temp';
@@ -42,6 +43,7 @@ export const test = mergeTests(
 	loginTest(),
 	pageEditorPagesTest,
 	pageTemplatesPagesTest,
+	productMenuPageTest,
 	stagingPageTest,
 	wikiPagesTest
 );
@@ -478,4 +480,63 @@ test('can import custom object entries at instance level with or without permiss
 			],
 		})
 	);
+});
+
+test('can see corresponding elements in instance and site level', async ({
+	apiHelpers,
+	companyExportImportPage,
+	exportImportPage,
+}) => {
+	const objectActionApiClient =
+		await apiHelpers.buildRestClient(ObjectDefinitionApi);
+
+	const {body: objectDefinition} =
+		await objectActionApiClient.postObjectDefinition({
+			active: true,
+			externalReferenceCode: 'test',
+			label: {
+				en_US: 'Test',
+			},
+			name: 'Test',
+			objectFields: [
+				{
+					DBType: ObjectField.DBTypeEnum.String,
+					businessType: ObjectField.BusinessTypeEnum.Text,
+					indexed: true,
+					indexedAsKeyword: true,
+					label: {
+						en_US: 'Name',
+					},
+					name: 'name',
+					required: true,
+				},
+			],
+			pluralLabel: {
+				en_US: 'Tests',
+			},
+			portlet: true,
+			scope: 'company',
+			status: {
+				code: 0,
+			},
+		});
+
+	apiHelpers.data.push({id: objectDefinition.id, type: 'objectDefinition'});
+
+	const exportFilePath =
+		await companyExportImportPage.export('Tests 1 Items');
+
+	await exportImportPage.page.goto('/');
+
+	await exportImportPage.goToImportOptions(exportFilePath);
+
+	await expect(
+		companyExportImportPage.page.getByText('Comments, Ratings')
+	).toBeVisible();
+
+	await companyExportImportPage.goToImportOptions(exportFilePath);
+
+	await expect(
+		companyExportImportPage.page.getByText('Comments, Ratings')
+	).not.toBeVisible();
 });

@@ -55,11 +55,11 @@ public class ObjectEntryFolderLocalServiceImpl
 		User user = _userLocalService.getUser(userId);
 
 		_validateExternalReferenceCode(
-			externalReferenceCode, groupId, user.getCompanyId());
+			externalReferenceCode, user.getCompanyId(), groupId);
 
 		_validateParentObjectEntryFolderId(groupId, parentObjectEntryFolderId);
 		_validateName(
-			groupId, user.getCompanyId(), 0, parentObjectEntryFolderId, name);
+			user.getCompanyId(), groupId, 0, parentObjectEntryFolderId, name);
 
 		ObjectEntryFolder objectEntryFolder =
 			objectEntryFolderPersistence.create(
@@ -190,7 +190,7 @@ public class ObjectEntryFolderLocalServiceImpl
 
 	@Override
 	public List<ObjectEntryFolder> getObjectEntryFolders(
-		long groupId, long companyId, long parentObjectEntryFolderId, int start,
+		long companyId, long groupId, long parentObjectEntryFolderId, int start,
 		int end) {
 
 		return objectEntryFolderPersistence.findByG_C_P(
@@ -199,7 +199,7 @@ public class ObjectEntryFolderLocalServiceImpl
 
 	@Override
 	public int getObjectEntryFoldersCount(
-		long groupId, long companyId, long parentObjectEntryFolderId) {
+		long companyId, long groupId, long parentObjectEntryFolderId) {
 
 		return objectEntryFolderPersistence.countByG_C_P(
 			groupId, companyId, parentObjectEntryFolderId);
@@ -218,7 +218,7 @@ public class ObjectEntryFolderLocalServiceImpl
 		_validateParentObjectEntryFolderId(
 			objectEntryFolder.getGroupId(), parentObjectEntryFolderId);
 		_validateName(
-			objectEntryFolder.getGroupId(), objectEntryFolder.getCompanyId(),
+			objectEntryFolder.getCompanyId(), objectEntryFolder.getGroupId(),
 			objectEntryFolderId, parentObjectEntryFolderId, name);
 
 		objectEntryFolder.setParentObjectEntryFolderId(
@@ -247,7 +247,7 @@ public class ObjectEntryFolderLocalServiceImpl
 	}
 
 	private void _validateExternalReferenceCode(
-		String externalReferenceCode, long groupId, long companyId) {
+		String externalReferenceCode, long companyId, long groupId) {
 
 		ObjectEntryFolder objectEntryFolder =
 			objectEntryFolderPersistence.fetchByERC_G_C(
@@ -262,7 +262,7 @@ public class ObjectEntryFolderLocalServiceImpl
 	}
 
 	private void _validateName(
-			long groupId, long companyId, long objectEntryFolderId,
+			long companyId, long groupId, long objectEntryFolderId,
 			long parentObjectEntryFolderId, String name)
 		throws PortalException {
 

@@ -16,7 +16,6 @@ import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {COLLECTION_APPLIED_FILTERS_FRAGMENT_ENTRY_KEY} from '../../../../../../../app/config/constants/collectionAppliedFiltersFragmentKey';
 import {COLLECTION_FILTER_FRAGMENT_ENTRY_KEY} from '../../../../../../../app/config/constants/collectionFilterFragmentEntryKey';
 import {COMMON_STYLES_ROLES} from '../../../../../../../app/config/constants/commonStylesRoles';
-import {CONTENT_DISPLAY_OPTIONS} from '../../../../../../../app/config/constants/contentDisplayOptions';
 import {FREEMARKER_FRAGMENT_ENTRY_PROCESSOR} from '../../../../../../../app/config/constants/freemarkerFragmentEntryProcessor';
 import {LAYOUT_DATA_ITEM_TYPES} from '../../../../../../../app/config/constants/layoutDataItemTypes';
 import {VIEWPORT_SIZES} from '../../../../../../../app/config/constants/viewportSizes';
@@ -33,6 +32,7 @@ import InfoItemService from '../../../../../../../app/services/InfoItemService';
 import updateCollectionDisplayCollection from '../../../../../../../app/thunks/updateCollectionDisplayCollection';
 import updateItemConfig from '../../../../../../../app/thunks/updateItemConfig';
 import {CACHE_KEYS} from '../../../../../../../app/utils/cache';
+import {COLLECTION_LIST_STYLES} from '../../../../../../../app/utils/collectionListStyles';
 import {getResponsiveConfig} from '../../../../../../../app/utils/getResponsiveConfig';
 import {isLayoutDataItemDeleted} from '../../../../../../../app/utils/isLayoutDataItemDeleted';
 import useCache from '../../../../../../../app/utils/useCache';
@@ -48,12 +48,6 @@ import {PaginationSelector} from './PaginationSelector';
 import {ShowGutterSelector} from './ShowGutterSelector';
 import {StyleDisplaySelector} from './StyleDisplaySelector';
 import {VerticalAlignmentSelector} from './VerticalAlignmentSelector';
-
-const LIST_STYLES = {
-	flexColumn: CONTENT_DISPLAY_OPTIONS.flexColumn,
-	flexRow: CONTENT_DISPLAY_OPTIONS.flexRow,
-	grid: '',
-};
 
 export function CollectionGeneralPanel({item}) {
 	const {
@@ -71,8 +65,8 @@ export function CollectionGeneralPanel({item}) {
 
 	const collectionItemType = collection?.itemType || null;
 	const flexEnabled =
-		listStyle === LIST_STYLES.flexColumn ||
-		listStyle === LIST_STYLES.flexRow;
+		listStyle === COLLECTION_LIST_STYLES.flexColumn ||
+		listStyle === COLLECTION_LIST_STYLES.flexRow;
 
 	const restrictedItemIds = useSelector((state) => state.restrictedItemIds);
 	const segmentsExperienceId = useSelector(selectSegmentsExperienceId);
@@ -179,7 +173,7 @@ export function CollectionGeneralPanel({item}) {
 			updateCollectionDisplayCollection({
 				collection: Object.keys(collection).length ? collection : null,
 				itemId: item.itemId,
-				listStyle: LIST_STYLES.grid,
+				listStyle: COLLECTION_LIST_STYLES.grid,
 			})
 		);
 	};
@@ -255,7 +249,7 @@ export function CollectionGeneralPanel({item}) {
 		if (
 			collection &&
 			listStyle &&
-			!Object.values(LIST_STYLES).includes(listStyle)
+			!Object.values(COLLECTION_LIST_STYLES).includes(listStyle)
 		) {
 			InfoItemService.getAvailableListItemRenderers({
 				itemSubtype: collection.itemSubtype,
@@ -341,7 +335,7 @@ export function CollectionGeneralPanel({item}) {
 									/>
 								)}
 
-								{listStyle === LIST_STYLES.grid && (
+								{listStyle === COLLECTION_LIST_STYLES.grid && (
 									<>
 										<LayoutSelector
 											collectionConfig={collectionConfig}
@@ -387,7 +381,8 @@ export function CollectionGeneralPanel({item}) {
 								{selectedViewportSize ===
 									VIEWPORT_SIZES.desktop && (
 									<>
-										{listStyle !== LIST_STYLES.grid &&
+										{listStyle !==
+											COLLECTION_LIST_STYLES.grid &&
 											!!availableListItemStyles.length && (
 												<ListItemStyleSelector
 													availableListItemStyles={

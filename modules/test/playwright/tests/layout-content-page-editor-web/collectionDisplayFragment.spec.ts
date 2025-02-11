@@ -432,7 +432,7 @@ testWithIsolatedSite(
 			.getByRole('menuitem', {
 				name: 'Add Button',
 			})
-			.dragTo(page.getByText('No Collection Selected Yet'));
+			.dragTo(page.getByText('Select a collection to display.'));
 
 		await expect(page.locator('.alert-danger')).toHaveText(
 			'Error:Fragments cannot be placed inside an unmapped collection display fragment.'

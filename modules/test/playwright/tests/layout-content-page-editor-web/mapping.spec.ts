@@ -191,7 +191,7 @@ test('Allows selecting specific repeatable collection provider', async ({
 		page.locator('.page-editor__collection-item').first()
 	);
 
-	await page.getByText('No Collection Selected').first().click();
+	await page.getByText('Select a collection to display.').first().click();
 
 	await pageEditorPage.chooseCollectionDisplayOption(
 		'Repeatable Fields Collection Providers',

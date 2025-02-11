@@ -4,6 +4,39 @@
 <service-builder auto-import-default-references="false" auto-namespace-tables="false" dependency-injector="ds" mvcc-enabled="true" package-path="com.liferay.commerce.tax">
 	<author>Marco Leo</author>
 	<namespace>Commerce</namespace>
+	<entity external-reference-code="company" local-service="true" name="CommerceTaxCategoryMapping" remote-service="true" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="commerceTaxCategoryMappingId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="commerceTaxMethodId" type="long" />
+		<column name="CPTaxCategoryId" type="long" />
+
+		<!-- Finder methods -->
+
+		<finder name="CommerceTaxMethodId" return-type="Collection">
+			<finder-column name="commerceTaxMethodId" />
+		</finder>
+		<finder name="C_C" return-type="CommerceTaxCategoryMapping" unique="true">
+			<finder-column name="commerceTaxMethodId" />
+			<finder-column name="CPTaxCategoryId" />
+		</finder>
+	</entity>
 	<entity local-service="true" name="CommerceTaxMethod" remote-service="true">
 
 		<!-- PK fields -->

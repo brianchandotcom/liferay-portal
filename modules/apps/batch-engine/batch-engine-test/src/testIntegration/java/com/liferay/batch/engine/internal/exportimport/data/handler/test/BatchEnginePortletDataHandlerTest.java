@@ -121,10 +121,32 @@ public class BatchEnginePortletDataHandlerTest {
 	}
 
 	@Test
-	public void testExportImportInstanceLevelOnFailureNothingIsImported()
-		throws Exception {
+	public void testExportImportCompanyGroup() throws Exception {
+		File larFile = _exportCompanyGroup();
 
-		File larFile = _exportInstanceLevel();
+		_objectEntryLocalService.deleteObjectEntry(_objectEntry1);
+		_objectEntryLocalService.deleteObjectEntry(_objectEntry2);
+		_objectEntryLocalService.deleteObjectEntry(_objectEntry3);
+
+		_importCompanyGroup(larFile);
+
+		Assert.assertNotNull(
+			_objectEntryLocalService.getObjectEntry(
+				_objectEntry1.getExternalReferenceCode(),
+				_objectDefinition.getObjectDefinitionId()));
+		Assert.assertNotNull(
+			_objectEntryLocalService.getObjectEntry(
+				_objectEntry2.getExternalReferenceCode(),
+				_objectDefinition.getObjectDefinitionId()));
+		Assert.assertNotNull(
+			_objectEntryLocalService.getObjectEntry(
+				_objectEntry3.getExternalReferenceCode(),
+				_objectDefinition.getObjectDefinitionId()));
+	}
+
+	@Test
+	public void testExportImportCompanyGroupWithError() throws Exception {
+		File larFile = _exportCompanyGroup();
 
 		String existingValue = (String)_objectEntry2.getValues(
 		).get(
@@ -149,7 +171,7 @@ public class BatchEnginePortletDataHandlerTest {
 						"BatchEngineImportTaskExecutorImpl",
 					LoggerTestUtil.OFF)) {
 
-				_importInstanceLevel(larFile);
+				_importCompanyGroup(larFile);
 			}
 
 			Assert.fail("Import process should fail");
@@ -174,30 +196,6 @@ public class BatchEnginePortletDataHandlerTest {
 		Assert.assertNotEquals(
 			_objectEntry2.getExternalReferenceCode(),
 			duplicateObjectEntry.getExternalReferenceCode());
-	}
-
-	@Test
-	public void testExportImportInstanceLevelSuccess() throws Exception {
-		File larFile = _exportInstanceLevel();
-
-		_objectEntryLocalService.deleteObjectEntry(_objectEntry1);
-		_objectEntryLocalService.deleteObjectEntry(_objectEntry2);
-		_objectEntryLocalService.deleteObjectEntry(_objectEntry3);
-
-		_importInstanceLevel(larFile);
-
-		Assert.assertNotNull(
-			_objectEntryLocalService.getObjectEntry(
-				_objectEntry1.getExternalReferenceCode(),
-				_objectDefinition.getObjectDefinitionId()));
-		Assert.assertNotNull(
-			_objectEntryLocalService.getObjectEntry(
-				_objectEntry2.getExternalReferenceCode(),
-				_objectDefinition.getObjectDefinitionId()));
-		Assert.assertNotNull(
-			_objectEntryLocalService.getObjectEntry(
-				_objectEntry3.getExternalReferenceCode(),
-				_objectDefinition.getObjectDefinitionId()));
 	}
 
 	private static void _invokeFeatureFlagListeners(
@@ -231,7 +229,7 @@ public class BatchEnginePortletDataHandlerTest {
 			ServiceContextTestUtil.getServiceContext());
 	}
 
-	private File _exportInstanceLevel() throws Exception {
+	private File _exportCompanyGroup() throws Exception {
 		User user = TestPropsValues.getUser();
 
 		Map<String, Serializable> exportLayoutSettingsMap =
@@ -271,7 +269,7 @@ public class BatchEnginePortletDataHandlerTest {
 		).build();
 	}
 
-	private void _importInstanceLevel(File larFile) throws Exception {
+	private void _importCompanyGroup(File larFile) throws Exception {
 		User user = TestPropsValues.getUser();
 
 		Map<String, Serializable> importLayoutSettingsMap =

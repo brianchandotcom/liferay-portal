@@ -6,7 +6,6 @@
 package com.liferay.commerce.catalog.web.internal.frontend.data.set.provider;
 
 import com.liferay.account.model.AccountGroup;
-import com.liferay.account.model.AccountGroupRel;
 import com.liferay.account.service.AccountGroupRelLocalService;
 import com.liferay.account.service.AccountGroupService;
 import com.liferay.commerce.catalog.web.internal.constants.CommerceCatalogFDSNames;
@@ -15,11 +14,11 @@ import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
 import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.ParamUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -43,26 +42,21 @@ public class CommerceCatalogAccountGroupsFDSDataProvider
 			HttpServletRequest httpServletRequest, Sort sort)
 		throws PortalException {
 
-		List<CatalogAccountGroup> catalogAccountGroups = new ArrayList<>();
-
 		long commerceCatalogId = ParamUtil.getLong(
 			httpServletRequest, "commerceCatalogId");
 
-		List<AccountGroupRel> accountGroupRels =
+		return TransformUtil.transform(
 			_accountGroupRelLocalService.getAccountGroupRels(
 				CommerceCatalog.class.getName(), commerceCatalogId,
 				fdsPagination.getStartPosition(),
-				fdsPagination.getEndPosition(), null);
+				fdsPagination.getEndPosition(), null),
+			accountGroupRel -> {
+				AccountGroup accountGroup =
+					_accountGroupService.getAccountGroup(
+						accountGroupRel.getAccountGroupId());
 
-		for (AccountGroupRel accountGroupRel : accountGroupRels) {
-			AccountGroup accountGroup = _accountGroupService.getAccountGroup(
-				accountGroupRel.getAccountGroupId());
-
-			catalogAccountGroups.add(
-				new CatalogAccountGroup(accountGroup.getName()));
-		}
-
-		return catalogAccountGroups;
+				return new CatalogAccountGroup(accountGroup.getName());
+			});
 	}
 
 	@Override

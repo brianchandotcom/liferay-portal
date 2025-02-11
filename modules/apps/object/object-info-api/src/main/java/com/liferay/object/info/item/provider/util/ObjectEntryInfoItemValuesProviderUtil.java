@@ -229,17 +229,15 @@ public class ObjectEntryInfoItemValuesProviderUtil {
 			locale = themeDisplay.getLocale();
 		}
 
-		if (objectField.isLocalized()) {
-			if (value instanceof Map) {
-				Map<String, Object> map = (Map<String, Object>)value;
+		if (objectField.isLocalized() && (value instanceof Map)) {
+			Map<String, Object> map = (Map<String, Object>)value;
 
-				infoFieldValue = InfoLocalizedValue.function(
-					currentLocale -> _parseValue(
-						listTypeEntryLocalService, currentLocale,
-						objectEntryLocalService, objectField,
-						objectRelationshipLocalService,
-						map.get(LanguageUtil.getLanguageId(currentLocale))));
-			}
+			infoFieldValue = InfoLocalizedValue.function(
+				currentLocale -> _parseValue(
+					listTypeEntryLocalService, currentLocale,
+					objectEntryLocalService, objectField,
+					objectRelationshipLocalService,
+					map.get(LanguageUtil.getLanguageId(currentLocale))));
 		}
 		else {
 			infoFieldValue = _parseValue(

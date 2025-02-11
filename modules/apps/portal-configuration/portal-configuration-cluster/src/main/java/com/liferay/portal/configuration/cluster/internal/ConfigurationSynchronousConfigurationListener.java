@@ -5,6 +5,7 @@
 
 package com.liferay.portal.configuration.cluster.internal;
 
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.persistence.InMemoryOnlyConfigurationThreadLocal;
 import com.liferay.portal.configuration.persistence.ReloadablePersistenceManager;
@@ -13,6 +14,7 @@ import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.service.Snapshot;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 
@@ -45,7 +47,8 @@ public class ConfigurationSynchronousConfigurationListener
 		try {
 			MethodHandler methodHandler = new MethodHandler(
 				_onNotifyMethodKey, configurationEvent.getPid(),
-				configurationEvent.getType());
+				configurationEvent.getType(),
+				CompanyThreadLocal.getNonsystemCompanyId());
 
 			ClusterRequest clusterRequest =
 				ClusterRequest.createMulticastRequest(methodHandler, true);
@@ -59,7 +62,9 @@ public class ConfigurationSynchronousConfigurationListener
 		}
 	}
 
-	private static void _onNotify(String pid, int type) throws Exception {
+	private static void _onNotify(String pid, int type, long companyId)
+		throws Exception {
+
 		SynchronousConfigurationListener synchronousConfigurationListener =
 			_snapshot.get();
 
@@ -72,8 +77,12 @@ public class ConfigurationSynchronousConfigurationListener
 				(ConfigurationSynchronousConfigurationListener)
 					synchronousConfigurationListener;
 
-		configurationSynchronousConfigurationListener._reloadConfiguration(
-			pid, type);
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(companyId)) {
+
+			configurationSynchronousConfigurationListener._reloadConfiguration(
+				pid, type);
+		}
 	}
 
 	private void _reloadConfiguration(String pid, int type) throws Exception {
@@ -135,7 +144,7 @@ public class ConfigurationSynchronousConfigurationListener
 
 	private static final MethodKey _onNotifyMethodKey = new MethodKey(
 		ConfigurationSynchronousConfigurationListener.class, "_onNotify",
-		String.class, int.class);
+		String.class, int.class, long.class);
 	private static final Snapshot<SynchronousConfigurationListener> _snapshot =
 		new Snapshot<>(
 			ConfigurationSynchronousConfigurationListener.class,

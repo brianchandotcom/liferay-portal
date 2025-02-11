@@ -14,12 +14,20 @@ import com.liferay.osb.spring.boot.client.zendesk.model.ZendeskTicket;
 import com.liferay.osb.spring.boot.client.zendesk.search.SearchHits;
 import com.liferay.osb.spring.boot.client.zendesk.search.ZendeskTicketQuery;
 import com.liferay.osb.spring.boot.client.zendesk.service.ZendeskService;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -121,6 +129,29 @@ public class BusinessEventRestController extends BaseRestController {
 		}
 	}
 
+	private List<String> _convertToList(JSONObject jsonObject) {
+		List<String> stringList = new ArrayList<>();
+
+		Iterator<String> iterator = jsonObject.keys();
+
+		while (iterator.hasNext()) {
+			String key = iterator.next();
+
+			if (key.equals("impactedTickets")) {
+				continue;
+			}
+
+			if (Validator.isNotNull(jsonObject.optString(key))) {
+				stringList.add(
+					StringBundler.concat(
+						key, StringPool.COLON, StringPool.SPACE,
+						jsonObject.getString(key)));
+			}
+		}
+
+		return stringList;
+	}
+
 	private long _fetchZendeskOrganizationId(String externalReferenceCode)
 		throws Exception {
 
@@ -174,6 +205,23 @@ public class BusinessEventRestController extends BaseRestController {
 		return jsonArray;
 	}
 
+	private Long[] _getImpactedTickets(JSONArray jsonArray) {
+		Set<Long> ticketList = new HashSet<>();
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			JSONArray impactedTicketsJSONArray = jsonObject.getJSONArray(
+				"impactedTickets");
+
+			for (int j = 0; j < impactedTicketsJSONArray.length(); j++) {
+				ticketList.add(impactedTicketsJSONArray.getLong(j));
+			}
+		}
+
+		return ticketList.toArray(new Long[0]);
+	}
+
 	private ZendeskOrganization _getZendeskOrganization(
 			String externalReferenceCode)
 		throws Exception {
@@ -199,6 +247,28 @@ public class BusinessEventRestController extends BaseRestController {
 		return zendeskOrganization;
 	}
 
+	private String _parseBusinessEvent(JSONObject jsonObject) {
+		List<String> stringList = _convertToList(jsonObject);
+
+		if (stringList.isEmpty()) {
+			return null;
+		}
+
+		return StringUtil.merge(
+			stringList, StringPool.COMMA + StringPool.NEW_LINE);
+	}
+
+	private String _parseBusinessEvents(JSONArray jsonArray) {
+		List<String> stringList = new ArrayList<>();
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			stringList.add(_parseBusinessEvent(jsonArray.getJSONObject(i)));
+		}
+
+		return StringUtil.merge(
+			stringList, StringPool.NEW_LINE + StringPool.NEW_LINE);
+	}
+
 	private JSONObject _transformTicket(ZendeskTicket zendeskTicket) {
 		return new JSONObject(
 		).put(
@@ -221,8 +291,12 @@ public class BusinessEventRestController extends BaseRestController {
 			ZendeskOrganization zendeskOrganization = _getZendeskOrganization(
 				externalReferenceCode);
 
+			JSONArray jsonArray = jsonObject.getJSONArray("businessEvents");
+
+			String businessEvents = _parseBusinessEvents(jsonArray);
+
 			_zendeskService.updateZendeskOrganization(
-				zendeskOrganization, jsonObject.toString());
+				zendeskOrganization, businessEvents);
 
 			ZendeskTicketQuery zendeskTicketQuery = new ZendeskTicketQuery();
 
@@ -232,6 +306,8 @@ public class BusinessEventRestController extends BaseRestController {
 			zendeskTicketQuery.addCriterion("status<closed");
 
 			int page = 1;
+
+			Long[] impactedTickets = _getImpactedTickets(jsonArray);
 
 			while (page > 0) {
 				zendeskTicketQuery.setPage(page);
@@ -244,11 +320,19 @@ public class BusinessEventRestController extends BaseRestController {
 						zendeskTicket.getCustomFields();
 
 					customFields.put(
-						_zendeskBusinessEventTicketFieldId,
-						jsonObject.toString());
+						_zendeskBusinessEventTicketFieldId, businessEvents);
+
+					Set<String> tags = zendeskTicket.getTags();
+
+					if (ArrayUtil.contains(
+							impactedTickets,
+							zendeskTicket.getZendeskTicketId())) {
+
+						tags.add("impacting_business_event");
+					}
 
 					_zendeskService.updateZendeskTicket(
-						zendeskTicket, customFields, zendeskTicket.getTags());
+						zendeskTicket, customFields, tags);
 				}
 
 				page = searchHits.getNextPage();

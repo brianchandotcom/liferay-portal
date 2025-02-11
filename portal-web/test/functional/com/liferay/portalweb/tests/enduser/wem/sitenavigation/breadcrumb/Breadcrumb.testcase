@@ -29,50 +29,6 @@ definition {
 		}
 	}
 
-	@description = "Disable Show Page in Breadcrumb widget."
-	@priority = 5
-	@uitest
-	test DisableShowPage {
-		property portal.acceptance = "true";
-
-		task ("Add a Breadcrumb widget to page") {
-			JSONLayout.addWidgetToPublicLayout(
-				groupName = "Test Site Name",
-				layoutName = "Test Page Name",
-				widgetName = "Breadcrumb");
-		}
-
-		task ("View displayed content in Breadcrumb") {
-			Navigator.openSitePage(
-				pageName = "Test Page Name",
-				siteName = "Test Site Name");
-
-			Breadcrumb.viewPG(breadcrumbListVisible = "Test Site Name,Test Page Name");
-		}
-
-		task ("Disable Show Page") {
-			Portlet.gotoPortletOptions(portletOption = "Configuration");
-
-			Breadcrumb.configureBreadcrumb(uncheckSetupName = "Show Page");
-
-			Breadcrumb.viewConfigurationPreview(breadcrumbListVisible = "Test Site Name");
-
-			Breadcrumb.saveDisplayPreview();
-
-			Breadcrumb.viewConfigurationPreview(breadcrumbListVisible = "Test Site Name");
-		}
-
-		task ("View displayed content in Breadcrumb") {
-			Navigator.openSitePage(
-				pageName = "Test Page Name",
-				siteName = "Test Site Name");
-
-			Breadcrumb.viewPG(
-				breadcrumbListNotVisible = "Test Page Name",
-				breadcrumbListVisible = "Test Site Name");
-		}
-	}
-
 	@description = "Disable Show Parent Site in Breadcrumb widget."
 	@priority = 4
 	@uitest

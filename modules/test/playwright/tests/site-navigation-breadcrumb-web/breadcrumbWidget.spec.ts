@@ -193,3 +193,42 @@ test('Configure Show Current Site in Breadcrumb widget', async ({
 		expect.arrayContaining([layout.nameCurrentValue])
 	);
 });
+
+test('Configure Show Page in Breadcrumb widget', async ({
+	breadcrumbWidgetPage,
+	page,
+	site,
+	widgetPagePage,
+}) => {
+	const layout = await breadcrumbWidgetPage.addBreadcrumbPortlet(site);
+
+	let breadcrumbEntries = await page
+		.locator('.breadcrumb-text-truncate')
+		.allInnerTexts();
+
+	await expect(breadcrumbEntries.length).toBe(2);
+
+	await expect(breadcrumbEntries).toEqual(
+		expect.arrayContaining([site.name, layout.nameCurrentValue])
+	);
+
+	await widgetPagePage.clickOnAction('Breadcrumb', 'Configuration');
+
+	const configurationIFrame = page.frameLocator(
+		'iframe[title*="Breadcrumb"]'
+	);
+
+	await configurationIFrame.getByLabel('Show Page').click();
+
+	await widgetPagePage.saveAndClose('Breadcrumb');
+
+	breadcrumbEntries = await page
+		.locator('.breadcrumb-text-truncate')
+		.allInnerTexts();
+
+	await expect(breadcrumbEntries.length).toBe(1);
+
+	await expect(breadcrumbEntries).toEqual(
+		expect.arrayContaining([site.name])
+	);
+});

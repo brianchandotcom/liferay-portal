@@ -2463,7 +2463,7 @@
 
 		<!-- Finder methods -->
 
-		<finder name="Key" return-type="Ticket">
+		<finder name="Key" return-type="Ticket" unique="true">
 			<finder-column name="key" />
 		</finder>
 		<finder name="C_C_C" return-type="Collection">

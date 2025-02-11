@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalService;
 import com.liferay.style.book.service.StyleBookEntryLocalServiceUtil;
+import com.liferay.style.book.util.DefaultStyleBookEntryUtil;
 import com.liferay.style.book.util.comparator.StyleBookEntryNameComparator;
 
 import java.util.Collections;
@@ -133,8 +134,7 @@ public class StyleBookEntryItemSelectorViewDescriptor
 		styleFromThemeStyleBookEntry.setStyleBookEntryId(0);
 
 		StyleBookEntry defaultStyleBookEntry =
-			StyleBookEntryLocalServiceUtil.fetchDefaultStyleBookEntry(
-				_themeDisplay.getScopeGroupId());
+			DefaultStyleBookEntryUtil.getDefaultStyleBookEntry(_getSelLayout());
 
 		if (defaultStyleBookEntry == null) {
 			styleFromThemeStyleBookEntry.setDefaultStyleBookEntry(true);

@@ -99,7 +99,7 @@ public class UpdateStyleBookEntryDefaultMVCActionCommandTest {
 		Assert.assertEquals(
 			styleBookEntry,
 			_styleBookEntryLocalService.fetchDefaultStyleBookEntry(
-				_group.getGroupId()));
+				_group.getGroupId(), ""));
 	}
 
 	@Test
@@ -130,7 +130,7 @@ public class UpdateStyleBookEntryDefaultMVCActionCommandTest {
 		Assert.assertEquals(
 			styleBookEntry1,
 			_styleBookEntryLocalService.fetchDefaultStyleBookEntry(
-				_group.getGroupId()));
+				_group.getGroupId(), ""));
 
 		StyleBookEntry styleBookEntry2 =
 			_styleBookEntryLocalService.addStyleBookEntry(
@@ -157,11 +157,11 @@ public class UpdateStyleBookEntryDefaultMVCActionCommandTest {
 		Assert.assertEquals(
 			styleBookEntry2,
 			_styleBookEntryLocalService.fetchDefaultStyleBookEntry(
-				_group.getGroupId()));
+				_group.getGroupId(), ""));
 		Assert.assertNotEquals(
 			styleBookEntry1,
 			_styleBookEntryLocalService.fetchDefaultStyleBookEntry(
-				_group.getGroupId()));
+				_group.getGroupId(), ""));
 	}
 
 	@Test
@@ -192,7 +192,7 @@ public class UpdateStyleBookEntryDefaultMVCActionCommandTest {
 		Assert.assertEquals(
 			styleBookEntry,
 			_styleBookEntryLocalService.fetchDefaultStyleBookEntry(
-				_group.getGroupId()));
+				_group.getGroupId(), ""));
 
 		mockLiferayPortletActionRequest = new MockLiferayPortletActionRequest();
 
@@ -211,7 +211,7 @@ public class UpdateStyleBookEntryDefaultMVCActionCommandTest {
 
 		Assert.assertNull(
 			_styleBookEntryLocalService.fetchDefaultStyleBookEntry(
-				_group.getGroupId()));
+				_group.getGroupId(), ""));
 	}
 
 	@Inject

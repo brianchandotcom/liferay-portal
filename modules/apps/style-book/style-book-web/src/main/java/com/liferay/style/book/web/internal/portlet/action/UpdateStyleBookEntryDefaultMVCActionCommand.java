@@ -12,8 +12,8 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.style.book.constants.StyleBookPortletKeys;
 import com.liferay.style.book.model.StyleBookEntry;
-import com.liferay.style.book.service.StyleBookEntryLocalService;
 import com.liferay.style.book.service.StyleBookEntryService;
+import com.liferay.style.book.util.DefaultStyleBookEntryUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -56,17 +56,14 @@ public class UpdateStyleBookEntryDefaultMVCActionCommand
 			WebKeys.THEME_DISPLAY);
 
 		StyleBookEntry styleBookEntry =
-			_styleBookEntryLocalService.fetchDefaultStyleBookEntry(
-				themeDisplay.getScopeGroupId());
+			DefaultStyleBookEntryUtil.getDefaultStyleBookEntry(
+				themeDisplay.getLayout());
 
 		if (styleBookEntry != null) {
 			_styleBookEntryService.updateDefaultStyleBookEntry(
 				styleBookEntry.getStyleBookEntryId(), false);
 		}
 	}
-
-	@Reference
-	private StyleBookEntryLocalService _styleBookEntryLocalService;
 
 	@Reference
 	private StyleBookEntryService _styleBookEntryService;

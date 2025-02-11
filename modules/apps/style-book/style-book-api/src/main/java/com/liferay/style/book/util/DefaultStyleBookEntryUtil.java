@@ -7,7 +7,9 @@ package com.liferay.style.book.util;
 
 import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalServiceUtil;
 
@@ -30,10 +32,22 @@ public class DefaultStyleBookEntryUtil {
 			}
 		}
 
-		if (styleBookEntry == null) {
+		if ((styleBookEntry == null) &&
+			Validator.isNotNull(layout.getThemeId())) {
+
 			styleBookEntry =
 				StyleBookEntryLocalServiceUtil.fetchDefaultStyleBookEntry(
-					StagingUtil.getLiveGroupId(layout.getGroupId()), "");
+					StagingUtil.getLiveGroupId(layout.getGroupId()),
+					layout.getThemeId());
+		}
+
+		if (styleBookEntry == null) {
+			LayoutSet layoutSet = layout.getLayoutSet();
+
+			styleBookEntry =
+				StyleBookEntryLocalServiceUtil.fetchDefaultStyleBookEntry(
+					StagingUtil.getLiveGroupId(layout.getGroupId()),
+					layoutSet.getThemeId());
 		}
 
 		return styleBookEntry;

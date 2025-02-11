@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.style.book.constants.StyleBookPortletKeys;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalServiceUtil;
+import com.liferay.style.book.util.DefaultStyleBookEntryUtil;
 import com.liferay.style.book.web.internal.constants.StyleBookWebKeys;
 import com.liferay.style.book.web.internal.util.StyleBookUtil;
 
@@ -317,8 +318,8 @@ public class StyleBookEntryActionDropdownItemsProvider {
 				).buildString());
 
 			StyleBookEntry defaultStyleBookEntry =
-				StyleBookEntryLocalServiceUtil.fetchDefaultStyleBookEntry(
-					_styleBookEntry.getGroupId());
+				DefaultStyleBookEntryUtil.getDefaultStyleBookEntry(
+					_themeDisplay.getLayout());
 
 			String defaultStyleBookEntryName = LanguageUtil.get(
 				_httpServletRequest, "styles-from-theme");

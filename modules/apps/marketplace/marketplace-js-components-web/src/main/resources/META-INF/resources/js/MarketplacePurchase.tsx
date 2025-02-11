@@ -4,13 +4,10 @@
  */
 
 import ClayLoadingIndicator from '@clayui/loading-indicator';
-import {
-	MarketplaceView,
-	ProductPurchase,
-	useMarketplaceContext,
-} from '@liferay/marketplace-js-components-web';
 import {sub} from 'frontend-js-web';
 import React from 'react';
+
+import {MarketplaceView, ProductPurchase, useMarketplaceContext} from './index';
 
 export enum States {
 	ERROR,

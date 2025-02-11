@@ -380,7 +380,7 @@ definition {
 				userEmailAddress = "userea@liferay.com");
 
 			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "DELETE",
+				resourceAction = "DEACTIVATE",
 				resourceName = "com.liferay.account.model.AccountEntry",
 				roleTitle = "Account Administrator",
 				roleType = "account");
@@ -1786,7 +1786,7 @@ definition {
 			userEmailAddress = "userea@liferay.com");
 
 		Permissions.definePermissionViaJSONAPI(
-			resourceAction = "DELETE",
+			resourceAction = "DEACTIVATE",
 			resourceName = "com.liferay.account.model.AccountEntry",
 			roleTitle = "Account Administrator",
 			roleType = "account");

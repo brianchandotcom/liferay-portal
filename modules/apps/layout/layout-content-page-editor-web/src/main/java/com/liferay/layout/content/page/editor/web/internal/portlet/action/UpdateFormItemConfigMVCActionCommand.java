@@ -27,7 +27,9 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -177,10 +179,14 @@ public class UpdateFormItemConfigMVCActionCommand
 
 		layoutStructureItemChanges.add(
 			_updateFormStyledLayoutStructureItemFormType(
-				formStyledLayoutStructureItem,
-				formStyledLayoutStructureItem.getFormType(), layoutStructure,
+				addedFragmentEntryLinks, formStyledLayoutStructureItem,
+				_portal.getHttpServletRequest(actionRequest),
+				_portal.getHttpServletResponse(actionResponse),
+				formStyledLayoutStructureItem.getFormType(),
+				themeDisplay.getLayout(), layoutStructure,
 				formStyledLayoutStructureItem.getNumberOfSteps(),
-				previousFormType, previousNumberOfSteps,
+				previousFormType, previousNumberOfSteps, segmentsExperienceId,
+				ServiceContextFactory.getInstance(actionRequest),
 				stepperFragmentEntryLinkId));
 
 		if (!Objects.equals(
@@ -348,7 +354,8 @@ public class UpdateFormItemConfigMVCActionCommand
 
 				stepperFragmentEntryLink =
 					_formItemManager.updateNumberOfStepps(
-						actionRequest, actionResponse,
+						_portal.getHttpServletRequest(actionRequest),
+						_portal.getHttpServletResponse(actionResponse),
 						formStyledLayoutStructureItem.getNumberOfSteps(),
 						stepperFragmentEntryLink);
 
@@ -392,17 +399,24 @@ public class UpdateFormItemConfigMVCActionCommand
 	}
 
 	private FormItemManager.LayoutStructureItemChanges
-		_updateFormStyledLayoutStructureItemFormType(
-			FormStyledLayoutStructureItem formStyledLayoutStructureItem,
-			String formType, LayoutStructure layoutStructure, int numberOfSteps,
-			String previousFormType, int previousNumberOfSteps,
-			long stepperFragmentEntryLinkId) {
+			_updateFormStyledLayoutStructureItemFormType(
+				List<FragmentEntryLink> addedFragmentEntryLinks,
+				FormStyledLayoutStructureItem formStyledLayoutStructureItem,
+				HttpServletRequest httpServletRequest,
+				HttpServletResponse httpServletResponse, String formType,
+				Layout layout, LayoutStructure layoutStructure,
+				int numberOfSteps, String previousFormType,
+				int previousNumberOfSteps, long segmentsExperienceId,
+				ServiceContext serviceContext, long stepperFragmentEntryLinkId)
+		throws Exception {
 
 		if (!Objects.equals(formType, previousFormType)) {
 			if (Objects.equals(formType, "multistep")) {
 				return _formItemManager.changeToMultistepFormType(
-					formStyledLayoutStructureItem, layoutStructure,
-					numberOfSteps, stepperFragmentEntryLinkId);
+					addedFragmentEntryLinks, formStyledLayoutStructureItem,
+					httpServletRequest, httpServletResponse, layout,
+					layoutStructure, numberOfSteps, segmentsExperienceId,
+					serviceContext, stepperFragmentEntryLinkId);
 			}
 
 			return _formItemManager.changeToSimpleFormType(
@@ -412,8 +426,10 @@ public class UpdateFormItemConfigMVCActionCommand
 		if (numberOfSteps != previousNumberOfSteps) {
 			if (numberOfSteps > previousNumberOfSteps) {
 				return _formItemManager.addFormStepLayoutStructureItems(
-					formStyledLayoutStructureItem, layoutStructure,
-					numberOfSteps);
+					addedFragmentEntryLinks, formStyledLayoutStructureItem,
+					httpServletRequest, httpServletResponse, layout,
+					layoutStructure, numberOfSteps, segmentsExperienceId,
+					serviceContext);
 			}
 
 			return _formItemManager.removeFormStepLayoutStructureItems(

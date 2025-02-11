@@ -139,8 +139,21 @@ test('can export custom object entries at instance level with permissions', asyn
 	expect(json[0]).toHaveProperty('permissions');
 });
 
-test('can see corresponding elements in instance and site level', async ({
+test('can see corresponding elements at instance level', async ({
 	companyExportImportPage,
+}) => {
+	await companyExportImportPage.applicationsMenuPage.goToExport();
+	await companyExportImportPage.page
+		.getByTestId('creationMenuNewButton')
+		.nth(1)
+		.click();
+
+	await expect(
+		companyExportImportPage.page.getByText('Comments, Ratings')
+	).not.toBeVisible();
+});
+
+test('can see corresponding elements at site level', async ({
 	productMenuPage,
 }) => {
 	await productMenuPage.openProductMenuIfClosed();
@@ -152,14 +165,4 @@ test('can see corresponding elements in instance and site level', async ({
 	await expect(
 		productMenuPage.page.getByText('Comments, Ratings')
 	).toBeVisible();
-
-	await companyExportImportPage.applicationsMenuPage.goToExport();
-	await companyExportImportPage.page
-		.getByTestId('creationMenuNewButton')
-		.nth(1)
-		.click();
-
-	await expect(
-		companyExportImportPage.page.getByText('Comments, Ratings')
-	).not.toBeVisible();
 });

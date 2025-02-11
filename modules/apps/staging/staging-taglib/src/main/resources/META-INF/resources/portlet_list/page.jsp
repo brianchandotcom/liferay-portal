@@ -243,7 +243,7 @@ html = html.trim();
 	<%= html %>
 </ul>
 
-<c:if test="<%= type.equals(Constants.EXPORT) %>">
+<c:if test="<%= type.equals(Constants.EXPORT) && !companyGroup %>">
 	<aui:fieldset cssClass="content-options" label="for-each-of-the-selected-content-types,-export-their">
 		<span class="selected-labels" id="<portlet:namespace />selectedContentOptions"></span>
 

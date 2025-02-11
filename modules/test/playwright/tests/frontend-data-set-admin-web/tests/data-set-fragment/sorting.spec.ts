@@ -17,6 +17,7 @@ export const test = mergeTests(
 	accountSettingsPagesTest,
 	dataSetManagerApiHelpersTest,
 	featureFlagsTest({
+		'LPD-37531': {enabled: true},
 		'LPS-178052': {enabled: true},
 	}),
 	isolatedLayoutTest({publish: false}),
@@ -41,127 +42,215 @@ test.afterEach(async ({dataSetManagerApiHelpers}) => {
 	await dataSetManagerApiHelpers.deleteDataSet({erc: dataSetERC});
 });
 
-test('When sorting is configured with at least 1 sort, the dropdown is displayed in the fragment @LPD-19503', async ({
-	dataSetFragmentPage,
-	dataSetManagerApiHelpers,
-	layout,
-	page,
-}) => {
-	await test.step('Create sorting', async () => {
-		await dataSetManagerApiHelpers.createDataSetSort({
-			dataSetERC,
-			defaultValue: true,
-			fieldName: 'id',
-			label_i18n: {en_US: 'ID'},
-			orderType: 'asc',
+test(
+	'When sorting is configured with at least 1 sort and it is active, the dropdown is displayed in the fragment',
+	{tag: ['@LPD-19503', '@LPD-39965']},
+	async ({dataSetFragmentPage, dataSetManagerApiHelpers, layout, page}) => {
+		await test.step('Create sorting', async () => {
+			await dataSetManagerApiHelpers.createDataSetSort({
+				dataSetERC,
+				defaultValue: true,
+				fieldName: 'id',
+				label_i18n: {en_US: 'ID'},
+				orderType: 'asc',
+			});
+
+			await dataSetManagerApiHelpers.createDataSetSort({
+				dataSetERC,
+				defaultValue: false,
+				fieldName: 'fieldName',
+				label_i18n: {en_US: 'Field Name'},
+			});
 		});
 
-		await dataSetManagerApiHelpers.createDataSetSort({
-			dataSetERC,
-			defaultValue: false,
-			fieldName: 'fieldName',
-			label_i18n: {en_US: 'Field Name'},
+		await test.step('Add fields, so data is displayed', async () => {
+			await dataSetManagerApiHelpers.createDataSetTableSection({
+				dataSetERC,
+				fieldName: 'id',
+				label_i18n: {
+					en_US: 'ID',
+				},
+				sortable: true,
+				type: 'string',
+			});
+
+			await dataSetManagerApiHelpers.createDataSetTableSection({
+				dataSetERC,
+				fieldName: 'fieldName',
+				label_i18n: {en_US: 'Field Name'},
+				sortable: true,
+				type: 'string',
+			});
 		});
-	});
 
-	await test.step('Add fields, so data is displayed', async () => {
-		await dataSetManagerApiHelpers.createDataSetTableSection({
-			dataSetERC,
-			fieldName: 'id',
-			label_i18n: {
-				en_US: 'ID',
-			},
-			sortable: true,
-			type: 'string',
+		await test.step('Configure Data Set fragment', async () => {
+			await dataSetFragmentPage.configureDataSetFragment({
+				dataSetLabel,
+				layout,
+			});
 		});
 
-		await dataSetManagerApiHelpers.createDataSetTableSection({
-			dataSetERC,
-			fieldName: 'fieldName',
-			label_i18n: {en_US: 'Field Name'},
-			sortable: true,
-			type: 'string',
+		await test.step('Check that the order dropdown is displayed', async () => {
+			await expect(
+				page.getByRole('button', {name: 'Order'})
+			).toBeVisible();
 		});
-	});
 
-	await test.step('Configure Data Set fragment', async () => {
-		await dataSetFragmentPage.configureDataSetFragment({
-			dataSetLabel,
-			layout,
+		await test.step('Check that default sorting is applied', async () => {
+			const firstIDText = await dataSetFragmentPage.table.bodyRows
+				.first()
+				.locator('td:first-child')
+				.textContent();
+
+			const lastIDText = await dataSetFragmentPage.table.container
+				.locator('tr:last-child td:first-child')
+				.textContent();
+
+			expect(firstIDText < lastIDText).toBeTruthy();
 		});
-	});
 
-	await test.step('Check that the order dropdown is displayed', async () => {
-		await expect(page.getByRole('button', {name: 'Order'})).toBeVisible();
-	});
+		await test.step('Check that sorting is displayed in the dropdown', async () => {
+			await page.getByRole('button', {name: 'Order'}).click();
 
-	await test.step('Check that default sorting is applied', async () => {
-		const firstIDText = await dataSetFragmentPage.table.bodyRows
-			.first()
-			.locator('td:first-child')
-			.textContent();
+			await expect(
+				page.getByRole('menuitem', {name: 'ID'})
+			).toBeVisible();
+			await expect(
+				page.getByRole('menuitem', {name: 'Name'})
+			).toBeVisible();
+		});
 
-		const lastIDText = await dataSetFragmentPage.table.container
-			.locator('tr:last-child td:first-child')
-			.textContent();
+		await test.step('Select "Descending" in the dropdown', async () => {
+			await page.getByRole('menuitem', {name: 'Descending'}).click();
+		});
 
-		expect(firstIDText < lastIDText).toBeTruthy();
-	});
+		await test.step('Check that the first ID is greater than the last ID in the table', async () => {
+			const firstIDText = await dataSetFragmentPage.table.bodyRows
+				.first()
+				.locator('td:first-child')
+				.textContent();
 
-	await test.step('Check that sorting is displayed in the dropdown', async () => {
-		await page.getByRole('button', {name: 'Order'}).click();
+			const lastIDText = await dataSetFragmentPage.table.container
+				.locator('tr:last-child td:first-child')
+				.textContent();
 
-		await expect(page.getByRole('menuitem', {name: 'ID'})).toBeVisible();
-		await expect(page.getByRole('menuitem', {name: 'Name'})).toBeVisible();
-	});
+			expect(firstIDText > lastIDText).toBeTruthy();
+		});
 
-	await test.step('Select "Descending" in the dropdown', async () => {
-		await page.getByRole('menuitem', {name: 'Descending'}).click();
-	});
+		await test.step('Check that a different sort "Name" can be used', async () => {
+			await page.getByRole('button', {name: 'Order'}).click();
+			await page.getByRole('menuitem', {name: 'Name'}).click();
 
-	await test.step('Check that the first ID is greater than the last ID in the table', async () => {
-		const firstIDText = await dataSetFragmentPage.table.bodyRows
-			.first()
-			.locator('td:first-child')
-			.textContent();
+			const firstNameText = await dataSetFragmentPage.table.bodyRows
+				.first()
+				.locator('td:nth-child(2)')
+				.textContent();
 
-		const lastIDText = await dataSetFragmentPage.table.container
-			.locator('tr:last-child td:first-child')
-			.textContent();
+			const lastNameText = await dataSetFragmentPage.table.container
+				.locator('tr:last-child td:nth-child(2)')
+				.textContent();
 
-		expect(firstIDText > lastIDText).toBeTruthy();
-	});
+			expect(firstNameText > lastNameText).toBeTruthy();
 
-	await test.step('Check that a different sort "Name" can be used', async () => {
-		await page.getByRole('button', {name: 'Order'}).click();
-		await page.getByRole('menuitem', {name: 'Name'}).click();
+			await page.getByRole('button', {name: 'Order'}).click();
+			await page.getByRole('menuitem', {name: 'Ascending'}).click();
 
-		const firstNameText = await dataSetFragmentPage.table.bodyRows
-			.first()
-			.locator('td:nth-child(2)')
-			.textContent();
+			const firstNameTextAscending =
+				await dataSetFragmentPage.table.bodyRows
+					.first()
+					.locator('td:nth-child(2)')
+					.textContent();
 
-		const lastNameText = await dataSetFragmentPage.table.container
-			.locator('tr:last-child td:nth-child(2)')
-			.textContent();
+			const lastNameTextAscending =
+				await dataSetFragmentPage.table.container
+					.locator('tr:last-child td:nth-child(2)')
+					.textContent();
 
-		expect(firstNameText > lastNameText).toBeTruthy();
+			expect(firstNameTextAscending < lastNameTextAscending).toBeTruthy();
+		});
+	}
+);
 
-		await page.getByRole('button', {name: 'Order'}).click();
-		await page.getByRole('menuitem', {name: 'Ascending'}).click();
+test(
+	'When sorting is configured with 1 sort that it is inactive, the dropdown does not display it in the fragment',
+	{tag: '@LPD-39965'},
+	async ({dataSetFragmentPage, dataSetManagerApiHelpers, layout, page}) => {
+		await test.step('Create sorting', async () => {
+			await dataSetManagerApiHelpers.createDataSetSort({
+				dataSetERC,
+				defaultValue: true,
+				fieldName: 'id',
+				label_i18n: {en_US: 'ID'},
+				orderType: 'asc',
+			});
 
-		const firstNameTextAscending = await dataSetFragmentPage.table.bodyRows
-			.first()
-			.locator('td:nth-child(2)')
-			.textContent();
+			await dataSetManagerApiHelpers.createDataSetSort({
+				active: false,
+				dataSetERC,
+				defaultValue: false,
+				fieldName: 'fieldName',
+				label_i18n: {en_US: 'Field Name'},
+			});
+		});
 
-		const lastNameTextAscending = await dataSetFragmentPage.table.container
-			.locator('tr:last-child td:nth-child(2)')
-			.textContent();
+		await test.step('Add fields, so data is displayed', async () => {
+			await dataSetManagerApiHelpers.createDataSetTableSection({
+				dataSetERC,
+				fieldName: 'id',
+				label_i18n: {
+					en_US: 'ID',
+				},
+				sortable: true,
+				type: 'string',
+			});
 
-		expect(firstNameTextAscending < lastNameTextAscending).toBeTruthy();
-	});
-});
+			await dataSetManagerApiHelpers.createDataSetTableSection({
+				dataSetERC,
+				fieldName: 'fieldName',
+				label_i18n: {en_US: 'Field Name'},
+				sortable: true,
+				type: 'string',
+			});
+		});
+
+		await test.step('Configure Data Set fragment', async () => {
+			await dataSetFragmentPage.configureDataSetFragment({
+				dataSetLabel,
+				layout,
+			});
+		});
+
+		await test.step('Check that the order dropdown is displayed', async () => {
+			await expect(
+				page.getByRole('button', {name: 'Order'})
+			).toBeVisible();
+		});
+
+		await test.step('Check that default sorting is applied', async () => {
+			const firstIDText = await dataSetFragmentPage.table.bodyRows
+				.first()
+				.locator('td:first-child')
+				.textContent();
+
+			const lastIDText = await dataSetFragmentPage.table.container
+				.locator('tr:last-child td:first-child')
+				.textContent();
+
+			expect(firstIDText < lastIDText).toBeTruthy();
+		});
+
+		await test.step('Check that the "inactive" sorting is not displayed in the dropdown', async () => {
+			await page.getByRole('button', {name: 'Order'}).click();
+
+			await expect(
+				page.getByRole('menuitem', {name: 'ID'})
+			).toBeVisible();
+			await expect(
+				page.getByRole('menuitem', {name: 'Name'})
+			).not.toBeVisible();
+		});
+	}
+);
 
 test('When the current page language is changed, the current translation is used and fallbacks to the site default language @LPD-25464', async ({
 	accountSettingsPage,

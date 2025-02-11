@@ -347,6 +347,13 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 					Map<String, Object> properties =
 						objectEntry.getProperties();
 
+					if (FeatureFlagManagerUtil.isEnabled("LPD-37531") &&
+						Boolean.FALSE.equals(
+							(Boolean)properties.get("active"))) {
+
+						return null;
+					}
+
 					return JSONUtil.put(
 						"data",
 						JSONUtil.put(
@@ -555,6 +562,12 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 				"dataSetToDataSetSelectionFilters"),
 			(ObjectEntry objectEntry) -> {
 				Map<String, Object> properties = objectEntry.getProperties();
+
+				if (FeatureFlagManagerUtil.isEnabled("LPD-37531") &&
+					Boolean.FALSE.equals((Boolean)properties.get("active"))) {
+
+					return null;
+				}
 
 				String fieldName = String.valueOf(properties.get("fieldName"));
 
@@ -774,6 +787,12 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 				"dataSetToDataSetActions"),
 			(ObjectEntry objectEntry) -> {
 				Map<String, Object> properties = objectEntry.getProperties();
+
+				if (FeatureFlagManagerUtil.isEnabled("LPD-37531") &&
+					Boolean.FALSE.equals((Boolean)properties.get("active"))) {
+
+					return null;
+				}
 
 				return JSONUtil.put(
 					"data",
@@ -1027,6 +1046,12 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 				(Predicate)null, "dataSetToDataSetSorts"),
 			(ObjectEntry objectEntry) -> {
 				Map<String, Object> properties = objectEntry.getProperties();
+
+				if (FeatureFlagManagerUtil.isEnabled("LPD-37531") &&
+					Boolean.FALSE.equals((Boolean)properties.get("active"))) {
+
+					return null;
+				}
 
 				String label = (String)properties.get("label");
 

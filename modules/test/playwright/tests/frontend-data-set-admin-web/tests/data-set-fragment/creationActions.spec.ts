@@ -21,6 +21,7 @@ export const test = mergeTests(
 	apiHelpersTest,
 	dataSetManagerApiHelpersTest,
 	featureFlagsTest({
+		'LPD-37531': {enabled: true},
 		'LPS-164563': {enabled: true},
 		'LPS-178052': {enabled: true},
 	}),
@@ -72,6 +73,34 @@ test.describe('Creation Actions in Data Set fragment', () => {
 			).not.toBeVisible();
 		});
 	});
+
+	test(
+		'Creation Action button does not appear if a creation action is defined but is "inactive"',
+		{tag: '@LPD-39965'},
+		async ({dataSetFragmentPage, dataSetManagerApiHelpers, layout}) => {
+			const actionLabel = 'Custom Creation Action';
+
+			await test.step('Create Creation Action', async () => {
+				await dataSetManagerApiHelpers.createDataSetCreationAction({
+					dataSetERC,
+					label_i18n: {en_US: actionLabel},
+				});
+			});
+
+			await test.step('Configure Data Set in the page', async () => {
+				await dataSetFragmentPage.configureDataSetFragment({
+					dataSetLabel,
+					layout,
+				});
+			});
+
+			await test.step('Check that the Creation Action button is not present', async () => {
+				await expect(
+					dataSetFragmentPage.creationMenuButton
+				).not.toBeVisible();
+			});
+		}
+	);
 
 	test('Show a simple button if only one Creation Action is defined', async ({
 		dataSetFragmentPage,

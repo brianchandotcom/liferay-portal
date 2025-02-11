@@ -30,6 +30,7 @@ let dataSetLabel: string;
 export const test = mergeTests(
 	dataSetManagerApiHelpersTest,
 	featureFlagsTest({
+		'LPD-37531': {enabled: true},
 		'LPS-164563': {enabled: true},
 		'LPS-178052': {enabled: true},
 	}),
@@ -792,4 +793,95 @@ test.describe('Item Actions in Data Set fragment', () => {
 			);
 		});
 	});
+
+	test(
+		'Only "active" Item Actions are shown in fragment',
+		{tag: '@LPD-39965'},
+		async ({
+			dataSetFragmentPage,
+			dataSetManagerApiHelpers,
+			layout,
+			page,
+		}) => {
+			const modalItemActionName = 'Modal item action';
+			const modalItemActionTitle = 'Modal title';
+			const sidePanelItemActionName = 'SidePanel item action';
+
+			await test.step('Create Item Actions', async () => {
+				await dataSetManagerApiHelpers.createDataSetItemAction({
+					dataSetERC,
+					label_i18n: {en_US: LINK_ITEM_ACTION_NAME},
+					target: EItemActionTarget.LINK,
+				});
+
+				await dataSetManagerApiHelpers.createDataSetItemAction({
+					dataSetERC,
+					label_i18n: {en_US: modalItemActionName},
+					modalSize: EModalActionVariant.SMALL,
+					target: EItemActionTarget.MODAL,
+					title_i18n: {en_US: modalItemActionTitle},
+					url: liferayConfig.environment.baseUrl,
+				});
+
+				await dataSetManagerApiHelpers.createDataSetItemAction({
+					active: false,
+					dataSetERC,
+					label_i18n: {en_US: sidePanelItemActionName},
+					modalSize: EModalActionVariant.SMALL,
+					target: EItemActionTarget.SIDE_PANEL,
+					title_i18n: {en_US: sidePanelItemActionName},
+					url: liferayConfig.environment.baseUrl,
+				});
+			});
+
+			await test.step('Configure Data Set in the page', async () => {
+				await dataSetFragmentPage.configureDataSetFragment({
+					dataSetLabel,
+					layout,
+				});
+			});
+
+			await test.step('Check that the Item Actions dropdown is present in table row', async () => {
+				const tableRow = dataSetFragmentPage.table.bodyRows
+					.first()
+					.locator('td.cell-item-actions');
+
+				await expect(
+					tableRow.getByRole('button', {
+						exact: true,
+						name: 'Actions',
+					})
+				).toBeVisible();
+
+				const button = tableRow.getByRole('button', {
+					exact: true,
+					name: 'Actions',
+				});
+
+				const dropdownId = await button.getAttribute('aria-controls');
+
+				await button.click();
+
+				await page
+					.locator(`#${dropdownId}`)
+					.filter({has: page.getByRole('menu')})
+					.waitFor();
+
+				await expect(
+					page.locator(`#${dropdownId}`).getByRole('menuitem')
+				).toHaveCount(2);
+
+				await expect(
+					page.locator(`#${dropdownId}`).getByRole('menuitem', {
+						exact: true,
+						name: sidePanelItemActionName,
+					})
+				).not.toBeVisible();
+
+				await page.keyboard.press('Escape');
+
+				return tableRow;
+			});
+		}
+	);
 });

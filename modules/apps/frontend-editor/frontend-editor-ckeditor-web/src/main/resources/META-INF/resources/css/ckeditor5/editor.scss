@@ -29,20 +29,59 @@
 		font-weight: $headings-font-weight;
 	}
 
-	&.ck-editor__main > .ck-editor__editable:focus {
-		@include clay-form-control-focus();
+	&.ck-toolbar {
+		& > .ck-toolbar__items > *:not(.ck-toolbar__line-break),
+		& > .ck.ck-toolbar__grouped-dropdown {
+			margin-bottom: 6px;
+			margin-top: 6px;
+		}
 	}
 
-	&.ck-button.ck-on,
-	&.ck-button.ck-on:not(.ck-disabled):hover,
-	&.ck-button:not(.ck-disabled):hover {
-		background: $gray-100;
-		color: $gray-900;
+	&.ck-button {
+		&:active,
+		&.ck-on:focus,
+		&.ck-disabled:active {
+			border-color: transparent;
+		}
+
+		&:focus,
+		&.ck-disabled:active,
+		&.ck-disabled:focus {
+			box-shadow: none;
+		}
+
+		&:focus-visible,
+		&.ck-on:focus-visible,
+		&.ck-disabled:focus-visible {
+			border: var(--ck-focus-ring);
+			box-shadow: $btn-focus-box-shadow;
+		}
+
+		&.ck-on,
+		&.ck-on:not(.ck-disabled):hover,
+		&:not(.ck-disabled):hover {
+			background: $gray-100;
+			color: $gray-900;
+		}
 	}
 
-	&.ck.ck-button:focus {
-		background: $gray-100;
-		box-shadow: $btn-focus-box-shadow;
-		outline: 0;
+	&.ck-dropdown {
+		.ck-button.ck-dropdown__button.ck-off:active:focus,
+		.ck-button.ck-dropdown__button.ck-on:active:focus {
+			box-shadow: none;
+		}
+	}
+
+	&.ck-style-panel .ck-style-grid {
+		.ck-style-grid__button {
+			&:focus,
+			&:not(:focus) {
+				border: 1px solid var(--ck-color-base-border);
+			}
+
+			&:focus-visible {
+				border: var(--ck-focus-ring);
+			}
+		}
 	}
 }

@@ -4,6 +4,9 @@
  */
 
 import {
+	AvailableLocale,
+	EditingLocale,
+	LocalizedValue,
 	MultipleSelection,
 	ReactFieldBase as FieldBase,
 } from 'dynamic-data-mapping-form-field-type';
@@ -15,10 +18,17 @@ interface MultiSelectOption {
 	value: string;
 }
 
+type Values = string[] | LocalizedValue<string[]>;
+
 interface MultiSelectPicklistProps {
-	errorMessage?: string;
+	availableLocales: AvailableLocale[];
+	defaultLanguageId: Liferay.Language.Locale;
+	defaultLocale: EditingLocale;
+	errorMessage: string;
+	fieldName: string;
 	id: string;
 	label: string;
+	localizedObjectField?: boolean;
 	localizedValue?: Liferay.Language.FullyLocalizedValue<string> | {};
 	name: string;
 	onChange: Function;
@@ -27,12 +37,13 @@ interface MultiSelectPicklistProps {
 	readOnly: boolean;
 	required: boolean;
 	tip?: string;
-	value: string[];
+	value: Values;
 }
 
 export default function MultiSelectPicklist({
 	errorMessage,
 	label,
+	localizedObjectField,
 	localizedValue = {},
 	name,
 	onChange,
@@ -57,9 +68,11 @@ export default function MultiSelectPicklist({
 			{...otherProps}
 		>
 			<MultipleSelection
+				{...otherProps}
 				errorMessage={errorMessage}
 				id={id}
 				label={label}
+				localizedObjectField={localizedObjectField}
 				name={name}
 				onChange={onChange}
 				options={options}
@@ -69,8 +82,6 @@ export default function MultiSelectPicklist({
 				tip={tip}
 				value={value}
 			/>
-
-			<input name={name} type="hidden" value={value} />
 		</FieldBase>
 	);
 }

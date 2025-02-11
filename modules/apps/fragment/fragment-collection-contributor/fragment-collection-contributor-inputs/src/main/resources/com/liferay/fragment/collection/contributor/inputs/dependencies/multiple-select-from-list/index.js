@@ -9,19 +9,6 @@ const allInputs = Array.from(
 	fragmentElement.querySelectorAll('.custom-control-input')
 );
 
-if (input.attributes?.readOnly) {
-	allInputs.forEach((input) => {
-		input.addEventListener('click', (event) => event.preventDefault());
-	});
-}
-else if (layoutMode === 'edit') {
-	allInputs.forEach((input) => {
-		input.setAttribute('disabled', true);
-	});
-
-	button.setAttribute('disabled', true);
-}
-
 const updateInputStatus = () => {
 	if (!input.required) {
 		return;
@@ -37,9 +24,46 @@ const updateInputStatus = () => {
 	}
 };
 
-updateInputStatus();
+if (input.attributes?.readOnly) {
+	allInputs.forEach((input) => {
+		input.addEventListener('click', (event) => event.preventDefault());
+	});
+}
+else if (layoutMode === 'edit') {
+	allInputs.forEach((input) => {
+		input.setAttribute('disabled', true);
+	});
 
-fieldSet.addEventListener('change', updateInputStatus);
+	button.setAttribute('disabled', true);
+}
+else {
+	if (Liferay.FeatureFlags['LPD-37927']) {
+		import('@liferay/fragment-impl').then(
+			({registerLocalizedMultiSelect}) => {
+				if (input.localizable) {
+					const defaultLanguageId =
+						themeDisplay.getDefaultLanguageId();
+
+					const {onChange} = registerLocalizedMultiSelect({
+						defaultLanguageId,
+						initialValues: input.valueI18n,
+						inputElements: allInputs,
+						namespace: fragmentNamespace,
+					});
+
+					fieldSet.addEventListener('change', (event) => {
+						onChange(event);
+					});
+				}
+			}
+		);
+	}
+	else {
+		fieldSet.addEventListener('change', updateInputStatus);
+	}
+}
+
+updateInputStatus();
 
 if (numberOfOptions < options.length) {
 	const missionOptions = options.slice(numberOfOptions);

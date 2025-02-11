@@ -19,6 +19,7 @@ const test = mergeTests(
 	isolatedSiteTest,
 	featureFlagsTest({
 		'LPD-34938': {enabled: true},
+		'LPD-35941': {enabled: true},
 	}),
 	loginTest(),
 	fragmentsPagesTest,
@@ -80,5 +81,41 @@ test(
 		await expect(
 			page.locator('[id$="marketplaceBadge"]')
 		).not.toBeVisible();
+	}
+);
+
+test(
+	'Show modal with fragments from marketplace in Fragment Administration',
+	{
+		tag: ['@LPD-48223'],
+	},
+	async ({fragmentsPage, page, site}) => {
+
+		// Go to fragment administration and click the marketplace button
+
+		await fragmentsPage.goto(site.friendlyUrlPath);
+
+		await page.getByTitle('Open Marketplace Explorer').click();
+
+		// Wait for the modal is shown click on the Explore Marketplace button
+
+		await expect(
+			page
+				.getByRole('dialog')
+				.getByRole('heading', {name: 'Marketplace is now in'})
+		).toBeVisible();
+
+		await page
+			.getByRole('dialog')
+			.getByLabel('Explore Marketplace')
+			.click();
+
+		// Wait for the modal with fragments to appear
+
+		await expect(
+			page
+				.getByRole('dialog')
+				.getByRole('heading', {name: 'Add from Marketplace'})
+		).toBeVisible();
 	}
 );

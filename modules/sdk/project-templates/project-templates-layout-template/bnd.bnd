@@ -1,7 +1,7 @@
 Bundle-Description: Creates a Liferay layout template module project.
 Bundle-Name: Liferay Project Templates Layout Template
 Bundle-SymbolicName: com.liferay.project.templates.layout.template
-Bundle-Version: 1.0.194
+Bundle-Version: 1.0.195
 Liferay-Versions: [7,2025.0)
 -removeheaders:\
 	Import-Package,\

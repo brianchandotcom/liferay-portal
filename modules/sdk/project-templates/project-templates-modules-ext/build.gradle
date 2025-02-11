@@ -1,6 +1,6 @@
 dependencies {
 	compileOnly group: "com.beust", name: "jcommander", version: "1.82"
-	compileOnly group: "com.liferay", name: "com.liferay.project.templates.extensions", version: "1.0.140"
+	compileOnly group: "com.liferay", name: "com.liferay.project.templates.extensions", version: "1.0.141"
 	compileOnly group: "org.apache.maven.archetype", name: "archetype-common", version: "2.4"
 	testImplementation gradleTestKit()
 	testImplementation group: "biz.aQute.bnd", name: "biz.aQute.bnd", version: "6.4.0"

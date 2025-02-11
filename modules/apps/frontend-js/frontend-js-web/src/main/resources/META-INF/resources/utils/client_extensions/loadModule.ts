@@ -3,29 +3,14 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-export async function loadModule(
-	importDeclarationOrAMDModule: string
-): Promise<any> {
-	if (importDeclarationOrAMDModule.includes(' from ')) {
-		const [moduleName, symbolName] = getModuleAndSymbolNames(
-			importDeclarationOrAMDModule
-		);
+export async function loadModule(importDeclaration: string): Promise<any> {
+	const [moduleName, symbolName] = getModuleAndSymbolNames(importDeclaration);
 
-		// @ts-ignore
+	// @ts-ignore
 
-		const module = await import(moduleName);
+	const module = await import(moduleName);
 
-		return module[symbolName];
-	}
-	else {
-		return new Promise((resolve, reject) => {
-			Liferay.Loader.require(
-				importDeclarationOrAMDModule,
-				(jsModule: any) => resolve(jsModule.default || jsModule),
-				(error: string) => reject(error)
-			);
-		});
-	}
+	return module[symbolName];
 }
 
 function getModuleAndSymbolNames(importDeclaration: string): [string, string] {

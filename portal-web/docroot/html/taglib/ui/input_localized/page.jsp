@@ -383,16 +383,17 @@ Map<String, Map<String, String>> languagesTranslationsAriaLabelsMap = new HashMa
 				translatedLanguages: '<%= StringUtil.merge(languageIds) %>',
 			};
 
+			const PATH_CONTEXT = Liferay.ThemeDisplay.getPathContext();
+
 			<c:choose>
 				<c:when test="<%= Validator.isNotNull(activeLanguageIds) && !activeLanguageIds.isEmpty() %>">
-					Liferay.Loader.require(
-					[
-						A.config.groups.components.mainModule,
-						A.config.groups.react.mainModule,
-						A.config.groups.state.mainModule,
-					],
-					(frontendJsComponentsWebModule, frontendJsReactWebModule, frontendJsStateWebModule) => {
 
+				Promise.all([
+					import (PATH_CONTEXT + '/o/frontend-js-components-web/__liferay__/index.js'),
+					import (PATH_CONTEXT + '/o/frontend-js-react-web/__liferay__/index.js'),
+					import (PATH_CONTEXT + '/o/frontend-js-state-web/__liferay__/index.js')
+				]).then(
+					([frontendJsComponentsWebModule, frontendJsReactWebModule, frontendJsStateWebModule]) => {
 						Liferay.InputLocalized.register(
 							'<%= namespace + id + HtmlUtil.getAUICompatibleId(fieldSuffix) %>',
 							{
@@ -403,16 +404,15 @@ Map<String, Map<String, String>> languagesTranslationsAriaLabelsMap = new HashMa
 								...inputLocalizedProps
 							}
 						);
-					});
+					}
+				)
 				</c:when>
 				<c:otherwise>
-					Liferay.Loader.require(
-					[
-						A.config.groups.components.mainModule,
-						A.config.groups.state.mainModule,
-					],
-					(frontendJsComponentsWebModule, frontendJsStateWebModule) => {
-
+				Promise.all([
+					import (PATH_CONTEXT + '/o/frontend-js-components-web/__liferay__/index.js'),
+					import (PATH_CONTEXT + '/o/frontend-js-state-web/__liferay__/index.js')
+				]).then(
+					([frontendJsComponentsWebModule, frontendJsStateWebModule]) => {
 						Liferay.InputLocalized.register(
 							'<%= namespace + id + HtmlUtil.getAUICompatibleId(fieldSuffix) %>',
 							{

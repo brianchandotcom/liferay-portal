@@ -4,25 +4,6 @@
  */
 
 import {loadModule} from 'frontend-js-web';
-import React from 'react';
-
-export function getFakeJsModule() {
-	return new Promise((resolve) => {
-		setTimeout(
-			() =>
-				resolve(() => (
-					<div className="custom-component">
-						fakely fetched component
-					</div>
-				)),
-			3000
-		);
-	});
-}
-
-export const getJsModule = Liferay.Loader?.require
-	? loadModule
-	: getFakeJsModule;
 
 export const fetchedJsModules = [];
 

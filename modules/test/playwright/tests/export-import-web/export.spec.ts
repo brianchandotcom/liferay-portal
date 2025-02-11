@@ -13,6 +13,7 @@ import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest'
 import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {productMenuPageTest} from '../../fixtures/productMenuPageTest';
 import {readFileFromZip} from '../../utils/zip';
 import {companyExportImportPageTest} from './fixtures/companyExportImportPagesTest';
 
@@ -23,7 +24,8 @@ export const test = mergeTests(
 	featureFlagsTest({
 		'LPD-35914': {enabled: true, system: true},
 	}),
-	loginTest()
+	loginTest(),
+	productMenuPageTest
 );
 
 test('cannot export site scoped custom object entries at instance level', async ({
@@ -135,4 +137,29 @@ test('can export custom object entries at instance level with permissions', asyn
 
 	expect(json.length).toBe(1);
 	expect(json[0]).toHaveProperty('permissions');
+});
+
+test('can see corresponding elements in instance and site level', async ({
+	companyExportImportPage,
+	productMenuPage,
+}) => {
+	await productMenuPage.openProductMenuIfClosed();
+	await productMenuPage.goToPublishingExport();
+	await productMenuPage.page
+		.getByRole('link', {name: 'Custom Export'})
+		.click();
+
+	await expect(
+		productMenuPage.page.getByText('Comments, Ratings')
+	).toBeVisible();
+
+	await companyExportImportPage.applicationsMenuPage.goToExport();
+	await companyExportImportPage.page
+		.getByTestId('creationMenuNewButton')
+		.nth(1)
+		.click();
+
+	await expect(
+		companyExportImportPage.page.getByText('Comments, Ratings')
+	).not.toBeVisible();
 });

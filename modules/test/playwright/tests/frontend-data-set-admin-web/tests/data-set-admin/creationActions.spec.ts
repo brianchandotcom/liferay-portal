@@ -608,3 +608,89 @@ test(
 		});
 	}
 );
+
+test(
+	'Deactivate and activate a creation action',
+	{tag: '@LPD-39965'},
+	async ({actionsPage, dataSetManagerApiHelpers, page}) => {
+		const icon: string = 'arrow-right-full';
+		const label: string = getRandomString();
+		const type: ECreationActionTarget = ECreationActionTarget.LINK;
+
+		await test.step('Create an item action with API', async () => {
+			await dataSetManagerApiHelpers.createDataSetCreationAction({
+				dataSetERC,
+				icon,
+				label_i18n: {en_US: label},
+				target: ECreationActionTarget.LINK,
+			});
+		});
+
+		await test.step('Go to creation actions tab', async () => {
+			await actionsPage.gotoCreationActionsTab({dataSetLabel});
+		});
+
+		let actionRow: Locator;
+
+		await test.step('New creation action is displayed on the table and is "Active" by default', async () => {
+			await expect(actionsPage.creationActionsTab).toBeInViewport();
+
+			actionRow = await getRowByText({
+				page,
+				table: actionsPage.creationActionsTable,
+				text: label,
+			});
+
+			await expect(actionRow.getByRole('cell')).toContainText([
+				icon,
+				label,
+				type,
+				'Active',
+			]);
+
+			await expect(actionsPage.activeToggle.last()).toBeVisible();
+		});
+
+		await test.step('Deactivate the creation action', async () => {
+			actionRow = await getRowByText({
+				page,
+				table: actionsPage.creationActionsTable,
+				text: label,
+			});
+
+			await actionsPage.activeToggle.last().click();
+
+			await waitForAlert(page);
+
+			await expect(actionRow.getByRole('cell')).toContainText([
+				icon,
+				label,
+				type,
+				'Inactive',
+			]);
+
+			await expect(actionsPage.inactiveToggle.last()).toBeVisible();
+		});
+
+		await test.step('Activate the creation action', async () => {
+			actionRow = await getRowByText({
+				page,
+				table: actionsPage.creationActionsTable,
+				text: label,
+			});
+
+			await actionsPage.inactiveToggle.last().click();
+
+			await waitForAlert(page);
+
+			await expect(actionRow.getByRole('cell')).toContainText([
+				icon,
+				label,
+				type,
+				'Active',
+			]);
+
+			await expect(actionsPage.activeToggle.last()).toBeVisible();
+		});
+	}
+);

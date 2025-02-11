@@ -11,10 +11,12 @@ import com.liferay.headless.admin.site.client.dto.v1_0.DisplayPageTemplateFolder
 import com.liferay.headless.admin.site.client.problem.Problem;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionService;
 import com.liferay.petra.function.UnsafeRunnable;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -400,9 +402,17 @@ public class DisplayPageTemplateFolderResourceTest
 	private void _testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateFolderWithExistingParentExternalReferenceCode()
 		throws Exception {
 
+		DisplayPageTemplateFolder displayPageTemplateFolder =
+			randomDisplayPageTemplateFolder();
+
+		displayPageTemplateFolder.setKey(StringPool.BLANK);
+
 		DisplayPageTemplateFolder parentDisplayPageTemplateFolder =
 			testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder_addDisplayPageTemplateFolder(
-				randomDisplayPageTemplateFolder());
+				displayPageTemplateFolder);
+
+		Assert.assertNotNull(
+			Validator.isNotNull(parentDisplayPageTemplateFolder.getKey()));
 
 		DisplayPageTemplateFolder randomDisplayPageTemplateFolder =
 			randomDisplayPageTemplateFolder();
@@ -417,6 +427,9 @@ public class DisplayPageTemplateFolderResourceTest
 
 		assertEquals(
 			randomDisplayPageTemplateFolder, postDisplayPageTemplateFolder);
+		Assert.assertEquals(
+			randomDisplayPageTemplateFolder.getKey(),
+			postDisplayPageTemplateFolder.getKey());
 		Assert.assertEquals(
 			randomDisplayPageTemplateFolder.
 				getParentDisplayPageTemplateFolderExternalReferenceCode(),

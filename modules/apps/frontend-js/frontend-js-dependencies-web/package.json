@@ -15,7 +15,7 @@
 		"html-to-image": "1.11.11",
 		"image-promise": "5.0.1",
 		"jspdf": "2.5.1",
-		"liferay-ckeditor": "4.21.0-liferay.10",
+		"liferay-ckeditor": "4.21.0-liferay.11",
 		"lodash.groupby": "4.6.0",
 		"lodash.isequal": "4.5.0",
 		"moment": "2.29.4",

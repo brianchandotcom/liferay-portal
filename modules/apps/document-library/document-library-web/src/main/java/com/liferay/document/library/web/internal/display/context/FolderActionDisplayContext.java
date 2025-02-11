@@ -956,10 +956,17 @@ public class FolderActionDisplayContext {
 			return false;
 		}
 
-		return DLFolderPermission.contains(
+		if(DLFolderPermission.contains(
 			_dlRequestHelper.getPermissionChecker(),
 			_dlRequestHelper.getScopeGroupId(), _getFolderId(),
-			ActionKeys.UPDATE);
+			ActionKeys.ADVANCE_UPDATE) || DLFolderPermission.contains(
+			_dlRequestHelper.getPermissionChecker(),
+			_dlRequestHelper.getScopeGroupId(), _getFolderId(),
+			ActionKeys.UPDATE)){
+			return true;
+		}
+
+		return false;
 	}
 
 	private boolean _isMoveFolderActionVisible() throws PortalException {

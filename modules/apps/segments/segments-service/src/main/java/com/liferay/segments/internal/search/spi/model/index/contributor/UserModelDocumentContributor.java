@@ -8,7 +8,6 @@ package com.liferay.segments.internal.search.spi.model.index.contributor;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -33,12 +32,6 @@ public class UserModelDocumentContributor
 	@Override
 	public void contribute(Document document, User user) {
 		try {
-			long[] inheritedRoleIds = _getInheritedRoleIds(user);
-
-			if (ArrayUtil.isNotEmpty(inheritedRoleIds)) {
-				document.addKeyword("inheritedRoleIds", inheritedRoleIds);
-			}
-
 			long[] segmentsEntryIds = _getSegmentsEntryIds(user);
 
 			if (ArrayUtil.isNotEmpty(segmentsEntryIds)) {
@@ -51,11 +44,6 @@ public class UserModelDocumentContributor
 					"Unable to index user " + user.getUserId(), exception);
 			}
 		}
-	}
-
-	private long[] _getInheritedRoleIds(User user) throws Exception {
-		return TransformUtil.transformToLongArray(
-			user.getInheritedRoles(), Role::getRoleId);
 	}
 
 	private long[] _getSegmentsEntryIds(User user) throws Exception {

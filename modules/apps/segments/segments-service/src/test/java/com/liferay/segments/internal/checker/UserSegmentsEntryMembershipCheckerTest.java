@@ -277,8 +277,6 @@ public class UserSegmentsEntryMembershipCheckerTest {
 		).put(
 			"groupIds", new long[] {1}
 		).put(
-			"inheritedRoleIds", new long[] {1}
-		).put(
 			"jobTitle", "test"
 		).put(
 			"lastLoginDate", new Date()

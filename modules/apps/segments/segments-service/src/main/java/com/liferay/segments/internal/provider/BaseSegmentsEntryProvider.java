@@ -359,13 +359,6 @@ public abstract class BaseSegmentsEntryProvider
 		).put(
 			"groupIds", user.getGroupIds()
 		).put(
-			"inheritedRoleIds",
-			TransformUtil.transform(
-				user.getInheritedRoles(), role -> role.getRoleId()
-			).toArray(
-				new Long[0]
-			)
-		).put(
 			"organizationIds", user.getOrganizationIds()
 		).put(
 			"roleIds", user.getRoleIds()

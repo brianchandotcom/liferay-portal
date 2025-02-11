@@ -5,6 +5,7 @@
 
 package com.liferay.style.book.web.internal.servlet.taglib.util;
 
+import com.liferay.client.extension.type.manager.CETManager;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.item.selector.ItemSelector;
@@ -23,6 +24,7 @@ import com.liferay.style.book.constants.StyleBookPortletKeys;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalServiceUtil;
 import com.liferay.style.book.web.internal.constants.StyleBookWebKeys;
+import com.liferay.style.book.web.internal.util.StyleBookUtil;
 
 import java.util.List;
 
@@ -39,10 +41,11 @@ public class StyleBookEntryActionDropdownItemsProvider {
 
 	public StyleBookEntryActionDropdownItemsProvider(
 		StyleBookEntry styleBookEntry, RenderRequest renderRequest,
-		RenderResponse renderResponse) {
+		RenderResponse renderResponse, CETManager cetManager) {
 
 		_styleBookEntry = styleBookEntry;
 		_renderResponse = renderResponse;
+		_cetManager = cetManager;
 
 		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
 		_itemSelector = (ItemSelector)renderRequest.getAttribute(
@@ -56,6 +59,29 @@ public class StyleBookEntryActionDropdownItemsProvider {
 			return DropdownItemListBuilder.add(
 				() -> !_styleBookEntry.isDefaultStyleBookEntry(),
 				_getMarkAsDefaultStyleBookEntryActionUnsafeConsumer()
+			).build();
+		}
+
+		if (StyleBookUtil.isThemeInactive(
+				_cetManager, _styleBookEntry.getCompanyId(),
+				_styleBookEntry.getThemeId())) {
+
+			return DropdownItemListBuilder.addGroup(
+				dropdownGroupItem -> {
+					dropdownGroupItem.setDropdownItems(
+						DropdownItemListBuilder.add(
+							_getExportStyleBookEntryActionUnsafeConsumer()
+						).build());
+					dropdownGroupItem.setSeparator(true);
+				}
+			).addGroup(
+				dropdownGroupItem -> {
+					dropdownGroupItem.setDropdownItems(
+						DropdownItemListBuilder.add(
+							_getDeleteStyleBookEntryActionUnsafeConsumer()
+						).build());
+					dropdownGroupItem.setSeparator(true);
+				}
 			).build();
 		}
 
@@ -356,6 +382,7 @@ public class StyleBookEntryActionDropdownItemsProvider {
 		};
 	}
 
+	private final CETManager _cetManager;
 	private final HttpServletRequest _httpServletRequest;
 	private final ItemSelector _itemSelector;
 	private final RenderResponse _renderResponse;

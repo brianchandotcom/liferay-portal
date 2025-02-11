@@ -13,6 +13,7 @@ import com.liferay.commerce.pricing.web.internal.model.PricingClass;
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
 import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
@@ -25,7 +26,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.text.DateFormat;
 import java.text.Format;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -49,8 +49,6 @@ public class CommercePricingClassFDSDataProvider
 			HttpServletRequest httpServletRequest, Sort sort)
 		throws PortalException {
 
-		List<PricingClass> pricingClasses = new ArrayList<>();
-
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
@@ -59,27 +57,19 @@ public class CommercePricingClassFDSDataProvider
 			DateFormat.MEDIUM, DateFormat.MEDIUM, themeDisplay.getLocale(),
 			themeDisplay.getTimeZone());
 
-		List<CommercePricingClass> commercePricingClasses =
+		return TransformUtil.transform(
 			_getCommercePricingClasses(
 				themeDisplay.getCompanyId(), fdsKeywords.getKeywords(),
 				fdsPagination.getStartPosition(),
-				fdsPagination.getEndPosition(), sort);
-
-		for (CommercePricingClass commercePricingClass :
-				commercePricingClasses) {
-
-			pricingClasses.add(
-				new PricingClass(
-					commercePricingClass.getCommercePricingClassId(),
-					commercePricingClass.getTitle(themeDisplay.getLocale()),
-					_commercePricingClassCPDefinitionRelService.
-						getCommercePricingClassCPDefinitionRelsCount(
-							commercePricingClass.getCommercePricingClassId()),
-					dateTimeFormat.format(
-						commercePricingClass.getLastPublishDate())));
-		}
-
-		return pricingClasses;
+				fdsPagination.getEndPosition(), sort),
+			commercePricingClass -> new PricingClass(
+				commercePricingClass.getCommercePricingClassId(),
+				commercePricingClass.getTitle(themeDisplay.getLocale()),
+				_commercePricingClassCPDefinitionRelService.
+					getCommercePricingClassCPDefinitionRelsCount(
+						commercePricingClass.getCommercePricingClassId()),
+				dateTimeFormat.format(
+					commercePricingClass.getLastPublishDate())));
 	}
 
 	@Override

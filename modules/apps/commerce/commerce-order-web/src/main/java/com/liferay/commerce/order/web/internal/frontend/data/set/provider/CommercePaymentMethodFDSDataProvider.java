@@ -25,6 +25,7 @@ import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.frontend.data.set.provider.FDSDataProvider;
 import com.liferay.frontend.data.set.provider.search.FDSKeywords;
 import com.liferay.frontend.data.set.provider.search.FDSPagination;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -65,8 +66,6 @@ public class CommercePaymentMethodFDSDataProvider
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		List<PaymentMethod> paymentMethods = new ArrayList<>();
-
 		long commerceOrderId = ParamUtil.getLong(
 			httpServletRequest, "commerceOrderId");
 
@@ -96,25 +95,18 @@ public class CommercePaymentMethodFDSDataProvider
 						commerceOrder.getGroupId(), true));
 		}
 
-		commercePaymentMethodGroupRels = _filterCommercePaymentMethodGroupRels(
-			commercePaymentMethodGroupRels,
-			commerceOrder.getCommerceOrderTypeId(),
-			commerceOrder.isSubscriptionOrder());
-
-		for (CommercePaymentMethodGroupRel commercePaymentMethodGroupRel :
-				commercePaymentMethodGroupRels) {
-
-			paymentMethods.add(
-				new PaymentMethod(
-					commercePaymentMethodGroupRel.getDescription(
-						themeDisplay.getLocale()),
-					commercePaymentMethodGroupRel.getPaymentIntegrationKey(),
-					_getThumbnail(commercePaymentMethodGroupRel, themeDisplay),
-					commercePaymentMethodGroupRel.getName(
-						themeDisplay.getLocale())));
-		}
-
-		return paymentMethods;
+		return TransformUtil.transform(
+			_filterCommercePaymentMethodGroupRels(
+				commercePaymentMethodGroupRels,
+				commerceOrder.getCommerceOrderTypeId(),
+				commerceOrder.isSubscriptionOrder()),
+			commercePaymentMethodGroupRel -> new PaymentMethod(
+				commercePaymentMethodGroupRel.getDescription(
+					themeDisplay.getLocale()),
+				commercePaymentMethodGroupRel.getPaymentIntegrationKey(),
+				_getThumbnail(commercePaymentMethodGroupRel, themeDisplay),
+				commercePaymentMethodGroupRel.getName(
+					themeDisplay.getLocale())));
 	}
 
 	@Override

@@ -4,6 +4,7 @@
  */
 
 import {Locator, Page} from '@playwright/test';
+
 import {InstanceSettingsPage} from '../configuration-admin-web/InstanceSettingsPage';
 
 export class TimeBasedOneTimePasswordConfigurationPage {
@@ -11,7 +12,7 @@ export class TimeBasedOneTimePasswordConfigurationPage {
 	readonly instanceSettingsPage: InstanceSettingsPage;
 	readonly page: Page;
 	readonly saveButton: Locator;
-	readonly updateButton: Locator;	
+	readonly updateButton: Locator;
 
 	constructor(page: Page) {
 		this.page = page;

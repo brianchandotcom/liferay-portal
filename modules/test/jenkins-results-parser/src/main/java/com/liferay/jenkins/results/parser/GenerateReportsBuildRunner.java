@@ -797,8 +797,17 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 	private void _updateReport(String filePath) {
 		_mergeHTMLFiles(filePath, false);
 
-		JenkinsResultsParserUtil.rsync(
-			"test-1-0", _REPORT_RSYNC_DESTINATION_DIR_PATH, null, filePath);
+		try {
+			JenkinsResultsParserUtil.rsync(
+				"test-1-0", _REPORT_RSYNC_DESTINATION_DIR_PATH, null, filePath);
+		}
+		catch (Exception exception) {
+			System.out.println(
+				"Unable to rsync report " + filePath + " to test-1-0:" +
+					_REPORT_RSYNC_DESTINATION_DIR_PATH);
+
+			exception.printStackTrace();
+		}
 	}
 
 	private void _validateBuildParameters() {

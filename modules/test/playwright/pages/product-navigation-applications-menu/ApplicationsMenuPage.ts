@@ -15,7 +15,7 @@ export class ApplicationsMenuPage {
 	private readonly announcementsItem: Locator;
 	private readonly apiBuilderMenuItem: Locator;
 	private readonly auditItem: Locator;
-	private readonly applicationsMenuTabButton: Locator;
+	readonly applicationsMenuTabButton: Locator;
 	private readonly blueprintsItem: Locator;
 	private readonly clientExtensionsLink: Locator;
 	private readonly commerceChannelsMenuItem: Locator;
@@ -33,8 +33,8 @@ export class ApplicationsMenuPage {
 	private readonly countriesManagementItem: Locator;
 	private readonly customFieldsMenuItem: Locator;
 	private readonly dataMigrationCenterMenuItem: Locator;
-	private readonly exportMenuItem: Locator;
-	private readonly importMenuItem: Locator;
+	readonly exportMenuItem: Locator;
+	readonly importMenuItem: Locator;
 	private readonly dataSetManagerMenuItem: Locator;
 	private readonly defaultPermissionsLink: Locator;
 	private readonly gogoShellItem: Locator;

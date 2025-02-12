@@ -96,8 +96,8 @@ public class ConfigurationSynchronousConfigurationListenerTest {
 
 		ReflectionTestUtil.invoke(
 			_configurationSynchronousConfigurationListener, "_onNotify",
-			new Class<?>[] {String.class, int.class, long.class}, "test",
-			ConfigurationEvent.CM_UPDATED, 1L);
+			new Class<?>[] {long.class, String.class, int.class}, 1L, "test",
+			ConfigurationEvent.CM_UPDATED);
 	}
 
 	@Test

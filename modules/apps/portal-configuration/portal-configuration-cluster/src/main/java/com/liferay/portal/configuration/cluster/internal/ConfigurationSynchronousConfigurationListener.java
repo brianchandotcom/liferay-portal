@@ -46,9 +46,8 @@ public class ConfigurationSynchronousConfigurationListener
 
 		try {
 			MethodHandler methodHandler = new MethodHandler(
-				_onNotifyMethodKey, configurationEvent.getPid(),
-				configurationEvent.getType(),
-				CompanyThreadLocal.getNonsystemCompanyId());
+				_onNotifyMethodKey, CompanyThreadLocal.getNonsystemCompanyId(),
+				configurationEvent.getPid(), configurationEvent.getType());
 
 			ClusterRequest clusterRequest =
 				ClusterRequest.createMulticastRequest(methodHandler, true);
@@ -62,7 +61,7 @@ public class ConfigurationSynchronousConfigurationListener
 		}
 	}
 
-	private static void _onNotify(String pid, int type, long companyId)
+	private static void _onNotify(long companyId, String pid, int type)
 		throws Exception {
 
 		SynchronousConfigurationListener synchronousConfigurationListener =
@@ -144,7 +143,7 @@ public class ConfigurationSynchronousConfigurationListener
 
 	private static final MethodKey _onNotifyMethodKey = new MethodKey(
 		ConfigurationSynchronousConfigurationListener.class, "_onNotify",
-		String.class, int.class, long.class);
+		long.class, String.class, int.class);
 	private static final Snapshot<SynchronousConfigurationListener> _snapshot =
 		new Snapshot<>(
 			ConfigurationSynchronousConfigurationListener.class,

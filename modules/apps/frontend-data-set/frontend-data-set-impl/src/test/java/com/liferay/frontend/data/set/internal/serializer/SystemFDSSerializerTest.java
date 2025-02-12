@@ -20,6 +20,7 @@ import com.liferay.frontend.data.set.filter.BaseSelectionFDSFilter;
 import com.liferay.frontend.data.set.filter.DateFDSFilterItem;
 import com.liferay.frontend.data.set.filter.FDSFilter;
 import com.liferay.frontend.data.set.filter.FDSFilterContextContributor;
+import com.liferay.frontend.data.set.filter.FDSFilterContextContributorRegistry;
 import com.liferay.frontend.data.set.filter.FDSFilterRegistry;
 import com.liferay.frontend.data.set.filter.SelectionFDSFilterItem;
 import com.liferay.frontend.data.set.internal.SystemFDSEntryRegistryImpl;
@@ -102,8 +103,14 @@ public class SystemFDSSerializerTest {
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
 			_bundleContext, SystemFDSEntry.class, "frontend.data.set.name");
 
+		SystemFDSEntryRegistry systemFDSEntryRegistry =
+			new SystemFDSEntryRegistryImpl();
+
 		ReflectionTestUtil.setFieldValue(
-			_systemFDSEntryRegistry, "_serviceTrackerMap", _serviceTrackerMap);
+			systemFDSEntryRegistry, "_serviceTrackerMap", _serviceTrackerMap);
+
+		ReflectionTestUtil.setFieldValue(
+			_fdsSerializer, "_systemFDSEntryRegistry", systemFDSEntryRegistry);
 	}
 
 	@After
@@ -131,9 +138,6 @@ public class SystemFDSSerializerTest {
 		ReflectionTestUtil.setFieldValue(
 			_fdsSerializer, "fdsAPIURLResolverRegistry",
 			fdsAPIURLResolverRegistry);
-
-		ReflectionTestUtil.setFieldValue(
-			_fdsSerializer, "_systemFDSEntryRegistry", _systemFDSEntryRegistry);
 
 		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
 
@@ -484,12 +488,12 @@ public class SystemFDSSerializerTest {
 			fdsFilterRegistry, "_serviceTrackerMap",
 			fdsFilterServiceTrackerMap);
 
-		FDSFilterContextContributorRegistryImpl
-			fdsFilterContextContributorRegistryImpl =
+		FDSFilterContextContributorRegistry
+			fdsFilterContextContributorRegistry =
 				new FDSFilterContextContributorRegistryImpl();
 
 		ReflectionTestUtil.setFieldValue(
-			fdsFilterContextContributorRegistryImpl, "_serviceTrackerMap",
+			fdsFilterContextContributorRegistry, "_serviceTrackerMap",
 			fdsFilterContextContributorServiceTrackerMap);
 
 		ReflectionTestUtil.setFieldValue(
@@ -497,32 +501,37 @@ public class SystemFDSSerializerTest {
 
 		ReflectionTestUtil.setFieldValue(
 			_fdsSerializer, "_fdsFilterContextContributorRegistry",
-			fdsFilterContextContributorRegistryImpl);
+			fdsFilterContextContributorRegistry);
+
+		Language language = Mockito.mock(Language.class);
+
+		ReflectionTestUtil.setFieldValue(_fdsSerializer, "_language", language);
+
+		JSONFactory jsonFactory = new JSONFactoryImpl();
 
 		ReflectionTestUtil.setFieldValue(
-			_fdsSerializer, "_jsonFactory", _jsonFactory);
+			_fdsSerializer, "_jsonFactory", jsonFactory);
 
-		ReflectionTestUtil.setFieldValue(
-			_fdsSerializer, "_language", _language);
+		Portal portal = Mockito.mock(Portal.class);
 
-		ReflectionTestUtil.setFieldValue(_fdsSerializer, "_portal", _portal);
+		ReflectionTestUtil.setFieldValue(_fdsSerializer, "_portal", portal);
 
 		DateRangeFDSFilterContextContributor
 			dateRangeFDSFilterContextContributor =
 				new DateRangeFDSFilterContextContributor();
 
 		ReflectionTestUtil.setFieldValue(
-			dateRangeFDSFilterContextContributor, "_jsonFactory", _jsonFactory);
+			dateRangeFDSFilterContextContributor, "_jsonFactory", jsonFactory);
 
 		SelectionFDSFilterContextContributor
 			selectionFDSFilterContextContributor =
 				new SelectionFDSFilterContextContributor();
 
 		ReflectionTestUtil.setFieldValue(
-			selectionFDSFilterContextContributor, "_jsonFactory", _jsonFactory);
+			selectionFDSFilterContextContributor, "_jsonFactory", jsonFactory);
 
 		ReflectionTestUtil.setFieldValue(
-			selectionFDSFilterContextContributor, "_language", _language);
+			selectionFDSFilterContextContributor, "_language", language);
 
 		ServiceRegistration<FDSFilterContextContributor>
 			clientExtensionFDSFilterContextContributorServiceRegistration =
@@ -563,32 +572,32 @@ public class SystemFDSSerializerTest {
 
 		LanguageUtil languageUtil = new LanguageUtil();
 
-		languageUtil.setLanguage(_language);
+		languageUtil.setLanguage(language);
 
 		Mockito.when(
-			_portal.getLocale(_httpServletRequest)
-		).thenReturn(
-			LocaleUtil.US
-		);
-
-		Mockito.when(
-			_language.get(LocaleUtil.US, null)
+			language.get(LocaleUtil.US, null)
 		).thenReturn(
 			StringPool.BLANK
 		);
 
 		Mockito.when(
-			_language.get(Mockito.eq(LocaleUtil.US), Mockito.anyString())
+			language.get(Mockito.eq(LocaleUtil.US), Mockito.anyString())
 		).thenAnswer(
 			invocation -> invocation.getArgument(1, String.class)
 		);
 
 		Mockito.when(
-			_language.get(
+			language.get(
 				Mockito.eq(ResourceBundleUtil.EMPTY_RESOURCE_BUNDLE),
 				Mockito.anyString())
 		).thenAnswer(
 			invocation -> invocation.getArgument(1, String.class)
+		);
+
+		Mockito.when(
+			portal.getLocale(_httpServletRequest)
+		).thenReturn(
+			LocaleUtil.US
 		);
 
 		// Client extension filter
@@ -1433,16 +1442,10 @@ public class SystemFDSSerializerTest {
 			MapUtil.singletonDictionary("frontend.data.set.name", fdsName));
 	}
 
-	private static final JSONFactory _jsonFactory = new JSONFactoryImpl();
-
 	private BundleContext _bundleContext = SystemBundleUtil.getBundleContext();
 	private final FDSSerializer _fdsSerializer = new SystemFDSSerializer();
 	private final HttpServletRequest _httpServletRequest = Mockito.mock(
 		HttpServletRequest.class);
-	private final Language _language = Mockito.mock(Language.class);
-	private final Portal _portal = Mockito.mock(Portal.class);
 	private ServiceTrackerMap<String, SystemFDSEntry> _serviceTrackerMap;
-	private final SystemFDSEntryRegistry _systemFDSEntryRegistry =
-		new SystemFDSEntryRegistryImpl();
 
 }

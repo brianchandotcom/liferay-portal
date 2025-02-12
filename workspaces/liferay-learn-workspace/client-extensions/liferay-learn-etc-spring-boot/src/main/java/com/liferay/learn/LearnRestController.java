@@ -63,7 +63,7 @@ public class LearnRestController extends BaseRestController {
 
 	@GetMapping("/{quizId}/questions")
 	@ResponseBody
-	public ResponseEntity<Object> getQuestions(
+	public ResponseEntity<Object> getQuizQuestions(
 			@AuthenticationPrincipal Jwt jwt, @PathVariable long quizId)
 		throws Exception {
 
@@ -86,7 +86,7 @@ public class LearnRestController extends BaseRestController {
 
 	@PostMapping("/{quizId}/result")
 	@ResponseBody
-	public ResponseEntity<Object> postResults(
+	public ResponseEntity<Object> postQuizResult(
 			@AuthenticationPrincipal Jwt jwt, @PathVariable long quizId,
 			@RequestBody Map<String, Object> map)
 		throws Exception {
@@ -116,7 +116,7 @@ public class LearnRestController extends BaseRestController {
 			"liferay-learn-etc-spring-boot-oauth-application-headless-server");
 	}
 
-	private int _getQuestionScore(
+	private int _getQuizQuestionScore(
 		Map<String, Object> answerMap, JSONObject quizQuestionJSONObject,
 		JSONObject scoreSheetJSONObject) {
 
@@ -202,13 +202,13 @@ public class LearnRestController extends BaseRestController {
 					scoreSheetJSONObject.getString("type"),
 					"selectMultipleChoice")) {
 
-				questionScore = _getQuestionScore(
+				questionScore = _getQuizQuestionScore(
 					(Map<String, Object>)answersMap.get(
 						String.valueOf(quizQuestionJSONObject.getLong("id"))),
 					quizQuestionJSONObject, scoreSheetJSONObject);
 			}
 			else {
-				questionScore = _getQuestionScore(
+				questionScore = _getQuizQuestionScore(
 					Collections.singletonMap(
 						String.valueOf(
 							answersMap.get(

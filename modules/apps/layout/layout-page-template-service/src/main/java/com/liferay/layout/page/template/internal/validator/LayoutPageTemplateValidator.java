@@ -12,9 +12,9 @@ import com.liferay.layout.page.template.exception.LayoutPageTemplateEntryNameExc
  */
 public class LayoutPageTemplateValidator {
 
-	public static boolean isBlacklistedChar(char c) {
-		for (char blacklistedChar : _BLACKLIST_CHAR) {
-			if (c == blacklistedChar) {
+	public static boolean hasBlacklistedChar(String string) {
+		for (char c : _BLACKLIST_CHAR) {
+			if (string.indexOf(c) >= 0) {
 				return true;
 			}
 		}
@@ -22,9 +22,9 @@ public class LayoutPageTemplateValidator {
 		return false;
 	}
 
-	public static boolean hasBlacklistedChar(String string) {
-		for (char c : _BLACKLIST_CHAR) {
-			if (string.indexOf(c) >= 0) {
+	public static boolean isBlacklistedChar(char c) {
+		for (char blacklistedChar : _BLACKLIST_CHAR) {
+			if (c == blacklistedChar) {
 				return true;
 			}
 		}

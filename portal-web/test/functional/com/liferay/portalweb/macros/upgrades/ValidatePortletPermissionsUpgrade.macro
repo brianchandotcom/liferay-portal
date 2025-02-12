@@ -2,9 +2,12 @@ definition {
 
 	@summary = "Validates that the portlet permissions definitions across different users persisted and are working correctly after an upgrade is executed"
 	macro viewPortletsPermissions() {
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea1@liferay.com",
-			userLoginFullName = "userfn1 userln1");
+		User.logoutPG();
+
+		SignIn.signInSpecificURL(
+			url = "http://localhost:8080",
+			userEmailAddress = "userea1@liferay.com",
+			userPassword = PropsUtil.get("default.admin.password"));
 
 		Navigator.gotoSitePage(
 			pageName = "Message Boards Page",
@@ -37,9 +40,12 @@ definition {
 
 		Portlet.viewNoPermissionPG();
 
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "userea2@liferay.com",
-			userLoginFullName = "userfn2 userln2");
+		User.logoutPG();
+
+		SignIn.signInSpecificURL(
+			url = "http://localhost:8080",
+			userEmailAddress = "userea2@liferay.com",
+			userPassword = PropsUtil.get("default.admin.password"));
 
 		Navigator.gotoSitePage(
 			pageName = "Wiki Page",

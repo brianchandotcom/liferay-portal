@@ -127,6 +127,16 @@ public class AttachmentDDMFormFieldTemplateContextContributor
 				})
 		).put(
 			"url", _getURL(ddmFormField, ddmFormFieldRenderingContext)
+		).put(
+			"value",
+			() -> {
+				if (localizedObjectField) {
+					return DDMFormFieldValueUtil.getValueJSONObject(
+						ddmFormFieldRenderingContext);
+				}
+
+				return ddmFormFieldRenderingContext.getValue();
+			}
 		).putAll(
 			DDMFormFieldTemplateContextContributorUtil.getLocaleMap(
 				ddmForm.getDefaultLocale())

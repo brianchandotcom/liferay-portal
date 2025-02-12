@@ -271,20 +271,6 @@ public class CustomFDSSerializer
 		return Collections.emptyMap();
 	}
 
-	protected String getLabelValue(
-		String defaultKey, String fallbackKey,
-		Map<String, Object> dataSetTableSectionProperties) {
-
-		String value = String.valueOf(
-			dataSetTableSectionProperties.get(defaultKey));
-
-		if (Validator.isNotNull(value)) {
-			return value;
-		}
-
-		return String.valueOf(dataSetTableSectionProperties.get(fallbackKey));
-	}
-
 	protected List<ObjectEntry> getSortedRelatedObjectEntries(
 		String externalReferenceCode, HttpServletRequest httpServletRequest,
 		Predicate<ObjectEntry> predicate, String propertyKey,
@@ -494,7 +480,9 @@ public class CustomFDSSerializer
 					).put(
 						"id", fieldName
 					).put(
-						"label", getLabelValue("label", "fieldName", properties)
+						"label",
+						MapUtil.getWithFallbackKey(
+							properties, "label", "fieldName")
 					).put(
 						"preloadedData",
 						() -> {
@@ -543,7 +531,9 @@ public class CustomFDSSerializer
 							return finalFieldName.substring(0, index);
 						}
 					).put(
-						"label", getLabelValue("label", "fieldName", properties)
+						"label",
+						MapUtil.getWithFallbackKey(
+							properties, "label", "fieldName")
 					).put(
 						"multiple", properties.get("multiple")
 					).put(
@@ -661,7 +651,9 @@ public class CustomFDSSerializer
 					).put(
 						"id", fieldName
 					).put(
-						"label", getLabelValue("label", "fieldName", properties)
+						"label",
+						MapUtil.getWithFallbackKey(
+							properties, "label", "fieldName")
 					).put(
 						"type", "clientExtension"
 					);

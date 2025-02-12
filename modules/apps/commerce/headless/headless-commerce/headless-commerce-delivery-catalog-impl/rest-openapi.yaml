@@ -1493,6 +1493,14 @@ paths:
                       minimum: 0
                       type: integer
                 - in: query
+                  name: currencyCode
+                  required: false
+                  schema:
+                      description:
+                          Currency code of the price list
+                      example: USD
+                      type: string
+                - in: query
                   name: page
                   required: false
                   schema:
@@ -1616,6 +1624,14 @@ paths:
                       format: int64
                       minimum: 0
                       type: integer
+                - in: query
+                  name: currencyCode
+                  required: false
+                  schema:
+                      description:
+                          Currency code of the price list
+                      example: USD
+                      type: string
                 - in: query
                   name: page
                   required: false
@@ -1826,6 +1842,14 @@ paths:
                       minimum: 0
                       type: integer
                 - in: query
+                  name: currencyCode
+                  required: false
+                  schema:
+                      description:
+                          Currency code of the price list
+                      example: USD
+                      type: string
+                - in: query
                   name: page
                   required: false
                   schema:
@@ -2022,6 +2046,14 @@ paths:
                       format: int64
                       minimum: 0
                       type: integer
+                - in: query
+                  name: currencyCode
+                  required: false
+                  schema:
+                      description:
+                          Currency code of the price list
+                      example: USD
+                      type: string
             responses:
                 200:
                     content:
@@ -2096,6 +2128,14 @@ paths:
                       format: int64
                       minimum: 0
                       type: integer
+                - in: query
+                  name: currencyCode
+                  required: false
+                  schema:
+                      description:
+                          Currency code of the price list
+                      example: USD
+                      type: string
                 - in: query
                   name: quantity
                   required: false
@@ -2195,6 +2235,14 @@ paths:
                       format: int64
                       minimum: 0
                       type: integer
+                - in: query
+                  name: currencyCode
+                  required: false
+                  schema:
+                      description:
+                          Currency code of the price list
+                      example: USD
+                      type: string
                 - in: query
                   name: page
                   required: false
@@ -3165,6 +3213,14 @@ paths:
                       minimum: 0
                       type: integer
                 - in: query
+                  name: currencyCode
+                  required: false
+                  schema:
+                      description:
+                          Currency code of the price list
+                      example: USD
+                      type: string
+                - in: query
                   explode: true
                   name: page
                   required: false
@@ -3486,6 +3542,14 @@ paths:
                       minimum: 0
                       type: integer
                 - in: query
+                  name: currencyCode
+                  required: false
+                  schema:
+                      description:
+                          Currency code of the price list
+                      example: USD
+                      type: string
+                - in: query
                   name: page
                   required: false
                   schema:
@@ -3617,6 +3681,14 @@ paths:
                       format: int64
                       minimum: 0
                       type: integer
+                - in: query
+                  name: currencyCode
+                  required: false
+                  schema:
+                      description:
+                          Currency code of the price list
+                      example: USD
+                      type: string
                 - in: query
                   name: page
                   required: false
@@ -3932,6 +4004,14 @@ paths:
                       minimum: 0
                       type: integer
                 - in: query
+                  name: currencyCode
+                  required: false
+                  schema:
+                      description:
+                          Currency code of the price list
+                      example: USD
+                      type: string
+                - in: query
                   name: page
                   required: false
                   schema:
@@ -4132,6 +4212,14 @@ paths:
                       minimum: 0
                       type: integer
                 - in: query
+                  name: currencyCode
+                  required: false
+                  schema:
+                      description:
+                          Currency code of the price list
+                      example: USD
+                      type: string
+                - in: query
                   name: quantity
                   required: false
                   schema:
@@ -4257,6 +4345,14 @@ paths:
                       format: int64
                       minimum: 0
                       type: integer
+                - in: query
+                  name: currencyCode
+                  required: false
+                  schema:
+                      description:
+                          Currency code of the price list
+                      example: USD
+                      type: string
             responses:
                 200:
                     content:
@@ -4323,6 +4419,14 @@ paths:
                       format: int64
                       minimum: 0
                       type: integer
+                - in: query
+                  name: currencyCode
+                  required: false
+                  schema:
+                      description:
+                          Currency code of the price list
+                      example: USD
+                      type: string
                 - in: query
                   name: page
                   required: false
@@ -4515,6 +4619,14 @@ paths:
                       format: int64
                       minimum: 0
                       type: integer
+                - in: query
+                  name: currencyCode
+                  required: false
+                  schema:
+                      description:
+                          Currency code of the price list
+                      example: USD
+                      type: string
             responses:
                 200:
                     content:
@@ -4751,6 +4863,14 @@ paths:
                       format: int64
                       minimum: 0
                       type: integer
+                - in: query
+                  name: currencyCode
+                  required: false
+                  schema:
+                      description:
+                          Currency code of the price list
+                      example: USD
+                      type: string
                 - in: query
                   name: page
                   required: false

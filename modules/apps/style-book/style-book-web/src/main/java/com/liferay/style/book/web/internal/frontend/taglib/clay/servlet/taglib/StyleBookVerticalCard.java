@@ -41,15 +41,15 @@ public class StyleBookVerticalCard
 	extends BaseBaseClayCard implements VerticalCard {
 
 	public StyleBookVerticalCard(
-		BaseModel<?> baseModel, RenderRequest renderRequest,
-		RenderResponse renderResponse, RowChecker rowChecker,
-		CETManager cetManager) {
+		BaseModel<?> baseModel, CETManager cetManager,
+		RenderRequest renderRequest, RenderResponse renderResponse,
+		RowChecker rowChecker) {
 
 		super(baseModel, rowChecker);
 
+		_cetManager = cetManager;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
-		_cetManager = cetManager;
 
 		_styleBookEntry = (StyleBookEntry)baseModel;
 
@@ -70,8 +70,8 @@ public class StyleBookVerticalCard
 		StyleBookEntryActionDropdownItemsProvider
 			styleBookEntryActionDropdownItemsProvider =
 				new StyleBookEntryActionDropdownItemsProvider(
-					_styleBookEntry, _renderRequest, _renderResponse,
-					_cetManager);
+					_cetManager, _styleBookEntry, _renderRequest,
+					_renderResponse);
 
 		return styleBookEntryActionDropdownItemsProvider.
 			getActionDropdownItems();
@@ -123,8 +123,6 @@ public class StyleBookVerticalCard
 
 	@Override
 	public List<LabelItem> getLabels() {
-		StyleBookEntry draftStyleBookEntry =
-			StyleBookEntryLocalServiceUtil.fetchDraft(_styleBookEntry);
 
 		CET cet = _cetManager.getCET(
 			_styleBookEntry.getCompanyId(), _styleBookEntry.getThemeId());
@@ -140,6 +138,9 @@ public class StyleBookVerticalCard
 				}
 			).build();
 		}
+
+		StyleBookEntry draftStyleBookEntry =
+			StyleBookEntryLocalServiceUtil.fetchDraft(_styleBookEntry);
 
 		if (_styleBookEntry.isHead() && (draftStyleBookEntry != null)) {
 			return LabelItemListBuilder.add(

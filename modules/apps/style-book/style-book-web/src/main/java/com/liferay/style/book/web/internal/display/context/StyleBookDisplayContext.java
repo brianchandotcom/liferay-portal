@@ -8,9 +8,11 @@ package com.liferay.style.book.web.internal.display.context;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.SearchOrderByUtil;
+import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -210,6 +212,11 @@ public class StyleBookDisplayContext {
 		styleFromThemeStyleBookEntry.setGroupId(groupId);
 		styleFromThemeStyleBookEntry.setName(
 			LanguageUtil.get(_httpServletRequest, "styles-from-theme"));
+
+		LayoutSet layoutSet = LayoutSetLocalServiceUtil.fetchLayoutSet(
+			groupId, false);
+
+		styleFromThemeStyleBookEntry.setThemeId(layoutSet.getThemeId());
 
 		StyleBookEntry defaultStyleBookEntry =
 			StyleBookEntryLocalServiceUtil.fetchDefaultStyleBookEntry(groupId);

@@ -47,7 +47,7 @@ StyleBookDisplayContext styleBookDisplayContext = (StyleBookDisplayContext)reque
 				<liferay-ui:search-container-column-text>
 					<clay:vertical-card
 						propsTransformer="{StylebookEntryActionDropdownPropsTransformer} from style-book-web"
-						verticalCard="<%= new StyleBookVerticalCard(styleBookEntry, renderRequest, renderResponse, searchContainer.getRowChecker(), cetManager) %>"
+						verticalCard="<%= new StyleBookVerticalCard(styleBookEntry, cetManager, renderRequest, renderResponse, searchContainer.getRowChecker()) %>"
 					/>
 				</liferay-ui:search-container-column-text>
 			</liferay-ui:search-container-row>

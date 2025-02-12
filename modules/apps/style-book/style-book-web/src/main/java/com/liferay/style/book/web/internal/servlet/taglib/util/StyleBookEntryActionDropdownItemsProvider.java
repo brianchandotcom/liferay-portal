@@ -40,12 +40,12 @@ import javax.servlet.http.HttpServletRequest;
 public class StyleBookEntryActionDropdownItemsProvider {
 
 	public StyleBookEntryActionDropdownItemsProvider(
-		StyleBookEntry styleBookEntry, RenderRequest renderRequest,
-		RenderResponse renderResponse, CETManager cetManager) {
+		CETManager cetManager, StyleBookEntry styleBookEntry,
+		RenderRequest renderRequest, RenderResponse renderResponse) {
 
+		_cetManager = cetManager;
 		_styleBookEntry = styleBookEntry;
 		_renderResponse = renderResponse;
-		_cetManager = cetManager;
 
 		_httpServletRequest = PortalUtil.getHttpServletRequest(renderRequest);
 		_itemSelector = (ItemSelector)renderRequest.getAttribute(

@@ -2315,6 +2315,159 @@ test.describe('Form Localization', () => {
 	);
 
 	test(
+		'Can translate multiselect form field',
+		{tag: '@LPD-48344'},
+		async ({apiHelpers, page, pageEditorPage, site}) => {
+
+			// Create object definition
+
+			const listTypeDefinition =
+				await apiHelpers.listTypeAdmin.postRandomListTypeDefinition();
+
+			for (const option of ['Spain', 'Italy', 'Germany']) {
+				await apiHelpers.listTypeAdmin.postListTypeEntry(
+					listTypeDefinition.externalReferenceCode,
+					option
+				);
+			}
+
+			const objectDefinitionAPIClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+
+			const {body: objectDefinition} =
+				await objectDefinitionAPIClient.postObjectDefinition({
+					active: true,
+					enableLocalization: true,
+					externalReferenceCode: 'plantERC',
+					label: {
+						en_US: 'Plant',
+					},
+					name: 'Plant',
+					objectFields: [
+						{
+							DBType: ObjectField.DBTypeEnum.String,
+							businessType:
+								ObjectField.BusinessTypeEnum
+									.MultiselectPicklist,
+							indexed: true,
+							indexedAsKeyword: false,
+							label: {
+								en_US: 'Growth Areas',
+							},
+							listTypeDefinitionExternalReferenceCode:
+								listTypeDefinition.externalReferenceCode,
+							listTypeDefinitionId: listTypeDefinition.id,
+							localized: true,
+							name: 'growthAreas',
+							required: false,
+						},
+					],
+					pluralLabel: {
+						en_US: 'Plants',
+					},
+					portlet: true,
+					scope: 'company',
+					status: {
+						code: 0,
+					},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			// Create a page with a Form fragment
+
+			const formId = getRandomString();
+
+			const formDefinition = getFormContainerDefinition({
+				id: formId,
+			});
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([formDefinition]),
+				siteId: site.id,
+				title: getRandomString(),
+			});
+
+			await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+			// Map the form to the Plant object
+
+			await pageEditorPage.mapFormFragment(formId, 'Plant', 'all', {
+				addLocalizationSelect: true,
+			});
+
+			await pageEditorPage.publishPage();
+
+			await page.goto(
+				`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
+
+			const translationTrigger = page.getByLabel(
+				'Select a language, current language:'
+			);
+
+			await translationTrigger.waitFor();
+
+			await page.getByRole('checkbox', {name: 'Spain'}).check();
+			await page.getByRole('checkbox', {name: 'Italy'}).check();
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('option', {
+					name: 'Spanish (Spain) Language',
+				}),
+				trigger: translationTrigger,
+			});
+
+			await page.getByRole('checkbox', {name: 'Germany'}).check();
+
+			// Check the translation in the localization multiselect
+
+			await translationTrigger.click();
+
+			expect(
+				page.getByRole('option', {
+					name: 'Spanish (Spain) Language',
+				})
+			).toContainText(/Translated/);
+
+			await page.keyboard.press('Escape');
+
+			// Save the form and publish the page
+
+			await page.getByRole('button', {name: 'Submit'}).click();
+
+			await expect(
+				page.getByText(
+					'Thank you. Your information was successfully received.'
+				)
+			).toBeVisible();
+
+			// Check the object entry
+
+			const {items} =
+				await apiHelpers.objectEntry.getObjectDefinitionObjectEntries(
+					'c/plants'
+				);
+
+			expect(items[0].growthAreas_i18n).toStrictEqual({
+				en_US: [
+					{key: 'spain', name: 'Spain'},
+					{key: 'italy', name: 'Italy'},
+				],
+				es_ES: [
+					{key: 'spain', name: 'Spain'},
+					{key: 'italy', name: 'Italy'},
+					{key: 'germany', name: 'Germany'},
+				],
+			});
+		}
+	);
+
+	test(
 		'Can translate date and date time form fields',
 		{tag: '@LPD-43805'},
 		async ({apiHelpers, page, pageEditorPage, site}) => {

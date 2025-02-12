@@ -16,6 +16,7 @@ function undoAction({action, store}) {
 		itemIds,
 		movedItemIds,
 		removedItemIds,
+		stepperFragmentEntryLinkId,
 	} = action;
 
 	const [itemId] = itemIds;
@@ -28,14 +29,6 @@ function undoAction({action, store}) {
 		nextMovedItems.push({itemId: item.itemId, parentId: item.parentId});
 	});
 
-	const form = store.layoutData.items[itemId];
-
-	const stepper = getStepperChild(
-		form,
-		store.layoutData,
-		store.fragmentEntryLinks
-	);
-
 	return (dispatch) => {
 		return LayoutService.undoUpdateFormConfig({
 			addedItemIds: removedItemIds,
@@ -45,7 +38,7 @@ function undoAction({action, store}) {
 			onNetworkStatus: dispatch,
 			removedItemIds: addedItemIds,
 			segmentsExperienceId: store.segmentsExperienceId,
-			stepperFragmentEntryLinkId: stepper?.config?.fragmentEntryLinkId,
+			stepperFragmentEntryLinkId,
 		}).then(({fragmentEntryLinks, layoutData}) => {
 			dispatch(
 				updateFormItemConfig({
@@ -88,10 +81,12 @@ function getDerivedStateForUndo({action, state}) {
 		triggerItemId,
 	} = action;
 
-	const {layoutData} = state;
+	const {fragmentEntryLinks, layoutData} = state;
 	const [itemId] = itemIds;
 
 	const item = layoutData.items[itemId];
+
+	const stepper = getStepperChild(item, layoutData, fragmentEntryLinks);
 
 	return {
 		addedItemIds,
@@ -101,6 +96,7 @@ function getDerivedStateForUndo({action, state}) {
 		itemIds: [itemId],
 		movedItemIds,
 		removedItemIds,
+		stepperFragmentEntryLinkId: stepper?.config.fragmentEntryLinkId,
 		triggerItemId,
 	};
 }

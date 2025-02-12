@@ -8,7 +8,6 @@ import {navigate} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import {useEffect} from 'react';
 
-import {useToControlsId} from '../../contexts/CollectionItemContext';
 import {
 	useEditableProcessorClickPosition,
 	useEditableProcessorUniqueId,
@@ -31,18 +30,13 @@ export default function FragmentContentProcessor({
 	const editableProcessorUniqueId = useEditableProcessorUniqueId();
 	const languageId = useSelector(selectLanguageId);
 	const setEditableProcessorUniqueId = useSetEditableProcessorUniqueId();
-	const toControlsId = useToControlsId();
 	const isMounted = useIsMounted();
 
 	const editable = editables.find(
-		(editable) =>
-			editableProcessorUniqueId === toControlsId(editable.itemId)
+		(editable) => editableProcessorUniqueId === editable.itemId
 	);
 
-	const editableCollectionItemId = toControlsId(
-		editable ? editable.itemId : ''
-	);
-
+	const editableCollectionItemId = editable ? editable.itemId : '';
 	const editableValues = useSelectorCallback(
 		(state) =>
 			state.fragmentEntryLinks[fragmentEntryLinkId] &&

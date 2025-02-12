@@ -20,19 +20,13 @@ import {useDisplayPagePreviewItem} from './DisplayPagePreviewItemContext';
 import {useAddPendingItem} from './PortletContentContext';
 import {useDispatch} from './StoreContext';
 
-const defaultFromControlsId = (itemId) => itemId;
-const defaultToControlsId = (controlId) => controlId;
-
 export const INITIAL_STATE = {
 	collectionConfig: null,
 	collectionId: null,
 	collectionItem: null,
 	collectionItemIndex: null,
 	customCollectionSelectorURL: null,
-	fromControlsId: defaultFromControlsId,
-	parentToControlsId: defaultToControlsId,
 	setCollectionItemContent: () => null,
-	toControlsId: defaultToControlsId,
 };
 
 const CollectionItemContext = React.createContext(INITIAL_STATE);
@@ -49,18 +43,6 @@ const useCustomCollectionSelectorURL = () => {
 	const context = useContext(CollectionItemContext);
 
 	return context.customCollectionSelectorURL;
-};
-
-const useParentToControlsId = () => {
-	const context = useContext(CollectionItemContext);
-
-	return context.parentToControlsId;
-};
-
-const useToControlsId = () => {
-	const context = useContext(CollectionItemContext);
-
-	return context.toControlsId || defaultToControlsId;
 };
 
 const useCollectionConfig = () => {
@@ -84,9 +66,6 @@ const useGetContent = (
 	const collectionItemContext = useContext(CollectionItemContext);
 	const dispatch = useDispatch();
 	const fieldSets = fragmentEntryLink.configuration?.fieldSets;
-	const toControlsId = useToControlsId();
-
-	const collectionContentId = toControlsId(fragmentEntryLinkId);
 
 	const addPendingItem = useAddPendingItem();
 
@@ -165,7 +144,7 @@ const useGetContent = (
 				(content) => {
 					dispatch(
 						updateFragmentEntryLinkContent({
-							collectionContentId,
+							collectionItemIndex,
 							content,
 							fragmentEntryLinkId,
 						})
@@ -174,7 +153,7 @@ const useGetContent = (
 			);
 		}
 	}, [
-		collectionContentId,
+		collectionItemIndex,
 		dispatch,
 		editableValues,
 		fieldSets,
@@ -209,7 +188,7 @@ const useGetContent = (
 
 	return (
 		(!isNullOrUndefined(collectionItemIndex)
-			? collectionContent[collectionContentId]
+			? collectionContent[collectionItemIndex]
 			: null) || content
 	);
 };
@@ -339,12 +318,10 @@ const useGetFieldValue = () => {
 export {
 	CollectionItemContext,
 	CollectionItemContextProvider,
-	useGetContent,
 	useCollectionConfig,
 	useCollectionItemIndex,
 	useCustomCollectionSelectorURL,
-	useParentToControlsId,
-	useToControlsId,
-	useWithinCollection,
+	useGetContent,
 	useGetFieldValue,
+	useWithinCollection,
 };

@@ -12,11 +12,9 @@ import React, {
 	useState,
 } from 'react';
 
-import {fromControlsId} from '../components/layout_data_items/Collection';
 import {ITEM_TYPES} from '../config/constants/itemTypes';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 import {MULTI_SELECT_TYPES} from '../config/constants/multiSelectTypes';
-import {useToControlsId} from './CollectionItemContext';
 import {useSelectorRef} from './StoreContext';
 
 const ACTIVE_INITIAL_STATE = {
@@ -315,13 +313,11 @@ const ControlsProvider = ({
 const useActivationOrigin = () =>
 	useContext(ActiveStateContext).activationOrigin;
 
-const useActiveItemIds = () =>
-	fromControlsId(useContext(ActiveStateContext).activeItemIds);
+const useActiveItemIds = () => useContext(ActiveStateContext).activeItemIds;
 
 const useActiveItemType = () => useContext(ActiveStateContext).activeItemType;
 
-const useHoveredItemId = () =>
-	fromControlsId(useContext(HoverStateContext).hoveredItemId);
+const useHoveredItemId = () => useContext(HoverStateContext).hoveredItemId;
 
 const useHoveredItemType = () => useContext(HoverStateContext).hoveredItemType;
 
@@ -329,7 +325,6 @@ const useHoveringOrigin = () => useContext(HoverStateContext).activationOrigin;
 
 const useHoverItem = () => {
 	const dispatch = useContext(HoverDispatchContext);
-	const toControlsId = useToControlsId();
 
 	return useCallback(
 		(
@@ -339,40 +334,34 @@ const useHoverItem = () => {
 			}
 		) =>
 			dispatch({
-				itemId: toControlsId(itemId),
+				itemId,
 				itemType,
 				origin,
 				type: HOVER_ITEM,
 			}),
-		[dispatch, toControlsId]
+		[dispatch]
 	);
 };
 
 const useIsActive = () => {
 	const {activeItemIds} = useContext(ActiveStateContext);
-	const toControlsId = useToControlsId();
 
 	return useCallback(
-		(itemId) => activeItemIds.includes(toControlsId(itemId)),
-		[activeItemIds, toControlsId]
+		(itemId) => activeItemIds.includes(itemId),
+		[activeItemIds]
 	);
 };
 
 const useIsHovered = () => {
 	const {hoveredItemId} = useContext(HoverStateContext);
-	const toControlsId = useToControlsId();
 
-	return useCallback(
-		(itemId) => hoveredItemId === toControlsId(itemId),
-		[hoveredItemId, toControlsId]
-	);
+	return useCallback((itemId) => hoveredItemId === itemId, [hoveredItemId]);
 };
 
 const useSelectItem = () => {
 	const activeDispatch = useContext(ActiveDispatchContext);
 	const layoutDataRef = useSelectorRef((state) => state.layoutData);
 	const multiSelectTypeRef = useContext(MultiSelectStateRefContext);
-	const toControlsId = useToControlsId();
 
 	return useCallback(
 		(
@@ -386,7 +375,7 @@ const useSelectItem = () => {
 			}
 		) => {
 			activeDispatch({
-				itemId: toControlsId(itemId),
+				itemId,
 				itemType,
 				layoutData: layoutDataRef.current,
 				multiSelect: multiSelectTypeRef.current,
@@ -395,7 +384,7 @@ const useSelectItem = () => {
 				type: SELECT_ITEM,
 			});
 		},
-		[activeDispatch, layoutDataRef, multiSelectTypeRef, toControlsId]
+		[activeDispatch, layoutDataRef, multiSelectTypeRef]
 	);
 };
 

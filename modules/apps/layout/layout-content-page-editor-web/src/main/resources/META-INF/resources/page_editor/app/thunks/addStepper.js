@@ -7,7 +7,6 @@ import addStepperAction from '../actions/addStepper';
 import {FORM_DEFAULT_NUMBER_OF_STEPS} from '../config/constants/formDefaultNumberOfSteps';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 import FragmentService from '../services/FragmentService';
-import selectFirstControlsItem from '../utils/selectFirstControlsItem';
 
 export default function addStepper({
 	fragmentEntryKey,
@@ -60,11 +59,7 @@ export default function addStepper({
 					})
 				);
 
-				selectFirstControlsItem({
-					itemId: stepperId,
-					layoutData,
-					selectItems,
-				});
+				selectItems([stepperId]);
 			}
 		);
 	};

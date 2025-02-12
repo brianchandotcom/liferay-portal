@@ -5,7 +5,6 @@
 
 import addFragmentEntryLinks from '../actions/addFragmentEntryLinks';
 import WidgetService from '../services/WidgetService';
-import selectFirstControlsItem from '../utils/selectFirstControlsItem';
 
 export default function addWidget({
 	parentItemId,
@@ -32,11 +31,7 @@ export default function addWidget({
 			);
 
 			if (addedItemId) {
-				selectFirstControlsItem({
-					itemId: addedItemId,
-					layoutData,
-					selectItems,
-				});
+				selectItems([addedItemId]);
 			}
 		});
 	};

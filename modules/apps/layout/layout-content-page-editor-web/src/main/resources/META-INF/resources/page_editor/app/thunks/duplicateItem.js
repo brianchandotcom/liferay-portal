@@ -6,7 +6,6 @@
 import duplicateItemAction from '../actions/duplicateItem';
 import {ITEM_ACTIVATION_ORIGINS} from '../config/constants/itemActivationOrigins';
 import FragmentService from '../services/FragmentService';
-import getFirstControlsId from '../utils/getFirstControlsId';
 import filterSelectedItems from './filterSelectedItems';
 
 export default function duplicateItem({itemIds, selectItems = () => {}}) {
@@ -34,14 +33,7 @@ export default function duplicateItem({itemIds, selectItems = () => {}}) {
 				);
 
 				if (duplicatedItemIds) {
-					const itemIds = duplicatedItemIds.map((itemId) =>
-						getFirstControlsId({
-							item: nextLayoutData.items[itemId],
-							layoutData: nextLayoutData,
-						})
-					);
-
-					selectItems(itemIds, {
+					selectItems(duplicatedItemIds, {
 						origin: ITEM_ACTIVATION_ORIGINS.itemActions,
 					});
 				}

@@ -12,7 +12,6 @@ import {sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useMemo, useRef} from 'react';
 
-import {fromControlsId} from '../../../../../app/components/layout_data_items/Collection';
 import {ITEM_ACTIVATION_ORIGINS} from '../../../../../app/config/constants/itemActivationOrigins';
 import {ITEM_TYPES} from '../../../../../app/config/constants/itemTypes';
 import {
@@ -27,7 +26,6 @@ import {
 	useActivationOrigin,
 	useActiveItemIds,
 	useSelectItem,
-	useSelectMultipleItems,
 } from '../../../../../app/contexts/ControlsContext';
 import {
 	useDisableKeyboardMovement,
@@ -68,9 +66,7 @@ import {
 import {formIsMapped} from '../../../../../app/utils/formIsMapped';
 import {formIsRestricted} from '../../../../../app/utils/formIsRestricted';
 import {formIsUnavailable} from '../../../../../app/utils/formIsUnavailable';
-import getFirstControlsId from '../../../../../app/utils/getFirstControlsId';
 import getMappingFieldsKey from '../../../../../app/utils/getMappingFieldsKey';
-import {hasCollectionParent} from '../../../../../app/utils/hasCollectionParent';
 import isItemWidget from '../../../../../app/utils/isItemWidget';
 import loadCollectionFields from '../../../../../app/utils/loadCollectionFields';
 import toMovementItem from '../../../../../app/utils/toMovementItem';
@@ -198,13 +194,8 @@ function NodeContentWithoutDND({isActive, isMapped, node}) {
 				onClick={(event) => {
 					event.stopPropagation();
 
-					const itemId = getFirstControlsId({
-						item: node,
-						layoutData: layoutDataRef.current,
-					});
-
 					if (node.activable) {
-						selectItem(itemId, {
+						selectItem(node.id, {
 							itemType: node.itemType,
 							origin: ITEM_ACTIVATION_ORIGINS.sidebar,
 							parentId: node.parentId,
@@ -253,7 +244,6 @@ function NodeContent({
 		(state) => state.selectedViewportSize
 	);
 	const selectItem = useSelectItem();
-	const selectItems = useSelectMultipleItems();
 	const setEditedNodeId = useSetEditedNodeId();
 	const setText = useSetMovementText();
 
@@ -319,37 +309,6 @@ function NodeContent({
 				})
 			: moveItems({
 					itemIds: activeItemIds,
-					onMoveEnd: (updatedLayoutData) => {
-
-						// The item is being moved inside a collection
-
-						if (
-							hasCollectionParent(
-								updatedLayoutData.items[parentItemId],
-								updatedLayoutData
-							)
-						) {
-							const itemIds = activeItemIds.map((id) =>
-								getFirstControlsId({
-									item: updatedLayoutData.items[id],
-									layoutData: updatedLayoutData,
-								})
-							);
-
-							selectItems(itemIds);
-						}
-
-						// The item is being moved outside a collection
-
-						else if (
-							hasCollectionParent(
-								layoutDataRef.current.items[node.id],
-								layoutDataRef.current
-							)
-						) {
-							selectItems(activeItemIds.map(fromControlsId));
-						}
-					},
 					parentItemIds: [parentItemId],
 					positions: [position],
 				});
@@ -483,13 +442,9 @@ function NodeContent({
 				data-item-id={node.id}
 				onClick={(event) => {
 					event.stopPropagation();
-					const itemId = getFirstControlsId({
-						item: node,
-						layoutData: layoutDataRef.current,
-					});
 
 					if (node.activable) {
-						selectItem(itemId, {
+						selectItem(node.id, {
 							itemType: node.itemType,
 							origin: ITEM_ACTIVATION_ORIGINS.sidebar,
 						});
@@ -862,12 +817,7 @@ function computeHover({
 
 	if (elevation) {
 		const getElevatedTargetItem = (target) => {
-			const parent = layoutDataRef.current.items[target.parentId]
-				? {
-						...layoutDataRef.current.items[target.parentId],
-						collectionItemIndex: target.collectionItemIndex,
-					}
-				: null;
+			const parent = layoutDataRef.current.items[target.parentId];
 
 			if (parent) {
 				const [targetPosition] = getItemPosition(

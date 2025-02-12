@@ -7,7 +7,6 @@ import {ScreenReaderAnnouncer} from '@liferay/layout-js-components-web';
 import React, {useCallback, useContext, useRef, useState} from 'react';
 
 import {TARGET_POSITIONS} from '../utils/drag_and_drop/constants/targetPositions';
-import getFirstControlsId from '../utils/getFirstControlsId';
 import isItemContainerFlex from '../utils/isItemContainerFlex';
 import {useSelectorRef} from './StoreContext';
 
@@ -85,14 +84,7 @@ function useIsMovementTarget() {
 
 	const targetItem = layoutDataRef.current?.items[target.itemId];
 
-	const controlsId =
-		targetItem &&
-		getFirstControlsId({
-			item: targetItem,
-			layoutData: layoutDataRef.current,
-		});
-
-	return useCallback((itemId) => itemId === controlsId, [controlsId]);
+	return useCallback((itemId) => itemId === targetItem?.itemId, [targetItem]);
 }
 
 function useMovementTargetPosition() {

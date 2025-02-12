@@ -13,7 +13,6 @@ import {TEXT_EDITABLE_TYPES} from '../../config/constants/textEditableTypes';
 import {
 	useGetContent,
 	useGetFieldValue,
-	useToControlsId,
 	useWithinCollection,
 } from '../../contexts/CollectionItemContext';
 import {useIsProcessorEnabled} from '../../contexts/EditableProcessorContext';
@@ -51,7 +50,6 @@ const FragmentContent = ({
 	const isMounted = useIsMounted();
 	const isProcessorEnabled = useIsProcessorEnabled();
 	const globalContext = useGlobalContext();
-	const toControlsId = useToControlsId();
 	const getFieldValue = useGetFieldValue();
 
 	const canConfigureWidgets = useSelector(selectCanConfigureWidgets);
@@ -132,7 +130,7 @@ const FragmentContent = ({
 	}, [fragmentEntryLinkError]);
 
 	const isBeingEdited = editables.some((editable) =>
-		isProcessorEnabled(toControlsId(editable.itemId))
+		isProcessorEnabled(editable.itemId)
 	);
 
 	/**
@@ -219,7 +217,6 @@ const FragmentContent = ({
 		isProcessorEnabled,
 		languageId,
 		segmentsExperienceId,
-		toControlsId,
 		withinCollection,
 	]);
 

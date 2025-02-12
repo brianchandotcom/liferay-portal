@@ -9,7 +9,6 @@ import {useEventListener} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 
-import {fromControlsId} from '../../../../../app/components/layout_data_items/Collection';
 import {ITEM_ACTIVATION_ORIGINS} from '../../../../../app/config/constants/itemActivationOrigins';
 import {ITEM_TYPES} from '../../../../../app/config/constants/itemTypes';
 import {
@@ -41,7 +40,6 @@ import selectCanUpdateEditables from '../../../../../app/selectors/selectCanUpda
 import selectCanUpdateItemConfiguration from '../../../../../app/selectors/selectCanUpdateItemConfiguration';
 import selectCanUpdatePageStructure from '../../../../../app/selectors/selectCanUpdatePageStructure';
 import {DragAndDropContextProvider} from '../../../../../app/utils/drag_and_drop/useDragAndDrop';
-import getFirstControlsId from '../../../../../app/utils/getFirstControlsId';
 import usePageContents from '../../../../../app/utils/usePageContents';
 import StructureTreeNode from './StructureTreeNode';
 import StructureTreeNodeActions from './StructureTreeNodeActions';
@@ -171,8 +169,8 @@ export default function StructureTreeContent({expandedKeys, setExpandedKeys}) {
 		const dispatch = useDispatch();
 		const hoveredItemId = useHoveredItemId();
 		const isMultiSelect = activeItemIds.length > 1;
-		const isSelected = fromControlsId(activeItemIds).includes(item.id);
-		const isHovered = item.id === fromControlsId(hoveredItemId);
+		const isSelected = activeItemIds.includes(item.id);
+		const isHovered = item.id === hoveredItemId;
 		const canUpdatePageStructure = useSelector(
 			selectCanUpdatePageStructure
 		);
@@ -240,13 +238,8 @@ export default function StructureTreeContent({expandedKeys, setExpandedKeys}) {
 			return;
 		}
 
-		const itemId = getFirstControlsId({
-			item,
-			layoutData: layoutDataRef.current,
-		});
-
 		if (item.activable) {
-			selectItem(itemId, {
+			selectItem(item.id, {
 				itemType: item.itemType,
 				origin: ITEM_ACTIVATION_ORIGINS.sidebar,
 			});

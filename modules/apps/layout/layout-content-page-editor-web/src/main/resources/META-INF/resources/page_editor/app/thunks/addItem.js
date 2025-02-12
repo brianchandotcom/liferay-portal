@@ -5,7 +5,6 @@
 
 import addItemAction from '../actions/addItem';
 import LayoutService from '../services/LayoutService';
-import selectFirstControlsItem from '../utils/selectFirstControlsItem';
 import {clearPageContents} from '../utils/usePageContents';
 
 export default function addItem({
@@ -29,11 +28,7 @@ export default function addItem({
 			clearPageContents();
 
 			if (addedItemId) {
-				selectFirstControlsItem({
-					itemId: addedItemId,
-					layoutData,
-					selectItems,
-				});
+				selectItems([addedItemId]);
 			}
 		});
 	};

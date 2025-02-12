@@ -12,7 +12,6 @@ import {sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useMemo, useState} from 'react';
 
-import {fromControlsId} from '../../../app/components/layout_data_items/Collection';
 import {EDITABLE_FRAGMENT_ENTRY_PROCESSOR} from '../../../app/config/constants/editableFragmentEntryProcessor';
 import {ITEM_ACTIVATION_ORIGINS} from '../../../app/config/constants/itemActivationOrigins';
 import {ITEM_TYPES} from '../../../app/config/constants/itemTypes';
@@ -28,8 +27,6 @@ import {
 import {useSelector} from '../../../app/contexts/StoreContext';
 import selectCanUpdateEditables from '../../../app/selectors/selectCanUpdateEditables';
 import getEditableId from '../../../app/utils/getEditableId';
-import getFirstControlsId from '../../../app/utils/getFirstControlsId';
-import getFragmentItem from '../../../app/utils/getFragmentItem';
 import {getPageContentDropdownItems} from '../../../app/utils/getPageContentDropdownItems';
 import ImageEditorModal from './ImageEditorModal';
 
@@ -51,7 +48,6 @@ export default function PageContent({
 	const canUpdateEditables = useSelector(selectCanUpdateEditables);
 	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
 	const [isHovered, setIsHovered] = useState(false);
-	const layoutData = useSelector((state) => state.layoutData);
 	const [nextEditableProcessorUniqueId, setNextEditableProcessorUniqueId] =
 		useState(null);
 	const selectItem = useSelectItem();
@@ -59,7 +55,7 @@ export default function PageContent({
 	const [imageEditorParams, setImageEditorParams] = useState(null);
 
 	const isBeingEdited = useMemo(
-		() => editableId === fromControlsId(editableProcessorUniqueId),
+		() => editableId === editableProcessorUniqueId,
 		[editableId, editableProcessorUniqueId]
 	);
 
@@ -174,18 +170,6 @@ export default function PageContent({
 		hoverItem(null);
 	};
 
-	const getInlineTextItemId = () => {
-		return getFirstControlsId({
-			item: {
-				id: editableId,
-				itemType: ITEM_TYPES.editable,
-				parentId: getFragmentItem(layoutData, editableId.split('-')[0])
-					?.itemId,
-			},
-			layoutData,
-		});
-	};
-
 	const isInlineText = !!editableId;
 
 	const onClickEditInlineText = () => {
@@ -193,7 +177,7 @@ export default function PageContent({
 			return;
 		}
 
-		const itemId = getInlineTextItemId();
+		const itemId = editableId;
 
 		setNextEditableProcessorUniqueId(itemId);
 	};
@@ -203,7 +187,7 @@ export default function PageContent({
 			return;
 		}
 
-		const itemId = getInlineTextItemId();
+		const itemId = editableId;
 
 		selectItem(itemId, {
 			itemType: ITEM_TYPES.editable,

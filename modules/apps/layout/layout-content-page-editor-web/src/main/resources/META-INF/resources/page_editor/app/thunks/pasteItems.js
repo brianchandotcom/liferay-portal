@@ -6,7 +6,6 @@
 import pasteItemAction from '../actions/pasteItems';
 import {ITEM_ACTIVATION_ORIGINS} from '../config/constants/itemActivationOrigins';
 import FragmentService from '../services/FragmentService';
-import getFirstControlsId from '../utils/getFirstControlsId';
 import sortItemIds from '../utils/sortItemIds';
 import filterSelectedItems from './filterSelectedItems';
 
@@ -43,15 +42,11 @@ export default function pasteItems({
 				);
 
 				if (copiedItemIds) {
-					const itemIds = copiedItemIds.map((itemId) =>
-						getFirstControlsId({
-							item: nextLayoutData.items[itemId],
-							layoutData: nextLayoutData,
-						})
-					);
-
 					selectItems(
-						filterSelectedItems(itemIds, nextLayoutData.items),
+						filterSelectedItems(
+							copiedItemIds,
+							nextLayoutData.items
+						),
 						{
 							origin: ITEM_ACTIVATION_ORIGINS.itemActions,
 						}

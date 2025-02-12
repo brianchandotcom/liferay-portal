@@ -12,10 +12,7 @@ import React, {useRef} from 'react';
 import {getLayoutDataItemPropTypes} from '../../../prop_types/index';
 import {ITEM_ACTIVATION_ORIGINS} from '../../config/constants/itemActivationOrigins';
 import {useClipboard} from '../../contexts/ClipboardContext';
-import {
-	useCollectionItemIndex,
-	useToControlsId,
-} from '../../contexts/CollectionItemContext';
+import {useCollectionItemIndex} from '../../contexts/CollectionItemContext';
 import {
 	useActiveItemIds,
 	useHoverItem,
@@ -87,8 +84,6 @@ const TopperEmpty = ({children, className, item}) => {
 	const isKeyboardTarget = useIsMovementTarget();
 	const movementTargetPosition = useMovementTargetPosition();
 
-	const toControlsId = useToControlsId();
-
 	const dropTargetPosition = targetPosition || movementTargetPosition;
 
 	const isFragment = children.type === React.Fragment;
@@ -96,8 +91,7 @@ const TopperEmpty = ({children, className, item}) => {
 
 	const dropContainerId = useDropContainerId();
 
-	const isValidDrop =
-		isOverTarget || isKeyboardTarget(toControlsId(item.itemId));
+	const isValidDrop = isOverTarget || isKeyboardTarget(item.itemId);
 
 	return React.Children.map(realChildren, (child) => {
 		if (!child) {
@@ -160,8 +154,6 @@ const ActivableTopperEmpty = ({
 	const isKeyboardTarget = useIsMovementTarget();
 	const movementTargetPosition = useMovementTargetPosition();
 
-	const toControlsId = useToControlsId();
-
 	const dropTargetPosition = targetPosition || movementTargetPosition;
 
 	const isFragment = children.type === React.Fragment;
@@ -169,8 +161,7 @@ const ActivableTopperEmpty = ({
 
 	const dropContainerId = useDropContainerId();
 
-	const isValidDrop =
-		isOverTarget || isKeyboardTarget(toControlsId(item.itemId));
+	const isValidDrop = isOverTarget || isKeyboardTarget(item.itemId);
 
 	const hoverItem = useHoverItem();
 	const selectItem = useSelectItem();

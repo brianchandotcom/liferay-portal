@@ -121,19 +121,7 @@ export default function defaultComputeHover({
 
 	if (elevationDepth) {
 		const getElevatedTargetItem = (sibling, maximumDepth) => {
-			let parent = layoutDataRef.current.items[sibling.parentId];
-
-			if (parent) {
-				parent = {
-					...parent,
-					collectionItemIndex: sibling.collectionItemIndex,
-					parentToControlsId: sibling.parentToControlsId,
-					toControlsId:
-						parent.type === LAYOUT_DATA_ITEM_TYPES.collection
-							? sibling.parentToControlsId
-							: sibling.toControlsId,
-				};
-			}
+			const parent = layoutDataRef.current.items[sibling.parentId];
 
 			if (parent) {
 				const [siblingPositionWithMiddle] = getItemPosition(
@@ -222,7 +210,7 @@ function getOrientation(item, monitor, targetRefs, layoutDataRef) {
 		return ORIENTATIONS.vertical;
 	}
 
-	const targetRef = targetRefs.get(item.toControlsId(item.itemId));
+	const targetRef = targetRefs.get(item.itemId);
 	const targetRect = targetRef.current.getBoundingClientRect();
 	const hoverMiddle = targetRect.left + targetRect.width / 2;
 	const clientOffsetX = monitor.getClientOffset().x;
@@ -243,7 +231,7 @@ function getOrientation(item, monitor, targetRefs, layoutDataRef) {
 }
 
 function getItemPosition(item, monitor, targetRefs, orientation) {
-	const targetRef = targetRefs.get(item.toControlsId(item.itemId));
+	const targetRef = targetRefs.get(item.itemId);
 
 	if (!targetRef || !targetRef.current) {
 		return [null, null, 0];
@@ -322,8 +310,6 @@ function stateHasChanged(state, sourceItem, targetItem, position) {
 	if (
 		state.dragSource?.itemId === sourceItem.itemId &&
 		state.dropTarget?.itemId === targetItem.itemId &&
-		state.dropTarget?.collectionItemIndex ===
-			targetItem.collectionItemIndex &&
 		state.targetPositionWithMiddle === position
 	) {
 		return false;

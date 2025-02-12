@@ -19,7 +19,6 @@ import {config} from '../../config/index';
 import {
 	CollectionItemContext,
 	CollectionItemContextProvider,
-	useToControlsId,
 } from '../../contexts/CollectionItemContext';
 import {useDisplayPagePreviewItem} from '../../contexts/DisplayPagePreviewItemContext';
 import {useDispatch, useSelector} from '../../contexts/StoreContext';
@@ -28,7 +27,6 @@ import selectSegmentsExperienceId from '../../selectors/selectSegmentsExperience
 import CollectionService from '../../services/CollectionService';
 import updateCollectionDisplayCollection from '../../thunks/updateCollectionDisplayCollection';
 import updateItemConfig from '../../thunks/updateItemConfig';
-import {deepEqual} from '../../utils/checkDeepEqual';
 import {collectionIsMapped} from '../../utils/collectionIsMapped';
 import {COLLECTION_LIST_STYLES} from '../../utils/collectionListStyles';
 import getLayoutDataItemClassName from '../../utils/getLayoutDataItemClassName';
@@ -38,55 +36,8 @@ import {ITEM_SELECTOR_VARIANTS} from '../../utils/itemSelectorVariants';
 import UnsafeHTML from '../UnsafeHTML';
 import CollectionPagination from './CollectionPagination';
 
-const COLLECTION_ID_DIVIDER = '$';
-
 function paginationIsEnabled(collectionConfig) {
 	return collectionConfig.paginationType !== 'none';
-}
-
-function getCollectionPrefix(collectionId, index) {
-	return `collection-${collectionId}-${index}${COLLECTION_ID_DIVIDER}`;
-}
-
-export function getToControlsId(collectionId, index, toControlsId) {
-	return (itemId) => {
-		if (!itemId) {
-			return null;
-		}
-
-		// If the itemId correspond to a collectionId ignore it,
-		// that id is only applied to the children not to the collection itself.
-
-		if (collectionId === itemId) {
-			return itemId;
-		}
-
-		return toControlsId(
-			`${getCollectionPrefix(collectionId, index)}${itemId}`
-		);
-	};
-}
-
-export function fromControlsId(controlsItemId) {
-	const getItemIdFromControlsId = (id) => {
-		const splits = id.split(COLLECTION_ID_DIVIDER);
-
-		const itemId = splits.pop();
-
-		return itemId || id;
-	};
-
-	if (!controlsItemId) {
-		return null;
-	}
-	else if (Array.isArray(controlsItemId)) {
-		const nextIds = controlsItemId.map(getItemIdFromControlsId);
-
-		return deepEqual(nextIds, controlsItemId) ? controlsItemId : nextIds;
-	}
-	else {
-		return getItemIdFromControlsId(controlsItemId);
-	}
 }
 
 const NotCollectionSelected = ({collection, dispatch, item}) => {
@@ -284,8 +235,6 @@ const ItemContext = ({
 	customCollectionSelectorURL,
 	index,
 }) => {
-	const toControlsId = useToControlsId();
-
 	const contextValue = useMemo(
 		() => ({
 			collectionConfig,
@@ -293,16 +242,12 @@ const ItemContext = ({
 			collectionItem,
 			collectionItemIndex: index,
 			customCollectionSelectorURL,
-			fromControlsId,
-			parentToControlsId: toControlsId,
-			toControlsId: getToControlsId(collectionId, index, toControlsId),
 		}),
 		[
 			collectionConfig,
 			collectionId,
 			collectionItem,
 			index,
-			toControlsId,
 			customCollectionSelectorURL,
 		]
 	);

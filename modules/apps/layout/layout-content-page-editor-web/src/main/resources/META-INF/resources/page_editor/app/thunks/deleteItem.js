@@ -20,7 +20,6 @@ import {getFormParent} from '../utils/getFormParent';
 import getFragmentEntryLinkIdsFromItemId from '../utils/getFragmentEntryLinkIdsFromItemId';
 import getPortletId from '../utils/getPortletId';
 import {isRequiredFormInput} from '../utils/isRequiredFormInput';
-import selectFirstControlsItem from '../utils/selectFirstControlsItem';
 import {clearPageContents} from '../utils/usePageContents';
 import filterSelectedItems from './filterSelectedItems';
 
@@ -76,11 +75,8 @@ export default function deleteItem({itemIds, selectItems = () => {}}) {
 				selectItems(null);
 			}
 			else {
-				selectFirstControlsItem({
-					itemId: nextItemId,
-					layoutData,
+				selectItems([nextItemId], {
 					origin: ITEM_ACTIVATION_ORIGINS.itemActions,
-					selectItems,
 				});
 			}
 

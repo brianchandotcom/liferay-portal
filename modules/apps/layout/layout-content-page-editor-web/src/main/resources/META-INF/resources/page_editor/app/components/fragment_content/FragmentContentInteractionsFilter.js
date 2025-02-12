@@ -13,7 +13,6 @@ import {ITEM_ACTIVATION_ORIGINS} from '../../config/constants/itemActivationOrig
 import {ITEM_TYPES} from '../../config/constants/itemTypes';
 import {TEXT_EDITABLE_TYPES} from '../../config/constants/textEditableTypes';
 import {config} from '../../config/index';
-import {useToControlsId} from '../../contexts/CollectionItemContext';
 import {
 	useActivationOrigin,
 	useActiveItemType,
@@ -37,7 +36,6 @@ import canActivateEditable from '../../utils/canActivateEditable';
 import {deepEqual} from '../../utils/checkDeepEqual';
 import isMapped from '../../utils/editable_value/isMapped';
 import getEditableId from '../../utils/getEditableId';
-import {fromControlsId} from '../layout_data_items/Collection';
 import {getEditableElement} from './getEditableElement';
 
 const EDITABLE_CLASS_NAMES = {
@@ -74,7 +72,6 @@ function FragmentContentInteractionsFilter({
 	);
 	const editableProcessorUniqueId = useEditableProcessorUniqueId();
 	const setEditableProcessorUniqueId = useSetEditableProcessorUniqueId();
-	const toControlsId = useToControlsId();
 
 	const editableValues = useSelectorCallback(
 		(state) => {
@@ -129,8 +126,7 @@ function FragmentContentInteractionsFilter({
 
 	useEffect(() => {
 		editables.forEach((editable) => {
-			const isBeingEdited =
-				editable.itemId === fromControlsId(editableProcessorUniqueId);
+			const isBeingEdited = editable.itemId === editableProcessorUniqueId;
 
 			if (siblingIds.some(isActive)) {
 				editable.element.setAttribute('tabindex', 0);
@@ -245,8 +241,7 @@ function FragmentContentInteractionsFilter({
 			(editable) => editable.element === editableElement
 		);
 
-		const isBeingEdited =
-			editable?.itemId === fromControlsId(editableProcessorUniqueId);
+		const isBeingEdited = editable?.itemId === editableProcessorUniqueId;
 
 		if (editable) {
 			event.stopPropagation();
@@ -283,8 +278,7 @@ function FragmentContentInteractionsFilter({
 		event.preventDefault();
 		event.stopPropagation();
 
-		const isBeingEdited =
-			editable.itemId === fromControlsId(editableProcessorUniqueId);
+		const isBeingEdited = editable.itemId === editableProcessorUniqueId;
 
 		if (isBeingEdited) {
 			return;
@@ -311,7 +305,7 @@ function FragmentContentInteractionsFilter({
 		};
 
 		debouncedSetEditableProcessorUniqueId(
-			toControlsId(editable.itemId),
+			editable.itemId,
 			editableClickPosition
 		);
 	};

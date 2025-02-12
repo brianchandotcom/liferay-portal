@@ -17,10 +17,7 @@ import {ITEM_ACTIVATION_ORIGINS} from '../../config/constants/itemActivationOrig
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 import {config} from '../../config/index';
 import {useSetCollectionActiveItemContext} from '../../contexts/CollectionActiveItemContext';
-import {
-	useCollectionItemIndex,
-	useToControlsId,
-} from '../../contexts/CollectionItemContext';
+import {useCollectionItemIndex} from '../../contexts/CollectionItemContext';
 import {
 	useActivationOrigin,
 	useActiveItemIds,
@@ -29,7 +26,6 @@ import {
 	useIsHovered,
 	useMultiSelectType,
 	useSelectItem,
-	useSelectMultipleItems,
 } from '../../contexts/ControlsContext';
 import {useEditableProcessorUniqueId} from '../../contexts/EditableProcessorContext';
 import {
@@ -42,7 +38,6 @@ import {
 	useDispatch,
 	useSelector,
 	useSelectorCallback,
-	useSelectorRef,
 } from '../../contexts/StoreContext';
 import {useLayoutKeyboardNavigation} from '../../hooks/app_hooks/useLayoutKeyboardNavigation';
 import selectCanUpdateItemConfiguration from '../../selectors/selectCanUpdateItemConfiguration';
@@ -57,13 +52,11 @@ import {
 	useDragItem,
 	useDropTarget,
 } from '../../utils/drag_and_drop/useDragAndDrop';
-import {hasCollectionParent} from '../../utils/hasCollectionParent';
 import isStepper from '../../utils/isStepper';
 import {isUnmappedCollection} from '../../utils/isUnmappedCollection';
 import {isUnmappedForm} from '../../utils/isUnmappedForm';
 import toMovementItem from '../../utils/toMovementItem';
 import useDropContainerId from '../../utils/useDropContainerId';
-import {fromControlsId} from '../layout_data_items/Collection';
 import TopperItemActions from './TopperItemActions';
 import {TopperLabel} from './TopperLabel';
 
@@ -122,14 +115,10 @@ function TopperContent({
 	const isMultiSelect = activeItemIds.length > 1;
 	const isKeyboardTarget = useIsMovementTarget();
 
-	const layoutDataRef = useSelectorRef((state) => state.layoutData);
-
-	const toControlsId = useToControlsId();
 	const collectionItemIndex = useCollectionItemIndex();
 
 	const keyboardMovementPosition = useMovementTargetPosition();
 	const selectItem = useSelectItem();
-	const selectItems = useSelectMultipleItems();
 	const topperLabelId = useId();
 
 	const dropContainerId = useDropContainerId();
@@ -172,7 +161,7 @@ function TopperContent({
 		}
 	};
 
-	const onDragEnd = (parentItemId, position, toControlsId) => {
+	const onDragEnd = (parentItemId, position) => {
 		const thunk = isStepper(dragItem)
 			? moveStepper({
 					itemId: item.itemId,
@@ -181,22 +170,6 @@ function TopperContent({
 				})
 			: moveItems({
 					itemIds: activeItemIds,
-					onMoveEnd: () => {
-
-						// The item is being moved inside a collection
-
-						if (toControlsId) {
-							selectItems(activeItemIds.map(toControlsId));
-						}
-
-						// The item is being moved outside a collection
-
-						else if (
-							hasCollectionParent(item, layoutDataRef.current)
-						) {
-							selectItems(activeItemIds.map(fromControlsId));
-						}
-					},
 					parentItemIds: [parentItemId],
 					positions: [position],
 				});
@@ -221,7 +194,7 @@ function TopperContent({
 		draggingItem || draggingTopper || lastSource?.itemId === item.itemId;
 
 	const isTarget =
-		(isOverTarget || isKeyboardTarget(toControlsId(item.itemId))) &&
+		(isOverTarget || isKeyboardTarget(item.itemId)) &&
 		!(
 			dropTargetPosition === TARGET_POSITIONS.MIDDLE &&
 			(isUnmappedCollection(item) || isUnmappedForm(item))

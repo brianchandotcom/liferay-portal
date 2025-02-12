@@ -303,14 +303,14 @@ public class CustomFDSSerializer
 		return objectEntries;
 	}
 
-	private JSONObject _getDateJSONObject(Object isoDate) {
-		if (isoDate == null) {
+	private JSONObject _getDateJSONObject(Object object) {
+		if (object == null) {
 			return null;
 		}
 
 		Calendar calendar = Calendar.getInstance();
 
-		calendar.setTime(Date.from(Instant.parse(String.valueOf(isoDate))));
+		calendar.setTime(Date.from(Instant.parse(String.valueOf(object))));
 
 		return JSONUtil.put(
 			"day", calendar.get(Calendar.DATE)

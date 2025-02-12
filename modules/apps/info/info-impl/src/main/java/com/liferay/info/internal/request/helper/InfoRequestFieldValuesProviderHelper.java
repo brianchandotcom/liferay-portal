@@ -180,14 +180,16 @@ public class InfoRequestFieldValuesProviderHelper {
 				}
 			}
 
-			for (String value : regularParameters) {
-				InfoFieldValue<Object> infoFieldValue = _getInfoFieldValue(
-					infoField, themeDisplay.getLocale(), value);
+			Object value = _parseValue(
+				groupId, infoField, themeDisplay.getLocale(),
+				multipartParameterMap, infoField.getName(), regularParameterMap,
+				themeDisplay.getUserId());
 
-				if (infoFieldValue != null) {
-					infoFieldValues.put(
-						infoField.getUniqueId(), infoFieldValue);
-				}
+			InfoFieldValue<Object> infoFieldValue = _getInfoFieldValue(
+				infoField, themeDisplay.getLocale(), value);
+
+			if (infoFieldValue != null) {
+				infoFieldValues.put(infoField.getUniqueId(), infoFieldValue);
 			}
 		}
 
@@ -238,36 +240,7 @@ public class InfoRequestFieldValuesProviderHelper {
 				).build());
 		}
 
-		return new InfoFieldValue<>(infoField, object);
-	}
-
-	private InfoFieldValue<Object> _getInfoFieldValue(
-		InfoField<?> infoField, Locale locale, String value) {
-
-		Object parsedValue = _parseValue(infoField, locale, value);
-
-		if (infoField.isLocalizable()) {
-			return new InfoFieldValue<>(
-				infoField,
-				InfoLocalizedValue.builder(
-				).defaultLocale(
-					locale
-				).value(
-					locale, parsedValue
-				).build());
-		}
-
-		return new InfoFieldValue<>(infoField, parsedValue);
-	}
-
-	private InfoFieldValue<Object> _getMultiselectInfoFieldValue(
-		InfoField infoField, Locale locale, Object value) {
-
-		if (Validator.isNull(value)) {
-			value = Collections.emptyList();
-		}
-
-		return _getInfoFieldValue(infoField, locale, value);
+		return new InfoFieldValue<>(infoField, value);
 	}
 
 	private Object _parseValue(

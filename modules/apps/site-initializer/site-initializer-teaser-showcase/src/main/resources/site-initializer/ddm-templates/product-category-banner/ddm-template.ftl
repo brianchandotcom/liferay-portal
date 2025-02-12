@@ -1,7 +1,7 @@
 <#assign
+	description = ''
 	image = ''
 	title = ''
-	description = ''
 />
 
 <#if cpCategoryContentDisplayContext.getDefaultImageSrc()??>
@@ -19,10 +19,10 @@
 
 <style>
 	.product-category-banner__background {
-		height: 280px;
 		background-position: center;
 		background-repeat: no-repeat;
 		background-size: cover;
+		height: 280px;
 	}
 </style>
 

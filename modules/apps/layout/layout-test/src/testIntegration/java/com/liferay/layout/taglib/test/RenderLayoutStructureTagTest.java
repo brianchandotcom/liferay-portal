@@ -69,6 +69,11 @@ import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
+import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.field.builder.TextObjectFieldBuilder;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -116,6 +121,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -131,11 +137,13 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.util.PortalImpl;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import com.liferay.segments.constants.SegmentsEntryConstants;
 import com.liferay.segments.criteria.Criteria;
 import com.liferay.segments.criteria.CriteriaSerializer;
@@ -144,6 +152,8 @@ import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.segments.test.util.SegmentsTestUtil;
+
+import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -675,6 +685,107 @@ public class RenderLayoutStructureTagTest {
 		Assert.assertEquals(
 			expectedJournalArticle2.getArticleId(),
 			actualJournalArticle.getArticleId());
+	}
+
+	@FeatureFlags({"LPD-32050", "LPD-37927"})
+	@Test
+	@TestInfo("LPD-48715")
+	public void testRenderCollectionStyledLayoutStructureItemWithLocalizedObjectField()
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				ListUtil.fromArray(
+					new TextObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).name(
+						"myLocalizedText"
+					).localized(
+						true
+					).objectFieldSettings(
+						Collections.emptyList()
+					).build(),
+					new TextObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).name(
+						"myText"
+					).objectFieldSettings(
+						Collections.emptyList()
+					).build()),
+				ObjectDefinitionConstants.SCOPE_SITE);
+
+		String myLocalizedTextENValue = RandomTestUtil.randomString();
+		String myLocalizedTextESValue = RandomTestUtil.randomString();
+		String myTextValue = RandomTestUtil.randomString();
+
+		_objectEntryLocalService.addObjectEntry(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			objectDefinition.getObjectDefinitionId(),
+			HashMapBuilder.<String, Serializable>put(
+				"myLocalizedText", myLocalizedTextENValue
+			).put(
+				"myLocalizedText_i18n",
+				HashMapBuilder.put(
+					LocaleUtil.toLanguageId(LocaleUtil.SPAIN),
+					myLocalizedTextESValue
+				).put(
+					LocaleUtil.toLanguageId(LocaleUtil.US),
+					myLocalizedTextENValue
+				).build()
+			).put(
+				"myText", myTextValue
+			).build(),
+			ServiceContextTestUtil.getServiceContext());
+
+		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		long segmentsExperienceId =
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperienceId(
+				draftLayout.getPlid());
+
+		_addCollectionStyledLayoutStructureItem(
+			JSONUtil.put(
+				"itemSubtype", objectDefinition.getObjectDefinitionId()
+			).put(
+				"itemType", objectDefinition.getClassName()
+			).put(
+				"key", objectDefinition.getClassName()
+			).put(
+				"type", InfoListProviderItemSelectorReturnType.class.getName()
+			),
+			JSONUtil.put(
+				"displayAllPages", true
+			).put(
+				"paginationType", "none"
+			).put(
+				"showAllItems", true
+			),
+			layout, null, segmentsExperienceId,
+			ArrayUtil.append(
+				_addFragmentEntryLinks(
+					1,
+					JSONUtil.put(
+						"collectionFieldId", "ObjectField_myLocalizedText"),
+					draftLayout, segmentsExperienceId),
+				_addFragmentEntryLinks(
+					1, JSONUtil.put("collectionFieldId", "ObjectField_myText"),
+					draftLayout, segmentsExperienceId)));
+
+		_testRenderLayoutWithLocale(
+			layout, LocaleUtil.CHINESE, "<h1", myLocalizedTextENValue, "</h1>",
+			"<h1", myTextValue, "</h1>");
+		_testRenderLayoutWithLocale(
+			layout, LocaleUtil.SPAIN, "<h1", myLocalizedTextESValue, "</h1>",
+			"<h1", myTextValue, "</h1>");
+		_testRenderLayoutWithLocale(
+			layout, LocaleUtil.US, "<h1", myLocalizedTextENValue, "</h1>",
+			"<h1", myTextValue, "</h1>");
 	}
 
 	@Test
@@ -2288,6 +2399,42 @@ public class RenderLayoutStructureTagTest {
 		}
 	}
 
+	private void _testRenderLayoutWithLocale(
+			Layout layout, Locale locale, String... strings)
+		throws Exception {
+
+		MockHttpServletRequest mockHttpServletRequest =
+			ContentLayoutTestUtil.getMockHttpServletRequest(
+				_companyLocalService.getCompany(layout.getCompanyId()), _group,
+				layout);
+
+		mockHttpServletRequest.setAttribute(
+			"ORIGINAL_HTTP_SERVLET_REQUEST", mockHttpServletRequest);
+		mockHttpServletRequest.setMethod(HttpMethods.GET);
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)mockHttpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		themeDisplay.setLanguageId(LocaleUtil.toLanguageId(locale));
+		themeDisplay.setLocale(locale);
+
+		themeDisplay.setRequest(mockHttpServletRequest);
+
+		MockHttpServletResponse mockHttpServletResponse = _renderLayout(
+			layout, mockHttpServletRequest);
+
+		String content = mockHttpServletResponse.getContentAsString();
+
+		for (String string : strings) {
+			int index = content.indexOf(string);
+
+			Assert.assertTrue(index >= 0);
+
+			content = content.substring(index);
+		}
+	}
+
 	private void _updateItemConfig(
 			String itemId, JSONObject jsonObject, Layout layout,
 			long segmentsExperienceId)
@@ -2400,6 +2547,9 @@ public class RenderLayoutStructureTagTest {
 
 	@Inject
 	private MultiVMPool _multiVMPool;
+
+	@Inject
+	private ObjectEntryLocalService _objectEntryLocalService;
 
 	@Inject
 	private Portal _portal;

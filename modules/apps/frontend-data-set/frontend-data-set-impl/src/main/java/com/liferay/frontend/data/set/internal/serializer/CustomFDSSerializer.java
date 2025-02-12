@@ -27,7 +27,6 @@ import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.CharPool;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -608,10 +607,9 @@ public class CustomFDSSerializer
 
 			if (fdsFilterCET == null) {
 				_log.error(
-					StringBundler.concat(
-						"No frontend data set filter client extension exists ",
-						"with the external reference code ",
-						clientExtensionEntryERC));
+					"No frontend data set filter client extension exists " +
+						"with the external reference code " +
+							clientExtensionEntryERC);
 
 				return null;
 			}

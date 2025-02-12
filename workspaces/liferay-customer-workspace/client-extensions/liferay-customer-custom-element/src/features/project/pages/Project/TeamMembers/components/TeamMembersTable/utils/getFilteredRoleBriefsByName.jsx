@@ -4,5 +4,5 @@
  */
 
 export default function getFilteredRoleBriefsByName(roleBriefs, name) {
-	return roleBriefs.filter((roleBrief) => roleBrief.name !== name);
+	return roleBriefs?.filter((roleBrief) => roleBrief?.name !== name);
 }

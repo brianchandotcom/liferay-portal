@@ -42,17 +42,17 @@ const TeamMembers = () => {
 	);
 
 	const accountSubscriptionGroups =
-		dataSubscriptionGroups?.c.accountSubscriptionGroups?.items;
+		dataSubscriptionGroups?.c?.accountSubscriptionGroups?.items;
 
 	const accountSubscriptionGroupsNames = accountSubscriptionGroups?.map(
-		(group) => group.name
+		(group) => group?.name
 	);
 
 	const hasActiveProduct = accountSubscriptionGroups?.some(
 		(item) =>
-			targetProducts.includes(item.name) &&
-			item.hasActivation &&
-			item.activationStatus === 'Active'
+			targetProducts?.includes(item?.name) &&
+			item?.hasActivation &&
+			item?.activationStatus === 'Active'
 	);
 
 	useEffect(() => {
@@ -70,17 +70,21 @@ const TeamMembers = () => {
 			</p>
 
 			<div className="mt-4">
+			{koroneikiAccount && !loading && (
 				<TeamMembersTable
 					koroneikiAccount={koroneikiAccount}
 					loading={loading}
 				/>
-
+			)}
+			{koroneikiAccount && !loading && (
 				<ManageProductUsers
 					koroneikiAccount={koroneikiAccount}
 					loading={loading}
 				/>
-
+			)}
 				{featureFlags.includes('LPS-159127') &&
+					koroneikiAccount &&
+					!loading &&
 					accountSubscriptionGroupsNames?.some((groupName) =>
 						targetProducts.includes(groupName)
 					) && (

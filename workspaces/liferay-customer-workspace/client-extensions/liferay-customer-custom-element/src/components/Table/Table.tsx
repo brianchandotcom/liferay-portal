@@ -68,7 +68,7 @@ interface IProps {
 }
 
 const Table: React.FC<IProps> = ({
-	checkboxConfig,
+	checkboxConfig = {checkboxesChecked: [], setCheckboxesChecked: () => {}},
 	columns,
 	handleSortChange,
 	hasCheckbox,
@@ -92,14 +92,14 @@ const Table: React.FC<IProps> = ({
 	const {checkboxesChecked, setCheckboxesChecked} = checkboxConfig;
 
 	const {
-		activePage = 1,
-		itemsPerPage = 5,
+		activePage,
+		itemsPerPage,
 		labels,
-		listItemsPerPage = [],
-		setActivePage = () => {},
-		setItemsPerPage = () => {},
-		showDeltasDropDown = false,
-		totalCount = 1,
+		listItemsPerPage,
+		setActivePage,
+		setItemsPerPage,
+		showDeltasDropDown,
+		totalCount,
 	} = paginationConfig;
 
 	useEffect(() => {
@@ -276,20 +276,20 @@ const Table: React.FC<IProps> = ({
 					<TableSkeleton
 						hasCheckbox={hasCheckbox}
 						totalColumns={columns.length}
-						totalItems={itemsPerPage}
+						totalItems={itemsPerPage as number}
 					/>
 				)}
 			</ClayTable>
 
 			{!!hasPagination && !!totalCount && (
 				<TablePagination
-					activePage={activePage}
-					itemsPerPage={itemsPerPage}
+					activePage={activePage as number}
+					itemsPerPage={itemsPerPage as number}
 					labels={labels}
 					listItemsPerPage={listItemsPerPage}
 					setActivePage={setActivePage}
 					setItemsPerPage={setItemsPerPage}
-					showDeltasDropDown={showDeltasDropDown}
+					showDeltasDropDown={showDeltasDropDown as boolean}
 					totalItems={totalCount}
 				/>
 			)}

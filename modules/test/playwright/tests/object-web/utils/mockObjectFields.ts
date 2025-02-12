@@ -14,8 +14,9 @@ import {
 } from './dateFormat';
 
 interface MockObjectFieldsReturn {
-	listTypeDefinition?: ListTypeDefinition;
-	objectEntry?: ObjectEntry;
+	listTypeDefinition: ListTypeDefinition;
+	listTypeDefinitionItems: string[];
+	objectEntry: ObjectEntry;
 	objectFields: Partial<ObjectField>[];
 	titleObjectFieldName?: string;
 }
@@ -381,6 +382,7 @@ export async function mockObjectFields({
 
 	return {
 		listTypeDefinition,
+		listTypeDefinitionItems,
 		objectEntry: objectEntryReturn ? objectEntry : undefined,
 		objectFields,
 		titleObjectFieldName: titleObjectFieldName

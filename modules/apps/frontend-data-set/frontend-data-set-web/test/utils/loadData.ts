@@ -24,17 +24,12 @@ describe('loadData util', () => {
 		expect(loadData).toBeDefined();
 	});
 
-	it('retrieves data for a Frontend Data Set using a GET request', async () => {
-		const requestResult = await loadData(
-			'/o/products',
-			'/sample-portlet-page-url',
-			[],
-			'foo=bar',
-			20,
-			1,
-			[],
-			''
-		);
+	it('retrieves data for a Frontend Data Set using a basic http GET request', async () => {
+		const requestResult = await loadData({
+			apiURL: '/o/products',
+			delta: 20,
+			page: 1,
+		});
 
 		expect(fetch).toHaveBeenCalledTimes(1);
 		expect(fetch.mock.calls[0][1]?.method).toEqual('GET');
@@ -45,38 +40,93 @@ describe('loadData util', () => {
 		});
 	});
 
-	it('requests data for a Frontend Data Set with a GET request', async () => {
-		await loadData('/o/products', '/', [''], 'foo=bar', 20, 1, [], '');
+	it('requests data for a Frontend Data Set with search parameter', async () => {
+		await loadData({
+			apiURL: '/o/products',
+			currentURL: '/sample-portlet-page-url',
+			delta: 20,
+			page: 1,
+			searchParam: 'foo=bar',
+		});
 
 		const requestUrl = fetch.mock.calls[0][0];
 
-		expect(requestUrl).toEqual(
-			`${Liferay.ThemeDisplay.getPortalURL()}//o/products?currentURL=%2F&filter=%28%29&page=1&pageSize=20&search=foo%3Dbar`
+		expect(requestUrl).toContain(
+			'/o/products?currentURL=%2Fsample-portlet-page-url&page=1&pageSize=20&search=foo%3Dbar'
+		);
+	});
+
+	it('requests data for a Frontend Data Set with a oData filters', async () => {
+		await loadData({
+			apiURL: '/o/products',
+			currentURL: '/sample-portlet-page-url',
+			delta: 20,
+			odataFiltersStrings: ['catalogId eq 32642'],
+			page: 1,
+		});
+
+		const requestUrl = fetch.mock.calls[0][0];
+
+		expect(requestUrl).toContain(
+			'/o/products?currentURL=%2Fsample-portlet-page-url&filter=%28catalogId+eq+32642%29&page=1&pageSize=20'
+		);
+	});
+
+	it('requests data for a Frontend Data Set with a sort parameter', async () => {
+		await loadData({
+			apiURL: '/o/products',
+			currentURL: '/sample-portlet-page-url',
+			delta: 20,
+			page: 1,
+			sorts: [
+				{
+					active: true,
+					direction: 'desc',
+					key: 'modifiedDate',
+				},
+			],
+		});
+
+		const requestUrl = fetch.mock.calls[0][0];
+
+		expect(requestUrl).toContain(
+			'/o/products?currentURL=%2Fsample-portlet-page-url&page=1&pageSize=20&sort=modifiedDate%3Adesc'
 		);
 	});
 
 	it('handles "LANG" property when it comes as a sort parameter', async () => {
-		await loadData(
-			'/o/products',
-			'/',
-			[''],
-			'foo=bar',
-			20,
-			1,
-			[
+		await loadData({
+			apiURL: '/o/products',
+			delta: 20,
+			page: 1,
+			sorts: [
 				{
 					active: true,
 					direction: 'asc',
 					key: 'name,LANG',
 				},
 			],
-			''
-		);
+		});
 
 		const requestUrl = fetch.mock.calls[0][0];
 
-		expect(requestUrl).toEqual(
-			`${Liferay.ThemeDisplay.getPortalURL()}//o/products?currentURL=%2F&filter=%28%29&page=1&pageSize=20&search=foo%3Dbar&sort=name%3Aasc`
+		expect(requestUrl).toContain(
+			'/o/products?page=1&pageSize=20&sort=name%3Aasc'
+		);
+	});
+
+	it('requests data for a Frontend Data Set with a additional URL parameters', async () => {
+		await loadData({
+			additionalAPIURLParameters: 'nestedFields=skus',
+			apiURL: '/o/products',
+			delta: 20,
+			page: 1,
+		});
+
+		const requestUrl = fetch.mock.calls[0][0];
+
+		expect(requestUrl).toContain(
+			'/o/products?page=1&pageSize=20&nestedFields=skus'
 		);
 	});
 });

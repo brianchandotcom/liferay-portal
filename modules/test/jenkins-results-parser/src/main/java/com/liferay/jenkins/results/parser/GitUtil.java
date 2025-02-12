@@ -217,18 +217,29 @@ public class GitUtil {
 				"git ls-remote -h ", remoteURL);
 		}
 
-		ExecutionResult executionResult = executeBashCommands(
-			3, GitUtil.MILLIS_RETRY_DELAY, 1000 * 60 * 10, workingDirectory,
-			command);
+		ExecutionResult executionResult;
 
-		if (executionResult.getExitValue() != 0) {
-			throw new RuntimeException(
-				JenkinsResultsParserUtil.combine(
-					"Unable to get remote refs from ", remoteURL, "\n",
-					executionResult.getStandardError()));
+		try {
+			executionResult = executeBashCommands(
+				3, GitUtil.MILLIS_RETRY_DELAY, 1000 * 60, workingDirectory,
+				command);
+
+			if (executionResult.getExitValue() != 0) {
+				throw new RuntimeException(
+					JenkinsResultsParserUtil.combine(
+						"Unable to get remote refs from ", remoteURL, "\n",
+						executionResult.getStandardError()));
+			}
+		}
+		catch (Exception exception) {
+			return new ArrayList<>();
 		}
 
 		String input = executionResult.getStandardOut();
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(input)) {
+			return new ArrayList<>();
+		}
 
 		List<RemoteGitRef> remoteGitRefs = new ArrayList<>();
 

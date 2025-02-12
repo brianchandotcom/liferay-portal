@@ -1,7 +1,11 @@
 <div class="multiselect-list">
 	<div class="custom-checkbox custom-control [#if input.errorMessage?has_content]has-error[/#if] mb-0">
 		<span class="font-weight-semi-bold mb-1 multiselect-list-label text-3 [#if !input.showLabel || !input.label?has_content]sr-only[/#if]" id="${fragmentEntryLinkNamespace}-multiselect-list-label">
-			${htmlUtil.escape(input.label)} [#if input.readOnly](${languageUtil.get(locale, "read-only")})[#elseif input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /][/#if]
+			${htmlUtil.escape(input.label)}
+
+			<span id="${fragmentEntryLinkNamespace}-multiselect-list-read-only" class="[#if !input.readOnly]d-none[/#if]">(${languageUtil.get(locale, "read-only")})</span>
+
+			[#if input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /][/#if]
 		</span>
 
 		<div aria-describedby="${fragmentEntryLinkNamespace}-multiselect-list-help-text" aria-labelledby="${fragmentEntryLinkNamespace}-multiselect-list-label [#if  input.errorMessage?has_content]${fragmentEntryLinkNamespace}-multiselect-list-error-message[/#if]" class="multiselect-list-fieldset" role="group">

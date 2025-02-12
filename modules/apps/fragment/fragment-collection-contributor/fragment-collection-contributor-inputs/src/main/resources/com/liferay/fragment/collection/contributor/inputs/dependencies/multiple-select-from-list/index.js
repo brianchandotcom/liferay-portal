@@ -24,9 +24,11 @@ const updateInputStatus = () => {
 	}
 };
 
+const preventClick = (event) => event.preventDefault();
+
 if (input.attributes?.readOnly) {
 	allInputs.forEach((input) => {
-		input.addEventListener('click', (event) => event.preventDefault());
+		input.addEventListener('click', preventClick);
 	});
 }
 else if (layoutMode === 'edit') {
@@ -39,11 +41,13 @@ else if (layoutMode === 'edit') {
 else {
 	if (Liferay.FeatureFlags['LPD-37927']) {
 		import('@liferay/fragment-impl').then(
-			({registerLocalizedMultiSelect}) => {
-				if (input.localizable) {
-					const defaultLanguageId =
-						themeDisplay.getDefaultLanguageId();
+			({
+				registerLocalizedMultiSelect,
+				registerUnlocalizedMultiSelect,
+			}) => {
+				const defaultLanguageId = themeDisplay.getDefaultLanguageId();
 
+				if (input.localizable) {
 					const {onChange} = registerLocalizedMultiSelect({
 						defaultLanguageId,
 						initialValues: input.valueI18n,
@@ -53,6 +57,45 @@ else {
 
 					fieldSet.addEventListener('change', (event) => {
 						onChange(event);
+					});
+				}
+				else {
+					const unlocalizedFieldsState =
+						input.attributes.unlocalizedFieldsState;
+
+					registerUnlocalizedMultiSelect({
+						defaultLanguageId,
+						inputElements: allInputs,
+
+						onLocaleChange: (languageId) => {
+							if (
+								defaultLanguageId !== languageId &&
+								unlocalizedFieldsState === 'read-only'
+							) {
+								allInputs.forEach((input) => {
+									input.addEventListener(
+										'click',
+										preventClick
+									);
+								});
+							}
+							else {
+								allInputs.forEach((input) => {
+									input.removeEventListener(
+										'click',
+										preventClick
+									);
+								});
+							}
+						},
+
+						readOnlyInputLabel: document.getElementById(
+							`${fragmentNamespace}-multiselect-list-read-only`
+						),
+						unlocalizedFieldsState,
+						unlocalizedMessageContainer: document.getElementById(
+							`${fragmentNamespace}-unlocalized-info`
+						),
 					});
 				}
 			}

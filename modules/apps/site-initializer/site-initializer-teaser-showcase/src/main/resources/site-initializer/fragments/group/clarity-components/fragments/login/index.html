@@ -1,0 +1,51 @@
+[#assign
+	theme_display = themeDisplay
+	is_signed_in = theme_display.isSignedIn()
+/]
+
+[#if !is_signed_in]
+	<div class="login-container">
+		<form action="?p_p_id=com_liferay_login_web_portlet_LoginPortlet&p_p_lifecycle=1&p_p_state=exclusive&p_p_mode=view&_com_liferay_login_web_portlet_LoginPortlet_javax.portlet.action=%2Flogin%2Flogin&_com_liferay_login_web_portlet_LoginPortlet_mvcRenderCommandName=%2Flogin%2Flogin" autocomplete="on" class="form sign-in-form" data-fm-namespace="_com_liferay_login_web_portlet_LoginPortlet_" id="_com_liferay_login_web_portlet_LoginPortlet_loginForm" method="post" name="_com_liferay_login_web_portlet_LoginPortlet_loginForm">
+			<div aria-label="Sign In" class="input-container" role="group"><input class="field form-control" id="_com_liferay_login_web_portlet_LoginPortlet_formDate" name="_com_liferay_login_web_portlet_LoginPortlet_formDate" type="hidden" value="1714917724004" /> <input class="field form-control" id="_com_liferay_login_web_portlet_LoginPortlet_saveLastPath" name="_com_liferay_login_web_portlet_LoginPortlet_saveLastPath" type="hidden" value="false" /> <input class="field form-control" id="_com_liferay_login_web_portlet_LoginPortlet_redirect" name="_com_liferay_login_web_portlet_LoginPortlet_redirect" type="hidden" value="" /> <input class="field form-control" id="_com_liferay_login_web_portlet_LoginPortlet_doActionAfterLogin" name="_com_liferay_login_web_portlet_LoginPortlet_doActionAfterLogin" type="hidden" value="false" />
+				<div class="inline-alert-container lfr-alert-container"></div>
+				
+				<div class="alert alert-danger" id="_com_liferay_login_web_portlet_LoginPortlet_cookieDisabled" style="display: none;">
+					Authentication failed. Please enable browser cookies and try again.
+				</div>
+
+				<fieldset class=""><legend class="sr-only"> Sign In </legend>
+					<div class="show" id="Content" role="presentation">
+						<div>
+							<div class="form-group input-text-wrapper">
+								<label class="control-label" for="_com_liferay_login_web_portlet_LoginPortlet_login"> Email Address </label>
+								<input class="clearable field form-control" id="_com_liferay_login_web_portlet_LoginPortlet_login" name="_com_liferay_login_web_portlet_LoginPortlet_login" placeholder="email" type="text" value="" />
+							</div>
+
+							<div class="form-group input-text-wrapper">
+								<label class="control-label" for="_com_liferay_login_web_portlet_LoginPortlet_password"> Password </label>
+								<input class="field form-control" id="_com_liferay_login_web_portlet_LoginPortlet_password" name="_com_liferay_login_web_portlet_LoginPortlet_password" type="password" value="" />
+							</div> 
+							<span id="_com_liferay_login_web_portlet_LoginPortlet_passwordCapsLockSpan" style="display: none;">Caps Lock is on.</span>
+						</div>
+					</div>
+				</fieldset>
+
+				<div class="button-holder">
+					<button class="btn btn-primary btn-block" id="_com_liferay_login_web_portlet_LoginPortlet_kbbc" type="submit">
+						<span class="lfr-btn-label">Login</span>
+					</button>
+				</div>
+			</div>
+		</form>
+	</div>
+[#else]
+	<div>
+		<div class="pb-5">
+			Looks like you're already signed in!
+		</div>
+
+		<div class="button-holder">
+			<a id="homeLink" href="/web/[$GROUP_KEY$]/home" class="btn btn-primary">Back to Home</a>
+		</div>
+	</div>
+[/#if]

@@ -185,10 +185,10 @@ definition {
 		task ("Assert user on second instance") {
 			Navigator.openSpecificURL(url = "http://www.able.com:8080");
 
-			User.firstLoginUI(
-				password = PropsUtil.get("default.admin.password"),
-				specificURL = "http://www.able.com:8080",
-				userEmailAddress = "test@www.able.com");
+			SignIn.signInSpecificURL(
+				url = "http://www.able.com:8080",
+				userEmailAddress = "test@www.able.com",
+				userPassword = PropsUtil.get("default.admin.password"));
 
 			User.openUsersAdmin(baseURL = "http://www.able.com:8080");
 
@@ -280,10 +280,10 @@ definition {
 		task ("Assert user on third instance") {
 			Navigator.openSpecificURL(url = "http://www.baker.com:8080");
 
-			User.firstLoginUI(
-				password = PropsUtil.get("default.admin.password"),
-				specificURL = "http://www.baker.com:8080",
-				userEmailAddress = "test@www.baker.com");
+			SignIn.signInSpecificURL(
+				url = "http://www.baker.com:8080",
+				userEmailAddress = "test@www.baker.com",
+				userPassword = PropsUtil.get("default.admin.password"));
 
 			User.openUsersAdmin(baseURL = "http://www.baker.com:8080");
 

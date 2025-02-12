@@ -11,6 +11,7 @@ import com.liferay.headless.admin.site.client.problem.Problem;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.LayoutPageTemplateEntryTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.LayoutUtilityPageEntryTestUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.utility.page.model.LayoutUtilityPageEntry;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -20,6 +21,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -28,6 +30,8 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -35,6 +39,8 @@ import java.util.List;
 import java.util.Locale;
 
 import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -45,6 +51,13 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class FriendlyUrlHistoryResourceTest
 	extends BaseFriendlyUrlHistoryResourceTestCase {
+
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(),
+			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@Override
 	@Test
@@ -58,6 +71,13 @@ public class FriendlyUrlHistoryResourceTest
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			LayoutPageTemplateEntryTestUtil.
 				getDisplayPageLayoutPageTemplateEntry(serviceContext);
+
+		_assertProblemException(layoutPageTemplateEntry);
+
+		Layout layout = _layoutLocalService.getLayout(
+			layoutPageTemplateEntry.getPlid());
+
+		ContentLayoutTestUtil.publishLayout(layout.fetchDraftLayout(), layout);
 
 		List<String> friendlyURLs = _updateLayout(
 			_layoutLocalService.getLayout(layoutPageTemplateEntry.getPlid()));
@@ -127,6 +147,26 @@ public class FriendlyUrlHistoryResourceTest
 			LayoutUtilityPageEntryTestUtil.getLayoutUtilityPageEntry(
 				ServiceContextTestUtil.getServiceContext(
 					testGroup.getGroupId(), TestPropsValues.getUserId()));
+
+		try {
+			friendlyUrlHistoryResource.
+				getSiteSiteByExternalReferenceCodeUtilityPageFriendlyUrlHistory(
+					testGroup.getExternalReferenceCode(),
+					layoutUtilityPageEntry.getExternalReferenceCode());
+
+			Assert.fail();
+		}
+		catch (Problem.ProblemException problemException) {
+			Problem problem = problemException.getProblem();
+
+			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
+			Assert.assertNull(problem.getTitle());
+		}
+
+		Layout layout = _layoutLocalService.getLayout(
+			layoutUtilityPageEntry.getPlid());
+
+		ContentLayoutTestUtil.publishLayout(layout.fetchDraftLayout(), layout);
 
 		List<String> friendlyURLs = _updateLayout(
 			_layoutLocalService.getLayout(layoutUtilityPageEntry.getPlid()));

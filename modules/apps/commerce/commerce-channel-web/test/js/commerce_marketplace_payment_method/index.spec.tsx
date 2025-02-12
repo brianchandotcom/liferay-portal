@@ -87,6 +87,7 @@ describe('CommerceMarketplacePaymentMethod', () => {
 
 		act(() => jest.runAllTimers());
 
+		expect(fetch.mock.calls.length).toBe(1);
 		expect(queryByText('connection-with-marketplace-needed')).toBeTruthy();
 		expect(queryByText('go-to-instance-settings')).toBeTruthy();
 		expect(
@@ -94,7 +95,6 @@ describe('CommerceMarketplacePaymentMethod', () => {
 				'you-are-trying-to-add-a-new-payment-method-through-the-marketplace,-but-the-connection-has-not-been-established-yet'
 			)
 		).toBeTruthy();
-		expect(fetch.mock.calls.length).toBe(1);
 	});
 
 	it('renders modal connection with markeplace needed', () => {
@@ -109,12 +109,12 @@ describe('CommerceMarketplacePaymentMethod', () => {
 
 		act(() => jest.runAllTimers());
 
+		expect(fetch.mock.calls.length).toBe(1);
 		expect(marketplaceIcon).toBeInTheDocument();
 		expect(marketplaceIcon).toBeVisible();
 		expect(marketplaceIcon).toHaveClass('lexicon-icon-marketplace');
 		expect(queryByText('connection-with-marketplace-needed')).toBeTruthy();
 		expect(queryByText('go-to-instance-settings')).toBeTruthy();
-		expect(fetch.mock.calls.length).toBe(1);
 	});
 
 	it('renders unauthorized and click on go to instance settings button', () => {
@@ -123,12 +123,13 @@ describe('CommerceMarketplacePaymentMethod', () => {
 		const {queryByText} = render(<CommerceChannelAddPaymentMethod />);
 
 		fireEvent.click(queryByText('add') as HTMLButtonElement);
+
 		act(() => jest.runAllTimers());
 
 		const instanceSettingsButton = queryByText('go-to-instance-settings');
 
-		expect(instanceSettingsButton).toBeInTheDocument();
 		expect(fetch.mock.calls.length).toBe(1);
+		expect(instanceSettingsButton).toBeInTheDocument();
 	});
 
 	it('renders aunthorized without apps', async () => {
@@ -150,9 +151,9 @@ describe('CommerceMarketplacePaymentMethod', () => {
 
 		await act(async () => jest.runAllTimers());
 
-		expect(queryByText('no-results-were-found')).toBeTruthy();
-		expect(queryByText('no-products-were-found')).toBeTruthy();
 		expect(fetch.mock.calls.length).toBe(6);
+		expect(queryByText('no-products-were-found')).toBeTruthy();
+		expect(queryByText('no-results-were-found')).toBeTruthy();
 	});
 
 	it('renders aunthorized with apps and click install without cloud projects', async () => {
@@ -185,8 +186,8 @@ describe('CommerceMarketplacePaymentMethod', () => {
 			fireEvent.click(queryByText('install') as HTMLButtonElement)
 		);
 
-		expect(queryByText('no-cloud-project-available')).toBeTruthy();
 		expect(fetch.mock.calls.length).toBe(3);
+		expect(queryByText('no-cloud-project-available')).toBeTruthy();
 	});
 
 	it('renders authorized with apps and click on app card', async () => {
@@ -211,8 +212,8 @@ describe('CommerceMarketplacePaymentMethod', () => {
 			queryByText(productResponseMock.items[0].name) as HTMLButtonElement
 		);
 
-		expect(queryByText('back-to-list')).toBeTruthy();
 		expect(fetch.mock.calls.length).toBe(6);
+		expect(queryByText('back-to-list')).toBeTruthy();
 	});
 
 	it('renders authorized with apps and click on cancel button', async () => {
@@ -228,6 +229,7 @@ describe('CommerceMarketplacePaymentMethod', () => {
 		const {queryByText} = await render(<CommerceChannelAddPaymentMethod />);
 
 		fireEvent.click(queryByText('add') as HTMLButtonElement);
+
 		await act(async () => jest.runAllTimers());
 
 		expect(queryByText(productResponseMock.items[0].name)).toBeTruthy();
@@ -239,8 +241,8 @@ describe('CommerceMarketplacePaymentMethod', () => {
 			fireEvent.click(queryByText('cancel') as HTMLButtonElement)
 		);
 
-		expect(queryByText(productResponseMock.items[0].name)).toBeTruthy();
 		expect(fetch.mock.calls.length).toBe(7);
+		expect(queryByText(productResponseMock.items[0].name)).toBeTruthy();
 	});
 
 	it('renders authorized with apps and click install failed', async () => {
@@ -273,8 +275,8 @@ describe('CommerceMarketplacePaymentMethod', () => {
 			fireEvent.click(queryByText('install') as HTMLButtonElement)
 		);
 
-		expect(queryByText('there-was-an-unknown-error')).toBeTruthy();
 		expect(fetch.mock.calls.length).toBe(9);
+		expect(queryByText('there-was-an-unknown-error')).toBeTruthy();
 	});
 
 	it('render no resources', async () => {
@@ -322,12 +324,12 @@ describe('CommerceMarketplacePaymentMethod', () => {
 			fireEvent.click(queryByText('install') as HTMLButtonElement)
 		);
 
-		expect(queryByText('insufficient-resources')).toBeTruthy();
 		expect(fetch.mock.calls.length).toBe(7);
+		expect(queryByText('insufficient-resources')).toBeTruthy();
 	});
 
 	it('renders success on instalation', async () => {
-		const placedOrderResponse = JSON.stringify({
+		const placedOrderResponse = {
 			...placedOrders,
 			items: placedOrders.items.map((item) => ({
 				...item,
@@ -346,17 +348,17 @@ describe('CommerceMarketplacePaymentMethod', () => {
 					productId: 999999,
 				})),
 			})),
-		});
+		};
 
 		fetch
 			.mockResponseOnce(JSON.stringify(marketplaceSettingsMock))
 			.mockResponseOnce(JSON.stringify(productResponseMock))
-			.mockResponseOnce(placedOrderResponse)
+			.mockResponseOnce(JSON.stringify(placedOrderResponse))
 			.mockResponseOnce(JSON.stringify(projectsMockResponse))
 			.mockResponseOnce(JSON.stringify(projectsMockResponse))
 			.mockResponseOnce(JSON.stringify(projectsMockResponse))
 			.mockResponseOnce(JSON.stringify(projectsMockResponse))
-			.mockResponseOnce(placedOrderResponse)
+			.mockResponseOnce(JSON.stringify(placedOrderResponse))
 			.mockResponseOnce(JSON.stringify(cartResponseMock))
 			.mockResponseOnce(JSON.stringify(cartResponseMock))
 			.mockResponseOnce(JSON.stringify({success: true}));
@@ -376,14 +378,13 @@ describe('CommerceMarketplacePaymentMethod', () => {
 			fireEvent.click(queryByText('install') as HTMLButtonElement)
 		);
 
+		expect(fetch.mock.calls.length).toBe(10);
 		expect(queryByText('success')).toBeTruthy();
 		expect(
 			queryByText(
 				'your-application-has-been-installed,-wait-a-few-moments-for-it-to-become-available'
 			)
 		).toBeTruthy();
-
-		expect(fetch.mock.calls.length).toBe(10);
 	});
 
 	it('render disabled button on apps and storefront', async () => {
@@ -424,7 +425,7 @@ describe('CommerceMarketplacePaymentMethod', () => {
 
 		await act(async () => jest.runAllTimers());
 
-		expect(queryByText('install')).toBeDisabled();
 		expect(fetch.mock.calls.length).toBe(7);
+		expect(queryByText('install')).toBeDisabled();
 	});
 });

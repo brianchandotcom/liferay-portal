@@ -13,10 +13,8 @@ import {
 } from '../../../src/main/resources/META-INF/resources/js/commerce_marketplace_payment_method/MarketplacePurchase';
 
 describe('CommerceMarketplacePaymentMethod', () => {
-	beforeEach(() => {
-		jest.useFakeTimers();
-		global.open = jest.fn();
-		cleanup();
+	afterAll(() => {
+		jest.useRealTimers();
 	});
 
 	afterEach(() => {
@@ -26,8 +24,10 @@ describe('CommerceMarketplacePaymentMethod', () => {
 		jest.restoreAllMocks();
 	});
 
-	afterAll(() => {
-		jest.useRealTimers();
+	beforeEach(() => {
+		cleanup();
+		global.open = jest.fn();
+		jest.useFakeTimers();
 	});
 
 	it('render success and click on setview', () => {
@@ -51,6 +51,8 @@ describe('CommerceMarketplacePaymentMethod', () => {
 		const cancelButton = queryByText('cancel');
 
 		fireEvent.click(cancelButton as HTMLButtonElement);
+
+		expect(setViewMock).toHaveBeenCalledTimes(1);
 	});
 
 	it('render error', () => {
@@ -73,6 +75,7 @@ describe('CommerceMarketplacePaymentMethod', () => {
 				state={States.NO_PROJECT}
 			/>
 		);
+
 		expect(queryByText('no-cloud-project-available')).toBeTruthy();
 	});
 
@@ -114,11 +117,16 @@ describe('CommerceMarketplacePaymentMethod', () => {
 	});
 
 	it('render null status', () => {
-		render(
+		const {queryByText} = render(
 			<MarketplacePurchase
 				onClickInstall={function (): void {}}
 				state={undefined}
 			/>
 		);
+
+		expect(queryByText('confirmation-required')).toBeFalsy();
+		expect(queryByText('installation-in-progress')).toBeFalsy();
+		expect(queryByText('no-cloud-project-available')).toBeFalsy();
+		expect(queryByText('there-was-an-unknown-error')).toBeFalsy();
 	});
 });

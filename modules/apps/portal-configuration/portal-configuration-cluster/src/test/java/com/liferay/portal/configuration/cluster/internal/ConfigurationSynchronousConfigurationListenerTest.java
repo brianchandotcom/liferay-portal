@@ -76,7 +76,7 @@ public class ConfigurationSynchronousConfigurationListenerTest {
 	}
 
 	@Test
-	public void testOnNotifySetsCompanyThreadLocal() throws Exception {
+	public void testOnNotify() throws Exception {
 		try (MockedStatic<CompanyThreadLocal> companyThreadLocalMockedStatic =
 				Mockito.mockStatic(CompanyThreadLocal.class)) {
 

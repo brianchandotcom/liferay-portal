@@ -170,10 +170,7 @@ public class UpdateFormItemConfigMVCActionCommand
 
 		List<FragmentEntryLink> addedFragmentEntryLinks = new ArrayList<>();
 
-		List<FormItemManager.LayoutStructureItemChanges>
-			layoutStructureItemChanges = new ArrayList<>();
-
-		layoutStructureItemChanges.add(
+		FormItemManager.LayoutStructureItemChanges layoutStructureItemChanges =
 			_updateFormStyledLayoutStructureItemFormType(
 				addedFragmentEntryLinks, formStyledLayoutStructureItem,
 				_portal.getHttpServletRequest(actionRequest),
@@ -183,7 +180,7 @@ public class UpdateFormItemConfigMVCActionCommand
 				formStyledLayoutStructureItem.getNumberOfSteps(),
 				previousFormType, previousNumberOfSteps, segmentsExperienceId,
 				ServiceContextFactory.getInstance(actionRequest),
-				stepperFragmentEntryLinkId));
+				stepperFragmentEntryLinkId);
 
 		if (!Objects.equals(
 				formStyledLayoutStructureItem.getClassNameId(),
@@ -192,7 +189,7 @@ public class UpdateFormItemConfigMVCActionCommand
 				formStyledLayoutStructureItem.getClassTypeId(),
 				previousClassTypeId)) {
 
-			layoutStructureItemChanges.add(
+			layoutStructureItemChanges.addRemovedLayoutStructureItems(
 				_formItemManager.removeLayoutStructureItems(
 					formStyledLayoutStructureItem, layoutStructure, null));
 
@@ -264,7 +261,7 @@ public class UpdateFormItemConfigMVCActionCommand
 				}
 
 				if (ListUtil.isNotEmpty(removedItemIds)) {
-					layoutStructureItemChanges.add(
+					layoutStructureItemChanges.addRemovedLayoutStructureItems(
 						_formItemManager.removeLayoutStructureItems(
 							formStyledLayoutStructureItem, layoutStructure,
 							removedItemIds));

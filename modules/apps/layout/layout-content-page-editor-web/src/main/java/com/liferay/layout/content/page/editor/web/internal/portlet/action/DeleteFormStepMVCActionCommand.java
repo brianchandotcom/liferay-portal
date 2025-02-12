@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 import javax.portlet.ActionRequest;
@@ -107,12 +106,9 @@ public class DeleteFormStepMVCActionCommand
 					themeDisplay.getLocale(), "an-unexpected-error-occurred"));
 		}
 
-		List<FormItemManager.LayoutStructureItemChanges>
-			layoutStructureItemChanges = new ArrayList<>();
-
-		layoutStructureItemChanges.add(
+		FormItemManager.LayoutStructureItemChanges layoutStructureItemChanges =
 			_formItemManager.removeFormStepLayoutStructureItem(
-				formStyledLayoutStructureItem, itemId, layoutStructure));
+				formStyledLayoutStructureItem, itemId, layoutStructure);
 
 		_layoutPageTemplateStructureService.
 			updateLayoutPageTemplateStructureData(

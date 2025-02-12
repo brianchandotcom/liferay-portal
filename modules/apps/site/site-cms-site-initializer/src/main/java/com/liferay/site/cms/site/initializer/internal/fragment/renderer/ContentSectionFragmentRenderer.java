@@ -85,15 +85,12 @@ public class ContentSectionFragmentRenderer implements FragmentRenderer {
 		throws IOException {
 
 		try {
-			ContentSectionDisplayContext contentSectionDisplayContext =
-				new ContentSectionDisplayContext(_cmsClassNamesConfiguration);
+			RequestDispatcher requestDispatcher =
+				_servletContext.getRequestDispatcher("/content_section.jsp");
 
 			httpServletRequest.setAttribute(
 				ContentSectionDisplayContext.class.getName(),
-				contentSectionDisplayContext);
-
-			RequestDispatcher requestDispatcher =
-				_servletContext.getRequestDispatcher("/content_section.jsp");
+				new ContentSectionDisplayContext(_cmsClassNamesConfiguration));
 
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}

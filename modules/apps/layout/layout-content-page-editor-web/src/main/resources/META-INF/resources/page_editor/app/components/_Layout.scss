@@ -59,19 +59,6 @@ html#{$cadmin-selector} {
 					font-weight: 500;
 				}
 			}
-
-			&-item-old {
-				border: 1px solid fade_out($cadmin-purple, 0.9);
-				min-height: 80px;
-
-				.page-editor__collection-item__title {
-					color: $cadmin-purple;
-					font-size: 12px;
-					font-style: italic;
-					padding-left: 8px;
-					padding-top: 8px;
-				}
-			}
 		}
 
 		&__col .page-editor__col__resizer {
@@ -113,8 +100,7 @@ html#{$cadmin-selector} {
 
 		&__col,
 		&__row,
-		&__collection-item,
-		&__collection-item-old {
+		&__collection-item {
 			position: relative;
 
 			.page-editor__no-fragments-state {
@@ -162,8 +148,7 @@ html#{$cadmin-selector} {
 			justify-content: flex-start;
 		}
 
-		&__collection-item,
-		&__collection-item-old {
+		&__collection-item {
 			&:before {
 				left: 0;
 				width: 100%;
@@ -318,8 +303,7 @@ html#{$cadmin-selector} {
 
 		&__container.flex-row,
 		&__collection .flex-row {
-			.page-editor__collection-item.empty,
-			.page-editor__collection-item-old.empty {
+			.page-editor__collection-item.empty {
 				min-width: $emptyCollectionItemMinWidth;
 			}
 

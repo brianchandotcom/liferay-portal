@@ -32,9 +32,8 @@ export function generateQRCode({
 		.then((dataUrl) => {
 			const image = document.createElement('img');
 
-			image.setAttribute('src', dataUrl);
-
 			image.setAttribute('alt', 'otp-configuration-qrcode');
+			image.setAttribute('src', dataUrl);
 
 			const container = document.getElementById(containerId);
 

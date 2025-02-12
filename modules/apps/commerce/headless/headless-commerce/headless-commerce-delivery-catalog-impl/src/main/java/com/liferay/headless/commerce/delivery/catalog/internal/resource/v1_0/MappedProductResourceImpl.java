@@ -48,8 +48,8 @@ public class MappedProductResourceImpl extends BaseMappedProductResourceImpl {
 
 	@Override
 	public Page<MappedProduct> getChannelProductMappedProductsPage(
-			Long channelId, Long productId, Long accountId, String search,
-			Pagination pagination, Sort[] sorts)
+			Long channelId, Long productId, Long accountId, String currencyCode,
+			String search, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
 		CPDefinition cpDefinition =
@@ -71,7 +71,7 @@ public class MappedProductResourceImpl extends BaseMappedProductResourceImpl {
 
 		CommerceContext commerceContext = _commerceContextFactory.create(
 			contextCompany.getCompanyId(), commerceChannel.getGroupId(),
-			contextUser.getUserId(), 0, accountId);
+			contextUser.getUserId(), 0, accountId, currencyCode);
 
 		return _getMappedProductsPage(
 			commerceContext, cpDefinition.getCPDefinitionId(), pagination,

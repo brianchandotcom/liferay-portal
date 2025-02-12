@@ -1238,7 +1238,7 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 		CommerceContext commerceContext = _commerceContextFactory.create(
 			contextCompany.getCompanyId(), commerceOrder.getGroupId(),
 			contextUser.getUserId(), commerceOrder.getCommerceOrderId(),
-			commerceOrder.getCommerceAccountId());
+			commerceOrder.getCommerceAccountId(), cart.getCurrencyCode());
 
 		_commerceOrderEngine.updateCommerceOrder(
 			commerceOrder.getExternalReferenceCode(),

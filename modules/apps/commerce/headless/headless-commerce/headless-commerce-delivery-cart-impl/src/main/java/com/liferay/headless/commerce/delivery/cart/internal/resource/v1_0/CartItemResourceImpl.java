@@ -470,7 +470,8 @@ public class CartItemResourceImpl extends BaseCartItemResourceImpl {
 						contextCompany.getCompanyId(),
 						commerceOrder.getGroupId(), contextUser.getUserId(),
 						commerceOrder.getCommerceOrderId(),
-						commerceOrder.getCommerceAccountId()),
+						commerceOrder.getCommerceAccountId(),
+						commerceOrder.getCommerceCurrencyCode()),
 					_serviceContextHelper.getServiceContext(
 						commerceOrder.getGroupId()));
 		}

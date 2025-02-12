@@ -51,9 +51,19 @@ public class TestCustomCommerceContextFactory
 		long companyId, long commerceChannelGroupId, long userId, long orderId,
 		long commerceAccountId) {
 
+		return create(
+			companyId, commerceChannelGroupId, userId, orderId,
+			commerceAccountId, null);
+	}
+
+	@Override
+	public CommerceContext create(
+		long companyId, long commerceChannelGroupId, long userId, long orderId,
+		long commerceAccountId, String currencyCode) {
+
 		return new TestCustomCommerceContext(
 			companyId, commerceChannelGroupId, orderId, commerceAccountId,
-			_accountEntryLocalService, _accountGroupLocalService,
+			currencyCode, _accountEntryLocalService, _accountGroupLocalService,
 			_commerceCatalogLocalService,
 			_commerceChannelAccountEntryRelLocalService,
 			_commerceChannelLocalService, _commerceCurrencyLocalService,

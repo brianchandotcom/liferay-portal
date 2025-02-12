@@ -40,7 +40,7 @@
 			"label": {
 				"en_US": "Basic Document"
 			},
-			"modifiable": true,
+			"modifiable": false,
 			"name": "BasicDocument",
 			"objectActions": [
 			],
@@ -263,7 +263,10 @@
 			"portlet": false,
 			"restContextPath": "/o/c/basicdocuments",
 			"scope": "site",
-			"system": false,
+			"status": {
+				"code": 0
+			},
+			"system": true,
 			"titleObjectFieldName": "title"
 		},
 		{
@@ -294,7 +297,7 @@
 			"label": {
 				"en_US": "Basic Web Content"
 			},
-			"modifiable": true,
+			"modifiable": false,
 			"name": "BasicWebContent",
 			"objectActions": [
 			],
@@ -501,7 +504,10 @@
 			"portlet": true,
 			"restContextPath": "/o/c/basicwebcontents",
 			"scope": "site",
-			"system": false,
+			"status": {
+				"code": 0
+			},
+			"system": true,
 			"titleObjectFieldName": "id"
 		}
 	]

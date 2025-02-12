@@ -342,7 +342,7 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 					"creationActionsOrder",
 					(ObjectEntry objectEntry) ->
 						Objects.equals(_getType(objectEntry), "creation") &&
-						Objects.equals(_isActive(objectEntry), true),
+						_isActive(objectEntry),
 					"dataSetToDataSetActions"),
 				(ObjectEntry objectEntry) -> {
 					Map<String, Object> properties =
@@ -551,8 +551,7 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 		return JSONUtil.toJSONArray(
 			_getSortedRelatedObjectEntries(
 				dataSetObjectDefinition, dataSetObjectEntry, "filtersOrder",
-				(ObjectEntry objectEntry) -> Objects.equals(
-					_isActive(objectEntry), true),
+				(ObjectEntry objectEntry) -> _isActive(objectEntry),
 				"dataSetToDataSetClientExtensionFilters",
 				"dataSetToDataSetDateFilters",
 				"dataSetToDataSetSelectionFilters"),
@@ -774,7 +773,7 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 				dataSetObjectDefinition, dataSetObjectEntry, "itemActionsOrder",
 				(ObjectEntry objectEntry) ->
 					Objects.equals(_getType(objectEntry), "item") &&
-					Objects.equals(_isActive(objectEntry), true),
+					_isActive(objectEntry),
 				"dataSetToDataSetActions"),
 			(ObjectEntry objectEntry) -> {
 				Map<String, Object> properties = objectEntry.getProperties();
@@ -1028,8 +1027,7 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 		return JSONUtil.toJSONArray(
 			_getSortedRelatedObjectEntries(
 				dataSetObjectDefinition, dataSetObjectEntry, "sortsOrder",
-				(ObjectEntry objectEntry) -> Objects.equals(
-					_isActive(objectEntry), true),
+				(ObjectEntry objectEntry) -> _isActive(objectEntry),
 				"dataSetToDataSetSorts"),
 			(ObjectEntry objectEntry) -> {
 				Map<String, Object> properties = objectEntry.getProperties();

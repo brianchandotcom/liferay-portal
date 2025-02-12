@@ -20,6 +20,7 @@ import com.liferay.frontend.data.set.filter.BaseSelectionFDSFilter;
 import com.liferay.frontend.data.set.filter.DateFDSFilterItem;
 import com.liferay.frontend.data.set.filter.FDSFilter;
 import com.liferay.frontend.data.set.filter.FDSFilterContextContributor;
+import com.liferay.frontend.data.set.filter.FDSFilterRegistry;
 import com.liferay.frontend.data.set.filter.SelectionFDSFilterItem;
 import com.liferay.frontend.data.set.internal.SystemFDSEntryRegistryImpl;
 import com.liferay.frontend.data.set.internal.action.FDSBulkActionsRegistryImpl;
@@ -466,16 +467,17 @@ public class SystemFDSSerializerTest {
 					<FDSFilterContextContributor>serviceWrapper(
 						_bundleContext));
 
+		FDSFilterRegistry fdsFilterRegistry = new FDSFilterRegistryImpl();
+
 		ReflectionTestUtil.setFieldValue(
-			_fdsFilterRegistryImpl, "_serviceTrackerMap",
-			_filterServiceTrackerMap);
+			fdsFilterRegistry, "_serviceTrackerMap", _filterServiceTrackerMap);
 
 		ReflectionTestUtil.setFieldValue(
 			_fdsFilterContextContributorRegistryImpl, "_serviceTrackerMap",
 			_filterContextContributorServiceTrackerMap);
 
 		ReflectionTestUtil.setFieldValue(
-			_fdsSerializer, "_fdsFilterRegistry", _fdsFilterRegistryImpl);
+			_fdsSerializer, "_fdsFilterRegistry", fdsFilterRegistry);
 
 		ReflectionTestUtil.setFieldValue(
 			_fdsSerializer, "_fdsFilterContextContributorRegistry",
@@ -489,9 +491,12 @@ public class SystemFDSSerializerTest {
 
 		ReflectionTestUtil.setFieldValue(_fdsSerializer, "_portal", _portal);
 
+		DateRangeFDSFilterContextContributor
+			dateRangeFDSFilterContextContributor =
+				new DateRangeFDSFilterContextContributor();
+
 		ReflectionTestUtil.setFieldValue(
-			_dateRangeFDSFilterContextContributor, "_jsonFactory",
-			_jsonFactory);
+			dateRangeFDSFilterContextContributor, "_jsonFactory", _jsonFactory);
 
 		ReflectionTestUtil.setFieldValue(
 			_selectionFDSFilterContextContributor, "_jsonFactory",
@@ -503,14 +508,14 @@ public class SystemFDSSerializerTest {
 		_clientExtensionFDSFilterContextContributorServiceRegistration =
 			_bundleContext.registerService(
 				FDSFilterContextContributor.class,
-				_clientExtensionFDSFilterContextContributor,
+				new ClientExtensionFDSFilterContextContributor(),
 				MapUtil.singletonDictionary(
 					"frontend.data.set.filter.type", "clientExtension"));
 
 		_dateRangeFDSFilterContextContributorServiceRegistration =
 			_bundleContext.registerService(
 				FDSFilterContextContributor.class,
-				_dateRangeFDSFilterContextContributor,
+				dateRangeFDSFilterContextContributor,
 				MapUtil.singletonDictionary(
 					"frontend.data.set.filter.type", "dateRange"));
 
@@ -1441,14 +1446,6 @@ public class SystemFDSSerializerTest {
 			MapUtil.singletonDictionary("frontend.data.set.name", fdsName));
 	}
 
-	private static final ClientExtensionFDSFilterContextContributor
-		_clientExtensionFDSFilterContextContributor =
-			new ClientExtensionFDSFilterContextContributor();
-	private static final DateRangeFDSFilterContextContributor
-		_dateRangeFDSFilterContextContributor =
-			new DateRangeFDSFilterContextContributor();
-	private static final FDSFilterRegistryImpl _fdsFilterRegistryImpl =
-		new FDSFilterRegistryImpl();
 	private static ServiceTrackerMap
 		<String,
 		 List<ServiceTrackerCustomizerFactory.ServiceWrapper<FDSFilter>>>

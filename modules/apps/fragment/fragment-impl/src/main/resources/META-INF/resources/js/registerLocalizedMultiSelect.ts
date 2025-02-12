@@ -17,7 +17,7 @@ export function registerLocalizedMultiSelect({
 	namespace,
 }: Args) {
 	if (initialValues) {
-		inputElements.forEach((inputElement) => {
+		inputElements.forEach((inputElement, index) => {
 			Object.entries(initialValues).forEach(([languageId, value]) => {
 				const input = getOrCreateTranslationInput(
 					inputElement.id,
@@ -26,6 +26,10 @@ export function registerLocalizedMultiSelect({
 					inputElement.parentNode as HTMLElement,
 					namespace
 				);
+
+				if (index !== 0) {
+					input.setAttribute('data-multiselect', 'true');
+				}
 
 				input.value = value.includes(inputElement.value)
 					? inputElement.value
@@ -39,7 +43,7 @@ export function registerLocalizedMultiSelect({
 	Liferay.on('localizationSelect:localeChanged', ({languageId}) => {
 		currentLanguageId = languageId;
 
-		inputElements.forEach((inputElement) => {
+		inputElements.forEach((inputElement, index) => {
 			const translationInput = getOrCreateTranslationInput(
 				inputElement.id,
 				inputElement.name,
@@ -47,6 +51,10 @@ export function registerLocalizedMultiSelect({
 				inputElement.parentNode as HTMLElement,
 				namespace
 			);
+
+			if (index !== 0) {
+				translationInput.setAttribute('data-multiselect', 'true');
+			}
 
 			if (translationInput.getAttribute('value') !== null) {
 				if (inputElement) {

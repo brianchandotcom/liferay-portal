@@ -1500,7 +1500,7 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 	}
 
 	private void _assertUpdateFormStyledLayoutStructureItemConfigJSONObject(
-		JSONObject jsonObject, int expectedAddedFragmentEntryLinks,
+		JSONObject jsonObject, int expectedFragmentEntryLinks,
 		String expectedError, String expectedErrorMessage,
 		int expectedRemovedLayoutStructureItems) {
 
@@ -1512,12 +1512,11 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 
 		Assert.assertTrue(jsonObject.has("layoutData"));
 
-		JSONObject addedFragmentEntryLinksJSONObject = jsonObject.getJSONObject(
-			"addedFragmentEntryLinks");
+		JSONObject fragmentEntryLinksJSONObject = jsonObject.getJSONObject(
+			"fragmentEntryLinks");
 
 		Assert.assertEquals(
-			expectedAddedFragmentEntryLinks,
-			addedFragmentEntryLinksJSONObject.length());
+			expectedFragmentEntryLinks, fragmentEntryLinksJSONObject.length());
 
 		JSONArray removedLayoutStructureItemsJSONArray =
 			jsonObject.getJSONArray("removedItemIds");

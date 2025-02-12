@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionRegistryUtil;
 import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkService;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
@@ -114,7 +115,7 @@ public class WorkflowDefinitionLinkResourceImpl
 		return _toWorkflowDefinitionLink(
 			_workflowDefinitionLinkService.addWorkflowDefinitionLink(
 				contextUser.getUserId(), contextCompany.getCompanyId(),
-				workflowDefinitionLink.getGroupId(),
+				GetterUtil.getLong(workflowDefinitionLink.getGroupId()),
 				workflowDefinitionLink.getClassName(), 0, 0,
 				workflowDefinition.getName(), workflowDefinition.getVersion()));
 	}
@@ -132,7 +133,7 @@ public class WorkflowDefinitionLinkResourceImpl
 		return _toWorkflowDefinitionLink(
 			_workflowDefinitionLinkService.addWorkflowDefinitionLink(
 				contextUser.getUserId(), contextCompany.getCompanyId(),
-				workflowDefinitionLink.getGroupId(),
+				GetterUtil.getLong(workflowDefinitionLink.getGroupId()),
 				workflowDefinitionLink.getClassName(), 0, 0,
 				workflowDefinition.getName(), workflowDefinition.getVersion()));
 	}
@@ -148,7 +149,7 @@ public class WorkflowDefinitionLinkResourceImpl
 			_workflowDefinitionLinkService.updateWorkflowDefinitionLink(
 				externalReferenceCode, contextUser.getUserId(),
 				contextCompany.getCompanyId(),
-				workflowDefinitionLink.getGroupId(),
+				GetterUtil.getLong(workflowDefinitionLink.getGroupId()),
 				workflowDefinitionLink.getClassName(), 0, 0,
 				workflowDefinitionLink.getWorkflowDefinitionName(),
 				workflowDefinitionLink.getWorkflowDefinitionVersion()));

@@ -32,39 +32,27 @@ public abstract class BaseItemFormConfigMVCActionCommand
 	extends BaseContentPageEditorTransactionalMVCActionCommand {
 
 	protected JSONObject getLayoutStructureItemChangesJSONObject(
-			List<FragmentEntryLink> addedFragmentEntryLinks,
+			List<FragmentEntryLink> fragmentEntryLinks,
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, JSONObject jsonObject,
 			LayoutStructure layoutStructure,
 			FormItemManager.LayoutStructureItemChanges
-				layoutStructureItemChanges,
-			FragmentEntryLink stepperFragmentEntryLink)
+				layoutStructureItemChanges)
 		throws PortalException {
 
-		JSONObject addedFragmentEntryLinksJSONObject =
+		JSONObject fragmentEntryLinksJSONObject =
 			jsonFactory.createJSONObject();
 
-		for (FragmentEntryLink addedFragmentEntryLink :
-				addedFragmentEntryLinks) {
-
-			addedFragmentEntryLinksJSONObject.put(
-				String.valueOf(addedFragmentEntryLink.getFragmentEntryLinkId()),
+		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
+			fragmentEntryLinksJSONObject.put(
+				String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()),
 				fragmentEntryLinkManager.getFragmentEntryLinkJSONObject(
-					addedFragmentEntryLink, httpServletRequest,
-					httpServletResponse, layoutStructure));
+					fragmentEntryLink, httpServletRequest, httpServletResponse,
+					layoutStructure));
 
 			layoutStructureItemChanges.addAddedLayoutStructureItems(
 				layoutStructure.getLayoutStructureItemByFragmentEntryLinkId(
-					addedFragmentEntryLink.getFragmentEntryLinkId()));
-		}
-
-		if (stepperFragmentEntryLink != null) {
-			addedFragmentEntryLinksJSONObject.put(
-				String.valueOf(
-					stepperFragmentEntryLink.getFragmentEntryLinkId()),
-				fragmentEntryLinkManager.getFragmentEntryLinkJSONObject(
-					stepperFragmentEntryLink, httpServletRequest,
-					httpServletResponse, layoutStructure));
+					fragmentEntryLink.getFragmentEntryLinkId()));
 		}
 
 		return jsonObject.put(
@@ -74,7 +62,7 @@ public abstract class BaseItemFormConfigMVCActionCommand
 					layoutStructureItemChanges.getAddedLayoutStructureItems(),
 					LayoutStructureItem::getItemId))
 		).put(
-			"fragmentEntryLinks", addedFragmentEntryLinksJSONObject
+			"fragmentEntryLinks", fragmentEntryLinksJSONObject
 		).put(
 			"layoutData", layoutStructure.toJSONObject()
 		).put(

@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import javax.portlet.ActionRequest;
@@ -106,6 +107,8 @@ public class DeleteFormStepMVCActionCommand
 					themeDisplay.getLocale(), "an-unexpected-error-occurred"));
 		}
 
+		List<FragmentEntryLink> fragmentEntryLinks = new ArrayList<>();
+
 		FormItemManager.LayoutStructureItemChanges layoutStructureItemChanges =
 			_formItemManager.removeFormStepLayoutStructureItem(
 				formStyledLayoutStructureItem, itemId, layoutStructure);
@@ -128,15 +131,16 @@ public class DeleteFormStepMVCActionCommand
 				stepperFragmentEntryLinkId);
 
 		if (stepperFragmentEntryLink != null) {
-			stepperFragmentEntryLink = _formItemManager.updateNumberOfStepps(
-				httpServletRequest, httpServletResponse, numberOfSteps - 1,
-				stepperFragmentEntryLink);
+			fragmentEntryLinks.add(
+				_formItemManager.updateNumberOfStepps(
+					httpServletRequest, httpServletResponse, numberOfSteps - 1,
+					stepperFragmentEntryLink));
 		}
 
 		return getLayoutStructureItemChangesJSONObject(
-			new ArrayList<>(), httpServletRequest, httpServletResponse,
+			fragmentEntryLinks, httpServletRequest, httpServletResponse,
 			_jsonFactory.createJSONObject(), layoutStructure,
-			layoutStructureItemChanges, stepperFragmentEntryLink);
+			layoutStructureItemChanges);
 	}
 
 	@Reference

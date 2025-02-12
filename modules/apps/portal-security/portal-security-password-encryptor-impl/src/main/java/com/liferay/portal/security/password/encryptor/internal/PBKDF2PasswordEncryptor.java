@@ -48,48 +48,42 @@ public class PBKDF2PasswordEncryptor implements PasswordEncryptor {
 			String encryptedPassword, boolean upgradeHashSecurity)
 		throws PwdEncryptorException {
 
-		try {
-			if (upgradeHashSecurity) {
-				encryptedPassword = null;
-			}
-
-			PBKDF2EncryptionConfiguration pbkdf2EncryptionConfiguration =
-				new PBKDF2EncryptionConfiguration();
-
-			pbkdf2EncryptionConfiguration.configure(
-				algorithm, encryptedPassword);
-
-			PKCS5S2ParametersGenerator pkcs5S2ParametersGenerator =
-				new PKCS5S2ParametersGenerator(
-					pbkdf2EncryptionConfiguration.getDigest());
-
-			pkcs5S2ParametersGenerator.init(
-				plainTextPassword.getBytes(),
-				pbkdf2EncryptionConfiguration.getSaltBytes(),
-				pbkdf2EncryptionConfiguration.getRounds());
-
-			byte[] saltBytes = pbkdf2EncryptionConfiguration.getSaltBytes();
-
-			KeyParameter keyParameter =
-				(KeyParameter)
-					pkcs5S2ParametersGenerator.generateDerivedMacParameters(
-						pbkdf2EncryptionConfiguration.getKeySize());
-
-			byte[] secretKeyBytes = keyParameter.getKey();
-
-			ByteBuffer byteBuffer = ByteBuffer.allocate(
-				(2 * 4) + saltBytes.length + secretKeyBytes.length);
-
-			byteBuffer.putInt(pbkdf2EncryptionConfiguration.getKeySize());
-			byteBuffer.putInt(pbkdf2EncryptionConfiguration.getRounds());
-			byteBuffer.put(saltBytes);
-			byteBuffer.put(secretKeyBytes);
-
-			return Base64.encode(byteBuffer.array());
+		if (upgradeHashSecurity) {
+			encryptedPassword = null;
 		}
-		catch (Exception exception) {
-			throw new PwdEncryptorException(exception.getMessage(), exception);
-		}
+
+		PBKDF2EncryptionConfiguration pbkdf2EncryptionConfiguration =
+			new PBKDF2EncryptionConfiguration();
+
+		pbkdf2EncryptionConfiguration.configure(algorithm, encryptedPassword);
+
+		PKCS5S2ParametersGenerator pkcs5S2ParametersGenerator =
+			new PKCS5S2ParametersGenerator(
+				pbkdf2EncryptionConfiguration.getDigest());
+
+		pkcs5S2ParametersGenerator.init(
+			plainTextPassword.getBytes(),
+			pbkdf2EncryptionConfiguration.getSaltBytes(),
+			pbkdf2EncryptionConfiguration.getRounds());
+
+		byte[] saltBytes = pbkdf2EncryptionConfiguration.getSaltBytes();
+
+		KeyParameter keyParameter =
+			(KeyParameter)
+				pkcs5S2ParametersGenerator.generateDerivedMacParameters(
+					pbkdf2EncryptionConfiguration.getKeySize());
+
+		byte[] secretKeyBytes = keyParameter.getKey();
+
+		ByteBuffer byteBuffer = ByteBuffer.allocate(
+			(2 * 4) + saltBytes.length + secretKeyBytes.length);
+
+		byteBuffer.putInt(pbkdf2EncryptionConfiguration.getKeySize());
+		byteBuffer.putInt(pbkdf2EncryptionConfiguration.getRounds());
+		byteBuffer.put(saltBytes);
+		byteBuffer.put(secretKeyBytes);
+
+		return Base64.encode(byteBuffer.array());
 	}
 
 	@Override
@@ -162,7 +156,7 @@ public class PBKDF2PasswordEncryptor implements PasswordEncryptor {
 					byteBuffer.get(_saltBytes);
 				}
 				catch (BufferUnderflowException bufferUnderflowException) {
-					throw new PwdEncryptorException(
+					throw new PwdEncryptorException.InvalidEncryptedPwd(
 						"Unable to extract salt from encrypted password",
 						bufferUnderflowException);
 				}

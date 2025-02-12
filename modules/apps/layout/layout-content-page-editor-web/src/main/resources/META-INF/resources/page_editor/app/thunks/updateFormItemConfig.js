@@ -30,7 +30,6 @@ export default function updateFormItemConfig({fields, itemConfig, itemIds}) {
 			stepperFragmentEntryLinkId: stepper?.config.fragmentEntryLinkId,
 		}).then(
 			({
-				addedFragmentEntryLinks,
 				addedItemIds,
 				errorMessage,
 				fragmentEntryLinks,
@@ -40,7 +39,6 @@ export default function updateFormItemConfig({fields, itemConfig, itemIds}) {
 			}) => {
 				dispatch(
 					updateFormItemConfigAction({
-						addedFragmentEntryLinks,
 						addedItemIds,
 						fragmentEntryLinks,
 						isMapping,

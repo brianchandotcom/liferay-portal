@@ -95,28 +95,55 @@ public class GitHubDevSyncUtil {
 		List<String> gitHubDevRemoteURLs = getGitHubDevRemoteURLs(
 			gitWorkingDirectory);
 
-		List<GitRemote> gitHubDevGitRemotes = new ArrayList<>(
+		List<Callable<GitRemote>> callables = new ArrayList<>(
 			gitHubDevRemoteURLs.size());
 
-		for (String gitHubDevRemoteURL : gitHubDevRemoteURLs) {
-			String gitHubDevRemoteName =
-				"git-hub-dev-remote-" +
-					gitHubDevRemoteURLs.indexOf(gitHubDevRemoteURL);
+		for (final String gitHubDevRemoteURL : gitHubDevRemoteURLs) {
+			SafeCallable<GitRemote> callable = new SafeCallable<GitRemote>(
+				gitHubDevRemoteURL) {
 
-			GitRemote gitRemote = gitWorkingDirectory.getGitRemote(
-				gitHubDevRemoteName);
+				public GitRemote safeCall() {
+					try {
+						String gitHubDevRemoteName =
+							"git-hub-dev-remote-" +
+								gitHubDevRemoteURLs.indexOf(gitHubDevRemoteURL);
 
-			if ((gitRemote == null) ||
-				!gitHubDevRemoteURL.equals(gitRemote.getRemoteURL())) {
+						GitRemote gitRemote = gitWorkingDirectory.getGitRemote(
+							gitHubDevRemoteName);
 
-				gitRemote = gitWorkingDirectory.addGitRemote(
-					true, gitHubDevRemoteName, gitHubDevRemoteURL);
-			}
+						if ((gitRemote == null) ||
+							!gitHubDevRemoteURL.equals(
+								gitRemote.getRemoteURL())) {
 
-			gitHubDevGitRemotes.add(gitRemote);
+							gitRemote = gitWorkingDirectory.addGitRemote(
+								true, gitHubDevRemoteName, gitHubDevRemoteURL);
+						}
+
+						if (!gitRemote.isAvailable()) {
+							return null;
+						}
+
+						return gitRemote;
+					}
+					catch (Exception exception) {
+						return null;
+					}
+				}
+
+			};
+
+			callables.add(callable);
 		}
 
-		return gitHubDevGitRemotes;
+		ParallelExecutor<GitRemote> parallelExecutor = new ParallelExecutor<>(
+			callables, true, _threadPoolExecutor, "getGitHubDevGitRemotes");
+
+		try {
+			return parallelExecutor.execute(60L * 5L);
+		}
+		catch (TimeoutException timeoutException) {
+			throw new RuntimeException(timeoutException);
+		}
 	}
 
 	public static List<GitRemote> getGitRemotesWithBranch(

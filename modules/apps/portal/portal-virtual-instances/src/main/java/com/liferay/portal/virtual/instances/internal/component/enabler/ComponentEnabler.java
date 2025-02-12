@@ -18,7 +18,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Mariano Álvaro Sáiz
  */
 @Component(service = {})
-public class VirtualInstancesComponentEnabler {
+public class ComponentEnabler {
 
 	@Activate
 	protected void activate(ComponentContext componentContext) {

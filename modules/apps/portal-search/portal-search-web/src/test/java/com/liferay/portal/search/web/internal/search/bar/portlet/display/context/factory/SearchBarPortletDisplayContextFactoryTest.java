@@ -106,6 +106,37 @@ public class SearchBarPortletDisplayContextFactoryTest {
 	}
 
 	@Test
+	public void testDestinationFromUserGroupLayout() throws Exception {
+		String destination = RandomTestUtil.randomString();
+
+		Layout layout = Mockito.mock(Layout.class);
+
+		_whenLayoutLocalServiceFetchLayoutByFriendlyURLWithGroupId(
+			destination, layout);
+
+		String layoutFriendlyURL = RandomTestUtil.randomString();
+
+		_whenPortalGetLayoutFriendlyURL(layout, layoutFriendlyURL);
+
+		_whenUserLocalServiceFetchUserById();
+
+		SearchBarPortletDisplayContextFactory
+			searchBarPortletDisplayContextFactory =
+				_createSearchBarPortletDisplayContextFactory(destination);
+
+		SearchBarPortletDisplayContext searchBarPortletDisplayContext =
+			searchBarPortletDisplayContextFactory.create(
+				_portletPreferencesLookup, _portletSharedSearchRequest,
+				_searchBarPrecedenceHelper, _searchCapabilities);
+
+		Assert.assertEquals(
+			layoutFriendlyURL, searchBarPortletDisplayContext.getSearchURL());
+
+		Assert.assertFalse(
+			searchBarPortletDisplayContext.isDestinationUnreachable());
+	}
+
+	@Test
 	public void testDestinationNull() throws Exception {
 		SearchBarPortletDisplayContextFactory
 			searchBarPortletDisplayContextFactory =
@@ -179,37 +210,6 @@ public class SearchBarPortletDisplayContextFactoryTest {
 		String layoutFriendlyURL = RandomTestUtil.randomString();
 
 		_whenPortalGetLayoutFriendlyURL(layout, layoutFriendlyURL);
-
-		SearchBarPortletDisplayContextFactory
-			searchBarPortletDisplayContextFactory =
-				_createSearchBarPortletDisplayContextFactory(destination);
-
-		SearchBarPortletDisplayContext searchBarPortletDisplayContext =
-			searchBarPortletDisplayContextFactory.create(
-				_portletPreferencesLookup, _portletSharedSearchRequest,
-				_searchBarPrecedenceHelper, _searchCapabilities);
-
-		Assert.assertEquals(
-			layoutFriendlyURL, searchBarPortletDisplayContext.getSearchURL());
-
-		Assert.assertFalse(
-			searchBarPortletDisplayContext.isDestinationUnreachable());
-	}
-
-	@Test
-	public void testDestinationWithoutThemeDisplayUser() throws Exception {
-		String destination = RandomTestUtil.randomString();
-
-		Layout layout = Mockito.mock(Layout.class);
-
-		_whenLayoutLocalServiceFetchLayoutByFriendlyURLWithGroupId(
-			destination, layout);
-
-		String layoutFriendlyURL = RandomTestUtil.randomString();
-
-		_whenPortalGetLayoutFriendlyURL(layout, layoutFriendlyURL);
-
-		_whenUserLocalServiceFetchUserById();
 
 		SearchBarPortletDisplayContextFactory
 			searchBarPortletDisplayContextFactory =

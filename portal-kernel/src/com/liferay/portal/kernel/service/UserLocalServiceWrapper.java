@@ -1116,20 +1116,6 @@ public class UserLocalServiceWrapper
 	}
 
 	/**
-	 * Returns the user with the Google user ID.
-	 *
-	 * @param companyId the primary key of the user's company
-	 * @param googleUserId the user's Google user ID
-	 * @return the user with the Google user ID, or <code>null</code> if a user
-	 with the Google user ID could not be found
-	 */
-	@Override
-	public User fetchUserByGoogleUserId(long companyId, String googleUserId) {
-		return _userLocalService.fetchUserByGoogleUserId(
-			companyId, googleUserId);
-	}
-
-	/**
 	 * Returns the user with the primary key.
 	 *
 	 * @param userId the primary key of the user
@@ -1872,20 +1858,6 @@ public class UserLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _userLocalService.getUserByFacebookId(companyId, facebookId);
-	}
-
-	/**
-	 * Returns the user with the Google user ID.
-	 *
-	 * @param companyId the primary key of the user's company
-	 * @param googleUserId the user's Google user ID
-	 * @return the user with the Google user ID
-	 */
-	@Override
-	public User getUserByGoogleUserId(long companyId, String googleUserId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _userLocalService.getUserByGoogleUserId(companyId, googleUserId);
 	}
 
 	/**
@@ -2980,20 +2952,6 @@ public class UserLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _userLocalService.updateFacebookId(userId, facebookId);
-	}
-
-	/**
-	 * Updates the user's Google user ID.
-	 *
-	 * @param userId the primary key of the user
-	 * @param googleUserId the new Google user ID
-	 * @return the user
-	 */
-	@Override
-	public User updateGoogleUserId(long userId, String googleUserId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _userLocalService.updateGoogleUserId(userId, googleUserId);
 	}
 
 	/**

@@ -816,17 +816,6 @@ public interface UserLocalService
 	public User fetchUserByFacebookId(long companyId, long facebookId);
 
 	/**
-	 * Returns the user with the Google user ID.
-	 *
-	 * @param companyId the primary key of the user's company
-	 * @param googleUserId the user's Google user ID
-	 * @return the user with the Google user ID, or <code>null</code> if a user
-	 with the Google user ID could not be found
-	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public User fetchUserByGoogleUserId(long companyId, String googleUserId);
-
-	/**
 	 * Returns the user with the primary key.
 	 *
 	 * @param userId the primary key of the user
@@ -1365,17 +1354,6 @@ public interface UserLocalService
 	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public User getUserByFacebookId(long companyId, long facebookId)
-		throws PortalException;
-
-	/**
-	 * Returns the user with the Google user ID.
-	 *
-	 * @param companyId the primary key of the user's company
-	 * @param googleUserId the user's Google user ID
-	 * @return the user with the Google user ID
-	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public User getUserByGoogleUserId(long companyId, String googleUserId)
 		throws PortalException;
 
 	/**
@@ -2159,16 +2137,6 @@ public interface UserLocalService
 	 */
 	@Deprecated
 	public User updateFacebookId(long userId, long facebookId)
-		throws PortalException;
-
-	/**
-	 * Updates the user's Google user ID.
-	 *
-	 * @param userId the primary key of the user
-	 * @param googleUserId the new Google user ID
-	 * @return the user
-	 */
-	public User updateGoogleUserId(long userId, String googleUserId)
 		throws PortalException;
 
 	/**

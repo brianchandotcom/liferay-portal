@@ -1019,20 +1019,6 @@ public class UserLocalServiceUtil {
 	}
 
 	/**
-	 * Returns the user with the Google user ID.
-	 *
-	 * @param companyId the primary key of the user's company
-	 * @param googleUserId the user's Google user ID
-	 * @return the user with the Google user ID, or <code>null</code> if a user
-	 with the Google user ID could not be found
-	 */
-	public static User fetchUserByGoogleUserId(
-		long companyId, String googleUserId) {
-
-		return getService().fetchUserByGoogleUserId(companyId, googleUserId);
-	}
-
-	/**
 	 * Returns the user with the primary key.
 	 *
 	 * @param userId the primary key of the user
@@ -1689,20 +1675,6 @@ public class UserLocalServiceUtil {
 		throws PortalException {
 
 		return getService().getUserByFacebookId(companyId, facebookId);
-	}
-
-	/**
-	 * Returns the user with the Google user ID.
-	 *
-	 * @param companyId the primary key of the user's company
-	 * @param googleUserId the user's Google user ID
-	 * @return the user with the Google user ID
-	 */
-	public static User getUserByGoogleUserId(
-			long companyId, String googleUserId)
-		throws PortalException {
-
-		return getService().getUserByGoogleUserId(companyId, googleUserId);
 	}
 
 	/**
@@ -2705,19 +2677,6 @@ public class UserLocalServiceUtil {
 		throws PortalException {
 
 		return getService().updateFacebookId(userId, facebookId);
-	}
-
-	/**
-	 * Updates the user's Google user ID.
-	 *
-	 * @param userId the primary key of the user
-	 * @param googleUserId the new Google user ID
-	 * @return the user
-	 */
-	public static User updateGoogleUserId(long userId, String googleUserId)
-		throws PortalException {
-
-		return getService().updateGoogleUserId(userId, googleUserId);
 	}
 
 	/**

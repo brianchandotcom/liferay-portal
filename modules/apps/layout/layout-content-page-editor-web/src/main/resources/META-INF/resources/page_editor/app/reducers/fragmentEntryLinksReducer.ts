@@ -306,8 +306,8 @@ export default function fragmentEntryLinksReducer(
 
 		case UPDATE_FORM_ITEM_CONFIG: {
 			const newFragmentEntryLinks: FragmentEntryLinkMap =
-				action.addedFragmentEntryLinks
-					? {...fragmentEntryLinks, ...action.addedFragmentEntryLinks}
+				action.fragmentEntryLinks
+					? {...fragmentEntryLinks, ...action.fragmentEntryLinks}
 					: {...fragmentEntryLinks};
 
 			if (action.removedFragmentEntryLinkIds) {

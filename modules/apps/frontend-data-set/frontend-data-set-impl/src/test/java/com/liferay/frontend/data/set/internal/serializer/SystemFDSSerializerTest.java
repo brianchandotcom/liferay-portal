@@ -149,8 +149,8 @@ public class SystemFDSSerializerTest {
 
 		// Different resolvers
 
-		ServiceRegistration<FDSAPIURLResolver> fdsAPIURLServiceRegistration =
-			_registerFDSAPIURLResolver(
+		ServiceRegistration<FDSAPIURLResolver>
+			fdsAPIURLResolverServiceRegistration = _registerFDSAPIURLResolver(
 				"/app1", "schema", new String[] {"{foo}"},
 				new String[] {"bar"});
 		ServiceRegistration<SystemFDSEntry> systemFDSEntryServiceRegistration1 =
@@ -167,7 +167,7 @@ public class SystemFDSSerializerTest {
 			"/o/app2/endpoint/{foo}",
 			_fdsSerializer.serializeAPIURL("fdsName2", _httpServletRequest));
 
-		fdsAPIURLServiceRegistration.unregister();
+		fdsAPIURLResolverServiceRegistration.unregister();
 		systemFDSEntryServiceRegistration1.unregister();
 		systemFDSEntryServiceRegistration2.unregister();
 
@@ -195,7 +195,7 @@ public class SystemFDSSerializerTest {
 
 		// Resolver with interpolation
 
-		fdsAPIURLServiceRegistration = _registerFDSAPIURLResolver(
+		fdsAPIURLResolverServiceRegistration = _registerFDSAPIURLResolver(
 			"/app", "schema", new String[] {"{foo}"}, new String[] {"bar"});
 		systemFDSEntryServiceRegistration1 = _registerSystemFDSEntry(
 			"{foo}=3", "fdsName", "/app", "/endpoint/{foo}", "schema");
@@ -204,12 +204,12 @@ public class SystemFDSSerializerTest {
 			"/o/app/endpoint/bar?bar=3",
 			_fdsSerializer.serializeAPIURL("fdsName", _httpServletRequest));
 
-		fdsAPIURLServiceRegistration.unregister();
+		fdsAPIURLResolverServiceRegistration.unregister();
 		systemFDSEntryServiceRegistration1.unregister();
 
 		// Shared resolver
 
-		fdsAPIURLServiceRegistration = _registerFDSAPIURLResolver(
+		fdsAPIURLResolverServiceRegistration = _registerFDSAPIURLResolver(
 			"/app", "schema", new String[] {"{foo}"}, new String[] {"bar"});
 		systemFDSEntryServiceRegistration1 = _registerSystemFDSEntry(
 			null, "fdsName1", "/app", "/endpoint/{foo}", "schema");
@@ -223,7 +223,7 @@ public class SystemFDSSerializerTest {
 			"/o/app/endpoint/bar",
 			_fdsSerializer.serializeAPIURL("fdsName2", _httpServletRequest));
 
-		fdsAPIURLServiceRegistration.unregister();
+		fdsAPIURLResolverServiceRegistration.unregister();
 		systemFDSEntryServiceRegistration1.unregister();
 		systemFDSEntryServiceRegistration2.unregister();
 
@@ -262,7 +262,7 @@ public class SystemFDSSerializerTest {
 					null, "trash", "delete", "delete", "delete", "delete",
 					"headless"));
 
-		ServiceRegistration<FDSBulkActions> bulkActionsServiceRegistration1 =
+		ServiceRegistration<FDSBulkActions> fdsBulkActionsServiceRegistration1 =
 			_registerFDSBulkActions(fdsActionDropdownItems1, "fdsName1");
 
 		Assert.assertEquals(
@@ -280,7 +280,7 @@ public class SystemFDSSerializerTest {
 					null, "cog", "permissions", "permissions", "get",
 					"permissions", "modal-permissions"));
 
-		ServiceRegistration<FDSBulkActions> bulkActionsServiceRegistration2 =
+		ServiceRegistration<FDSBulkActions> fdsBulkActionsServiceRegistration2 =
 			_registerFDSBulkActions(fdsActionDropdownItems2, "fdsName2");
 
 		Assert.assertEquals(
@@ -294,8 +294,8 @@ public class SystemFDSSerializerTest {
 			_fdsSerializer.serializeBulkActions(
 				"fdsName2", _httpServletRequest));
 
-		bulkActionsServiceRegistration1.unregister();
-		bulkActionsServiceRegistration2.unregister();
+		fdsBulkActionsServiceRegistration1.unregister();
+		fdsBulkActionsServiceRegistration2.unregister();
 		systemFDSEntryServiceRegistration1.unregister();
 		systemFDSEntryServiceRegistration2.unregister();
 
@@ -323,9 +323,9 @@ public class SystemFDSSerializerTest {
 				null, "trash", "delete", "delete", "delete", "delete",
 				"headless"));
 
-		bulkActionsServiceRegistration1 = _registerFDSBulkActions(
+		fdsBulkActionsServiceRegistration1 = _registerFDSBulkActions(
 			fdsActionDropdownItems1, "fdsName1");
-		bulkActionsServiceRegistration2 = _registerFDSBulkActions(
+		fdsBulkActionsServiceRegistration2 = _registerFDSBulkActions(
 			fdsActionDropdownItems1, "fdsName2");
 
 		Assert.assertEquals(
@@ -334,8 +334,8 @@ public class SystemFDSSerializerTest {
 			_fdsSerializer.serializeBulkActions(
 				"fdsName2", _httpServletRequest));
 
-		bulkActionsServiceRegistration1.unregister();
-		bulkActionsServiceRegistration2.unregister();
+		fdsBulkActionsServiceRegistration1.unregister();
+		fdsBulkActionsServiceRegistration2.unregister();
 		systemFDSEntryServiceRegistration1.unregister();
 		systemFDSEntryServiceRegistration2.unregister();
 
@@ -375,8 +375,9 @@ public class SystemFDSSerializerTest {
 			).build()
 		).build();
 
-		ServiceRegistration<FDSCreationMenu> creationMenuServiceRegistration1 =
-			_registerFDSCreationMenu(creationMenu1, "fdsName1");
+		ServiceRegistration<FDSCreationMenu>
+			fdsCreationMenuServiceRegistration1 = _registerFDSCreationMenu(
+				creationMenu1, "fdsName1");
 
 		Assert.assertEquals(
 			creationMenu1,
@@ -393,8 +394,9 @@ public class SystemFDSSerializerTest {
 			).build()
 		).build();
 
-		ServiceRegistration<FDSCreationMenu> creationMenuServiceRegistration2 =
-			_registerFDSCreationMenu(creationMenu2, "fdsName2");
+		ServiceRegistration<FDSCreationMenu>
+			fdsCreationMenuServiceRegistration2 = _registerFDSCreationMenu(
+				creationMenu2, "fdsName2");
 
 		Assert.assertEquals(
 			creationMenu2,
@@ -407,8 +409,8 @@ public class SystemFDSSerializerTest {
 			_fdsSerializer.serializeCreationMenu(
 				"fdsName2", _httpServletRequest));
 
-		creationMenuServiceRegistration1.unregister();
-		creationMenuServiceRegistration2.unregister();
+		fdsCreationMenuServiceRegistration1.unregister();
+		fdsCreationMenuServiceRegistration2.unregister();
 		systemFDSEntryServiceRegistration1.unregister();
 		systemFDSEntryServiceRegistration2.unregister();
 
@@ -437,9 +439,9 @@ public class SystemFDSSerializerTest {
 			).build()
 		).build();
 
-		creationMenuServiceRegistration1 = _registerFDSCreationMenu(
+		fdsCreationMenuServiceRegistration1 = _registerFDSCreationMenu(
 			creationMenu1, "fdsName1");
-		creationMenuServiceRegistration2 = _registerFDSCreationMenu(
+		fdsCreationMenuServiceRegistration2 = _registerFDSCreationMenu(
 			creationMenu1, "fdsName2");
 
 		Assert.assertEquals(
@@ -448,8 +450,8 @@ public class SystemFDSSerializerTest {
 			_fdsSerializer.serializeCreationMenu(
 				"fdsName2", _httpServletRequest));
 
-		creationMenuServiceRegistration1.unregister();
-		creationMenuServiceRegistration2.unregister();
+		fdsCreationMenuServiceRegistration1.unregister();
+		fdsCreationMenuServiceRegistration2.unregister();
 		systemFDSEntryServiceRegistration1.unregister();
 		systemFDSEntryServiceRegistration2.unregister();
 
@@ -533,30 +535,6 @@ public class SystemFDSSerializerTest {
 		ReflectionTestUtil.setFieldValue(
 			selectionFDSFilterContextContributor, "_language", language);
 
-		ServiceRegistration<FDSFilterContextContributor>
-			clientExtensionFDSFilterContextContributorServiceRegistration =
-				_bundleContext.registerService(
-					FDSFilterContextContributor.class,
-					new ClientExtensionFDSFilterContextContributor(),
-					MapUtil.singletonDictionary(
-						"frontend.data.set.filter.type", "clientExtension"));
-
-		ServiceRegistration<FDSFilterContextContributor>
-			dateRangeFDSFilterContextContributorServiceRegistration =
-				_bundleContext.registerService(
-					FDSFilterContextContributor.class,
-					dateRangeFDSFilterContextContributor,
-					MapUtil.singletonDictionary(
-						"frontend.data.set.filter.type", "dateRange"));
-
-		ServiceRegistration<FDSFilterContextContributor>
-			selectionFDSFilterContextContributorServiceRegistration =
-				_bundleContext.registerService(
-					FDSFilterContextContributor.class,
-					selectionFDSFilterContextContributor,
-					MapUtil.singletonDictionary(
-						"frontend.data.set.filter.type", "selection"));
-
 		ResourceBundleLoader resourceBundleLoader = Mockito.mock(
 			ResourceBundleLoader.class);
 
@@ -601,6 +579,14 @@ public class SystemFDSSerializerTest {
 		);
 
 		// Client extension filter
+
+		ServiceRegistration<FDSFilterContextContributor>
+			clientExtensionFDSFilterContextContributorServiceRegistration =
+				_bundleContext.registerService(
+					FDSFilterContextContributor.class,
+					new ClientExtensionFDSFilterContextContributor(),
+					MapUtil.singletonDictionary(
+						"frontend.data.set.filter.type", "clientExtension"));
 
 		ServiceRegistration<SystemFDSEntry> systemFDSEntryServiceRegistration1 =
 			_registerSystemFDSEntry(
@@ -663,9 +649,20 @@ public class SystemFDSSerializerTest {
 
 		clientExtensionFDSFilterServiceRegistration.unregister();
 
+		clientExtensionFDSFilterContextContributorServiceRegistration.
+			unregister();
+
 		systemFDSEntryServiceRegistration1.unregister();
 
 		// Date range filter
+
+		ServiceRegistration<FDSFilterContextContributor>
+			dateRangeFDSFilterContextContributorServiceRegistration =
+				_bundleContext.registerService(
+					FDSFilterContextContributor.class,
+					dateRangeFDSFilterContextContributor,
+					MapUtil.singletonDictionary(
+						"frontend.data.set.filter.type", "dateRange"));
 
 		systemFDSEntryServiceRegistration1 = _registerSystemFDSEntry(
 			null, "fdsName", "/app", "/endpoint", "schema");
@@ -911,6 +908,14 @@ public class SystemFDSSerializerTest {
 
 		// Selection filter, with API URL
 
+		ServiceRegistration<FDSFilterContextContributor>
+			selectionFDSFilterContextContributorServiceRegistration =
+				_bundleContext.registerService(
+					FDSFilterContextContributor.class,
+					selectionFDSFilterContextContributor,
+					MapUtil.singletonDictionary(
+						"frontend.data.set.filter.type", "selection"));
+
 		systemFDSEntryServiceRegistration1 = _registerSystemFDSEntry(
 			null, "fdsName", "/app", "/endpoint", "schema");
 
@@ -1106,6 +1111,8 @@ public class SystemFDSSerializerTest {
 			).toString(),
 			JSONCompareMode.STRICT);
 
+		selectionFDSFilterContextContributorServiceRegistration.unregister();
+
 		selectionFDSFilterServiceRegistration.unregister();
 
 		systemFDSEntryServiceRegistration1.unregister();
@@ -1145,11 +1152,9 @@ public class SystemFDSSerializerTest {
 
 		systemFDSEntryServiceRegistration2.unregister();
 
-		clientExtensionFDSFilterContextContributorServiceRegistration.
-			unregister();
 		dateRangeFDSFilterContextContributorServiceRegistration.unregister();
-		selectionFDSFilterContextContributorServiceRegistration.unregister();
 
+		fdsFilterContextContributorServiceTrackerMap.close();
 		fdsFilterServiceTrackerMap.close();
 	}
 
@@ -1186,8 +1191,9 @@ public class SystemFDSSerializerTest {
 					null, "trash", "delete", "delete", "delete", "delete",
 					"headless"));
 
-		ServiceRegistration<FDSItemsActions> itemsActionsServiceRegistration1 =
-			_registerFDSItemsActions(fdsActionDropdownItems1, "fdsName1");
+		ServiceRegistration<FDSItemsActions>
+			fdsItemsActionsServiceRegistration1 = _registerFDSItemsActions(
+				fdsActionDropdownItems1, "fdsName1");
 
 		Assert.assertEquals(
 			fdsActionDropdownItems1,
@@ -1204,8 +1210,9 @@ public class SystemFDSSerializerTest {
 					null, "cog", "permissions", "permissions", "get",
 					"permissions", "modal-permissions"));
 
-		ServiceRegistration<FDSItemsActions> itemsActionsServiceRegistration2 =
-			_registerFDSItemsActions(fdsActionDropdownItems2, "fdsName2");
+		ServiceRegistration<FDSItemsActions>
+			fdsItemsActionsServiceRegistration2 = _registerFDSItemsActions(
+				fdsActionDropdownItems2, "fdsName2");
 
 		Assert.assertEquals(
 			fdsActionDropdownItems2,
@@ -1218,8 +1225,8 @@ public class SystemFDSSerializerTest {
 			_fdsSerializer.serializeItemsActions(
 				"fdsName2", _httpServletRequest));
 
-		itemsActionsServiceRegistration1.unregister();
-		itemsActionsServiceRegistration2.unregister();
+		fdsItemsActionsServiceRegistration1.unregister();
+		fdsItemsActionsServiceRegistration2.unregister();
 		systemFDSEntryServiceRegistration1.unregister();
 		systemFDSEntryServiceRegistration2.unregister();
 
@@ -1247,9 +1254,9 @@ public class SystemFDSSerializerTest {
 				null, "trash", "delete", "delete", "delete", "delete",
 				"headless"));
 
-		itemsActionsServiceRegistration1 = _registerFDSItemsActions(
+		fdsItemsActionsServiceRegistration1 = _registerFDSItemsActions(
 			fdsActionDropdownItems1, "fdsName1");
-		itemsActionsServiceRegistration2 = _registerFDSItemsActions(
+		fdsItemsActionsServiceRegistration2 = _registerFDSItemsActions(
 			fdsActionDropdownItems1, "fdsName2");
 
 		Assert.assertEquals(
@@ -1258,8 +1265,8 @@ public class SystemFDSSerializerTest {
 			_fdsSerializer.serializeItemsActions(
 				"fdsName2", _httpServletRequest));
 
-		itemsActionsServiceRegistration1.unregister();
-		itemsActionsServiceRegistration2.unregister();
+		fdsItemsActionsServiceRegistration1.unregister();
+		fdsItemsActionsServiceRegistration2.unregister();
 		systemFDSEntryServiceRegistration1.unregister();
 		systemFDSEntryServiceRegistration2.unregister();
 

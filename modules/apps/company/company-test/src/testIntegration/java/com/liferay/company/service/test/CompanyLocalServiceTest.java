@@ -26,6 +26,7 @@ import com.liferay.layout.friendly.url.LayoutFriendlyURLEntryHelper;
 import com.liferay.layout.set.model.adapter.StagedLayoutSet;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.db.partition.util.DBPartitionUtil;
 import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -489,9 +490,7 @@ public class CompanyLocalServiceTest {
 					counterFinder, "_counterRegisterMap");
 
 			counterRegisterMap.remove(
-				ReflectionTestUtil.invoke(
-					counterFinder, "_encodeKey", new Class<?>[] {String.class},
-					Company.class.getName()));
+				DBPartitionUtil.getPartitionKey(Company.class.getName()));
 
 			String webId2 = RandomTestUtil.randomString() + "test.com";
 

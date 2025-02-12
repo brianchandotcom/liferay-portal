@@ -19,6 +19,7 @@
 				<action-key>ADD_REPOSITORY</action-key>
 				<action-key>ADD_SHORTCUT</action-key>
 				<action-key>ADD_STRUCTURE</action-key>
+				<action-key>ADVANCE_UPDATE</action-key>
 				<action-key>PERMISSIONS</action-key>
 				<action-key>SUBSCRIBE</action-key>
 				<action-key>UPDATE</action-key>
@@ -41,6 +42,7 @@
 				<action-key>ADD_REPOSITORY</action-key>
 				<action-key>ADD_SHORTCUT</action-key>
 				<action-key>ADD_STRUCTURE</action-key>
+				<action-key>ADVANCE_UPDATE</action-key>
 				<action-key>PERMISSIONS</action-key>
 				<action-key>SUBSCRIBE</action-key>
 				<action-key>UPDATE</action-key>

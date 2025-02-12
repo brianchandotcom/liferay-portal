@@ -15,10 +15,10 @@ public class CMSSiteInitializerConstants {
 
 	public static final String
 		CONTENT_OBJECT_ENTRY_FOLDER_EXTERNAL_REFERENCE_CODE =
-			"ea251ac8-e3c4-11ef-8b1b-7070fc01ae5e";
+			"L_CONTENT_OBJECT_ENTRY_FOLDER";
 
 	public static final String
 		FILES_OBJECT_ENTRY_FOLDER_EXTERNAL_REFERENCE_CODE =
-			"07b8bbe4-e3c5-11ef-ad6a-7070fc01ae5e";
+			"L_FILES_OBJECT_ENTRY_FOLDER";
 
 }

@@ -36,7 +36,7 @@
 			"enableLocalization": true,
 			"enableObjectEntryDraft": true,
 			"enableObjectEntryHistory": true,
-			"externalReferenceCode": "6f996152-4147-b444-7284-2ae839234de1",
+			"externalReferenceCode": "L_BASIC_DOCUMENT",
 			"label": {
 				"en_US": "Basic Document"
 			},
@@ -246,7 +246,7 @@
 					"unique": false
 				}
 			],
-			"objectFolderExternalReferenceCode": "8a5269c6-79b0-b741-ed1a-4cf13c4560e0",
+			"objectFolderExternalReferenceCode": "L_CMS_FILES",
 			"objectLayouts": [
 			],
 			"objectRelationships": [
@@ -293,7 +293,7 @@
 			"enableLocalization": true,
 			"enableObjectEntryDraft": true,
 			"enableObjectEntryHistory": true,
-			"externalReferenceCode": "e42820e4-28f7-fcc5-cd40-07f6717174d2",
+			"externalReferenceCode": "L_BASIC_WEB_CONTENT",
 			"label": {
 				"en_US": "Basic Web Content"
 			},
@@ -487,7 +487,7 @@
 					"unique": false
 				}
 			],
-			"objectFolderExternalReferenceCode": "a0166c3c-6c8a-74a4-2d43-dba2e5577c40",
+			"objectFolderExternalReferenceCode": "L_CMS_CONTENT",
 			"objectLayouts": [
 			],
 			"objectRelationships": [

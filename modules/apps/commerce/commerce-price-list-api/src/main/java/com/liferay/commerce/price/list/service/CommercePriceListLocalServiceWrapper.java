@@ -613,14 +613,14 @@ public class CommercePriceListLocalServiceWrapper
 	public CommercePriceList getCommercePriceListByLowestPrice(
 			long groupId, long commerceAccountId,
 			long[] commerceAccountGroupIds, long commerceChannelId,
-			long commerceOrderTypeId, String cPInstanceUuid, String type,
-			String unitOfMeasureKey)
+			long commerceOrderTypeId, String cpInstanceUuid,
+			String currencyCode, String type, String unitOfMeasureKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commercePriceListLocalService.getCommercePriceListByLowestPrice(
 			groupId, commerceAccountId, commerceAccountGroupIds,
-			commerceChannelId, commerceOrderTypeId, cPInstanceUuid, type,
-			unitOfMeasureKey);
+			commerceChannelId, commerceOrderTypeId, cpInstanceUuid,
+			currencyCode, type, unitOfMeasureKey);
 	}
 
 	/**
@@ -712,122 +712,132 @@ public class CommercePriceListLocalServiceWrapper
 	public java.util.List<CommercePriceList>
 		getCommercePriceListsByAccountAndChannelAndOrderTypeId(
 			long groupId, long commerceAccountId, long commerceChannelId,
-			long commerceOrderTypeId, String type) {
+			long commerceOrderTypeId, String currencyCode, String type) {
 
 		return _commercePriceListLocalService.
 			getCommercePriceListsByAccountAndChannelAndOrderTypeId(
 				groupId, commerceAccountId, commerceChannelId,
-				commerceOrderTypeId, type);
+				commerceOrderTypeId, currencyCode, type);
 	}
 
 	@Override
 	public java.util.List<CommercePriceList>
 		getCommercePriceListsByAccountAndChannelId(
 			long groupId, long commerceAccountId, long commerceChannelId,
-			String type) {
+			String currencyCode, String type) {
 
 		return _commercePriceListLocalService.
 			getCommercePriceListsByAccountAndChannelId(
-				groupId, commerceAccountId, commerceChannelId, type);
+				groupId, commerceAccountId, commerceChannelId, currencyCode,
+				type);
 	}
 
 	@Override
 	public java.util.List<CommercePriceList>
 		getCommercePriceListsByAccountAndOrderTypeId(
 			long groupId, long commerceAccountId, long commerceOrderTypeId,
-			String type) {
+			String currencyCode, String type) {
 
 		return _commercePriceListLocalService.
 			getCommercePriceListsByAccountAndOrderTypeId(
-				groupId, commerceAccountId, commerceOrderTypeId, type);
+				groupId, commerceAccountId, commerceOrderTypeId, currencyCode,
+				type);
 	}
 
 	@Override
 	public java.util.List<CommercePriceList>
 		getCommercePriceListsByAccountGroupIds(
-			long groupId, long[] commerceAccountGroupIds, String type) {
+			long groupId, long[] commerceAccountGroupIds, String currencyCode,
+			String type) {
 
 		return _commercePriceListLocalService.
 			getCommercePriceListsByAccountGroupIds(
-				groupId, commerceAccountGroupIds, type);
+				groupId, commerceAccountGroupIds, currencyCode, type);
 	}
 
 	@Override
 	public java.util.List<CommercePriceList>
 		getCommercePriceListsByAccountGroupsAndChannelAndOrderTypeId(
 			long groupId, long[] commerceAccountGroupIds,
-			long commerceChannelId, long commerceOrderTypeId, String type) {
+			long commerceChannelId, long commerceOrderTypeId,
+			String currencyCode, String type) {
 
 		return _commercePriceListLocalService.
 			getCommercePriceListsByAccountGroupsAndChannelAndOrderTypeId(
 				groupId, commerceAccountGroupIds, commerceChannelId,
-				commerceOrderTypeId, type);
+				commerceOrderTypeId, currencyCode, type);
 	}
 
 	@Override
 	public java.util.List<CommercePriceList>
 		getCommercePriceListsByAccountGroupsAndChannelId(
 			long groupId, long[] commerceAccountGroupIds,
-			long commerceChannelId, String type) {
+			long commerceChannelId, String currencyCode, String type) {
 
 		return _commercePriceListLocalService.
 			getCommercePriceListsByAccountGroupsAndChannelId(
-				groupId, commerceAccountGroupIds, commerceChannelId, type);
+				groupId, commerceAccountGroupIds, commerceChannelId,
+				currencyCode, type);
 	}
 
 	@Override
 	public java.util.List<CommercePriceList>
 		getCommercePriceListsByAccountGroupsAndOrderTypeId(
 			long groupId, long[] commerceAccountGroupIds,
-			long commerceOrderTypeId, String type) {
+			long commerceOrderTypeId, String currencyCode, String type) {
 
 		return _commercePriceListLocalService.
 			getCommercePriceListsByAccountGroupsAndOrderTypeId(
-				groupId, commerceAccountGroupIds, commerceOrderTypeId, type);
+				groupId, commerceAccountGroupIds, commerceOrderTypeId,
+				currencyCode, type);
 	}
 
 	@Override
 	public java.util.List<CommercePriceList> getCommercePriceListsByAccountId(
-		long groupId, long commerceAccountId, String type) {
+		long groupId, long commerceAccountId, String currencyCode,
+		String type) {
 
 		return _commercePriceListLocalService.getCommercePriceListsByAccountId(
-			groupId, commerceAccountId, type);
+			groupId, commerceAccountId, currencyCode, type);
 	}
 
 	@Override
 	public java.util.List<CommercePriceList>
 		getCommercePriceListsByChannelAndOrderTypeId(
 			long groupId, long commerceChannelId, long commerceOrderTypeId,
-			String type) {
+			String currencyCode, String type) {
 
 		return _commercePriceListLocalService.
 			getCommercePriceListsByChannelAndOrderTypeId(
-				groupId, commerceChannelId, commerceOrderTypeId, type);
+				groupId, commerceChannelId, commerceOrderTypeId, currencyCode,
+				type);
 	}
 
 	@Override
 	public java.util.List<CommercePriceList> getCommercePriceListsByChannelId(
-		long groupId, long commerceChannelId, String type) {
+		long groupId, long commerceChannelId, String currencyCode,
+		String type) {
 
 		return _commercePriceListLocalService.getCommercePriceListsByChannelId(
-			groupId, commerceChannelId, type);
+			groupId, commerceChannelId, currencyCode, type);
 	}
 
 	@Override
 	public java.util.List<CommercePriceList> getCommercePriceListsByOrderTypeId(
-		long groupId, long commerceOrderTypeId, String type) {
+		long groupId, long commerceOrderTypeId, String currencyCode,
+		String type) {
 
 		return _commercePriceListLocalService.
 			getCommercePriceListsByOrderTypeId(
-				groupId, commerceOrderTypeId, type);
+				groupId, commerceOrderTypeId, currencyCode, type);
 	}
 
 	@Override
 	public java.util.List<CommercePriceList> getCommercePriceListsByUnqualified(
-		long groupId, String type) {
+		long groupId, String currencyCode, String type) {
 
 		return _commercePriceListLocalService.
-			getCommercePriceListsByUnqualified(groupId, type);
+			getCommercePriceListsByUnqualified(groupId, currencyCode, type);
 	}
 
 	/**

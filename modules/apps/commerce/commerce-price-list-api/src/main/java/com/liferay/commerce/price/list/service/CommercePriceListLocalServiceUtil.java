@@ -551,14 +551,14 @@ public class CommercePriceListLocalServiceUtil {
 	public static CommercePriceList getCommercePriceListByLowestPrice(
 			long groupId, long commerceAccountId,
 			long[] commerceAccountGroupIds, long commerceChannelId,
-			long commerceOrderTypeId, String cPInstanceUuid, String type,
-			String unitOfMeasureKey)
+			long commerceOrderTypeId, String cpInstanceUuid,
+			String currencyCode, String type, String unitOfMeasureKey)
 		throws PortalException {
 
 		return getService().getCommercePriceListByLowestPrice(
 			groupId, commerceAccountId, commerceAccountGroupIds,
-			commerceChannelId, commerceOrderTypeId, cPInstanceUuid, type,
-			unitOfMeasureKey);
+			commerceChannelId, commerceOrderTypeId, cpInstanceUuid,
+			currencyCode, type, unitOfMeasureKey);
 	}
 
 	/**
@@ -638,103 +638,113 @@ public class CommercePriceListLocalServiceUtil {
 	public static List<CommercePriceList>
 		getCommercePriceListsByAccountAndChannelAndOrderTypeId(
 			long groupId, long commerceAccountId, long commerceChannelId,
-			long commerceOrderTypeId, String type) {
+			long commerceOrderTypeId, String currencyCode, String type) {
 
 		return getService().
 			getCommercePriceListsByAccountAndChannelAndOrderTypeId(
 				groupId, commerceAccountId, commerceChannelId,
-				commerceOrderTypeId, type);
+				commerceOrderTypeId, currencyCode, type);
 	}
 
 	public static List<CommercePriceList>
 		getCommercePriceListsByAccountAndChannelId(
 			long groupId, long commerceAccountId, long commerceChannelId,
-			String type) {
+			String currencyCode, String type) {
 
 		return getService().getCommercePriceListsByAccountAndChannelId(
-			groupId, commerceAccountId, commerceChannelId, type);
+			groupId, commerceAccountId, commerceChannelId, currencyCode, type);
 	}
 
 	public static List<CommercePriceList>
 		getCommercePriceListsByAccountAndOrderTypeId(
 			long groupId, long commerceAccountId, long commerceOrderTypeId,
-			String type) {
+			String currencyCode, String type) {
 
 		return getService().getCommercePriceListsByAccountAndOrderTypeId(
-			groupId, commerceAccountId, commerceOrderTypeId, type);
+			groupId, commerceAccountId, commerceOrderTypeId, currencyCode,
+			type);
 	}
 
 	public static List<CommercePriceList>
 		getCommercePriceListsByAccountGroupIds(
-			long groupId, long[] commerceAccountGroupIds, String type) {
+			long groupId, long[] commerceAccountGroupIds, String currencyCode,
+			String type) {
 
 		return getService().getCommercePriceListsByAccountGroupIds(
-			groupId, commerceAccountGroupIds, type);
+			groupId, commerceAccountGroupIds, currencyCode, type);
 	}
 
 	public static List<CommercePriceList>
 		getCommercePriceListsByAccountGroupsAndChannelAndOrderTypeId(
 			long groupId, long[] commerceAccountGroupIds,
-			long commerceChannelId, long commerceOrderTypeId, String type) {
+			long commerceChannelId, long commerceOrderTypeId,
+			String currencyCode, String type) {
 
 		return getService().
 			getCommercePriceListsByAccountGroupsAndChannelAndOrderTypeId(
 				groupId, commerceAccountGroupIds, commerceChannelId,
-				commerceOrderTypeId, type);
+				commerceOrderTypeId, currencyCode, type);
 	}
 
 	public static List<CommercePriceList>
 		getCommercePriceListsByAccountGroupsAndChannelId(
 			long groupId, long[] commerceAccountGroupIds,
-			long commerceChannelId, String type) {
+			long commerceChannelId, String currencyCode, String type) {
 
 		return getService().getCommercePriceListsByAccountGroupsAndChannelId(
-			groupId, commerceAccountGroupIds, commerceChannelId, type);
+			groupId, commerceAccountGroupIds, commerceChannelId, currencyCode,
+			type);
 	}
 
 	public static List<CommercePriceList>
 		getCommercePriceListsByAccountGroupsAndOrderTypeId(
 			long groupId, long[] commerceAccountGroupIds,
-			long commerceOrderTypeId, String type) {
+			long commerceOrderTypeId, String currencyCode, String type) {
 
 		return getService().getCommercePriceListsByAccountGroupsAndOrderTypeId(
-			groupId, commerceAccountGroupIds, commerceOrderTypeId, type);
+			groupId, commerceAccountGroupIds, commerceOrderTypeId, currencyCode,
+			type);
 	}
 
 	public static List<CommercePriceList> getCommercePriceListsByAccountId(
-		long groupId, long commerceAccountId, String type) {
+		long groupId, long commerceAccountId, String currencyCode,
+		String type) {
 
 		return getService().getCommercePriceListsByAccountId(
-			groupId, commerceAccountId, type);
+			groupId, commerceAccountId, currencyCode, type);
 	}
 
 	public static List<CommercePriceList>
 		getCommercePriceListsByChannelAndOrderTypeId(
 			long groupId, long commerceChannelId, long commerceOrderTypeId,
-			String type) {
+			String currencyCode, String type) {
 
 		return getService().getCommercePriceListsByChannelAndOrderTypeId(
-			groupId, commerceChannelId, commerceOrderTypeId, type);
+			groupId, commerceChannelId, commerceOrderTypeId, currencyCode,
+			type);
 	}
 
 	public static List<CommercePriceList> getCommercePriceListsByChannelId(
-		long groupId, long commerceChannelId, String type) {
+		long groupId, long commerceChannelId, String currencyCode,
+		String type) {
 
 		return getService().getCommercePriceListsByChannelId(
-			groupId, commerceChannelId, type);
+			groupId, commerceChannelId, currencyCode, type);
 	}
 
 	public static List<CommercePriceList> getCommercePriceListsByOrderTypeId(
-		long groupId, long commerceOrderTypeId, String type) {
+		long groupId, long commerceOrderTypeId, String currencyCode,
+		String type) {
 
 		return getService().getCommercePriceListsByOrderTypeId(
-			groupId, commerceOrderTypeId, type);
+			groupId, commerceOrderTypeId, currencyCode, type);
 	}
 
 	public static List<CommercePriceList> getCommercePriceListsByUnqualified(
-		long groupId, String type) {
+		long groupId, String currencyCode, String type) {
 
-		return getService().getCommercePriceListsByUnqualified(groupId, type);
+		return getService().getCommercePriceListsByUnqualified(
+			groupId, currencyCode, type);
 	}
 
 	/**

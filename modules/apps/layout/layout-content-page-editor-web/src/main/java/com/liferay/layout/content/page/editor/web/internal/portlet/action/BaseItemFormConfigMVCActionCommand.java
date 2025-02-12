@@ -58,28 +58,23 @@ public abstract class BaseItemFormConfigMVCActionCommand
 					addedFragmentEntryLink.getFragmentEntryLinkId()));
 		}
 
+		if (stepperFragmentEntryLink != null) {
+			addedFragmentEntryLinksJSONObject.put(
+				String.valueOf(
+					stepperFragmentEntryLink.getFragmentEntryLinkId()),
+				fragmentEntryLinkManager.getFragmentEntryLinkJSONObject(
+					stepperFragmentEntryLink, httpServletRequest,
+					httpServletResponse, layoutStructure));
+		}
+
 		return jsonObject.put(
-			"addedFragmentEntryLinks", addedFragmentEntryLinksJSONObject
-		).put(
 			"addedItemIds",
 			jsonFactory.createJSONArray(
 				TransformUtil.transform(
 					layoutStructureItemChanges.getAddedLayoutStructureItems(),
 					LayoutStructureItem::getItemId))
 		).put(
-			"fragmentEntryLinks",
-			() -> {
-				if (stepperFragmentEntryLink == null) {
-					return null;
-				}
-
-				return JSONUtil.put(
-					String.valueOf(
-						stepperFragmentEntryLink.getFragmentEntryLinkId()),
-					fragmentEntryLinkManager.getFragmentEntryLinkJSONObject(
-						stepperFragmentEntryLink, httpServletRequest,
-						httpServletResponse, layoutStructure));
-			}
+			"fragmentEntryLinks", addedFragmentEntryLinksJSONObject
 		).put(
 			"layoutData", layoutStructure.toJSONObject()
 		).put(

@@ -122,14 +122,15 @@ public class UriInfoUtil {
 			@Override
 			public URI getBaseUri() {
 				UriBuilder uriBuilder = UriInfoUtil.getBaseUriBuilder(
-					applicationPath, uriInfo);
+					_applicationPath + StringPool.SLASH, _uriInfo);
 
 				return uriBuilder.build();
 			}
 
 			@Override
 			public UriBuilder getBaseUriBuilder() {
-				return UriInfoUtil.getBaseUriBuilder(applicationPath, uriInfo);
+				return UriInfoUtil.getBaseUriBuilder(
+					_applicationPath + StringPool.SLASH, _uriInfo);
 			}
 
 			@Override
@@ -209,6 +210,7 @@ public class UriInfoUtil {
 				return _uriInfo.resolve(uri);
 			}
 
+			private final String _applicationPath = applicationPath;
 			private final UriInfo _uriInfo = uriInfo;
 
 		};

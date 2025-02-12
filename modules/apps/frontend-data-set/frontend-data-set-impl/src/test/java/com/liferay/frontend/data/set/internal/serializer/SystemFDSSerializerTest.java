@@ -457,7 +457,7 @@ public class SystemFDSSerializerTest {
 		ServiceTrackerMap
 			<String,
 			 List<ServiceTrackerCustomizerFactory.ServiceWrapper<FDSFilter>>>
-				filterServiceTrackerMap =
+				fdsFilterServiceTrackerMap =
 					ServiceTrackerMapFactory.openMultiValueMap(
 						_bundleContext, FDSFilter.class,
 						"frontend.data.set.name",
@@ -469,7 +469,7 @@ public class SystemFDSSerializerTest {
 			 List
 				 <ServiceTrackerCustomizerFactory.ServiceWrapper
 					 <FDSFilterContextContributor>>>
-						filterContextContributorServiceTrackerMap =
+						fdsFilterContextContributorServiceTrackerMap =
 							ServiceTrackerMapFactory.openMultiValueMap(
 								_bundleContext,
 								FDSFilterContextContributor.class,
@@ -481,7 +481,8 @@ public class SystemFDSSerializerTest {
 		FDSFilterRegistry fdsFilterRegistry = new FDSFilterRegistryImpl();
 
 		ReflectionTestUtil.setFieldValue(
-			fdsFilterRegistry, "_serviceTrackerMap", filterServiceTrackerMap);
+			fdsFilterRegistry, "_serviceTrackerMap",
+			fdsFilterServiceTrackerMap);
 
 		FDSFilterContextContributorRegistryImpl
 			fdsFilterContextContributorRegistryImpl =
@@ -489,7 +490,7 @@ public class SystemFDSSerializerTest {
 
 		ReflectionTestUtil.setFieldValue(
 			fdsFilterContextContributorRegistryImpl, "_serviceTrackerMap",
-			filterContextContributorServiceTrackerMap);
+			fdsFilterContextContributorServiceTrackerMap);
 
 		ReflectionTestUtil.setFieldValue(
 			_fdsSerializer, "_fdsFilterRegistry", fdsFilterRegistry);
@@ -597,7 +598,7 @@ public class SystemFDSSerializerTest {
 				null, "fdsName", "/app", "/endpoint", "schema");
 
 		ServiceRegistration<FDSFilter>
-			clientExtensionFilterServiceRegistration = _registerFilter(
+			clientExtensionFDSFilterServiceRegistration = _registerFDSFilter(
 				"fdsName",
 				new BaseClientExtensionFDSFilter() {
 
@@ -651,7 +652,7 @@ public class SystemFDSSerializerTest {
 			).toString(),
 			JSONCompareMode.STRICT);
 
-		clientExtensionFilterServiceRegistration.unregister();
+		clientExtensionFDSFilterServiceRegistration.unregister();
 
 		systemFDSEntryServiceRegistration1.unregister();
 
@@ -660,8 +661,8 @@ public class SystemFDSSerializerTest {
 		systemFDSEntryServiceRegistration1 = _registerSystemFDSEntry(
 			null, "fdsName", "/app", "/endpoint", "schema");
 
-		ServiceRegistration<FDSFilter> dateRangeFilterServiceRegistration1 =
-			_registerFilter(
+		ServiceRegistration<FDSFilter> dateRangeFDSFilterServiceRegistration1 =
+			_registerFDSFilter(
 				"fdsName",
 				_createFDSDateRangeFilter(
 					"createDate", "By Creation Date", FDSEntityFieldTypes.DATE,
@@ -729,7 +730,7 @@ public class SystemFDSSerializerTest {
 			).toString(),
 			JSONCompareMode.STRICT);
 
-		dateRangeFilterServiceRegistration1.unregister();
+		dateRangeFDSFilterServiceRegistration1.unregister();
 
 		systemFDSEntryServiceRegistration1.unregister();
 
@@ -742,15 +743,15 @@ public class SystemFDSSerializerTest {
 			_registerSystemFDSEntry(
 				null, "fdsName2", "/app", "/endpoint", "schema");
 
-		dateRangeFilterServiceRegistration1 = _registerFilter(
+		dateRangeFDSFilterServiceRegistration1 = _registerFDSFilter(
 			"fdsName1",
 			_createFDSDateRangeFilter(
 				"createDate", "By Creation Date", FDSEntityFieldTypes.DATE,
 				null, new DateFDSFilterItem(0, 0, 0),
 				new DateFDSFilterItem(1, 1, 1980)));
 
-		ServiceRegistration<FDSFilter> dateRangeFilterServiceRegistration2 =
-			_registerFilter(
+		ServiceRegistration<FDSFilter> dateRangeFDSFilterServiceRegistration2 =
+			_registerFDSFilter(
 				"fdsName2",
 				_createFDSDateRangeFilter(
 					"modifiedDate", "By Modification Date",
@@ -758,16 +759,16 @@ public class SystemFDSSerializerTest {
 					new DateFDSFilterItem(0, 0, 0),
 					new DateFDSFilterItem(1, 1, 1980)));
 
-		String dateRangeFilterSerialized1 = _fdsSerializer.serializeFilters(
+		String dateRangeFDSFilterSerialized1 = _fdsSerializer.serializeFilters(
 			"fdsName1", _httpServletRequest
 		).toString();
 
-		String dateRangeFilterSerialized2 = _fdsSerializer.serializeFilters(
+		String dateRangeFDSFilterSerialized2 = _fdsSerializer.serializeFilters(
 			"fdsName2", _httpServletRequest
 		).toString();
 
 		JSONAssert.assertNotEquals(
-			dateRangeFilterSerialized1, dateRangeFilterSerialized2,
+			dateRangeFDSFilterSerialized1, dateRangeFDSFilterSerialized2,
 			JSONCompareMode.STRICT);
 
 		JSONAssert.assertEquals(
@@ -800,7 +801,7 @@ public class SystemFDSSerializerTest {
 					"type", "dateRange"
 				)
 			).toString(),
-			dateRangeFilterSerialized1, JSONCompareMode.STRICT);
+			dateRangeFDSFilterSerialized1, JSONCompareMode.STRICT);
 
 		JSONAssert.assertEquals(
 			JSONUtil.putAll(
@@ -832,11 +833,11 @@ public class SystemFDSSerializerTest {
 					"type", "dateRange"
 				)
 			).toString(),
-			dateRangeFilterSerialized2, JSONCompareMode.STRICT);
+			dateRangeFDSFilterSerialized2, JSONCompareMode.STRICT);
 
-		dateRangeFilterServiceRegistration1.unregister();
+		dateRangeFDSFilterServiceRegistration1.unregister();
 
-		dateRangeFilterServiceRegistration2.unregister();
+		dateRangeFDSFilterServiceRegistration2.unregister();
 
 		systemFDSEntryServiceRegistration1.unregister();
 
@@ -848,7 +849,7 @@ public class SystemFDSSerializerTest {
 			null, "fdsName", "/app", "/endpoint", "schema");
 
 		ServiceRegistration<FDSFilter> fdsFilterServiceRegistration =
-			_registerFilter(
+			_registerFDSFilter(
 				"fdsName",
 				new FDSFilter() {
 
@@ -904,8 +905,8 @@ public class SystemFDSSerializerTest {
 		systemFDSEntryServiceRegistration1 = _registerSystemFDSEntry(
 			null, "fdsName", "/app", "/endpoint", "schema");
 
-		ServiceRegistration<FDSFilter> selectionFilterServiceRegistration =
-			_registerFilter(
+		ServiceRegistration<FDSFilter> selectionFDSFilterServiceRegistration =
+			_registerFDSFilter(
 				"fdsName",
 				new BaseSelectionFDSFilter() {
 
@@ -994,7 +995,7 @@ public class SystemFDSSerializerTest {
 			).toString(),
 			JSONCompareMode.STRICT);
 
-		selectionFilterServiceRegistration.unregister();
+		selectionFDSFilterServiceRegistration.unregister();
 
 		systemFDSEntryServiceRegistration1.unregister();
 
@@ -1003,7 +1004,7 @@ public class SystemFDSSerializerTest {
 		systemFDSEntryServiceRegistration1 = _registerSystemFDSEntry(
 			null, "fdsName", "/app", "/endpoint", "schema");
 
-		selectionFilterServiceRegistration = _registerFilter(
+		selectionFDSFilterServiceRegistration = _registerFDSFilter(
 			"fdsName",
 			new BaseSelectionFDSFilter() {
 
@@ -1096,7 +1097,7 @@ public class SystemFDSSerializerTest {
 			).toString(),
 			JSONCompareMode.STRICT);
 
-		selectionFilterServiceRegistration.unregister();
+		selectionFDSFilterServiceRegistration.unregister();
 
 		systemFDSEntryServiceRegistration1.unregister();
 
@@ -1108,15 +1109,15 @@ public class SystemFDSSerializerTest {
 		systemFDSEntryServiceRegistration2 = _registerSystemFDSEntry(
 			null, "fdsName2", "/app", "/endpoint", "schema");
 
-		FDSFilter dateRangeFilter = _createFDSDateRangeFilter(
+		FDSFilter dateRangeFDSFilter = _createFDSDateRangeFilter(
 			"createDate", "By Creation Date", FDSEntityFieldTypes.DATE, null,
 			new DateFDSFilterItem(0, 0, 0), new DateFDSFilterItem(1, 1, 1980));
 
-		dateRangeFilterServiceRegistration1 = _registerFilter(
-			"fdsName1", dateRangeFilter);
+		dateRangeFDSFilterServiceRegistration1 = _registerFDSFilter(
+			"fdsName1", dateRangeFDSFilter);
 
-		dateRangeFilterServiceRegistration2 = _registerFilter(
-			"fdsName2", dateRangeFilter);
+		dateRangeFDSFilterServiceRegistration2 = _registerFDSFilter(
+			"fdsName2", dateRangeFDSFilter);
 
 		JSONAssert.assertEquals(
 			_fdsSerializer.serializeFilters(
@@ -1127,9 +1128,9 @@ public class SystemFDSSerializerTest {
 			).toString(),
 			JSONCompareMode.STRICT);
 
-		dateRangeFilterServiceRegistration1.unregister();
+		dateRangeFDSFilterServiceRegistration1.unregister();
 
-		dateRangeFilterServiceRegistration2.unregister();
+		dateRangeFDSFilterServiceRegistration2.unregister();
 
 		systemFDSEntryServiceRegistration1.unregister();
 
@@ -1140,7 +1141,7 @@ public class SystemFDSSerializerTest {
 		dateRangeFDSFilterContextContributorServiceRegistration.unregister();
 		selectionFDSFilterContextContributorServiceRegistration.unregister();
 
-		filterServiceTrackerMap.close();
+		fdsFilterServiceTrackerMap.close();
 	}
 
 	@Test
@@ -1359,6 +1360,14 @@ public class SystemFDSSerializerTest {
 			MapUtil.singletonDictionary("frontend.data.set.name", fdsName));
 	}
 
+	private ServiceRegistration<FDSFilter> _registerFDSFilter(
+		String fdsName, FDSFilter fdsFilter) {
+
+		return _bundleContext.registerService(
+			FDSFilter.class, fdsFilter,
+			MapUtil.singletonDictionary("frontend.data.set.name", fdsName));
+	}
+
 	private ServiceRegistration<FDSItemsActions> _registerFDSItemsActions(
 		List<FDSActionDropdownItem> fdsActionDropdownItems, String fdsName) {
 
@@ -1374,14 +1383,6 @@ public class SystemFDSSerializerTest {
 				}
 
 			},
-			MapUtil.singletonDictionary("frontend.data.set.name", fdsName));
-	}
-
-	private ServiceRegistration<FDSFilter> _registerFilter(
-		String fdsName, FDSFilter fdsFilter) {
-
-		return _bundleContext.registerService(
-			FDSFilter.class, fdsFilter,
 			MapUtil.singletonDictionary("frontend.data.set.name", fdsName));
 	}
 

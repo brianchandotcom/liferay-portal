@@ -12,6 +12,7 @@ import fs from 'fs/promises';
 import * as path from 'path';
 import {getComparator} from 'playwright-core/lib/utils';
 
+import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
 import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {depotAdminPageTest} from '../../fixtures/depotAdminPageTest';
 import {documentLibraryPagesTest} from '../../fixtures/documentLibraryPages.fixtures';
@@ -21,7 +22,9 @@ import {loginTest} from '../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {pageTemplatesPagesTest} from '../../fixtures/pageTemplatesPagesTest';
 import {wikiPagesTest} from '../../fixtures/wikiPagesTest';
+import {getRandomInt} from '../../utils/getRandomInt';
 import getRandomString from '../../utils/getRandomString';
+import performLogin, {performLogout, userData} from '../../utils/performLogin';
 import {getTempDir} from '../../utils/temp';
 import {readFileFromZip} from '../../utils/zip';
 import {companyExportImportPageTest} from './fixtures/companyExportImportPagesTest';
@@ -29,6 +32,7 @@ import {exportImportPagesTest} from './fixtures/exportImportPagesTest';
 import {stagingPageTest} from './fixtures/stagingPageTest';
 
 export const test = mergeTests(
+	applicationsMenuPageTest,
 	companyExportImportPageTest,
 	dataApiHelpersTest,
 	depotAdminPageTest,
@@ -478,4 +482,106 @@ test('can import custom object entries at instance level with or without permiss
 			],
 		})
 	);
+});
+
+test('Can/not view Import menu item in Application menu depending on permissions', async ({
+	apiHelpers,
+	applicationsMenuPage,
+	page,
+}) => {
+	const companyId = await page.evaluate(() => {
+		return Liferay.ThemeDisplay.getCompanyId();
+	});
+
+	const user1 = await apiHelpers.headlessAdminUser.postUserAccount();
+
+	userData[user1.alternateName] = {
+		name: user1.givenName,
+		password: 'test',
+		surname: user1.familyName,
+	};
+
+	const roleWithPermissions = await apiHelpers.headlessAdminUser.postRole({
+		name: 'role' + getRandomInt(),
+		rolePermissions: [
+			{
+				actionIds: ['VIEW_CONTROL_PANEL'],
+				primaryKey: companyId,
+				resourceName: '90',
+				scope: 1,
+			},
+			{
+				actionIds: ['ACCESS_IN_CONTROL_PANEL'],
+				primaryKey: companyId,
+				resourceName:
+					'com_liferay_exportimport_web_portlet_CompanyImportPortlet',
+				scope: 1,
+			},
+		],
+	});
+
+	await apiHelpers.headlessAdminUser.assignUserToRole(
+		roleWithPermissions.externalReferenceCode,
+		user1.id
+	);
+
+	const user2 = await apiHelpers.headlessAdminUser.postUserAccount();
+
+	userData[user2.alternateName] = {
+		name: user2.givenName,
+		password: 'test',
+		surname: user2.familyName,
+	};
+
+	const roleWithoutPermissions = await apiHelpers.headlessAdminUser.postRole({
+		name: 'role' + getRandomInt(),
+		rolePermissions: [
+			{
+				actionIds: ['VIEW_CONTROL_PANEL'],
+				primaryKey: companyId,
+				resourceName: '90',
+				scope: 1,
+			},
+		],
+	});
+
+	await apiHelpers.headlessAdminUser.assignUserToRole(
+		roleWithoutPermissions.externalReferenceCode,
+		user2.id
+	);
+
+	await performLogout(page);
+
+	await performLogin(page, user1.alternateName);
+
+	await applicationsMenuPage.goToApplicationsMenu();
+
+	const importButton = page.getByRole('menuitem', {
+		exact: true,
+		name: 'Import',
+	});
+
+	const importUrl = await importButton.getAttribute('href');
+
+	await expect(importButton).toBeVisible();
+
+	await applicationsMenuPage.goToImport();
+
+	await expect(page.getByText('New', {exact: true})).toBeVisible();
+
+	await performLogout(page);
+
+	await performLogin(page, user2.alternateName);
+
+	await expect(
+		page.getByRole('tab', {
+			name: 'Applications',
+		})
+	).toBeHidden();
+
+	// Try to access the Import page directly using the stored URL
+
+	await page.goto(importUrl);
+
+	await expect(page.getByText('New', {exact: true})).toBeHidden();
 });

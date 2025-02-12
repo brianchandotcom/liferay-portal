@@ -1,0 +1,37 @@
+.action-link {
+	font-weight: 600;
+}
+
+.action-link:after {
+	content: '\2192';
+	padding-left: 5px;
+}
+
+.card {
+	background-color: #f8f8f8;
+}
+
+.card-image {
+	height: 200px;
+	object-fit: cover;
+}
+
+.category-height {
+	min-height: 16px;
+}
+
+p {
+	display: block;
+	margin-bottom: 0px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+p:nth-last-child(){
+	margin-bottom: 20px;
+}
+
+.rounded-corners {
+	border-radius: 10px;
+}

@@ -151,7 +151,7 @@ public class InfoRequestFieldValuesProviderHelper {
 						InfoLocalizedValue.builder(
 						).defaultLocale(
 							themeDisplay.getSiteDefaultLocale()
-						).value(
+						).<InfoFormFileUploadException>value(
 							unsafeBiConsumer -> {
 								for (Locale locale :
 										LanguageUtil.getAvailableLocales(
@@ -160,18 +160,18 @@ public class InfoRequestFieldValuesProviderHelper {
 									String languageId =
 										LanguageUtil.getLanguageId(locale);
 
-									List<String> values =
-										regularParameterMap.get(
-											infoField.getName() +
-												StringPool.UNDERLINE +
-													languageId);
+									String inputName =
+										infoField.getName() +
+											StringPool.UNDERLINE + languageId;
 
-									if (ListUtil.isNotEmpty(values)) {
-										unsafeBiConsumer.accept(
-											locale,
-											_parseValue(
-												infoField, locale,
-												values.get(0)));
+									Object value = _parseValue(
+										groupId, infoField, locale,
+										multipartParameterMap, inputName,
+										regularParameterMap,
+										themeDisplay.getUserId());
+
+									if (value != null) {
+										unsafeBiConsumer.accept(locale, value);
 									}
 								}
 							}
@@ -326,7 +326,65 @@ public class InfoRequestFieldValuesProviderHelper {
 	}
 
 	private Object _parseValue(
-		InfoField<?> infoField, Locale locale, String value) {
+			long groupId, InfoField<?> infoField, Locale locale,
+			Map<String, FileItem[]> multipartParameterMap, String name,
+			Map<String, List<String>> regularParameterMap, long userId)
+		throws InfoFormFileUploadException {
+
+		if ((infoField.getInfoFieldType() instanceof FileInfoFieldType) &&
+			multipartParameterMap.containsKey(name)) {
+
+			FileItem[] fileItems = multipartParameterMap.get(name);
+
+			if (ArrayUtil.isEmpty(fileItems)) {
+				return null;
+			}
+
+			FileItem fileItem = fileItems[0];
+
+			if ((fileItem.getSize() < 0) ||
+				Validator.isNull(fileItem.getFileName())) {
+
+				return StringPool.BLANK;
+			}
+
+			try (InputStream inputStream = fileItem.getInputStream()) {
+				if (inputStream == null) {
+					throw new InfoFormFileUploadException(
+						infoField.getUniqueId());
+				}
+
+				File file = FileUtil.createTempFile(inputStream);
+
+				if (file == null) {
+					throw new InfoFormFileUploadException(
+						infoField.getUniqueId());
+				}
+
+				FileEntry fileEntry = TempFileEntryUtil.addTempFileEntry(
+					groupId, userId,
+					InfoRequestFieldValuesProviderHelper.class.getName(),
+					TempFileEntryUtil.getTempFileName(fileItem.getFileName()),
+					file, fileItem.getContentType());
+
+				return fileEntry.getFileEntryId();
+			}
+			catch (IOException | PortalException exception) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(exception);
+				}
+
+				throw new InfoFormFileUploadException(infoField.getUniqueId());
+			}
+		}
+
+		List<String> values = regularParameterMap.get(name);
+
+		if (ListUtil.isEmpty(values)) {
+			return null;
+		}
+
+		String value = values.get(0);
 
 		if (infoField.getInfoFieldType() instanceof BooleanInfoFieldType) {
 			return GetterUtil.getBoolean(value);

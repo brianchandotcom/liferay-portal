@@ -1197,10 +1197,10 @@ public class CalendarBookingLocalServiceImpl
 			(calendar.getGroupId() != calendarBooking.getGroupId())) {
 
 			systemEventLocalService.addSystemEvent(
-				userId, calendarBooking.getGroupId(),
+				userId, calendarBooking.getGroupId(), StringPool.BLANK,
 				CalendarBooking.class.getName(),
 				calendarBooking.getCalendarBookingId(),
-				calendarBooking.getUuid(), StringPool.BLANK, null,
+				calendarBooking.getUuid(), null,
 				SystemEventConstants.TYPE_DELETE, StringPool.BLANK);
 		}
 

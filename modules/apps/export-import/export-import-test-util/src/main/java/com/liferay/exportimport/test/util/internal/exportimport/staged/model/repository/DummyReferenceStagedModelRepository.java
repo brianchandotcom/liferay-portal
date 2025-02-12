@@ -80,11 +80,11 @@ public class DummyReferenceStagedModelRepository
 
 		if (_dummyReferences.remove(dummyReference)) {
 			systemEventLocalService.addSystemEvent(
-				0, dummyReference.getGroupId(),
+				0, dummyReference.getGroupId(), StringPool.BLANK,
 				dummyReference.getModelClassName(),
 				dummyReference.getPrimaryKey(), dummyReference.getUuid(),
-				StringPool.BLANK, StringPool.BLANK,
-				SystemEventConstants.TYPE_DELETE, StringPool.BLANK);
+				StringPool.BLANK, SystemEventConstants.TYPE_DELETE,
+				StringPool.BLANK);
 		}
 	}
 

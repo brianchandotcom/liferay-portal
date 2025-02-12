@@ -111,24 +111,6 @@ public class InfoRequestFieldValuesProviderHelper {
 				continue;
 			}
 
-			FileItem[] multipartParameters = multipartParameterMap.get(
-				infoField.getName());
-
-			if ((multipartParameters != null) &&
-				(infoField.getInfoFieldType() instanceof FileInfoFieldType)) {
-
-				for (FileItem fileItem : multipartParameters) {
-					InfoFieldValue<Object> infoFieldValue =
-						_getFileInfoFieldValue(
-							fileItem, groupId, infoField, themeDisplay);
-
-					if (infoFieldValue != null) {
-						infoFieldValues.put(
-							infoField.getUniqueId(), infoFieldValue);
-					}
-				}
-			}
-
 			if (infoField.getInfoFieldType() instanceof
 					MultiselectInfoFieldType) {
 
@@ -209,48 +191,6 @@ public class InfoRequestFieldValuesProviderHelper {
 		}
 
 		return infoFieldValues;
-	}
-
-	private InfoFieldValue<Object> _getFileInfoFieldValue(
-			FileItem fileItem, long groupId, InfoField infoField,
-			ThemeDisplay themeDisplay)
-		throws InfoFormFileUploadException {
-
-		if ((fileItem.getSize() < 0) ||
-			Validator.isNull(fileItem.getFileName())) {
-
-			return _getInfoFieldValue(
-				infoField, themeDisplay.getLocale(), (Object)StringPool.BLANK);
-		}
-
-		try (InputStream inputStream = fileItem.getInputStream()) {
-			if (inputStream == null) {
-				throw new InfoFormFileUploadException(infoField.getUniqueId());
-			}
-
-			File file = FileUtil.createTempFile(inputStream);
-
-			if (file == null) {
-				throw new InfoFormFileUploadException(infoField.getUniqueId());
-			}
-
-			FileEntry fileEntry = TempFileEntryUtil.addTempFileEntry(
-				groupId, themeDisplay.getUserId(),
-				InfoRequestFieldValuesProviderHelper.class.getName(),
-				TempFileEntryUtil.getTempFileName(fileItem.getFileName()), file,
-				fileItem.getContentType());
-
-			return _getInfoFieldValue(
-				infoField, themeDisplay.getLocale(),
-				String.valueOf(fileEntry.getFileEntryId()));
-		}
-		catch (IOException | PortalException exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-
-			throw new InfoFormFileUploadException(infoField.getUniqueId());
-		}
 	}
 
 	private <T> List<InfoField<?>> _getInfoFields(

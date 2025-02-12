@@ -301,17 +301,30 @@ public class ObjectRelationshipServiceTest {
 
 		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
-		_resourcePermissionLocalService.setResourcePermissions(
-			TestPropsValues.getCompanyId(), objectDefinition2.getClassName(),
-			ResourceConstants.SCOPE_COMPANY,
-			String.valueOf(TestPropsValues.getCompanyId()), role.getRoleId(),
-			new String[] {ActionKeys.VIEW});
-
 		User user = UserTestUtil.addUser();
 
 		_userLocalService.addRoleUser(role.getRoleId(), user);
 
 		_setUser(user);
+
+		AssertUtils.assertFailure(
+			PrincipalException.MustHavePermission.class,
+			StringBundler.concat(
+				"User ", user.getUserId(), " must have VIEW permission for ",
+				objectDefinition2.getClassName(), StringPool.SPACE,
+				objectEntry2.getObjectEntryId()),
+			() ->
+				_objectRelationshipService.
+					addObjectRelationshipMappingTableValues(
+						objectRelationship.getObjectRelationshipId(),
+						objectEntry1.getObjectEntryId(),
+						objectEntry2.getObjectEntryId(), new ServiceContext()));
+
+		_resourcePermissionLocalService.setResourcePermissions(
+			TestPropsValues.getCompanyId(), objectDefinition2.getClassName(),
+			ResourceConstants.SCOPE_COMPANY,
+			String.valueOf(TestPropsValues.getCompanyId()), role.getRoleId(),
+			new String[] {ActionKeys.VIEW});
 
 		AssertUtils.assertFailure(
 			PrincipalException.MustHavePermission.class,
@@ -343,6 +356,19 @@ public class ObjectRelationshipServiceTest {
 
 			return;
 		}
+
+		AssertUtils.assertFailure(
+			PrincipalException.MustHavePermission.class,
+			StringBundler.concat(
+				"User ", user.getUserId(), " must have VIEW permission for ",
+				objectDefinition1.getClassName(), StringPool.SPACE,
+				objectEntry1.getObjectEntryId()),
+			() ->
+				_objectRelationshipService.
+					addObjectRelationshipMappingTableValues(
+						objectRelationship.getObjectRelationshipId(),
+						objectEntry1.getObjectEntryId(),
+						objectEntry2.getObjectEntryId(), new ServiceContext()));
 
 		_resourcePermissionLocalService.setResourcePermissions(
 			TestPropsValues.getCompanyId(), objectDefinition1.getClassName(),

@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.upload.configuration.UploadServletRequestConfigurationProvider;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Map;
@@ -35,6 +36,7 @@ import org.skyscreamer.jsonassert.JSONAssert;
 /**
  * @author Pedro Leite
  */
+@FeatureFlags("LPD-32050")
 public class AttachmentDDMFormFieldTemplateContextContributorTest
 	extends BaseDDMFormFieldTemplateContextContributorTestCase {
 

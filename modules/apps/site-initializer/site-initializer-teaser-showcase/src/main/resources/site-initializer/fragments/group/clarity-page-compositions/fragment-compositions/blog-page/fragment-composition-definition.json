@@ -1,7 +1,8 @@
 {
 	"definition": {
 		"indexed": true,
-		"layout": {},
+		"layout": {
+		},
 		"name": "Blog Page"
 	},
 	"id": "b88fa88c-8da0-ecf1-c586-7b8a94a22024",
@@ -63,11 +64,13 @@
 									},
 									{
 										"id": "portraitMobile",
-										"rowViewportDefinition": {}
+										"rowViewportDefinition": {
+										}
 									},
 									{
 										"id": "tablet",
-										"rowViewportDefinition": {}
+										"rowViewportDefinition": {
+										}
 									}
 								],
 								"verticalAlignment": "middle"
@@ -84,11 +87,13 @@
 												"id": "landscapeMobile"
 											},
 											{
-												"columnViewportDefinition": {},
+												"columnViewportDefinition": {
+												},
 												"id": "portraitMobile"
 											},
 											{
-												"columnViewportDefinition": {},
+												"columnViewportDefinition": {
+												},
 												"id": "tablet"
 											}
 										],
@@ -101,12 +106,14 @@
 												"fragment": {
 													"key": "BASIC_COMPONENT-paragraph"
 												},
-												"fragmentConfig": {},
+												"fragmentConfig": {
+												},
 												"fragmentFields": [
 													{
 														"id": "element-text",
 														"value": {
-															"fragmentLink": {},
+															"fragmentLink": {
+															},
 															"text": {
 																"value_i18n": {
 																	"en_US": "INNOVATION"
@@ -136,7 +143,8 @@
 													{
 														"id": "element-text",
 														"value": {
-															"fragmentLink": {},
+															"fragmentLink": {
+															},
 															"text": {
 																"value_i18n": {
 																	"en_US": "Innovations in EyewearTechnology: Beyond Clear Vision"
@@ -158,12 +166,14 @@
 												"fragment": {
 													"key": "BASIC_COMPONENT-paragraph"
 												},
-												"fragmentConfig": {},
+												"fragmentConfig": {
+												},
 												"fragmentFields": [
 													{
 														"id": "element-text",
 														"value": {
-															"fragmentLink": {},
+															"fragmentLink": {
+															},
 															"text": {
 																"value_i18n": {
 																	"en_US": "Take advantage of exclusive offers on the latest products to deliver exceptional value for your business and your customers."
@@ -194,7 +204,8 @@
 													{
 														"id": "link",
 														"value": {
-															"fragmentLink": {},
+															"fragmentLink": {
+															},
 															"text": {
 																"value_i18n": {
 																	"en_US": "Read More"
@@ -221,11 +232,13 @@
 												"id": "landscapeMobile"
 											},
 											{
-												"columnViewportDefinition": {},
+												"columnViewportDefinition": {
+												},
 												"id": "portraitMobile"
 											},
 											{
-												"columnViewportDefinition": {},
+												"columnViewportDefinition": {
+												},
 												"id": "tablet"
 											}
 										],
@@ -265,10 +278,12 @@
 																			}
 																		},
 																		"url": {
-																			"value_i18n": {}
+																			"value_i18n": {
+																			}
 																		}
 																	},
-																	"fragmentLink": {}
+																	"fragmentLink": {
+																	}
 																}
 															}
 														],
@@ -334,8 +349,10 @@
 								"fragment": {
 									"key": "com.liferay.fragment.renderer.collection.filter.internal.CollectionFilterFragmentRenderer"
 								},
-								"fragmentConfig": {},
-								"fragmentFields": [],
+								"fragmentConfig": {
+								},
+								"fragmentFields": [
+								],
 								"fragmentStyle": {
 									"marginBottom": "4",
 									"maxWidth": "750px",
@@ -352,7 +369,8 @@
 				{
 					"definition": {
 						"indexed": true,
-						"layout": {},
+						"layout": {
+						},
 						"name": "Blog Articles"
 					},
 					"id": "9b8d5d31-76af-4970-2319-791c9ea630d5",
@@ -399,7 +417,8 @@
 							"pageElements": [
 								{
 									"definition": {
-										"collectionItemConfig": {}
+										"collectionItemConfig": {
+										}
 									},
 									"id": "c8e38858-aed9-7b2b-a4c9-bfe53f97b878",
 									"pageElements": [
@@ -409,41 +428,48 @@
 													"key": "card",
 													"siteKey": "[$GROUP_KEY$]"
 												},
-												"fragmentConfig": {},
+												"fragmentConfig": {
+												},
 												"fragmentFields": [
 													{
 														"id": "card-image",
 														"value": {
 															"fragmentImage": {
 																"url": {
-																	"value_i18n": {}
+																	"value_i18n": {
+																	}
 																}
 															},
-															"fragmentLink": {}
+															"fragmentLink": {
+															}
 														}
 													},
 													{
 														"id": "summary",
 														"value": {
-															"fragmentLink": {}
+															"fragmentLink": {
+															}
 														}
 													},
 													{
 														"id": "card-title",
 														"value": {
-															"fragmentLink": {}
+															"fragmentLink": {
+															}
 														}
 													},
 													{
 														"id": "card-link",
 														"value": {
-															"fragmentLink": {}
+															"fragmentLink": {
+															}
 														}
 													},
 													{
 														"id": "category",
 														"value": {
-															"fragmentLink": {}
+															"fragmentLink": {
+															}
 														}
 													}
 												],
@@ -516,11 +542,13 @@
 									},
 									{
 										"id": "portraitMobile",
-										"rowViewportDefinition": {}
+										"rowViewportDefinition": {
+										}
 									},
 									{
 										"id": "tablet",
-										"rowViewportDefinition": {}
+										"rowViewportDefinition": {
+										}
 									}
 								],
 								"verticalAlignment": "middle"
@@ -537,11 +565,13 @@
 												"id": "landscapeMobile"
 											},
 											{
-												"columnViewportDefinition": {},
+												"columnViewportDefinition": {
+												},
 												"id": "portraitMobile"
 											},
 											{
-												"columnViewportDefinition": {},
+												"columnViewportDefinition": {
+												},
 												"id": "tablet"
 											}
 										],
@@ -554,12 +584,14 @@
 												"fragment": {
 													"key": "BASIC_COMPONENT-paragraph"
 												},
-												"fragmentConfig": {},
+												"fragmentConfig": {
+												},
 												"fragmentFields": [
 													{
 														"id": "element-text",
 														"value": {
-															"fragmentLink": {},
+															"fragmentLink": {
+															},
 															"text": {
 																"value_i18n": {
 																	"en_US": "Eyewear Enthusiast? Subscribe for the Latest Trends &amp; More!"
@@ -595,11 +627,13 @@
 												"id": "landscapeMobile"
 											},
 											{
-												"columnViewportDefinition": {},
+												"columnViewportDefinition": {
+												},
 												"id": "portraitMobile"
 											},
 											{
-												"columnViewportDefinition": {},
+												"columnViewportDefinition": {
+												},
 												"id": "tablet"
 											}
 										],
@@ -625,7 +659,8 @@
 													{
 														"id": "link",
 														"value": {
-															"fragmentLink": {},
+															"fragmentLink": {
+															},
 															"text": {
 																"value_i18n": {
 																	"en_US": "Subscribe"

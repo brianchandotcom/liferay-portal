@@ -1,7 +1,8 @@
 {
 	"definition": {
 		"indexed": true,
-		"layout": {},
+		"layout": {
+		},
 		"name": "Search Page"
 	},
 	"id": "6c2a6213-3015-73bf-3406-4ba80bca07e7",
@@ -41,11 +42,13 @@
 							},
 							{
 								"id": "portraitMobile",
-								"rowViewportDefinition": {}
+								"rowViewportDefinition": {
+								}
 							},
 							{
 								"id": "tablet",
-								"rowViewportDefinition": {}
+								"rowViewportDefinition": {
+								}
 							}
 						],
 						"verticalAlignment": "top"
@@ -62,11 +65,13 @@
 										"id": "landscapeMobile"
 									},
 									{
-										"columnViewportDefinition": {},
+										"columnViewportDefinition": {
+										},
 										"id": "portraitMobile"
 									},
 									{
-										"columnViewportDefinition": {},
+										"columnViewportDefinition": {
+										},
 										"id": "tablet"
 									}
 								],
@@ -129,11 +134,13 @@
 										"id": "landscapeMobile"
 									},
 									{
-										"columnViewportDefinition": {},
+										"columnViewportDefinition": {
+										},
 										"id": "portraitMobile"
 									},
 									{
-										"columnViewportDefinition": {},
+										"columnViewportDefinition": {
+										},
 										"id": "tablet"
 									}
 								],
@@ -209,11 +216,15 @@
 							"roleKey": "Owner"
 						},
 						{
-							"actionKeys": ["VIEW"],
+							"actionKeys": [
+								"VIEW"
+							],
 							"roleKey": "Site Member"
 						},
 						{
-							"actionKeys": ["VIEW"],
+							"actionKeys": [
+								"VIEW"
+							],
 							"roleKey": "Guest"
 						}
 					]

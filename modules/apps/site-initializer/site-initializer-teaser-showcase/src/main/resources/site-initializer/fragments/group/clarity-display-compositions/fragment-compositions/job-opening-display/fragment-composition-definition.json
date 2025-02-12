@@ -1,7 +1,8 @@
 {
 	"definition": {
 		"indexed": true,
-		"layout": {},
+		"layout": {
+		},
 		"name": "Job Opening Display"
 	},
 	"id": "a6ccb34f-d3e4-2c07-879e-c62f811ed3b1",
@@ -38,13 +39,15 @@
 							{
 								"id": "page-title-fragment-right",
 								"value": {
-									"fragmentLink": {}
+									"fragmentLink": {
+									}
 								}
 							},
 							{
 								"id": "page-title-fragment-left",
 								"value": {
-									"fragmentLink": {}
+									"fragmentLink": {
+									}
 								}
 							}
 						],
@@ -58,12 +61,14 @@
 						"fragment": {
 							"key": "BASIC_COMPONENT-paragraph"
 						},
-						"fragmentConfig": {},
+						"fragmentConfig": {
+						},
 						"fragmentFields": [
 							{
 								"id": "element-text",
 								"value": {
-									"fragmentLink": {}
+									"fragmentLink": {
+									}
 								}
 							}
 						],
@@ -101,7 +106,8 @@
 							"paddingRight": "9"
 						},
 						"indexed": true,
-						"layout": {},
+						"layout": {
+						},
 						"name": "Role Overview"
 					},
 					"id": "9912e2de-53c6-1680-029e-524fc1da2da7",
@@ -118,7 +124,8 @@
 									{
 										"id": "element-text",
 										"value": {
-											"fragmentLink": {},
+											"fragmentLink": {
+											},
 											"text": {
 												"value_i18n": {
 													"en_US": "Role Overview"
@@ -140,13 +147,15 @@
 								"fragment": {
 									"key": "BASIC_COMPONENT-html"
 								},
-								"fragmentConfig": {},
+								"fragmentConfig": {
+								},
 								"fragmentFields": [
 									{
 										"id": "element-html",
 										"value": {
 											"html": {
-												"value_i18n": {}
+												"value_i18n": {
+												}
 											}
 										}
 									}
@@ -166,7 +175,8 @@
 							"paddingRight": "9"
 						},
 						"indexed": true,
-						"layout": {},
+						"layout": {
+						},
 						"name": "Key Responsibilities"
 					},
 					"id": "3845f936-6c9b-f723-0ef3-4a196094b3aa",
@@ -183,7 +193,8 @@
 									{
 										"id": "element-text",
 										"value": {
-											"fragmentLink": {},
+											"fragmentLink": {
+											},
 											"text": {
 												"value_i18n": {
 													"en_US": "Key Responsibilities"
@@ -206,13 +217,15 @@
 								"fragment": {
 									"key": "BASIC_COMPONENT-html"
 								},
-								"fragmentConfig": {},
+								"fragmentConfig": {
+								},
 								"fragmentFields": [
 									{
 										"id": "element-html",
 										"value": {
 											"html": {
-												"value_i18n": {}
+												"value_i18n": {
+												}
 											}
 										}
 									}
@@ -232,7 +245,8 @@
 							"paddingRight": "9"
 						},
 						"indexed": true,
-						"layout": {},
+						"layout": {
+						},
 						"name": "Qualifications and Kills"
 					},
 					"id": "1d822fa4-7960-a352-11ae-eda157fab421",
@@ -249,7 +263,8 @@
 									{
 										"id": "element-text",
 										"value": {
-											"fragmentLink": {},
+											"fragmentLink": {
+											},
 											"text": {
 												"value_i18n": {
 													"en_US": "Qualifications and Skills"
@@ -272,13 +287,15 @@
 								"fragment": {
 									"key": "BASIC_COMPONENT-html"
 								},
-								"fragmentConfig": {},
+								"fragmentConfig": {
+								},
 								"fragmentFields": [
 									{
 										"id": "element-html",
 										"value": {
 											"html": {
-												"value_i18n": {}
+												"value_i18n": {
+												}
 											}
 										}
 									}
@@ -298,7 +315,8 @@
 							"paddingRight": "9"
 						},
 						"indexed": true,
-						"layout": {},
+						"layout": {
+						},
 						"name": "Why Join"
 					},
 					"id": "e2e52655-2852-7e8f-ea84-58f60148ece7",
@@ -315,7 +333,8 @@
 									{
 										"id": "element-text",
 										"value": {
-											"fragmentLink": {},
+											"fragmentLink": {
+											},
 											"text": {
 												"value_i18n": {
 													"en_US": "Why Join Clarity"
@@ -338,7 +357,8 @@
 								"fragment": {
 									"key": "BASIC_COMPONENT-html"
 								},
-								"fragmentConfig": {},
+								"fragmentConfig": {
+								},
 								"fragmentFields": [
 									{
 										"id": "element-html",
@@ -393,7 +413,8 @@
 									{
 										"id": "link",
 										"value": {
-											"fragmentLink": {},
+											"fragmentLink": {
+											},
 											"text": {
 												"value_i18n": {
 													"en_US": "Back to Open Positions"
@@ -425,7 +446,8 @@
 									{
 										"id": "link",
 										"value": {
-											"fragmentLink": {},
+											"fragmentLink": {
+											},
 											"text": {
 												"value_i18n": {
 													"en_US": "Apply Now"
@@ -436,7 +458,8 @@
 									{
 										"id": "text",
 										"value": {
-											"fragmentLink": {},
+											"fragmentLink": {
+											},
 											"text": {
 												"value_i18n": {
 													"en_US": "Apply Now"

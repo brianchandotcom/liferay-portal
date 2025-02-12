@@ -1,7 +1,8 @@
 {
 	"definition": {
 		"indexed": true,
-		"layout": {},
+		"layout": {
+		},
 		"name": "Contact Us Page"
 	},
 	"id": "839ad420-8c88-b8cb-51da-49fd661bfa0c",
@@ -12,20 +13,24 @@
 					"key": "banner",
 					"siteKey": "[$GROUP_KEY$]"
 				},
-				"fragmentConfig": {},
-				"fragmentFields": [],
+				"fragmentConfig": {
+				},
+				"fragmentFields": [
+				],
 				"indexed": true
 			},
 			"id": "b9a0f8f8-5ae6-4652-8c93-329a7cb0a71b",
 			"pageElements": [
 				{
-					"definition": {},
+					"definition": {
+					},
 					"id": "4f74403d-adfc-5e94-74eb-73830064b5f6",
 					"pageElements": [
 						{
 							"definition": {
 								"indexed": true,
-								"layout": {},
+								"layout": {
+								},
 								"name": "Background Overlay"
 							},
 							"id": "06a54314-28c0-e6f2-69c6-dac041124f16",
@@ -56,7 +61,8 @@
 													{
 														"id": "element-text",
 														"value": {
-															"fragmentLink": {},
+															"fragmentLink": {
+															},
 															"text": {
 																"value_i18n": {
 																	"en_US": "We would love to hear from you"
@@ -79,12 +85,14 @@
 												"fragment": {
 													"key": "BASIC_COMPONENT-paragraph"
 												},
-												"fragmentConfig": {},
+												"fragmentConfig": {
+												},
 												"fragmentFields": [
 													{
 														"id": "element-text",
 														"value": {
-															"fragmentLink": {},
+															"fragmentLink": {
+															},
 															"text": {
 																"value_i18n": {
 																	"en_US": "If you would like to contact us, please fill the information below to direct your inquiry"
@@ -171,11 +179,13 @@
 							},
 							{
 								"id": "portraitMobile",
-								"rowViewportDefinition": {}
+								"rowViewportDefinition": {
+								}
 							},
 							{
 								"id": "tablet",
-								"rowViewportDefinition": {}
+								"rowViewportDefinition": {
+								}
 							}
 						],
 						"verticalAlignment": "top"
@@ -192,11 +202,13 @@
 										"id": "landscapeMobile"
 									},
 									{
-										"columnViewportDefinition": {},
+										"columnViewportDefinition": {
+										},
 										"id": "portraitMobile"
 									},
 									{
-										"columnViewportDefinition": {},
+										"columnViewportDefinition": {
+										},
 										"id": "tablet"
 									}
 								],
@@ -209,7 +221,8 @@
 										"fragment": {
 											"key": "BASIC_COMPONENT-html"
 										},
-										"fragmentConfig": {},
+										"fragmentConfig": {
+										},
 										"fragmentFields": [
 											{
 												"id": "element-html",
@@ -240,11 +253,13 @@
 										"id": "landscapeMobile"
 									},
 									{
-										"columnViewportDefinition": {},
+										"columnViewportDefinition": {
+										},
 										"id": "portraitMobile"
 									},
 									{
-										"columnViewportDefinition": {},
+										"columnViewportDefinition": {
+										},
 										"id": "tablet"
 									}
 								],
@@ -257,7 +272,8 @@
 										"fragment": {
 											"key": "BASIC_COMPONENT-html"
 										},
-										"fragmentConfig": {},
+										"fragmentConfig": {
+										},
 										"fragmentFields": [
 											{
 												"id": "element-html",
@@ -288,11 +304,13 @@
 										"id": "landscapeMobile"
 									},
 									{
-										"columnViewportDefinition": {},
+										"columnViewportDefinition": {
+										},
 										"id": "portraitMobile"
 									},
 									{
-										"columnViewportDefinition": {},
+										"columnViewportDefinition": {
+										},
 										"id": "tablet"
 									}
 								],
@@ -305,7 +323,8 @@
 										"fragment": {
 											"key": "BASIC_COMPONENT-html"
 										},
-										"fragmentConfig": {},
+										"fragmentConfig": {
+										},
 										"fragmentFields": [
 											{
 												"id": "element-html",

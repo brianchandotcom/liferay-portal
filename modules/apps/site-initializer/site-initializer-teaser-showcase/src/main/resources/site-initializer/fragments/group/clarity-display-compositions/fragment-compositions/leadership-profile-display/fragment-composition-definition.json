@@ -1,7 +1,8 @@
 {
 	"definition": {
 		"indexed": true,
-		"layout": {},
+		"layout": {
+		},
 		"name": "Leadership Profile Page"
 	},
 	"id": "e0a1b3bd-b253-0667-bdbe-e87b3f49e44a",
@@ -41,11 +42,13 @@
 							},
 							{
 								"id": "portraitMobile",
-								"rowViewportDefinition": {}
+								"rowViewportDefinition": {
+								}
 							},
 							{
 								"id": "tablet",
-								"rowViewportDefinition": {}
+								"rowViewportDefinition": {
+								}
 							}
 						],
 						"verticalAlignment": "top"
@@ -62,11 +65,13 @@
 										"id": "landscapeMobile"
 									},
 									{
-										"columnViewportDefinition": {},
+										"columnViewportDefinition": {
+										},
 										"id": "portraitMobile"
 									},
 									{
-										"columnViewportDefinition": {},
+										"columnViewportDefinition": {
+										},
 										"id": "tablet"
 									}
 								],
@@ -81,7 +86,8 @@
 											"overflow": "hidden"
 										},
 										"indexed": true,
-										"layout": {},
+										"layout": {
+										},
 										"name": "Leader Image"
 									},
 									"id": "3cd98117-febd-b7bc-6413-889bcf2f2508",
@@ -100,10 +106,12 @@
 														"value": {
 															"fragmentImage": {
 																"url": {
-																	"value_i18n": {}
+																	"value_i18n": {
+																	}
 																}
 															},
-															"fragmentLink": {}
+															"fragmentLink": {
+															}
 														}
 													}
 												],
@@ -128,11 +136,13 @@
 										"id": "landscapeMobile"
 									},
 									{
-										"columnViewportDefinition": {},
+										"columnViewportDefinition": {
+										},
 										"id": "portraitMobile"
 									},
 									{
-										"columnViewportDefinition": {},
+										"columnViewportDefinition": {
+										},
 										"id": "tablet"
 									}
 								],
@@ -152,7 +162,8 @@
 											{
 												"id": "element-text",
 												"value": {
-													"fragmentLink": {}
+													"fragmentLink": {
+													}
 												}
 											}
 										],
@@ -173,7 +184,8 @@
 											{
 												"id": "element-text",
 												"value": {
-													"fragmentLink": {}
+													"fragmentLink": {
+													}
 												}
 											}
 										],
@@ -191,12 +203,14 @@
 										"fragment": {
 											"key": "BASIC_COMPONENT-paragraph"
 										},
-										"fragmentConfig": {},
+										"fragmentConfig": {
+										},
 										"fragmentFields": [
 											{
 												"id": "element-text",
 												"value": {
-													"fragmentLink": {}
+													"fragmentLink": {
+													}
 												}
 											}
 										],
@@ -245,7 +259,8 @@
 							{
 								"id": "element-text",
 								"value": {
-									"fragmentLink": {},
+									"fragmentLink": {
+									},
 									"text": {
 										"value_i18n": {
 											"en_US": "Recent posts"
@@ -267,7 +282,8 @@
 				{
 					"definition": {
 						"indexed": true,
-						"layout": {},
+						"layout": {
+						},
 						"name": "Content Cards"
 					},
 					"id": "ab3528d9-4911-8238-b529-5191897ee6bc",
@@ -313,7 +329,8 @@
 							"pageElements": [
 								{
 									"definition": {
-										"collectionItemConfig": {}
+										"collectionItemConfig": {
+										}
 									},
 									"id": "6c007738-2be5-5006-4a26-20d27b6a7d73",
 									"pageElements": [
@@ -323,41 +340,48 @@
 													"key": "card",
 													"siteKey": "[$GROUP_KEY$]"
 												},
-												"fragmentConfig": {},
+												"fragmentConfig": {
+												},
 												"fragmentFields": [
 													{
 														"id": "card-image",
 														"value": {
 															"fragmentImage": {
 																"url": {
-																	"value_i18n": {}
+																	"value_i18n": {
+																	}
 																}
 															},
-															"fragmentLink": {}
+															"fragmentLink": {
+															}
 														}
 													},
 													{
 														"id": "summary",
 														"value": {
-															"fragmentLink": {}
+															"fragmentLink": {
+															}
 														}
 													},
 													{
 														"id": "card-title",
 														"value": {
-															"fragmentLink": {}
+															"fragmentLink": {
+															}
 														}
 													},
 													{
 														"id": "card-link",
 														"value": {
-															"fragmentLink": {}
+															"fragmentLink": {
+															}
 														}
 													},
 													{
 														"id": "category",
 														"value": {
-															"fragmentLink": {}
+															"fragmentLink": {
+															}
 														}
 													}
 												],

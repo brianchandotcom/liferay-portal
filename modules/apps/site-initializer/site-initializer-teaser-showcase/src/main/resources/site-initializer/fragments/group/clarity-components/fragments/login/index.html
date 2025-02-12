@@ -5,16 +5,13 @@
 
 [#if !is_signed_in]
 	<div class="login-container">
-		<form
-			action="?p_p_id=com_liferay_login_web_portlet_LoginPortlet&p_p_lifecycle=1&p_p_state=exclusive&p_p_mode=view&_com_liferay_login_web_portlet_LoginPortlet_javax.portlet.action=%2Flogin%2Flogin&_com_liferay_login_web_portlet_LoginPortlet_mvcRenderCommandName=%2Flogin%2Flogin"
-			autocomplete="on" class="form sign-in-form" data-fm-namespace="_com_liferay_login_web_portlet_LoginPortlet_"
-			id="_com_liferay_login_web_portlet_LoginPortlet_loginForm" method="post"
-			name="_com_liferay_login_web_portlet_LoginPortlet_loginForm">
-			<div aria-label="Sign In" class="input-container" role="group"><input class="field form-control"
+		<form action="?p_p_id=com_liferay_login_web_portlet_LoginPortlet&p_p_lifecycle=1&p_p_state=exclusive&p_p_mode=view&_com_liferay_login_web_portlet_LoginPortlet_javax.portlet.action=%2Flogin%2Flogin&_com_liferay_login_web_portlet_LoginPortlet_mvcRenderCommandName=%2Flogin%2Flogin" autocomplete="on" class="form sign-in-form" data-fm-namespace="_com_liferay_login_web_portlet_LoginPortlet_" id="_com_liferay_login_web_portlet_LoginPortlet_loginForm" method="post" name="_com_liferay_login_web_portlet_LoginPortlet_loginForm">
+			<div aria-label="Sign In" class="input-container" role="group">
+				<input class="field form-control"
 					id="_com_liferay_login_web_portlet_LoginPortlet_formDate"
 					name="_com_liferay_login_web_portlet_LoginPortlet_formDate" type="hidden" value="1714917724004" />
-				<input class="field form-control" id="_com_liferay_login_web_portlet_LoginPortlet_saveLastPath"
-					name="_com_liferay_login_web_portlet_LoginPortlet_saveLastPath" type="hidden" value="false" /> <input
+				
+				<input class="field form-control" id="_com_liferay_login_web_portlet_LoginPortlet_saveLastPath" name="_com_liferay_login_web_portlet_LoginPortlet_saveLastPath" type="hidden" value="false" /> <input
 					class="field form-control" id="_com_liferay_login_web_portlet_LoginPortlet_redirect"
 					name="_com_liferay_login_web_portlet_LoginPortlet_redirect" type="hidden" value="" /> <input
 					class="field form-control" id="_com_liferay_login_web_portlet_LoginPortlet_doActionAfterLogin"
@@ -22,8 +19,7 @@
 
 				<div class="inline-alert-container lfr-alert-container"></div>
 
-				<div class="alert alert-danger" id="_com_liferay_login_web_portlet_LoginPortlet_cookieDisabled"
-					style="display: none;">
+				<div class="alert alert-danger" id="_com_liferay_login_web_portlet_LoginPortlet_cookieDisabled" style="display: none;">
 					Authentication failed. Please enable browser cookies and try again.
 				</div>
 
@@ -37,10 +33,7 @@
 									Address
 								</label>
 
-								<input class="clearable field form-control"
-									id="_com_liferay_login_web_portlet_LoginPortlet_login"
-									name="_com_liferay_login_web_portlet_LoginPortlet_login" placeholder="email" type="text"
-									value="" />
+								<input class="clearable field form-control" id="_com_liferay_login_web_portlet_LoginPortlet_login" name="_com_liferay_login_web_portlet_LoginPortlet_login" placeholder="email" type="text" value="" />
 							</div>
 
 							<div class="form-group input-text-wrapper"><label class=" control-label"
@@ -49,17 +42,15 @@
 									name="_com_liferay_login_web_portlet_LoginPortlet_password" type="password" value="" />
 							</div>
 
-							<span id="_com_liferay_login_web_portlet_LoginPortlet_passwordCapsLockSpan"
-								style="display: none;">
-								Caps Lock is on.
+							<span id="_com_liferay_login_web_portlet_LoginPortlet_passwordCapsLockSpan" style="display: none;">
+									Caps Lock is on.
 							</span>
 						</div>
 					</div>
 				</fieldset>
 
 				<div class="button-holder">
-					<button class="btn  btn-primary btn-block" id="_com_liferay_login_web_portlet_LoginPortlet_kbbc"
-						type="submit">
+					<button class="btn  btn-primary btn-block" id="_com_liferay_login_web_portlet_LoginPortlet_kbbc" type="submit">
 						<span class="lfr-btn-label">
 							Login
 						</span>
@@ -75,7 +66,7 @@
 		</div>
 
 		<div class="button-holder">
-			<a id="homeLink" href="/web/[$GROUP_KEY$]/home" class="btn btn-primary">
+			<a class="btn btn-primary" href="/web/[$GROUP_KEY$]/home" id="homeLink">
 				Back to Home
 			</a>
 		</div>

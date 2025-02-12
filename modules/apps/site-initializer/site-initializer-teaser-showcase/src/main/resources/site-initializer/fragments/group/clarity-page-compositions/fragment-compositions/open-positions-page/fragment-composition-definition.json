@@ -1,7 +1,8 @@
 {
 	"definition": {
 		"indexed": true,
-		"layout": {},
+		"layout": {
+		},
 		"name": "Open Positions Page"
 	},
 	"id": "7e585126-f70a-f306-68b4-930cb2fe3121",
@@ -9,7 +10,8 @@
 		{
 			"definition": {
 				"fragmentStyle": {
-					"backgroundFragmentImage": {},
+					"backgroundFragmentImage": {
+					},
 					"height": "240px"
 				},
 				"indexed": true,
@@ -34,7 +36,8 @@
 							{
 								"id": "element-text",
 								"value": {
-									"fragmentLink": {},
+									"fragmentLink": {
+									},
 									"text": {
 										"value_i18n": {
 											"en_US": "Join the Team!"
@@ -117,11 +120,13 @@
 							},
 							{
 								"id": "portraitMobile",
-								"rowViewportDefinition": {}
+								"rowViewportDefinition": {
+								}
 							},
 							{
 								"id": "tablet",
-								"rowViewportDefinition": {}
+								"rowViewportDefinition": {
+								}
 							}
 						],
 						"verticalAlignment": "top"
@@ -138,11 +143,13 @@
 										"id": "landscapeMobile"
 									},
 									{
-										"columnViewportDefinition": {},
+										"columnViewportDefinition": {
+										},
 										"id": "portraitMobile"
 									},
 									{
-										"columnViewportDefinition": {},
+										"columnViewportDefinition": {
+										},
 										"id": "tablet"
 									}
 								],
@@ -220,11 +227,13 @@
 										"id": "landscapeMobile"
 									},
 									{
-										"columnViewportDefinition": {},
+										"columnViewportDefinition": {
+										},
 										"id": "portraitMobile"
 									},
 									{
-										"columnViewportDefinition": {},
+										"columnViewportDefinition": {
+										},
 										"id": "tablet"
 									}
 								],

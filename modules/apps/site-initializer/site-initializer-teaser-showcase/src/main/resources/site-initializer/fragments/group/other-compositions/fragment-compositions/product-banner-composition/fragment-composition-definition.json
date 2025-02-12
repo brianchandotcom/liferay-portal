@@ -45,11 +45,13 @@
 					},
 					{
 						"id": "portraitMobile",
-						"rowViewportDefinition": {}
+						"rowViewportDefinition": {
+						}
 					},
 					{
 						"id": "tablet",
-						"rowViewportDefinition": {}
+						"rowViewportDefinition": {
+						}
 					}
 				],
 				"verticalAlignment": "middle"
@@ -65,11 +67,13 @@
 								"id": "landscapeMobile"
 							},
 							{
-								"columnViewportDefinition": {},
+								"columnViewportDefinition": {
+								},
 								"id": "portraitMobile"
 							},
 							{
-								"columnViewportDefinition": {},
+								"columnViewportDefinition": {
+								},
 								"id": "tablet"
 							}
 						],
@@ -88,7 +92,8 @@
 									{
 										"id": "element-text",
 										"value": {
-											"fragmentLink": {},
+											"fragmentLink": {
+											},
 											"text": {
 												"value_i18n": {
 													"en_US": "Elevate Your Eyewear Business with Premium Quality"
@@ -109,12 +114,14 @@
 								"fragment": {
 									"key": "BASIC_COMPONENT-paragraph"
 								},
-								"fragmentConfig": {},
+								"fragmentConfig": {
+								},
 								"fragmentFields": [
 									{
 										"id": "element-text",
 										"value": {
-											"fragmentLink": {},
+											"fragmentLink": {
+											},
 											"text": {
 												"value_i18n": {
 													"en_US": "Elevate your brand with a curaed selection of glasses, sunglasses, conact and lenses"
@@ -180,7 +187,8 @@
 									{
 										"id": "text",
 										"value": {
-											"fragmentLink": {}
+											"fragmentLink": {
+											}
 										}
 									}
 								],
@@ -204,11 +212,13 @@
 								"id": "landscapeMobile"
 							},
 							{
-								"columnViewportDefinition": {},
+								"columnViewportDefinition": {
+								},
 								"id": "portraitMobile"
 							},
 							{
-								"columnViewportDefinition": {},
+								"columnViewportDefinition": {
+								},
 								"id": "tablet"
 							}
 						],

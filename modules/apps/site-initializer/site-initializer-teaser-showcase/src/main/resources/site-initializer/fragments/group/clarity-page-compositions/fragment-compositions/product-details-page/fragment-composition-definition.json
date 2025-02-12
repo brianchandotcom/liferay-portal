@@ -42,11 +42,13 @@
 							},
 							{
 								"id": "portraitMobile",
-								"rowViewportDefinition": {}
+								"rowViewportDefinition": {
+								}
 							},
 							{
 								"id": "tablet",
-								"rowViewportDefinition": {}
+								"rowViewportDefinition": {
+								}
 							}
 						],
 						"verticalAlignment": "top"
@@ -63,11 +65,13 @@
 										"id": "landscapeMobile"
 									},
 									{
-										"columnViewportDefinition": {},
+										"columnViewportDefinition": {
+										},
 										"id": "portraitMobile"
 									},
 									{
-										"columnViewportDefinition": {},
+										"columnViewportDefinition": {
+										},
 										"id": "tablet"
 									}
 								],
@@ -80,8 +84,10 @@
 										"fragment": {
 											"key": "com.liferay.commerce.product.content.web.internal.fragment.renderer.ImageGalleryFragmentRenderer"
 										},
-										"fragmentConfig": {},
-										"fragmentFields": [],
+										"fragmentConfig": {
+										},
+										"fragmentFields": [
+										],
 										"fragmentStyle": {
 											"height": "100px",
 											"paddingBottom": "3",
@@ -107,11 +113,13 @@
 										"id": "landscapeMobile"
 									},
 									{
-										"columnViewportDefinition": {},
+										"columnViewportDefinition": {
+										},
 										"id": "portraitMobile"
 									},
 									{
-										"columnViewportDefinition": {},
+										"columnViewportDefinition": {
+										},
 										"id": "tablet"
 									}
 								],
@@ -126,7 +134,8 @@
 											"paddingRight": "2"
 										},
 										"indexed": true,
-										"layout": {},
+										"layout": {
+										},
 										"name": "Description Container"
 									},
 									"id": "a43f4699-e736-25f4-e167-96af40eae921",
@@ -139,7 +148,8 @@
 												"fragmentConfig": {
 													"headingLevel": "h3"
 												},
-												"fragmentFields": [],
+												"fragmentFields": [
+												],
 												"indexed": true,
 												"name": "Product Name"
 											},
@@ -151,8 +161,10 @@
 												"fragment": {
 													"key": "BASIC_COMPONENT-paragraph"
 												},
-												"fragmentConfig": {},
-												"fragmentFields": [],
+												"fragmentConfig": {
+												},
+												"fragmentFields": [
+												],
 												"fragmentStyle": {
 													"marginBottom": "4"
 												},
@@ -167,8 +179,10 @@
 												"fragment": {
 													"key": "BASIC_COMPONENT-html"
 												},
-												"fragmentConfig": {},
-												"fragmentFields": [],
+												"fragmentConfig": {
+												},
+												"fragmentFields": [
+												],
 												"fragmentStyle": {
 													"fontSize": "0.875rem"
 												},
@@ -188,7 +202,8 @@
 													"buttonType": "primary",
 													"type": "link"
 												},
-												"fragmentFields": [],
+												"fragmentFields": [
+												],
 												"fragmentStyle": {
 													"marginTop": "4"
 												},
@@ -231,7 +246,8 @@
 						"fragmentConfig": {
 							"headingLevel": "h5"
 						},
-						"fragmentFields": [],
+						"fragmentFields": [
+						],
 						"fragmentStyle": {
 							"marginBottom": "4",
 							"marginTop": "1",
@@ -309,7 +325,8 @@
 							"pageElements": [
 								{
 									"definition": {
-										"collectionItemConfig": {}
+										"collectionItemConfig": {
+										}
 									},
 									"id": "be129de7-89e3-f206-b5e9-366b2b333a43",
 									"pageElements": [
@@ -333,11 +350,13 @@
 													},
 													{
 														"id": "portraitMobile",
-														"rowViewportDefinition": {}
+														"rowViewportDefinition": {
+														}
 													},
 													{
 														"id": "tablet",
-														"rowViewportDefinition": {}
+														"rowViewportDefinition": {
+														}
 													}
 												],
 												"verticalAlignment": "top"
@@ -354,11 +373,13 @@
 																"id": "landscapeMobile"
 															},
 															{
-																"columnViewportDefinition": {},
+																"columnViewportDefinition": {
+																},
 																"id": "portraitMobile"
 															},
 															{
-																"columnViewportDefinition": {},
+																"columnViewportDefinition": {
+																},
 																"id": "tablet"
 															}
 														],
@@ -371,8 +392,10 @@
 																"fragment": {
 																	"key": "BASIC_COMPONENT-paragraph"
 																},
-																"fragmentConfig": {},
-																"fragmentFields": [],
+																"fragmentConfig": {
+																},
+																"fragmentFields": [
+																],
 																"fragmentStyle": {
 																	"fontWeight": "fontWeightBold",
 																	"paddingBottom": "1",
@@ -399,11 +422,13 @@
 																"id": "landscapeMobile"
 															},
 															{
-																"columnViewportDefinition": {},
+																"columnViewportDefinition": {
+																},
 																"id": "portraitMobile"
 															},
 															{
-																"columnViewportDefinition": {},
+																"columnViewportDefinition": {
+																},
 																"id": "tablet"
 															}
 														],
@@ -416,8 +441,10 @@
 																"fragment": {
 																	"key": "BASIC_COMPONENT-paragraph"
 																},
-																"fragmentConfig": {},
-																"fragmentFields": [],
+																"fragmentConfig": {
+																},
+																"fragmentFields": [
+																],
 																"fragmentStyle": {
 																	"paddingBottom": "1",
 																	"paddingLeft": "1",
@@ -470,7 +497,8 @@
 						"fragmentConfig": {
 							"headingLevel": "h5"
 						},
-						"fragmentFields": [],
+						"fragmentFields": [
+						],
 						"fragmentStyle": {
 							"marginBottom": "4",
 							"marginTop": "1",
@@ -548,7 +576,8 @@
 							"pageElements": [
 								{
 									"definition": {
-										"collectionItemConfig": {}
+										"collectionItemConfig": {
+										}
 									},
 									"id": "9d70a424-77c6-b90b-de1a-83ba1c212d53",
 									"pageElements": [
@@ -572,11 +601,13 @@
 													},
 													{
 														"id": "portraitMobile",
-														"rowViewportDefinition": {}
+														"rowViewportDefinition": {
+														}
 													},
 													{
 														"id": "tablet",
-														"rowViewportDefinition": {}
+														"rowViewportDefinition": {
+														}
 													}
 												],
 												"verticalAlignment": "top"
@@ -593,11 +624,13 @@
 																"id": "landscapeMobile"
 															},
 															{
-																"columnViewportDefinition": {},
+																"columnViewportDefinition": {
+																},
 																"id": "portraitMobile"
 															},
 															{
-																"columnViewportDefinition": {},
+																"columnViewportDefinition": {
+																},
 																"id": "tablet"
 															}
 														],
@@ -610,8 +643,10 @@
 																"fragment": {
 																	"key": "BASIC_COMPONENT-paragraph"
 																},
-																"fragmentConfig": {},
-																"fragmentFields": [],
+																"fragmentConfig": {
+																},
+																"fragmentFields": [
+																],
 																"fragmentStyle": {
 																	"fontWeight": "fontWeightBold",
 																	"paddingBottom": "1",
@@ -638,11 +673,13 @@
 																"id": "landscapeMobile"
 															},
 															{
-																"columnViewportDefinition": {},
+																"columnViewportDefinition": {
+																},
 																"id": "portraitMobile"
 															},
 															{
-																"columnViewportDefinition": {},
+																"columnViewportDefinition": {
+																},
 																"id": "tablet"
 															}
 														],
@@ -660,7 +697,8 @@
 																	"buttonType": "outline-primary",
 																	"type": "link"
 																},
-																"fragmentFields": [],
+																"fragmentFields": [
+																],
 																"indexed": true,
 																"name": "Download"
 															},

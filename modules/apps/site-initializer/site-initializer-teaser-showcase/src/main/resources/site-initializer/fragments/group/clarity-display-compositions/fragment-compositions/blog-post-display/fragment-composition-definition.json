@@ -1,7 +1,8 @@
 {
 	"definition": {
 		"indexed": true,
-		"layout": {},
+		"layout": {
+		},
 		"name": "Blog Post Page"
 	},
 	"id": "7b061898-c6a9-853d-4d4e-75f115c2031d",
@@ -33,7 +34,8 @@
 							"overflow": "hidden"
 						},
 						"indexed": true,
-						"layout": {},
+						"layout": {
+						},
 						"name": "Image Wrapper"
 					},
 					"id": "93ccf373-0879-e787-b553-c3dd5c6c9a3a",
@@ -52,10 +54,12 @@
 										"value": {
 											"fragmentImage": {
 												"url": {
-													"value_i18n": {}
+													"value_i18n": {
+													}
 												}
 											},
-											"fragmentLink": {}
+											"fragmentLink": {
+											}
 										}
 									}
 								],
@@ -94,12 +98,14 @@
 						"fragment": {
 							"key": "BASIC_COMPONENT-paragraph"
 						},
-						"fragmentConfig": {},
+						"fragmentConfig": {
+						},
 						"fragmentFields": [
 							{
 								"id": "element-text",
 								"value": {
-									"fragmentLink": {}
+									"fragmentLink": {
+									}
 								}
 							}
 						],
@@ -120,7 +126,8 @@
 							{
 								"id": "element-text",
 								"value": {
-									"fragmentLink": {}
+									"fragmentLink": {
+									}
 								}
 							}
 						],
@@ -149,11 +156,13 @@
 							},
 							{
 								"id": "portraitMobile",
-								"rowViewportDefinition": {}
+								"rowViewportDefinition": {
+								}
 							},
 							{
 								"id": "tablet",
-								"rowViewportDefinition": {}
+								"rowViewportDefinition": {
+								}
 							}
 						],
 						"verticalAlignment": "top"
@@ -170,11 +179,13 @@
 										"id": "landscapeMobile"
 									},
 									{
-										"columnViewportDefinition": {},
+										"columnViewportDefinition": {
+										},
 										"id": "portraitMobile"
 									},
 									{
-										"columnViewportDefinition": {},
+										"columnViewportDefinition": {
+										},
 										"id": "tablet"
 									}
 								],
@@ -193,11 +204,13 @@
 										"id": "landscapeMobile"
 									},
 									{
-										"columnViewportDefinition": {},
+										"columnViewportDefinition": {
+										},
 										"id": "portraitMobile"
 									},
 									{
-										"columnViewportDefinition": {},
+										"columnViewportDefinition": {
+										},
 										"id": "tablet"
 									}
 								],
@@ -223,13 +236,15 @@
 											{
 												"id": "link",
 												"value": {
-													"fragmentLink": {}
+													"fragmentLink": {
+													}
 												}
 											},
 											{
 												"id": "text",
 												"value": {
-													"fragmentLink": {},
+													"fragmentLink": {
+													},
 													"text": {
 														"value_i18n": {
 															"en_US": "Share"
@@ -279,13 +294,15 @@
 						"fragment": {
 							"key": "BASIC_COMPONENT-html"
 						},
-						"fragmentConfig": {},
+						"fragmentConfig": {
+						},
 						"fragmentFields": [
 							{
 								"id": "element-html",
 								"value": {
 									"html": {
-										"value_i18n": {}
+										"value_i18n": {
+										}
 									}
 								}
 							}
@@ -329,7 +346,8 @@
 							{
 								"id": "element-text",
 								"value": {
-									"fragmentLink": {},
+									"fragmentLink": {
+									},
 									"text": {
 										"value_i18n": {
 											"en_US": "Related Content"

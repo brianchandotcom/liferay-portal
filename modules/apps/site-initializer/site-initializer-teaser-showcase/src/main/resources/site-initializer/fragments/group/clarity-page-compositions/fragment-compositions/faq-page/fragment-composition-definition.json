@@ -1,7 +1,8 @@
 {
 	"definition": {
 		"indexed": true,
-		"layout": {},
+		"layout": {
+		},
 		"name": "FAQ Page"
 	},
 	"id": "4a7db8c0-00df-39fc-384b-75767fd82898",
@@ -35,11 +36,13 @@
 							},
 							{
 								"id": "portraitMobile",
-								"rowViewportDefinition": {}
+								"rowViewportDefinition": {
+								}
 							},
 							{
 								"id": "tablet",
-								"rowViewportDefinition": {}
+								"rowViewportDefinition": {
+								}
 							}
 						],
 						"verticalAlignment": "top"
@@ -56,11 +59,13 @@
 										"id": "landscapeMobile"
 									},
 									{
-										"columnViewportDefinition": {},
+										"columnViewportDefinition": {
+										},
 										"id": "portraitMobile"
 									},
 									{
-										"columnViewportDefinition": {},
+										"columnViewportDefinition": {
+										},
 										"id": "tablet"
 									}
 								],
@@ -87,10 +92,12 @@
 															}
 														},
 														"url": {
-															"value_i18n": {}
+															"value_i18n": {
+															}
 														}
 													},
-													"fragmentLink": {}
+													"fragmentLink": {
+													}
 												}
 											}
 										],
@@ -112,11 +119,13 @@
 										"id": "landscapeMobile"
 									},
 									{
-										"columnViewportDefinition": {},
+										"columnViewportDefinition": {
+										},
 										"id": "portraitMobile"
 									},
 									{
-										"columnViewportDefinition": {},
+										"columnViewportDefinition": {
+										},
 										"id": "tablet"
 									}
 								],
@@ -137,7 +146,8 @@
 											{
 												"id": "page-title-fragment-right",
 												"value": {
-													"fragmentLink": {},
+													"fragmentLink": {
+													},
 													"text": {
 														"value_i18n": {
 															"en_US": "FAQs"
@@ -148,7 +158,8 @@
 											{
 												"id": "page-title-fragment-left",
 												"value": {
-													"fragmentLink": {},
+													"fragmentLink": {
+													},
 													"text": {
 														"value_i18n": {
 															"en_US": "General FAQs&nbsp;"
@@ -185,12 +196,14 @@
 													"key": "section-heading",
 													"siteKey": "[$GROUP_KEY$]"
 												},
-												"fragmentConfig": {},
+												"fragmentConfig": {
+												},
 												"fragmentFields": [
 													{
 														"id": "section-heading-fragment",
 														"value": {
-															"fragmentLink": {},
+															"fragmentLink": {
+															},
 															"text": {
 																"value_i18n": {
 																	"en_US": "Retail Partners"
@@ -252,7 +265,8 @@
 											"pageElements": [
 												{
 													"definition": {
-														"collectionItemConfig": {}
+														"collectionItemConfig": {
+														}
 													},
 													"id": "81d15d4e-ad18-155a-5caa-85f9a9a3fd0e",
 													"pageElements": [
@@ -262,18 +276,21 @@
 																	"key": "faq-fragment",
 																	"siteKey": "[$GROUP_KEY$]"
 																},
-																"fragmentConfig": {},
+																"fragmentConfig": {
+																},
 																"fragmentFields": [
 																	{
 																		"id": "answer-text",
 																		"value": {
-																			"fragmentLink": {}
+																			"fragmentLink": {
+																			}
 																		}
 																	},
 																	{
 																		"id": "main-text",
 																		"value": {
-																			"fragmentLink": {}
+																			"fragmentLink": {
+																			}
 																		}
 																	}
 																],
@@ -310,12 +327,14 @@
 													"key": "section-heading",
 													"siteKey": "[$GROUP_KEY$]"
 												},
-												"fragmentConfig": {},
+												"fragmentConfig": {
+												},
 												"fragmentFields": [
 													{
 														"id": "section-heading-fragment",
 														"value": {
-															"fragmentLink": {},
+															"fragmentLink": {
+															},
 															"text": {
 																"value_i18n": {
 																	"en_US": "Products &amp; services"
@@ -377,7 +396,8 @@
 											"pageElements": [
 												{
 													"definition": {
-														"collectionItemConfig": {}
+														"collectionItemConfig": {
+														}
 													},
 													"id": "f2414575-2a6d-3fad-5e8a-beac882acfd6",
 													"pageElements": [
@@ -387,18 +407,21 @@
 																	"key": "faq-fragment",
 																	"siteKey": "[$GROUP_KEY$]"
 																},
-																"fragmentConfig": {},
+																"fragmentConfig": {
+																},
 																"fragmentFields": [
 																	{
 																		"id": "answer-text",
 																		"value": {
-																			"fragmentLink": {}
+																			"fragmentLink": {
+																			}
 																		}
 																	},
 																	{
 																		"id": "main-text",
 																		"value": {
-																			"fragmentLink": {}
+																			"fragmentLink": {
+																			}
 																		}
 																	}
 																],
@@ -435,12 +458,14 @@
 													"key": "section-heading",
 													"siteKey": "[$GROUP_KEY$]"
 												},
-												"fragmentConfig": {},
+												"fragmentConfig": {
+												},
 												"fragmentFields": [
 													{
 														"id": "section-heading-fragment",
 														"value": {
-															"fragmentLink": {},
+															"fragmentLink": {
+															},
 															"text": {
 																"value_i18n": {
 																	"en_US": "Pricing &amp; Ordering"
@@ -502,7 +527,8 @@
 											"pageElements": [
 												{
 													"definition": {
-														"collectionItemConfig": {}
+														"collectionItemConfig": {
+														}
 													},
 													"id": "fa114b79-bbf9-1a12-18f5-cdd1b2a34a78",
 													"pageElements": [
@@ -512,18 +538,21 @@
 																	"key": "faq-fragment",
 																	"siteKey": "[$GROUP_KEY$]"
 																},
-																"fragmentConfig": {},
+																"fragmentConfig": {
+																},
 																"fragmentFields": [
 																	{
 																		"id": "answer-text",
 																		"value": {
-																			"fragmentLink": {}
+																			"fragmentLink": {
+																			}
 																		}
 																	},
 																	{
 																		"id": "main-text",
 																		"value": {
-																			"fragmentLink": {}
+																			"fragmentLink": {
+																			}
 																		}
 																	}
 																],
@@ -560,12 +589,14 @@
 													"key": "section-heading",
 													"siteKey": "[$GROUP_KEY$]"
 												},
-												"fragmentConfig": {},
+												"fragmentConfig": {
+												},
 												"fragmentFields": [
 													{
 														"id": "section-heading-fragment",
 														"value": {
-															"fragmentLink": {},
+															"fragmentLink": {
+															},
 															"text": {
 																"value_i18n": {
 																	"en_US": "Return and exchange"
@@ -627,7 +658,8 @@
 											"pageElements": [
 												{
 													"definition": {
-														"collectionItemConfig": {}
+														"collectionItemConfig": {
+														}
 													},
 													"id": "a1c47bf7-ddcb-d956-3308-aabb145131ac",
 													"pageElements": [
@@ -637,18 +669,21 @@
 																	"key": "faq-fragment",
 																	"siteKey": "[$GROUP_KEY$]"
 																},
-																"fragmentConfig": {},
+																"fragmentConfig": {
+																},
 																"fragmentFields": [
 																	{
 																		"id": "answer-text",
 																		"value": {
-																			"fragmentLink": {}
+																			"fragmentLink": {
+																			}
 																		}
 																	},
 																	{
 																		"id": "main-text",
 																		"value": {
-																			"fragmentLink": {}
+																			"fragmentLink": {
+																			}
 																		}
 																	}
 																],
@@ -719,7 +754,8 @@
 									{
 										"id": "element-text",
 										"value": {
-											"fragmentLink": {},
+											"fragmentLink": {
+											},
 											"text": {
 												"value_i18n": {
 													"en_US": "Helpful articles from our team!"
@@ -795,7 +831,8 @@
 							"pageElements": [
 								{
 									"definition": {
-										"collectionItemConfig": {}
+										"collectionItemConfig": {
+										}
 									},
 									"id": "78ee33d2-2972-e2ce-ce97-07de87bdf1af",
 									"pageElements": [
@@ -805,41 +842,48 @@
 													"key": "card",
 													"siteKey": "[$GROUP_KEY$]"
 												},
-												"fragmentConfig": {},
+												"fragmentConfig": {
+												},
 												"fragmentFields": [
 													{
 														"id": "card-image",
 														"value": {
 															"fragmentImage": {
 																"url": {
-																	"value_i18n": {}
+																	"value_i18n": {
+																	}
 																}
 															},
-															"fragmentLink": {}
+															"fragmentLink": {
+															}
 														}
 													},
 													{
 														"id": "summary",
 														"value": {
-															"fragmentLink": {}
+															"fragmentLink": {
+															}
 														}
 													},
 													{
 														"id": "card-title",
 														"value": {
-															"fragmentLink": {}
+															"fragmentLink": {
+															}
 														}
 													},
 													{
 														"id": "card-link",
 														"value": {
-															"fragmentLink": {}
+															"fragmentLink": {
+															}
 														}
 													},
 													{
 														"id": "category",
 														"value": {
-															"fragmentLink": {}
+															"fragmentLink": {
+															}
 														}
 													}
 												],

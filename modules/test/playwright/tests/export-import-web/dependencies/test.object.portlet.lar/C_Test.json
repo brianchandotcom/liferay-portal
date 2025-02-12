@@ -1,0 +1,92 @@
+[
+    {
+        "actions": {
+            "permissions": {
+                "method": "GET",
+                "href": "/headless-batch-engine/32706/permissions"
+            },
+            "get": {
+                "method": "GET",
+                "href": "/headless-batch-engine/32706"
+            },
+            "replace": {
+                "method": "PUT",
+                "href": "/headless-batch-engine/32706"
+            },
+            "update": {
+                "method": "PATCH",
+                "href": "/headless-batch-engine/32706"
+            },
+            "delete": {
+                "method": "DELETE",
+                "href": "/headless-batch-engine/32706"
+            }
+        },
+        "creator": {
+            "additionalName": "",
+            "contentType": "UserAccount",
+            "externalReferenceCode": "672432f5-3157-f397-d51a-9fb8877aec55",
+            "familyName": "Test",
+            "givenName": "Test",
+            "id": 20123,
+            "name": "Test Test"
+        },
+        "dateCreated": "2025-02-17T13:41:30Z",
+        "dateModified": "2025-02-17T13:41:30Z",
+        "externalReferenceCode": "test1",
+        "id": 32706,
+        "keywords": [],
+        "status": {
+            "code": 0,
+            "label": "approved",
+            "label_i18n": "Approved"
+        },
+        "taxonomyCategoryBriefs": [],
+        "textField": "test1"
+    },
+    {
+        "actions": {
+            "permissions": {
+                "method": "GET",
+                "href": "/headless-batch-engine/32708/permissions"
+            },
+            "get": {
+                "method": "GET",
+                "href": "/headless-batch-engine/32708"
+            },
+            "replace": {
+                "method": "PUT",
+                "href": "/headless-batch-engine/32708"
+            },
+            "update": {
+                "method": "PATCH",
+                "href": "/headless-batch-engine/32708"
+            },
+            "delete": {
+                "method": "DELETE",
+                "href": "/headless-batch-engine/32708"
+            }
+        },
+        "creator": {
+            "additionalName": "",
+            "contentType": "UserAccount",
+            "externalReferenceCode": "672432f5-3157-f397-d51a-9fb8877aec55",
+            "familyName": "Test",
+            "givenName": "Test",
+            "id": 20123,
+            "name": "Test Test"
+        },
+        "dateCreated": "2025-02-17T13:41:44Z",
+        "dateModified": "2025-02-17T13:41:44Z",
+        "externalReferenceCode": "test2",
+        "id": 32708,
+        "keywords": [],
+        "status": {
+            "code": 0,
+            "label": "approved",
+            "label_i18n": "Approved"
+        },
+        "taxonomyCategoryBriefs": [],
+        "textField": "test2"
+    }
+]

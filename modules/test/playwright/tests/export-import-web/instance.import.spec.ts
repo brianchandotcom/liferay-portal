@@ -8,6 +8,7 @@ import {
 	ObjectField,
 } from '@liferay/object-admin-rest-client-js';
 import {expect, mergeTests} from '@playwright/test';
+import path from 'path';
 
 import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
 import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
@@ -21,7 +22,7 @@ import {pageTemplatesPagesTest} from '../../fixtures/pageTemplatesPagesTest';
 import {wikiPagesTest} from '../../fixtures/wikiPagesTest';
 import {getRandomInt} from '../../utils/getRandomInt';
 import performLogin, {performLogout, userData} from '../../utils/performLogin';
-import {readFileFromZip} from '../../utils/zip';
+import {readFileFromZip, zipFolder} from '../../utils/zip';
 import {companyExportImportPageTest} from './fixtures/companyExportImportPagesTest';
 import {exportImportPagesTest} from './fixtures/exportImportPagesTest';
 import {stagingPageTest} from './fixtures/stagingPageTest';
@@ -118,6 +119,81 @@ test('can export and import custom object entries at instance level', async ({
 		expect.objectContaining({
 			externalReferenceCode: objectEntry.externalReferenceCode,
 			name: objectEntry.name,
+		})
+	);
+});
+
+test('can only import custom object entries when their definitions are already in the system', async ({
+	apiHelpers,
+	companyExportImportPage,
+}) => {
+	await companyExportImportPage.applicationsMenuPage.goToImport();
+	await companyExportImportPage.exportImportPage.newImportButton.click();
+
+	const compressedFile = await zipFolder(
+		path.join(__dirname, 'dependencies', 'test.object.portlet.lar')
+	);
+
+	await companyExportImportPage.page
+		.locator('input[type="file"]')
+		.setInputFiles(compressedFile);
+
+	expect(
+		companyExportImportPage.page.getByText(
+			'The file test.object.portlet.lar cannot be imported.The object definition "'
+		)
+	).toBeVisible();
+
+	const objectActionApiClient =
+		await apiHelpers.buildRestClient(ObjectDefinitionApi);
+
+	const {body: objectDefinition} =
+		await objectActionApiClient.postObjectDefinition({
+			active: true,
+			className:
+				'com.liferay.object.model.ObjectDefinition#test_definition',
+			externalReferenceCode: 'test-definition',
+			label: {
+				en_US: 'Test',
+			},
+			name: 'Test',
+			objectFields: [
+				{
+					DBType: ObjectField.DBTypeEnum.String,
+					businessType: ObjectField.BusinessTypeEnum.Text,
+					indexed: true,
+					indexedAsKeyword: true,
+					label: {
+						en_US: 'textField',
+					},
+					name: 'textField',
+					required: true,
+				},
+			],
+			pluralLabel: {
+				en_US: 'Tests',
+			},
+			portlet: true,
+			scope: 'company',
+			status: {
+				code: 0,
+			},
+		});
+
+	apiHelpers.data.push({id: objectDefinition.id, type: 'objectDefinition'});
+
+	await companyExportImportPage.page.reload();
+
+	await companyExportImportPage.import(compressedFile);
+
+	expect(
+		await apiHelpers.get(
+			`${apiHelpers.baseUrl}c/tests/by-external-reference-code/test1`
+		)
+	).toEqual(
+		expect.objectContaining({
+			externalReferenceCode: 'test1',
+			textField: 'test1',
 		})
 	);
 });

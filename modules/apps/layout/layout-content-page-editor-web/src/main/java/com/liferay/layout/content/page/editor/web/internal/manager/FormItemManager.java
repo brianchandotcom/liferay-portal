@@ -578,7 +578,7 @@ public class FormItemManager {
 		return layoutStructureItemChanges;
 	}
 
-	public LayoutStructureItemChanges removeLayoutStructureItemsJSONArray(
+	public LayoutStructureItemChanges removeLayoutStructureItems(
 		FormStyledLayoutStructureItem formStyledLayoutStructureItem,
 		LayoutStructure layoutStructure, List<String> initialRemovedItemIds) {
 

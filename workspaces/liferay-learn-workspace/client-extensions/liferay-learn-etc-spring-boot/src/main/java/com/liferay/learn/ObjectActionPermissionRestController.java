@@ -43,52 +43,52 @@ public class ObjectActionPermissionRestController extends BaseRestController {
 		JSONObject jsonObject = new JSONObject(json);
 
 		_updatePermissions(
-			jsonObject.getLong("classPK"),
 			new JSONObject(
 				get(
 					_getAuthorization(),
 					"/o/object-admin/v1.0/object-definitions/" +
-						jsonObject.getLong("objectDefinitionId"))));
+						jsonObject.getLong("objectDefinitionId"))),
+			jsonObject.getLong("classPK"));
 
 		return new ResponseEntity<>(json, HttpStatus.OK);
 	}
 
-	private JSONArray _filterPermissions(
-		JSONArray newPermissionsJSONArray,
-		JSONArray currentPermissionsJSONArray) {
+	private JSONArray _filterPermissionsJSONArray(
+		JSONArray currentPermissionsJSONArray,
+		JSONArray newPermissionsJSONArray) {
 
-		List<String> sourceRoles = new ArrayList<>();
+		List<String> roleNames = new ArrayList<>();
 
 		for (int i = 0; i < newPermissionsJSONArray.length(); i++) {
 			JSONObject jsonObject = newPermissionsJSONArray.getJSONObject(i);
 
 			JSONArray actionIdsJSONArray = jsonObject.getJSONArray("actionIds");
 
-			List<Object> list = actionIdsJSONArray.toList();
+			List<Object> actionIds = actionIdsJSONArray.toList();
 
-			list.removeIf(
+			actionIds.removeIf(
 				item -> !Arrays.asList(
 					_ALLOWED_ACTION_IDS
 				).contains(
 					item
 				));
 
-			jsonObject.put("actionIds", list);
+			jsonObject.put("actionIds", actionIds);
 
-			sourceRoles.add(jsonObject.getString("roleName"));
+			roleNames.add(jsonObject.getString("roleName"));
 		}
 
 		for (int i = 0; i < currentPermissionsJSONArray.length(); i++) {
 			JSONObject jsonObject = currentPermissionsJSONArray.getJSONObject(
 				i);
 
-			if (!sourceRoles.contains(jsonObject.getString("roleName"))) {
+			if (!roleNames.contains(jsonObject.getString("roleName"))) {
 				newPermissionsJSONArray.put(
 					new JSONObject(
 					).put(
-						"roleName", jsonObject.getString("roleName")
-					).put(
 						"actionIds", new JSONArray()
+					).put(
+						"roleName", jsonObject.getString("roleName")
 					));
 			}
 		}
@@ -115,55 +115,49 @@ public class ObjectActionPermissionRestController extends BaseRestController {
 	}
 
 	private Map<Long, List<Object>> _getRelatedObjectEntries(
-		JSONArray objectRelationshipsJSONArray, String restContextPath,
-		long objectEntryId) {
+		JSONArray jsonArray, long objectEntryId, String restContextPath) {
 
-		Map<Long, List<Object>> objectEntriesMap = new HashMap<>();
+		Map<Long, List<Object>> map = new HashMap<>();
 
-		for (int i = 0; i < objectRelationshipsJSONArray.length(); i++) {
-			JSONObject objectRelationshipJSONObject =
-				objectRelationshipsJSONArray.getJSONObject(i);
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject1 = jsonArray.getJSONObject(i);
 
 			if (Arrays.asList(
-					_EXCLUDED_OBJECT_DEFINITION_EXTERNAL_REFERENCE_CODES
+					_EXCLUDED_OBJECT_DEFINITIONS_EXTERNAL_REFERENCE_CODES
 				).contains(
-					objectRelationshipJSONObject.getString(
+					jsonObject1.getString(
 						"objectDefinitionExternalReferenceCode2")
 				)) {
 
 				continue;
 			}
 
-			JSONObject relatedObjectEntriesJSONObject = new JSONObject(
+			JSONObject jsonObject2 = new JSONObject(
 				get(
 					_getAuthorization(),
 					StringBundler.concat(
 						restContextPath, "/", objectEntryId, "/",
-						objectRelationshipJSONObject.getString("name"),
+						jsonObject1.getString("name"),
 						"?fields=id&pageSize=500")));
 
-			objectEntriesMap.put(
-				objectRelationshipJSONObject.getLong("objectDefinitionId2"),
-				relatedObjectEntriesJSONObject.getJSONArray(
+			map.put(
+				jsonObject1.getLong("objectDefinitionId2"),
+				jsonObject2.getJSONArray(
 					"items"
 				).toList());
 		}
 
-		return objectEntriesMap;
+		return map;
 	}
 
-	private void _updatePermissions(
-		long objectEntryId, JSONObject objectDefinitionJSONObject) {
-
+	private void _updatePermissions(JSONObject jsonObject, long objectEntryId) {
 		for (Map.Entry<Long, List<Object>> entry :
 				_getRelatedObjectEntries(
-					objectDefinitionJSONObject.getJSONArray(
-						"objectRelationships"),
-					objectDefinitionJSONObject.getString("restContextPath"),
-					objectEntryId
+					jsonObject.getJSONArray("objectRelationships"),
+					objectEntryId, jsonObject.getString("restContextPath")
 				).entrySet()) {
 
-			JSONObject relatedObjectDefinitionJSONObject = new JSONObject(
+			JSONObject objectDefinitionJSONObject = new JSONObject(
 				get(
 					_getAuthorization(),
 					"/o/object-admin/v1.0/object-definitions/" +
@@ -174,36 +168,34 @@ public class ObjectActionPermissionRestController extends BaseRestController {
 
 				put(
 					_getAuthorization(),
-					_filterPermissions(
+					_filterPermissionsJSONArray(
 						_getPermissionsJSONArray(
-							objectEntryId,
+							GetterUtil.getLong(map.get("id")),
 							objectDefinitionJSONObject.getString(
 								"restContextPath")),
 						_getPermissionsJSONArray(
-							GetterUtil.getLong(map.get("id")),
-							relatedObjectDefinitionJSONObject.getString(
-								"restContextPath"))
+							objectEntryId,
+							jsonObject.getString("restContextPath"))
 					).toString(),
 					StringBundler.concat(
-						relatedObjectDefinitionJSONObject.getString(
-							"restContextPath"),
+						objectDefinitionJSONObject.getString("restContextPath"),
 						"/", GetterUtil.getLong(map.get("id")),
 						"/permissions"));
 
 				_updatePermissions(
-					GetterUtil.getLong(map.get("id")),
-					relatedObjectDefinitionJSONObject);
+					objectDefinitionJSONObject,
+					GetterUtil.getLong(map.get("id")));
 			}
 		}
 	}
 
 	private static final String[] _ALLOWED_ACTION_IDS = {
-		"DELETE", "UPDATE", "VIEW", "PERMISSIONS"
+		"DELETE", "PERMISSIONS", "UPDATE", "VIEW"
 	};
 
 	private static final String[]
-		_EXCLUDED_OBJECT_DEFINITION_EXTERNAL_REFERENCE_CODES = {
-			"T4T14_ENROLLMENTS", "T4T14_QUIZ_QUESTION", "T4T14_QUIZ_ANSWER"
+		_EXCLUDED_OBJECT_DEFINITIONS_EXTERNAL_REFERENCE_CODES = {
+			"T4T14_ENROLLMENTS", "T4T14_QUIZ_ANSWER", "T4T14_QUIZ_QUESTION"
 		};
 
 	@Autowired

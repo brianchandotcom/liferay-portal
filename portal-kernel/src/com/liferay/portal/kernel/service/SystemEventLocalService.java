@@ -61,15 +61,15 @@ public interface SystemEventLocalService
 	 * Never modify this interface directly. Add custom service methods to <code>com.liferay.portal.service.impl.SystemEventLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface. Consume the system event local service via injection or a <code>org.osgi.util.tracker.ServiceTracker</code>. Use {@link SystemEventLocalServiceUtil} if injection and service tracking are not available.
 	 */
 	public SystemEvent addSystemEvent(
-			long userId, long groupId, String className, long classPK,
-			String classUuid, String classExternalReferenceCode,
+			long userId, long groupId, String classExternalReferenceCode,
+			String className, long classPK, String classUuid,
 			String referrerClassName, int type, String extraData)
 		throws PortalException;
 
 	public SystemEvent addSystemEvent(
-			long companyId, String className, long classPK, String classUuid,
-			String classExternalReferenceCode, String referrerClassName,
-			int type, String extraData)
+			long companyId, String classExternalReferenceCode, String className,
+			long classPK, String classUuid, String referrerClassName, int type,
+			String extraData)
 		throws PortalException;
 
 	/**

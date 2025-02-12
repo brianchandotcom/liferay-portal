@@ -36,25 +36,25 @@ public class SystemEventLocalServiceUtil {
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.portal.service.impl.SystemEventLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static SystemEvent addSystemEvent(
-			long userId, long groupId, String className, long classPK,
-			String classUuid, String classExternalReferenceCode,
+			long userId, long groupId, String classExternalReferenceCode,
+			String className, long classPK, String classUuid,
 			String referrerClassName, int type, String extraData)
 		throws PortalException {
 
 		return getService().addSystemEvent(
-			userId, groupId, className, classPK, classUuid,
-			classExternalReferenceCode, referrerClassName, type, extraData);
+			userId, groupId, classExternalReferenceCode, className, classPK,
+			classUuid, referrerClassName, type, extraData);
 	}
 
 	public static SystemEvent addSystemEvent(
-			long companyId, String className, long classPK, String classUuid,
-			String classExternalReferenceCode, String referrerClassName,
-			int type, String extraData)
+			long companyId, String classExternalReferenceCode, String className,
+			long classPK, String classUuid, String referrerClassName, int type,
+			String extraData)
 		throws PortalException {
 
 		return getService().addSystemEvent(
-			companyId, className, classPK, classUuid,
-			classExternalReferenceCode, referrerClassName, type, extraData);
+			companyId, classExternalReferenceCode, className, classPK,
+			classUuid, referrerClassName, type, extraData);
 	}
 
 	/**

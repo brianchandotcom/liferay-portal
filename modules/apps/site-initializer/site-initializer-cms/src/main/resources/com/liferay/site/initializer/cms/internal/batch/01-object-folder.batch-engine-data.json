@@ -1,0 +1,54 @@
+{
+	"configuration": {
+		"className": "com.liferay.object.admin.rest.dto.v1_0.ObjectFolder",
+		"multiCompany": true,
+		"parameters": {
+			"containsHeaders": "true",
+			"createStrategy": "UPSERT",
+			"featureFlag": "LPD-17809",
+			"importStrategy": "ON_ERROR_FAIL",
+			"updateStrategy": "UPDATE"
+		},
+		"taskItemDelegateName": "DEFAULT"
+	},
+	"items": [
+		{
+			"actions": {
+				"delete": {
+				},
+				"get": {
+				},
+				"permissions": {
+				},
+				"update": {
+				}
+			},
+			"externalReferenceCode": "a0166c3c-6c8a-74a4-2d43-dba2e5577c40",
+			"label": {
+				"en_US": "CMS Content"
+			},
+			"name": "CMSContent",
+			"objectFolderItems": [
+			]
+		},
+		{
+			"actions": {
+				"delete": {
+				},
+				"get": {
+				},
+				"permissions": {
+				},
+				"update": {
+				}
+			},
+			"externalReferenceCode": "8a5269c6-79b0-b741-ed1a-4cf13c4560e0",
+			"label": {
+				"en_US": "CMS Files"
+			},
+			"name": "CMSFiles",
+			"objectFolderItems": [
+			]
+		}
+	]
+}

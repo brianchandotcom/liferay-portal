@@ -71,10 +71,6 @@ public class DefaultDLEditFileEntryDisplayContextTest {
 			true
 		);
 
-		ReflectionTestUtil.setFieldValue(
-			defaultDLEditFileEntryDisplayContext,
-			"_fileEntryDisplayContextHelper", fileEntryDisplayContextHelper);
-
 		Assert.assertTrue(
 			defaultDLEditFileEntryDisplayContext.isPublishButtonDisabled());
 	}

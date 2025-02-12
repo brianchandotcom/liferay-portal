@@ -67,18 +67,17 @@ public class LearnRestController extends BaseRestController {
 			@AuthenticationPrincipal Jwt jwt, @PathVariable long quizId)
 		throws Exception {
 
-		JSONObject jsonObject = new JSONObject(
-			get(
-				_getAuthorization(),
-				StringBundler.concat(
-					"/o/c/quizquestions/scopes/", _siteGroupId,
-					"?filter=quizId eq '", quizId, "'&fields=id,position,",
-					"question,questionType,quizAnswers,quizAnswers.answer,",
-					"quizAnswers.id,quizAnswers.position&nestedFields=",
-					"quizAnswers&pageSize=500&sort=position")));
-
 		return new ResponseEntity<>(
-			jsonObject.getJSONArray(
+			new JSONObject(
+				get(
+					_getAuthorization(),
+					StringBundler.concat(
+						"/o/c/quizquestions/scopes/", _siteGroupId,
+						"?filter=quizId eq '", quizId, "'&fields=id,position,",
+						"question,questionType,quizAnswers,quizAnswers.answer,",
+						"quizAnswers.id,quizAnswers.position&nestedFields=",
+						"quizAnswers&pageSize=500&sort=position"))
+			).getJSONArray(
 				"items"
 			).toList(),
 			HttpStatus.OK);

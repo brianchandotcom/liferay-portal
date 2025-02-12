@@ -8,6 +8,7 @@ package com.liferay.headless.admin.site.resource.v1_0.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.exportimport.kernel.service.StagingLocalService;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageTemplateSet;
+import com.liferay.headless.admin.site.client.pagination.Page;
 import com.liferay.headless.admin.site.client.problem.Problem;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
 import com.liferay.petra.function.UnsafeRunnable;
@@ -101,6 +102,82 @@ public class PageTemplateSetResourceTest
 
 		super.
 			testGetSiteSiteByExternalReferenceCodePageTemplateSetPermissionsPage();
+	}
+
+	@Override
+	@Test
+	public void testGetSiteSiteByExternalReferenceCodePageTemplateSetsPage()
+		throws Exception {
+
+		super.testGetSiteSiteByExternalReferenceCodePageTemplateSetsPage();
+
+		String search = RandomTestUtil.randomString();
+
+		Page<PageTemplateSet> page =
+			pageTemplateSetResource.
+				getSiteSiteByExternalReferenceCodePageTemplateSetsPage(
+					testGroup.getExternalReferenceCode(), search, null, null,
+					null, null);
+
+		long searchTotalCount = page.getTotalCount();
+
+		page =
+			pageTemplateSetResource.
+				getSiteSiteByExternalReferenceCodePageTemplateSetsPage(
+					testGroup.getExternalReferenceCode(), null, null, null,
+					null, null);
+
+		long totalCount = page.getTotalCount();
+
+		pageTemplateSetResource.
+			postSiteSiteByExternalReferenceCodePageTemplateSet(
+				testGroup.getExternalReferenceCode(), randomPageTemplateSet());
+
+		page =
+			pageTemplateSetResource.
+				getSiteSiteByExternalReferenceCodePageTemplateSetsPage(
+					testGroup.getExternalReferenceCode(), search, null, null,
+					null, null);
+
+		Assert.assertEquals(searchTotalCount, page.getTotalCount());
+
+		PageTemplateSet pageTemplateSet = randomPageTemplateSet();
+
+		pageTemplateSet.setName(
+			RandomTestUtil.randomString() + search +
+				RandomTestUtil.randomString());
+
+		pageTemplateSetResource.
+			postSiteSiteByExternalReferenceCodePageTemplateSet(
+				testGroup.getExternalReferenceCode(), pageTemplateSet);
+
+		page =
+			pageTemplateSetResource.
+				getSiteSiteByExternalReferenceCodePageTemplateSetsPage(
+					testGroup.getExternalReferenceCode(), search, null, null,
+					null, null);
+
+		Assert.assertEquals(searchTotalCount + 1, page.getTotalCount());
+
+		pageTemplateSetResource.
+			postSiteSiteByExternalReferenceCodePageTemplateSet(
+				testGroup.getExternalReferenceCode(), randomPageTemplateSet());
+
+		page =
+			pageTemplateSetResource.
+				getSiteSiteByExternalReferenceCodePageTemplateSetsPage(
+					testGroup.getExternalReferenceCode(), search, null, null,
+					null, null);
+
+		Assert.assertEquals(searchTotalCount + 1, page.getTotalCount());
+
+		page =
+			pageTemplateSetResource.
+				getSiteSiteByExternalReferenceCodePageTemplateSetsPage(
+					testGroup.getExternalReferenceCode(), null, null, null,
+					null, null);
+
+		Assert.assertEquals(totalCount + 3, page.getTotalCount());
 	}
 
 	@Ignore

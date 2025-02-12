@@ -5,7 +5,6 @@
 
 package com.liferay.feature.flag.web.internal.upgrade.registry;
 
-import com.liferay.feature.flag.web.internal.upgrade.v1_0_0.FeatureFlagUpgradeProcess;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.PortalPreferencesLocalService;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
@@ -26,8 +25,14 @@ public class FeatureFlagUpgradeStepRegistrator
 
 		registry.register(
 			"0.0.1", "1.0.0",
-			new FeatureFlagUpgradeProcess(
-				_companyLocalService, _portalPreferencesLocalService));
+			new com.liferay.feature.flag.web.internal.upgrade.v1_0_0.
+				FeatureFlagUpgradeProcess(
+					_companyLocalService, _portalPreferencesLocalService));
+
+		registry.register(
+			"1.0.0", "1.0.1",
+			new com.liferay.feature.flag.web.internal.upgrade.v1_0_1.
+				FeatureFlagUpgradeProcess(_portalPreferencesLocalService));
 	}
 
 	@Reference

@@ -16,6 +16,8 @@ import com.liferay.dynamic.data.mapping.util.DDMFormDeserializeUtil;
 import com.liferay.dynamic.data.mapping.util.DDMFormSerializeUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -93,6 +95,7 @@ public class DDMStructureUpgradeProcess extends UpgradeProcess {
 					StringBundler.concat(
 						"select DDMStructureVersion.ctCollectionId, ",
 						"DDMStructureVersion.structureVersionId, ",
+						"DDMStructure.structureId, ",
 						"DDMStructureVersion.definition from DDMStructure ",
 						"inner join DDMStructureVersion on ",
 						"DDMStructure.structureId = ",
@@ -109,46 +112,65 @@ public class DDMStructureUpgradeProcess extends UpgradeProcess {
 
 			try (ResultSet resultSet = selectPreparedStatement.executeQuery()) {
 				while (resultSet.next()) {
-					DDMForm ddmForm = DDMFormDeserializeUtil.deserialize(
-						_ddmFormDeserializer,
-						resultSet.getString("definition"));
+					try {
+						DDMForm ddmForm = DDMFormDeserializeUtil.deserialize(
+							_ddmFormDeserializer,
+							resultSet.getString("definition"));
 
-					List<DDMFormRule> ddmFormRules = ddmForm.getDDMFormRules();
+						List<DDMFormRule> ddmFormRules =
+							ddmForm.getDDMFormRules();
 
-					SPIDDMFormRuleSerializerContext
-						spiDDMFormRuleSerializerContext =
-							new SPIDDMFormRuleSerializerContext();
+						SPIDDMFormRuleSerializerContext
+							spiDDMFormRuleSerializerContext =
+								new SPIDDMFormRuleSerializerContext();
 
-					spiDDMFormRuleSerializerContext.addAttribute(
-						"form", ddmForm);
+						spiDDMFormRuleSerializerContext.addAttribute(
+							"form", ddmForm);
 
-					List<DDMFormRule> newDDMFormRules =
-						_spiDDMFormRuleConverter.convert(
-							_spiDDMFormRuleConverter.convert(ddmFormRules),
-							spiDDMFormRuleSerializerContext);
+						List<DDMFormRule> newDDMFormRules =
+							_spiDDMFormRuleConverter.convert(
+								_spiDDMFormRuleConverter.convert(ddmFormRules),
+								spiDDMFormRuleSerializerContext);
 
-					if (Objects.equals(ddmFormRules, newDDMFormRules)) {
-						continue;
+						if (Objects.equals(ddmFormRules, newDDMFormRules)) {
+							continue;
+						}
+
+						ddmForm.setDDMFormRules(newDDMFormRules);
+
+						updatePreparedStatement.setString(
+							1,
+							DDMFormSerializeUtil.serialize(
+								ddmForm, _ddmFormSerializer));
+						updatePreparedStatement.setLong(
+							2, resultSet.getLong("ctCollectionId"));
+						updatePreparedStatement.setLong(
+							3, resultSet.getLong("structureVersionId"));
+
+						updatePreparedStatement.addBatch();
 					}
+					catch (Exception exception) {
+						String message =
+							"Unable to normalize form rule conditions for " +
+								"DDM Structure with ID " +
+									resultSet.getLong("structureId");
 
-					ddmForm.setDDMFormRules(newDDMFormRules);
-
-					updatePreparedStatement.setString(
-						1,
-						DDMFormSerializeUtil.serialize(
-							ddmForm, _ddmFormSerializer));
-					updatePreparedStatement.setLong(
-						2, resultSet.getLong("ctCollectionId"));
-					updatePreparedStatement.setLong(
-						3, resultSet.getLong("structureVersionId"));
-
-					updatePreparedStatement.addBatch();
+						if (_log.isDebugEnabled()) {
+							_log.debug(message, exception);
+						}
+						else if (_log.isWarnEnabled()) {
+							_log.warn(message);
+						}
+					}
 				}
 
 				updatePreparedStatement.executeBatch();
 			}
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DDMStructureUpgradeProcess.class);
 
 	private final DDMFormDeserializer _ddmFormDeserializer;
 	private final DDMFormSerializer _ddmFormSerializer;

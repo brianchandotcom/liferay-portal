@@ -339,7 +339,8 @@ public class UserDisplayContext {
 				organization.getParentOrganization();
 
 			if ((parentOrganization != null) &&
-				!organizations.contains(parentOrganization)) {
+				!organizations.contains(parentOrganization) &&
+				!parentOrganizations.contains(parentOrganization)) {
 
 				parentOrganizations.add(parentOrganization);
 			}

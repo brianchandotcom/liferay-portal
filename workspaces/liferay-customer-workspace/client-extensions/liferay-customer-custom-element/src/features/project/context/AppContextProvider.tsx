@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {createContext, useContext, useEffect, useReducer} from 'react';
+import {createContext, useContext, useEffect, useMemo, useReducer} from 'react';
 import {useAppPropertiesContext} from '~/contexts/AppPropertiesContext';
 import IAccountBrief from '~/interfaces/accountBrief';
 import IAccountSubscriptionGroup from '~/interfaces/accountSubscriptionGroup';
@@ -22,7 +22,7 @@ import {getAccountKey} from '~/utils/getAccountKey';
 import {isValidPage} from '~/utils/page.validation';
 import routerPath from '~/utils/routerPath';
 
-import reducer, {IAction, IState, actionTypes} from './reducer';
+import reducer, {ActionPayload, IAction, IState, actionTypes} from './reducer';
 
 const AppContext = createContext<[IState, React.Dispatch<IAction>]>([
 	{
@@ -54,7 +54,7 @@ const AppContextProvider = ({children}: {children: React.ReactNode}) => {
 		}
 	);
 
-	const pageRoutes = routerPath();
+	const pageRoutes = useMemo(() => routerPath(), []);
 
 	useEffect(() => {
 		const getUser = async (
@@ -159,7 +159,7 @@ const AppContextProvider = ({children}: {children: React.ReactNode}) => {
 			};
 
 			dispatch({
-				payload: currentUserProjectAccess.hasProjectAccess,
+				payload: currentUserProjectAccess as unknown as ActionPayload,
 				type: actionTypes.UPDATE_USER_PROJECT_ACCESS as keyof typeof actionTypes,
 			});
 

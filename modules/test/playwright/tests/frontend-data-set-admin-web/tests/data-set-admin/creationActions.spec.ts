@@ -649,7 +649,7 @@ test(
 				'Active',
 			]);
 
-			await expect(actionsPage.activeToggle.last()).toBeVisible();
+			await expect(actionsPage.activeToggle.first()).toBeVisible();
 		});
 
 		await test.step('Deactivate the creation action', async () => {
@@ -659,7 +659,7 @@ test(
 				text: label,
 			});
 
-			await actionsPage.activeToggle.last().click();
+			await actionsPage.activeToggle.first().click();
 
 			await waitForAlert(page);
 
@@ -670,7 +670,7 @@ test(
 				'Inactive',
 			]);
 
-			await expect(actionsPage.inactiveToggle.last()).toBeVisible();
+			await expect(actionsPage.inactiveToggle.first()).toBeVisible();
 		});
 
 		await test.step('Activate the creation action', async () => {
@@ -680,7 +680,7 @@ test(
 				text: label,
 			});
 
-			await actionsPage.inactiveToggle.last().click();
+			await actionsPage.inactiveToggle.first().click();
 
 			await waitForAlert(page);
 
@@ -691,7 +691,7 @@ test(
 				'Active',
 			]);
 
-			await expect(actionsPage.activeToggle.last()).toBeVisible();
+			await expect(actionsPage.activeToggle.first()).toBeVisible();
 		});
 	}
 );

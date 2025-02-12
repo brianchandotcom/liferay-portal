@@ -306,31 +306,26 @@ test(
 		const filter1Label = getRandomString();
 		const filter2Label = getRandomString();
 		const modifiedDateField = 'dateModified';
-		const filterIds = [];
 
 		await test.step('Create a couple of new date-time filters', async () => {
-			const filter1 =
-				await dataSetManagerApiHelpers.createDataSetDateFilter({
-					dataSetERC,
-					fieldName: DATE_FIELD_NAME,
-					from: '',
-					label_i18n: {en_US: filter1Label},
-					to: '',
-					type: 'date-time',
-				});
+			await dataSetManagerApiHelpers.createDataSetDateFilter({
+				dataSetERC,
+				fieldName: DATE_FIELD_NAME,
+				from: '',
+				label_i18n: {en_US: filter1Label},
+				to: '',
+				type: 'date-time',
+			});
 
-			const filter2 =
-				await dataSetManagerApiHelpers.createDataSetDateFilter({
-					active: false,
-					dataSetERC,
-					fieldName: modifiedDateField,
-					from: '',
-					label_i18n: {en_US: filter2Label},
-					to: '',
-					type: 'date-time',
-				});
-
-			filterIds.push(filter1.id, filter2.id);
+			await dataSetManagerApiHelpers.createDataSetDateFilter({
+				active: false,
+				dataSetERC,
+				fieldName: modifiedDateField,
+				from: '',
+				label_i18n: {en_US: filter2Label},
+				to: '',
+				type: 'date-time',
+			});
 		});
 
 		await test.step('Add a field, so FDS has something to show', async () => {

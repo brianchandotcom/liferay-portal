@@ -340,19 +340,13 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 				_getSortedRelatedObjectEntries(
 					dataSetObjectDefinition, dataSetObjectEntry,
 					"creationActionsOrder",
-					(ObjectEntry objectEntry) -> Objects.equals(
-						_getType(objectEntry), "creation"),
+					(ObjectEntry objectEntry) ->
+						Objects.equals(_getType(objectEntry), "creation") &&
+						Objects.equals(_isActive(objectEntry), true),
 					"dataSetToDataSetActions"),
 				(ObjectEntry objectEntry) -> {
 					Map<String, Object> properties =
 						objectEntry.getProperties();
-
-					if (FeatureFlagManagerUtil.isEnabled("LPD-37531") &&
-						Boolean.FALSE.equals(
-							(Boolean)properties.get("active"))) {
-
-						return null;
-					}
 
 					return JSONUtil.put(
 						"data",
@@ -557,17 +551,13 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 		return JSONUtil.toJSONArray(
 			_getSortedRelatedObjectEntries(
 				dataSetObjectDefinition, dataSetObjectEntry, "filtersOrder",
-				(Predicate)null, "dataSetToDataSetClientExtensionFilters",
+				(ObjectEntry objectEntry) -> Objects.equals(
+					_isActive(objectEntry), true),
+				"dataSetToDataSetClientExtensionFilters",
 				"dataSetToDataSetDateFilters",
 				"dataSetToDataSetSelectionFilters"),
 			(ObjectEntry objectEntry) -> {
 				Map<String, Object> properties = objectEntry.getProperties();
-
-				if (FeatureFlagManagerUtil.isEnabled("LPD-37531") &&
-					Boolean.FALSE.equals((Boolean)properties.get("active"))) {
-
-					return null;
-				}
 
 				String fieldName = String.valueOf(properties.get("fieldName"));
 
@@ -782,17 +772,12 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 		return JSONUtil.toJSONArray(
 			_getSortedRelatedObjectEntries(
 				dataSetObjectDefinition, dataSetObjectEntry, "itemActionsOrder",
-				(ObjectEntry objectEntry) -> Objects.equals(
-					_getType(objectEntry), "item"),
+				(ObjectEntry objectEntry) ->
+					Objects.equals(_getType(objectEntry), "item") &&
+					Objects.equals(_isActive(objectEntry), true),
 				"dataSetToDataSetActions"),
 			(ObjectEntry objectEntry) -> {
 				Map<String, Object> properties = objectEntry.getProperties();
-
-				if (FeatureFlagManagerUtil.isEnabled("LPD-37531") &&
-					Boolean.FALSE.equals((Boolean)properties.get("active"))) {
-
-					return null;
-				}
 
 				return JSONUtil.put(
 					"data",
@@ -1043,15 +1028,11 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 		return JSONUtil.toJSONArray(
 			_getSortedRelatedObjectEntries(
 				dataSetObjectDefinition, dataSetObjectEntry, "sortsOrder",
-				(Predicate)null, "dataSetToDataSetSorts"),
+				(ObjectEntry objectEntry) -> Objects.equals(
+					_isActive(objectEntry), true),
+				"dataSetToDataSetSorts"),
 			(ObjectEntry objectEntry) -> {
 				Map<String, Object> properties = objectEntry.getProperties();
-
-				if (FeatureFlagManagerUtil.isEnabled("LPD-37531") &&
-					Boolean.FALSE.equals((Boolean)properties.get("active"))) {
-
-					return null;
-				}
 
 				String label = (String)properties.get("label");
 
@@ -1120,6 +1101,16 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 		}
 
 		return apiURL;
+	}
+
+	private Boolean _isActive(ObjectEntry objectEntry) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-37531")) {
+			return true;
+		}
+
+		Map<String, Object> properties = objectEntry.getProperties();
+
+		return (Boolean)properties.get("active");
 	}
 
 	private String _resolveParameters(

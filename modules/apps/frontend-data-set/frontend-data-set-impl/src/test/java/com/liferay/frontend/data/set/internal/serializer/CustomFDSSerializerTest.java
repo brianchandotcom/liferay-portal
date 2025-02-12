@@ -21,7 +21,6 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -47,7 +46,6 @@ import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -76,15 +74,6 @@ public class CustomFDSSerializerTest {
 	public void setUp() {
 		_bundleContext = SystemBundleUtil.getBundleContext();
 
-		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			_bundleContext, FDSAPIURLResolver.class, "fds.rest.application.key",
-			ServiceTrackerCustomizerFactory.<FDSAPIURLResolver>serviceWrapper(
-				_bundleContext));
-
-		ReflectionTestUtil.setFieldValue(
-			_fdsAPIURLResolverRegistry, "_serviceTrackerMap",
-			_serviceTrackerMap);
-
 		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
 
 		Mockito.when(
@@ -102,15 +91,28 @@ public class CustomFDSSerializerTest {
 		_resetFDSSerializer();
 	}
 
-	@After
-	public void tearDown() {
-		_serviceTrackerMap.close();
-	}
-
 	@Test
 	public void testSerializeAPIURL() {
+		ServiceTrackerMap
+			<String,
+			 ServiceTrackerCustomizerFactory.ServiceWrapper<FDSAPIURLResolver>>
+				serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+					_bundleContext, FDSAPIURLResolver.class,
+					"fds.rest.application.key",
+					ServiceTrackerCustomizerFactory.
+						<FDSAPIURLResolver>serviceWrapper(_bundleContext));
+
+		FDSAPIURLResolverRegistry fdsAPIURLResolverRegistry =
+			new FDSAPIURLResolverRegistryImpl();
+
+		ReflectionTestUtil.setFieldValue(
+			fdsAPIURLResolverRegistry, "_serviceTrackerMap", serviceTrackerMap);
 
 		// Interpolation
+
+		ReflectionTestUtil.setFieldValue(
+			_customFDSSerializer, "fdsAPIURLResolverRegistry",
+			fdsAPIURLResolverRegistry);
 
 		_mockSerializeAPIURL("fdsName", "/app", "/endpoint/{foo}", "schema");
 
@@ -128,6 +130,10 @@ public class CustomFDSSerializerTest {
 		_resetFDSSerializer();
 
 		// REST application: /app
+
+		ReflectionTestUtil.setFieldValue(
+			_customFDSSerializer, "fdsAPIURLResolverRegistry",
+			fdsAPIURLResolverRegistry);
 
 		_mockSerializeAPIURL("fdsName1", "/app", "/endpoint/{foo}", "schema");
 		_mockSerializeAPIURL("fdsName2", "/app", "/endpoint/{foo}", "schema");
@@ -150,6 +156,10 @@ public class CustomFDSSerializerTest {
 
 		// REST application: /app1 and /app2
 
+		ReflectionTestUtil.setFieldValue(
+			_customFDSSerializer, "fdsAPIURLResolverRegistry",
+			fdsAPIURLResolverRegistry);
+
 		_mockSerializeAPIURL("fdsName1", "/app1", "/endpoint/{foo}", "schema");
 		_mockSerializeAPIURL("fdsName2", "/app2", "/endpoint/{foo}", "schema");
 
@@ -171,6 +181,10 @@ public class CustomFDSSerializerTest {
 
 		// Nested fields: creator.name
 
+		ReflectionTestUtil.setFieldValue(
+			_customFDSSerializer, "fdsAPIURLResolverRegistry",
+			fdsAPIURLResolverRegistry);
+
 		_mockSerializeAPIURL(
 			"fdsName", new String[] {"creator.name"}, "/app", "/endpoint",
 			"schema");
@@ -183,6 +197,10 @@ public class CustomFDSSerializerTest {
 		_resetFDSSerializer();
 
 		// Nested fields: creator.name and status.id
+
+		ReflectionTestUtil.setFieldValue(
+			_customFDSSerializer, "fdsAPIURLResolverRegistry",
+			fdsAPIURLResolverRegistry);
 
 		_mockSerializeAPIURL(
 			"fdsName", new String[] {"creator.name", "status.id"}, "/app",
@@ -204,6 +222,10 @@ public class CustomFDSSerializerTest {
 		_resetFDSSerializer();
 
 		// Nested fields depth
+
+		ReflectionTestUtil.setFieldValue(
+			_customFDSSerializer, "fdsAPIURLResolverRegistry",
+			fdsAPIURLResolverRegistry);
 
 		_mockSerializeAPIURL(
 			"fdsName",
@@ -227,6 +249,8 @@ public class CustomFDSSerializerTest {
 		String nestedFieldsDepth = parameterMap.get("nestedFieldsDepth");
 
 		Assert.assertTrue(nestedFieldsDepth.equals("2"));
+
+		serviceTrackerMap.close();
 	}
 
 	@Test
@@ -282,18 +306,10 @@ public class CustomFDSSerializerTest {
 
 		_resetFDSSerializer();
 
-		_mockSerializeFilters(
-			"fdsName",
-			HashMapBuilder.put(
-				"clientExtensionEntryERC", (Object)"LXC:filter-client-extension"
-			).put(
-				"fieldName", (Object)"channelId"
-			).put(
-				"label", (Object)"By Channel CX"
-			).build());
+		CETManager cetManager = Mockito.mock(CETManager.class);
 
 		Mockito.when(
-			_cetManager.getCET(
+			cetManager.getCET(
 				Mockito.anyLong(), Mockito.eq("LXC:filter-client-extension"))
 		).thenAnswer(
 			invocation -> new FDSFilterCET() {
@@ -385,6 +401,19 @@ public class CustomFDSSerializerTest {
 
 			}
 		);
+
+		ReflectionTestUtil.setFieldValue(
+			_customFDSSerializer, "_cetManager", cetManager);
+
+		_mockSerializeFilters(
+			"fdsName",
+			HashMapBuilder.put(
+				"clientExtensionEntryERC", (Object)"LXC:filter-client-extension"
+			).put(
+				"fieldName", (Object)"channelId"
+			).put(
+				"label", (Object)"By Channel CX"
+			).build());
 
 		JSONAssert.assertEquals(
 			JSONUtil.putAll(
@@ -926,14 +955,7 @@ public class CustomFDSSerializerTest {
 		_customFDSSerializer = Mockito.mock(CustomFDSSerializer.class);
 
 		ReflectionTestUtil.setFieldValue(
-			_customFDSSerializer, "_cetManager", _cetManager);
-
-		ReflectionTestUtil.setFieldValue(
-			_customFDSSerializer, "_jsonFactory", _jsonFactory);
-
-		ReflectionTestUtil.setFieldValue(
-			_customFDSSerializer, "fdsAPIURLResolverRegistry",
-			_fdsAPIURLResolverRegistry);
+			_customFDSSerializer, "_jsonFactory", new JSONFactoryImpl());
 	}
 
 	private void _testSerializeCreationMenu(String fdsName, String[] titles) {
@@ -967,17 +989,8 @@ public class CustomFDSSerializerTest {
 		CustomFDSSerializerTest.class);
 
 	private static BundleContext _bundleContext;
-	private static final CETManager _cetManager = Mockito.mock(
-		CETManager.class);
 	private static CustomFDSSerializer _customFDSSerializer;
-	private static final FDSAPIURLResolverRegistry _fdsAPIURLResolverRegistry =
-		new FDSAPIURLResolverRegistryImpl();
 	private static final HttpServletRequest _httpServletRequest = Mockito.mock(
 		HttpServletRequest.class);
-	private static final JSONFactory _jsonFactory = new JSONFactoryImpl();
-	private static ServiceTrackerMap
-		<String,
-		 ServiceTrackerCustomizerFactory.ServiceWrapper<FDSAPIURLResolver>>
-			_serviceTrackerMap;
 
 }

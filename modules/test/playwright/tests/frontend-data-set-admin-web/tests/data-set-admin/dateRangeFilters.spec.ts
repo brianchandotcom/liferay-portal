@@ -450,23 +450,23 @@ test(
 				rowIndex: 0,
 			});
 
-			await expect(filtersPage.activeToggle.last()).toBeVisible();
+			await expect(filtersPage.activeToggle.first()).toBeVisible();
 		});
 
 		await test.step('Deactivate date filter', async () => {
-			await filtersPage.activeToggle.last().click();
+			await filtersPage.activeToggle.first().click();
 
 			await waitForAlert(page);
 
-			await expect(filtersPage.inactiveToggle.last()).toBeVisible();
+			await expect(filtersPage.inactiveToggle.first()).toBeVisible();
 		});
 
 		await test.step('Activate date filter', async () => {
-			await filtersPage.inactiveToggle.last().click();
+			await filtersPage.inactiveToggle.first().click();
 
 			await waitForAlert(page);
 
-			await expect(filtersPage.activeToggle.last()).toBeVisible();
+			await expect(filtersPage.activeToggle.first()).toBeVisible();
 		});
 	}
 );

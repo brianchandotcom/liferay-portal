@@ -65,6 +65,4 @@
 			</#if>
 		</#list>
 	</ul>
-
-	<br style="clear: both;" />
 </#if>

@@ -101,9 +101,9 @@ public class SystemFDSSerializer
 		List<FDSFilter> fdsFilters, String fdsName,
 		HttpServletRequest httpServletRequest) {
 
-		Locale locale = _portal.getLocale(httpServletRequest);
-
 		JSONArray jsonArray = _jsonFactory.createJSONArray();
+
+		Locale locale = _portal.getLocale(httpServletRequest);
 
 		_serializeFilters(fdsFilters, jsonArray, locale);
 		_serializeFilters(

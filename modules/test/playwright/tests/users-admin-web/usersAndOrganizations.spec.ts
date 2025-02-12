@@ -687,3 +687,52 @@ test(
 		}
 	}
 );
+
+test('LPD-48741 User organizations list contains no duplicate', async ({
+	apiHelpers,
+	editUserPage,
+	usersAndOrganizationsPage,
+}) => {
+	const parentOrganization =
+		await apiHelpers.headlessAdminUser.postOrganization();
+	const organization1 = await apiHelpers.headlessAdminUser.postOrganization({
+		parentOrganization: {
+			externalReferenceCode: parentOrganization.externalReferenceCode,
+		},
+	});
+	const organization2 = await apiHelpers.headlessAdminUser.postOrganization({
+		parentOrganization: {
+			externalReferenceCode: parentOrganization.externalReferenceCode,
+		},
+	});
+
+	await apiHelpers.headlessAdminUser.assignUserToOrganizationByEmailAddress(
+		organization1.id,
+		'test@liferay.com'
+	);
+
+	apiHelpers.data.push({
+		id: `${organization1.id}_test@liferay.com`,
+		type: 'organizationUserAccountAssociation',
+	});
+
+	await apiHelpers.headlessAdminUser.assignUserToOrganizationByEmailAddress(
+		organization2.id,
+		'test@liferay.com'
+	);
+
+	apiHelpers.data.push({
+		id: `${organization2.id}_test@liferay.com`,
+		type: 'organizationUserAccountAssociation',
+	});
+
+	await usersAndOrganizationsPage.goToUsers();
+
+	await (await usersAndOrganizationsPage.usersTableRowLink('test')).click();
+
+	await editUserPage.organizationsLink.click();
+
+	await expect(
+		editUserPage.organizationsTable.getByText(`${parentOrganization.name}`)
+	).toHaveCount(1);
+});

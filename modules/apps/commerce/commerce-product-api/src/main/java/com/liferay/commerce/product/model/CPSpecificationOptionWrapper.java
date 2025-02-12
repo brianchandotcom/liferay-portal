@@ -369,13 +369,6 @@ public class CPSpecificationOptionWrapper
 		return model.getListTypeDefinitionsCount();
 	}
 
-	@Override
-	public java.util.List<com.liferay.list.type.model.ListTypeEntry>
-		getListTypeEntries() {
-
-		return model.getListTypeEntries();
-	}
-
 	/**
 	 * Returns the modified date of this cp specification option.
 	 *

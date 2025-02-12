@@ -1,8 +1,8 @@
 <#macro treeview_item
 	cssClassTreeItem = ""
 	frequency = 0
-	id = ""
 	frequencyVisible = true
+	id = ""
 	name = ""
 	selectable = false
 	selected = false

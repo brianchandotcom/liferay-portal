@@ -150,7 +150,7 @@ public class CommercePriceListLowestDiscoveryTest {
 				_commerceCatalog.getGroupId(),
 				_accountEntry.getAccountEntryId(),
 				_commerceChannel.getCommerceChannelId(), 0,
-				cpInstance.getCPInstanceUuid(), _TYPE, StringPool.BLANK);
+				cpInstance.getCPInstanceUuid(), null, _TYPE, StringPool.BLANK);
 
 		Assert.assertEquals(
 			expectedPriceList.getCommercePriceListId(),
@@ -176,7 +176,7 @@ public class CommercePriceListLowestDiscoveryTest {
 				_commerceCatalog.getGroupId(),
 				_accountEntry.getAccountEntryId(),
 				_commerceChannel.getCommerceChannelId(), 0,
-				cpInstance.getCPInstanceUuid(), _TYPE, StringPool.BLANK);
+				cpInstance.getCPInstanceUuid(), null, _TYPE, StringPool.BLANK);
 
 		Assert.assertEquals(
 			expectedPriceList.getCommercePriceListId(),
@@ -205,7 +205,7 @@ public class CommercePriceListLowestDiscoveryTest {
 				_commerceCatalog.getGroupId(),
 				_accountEntry.getAccountEntryId(),
 				_commerceChannel.getCommerceChannelId(), 0,
-				cpInstance.getCPInstanceUuid(), _TYPE, StringPool.BLANK);
+				cpInstance.getCPInstanceUuid(), null, _TYPE, StringPool.BLANK);
 
 		Assert.assertEquals(
 			expectedPriceList.getCommercePriceListId(),
@@ -231,7 +231,7 @@ public class CommercePriceListLowestDiscoveryTest {
 				_commerceCatalog.getGroupId(),
 				_accountEntry.getAccountEntryId(),
 				_commerceChannel.getCommerceChannelId(), 0,
-				cpInstance.getCPInstanceUuid(), _TYPE, StringPool.BLANK);
+				cpInstance.getCPInstanceUuid(), null, _TYPE, StringPool.BLANK);
 
 		Assert.assertEquals(
 			expectedPriceList.getCommercePriceListId(),
@@ -257,7 +257,7 @@ public class CommercePriceListLowestDiscoveryTest {
 				_commerceCatalog.getGroupId(),
 				_accountEntry.getAccountEntryId(),
 				_commerceChannel.getCommerceChannelId(), 0,
-				cpInstance.getCPInstanceUuid(), _TYPE, StringPool.BLANK);
+				cpInstance.getCPInstanceUuid(), null, _TYPE, StringPool.BLANK);
 
 		Assert.assertEquals(
 			expectedPriceList.getCommercePriceListId(),
@@ -283,7 +283,7 @@ public class CommercePriceListLowestDiscoveryTest {
 				_commerceCatalog.getGroupId(),
 				_accountEntry.getAccountEntryId(),
 				_commerceChannel.getCommerceChannelId(), 0,
-				cpInstance.getCPInstanceUuid(), _TYPE, StringPool.BLANK);
+				cpInstance.getCPInstanceUuid(), null, _TYPE, StringPool.BLANK);
 
 		Assert.assertEquals(
 			expectedPriceList.getCommercePriceListId(),

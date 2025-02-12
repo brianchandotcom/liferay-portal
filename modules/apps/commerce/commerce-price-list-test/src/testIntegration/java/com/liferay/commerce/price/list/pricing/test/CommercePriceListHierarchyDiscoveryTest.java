@@ -209,7 +209,7 @@ public class CommercePriceListHierarchyDiscoveryTest {
 
 		CommercePriceList discoveredPriceList =
 			_commercePriceListDiscovery.getCommercePriceList(
-				commerceCatalog.getGroupId(), 0, 0, 0, null, _TYPE,
+				commerceCatalog.getGroupId(), 0, 0, 0, null, null, _TYPE,
 				StringPool.BLANK);
 
 		Assert.assertEquals(
@@ -244,7 +244,7 @@ public class CommercePriceListHierarchyDiscoveryTest {
 			_commercePriceListDiscovery.getCommercePriceList(
 				commerceCatalog.getGroupId(),
 				_accountEntry1.getAccountEntryId(),
-				_commerceChannel1.getCommerceChannelId(), 0, null, _TYPE,
+				_commerceChannel1.getCommerceChannelId(), 0, null, null, _TYPE,
 				StringPool.BLANK);
 
 		Assert.assertEquals(
@@ -258,7 +258,7 @@ public class CommercePriceListHierarchyDiscoveryTest {
 
 		discoveredPriceList = _commercePriceListDiscovery.getCommercePriceList(
 			commerceCatalog.getGroupId(), _accountEntry1.getAccountEntryId(),
-			_commerceChannel1.getCommerceChannelId(), 0, null, _TYPE,
+			_commerceChannel1.getCommerceChannelId(), 0, null, null, _TYPE,
 			StringPool.BLANK);
 
 		Assert.assertEquals(
@@ -275,7 +275,7 @@ public class CommercePriceListHierarchyDiscoveryTest {
 
 		discoveredPriceList = _commercePriceListDiscovery.getCommercePriceList(
 			commerceCatalog.getGroupId(), _accountEntry1.getAccountEntryId(),
-			_commerceChannel1.getCommerceChannelId(), 0, null, _TYPE,
+			_commerceChannel1.getCommerceChannelId(), 0, null, null, _TYPE,
 			StringPool.BLANK);
 
 		Assert.assertEquals(
@@ -289,7 +289,7 @@ public class CommercePriceListHierarchyDiscoveryTest {
 
 		discoveredPriceList = _commercePriceListDiscovery.getCommercePriceList(
 			commerceCatalog.getGroupId(), _accountEntry1.getAccountEntryId(),
-			_commerceChannel1.getCommerceChannelId(), 0, null, _TYPE,
+			_commerceChannel1.getCommerceChannelId(), 0, null, null, _TYPE,
 			StringPool.BLANK);
 
 		Assert.assertEquals(
@@ -303,7 +303,7 @@ public class CommercePriceListHierarchyDiscoveryTest {
 
 		discoveredPriceList = _commercePriceListDiscovery.getCommercePriceList(
 			commerceCatalog.getGroupId(), _accountEntry1.getAccountEntryId(),
-			_commerceChannel1.getCommerceChannelId(), 0, null, _TYPE,
+			_commerceChannel1.getCommerceChannelId(), 0, null, null, _TYPE,
 			StringPool.BLANK);
 
 		Assert.assertEquals(
@@ -318,7 +318,7 @@ public class CommercePriceListHierarchyDiscoveryTest {
 
 		discoveredPriceList = _commercePriceListDiscovery.getCommercePriceList(
 			commerceCatalog.getGroupId(), _accountEntry1.getAccountEntryId(),
-			_commerceChannel1.getCommerceChannelId(), 0, null, _TYPE,
+			_commerceChannel1.getCommerceChannelId(), 0, null, null, _TYPE,
 			StringPool.BLANK);
 
 		Assert.assertEquals(
@@ -353,7 +353,7 @@ public class CommercePriceListHierarchyDiscoveryTest {
 			_commercePriceListDiscovery.getCommercePriceList(
 				commerceCatalog.getGroupId(),
 				_accountEntry1.getAccountEntryId(), RandomTestUtil.nextLong(),
-				0, null, _TYPE, StringPool.BLANK);
+				0, null, null, _TYPE, StringPool.BLANK);
 
 		CommercePriceList commercePriceList =
 			_commercePriceListLocalService.fetchCatalogBaseCommercePriceList(
@@ -393,7 +393,7 @@ public class CommercePriceListHierarchyDiscoveryTest {
 			_commercePriceListDiscovery.getCommercePriceList(
 				commerceCatalog.getGroupId(),
 				_accountEntry1.getAccountEntryId(), RandomTestUtil.nextLong(),
-				0, null, _TYPE, StringPool.BLANK);
+				0, null, null, _TYPE, StringPool.BLANK);
 
 		CommercePriceList commercePriceList =
 			_commercePriceListLocalService.fetchCatalogBaseCommercePriceList(
@@ -421,7 +421,7 @@ public class CommercePriceListHierarchyDiscoveryTest {
 			_commercePriceListDiscovery.getCommercePriceList(
 				_commerceCatalog.getGroupId(),
 				_accountEntry3.getAccountEntryId(),
-				_commerceChannel2.getCommerceChannelId(), 0, null, _TYPE,
+				_commerceChannel2.getCommerceChannelId(), 0, null, null, _TYPE,
 				StringPool.BLANK);
 
 		Assert.assertEquals(
@@ -446,7 +446,7 @@ public class CommercePriceListHierarchyDiscoveryTest {
 			_commercePriceListDiscovery.getCommercePriceList(
 				_commerceCatalog.getGroupId(),
 				_accountEntry5.getAccountEntryId(),
-				_commerceChannel2.getCommerceChannelId(), 0, null, _TYPE,
+				_commerceChannel2.getCommerceChannelId(), 0, null, null, _TYPE,
 				StringPool.BLANK);
 
 		Assert.assertEquals(
@@ -474,7 +474,7 @@ public class CommercePriceListHierarchyDiscoveryTest {
 			_commercePriceListDiscovery.getCommercePriceList(
 				_commerceCatalog.getGroupId(),
 				_accountEntry4.getAccountEntryId(),
-				_commerceChannel3.getCommerceChannelId(), 0, null, _TYPE,
+				_commerceChannel3.getCommerceChannelId(), 0, null, null, _TYPE,
 				StringPool.BLANK);
 
 		Assert.assertEquals(
@@ -499,7 +499,7 @@ public class CommercePriceListHierarchyDiscoveryTest {
 			_commercePriceListDiscovery.getCommercePriceList(
 				_commerceCatalog.getGroupId(),
 				_accountEntry2.getAccountEntryId(),
-				_commerceChannel2.getCommerceChannelId(), 0, null, _TYPE,
+				_commerceChannel2.getCommerceChannelId(), 0, null, null, _TYPE,
 				StringPool.BLANK);
 
 		Assert.assertEquals(
@@ -524,7 +524,7 @@ public class CommercePriceListHierarchyDiscoveryTest {
 			_commercePriceListDiscovery.getCommercePriceList(
 				_commerceCatalog.getGroupId(),
 				_accountEntry6.getAccountEntryId(),
-				_commerceChannel4.getCommerceChannelId(), 0, null, _TYPE,
+				_commerceChannel4.getCommerceChannelId(), 0, null, null, _TYPE,
 				StringPool.BLANK);
 
 		Assert.assertEquals(
@@ -549,7 +549,7 @@ public class CommercePriceListHierarchyDiscoveryTest {
 			_commercePriceListDiscovery.getCommercePriceList(
 				_commerceCatalog.getGroupId(),
 				AccountConstants.ACCOUNT_ENTRY_ID_GUEST,
-				_commerceChannel2.getCommerceChannelId(), 0, null, _TYPE,
+				_commerceChannel2.getCommerceChannelId(), 0, null, null, _TYPE,
 				StringPool.BLANK);
 
 		Assert.assertEquals(
@@ -574,7 +574,7 @@ public class CommercePriceListHierarchyDiscoveryTest {
 			_commercePriceListDiscovery.getCommercePriceList(
 				_commerceCatalog.getGroupId(),
 				_accountEntry7.getAccountEntryId(),
-				_commerceChannel5.getCommerceChannelId(), 0, null, _TYPE,
+				_commerceChannel5.getCommerceChannelId(), 0, null, null, _TYPE,
 				StringPool.BLANK);
 
 		Assert.assertEquals(

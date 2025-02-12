@@ -1007,7 +1007,7 @@ public class CommerceProductPriceCalculationV2Impl
 		return commercePriceListDiscovery.getCommercePriceList(
 			cpInstance.getGroupId(), commerceAccountId,
 			commerceContext.getCommerceChannelId(), commerceOrderTypeId,
-			cpInstance.getCPInstanceUuid(), type, unitOfMeasureKey);
+			cpInstance.getCPInstanceUuid(), null, type, unitOfMeasureKey);
 	}
 
 	private CommercePriceListDiscovery _getCommercePriceListDiscovery(

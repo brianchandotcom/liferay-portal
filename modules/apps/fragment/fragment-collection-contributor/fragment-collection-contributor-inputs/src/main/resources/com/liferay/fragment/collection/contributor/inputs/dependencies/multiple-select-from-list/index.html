@@ -8,29 +8,37 @@
 			[#if input.required][@clay["icon"] className="reference-mark" symbol="asterisk" /][/#if]
 		</span>
 
-		<div aria-describedby="${fragmentEntryLinkNamespace}-multiselect-list-help-text" aria-labelledby="${fragmentEntryLinkNamespace}-multiselect-list-label [#if  input.errorMessage?has_content]${fragmentEntryLinkNamespace}-multiselect-list-error-message[/#if]" class="multiselect-list-fieldset" role="group">
-			[#assign options=(input.attributes.options)![]]
-			[#assign values=(input.value?split(","))]
+		<div class="d-flex">
+			<div aria-describedby="${fragmentEntryLinkNamespace}-multiselect-list-help-text" aria-labelledby="${fragmentEntryLinkNamespace}-multiselect-list-label [#if  input.errorMessage?has_content]${fragmentEntryLinkNamespace}-multiselect-list-error-message[/#if]" class="multiselect-list-fieldset" role="group">
+				[#assign options=(input.attributes.options)![]]
+				[#assign values=(input.value?split(","))]
 
-			[#list options as option]
-				[#if option?index == configuration.numberOfOptions && !configuration.showAllOptions]
-					[#break]
+				[#list options as option]
+					[#if option?index == configuration.numberOfOptions && !configuration.showAllOptions]
+						[#break]
+					[/#if]
+
+					<div class="custom-control mb-0">
+						<input class="custom-control-input" [#if values?seq_contains(option.value)]checked[/#if] id="${fragmentEntryLinkNamespace}-checkbox-${option.value}" name="${input.name}" [#if input.readOnly]readonly[/#if] ${input.required?then('required', '')} type="checkbox" value="${option.value}" />
+
+						<label class="custom-control-label" for="${fragmentEntryLinkNamespace}-checkbox-${option.value}">
+							<span class="custom-control-label-text">${htmlUtil.escape(option.label)}</span>
+						</label>
+					</div>
+				[/#list]
+
+				[#if configuration.numberOfOptions < options?size && !configuration.showAllOptions ]
+					<button class="btn btn-secondary btn-sm mt-1 multiselect-list-button" type="button">
+						${languageUtil.get(locale, "show-all")}
+					</button>
 				[/#if]
+			</div>
 
-				<div class="custom-control mb-0">
-					<input class="custom-control-input" [#if values?seq_contains(option.value)]checked[/#if] id="${fragmentEntryLinkNamespace}-checkbox-${option.value}" name="${input.name}" [#if input.readOnly]readonly[/#if] ${input.required?then('required', '')} type="checkbox" value="${option.value}" />
-
-					<label class="custom-control-label" for="${fragmentEntryLinkNamespace}-checkbox-${option.value}">
-						<span class="custom-control-label-text">${htmlUtil.escape(option.label)}</span>
-					</label>
-				</div>
-			[/#list]
-
-			[#if configuration.numberOfOptions < options?size && !configuration.showAllOptions ]
-				<button class="btn btn-secondary btn-sm mt-1 multiselect-list-button" type="button">
-					${languageUtil.get(locale, "show-all")}
-				</button>
-			[/#if]
+			[#if !input.localizable && input.attributes.unlocalizedFieldsMessage??]
+			<div aria-label="${input.attributes.unlocalizedFieldsMessage}" class="d-none lfr-portal-tooltip mt-1" data-title="${input.attributes.unlocalizedFieldsMessage}" id="${fragmentEntryLinkNamespace}-unlocalized-info" role="tooltip" tabindex="0">
+				[@clay["icon"] className="ml-2 mt-0 text-secondary" symbol="question-circle-full" /]
+			</div>
+		[/#if]
 		</div>
 	</div>
 

@@ -23,7 +23,7 @@
 				"update": {
 				}
 			},
-			"externalReferenceCode": "a0166c3c-6c8a-74a4-2d43-dba2e5577c40",
+			"externalReferenceCode": "L_CMS_CONTENT",
 			"label": {
 				"en_US": "CMS Content"
 			},
@@ -42,7 +42,7 @@
 				"update": {
 				}
 			},
-			"externalReferenceCode": "8a5269c6-79b0-b741-ed1a-4cf13c4560e0",
+			"externalReferenceCode": "L_CMS_FILES",
 			"label": {
 				"en_US": "CMS Files"
 			},

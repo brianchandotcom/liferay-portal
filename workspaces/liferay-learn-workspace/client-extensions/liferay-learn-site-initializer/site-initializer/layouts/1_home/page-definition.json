@@ -285,8 +285,8 @@
 													"fragmentLink": {
 														"href": {
 															"value_i18n": {
-																"en_US": "/capabilities/cloud",
-																"ja_JP": "/capabilities/cloud"
+																"en_US": "/v/32495625?capability=33946146",
+																"ja_JP": "/v/32495625?capability=33946146"
 															}
 														}
 													},
@@ -439,8 +439,8 @@
 													"fragmentLink": {
 														"href": {
 															"value_i18n": {
-																"en_US": "/capabilities/commerce",
-																"ja_JP": "/capabilities/commerce"
+																"en_US": "/v/32495601?capability=33946128",
+																"ja_JP": "/v/32495601?capability=33946128"
 															}
 														}
 													},
@@ -588,8 +588,8 @@
 													"fragmentLink": {
 														"href": {
 															"value_i18n": {
-																"en_US": "/capabilities/content-management-system",
-																"ja_JP": "/capabilities/content-management-system"
+																"en_US": "/v/32495609?capability=33946134",
+																"ja_JP": "/v/32495609?capability=33946134"
 															}
 														}
 													},
@@ -737,8 +737,8 @@
 													"fragmentLink": {
 														"href": {
 															"value_i18n": {
-																"en_US": "/capabilities/development-and-tooling",
-																"ja_JP": "/capabilities/development-and-tooling"
+																"en_US": "/v/32495605?capability=33946131",
+																"ja_JP": "/v/32495605?capability=33946131"
 															}
 														}
 													},
@@ -886,8 +886,8 @@
 													"fragmentLink": {
 														"href": {
 															"value_i18n": {
-																"en_US": "/capabilities/digital-asset-management",
-																"ja_JP": "/capabilities/digital-asset-management"
+																"en_US": "/v/32495633?capability=33946152",
+																"ja_JP": "/v/32495633?capability=33946152"
 															}
 														}
 													},
@@ -1035,8 +1035,8 @@
 													"fragmentLink": {
 														"href": {
 															"value_i18n": {
-																"en_US": "/capabilities/dxp-self-hosted-installation-maintenance-and-administration",
-																"ja_JP": "/capabilities/dxp-self-hosted-installation-maintenance-and-administration"
+																"en_US": "/v/32495621?capability=33946143",
+																"ja_JP": "/v/32495621?capability=33946143"
 															}
 														}
 													},
@@ -1184,8 +1184,8 @@
 													"fragmentLink": {
 														"href": {
 															"value_i18n": {
-																"en_US": "/capabilities/integration",
-																"ja_JP": "/capabilities/integration"
+																"en_US": "/v/32495641?capability=33946158",
+																"ja_JP": "/v/32495641?capability=33946158"
 															}
 														}
 													},
@@ -1333,8 +1333,8 @@
 													"fragmentLink": {
 														"href": {
 															"value_i18n": {
-																"en_US": "/capabilities/personalization",
-																"ja_JP": "/capabilities/personalization"
+																"en_US": "/v/32495613?capability=33946137",
+																"ja_JP": "/v/32495613?capability=33946137"
 															}
 														}
 													},
@@ -1482,8 +1482,8 @@
 													"fragmentLink": {
 														"href": {
 															"value_i18n": {
-																"en_US": "/capabilities/platform",
-																"ja_JP": "/capabilities/platform"
+																"en_US": "/v/32495617?capability=33946140",
+																"ja_JP": "/v/32495617?capability=33946140"
 															}
 														}
 													},
@@ -1631,8 +1631,8 @@
 													"fragmentLink": {
 														"href": {
 															"value_i18n": {
-																"en_US": "/capabilities/search",
-																"ja_JP": "/capabilities/search"
+																"en_US": "/v/32495629?capability=33946149",
+																"ja_JP": "/v/32495629?capability=33946149"
 															}
 														}
 													},
@@ -1780,8 +1780,8 @@
 													"fragmentLink": {
 														"href": {
 															"value_i18n": {
-																"en_US": "/capabilities/security",
-																"ja_JP": "/capabilities/security"
+																"en_US": "/v/32495645?capability=33946161",
+																"ja_JP": "/v/32495645?capability=33946161"
 															}
 														}
 													},
@@ -1929,8 +1929,8 @@
 													"fragmentLink": {
 														"href": {
 															"value_i18n": {
-																"en_US": "/capabilities/sites",
-																"ja_JP": "/capabilities/sites"
+																"en_US": "/v/32495637?capability=33946155",
+																"ja_JP": "/v/32495637?capability=33946155"
 															}
 														}
 													},

@@ -91,7 +91,11 @@ test(
 				})
 				.click();
 
-			await expect(page.getByText('Páginas estáticas')).toBeVisible();
+			const bcp47LanguageId = await page.evaluate(() =>
+				Liferay.ThemeDisplay.getBCP47LanguageId()
+			);
+
+			expect(bcp47LanguageId).toEqual('es-ES');
 		});
 
 		await test.step('Make any session request', async () => {
@@ -109,7 +113,11 @@ test(
 		await test.step('Refresh page and check locale is preserved', async () => {
 			await page.reload();
 
-			await expect(page.getByText('Páginas estáticas')).toBeVisible();
+			const bcp47LanguageId = await page.evaluate(() =>
+				Liferay.ThemeDisplay.getBCP47LanguageId()
+			);
+
+			expect(bcp47LanguageId).toEqual('es-ES');
 		});
 	}
 );

@@ -1,0 +1,256 @@
+{
+  "definition": {
+    "indexed": true,
+    "layout": {},
+    "name": "Open Positions Page"
+  },
+  "id": "7e585126-f70a-f306-68b4-930cb2fe3121",
+  "pageElements": [
+    {
+      "definition": {
+        "fragmentStyle": { "backgroundFragmentImage": {}, "height": "240px" },
+        "indexed": true,
+        "layout": {
+          "align": "Center",
+          "contentDisplay": "FlexColumn",
+          "justify": "Center"
+        },
+        "name": "Banner"
+      },
+      "id": "c5f48988-d795-deda-5e84-a2707a328584",
+      "pageElements": [
+        {
+          "definition": {
+            "fragment": { "key": "BASIC_COMPONENT-heading" },
+            "fragmentConfig": { "headingLevel": "h1" },
+            "fragmentFields": [
+              {
+                "id": "element-text",
+                "value": {
+                  "fragmentLink": {},
+                  "text": { "value_i18n": { "en_US": "Join the Team!" } }
+                }
+              }
+            ],
+            "fragmentStyle": { "paddingBottom": "4" },
+            "indexed": true
+          },
+          "id": "1ed0e2bd-f62f-d9c6-57af-15431973c457",
+          "type": "Fragment"
+        },
+        {
+          "definition": {
+            "fragmentStyle": { "maxWidth": "500px", "minWidth": "500px" },
+            "widgetInstance": {
+              "widgetConfig": {
+                "federatedSearchKey": "",
+                "suggestionsContributorConfigurations": "{\"contributorName\":\"basic\",\"displayGroupName\":\"suggestions\",\"size\":5}",
+                "showStagedResults": "false",
+                "searchScope": "this-site",
+                "suggestionsEnabled": "true",
+                "destination": "/open-positions",
+                "invisible": "false",
+                "displayStyleGroupId": "37203",
+                "suggestionsDisplayThreshold": "2",
+                "displayStyle": "default",
+                "scopeParameterName": "scope",
+                "keywordsParameterName": "q",
+                "useAdvancedSearchSyntax": "false"
+              },
+              "widgetName": "com_liferay_portal_search_web_search_bar_portlet_SearchBarPortlet"
+            }
+          },
+          "id": "5df007c8-b5f9-e7d6-adfe-b66f4055fc47",
+          "type": "Widget"
+        }
+      ],
+      "type": "Section"
+    },
+    {
+      "definition": {
+        "fragmentStyle": {
+          "paddingBottom": "5",
+          "paddingLeft": "5",
+          "paddingRight": "3",
+          "paddingTop": "5"
+        },
+        "indexed": true,
+        "layout": {
+          "paddingBottom": 4,
+          "paddingLeft": 4,
+          "paddingRight": 1,
+          "paddingTop": 4
+        },
+        "name": "Search Results and Options"
+      },
+      "id": "cecca548-2959-65a4-819e-515f4238a20b",
+      "pageElements": [
+        {
+          "definition": {
+            "gutters": true,
+            "indexed": true,
+            "modulesPerRow": 2,
+            "numberOfColumns": 2,
+            "reverseOrder": false,
+            "rowViewports": [
+              {
+                "id": "landscapeMobile",
+                "rowViewportDefinition": { "modulesPerRow": 1 }
+              },
+              { "id": "portraitMobile", "rowViewportDefinition": {} },
+              { "id": "tablet", "rowViewportDefinition": {} }
+            ],
+            "verticalAlignment": "top"
+          },
+          "id": "6c8745bb-7ab6-cac6-f5b3-57ab412ea276",
+          "pageElements": [
+            {
+              "definition": {
+                "columnViewports": [
+                  {
+                    "columnViewportDefinition": { "size": 12 },
+                    "id": "landscapeMobile"
+                  },
+                  { "columnViewportDefinition": {}, "id": "portraitMobile" },
+                  { "columnViewportDefinition": {}, "id": "tablet" }
+                ],
+                "size": 3
+              },
+              "id": "78fe6e0a-510f-d4c8-5670-76447cd78c33",
+              "pageElements": [
+                {
+                  "definition": {
+                    "widgetInstance": {
+                      "widgetConfig": {
+                        "vocabularyIds": "40433",
+                        "displayStyle": "default",
+                        "maxTerms": "10",
+                        "frequencyThreshold": "1",
+                        "frequenciesVisible": "true",
+                        "parameterName": "category",
+                        "displayStyleGroupId": "37203",
+                        "order": "count:desc"
+                      },
+                      "widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
+                    }
+                  },
+                  "id": "0a349845-c26a-3dea-6496-40e3ad5d9f7f",
+                  "type": "Widget"
+                },
+                {
+                  "definition": {
+                    "widgetInstance": {
+                      "widgetConfig": {
+                        "vocabularyIds": "40446",
+                        "displayStyle": "default",
+                        "maxTerms": "10",
+                        "frequencyThreshold": "1",
+                        "frequenciesVisible": "true",
+                        "parameterName": "category",
+                        "displayStyleGroupId": "37203",
+                        "order": "count:desc"
+                      },
+                      "widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
+                    }
+                  },
+                  "id": "14bf3aa1-1142-afb1-a4be-53bfb2af46d7",
+                  "type": "Widget"
+                },
+                {
+                  "definition": {
+                    "widgetInstance": {
+                      "widgetConfig": {
+                        "vocabularyIds": "40489",
+                        "displayStyle": "default",
+                        "maxTerms": "10",
+                        "frequencyThreshold": "1",
+                        "frequenciesVisible": "true",
+                        "parameterName": "category",
+                        "displayStyleGroupId": "37203",
+                        "order": "count:desc"
+                      },
+                      "widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
+                    }
+                  },
+                  "id": "0a4760c4-68fa-b767-2916-56445f937661",
+                  "type": "Widget"
+                }
+              ],
+              "type": "Column"
+            },
+            {
+              "definition": {
+                "columnViewports": [
+                  {
+                    "columnViewportDefinition": { "size": 12 },
+                    "id": "landscapeMobile"
+                  },
+                  { "columnViewportDefinition": {}, "id": "portraitMobile" },
+                  { "columnViewportDefinition": {}, "id": "tablet" }
+                ],
+                "size": 9
+              },
+              "id": "017aac81-79cd-baba-4904-a6a0c7b40573",
+              "pageElements": [
+                {
+                  "definition": {
+                    "widgetInstance": {
+                      "widgetConfig": {
+                        "viewInContext": "true",
+                        "displayStyle": "ddmTemplate_SEARCH-RESULTS-COMPACT-FTL",
+                        "fieldsToDisplay": "",
+                        "federatedSearchKey": "",
+                        "displayInDocumentForm": "false",
+                        "paginationDelta": "10",
+                        "paginationStartParameterName": "start",
+                        "showEmptyResultMessage": "true",
+                        "showPagination": "true",
+                        "paginationDeltaParameterName": "delta",
+                        "displayStyleGroupId": "20119",
+                        "highlightEnabled": "false"
+                      },
+                      "widgetName": "com_liferay_portal_search_web_search_results_portlet_SearchResultsPortlet"
+                    }
+                  },
+                  "id": "48e7a4a9-96b7-0926-b95b-a76317fcb290",
+                  "type": "Widget"
+                }
+              ],
+              "type": "Column"
+            }
+          ],
+          "type": "Row"
+        },
+        {
+          "definition": {
+            "widgetInstance": {
+              "widgetConfig": {
+                "federatedSearchKey": "",
+                "allowEmptySearches": "true",
+                "basicFacetSelection": "false"
+              },
+              "widgetName": "com_liferay_portal_search_web_search_options_portlet_SearchOptionsPortlet"
+            }
+          },
+          "id": "89e7496f-93da-4e54-e2bc-72bccf2bdb51",
+          "type": "Widget"
+        },
+        {
+          "definition": {
+            "widgetInstance": {
+              "widgetConfig": {
+                "federatedSearchKey": "",
+                "sxpBlueprintExternalReferenceCode": ""
+              },
+              "widgetName": "com_liferay_search_experiences_web_internal_blueprint_options_portlet_SXPBlueprintOptionsPortlet"
+            }
+          },
+          "id": "1200e8db-8cfc-38e1-a066-e705904b9966",
+          "type": "Widget"
+        }
+      ],
+      "type": "Section"
+    }
+  ],
+  "type": "Section"
+}

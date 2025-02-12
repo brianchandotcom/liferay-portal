@@ -1,0 +1,9 @@
+{
+	"configurationPath": "configuration.json",
+	"cssPath": "index.css",
+	"htmlPath": "index.html",
+	"icon": "button",
+	"jsPath": "index.js",
+	"name": "Dialect Button",
+	"type": "component"
+}

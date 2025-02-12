@@ -1,0 +1,17 @@
+.faq-entry h4 {
+	cursor:pointer;
+}
+
+.faq-entry .content-area {
+	max-width: 860px;
+}
+
+.faq-entry .custom-icon {
+	cursor: pointer;
+	height: 24px !important;
+	width: 24px !important;
+}
+
+.text-primary {
+	color: #1D8C8C;
+}

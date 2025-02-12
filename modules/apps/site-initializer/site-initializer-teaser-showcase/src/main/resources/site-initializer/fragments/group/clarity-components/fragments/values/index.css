@@ -1,0 +1,82 @@
+.values{
+  display: flex;  
+}
+
+.value-card{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+	padding: 32px;
+  width: 100%;
+  height: 148px;
+	gap: 16px;
+  background: #F7EBD9;
+  border-radius: 12px;
+	isolation: isolate;
+  overflow: hidden;
+  position: relative;
+}
+
+.value-card-circle{
+  position: absolute;
+	background: linear-gradient(227.52deg, #F7EBD9 12.01%, #FBE0B9 85.9%);
+  box-shadow: 0px -2px 12px rgba(193, 137, 51, 0.2);
+  border-radius: 999px;
+	opacity: 50%;
+}
+
+/* large watermark positions */
+
+.value-card-circle-lg{
+  width: 142px;
+  height: 142px;
+
+}
+
+.value-card-circle-lg-br{
+  bottom: -80px;
+  right: -85px;
+}
+
+.value-card-circle-lg-bl{
+  bottom: -80px;
+  left: -85px;
+}
+
+.value-card-circle-lg-tr{
+  top: -80px;
+  right: -60px;
+}
+
+.value-card-circle-lg-tl{
+  top: -80px;
+  left: -100px;
+}
+
+/* small watermark positions */
+
+.value-card-circle-sm{
+  width: 95px;
+  height: 95px;
+}
+
+.value-card-circle-sm-br{
+  bottom: -20px;
+  right: -60px;
+}
+
+.value-card-circle-sm-bl{
+  bottom: -20px;
+  left: -60px;
+}
+
+.value-card-circle-sm-tr{
+  bottom: -20px;
+  right: -60px;
+}
+
+.value-card-circle-sm-tl{
+  bottom: -20px;
+  left: -60px;
+}

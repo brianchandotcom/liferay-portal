@@ -1,0 +1,9 @@
+{
+	"configurationPath": "configuration.json",
+	"cssPath": "index.css",
+	"htmlPath": "index.html",
+	"icon": "sites",
+	"jsPath": "index.js",
+	"name": "Dialect Nav",
+	"type": "component"
+}

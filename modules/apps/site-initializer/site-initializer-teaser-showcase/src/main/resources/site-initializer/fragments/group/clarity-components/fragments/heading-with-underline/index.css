@@ -1,0 +1,14 @@
+.heading-underline {
+  position: relative;
+  line-height: 1.3em;
+}
+
+.heading-underline:before {
+  position: absolute;
+  left: 0;
+  top: 1.2em;
+  height: 0;
+  width: 60%;
+  content: '';
+  border-top: 1px solid #1D8C8C;
+}

@@ -1,0 +1,9 @@
+{
+	"configurationPath": "configuration.json",
+	"cssPath": "index.css",
+	"htmlPath": "index.html",
+	"icon": "tabs",
+	"jsPath": "index.js",
+	"name": "Dialect Tabs",
+	"type": "component"
+}

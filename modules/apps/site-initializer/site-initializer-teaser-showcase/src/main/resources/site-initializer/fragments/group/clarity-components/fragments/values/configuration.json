@@ -1,0 +1,61 @@
+{
+    "fieldSets": [
+			{
+				 "fields": [
+                {
+                    "dataType": "string",
+                    "defaultValue": false,
+                    "description": "Size of watermark circle",
+                    "label": "Size",
+                    "typeOptions": {
+                        "validValues": [
+                            {
+                                "label": "Small",
+                                "value": "sm"
+                            },
+                            {
+                                "label": "Large",
+                                "value": "lg"
+                            }
+                        ]
+                    },
+                    "name": "circleSize",
+                    "type": "select"
+                },
+  {
+                    "dataType": "string",
+                    "defaultValue": true,
+                    "description": "Show circle watermark top right on card",
+                    "label": "Top Right",
+                    "name": "topRight",
+                    "type": "checkbox"
+                },
+                {
+                    "dataType": "string",
+                    "defaultValue": true,
+                    "description": "Show circle watermark bottom right on card",
+                    "label": "Bottom Right",
+                    "name": "bottomRight",
+                    "type": "checkbox"
+                },
+                {
+                    "dataType": "string",
+                    "defaultValue": true,
+                    "description": "Show circle watermark bottom left on card",
+                    "label": "Bottom Left",
+                    "name": "bottomLeft",
+                    "type": "checkbox"
+                },
+                {
+                    "dataType": "string",
+                    "defaultValue": true,
+                    "description": "Show circle watermark top left on card",
+                    "label": "Top Left",
+                    "name": "topLeft",
+                    "type": "checkbox"
+                }
+            ],
+            "label": "Watermark"
+			}
+    ]
+}

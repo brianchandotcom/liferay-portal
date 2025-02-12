@@ -1,0 +1,103 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "",
+					"label": "type",
+					"name": "type",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "outline",
+								"value": ""
+							},
+							{
+								"label": "inverse",
+								"value": "-inverse"
+							},
+							{
+								"label": "tonal",
+								"value": "-tonal"
+							},
+							{
+								"label": "borderless",
+								"value": "-borderless"
+							}
+						]
+					}
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "primary",
+					"label": "variant",
+					"name": "variant",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"value": "primary"
+							},
+							{
+								"value": "secondary"
+							},
+							{
+								"value": "success"
+							},
+							{
+								"value": "info"
+							},
+							{
+								"value": "warning"
+							},
+							{
+								"value": "danger"
+							},
+							{
+								"value": "dark"
+							},
+							{
+								"value": "light"
+							}
+						]
+					}
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "small",
+					"label": "size",
+					"name": "size",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "small",
+								"value": ""
+							},
+							{
+								"label": "large",
+								"value": "label-lg"
+							}
+						]
+					}
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "",
+					"label": "icon-before",
+					"name": "iconBefore",
+					"type": "text"
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "",
+					"label": "icon-after",
+					"name": "iconAfter",
+					"type": "text"
+				}
+			]
+		}
+	]
+}

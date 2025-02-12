@@ -1,0 +1,41 @@
+{
+    "fieldSets": [
+        {
+            "fields": [
+                {
+                    "dataType": "string",
+                    "defaultValue": "search",
+                    "label": "icon-name",
+                    "name": "iconName",
+                    "type": "text"
+                },
+                {
+                    "dataType": "string",
+                    "defaultValue": "1rem",
+                    "label": "icon-size",
+                    "name": "iconSize",
+                    "type": "select",
+                    "typeOptions": {
+                        "validValues": [
+                            {
+                                "value": "1rem"
+                            },
+                            {
+                                "value": "1.5rem"
+                            },
+                            {
+                                "value": "2rem"
+                            },
+                            {
+                                "value": "2.5rem"
+                            },
+                            {
+                                "value": "3rem"
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}

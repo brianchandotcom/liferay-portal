@@ -28,6 +28,8 @@ import {
 import getDateCustomFormat from '~/utils/getDateCustomFormat';
 import useOrderItems from '../AccountSubscriptionModal/hooks/useOrderItems';
 
+import './AccountSubscriptionCard.css';
+
 const AccountSubscriptionCard = ({
 	IsPortalOrDXP,
 	loading,

@@ -5,7 +5,7 @@
 
 import {NetworkStatus} from '@apollo/client';
 import classNames from 'classnames';
-import {useEffect, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import {IconBreadcrumbs} from '~/assets';
 import i18n from '~/utils/I18n';
 import Skeleton from '~/components/Skeleton';
@@ -13,12 +13,29 @@ import useCurrentKoroneikiAccount from '~/hooks/useCurrentKoroneikiAccount';
 import useKoroneikiAccounts from '~/hooks/useKoroneikiAccounts';
 import PopoverIcon from '../ActivationStatus/DXPCloud/components/PopoverIcon';
 import Dropdown from './components/Dropdown';
+import SearchBuilder from '~/lib/SearchBuilder';
 
 import './ProjectBreadcrumb.css';
 
 const ProjectBreadcrumb = () => {
+	const [filter, setFilter] = useState('');
 	const [initialTotalCount, setInitialTotalCount] = useState(0);
 	const [projectStatus, setProjectStatus] = useState('');
+
+	const getFilter = useCallback(
+		(searchTerm) => {
+			let searchBuilder = new SearchBuilder();
+
+			if (searchTerm) {
+				searchBuilder.contains('name', searchTerm);
+				searchBuilder.or();
+				searchBuilder.contains('code', searchTerm);
+			}
+
+			return searchBuilder.build();
+		},
+		[]
+	);
 
 	const {
 		data: currentKoroneikiAccountData,
@@ -28,14 +45,21 @@ const ProjectBreadcrumb = () => {
 	const selectedKoroneikiAccount =
 		currentKoroneikiAccountData?.koroneikiAccountByExternalReferenceCode;
 
-	const {
-		data,
-		fetchMore,
-		networkStatus,
-	} = useKoroneikiAccounts({
-		filter: (searchBuilder) => searchBuilder,
+	const {data, fetchMore, networkStatus, refetch} = useKoroneikiAccounts({
+		filter,
 		pageSize: 5,
 	});
+
+	const handleSearch = useCallback(
+		(searchTerm) => {
+			setFilter(getFilter(searchTerm));
+		},
+		[getFilter]
+	);
+
+	useEffect(() => {
+		refetch({filter});
+	}, [filter, refetch]);
 
 	useEffect(() => {
 		if (data?.c.koroneikiAccounts.totalCount > initialTotalCount) {
@@ -71,7 +95,7 @@ const ProjectBreadcrumb = () => {
 							},
 						})
 					}
-					onSearch={onSearch}
+					onSearch={handleSearch}
 					searching={networkStatus === NetworkStatus.refetch}
 					selectedKoroneikiAccount={selectedKoroneikiAccount}
 				/>

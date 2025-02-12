@@ -353,7 +353,7 @@ public class HeadlessDisplayTag extends BaseDisplayTag {
 
 	private void _setFiltersJSONArray() {
 		_filtersJSONArray = _fdsSerializer.serializeFilters(
-			getId(), getFdsFilters(), getRequest());
+			getFdsFilters(), getId(), getRequest());
 	}
 
 	private void _setViewsJSONArray() {

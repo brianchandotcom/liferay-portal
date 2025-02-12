@@ -101,12 +101,12 @@ public class SystemFDSSerializer
 		String fdsName, HttpServletRequest httpServletRequest) {
 
 		return serializeFilters(
-			fdsName, Collections.emptyList(), httpServletRequest);
+			Collections.emptyList(), fdsName, httpServletRequest);
 	}
 
 	@Override
 	public JSONArray serializeFilters(
-		String fdsName, List<FDSFilter> fdsFilters,
+		List<FDSFilter> fdsFilters, String fdsName,
 		HttpServletRequest httpServletRequest) {
 
 		Locale locale = _portal.getLocale(httpServletRequest);

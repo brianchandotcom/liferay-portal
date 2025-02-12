@@ -129,6 +129,7 @@ definition {
 
 	@description = "This is for LPS-176136. Verify is possible to hide or show Control Menu of a Role and that Administrator and Site Administrator cannot be deleted."
 	@priority = 4
+	@uitest
 	test ShowControlMenuByOOTBRoles {
 		task ("Given the site administrator accesses to the Site Configuration") {
 			Permissions.definePermissionViaJSONAPI(
@@ -223,6 +224,7 @@ definition {
 
 	@description = "This is for LPS-176136. Verify that users accessing the admin Page directly will see the Control Menu."
 	@priority = 4
+	@uitest
 	test ViewControlMenuInWebContentAdminAsUserWithRoleOutsideRolesThatCanSeeTheControlMenu {
 		var randomRoleKey = StringUtil.randomString(8);
 

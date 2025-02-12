@@ -5,6 +5,7 @@
 
 package com.liferay.portal.workflow.kaleo.runtime.integration.internal;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -13,6 +14,7 @@ import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManager;
+import com.liferay.portal.kernel.workflow.WorkflowTransition;
 import com.liferay.portal.kernel.workflow.search.WorkflowModelSearchResult;
 import com.liferay.portal.lock.service.LockLocalService;
 import com.liferay.portal.workflow.kaleo.runtime.WorkflowEngine;
@@ -50,13 +52,23 @@ public class WorkflowInstanceManagerImpl implements WorkflowInstanceManager {
 			long companyId, long userId, long workflowInstanceId)
 		throws WorkflowException {
 
+		return TransformUtil.transform(
+			getNextWorkflowTransitions(companyId, userId, workflowInstanceId),
+			WorkflowTransition::getName);
+	}
+
+	@Override
+	public List<WorkflowTransition> getNextWorkflowTransitions(
+			long companyId, long userId, long workflowInstanceId)
+		throws WorkflowException {
+
 		try {
 			ServiceContext serviceContext = new ServiceContext();
 
 			serviceContext.setCompanyId(companyId);
 			serviceContext.setUserId(userId);
 
-			return _workflowEngine.getNextTransitionNames(
+			return _workflowEngine.getNextWorkflowTransitions(
 				workflowInstanceId, serviceContext);
 		}
 		catch (WorkflowException workflowException) {

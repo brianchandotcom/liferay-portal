@@ -10,6 +10,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
+import com.liferay.portal.kernel.workflow.WorkflowTransition;
 import com.liferay.portal.kernel.workflow.search.WorkflowModelSearchResult;
 
 import java.io.InputStream;
@@ -47,6 +48,10 @@ public interface WorkflowEngine {
 		throws WorkflowException;
 
 	public List<String> getNextTransitionNames(
+			long workflowInstanceId, ServiceContext serviceContext)
+		throws WorkflowException;
+
+	public List<WorkflowTransition> getNextWorkflowTransitions(
 			long workflowInstanceId, ServiceContext serviceContext)
 		throws WorkflowException;
 

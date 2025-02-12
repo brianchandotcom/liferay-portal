@@ -28,6 +28,10 @@ public interface WorkflowInstanceManager {
 			long companyId, long userId, long workflowInstanceId)
 		throws WorkflowException;
 
+	public List<WorkflowTransition> getNextWorkflowTransitions(
+			long companyId, long userId, long workflowInstanceId)
+		throws WorkflowException;
+
 	public WorkflowInstance getWorkflowInstance(
 			long companyId, long workflowInstanceId)
 		throws WorkflowException;

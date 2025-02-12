@@ -20,7 +20,6 @@ import getPageDefinition from './utils/getPageDefinition';
 const test = mergeTests(
 	apiHelpersTest,
 	featureFlagsTest({
-		'LPD-18221': {enabled: true},
 		'LPS-178052': {enabled: true},
 	}),
 	isolatedSiteTest,

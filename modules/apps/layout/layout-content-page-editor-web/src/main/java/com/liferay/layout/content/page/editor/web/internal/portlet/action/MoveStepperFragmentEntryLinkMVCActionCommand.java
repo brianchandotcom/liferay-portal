@@ -126,19 +126,19 @@ public class MoveStepperFragmentEntryLinkMVCActionCommand
 			}
 		}
 
-		FragmentEntryLink steeperFragmentEntryLink =
+		addedFragmentEntryLinks.add(
 			_formItemManager.updateNumberOfStepps(
 				_portal.getHttpServletRequest(actionRequest),
 				_portal.getHttpServletResponse(actionResponse), numberOfSteps,
 				_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
-					fragmentEntryLinkId));
+					fragmentEntryLinkId)));
 
 		return getLayoutStructureItemChangesJSONObject(
 			addedFragmentEntryLinks,
 			_portal.getHttpServletRequest(actionRequest),
 			_portal.getHttpServletResponse(actionResponse),
 			_jsonFactory.createJSONObject(), layoutStructure,
-			layoutStructureItemChanges, steeperFragmentEntryLink);
+			layoutStructureItemChanges);
 	}
 
 	@Reference

@@ -22,7 +22,7 @@ interface InputLocalizedProps {
 	onBlur?: FocusEventHandler<HTMLInputElement>;
 	onChange: (
 		value: Liferay.Language.LocalizedValue<string>,
-		locale: InputLocale
+		locale: LocaleItem
 	) => void;
 	onSelectedLocaleChange?: (locale: Liferay.Language.Locale) => void;
 	placeholder?: string;
@@ -37,7 +37,7 @@ interface InputLocalizedProps {
 		}>;
 }
 
-interface InputLocale {
+interface LocaleItem {
 	label: Liferay.Language.Locale;
 	symbol: string;
 }
@@ -73,7 +73,7 @@ export default function InputLocalized({
 	resultFormatter = () => null,
 	selectedLocale,
 	tooltip,
-	translations: initialTranslations,
+	translations,
 	...otherProps
 }: InputLocalizedProps) {
 	const availableLocales = useMemo(() => {
@@ -89,16 +89,17 @@ export default function InputLocalized({
 			}));
 	}, []);
 
-	const [locale, setLocale] = useState<InputLocale>(availableLocales[0]);
+	const [selectedLocaleItem, setSelectedLocaleItem] = useState<LocaleItem>(
+		availableLocales[0]
+	);
 
-	const translations = translationsNormalizer(initialTranslations);
+	const normalizedTranslations = translationsNormalizer(translations);
 
 	useEffect(() => {
-		const locale =
+		setSelectedLocaleItem(
 			availableLocales.find(({label}) => label === selectedLocale)! ??
-			availableLocales[0];
-
-		setLocale(locale);
+				availableLocales[0]
+		);
 	}, [availableLocales, selectedLocale]);
 
 	return (
@@ -116,7 +117,8 @@ export default function InputLocalized({
 				{...otherProps}
 				className={classNames({
 					'input-localized--rtl':
-						Liferay.Language.direction[locale.label] === 'rtl',
+						Liferay.Language.direction[selectedLocaleItem.label] ===
+						'rtl',
 				})}
 				disabled={disabled}
 				id={id}
@@ -124,20 +126,22 @@ export default function InputLocalized({
 				locales={availableLocales}
 				name={name}
 				onBlur={onBlur}
-				onSelectedLocaleChange={(locale) => {
-					setLocale(locale as InputLocale);
+				onSelectedLocaleChange={(newLocale) => {
+					setSelectedLocaleItem(newLocale as LocaleItem);
 
-					onChange(translations, locale as InputLocale);
+					onChange(normalizedTranslations, newLocale as LocaleItem);
 
 					if (onSelectedLocaleChange) {
-						onSelectedLocaleChange((locale as InputLocale).label);
+						onSelectedLocaleChange((newLocale as LocaleItem).label);
 					}
 				}}
-				onTranslationsChange={(value) => onChange(value, locale)}
+				onTranslationsChange={(newTranslations) => {
+					onChange(newTranslations, selectedLocaleItem);
+				}}
 				placeholder={placeholder}
 				resultFormatter={resultFormatter}
-				selectedLocale={locale}
-				translations={translations}
+				selectedLocale={selectedLocaleItem}
+				translations={normalizedTranslations}
 			/>
 		</FieldBase>
 	);

@@ -5,7 +5,7 @@
 
 import {ObjectField} from '@liferay/object-admin-rest-client-js';
 
-import {ApiHelpers} from '../../../helpers/ApiHelpers';
+import {DataApiHelpers} from '../../../helpers/ApiHelpers';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
 import {
@@ -228,7 +228,7 @@ export async function mockObjectFields({
 	objectFieldBusinessTypes,
 	titleObjectFieldName,
 }: {
-	apiHelpers: ApiHelpers;
+	apiHelpers: DataApiHelpers;
 	localizeAllLocalizable?: boolean;
 	objectEntryReturn?: {format: 'API' | 'UI'};
 	objectFieldBusinessTypes: ObjectFieldBusinessTypes[];
@@ -243,6 +243,11 @@ export async function mockObjectFields({
 	) {
 		listTypeDefinition =
 			await apiHelpers.listTypeAdmin.postRandomListTypeDefinition();
+
+		apiHelpers.data.push({
+			id: listTypeDefinition.id,
+			type: 'listTypeDefinition',
+		});
 
 		listTypeDefinitionItems = new Array(3)
 			.fill('')

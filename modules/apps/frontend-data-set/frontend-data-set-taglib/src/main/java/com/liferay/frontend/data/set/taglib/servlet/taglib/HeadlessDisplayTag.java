@@ -197,9 +197,8 @@ public class HeadlessDisplayTag extends BaseDisplayTag {
 
 	@Override
 	public void setPageContext(PageContext pageContext) {
-		_fdsViewSerializer = ServletContextUtil.getFDSViewSerializer();
-
 		_fdsSerializer = ServletContextUtil.getFDSSerializer();
+		_fdsViewSerializer = ServletContextUtil.getFDSViewSerializer();
 
 		super.setPageContext(pageContext);
 

@@ -237,3 +237,35 @@ test('Configure Show Guest Site in Breadcrumb widget', async ({
 		layout.nameCurrentValue,
 	]);
 });
+
+test('Preview pane reloads in Breadcrumb widget configuration', async ({
+	breadcrumbPage,
+	breadcrumbWidgetPage,
+	page,
+	site,
+	widgetPagePage,
+}) => {
+	const layout = await breadcrumbWidgetPage.addBreadcrumbPortlet(site);
+
+	await widgetPagePage.clickOnAction('Breadcrumb', 'Configuration');
+
+	const configurationIFrame = page.frameLocator(
+		'iframe[title*="Breadcrumb"]'
+	);
+
+	await page.waitForTimeout(1000);
+
+	await breadcrumbPage.assertBreadcrumbEntries(
+		2,
+		[site.name, layout.nameCurrentValue],
+		configurationIFrame
+	);
+
+	await configurationIFrame.getByLabel('Show Guest Site').click();
+
+	await breadcrumbPage.assertBreadcrumbEntries(
+		3,
+		['Liferay DXP', site.name, layout.nameCurrentValue],
+		configurationIFrame
+	);
+});

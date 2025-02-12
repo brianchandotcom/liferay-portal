@@ -49,7 +49,8 @@ public class LearnRestController extends BaseRestController {
 			get(
 				_getAuthorization(),
 				"/o/object-admin/v1.0/object-folders" +
-					"/by-external-reference-code/T4T14_LMS_FOLDER"));
+					"/by-external-reference-code" +
+						"/P2S3_LEARNING_MANAGEMENT_SYSTEM"));
 
 		return new ResponseEntity<>(
 			TransformUtil.transform(

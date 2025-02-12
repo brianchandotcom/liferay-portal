@@ -238,14 +238,15 @@ public class AddStepperFragmentEntryLinkMVCActionCommand
 		HttpServletResponse httpServletResponse =
 			_portal.getHttpServletResponse(actionResponse);
 
-		stepperFragmentEntryLink = _formItemManager.updateNumberOfStepps(
-			httpServletRequest, httpServletResponse, numberOfSteps,
-			stepperFragmentEntryLink);
+		addedFragmentEntryLinks.add(
+			_formItemManager.updateNumberOfStepps(
+				httpServletRequest, httpServletResponse, numberOfSteps,
+				stepperFragmentEntryLink));
 
 		return getLayoutStructureItemChangesJSONObject(
 			addedFragmentEntryLinks, httpServletRequest, httpServletResponse,
 			_jsonFactory.createJSONObject(), layoutStructure,
-			layoutStructureItemChanges, stepperFragmentEntryLink);
+			layoutStructureItemChanges);
 	}
 
 	@Reference

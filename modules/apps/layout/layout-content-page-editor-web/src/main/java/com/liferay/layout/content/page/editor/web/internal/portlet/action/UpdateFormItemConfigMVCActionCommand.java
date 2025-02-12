@@ -296,13 +296,14 @@ public class UpdateFormItemConfigMVCActionCommand
 				_portal.getHttpServletResponse(actionResponse),
 				formStyledLayoutStructureItem.getNumberOfSteps(),
 				stepperFragmentEntryLink);
+
+			addedFragmentEntryLinks.add(stepperFragmentEntryLink);
 		}
 
 		return getLayoutStructureItemChangesJSONObject(
 			addedFragmentEntryLinks, httpServletRequest,
 			_portal.getHttpServletResponse(actionResponse), jsonObject,
-			layoutStructure, layoutStructureItemChanges,
-			stepperFragmentEntryLink);
+			layoutStructure, layoutStructureItemChanges);
 	}
 
 	private FormItemManager.LayoutStructureItemChanges

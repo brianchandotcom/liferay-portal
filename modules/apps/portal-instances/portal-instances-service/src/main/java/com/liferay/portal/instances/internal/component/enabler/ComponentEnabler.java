@@ -18,7 +18,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Mariano Álvaro Sáiz
  */
 @Component(service = {})
-public class PortalInstancesComponentEnabler {
+public class ComponentEnabler {
 
 	@Activate
 	protected void activate(ComponentContext componentContext) {

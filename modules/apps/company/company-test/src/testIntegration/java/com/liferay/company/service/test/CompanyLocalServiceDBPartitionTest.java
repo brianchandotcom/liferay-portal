@@ -899,7 +899,7 @@ public class CompanyLocalServiceDBPartitionTest
 		try (ResultSet resultSet = databaseMetaData.getTables(
 				dbPartitionDB.getCatalog(
 					connection, getPartitionName(copiedCompanyId)),
-				dbPartitionDB.getCatalog(
+				dbPartitionDB.getSchema(
 					connection, getPartitionName(copiedCompanyId)),
 				null, new String[] {"TABLE"})) {
 
@@ -918,7 +918,7 @@ public class CompanyLocalServiceDBPartitionTest
 			try (ResultSet resultSet = databaseMetaData.getColumns(
 					dbPartitionDB.getCatalog(
 						connection, getPartitionName(copiedCompanyId)),
-					dbPartitionDB.getCatalog(
+					dbPartitionDB.getSchema(
 						connection, getPartitionName(copiedCompanyId)),
 					tableName, null)) {
 

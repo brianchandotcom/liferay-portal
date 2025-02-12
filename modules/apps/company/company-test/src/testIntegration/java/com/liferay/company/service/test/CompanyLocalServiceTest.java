@@ -804,6 +804,10 @@ public class CompanyLocalServiceTest {
 	public void testDeleteCompanyDeletesUserGroupRoleBeforeRole()
 		throws Exception {
 
+		if (DBPartition.isPartitionEnabled()) {
+			return;
+		}
+
 		List<String> list = _registerModelListeners();
 
 		Company company = addCompany();

@@ -686,6 +686,12 @@ public class FormItemManager {
 			}
 		}
 
+		public void addRemovedLayoutStructureItems(
+			List<LayoutStructureItem> layoutStructureItems) {
+
+			_removedLayoutStructureItems.addAll(layoutStructureItems);
+		}
+
 		public List<LayoutStructureItem> getAddedLayoutStructureItems() {
 			return _addedLayoutStructureItems;
 		}

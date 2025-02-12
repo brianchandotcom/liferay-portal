@@ -439,8 +439,8 @@ public interface CommercePriceListLocalService
 	public CommercePriceList getCommercePriceListByLowestPrice(
 			long groupId, long commerceAccountId,
 			long[] commerceAccountGroupIds, long commerceChannelId,
-			long commerceOrderTypeId, String cPInstanceUuid, String type,
-			String unitOfMeasureKey)
+			long commerceOrderTypeId, String cpInstanceUuid,
+			String currencyCode, String type, String unitOfMeasureKey)
 		throws PortalException;
 
 	/**
@@ -503,60 +503,63 @@ public interface CommercePriceListLocalService
 	public List<CommercePriceList>
 		getCommercePriceListsByAccountAndChannelAndOrderTypeId(
 			long groupId, long commerceAccountId, long commerceChannelId,
-			long commerceOrderTypeId, String type);
+			long commerceOrderTypeId, String currencyCode, String type);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommercePriceList> getCommercePriceListsByAccountAndChannelId(
 		long groupId, long commerceAccountId, long commerceChannelId,
-		String type);
+		String currencyCode, String type);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommercePriceList> getCommercePriceListsByAccountAndOrderTypeId(
 		long groupId, long commerceAccountId, long commerceOrderTypeId,
-		String type);
+		String currencyCode, String type);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommercePriceList> getCommercePriceListsByAccountGroupIds(
-		long groupId, long[] commerceAccountGroupIds, String type);
+		long groupId, long[] commerceAccountGroupIds, String currencyCode,
+		String type);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommercePriceList>
 		getCommercePriceListsByAccountGroupsAndChannelAndOrderTypeId(
 			long groupId, long[] commerceAccountGroupIds,
-			long commerceChannelId, long commerceOrderTypeId, String type);
+			long commerceChannelId, long commerceOrderTypeId,
+			String currencyCode, String type);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommercePriceList>
 		getCommercePriceListsByAccountGroupsAndChannelId(
 			long groupId, long[] commerceAccountGroupIds,
-			long commerceChannelId, String type);
+			long commerceChannelId, String currencyCode, String type);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommercePriceList>
 		getCommercePriceListsByAccountGroupsAndOrderTypeId(
 			long groupId, long[] commerceAccountGroupIds,
-			long commerceOrderTypeId, String type);
+			long commerceOrderTypeId, String currencyCode, String type);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommercePriceList> getCommercePriceListsByAccountId(
-		long groupId, long commerceAccountId, String type);
+		long groupId, long commerceAccountId, String currencyCode, String type);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommercePriceList> getCommercePriceListsByChannelAndOrderTypeId(
 		long groupId, long commerceChannelId, long commerceOrderTypeId,
-		String type);
+		String currencyCode, String type);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommercePriceList> getCommercePriceListsByChannelId(
-		long groupId, long commerceChannelId, String type);
+		long groupId, long commerceChannelId, String currencyCode, String type);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommercePriceList> getCommercePriceListsByOrderTypeId(
-		long groupId, long commerceOrderTypeId, String type);
+		long groupId, long commerceOrderTypeId, String currencyCode,
+		String type);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommercePriceList> getCommercePriceListsByUnqualified(
-		long groupId, String type);
+		long groupId, String currencyCode, String type);
 
 	/**
 	 * Returns all the commerce price lists matching the UUID and company.

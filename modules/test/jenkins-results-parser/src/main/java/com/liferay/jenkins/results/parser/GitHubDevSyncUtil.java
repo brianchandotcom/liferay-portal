@@ -103,31 +103,25 @@ public class GitHubDevSyncUtil {
 				gitHubDevRemoteURL) {
 
 				public GitRemote safeCall() {
-					try {
-						String gitHubDevRemoteName =
-							"git-hub-dev-remote-" +
-								gitHubDevRemoteURLs.indexOf(gitHubDevRemoteURL);
+					String gitHubDevRemoteName =
+						"git-hub-dev-remote-" +
+							gitHubDevRemoteURLs.indexOf(gitHubDevRemoteURL);
 
-						GitRemote gitRemote = gitWorkingDirectory.getGitRemote(
-							gitHubDevRemoteName);
+					GitRemote gitRemote = gitWorkingDirectory.getGitRemote(
+						gitHubDevRemoteName);
 
-						if ((gitRemote == null) ||
-							!gitHubDevRemoteURL.equals(
-								gitRemote.getRemoteURL())) {
+					if ((gitRemote == null) ||
+						!gitHubDevRemoteURL.equals(gitRemote.getRemoteURL())) {
 
-							gitRemote = gitWorkingDirectory.addGitRemote(
-								true, gitHubDevRemoteName, gitHubDevRemoteURL);
-						}
-
-						if (!gitRemote.isAvailable()) {
-							return null;
-						}
-
-						return gitRemote;
+						gitRemote = gitWorkingDirectory.addGitRemote(
+							true, gitHubDevRemoteName, gitHubDevRemoteURL);
 					}
-					catch (Exception exception) {
+
+					if (!gitRemote.isAvailable()) {
 						return null;
 					}
+
+					return gitRemote;
 				}
 
 			};

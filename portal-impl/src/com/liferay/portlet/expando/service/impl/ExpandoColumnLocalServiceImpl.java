@@ -425,10 +425,10 @@ public class ExpandoColumnLocalServiceImpl
 
 		try {
 			_systemEventLocalService.addSystemEvent(
-				stagedExpandoColumn.getCompanyId(),
+				stagedExpandoColumn.getCompanyId(), StringPool.BLANK,
 				stagedModelType.getClassName(),
-				stagedExpandoColumn.getPrimaryKey(), StringPool.BLANK,
-				StringPool.BLANK, null, SystemEventConstants.TYPE_DELETE,
+				stagedExpandoColumn.getPrimaryKey(), StringPool.BLANK, null,
+				SystemEventConstants.TYPE_DELETE,
 				extraDataJSONObject.toString());
 		}
 		catch (PortalException portalException) {

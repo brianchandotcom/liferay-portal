@@ -128,33 +128,32 @@ public class SystemEventAdvice extends ChainableMethodAdvice {
 
 			if (group != null) {
 				SystemEventLocalServiceUtil.addSystemEvent(
-					0, groupId, systemEventHierarchyEntry.getClassName(),
-					classPK, systemEventHierarchyEntry.getUuid(),
-					classExternalReferenceCode, referrerClassName,
+					0, groupId, classExternalReferenceCode,
+					systemEventHierarchyEntry.getClassName(), classPK,
+					systemEventHierarchyEntry.getUuid(), referrerClassName,
 					systemEvent.type(),
 					systemEventHierarchyEntry.getExtraData());
 			}
 			else {
 				SystemEventLocalServiceUtil.addSystemEvent(
-					getCompanyId(classedModel),
+					getCompanyId(classedModel), classExternalReferenceCode,
 					systemEventHierarchyEntry.getClassName(), classPK,
-					systemEventHierarchyEntry.getUuid(),
-					classExternalReferenceCode, referrerClassName,
+					systemEventHierarchyEntry.getUuid(), referrerClassName,
 					systemEvent.type(),
 					systemEventHierarchyEntry.getExtraData());
 			}
 		}
 		else if (group != null) {
 			SystemEventLocalServiceUtil.addSystemEvent(
-				0, groupId, className, classPK, getUuid(classedModel),
-				classExternalReferenceCode, referrerClassName,
-				systemEvent.type(), StringPool.BLANK);
+				0, groupId, classExternalReferenceCode, className, classPK,
+				getUuid(classedModel), referrerClassName, systemEvent.type(),
+				StringPool.BLANK);
 		}
 		else {
 			SystemEventLocalServiceUtil.addSystemEvent(
-				getCompanyId(classedModel), className, classPK,
-				getUuid(classedModel), classExternalReferenceCode,
-				referrerClassName, systemEvent.type(), StringPool.BLANK);
+				getCompanyId(classedModel), classExternalReferenceCode,
+				className, classPK, getUuid(classedModel), referrerClassName,
+				systemEvent.type(), StringPool.BLANK);
 		}
 	}
 

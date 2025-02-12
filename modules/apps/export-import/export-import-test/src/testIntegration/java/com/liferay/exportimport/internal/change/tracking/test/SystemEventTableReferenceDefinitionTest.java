@@ -42,8 +42,8 @@ public class SystemEventTableReferenceDefinitionTest
 	protected CTModel<?> addCTModel() throws Exception {
 		return _systemEventLocalService.addSystemEvent(
 			TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
-			Group.class.getName(), RandomTestUtil.nextLong(),
-			PortalUUIDUtil.generate(), StringPool.BLANK, StringPool.BLANK,
+			StringPool.BLANK, Group.class.getName(), RandomTestUtil.nextLong(),
+			PortalUUIDUtil.generate(), StringPool.BLANK,
 			SystemEventConstants.TYPE_DELETE, StringPool.BLANK);
 	}
 

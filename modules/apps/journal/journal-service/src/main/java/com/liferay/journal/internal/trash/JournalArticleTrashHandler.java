@@ -80,8 +80,8 @@ public class JournalArticleTrashHandler extends BaseJournalTrashHandler {
 			"assetTitle", article.getTitle(article.getDefaultLanguageId()));
 
 		return _systemEventLocalService.addSystemEvent(
-			userId, groupId, getSystemEventClassName(), classPK, classUuid,
-			StringPool.BLANK, referrerClassName,
+			userId, groupId, StringPool.BLANK, getSystemEventClassName(),
+			classPK, classUuid, referrerClassName,
 			SystemEventConstants.TYPE_DELETE, extraDataJSONObject.toString());
 	}
 

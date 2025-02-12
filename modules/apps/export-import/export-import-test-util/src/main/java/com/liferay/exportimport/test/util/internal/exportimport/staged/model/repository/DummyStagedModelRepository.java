@@ -81,10 +81,10 @@ public class DummyStagedModelRepository
 	public void deleteStagedModel(Dummy dummy) throws PortalException {
 		if (_dummies.remove(dummy)) {
 			systemEventLocalService.addSystemEvent(
-				0, dummy.getGroupId(), dummy.getModelClassName(),
-				dummy.getPrimaryKey(), dummy.getUuid(), StringPool.BLANK,
-				StringPool.BLANK, SystemEventConstants.TYPE_DELETE,
-				StringPool.BLANK);
+				0, dummy.getGroupId(), StringPool.BLANK,
+				dummy.getModelClassName(), dummy.getPrimaryKey(),
+				dummy.getUuid(), StringPool.BLANK,
+				SystemEventConstants.TYPE_DELETE, StringPool.BLANK);
 		}
 	}
 

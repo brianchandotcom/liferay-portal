@@ -31,7 +31,6 @@ const test = mergeTests(
 	apiHelpersTest,
 	collectionsPagesTest,
 	featureFlagsTest({
-		'LPD-18221': {enabled: true},
 		'LPS-178052': {enabled: true},
 	}),
 	isolatedSiteTest,
@@ -39,14 +38,6 @@ const test = mergeTests(
 	masterPagesPagesTest,
 	pageEditorPagesTest,
 	pageManagementSiteTest
-);
-
-const testWithoutMultiselection = mergeTests(
-	test,
-	featureFlagsTest({
-		'LPD-18221': {enabled: false},
-		'LPS-178052': {enabled: true},
-	})
 );
 
 test('Checks that a widget can be added and dragged to another part of the page', async ({
@@ -411,7 +402,7 @@ test(
 	}
 );
 
-testWithoutMultiselection(
+test(
 	'Check correct item is selected when dragging into a collection item from tree',
 	{tag: ['@LPD-41382']},
 	async ({
@@ -500,7 +491,7 @@ testWithoutMultiselection(
 	}
 );
 
-testWithoutMultiselection(
+test(
 	'Check correct item is selected when dragging into a collection item from layout',
 	{tag: ['@LPD-41382']},
 	async ({
@@ -550,12 +541,12 @@ testWithoutMultiselection(
 
 		await expect(async () => {
 			await heading.dragTo(
-				page.locator('.page-editor__collection-item-old').nth(1)
+				page.locator('.page-editor__collection-item').nth(0)
 			);
 
 			const topper = page
 				.locator(`.lfr-layout-structure-item-topper-${headingId}`)
-				.nth(1);
+				.nth(0);
 
 			await expect(topper).toHaveClass(/active/, {timeout: 2000});
 		}).toPass();

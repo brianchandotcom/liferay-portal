@@ -13,6 +13,7 @@ import SearchHeader from './components/SearchHeader';
 import './Home.css';
 
 import {NetworkStatus} from '@apollo/client';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import useKoroneikiAccounts from '~/hooks/useKoroneikiAccounts';
 import SearchBuilder from '~/lib/SearchBuilder';
 
@@ -94,12 +95,19 @@ const Home: React.FC = () => {
 		[projectCategoryItems]
 	);
 
+	if (networkStatus === NetworkStatus.loading) {
+		return (
+			<div className="mx-auto">
+				<ClayLoadingIndicator size="sm" />
+			</div>
+		);
+	}
+
 	return (
 		<>
 			{featureFlags?.includes('LPS-191380') &&
 				hasAvailableCategoriesToDisplay && (
 					<ProjectCategoryDropdown
-						loading={networkStatus === NetworkStatus.loading}
 						onSelect={handleOnSelect}
 						projectCategoryItems={projectCategoryItems}
 						selectedProjectCategoryKey={selectedProjectCategoryKey}
@@ -111,11 +119,7 @@ const Home: React.FC = () => {
 				onPointerEnterCapture={() => {}}
 				onPointerLeaveCapture={() => {}}
 				placeholder=""
-				size={
-					hasManyProjects && networkStatus !== NetworkStatus.loading
-						? 'md'
-						: 'xl'
-				}
+				size={hasManyProjects ? 'md' : 'xl'}
 			>
 				<ClayLayout.Row>
 					<ClayLayout.Col>
@@ -127,14 +131,10 @@ const Home: React.FC = () => {
 						)}
 
 						<ProjectList
-							compressed={
-								hasManyProjects &&
-								networkStatus !== NetworkStatus.loading
-							}
+							compressed={hasManyProjects}
 							fetching={networkStatus === NetworkStatus.fetchMore}
 							koroneikiAccounts={koroneikiAccounts}
-							loading={networkStatus === NetworkStatus.loading}
-							maxCardsLoading={THRESHOLD_COUNT}
+							loading={networkStatus === NetworkStatus.refetch}
 							onIntersect={(currentPage: number) => {
 								fetchMore({
 									variables: {page: currentPage + 1},

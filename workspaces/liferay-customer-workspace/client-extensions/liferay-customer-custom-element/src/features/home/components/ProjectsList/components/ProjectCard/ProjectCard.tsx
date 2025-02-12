@@ -6,7 +6,7 @@
 import ClayCard from '@clayui/card';
 import classNames from 'classnames';
 import {MouseEventHandler, memo} from 'react';
-import {Skeleton, StatusTag} from '~/components';
+import {StatusTag} from '~/components';
 import IKoroneikiAccount from '~/interfaces/koroneikiAccount';
 import i18n from '~/utils/I18n';
 import {FORMAT_DATE_TYPES, SLA_STATUS_TYPES} from '~/utils/constants';
@@ -18,14 +18,12 @@ import './ProjectCard.css';
 interface IProps {
 	compressed: boolean;
 	koroneikiAccount: IKoroneikiAccount | undefined;
-	loading: boolean;
 	onClick?: MouseEventHandler<HTMLDivElement>;
 }
 
 const ProjectCard: React.FC<IProps> = ({
 	compressed,
 	koroneikiAccount,
-	loading,
 	onClick,
 }) => {
 	const statusReport: Record<string, string> = {
@@ -35,10 +33,6 @@ const ProjectCard: React.FC<IProps> = ({
 	};
 
 	const renderSLAStatus = () => {
-		if (loading) {
-			return <Skeleton align="left" height={20} width={54} />;
-		}
-
 		return (
 			<StatusTag
 				currentStatus={koroneikiAccount?.status as unknown as string}
@@ -46,17 +40,6 @@ const ProjectCard: React.FC<IProps> = ({
 		);
 	};
 	const renderSLAStatusDate = () => {
-		if (loading) {
-			return (
-				<Skeleton
-					align="left"
-					className="mt-1"
-					height={20}
-					width={100}
-				/>
-			);
-		}
-
 		if (!koroneikiAccount) {
 			return null;
 		}
@@ -87,17 +70,6 @@ const ProjectCard: React.FC<IProps> = ({
 		);
 	};
 	const renderSupportRegion = () => {
-		if (loading) {
-			return (
-				<Skeleton
-					align="left"
-					className="mt-1"
-					height={20}
-					width={120}
-				/>
-			);
-		}
-
 		if (!koroneikiAccount) {
 			return null;
 		}
@@ -152,36 +124,20 @@ const ProjectCard: React.FC<IProps> = ({
 						})}
 					>
 						<h4 className="mb-1 text-neutral-7 text-truncate">
-							{loading ? (
-								<Skeleton
-									className="mb-1"
-									height={34}
-									width={300}
-								/>
-							) : (
-								koroneikiAccount?.name
-							)}
+							{koroneikiAccount?.name}
 						</h4>
 
-						{compressed &&
-							(loading ? (
-								<Skeleton
-									className="mb-1"
-									height={24}
-									width={120}
-								/>
-							) : (
-								<div className="text-neutral-5 text-paragraph text-truncate text-uppercase">
-									{koroneikiAccount?.code}
-								</div>
-							))}
+						{compressed && (
+							<div className="text-neutral-5 text-paragraph text-truncate text-uppercase">
+								{koroneikiAccount?.code}
+							</div>
+						)}
 					</div>
 
 					<div
-						className={classNames({
+						className={classNames('d-block', {
 							'autofit-col text-right align-items-end h-100':
 								compressed,
-							'd-block': !loading,
 							'mt-6 pt-3': !compressed,
 						})}
 					>

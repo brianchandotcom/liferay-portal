@@ -7,11 +7,9 @@ import {Button} from '@clayui/core';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import {useState} from 'react';
-import {Skeleton} from '~/components';
 import i18n from '~/utils/I18n';
 
 interface IProps {
-	loading: boolean;
 	onSelect: (key: string) => void;
 	projectCategoryItems: ProjectCategoryItem[];
 	selectedProjectCategoryKey: string;
@@ -23,7 +21,6 @@ interface ProjectCategoryItem {
 }
 
 const ProjectCategoryDropdown: React.FC<IProps> = ({
-	loading,
 	onSelect,
 	projectCategoryItems,
 	selectedProjectCategoryKey,
@@ -33,11 +30,7 @@ const ProjectCategoryDropdown: React.FC<IProps> = ({
 	return (
 		<div className="align-items-center d-flex mb-4 ml-4 mt-2">
 			<div className="font-weight-bold pr-1 text-paragraph-sm">
-				{loading ? (
-					<Skeleton height={18} width={40} />
-				) : (
-					`${i18n.translate('filter-by-my-role')}:`
-				)}
+				{`${i18n.translate('filter-by-my-role')}:`}
 			</div>
 
 			<ClayDropDown
@@ -54,16 +47,13 @@ const ProjectCategoryDropdown: React.FC<IProps> = ({
 						}
 						borderless
 						className="align-items-center d-flex px-2"
-						disabled={loading}
 						size="sm"
 					>
-						{loading ? (
-							<Skeleton height={18} width={46} />
-						) : (
+						{
 							projectCategoryItems.find(
 								({key}) => key === selectedProjectCategoryKey
 							)?.label
-						)}
+						}
 
 						<span className="inline-item-after">
 							<ClayIcon symbol="caret-bottom" />

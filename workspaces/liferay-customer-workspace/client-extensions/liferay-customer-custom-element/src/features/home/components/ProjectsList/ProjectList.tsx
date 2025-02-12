@@ -24,7 +24,6 @@ interface IProps {
 		totalCount: number;
 	} | null;
 	loading: boolean;
-	maxCardsLoading?: number;
 	onIntersect: (page: number) => void;
 }
 
@@ -33,7 +32,6 @@ const ProjectList: React.FC<IProps> = ({
 	fetching,
 	koroneikiAccounts,
 	loading,
-	maxCardsLoading = 4,
 	onIntersect,
 }) => {
 	const [trackedRefCurrent, isIntersecting] = useIntersectionObserver();
@@ -49,23 +47,13 @@ const ProjectList: React.FC<IProps> = ({
 			page: number;
 			totalCount: number;
 		} | null;
-		loading: boolean;
 	}
 
 	const RenderResults: React.FC<IRenderResultsProps> = ({
 		compressed,
 		koroneikiAccounts,
-		loading,
 	}) => {
 		const pageRoutes = routerPath();
-
-		if (loading) {
-			return (
-				<div className="mx-auto">
-					<ClayLoadingIndicator size="sm" />
-				</div>
-			);
-		}
 
 		if (!koroneikiAccounts || !koroneikiAccounts.totalCount) {
 			return (
@@ -82,7 +70,6 @@ const ProjectList: React.FC<IProps> = ({
 						compressed={compressed}
 						key={`${koroneikiAccount.accountKey}-${index}`}
 						koroneikiAccount={koroneikiAccount}
-						loading={loading}
 						onClick={() =>
 							Liferay.Util.navigate(
 								pageRoutes.project(koroneikiAccount.accountKey)
@@ -100,6 +87,14 @@ const ProjectList: React.FC<IProps> = ({
 		}
 	}, [isIntersecting, koroneikiAccounts?.page, onIntersect, allowFetching]);
 
+	if (loading) {
+		return (
+			<div className="mx-auto">
+				<ClayLoadingIndicator size="sm" />
+			</div>
+		);
+	}
+
 	return (
 		<div
 			className={classNames('d-flex justify-content-center', {
@@ -107,24 +102,10 @@ const ProjectList: React.FC<IProps> = ({
 				'flex-wrap pl-3': !compressed,
 			})}
 		>
-			{loading ? (
-				<>
-					{[...new Array(maxCardsLoading)].map((_, index) => (
-						<ProjectCard
-							compressed={compressed}
-							key={index}
-							koroneikiAccount={undefined}
-							loading={loading}
-						/>
-					))}
-				</>
-			) : (
-				<RenderResults
-					compressed={compressed}
-					koroneikiAccounts={koroneikiAccounts}
-					loading={loading}
-				/>
-			)}
+			<RenderResults
+				compressed={compressed}
+				koroneikiAccounts={koroneikiAccounts}
+			/>
 
 			<div ref={trackedRefCurrent as any}></div>
 		</div>

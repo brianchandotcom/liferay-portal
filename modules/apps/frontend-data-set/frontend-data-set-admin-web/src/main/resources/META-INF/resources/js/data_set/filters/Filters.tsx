@@ -421,7 +421,7 @@ function Filters({
 		}
 	};
 
-	const onUpdateStatus = async (item: IFilter) => {
+	const updateActive = async (item: IFilter) => {
 		const type: any =
 			item.filterType === 'DATE_RANGE'
 				? 'DATE_FILTERS'
@@ -591,7 +591,7 @@ function Filters({
 						editFilter={onEdit}
 						filterTypes={FILTER_TYPES}
 						filters={filters}
-						toggleChange={onUpdateStatus}
+						updateActive={updateActive}
 						updateFiltersOrder={updateFiltersOrder}
 					/>
 				</ClayLayout.ContainerFluid>

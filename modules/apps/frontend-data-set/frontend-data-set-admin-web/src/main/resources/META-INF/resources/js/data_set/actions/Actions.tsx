@@ -282,7 +282,7 @@ const Actions = ({dataSet, namespace, spritemap}: IDataSetSectionProps) => {
 		}
 	};
 
-	const updateStatus = async (item: IAction) => {
+	const updateActive = async (item: IAction) => {
 		const response = await fetch(
 			`${API_URL.ACTIONS}/by-external-reference-code/${item.externalReferenceCode}`,
 			{
@@ -377,8 +377,8 @@ const Actions = ({dataSet, namespace, spritemap}: IDataSetSectionProps) => {
 									noItemsButtonLabel={Liferay.Language.get(
 										'new-item-action'
 									)}
-									toggleChange={updateStatus}
 									updateActionsOrder={updateActionsOrder}
+									updateActive={updateActive}
 								/>
 							</ClayTabs.TabPane>
 
@@ -399,8 +399,8 @@ const Actions = ({dataSet, namespace, spritemap}: IDataSetSectionProps) => {
 									noItemsButtonLabel={Liferay.Language.get(
 										'new-creation-action'
 									)}
-									toggleChange={updateStatus}
 									updateActionsOrder={updateActionsOrder}
+									updateActive={updateActive}
 								/>
 							</ClayTabs.TabPane>
 						</ClayTabs.Content>

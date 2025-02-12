@@ -15,7 +15,7 @@ const FilterList = ({
 	editFilter,
 	filterTypes,
 	filters,
-	toggleChange,
+	updateActive,
 	updateFiltersOrder,
 }: {
 	createFilter: (filterType: EFilterType) => void;
@@ -23,7 +23,7 @@ const FilterList = ({
 	editFilter: ({item}: {item: IFilter}) => void;
 	filterTypes: Record<EFilterType, IFilterTypeProps>;
 	filters: IFilter[];
-	toggleChange: (item: IFilter) => void;
+	updateActive: (item: IFilter) => void;
 	updateFiltersOrder: ({filtersOrder}: {filtersOrder: string}) => void;
 }) => {
 	return (
@@ -66,7 +66,7 @@ const FilterList = ({
 									component: ({item}: any) =>
 										ToggleStatus({
 											item,
-											toggleChange,
+											toggleChange: updateActive,
 										}),
 								},
 								label: Liferay.Language.get('status'),

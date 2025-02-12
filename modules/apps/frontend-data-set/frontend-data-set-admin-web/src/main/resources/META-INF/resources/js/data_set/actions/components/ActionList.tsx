@@ -16,8 +16,8 @@ const ActionList = ({
 	deleteAction,
 	editAction,
 	noItemsButtonLabel,
-	toggleChange,
 	updateActionsOrder,
+	updateActive,
 }: {
 	actions: Array<IAction>;
 	createAction: () => void;
@@ -25,8 +25,8 @@ const ActionList = ({
 	deleteAction: ({item}: {item: IAction}) => void;
 	editAction: ({item}: {item: IAction}) => void;
 	noItemsButtonLabel: string;
-	toggleChange: (item: IAction) => void;
 	updateActionsOrder: ({order}: {order: string}) => void;
+	updateActive: (item: IAction) => void;
 }) => {
 	return (
 		<OrderableTable
@@ -69,7 +69,7 @@ const ActionList = ({
 									component: ({item}: any) =>
 										ToggleStatus({
 											item,
-											toggleChange,
+											toggleChange: updateActive,
 										}),
 								},
 								label: Liferay.Language.get('status'),

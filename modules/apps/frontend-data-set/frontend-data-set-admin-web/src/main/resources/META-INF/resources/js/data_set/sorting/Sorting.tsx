@@ -639,7 +639,7 @@ const Sorting = ({
 		}
 	};
 
-	const updateActiveState = async (item: IDataSetSort) => {
+	const updateActive = async (item: IDataSetSort) => {
 		const response = await fetch(
 			`${API_URL.SORTS}/by-external-reference-code/${item.externalReferenceCode}`,
 			{
@@ -734,7 +734,7 @@ const Sorting = ({
 													ToggleStatus({
 														item,
 														toggleChange:
-															updateActiveState,
+															updateActive,
 													}),
 											},
 											label: Liferay.Language.get(

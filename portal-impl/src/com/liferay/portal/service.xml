@@ -3240,7 +3240,6 @@
 		<exception>CountryTitle</exception>
 		<exception>DuplicateCountry</exception>
 		<exception>DuplicateGroup</exception>
-		<exception>DuplicateOpenId</exception>
 		<exception>DuplicateOrganization</exception>
 		<exception>DuplicatePasswordPolicy</exception>
 		<exception>DuplicateRegion</exception>

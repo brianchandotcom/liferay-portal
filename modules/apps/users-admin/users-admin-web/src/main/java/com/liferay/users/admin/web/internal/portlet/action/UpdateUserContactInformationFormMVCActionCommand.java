@@ -6,7 +6,6 @@
 package com.liferay.users.admin.web.internal.portlet.action;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.DuplicateOpenIdException;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.exception.UserSmsException;
 import com.liferay.portal.kernel.model.Contact;
@@ -87,9 +86,7 @@ public class UpdateUserContactInformationFormMVCActionCommand
 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
-			else if (exception instanceof DuplicateOpenIdException ||
-					 exception instanceof UserSmsException) {
-
+			else if (exception instanceof UserSmsException) {
 				SessionErrors.add(
 					actionRequest, exception.getClass(), exception);
 

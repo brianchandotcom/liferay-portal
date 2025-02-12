@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.exception.AddressZipException;
 import com.liferay.portal.kernel.exception.CompanyMaxUsersException;
 import com.liferay.portal.kernel.exception.ContactBirthdayException;
 import com.liferay.portal.kernel.exception.ContactNameException;
-import com.liferay.portal.kernel.exception.DuplicateOpenIdException;
 import com.liferay.portal.kernel.exception.EmailAddressException;
 import com.liferay.portal.kernel.exception.GroupFriendlyURLException;
 import com.liferay.portal.kernel.exception.NoSuchCountryException;
@@ -319,7 +318,6 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 				exception instanceof CompanyMaxUsersException ||
 				exception instanceof ContactBirthdayException ||
 				exception instanceof ContactNameException ||
-				exception instanceof DuplicateOpenIdException ||
 				exception instanceof EmailAddressException ||
 				exception instanceof GroupFriendlyURLException ||
 				exception instanceof NoSuchCountryException ||

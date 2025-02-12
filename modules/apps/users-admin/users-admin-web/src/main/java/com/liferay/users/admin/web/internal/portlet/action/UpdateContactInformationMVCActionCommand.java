@@ -8,7 +8,6 @@ package com.liferay.users.admin.web.internal.portlet.action;
 import com.liferay.portal.kernel.exception.AddressCityException;
 import com.liferay.portal.kernel.exception.AddressStreetException;
 import com.liferay.portal.kernel.exception.AddressZipException;
-import com.liferay.portal.kernel.exception.DuplicateOpenIdException;
 import com.liferay.portal.kernel.exception.EmailAddressException;
 import com.liferay.portal.kernel.exception.NoSuchCountryException;
 import com.liferay.portal.kernel.exception.NoSuchListTypeException;
@@ -116,7 +115,6 @@ public class UpdateContactInformationMVCActionCommand
 			else if (exception instanceof AddressCityException ||
 					 exception instanceof AddressStreetException ||
 					 exception instanceof AddressZipException ||
-					 exception instanceof DuplicateOpenIdException ||
 					 exception instanceof EmailAddressException ||
 					 exception instanceof NoSuchCountryException ||
 					 exception instanceof NoSuchListTypeException ||

@@ -578,12 +578,11 @@ public class FormItemManager {
 		return layoutStructureItemChanges;
 	}
 
-	public LayoutStructureItemChanges removeLayoutStructureItems(
+	public List<LayoutStructureItem> removeLayoutStructureItems(
 		FormStyledLayoutStructureItem formStyledLayoutStructureItem,
 		LayoutStructure layoutStructure, List<String> initialRemovedItemIds) {
 
-		LayoutStructureItemChanges layoutStructureItemChanges =
-			new LayoutStructureItemChanges();
+		List<LayoutStructureItem> layoutStructureItems = new ArrayList<>();
 
 		for (String itemId :
 				LayoutStructureItemUtil.getChildrenItemIds(
@@ -599,11 +598,11 @@ public class FormItemManager {
 			layoutStructure.markLayoutStructureItemForDeletion(
 				Collections.singletonList(itemId), Collections.emptyList());
 
-			layoutStructureItemChanges.addRemovedLayoutStructureItems(
+			layoutStructureItems.add(
 				layoutStructure.getLayoutStructureItem(itemId));
 		}
 
-		return layoutStructureItemChanges;
+		return layoutStructureItems;
 	}
 
 	public FragmentEntryLink updateNumberOfStepps(

@@ -114,8 +114,8 @@ export default {
 		stepperFragmentEntryLinkId: FragmentEntryLink['fragmentEntryLinkId'];
 	}) {
 		return draftServiceFetch<{
-			addedFragmentEntryLinks: FragmentEntryLinkMap;
 			errorMessage?: string;
+			fragmentEntryLinks: FragmentEntryLinkMap;
 			layoutData: LayoutData;
 			removedFragmentEntryLinkIds: string[];
 		}>(

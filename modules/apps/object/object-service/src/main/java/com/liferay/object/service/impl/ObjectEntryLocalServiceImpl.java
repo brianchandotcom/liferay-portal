@@ -5611,6 +5611,21 @@ public class ObjectEntryLocalServiceImpl
 					objectField.getBusinessType(),
 					ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP)) {
 
+			if (StringUtil.equals(
+					objectDefinition.getScope(),
+					ObjectDefinitionConstants.SCOPE_DEPOT)) {
+
+				ObjectEntry relatedObjectEntry = fetchObjectEntry(
+					GetterUtil.getLong(value));
+
+				if ((relatedObjectEntry != null) &&
+					(groupId != relatedObjectEntry.getGroupId())) {
+
+					throw new ObjectEntryValuesException.InvalidValue(
+						objectField.getName());
+				}
+			}
+
 			if (!objectDefinition.isAccountEntryRestricted() ||
 				!Objects.equals(
 					objectField.getObjectFieldId(),

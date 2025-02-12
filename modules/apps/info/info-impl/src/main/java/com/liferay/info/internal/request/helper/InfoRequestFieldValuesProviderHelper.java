@@ -221,7 +221,11 @@ public class InfoRequestFieldValuesProviderHelper {
 	}
 
 	private InfoFieldValue<Object> _getInfoFieldValue(
-		InfoField<?> infoField, Locale locale, Object object) {
+		InfoField<?> infoField, Locale locale, Object value) {
+
+		if (value == null) {
+			return null;
+		}
 
 		if (infoField.isLocalizable()) {
 			return new InfoFieldValue<>(
@@ -230,7 +234,7 @@ public class InfoRequestFieldValuesProviderHelper {
 				).defaultLocale(
 					locale
 				).value(
-					locale, object
+					locale, value
 				).build());
 		}
 

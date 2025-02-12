@@ -65,12 +65,16 @@ public class TransitionResourceTest extends BaseTransitionResourceTestCase {
 					{
 						label = "Approve";
 						name = "approve";
+						sourceNodeName = "review";
+						targetNodeName = "approved";
 					}
 				},
 				new Transition() {
 					{
 						label = "Reject";
 						name = "reject";
+						sourceNodeName = "review";
+						targetNodeName = "update";
 					}
 				}),
 			(List<Transition>)page.getItems());
@@ -110,12 +114,16 @@ public class TransitionResourceTest extends BaseTransitionResourceTestCase {
 					{
 						label = "Approve";
 						name = "approve";
+						sourceNodeName = "review";
+						targetNodeName = "approved";
 					}
 				},
 				new Transition() {
 					{
 						label = "Reject";
 						name = "reject";
+						sourceNodeName = "review";
+						targetNodeName = "update";
 					}
 				}),
 			(List<Transition>)page3.getItems());
@@ -137,12 +145,16 @@ public class TransitionResourceTest extends BaseTransitionResourceTestCase {
 					{
 						label = "Approve";
 						name = "approve";
+						sourceNodeName = "review";
+						targetNodeName = "approved";
 					}
 				},
 				new Transition() {
 					{
 						label = "Reject";
 						name = "reject";
+						sourceNodeName = "review";
+						targetNodeName = "update";
 					}
 				}),
 			(List<Transition>)page.getItems());
@@ -185,12 +197,16 @@ public class TransitionResourceTest extends BaseTransitionResourceTestCase {
 					{
 						label = "Approve";
 						name = "approve";
+						sourceNodeName = "review";
+						targetNodeName = "approved";
 					}
 				},
 				new Transition() {
 					{
 						label = "Reject";
 						name = "reject";
+						sourceNodeName = "review";
+						targetNodeName = "update";
 					}
 				}),
 			(List<Transition>)page3.getItems());
@@ -198,7 +214,9 @@ public class TransitionResourceTest extends BaseTransitionResourceTestCase {
 
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
-		return new String[] {"label", "name"};
+		return new String[] {
+			"label", "name", "sourceNodeName", "targetNodeName"
+		};
 	}
 
 	@Override

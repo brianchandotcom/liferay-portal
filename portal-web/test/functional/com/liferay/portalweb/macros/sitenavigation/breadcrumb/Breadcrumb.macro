@@ -1,75 +1,9 @@
 definition {
 
-	@summary = "Go to breadcrumb entry"
-	macro gotoEntry(breadcrumbName = null) {
-		Click(
-			key_breadcrumbName = ${breadcrumbName},
-			locator1 = "Breadcrumb#BREADCRUMB_ENTRY_LINK");
-	}
-
-	@summary = "Default summary"
-	macro seeFullNested() {
-		Click(
-			ariaLabel = "See full nested",
-			locator1 = "Button#ANY_WITH_ARIA_LABEL");
-	}
-
 	@summary = "Default summary"
 	macro viewActiveEntry(breadcrumbName = null) {
 		AssertTextEquals(
 			locator1 = "Breadcrumb#BREADCRUMB_ENTRY_ACTIVE_ENTRY",
-			value1 = ${breadcrumbName});
-	}
-
-	@summary = "Default summary"
-	macro viewADTApplied(breadcrumbAdtType = null) {
-		var key_breadcrumbAdtType = ${breadcrumbAdtType};
-
-		AssertElementPresent(locator1 = "BreadcrumbPortlet#BREADCRUMB_ADT");
-	}
-
-	@summary = "Default summary"
-	macro viewBreadcrumbPath(breadcrumbNameList = null) {
-		var index = 1;
-
-		for (var breadcrumbName : list ${breadcrumbNameList}) {
-			AssertElementPresent(
-				key_breadcrumbName = ${breadcrumbName},
-				key_index = ${index},
-				locator1 = "Breadcrumb#BREADCRUMB_ENTRY_BY_INDEX");
-
-			var index = ${index} + 1;
-		}
-	}
-
-	@summary = "Default summary"
-	macro viewConfigurationCheckboxes() {
-		SelectFrame(locator1 = "IFrame#CONFIGURATION");
-
-		if (isSet(checkSetupName)) {
-			for (var checkSetupName : list ${checkSetupName}) {
-				var key_checkSetupName = ${checkSetupName};
-
-				AssertChecked.assertCheckedNotVisible(locator1 = "ToggleSwitch#SHOW_SPECIFIC_TOGGLE_SWITCH");
-			}
-		}
-
-		if (isSet(uncheckSetupName)) {
-			for (var uncheckSetupName : list ${uncheckSetupName}) {
-				var key_checkSetupName = ${uncheckSetupName};
-
-				AssertNotChecked.assertNotCheckedNotVisible(locator1 = "ToggleSwitch#SHOW_SPECIFIC_TOGGLE_SWITCH");
-			}
-		}
-
-		SelectFrame(value1 = "relative=top");
-	}
-
-	@summary = "Default summary"
-	macro viewEntry(breadcrumbName = null) {
-		AssertTextEquals(
-			key_breadcrumbName = ${breadcrumbName},
-			locator1 = "BreadcrumbPortlet#BREADCRUMB_SPECIFIC_ENTRY",
 			value1 = ${breadcrumbName});
 	}
 
@@ -88,25 +22,6 @@ definition {
 		if (isSet(breadcrumbListNotVisible)) {
 			for (var breadcrumbName : list ${breadcrumbListNotVisible}) {
 				AssertElementNotPresent(
-					key_breadcrumbName = ${breadcrumbName},
-					locator1 = "BreadcrumbPortlet#BREADCRUMB_SPECIFIC_ENTRY");
-			}
-		}
-	}
-
-	@summary = "Default summary"
-	macro viewSpecificPG(breadcrumbListVisible = null, breadcrumbListNotVisible = null) {
-		if (isSet(breadcrumbListNotVisible)) {
-			for (var breadcrumbName : list ${breadcrumbListNotVisible}) {
-				AssertElementNotPresent(
-					key_breadcrumbName = ${breadcrumbName},
-					locator1 = "BreadcrumbPortlet#BREADCRUMB_SPECIFIC_ENTRY");
-			}
-		}
-
-		if (isSet(breadcrumListVisible)) {
-			for (var breadcrumbName : list ${breadcrumbListVisible}) {
-				AssertElementPresent(
 					key_breadcrumbName = ${breadcrumbName},
 					locator1 = "BreadcrumbPortlet#BREADCRUMB_SPECIFIC_ENTRY");
 			}

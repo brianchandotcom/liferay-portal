@@ -1,1 +1,5 @@
-{"fragmentCompositionDefinitionPath":"fragment-composition-definition.json","name":"Home Page","description":""}
+{
+	"description": "",
+	"fragmentCompositionDefinitionPath": "fragment-composition-definition.json",
+	"name": "Home Page"
+}

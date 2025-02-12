@@ -26,7 +26,7 @@
 	opacity: 50%;
 }
 
-/* large watermark positions */
+/* ---------- large watermark positions ---------- */
 
 .value-card-circle-lg{
   width: 142px;
@@ -54,7 +54,7 @@
   left: -100px;
 }
 
-/* small watermark positions */
+/* ---------- small watermark positions ---------- */
 
 .value-card-circle-sm{
   width: 95px;

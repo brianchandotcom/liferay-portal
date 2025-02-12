@@ -1,1 +1,5 @@
-{"fragmentCompositionDefinitionPath":"fragment-composition-definition.json","name":"Leadership Profile Display","description":""}
+{
+	"description": "",
+	"fragmentCompositionDefinitionPath": "fragment-composition-definition.json",
+	"name": "Leadership Profile Display"
+}

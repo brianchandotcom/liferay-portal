@@ -1,1 +1,5 @@
-{"fragmentCompositionDefinitionPath":"fragment-composition-definition.json","name":"404 Error Page","description":""}
+{
+	"description": "",
+	"fragmentCompositionDefinitionPath": "fragment-composition-definition.json",
+	"name": "404 Error Page"
+}

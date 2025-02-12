@@ -11,8 +11,8 @@
 }
 
 .action-link:after {
-	padding-left: 5px;
 	content: '\2192';
+	padding-left: 5px;
 }
 
 .card-image {
@@ -26,10 +26,10 @@
 
 p {
 	display: block;
+	margin-bottom: 0px;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
-	margin-bottom: 0px;
 }
 
 p:nth-last-child(){

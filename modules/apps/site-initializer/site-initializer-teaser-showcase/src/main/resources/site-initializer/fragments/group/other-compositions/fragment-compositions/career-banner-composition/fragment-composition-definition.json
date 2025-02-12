@@ -1,132 +1,167 @@
 {
-  "definition": {
-    "fragmentStyle": {
-      "backgroundColor": "gray500Color",
-      "backgroundFragmentImage": {
-        "title": { "value": "careers-hero-small" },
-        "url": {
-          "value": "/documents/d/asset-library-34776/careers-hero-small?imagePreview=1"
-        }
-      },
-      "borderWidth": "0",
-      "height": "200px",
-      "paddingBottom": "10",
-      "paddingLeft": "3",
-      "paddingRight": "3",
-      "paddingTop": "10"
-    },
-    "fragmentViewports": [
-      {
-        "fragmentViewportStyle": { "paddingLeft": "4", "paddingRight": "4" },
-        "id": "landscapeMobile"
-      },
-      {
-        "fragmentViewportStyle": { "paddingLeft": "3", "paddingRight": "3" },
-        "id": "portraitMobile"
-      },
-      {
-        "fragmentViewportStyle": { "paddingLeft": "5", "paddingRight": "5" },
-        "id": "tablet"
-      }
-    ],
-    "indexed": true,
-    "layout": {
-      "align": "Center",
-      "contentDisplay": "FlexRow",
-      "paddingLeft": 1,
-      "paddingRight": 1
-    },
-    "name": "Banner"
-  },
-  "pageElements": [
-    {
-      "definition": {
-        "fragmentStyle": { "borderWidth": "0" },
-        "indexed": true,
-        "layout": { "widthType": "Fixed" },
-        "name": "Banner Content"
-      },
-      "pageElements": [
-        {
-          "definition": {
-            "fragment": { "key": "BASIC_COMPONENT-heading" },
-            "fragmentConfig": { "headingLevel": "h1" },
-            "fragmentFields": [
-              {
-                "id": "element-text",
-                "value": {
-                  "fragmentLink": {},
-                  "text": { "value_i18n": { "en_US": "Join the Clarity Team" } }
-                }
-              }
-            ],
-            "fragmentStyle": { "marginBottom": "4", "textColor": "whiteColor" },
-            "fragmentViewports": [
-              {
-                "fragmentViewportStyle": { "marginRight": "0" },
-                "id": "portraitMobile"
-              }
-            ],
-            "indexed": true
-          },
-          "type": "Fragment"
-        },
-        {
-          "definition": {
-            "fragment": { "key": "BASIC_COMPONENT-button" },
-            "fragmentConfig": {
-              "buttonType": "primary",
-              "type": "link",
-              "buttonSize": "nm"
-            },
-            "fragmentFields": [
-              {
-                "id": "link",
-                "value": {
-                  "fragmentLink": {
-                    "value": {
-                      "href": {
-                        "mapping": {
-                          "itemReference": {
-                            "className": "com.liferay.portal.kernel.model.Layout",
-                            "fields": [
-                              {
-                                "fieldName": "friendlyURL",
-                                "fieldValue": "/open-positions"
-                              },
-                              {
-                                "fieldName": "privatePage",
-                                "fieldValue": "false"
-                              },
-                              {
-                                "fieldName": "siteKey",
-                                "fieldValue": "[$GROUP_KEY$]"
-                              }
-                            ]
-                          }
-                        }
-                      }
-                    }
-                  },
-                  "text": {
-                    "value_i18n": { "en_US": "Explore Open Positions" }
-                  }
-                }
-              }
-            ],
-            "fragmentViewports": [
-              {
-                "fragmentViewportStyle": { "marginRight": "0" },
-                "id": "portraitMobile"
-              }
-            ],
-            "indexed": true
-          },
-          "type": "Fragment"
-        }
-      ],
-      "type": "Section"
-    }
-  ],
-  "type": "Section"
+	"definition": {
+		"fragmentStyle": {
+			"backgroundColor": "gray500Color",
+			"backgroundFragmentImage": {
+				"title": {
+					"value": "careers-hero-small"
+				},
+				"url": {
+					"value": "/documents/d/asset-library-34776/careers-hero-small?imagePreview=1"
+				}
+			},
+			"borderWidth": "0",
+			"height": "200px",
+			"paddingBottom": "10",
+			"paddingLeft": "3",
+			"paddingRight": "3",
+			"paddingTop": "10"
+		},
+		"fragmentViewports": [
+			{
+				"fragmentViewportStyle": {
+					"paddingLeft": "4",
+					"paddingRight": "4"
+				},
+				"id": "landscapeMobile"
+			},
+			{
+				"fragmentViewportStyle": {
+					"paddingLeft": "3",
+					"paddingRight": "3"
+				},
+				"id": "portraitMobile"
+			},
+			{
+				"fragmentViewportStyle": {
+					"paddingLeft": "5",
+					"paddingRight": "5"
+				},
+				"id": "tablet"
+			}
+		],
+		"indexed": true,
+		"layout": {
+			"align": "Center",
+			"contentDisplay": "FlexRow",
+			"paddingLeft": 1,
+			"paddingRight": 1
+		},
+		"name": "Banner"
+	},
+	"pageElements": [
+		{
+			"definition": {
+				"fragmentStyle": {
+					"borderWidth": "0"
+				},
+				"indexed": true,
+				"layout": {
+					"widthType": "Fixed"
+				},
+				"name": "Banner Content"
+			},
+			"pageElements": [
+				{
+					"definition": {
+						"fragment": {
+							"key": "BASIC_COMPONENT-heading"
+						},
+						"fragmentConfig": {
+							"headingLevel": "h1"
+						},
+						"fragmentFields": [
+							{
+								"id": "element-text",
+								"value": {
+									"fragmentLink": {
+									},
+									"text": {
+										"value_i18n": {
+											"en_US": "Join the Clarity Team"
+										}
+									}
+								}
+							}
+						],
+						"fragmentStyle": {
+							"marginBottom": "4",
+							"textColor": "whiteColor"
+						},
+						"fragmentViewports": [
+							{
+								"fragmentViewportStyle": {
+									"marginRight": "0"
+								},
+								"id": "portraitMobile"
+							}
+						],
+						"indexed": true
+					},
+					"type": "Fragment"
+				},
+				{
+					"definition": {
+						"fragment": {
+							"key": "BASIC_COMPONENT-button"
+						},
+						"fragmentConfig": {
+							"buttonSize": "nm",
+							"buttonType": "primary",
+							"type": "link"
+						},
+						"fragmentFields": [
+							{
+								"id": "link",
+								"value": {
+									"fragmentLink": {
+										"value": {
+											"href": {
+												"mapping": {
+													"itemReference": {
+														"className": "com.liferay.portal.kernel.model.Layout",
+														"fields": [
+															{
+																"fieldName": "friendlyURL",
+																"fieldValue": "/open-positions"
+															},
+															{
+																"fieldName": "privatePage",
+																"fieldValue": "false"
+															},
+															{
+																"fieldName": "siteKey",
+																"fieldValue": "[$GROUP_KEY$]"
+															}
+														]
+													}
+												}
+											}
+										}
+									},
+									"text": {
+										"value_i18n": {
+											"en_US": "Explore Open Positions"
+										}
+									}
+								}
+							}
+						],
+						"fragmentViewports": [
+							{
+								"fragmentViewportStyle": {
+									"marginRight": "0"
+								},
+								"id": "portraitMobile"
+							}
+						],
+						"indexed": true
+					},
+					"type": "Fragment"
+				}
+			],
+			"type": "Section"
+		}
+	],
+	"type": "Section"
 }

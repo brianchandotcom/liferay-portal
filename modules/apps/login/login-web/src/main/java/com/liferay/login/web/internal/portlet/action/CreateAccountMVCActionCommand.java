@@ -433,14 +433,7 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 		long facebookId = GetterUtil.getLong(
 			httpSession.getAttribute(WebKeys.FACEBOOK_INCOMPLETE_USER_ID));
 
-		String googleUserId = GetterUtil.getString(
-			httpSession.getAttribute(WebKeys.GOOGLE_INCOMPLETE_USER_ID));
-
-		if (Validator.isNotNull(googleUserId)) {
-			autoPassword = false;
-		}
-
-		if ((facebookId > 0) || Validator.isNotNull(googleUserId)) {
+		if (facebookId > 0) {
 			password1 = PwdGenerator.getPassword();
 
 			password2 = password1;
@@ -463,10 +456,6 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 
 		boolean sendEmail = true;
 
-		if (Validator.isNotNull(googleUserId)) {
-			sendEmail = false;
-		}
-
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			User.class.getName(), actionRequest);
 
@@ -480,18 +469,6 @@ public class CreateAccountMVCActionCommand extends BaseMVCActionCommand {
 
 		if (facebookId > 0) {
 			httpSession.removeAttribute(WebKeys.FACEBOOK_INCOMPLETE_USER_ID);
-
-			_updateUserAndSendRedirect(
-				actionRequest, actionResponse, themeDisplay, user, password1);
-
-			return;
-		}
-
-		if (Validator.isNotNull(googleUserId)) {
-			_userLocalService.updateGoogleUserId(
-				user.getUserId(), googleUserId);
-
-			httpSession.removeAttribute(WebKeys.GOOGLE_INCOMPLETE_USER_ID);
 
 			_updateUserAndSendRedirect(
 				actionRequest, actionResponse, themeDisplay, user, password1);

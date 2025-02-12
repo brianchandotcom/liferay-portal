@@ -33,11 +33,11 @@ public interface FDSSerializer {
 		String fdsName, HttpServletRequest httpServletRequest);
 
 	public JSONArray serializeFilters(
-		String fdsName, HttpServletRequest httpServletRequest);
-
-	public JSONArray serializeFilters(
 		List<FDSFilter> fdsFilters, String fdsName,
 		HttpServletRequest httpServletRequest);
+
+	public JSONArray serializeFilters(
+		String fdsName, HttpServletRequest httpServletRequest);
 
 	public List<FDSActionDropdownItem> serializeItemsActions(
 		String fdsName, HttpServletRequest httpServletRequest);

@@ -570,7 +570,7 @@ public class CommercePriceListLocalServiceImpl
 			commercePriceListLocalService.
 				getCommercePriceListsByAccountAndChannelAndOrderTypeId(
 					groupId, commerceAccountId, commerceChannelId,
-					commerceOrderTypeId, type);
+					commerceOrderTypeId, null, type);
 
 		if (commercePriceLists.isEmpty()) {
 			return null;
@@ -591,7 +591,7 @@ public class CommercePriceListLocalServiceImpl
 		List<CommercePriceList> commercePriceLists =
 			commercePriceListLocalService.
 				getCommercePriceListsByAccountAndChannelId(
-					groupId, commerceAccountId, commerceChannelId, type);
+					groupId, commerceAccountId, commerceChannelId, null, type);
 
 		if (commercePriceLists.isEmpty()) {
 			return null;
@@ -612,7 +612,8 @@ public class CommercePriceListLocalServiceImpl
 		List<CommercePriceList> commercePriceLists =
 			commercePriceListLocalService.
 				getCommercePriceListsByAccountAndOrderTypeId(
-					groupId, commerceAccountId, commerceOrderTypeId, type);
+					groupId, commerceAccountId, commerceOrderTypeId, null,
+					type);
 
 		if (commercePriceLists.isEmpty()) {
 			return null;
@@ -632,7 +633,7 @@ public class CommercePriceListLocalServiceImpl
 		List<CommercePriceList> commercePriceLists =
 			commercePriceListLocalService.
 				getCommercePriceListsByAccountGroupIds(
-					groupId, commerceAccountGroupIds, type);
+					groupId, commerceAccountGroupIds, null, type);
 
 		if (commercePriceLists.isEmpty()) {
 			return null;
@@ -655,7 +656,7 @@ public class CommercePriceListLocalServiceImpl
 			commercePriceListLocalService.
 				getCommercePriceListsByAccountGroupsAndChannelAndOrderTypeId(
 					groupId, commerceAccountGroupIds, commerceChannelId,
-					commerceOrderTypeId, type);
+					commerceOrderTypeId, null, type);
 
 		if (commercePriceLists.isEmpty()) {
 			return null;
@@ -676,7 +677,8 @@ public class CommercePriceListLocalServiceImpl
 		List<CommercePriceList> commercePriceLists =
 			commercePriceListLocalService.
 				getCommercePriceListsByAccountGroupsAndChannelId(
-					groupId, commerceAccountGroupIds, commerceChannelId, type);
+					groupId, commerceAccountGroupIds, commerceChannelId, null,
+					type);
 
 		if (commercePriceLists.isEmpty()) {
 			return null;
@@ -697,7 +699,7 @@ public class CommercePriceListLocalServiceImpl
 		List<CommercePriceList> commercePriceLists =
 			commercePriceListLocalService.
 				getCommercePriceListsByAccountGroupsAndOrderTypeId(
-					groupId, commerceAccountGroupIds, commerceOrderTypeId,
+					groupId, commerceAccountGroupIds, commerceOrderTypeId, null,
 					type);
 
 		if (commercePriceLists.isEmpty()) {
@@ -717,7 +719,7 @@ public class CommercePriceListLocalServiceImpl
 
 		List<CommercePriceList> commercePriceLists =
 			commercePriceListLocalService.getCommercePriceListsByAccountId(
-				groupId, commerceAccountId, type);
+				groupId, commerceAccountId, null, type);
 
 		if (commercePriceLists.isEmpty()) {
 			return null;
@@ -738,7 +740,8 @@ public class CommercePriceListLocalServiceImpl
 		List<CommercePriceList> commercePriceLists =
 			commercePriceListLocalService.
 				getCommercePriceListsByChannelAndOrderTypeId(
-					groupId, commerceChannelId, commerceOrderTypeId, type);
+					groupId, commerceChannelId, commerceOrderTypeId, null,
+					type);
 
 		if (commercePriceLists.isEmpty()) {
 			return null;
@@ -757,7 +760,7 @@ public class CommercePriceListLocalServiceImpl
 
 		List<CommercePriceList> commercePriceLists =
 			commercePriceListLocalService.getCommercePriceListsByChannelId(
-				groupId, commerceChannelId, type);
+				groupId, commerceChannelId, null, type);
 
 		if (commercePriceLists.isEmpty()) {
 			return null;
@@ -770,8 +773,8 @@ public class CommercePriceListLocalServiceImpl
 	public CommercePriceList getCommercePriceListByLowestPrice(
 			long groupId, long commerceAccountId,
 			long[] commerceAccountGroupIds, long commerceChannelId,
-			long commerceOrderTypeId, String cPInstanceUuid, String type,
-			String unitOfMeasureKey)
+			long commerceOrderTypeId, String cpInstanceUuid,
+			String currencyCode, String type, String unitOfMeasureKey)
 		throws PortalException {
 
 		List<CommercePriceEntry> commercePriceEntries =
@@ -780,8 +783,8 @@ public class CommercePriceListLocalServiceImpl
 					DSLQueryFactoryUtil.selectDistinct(
 						CommercePriceEntryTable.INSTANCE),
 					groupId, commerceAccountId, commerceAccountGroupIds,
-					commerceChannelId, commerceOrderTypeId, cPInstanceUuid,
-					type, unitOfMeasureKey
+					commerceChannelId, commerceOrderTypeId, cpInstanceUuid,
+					currencyCode, type, unitOfMeasureKey
 				).orderBy(
 					CommercePriceEntryTable.INSTANCE.priceOnApplication.
 						ascending(),
@@ -809,7 +812,7 @@ public class CommercePriceListLocalServiceImpl
 
 		List<CommercePriceList> commercePriceLists =
 			commercePriceListLocalService.getCommercePriceListsByOrderTypeId(
-				groupId, commerceOrderTypeId, type);
+				groupId, commerceOrderTypeId, null, type);
 
 		if (commercePriceLists.isEmpty()) {
 			return null;
@@ -828,7 +831,7 @@ public class CommercePriceListLocalServiceImpl
 
 		List<CommercePriceList> commercePriceLists =
 			commercePriceListLocalService.getCommercePriceListsByUnqualified(
-				groupId, type);
+				groupId, null, type);
 
 		if (commercePriceLists.isEmpty()) {
 			return null;
@@ -872,14 +875,14 @@ public class CommercePriceListLocalServiceImpl
 	public List<CommercePriceList>
 		getCommercePriceListsByAccountAndChannelAndOrderTypeId(
 			long groupId, long commerceAccountId, long commerceChannelId,
-			long commerceOrderTypeId, String type) {
+			long commerceOrderTypeId, String currencyCode, String type) {
 
 		return dslQuery(
 			_getGroupByStep(
 				DSLQueryFactoryUtil.selectDistinct(
 					CommercePriceListTable.INSTANCE),
 				groupId, commerceAccountId, null, commerceChannelId,
-				commerceOrderTypeId, type
+				commerceOrderTypeId, currencyCode, type
 			).orderBy(
 				CommercePriceListTable.INSTANCE.priority.descending()
 			));
@@ -888,13 +891,14 @@ public class CommercePriceListLocalServiceImpl
 	@Override
 	public List<CommercePriceList> getCommercePriceListsByAccountAndChannelId(
 		long groupId, long commerceAccountId, long commerceChannelId,
-		String type) {
+		String currencyCode, String type) {
 
 		return dslQuery(
 			_getGroupByStep(
 				DSLQueryFactoryUtil.selectDistinct(
 					CommercePriceListTable.INSTANCE),
-				groupId, commerceAccountId, null, commerceChannelId, null, type
+				groupId, commerceAccountId, null, commerceChannelId, null,
+				currencyCode, type
 			).orderBy(
 				CommercePriceListTable.INSTANCE.priority.descending()
 			));
@@ -903,14 +907,14 @@ public class CommercePriceListLocalServiceImpl
 	@Override
 	public List<CommercePriceList> getCommercePriceListsByAccountAndOrderTypeId(
 		long groupId, long commerceAccountId, long commerceOrderTypeId,
-		String type) {
+		String currencyCode, String type) {
 
 		return dslQuery(
 			_getGroupByStep(
 				DSLQueryFactoryUtil.selectDistinct(
 					CommercePriceListTable.INSTANCE),
 				groupId, commerceAccountId, null, null, commerceOrderTypeId,
-				type
+				currencyCode, type
 			).orderBy(
 				CommercePriceListTable.INSTANCE.priority.descending()
 			));
@@ -918,13 +922,15 @@ public class CommercePriceListLocalServiceImpl
 
 	@Override
 	public List<CommercePriceList> getCommercePriceListsByAccountGroupIds(
-		long groupId, long[] commerceAccountGroupIds, String type) {
+		long groupId, long[] commerceAccountGroupIds, String currencyCode,
+		String type) {
 
 		return dslQuery(
 			_getGroupByStep(
 				DSLQueryFactoryUtil.selectDistinct(
 					CommercePriceListTable.INSTANCE),
-				groupId, null, commerceAccountGroupIds, null, null, type
+				groupId, null, commerceAccountGroupIds, null, null,
+				currencyCode, type
 			).orderBy(
 				CommercePriceListTable.INSTANCE.priority.descending()
 			));
@@ -934,14 +940,15 @@ public class CommercePriceListLocalServiceImpl
 	public List<CommercePriceList>
 		getCommercePriceListsByAccountGroupsAndChannelAndOrderTypeId(
 			long groupId, long[] commerceAccountGroupIds,
-			long commerceChannelId, long commerceOrderTypeId, String type) {
+			long commerceChannelId, long commerceOrderTypeId,
+			String currencyCode, String type) {
 
 		return dslQuery(
 			_getGroupByStep(
 				DSLQueryFactoryUtil.selectDistinct(
 					CommercePriceListTable.INSTANCE),
 				groupId, null, commerceAccountGroupIds, commerceChannelId,
-				commerceOrderTypeId, type
+				commerceOrderTypeId, currencyCode, type
 			).orderBy(
 				CommercePriceListTable.INSTANCE.priority.descending()
 			));
@@ -951,14 +958,14 @@ public class CommercePriceListLocalServiceImpl
 	public List<CommercePriceList>
 		getCommercePriceListsByAccountGroupsAndChannelId(
 			long groupId, long[] commerceAccountGroupIds,
-			long commerceChannelId, String type) {
+			long commerceChannelId, String currencyCode, String type) {
 
 		return dslQuery(
 			_getGroupByStep(
 				DSLQueryFactoryUtil.selectDistinct(
 					CommercePriceListTable.INSTANCE),
 				groupId, null, commerceAccountGroupIds, commerceChannelId, null,
-				type
+				currencyCode, type
 			).orderBy(
 				CommercePriceListTable.INSTANCE.priority.descending()
 			));
@@ -968,14 +975,14 @@ public class CommercePriceListLocalServiceImpl
 	public List<CommercePriceList>
 		getCommercePriceListsByAccountGroupsAndOrderTypeId(
 			long groupId, long[] commerceAccountGroupIds,
-			long commerceOrderTypeId, String type) {
+			long commerceOrderTypeId, String currencyCode, String type) {
 
 		return dslQuery(
 			_getGroupByStep(
 				DSLQueryFactoryUtil.selectDistinct(
 					CommercePriceListTable.INSTANCE),
 				groupId, null, commerceAccountGroupIds, null,
-				commerceOrderTypeId, type
+				commerceOrderTypeId, currencyCode, type
 			).orderBy(
 				CommercePriceListTable.INSTANCE.priority.descending()
 			));
@@ -983,13 +990,14 @@ public class CommercePriceListLocalServiceImpl
 
 	@Override
 	public List<CommercePriceList> getCommercePriceListsByAccountId(
-		long groupId, long commerceAccountId, String type) {
+		long groupId, long commerceAccountId, String currencyCode,
+		String type) {
 
 		return dslQuery(
 			_getGroupByStep(
 				DSLQueryFactoryUtil.selectDistinct(
 					CommercePriceListTable.INSTANCE),
-				groupId, commerceAccountId, null, null, null, type
+				groupId, commerceAccountId, null, null, null, currencyCode, type
 			).orderBy(
 				CommercePriceListTable.INSTANCE.priority.descending()
 			));
@@ -998,14 +1006,14 @@ public class CommercePriceListLocalServiceImpl
 	@Override
 	public List<CommercePriceList> getCommercePriceListsByChannelAndOrderTypeId(
 		long groupId, long commerceChannelId, long commerceOrderTypeId,
-		String type) {
+		String currencyCode, String type) {
 
 		return dslQuery(
 			_getGroupByStep(
 				DSLQueryFactoryUtil.selectDistinct(
 					CommercePriceListTable.INSTANCE),
 				groupId, null, null, commerceChannelId, commerceOrderTypeId,
-				type
+				currencyCode, type
 			).orderBy(
 				CommercePriceListTable.INSTANCE.priority.descending()
 			));
@@ -1013,13 +1021,14 @@ public class CommercePriceListLocalServiceImpl
 
 	@Override
 	public List<CommercePriceList> getCommercePriceListsByChannelId(
-		long groupId, long commerceChannelId, String type) {
+		long groupId, long commerceChannelId, String currencyCode,
+		String type) {
 
 		return dslQuery(
 			_getGroupByStep(
 				DSLQueryFactoryUtil.selectDistinct(
 					CommercePriceListTable.INSTANCE),
-				groupId, null, null, commerceChannelId, null, type
+				groupId, null, null, commerceChannelId, null, currencyCode, type
 			).orderBy(
 				CommercePriceListTable.INSTANCE.priority.descending()
 			));
@@ -1027,13 +1036,15 @@ public class CommercePriceListLocalServiceImpl
 
 	@Override
 	public List<CommercePriceList> getCommercePriceListsByOrderTypeId(
-		long groupId, long commerceOrderTypeId, String type) {
+		long groupId, long commerceOrderTypeId, String currencyCode,
+		String type) {
 
 		return dslQuery(
 			_getGroupByStep(
 				DSLQueryFactoryUtil.selectDistinct(
 					CommercePriceListTable.INSTANCE),
-				groupId, null, null, null, commerceOrderTypeId, type
+				groupId, null, null, null, commerceOrderTypeId, currencyCode,
+				type
 			).orderBy(
 				CommercePriceListTable.INSTANCE.priority.descending()
 			));
@@ -1041,13 +1052,13 @@ public class CommercePriceListLocalServiceImpl
 
 	@Override
 	public List<CommercePriceList> getCommercePriceListsByUnqualified(
-		long groupId, String type) {
+		long groupId, String currencyCode, String type) {
 
 		return dslQuery(
 			_getGroupByStep(
 				DSLQueryFactoryUtil.selectDistinct(
 					CommercePriceListTable.INSTANCE),
-				groupId, null, null, null, null, type
+				groupId, null, null, null, null, currencyCode, type
 			).orderBy(
 				CommercePriceListTable.INSTANCE.priority.descending(),
 				CommercePriceListTable.INSTANCE.catalogBasePriceList.ascending()
@@ -1507,7 +1518,7 @@ public class CommercePriceListLocalServiceImpl
 	private GroupByStep _getGroupByStep(
 		FromStep fromStep, Long groupId, Long commerceAccountId,
 		long[] commerceAccountGroupIds, Long commerceChannelId,
-		Long commerceOrderTypeId, String type) {
+		Long commerceOrderTypeId, String currencyCode, String type) {
 
 		JoinStep joinStep = fromStep.from(CommercePriceListTable.INSTANCE);
 		Predicate predicate = CommercePriceListTable.INSTANCE.status.eq(
@@ -1583,6 +1594,12 @@ public class CommercePriceListLocalServiceImpl
 					CommercePriceListChannelRelId.isNull());
 		}
 
+		if (!Validator.isBlank(currencyCode)) {
+			predicate = predicate.and(
+				CommercePriceListTable.INSTANCE.commerceCurrencyCode.eq(
+					currencyCode));
+		}
+
 		if (commerceOrderTypeId != null) {
 			joinStep = joinStep.innerJoinON(
 				CommercePriceListOrderTypeRelTable.INSTANCE,
@@ -1608,8 +1625,8 @@ public class CommercePriceListLocalServiceImpl
 	private GroupByStep _getGroupByStep(
 		FromStep fromStep, Long groupId, Long commerceAccountId,
 		long[] commerceAccountGroupIds, Long commerceChannelId,
-		Long commerceOrderTypeId, String cPInstanceUuid, String type,
-		String unitOfMeasureKey) {
+		Long commerceOrderTypeId, String cpInstanceUuid, String currencyCode,
+		String type, String unitOfMeasureKey) {
 
 		JoinStep joinStep = fromStep.from(
 			CommercePriceEntryTable.INSTANCE
@@ -1682,14 +1699,20 @@ public class CommercePriceListLocalServiceImpl
 			).withParentheses()
 		);
 
-		if (!Validator.isBlank(cPInstanceUuid)) {
+		if (!Validator.isBlank(cpInstanceUuid)) {
 			predicate = predicate.and(
 				CommercePriceEntryTable.INSTANCE.CPInstanceUuid.eq(
-					cPInstanceUuid)
+					cpInstanceUuid)
 			).and(
 				CommercePriceEntryTable.INSTANCE.status.eq(
 					WorkflowConstants.STATUS_APPROVED)
 			);
+		}
+
+		if (!Validator.isBlank(currencyCode)) {
+			predicate = predicate.and(
+				CommercePriceListTable.INSTANCE.commerceCurrencyCode.eq(
+					currencyCode));
 		}
 
 		if (Validator.isNotNull(unitOfMeasureKey)) {

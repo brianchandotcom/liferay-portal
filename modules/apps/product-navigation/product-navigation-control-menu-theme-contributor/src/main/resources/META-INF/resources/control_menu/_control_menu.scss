@@ -56,6 +56,11 @@ html#{$cadmin-selector} {
 		.control-menu-level-1-heading {
 			font-size: 16px;
 			font-weight: 600;
+			overflow-wrap: break-word;
+
+			h1 {
+				display: block;
+			}
 		}
 
 		.control-menu-level-1-dark {
@@ -107,6 +112,11 @@ html#{$cadmin-selector} {
 
 		.control-menu-level-1-nav {
 			display: flex;
+			flex-wrap: nowrap;
+
+			@include media-breakpoint-down(xs, $cadmin-grid-breakpoints) {
+				flex-wrap: wrap;
+			}
 
 			> div,
 			> li {
@@ -114,6 +124,10 @@ html#{$cadmin-selector} {
 					margin-left: 4px;
 					margin-right: 4px;
 				}
+			}
+
+			.control-menu-nav {
+				flex-wrap: wrap;
 			}
 
 			> .control-menu-nav-item {
@@ -210,7 +224,12 @@ html#{$cadmin-selector} {
 		}
 
 		.control-menu-nav-category:not(.tools-control-group) {
-			min-width: auto;
+			display: flex;
+			flex-direction: column;
+			flex-shrink: 0;
+			max-width: 100%;
+			min-height: 0;
+			position: relative;
 		}
 
 		.control-menu-nav-item {
@@ -252,11 +271,14 @@ html#{$cadmin-selector} {
 			flex: 0 1 auto;
 		}
 
+		.exp-control-group {
+			margin-right: auto;
+		}
+
 		.tools-control-group {
-			> .control-menu-nav {
-				flex-wrap: nowrap;
-				justify-content: flex-start;
-			}
+			flex-shrink: 1;
+			max-width: calc(100% - 80px);
+			word-wrap: break-word;
 
 			.taglib-icon-help {
 				margin-top: 1px;
@@ -266,12 +288,6 @@ html#{$cadmin-selector} {
 		}
 
 		.user-control-group {
-			flex-grow: 1;
-
-			.control-menu-nav {
-				justify-content: end;
-			}
-
 			.portlet-options {
 				margin-right: -1px;
 			}

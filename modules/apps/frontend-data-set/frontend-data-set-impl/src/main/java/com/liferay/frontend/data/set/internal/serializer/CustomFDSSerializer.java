@@ -31,7 +31,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -60,7 +59,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Predicate;
@@ -400,39 +398,6 @@ public class CustomFDSSerializer
 		return objectEntries;
 	}
 
-	private JSONArray _getSelectedItemsJSONArray(
-			List<ListTypeEntry> listTypeEntries, Locale locale,
-			String preselectedValues)
-		throws JSONException {
-
-		JSONArray jsonArray = _jsonFactory.createJSONArray();
-
-		JSONArray preselectedValuesJSONArray = _jsonFactory.createJSONArray(
-			preselectedValues);
-
-		for (int i = 0; i < preselectedValuesJSONArray.length(); i++) {
-			JSONObject jsonObject = preselectedValuesJSONArray.getJSONObject(i);
-
-			for (ListTypeEntry listTypeEntry : listTypeEntries) {
-				if (Objects.equals(
-						listTypeEntry.getExternalReferenceCode(),
-						jsonObject.getString("value"))) {
-
-					jsonArray.put(
-						JSONUtil.put(
-							"label", listTypeEntry.getName(locale)
-						).put(
-							"value", listTypeEntry.getKey()
-						));
-
-					break;
-				}
-			}
-		}
-
-		return jsonArray;
-	}
-
 	private String _getType(ObjectEntry objectEntry) {
 		Map<String, Object> properties = objectEntry.getProperties();
 
@@ -457,11 +422,10 @@ public class CustomFDSSerializer
 				properties.get("from"));
 			JSONObject toJSONObject = _getDateJSONObject(properties.get("to"));
 
-			boolean hasPreloadedData =
-				(fromJSONObject != null) || (toJSONObject != null);
+			boolean active = (fromJSONObject != null) || (toJSONObject != null);
 
 			return JSONUtil.put(
-				"active", hasPreloadedData
+				"active", active
 			).put(
 				"entityFieldType",
 				Objects.equals(type, "date") ? FDSEntityFieldTypes.DATE :
@@ -474,7 +438,7 @@ public class CustomFDSSerializer
 			).put(
 				"preloadedData",
 				() -> {
-					if (!hasPreloadedData) {
+					if (!active) {
 						return null;
 					}
 
@@ -495,7 +459,7 @@ public class CustomFDSSerializer
 			String finalFieldName = fieldName;
 			String sourceType = MapUtil.getString(properties, "sourceType");
 
-			JSONObject selectionFilterJSONObject = JSONUtil.put(
+			JSONObject jsonObject = JSONUtil.put(
 				"autocompleteEnabled", true
 			).put(
 				"entityFieldType", FDSEntityFieldTypes.STRING
@@ -527,7 +491,7 @@ public class CustomFDSSerializer
 			if (Validator.isNotNull(sourceType) &&
 				Objects.equals(sourceType, "API_REST_APPLICATION")) {
 
-				return selectionFilterJSONObject.put(
+				return jsonObject.put(
 					"apiURL", source
 				).put(
 					"itemKey", properties.get("itemKey")
@@ -569,7 +533,7 @@ public class CustomFDSSerializer
 				_listTypeEntryLocalService.getListTypeEntries(
 					listTypeDefinition.getListTypeDefinitionId());
 
-			return selectionFilterJSONObject.put(
+			return jsonObject.put(
 				"items",
 				JSONUtil.toJSONArray(
 					listTypeEntries,
@@ -584,9 +548,37 @@ public class CustomFDSSerializer
 				"preloadedData",
 				() -> {
 					JSONArray selectedItemsJSONArray =
-						_getSelectedItemsJSONArray(
-							listTypeEntries, themeDisplay.getLocale(),
+						_jsonFactory.createJSONArray();
+
+					JSONArray preselectedValuesJSONArray =
+						_jsonFactory.createJSONArray(
 							MapUtil.getString(properties, "preselectedValues"));
+
+					for (int i = 0; i < preselectedValuesJSONArray.length();
+						 i++) {
+
+						JSONObject preselectedValueJSONObject =
+							preselectedValuesJSONArray.getJSONObject(i);
+
+						for (ListTypeEntry listTypeEntry : listTypeEntries) {
+							if (!Objects.equals(
+									listTypeEntry.getExternalReferenceCode(),
+									preselectedValueJSONObject.getString(
+										"value"))) {
+
+								continue;
+							}
+
+							selectedItemsJSONArray.put(
+								JSONUtil.put(
+									"label",
+									listTypeEntry.getName(
+										themeDisplay.getLocale())
+								).put(
+									"value", listTypeEntry.getKey()
+								));
+						}
+					}
 
 					if (JSONUtil.isEmpty(selectedItemsJSONArray)) {
 						return null;

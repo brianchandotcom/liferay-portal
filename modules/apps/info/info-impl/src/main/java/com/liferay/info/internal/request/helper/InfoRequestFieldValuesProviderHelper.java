@@ -111,18 +111,6 @@ public class InfoRequestFieldValuesProviderHelper {
 				continue;
 			}
 
-			if (infoField.getInfoFieldType() instanceof
-					MultiselectInfoFieldType) {
-
-				infoFieldValues.put(
-					infoField.getUniqueId(),
-					_getMultiselectInfoFieldValue(
-						infoField, themeDisplay.getLocale(),
-						regularParameterMap.get(infoField.getName())));
-
-				continue;
-			}
-
 			if (FeatureFlagManagerUtil.isEnabled("LPD-37927") &&
 				infoField.isLocalizable()) {
 
@@ -320,6 +308,14 @@ public class InfoRequestFieldValuesProviderHelper {
 
 		List<String> values = regularParameterMap.get(name);
 
+		if (values == null) {
+			return null;
+		}
+
+		if (infoField.getInfoFieldType() instanceof MultiselectInfoFieldType) {
+			return ListUtil.filter(values, Validator::isNotNull);
+		}
+
 		if (ListUtil.isEmpty(values)) {
 			return null;
 		}
@@ -381,7 +377,6 @@ public class InfoRequestFieldValuesProviderHelper {
 
 		if (infoField.getInfoFieldType() instanceof FileInfoFieldType ||
 			infoField.getInfoFieldType() instanceof HTMLInfoFieldType ||
-			infoField.getInfoFieldType() instanceof MultiselectInfoFieldType ||
 			infoField.getInfoFieldType() instanceof LongTextInfoFieldType ||
 			infoField.getInfoFieldType() instanceof RelationshipInfoFieldType ||
 			infoField.getInfoFieldType() instanceof SelectInfoFieldType ||

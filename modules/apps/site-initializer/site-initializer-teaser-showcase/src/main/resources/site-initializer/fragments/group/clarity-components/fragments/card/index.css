@@ -32,6 +32,6 @@ p {
 	white-space: nowrap;
 }
 
-p:nth-last-child(){
+p:nth-last-child() {
 	margin-bottom: 20px;
 }

@@ -20,7 +20,6 @@ for (let i = 0; i < customIcons.length; i++) {
 }
 
 function toggleVisability() {
-	console.log('toggleVisability');
 	const flag = faqList.classList.contains('collapse');
 
 	if (flag) {

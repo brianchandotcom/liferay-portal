@@ -30,8 +30,7 @@
 					{
 						"id": "page-title-fragment-left",
 						"value": {
-							"fragmentLink": {
-							},
+							"fragmentLink": {},
 							"text": {
 								"value_i18n": {
 									"en_US": "FAQ"

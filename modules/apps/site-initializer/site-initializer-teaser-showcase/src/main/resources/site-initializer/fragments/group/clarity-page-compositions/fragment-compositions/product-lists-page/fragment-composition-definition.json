@@ -1,8 +1,7 @@
 {
 	"definition": {
 		"indexed": true,
-		"layout": {
-		},
+		"layout": {},
 		"name": "Product Lists Page"
 	},
 	"pageElements": [
@@ -53,13 +52,11 @@
 							},
 							{
 								"id": "portraitMobile",
-								"rowViewportDefinition": {
-								}
+								"rowViewportDefinition": {}
 							},
 							{
 								"id": "tablet",
-								"rowViewportDefinition": {
-								}
+								"rowViewportDefinition": {}
 							}
 						],
 						"verticalAlignment": "top"
@@ -75,13 +72,11 @@
 										"id": "landscapeMobile"
 									},
 									{
-										"columnViewportDefinition": {
-										},
+										"columnViewportDefinition": {},
 										"id": "portraitMobile"
 									},
 									{
-										"columnViewportDefinition": {
-										},
+										"columnViewportDefinition": {},
 										"id": "tablet"
 									}
 								],
@@ -114,8 +109,7 @@
 								{
 									"definition": {
 										"widgetInstance": {
-											"widgetConfig": {
-											},
+											"widgetConfig": {},
 											"widgetName": "com_liferay_commerce_product_content_search_web_internal_portlet_CPSpecificationOptionFacetsPortlet"
 										}
 									},
@@ -124,8 +118,7 @@
 								{
 									"definition": {
 										"widgetInstance": {
-											"widgetConfig": {
-											},
+											"widgetConfig": {},
 											"widgetName": "com_liferay_commerce_product_content_search_web_internal_portlet_CPOptionFacetsPortlet"
 										}
 									},
@@ -160,13 +153,11 @@
 										"id": "landscapeMobile"
 									},
 									{
-										"columnViewportDefinition": {
-										},
+										"columnViewportDefinition": {},
 										"id": "portraitMobile"
 									},
 									{
-										"columnViewportDefinition": {
-										},
+										"columnViewportDefinition": {},
 										"id": "tablet"
 									}
 								],
@@ -176,8 +167,7 @@
 								{
 									"definition": {
 										"widgetInstance": {
-											"widgetConfig": {
-											},
+											"widgetConfig": {},
 											"widgetName": "com_liferay_commerce_product_content_search_web_internal_portlet_CPSortPortlet"
 										}
 									},
@@ -215,8 +205,7 @@
 		{
 			"definition": {
 				"indexed": true,
-				"layout": {
-				},
+				"layout": {},
 				"name": "Search Options"
 			},
 			"pageElements": [

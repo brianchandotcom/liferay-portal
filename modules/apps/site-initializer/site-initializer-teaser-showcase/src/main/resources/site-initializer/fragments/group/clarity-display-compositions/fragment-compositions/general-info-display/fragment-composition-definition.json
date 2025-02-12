@@ -27,8 +27,7 @@
 					{
 						"id": "element-text",
 						"value": {
-							"fragmentLink": {
-							}
+							"fragmentLink": {}
 						}
 					}
 				],
@@ -45,15 +44,13 @@
 				"fragment": {
 					"key": "BASIC_COMPONENT-html"
 				},
-				"fragmentConfig": {
-				},
+				"fragmentConfig": {},
 				"fragmentFields": [
 					{
 						"id": "element-html",
 						"value": {
 							"html": {
-								"value_i18n": {
-								}
+								"value_i18n": {}
 							}
 						}
 					}

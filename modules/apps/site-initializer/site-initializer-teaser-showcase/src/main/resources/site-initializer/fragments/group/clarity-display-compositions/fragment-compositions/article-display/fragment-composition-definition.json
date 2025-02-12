@@ -40,8 +40,7 @@
 						"fragmentConfig": {
 							"imageSize": "w-100"
 						},
-						"fragmentFields": [
-						],
+						"fragmentFields": [],
 						"indexed": true
 					},
 					"id": "8f9e0d1b-cc2b-87ea-6bc6-95778e4014bf",
@@ -58,8 +57,7 @@
 				"fragmentConfig": {
 					"headingLevel": "h1"
 				},
-				"fragmentFields": [
-				],
+				"fragmentFields": [],
 				"fragmentStyle": {
 					"marginBottom": "3"
 				},
@@ -76,8 +74,7 @@
 				"fragmentConfig": {
 					"headingLevel": "h2"
 				},
-				"fragmentFields": [
-				],
+				"fragmentFields": [],
 				"fragmentStyle": {
 					"marginBottom": "5"
 				},
@@ -91,10 +88,8 @@
 				"fragment": {
 					"key": "BASIC_COMPONENT-html"
 				},
-				"fragmentConfig": {
-				},
-				"fragmentFields": [
-				],
+				"fragmentConfig": {},
+				"fragmentFields": [],
 				"indexed": true
 			},
 			"id": "4e53a668-77b7-3359-86e0-587747df06d5",

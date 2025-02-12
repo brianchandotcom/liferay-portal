@@ -6,6 +6,7 @@
 package com.liferay.portal.repository.liferayrepository;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFileShortcut;
 import com.liferay.document.library.kernel.model.DLFileVersion;
 import com.liferay.document.library.kernel.model.DLFolder;
@@ -23,6 +24,7 @@ import com.liferay.document.library.kernel.service.DLFolderService;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.repository.Repository;
@@ -39,10 +41,17 @@ import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionRegistryUtil;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionUtil;
 import com.liferay.portal.kernel.service.RepositoryLocalService;
 import com.liferay.portal.kernel.service.RepositoryService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -1026,6 +1035,46 @@ public class LiferayRepository
 			serviceContext, "dlFileEntryTypesSearchContainerPrimaryKeys");
 		int restrictionType = ParamUtil.getInteger(
 			serviceContext, "restrictionType");
+
+		if (FeatureFlagManagerUtil.isEnabled(
+				serviceContext.getCompanyId(), "LPD-42452")) {
+
+			DLFolder dlFolder = dlFolderService.getFolder(toFolderId(folderId));
+
+			ModelResourcePermission<DLFolder> modelResourcePermission =
+				ModelResourcePermissionRegistryUtil.
+					<DLFolder>getModelResourcePermission(
+						DLFolder.class.getName());
+			PermissionChecker permissionChecker =
+				PermissionThreadLocal.getPermissionChecker();
+
+			if (!ModelResourcePermissionUtil.contains(
+					modelResourcePermission, permissionChecker,
+					serviceContext.getScopeGroupId(), folderId,
+					ActionKeys.ADVANCE_UPDATE)) {
+
+				defaultFileEntryTypeId = dlFolder.getDefaultFileEntryTypeId();
+
+				fileEntryTypeIds = ListUtil.toList(
+					dlFileEntryTypeLocalService.getFolderFileEntryTypes(
+						new long[] {dlFolder.getGroupId()}, folderId, true),
+					DLFileEntryType.FILE_ENTRY_TYPE_ID_ACCESSOR);
+
+				restrictionType = dlFolder.getRestrictionType();
+
+				serviceContext.setAttribute(
+					"updateWorkflowDefinitionLinks", Boolean.FALSE);
+			}
+
+			if (!ModelResourcePermissionUtil.contains(
+					modelResourcePermission, permissionChecker,
+					serviceContext.getScopeGroupId(), folderId,
+					ActionKeys.UPDATE)) {
+
+				name = dlFolder.getName();
+				description = dlFolder.getDescription();
+			}
+		}
 
 		DLFolder dlFolder = dlFolderService.updateFolder(
 			toFolderId(folderId), name, description, defaultFileEntryTypeId,

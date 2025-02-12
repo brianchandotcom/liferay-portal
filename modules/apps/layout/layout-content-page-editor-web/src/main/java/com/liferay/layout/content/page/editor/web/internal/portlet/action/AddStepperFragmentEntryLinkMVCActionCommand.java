@@ -22,6 +22,7 @@ import com.liferay.layout.content.page.editor.web.internal.util.layout.structure
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureService;
 import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
+import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.LockedLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -172,8 +173,6 @@ public class AddStepperFragmentEntryLinkMVCActionCommand
 		int position = ParamUtil.getInteger(actionRequest, "position");
 
 		List<FragmentEntryLink> addedFragmentEntryLinks = new ArrayList<>();
-		List<FormItemManager.LayoutStructureItemChanges>
-			layoutStructureItemChangesList = new ArrayList<>();
 
 		FragmentEntryLink stepperFragmentEntryLink = addFragmentEntryLink(
 			actionRequest);
@@ -188,12 +187,10 @@ public class AddStepperFragmentEntryLinkMVCActionCommand
 				themeDisplay.getScopeGroupId(), themeDisplay.getPlid(),
 				segmentsExperienceId);
 
-		layoutStructureItemChanges.addAddedLayoutStructureItems(
+		LayoutStructureItem fragmentStyledLayoutStructureItem =
 			layoutStructure.addFragmentStyledLayoutStructureItem(
 				stepperFragmentEntryLink.getFragmentEntryLinkId(), parentItemId,
-				position));
-
-		layoutStructureItemChangesList.add(layoutStructureItemChanges);
+				position);
 
 		FormStyledLayoutStructureItem formStyledLayoutStructureItem =
 			(FormStyledLayoutStructureItem)
@@ -205,7 +202,7 @@ public class AddStepperFragmentEntryLinkMVCActionCommand
 			formStyledLayoutStructureItem.setFormType("multistep");
 			formStyledLayoutStructureItem.setNumberOfSteps(numberOfSteps);
 
-			layoutStructureItemChangesList.add(
+			layoutStructureItemChanges =
 				_formItemManager.changeToMultistepFormType(
 					addedFragmentEntryLinks, formStyledLayoutStructureItem,
 					_portal.getHttpServletRequest(actionRequest),
@@ -213,8 +210,11 @@ public class AddStepperFragmentEntryLinkMVCActionCommand
 					themeDisplay.getLayout(), layoutStructure, numberOfSteps,
 					segmentsExperienceId,
 					ServiceContextFactory.getInstance(actionRequest),
-					stepperFragmentEntryLink.getFragmentEntryLinkId()));
+					stepperFragmentEntryLink.getFragmentEntryLinkId());
 		}
+
+		layoutStructureItemChanges.addAddedLayoutStructureItems(
+			fragmentStyledLayoutStructureItem);
 
 		_layoutPageTemplateStructureService.
 			updateLayoutPageTemplateStructureData(
@@ -245,7 +245,7 @@ public class AddStepperFragmentEntryLinkMVCActionCommand
 		return getLayoutStructureItemChangesJSONObject(
 			addedFragmentEntryLinks, httpServletRequest, httpServletResponse,
 			_jsonFactory.createJSONObject(), layoutStructure,
-			layoutStructureItemChangesList, stepperFragmentEntryLink);
+			layoutStructureItemChanges, stepperFragmentEntryLink);
 	}
 
 	@Reference

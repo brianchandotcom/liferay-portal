@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -37,12 +36,10 @@ public abstract class BaseItemFormConfigMVCActionCommand
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse, JSONObject jsonObject,
 			LayoutStructure layoutStructure,
-			List<FormItemManager.LayoutStructureItemChanges>
+			FormItemManager.LayoutStructureItemChanges
 				layoutStructureItemChanges,
 			FragmentEntryLink stepperFragmentEntryLink)
 		throws PortalException {
-
-		List<LayoutStructureItem> addedLayoutStructureItems = new ArrayList<>();
 
 		JSONObject addedFragmentEntryLinksJSONObject =
 			jsonFactory.createJSONObject();
@@ -50,32 +47,15 @@ public abstract class BaseItemFormConfigMVCActionCommand
 		for (FragmentEntryLink addedFragmentEntryLink :
 				addedFragmentEntryLinks) {
 
-			LayoutStructureItem layoutStructureItem =
-				layoutStructure.getLayoutStructureItemByFragmentEntryLinkId(
-					addedFragmentEntryLink.getFragmentEntryLinkId());
-
 			addedFragmentEntryLinksJSONObject.put(
 				String.valueOf(addedFragmentEntryLink.getFragmentEntryLinkId()),
 				fragmentEntryLinkManager.getFragmentEntryLinkJSONObject(
 					addedFragmentEntryLink, httpServletRequest,
 					httpServletResponse, layoutStructure));
 
-			addedLayoutStructureItems.add(layoutStructureItem);
-		}
-
-		List<LayoutStructureItem> movedLayoutStructureItems = new ArrayList<>();
-		List<LayoutStructureItem> removedLayoutStructureItems =
-			new ArrayList<>();
-
-		for (FormItemManager.LayoutStructureItemChanges
-				layoutStructureItemChange : layoutStructureItemChanges) {
-
-			addedLayoutStructureItems.addAll(
-				layoutStructureItemChange.getAddedLayoutStructureItems());
-			movedLayoutStructureItems.addAll(
-				layoutStructureItemChange.getMovedLayoutStructureItems());
-			removedLayoutStructureItems.addAll(
-				layoutStructureItemChange.getRemovedLayoutStructureItems());
+			layoutStructureItemChanges.addAddedLayoutStructureItems(
+				layoutStructure.getLayoutStructureItemByFragmentEntryLinkId(
+					addedFragmentEntryLink.getFragmentEntryLinkId()));
 		}
 
 		return jsonObject.put(
@@ -84,7 +64,8 @@ public abstract class BaseItemFormConfigMVCActionCommand
 			"addedItemIds",
 			jsonFactory.createJSONArray(
 				TransformUtil.transform(
-					addedLayoutStructureItems, LayoutStructureItem::getItemId))
+					layoutStructureItemChanges.getAddedLayoutStructureItems(),
+					LayoutStructureItem::getItemId))
 		).put(
 			"fragmentEntryLinks",
 			() -> {
@@ -107,7 +88,8 @@ public abstract class BaseItemFormConfigMVCActionCommand
 				JSONArray jsonArray = jsonFactory.createJSONArray();
 
 				for (LayoutStructureItem movedLayoutStructureItem :
-						movedLayoutStructureItems) {
+						layoutStructureItemChanges.
+							getMovedLayoutStructureItems()) {
 
 					jsonArray.put(
 						JSONUtil.put(
@@ -124,7 +106,7 @@ public abstract class BaseItemFormConfigMVCActionCommand
 			"removedItemIds",
 			jsonFactory.createJSONArray(
 				TransformUtil.transform(
-					removedLayoutStructureItems,
+					layoutStructureItemChanges.getRemovedLayoutStructureItems(),
 					LayoutStructureItem::getItemId))
 		);
 	}

@@ -69,22 +69,25 @@ function onSelectFile(event) {
 	});
 }
 
+const onSelectFromUserComputer = () => {
+	previousFiles = fileInput.files[0] || null;
+
+	fileInput.click();
+};
+
 if (layoutMode === 'edit') {
 	selectButton.classList.add('disabled');
 }
 else {
-	fileInput.addEventListener('change', onInputChange);
+	let selectFileEvent = onSelectFromUserComputer;
 
 	if (input.attributes.selectFromDocumentLibrary) {
-		selectButton.addEventListener('click', onSelectFile);
+		selectFileEvent = onSelectFile;
 	}
-	else {
-		selectButton.addEventListener('click', () => {
-			previousFiles = fileInput.files[0] || null;
 
-			fileInput.click();
-		});
-	}
+	fileInput.addEventListener('change', onInputChange);
+
+	selectButton.addEventListener('click', selectFileEvent);
 
 	if (fileName.innerText !== '') {
 		showRemoveButton();

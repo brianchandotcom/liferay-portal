@@ -85,7 +85,8 @@ public class ConfigurationSynchronousConfigurationListenerTest {
 				public Configuration[] answer(InvocationOnMock invocationOnMock)
 					throws Throwable {
 
-					_companyId = CompanyThreadLocal.getCompanyId();
+					Assert.assertEquals(
+						Long.valueOf(1L), CompanyThreadLocal.getCompanyId());
 
 					return null;
 				}
@@ -97,8 +98,6 @@ public class ConfigurationSynchronousConfigurationListenerTest {
 			_configurationSynchronousConfigurationListener, "_onNotify",
 			new Class<?>[] {String.class, int.class, long.class}, "test",
 			ConfigurationEvent.CM_UPDATED, 1L);
-
-		Assert.assertEquals(1L, _companyId);
 	}
 
 	@Test
@@ -249,8 +248,6 @@ public class ConfigurationSynchronousConfigurationListenerTest {
 
 		unsafeConsumer.accept(configuration);
 	}
-
-	private long _companyId;
 
 	@Mock
 	private ConfigurationAdmin _configurationAdmin;

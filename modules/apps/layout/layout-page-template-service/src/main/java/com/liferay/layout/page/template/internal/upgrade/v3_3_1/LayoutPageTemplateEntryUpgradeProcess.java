@@ -156,7 +156,7 @@ public class LayoutPageTemplateEntryUpgradeProcess extends UpgradeProcess {
 			while (resultSet.next()) {
 				String name = resultSet.getString("name");
 
-				if (LayoutPageTemplateValidator.isValidName(name)) {
+				if (!LayoutPageTemplateValidator.hasBlacklistedChar(name)) {
 					continue;
 				}
 

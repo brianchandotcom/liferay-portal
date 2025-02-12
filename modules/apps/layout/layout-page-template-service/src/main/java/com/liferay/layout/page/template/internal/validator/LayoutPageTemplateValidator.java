@@ -22,14 +22,14 @@ public class LayoutPageTemplateValidator {
 		return false;
 	}
 
-	public static boolean isValidName(String name) {
+	public static boolean hasBlacklistedChar(String string) {
 		for (char c : _BLACKLIST_CHAR) {
-			if (name.indexOf(c) >= 0) {
-				return false;
+			if (string.indexOf(c) >= 0) {
+				return true;
 			}
 		}
 
-		return true;
+		return false;
 	}
 
 	public static void validateNameCharacters(

@@ -11,6 +11,6 @@
 	z-index: 99;
 }
 
-.loading-overlay.hide {
+.loading-overlay .hide {
 	display: none !important;
 }

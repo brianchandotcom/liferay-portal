@@ -1,6 +1,4 @@
-[#assign
-	user = restClient.get("/headless-admin-user/v1.0/user-accounts/${themeDisplay.getUserId()}")
-/]
+[#assign user = restClient.get("/headless-admin-user/v1.0/user-accounts/${themeDisplay.getUserId()}") /]
 
 <div>
 	<h3 class="mb-3">${languageUtil.get(locale, 'user-information', 'User Information')}</h3>

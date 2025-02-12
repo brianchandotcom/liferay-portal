@@ -1,8 +1,4 @@
 [#assign assetEntry = (request.getAttribute("LIFERAY_SHARED_LAYOUT_ASSET_ENTRY"))! /]
 
-<liferay-lms-exercise-view
-	badge-page-url="${configuration.badgePageUrl}"
-	education-page-url="${configuration.educationPageUrl}"
-	exercise-id="${assetEntry.classPK!}"
->
+<liferay-lms-exercise-view badge-page-url="${configuration.badgePageUrl}" education-page-url="${configuration.educationPageUrl}" exercise-id="${assetEntry.classPK!}">
 </liferay-lms-exercise-view>

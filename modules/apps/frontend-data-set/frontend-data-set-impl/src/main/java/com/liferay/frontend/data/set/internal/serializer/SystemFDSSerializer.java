@@ -98,14 +98,6 @@ public class SystemFDSSerializer
 
 	@Override
 	public JSONArray serializeFilters(
-		String fdsName, HttpServletRequest httpServletRequest) {
-
-		return serializeFilters(
-			Collections.emptyList(), fdsName, httpServletRequest);
-	}
-
-	@Override
-	public JSONArray serializeFilters(
 		List<FDSFilter> fdsFilters, String fdsName,
 		HttpServletRequest httpServletRequest) {
 
@@ -118,6 +110,14 @@ public class SystemFDSSerializer
 			_fdsFilterRegistry.getFDSFilters(fdsName), jsonArray, locale);
 
 		return jsonArray;
+	}
+
+	@Override
+	public JSONArray serializeFilters(
+		String fdsName, HttpServletRequest httpServletRequest) {
+
+		return serializeFilters(
+			Collections.emptyList(), fdsName, httpServletRequest);
 	}
 
 	@Override

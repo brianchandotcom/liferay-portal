@@ -14,6 +14,7 @@ import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest'
 import {collectionsPagesTest} from '../../fixtures/collectionsPagesTest';
 import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {editObjectDefinitionPagesTest} from '../../fixtures/editObjectDefinitionPagesTest';
+import {formsPagesTest} from '../../fixtures/formsPagesTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
@@ -36,6 +37,7 @@ export const test = mergeTests(
 		'LPD-32050': {enabled: true},
 		'LPS-178052': {enabled: true},
 	}),
+	formsPagesTest,
 	journalPagesTest,
 	loginTest(),
 	objectPagesTest,
@@ -334,6 +336,180 @@ test.describe('Localized object entries are saved correctly', () => {
 		await expect(dateInput).toHaveValue('11/01/2025');
 
 		await expect(dateTimeInput).toHaveValue('20/02/2025 22:00');
+	});
+
+	test('Multiselect Picklist fields', async ({
+		apiHelpers,
+		formFieldsPage,
+		page,
+		viewObjectEntriesPage,
+	}) => {
+		const objectDefinitionLabel = 'ObjectDefinitionLabel' + getRandomInt();
+		const objectDefinitionName = 'ObjectDefinitionName' + getRandomInt();
+
+		const {listTypeDefinitionItems, objectFields, titleObjectFieldName} = await mockObjectFields({
+			apiHelpers,
+			localizeAllLocalizable: true,
+			objectFieldBusinessTypes: [
+				'multiselectPicklist',
+				'multiselectPicklist',
+			],
+		});
+
+		const objectDefinitionAPIClient =
+			await apiHelpers.buildRestClient(ObjectDefinitionApi);
+
+		const {body: objectDefinition} =
+			await objectDefinitionAPIClient.postObjectDefinition({
+				active: true,
+				enableLocalization: true,
+				label: {
+					en_US: objectDefinitionLabel,
+				},
+				name: objectDefinitionName,
+				objectFields,
+				pluralLabel: {
+					en_US: objectDefinitionLabel,
+				},
+				portlet: true,
+				scope: 'company',
+				status: {
+					code: 0,
+				},
+				titleObjectFieldName,
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		await viewObjectEntriesPage.goto(objectDefinition.className);
+
+		await viewObjectEntriesPage.addObjectEntryButton.click();
+
+		for (const item of listTypeDefinitionItems) {
+			await formFieldsPage.addMultipleSelectItem(item, 0);
+			await formFieldsPage.addMultipleSelectItem(item, 1);
+		}
+
+		const responsePromise = page.waitForResponse(
+			`**${objectDefinition.restContextPath}`
+		);
+
+		await viewObjectEntriesPage.saveObjectEntryButton.click();
+
+		const response = await responsePromise;
+
+		// expect new entry to be saved successfully
+
+		await expect(
+			page.getByText('Success:Your request completed successfully.')
+		).toBeVisible();
+
+		await page.getByRole('link', {name: 'Back'}).click();
+
+		const responseBody = await response.json();
+
+		const entryLink = page.getByRole('link', {name: responseBody.id});
+
+		await entryLink.click();
+
+		// expect saved entry to have all added items
+
+		for (const item of listTypeDefinitionItems) {
+			await expect(
+				page.getByRole('row', { name: `Remove ${item}`}).first()
+			).toBeVisible();
+
+			await expect(
+				page.getByRole('row', { name: `Remove ${item}`}).nth(1)
+			).toBeVisible();
+		}
+
+		// expect unaltered entry to be saved successfully
+
+		await viewObjectEntriesPage.saveObjectEntryButton.click();
+
+		await expect(
+			page.getByText('Success:Your request completed successfully.')
+		).toBeVisible();
+
+		// remove the first item from the first field
+		// so expect this locator to only be found once after save
+
+		await formFieldsPage.removeMultipleSelectItem(listTypeDefinitionItems[0], 0);
+
+		await viewObjectEntriesPage.saveObjectEntryButton.click();
+
+		const itemLocators = 
+			formFieldsPage.getMultipleSelectItemsLocators(listTypeDefinitionItems);
+
+		async function expectFinalEnglishState() {
+			await expect(itemLocators[0]).toHaveCount(1);
+	
+			for (let index = 1; index <= 2; index++) {
+				await expect(itemLocators[index].nth(0)).toBeVisible();
+				await expect(itemLocators[index].nth(1)).toBeVisible();
+			};
+		}
+
+		await expectFinalEnglishState();
+
+		// after navigating to catalan for the first time
+		// expect catalan items to be a copy of the default language 
+
+		await page.waitForTimeout(2000);
+
+		const translationsDropdownTrigger = page
+			.getByTestId('triggerButton')
+			.first();
+		
+		await translationsDropdownTrigger.click();
+
+		const catalanOption = page.getByTestId('availableLocalesDropdownca_ES');
+
+		await catalanOption.first().click();
+		
+		expect(itemLocators[0]).toHaveCount(1);
+
+		for (let index = 1; index <= 2; index++) {
+			await expect(itemLocators[index].nth(0)).toBeVisible();
+			await expect(itemLocators[index].nth(1)).toBeVisible();
+		};
+
+		// remove some of the items from catalan entry
+
+		await formFieldsPage.removeMultipleSelectItem(listTypeDefinitionItems[2], 0);
+		await formFieldsPage.removeMultipleSelectItem(listTypeDefinitionItems[2], 0);
+		await formFieldsPage.removeMultipleSelectItem(listTypeDefinitionItems[1], 1);
+
+		// expect only the remaining to be visible
+
+		async function expectFinalCatalanState() {
+			await expect(itemLocators[0]).toBeVisible();
+			await expect(itemLocators[1]).toBeVisible();
+		}
+
+		await expectFinalCatalanState();
+
+		// save, navigate back to entry and expect final states to be persisted
+
+		await viewObjectEntriesPage.saveObjectEntryButton.click();
+
+		await page.waitForTimeout(2000);
+
+		await page.getByRole('link', {name: 'Back'}).click();
+		
+		await entryLink.click();
+
+		await expectFinalEnglishState();
+
+		await translationsDropdownTrigger.click();
+
+		await catalanOption.first().click();
+
+		await expectFinalCatalanState();
 	});
 
 	test('Numeric fields', async ({

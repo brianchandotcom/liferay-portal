@@ -433,7 +433,7 @@ public class CustomFDSSerializer
 
 	@Override
 	public JSONArray serializeFilters(
-		String fdsName, List<FDSFilter> fdsFilters,
+		List<FDSFilter> fdsFilters, String fdsName,
 		HttpServletRequest httpServletRequest) {
 
 		// for custom data sets, there are no additional filters

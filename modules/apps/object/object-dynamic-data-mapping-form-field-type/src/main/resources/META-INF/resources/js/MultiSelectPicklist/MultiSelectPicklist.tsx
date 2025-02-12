@@ -10,7 +10,7 @@ import {
 	MultipleSelection,
 	ReactFieldBase as FieldBase,
 } from 'dynamic-data-mapping-form-field-type';
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
 interface MultiSelectOption {
 	label: string;
@@ -69,6 +69,8 @@ export default function MultiSelectPicklist({
 }: MultiSelectPicklistProps) {
 	const normalizedValue = normalizeValues(value);
 
+	const [localValues, setLocalValues] = useState(normalizedValue);
+
 	const onChangeRef = useRef(onChange);
 
 	useEffect(() => {
@@ -78,6 +80,16 @@ export default function MultiSelectPicklist({
 	useEffect(() => {
 		onChangeRef.current({target: {value: normalizedValue}});
 	}, [normalizedValue]);
+
+	const handleChange = (_: object, value: Values) => {
+		const updatedValues = localizedObjectField
+			? {...(value as LocalizedValue<string[]>)}
+			: [...(value as string[])];
+
+		onChangeRef.current({target: {value: updatedValues}});
+
+		setLocalValues(updatedValues);
+	};
 
 	return (
 		<FieldBase
@@ -97,13 +109,13 @@ export default function MultiSelectPicklist({
 				label={label}
 				localizedObjectField={localizedObjectField}
 				name={name}
-				onChange={onChange}
+				onChange={handleChange}
 				options={options}
 				placeholder={placeholder}
 				readOnly={readOnly}
 				required={required}
 				tip={tip}
-				value={normalizeValues(value)}
+				value={localValues}
 			/>
 		</FieldBase>
 	);

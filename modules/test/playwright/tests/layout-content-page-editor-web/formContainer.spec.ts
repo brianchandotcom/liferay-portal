@@ -2637,6 +2637,23 @@ test.describe('Form Localization', () => {
 							name: 'selectOrigin',
 							required: false,
 						},
+						{
+							DBType: ObjectField.DBTypeEnum.String,
+							businessType:
+								ObjectField.BusinessTypeEnum
+									.MultiselectPicklist,
+							indexed: true,
+							indexedAsKeyword: false,
+							label: {
+								en_US: 'Growth Areas',
+							},
+							listTypeDefinitionExternalReferenceCode:
+								listTypeDefinition.externalReferenceCode,
+							listTypeDefinitionId: listTypeDefinition.id,
+							localized: false,
+							name: 'growthAreas',
+							required: false,
+						},
 					],
 					pluralLabel: {
 						en_US: 'Plants',
@@ -2717,6 +2734,10 @@ test.describe('Form Localization', () => {
 				page.getByLabel('Select Origin field cannot be localized')
 			).toBeVisible();
 
+			await expect(
+				page.getByLabel('Growth Areas field cannot be localized')
+			).toBeVisible();
+
 			// Check that unlocalized fields are disabled
 
 			await expect(
@@ -2750,6 +2771,16 @@ test.describe('Form Localization', () => {
 				page.getByPlaceholder('Choose an option')
 			).toBeDisabled();
 
+			const firstMultiSelectOption = page.getByRole('checkbox', {
+				name: 'Spain',
+			});
+			const secondMultiSelectOption = page.getByRole('checkbox', {
+				name: 'Italy',
+			});
+
+			await expect(firstMultiSelectOption).toBeDisabled();
+			await expect(secondMultiSelectOption).toBeDisabled();
+
 			// Check that the read only labels are not visibles
 
 			const checkboxReadOnlyLabel = page
@@ -2768,10 +2799,15 @@ test.describe('Form Localization', () => {
 				.getByText('Select Origin')
 				.getByText('(Read Only)');
 
+			const multiSelectReadOnlyLabel = page
+				.getByText('Growth Areas')
+				.getByText('(Read Only)');
+
 			await expect(checkboxReadOnlyLabel).not.toBeVisible();
 			await expect(inputTextReadOnlyLabel).not.toBeVisible();
 			await expect(textareaReadOnlyLabel).not.toBeVisible();
 			await expect(selectReadOnlyLabel).not.toBeVisible();
+			await expect(multiSelectReadOnlyLabel).not.toBeVisible();
 
 			// Go to edit mode and change unlocalized field configuration to read only
 
@@ -2815,12 +2851,13 @@ test.describe('Form Localization', () => {
 
 			await expect(
 				page.getByLabel('field is not localizable message')
-			).toHaveCount(5);
+			).toHaveCount(6);
 
 			await expect(checkboxReadOnlyLabel).toBeVisible();
 			await expect(inputTextReadOnlyLabel).toBeVisible();
 			await expect(textareaReadOnlyLabel).toBeVisible();
 			await expect(selectReadOnlyLabel).toBeVisible();
+			await expect(multiSelectReadOnlyLabel).toBeVisible();
 
 			await expect(page.getByLabel('Country')).toHaveAttribute(
 				'readonly'
@@ -2842,6 +2879,12 @@ test.describe('Form Localization', () => {
 			await expect(page.getByLabel('Select Origin')).toHaveAttribute(
 				'readonly'
 			);
+
+			await firstMultiSelectOption.click({force: true});
+			await secondMultiSelectOption.click({force: true});
+
+			await expect(firstMultiSelectOption).not.toBeChecked();
+			await expect(secondMultiSelectOption).not.toBeChecked();
 		}
 	);
 

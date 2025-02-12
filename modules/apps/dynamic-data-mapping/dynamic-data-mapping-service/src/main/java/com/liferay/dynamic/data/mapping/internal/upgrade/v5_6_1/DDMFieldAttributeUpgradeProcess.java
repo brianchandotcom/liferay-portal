@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HttpComponentsUtil;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -156,7 +157,7 @@ public class DDMFieldAttributeUpgradeProcess extends UpgradeProcess {
 
 		long groupId = GetterUtil.getLong(matcher.group(2));
 		long folderId = GetterUtil.getLong(matcher.group(3));
-		String title = matcher.group(4);
+		String title = HttpComponentsUtil.decodeURL(matcher.group(4));
 
 		try {
 			return _dlFileEntryLocalService.getFileEntry(

@@ -153,12 +153,12 @@ public class AccountUsage {
 		).put(
 			"clientExtensionsCapacityCPU",
 			_getUsageJSONObject(
-				_formatDecimal(_clientExtensionsCapacityCPUUsed),
+				_format(_clientExtensionsCapacityCPUUsed),
 				_clientExtensionsCapacityCPUMax)
 		).put(
 			"clientExtensionsCapacityRAM",
 			_getUsageJSONObject(
-				_formatDecimal(_clientExtensionsCapacityRAMUsed),
+				_format(_clientExtensionsCapacityRAMUsed),
 				_clientExtensionsCapacityRAMMax)
 		).put(
 			"monthlyActiveLoggedInUsers",
@@ -169,14 +169,14 @@ public class AccountUsage {
 		).put(
 			"storageCapacityDocumentLibrary",
 			_getUsageJSONObject(
-				_formatDecimal(_storageCapacityDocumentLibraryUsed),
+				_format(_storageCapacityDocumentLibraryUsed),
 				_storageCapacityDocumentLibraryMax)
 		);
 
 		return jsonObject;
 	}
 
-	private float _formatDecimal(BigDecimal bigDecimal) {
+	private float _format(BigDecimal bigDecimal) {
 		if (bigDecimal != null) {
 			return bigDecimal.setScale(
 				2, RoundingMode.DOWN

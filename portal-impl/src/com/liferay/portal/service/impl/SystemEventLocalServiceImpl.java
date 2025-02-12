@@ -39,8 +39,8 @@ public class SystemEventLocalServiceImpl
 
 	@Override
 	public SystemEvent addSystemEvent(
-			long userId, long groupId, String className, long classPK,
-			String classUuid, String classExternalReferenceCode,
+			long userId, long groupId, String classExternalReferenceCode,
+			String className, long classPK, String classUuid,
 			String referrerClassName, int type, String extraData)
 		throws PortalException {
 
@@ -64,22 +64,20 @@ public class SystemEventLocalServiceImpl
 		}
 
 		return addSystemEvent(
-			userId, companyId, groupId, className, classPK, classUuid,
-			classExternalReferenceCode, referrerClassName, type, extraData,
-			userName);
+			userId, companyId, groupId, classExternalReferenceCode, className,
+			classPK, classUuid, referrerClassName, type, extraData, userName);
 	}
 
 	@Override
 	public SystemEvent addSystemEvent(
-			long companyId, String className, long classPK, String classUuid,
-			String classExternalReferenceCode, String referrerClassName,
-			int type, String extraData)
+			long companyId, String classExternalReferenceCode, String className,
+			long classPK, String classUuid, String referrerClassName, int type,
+			String extraData)
 		throws PortalException {
 
 		return addSystemEvent(
-			0, companyId, 0, className, classPK, classUuid,
-			classExternalReferenceCode, referrerClassName, type, extraData,
-			StringPool.BLANK);
+			0, companyId, 0, classExternalReferenceCode, className, classPK,
+			classUuid, referrerClassName, type, extraData, StringPool.BLANK);
 	}
 
 	@Override
@@ -162,10 +160,10 @@ public class SystemEventLocalServiceImpl
 	}
 
 	protected SystemEvent addSystemEvent(
-			long userId, long companyId, long groupId, String className,
-			long classPK, String classUuid, String classExternalReferenceCode,
-			String referrerClassName, int type, String extraData,
-			String userName)
+			long userId, long companyId, long groupId,
+			String classExternalReferenceCode, String className, long classPK,
+			String classUuid, String referrerClassName, int type,
+			String extraData, String userName)
 		throws PortalException {
 
 		SystemEventHierarchyEntry systemEventHierarchyEntry =

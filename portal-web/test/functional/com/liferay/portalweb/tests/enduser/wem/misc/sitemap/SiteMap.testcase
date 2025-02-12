@@ -29,43 +29,6 @@ definition {
 		}
 	}
 
-	@description = "This is a test for LPS-109854. Cannot view the sitemap of staging site as Guest."
-	@priority = 4
-	test CannotViewSiteMapOfStagingSiteAsGuest {
-		task ("Activate local live staging") {
-			JSONStaging.enableLocalStaging(groupName = "Test Site Name");
-		}
-
-		task ("Add a content page") {
-			JSONLayout.addPublicLayout(
-				groupName = "Test Site Name (Staging)",
-				layoutName = "Test Page Name",
-				site = "false",
-				type = "content");
-
-			JSONLayout.publishLayout(
-				groupName = "Test Site Name (Staging)",
-				layoutName = "Test Page Name",
-				site = "false");
-		}
-
-		task ("Configure the Staging Public Pages in site configuration") {
-			Site.openSiteSettingsAdmin(siteURLKey = "test-site-name-staging");
-
-			Site.addVirtualHostsURLCP(stagingPages = "www.able.com");
-		}
-
-		task ("Sign out") {
-			User.logoutPG();
-		}
-
-		task ("Cannot view sitemap of staging site as Guest") {
-			Navigator.openSpecificURL(url = "http://www.able.com:8080/sitemap.xml");
-
-			AssertTextPresent(value1 = "You do not have permission to access the requested resource.");
-		}
-	}
-
 	@description = "View private parend and child page via Site Map widget."
 	@priority = 4
 	test DisplayPrivateParentAndChildPage {

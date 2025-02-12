@@ -360,49 +360,53 @@ const Actions = ({dataSet, namespace, spritemap}: IDataSetSectionProps) => {
 						</ClayTabs>
 
 						<ClayTabs.Content active={activeTab} fade>
-							<ClayTabs.TabPane
-								aria-label={Liferay.Language.get(
-									'item-actions'
-								)}
-								className="item-actions-tab-pane"
-							>
-								<ActionList
-									actions={actions}
-									createAction={createAction}
-									creationMenuItemLabel={Liferay.Language.get(
-										'new-item-action'
+							{activeSection === SECTIONS.ITEM_ACTIONS && (
+								<ClayTabs.TabPane
+									aria-label={Liferay.Language.get(
+										'item-actions'
 									)}
-									deleteAction={deleteAction}
-									editAction={editAction}
-									noItemsButtonLabel={Liferay.Language.get(
-										'new-item-action'
-									)}
-									updateActionsOrder={updateActionsOrder}
-									updateActive={updateActive}
-								/>
-							</ClayTabs.TabPane>
+									className="item-actions-tab-pane"
+								>
+									<ActionList
+										actions={actions}
+										createAction={createAction}
+										creationMenuItemLabel={Liferay.Language.get(
+											'new-item-action'
+										)}
+										deleteAction={deleteAction}
+										editAction={editAction}
+										noItemsButtonLabel={Liferay.Language.get(
+											'new-item-action'
+										)}
+										updateActionsOrder={updateActionsOrder}
+										updateActive={updateActive}
+									/>
+								</ClayTabs.TabPane>
+							)}
 
-							<ClayTabs.TabPane
-								aria-label={Liferay.Language.get(
-									'creation-actions'
-								)}
-								className="creation-actions-tab-pane"
-							>
-								<ActionList
-									actions={actions}
-									createAction={createAction}
-									creationMenuItemLabel={Liferay.Language.get(
-										'new-creation-action'
+							{activeSection === SECTIONS.CREATION_ACTIONS && (
+								<ClayTabs.TabPane
+									aria-label={Liferay.Language.get(
+										'creation-actions'
 									)}
-									deleteAction={deleteAction}
-									editAction={editAction}
-									noItemsButtonLabel={Liferay.Language.get(
-										'new-creation-action'
-									)}
-									updateActionsOrder={updateActionsOrder}
-									updateActive={updateActive}
-								/>
-							</ClayTabs.TabPane>
+									className="creation-actions-tab-pane"
+								>
+									<ActionList
+										actions={actions}
+										createAction={createAction}
+										creationMenuItemLabel={Liferay.Language.get(
+											'new-creation-action'
+										)}
+										deleteAction={deleteAction}
+										editAction={editAction}
+										noItemsButtonLabel={Liferay.Language.get(
+											'new-creation-action'
+										)}
+										updateActionsOrder={updateActionsOrder}
+										updateActive={updateActive}
+									/>
+								</ClayTabs.TabPane>
+							)}
 						</ClayTabs.Content>
 					</>
 				)}

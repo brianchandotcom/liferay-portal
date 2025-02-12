@@ -40,7 +40,7 @@ GroupDisplayContextHelper groupDisplayContextHelper = new GroupDisplayContextHel
 %>
 
 <c:choose>
-	<c:when test="<%= !GroupPermissionUtil.contains(permissionChecker, groupDisplayContextHelper.getGroupId(), ActionKeys.EXPORT_IMPORT_LAYOUTS) %>">
+	<c:when test="<%= (!stagingGroupHelper.isCompanyGroup(groupDisplayContextHelper.getGroup()) && !GroupPermissionUtil.contains(permissionChecker, groupDisplayContextHelper.getGroupId(), ActionKeys.EXPORT_IMPORT_LAYOUTS)) || (stagingGroupHelper.isCompanyGroup(groupDisplayContextHelper.getGroup()) && !PortletPermissionUtil.contains(permissionChecker, layout, portletDisplay.getPortletName(), ActionKeys.ACCESS_IN_CONTROL_PANEL)) %>">
 		<div class="alert alert-info">
 			<liferay-ui:message key="you-do-not-have-permission-to-access-the-requested-resource" />
 		</div>

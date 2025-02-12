@@ -10,6 +10,7 @@ import {HomePage} from '../portal-web/HomePage';
 export class ApplicationsMenuPage {
 	private readonly accountGroupsItem: Locator;
 	private readonly accountsItem: Locator;
+	private readonly accountUsersItem: Locator;
 	private readonly aiCreatorLink: Locator;
 	private readonly announcementsItem: Locator;
 	private readonly apiBuilderMenuItem: Locator;
@@ -71,6 +72,10 @@ export class ApplicationsMenuPage {
 		this.accountsItem = page.getByRole('menuitem', {
 			exact: true,
 			name: 'Accounts',
+		});
+		this.accountUsersItem = page.getByRole('menuitem', {
+			exact: true,
+			name: 'Account Users',
 		});
 		this.aiCreatorLink = page.getByRole('link', {
 			exact: true,
@@ -306,6 +311,18 @@ export class ApplicationsMenuPage {
 
 		await this.controlPanelButton.click();
 		await this.accountsItem.click();
+	}
+
+	async goToAccountUsers(forceReload = true) {
+		if (forceReload) {
+			await this.goto();
+		}
+		else {
+			await this.homePage.openApplicationMenu();
+		}
+
+		await this.controlPanelButton.click();
+		await this.accountUsersItem.click();
 	}
 
 	async goToAnnouncements() {

@@ -8,7 +8,10 @@ import {FrameLocator, Locator, Page} from '@playwright/test';
 import {searchTableRowByValue} from './UsersAndOrganizationsPage';
 
 export class EditUserPage {
+	readonly accountsLink: Locator;
 	readonly appsLink: Locator;
+	readonly backLink: Locator;
+	readonly cancelButton: Locator;
 	readonly confirmButton: Locator;
 	readonly customField: (fieldName: string) => Promise<Locator>;
 	readonly emailAddressError: Locator;
@@ -42,6 +45,7 @@ export class EditUserPage {
 	readonly rolesLink: Locator;
 	readonly saveButton: Locator;
 	readonly screenNameInput: Locator;
+	readonly selectAccountsButton: Locator;
 	readonly selectOrganizationButton: Locator;
 	readonly selectOrganizationRolesButton: Locator;
 	readonly selectOrganizationRolesFrame: FrameLocator;
@@ -81,13 +85,23 @@ export class EditUserPage {
 	) => Promise<{column: Locator; row: Locator}>;
 	readonly selectSitesTableRowButton: (siteName: string) => Promise<Locator>;
 	readonly selectUserLanguage: Locator;
+	readonly userIDInput: Locator;
 	readonly webDAVPasswordLabel: Locator;
 	readonly yourPasswordInput: Locator;
 
 	constructor(page: Page) {
+		this.accountsLink = page.getByRole('link', {
+			exact: true,
+			name: 'Accounts',
+		});
 		this.appsLink = page.getByRole('link', {
 			exact: true,
 			name: 'Apps',
+		});
+		this.backLink = page.getByRole('link', {exact: true, name: 'Back'});
+		this.cancelButton = page.getByRole('button', {
+			exact: true,
+			name: 'Cancel',
 		});
 		this.customField = async (fieldName: string) => {
 			await page.getByText('Custom Fields').waitFor({timeout: 15 * 1000});
@@ -177,7 +191,7 @@ export class EditUserPage {
 		});
 		this.saveButton = page.getByRole('button', {name: 'Save'});
 		this.screenNameInput = page.getByLabel('Screen Name');
-
+		this.selectAccountsButton = page.getByLabel('Select Accounts');
 		this.selectOrganizationButton = page.locator(
 			'#_com_liferay_users_admin_web_portlet_MyOrganizationsPortlet_selectOrganizationLink'
 		);
@@ -300,9 +314,11 @@ export class EditUserPage {
 			throw new Error(`Cannot locate user row with siteName ${siteName}`);
 		};
 		this.selectUserLanguage = page.getByLabel('Language');
+		this.userIDInput = page.getByLabel('User ID');
 		this.webDAVPasswordLabel = page.locator(
 			'#_com_liferay_users_admin_web_portlet_UsersAdminPortlet_webDAVPassword'
 		);
+
 		this.confirmButton = this.passwordConfirmationFrame.getByRole(
 			'button',
 			{name: 'Confirm'}

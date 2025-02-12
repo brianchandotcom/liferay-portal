@@ -23,6 +23,7 @@ import {AccountRolesPage} from '../pages/account-admin-web/AccountRolesPage';
 import {AccountTagSelectorPage} from '../pages/account-admin-web/AccountTagSelectorPage';
 import {AccountUserInvitePage} from '../pages/account-admin-web/AccountUserInvitePage';
 import {AccountUserSelectorPage} from '../pages/account-admin-web/AccountUserSelectorPage';
+import {AccountUsersAccountSelectorPage} from '../pages/account-admin-web/AccountUsersAccountSelectorPage';
 import {AccountUsersPage} from '../pages/account-admin-web/AccountUsersPage';
 import {AccountsPage} from '../pages/account-admin-web/AccountsPage';
 import {EditAccountAddressPage} from '../pages/account-admin-web/EditAccountAddressPage';
@@ -57,6 +58,7 @@ const accountsPagesTest = test.extend<{
 	accountTagSelectorPage: AccountTagSelectorPage;
 	accountUserInvitePage: AccountUserInvitePage;
 	accountUserSelectorPage: AccountUserSelectorPage;
+	accountUsersAccountSelectorPage: AccountUsersAccountSelectorPage;
 	accountUsersPage: AccountUsersPage;
 	accountsPage: AccountsPage;
 	editAccountAddressPage: EditAccountAddressPage;
@@ -125,6 +127,9 @@ const accountsPagesTest = test.extend<{
 	},
 	accountUserSelectorPage: async ({page}, use) => {
 		await use(new AccountUserSelectorPage(page));
+	},
+	accountUsersAccountSelectorPage: async ({page}, use) => {
+		await use(new AccountUsersAccountSelectorPage(page));
 	},
 	accountUsersPage: async ({page}, use) => {
 		await use(new AccountUsersPage(page));

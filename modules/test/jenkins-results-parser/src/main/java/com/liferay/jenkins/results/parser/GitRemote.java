@@ -94,6 +94,40 @@ public class GitRemote {
 		return key.hashCode();
 	}
 
+	public boolean isAvailable() {
+		if (_available != null) {
+			return _available;
+		}
+
+		GitWorkingDirectory gitWorkingDirectory = getGitWorkingDirectory();
+
+		String command = JenkinsResultsParserUtil.combine(
+			"git ls-remote -h -t ", getRemoteURL(), " ",
+			gitWorkingDirectory.getUpstreamBranchName());
+
+		try {
+			GitUtil.ExecutionResult executionResult =
+				GitUtil.executeBashCommands(
+					1, GitUtil.MILLIS_RETRY_DELAY, 1000 * 5,
+					gitWorkingDirectory.getWorkingDirectory(), command);
+
+			if (executionResult.getExitValue() != 0) {
+				_available = false;
+
+				return _available;
+			}
+		}
+		catch (Exception exception) {
+			_available = false;
+
+			return _available;
+		}
+
+		_available = true;
+
+		return _available;
+	}
+
 	@Override
 	public String toString() {
 		return JenkinsResultsParserUtil.combine(
@@ -208,6 +242,7 @@ public class GitRemote {
 		"root@(?<hostname>[^:]+):/opt/dev/projects/github" +
 			"/(?<gitRepositoryName>[^\\\\.]+)");
 
+	private Boolean _available;
 	private final String _fetchRemoteURL;
 	private String _gitRepositoryName;
 	private final GitWorkingDirectory _gitWorkingDirectory;

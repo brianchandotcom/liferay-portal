@@ -193,7 +193,7 @@ public class UpdateFormItemConfigMVCActionCommand
 				previousClassTypeId)) {
 
 			layoutStructureItemChanges.add(
-				_formItemManager.removeLayoutStructureItemsJSONArray(
+				_formItemManager.removeLayoutStructureItems(
 					formStyledLayoutStructureItem, layoutStructure, null));
 
 			if (formStyledLayoutStructureItem.getClassNameId() > 0) {
@@ -265,7 +265,7 @@ public class UpdateFormItemConfigMVCActionCommand
 
 				if (ListUtil.isNotEmpty(removedItemIds)) {
 					layoutStructureItemChanges.add(
-						_formItemManager.removeLayoutStructureItemsJSONArray(
+						_formItemManager.removeLayoutStructureItems(
 							formStyledLayoutStructureItem, layoutStructure,
 							removedItemIds));
 				}

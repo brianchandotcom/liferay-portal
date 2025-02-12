@@ -13,7 +13,9 @@ const hiddenFileInput = document.getElementById(
 const removeButton = document.getElementById(
 	`${fragmentNamespace}-file-upload-remove-button`
 );
-const selectButton = wrapper.querySelector('.btn-secondary');
+const selectButton = document.getElementById(
+	`${fragmentNamespace}-file-upload-button-label`
+);
 
 function showRemoveButton() {
 	removeButton.classList.remove('d-none');

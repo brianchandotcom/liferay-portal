@@ -24,23 +24,23 @@
 		}
 
 		.heart {
-			height: 29px;
-			width: 29px;
+			align-items: center;
 			background-color: #eaeaea;
 			border-radius: 50%;
 			display: flex;
+			height: 29px;
 			justify-content: center;
-			align-items: center;
+			width: 29px;
 		}
 
 		.main_image {
-			display: flex;
-			justify-content: center;
 			align-items: center;
 			border-bottom: 1px solid #eee;
+			display: flex;
 			height: 400px;
-			width: 100%;
+			justify-content: center;
 			overflow: hidden;
+			width: 100%;
 		}
 
 		.price.lfr-tooltip-scope {
@@ -65,18 +65,18 @@
 		}
 
 		.thumbnail_images ul {
-			list-style: none;
-			justify-content: center;
-			display: flex;
 			align-items: center;
+			display: flex;
+			justify-content: center;
+			list-style: none;
 			margin-top: 10px;
 		}
 
 		.thumbnail_images ul li {
-			margin: 5px;
-			padding: 10px;
 			border: 2px solid #eee;
 			cursor: pointer;
+			margin: 5px;
+			padding: 10px;
 			transition: all 0.5s;
 		}
 

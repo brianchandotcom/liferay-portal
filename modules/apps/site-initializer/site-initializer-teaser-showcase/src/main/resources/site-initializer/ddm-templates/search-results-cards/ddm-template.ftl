@@ -1,7 +1,7 @@
 <style>
 	.badge {
-		padding: 10px;
 		font-size: .8rem;
+		padding: 10px;
 	}
 
 	.card-title {
@@ -23,31 +23,31 @@
 </style>
 
 <#assign
-	commerceContext = renderRequest.getAttribute("COMMERCE_CONTEXT")
 	account = commerceContext.getAccountEntry()
 	accountId = account.getAccountEntryId()
 	chanelId = commerceContext.getCommerceChannelId()
+	commerceContext = renderRequest.getAttribute("COMMERCE_CONTEXT")
 />
 
 <div class="product-card-tiles">
 	<#if entries?has_content>
 		<#list entries as curCPCatalogEntry>
 			<#assign
+				categories = productDetail.categories
 				cpDefinitionId = curCPCatalogEntry.getCPDefinitionId()
+				defaultImageFileVersion = cpContentHelper.getCPDefinitionImageFileVersion(cpDefinitionId, request)
+				defaultImageURL = cpContentHelper.getDefaultImageFileURL(accountId, cpDefinitionId)
+				featuredSpecificationKeys = ["fit", "weight", "material"]
+				friendlyURL = cpContentHelper.getFriendlyURL(curCPCatalogEntry, themeDisplay)
+				isSuggested = false
+				productDescription = curCPCatalogEntry.getDescription()
+				productDetail = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels/${chanelId}/products/${productId}?accountId=${accountId}&nestedFields=categories,productSpecifications")
 				productId = curCPCatalogEntry.getCProductId()
 				productName = curCPCatalogEntry.getName()
 				productShortDescription = curCPCatalogEntry.getShortDescription()
-				productDescription = curCPCatalogEntry.getDescription()
-				friendlyURL = cpContentHelper.getFriendlyURL(curCPCatalogEntry, themeDisplay)
-				defaultImageURL = cpContentHelper.getDefaultImageFileURL(accountId, cpDefinitionId)
-				defaultImageFileVersion = cpContentHelper.getCPDefinitionImageFileVersion(cpDefinitionId, request)
-				productDetail = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels/${chanelId}/products/${productId}?accountId=${accountId}&nestedFields=categories,productSpecifications")
-				categories = productDetail.categories
 				specifications = productDetail.productSpecifications
-				tags = productDetail.tags
-				featuredSpecificationKeys = ["fit", "weight", "material"]
-				isSuggested = false
 				suggestedClass = ""
+				tags = productDetail.tags
 			/>
 
 			<#if cpContentHelper.getDefaultCPSku(curCPCatalogEntry)?has_content>

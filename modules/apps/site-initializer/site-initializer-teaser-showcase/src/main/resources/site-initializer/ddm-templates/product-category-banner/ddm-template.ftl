@@ -12,8 +12,8 @@
 
 <#if assetCategory??>
 	<#assign
-		title = assetCategory.getTitle(locale)
 		description = assetCategory.getDescription(locale)
+		title = assetCategory.getTitle(locale)
 	/>
 </#if>
 

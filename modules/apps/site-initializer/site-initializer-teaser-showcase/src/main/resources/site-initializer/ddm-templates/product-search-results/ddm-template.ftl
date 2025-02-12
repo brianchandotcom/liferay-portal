@@ -1,7 +1,7 @@
 <style>
 	.badge {
-		padding: 10px;
 		font-size: .8rem;
+		padding: 10px;
 	}
 
 	.card-title {

@@ -104,6 +104,10 @@ public class FormItemManager {
 		List<String> childrenItemIds =
 			formStepContainerStyledLayoutStructureItem.getChildrenItemIds();
 
+		LayoutStructureItem lastFormStepLayoutStructureItem =
+			layoutStructure.getLayoutStructureItem(
+				childrenItemIds.get(childrenItemIds.size() - 1));
+
 		_addFormStepLayoutStructureItems(
 			addedFragmentEntryLinks, formStepContainerStyledLayoutStructureItem,
 			httpServletRequest, httpServletResponse,
@@ -112,6 +116,46 @@ public class FormItemManager {
 			layout, layoutStructure, layoutStructureItemChanges,
 			numberOfSteps - childrenItemIds.size(), segmentsExperienceId,
 			serviceContext);
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-31772")) {
+			return layoutStructureItemChanges;
+		}
+
+		childrenItemIds =
+			formStepContainerStyledLayoutStructureItem.getChildrenItemIds();
+
+		String parentItemId = childrenItemIds.get(childrenItemIds.size() - 1);
+
+		for (String childrenItemId :
+				new ArrayList<>(
+					lastFormStepLayoutStructureItem.getChildrenItemIds())) {
+
+			LayoutStructureItem layoutStructureItem =
+				layoutStructure.getLayoutStructureItem(childrenItemId);
+
+			if (!(layoutStructureItem instanceof
+					FragmentStyledLayoutStructureItem)) {
+
+				continue;
+			}
+
+			FragmentStyledLayoutStructureItem
+				fragmentStyledLayoutStructureItem =
+					(FragmentStyledLayoutStructureItem)layoutStructureItem;
+
+			if (Objects.equals(
+					_getFragmentEntryLinkFormButtonType(
+						fragmentStyledLayoutStructureItem.
+							getFragmentEntryLinkId()),
+					"submit")) {
+
+				layoutStructureItemChanges.addMovedLayoutStructureItems(
+					layoutStructureItem.clone());
+
+				layoutStructure.moveLayoutStructureItem(
+					layoutStructureItem.getItemId(), parentItemId, -1);
+			}
+		}
 
 		return layoutStructureItemChanges;
 	}
@@ -247,7 +291,7 @@ public class FormItemManager {
 		LayoutStructureItemChanges layoutStructureItemChanges =
 			new LayoutStructureItemChanges();
 
-		List<String> childrenItemIds = new ArrayList<>(
+		List<String> originalChildrenItemIds = new ArrayList<>(
 			formStyledLayoutStructureItem.getChildrenItemIds());
 
 		LayoutStructureItem formStepContainerStyledLayoutStructureItem =
@@ -261,9 +305,25 @@ public class FormItemManager {
 			layoutStructure.addFormStepLayoutStructureItem(
 				formStepContainerStyledLayoutStructureItem.getItemId(), 0);
 
-		for (String childrenItemId : childrenItemIds) {
+		_addFormStepLayoutStructureItems(
+			addedFragmentEntryLinks, formStepContainerStyledLayoutStructureItem,
+			httpServletRequest, httpServletResponse,
+			firstFormStepLayoutStructureItem, layout, layoutStructure,
+			layoutStructureItemChanges, numberOfSteps - 1, segmentsExperienceId,
+			serviceContext);
+
+		List<String> childrenItemIds =
+			formStepContainerStyledLayoutStructureItem.getChildrenItemIds();
+
+		LayoutStructureItem lastFormStepLayoutStructureItem =
+			layoutStructure.getLayoutStructureItem(
+				childrenItemIds.get(childrenItemIds.size() - 1));
+
+		for (String childrenItemId : originalChildrenItemIds) {
 			LayoutStructureItem layoutStructureItem =
 				layoutStructure.getLayoutStructureItem(childrenItemId);
+
+			String parentItemId = firstFormStepLayoutStructureItem.getItemId();
 
 			if (layoutStructureItem instanceof
 					FragmentStyledLayoutStructureItem) {
@@ -278,22 +338,24 @@ public class FormItemManager {
 				if (fragmentEntryLinkId == stepperFragmentEntryLinkId) {
 					continue;
 				}
+
+				if (FeatureFlagManagerUtil.isEnabled("LPD-31772") &&
+					Objects.equals(
+						_getFragmentEntryLinkFormButtonType(
+							fragmentStyledLayoutStructureItem.
+								getFragmentEntryLinkId()),
+						"submit")) {
+
+					parentItemId = lastFormStepLayoutStructureItem.getItemId();
+				}
 			}
 
 			layoutStructureItemChanges.addMovedLayoutStructureItems(
 				layoutStructureItem.clone());
 
 			layoutStructure.moveLayoutStructureItem(
-				childrenItemId, firstFormStepLayoutStructureItem.getItemId(),
-				-1);
+				childrenItemId, parentItemId, -1);
 		}
-
-		_addFormStepLayoutStructureItems(
-			addedFragmentEntryLinks, formStepContainerStyledLayoutStructureItem,
-			httpServletRequest, httpServletResponse,
-			firstFormStepLayoutStructureItem, layout, layoutStructure,
-			layoutStructureItemChanges, numberOfSteps - 1, segmentsExperienceId,
-			serviceContext);
 
 		return layoutStructureItemChanges;
 	}

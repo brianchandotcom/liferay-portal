@@ -5,11 +5,14 @@
 
 package com.liferay.layout.taglib.servlet.taglib.renderer;
 
+import com.liferay.fragment.constants.FragmentConstants;
 import com.liferay.fragment.constants.FragmentWebKeys;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.renderer.DefaultFragmentRendererContext;
 import com.liferay.fragment.renderer.FragmentRendererController;
 import com.liferay.fragment.service.FragmentEntryLinkLocalServiceUtil;
+import com.liferay.fragment.util.configuration.FragmentConfigurationField;
+import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.frontend.taglib.clay.servlet.taglib.ButtonTag;
 import com.liferay.frontend.taglib.clay.servlet.taglib.ColTag;
 import com.liferay.frontend.taglib.clay.servlet.taglib.ContainerTag;
@@ -17,6 +20,9 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.PaginationBarTag;
 import com.liferay.frontend.taglib.clay.servlet.taglib.RowTag;
 import com.liferay.frontend.taglib.servlet.taglib.ComponentTag;
 import com.liferay.info.constants.InfoDisplayWebKeys;
+import com.liferay.info.field.InfoField;
+import com.liferay.info.field.type.BooleanInfoFieldType;
+import com.liferay.info.field.type.MultiselectInfoFieldType;
 import com.liferay.info.form.InfoForm;
 import com.liferay.info.item.InfoItemDetails;
 import com.liferay.info.item.InfoItemReference;
@@ -1014,11 +1020,6 @@ public class LayoutStructureRenderer {
 		jspWriter.write("\"><input name=\"backURL\" type=\"hidden\" value=\"");
 		jspWriter.write(_themeDisplay.getURLCurrent());
 		jspWriter.write(
-			"\"><input name=\"checkboxNames\" type=\"hidden\" value=\"");
-		jspWriter.write(
-			_renderLayoutStructureDisplayContext.getInfoFormCheckboxNames(
-				infoForm));
-		jspWriter.write(
 			"\"><input name=\"classNameId\" type=\"hidden\" value=\"");
 		jspWriter.write(
 			String.valueOf(formStyledLayoutStructureItem.getClassNameId()));
@@ -1184,6 +1185,38 @@ public class LayoutStructureRenderer {
 				String html = fragmentRendererController.render(
 					defaultFragmentRendererContext, _httpServletRequest,
 					httpServletResponse);
+
+				if (Objects.equals(
+						fragmentEntryLink.getType(),
+						FragmentConstants.TYPE_INPUT)) {
+
+					FragmentEntryConfigurationParser
+						fragmentEntryConfigurationParser =
+							ServletContextUtil.
+								getFragmentEntryConfigurationParser();
+
+					String fieldName = GetterUtil.getString(
+						fragmentEntryConfigurationParser.getFieldValue(
+							fragmentEntryLink.getEditableValues(),
+							new FragmentConfigurationField(
+								"inputFieldId", "string", "", false, "text"),
+							_themeDisplay.getLocale()));
+
+					InfoField<?> infoField = infoForm.getInfoField(fieldName);
+
+					if ((infoField != null) &&
+						(infoField.getInfoFieldType() instanceof
+							BooleanInfoFieldType ||
+						 infoField.getInfoFieldType() instanceof
+							 MultiselectInfoFieldType)) {
+
+						jspWriter.write(
+							"<input name=\"checkboxNames\" type=\"hidden\"");
+						jspWriter.write("value=\"");
+						jspWriter.write(fieldName);
+						jspWriter.write("\">");
+					}
+				}
 
 				if (GetterUtil.getBoolean(
 						_httpServletRequest.getAttribute(

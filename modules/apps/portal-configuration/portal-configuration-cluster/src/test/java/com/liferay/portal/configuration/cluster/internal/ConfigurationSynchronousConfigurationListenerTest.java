@@ -26,7 +26,6 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import org.mockito.Mock;
-import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.invocation.InvocationOnMock;
@@ -77,66 +76,29 @@ public class ConfigurationSynchronousConfigurationListenerTest {
 
 	@Test
 	public void testOnNotify() throws Exception {
-		try (MockedStatic<CompanyThreadLocal> companyThreadLocalMockedStatic =
-				Mockito.mockStatic(CompanyThreadLocal.class)) {
+		Mockito.when(
+			_configurationAdmin.listConfigurations(Mockito.anyString())
+		).thenAnswer(
+			new Answer<Configuration[]>() {
 
-			companyThreadLocalMockedStatic.when(
-				() -> CompanyThreadLocal.setCompanyIdWithSafeCloseable(1L)
-			).thenAnswer(
-				new Answer<Void>() {
+				@Override
+				public Configuration[] answer(InvocationOnMock invocationOnMock)
+					throws Throwable {
 
-					@Override
-					public Void answer(InvocationOnMock invocationOnMock)
-						throws Throwable {
+					_companyId = CompanyThreadLocal.getCompanyId();
 
-						_companyId = (Long)invocationOnMock.getArgument(0);
-
-						return null;
-					}
-
+					return null;
 				}
-			);
 
-			companyThreadLocalMockedStatic.when(
-				CompanyThreadLocal::getCompanyId
-			).thenAnswer(
-				new Answer<Long>() {
+			}
+		);
 
-					@Override
-					public Long answer(InvocationOnMock invocationOnMock)
-						throws Throwable {
+		ReflectionTestUtil.invoke(
+			_configurationSynchronousConfigurationListener, "_onNotify",
+			new Class<?>[] {String.class, int.class, long.class}, "test",
+			ConfigurationEvent.CM_UPDATED, 1L);
 
-						return _companyId;
-					}
-
-				}
-			);
-
-			Mockito.when(
-				_configurationAdmin.listConfigurations(Mockito.anyString())
-			).thenAnswer(
-				new Answer<Configuration[]>() {
-
-					@Override
-					public Configuration[] answer(
-							InvocationOnMock invocationOnMock)
-						throws Throwable {
-
-						_actualCompanyId = CompanyThreadLocal.getCompanyId();
-
-						return null;
-					}
-
-				}
-			);
-
-			ReflectionTestUtil.invoke(
-				_configurationSynchronousConfigurationListener, "_onNotify",
-				new Class<?>[] {String.class, int.class, long.class}, "test",
-				ConfigurationEvent.CM_UPDATED, 1L);
-
-			Assert.assertEquals(1L, _actualCompanyId);
-		}
+		Assert.assertEquals(1L, _companyId);
 	}
 
 	@Test
@@ -288,7 +250,6 @@ public class ConfigurationSynchronousConfigurationListenerTest {
 		unsafeConsumer.accept(configuration);
 	}
 
-	private long _actualCompanyId;
 	private long _companyId;
 
 	@Mock

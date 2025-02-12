@@ -844,11 +844,6 @@ public class CustomFDSSerializerTest {
 			_customFDSSerializer.serializeFilters(fdsName, _httpServletRequest)
 		).thenCallRealMethod();
 
-		Mockito.when(
-			_customFDSSerializer.getLabelValue(
-				Mockito.eq("label"), Mockito.eq("fieldName"), Mockito.anyMap())
-		).thenCallRealMethod();
-
 		List<ObjectEntry> objectEntries = new ArrayList<>();
 
 		if (properties != null) {

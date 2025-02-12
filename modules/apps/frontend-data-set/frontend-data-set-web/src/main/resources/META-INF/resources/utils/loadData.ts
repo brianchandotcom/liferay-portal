@@ -33,16 +33,25 @@ function getFiltersString(
 	return filtersString;
 }
 
-export async function loadData(
-	apiURL: string,
-	currentURL: string,
-	odataFiltersStrings: Array<string>,
-	searchParam: string,
-	delta: number,
-	page: number = 1,
-	sorts: TSort[] = [],
-	additionalAPIURLParameters: string
-) {
+export async function loadData({
+	additionalAPIURLParameters,
+	apiURL,
+	currentURL,
+	delta,
+	odataFiltersStrings = [],
+	page = 1,
+	searchParam,
+	sorts,
+}: {
+	additionalAPIURLParameters?: string;
+	apiURL: string;
+	currentURL?: string;
+	delta: number;
+	odataFiltersStrings?: Array<string>;
+	page: number;
+	searchParam?: string;
+	sorts?: TSort[];
+}) {
 	const fullUrl = apiURL.startsWith('/')
 		? Liferay.ThemeDisplay.getPortalURL() +
 			Liferay.ThemeDisplay.getPathContext() +
@@ -77,9 +86,9 @@ export async function loadData(
 		url.searchParams.append('search', searchParam);
 	}
 
-	if (sorts.length) {
+	if (sorts && sorts.length) {
 		const updatedSorts = sorts.map((sort: TSort) => {
-			const key = sort.key?.includes('LANG')
+			const key = sort.key?.includes(',LANG')
 				? sort.key.split(',')[0]
 				: sort.key;
 

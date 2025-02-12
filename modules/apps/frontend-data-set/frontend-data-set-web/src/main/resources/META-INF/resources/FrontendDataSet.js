@@ -228,16 +228,16 @@ const FrontendDataSet = ({
 		const activeSorts =
 			sorts.length > 1 ? sorts.filter((sort) => sort.active) : sorts;
 
-		return loadData(
+		return loadData({
+			additionalAPIURLParameters,
 			apiURL,
 			currentURL,
-			activeFiltersOdataStrings,
+			delta: paginationDelta,
+			odataFiltersStrings: activeFiltersOdataStrings,
+			page: pageNumber,
 			searchParam,
-			paginationDelta,
-			pageNumber,
-			activeSorts,
-			additionalAPIURLParameters
-		);
+			sorts: activeSorts,
+		});
 	}, [
 		additionalAPIURLParameters,
 		apiURL,

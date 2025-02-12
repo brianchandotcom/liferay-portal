@@ -26,11 +26,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>BREADCRUMB_ADT</td>
-	<td>//div/ul[contains(@class,'breadcrumb-${key_breadcrumbAdtType}')] | //div[contains(@class,'breadcrumb-${key_breadcrumbAdtType}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>BREADCRUMB_SPECIFIC_ENTRY</td>
 	<td>//div[contains(@id,'SiteNavigationBreadcrumbPortlet')]//li[contains(.,'${key_breadcrumbName}')]</td>
 	<td></td>

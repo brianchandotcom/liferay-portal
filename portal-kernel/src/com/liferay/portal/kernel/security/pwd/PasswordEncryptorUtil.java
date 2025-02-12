@@ -97,7 +97,7 @@ public class PasswordEncryptorUtil {
 		throws PwdEncryptorException {
 
 		if (Validator.isNull(plainTextPassword)) {
-			throw new PwdEncryptorException(
+			throw new PwdEncryptorException.PwdMustNotBeNull(
 				"Unable to _encrypt blank password");
 		}
 

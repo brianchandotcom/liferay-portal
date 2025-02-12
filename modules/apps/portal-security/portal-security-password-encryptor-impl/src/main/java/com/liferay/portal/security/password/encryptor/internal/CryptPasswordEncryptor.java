@@ -47,7 +47,7 @@ public class CryptPasswordEncryptor implements PasswordEncryptor {
 				saltBytes, plainTextPassword.getBytes(Digester.ENCODING));
 		}
 		catch (UnsupportedEncodingException unsupportedEncodingException) {
-			throw new PwdEncryptorException(
+			throw new PwdEncryptorException.UnsupportedEncoding(
 				unsupportedEncodingException.getMessage(),
 				unsupportedEncodingException);
 		}
@@ -76,7 +76,7 @@ public class CryptPasswordEncryptor implements PasswordEncryptor {
 			}
 		}
 		catch (UnsupportedEncodingException unsupportedEncodingException) {
-			throw new PwdEncryptorException(
+			throw new PwdEncryptorException.UnsupportedEncoding(
 				"Unable to extract salt from encrypted password " +
 					unsupportedEncodingException.getMessage(),
 				unsupportedEncodingException);

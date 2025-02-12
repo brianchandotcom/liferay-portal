@@ -5,44 +5,62 @@
 
 package com.liferay.portal.kernel.exception;
 
+import com.liferay.portal.kernel.util.PropsKeys;
+
 /**
  * @author Scott Lee
  */
 public class PwdEncryptorException extends PortalException {
 
-	public PwdEncryptorException() {
+	public static class InvalidAlgorithm extends PwdEncryptorException {
+
+		public InvalidAlgorithm(String msg, Throwable throwable) {
+			super(msg, throwable);
+		}
+
 	}
 
-	public PwdEncryptorException(String msg) {
-		super(msg);
-	}
+	public static class InvalidEncryptedPwd extends PwdEncryptorException {
 
-	public PwdEncryptorException(String msg, Throwable throwable) {
-		super(msg, throwable);
-	}
+		public InvalidEncryptedPwd(String msg, Throwable throwable) {
+			super(msg, throwable);
+		}
 
-	public PwdEncryptorException(Throwable throwable) {
-		super(throwable);
 	}
 
 	public static class MustSetLegacyAlgorithmProperty
 		extends PwdEncryptorException {
 
 		public MustSetLegacyAlgorithmProperty() {
+			super(
+				PropsKeys.PASSWORDS_ENCRYPTION_ALGORITHM_LEGACY +
+					" must be set");
 		}
 
-		public MustSetLegacyAlgorithmProperty(String msg) {
+	}
+
+	public static class PwdMustNotBeNull extends PwdEncryptorException {
+
+		public PwdMustNotBeNull(String msg) {
 			super(msg);
 		}
 
-		public MustSetLegacyAlgorithmProperty(String msg, Throwable throwable) {
+	}
+
+	public static class UnsupportedEncoding extends PwdEncryptorException {
+
+		public UnsupportedEncoding(String msg, Throwable throwable) {
 			super(msg, throwable);
 		}
 
-		public MustSetLegacyAlgorithmProperty(Throwable throwable) {
-			super(throwable);
-		}
+	}
 
+	private PwdEncryptorException(String msg) {
+		super(msg);
+	}
+
+	private PwdEncryptorException(String msg, Throwable throwable) {
+		super(msg, throwable);
 	}
 
 }

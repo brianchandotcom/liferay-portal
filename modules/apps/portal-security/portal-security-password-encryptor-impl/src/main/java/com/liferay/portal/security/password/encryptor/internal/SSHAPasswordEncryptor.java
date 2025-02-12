@@ -56,12 +56,12 @@ public class SSHAPasswordEncryptor implements PasswordEncryptor {
 				ArrayUtil.append(messageDigestBytes, saltBytes));
 		}
 		catch (NoSuchAlgorithmException noSuchAlgorithmException) {
-			throw new PwdEncryptorException(
+			throw new PwdEncryptorException.InvalidAlgorithm(
 				noSuchAlgorithmException.getMessage(),
 				noSuchAlgorithmException);
 		}
 		catch (UnsupportedEncodingException unsupportedEncodingException) {
-			throw new PwdEncryptorException(
+			throw new PwdEncryptorException.UnsupportedEncoding(
 				unsupportedEncodingException.getMessage(),
 				unsupportedEncodingException);
 		}
@@ -85,7 +85,7 @@ public class SSHAPasswordEncryptor implements PasswordEncryptor {
 					saltBytes, 0, saltBytes.length);
 			}
 			catch (Exception exception) {
-				throw new PwdEncryptorException(
+				throw new PwdEncryptorException.InvalidEncryptedPwd(
 					"Unable to extract salt from encrypted password " +
 						exception.getMessage(),
 					exception);

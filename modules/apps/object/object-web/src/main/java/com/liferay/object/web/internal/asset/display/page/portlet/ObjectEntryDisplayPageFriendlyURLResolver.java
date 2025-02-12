@@ -60,17 +60,17 @@ public class ObjectEntryDisplayPageFriendlyURLResolver
 			return super.getLayoutDisplayPageProvider(friendlyURL);
 		}
 
-		String[] paths = StringUtil.split(
+		String[] parts = StringUtil.split(
 			StringUtil.removeFirst(friendlyURL, getURLSeparator()),
 			CharPool.SLASH);
 
-		if (paths.length == 1) {
+		if (parts.length == 1) {
 			return super.getLayoutDisplayPageProvider(friendlyURL);
 		}
 
 		ObjectDefinition objectDefinition =
 			_objectDefinitionLocalService.fetchObjectDefinition(
-				serviceContext.getCompanyId(), paths[0]);
+				serviceContext.getCompanyId(), parts[0]);
 
 		if (objectDefinition == null) {
 			return super.getLayoutDisplayPageProvider(friendlyURL);

@@ -95,6 +95,11 @@ public class WishListItemResourceTest extends BaseWishListItemResourceTestCase {
 	}
 
 	@Override
+	protected String testDeleteWishListItem_getCurrencyCode() throws Exception {
+		return null;
+	}
+
+	@Override
 	protected WishListItem testGetWishListItem_addWishListItem()
 		throws Exception {
 

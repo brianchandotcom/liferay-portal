@@ -390,7 +390,8 @@ public class SkuResourceTest extends BaseSkuResourceTestCase {
 
 		Sku channelProductSku = skuResource.getChannelProductSku(
 			_commerceChannel.getCommerceChannelId(),
-			cpDefinition.getCProductId(), cpInstance.getCPInstanceId(), -1L);
+			cpDefinition.getCProductId(), cpInstance.getCPInstanceId(), -1L,
+			null);
 
 		Price price = channelProductSku.getPrice();
 
@@ -472,7 +473,8 @@ public class SkuResourceTest extends BaseSkuResourceTestCase {
 
 		Sku channelProductSku = skuResource.getChannelProductSku(
 			_commerceChannel.getCommerceChannelId(),
-			cpDefinition.getCProductId(), cpInstance.getCPInstanceId(), -1L);
+			cpDefinition.getCProductId(), cpInstance.getCPInstanceId(), -1L,
+			null);
 
 		Price price = channelProductSku.getPrice();
 
@@ -505,7 +507,7 @@ public class SkuResourceTest extends BaseSkuResourceTestCase {
 			channelId, productId, randomSku());
 
 		Page<Sku> page = skuResource.getChannelProductSkusPage(
-			channelId, productId, null, Pagination.of(1, 10));
+			channelId, productId, null, null, Pagination.of(1, 10));
 
 		for (Sku sku : page.getItems()) {
 			SkuUnitOfMeasure[] skuUnitOfMeasures = sku.getSkuUnitOfMeasures();
@@ -567,7 +569,7 @@ public class SkuResourceTest extends BaseSkuResourceTestCase {
 		_addCPInstanceUnitOfMeasure(sku2, true);
 
 		Page<Sku> page = skuResource.getChannelProductSkusPage(
-			channelId, productId, null, Pagination.of(1, 10));
+			channelId, productId, null, null, Pagination.of(1, 10));
 
 		for (Sku sku : page.getItems()) {
 			SkuUnitOfMeasure[] skuUnitOfMeasures = sku.getSkuUnitOfMeasures();

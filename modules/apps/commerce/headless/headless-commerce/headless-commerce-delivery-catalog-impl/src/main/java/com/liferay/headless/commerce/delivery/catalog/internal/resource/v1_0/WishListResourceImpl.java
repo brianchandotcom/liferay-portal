@@ -43,7 +43,8 @@ public class WishListResourceImpl extends BaseWishListResourceImpl {
 
 	@Override
 	public Page<WishList> getChannelByExternalReferenceCodeWishListsPage(
-			String externalReferenceCode, Long accountId, Pagination pagination)
+			String externalReferenceCode, Long accountId, String currencyCode,
+			Pagination pagination)
 		throws Exception {
 
 		CommerceChannel commerceChannel =
@@ -52,12 +53,14 @@ public class WishListResourceImpl extends BaseWishListResourceImpl {
 					externalReferenceCode, contextCompany.getCompanyId());
 
 		return getChannelWishListsPage(
-			commerceChannel.getCommerceChannelId(), accountId, pagination);
+			commerceChannel.getCommerceChannelId(), accountId, currencyCode,
+			pagination);
 	}
 
 	@Override
 	public Page<WishList> getChannelWishListsPage(
-			Long channelId, Long accountId, Pagination pagination)
+			Long channelId, Long accountId, String currencyCode,
+			Pagination pagination)
 		throws Exception {
 
 		CommerceChannel commerceChannel =

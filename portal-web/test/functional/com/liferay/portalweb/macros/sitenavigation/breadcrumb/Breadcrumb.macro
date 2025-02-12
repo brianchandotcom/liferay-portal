@@ -1,48 +1,5 @@
 definition {
 
-	@summary = "Default summary"
-	macro configureBreadcrumb(selectAdtType = null, configureWithoutSave = null) {
-		SelectFrame(locator1 = "IFrame#CONFIGURATION");
-
-		if (isSet(checkSetupName)) {
-			for (var checkSetupName : list ${checkSetupName}) {
-				var key_checkSetupName = ${checkSetupName};
-
-				Check.checkToggleSwitch(locator1 = "ToggleSwitch#SHOW_SPECIFIC_TOGGLE_SWITCH");
-			}
-		}
-
-		if (isSet(uncheckSetupName)) {
-			for (var uncheckSetupName : list ${uncheckSetupName}) {
-				var key_checkSetupName = ${uncheckSetupName};
-
-				Uncheck.uncheckToggleSwitch(locator1 = "ToggleSwitch#SHOW_SPECIFIC_TOGGLE_SWITCH");
-			}
-		}
-
-		if (isSet(selectAdtType)) {
-			Click(
-				key_class = "display-template-selector",
-				key_index = 1,
-				locator1 = "Button#ANY_WITH_CLASS_AND_INDEX");
-
-			MenuItem.click(menuItem = ${selectAdtType});
-		}
-
-		if (${configureWithoutSave} == "true") {
-			echo("Configuring Breadcrumb without saving to check bug.");
-		}
-		else {
-			WaitForElementPresent(
-				key_text = "Save",
-				locator1 = "Button#ANY_ENABLED");
-
-			PortletEntry.save();
-		}
-
-		SelectFrame(value1 = "relative=top");
-	}
-
 	@summary = "Go to breadcrumb entry"
 	macro gotoEntry(breadcrumbName = null) {
 		Click(

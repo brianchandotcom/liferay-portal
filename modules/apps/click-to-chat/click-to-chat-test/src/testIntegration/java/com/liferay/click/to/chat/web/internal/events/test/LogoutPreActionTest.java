@@ -113,7 +113,6 @@ public class LogoutPreActionTest {
 			new Cookie("intercom-id-test", RandomTestUtil.randomString()),
 			new Cookie("intercom-session-test", RandomTestUtil.randomString()),
 			new Cookie("test-cookie", RandomTestUtil.randomString()));
-
 		_mockHttpServletRequest.setPathInfo(StringPool.BLANK);
 	}
 

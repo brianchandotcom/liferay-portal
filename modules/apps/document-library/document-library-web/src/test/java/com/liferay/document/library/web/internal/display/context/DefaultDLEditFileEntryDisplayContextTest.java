@@ -41,16 +41,6 @@ public class DefaultDLEditFileEntryDisplayContextTest {
 		BeanPropertiesUtil beanPropertiesUtil = new BeanPropertiesUtil();
 
 		beanPropertiesUtil.setBeanProperties(new BeanPropertiesImpl());
-
-		_configurationProvider = Mockito.mock(ConfigurationProvider.class);
-
-		_ddmFormValuesFactory = Mockito.mock(DDMFormValuesFactory.class);
-
-		_ddmStorageEngineManager = Mockito.mock(DDMStorageEngineManager.class);
-
-		_dlFileEntryType = Mockito.mock(DLFileEntryType.class);
-
-		_dlValidator = Mockito.mock(DLValidator.class);
 	}
 
 	@Test
@@ -112,10 +102,14 @@ public class DefaultDLEditFileEntryDisplayContextTest {
 			mockHttpServletRequest);
 	}
 
-	private ConfigurationProvider _configurationProvider;
-	private DDMFormValuesFactory _ddmFormValuesFactory;
-	private DDMStorageEngineManager _ddmStorageEngineManager;
-	private DLFileEntryType _dlFileEntryType;
-	private DLValidator _dlValidator;
+	private final ConfigurationProvider _configurationProvider = Mockito.mock(
+		ConfigurationProvider.class);
+	private final DDMFormValuesFactory _ddmFormValuesFactory = Mockito.mock(
+		DDMFormValuesFactory.class);
+	private final DDMStorageEngineManager _ddmStorageEngineManager =
+		Mockito.mock(DDMStorageEngineManager.class);
+	private final DLFileEntryType _dlFileEntryType = Mockito.mock(
+		DLFileEntryType.class);
+	private final DLValidator _dlValidator = Mockito.mock(DLValidator.class);
 
 }

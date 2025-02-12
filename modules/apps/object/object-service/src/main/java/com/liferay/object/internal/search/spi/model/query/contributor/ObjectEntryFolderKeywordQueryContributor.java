@@ -37,6 +37,8 @@ public class ObjectEntryFolderKeywordQueryContributor
 			booleanQuery, searchContext, Field.ENTRY_CLASS_PK, false);
 		_queryHelper.addSearchLocalizedTerm(
 			booleanQuery, searchContext, "label", false);
+		_queryHelper.addSearchTerm(
+			booleanQuery, searchContext, Field.NAME, false);
 	}
 
 	@Reference

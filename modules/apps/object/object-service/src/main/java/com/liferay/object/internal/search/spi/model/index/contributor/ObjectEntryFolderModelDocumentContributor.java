@@ -30,6 +30,7 @@ public class ObjectEntryFolderModelDocumentContributor
 			Field.FOLDER_ID, objectEntryFolder.getParentObjectEntryFolderId());
 		document.addLocalizedKeyword(
 			"localized_label", objectEntryFolder.getLabelMap(), true, true);
+		document.addText(Field.NAME, objectEntryFolder.getName());
 	}
 
 }

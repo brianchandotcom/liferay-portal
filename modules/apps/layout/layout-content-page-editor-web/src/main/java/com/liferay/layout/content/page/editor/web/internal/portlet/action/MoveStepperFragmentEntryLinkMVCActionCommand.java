@@ -68,8 +68,6 @@ public class MoveStepperFragmentEntryLinkMVCActionCommand
 		int position = ParamUtil.getInteger(actionRequest, "position");
 
 		List<FragmentEntryLink> addedFragmentEntryLinks = new ArrayList<>();
-		List<FormItemManager.LayoutStructureItemChanges>
-			layoutStructureItemChangesList = new ArrayList<>();
 
 		FormItemManager.LayoutStructureItemChanges layoutStructureItemChanges =
 			new FormItemManager.LayoutStructureItemChanges();
@@ -82,10 +80,8 @@ public class MoveStepperFragmentEntryLinkMVCActionCommand
 		LayoutStructureItem layoutStructureItem =
 			layoutStructure.getLayoutStructureItem(itemId);
 
-		layoutStructureItemChanges.addMovedLayoutStructureItems(
-			layoutStructureItem.clone());
-
-		layoutStructureItemChangesList.add(layoutStructureItemChanges);
+		LayoutStructureItem clonedLayoutStructureItem =
+			layoutStructureItem.clone();
 
 		layoutStructure.moveLayoutStructureItem(itemId, parentItemId, position);
 
@@ -99,7 +95,7 @@ public class MoveStepperFragmentEntryLinkMVCActionCommand
 			formStyledLayoutStructureItem.setFormType("multistep");
 			formStyledLayoutStructureItem.setNumberOfSteps(numberOfSteps);
 
-			layoutStructureItemChangesList.add(
+			layoutStructureItemChanges =
 				_formItemManager.changeToMultistepFormType(
 					addedFragmentEntryLinks, formStyledLayoutStructureItem,
 					_portal.getHttpServletRequest(actionRequest),
@@ -107,8 +103,11 @@ public class MoveStepperFragmentEntryLinkMVCActionCommand
 					themeDisplay.getLayout(), layoutStructure, numberOfSteps,
 					segmentsExperienceId,
 					ServiceContextFactory.getInstance(actionRequest),
-					fragmentEntryLinkId));
+					fragmentEntryLinkId);
 		}
+
+		layoutStructureItemChanges.addMovedLayoutStructureItems(
+			clonedLayoutStructureItem);
 
 		_layoutPageTemplateStructureService.
 			updateLayoutPageTemplateStructureData(
@@ -139,7 +138,7 @@ public class MoveStepperFragmentEntryLinkMVCActionCommand
 			_portal.getHttpServletRequest(actionRequest),
 			_portal.getHttpServletResponse(actionResponse),
 			_jsonFactory.createJSONObject(), layoutStructure,
-			layoutStructureItemChangesList, steeperFragmentEntryLink);
+			layoutStructureItemChanges, steeperFragmentEntryLink);
 	}
 
 	@Reference

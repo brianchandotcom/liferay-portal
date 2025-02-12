@@ -19,6 +19,7 @@ import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.Validator;
 
 /**
  * @author Alec Sloan
@@ -27,7 +28,7 @@ public class TestCustomCommerceContext extends BaseCommerceContext {
 
 	public TestCustomCommerceContext(
 		long companyId, long commerceChannelGroupId, long orderId,
-		long commerceAccountId,
+		long commerceAccountId, String currencyCode,
 		AccountEntryLocalService accountEntryLocalService,
 		AccountGroupLocalService accountGroupLocalService,
 		CommerceCatalogLocalService commerceCatalogLocalService,
@@ -46,9 +47,10 @@ public class TestCustomCommerceContext extends BaseCommerceContext {
 			commerceChannelAccountEntryRelLocalService,
 			commerceChannelLocalService, commerceCurrencyLocalService,
 			commerceOrderService, configurationProvider,
-			cpConfigurationListDiscovery);
+			cpConfigurationListDiscovery, currencyCode);
 
 		_companyId = companyId;
+		_currencyCode = currencyCode;
 		_commerceCurrencyLocalService = commerceCurrencyLocalService;
 	}
 
@@ -84,5 +86,6 @@ public class TestCustomCommerceContext extends BaseCommerceContext {
 	private CommerceCurrency _commerceCurrency;
 	private final CommerceCurrencyLocalService _commerceCurrencyLocalService;
 	private final long _companyId;
+	private final String _currencyCode;
 
 }

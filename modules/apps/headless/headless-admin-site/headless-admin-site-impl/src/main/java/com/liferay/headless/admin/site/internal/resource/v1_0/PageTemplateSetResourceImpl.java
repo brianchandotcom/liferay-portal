@@ -91,15 +91,16 @@ public class PageTemplateSetResourceImpl
 			transform(
 				_layoutPageTemplateCollectionService.
 					getLayoutPageTemplateCollections(
-						groupId,
+						groupId, search,
 						LayoutPageTemplateCollectionTypeConstants.BASIC,
 						pagination.getStartPosition(),
-						pagination.getEndPosition()),
+						pagination.getEndPosition(), null),
 				this::_toPageTemplateSet),
 			pagination,
 			_layoutPageTemplateCollectionService.
 				getLayoutPageTemplateCollectionsCount(
-					groupId, LayoutPageTemplateCollectionTypeConstants.BASIC));
+					groupId, search,
+					LayoutPageTemplateCollectionTypeConstants.BASIC));
 	}
 
 	@Override

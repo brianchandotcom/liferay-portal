@@ -162,9 +162,22 @@ public class InfoRequestFieldValuesProviderHelper {
 						infoField.getUniqueId(),
 						_getInfoFieldValue(
 							infoField, themeDisplay.getLocale(), false));
+
+					continue;
 				}
 
-				continue;
+				if ((infoField.getInfoFieldType() instanceof
+						MultiselectInfoFieldType) &&
+					ArrayUtil.contains(checkboxNames, infoField.getName())) {
+
+					infoFieldValues.put(
+						infoField.getUniqueId(),
+						_getInfoFieldValue(
+							infoField, themeDisplay.getLocale(),
+							Collections.emptyList()));
+
+					continue;
+				}
 			}
 
 			for (String value : regularParameters) {

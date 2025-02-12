@@ -54,6 +54,9 @@ public class MapDevelopToDeployScanCodePipeline extends BaseScanCodePipeline {
 		inputURLS.add(
 			JenkinsResultsParserUtil.getBuildProperty(
 				"scancode.config.file.url"));
+		inputURLS.add(
+			JenkinsResultsParserUtil.getBuildProperty(
+				"scancode.policies.file.url"));
 
 		String portalReleaseVersion =
 			JenkinsResultsParserUtil.getBuildParameter(

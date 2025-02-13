@@ -9,14 +9,18 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.captcha.recaptcha.ReCaptchaImpl;
 import com.liferay.captcha.simplecaptcha.SimpleCaptchaImpl;
 import com.liferay.configuration.admin.definition.ConfigurationFieldOptionsProvider;
+import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.captcha.Captcha;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
@@ -30,6 +34,7 @@ import org.junit.rules.TestRule;
 import org.junit.runner.RunWith;
 
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 
 /**
@@ -43,31 +48,52 @@ public class CaptchaConfigurationFieldOptionsProviderTest {
 	public static final TestRule testRule = new LiferayIntegrationTestRule();
 
 	@BeforeClass
-	public static void setUpClass() {
-		BundleContext bundleContext = SystemBundleUtil.getBundleContext();
+	public static void setUpClass() throws Exception {
+		_bundleContext = SystemBundleUtil.getBundleContext();
 
-		_serviceRegistration = bundleContext.registerService(
+		_serviceRegistration = _bundleContext.registerService(
 			Captcha.class, new TestCaptcha(),
 			HashMapDictionaryBuilder.<String, Object>put(
 				"captcha.engine.impl",
 				"com.liferay.captcha.configuration.admin.definition.test." +
 					"CaptchaConfigurationFieldOptionsProviderTest$TestCaptcha"
 			).build());
+
+		_pid = ConfigurationTestUtil.createFactoryConfiguration(
+			"com.liferay.captcha.configuration." +
+				"ClientExtensionCaptchaImplConfiguration",
+			HashMapDictionaryBuilder.<String, Object>put(
+				"captchaName", "ClientExtensionCaptcha"
+			).build());
 	}
 
 	@AfterClass
-	public static void tearDownClass() {
+	public static void tearDownClass() throws Exception {
 		_serviceRegistration.unregister();
+
+		ConfigurationTestUtil.deleteConfiguration(_pid);
 	}
 
 	@Test
-	public void testGetOptions() {
+	public void testGetOptions() throws Exception {
 		List<ConfigurationFieldOptionsProvider.Option> options =
 			_configurationFieldOptionsProvider.getOptions();
 
 		_assertContainsOption(new ReCaptchaImpl(), options);
 		_assertContainsOption(new SimpleCaptchaImpl(), options);
 		_assertContainsOption(new TestCaptcha(), options);
+
+		Collection<ServiceReference<Captcha>> serviceReferences =
+			_bundleContext.getServiceReferences(
+				Captcha.class,
+				"(component.name=com.liferay.captcha.internal.client." +
+					"extension.ClientExtensionCaptchaImpl)");
+
+		Iterator<ServiceReference<Captcha>> iterator =
+			serviceReferences.iterator();
+
+		_assertContainsOption(
+			_bundleContext.getService(iterator.next()), options);
 	}
 
 	public static class TestCaptcha extends SimpleCaptchaImpl {
@@ -92,7 +118,8 @@ public class CaptchaConfigurationFieldOptionsProviderTest {
 					if (Objects.equals(
 							captcha.getName(),
 							option.getLabel(LocaleUtil.getDefault())) &&
-						Objects.equals(clazz.getName(), option.getValue())) {
+						StringUtil.startsWith(
+							option.getValue(), clazz.getName())) {
 
 						return true;
 					}
@@ -101,6 +128,8 @@ public class CaptchaConfigurationFieldOptionsProviderTest {
 				}));
 	}
 
+	private static BundleContext _bundleContext;
+	private static String _pid;
 	private static ServiceRegistration<Captcha> _serviceRegistration;
 
 	@Inject(

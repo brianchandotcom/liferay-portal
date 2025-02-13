@@ -579,11 +579,8 @@ public class DB2DB extends BaseDB {
 
 					String nullable = template[template.length - 1];
 
-					boolean currentNullable = isNullable(
-						template[0], template[1]);
-
 					if (Objects.equals(nullable, "not null") &&
-						currentNullable) {
+						isNullable(template[0], template[1])) {
 
 						runSQL(
 							StringUtil.replace(
@@ -592,7 +589,7 @@ public class DB2DB extends BaseDB {
 								REWORD_TEMPLATE, template));
 					}
 					else if (!Objects.equals(nullable, "not null") &&
-							 !currentNullable) {
+							 !isNullable(template[0], template[1])) {
 
 						runSQL(
 							StringUtil.replace(

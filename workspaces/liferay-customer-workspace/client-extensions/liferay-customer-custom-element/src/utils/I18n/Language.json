@@ -192,6 +192,8 @@
 	"error-fetching-high-priority-contacts": "Error fetching high priority contacts",
 	"error-high-priority-contacts": "Error high priority contacts",
 	"event-name": "Event Name",
+	"event-status": "Event Status",
+	"event-type": "Event Type",
 	"exit-customer-portal": "Exit Customer Portal",
 	"exp-date": "Exp. Date",
 	"expiration-date": "Expiration Date",

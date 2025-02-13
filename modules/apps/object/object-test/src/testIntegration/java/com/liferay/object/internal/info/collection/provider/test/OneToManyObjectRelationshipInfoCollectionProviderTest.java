@@ -102,7 +102,7 @@ public class OneToManyObjectRelationshipInfoCollectionProviderTest {
 
 		ObjectEntry parentObjectEntry = _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), _group.getGroupId(),
-			_parentObjectDefinition.getObjectDefinitionId(),
+			_parentObjectDefinition.getObjectDefinitionId(), null,
 			HashMapBuilder.<String, Serializable>put(
 				"parentTextObjectFieldName", RandomTestUtil.randomString()
 			).build(),
@@ -150,7 +150,7 @@ public class OneToManyObjectRelationshipInfoCollectionProviderTest {
 
 		return _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), group.getGroupId(),
-			objectDefinition.getObjectDefinitionId(),
+			objectDefinition.getObjectDefinitionId(), null,
 			HashMapBuilder.<String, Serializable>put(
 				"childTextObjectFieldName", RandomTestUtil.randomString()
 			).put(

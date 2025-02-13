@@ -178,7 +178,7 @@ public class ObjectDefinitionGraphQLTest {
 
 		_parentObjectEntry = ObjectEntryLocalServiceUtil.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
-			_parentObjectDefinition.getObjectDefinitionId(),
+			_parentObjectDefinition.getObjectDefinitionId(), null,
 			HashMapBuilder.<String, Serializable>put(
 				_LIST_FIELD_NAME, _LIST_FIELD_VALUE_KEY
 			).put(
@@ -188,7 +188,7 @@ public class ObjectDefinitionGraphQLTest {
 
 		_childObjectEntry = ObjectEntryLocalServiceUtil.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
-			childObjectDefinition.getObjectDefinitionId(),
+			childObjectDefinition.getObjectDefinitionId(), null,
 			HashMapBuilder.<String, Serializable>put(
 				StringBundler.concat(
 					"r_", _RELATIONSHIP_NAME, "_",
@@ -502,7 +502,7 @@ public class ObjectDefinitionGraphQLTest {
 
 		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
-			_parentObjectDefinition.getObjectDefinitionId(),
+			_parentObjectDefinition.getObjectDefinitionId(), null,
 			HashMapBuilder.<String, Serializable>put(
 				_LIST_FIELD_NAME, _LIST_FIELD_VALUE_KEY
 			).put(

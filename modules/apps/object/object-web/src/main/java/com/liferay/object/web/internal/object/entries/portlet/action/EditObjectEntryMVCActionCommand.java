@@ -110,7 +110,7 @@ public class EditObjectEntryMVCActionCommand extends BaseMVCActionCommand {
 			if (objectEntryId == 0) {
 				_objectEntryService.addObjectEntry(
 					_getGroupId(actionRequest, objectDefinition),
-					objectDefinition.getObjectDefinitionId(),
+					objectDefinition.getObjectDefinitionId(), null,
 					_getValues(actionRequest),
 					ServiceContextFactory.getInstance(
 						objectDefinition.getClassName(), actionRequest));

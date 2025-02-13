@@ -67,8 +67,8 @@ public class RelatedModelFDSActionProviderTest {
 
 		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
-			objectDefinition.getObjectDefinitionId(), Collections.emptyMap(),
-			ServiceContextTestUtil.getServiceContext());
+			objectDefinition.getObjectDefinitionId(), null,
+			Collections.emptyMap(), ServiceContextTestUtil.getServiceContext());
 
 		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 

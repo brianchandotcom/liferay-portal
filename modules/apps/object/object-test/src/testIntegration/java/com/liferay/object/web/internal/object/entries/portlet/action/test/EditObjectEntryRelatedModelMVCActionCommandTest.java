@@ -89,8 +89,8 @@ public class EditObjectEntryRelatedModelMVCActionCommandTest {
 
 		ObjectEntry objectEntry1 = _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
-			objectDefinition1.getObjectDefinitionId(), Collections.emptyMap(),
-			ServiceContextTestUtil.getServiceContext());
+			objectDefinition1.getObjectDefinitionId(), null,
+			Collections.emptyMap(), ServiceContextTestUtil.getServiceContext());
 
 		mockLiferayPortletActionRequest.addParameter(
 			"objectEntryId", String.valueOf(objectEntry1.getObjectEntryId()));
@@ -109,8 +109,8 @@ public class EditObjectEntryRelatedModelMVCActionCommandTest {
 
 		ObjectEntry objectEntry2 = _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
-			objectDefinition2.getObjectDefinitionId(), Collections.emptyMap(),
-			ServiceContextTestUtil.getServiceContext());
+			objectDefinition2.getObjectDefinitionId(), null,
+			Collections.emptyMap(), ServiceContextTestUtil.getServiceContext());
 
 		mockLiferayPortletActionRequest.addParameter(
 			"objectRelationshipPrimaryKey2",

@@ -121,7 +121,8 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 		_validateSubmissionLimit(objectDefinitionId, getUser());
 
 		return objectEntryLocalService.addObjectEntry(
-			getUserId(), groupId, objectDefinitionId, values, serviceContext);
+			getUserId(), groupId, objectDefinitionId, defaultLanguageId, values,
+			serviceContext);
 	}
 
 	@Override

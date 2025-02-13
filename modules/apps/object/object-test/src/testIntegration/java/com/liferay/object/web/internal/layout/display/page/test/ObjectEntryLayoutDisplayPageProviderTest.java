@@ -66,7 +66,7 @@ public class ObjectEntryLayoutDisplayPageProviderTest {
 
 		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
-			objectDefinition1.getObjectDefinitionId(),
+			objectDefinition1.getObjectDefinitionId(), null,
 			HashMapBuilder.<String, Serializable>put(
 				objectFieldName, StringUtil.randomId()
 			).build(),

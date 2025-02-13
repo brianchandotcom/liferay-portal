@@ -190,7 +190,7 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 
 		ObjectEntry parentObjectEntry = _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), _group.getGroupId(),
-			_parentObjectDefinition.getObjectDefinitionId(),
+			_parentObjectDefinition.getObjectDefinitionId(), null,
 			HashMapBuilder.<String, Serializable>put(
 				"parentTextObjectFieldName", parentTextObjectFieldNameValue
 			).build(),
@@ -198,7 +198,7 @@ public class ObjectEntryInfoItemFieldValuesProviderTest {
 
 		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), _group.getGroupId(),
-			_childObjectDefinition.getObjectDefinitionId(),
+			_childObjectDefinition.getObjectDefinitionId(), null,
 			HashMapBuilder.<String, Serializable>put(
 				"r_oneToManyRelationshipName_" +
 					_parentObjectDefinition.getPKObjectFieldName(),

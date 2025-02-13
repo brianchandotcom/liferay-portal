@@ -1510,7 +1510,7 @@ public class ObjectFieldLocalServiceTest {
 
 		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
-			customObjectDefinition.getObjectDefinitionId(),
+			customObjectDefinition.getObjectDefinitionId(), null,
 			HashMapBuilder.<String, Serializable>put(
 				"upload",
 				() -> {
@@ -2496,7 +2496,7 @@ public class ObjectFieldLocalServiceTest {
 
 		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), 0, objectField.getObjectDefinitionId(),
-			values, ServiceContextTestUtil.getServiceContext());
+			null, values, ServiceContextTestUtil.getServiceContext());
 
 		values = objectEntry.getValues();
 

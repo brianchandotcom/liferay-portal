@@ -377,7 +377,7 @@ public class ObjectValidationRuleLocalServiceTest {
 
 		_objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
-			_objectDefinition.getObjectDefinitionId(),
+			_objectDefinition.getObjectDefinitionId(), null,
 			HashMapBuilder.<String, Serializable>put(
 				"textObjectField", RandomTestUtil.randomString()
 			).build(),
@@ -482,7 +482,7 @@ public class ObjectValidationRuleLocalServiceTest {
 
 			_objectEntryLocalService.addObjectEntry(
 				TestPropsValues.getUserId(), 0,
-				_objectDefinition.getObjectDefinitionId(),
+				_objectDefinition.getObjectDefinitionId(), null,
 				HashMapBuilder.<String, Serializable>put(
 					"textObjectField", RandomTestUtil.randomString()
 				).build(),
@@ -738,6 +738,7 @@ public class ObjectValidationRuleLocalServiceTest {
 		try {
 			_objectEntryLocalService.addObjectEntry(
 				user.getUserId(), 0, _objectDefinition.getObjectDefinitionId(),
+				null,
 				HashMapBuilder.<String, Serializable>put(
 					"textObjectField", RandomTestUtil.randomString()
 				).build(),

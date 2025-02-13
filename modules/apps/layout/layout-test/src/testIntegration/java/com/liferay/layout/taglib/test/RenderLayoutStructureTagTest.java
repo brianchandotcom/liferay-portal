@@ -754,7 +754,7 @@ public class RenderLayoutStructureTagTest {
 
 		_objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), _group.getGroupId(),
-			objectDefinition.getObjectDefinitionId(),
+			objectDefinition.getObjectDefinitionId(), null,
 			HashMapBuilder.<String, Serializable>put(
 				"myLocalizedText", myLocalizedTextENValue
 			).put(

@@ -70,7 +70,7 @@ public class SaveDataSetTableSectionsMVCResourceCommand
 				creationDataJSONArray.getJSONObject(i);
 
 			ObjectEntry objectEntry = _objectEntryService.addObjectEntry(
-				0, objectDefinition.getObjectDefinitionId(),
+				0, objectDefinition.getObjectDefinitionId(), null,
 				HashMapBuilder.<String, Serializable>put(
 					"fieldName",
 					String.valueOf(creationDataJSONObject.get("name"))

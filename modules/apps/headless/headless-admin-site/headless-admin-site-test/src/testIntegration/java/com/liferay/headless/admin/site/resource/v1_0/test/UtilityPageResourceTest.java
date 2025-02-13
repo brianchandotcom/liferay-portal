@@ -105,9 +105,13 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 	public void testGetSiteSiteByExternalReferenceCodeUtilityPage()
 		throws Exception {
 
+		UtilityPage utilityPage = randomUtilityPage();
+
+		utilityPage.setMarkedAsDefault(false);
+
 		UtilityPage postUtilityPage =
 			testPostSiteSiteByExternalReferenceCodeUtilityPage_addUtilityPage(
-				randomUtilityPage());
+				utilityPage);
 
 		UtilityPage getUtilityPage =
 			utilityPageResource.getSiteSiteByExternalReferenceCodeUtilityPage(
@@ -523,9 +527,12 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 
 		long totalCount = page.getTotalCount();
 
-		UtilityPage utilityPage =
-			testGetSiteSiteByExternalReferenceCodeUtilityPagesPage_addUtilityPage(
-				testGroup.getExternalReferenceCode(), randomUtilityPage());
+		UtilityPage utilityPage = randomUtilityPage();
+
+		utilityPage.setMarkedAsDefault(false);
+
+		testGetSiteSiteByExternalReferenceCodeUtilityPagesPage_addUtilityPage(
+			testGroup.getExternalReferenceCode(), utilityPage);
 
 		LayoutUtilityPageEntry layoutUtilityPageEntry =
 			_layoutUtilityPageEntryLocalService.

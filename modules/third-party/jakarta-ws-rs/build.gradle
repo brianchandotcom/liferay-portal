@@ -1,0 +1,3 @@
+dependencies {
+	compileOnly group: "jakarta.ws.rs", name: "jakarta.ws.rs-api", version: "2.1.6"
+}

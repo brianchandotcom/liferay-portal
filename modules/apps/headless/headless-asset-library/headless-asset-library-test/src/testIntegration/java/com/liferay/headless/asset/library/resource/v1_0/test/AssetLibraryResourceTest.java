@@ -38,10 +38,10 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 
 		// Nonexistent assetLibrary ID
 
-		long siteId = RandomTestUtil.randomLong();
+		long assetLibraryId = RandomTestUtil.randomLong();
 
 		try {
-			assetLibraryResource.deleteAssetLibrary(siteId);
+			assetLibraryResource.deleteAssetLibrary(assetLibraryId);
 
 			Assert.fail();
 		}
@@ -72,8 +72,26 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 
 	@Override
 	@Test
-	public void testPatchAssetLibrary() throws Exception {
-		super.testPatchAssetLibrary();
+	public void testPatchAssetLibraryBySite() throws Exception {
+		AssetLibrary postAssetLibrary =
+			testPatchAssetLibraryBySite_addAssetLibrary();
+
+		AssetLibrary randomPatchAssetLibrary = randomPatchAssetLibrary();
+
+		assetLibraryResource.patchAssetLibraryBySite(
+			postAssetLibrary.getSiteId(), randomPatchAssetLibrary);
+
+		AssetLibrary expectedPatchAssetLibrary = postAssetLibrary.clone();
+
+		BeanTestUtil.copyProperties(
+			randomPatchAssetLibrary, expectedPatchAssetLibrary);
+
+		AssetLibrary getAssetLibrary =
+			assetLibraryResource.getAssetLibraryBySite(
+				postAssetLibrary.getSiteId());
+
+		assertEquals(expectedPatchAssetLibrary, getAssetLibrary);
+		assertValid(getAssetLibrary);
 	}
 
 	@Override
@@ -219,6 +237,13 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 	}
 
 	@Override
+	protected AssetLibrary testDeleteAssetLibraryBySite_addAssetLibrary()
+		throws Exception {
+
+		return _addRandomAssetLibrary();
+	}
+
+	@Override
 	protected AssetLibrary testDeleteAssetLibraryLinkToSite_addAssetLibrary()
 		throws Exception {
 
@@ -241,7 +266,21 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 	}
 
 	@Override
+	protected AssetLibrary testGetAssetLibraryBySite_addAssetLibrary()
+		throws Exception {
+
+		return _addRandomAssetLibrary();
+	}
+
+	@Override
 	protected AssetLibrary testPatchAssetLibrary_addAssetLibrary()
+		throws Exception {
+
+		return _addRandomAssetLibrary();
+	}
+
+	@Override
+	protected AssetLibrary testPatchAssetLibraryBySite_addAssetLibrary()
 		throws Exception {
 
 		return _addRandomAssetLibrary();

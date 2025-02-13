@@ -490,6 +490,10 @@ public class CompanyLocalServiceTest {
 
 			String webId1 = RandomTestUtil.randomString() + "test.com";
 
+			if (!originalCompanyPredictableCompanyIdsEnabled) {
+				_counterLocalService.reset(Company.class.getName());
+			}
+
 			company1 = _companyLocalService.addCompany(
 				null, webId1, webId1, "test.com", 0, true, true, null, null,
 				null, null, null, null);

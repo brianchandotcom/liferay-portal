@@ -61,9 +61,9 @@ public class AttachmentDDMFormFieldTemplateContextContributorTest
 
 	@Test
 	public void testGetFileEntryProperties() throws Exception {
-		String contentUrl = RandomTestUtil.randomString();
+		String contentURL = RandomTestUtil.randomString();
 
-		_ddmFormField.setProperty("contentURL", contentUrl);
+		_ddmFormField.setProperty("contentURL", contentURL);
 
 		_ddmFormField.setProperty("localizedObjectField", true);
 
@@ -91,14 +91,14 @@ public class AttachmentDDMFormFieldTemplateContextContributorTest
 			JSONUtil.put(
 				"en_US",
 				JSONUtil.put(
-					"contentURL", contentUrl
+					"contentURL", contentURL
 				).put(
 					"title", String.valueOf(value1)
 				)
 			).put(
 				"pt_BR",
 				JSONUtil.put(
-					"contentURL", contentUrl
+					"contentURL", contentURL
 				).put(
 					"title", String.valueOf(value2)
 				)

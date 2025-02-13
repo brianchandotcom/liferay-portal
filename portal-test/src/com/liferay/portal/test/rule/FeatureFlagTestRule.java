@@ -5,11 +5,6 @@
 
 package com.liferay.portal.test.rule;
 
-import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
-import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagListener;
-import com.liferay.portal.kernel.model.CompanyConstants;
-import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.test.rule.AbstractTestRule;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.util.PropsUtil;
@@ -26,9 +21,8 @@ import org.junit.runner.Description;
 public class FeatureFlagTestRule
 	extends AbstractTestRule<Map<String, String>, Map<String, String>> {
 
-	public FeatureFlagTestRule(boolean enableFeatureFlagListeners) {
-		_enableFeatureFlagListeners = enableFeatureFlagListeners;
-	}
+	public static final FeatureFlagTestRule INSTANCE =
+		new FeatureFlagTestRule();
 
 	@Override
 	protected void afterClass(
@@ -62,28 +56,6 @@ public class FeatureFlagTestRule
 		return _updateFeatureFlags(description);
 	}
 
-	private void _invokeFeatureFlagListeners(
-		String featureFlagKey, boolean enabled) {
-
-		if (!_enableFeatureFlagListeners) {
-			return;
-		}
-
-		try (ServiceTrackerList<FeatureFlagListener> featureFlagListeners =
-				ServiceTrackerListFactory.open(
-					SystemBundleUtil.getBundleContext(),
-					FeatureFlagListener.class,
-					"(featureFlagKey=" + featureFlagKey + ")")) {
-
-			for (FeatureFlagListener featureFlagListener :
-					featureFlagListeners) {
-
-				featureFlagListener.onValue(
-					CompanyConstants.SYSTEM, featureFlagKey, enabled);
-			}
-		}
-	}
-
 	private void _restoreFeatureFlags(Map<String, String> previousValues) {
 		Map<String, String> values = new HashMap<>();
 
@@ -97,9 +69,6 @@ public class FeatureFlagTestRule
 			}
 
 			values.put(entry.getKey(), entry.getValue());
-
-			_invokeFeatureFlagListeners(
-				entry.getKey(), Boolean.parseBoolean(entry.getValue()));
 		}
 
 		PropsUtil.addProperties(
@@ -127,13 +96,9 @@ public class FeatureFlagTestRule
 				UnicodePropertiesBuilder.setProperty(
 					featureFlagKey, String.valueOf(featureFlags.enable())
 				).build());
-
-			_invokeFeatureFlagListeners(key, featureFlags.enable());
 		}
 
 		return previousValues;
 	}
-
-	private final boolean _enableFeatureFlagListeners;
 
 }

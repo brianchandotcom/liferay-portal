@@ -10,7 +10,6 @@ import com.liferay.data.engine.rest.resource.v2_0.DataDefinitionResource;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.journal.constants.JournalPortletKeys;
-import com.liferay.journal.web.internal.util.DataDefinitionUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
@@ -68,8 +67,6 @@ public class ImportAndOverrideDataDefinitionMVCActionCommand
 
 			DataDefinition dataDefinition = DataDefinition.toDTO(
 				FileUtil.read(uploadPortletRequest.getFile("jsonFile")));
-
-			DataDefinitionUtil.validateDefinitionFields(dataDefinition);
 
 			DDMStructure ddmStructure =
 				_ddmStructureLocalService.getDDMStructure(dataDefinitionId);

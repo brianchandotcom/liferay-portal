@@ -650,6 +650,20 @@
 		},
 		{
 			"properties": {
+				"captchaName": {
+					"type": "string"
+				},
+				"pid": {
+					"const": "com.liferay.captcha.configuration.ClientExtensionCaptchaImplConfiguration"
+				}
+			},
+			"required": [
+				"pid",
+				"captchaName"
+			]
+		},
+		{
+			"properties": {
 				"emailFromAddress": {
 					"default": "",
 					"title": "Email from Address",
@@ -4205,6 +4219,7 @@
 				"com.liferay.asset.categories.configuration.AssetCategoriesCompanyConfiguration",
 				"com.liferay.batch.engine.configuration.BatchEngineTaskCompanyConfiguration",
 				"com.liferay.captcha.configuration.CaptchaConfiguration",
+				"com.liferay.captcha.configuration.ClientExtensionCaptchaImplConfiguration",
 				"com.liferay.change.tracking.configuration.CTCollectionEmailConfiguration",
 				"com.liferay.change.tracking.configuration.CTConflictConfiguration",
 				"com.liferay.change.tracking.configuration.CTSettingsConfiguration",

@@ -33,8 +33,9 @@ public class PwdEncryptorException extends PortalException {
 
 		public MustSetLegacyAlgorithmProperty() {
 			super(
-				PropsKeys.PASSWORDS_ENCRYPTION_ALGORITHM_LEGACY +
-					" must be set");
+				"The property \"" +
+					PropsKeys.PASSWORDS_ENCRYPTION_ALGORITHM_LEGACY +
+						"\" must be set");
 		}
 
 	}

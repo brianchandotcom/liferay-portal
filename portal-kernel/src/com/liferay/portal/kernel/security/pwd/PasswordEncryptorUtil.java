@@ -207,9 +207,9 @@ public class PasswordEncryptorUtil {
 
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Property " +
+					"Property \"" +
 						PropsKeys.PASSWORDS_ENCRYPTION_ALGORITHM_LEGACY +
-							" is not set");
+							"\" is not set");
 			}
 
 			throw new PwdEncryptorException.MustSetLegacyAlgorithmProperty();

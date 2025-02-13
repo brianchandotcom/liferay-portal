@@ -12,7 +12,7 @@ MBCategory category = (MBCategory)request.getAttribute("edit_message.jsp-categor
 %>
 
 <c:if test="<%= MBResourcePermission.contains(permissionChecker, scopeGroupId, ActionKeys.BAN_USER) %>">
-	<div class="spam" style="margin: 10px;">
+	<div class="mt-8 spam">
 		<c:choose>
 			<c:when test="<%= spam %>">
 				<portlet:actionURL name="/message_boards/edit_message" var="notSpamURL">

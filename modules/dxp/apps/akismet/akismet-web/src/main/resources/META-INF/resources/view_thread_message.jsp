@@ -24,7 +24,7 @@ if (messageId > 0) {
 <a id="<portlet:namespace />message_<%= message.getMessageId() %>"></a>
 
 <clay:container-fluid>
-	<div class="spam" style="margin: 10px;">
+	<div class="mt-8 spam">
 		<portlet:actionURL name="markNotSpamMBMessages" var="markAsHamURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
 			<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
 			<portlet:param name="notSpamMBMessageIds" value="<%= String.valueOf(message.getMessageId()) %>" />

@@ -7,7 +7,7 @@ import {useModal} from '@clayui/core';
 import {useEffect, useState} from 'react';
 import {PAGE_ROUTER_TYPES} from '~/utils/constants';
 import i18n from '~/utils/I18n';
-import Table from '~/components/Table';
+import ActionTable from '~/components/ActionTable';
 import {getTicketAttachments} from '~/services/liferay/api';
 import useMyUserAccountByAccountExternalReferenceCode from '~/features/project/pages/Project/TeamMembers/components/TeamMembersTable/hooks/useMyUserAccountByAccountExternalReferenceCode';
 import DeleteTicketAttachmentModal from './components/DeleteTicketAttachmentModal/DeleteTicketAttachmentModal';
@@ -116,7 +116,7 @@ const TicketAttachmentsTable = ({
 			paginationConfig.totalCount > 0 &&
 			!loading ? (
 				<div className="cp-ticket-attachments-table-wrapper">
-					<Table
+					<ActionTable
 						className="border-0"
 						columns={getColumns()}
 						handleSortChange={handleSortChange}

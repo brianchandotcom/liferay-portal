@@ -5,7 +5,7 @@
 
 import ClayTable from '@clayui/table';
 
-import Skeleton from '../Skeleton';
+import {default as BaseSkeleton} from '../../../Skeleton';
 
 interface IProps {
 	hasCheckbox: boolean;
@@ -13,7 +13,7 @@ interface IProps {
 	totalItems: number;
 }
 
-const TableSkeleton: React.FC<IProps> = ({
+const Skeleton: React.FC<IProps> = ({
 	hasCheckbox,
 	totalColumns,
 	totalItems,
@@ -37,7 +37,7 @@ const TableSkeleton: React.FC<IProps> = ({
 							expanded
 							key={`table-${rowIndex}-${cellIndex}`}
 						>
-							<Skeleton className="w-100" height={24} />
+							<BaseSkeleton className="w-100" height={24} />
 						</ClayTable.Cell>
 					))}
 				</ClayTable.Row>
@@ -46,4 +46,4 @@ const TableSkeleton: React.FC<IProps> = ({
 	);
 };
 
-export default TableSkeleton;
+export default Skeleton;

@@ -8,7 +8,7 @@ import {useCallback, useEffect, useMemo, useState} from 'react';
 import {Navigate, useOutletContext} from 'react-router-dom';
 import {useGetMyUserAccount} from '~/services/liferay/graphql/user-accounts';
 import i18n from '~/utils/I18n';
-import Table from '~/components/Table';
+import ActionTable from '~/components/ActionTable';
 import {getOrRequestToken} from '~/services/liferay/security/auth/getOrRequestToken';
 import {useCustomerPortal} from '~/features/project/context';
 import useGetActivationKeysData from '../ActivationKeysTable/hooks/useGetActivationKeysData';
@@ -152,7 +152,7 @@ const DeactivateKeysTable = ({initialFilter, productName}) => {
 					</div>
 
 					{!!activationKeysByStatusPaginated.length && (
-						<Table
+						<ActionTable
 							checkboxConfig={{
 								checkboxesChecked: activationKeysIdChecked,
 								setCheckboxesChecked:

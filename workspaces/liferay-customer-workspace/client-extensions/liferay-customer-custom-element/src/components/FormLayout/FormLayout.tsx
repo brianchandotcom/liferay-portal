@@ -6,8 +6,8 @@
 import classNames from 'classnames';
 import React from 'react';
 
-import FormLayoutFooter from './FormLayoutFooter';
-import FormLayoutHeader from './FormLayoutHeader';
+import FormLayoutFooter from './components/FormLayoutFooter';
+import FormLayoutHeader from './components/FormLayoutHeader';
 
 interface IProps {
 	children: React.ReactNode;

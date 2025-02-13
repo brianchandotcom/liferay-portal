@@ -24,19 +24,7 @@ interface IProps {
 }
 
 const BETable = ({columns, rows}: IProps) => {
-	return (
-		<div className="be-table-wrapper">
-			{rows.length ? (
-				<Table className="be" columns={columns} rows={rows} />
-			) : (
-				<div className="py-2">
-					{i18n.translate(
-						'the-requested-search-does-not-exist-in-our-database-please-try-again-with-different-criteria'
-					)}
-				</div>
-			)}
-		</div>
-	);
+	return <Table className="be" columns={columns} rows={rows} />;
 };
 
 export default BETable;

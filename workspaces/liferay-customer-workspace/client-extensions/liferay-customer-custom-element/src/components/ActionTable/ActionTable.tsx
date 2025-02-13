@@ -12,7 +12,7 @@ import {FilterIcon} from '../../assets/FilterIcon';
 import TablePagination from './components/Pagination';
 import TableSkeleton from './components/Skeleton/Skeleton';
 
-import './Table.css';
+import './ActionTable.css';
 
 interface IColumn {
 	accessor: string;

@@ -331,6 +331,8 @@ public class PortalHotfixReleasePortalTopLevelBuild
 				return null;
 			}
 
+			portalBranchUsername = "liferay";
+			
 			Matcher patcherPortalVersionDXPMatcher =
 				_patcherPortalVersionDXPPattern.matcher(patcherPortalVersion);
 
@@ -372,7 +374,6 @@ public class PortalHotfixReleasePortalTopLevelBuild
 				}
 			}
 
-			portalBranchUsername = "liferay";
 			portalBranchName = sb.toString();
 		}
 

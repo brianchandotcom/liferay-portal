@@ -7,7 +7,6 @@ package com.liferay.frontend.data.set.internal.serializer;
 
 import com.liferay.frontend.data.set.SystemFDSEntry;
 import com.liferay.frontend.data.set.action.FDSBulkActions;
-import com.liferay.frontend.data.set.action.FDSBulkActionsRegistry;
 import com.liferay.frontend.data.set.action.FDSCreationMenu;
 import com.liferay.frontend.data.set.action.FDSCreationMenuRegistry;
 import com.liferay.frontend.data.set.action.FDSItemsActions;
@@ -232,15 +231,8 @@ public class SystemFDSSerializerTest {
 					ServiceTrackerCustomizerFactory.
 						<FDSBulkActions>serviceWrapper(_bundleContext));
 
-		FDSBulkActionsRegistry fdsBulkActionsRegistry =
-			new FDSBulkActionsRegistryImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			fdsBulkActionsRegistry, "_serviceTrackerMap", serviceTrackerMap);
-
-		ReflectionTestUtil.setFieldValue(
-			_systemFDSSerializer, "_fdsBulkActionsRegistry",
-			fdsBulkActionsRegistry);
+		_systemFDSSerializer.fdsBulkActionsRegistry =
+			new FDSBulkActionsRegistryImpl(serviceTrackerMap);
 
 		// Different bulk actions
 

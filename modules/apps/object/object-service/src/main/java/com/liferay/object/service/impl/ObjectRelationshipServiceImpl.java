@@ -77,8 +77,9 @@ public class ObjectRelationshipServiceImpl
 				objectRelationship.getObjectDefinitionId2());
 
 		modelResourcePermission.check(
-			getPermissionChecker(),
-			_objectEntryService.getObjectEntry(primaryKey2), ActionKeys.UPDATE);
+			getPermissionChecker(), primaryKey2, ActionKeys.UPDATE);
+		modelResourcePermission.check(
+			getPermissionChecker(), primaryKey2, ActionKeys.VIEW);
 
 		if (Objects.equals(
 				objectRelationship.getType(),
@@ -89,9 +90,9 @@ public class ObjectRelationshipServiceImpl
 					objectRelationship.getObjectDefinitionId1());
 
 			modelResourcePermission.check(
-				getPermissionChecker(),
-				_objectEntryService.getObjectEntry(primaryKey1),
-				ActionKeys.UPDATE);
+				getPermissionChecker(), primaryKey1, ActionKeys.UPDATE);
+			modelResourcePermission.check(
+				getPermissionChecker(), primaryKey1, ActionKeys.VIEW);
 		}
 
 		objectRelationshipLocalService.addObjectRelationshipMappingTableValues(

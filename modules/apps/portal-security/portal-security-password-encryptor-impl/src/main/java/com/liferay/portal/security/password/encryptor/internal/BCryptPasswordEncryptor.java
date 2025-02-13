@@ -61,6 +61,12 @@ public class BCryptPasswordEncryptor implements PasswordEncryptor {
 	public String getEncryptedPasswordAlgorithmSettings(
 		String encryptedPassword) {
 
+		int index = encryptedPassword.indexOf(CharPool.CLOSE_CURLY_BRACE);
+
+		if (index < 0) {
+			return null;
+		}
+
 		String rounds = String.valueOf(_ROUNDS);
 
 		Matcher matcher = _encryptedPasswordPattern.matcher(encryptedPassword);
@@ -70,9 +76,8 @@ public class BCryptPasswordEncryptor implements PasswordEncryptor {
 		}
 
 		return StringBundler.concat(
-			encryptedPassword.substring(
-				1, encryptedPassword.indexOf(CharPool.CLOSE_CURLY_BRACE)),
-			CharPool.FORWARD_SLASH, rounds);
+			encryptedPassword.substring(1, index), CharPool.FORWARD_SLASH,
+			rounds);
 	}
 
 	private static final int _ROUNDS = 10;

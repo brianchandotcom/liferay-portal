@@ -93,6 +93,10 @@ public class PBKDF2PasswordEncryptor implements PasswordEncryptor {
 		try {
 			int index = encryptedPassword.indexOf(CharPool.CLOSE_CURLY_BRACE);
 
+			if (index < 0) {
+				return null;
+			}
+
 			PBKDF2EncryptionConfiguration pbkdf2EncryptionConfiguration =
 				new PBKDF2EncryptionConfiguration();
 

@@ -90,24 +90,37 @@ public class LearnRestController extends BaseRestController {
 			@RequestBody Map<String, Object> map)
 		throws Exception {
 
-		return ResponseEntity.ok(
-			_getQuizResult(
-				map,
-				new JSONObject(
-					get(
-						_getAuthorization(),
-						StringBundler.concat(
-							"/o/c/quizes/", quizId,
-							"?&fields=id,r_quiz_c_moduleId,durationMinutes,",
-							"passingScore,isKnowledgeCheck,quizQuestions.id,",
-							"quizQuestions.position,quizQuestions.question,",
-							"quizQuestions.questionType,quizQuestions.",
-							"questionTotalScore,quizQuestions.quizAnswers,",
-							"quizQuestions.quizAnswers.id,quizQuestions.",
-							"quizAnswers.position,quizQuestions.quizAnswers.",
-							"answer,quizQuestions.quizAnswers.score&",
-							"nestedFields=quizQuestions,quizAnswers&",
-							"nestedFieldsDepth=2&pageSize=500")))));
+		Map<String, Object> quizResultMap = _getQuizResult(
+			map,
+			new JSONObject(
+				get(
+					_getAuthorization(),
+					StringBundler.concat(
+						"/o/c/quizes/", quizId,
+						"?&fields=id,r_quiz_c_moduleId,durationMinutes,",
+						"passingScore,isKnowledgeCheck,quizQuestions.id,",
+						"quizQuestions.position,quizQuestions.question,",
+						"quizQuestions.questionType,quizQuestions.",
+						"questionTotalScore,quizQuestions.quizAnswers,",
+						"quizQuestions.quizAnswers.id,quizQuestions.",
+						"quizAnswers.position,quizQuestions.quizAnswers.",
+						"answer,quizQuestions.quizAnswers.score&",
+						"nestedFields=quizQuestions,quizAnswers&",
+						"nestedFieldsDepth=2&pageSize=500"))));
+
+		if (!GetterUtil.getBoolean(quizResultMap.get("isKnowledgeCheck")) &&
+			GetterUtil.getBoolean(quizResultMap.get("passed"))) {
+
+			_postUserBadge(
+				quizId,
+				GetterUtil.getLong(
+					jwt.getClaims(
+					).get(
+						"sub"
+					)));
+		}
+
+		return ResponseEntity.ok(quizResultMap);
 	}
 
 	private String _getAuthorization() {
@@ -161,6 +174,8 @@ public class LearnRestController extends BaseRestController {
 			"quizQuestions");
 
 		Map<String, Object> map = HashMapBuilder.<String, Object>put(
+			"isKnowledgeCheck", false
+		).put(
 			"passingScore", quizJSONObject.getInt("passingScore")
 		).put(
 			"selectedAnswers", answersMap
@@ -229,6 +244,7 @@ public class LearnRestController extends BaseRestController {
 		}
 
 		if (quizJSONObject.getBoolean("isKnowledgeCheck")) {
+			map.put("isKnowledgeCheck", true);
 			map.put("scoreSheet", scoreSheetJSONArray.toList());
 		}
 
@@ -240,6 +256,46 @@ public class LearnRestController extends BaseRestController {
 		map.put("totalScore", Math.round((achievedScore / totalScore) * 100));
 
 		return map;
+	}
+
+	private void _postUserBadge(long quizId, long userId) {
+		JSONArray jsonArray = new JSONObject(
+			get(
+				_getAuthorization(),
+				"/o/c/quizes/" + quizId + "/quizBadge?fields=id")
+		).getJSONArray(
+			"items"
+		);
+
+		if (jsonArray.isEmpty()) {
+			return;
+		}
+
+		JSONObject badgeJSONObject = jsonArray.getJSONObject(0);
+
+		JSONObject userBadgeJSONObject = new JSONObject(
+			get(
+				_getAuthorization(),
+				StringBundler.concat(
+					"/o/c/userbadges/scopes/", _siteGroupId,
+					"/?filter=userId eq '", userId, "' and badgeId eq ",
+					badgeJSONObject.getLong("id"))));
+
+		if (userBadgeJSONObject.getInt("totalCount") > 0) {
+			return;
+		}
+
+		post(
+			_getAuthorization(),
+			new JSONObject(
+			).put(
+				"badgeId", badgeJSONObject.getLong("id")
+			).put(
+				"quizId", quizId
+			).put(
+				"r_userBadges_userId", userId
+			).toString(),
+			"/o/c/userbadges/scopes/" + _siteGroupId);
 	}
 
 	private Map<String, Object> _toMap(Object object) {

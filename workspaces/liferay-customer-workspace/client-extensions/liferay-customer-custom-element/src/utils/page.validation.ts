@@ -4,8 +4,8 @@
  */
 
 import {ApolloClient} from '@apollo/client';
-import IUserAccount from '~/interfaces/userAccount';
 import {getAccountFlags} from '~/services/liferay/graphql/queries';
+import {IUserAccount} from '~/utils/types';
 
 import {API_BASE_URL, PAGE_ROUTER_TYPES, ROUTE_TYPES} from './constants';
 import getLiferaySiteName from './getLiferaySiteName';

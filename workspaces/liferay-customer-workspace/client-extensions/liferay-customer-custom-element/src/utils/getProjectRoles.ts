@@ -4,9 +4,8 @@
  */
 
 import {ApolloClient} from '@apollo/client';
-import IAccountRole from '~/interfaces/accountRole';
-import IProject from '~/interfaces/project';
 import {getAccountRoles} from '~/services/liferay/graphql/queries';
+import {IAccountRole, IProject} from '~/utils/types';
 
 import {ROLE_TYPES, SLA_TYPES} from './constants';
 

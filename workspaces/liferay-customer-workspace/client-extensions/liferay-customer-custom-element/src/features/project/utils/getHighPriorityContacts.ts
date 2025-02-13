@@ -4,8 +4,6 @@
  */
 
 import {ApolloClient, FetchResult} from '@apollo/client';
-import IAccountRole from '~/interfaces/accountRole';
-import IProject from '~/interfaces/project';
 import {
 	createAccountUserRoles,
 	deleteAccountUserRoles,
@@ -16,6 +14,7 @@ import {
 	deleteContactRoleNameByEmailByProject,
 } from '~/services/liferay/rest/raysource/LicenseKeys';
 import i18n from '~/utils/I18n';
+import {IAccountRole, IProject} from '~/utils/types';
 
 interface IContact {
 	category: {role: string};

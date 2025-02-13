@@ -7,11 +7,11 @@ import ClayCard from '@clayui/card';
 import classNames from 'classnames';
 import {MouseEventHandler, memo} from 'react';
 import {StatusTag} from '~/components';
-import IKoroneikiAccount from '~/interfaces/koroneikiAccount';
 import i18n from '~/utils/I18n';
 import {FORMAT_DATE_TYPES, SLA_STATUS_TYPES} from '~/utils/constants';
 import getDateCustomFormat from '~/utils/getDateCustomFormat';
 import getKebabCase from '~/utils/getKebabCase';
+import {IKoroneikiAccount} from '~/utils/types';
 
 import './ProjectCard.css';
 

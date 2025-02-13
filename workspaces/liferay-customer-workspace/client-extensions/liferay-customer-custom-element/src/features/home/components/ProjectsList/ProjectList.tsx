@@ -7,10 +7,10 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import classNames from 'classnames';
 import {useEffect} from 'react';
 import useIntersectionObserver from '~/hooks/useIntersectionObserver';
-import IKoroneikiAccount from '~/interfaces/koroneikiAccount';
 import {Liferay} from '~/services/liferay';
 import i18n from '~/utils/I18n';
 import routerPath from '~/utils/routerPath';
+import {IKoroneikiAccount} from '~/utils/types';
 
 import ProjectCard from './components/ProjectCard';
 

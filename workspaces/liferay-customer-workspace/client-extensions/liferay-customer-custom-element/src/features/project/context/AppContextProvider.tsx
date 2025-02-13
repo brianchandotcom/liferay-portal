@@ -5,10 +5,6 @@
 
 import {createContext, useContext, useEffect, useMemo, useReducer} from 'react';
 import {useAppPropertiesContext} from '~/contexts/AppPropertiesContext';
-import IAccountBrief from '~/interfaces/accountBrief';
-import IAccountSubscriptionGroup from '~/interfaces/accountSubscriptionGroup';
-import IProject from '~/interfaces/project';
-import IUserAccount from '~/interfaces/userAccount';
 import {Liferay} from '~/services/liferay';
 import {
 	getAccountByExternalReferenceCode,
@@ -21,6 +17,12 @@ import {ROLE_TYPES, ROUTE_TYPES} from '~/utils/constants';
 import {getAccountKey} from '~/utils/getAccountKey';
 import {isValidPage} from '~/utils/page.validation';
 import routerPath from '~/utils/routerPath';
+import {
+	IAccountBrief,
+	IAccountSubscriptionGroup,
+	IProject,
+	IUserAccount,
+} from '~/utils/types';
 
 import reducer, {ActionPayload, IAction, IState, actionTypes} from './reducer';
 

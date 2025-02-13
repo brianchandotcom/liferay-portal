@@ -3,9 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import IAccountSubscriptionGroup from '~/interfaces/accountSubscriptionGroup';
-import IProject from '~/interfaces/project';
-import IUserAccount from '~/interfaces/userAccount';
+import {IAccountSubscriptionGroup, IProject, IUserAccount} from '~/utils/types';
 
 export const actionTypes = {
 	UPDATE_PAGE: 'UPDATE_PAGE',

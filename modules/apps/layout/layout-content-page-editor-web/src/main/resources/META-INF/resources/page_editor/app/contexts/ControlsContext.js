@@ -189,6 +189,13 @@ const reducer = (state, action) => {
 
 			let startLimitId = [...state.activeItemIds].pop();
 
+			if (
+				itemType === ITEM_TYPES.editable &&
+				state.activeItemIds.length
+			) {
+				nextItemType = ITEM_TYPES.layoutDataItem;
+			}
+
 			if (state.rangeLimitIds.end) {
 
 				// If a range selection has just been made, and another range

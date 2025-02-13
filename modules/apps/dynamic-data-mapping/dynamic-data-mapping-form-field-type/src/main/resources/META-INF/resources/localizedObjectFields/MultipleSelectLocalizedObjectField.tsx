@@ -4,9 +4,6 @@
  */
 
 import {ClayInput} from '@clayui/form';
-
-// @ts-ignore
-
 import React, {useEffect, useRef, useState} from 'react';
 
 import {MultipleSelectBase} from '../Select/MultipleSelectBase';

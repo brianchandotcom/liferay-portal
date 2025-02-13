@@ -60,7 +60,7 @@ public class DBColumnSizeUpgradeProcess extends UpgradeProcess {
 		String catalog = dbInspector.getCatalog();
 		String schema = dbInspector.getSchema();
 
-		List<String> tableColumns = new ArrayList<>();
+		List<String> tableColumnNames = new ArrayList<>();
 
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			ResultSet tableResultSet = databaseMetaData.getTables(
@@ -85,19 +85,18 @@ public class DBColumnSizeUpgradeProcess extends UpgradeProcess {
 								_oldTypeName,
 								columnResultSet.getString("TYPE_NAME"))) {
 
-							String columnName = columnResultSet.getString(
-								"COLUMN_NAME");
-
-							tableColumns.add(
-								tableName + StringPool.PERIOD + columnName);
+							tableColumnNames.add(
+								tableName + StringPool.PERIOD +
+									columnResultSet.getString("COLUMN_NAME"));
 						}
 					}
 				}
 			}
 		}
 
-		for (String tableColumn : tableColumns) {
-			String[] splits = StringUtil.split(tableColumn, StringPool.PERIOD);
+		for (String tableColumnName : tableColumnNames) {
+			String[] splits = StringUtil.split(
+				tableColumnName, StringPool.PERIOD);
 
 			try {
 				alterColumnType(splits[0], splits[1], _newColumnType);

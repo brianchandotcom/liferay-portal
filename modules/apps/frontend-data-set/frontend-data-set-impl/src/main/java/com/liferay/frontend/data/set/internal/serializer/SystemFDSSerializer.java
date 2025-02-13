@@ -87,7 +87,7 @@ public class SystemFDSSerializer
 		String fdsName, HttpServletRequest httpServletRequest) {
 
 		FDSCreationMenu fdsCreationMenu =
-			_fdsCreationMenuRegistry.getFDSCreationMenu(fdsName);
+			fdsCreationMenuRegistry.getFDSCreationMenu(fdsName);
 
 		if (fdsCreationMenu == null) {
 			return new CreationMenu();
@@ -136,6 +136,9 @@ public class SystemFDSSerializer
 
 	@Reference
 	protected FDSBulkActionsRegistry fdsBulkActionsRegistry;
+
+	@Reference
+	protected FDSCreationMenuRegistry fdsCreationMenuRegistry;
 
 	@Reference
 	protected SystemFDSEntryRegistry systemFDSEntryRegistry;
@@ -188,9 +191,6 @@ public class SystemFDSSerializer
 			jsonArray.put(jsonObject);
 		}
 	}
-
-	@Reference
-	private FDSCreationMenuRegistry _fdsCreationMenuRegistry;
 
 	@Reference
 	private FDSFilterContextContributorRegistry

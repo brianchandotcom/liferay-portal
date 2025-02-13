@@ -332,12 +332,11 @@ public class PortalHotfixReleasePortalTopLevelBuild
 			}
 
 			portalBranchUsername = "liferay";
-			
+
 			Matcher patcherPortalVersionDXPMatcher =
 				_patcherPortalVersionDXPPattern.matcher(patcherPortalVersion);
 
 			if (patcherPortalVersionDXPMatcher.find()) {
-
 				StringBuilder sb = new StringBuilder();
 
 				sb.append("https://github.com/");
@@ -348,7 +347,7 @@ public class PortalHotfixReleasePortalTopLevelBuild
 				sb.append(patcherPortalVersion);
 
 				return sb.toString();
-			}	
+			}
 
 			Matcher patcherPortalVersionMatcher =
 				_patcherPortalVersionPattern.find(patcherPortalVersion);

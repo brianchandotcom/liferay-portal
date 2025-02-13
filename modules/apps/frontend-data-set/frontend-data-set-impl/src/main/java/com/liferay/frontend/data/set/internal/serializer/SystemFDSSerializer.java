@@ -107,7 +107,7 @@ public class SystemFDSSerializer
 
 		_serializeFilters(fdsFilters, jsonArray, locale);
 		_serializeFilters(
-			_fdsFilterRegistry.getFDSFilters(fdsName), jsonArray, locale);
+			fdsFilterRegistry.getFDSFilters(fdsName), jsonArray, locale);
 
 		return jsonArray;
 	}
@@ -141,6 +141,13 @@ public class SystemFDSSerializer
 	protected FDSCreationMenuRegistry fdsCreationMenuRegistry;
 
 	@Reference
+	protected FDSFilterContextContributorRegistry
+		fdsFilterContextContributorRegistry;
+
+	@Reference
+	protected FDSFilterRegistry fdsFilterRegistry;
+
+	@Reference
 	protected SystemFDSEntryRegistry systemFDSEntryRegistry;
 
 	private void _serializeFilters(
@@ -167,7 +174,7 @@ public class SystemFDSSerializer
 			);
 
 			List<FDSFilterContextContributor> fdsFilterContextContributors =
-				_fdsFilterContextContributorRegistry.
+				fdsFilterContextContributorRegistry.
 					getFDSFilterContextContributors(fdsFilter.getType());
 
 			for (FDSFilterContextContributor fdsFilterContextContributor :
@@ -191,13 +198,6 @@ public class SystemFDSSerializer
 			jsonArray.put(jsonObject);
 		}
 	}
-
-	@Reference
-	private FDSFilterContextContributorRegistry
-		_fdsFilterContextContributorRegistry;
-
-	@Reference
-	private FDSFilterRegistry _fdsFilterRegistry;
 
 	@Reference
 	private FDSItemsActionsRegistry _fdsItemsActionsRegistry;

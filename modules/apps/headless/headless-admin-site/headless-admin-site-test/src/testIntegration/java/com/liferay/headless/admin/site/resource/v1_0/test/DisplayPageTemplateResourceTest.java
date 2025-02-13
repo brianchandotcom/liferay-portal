@@ -15,7 +15,6 @@ import com.liferay.headless.admin.site.client.dto.v1_0.DisplayPageTemplateFolder
 import com.liferay.headless.admin.site.client.dto.v1_0.FriendlyUrlHistory;
 import com.liferay.headless.admin.site.client.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.site.client.pagination.Page;
-import com.liferay.headless.admin.site.client.pagination.Pagination;
 import com.liferay.headless.admin.site.client.problem.Problem;
 import com.liferay.headless.admin.site.client.resource.v1_0.DisplayPageTemplateResource;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.LayoutPageTemplateEntryTestUtil;
@@ -744,7 +743,7 @@ public class DisplayPageTemplateResourceTest
 			displayPageTemplateResource.
 				getSiteSiteByExternalReferenceCodeDisplayPageTemplatesPage(
 					testGroup.getExternalReferenceCode(), null, null, null,
-					Pagination.of(1, 10), null);
+					null, null);
 
 		long totalCount = page.getTotalCount();
 
@@ -771,7 +770,7 @@ public class DisplayPageTemplateResourceTest
 			displayPageTemplateResource.
 				getSiteSiteByExternalReferenceCodeDisplayPageTemplatesPage(
 					testGroup.getExternalReferenceCode(), null, null, null,
-					Pagination.of(1, 10), null);
+					null, null);
 
 		Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
@@ -788,7 +787,7 @@ public class DisplayPageTemplateResourceTest
 			displayPageTemplateResource.
 				getSiteSiteByExternalReferenceCodeDisplayPageTemplatesPage(
 					testGroup.getExternalReferenceCode(), null, null, null,
-					Pagination.of(1, 10), null);
+					null, null);
 
 		Assert.assertEquals(totalCount + 1, page.getTotalCount());
 

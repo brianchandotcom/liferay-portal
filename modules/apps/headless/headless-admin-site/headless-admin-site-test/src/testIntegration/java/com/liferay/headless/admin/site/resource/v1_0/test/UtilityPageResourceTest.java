@@ -9,7 +9,6 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.admin.site.client.dto.v1_0.FriendlyUrlHistory;
 import com.liferay.headless.admin.site.client.dto.v1_0.UtilityPage;
 import com.liferay.headless.admin.site.client.pagination.Page;
-import com.liferay.headless.admin.site.client.pagination.Pagination;
 import com.liferay.headless.admin.site.client.problem.Problem;
 import com.liferay.headless.admin.site.client.resource.v1_0.UtilityPageResource;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.LayoutUtilityPageEntryTestUtil;
@@ -523,7 +522,7 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 			utilityPageResource.
 				getSiteSiteByExternalReferenceCodeUtilityPagesPage(
 					testGroup.getExternalReferenceCode(), null, null, null,
-					Pagination.of(1, 10), null);
+					null, null);
 
 		long totalCount = page.getTotalCount();
 
@@ -551,7 +550,7 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 			utilityPageResource.
 				getSiteSiteByExternalReferenceCodeUtilityPagesPage(
 					testGroup.getExternalReferenceCode(), null, null, null,
-					Pagination.of(1, 10), null);
+					null, null);
 
 		Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
@@ -568,7 +567,7 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 			utilityPageResource.
 				getSiteSiteByExternalReferenceCodeUtilityPagesPage(
 					testGroup.getExternalReferenceCode(), null, null, null,
-					Pagination.of(1, 10), null);
+					null, null);
 
 		Assert.assertEquals(totalCount + 1, page.getTotalCount());
 

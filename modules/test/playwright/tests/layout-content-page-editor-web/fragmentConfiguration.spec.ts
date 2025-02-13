@@ -1171,15 +1171,15 @@ test.describe('General Configuration', () => {
 
 			await pageEditorPage.goToConfigurationTab('General');
 
-			await fillAndClickOutside(page, page.getByLabel('Number'), '0');
+			await page.getByLabel('Number').fill('0');
 
-			expect(
+			await expect(
 				page.getByText('You have entered invalid data.')
 			).toBeVisible();
 
-			await fillAndClickOutside(page, page.getByLabel('Number'), '11');
+			await page.getByLabel('Number').fill('11');
 
-			expect(
+			await expect(
 				page.getByText('You have entered invalid data.')
 			).toBeVisible();
 

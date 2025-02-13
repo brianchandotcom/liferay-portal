@@ -14,6 +14,7 @@ import {masterPagesPagesTest} from '../../fixtures/masterPagesPagesTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {pageManagementSiteTest} from '../../fixtures/pageManagementSiteTest';
 import {productMenuPageTest} from '../../fixtures/productMenuPageTest';
+import {clickAndExpectToBeHidden} from '../../utils/clickAndExpectToBeHidden';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../utils/getRandomString';
 import {performLogout} from '../../utils/performLogin';
@@ -154,6 +155,16 @@ test(
 		).toBeVisible();
 
 		await expect(dropdown.getByText('Permissions')).toBeVisible();
+
+		await clickAndExpectToBeHidden({
+			target: dropdown.getByText('Permissions'),
+			trigger: page.locator(
+				'.page-editor__page-structure__item-configuration-tab',
+				{
+					hasText: 'General',
+				}
+			),
+		});
 
 		// Check widget configuration is not accessible from overlay
 

@@ -475,25 +475,25 @@ public class FragmentEntryInputTemplateNodeContextHelperTest {
 			).put(
 				"myLocalizedAttachment_i18n",
 				HashMapBuilder.put(
-					LocaleUtil.toLanguageId(LocaleUtil.US),
-					enDLFileEntry.getFileEntryId()
-				).put(
 					LocaleUtil.toLanguageId(LocaleUtil.SPAIN),
 					esDLFileEntry.getFileEntryId()
+				).put(
+					LocaleUtil.toLanguageId(LocaleUtil.US),
+					enDLFileEntry.getFileEntryId()
 				).build()
 			).put(
 				"myLocalizedDate_i18n",
 				HashMapBuilder.put(
-					LocaleUtil.toLanguageId(LocaleUtil.US), enDate
-				).put(
 					LocaleUtil.toLanguageId(LocaleUtil.SPAIN), esDate
+				).put(
+					LocaleUtil.toLanguageId(LocaleUtil.US), enDate
 				).build()
 			).put(
 				"myLocalizedDateTime_i18n",
 				HashMapBuilder.put(
-					LocaleUtil.toLanguageId(LocaleUtil.US), enTimestamp
-				).put(
 					LocaleUtil.toLanguageId(LocaleUtil.SPAIN), esTimestamp
+				).put(
+					LocaleUtil.toLanguageId(LocaleUtil.US), enTimestamp
 				).build()
 			).build(),
 			ServiceContextTestUtil.getServiceContext());

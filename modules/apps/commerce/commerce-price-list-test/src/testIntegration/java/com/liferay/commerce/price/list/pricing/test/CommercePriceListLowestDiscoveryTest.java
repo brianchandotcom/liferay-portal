@@ -73,7 +73,9 @@ public class CommercePriceListLowestDiscoveryTest {
 
 		_user = UserTestUtil.addUser();
 
-		_commerceCurrency = CommerceCurrencyTestUtil.addCommerceCurrency(
+		_commerceCurrency1 = CommerceCurrencyTestUtil.addCommerceCurrency(
+			_group.getCompanyId());
+		_commerceCurrency2 = CommerceCurrencyTestUtil.addCommerceCurrency(
 			_group.getCompanyId());
 
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
@@ -100,16 +102,79 @@ public class CommercePriceListLowestDiscoveryTest {
 
 		_commerceCatalog = CommerceTestUtil.addCommerceCatalog(
 			_group.getCompanyId(), _group.getGroupId(), _user.getUserId(),
-			_commerceCurrency.getCode());
+			_commerceCurrency1.getCode());
 
 		_commerceChannel = CommerceTestUtil.addCommerceChannel(
-			_group.getGroupId(), _commerceCurrency.getCode());
+			_group.getGroupId(), _commerceCurrency1.getCode());
 	}
 
 	@After
 	public void tearDown() throws Exception {
 		_commercePriceListLocalService.deleteCommercePriceLists(
 			_group.getCompanyId());
+	}
+
+	@Test
+	public void testRetrieveCorrectPriceListByCurrency() throws Exception {
+		frutillaRule.scenario(
+			"When multiple price list are defined for the same catalog the " +
+				"price list that provides the correct currency should be taken"
+		).given(
+			"A catalog with multiple price lists and one product"
+		).when(
+			"The price list is discovered"
+		).then(
+			"The price list that gives the correct currency is retrieved"
+		);
+
+		CPInstance cpInstance = CPTestUtil.addCPInstanceFromCatalog(
+			_commerceCatalog.getGroupId());
+
+		CPDefinition cpDefinition = cpInstance.getCPDefinition();
+
+		CommercePriceList commerceUnqualifiedPriceList =
+			CommercePriceListTestUtil.addCommercePriceList(
+				_commerceCatalog.getGroupId(), false, _TYPE, 1.0);
+
+		CommercePriceEntry commercePriceEntry =
+			CommercePriceEntryTestUtil.addCommercePriceEntry(
+				"", cpDefinition.getCProductId(),
+				cpInstance.getCPInstanceUuid(),
+				commerceUnqualifiedPriceList.getCommercePriceListId(),
+				BigDecimal.valueOf(RandomTestUtil.randomDouble()));
+
+		CommercePriceList discoveredCommercePriceList =
+			_commercePriceListDiscovery.getCommercePriceList(
+				_commerceCatalog.getGroupId(),
+				_accountEntry.getAccountEntryId(),
+				_commerceChannel.getCommerceChannelId(), 0,
+				cpInstance.getCPInstanceUuid(), null, _TYPE, StringPool.BLANK);
+
+		Assert.assertEquals(
+			commerceUnqualifiedPriceList.getCommercePriceListId(),
+			discoveredCommercePriceList.getCommercePriceListId());
+
+		CommercePriceList commerceCurrencyPriceList =
+			CommercePriceListTestUtil.addCommercePriceList(
+				_commerceCatalog.getGroupId(), false,
+				_commerceCurrency2.getCode(), _TYPE, 0);
+
+		CommercePriceEntryTestUtil.addCommercePriceEntry(
+			"", cpDefinition.getCProductId(), cpInstance.getCPInstanceUuid(),
+			commerceCurrencyPriceList.getCommercePriceListId(),
+			commercePriceEntry.getPrice());
+
+		discoveredCommercePriceList =
+			_commercePriceListDiscovery.getCommercePriceList(
+				_commerceCatalog.getGroupId(),
+				_accountEntry.getAccountEntryId(),
+				_commerceChannel.getCommerceChannelId(), 0,
+				cpInstance.getCPInstanceUuid(), _commerceCurrency2.getCode(),
+				_TYPE, StringPool.BLANK);
+
+		Assert.assertEquals(
+			commerceCurrencyPriceList.getCommercePriceListId(),
+			discoveredCommercePriceList.getCommercePriceListId());
 	}
 
 	@Test
@@ -306,7 +371,8 @@ public class CommercePriceListLowestDiscoveryTest {
 
 	private CommerceCatalog _commerceCatalog;
 	private CommerceChannel _commerceChannel;
-	private CommerceCurrency _commerceCurrency;
+	private CommerceCurrency _commerceCurrency1;
+	private CommerceCurrency _commerceCurrency2;
 
 	@Inject(
 		filter = "component.name=com.liferay.commerce.price.list.internal.discovery.CommercePriceListLowestDiscoveryImpl"

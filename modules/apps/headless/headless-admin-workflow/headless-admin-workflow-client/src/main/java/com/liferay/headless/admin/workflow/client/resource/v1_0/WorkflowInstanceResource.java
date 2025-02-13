@@ -193,8 +193,8 @@ public interface WorkflowInstanceResource {
 		private Map<String, String> _headers = new LinkedHashMap<>();
 		private String _host = "localhost";
 		private Locale _locale;
-		private String _login = "";
-		private String _password = "";
+		private String _login;
+		private String _password;
 		private Map<String, String> _parameters = new LinkedHashMap<>();
 		private int _port = 8080;
 		private String _scheme = "http";
@@ -324,8 +324,10 @@ public interface WorkflowInstanceResource {
 					_builder._port + _builder._contextPath +
 						"/o/headless-admin-workflow/v1.0/workflow-instances");
 
-			httpInvoker.userNameAndPassword(
-				_builder._login + ":" + _builder._password);
+			if ((_builder._login != null) && (_builder._password != null)) {
+				httpInvoker.userNameAndPassword(
+					_builder._login + ":" + _builder._password);
+			}
 
 			return httpInvoker.invoke();
 		}
@@ -451,8 +453,10 @@ public interface WorkflowInstanceResource {
 					_builder._port + _builder._contextPath +
 						"/o/headless-admin-workflow/v1.0/workflow-instances/export-batch");
 
-			httpInvoker.userNameAndPassword(
-				_builder._login + ":" + _builder._password);
+			if ((_builder._login != null) && (_builder._password != null)) {
+				httpInvoker.userNameAndPassword(
+					_builder._login + ":" + _builder._password);
+			}
 
 			return httpInvoker.invoke();
 		}
@@ -556,8 +560,10 @@ public interface WorkflowInstanceResource {
 					_builder._port + _builder._contextPath +
 						"/o/headless-admin-workflow/v1.0/workflow-instances/submit");
 
-			httpInvoker.userNameAndPassword(
-				_builder._login + ":" + _builder._password);
+			if ((_builder._login != null) && (_builder._password != null)) {
+				httpInvoker.userNameAndPassword(
+					_builder._login + ":" + _builder._password);
+			}
 
 			return httpInvoker.invoke();
 		}
@@ -659,8 +665,10 @@ public interface WorkflowInstanceResource {
 
 			httpInvoker.path("workflowInstanceId", workflowInstanceId);
 
-			httpInvoker.userNameAndPassword(
-				_builder._login + ":" + _builder._password);
+			if ((_builder._login != null) && (_builder._password != null)) {
+				httpInvoker.userNameAndPassword(
+					_builder._login + ":" + _builder._password);
+			}
 
 			return httpInvoker.invoke();
 		}
@@ -757,8 +765,10 @@ public interface WorkflowInstanceResource {
 					_builder._port + _builder._contextPath +
 						"/o/headless-admin-workflow/v1.0/workflow-instances/batch");
 
-			httpInvoker.userNameAndPassword(
-				_builder._login + ":" + _builder._password);
+			if ((_builder._login != null) && (_builder._password != null)) {
+				httpInvoker.userNameAndPassword(
+					_builder._login + ":" + _builder._password);
+			}
 
 			return httpInvoker.invoke();
 		}
@@ -860,8 +870,10 @@ public interface WorkflowInstanceResource {
 
 			httpInvoker.path("workflowInstanceId", workflowInstanceId);
 
-			httpInvoker.userNameAndPassword(
-				_builder._login + ":" + _builder._password);
+			if ((_builder._login != null) && (_builder._password != null)) {
+				httpInvoker.userNameAndPassword(
+					_builder._login + ":" + _builder._password);
+			}
 
 			return httpInvoker.invoke();
 		}
@@ -968,8 +980,10 @@ public interface WorkflowInstanceResource {
 
 			httpInvoker.path("workflowInstanceId", workflowInstanceId);
 
-			httpInvoker.userNameAndPassword(
-				_builder._login + ":" + _builder._password);
+			if ((_builder._login != null) && (_builder._password != null)) {
+				httpInvoker.userNameAndPassword(
+					_builder._login + ":" + _builder._password);
+			}
 
 			return httpInvoker.invoke();
 		}

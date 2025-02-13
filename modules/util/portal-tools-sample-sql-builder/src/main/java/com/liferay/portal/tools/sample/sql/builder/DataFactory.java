@@ -7709,15 +7709,15 @@ public class DataFactory {
 				"fragment_component/fragment_component_heading_configuration." +
 					"json"));
 
-		String editValue = _readFile(
-			"fragment_component/fragment_component_heading_editValue_" +
-				"attachment_journal_article_title.json");
-
 		fragmentEntryLinkModel.setEditableValues(
 			StringUtil.replace(
 				StringUtil.replace(
 					StringUtil.replace(
-						editValue, "${journalArticleClassNameId}",
+						_readFile(
+							"fragment_component/fragment_" +
+								"component_heading_editValue_attachment_" +
+									"journal_article_title.json"),
+						"${journalArticleClassNameId}",
 						String.valueOf(getClassNameId(JournalArticle.class))),
 					"${journalArticleClassPK}",
 					String.valueOf(journalArticleModel.getResourcePrimKey())),

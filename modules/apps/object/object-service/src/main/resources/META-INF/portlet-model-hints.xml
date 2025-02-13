@@ -97,6 +97,7 @@
 		<field name="objectDefinitionId" type="long" />
 		<field name="objectEntryFolderId" type="long" />
 		<field name="rootObjectEntryId" type="long" />
+		<field name="defaultLanguageId" type="String" />
 		<field name="treePath" type="String">
 			<hint name="max-length">4000</hint>
 		</field>

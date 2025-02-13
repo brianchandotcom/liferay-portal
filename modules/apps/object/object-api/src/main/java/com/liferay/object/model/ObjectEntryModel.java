@@ -273,6 +273,21 @@ public interface ObjectEntryModel
 	public void setRootObjectEntryId(long rootObjectEntryId);
 
 	/**
+	 * Returns the default language ID of this object entry.
+	 *
+	 * @return the default language ID of this object entry
+	 */
+	@AutoEscape
+	public String getDefaultLanguageId();
+
+	/**
+	 * Sets the default language ID of this object entry.
+	 *
+	 * @param defaultLanguageId the default language ID of this object entry
+	 */
+	public void setDefaultLanguageId(String defaultLanguageId);
+
+	/**
 	 * Returns the tree path of this object entry.
 	 *
 	 * @return the tree path of this object entry

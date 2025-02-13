@@ -68,7 +68,7 @@ public class ObjectEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(39);
+		StringBundler sb = new StringBundler(41);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -96,6 +96,8 @@ public class ObjectEntryCacheModel
 		sb.append(objectEntryFolderId);
 		sb.append(", rootObjectEntryId=");
 		sb.append(rootObjectEntryId);
+		sb.append(", defaultLanguageId=");
+		sb.append(defaultLanguageId);
 		sb.append(", treePath=");
 		sb.append(treePath);
 		sb.append(", lastPublishDate=");
@@ -163,6 +165,13 @@ public class ObjectEntryCacheModel
 		objectEntryImpl.setObjectEntryFolderId(objectEntryFolderId);
 		objectEntryImpl.setRootObjectEntryId(rootObjectEntryId);
 
+		if (defaultLanguageId == null) {
+			objectEntryImpl.setDefaultLanguageId("");
+		}
+		else {
+			objectEntryImpl.setDefaultLanguageId(defaultLanguageId);
+		}
+
 		if (treePath == null) {
 			objectEntryImpl.setTreePath("");
 		}
@@ -221,6 +230,7 @@ public class ObjectEntryCacheModel
 		objectEntryFolderId = objectInput.readLong();
 
 		rootObjectEntryId = objectInput.readLong();
+		defaultLanguageId = objectInput.readUTF();
 		treePath = objectInput.readUTF();
 		lastPublishDate = objectInput.readLong();
 
@@ -273,6 +283,13 @@ public class ObjectEntryCacheModel
 
 		objectOutput.writeLong(rootObjectEntryId);
 
+		if (defaultLanguageId == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(defaultLanguageId);
+		}
+
 		if (treePath == null) {
 			objectOutput.writeUTF("");
 		}
@@ -309,6 +326,7 @@ public class ObjectEntryCacheModel
 	public long objectDefinitionId;
 	public long objectEntryFolderId;
 	public long rootObjectEntryId;
+	public String defaultLanguageId;
 	public String treePath;
 	public long lastPublishDate;
 	public int status;

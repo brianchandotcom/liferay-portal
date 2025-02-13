@@ -78,6 +78,7 @@ create table ObjectEntry (
 	objectDefinitionId LONG,
 	objectEntryFolderId LONG,
 	rootObjectEntryId LONG,
+	defaultLanguageId VARCHAR(75) null,
 	treePath STRING null,
 	lastPublishDate DATE null,
 	status INTEGER,

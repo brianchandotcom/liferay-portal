@@ -55,6 +55,7 @@ import {config as fragmentWebConfig} from './tests/fragment-web/config';
 import {config as frontendDataSetAdminWebConfig} from './tests/frontend-data-set-admin-web/config';
 import {config as frontendDataSetWebConfig} from './tests/frontend-data-set-web/config';
 import {config as frontendEditorCKEditorWebConfig} from './tests/frontend-editor-ckeditor-web/config';
+import {config as frontendJsComponentsWebConfig} from './tests/frontend-js-components-web/config';
 import {config as frontendJsSpaWebConfig} from './tests/frontend-js-spa-web/config';
 import {config as frontendJsWebConfig} from './tests/frontend-js-web/config';
 import {config as frontendTaglibClayConfig} from './tests/frontend-taglib-clay/config';
@@ -183,6 +184,7 @@ export default defineConfig({
 		frontendDataSetAdminWebConfig,
 		frontendDataSetWebConfig,
 		frontendEditorCKEditorWebConfig,
+		frontendJsComponentsWebConfig,
 		frontendJsSpaWebConfig,
 		frontendJsWebConfig,
 		frontendTaglibClayConfig,

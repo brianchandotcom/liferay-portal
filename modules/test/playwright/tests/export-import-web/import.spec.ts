@@ -534,7 +534,15 @@ test('can see corresponding elements in instance and site level', async ({
 		companyExportImportPage.page.getByText('Comments, Ratings')
 	).toBeVisible();
 
+	await expect(
+		companyExportImportPage.page.getByRole('group', {name: 'Pages'})
+	).toBeVisible();
+
 	await companyExportImportPage.goToImportOptions(exportFilePath);
+
+	await expect(
+		companyExportImportPage.page.getByRole('group', {name: 'Pages'})
+	).not.toBeVisible();
 
 	await expect(
 		companyExportImportPage.page.getByText('Comments, Ratings')

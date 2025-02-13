@@ -31,17 +31,26 @@ export default function moveStepper({itemId, parentItemId, position = 0}) {
 			parentItemId,
 			position,
 			segmentsExperienceId,
-		}).then(({addedItemIds, layoutData, movedItemIds, removedItemIds}) => {
-			dispatch(
-				moveStepperAction({
-					addedItemIds,
-					formId: parentItemId,
-					itemId,
-					layoutData,
-					movedItemIds,
-					removedItemIds,
-				})
-			);
-		});
+		}).then(
+			({
+				addedItemIds,
+				fragmentEntryLinks,
+				layoutData,
+				movedItemIds,
+				removedItemIds,
+			}) => {
+				dispatch(
+					moveStepperAction({
+						addedItemIds,
+						formId: parentItemId,
+						fragmentEntryLinks,
+						itemId,
+						layoutData,
+						movedItemIds,
+						removedItemIds,
+					})
+				);
+			}
+		);
 	};
 }

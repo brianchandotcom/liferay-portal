@@ -103,10 +103,7 @@ public class CustomFDSSerializerTest {
 						<FDSAPIURLResolver>serviceWrapper(_bundleContext));
 
 		FDSAPIURLResolverRegistry fdsAPIURLResolverRegistry =
-			new FDSAPIURLResolverRegistryImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			fdsAPIURLResolverRegistry, "_serviceTrackerMap", serviceTrackerMap);
+			new FDSAPIURLResolverRegistryImpl(serviceTrackerMap);
 
 		// Interpolation
 

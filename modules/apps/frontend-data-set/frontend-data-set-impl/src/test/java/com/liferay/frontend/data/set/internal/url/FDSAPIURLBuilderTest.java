@@ -13,7 +13,6 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -53,8 +52,7 @@ public class FDSAPIURLBuilderTest {
 			ServiceTrackerCustomizerFactory.<FDSAPIURLResolver>serviceWrapper(
 				_bundleContext));
 
-		ReflectionTestUtil.setFieldValue(
-			_fdsAPIURLResolverRegistry, "_serviceTrackerMap",
+		_fdsAPIURLResolverRegistry = new FDSAPIURLResolverRegistryImpl(
 			_serviceTrackerMap);
 
 		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
@@ -232,12 +230,11 @@ public class FDSAPIURLBuilderTest {
 			).build());
 	}
 
-	private static BundleContext _bundleContext;
-	private static final FDSAPIURLResolverRegistry _fdsAPIURLResolverRegistry =
-		new FDSAPIURLResolverRegistryImpl();
-	private static final HttpServletRequest _httpServletRequest = Mockito.mock(
+	private BundleContext _bundleContext;
+	private FDSAPIURLResolverRegistry _fdsAPIURLResolverRegistry;
+	private final HttpServletRequest _httpServletRequest = Mockito.mock(
 		HttpServletRequest.class);
-	private static ServiceTrackerMap<String, ServiceWrapper<FDSAPIURLResolver>>
+	private ServiceTrackerMap<String, ServiceWrapper<FDSAPIURLResolver>>
 		_serviceTrackerMap;
 
 }

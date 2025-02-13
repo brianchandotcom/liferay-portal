@@ -6,6 +6,7 @@
 package com.liferay.portal.vulcan.util;
 
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Portal;
@@ -71,29 +72,12 @@ public class UriInfoUtil {
 	public static UriBuilder getBaseUriBuilder(
 		String applicationPath, UriInfo uriInfo) {
 
-		String basePath = getBasePath(uriInfo);
+		String separator = Portal.PATH_MODULE + StringPool.SLASH;
 
-		if (basePath.endsWith(StringPool.FORWARD_SLASH)) {
-			basePath = basePath.substring(0, basePath.length() - 1);
-		}
-
-		basePath = basePath.substring(0, basePath.lastIndexOf("/") + 1);
-
-		if (basePath.endsWith("/c/")) {
-			basePath = StringUtil.removeLast(basePath, "c/");
-		}
-
-		if (applicationPath.startsWith(
-				Portal.PATH_MODULE + StringPool.FORWARD_SLASH)) {
-
-			applicationPath = applicationPath.substring(
-				Portal.PATH_MODULE.length() +
-					StringPool.FORWARD_SLASH.length());
-		}
-
-		basePath = basePath + applicationPath;
-
-		return UriBuilder.fromPath(basePath);
+		return UriBuilder.fromPath(
+			StringBundler.concat(
+				StringUtil.extractFirst(getBasePath(uriInfo), separator),
+				separator, applicationPath));
 	}
 
 	public static UriBuilder getBaseUriBuilder(UriInfo uriInfo) {

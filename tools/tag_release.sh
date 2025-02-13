@@ -13,6 +13,10 @@ function get_property {
 }
 
 function main {
+	echo "Skipping release tagging since merge of https://liferay.atlassian.net/browse/LPD-45794"
+
+	return
+
 	pushd $(git rev-parse --show-toplevel) > /dev/null
 
 	local branch=$(parse_git_current_branch)

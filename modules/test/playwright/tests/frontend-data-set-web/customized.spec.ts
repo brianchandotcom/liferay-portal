@@ -521,19 +521,19 @@ test(
 
 			await expect(idColumnHeader).toBeInViewport();
 
-			let cells = await page.locator('td').allInnerTexts();
-
-			await expect(page.locator('td').nth(1)).toHaveText(cells[1]);
-			await expect(page.locator('td').nth(11)).toHaveText(cells[11]);
-			await expect(page.locator('td').nth(21)).toHaveText(cells[21]);
-			await expect(page.locator('td').nth(31)).toHaveText(cells[31]);
-
 			await Promise.all([
 				idColumnHeader.click(),
 				page.waitForResponse(
 					(response: any) => response.status() === 200
 				),
 			]);
+
+			let cells = await page.locator('td').allInnerTexts();
+
+			await expect(page.locator('td').nth(1)).toHaveText(cells[1]);
+			await expect(page.locator('td').nth(11)).toHaveText(cells[11]);
+			await expect(page.locator('td').nth(21)).toHaveText(cells[21]);
+			await expect(page.locator('td').nth(31)).toHaveText(cells[31]);
 
 			const ascendingIDCells = [
 				cells[1],

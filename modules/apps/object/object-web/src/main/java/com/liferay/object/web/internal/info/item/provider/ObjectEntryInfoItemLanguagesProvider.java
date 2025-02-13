@@ -33,7 +33,7 @@ public class ObjectEntryInfoItemLanguagesProvider
 
 	@Override
 	public String getDefaultLanguageId(ObjectEntry objectEntry) {
-		return LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault());
+		return objectEntry.getDefaultLanguageId();
 	}
 
 }

@@ -339,7 +339,7 @@ modules/apps/site-initializer/site-initializer-extender/    @liferay-site-manage
 modules/apps/site-navigation/    @liferay-site-management
 modules/apps/site-navigation/site-navigation-language-web    @liferay-page-management
 modules/apps/site/    @liferay-site-management
-modules/apps/site/site-cms-site-initializer/
+modules/apps/site/site-cms-site-initializer/    @liferay-content-management
 modules/apps/site/site-demo-data-creator-api/
 modules/apps/site/site-demo-data-creator-impl/
 modules/apps/site/site-teams-item-selector-api/    @liferay-commerce
@@ -395,7 +395,7 @@ modules/core/portal-jsp-engine/    @liferay-core-infra
 modules/core/portal-web/    @liferay-core-infra
 modules/core/shielded-container-api/    @liferay-core-infra
 modules/core/shielded-container-impl/    @liferay-core-infra
-modules/dxp/apps/akismet/
+modules/dxp/apps/akismet/    @liferay-content-management
 modules/dxp/apps/analytics/    @liferay-ac
 modules/dxp/apps/antivirus/    @liferay-appsec
 modules/dxp/apps/commerce-avalara/    @liferay-commerce

@@ -366,7 +366,7 @@ public class RESTBuilder {
 				Validator.isNotNull(_configYAML.getClientDir())) {
 
 				TypeScriptClientUtil.generateTypeScriptClient(
-					_configYAML, _copyrightFile, _configDir, yamlString);
+					_configDir, _configYAML, _copyrightFile, yamlString);
 			}
 		}
 

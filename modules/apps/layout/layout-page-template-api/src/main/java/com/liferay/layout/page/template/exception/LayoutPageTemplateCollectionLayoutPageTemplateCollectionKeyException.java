@@ -23,7 +23,7 @@ public class
 
 			super(
 				StringBundler.concat(
-					"Duplicate layout page template for group ", groupId,
+					"Duplicate layout page template collection for group ", groupId,
 					" with layout page template collection key ",
 					layoutPageTemplateCollectionKey));
 		}

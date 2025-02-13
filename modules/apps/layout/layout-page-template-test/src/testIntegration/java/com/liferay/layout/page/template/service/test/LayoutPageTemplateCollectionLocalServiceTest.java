@@ -144,7 +144,7 @@ public class LayoutPageTemplateCollectionLocalServiceTest {
 			LayoutPageTemplateCollectionLayoutPageTemplateCollectionKeyException.MustNotBeDuplicate.class,
 			layoutPageTemplateCollectionKey,
 			StringBundler.concat(
-				"Duplicate layout page template for group ",
+				"Duplicate layout page template collection for group ",
 				_group.getGroupId(),
 				" with layout page template collection key ",
 				layoutPageTemplateCollectionKey));

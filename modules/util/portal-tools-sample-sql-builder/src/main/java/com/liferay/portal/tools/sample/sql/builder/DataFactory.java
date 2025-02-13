@@ -5010,15 +5010,6 @@ public class DataFactory {
 				List<FragmentEntryLinkModel> fragmentEntryLinkModels)
 		throws Exception {
 
-		List<FragmentEntryLinkModel> targetFragmentEntryLinkModels =
-			new ArrayList<>();
-
-		for (FragmentEntryLinkModel model : fragmentEntryLinkModels) {
-			if (model.getPlid() == layoutModel.getPlid()) {
-				targetFragmentEntryLinkModels.add(model);
-			}
-		}
-
 		LayoutPageTemplateStructureRelModel
 			layoutPageTemplateStructureRelModel =
 				new LayoutPageTemplateStructureRelModelImpl();
@@ -5048,13 +5039,13 @@ public class DataFactory {
 				getLayoutPageTemplateStructureId());
 
 		FragmentEntryLinkModel fragmentEntryLinkModel =
-			targetFragmentEntryLinkModels.get(0);
+			fragmentEntryLinkModels.get(0);
 
 		layoutPageTemplateStructureRelModel.setSegmentsExperienceId(
 			fragmentEntryLinkModel.getSegmentsExperienceId());
 
 		layoutPageTemplateStructureRelModel.setData(
-			_generateJsonData(targetFragmentEntryLinkModels));
+			_generateJsonData(fragmentEntryLinkModels));
 		layoutPageTemplateStructureRelModel.setStatusByUserId(_sampleUserId);
 		layoutPageTemplateStructureRelModel.setStatusByUserName(
 			_SAMPLE_USER_NAME);

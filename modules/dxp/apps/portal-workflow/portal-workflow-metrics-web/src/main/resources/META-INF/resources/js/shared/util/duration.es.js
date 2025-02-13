@@ -49,22 +49,22 @@ export function formatDuration(millisecondsDuration) {
 
 	const durationParts = [
 		{
-			label: Liferay.Language.get('days-abbreviation'),
+			label: Liferay.Language.get('day-abbreviation'),
 			value: duration.days,
 		},
 		{
-			label: Liferay.Language.get('hours-abbreviation'),
+			label: Liferay.Language.get('hour-abbreviation'),
 			value: duration.hours,
 		},
 		{
-			label: Liferay.Language.get('minutes-abbreviation'),
+			label: Liferay.Language.get('minute-abbreviation'),
 			value: duration.minutes,
 		},
 	].filter((part) => part.value > 0);
 
 	if (!durationParts.length) {
 		return `${duration.seconds ? 1 : 0}${Liferay.Language.get(
-			'minutes-abbreviation'
+			'minute-abbreviation'
 		)}`;
 	}
 

@@ -8,10 +8,10 @@ window.AUI = () => ({
 });
 
 const languageMap = {
-	'days-abbreviation': 'd',
+	'day-abbreviation': 'd',
 	'decimal-delimiter': '.',
-	'hours-abbreviation': 'h',
-	'minutes-abbreviation': 'min',
+	'hour-abbreviation': 'h',
+	'minute-abbreviation': 'min',
 	'mmm-dd': 'MMM DD',
 	'mmm-dd-hh-mm': 'MMM DD, HH:mm',
 	'mmm-dd-hh-mm-a': 'MMM DD, hh:mm A',

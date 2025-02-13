@@ -73,6 +73,10 @@ test('can move between mini calendar gridcell child buttons using arrow keys', a
 	calendarWidgetPage,
 	page,
 }) => {
+	if (await calendarWidgetPage.untoggleSideBarButton.isVisible()) {
+		await calendarWidgetPage.untoggleSideBarButton.click();
+	}
+
 	await calendarWidgetPage.miniCalendarGrid.focus();
 
 	const gridMoviments = [
@@ -98,6 +102,10 @@ test('can move between mini calendar gridcell child buttons using arrow keys', a
 test('ensure that mini calendar accessibility properties are maintained after changing months', async ({
 	calendarWidgetPage,
 }) => {
+	if (await calendarWidgetPage.untoggleSideBarButton.isVisible()) {
+		await calendarWidgetPage.untoggleSideBarButton.click();
+	}
+
 	await calendarWidgetPage.miniCalendarNextMonthButton.click();
 
 	await expect(calendarWidgetPage.miniCalendarBase).toHaveAttribute(

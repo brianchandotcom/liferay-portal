@@ -38,6 +38,7 @@ export class CalendarWidgetPage {
 	readonly timeZoneDropdown: Locator;
 	readonly title: Locator;
 	readonly toggleSideBarButton: Locator;
+	readonly untoggleSideBarButton: Locator;
 	readonly useGlobalTimeZoneCheckBox: Locator;
 
 	constructor(page: Page) {
@@ -123,6 +124,9 @@ export class CalendarWidgetPage {
 			.getByLabel('Title', {exact: true});
 		this.toggleSideBarButton = page.locator(
 			'.calendar-portlet-column-toggler .lexicon-icon-caret-left'
+		);
+		this.untoggleSideBarButton = page.locator(
+			'.calendar-portlet-column-toggler .lexicon-icon-caret-right'
 		);
 		this.useGlobalTimeZoneCheckBox = page
 			.frameLocator('iframe')

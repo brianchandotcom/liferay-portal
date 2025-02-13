@@ -19,6 +19,8 @@ else {
 	group = (Group)request.getAttribute(WebKeys.GROUP);
 }
 
+boolean companyGroup = stagingGroupHelper.isCompanyGroup(group);
+
 FileEntry fileEntry = ExportImportHelperUtil.getTempFileEntry(groupId, themeDisplay.getUserId(), ExportImportHelper.TEMP_FOLDER_NAME);
 
 ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user.getUserId(), themeDisplay.getSiteGroupId(), new HashMap<String, String[]>(), fileEntry);
@@ -156,43 +158,45 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 					</dl>
 				</aui:fieldset>
 
-				<aui:fieldset collapsible="<%= true %>" cssClass="options-group" label="pages">
-					<c:choose>
-						<c:when test="<%= !group.isDepot() && !group.isCompany() && !group.isLayoutPrototype() && !group.isLayoutSetPrototype() %>">
-							<c:choose>
-								<c:when test="<%= group.isPrivateLayoutsEnabled() %>">
-									<aui:input id="publicPages" label="public-pages" name="privateLayout" type="radio" value="<%= false %>" />
+				<c:if test="<%= !companyGroup %>">
+					<aui:fieldset collapsible="<%= true %>" cssClass="options-group" label="pages">
+						<c:choose>
+							<c:when test="<%= !group.isDepot() && !group.isCompany() && !group.isLayoutPrototype() && !group.isLayoutSetPrototype() %>">
+								<c:choose>
+									<c:when test="<%= group.isPrivateLayoutsEnabled() %>">
+										<aui:input id="publicPages" label="public-pages" name="privateLayout" type="radio" value="<%= false %>" />
 
-									<aui:input id="privatePages" label="private-pages" name="privateLayout" type="radio" value="<%= true %>" />
-								</c:when>
-								<c:otherwise>
-									<aui:input name="privateLayout" type="hidden" value="<%= false %>" />
-								</c:otherwise>
-							</c:choose>
+										<aui:input id="privatePages" label="private-pages" name="privateLayout" type="radio" value="<%= true %>" />
+									</c:when>
+									<c:otherwise>
+										<aui:input name="privateLayout" type="hidden" value="<%= false %>" />
+									</c:otherwise>
+								</c:choose>
 
-							<aui:input label="logo" name="<%= PortletDataHandlerKeys.LOGO %>" type="checkbox" value="<%= true %>" />
+								<aui:input label="logo" name="<%= PortletDataHandlerKeys.LOGO %>" type="checkbox" value="<%= true %>" />
 
-							<aui:input label="site-pages-settings" name="<%= PortletDataHandlerKeys.LAYOUT_SET_SETTINGS %>" type="checkbox" value="<%= true %>" />
+								<aui:input label="site-pages-settings" name="<%= PortletDataHandlerKeys.LAYOUT_SET_SETTINGS %>" type="checkbox" value="<%= true %>" />
 
-							<aui:input label="site-template-settings" name="<%= PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_SETTINGS %>" type="checkbox" value="<%= true %>" />
+								<aui:input label="site-template-settings" name="<%= PortletDataHandlerKeys.LAYOUT_SET_PROTOTYPE_SETTINGS %>" type="checkbox" value="<%= true %>" />
 
-							<%
-							String taglibDeleteMissingLayoutsLabel = "<span style='font-weight: bold;'>" + LanguageUtil.get(request, "delete-missing-layouts") + ":</span> " + LanguageUtil.get(request, "delete-missing-layouts-help");
-							%>
+								<%
+								String taglibDeleteMissingLayoutsLabel = "<span style='font-weight: bold;'>" + LanguageUtil.get(request, "delete-missing-layouts") + ":</span> " + LanguageUtil.get(request, "delete-missing-layouts-help");
+								%>
 
-							<aui:input label="<%= taglibDeleteMissingLayoutsLabel %>" name="<%= PortletDataHandlerKeys.DELETE_MISSING_LAYOUTS %>" type="checkbox" value="<%= false %>" />
-						</c:when>
-						<c:otherwise>
-							<aui:input name="privateLayout" type="hidden" value="<%= true %>" />
-						</c:otherwise>
-					</c:choose>
+								<aui:input label="<%= taglibDeleteMissingLayoutsLabel %>" name="<%= PortletDataHandlerKeys.DELETE_MISSING_LAYOUTS %>" type="checkbox" value="<%= false %>" />
+							</c:when>
+							<c:otherwise>
+								<aui:input name="privateLayout" type="hidden" value="<%= true %>" />
+							</c:otherwise>
+						</c:choose>
 
-					<%
-					String taglibThemeSettingsLabel = "<span style='font-weight: bold;'>" + LanguageUtil.get(request, "theme-settings") + ":</span> " + LanguageUtil.get(request, "export-import-theme-settings-help");
-					%>
+						<%
+						String taglibThemeSettingsLabel = "<span style='font-weight: bold;'>" + LanguageUtil.get(request, "theme-settings") + ":</span> " + LanguageUtil.get(request, "export-import-theme-settings-help");
+						%>
 
-					<aui:input label="<%= taglibThemeSettingsLabel %>" name="<%= PortletDataHandlerKeys.THEME_REFERENCE %>" type="checkbox" value="<%= true %>" />
-				</aui:fieldset>
+						<aui:input label="<%= taglibThemeSettingsLabel %>" name="<%= PortletDataHandlerKeys.THEME_REFERENCE %>" type="checkbox" value="<%= true %>" />
+					</aui:fieldset>
+				</c:if>
 
 				<%
 				List<Portlet> dataPortlets = ListUtil.sort(manifestSummary.getDataPortlets(), new PortletTitleComparator(application, locale));
@@ -361,7 +365,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 
 										</ul>
 
-										<c:if test="<%= !stagingGroupHelper.isCompanyGroup(group) %>">
+										<c:if test="<%= !companyGroup %>">
 											<aui:fieldset cssClass="content-options" label="for-each-of-the-selected-content-types,-import-their">
 												<span class="selected-labels" id="<portlet:namespace />selectedContentOptions"></span>
 

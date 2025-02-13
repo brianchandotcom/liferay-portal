@@ -28,6 +28,55 @@
 							"direction": "[vertical]",
 							"displayStyle": "singleline",
 							"fieldNamespace": "",
+							"fieldReference": "Name",
+							"hideField": false,
+							"indexType": "keyword",
+							"label": {
+								"en_US": "Name"
+							},
+							"labelAtStructureLevel": true,
+							"localizable": true,
+							"name": "Name",
+							"nativeField": false,
+							"objectFieldName": "",
+							"placeholder": {
+								"en_US": ""
+							},
+							"predefinedValue": {
+								"en_US": ""
+							},
+							"readOnly": false,
+							"repeatable": false,
+							"requireConfirmation": false,
+							"required": false,
+							"requiredErrorMessage": {
+								"en_US": ""
+							},
+							"showLabel": true,
+							"tip": {
+								"en_US": ""
+							},
+							"tooltip": {
+								"en_US": ""
+							},
+							"type": "text",
+							"visibilityExpression": ""
+						},
+						{
+							"autocomplete": false,
+							"confirmationErrorMessage": {
+								"en_US": ""
+							},
+							"confirmationLabel": {
+								"en_US": ""
+							},
+							"dataSourceType": "",
+							"dataType": "string",
+							"ddmDataProviderInstanceId": "[]",
+							"ddmDataProviderInstanceOutput": "[]",
+							"direction": "[vertical]",
+							"displayStyle": "singleline",
+							"fieldNamespace": "",
 							"fieldReference": "Content",
 							"hideField": false,
 							"indexType": "keyword",

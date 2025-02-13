@@ -7679,7 +7679,6 @@ public class DataFactory {
 		// PK fields
 
 		fragmentEntryLinkModel.setFragmentEntryLinkId(_counter.get());
-		fragmentEntryLinkModel.setSegmentsExperienceId(segmentsExperienceId);
 
 		// Group instance
 
@@ -7696,17 +7695,19 @@ public class DataFactory {
 		// Other fields
 
 		fragmentEntryLinkModel.setFragmentEntryId(0);
+		fragmentEntryLinkModel.setSegmentsExperienceId(segmentsExperienceId);
 		fragmentEntryLinkModel.setClassNameId(getClassNameId(Layout.class));
 		fragmentEntryLinkModel.setClassPK(layoutModel.getPlid());
+		fragmentEntryLinkModel.setPlid(layoutModel.getPlid());
 		fragmentEntryLinkModel.setCss(
 			_readFile(_getFragmentComponentInputStream("heading", "css")));
 		fragmentEntryLinkModel.setHtml(
 			_readFile(_getFragmentComponentInputStream("heading", "html")));
+		fragmentEntryLinkModel.setJs(StringPool.BLANK);
 		fragmentEntryLinkModel.setConfiguration(
 			_readFile(
 				"fragment_component/fragment_component_heading_configuration." +
 					"json"));
-		fragmentEntryLinkModel.setJs(StringPool.BLANK);
 
 		String editValue = _readFile(
 			"fragment_component/fragment_component_heading_editValue_" +
@@ -7723,7 +7724,6 @@ public class DataFactory {
 				"${journalArticleTitle}", journalArticleModel.getUrlTitle()));
 
 		fragmentEntryLinkModel.setNamespace(StringUtil.randomId());
-		fragmentEntryLinkModel.setPlid(layoutModel.getPlid());
 		fragmentEntryLinkModel.setPosition(0);
 		fragmentEntryLinkModel.setRendererKey(
 			_FRAGMENT_COMPONENT_RENDER_KEY_HEADING);

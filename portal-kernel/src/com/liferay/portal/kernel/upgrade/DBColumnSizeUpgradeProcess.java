@@ -67,8 +67,7 @@ public class DBColumnSizeUpgradeProcess extends UpgradeProcess {
 				catalog, schema, null, new String[] {"TABLE"})) {
 
 			while (tableResultSet.next()) {
-				String tableName = dbInspector.normalizeName(
-					tableResultSet.getString("TABLE_NAME"));
+				String tableName = tableResultSet.getString("TABLE_NAME");
 
 				try (ResultSet columnResultSet = databaseMetaData.getColumns(
 						catalog, schema, tableName, null)) {

@@ -328,7 +328,7 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 
 		_addInputTemplateNodeAttributes(
 			fragmentEntryLink, httpServletRequest, infoField, inputTemplateNode,
-			label, locale, value);
+			label, locale, value, valueI18n);
 
 		if (!localizable && FeatureFlagManagerUtil.isEnabled("LPD-37927")) {
 			_addLocalizationOptionsAttributes(
@@ -342,7 +342,8 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 	private void _addFileInfoFieldTypeInputTemplateNodeAttributes(
 		FragmentEntryLink fragmentEntryLink,
 		HttpServletRequest httpServletRequest, InfoField infoField,
-		InputTemplateNode inputTemplateNode, String value) {
+		InputTemplateNode inputTemplateNode, String value,
+		Map<Locale, String> valueI18n) {
 
 		String allowedFileExtensions = (String)infoField.getAttribute(
 			FileInfoFieldType.ALLOWED_FILE_EXTENSIONS);
@@ -388,34 +389,32 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 			return;
 		}
 
-		String fileName = null;
-		FileEntry fileEntry = null;
 		boolean selectFromDocumentLibrary = false;
 
-		if (Validator.isNotNull(value)) {
-			fileEntry = _fetchFileEntry(GetterUtil.getLong(value));
+		String fileName = _getFileName(fileSourceType, value);
+
+		if (fileName != null) {
+			inputTemplateNode.addAttribute("fileName", fileName);
 		}
+
+		Map<String, String> fileNameI18n = new HashMap<>();
+
+		for (Map.Entry<Locale, String> entry : valueI18n.entrySet()) {
+			String localizedFileName = _getFileName(
+				fileSourceType, entry.getValue());
+
+			if (localizedFileName != null) {
+				fileNameI18n.put(
+					_language.getLanguageId(entry.getKey()), localizedFileName);
+			}
+		}
+
+		inputTemplateNode.addAttribute("fileNameI18n", fileNameI18n);
 
 		if (fileSourceType ==
 				FileInfoFieldType.FileSourceType.DOCUMENTS_AND_MEDIA) {
 
 			selectFromDocumentLibrary = true;
-
-			if (fileEntry != null) {
-				fileName = fileEntry.getFileName();
-			}
-		}
-		else if (fileSourceType ==
-					FileInfoFieldType.FileSourceType.USER_COMPUTER) {
-
-			if (fileEntry != null) {
-				fileName = TempFileEntryUtil.getOriginalTempFileName(
-					fileEntry.getFileName());
-			}
-		}
-
-		if (fileName != null) {
-			inputTemplateNode.addAttribute("fileName", fileName);
 		}
 
 		inputTemplateNode.addAttribute(
@@ -449,12 +448,12 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 		FragmentEntryLink fragmentEntryLink,
 		HttpServletRequest httpServletRequest, InfoField infoField,
 		InputTemplateNode inputTemplateNode, String label, Locale locale,
-		String value) {
+		String value, Map<Locale, String> valueI18n) {
 
 		if (infoField.getInfoFieldType() instanceof FileInfoFieldType) {
 			_addFileInfoFieldTypeInputTemplateNodeAttributes(
 				fragmentEntryLink, httpServletRequest, infoField,
-				inputTemplateNode, value);
+				inputTemplateNode, value, valueI18n);
 		}
 		else if (infoField.getInfoFieldType() instanceof
 					LongTextInfoFieldType) {
@@ -705,6 +704,34 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 
 			return null;
 		}
+	}
+
+	private String _getFileName(
+		FileInfoFieldType.FileSourceType fileSourceType, Object value) {
+
+		if (Validator.isNull(value) || !(value instanceof Long)) {
+			return null;
+		}
+
+		FileEntry fileEntry = _fetchFileEntry(GetterUtil.getLong(value));
+
+		if (fileSourceType ==
+				FileInfoFieldType.FileSourceType.DOCUMENTS_AND_MEDIA) {
+
+			if (fileEntry != null) {
+				return fileEntry.getFileName();
+			}
+		}
+		else if (fileSourceType ==
+					FileInfoFieldType.FileSourceType.USER_COMPUTER) {
+
+			if (fileEntry != null) {
+				return TempFileEntryUtil.getOriginalTempFileName(
+					fileEntry.getFileName());
+			}
+		}
+
+		return null;
 	}
 
 	private String _getInputLabel(

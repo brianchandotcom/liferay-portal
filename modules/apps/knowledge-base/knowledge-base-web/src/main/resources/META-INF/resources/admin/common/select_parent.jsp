@@ -113,7 +113,7 @@ kbSelectParentDisplayContext.populatePortletBreadcrumbEntries(currentURLObj);
 						<liferay-ui:search-container-column-text
 							cssClass="text-right"
 							href="<%= (rowURL == null) ? StringPool.BLANK : rowURL.toString() %>"
-							name="num-of-kb-folders"
+							name="num-of-folders"
 							value="<%= String.valueOf(kbFoldersCount) %>"
 						/>
 
@@ -197,7 +197,7 @@ kbSelectParentDisplayContext.populatePortletBreadcrumbEntries(currentURLObj);
 						<liferay-ui:search-container-column-text
 							cssClass="text-right"
 							href="<%= (rowURL == null) ? StringPool.BLANK : rowURL.toString() %>"
-							name="num-of-kb-folders"
+							name="num-of-folders"
 							value="-"
 						/>
 

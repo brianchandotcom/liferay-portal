@@ -5,6 +5,7 @@
 
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
+import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
 import com.liferay.headless.delivery.dto.v1_0.ObjectEntryFolder;
 import com.liferay.headless.delivery.resource.v1_0.ObjectEntryFolderResource;
 import com.liferay.object.service.ObjectEntryFolderService;
@@ -19,6 +20,7 @@ import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.Map;
 
@@ -56,6 +58,38 @@ public class ObjectEntryFolderResourceImpl
 					_CLASS_NAME, assetLibraryId)
 			).build(),
 			assetLibraryId, pagination);
+	}
+
+	@Override
+	public ObjectEntryFolder postAssetLibraryObjectEntryFolder(
+			Long assetLibraryId, ObjectEntryFolder objectEntryFolder)
+		throws Exception {
+
+		return _addObjectEntryFolder(assetLibraryId, null, objectEntryFolder);
+	}
+
+	private ObjectEntryFolder _addObjectEntryFolder(
+			Long siteId, Long parentObjectEntryFolderId,
+			ObjectEntryFolder objectEntryFolder)
+		throws Exception {
+
+		if (parentObjectEntryFolderId == null) {
+			parentObjectEntryFolderId = 0L;
+		}
+
+		return _toObjectEntryFolder(
+			_objectEntryFolderService.addObjectEntryFolder(
+				objectEntryFolder.getExternalReferenceCode(), siteId,
+				parentObjectEntryFolderId,
+				LocalizedMapUtil.getLocalizedMap(
+					contextAcceptLanguage.getPreferredLocale(),
+					objectEntryFolder.getLabel(),
+					objectEntryFolder.getLabel_i18n()),
+				objectEntryFolder.getName(),
+				ServiceContextBuilder.create(
+					siteId, contextHttpServletRequest,
+					objectEntryFolder.getViewableByAsString()
+				).build()));
 	}
 
 	private Page<ObjectEntryFolder> _getAssetLibraryObjectEntryFoldersPage(

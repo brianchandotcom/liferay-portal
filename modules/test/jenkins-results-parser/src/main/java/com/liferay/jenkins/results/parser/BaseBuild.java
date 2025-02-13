@@ -3117,7 +3117,11 @@ public abstract class BaseBuild implements Build {
 	}
 
 	private void _archiveConsoleLog() {
-		_archive(getConsoleText(), true, "consoleText");
+		if (Objects.equals(getStatus(), "completed") &&
+			!Objects.equals(getResult(), "SUCCESS")) {
+
+			_archive(getConsoleText(), true, "consoleText");
+		}
 	}
 
 	private void _archiveMarkerFile() {

@@ -7,7 +7,6 @@ package com.liferay.jenkins.results.parser.scancode;
 
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 
-import java.io.File;
 import java.io.IOException;
 
 import java.text.SimpleDateFormat;
@@ -29,31 +28,6 @@ public class AnalyzeDockerImageScanCodePipeline extends BaseScanCodePipeline {
 	@Override
 	public void execute() throws IOException, TimeoutException {
 		invokeScan(getJSONObject());
-
-		File tempDir = new File(System.getProperty("java.io.tmpdir"));
-
-		File dockerConfigFile = new File(tempDir, "scancode-config.yml");
-
-		try {
-			JenkinsResultsParserUtil.write(
-				dockerConfigFile,
-				"ignored_patterns:\n - \'*opt/liferay/license/versions.html\'");
-
-			addFileInput(dockerConfigFile.toString());
-
-			startPipeline(_pipelineName);
-		}
-		catch (IOException ioException) {
-			throw new RuntimeException(ioException);
-		}
-		catch (Exception exception) {
-			exception.printStackTrace();
-		}
-		finally {
-			if (dockerConfigFile != null) {
-				dockerConfigFile.delete();
-			}
-		}
 
 		waitForScan(_pipelineName);
 
@@ -78,10 +52,6 @@ public class AnalyzeDockerImageScanCodePipeline extends BaseScanCodePipeline {
 				"Invalid Docker tag " + _dockerTag);
 		}
 
-		JSONObject jsonObject = new JSONObject();
-
-		SimpleDateFormat simpleDateFormat = getSimpleDateFormat();
-
 		List<String> inputURLS = new ArrayList<>();
 
 		inputURLS.add("docker://liferay/" + _dockerTag);
@@ -92,8 +62,12 @@ public class AnalyzeDockerImageScanCodePipeline extends BaseScanCodePipeline {
 			JenkinsResultsParserUtil.getBuildProperty(
 				"scancode.policies.file.url"));
 
+		JSONObject jsonObject = new JSONObject();
+
+		SimpleDateFormat simpleDateFormat = getSimpleDateFormat();
+
 		jsonObject.put(
-			"execute_now", false
+			"execute_now", true
 		).put(
 			"input_urls", inputURLS
 		).put(

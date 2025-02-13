@@ -26,7 +26,7 @@ public interface SMSPushNotificationsSenderConfiguration {
 	@Meta.AD(name = "authentication.token.name", required = false)
 	public String authToken();
 
-	@Meta.AD(name = "number.name", required = false)
+	@Meta.AD(name = "number", required = false)
 	public String number();
 
 	@Meta.AD(name = "status.callback.name", required = false)

@@ -1,6 +1,6 @@
 import localVarRequest from 'request';
 
-<#list modelContexts?keys?sort as key>
+<#list schemaMap?keys?sort as key>
 export * from './${key?uncap_first}';
 </#list>
 
@@ -13,24 +13,24 @@ export interface RequestDetailedFile {
 	}
 }
 
-<#list modelContexts?keys?sort as key>
+<#list schemaMap?keys?sort as key>
 import { ${key} } from './${key?uncap_first}';
 </#list>
 
 /* tslint:disable:no-unused-variable */
 let primitives = [
-					"string",
-					"boolean",
-					"double",
-					"integer",
-					"long",
-					"float",
-					"number",
-					"any"
-				 ];
+	"string",
+	"boolean",
+	"double",
+	"integer",
+	"long",
+	"float",
+	"number",
+	"any"
+];
 
 let typeMap: {[index: string]: any} = {
-<#list modelContexts?keys?sort as key>
+<#list schemaMap?keys?sort as key>
 	"${key}": ${key}<#if !key?is_last>,</#if>
 </#list>
 }

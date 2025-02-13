@@ -62,15 +62,15 @@ import { UnreferencedTestEntity } from './unreferencedTestEntity';
 
 /* tslint:disable:no-unused-variable */
 let primitives = [
-					"string",
-					"boolean",
-					"double",
-					"integer",
-					"long",
-					"float",
-					"number",
-					"any"
-				 ];
+	"string",
+	"boolean",
+	"double",
+	"integer",
+	"long",
+	"float",
+	"number",
+	"any"
+];
 
 let typeMap: {[index: string]: any} = {
 	"ChildTestEntity1": ChildTestEntity1,

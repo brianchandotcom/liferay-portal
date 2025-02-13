@@ -40,15 +40,15 @@ import { Status } from './status';
 
 /* tslint:disable:no-unused-variable */
 let primitives = [
-					"string",
-					"boolean",
-					"double",
-					"integer",
-					"long",
-					"float",
-					"number",
-					"any"
-				 ];
+	"string",
+	"boolean",
+	"double",
+	"integer",
+	"long",
+	"float",
+	"number",
+	"any"
+];
 
 let typeMap: {[index: string]: any} = {
 	"CTCollection": CTCollection,

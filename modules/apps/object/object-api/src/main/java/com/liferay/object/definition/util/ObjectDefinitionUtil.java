@@ -77,7 +77,8 @@ public class ObjectDefinitionUtil {
 		"com.liferay.frontend.data.set.admin.web",
 		"com.liferay.frontend.data.set.impl",
 		"com.liferay.headless.builder.impl", "com.liferay.list.type.service",
-		"com.liferay.notification.service", "com.liferay.object.service"
+		"com.liferay.notification.service", "com.liferay.object.service",
+		"com.liferay.site.initializer.cms"
 	};
 
 	private static final Map<String, String>
@@ -93,6 +94,10 @@ public class ObjectDefinitionUtil {
 			"APISchema", "/headless-builder/schemas"
 		).put(
 			"APISort", "/headless-builder/sorts"
+		).put(
+			"BasicDocument", "/basicdocuments"
+		).put(
+			"BasicWebContent", "/basicwebcontents"
 		).put(
 			"Bookmark", "/bookmarks"
 		).put(

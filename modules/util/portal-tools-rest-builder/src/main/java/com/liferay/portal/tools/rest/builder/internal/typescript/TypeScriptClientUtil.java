@@ -86,8 +86,6 @@ public class TypeScriptClientUtil {
 		Files.createDirectories(
 			Paths.get(baseClientTSDir.getPath(), "src", "node", "model"));
 
-		// Generate API files
-
 		Set<Map.Entry<String, Map<String, Object>>> apiContexts =
 			_buildApiContexts(
 				configYAML, openAPIYAML, pathItems
@@ -107,7 +105,6 @@ public class TypeScriptClientUtil {
 					"typescript/api", apiContext.getValue()));
 		}
 
-		//Generate node/api/apis.ts file
 		File apisFile = new File(
 			baseClientTSDir.getPath() + "/src/node/api/apis.ts");
 
@@ -117,8 +114,6 @@ public class TypeScriptClientUtil {
 				copyrightFile, FileUtil.getCopyrightYear(apisFile),
 				"typescript/apis",
 				Collections.singletonMap("apiContexts", apiContexts)));
-
-		// Generate Model files
 
 		Map<String, Schema> schemas = openAPIYAML.getComponents(
 		).getSchemas();
@@ -141,8 +136,6 @@ public class TypeScriptClientUtil {
 			}
 		}
 
-		// Generate node/model/models.ts file
-
 		File modelsFile = new File(
 			baseClientTSDir.getPath() + "/src/node/model/models.ts");
 
@@ -152,8 +145,6 @@ public class TypeScriptClientUtil {
 				copyrightFile, FileUtil.getCopyrightYear(modelsFile),
 				"typescript/models",
 				Collections.singletonMap("modelContexts", schemas)));
-
-		// Generate node/api.ts file
 
 		File apiGlobalFile = new File(
 			baseClientTSDir.getPath() + "/src/node/api.ts");
@@ -306,8 +297,6 @@ public class TypeScriptClientUtil {
 				"operations", tagOperations.getValue()
 			).build();
 
-			// Collect all imports
-
 			Set<Map<String, String>> allImports = new LinkedHashSet<>();
 
 			for (Map<String, Object> tagOperation : tagOperations.getValue()) {
@@ -350,8 +339,6 @@ public class TypeScriptClientUtil {
 			}
 		}
 
-		// Handle inheritance and properties
-
 		List<Map<String, Object>> schemaProperties = new ArrayList<>();
 
 		if (schema.getAllOfSchemas() != null) {
@@ -369,8 +356,6 @@ public class TypeScriptClientUtil {
 				modelContext.put("parent", parentClass);
 				modelImports.add(
 					Collections.singletonMap("classname", parentClass));
-
-				// Add properties from additional schemas in allOf
 
 				for (Schema additionalSchema : schema.getAllOfSchemas()) {
 					if (additionalSchema.getPropertySchemas() != null) {
@@ -438,8 +423,6 @@ public class TypeScriptClientUtil {
 				).getVersion(),
 				path)
 		).build();
-
-		// Extract produces (media types) from responses.
 
 		if (operation.getResponses() != null) {
 			Set<String> produces = new LinkedHashSet<>();
@@ -517,8 +500,6 @@ public class TypeScriptClientUtil {
 		List<Map<String, Object>> allParams = new ArrayList<>();
 		Map<String, List<Map<String, Object>>> paramsByType = new HashMap<>();
 
-		// Process regular parameters
-
 		if (operation.getParameters() != null) {
 			for (Parameter parameter : operation.getParameters()) {
 				Map<String, Object> paramMap =
@@ -544,8 +525,6 @@ public class TypeScriptClientUtil {
 				);
 			}
 		}
-
-		// Process request body
 
 		RequestBody requestBody = operation.getRequestBody();
 
@@ -587,8 +566,6 @@ public class TypeScriptClientUtil {
 				operationMap.put("bodyParam", bodyParam);
 			}
 		}
-
-		// Add parameter lists to operation map
 
 		paramsByType.forEach(
 			(key, value) -> {

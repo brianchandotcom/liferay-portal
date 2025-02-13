@@ -8,6 +8,7 @@ const path = require('path');
 const esbuild = {
 	bundle: true,
 	entryPoints: [path.resolve('src', 'index.js')],
+	loader: {'.ts': 'ts'},
 	minify: true,
 	outfile: path.resolve('build', 'analytics-all-min.js'),
 	sourcemap: true,

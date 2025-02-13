@@ -37,9 +37,7 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizer
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -53,6 +51,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -460,54 +459,9 @@ public class SystemFDSSerializerTest {
 		_systemFDSSerializer.fdsFilterRegistry = new FDSFilterRegistryImpl(
 			serviceTrackerMap2);
 
-		Language language = Mockito.mock(Language.class);
-
-		ReflectionTestUtil.setFieldValue(
-			_systemFDSSerializer, "_language", language);
-
-		JSONFactory jsonFactory = new JSONFactoryImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			_systemFDSSerializer, "_jsonFactory", jsonFactory);
-
-		Portal portal = Mockito.mock(Portal.class);
-
-		ReflectionTestUtil.setFieldValue(
-			_systemFDSSerializer, "_portal", portal);
-
-		DateRangeFDSFilterContextContributor
-			dateRangeFDSFilterContextContributor =
-				new DateRangeFDSFilterContextContributor();
-
-		ReflectionTestUtil.setFieldValue(
-			dateRangeFDSFilterContextContributor, "_jsonFactory", jsonFactory);
-
-		SelectionFDSFilterContextContributor
-			selectionFDSFilterContextContributor =
-				new SelectionFDSFilterContextContributor();
-
-		ReflectionTestUtil.setFieldValue(
-			selectionFDSFilterContextContributor, "_jsonFactory", jsonFactory);
-
-		ReflectionTestUtil.setFieldValue(
-			selectionFDSFilterContextContributor, "_language", language);
-
-		ResourceBundleLoader resourceBundleLoader = Mockito.mock(
-			ResourceBundleLoader.class);
-
-		ResourceBundleLoaderUtil.setPortalResourceBundleLoader(
-			resourceBundleLoader);
-
-		Mockito.when(
-			resourceBundleLoader.loadResourceBundle(
-				Mockito.nullable(Locale.class))
-		).thenReturn(
-			ResourceBundleUtil.EMPTY_RESOURCE_BUNDLE
-		);
-
 		LanguageUtil languageUtil = new LanguageUtil();
 
-		languageUtil.setLanguage(language);
+		Language language = Mockito.mock(Language.class);
 
 		Mockito.when(
 			language.get(LocaleUtil.US, null)
@@ -529,11 +483,32 @@ public class SystemFDSSerializerTest {
 			invocation -> invocation.getArgument(1, String.class)
 		);
 
+		languageUtil.setLanguage(language);
+
+		PortalUtil portalUtil = new PortalUtil();
+
+		Portal portal = Mockito.mock(Portal.class);
+
 		Mockito.when(
 			portal.getLocale(_httpServletRequest)
 		).thenReturn(
 			LocaleUtil.US
 		);
+
+		portalUtil.setPortal(portal);
+
+		ResourceBundleLoader resourceBundleLoader = Mockito.mock(
+			ResourceBundleLoader.class);
+
+		Mockito.when(
+			resourceBundleLoader.loadResourceBundle(
+				Mockito.nullable(Locale.class))
+		).thenReturn(
+			ResourceBundleUtil.EMPTY_RESOURCE_BUNDLE
+		);
+
+		ResourceBundleLoaderUtil.setPortalResourceBundleLoader(
+			resourceBundleLoader);
 
 		// Client extension filter
 
@@ -617,7 +592,7 @@ public class SystemFDSSerializerTest {
 			dateRangeFDSFilterContextContributorServiceRegistration =
 				_bundleContext.registerService(
 					FDSFilterContextContributor.class,
-					dateRangeFDSFilterContextContributor,
+					new DateRangeFDSFilterContextContributor(),
 					MapUtil.singletonDictionary(
 						"frontend.data.set.filter.type", "dateRange"));
 
@@ -871,7 +846,7 @@ public class SystemFDSSerializerTest {
 			selectionFDSFilterContextContributorServiceRegistration =
 				_bundleContext.registerService(
 					FDSFilterContextContributor.class,
-					selectionFDSFilterContextContributor,
+					new SelectionFDSFilterContextContributor(),
 					MapUtil.singletonDictionary(
 						"frontend.data.set.filter.type", "selection"));
 

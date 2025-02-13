@@ -9,8 +9,8 @@ import com.liferay.frontend.data.set.filter.BaseDateRangeFDSFilter;
 import com.liferay.frontend.data.set.filter.DateFDSFilterItem;
 import com.liferay.frontend.data.set.filter.FDSFilter;
 import com.liferay.frontend.data.set.filter.FDSFilterContextContributor;
-import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.util.Collections;
@@ -18,7 +18,6 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Luca Pellizzon
@@ -42,17 +41,13 @@ public class DateRangeFDSFilterContextContributor
 	}
 
 	private JSONObject _getJSONObject(DateFDSFilterItem dateFDSFilterItem) {
-		JSONObject jsonObject = _jsonFactory.createJSONObject();
-
-		jsonObject.put(
+		return JSONUtil.put(
 			"day", dateFDSFilterItem.getDay()
 		).put(
 			"month", dateFDSFilterItem.getMonth()
 		).put(
 			"year", dateFDSFilterItem.getYear()
 		);
-
-		return jsonObject;
 	}
 
 	private Map<String, Object> _serialize(
@@ -66,8 +61,5 @@ public class DateRangeFDSFilterContextContributor
 			_getJSONObject(baseDateRangeFDSFilter.getMinDateFDSFilterItem())
 		).build();
 	}
-
-	@Reference
-	private JSONFactory _jsonFactory;
 
 }

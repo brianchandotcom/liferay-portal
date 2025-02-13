@@ -27,6 +27,8 @@ import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeoutException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.io.FileUtils;
 
@@ -279,6 +281,27 @@ public class CISystemStatusReportUtil {
 			}
 
 			for (String buildReportJSONFilePath : output.split("\n")) {
+				Matcher matcher = _buildReportFilePathPattern.matcher(
+					buildReportJSONFilePath);
+
+				if (matcher.find()) {
+					int masterID = Integer.parseInt(matcher.group("masterID"));
+
+					String masterNetworkName = System.getenv(
+						"MASTER_NETWORK_NAME");
+
+					if (masterNetworkName.equals("gcp-network")) {
+						if (masterID <= 40) {
+							continue;
+						}
+					}
+					else {
+						if (masterID > 40) {
+							continue;
+						}
+					}
+				}
+
 				buildReportJSONFiles.add(
 					new File(_TESTRAY_LOGS_DIR, buildReportJSONFilePath));
 			}
@@ -624,6 +647,8 @@ public class CISystemStatusReportUtil {
 	private static final File _TMP_BASE_DIR;
 
 	private static final Properties _buildProperties;
+	private static final Pattern _buildReportFilePathPattern = Pattern.compile(
+		".*/?(?<dateString>\\d{4}-\\d{2})/test-\\d-(?<masterID>[\\w-]+)/.*");
 	private static final List<String> _dateStrings = new ArrayList<>();
 	private static final ExecutorService _executorService =
 		JenkinsResultsParserUtil.getNewThreadPoolExecutor(20, true);

@@ -4,12 +4,30 @@
 			{
 				"definition": {
 					"fragment": {
-						"key": "new-structure-button",
-						"siteKey": "New CMS"
+						"key": "BASIC_COMPONENT-button"
 					},
 					"fragmentConfig": {
 					},
 					"fragmentFields": [
+						{
+							"id": "link",
+							"value": {
+								"fragmentLink": {
+									"value": {
+										"href": {
+											"value_i18n": {
+												"en_US": "structure-builder"
+											}
+										}
+									}
+								},
+								"text": {
+									"value_i18n": {
+										"en_US": "New"
+									}
+								}
+							}
+						}
 					],
 					"indexed": true
 				},

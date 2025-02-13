@@ -1,8 +1,0 @@
-{
-	"cacheable": true,
-	"cssPath": "index.css",
-	"htmlPath": "index.html",
-	"jsPath": "index.js",
-	"name": "New Structure Button",
-	"type": "component"
-}

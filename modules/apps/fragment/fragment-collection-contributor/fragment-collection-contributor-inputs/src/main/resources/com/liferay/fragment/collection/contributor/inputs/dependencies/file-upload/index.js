@@ -98,30 +98,125 @@ else {
 		const inputElement = fileInput;
 
 		import('@liferay/fragment-impl').then(
-			({registerLocalizedFileInput, registerUnlocalizedInput}) => {
+			({
+				registerLocalizedFileInput,
+				registerLocalizedInput,
+				registerUnlocalizedInput,
+			}) => {
 				if (input.localizable) {
-					const {onChange} = registerLocalizedFileInput({
-						defaultLanguageId,
-						initialValues: input.valueI18n,
-						inputElement,
-						inputName: input.name,
-						localizationInputsContainer: inputElement.parentNode,
-						namespace: fragmentNamespace,
-						onFileChange: ({files}) => {
-							if (files?.length) {
-								fileName.innerText = files[0].name;
-								showRemoveButton();
-							}
-							else {
-								onRemoveFile();
-							}
-						},
-						removeButton,
-					});
+					if (input.attributes.selectFromDocumentLibrary) {
+						const translationFileMap = new Map();
+						let currentLanguageId = defaultLanguageId;
 
-					inputElement.addEventListener('change', (event) => {
-						onChange(event.target.files);
-					});
+						const {onChange} = registerLocalizedInput({
+							defaultLanguageId:
+								themeDisplay.getDefaultLanguageId(),
+							initialValues: input.valueI18n,
+							inputElement,
+							inputName: input.name,
+							localizationInputsContainer:
+								inputElement.parentNode,
+							namespace: fragmentNamespace,
+							onLocaleChange: ({languageId}) => {
+								let fileNameText = '';
+
+								const defaultFileName =
+									translationFileMap.get(defaultLanguageId);
+								if (defaultFileName) {
+									fileNameText = defaultFileName;
+								}
+
+								const translatedFileName =
+									translationFileMap.get(languageId);
+								if (translatedFileName) {
+									fileNameText = translatedFileName;
+								}
+
+								fileName.innerText = fileNameText;
+
+								if (fileNameText !== '') {
+									showRemoveButton();
+								}
+								else {
+									onRemoveFile();
+								}
+
+								currentLanguageId = languageId;
+							},
+						});
+
+						inputElement.addEventListener('change', (event) => {
+							onChange(event.target.value);
+						});
+
+						const onSelectFromDocumentLibrary = (event) => {
+							event.preventDefault();
+
+							Liferay.Util.openSelectionModal({
+								onSelect: (selectedItem) => {
+									const {fileEntryId, title} = JSON.parse(
+										selectedItem.value
+									);
+
+									fileInput.value = fileEntryId;
+									fileName.innerText = title;
+
+									translationFileMap.set(
+										currentLanguageId,
+										title
+									);
+
+									onChange(fileEntryId);
+
+									showRemoveButton();
+								},
+								selectEventName: `${fragmentNamespace}selectFileEntry`,
+								url: input.attributes
+									.selectFromDocumentLibraryURL,
+							});
+						};
+
+						selectButton.addEventListener(
+							'click',
+							onSelectFromDocumentLibrary
+						);
+					}
+					else {
+						const {onChange} = registerLocalizedFileInput({
+							defaultLanguageId,
+							initialValues: input.valueI18n,
+							inputElement,
+							inputName: input.name,
+							localizationInputsContainer:
+								inputElement.parentNode,
+							namespace: fragmentNamespace,
+							onFileChange: ({files}) => {
+								if (files?.length) {
+									fileName.innerText = files[0].name;
+									showRemoveButton();
+								}
+								else {
+									onRemoveFile();
+								}
+							},
+							removeButton,
+						});
+
+						inputElement.addEventListener('change', (event) => {
+							onChange(event.target.files);
+						});
+
+						const onSelectFromUserComputer = () => {
+							previousFiles = fileInput.files[0] || null;
+
+							fileInput.click();
+						};
+
+						selectButton.addEventListener(
+							'click',
+							onSelectFromUserComputer
+						);
+					}
 				}
 				else {
 					const unlocalizedFieldsState =

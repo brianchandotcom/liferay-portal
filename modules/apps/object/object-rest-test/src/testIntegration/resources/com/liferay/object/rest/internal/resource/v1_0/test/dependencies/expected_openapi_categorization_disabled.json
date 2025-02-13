@@ -41,6 +41,9 @@
 					"name": {
 						"type": "string"
 					},
+					"newValue": {
+						"type": "object"
+					},
 					"oldValue": {
 						"type": "object"
 					},
@@ -540,8 +543,6 @@
 			},
 			"post": {
 				"operationId": "postObject9",
-				"parameters": [
-				],
 				"requestBody": {
 					"content": {
 						"application/json": {
@@ -926,6 +927,7 @@
 						"name": "type",
 						"required": true,
 						"schema": {
+							"pattern": "json|yaml",
 							"type": "string"
 						}
 					}

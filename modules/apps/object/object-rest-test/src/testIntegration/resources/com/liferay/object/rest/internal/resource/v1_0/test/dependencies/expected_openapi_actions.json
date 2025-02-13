@@ -41,6 +41,9 @@
 					"name": {
 						"type": "string"
 					},
+					"newValue": {
+						"type": "object"
+					},
 					"oldValue": {
 						"type": "object"
 					},
@@ -233,7 +236,6 @@
 						"type": "string"
 					}
 				},
-				"readOnly": true,
 				"type": "object",
 				"x-filterable": [
 				],
@@ -878,8 +880,6 @@
 			},
 			"post": {
 				"operationId": "postObject1",
-				"parameters": [
-				],
 				"requestBody": {
 					"content": {
 						"application/json": {
@@ -1264,6 +1264,7 @@
 						"name": "type",
 						"required": true,
 						"schema": {
+							"pattern": "json|yaml",
 							"type": "string"
 						}
 					}

@@ -297,7 +297,7 @@ public class ObjectEntryFolderLocalServiceTest {
 
 		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), _group.getGroupId(),
-			_objectDefinition.getObjectDefinitionId(),
+			_objectDefinition.getObjectDefinitionId(), null,
 			HashMapBuilder.<String, Serializable>put(
 				"fieldName", StringUtil.randomString()
 			).build(),

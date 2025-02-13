@@ -706,8 +706,8 @@ public class ObjectViewLocalServiceTest {
 
 		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
-			objectDefinition.getObjectDefinitionId(), Collections.emptyMap(),
-			ServiceContextTestUtil.getServiceContext());
+			objectDefinition.getObjectDefinitionId(), null,
+			Collections.emptyMap(), ServiceContextTestUtil.getServiceContext());
 
 		_objectViewLocalService.addObjectView(
 			TestPropsValues.getUserId(),

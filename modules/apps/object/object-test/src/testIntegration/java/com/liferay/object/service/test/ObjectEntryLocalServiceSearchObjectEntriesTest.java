@@ -579,7 +579,7 @@ public class ObjectEntryLocalServiceSearchObjectEntriesTest {
 
 		return _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
-			_objectDefinition.getObjectDefinitionId(), values,
+			_objectDefinition.getObjectDefinitionId(), null, values,
 			ServiceContextTestUtil.getServiceContext());
 	}
 

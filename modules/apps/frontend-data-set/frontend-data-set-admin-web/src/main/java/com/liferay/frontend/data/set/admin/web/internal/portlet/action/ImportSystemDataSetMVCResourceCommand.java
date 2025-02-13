@@ -191,7 +191,8 @@ public class ImportSystemDataSetMVCResourceCommand
 			}
 
 			_objectEntryService.addObjectEntry(
-				0, objectDefinitionId, objectEntryValues, new ServiceContext());
+				0, objectDefinitionId, null, objectEntryValues,
+				new ServiceContext());
 		}
 	}
 
@@ -211,7 +212,7 @@ public class ImportSystemDataSetMVCResourceCommand
 				(Map<String, Object>)fdsActionDropdownItem.get("data");
 
 			_objectEntryService.addObjectEntry(
-				0, objectDefinitionId,
+				0, objectDefinitionId, null,
 				HashMapBuilder.<String, Serializable>put(
 					"confirmationMessage_i18n",
 					() -> _getLocalizeableValue(

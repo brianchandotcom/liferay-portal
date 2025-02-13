@@ -163,6 +163,7 @@ public class DefaultObjectEntryManagerImpl
 			_objectEntryService.addObjectEntry(
 				getGroupId(objectDefinition, scopeKey),
 				objectDefinition.getObjectDefinitionId(),
+				objectEntry.getDefaultLanguageId(),
 				_toObjectValues(
 					dtoConverterContext.getLocale(), objectDefinition,
 					objectEntry, scopeKey, serviceContext),

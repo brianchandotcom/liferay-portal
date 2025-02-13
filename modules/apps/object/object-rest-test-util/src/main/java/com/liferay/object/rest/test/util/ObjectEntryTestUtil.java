@@ -38,7 +38,8 @@ public class ObjectEntryTestUtil {
 
 		return ObjectEntryLocalServiceUtil.addObjectEntry(
 			TestPropsValues.getUserId(), groupId,
-			objectDefinition.getObjectDefinitionId(), values, serviceContext);
+			objectDefinition.getObjectDefinitionId(), null, values,
+			serviceContext);
 	}
 
 	public static ObjectEntry addObjectEntry(

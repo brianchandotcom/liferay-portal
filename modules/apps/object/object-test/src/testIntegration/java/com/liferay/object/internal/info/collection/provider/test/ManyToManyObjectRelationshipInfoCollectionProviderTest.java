@@ -107,7 +107,7 @@ public class ManyToManyObjectRelationshipInfoCollectionProviderTest {
 		ObjectEntry objectDefinition1ObjectEntry1 =
 			_objectEntryLocalService.addObjectEntry(
 				TestPropsValues.getUserId(), _group.getGroupId(),
-				_objectDefinition1.getObjectDefinitionId(),
+				_objectDefinition1.getObjectDefinitionId(), null,
 				HashMapBuilder.<String, Serializable>put(
 					"objectDefinition1TextObjectFieldName",
 					RandomTestUtil.randomString()
@@ -117,7 +117,7 @@ public class ManyToManyObjectRelationshipInfoCollectionProviderTest {
 		ObjectEntry objectDefinition1ObjectEntry2 =
 			_objectEntryLocalService.addObjectEntry(
 				TestPropsValues.getUserId(), _group.getGroupId(),
-				_objectDefinition1.getObjectDefinitionId(),
+				_objectDefinition1.getObjectDefinitionId(), null,
 				HashMapBuilder.<String, Serializable>put(
 					"objectDefinition1TextObjectFieldName",
 					RandomTestUtil.randomString()
@@ -127,7 +127,7 @@ public class ManyToManyObjectRelationshipInfoCollectionProviderTest {
 		ObjectEntry objectDefinition2ObjectEntry =
 			_objectEntryLocalService.addObjectEntry(
 				TestPropsValues.getUserId(), _group.getGroupId(),
-				_objectDefinition2.getObjectDefinitionId(),
+				_objectDefinition2.getObjectDefinitionId(), null,
 				HashMapBuilder.<String, Serializable>put(
 					"objectDefinition2TextObjectFieldName",
 					RandomTestUtil.randomString()

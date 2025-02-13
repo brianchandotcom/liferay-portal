@@ -200,7 +200,7 @@ public class ObjectRelationshipExtensionProviderTest {
 
 		return ObjectEntryLocalServiceUtil.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
-			_objectDefinition.getObjectDefinitionId(),
+			_objectDefinition.getObjectDefinitionId(), null,
 			HashMapBuilder.<String, Serializable>put(
 				_OBJECT_FIELD_NAME, objectFieldValue
 			).build(),

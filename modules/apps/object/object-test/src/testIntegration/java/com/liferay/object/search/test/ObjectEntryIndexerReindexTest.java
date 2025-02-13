@@ -200,7 +200,7 @@ public class ObjectEntryIndexerReindexTest {
 
 			ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
 				TestPropsValues.getUserId(), 0,
-				objectDefinition.getObjectDefinitionId(),
+				objectDefinition.getObjectDefinitionId(), null,
 				HashMapBuilder.<String, Serializable>put(
 					"decimalLocalized_i18n",
 					HashMapBuilder.put(

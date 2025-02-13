@@ -152,7 +152,7 @@ public class CategoriesInputFragmentRendererTest
 
 		return _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), groupId,
-			objectDefinition.getObjectDefinitionId(),
+			objectDefinition.getObjectDefinitionId(), null,
 			HashMapBuilder.<String, Serializable>put(
 				"firstName", RandomTestUtil.randomString()
 			).build(),

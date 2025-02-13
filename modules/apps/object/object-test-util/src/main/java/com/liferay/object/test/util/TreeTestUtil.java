@@ -165,7 +165,7 @@ public class TreeTestUtil {
 			Arrays.asList("A", "AA", "AB", "AAA", "AAB"));
 
 		ObjectEntry rootObjectEntry = objectEntryLocalService.addObjectEntry(
-			TestPropsValues.getUserId(), 0, rootNode.getPrimaryKey(),
+			TestPropsValues.getUserId(), 0, rootNode.getPrimaryKey(), null,
 			HashMapBuilder.<String, Serializable>put(
 				"externalReferenceCode",
 				externalReferenceCodes.poll() + externalReferenceCodeSuffix
@@ -180,7 +180,7 @@ public class TreeTestUtil {
 			Node node = iterator.next();
 
 			ObjectEntry objectEntry = objectEntryLocalService.addObjectEntry(
-				TestPropsValues.getUserId(), 0, node.getPrimaryKey(),
+				TestPropsValues.getUserId(), 0, node.getPrimaryKey(), null,
 				HashMapBuilder.<String, Serializable>put(
 					"externalReferenceCode",
 					externalReferenceCodes.poll() + externalReferenceCodeSuffix

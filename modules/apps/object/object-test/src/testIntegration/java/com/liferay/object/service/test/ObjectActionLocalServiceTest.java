@@ -657,7 +657,7 @@ public class ObjectActionLocalServiceTest {
 
 			ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
 				TestPropsValues.getUserId(), 0,
-				_objectDefinition.getObjectDefinitionId(),
+				_objectDefinition.getObjectDefinitionId(), null,
 				HashMapBuilder.<String, Serializable>put(
 					"birthday", "2000-12-25"
 				).put(
@@ -817,7 +817,7 @@ public class ObjectActionLocalServiceTest {
 
 			objectEntry = _objectEntryLocalService.addObjectEntry(
 				TestPropsValues.getUserId(), 0,
-				_objectDefinition.getObjectDefinitionId(),
+				_objectDefinition.getObjectDefinitionId(), null,
 				HashMapBuilder.<String, Serializable>put(
 					"firstName", "John"
 				).build(),
@@ -902,7 +902,7 @@ public class ObjectActionLocalServiceTest {
 			ObjectEntry rootObjectEntry =
 				_objectEntryLocalService.addObjectEntry(
 					TestPropsValues.getUserId(), 0,
-					objectDefinitionA.getObjectDefinitionId(),
+					objectDefinitionA.getObjectDefinitionId(), null,
 					HashMapBuilder.<String, Serializable>put(
 						"firstName", "John"
 					).build(),
@@ -916,7 +916,7 @@ public class ObjectActionLocalServiceTest {
 
 			objectEntry = _objectEntryLocalService.addObjectEntry(
 				TestPropsValues.getUserId(), 0,
-				objectDefinitionAA.getObjectDefinitionId(),
+				objectDefinitionAA.getObjectDefinitionId(), null,
 				HashMapBuilder.<String, Serializable>put(
 					"able", RandomTestUtil.randomString()
 				).put(
@@ -940,7 +940,7 @@ public class ObjectActionLocalServiceTest {
 
 			_objectEntryLocalService.addObjectEntry(
 				TestPropsValues.getUserId(), 0,
-				objectDefinitionAAA.getObjectDefinitionId(),
+				objectDefinitionAAA.getObjectDefinitionId(), null,
 				HashMapBuilder.<String, Serializable>put(
 					"able", RandomTestUtil.randomString()
 				).put(
@@ -1349,7 +1349,7 @@ public class ObjectActionLocalServiceTest {
 
 		_objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
-			_objectDefinition.getObjectDefinitionId(),
+			_objectDefinition.getObjectDefinitionId(), null,
 			HashMapBuilder.<String, Serializable>put(
 				"firstName", "John"
 			).build(),
@@ -1481,7 +1481,7 @@ public class ObjectActionLocalServiceTest {
 
 		_objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
-			_objectDefinition.getObjectDefinitionId(),
+			_objectDefinition.getObjectDefinitionId(), null,
 			HashMapBuilder.<String, Serializable>put(
 				"firstName", "John"
 			).build(),
@@ -1705,7 +1705,7 @@ public class ObjectActionLocalServiceTest {
 					try {
 						_objectEntryLocalService.addObjectEntry(
 							TestPropsValues.getUserId(), 0,
-							_objectDefinition.getObjectDefinitionId(),
+							_objectDefinition.getObjectDefinitionId(), null,
 							HashMapBuilder.<String, Serializable>put(
 								"firstName", "John"
 							).build(),
@@ -1720,7 +1720,7 @@ public class ObjectActionLocalServiceTest {
 					try {
 						_objectEntryLocalService.addObjectEntry(
 							TestPropsValues.getUserId(), 0,
-							_objectDefinition.getObjectDefinitionId(),
+							_objectDefinition.getObjectDefinitionId(), null,
 							HashMapBuilder.<String, Serializable>put(
 								"firstName", "Peter"
 							).build(),
@@ -1815,7 +1815,7 @@ public class ObjectActionLocalServiceTest {
 
 		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
-			_objectDefinition.getObjectDefinitionId(),
+			_objectDefinition.getObjectDefinitionId(), null,
 			HashMapBuilder.<String, Serializable>put(
 				"firstName", "John"
 			).put(
@@ -1884,7 +1884,7 @@ public class ObjectActionLocalServiceTest {
 
 		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
-			_objectDefinition.getObjectDefinitionId(),
+			_objectDefinition.getObjectDefinitionId(), null,
 			HashMapBuilder.<String, Serializable>put(
 				"firstName", "John"
 			).build(),
@@ -1898,7 +1898,7 @@ public class ObjectActionLocalServiceTest {
 
 		objectEntry = _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
-			_objectDefinition.getObjectDefinitionId(),
+			_objectDefinition.getObjectDefinitionId(), null,
 			HashMapBuilder.<String, Serializable>put(
 				"firstName", "João"
 			).build(),
@@ -1955,7 +1955,7 @@ public class ObjectActionLocalServiceTest {
 
 		objectEntry = _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
-			_objectDefinition.getObjectDefinitionId(),
+			_objectDefinition.getObjectDefinitionId(), null,
 			HashMapBuilder.<String, Serializable>put(
 				"firstName", RandomTestUtil.randomString()
 			).build(),
@@ -2002,7 +2002,7 @@ public class ObjectActionLocalServiceTest {
 
 		objectEntry = _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
-			_objectDefinition.getObjectDefinitionId(),
+			_objectDefinition.getObjectDefinitionId(), null,
 			HashMapBuilder.<String, Serializable>put(
 				"firstName", RandomTestUtil.randomString()
 			).build(),
@@ -2186,7 +2186,7 @@ public class ObjectActionLocalServiceTest {
 
 		_objectEntryLocalService.addObjectEntry(
 			guestUser.getUserId(), 0, objectDefinition.getObjectDefinitionId(),
-			Collections.emptyMap(), serviceContext);
+			null, Collections.emptyMap(), serviceContext);
 
 		_assertNotificationQueueEntrySubject("Subject");
 
@@ -2196,7 +2196,7 @@ public class ObjectActionLocalServiceTest {
 			user.getUserId(), LocaleUtil.BRAZIL.toLanguageTag());
 
 		_objectEntryLocalService.addObjectEntry(
-			user.getUserId(), 0, objectDefinition.getObjectDefinitionId(),
+			user.getUserId(), 0, objectDefinition.getObjectDefinitionId(), null,
 			Collections.emptyMap(), serviceContext);
 
 		_assertNotificationQueueEntrySubject("Assunto");
@@ -2215,7 +2215,7 @@ public class ObjectActionLocalServiceTest {
 
 		_objectEntryLocalService.addObjectEntry(
 			guestUser.getUserId(), 0, objectDefinition.getObjectDefinitionId(),
-			Collections.emptyMap(), serviceContext);
+			null, Collections.emptyMap(), serviceContext);
 
 		_assertNotificationQueueEntrySubject("Assunto");
 
@@ -2223,7 +2223,7 @@ public class ObjectActionLocalServiceTest {
 			user.getUserId(), LocaleUtil.US.toLanguageTag());
 
 		_objectEntryLocalService.addObjectEntry(
-			user.getUserId(), 0, objectDefinition.getObjectDefinitionId(),
+			user.getUserId(), 0, objectDefinition.getObjectDefinitionId(), null,
 			Collections.emptyMap(), serviceContext);
 
 		_assertNotificationQueueEntrySubject("Subject");
@@ -2232,12 +2232,12 @@ public class ObjectActionLocalServiceTest {
 
 		_objectEntryLocalService.addObjectEntry(
 			guestUser.getUserId(), 0, objectDefinition.getObjectDefinitionId(),
-			Collections.emptyMap(), serviceContext);
+			null, Collections.emptyMap(), serviceContext);
 
 		_assertNotificationQueueEntrySubject("Subject");
 
 		_objectEntryLocalService.addObjectEntry(
-			user.getUserId(), 0, objectDefinition.getObjectDefinitionId(),
+			user.getUserId(), 0, objectDefinition.getObjectDefinitionId(), null,
 			Collections.emptyMap(), serviceContext);
 
 		_assertNotificationQueueEntrySubject("Subject");
@@ -2375,7 +2375,7 @@ public class ObjectActionLocalServiceTest {
 
 		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
-			objectDefinition.getObjectDefinitionId(),
+			objectDefinition.getObjectDefinitionId(), null,
 			HashMapBuilder.<String, Serializable>put(
 				"attachment", StringPool.BLANK
 			).put(
@@ -2515,7 +2515,7 @@ public class ObjectActionLocalServiceTest {
 
 		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
-			_objectDefinition.getObjectDefinitionId(),
+			_objectDefinition.getObjectDefinitionId(), null,
 			HashMapBuilder.<String, Serializable>put(
 				"firstName", RandomTestUtil.randomString()
 			).build(),
@@ -2852,7 +2852,7 @@ public class ObjectActionLocalServiceTest {
 
 		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
-			objectDefinition.getObjectDefinitionId(), values,
+			objectDefinition.getObjectDefinitionId(), null, values,
 			ServiceContextTestUtil.getServiceContext());
 
 		Assert.assertEquals(
@@ -3172,7 +3172,7 @@ public class ObjectActionLocalServiceTest {
 
 			_objectEntryLocalService.addObjectEntry(
 				TestPropsValues.getUserId(), 0,
-				_objectDefinition.getObjectDefinitionId(),
+				_objectDefinition.getObjectDefinitionId(), null,
 				Collections.singletonMap(
 					"firstName", RandomTestUtil.randomString()),
 				ServiceContextTestUtil.getServiceContext());
@@ -3210,7 +3210,7 @@ public class ObjectActionLocalServiceTest {
 
 		ObjectEntry objectEntry1 = _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
-			_objectDefinition.getObjectDefinitionId(),
+			_objectDefinition.getObjectDefinitionId(), null,
 			HashMapBuilder.<String, Serializable>put(
 				"firstName", "John"
 			).put(
@@ -3225,7 +3225,7 @@ public class ObjectActionLocalServiceTest {
 
 		ObjectEntry objectEntry2 = _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
-			_objectDefinition.getObjectDefinitionId(),
+			_objectDefinition.getObjectDefinitionId(), null,
 			HashMapBuilder.<String, Serializable>put(
 				"firstName", "Peter"
 			).put(
@@ -3259,7 +3259,7 @@ public class ObjectActionLocalServiceTest {
 
 		ObjectEntry objectEntry3 = _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
-			_objectDefinition.getObjectDefinitionId(),
+			_objectDefinition.getObjectDefinitionId(), null,
 			HashMapBuilder.<String, Serializable>put(
 				"firstName", "John"
 			).put(
@@ -3268,7 +3268,7 @@ public class ObjectActionLocalServiceTest {
 			ServiceContextTestUtil.getServiceContext());
 		ObjectEntry objectEntry4 = _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
-			_objectDefinition.getObjectDefinitionId(),
+			_objectDefinition.getObjectDefinitionId(), null,
 			HashMapBuilder.<String, Serializable>put(
 				"firstName", "Peter"
 			).put(
@@ -3306,7 +3306,7 @@ public class ObjectActionLocalServiceTest {
 
 		ObjectEntry objectEntry5 = _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
-			_objectDefinition.getObjectDefinitionId(),
+			_objectDefinition.getObjectDefinitionId(), null,
 			HashMapBuilder.<String, Serializable>put(
 				"firstName", "Peter"
 			).put(
@@ -3315,7 +3315,7 @@ public class ObjectActionLocalServiceTest {
 			ServiceContextTestUtil.getServiceContext());
 		ObjectEntry objectEntry6 = _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
-			_objectDefinition.getObjectDefinitionId(),
+			_objectDefinition.getObjectDefinitionId(), null,
 			HashMapBuilder.<String, Serializable>put(
 				"firstName", "Peter"
 			).put(

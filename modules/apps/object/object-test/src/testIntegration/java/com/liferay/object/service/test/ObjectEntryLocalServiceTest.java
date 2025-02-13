@@ -2078,7 +2078,7 @@ public class ObjectEntryLocalServiceTest {
 
 		_objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
-			objectDefinition.getObjectDefinitionId(),
+			objectDefinition.getObjectDefinitionId(), null,
 			HashMapBuilder.<String, Serializable>put(
 				"multiselectPicklistObjectField",
 				_getMultiselectPicklistObjectFieldValue(prefixKey, 10)
@@ -2099,7 +2099,7 @@ public class ObjectEntryLocalServiceTest {
 				"\"multiselectPicklistObjectField\""),
 			() -> _objectEntryLocalService.addObjectEntry(
 				TestPropsValues.getUserId(), 0,
-				objectDefinition.getObjectDefinitionId(),
+				objectDefinition.getObjectDefinitionId(), null,
 				HashMapBuilder.<String, Serializable>put(
 					"multiselectPicklistObjectField",
 					_getMultiselectPicklistObjectFieldValue(prefixKey, 100)
@@ -2458,7 +2458,8 @@ public class ObjectEntryLocalServiceTest {
 
 		_objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
-			_objectDefinition.getObjectDefinitionId(), values, serviceContext);
+			_objectDefinition.getObjectDefinitionId(), null, values,
+			serviceContext);
 
 		_assertCount(8);
 
@@ -4765,8 +4766,8 @@ public class ObjectEntryLocalServiceTest {
 		throws Exception {
 
 		return _objectEntryLocalService.addObjectEntry(
-			TestPropsValues.getUserId(), groupId, objectDefinitionId, values,
-			ServiceContextTestUtil.getServiceContext());
+			TestPropsValues.getUserId(), groupId, objectDefinitionId, null,
+			values, ServiceContextTestUtil.getServiceContext());
 	}
 
 	private ObjectEntry _addObjectEntry(Map<String, Serializable> values)
@@ -5205,7 +5206,8 @@ public class ObjectEntryLocalServiceTest {
 
 		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
-			_objectDefinition.getObjectDefinitionId(), values1, serviceContext);
+			_objectDefinition.getObjectDefinitionId(), null, values1,
+			serviceContext);
 
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_DRAFT, objectEntry.getStatus());
@@ -5248,7 +5250,8 @@ public class ObjectEntryLocalServiceTest {
 
 		objectEntry = _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
-			_objectDefinition.getObjectDefinitionId(), values2, serviceContext);
+			_objectDefinition.getObjectDefinitionId(), null, values2,
+			serviceContext);
 
 		_objectDefinition.setEnableObjectEntryDraft(false);
 
@@ -5557,14 +5560,14 @@ public class ObjectEntryLocalServiceTest {
 					"\""),
 				() -> _objectEntryLocalService.addObjectEntry(
 					TestPropsValues.getUserId(), groupId,
-					objectDefinition.getObjectDefinitionId(),
+					objectDefinition.getObjectDefinitionId(), null,
 					Collections.<String, Serializable>emptyMap(),
 					ServiceContextTestUtil.getServiceContext()));
 		}
 		else {
 			_objectEntryLocalService.addObjectEntry(
 				TestPropsValues.getUserId(), groupId,
-				objectDefinition.getObjectDefinitionId(),
+				objectDefinition.getObjectDefinitionId(), null,
 				Collections.<String, Serializable>emptyMap(),
 				ServiceContextTestUtil.getServiceContext());
 

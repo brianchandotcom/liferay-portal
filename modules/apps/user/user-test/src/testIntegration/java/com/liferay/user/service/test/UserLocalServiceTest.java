@@ -9,6 +9,7 @@ import com.liferay.announcements.kernel.service.AnnouncementsDeliveryLocalServic
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.lang.SafeCloseable;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.audit.AuditMessage;
 import com.liferay.portal.kernel.bean.ClassLoaderBeanHandler;
@@ -1541,7 +1542,32 @@ public class UserLocalServiceTest {
 				ReflectionTestUtil.setFieldValueWithAutoCloseable(
 					UserLocalServiceImpl.class,
 					"_PASSWORDS_ENCRYPTION_ALGORITHM",
+					newPasswordsEncryptionAlgorithm);
+			AutoCloseable autoCloseable3 =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"PASSWORDS_ENCRYPTION_ALGORITHM_LEGACY",
 					newPasswordsEncryptionAlgorithm)) {
+
+			Assert.assertEquals(
+				Authenticator.SUCCESS,
+				_userLocalService.authenticateByEmailAddress(
+					user.getCompanyId(), user.getDisplayEmailAddress(),
+					"password", null, null, null));
+
+			user = _userLocalService.getUser(user.getUserId());
+
+			Assert.assertEquals(
+				newPasswordsEncryptionAlgorithm,
+				PasswordEncryptorUtil.getEncryptedPasswordAlgorithmSettings(
+					user.getPassword()));
+
+			String password = user.getPassword();
+
+			user.setPassword(
+				password.substring(
+					password.indexOf(CharPool.CLOSE_CURLY_BRACE) + 1));
+
+			user = _userLocalService.updateUser(user);
 
 			Assert.assertEquals(
 				Authenticator.SUCCESS,

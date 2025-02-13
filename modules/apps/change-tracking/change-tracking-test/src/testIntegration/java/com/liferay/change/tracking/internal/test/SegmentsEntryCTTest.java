@@ -102,7 +102,7 @@ public class SegmentsEntryCTTest {
 	}
 
 	@Test
-	public void testUpdateSegmentsEntry() throws Exception {
+	public void testPublishCTCollectionWithNameMapUpdated() throws Exception {
 		SegmentsEntry segmentsEntry = SegmentsTestUtil.addSegmentsEntry(
 			_group.getGroupId());
 

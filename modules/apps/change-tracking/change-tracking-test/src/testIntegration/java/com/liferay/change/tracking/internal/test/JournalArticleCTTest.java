@@ -58,7 +58,7 @@ public class JournalArticleCTTest {
 	}
 
 	@Test
-	public void testShouldMoveArticleToTrashInPublication() throws Exception {
+	public void testMoveArticleToTrashInPublication() throws Exception {
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
 					_ctCollection.getCtCollectionId())) {

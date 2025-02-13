@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.search.model.uid.UIDFactory;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
@@ -74,87 +73,160 @@ public class SearchCTTest {
 	}
 
 	@Test
-	public void testCollectionCTModelPreFilter() throws Exception {
-		_productionUserGroup = UserGroupTestUtil.addUserGroup(
-			_group.getGroupId());
+	public void testSearchCTCollection() throws Exception {
+		SearchRequestBuilder searchRequestBuilder =
+			_searchRequestBuilderFactory.builder(
+			).companyId(
+				_group.getCompanyId()
+			).emptySearchEnabled(
+				true
+			).entryClassNames(
+				CTCollection.class.getName()
+			).modelIndexerClasses(
+				CTCollection.class
+			).withSearchContext(
+				searchContext -> {
+				}
+			);
 
-		UserGroup addedUserGroup = null;
+		SearchResponse searchResponse = _searcher.search(
+			searchRequestBuilder.build());
+
+		DocumentsAssert.assertValuesIgnoreRelevance(
+			searchResponse.getRequestString(), searchResponse.getDocuments(),
+			Field.UID,
+			Arrays.asList(
+				_uidFactory.getUID(
+					CTCollection.class.getName(),
+					_ctCollection1.getCtCollectionId(),
+					CTConstants.CT_COLLECTION_ID_PRODUCTION)));
+	}
+
+	@Test
+	public void testSearchJournalArticleAfterPublishingAndUndoingCTCollection()
+		throws Exception {
+
+		JournalArticle addedJournalArticle = null;
+
+		JournalArticle deletedJournalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString());
+
+		JournalArticle modifiedJournalArticle1 = JournalTestUtil.addArticle(
+			_group.getGroupId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString());
+
+		JournalArticle modifiedJournalArticle2 = null;
+
+		JournalArticle unmodifiedJournalArticle = JournalTestUtil.addArticle(
+			_group.getGroupId(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString());
 
 		try (SafeCloseable safeCloseable =
 				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
 					_ctCollection1.getCtCollectionId())) {
 
-			addedUserGroup = UserGroupTestUtil.addUserGroup(
-				_group.getGroupId());
+			addedJournalArticle = JournalTestUtil.addArticle(
+				_group.getGroupId(), RandomTestUtil.randomString(),
+				RandomTestUtil.randomString());
+
+			deletedJournalArticle = _journalArticleLocalService.deleteArticle(
+				deletedJournalArticle);
+
+			modifiedJournalArticle2 = JournalTestUtil.updateArticle(
+				modifiedJournalArticle1, "testModifyJournalArticle");
 		}
+
+		_assertProductionHits(
+			_JOURNAL_ARTICLE_CLASS, deletedJournalArticle,
+			modifiedJournalArticle1, unmodifiedJournalArticle);
+
+		_ctProcessLocalService.addCTProcess(
+			_ctCollection1.getUserId(), _ctCollection1.getCtCollectionId());
+
+		_assertProductionHits(
+			_JOURNAL_ARTICLE_CLASS, addedJournalArticle,
+			modifiedJournalArticle2, unmodifiedJournalArticle);
+
+		_undoCTCollection = _ctCollectionLocalService.undoCTCollection(
+			_ctCollection1.getCtCollectionId(), _ctCollection1.getUserId(),
+			"(undo) " + _ctCollection1.getName(), StringPool.BLANK);
+
+		_ctProcessLocalService.addCTProcess(
+			_undoCTCollection.getUserId(),
+			_undoCTCollection.getCtCollectionId());
+
+		_assertProductionHits(
+			_JOURNAL_ARTICLE_CLASS, deletedJournalArticle,
+			modifiedJournalArticle1, unmodifiedJournalArticle);
+	}
+
+	@Test
+	public void testSearchLayoutAfterPublishingAndUndoingCTCollection()
+		throws Exception {
+
+		Layout addedLayout = null;
+
+		Layout deletedLayout = LayoutTestUtil.addTypePortletLayout(_group);
+		Layout modifiedLayout = LayoutTestUtil.addTypePortletLayout(_group);
+		Layout unmodifiedLayout = LayoutTestUtil.addTypePortletLayout(_group);
+
+		try (SafeCloseable safeCloseable =
+				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
+					_ctCollection1.getCtCollectionId())) {
+
+			addedLayout = LayoutTestUtil.addTypePortletLayout(_group);
+			deletedLayout = _layoutLocalService.deleteLayout(deletedLayout);
+
+			modifiedLayout.setFriendlyURL("/testModifyLayout");
+
+			modifiedLayout = _layoutLocalService.updateLayout(modifiedLayout);
+		}
+
+		_assertProductionHits(
+			_LAYOUT_CLASS, deletedLayout, modifiedLayout, unmodifiedLayout);
+
+		_ctProcessLocalService.addCTProcess(
+			_ctCollection1.getUserId(), _ctCollection1.getCtCollectionId());
+
+		_assertProductionHits(
+			_LAYOUT_CLASS, addedLayout, modifiedLayout, unmodifiedLayout);
 
 		_assertAllHits(
-			_USER_GROUP_CLASS,
+			_LAYOUT_CLASS,
 			_getUIDs(
-				CTConstants.CT_COLLECTION_ID_PRODUCTION, _productionUserGroup),
-			_getUIDs(_ctCollection1.getCtCollectionId(), addedUserGroup));
+				CTConstants.CT_COLLECTION_ID_PRODUCTION, addedLayout,
+				modifiedLayout, unmodifiedLayout),
+			_getUIDs(
+				_ctCollection1.getCtCollectionId(), addedLayout,
+				modifiedLayout));
 
-		_assertProductionHits(_USER_GROUP_CLASS, _productionUserGroup);
+		_undoCTCollection = _ctCollectionLocalService.undoCTCollection(
+			_ctCollection1.getCtCollectionId(), _ctCollection1.getUserId(),
+			"(undo) " + _ctCollection1.getName(), StringPool.BLANK);
 
-		_assertCollectionHits(
-			_ctCollection1.getCtCollectionId(), _USER_GROUP_CLASS,
-			new UserGroup[] {addedUserGroup},
-			new UserGroup[] {_productionUserGroup});
+		_ctProcessLocalService.addCTProcess(
+			_undoCTCollection.getUserId(),
+			_undoCTCollection.getCtCollectionId());
+
+		_assertProductionHits(
+			_LAYOUT_CLASS, deletedLayout, modifiedLayout, unmodifiedLayout);
+
+		_assertAllHits(
+			_LAYOUT_CLASS,
+			_getUIDs(
+				CTConstants.CT_COLLECTION_ID_PRODUCTION, deletedLayout,
+				modifiedLayout, unmodifiedLayout),
+			_getUIDs(
+				_ctCollection1.getCtCollectionId(), addedLayout,
+				modifiedLayout),
+			_getUIDs(
+				_undoCTCollection.getCtCollectionId(), deletedLayout,
+				modifiedLayout));
 	}
 
 	@Test
-	public void testCollectionCTModelPreFilterExclusion() throws Exception {
-		_productionUserGroup = UserGroupTestUtil.addUserGroup(
-			_group.getGroupId());
-
-		UserGroup modifiedUserGroup1 = null;
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					_ctCollection1.getCtCollectionId())) {
-
-			UserGroup productionUserGroup = _userGroupLocalService.getUserGroup(
-				_productionUserGroup.getUserGroupId());
-
-			productionUserGroup.setName("P1 UserGroup");
-
-			modifiedUserGroup1 = _userGroupLocalService.updateUserGroup(
-				productionUserGroup);
-		}
-
-		_ctCollection2 = _ctCollectionLocalService.addCTCollection(
-			null, TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-			0, SearchCTTest.class.getSimpleName(),
-			SearchCTTest.class.getSimpleName());
-
-		UserGroup modifiedUserGroup2 = null;
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					_ctCollection2.getCtCollectionId())) {
-
-			UserGroup productionUserGroup = _userGroupLocalService.getUserGroup(
-				_productionUserGroup.getUserGroupId());
-
-			productionUserGroup.setName("P2 UserGroup");
-
-			modifiedUserGroup2 = _userGroupLocalService.updateUserGroup(
-				productionUserGroup);
-		}
-
-		_assertProductionHits(_USER_GROUP_CLASS, _productionUserGroup);
-
-		_assertCollectionHits(
-			_ctCollection1.getCtCollectionId(), _USER_GROUP_CLASS,
-			new UserGroup[] {modifiedUserGroup1}, new UserGroup[0]);
-
-		_assertCollectionHits(
-			_ctCollection2.getCtCollectionId(), _USER_GROUP_CLASS,
-			new UserGroup[] {modifiedUserGroup2}, new UserGroup[0]);
-	}
-
-	@Test
-	public void testCollectionVersusProduction() throws Exception {
+	public void testSearchWithCTCollections() throws Exception {
 		JournalArticle addedJournalArticle = null;
 
 		JournalArticle deletedJournalArticle = JournalTestUtil.addArticle(
@@ -218,155 +290,6 @@ public class SearchCTTest {
 			_getUIDs(
 				_ctCollection1.getCtCollectionId(), addedJournalArticle,
 				addedLayout, modifiedJournalArticle2, modifiedLayout));
-	}
-
-	@Test
-	public void testPublishAndUndoArticle() throws Exception {
-		JournalArticle addedJournalArticle = null;
-
-		JournalArticle deletedJournalArticle = JournalTestUtil.addArticle(
-			_group.getGroupId(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString());
-
-		JournalArticle modifiedJournalArticle1 = JournalTestUtil.addArticle(
-			_group.getGroupId(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString());
-
-		JournalArticle modifiedJournalArticle2 = null;
-
-		JournalArticle unmodifiedJournalArticle = JournalTestUtil.addArticle(
-			_group.getGroupId(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString());
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					_ctCollection1.getCtCollectionId())) {
-
-			addedJournalArticle = JournalTestUtil.addArticle(
-				_group.getGroupId(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomString());
-
-			deletedJournalArticle = _journalArticleLocalService.deleteArticle(
-				deletedJournalArticle);
-
-			modifiedJournalArticle2 = JournalTestUtil.updateArticle(
-				modifiedJournalArticle1, "testModifyJournalArticle");
-		}
-
-		_assertProductionHits(
-			_JOURNAL_ARTICLE_CLASS, deletedJournalArticle,
-			modifiedJournalArticle1, unmodifiedJournalArticle);
-
-		_ctProcessLocalService.addCTProcess(
-			_ctCollection1.getUserId(), _ctCollection1.getCtCollectionId());
-
-		_assertProductionHits(
-			_JOURNAL_ARTICLE_CLASS, addedJournalArticle,
-			modifiedJournalArticle2, unmodifiedJournalArticle);
-
-		_undoCTCollection = _ctCollectionLocalService.undoCTCollection(
-			_ctCollection1.getCtCollectionId(), _ctCollection1.getUserId(),
-			"(undo) " + _ctCollection1.getName(), StringPool.BLANK);
-
-		_ctProcessLocalService.addCTProcess(
-			_undoCTCollection.getUserId(),
-			_undoCTCollection.getCtCollectionId());
-
-		_assertProductionHits(
-			_JOURNAL_ARTICLE_CLASS, deletedJournalArticle,
-			modifiedJournalArticle1, unmodifiedJournalArticle);
-	}
-
-	@Test
-	public void testPublishAndUndoLayout() throws Exception {
-		Layout addedLayout = null;
-
-		Layout deletedLayout = LayoutTestUtil.addTypePortletLayout(_group);
-		Layout modifiedLayout = LayoutTestUtil.addTypePortletLayout(_group);
-		Layout unmodifiedLayout = LayoutTestUtil.addTypePortletLayout(_group);
-
-		try (SafeCloseable safeCloseable =
-				CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
-					_ctCollection1.getCtCollectionId())) {
-
-			addedLayout = LayoutTestUtil.addTypePortletLayout(_group);
-			deletedLayout = _layoutLocalService.deleteLayout(deletedLayout);
-
-			modifiedLayout.setFriendlyURL("/testModifyLayout");
-
-			modifiedLayout = _layoutLocalService.updateLayout(modifiedLayout);
-		}
-
-		_assertProductionHits(
-			_LAYOUT_CLASS, deletedLayout, modifiedLayout, unmodifiedLayout);
-
-		_ctProcessLocalService.addCTProcess(
-			_ctCollection1.getUserId(), _ctCollection1.getCtCollectionId());
-
-		_assertProductionHits(
-			_LAYOUT_CLASS, addedLayout, modifiedLayout, unmodifiedLayout);
-
-		_assertAllHits(
-			_LAYOUT_CLASS,
-			_getUIDs(
-				CTConstants.CT_COLLECTION_ID_PRODUCTION, addedLayout,
-				modifiedLayout, unmodifiedLayout),
-			_getUIDs(
-				_ctCollection1.getCtCollectionId(), addedLayout,
-				modifiedLayout));
-
-		_undoCTCollection = _ctCollectionLocalService.undoCTCollection(
-			_ctCollection1.getCtCollectionId(), _ctCollection1.getUserId(),
-			"(undo) " + _ctCollection1.getName(), StringPool.BLANK);
-
-		_ctProcessLocalService.addCTProcess(
-			_undoCTCollection.getUserId(),
-			_undoCTCollection.getCtCollectionId());
-
-		_assertProductionHits(
-			_LAYOUT_CLASS, deletedLayout, modifiedLayout, unmodifiedLayout);
-
-		_assertAllHits(
-			_LAYOUT_CLASS,
-			_getUIDs(
-				CTConstants.CT_COLLECTION_ID_PRODUCTION, deletedLayout,
-				modifiedLayout, unmodifiedLayout),
-			_getUIDs(
-				_ctCollection1.getCtCollectionId(), addedLayout,
-				modifiedLayout),
-			_getUIDs(
-				_undoCTCollection.getCtCollectionId(), deletedLayout,
-				modifiedLayout));
-	}
-
-	@Test
-	public void testSearchCTCollection() throws Exception {
-		SearchRequestBuilder searchRequestBuilder =
-			_searchRequestBuilderFactory.builder(
-			).companyId(
-				_group.getCompanyId()
-			).emptySearchEnabled(
-				true
-			).entryClassNames(
-				CTCollection.class.getName()
-			).modelIndexerClasses(
-				CTCollection.class
-			).withSearchContext(
-				searchContext -> {
-				}
-			);
-
-		SearchResponse searchResponse = _searcher.search(
-			searchRequestBuilder.build());
-
-		DocumentsAssert.assertValuesIgnoreRelevance(
-			searchResponse.getRequestString(), searchResponse.getDocuments(),
-			Field.UID,
-			Arrays.asList(
-				_uidFactory.getUID(
-					CTCollection.class.getName(),
-					_ctCollection1.getCtCollectionId(),
-					CTConstants.CT_COLLECTION_ID_PRODUCTION)));
 	}
 
 	@Rule
@@ -479,8 +402,6 @@ public class SearchCTTest {
 	};
 
 	private static final Class<?>[] _LAYOUT_CLASS = {Layout.class};
-
-	private static final Class<?>[] _USER_GROUP_CLASS = {UserGroup.class};
 
 	@Inject
 	private static CTCollectionLocalService _ctCollectionLocalService;

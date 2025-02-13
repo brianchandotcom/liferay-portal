@@ -52,7 +52,7 @@ public class GroupServiceUserSitesGroupsCTTest {
 	}
 
 	@Test
-	public void testGetUserSitesGroups() throws Exception {
+	public void testSearchWithCTCollections() throws Exception {
 		Group group = null;
 
 		try (SafeCloseable safeCloseable =

@@ -6,6 +6,8 @@
 package com.liferay.site.cms.site.initializer.internal.display.context;
 
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -49,6 +51,34 @@ public class ContentSectionDisplayContext {
 
 	public List<DropdownItem> getBulkActionDropdownItems() {
 		return new ArrayList<>();
+	}
+
+	public CreationMenu getCreationMenu() {
+		return CreationMenuBuilder.addPrimaryDropdownItem(
+			dropdownItem -> {
+				dropdownItem.setIcon("forms");
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "basic-content"));
+			}
+		).addPrimaryDropdownItem(
+			dropdownItem -> {
+				dropdownItem.setIcon("blogs");
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "blog"));
+			}
+		).addPrimaryDropdownItem(
+			dropdownItem -> {
+				dropdownItem.setIcon("wiki");
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "knowledge-base"));
+			}
+		).addPrimaryDropdownItem(
+			dropdownItem -> {
+				dropdownItem.setIcon("folder");
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "folder"));
+			}
+		).build();
 	}
 
 	public Map<String, Object> getEmptyState() {

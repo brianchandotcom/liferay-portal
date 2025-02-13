@@ -2599,3 +2599,106 @@ test(
 		await expect(page.getByText('Heading Example')).toHaveCount(2);
 	}
 );
+
+test(
+	'Check parent fragments are selected when doing a range multiselect of editables',
+	{tag: ['@LPD-48393']},
+	async ({apiHelpers, page, pageEditorPage, site}) => {
+
+		// Create a page and go to edit mode
+
+		const headingId = getRandomString();
+		const headingDefinition = getFragmentDefinition({
+			id: headingId,
+			key: 'BASIC_COMPONENT-heading',
+		});
+
+		const buttonId = getRandomString();
+		const buttonDefinition = getFragmentDefinition({
+			id: buttonId,
+			key: 'BASIC_COMPONENT-button',
+		});
+
+		const paragraphId = getRandomString();
+		const paragraphDefinition = getFragmentDefinition({
+			id: paragraphId,
+			key: 'BASIC_COMPONENT-paragraph',
+		});
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([
+				headingDefinition,
+				buttonDefinition,
+				paragraphDefinition,
+			]),
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+		// Go to Browser and expand fragments
+
+		await pageEditorPage.goToSidebarTab('Browser');
+
+		await clickAndExpectToBeVisible({
+			target: page.locator('.page-editor__page-structure__tree-node', {
+				hasText: 'element-text',
+			}),
+			trigger: page.locator('.page-editor__page-structure__tree-node', {
+				hasText: 'Heading',
+			}),
+		});
+
+		await clickAndExpectToBeVisible({
+			target: page.locator('.page-editor__page-structure__tree-node', {
+				hasText: 'link',
+			}),
+			trigger: page.locator('.page-editor__page-structure__tree-node', {
+				hasText: 'Button',
+			}),
+		});
+
+		await clickAndExpectToBeVisible({
+			target: page
+				.locator('.page-editor__page-structure__tree-node', {
+					hasText: 'text',
+				})
+				.nth(1),
+			trigger: page.locator('.page-editor__page-structure__tree-node', {
+				hasText: 'Paragraph',
+			}),
+		});
+
+		// Select Heading
+
+		await clickAndExpectToBeVisible({
+			target: page.locator('.page-editor__topper__title', {
+				hasText: 'Heading',
+			}),
+			trigger: page.locator('.page-editor__page-structure__tree-node', {
+				hasText: 'Heading',
+			}),
+		});
+
+		// Select next fragment editables with Shift and check selection is correct
+
+		await page.keyboard.down('Shift');
+
+		await clickAndExpectToBeVisible({
+			target: page.getByText('2 Items Selected'),
+			trigger: page.locator('.page-editor__page-structure__tree-node', {
+				hasText: 'link',
+			}),
+		});
+
+		await clickAndExpectToBeVisible({
+			target: page.getByText('3 Items Selected'),
+			trigger: page
+				.locator('.page-editor__page-structure__tree-node', {
+					hasText: 'text',
+				})
+				.nth(1),
+		});
+	}
+);

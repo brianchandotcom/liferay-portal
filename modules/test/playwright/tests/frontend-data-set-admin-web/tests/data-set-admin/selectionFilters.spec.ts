@@ -434,7 +434,7 @@ test(
 
 			await filtersPage.saveAddFilterForm();
 
-			await page.locator('.alert-success').isHidden();
+			await waitForAlert(page);
 		});
 
 		await test.step('Check that the selection filter is in the list and is "Active" by default', async () => {

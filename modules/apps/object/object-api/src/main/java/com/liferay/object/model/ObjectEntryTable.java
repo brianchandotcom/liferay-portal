@@ -56,6 +56,10 @@ public class ObjectEntryTable extends BaseTable<ObjectEntryTable> {
 	public final Column<ObjectEntryTable, Long> rootObjectEntryId =
 		createColumn(
 			"rootObjectEntryId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<ObjectEntryTable, String> defaultLanguageId =
+		createColumn(
+			"defaultLanguageId", String.class, Types.VARCHAR,
+			Column.FLAG_DEFAULT);
 	public final Column<ObjectEntryTable, String> treePath = createColumn(
 		"treePath", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
 	public final Column<ObjectEntryTable, Date> lastPublishDate = createColumn(

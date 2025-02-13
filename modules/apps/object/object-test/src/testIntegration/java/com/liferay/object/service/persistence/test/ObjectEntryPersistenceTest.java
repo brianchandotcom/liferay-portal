@@ -139,6 +139,8 @@ public class ObjectEntryPersistenceTest {
 
 		newObjectEntry.setRootObjectEntryId(RandomTestUtil.nextLong());
 
+		newObjectEntry.setDefaultLanguageId(RandomTestUtil.randomString());
+
 		newObjectEntry.setTreePath(RandomTestUtil.randomString());
 
 		newObjectEntry.setLastPublishDate(RandomTestUtil.nextDate());
@@ -190,6 +192,9 @@ public class ObjectEntryPersistenceTest {
 		Assert.assertEquals(
 			existingObjectEntry.getRootObjectEntryId(),
 			newObjectEntry.getRootObjectEntryId());
+		Assert.assertEquals(
+			existingObjectEntry.getDefaultLanguageId(),
+			newObjectEntry.getDefaultLanguageId());
 		Assert.assertEquals(
 			existingObjectEntry.getTreePath(), newObjectEntry.getTreePath());
 		Assert.assertEquals(
@@ -334,9 +339,9 @@ public class ObjectEntryPersistenceTest {
 			true, "companyId", true, "userId", true, "userName", true,
 			"createDate", true, "modifiedDate", true, "objectDefinitionId",
 			true, "objectEntryFolderId", true, "rootObjectEntryId", true,
-			"treePath", true, "lastPublishDate", true, "status", true,
-			"statusByUserId", true, "statusByUserName", true, "statusDate",
-			true);
+			"defaultLanguageId", true, "treePath", true, "lastPublishDate",
+			true, "status", true, "statusByUserId", true, "statusByUserName",
+			true, "statusDate", true);
 	}
 
 	@Test
@@ -673,6 +678,8 @@ public class ObjectEntryPersistenceTest {
 		objectEntry.setObjectEntryFolderId(RandomTestUtil.nextLong());
 
 		objectEntry.setRootObjectEntryId(RandomTestUtil.nextLong());
+
+		objectEntry.setDefaultLanguageId(RandomTestUtil.randomString());
 
 		objectEntry.setTreePath(RandomTestUtil.randomString());
 

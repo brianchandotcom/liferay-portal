@@ -11,10 +11,14 @@ import com.liferay.depot.service.DepotEntryGroupRelLocalService;
 import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.headless.asset.library.client.dto.v1_0.AssetLibrary;
 import com.liferay.headless.asset.library.client.problem.Problem;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
+
+import java.util.Objects;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -80,6 +84,122 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 				randomAssetLibrary());
 
 		_assertLinkedSites(assetLibrary);
+	}
+
+	@Override
+	protected void assertValid(AssetLibrary assetLibrary) throws Exception {
+		boolean valid = true;
+
+		if ((assetLibrary.getDateCreated() == null) ||
+			(assetLibrary.getDateModified() == null) ||
+			(assetLibrary.getId() == null)) {
+
+			valid = false;
+		}
+
+		DepotEntry depotEntry = _depotEntryLocalService.getDepotEntry(
+			assetLibrary.getId());
+
+		Group group = depotEntry.getGroup();
+
+		if (!Objects.equals(
+				assetLibrary.getAssetLibraryKey(), group.getGroupKey()) &&
+			!Objects.equals(assetLibrary.getSiteId(), group.getGroupId())) {
+
+			valid = false;
+		}
+
+		for (String additionalAssertFieldName :
+				getAdditionalAssertFieldNames()) {
+
+			if (Objects.equals(additionalAssertFieldName, "assetLibraryKey")) {
+				if (assetLibrary.getAssetLibraryKey() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(additionalAssertFieldName, "description")) {
+				if (assetLibrary.getDescription() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(additionalAssertFieldName, "description_i18n")) {
+				if (assetLibrary.getDescription_i18n() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					additionalAssertFieldName, "externalReferenceCode")) {
+
+				if (assetLibrary.getExternalReferenceCode() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(additionalAssertFieldName, "linkedSiteIds")) {
+				if (assetLibrary.getLinkedSiteIds() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(
+					additionalAssertFieldName,
+					"linkedSitesExternalReferenceCodes")) {
+
+				if (assetLibrary.getLinkedSitesExternalReferenceCodes() ==
+						null) {
+
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(additionalAssertFieldName, "name")) {
+				if (assetLibrary.getName() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals(additionalAssertFieldName, "name_i18n")) {
+				if (assetLibrary.getName_i18n() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			throw new IllegalArgumentException(
+				"Invalid additional assert field name " +
+					additionalAssertFieldName);
+		}
+
+		Assert.assertTrue(valid);
+	}
+
+	@Override
+	protected AssetLibrary randomAssetLibrary() throws Exception {
+		return new AssetLibrary() {
+			{
+				description = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				name = StringUtil.toLowerCase(RandomTestUtil.randomString());
+			}
+		};
 	}
 
 	@Override

@@ -47,10 +47,12 @@ import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectDefinitionSetting;
+import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectEntryTable;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFolder;
 import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.related.models.test.util.ObjectEntryTestUtil;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectActionLocalServiceUtil;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -666,16 +668,19 @@ public class ObjectDefinitionLocalServiceTest {
 	public void testAddObjectDefinitionWithObjectDefinitionSettings()
 		throws Exception {
 
-		String randomName = ObjectDefinitionTestUtil.getRandomName();
+		String randomObjectDefinitionName =
+			ObjectDefinitionTestUtil.getRandomName();
 
 		AssertUtils.assertFailure(
 			ObjectDefinitionSettingNameException.NotAllowedNames.class,
 			StringBundler.concat(
 				"The settings ",
 				ObjectDefinitionSettingConstants.NAME_ACCEPT_ALL_GROUPS,
-				" are not allowed for object definition ", randomName),
-			() -> _addCustomObjectDefinition(
-				randomName, ObjectDefinitionConstants.SCOPE_COMPANY,
+				" are not allowed for object definition ",
+				randomObjectDefinitionName),
+			() -> _publishCustomObjectDefinition(
+				randomObjectDefinitionName,
+				ObjectDefinitionConstants.SCOPE_COMPANY,
 				Collections.singletonList(
 					new ObjectDefinitionSettingBuilder(
 					).name(
@@ -688,9 +693,11 @@ public class ObjectDefinitionLocalServiceTest {
 			StringBundler.concat(
 				"The settings ",
 				ObjectDefinitionSettingConstants.NAME_ACCEPT_ALL_GROUPS,
-				" are not allowed for object definition ", randomName),
-			() -> _addCustomObjectDefinition(
-				randomName, ObjectDefinitionConstants.SCOPE_SITE,
+				" are not allowed for object definition ",
+				randomObjectDefinitionName),
+			() -> _publishCustomObjectDefinition(
+				randomObjectDefinitionName,
+				ObjectDefinitionConstants.SCOPE_SITE,
 				Collections.singletonList(
 					new ObjectDefinitionSettingBuilder(
 					).name(
@@ -701,25 +708,13 @@ public class ObjectDefinitionLocalServiceTest {
 		AssertUtils.assertFailure(
 			ObjectDefinitionSettingNameException.NotAllowedNames.class,
 			StringBundler.concat(
-				"The settings ", randomName,
-				" are not allowed for object definition ", randomName),
-			() -> _addCustomObjectDefinition(
-				randomName, ObjectDefinitionConstants.SCOPE_DEPOT,
-				Collections.singletonList(
-					new ObjectDefinitionSettingBuilder(
-					).name(
-						randomName
-					).value(
-						randomName
-					).build())));
-		AssertUtils.assertFailure(
-			ObjectDefinitionSettingNameException.NotAllowedNames.class,
-			StringBundler.concat(
 				"The settings ",
 				ObjectDefinitionSettingConstants.NAME_ACCEPTED_GROUP_IDS,
-				" are not allowed for object definition ", randomName),
-			() -> _addCustomObjectDefinition(
-				randomName, ObjectDefinitionConstants.SCOPE_DEPOT,
+				" are not allowed for object definition ",
+				randomObjectDefinitionName),
+			() -> _publishCustomObjectDefinition(
+				randomObjectDefinitionName,
+				ObjectDefinitionConstants.SCOPE_DEPOT,
 				List.of(
 					new ObjectDefinitionSettingBuilder(
 					).name(
@@ -734,33 +729,70 @@ public class ObjectDefinitionLocalServiceTest {
 						String.valueOf(TestPropsValues.getGroupId())
 					).build())));
 
-		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
-			HashMapBuilder.put(
-				LocaleUtil.getDefault(), RandomTestUtil.randomString()
-			).build(),
-			Collections.emptyMap(), ServiceContextTestUtil.getServiceContext());
+		String objectDefinitionSettingName = RandomTestUtil.randomString();
 
-		long depotGroupId = depotEntry.getGroupId();
+		AssertUtils.assertFailure(
+			ObjectDefinitionSettingNameException.NotAllowedNames.class,
+			StringBundler.concat(
+				"The settings ", objectDefinitionSettingName,
+				" are not allowed for object definition ",
+				randomObjectDefinitionName),
+			() -> _publishCustomObjectDefinition(
+				randomObjectDefinitionName,
+				ObjectDefinitionConstants.SCOPE_DEPOT,
+				Collections.singletonList(
+					new ObjectDefinitionSettingBuilder(
+					).name(
+						objectDefinitionSettingName
+					).value(
+						StringPool.TRUE
+					).build())));
+
+		String objectDefinitionSettingValue = RandomTestUtil.randomString();
+
+		AssertUtils.assertFailure(
+			ObjectDefinitionSettingValueException.InvalidValue.class,
+			StringBundler.concat(
+				"The value ", objectDefinitionSettingValue, " of setting \"",
+				ObjectDefinitionSettingConstants.NAME_ACCEPT_ALL_GROUPS,
+				"\" is invalid for object definition \"",
+				randomObjectDefinitionName, "\""),
+			() -> _publishCustomObjectDefinition(
+				randomObjectDefinitionName,
+				ObjectDefinitionConstants.SCOPE_DEPOT,
+				Collections.singletonList(
+					new ObjectDefinitionSettingBuilder(
+					).name(
+						ObjectDefinitionSettingConstants.NAME_ACCEPT_ALL_GROUPS
+					).value(
+						objectDefinitionSettingValue
+					).build())));
+
+		DepotEntry depotEntry1 = _depotEntryLocalService.addDepotEntry(
+			RandomTestUtil.randomLocaleStringMap(), Collections.emptyMap(),
+			ServiceContextTestUtil.getServiceContext());
 
 		AssertUtils.assertFailure(
 			ObjectDefinitionSettingValueException.InvalidValue.class,
 			StringBundler.concat(
 				"The value ", TestPropsValues.getGroupId(), " of setting \"",
 				ObjectDefinitionSettingConstants.NAME_ACCEPTED_GROUP_IDS,
-				"\" is invalid for object definition \"", randomName, "\""),
-			() -> _addCustomObjectDefinition(
-				randomName, ObjectDefinitionConstants.SCOPE_DEPOT,
-				List.of(
+				"\" is invalid for object definition \"",
+				randomObjectDefinitionName, "\""),
+			() -> _publishCustomObjectDefinition(
+				randomObjectDefinitionName,
+				ObjectDefinitionConstants.SCOPE_DEPOT,
+				Collections.singletonList(
 					new ObjectDefinitionSettingBuilder(
 					).name(
 						ObjectDefinitionSettingConstants.NAME_ACCEPTED_GROUP_IDS
 					).value(
 						StringBundler.concat(
-							depotGroupId, StringPool.COMMA,
+							depotEntry1.getGroupId(), StringPool.COMMA,
 							TestPropsValues.getGroupId())
 					).build())));
 
-		ObjectDefinition objectDefinition = _addCustomObjectDefinition(
+		ObjectDefinition objectDefinition1 = _publishCustomObjectDefinition(
 			ObjectDefinitionTestUtil.getRandomName(),
 			ObjectDefinitionConstants.SCOPE_DEPOT,
 			Collections.singletonList(
@@ -772,27 +804,129 @@ public class ObjectDefinitionLocalServiceTest {
 				).build()));
 
 		_assertObjectDefinitionSettingsValues(
-			objectDefinition.getObjectDefinitionSettings(),
+			objectDefinition1.getObjectDefinitionSettings(),
 			Collections.singletonMap(
 				ObjectDefinitionSettingConstants.NAME_ACCEPT_ALL_GROUPS,
 				StringPool.TRUE));
 
-		objectDefinition = _addCustomObjectDefinition(
+		ObjectDefinition objectDefinition2 = _publishCustomObjectDefinition(
 			ObjectDefinitionTestUtil.getRandomName(),
 			ObjectDefinitionConstants.SCOPE_DEPOT,
-			List.of(
+			Collections.singletonList(
 				new ObjectDefinitionSettingBuilder(
 				).name(
-					ObjectDefinitionSettingConstants.NAME_ACCEPTED_GROUP_IDS
+					ObjectDefinitionSettingConstants.NAME_ACCEPT_ALL_GROUPS
 				).value(
-					String.valueOf(depotGroupId)
+					StringPool.TRUE
 				).build()));
 
 		_assertObjectDefinitionSettingsValues(
-			objectDefinition.getObjectDefinitionSettings(),
+			objectDefinition2.getObjectDefinitionSettings(),
+			Collections.singletonMap(
+				ObjectDefinitionSettingConstants.NAME_ACCEPT_ALL_GROUPS,
+				StringPool.TRUE));
+
+		ObjectRelationship objectRelationship =
+			ObjectRelationshipTestUtil.addObjectRelationship(
+				_objectRelationshipLocalService, objectDefinition1,
+				objectDefinition2,
+				ObjectRelationshipConstants.DELETION_TYPE_PREVENT);
+
+		ObjectField relationshipObjectField =
+			_objectFieldLocalService.getObjectField(
+				objectRelationship.getObjectFieldId2());
+
+		ObjectEntry objectEntry1 = ObjectEntryTestUtil.addObjectEntry(
+			depotEntry1.getGroupId(), objectDefinition1.getObjectDefinitionId(),
+			Collections.emptyMap());
+
+		ObjectEntry objectEntry2 = ObjectEntryTestUtil.addObjectEntry(
+			depotEntry1.getGroupId(), objectDefinition2.getObjectDefinitionId(),
+			Collections.singletonMap(
+				relationshipObjectField.getName(),
+				objectEntry1.getObjectEntryId()));
+
+		DepotEntry depotEntry2 = _depotEntryLocalService.addDepotEntry(
+			RandomTestUtil.randomLocaleStringMap(), Collections.emptyMap(),
+			ServiceContextTestUtil.getServiceContext());
+
+		ObjectEntry objectEntry3 = ObjectEntryTestUtil.addObjectEntry(
+			depotEntry2.getGroupId(), objectDefinition1.getObjectDefinitionId(),
+			Collections.emptyMap());
+
+		String originalName = PrincipalThreadLocal.getName();
+
+		try {
+			PrincipalThreadLocal.setName(TestPropsValues.getUserId());
+
+			objectDefinition1 =
+				_objectDefinitionLocalService.updateCustomObjectDefinition(
+					null, objectDefinition1.getObjectDefinitionId(), 0, 0,
+					objectDefinition1.getObjectFolderId(), 0, false,
+					objectDefinition1.isActive(),
+					objectDefinition1.getClassName(), true, false, true, false,
+					false, false, false,
+					LocalizedMapUtil.getLocalizedMap("Able"), "Able", null,
+					null, false, LocalizedMapUtil.getLocalizedMap("Ables"),
+					objectDefinition1.getScope(), objectDefinition1.getStatus(),
+					Collections.singletonList(
+						new ObjectDefinitionSettingBuilder(
+						).name(
+							ObjectDefinitionSettingConstants.
+								NAME_ACCEPTED_GROUP_IDS
+						).value(
+							String.valueOf(depotEntry2.getGroupId())
+						).build()));
+
+			_assertObjectDefinitionSettingsValues(
+				objectDefinition1.getObjectDefinitionSettings(),
+				Collections.singletonMap(
+					ObjectDefinitionSettingConstants.NAME_ACCEPTED_GROUP_IDS,
+					String.valueOf(depotEntry2.getGroupId())));
+		}
+		finally {
+			PrincipalThreadLocal.setName(originalName);
+		}
+
+		Assert.assertNull(
+			_objectEntryLocalService.fetchObjectEntry(
+				objectEntry1.getObjectEntryId()));
+		Assert.assertNotNull(
+			_objectEntryLocalService.fetchObjectEntry(
+				objectEntry2.getObjectEntryId()));
+		Assert.assertNotNull(
+			_objectEntryLocalService.fetchObjectEntry(
+				objectEntry3.getObjectEntryId()));
+
+		objectDefinition1 =
+			_objectDefinitionLocalService.updateCustomObjectDefinition(
+				null, objectDefinition1.getObjectDefinitionId(), 0, 0,
+				objectDefinition1.getObjectFolderId(), 0, false,
+				objectDefinition1.isActive(), objectDefinition1.getClassName(),
+				true, false, true, false, false, false, false,
+				LocalizedMapUtil.getLocalizedMap("Able"), "Able", null, null,
+				false, LocalizedMapUtil.getLocalizedMap("Ables"),
+				objectDefinition1.getScope(), objectDefinition1.getStatus(),
+				Collections.singletonList(
+					new ObjectDefinitionSettingBuilder(
+					).name(
+						ObjectDefinitionSettingConstants.NAME_ACCEPTED_GROUP_IDS
+					).value(
+						String.valueOf(depotEntry1.getGroupId())
+					).build()));
+
+		_assertObjectDefinitionSettingsValues(
+			objectDefinition1.getObjectDefinitionSettings(),
 			Collections.singletonMap(
 				ObjectDefinitionSettingConstants.NAME_ACCEPTED_GROUP_IDS,
-				String.valueOf(depotGroupId)));
+				String.valueOf(depotEntry1.getGroupId())));
+
+		Assert.assertNull(
+			_objectEntryLocalService.fetchObjectEntry(
+				objectEntry3.getObjectEntryId()));
+
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition1);
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition2);
 	}
 
 	@Test
@@ -3119,24 +3253,6 @@ public class ObjectDefinitionLocalServiceTest {
 	}
 
 	private ObjectDefinition _addCustomObjectDefinition(
-			String name, String scope,
-			List<ObjectDefinitionSetting> objectDefinitionSettings)
-		throws Exception {
-
-		return _objectDefinitionLocalService.addCustomObjectDefinition(
-			TestPropsValues.getUserId(), 0, null, false, false, true, false,
-			false, LocalizedMapUtil.getLocalizedMap(name), name, null, null,
-			LocalizedMapUtil.getLocalizedMap(name), true, scope,
-			ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
-			objectDefinitionSettings,
-			Arrays.asList(
-				ObjectFieldUtil.createObjectField(
-					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-					ObjectFieldConstants.DB_TYPE_STRING,
-					RandomTestUtil.randomString(), StringUtil.randomId())));
-	}
-
-	private ObjectDefinition _addCustomObjectDefinition(
 			String label, String name, String pluralLabel)
 		throws Exception {
 
@@ -3438,6 +3554,29 @@ public class ObjectDefinitionLocalServiceTest {
 
 		return _objectDefinitionLocalService.publishCustomObjectDefinition(
 			TestPropsValues.getUserId(),
+			objectDefinition.getObjectDefinitionId());
+	}
+
+	private ObjectDefinition _publishCustomObjectDefinition(
+			String name, String scope,
+			List<ObjectDefinitionSetting> objectDefinitionSettings)
+		throws Exception {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.addCustomObjectDefinition(
+				TestPropsValues.getUserId(), 0, null, false, false, true, false,
+				false, LocalizedMapUtil.getLocalizedMap(name), name, null, null,
+				LocalizedMapUtil.getLocalizedMap(name), true, scope,
+				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
+				objectDefinitionSettings,
+				Arrays.asList(
+					ObjectFieldUtil.createObjectField(
+						ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+						ObjectFieldConstants.DB_TYPE_STRING,
+						RandomTestUtil.randomString(), StringUtil.randomId())));
+
+		return _objectDefinitionLocalService.publishCustomObjectDefinition(
+			objectDefinition.getUserId(),
 			objectDefinition.getObjectDefinitionId());
 	}
 

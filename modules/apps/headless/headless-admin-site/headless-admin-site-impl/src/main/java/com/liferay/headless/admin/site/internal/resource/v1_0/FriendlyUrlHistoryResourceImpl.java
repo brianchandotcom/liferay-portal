@@ -72,11 +72,8 @@ public class FriendlyUrlHistoryResourceImpl
 						true, contextCompany.getCompanyId(),
 						siteExternalReferenceCode));
 
-		if (!LayoutUtil.isPublished(
-				_layoutLocalService.getLayout(
-					layoutPageTemplateEntry.getPlid())) ||
-			(layoutPageTemplateEntry.getType() !=
-				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE)) {
+		if (layoutPageTemplateEntry.getType() !=
+				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE) {
 
 			throw new UnsupportedOperationException();
 		}
@@ -142,13 +139,6 @@ public class FriendlyUrlHistoryResourceImpl
 						true, contextCompany.getCompanyId(),
 						siteExternalReferenceCode));
 
-		if (!LayoutUtil.isPublished(
-				_layoutLocalService.getLayout(
-					layoutUtilityPageEntry.getPlid()))) {
-
-			throw new UnsupportedOperationException();
-		}
-
 		return _toFriendlyUrlHistory(
 			_layoutLocalService.getLayout(layoutUtilityPageEntry.getPlid()));
 	}
@@ -157,6 +147,10 @@ public class FriendlyUrlHistoryResourceImpl
 		throws Exception {
 
 		JSONObject jsonObject = _jsonFactory.createJSONObject();
+
+		if (!LayoutUtil.isPublished(layout)) {
+			return jsonObject;
+		}
 
 		long classNameId = _layoutFriendlyURLEntryHelper.getClassNameId(
 			layout.isPrivateLayout());

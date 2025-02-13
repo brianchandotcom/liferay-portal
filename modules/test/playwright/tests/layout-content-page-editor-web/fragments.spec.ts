@@ -112,38 +112,27 @@ test.describe('Content Display Fragment', () => {
 	test('Does not show alert when accessing a page with a web content display mapped to a restricted web content', async ({
 		apiHelpers,
 		browser,
-		journalEditArticlePage,
-		journalPage,
 		page,
 		pageEditorPage,
-		site,
+		pageManagementSite,
 	}) => {
 
-		// Create a web content
+		// Create bird web content
 
-		await journalPage.goto(site.friendlyUrlPath);
-		await journalPage.goToCreateArticle();
+		const birdWebContentTitle = getRandomString();
 
-		// Wait for editor to be loaded
+		const birdWebContentStructureId = await getWebContentStructureId(
+			apiHelpers,
+			pageManagementSite.id,
+			ANIMAL_DDM_STRUCTURE_KEY
+		);
 
-		await page.getByLabel('Select a language').waitFor();
-
-		await page
-			.locator('.sheet-subtitle', {hasText: 'Basic Information'})
-			.waitFor();
-
-		// Fill article data and publish for Site Members
-
-		const articleTitle = getRandomString();
-		const articleContent = 'My article';
-
-		await journalPage.fillArticleData(articleTitle, articleContent);
-
-		await journalEditArticlePage.publishArticle(false, 'Site Members');
-
-		await expect(
-			page.getByLabel('Not Visible to Guest Users')
-		).toBeVisible();
+		await apiHelpers.jsonWebServicesJournal.addWebContent({
+			ddmStructureId: birdWebContentStructureId,
+			ddmTemplateKey: ANIMAL_DDM_TEMPLATE_KEY,
+			groupId: pageManagementSite.id,
+			titleMap: {en_US: birdWebContentTitle},
+		});
 
 		// Create a page with a content display fragment and go to edit mode
 
@@ -164,11 +153,11 @@ test.describe('Content Display Fragment', () => {
 
 		const layout = await apiHelpers.headlessDelivery.createSitePage({
 			pageDefinition: getPageDefinition([contentDisplayDefinition]),
-			siteId: site.id,
+			siteId: pageManagementSite.id,
 			title: getRandomString(),
 		});
 
-		await pageEditorPage.goto(layout, site.friendlyUrlPath);
+		await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
 
 		// Map the content display fragment to the created web content and publish the page
 
@@ -176,8 +165,13 @@ test.describe('Content Display Fragment', () => {
 
 		await pageEditorPage.setMappedItem({
 			entity: 'Web Content',
-			entry: articleTitle,
+			entry: 'Hummingbird',
+			folder: 'Birds',
 		});
+
+		await expect(
+			page.locator('#page-editor').getByText('Hummingbird')
+		).toBeVisible();
 
 		await pageEditorPage.publishPage();
 
@@ -188,12 +182,12 @@ test.describe('Content Display Fragment', () => {
 		const incognitoPage = await context.newPage();
 
 		await incognitoPage.goto(
-			`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
+			`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
 		);
 
 		// Check the content is not displayed and no alert is shown
 
-		await expect(incognitoPage.getByText(articleContent)).not.toBeVisible();
+		await expect(incognitoPage.getByText('Hummingbird')).not.toBeVisible();
 		await expect(incognitoPage.getByRole('alert')).not.toBeVisible();
 	});
 

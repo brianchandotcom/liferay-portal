@@ -73,7 +73,7 @@ public class SystemFDSSerializer
 		String fdsName, HttpServletRequest httpServletRequest) {
 
 		FDSBulkActions fdsBulkActions =
-			_fdsBulkActionsRegistry.getFDSBulkActions(fdsName);
+			fdsBulkActionsRegistry.getFDSBulkActions(fdsName);
 
 		if (fdsBulkActions == null) {
 			return Collections.emptyList();
@@ -135,6 +135,9 @@ public class SystemFDSSerializer
 	}
 
 	@Reference
+	protected FDSBulkActionsRegistry fdsBulkActionsRegistry;
+
+	@Reference
 	protected SystemFDSEntryRegistry systemFDSEntryRegistry;
 
 	private void _serializeFilters(
@@ -185,9 +188,6 @@ public class SystemFDSSerializer
 			jsonArray.put(jsonObject);
 		}
 	}
-
-	@Reference
-	private FDSBulkActionsRegistry _fdsBulkActionsRegistry;
 
 	@Reference
 	private FDSCreationMenuRegistry _fdsCreationMenuRegistry;

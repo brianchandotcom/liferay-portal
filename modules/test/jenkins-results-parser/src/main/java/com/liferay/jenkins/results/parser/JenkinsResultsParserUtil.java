@@ -1263,7 +1263,7 @@ public class JenkinsResultsParserUtil {
 	public static String getBuildDirPath() {
 		StringBuilder sb = new StringBuilder();
 
-		sb.append("/tmp/jenkins/");
+		sb.append("/opt/dev/projects/github/liferay-jenkins-ee/tmp/jenkins/");
 
 		String topLevelBuildURL = System.getenv("TOP_LEVEL_BUILD_URL");
 
@@ -1299,7 +1299,7 @@ public class JenkinsResultsParserUtil {
 
 		StringBuilder sb = new StringBuilder();
 
-		sb.append("/tmp/jenkins/");
+		sb.append("/opt/dev/projects/github/liferay-jenkins-ee/tmp/jenkins/");
 
 		if (!isCINode() || isNullOrEmpty(buildNumber) ||
 			isNullOrEmpty(jobName) || isNullOrEmpty(masterHostname)) {

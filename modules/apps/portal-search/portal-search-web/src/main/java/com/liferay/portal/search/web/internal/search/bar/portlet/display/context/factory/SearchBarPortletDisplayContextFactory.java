@@ -52,8 +52,6 @@ import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchRe
 import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchResponse;
 import com.liferay.portal.search.web.search.request.SearchSettings;
 
-import java.util.List;
-
 import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
 

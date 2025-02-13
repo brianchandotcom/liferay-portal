@@ -177,7 +177,6 @@ test('can export custom object entries at instance level with permissions', asyn
 
 	const exportFilePath = await companyExportImportPage.export(
 		'Tests 1 Items',
-		false,
 		true
 	);
 

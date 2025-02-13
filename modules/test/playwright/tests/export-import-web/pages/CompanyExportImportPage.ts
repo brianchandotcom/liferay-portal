@@ -7,7 +7,6 @@ import {Page} from '@playwright/test';
 import path from 'path';
 
 import {ApplicationsMenuPage} from '../../../pages/product-navigation-applications-menu/ApplicationsMenuPage';
-import getRandomString from '../../../utils/getRandomString';
 import {ExportImportPage} from './ExportImportPage';
 
 export class CompanyExportImportPage {
@@ -23,8 +22,8 @@ export class CompanyExportImportPage {
 
 	async export(
 		itemLabel: string,
-		defaultTaskName?: boolean,
-		includePermissions: boolean = false
+		includePermissions: boolean = false,
+		taskName?: string
 	): Promise<string> {
 		await this.applicationsMenuPage.goToExport();
 
@@ -32,15 +31,9 @@ export class CompanyExportImportPage {
 
 		await this.page.getByLabel(itemLabel).click();
 
-		let exportName;
-
-		if (defaultTaskName) {
-			exportName = 'Export';
-		}
-		else {
-			exportName = 'MyExport-' + getRandomString();
-			await this.exportImportPage.title.fill(exportName);
-		}
+		taskName
+			? await this.exportImportPage.title.fill(taskName)
+			: (taskName = 'Export');
 
 		if (includePermissions) {
 			await this.exportImportPage.exportPermissionsButton.click();
@@ -49,16 +42,14 @@ export class CompanyExportImportPage {
 		await this.exportImportPage.exportButton.click();
 
 		await this.page
-			.getByText(exportName)
+			.getByText(taskName)
 			.locator('../../..')
 			.getByText('Successful')
 			.waitFor();
 
-		if (defaultTaskName) {
-			exportName += '-';
-		}
+		taskName += '-';
 
-		return await this.exportImportPage.downloadExportProcess(exportName);
+		return await this.exportImportPage.downloadExportProcess(taskName);
 	}
 
 	async goToImportOptions(filePath: string) {

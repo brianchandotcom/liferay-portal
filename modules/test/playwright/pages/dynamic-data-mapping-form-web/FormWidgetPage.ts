@@ -19,9 +19,9 @@ export class FormWidgetPage {
 		this.configurationDropdownButton = page.getByRole('menuitem', {
 			name: 'Configuration',
 		});
-		this.dropdownButton = page.locator(
-			'[id^="portlet-topper-toolbar_com_liferay_dynamic_data_mapping_form_web_portlet_DDMFormPortlet_INSTANCE_"]'
-		);
+		this.dropdownButton = page
+			.locator('#wrapper')
+			.getByRole('button', {name: 'Options'});
 		this.formLabelLink = page.locator(
 			'tbody.table-data tr td a:has-text("Form A")'
 		);

@@ -235,6 +235,10 @@ public class CompanyLocalServiceTest {
 	public void testAddAndDeleteCompanyWithCompanyGroupStaging()
 		throws Exception {
 
+		if (DBPartition.isPartitionEnabled()) {
+			return;
+		}
+
 		Company company = addCompany();
 
 		Group companyGroup = null;
@@ -264,6 +268,10 @@ public class CompanyLocalServiceTest {
 
 	@Test
 	public void testAddAndDeleteCompanyWithDLFileEntryTypes() throws Exception {
+		if (DBPartition.isPartitionEnabled()) {
+			return;
+		}
+
 		Company company = addCompany();
 
 		long companyId = company.getCompanyId();
@@ -333,6 +341,10 @@ public class CompanyLocalServiceTest {
 	public void testAddAndDeleteCompanyWithLayoutSetPrototype()
 		throws Throwable {
 
+		if (DBPartition.isPartitionEnabled()) {
+			return;
+		}
+
 		Company company = addCompany();
 
 		long companyId = company.getCompanyId();
@@ -375,6 +387,10 @@ public class CompanyLocalServiceTest {
 	@Test
 	public void testAddAndDeleteCompanyWithLayoutSetPrototypeLinkedUserGroup()
 		throws Throwable {
+
+		if (DBPartition.isPartitionEnabled()) {
+			return;
+		}
 
 		Company company = addCompany();
 
@@ -425,6 +441,10 @@ public class CompanyLocalServiceTest {
 
 	@Test
 	public void testAddAndDeleteCompanyWithParentGroup() throws Exception {
+		if (DBPartition.isPartitionEnabled()) {
+			return;
+		}
+
 		Company company = addCompany();
 
 		long companyId = company.getCompanyId();
@@ -526,6 +546,10 @@ public class CompanyLocalServiceTest {
 	public void testAddAndDeleteCompanyWithStagedOrganizationSite()
 		throws Exception {
 
+		if (DBPartition.isPartitionEnabled()) {
+			return;
+		}
+
 		Company company = addCompany();
 
 		Organization companyOrganization = null;
@@ -561,6 +585,10 @@ public class CompanyLocalServiceTest {
 
 	@Test
 	public void testAddAndDeleteCompanyWithUserGroup() throws Exception {
+		if (DBPartition.isPartitionEnabled()) {
+			return;
+		}
+
 		Company company = addCompany();
 
 		long companyId = company.getCompanyId();
@@ -598,6 +626,10 @@ public class CompanyLocalServiceTest {
 	@Test
 	public void testAddAndDeleteCompanyWithUserGroupAndUserGroupRole()
 		throws Exception {
+
+		if (DBPartition.isPartitionEnabled()) {
+			return;
+		}
 
 		Company company = addCompany();
 

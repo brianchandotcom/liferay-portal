@@ -43,7 +43,7 @@ public class IsGreaterThanOrEqualToDDMValidation implements DDMValidation {
 		return _language.get(
 			ResourceBundleUtil.getModuleAndPortalResourceBundle(
 				locale, getClass()),
-			"number-placeholder");
+			"number");
 	}
 
 	@Override

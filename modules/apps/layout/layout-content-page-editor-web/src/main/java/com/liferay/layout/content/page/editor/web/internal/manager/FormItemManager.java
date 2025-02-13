@@ -394,6 +394,26 @@ public class FormItemManager {
 					layoutStructure.getLayoutStructureItem(
 						formStepLayoutStructureItemChildrenItemId);
 
+				if (FeatureFlagManagerUtil.isEnabled("LPD-31772") &&
+					(layoutStructureItem instanceof
+						FragmentStyledLayoutStructureItem)) {
+
+					FragmentStyledLayoutStructureItem
+						fragmentStyledLayoutStructureItem =
+							(FragmentStyledLayoutStructureItem)
+								layoutStructureItem;
+
+					String type = _getFragmentEntryLinkFormButtonType(
+						fragmentStyledLayoutStructureItem.
+							getFragmentEntryLinkId());
+
+					if (Objects.equals(type, "next") ||
+						Objects.equals(type, "previous")) {
+
+						continue;
+					}
+				}
+
 				layoutStructureItemChanges.addMovedLayoutStructureItems(
 					layoutStructureItem.clone());
 
@@ -635,9 +655,8 @@ public class FormItemManager {
 		List<String> childrenItemIds = new ArrayList<>(
 			formStepContainerStyledLayoutStructureItem.getChildrenItemIds());
 
-		LayoutStructureItem previousFormStepLayoutStructureItem =
-			layoutStructure.getLayoutStructureItem(
-				childrenItemIds.get(numberOfSteps - 1));
+		String previousFormStepLayoutStructureItemId = childrenItemIds.get(
+			numberOfSteps - 1);
 
 		for (int i = numberOfSteps; i < childrenItemIds.size(); i++) {
 			LayoutStructureItem formStepLayoutStructureItem =
@@ -650,12 +669,29 @@ public class FormItemManager {
 				LayoutStructureItem layoutStructureItem =
 					layoutStructure.getLayoutStructureItem(childrenItemId);
 
+				if (FeatureFlagManagerUtil.isEnabled("LPD-31772") &&
+					(layoutStructureItem instanceof
+						FragmentStyledLayoutStructureItem)) {
+
+					FragmentStyledLayoutStructureItem
+						fragmentStyledLayoutStructureItem =
+							(FragmentStyledLayoutStructureItem)
+								layoutStructureItem;
+
+					String type = _getFragmentEntryLinkFormButtonType(
+						fragmentStyledLayoutStructureItem.
+							getFragmentEntryLinkId());
+
+					if (Objects.equals(type, "next")) {
+						continue;
+					}
+				}
+
 				layoutStructureItemChanges.addMovedLayoutStructureItems(
 					layoutStructureItem.clone());
 
 				layoutStructure.moveLayoutStructureItem(
-					childrenItemId,
-					previousFormStepLayoutStructureItem.getItemId(), -1);
+					childrenItemId, previousFormStepLayoutStructureItemId, -1);
 			}
 
 			layoutStructureItemChanges.addRemovedLayoutStructureItems(
@@ -673,8 +709,7 @@ public class FormItemManager {
 
 		for (String childrenItemId :
 				LayoutStructureItemUtil.getChildrenItemIds(
-					previousFormStepLayoutStructureItem.getItemId(),
-					layoutStructure)) {
+					previousFormStepLayoutStructureItemId, layoutStructure)) {
 
 			LayoutStructureItem layoutStructureItem =
 				layoutStructure.getLayoutStructureItem(childrenItemId);

@@ -120,7 +120,15 @@ export class ExportImportPage {
 	async downloadExportProcess(name: string) {
 		const downloadPromise = this.page.waitForEvent('download');
 
-		await this.page.locator('//*[contains(@href, "' + name + '")]').click();
+		await this.page
+			.locator(
+				'//h2[span[normalize-space()="' +
+					name +
+					'"]]/span/a[contains(@href, "/portlet_file_entry/") and contains(@href, "' +
+					name +
+					'")]'
+			)
+			.click();
 
 		const download = await downloadPromise;
 		const filePath = getTempDir() + download.suggestedFilename();

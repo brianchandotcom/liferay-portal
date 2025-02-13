@@ -5,19 +5,15 @@
 
 /**
  * Conver UTC date to local date
- * @param {Date} date
- * @returns {number}
  */
-export function convertUTCDateToLocalDate(date = new Date()) {
+export function convertUTCDateToLocalDate(date: Date = new Date()): Date {
 	return new Date(date.getTime() - date.getTimezoneOffset() * 60 * 1000);
 }
 
 /**
  * Get timezone offset hour
- * @param {Date} date
- * @returns {number}
  */
-export function getTimezoneOffsetHour(date = new Date()) {
+export function getTimezoneOffsetHour(date: Date = new Date()): string {
 	const offset = date.getTimezoneOffset() / 60;
 
 	const sign = offset > 0 ? '-' : '+';

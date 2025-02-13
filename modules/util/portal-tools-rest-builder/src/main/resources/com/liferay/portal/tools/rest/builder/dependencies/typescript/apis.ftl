@@ -1,6 +1,6 @@
-<#list apiContexts?sort_by("key") as apiContext>
-export * from './${apiContext.value.classname?uncap_first}';
-import { ${apiContext.value.classname} } from './${apiContext.value.classname?uncap_first}';
+<#list apiContexts as apiContext>
+export * from './${apiContext.classname?uncap_first}';
+import { ${apiContext.classname} } from './${apiContext.classname?uncap_first}';
 </#list>
 
 import * as http from 'http';
@@ -11,4 +11,4 @@ export class HttpError extends Error {
 	}
 }
 
-export const APIS = [<#list apiContexts?sort_by("key") as apiContext>${apiContext.value.classname}<#if apiContext_has_next>, </#if></#list>];
+export const APIS = [<#list apiContexts as apiContext>${apiContext.classname}<#if apiContext_has_next>, </#if></#list>];

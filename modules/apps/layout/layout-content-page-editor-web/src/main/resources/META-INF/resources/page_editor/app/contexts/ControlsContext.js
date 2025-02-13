@@ -216,7 +216,10 @@ const reducer = (state, action) => {
 
 			rangeLimitIds = {end: parentId || itemId, start: startLimitId};
 
-			if (
+			if (!state.activeItemIds.length) {
+				nextActiveItemIds = [itemId];
+			}
+			else if (
 				!rangeLimitIds.start ||
 				rangeLimitIds.end === rangeLimitIds.start
 			) {

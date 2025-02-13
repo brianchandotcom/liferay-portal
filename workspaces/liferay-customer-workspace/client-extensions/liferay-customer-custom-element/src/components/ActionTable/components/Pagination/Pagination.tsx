@@ -20,7 +20,7 @@ interface IProps {
 	totalItems: number;
 }
 
-const TablePagination: React.FC<IProps> = ({
+const Pagination: React.FC<IProps> = ({
 	activePage,
 	ellipsisBuffer = 3,
 	itemsPerPage = 5,
@@ -73,4 +73,4 @@ const TablePagination: React.FC<IProps> = ({
 	);
 };
 
-export default TablePagination;
+export default Pagination;

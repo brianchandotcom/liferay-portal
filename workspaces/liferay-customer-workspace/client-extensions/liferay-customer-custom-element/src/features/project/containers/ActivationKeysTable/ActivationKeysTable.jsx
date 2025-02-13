@@ -9,7 +9,7 @@ import {useCallback, useEffect, useMemo, useState} from 'react';
 import {useLocation, useOutletContext} from 'react-router-dom';
 import i18n from '~/utils/I18n';
 import RoundedGroupButtons from '~/components/RoundedGroupButtons';
-import Table from '~/components/Table';
+import ActionTable from '~/components/ActionTable';
 import {useAppPropertiesContext} from '~/contexts/AppPropertiesContext';
 import {ALERT_DOWNLOAD_TYPE} from '~/features/project/utils/constants/alertDownloadType';
 import {getLicenseKeyPermanentStatus} from '../GenerateNewKey/utils/licenseKeyPermanentStatus';
@@ -290,7 +290,7 @@ const ActivationKeysTable = ({
 					</div>
 
 					{!!activationKeysByStatusPaginated.length && (
-						<Table
+						<ActionTable
 							checkboxConfig={{
 								checkboxesChecked: activationKeysIdChecked,
 								setCheckboxesChecked:

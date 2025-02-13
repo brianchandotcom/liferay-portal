@@ -16,7 +16,7 @@ import {rolesHighPriorityContacts} from '~/features/project/utils/getHighPriorit
 
 import i18n from '~/utils/I18n';
 import StatusTag from '~/components/StatusTag';
-import Table from '~/components/Table';
+import ActionTable from '~/components/ActionTable';
 import {useAppPropertiesContext} from '~/contexts/AppPropertiesContext';
 import {useCustomerPortal} from '~/features/project/context';
 import {STATUS_TAG_TYPES} from '~/features/project/utils/constants/statusTag';
@@ -440,7 +440,7 @@ const TeamMembersTable = ({
 
 				{!!teamMembersByStatusPaginated &&
 					(totalUserAccounts || loading || searching) && (
-						<Table
+						<ActionTable
 							className="border-0"
 							columns={getColumns(
 								loggedUserAccount?.selectedAccountSummary

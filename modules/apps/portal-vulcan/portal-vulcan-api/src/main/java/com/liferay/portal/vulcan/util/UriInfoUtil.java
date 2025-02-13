@@ -229,7 +229,11 @@ public class UriInfoUtil {
 		if (!Validator.isBlank(PortalUtil.getPathContext())) {
 			URI uri = uriBuilder.build();
 
-			uriBuilder.replacePath(PortalUtil.getPathContext(uri.getPath()));
+			String path = uri.getPath();
+
+			if (!path.startsWith(PortalUtil.getPathContext())) {
+				uriBuilder.replacePath(PortalUtil.getPathContext(path));
+			}
 		}
 
 		if (Validator.isNotNull(_getHost(uriBuilder)) && _isHttpsEnabled()) {

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import DataTable from '~/components/DataTable';
+import Table from '~/components/Table';
 
 import './BETable.css';
 
@@ -24,7 +24,19 @@ interface IProps {
 }
 
 const BETable = ({columns, rows}: IProps) => {
-	return <DataTable className="be" columns={columns} rows={rows} />;
+	return (
+		<div className="be-table-wrapper">
+			{rows.length ? (
+				<Table className="be" columns={columns} rows={rows} />
+			) : (
+				<div className="py-2">
+					{i18n.translate(
+						'the-requested-search-does-not-exist-in-our-database-please-try-again-with-different-criteria'
+					)}
+				</div>
+			)}
+		</div>
+	);
 };
 
 export default BETable;

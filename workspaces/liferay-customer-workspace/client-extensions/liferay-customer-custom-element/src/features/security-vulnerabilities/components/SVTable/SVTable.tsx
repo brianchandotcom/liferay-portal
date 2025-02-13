@@ -7,7 +7,7 @@ import {useNavigate} from 'react-router-dom';
 
 import './SVTable.css';
 
-import DataTable from '~/components/DataTable';
+import Table from '~/components/Table';
 
 export interface IColumn {
 	columnKey: string;
@@ -34,7 +34,7 @@ const SVTable = ({columns, rows}: IProps) => {
 	};
 
 	return (
-		<DataTable
+		<Table
 			className="sv"
 			columns={columns}
 			onRowClick={handleRowClick}

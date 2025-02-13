@@ -10,7 +10,7 @@ import './BusinessEvents.css';
 import {ButtonWithIcon} from '@clayui/core';
 import {useEffect, useMemo, useState} from 'react';
 import {ButtonDropDown} from '~/components';
-import {IRow} from '~/components/DataTable';
+import {IRow} from '~/components/Table';
 import {hasAdminUserAccount} from '~/features/project/containers/ActivationKeysTable/utils/hasAdminUserAccount';
 import BEActionsHeader from '~/features/project/pages/Project/BusinessEvent/components/BEActionsHeader';
 import BETable from '~/features/project/pages/Project/BusinessEvent/components/BETable';

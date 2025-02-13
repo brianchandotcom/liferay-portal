@@ -23,7 +23,7 @@ interface IProps {
 	rows: IRow[];
 }
 
-const DataTable = ({className, columns, onRowClick, rows}: IProps) => {
+const Table = ({className, columns, onRowClick, rows}: IProps) => {
 	return (
 		<ClayTable
 			borderless
@@ -73,4 +73,4 @@ const DataTable = ({className, columns, onRowClick, rows}: IProps) => {
 	);
 };
 
-export default DataTable;
+export default Table;

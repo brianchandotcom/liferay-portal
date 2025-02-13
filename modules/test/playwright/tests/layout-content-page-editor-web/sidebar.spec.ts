@@ -2436,3 +2436,49 @@ test(
 		expect(requestWasMade).toBeFalsy();
 	}
 );
+
+test(
+	'Do not show an error message when manually entering a margin value to a fragment',
+	{
+		tag: '@LPD-48446',
+	},
+	async ({apiHelpers, page, pageEditorPage, pageManagementSite}) => {
+
+		// Create a page with a button
+
+		const buttonId = getRandomString();
+
+		const buttonDefinition = getFragmentDefinition({
+			id: buttonId,
+			key: 'BASIC_COMPONENT-button',
+		});
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition([buttonDefinition]),
+			siteId: pageManagementSite.id,
+			title: getRandomString(),
+		});
+
+		await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
+
+		// Select the button and add a margin top manually
+
+		await pageEditorPage.selectFragment(buttonId);
+
+		await pageEditorPage.goToConfigurationTab('Styles');
+
+		await page.getByLabel('Margin Top').click();
+
+		const input = page.getByRole('spinbutton', {name: 'Margin Top'});
+
+		await input.click();
+
+		await input.fill('34');
+
+		await input.press('Enter');
+
+		// Check that the alert is not present
+
+		await expect(page.getByRole('alert')).toHaveCount(0);
+	}
+);

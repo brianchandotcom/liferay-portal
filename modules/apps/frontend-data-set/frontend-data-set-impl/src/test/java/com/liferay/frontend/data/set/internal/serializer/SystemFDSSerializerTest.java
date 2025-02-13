@@ -8,7 +8,6 @@ package com.liferay.frontend.data.set.internal.serializer;
 import com.liferay.frontend.data.set.SystemFDSEntry;
 import com.liferay.frontend.data.set.action.FDSBulkActions;
 import com.liferay.frontend.data.set.action.FDSCreationMenu;
-import com.liferay.frontend.data.set.action.FDSCreationMenuRegistry;
 import com.liferay.frontend.data.set.action.FDSItemsActions;
 import com.liferay.frontend.data.set.action.FDSItemsActionsRegistry;
 import com.liferay.frontend.data.set.constants.FDSEntityFieldTypes;
@@ -337,15 +336,8 @@ public class SystemFDSSerializerTest {
 					ServiceTrackerCustomizerFactory.
 						<FDSCreationMenu>serviceWrapper(_bundleContext));
 
-		FDSCreationMenuRegistry fdsCreationMenuRegistry =
-			new FDSCreationMenuRegistryImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			fdsCreationMenuRegistry, "_serviceTrackerMap", serviceTrackerMap);
-
-		ReflectionTestUtil.setFieldValue(
-			_systemFDSSerializer, "_fdsCreationMenuRegistry",
-			fdsCreationMenuRegistry);
+		_systemFDSSerializer.fdsCreationMenuRegistry =
+			new FDSCreationMenuRegistryImpl(serviceTrackerMap);
 
 		// Different creation menu
 

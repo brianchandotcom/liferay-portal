@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.struts.Action;
 import com.liferay.portal.test.rule.Inject;
@@ -101,11 +102,15 @@ public class UpdatePasswordActionTest {
 
 		mockHttpServletRequest.addParameter("p_auth", "test");
 
+		mockHttpServletRequest.setAttribute(
+			WebKeys.COMPANY_ID, company.getCompanyId());
+
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
 		themeDisplay.setCompany(company);
 
-		Layout layout = LayoutLocalServiceUtil.getLayout(1);
+		Layout layout = LayoutLocalServiceUtil.getLayout(
+			PortalUtil.getControlPanelPlid(company.getCompanyId()));
 
 		themeDisplay.setLayout(layout);
 		themeDisplay.setLayoutSet(layout.getLayoutSet());

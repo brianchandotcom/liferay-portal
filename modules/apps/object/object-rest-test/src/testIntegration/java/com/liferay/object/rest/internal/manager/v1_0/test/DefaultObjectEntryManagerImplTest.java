@@ -685,6 +685,7 @@ public class DefaultObjectEntryManagerImplTest
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				true, ObjectDefinitionConstants.SCOPE_COMPANY,
 				ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
+				Collections.emptyList(),
 				ListUtil.fromArray(
 					new TextObjectFieldBuilder(
 					).indexed(
@@ -6040,7 +6041,7 @@ public class DefaultObjectEntryManagerImplTest
 				ObjectDefinitionTestUtil.getRandomName(), null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				true, scope, ObjectDefinitionConstants.STORAGE_TYPE_DEFAULT,
-				objectFields);
+				Collections.emptyList(), objectFields);
 
 		return objectDefinitionLocalService.publishCustomObjectDefinition(
 			adminUser.getUserId(), objectDefinition.getObjectDefinitionId());

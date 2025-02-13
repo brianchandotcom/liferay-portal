@@ -84,6 +84,7 @@ public class ObjectEntryDefaultLanguageIdUpgradeProcess extends UpgradeProcess {
 			}
 
 			preparedStatement2.executeBatch();
+
 			preparedStatement4.executeBatch();
 		}
 	}

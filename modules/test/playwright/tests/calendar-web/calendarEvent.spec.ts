@@ -167,7 +167,7 @@ test('can create calendar event with invitation', async ({
 
 		await calendarWidgetPage.addInvitation(user1.name);
 
-		await calendarWidgetPage.publishEvent();
+		await calendarWidgetPage.publishEvent({waitForSuccessAlert: true});
 
 		await calendarWidgetPage.openInvitations();
 

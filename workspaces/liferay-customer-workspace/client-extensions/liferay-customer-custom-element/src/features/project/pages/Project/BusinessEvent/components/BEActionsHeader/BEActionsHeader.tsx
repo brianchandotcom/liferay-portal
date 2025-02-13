@@ -7,30 +7,57 @@ import Button from '@clayui/button';
 
 import './BEActionsHeader.css';
 
+import SearchBar from '~/features/project/components/SearchBar';
 import i18n from '~/utils/I18n';
 
+import {IBEFilter} from '../../utils/constants/IBEFilter';
 import BEFilter from './components/BEFilter';
-import BESearch from './components/BESearch';
+import BEBadgeFilter from './components/BEFilter/components/BEBadgeFilter';
 
 interface IPropsHeader {
-	hasAllEventsPermissions: Boolean;
+	availableFields: {
+		eventStatus: string[];
+		eventType: string[];
+	};
+	filtersState: [IBEFilter, React.Dispatch<React.SetStateAction<IBEFilter>>];
+	hasAllEventsPermissions: boolean;
 }
 
-const BEActionsHeader = ({hasAllEventsPermissions}: IPropsHeader) => {
+const BEActionsHeader = ({
+	availableFields,
+	filtersState: [filters, setFilters],
+	hasAllEventsPermissions,
+}: IPropsHeader) => {
 	return (
 		<div className="d-flex flex-column mt-4">
-			<div className="be-table-header d-flex justify-content-between p-3">
-				<div className="d-flex">
-					<BESearch />
+			<div className="be-table-header p-3">
+				<div className="d-flex justify-content-between">
+					<div className="d-flex">
+						<SearchBar
+							clearSearchTerm={undefined}
+							isBusinessEvent={true}
+							onSearchSubmit={(term: string) => {
+								setFilters((previousFilters) => ({
+									...previousFilters,
+									searchTerm: term,
+								}));
+							}}
+						/>
 
-					<BEFilter />
+						<BEFilter
+							availableFields={availableFields}
+							filtersState={[filters, setFilters]}
+						/>
+					</div>
+
+					{hasAllEventsPermissions && (
+						<Button className="be-create-event">
+							{i18n.translate('create-event')}
+						</Button>
+					)}
 				</div>
 
-				{hasAllEventsPermissions && (
-					<Button className="be-create-event">
-						{i18n.translate('create-event')}
-					</Button>
-				)}
+				<BEBadgeFilter filtersState={[filters, setFilters]} />
 			</div>
 		</div>
 	);

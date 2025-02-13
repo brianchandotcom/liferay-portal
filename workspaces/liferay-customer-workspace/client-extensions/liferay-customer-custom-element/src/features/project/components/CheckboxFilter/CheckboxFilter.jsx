@@ -11,6 +11,18 @@ import i18n from '~/utils/I18n';
 const CheckboxFilter = ({availableItems, clearCheckboxes, updateFilters}) => {
 	const [checkedItems, setCheckedItems] = useState([]);
 
+	const itemDisplayMap = {
+		Golive: 'Go-Live',
+		OtherEvent: 'Other Event',
+	};
+
+	const displayItems = availableItems.map((item) => {
+		return {
+			display: itemDisplayMap[item] || item,
+			value: item,
+		};
+	});
+
 	const handleSelectedCheckbox = (checkedItem) => {
 		if (checkedItems.includes(checkedItem)) {
 			return setCheckedItems(
@@ -30,12 +42,12 @@ const CheckboxFilter = ({availableItems, clearCheckboxes, updateFilters}) => {
 	return (
 		<div className="w-100">
 			<div className="filter-content pt-2 px-3">
-				{availableItems?.map((item, index) => (
+				{displayItems?.map(({display, value}, index) => (
 					<ClayCheckbox
-						checked={checkedItems.includes(item)}
-						key={`${item}-${index}`}
-						label={item}
-						onChange={() => handleSelectedCheckbox(item)}
+						checked={checkedItems.includes(value)}
+						key={`${value}-${index}`}
+						label={display}
+						onChange={() => handleSelectedCheckbox(value)}
 					/>
 				))}
 			</div>

@@ -438,32 +438,27 @@ public class SystemFDSSerializerTest {
 			<String,
 			 List
 				 <ServiceTrackerCustomizerFactory.ServiceWrapper
-					 <FDSFilterContextContributor>>>
-						fdsFilterContextContributorServiceTrackerMap =
-							ServiceTrackerMapFactory.openMultiValueMap(
-								_bundleContext,
-								FDSFilterContextContributor.class,
-								"frontend.data.set.filter.type",
-								ServiceTrackerCustomizerFactory.
-									<FDSFilterContextContributor>serviceWrapper(
-										_bundleContext));
+					 <FDSFilterContextContributor>>> serviceTrackerMap1 =
+						ServiceTrackerMapFactory.openMultiValueMap(
+							_bundleContext, FDSFilterContextContributor.class,
+							"frontend.data.set.filter.type",
+							ServiceTrackerCustomizerFactory.
+								<FDSFilterContextContributor>serviceWrapper(
+									_bundleContext));
 
 		_systemFDSSerializer.fdsFilterContextContributorRegistry =
-			new FDSFilterContextContributorRegistryImpl(
-				fdsFilterContextContributorServiceTrackerMap);
+			new FDSFilterContextContributorRegistryImpl(serviceTrackerMap1);
 
 		ServiceTrackerMap
 			<String,
 			 List<ServiceTrackerCustomizerFactory.ServiceWrapper<FDSFilter>>>
-				fdsFilterServiceTrackerMap =
-					ServiceTrackerMapFactory.openMultiValueMap(
-						_bundleContext, FDSFilter.class,
-						"frontend.data.set.name",
-						ServiceTrackerCustomizerFactory.
-							<FDSFilter>serviceWrapper(_bundleContext));
+				serviceTrackerMap2 = ServiceTrackerMapFactory.openMultiValueMap(
+					_bundleContext, FDSFilter.class, "frontend.data.set.name",
+					ServiceTrackerCustomizerFactory.<FDSFilter>serviceWrapper(
+						_bundleContext));
 
 		_systemFDSSerializer.fdsFilterRegistry = new FDSFilterRegistryImpl(
-			fdsFilterServiceTrackerMap);
+			serviceTrackerMap2);
 
 		Language language = Mockito.mock(Language.class);
 
@@ -1118,8 +1113,8 @@ public class SystemFDSSerializerTest {
 
 		dateRangeFDSFilterContextContributorServiceRegistration.unregister();
 
-		fdsFilterContextContributorServiceTrackerMap.close();
-		fdsFilterServiceTrackerMap.close();
+		serviceTrackerMap1.close();
+		serviceTrackerMap2.close();
 	}
 
 	@Test

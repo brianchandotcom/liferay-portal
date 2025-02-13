@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {FragmentEntryLinkMap} from './addFragmentEntryLinks';
 import {MOVE_STEPPER} from './types';
 
 import type {LayoutData} from '../../types/layout_data/LayoutData';
@@ -10,6 +11,7 @@ import type {LayoutData} from '../../types/layout_data/LayoutData';
 export default function moveStepper({
 	addedItemIds,
 	formId,
+	fragmentEntryLinks,
 	itemId,
 	layoutData,
 	movedItemIds,
@@ -17,6 +19,7 @@ export default function moveStepper({
 }: {
 	addedItemIds: string[];
 	formId: string;
+	fragmentEntryLinks: FragmentEntryLinkMap;
 	itemId: string;
 	layoutData: LayoutData;
 	movedItemIds: {itemId: string; parentId: string}[];
@@ -25,6 +28,7 @@ export default function moveStepper({
 	return {
 		addedItemIds,
 		formId,
+		fragmentEntryLinks,
 		itemId,
 		layoutData,
 		movedItemIds,

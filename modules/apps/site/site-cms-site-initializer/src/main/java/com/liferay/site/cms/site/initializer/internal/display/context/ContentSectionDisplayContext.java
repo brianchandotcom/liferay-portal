@@ -9,11 +9,16 @@ import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.site.cms.site.initializer.internal.configuration.CMSSiteInitializerConfiguration;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Sam Ziemer
@@ -21,9 +26,11 @@ import java.util.List;
 public class ContentSectionDisplayContext {
 
 	public ContentSectionDisplayContext(
-		CMSSiteInitializerConfiguration cmsSiteInitializerConfiguration) {
+		CMSSiteInitializerConfiguration cmsSiteInitializerConfiguration,
+		HttpServletRequest httpServletRequest) {
 
 		_cmsSiteInitializerConfiguration = cmsSiteInitializerConfiguration;
+		_httpServletRequest = httpServletRequest;
 	}
 
 	public String getAPIURL() {
@@ -44,11 +51,24 @@ public class ContentSectionDisplayContext {
 		return new ArrayList<>();
 	}
 
+	public Map<String, Object> getEmptyState() {
+		return HashMapBuilder.<String, Object>put(
+			"description",
+			LanguageUtil.get(
+				_httpServletRequest, "click-new-to-create-your-first-content")
+		).put(
+			"image", "/states/cms_empty_state_content.svg"
+		).put(
+			"title", LanguageUtil.get(_httpServletRequest, "no-content-yet")
+		).build();
+	}
+
 	public List<FDSActionDropdownItem> getFDSActionDropdownItems() {
 		return new ArrayList<>();
 	}
 
 	private final CMSSiteInitializerConfiguration
 		_cmsSiteInitializerConfiguration;
+	private final HttpServletRequest _httpServletRequest;
 
 }

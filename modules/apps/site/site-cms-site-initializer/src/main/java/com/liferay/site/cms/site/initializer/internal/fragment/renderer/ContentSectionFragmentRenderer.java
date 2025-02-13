@@ -91,7 +91,7 @@ public class ContentSectionFragmentRenderer implements FragmentRenderer {
 			httpServletRequest.setAttribute(
 				ContentSectionDisplayContext.class.getName(),
 				new ContentSectionDisplayContext(
-					_cmsSiteInitializerConfiguration));
+					_cmsSiteInitializerConfiguration, httpServletRequest));
 
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}

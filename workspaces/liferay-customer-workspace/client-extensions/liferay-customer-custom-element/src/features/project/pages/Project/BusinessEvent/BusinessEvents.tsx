@@ -20,6 +20,8 @@ import {getBusinessEvents} from '~/services/liferay/api';
 import {getFormattedTime} from '~/utils/getFormattedTime';
 
 import useMyUserAccountByAccountExternalReferenceCode from '../TeamMembers/components/TeamMembersTable/hooks/useMyUserAccountByAccountExternalReferenceCode';
+import {BE_INITIAL_FILTER} from './utils/BE_INITIAL_FILTER';
+import {IBEFilter} from './utils/constants/IBEFilter';
 
 interface IBusinessEventTicket {
 	associatedTickets: string;
@@ -71,6 +73,15 @@ const BusinessEvents = () => {
 		IBusinessEventTicket[]
 	>([]);
 
+	const [filters, setFilters] = useState<IBEFilter>(BE_INITIAL_FILTER);
+	const [availableFields, setAvailableFields] = useState<{
+		eventStatus: string[];
+		eventType: string[];
+	}>({
+		eventStatus: [],
+		eventType: [],
+	});
+
 	const {data, loading} = useCurrentKoroneikiAccount();
 	const koroneikiAccount = data?.koroneikiAccountByExternalReferenceCode;
 
@@ -100,11 +111,48 @@ const BusinessEvents = () => {
 		isLiferayStaff ||
 		hasFLSOrganizationAssociated;
 
+	const filterEventData = () => {
+		const eventStatusData = ['Open', 'Canceled', 'Completed', 'Overdue'];
+		const eventTypeData = ['Golive', 'Upgrade', 'Migration', 'OtherEvent'];
+
+		const eventStatusSet = new Set<string>(eventStatusData);
+		const eventTypeSet = new Set<string>(eventTypeData);
+
+		setAvailableFields({
+			eventStatus: Array.from(eventStatusSet),
+			eventType: Array.from(eventTypeSet),
+		});
+	};
+
+	const generateFilterQuery = (filters: IBEFilter) => {
+		const queryParams = Object.entries(filters)
+			.map(([key, {value}]) => {
+				if (Array.isArray(value) && !!value.length) {
+					return `(${value
+						.map((item) => `${key} eq '${item}'`)
+						.join(' or ')})`;
+				}
+
+				return '';
+			})
+			.filter(Boolean);
+
+		if (filters.searchTerm && filters.searchTerm.trim()) {
+			queryParams.push(`(contains(name, '${filters.searchTerm}'))`);
+		}
+
+		return queryParams.length ? `filter=${queryParams.join(' and ')}` : '';
+	};
+
+	const filterQuery = generateFilterQuery(filters);
+
 	useEffect(() => {
 		const fetchBusinessEvents = async () => {
 			try {
-				const businessEventsResponse = await getBusinessEvents();
+				const businessEventsResponse =
+					await getBusinessEvents(filterQuery);
 
+				filterEventData();
 				setBusinessEventsTickets(businessEventsResponse.items);
 			}
 			catch (error) {
@@ -113,7 +161,7 @@ const BusinessEvents = () => {
 		};
 
 		fetchBusinessEvents();
-	}, []);
+	}, [filterQuery]);
 
 	const rows = useMemo(() => {
 		const userOptions = [
@@ -232,6 +280,8 @@ const BusinessEvents = () => {
 
 			<div className="mb-1">
 				<BEActionsHeader
+					availableFields={availableFields}
+					filtersState={[filters, setFilters]}
 					hasAllEventsPermissions={hasAllEventsPermissions}
 				/>
 			</div>

@@ -5,10 +5,11 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import {ClayInput} from '@clayui/form';
+import classNames from 'classnames';
 import {memo, useEffect, useState} from 'react';
 import i18n from '~/utils/I18n';
 
-const SearchBar = ({clearSearchTerm, onSearchSubmit}) => {
+const SearchBar = ({clearSearchTerm, isBusinessEvent, onSearchSubmit}) => {
 	const [term, setTerm] = useState('');
 	const [searching, setSearching] = useState(true);
 
@@ -34,10 +35,20 @@ const SearchBar = ({clearSearchTerm, onSearchSubmit}) => {
 	}, [clearSearchTerm, onSearchSubmit]);
 
 	return (
-		<ClayInput.Group className="m-0 mr-2">
+		<ClayInput.Group
+			className={classNames('m-0 mr-2', {
+				'rounded shadow-lg': isBusinessEvent,
+			})}
+		>
 			<ClayInput.GroupItem>
 				<ClayInput
-					className="form-control input-group-inset input-group-inset-after"
+					className={classNames(
+						'form-control input-group-inset input-group-inset-after',
+						{
+							'border-brand-primary-lighten-5 font-weight-semi-bold':
+								isBusinessEvent,
+						}
+					)}
 					onChange={(event) => {
 						setTerm(event.target.value);
 						setSearching(true);
@@ -47,12 +58,22 @@ const SearchBar = ({clearSearchTerm, onSearchSubmit}) => {
 							handleSearchSubmit();
 						}
 					}}
-					placeholder={i18n.translate('search')}
+					placeholder={
+						isBusinessEvent
+							? i18n.translate('search-event-name')
+							: i18n.translate('search')
+					}
 					type="text"
 					value={term}
 				/>
 
-				<ClayInput.GroupInsetItem after tag="span">
+				<ClayInput.GroupInsetItem
+					after
+					className={classNames({
+						'border-brand-primary-lighten-5': isBusinessEvent,
+					})}
+					tag="span"
+				>
 					{searching || !term ? (
 						<ClayButtonWithIcon
 							aria-label={i18n.translate('search')}

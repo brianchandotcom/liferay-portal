@@ -7,6 +7,8 @@ import Table from '~/components/Table';
 
 import './BETable.css';
 
+import i18n from '~/utils/I18n';
+
 export interface IColumn {
 	columnKey: string;
 	label: string;
@@ -24,7 +26,19 @@ interface IProps {
 }
 
 const BETable = ({columns, rows}: IProps) => {
-	return <Table className="be" columns={columns} rows={rows} />;
+	return (
+		<div className="be-table-wrapper">
+			{rows.length ? (
+				<Table className="be" columns={columns} rows={rows} />
+			) : (
+				<div className="py-2">
+					{i18n.translate(
+						'the-requested-search-does-not-exist-in-our-database-please-try-again-with-different-criteria'
+					)}
+				</div>
+			)}
+		</div>
+	);
 };
 
 export default BETable;

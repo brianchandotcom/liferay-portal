@@ -33,8 +33,8 @@ const fetchHeadless = async ({
 	return response;
 };
 
-const getBusinessEvents = async () => {
-	return fetcher(`${HEADLESS_BASE_URL}${`c/businessevents`}`, {
+const getBusinessEvents = async (filters: string) => {
+	return fetcher(`${HEADLESS_BASE_URL}${`c/businessevents?${filters}`}`, {
 		headers: {
 			'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
 			'Content-Type': 'application/json',

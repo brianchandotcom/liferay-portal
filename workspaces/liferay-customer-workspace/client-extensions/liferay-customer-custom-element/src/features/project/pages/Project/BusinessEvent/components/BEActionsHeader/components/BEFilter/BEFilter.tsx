@@ -5,22 +5,96 @@
 
 import {Button as ClayButton} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
-
-import './BEFilter.css';
-
+import CheckboxFilter from '~/features/project/components/CheckboxFilter';
+import DropDownWithDrillDown from '~/features/project/components/DropDownWithDrillDown';
 import i18n from '~/utils/I18n';
 
-const BEFilter = () => {
-	return (
-		<div>
-			<ClayButton borderless className="text-neutral-10">
-				<span className="inline-item inline-item-before">
-					<ClayIcon symbol="filter" />
-				</span>
+import {IBEFilter} from '../../../../utils/constants/IBEFilter';
 
-				{i18n.translate('filters')}
-			</ClayButton>
-		</div>
+interface IFilterProps {
+	availableFields: {
+		eventStatus: string[];
+		eventType: string[];
+	};
+	filtersState: [IBEFilter, React.Dispatch<React.SetStateAction<IBEFilter>>];
+}
+
+const BEFilter = ({
+	availableFields,
+	filtersState: [filters, setFilters],
+}: IFilterProps) => {
+	const menus = {
+		x0a0: [
+			{child: 'x0a1', title: i18n.translate('event-status')},
+			{child: 'x0a2', title: i18n.translate('event-type')},
+		],
+		x0a1: [
+			{
+				child: (
+					<CheckboxFilter
+						availableItems={availableFields.eventStatus}
+						clearCheckboxes={
+							filters.eventStatus.value?.length === 0
+						}
+						updateFilters={(checkedItems: any) =>
+							setFilters((previousFilters) => ({
+								...previousFilters,
+								eventStatus: {
+									...previousFilters.eventStatus,
+									value: checkedItems,
+								},
+							}))
+						}
+					/>
+				),
+				type: 'component',
+			},
+		],
+		x0a2: [
+			{
+				child: (
+					<CheckboxFilter
+						availableItems={availableFields.eventType}
+						clearCheckboxes={filters.eventType.value?.length === 0}
+						updateFilters={(checkedItems: any) =>
+							setFilters((previousFilters) => ({
+								...previousFilters,
+								eventType: {
+									...previousFilters.eventType,
+									value: checkedItems,
+								},
+							}))
+						}
+					/>
+				),
+				type: 'component',
+			},
+		],
+	};
+
+	return (
+		<>
+			<DropDownWithDrillDown
+				alignmentPosition={undefined}
+				className="align-items-center d-flex"
+				containerElement={undefined}
+				initialActiveMenu="x0a0"
+				menuElementAttrs={undefined}
+				menuHeight={undefined}
+				menuWidth={undefined}
+				menus={menus}
+				offsetFn={undefined}
+				trigger={
+					<ClayButton borderless className="text-neutral-10">
+						<span className="inline-item inline-item-before">
+							<ClayIcon symbol="filter" />
+						</span>
+
+						{i18n.translate('filters')}
+					</ClayButton>
+				}
+			/>
+		</>
 	);
 };
 

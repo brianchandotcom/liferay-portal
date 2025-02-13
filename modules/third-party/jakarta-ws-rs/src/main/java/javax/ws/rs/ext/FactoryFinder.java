@@ -23,7 +23,6 @@ import java.security.AccessController;
 import java.security.PrivilegedAction;
 import java.util.Iterator;
 import java.util.Properties;
-import java.util.ServiceConfigurationError;
 import java.util.ServiceLoader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -125,7 +124,7 @@ final class FactoryFinder {
             if(iterator.hasNext()) {
                 return iterator.next();
             }
-        } catch (Exception | ServiceConfigurationError ex) {
+        } catch (Exception ex) {
             LOGGER.log(Level.FINER, "Failed to load service " + factoryId + ".", ex);
         }
 
@@ -135,7 +134,7 @@ final class FactoryFinder {
             if(iterator.hasNext()) {
                 return iterator.next();
             }
-        } catch (Exception | ServiceConfigurationError ex) {
+        } catch (Exception ex) {
             LOGGER.log(Level.FINER, "Failed to load service " + factoryId + ".", ex);
         }
 
@@ -185,3 +184,4 @@ final class FactoryFinder {
         return newInstance(fallbackClassName, classLoader);
     }
 }
+/* @generated */

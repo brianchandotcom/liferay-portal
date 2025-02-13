@@ -17,8 +17,6 @@ import com.liferay.frontend.data.set.filter.BaseSelectionFDSFilter;
 import com.liferay.frontend.data.set.filter.DateFDSFilterItem;
 import com.liferay.frontend.data.set.filter.FDSFilter;
 import com.liferay.frontend.data.set.filter.FDSFilterContextContributor;
-import com.liferay.frontend.data.set.filter.FDSFilterContextContributorRegistry;
-import com.liferay.frontend.data.set.filter.FDSFilterRegistry;
 import com.liferay.frontend.data.set.filter.SelectionFDSFilterItem;
 import com.liferay.frontend.data.set.internal.SystemFDSEntryRegistryImpl;
 import com.liferay.frontend.data.set.internal.action.FDSBulkActionsRegistryImpl;
@@ -438,16 +436,6 @@ public class SystemFDSSerializerTest {
 	public void testSerializeFilters() throws Exception {
 		ServiceTrackerMap
 			<String,
-			 List<ServiceTrackerCustomizerFactory.ServiceWrapper<FDSFilter>>>
-				fdsFilterServiceTrackerMap =
-					ServiceTrackerMapFactory.openMultiValueMap(
-						_bundleContext, FDSFilter.class,
-						"frontend.data.set.name",
-						ServiceTrackerCustomizerFactory.
-							<FDSFilter>serviceWrapper(_bundleContext));
-
-		ServiceTrackerMap
-			<String,
 			 List
 				 <ServiceTrackerCustomizerFactory.ServiceWrapper
 					 <FDSFilterContextContributor>>>
@@ -460,26 +448,22 @@ public class SystemFDSSerializerTest {
 									<FDSFilterContextContributor>serviceWrapper(
 										_bundleContext));
 
-		FDSFilterRegistry fdsFilterRegistry = new FDSFilterRegistryImpl();
+		_systemFDSSerializer.fdsFilterContextContributorRegistry =
+			new FDSFilterContextContributorRegistryImpl(
+				fdsFilterContextContributorServiceTrackerMap);
 
-		ReflectionTestUtil.setFieldValue(
-			fdsFilterRegistry, "_serviceTrackerMap",
+		ServiceTrackerMap
+			<String,
+			 List<ServiceTrackerCustomizerFactory.ServiceWrapper<FDSFilter>>>
+				fdsFilterServiceTrackerMap =
+					ServiceTrackerMapFactory.openMultiValueMap(
+						_bundleContext, FDSFilter.class,
+						"frontend.data.set.name",
+						ServiceTrackerCustomizerFactory.
+							<FDSFilter>serviceWrapper(_bundleContext));
+
+		_systemFDSSerializer.fdsFilterRegistry = new FDSFilterRegistryImpl(
 			fdsFilterServiceTrackerMap);
-
-		FDSFilterContextContributorRegistry
-			fdsFilterContextContributorRegistry =
-				new FDSFilterContextContributorRegistryImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			fdsFilterContextContributorRegistry, "_serviceTrackerMap",
-			fdsFilterContextContributorServiceTrackerMap);
-
-		ReflectionTestUtil.setFieldValue(
-			_systemFDSSerializer, "_fdsFilterRegistry", fdsFilterRegistry);
-
-		ReflectionTestUtil.setFieldValue(
-			_systemFDSSerializer, "_fdsFilterContextContributorRegistry",
-			fdsFilterContextContributorRegistry);
 
 		Language language = Mockito.mock(Language.class);
 

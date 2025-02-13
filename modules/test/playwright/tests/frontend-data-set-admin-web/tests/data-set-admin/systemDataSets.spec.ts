@@ -276,11 +276,15 @@ test(
 				label: 'Creation Actions',
 			});
 
-			const creaationActionRows = actionsPage.creationActionsTable
+			const creationActionRows = actionsPage.creationActionsTable
 				.locator('tr')
 				.filter({hasText: 'ITEM_PROXY'});
 
-			await expect(creaationActionRows).toHaveCount(2);
+			await expect(creationActionRows).toHaveCount(1);
+
+			await expect(
+				creationActionRows.getByText('Calendar', {exact: true})
+			).toBeVisible();
 
 			await page.getByTitle('Back').click();
 		});
@@ -315,11 +319,11 @@ test(
 				label: 'Creation Actions',
 			});
 
-			const creaationActionRows = actionsPage.creationActionsTable
+			const creationActionRows = actionsPage.creationActionsTable
 				.locator('tr')
 				.filter({hasText: 'GROUP_PROXY'});
 
-			await expect(creaationActionRows).toHaveCount(1);
+			await expect(creationActionRows).toHaveCount(1);
 
 			await page.getByTitle('Back').click();
 		});

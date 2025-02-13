@@ -206,8 +206,22 @@ public class ImportSystemDataSetMVCResourceCommand
 					FDSEntryItemImportPolicy.ITEM_PROXY) {
 
 			for (DropdownItem dropdownItem : primaryDropdownItems) {
-				_objectEntryService.addObjectEntry(
-					0, objectDefinitionId,
+				Object id = null;
+
+				Object dataObject = dropdownItem.get("data");
+
+				if (dataObject != null) {
+					Map<String, Object> data = (Map<String, Object>)dataObject;
+
+					id = data.get("id");
+				}
+
+				if (id == null) {
+					continue;
+				}
+
+				_objectEntryService.addOrUpdateObjectEntry(
+					String.valueOf(id), 0, objectDefinitionId,
 					HashMapBuilder.<String, Serializable>put(
 						"icon",
 						() -> _getOptionalValue(dropdownItem.get("icon"))
@@ -327,8 +341,11 @@ public class ImportSystemDataSetMVCResourceCommand
 			for (FDSActionDropdownItem fdsActionDropdownItem :
 					fdsActionDropdownItems) {
 
-				_objectEntryService.addObjectEntry(
-					0, objectDefinitionId,
+				Map<String, Object> data =
+					(Map<String, Object>)fdsActionDropdownItem.get("data");
+
+				_objectEntryService.addOrUpdateObjectEntry(
+					String.valueOf(data.get("id")), 0, objectDefinitionId,
 					HashMapBuilder.<String, Serializable>put(
 						"icon",
 						() -> _getOptionalValue(

@@ -36,6 +36,8 @@ public class ClassicFDSCreationMenu implements FDSCreationMenu {
 			).putData(
 				"confirmationMessageType", "warning"
 			).putData(
+				"id", "openCalendar"
+			).putData(
 				"modalSize", "full-screen"
 			).putData(
 				"permissionKey", "update"

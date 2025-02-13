@@ -142,7 +142,7 @@ function Import({backURL, helpLink, importURL, portletNamespace}: Props) {
 	return (
 		<>
 			<ClayToolbar light>
-				<ClayLayout.ContainerFluid>
+				<ClayLayout.ContainerFluid size={false}>
 					<ClayToolbar.Nav className="justify-content-sm-end">
 						{importResults ? (
 							<>

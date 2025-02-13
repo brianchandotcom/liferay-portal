@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.jaas.JAASHelper;
 import com.liferay.portal.servlet.filters.absoluteredirects.AbsoluteRedirectsResponse;
 import com.liferay.portal.test.rule.Inject;
@@ -131,6 +132,8 @@ public class JAASTest {
 
 			mockHttpServletRequest.setRemoteUser(
 				String.valueOf(_user.getScreenName()));
+			mockHttpServletRequest.setAttribute(
+				WebKeys.COMPANY_ID, TestPropsValues.getCompanyId());
 
 			try {
 				User user = PortalUtil.getUser(mockHttpServletRequest);
@@ -206,6 +209,8 @@ public class JAASTest {
 		mockHttpServletRequest.setRemoteUser(String.valueOf(_user.getUserId()));
 		mockHttpServletRequest.setAttribute(
 			AbsoluteRedirectsResponse.class.getName(), new Object());
+		mockHttpServletRequest.setAttribute(
+			WebKeys.COMPANY_ID, TestPropsValues.getCompanyId());
 
 		Bundle bundle = FrameworkUtil.getBundle(getClass());
 

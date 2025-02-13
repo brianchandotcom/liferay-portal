@@ -519,6 +519,26 @@ public class ObjectServiceUpgradeStepRegistrator
 			UpgradeProcessFactory.runSQL(
 				"update ObjectEntry set objectEntryFolderId = 0, treePath = " +
 					"'/'"));
+
+		registry.register(
+			"10.4.0", "10.4.1", new ObjectDefinitionPortletIdUpgradeProcess());
+
+		registry.register(
+			"10.4.1", "10.5.0",
+			UpgradeProcessFactory.alterColumnType(
+				"ObjectEntry", "externalReferenceCode", "VARCHAR(1000)"));
+
+		registry.register(
+			"10.5.0", "10.5.1",
+			new ObjectDefinitionStaleUserIdUpgradeProcess(_userLocalService),
+			new ObjectFieldStaleUserIdUpgradeProcess(_userLocalService),
+			new ObjectRelationshipStaleUserIdUpgradeProcess(_userLocalService));
+
+		registry.register(
+			"10.5.1", "10.6.0",
+			UpgradeProcessFactory.runSQL(
+				"update ObjectField set dbType = 'Integer' where " +
+					"dbColumnName = 'status'"));
 	}
 
 	@Reference

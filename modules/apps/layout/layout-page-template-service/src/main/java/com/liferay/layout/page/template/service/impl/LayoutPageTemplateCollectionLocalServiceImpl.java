@@ -545,7 +545,7 @@ public class LayoutPageTemplateCollectionLocalServiceImpl
 				layoutPageTemplateCollectionKey)) {
 
 			throw new LayoutPageTemplateCollectionLayoutPageTemplateCollectionKeyException.MustNotContainInvalidCharacters(
-				layoutPageTemplateCollectionKey);
+				layoutPageTemplateCollectionKey, type);
 		}
 
 		int layoutPageTemplateCollectionKeyMaxLength =
@@ -558,7 +558,7 @@ public class LayoutPageTemplateCollectionLocalServiceImpl
 
 			throw new LayoutPageTemplateCollectionLayoutPageTemplateCollectionKeyException.MustNotExceedMaximumSize(
 				layoutPageTemplateCollectionKey,
-				layoutPageTemplateCollectionKeyMaxLength);
+				layoutPageTemplateCollectionKeyMaxLength, type);
 		}
 
 		LayoutPageTemplateCollection layoutPageTemplateCollection =
@@ -567,7 +567,7 @@ public class LayoutPageTemplateCollectionLocalServiceImpl
 
 		if (layoutPageTemplateCollection != null) {
 			throw new LayoutPageTemplateCollectionLayoutPageTemplateCollectionKeyException.MustNotBeDuplicate(
-				groupId, layoutPageTemplateCollectionKey);
+				groupId, layoutPageTemplateCollectionKey, type);
 		}
 	}
 

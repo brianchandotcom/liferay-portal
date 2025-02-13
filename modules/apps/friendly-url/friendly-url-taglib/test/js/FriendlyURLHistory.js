@@ -82,6 +82,7 @@ describe('FriendlyURLHistory', () => {
 			return {
 				getSelectedLanguageId: () => 'en_US',
 				updateInput: () => jest.fn(),
+				updateInputLanguage: () => jest.fn(),
 			};
 		});
 	});

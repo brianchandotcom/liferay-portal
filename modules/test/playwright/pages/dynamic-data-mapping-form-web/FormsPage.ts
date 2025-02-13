@@ -79,8 +79,8 @@ export class FormsPage {
 			.getByRole('button', {name: 'Actions'})
 			.click();
 
-		this.page.once('dialog', (dialog) => {
-			dialog.accept();
+		this.page.once('dialog', async (dialog) => {
+			await dialog.accept();
 		});
 
 		await this.exportImportIframe

@@ -13,8 +13,8 @@ export async function deleteItems(formsPage: FormsPage, page: Page) {
 	if (await formsPage.managementToolbarSelectAllItems.isEnabled()) {
 		await formsPage.managementToolbarSelectAllItems.click();
 
-		page.once('dialog', (dialog) => {
-			dialog.accept();
+		page.once('dialog', async (dialog) => {
+			await dialog.accept();
 		});
 
 		await formsPage.managementToolbarDeleteButton.click();

@@ -117,11 +117,12 @@ public class UpgradeImportsCheck extends BaseFileCheck {
 
 			Matcher matcher = pattern.matcher(newContent);
 
-			String newVariable = StringUtil.lowerCaseFirstLetter(newClassName);
+			String newVariableName = StringUtil.lowerCaseFirstLetter(
+				newClassName);
 
 			if (matcher.find() &&
-				!StringUtil.equals(matcher.group(), newVariable) &&
-				!StringUtil.equals(matcher.group(), "_" + newVariable) &&
+				!StringUtil.equals(matcher.group(), newVariableName) &&
+				!StringUtil.equals(matcher.group(), "_" + newVariableName) &&
 				!StringUtil.equals(
 					matcher.group(), matcher.group(1) + newClassName)) {
 

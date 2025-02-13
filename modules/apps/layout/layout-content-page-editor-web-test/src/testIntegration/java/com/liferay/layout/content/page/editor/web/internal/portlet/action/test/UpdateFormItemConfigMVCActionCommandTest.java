@@ -332,8 +332,28 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 
 		layoutStructure.addFormStepLayoutStructureItem(
 			formStepContainerStyledLayoutStructureItem.getItemId(), -1);
-		layoutStructure.addFormStepLayoutStructureItem(
-			formStepContainerStyledLayoutStructureItem.getItemId(), -1);
+
+		LayoutStructureItem lastFormStepLayoutStructureItem =
+			layoutStructure.addFormStepLayoutStructureItem(
+				formStepContainerStyledLayoutStructureItem.getItemId(), -1);
+
+		FragmentEntry fragmentEntry =
+			_fragmentCollectionContributorRegistry.getFragmentEntry(
+				"INPUTS-submit-button");
+
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkLocalService.addFragmentEntryLink(
+				null, TestPropsValues.getUserId(), _draftLayout.getGroupId(), 0,
+				fragmentEntry.getFragmentEntryId(), _segmentsExperienceId,
+				_draftLayout.getPlid(), fragmentEntry.getCss(),
+				fragmentEntry.getHtml(), fragmentEntry.getJs(),
+				fragmentEntry.getConfiguration(), null, StringPool.BLANK, 0,
+				fragmentEntry.getFragmentEntryKey(), fragmentEntry.getType(),
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		layoutStructure.addFragmentStyledLayoutStructureItem(
+			fragmentEntryLink.getFragmentEntryLinkId(),
+			lastFormStepLayoutStructureItem.getItemId(), -1);
 
 		ReflectionTestUtil.invoke(
 			_mvcActionCommand, "_updateFormStyledLayoutStructureItemFormType",
@@ -393,11 +413,15 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 			thirdFormStepStyledLayoutStructureItem.getChildrenItemIds();
 
 		Assert.assertEquals(
-			childrenItemIds.toString(), 1, childrenItemIds.size());
+			childrenItemIds.toString(), 2, childrenItemIds.size());
 
 		_assertFormButtonType(
 			"previous",
 			thirdFormStepStyledLayoutStructureItem.getChildrenItemId(0),
+			layoutStructure);
+		_assertFormButtonType(
+			"submit",
+			thirdFormStepStyledLayoutStructureItem.getChildrenItemId(1),
 			layoutStructure);
 	}
 
@@ -583,6 +607,24 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 				layoutStructure.addFormStyledLayoutStructureItem(
 					rootLayoutStructureItem.getItemId(), 0);
 
+		FragmentEntry fragmentEntry =
+			_fragmentCollectionContributorRegistry.getFragmentEntry(
+				"INPUTS-submit-button");
+
+		FragmentEntryLink fragmentEntryLink =
+			_fragmentEntryLinkLocalService.addFragmentEntryLink(
+				null, TestPropsValues.getUserId(), _draftLayout.getGroupId(), 0,
+				fragmentEntry.getFragmentEntryId(), _segmentsExperienceId,
+				_draftLayout.getPlid(), fragmentEntry.getCss(),
+				fragmentEntry.getHtml(), fragmentEntry.getJs(),
+				fragmentEntry.getConfiguration(), null, StringPool.BLANK, 0,
+				fragmentEntry.getFragmentEntryKey(), fragmentEntry.getType(),
+				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		layoutStructure.addFragmentStyledLayoutStructureItem(
+			fragmentEntryLink.getFragmentEntryLinkId(),
+			formStyledLayoutStructureItem.getItemId(), -1);
+
 		ReflectionTestUtil.invoke(
 			_mvcActionCommand, "_updateFormStyledLayoutStructureItemFormType",
 			new Class<?>[] {
@@ -625,11 +667,15 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 			secondFormStepStyledLayoutStructureItem.getChildrenItemIds();
 
 		Assert.assertEquals(
-			childrenItemIds.toString(), 1, childrenItemIds.size());
+			childrenItemIds.toString(), 2, childrenItemIds.size());
 
 		_assertFormButtonType(
 			"previous",
 			secondFormStepStyledLayoutStructureItem.getChildrenItemId(0),
+			layoutStructure);
+		_assertFormButtonType(
+			"submit",
+			secondFormStepStyledLayoutStructureItem.getChildrenItemId(1),
 			layoutStructure);
 	}
 

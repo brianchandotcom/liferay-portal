@@ -47,8 +47,6 @@ export class CompanyExportImportPage {
 			.getByText('Successful')
 			.waitFor();
 
-		taskName += '-';
-
 		return await this.exportImportPage.downloadExportProcess(taskName);
 	}
 

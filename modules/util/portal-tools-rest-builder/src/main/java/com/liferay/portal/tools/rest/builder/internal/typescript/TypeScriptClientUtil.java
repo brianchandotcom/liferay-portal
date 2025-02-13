@@ -33,9 +33,6 @@ import com.liferay.portal.tools.rest.builder.internal.yaml.openapi.Schema;
 
 import java.io.File;
 
-import java.nio.file.Files;
-import java.nio.file.Paths;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -70,11 +67,6 @@ public class TypeScriptClientUtil {
 		_createBuildGradleFile(baseClientDir, files);
 		_createNodeScriptsConfigFile(baseClientDir, files);
 		_createPackageJSONFile(baseClientDir, files);
-
-		Files.createDirectories(
-			Paths.get(baseClientDir.getPath(), "src", "node", "api"));
-		Files.createDirectories(
-			Paths.get(baseClientDir.getPath(), "src", "node", "model"));
 
 		Map<String, Map<String, Object>> contextMap = _buildContextMap(
 			configYAML, openAPIYAML);

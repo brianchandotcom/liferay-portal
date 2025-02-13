@@ -48,10 +48,10 @@ const pageFields: {
 	},
 ];
 
-test.afterEach(async ({formsPage, page}) => {
+test.afterEach(async ({formsPage}) => {
 	await formsPage.goTo();
 
-	await deleteItems(formsPage, page);
+	await deleteItems(formsPage);
 });
 
 test.describe('Can render forms with multiple pages through page templates', () => {

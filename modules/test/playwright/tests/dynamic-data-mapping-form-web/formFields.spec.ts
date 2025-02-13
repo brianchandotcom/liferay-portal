@@ -13,10 +13,10 @@ import {deleteItems} from './utils/deleteItems';
 
 export const test = mergeTests(loginTest(), formsPagesTest);
 
-test.afterEach(async ({formsPage, page}) => {
+test.afterEach(async ({formsPage}) => {
 	await formsPage.goTo();
 
-	await deleteItems(formsPage, page);
+	await deleteItems(formsPage);
 });
 
 test.describe('Manage fields through Form Preview page', () => {

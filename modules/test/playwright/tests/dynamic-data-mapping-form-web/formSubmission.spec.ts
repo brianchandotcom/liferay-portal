@@ -25,17 +25,17 @@ const DEFAULT_VIRTUAL_INSTANCE_NAME = 'www.able.com';
 const deleteAfterTestVirtualInstances = new Set<string>();
 let hasDataProvider: boolean = false;
 
-test.afterEach(async ({formsPage, page, virtualInstancesPage}) => {
+test.afterEach(async ({formsPage, virtualInstancesPage}) => {
 	await formsPage.goTo();
 
-	await deleteItems(formsPage, page);
+	await deleteItems(formsPage);
 
 	if (hasDataProvider) {
-		await page.waitForLoadState();
+		await formsPage.page.waitForLoadState();
 
 		await formsPage.dataProvidersTab.click();
 
-		await deleteItems(formsPage, page);
+		await deleteItems(formsPage);
 
 		hasDataProvider = false;
 	}

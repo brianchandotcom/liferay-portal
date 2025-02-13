@@ -19,10 +19,10 @@ export const test = mergeTests(
 	loginTest()
 );
 
-test.afterEach(async ({formsPage, page}) => {
+test.afterEach(async ({formsPage}) => {
 	await formsPage.goTo();
 
-	await deleteItems(formsPage, page);
+	await deleteItems(formsPage);
 });
 
 test.describe('FormView when form storage type is object', () => {

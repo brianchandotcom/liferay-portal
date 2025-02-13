@@ -28,10 +28,10 @@ export const xssDisabledTest = mergeTests(
 );
 
 [xssBypassTest, xssDisabledTest].forEach((testSuite) => {
-	testSuite.afterEach(async ({formsPage, page}) => {
+	testSuite.afterEach(async ({formsPage}) => {
 		await formsPage.goTo();
 
-		await deleteItems(formsPage, page);
+		await deleteItems(formsPage);
 	});
 });
 

@@ -19,6 +19,7 @@ import getGridDefinition from '../layout-content-page-editor-web/utils/getGridDe
 import getPageDefinition from '../layout-content-page-editor-web/utils/getPageDefinition';
 import getWidgetDefinition from '../layout-content-page-editor-web/utils/getWidgetDefinition';
 import evaluateKeepCheckingAfterFound from '../object-web/utils/keepCheckingAfterFound';
+import {deleteItems} from './utils/deleteItems';
 
 const test = mergeTests(
 	applicationsMenuPageTest,
@@ -34,6 +35,12 @@ const test = mergeTests(
 
 test.use({
 	permissions: ['clipboard-write'],
+});
+
+test.afterEach(async ({formsPage}) => {
+	await formsPage.goTo();
+
+	await deleteItems(formsPage);
 });
 
 test.describe('Forms widget', () => {

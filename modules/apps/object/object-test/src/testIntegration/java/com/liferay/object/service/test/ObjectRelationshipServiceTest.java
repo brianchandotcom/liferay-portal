@@ -310,7 +310,7 @@ public class ObjectRelationshipServiceTest {
 		AssertUtils.assertFailure(
 			PrincipalException.MustHavePermission.class,
 			StringBundler.concat(
-				"User ", user.getUserId(), " must have VIEW permission for ",
+				"User ", user.getUserId(), " must have UPDATE permission for ",
 				objectDefinition2.getClassName(), StringPool.SPACE,
 				objectEntry2.getObjectEntryId()),
 			() ->
@@ -324,12 +324,12 @@ public class ObjectRelationshipServiceTest {
 			TestPropsValues.getCompanyId(), objectDefinition2.getClassName(),
 			ResourceConstants.SCOPE_COMPANY,
 			String.valueOf(TestPropsValues.getCompanyId()), role.getRoleId(),
-			new String[] {ActionKeys.VIEW});
+			new String[] {ActionKeys.UPDATE});
 
 		AssertUtils.assertFailure(
 			PrincipalException.MustHavePermission.class,
 			StringBundler.concat(
-				"User ", user.getUserId(), " must have UPDATE permission for ",
+				"User ", user.getUserId(), " must have VIEW permission for ",
 				objectDefinition2.getClassName(), StringPool.SPACE,
 				objectEntry2.getObjectEntryId()),
 			() ->
@@ -360,7 +360,7 @@ public class ObjectRelationshipServiceTest {
 		AssertUtils.assertFailure(
 			PrincipalException.MustHavePermission.class,
 			StringBundler.concat(
-				"User ", user.getUserId(), " must have VIEW permission for ",
+				"User ", user.getUserId(), " must have UPDATE permission for ",
 				objectDefinition1.getClassName(), StringPool.SPACE,
 				objectEntry1.getObjectEntryId()),
 			() ->
@@ -374,12 +374,12 @@ public class ObjectRelationshipServiceTest {
 			TestPropsValues.getCompanyId(), objectDefinition1.getClassName(),
 			ResourceConstants.SCOPE_COMPANY,
 			String.valueOf(TestPropsValues.getCompanyId()), role.getRoleId(),
-			new String[] {ActionKeys.VIEW});
+			new String[] {ActionKeys.UPDATE});
 
 		AssertUtils.assertFailure(
 			PrincipalException.MustHavePermission.class,
 			StringBundler.concat(
-				"User ", user.getUserId(), " must have UPDATE permission for ",
+				"User ", user.getUserId(), " must have VIEW permission for ",
 				objectDefinition1.getClassName(), StringPool.SPACE,
 				objectEntry1.getObjectEntryId()),
 			() ->

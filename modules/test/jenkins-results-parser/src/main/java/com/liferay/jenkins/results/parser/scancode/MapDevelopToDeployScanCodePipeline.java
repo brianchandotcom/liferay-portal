@@ -41,20 +41,20 @@ public class MapDevelopToDeployScanCodePipeline extends BaseScanCodePipeline {
 	public JSONObject getJSONObject() throws IOException {
 		JSONObject jsonObject = new JSONObject();
 
-		List<String> inputURLS = new ArrayList<>();
+		List<String> inputURLs = new ArrayList<>();
 
 		String tomcatURL = JenkinsResultsParserUtil.getBuildParameter(
 			_buildURL, "TEST_PORTAL_RELEASE_TOMCAT_URL");
 
-		inputURLS.add(tomcatURL + "#to");
+		inputURLs.add(tomcatURL + "#to");
 
-		inputURLS.add(getReleaseTarballLink());
-		inputURLS.add(
+		inputURLs.add(getReleaseTarballLink());
+		inputURLs.add(
 			JenkinsResultsParserUtil.getBuildProperty("scancode.tar.gz.url"));
-		inputURLS.add(
+		inputURLs.add(
 			JenkinsResultsParserUtil.getBuildProperty(
 				"scancode.config.file.url"));
-		inputURLS.add(
+		inputURLs.add(
 			JenkinsResultsParserUtil.getBuildProperty(
 				"scancode.policies.file.url"));
 
@@ -66,7 +66,7 @@ public class MapDevelopToDeployScanCodePipeline extends BaseScanCodePipeline {
 		jsonObject.put(
 			"execute_now", true
 		).put(
-			"input_urls", inputURLS
+			"input_urls", inputURLs
 		).put(
 			"labels", getLabels(new String[] {portalReleaseVersion})
 		).put(

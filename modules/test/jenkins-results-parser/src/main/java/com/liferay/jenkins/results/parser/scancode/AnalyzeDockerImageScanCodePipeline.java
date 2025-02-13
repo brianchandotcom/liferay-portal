@@ -52,13 +52,13 @@ public class AnalyzeDockerImageScanCodePipeline extends BaseScanCodePipeline {
 				"Invalid Docker tag " + _dockerTag);
 		}
 
-		List<String> inputURLS = new ArrayList<>();
+		List<String> inputURLs = new ArrayList<>();
 
-		inputURLS.add("docker://liferay/" + _dockerTag);
-		inputURLS.add(
+		inputURLs.add("docker://liferay/" + _dockerTag);
+		inputURLs.add(
 			JenkinsResultsParserUtil.getBuildProperty(
 				"scancode.config.file.url"));
-		inputURLS.add(
+		inputURLs.add(
 			JenkinsResultsParserUtil.getBuildProperty(
 				"scancode.policies.file.url"));
 
@@ -69,7 +69,7 @@ public class AnalyzeDockerImageScanCodePipeline extends BaseScanCodePipeline {
 		jsonObject.put(
 			"execute_now", true
 		).put(
-			"input_urls", inputURLS
+			"input_urls", inputURLs
 		).put(
 			"labels",
 			getLabels(

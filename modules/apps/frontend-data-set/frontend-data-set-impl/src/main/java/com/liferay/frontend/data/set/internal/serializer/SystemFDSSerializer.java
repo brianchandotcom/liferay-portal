@@ -21,11 +21,10 @@ import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.data.set.serializer.FDSSerializer;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Collections;
@@ -101,9 +100,9 @@ public class SystemFDSSerializer
 		List<FDSFilter> fdsFilters, String fdsName,
 		HttpServletRequest httpServletRequest) {
 
-		JSONArray jsonArray = _jsonFactory.createJSONArray();
+		JSONArray jsonArray = JSONUtil.putAll();
 
-		Locale locale = _portal.getLocale(httpServletRequest);
+		Locale locale = PortalUtil.getLocale(httpServletRequest);
 
 		_serializeFilters(fdsFilters, jsonArray, locale);
 		_serializeFilters(
@@ -166,7 +165,7 @@ public class SystemFDSSerializer
 			).put(
 				"id", fdsFilter.getId()
 			).put(
-				"label", _language.get(resourceBundle, fdsFilter.getLabel())
+				"label", LanguageUtil.get(resourceBundle, fdsFilter.getLabel())
 			).put(
 				"preloadedData", fdsFilter.getPreloadedData()
 			).put(
@@ -201,14 +200,5 @@ public class SystemFDSSerializer
 
 	@Reference
 	private FDSItemsActionsRegistry _fdsItemsActionsRegistry;
-
-	@Reference
-	private JSONFactory _jsonFactory;
-
-	@Reference
-	private Language _language;
-
-	@Reference
-	private Portal _portal;
 
 }

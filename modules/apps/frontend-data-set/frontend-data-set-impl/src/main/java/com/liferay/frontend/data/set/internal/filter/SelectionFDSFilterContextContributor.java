@@ -10,9 +10,8 @@ import com.liferay.frontend.data.set.filter.FDSFilter;
 import com.liferay.frontend.data.set.filter.FDSFilterContextContributor;
 import com.liferay.frontend.data.set.filter.SelectionFDSFilterItem;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
@@ -23,7 +22,6 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marko Cikos
@@ -49,7 +47,7 @@ public class SelectionFDSFilterContextContributor
 	private Map<String, Object> _serialize(
 		BaseSelectionFDSFilter baseSelectionFDSFilter, Locale locale) {
 
-		JSONArray jsonArray = _jsonFactory.createJSONArray();
+		JSONArray jsonArray = JSONUtil.putAll();
 
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
@@ -63,7 +61,7 @@ public class SelectionFDSFilterContextContributor
 			jsonArray.put(
 				JSONUtil.put(
 					"label",
-					_language.get(
+					LanguageUtil.get(
 						resourceBundle, selectionFDSFilterItem.getLabel())
 				).put(
 					"value", selectionFDSFilterItem.getValue()
@@ -85,7 +83,8 @@ public class SelectionFDSFilterContextContributor
 				"apiURL", baseSelectionFDSFilter.getAPIURL()
 			).put(
 				"inputPlaceholder",
-				_language.get(locale, baseSelectionFDSFilter.getPlaceholder())
+				LanguageUtil.get(
+					locale, baseSelectionFDSFilter.getPlaceholder())
 			).put(
 				"itemKey", baseSelectionFDSFilter.getItemKey()
 			).put(
@@ -95,11 +94,5 @@ public class SelectionFDSFilterContextContributor
 
 		return builder.build();
 	}
-
-	@Reference
-	private JSONFactory _jsonFactory;
-
-	@Reference
-	private Language _language;
 
 }

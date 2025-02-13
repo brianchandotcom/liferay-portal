@@ -225,7 +225,7 @@ definition {
 		KBAdmin.viewEntryInTableView(
 			kbEntryTitle = "Knowledge Base Article Title",
 			tableColumnContents = "Knowledge Base Article Title,--,0,0,Seconds Ago,Approved",
-			tableColumnNames = "title,num-of-folders,num-of-kb-articles,views,modified-date,status");
+			tableColumnNames = "title,num-of-folders,num-of-articles,views,modified-date,status");
 
 		LexiconTable.clickTableEntryTitle(tableEntry = "Knowledge Base Article Title");
 
@@ -240,7 +240,7 @@ definition {
 		KBAdmin.viewEntryInTableView(
 			kbEntryTitle = "Knowledge Base Article Title",
 			tableColumnContents = "Knowledge Base Article Title,--,1,1,Seconds Ago,Approved",
-			tableColumnNames = "title,num-of-folders,num-of-kb-articles,views,modified-date,status");
+			tableColumnNames = "title,num-of-folders,num-of-articles,views,modified-date,status");
 	}
 
 	@description = "This test ensures that users can view folder in the table view."
@@ -260,7 +260,7 @@ definition {
 		KBAdmin.viewEntryInTableView(
 			kbEntryTitle = "KB Folder",
 			tableColumnContents = "KB Folder,--,0,0,--,Seconds Ago,",
-			tableColumnNames = "title,status,num-of-folders,num-of-kb-articles,views,modified-date");
+			tableColumnNames = "title,status,num-of-folders,num-of-articles,views,modified-date");
 
 		JSONKnowledgeBase.addkBArticle(
 			folderName = "KB Folder",
@@ -279,7 +279,7 @@ definition {
 		KBAdmin.viewEntryInTableView(
 			kbEntryTitle = "KB Folder",
 			tableColumnContents = "KB Folder,,1,1,--,Seconds Ago,--",
-			tableColumnNames = "title,status,num-of-folders,num-of-kb-articles,views,modified-date,status");
+			tableColumnNames = "title,status,num-of-folders,num-of-articles,views,modified-date,status");
 	}
 
 	@description = "This test covers LPS-171314. It ensures that the expiration label is displayed when the Notification Date is reached."

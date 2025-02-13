@@ -105,7 +105,7 @@ if (ListUtil.isEmpty(kbFolders) && ListUtil.isEmpty(kbArticles)) {
 							</c:choose>
 						</dd>
 						<dt class="sidebar-dt">
-							<liferay-ui:message key="num-of-kb-articles" />
+							<liferay-ui:message key="num-of-articles" />
 						</dt>
 
 						<%

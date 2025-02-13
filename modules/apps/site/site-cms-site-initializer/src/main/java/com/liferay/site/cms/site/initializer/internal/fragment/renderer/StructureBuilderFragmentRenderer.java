@@ -7,20 +7,23 @@ package com.liferay.site.cms.site.initializer.internal.fragment.renderer;
 
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
+import com.liferay.frontend.taglib.react.servlet.taglib.ComponentTag;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.taglib.servlet.PageContextFactoryUtil;
 
-import java.io.IOException;
+import java.io.PrintWriter;
 
 import java.util.Locale;
 import java.util.Objects;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -70,21 +73,40 @@ public class StructureBuilderFragmentRenderer implements FragmentRenderer {
 
 	@Override
 	public void render(
-			FragmentRendererContext fragmentRendererContext,
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws IOException {
+		FragmentRendererContext fragmentRendererContext,
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
 		try {
-			RequestDispatcher requestDispatcher =
-				_servletContext.getRequestDispatcher("/structure_builder.jsp");
+			PrintWriter printWriter = httpServletResponse.getWriter();
 
-			requestDispatcher.include(httpServletRequest, httpServletResponse);
+			printWriter.write("<div><span aria-hidden=\"true\" class=\"");
+			printWriter.write("loading-animation\"></span>");
+
+			ComponentTag componentTag = new ComponentTag();
+
+			componentTag.setModule(
+				"{StructureBuilder} from site-cms-site-initializer");
+			componentTag.setPageContext(
+				PageContextFactoryUtil.create(
+					httpServletRequest, httpServletResponse));
+			componentTag.setServletContext(_servletContext);
+
+			componentTag.doStartTag();
+
+			componentTag.doEndTag();
+
+			printWriter.write("</div>");
 		}
 		catch (Exception exception) {
-			throw new RuntimeException(exception);
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		StructureBuilderFragmentRenderer.class);
 
 	@Reference
 	private GroupLocalService _groupLocalService;

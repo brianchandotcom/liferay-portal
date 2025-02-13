@@ -5,7 +5,6 @@
 
 package com.liferay.style.book.web.internal.servlet.taglib.util;
 
-import com.liferay.client.extension.type.manager.CETManager;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.item.selector.ItemSelector;
@@ -41,10 +40,9 @@ import javax.servlet.http.HttpServletRequest;
 public class StyleBookEntryActionDropdownItemsProvider {
 
 	public StyleBookEntryActionDropdownItemsProvider(
-		CETManager cetManager, StyleBookEntry styleBookEntry,
-		RenderRequest renderRequest, RenderResponse renderResponse) {
+		StyleBookEntry styleBookEntry, RenderRequest renderRequest,
+		RenderResponse renderResponse) {
 
-		_cetManager = cetManager;
 		_styleBookEntry = styleBookEntry;
 		_renderResponse = renderResponse;
 
@@ -384,7 +382,6 @@ public class StyleBookEntryActionDropdownItemsProvider {
 		};
 	}
 
-	private final CETManager _cetManager;
 	private final HttpServletRequest _httpServletRequest;
 	private final ItemSelector _itemSelector;
 	private final RenderResponse _renderResponse;

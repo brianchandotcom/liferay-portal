@@ -67,8 +67,6 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 			StyleBookManagementToolbarDisplayContext.class.getName(),
 			styleBookManagementToolbarDisplayContext);
 
-		renderRequest.setAttribute(CETManager.class.getName(), _cetManager);
-
 		return "/view.jsp";
 	}
 

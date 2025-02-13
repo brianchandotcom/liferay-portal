@@ -167,6 +167,7 @@ com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaBuilderFacto
 com.liferay.frontend.taglib.clay.data.set.view.table.ClayTableSchemaField=com.liferay.frontend.data.set.view.table.FDSTableSchemaField
 com.liferay.frontend.taglib.clay.data.set.view.table.selectable.BaseSelectableTableClayDataSetDisplayView=com.liferay.frontend.data.set.view.table.selectable.BaseSelectableTableFDSView
 com.liferay.frontend.taglib.form.navigator.FormNavigatorContextConstants=com.liferay.frontend.taglib.form.navigator.constants.FormNavigatorContextConstants
+com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationRegistry=com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationRegistryUtil
 com.liferay.info.display.url.provider.InfoEditURLProviderTracker=com.liferay.info.display.url.provider.InfoEditURLProviderRegistry
 com.liferay.info.item.InfoItemServiceTracker=com.liferay.info.item.InfoItemServiceRegistry
 com.liferay.info.item.renderer.InfoItemRendererTracker=com.liferay.info.item.renderer.InfoItemRendererRegistry

@@ -21,8 +21,6 @@
 
 	<#include "fragment.ftl">
 
-	<#include "fragment_heading_journal.ftl">
-
 	<#include "mb.ftl">
 
 	<#include "object_definition_layout.ftl">

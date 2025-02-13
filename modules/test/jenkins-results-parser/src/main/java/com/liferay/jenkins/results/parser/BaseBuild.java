@@ -301,7 +301,7 @@ public abstract class BaseBuild implements Build {
 			sb.append("C:");
 		}
 
-		sb.append("/tmp/jenkins/");
+		sb.append("/opt/dev/projects/github/liferay-jenkins-ee/tmp/jenkins/");
 
 		JenkinsMaster jenkinsMaster = getJenkinsMaster();
 

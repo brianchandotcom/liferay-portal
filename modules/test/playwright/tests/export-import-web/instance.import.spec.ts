@@ -176,7 +176,6 @@ test('can import custom object entries at instance level with or without permiss
 
 	const exportFilePath = await companyExportImportPage.export(
 		'Tests 1 Items',
-		false,
 		true
 	);
 

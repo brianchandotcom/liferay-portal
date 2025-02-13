@@ -29,6 +29,7 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
+import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -146,6 +147,27 @@ public class DisplayPageTemplateResourceTest
 		_testGetSiteSiteByExternalReferenceCodeDisplayPageTemplate(
 			displayPageTemplate);
 
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.
+				getLayoutPageTemplateEntryByExternalReferenceCode(
+					displayPageTemplate.getExternalReferenceCode(),
+					testGroup.getGroupId());
+
+		Layout layout = _layoutLocalService.getLayout(
+			layoutPageTemplateEntry.getPlid());
+
+		Assert.assertFalse(_isPublished(layout));
+
+		_testGetSiteSiteByExternalReferenceCodeDisplayPageTemplateWithNestedFields(
+			displayPageTemplate);
+
+		ContentLayoutTestUtil.publishLayout(layout.fetchDraftLayout(), layout);
+
+		Assert.assertTrue(_isPublished(layout));
+
+		_testGetSiteSiteByExternalReferenceCodeDisplayPageTemplateWithNestedFields(
+			displayPageTemplate);
+
 		_assertProblemException(
 			"NOT_FOUND",
 			() ->
@@ -158,7 +180,6 @@ public class DisplayPageTemplateResourceTest
 
 		_testGetSiteSiteByExternalReferenceCodeDisplayPageTemplate(
 			displayPageTemplate);
-
 		_testGetSiteSiteByExternalReferenceCodeDisplayPageTemplateWithNestedFields(
 			displayPageTemplate);
 	}
@@ -527,16 +548,12 @@ public class DisplayPageTemplateResourceTest
 					displayPageTemplate.getExternalReferenceCode(),
 					testGroup.getGroupId());
 
+		Map<Locale, String> friendlyURLMap = new HashMap<>();
+
 		Layout layout = _layoutLocalService.getLayout(
 			layoutPageTemplateEntry.getPlid());
 
-		Layout draftLayout = layout.fetchDraftLayout();
-
-		Map<Locale, String> friendlyURLMap = new HashMap<>();
-
-		if (GetterUtil.getBoolean(
-				draftLayout.getTypeSettingsProperty("published"))) {
-
+		if (_isPublished(layout)) {
 			friendlyURLMap = layout.getFriendlyURLMap();
 		}
 
@@ -694,6 +711,18 @@ public class DisplayPageTemplateResourceTest
 		};
 	}
 
+	private boolean _isPublished(Layout layout) {
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		if (GetterUtil.getBoolean(
+				draftLayout.getTypeSettingsProperty("published"))) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private void _testGetSiteSiteByExternalReferenceCodeDisplayPageTemplate(
 			DisplayPageTemplate displayPageTemplate)
 		throws Exception {
@@ -724,8 +753,36 @@ public class DisplayPageTemplateResourceTest
 				testGroup.getExternalReferenceCode(),
 				randomDisplayPageTemplate());
 
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.
+				getLayoutPageTemplateEntryByExternalReferenceCode(
+					displayPageTemplate.getExternalReferenceCode(),
+					testGroup.getGroupId());
+
+		Layout layout = _layoutLocalService.getLayout(
+			layoutPageTemplateEntry.getPlid());
+
+		Assert.assertFalse(_isPublished(layout));
+
 		DisplayPageTemplateResource displayPageTemplateResource =
 			_getDisplayPageTemplateResource();
+
+		page =
+			displayPageTemplateResource.
+				getSiteSiteByExternalReferenceCodeDisplayPageTemplatesPage(
+					testGroup.getExternalReferenceCode(), null, null, null,
+					Pagination.of(1, 10), null);
+
+		Assert.assertEquals(totalCount + 1, page.getTotalCount());
+
+		_assertNestedFields(
+			_getDisplayPageTemplate(
+				(List<DisplayPageTemplate>)page.getItems(),
+				displayPageTemplate.getExternalReferenceCode()));
+
+		ContentLayoutTestUtil.publishLayout(layout.fetchDraftLayout(), layout);
+
+		Assert.assertTrue(_isPublished(layout));
 
 		page =
 			displayPageTemplateResource.

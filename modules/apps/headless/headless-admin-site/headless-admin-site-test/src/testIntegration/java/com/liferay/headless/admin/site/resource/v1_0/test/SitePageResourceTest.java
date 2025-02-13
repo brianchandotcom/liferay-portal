@@ -17,6 +17,7 @@ import com.liferay.headless.admin.site.client.resource.v1_0.SitePageResource;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.LayoutPageTemplateEntryTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.LayoutUtilityPageEntryTestUtil;
 import com.liferay.headless.admin.site.resource.v1_0.test.util.PageSpecificationsTestUtil;
+import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.function.UnsafeRunnable;
 import com.liferay.petra.string.StringPool;
@@ -149,8 +150,19 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 			ServiceContextTestUtil.getServiceContext(
 				testGroup.getGroupId(), TestPropsValues.getUserId());
 
-		_testGetSiteSiteByExternalReferenceCodeSitePage(
-			_addLayout(LayoutConstants.TYPE_CONTENT, null, serviceContext));
+		Layout layout = _addLayout(
+			LayoutConstants.TYPE_CONTENT, null, serviceContext);
+
+		Assert.assertFalse(layout.isPublished());
+
+		_testGetSiteSiteByExternalReferenceCodeSitePage(layout);
+
+		ContentLayoutTestUtil.publishLayout(layout.fetchDraftLayout(), layout);
+
+		Assert.assertTrue(layout.isPublished());
+
+		_testGetSiteSiteByExternalReferenceCodeSitePage(layout);
+
 		_testGetSiteSiteByExternalReferenceCodeSitePage(
 			_addLayout(
 				LayoutConstants.TYPE_PORTLET,

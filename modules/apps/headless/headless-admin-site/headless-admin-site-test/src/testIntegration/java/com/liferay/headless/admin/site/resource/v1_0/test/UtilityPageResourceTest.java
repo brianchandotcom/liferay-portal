@@ -125,7 +125,27 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 						testGroup.getExternalReferenceCode(),
 						RandomTestUtil.randomString()));
 
+		LayoutUtilityPageEntry layoutUtilityPageEntry =
+			_layoutUtilityPageEntryLocalService.
+				getLayoutUtilityPageEntryByExternalReferenceCode(
+					postUtilityPage.getExternalReferenceCode(),
+					testGroup.getGroupId());
+
+		Layout layout = _layoutLocalService.getLayout(
+			layoutUtilityPageEntry.getPlid());
+
+		Assert.assertFalse(layout.isPublished());
+
 		UtilityPageResource utilityPageResource = _getUtilityPageResource();
+
+		_assertNestedFields(
+			utilityPageResource.getSiteSiteByExternalReferenceCodeUtilityPage(
+				testGroup.getExternalReferenceCode(),
+				postUtilityPage.getExternalReferenceCode()));
+
+		ContentLayoutTestUtil.publishLayout(layout.fetchDraftLayout(), layout);
+
+		Assert.assertTrue(layout.isPublished());
 
 		_assertNestedFields(
 			utilityPageResource.getSiteSiteByExternalReferenceCodeUtilityPage(
@@ -507,7 +527,35 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 			testGetSiteSiteByExternalReferenceCodeUtilityPagesPage_addUtilityPage(
 				testGroup.getExternalReferenceCode(), randomUtilityPage());
 
+		LayoutUtilityPageEntry layoutUtilityPageEntry =
+			_layoutUtilityPageEntryLocalService.
+				getLayoutUtilityPageEntryByExternalReferenceCode(
+					utilityPage.getExternalReferenceCode(),
+					testGroup.getGroupId());
+
+		Layout layout = _layoutLocalService.getLayout(
+			layoutUtilityPageEntry.getPlid());
+
+		Assert.assertFalse(layout.isPublished());
+
 		UtilityPageResource utilityPageResource = _getUtilityPageResource();
+
+		page =
+			utilityPageResource.
+				getSiteSiteByExternalReferenceCodeUtilityPagesPage(
+					testGroup.getExternalReferenceCode(), null, null, null,
+					Pagination.of(1, 10), null);
+
+		Assert.assertEquals(totalCount + 1, page.getTotalCount());
+
+		_assertNestedFields(
+			_getUtilityPage(
+				utilityPage.getExternalReferenceCode(),
+				(List<UtilityPage>)page.getItems()));
+
+		ContentLayoutTestUtil.publishLayout(layout.fetchDraftLayout(), layout);
+
+		Assert.assertTrue(layout.isPublished());
 
 		page =
 			utilityPageResource.

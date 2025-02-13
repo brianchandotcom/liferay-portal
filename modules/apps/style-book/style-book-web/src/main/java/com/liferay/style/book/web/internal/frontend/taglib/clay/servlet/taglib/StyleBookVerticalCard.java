@@ -5,7 +5,6 @@
 
 package com.liferay.style.book.web.internal.frontend.taglib.clay.servlet.taglib;
 
-import com.liferay.client.extension.type.manager.CETManager;
 import com.liferay.frontend.taglib.clay.servlet.taglib.BaseBaseClayCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.VerticalCard;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
@@ -38,13 +37,11 @@ public class StyleBookVerticalCard
 	extends BaseBaseClayCard implements VerticalCard {
 
 	public StyleBookVerticalCard(
-		BaseModel<?> baseModel, CETManager cetManager,
-		RenderRequest renderRequest, RenderResponse renderResponse,
-		RowChecker rowChecker) {
+		BaseModel<?> baseModel, RenderRequest renderRequest,
+		RenderResponse renderResponse, RowChecker rowChecker) {
 
 		super(baseModel, rowChecker);
 
-		_cetManager = cetManager;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 
@@ -67,8 +64,7 @@ public class StyleBookVerticalCard
 		StyleBookEntryActionDropdownItemsProvider
 			styleBookEntryActionDropdownItemsProvider =
 				new StyleBookEntryActionDropdownItemsProvider(
-					_cetManager, _styleBookEntry, _renderRequest,
-					_renderResponse);
+					_styleBookEntry, _renderRequest, _renderResponse);
 
 		return styleBookEntryActionDropdownItemsProvider.
 			getActionDropdownItems();
@@ -196,7 +192,6 @@ public class StyleBookVerticalCard
 		return false;
 	}
 
-	private final CETManager _cetManager;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private final StyleBookEntry _styleBookEntry;

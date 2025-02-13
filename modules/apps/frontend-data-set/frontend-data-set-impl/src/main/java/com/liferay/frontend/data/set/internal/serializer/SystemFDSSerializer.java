@@ -54,7 +54,7 @@ public class SystemFDSSerializer
 		String fdsName, HttpServletRequest httpServletRequest) {
 
 		SystemFDSEntry systemFDSEntry =
-			_systemFDSEntryRegistry.getSystemFDSEntry(fdsName);
+			systemFDSEntryRegistry.getSystemFDSEntry(fdsName);
 
 		if (systemFDSEntry == null) {
 			return null;
@@ -134,6 +134,9 @@ public class SystemFDSSerializer
 		return fdsItemsActions.getFDSActionDropdownItems(httpServletRequest);
 	}
 
+	@Reference
+	protected SystemFDSEntryRegistry systemFDSEntryRegistry;
+
 	private void _serializeFilters(
 		List<FDSFilter> fdsFilters, JSONArray jsonArray, Locale locale) {
 
@@ -207,8 +210,5 @@ public class SystemFDSSerializer
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private SystemFDSEntryRegistry _systemFDSEntryRegistry;
 
 }

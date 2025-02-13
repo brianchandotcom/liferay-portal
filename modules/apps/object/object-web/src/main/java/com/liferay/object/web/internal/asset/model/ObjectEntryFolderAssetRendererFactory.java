@@ -12,6 +12,7 @@ import com.liferay.object.constants.ObjectPortletKeys;
 import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.service.ObjectEntryFolderService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -40,8 +41,16 @@ public class ObjectEntryFolderAssetRendererFactory
 			long classPK, int type)
 		throws PortalException {
 
-		return new ObjectEntryFolderAssetRenderer(
-			_objectEntryFolderService.getObjectEntryFolder(classPK));
+		ObjectEntryFolder objectEntryFolder =
+			_objectEntryFolderService.getObjectEntryFolder(classPK);
+
+		if (!FeatureFlagManagerUtil.isEnabled(
+				objectEntryFolder.getCompanyId(), "LPD-17809")) {
+
+			return null;
+		}
+
+		return new ObjectEntryFolderAssetRenderer(objectEntryFolder);
 	}
 
 	@Override

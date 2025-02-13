@@ -19,7 +19,9 @@ AssetRenderer<?> assetRenderer = (AssetRenderer<?>)request.getAttribute(WebKeys.
 	%>
 
 	<c:if test="<%= Validator.isNotNull(imagePreviewURL) %>">
-		<div class="aspect-ratio aspect-ratio-8-to-3 aspect-ratio-bg-cover cover-image mb-4" style="background-image: url(<%= imagePreviewURL %>);"></div>
+		<liferay-ui:csp>
+			<div class="aspect-ratio aspect-ratio-8-to-3 aspect-ratio-bg-cover cover-image mb-4" style="background-image: url(<%= imagePreviewURL %>);"></div>
+		</liferay-ui:csp>
 	</c:if>
 
 	<%

@@ -445,12 +445,12 @@ public class FragmentEntryInputTemplateNodeContextHelperTest {
 
 		_testToInputTemplateNodeLocalizedInputValue(
 			objectDefinition.getClassName(), "ObjectField_myDate", objectEntry,
+			Collections.emptyMap(),
 			HashMapBuilder.put(
 				LocaleUtil.SPAIN, enValue
 			).put(
 				LocaleUtil.US, enValue
-			).build(),
-			Collections.emptyMap());
+			).build());
 
 		DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(
 			"yyyy-MM-dd'T'HH:mm");
@@ -459,13 +459,12 @@ public class FragmentEntryInputTemplateNodeContextHelperTest {
 
 		_testToInputTemplateNodeLocalizedInputValue(
 			objectDefinition.getClassName(), "ObjectField_myDateTime",
-			objectEntry,
+			objectEntry, Collections.emptyMap(),
 			HashMapBuilder.put(
 				LocaleUtil.SPAIN, enValue
 			).put(
 				LocaleUtil.US, enValue
-			).build(),
-			Collections.emptyMap());
+			).build());
 
 		enValue = enDateFormat.format(enDate);
 

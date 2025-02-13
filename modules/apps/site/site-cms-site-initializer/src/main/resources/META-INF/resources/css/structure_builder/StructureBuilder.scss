@@ -11,6 +11,14 @@ $structureFieldsWidth: 448px;
 		background-color: $cadmin-light-l1;
 		border-radius: 8px;
 		width: $structureFieldsWidth;
+
+		&-empty-state.c-empty-state-sm .c-empty-state-image {
+			max-width: 190px;
+
+			.c-empty-state-aspect-ratio {
+				padding-bottom: 50%;
+			}
+		}
 	}
 
 	&__title-input {

@@ -67,6 +67,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
@@ -87,6 +88,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -698,6 +700,20 @@ public class FragmentEntryInputTemplateNodeContextHelperTest {
 		}
 	}
 
+	private Map<Locale, String> _cleanNullValuesFromMap(
+		Map<Locale, String> values) {
+
+		Map<Locale, String> map = new HashMap<>();
+
+		for (Map.Entry<Locale, String> entry : values.entrySet()) {
+			if (Validator.isNotNull(entry.getValue())) {
+				map.put(entry.getKey(), entry.getValue());
+			}
+		}
+
+		return map;
+	}
+
 	private ObjectFieldSetting _createObjectFieldSetting(
 		String name, String value) {
 
@@ -797,7 +813,7 @@ public class FragmentEntryInputTemplateNodeContextHelperTest {
 					entry.getValue(), inputTemplateNode.getInputValue());
 
 				Map<Locale, String> actualValueI18nMap =
-					inputTemplateNode.getValueI18n();
+					_cleanNullValuesFromMap(inputTemplateNode.getValueI18n());
 
 				Assert.assertEquals(
 					MapUtil.toString(actualValueI18nMap), valueI18nMap.size(),

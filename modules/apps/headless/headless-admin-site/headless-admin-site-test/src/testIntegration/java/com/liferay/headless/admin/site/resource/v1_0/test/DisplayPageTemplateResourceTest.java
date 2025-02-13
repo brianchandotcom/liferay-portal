@@ -55,6 +55,7 @@ import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -529,7 +530,15 @@ public class DisplayPageTemplateResourceTest
 		Layout layout = _layoutLocalService.getLayout(
 			layoutPageTemplateEntry.getPlid());
 
-		Map<Locale, String> friendlyURLMap = layout.getFriendlyURLMap();
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		Map<Locale, String> friendlyURLMap = new HashMap<>();
+
+		if (GetterUtil.getBoolean(
+				draftLayout.getTypeSettingsProperty("published"))) {
+
+			friendlyURLMap = layout.getFriendlyURLMap();
+		}
 
 		Assert.assertEquals(
 			jsonObject.toString(), friendlyURLMap.size(), jsonObject.length());

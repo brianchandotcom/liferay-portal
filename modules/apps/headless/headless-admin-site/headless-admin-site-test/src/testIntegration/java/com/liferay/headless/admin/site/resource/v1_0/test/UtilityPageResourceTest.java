@@ -39,6 +39,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.util.PropsValues;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -409,7 +410,11 @@ public class UtilityPageResourceTest extends BaseUtilityPageResourceTestCase {
 		Layout layout = _layoutLocalService.getLayout(
 			layoutUtilityPageEntry.getPlid());
 
-		Map<Locale, String> friendlyURLMap = layout.getFriendlyURLMap();
+		Map<Locale, String> friendlyURLMap = new HashMap<>();
+
+		if (layout.isPublished()) {
+			friendlyURLMap = layout.getFriendlyURLMap();
+		}
 
 		Assert.assertEquals(
 			jsonObject.toString(), friendlyURLMap.size(), jsonObject.length());

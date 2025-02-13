@@ -72,17 +72,25 @@ public class FriendlyUrlHistoryResourceTest
 			LayoutPageTemplateEntryTestUtil.
 				getDisplayPageLayoutPageTemplateEntry(serviceContext);
 
-		_assertProblemException(layoutPageTemplateEntry);
-
 		Layout layout = _layoutLocalService.getLayout(
 			layoutPageTemplateEntry.getPlid());
 
-		ContentLayoutTestUtil.publishLayout(layout.fetchDraftLayout(), layout);
-
-		List<String> friendlyURLs = _updateLayout(
-			_layoutLocalService.getLayout(layoutPageTemplateEntry.getPlid()));
+		List<String> friendlyURLs = _updateLayout(layout);
 
 		FriendlyUrlHistory friendlyUrlHistory =
+			friendlyUrlHistoryResource.
+				getSiteSiteByExternalReferenceCodeDisplayPageTemplateFriendlyUrlHistory(
+					testGroup.getExternalReferenceCode(),
+					layoutPageTemplateEntry.getExternalReferenceCode());
+
+		JSONObject jsonObject = _jsonFactory.createJSONObject(
+			GetterUtil.getString(friendlyUrlHistory.getFriendlyUrlPath_i18n()));
+
+		Assert.assertEquals(0, jsonObject.length());
+
+		ContentLayoutTestUtil.publishLayout(layout.fetchDraftLayout(), layout);
+
+		friendlyUrlHistory =
 			friendlyUrlHistoryResource.
 				getSiteSiteByExternalReferenceCodeDisplayPageTemplateFriendlyUrlHistory(
 					testGroup.getExternalReferenceCode(),
@@ -148,34 +156,35 @@ public class FriendlyUrlHistoryResourceTest
 				ServiceContextTestUtil.getServiceContext(
 					testGroup.getGroupId(), TestPropsValues.getUserId()));
 
-		try {
-			friendlyUrlHistoryResource.
-				getSiteSiteByExternalReferenceCodeUtilityPageFriendlyUrlHistory(
-					testGroup.getExternalReferenceCode(),
-					layoutUtilityPageEntry.getExternalReferenceCode());
-
-			Assert.fail();
-		}
-		catch (Problem.ProblemException problemException) {
-			Problem problem = problemException.getProblem();
-
-			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
-			Assert.assertNull(problem.getTitle());
-		}
-
 		Layout layout = _layoutLocalService.getLayout(
 			layoutUtilityPageEntry.getPlid());
 
-		ContentLayoutTestUtil.publishLayout(layout.fetchDraftLayout(), layout);
-
-		List<String> friendlyURLs = _updateLayout(
-			_layoutLocalService.getLayout(layoutUtilityPageEntry.getPlid()));
+		List<String> friendlyURLs = _updateLayout(layout);
 
 		FriendlyUrlHistory friendlyUrlHistory =
 			friendlyUrlHistoryResource.
 				getSiteSiteByExternalReferenceCodeUtilityPageFriendlyUrlHistory(
 					testGroup.getExternalReferenceCode(),
 					layoutUtilityPageEntry.getExternalReferenceCode());
+
+		JSONObject jsonObject = _jsonFactory.createJSONObject(
+			GetterUtil.getString(friendlyUrlHistory.getFriendlyUrlPath_i18n()));
+
+		Assert.assertEquals(0, jsonObject.length());
+
+		ContentLayoutTestUtil.publishLayout(layout.fetchDraftLayout(), layout);
+
+		friendlyUrlHistory =
+			friendlyUrlHistoryResource.
+				getSiteSiteByExternalReferenceCodeUtilityPageFriendlyUrlHistory(
+					testGroup.getExternalReferenceCode(),
+					layoutUtilityPageEntry.getExternalReferenceCode());
+
+		_assertFriendlyUrlHistoryJSONObject(
+			_jsonFactory.createJSONObject(
+				GetterUtil.getString(
+					friendlyUrlHistory.getFriendlyUrlPath_i18n())),
+			friendlyURLs);
 
 		_assertFriendlyUrlHistoryJSONObject(
 			_jsonFactory.createJSONObject(
@@ -248,6 +257,23 @@ public class FriendlyUrlHistoryResourceTest
 				getSiteSiteByExternalReferenceCodeSitePageFriendlyUrlHistory(
 					testGroup.getExternalReferenceCode(),
 					layout.getExternalReferenceCode());
+
+		if (!layout.isPublished()) {
+			JSONObject jsonObject = _jsonFactory.createJSONObject(
+				GetterUtil.getString(
+					friendlyUrlHistory.getFriendlyUrlPath_i18n()));
+
+			Assert.assertEquals(0, jsonObject.length());
+
+			ContentLayoutTestUtil.publishLayout(
+				layout.fetchDraftLayout(), layout);
+
+			friendlyUrlHistory =
+				friendlyUrlHistoryResource.
+					getSiteSiteByExternalReferenceCodeSitePageFriendlyUrlHistory(
+						testGroup.getExternalReferenceCode(),
+						layout.getExternalReferenceCode());
+		}
 
 		_assertFriendlyUrlHistoryJSONObject(
 			_jsonFactory.createJSONObject(

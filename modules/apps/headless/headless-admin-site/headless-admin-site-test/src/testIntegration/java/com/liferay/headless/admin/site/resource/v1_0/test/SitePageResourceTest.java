@@ -51,6 +51,7 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -443,7 +444,11 @@ public class SitePageResourceTest extends BaseSitePageResourceTestCase {
 		Layout layout = _layoutLocalService.getLayoutByExternalReferenceCode(
 			sitePage.getExternalReferenceCode(), testGroup.getGroupId());
 
-		Map<Locale, String> friendlyURLMap = layout.getFriendlyURLMap();
+		Map<Locale, String> friendlyURLMap = new HashMap<>();
+
+		if (layout.isPublished()) {
+			friendlyURLMap = layout.getFriendlyURLMap();
+		}
 
 		Assert.assertEquals(
 			jsonObject.toString(), friendlyURLMap.size(), jsonObject.length());

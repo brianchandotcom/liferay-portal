@@ -10,11 +10,9 @@ import com.liferay.headless.admin.workflow.client.dto.v1_0.WorkflowDefinitionLin
 import com.liferay.headless.admin.workflow.resource.v1_0.test.util.WorkflowDefinitionTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.test.rule.DataGuard;
@@ -61,16 +59,13 @@ public class WorkflowDefinitionLinkResourceTest
 	protected WorkflowDefinitionLink randomWorkflowDefinitionLink()
 		throws Exception {
 
-		Group group = _groupService.getGroup(_kaleoDefinition.getGroupId());
-
 		return new WorkflowDefinitionLink() {
 			{
 				className = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				externalReferenceCode = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
-				groupExternalReferenceCode = group.getExternalReferenceCode();
-				groupId = _kaleoDefinition.getGroupId();
+				groupExternalReferenceCode = StringPool.BLANK;
 				workflowDefinitionName = _kaleoDefinition.getName();
 				workflowDefinitionVersion = _kaleoDefinition.getVersion();
 			}
@@ -143,7 +138,7 @@ public class WorkflowDefinitionLinkResourceTest
 
 		try {
 			return _fetchWorkflowDefinitionLinkByExternalReferenceCode(
-				externalReferenceCode, _kaleoDefinition.getGroupId());
+				externalReferenceCode, 0);
 		}
 		catch (PortalException portalException) {
 			return null;
@@ -171,13 +166,7 @@ public class WorkflowDefinitionLinkResourceTest
 				setClassName(workflowDefinitionLink::getClassName);
 				setExternalReferenceCode(
 					workflowDefinitionLink::getExternalReferenceCode);
-				setGroupExternalReferenceCode(
-					() -> {
-						Group group = _groupLocalService.fetchGroup(
-							workflowDefinitionLink.getGroupId());
-
-						return group.getExternalReferenceCode();
-					});
+				setGroupExternalReferenceCode(StringPool.BLANK);
 				setGroupId(workflowDefinitionLink::getGroupId);
 				setId(workflowDefinitionLink::getWorkflowDefinitionLinkId);
 				setWorkflowDefinitionName(
@@ -190,9 +179,6 @@ public class WorkflowDefinitionLinkResourceTest
 
 	@Inject
 	private GroupLocalService _groupLocalService;
-
-	@Inject
-	private GroupService _groupService;
 
 	@DeleteAfterTestRun
 	private KaleoDefinition _kaleoDefinition;

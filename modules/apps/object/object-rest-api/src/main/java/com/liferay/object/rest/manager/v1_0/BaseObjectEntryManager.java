@@ -125,17 +125,10 @@ public abstract class BaseObjectEntryManager {
 				objectDefinition.getScope());
 
 		if (objectScopeProvider.isGroupAware()) {
-			if (Objects.equals(objectDefinition.getScope(), "site")) {
-				return GetterUtil.getLong(
-					GroupUtil.getGroupId(
-						objectDefinition.getCompanyId(), scopeKey,
-						groupLocalService));
-			}
-
 			return GetterUtil.getLong(
-				com.liferay.portal.vulcan.util.GroupUtil.getDepotGroupId(
-					scopeKey, objectDefinition.getCompanyId(),
-					depotEntryLocalService, groupLocalService));
+				GroupUtil.getGroupId(
+					objectDefinition.getCompanyId(), scopeKey,
+					groupLocalService));
 		}
 
 		if (useCompanyGroup) {

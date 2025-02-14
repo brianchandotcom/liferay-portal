@@ -124,7 +124,7 @@ public class SystemFDSSerializer
 		String fdsName, HttpServletRequest httpServletRequest) {
 
 		FDSItemsActions fdsItemsActions =
-			_fdsItemsActionsRegistry.getFDSItemsActions(fdsName);
+			fdsItemsActionsRegistry.getFDSItemsActions(fdsName);
 
 		if (fdsItemsActions == null) {
 			return Collections.emptyList();
@@ -145,6 +145,9 @@ public class SystemFDSSerializer
 
 	@Reference
 	protected FDSFilterRegistry fdsFilterRegistry;
+
+	@Reference
+	protected FDSItemsActionsRegistry fdsItemsActionsRegistry;
 
 	@Reference
 	protected SystemFDSEntryRegistry systemFDSEntryRegistry;
@@ -197,8 +200,5 @@ public class SystemFDSSerializer
 			jsonArray.put(jsonObject);
 		}
 	}
-
-	@Reference
-	private FDSItemsActionsRegistry _fdsItemsActionsRegistry;
 
 }

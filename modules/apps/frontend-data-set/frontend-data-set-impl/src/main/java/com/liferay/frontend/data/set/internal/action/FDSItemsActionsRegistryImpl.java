@@ -24,6 +24,15 @@ import org.osgi.service.component.annotations.Deactivate;
 @Component(service = FDSItemsActionsRegistry.class)
 public class FDSItemsActionsRegistryImpl implements FDSItemsActionsRegistry {
 
+	public FDSItemsActionsRegistryImpl(
+		ServiceTrackerMap
+			<String,
+			 ServiceTrackerCustomizerFactory.ServiceWrapper<FDSItemsActions>>
+				serviceTrackerMap) {
+
+		_serviceTrackerMap = serviceTrackerMap;
+	}
+
 	@Override
 	public FDSItemsActions getFDSItemsActions(String fdsName) {
 		ServiceTrackerCustomizerFactory.ServiceWrapper<FDSItemsActions>

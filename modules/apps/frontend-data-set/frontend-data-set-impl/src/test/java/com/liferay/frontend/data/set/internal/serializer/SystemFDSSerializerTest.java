@@ -1086,15 +1086,8 @@ public class SystemFDSSerializerTest {
 					ServiceTrackerCustomizerFactory.
 						<FDSItemsActions>serviceWrapper(_bundleContext));
 
-		FDSItemsActionsRegistry fdsItemsActionsRegistry =
-			new FDSItemsActionsRegistryImpl();
-
-		ReflectionTestUtil.setFieldValue(
-			fdsItemsActionsRegistry, "_serviceTrackerMap", serviceTrackerMap);
-
-		ReflectionTestUtil.setFieldValue(
-			_systemFDSSerializer, "_fdsItemsActionsRegistry",
-			fdsItemsActionsRegistry);
+		_systemFDSSerializer.fdsItemsActionsRegistry =
+			new FDSItemsActionsRegistryImpl(serviceTrackerMap);
 
 		// Different items actions
 

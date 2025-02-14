@@ -18,7 +18,6 @@ export class ExportImportPage {
 	readonly importPermissionsButton: Locator;
 	readonly newExportButton: Locator;
 	readonly newImportButton: Locator;
-	readonly newImportProcess: Locator;
 	readonly page: Page;
 	readonly productMenuPage: ProductMenuPage;
 	readonly title: Locator;
@@ -33,9 +32,6 @@ export class ExportImportPage {
 		this.importPermissionsButton = page.getByLabel('Import Permissions');
 		this.newExportButton = page.getByRole('link', {name: 'Custom Export'});
 		this.newImportButton = page.getByRole('link', {name: 'Import'});
-		this.newImportProcess = page.getByRole('button', {
-			name: 'New',
-		});
 		this.page = page;
 		this.productMenuPage = new ProductMenuPage(page);
 		this.title = page.getByPlaceholder('Enter the name of the process');

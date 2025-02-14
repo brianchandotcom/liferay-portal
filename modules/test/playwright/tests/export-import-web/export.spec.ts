@@ -142,19 +142,12 @@ test('can export custom object entries at instance level with permissions', asyn
 test('Can/not view Export menu item in Application menu depending on permissions', async ({
 	apiHelpers,
 	applicationsMenuPage,
+	companyExportImportPage,
 	page,
 }) => {
 	const companyId = await page.evaluate(() => {
 		return Liferay.ThemeDisplay.getCompanyId();
 	});
-
-	const user1 = await apiHelpers.headlessAdminUser.postUserAccount();
-
-	userData[user1.alternateName] = {
-		name: user1.givenName,
-		password: 'test',
-		surname: user1.familyName,
-	};
 
 	const roleWithPermissions = await apiHelpers.headlessAdminUser.postRole({
 		name: 'role' + getRandomInt(),
@@ -175,6 +168,26 @@ test('Can/not view Export menu item in Application menu depending on permissions
 		],
 	});
 
+	const roleWithoutPermissions = await apiHelpers.headlessAdminUser.postRole({
+		name: 'role' + getRandomInt(),
+		rolePermissions: [
+			{
+				actionIds: ['VIEW_CONTROL_PANEL'],
+				primaryKey: companyId,
+				resourceName: '90',
+				scope: 1,
+			},
+		],
+	});
+
+	const user1 = await apiHelpers.headlessAdminUser.postUserAccount();
+
+	userData[user1.alternateName] = {
+		name: user1.givenName,
+		password: 'test',
+		surname: user1.familyName,
+	};
+
 	await apiHelpers.headlessAdminUser.assignUserToRole(
 		roleWithPermissions.externalReferenceCode,
 		user1.id
@@ -188,18 +201,6 @@ test('Can/not view Export menu item in Application menu depending on permissions
 		surname: user2.familyName,
 	};
 
-	const roleWithoutPermissions = await apiHelpers.headlessAdminUser.postRole({
-		name: 'role' + getRandomInt(),
-		rolePermissions: [
-			{
-				actionIds: ['VIEW_CONTROL_PANEL'],
-				primaryKey: companyId,
-				resourceName: '90',
-				scope: 1,
-			},
-		],
-	});
-
 	await apiHelpers.headlessAdminUser.assignUserToRole(
 		roleWithoutPermissions.externalReferenceCode,
 		user2.id
@@ -211,32 +212,28 @@ test('Can/not view Export menu item in Application menu depending on permissions
 
 	await applicationsMenuPage.goToApplicationsMenu();
 
-	const exportButton = page.getByRole('menuitem', {
-		exact: true,
-		name: 'Export',
-	});
+	const exportUrl =
+		await applicationsMenuPage.exportMenuItem.getAttribute('href');
 
-	const exportUrl = await exportButton.getAttribute('href');
-
-	await expect(exportButton).toBeVisible();
+	await expect(applicationsMenuPage.exportMenuItem).toBeVisible();
 
 	await applicationsMenuPage.goToExport();
 
-	await expect(page.getByText('New', {exact: true})).toBeVisible();
+	await expect(
+		companyExportImportPage.exportImportPage.newExportButton
+	).toBeVisible();
 
 	await performLogout(page);
 
 	await performLogin(page, user2.alternateName);
 
-	await expect(
-		page.getByRole('tab', {
-			name: 'Applications',
-		})
-	).toBeHidden();
+	await expect(applicationsMenuPage.applicationsMenuTabButton).toBeHidden();
 
 	// Try to access the Export page directly using the stored URL
 
 	await page.goto(exportUrl);
 
-	await expect(page.getByText('New', {exact: true})).toBeHidden();
+	await expect(
+		companyExportImportPage.exportImportPage.newExportButton
+	).toBeHidden();
 });

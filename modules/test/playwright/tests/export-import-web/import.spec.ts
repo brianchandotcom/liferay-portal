@@ -487,19 +487,12 @@ test('can import custom object entries at instance level with or without permiss
 test('Can/not view Import menu item in Application menu depending on permissions', async ({
 	apiHelpers,
 	applicationsMenuPage,
+	companyExportImportPage,
 	page,
 }) => {
 	const companyId = await page.evaluate(() => {
 		return Liferay.ThemeDisplay.getCompanyId();
 	});
-
-	const user1 = await apiHelpers.headlessAdminUser.postUserAccount();
-
-	userData[user1.alternateName] = {
-		name: user1.givenName,
-		password: 'test',
-		surname: user1.familyName,
-	};
 
 	const roleWithPermissions = await apiHelpers.headlessAdminUser.postRole({
 		name: 'role' + getRandomInt(),
@@ -520,6 +513,26 @@ test('Can/not view Import menu item in Application menu depending on permissions
 		],
 	});
 
+	const roleWithoutPermissions = await apiHelpers.headlessAdminUser.postRole({
+		name: 'role' + getRandomInt(),
+		rolePermissions: [
+			{
+				actionIds: ['VIEW_CONTROL_PANEL'],
+				primaryKey: companyId,
+				resourceName: '90',
+				scope: 1,
+			},
+		],
+	});
+
+	const user1 = await apiHelpers.headlessAdminUser.postUserAccount();
+
+	userData[user1.alternateName] = {
+		name: user1.givenName,
+		password: 'test',
+		surname: user1.familyName,
+	};
+
 	await apiHelpers.headlessAdminUser.assignUserToRole(
 		roleWithPermissions.externalReferenceCode,
 		user1.id
@@ -533,18 +546,6 @@ test('Can/not view Import menu item in Application menu depending on permissions
 		surname: user2.familyName,
 	};
 
-	const roleWithoutPermissions = await apiHelpers.headlessAdminUser.postRole({
-		name: 'role' + getRandomInt(),
-		rolePermissions: [
-			{
-				actionIds: ['VIEW_CONTROL_PANEL'],
-				primaryKey: companyId,
-				resourceName: '90',
-				scope: 1,
-			},
-		],
-	});
-
 	await apiHelpers.headlessAdminUser.assignUserToRole(
 		roleWithoutPermissions.externalReferenceCode,
 		user2.id
@@ -556,32 +557,28 @@ test('Can/not view Import menu item in Application menu depending on permissions
 
 	await applicationsMenuPage.goToApplicationsMenu();
 
-	const importButton = page.getByRole('menuitem', {
-		exact: true,
-		name: 'Import',
-	});
+	const importUrl =
+		await applicationsMenuPage.importMenuItem.getAttribute('href');
 
-	const importUrl = await importButton.getAttribute('href');
-
-	await expect(importButton).toBeVisible();
+	await expect(applicationsMenuPage.importMenuItem).toBeVisible();
 
 	await applicationsMenuPage.goToImport();
 
-	await expect(page.getByText('New', {exact: true})).toBeVisible();
+	await expect(
+		companyExportImportPage.exportImportPage.newImportButton
+	).toBeVisible();
 
 	await performLogout(page);
 
 	await performLogin(page, user2.alternateName);
 
-	await expect(
-		page.getByRole('tab', {
-			name: 'Applications',
-		})
-	).toBeHidden();
+	await expect(applicationsMenuPage.applicationsMenuTabButton).toBeHidden();
 
 	// Try to access the Import page directly using the stored URL
 
 	await page.goto(importUrl);
 
-	await expect(page.getByText('New', {exact: true})).toBeHidden();
+	await expect(
+		companyExportImportPage.exportImportPage.newImportButton
+	).toBeHidden();
 });

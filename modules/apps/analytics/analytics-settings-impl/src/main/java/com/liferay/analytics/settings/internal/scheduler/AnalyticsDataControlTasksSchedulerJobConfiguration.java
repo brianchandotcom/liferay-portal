@@ -40,23 +40,20 @@ public class AnalyticsDataControlTasksSchedulerJobConfiguration
 				return;
 			}
 
-			for (Map.Entry<Long, AnalyticsConfiguration>
-					analyticsConfigurationEntry :
-						analyticsConfigurations.entrySet()) {
+			for (Map.Entry<Long, AnalyticsConfiguration> entry :
+					analyticsConfigurations.entrySet()) {
 
 				Set<String> emailAddresses =
-					_usersDataControlTasks.getEmailAddresses(
-						analyticsConfigurationEntry.getKey());
+					_usersDataControlTasks.getEmailAddresses(entry.getKey());
 
 				if (emailAddresses.isEmpty()) {
 					continue;
 				}
 
-				_usersDataControlTasks.clean(
-					analyticsConfigurationEntry.getKey());
+				_usersDataControlTasks.clean(entry.getKey());
 
 				_analyticsCloudClient.createDataControlTasks(
-					analyticsConfigurationEntry.getValue(), emailAddresses,
+					entry.getValue(), emailAddresses,
 					SetUtil.fromArray(new String[] {"SUPPRESS", "DELETE"}));
 			}
 		};

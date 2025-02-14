@@ -35,7 +35,6 @@ public class AnalyticsCloudClient {
 		Http.Options options = _getOptions(analyticsConfiguration);
 
 		options.addHeader("Content-Type", ContentTypes.APPLICATION_JSON);
-
 		options.setBody(
 			JSONUtil.put(
 				"emailAddresses", emailAddresses
@@ -60,7 +59,7 @@ public class AnalyticsCloudClient {
 			_log.debug("Response code " + response.getResponseCode());
 		}
 
-		throw new PortalException("Unable to add Data Control Tasks");
+		throw new PortalException("Unable to add data control tasks");
 	}
 
 	private Http.Options _getOptions(

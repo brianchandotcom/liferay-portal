@@ -132,6 +132,19 @@ public class DDMStructureTestHelper {
 
 	public DDMStructure addStructure(
 			long classNameId, String structureKey, String name,
+			String description, DDMForm ddmForm, String storageType, int type)
+		throws Exception {
+
+		DDMFormLayout ddmFormLayout = DDMUtil.getDefaultDDMFormLayout(ddmForm);
+
+		return addStructure(
+			DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID, classNameId,
+			structureKey, name, description, ddmForm, ddmFormLayout,
+			storageType, type);
+	}
+
+	public DDMStructure addStructure(
+			long classNameId, String structureKey, String name,
 			String definition, String storageType)
 		throws Exception {
 

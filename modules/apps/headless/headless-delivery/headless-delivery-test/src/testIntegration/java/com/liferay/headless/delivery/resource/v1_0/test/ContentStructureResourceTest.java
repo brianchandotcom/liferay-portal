@@ -15,6 +15,7 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestHelper;
 import com.liferay.headless.delivery.client.dto.v1_0.ContentStructure;
+import com.liferay.headless.delivery.client.pagination.Page;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
@@ -26,6 +27,8 @@ import com.liferay.portal.test.rule.Inject;
 
 import java.io.InputStream;
 
+import org.junit.Assert;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -34,6 +37,25 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class ContentStructureResourceTest
 	extends BaseContentStructureResourceTestCase {
+
+	@Test
+	public void testGetSiteContentStructuresPageSearch() throws Exception {
+		DDMStructure structure = _addDDMStructure(
+			testGroup, RandomTestUtil.randomString());
+
+		Page<ContentStructure> structuresPage =
+			contentStructureResource.getSiteContentStructuresPage(
+				testGroup.getGroupId(), structure.getName("en_US"), null, null,
+				null, null);
+
+		Assert.assertEquals(1, structuresPage.getTotalCount());
+
+		structuresPage = contentStructureResource.getSiteContentStructuresPage(
+			testGroup.getGroupId(), structure.getDescription("en_US"), null,
+			null, null, null);
+
+		Assert.assertEquals(1, structuresPage.getTotalCount());
+	}
 
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
@@ -135,7 +157,7 @@ public class ContentStructureResourceTest
 
 		return ddmStructureTestHelper.addStructure(
 			PortalUtil.getClassNameId(JournalArticle.class),
-			RandomTestUtil.randomString(), name,
+			RandomTestUtil.randomString(), name, RandomTestUtil.randomString(),
 			_deserialize(_read("test-ddm-structure.json")),
 			StorageType.DEFAULT.getValue(), DDMStructureConstants.TYPE_DEFAULT);
 	}

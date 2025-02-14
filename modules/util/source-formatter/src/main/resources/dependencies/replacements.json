@@ -4104,7 +4104,10 @@
 		],
 		"from": "deleteCommerceOrderItems(long paramName)",
 		"issueKey": "LPS-197459",
-		"to": "deleteCommerceOrderItems(0, param#0#)"
+		"newImports": [
+			"com.liferay.portal.kernel.service.ServiceContextThreadLocal"
+		],
+		"to": "deleteCommerceOrderItems(ServiceContextThreadLocal.getServiceContext().getUserId(), param#0#)"
 	},
 	{
 		"classNames": [

@@ -98,6 +98,15 @@ public class RelevantTestSuite {
 
 					testBatches.add(testBatch);
 				}
+				else {
+					System.out.println(
+						JenkinsResultsParserUtil.combine(
+							testBatch.getName(),
+							" is not a valid test batch in relevant. ",
+							"Please check test.batch.names[relevant] ",
+							"in the base test.properties file and ",
+							"set the batch name if necessary.\n"));
+				}
 			}
 
 			_testBatchNamesJobProperties.addAll(

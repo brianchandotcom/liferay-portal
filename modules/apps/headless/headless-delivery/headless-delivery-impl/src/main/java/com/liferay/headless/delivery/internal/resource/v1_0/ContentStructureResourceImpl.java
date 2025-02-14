@@ -83,6 +83,8 @@ public class ContentStructureResourceImpl
 				Field.ENTRY_CLASS_PK),
 			searchContext -> {
 				searchContext.addVulcanAggregation(aggregation);
+				searchContext.setAttribute(Field.DESCRIPTION, search);
+				searchContext.setAttribute(Field.NAME, search);
 				searchContext.setAttribute(
 					"searchPermissionContext", StringPool.BLANK);
 				searchContext.setCompanyId(contextCompany.getCompanyId());

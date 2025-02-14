@@ -6,7 +6,7 @@
 import ClayTabs from '@clayui/tabs';
 import React, {useEffect, useRef, useState} from 'react';
 
-const Panel = ({children: tabPanel}) => {
+const TabPanelContent = ({children: tabPanel}) => {
 	const ref = useRef();
 
 	useEffect(() => {
@@ -69,7 +69,7 @@ export default function Tabs({
 				<ClayTabs.Panels>
 					{Array.from(panelsContent).map((panelContent, i) => (
 						<ClayTabs.TabPanel key={i}>
-							<Panel>{panelContent}</Panel>
+							<TabPanelContent>{panelContent}</TabPanelContent>
 						</ClayTabs.TabPanel>
 					))}
 				</ClayTabs.Panels>

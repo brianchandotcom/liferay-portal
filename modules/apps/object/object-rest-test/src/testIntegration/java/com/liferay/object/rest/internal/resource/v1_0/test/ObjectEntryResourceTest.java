@@ -7742,6 +7742,12 @@ public class ObjectEntryResourceTest {
 		finally {
 			_objectDefinitionLocalService.deleteObjectDefinition(
 				objectDefinition);
+
+			HTTPTestUtil.invokeToJSONObject(
+				null,
+				"headless-portal-instances/v1.0/portal-instances/" +
+					portalInstanceJSONObject.getString("portalInstanceId"),
+				Http.Method.DELETE);
 		}
 	}
 
@@ -8634,32 +8640,41 @@ public class ObjectEntryResourceTest {
 		ObjectRelationship objectRelationship2 = _addObjectRelationship(
 			jsonObject.getLong("companyId"));
 
-		HTTPTestUtil.customize(
-		).withBaseURL(
-			"http://www.able.com:8080"
-		).withCredentials(
-			"test@able.com", PropsValues.DEFAULT_ADMIN_PASSWORD
-		).apply(
-			() -> {
-				ObjectDefinition objectDefinition =
-					_objectDefinitionLocalService.getObjectDefinition(
-						objectRelationship2.getObjectDefinitionId2());
+		try {
+			HTTPTestUtil.customize(
+			).withBaseURL(
+				"http://www.able.com:8080"
+			).withCredentials(
+				"test@able.com", PropsValues.DEFAULT_ADMIN_PASSWORD
+			).apply(
+				() -> {
+					ObjectDefinition objectDefinition =
+						_objectDefinitionLocalService.getObjectDefinition(
+							objectRelationship2.getObjectDefinitionId2());
 
-				ObjectField objectField =
-					_objectFieldLocalService.getObjectField(
-						objectRelationship2.getObjectFieldId2());
+					ObjectField objectField =
+						_objectFieldLocalService.getObjectField(
+							objectRelationship2.getObjectFieldId2());
 
-				Assert.assertEquals(
-					400,
-					HTTPTestUtil.invokeToHttpCode(
-						JSONUtil.put(
-							objectField.getName(),
-							objectEntry.getObjectEntryId()
-						).toString(),
-						objectDefinition.getRESTContextPath(),
-						Http.Method.POST));
-			}
-		);
+					Assert.assertEquals(
+						400,
+						HTTPTestUtil.invokeToHttpCode(
+							JSONUtil.put(
+								objectField.getName(),
+								objectEntry.getObjectEntryId()
+							).toString(),
+							objectDefinition.getRESTContextPath(),
+							Http.Method.POST));
+				}
+			);
+		}
+		finally {
+			HTTPTestUtil.invokeToJSONObject(
+				null,
+				"headless-portal-instances/v1.0/portal-instances/" +
+					jsonObject.getString("portalInstanceId"),
+				Http.Method.DELETE);
+		}
 	}
 
 	@Test

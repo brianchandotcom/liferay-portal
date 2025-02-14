@@ -234,10 +234,6 @@ public interface LayoutRevisionLocalService
 	public LayoutRevision fetchLayoutRevision(long layoutRevisionId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public LayoutRevision fetchLayoutRevision(
-		long layoutSetBranchId, long layoutBranchId, boolean head, long plid);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

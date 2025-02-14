@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.impl.LayoutRevisionImpl;
 import com.liferay.portal.model.impl.LayoutRevisionModelImpl;
 
@@ -39,7 +38,6 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -7197,253 +7195,6 @@ public class LayoutRevisionPersistenceImpl
 	private static final String _FINDER_COLUMN_L_P_S_STATUS_2 =
 		"layoutRevision.status = ?";
 
-	private FinderPath _finderPathFetchByL_L_H_P;
-
-	/**
-	 * Returns the layout revision where layoutSetBranchId = &#63; and layoutBranchId = &#63; and head = &#63; and plid = &#63; or throws a <code>NoSuchLayoutRevisionException</code> if it could not be found.
-	 *
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param layoutBranchId the layout branch ID
-	 * @param head the head
-	 * @param plid the plid
-	 * @return the matching layout revision
-	 * @throws NoSuchLayoutRevisionException if a matching layout revision could not be found
-	 */
-	@Override
-	public LayoutRevision findByL_L_H_P(
-			long layoutSetBranchId, long layoutBranchId, boolean head,
-			long plid)
-		throws NoSuchLayoutRevisionException {
-
-		LayoutRevision layoutRevision = fetchByL_L_H_P(
-			layoutSetBranchId, layoutBranchId, head, plid);
-
-		if (layoutRevision == null) {
-			StringBundler sb = new StringBundler(10);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("layoutSetBranchId=");
-			sb.append(layoutSetBranchId);
-
-			sb.append(", layoutBranchId=");
-			sb.append(layoutBranchId);
-
-			sb.append(", head=");
-			sb.append(head);
-
-			sb.append(", plid=");
-			sb.append(plid);
-
-			sb.append("}");
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
-			}
-
-			throw new NoSuchLayoutRevisionException(sb.toString());
-		}
-
-		return layoutRevision;
-	}
-
-	/**
-	 * Returns the layout revision where layoutSetBranchId = &#63; and layoutBranchId = &#63; and head = &#63; and plid = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param layoutBranchId the layout branch ID
-	 * @param head the head
-	 * @param plid the plid
-	 * @return the matching layout revision, or <code>null</code> if a matching layout revision could not be found
-	 */
-	@Override
-	public LayoutRevision fetchByL_L_H_P(
-		long layoutSetBranchId, long layoutBranchId, boolean head, long plid) {
-
-		return fetchByL_L_H_P(
-			layoutSetBranchId, layoutBranchId, head, plid, true);
-	}
-
-	/**
-	 * Returns the layout revision where layoutSetBranchId = &#63; and layoutBranchId = &#63; and head = &#63; and plid = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param layoutBranchId the layout branch ID
-	 * @param head the head
-	 * @param plid the plid
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the matching layout revision, or <code>null</code> if a matching layout revision could not be found
-	 */
-	@Override
-	public LayoutRevision fetchByL_L_H_P(
-		long layoutSetBranchId, long layoutBranchId, boolean head, long plid,
-		boolean useFinderCache) {
-
-		Object[] finderArgs = null;
-
-		if (useFinderCache) {
-			finderArgs = new Object[] {
-				layoutSetBranchId, layoutBranchId, head, plid
-			};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = FinderCacheUtil.getResult(
-				_finderPathFetchByL_L_H_P, finderArgs, this);
-		}
-
-		if (result instanceof LayoutRevision) {
-			LayoutRevision layoutRevision = (LayoutRevision)result;
-
-			if ((layoutSetBranchId != layoutRevision.getLayoutSetBranchId()) ||
-				(layoutBranchId != layoutRevision.getLayoutBranchId()) ||
-				(head != layoutRevision.isHead()) ||
-				(plid != layoutRevision.getPlid())) {
-
-				result = null;
-			}
-		}
-
-		if (result == null) {
-			StringBundler sb = new StringBundler(6);
-
-			sb.append(_SQL_SELECT_LAYOUTREVISION_WHERE);
-
-			sb.append(_FINDER_COLUMN_L_L_H_P_LAYOUTSETBRANCHID_2);
-
-			sb.append(_FINDER_COLUMN_L_L_H_P_LAYOUTBRANCHID_2);
-
-			sb.append(_FINDER_COLUMN_L_L_H_P_HEAD_2);
-
-			sb.append(_FINDER_COLUMN_L_L_H_P_PLID_2);
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				queryPos.add(layoutSetBranchId);
-
-				queryPos.add(layoutBranchId);
-
-				queryPos.add(head);
-
-				queryPos.add(plid);
-
-				List<LayoutRevision> list = query.list();
-
-				if (list.isEmpty()) {
-					if (useFinderCache) {
-						FinderCacheUtil.putResult(
-							_finderPathFetchByL_L_H_P, finderArgs, list);
-					}
-				}
-				else {
-					if (list.size() > 1) {
-						Collections.sort(list, Collections.reverseOrder());
-
-						if (_log.isWarnEnabled()) {
-							if (!useFinderCache) {
-								finderArgs = new Object[] {
-									layoutSetBranchId, layoutBranchId, head,
-									plid
-								};
-							}
-
-							_log.warn(
-								"LayoutRevisionPersistenceImpl.fetchByL_L_H_P(long, long, boolean, long, boolean) with parameters (" +
-									StringUtil.merge(finderArgs) +
-										") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
-						}
-					}
-
-					LayoutRevision layoutRevision = list.get(0);
-
-					result = layoutRevision;
-
-					cacheResult(layoutRevision);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (LayoutRevision)result;
-		}
-	}
-
-	/**
-	 * Removes the layout revision where layoutSetBranchId = &#63; and layoutBranchId = &#63; and head = &#63; and plid = &#63; from the database.
-	 *
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param layoutBranchId the layout branch ID
-	 * @param head the head
-	 * @param plid the plid
-	 * @return the layout revision that was removed
-	 */
-	@Override
-	public LayoutRevision removeByL_L_H_P(
-			long layoutSetBranchId, long layoutBranchId, boolean head,
-			long plid)
-		throws NoSuchLayoutRevisionException {
-
-		LayoutRevision layoutRevision = findByL_L_H_P(
-			layoutSetBranchId, layoutBranchId, head, plid);
-
-		return remove(layoutRevision);
-	}
-
-	/**
-	 * Returns the number of layout revisions where layoutSetBranchId = &#63; and layoutBranchId = &#63; and head = &#63; and plid = &#63;.
-	 *
-	 * @param layoutSetBranchId the layout set branch ID
-	 * @param layoutBranchId the layout branch ID
-	 * @param head the head
-	 * @param plid the plid
-	 * @return the number of matching layout revisions
-	 */
-	@Override
-	public int countByL_L_H_P(
-		long layoutSetBranchId, long layoutBranchId, boolean head, long plid) {
-
-		LayoutRevision layoutRevision = fetchByL_L_H_P(
-			layoutSetBranchId, layoutBranchId, head, plid);
-
-		if (layoutRevision == null) {
-			return 0;
-		}
-
-		return 1;
-	}
-
-	private static final String _FINDER_COLUMN_L_L_H_P_LAYOUTSETBRANCHID_2 =
-		"layoutRevision.layoutSetBranchId = ? AND ";
-
-	private static final String _FINDER_COLUMN_L_L_H_P_LAYOUTBRANCHID_2 =
-		"layoutRevision.layoutBranchId = ? AND ";
-
-	private static final String _FINDER_COLUMN_L_L_H_P_HEAD_2 =
-		"layoutRevision.head = ? AND ";
-
-	private static final String _FINDER_COLUMN_L_L_H_P_PLID_2 =
-		"layoutRevision.plid = ?";
-
 	public LayoutRevisionPersistenceImpl() {
 		setModelClass(LayoutRevision.class);
 
@@ -7462,15 +7213,6 @@ public class LayoutRevisionPersistenceImpl
 	public void cacheResult(LayoutRevision layoutRevision) {
 		EntityCacheUtil.putResult(
 			LayoutRevisionImpl.class, layoutRevision.getPrimaryKey(),
-			layoutRevision);
-
-		FinderCacheUtil.putResult(
-			_finderPathFetchByL_L_H_P,
-			new Object[] {
-				layoutRevision.getLayoutSetBranchId(),
-				layoutRevision.getLayoutBranchId(), layoutRevision.isHead(),
-				layoutRevision.getPlid()
-			},
 			layoutRevision);
 	}
 
@@ -7541,19 +7283,6 @@ public class LayoutRevisionPersistenceImpl
 		for (Serializable primaryKey : primaryKeys) {
 			EntityCacheUtil.removeResult(LayoutRevisionImpl.class, primaryKey);
 		}
-	}
-
-	protected void cacheUniqueFindersCache(
-		LayoutRevisionModelImpl layoutRevisionModelImpl) {
-
-		Object[] args = new Object[] {
-			layoutRevisionModelImpl.getLayoutSetBranchId(),
-			layoutRevisionModelImpl.getLayoutBranchId(),
-			layoutRevisionModelImpl.isHead(), layoutRevisionModelImpl.getPlid()
-		};
-
-		FinderCacheUtil.putResult(
-			_finderPathFetchByL_L_H_P, args, layoutRevisionModelImpl);
 	}
 
 	/**
@@ -7730,8 +7459,6 @@ public class LayoutRevisionPersistenceImpl
 
 		EntityCacheUtil.putResult(
 			LayoutRevisionImpl.class, layoutRevisionModelImpl, false, true);
-
-		cacheUniqueFindersCache(layoutRevisionModelImpl);
 
 		if (isNew) {
 			layoutRevision.setNew(false);
@@ -8284,17 +8011,6 @@ public class LayoutRevisionPersistenceImpl
 				Integer.class.getName()
 			},
 			new String[] {"layoutSetBranchId", "plid", "status"}, false);
-
-		_finderPathFetchByL_L_H_P = new FinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByL_L_H_P",
-			new String[] {
-				Long.class.getName(), Long.class.getName(),
-				Boolean.class.getName(), Long.class.getName()
-			},
-			new String[] {
-				"layoutSetBranchId", "layoutBranchId", "head", "plid"
-			},
-			true);
 
 		LayoutRevisionUtil.setPersistence(this);
 	}

@@ -233,12 +233,12 @@ create index IX_9F80D54 on LayoutFriendlyURL (uuid_[$COLUMN_LENGTH:75$]);
 create index IX_557A639F on LayoutPrototype (companyId, active_);
 create index IX_CEF72136 on LayoutPrototype (uuid_[$COLUMN_LENGTH:75$]);
 
-create index IX_9EC9F954 on LayoutRevision (layoutSetBranchId, head, status);
-create index IX_538BFC54 on LayoutRevision (layoutSetBranchId, plid, head, layoutBranchId);
+create index IX_A9AC086E on LayoutRevision (layoutSetBranchId, head);
+create index IX_F21D36F9 on LayoutRevision (layoutSetBranchId, plid, head);
 create index IX_84668240 on LayoutRevision (layoutSetBranchId, plid, layoutBranchId);
 create index IX_F93E5CC3 on LayoutRevision (layoutSetBranchId, plid, parentLayoutRevisionId);
 create index IX_70DA9ECB on LayoutRevision (layoutSetBranchId, plid, status);
-create index IX_7FFAE700 on LayoutRevision (layoutSetBranchId, status);
+create index IX_3681C8D4 on LayoutRevision (layoutSetBranchId, status, head);
 create index IX_27F4B32A on LayoutRevision (plid, head);
 create index IX_8EC3D2BC on LayoutRevision (plid, status);
 create index IX_421223B1 on LayoutRevision (status);

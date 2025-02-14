@@ -306,14 +306,6 @@ public class LayoutRevisionLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.LayoutRevision fetchLayoutRevision(
-		long layoutSetBranchId, long layoutBranchId, boolean head, long plid) {
-
-		return _layoutRevisionLocalService.fetchLayoutRevision(
-			layoutSetBranchId, layoutBranchId, head, plid);
-	}
-
-	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 

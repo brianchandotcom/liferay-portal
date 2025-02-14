@@ -418,9 +418,7 @@ public class CalendarLocalServiceWrapper
 	}
 
 	@Override
-	public boolean hasStagingCalendar(Calendar calendar)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
+	public boolean hasStagingCalendar(Calendar calendar) {
 		return _calendarLocalService.hasStagingCalendar(calendar);
 	}
 

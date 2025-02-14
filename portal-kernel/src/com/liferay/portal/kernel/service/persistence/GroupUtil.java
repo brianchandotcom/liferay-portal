@@ -682,51 +682,161 @@ public class GroupUtil {
 	}
 
 	/**
-	 * Returns the group where liveGroupId = &#63; or throws a <code>NoSuchGroupException</code> if it could not be found.
+	 * Returns all the groups where liveGroupId = &#63;.
 	 *
 	 * @param liveGroupId the live group ID
-	 * @return the matching group
-	 * @throws NoSuchGroupException if a matching group could not be found
+	 * @return the matching groups
 	 */
-	public static Group findByLiveGroupId(long liveGroupId)
-		throws com.liferay.portal.kernel.exception.NoSuchGroupException {
-
+	public static List<Group> findByLiveGroupId(long liveGroupId) {
 		return getPersistence().findByLiveGroupId(liveGroupId);
 	}
 
 	/**
-	 * Returns the group where liveGroupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns a range of all the groups where liveGroupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>GroupModelImpl</code>.
+	 * </p>
 	 *
 	 * @param liveGroupId the live group ID
-	 * @return the matching group, or <code>null</code> if a matching group could not be found
+	 * @param start the lower bound of the range of groups
+	 * @param end the upper bound of the range of groups (not inclusive)
+	 * @return the range of matching groups
 	 */
-	public static Group fetchByLiveGroupId(long liveGroupId) {
-		return getPersistence().fetchByLiveGroupId(liveGroupId);
+	public static List<Group> findByLiveGroupId(
+		long liveGroupId, int start, int end) {
+
+		return getPersistence().findByLiveGroupId(liveGroupId, start, end);
 	}
 
 	/**
-	 * Returns the group where liveGroupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns an ordered range of all the groups where liveGroupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>GroupModelImpl</code>.
+	 * </p>
 	 *
 	 * @param liveGroupId the live group ID
+	 * @param start the lower bound of the range of groups
+	 * @param end the upper bound of the range of groups (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching groups
+	 */
+	public static List<Group> findByLiveGroupId(
+		long liveGroupId, int start, int end,
+		OrderByComparator<Group> orderByComparator) {
+
+		return getPersistence().findByLiveGroupId(
+			liveGroupId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the groups where liveGroupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>GroupModelImpl</code>.
+	 * </p>
+	 *
+	 * @param liveGroupId the live group ID
+	 * @param start the lower bound of the range of groups
+	 * @param end the upper bound of the range of groups (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param useFinderCache whether to use the finder cache
-	 * @return the matching group, or <code>null</code> if a matching group could not be found
+	 * @return the ordered range of matching groups
 	 */
-	public static Group fetchByLiveGroupId(
-		long liveGroupId, boolean useFinderCache) {
+	public static List<Group> findByLiveGroupId(
+		long liveGroupId, int start, int end,
+		OrderByComparator<Group> orderByComparator, boolean useFinderCache) {
 
-		return getPersistence().fetchByLiveGroupId(liveGroupId, useFinderCache);
+		return getPersistence().findByLiveGroupId(
+			liveGroupId, start, end, orderByComparator, useFinderCache);
 	}
 
 	/**
-	 * Removes the group where liveGroupId = &#63; from the database.
+	 * Returns the first group in the ordered set where liveGroupId = &#63;.
 	 *
 	 * @param liveGroupId the live group ID
-	 * @return the group that was removed
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching group
+	 * @throws NoSuchGroupException if a matching group could not be found
 	 */
-	public static Group removeByLiveGroupId(long liveGroupId)
+	public static Group findByLiveGroupId_First(
+			long liveGroupId, OrderByComparator<Group> orderByComparator)
 		throws com.liferay.portal.kernel.exception.NoSuchGroupException {
 
-		return getPersistence().removeByLiveGroupId(liveGroupId);
+		return getPersistence().findByLiveGroupId_First(
+			liveGroupId, orderByComparator);
+	}
+
+	/**
+	 * Returns the first group in the ordered set where liveGroupId = &#63;.
+	 *
+	 * @param liveGroupId the live group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching group, or <code>null</code> if a matching group could not be found
+	 */
+	public static Group fetchByLiveGroupId_First(
+		long liveGroupId, OrderByComparator<Group> orderByComparator) {
+
+		return getPersistence().fetchByLiveGroupId_First(
+			liveGroupId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last group in the ordered set where liveGroupId = &#63;.
+	 *
+	 * @param liveGroupId the live group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching group
+	 * @throws NoSuchGroupException if a matching group could not be found
+	 */
+	public static Group findByLiveGroupId_Last(
+			long liveGroupId, OrderByComparator<Group> orderByComparator)
+		throws com.liferay.portal.kernel.exception.NoSuchGroupException {
+
+		return getPersistence().findByLiveGroupId_Last(
+			liveGroupId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last group in the ordered set where liveGroupId = &#63;.
+	 *
+	 * @param liveGroupId the live group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching group, or <code>null</code> if a matching group could not be found
+	 */
+	public static Group fetchByLiveGroupId_Last(
+		long liveGroupId, OrderByComparator<Group> orderByComparator) {
+
+		return getPersistence().fetchByLiveGroupId_Last(
+			liveGroupId, orderByComparator);
+	}
+
+	/**
+	 * Returns the groups before and after the current group in the ordered set where liveGroupId = &#63;.
+	 *
+	 * @param groupId the primary key of the current group
+	 * @param liveGroupId the live group ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next group
+	 * @throws NoSuchGroupException if a group with the primary key could not be found
+	 */
+	public static Group[] findByLiveGroupId_PrevAndNext(
+			long groupId, long liveGroupId,
+			OrderByComparator<Group> orderByComparator)
+		throws com.liferay.portal.kernel.exception.NoSuchGroupException {
+
+		return getPersistence().findByLiveGroupId_PrevAndNext(
+			groupId, liveGroupId, orderByComparator);
+	}
+
+	/**
+	 * Removes all the groups where liveGroupId = &#63; from the database.
+	 *
+	 * @param liveGroupId the live group ID
+	 */
+	public static void removeByLiveGroupId(long liveGroupId) {
+		getPersistence().removeByLiveGroupId(liveGroupId);
 	}
 
 	/**

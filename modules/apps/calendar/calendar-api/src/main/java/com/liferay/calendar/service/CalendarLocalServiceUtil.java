@@ -379,9 +379,7 @@ public class CalendarLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static boolean hasStagingCalendar(Calendar calendar)
-		throws PortalException {
-
+	public static boolean hasStagingCalendar(Calendar calendar) {
 		return getService().hasStagingCalendar(calendar);
 	}
 

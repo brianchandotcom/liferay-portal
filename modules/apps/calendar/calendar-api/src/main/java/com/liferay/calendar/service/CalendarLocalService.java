@@ -336,7 +336,7 @@ public interface CalendarLocalService
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasStagingCalendar(Calendar calendar) throws PortalException;
+	public boolean hasStagingCalendar(Calendar calendar);
 
 	public void importCalendar(long calendarId, String data, String type)
 		throws Exception;

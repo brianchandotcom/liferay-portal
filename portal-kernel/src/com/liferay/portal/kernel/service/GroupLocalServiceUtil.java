@@ -1221,19 +1221,6 @@ public class GroupLocalServiceUtil {
 	}
 
 	/**
-	 * Returns the staging group.
-	 *
-	 * @param liveGroupId the primary key of the live group
-	 * @return the staging group
-	 * @throws PortalException if a portal exception occurred
-	 */
-	public static Group getStagingGroup(long liveGroupId)
-		throws PortalException {
-
-		return getService().getStagingGroup(liveGroupId);
-	}
-
-	/**
 	 * Returns the group directly associated with the user.
 	 *
 	 * @param companyId the primary key of the company
@@ -1482,17 +1469,6 @@ public class GroupLocalServiceUtil {
 
 	public static boolean hasRoleGroups(long roleId) {
 		return getService().hasRoleGroups(roleId);
-	}
-
-	/**
-	 * Returns <code>true</code> if the live group has a staging group.
-	 *
-	 * @param liveGroupId the primary key of the live group
-	 * @return <code>true</code> if the live group has a staging group;
-	 <code>false</code> otherwise
-	 */
-	public static boolean hasStagingGroup(long liveGroupId) {
-		return getService().hasStagingGroup(liveGroupId);
 	}
 
 	public static boolean hasUserGroup(long userId, long groupId) {

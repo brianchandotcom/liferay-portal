@@ -3493,6 +3493,15 @@
 	},
 	{
 		"classNames": [
+			"AssetCategoryLocalService",
+			"AssetCategoryLocalServiceUtil"
+		],
+		"from": "getAssetEntryAssetCategories",
+		"issueKey": "LPD-41237",
+		"to": "getEntryCategories"
+	},
+	{
+		"classNames": [
 			"DDMTemplateLocalService",
 			"DDMTemplateLocalServiceUtil"
 		],

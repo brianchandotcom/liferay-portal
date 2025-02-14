@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.OrganizationTypeException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.RequiredOrganizationException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.Group;
@@ -57,6 +58,7 @@ import com.liferay.portal.kernel.service.PhoneLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.SystemEventLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.WebsiteLocalService;
@@ -618,6 +620,17 @@ public class OrganizationLocalServiceImpl
 		// Organization
 
 		organizationPersistence.remove(organization);
+
+		// System event
+
+		_systemEventLocalService.addSystemEvent(
+			organization.getUserId(), organization.getGroupId(),
+			organization.getExternalReferenceCode(),
+			organization.getModelClassName(), organization.getPrimaryKey(),
+			organization.getUuid(), null, SystemEventConstants.TYPE_DELETE,
+			JSONUtil.put(
+				"name", organization.getName()
+			).toString());
 
 		return organization;
 	}
@@ -2736,6 +2749,9 @@ public class OrganizationLocalServiceImpl
 
 	@BeanReference(type = RoleLocalService.class)
 	private RoleLocalService _roleLocalService;
+
+	@BeanReference(type = SystemEventLocalService.class)
+	private SystemEventLocalService _systemEventLocalService;
 
 	@BeanReference(type = UserFinder.class)
 	private UserFinder _userFinder;

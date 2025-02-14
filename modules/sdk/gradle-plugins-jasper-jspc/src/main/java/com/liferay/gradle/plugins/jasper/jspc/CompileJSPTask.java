@@ -57,7 +57,7 @@ public class CompileJSPTask extends DefaultTask {
 
 		if ((compileJspClasspath == null) || compileJspClasspath.isEmpty()) {
 			if (logger.isInfoEnabled()) {
-				logger.info("Compiling JSP with standard classpath");
+				logger.info("Compiling JSP with standard class path");
 			}
 
 			CompileJSPUtil.compileJSP(
@@ -68,7 +68,7 @@ public class CompileJSPTask extends DefaultTask {
 		}
 
 		if (logger.isInfoEnabled()) {
-			logger.info("Compiling JSP with custom classpath");
+			logger.info("Compiling JSP with custom class path");
 		}
 
 		Set<File> files = compileJspClasspath.getFiles();

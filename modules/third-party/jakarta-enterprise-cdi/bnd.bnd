@@ -1,0 +1,29 @@
+Bundle-SymbolicName: jakarta.enterprise.cdi
+Bundle-Version: 2.0.2.LIFERAY-PATCHED-1
+Export-Package:\
+	javax.decorator,\
+	\
+	javax.enterprise.*
+Provide-Capability:\
+	osgi.contract;\
+		osgi.contract=JavaCDI;\
+		uses:="javax.decorator,javax.enterprise.context,javax.enterprise.context.spi,javax.enterprise.context.control,javax.enterprise.util,javax.enterprise.inject,javax.enterprise.inject.se,javax.enterprise.inject.literal,javax.enterprise.inject.spi,javax.enterprise.inject.spi.configurator,javax.enterprise.event";\
+		version:Version=2.0
+Require-Capability:\
+	osgi.contract;\
+		filter:="(&(osgi.contract=JavaEL)(version=2.2.0))";\
+		osgi.contract=JavaEL,\
+	osgi.contract;\
+		filter:="(&(osgi.contract=JavaInterceptor)(version=1.2.0))";\
+		osgi.contract=JavaInterceptor,\
+	osgi.contract;\
+		filter:="(&(osgi.contract=JavaInject)(version=1.0.0))";\
+		osgi.contract=JavaInject,\
+	osgi.extender;\
+		filter:="(osgi.extender=osgi.serviceloader.processor)",\
+	osgi.serviceloader;\
+		cardinality:=multiple;\
+		filter:="(osgi.serviceloader=javax.enterprise.inject.se.SeContainerInitializer)",\
+	osgi.serviceloader;\
+		cardinality:=multiple;\
+		filter:="(osgi.serviceloader=javax.enterprise.inject.spi.CDIProvider)"

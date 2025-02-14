@@ -142,19 +142,16 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 
 		ServletContext servletContext = portletApp.getServletContext();
 
-		String path = StringUtil.replace(
-			"/WEB-INF/classes/".concat(resourceBundle), CharPool.PERIOD,
-			CharPool.SLASH);
+		String path = "/WEB-INF/classes/" + resourceBundle;
 
-		String parentPath = path;
-
-		int index = path.lastIndexOf(StringPool.SLASH);
+		int index = path.lastIndexOf(StringPool.PERIOD);
 
 		if (index > 0) {
-			parentPath = path.substring(0, index);
+			path = path.substring(0, index);
 		}
 
-		Set<String> resourcePaths = servletContext.getResourcePaths(parentPath);
+		Set<String> resourcePaths = servletContext.getResourcePaths(
+			StringUtil.replace(path, CharPool.PERIOD, CharPool.SLASH));
 
 		if (resourcePaths == null) {
 			return;
@@ -164,15 +161,18 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 			new HashSet<>();
 
 		for (String resourcePath : resourcePaths) {
-			if (!resourcePath.startsWith(path + StringPool.UNDERLINE) ||
-				!resourcePath.endsWith(".properties")) {
-
+			if (!resourcePath.endsWith(".properties")) {
 				continue;
 			}
 
-			String languageId = resourcePath.substring(
-				path.length() + 1,
-				resourcePath.length() - ".properties".length());
+			String languageId = StringPool.BLANK;
+
+			index = resourcePath.indexOf(StringPool.UNDERLINE, path.length());
+
+			if (index > -1) {
+				languageId = resourcePath.substring(
+					index + 1, resourcePath.length() - ".properties".length());
+			}
 
 			Locale locale = LocaleUtil.fromLanguageId(languageId, false);
 

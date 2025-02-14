@@ -1534,18 +1534,18 @@ public class UserLocalServiceTest {
 		}
 
 		try (AutoCloseable autoCloseable1 =
+				PropsValuesTestUtil.swapWithSafeCloseable(
+					"PASSWORDS_ENCRYPTION_ALGORITHM_LEGACY",
+					newPasswordsEncryptionAlgorithm);
+			AutoCloseable autoCloseable2 =
 				ReflectionTestUtil.setFieldValueWithAutoCloseable(
 					PasswordEncryptorUtil.class,
 					"_PASSWORDS_ENCRYPTION_ALGORITHM",
 					newPasswordsEncryptionAlgorithm);
-			AutoCloseable autoCloseable2 =
+			AutoCloseable autoCloseable3 =
 				ReflectionTestUtil.setFieldValueWithAutoCloseable(
 					UserLocalServiceImpl.class,
 					"_PASSWORDS_ENCRYPTION_ALGORITHM",
-					newPasswordsEncryptionAlgorithm);
-			AutoCloseable autoCloseable3 =
-				PropsValuesTestUtil.swapWithSafeCloseable(
-					"PASSWORDS_ENCRYPTION_ALGORITHM_LEGACY",
 					newPasswordsEncryptionAlgorithm)) {
 
 			Assert.assertEquals(

@@ -5,11 +5,14 @@
 
 package com.liferay.dynamic.data.mapping.form.web.internal.portlet.action;
 
+import com.liferay.document.library.configuration.DLFileEntryMimeTypeConfiguration;
 import com.liferay.document.library.kernel.exception.FileExtensionException;
+import com.liferay.document.library.kernel.exception.FileMimeTypeException;
 import com.liferay.document.library.kernel.exception.FileNameException;
 import com.liferay.document.library.kernel.exception.FileSizeException;
 import com.liferay.document.library.kernel.exception.InvalidFileException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.util.DLValidator;
 import com.liferay.dynamic.data.mapping.constants.DDMActionKeys;
 import com.liferay.dynamic.data.mapping.constants.DDMFormConstants;
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
@@ -22,6 +25,7 @@ import com.liferay.object.exception.ObjectEntryValuesException;
 import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -96,6 +100,9 @@ public class UploadFileEntryMVCActionCommand extends BaseMVCActionCommand {
 	@Reference
 	private CompanyLocalService _companyLocalService;
 
+	@Reference
+	private ConfigurationProvider _configurationProvider;
+
 	private final DDMFormUploadFileEntryHandler _ddmFormUploadFileEntryHandler =
 		new DDMFormUploadFileEntryHandler();
 	private final DDMFormUploadResponseHandler _ddmFormUploadResponseHandler =
@@ -103,6 +110,9 @@ public class UploadFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference(target = "(upload.response.handler.system.default=true)")
 	private UploadResponseHandler _defaultUploadResponseHandler;
+
+	@Reference
+	private DLValidator _dlValidator;
 
 	@Reference
 	private Language _language;
@@ -129,6 +139,10 @@ public class UploadFileEntryMVCActionCommand extends BaseMVCActionCommand {
 			File file = null;
 
 			try {
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)uploadPortletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
+
 				InputStream inputStream = uploadPortletRequest.getFileAsStream(
 					"file");
 
@@ -139,6 +153,11 @@ public class UploadFileEntryMVCActionCommand extends BaseMVCActionCommand {
 				file = FileUtil.createTempFile(inputStream);
 
 				String fileName = uploadPortletRequest.getFileName("file");
+
+				String mimeType = MimeTypesUtil.getContentType(file, fileName);
+
+				_dlValidator.validateFileMimeType(
+					themeDisplay.getCompanyId(), mimeType);
 
 				DDMFormUploadValidator.validateFileSize(file, fileName);
 
@@ -155,9 +174,7 @@ public class UploadFileEntryMVCActionCommand extends BaseMVCActionCommand {
 					ParamUtil.getLong(uploadPortletRequest, "formInstanceId"),
 					ParamUtil.getLong(uploadPortletRequest, "groupId"),
 					ParamUtil.getLong(uploadPortletRequest, "folderId"), file,
-					fileName, MimeTypesUtil.getContentType(file, fileName),
-					(ThemeDisplay)uploadPortletRequest.getAttribute(
-						WebKeys.THEME_DISPLAY));
+					fileName, mimeType, themeDisplay);
 			}
 			finally {
 				FileUtil.delete(file);
@@ -250,6 +267,19 @@ public class UploadFileEntryMVCActionCommand extends BaseMVCActionCommand {
 					"please-enter-a-file-with-a-valid-extension-x",
 					StringUtil.merge(
 						DDMFormUploadValidator.getGuestUploadFileExtensions(),
+						StringPool.COMMA_AND_SPACE));
+			}
+			else if (portalException instanceof FileMimeTypeException) {
+				DLFileEntryMimeTypeConfiguration
+					dlFileEntryMimeTypeConfiguration =
+						_configurationProvider.getCompanyConfiguration(
+							DLFileEntryMimeTypeConfiguration.class,
+							themeDisplay.getCompanyId());
+
+				errorMessage = themeDisplay.translate(
+					"please-enter-a-file-with-a-valid-mime-type-x",
+					StringUtil.merge(
+						dlFileEntryMimeTypeConfiguration.fileMimeTypes(),
 						StringPool.COMMA_AND_SPACE));
 			}
 			else if (portalException instanceof FileNameException) {

@@ -13,7 +13,9 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  * @author Julien Castelain
  * @review
  */
-@ExtendedObjectClassDefinition(category = "third-party")
+@ExtendedObjectClassDefinition(
+	category = "third-party", featureFlagKey = "LPD-48975"
+)
 @Meta.OCD(
 	description = "frontend-js-lodash-description",
 	id = "com.liferay.frontend.js.lodash.web.internal.configuration.JSLodashConfiguration",

@@ -899,10 +899,10 @@ public class StagingGroupHelperTest {
 			TestPropsValues.getUserId(), _localLiveGroup, false, false,
 			serviceContext);
 
-		_localStagingGroup = GroupLocalServiceUtil.getStagingGroup(
+		_localStagingGroup = GroupLocalServiceUtil.fetchStagingGroup(
 			_localLiveGroup.getGroupId());
 
-		Assert.assertTrue(_localStagingGroup != null);
+		Assert.assertNotNull(_localStagingGroup);
 	}
 
 	private void _addRemoteStagingGroups() throws Exception {

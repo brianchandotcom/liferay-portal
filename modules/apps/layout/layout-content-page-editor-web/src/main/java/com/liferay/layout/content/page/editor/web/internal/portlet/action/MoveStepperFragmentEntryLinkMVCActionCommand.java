@@ -77,14 +77,6 @@ public class MoveStepperFragmentEntryLinkMVCActionCommand
 				themeDisplay.getScopeGroupId(), themeDisplay.getPlid(),
 				segmentsExperienceId);
 
-		LayoutStructureItem layoutStructureItem =
-			layoutStructure.getLayoutStructureItem(itemId);
-
-		LayoutStructureItem clonedLayoutStructureItem =
-			layoutStructureItem.clone();
-
-		layoutStructure.moveLayoutStructureItem(itemId, parentItemId, position);
-
 		FormStyledLayoutStructureItem formStyledLayoutStructureItem =
 			(FormStyledLayoutStructureItem)
 				layoutStructure.getLayoutStructureItem(parentItemId);
@@ -104,10 +96,17 @@ public class MoveStepperFragmentEntryLinkMVCActionCommand
 					segmentsExperienceId,
 					ServiceContextFactory.getInstance(actionRequest),
 					fragmentEntryLinkId);
+
+			position = 0;
 		}
 
+		LayoutStructureItem layoutStructureItem =
+			layoutStructure.getLayoutStructureItem(itemId);
+
 		layoutStructureItemChanges.addMovedLayoutStructureItems(
-			clonedLayoutStructureItem);
+			layoutStructureItem.clone());
+
+		layoutStructure.moveLayoutStructureItem(itemId, parentItemId, position);
 
 		_layoutPageTemplateStructureService.
 			updateLayoutPageTemplateStructureData(

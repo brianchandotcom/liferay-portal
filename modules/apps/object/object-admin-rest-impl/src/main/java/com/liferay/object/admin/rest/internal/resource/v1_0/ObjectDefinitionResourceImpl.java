@@ -851,6 +851,15 @@ public class ObjectDefinitionResourceImpl
 		return postObjectDefinition(objectDefinition);
 	}
 
+	@Override
+	protected void preparePatch(
+		ObjectDefinition objectDefinition,
+		ObjectDefinition existingObjectDefinition) {
+
+		existingObjectDefinition.setObjectDefinitionSettings(
+			objectDefinition::getObjectDefinitionSettings);
+	}
+
 	private void _addListTypeDefinition(ObjectDefinition objectDefinition)
 		throws Exception {
 

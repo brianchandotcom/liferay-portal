@@ -4174,12 +4174,19 @@ public class ObjectEntryResourceTest {
 		_objectRelationship1 = _addObjectRelationshipAndRelateObjectEntries(
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
-		String relationshipERCFieldName = String.format(
-			"r_%s_%s", _objectRelationship1.getName(),
-			_objectDefinition1.getPKObjectFieldName()
-		).replace(
-			"Id", "ERC"
-		);
+		String objectRelationshipERCObjectFieldName =
+			ObjectFieldSettingUtil.getValue(
+				ObjectFieldSettingConstants.
+					NAME_OBJECT_RELATIONSHIP_ERC_OBJECT_FIELD_NAME,
+				_objectFieldLocalService.getObjectField(
+					_objectRelationship1.getObjectFieldId2()));
+
+		Assert.assertEquals(
+			StringBundler.concat(
+				"r_", _objectRelationship1.getName(), "_",
+				StringUtil.replaceLast(
+					_objectDefinition1.getPKObjectFieldName(), "Id", "ERC")),
+			objectRelationshipERCObjectFieldName);
 
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null, _objectDefinition2.getRESTContextPath(), Http.Method.GET);
@@ -4191,7 +4198,7 @@ public class ObjectEntryResourceTest {
 		JSONObject itemJSONObject = itemsJSONArray.getJSONObject(0);
 
 		Assert.assertEquals(
-			itemJSONObject.getString(relationshipERCFieldName),
+			itemJSONObject.getString(objectRelationshipERCObjectFieldName),
 			_objectEntry1.getExternalReferenceCode());
 
 		// Comparison operators
@@ -4206,7 +4213,7 @@ public class ObjectEntryResourceTest {
 			_escape(
 				String.format(
 					"%s/%s eq '%s'", _objectRelationship1.getName(),
-					relationshipERCFieldName,
+					objectRelationshipERCObjectFieldName,
 					_objectEntry1.getExternalReferenceCode())),
 			_objectDefinition1);
 
@@ -4215,7 +4222,7 @@ public class ObjectEntryResourceTest {
 			_escape(
 				String.format(
 					"%s/%s ge '%s'", _objectRelationship1.getName(),
-					relationshipERCFieldName,
+					objectRelationshipERCObjectFieldName,
 					_objectEntry1.getExternalReferenceCode())),
 			_objectDefinition1);
 
@@ -4224,7 +4231,7 @@ public class ObjectEntryResourceTest {
 			_escape(
 				String.format(
 					"%s/%s gt '%s'", _objectRelationship1.getName(),
-					relationshipERCFieldName, substring + "0000")),
+					objectRelationshipERCObjectFieldName, substring + "0000")),
 			_objectDefinition1);
 
 		_assertFilterString(
@@ -4232,7 +4239,7 @@ public class ObjectEntryResourceTest {
 			_escape(
 				String.format(
 					"%s/%s le '%s'", _objectRelationship1.getName(),
-					relationshipERCFieldName,
+					objectRelationshipERCObjectFieldName,
 					_objectEntry1.getExternalReferenceCode())),
 			_objectDefinition1);
 
@@ -4241,7 +4248,7 @@ public class ObjectEntryResourceTest {
 			_escape(
 				String.format(
 					"%s/%s lt '%s'", _objectRelationship1.getName(),
-					relationshipERCFieldName, substring + "ZZZZ")),
+					objectRelationshipERCObjectFieldName, substring + "ZZZZ")),
 			_objectDefinition1);
 
 		_assertFilterString(
@@ -4249,7 +4256,8 @@ public class ObjectEntryResourceTest {
 			_escape(
 				String.format(
 					"%s/%s ne '%s'", _objectRelationship1.getName(),
-					relationshipERCFieldName, RandomTestUtil.randomInt())),
+					objectRelationshipERCObjectFieldName,
+					RandomTestUtil.randomInt())),
 			_objectDefinition1);
 
 		// List operators
@@ -4259,7 +4267,7 @@ public class ObjectEntryResourceTest {
 			_escape(
 				String.format(
 					"%s/%s in ('%s', '%s')", _objectRelationship1.getName(),
-					relationshipERCFieldName,
+					objectRelationshipERCObjectFieldName,
 					_objectEntry1.getExternalReferenceCode(),
 					RandomTestUtil.randomInt())),
 			_objectDefinition1);
@@ -4270,14 +4278,14 @@ public class ObjectEntryResourceTest {
 			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
 			String.format(
 				"contains(%s/%s,'%s')", _objectRelationship1.getName(),
-				relationshipERCFieldName, substring),
+				objectRelationshipERCObjectFieldName, substring),
 			_objectDefinition1);
 
 		_assertFilterString(
 			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
 			String.format(
 				"startswith(%s/%s,'%s')", _objectRelationship1.getName(),
-				relationshipERCFieldName, substring),
+				objectRelationshipERCObjectFieldName, substring),
 			_objectDefinition1);
 	}
 

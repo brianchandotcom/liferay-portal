@@ -38,12 +38,12 @@ import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructureItemUtil;
-import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -534,40 +534,17 @@ public class FormItemManager {
 
 		return jsonObject.put(
 			"addedItemIds",
-			_jsonFactory.createJSONArray(
-				TransformUtil.transform(
-					layoutStructureItemChanges.getAddedLayoutStructureItems(),
-					LayoutStructureItem::getItemId))
+			layoutStructureItemChanges.getAddedLayoutStructureItemsJSONArray()
 		).put(
 			"fragmentEntryLinks", fragmentEntryLinksJSONObject
 		).put(
 			"layoutData", layoutStructure.toJSONObject()
 		).put(
 			"movedItemIds",
-			() -> {
-				JSONArray jsonArray = _jsonFactory.createJSONArray();
-
-				for (LayoutStructureItem movedLayoutStructureItem :
-						layoutStructureItemChanges.
-							getMovedLayoutStructureItems()) {
-
-					jsonArray.put(
-						JSONUtil.put(
-							"itemId", movedLayoutStructureItem.getItemId()
-						).put(
-							"parentId",
-							movedLayoutStructureItem.getParentItemId()
-						));
-				}
-
-				return jsonArray;
-			}
+			layoutStructureItemChanges.getMovedLayoutStructureItemsJSONArray()
 		).put(
 			"removedItemIds",
-			_jsonFactory.createJSONArray(
-				TransformUtil.transform(
-					layoutStructureItemChanges.getRemovedLayoutStructureItems(),
-					LayoutStructureItem::getItemId))
+			layoutStructureItemChanges.getRemovedLayoutStructureItemsJSONArray()
 		);
 	}
 
@@ -825,25 +802,44 @@ public class FormItemManager {
 
 	public static class LayoutStructureItemChanges {
 
+		public LayoutStructureItemChanges() {
+			_addedLayoutStructureItemsJSONArray =
+				JSONFactoryUtil.createJSONArray();
+			_movedLayoutStructureItemsJSONArray =
+				JSONFactoryUtil.createJSONArray();
+			_removedLayoutStructureItemsJSONArray =
+				JSONFactoryUtil.createJSONArray();
+		}
+
 		public void addAddedLayoutStructureItems(
 			LayoutStructureItem layoutStructureItem) {
 
 			if (layoutStructureItem != null) {
-				_addedLayoutStructureItems.add(layoutStructureItem);
+				_addedLayoutStructureItemsJSONArray.put(
+					layoutStructureItem.getItemId());
 			}
 		}
 
 		public void addAddedLayoutStructureItems(
 			List<LayoutStructureItem> layoutStructureItems) {
 
-			_addedLayoutStructureItems.addAll(layoutStructureItems);
+			for (LayoutStructureItem layoutStructureItem :
+					layoutStructureItems) {
+
+				addAddedLayoutStructureItems(layoutStructureItem);
+			}
 		}
 
 		public void addMovedLayoutStructureItems(
 			LayoutStructureItem layoutStructureItem) {
 
 			if (layoutStructureItem != null) {
-				_movedLayoutStructureItems.add(layoutStructureItem);
+				_movedLayoutStructureItemsJSONArray.put(
+					JSONUtil.put(
+						"itemId", layoutStructureItem.getItemId()
+					).put(
+						"parentId", layoutStructureItem.getParentItemId()
+					));
 			}
 		}
 
@@ -851,34 +847,36 @@ public class FormItemManager {
 			LayoutStructureItem layoutStructureItem) {
 
 			if (layoutStructureItem != null) {
-				_removedLayoutStructureItems.add(layoutStructureItem);
+				_removedLayoutStructureItemsJSONArray.put(
+					layoutStructureItem.getItemId());
 			}
 		}
 
 		public void addRemovedLayoutStructureItems(
 			List<LayoutStructureItem> layoutStructureItems) {
 
-			_removedLayoutStructureItems.addAll(layoutStructureItems);
+			for (LayoutStructureItem layoutStructureItem :
+					layoutStructureItems) {
+
+				addRemovedLayoutStructureItems(layoutStructureItem);
+			}
 		}
 
-		public List<LayoutStructureItem> getAddedLayoutStructureItems() {
-			return _addedLayoutStructureItems;
+		public JSONArray getAddedLayoutStructureItemsJSONArray() {
+			return _addedLayoutStructureItemsJSONArray;
 		}
 
-		public List<LayoutStructureItem> getMovedLayoutStructureItems() {
-			return _movedLayoutStructureItems;
+		public JSONArray getMovedLayoutStructureItemsJSONArray() {
+			return _movedLayoutStructureItemsJSONArray;
 		}
 
-		public List<LayoutStructureItem> getRemovedLayoutStructureItems() {
-			return _removedLayoutStructureItems;
+		public JSONArray getRemovedLayoutStructureItemsJSONArray() {
+			return _removedLayoutStructureItemsJSONArray;
 		}
 
-		private final List<LayoutStructureItem> _addedLayoutStructureItems =
-			new ArrayList<>();
-		private final List<LayoutStructureItem> _movedLayoutStructureItems =
-			new ArrayList<>();
-		private final List<LayoutStructureItem> _removedLayoutStructureItems =
-			new ArrayList<>();
+		private final JSONArray _addedLayoutStructureItemsJSONArray;
+		private final JSONArray _movedLayoutStructureItemsJSONArray;
+		private final JSONArray _removedLayoutStructureItemsJSONArray;
 
 	}
 

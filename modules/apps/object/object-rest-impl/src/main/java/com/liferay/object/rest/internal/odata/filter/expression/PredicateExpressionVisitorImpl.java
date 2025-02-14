@@ -450,16 +450,16 @@ public class PredicateExpressionVisitorImpl
 
 		int index = fieldName.indexOf(StringPool.SLASH);
 
-		if (index != -1) {
-			return _getEntityField(
-				fieldName.substring(index + 1),
-				ObjectRelationshipUtil.getRelatedObjectDefinition(
-					objectDefinition,
-					_fetchObjectRelationship(
-						objectDefinition, fieldName.substring(0, index))));
+		if (index == -1) {
+			return entityFieldsMap.get(fieldName);
 		}
 
-		return entityFieldsMap.get(fieldName);
+		return _getEntityField(
+			fieldName.substring(index + 1),
+			ObjectRelationshipUtil.getRelatedObjectDefinition(
+				objectDefinition,
+				_fetchObjectRelationship(
+					objectDefinition, fieldName.substring(0, index))));
 	}
 
 	private Map<String, EntityField> _getEntityFieldsMap(

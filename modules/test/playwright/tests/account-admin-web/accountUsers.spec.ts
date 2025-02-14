@@ -1456,9 +1456,10 @@ test(
 		await editUserPage.membershipsLink.click();
 
 		await expect(async () => {
-			await expect(editUserPage.membershipsNoAccountsMessage).toHaveCount(
-				0
-			);
+			await expect(editUserPage.selectAccountsButton).toBeVisible();
+			await expect(
+				editUserPage.membershipsNoAccountsMessage
+			).not.toBeVisible();
 			await expect(
 				(
 					await editUserPage.membershipsAccountsTableRow(

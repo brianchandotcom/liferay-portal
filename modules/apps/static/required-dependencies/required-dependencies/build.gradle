@@ -70,7 +70,6 @@ deploy {
 
 deployDependencies {
 	from configurations.compileOnly
-	rename(/geronimo-jcdi_2\.0_spec-(.+)\.jar/, "geronimo-jcdi_2.0_spec" + renameSuffix)
 }
 
 deployReqTestLibs {

@@ -15,8 +15,8 @@ import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.site.cms.site.initializer.internal.configuration.CMSSiteInitializerConfiguration;
 import com.liferay.site.cms.site.initializer.internal.display.context.ContentSectionDisplayContext;
-import com.liferay.site.configuration.CMSClassNamesConfiguration;
 
 import java.io.IOException;
 
@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Sam Ziemer
  */
 @Component(
-	configurationPid = "com.liferay.site.configuration.CMSClassNamesConfiguration",
+	configurationPid = "com.liferay.site.cms.site.initializer.internal.configuration.CMSSiteInitializerConfiguration",
 	service = FragmentRenderer.class
 )
 public class ContentSectionFragmentRenderer implements FragmentRenderer {
@@ -90,7 +90,8 @@ public class ContentSectionFragmentRenderer implements FragmentRenderer {
 
 			httpServletRequest.setAttribute(
 				ContentSectionDisplayContext.class.getName(),
-				new ContentSectionDisplayContext(_cmsClassNamesConfiguration));
+				new ContentSectionDisplayContext(
+					_cmsSiteInitializerConfiguration));
 
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
@@ -102,11 +103,12 @@ public class ContentSectionFragmentRenderer implements FragmentRenderer {
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_cmsClassNamesConfiguration = ConfigurableUtil.createConfigurable(
-			CMSClassNamesConfiguration.class, properties);
+		_cmsSiteInitializerConfiguration = ConfigurableUtil.createConfigurable(
+			CMSSiteInitializerConfiguration.class, properties);
 	}
 
-	private volatile CMSClassNamesConfiguration _cmsClassNamesConfiguration;
+	private volatile CMSSiteInitializerConfiguration
+		_cmsSiteInitializerConfiguration;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

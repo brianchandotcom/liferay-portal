@@ -10,7 +10,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.site.configuration.CMSClassNamesConfiguration;
+import com.liferay.site.cms.site.initializer.internal.configuration.CMSSiteInitializerConfiguration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,9 +21,9 @@ import java.util.List;
 public class ContentSectionDisplayContext {
 
 	public ContentSectionDisplayContext(
-		CMSClassNamesConfiguration cmsClassNamesConfiguration) {
+		CMSSiteInitializerConfiguration cmsSiteInitializerConfiguration) {
 
-		_cmsClassNamesConfiguration = cmsClassNamesConfiguration;
+		_cmsSiteInitializerConfiguration = cmsSiteInitializerConfiguration;
 	}
 
 	public String getAPIURL() {
@@ -34,7 +34,7 @@ public class ContentSectionDisplayContext {
 
 		sb.append(
 			ArrayUtil.toString(
-				_cmsClassNamesConfiguration.contentClassNames(),
+				_cmsSiteInitializerConfiguration.contentClassNames(),
 				StringPool.BLANK));
 
 		return sb.toString();
@@ -48,6 +48,7 @@ public class ContentSectionDisplayContext {
 		return new ArrayList<>();
 	}
 
-	private final CMSClassNamesConfiguration _cmsClassNamesConfiguration;
+	private final CMSSiteInitializerConfiguration
+		_cmsSiteInitializerConfiguration;
 
 }

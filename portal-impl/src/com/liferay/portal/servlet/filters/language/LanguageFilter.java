@@ -5,16 +5,14 @@
 
 package com.liferay.portal.servlet.filters.language;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Portlet;
-import com.liferay.portal.kernel.model.PortletApp;
 import com.liferay.portal.kernel.portlet.PortletConfigFactoryUtil;
 import com.liferay.portal.kernel.servlet.BufferCacheServletResponse;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
-import com.liferay.portal.kernel.servlet.PortletServlet;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.DigesterUtil;
@@ -35,7 +33,6 @@ import javax.portlet.PortletConfig;
 
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
@@ -49,24 +46,6 @@ public class LanguageFilter extends BasePortalFilter {
 	@Override
 	public void init(FilterConfig filterConfig) {
 		super.init(filterConfig);
-
-		ServletContext servletContext = filterConfig.getServletContext();
-
-		PortletApp portletApp = (PortletApp)servletContext.getAttribute(
-			PortletServlet.PORTLET_APP);
-
-		if ((portletApp == null) || !portletApp.isWARFile()) {
-			return;
-		}
-
-		List<Portlet> portlets = portletApp.getPortlets();
-
-		if (portlets.size() <= 0) {
-			return;
-		}
-
-		_portletConfig = PortletConfigFactoryUtil.create(
-			portlets.get(0), filterConfig.getServletContext());
 	}
 
 	@Override
@@ -118,6 +97,24 @@ public class LanguageFilter extends BasePortalFilter {
 	protected String translateResponse(
 		HttpServletRequest httpServletRequest, String content) {
 
+		Enumeration<String> parameterNamesEnumeration =
+			httpServletRequest.getParameterNames();
+
+		PortletConfig portletConfig = null;
+
+		while (parameterNamesEnumeration.hasMoreElements()) {
+			String parameterName = parameterNamesEnumeration.nextElement();
+
+			int index = parameterName.indexOf(CharPool.COLON);
+
+			if (index > 0) {
+				portletConfig = PortletConfigFactoryUtil.get(
+					parameterName.substring(0, index));
+			}
+		}
+
+		PortletConfig finalPortletConfig = portletConfig;
+
 		Locale locale = LocaleUtil.fromLanguageId(
 			LanguageUtil.getLanguageId(httpServletRequest));
 
@@ -126,9 +123,9 @@ public class LanguageFilter extends BasePortalFilter {
 				ResourceBundle resourceBundle =
 					LanguageResources.getResourceBundle(locale);
 
-				if (_portletConfig != null) {
+				if (finalPortletConfig != null) {
 					resourceBundle = new AggregateResourceBundle(
-						_portletConfig.getResourceBundle(locale),
+						finalPortletConfig.getResourceBundle(locale),
 						resourceBundle);
 				}
 
@@ -138,8 +135,6 @@ public class LanguageFilter extends BasePortalFilter {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(LanguageFilter.class);
-
-	private PortletConfig _portletConfig;
 
 	private static class NoCacheHttpServletRequestWrapper
 		extends HttpServletRequestWrapper {

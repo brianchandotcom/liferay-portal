@@ -87,11 +87,11 @@ public class LearnRestController extends BaseRestController {
 	@ResponseBody
 	public ResponseEntity<Object> postQuizResult(
 			@AuthenticationPrincipal Jwt jwt, @PathVariable long quizId,
-			@RequestBody Map<String, Object> map)
+			@RequestBody String json)
 		throws Exception {
 
 		Map<String, Object> quizResultMap = _getQuizResult(
-			map,
+			new JSONObject(json),
 			new JSONObject(
 				get(
 					_getAuthorization(),
@@ -168,7 +168,7 @@ public class LearnRestController extends BaseRestController {
 	}
 
 	private Map<String, Object> _getQuizResult(
-		Map<String, Object> answersMap, JSONObject quizJSONObject) {
+		JSONObject quizAnswersJSONObject, JSONObject quizJSONObject) {
 
 		JSONArray quizQuestionsJSONArray = quizJSONObject.getJSONArray(
 			"quizQuestions");
@@ -178,14 +178,14 @@ public class LearnRestController extends BaseRestController {
 		).put(
 			"passingScore", quizJSONObject.getInt("passingScore")
 		).put(
-			"selectedAnswers", answersMap
+			"selectedAnswers", quizAnswersJSONObject.toMap()
 		).put(
 			"totalQuestions", quizQuestionsJSONArray.length()
 		).build();
 
-		float achievedScore = 0;
-		float totalScore = 0;
-		int totalPassedQuestions = 0;
+		float achievedQuizScore = 0;
+		float totalQuizScore = 0;
+		int totalPassedQuizQuestions = 0;
 
 		JSONArray scoreSheetJSONArray = new JSONArray();
 
@@ -210,35 +210,37 @@ public class LearnRestController extends BaseRestController {
 				)
 			);
 
-			int questionScore = 0;
+			int quizQuestionScore = 0;
 
 			if (Objects.equals(
 					scoreSheetJSONObject.getString("type"),
 					"selectMultipleChoice")) {
 
-				questionScore = _getQuizQuestionScore(
-					(Map<String, Object>)answersMap.get(
-						String.valueOf(quizQuestionJSONObject.getLong("id"))),
+				quizQuestionScore = _getQuizQuestionScore(
+					quizAnswersJSONObject.getJSONObject(
+						String.valueOf(quizQuestionJSONObject.getLong("id"))
+					).toMap(),
 					quizQuestionJSONObject, scoreSheetJSONObject);
 			}
 			else {
-				questionScore = _getQuizQuestionScore(
+				quizQuestionScore = _getQuizQuestionScore(
 					Collections.singletonMap(
 						String.valueOf(
-							answersMap.get(
+							quizAnswersJSONObject.getLong(
 								String.valueOf(
 									quizQuestionJSONObject.getLong("id")))),
 						true),
 					quizQuestionJSONObject, scoreSheetJSONObject);
 			}
 
-			if (questionScore > 0) {
-				totalPassedQuestions++;
+			if (quizQuestionScore > 0) {
+				totalPassedQuizQuestions++;
 			}
 
-			achievedScore += questionScore;
-			scoreSheetJSONObject.put("achievedScore", questionScore);
-			totalScore += quizQuestionJSONObject.getInt("questionTotalScore");
+			achievedQuizScore += quizQuestionScore;
+			scoreSheetJSONObject.put("achievedScore", quizQuestionScore);
+			totalQuizScore += quizQuestionJSONObject.getInt(
+				"questionTotalScore");
 
 			scoreSheetJSONArray.put(scoreSheetJSONObject);
 		}
@@ -250,10 +252,12 @@ public class LearnRestController extends BaseRestController {
 
 		map.put(
 			"passed",
-			Math.round((achievedScore / totalScore) * 100) >=
+			Math.round((achievedQuizScore / totalQuizScore) * 100) >=
 				quizJSONObject.getInt("passingScore"));
-		map.put("totalPassedQuestions", totalPassedQuestions);
-		map.put("totalScore", Math.round((achievedScore / totalScore) * 100));
+		map.put("totalPassedQuestions", totalPassedQuizQuestions);
+		map.put(
+			"totalScore",
+			Math.round((achievedQuizScore / totalQuizScore) * 100));
 
 		return map;
 	}

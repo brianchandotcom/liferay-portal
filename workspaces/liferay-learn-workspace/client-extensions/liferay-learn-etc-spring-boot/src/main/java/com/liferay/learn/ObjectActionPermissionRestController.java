@@ -42,7 +42,7 @@ public class ObjectActionPermissionRestController extends BaseRestController {
 
 		JSONObject jsonObject = new JSONObject(json);
 
-		_updatePermissions(
+		_updateObjectEntryPermissions(
 			new JSONObject(
 				get(
 					_getAuthorization(),
@@ -53,14 +53,15 @@ public class ObjectActionPermissionRestController extends BaseRestController {
 		return new ResponseEntity<>(json, HttpStatus.OK);
 	}
 
-	private JSONArray _filterPermissionsJSONArray(
-		JSONArray currentPermissionsJSONArray,
-		JSONArray newPermissionsJSONArray) {
+	private JSONArray _filterObjectEntryPermissionsJSONArray(
+		JSONArray currentObjectEntryPermissionsJSONArray,
+		JSONArray newObjectEntryPermissionsJSONArray) {
 
 		List<String> roleNames = new ArrayList<>();
 
-		for (int i = 0; i < newPermissionsJSONArray.length(); i++) {
-			JSONObject jsonObject = newPermissionsJSONArray.getJSONObject(i);
+		for (int i = 0; i < newObjectEntryPermissionsJSONArray.length(); i++) {
+			JSONObject jsonObject =
+				newObjectEntryPermissionsJSONArray.getJSONObject(i);
 
 			JSONArray actionIdsJSONArray = jsonObject.getJSONArray("actionIds");
 
@@ -78,12 +79,14 @@ public class ObjectActionPermissionRestController extends BaseRestController {
 			roleNames.add(jsonObject.getString("roleName"));
 		}
 
-		for (int i = 0; i < currentPermissionsJSONArray.length(); i++) {
-			JSONObject jsonObject = currentPermissionsJSONArray.getJSONObject(
-				i);
+		for (int i = 0; i < currentObjectEntryPermissionsJSONArray.length();
+			 i++) {
+
+			JSONObject jsonObject =
+				currentObjectEntryPermissionsJSONArray.getJSONObject(i);
 
 			if (!roleNames.contains(jsonObject.getString("roleName"))) {
-				newPermissionsJSONArray.put(
+				newObjectEntryPermissionsJSONArray.put(
 					new JSONObject(
 					).put(
 						"actionIds", new JSONArray()
@@ -93,7 +96,7 @@ public class ObjectActionPermissionRestController extends BaseRestController {
 			}
 		}
 
-		return newPermissionsJSONArray;
+		return newObjectEntryPermissionsJSONArray;
 	}
 
 	private String _getAuthorization() {
@@ -101,7 +104,7 @@ public class ObjectActionPermissionRestController extends BaseRestController {
 			"liferay-learn-etc-spring-boot-oauth-application-headless-server");
 	}
 
-	private JSONArray _getPermissionsJSONArray(
+	private JSONArray _getObjectEntryPermissionsJSONArray(
 		long objectEntryId, String restContextPath) {
 
 		return new JSONObject(
@@ -150,7 +153,9 @@ public class ObjectActionPermissionRestController extends BaseRestController {
 		return map;
 	}
 
-	private void _updatePermissions(JSONObject jsonObject, long objectEntryId) {
+	private void _updateObjectEntryPermissions(
+		JSONObject jsonObject, long objectEntryId) {
+
 		for (Map.Entry<Long, List<Object>> entry :
 				_getRelatedObjectEntries(
 					jsonObject.getJSONArray("objectRelationships"),
@@ -168,12 +173,12 @@ public class ObjectActionPermissionRestController extends BaseRestController {
 
 				put(
 					_getAuthorization(),
-					_filterPermissionsJSONArray(
-						_getPermissionsJSONArray(
+					_filterObjectEntryPermissionsJSONArray(
+						_getObjectEntryPermissionsJSONArray(
 							GetterUtil.getLong(map.get("id")),
 							objectDefinitionJSONObject.getString(
 								"restContextPath")),
-						_getPermissionsJSONArray(
+						_getObjectEntryPermissionsJSONArray(
 							objectEntryId,
 							jsonObject.getString("restContextPath"))
 					).toString(),
@@ -182,7 +187,7 @@ public class ObjectActionPermissionRestController extends BaseRestController {
 						"/", GetterUtil.getLong(map.get("id")),
 						"/permissions"));
 
-				_updatePermissions(
+				_updateObjectEntryPermissions(
 					objectDefinitionJSONObject,
 					GetterUtil.getLong(map.get("id")));
 			}

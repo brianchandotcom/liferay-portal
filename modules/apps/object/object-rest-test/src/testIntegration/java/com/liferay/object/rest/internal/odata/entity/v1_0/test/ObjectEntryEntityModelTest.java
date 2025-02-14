@@ -109,11 +109,9 @@ public class ObjectEntryEntityModelTest {
 			_addObjectRelationship(
 				objectDefinition, relatedObjectDefinition,
 				ObjectRelationshipConstants.TYPE_MANY_TO_MANY);
-
 		ObjectRelationship manyToOneObjectRelationship = _addObjectRelationship(
 			relatedObjectDefinition, objectDefinition,
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
-
 		ObjectRelationship oneToManyObjectRelationship = _addObjectRelationship(
 			objectDefinition, relatedObjectDefinition,
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
@@ -228,15 +226,15 @@ public class ObjectEntryEntityModelTest {
 	private Map<String, EntityField> _getExpectedObjectFieldsEntityFieldsMap(
 		List<ObjectField> customObjectFields) {
 
-		Map<String, EntityField> expectedEntityFieldsMap = new HashMap<>();
+		Map<String, EntityField> entityFieldsMap = new HashMap<>();
 
 		for (ObjectField customObjectField : customObjectFields) {
 			EntityField entityField = _toExpectedEntityField(customObjectField);
 
-			expectedEntityFieldsMap.put(entityField.getName(), entityField);
+			entityFieldsMap.put(entityField.getName(), entityField);
 		}
 
-		return expectedEntityFieldsMap;
+		return entityFieldsMap;
 	}
 
 	private Map<String, EntityField>
@@ -244,13 +242,13 @@ public class ObjectEntryEntityModelTest {
 			ObjectRelationship objectRelationship,
 			ObjectDefinition relatedObjectDefinition) {
 
-		Map<String, EntityField> expectedEntityFieldsMap = new HashMap<>();
+		Map<String, EntityField> entityFieldsMap = new HashMap<>();
 
 		if (StringUtil.equals(
 				objectRelationship.getType(),
 				ObjectRelationshipConstants.TYPE_MANY_TO_MANY)) {
 
-			expectedEntityFieldsMap.put(
+			entityFieldsMap.put(
 				objectRelationship.getName(),
 				new ComplexEntityField(
 					objectRelationship.getName(), Collections.emptyList()));
@@ -270,7 +268,7 @@ public class ObjectEntryEntityModelTest {
 				String expectedObjectFieldName =
 					relationshipEntityFieldPrefix + pkObjectFieldName;
 
-				expectedEntityFieldsMap.put(
+				entityFieldsMap.put(
 					expectedObjectFieldName,
 					new IdEntityField(
 						expectedObjectFieldName,
@@ -280,7 +278,7 @@ public class ObjectEntryEntityModelTest {
 					relationshipEntityFieldPrefix +
 						StringUtil.replaceLast(pkObjectFieldName, "Id", "ERC");
 
-				expectedEntityFieldsMap.put(
+				entityFieldsMap.put(
 					expectedObjectRelationshipERCObjectFieldName,
 					new StringEntityField(
 						expectedObjectRelationshipERCObjectFieldName,
@@ -289,19 +287,19 @@ public class ObjectEntryEntityModelTest {
 				String expectedRelatedObjectDefinitionIdObjectFieldName =
 					pkObjectFieldName.replaceFirst("c_", "");
 
-				expectedEntityFieldsMap.put(
+				entityFieldsMap.put(
 					expectedRelatedObjectDefinitionIdObjectFieldName,
 					new IdEntityField(
 						expectedRelatedObjectDefinitionIdObjectFieldName,
 						locale -> expectedObjectFieldName, String::valueOf));
 
-				expectedEntityFieldsMap.put(
+				entityFieldsMap.put(
 					objectRelationship.getName(),
 					new ComplexEntityField(
 						objectRelationship.getName(), Collections.emptyList()));
 			}
 			else {
-				expectedEntityFieldsMap.put(
+				entityFieldsMap.put(
 					objectRelationship.getName(),
 					new ComplexEntityField(
 						objectRelationship.getName(), Collections.emptyList()));
@@ -311,14 +309,14 @@ public class ObjectEntryEntityModelTest {
 			throw new IllegalStateException();
 		}
 
-		return expectedEntityFieldsMap;
+		return entityFieldsMap;
 	}
 
 	private Map<String, EntityField> _getObjectDefinitionEntityFieldsMap(
 			ObjectDefinition objectDefinition)
 		throws Exception {
 
-		Map<String, EntityField> objectEntityFieldsMap = null;
+		Map<String, EntityField> entityFieldsMap = null;
 
 		Bundle bundle = FrameworkUtil.getBundle(
 			ObjectEntryEntityModelTest.class);
@@ -345,10 +343,10 @@ public class ObjectEntryEntityModelTest {
 
 			EntityModel entityModel = entityModelResource.getEntityModel(null);
 
-			objectEntityFieldsMap = entityModel.getEntityFieldsMap();
+			entityFieldsMap = entityModel.getEntityFieldsMap();
 		}
 
-		return objectEntityFieldsMap;
+		return entityFieldsMap;
 	}
 
 	private ObjectDefinition _publishObjectDefinition(

@@ -305,6 +305,9 @@ public class FormItemManager {
 			layoutStructure.addFormStepLayoutStructureItem(
 				formStepContainerStyledLayoutStructureItem.getItemId(), 0);
 
+		layoutStructureItemChanges.addAddedLayoutStructureItems(
+			firstFormStepLayoutStructureItem);
+
 		_addFormStepLayoutStructureItems(
 			addedFragmentEntryLinks, formStepContainerStyledLayoutStructureItem,
 			httpServletRequest, httpServletResponse,

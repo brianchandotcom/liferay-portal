@@ -198,14 +198,16 @@ public class UpdateFormItemConfigMVCActionCommand
 					ParamUtil.getString(actionRequest, "fields"));
 
 				if (ArrayUtil.isNotEmpty(uniqueInfoFieldIds)) {
-					addedFragmentEntryLinks.addAll(
-						_formItemManager.addFragmentEntryLinks(
-							jsonObject, formStyledLayoutStructureItem, true,
-							themeDisplay.getLayout(), layoutStructure,
-							themeDisplay.getLocale(), segmentsExperienceId,
-							ServiceContextFactory.getInstance(
-								httpServletRequest),
-							uniqueInfoFieldIds));
+					layoutStructureItemChanges.addAddedLayoutStructureItems(
+						_formItemManager.
+							addFragmentEntryLinksLayoutStructureItems(
+								addedFragmentEntryLinks, jsonObject,
+								formStyledLayoutStructureItem, true,
+								themeDisplay.getLayout(), layoutStructure,
+								themeDisplay.getLocale(), segmentsExperienceId,
+								ServiceContextFactory.getInstance(
+									httpServletRequest),
+								uniqueInfoFieldIds));
 				}
 			}
 		}
@@ -237,14 +239,16 @@ public class UpdateFormItemConfigMVCActionCommand
 				}
 
 				if (ListUtil.isNotEmpty(newUniqueInfoFieldIds)) {
-					addedFragmentEntryLinks.addAll(
-						_formItemManager.addFragmentEntryLinks(
-							jsonObject, formStyledLayoutStructureItem, false,
-							themeDisplay.getLayout(), layoutStructure,
-							themeDisplay.getLocale(), segmentsExperienceId,
-							ServiceContextFactory.getInstance(
-								httpServletRequest),
-							newUniqueInfoFieldIds.toArray(new String[0])));
+					layoutStructureItemChanges.addAddedLayoutStructureItems(
+						_formItemManager.
+							addFragmentEntryLinksLayoutStructureItems(
+								addedFragmentEntryLinks, jsonObject,
+								formStyledLayoutStructureItem, false,
+								themeDisplay.getLayout(), layoutStructure,
+								themeDisplay.getLocale(), segmentsExperienceId,
+								ServiceContextFactory.getInstance(
+									httpServletRequest),
+								newUniqueInfoFieldIds.toArray(new String[0])));
 				}
 
 				List<String> removedItemIds = new ArrayList<>();

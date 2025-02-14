@@ -160,7 +160,8 @@ public class FormItemManager {
 		return layoutStructureItemChanges;
 	}
 
-	public List<FragmentEntryLink> addFragmentEntryLinks(
+	public List<LayoutStructureItem> addFragmentEntryLinksLayoutStructureItems(
+			List<FragmentEntryLink> addedFragmentEntryLinks,
 			JSONObject errorJSONObject,
 			FormStyledLayoutStructureItem formStyledLayoutStructureItem,
 			boolean includeSubmitButton, Layout layout,
@@ -168,6 +169,8 @@ public class FormItemManager {
 			long segmentsExperienceId, ServiceContext serviceContext,
 			String[] uniqueInfoFieldIds)
 		throws PortalException {
+
+		List<LayoutStructureItem> layoutStructureItems = new ArrayList<>();
 
 		FragmentCollectionContributor fragmentCollectionContributor =
 			_fragmentCollectionContributorRegistry.
@@ -181,10 +184,9 @@ public class FormItemManager {
 					"your-form-could-not-be-loaded-because-fragments-are-not-" +
 						"available"));
 
-			return Collections.emptyList();
+			return layoutStructureItems;
 		}
 
-		List<FragmentEntryLink> addedFragmentEntryLinks = new ArrayList<>();
 		DropZoneLayoutStructureItem masterDropZoneLayoutStructureItem =
 			_getMasterDropZoneLayoutStructureItem(layout);
 		TreeSet<String> missingInputTypes = new TreeSet<>();
@@ -221,11 +223,11 @@ public class FormItemManager {
 				continue;
 			}
 
-			addedFragmentEntryLinks.add(
-				_addFragmentEntryLink(
-					formStyledLayoutStructureItem, fragmentEntry, infoField,
-					layout, layoutStructure, segmentsExperienceId,
-					serviceContext));
+			layoutStructureItems.add(
+				_addFragmentStyledLayoutStructureItem(
+					addedFragmentEntryLinks, formStyledLayoutStructureItem,
+					fragmentEntry, infoField, layout, layoutStructure,
+					segmentsExperienceId, serviceContext));
 		}
 
 		if (includeSubmitButton) {
@@ -242,11 +244,11 @@ public class FormItemManager {
 				missingInputTypes.add(_language.get(locale, "submit-button"));
 			}
 			else {
-				addedFragmentEntryLinks.add(
-					_addFragmentEntryLink(
-						formStyledLayoutStructureItem, fragmentEntry, null,
-						layout, layoutStructure, segmentsExperienceId,
-						serviceContext));
+				layoutStructureItems.add(
+					_addFragmentStyledLayoutStructureItem(
+						addedFragmentEntryLinks, formStyledLayoutStructureItem,
+						fragmentEntry, null, layout, layoutStructure,
+						segmentsExperienceId, serviceContext));
 			}
 		}
 
@@ -275,7 +277,7 @@ public class FormItemManager {
 					}));
 		}
 
-		return addedFragmentEntryLinks;
+		return layoutStructureItems;
 	}
 
 	public LayoutStructureItemChanges changeToMultistepFormType(
@@ -831,6 +833,12 @@ public class FormItemManager {
 			}
 		}
 
+		public void addAddedLayoutStructureItems(
+			List<LayoutStructureItem> layoutStructureItems) {
+
+			_addedLayoutStructureItems.addAll(layoutStructureItems);
+		}
+
 		public void addMovedLayoutStructureItems(
 			LayoutStructureItem layoutStructureItem) {
 
@@ -1007,7 +1015,8 @@ public class FormItemManager {
 		}
 	}
 
-	private FragmentEntryLink _addFragmentEntryLink(
+	private LayoutStructureItem _addFragmentStyledLayoutStructureItem(
+			List<FragmentEntryLink> addedFragmentEntryLinks,
 			FormStyledLayoutStructureItem formStyledLayoutStructureItem,
 			FragmentEntry fragmentEntry, InfoField<?> infoField, Layout layout,
 			LayoutStructure layoutStructure, long segmentsExperienceId,
@@ -1049,25 +1058,21 @@ public class FormItemManager {
 					editableValuesJSONObject.toString());
 		}
 
+		addedFragmentEntryLinks.add(fragmentEntryLink);
+
 		LayoutStructureItem layoutStructureItem =
 			findFormStepContainerStyledLayoutStructureItem(
 				formStyledLayoutStructureItem, layoutStructure);
 
 		if (layoutStructureItem == null) {
-			layoutStructure.addFragmentStyledLayoutStructureItem(
+			return layoutStructure.addFragmentStyledLayoutStructureItem(
 				fragmentEntryLink.getFragmentEntryLinkId(),
 				formStyledLayoutStructureItem.getItemId(), -1);
 		}
-		else {
-			layoutStructureItem = layoutStructure.getLayoutStructureItem(
-				layoutStructureItem.getChildrenItemId(0));
 
-			layoutStructure.addFragmentStyledLayoutStructureItem(
-				fragmentEntryLink.getFragmentEntryLinkId(),
-				layoutStructureItem.getItemId(), -1);
-		}
-
-		return fragmentEntryLink;
+		return layoutStructure.addFragmentStyledLayoutStructureItem(
+			fragmentEntryLink.getFragmentEntryLinkId(),
+			layoutStructureItem.getChildrenItemId(0), -1);
 	}
 
 	private FragmentEntry _getFragmentEntry(

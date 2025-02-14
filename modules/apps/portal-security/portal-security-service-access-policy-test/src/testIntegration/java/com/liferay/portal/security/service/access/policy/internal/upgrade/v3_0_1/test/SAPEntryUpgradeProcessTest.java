@@ -6,11 +6,13 @@
 package com.liferay.portal.security.service.access.policy.internal.upgrade.v3_0_1.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
@@ -55,31 +57,36 @@ public class SAPEntryUpgradeProcessTest {
 
 		Company company = CompanyTestUtil.addCompany();
 
-		SAPEntry sapEntry = _sapEntryLocalService.fetchSAPEntry(
-			company.getCompanyId(),
-			_sapConfiguration.systemRESTClientTemplateObjectSAPEntryName());
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+					company.getCompanyId())) {
 
-		if (sapEntry != null) {
-			_sapEntryLocalService.deleteSAPEntry(sapEntry);
+			SAPEntry sapEntry = _sapEntryLocalService.fetchSAPEntry(
+				company.getCompanyId(),
+				_sapConfiguration.systemRESTClientTemplateObjectSAPEntryName());
+
+			if (sapEntry != null) {
+				_sapEntryLocalService.deleteSAPEntry(sapEntry);
+			}
+
+			_runUpgrade();
+
+			sapEntry = _sapEntryLocalService.fetchSAPEntry(
+				company.getCompanyId(),
+				_sapConfiguration.systemRESTClientTemplateObjectSAPEntryName());
+
+			Assert.assertNotNull(sapEntry);
+
+			Role role = RoleLocalServiceUtil.getRole(
+				company.getCompanyId(), RoleConstants.GUEST);
+
+			Assert.assertTrue(
+				_resourcePermissionLocalService.hasResourcePermission(
+					company.getCompanyId(), SAPEntry.class.getName(),
+					ResourceConstants.SCOPE_INDIVIDUAL,
+					String.valueOf(sapEntry.getSapEntryId()), role.getRoleId(),
+					ActionKeys.VIEW));
 		}
-
-		_runUpgrade();
-
-		sapEntry = _sapEntryLocalService.fetchSAPEntry(
-			company.getCompanyId(),
-			_sapConfiguration.systemRESTClientTemplateObjectSAPEntryName());
-
-		Assert.assertNotNull(sapEntry);
-
-		Role role = RoleLocalServiceUtil.getRole(
-			company.getCompanyId(), RoleConstants.GUEST);
-
-		Assert.assertTrue(
-			_resourcePermissionLocalService.hasResourcePermission(
-				company.getCompanyId(), SAPEntry.class.getName(),
-				ResourceConstants.SCOPE_INDIVIDUAL,
-				String.valueOf(sapEntry.getSapEntryId()), role.getRoleId(),
-				ActionKeys.VIEW));
 	}
 
 	private void _runUpgrade() throws Exception {

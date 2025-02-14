@@ -43,7 +43,7 @@ deployDependencies {
 	include "commons-*.jar"
 	include "cxf-*.jar"
 	include "jakarta.json.bind-*.jar"
-	include "jakarta.ws.rs-*.jar"
+	include "jakarta.ws.rs-2*.jar"
 	include "jaxb-osgi-*.jar"
 	include "johnzon-jsonb-*.jar"
 	include "johnzon-mapper-*.jar"

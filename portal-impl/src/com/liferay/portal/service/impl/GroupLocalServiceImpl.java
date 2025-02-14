@@ -125,7 +125,6 @@ import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.service.http.TunnelUtil;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.service.persistence.CompanyPersistence;
-import com.liferay.portal.kernel.service.persistence.GroupUtil;
 import com.liferay.portal.kernel.service.persistence.LayoutPersistence;
 import com.liferay.portal.kernel.service.persistence.OrganizationPersistence;
 import com.liferay.portal.kernel.service.persistence.ResourcePermissionPersistence;
@@ -1538,7 +1537,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	@Override
 	public Group fetchStagingGroup(long liveGroupId) {
 		if (_cacheableQueryLimitLPD28122 <= 0) {
-			return GroupUtil.fetchByLiveGroupId(liveGroupId);
+			return groupPersistence.fetchByLiveGroupId(liveGroupId);
 		}
 
 		Map<Long, Long> stagingGroupIds =

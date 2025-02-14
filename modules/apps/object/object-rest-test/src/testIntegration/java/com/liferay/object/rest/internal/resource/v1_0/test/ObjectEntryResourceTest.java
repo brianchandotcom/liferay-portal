@@ -4162,7 +4162,7 @@ public class ObjectEntryResourceTest {
 	}
 
 	@Test
-	public void testFilterByRelationshipERCFieldNameInOneToManyRelationship()
+	public void testFilterByObjectRelationshipERCObjectFieldNameInOneToManyRelationship()
 		throws Exception {
 
 		_objectEntry1 = ObjectEntryTestUtil.addObjectEntry(

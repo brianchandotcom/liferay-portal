@@ -498,7 +498,7 @@ test('Checks Content Flags, Content Ratings and Content Display are compatible w
 
 	await expect(
 		page.locator('.page-editor').getByText('Content', {exact: true})
-	).toHaveCount(2);
+	).toHaveCount(3);
 	await expect(page.getByText('Animal 01 content')).toBeVisible();
 	await expect(page.getByText('Animal 02 content')).toBeVisible();
 
@@ -522,8 +522,8 @@ test('Checks Content Flags, Content Ratings and Content Display are compatible w
 
 	// Check that the Content Ratings and Content Flags are shown for every item
 
-	await expect(page.getByLabel('Vote', {exact: true})).toHaveCount(2);
-	await expect(page.locator('button', {hasText: 'Report'})).toHaveCount(2);
+	await expect(page.getByLabel('Vote', {exact: true})).toHaveCount(3);
+	await expect(page.locator('button', {hasText: 'Report'})).toHaveCount(3);
 });
 
 test('Modifies inline text on all collection items', async ({
@@ -576,7 +576,7 @@ test('Modifies inline text on all collection items', async ({
 
 	await expect(
 		page.locator('.page-editor').getByText('New Content')
-	).toHaveCount(2);
+	).toHaveCount(3);
 });
 
 test(
@@ -744,6 +744,10 @@ test('Checks that fragment ids used within a display collection are not repeated
 }) => {
 	const checkNonRepeatedFragmentIds = async () => {
 
+		// Wait for the fragments to load
+
+		await page.getByText('Heading Example').first().waitFor();
+
 		// Get all fragments with Heading Example text
 
 		const fragments = await page
@@ -759,7 +763,7 @@ test('Checks that fragment ids used within a display collection are not repeated
 			fragmentIds.push(fragment.getAttribute('id'));
 		}
 
-		expect(Array.from(new Set(fragmentIds))).toHaveLength(4);
+		expect(Array.from(new Set(fragmentIds))).toHaveLength(6);
 	};
 
 	const animalsClassPK = await collectionsPage.getCollectionClassPK(

@@ -4197,11 +4197,10 @@ public class ObjectEntryResourceTest {
 
 		// Comparison operators
 
-		String relationshipERCSubstring =
-			_objectEntry1.getExternalReferenceCode(
-			).substring(
-				0, 3
-			);
+		String substring = _objectEntry1.getExternalReferenceCode(
+		).substring(
+			0, 3
+		);
 
 		_assertFilterString(
 			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
@@ -4226,8 +4225,7 @@ public class ObjectEntryResourceTest {
 			_escape(
 				String.format(
 					"%s/%s gt '%s'", _objectRelationship1.getName(),
-					relationshipERCFieldName,
-					relationshipERCSubstring + "0000")),
+					relationshipERCFieldName, substring + "0000")),
 			_objectDefinition1);
 
 		_assertFilterString(
@@ -4244,8 +4242,7 @@ public class ObjectEntryResourceTest {
 			_escape(
 				String.format(
 					"%s/%s lt '%s'", _objectRelationship1.getName(),
-					relationshipERCFieldName,
-					relationshipERCSubstring + "ZZZZ")),
+					relationshipERCFieldName, substring + "ZZZZ")),
 			_objectDefinition1);
 
 		_assertFilterString(
@@ -4274,22 +4271,14 @@ public class ObjectEntryResourceTest {
 			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
 			String.format(
 				"contains(%s/%s,'%s')", _objectRelationship1.getName(),
-				relationshipERCFieldName,
-				_objectEntry1.getExternalReferenceCode(
-				).substring(
-					0, 2
-				)),
+				relationshipERCFieldName, substring),
 			_objectDefinition1);
 
 		_assertFilterString(
 			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
 			String.format(
 				"startswith(%s/%s,'%s')", _objectRelationship1.getName(),
-				relationshipERCFieldName,
-				_objectEntry1.getExternalReferenceCode(
-				).substring(
-					0, 2
-				)),
+				relationshipERCFieldName, substring),
 			_objectDefinition1);
 	}
 

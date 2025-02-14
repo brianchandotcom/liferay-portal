@@ -62,9 +62,7 @@ const openFragmentModal = () => {
 
 const customizeGetAppButton = (product) => {
 	getAppButtonElement.onclick = () => {
-		const isFragment = isFragmentApp(product.productSpecifications);
-
-		if (isFragment) {
+		if (isFragmentApp(product.productSpecifications)) {
 			openFragmentModal();
 
 			return;

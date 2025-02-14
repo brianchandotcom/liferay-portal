@@ -1,8 +1,8 @@
 <style>
 	.app-container {
-		font-size: MEDIUM;
 		border-color: #2e5aac !important;
 		color: #2e5aac;
+		font-size: MEDIUM;
 	}
 
 	.app-category {
@@ -25,6 +25,11 @@
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
+	}
+
+	.client-extension-app-product-type {
+		background-color: #FFE6C6;
+		color: #9D4C00;
 	}
 
 	.cloud-app-product-type {
@@ -66,6 +71,7 @@
 	}
 </style>
 <#assign
+	PRODUCT_TYPE_CLIENT_EXTENSION = "CLIENT-EXTENSION"
 	PRODUCT_TYPE_CLOUD = "CLOUD"
 	PRODUCT_TYPE_DXP = "DXP"
 	PRODUCT_TYPE_FRAGMENT = "FRAGMENT"
@@ -107,12 +113,15 @@
 <div class="app-container color-neutral-3 d-flex flex-wrap font-size-paragraph-small justify-content-between w-100">
 	<div class="d-flex">
 		<#if productSpecifications?has_content>
-
 			<#assign productTypes = productSpecifications?filter(item -> stringUtil.equals(item.specificationKey, "type")) />
 
 			<#list productTypes as productType>
-				<#if productType.value?upper_case == PRODUCT_TYPE_CLOUD>
-					<div class="align-items-center app-product-type border border-radius-small d-flex cloud-app-product-type mb-1 mr-2 px-2 rounded-lg">
+				<#if productType.value?upper_case == PRODUCT_TYPE_CLIENT_EXTENSION>
+					<div class="align-items-center app-product-type border border-radius-small client-extension-app-product-type d-flex mb-1 mr-2 px-2 rounded-lg">
+						<div class="bg-neutral-8">Client Extension</div>
+					</div>
+				<#elseif productType.value?upper_case == PRODUCT_TYPE_CLOUD>
+					<div class="align-items-center app-product-type border border-radius-small cloud-app-product-type d-flex mb-1 mr-2 px-2 rounded-lg">
 						<div class="bg-neutral-8">Cloud App</div>
 					</div>
 				<#elseif productType.value?upper_case == PRODUCT_TYPE_DXP>
@@ -130,14 +139,13 @@
 		<#if categories?has_content>
 			<#assign filteredCategories = categories?filter(category -> category.vocabulary?upper_case == VOCABULARY_PRODUCT_CATEGORY) />
 
-			<#if filteredCategories?has_content>
+			<#if filteredCategories?has_content && productTypes?has_content>
 				<span class="align-items-center d-flex justify-content-between">
 					<span class="align-items-center d-flex diamond-icon-container justify-content-between mr-3">
 						<@clay["icon"] symbol="diamond" />
 					</span>
 				</span>
 			</#if>
-
 			<#list categories as category>
 				<#if category.vocabulary?upper_case == VOCABULARY_PRODUCT_CATEGORY>
 					<span class="app-category bg-neutral-8 border-radius-small mb-1 mr-2 px-3 rounded-lg" title="${category.name}">

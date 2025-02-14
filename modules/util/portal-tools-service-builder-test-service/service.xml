@@ -110,6 +110,32 @@
 		<column name="createDate" type="Date" />
 		<column name="modifiedDate" type="Date" />
 	</entity>
+	<entity local-service="true" name="DefinedDefaultOrderEntry" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="definedDefaultOrderEntryId" primary="true" type="long" />
+
+		<!-- Other fields -->
+
+		<column name="name" type="String" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column name="modifiedDate" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="Name" return-type="DefinedDefaultOrderEntry">
+			<finder-column name="name" />
+		</finder>
+		<finder name="Name_Collection" return-type="Collection">
+			<finder-column name="name" />
+		</finder>
+	</entity>
 	<entity cache-enabled="true" local-service="true" name="DSLQueryEntry" remote-service="false">
 
 		<!-- PK fields -->
@@ -532,6 +558,26 @@
 		<!-- Other fields -->
 
 		<column name="message" type="String" uad-nonanonymizable="true" />
+	</entity>
+	<entity local-service="true" name="UndefinedDefaultOrderEntry" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="undefinedDefaultOrderEntryId" primary="true" type="long" />
+
+		<!-- Other fields -->
+
+		<column name="name" type="String" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Finder methods -->
+
+		<finder name="Name" return-type="UndefinedDefaultOrderEntry">
+			<finder-column name="name" />
+		</finder>
+		<finder name="Name_Collection" return-type="Collection">
+			<finder-column name="name" />
+		</finder>
 	</entity>
 	<entity local-service="true" name="VersionedEntry" remote-service="false" versioned="true">
 

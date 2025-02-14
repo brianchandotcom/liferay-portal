@@ -9,7 +9,6 @@ import com.liferay.frontend.data.set.SystemFDSEntry;
 import com.liferay.frontend.data.set.action.FDSBulkActions;
 import com.liferay.frontend.data.set.action.FDSCreationMenu;
 import com.liferay.frontend.data.set.action.FDSItemsActions;
-import com.liferay.frontend.data.set.action.FDSItemsActionsRegistry;
 import com.liferay.frontend.data.set.constants.FDSEntityFieldTypes;
 import com.liferay.frontend.data.set.filter.BaseClientExtensionFDSFilter;
 import com.liferay.frontend.data.set.filter.BaseDateRangeFDSFilter;
@@ -44,7 +43,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoaderUtil;
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -129,16 +127,14 @@ public class SystemFDSSerializerTest {
 
 		// Different resolvers
 
-		ServiceRegistration<FDSAPIURLResolver>
-			fdsAPIURLResolverServiceRegistration = _registerFDSAPIURLResolver(
+		_registerServices(
+			_registerFDSAPIURLResolver(
 				"/app1", "schema", new String[] {"{foo}"},
-				new String[] {"bar"});
-		ServiceRegistration<SystemFDSEntry> systemFDSEntryServiceRegistration1 =
+				new String[] {"bar"}),
 			_registerSystemFDSEntry(
-				null, "fdsName1", "/app1", "/endpoint/{foo}", "schema");
-		ServiceRegistration<SystemFDSEntry> systemFDSEntryServiceRegistration2 =
+				null, "fdsName1", "/app1", "/endpoint/{foo}", "schema"),
 			_registerSystemFDSEntry(
-				null, "fdsName2", "/app2", "/endpoint/{foo}", "schema");
+				null, "fdsName2", "/app2", "/endpoint/{foo}", "schema"));
 
 		Assert.assertEquals(
 			"/o/app1/endpoint/bar",
@@ -149,57 +145,58 @@ public class SystemFDSSerializerTest {
 			_systemFDSSerializer.serializeAPIURL(
 				"fdsName2", _httpServletRequest));
 
-		fdsAPIURLResolverServiceRegistration.unregister();
-		systemFDSEntryServiceRegistration1.unregister();
-		systemFDSEntryServiceRegistration2.unregister();
+		_unregisterServices();
 
 		// No resolver, URL
 
-		systemFDSEntryServiceRegistration1 = _registerSystemFDSEntry(
-			null, "fdsName", "/app", "/endpoint", "schema");
+		_registerServices(
+			_registerSystemFDSEntry(
+				null, "fdsName", "/app", "/endpoint", "schema"));
 
 		Assert.assertEquals(
 			"/o/app/endpoint",
 			_systemFDSSerializer.serializeAPIURL(
 				"fdsName", _httpServletRequest));
 
-		systemFDSEntryServiceRegistration1.unregister();
+		_unregisterServices();
 
 		// No resolver, URL with parameters
 
-		systemFDSEntryServiceRegistration1 = _registerSystemFDSEntry(
-			"param=3", "fdsName", "/app", "/endpoint", "schema");
+		_registerServices(
+			_registerSystemFDSEntry(
+				"param=3", "fdsName", "/app", "/endpoint", "schema"));
 
 		Assert.assertEquals(
 			"/o/app/endpoint?param=3",
 			_systemFDSSerializer.serializeAPIURL(
 				"fdsName", _httpServletRequest));
 
-		systemFDSEntryServiceRegistration1.unregister();
+		_unregisterServices();
 
 		// Resolver with interpolation
 
-		fdsAPIURLResolverServiceRegistration = _registerFDSAPIURLResolver(
-			"/app", "schema", new String[] {"{foo}"}, new String[] {"bar"});
-		systemFDSEntryServiceRegistration1 = _registerSystemFDSEntry(
-			"{foo}=3", "fdsName", "/app", "/endpoint/{foo}", "schema");
+		_registerServices(
+			_registerFDSAPIURLResolver(
+				"/app", "schema", new String[] {"{foo}"}, new String[] {"bar"}),
+			_registerSystemFDSEntry(
+				"{foo}=3", "fdsName", "/app", "/endpoint/{foo}", "schema"));
 
 		Assert.assertEquals(
 			"/o/app/endpoint/bar?bar=3",
 			_systemFDSSerializer.serializeAPIURL(
 				"fdsName", _httpServletRequest));
 
-		fdsAPIURLResolverServiceRegistration.unregister();
-		systemFDSEntryServiceRegistration1.unregister();
+		_unregisterServices();
 
 		// Shared resolver
 
-		fdsAPIURLResolverServiceRegistration = _registerFDSAPIURLResolver(
-			"/app", "schema", new String[] {"{foo}"}, new String[] {"bar"});
-		systemFDSEntryServiceRegistration1 = _registerSystemFDSEntry(
-			null, "fdsName1", "/app", "/endpoint/{foo}", "schema");
-		systemFDSEntryServiceRegistration2 = _registerSystemFDSEntry(
-			null, "fdsName2", "/app", "/endpoint/{foo}", "schema");
+		_registerServices(
+			_registerFDSAPIURLResolver(
+				"/app", "schema", new String[] {"{foo}"}, new String[] {"bar"}),
+			_registerSystemFDSEntry(
+				null, "fdsName1", "/app", "/endpoint/{foo}", "schema"),
+			_registerSystemFDSEntry(
+				null, "fdsName2", "/app", "/endpoint/{foo}", "schema"));
 
 		Assert.assertEquals(
 			"/o/app/endpoint/bar",
@@ -210,9 +207,7 @@ public class SystemFDSSerializerTest {
 			_systemFDSSerializer.serializeAPIURL(
 				"fdsName2", _httpServletRequest));
 
-		fdsAPIURLResolverServiceRegistration.unregister();
-		systemFDSEntryServiceRegistration1.unregister();
-		systemFDSEntryServiceRegistration2.unregister();
+		_unregisterServices();
 
 		serviceTrackerMap.close();
 	}
@@ -233,27 +228,21 @@ public class SystemFDSSerializerTest {
 
 		// Different bulk actions
 
-		ServiceRegistration<SystemFDSEntry> systemFDSEntryServiceRegistration1 =
-			_registerSystemFDSEntry(
-				null, "fdsName1", "/app", "/endpoint", "schema");
-
 		List<FDSActionDropdownItem> fdsActionDropdownItems1 =
 			ListUtil.fromArray(
 				new FDSActionDropdownItem(
 					null, "trash", "delete", "delete", "delete", "delete",
 					"headless"));
 
-		ServiceRegistration<FDSBulkActions> fdsBulkActionsServiceRegistration1 =
-			_registerFDSBulkActions(fdsActionDropdownItems1, "fdsName1");
+		_registerServices(
+			_registerFDSBulkActions(fdsActionDropdownItems1, "fdsName1"),
+			_registerSystemFDSEntry(
+				null, "fdsName1", "/app", "/endpoint", "schema"));
 
 		Assert.assertEquals(
 			fdsActionDropdownItems1,
 			_systemFDSSerializer.serializeBulkActions(
 				"fdsName1", _httpServletRequest));
-
-		ServiceRegistration<SystemFDSEntry> systemFDSEntryServiceRegistration2 =
-			_registerSystemFDSEntry(
-				null, "fdsName2", "/app", "/endpoint", "schema");
 
 		List<FDSActionDropdownItem> fdsActionDropdownItems2 =
 			ListUtil.fromArray(
@@ -261,8 +250,10 @@ public class SystemFDSSerializerTest {
 					null, "cog", "permissions", "permissions", "get",
 					"permissions", "modal-permissions"));
 
-		ServiceRegistration<FDSBulkActions> fdsBulkActionsServiceRegistration2 =
-			_registerFDSBulkActions(fdsActionDropdownItems2, "fdsName2");
+		_registerServices(
+			_registerFDSBulkActions(fdsActionDropdownItems2, "fdsName2"),
+			_registerSystemFDSEntry(
+				null, "fdsName2", "/app", "/endpoint", "schema"));
 
 		Assert.assertEquals(
 			fdsActionDropdownItems2,
@@ -275,39 +266,35 @@ public class SystemFDSSerializerTest {
 			_systemFDSSerializer.serializeBulkActions(
 				"fdsName2", _httpServletRequest));
 
-		fdsBulkActionsServiceRegistration1.unregister();
-		fdsBulkActionsServiceRegistration2.unregister();
-		systemFDSEntryServiceRegistration1.unregister();
-		systemFDSEntryServiceRegistration2.unregister();
+		_unregisterServices();
 
 		// No bulk actions
 
-		systemFDSEntryServiceRegistration1 = _registerSystemFDSEntry(
-			null, "fdsName", "/app", "/endpoint", "schema");
+		_registerServices(
+			_registerSystemFDSEntry(
+				null, "fdsName", "/app", "/endpoint", "schema"));
 
 		Assert.assertTrue(
 			_systemFDSSerializer.serializeBulkActions(
 				"fdsName", _httpServletRequest
 			).isEmpty());
 
-		systemFDSEntryServiceRegistration1.unregister();
+		_unregisterServices();
 
 		// Shared bulk actions
-
-		systemFDSEntryServiceRegistration1 = _registerSystemFDSEntry(
-			null, "fdsName1", "/app", "/endpoint", "schema");
-		systemFDSEntryServiceRegistration2 = _registerSystemFDSEntry(
-			null, "fdsName2", "/app", "/endpoint", "schema");
 
 		fdsActionDropdownItems1 = ListUtil.fromArray(
 			new FDSActionDropdownItem(
 				null, "trash", "delete", "delete", "delete", "delete",
 				"headless"));
 
-		fdsBulkActionsServiceRegistration1 = _registerFDSBulkActions(
-			fdsActionDropdownItems1, "fdsName1");
-		fdsBulkActionsServiceRegistration2 = _registerFDSBulkActions(
-			fdsActionDropdownItems1, "fdsName2");
+		_registerServices(
+			_registerFDSBulkActions(fdsActionDropdownItems1, "fdsName1"),
+			_registerFDSBulkActions(fdsActionDropdownItems1, "fdsName2"),
+			_registerSystemFDSEntry(
+				null, "fdsName1", "/app", "/endpoint", "schema"),
+			_registerSystemFDSEntry(
+				null, "fdsName2", "/app", "/endpoint", "schema"));
 
 		Assert.assertEquals(
 			_systemFDSSerializer.serializeBulkActions(
@@ -315,10 +302,7 @@ public class SystemFDSSerializerTest {
 			_systemFDSSerializer.serializeBulkActions(
 				"fdsName2", _httpServletRequest));
 
-		fdsBulkActionsServiceRegistration1.unregister();
-		fdsBulkActionsServiceRegistration2.unregister();
-		systemFDSEntryServiceRegistration1.unregister();
-		systemFDSEntryServiceRegistration2.unregister();
+		_unregisterServices();
 
 		serviceTrackerMap.close();
 	}
@@ -339,28 +323,21 @@ public class SystemFDSSerializerTest {
 
 		// Different creation menu
 
-		ServiceRegistration<SystemFDSEntry> systemFDSEntryServiceRegistration1 =
-			_registerSystemFDSEntry(
-				null, "fdsName1", "/app", "/endpoint", "schema");
-
 		CreationMenu creationMenu1 = CreationMenuBuilder.addDropdownItem(
 			DropdownItemBuilder.setIcon(
 				"times"
 			).build()
 		).build();
 
-		ServiceRegistration<FDSCreationMenu>
-			fdsCreationMenuServiceRegistration1 = _registerFDSCreationMenu(
-				creationMenu1, "fdsName1");
+		_registerServices(
+			_registerFDSCreationMenu(creationMenu1, "fdsName1"),
+			_registerSystemFDSEntry(
+				null, "fdsName1", "/app", "/endpoint", "schema"));
 
 		Assert.assertEquals(
 			creationMenu1,
 			_systemFDSSerializer.serializeCreationMenu(
 				"fdsName1", _httpServletRequest));
-
-		ServiceRegistration<SystemFDSEntry> systemFDSEntryServiceRegistration2 =
-			_registerSystemFDSEntry(
-				null, "fdsName2", "/app", "/endpoint", "schema");
 
 		CreationMenu creationMenu2 = CreationMenuBuilder.addDropdownItem(
 			DropdownItemBuilder.setIcon(
@@ -368,9 +345,10 @@ public class SystemFDSSerializerTest {
 			).build()
 		).build();
 
-		ServiceRegistration<FDSCreationMenu>
-			fdsCreationMenuServiceRegistration2 = _registerFDSCreationMenu(
-				creationMenu2, "fdsName2");
+		_registerServices(
+			_registerFDSCreationMenu(creationMenu2, "fdsName2"),
+			_registerSystemFDSEntry(
+				null, "fdsName2", "/app", "/endpoint", "schema"));
 
 		Assert.assertEquals(
 			creationMenu2,
@@ -383,29 +361,22 @@ public class SystemFDSSerializerTest {
 			_systemFDSSerializer.serializeCreationMenu(
 				"fdsName2", _httpServletRequest));
 
-		fdsCreationMenuServiceRegistration1.unregister();
-		fdsCreationMenuServiceRegistration2.unregister();
-		systemFDSEntryServiceRegistration1.unregister();
-		systemFDSEntryServiceRegistration2.unregister();
+		_unregisterServices();
 
 		// No creation menu
 
-		systemFDSEntryServiceRegistration1 = _registerSystemFDSEntry(
-			null, "fdsName", "/app", "/endpoint", "schema");
+		_registerServices(
+			_registerSystemFDSEntry(
+				null, "fdsName", "/app", "/endpoint", "schema"));
 
 		Assert.assertTrue(
 			_systemFDSSerializer.serializeCreationMenu(
 				"fdsName", _httpServletRequest
 			).isEmpty());
 
-		systemFDSEntryServiceRegistration1.unregister();
+		_unregisterServices();
 
 		// Shared creation menu
-
-		systemFDSEntryServiceRegistration1 = _registerSystemFDSEntry(
-			null, "fdsName1", "/app", "/endpoint", "schema");
-		systemFDSEntryServiceRegistration2 = _registerSystemFDSEntry(
-			null, "fdsName2", "/app", "/endpoint", "schema");
 
 		creationMenu1 = CreationMenuBuilder.addDropdownItem(
 			DropdownItemBuilder.setIcon(
@@ -413,10 +384,13 @@ public class SystemFDSSerializerTest {
 			).build()
 		).build();
 
-		fdsCreationMenuServiceRegistration1 = _registerFDSCreationMenu(
-			creationMenu1, "fdsName1");
-		fdsCreationMenuServiceRegistration2 = _registerFDSCreationMenu(
-			creationMenu1, "fdsName2");
+		_registerServices(
+			_registerFDSCreationMenu(creationMenu1, "fdsName1"),
+			_registerFDSCreationMenu(creationMenu1, "fdsName2"),
+			_registerSystemFDSEntry(
+				null, "fdsName1", "/app", "/endpoint", "schema"),
+			_registerSystemFDSEntry(
+				null, "fdsName2", "/app", "/endpoint", "schema"));
 
 		Assert.assertEquals(
 			_systemFDSSerializer.serializeCreationMenu(
@@ -424,10 +398,7 @@ public class SystemFDSSerializerTest {
 			_systemFDSSerializer.serializeCreationMenu(
 				"fdsName2", _httpServletRequest));
 
-		fdsCreationMenuServiceRegistration1.unregister();
-		fdsCreationMenuServiceRegistration2.unregister();
-		systemFDSEntryServiceRegistration1.unregister();
-		systemFDSEntryServiceRegistration2.unregister();
+		_unregisterServices();
 
 		serviceTrackerMap.close();
 	}
@@ -513,20 +484,8 @@ public class SystemFDSSerializerTest {
 
 		// Client extension filter
 
-		ServiceRegistration<FDSFilterContextContributor>
-			clientExtensionFDSFilterContextContributorServiceRegistration =
-				_bundleContext.registerService(
-					FDSFilterContextContributor.class,
-					new ClientExtensionFDSFilterContextContributor(),
-					MapUtil.singletonDictionary(
-						"frontend.data.set.filter.type", "clientExtension"));
-
-		ServiceRegistration<SystemFDSEntry> systemFDSEntryServiceRegistration1 =
-			_registerSystemFDSEntry(
-				null, "fdsName", "/app", "/endpoint", "schema");
-
-		ServiceRegistration<FDSFilter>
-			clientExtensionFDSFilterServiceRegistration = _registerFDSFilter(
+		_registerServices(
+			_registerFDSFilter(
 				"fdsName",
 				new BaseClientExtensionFDSFilter() {
 
@@ -554,7 +513,14 @@ public class SystemFDSSerializerTest {
 						).build();
 					}
 
-				});
+				}),
+			_bundleContext.registerService(
+				FDSFilterContextContributor.class,
+				new ClientExtensionFDSFilterContextContributor(),
+				MapUtil.singletonDictionary(
+					"frontend.data.set.filter.type", "clientExtension")),
+			_registerSystemFDSEntry(
+				null, "fdsName", "/app", "/endpoint", "schema"));
 
 		JSONAssert.assertEquals(
 			JSONUtil.putAll(
@@ -580,27 +546,11 @@ public class SystemFDSSerializerTest {
 			).toString(),
 			JSONCompareMode.STRICT);
 
-		clientExtensionFDSFilterServiceRegistration.unregister();
-
-		clientExtensionFDSFilterContextContributorServiceRegistration.
-			unregister();
-
-		systemFDSEntryServiceRegistration1.unregister();
+		_unregisterServices();
 
 		// Date range filter
 
-		ServiceRegistration<FDSFilterContextContributor>
-			dateRangeFDSFilterContextContributorServiceRegistration =
-				_bundleContext.registerService(
-					FDSFilterContextContributor.class,
-					new DateRangeFDSFilterContextContributor(),
-					MapUtil.singletonDictionary(
-						"frontend.data.set.filter.type", "dateRange"));
-
-		systemFDSEntryServiceRegistration1 = _registerSystemFDSEntry(
-			null, "fdsName", "/app", "/endpoint", "schema");
-
-		ServiceRegistration<FDSFilter> dateRangeFDSFilterServiceRegistration1 =
+		_registerServices(
 			_registerFDSFilter(
 				"fdsName",
 				_createFDSDateRangeFilter(
@@ -611,7 +561,14 @@ public class SystemFDSSerializerTest {
 						"to", new DateFDSFilterItem(27, 5, 1995)
 					).build(),
 					new DateFDSFilterItem(0, 0, 0),
-					new DateFDSFilterItem(16, 3, 1977)));
+					new DateFDSFilterItem(16, 3, 1977))),
+			_bundleContext.registerService(
+				FDSFilterContextContributor.class,
+				new DateRangeFDSFilterContextContributor(),
+				MapUtil.singletonDictionary(
+					"frontend.data.set.filter.type", "dateRange")),
+			_registerSystemFDSEntry(
+				null, "fdsName", "/app", "/endpoint", "schema"));
 
 		JSONAssert.assertEquals(
 			JSONUtil.putAll(
@@ -669,34 +626,33 @@ public class SystemFDSSerializerTest {
 			).toString(),
 			JSONCompareMode.STRICT);
 
-		dateRangeFDSFilterServiceRegistration1.unregister();
-
-		systemFDSEntryServiceRegistration1.unregister();
+		_unregisterServices();
 
 		// Different filters
 
-		systemFDSEntryServiceRegistration1 = _registerSystemFDSEntry(
-			null, "fdsName1", "/app", "/endpoint", "schema");
-
-		ServiceRegistration<SystemFDSEntry> systemFDSEntryServiceRegistration2 =
-			_registerSystemFDSEntry(
-				null, "fdsName2", "/app", "/endpoint", "schema");
-
-		dateRangeFDSFilterServiceRegistration1 = _registerFDSFilter(
-			"fdsName1",
-			_createFDSDateRangeFilter(
-				"createDate", "By Creation Date", FDSEntityFieldTypes.DATE,
-				null, new DateFDSFilterItem(0, 0, 0),
-				new DateFDSFilterItem(1, 1, 1980)));
-
-		ServiceRegistration<FDSFilter> dateRangeFDSFilterServiceRegistration2 =
+		_registerServices(
+			_registerFDSFilter(
+				"fdsName1",
+				_createFDSDateRangeFilter(
+					"createDate", "By Creation Date", FDSEntityFieldTypes.DATE,
+					null, new DateFDSFilterItem(0, 0, 0),
+					new DateFDSFilterItem(1, 1, 1980))),
 			_registerFDSFilter(
 				"fdsName2",
 				_createFDSDateRangeFilter(
 					"modifiedDate", "By Modification Date",
 					FDSEntityFieldTypes.DATE, null,
 					new DateFDSFilterItem(0, 0, 0),
-					new DateFDSFilterItem(1, 1, 1980)));
+					new DateFDSFilterItem(1, 1, 1980))),
+			_bundleContext.registerService(
+				FDSFilterContextContributor.class,
+				new DateRangeFDSFilterContextContributor(),
+				MapUtil.singletonDictionary(
+					"frontend.data.set.filter.type", "dateRange")),
+			_registerSystemFDSEntry(
+				null, "fdsName1", "/app", "/endpoint", "schema"),
+			_registerSystemFDSEntry(
+				null, "fdsName2", "/app", "/endpoint", "schema"));
 
 		String dateRangeFDSFilterSerialized1 =
 			_systemFDSSerializer.serializeFilters(
@@ -776,20 +732,11 @@ public class SystemFDSSerializerTest {
 			).toString(),
 			dateRangeFDSFilterSerialized2, JSONCompareMode.STRICT);
 
-		dateRangeFDSFilterServiceRegistration1.unregister();
-
-		dateRangeFDSFilterServiceRegistration2.unregister();
-
-		systemFDSEntryServiceRegistration1.unregister();
-
-		systemFDSEntryServiceRegistration2.unregister();
+		_unregisterServices();
 
 		// Disabled filter
 
-		systemFDSEntryServiceRegistration1 = _registerSystemFDSEntry(
-			null, "fdsName", "/app", "/endpoint", "schema");
-
-		ServiceRegistration<FDSFilter> fdsFilterServiceRegistration =
+		_registerServices(
 			_registerFDSFilter(
 				"fdsName",
 				new FDSFilter() {
@@ -814,7 +761,9 @@ public class SystemFDSSerializerTest {
 						return false;
 					}
 
-				});
+				}),
+			_registerSystemFDSEntry(
+				null, "fdsName", "/app", "/endpoint", "schema"));
 
 		JSONAssert.assertEquals(
 			"[]",
@@ -823,14 +772,13 @@ public class SystemFDSSerializerTest {
 			).toString(),
 			JSONCompareMode.STRICT);
 
-		systemFDSEntryServiceRegistration1.unregister();
-
-		fdsFilterServiceRegistration.unregister();
+		_unregisterServices();
 
 		// No filter
 
-		systemFDSEntryServiceRegistration1 = _registerSystemFDSEntry(
-			null, "fdsName", "/app", "/endpoint", "schema");
+		_registerServices(
+			_registerSystemFDSEntry(
+				null, "fdsName", "/app", "/endpoint", "schema"));
 
 		JSONAssert.assertEquals(
 			"[]",
@@ -839,20 +787,11 @@ public class SystemFDSSerializerTest {
 			).toString(),
 			JSONCompareMode.STRICT);
 
-		systemFDSEntryServiceRegistration1.unregister();
+		_unregisterServices();
 
 		// Selection filter, with API URL
 
-		_bundleContext.registerService(
-			FDSFilterContextContributor.class,
-			new SelectionFDSFilterContextContributor(),
-			MapUtil.singletonDictionary(
-				"frontend.data.set.filter.type", "selection"));
-
-		systemFDSEntryServiceRegistration1 = _registerSystemFDSEntry(
-			null, "fdsName", "/app", "/endpoint", "schema");
-
-		ServiceRegistration<FDSFilter> selectionFDSFilterServiceRegistration =
+		_registerServices(
 			_registerFDSFilter(
 				"fdsName",
 				new BaseSelectionFDSFilter() {
@@ -905,7 +844,14 @@ public class SystemFDSSerializerTest {
 						return false;
 					}
 
-				});
+				}),
+			_bundleContext.registerService(
+				FDSFilterContextContributor.class,
+				new SelectionFDSFilterContextContributor(),
+				MapUtil.singletonDictionary(
+					"frontend.data.set.filter.type", "selection")),
+			_registerSystemFDSEntry(
+				null, "fdsName", "/app", "/endpoint", "schema"));
 
 		JSONAssert.assertEquals(
 			JSONUtil.putAll(
@@ -942,9 +888,7 @@ public class SystemFDSSerializerTest {
 			).toString(),
 			JSONCompareMode.STRICT);
 
-		selectionFDSFilterServiceRegistration.unregister();
-
-		systemFDSEntryServiceRegistration1.unregister();
+		_unregisterServices();
 
 		// Selection filter, with items
 
@@ -1005,6 +949,11 @@ public class SystemFDSSerializerTest {
 					}
 
 				}),
+			_bundleContext.registerService(
+				FDSFilterContextContributor.class,
+				new SelectionFDSFilterContextContributor(),
+				MapUtil.singletonDictionary(
+					"frontend.data.set.filter.type", "selection")),
 			_registerSystemFDSEntry(
 				null, "fdsName", "/app", "/endpoint", "schema"));
 
@@ -1091,28 +1040,11 @@ public class SystemFDSSerializerTest {
 
 		// Different items actions
 
-		ServiceRegistration<SystemFDSEntry> systemFDSEntryServiceRegistration1 =
-			_registerSystemFDSEntry(
-				null, "fdsName1", "/app", "/endpoint", "schema");
-
 		List<FDSActionDropdownItem> fdsActionDropdownItems1 =
 			ListUtil.fromArray(
 				new FDSActionDropdownItem(
 					null, "trash", "delete", "delete", "delete", "delete",
 					"headless"));
-
-		ServiceRegistration<FDSItemsActions>
-			fdsItemsActionsServiceRegistration1 = _registerFDSItemsActions(
-				fdsActionDropdownItems1, "fdsName1");
-
-		Assert.assertEquals(
-			fdsActionDropdownItems1,
-			_systemFDSSerializer.serializeItemsActions(
-				"fdsName1", _httpServletRequest));
-
-		ServiceRegistration<SystemFDSEntry> systemFDSEntryServiceRegistration2 =
-			_registerSystemFDSEntry(
-				null, "fdsName2", "/app", "/endpoint", "schema");
 
 		List<FDSActionDropdownItem> fdsActionDropdownItems2 =
 			ListUtil.fromArray(
@@ -1120,9 +1052,18 @@ public class SystemFDSSerializerTest {
 					null, "cog", "permissions", "permissions", "get",
 					"permissions", "modal-permissions"));
 
-		ServiceRegistration<FDSItemsActions>
-			fdsItemsActionsServiceRegistration2 = _registerFDSItemsActions(
-				fdsActionDropdownItems2, "fdsName2");
+		_registerServices(
+			_registerFDSItemsActions(fdsActionDropdownItems1, "fdsName1"),
+			_registerFDSItemsActions(fdsActionDropdownItems2, "fdsName2"),
+			_registerSystemFDSEntry(
+				null, "fdsName1", "/app", "/endpoint", "schema"),
+			_registerSystemFDSEntry(
+				null, "fdsName2", "/app", "/endpoint", "schema"));
+
+		Assert.assertEquals(
+			fdsActionDropdownItems1,
+			_systemFDSSerializer.serializeItemsActions(
+				"fdsName1", _httpServletRequest));
 
 		Assert.assertEquals(
 			fdsActionDropdownItems2,
@@ -1135,39 +1076,35 @@ public class SystemFDSSerializerTest {
 			_systemFDSSerializer.serializeItemsActions(
 				"fdsName2", _httpServletRequest));
 
-		fdsItemsActionsServiceRegistration1.unregister();
-		fdsItemsActionsServiceRegistration2.unregister();
-		systemFDSEntryServiceRegistration1.unregister();
-		systemFDSEntryServiceRegistration2.unregister();
+		_unregisterServices();
 
 		// No items actions
 
-		systemFDSEntryServiceRegistration1 = _registerSystemFDSEntry(
-			null, "fdsName", "/app", "/endpoint", "schema");
+		_registerServices(
+			_registerSystemFDSEntry(
+				null, "fdsName", "/app", "/endpoint", "schema"));
 
 		Assert.assertTrue(
 			_systemFDSSerializer.serializeItemsActions(
 				"fdsName", _httpServletRequest
 			).isEmpty());
 
-		systemFDSEntryServiceRegistration1.unregister();
+		_unregisterServices();
 
 		// Shared items actions
-
-		systemFDSEntryServiceRegistration1 = _registerSystemFDSEntry(
-			null, "fdsName1", "/app", "/endpoint", "schema");
-		systemFDSEntryServiceRegistration2 = _registerSystemFDSEntry(
-			null, "fdsName2", "/app", "/endpoint", "schema");
 
 		fdsActionDropdownItems1 = ListUtil.fromArray(
 			new FDSActionDropdownItem(
 				null, "trash", "delete", "delete", "delete", "delete",
 				"headless"));
 
-		fdsItemsActionsServiceRegistration1 = _registerFDSItemsActions(
-			fdsActionDropdownItems1, "fdsName1");
-		fdsItemsActionsServiceRegistration2 = _registerFDSItemsActions(
-			fdsActionDropdownItems1, "fdsName2");
+		_registerServices(
+			_registerFDSItemsActions(fdsActionDropdownItems1, "fdsName1"),
+			_registerFDSItemsActions(fdsActionDropdownItems1, "fdsName2"),
+			_registerSystemFDSEntry(
+				null, "fdsName1", "/app", "/endpoint", "schema"),
+			_registerSystemFDSEntry(
+				null, "fdsName2", "/app", "/endpoint", "schema"));
 
 		Assert.assertEquals(
 			_systemFDSSerializer.serializeItemsActions(
@@ -1175,10 +1112,7 @@ public class SystemFDSSerializerTest {
 			_systemFDSSerializer.serializeItemsActions(
 				"fdsName2", _httpServletRequest));
 
-		fdsItemsActionsServiceRegistration1.unregister();
-		fdsItemsActionsServiceRegistration2.unregister();
-		systemFDSEntryServiceRegistration1.unregister();
-		systemFDSEntryServiceRegistration2.unregister();
+		_unregisterServices();
 
 		serviceTrackerMap.close();
 	}

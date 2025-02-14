@@ -709,7 +709,7 @@ public class FragmentEntryInputTemplateNodeContextHelperImpl
 	private String _getFileName(
 		FileInfoFieldType.FileSourceType fileSourceType, Object value) {
 
-		if (Validator.isNull(value) || !(value instanceof Long)) {
+		if (Validator.isNull(value)) {
 			return null;
 		}
 

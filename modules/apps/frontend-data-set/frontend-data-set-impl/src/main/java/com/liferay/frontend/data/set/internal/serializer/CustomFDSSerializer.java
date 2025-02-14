@@ -300,6 +300,9 @@ public class CustomFDSSerializer
 		return objectEntries;
 	}
 
+	@Reference
+	protected CETManager cetManager;
+
 	private JSONObject _getDateJSONObject(Object object) {
 		if (object == null) {
 			return null;
@@ -447,7 +450,7 @@ public class CustomFDSSerializer
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		FDSFilterCET fdsFilterCET = (FDSFilterCET)_cetManager.getCET(
+		FDSFilterCET fdsFilterCET = (FDSFilterCET)cetManager.getCET(
 			themeDisplay.getCompanyId(), clientExtensionEntryERC);
 
 		if (fdsFilterCET == null) {
@@ -664,9 +667,6 @@ public class CustomFDSSerializer
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CustomFDSSerializer.class);
-
-	@Reference
-	private CETManager _cetManager;
 
 	@Reference
 	private JSONFactory _jsonFactory;

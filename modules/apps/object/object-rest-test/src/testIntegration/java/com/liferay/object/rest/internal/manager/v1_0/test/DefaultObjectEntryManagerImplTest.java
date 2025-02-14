@@ -2863,6 +2863,22 @@ public class DefaultObjectEntryManagerImplTest
 			HashMapBuilder.put(
 				"filter",
 				_buildContainsExpressionFilterString(
+					_objectRelationshipERCObjectFieldName,
+					parentObjectEntry1.getExternalReferenceCode())
+			).build(),
+			childObjectEntry1);
+		testGetObjectEntries(
+			HashMapBuilder.put(
+				"filter",
+				_buildContainsExpressionFilterString(
+					_objectRelationshipERCObjectFieldName,
+					parentObjectEntry2.getExternalReferenceCode())
+			).build(),
+			childObjectEntry2);
+		testGetObjectEntries(
+			HashMapBuilder.put(
+				"filter",
+				_buildContainsExpressionFilterString(
 					"id", RandomTestUtil.randomString())
 			).build());
 		testGetObjectEntries(
@@ -2917,22 +2933,6 @@ public class DefaultObjectEntryManagerImplTest
 			HashMapBuilder.put(
 				"filter",
 				_buildContainsExpressionFilterString("textObjectFieldName", "b")
-			).build(),
-			childObjectEntry2);
-		testGetObjectEntries(
-			HashMapBuilder.put(
-				"filter",
-				_buildContainsExpressionFilterString(
-					_objectRelationshipERCObjectFieldName,
-					parentObjectEntry1.getExternalReferenceCode())
-			).build(),
-			childObjectEntry1);
-		testGetObjectEntries(
-			HashMapBuilder.put(
-				"filter",
-				_buildContainsExpressionFilterString(
-					_objectRelationshipERCObjectFieldName,
-					parentObjectEntry2.getExternalReferenceCode())
 			).build(),
 			childObjectEntry2);
 
@@ -3390,6 +3390,22 @@ public class DefaultObjectEntryManagerImplTest
 			HashMapBuilder.put(
 				"filter",
 				_buildStartsWithExpressionFilterString(
+					_objectRelationshipERCObjectFieldName,
+					parentObjectEntry1.getExternalReferenceCode())
+			).build(),
+			childObjectEntry1);
+		testGetObjectEntries(
+			HashMapBuilder.put(
+				"filter",
+				_buildStartsWithExpressionFilterString(
+					_objectRelationshipERCObjectFieldName,
+					parentObjectEntry2.getExternalReferenceCode())
+			).build(),
+			childObjectEntry2);
+		testGetObjectEntries(
+			HashMapBuilder.put(
+				"filter",
+				_buildStartsWithExpressionFilterString(
 					"id", RandomTestUtil.randomString())
 			).build());
 		testGetObjectEntries(
@@ -3445,22 +3461,6 @@ public class DefaultObjectEntryManagerImplTest
 				_buildStartsWithExpressionFilterString(
 					"textObjectFieldName", "b")
 			).build());
-		testGetObjectEntries(
-			HashMapBuilder.put(
-				"filter",
-				_buildStartsWithExpressionFilterString(
-					_objectRelationshipERCObjectFieldName,
-					parentObjectEntry1.getExternalReferenceCode())
-			).build(),
-			childObjectEntry1);
-		testGetObjectEntries(
-			HashMapBuilder.put(
-				"filter",
-				_buildStartsWithExpressionFilterString(
-					_objectRelationshipERCObjectFieldName,
-					parentObjectEntry2.getExternalReferenceCode())
-			).build(),
-			childObjectEntry2);
 	}
 
 	@Test

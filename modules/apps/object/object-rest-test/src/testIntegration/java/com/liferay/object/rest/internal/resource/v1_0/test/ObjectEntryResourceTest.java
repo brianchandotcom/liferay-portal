@@ -14,6 +14,8 @@ import com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil;
+import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
@@ -33,6 +35,7 @@ import com.liferay.object.constants.ObjectActionExecutorConstants;
 import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.constants.ObjectDefinitionSettingConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectFieldValidationConstants;
@@ -63,6 +66,7 @@ import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectDefinitionSettingLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectFieldLocalService;
@@ -7215,8 +7219,69 @@ public class ObjectEntryResourceTest {
 			_objectEntry1.getExternalReferenceCode());
 	}
 
+	@FeatureFlags("LPD-31149")
 	@Test
 	public void testGetScopeScopeKeyObjectEntriesPage() throws Exception {
+
+		// Depot scope
+
+		ObjectDefinition depotScopedObjectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				Collections.singletonList(
+					new TextObjectFieldBuilder(
+					).labelMap(
+						RandomTestUtil.randomLocaleStringMap()
+					).name(
+						StringUtil.randomId()
+					).build()),
+				ObjectDefinitionConstants.SCOPE_DEPOT);
+
+		_objectDefinitionSettingLocalService.addObjectDefinitionSetting(
+			depotScopedObjectDefinition.getUserId(),
+			depotScopedObjectDefinition.getObjectDefinitionId(),
+			ObjectDefinitionSettingConstants.NAME_ACCEPT_ALL_GROUPS,
+			StringPool.TRUE);
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.portal.vulcan.internal.jaxrs.exception.mapper." +
+					"WebApplicationExceptionMapper",
+				LoggerTestUtil.ERROR)) {
+
+			_assertNotFound(
+				HTTPTestUtil.invokeToJSONObject(
+					null,
+					_getEndpoint(
+						RandomTestUtil.randomLong(),
+						depotScopedObjectDefinition),
+					Http.Method.GET));
+		}
+
+		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap(),
+			ServiceContextTestUtil.getServiceContext());
+
+		ObjectEntry depotScopedObjectEntry = ObjectEntryTestUtil.addObjectEntry(
+			depotEntry.getGroupId(), depotScopedObjectDefinition,
+			Collections.emptyMap());
+
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+			null,
+			_getEndpoint(depotEntry.getGroupId(), depotScopedObjectDefinition),
+			Http.Method.GET);
+
+		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
+
+		Assert.assertEquals(1, itemsJSONArray.length());
+
+		JSONObject itemJSONObject = itemsJSONArray.getJSONObject(0);
+
+		Assert.assertEquals(
+			itemJSONObject.getLong("id"),
+			depotScopedObjectEntry.getObjectEntryId());
+
+		// Site scope
+
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.portal.vulcan.internal.jaxrs.exception.mapper." +
 					"WebApplicationExceptionMapper",
@@ -7235,17 +7300,17 @@ public class ObjectEntryResourceTest {
 			_siteScopedObjectDefinition1, _OBJECT_FIELD_NAME_1,
 			_OBJECT_FIELD_VALUE_1);
 
-		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+		jsonObject = HTTPTestUtil.invokeToJSONObject(
 			null,
 			_getEndpoint(
 				TestPropsValues.getGroupId(), _siteScopedObjectDefinition1),
 			Http.Method.GET);
 
-		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
+		itemsJSONArray = jsonObject.getJSONArray("items");
 
 		Assert.assertEquals(1, itemsJSONArray.length());
 
-		JSONObject itemJSONObject = itemsJSONArray.getJSONObject(0);
+		itemJSONObject = itemsJSONArray.getJSONObject(0);
 
 		Assert.assertEquals(
 			itemJSONObject.getLong("id"),
@@ -16236,6 +16301,9 @@ public class ObjectEntryResourceTest {
 	private CompanyLocalService _companyLocalService;
 
 	@Inject
+	private DepotEntryLocalService _depotEntryLocalService;
+
+	@Inject
 	private DLAppLocalService _dlAppLocalService;
 
 	@Inject
@@ -16275,6 +16343,10 @@ public class ObjectEntryResourceTest {
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Inject
+	private ObjectDefinitionSettingLocalService
+		_objectDefinitionSettingLocalService;
 
 	private ObjectEntry _objectEntry1;
 	private ObjectEntry _objectEntry2;

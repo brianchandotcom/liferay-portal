@@ -8,6 +8,7 @@ package com.liferay.object.rest.internal.jaxrs.param.converter.provider;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.scope.util.GroupUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -45,6 +46,9 @@ public class ScopeKeyParamConverterProvider
 
 		if (StringUtil.equals(
 				_objectDefinition.getScope(),
+				ObjectDefinitionConstants.SCOPE_DEPOT) ||
+			StringUtil.equals(
+				_objectDefinition.getScope(),
 				ObjectDefinitionConstants.SCOPE_SITE)) {
 
 			String groupId = _getGroupId(_company.getCompanyId(), parameter);
@@ -53,8 +57,19 @@ public class ScopeKeyParamConverterProvider
 				return groupId;
 			}
 
+			String groupType = "asset library";
+
+			if (StringUtil.equals(
+					_objectDefinition.getScope(),
+					ObjectDefinitionConstants.SCOPE_SITE)) {
+
+				groupType = "site";
+			}
+
 			throw new NotFoundException(
-				"Unable to get a valid site with ID " + parameter);
+				StringBundler.concat(
+					"Unable to get a valid ", groupType, " with group ID ",
+					parameter));
 		}
 
 		throw new InternalServerErrorException("Unexpected scopeKey parameter");

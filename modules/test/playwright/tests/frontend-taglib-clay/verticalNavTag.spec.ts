@@ -22,7 +22,7 @@ export const test = mergeTests(
 );
 
 test.describe('Vertical Nav apostrophes are not displayed correctly on vocabularies names', () => {
-	test.skip(
+	test(
 		'Label is being escaped',
 		{tag: '@LPD-30368'},
 		async ({apiHelpers, claySamplePage, page, site}) => {
@@ -33,7 +33,7 @@ test.describe('Vertical Nav apostrophes are not displayed correctly on vocabular
 			await test.step('Select Vertical Nav tab', async () => {
 				await claySamplePage.selectTab(
 					'Vertical Nav',
-					page.getByText('Panel Content 5')
+					page.getByText('DEFAULT VERTICAL NAV')
 				);
 			});
 

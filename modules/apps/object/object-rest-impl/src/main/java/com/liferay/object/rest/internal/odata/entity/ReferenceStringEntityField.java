@@ -17,17 +17,17 @@ public class ReferenceStringEntityField extends StringEntityField {
 
 	public ReferenceStringEntityField(
 		String fieldName, Function<Locale, String> filterableFunction,
-		String referencedFieldName) {
+		String referenceFieldName) {
 
-		super(fieldName, locale -> referencedFieldName, filterableFunction);
+		super(fieldName, locale -> referenceFieldName, filterableFunction);
 
-		_referencedFieldName = referencedFieldName;
+		_referenceFieldName = referenceFieldName;
 	}
 
-	public String getReferencedFieldName() {
-		return _referencedFieldName;
+	public String getReferenceFieldName() {
+		return _referenceFieldName;
 	}
 
-	private final String _referencedFieldName;
+	private final String _referenceFieldName;
 
 }

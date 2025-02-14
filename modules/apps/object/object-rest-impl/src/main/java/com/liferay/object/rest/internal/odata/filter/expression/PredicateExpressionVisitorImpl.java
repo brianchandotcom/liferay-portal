@@ -891,7 +891,7 @@ public class PredicateExpressionVisitorImpl
 			ReferenceStringEntityField referenceStringEntityField =
 				(ReferenceStringEntityField)entityField;
 
-			return referenceStringEntityField.getReferencedFieldName();
+			return referenceStringEntityField.getReferenceFieldName();
 		}
 
 		return primitivePropertyExpression.getName();

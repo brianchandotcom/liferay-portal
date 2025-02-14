@@ -2243,18 +2243,6 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Returns the staging group.
-	 *
-	 * @param  liveGroupId the primary key of the live group
-	 * @return the staging group
-	 * @throws PortalException if a portal exception occurred
-	 */
-	@Override
-	public Group getStagingGroup(long liveGroupId) throws PortalException {
-		return groupPersistence.findByLiveGroupId(liveGroupId);
-	}
-
-	/**
 	 * Returns the group directly associated with the user.
 	 *
 	 * @param  companyId the primary key of the company
@@ -2537,22 +2525,6 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 				"usersGroups", userId
 			).build(),
 			start, end, new GroupNameComparator(true));
-	}
-
-	/**
-	 * Returns <code>true</code> if the live group has a staging group.
-	 *
-	 * @param  liveGroupId the primary key of the live group
-	 * @return <code>true</code> if the live group has a staging group;
-	 *         <code>false</code> otherwise
-	 */
-	@Override
-	public boolean hasStagingGroup(long liveGroupId) {
-		if (groupPersistence.fetchByLiveGroupId(liveGroupId) != null) {
-			return true;
-		}
-
-		return false;
 	}
 
 	/**

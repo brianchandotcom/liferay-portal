@@ -46,7 +46,6 @@ public class ObjectEntryFieldSortDSLQueryVisitor
 	@Override
 	public DSLQuery visit(DSLQuery dslQuery, Sort sort) throws PortalException {
 		ObjectDefinition objectDefinition = sort.getObjectDefinition();
-
 		String fieldName = _getSortFieldName(sort);
 
 		ObjectField objectField = objectFieldLocalService.fetchObjectField(

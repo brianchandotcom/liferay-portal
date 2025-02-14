@@ -262,11 +262,10 @@ public class ObjectEntryEntityModelTest {
 
 				String pkObjectFieldName =
 					relatedObjectDefinition.getPKObjectFieldName();
-				String relationshipEntityFieldPrefix = StringBundler.concat(
+				String prefix = StringBundler.concat(
 					"r_", objectRelationship.getName(), "_");
 
-				String expectedObjectFieldName =
-					relationshipEntityFieldPrefix + pkObjectFieldName;
+				String expectedObjectFieldName = prefix + pkObjectFieldName;
 
 				entityFieldsMap.put(
 					expectedObjectFieldName,
@@ -275,7 +274,7 @@ public class ObjectEntryEntityModelTest {
 						locale -> expectedObjectFieldName, String::valueOf));
 
 				String expectedObjectRelationshipERCObjectFieldName =
-					relationshipEntityFieldPrefix +
+					prefix +
 						StringUtil.replaceLast(pkObjectFieldName, "Id", "ERC");
 
 				entityFieldsMap.put(

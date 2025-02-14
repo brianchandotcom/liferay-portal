@@ -40,21 +40,21 @@ public class ContentStructureResourceTest
 
 	@Test
 	public void testGetSiteContentStructuresPageSearch() throws Exception {
-		DDMStructure structure = _addDDMStructure(
+		DDMStructure ddmStructure = _addDDMStructure(
 			testGroup, RandomTestUtil.randomString());
 
-		Page<ContentStructure> structuresPage =
+		Page<ContentStructure> page =
 			contentStructureResource.getSiteContentStructuresPage(
-				testGroup.getGroupId(), structure.getName("en_US"), null, null,
-				null, null);
+				testGroup.getGroupId(),
+				ddmStructure.getName("en_US"), null, null, null, null);
 
-		Assert.assertEquals(1, structuresPage.getTotalCount());
+		Assert.assertEquals(1, page.getTotalCount());
 
-		structuresPage = contentStructureResource.getSiteContentStructuresPage(
-			testGroup.getGroupId(), structure.getDescription("en_US"), null,
+		page = contentStructureResource.getSiteContentStructuresPage(
+			testGroup.getGroupId(), ddmStructure.getDescription("en_US"), null,
 			null, null, null);
 
-		Assert.assertEquals(1, structuresPage.getTotalCount());
+		Assert.assertEquals(1, page.getTotalCount());
 	}
 
 	@Override

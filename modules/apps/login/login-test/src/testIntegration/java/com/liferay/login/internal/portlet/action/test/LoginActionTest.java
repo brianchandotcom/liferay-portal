@@ -14,6 +14,7 @@ import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.GroupConfigurationTemporarySwapper;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
@@ -22,6 +23,7 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
@@ -76,6 +78,8 @@ public class LoginActionTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
+		_company = CompanyLocalServiceUtil.getCompany(_group.getCompanyId());
+
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			_group.getGroupId());
 
@@ -119,8 +123,8 @@ public class LoginActionTest {
 					httpURLConnection.getHeaderField("Location"),
 					StringBundler.concat(
 						"_com_liferay_login_web_portlet_LoginPortlet_redirect=",
-						"http%3A%2F%2Flocalhost%3A8080",
-						HtmlUtil.escapeURL(contextPath),
+						"http%3A%2F%2F", _company.getVirtualHostname(),
+						"%3A8080", HtmlUtil.escapeURL(contextPath),
 						"%2Fweb%2Fguest%2Fhome"),
 					StringPool.BLANK));
 		}
@@ -143,8 +147,10 @@ public class LoginActionTest {
 			Assert.assertTrue(
 				StringUtil.contains(
 					url.getQuery(),
-					"_com_liferay_login_web_portlet_LoginPortlet_redirect=" +
-						"http%3A%2F%2Flocalhost%3A8080%2Fweb%2Fguest%2Fhome",
+					StringBundler.concat(
+						"_com_liferay_login_web_portlet_LoginPortlet_redirect=",
+						"http%3A%2F%2F", _company.getVirtualHostname(),
+						"%3A8080%2Fweb%2Fguest%2Fhome"),
 					StringPool.BLANK));
 		}
 	}
@@ -204,8 +210,9 @@ public class LoginActionTest {
 				_userLocalService.getGuestUser(TestPropsValues.getCompanyId()));
 
 			URL url = new URL(
-				"http://localhost:8080/web" + _group.getFriendlyURL() +
-					layout.getFriendlyURL());
+				StringBundler.concat(
+					"http://", _company.getVirtualHostname(), ":8080/web",
+					_group.getFriendlyURL(), layout.getFriendlyURL()));
 
 			HttpURLConnection httpURLConnection =
 				(HttpURLConnection)url.openConnection();
@@ -236,8 +243,10 @@ public class LoginActionTest {
 			_userLocalService.getGuestUser(TestPropsValues.getCompanyId()));
 
 		URL url = new URL(
-			"http://localhost:8080/c/portal/login?p_l_id=" +
-				TestPropsValues.getPlid() + "&windowState=exclusive");
+			StringBundler.concat(
+				"http://", _company.getVirtualHostname(),
+				":8080/c/portal/login?p_l_id=", TestPropsValues.getPlid(),
+				"&windowState=exclusive"));
 
 		HttpURLConnection httpURLConnection =
 			(HttpURLConnection)url.openConnection();
@@ -246,6 +255,8 @@ public class LoginActionTest {
 
 		return httpURLConnection;
 	}
+
+	private Company _company;
 
 	@DeleteAfterTestRun
 	private Group _group;

@@ -13,7 +13,7 @@ function get_property {
 }
 
 function main {
-	echo "Skipping release tagging since merge of https://liferay.atlassian.net/browse/LPD-45794"
+	echo "This script is deprecated as of LPD-45794."
 
 	return
 

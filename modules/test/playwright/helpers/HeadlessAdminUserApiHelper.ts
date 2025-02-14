@@ -186,6 +186,15 @@ export class HeadlessAdminUserApiHelper {
 		);
 	}
 
+	async deleteUserGroupUsers(userGroupId: number, userIds: string[]) {
+		return this.apiHelpers.delete(
+			`${this.apiHelpers.baseUrl}${this.basePath}/user-groups/${userGroupId}/user-group-users`,
+			{
+				data: userIds,
+			}
+		);
+	}
+
 	async deleteUserFromOrganizationByEmailAddress(
 		organizationId: string,
 		emailAddress: string
@@ -486,13 +495,22 @@ export class HeadlessAdminUserApiHelper {
 		return userGroup;
 	}
 
-	async assignUsersToUserGroup(userGroupId: number, userIds: number[]) {
-		return this.apiHelpers.post(
+	async assignUsersToUserGroup(userGroupId: number, userIds: string[]) {
+		const association = this.apiHelpers.post(
 			`${this.apiHelpers.baseUrl}${this.basePath}/user-groups/${userGroupId}/user-group-users`,
 			{
-				data: {userIds},
+				data: userIds,
 			}
 		);
+
+		if (this.apiHelpers instanceof DataApiHelpers) {
+			this.apiHelpers.data.push({
+				id: `${userGroupId}_${userIds.join('_')}`,
+				type: 'userGroupUserAccountAssociation',
+			});
+		}
+
+		return association;
 	}
 
 	async getAccountRoles(accountId: number) {

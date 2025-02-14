@@ -322,8 +322,13 @@ export class ApiHelpers {
 		});
 	}
 
-	async delete(url: string, headers?: any) {
+	async delete<T>(
+		url: string,
+		{data, failOnStatusCode, headers}: RequestOptions<T> = {}
+	) {
 		return this.page.request.delete(url, {
+			data,
+			failOnStatusCode: failOnStatusCode || false,
 			headers: {
 				...(await getHeader(this.page)),
 				...(headers || {}),
@@ -573,6 +578,13 @@ export class DataApiHelpers extends ApiHelpers {
 			}
 			else if (item.type === 'userGroup') {
 				await this.headlessAdminUser.deleteUserGroup(item.id);
+			}
+			else if (item.type === 'userGroupUserAccountAssociation') {
+				const [userGroupId, ...userIds] = item.id.split('_');
+				await this.headlessAdminUser.deleteUserGroupUsers(
+					userGroupId,
+					userIds
+				);
 			}
 			else if (item.type === 'warehouse') {
 				await this.headlessCommerceAdminInventoryApiHelper.deleteWarehouse(

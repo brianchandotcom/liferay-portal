@@ -4,13 +4,20 @@
  */
 
 import {expect, mergeTests} from '@playwright/test';
+import {createReadStream} from 'fs';
+import path from 'path';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {usersAndOrganizationsPagesTest} from '../../fixtures/usersAndOrganizationsPagesTest';
 import {getRandomInt} from '../../utils/getRandomInt';
-import performLogin, {performLogout, userData} from '../../utils/performLogin';
+import getRandomString from '../../utils/getRandomString';
+import performLogin, {
+	performLoginViaApi,
+	performLogout,
+	userData,
+} from '../../utils/performLogin';
 import {waitForAlert} from '../../utils/waitForAlert';
 
 export const test = mergeTests(
@@ -736,3 +743,160 @@ test('LPD-48741 User organizations list contains no duplicate', async ({
 		editUserPage.organizationsTable.getByText(`${parentOrganization.name}`)
 	).toHaveCount(1);
 });
+
+test(
+	'Bulk deactivate user succeed',
+	{tag: '@LPD-48841'},
+	async ({apiHelpers, page, usersAndOrganizationsPage}) => {
+		page.on('dialog', async (dialog) => await dialog.accept());
+
+		const user1 = await apiHelpers.headlessAdminUser.postUserAccount();
+		const user2 = await apiHelpers.headlessAdminUser.postUserAccount();
+		const user3 = await apiHelpers.headlessAdminUser.postUserAccount();
+		const user4 = await apiHelpers.headlessAdminUser.postUserAccount();
+		const user5 = await apiHelpers.headlessAdminUser.postUserAccount();
+
+		await usersAndOrganizationsPage.goToUsers();
+
+		const userNames: string[] = [user1.name, user2.name, user3.name];
+
+		await usersAndOrganizationsPage.deActivateUsers(userNames);
+
+		for (const userName of userNames) {
+			await expect(
+				usersAndOrganizationsPage.usersTableCell(userName)
+			).not.toBeVisible();
+		}
+
+		for (const userName of [user4.name, user5.name]) {
+			await expect(
+				usersAndOrganizationsPage.usersTableCell(userName)
+			).toBeVisible();
+		}
+
+		await usersAndOrganizationsPage.filterUsers('inactive');
+
+		for (const userName of userNames) {
+			await expect(
+				usersAndOrganizationsPage.usersTableCell(userName)
+			).toBeVisible();
+		}
+	}
+);
+
+test(
+	'Can share document with site member user group user',
+	{tag: '@LPD-48841'},
+	async ({
+		apiHelpers,
+		documentLibraryPage,
+		notificationsPage,
+		page,
+		siteMembershipsPage,
+	}) => {
+		const userAccount1 =
+			await apiHelpers.headlessAdminUser.postUserAccount();
+
+		userData[userAccount1.alternateName] = {
+			name: userAccount1.givenName,
+			password: 'test',
+			surname: userAccount1.familyName,
+		};
+
+		const userAccount2 =
+			await apiHelpers.headlessAdminUser.postUserAccount();
+
+		userData[userAccount2.alternateName] = {
+			name: userAccount2.givenName,
+			password: 'test',
+			surname: userAccount2.familyName,
+		};
+
+		const userGroup = await apiHelpers.headlessAdminUser.postUserGroup();
+
+		await apiHelpers.headlessAdminUser.assignUsersToUserGroup(
+			userGroup.id,
+			[userAccount1.id, userAccount2.id]
+		);
+
+		const site = await apiHelpers.headlessSite.createSite({
+			name: getRandomString(),
+		});
+
+		apiHelpers.data.push({id: site.id, type: 'site'});
+
+		const role =
+			await apiHelpers.headlessAdminUser.getRoleByName(
+				'Site Administrator'
+			);
+
+		await apiHelpers.headlessAdminUser.assignUserToSite(
+			role.id,
+			site.id,
+			userAccount1.id
+		);
+
+		await siteMembershipsPage.goto(site.friendlyUrlPath);
+		await siteMembershipsPage.userGroupsLink.click();
+		await siteMembershipsPage.newUserGroupButton.click();
+
+		await siteMembershipsPage.assignUserGroupTable.changeView('Table');
+
+		await expect(
+			siteMembershipsPage.assignUserGroupTable.cell(userGroup.name)
+		).toBeVisible();
+
+		await (
+			await siteMembershipsPage.assignUserGroupTable.rowCheckbox(
+				userGroup.name
+			)
+		).check();
+		await siteMembershipsPage.userGroupSelectDoneButton.click();
+
+		await waitForAlert(page);
+
+		await performLogout(page);
+		await performLoginViaApi(page, userAccount1.alternateName);
+
+		const document = await apiHelpers.headlessDelivery.postDocument(
+			site.id,
+			createReadStream(
+				path.join(__dirname, '/dependencies/attachment.txt')
+			),
+			{title: 'Attachment'}
+		);
+
+		await documentLibraryPage.goto(site.friendlyUrlPath);
+
+		await documentLibraryPage.documentsTable.changeView('Table');
+
+		await expect(
+			documentLibraryPage.documentsTable.cell('Attachment')
+		).toBeVisible();
+
+		await (
+			await documentLibraryPage.documentsTable.rowActions(document.title)
+		).click();
+		await documentLibraryPage.shareDocumentLink.click();
+
+		await documentLibraryPage.sharingDialogueInput.fill(
+			userAccount2.emailAddress
+		);
+		await page.keyboard.press('Enter');
+		await documentLibraryPage.sharingDialogueShareButton.click();
+
+		await waitForAlert(page, 'Success:The item was shared successfully.');
+
+		await performLogout(page);
+		await performLoginViaApi(page, userAccount2.alternateName);
+
+		await notificationsPage.goto(userAccount2.name);
+
+		await expect(
+			notificationsPage.sharingNotificationMessage(
+				userAccount1.name,
+				document.title
+			)
+		).toBeVisible();
+	}
+);

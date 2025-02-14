@@ -23,7 +23,6 @@ import com.liferay.calendar.service.CalendarNotificationTemplateLocalService;
 import com.liferay.calendar.service.base.CalendarLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -219,35 +218,24 @@ public class CalendarLocalServiceImpl extends CalendarLocalServiceBaseImpl {
 	}
 
 	@Override
-	public boolean hasStagingCalendar(Calendar calendar)
-		throws PortalException {
-
+	public boolean hasStagingCalendar(Calendar calendar) {
 		long liveGroupId = calendar.getGroupId();
 
-		try {
-			Group stagingGroup = _groupLocalService.getStagingGroup(
-				liveGroupId);
+		Group stagingGroup = _groupLocalService.fetchStagingGroup(liveGroupId);
 
-			Calendar stagedCalendar =
-				calendarLocalService.fetchCalendarByUuidAndGroupId(
-					calendar.getUuid(), stagingGroup.getGroupId());
-
-			if (stagedCalendar == null) {
-				return false;
-			}
-
-			return true;
-		}
-		catch (NoSuchGroupException noSuchGroupException) {
-
-			// LPS-52675
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchGroupException);
-			}
-
+		if (stagingGroup == null) {
 			return false;
 		}
+
+		Calendar stagedCalendar =
+			calendarLocalService.fetchCalendarByUuidAndGroupId(
+				calendar.getUuid(), stagingGroup.getGroupId());
+
+		if (stagedCalendar == null) {
+			return false;
+		}
+
+		return true;
 	}
 
 	@Override

@@ -6,7 +6,7 @@
 import React from 'react';
 
 import OrderableTable from '../../../components/OrderableTable';
-import ToggleStatus from '../../../components/ToggleStatus';
+import Toggle from '../../../components/Toggle';
 import {EFilterType, IFilter, IFilterTypeProps} from '../../../utils/types';
 
 const FilterList = ({
@@ -23,7 +23,7 @@ const FilterList = ({
 	editFilter: ({item}: {item: IFilter}) => void;
 	filterTypes: Record<EFilterType, IFilterTypeProps>;
 	filters: IFilter[];
-	updateActive: (item: IFilter) => void;
+	updateActive: (item: IFilter) => Promise<void>;
 	updateFiltersOrder: ({filtersOrder}: {filtersOrder: string}) => void;
 }) => {
 	return (
@@ -64,7 +64,7 @@ const FilterList = ({
 							{
 								contentRenderer: {
 									component: ({item}: any) =>
-										ToggleStatus({
+										Toggle({
 											item,
 											toggleChange: updateActive,
 										}),

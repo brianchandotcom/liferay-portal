@@ -6,7 +6,7 @@
 import React from 'react';
 
 import OrderableTable from '../../../components/OrderableTable';
-import ToggleStatus from '../../../components/ToggleStatus';
+import Toggle from '../../../components/Toggle';
 import {IAction} from '../Actions';
 
 const ActionList = ({
@@ -26,7 +26,7 @@ const ActionList = ({
 	editAction: ({item}: {item: IAction}) => void;
 	noItemsButtonLabel: string;
 	updateActionsOrder: ({order}: {order: string}) => void;
-	updateActive: (item: IAction) => void;
+	updateActive: (item: IAction) => Promise<void>;
 }) => {
 	return (
 		<OrderableTable
@@ -67,7 +67,7 @@ const ActionList = ({
 							{
 								contentRenderer: {
 									component: ({item}: any) =>
-										ToggleStatus({
+										Toggle({
 											item,
 											toggleChange: updateActive,
 										}),

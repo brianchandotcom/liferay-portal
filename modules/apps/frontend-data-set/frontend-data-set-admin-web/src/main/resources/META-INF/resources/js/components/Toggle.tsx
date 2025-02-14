@@ -6,26 +6,28 @@
 import {ClayToggle} from '@clayui/form';
 import React from 'react';
 
-import '../../css/components/ToggleStatus.scss';
+import '../../css/components/Toggle.scss';
 
 const ToggleStatus = ({
 	item,
 	toggleChange,
 }: {
 	item: any;
-	toggleChange: Function;
+	toggleChange: (item: any) => Promise<void>;
 }) => {
 	const label = item.active
 		? Liferay.Language.get('active')
 		: Liferay.Language.get('inactive');
 
 	return (
-		<ClayToggle
-			label={label}
-			onToggle={() => toggleChange(item)}
-			sizing="sm"
-			toggled={item.active}
-		/>
+		<div className="dsm-toggle-switch">
+			<ClayToggle
+				label={label}
+				onToggle={() => toggleChange(item)}
+				sizing="sm"
+				toggled={item.active}
+			/>
+		</div>
 	);
 };
 

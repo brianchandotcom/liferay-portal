@@ -105,11 +105,9 @@ public class CustomFDSSerializerTest {
 		FDSAPIURLResolverRegistry fdsAPIURLResolverRegistry =
 			new FDSAPIURLResolverRegistryImpl(serviceTrackerMap);
 
-		// Interpolation
+		_resetFDSSerializer(fdsAPIURLResolverRegistry);
 
-		ReflectionTestUtil.setFieldValue(
-			_customFDSSerializer, "fdsAPIURLResolverRegistry",
-			fdsAPIURLResolverRegistry);
+		// Interpolation
 
 		_mockSerializeAPIURL("fdsName", "/app", "/endpoint/{foo}", "schema");
 
@@ -124,13 +122,9 @@ public class CustomFDSSerializerTest {
 
 		serviceRegistration.unregister();
 
-		_resetFDSSerializer();
+		_resetFDSSerializer(fdsAPIURLResolverRegistry);
 
 		// REST application: /app
-
-		ReflectionTestUtil.setFieldValue(
-			_customFDSSerializer, "fdsAPIURLResolverRegistry",
-			fdsAPIURLResolverRegistry);
 
 		_mockSerializeAPIURL("fdsName1", "/app", "/endpoint/{foo}", "schema");
 		_mockSerializeAPIURL("fdsName2", "/app", "/endpoint/{foo}", "schema");
@@ -149,13 +143,9 @@ public class CustomFDSSerializerTest {
 
 		serviceRegistration.unregister();
 
-		_resetFDSSerializer();
+		_resetFDSSerializer(fdsAPIURLResolverRegistry);
 
 		// REST application: /app1 and /app2
-
-		ReflectionTestUtil.setFieldValue(
-			_customFDSSerializer, "fdsAPIURLResolverRegistry",
-			fdsAPIURLResolverRegistry);
 
 		_mockSerializeAPIURL("fdsName1", "/app1", "/endpoint/{foo}", "schema");
 		_mockSerializeAPIURL("fdsName2", "/app2", "/endpoint/{foo}", "schema");
@@ -174,13 +164,9 @@ public class CustomFDSSerializerTest {
 
 		serviceRegistration.unregister();
 
-		_resetFDSSerializer();
+		_resetFDSSerializer(fdsAPIURLResolverRegistry);
 
 		// Nested fields: creator.name
-
-		ReflectionTestUtil.setFieldValue(
-			_customFDSSerializer, "fdsAPIURLResolverRegistry",
-			fdsAPIURLResolverRegistry);
 
 		_mockSerializeAPIURL(
 			"fdsName", new String[] {"creator.name"}, "/app", "/endpoint",
@@ -191,13 +177,9 @@ public class CustomFDSSerializerTest {
 			_customFDSSerializer.serializeAPIURL(
 				"fdsName", _httpServletRequest));
 
-		_resetFDSSerializer();
+		_resetFDSSerializer(fdsAPIURLResolverRegistry);
 
 		// Nested fields: creator.name and status.id
-
-		ReflectionTestUtil.setFieldValue(
-			_customFDSSerializer, "fdsAPIURLResolverRegistry",
-			fdsAPIURLResolverRegistry);
 
 		_mockSerializeAPIURL(
 			"fdsName", new String[] {"creator.name", "status.id"}, "/app",
@@ -216,13 +198,9 @@ public class CustomFDSSerializerTest {
 		Assert.assertTrue(nestedFields.contains("status"));
 		Assert.assertTrue(nestedFields.split(",").length == 2);
 
-		_resetFDSSerializer();
+		_resetFDSSerializer(fdsAPIURLResolverRegistry);
 
 		// Nested fields depth
-
-		ReflectionTestUtil.setFieldValue(
-			_customFDSSerializer, "fdsAPIURLResolverRegistry",
-			fdsAPIURLResolverRegistry);
 
 		_mockSerializeAPIURL(
 			"fdsName",
@@ -300,8 +278,6 @@ public class CustomFDSSerializerTest {
 	public void testSerializeFilters() throws Exception {
 
 		// Client extension filter
-
-		_resetFDSSerializer();
 
 		CETManager cetManager = Mockito.mock(CETManager.class);
 
@@ -954,6 +930,15 @@ public class CustomFDSSerializerTest {
 
 		ReflectionTestUtil.setFieldValue(
 			_customFDSSerializer, "_jsonFactory", new JSONFactoryImpl());
+	}
+
+	private void _resetFDSSerializer(
+		FDSAPIURLResolverRegistry fdsAPIURLResolverRegistry) {
+
+		_resetFDSSerializer();
+
+		_customFDSSerializer.fdsAPIURLResolverRegistry =
+			fdsAPIURLResolverRegistry;
 	}
 
 	private void _testSerializeCreationMenu(String fdsName, String[] titles) {

@@ -17,7 +17,7 @@ import React, {useCallback, useEffect, useState} from 'react';
 
 import OrderableTable from '../../components/OrderableTable';
 import RequiredMark from '../../components/RequiredMark';
-import ToggleStatus from '../../components/ToggleStatus';
+import Toggle from '../../components/Toggle';
 import {
 	API_URL,
 	DEFAULT_FETCH_HEADERS,
@@ -731,7 +731,7 @@ const Sorting = ({
 										{
 											contentRenderer: {
 												component: ({item}: any) =>
-													ToggleStatus({
+													Toggle({
 														item,
 														toggleChange:
 															updateActive,

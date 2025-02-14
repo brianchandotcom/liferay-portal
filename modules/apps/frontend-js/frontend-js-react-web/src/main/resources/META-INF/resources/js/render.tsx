@@ -73,12 +73,10 @@ export default function render(
 		}
 
 		if (hasBodyContent) {
-			const children = container.querySelectorAll(
-				'.tag-body-content > *'
-			);
+			const tagBodyContent = container.querySelector('.tag-body-content');
 
-			if (children.length) {
-				componentProps.children = children;
+			if (tagBodyContent && tagBodyContent.children.length) {
+				componentProps.children = tagBodyContent.children;
 			}
 		}
 

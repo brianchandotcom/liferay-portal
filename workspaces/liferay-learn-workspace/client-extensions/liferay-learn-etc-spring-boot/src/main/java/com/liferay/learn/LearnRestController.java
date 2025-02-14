@@ -45,16 +45,15 @@ public class LearnRestController extends BaseRestController {
 	public ResponseEntity<Object> getMenuItems(
 		@AuthenticationPrincipal Jwt jwt) {
 
-		JSONObject jsonObject = new JSONObject(
-			get(
-				_getAuthorization(),
-				"/o/object-admin/v1.0/object-folders" +
-					"/by-external-reference-code" +
-						"/P2S3_LEARNING_MANAGEMENT_SYSTEM"));
-
 		return new ResponseEntity<>(
 			TransformUtil.transform(
-				jsonObject.getJSONArray(
+				new JSONObject(
+					get(
+						_getAuthorization(),
+						"/o/object-admin/v1.0/object-folders" +
+							"/by-external-reference-code" +
+								"/P2S3_LEARNING_MANAGEMENT_SYSTEM")
+				).getJSONArray(
 					"objectFolderItems"
 				).toList(),
 				this::_toMap),

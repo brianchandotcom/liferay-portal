@@ -118,6 +118,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -235,9 +236,7 @@ public class CompanyLocalServiceTest {
 	public void testAddAndDeleteCompanyWithCompanyGroupStaging()
 		throws Exception {
 
-		if (DBPartition.isPartitionEnabled()) {
-			return;
-		}
+		Assume.assumeFalse(DBPartition.isPartitionEnabled());
 
 		Company company = addCompany();
 
@@ -268,9 +267,7 @@ public class CompanyLocalServiceTest {
 
 	@Test
 	public void testAddAndDeleteCompanyWithDLFileEntryTypes() throws Exception {
-		if (DBPartition.isPartitionEnabled()) {
-			return;
-		}
+		Assume.assumeFalse(DBPartition.isPartitionEnabled());
 
 		Company company = addCompany();
 
@@ -341,9 +338,7 @@ public class CompanyLocalServiceTest {
 	public void testAddAndDeleteCompanyWithLayoutSetPrototype()
 		throws Throwable {
 
-		if (DBPartition.isPartitionEnabled()) {
-			return;
-		}
+		Assume.assumeFalse(DBPartition.isPartitionEnabled());
 
 		Company company = addCompany();
 
@@ -388,9 +383,7 @@ public class CompanyLocalServiceTest {
 	public void testAddAndDeleteCompanyWithLayoutSetPrototypeLinkedUserGroup()
 		throws Throwable {
 
-		if (DBPartition.isPartitionEnabled()) {
-			return;
-		}
+		Assume.assumeFalse(DBPartition.isPartitionEnabled());
 
 		Company company = addCompany();
 
@@ -441,9 +434,7 @@ public class CompanyLocalServiceTest {
 
 	@Test
 	public void testAddAndDeleteCompanyWithParentGroup() throws Exception {
-		if (DBPartition.isPartitionEnabled()) {
-			return;
-		}
+		Assume.assumeFalse(DBPartition.isPartitionEnabled());
 
 		Company company = addCompany();
 
@@ -550,9 +541,7 @@ public class CompanyLocalServiceTest {
 	public void testAddAndDeleteCompanyWithStagedOrganizationSite()
 		throws Exception {
 
-		if (DBPartition.isPartitionEnabled()) {
-			return;
-		}
+		Assume.assumeFalse(DBPartition.isPartitionEnabled());
 
 		Company company = addCompany();
 
@@ -589,9 +578,7 @@ public class CompanyLocalServiceTest {
 
 	@Test
 	public void testAddAndDeleteCompanyWithUserGroup() throws Exception {
-		if (DBPartition.isPartitionEnabled()) {
-			return;
-		}
+		Assume.assumeFalse(DBPartition.isPartitionEnabled());
 
 		Company company = addCompany();
 
@@ -631,9 +618,7 @@ public class CompanyLocalServiceTest {
 	public void testAddAndDeleteCompanyWithUserGroupAndUserGroupRole()
 		throws Exception {
 
-		if (DBPartition.isPartitionEnabled()) {
-			return;
-		}
+		Assume.assumeFalse(DBPartition.isPartitionEnabled());
 
 		Company company = addCompany();
 
@@ -840,9 +825,7 @@ public class CompanyLocalServiceTest {
 	public void testDeleteCompanyDeletesUserGroupRoleBeforeRole()
 		throws Exception {
 
-		if (DBPartition.isPartitionEnabled()) {
-			return;
-		}
+		Assume.assumeFalse(DBPartition.isPartitionEnabled());
 
 		List<String> list = _registerModelListeners();
 
@@ -918,9 +901,7 @@ public class CompanyLocalServiceTest {
 
 	@Test
 	public void testExtractDBPartitionCompany() {
-		if (DBPartition.isPartitionEnabled()) {
-			return;
-		}
+		Assume.assumeFalse(DBPartition.isPartitionEnabled());
 
 		try {
 			_companyLocalService.extractDBPartitionCompany(1L);

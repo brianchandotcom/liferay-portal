@@ -122,6 +122,7 @@ const Head = ({
 								</ClayTableCell>
 							);
 						}
+
 						if (!Liferay.FeatureFlags['LPD-42570']) {
 							const title =
 								items.length !== selectedItemsValue.length

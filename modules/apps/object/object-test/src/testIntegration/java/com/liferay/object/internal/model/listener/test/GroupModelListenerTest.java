@@ -6,22 +6,26 @@
 package com.liferay.object.internal.model.listener.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.object.constants.ObjectDefinitionConstants;
-import com.liferay.object.constants.ObjectFieldConstants;
+import com.liferay.object.constants.ObjectDefinitionSettingConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.exception.RequiredObjectRelationshipException;
-import com.liferay.object.field.util.ObjectFieldUtil;
+import com.liferay.object.field.builder.TextObjectFieldBuilder;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectDefinitionSettingLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.object.test.util.ObjectRelationshipTestUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -30,6 +34,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -38,9 +43,7 @@ import java.io.Serializable;
 
 import java.util.Collections;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -59,59 +62,80 @@ public class GroupModelListenerTest {
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
-	@Before
-	public void setUp() throws Exception {
-		ObjectField objectField = ObjectFieldUtil.createObjectField(
-			ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-			ObjectFieldConstants.DB_TYPE_STRING, true, true, null,
-			RandomTestUtil.randomString(), _OBJECT_FIELD_NAME, false);
-
-		_objectDefinition1 = ObjectDefinitionTestUtil.publishObjectDefinition(
-			Collections.singletonList(objectField),
-			ObjectDefinitionConstants.SCOPE_SITE);
-		_objectDefinition2 = ObjectDefinitionTestUtil.publishObjectDefinition(
-			Collections.singletonList(objectField),
-			ObjectDefinitionConstants.SCOPE_SITE);
-
-		_objectRelationship = ObjectRelationshipTestUtil.addObjectRelationship(
-			_objectRelationshipLocalService, _objectDefinition1,
-			_objectDefinition2,
-			ObjectRelationshipConstants.DELETION_TYPE_PREVENT);
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		_objectRelationshipLocalService.deleteObjectRelationship(
-			_objectRelationship);
-
-		_objectDefinitionLocalService.deleteObjectDefinition(
-			_objectDefinition1);
-		_objectDefinitionLocalService.deleteObjectDefinition(
-			_objectDefinition2);
-	}
-
 	@Test
 	public void testOnBeforeRemove() throws Exception {
-		Group group = GroupTestUtil.addGroup();
+
+		// Depot
+
+		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap(),
+			ServiceContextTestUtil.getServiceContext());
+
+		_testOnBeforeRemove(depotEntry.getGroup());
+
+		// Site
+
+		_testOnBeforeRemove(GroupTestUtil.addGroup());
+	}
+
+	private void _testOnBeforeRemove(Group group) throws Exception {
+		ObjectField objectField = new TextObjectFieldBuilder(
+		).labelMap(
+			RandomTestUtil.randomLocaleStringMap()
+		).name(
+			StringUtil.randomId()
+		).build();
+
+		String scope = group.isSite() ? ObjectDefinitionConstants.SCOPE_SITE :
+			ObjectDefinitionConstants.SCOPE_DEPOT;
+
+		ObjectDefinition objectDefinition1 =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				Collections.singletonList(objectField), scope);
+		ObjectDefinition objectDefinition2 =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				Collections.singletonList(objectField), scope);
+
+		if (scope.equals(ObjectDefinitionConstants.SCOPE_DEPOT)) {
+			_objectDefinitionSettingLocalService.addObjectDefinitionSetting(
+				objectDefinition1.getUserId(),
+				objectDefinition1.getObjectDefinitionId(),
+				ObjectDefinitionSettingConstants.NAME_ACCEPT_ALL_GROUPS,
+				StringPool.TRUE);
+			_objectDefinitionSettingLocalService.addObjectDefinitionSetting(
+				objectDefinition2.getUserId(),
+				objectDefinition2.getObjectDefinitionId(),
+				ObjectDefinitionSettingConstants.NAME_ACCEPT_ALL_GROUPS,
+				StringPool.TRUE);
+		}
+
+		ObjectRelationship objectRelationship =
+			ObjectRelationshipTestUtil.addObjectRelationship(
+				_objectRelationshipLocalService, objectDefinition1,
+				objectDefinition2,
+				ObjectRelationshipConstants.DELETION_TYPE_PREVENT);
 
 		ObjectEntry objectEntry1 = _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), group.getGroupId(),
-			_objectDefinition1.getObjectDefinitionId(), null,
+			objectDefinition1.getObjectDefinitionId(), null,
 			HashMapBuilder.<String, Serializable>put(
-				_OBJECT_FIELD_NAME, RandomTestUtil.randomString()
+				objectField.getName(), RandomTestUtil.randomString()
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
 
-		ObjectField objectField = _objectFieldLocalService.getObjectField(
-			_objectRelationship.getObjectFieldId2());
+		ObjectField relationshipObjectField =
+			_objectFieldLocalService.getObjectField(
+				objectRelationship.getObjectFieldId2());
 
 		ObjectEntry objectEntry2 = _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), group.getGroupId(),
-			_objectDefinition2.getObjectDefinitionId(), null,
+			objectDefinition2.getObjectDefinitionId(), null,
 			HashMapBuilder.<String, Serializable>put(
-				_OBJECT_FIELD_NAME, RandomTestUtil.randomString()
+				objectField.getName(), RandomTestUtil.randomString()
 			).put(
-				objectField.getName(), objectEntry1.getObjectEntryId()
+				relationshipObjectField.getName(),
+				objectEntry1.getObjectEntryId()
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
 
@@ -119,7 +143,7 @@ public class GroupModelListenerTest {
 			RequiredObjectRelationshipException.class,
 			StringBundler.concat(
 				"Object relationship ",
-				_objectRelationship.getObjectRelationshipId(),
+				objectRelationship.getObjectRelationshipId(),
 				" does not allow deletes"),
 			() -> _objectEntryLocalService.deleteObjectEntry(objectEntry1));
 
@@ -131,24 +155,29 @@ public class GroupModelListenerTest {
 		Assert.assertNull(
 			_objectEntryLocalService.fetchObjectEntry(
 				objectEntry2.getObjectEntryId()));
+
+		_objectRelationshipLocalService.deleteObjectRelationship(
+			objectRelationship);
+
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition1);
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition2);
 	}
 
-	private static final String _OBJECT_FIELD_NAME =
-		"a" + RandomTestUtil.randomString();
-
-	private ObjectDefinition _objectDefinition1;
-	private ObjectDefinition _objectDefinition2;
+	@Inject
+	private DepotEntryLocalService _depotEntryLocalService;
 
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Inject
+	private ObjectDefinitionSettingLocalService
+		_objectDefinitionSettingLocalService;
 
 	@Inject
 	private ObjectEntryLocalService _objectEntryLocalService;
 
 	@Inject
 	private ObjectFieldLocalService _objectFieldLocalService;
-
-	private ObjectRelationship _objectRelationship;
 
 	@Inject
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;

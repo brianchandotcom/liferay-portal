@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -105,9 +106,13 @@ public class LoginMVCActionCommandTest {
 			String redirectLocation =
 				customMockLiferayPortletActionResponse.getRedirectLocation();
 
-			_assertParameter(
-				redirectLocation, "p_l_id",
-				String.valueOf(layoutUtilityPageEntry.getPlid()));
+			Layout utilityPageLayout = _layoutLocalService.getLayout(
+				layoutUtilityPageEntry.getPlid());
+
+			Assert.assertTrue(
+				redirectLocation.contains(_group.getFriendlyURL()));
+			Assert.assertTrue(
+				redirectLocation.contains(utilityPageLayout.getFriendlyURL()));
 			_assertParameter(
 				redirectLocation, "p_p_id", LoginPortletKeys.LOGIN);
 			_assertParameter(redirectLocation, "p_p_lifecycle", "0");
@@ -142,8 +147,8 @@ public class LoginMVCActionCommandTest {
 			String redirectLocation =
 				customMockLiferayPortletActionResponse.getRedirectLocation();
 
-			_assertParameter(
-				redirectLocation, "p_l_id", String.valueOf(layout.getPlid()));
+			Assert.assertTrue(
+				redirectLocation.contains(layout.getFriendlyURL()));
 			_assertParameter(
 				redirectLocation, "p_p_id", LoginPortletKeys.LOGIN);
 			_assertParameter(redirectLocation, "p_p_lifecycle", "0");
@@ -222,15 +227,21 @@ public class LoginMVCActionCommandTest {
 	}
 
 	private ThemeDisplay _getThemeDisplay() throws Exception {
+		Layout layout = _layoutLocalService.getLayout(
+			TestPropsValues.getPlid());
+
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
 		themeDisplay.setCompany(
 			CompanyLocalServiceUtil.fetchCompany(
 				TestPropsValues.getCompanyId()));
-		themeDisplay.setLayout(
-			_layoutLocalService.getLayout(TestPropsValues.getPlid()));
+		themeDisplay.setLayout(layout);
+		themeDisplay.setLayoutSet(layout.getLayoutSet());
 		themeDisplay.setPlid(TestPropsValues.getPlid());
 		themeDisplay.setScopeGroupId(_group.getGroupId());
+		themeDisplay.setSiteGroupId(_group.getGroupId());
+		themeDisplay.setUser(
+			UserLocalServiceUtil.getGuestUser(_group.getCompanyId()));
 
 		return themeDisplay;
 	}

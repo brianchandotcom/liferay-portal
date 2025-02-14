@@ -15,12 +15,11 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.util.MaintenanceUtil;
-
-import java.io.IOException;
-import java.io.InputStream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -67,25 +66,16 @@ public class AMDLStoreConvertProcess implements DLStoreConvertProcess {
 							amImageEntry.getCompanyId(),
 							CompanyConstants.SYSTEM, fileVersionPath)) {
 
-					try (InputStream inputStream = sourceStore.getFileAsStream(
+					try {
+						transferFile(
+							sourceStore, targetStore,
 							amImageEntry.getCompanyId(),
 							CompanyConstants.SYSTEM, fileVersionPath,
-							versionLabel)) {
-
-						targetStore.addFile(
-							amImageEntry.getCompanyId(),
-							CompanyConstants.SYSTEM, fileVersionPath,
-							versionLabel, inputStream);
-
-						if (delete) {
-							sourceStore.deleteFile(
-								amImageEntry.getCompanyId(),
-								CompanyConstants.SYSTEM, fileVersionPath,
-								versionLabel);
-						}
+							versionLabel, delete);
 					}
-					catch (IOException ioException) {
-						throw new PortalException(ioException);
+					catch (Exception exception) {
+						_log.error(
+							"Unable to migrate " + fileVersionPath, exception);
 					}
 				}
 			});
@@ -119,6 +109,9 @@ public class AMDLStoreConvertProcess implements DLStoreConvertProcess {
 				actionableDynamicQuery.performActions();
 			});
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AMDLStoreConvertProcess.class);
 
 	@Reference
 	private AMImageEntryLocalService _amImageEntryLocalService;

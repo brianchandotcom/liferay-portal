@@ -9,18 +9,59 @@ import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest'
 import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
-import {companyExportImportPageTest} from './fixtures/companyExportImportPagesTest';
 import {productMenuPageTest} from '../../fixtures/productMenuPageTest';
+import {getTempDir} from '../../utils/temp';
+import {exportImportPagesTest} from './fixtures/exportImportPagesTest';
 
 export const test = mergeTests(
 	applicationsMenuPageTest,
-	companyExportImportPageTest,
+	exportImportPagesTest,
+	dataApiHelpersTest,
+	loginTest(),
+    productMenuPageTest
+);
+
+export const testWithStagingInInstanceFF = mergeTests(
+	applicationsMenuPageTest,
+	exportImportPagesTest,
 	dataApiHelpersTest,
 	featureFlagsTest({
 		'LPD-35914': {enabled: true, system: true},
 	}),
-	loginTest(),
-	productMenuPageTest
+	loginTest()
+);
+
+async function expectExportName(exportImportPage, taskName: string) {
+	await exportImportPage.goToExport();
+
+	await exportImportPage.newExportButton.click();
+
+	await exportImportPage.exportButton.click();
+
+	await expect(
+		exportImportPage.page
+			.getByText(taskName)
+			.locator('../..')
+			.getByText('Successful')
+	).toBeVisible();
+
+	const exportFilePath =
+		await exportImportPage.downloadExportProcess(taskName);
+
+	expect(exportFilePath).toMatch(new RegExp(`^${getTempDir()}${taskName}-`));
+}
+
+test('can export at site level with old file name', async ({
+	exportImportPage,
+}) => {
+	await expectExportName(exportImportPage, 'Pages');
+});
+
+testWithStagingInInstanceFF(
+	'can export at site level with new file name',
+	async ({exportImportPage}) => {
+		await expectExportName(exportImportPage, 'Export');
+	}
 );
 
 test('can see corresponding elements at site level', async ({

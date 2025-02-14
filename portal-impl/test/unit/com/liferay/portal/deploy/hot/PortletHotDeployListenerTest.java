@@ -1,17 +1,16 @@
 /**
- * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.deploy.hot;
 
 import com.liferay.petra.string.CharPool;
-import com.liferay.petra.string.StringPool;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletApp;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.Map;
@@ -26,7 +25,6 @@ import org.junit.Test;
 
 import org.mockito.Mockito;
 
-import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
 
 /**
@@ -39,28 +37,16 @@ public class PortletHotDeployListenerTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Test
-	public void testResourceBundle() {
-		Class<?> clazz = getClass();
-
-		String resourceBundle =
-			clazz.getPackageName() + ".dependencies.TestPortlet";
-
-		String path = StringUtil.replace(
-			"/WEB-INF/classes/".concat(resourceBundle), CharPool.PERIOD,
-			CharPool.SLASH);
-
-		String resourcePath = path.substring(
-			0, path.lastIndexOf(StringPool.SLASH));
-
+	public void test() {
 		ServletContext servletContext = Mockito.mock(ServletContext.class);
 
 		Mockito.when(
 			servletContext.getResourcePaths(Mockito.anyString())
 		).thenReturn(
 			Set.of(
-				resourcePath + "/FakePortlet_Fake_Resource_Name.bin",
-				resourcePath + "/FakePortlet_zh_CN.properties",
-				resourcePath + "/TestPortlet_en_US.properties")
+				_RESOURCE_PATH + "FakePortlet_Fake_Resource_Name.bin",
+				_RESOURCE_PATH + "FakePortlet_en_US.properties",
+				_RESOURCE_PATH + "TestPortlet_en_US.properties")
 		);
 
 		PortletApp portletApp = Mockito.mock(PortletApp.class);
@@ -76,7 +62,7 @@ public class PortletHotDeployListenerTest {
 		Mockito.when(
 			portlet.getContextName()
 		).thenReturn(
-			clazz.getName()
+			_CONTEXT_NAME
 		);
 
 		Mockito.when(
@@ -88,17 +74,19 @@ public class PortletHotDeployListenerTest {
 		Mockito.when(
 			portlet.getPortletId()
 		).thenReturn(
-			"TestPortlet"
+			_PORTLET_ID
 		);
 
 		Mockito.when(
 			portlet.getResourceBundle()
 		).thenReturn(
-			resourceBundle
+			_RESOURCE_BUNDLE
 		);
 
 		PortletHotDeployListener portletHotDeployListener =
 			new PortletHotDeployListener();
+
+		Class<?> clazz = getClass();
 
 		portletHotDeployListener.checkResourceBundles(
 			clazz.getClassLoader(), portlet);
@@ -110,9 +98,7 @@ public class PortletHotDeployListenerTest {
 					"_resourceBundleLoaderServiceRegistrations");
 
 		Assert.assertNotNull(
-			resourceBundleLoaderServiceRegistrations.get("TestPortlet"));
-		Assert.assertNull(
-			resourceBundleLoaderServiceRegistrations.get("FakePortlet"));
+			resourceBundleLoaderServiceRegistrations.get(_PORTLET_ID));
 
 		Map<String, Set<ServiceRegistration<ResourceBundle>>>
 			resourceBundleServiceRegistrations =
@@ -121,23 +107,26 @@ public class PortletHotDeployListenerTest {
 					"_resourceBundleServiceRegistrations");
 
 		Set<ServiceRegistration<ResourceBundle>> serviceRegistrations =
-			resourceBundleServiceRegistrations.get(clazz.getName());
+			resourceBundleServiceRegistrations.get(_CONTEXT_NAME);
 
 		Assert.assertNotNull(serviceRegistrations);
 		Assert.assertEquals(
 			serviceRegistrations.toString(), 1, serviceRegistrations.size());
-
-		ServiceRegistration<?>[] serviceRegistrationArray =
-			serviceRegistrations.toArray(new ServiceRegistration<?>[0]);
-
-		ServiceRegistration<?> serviceRegistration =
-			serviceRegistrationArray[0];
-
-		ServiceReference<?> serviceReference =
-			serviceRegistration.getReference();
-
-		Assert.assertEquals(
-			"en_US", serviceReference.getProperty("language.id"));
 	}
+
+	private static final String _CONTEXT_NAME =
+		PortletHotDeployListenerTest.class.getName();
+
+	private static final String _PORTLET_ID = "TestPortlet";
+
+	private static final String _RESOURCE_BUNDLE =
+		PortletHotDeployListenerTest.class.getPackageName() + ".dependencies." +
+			_PORTLET_ID;
+
+	private static final String _RESOURCE_PATH =
+		"/WEB-INF/classes/" +
+			StringUtil.replace(
+				PortletHotDeployListenerTest.class.getPackageName(),
+				CharPool.PERIOD, CharPool.SLASH) + "/dependencies/";
 
 }

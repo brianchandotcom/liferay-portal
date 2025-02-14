@@ -73,6 +73,23 @@ test(
 
 		await publishButton.click();
 
+		const publishWithPermissionButton = page.getByRole('menuitem', {
+			name: 'Publish With Permissions',
+		});
+
+		await publishWithPermissionButton.waitFor({state: 'visible'});
+
+		await publishWithPermissionButton.click();
+
+		const permissionPublishButton = page.getByRole('button', {
+			exact: true,
+			name: 'Publish',
+		});
+
+		await permissionPublishButton.waitFor({state: 'visible'});
+
+		await permissionPublishButton.click();
+
 		await waitForAlert(
 			page,
 			`Success:${randomTitle} was created successfully.`

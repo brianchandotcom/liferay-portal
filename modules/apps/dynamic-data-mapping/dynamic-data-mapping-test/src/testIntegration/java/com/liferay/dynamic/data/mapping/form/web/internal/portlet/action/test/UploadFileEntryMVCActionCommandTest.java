@@ -6,6 +6,7 @@
 package com.liferay.dynamic.data.mapping.form.web.internal.portlet.action.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.document.library.configuration.DLFileEntryMimeTypeConfiguration;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
@@ -16,6 +17,7 @@ import com.liferay.dynamic.data.mapping.util.DDMFormUtil;
 import com.liferay.petra.memory.DeleteFileFinalizeAction;
 import com.liferay.petra.memory.FinalizeManager;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
@@ -46,6 +48,8 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.FileItem;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -159,23 +163,11 @@ public class UploadFileEntryMVCActionCommandTest {
 			_dlFileEntryLocalService.fetchDLFileEntry(
 				_oldDLFileEntry.getFileEntryId()));
 
-		MockLiferayPortletActionResponse mockLiferayPortletActionResponse =
-			new MockLiferayPortletActionResponse();
-
-		_mvcActionCommand.processAction(
-			new MockLiferayPortletActionRequest(_getMockHttpServletRequest()),
-			mockLiferayPortletActionResponse);
+		JSONObject jsonObject = _processAction();
 
 		Assert.assertNull(
 			_dlFileEntryLocalService.fetchDLFileEntry(
 				_oldDLFileEntry.getFileEntryId()));
-
-		MockHttpServletResponse mockHttpServletResponse =
-			(MockHttpServletResponse)
-				mockLiferayPortletActionResponse.getHttpServletResponse();
-
-		JSONObject jsonObject = _jsonFactory.createJSONObject(
-			mockHttpServletResponse.getContentAsString());
 
 		JSONObject fileJSONObject = jsonObject.getJSONObject("file");
 
@@ -199,6 +191,27 @@ public class UploadFileEntryMVCActionCommandTest {
 					TestPropsValues.getCompanyId(), RoleConstants.GUEST
 				).getRoleId(),
 				ActionKeys.VIEW));
+	}
+
+	@Test
+	public void testProcessActionWithInvalidMimetype() throws Exception {
+		try (CompanyConfigurationTemporarySwapper
+				companyConfigurationTemporarySwapper =
+					new CompanyConfigurationTemporarySwapper(
+						TestPropsValues.getCompanyId(),
+						DLFileEntryMimeTypeConfiguration.class.getName(),
+						HashMapDictionaryBuilder.<String, Object>put(
+							"fileMimeTypes", new String[] {"image/jpeg"}
+						).build())) {
+
+			JSONObject jsonObject = _processAction();
+
+			JSONObject errorJSONObject = jsonObject.getJSONObject("error");
+
+			Assert.assertEquals(
+				"Please enter a file with a valid mime type (image/jpeg).",
+				errorJSONObject.get("message"));
+		}
 	}
 
 	private FileItem _getFileItem() throws Exception {
@@ -260,6 +273,7 @@ public class UploadFileEntryMVCActionCommandTest {
 
 		themeDisplay.setCompany(
 			_companyLocalService.fetchCompany(TestPropsValues.getCompanyId()));
+		themeDisplay.setLocale(LocaleUtil.US);
 		themeDisplay.setPermissionChecker(
 			PermissionCheckerFactoryUtil.create(TestPropsValues.getUser()));
 
@@ -270,6 +284,22 @@ public class UploadFileEntryMVCActionCommandTest {
 			"multipart/form-data;boundary=" + System.currentTimeMillis());
 
 		return mockHttpServletRequest;
+	}
+
+	private JSONObject _processAction() throws Exception {
+		MockLiferayPortletActionResponse mockLiferayPortletActionResponse =
+			new MockLiferayPortletActionResponse();
+
+		_mvcActionCommand.processAction(
+			new MockLiferayPortletActionRequest(_getMockHttpServletRequest()),
+			mockLiferayPortletActionResponse);
+
+		MockHttpServletResponse mockHttpServletResponse =
+			(MockHttpServletResponse)
+				mockLiferayPortletActionResponse.getHttpServletResponse();
+
+		return _jsonFactory.createJSONObject(
+			mockHttpServletResponse.getContentAsString());
 	}
 
 	@Inject

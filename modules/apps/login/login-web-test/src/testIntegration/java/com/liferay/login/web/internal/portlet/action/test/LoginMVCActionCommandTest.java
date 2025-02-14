@@ -214,6 +214,8 @@ public class LoginMVCActionCommandTest {
 		mockLiferayPortletActionRequest.addParameter(
 			"password", "wrongpassword");
 		mockLiferayPortletActionRequest.setAttribute(
+			WebKeys.COMPANY_ID, TestPropsValues.getCompanyId());
+		mockLiferayPortletActionRequest.setAttribute(
 			JavaConstants.JAVAX_PORTLET_CONFIG, _getLiferayPortletConfig());
 
 		ThemeDisplay themeDisplay = _getThemeDisplay();

@@ -796,17 +796,17 @@ public class PredicateExpressionVisitorImpl
 			PrimitivePropertyExpression primitivePropertyExpression =
 				(PrimitivePropertyExpression)propertyExpression;
 
-			String relationshipsNamesValue = StringUtil.merge(
+			String relationshipsNamesString = StringUtil.merge(
 				relationshipsNames, StringPool.SLASH);
 
 			Object value = _visitPrimitivePropertyExpression(
 				_getEntityField(
-					relationshipsNamesValue + StringPool.SLASH +
+					relationshipsNamesString + StringPool.SLASH +
 						primitivePropertyExpression.getName(),
 					_objectDefinition),
 				primitivePropertyExpression);
 
-			return relationshipsNamesValue + StringPool.SLASH + value;
+			return relationshipsNamesString + StringPool.SLASH + value;
 		}
 
 		relationshipsNames.add(propertyExpression.toString());

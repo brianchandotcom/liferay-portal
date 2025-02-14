@@ -482,7 +482,7 @@ test('can import custom object entries at instance level with or without permiss
 	);
 });
 
-test('can see corresponding elements in instance and site level', async ({
+test('can see corresponding elements at instance level', async ({
 	apiHelpers,
 	companyExportImportPage,
 	exportImportPage,
@@ -528,16 +528,6 @@ test('can see corresponding elements in instance and site level', async ({
 
 	await exportImportPage.page.goto('/');
 
-	await exportImportPage.goToImportOptions(exportFilePath);
-
-	await expect(
-		companyExportImportPage.page.getByText('Comments, Ratings')
-	).toBeVisible();
-
-	await expect(
-		companyExportImportPage.page.getByRole('group', {name: 'Pages'})
-	).toBeVisible();
-
 	await companyExportImportPage.goToImportOptions(exportFilePath);
 
 	await expect(
@@ -547,4 +537,78 @@ test('can see corresponding elements in instance and site level', async ({
 	await expect(
 		companyExportImportPage.page.getByText('Comments, Ratings')
 	).not.toBeVisible();
+});
+
+test('can see corresponding elements at site level', async ({
+	apiHelpers,
+	exportImportPage,
+}) => {
+	const objectActionApiClient =
+		await apiHelpers.buildRestClient(ObjectDefinitionApi);
+
+	const {body: objectDefinition} =
+		await objectActionApiClient.postObjectDefinition({
+			active: true,
+			externalReferenceCode: 'test',
+			label: {
+				en_US: 'Test',
+			},
+			name: 'Test',
+			objectFields: [
+				{
+					DBType: ObjectField.DBTypeEnum.String,
+					businessType: ObjectField.BusinessTypeEnum.Text,
+					indexed: true,
+					indexedAsKeyword: true,
+					label: {
+						en_US: 'Name',
+					},
+					name: 'name',
+					required: true,
+				},
+			],
+			pluralLabel: {
+				en_US: 'Tests',
+			},
+			portlet: true,
+			scope: 'company',
+			status: {
+				code: 0,
+			},
+		});
+
+	apiHelpers.data.push({id: objectDefinition.id, type: 'objectDefinition'});
+
+	await exportImportPage.goToExport();
+
+	const exportName = 'MyExport-' + getRandomString();
+
+	await exportImportPage.createNewExportProcess(exportName, ['Tests']);
+
+	await expect(
+		exportImportPage.page
+			.getByText(exportName)
+			.locator('../..')
+			.getByText('Successful')
+	).toBeVisible();
+
+	const exportFilePath =
+		await exportImportPage.downloadExportProcess(exportName);
+
+	await exportImportPage.goToImport();
+
+	await exportImportPage.checkItemInNewlyCreatedImportProcess(
+		exportFilePath,
+		'Tests'
+	);
+
+	await exportImportPage.goToImportOptions(exportFilePath);
+
+	await expect(
+		exportImportPage.page.getByText('Comments, Ratings')
+	).toBeVisible();
+
+	await expect(
+		exportImportPage.page.getByRole('group', {name: 'Pages'})
+	).toBeVisible();
 });

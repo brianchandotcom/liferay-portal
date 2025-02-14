@@ -41,10 +41,14 @@ export class ExportImportPage {
 		this.title = page.getByPlaceholder('Enter the name of the process');
 	}
 
-	async createNewExportProcess(title: string) {
+	async createNewExportProcess(title: string, fieldsToExport?: string[]) {
 		await this.newExportButton.click();
 
 		await this.title.fill(title);
+
+		fieldsToExport.forEach(async (field) => {
+			await this.page.getByLabel(field).click();
+		});
 
 		await this.exportButton.click();
 	}

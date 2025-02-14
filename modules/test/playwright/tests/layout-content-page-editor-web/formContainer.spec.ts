@@ -2037,8 +2037,8 @@ test.describe('Form Localization', () => {
 					name: 'Boolean',
 					objectFields: [
 						{
-							DBType: ObjectField.DBTypeEnum.Boolean,
-							businessType: ObjectField.BusinessTypeEnum.Boolean,
+							DBType: 'Boolean',
+							businessType: 'Boolean',
 							externalReferenceCode: 'legalThingsERC',
 							indexed: true,
 							indexedAsKeyword: false,
@@ -2180,8 +2180,8 @@ test.describe('Form Localization', () => {
 					name: 'Select',
 					objectFields: [
 						{
-							DBType: ObjectField.DBTypeEnum.String,
-							businessType: ObjectField.BusinessTypeEnum.Picklist,
+							DBType: 'String',
+							businessType: 'Picklist',
 							externalReferenceCode: 'selectCountryERC',
 							indexed: true,
 							indexedAsKeyword: false,
@@ -2614,8 +2614,8 @@ test.describe('Form Localization', () => {
 							required: false,
 						},
 						{
-							DBType: ObjectField.DBTypeEnum.String,
-							businessType: ObjectField.BusinessTypeEnum.Picklist,
+							DBType: 'String',
+							businessType: 'Picklist',
 							externalReferenceCode: 'selectOriginERC',
 							indexed: true,
 							indexedAsKeyword: false,

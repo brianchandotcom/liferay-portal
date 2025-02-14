@@ -44,7 +44,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -232,20 +231,30 @@ public class ObjectEntryInfoItemValuesProviderUtil {
 		if (objectField.isLocalized() && (value instanceof Map)) {
 			Map<String, Object> map = (Map<String, Object>)value;
 
-			Object defaultValue = map.get(objectField.getDefaultLanguageId());
+			infoFieldValue = InfoLocalizedValue.builder(
+			).defaultLocale(
+				LocaleUtil.fromLanguageId(objectField.getDefaultLanguageId())
+			).value(
+				consumer -> {
+					for (Map.Entry<String, Object> entry : map.entrySet()) {
+						Locale curLocale = LocaleUtil.fromLanguageId(
+							entry.getKey());
 
-			infoFieldValue = InfoLocalizedValue.function(
-				currentLocale -> _parseValue(
-					defaultValue, listTypeEntryLocalService, currentLocale,
-					objectEntryLocalService, objectField,
-					objectRelationshipLocalService,
-					map.get(LanguageUtil.getLanguageId(currentLocale))));
+						consumer.accept(
+							curLocale,
+							_parseValue(
+								listTypeEntryLocalService, curLocale,
+								objectEntryLocalService, objectField,
+								objectRelationshipLocalService,
+								entry.getValue()));
+					}
+				}
+			).build();
 		}
 		else {
 			infoFieldValue = _parseValue(
-				null, listTypeEntryLocalService, locale,
-				objectEntryLocalService, objectField,
-				objectRelationshipLocalService, value);
+				listTypeEntryLocalService, locale, objectEntryLocalService,
+				objectField, objectRelationshipLocalService, value);
 		}
 
 		if (infoFieldValue == null) {
@@ -462,7 +471,6 @@ public class ObjectEntryInfoItemValuesProviderUtil {
 	}
 
 	private static Object _parseValue(
-		Object defaultValue,
 		ListTypeEntryLocalService listTypeEntryLocalService, Locale locale,
 		ObjectEntryLocalService objectEntryLocalService,
 		ObjectField objectField,
@@ -470,7 +478,7 @@ public class ObjectEntryInfoItemValuesProviderUtil {
 		Object value) {
 
 		if (value == null) {
-			return defaultValue;
+			return null;
 		}
 
 		if (Objects.equals(
@@ -491,7 +499,7 @@ public class ObjectEntryInfoItemValuesProviderUtil {
 				if (_log.isDebugEnabled()) {
 					_log.debug(exception);
 
-					return defaultValue;
+					return null;
 				}
 			}
 		}
@@ -518,7 +526,7 @@ public class ObjectEntryInfoItemValuesProviderUtil {
 				if (_log.isDebugEnabled()) {
 					_log.debug(exception);
 
-					return defaultValue;
+					return null;
 				}
 			}
 		}
@@ -591,7 +599,7 @@ public class ObjectEntryInfoItemValuesProviderUtil {
 				if (_log.isDebugEnabled()) {
 					_log.debug(exception);
 
-					return defaultValue;
+					return null;
 				}
 			}
 		}

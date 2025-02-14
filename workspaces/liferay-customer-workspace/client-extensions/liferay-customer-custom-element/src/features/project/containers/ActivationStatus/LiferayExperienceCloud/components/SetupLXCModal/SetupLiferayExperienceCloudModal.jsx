@@ -6,7 +6,7 @@ import ClayModal from '@clayui/modal';
 import {useMemo, useState} from 'react';
 import i18n from '~/utils/I18n';
 import {LXC_STEPS_TYPES} from '~/features/project/utils/constants';
-import AlreadySubmittedModal from '~/features/project/components/ActivationStatus/AlreadySubmittedModal';
+import AlreadySubmittedModal from '~/features/project/containers/ActivationStatus/AlreadySubmittedModal';
 import ConfirmationMessageModal from '../ConfirmationMessageModal';
 import SetupLiferayExperienceCloudForm from '../SetupLXCForm';
 import {submittedModalTexts} from '../../utils/submittedModalTexts';

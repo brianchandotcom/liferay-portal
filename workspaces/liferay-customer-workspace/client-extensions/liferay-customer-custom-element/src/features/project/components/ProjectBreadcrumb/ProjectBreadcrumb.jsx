@@ -11,7 +11,7 @@ import i18n from '~/utils/I18n';
 import Skeleton from '~/components/Skeleton';
 import useCurrentKoroneikiAccount from '~/hooks/useCurrentKoroneikiAccount';
 import useKoroneikiAccounts from '~/hooks/useKoroneikiAccounts';
-import PopoverIcon from '../ActivationStatus/DXPCloud/components/PopoverIcon';
+import PopoverIcon from '../../containers/ActivationStatus/DXPCloud/components/PopoverIcon';
 import Dropdown from './components/Dropdown';
 import SearchBuilder from '~/lib/SearchBuilder';
 

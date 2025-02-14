@@ -14,7 +14,7 @@ import {
 	Input,
 	Select,
 } from '~/components';
-import SetupHighPriorityContactForm from '~/features/project/components/HighPriorityContacts/SetupHighPriorityContact';
+import SetupHighPriorityContactForm from '~/features/project/containers/HighPriorityContacts/SetupHighPriorityContact';
 import Layout from '~/components/FormLayout';
 import useBannedDomains from '~/hooks/useBannedDomains';
 import {isValidEmail} from '~/utils/validations.form';

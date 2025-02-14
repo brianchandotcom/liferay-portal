@@ -8,7 +8,7 @@ import {useEffect} from 'react';
 import {useOutletContext} from 'react-router-dom';
 import {useAppPropertiesContext} from '~/contexts/AppPropertiesContext';
 import SearchBuilder from '~/lib/SearchBuilder';
-import IncidentContactCard from '~/features/project/components/IncidentContactCard';
+import IncidentContactCard from '~/features/project/containers/IncidentContactCard';
 import i18n from '~/utils/I18n';
 import useCurrentKoroneikiAccount from '~/hooks/useCurrentKoroneikiAccount';
 import {getAccountSubscriptionGroups} from '~/services/liferay/graphql/queries';

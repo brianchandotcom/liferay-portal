@@ -27,7 +27,7 @@ import {
 } from '~/features/project/utils/constants';
 import i18n from '~/utils/I18n';
 import {Button, Input, Select} from '~/components';
-import SetupHighPriorityContactForm from '~/features/project/components/HighPriorityContacts/SetupHighPriorityContact';
+import SetupHighPriorityContactForm from '~/features/project/containers/HighPriorityContacts/SetupHighPriorityContact';
 import {
 	addAdminDXPCloud,
 	addDXPCloudEnvironment,

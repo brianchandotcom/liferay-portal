@@ -9,7 +9,7 @@ import i18n from '~/utils/I18n';
 import {useAppPropertiesContext} from '~/contexts/AppPropertiesContext';
 import {getDXPCloudEnvironment} from '~/services/liferay/graphql/queries';
 import {getOrRequestToken} from '~/services/liferay/security/auth/getOrRequestToken';
-import ActivationStatus from '~/features/project/components/ActivationStatus/index';
+import ActivationStatus from '~/features/project/containers/ActivationStatus/index';
 import {useCustomerPortal} from '~/features/project/context';
 import DeveloperKeysLayouts from '~/features/project/layouts/DeveloperKeysLayout';
 import {LIST_TYPES, PRODUCT_TYPES} from '~/features/project/utils/constants';

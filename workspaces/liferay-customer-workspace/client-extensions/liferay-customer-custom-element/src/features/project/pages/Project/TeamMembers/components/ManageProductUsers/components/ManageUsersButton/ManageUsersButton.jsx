@@ -4,7 +4,7 @@
  */
 
 import ClayIcon from '@clayui/icon';
-import PopoverIcon from '~/features/project/components/ActivationStatus/DXPCloud/components/PopoverIcon';
+import PopoverIcon from '~/features/project/containers/ActivationStatus/DXPCloud/components/PopoverIcon';
 
 import './ManageUsersButton.css';
 

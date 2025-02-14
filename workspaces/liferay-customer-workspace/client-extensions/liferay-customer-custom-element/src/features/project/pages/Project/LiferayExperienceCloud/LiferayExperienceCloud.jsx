@@ -6,7 +6,7 @@ import {useEffect} from 'react';
 import {useOutletContext} from 'react-router-dom';
 import i18n from '~/utils/I18n';
 import {useGetLiferayExperienceCloudEnvironments} from '~/services/liferay/graphql/liferay-experience-cloud-environments';
-import ActivationStatus from '~/features/project/components/ActivationStatus';
+import ActivationStatus from '~/features/project/containers/ActivationStatus';
 import {useCustomerPortal} from '~/features/project/context';
 import {PRODUCT_TYPES} from '~/features/project/utils/constants';
 

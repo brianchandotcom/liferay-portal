@@ -1,9 +1,13 @@
+configurations {
+	bndOnly
+}
+
 dependencies {
-	compileOnly classifier: "bin", ext: "bin", group: "com.liferay", name: "org.apache.opennlp.model.en.ner.location", version: "1.5.0"
-	compileOnly classifier: "bin", ext: "bin", group: "com.liferay", name: "org.apache.opennlp.model.en.ner.organization", version: "1.5.0"
-	compileOnly classifier: "bin", ext: "bin", group: "com.liferay", name: "org.apache.opennlp.model.en.ner.person", version: "1.5.0"
-	compileOnly classifier: "bin", ext: "bin", group: "com.liferay", name: "org.apache.opennlp.model.en.sent", version: "1.5.0"
-	compileOnly classifier: "bin", ext: "bin", group: "com.liferay", name: "org.apache.opennlp.model.en.token", version: "1.5.0"
+	bndOnly classifier: "bin", ext: "bin", group: "com.liferay", name: "org.apache.opennlp.model.en.ner.location", version: "1.5.0"
+	bndOnly classifier: "bin", ext: "bin", group: "com.liferay", name: "org.apache.opennlp.model.en.ner.organization", version: "1.5.0"
+	bndOnly classifier: "bin", ext: "bin", group: "com.liferay", name: "org.apache.opennlp.model.en.ner.person", version: "1.5.0"
+	bndOnly classifier: "bin", ext: "bin", group: "com.liferay", name: "org.apache.opennlp.model.en.sent", version: "1.5.0"
+	bndOnly classifier: "bin", ext: "bin", group: "com.liferay", name: "org.apache.opennlp.model.en.token", version: "1.5.0"
 	compileOnly group: "com.liferay", name: "biz.aQute.bnd.annotation", version: "4.2.0.LIFERAY-PATCHED-2"
 	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	compileOnly group: "org.apache.opennlp", name: "opennlp-tools", version: "1.9.1"
@@ -15,4 +19,12 @@ dependencies {
 	compileOnly project(":core:osgi-service-tracker-collections")
 	compileOnly project(":core:petra:petra-concurrent")
 	compileOnly project(":core:petra:petra-reflect")
+}
+
+tasks.named("jar") {
+	Task jarTask ->
+
+	bundle {
+		classpath jarTask.project.configurations.bndOnly
+	}
 }

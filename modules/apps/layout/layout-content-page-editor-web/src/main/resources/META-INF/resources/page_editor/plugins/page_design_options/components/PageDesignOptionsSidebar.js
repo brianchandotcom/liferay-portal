@@ -183,7 +183,11 @@ export default function PageDesignOptionsSidebar() {
 }
 
 const OptionList = ({options = [], icon, type}) => {
-	if (type === OPTIONS_TYPES.styleBook && !config.styleBookEnabled) {
+	if (
+		type === OPTIONS_TYPES.styleBook &&
+		!config.styleBookEnabled &&
+		!Liferay.FeatureFlags['LPD-30204']
+	) {
 		return (
 			<ClayAlert className="mt-3" displayType="info">
 				{config.isPrivateLayoutsEnabled

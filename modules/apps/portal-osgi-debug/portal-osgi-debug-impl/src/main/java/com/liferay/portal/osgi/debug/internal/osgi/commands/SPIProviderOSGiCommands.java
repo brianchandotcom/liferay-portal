@@ -52,14 +52,14 @@ public class SPIProviderOSGiCommands implements OSGiCommands {
 	}
 
 	public void listSPIProviders(String... spiTypes) throws IOException {
-		Set<String> spiTypeSet = new HashSet<>(Arrays.asList(spiTypes));
+		Set<String> spiTypesSet = new HashSet<>(Arrays.asList(spiTypes));
 
 		for (Bundle bundle : _bundleContext.getBundles()) {
 			Enumeration<URL> enumeration = bundle.findEntries(
 				"/META-INF/services/", null, true);
 
 			if (enumeration != null) {
-				_print(bundle, enumeration, spiTypeSet);
+				_print(bundle, enumeration, spiTypesSet);
 			}
 		}
 	}
@@ -69,8 +69,8 @@ public class SPIProviderOSGiCommands implements OSGiCommands {
 		_bundleContext = bundleContext;
 	}
 
-	private boolean _matches(URL url, Set<String> spiTypeSet) {
-		if (spiTypeSet.isEmpty()) {
+	private boolean _matches(Set<String> spiTypesSet, URL url) {
+		if (spiTypesSet.isEmpty()) {
 			return true;
 		}
 
@@ -78,11 +78,12 @@ public class SPIProviderOSGiCommands implements OSGiCommands {
 
 		int index = path.lastIndexOf('/');
 
-		return spiTypeSet.contains(path.substring(index + 1));
+		return spiTypesSet.contains(path.substring(index + 1));
 	}
 
 	private void _print(
-			Bundle bundle, Enumeration<URL> enumeration, Set<String> spiTypeSet)
+			Bundle bundle, Enumeration<URL> enumeration,
+			Set<String> spiTypesSet)
 		throws IOException {
 
 		List<URL> urls = new ArrayList<>();
@@ -91,7 +92,7 @@ public class SPIProviderOSGiCommands implements OSGiCommands {
 			while (enumeration.hasMoreElements()) {
 				URL url = enumeration.nextElement();
 
-				if (_matches(url, spiTypeSet)) {
+				if (_matches(spiTypesSet, url)) {
 					urls.add(url);
 				}
 			}

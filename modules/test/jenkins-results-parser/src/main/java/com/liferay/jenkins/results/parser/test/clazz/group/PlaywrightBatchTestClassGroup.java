@@ -311,7 +311,9 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 							axisTestClassGroup);
 
 						synchronized (_loadedProjectNames) {
-							if (!_loadedProjectNames.contains(projectName)) {
+							if (!_loadedProjectNames.contains(projectName) ||
+								(axisCount > 1)) {
+
 								_loadedProjectNames.add(projectName);
 
 								StringBuilder sb = new StringBuilder();

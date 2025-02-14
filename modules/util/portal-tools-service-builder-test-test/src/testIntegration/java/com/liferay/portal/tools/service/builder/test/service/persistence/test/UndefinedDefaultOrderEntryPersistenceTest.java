@@ -1,0 +1,535 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.portal.tools.service.builder.test.service.persistence.test;
+
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.util.IntegerWrapper;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
+import com.liferay.portal.kernel.util.Time;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PersistenceTestRule;
+import com.liferay.portal.test.rule.TransactionalTestRule;
+import com.liferay.portal.tools.service.builder.test.exception.NoSuchUndefinedDefaultOrderEntryException;
+import com.liferay.portal.tools.service.builder.test.model.UndefinedDefaultOrderEntry;
+import com.liferay.portal.tools.service.builder.test.service.UndefinedDefaultOrderEntryLocalServiceUtil;
+import com.liferay.portal.tools.service.builder.test.service.persistence.UndefinedDefaultOrderEntryPersistence;
+import com.liferay.portal.tools.service.builder.test.service.persistence.UndefinedDefaultOrderEntryUtil;
+
+import java.io.Serializable;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+/**
+ * @generated
+ */
+@RunWith(Arquillian.class)
+public class UndefinedDefaultOrderEntryPersistenceTest {
+
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(), PersistenceTestRule.INSTANCE,
+			new TransactionalTestRule(
+				Propagation.REQUIRED,
+				"com.liferay.portal.tools.service.builder.test.service"));
+
+	@Before
+	public void setUp() {
+		_persistence = UndefinedDefaultOrderEntryUtil.getPersistence();
+
+		Class<?> clazz = _persistence.getClass();
+
+		_dynamicQueryClassLoader = clazz.getClassLoader();
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		Iterator<UndefinedDefaultOrderEntry> iterator =
+			_undefinedDefaultOrderEntries.iterator();
+
+		while (iterator.hasNext()) {
+			_persistence.remove(iterator.next());
+
+			iterator.remove();
+		}
+	}
+
+	@Test
+	public void testCreate() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		UndefinedDefaultOrderEntry undefinedDefaultOrderEntry =
+			_persistence.create(pk);
+
+		Assert.assertNotNull(undefinedDefaultOrderEntry);
+
+		Assert.assertEquals(undefinedDefaultOrderEntry.getPrimaryKey(), pk);
+	}
+
+	@Test
+	public void testRemove() throws Exception {
+		UndefinedDefaultOrderEntry newUndefinedDefaultOrderEntry =
+			addUndefinedDefaultOrderEntry();
+
+		_persistence.remove(newUndefinedDefaultOrderEntry);
+
+		UndefinedDefaultOrderEntry existingUndefinedDefaultOrderEntry =
+			_persistence.fetchByPrimaryKey(
+				newUndefinedDefaultOrderEntry.getPrimaryKey());
+
+		Assert.assertNull(existingUndefinedDefaultOrderEntry);
+	}
+
+	@Test
+	public void testUpdateNew() throws Exception {
+		addUndefinedDefaultOrderEntry();
+	}
+
+	@Test
+	public void testUpdateExisting() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		UndefinedDefaultOrderEntry newUndefinedDefaultOrderEntry =
+			_persistence.create(pk);
+
+		newUndefinedDefaultOrderEntry.setName(RandomTestUtil.randomString());
+
+		newUndefinedDefaultOrderEntry.setModifiedDate(
+			RandomTestUtil.nextDate());
+
+		_undefinedDefaultOrderEntries.add(
+			_persistence.update(newUndefinedDefaultOrderEntry));
+
+		UndefinedDefaultOrderEntry existingUndefinedDefaultOrderEntry =
+			_persistence.findByPrimaryKey(
+				newUndefinedDefaultOrderEntry.getPrimaryKey());
+
+		Assert.assertEquals(
+			existingUndefinedDefaultOrderEntry.
+				getUndefinedDefaultOrderEntryId(),
+			newUndefinedDefaultOrderEntry.getUndefinedDefaultOrderEntryId());
+		Assert.assertEquals(
+			existingUndefinedDefaultOrderEntry.getName(),
+			newUndefinedDefaultOrderEntry.getName());
+		Assert.assertEquals(
+			Time.getShortTimestamp(
+				existingUndefinedDefaultOrderEntry.getModifiedDate()),
+			Time.getShortTimestamp(
+				newUndefinedDefaultOrderEntry.getModifiedDate()));
+	}
+
+	@Test
+	public void testCountByName() throws Exception {
+		_persistence.countByName("");
+
+		_persistence.countByName("null");
+
+		_persistence.countByName((String)null);
+	}
+
+	@Test
+	public void testCountByName_Collection() throws Exception {
+		_persistence.countByName_Collection("");
+
+		_persistence.countByName_Collection("null");
+
+		_persistence.countByName_Collection((String)null);
+	}
+
+	@Test
+	public void testFindByPrimaryKeyExisting() throws Exception {
+		UndefinedDefaultOrderEntry newUndefinedDefaultOrderEntry =
+			addUndefinedDefaultOrderEntry();
+
+		UndefinedDefaultOrderEntry existingUndefinedDefaultOrderEntry =
+			_persistence.findByPrimaryKey(
+				newUndefinedDefaultOrderEntry.getPrimaryKey());
+
+		Assert.assertEquals(
+			existingUndefinedDefaultOrderEntry, newUndefinedDefaultOrderEntry);
+	}
+
+	@Test(expected = NoSuchUndefinedDefaultOrderEntryException.class)
+	public void testFindByPrimaryKeyMissing() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		_persistence.findByPrimaryKey(pk);
+	}
+
+	@Test
+	public void testFindAll() throws Exception {
+		_persistence.findAll(
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, getOrderByComparator());
+	}
+
+	protected OrderByComparator<UndefinedDefaultOrderEntry>
+		getOrderByComparator() {
+
+		return OrderByComparatorFactoryUtil.create(
+			"UndefinedDefaultOrderEntry", "undefinedDefaultOrderEntryId", true,
+			"name", true, "modifiedDate", true);
+	}
+
+	@Test
+	public void testFetchByPrimaryKeyExisting() throws Exception {
+		UndefinedDefaultOrderEntry newUndefinedDefaultOrderEntry =
+			addUndefinedDefaultOrderEntry();
+
+		UndefinedDefaultOrderEntry existingUndefinedDefaultOrderEntry =
+			_persistence.fetchByPrimaryKey(
+				newUndefinedDefaultOrderEntry.getPrimaryKey());
+
+		Assert.assertEquals(
+			existingUndefinedDefaultOrderEntry, newUndefinedDefaultOrderEntry);
+	}
+
+	@Test
+	public void testFetchByPrimaryKeyMissing() throws Exception {
+		long pk = RandomTestUtil.nextLong();
+
+		UndefinedDefaultOrderEntry missingUndefinedDefaultOrderEntry =
+			_persistence.fetchByPrimaryKey(pk);
+
+		Assert.assertNull(missingUndefinedDefaultOrderEntry);
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereAllPrimaryKeysExist()
+		throws Exception {
+
+		UndefinedDefaultOrderEntry newUndefinedDefaultOrderEntry1 =
+			addUndefinedDefaultOrderEntry();
+		UndefinedDefaultOrderEntry newUndefinedDefaultOrderEntry2 =
+			addUndefinedDefaultOrderEntry();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newUndefinedDefaultOrderEntry1.getPrimaryKey());
+		primaryKeys.add(newUndefinedDefaultOrderEntry2.getPrimaryKey());
+
+		Map<Serializable, UndefinedDefaultOrderEntry>
+			undefinedDefaultOrderEntries = _persistence.fetchByPrimaryKeys(
+				primaryKeys);
+
+		Assert.assertEquals(2, undefinedDefaultOrderEntries.size());
+		Assert.assertEquals(
+			newUndefinedDefaultOrderEntry1,
+			undefinedDefaultOrderEntries.get(
+				newUndefinedDefaultOrderEntry1.getPrimaryKey()));
+		Assert.assertEquals(
+			newUndefinedDefaultOrderEntry2,
+			undefinedDefaultOrderEntries.get(
+				newUndefinedDefaultOrderEntry2.getPrimaryKey()));
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereNoPrimaryKeysExist()
+		throws Exception {
+
+		long pk1 = RandomTestUtil.nextLong();
+
+		long pk2 = RandomTestUtil.nextLong();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(pk1);
+		primaryKeys.add(pk2);
+
+		Map<Serializable, UndefinedDefaultOrderEntry>
+			undefinedDefaultOrderEntries = _persistence.fetchByPrimaryKeys(
+				primaryKeys);
+
+		Assert.assertTrue(undefinedDefaultOrderEntries.isEmpty());
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysWithMultiplePrimaryKeysWhereSomePrimaryKeysExist()
+		throws Exception {
+
+		UndefinedDefaultOrderEntry newUndefinedDefaultOrderEntry =
+			addUndefinedDefaultOrderEntry();
+
+		long pk = RandomTestUtil.nextLong();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newUndefinedDefaultOrderEntry.getPrimaryKey());
+		primaryKeys.add(pk);
+
+		Map<Serializable, UndefinedDefaultOrderEntry>
+			undefinedDefaultOrderEntries = _persistence.fetchByPrimaryKeys(
+				primaryKeys);
+
+		Assert.assertEquals(1, undefinedDefaultOrderEntries.size());
+		Assert.assertEquals(
+			newUndefinedDefaultOrderEntry,
+			undefinedDefaultOrderEntries.get(
+				newUndefinedDefaultOrderEntry.getPrimaryKey()));
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysWithNoPrimaryKeys() throws Exception {
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		Map<Serializable, UndefinedDefaultOrderEntry>
+			undefinedDefaultOrderEntries = _persistence.fetchByPrimaryKeys(
+				primaryKeys);
+
+		Assert.assertTrue(undefinedDefaultOrderEntries.isEmpty());
+	}
+
+	@Test
+	public void testFetchByPrimaryKeysWithOnePrimaryKey() throws Exception {
+		UndefinedDefaultOrderEntry newUndefinedDefaultOrderEntry =
+			addUndefinedDefaultOrderEntry();
+
+		Set<Serializable> primaryKeys = new HashSet<Serializable>();
+
+		primaryKeys.add(newUndefinedDefaultOrderEntry.getPrimaryKey());
+
+		Map<Serializable, UndefinedDefaultOrderEntry>
+			undefinedDefaultOrderEntries = _persistence.fetchByPrimaryKeys(
+				primaryKeys);
+
+		Assert.assertEquals(1, undefinedDefaultOrderEntries.size());
+		Assert.assertEquals(
+			newUndefinedDefaultOrderEntry,
+			undefinedDefaultOrderEntries.get(
+				newUndefinedDefaultOrderEntry.getPrimaryKey()));
+	}
+
+	@Test
+	public void testActionableDynamicQuery() throws Exception {
+		final IntegerWrapper count = new IntegerWrapper();
+
+		ActionableDynamicQuery actionableDynamicQuery =
+			UndefinedDefaultOrderEntryLocalServiceUtil.
+				getActionableDynamicQuery();
+
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod
+				<UndefinedDefaultOrderEntry>() {
+
+				@Override
+				public void performAction(
+					UndefinedDefaultOrderEntry undefinedDefaultOrderEntry) {
+
+					Assert.assertNotNull(undefinedDefaultOrderEntry);
+
+					count.increment();
+				}
+
+			});
+
+		actionableDynamicQuery.performActions();
+
+		Assert.assertEquals(count.getValue(), _persistence.countAll());
+	}
+
+	@Test
+	public void testDynamicQueryByPrimaryKeyExisting() throws Exception {
+		UndefinedDefaultOrderEntry newUndefinedDefaultOrderEntry =
+			addUndefinedDefaultOrderEntry();
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			UndefinedDefaultOrderEntry.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"undefinedDefaultOrderEntryId",
+				newUndefinedDefaultOrderEntry.
+					getUndefinedDefaultOrderEntryId()));
+
+		List<UndefinedDefaultOrderEntry> result =
+			_persistence.findWithDynamicQuery(dynamicQuery);
+
+		Assert.assertEquals(1, result.size());
+
+		UndefinedDefaultOrderEntry existingUndefinedDefaultOrderEntry =
+			result.get(0);
+
+		Assert.assertEquals(
+			existingUndefinedDefaultOrderEntry, newUndefinedDefaultOrderEntry);
+	}
+
+	@Test
+	public void testDynamicQueryByPrimaryKeyMissing() throws Exception {
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			UndefinedDefaultOrderEntry.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"undefinedDefaultOrderEntryId", RandomTestUtil.nextLong()));
+
+		List<UndefinedDefaultOrderEntry> result =
+			_persistence.findWithDynamicQuery(dynamicQuery);
+
+		Assert.assertEquals(0, result.size());
+	}
+
+	@Test
+	public void testDynamicQueryByProjectionExisting() throws Exception {
+		UndefinedDefaultOrderEntry newUndefinedDefaultOrderEntry =
+			addUndefinedDefaultOrderEntry();
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			UndefinedDefaultOrderEntry.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.setProjection(
+			ProjectionFactoryUtil.property("undefinedDefaultOrderEntryId"));
+
+		Object newUndefinedDefaultOrderEntryId =
+			newUndefinedDefaultOrderEntry.getUndefinedDefaultOrderEntryId();
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in(
+				"undefinedDefaultOrderEntryId",
+				new Object[] {newUndefinedDefaultOrderEntryId}));
+
+		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+
+		Assert.assertEquals(1, result.size());
+
+		Object existingUndefinedDefaultOrderEntryId = result.get(0);
+
+		Assert.assertEquals(
+			existingUndefinedDefaultOrderEntryId,
+			newUndefinedDefaultOrderEntryId);
+	}
+
+	@Test
+	public void testDynamicQueryByProjectionMissing() throws Exception {
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			UndefinedDefaultOrderEntry.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.setProjection(
+			ProjectionFactoryUtil.property("undefinedDefaultOrderEntryId"));
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.in(
+				"undefinedDefaultOrderEntryId",
+				new Object[] {RandomTestUtil.nextLong()}));
+
+		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
+
+		Assert.assertEquals(0, result.size());
+	}
+
+	@Test
+	public void testResetOriginalValues() throws Exception {
+		UndefinedDefaultOrderEntry newUndefinedDefaultOrderEntry =
+			addUndefinedDefaultOrderEntry();
+
+		_persistence.clearCache();
+
+		_assertOriginalValues(
+			_persistence.findByPrimaryKey(
+				newUndefinedDefaultOrderEntry.getPrimaryKey()));
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromDatabase()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(true);
+	}
+
+	@Test
+	public void testResetOriginalValuesWithDynamicQueryLoadFromSession()
+		throws Exception {
+
+		_testResetOriginalValuesWithDynamicQuery(false);
+	}
+
+	private void _testResetOriginalValuesWithDynamicQuery(boolean clearSession)
+		throws Exception {
+
+		UndefinedDefaultOrderEntry newUndefinedDefaultOrderEntry =
+			addUndefinedDefaultOrderEntry();
+
+		if (clearSession) {
+			Session session = _persistence.openSession();
+
+			session.flush();
+
+			session.clear();
+		}
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			UndefinedDefaultOrderEntry.class, _dynamicQueryClassLoader);
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq(
+				"undefinedDefaultOrderEntryId",
+				newUndefinedDefaultOrderEntry.
+					getUndefinedDefaultOrderEntryId()));
+
+		List<UndefinedDefaultOrderEntry> result =
+			_persistence.findWithDynamicQuery(dynamicQuery);
+
+		_assertOriginalValues(result.get(0));
+	}
+
+	private void _assertOriginalValues(
+		UndefinedDefaultOrderEntry undefinedDefaultOrderEntry) {
+
+		Assert.assertEquals(
+			undefinedDefaultOrderEntry.getName(),
+			ReflectionTestUtil.invoke(
+				undefinedDefaultOrderEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "name"));
+	}
+
+	protected UndefinedDefaultOrderEntry addUndefinedDefaultOrderEntry()
+		throws Exception {
+
+		long pk = RandomTestUtil.nextLong();
+
+		UndefinedDefaultOrderEntry undefinedDefaultOrderEntry =
+			_persistence.create(pk);
+
+		undefinedDefaultOrderEntry.setName(RandomTestUtil.randomString());
+
+		undefinedDefaultOrderEntry.setModifiedDate(RandomTestUtil.nextDate());
+
+		_undefinedDefaultOrderEntries.add(
+			_persistence.update(undefinedDefaultOrderEntry));
+
+		return undefinedDefaultOrderEntry;
+	}
+
+	private List<UndefinedDefaultOrderEntry> _undefinedDefaultOrderEntries =
+		new ArrayList<UndefinedDefaultOrderEntry>();
+	private UndefinedDefaultOrderEntryPersistence _persistence;
+	private ClassLoader _dynamicQueryClassLoader;
+
+}

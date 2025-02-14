@@ -35,6 +35,11 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 	</model>
+	<model name="com.liferay.portal.tools.service.builder.test.model.DefinedDefaultOrderEntry">
+		<field name="definedDefaultOrderEntryId" type="long" />
+		<field name="name" type="String" />
+		<field name="modifiedDate" type="Date" />
+	</model>
 	<model name="com.liferay.portal.tools.service.builder.test.model.DSLQueryEntry">
 		<field name="dslQueryEntryId" type="long" />
 		<field name="name" type="String" />
@@ -260,6 +265,11 @@
 		<field name="userId" type="long" />
 		<field name="userName" type="String" />
 		<field name="message" type="String" />
+	</model>
+	<model name="com.liferay.portal.tools.service.builder.test.model.UndefinedDefaultOrderEntry">
+		<field name="undefinedDefaultOrderEntryId" type="long" />
+		<field name="name" type="String" />
+		<field name="modifiedDate" type="Date" />
 	</model>
 	<model name="com.liferay.portal.tools.service.builder.test.model.VersionedEntry">
 		<field name="mvccVersion" type="long" />

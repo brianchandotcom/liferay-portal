@@ -40,20 +40,44 @@ public class PortletHotDeployListenerTest {
 
 	@Test
 	public void testResourceBundle() {
-		PortletHotDeployListener portletHotDeployListener =
-			new PortletHotDeployListener();
+		Class<?> clazz = getClass();
+
+		String resourceBundle =
+			clazz.getPackageName() + ".dependencies.TestPortlet";
+
+		String path = StringUtil.replace(
+			"/WEB-INF/classes/".concat(resourceBundle), CharPool.PERIOD,
+			CharPool.SLASH);
+
+		String resourcePath = path.substring(
+			0, path.lastIndexOf(StringPool.SLASH));
+
+		ServletContext servletContext = Mockito.mock(ServletContext.class);
+
+		Mockito.when(
+			servletContext.getResourcePaths(Mockito.anyString())
+		).thenReturn(
+			Set.of(
+				resourcePath + "/FakePortlet_Fake_Resource_Name.bin",
+				resourcePath + "/FakePortlet_zh_CN.properties",
+				resourcePath + "/TestPortlet_en_US.properties")
+		);
+
+		PortletApp portletApp = Mockito.mock(PortletApp.class);
+
+		Mockito.when(
+			portletApp.getServletContext()
+		).thenReturn(
+			servletContext
+		);
 
 		Portlet portlet = Mockito.mock(Portlet.class);
-
-		Class<?> clazz = getClass();
 
 		Mockito.when(
 			portlet.getContextName()
 		).thenReturn(
 			clazz.getName()
 		);
-
-		PortletApp portletApp = _mockPortletApp(clazz);
 
 		Mockito.when(
 			portlet.getPortletApp()
@@ -70,8 +94,11 @@ public class PortletHotDeployListenerTest {
 		Mockito.when(
 			portlet.getResourceBundle()
 		).thenReturn(
-			clazz.getPackageName() + ".dependencies.TestPortlet"
+			resourceBundle
 		);
+
+		PortletHotDeployListener portletHotDeployListener =
+			new PortletHotDeployListener();
 
 		portletHotDeployListener.checkResourceBundles(
 			clazz.getClassLoader(), portlet);
@@ -82,10 +109,10 @@ public class PortletHotDeployListenerTest {
 					portletHotDeployListener,
 					"_resourceBundleLoaderServiceRegistrations");
 
-		Assert.assertNull(
-			resourceBundleLoaderServiceRegistrations.get("FakePortlet"));
 		Assert.assertNotNull(
 			resourceBundleLoaderServiceRegistrations.get("TestPortlet"));
+		Assert.assertNull(
+			resourceBundleLoaderServiceRegistrations.get("FakePortlet"));
 
 		Map<String, Set<ServiceRegistration<ResourceBundle>>>
 			resourceBundleServiceRegistrations =
@@ -100,48 +127,17 @@ public class PortletHotDeployListenerTest {
 		Assert.assertEquals(
 			serviceRegistrations.toString(), 1, serviceRegistrations.size());
 
-		ServiceRegistration<?>[] serviceRegistrationsArray =
+		ServiceRegistration<?>[] serviceRegistrationArray =
 			serviceRegistrations.toArray(new ServiceRegistration<?>[0]);
 
 		ServiceRegistration<?> serviceRegistration =
-			serviceRegistrationsArray[0];
+			serviceRegistrationArray[0];
 
 		ServiceReference<?> serviceReference =
 			serviceRegistration.getReference();
 
 		Assert.assertEquals(
 			"en_US", serviceReference.getProperty("language.id"));
-	}
-
-	private PortletApp _mockPortletApp(Class<?> clazz) {
-		PortletApp portletApp = Mockito.mock(PortletApp.class);
-
-		ServletContext servletContext = Mockito.mock(ServletContext.class);
-
-		String path = StringUtil.replace(
-			"/WEB-INF/classes/" + clazz.getPackageName() +
-				".dependencies.TestPortlet",
-			CharPool.PERIOD, CharPool.SLASH);
-
-		String resourcePath = path.substring(
-			0, path.lastIndexOf(StringPool.SLASH));
-
-		Mockito.when(
-			servletContext.getResourcePaths(Mockito.anyString())
-		).thenReturn(
-			Set.of(
-				resourcePath + "/FakePortlet_Fake_Resource_Name.bin",
-				resourcePath + "/FakePortlet_zh_CN.properties",
-				resourcePath + "/TestPortlet_en_US.properties")
-		);
-
-		Mockito.when(
-			portletApp.getServletContext()
-		).thenReturn(
-			servletContext
-		);
-
-		return portletApp;
 	}
 
 }

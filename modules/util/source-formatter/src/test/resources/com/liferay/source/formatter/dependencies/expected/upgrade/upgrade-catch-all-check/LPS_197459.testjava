@@ -5,6 +5,8 @@
 
 package com.liferay.source.formatter.dependencies.upgrade;
 
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+
 import java.math.BigDecimal;
 
 import org.osgi.service.component.annotations.Reference;
@@ -15,9 +17,9 @@ import org.osgi.service.component.annotations.Reference;
 public class LPS_197459 {
 
 	public void method(long commerceOrderId) {
-		CommerceOrderItemLocalServiceUtil.deleteCommerceOrderItems(0, commerceOrderId);
+		CommerceOrderItemLocalServiceUtil.deleteCommerceOrderItems(ServiceContextThreadLocal.getServiceContext().getUserId(), commerceOrderId);
 		_commerceOrderItemLocalService.deleteCommerceOrderItems(123);
-		_commerceOrderItemLocalService.deleteCommerceOrderItems(0, commerceOrderId);
+		_commerceOrderItemLocalService.deleteCommerceOrderItems(ServiceContextThreadLocal.getServiceContext().getUserId(), commerceOrderId);
 	}
 
 	public void method(

@@ -99,8 +99,8 @@ test('can export custom object entries at instance level with date filter', asyn
 			name: 'Test',
 			objectFields: [
 				{
-					DBType: ObjectField.DBTypeEnum.String,
-					businessType: ObjectField.BusinessTypeEnum.Text,
+					DBType: 'String',
+					businessType: 'Text',
 					indexed: true,
 					indexedAsKeyword: true,
 					label: {
@@ -195,8 +195,8 @@ test('can export new default and custom task name', async ({
 			name: 'Test',
 			objectFields: [
 				{
-					DBType: ObjectField.DBTypeEnum.String,
-					businessType: ObjectField.BusinessTypeEnum.Text,
+					DBType: 'String',
+					businessType: 'Text',
 					indexed: true,
 					indexedAsKeyword: true,
 					label: {

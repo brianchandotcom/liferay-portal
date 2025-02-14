@@ -3675,6 +3675,12 @@ components:
                         Block of actions allowed by the user making the request.
                     readOnly: true
                     type: object
+                assetLibraryId:
+                    # @review
+                    description:
+                        The ID of the asset library to which this object entry folder is scoped.
+                    format: int64
+                    type: integer
                 assetLibraryKey:
                     # @review
                     description:

@@ -528,10 +528,6 @@ public class FormItemManager {
 				_fragmentEntryLinkManager.getFragmentEntryLinkJSONObject(
 					fragmentEntryLink, httpServletRequest, httpServletResponse,
 					layoutStructure));
-
-			layoutStructureItemChanges.addAddedLayoutStructureItems(
-				layoutStructure.getLayoutStructureItemByFragmentEntryLinkId(
-					fragmentEntryLink.getFragmentEntryLinkId()));
 		}
 
 		return jsonObject.put(

@@ -11,16 +11,6 @@
 
 <tbody>
 <tr>
-	<td>DRAG_PREVIEW_LABEL</td>
-	<td>//div[contains(@class,'drag-preview__label')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DRAG_PREVIEW_BORDER</td>
-	<td>//div[contains(@class,'drag-preview__border')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ITEM_ENTRY</td>
 	<td>//div[contains(@class,'MenuItem')]//p[contains(@class,'card-title')][normalize-space()='${key_itemName}']</td>
 	<td></td>
@@ -28,11 +18,6 @@
 <tr>
 	<td>ITEM_ENTRY_BODY</td>
 	<td>//div[contains(@role,'menuitem')][.//p[contains(@class,'card-title')][normalize-space()='${key_itemName}']]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ITEM_ENTRY_DRAG_ICON</td>
-	<td>//div[contains(@class,'MenuItem')][.//p[contains(@class,'card-title')][normalize-space()='${key_sourceItemName}']]//div[contains(@draggable,'true')]//button[contains(@title,'Move') or contains(@data-restore-title,'Move')]</td>
 	<td></td>
 </tr>
 <tr>

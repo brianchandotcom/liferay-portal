@@ -12,7 +12,6 @@ import {waitForAlert} from '../../../utils/waitForAlert';
 export class NavigationMenusPage {
 	readonly page: Page;
 
-	readonly addChildButton: Locator;
 	readonly addItemButton: Locator;
 	readonly blogsModal: FrameLocator;
 	readonly categoriesModal: FrameLocator;
@@ -23,7 +22,6 @@ export class NavigationMenusPage {
 	constructor(page: Page) {
 		this.page = page;
 
-		this.addChildButton = page.getByRole('menuitem', {name: 'Add Child'});
 		this.addItemButton = page.getByLabel('Add Menu Item');
 		this.blogsModal = page.frameLocator(
 			'iframe[title="Select Blogs Entry"]'
@@ -67,22 +65,6 @@ export class NavigationMenusPage {
 		});
 
 		await this.pagesModal.getByPlaceholder('Search').waitFor();
-	}
-
-	async openAddChildCategoryModal(parentName: string) {
-		await this.page.getByText(parentName, {exact: true}).hover();
-
-		await this.page.getByLabel(`View ${parentName} Options`).click();
-
-		await this.addChildButton.hover();
-
-		await this.page
-			.getByRole('menuitem', {
-				name: 'Category',
-			})
-			.click();
-
-		await this.categoriesModal.getByPlaceholder('Search').waitFor();
 	}
 
 	async openAddCategoryModal() {

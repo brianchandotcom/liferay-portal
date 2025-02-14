@@ -399,8 +399,9 @@ public class CustomFDSSerializerTest {
 			}
 		);
 
-		ReflectionTestUtil.setFieldValue(
-			_customFDSSerializer, "_cetManager", cetManager);
+		_resetFDSSerializer();
+
+		_customFDSSerializer.cetManager = cetManager;
 
 		_mockSerializeFilters(
 			"fdsName",

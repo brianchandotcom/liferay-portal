@@ -149,8 +149,17 @@ public class FormItemManager {
 							getFragmentEntryLinkId()),
 					"submit")) {
 
+				LayoutStructureItem parentLayoutStructureItem =
+					layoutStructure.getLayoutStructureItem(
+						layoutStructureItem.getParentItemId());
+
+				List<String> parentChildrenItemIds =
+					parentLayoutStructureItem.getChildrenItemIds();
+
 				layoutStructureItemChanges.addMovedLayoutStructureItems(
-					layoutStructureItem.clone());
+					layoutStructureItem.clone(),
+					parentChildrenItemIds.indexOf(
+						layoutStructureItem.getItemId()));
 
 				layoutStructure.moveLayoutStructureItem(
 					layoutStructureItem.getItemId(), parentItemId, -1);
@@ -355,8 +364,16 @@ public class FormItemManager {
 				}
 			}
 
+			LayoutStructureItem parentLayoutStructureItem =
+				layoutStructure.getLayoutStructureItem(
+					layoutStructureItem.getParentItemId());
+
+			List<String> parentChildrenItemIds =
+				parentLayoutStructureItem.getChildrenItemIds();
+
 			layoutStructureItemChanges.addMovedLayoutStructureItems(
-				layoutStructureItem.clone());
+				layoutStructureItem.clone(),
+				parentChildrenItemIds.indexOf(layoutStructureItem.getItemId()));
 
 			layoutStructure.moveLayoutStructureItem(
 				childrenItemId, parentItemId, -1);
@@ -419,8 +436,17 @@ public class FormItemManager {
 					}
 				}
 
+				LayoutStructureItem parentLayoutStructureItem =
+					layoutStructure.getLayoutStructureItem(
+						layoutStructureItem.getParentItemId());
+
+				List<String> parentChildrenItemIds =
+					parentLayoutStructureItem.getChildrenItemIds();
+
 				layoutStructureItemChanges.addMovedLayoutStructureItems(
-					layoutStructureItem.clone());
+					layoutStructureItem.clone(),
+					parentChildrenItemIds.indexOf(
+						layoutStructureItem.getItemId()));
 
 				layoutStructure.moveLayoutStructureItem(
 					formStepLayoutStructureItemChildrenItemId,
@@ -596,8 +622,16 @@ public class FormItemManager {
 				layoutStructure.getLayoutStructureItem(
 					formStepLayoutStructureItemChildrenItemId);
 
+			LayoutStructureItem parentLayoutStructureItem =
+				layoutStructure.getLayoutStructureItem(
+					layoutStructureItem.getParentItemId());
+
+			List<String> parentChildrenItemIds =
+				parentLayoutStructureItem.getChildrenItemIds();
+
 			layoutStructureItemChanges.addMovedLayoutStructureItems(
-				layoutStructureItem.clone());
+				layoutStructureItem.clone(),
+				parentChildrenItemIds.indexOf(layoutStructureItem.getItemId()));
 
 			layoutStructure.moveLayoutStructureItem(
 				formStepLayoutStructureItemChildrenItemId,
@@ -665,8 +699,17 @@ public class FormItemManager {
 					}
 				}
 
+				LayoutStructureItem parentLayoutStructureItem =
+					layoutStructure.getLayoutStructureItem(
+						layoutStructureItem.getParentItemId());
+
+				List<String> parentChildrenItemIds =
+					parentLayoutStructureItem.getChildrenItemIds();
+
 				layoutStructureItemChanges.addMovedLayoutStructureItems(
-					layoutStructureItem.clone());
+					layoutStructureItem.clone(),
+					parentChildrenItemIds.indexOf(
+						layoutStructureItem.getItemId()));
 
 				layoutStructure.moveLayoutStructureItem(
 					childrenItemId, previousFormStepLayoutStructureItemId, -1);
@@ -831,7 +874,7 @@ public class FormItemManager {
 		}
 
 		public void addMovedLayoutStructureItems(
-			LayoutStructureItem layoutStructureItem) {
+			LayoutStructureItem layoutStructureItem, int position) {
 
 			if (layoutStructureItem != null) {
 				_movedLayoutStructureItemsJSONArray.put(
@@ -839,6 +882,8 @@ public class FormItemManager {
 						"itemId", layoutStructureItem.getItemId()
 					).put(
 						"parentId", layoutStructureItem.getParentItemId()
+					).put(
+						"position", position
 					));
 			}
 		}

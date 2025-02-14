@@ -123,7 +123,8 @@ public class UndoFormItemConfigMVCActionCommand
 
 						layoutStructure.moveLayoutStructureItem(
 							jsonObject.getString("itemId"),
-							jsonObject.getString("parentId"), -1);
+							jsonObject.getString("parentId"),
+							jsonObject.getInt("position"));
 					}
 
 					layoutStructure.markLayoutStructureItemForDeletion(

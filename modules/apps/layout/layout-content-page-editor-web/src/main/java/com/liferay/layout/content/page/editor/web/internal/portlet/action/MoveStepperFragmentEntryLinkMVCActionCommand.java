@@ -103,8 +103,15 @@ public class MoveStepperFragmentEntryLinkMVCActionCommand
 		LayoutStructureItem layoutStructureItem =
 			layoutStructure.getLayoutStructureItem(itemId);
 
+		LayoutStructureItem parentLayoutStructureItem =
+			layoutStructure.getLayoutStructureItem(
+				layoutStructureItem.getParentItemId());
+
+		List<String> childrenItemIds =
+			parentLayoutStructureItem.getChildrenItemIds();
+
 		layoutStructureItemChanges.addMovedLayoutStructureItems(
-			layoutStructureItem.clone());
+			layoutStructureItem.clone(), childrenItemIds.indexOf(itemId));
 
 		layoutStructure.moveLayoutStructureItem(itemId, parentItemId, position);
 

@@ -10,6 +10,10 @@ export class NotificationsPage {
 
 	readonly backButton: Locator;
 	readonly requestsTab: Locator;
+	readonly sharingNotificationMessage: (
+		userName: string,
+		documentTitle: string
+	) => Locator;
 
 	constructor(page: Page) {
 		this.page = page;
@@ -20,10 +24,18 @@ export class NotificationsPage {
 		this.requestsTab = this.page.getByRole('link', {
 			name: 'Requests List (0)',
 		});
+		this.sharingNotificationMessage = (
+			userName: string,
+			documentTitle: string
+		) => {
+			return page.getByText(
+				`${userName} has shared ${documentTitle} with you for viewing.`
+			);
+		};
 	}
 
-	async goto() {
-		await this.page.getByLabel('Test Test User Profile').click();
+	async goto(userName: string = 'Test Test') {
+		await this.page.getByLabel(`${userName} User Profile`).click();
 		await this.page.getByRole('menuitem', {name: 'Notifications'}).click();
 	}
 }

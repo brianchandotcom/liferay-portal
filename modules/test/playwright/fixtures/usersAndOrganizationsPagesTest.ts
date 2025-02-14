@@ -21,16 +21,22 @@ import {ServiceAccountsPage} from '../pages/users-admin-web/ServiceAccountsPage'
 import {TeamsPage} from '../pages/users-admin-web/TeamsPage';
 import {UserPersonalSitePage} from '../pages/users-admin-web/UserPersonalSitePage';
 import {UsersAndOrganizationsPage} from '../pages/users-admin-web/UsersAndOrganizationsPage';
+import {DocumentLibraryPage} from '../pages/users-admin-web/document-library-web/DocumentLibraryPage';
+import {SiteMembershipsPage} from '../pages/users-admin-web/site-admin-web/SiteMembershipsPage';
+import {NotificationsPage} from '../tests/notifications-web/pages/NotificationsPage';
 
 const usersAndOrganizationsPagesTest = test.extend<{
 	assignUsersPage: AssignUsersPage;
+	documentLibraryPage: DocumentLibraryPage;
 	editOrganizationPage: EditOrganizationPage;
 	editUserPage: EditUserPage;
 	exportUserDataPage: ExportUserDataPage;
+	notificationsPage: NotificationsPage;
 	organizationUsersPage: OrganizationUsersPage;
 	personalDataErasurePage: PersonalDataErasurePage;
 	serviceAccountsPage: ServiceAccountsPage;
 	siteConfigurationDetailsPage: SiteConfigurationDetailsPage;
+	siteMembershipsPage: SiteMembershipsPage;
 	siteSettingsPage: SiteSettingsPage;
 	teamsPage: TeamsPage;
 	userAssociatedDataDocumentLibraryPage: UserAssociatedDataDocumentLibraryPage;
@@ -43,6 +49,9 @@ const usersAndOrganizationsPagesTest = test.extend<{
 	assignUsersPage: async ({page}, use) => {
 		await use(new AssignUsersPage(page));
 	},
+	documentLibraryPage: async ({page}, use) => {
+		await use(new DocumentLibraryPage(page));
+	},
 	editOrganizationPage: async ({page}, use) => {
 		await use(new EditOrganizationPage(page));
 	},
@@ -51,6 +60,9 @@ const usersAndOrganizationsPagesTest = test.extend<{
 	},
 	exportUserDataPage: async ({page}, use) => {
 		await use(new ExportUserDataPage(page));
+	},
+	notificationsPage: async ({page}, use) => {
+		await use(new NotificationsPage(page));
 	},
 	organizationUsersPage: async ({page}, use) => {
 		await use(new OrganizationUsersPage(page));
@@ -63,6 +75,9 @@ const usersAndOrganizationsPagesTest = test.extend<{
 	},
 	siteConfigurationDetailsPage: async ({page}, use) => {
 		await use(new SiteConfigurationDetailsPage(page));
+	},
+	siteMembershipsPage: async ({page}, use) => {
+		await use(new SiteMembershipsPage(page));
 	},
 	siteSettingsPage: async ({page}, use) => {
 		await use(new SiteSettingsPage(page));

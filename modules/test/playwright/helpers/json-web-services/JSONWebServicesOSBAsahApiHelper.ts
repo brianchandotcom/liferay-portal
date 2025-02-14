@@ -257,7 +257,7 @@ export class JSONWebServicesOSBAsahApiHelper {
 	async closeSessions(): Promise<any> {
 		return this.apiHelpers.delete(
 			`${asahConfig.environment.backendUrl}${this.basePath}/sessions/close`,
-			this.getHeaders()
+			{headers: this.getHeaders()}
 		);
 	}
 }

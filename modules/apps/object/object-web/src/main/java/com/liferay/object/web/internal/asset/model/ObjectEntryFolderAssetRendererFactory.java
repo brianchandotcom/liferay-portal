@@ -13,6 +13,7 @@ import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.service.ObjectEntryFolderService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -33,7 +34,6 @@ public class ObjectEntryFolderAssetRendererFactory
 		setLinkable(true);
 		setClassName(ObjectEntryFolder.class.getName());
 		setPortletId(ObjectPortletKeys.OBJECT_DEFINITIONS);
-		setSearchable(true);
 	}
 
 	@Override
@@ -66,6 +66,17 @@ public class ObjectEntryFolderAssetRendererFactory
 	@Override
 	public String getType() {
 		return TYPE;
+	}
+
+	@Override
+	public boolean isSearchable() {
+		if (FeatureFlagManagerUtil.isEnabled(
+				CompanyThreadLocal.getCompanyId(), "LPD-17809")) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	@Reference

@@ -142,16 +142,17 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 
 		ServletContext servletContext = portletApp.getServletContext();
 
-		String path = "/WEB-INF/classes/" + resourceBundle;
+		String path = resourceBundle;
 
-		int index = path.lastIndexOf(StringPool.PERIOD);
+		int index = resourceBundle.lastIndexOf(StringPool.PERIOD);
 
 		if (index > 0) {
-			path = path.substring(0, index);
+			path = resourceBundle.substring(0, index);
 		}
 
 		Set<String> resourcePaths = servletContext.getResourcePaths(
-			StringUtil.replace(path, CharPool.PERIOD, CharPool.SLASH));
+			"/WEB-INF/classes/" +
+				StringUtil.replace(path, CharPool.PERIOD, CharPool.SLASH));
 
 		if (resourcePaths == null) {
 			return;
@@ -163,7 +164,8 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 		for (String resourcePath : resourcePaths) {
 			String languageId = StringPool.BLANK;
 
-			index = resourcePath.indexOf(StringPool.UNDERLINE, path.length());
+			index = resourcePath.indexOf(
+				StringPool.UNDERLINE, resourcePath.length());
 
 			if (index > -1) {
 				languageId = resourcePath.substring(

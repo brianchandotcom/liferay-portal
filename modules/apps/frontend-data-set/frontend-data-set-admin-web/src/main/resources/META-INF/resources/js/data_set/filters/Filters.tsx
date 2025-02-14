@@ -190,6 +190,8 @@ function Filters({
 	const [availableFields, setAvailableFields] = useState(fields);
 	const [fieldNames, setFieldNames] = useState<string[]>([]);
 	const [filters, setFilters] = useState<IFilter[]>([]);
+	const [toggleActiveDisabled, setToogleActiveDisabled] =
+		useState<boolean>(false);
 
 	useEffect(() => {
 		const getFilters = async () => {
@@ -422,6 +424,8 @@ function Filters({
 	};
 
 	const updateActive = async (item: IFilter) => {
+		setToogleActiveDisabled(true);
+
 		const type: any =
 			item.filterType === 'DATE_RANGE'
 				? 'DATE_FILTERS'
@@ -460,6 +464,8 @@ function Filters({
 		else {
 			openDefaultFailureToast();
 		}
+
+		setToogleActiveDisabled(false);
 	};
 
 	const getBreadcrumbItems = () => {
@@ -591,6 +597,7 @@ function Filters({
 						editFilter={onEdit}
 						filterTypes={FILTER_TYPES}
 						filters={filters}
+						toogleActiveDisabled={toggleActiveDisabled}
 						updateActive={updateActive}
 						updateFiltersOrder={updateFiltersOrder}
 					/>

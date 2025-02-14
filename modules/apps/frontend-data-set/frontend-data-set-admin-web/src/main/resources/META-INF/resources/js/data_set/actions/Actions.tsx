@@ -95,6 +95,8 @@ const Actions = ({dataSet, namespace, spritemap}: IDataSetSectionProps) => {
 	const [loading, setLoading] = useState(true);
 	const [initialActionFormValues, setInitialActionFormValues] =
 		useState<IAction>();
+	const [toggleActiveDisabled, setToogleActiveDisabled] =
+		useState<boolean>(false);
 
 	const getBreadcrumbItems = () => {
 		const breadcrumbItems: React.ComponentProps<
@@ -283,6 +285,8 @@ const Actions = ({dataSet, namespace, spritemap}: IDataSetSectionProps) => {
 	};
 
 	const updateActive = async (item: IAction) => {
+		setToogleActiveDisabled(true);
+
 		const response = await fetch(
 			`${API_URL.ACTIONS}/by-external-reference-code/${item.externalReferenceCode}`,
 			{
@@ -316,6 +320,8 @@ const Actions = ({dataSet, namespace, spritemap}: IDataSetSectionProps) => {
 		else {
 			openDefaultFailureToast();
 		}
+
+		setToogleActiveDisabled(false);
 	};
 
 	useEffect(() => {
@@ -378,6 +384,9 @@ const Actions = ({dataSet, namespace, spritemap}: IDataSetSectionProps) => {
 										noItemsButtonLabel={Liferay.Language.get(
 											'new-item-action'
 										)}
+										toogleActiveDisabled={
+											toggleActiveDisabled
+										}
 										updateActionsOrder={updateActionsOrder}
 										updateActive={updateActive}
 									/>
@@ -402,6 +411,9 @@ const Actions = ({dataSet, namespace, spritemap}: IDataSetSectionProps) => {
 										noItemsButtonLabel={Liferay.Language.get(
 											'new-creation-action'
 										)}
+										toogleActiveDisabled={
+											toggleActiveDisabled
+										}
 										updateActionsOrder={updateActionsOrder}
 										updateActive={updateActive}
 									/>

@@ -483,6 +483,8 @@ const Sorting = ({
 	const fields = fieldTreeItems.filter((field) => field.sortable);
 	const [fdsSorts, setFDSSorts] = useState<Array<IDataSetSort>>([]);
 	const [loading, setLoading] = useState(true);
+	const [toggleActiveDisabled, setToogleActiveDisabled] =
+		useState<boolean>(false);
 
 	const fetchDataSetSorts = useCallback(async () => {
 		setLoading(true);
@@ -640,6 +642,8 @@ const Sorting = ({
 	};
 
 	const updateActive = async (item: IDataSetSort) => {
+		setToogleActiveDisabled(true);
+
 		const response = await fetch(
 			`${API_URL.SORTS}/by-external-reference-code/${item.externalReferenceCode}`,
 			{
@@ -673,6 +677,8 @@ const Sorting = ({
 		else {
 			openDefaultFailureToast();
 		}
+
+		setToogleActiveDisabled(false);
 	};
 
 	return (
@@ -732,6 +738,8 @@ const Sorting = ({
 											contentRenderer: {
 												component: ({item}: any) =>
 													Toggle({
+														disabled:
+															toggleActiveDisabled,
 														item,
 														toggleChange:
 															updateActive,

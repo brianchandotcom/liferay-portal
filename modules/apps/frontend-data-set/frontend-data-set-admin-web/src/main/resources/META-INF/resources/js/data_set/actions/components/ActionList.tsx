@@ -16,6 +16,7 @@ const ActionList = ({
 	deleteAction,
 	editAction,
 	noItemsButtonLabel,
+	toogleActiveDisabled,
 	updateActionsOrder,
 	updateActive,
 }: {
@@ -25,6 +26,7 @@ const ActionList = ({
 	deleteAction: ({item}: {item: IAction}) => void;
 	editAction: ({item}: {item: IAction}) => void;
 	noItemsButtonLabel: string;
+	toogleActiveDisabled: boolean;
 	updateActionsOrder: ({order}: {order: string}) => void;
 	updateActive: (item: IAction) => Promise<void>;
 }) => {
@@ -68,6 +70,7 @@ const ActionList = ({
 								contentRenderer: {
 									component: ({item}: any) =>
 										Toggle({
+											disabled: toogleActiveDisabled,
 											item,
 											toggleChange: updateActive,
 										}),

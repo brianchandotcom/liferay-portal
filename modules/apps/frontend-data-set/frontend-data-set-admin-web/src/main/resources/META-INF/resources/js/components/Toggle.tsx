@@ -9,9 +9,11 @@ import React from 'react';
 import '../../css/components/Toggle.scss';
 
 const ToggleStatus = ({
+	disabled = false,
 	item,
 	toggleChange,
 }: {
+	disabled: boolean;
 	item: any;
 	toggleChange: (item: any) => Promise<void>;
 }) => {
@@ -22,6 +24,7 @@ const ToggleStatus = ({
 	return (
 		<div className="dsm-toggle-switch">
 			<ClayToggle
+				disabled={disabled}
 				label={label}
 				onToggle={() => toggleChange(item)}
 				sizing="sm"

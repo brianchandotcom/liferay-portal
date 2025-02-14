@@ -15,6 +15,7 @@ const FilterList = ({
 	editFilter,
 	filterTypes,
 	filters,
+	toogleActiveDisabled,
 	updateActive,
 	updateFiltersOrder,
 }: {
@@ -23,6 +24,7 @@ const FilterList = ({
 	editFilter: ({item}: {item: IFilter}) => void;
 	filterTypes: Record<EFilterType, IFilterTypeProps>;
 	filters: IFilter[];
+	toogleActiveDisabled: boolean;
 	updateActive: (item: IFilter) => Promise<void>;
 	updateFiltersOrder: ({filtersOrder}: {filtersOrder: string}) => void;
 }) => {
@@ -65,6 +67,7 @@ const FilterList = ({
 								contentRenderer: {
 									component: ({item}: any) =>
 										Toggle({
+											disabled: toogleActiveDisabled,
 											item,
 											toggleChange: updateActive,
 										}),

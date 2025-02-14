@@ -11,6 +11,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.LabelItemListBuilder;
 import com.liferay.portal.kernel.dao.search.RowChecker;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
@@ -185,11 +186,17 @@ public class StyleBookVerticalCard
 
 	@Override
 	public boolean isSelectable() {
-		if (_styleBookEntry.getStyleBookEntryId() > 0) {
-			return true;
+		if ((_styleBookEntry.getStyleBookEntryId() <= 0) ||
+			(FeatureFlagManagerUtil.isEnabled(
+				_themeDisplay.getCompanyId(), "LPD-30204") &&
+			 StyleBookUtil.isThemeInactive(
+				 _styleBookEntry.getCompanyId(),
+				 _styleBookEntry.getThemeId()))) {
+
+			return false;
 		}
 
-		return false;
+		return true;
 	}
 
 	private final RenderRequest _renderRequest;

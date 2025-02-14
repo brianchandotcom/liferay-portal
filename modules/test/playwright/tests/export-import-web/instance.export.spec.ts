@@ -82,7 +82,7 @@ test('cannot export site scoped custom object entries at instance level', async 
 	await expect(page.getByLabel('Tests 1 Items')).toBeHidden();
 });
 
-test('can export with "Export-..." as default name', async ({
+test('can export new default and custom task name', async ({
 	apiHelpers,
 	companyExportImportPage,
 }) => {
@@ -122,12 +122,24 @@ test('can export with "Export-..." as default name', async ({
 
 	apiHelpers.data.push({id: objectDefinition.id, type: 'objectDefinition'});
 
-	const exportFilePath = await companyExportImportPage.export(
-		'Tests 1 Items',
-		true
+	const defaultExportFilePath =
+		await companyExportImportPage.export('Tests 1 Items');
+
+	expect(defaultExportFilePath).toMatch(
+		new RegExp(`^${getTempDir()}Export-`)
 	);
 
-	expect(exportFilePath).toMatch(new RegExp(`^${getTempDir()}Export-`));
+	const taskName = 'CustomTaskName';
+
+	const customExportFilePath = await companyExportImportPage.export(
+		'Tests 1 Items',
+		false,
+		taskName
+	);
+
+	expect(customExportFilePath).toMatch(
+		new RegExp(`^${getTempDir()}${taskName}-`)
+	);
 });
 
 test('can export custom object entries at instance level with permissions', async ({

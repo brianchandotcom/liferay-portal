@@ -63,6 +63,7 @@ import com.liferay.object.service.persistence.ObjectLayoutColumnPersistence;
 import com.liferay.object.service.persistence.ObjectRelationshipPersistence;
 import com.liferay.object.system.SystemObjectDefinitionManager;
 import com.liferay.object.system.SystemObjectDefinitionManagerRegistry;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.Table;
@@ -367,33 +368,33 @@ public class ObjectFieldLocalServiceImpl
 			List<ObjectField> objectFields)
 		throws PortalException {
 
-		List<ObjectField> activeObjectFields = new ArrayList<>();
+		return TransformUtil.transform(
+			objectFields,
+			objectField -> {
+				long objectFieldId = objectField.getObjectFieldId();
 
-		for (ObjectField objectField : objectFields) {
-			objectField.setObjectFieldSettings(
-				_objectFieldSettingLocalService.
-					getObjectFieldObjectFieldSettings(
-						objectField.getObjectFieldId()));
+				objectField.setObjectFieldSettings(
+					_objectFieldSettingLocalService.
+						getObjectFieldObjectFieldSettings(objectFieldId));
 
-			if (Validator.isNotNull(objectField.getRelationshipType())) {
+				if (Validator.isNull(objectField.getRelationshipType())) {
+					return objectField;
+				}
+
 				ObjectRelationship objectRelationship =
 					_objectRelationshipPersistence.fetchByObjectFieldId2(
-						objectField.getObjectFieldId());
+						objectFieldId);
 
 				ObjectDefinition objectDefinition =
 					_objectDefinitionPersistence.findByPrimaryKey(
 						objectRelationship.getObjectDefinitionId1());
 
 				if (objectDefinition.isActive()) {
-					activeObjectFields.add(objectField);
+					return objectField;
 				}
-			}
-			else {
-				activeObjectFields.add(objectField);
-			}
-		}
 
-		return activeObjectFields;
+				return null;
+			});
 	}
 
 	@Override

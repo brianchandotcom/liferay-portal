@@ -336,18 +336,12 @@ public class ObjectLayoutLocalServiceImpl
 			List<ObjectLayoutColumn> objectLayoutColumns)
 		throws PortalException {
 
-		List<ObjectLayoutColumn> addObjectLayoutColumns = new ArrayList<>();
-
-		for (ObjectLayoutColumn objectLayoutColumn : objectLayoutColumns) {
-			addObjectLayoutColumns.add(
-				_addObjectLayoutColumn(
-					user, objectDefinitionId,
-					objectLayoutColumn.getObjectFieldId(), objectLayoutRowId,
-					objectLayoutColumn.getPriority(),
-					objectLayoutColumn.getSize()));
-		}
-
-		return addObjectLayoutColumns;
+		return TransformUtil.transform(
+			objectLayoutColumns,
+			objectLayoutColumn -> _addObjectLayoutColumn(
+				user, objectDefinitionId, objectLayoutColumn.getObjectFieldId(),
+				objectLayoutRowId, objectLayoutColumn.getPriority(),
+				objectLayoutColumn.getSize()));
 	}
 
 	private ObjectLayoutRow _addObjectLayoutRow(

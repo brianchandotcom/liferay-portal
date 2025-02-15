@@ -427,8 +427,6 @@ public class PortletCategoryManagerImpl implements PortletCategoryManager {
 		Set<String> highlightedPortletIds, PortletCategory portletCategory,
 		ThemeDisplay themeDisplay) {
 
-		List<Portlet> portlets = new ArrayList<>();
-
 		Set<String> portletIds = portletCategory.getPortletIds();
 
 		Layout layout = themeDisplay.getLayout();
@@ -437,32 +435,33 @@ public class PortletCategoryManagerImpl implements PortletCategoryManager {
 			portletIds = highlightedPortletIds;
 		}
 
-		for (String portletId : portletIds) {
-			Portlet portlet = _portletLocalService.getPortletById(
-				themeDisplay.getCompanyId(), portletId);
+		return TransformUtil.transform(
+			portletIds,
+			portletId -> {
+				Portlet portlet = _portletLocalService.getPortletById(
+					themeDisplay.getCompanyId(), portletId);
 
-			if (!_isVisible(layout, portlet)) {
-				continue;
-			}
-
-			try {
-				if (PortletPermissionUtil.contains(
-						themeDisplay.getPermissionChecker(),
-						themeDisplay.getLayout(), portlet,
-						ActionKeys.ADD_TO_PAGE)) {
-
-					portlets.add(portlet);
+				if (!_isVisible(layout, portlet)) {
+					return null;
 				}
-			}
-			catch (PortalException portalException) {
-				_log.error(
-					"Unable to check portlet permissions for " +
-						portlet.getPortletId(),
-					portalException);
-			}
-		}
 
-		return portlets;
+				try {
+					if (PortletPermissionUtil.contains(
+							themeDisplay.getPermissionChecker(), layout,
+							portlet, ActionKeys.ADD_TO_PAGE)) {
+
+						return portlet;
+					}
+				}
+				catch (PortalException portalException) {
+					_log.error(
+						"Unable to check portlet permissions for " +
+							portlet.getPortletId(),
+						portalException);
+				}
+
+				return null;
+			});
 	}
 
 	private JSONArray _getPortletsJSONArray(

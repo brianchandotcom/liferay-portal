@@ -15,6 +15,7 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMFieldLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.util.comparator.StructureStructureKeyComparator;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -23,7 +24,6 @@ import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -52,8 +52,6 @@ public class FileEntryMetadataOpenGraphTagsProvider {
 			return Collections.emptyList();
 		}
 
-		List<KeyValuePair> keyValuePairs = new ArrayList<>();
-
 		FileVersion fileVersion = fileEntry.getFileVersion();
 
 		List<DDMStructure> ddmStructures =
@@ -62,34 +60,34 @@ public class FileEntryMetadataOpenGraphTagsProvider {
 				_portal.getClassNameId(RawMetadataProcessor.class),
 				StructureStructureKeyComparator.getInstance(false));
 
-		for (DDMStructure ddmStructure : ddmStructures) {
-			DLFileEntryMetadata fileEntryMetadata =
-				_dlFileEntryMetadataLocalService.fetchFileEntryMetadata(
-					ddmStructure.getStructureId(),
-					fileVersion.getFileVersionId());
+		return TransformUtil.transform(
+			ddmStructures,
+			ddmStructure -> {
+				DLFileEntryMetadata fileEntryMetadata =
+					_dlFileEntryMetadataLocalService.fetchFileEntryMetadata(
+						ddmStructure.getStructureId(),
+						fileVersion.getFileVersionId());
 
-			if (fileEntryMetadata == null) {
-				continue;
-			}
+				if (fileEntryMetadata == null) {
+					return null;
+				}
 
-			String tiffImageLength = _getDDMFormFieldsValueValue(
-				fileEntryMetadata.getDDMStorageId(), "TIFF_IMAGE_LENGTH");
+				String tiffImageLength = _getDDMFormFieldsValueValue(
+					fileEntryMetadata.getDDMStorageId(), "TIFF_IMAGE_LENGTH");
 
-			if (tiffImageLength != null) {
-				keyValuePairs.add(
-					new KeyValuePair("og:image:height", tiffImageLength));
-			}
+				if (tiffImageLength != null) {
+					return new KeyValuePair("og:image:height", tiffImageLength);
+				}
 
-			String tiffImageWidth = _getDDMFormFieldsValueValue(
-				fileEntryMetadata.getDDMStorageId(), "TIFF_IMAGE_WIDTH");
+				String tiffImageWidth = _getDDMFormFieldsValueValue(
+					fileEntryMetadata.getDDMStorageId(), "TIFF_IMAGE_WIDTH");
 
-			if (tiffImageWidth != null) {
-				keyValuePairs.add(
-					new KeyValuePair("og:image:width", tiffImageWidth));
-			}
-		}
+				if (tiffImageWidth != null) {
+					return new KeyValuePair("og:image:width", tiffImageWidth);
+				}
 
-		return keyValuePairs;
+				return null;
+			});
 	}
 
 	private String _getDDMFormFieldsValueValue(

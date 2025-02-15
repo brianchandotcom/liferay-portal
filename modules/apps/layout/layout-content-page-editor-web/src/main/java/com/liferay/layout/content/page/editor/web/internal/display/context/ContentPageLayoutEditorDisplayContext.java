@@ -21,13 +21,13 @@ import com.liferay.layout.content.page.editor.web.internal.manager.FragmentEntry
 import com.liferay.layout.content.page.editor.web.internal.segments.SegmentsExperienceUtil;
 import com.liferay.layout.manager.LayoutLockManager;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
-import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureLocalService;
 import com.liferay.layout.page.template.service.LayoutPageTemplateStructureRelLocalService;
 import com.liferay.learn.LearnMessage;
 import com.liferay.learn.LearnMessageUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -63,8 +63,6 @@ import com.liferay.segments.service.SegmentsExperimentRelLocalService;
 import com.liferay.staging.StagingGroupHelper;
 import com.liferay.style.book.service.StyleBookEntryLocalService;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -276,22 +274,12 @@ public class ContentPageLayoutEditorDisplayContext
 				fetchLayoutPageTemplateStructure(
 					themeDisplay.getScopeGroupId(), themeDisplay.getPlid());
 
-		if (layoutPageTemplateStructure == null) {
-			return Collections.emptyList();
-		}
-
-		List<Map<String, Object>> layoutDataList = new ArrayList<>();
-
-		List<LayoutPageTemplateStructureRel> layoutPageTemplateStructureRels =
+		return TransformUtil.transform(
 			_layoutPageTemplateStructureRelLocalService.
 				getLayoutPageTemplateStructureRels(
 					layoutPageTemplateStructure.
-						getLayoutPageTemplateStructureId());
-
-		for (LayoutPageTemplateStructureRel layoutPageTemplateStructureRel :
-				layoutPageTemplateStructureRels) {
-
-			layoutDataList.add(
+						getLayoutPageTemplateStructureId()),
+			layoutPageTemplateStructureRel ->
 				HashMapBuilder.<String, Object>put(
 					"layoutData",
 					JSONFactoryUtil.createJSONObject(
@@ -300,9 +288,6 @@ public class ContentPageLayoutEditorDisplayContext
 					"segmentsExperienceId",
 					layoutPageTemplateStructureRel.getSegmentsExperienceId()
 				).build());
-		}
-
-		return layoutDataList;
 	}
 
 	private long _getSegmentsEntryId() {

@@ -157,10 +157,7 @@ public class DisplayPageTemplateFolderResourceImpl
 			_getParentLayoutPageTemplateCollectionId(
 				displayPageTemplateFolder, groupId);
 
-		if (Validator.isNotNull(
-				displayPageTemplateFolder.
-					getParentDisplayPageTemplateFolderExternalReferenceCode()) &&
-			!Objects.equals(
+		if (!Objects.equals(
 				layoutPageTemplateCollection.
 					getParentLayoutPageTemplateCollectionId(),
 				parentLayoutPageTemplateCollectionId)) {

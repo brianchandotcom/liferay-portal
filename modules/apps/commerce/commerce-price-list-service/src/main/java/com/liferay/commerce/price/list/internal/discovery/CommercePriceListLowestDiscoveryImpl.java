@@ -11,6 +11,7 @@ import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.CommercePriceListLocalService;
 import com.liferay.commerce.pricing.constants.CommercePricingConstants;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.Validator;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -29,11 +30,24 @@ public class CommercePriceListLowestDiscoveryImpl
 			String currencyCode, String type, String unitOfMeasureKey)
 		throws PortalException {
 
-		return _commercePriceListLocalService.getCommercePriceListByLowestPrice(
-			groupId, commerceAccountId,
-			_accountGroupLocalService.getAccountGroupIds(commerceAccountId),
-			commerceChannelId, commerceOrderTypeId, cpInstanceUuid,
-			currencyCode, type, unitOfMeasureKey);
+		CommercePriceList commercePriceList =
+			_commercePriceListLocalService.getCommercePriceListByLowestPrice(
+				groupId, commerceAccountId,
+				_accountGroupLocalService.getAccountGroupIds(commerceAccountId),
+				commerceChannelId, commerceOrderTypeId, cpInstanceUuid,
+				currencyCode, type, unitOfMeasureKey);
+
+		if ((commercePriceList == null) && Validator.isBlank(currencyCode)) {
+			return _commercePriceListLocalService.
+				getCommercePriceListByLowestPrice(
+					groupId, commerceAccountId,
+					_accountGroupLocalService.getAccountGroupIds(
+						commerceAccountId),
+					commerceChannelId, commerceOrderTypeId, cpInstanceUuid,
+					null, type, unitOfMeasureKey);
+		}
+
+		return commercePriceList;
 	}
 
 	@Override

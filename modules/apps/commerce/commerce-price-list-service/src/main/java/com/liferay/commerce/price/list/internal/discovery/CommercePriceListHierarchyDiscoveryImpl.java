@@ -14,6 +14,7 @@ import com.liferay.commerce.product.constants.CommerceChannelAccountEntryRelCons
 import com.liferay.commerce.product.model.CommerceChannelAccountEntryRel;
 import com.liferay.commerce.product.service.CommerceChannelAccountEntryRelLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
 
@@ -33,6 +34,29 @@ public class CommercePriceListHierarchyDiscoveryImpl
 			long groupId, long commerceAccountId, long commerceChannelId,
 			long commerceOrderTypeId, String cpInstanceUuid,
 			String currencyCode, String type, String unitOfMeasureKey)
+		throws PortalException {
+
+		CommercePriceList commercePriceList = _getCommercePriceList(
+			groupId, commerceAccountId, commerceChannelId, commerceOrderTypeId,
+			currencyCode, type);
+
+		if ((commercePriceList == null) && !Validator.isBlank(currencyCode)) {
+			return _getCommercePriceList(
+				groupId, commerceAccountId, commerceChannelId,
+				commerceOrderTypeId, null, type);
+		}
+
+		return commercePriceList;
+	}
+
+	@Override
+	public String getCommercePriceListDiscoveryKey() {
+		return CommercePricingConstants.ORDER_BY_HIERARCHY;
+	}
+
+	private CommercePriceList _getCommercePriceList(
+			long groupId, long commerceAccountId, long commerceChannelId,
+			long commerceOrderTypeId, String currencyCode, String type)
 		throws PortalException {
 
 		CommercePriceList firstEligibleCommercePriceList = null;
@@ -276,11 +300,6 @@ public class CommercePriceListHierarchyDiscoveryImpl
 		}
 
 		return firstEligibleCommercePriceList;
-	}
-
-	@Override
-	public String getCommercePriceListDiscoveryKey() {
-		return CommercePricingConstants.ORDER_BY_HIERARCHY;
 	}
 
 	private CommercePriceList _getDefaultCommercePriceList(

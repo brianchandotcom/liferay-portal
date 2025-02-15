@@ -6,6 +6,7 @@
 package com.liferay.commerce.price.list.service.impl;
 
 import com.liferay.commerce.currency.exception.NoSuchCurrencyException;
+import com.liferay.commerce.currency.model.CommerceCurrencyTable;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.price.list.constants.CommercePriceListConstants;
 import com.liferay.commerce.price.list.exception.CommercePriceListCurrencyException;
@@ -15,7 +16,6 @@ import com.liferay.commerce.price.list.exception.CommercePriceListParentPriceLis
 import com.liferay.commerce.price.list.exception.DuplicateCommerceBasePriceListException;
 import com.liferay.commerce.price.list.exception.NoSuchPriceListException;
 import com.liferay.commerce.price.list.exception.RequiredCommerceBasePriceListException;
-import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.model.CommercePriceEntryTable;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.model.CommercePriceListAccountRelTable;
@@ -35,7 +35,9 @@ import com.liferay.commerce.pricing.exception.CommerceUndefinedBasePriceListExce
 import com.liferay.commerce.pricing.service.CommercePriceModifierLocalService;
 import com.liferay.commerce.product.service.CommerceChannelAccountEntryRelLocalService;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
+import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
+import com.liferay.petra.sql.dsl.expression.Expression;
 import com.liferay.petra.sql.dsl.expression.Predicate;
 import com.liferay.petra.sql.dsl.query.FromStep;
 import com.liferay.petra.sql.dsl.query.GroupByStep;
@@ -88,6 +90,8 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 
 import java.io.Serializable;
+
+import java.math.BigDecimal;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -777,29 +781,37 @@ public class CommercePriceListLocalServiceImpl
 			String currencyCode, String type, String unitOfMeasureKey)
 		throws PortalException {
 
-		List<CommercePriceEntry> commercePriceEntries =
-			_commercePriceEntryPersistence.dslQuery(
-				_getGroupByStep(
-					DSLQueryFactoryUtil.selectDistinct(
-						CommercePriceEntryTable.INSTANCE),
-					groupId, commerceAccountId, commerceAccountGroupIds,
-					commerceChannelId, commerceOrderTypeId, cpInstanceUuid,
-					currencyCode, type, unitOfMeasureKey
-				).orderBy(
-					CommercePriceEntryTable.INSTANCE.priceOnApplication.
-						ascending(),
-					CommercePriceEntryTable.INSTANCE.price.ascending()
-				).limit(
-					0, 1
-				));
+		Expression<BigDecimal> expression = DSLFunctionFactoryUtil.divide(
+			CommercePriceEntryTable.INSTANCE.price,
+			CommerceCurrencyTable.INSTANCE.rate
+		).as(
+			"convertedPrice"
+		);
 
-		if (commercePriceEntries.isEmpty()) {
+		List<Object[]> results = _commercePriceEntryPersistence.dslQuery(
+			_getGroupByStep(
+				DSLQueryFactoryUtil.select(
+					CommercePriceListTable.INSTANCE.commercePriceListId,
+					expression,
+					CommercePriceEntryTable.INSTANCE.priceOnApplication),
+				groupId, commerceAccountId, commerceAccountGroupIds,
+				commerceChannelId, commerceOrderTypeId, cpInstanceUuid,
+				currencyCode, type, unitOfMeasureKey
+			).orderBy(
+				CommercePriceEntryTable.INSTANCE.priceOnApplication.ascending(),
+				expression.ascending()
+			).limit(
+				0, 1
+			));
+
+		if (results.isEmpty()) {
 			return null;
 		}
 
-		CommercePriceEntry commercePriceEntry = commercePriceEntries.get(0);
+		Object[] result = results.get(0);
 
-		return commercePriceEntry.getCommercePriceList();
+		return commercePriceListLocalService.getCommercePriceList(
+			(Long)result[0]);
 	}
 
 	/**
@@ -1634,6 +1646,10 @@ public class CommercePriceListLocalServiceImpl
 			CommercePriceListTable.INSTANCE,
 			CommercePriceListTable.INSTANCE.commercePriceListId.eq(
 				CommercePriceEntryTable.INSTANCE.commercePriceListId)
+		).innerJoinON(
+			CommerceCurrencyTable.INSTANCE,
+			CommerceCurrencyTable.INSTANCE.code.eq(
+				CommercePriceListTable.INSTANCE.commerceCurrencyCode)
 		).leftJoinOn(
 			CommercePriceListAccountRelTable.INSTANCE,
 			CommercePriceListAccountRelTable.INSTANCE.commercePriceListId.eq(

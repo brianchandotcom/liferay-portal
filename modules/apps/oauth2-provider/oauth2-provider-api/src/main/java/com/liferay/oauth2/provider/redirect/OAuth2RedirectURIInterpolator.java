@@ -61,11 +61,9 @@ public class OAuth2RedirectURIInterpolator {
 						":" + portal.getForwardedPort(httpServletRequest);
 				}
 
-				if (Objects.equals(portWithColon, ":80")) {
-					portWithColon = StringPool.BLANK;
-				}
+				if (Objects.equals(portWithColon, ":80") ||
+					(secure && Objects.equals(portWithColon, ":443"))) {
 
-				if (secure && Objects.equals(portWithColon, ":443")) {
 					portWithColon = StringPool.BLANK;
 				}
 

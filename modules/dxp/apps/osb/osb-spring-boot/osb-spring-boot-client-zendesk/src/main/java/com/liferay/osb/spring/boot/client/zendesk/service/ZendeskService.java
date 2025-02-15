@@ -178,7 +178,8 @@ public class ZendeskService {
 				String.class
 			).block());
 
-		return new ZendeskTicket(jsonObject.getJSONObject("ticket"));
+		return new ZendeskTicket(
+			jsonObject.getJSONObject("ticket"), _zendeskURL);
 	}
 
 	@PostConstruct
@@ -220,7 +221,7 @@ public class ZendeskService {
 	}
 
 	public void updateZendeskOrganization(
-			ZendeskOrganization zendeskOrganization, String businessEvents)
+			long zendeskOrganizationId, String businessEvents)
 		throws Exception {
 
 		JSONObject organizationFieldsJSONObject = new JSONObject(
@@ -242,8 +243,7 @@ public class ZendeskService {
 			_zendeskURL
 		).put(
 		).uri(
-			"/api/v2/organizations/" +
-				zendeskOrganization.getZendeskOrganizationId() + ".json"
+			"/api/v2/organizations/" + zendeskOrganizationId + ".json"
 		).accept(
 			MediaType.APPLICATION_JSON
 		).contentType(
@@ -259,19 +259,19 @@ public class ZendeskService {
 	}
 
 	public void updateZendeskTicket(
-			ZendeskTicket zendeskTicket, Map<Long, String> customFields,
-			Set<String> tags)
+			long zendeskTicketId, long zendeskOrganizationId, long requesterId,
+			String status, Map<Long, String> customFields, Set<String> tags)
 		throws Exception {
 
 		JSONObject ticketJSONObject = new JSONObject(
 		).put(
 			"custom_fields", _transformToCustomFieldsJSONArray(customFields)
 		).put(
-			"organization_id", zendeskTicket.getZendeskOrganizationId()
+			"organization_id", zendeskOrganizationId
 		).put(
-			"requester_id", zendeskTicket.getRequesterId()
+			"requester_id", requesterId
 		).put(
-			"status", zendeskTicket.getStatus()
+			"status", status
 		).put(
 			"tags", _transformToTagsJSONArray(tags)
 		);
@@ -285,7 +285,7 @@ public class ZendeskService {
 			_zendeskURL
 		).put(
 		).uri(
-			"/api/v2/tickets/" + zendeskTicket.getZendeskTicketId() + ".json"
+			"/api/v2/tickets/" + zendeskTicketId + ".json"
 		).accept(
 			MediaType.APPLICATION_JSON
 		).contentType(
@@ -318,7 +318,8 @@ public class ZendeskService {
 		JSONArray jsonArray = jsonObject.getJSONArray("results");
 
 		for (int i = 0; i < jsonArray.length(); i++) {
-			zendeskTickets.add(new ZendeskTicket(jsonArray.getJSONObject(i)));
+			zendeskTickets.add(
+				new ZendeskTicket(jsonArray.getJSONObject(i), _zendeskURL));
 		}
 
 		searchHits.setResults(zendeskTickets);

@@ -20,7 +20,7 @@ public class ZendeskTicket {
 
 	public static final String STATUS_CLOSED = "closed";
 
-	public ZendeskTicket(JSONObject jsonObject) {
+	public ZendeskTicket(JSONObject jsonObject, String zendeskURL) {
 		JSONArray customFieldsJSONArray = jsonObject.getJSONArray(
 			"custom_fields");
 
@@ -38,6 +38,7 @@ public class ZendeskTicket {
 		}
 
 		_customFields = customFields;
+
 		_requesterId = jsonObject.getLong("requester_id");
 		_status = jsonObject.getString("status");
 		_subject = jsonObject.getString("subject");
@@ -53,8 +54,11 @@ public class ZendeskTicket {
 		}
 
 		_tags = tags;
+
 		_zendeskOrganizationId = jsonObject.getLong("organization_id");
 		_zendeskTicketId = jsonObject.getLong("id");
+
+		_zendeskURL = zendeskURL;
 	}
 
 	public Map<Long, String> getCustomFields() {
@@ -93,6 +97,19 @@ public class ZendeskTicket {
 		return false;
 	}
 
+	public JSONObject toJSONObject() {
+		return new JSONObject(
+		).put(
+			"link", _zendeskURL + "/requests/" + _zendeskTicketId
+		).put(
+			"status", _status
+		).put(
+			"subject", _subject
+		).put(
+			"ticketId", _zendeskTicketId
+		);
+	}
+
 	private final Map<Long, String> _customFields;
 	private final long _requesterId;
 	private final String _status;
@@ -100,5 +117,6 @@ public class ZendeskTicket {
 	private final Set<String> _tags;
 	private final long _zendeskOrganizationId;
 	private final long _zendeskTicketId;
+	private final String _zendeskURL;
 
 }

@@ -9,13 +9,10 @@ import com.liferay.client.extension.util.spring.boot3.BaseRestController;
 import com.liferay.customer.constants.ExternalLinkConstants;
 import com.liferay.customer.service.KoroneikiService;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ExternalLink;
-import com.liferay.osb.spring.boot.client.zendesk.model.ZendeskOrganization;
 import com.liferay.osb.spring.boot.client.zendesk.model.ZendeskTicket;
 import com.liferay.osb.spring.boot.client.zendesk.search.SearchHits;
 import com.liferay.osb.spring.boot.client.zendesk.search.ZendeskTicketQuery;
 import com.liferay.osb.spring.boot.client.zendesk.service.ZendeskService;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -61,19 +58,19 @@ public class BusinessEventRestController extends BaseRestController {
 		throws Exception {
 
 		try {
-			ZendeskOrganization zendeskOrganization = _getZendeskOrganization(
+			long zendeskOrganizationId = _fetchZendeskOrganizationId(
 				externalReferenceCode);
 
 			ZendeskTicket zendeskTicket = _zendeskService.getZendeskTicket(
 				ticketId);
 
-			if (zendeskOrganization.getZendeskOrganizationId() !=
+			if (zendeskOrganizationId !=
 					zendeskTicket.getZendeskOrganizationId()) {
 
 				throw new PrincipalException();
 			}
 
-			JSONObject jsonObject = _transformTicket(zendeskTicket);
+			JSONObject jsonObject = zendeskTicket.toJSONObject();
 
 			return new ResponseEntity<>(jsonObject.toString(), HttpStatus.OK);
 		}
@@ -94,8 +91,29 @@ public class BusinessEventRestController extends BaseRestController {
 		throws Exception {
 
 		try {
-			JSONArray jsonArray = _getAccountTicketsJSONArray(
-				externalReferenceCode);
+			ZendeskTicketQuery zendeskTicketQuery = new ZendeskTicketQuery();
+
+			zendeskTicketQuery.addCriterion(
+				"organization:" +
+					_fetchZendeskOrganizationId(externalReferenceCode));
+			zendeskTicketQuery.addCriterion("status<closed");
+
+			int page = 1;
+
+			JSONArray jsonArray = new JSONArray();
+
+			while (page > 0) {
+				zendeskTicketQuery.setPage(page);
+
+				SearchHits<ZendeskTicket> searchHits = _zendeskService.search(
+					zendeskTicketQuery);
+
+				for (ZendeskTicket zendeskTicket : searchHits.getResults()) {
+					jsonArray.put(zendeskTicket.toJSONObject());
+				}
+
+				page = searchHits.getNextPage();
+			}
 
 			return new ResponseEntity<>(jsonArray.toString(), HttpStatus.OK);
 		}
@@ -117,39 +135,26 @@ public class BusinessEventRestController extends BaseRestController {
 		throws Exception {
 
 		try {
-			_updateZendesk(externalReferenceCode, new JSONObject(json));
+			JSONObject jsonObject = new JSONObject(json);
+
+			JSONArray jsonArray = jsonObject.getJSONArray("businessEvents");
+
+			_updateZendesk(
+				_fetchZendeskOrganizationId(externalReferenceCode),
+				_getBusinessEvents(jsonArray),
+				_getImpactedZendeskTicketIds(jsonArray));
 
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
 		catch (Exception exception) {
-			_log.error(exception, exception);
+			_log.error(
+				"Unable to update Zendesk business events for " +
+					externalReferenceCode,
+				exception);
 
 			return new ResponseEntity(
 				exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-	}
-
-	private List<String> _convertToList(JSONObject jsonObject) {
-		List<String> stringList = new ArrayList<>();
-
-		Iterator<String> iterator = jsonObject.keys();
-
-		while (iterator.hasNext()) {
-			String key = iterator.next();
-
-			if (key.equals("impactedTickets")) {
-				continue;
-			}
-
-			if (Validator.isNotNull(jsonObject.optString(key))) {
-				stringList.add(
-					StringBundler.concat(
-						key, StringPool.COLON, StringPool.SPACE,
-						jsonObject.getString(key)));
-			}
-		}
-
-		return stringList;
 	}
 
 	private long _fetchZendeskOrganizationId(String externalReferenceCode)
@@ -173,21 +178,73 @@ public class BusinessEventRestController extends BaseRestController {
 		return 0;
 	}
 
-	private JSONArray _getAccountTicketsJSONArray(String externalReferenceCode)
+	private String _getBusinessEvents(JSONArray jsonArray) {
+		List<String> businessEvents = new ArrayList<>();
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			List<String> businessEventFieldValues = new ArrayList<>();
+
+			Iterator<String> iterator = jsonObject.keys();
+
+			while (iterator.hasNext()) {
+				String key = iterator.next();
+
+				if (key.equals("impactedZendeskTicketIds")) {
+					continue;
+				}
+
+				if (Validator.isNotNull(jsonObject.optString(key))) {
+					businessEventFieldValues.add(
+						key + ": " + jsonObject.getString(key));
+				}
+			}
+
+			if (!businessEventFieldValues.isEmpty()) {
+				businessEvents.add(
+					StringUtil.merge(businessEventFieldValues, ",\n"));
+			}
+		}
+
+		return StringUtil.merge(businessEvents, "\n\n");
+	}
+
+	private Long[] _getImpactedZendeskTicketIds(JSONArray jsonArray) {
+		Set<Long> zendeskTicketIds = new HashSet<>();
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			JSONArray impactedZendeskTicketIdsJSONArray =
+				jsonObject.getJSONArray("impactedZendeskTicketIds");
+
+			for (int j = 0; j < impactedZendeskTicketIdsJSONArray.length();
+				 j++) {
+
+				zendeskTicketIds.add(
+					impactedZendeskTicketIdsJSONArray.getLong(j));
+			}
+		}
+
+		return zendeskTicketIds.toArray(new Long[0]);
+	}
+
+	private void _updateZendesk(
+			long zendeskOrganizationId, String businessEvents,
+			Long[] impactedZendeskTicketIds)
 		throws Exception {
 
-		ZendeskOrganization zendeskOrganization = _getZendeskOrganization(
-			externalReferenceCode);
+		_zendeskService.updateZendeskOrganization(
+			zendeskOrganizationId, businessEvents);
 
 		ZendeskTicketQuery zendeskTicketQuery = new ZendeskTicketQuery();
 
 		zendeskTicketQuery.addCriterion(
-			"organization:" + zendeskOrganization.getZendeskOrganizationId());
+			"organization:" + zendeskOrganizationId);
 		zendeskTicketQuery.addCriterion("status<closed");
 
 		int page = 1;
-
-		JSONArray jsonArray = new JSONArray();
 
 		while (page > 0) {
 			zendeskTicketQuery.setPage(page);
@@ -196,155 +253,28 @@ public class BusinessEventRestController extends BaseRestController {
 				zendeskTicketQuery);
 
 			for (ZendeskTicket zendeskTicket : searchHits.getResults()) {
-				jsonArray.put(_transformTicket(zendeskTicket));
+				Map<Long, String> customFields =
+					zendeskTicket.getCustomFields();
+
+				customFields.put(
+					_zendeskBusinessEventTicketFieldId, businessEvents);
+
+				Set<String> tags = zendeskTicket.getTags();
+
+				if (ArrayUtil.contains(
+						impactedZendeskTicketIds,
+						zendeskTicket.getZendeskTicketId())) {
+
+					tags.add("impacting_business_event");
+				}
+
+				_zendeskService.updateZendeskTicket(
+					zendeskTicket.getZendeskTicketId(), zendeskOrganizationId,
+					zendeskTicket.getRequesterId(), zendeskTicket.getStatus(),
+					customFields, tags);
 			}
 
 			page = searchHits.getNextPage();
-		}
-
-		return jsonArray;
-	}
-
-	private Long[] _getImpactedTickets(JSONArray jsonArray) {
-		Set<Long> ticketList = new HashSet<>();
-
-		for (int i = 0; i < jsonArray.length(); i++) {
-			JSONObject jsonObject = jsonArray.getJSONObject(i);
-
-			JSONArray impactedTicketsJSONArray = jsonObject.getJSONArray(
-				"impactedTickets");
-
-			for (int j = 0; j < impactedTicketsJSONArray.length(); j++) {
-				ticketList.add(impactedTicketsJSONArray.getLong(j));
-			}
-		}
-
-		return ticketList.toArray(new Long[0]);
-	}
-
-	private ZendeskOrganization _getZendeskOrganization(
-			String externalReferenceCode)
-		throws Exception {
-
-		long zendeskOrganizationId = _fetchZendeskOrganizationId(
-			externalReferenceCode);
-
-		if (zendeskOrganizationId <= 0) {
-			throw new Exception(
-				"Unable to get Koroneiki external link for " +
-					externalReferenceCode);
-		}
-
-		ZendeskOrganization zendeskOrganization =
-			_zendeskService.getZendeskOrganization(zendeskOrganizationId);
-
-		if (zendeskOrganization == null) {
-			throw new Exception(
-				"Unable to get Zendesk organization for " +
-					externalReferenceCode);
-		}
-
-		return zendeskOrganization;
-	}
-
-	private String _parseBusinessEvent(JSONObject jsonObject) {
-		List<String> stringList = _convertToList(jsonObject);
-
-		if (stringList.isEmpty()) {
-			return null;
-		}
-
-		return StringUtil.merge(
-			stringList, StringPool.COMMA + StringPool.NEW_LINE);
-	}
-
-	private String _parseBusinessEvents(JSONArray jsonArray) {
-		List<String> stringList = new ArrayList<>();
-
-		for (int i = 0; i < jsonArray.length(); i++) {
-			stringList.add(_parseBusinessEvent(jsonArray.getJSONObject(i)));
-		}
-
-		return StringUtil.merge(
-			stringList, StringPool.NEW_LINE + StringPool.NEW_LINE);
-	}
-
-	private JSONObject _transformTicket(ZendeskTicket zendeskTicket) {
-		return new JSONObject(
-		).put(
-			"link",
-			_zendeskURL + "/requests/" + zendeskTicket.getZendeskTicketId()
-		).put(
-			"status", zendeskTicket.getStatus()
-		).put(
-			"subject", zendeskTicket.getSubject()
-		).put(
-			"ticketId", zendeskTicket.getZendeskTicketId()
-		);
-	}
-
-	private void _updateZendesk(
-			String externalReferenceCode, JSONObject jsonObject)
-		throws Exception {
-
-		try {
-			ZendeskOrganization zendeskOrganization = _getZendeskOrganization(
-				externalReferenceCode);
-
-			JSONArray jsonArray = jsonObject.getJSONArray("businessEvents");
-
-			String businessEvents = _parseBusinessEvents(jsonArray);
-
-			_zendeskService.updateZendeskOrganization(
-				zendeskOrganization, businessEvents);
-
-			ZendeskTicketQuery zendeskTicketQuery = new ZendeskTicketQuery();
-
-			zendeskTicketQuery.addCriterion(
-				"organization:" +
-					zendeskOrganization.getZendeskOrganizationId());
-			zendeskTicketQuery.addCriterion("status<closed");
-
-			int page = 1;
-
-			Long[] impactedTickets = _getImpactedTickets(jsonArray);
-
-			while (page > 0) {
-				zendeskTicketQuery.setPage(page);
-
-				SearchHits<ZendeskTicket> searchHits = _zendeskService.search(
-					zendeskTicketQuery);
-
-				for (ZendeskTicket zendeskTicket : searchHits.getResults()) {
-					Map<Long, String> customFields =
-						zendeskTicket.getCustomFields();
-
-					customFields.put(
-						_zendeskBusinessEventTicketFieldId, businessEvents);
-
-					Set<String> tags = zendeskTicket.getTags();
-
-					if (ArrayUtil.contains(
-							impactedTickets,
-							zendeskTicket.getZendeskTicketId())) {
-
-						tags.add("impacting_business_event");
-					}
-
-					_zendeskService.updateZendeskTicket(
-						zendeskTicket, customFields, tags);
-				}
-
-				page = searchHits.getNextPage();
-			}
-		}
-		catch (Exception exception) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to update Zendesk business events for " +
-						externalReferenceCode,
-					exception);
-			}
 		}
 	}
 
@@ -359,8 +289,5 @@ public class BusinessEventRestController extends BaseRestController {
 
 	@Autowired
 	private ZendeskService _zendeskService;
-
-	@Value("${liferay.osb.spring.boot.client.zendesk.url}")
-	private String _zendeskURL;
 
 }

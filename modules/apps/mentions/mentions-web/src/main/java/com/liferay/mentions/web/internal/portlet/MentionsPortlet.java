@@ -10,6 +10,7 @@ import com.liferay.mentions.strategy.MentionsStrategy;
 import com.liferay.mentions.util.MentionsUtil;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -37,7 +38,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.user.taglib.servlet.taglib.UserPortraitTag;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Supplier;
@@ -198,30 +198,30 @@ public class MentionsPortlet extends MVCPortlet {
 
 		return () -> {
 			try {
-				List<User> filteredUsers = new ArrayList<>();
+				return TransformUtil.transform(
+					mentionsStrategy.getUsers(
+						themeDisplay.getCompanyId(),
+						themeDisplay.getSiteGroupId(), themeDisplay.getUserId(),
+						query, jsonObject),
+					user -> {
+						PermissionChecker permissionChecker =
+							PermissionCheckerFactoryUtil.create(user);
 
-				List<User> users = mentionsStrategy.getUsers(
-					themeDisplay.getCompanyId(), themeDisplay.getSiteGroupId(),
-					themeDisplay.getUserId(), query, jsonObject);
+						Layout layout = themeDisplay.getLayout();
 
-				for (User user : users) {
-					PermissionChecker permissionChecker =
-						PermissionCheckerFactoryUtil.create(user);
+						if ((layout != null) &&
+							_layoutPermission.contains(
+								permissionChecker, layout, true,
+								ActionKeys.VIEW) &&
+							PortletPermissionUtil.contains(
+								permissionChecker, layout, discussionPortletId,
+								ActionKeys.VIEW)) {
 
-					Layout layout = themeDisplay.getLayout();
+							return user;
+						}
 
-					if ((layout != null) &&
-						_layoutPermission.contains(
-							permissionChecker, layout, true, ActionKeys.VIEW) &&
-						PortletPermissionUtil.contains(
-							permissionChecker, layout, discussionPortletId,
-							ActionKeys.VIEW)) {
-
-						filteredUsers.add(user);
-					}
-				}
-
-				return filteredUsers;
+						return null;
+					});
 			}
 			catch (PortalException portalException) {
 				_log.error(portalException);

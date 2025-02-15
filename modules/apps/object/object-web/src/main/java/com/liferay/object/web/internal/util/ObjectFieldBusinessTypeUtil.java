@@ -6,9 +6,9 @@
 package com.liferay.object.web.internal.util;
 
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -21,28 +21,19 @@ public class ObjectFieldBusinessTypeUtil {
 	public static List<Map<String, String>> getObjectFieldBusinessTypeMaps(
 		Locale locale, List<ObjectFieldBusinessType> objectFieldBusinessTypes) {
 
-		List<Map<String, String>> objectFieldBusinessTypeMaps =
-			new ArrayList<>();
-
-		for (ObjectFieldBusinessType objectFieldBusinessType :
-				objectFieldBusinessTypes) {
-
-			objectFieldBusinessTypeMaps.add(
-				HashMapBuilder.put(
-					"businessType", objectFieldBusinessType.getName()
-				).put(
-					"dbType", objectFieldBusinessType.getDBType()
-				).put(
-					"description",
-					objectFieldBusinessType.getDescription(locale)
-				).put(
-					"label", objectFieldBusinessType.getLabel(locale)
-				).put(
-					"name", objectFieldBusinessType.getName()
-				).build());
-		}
-
-		return objectFieldBusinessTypeMaps;
+		return TransformUtil.transform(
+			objectFieldBusinessTypes,
+			objectFieldBusinessType -> HashMapBuilder.put(
+				"businessType", objectFieldBusinessType.getName()
+			).put(
+				"dbType", objectFieldBusinessType.getDBType()
+			).put(
+				"description", objectFieldBusinessType.getDescription(locale)
+			).put(
+				"label", objectFieldBusinessType.getLabel(locale)
+			).put(
+				"name", objectFieldBusinessType.getName()
+			).build());
 	}
 
 }

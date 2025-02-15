@@ -18,6 +18,7 @@ import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectFolderLocalService;
 import com.liferay.object.web.internal.display.context.helper.ObjectRequestHelper;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -34,7 +35,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -81,24 +81,18 @@ public class ObjectDefinitionsDetailsDisplayContext
 	}
 
 	public List<Map<String, Object>> getNonrelationshipObjectFieldsInfo() {
-		List<Map<String, Object>> nonrelationshipObjectFieldsInfo =
-			new ArrayList<>();
-
 		List<ObjectField> objectFields = ListUtil.filter(
 			getObjectFields(),
 			objectField -> Validator.isNull(objectField.getRelationshipType()));
 
-		for (ObjectField objectField : objectFields) {
-			nonrelationshipObjectFieldsInfo.add(
-				HashMapBuilder.<String, Object>put(
-					"label",
-					LocalizationUtil.getLocalizationMap(objectField.getLabel())
-				).put(
-					"name", objectField.getName()
-				).build());
-		}
-
-		return nonrelationshipObjectFieldsInfo;
+		return TransformUtil.transform(
+			objectFields,
+			objectField -> HashMapBuilder.<String, Object>put(
+				"label",
+				LocalizationUtil.getLocalizationMap(objectField.getLabel())
+			).put(
+				"name", objectField.getName()
+			).build());
 	}
 
 	@Override

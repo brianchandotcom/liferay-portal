@@ -10,6 +10,7 @@ import com.liferay.message.boards.model.MBCategory;
 import com.liferay.message.boards.model.MBThread;
 import com.liferay.message.boards.service.MBCategoryLocalService;
 import com.liferay.message.boards.service.MBThreadLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ContainerModel;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -86,19 +87,13 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 			long classPK, long parentContainerModelId, int start, int end)
 		throws PortalException {
 
-		List<ContainerModel> containerModels = new ArrayList<>();
-
 		MBCategory category = _mbCategoryLocalService.getCategory(classPK);
 
-		List<MBCategory> categories = _mbCategoryLocalService.getCategories(
-			category.getGroupId(), parentContainerModelId,
-			WorkflowConstants.STATUS_APPROVED, start, end);
-
-		for (MBCategory curCategory : categories) {
-			containerModels.add(curCategory);
-		}
-
-		return containerModels;
+		return TransformUtil.transform(
+			_mbCategoryLocalService.getCategories(
+				category.getGroupId(), parentContainerModelId,
+				WorkflowConstants.STATUS_APPROVED, start, end),
+			curCategory -> curCategory);
 	}
 
 	@Override

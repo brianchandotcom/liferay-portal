@@ -5,6 +5,7 @@
 
 package com.liferay.oauth2.provider.redirect;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.Portal;
@@ -12,7 +13,6 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -31,49 +31,48 @@ public class OAuth2RedirectURIInterpolator {
 		HttpServletRequest httpServletRequest, List<String> redirectURIsList,
 		Portal portal) {
 
-		List<String> interpolattedRedirectURIsList = new ArrayList<>();
+		return TransformUtil.transform(
+			redirectURIsList,
+			redirectURI -> {
+				boolean secure = false;
 
-		String protocol = Http.HTTP;
+				if (httpServletRequest != null) {
+					secure = portal.isSecure(httpServletRequest);
+				}
+				else if (Http.HTTPS.equals(
+							PropsUtil.get(
+								PropsKeys.PORTAL_INSTANCE_PROTOCOL)) ||
+						 Http.HTTPS.equals(
+							 PropsUtil.get(PropsKeys.WEB_SERVER_PROTOCOL))) {
 
-		boolean secure = false;
+					secure = true;
+				}
 
-		if (httpServletRequest != null) {
-			secure = portal.isSecure(httpServletRequest);
-		}
-		else if (Http.HTTPS.equals(
-					PropsUtil.get(PropsKeys.PORTAL_INSTANCE_PROTOCOL)) ||
-				 Http.HTTPS.equals(
-					 PropsUtil.get(PropsKeys.WEB_SERVER_PROTOCOL))) {
+				String protocol = Http.HTTP;
 
-			secure = true;
-		}
+				if (secure) {
+					protocol = Http.HTTPS;
+				}
 
-		if (secure) {
-			protocol = Http.HTTPS;
-		}
+				String portWithColon = ":" + portal.getPortalLocalPort(secure);
 
-		String portWithColon = ":" + portal.getPortalLocalPort(secure);
+				if (httpServletRequest != null) {
+					portWithColon =
+						":" + portal.getForwardedPort(httpServletRequest);
+				}
 
-		if (httpServletRequest != null) {
-			portWithColon = ":" + portal.getForwardedPort(httpServletRequest);
-		}
+				if (Objects.equals(portWithColon, ":80")) {
+					portWithColon = StringPool.BLANK;
+				}
 
-		if (Objects.equals(portWithColon, ":80")) {
-			portWithColon = StringPool.BLANK;
-		}
+				if (secure && Objects.equals(portWithColon, ":443")) {
+					portWithColon = StringPool.BLANK;
+				}
 
-		if (secure && Objects.equals(portWithColon, ":443")) {
-			portWithColon = StringPool.BLANK;
-		}
-
-		for (String redirectURI : redirectURIsList) {
-			interpolattedRedirectURIsList.add(
-				StringUtil.replace(
+				return StringUtil.replace(
 					redirectURI, _TOKENS,
-					new String[] {portWithColon, protocol}));
-		}
-
-		return interpolattedRedirectURIsList;
+					new String[] {portWithColon, protocol});
+			});
 	}
 
 	private static final String[] _TOKENS = {

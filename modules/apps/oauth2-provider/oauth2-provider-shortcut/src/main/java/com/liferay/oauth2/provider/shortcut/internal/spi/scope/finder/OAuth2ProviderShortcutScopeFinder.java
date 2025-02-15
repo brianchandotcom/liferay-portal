@@ -10,13 +10,13 @@ import com.liferay.oauth2.provider.scope.spi.prefix.handler.PrefixHandler;
 import com.liferay.oauth2.provider.scope.spi.prefix.handler.PrefixHandlerFactory;
 import com.liferay.oauth2.provider.scope.spi.scope.finder.ScopeFinder;
 import com.liferay.oauth2.provider.scope.spi.scope.mapper.ScopeMapper;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.security.service.access.policy.model.SAPEntry;
 import com.liferay.portal.security.service.access.policy.service.SAPEntryLocalService;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -63,20 +63,20 @@ public class OAuth2ProviderShortcutScopeFinder
 			return _scopeAliasesList;
 		}
 
-		List<String> scopes = new ArrayList<>();
+		return TransformUtil.transform(
+			_scopeAliasesList,
+			scopeAlias -> {
+				String name = "OAUTH2_" + scopeAlias;
 
-		for (String scopeAlias : _scopeAliasesList) {
-			String name = "OAUTH2_" + scopeAlias;
+				SAPEntry sapEntry = _sapEntryLocalService.fetchSAPEntry(
+					companyId, name);
 
-			SAPEntry sapEntry = _sapEntryLocalService.fetchSAPEntry(
-				companyId, name);
+				if ((sapEntry != null) && sapEntry.isEnabled()) {
+					return scopeAlias;
+				}
 
-			if ((sapEntry != null) && sapEntry.isEnabled()) {
-				scopes.add(scopeAlias);
-			}
-		}
-
-		return scopes;
+				return null;
+			});
 	}
 
 	@Override

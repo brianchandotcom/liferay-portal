@@ -10,6 +10,7 @@ import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.service.KBArticleLocalService;
 import com.liferay.knowledge.base.service.KBFolderLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ContainerModel;
 import com.liferay.portal.kernel.model.TrashedModel;
@@ -154,24 +155,20 @@ public abstract class BaseKBTrashHandler extends BaseTrashHandler {
 			OrderByComparator<?> orderByComparator)
 		throws PortalException {
 
-		List<TrashedModel> trashedModels = new ArrayList<>();
-
 		KBFolder kbFolder = kbFolderLocalService.getKBFolder(classPK);
 
-		List<Object> objects = kbFolderLocalService.getKBFoldersAndKBArticles(
-			kbFolder.getGroupId(), classPK, WorkflowConstants.STATUS_IN_TRASH,
-			start, end, orderByComparator);
+		return TransformUtil.transform(
+			kbFolderLocalService.getKBFoldersAndKBArticles(
+				kbFolder.getGroupId(), classPK,
+				WorkflowConstants.STATUS_IN_TRASH, start, end,
+				orderByComparator),
+			object -> {
+				if (object instanceof KBFolder) {
+					return (KBFolder)object;
+				}
 
-		for (Object object : objects) {
-			if (object instanceof KBFolder) {
-				trashedModels.add((KBFolder)object);
-			}
-			else {
-				trashedModels.add((KBArticle)object);
-			}
-		}
-
-		return trashedModels;
+				return (KBArticle)object;
+			});
 	}
 
 	protected abstract long getGroupId(long classPK) throws PortalException;

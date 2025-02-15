@@ -68,13 +68,10 @@ public class OAuth2RedirectURIInterpolator {
 				}
 
 				return StringUtil.replace(
-					redirectURI, _TOKENS,
+					redirectURI,
+					new String[] {TOKEN_PORT_WITH_COLON, TOKEN_PROTOCOL},
 					new String[] {portWithColon, protocol});
 			});
 	}
-
-	private static final String[] _TOKENS = {
-		TOKEN_PORT_WITH_COLON, TOKEN_PROTOCOL
-	};
 
 }

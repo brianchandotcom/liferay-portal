@@ -83,7 +83,9 @@ public interface OpenSSOConfiguration {
 	@Meta.AD(deflt = "mail", name = "email-address-attribute", required = false)
 	public String emailAddressAttr();
 
-	@Meta.AD(deflt = "givenName", name = "first-name-attribute", required = false)
+	@Meta.AD(
+		deflt = "givenName", name = "first-name-attribute", required = false
+	)
 	public String firstNameAttr();
 
 	@Meta.AD(deflt = "sn", name = "last-name-attribute", required = false)

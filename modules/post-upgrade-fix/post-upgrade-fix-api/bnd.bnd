@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Post Upgrade Fix API
-Bundle-SymbolicName: com.liferay.post.upgrade.fix.api
-Bundle-Version: 4.0.0
-Export-Package: com.liferay.post.upgrade.fix.osgi.commands

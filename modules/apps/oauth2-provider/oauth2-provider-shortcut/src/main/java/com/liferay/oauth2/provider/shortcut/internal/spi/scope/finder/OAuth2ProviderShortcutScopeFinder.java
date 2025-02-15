@@ -66,10 +66,8 @@ public class OAuth2ProviderShortcutScopeFinder
 		return TransformUtil.transform(
 			_scopeAliasesList,
 			scopeAlias -> {
-				String name = "OAUTH2_" + scopeAlias;
-
 				SAPEntry sapEntry = _sapEntryLocalService.fetchSAPEntry(
-					companyId, name);
+					companyId, "OAUTH2_" + scopeAlias);
 
 				if ((sapEntry != null) && sapEntry.isEnabled()) {
 					return scopeAlias;

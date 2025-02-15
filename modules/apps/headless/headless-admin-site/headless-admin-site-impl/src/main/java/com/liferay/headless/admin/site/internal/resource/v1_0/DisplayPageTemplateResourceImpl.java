@@ -294,8 +294,7 @@ public class DisplayPageTemplateResourceImpl
 		long layoutPageTemplateCollectionId =
 			_getLayoutPageTemplateCollectionId(displayPageTemplate, groupId);
 
-		if (Validator.isNotNull(displayPageTemplate.getParentFolder()) &&
-			!Objects.equals(
+		if (!Objects.equals(
 				layoutPageTemplateEntry.getLayoutPageTemplateCollectionId(),
 				layoutPageTemplateCollectionId)) {
 

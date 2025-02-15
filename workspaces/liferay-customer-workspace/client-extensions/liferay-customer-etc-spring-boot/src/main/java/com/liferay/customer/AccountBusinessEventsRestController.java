@@ -13,7 +13,6 @@ import com.liferay.osb.spring.boot.client.zendesk.model.ZendeskTicket;
 import com.liferay.osb.spring.boot.client.zendesk.search.SearchHits;
 import com.liferay.osb.spring.boot.client.zendesk.search.ZendeskTicketQuery;
 import com.liferay.osb.spring.boot.client.zendesk.service.ZendeskService;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -46,84 +45,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Jenny Chen
  */
 @RestController
-public class BusinessEventRestController extends BaseRestController {
-
-	@RequestMapping(
-		method = RequestMethod.GET,
-		path = "/accounts/{externalReferenceCode}/tickets/{ticketId}"
-	)
-	public ResponseEntity<String> getZendeskTicket(
-			@PathVariable("externalReferenceCode") String externalReferenceCode,
-			@PathVariable("ticketId") long ticketId)
-		throws Exception {
-
-		try {
-			long zendeskOrganizationId = _fetchZendeskOrganizationId(
-				externalReferenceCode);
-
-			ZendeskTicket zendeskTicket = _zendeskService.getZendeskTicket(
-				ticketId);
-
-			if (zendeskOrganizationId !=
-					zendeskTicket.getZendeskOrganizationId()) {
-
-				throw new PrincipalException();
-			}
-
-			JSONObject jsonObject = zendeskTicket.toJSONObject();
-
-			return new ResponseEntity<>(jsonObject.toString(), HttpStatus.OK);
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
-
-			return new ResponseEntity(
-				exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
-
-	@RequestMapping(
-		method = RequestMethod.GET,
-		path = "/accounts/{externalReferenceCode}/tickets"
-	)
-	public ResponseEntity<String> getZendeskTickets(
-			@PathVariable("externalReferenceCode") String externalReferenceCode)
-		throws Exception {
-
-		try {
-			ZendeskTicketQuery zendeskTicketQuery = new ZendeskTicketQuery();
-
-			zendeskTicketQuery.addCriterion(
-				"organization:" +
-					_fetchZendeskOrganizationId(externalReferenceCode));
-			zendeskTicketQuery.addCriterion("status<closed");
-
-			int page = 1;
-
-			JSONArray jsonArray = new JSONArray();
-
-			while (page > 0) {
-				zendeskTicketQuery.setPage(page);
-
-				SearchHits<ZendeskTicket> searchHits = _zendeskService.search(
-					zendeskTicketQuery);
-
-				for (ZendeskTicket zendeskTicket : searchHits.getResults()) {
-					jsonArray.put(zendeskTicket.toJSONObject());
-				}
-
-				page = searchHits.getNextPage();
-			}
-
-			return new ResponseEntity<>(jsonArray.toString(), HttpStatus.OK);
-		}
-		catch (Exception exception) {
-			_log.error(exception, exception);
-
-			return new ResponseEntity(
-				exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
+public class AccountBusinessEventsRestController extends BaseRestController {
 
 	@RequestMapping(
 		method = RequestMethod.POST,
@@ -279,7 +201,7 @@ public class BusinessEventRestController extends BaseRestController {
 	}
 
 	private static final Log _log = LogFactory.getLog(
-		BusinessEventRestController.class);
+		AccountBusinessEventsRestController.class);
 
 	@Autowired
 	private KoroneikiService _koroneikiService;

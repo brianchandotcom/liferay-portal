@@ -384,12 +384,12 @@ public class CustomFDSSerializerTest {
 
 		_mockSerializeFilters(
 			"fdsName",
-			HashMapBuilder.put(
-				"clientExtensionEntryERC", (Object)cetExternalReferenceCode
+			HashMapBuilder.<String, Object>put(
+				"clientExtensionEntryERC", cetExternalReferenceCode
 			).put(
-				"fieldName", (Object)"channelId"
+				"fieldName", "channelId"
 			).put(
-				"label", (Object)"By Channel CX"
+				"label", "By Channel CX"
 			).build());
 
 		JSONAssert.assertEquals(

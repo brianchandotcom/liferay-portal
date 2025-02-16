@@ -9,7 +9,7 @@
 
 <div class="lfr-translation-manager" id="<%= namespace + id %>">
 	<div class="lfr-translation-manager-content">
-		<label class="lfr-translation-manager-default-locale-label" for="<portlet:namespace />defaultLanguageId"><liferay-ui:message key="web-content-default-language" />:</label>
+		<label class="lfr-translation-manager-default-locale-label" for="<portlet:namespace />defaultLanguageId"><liferay-ui:message key="default-language" />:</label>
 
 		<span class="label label-default label-lg lfr-translation-manager-default-locale-text lfr-translation-manager-translation lfr-translation-manager-translation-editing">
 

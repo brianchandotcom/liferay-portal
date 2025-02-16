@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -281,9 +282,11 @@ public class CustomFDSSerializerTest {
 
 		CETManager cetManager = Mockito.mock(CETManager.class);
 
+		String cetExternalReferenceCode = RandomTestUtil.randomString();
+
 		Mockito.when(
 			cetManager.getCET(
-				Mockito.anyLong(), Mockito.eq("LXC:filter-client-extension"))
+				Mockito.anyLong(), Mockito.eq(cetExternalReferenceCode))
 		).thenAnswer(
 			invocation -> new FDSFilterCET() {
 
@@ -314,7 +317,7 @@ public class CustomFDSSerializerTest {
 
 				@Override
 				public String getExternalReferenceCode() {
-					return "LXC:filter-client-extension";
+					return cetExternalReferenceCode;
 				}
 
 				@Override
@@ -359,7 +362,7 @@ public class CustomFDSSerializerTest {
 
 				@Override
 				public String getURL() {
-					return "/o/LXC:filter-client-extension/index.js";
+					return "/o/" + cetExternalReferenceCode + "/index.js";
 				}
 
 				@Override
@@ -382,7 +385,7 @@ public class CustomFDSSerializerTest {
 		_mockSerializeFilters(
 			"fdsName",
 			HashMapBuilder.put(
-				"clientExtensionEntryERC", (Object)"LXC:filter-client-extension"
+				"clientExtensionEntryERC", (Object)cetExternalReferenceCode
 			).put(
 				"fieldName", (Object)"channelId"
 			).put(
@@ -393,7 +396,7 @@ public class CustomFDSSerializerTest {
 			JSONUtil.putAll(
 				JSONUtil.put(
 					"clientExtensionFilterURL",
-					"/o/LXC:filter-client-extension/index.js"
+					"/o/" + cetExternalReferenceCode + "/index.js"
 				).put(
 					"entityFieldType", "string"
 				).put(

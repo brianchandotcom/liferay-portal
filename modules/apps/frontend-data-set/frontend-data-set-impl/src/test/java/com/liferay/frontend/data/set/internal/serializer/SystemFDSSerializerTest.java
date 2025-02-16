@@ -357,6 +357,7 @@ public class SystemFDSSerializerTest {
 			creationMenu2,
 			_systemFDSSerializer.serializeCreationMenu(
 				"fdsName2", _httpServletRequest));
+
 		Assert.assertNotEquals(
 			_systemFDSSerializer.serializeCreationMenu(
 				"fdsName1", _httpServletRequest),
@@ -557,7 +558,7 @@ public class SystemFDSSerializerTest {
 			_registerFDSFilter(
 				"fdsName",
 				_createFDSDateRangeFilter(
-					"createDate", "By Creation Date", FDSEntityFieldTypes.DATE,
+					"createDate", "By Creation Date",
 					new HashMapBuilder<>().<String, Object>put(
 						"from", new DateFDSFilterItem(30, 11, 1985)
 					).put(
@@ -637,14 +638,13 @@ public class SystemFDSSerializerTest {
 			_registerFDSFilter(
 				"fdsName1",
 				_createFDSDateRangeFilter(
-					"createDate", "By Creation Date", FDSEntityFieldTypes.DATE,
-					null, new DateFDSFilterItem(0, 0, 0),
+					"createDate", "By Creation Date", null,
+					new DateFDSFilterItem(0, 0, 0),
 					new DateFDSFilterItem(1, 1, 1980))),
 			_registerFDSFilter(
 				"fdsName2",
 				_createFDSDateRangeFilter(
-					"modifiedDate", "By Modification Date",
-					FDSEntityFieldTypes.DATE, null,
+					"modifiedDate", "By Modification Date", null,
 					new DateFDSFilterItem(0, 0, 0),
 					new DateFDSFilterItem(1, 1, 1980))),
 			_bundleContext.registerService(
@@ -1001,7 +1001,7 @@ public class SystemFDSSerializerTest {
 		// Shared filters
 
 		FDSFilter dateRangeFDSFilter = _createFDSDateRangeFilter(
-			"createDate", "By Creation Date", FDSEntityFieldTypes.DATE, null,
+			"createDate", "By Creation Date", null,
 			new DateFDSFilterItem(0, 0, 0), new DateFDSFilterItem(1, 1, 1980));
 
 		_registerServices(
@@ -1120,15 +1120,14 @@ public class SystemFDSSerializerTest {
 	}
 
 	private FDSFilter _createFDSDateRangeFilter(
-		String id, String label, String entityFieldType,
-		Map<String, Object> preloadedData, DateFDSFilterItem min,
-		DateFDSFilterItem max) {
+		String id, String label, Map<String, Object> preloadedData,
+		DateFDSFilterItem min, DateFDSFilterItem max) {
 
 		return new BaseDateRangeFDSFilter() {
 
 			@Override
 			public String getEntityFieldType() {
-				return entityFieldType;
+				return FDSEntityFieldTypes.DATE;
 			}
 
 			@Override

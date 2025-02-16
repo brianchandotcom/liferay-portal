@@ -548,12 +548,11 @@ public class JournalManagementToolbarDisplayContext
 		).setParameter(
 			"highlightedDDMStructureId",
 			() -> {
-				if (_journalDisplayContext.isHighlightedDDMStructure()) {
-					return _journalDisplayContext.
-						getHighlightedDDMStructureId();
+				if (!_journalDisplayContext.isHighlightedDDMStructure()) {
+					return null;
 				}
 
-				return null;
+				return _journalDisplayContext.getHighlightedDDMStructureId();
 			}
 		).buildString();
 	}

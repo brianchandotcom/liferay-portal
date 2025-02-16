@@ -45,8 +45,8 @@ public class ContentStructureResourceTest
 
 		Page<ContentStructure> page =
 			contentStructureResource.getSiteContentStructuresPage(
-				testGroup.getGroupId(),
-				ddmStructure.getName("en_US"), null, null, null, null);
+				testGroup.getGroupId(), ddmStructure.getName("en_US"), null,
+				null, null, null);
 
 		Assert.assertEquals(1, page.getTotalCount());
 

@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -138,6 +139,13 @@ public class LayoutSEOCanonicalURLProviderImpl
 			return alternateURLMapper.getAlternateURL(
 				canonicalURL, themeDisplay, LocaleUtil.getSiteDefault(),
 				layout);
+		}
+
+		Set<Locale> availableLocales = _language.getAvailableLocales(
+			layout.getGroupId());
+
+		if (!availableLocales.contains(locale)) {
+			locale = LocaleUtil.getSiteDefault();
 		}
 
 		return alternateURLMapper.getAlternateURL(

@@ -72,8 +72,7 @@ public class SegmentsExperienceLocalServiceImpl
 			SegmentsExperienceConstants.KEY_DEFAULT, layout.getPlid(),
 			Collections.singletonMap(
 				LocaleUtil.getSiteDefault(),
-				_language.get(
-					LocaleUtil.getSiteDefault(), "default-experience-name")),
+				_language.get(LocaleUtil.getSiteDefault(), "default")),
 			0, true, new UnicodeProperties(true), serviceContext);
 	}
 

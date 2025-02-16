@@ -37,12 +37,12 @@ public class DLVideoExternalShortcutResolverImpl
 				_dlVideoExternalShortcutMetadataHelperFactory.
 					getDLVideoExternalShortcutMetadataHelper(fileVersion);
 
-		if (dlVideoExternalShortcutMetadataHelper != null) {
-			return _getDLVideoExternalShortcut(
-				dlVideoExternalShortcutMetadataHelper);
+		if (dlVideoExternalShortcutMetadataHelper == null) {
+			return null;
 		}
 
-		return null;
+		return _getDLVideoExternalShortcut(
+			dlVideoExternalShortcutMetadataHelper);
 	}
 
 	@Override

@@ -89,18 +89,18 @@ public class PageFragmentInstanceDefinitionDTOConverter
 							_fragmentCollectionContributorRegistry.
 								getFragmentEntries();
 
-						if (fragmentEntries.containsKey(
+						if (!fragmentEntries.containsKey(
 								fragmentEntryLink.getRendererKey())) {
 
-							return new DefaultFragmentReference() {
-								{
-									setDefaultFragmentKey(
-										fragmentEntryLink::getRendererKey);
-								}
-							};
+							return null;
 						}
 
-						return null;
+						return new DefaultFragmentReference() {
+							{
+								setDefaultFragmentKey(
+									fragmentEntryLink::getRendererKey);
+							}
+						};
 					});
 				setIndexed(fragmentStyledLayoutStructureItem::isIndexed);
 				setName(fragmentStyledLayoutStructureItem::getName);

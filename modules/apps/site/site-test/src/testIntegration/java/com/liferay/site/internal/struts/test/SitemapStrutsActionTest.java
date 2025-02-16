@@ -93,9 +93,6 @@ public class SitemapStrutsActionTest {
 		themeDisplay.setPermissionChecker(
 			PermissionCheckerFactoryUtil.create(TestPropsValues.getUser()));
 
-		mockHttpServletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, themeDisplay);
-
 		mockHttpServletResponse = new MockHttpServletResponse();
 
 		_sitemapStrutsAction.execute(

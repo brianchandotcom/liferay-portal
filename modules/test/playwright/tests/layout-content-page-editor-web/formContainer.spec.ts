@@ -5854,13 +5854,25 @@ test.describe('Multistep', () => {
 				key: 'INPUTS-stepper',
 			});
 
+			// Create a form with two steps and the Stepper
+
+			const headingDefinition = getFragmentDefinition({
+				id: getRandomString(),
+				key: 'BASIC_COMPONENT-heading',
+			});
+
+			const buttonDefinition = getFragmentDefinition({
+				id: getRandomString(),
+				key: 'BASIC_COMPONENT-button',
+			});
+
 			const firstFormId = getRandomString();
 
 			const firstFormDefinition = getFormContainerDefinition({
 				id: firstFormId,
 				objectDefinitionClassName,
 				pageElements: [stepperFragment],
-				steps: [[]],
+				steps: [[headingDefinition], [buttonDefinition]],
 			});
 
 			const secondFormId = getRandomString();
@@ -5933,6 +5945,18 @@ test.describe('Multistep', () => {
 			await expect(
 				secondForm.locator('.multi-step-nav')
 			).not.toBeVisible();
+
+			// Check Stepper is present in the first shape in the first position
+
+			const firstForm = page
+				.locator('.page-editor__form .page-editor__container')
+				.first();
+
+			await expect(firstForm.locator('.multi-step-nav')).toBeVisible();
+
+			await expect(
+				firstForm.locator('.page-editor__topper').first()
+			).toContainText(/Step 1/);
 		}
 	);
 

@@ -567,23 +567,23 @@ public class DXPEntityDTOConverterImpl implements DXPEntityDTOConverter {
 	}
 
 	private String _parseValue(Object value) {
-		if (value != null) {
-			Class<?> clazz = value.getClass();
-
-			if (!clazz.isArray()) {
-				return String.valueOf(value);
-			}
-
-			JSONArray jsonArray = _jsonFactory.createJSONArray();
-
-			for (int i = 0; i < Array.getLength(value); i++) {
-				jsonArray.put(Array.get(value, i));
-			}
-
-			return jsonArray.toString();
+		if (value == null) {
+			return null;
 		}
 
-		return null;
+		Class<?> clazz = value.getClass();
+
+		if (!clazz.isArray()) {
+			return String.valueOf(value);
+		}
+
+		JSONArray jsonArray = _jsonFactory.createJSONArray();
+
+		for (int i = 0; i < Array.getLength(value); i++) {
+			jsonArray.put(Array.get(value, i));
+		}
+
+		return jsonArray.toString();
 	}
 
 	private DXPEntity _toDXPEntity(

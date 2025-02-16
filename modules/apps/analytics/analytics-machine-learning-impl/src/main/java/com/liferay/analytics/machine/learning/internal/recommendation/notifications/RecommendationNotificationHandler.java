@@ -104,12 +104,11 @@ public class RecommendationNotificationHandler
 			RecommendationNotificationType.fromNotificationTypeCode(
 				notificationTypeCode);
 
-		if (recommendationNotificationType != null) {
-			return _language.get(
-				locale, recommendationNotificationType.getKey());
+		if (recommendationNotificationType == null) {
+			return null;
 		}
 
-		return null;
+		return _language.get(locale, recommendationNotificationType.getKey());
 	}
 
 	@Reference

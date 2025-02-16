@@ -1733,12 +1733,12 @@ public class DefaultObjectEntryManagerImpl
 								return null;
 							},
 							() -> {
-								if (scopeSite) {
-									return String.valueOf(
-										serviceBuilderObjectEntry.getGroupId());
+								if (!scopeSite) {
+									return null;
 								}
 
-								return null;
+								return String.valueOf(
+									serviceBuilderObjectEntry.getGroupId());
 							}
 						).put(
 							() -> {

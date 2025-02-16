@@ -210,16 +210,15 @@ public class MillerColumnsDisplayContext {
 				).put(
 					"addChildLayoutURL",
 					() -> {
-						if (_layoutsAdminDisplayContext.
+						if (!_layoutsAdminDisplayContext.
 								isShowAddChildPageAction(layout)) {
 
-							return _layoutsAdminDisplayContext.
-								getSelectLayoutPageTemplateEntryURL(
-									0, layout.getPlid(),
-									layout.isPrivateLayout());
+							return null;
 						}
 
-						return null;
+						return _layoutsAdminDisplayContext.
+							getSelectLayoutPageTemplateEntryURL(
+								0, layout.getPlid(), layout.isPrivateLayout());
 					}
 				).put(
 					"bulkActions",
@@ -435,12 +434,12 @@ public class MillerColumnsDisplayContext {
 		).put(
 			"addChildLayoutURL",
 			() -> {
-				if (_layoutsAdminDisplayContext.isShowAddRootLayoutButton()) {
-					return _layoutsAdminDisplayContext.
-						getSelectLayoutPageTemplateEntryURL(privatePages);
+				if (!_layoutsAdminDisplayContext.isShowAddRootLayoutButton()) {
+					return null;
 				}
 
-				return null;
+				return _layoutsAdminDisplayContext.
+					getSelectLayoutPageTemplateEntryURL(privatePages);
 			}
 		).put(
 			"hasChild", true

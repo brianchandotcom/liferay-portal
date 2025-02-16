@@ -94,12 +94,12 @@ public class PortletPanelAppAdapterServiceTrackerCustomizer
 		String controlPanelEntryWeight = (String)serviceReference.getProperty(
 			"com.liferay.portlet.control-panel-entry-weight");
 
-		if (Validator.isNotNull(controlPanelEntryWeight)) {
-			return (int)Math.ceil(
-				GetterUtil.getDouble(controlPanelEntryWeight) * 100);
+		if (Validator.isNull(controlPanelEntryWeight)) {
+			return null;
 		}
 
-		return null;
+		return (int)Math.ceil(
+			GetterUtil.getDouble(controlPanelEntryWeight) * 100);
 	}
 
 	private final BundleContext _bundleContext;

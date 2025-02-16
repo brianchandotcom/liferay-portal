@@ -164,13 +164,13 @@ public class LegacyPortletPanelAppHotDeployListener
 							portletElement.elementText(
 								"control-panel-entry-weight");
 
-						if (Validator.isNotNull(controlPanelEntryWeight)) {
-							return (int)Math.ceil(
-								GetterUtil.getDouble(controlPanelEntryWeight) *
-									100);
+						if (Validator.isNull(controlPanelEntryWeight)) {
+							return null;
 						}
 
-						return null;
+						return (int)Math.ceil(
+							GetterUtil.getDouble(controlPanelEntryWeight) *
+								100);
 					}
 				).put(
 					"panel.app.portlet.id",

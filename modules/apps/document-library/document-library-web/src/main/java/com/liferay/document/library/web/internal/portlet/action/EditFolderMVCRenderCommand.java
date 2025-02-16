@@ -44,7 +44,7 @@ public class EditFolderMVCRenderCommand extends BaseFolderMVCRenderCommand {
 		if (FeatureFlagManagerUtil.isEnabled(
 				folder.getCompanyId(), "LPD-42452") &&
 			!_folderModelResourcePermission.contains(
-				permissionChecker, folder, ActionKeys.ADVANCE_UPDATE) &&
+				permissionChecker, folder, ActionKeys.ADVANCED_UPDATE) &&
 			!_folderModelResourcePermission.contains(
 				permissionChecker, folder, ActionKeys.UPDATE)) {
 

@@ -784,7 +784,7 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 		if (ModelResourcePermissionUtil.contains(
 				modelResourcePermission, permissionChecker,
 				serviceContext.getScopeGroupId(), folderId,
-				ActionKeys.ADVANCE_UPDATE) ||
+				ActionKeys.ADVANCED_UPDATE) ||
 			ModelResourcePermissionUtil.contains(
 				modelResourcePermission, permissionChecker,
 				serviceContext.getScopeGroupId(), folderId,
@@ -800,7 +800,7 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 
 		throw new PrincipalException.MustHavePermission(
 			permissionChecker, DLFolder.class.getName(), folderId,
-			ActionKeys.ADVANCE_UPDATE, ActionKeys.UPDATE);
+			ActionKeys.ADVANCED_UPDATE, ActionKeys.UPDATE);
 	}
 
 	@Override
@@ -818,7 +818,7 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 		if (ModelResourcePermissionUtil.contains(
 				modelResourcePermission, permissionChecker,
 				serviceContext.getScopeGroupId(), folderId,
-				ActionKeys.ADVANCE_UPDATE) ||
+				ActionKeys.ADVANCED_UPDATE) ||
 			ModelResourcePermissionUtil.contains(
 				modelResourcePermission, permissionChecker,
 				serviceContext.getScopeGroupId(), folderId,
@@ -833,7 +833,7 @@ public class DLFolderServiceImpl extends DLFolderServiceBaseImpl {
 
 		throw new PrincipalException.MustHavePermission(
 			permissionChecker, DLFolder.class.getName(), folderId,
-			ActionKeys.ADVANCE_UPDATE, ActionKeys.UPDATE);
+			ActionKeys.ADVANCED_UPDATE, ActionKeys.UPDATE);
 	}
 
 	@Override

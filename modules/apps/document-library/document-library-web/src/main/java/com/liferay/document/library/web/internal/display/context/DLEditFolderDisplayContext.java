@@ -233,7 +233,7 @@ public class DLEditFolderDisplayContext {
 		_advancedUpdateDLFolderPermission = DLFolderPermission.contains(
 			_themeDisplay.getPermissionChecker(),
 			_themeDisplay.getScopeGroupId(), getFolderId(),
-			ActionKeys.ADVANCE_UPDATE);
+			ActionKeys.ADVANCED_UPDATE);
 
 		return _advancedUpdateDLFolderPermission;
 	}
@@ -400,7 +400,7 @@ public class DLEditFolderDisplayContext {
 			((DLFolderPermission.contains(
 				_themeDisplay.getPermissionChecker(),
 				_themeDisplay.getScopeGroupId(), getFolderId(),
-				ActionKeys.ADVANCE_UPDATE) &&
+				ActionKeys.ADVANCED_UPDATE) &&
 			  FeatureFlagManagerUtil.isEnabled(
 				  _themeDisplay.getCompanyId(), "LPD-42452")) ||
 			 DLFolderPermission.contains(

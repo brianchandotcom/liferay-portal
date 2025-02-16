@@ -1051,7 +1051,7 @@ public class LiferayRepository
 			if (!ModelResourcePermissionUtil.contains(
 					modelResourcePermission, permissionChecker,
 					serviceContext.getScopeGroupId(), folderId,
-					ActionKeys.ADVANCE_UPDATE)) {
+					ActionKeys.ADVANCED_UPDATE)) {
 
 				defaultFileEntryTypeId = dlFolder.getDefaultFileEntryTypeId();
 

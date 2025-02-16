@@ -962,7 +962,7 @@ public class FolderActionDisplayContext {
 			 DLFolderPermission.contains(
 				 _dlRequestHelper.getPermissionChecker(),
 				 _dlRequestHelper.getScopeGroupId(), _getFolderId(),
-				 ActionKeys.ADVANCE_UPDATE)) ||
+				 ActionKeys.ADVANCED_UPDATE)) ||
 			DLFolderPermission.contains(
 				_dlRequestHelper.getPermissionChecker(),
 				_dlRequestHelper.getScopeGroupId(), _getFolderId(),

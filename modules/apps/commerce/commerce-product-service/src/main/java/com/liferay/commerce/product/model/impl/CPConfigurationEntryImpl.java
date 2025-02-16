@@ -46,12 +46,12 @@ public class CPConfigurationEntryImpl extends CPConfigurationEntryBaseImpl {
 
 	@Override
 	public CPTaxCategory getCPTaxCategory() throws PortalException {
-		if (getCPTaxCategoryId() > 0) {
-			return CPTaxCategoryLocalServiceUtil.getCPTaxCategory(
-				getCPTaxCategoryId());
+		if (getCPTaxCategoryId() <= 0) {
+			return null;
 		}
 
-		return null;
+		return CPTaxCategoryLocalServiceUtil.getCPTaxCategory(
+			getCPTaxCategoryId());
 	}
 
 	@Override

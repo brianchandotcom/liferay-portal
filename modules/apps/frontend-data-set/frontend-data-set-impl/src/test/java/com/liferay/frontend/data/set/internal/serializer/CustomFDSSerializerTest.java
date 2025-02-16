@@ -378,8 +378,6 @@ public class CustomFDSSerializerTest {
 			}
 		);
 
-		_resetFDSSerializer();
-
 		_customFDSSerializer.cetManager = cetManager;
 
 		_mockSerializeFilters(

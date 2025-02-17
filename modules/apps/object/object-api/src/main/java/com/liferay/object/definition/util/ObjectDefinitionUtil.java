@@ -95,9 +95,9 @@ public class ObjectDefinitionUtil {
 		).put(
 			"APISort", "/headless-builder/sorts"
 		).put(
-			"BasicDocument", "/basicdocuments"
+			"BasicDocument", "/cms/basic-documents"
 		).put(
-			"BasicWebContent", "/basicwebcontents"
+			"BasicWebContent", "/cms/basic-web-contents"
 		).put(
 			"Bookmark", "/bookmarks"
 		).put(

@@ -261,7 +261,7 @@
 				"en_US": "BasicDocuments"
 			},
 			"portlet": false,
-			"restContextPath": "/o/c/basicdocuments",
+			"restContextPath": "/o/c/cms/basic-documents",
 			"scope": "site",
 			"status": {
 				"code": 0
@@ -502,7 +502,7 @@
 				"en_US": "BasicWebContents"
 			},
 			"portlet": true,
-			"restContextPath": "/o/c/basicwebcontents",
+			"restContextPath": "/o/c/cms/basic-web-contents",
 			"scope": "site",
 			"status": {
 				"code": 0

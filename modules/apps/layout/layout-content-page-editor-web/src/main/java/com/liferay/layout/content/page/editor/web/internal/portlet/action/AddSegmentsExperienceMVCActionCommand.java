@@ -274,12 +274,27 @@ public class AddSegmentsExperienceMVCActionCommand
 
 		Layout draftLayout = _layoutLocalService.fetchDraftLayout(classPK);
 
-		if (draftLayout != null) {
-			SegmentsExperienceUtil.copySegmentsExperienceData(
-				_commentManager, groupId, draftLayout, _portletRegistry,
-				baseSegmentsExperience, segmentsExperience,
-				className -> serviceContext, serviceContext.getUserId());
+		if (draftLayout == null) {
+			return;
 		}
+
+		SegmentsExperience newSegmentsExperience =
+			_segmentsExperienceService.appendSegmentsExperience(
+				serviceContext.getScopeGroupId(),
+				segmentsExperience.getSegmentsEntryId(), draftLayout.getPlid(),
+				segmentsExperience.getNameMap(), false, serviceContext);
+
+		newSegmentsExperience.setSegmentsExperienceKey(
+			segmentsExperience.getSegmentsExperienceKey());
+
+		newSegmentsExperience =
+			_segmentsExperienceLocalService.updateSegmentsExperience(
+				newSegmentsExperience);
+
+		SegmentsExperienceUtil.copySegmentsExperienceData(
+			_commentManager, groupId, draftLayout, _portletRegistry,
+			baseSegmentsExperience, newSegmentsExperience,
+			className -> serviceContext, serviceContext.getUserId());
 	}
 
 	@Reference

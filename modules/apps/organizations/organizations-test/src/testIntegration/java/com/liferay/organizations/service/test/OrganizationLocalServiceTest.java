@@ -24,6 +24,8 @@ import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
+import com.liferay.portal.kernel.model.SystemEvent;
+import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Document;
@@ -36,6 +38,7 @@ import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ListTypeLocalService;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.SystemEventLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -46,6 +49,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.test.rule.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
@@ -355,6 +359,31 @@ public class OrganizationLocalServiceTest {
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, new Sort("userId", false));
 
 		Assert.assertEquals(0, baseModelSearchResult.getLength());
+	}
+
+	@Test
+	public void testDeleteOrganization() throws Exception {
+		Organization organization = OrganizationTestUtil.addOrganization();
+
+		_organizationLocalService.deleteOrganization(
+			organization.getOrganizationId());
+
+		Assert.assertNull(
+			_organizationLocalService.fetchOrganization(
+				organization.getOrganizationId()));
+
+		List<SystemEvent> systemEvents =
+			_systemEventLocalService.getSystemEvents(
+				0, _portal.getClassNameId(organization.getModelClassName()),
+				organization.getPrimaryKey());
+
+		SystemEvent systemEvent = systemEvents.get(0);
+
+		Assert.assertEquals(
+			organization.getExternalReferenceCode(),
+			systemEvent.getClassExternalReferenceCode());
+		Assert.assertEquals(
+			SystemEventConstants.TYPE_DELETE, systemEvent.getType());
 	}
 
 	@Test
@@ -1114,6 +1143,13 @@ public class OrganizationLocalServiceTest {
 	private final List<Organization> _organizations = new ArrayList<>();
 	private PermissionChecker _originalPermissionChecker;
 	private final List<String> _pids = new ArrayList<>();
+
+	@Inject
+	private Portal _portal;
+
+	@Inject
+	private SystemEventLocalService _systemEventLocalService;
+
 	private User _user;
 
 	@Inject

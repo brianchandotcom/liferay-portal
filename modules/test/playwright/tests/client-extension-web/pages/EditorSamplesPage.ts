@@ -23,10 +23,9 @@ export class EditorSamplesPage {
 	}
 
 	async selectTab({tabLabel}: {tabLabel: string}) {
-		const tab = this.page.getByRole('tab', {
-			exact: true,
-			name: tabLabel,
-		});
+		const tab = this.page.
+			locator('.nav-link').
+			filter({hasText: tabLabel});
 
 		await tab.click();
 	}

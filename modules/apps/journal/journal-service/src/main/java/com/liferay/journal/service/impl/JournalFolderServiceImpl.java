@@ -539,12 +539,13 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 		throws PortalException {
 
 		PermissionChecker permissionChecker = getPermissionChecker();
-		JournalFolder folder = journalFolderLocalService.getFolder(folderId);
 
-		if (_journalFolderModelResourcePermission.contains(
-				permissionChecker, folder, ActionKeys.ADVANCED_UPDATE) ||
-			_journalFolderModelResourcePermission.contains(
-				permissionChecker, folder, ActionKeys.UPDATE)) {
+		if (ModelResourcePermissionUtil.contains(
+				_journalFolderModelResourcePermission, permissionChecker,
+				groupId, folderId, ActionKeys.ADVANCED_UPDATE) ||
+			ModelResourcePermissionUtil.contains(
+				_journalFolderModelResourcePermission, permissionChecker,
+				groupId, folderId, ActionKeys.UPDATE)) {
 
 			return journalFolderLocalService.updateFolder(
 				getUserId(), groupId, folderId, parentFolderId, name,

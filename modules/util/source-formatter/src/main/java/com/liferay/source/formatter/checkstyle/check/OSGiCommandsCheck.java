@@ -108,7 +108,24 @@ public class OSGiCommandsCheck extends BaseCheck {
 		for (DetailAST methodDefinitionDetailAST :
 				methodDefinitionDetailASTList) {
 
-			osgiCommandFunctions.remove(getName(methodDefinitionDetailAST));
+			DetailAST modifiersDetailAST =
+				methodDefinitionDetailAST.findFirstToken(TokenTypes.MODIFIERS);
+
+			if (!modifiersDetailAST.branchContains(TokenTypes.LITERAL_PUBLIC)) {
+				continue;
+			}
+
+			String methodName = getName(methodDefinitionDetailAST);
+
+			if (!osgiCommandFunctions.contains(methodName)) {
+				log(
+					methodDefinitionDetailAST,
+					_MSG_INCORRECT_PUBLIC_METHOD_NAME);
+
+				continue;
+			}
+
+			osgiCommandFunctions.remove(methodName);
 		}
 
 		for (String osgiCommandFunction : osgiCommandFunctions) {
@@ -165,6 +182,9 @@ public class OSGiCommandsCheck extends BaseCheck {
 
 		return osgiCommandFunctions;
 	}
+
+	private static final String _MSG_INCORRECT_PUBLIC_METHOD_NAME =
+		"public.method.name.incorrect";
 
 	private static final String _MSG_MISSING_IMPLEMENTED_COMMAND_FUNCTION =
 		"implemented.command.function.missing";

@@ -3502,6 +3502,15 @@
 	},
 	{
 		"classNames": [
+			"DLAppService",
+			"DLAppServiceUtil"
+		],
+		"from": "updateFileEntry(long paramName, String paramName, String paramName, String paramName, String paramName, String paramName, DLVersionNumberIncrease paramName, byte[] paramName, ServiceContext paramName)",
+		"issueKey": "LPD-41239",
+		"to": "updateFileEntry(param#0#, param#1#, param#2#, param#3#, null, param#4#, param#5#, param#6#, param#7#, null, null, null, param#8#)"
+	},
+	{
+		"classNames": [
 			"DDMTemplateLocalService",
 			"DDMTemplateLocalServiceUtil"
 		],

@@ -130,6 +130,30 @@ public class CommerceChannelRelServiceImpl
 	}
 
 	@Override
+	public List<CommerceChannelRel> getCommerceChannelCurrencies(
+			long commerceChannelId, String name, int start, int end)
+		throws PortalException {
+
+		_commerceChannelModelResourcePermission.check(
+			getPermissionChecker(), commerceChannelId, ActionKeys.VIEW);
+
+		return commerceChannelRelLocalService.getCommerceChannelCurrencies(
+			commerceChannelId, name, start, end);
+	}
+
+	@Override
+	public int getCommerceChannelCurrenciesCount(
+			long commerceChannelId, String name)
+		throws PortalException {
+
+		_commerceChannelModelResourcePermission.check(
+			getPermissionChecker(), commerceChannelId, ActionKeys.VIEW);
+
+		return commerceChannelRelLocalService.getCommerceChannelCurrenciesCount(
+			commerceChannelId, name);
+	}
+
+	@Override
 	public CommerceChannelRel getCommerceChannelRel(long commerceChannelRelId)
 		throws PortalException {
 

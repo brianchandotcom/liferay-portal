@@ -157,6 +157,9 @@ public class DisplayPageTemplateFolderResourceTest
 
 		_testPatchSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
 			displayPageTemplateFolder.getExternalReferenceCode(), null);
+		_testPatchSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
+			displayPageTemplateFolder.getExternalReferenceCode(),
+			StringPool.BLANK);
 
 		_assertProblemException(
 			"NOT_FOUND", null,
@@ -423,10 +426,19 @@ public class DisplayPageTemplateFolderResourceTest
 					getParentDisplayPageTemplateFolderExternalReferenceCode();
 		}
 
-		Assert.assertEquals(
-			parentDisplayPageTemplateFolderExternalReferenceCode,
-			patchDisplayPageTemplateFolder.
-				getParentDisplayPageTemplateFolderExternalReferenceCode());
+		if (Validator.isBlank(
+				parentDisplayPageTemplateFolderExternalReferenceCode)) {
+
+			Assert.assertNull(
+				patchDisplayPageTemplateFolder.
+					getParentDisplayPageTemplateFolderExternalReferenceCode());
+		}
+		else {
+			Assert.assertEquals(
+				parentDisplayPageTemplateFolderExternalReferenceCode,
+				patchDisplayPageTemplateFolder.
+					getParentDisplayPageTemplateFolderExternalReferenceCode());
+		}
 	}
 
 	private void _testPostSiteSiteByExternalReferenceCodeDisplayPageTemplateFolderWithExistingParentExternalReferenceCode()

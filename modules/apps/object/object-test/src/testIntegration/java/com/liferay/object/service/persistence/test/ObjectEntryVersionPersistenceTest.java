@@ -132,7 +132,7 @@ public class ObjectEntryVersionPersistenceTest {
 
 		newObjectEntryVersion.setContent(RandomTestUtil.randomString());
 
-		newObjectEntryVersion.setVersion(RandomTestUtil.nextLong());
+		newObjectEntryVersion.setVersion(RandomTestUtil.nextInt());
 
 		newObjectEntryVersion.setStatus(RandomTestUtil.nextInt());
 
@@ -200,6 +200,13 @@ public class ObjectEntryVersionPersistenceTest {
 	}
 
 	@Test
+	public void testCountByObjectEntryId() throws Exception {
+		_persistence.countByObjectEntryId(RandomTestUtil.nextLong());
+
+		_persistence.countByObjectEntryId(0L);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		ObjectEntryVersion newObjectEntryVersion = addObjectEntryVersion();
 
@@ -228,8 +235,7 @@ public class ObjectEntryVersionPersistenceTest {
 			"ObjectEntryVersion", "mvccVersion", true, "uuid", true,
 			"objectEntryVersionId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,
-			"objectEntryId", true, "content", true, "version", true, "status",
-			true);
+			"objectEntryId", true, "version", true, "status", true);
 	}
 
 	@Test
@@ -478,7 +484,7 @@ public class ObjectEntryVersionPersistenceTest {
 
 		objectEntryVersion.setContent(RandomTestUtil.randomString());
 
-		objectEntryVersion.setVersion(RandomTestUtil.nextLong());
+		objectEntryVersion.setVersion(RandomTestUtil.nextInt());
 
 		objectEntryVersion.setStatus(RandomTestUtil.nextInt());
 

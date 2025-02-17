@@ -36,6 +36,12 @@ public class ObjectEntryVersionLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>com.liferay.object.service.impl.ObjectEntryVersionLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static ObjectEntryVersion addObjectEntryVersion(
+			com.liferay.object.model.ObjectEntry objectEntry)
+		throws Exception {
+
+		return getService().addObjectEntryVersion(objectEntry);
+	}
 
 	/**
 	 * Adds the object entry version to the database. Also notifies the appropriate model listeners.
@@ -290,6 +296,12 @@ public class ObjectEntryVersionLocalServiceUtil {
 		int start, int end) {
 
 		return getService().getObjectEntryVersions(start, end);
+	}
+
+	public static List<ObjectEntryVersion> getObjectEntryVersions(
+		long objectEntryId) {
+
+		return getService().getObjectEntryVersions(objectEntryId);
 	}
 
 	/**

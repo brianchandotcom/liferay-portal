@@ -113,7 +113,7 @@ public class ObjectEntryVersionWrapper
 			setContent(content);
 		}
 
-		Long version = (Long)attributes.get("version");
+		Integer version = (Integer)attributes.get("version");
 
 		if (version != null) {
 			setVersion(version);
@@ -297,7 +297,7 @@ public class ObjectEntryVersionWrapper
 	 * @return the version of this object entry version
 	 */
 	@Override
-	public long getVersion() {
+	public int getVersion() {
 		return model.getVersion();
 	}
 
@@ -462,7 +462,7 @@ public class ObjectEntryVersionWrapper
 	 * @param version the version of this object entry version
 	 */
 	@Override
-	public void setVersion(long version) {
+	public void setVersion(int version) {
 		model.setVersion(version);
 	}
 

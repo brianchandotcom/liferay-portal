@@ -8,6 +8,7 @@ import DocumentsAndMediaListResolver from './DocumentsAndMediaListResolver';
 import DocumentsAndMediaMetricsResolver from './DocumentsAndMediaMetricsResolver';
 import EventAnalysisListResolver from './EventAnalysisListResolver';
 import ExperimentResolver from './ExperimentResolver';
+import IndividualSiteMetricsResolver from './individualSiteMetricsResolver';
 import InterestsResolver from './InterestsResolver';
 import PagePathResolver from './PagePathResolver';
 
@@ -37,5 +38,6 @@ export const resolvers = {
 	orderIncompleteCurrencyValues: CommerceIncompleteOrdersResolver,
 	orderTotalCurrencyValues: CommerceTotalOrderValueResolver,
 	pagePath: PagePathResolver,
+	site: IndividualSiteMetricsResolver,
 	siteInterests: InterestsResolver
 };

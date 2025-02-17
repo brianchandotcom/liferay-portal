@@ -21,7 +21,7 @@ import org.osgi.service.component.annotations.Component;
 		"ddm.form.field.type.description=link-to-layout-field-description",
 		"ddm.form.field.type.display.order:Integer=11",
 		"ddm.form.field.type.group=basic", "ddm.form.field.type.icon=link",
-		"ddm.form.field.type.label=link-to-layout-field-label",
+		"ddm.form.field.type.label=link-to-page",
 		"ddm.form.field.type.name=" + LayoutDDMFormFieldTypeConstants.LINK_TO_LAYOUT,
 		"ddm.form.field.type.scope=document-library,journal,layout"
 	},

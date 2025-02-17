@@ -215,6 +215,13 @@ public class SegmentsExperienceSelectorDisplayContext {
 		}
 
 		if (segmentsExperience != null) {
+			SegmentsExperience parentSegmentsExperience =
+				_getParentSegmentsExperience(segmentsExperience);
+
+			if (parentSegmentsExperience != null) {
+				segmentsExperience = parentSegmentsExperience;
+			}
+
 			JSONObject segmentsExperienceSelectedJSONObject =
 				_getSegmentsExperienceJSONObject(
 					segmentsExperience.getSegmentsExperienceId());
@@ -255,15 +262,6 @@ public class SegmentsExperienceSelectorDisplayContext {
 
 	private String _getSelectedSegmentsExperienceName(
 		SegmentsExperience segmentsExperience) {
-
-		SegmentsExperience parentSegmentsExperience =
-			_getParentSegmentsExperience(segmentsExperience);
-
-		if ((segmentsExperience != null) &&
-			(parentSegmentsExperience != null)) {
-
-			segmentsExperience = parentSegmentsExperience;
-		}
 
 		if (segmentsExperience != null) {
 			return segmentsExperience.getName(_themeDisplay.getLocale());

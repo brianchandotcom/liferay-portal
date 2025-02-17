@@ -12,7 +12,6 @@ import {loginTest} from '../../fixtures/loginTest';
 import {liferayConfig} from '../../liferay.config';
 import getRandomString from '../../utils/getRandomString';
 import {syncAnalyticsCloud} from '../analytics-settings-web/utils/analytics-settings';
-import {createChannel} from './utils/channel';
 import {
 	addBreakdownByAttribute,
 	viewBreakdownRechartsData,
@@ -27,7 +26,6 @@ export const test = mergeTests(
 	loginAnalyticsCloudTest(),
 	loginTest()
 );
-
 
 const randomString = getRandomString();
 
@@ -74,19 +72,12 @@ test.afterEach(async ({apiHelpers, page}) => {
 	});
 });
 
-
 test(
 	'Add a new breakdown by an attribute and assert that correct results appear',
 	{
 		tag: '@Legacy',
 	},
 	async ({apiHelpers, page}) => {
-		const channelName = 'My Property - ' + getRandomString();
-		const {channel, project} = await createChannel({
-			apiHelpers,
-			channelName,
-		});
-
 		const individualName = 'ac';
 		const individuals = [
 			generateIndividual({
@@ -161,6 +152,82 @@ test(
 				`[${channel.id}]`,
 				project.groupId
 			);
+		});
+	}
+);
+
+test(
+	'Distribution page can be filtered by a specific string',
+	{
+		tag: '@Legacy',
+	},
+	async ({apiHelpers, page}) => {
+		const individualName = 'ac';
+		const individuals = [
+			generateIndividual({
+				name: individualName,
+			}),
+		];
+
+		await test.step('Create new Individual', async () => {
+			await createIndividuals({
+				apiHelpers,
+				individuals,
+			});
+		});
+
+		const date = new Date();
+		await test.step('Create Individual Event', async () => {
+			const events = individuals.map((individual) => ({
+				applicationId: 'Page',
+				canonicalUrl: 'https://www.liferay.com',
+				channelId: channel.id,
+				eventDate: date.toISOString(),
+				eventId: 'pageViewed',
+				title: 'Liferay',
+				userId: individual.id,
+			}));
+
+			await apiHelpers.jsonWebServicesOSBAsah.createEvents(events);
+		});
+
+		await test.step('Create Individual Session', async () => {
+			const sessions = individuals.map((individual) => ({
+				channelId: channel.id,
+				id: individual.id,
+				sessionEnd: date.toISOString(),
+				sessionStart: date.toISOString(),
+				userId: individual.id,
+			}));
+
+			await apiHelpers.jsonWebServicesOSBAsah.createSessions(sessions);
+		});
+
+		await test.step('Go to Individuals Dashboard', async () => {
+			await navigateToACPageViaURL({
+				acPage: ACPage.individualPage,
+				channelID: channel.id,
+				page,
+				projectID: project.groupId,
+			});
+		});
+
+		await test.step('Go to Distribution tab', async () => {
+			await page.getByRole('link', {name: 'Distribution'}).click();
+
+			expect(page.getByText('Distribution by attribute')).toBeVisible();
+		});
+
+		await test.step('Add a new breakdown', async () => {
+			await page.locator('.selected-item-container').click();
+
+			await page.getByRole('menuitem', {name: 'email'}).click();
+		});
+
+		await test.step('Check if the correct results appear (email and maximum count)', async () => {
+			expect(
+				page.getByText(`${individualName}@liferay.com - 100.0%`)
+			).toBeVisible();
 		});
 	}
 );

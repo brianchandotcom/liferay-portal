@@ -119,7 +119,7 @@ const MarketplaceProducts: React.FC<ProductListViewProps> = ({
 	onClickProduct,
 }) => (
 	<div className="d-flex flex-column h-100 justify-content-between payment-methods-modal-body">
-		<ManagementToolbar />
+		<ManagementToolbar/>
 
 		<ProductListView>
 			{(product) => (

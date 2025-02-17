@@ -46,7 +46,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = MVCActionCommand.class
 )
 public class MoveStepperFragmentEntryLinkMVCActionCommand
-	extends BaseItemFormConfigMVCActionCommand {
+	extends BaseContentPageEditorTransactionalMVCActionCommand {
 
 	@Override
 	protected JSONObject doTransactionalCommand(
@@ -133,7 +133,7 @@ public class MoveStepperFragmentEntryLinkMVCActionCommand
 				_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
 					fragmentEntryLinkId)));
 
-		return getLayoutStructureItemChangesJSONObject(
+		return _formItemManager.getLayoutStructureItemChangesJSONObject(
 			addedFragmentEntryLinks,
 			_portal.getHttpServletRequest(actionRequest),
 			_portal.getHttpServletResponse(actionResponse),

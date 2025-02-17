@@ -38,9 +38,11 @@ import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructureItemUtil;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -421,6 +423,69 @@ public class FormItemManager {
 		}
 
 		return null;
+	}
+
+	public JSONObject getLayoutStructureItemChangesJSONObject(
+			List<FragmentEntryLink> fragmentEntryLinks,
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, JSONObject jsonObject,
+			LayoutStructure layoutStructure,
+			FormItemManager.LayoutStructureItemChanges
+				layoutStructureItemChanges)
+		throws PortalException {
+
+		JSONObject fragmentEntryLinksJSONObject =
+			_jsonFactory.createJSONObject();
+
+		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
+			fragmentEntryLinksJSONObject.put(
+				String.valueOf(fragmentEntryLink.getFragmentEntryLinkId()),
+				_fragmentEntryLinkManager.getFragmentEntryLinkJSONObject(
+					fragmentEntryLink, httpServletRequest, httpServletResponse,
+					layoutStructure));
+
+			layoutStructureItemChanges.addAddedLayoutStructureItems(
+				layoutStructure.getLayoutStructureItemByFragmentEntryLinkId(
+					fragmentEntryLink.getFragmentEntryLinkId()));
+		}
+
+		return jsonObject.put(
+			"addedItemIds",
+			_jsonFactory.createJSONArray(
+				TransformUtil.transform(
+					layoutStructureItemChanges.getAddedLayoutStructureItems(),
+					LayoutStructureItem::getItemId))
+		).put(
+			"fragmentEntryLinks", fragmentEntryLinksJSONObject
+		).put(
+			"layoutData", layoutStructure.toJSONObject()
+		).put(
+			"movedItemIds",
+			() -> {
+				JSONArray jsonArray = _jsonFactory.createJSONArray();
+
+				for (LayoutStructureItem movedLayoutStructureItem :
+						layoutStructureItemChanges.
+							getMovedLayoutStructureItems()) {
+
+					jsonArray.put(
+						JSONUtil.put(
+							"itemId", movedLayoutStructureItem.getItemId()
+						).put(
+							"parentId",
+							movedLayoutStructureItem.getParentItemId()
+						));
+				}
+
+				return jsonArray;
+			}
+		).put(
+			"removedItemIds",
+			_jsonFactory.createJSONArray(
+				TransformUtil.transform(
+					layoutStructureItemChanges.getRemovedLayoutStructureItems(),
+					LayoutStructureItem::getItemId))
+		);
 	}
 
 	public LayoutStructureItemChanges removeFormStepLayoutStructureItem(

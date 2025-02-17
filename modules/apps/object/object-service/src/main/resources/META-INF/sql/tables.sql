@@ -118,6 +118,21 @@ create table ObjectEntryFolder (
 	treePath STRING null
 );
 
+create table ObjectEntryVersion (
+	mvccVersion LONG default 0 not null,
+	uuid_ VARCHAR(75) null,
+	objectEntryVersionId LONG not null primary key,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	objectEntryId LONG,
+	content VARCHAR(75) null,
+	version LONG,
+	status INTEGER
+);
+
 create table ObjectField (
 	mvccVersion LONG default 0 not null,
 	uuid_ VARCHAR(75) null,

@@ -35,7 +35,14 @@ public class UserSegmentsEntryMembershipCheckerTest {
 	public void testIsMemberContains() throws Exception {
 		Assert.assertFalse(
 			UserSegmentsEntryMembershipChecker.isMember(
+				"(contains(customField/_00001_test, 'test1'))",
+				_userAttributes));
+		Assert.assertFalse(
+			UserSegmentsEntryMembershipChecker.isMember(
 				"(contains(firstName, 'Testing'))", _userAttributes));
+		Assert.assertTrue(
+			UserSegmentsEntryMembershipChecker.isMember(
+				"(contains(customField/_00001_test, 'tes'))", _userAttributes));
 		Assert.assertTrue(
 			UserSegmentsEntryMembershipChecker.isMember(
 				"(contains(firstName, 'Tes'))", _userAttributes));
@@ -48,6 +55,9 @@ public class UserSegmentsEntryMembershipCheckerTest {
 	public void testIsMemberEquals() throws Exception {
 		Assert.assertFalse(
 			UserSegmentsEntryMembershipChecker.isMember(
+				"(customField/_00001_test eq 'test1')", _userAttributes));
+		Assert.assertFalse(
+			UserSegmentsEntryMembershipChecker.isMember(
 				"(jobTitle eq 'aaa')", _userAttributes));
 		Assert.assertFalse(
 			UserSegmentsEntryMembershipChecker.isMember(
@@ -58,6 +68,9 @@ public class UserSegmentsEntryMembershipCheckerTest {
 		Assert.assertFalse(
 			UserSegmentsEntryMembershipChecker.isMember(
 				"(userId eq '2')", _userAttributes));
+		Assert.assertTrue(
+			UserSegmentsEntryMembershipChecker.isMember(
+				"(customField/_00001_test eq 'test')", _userAttributes));
 		Assert.assertTrue(
 			UserSegmentsEntryMembershipChecker.isMember(
 				"(dateModified eq " +
@@ -223,10 +236,18 @@ public class UserSegmentsEntryMembershipCheckerTest {
 	public void testIsMemberNotContains() throws Exception {
 		Assert.assertFalse(
 			UserSegmentsEntryMembershipChecker.isMember(
+				"not (contains(customField/_00001_test, 'tes'))",
+				_userAttributes));
+		Assert.assertFalse(
+			UserSegmentsEntryMembershipChecker.isMember(
 				"not (contains(firstName, 'Tes'))", _userAttributes));
 		Assert.assertFalse(
 			UserSegmentsEntryMembershipChecker.isMember(
 				"not (contains(firstName, 'Test'))", _userAttributes));
+		Assert.assertTrue(
+			UserSegmentsEntryMembershipChecker.isMember(
+				"not (contains(customField/_00001_test, 'test1'))",
+				_userAttributes));
 		Assert.assertTrue(
 			UserSegmentsEntryMembershipChecker.isMember(
 				"not (contains(firstName, 'Testing'))", _userAttributes));
@@ -234,6 +255,9 @@ public class UserSegmentsEntryMembershipCheckerTest {
 
 	@Test
 	public void testIsMemberNotEquals() throws Exception {
+		Assert.assertFalse(
+			UserSegmentsEntryMembershipChecker.isMember(
+				"not (customField/_00001_test eq 'test')", _userAttributes));
 		Assert.assertFalse(
 			UserSegmentsEntryMembershipChecker.isMember(
 				"not (jobTitle eq 'test')", _userAttributes));
@@ -246,6 +270,9 @@ public class UserSegmentsEntryMembershipCheckerTest {
 		Assert.assertFalse(
 			UserSegmentsEntryMembershipChecker.isMember(
 				"not (userId eq '1')", _userAttributes));
+		Assert.assertTrue(
+			UserSegmentsEntryMembershipChecker.isMember(
+				"not (customField/_00001_test eq 'test1')", _userAttributes));
 		Assert.assertTrue(
 			UserSegmentsEntryMembershipChecker.isMember(
 				"not (jobTitle eq 'aaa')", _userAttributes));
@@ -270,6 +297,8 @@ public class UserSegmentsEntryMembershipCheckerTest {
 			"assetTagIds", new long[] {1}
 		).put(
 			"classPK", 1
+		).put(
+			"customField/_00001_test", "test"
 		).put(
 			"emailAddress", "test@liferay.com"
 		).put(

@@ -549,6 +549,15 @@ public class ObjectServiceUpgradeStepRegistrator
 
 		registry.register(
 			"10.7.0", "10.8.0", ObjectDefinitionSettingTable.create());
+
+		registry.register(
+			"10.8.0", "10.9.0",
+			UpgradeProcessFactory.runSQL(
+				StringBundler.concat(
+					"update ObjectField set dbTableName = ",
+					"'CPDefinitionLocalization', localized = [$TRUE$] where ",
+					"dbTableName = 'CPDefinition' and name in ('description', ",
+					"'name', 'shortDescription')")));
 	}
 
 	@Reference

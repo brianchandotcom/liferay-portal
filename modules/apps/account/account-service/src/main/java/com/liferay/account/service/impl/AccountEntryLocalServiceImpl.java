@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
@@ -61,6 +62,7 @@ import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.SystemEventLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
@@ -355,6 +357,17 @@ public class AccountEntryLocalServiceImpl
 		_workflowInstanceLinkLocalService.deleteWorkflowInstanceLinks(
 			accountEntry.getCompanyId(), 0, AccountEntry.class.getName(),
 			accountEntry.getAccountEntryId());
+
+		// System event
+
+		_systemEventLocalService.addSystemEvent(
+			accountEntry.getUserId(), accountEntry.getAccountEntryGroupId(),
+			accountEntry.getExternalReferenceCode(),
+			accountEntry.getModelClassName(), accountEntry.getPrimaryKey(),
+			accountEntry.getUuid(), null, SystemEventConstants.TYPE_DELETE,
+			JSONUtil.put(
+				"name", accountEntry.getName()
+			).toString());
 
 		return accountEntry;
 	}
@@ -1288,6 +1301,9 @@ public class AccountEntryLocalServiceImpl
 
 	@Reference
 	private Sorts _sorts;
+
+	@Reference
+	private SystemEventLocalService _systemEventLocalService;
 
 	@Reference
 	private UserFileUploadsSettings _userFileUploadsSettings;

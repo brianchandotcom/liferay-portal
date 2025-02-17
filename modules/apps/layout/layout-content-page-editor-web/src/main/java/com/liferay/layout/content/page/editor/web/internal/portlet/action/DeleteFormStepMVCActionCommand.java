@@ -51,7 +51,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = MVCActionCommand.class
 )
 public class DeleteFormStepMVCActionCommand
-	extends BaseItemFormConfigMVCActionCommand {
+	extends BaseContentPageEditorTransactionalMVCActionCommand {
 
 	@Override
 	protected JSONObject doTransactionalCommand(
@@ -137,7 +137,7 @@ public class DeleteFormStepMVCActionCommand
 					stepperFragmentEntryLink));
 		}
 
-		return getLayoutStructureItemChangesJSONObject(
+		return _formItemManager.getLayoutStructureItemChangesJSONObject(
 			fragmentEntryLinks, httpServletRequest, httpServletResponse,
 			_jsonFactory.createJSONObject(), layoutStructure,
 			layoutStructureItemChanges);

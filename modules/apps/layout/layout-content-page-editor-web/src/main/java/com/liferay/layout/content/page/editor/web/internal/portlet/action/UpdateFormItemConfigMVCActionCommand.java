@@ -64,7 +64,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = MVCActionCommand.class
 )
 public class UpdateFormItemConfigMVCActionCommand
-	extends BaseItemFormConfigMVCActionCommand {
+	extends BaseContentPageEditorTransactionalMVCActionCommand {
 
 	@Override
 	protected JSONObject doTransactionalCommand(
@@ -287,11 +287,11 @@ public class UpdateFormItemConfigMVCActionCommand
 		}
 
 		FragmentEntryLink stepperFragmentEntryLink =
-			fragmentEntryLinkLocalService.fetchFragmentEntryLink(
+			_fragmentEntryLinkLocalService.fetchFragmentEntryLink(
 				stepperFragmentEntryLinkId);
 
 		if (stepperFragmentEntryLink != null) {
-			stepperFragmentEntryLink = formItemManager.updateNumberOfStepps(
+			stepperFragmentEntryLink = _formItemManager.updateNumberOfStepps(
 				httpServletRequest,
 				_portal.getHttpServletResponse(actionResponse),
 				formStyledLayoutStructureItem.getNumberOfSteps(),
@@ -300,7 +300,7 @@ public class UpdateFormItemConfigMVCActionCommand
 			addedFragmentEntryLinks.add(stepperFragmentEntryLink);
 		}
 
-		return getLayoutStructureItemChangesJSONObject(
+		return _formItemManager.getLayoutStructureItemChangesJSONObject(
 			addedFragmentEntryLinks, httpServletRequest,
 			_portal.getHttpServletResponse(actionResponse), jsonObject,
 			layoutStructure, layoutStructureItemChanges);

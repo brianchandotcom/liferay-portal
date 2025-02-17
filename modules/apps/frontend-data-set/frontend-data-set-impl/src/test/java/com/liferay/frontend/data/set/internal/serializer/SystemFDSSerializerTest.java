@@ -36,7 +36,6 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizer
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -51,7 +50,6 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -106,7 +104,7 @@ public class SystemFDSSerializerTest {
 	@Test
 	public void testSerializeAPIURL() throws Exception {
 
-		// No resolver, URL
+		// URL
 
 		ServiceTrackerMap
 			<String,
@@ -139,7 +137,7 @@ public class SystemFDSSerializerTest {
 
 		_unregisterServices();
 
-		// No resolver, URL with parameters
+		// URL with parameters
 
 		_registerServices(
 			_registerSystemFDSEntry(
@@ -149,42 +147,6 @@ public class SystemFDSSerializerTest {
 			"/o/app/endpoint?param=3",
 			_systemFDSSerializer.serializeAPIURL(
 				"fdsName", _httpServletRequest));
-
-		_unregisterServices();
-
-		// Resolver with interpolation
-
-		_registerServices(
-			_registerFDSAPIURLResolver(
-				"/app", "schema", new String[] {"{foo}"}, new String[] {"bar"}),
-			_registerSystemFDSEntry(
-				"{foo}=3", "fdsName", "/app", "/endpoint/{foo}", "schema"));
-
-		Assert.assertEquals(
-			"/o/app/endpoint/bar?bar=3",
-			_systemFDSSerializer.serializeAPIURL(
-				"fdsName", _httpServletRequest));
-
-		_unregisterServices();
-
-		// Shared resolver
-
-		_registerServices(
-			_registerFDSAPIURLResolver(
-				"/app", "schema", new String[] {"{foo}"}, new String[] {"bar"}),
-			_registerSystemFDSEntry(
-				null, "fdsName1", "/app", "/endpoint/{foo}", "schema"),
-			_registerSystemFDSEntry(
-				null, "fdsName2", "/app", "/endpoint/{foo}", "schema"));
-
-		Assert.assertEquals(
-			"/o/app/endpoint/bar",
-			_systemFDSSerializer.serializeAPIURL(
-				"fdsName1", _httpServletRequest));
-		Assert.assertEquals(
-			"/o/app/endpoint/bar",
-			_systemFDSSerializer.serializeAPIURL(
-				"fdsName2", _httpServletRequest));
 
 		_unregisterServices();
 
@@ -1044,33 +1006,6 @@ public class SystemFDSSerializerTest {
 			}
 
 		};
-	}
-
-	private ServiceRegistration<FDSAPIURLResolver> _registerFDSAPIURLResolver(
-		String restApplication, String restSchema, String[] tokens,
-		String[] values) {
-
-		return _bundleContext.registerService(
-			FDSAPIURLResolver.class,
-			new FDSAPIURLResolver() {
-
-				@Override
-				public String getSchema() {
-					return restSchema;
-				}
-
-				@Override
-				public String resolve(
-						String baseURL, HttpServletRequest httpServletRequest)
-					throws PortalException {
-
-					return StringUtil.replace(baseURL, tokens, values);
-				}
-
-			},
-			MapUtil.singletonDictionary(
-				"fds.rest.application.key",
-				restApplication + "/" + restSchema));
 	}
 
 	private ServiceRegistration<FDSBulkActions> _registerFDSBulkActions(

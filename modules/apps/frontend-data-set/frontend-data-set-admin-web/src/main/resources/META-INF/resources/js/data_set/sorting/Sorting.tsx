@@ -37,7 +37,6 @@ interface IContentRendererProps {
 
 interface IDataSetSort extends IOrderable {
 	[OBJECT_RELATIONSHIP.DATA_SET_SORTS]: IDataSet;
-	active: boolean;
 	default: boolean;
 	externalReferenceCode: string;
 	fieldName: string;

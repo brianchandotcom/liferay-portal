@@ -42,4 +42,7 @@ public interface FDSSerializer {
 	public List<FDSActionDropdownItem> serializeItemsActions(
 		String fdsName, HttpServletRequest httpServletRequest);
 
+	public JSONArray serializeViews(
+		String fdsName, HttpServletRequest httpServletRequest);
+
 }

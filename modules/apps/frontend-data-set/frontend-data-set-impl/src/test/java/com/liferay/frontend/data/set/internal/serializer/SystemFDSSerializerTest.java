@@ -657,19 +657,14 @@ public class SystemFDSSerializerTest {
 			_registerSystemFDSEntry(
 				null, "fdsName2", "/app", "/endpoint", "schema"));
 
-		String dateRangeFDSFilterSerialized1 =
-			_systemFDSSerializer.serializeFilters(
-				"fdsName1", _httpServletRequest
-			).toString();
+		String json1 = _systemFDSSerializer.serializeFilters(
+			"fdsName1", _httpServletRequest
+		).toString();
+		String json2 = _systemFDSSerializer.serializeFilters(
+			"fdsName2", _httpServletRequest
+		).toString();
 
-		String dateRangeFDSFilterSerialized2 =
-			_systemFDSSerializer.serializeFilters(
-				"fdsName2", _httpServletRequest
-			).toString();
-
-		JSONAssert.assertNotEquals(
-			dateRangeFDSFilterSerialized1, dateRangeFDSFilterSerialized2,
-			JSONCompareMode.STRICT);
+		JSONAssert.assertNotEquals(json1, json2, JSONCompareMode.STRICT);
 
 		JSONAssert.assertEquals(
 			JSONUtil.putAll(
@@ -701,8 +696,7 @@ public class SystemFDSSerializerTest {
 					"type", "dateRange"
 				)
 			).toString(),
-			dateRangeFDSFilterSerialized1, JSONCompareMode.STRICT);
-
+			json1, JSONCompareMode.STRICT);
 		JSONAssert.assertEquals(
 			JSONUtil.putAll(
 				JSONUtil.put(
@@ -733,7 +727,7 @@ public class SystemFDSSerializerTest {
 					"type", "dateRange"
 				)
 			).toString(),
-			dateRangeFDSFilterSerialized2, JSONCompareMode.STRICT);
+			json2, JSONCompareMode.STRICT);
 
 		_unregisterServices();
 

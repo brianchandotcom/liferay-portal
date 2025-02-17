@@ -17,14 +17,17 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.ModelListenerException;
+import com.liferay.portal.kernel.model.SystemEvent;
+import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.service.SystemEventLocalService;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -271,6 +274,19 @@ public class AccountGroupLocalServiceTest {
 		Assert.assertNull(
 			_accountGroupLocalService.fetchAccountGroup(
 				accountGroup.getAccountGroupId()));
+
+		List<SystemEvent> systemEvents =
+			_systemEventLocalService.getSystemEvents(
+				0, _portal.getClassNameId(accountGroup.getModelClassName()),
+				accountGroup.getPrimaryKey());
+
+		SystemEvent systemEvent = systemEvents.get(0);
+
+		Assert.assertEquals(
+			accountGroup.getExternalReferenceCode(),
+			systemEvent.getClassExternalReferenceCode());
+		Assert.assertEquals(
+			SystemEventConstants.TYPE_DELETE, systemEvent.getType());
 	}
 
 	private void _testSearchAccountGroupsWithPagination(
@@ -316,6 +332,9 @@ public class AccountGroupLocalServiceTest {
 	private AccountGroupRelLocalService _accountGroupRelLocalService;
 
 	@Inject
-	private UserLocalService _userLocalService;
+	private Portal _portal;
+
+	@Inject
+	private SystemEventLocalService _systemEventLocalService;
 
 }

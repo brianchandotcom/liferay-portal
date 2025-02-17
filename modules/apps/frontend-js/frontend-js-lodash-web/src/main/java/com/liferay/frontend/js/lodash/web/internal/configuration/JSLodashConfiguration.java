@@ -14,7 +14,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  * @review
  */
 @ExtendedObjectClassDefinition(
-	category = "third-party", featureFlagKey = "LPD-48975"
+	category = "third-party", deprecated = true, featureFlagKey = "LPD-48975"
 )
 @Meta.OCD(
 	description = "frontend-js-lodash-description",

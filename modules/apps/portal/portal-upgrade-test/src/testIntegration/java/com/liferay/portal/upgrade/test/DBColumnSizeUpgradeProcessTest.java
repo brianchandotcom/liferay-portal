@@ -65,12 +65,12 @@ public class DBColumnSizeUpgradeProcessTest {
 		).upgrade();
 
 		try (Connection connection = DataAccess.getConnection()) {
-			_assertColumn(connection, "TestTable1", "testValue");
-			_assertColumn(connection, "TestTable2", "testValue");
+			_assertColumnType(connection, "TestTable1", "testValue");
+			_assertColumnType(connection, "TestTable2", "testValue");
 		}
 	}
 
-	private void _assertColumn(
+	private void _assertColumnType(
 			Connection connection, String tableName, String columnName)
 		throws Exception {
 

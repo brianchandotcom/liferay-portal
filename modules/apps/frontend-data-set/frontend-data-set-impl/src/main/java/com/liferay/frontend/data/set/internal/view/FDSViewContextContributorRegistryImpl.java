@@ -30,6 +30,17 @@ import org.osgi.service.component.annotations.Deactivate;
 public class FDSViewContextContributorRegistryImpl
 	implements FDSViewContextContributorRegistry {
 
+	public FDSViewContextContributorRegistryImpl() {
+	}
+
+	public FDSViewContextContributorRegistryImpl(
+		ServiceTrackerMap
+			<String, List<ServiceWrapper<FDSViewContextContributor>>>
+				serviceTrackerMap) {
+
+		_serviceTrackerMap = serviceTrackerMap;
+	}
+
 	@Override
 	public List<FDSViewContextContributor> getFDSViewContextContributors(
 		String fdsViewName) {

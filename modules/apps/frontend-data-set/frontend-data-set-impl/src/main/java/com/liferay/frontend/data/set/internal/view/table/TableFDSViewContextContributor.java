@@ -13,10 +13,9 @@ import com.liferay.frontend.data.set.view.table.FDSTableSchema;
 import com.liferay.frontend.data.set.view.table.FDSTableSchemaField;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -26,7 +25,6 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
@@ -52,7 +50,7 @@ public class TableFDSViewContextContributor
 	private Map<String, Object> _serialize(
 		BaseTableFDSView baseTableFDSView, Locale locale) {
 
-		JSONArray fieldsJSONArray = _jsonFactory.createJSONArray();
+		JSONArray fieldsJSONArray = JSONUtil.putAll();
 
 		FDSTableSchema fdsTableSchema = baseTableFDSView.getFDSTableSchema(
 			locale);
@@ -67,7 +65,7 @@ public class TableFDSViewContextContributor
 			String label = fdsTableSchemaField.getLabel();
 
 			if (fdsTableSchemaField.isLocalizeLabel()) {
-				label = _language.get(
+				label = LanguageUtil.get(
 					resourceBundle, fdsTableSchemaField.getLabel());
 			}
 
@@ -88,11 +86,5 @@ public class TableFDSViewContextContributor
 			"schema", JSONUtil.put("fields", fieldsJSONArray)
 		).build();
 	}
-
-	@Reference
-	private JSONFactory _jsonFactory;
-
-	@Reference
-	private Language _language;
 
 }

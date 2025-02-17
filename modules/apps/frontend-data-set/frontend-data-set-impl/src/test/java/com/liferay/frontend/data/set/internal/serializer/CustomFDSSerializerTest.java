@@ -5,6 +5,7 @@
 
 package com.liferay.frontend.data.set.internal.serializer;
 
+import com.liferay.client.extension.type.FDSCellRendererCET;
 import com.liferay.client.extension.type.FDSFilterCET;
 import com.liferay.client.extension.type.manager.CETManager;
 import com.liferay.frontend.data.set.constants.FDSEntityFieldTypes;
@@ -28,6 +29,7 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -41,8 +43,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
-
-import javax.servlet.http.HttpServletRequest;
+import java.util.function.Predicate;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -60,7 +61,7 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 /**
  * @author Daniel Sanz
  */
-public class CustomFDSSerializerTest {
+public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 	@ClassRule
 	@Rule
@@ -74,7 +75,7 @@ public class CustomFDSSerializerTest {
 		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
 
 		Mockito.when(
-			_httpServletRequest.getAttribute(WebKeys.THEME_DISPLAY)
+			httpServletRequest.getAttribute(WebKeys.THEME_DISPLAY)
 		).thenReturn(
 			themeDisplay
 		);
@@ -114,7 +115,7 @@ public class CustomFDSSerializerTest {
 		Assert.assertEquals(
 			"/o/app/endpoint?nestedFields=creator",
 			_customFDSSerializer.serializeAPIURL(
-				"fdsName", _httpServletRequest));
+				"fdsName", httpServletRequest));
 
 		_resetFDSSerializer(fdsAPIURLResolverRegistry);
 
@@ -125,7 +126,7 @@ public class CustomFDSSerializerTest {
 			"/endpoint", "schema");
 
 		String url = _customFDSSerializer.serializeAPIURL(
-			"fdsName", _httpServletRequest);
+			"fdsName", httpServletRequest);
 
 		Assert.assertTrue(url.startsWith("/o/app/endpoint?"));
 
@@ -147,7 +148,7 @@ public class CustomFDSSerializerTest {
 			"/app", "/endpoint", "schema");
 
 		url = _customFDSSerializer.serializeAPIURL(
-			"fdsName", _httpServletRequest);
+			"fdsName", httpServletRequest);
 
 		Assert.assertTrue(url.startsWith("/o/app/endpoint?"));
 
@@ -173,7 +174,7 @@ public class CustomFDSSerializerTest {
 		Assert.assertEquals(
 			"/o/app/endpoint",
 			_customFDSSerializer.serializeAPIURL(
-				"fdsName", _httpServletRequest));
+				"fdsName", httpServletRequest));
 
 		serviceTrackerMap.close();
 	}
@@ -188,7 +189,7 @@ public class CustomFDSSerializerTest {
 		_mockSerializeCreationMenu("fdsName2", new String[] {"New 2"});
 
 		CreationMenu creationMenu1 = _customFDSSerializer.serializeCreationMenu(
-			"fdsName1", _httpServletRequest);
+			"fdsName1", httpServletRequest);
 
 		Assert.assertEquals(2, _getPrimaryItemsSize(creationMenu1));
 		Assert.assertFalse(_containsTitle(creationMenu1, "New 2"));
@@ -196,7 +197,7 @@ public class CustomFDSSerializerTest {
 		Assert.assertTrue(_containsTitle(creationMenu1, "New 1.2"));
 
 		CreationMenu creationMenu2 = _customFDSSerializer.serializeCreationMenu(
-			"fdsName2", _httpServletRequest);
+			"fdsName2", httpServletRequest);
 
 		Assert.assertEquals(1, _getPrimaryItemsSize(creationMenu2));
 		Assert.assertFalse(_containsTitle(creationMenu2, "New 1.1"));
@@ -211,7 +212,7 @@ public class CustomFDSSerializerTest {
 
 		Assert.assertTrue(
 			_customFDSSerializer.serializeCreationMenu(
-				"fdsName", _httpServletRequest
+				"fdsName", httpServletRequest
 			).isEmpty());
 
 		_resetFDSSerializer();
@@ -355,7 +356,7 @@ public class CustomFDSSerializerTest {
 				)
 			).toString(),
 			_customFDSSerializer.serializeFilters(
-				"fdsName", _httpServletRequest
+				"fdsName", httpServletRequest
 			).toString(),
 			JSONCompareMode.LENIENT);
 
@@ -413,7 +414,7 @@ public class CustomFDSSerializerTest {
 				)
 			).toString(),
 			_customFDSSerializer.serializeFilters(
-				"fdsName", _httpServletRequest
+				"fdsName", httpServletRequest
 			).toString(),
 			JSONCompareMode.LENIENT);
 
@@ -470,7 +471,7 @@ public class CustomFDSSerializerTest {
 				)
 			).toString(),
 			_customFDSSerializer.serializeFilters(
-				"fdsName1", _httpServletRequest
+				"fdsName1", httpServletRequest
 			).toString(),
 			JSONCompareMode.LENIENT);
 		JSONAssert.assertEquals(
@@ -499,7 +500,7 @@ public class CustomFDSSerializerTest {
 				)
 			).toString(),
 			_customFDSSerializer.serializeFilters(
-				"fdsName2", _httpServletRequest
+				"fdsName2", httpServletRequest
 			).toString(),
 			JSONCompareMode.LENIENT);
 
@@ -512,7 +513,7 @@ public class CustomFDSSerializerTest {
 		JSONAssert.assertEquals(
 			"[]",
 			_customFDSSerializer.serializeFilters(
-				"fdsName", _httpServletRequest
+				"fdsName", httpServletRequest
 			).toString(),
 			JSONCompareMode.STRICT);
 
@@ -585,7 +586,7 @@ public class CustomFDSSerializerTest {
 				)
 			).toString(),
 			_customFDSSerializer.serializeFilters(
-				"fdsName", _httpServletRequest
+				"fdsName", httpServletRequest
 			).toString(),
 			JSONCompareMode.LENIENT);
 	}
@@ -601,7 +602,7 @@ public class CustomFDSSerializerTest {
 
 		List<FDSActionDropdownItem> fdsActionDropdownItems1 =
 			_customFDSSerializer.serializeItemsActions(
-				"fdsName1", _httpServletRequest);
+				"fdsName1", httpServletRequest);
 
 		Assert.assertFalse(_containsLabel(fdsActionDropdownItems1, "New 2"));
 		Assert.assertTrue(_containsLabel(fdsActionDropdownItems1, "New 1.1"));
@@ -610,7 +611,7 @@ public class CustomFDSSerializerTest {
 
 		List<FDSActionDropdownItem> fdsActionDropdownItems2 =
 			_customFDSSerializer.serializeItemsActions(
-				"fdsName2", _httpServletRequest);
+				"fdsName2", httpServletRequest);
 
 		Assert.assertFalse(_containsLabel(fdsActionDropdownItems2, "New 1.1"));
 		Assert.assertFalse(_containsLabel(fdsActionDropdownItems2, "New 1.2"));
@@ -625,7 +626,7 @@ public class CustomFDSSerializerTest {
 
 		Assert.assertTrue(
 			_customFDSSerializer.serializeItemsActions(
-				"fdsName", _httpServletRequest
+				"fdsName", httpServletRequest
 			).isEmpty());
 
 		_resetFDSSerializer();
@@ -636,6 +637,306 @@ public class CustomFDSSerializerTest {
 
 		_testSerializeItemsActions("fdsName1", labels);
 		_testSerializeItemsActions("fdsName2", labels);
+	}
+
+	@Test
+	public void testSerializeViews() throws Exception {
+
+		// Cards view
+
+		mockLanguage();
+
+		_mockSerializeViewsCardsOrList(
+			"fdsName",
+			HashMapBuilder.put(
+				"name", "title"
+			).put(
+				"thumbnail", "image"
+			).build(),
+			"dataSetToDataSetCardsSections");
+
+		JSONAssert.assertEquals(
+			JSONUtil.putAll(
+				JSONUtil.put(
+					"contentRenderer", "cards"
+				).put(
+					"default", false
+				).put(
+					"name", "cards"
+				).put(
+					"schema",
+					JSONUtil.put(
+						"image", "thumbnail"
+					).put(
+						"title", "name"
+					)
+				).put(
+					"thumbnail", "cards2"
+				)
+			).toString(),
+			_customFDSSerializer.serializeViews(
+				"fdsName", httpServletRequest
+			).toString(),
+			JSONCompareMode.STRICT);
+
+		_resetFDSSerializer();
+
+		// Different views
+
+		_mockSerializeViewsCardsOrList(
+			"fdsName1",
+			HashMapBuilder.put(
+				"name", "title"
+			).put(
+				"thumbnail", "image"
+			).build(),
+			"dataSetToDataSetCardsSections");
+
+		_mockSerializeViewsCardsOrList(
+			"fdsName2",
+			HashMapBuilder.put(
+				"image", "image"
+			).put(
+				"title", "title"
+			).build(),
+			"dataSetToDataSetCardsSections");
+
+		JSONAssert.assertEquals(
+			JSONUtil.putAll(
+				JSONUtil.put(
+					"contentRenderer", "cards"
+				).put(
+					"default", false
+				).put(
+					"name", "cards"
+				).put(
+					"schema",
+					JSONUtil.put(
+						"image", "thumbnail"
+					).put(
+						"title", "name"
+					)
+				).put(
+					"thumbnail", "cards2"
+				)
+			).toString(),
+			_customFDSSerializer.serializeViews(
+				"fdsName1", httpServletRequest
+			).toString(),
+			JSONCompareMode.STRICT);
+
+		JSONAssert.assertEquals(
+			JSONUtil.putAll(
+				JSONUtil.put(
+					"contentRenderer", "cards"
+				).put(
+					"default", false
+				).put(
+					"name", "cards"
+				).put(
+					"schema",
+					JSONUtil.put(
+						"image", "image"
+					).put(
+						"title", "title"
+					)
+				).put(
+					"thumbnail", "cards2"
+				)
+			).toString(),
+			_customFDSSerializer.serializeViews(
+				"fdsName2", httpServletRequest
+			).toString(),
+			JSONCompareMode.STRICT);
+
+		_resetFDSSerializer();
+
+		// Empty view
+
+		_mockSerializeViewsCardsOrList(
+			"fdsName", Collections.emptyMap(), "dataSetToDataSetListSections");
+
+		JSONAssert.assertEquals(
+			"[]",
+			_customFDSSerializer.serializeViews(
+				"fdsName", httpServletRequest
+			).toString(),
+			JSONCompareMode.STRICT);
+
+		_resetFDSSerializer();
+
+		// List view
+
+		_mockSerializeViewsCardsOrList(
+			"fdsName",
+			HashMapBuilder.put(
+				"name", "title"
+			).put(
+				"thumbnail", "image"
+			).build(),
+			"dataSetToDataSetListSections");
+
+		JSONAssert.assertEquals(
+			JSONUtil.putAll(
+				JSONUtil.put(
+					"contentRenderer", "list"
+				).put(
+					"default", false
+				).put(
+					"name", "list"
+				).put(
+					"schema",
+					JSONUtil.put(
+						"image", "thumbnail"
+					).put(
+						"title", "name"
+					)
+				).put(
+					"thumbnail", "list"
+				)
+			).toString(),
+			_customFDSSerializer.serializeViews(
+				"fdsName", httpServletRequest
+			).toString(),
+			JSONCompareMode.STRICT);
+
+		_resetFDSSerializer();
+
+		// Shared view
+
+		Map<String, String> sectionsMap = HashMapBuilder.put(
+			"name", "title"
+		).put(
+			"thumbnail", "image"
+		).build();
+
+		_mockSerializeViewsCardsOrList(
+			"fdsName1", sectionsMap, "dataSetToDataSetListSections");
+
+		_mockSerializeViewsCardsOrList(
+			"fdsName2", sectionsMap, "dataSetToDataSetListSections");
+
+		JSONAssert.assertEquals(
+			_customFDSSerializer.serializeViews(
+				"fdsName1", httpServletRequest
+			).toString(),
+			_customFDSSerializer.serializeViews(
+				"fdsName2", httpServletRequest
+			).toString(),
+			JSONCompareMode.STRICT);
+
+		// Table view
+
+		List<Map<String, Object>> tableSectionObjectEntriesProperties =
+			new ArrayList<>();
+
+		tableSectionObjectEntriesProperties.add(
+			HashMapBuilder.<String, Object>put(
+				"fieldName", "creator.name"
+			).put(
+				"label", "Creator"
+			).put(
+				"renderer", "ActionLink"
+			).put(
+				"rendererType", "internal"
+			).put(
+				"sortable", true
+			).put(
+				"type", "String"
+			).build());
+
+		String cetExternalReferenceCode = RandomTestUtil.randomString();
+
+		tableSectionObjectEntriesProperties.add(
+			HashMapBuilder.<String, Object>put(
+				"fieldName", "description"
+			).put(
+				"label", "Description"
+			).put(
+				"renderer", cetExternalReferenceCode
+			).put(
+				"rendererType", "clientExtension"
+			).put(
+				"sortable", false
+			).put(
+				"type", "String"
+			).build());
+
+		tableSectionObjectEntriesProperties.add(
+			HashMapBuilder.<String, Object>put(
+				"fieldName", "createDate"
+			).put(
+				"label", "Created"
+			).put(
+				"renderer", "default"
+			).put(
+				"rendererType", "internal"
+			).put(
+				"sortable", false
+			).put(
+				"type", "String"
+			).build());
+
+		_mockSerializeViewsTable(
+			"fdsName", tableSectionObjectEntriesProperties);
+
+		JSONAssert.assertEquals(
+			JSONUtil.putAll(
+				JSONUtil.put(
+					"contentRenderer", "table"
+				).put(
+					"default", false
+				).put(
+					"name", "table"
+				).put(
+					"schema",
+					JSONUtil.put(
+						"fields",
+						JSONUtil.putAll(
+							JSONUtil.put(
+								"contentRenderer", "ActionLink"
+							).put(
+								"fieldName", "creator.name"
+							).put(
+								"label", "Creator"
+							).put(
+								"sortable", true
+							),
+							JSONUtil.put(
+								"contentRenderer", cetExternalReferenceCode
+							).put(
+								"contentRendererClientExtension", true
+							).put(
+								"contentRendererModuleURL",
+								"default from /o/" + cetExternalReferenceCode +
+									"/index.js"
+							).put(
+								"fieldName", "description"
+							).put(
+								"label", "Description"
+							).put(
+								"sortable", false
+							),
+							JSONUtil.put(
+								"contentRenderer", "default"
+							).put(
+								"fieldName", "createDate"
+							).put(
+								"label", "Created"
+							).put(
+								"sortable", false
+							))
+					).put(
+						"thumbnail", "table"
+					)
+				)
+			).toString(),
+			_customFDSSerializer.serializeViews(
+				"fdsName", httpServletRequest
+			).toString(),
+			JSONCompareMode.STRICT);
+
+		_resetFDSSerializer();
 	}
 
 	private boolean _containsLabel(
@@ -709,12 +1010,12 @@ public class CustomFDSSerializerTest {
 
 		Mockito.when(
 			_customFDSSerializer.createFDSAPIURLBuilder(
-				_httpServletRequest, restApplication, restEndpoint, restSchema)
+				httpServletRequest, restApplication, restEndpoint, restSchema)
 		).thenCallRealMethod();
 
 		Mockito.when(
 			_customFDSSerializer.getDataSetObjectEntryProperties(
-				fdsName, _httpServletRequest)
+				fdsName, httpServletRequest)
 		).thenReturn(
 			HashMapBuilder.put(
 				"restApplication", (Object)restApplication
@@ -740,14 +1041,14 @@ public class CustomFDSSerializerTest {
 
 		Mockito.when(
 			_customFDSSerializer.getSortedRelatedObjectEntries(
-				fdsName, _httpServletRequest, null, "tableSectionsOrder",
+				fdsName, httpServletRequest, null, "tableSectionsOrder",
 				"dataSetToDataSetTableSections")
 		).thenReturn(
 			objectEntries
 		);
 
 		Mockito.when(
-			_customFDSSerializer.serializeAPIURL(fdsName, _httpServletRequest)
+			_customFDSSerializer.serializeAPIURL(fdsName, httpServletRequest)
 		).thenCallRealMethod();
 	}
 
@@ -767,7 +1068,7 @@ public class CustomFDSSerializerTest {
 
 		Mockito.when(
 			_customFDSSerializer.getSortedRelatedObjectEntries(
-				Mockito.eq(fdsName), Mockito.eq(_httpServletRequest),
+				Mockito.eq(fdsName), Mockito.eq(httpServletRequest),
 				Mockito.any(), Mockito.eq("creationActionsOrder"),
 				Mockito.eq("dataSetToDataSetActions"))
 		).thenReturn(
@@ -776,7 +1077,7 @@ public class CustomFDSSerializerTest {
 
 		Mockito.when(
 			_customFDSSerializer.serializeCreationMenu(
-				fdsName, _httpServletRequest)
+				fdsName, httpServletRequest)
 		).thenCallRealMethod();
 	}
 
@@ -784,7 +1085,7 @@ public class CustomFDSSerializerTest {
 		String fdsName, Map<String, Object> properties) {
 
 		Mockito.when(
-			_customFDSSerializer.serializeFilters(fdsName, _httpServletRequest)
+			_customFDSSerializer.serializeFilters(fdsName, httpServletRequest)
 		).thenCallRealMethod();
 
 		List<ObjectEntry> objectEntries = new ArrayList<>();
@@ -799,7 +1100,7 @@ public class CustomFDSSerializerTest {
 
 		Mockito.when(
 			_customFDSSerializer.getSortedRelatedObjectEntries(
-				Mockito.eq(fdsName), Mockito.eq(_httpServletRequest),
+				Mockito.eq(fdsName), Mockito.eq(httpServletRequest),
 				Mockito.any(), Mockito.eq("filtersOrder"),
 				Mockito.eq("dataSetToDataSetClientExtensionFilters"),
 				Mockito.eq("dataSetToDataSetDateFilters"),
@@ -825,7 +1126,7 @@ public class CustomFDSSerializerTest {
 
 		Mockito.when(
 			_customFDSSerializer.getSortedRelatedObjectEntries(
-				Mockito.eq(fdsName), Mockito.eq(_httpServletRequest),
+				Mockito.eq(fdsName), Mockito.eq(httpServletRequest),
 				Mockito.any(), Mockito.eq("itemActionsOrder"),
 				Mockito.eq("dataSetToDataSetActions"))
 		).thenReturn(
@@ -834,8 +1135,176 @@ public class CustomFDSSerializerTest {
 
 		Mockito.when(
 			_customFDSSerializer.serializeItemsActions(
-				fdsName, _httpServletRequest)
+				fdsName, httpServletRequest)
 		).thenCallRealMethod();
+	}
+
+	private void _mockSerializeViewsCardsOrList(
+		String fdsName, Map<String, String> sectionMap, String relationship) {
+
+		Mockito.when(
+			_customFDSSerializer.serializeViews(fdsName, httpServletRequest)
+		).thenCallRealMethod();
+
+		List<ObjectEntry> objectEntries = new ArrayList<>();
+
+		for (Map.Entry<String, String> sectionMapEntry :
+				sectionMap.entrySet()) {
+
+			ObjectEntry objectEntry = new ObjectEntry();
+
+			objectEntry.setProperties(
+				HashMapBuilder.put(
+					"fieldName", (Object)sectionMapEntry.getKey()
+				).put(
+					"name", (Object)sectionMapEntry.getValue()
+				).build());
+
+			objectEntries.add(objectEntry);
+		}
+
+		Mockito.when(
+			_customFDSSerializer.getRelatedObjectEntries(
+				Mockito.eq(fdsName), Mockito.eq(httpServletRequest),
+				Mockito.eq((Predicate)null), Mockito.eq(relationship))
+		).thenReturn(
+			objectEntries
+		);
+	}
+
+	private void _mockSerializeViewsTable(
+		String fdsName, List<Map<String, Object>> propertiesMapList) {
+
+		Mockito.when(
+			_customFDSSerializer.serializeViews(fdsName, httpServletRequest)
+		).thenCallRealMethod();
+
+		List<ObjectEntry> objectEntries = new ArrayList<>();
+
+		for (Map<String, Object> propertiesMap : propertiesMapList) {
+			ObjectEntry objectEntry = new ObjectEntry();
+
+			objectEntry.setProperties(propertiesMap);
+
+			objectEntries.add(objectEntry);
+
+			String rendererType = String.valueOf(
+				propertiesMap.get("rendererType"));
+
+			if (Validator.isNotNull(rendererType) &&
+				rendererType.equals("clientExtension")) {
+
+				String clientExtensionEntryERC = String.valueOf(
+					propertiesMap.get("renderer"));
+
+				CETManager cetManager = Mockito.mock(CETManager.class);
+
+				Mockito.when(
+					cetManager.getCET(
+						Mockito.anyLong(), Mockito.eq(clientExtensionEntryERC))
+				).thenAnswer(
+					invocation -> new FDSCellRendererCET() {
+
+						@Override
+						public String getBaseURL() {
+							return "";
+						}
+
+						@Override
+						public long getCompanyId() {
+							return invocation.getArgument(0, long.class);
+						}
+
+						@Override
+						public Date getCreateDate() {
+							return null;
+						}
+
+						@Override
+						public String getDescription() {
+							return "";
+						}
+
+						@Override
+						public String getEditJSP() {
+							return "";
+						}
+
+						@Override
+						public String getExternalReferenceCode() {
+							return clientExtensionEntryERC;
+						}
+
+						@Override
+						public Date getModifiedDate() {
+							return null;
+						}
+
+						@Override
+						public String getName() {
+							return "";
+						}
+
+						@Override
+						public String getName(Locale locale) {
+							return "";
+						}
+
+						@Override
+						public Properties getProperties() {
+							return null;
+						}
+
+						@Override
+						public String getSourceCodeURL() {
+							return "";
+						}
+
+						@Override
+						public int getStatus() {
+							return 0;
+						}
+
+						@Override
+						public String getType() {
+							return "";
+						}
+
+						@Override
+						public String getTypeSettings() {
+							return "";
+						}
+
+						@Override
+						public String getURL() {
+							return "/o/" + clientExtensionEntryERC +
+								"/index.js";
+						}
+
+						@Override
+						public boolean hasProperties() {
+							return false;
+						}
+
+						@Override
+						public boolean isReadOnly() {
+							return false;
+						}
+
+					}
+				);
+
+				_customFDSSerializer.cetManager = cetManager;
+			}
+		}
+
+		Mockito.when(
+			_customFDSSerializer.getSortedRelatedObjectEntries(
+				fdsName, httpServletRequest, (Predicate)null,
+				"tableSectionsOrder", "dataSetToDataSetTableSections")
+		).thenReturn(
+			objectEntries
+		);
 	}
 
 	private void _resetFDSSerializer() {
@@ -858,7 +1327,7 @@ public class CustomFDSSerializerTest {
 		_mockSerializeCreationMenu(fdsName, titles);
 
 		CreationMenu creationMenu = _customFDSSerializer.serializeCreationMenu(
-			fdsName, _httpServletRequest);
+			fdsName, httpServletRequest);
 
 		for (String title : titles) {
 			Assert.assertTrue(_containsTitle(creationMenu, title));
@@ -872,7 +1341,7 @@ public class CustomFDSSerializerTest {
 
 		List<FDSActionDropdownItem> fdsActionDropdownItems =
 			_customFDSSerializer.serializeItemsActions(
-				fdsName, _httpServletRequest);
+				fdsName, httpServletRequest);
 
 		for (String label : labels) {
 			Assert.assertTrue(_containsLabel(fdsActionDropdownItems, label));
@@ -886,7 +1355,5 @@ public class CustomFDSSerializerTest {
 
 	private static BundleContext _bundleContext;
 	private static CustomFDSSerializer _customFDSSerializer;
-	private static final HttpServletRequest _httpServletRequest = Mockito.mock(
-		HttpServletRequest.class);
 
 }

@@ -224,6 +224,14 @@ public interface CommerceChannelRelLocalService
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceChannelRel> getCommerceChannelCommerceCurrencies(
+		long commerceChannelId, String name, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceChannelCommerceCurrenciesCount(
+		long commerceChannelId, String name);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceChannelRel> getCommerceChannelCountries(
 		long commerceChannelId, String name, int start, int end);
 

@@ -75,6 +75,25 @@ public class CommerceChannelRelServiceWrapper
 	}
 
 	@Override
+	public java.util.List<CommerceChannelRel>
+			getCommerceChannelCommerceCurrencies(
+				long commerceChannelId, String name, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceChannelRelService.getCommerceChannelCommerceCurrencies(
+			commerceChannelId, name, start, end);
+	}
+
+	@Override
+	public int getCommerceChannelCommerceCurrenciesCount(
+			long commerceChannelId, String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceChannelRelService.
+			getCommerceChannelCommerceCurrenciesCount(commerceChannelId, name);
+	}
+
+	@Override
 	public java.util.List<CommerceChannelRel> getCommerceChannelCountries(
 			long commerceChannelId, String name, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {

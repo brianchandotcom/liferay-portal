@@ -284,6 +284,24 @@ public class CommerceChannelRelLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<CommerceChannelRel>
+		getCommerceChannelCommerceCurrencies(
+			long commerceChannelId, String name, int start, int end) {
+
+		return _commerceChannelRelLocalService.
+			getCommerceChannelCommerceCurrencies(
+				commerceChannelId, name, start, end);
+	}
+
+	@Override
+	public int getCommerceChannelCommerceCurrenciesCount(
+		long commerceChannelId, String name) {
+
+		return _commerceChannelRelLocalService.
+			getCommerceChannelCommerceCurrenciesCount(commerceChannelId, name);
+	}
+
+	@Override
 	public java.util.List<CommerceChannelRel> getCommerceChannelCountries(
 		long commerceChannelId, String name, int start, int end) {
 

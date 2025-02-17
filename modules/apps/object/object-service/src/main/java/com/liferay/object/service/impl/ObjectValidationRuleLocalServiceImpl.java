@@ -26,6 +26,7 @@ import com.liferay.object.internal.entry.util.ObjectEntryUtil;
 import com.liferay.object.internal.validation.rule.FunctionObjectValidationRuleEngineImpl;
 import com.liferay.object.internal.validation.rule.UniqueCompositeKeyObjectValidationRuleEngineImpl;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.model.ObjectValidationRule;
@@ -420,131 +421,43 @@ public class ObjectValidationRuleLocalServiceImpl
 			return;
 		}
 
-		ObjectDefinition objectDefinition =
-			_objectDefinitionPersistence.fetchByPrimaryKey(objectDefinitionId);
+		_validate(
+			baseModel, objectDefinitionId, payloadJSONObject, userId,
+			objectValidationRules);
+	}
 
-		Map<String, Object> variables = ObjectEntryVariablesUtil.getVariables(
-			_dtoConverterRegistry, objectDefinition, payloadJSONObject,
-			_systemObjectDefinitionManagerRegistry);
+	@Override
+	@Transactional(readOnly = true)
+	public void validate(
+			ObjectEntry objectEntry, List<String> objectValidationRulesERC,
+			long userId)
+		throws PortalException {
 
-		List<ObjectValidationRuleResult> objectValidationRuleResults =
-			new ArrayList<>();
+		List<ObjectValidationRule> objectValidationRules;
 
-		for (ObjectValidationRule objectValidationRule :
-				objectValidationRules) {
-
-			Map<String, Object> results = new HashMap<>();
-
-			ObjectValidationRuleEngine objectValidationRuleEngine =
-				_objectValidationRuleEngineRegistry.
-					getObjectValidationRuleEngine(
-						objectValidationRule.getCompanyId(),
-						objectValidationRule.getEngine());
-
-			if (StringUtil.equals(
-					objectValidationRuleEngine.getKey(),
-					ObjectValidationRuleConstants.ENGINE_TYPE_COMPOSITE_KEY)) {
-
-				variables.put("objectValidationRule", objectValidationRule);
-
-				results = objectValidationRuleEngine.execute(variables, null);
-			}
-			else if (StringUtil.equals(
-						objectValidationRuleEngine.getKey(),
-						ObjectValidationRuleConstants.ENGINE_TYPE_DDM)) {
-
-				_addRelatedObjectEntryValues(
-					objectDefinition.getObjectDefinitionId(),
-					objectValidationRule.getScript(), userId, variables);
-
-				results = objectValidationRuleEngine.execute(
-					variables, objectValidationRule.getScript());
-			}
-			else if (StringUtil.equals(
-						objectValidationRuleEngine.getKey(),
-						ObjectValidationRuleConstants.ENGINE_TYPE_GROOVY)) {
-
-				results = objectValidationRuleEngine.execute(
-					(Map<String, Object>)variables.get("baseModel"),
-					objectValidationRule.getScript());
-			}
-			else if (StringUtil.startsWith(
-						objectValidationRuleEngine.getKey(),
-						ObjectValidationRuleConstants.
-							ENGINE_TYPE_JAVA_DELEGATE_PREFIX)) {
-
-				results = objectValidationRuleEngine.execute(
-					HashMapBuilder.put(
-						"entryDTO", variables.get("entryDTO")
-					).put(
-						"originalEntryDTO", variables.get("originalEntryDTO")
-					).build(),
-					null);
-			}
-			else {
-				results = objectValidationRuleEngine.execute(
-					(Map<String, Object>)variables.get("entryDTO"), null);
-			}
-
-			Locale locale = LocaleUtil.getMostRelevantLocale();
-
-			User user = _userLocalService.fetchUser(userId);
-
-			if (user != null) {
-				locale = user.getLocale();
-			}
-
-			String errorMessage = null;
-
-			if (!GetterUtil.getBoolean(results.get("validationCriteriaMet"))) {
-				errorMessage = objectValidationRule.getErrorLabel(locale);
-			}
-			else if (GetterUtil.getBoolean(results.get("invalidScript"))) {
-				errorMessage = _language.get(
-					locale, "there-was-an-error-validating-your-data");
-			}
-
-			if (Validator.isNull(errorMessage)) {
-				continue;
-			}
-
-			if (objectValidationRule.compareOutputType(
-					ObjectValidationRuleConstants.
-						OUTPUT_TYPE_PARTIAL_VALIDATION)) {
-
-				for (ObjectValidationRuleSetting objectValidationRuleSetting :
-						_objectValidationRuleSettingPersistence.findByOVRI_N(
-							objectValidationRule.getObjectValidationRuleId(),
-							ObjectValidationRuleSettingConstants.
-								NAME_OUTPUT_OBJECT_FIELD_ID)) {
-
-					ObjectField objectField =
-						_objectFieldPersistence.fetchByPrimaryKey(
-							GetterUtil.getLong(
-								objectValidationRuleSetting.getValue()));
-
-					if (objectField == null) {
-						continue;
-					}
-
-					objectValidationRuleResults.add(
-						new ObjectValidationRuleResult(
-							errorMessage, objectField.getName()));
-				}
-			}
-			else {
-				objectValidationRuleResults.add(
-					new ObjectValidationRuleResult(errorMessage));
-			}
+		if (ListUtil.isEmpty(objectValidationRulesERC)) {
+			objectValidationRules =
+				objectValidationRuleLocalService.getObjectValidationRules(
+					objectEntry.getObjectDefinitionId());
+		}
+		else {
+			objectValidationRules = TransformUtil.transform(
+				objectValidationRulesERC,
+				objectValidationRuleERC ->
+					objectValidationRuleLocalService.fetchObjectValidationRule(
+						objectValidationRuleERC,
+						objectEntry.getObjectDefinitionId()));
 		}
 
-		ObjectEntryThreadLocal.addValidatedObjectEntryId(
-			(long)baseModel.getPrimaryKeyObj());
-
-		if (ListUtil.isNotEmpty(objectValidationRuleResults)) {
-			throw new ObjectValidationRuleEngineException(
-				objectValidationRuleResults);
-		}
+		_validate(
+			objectEntry, objectEntry.getObjectDefinitionId(),
+			ObjectEntryUtil.getPayloadJSONObject(
+				_dtoConverterRegistry, _jsonFactory, null,
+				_objectDefinitionPersistence.fetchByPrimaryKey(
+					objectEntry.getObjectDefinitionId()),
+				objectEntry, objectEntry, null,
+				_userLocalService.getUser(userId)),
+			userId, objectValidationRules);
 	}
 
 	private void _addRelatedObjectEntryValues(
@@ -703,6 +616,142 @@ public class ObjectValidationRuleLocalServiceImpl
 		}
 
 		return newObjectValidationRuleSettings;
+	}
+
+	private void _validate(
+			BaseModel<?> baseModel, long objectDefinitionId,
+			JSONObject payloadJSONObject, long userId,
+			List<ObjectValidationRule> objectValidationRules)
+		throws PortalException {
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionPersistence.fetchByPrimaryKey(objectDefinitionId);
+
+		Map<String, Object> variables = ObjectEntryVariablesUtil.getVariables(
+			_dtoConverterRegistry, objectDefinition, payloadJSONObject,
+			_systemObjectDefinitionManagerRegistry);
+
+		List<ObjectValidationRuleResult> objectValidationRuleResults =
+			new ArrayList<>();
+
+		for (ObjectValidationRule objectValidationRule :
+				objectValidationRules) {
+
+			Map<String, Object> results = new HashMap<>();
+
+			ObjectValidationRuleEngine objectValidationRuleEngine =
+				_objectValidationRuleEngineRegistry.
+					getObjectValidationRuleEngine(
+						objectValidationRule.getCompanyId(),
+						objectValidationRule.getEngine());
+
+			if (StringUtil.equals(
+					objectValidationRuleEngine.getKey(),
+					ObjectValidationRuleConstants.ENGINE_TYPE_COMPOSITE_KEY)) {
+
+				variables.put("objectValidationRule", objectValidationRule);
+
+				results = objectValidationRuleEngine.execute(variables, null);
+			}
+			else if (StringUtil.equals(
+						objectValidationRuleEngine.getKey(),
+						ObjectValidationRuleConstants.ENGINE_TYPE_DDM)) {
+
+				_addRelatedObjectEntryValues(
+					objectDefinition.getObjectDefinitionId(),
+					objectValidationRule.getScript(), userId, variables);
+
+				results = objectValidationRuleEngine.execute(
+					variables, objectValidationRule.getScript());
+			}
+			else if (StringUtil.equals(
+						objectValidationRuleEngine.getKey(),
+						ObjectValidationRuleConstants.ENGINE_TYPE_GROOVY)) {
+
+				results = objectValidationRuleEngine.execute(
+					(Map<String, Object>)variables.get("baseModel"),
+					objectValidationRule.getScript());
+			}
+			else if (StringUtil.startsWith(
+						objectValidationRuleEngine.getKey(),
+						ObjectValidationRuleConstants.
+							ENGINE_TYPE_JAVA_DELEGATE_PREFIX)) {
+
+				results = objectValidationRuleEngine.execute(
+					HashMapBuilder.put(
+						"entryDTO", variables.get("entryDTO")
+					).put(
+						"originalEntryDTO", variables.get("originalEntryDTO")
+					).build(),
+					null);
+			}
+			else {
+				results = objectValidationRuleEngine.execute(
+					(Map<String, Object>)variables.get("entryDTO"), null);
+			}
+
+			Locale locale = LocaleUtil.getMostRelevantLocale();
+
+			User user = _userLocalService.fetchUser(userId);
+
+			if (user != null) {
+				locale = user.getLocale();
+			}
+
+			String errorMessage = null;
+
+			if (!GetterUtil.getBoolean(results.get("validationCriteriaMet"))) {
+				errorMessage = objectValidationRule.getErrorLabel(locale);
+			}
+			else if (GetterUtil.getBoolean(results.get("invalidScript"))) {
+				errorMessage = _language.get(
+					locale, "there-was-an-error-validating-your-data");
+			}
+
+			if (Validator.isNull(errorMessage)) {
+				continue;
+			}
+
+			if (objectValidationRule.compareOutputType(
+					ObjectValidationRuleConstants.
+						OUTPUT_TYPE_PARTIAL_VALIDATION)) {
+
+				for (ObjectValidationRuleSetting objectValidationRuleSetting :
+						_objectValidationRuleSettingPersistence.findByOVRI_N(
+							objectValidationRule.getObjectValidationRuleId(),
+							ObjectValidationRuleSettingConstants.
+								NAME_OUTPUT_OBJECT_FIELD_ID)) {
+
+					ObjectField objectField =
+						_objectFieldPersistence.fetchByPrimaryKey(
+							GetterUtil.getLong(
+								objectValidationRuleSetting.getValue()));
+
+					if (objectField == null) {
+						continue;
+					}
+
+					objectValidationRuleResults.add(
+						new ObjectValidationRuleResult(
+							errorMessage, objectField.getName(),
+							objectValidationRule.getExternalReferenceCode()));
+				}
+			}
+			else {
+				objectValidationRuleResults.add(
+					new ObjectValidationRuleResult(
+						errorMessage,
+						objectValidationRule.getExternalReferenceCode()));
+			}
+		}
+
+		ObjectEntryThreadLocal.addValidatedObjectEntryId(
+			(long)baseModel.getPrimaryKeyObj());
+
+		if (ListUtil.isNotEmpty(objectValidationRuleResults)) {
+			throw new ObjectValidationRuleEngineException(
+				objectValidationRuleResults);
+		}
 	}
 
 	private void _validate(

@@ -16,23 +16,23 @@ import java.util.List;
 public class JavaClass extends BaseJavaTerm {
 
 	public JavaClass(
-		String name, String packageName, List<String> importNames,
-		String content, String accessModifier, int lineNumber,
-		boolean isAbstract, boolean isFinal, boolean isStatic,
-		boolean isInterface, boolean nonsealed, boolean sealed,
-		boolean isStrictfp, boolean anonymous) {
+		String accessModifier, boolean anonymous, String content,
+		List<String> importNames, boolean isAbstract, boolean isFinal,
+		boolean isInterface, boolean isStatic, boolean isStrictfp,
+		int lineNumber, String name, boolean nonsealed, String packageName,
+		boolean sealed) {
 
 		super(
-			name, content, accessModifier, lineNumber, isAbstract, isFinal,
-			isStatic);
+			accessModifier, content, isAbstract, isFinal, isStatic, lineNumber,
+			name);
 
-		_packageName = packageName;
+		_anonymous = anonymous;
 		_importNames = importNames;
 		_isInterface = isInterface;
-		_nonsealed = nonsealed;
-		_sealed = sealed;
 		_isStrictfp = isStrictfp;
-		_anonymous = anonymous;
+		_nonsealed = nonsealed;
+		_packageName = packageName;
+		_sealed = sealed;
 	}
 
 	public void addChildJavaTerm(JavaTerm javaTerm) {

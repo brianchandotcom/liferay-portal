@@ -11,12 +11,12 @@ package com.liferay.source.formatter.parser;
 public class JavaConstructor extends BaseJavaTerm {
 
 	public JavaConstructor(
-		String name, String content, String accessModifier, int lineNumber,
-		boolean isAbstract, boolean isFinal, boolean isStatic) {
+		String accessModifier, String content, boolean isAbstract,
+		boolean isFinal, boolean isStatic, int lineNumber, String name) {
 
 		super(
-			name, content, accessModifier, lineNumber, isAbstract, isFinal,
-			isStatic);
+			accessModifier, content, isAbstract, isFinal, isStatic, lineNumber,
+			name);
 	}
 
 	@Override

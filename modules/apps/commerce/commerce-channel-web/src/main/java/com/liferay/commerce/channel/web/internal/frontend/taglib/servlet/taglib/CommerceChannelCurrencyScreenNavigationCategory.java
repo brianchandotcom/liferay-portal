@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -17,18 +17,19 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Danny Situ
+ * @author Fabio Monaco
  */
 @Component(
-	property = "screen.navigation.category.order:Integer=100",
+	property = "screen.navigation.category.order:Integer=90",
 	service = ScreenNavigationCategory.class
 )
-public class CommerceChannelAccountEntryQualifiersScreenNavigationCategory
+public class CommerceChannelCurrencyScreenNavigationCategory
 	implements ScreenNavigationCategory {
 
 	@Override
 	public String getCategoryKey() {
-		return CommerceChannelScreenNavigationConstants.CATEGORY_KEY_QUALIFIERS;
+		return CommerceChannelScreenNavigationConstants.
+			CATEGORY_KEY_COMMERCE_CHANNEL_CURRENCIES;
 	}
 
 	@Override
@@ -36,7 +37,7 @@ public class CommerceChannelAccountEntryQualifiersScreenNavigationCategory
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return language.get(resourceBundle, "eligibility");
+		return language.get(resourceBundle, getCategoryKey());
 	}
 
 	@Override

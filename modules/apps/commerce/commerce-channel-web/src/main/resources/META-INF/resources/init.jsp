@@ -28,6 +28,7 @@ page import="com.liferay.commerce.channel.web.internal.constants.CommerceChannel
 page import="com.liferay.commerce.channel.web.internal.constants.CommerceChannelScreenNavigationConstants" %><%@
 page import="com.liferay.commerce.channel.web.internal.display.context.CommerceChannelAccountEntryQualifiersDisplayContext" %><%@
 page import="com.liferay.commerce.channel.web.internal.display.context.CommerceChannelCountryDisplayContext" %><%@
+page import="com.liferay.commerce.channel.web.internal.display.context.CommerceChannelCurrencyDisplayContext" %><%@
 page import="com.liferay.commerce.channel.web.internal.display.context.CommerceChannelDisplayContext" %><%@
 page import="com.liferay.commerce.channel.web.internal.display.context.SiteCommerceChannelTypeDisplayContext" %><%@
 page import="com.liferay.commerce.constants.CommerceOrderConstants" %><%@

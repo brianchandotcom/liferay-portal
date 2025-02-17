@@ -24,6 +24,9 @@ public class CommerceChannelFDSNames {
 	public static final String CHANNEL_QUALIFIER_ACCOUNTS =
 		CPPortletKeys.COMMERCE_CHANNELS + "-channelQualifierAccounts";
 
+	public static final String COMMERCE_CURRENCIES =
+		CPPortletKeys.COMMERCE_CHANNELS + "-commerceCurrencies";
+
 	public static final String PAYMENT_METHOD =
 		CPPortletKeys.COMMERCE_CHANNELS + "-paymentMethod";
 

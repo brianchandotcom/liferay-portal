@@ -13,12 +13,18 @@ public class CommerceChannelScreenNavigationConstants {
 	public static final String CATEGORY_KEY_COMMERCE_CHANNEL_COUNTRIES =
 		"countries";
 
+	public static final String CATEGORY_KEY_COMMERCE_CHANNEL_CURRENCIES =
+		"currencies";
+
 	public static final String CATEGORY_KEY_COMMERCE_CHANNEL_GENERAL =
 		"general";
 
 	public static final String CATEGORY_KEY_COMMERCE_CHANNEL_SITE = "site";
 
 	public static final String CATEGORY_KEY_QUALIFIERS = "qualifiers";
+
+	public static final String ENTRY_KEY_COMMERCE_CURRENCY_CURRENCIES =
+		"currencies";
 
 	public static final String
 		SCREEN_NAVIGATION_KEY_COMMERCE_CHANNEL_COUNTRIES =

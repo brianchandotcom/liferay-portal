@@ -559,13 +559,13 @@ public class SystemFDSSerializerTest {
 				"fdsName",
 				_createFDSDateRangeFilter(
 					"createDate", "By Creation Date",
+					new DateFDSFilterItem(16, 3, 1977),
+					new DateFDSFilterItem(0, 0, 0),
 					new HashMapBuilder<>().<String, Object>put(
 						"from", new DateFDSFilterItem(30, 11, 1985)
 					).put(
 						"to", new DateFDSFilterItem(27, 5, 1995)
-					).build(),
-					new DateFDSFilterItem(0, 0, 0),
-					new DateFDSFilterItem(16, 3, 1977))),
+					).build())),
 			_bundleContext.registerService(
 				FDSFilterContextContributor.class,
 				new DateRangeFDSFilterContextContributor(),
@@ -638,15 +638,15 @@ public class SystemFDSSerializerTest {
 			_registerFDSFilter(
 				"fdsName1",
 				_createFDSDateRangeFilter(
-					"createDate", "By Creation Date", null,
-					new DateFDSFilterItem(0, 0, 0),
-					new DateFDSFilterItem(1, 1, 1980))),
+					"createDate", "By Creation Date",
+					new DateFDSFilterItem(1, 1, 1980),
+					new DateFDSFilterItem(0, 0, 0), null)),
 			_registerFDSFilter(
 				"fdsName2",
 				_createFDSDateRangeFilter(
-					"modifiedDate", "By Modification Date", null,
-					new DateFDSFilterItem(0, 0, 0),
-					new DateFDSFilterItem(1, 1, 1980))),
+					"modifiedDate", "By Modification Date",
+					new DateFDSFilterItem(1, 1, 1980),
+					new DateFDSFilterItem(0, 0, 0), null)),
 			_bundleContext.registerService(
 				FDSFilterContextContributor.class,
 				new DateRangeFDSFilterContextContributor(),
@@ -1001,8 +1001,8 @@ public class SystemFDSSerializerTest {
 		// Shared filters
 
 		FDSFilter dateRangeFDSFilter = _createFDSDateRangeFilter(
-			"createDate", "By Creation Date", null,
-			new DateFDSFilterItem(0, 0, 0), new DateFDSFilterItem(1, 1, 1980));
+			"createDate", "By Creation Date", new DateFDSFilterItem(1, 1, 1980),
+			new DateFDSFilterItem(0, 0, 0), null);
 
 		_registerServices(
 			_registerFDSFilter("fdsName1", dateRangeFDSFilter),
@@ -1120,8 +1120,9 @@ public class SystemFDSSerializerTest {
 	}
 
 	private FDSFilter _createFDSDateRangeFilter(
-		String id, String label, Map<String, Object> preloadedData,
-		DateFDSFilterItem minDateFDSFilterItem, DateFDSFilterItem maxDateFDSFilterItem) {
+		String id, String label, DateFDSFilterItem maxDateFDSFilterItem,
+		DateFDSFilterItem minDateFDSFilterItem,
+		Map<String, Object> preloadedData) {
 
 		return new BaseDateRangeFDSFilter() {
 

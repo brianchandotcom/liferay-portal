@@ -119,7 +119,10 @@ public class StyleBookVerticalCard
 
 	@Override
 	public List<LabelItem> getLabels() {
-		if (StyleBookUtil.isThemeInactive(
+		if ((_styleBookEntry.getStyleBookEntryId() > 0) &&
+			FeatureFlagManagerUtil.isEnabled(
+				_themeDisplay.getCompanyId(), "LPD-30204") &&
+			StyleBookUtil.isThemeInactive(
 				_styleBookEntry.getCompanyId(), _styleBookEntry.getThemeId())) {
 
 			return LabelItemListBuilder.add(

@@ -55,6 +55,7 @@ import com.liferay.portal.kernel.exception.UserReminderQueryException;
 import com.liferay.portal.kernel.exception.UserScreenNameException;
 import com.liferay.portal.kernel.exception.UserSmsException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -72,6 +73,7 @@ import com.liferay.portal.kernel.model.PasswordPolicy;
 import com.liferay.portal.kernel.model.PortalPreferences;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.Team;
 import com.liferay.portal.kernel.model.Ticket;
 import com.liferay.portal.kernel.model.TicketConstants;
@@ -132,6 +134,7 @@ import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.SystemEventLocalService;
 import com.liferay.portal.kernel.service.TicketLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserIdMapperLocalService;
@@ -2144,6 +2147,16 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		_resourceLocalService.deleteResource(
 			user.getCompanyId(), User.class.getName(),
 			ResourceConstants.SCOPE_INDIVIDUAL, user.getUserId());
+
+		// System event
+
+		_systemEventLocalService.addSystemEvent(
+			user.getUserId(), 0, user.getExternalReferenceCode(),
+			user.getModelClassName(), user.getPrimaryKey(), user.getUuid(),
+			null, SystemEventConstants.TYPE_DELETE,
+			JSONUtil.put(
+				"name", user.getFullName()
+			).toString());
 
 		// User
 
@@ -7584,6 +7597,9 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				}
 
 			};
+
+	@BeanReference(type = SystemEventLocalService.class)
+	private SystemEventLocalService _systemEventLocalService;
 
 	@BeanReference(type = TeamPersistence.class)
 	private TeamPersistence _teamPersistence;

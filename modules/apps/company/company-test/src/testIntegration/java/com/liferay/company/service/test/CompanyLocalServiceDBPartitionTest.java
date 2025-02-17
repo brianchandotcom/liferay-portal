@@ -17,6 +17,7 @@ import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
+import com.liferay.portal.dao.orm.common.SQLTransformer;
 import com.liferay.portal.db.partition.db.DBPartitionDB;
 import com.liferay.portal.db.partition.test.util.BaseDBPartitionTestCase;
 import com.liferay.portal.db.partition.util.DBPartitionUtil;
@@ -934,14 +935,28 @@ public class CompanyLocalServiceDBPartitionTest
 
 					String columnName = resultSet.getString("COLUMN_NAME");
 
+					String whereClause = StringBundler.concat(
+						columnName, " like '%", companyId, "%'");
+
+					if (columnType == Types.BIGINT) {
+						whereClause = StringBundler.concat(
+							"CAST_LONG(", columnName, ") = ", companyId);
+					}
+					else if (columnType == Types.LONGVARCHAR) {
+						whereClause = StringBundler.concat(
+							"CAST_TEXT(", columnName, ") like '%", companyId,
+							"%'");
+					}
+
 					PreparedStatement preparedStatement =
 						connection.prepareStatement(
-							StringBundler.concat(
-								"select ", columnName, " from ",
-								DBPartitionUtil.getPartitionName(
-									copiedCompanyId),
-								StringPool.PERIOD, tableName, " where ",
-								columnName, " like '%", companyId, "%'"));
+							SQLTransformer.transform(
+								StringBundler.concat(
+									"select ", columnName, " from ",
+									DBPartitionUtil.getPartitionName(
+										copiedCompanyId),
+									StringPool.PERIOD, tableName, " where ",
+									whereClause)));
 
 					try (ResultSet resultSet2 =
 							preparedStatement.executeQuery()) {

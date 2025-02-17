@@ -539,7 +539,8 @@ public class DBPartitionUtil {
 								"companyId = ", fromCompanyId));
 					}
 
-					if (fromTableName.startsWith("Object") &&
+					if (StringUtil.startsWith(
+							StringUtil.lowerCase(fromTableName), "object") &&
 						dbInspector.hasColumn(fromTableName, "dbTableName")) {
 
 						statement.executeUpdate(

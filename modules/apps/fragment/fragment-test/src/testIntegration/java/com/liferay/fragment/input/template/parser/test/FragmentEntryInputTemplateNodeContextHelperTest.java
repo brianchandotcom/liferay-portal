@@ -456,8 +456,8 @@ public class FragmentEntryInputTemplateNodeContextHelperTest {
 
 		Timestamp enTimestamp = new Timestamp(enDate.getTime());
 
-		DLFileEntry enDLFileEntry = _addDLFileEntry();
 		DLFileEntry esDLFileEntry = _addDLFileEntry();
+		DLFileEntry enDLFileEntry = _addDLFileEntry();
 
 		Date esDate = new Date(System.currentTimeMillis());
 
@@ -498,11 +498,6 @@ public class FragmentEntryInputTemplateNodeContextHelperTest {
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
 
-		DateFormat enDateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
-			"yyyy-MM-dd", LocaleUtil.US);
-
-		String enValue = enDateFormat.format(enDate);
-
 		Map<String, ObjectField> objectFieldsMap =
 			ObjectFieldUtil.toObjectFieldsMap(
 				_objectFieldLocalService.getObjectFields(
@@ -520,6 +515,11 @@ public class FragmentEntryInputTemplateNodeContextHelperTest {
 				LocaleUtil.US, String.valueOf(fileEntryId)
 			).build(),
 			Collections.emptyMap());
+
+		DateFormat enDateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+			"yyyy-MM-dd", LocaleUtil.US);
+
+		String enValue = enDateFormat.format(enDate);
 
 		_testToInputTemplateNodeLocalizedInputValue(
 			objectDefinition.getClassName(), "ObjectField_myDate", objectEntry,
@@ -546,7 +546,6 @@ public class FragmentEntryInputTemplateNodeContextHelperTest {
 
 		long esFileEntryId = _getFileEntryId(
 			esDLFileEntry, objectFieldsMap.get("myLocalizedAttachment"));
-
 		long enFileEntryId = _getFileEntryId(
 			enDLFileEntry, objectFieldsMap.get("myLocalizedAttachment"));
 
@@ -564,12 +563,12 @@ public class FragmentEntryInputTemplateNodeContextHelperTest {
 				LocaleUtil.US, String.valueOf(enFileEntryId)
 			).build());
 
+		String esValue = esDateFormat.format(esDate);
+
 		enValue = enDateFormat.format(enDate);
 
 		DateFormat esDateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
 			"yyyy-MM-dd", LocaleUtil.SPAIN);
-
-		String esValue = esDateFormat.format(esDate);
 
 		_testToInputTemplateNodeLocalizedInputValue(
 			objectDefinition.getClassName(), "ObjectField_myLocalizedDate",
@@ -585,9 +584,8 @@ public class FragmentEntryInputTemplateNodeContextHelperTest {
 				LocaleUtil.US, enValue
 			).build());
 
-		enValue = dateTimeFormatter.format(enTimestamp.toLocalDateTime());
-
 		esValue = dateTimeFormatter.format(esTimestamp.toLocalDateTime());
+		enValue = dateTimeFormatter.format(enTimestamp.toLocalDateTime());
 
 		_testToInputTemplateNodeLocalizedInputValue(
 			objectDefinition.getClassName(), "ObjectField_myLocalizedDateTime",

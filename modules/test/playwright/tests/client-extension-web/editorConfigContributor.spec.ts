@@ -125,9 +125,7 @@ test('Add a toolbar button to an Alloy Editor @LPD-11056', async ({
 			`${liferayConfig.environment.baseUrl}/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
 		);
 
-		await expect(
-			editorSamplesPage.balloonEditorContainer.getByText('Lorem ipsum')
-		).toBeInViewport();
+		await page.getByRole('link', { name: 'CKEditor 4' }).click();
 
 		await editorSamplesPage.selectTab({tabLabel: 'Alloy'});
 

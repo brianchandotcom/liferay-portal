@@ -6,7 +6,6 @@
 package com.liferay.frontend.data.set.taglib.internal.servlet;
 
 import com.liferay.frontend.data.set.serializer.FDSSerializer;
-import com.liferay.frontend.data.set.view.FDSViewSerializer;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.module.service.Snapshot;
@@ -53,10 +52,6 @@ public class ServletContextUtil {
 		return sb.toString();
 	}
 
-	public static FDSViewSerializer getFDSViewSerializer() {
-		return _fdsViewSerializerSnapshot.get();
-	}
-
 	public static ServletContext getServletContext() {
 		return _servletContextSnapshot.get();
 	}
@@ -66,9 +61,6 @@ public class ServletContextUtil {
 			ServletContextUtil.class, FDSSerializer.class,
 			"(frontend.data.set.serializer.type=" + FDSSerializer.TYPE_SYSTEM +
 				")");
-	private static final Snapshot<FDSViewSerializer>
-		_fdsViewSerializerSnapshot = new Snapshot<>(
-			ServletContextUtil.class, FDSViewSerializer.class);
 	private static final Snapshot<Portal> _portalSnapshot = new Snapshot<>(
 		ServletContextUtil.class, Portal.class);
 	private static final Snapshot<ServletContext> _servletContextSnapshot =

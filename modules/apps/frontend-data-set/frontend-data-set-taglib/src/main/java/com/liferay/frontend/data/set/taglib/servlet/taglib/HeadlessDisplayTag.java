@@ -9,9 +9,7 @@ import com.liferay.frontend.data.set.filter.FDSFilter;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.data.set.model.FDSSortItem;
 import com.liferay.frontend.data.set.model.FDSSortItemList;
-import com.liferay.frontend.data.set.serializer.FDSSerializer;
 import com.liferay.frontend.data.set.taglib.internal.servlet.ServletContextUtil;
-import com.liferay.frontend.data.set.view.FDSViewSerializer;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.petra.string.StringPool;
@@ -52,7 +50,6 @@ public class HeadlessDisplayTag extends BaseDisplayTag {
 
 			_setActiveViewSettingsJSON();
 			_setFiltersJSONArray();
-			_setViewsJSONArray();
 		}
 		catch (Exception exception) {
 			_log.error(exception);
@@ -198,9 +195,6 @@ public class HeadlessDisplayTag extends BaseDisplayTag {
 
 	@Override
 	public void setPageContext(PageContext pageContext) {
-		_fdsSerializer = ServletContextUtil.getFDSSerializer();
-		_fdsViewSerializer = ServletContextUtil.getFDSViewSerializer();
-
 		super.setPageContext(pageContext);
 
 		setServletContext(ServletContextUtil.getServletContext());
@@ -256,9 +250,7 @@ public class HeadlessDisplayTag extends BaseDisplayTag {
 		_customViewsEnabled = false;
 		_fdsActionDropdownItems = new ArrayList<>();
 		_fdsFilters = new ArrayList<>();
-		_fdsSerializer = null;
 		_fdsSortItemList = new FDSSortItemList();
-		_fdsViewSerializer = null;
 		_filtersJSONArray = null;
 		_formId = null;
 		_formName = null;
@@ -272,7 +264,6 @@ public class HeadlessDisplayTag extends BaseDisplayTag {
 		_showPagination = true;
 		_showSearch = true;
 		_style = "default";
-		_viewsJSONArray = null;
 	}
 
 	@Override
@@ -333,8 +324,6 @@ public class HeadlessDisplayTag extends BaseDisplayTag {
 				"sorts", _fdsSortItemList
 			).put(
 				"style", _validateDataAttribute(_style)
-			).put(
-				"views", _viewsJSONArray
 			).build());
 	}
 
@@ -352,13 +341,8 @@ public class HeadlessDisplayTag extends BaseDisplayTag {
 	}
 
 	private void _setFiltersJSONArray() {
-		_filtersJSONArray = _fdsSerializer.serializeFilters(
+		_filtersJSONArray = fdsSerializer.serializeFilters(
 			getFdsFilters(), getId(), getRequest());
-	}
-
-	private void _setViewsJSONArray() {
-		_viewsJSONArray = _fdsViewSerializer.serialize(
-			getId(), PortalUtil.getLocale(getRequest()));
 	}
 
 	private Object _validateDataAttribute(Object object) {
@@ -382,9 +366,7 @@ public class HeadlessDisplayTag extends BaseDisplayTag {
 	private List<FDSActionDropdownItem> _fdsActionDropdownItems =
 		new ArrayList<>();
 	private List<FDSFilter> _fdsFilters = new ArrayList<>();
-	private FDSSerializer _fdsSerializer;
 	private FDSSortItemList _fdsSortItemList = new FDSSortItemList();
-	private FDSViewSerializer _fdsViewSerializer;
 	private JSONArray _filtersJSONArray;
 	private String _formId;
 	private String _formName;
@@ -398,6 +380,5 @@ public class HeadlessDisplayTag extends BaseDisplayTag {
 	private boolean _showPagination = true;
 	private boolean _showSearch = true;
 	private String _style = "default";
-	private JSONArray _viewsJSONArray;
 
 }

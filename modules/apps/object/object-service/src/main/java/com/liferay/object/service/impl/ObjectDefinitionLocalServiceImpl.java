@@ -2787,12 +2787,22 @@ public class ObjectDefinitionLocalServiceImpl
 				objectDefinitionSettingsValuesMap.keySet());
 		}
 
+		String acceptAllGroups = objectDefinitionSettingsValuesMap.get(
+			ObjectDefinitionSettingConstants.NAME_ACCEPT_ALL_GROUPS);
+
+		if ((acceptAllGroups != null) &&
+			!acceptAllGroups.equals(StringPool.TRUE)) {
+
+			throw new ObjectDefinitionSettingValueException.InvalidValue(
+				objectDefinition.getShortName(),
+				ObjectDefinitionSettingConstants.NAME_ACCEPT_ALL_GROUPS,
+				acceptAllGroups);
+		}
+
 		if (objectDefinitionSettingsValuesMap.containsKey(
 				ObjectDefinitionSettingConstants.NAME_ACCEPTED_GROUP_IDS)) {
 
-			if (objectDefinitionSettingsValuesMap.containsKey(
-					ObjectDefinitionSettingConstants.NAME_ACCEPT_ALL_GROUPS)) {
-
+			if (acceptAllGroups != null) {
 				throw new ObjectDefinitionSettingNameException.NotAllowedNames(
 					objectDefinition.getShortName(),
 					Set.of(

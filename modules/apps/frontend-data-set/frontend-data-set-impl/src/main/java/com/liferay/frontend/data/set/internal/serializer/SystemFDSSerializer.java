@@ -19,11 +19,16 @@ import com.liferay.frontend.data.set.filter.FDSFilterContextContributorRegistry;
 import com.liferay.frontend.data.set.filter.FDSFilterRegistry;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.data.set.serializer.FDSSerializer;
+import com.liferay.frontend.data.set.view.FDSView;
+import com.liferay.frontend.data.set.view.FDSViewContextContributor;
+import com.liferay.frontend.data.set.view.FDSViewContextContributorRegistry;
+import com.liferay.frontend.data.set.view.FDSViewRegistry;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
@@ -133,6 +138,65 @@ public class SystemFDSSerializer
 		return fdsItemsActions.getFDSActionDropdownItems(httpServletRequest);
 	}
 
+	@Override
+	public JSONArray serializeViews(
+		String fdsName, HttpServletRequest httpServletRequest) {
+
+		JSONArray jsonArray = JSONUtil.putAll();
+
+		List<FDSView> fdsViews = fdsViewRegistry.getFDSViews(fdsName);
+
+		for (FDSView fdsView : fdsViews) {
+			JSONObject jsonObject = JSONUtil.put(
+				"contentRenderer", fdsView.getContentRenderer()
+			).put(
+				"contentRendererModuleURL",
+				fdsView.getContentRendererModuleURL()
+			).put(
+				"default", fdsView.isDefault()
+			).put(
+				"label",
+				LanguageUtil.get(
+					ResourceBundleUtil.getBundle(
+						"content.Language",
+						_portal.getLocale(httpServletRequest), getClass()),
+					fdsView.getLabel())
+			).put(
+				"name", fdsView.getName()
+			).put(
+				"thumbnail", fdsView.getThumbnail()
+			);
+
+			List<FDSViewContextContributor> fdsViewContextContributors =
+				fdsViewContextContributorRegistry.getFDSViewContextContributors(
+					fdsView.getContentRenderer());
+
+			for (FDSViewContextContributor fdsViewContextContributor :
+					fdsViewContextContributors) {
+
+				Map<String, Object> fdsViewContext =
+					fdsViewContextContributor.getFDSViewContext(
+						fdsView, _portal.getLocale(httpServletRequest));
+
+				if (fdsViewContext == null) {
+					continue;
+				}
+
+				for (Map.Entry<String, Object> fdsViewContextEntry :
+						fdsViewContext.entrySet()) {
+
+					jsonObject.put(
+						fdsViewContextEntry.getKey(),
+						fdsViewContextEntry.getValue());
+				}
+			}
+
+			jsonArray.put(jsonObject);
+		}
+
+		return jsonArray;
+	}
+
 	@Reference
 	protected FDSBulkActionsRegistry fdsBulkActionsRegistry;
 
@@ -148,6 +212,13 @@ public class SystemFDSSerializer
 
 	@Reference
 	protected FDSItemsActionsRegistry fdsItemsActionsRegistry;
+
+	@Reference
+	protected FDSViewContextContributorRegistry
+		fdsViewContextContributorRegistry;
+
+	@Reference
+	protected FDSViewRegistry fdsViewRegistry;
 
 	@Reference
 	protected SystemFDSEntryRegistry systemFDSEntryRegistry;
@@ -200,5 +271,8 @@ public class SystemFDSSerializer
 			jsonArray.put(jsonObject);
 		}
 	}
+
+	@Reference
+	private Portal _portal;
 
 }

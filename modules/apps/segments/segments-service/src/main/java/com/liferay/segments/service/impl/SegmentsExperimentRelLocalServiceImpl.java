@@ -119,8 +119,21 @@ public class SegmentsExperimentRelLocalServiceImpl
 		// Segments experience
 
 		if (!segmentsExperimentRel.isActive()) {
+			SegmentsExperience segmentsExperience =
+				_segmentsExperienceLocalService.fetchSegmentsExperience(
+					segmentsExperimentRel.getSegmentsExperienceId());
+
+			Layout draftLayout = _layoutLocalService.fetchDraftLayout(
+				segmentsExperience.getPlid());
+
 			_segmentsExperienceLocalService.deleteSegmentsExperience(
-				segmentsExperimentRel.getSegmentsExperienceId());
+				_segmentsExperienceLocalService.fetchSegmentsExperience(
+					segmentsExperience.getGroupId(),
+					segmentsExperience.getSegmentsExperienceKey(),
+					draftLayout.getPlid()));
+
+			_segmentsExperienceLocalService.deleteSegmentsExperience(
+				segmentsExperience);
 		}
 
 		return segmentsExperimentRel;

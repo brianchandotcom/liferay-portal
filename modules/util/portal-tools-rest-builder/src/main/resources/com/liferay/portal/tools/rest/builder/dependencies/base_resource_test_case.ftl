@@ -1402,7 +1402,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 					<#elseif freeMarkerTool.hasPostSchemaJavaMethodSignature(javaMethodSignatures, "assetLibraryId", schemaName)>
 						<#assign postSchemaJavaMethodSignature = freeMarkerTool.getPostSchemaJavaMethodSignature(javaMethodSignatures, "assetLibraryId", schemaName) />
 
-						return ${schemaVarName}Resource.postSite${schemaName}(testDepotEntry.getDepotEntryId(), random${schemaName}()
+						return ${schemaVarName}Resource.postAssetLibrary${schemaName}(testDepotEntry.getDepotEntryId(), random${schemaName}()
 
 						<#if freeMarkerTool.hasRequestBodyMediaType(postSchemaJavaMethodSignature, "multipart/form-data")>
 							<#assign generateGetMultipartFilesMethod = true />

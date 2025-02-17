@@ -6,9 +6,8 @@
 package com.liferay.frontend.data.set.sample.web.internal.display.context;
 
 import com.liferay.frontend.data.set.sample.web.internal.constants.FDSSampleFDSNames;
-import com.liferay.frontend.data.set.sample.web.internal.view.util.FDSViewSerializerUtil;
-import com.liferay.frontend.data.set.view.FDSViewSerializer;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.frontend.data.set.sample.web.internal.util.FDSSerializerUtil;
+import com.liferay.frontend.data.set.serializer.FDSSerializer;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -26,11 +25,10 @@ public class ReactFDSDisplayContext {
 	}
 
 	public Object getViews() {
-		FDSViewSerializer fdsViewSerializer =
-			FDSViewSerializerUtil.getFDSViewSerializer();
+		FDSSerializer fdsSerializer = FDSSerializerUtil.getFDSSerializer();
 
-		return fdsViewSerializer.serialize(
-			FDSSampleFDSNames.REACT, PortalUtil.getLocale(_httpServletRequest));
+		return fdsSerializer.serializeViews(
+			FDSSampleFDSNames.REACT, _httpServletRequest);
 	}
 
 	private final HttpServletRequest _httpServletRequest;

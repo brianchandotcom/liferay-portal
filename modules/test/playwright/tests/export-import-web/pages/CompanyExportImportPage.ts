@@ -23,7 +23,12 @@ export class CompanyExportImportPage {
 
 	async export(
 		itemLabel: string,
-		includePermissions: boolean = false
+		includePermissions: boolean = false,
+		endDate: string = '',
+		endTime: string = '',
+		rangeLast: string = '',
+		startDate: string = '',
+		startTime: string = ''
 	): Promise<string> {
 		await this.applicationsMenuPage.goToExport();
 
@@ -37,6 +42,40 @@ export class CompanyExportImportPage {
 
 		if (includePermissions) {
 			await this.exportImportPage.exportPermissionsButton.click();
+		}
+
+		if (endDate && endTime && startDate && startTime) {
+			await this.exportImportPage.rangeDateRangeRadioButton.check();
+
+			await this.page
+				.locator(
+					'[id="_com_liferay_exportimport_web_portlet_CompanyExportPortlet_endDate"]'
+				)
+				.fill(endDate);
+			await this.page
+				.locator(
+					'[id="_com_liferay_exportimport_web_portlet_CompanyExportPortlet_endTime"]'
+				)
+				.fill(endTime);
+			await this.page
+				.locator(
+					'[id="_com_liferay_exportimport_web_portlet_CompanyExportPortlet_startDate"]'
+				)
+				.fill(startDate);
+			await this.page
+				.locator(
+					'[id="_com_liferay_exportimport_web_portlet_CompanyExportPortlet_startTime"]'
+				)
+				.fill(startTime);
+		}
+		else if (rangeLast) {
+			await this.exportImportPage.rangeLastRadioButton.check();
+
+			await this.page
+				.locator(
+					'[id="_com_liferay_exportimport_web_portlet_CompanyExportPortlet_last"]'
+				)
+				.selectOption('12 Hours');
 		}
 
 		await this.exportImportPage.exportButton.click();

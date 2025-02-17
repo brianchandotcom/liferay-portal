@@ -7,14 +7,23 @@ package com.liferay.segments.internal.provider;
 
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
+import com.liferay.expando.kernel.model.ExpandoColumn;
+import com.liferay.expando.kernel.model.ExpandoTable;
+import com.liferay.expando.kernel.model.ExpandoTableConstants;
+import com.liferay.expando.kernel.model.ExpandoValue;
+import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
+import com.liferay.expando.kernel.service.ExpandoTableLocalService;
+import com.liferay.expando.kernel.service.ExpandoValueLocalService;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -36,6 +45,7 @@ import com.liferay.segments.provider.SegmentsEntryProvider;
 import com.liferay.segments.service.SegmentsEntryLocalService;
 import com.liferay.segments.service.SegmentsEntryRelLocalService;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -298,6 +308,18 @@ public abstract class BaseSegmentsEntryProvider
 	@Reference
 	protected AssetTagLocalService assetTagLocalService;
 
+	@Reference
+	protected ClassNameLocalService classNameLocalService;
+
+	@Reference
+	protected ExpandoColumnLocalService expandoColumnLocalService;
+
+	@Reference
+	protected ExpandoTableLocalService expandoTableLocalService;
+
+	@Reference
+	protected ExpandoValueLocalService expandoValueLocalService;
+
 	@Reference(
 		target = "(target.class.name=com.liferay.segments.context.Context)"
 	)
@@ -332,8 +354,39 @@ public abstract class BaseSegmentsEntryProvider
 	}
 
 	private Map<String, Object> _getUserAttributes(User user) throws Exception {
+		Map<String, String> expandoValues = new HashMap<>();
+
+		ExpandoTable expandoTable = expandoTableLocalService.fetchTable(
+			user.getCompanyId(),
+			classNameLocalService.getClassNameId(User.class.getName()),
+			ExpandoTableConstants.DEFAULT_TABLE_NAME);
+
+		if (expandoTable != null) {
+			List<ExpandoColumn> expandoColumns =
+				expandoColumnLocalService.getColumns(expandoTable.getTableId());
+
+			for (ExpandoColumn expandoColumn : expandoColumns) {
+				ExpandoValue expandoValue = expandoValueLocalService.getValue(
+					expandoTable.getTableId(), expandoColumn.getColumnId(),
+					user.getUserId());
+
+				String key = StringBundler.concat(
+					"customField/_", expandoColumn.getColumnId(),
+					StringPool.UNDERLINE, expandoColumn.getName());
+
+				if (expandoValue != null) {
+					expandoValues.put(key, expandoValue.getData());
+				}
+				else {
+					expandoValues.put(key, StringPool.BLANK);
+				}
+			}
+		}
+
 		return HashMapBuilder.<String, Object>putAll(
 			user.getModelAttributes()
+		).putAll(
+			expandoValues
 		).put(
 			Field.ASSET_CATEGORY_IDS,
 			TransformUtil.transform(

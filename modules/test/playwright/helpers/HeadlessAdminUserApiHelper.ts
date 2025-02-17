@@ -37,16 +37,18 @@ type TOrganization = {
 	services?: TServices[];
 };
 
-type TRole = {
+export type TPermission = {
+	actionIds: string[];
+	primaryKey: string;
+	resourceName: string;
+	scope: number;
+};
+
+export type TRole = {
 	externalReferenceCode?: string;
 	id?: number;
 	name: string;
-	rolePermissions?: Array<{
-		actionIds: string[];
-		primaryKey: string;
-		resourceName: string;
-		scope: number;
-	}>;
+	rolePermissions?: Array<TPermission>;
 	roleType?: number | string;
 };
 
@@ -244,9 +246,9 @@ export class HeadlessAdminUserApiHelper {
 		);
 	}
 
-	async getRoles(search: string) {
+	async getRoles(search: string, restrictFields = '') {
 		return this.apiHelpers.get(
-			`${this.apiHelpers.baseUrl}${this.basePath}/roles?search=${search}`
+			`${this.apiHelpers.baseUrl}${this.basePath}/roles?search=${search}&restrictFields=${restrictFields}`
 		);
 	}
 
@@ -256,8 +258,8 @@ export class HeadlessAdminUserApiHelper {
 		);
 	}
 
-	async getRoleByName(name: string) {
-		const response = await this.getRoles(name);
+	async getRoleByName(name: string, restrictFields = '') {
+		const response = await this.getRoles(name, restrictFields);
 
 		const roles = response.items || [];
 

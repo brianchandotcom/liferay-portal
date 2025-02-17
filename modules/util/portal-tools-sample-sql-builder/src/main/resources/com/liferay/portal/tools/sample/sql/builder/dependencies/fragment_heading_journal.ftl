@@ -24,7 +24,7 @@
 		${dataFactory.toInsertSQL(layoutPageTemplateStructureModel)}
 
 		<#assign
-			segmentsExperienceModel = dataFactory.newSegmentsExperienceModel(groupId, 0, contentLayoutModel.plid)
+			segmentsExperienceModel = dataFactory.newSegmentsExperienceModel(groupId, 0, "DEFAULT", contentLayoutModel.plid, "Default", 0)
 		/>
 
 	 	${dataFactory.toInsertSQL(segmentsExperienceModel)}

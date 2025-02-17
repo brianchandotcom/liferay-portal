@@ -22,6 +22,7 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -566,6 +567,39 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 			ModelResourcePermissionUtil.contains(
 				_journalFolderModelResourcePermission, permissionChecker,
 				groupId, folderId, ActionKeys.UPDATE)) {
+
+			if (FeatureFlagManagerUtil.isEnabled(
+					serviceContext.getCompanyId(), "LPD-42452")) {
+
+				JournalFolder folder = getFolder(folderId);
+
+				if (!ModelResourcePermissionUtil.contains(
+						_journalFolderModelResourcePermission,
+						permissionChecker, groupId, folderId,
+						ActionKeys.ADVANCED_UPDATE)) {
+
+					ddmStructureIds = TransformUtil.transformToLongArray(
+						_ddmStructureLinkLocalService.getStructureLinks(
+							_classNameLocalService.getClassNameId(
+								JournalFolder.class),
+							folderId),
+						ddmStructureLink -> ddmStructureLink.getStructureId());
+
+					restrictionType = folder.getRestrictionType();
+
+					serviceContext.setAttribute(
+						"updateWorkflowDefinitionLinks", Boolean.FALSE);
+				}
+
+				if (!ModelResourcePermissionUtil.contains(
+						_journalFolderModelResourcePermission,
+						permissionChecker, groupId, folderId,
+						ActionKeys.UPDATE)) {
+
+					name = folder.getName();
+					description = folder.getDescription();
+				}
+			}
 
 			return journalFolderLocalService.updateFolder(
 				getUserId(), groupId, folderId, parentFolderId, name,

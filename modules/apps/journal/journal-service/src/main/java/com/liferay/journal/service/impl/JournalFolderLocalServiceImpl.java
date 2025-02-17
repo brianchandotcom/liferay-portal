@@ -52,6 +52,7 @@ import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.kernel.social.SocialActivityManagerUtil;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -897,64 +898,9 @@ public class JournalFolderLocalServiceImpl
 				serviceContext);
 		}
 
-		List<ObjectValuePair<Long, String>> workflowDefinitionOVPs =
-			new ArrayList<>();
-
-		if (restrictionType ==
-				JournalFolderConstants.
-					RESTRICTION_TYPE_DDM_STRUCTURES_AND_WORKFLOW) {
-
-			workflowDefinitionOVPs.add(
-				new ObjectValuePair<Long, String>(
-					JournalArticleConstants.DDM_STRUCTURE_ID_ALL,
-					StringPool.BLANK));
-
-			for (long ddmStructureId : ddmStructureIds) {
-				String workflowDefinition = ParamUtil.getString(
-					serviceContext, "workflowDefinition" + ddmStructureId);
-
-				workflowDefinitionOVPs.add(
-					new ObjectValuePair<Long, String>(
-						ddmStructureId, workflowDefinition));
-			}
-		}
-		else if (restrictionType ==
-					JournalFolderConstants.RESTRICTION_TYPE_INHERIT) {
-
-			if (originalDDMStructureIds.isEmpty()) {
-				originalDDMStructureIds.add(
-					JournalArticleConstants.DDM_STRUCTURE_ID_ALL);
-			}
-
-			for (long originalDDMStructureId : originalDDMStructureIds) {
-				workflowDefinitionOVPs.add(
-					new ObjectValuePair<Long, String>(
-						originalDDMStructureId, StringPool.BLANK));
-			}
-		}
-		else if (restrictionType ==
-					JournalFolderConstants.RESTRICTION_TYPE_WORKFLOW) {
-
-			String workflowDefinition = ParamUtil.getString(
-				serviceContext,
-				"workflowDefinition" +
-					JournalArticleConstants.DDM_STRUCTURE_ID_ALL);
-
-			workflowDefinitionOVPs.add(
-				new ObjectValuePair<Long, String>(
-					JournalArticleConstants.DDM_STRUCTURE_ID_ALL,
-					workflowDefinition));
-
-			for (long originalDDMStructureId : originalDDMStructureIds) {
-				workflowDefinitionOVPs.add(
-					new ObjectValuePair<Long, String>(
-						originalDDMStructureId, StringPool.BLANK));
-			}
-		}
-
-		_workflowDefinitionLinkLocalService.updateWorkflowDefinitionLinks(
-			userId, serviceContext.getCompanyId(), groupId,
-			JournalFolder.class.getName(), folderId, workflowDefinitionOVPs);
+		_updateWorkflowDefinitionLinks(
+			userId, groupId, folderId, ddmStructureIds, restrictionType,
+			serviceContext, originalDDMStructureIds);
 
 		return folder;
 	}
@@ -1483,6 +1429,79 @@ public class JournalFolderLocalServiceImpl
 		}
 
 		return folder;
+	}
+
+	private void _updateWorkflowDefinitionLinks(
+			long userId, long groupId, long folderId, long[] ddmStructureIds,
+			int restrictionType, ServiceContext serviceContext,
+			Set<Long> originalDDMStructureIds)
+		throws PortalException {
+
+		if (!GetterUtil.getBoolean(
+				serviceContext.getAttribute("updateWorkflowDefinitionLinks"),
+				true)) {
+
+			return;
+		}
+
+		List<ObjectValuePair<Long, String>> workflowDefinitionOVPs =
+			new ArrayList<>();
+
+		if (restrictionType ==
+				JournalFolderConstants.
+					RESTRICTION_TYPE_DDM_STRUCTURES_AND_WORKFLOW) {
+
+			workflowDefinitionOVPs.add(
+				new ObjectValuePair<Long, String>(
+					JournalArticleConstants.DDM_STRUCTURE_ID_ALL,
+					StringPool.BLANK));
+
+			for (long ddmStructureId : ddmStructureIds) {
+				String workflowDefinition = ParamUtil.getString(
+					serviceContext, "workflowDefinition" + ddmStructureId);
+
+				workflowDefinitionOVPs.add(
+					new ObjectValuePair<Long, String>(
+						ddmStructureId, workflowDefinition));
+			}
+		}
+		else if (restrictionType ==
+					JournalFolderConstants.RESTRICTION_TYPE_INHERIT) {
+
+			if (originalDDMStructureIds.isEmpty()) {
+				originalDDMStructureIds.add(
+					JournalArticleConstants.DDM_STRUCTURE_ID_ALL);
+			}
+
+			for (long originalDDMStructureId : originalDDMStructureIds) {
+				workflowDefinitionOVPs.add(
+					new ObjectValuePair<Long, String>(
+						originalDDMStructureId, StringPool.BLANK));
+			}
+		}
+		else if (restrictionType ==
+					JournalFolderConstants.RESTRICTION_TYPE_WORKFLOW) {
+
+			String workflowDefinition = ParamUtil.getString(
+				serviceContext,
+				"workflowDefinition" +
+					JournalArticleConstants.DDM_STRUCTURE_ID_ALL);
+
+			workflowDefinitionOVPs.add(
+				new ObjectValuePair<Long, String>(
+					JournalArticleConstants.DDM_STRUCTURE_ID_ALL,
+					workflowDefinition));
+
+			for (long originalDDMStructureId : originalDDMStructureIds) {
+				workflowDefinitionOVPs.add(
+					new ObjectValuePair<Long, String>(
+						originalDDMStructureId, StringPool.BLANK));
+			}
+		}
+
+		_workflowDefinitionLinkLocalService.updateWorkflowDefinitionLinks(
+			userId, serviceContext.getCompanyId(), groupId,
+			JournalFolder.class.getName(), folderId, workflowDefinitionOVPs);
 	}
 
 	private void _validateArticleDDMStructures(

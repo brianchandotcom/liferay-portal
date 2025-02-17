@@ -8,7 +8,7 @@ package com.liferay.adaptive.media.image.internal.convert.document.library;
 import com.liferay.adaptive.media.image.internal.storage.AMStoreUtil;
 import com.liferay.adaptive.media.image.model.AMImageEntry;
 import com.liferay.adaptive.media.image.service.AMImageEntryLocalService;
-import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.store.Store;
 import com.liferay.portal.convert.documentlibrary.DLStoreConvertProcess;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -60,7 +60,7 @@ public class AMDLStoreConvertProcess implements DLStoreConvertProcess {
 				FileVersion fileVersion = null;
 
 				try {
-					fileVersion = _dlAppService.getFileVersion(
+					fileVersion = _dlAppLocalService.getFileVersion(
 						amImageEntry.getFileVersionId());
 				}
 				catch (PortalException portalException) {
@@ -136,6 +136,6 @@ public class AMDLStoreConvertProcess implements DLStoreConvertProcess {
 	private CompanyLocalService _companyLocalService;
 
 	@Reference
-	private DLAppService _dlAppService;
+	private DLAppLocalService _dlAppLocalService;
 
 }

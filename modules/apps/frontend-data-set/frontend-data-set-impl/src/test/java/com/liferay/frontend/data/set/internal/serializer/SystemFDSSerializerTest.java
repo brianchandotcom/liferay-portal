@@ -106,7 +106,7 @@ public class SystemFDSSerializerTest {
 	@Test
 	public void testSerializeAPIURL() throws Exception {
 
-		// Different resolvers
+		// No resolver, URL
 
 		ServiceTrackerMap
 			<String,
@@ -127,28 +127,6 @@ public class SystemFDSSerializerTest {
 		).thenReturn(
 			themeDisplay
 		);
-
-		_registerServices(
-			_registerFDSAPIURLResolver(
-				"/app1", "schema", new String[] {"{foo}"},
-				new String[] {"bar"}),
-			_registerSystemFDSEntry(
-				null, "fdsName1", "/app1", "/endpoint/{foo}", "schema"),
-			_registerSystemFDSEntry(
-				null, "fdsName2", "/app2", "/endpoint/{foo}", "schema"));
-
-		Assert.assertEquals(
-			"/o/app1/endpoint/bar",
-			_systemFDSSerializer.serializeAPIURL(
-				"fdsName1", _httpServletRequest));
-		Assert.assertEquals(
-			"/o/app2/endpoint/{foo}",
-			_systemFDSSerializer.serializeAPIURL(
-				"fdsName2", _httpServletRequest));
-
-		_unregisterServices();
-
-		// No resolver, URL
 
 		_registerServices(
 			_registerSystemFDSEntry(

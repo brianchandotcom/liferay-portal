@@ -228,7 +228,7 @@ public class SegmentsExperienceSelectorDisplayContext {
 
 			segmentsExperienceSelectedJSONObject.put(
 				"segmentsExperienceName",
-				_getSelectedSegmentsExperienceName(segmentsExperience));
+				segmentsExperience.getName(_themeDisplay.getLocale()));
 
 			return segmentsExperienceSelectedJSONObject;
 		}
@@ -258,17 +258,6 @@ public class SegmentsExperienceSelectorDisplayContext {
 		_segmentsExperiencesJSONArray = segmentsExperiencesJSONArray;
 
 		return _segmentsExperiencesJSONArray;
-	}
-
-	private String _getSelectedSegmentsExperienceName(
-		SegmentsExperience segmentsExperience) {
-
-		if (segmentsExperience != null) {
-			return segmentsExperience.getName(_themeDisplay.getLocale());
-		}
-
-		return SegmentsEntryConstants.getDefaultSegmentsEntryName(
-			_themeDisplay.getLocale());
 	}
 
 	private boolean _isActive(

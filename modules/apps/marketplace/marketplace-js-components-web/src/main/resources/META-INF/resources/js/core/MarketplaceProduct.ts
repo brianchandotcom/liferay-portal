@@ -5,7 +5,7 @@
 
 import {CloudUserProject, Product} from '../types';
 
-const Specifications = {
+export const Specifications = {
 	CPU: 'cpu',
 	LATEST_VERSION: 'latest-version',
 	PRICE_MODEL: 'price-model',
@@ -21,7 +21,7 @@ enum PriceModel {
 	PAID = 'Paid',
 }
 
-enum Vocabularies {
+export enum Vocabularies {
 	APP_CATEGORY = 'marketplace app category',
 	PLATFORM_OFFERING = 'marketplace liferay platform offering',
 	EDITION = 'marketplace edition',

@@ -29,7 +29,7 @@ class MarketplaceRestError extends Error {
 	}
 }
 
-function safeJSONParse(value: string) {
+export function safeJSONParse(value: string) {
 	try {
 		return JSON.parse(value);
 	}
@@ -61,8 +61,7 @@ export class MarketplaceRest {
 	}
 
 	public async createCart(product: Product) {
-		const {account, channelId} =
-			this.marketplaceConfiguration.settings || {};
+		const {account, channelId} = this.settings;
 
 		const purchasableSKUs = product.skus.filter(
 			({purchasable}) => purchasable

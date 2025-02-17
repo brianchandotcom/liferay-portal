@@ -92,9 +92,7 @@ export default function SingleSelectBase({
 			setLoading(true);
 			setTimeout(() => setLoading(false), 200);
 		}
-
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [options]);
+	}, [activeTabTitle, name, options, readOnly, viewMode]);
 
 	useEffect(() => {
 		const selectedOption = options.find(
@@ -107,9 +105,7 @@ export default function SingleSelectBase({
 		else {
 			setSelectedLabel(Liferay.Language.get('choose-an-option'));
 		}
-
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [selectedKey, selectedItem]);
+	}, [options, selectedKey, selectedItem]);
 
 	return (
 		<div

@@ -1,6 +1,7 @@
 @component-name = "portal-commerce"
 definition {
 
+	property custom.properties = "passwords.encryption.algorithm.legacy=PBKDF2WithHmacSHA1/160/128000";
 	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver";
 	property portal.release = "true";
 	property portal.upstream = "true";
@@ -461,7 +462,7 @@ definition {
 	@description = "This is a use case for LPS-179688. TC-2 and TC-3: Verify login.create.account.allow.custom.password parameter is completely ignored from now on."
 	@priority = 5
 	test ViewCreatePasswordParameterIsIgnoredAfterUpgrade71103 {
-		property custom.properties = "login.create.account.allow.custom.password=false";
+		property custom.properties = "login.create.account.allow.custom.password=false${line.separator}passwords.encryption.algorithm.legacy=PBKDF2WithHmacSHA1/160/128000";
 		property data.archive.type = "data-archive-create-account-disable-password";
 		property database.types = "db2,mysql,oracle,postgresql,sqlserver";
 		property portal.version = "7.1.10.3";

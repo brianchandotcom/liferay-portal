@@ -2,6 +2,7 @@
 definition {
 
 	property ci.retries.disabled = "true";
+	property custom.properties = "passwords.encryption.algorithm.legacy=PBKDF2WithHmacSHA1/160/128000";
 	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver";
 	property portal.release = "true";
 	property portal.upstream = "true";
@@ -68,7 +69,7 @@ definition {
 	@description = "This is a use case for LPS-174465 and LPS-174471. TC-8 Verify that the exclamation mark are present after upgrade."
 	@priority = 3
 	test ExclamationMarkPresentAfterUpgrade701016 {
-		property custom.properties = "feature.flag.LPS-174417=true";
+		property custom.properties = "feature.flag.LPS-174417=true${line.separator}passwords.encryption.algorithm.legacy=PBKDF2WithHmacSHA1/160/128000";
 		property data.archive.type = "data-archive-page-with-collision";
 		property portal.version = "7.0.10.16";
 

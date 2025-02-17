@@ -1,7 +1,7 @@
 @component-name = "portal-core-infra"
 definition {
 
-	property custom.properties = "layout.user.access.via.plid.enabled=true";
+	property custom.properties = "layout.user.access.via.plid.enabled=true${line.separator}passwords.encryption.algorithm.legacy=PBKDF2WithHmacSHA1/160/128000";
 	property database.types = "db2,mariadb,mysql,oracle,postgresql,sqlserver";
 	property portal.release = "true";
 	property portal.smoke.upgrades = "true";

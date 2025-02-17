@@ -72,6 +72,7 @@ public interface ObjectEntryFolderLocalService
 	public ObjectEntryFolder addObjectEntryFolder(
 		ObjectEntryFolder objectEntryFolder);
 
+	@Indexable(type = IndexableType.REINDEX)
 	public ObjectEntryFolder addObjectEntryFolder(
 			String externalReferenceCode, long userId, long groupId,
 			long parentObjectEntryFolderId, Map<Locale, String> labelMap,
@@ -314,6 +315,7 @@ public interface ObjectEntryFolderLocalService
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	@Indexable(type = IndexableType.REINDEX)
 	public ObjectEntryFolder updateObjectEntryFolder(
 			long userId, long objectEntryFolderId,
 			long parentObjectEntryFolderId, Map<Locale, String> labelMap,

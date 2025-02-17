@@ -6,6 +6,7 @@
 package com.liferay.source.formatter.checkstyle.check;
 
 import com.liferay.petra.string.CharPool;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
@@ -13,6 +14,7 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 import com.puppycrawl.tools.checkstyle.utils.AnnotationUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -59,7 +61,31 @@ public class OSGiCommandsCheck extends BaseCheck {
 		if (importNames.contains(
 				"org.osgi.service.component.annotations.Component")) {
 
-			_checkMissingUnimplementedMethod(detailAST, objBlockDetailAST);
+			List<String> osgiCommandFunctions = _getOSGiCommandFunctions(
+				detailAST);
+
+			if (osgiCommandFunctions.isEmpty()) {
+				return;
+			}
+
+			List<DetailAST> methodDefinitionDetailASTList = getAllChildTokens(
+				objBlockDetailAST, false, TokenTypes.METHOD_DEF);
+
+			methodDefinitionDetailASTList = ListUtil.filter(
+				methodDefinitionDetailASTList,
+				methodDefinitionDetailAST -> {
+					DetailAST modifiersDetailAST =
+						methodDefinitionDetailAST.findFirstToken(
+							TokenTypes.MODIFIERS);
+
+					return modifiersDetailAST.branchContains(
+						TokenTypes.LITERAL_PUBLIC);
+				});
+
+			_checkIncorrectPublicMethodName(
+				methodDefinitionDetailASTList, osgiCommandFunctions);
+			_checkMissingUnimplementedMethod(
+				detailAST, methodDefinitionDetailASTList, osgiCommandFunctions);
 		}
 
 		if (importNames.contains(
@@ -69,51 +95,12 @@ public class OSGiCommandsCheck extends BaseCheck {
 		}
 	}
 
-	private void _checkMissingUnimplementedMethod(
-		DetailAST detailAST, DetailAST objBlockDetailAST) {
-
-		DetailAST annotationDetailAST = AnnotationUtil.getAnnotation(
-			detailAST, "Component");
-
-		if (annotationDetailAST == null) {
-			return;
-		}
-
-		DetailAST annotationMemberValuePairDetailAST =
-			getAnnotationMemberValuePairDetailAST(
-				annotationDetailAST, "property");
-
-		if (annotationMemberValuePairDetailAST == null) {
-			return;
-		}
-
-		DetailAST annotationArrayInitDetailAST =
-			annotationMemberValuePairDetailAST.findFirstToken(
-				TokenTypes.ANNOTATION_ARRAY_INIT);
-
-		if (annotationArrayInitDetailAST == null) {
-			return;
-		}
-
-		List<String> osgiCommandFunctions = _getOSGiCommandFunctions(
-			annotationArrayInitDetailAST);
-
-		if (osgiCommandFunctions.isEmpty()) {
-			return;
-		}
-
-		List<DetailAST> methodDefinitionDetailASTList = getAllChildTokens(
-			objBlockDetailAST, false, TokenTypes.METHOD_DEF);
+	private void _checkIncorrectPublicMethodName(
+		List<DetailAST> methodDefinitionDetailASTList,
+		List<String> osgiCommandFunctions) {
 
 		for (DetailAST methodDefinitionDetailAST :
 				methodDefinitionDetailASTList) {
-
-			DetailAST modifiersDetailAST =
-				methodDefinitionDetailAST.findFirstToken(TokenTypes.MODIFIERS);
-
-			if (!modifiersDetailAST.branchContains(TokenTypes.LITERAL_PUBLIC)) {
-				continue;
-			}
 
 			String methodName = getName(methodDefinitionDetailAST);
 
@@ -121,14 +108,26 @@ public class OSGiCommandsCheck extends BaseCheck {
 				log(
 					methodDefinitionDetailAST,
 					_MSG_INCORRECT_PUBLIC_METHOD_NAME);
+			}
+		}
+	}
 
-				continue;
+	private void _checkMissingUnimplementedMethod(
+		DetailAST detailAST, List<DetailAST> methodDefinitionDetailASTList,
+		List<String> osgiCommandFunctions) {
+
+		outerLoop:
+		for (String osgiCommandFunction : osgiCommandFunctions) {
+			for (DetailAST methodDefinitionDetailAST :
+					methodDefinitionDetailASTList) {
+
+				String methodName = getName(methodDefinitionDetailAST);
+
+				if (osgiCommandFunction.equals(methodName)) {
+					continue outerLoop;
+				}
 			}
 
-			osgiCommandFunctions.remove(methodName);
-		}
-
-		for (String osgiCommandFunction : osgiCommandFunctions) {
 			log(
 				detailAST, _MSG_MISSING_IMPLEMENTED_COMMAND_FUNCTION,
 				osgiCommandFunction);
@@ -156,10 +155,31 @@ public class OSGiCommandsCheck extends BaseCheck {
 		}
 	}
 
-	private List<String> _getOSGiCommandFunctions(
-		DetailAST annotationArrayInitDetailAST) {
-
+	private List<String> _getOSGiCommandFunctions(DetailAST detailAST) {
 		List<String> osgiCommandFunctions = new ArrayList<>();
+
+		DetailAST annotationDetailAST = AnnotationUtil.getAnnotation(
+			detailAST, "Component");
+
+		if (annotationDetailAST == null) {
+			Collections.emptyList();
+		}
+
+		DetailAST annotationMemberValuePairDetailAST =
+			getAnnotationMemberValuePairDetailAST(
+				annotationDetailAST, "property");
+
+		if (annotationMemberValuePairDetailAST == null) {
+			Collections.emptyList();
+		}
+
+		DetailAST annotationArrayInitDetailAST =
+			annotationMemberValuePairDetailAST.findFirstToken(
+				TokenTypes.ANNOTATION_ARRAY_INIT);
+
+		if (annotationArrayInitDetailAST == null) {
+			Collections.emptyList();
+		}
 
 		for (DetailAST expressionDetailAST :
 				getAllChildTokens(

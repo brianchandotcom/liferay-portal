@@ -44,7 +44,8 @@ async function expectExportName(exportImportPage, taskName: string) {
 
 	await expect(
 		exportImportPage.page
-			.getByText(taskName)
+			.locator('//h2[span[normalize-space()="' + taskName + '"]]')
+			.first()
 			.locator('../..')
 			.getByText('Successful')
 	).toBeVisible();

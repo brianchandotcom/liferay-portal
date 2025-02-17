@@ -546,9 +546,9 @@ public class DBPartitionUtil {
 						statement.executeUpdate(
 							StringBundler.concat(
 								"update ", partitionTableName, " set ",
-								"dbTableName = REPLACE(dbTableName, ",
-								fromCompanyId, ", ", toCompanyId,
-								") where dbTableName like '%", fromCompanyId,
+								"dbTableName = REPLACE(dbTableName, '",
+								fromCompanyId, "', '", toCompanyId,
+								"') where dbTableName like '%", fromCompanyId,
 								"%'"));
 					}
 

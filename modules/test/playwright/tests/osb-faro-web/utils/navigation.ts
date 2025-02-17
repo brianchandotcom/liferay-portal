@@ -9,6 +9,7 @@ import {faroConfig} from '../faro.config';
 import {waitForLoading} from './loading';
 
 export enum ACPage {
+	apisTokensPage = 'apis/tokens',
 	assetPage = 'assets',
 	dataSourcePage = 'data-source',
 	dataPrivacyRequestLogPage = 'data-privacy/request-log',

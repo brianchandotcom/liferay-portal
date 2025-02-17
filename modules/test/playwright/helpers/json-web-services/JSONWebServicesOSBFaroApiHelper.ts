@@ -15,6 +15,13 @@ type Project = {
 	name: string;
 };
 
+type ApiToken = {
+	createDate: string;
+	expirationDate: string;
+	lastAccessDate: string;
+	token: string;
+};
+
 export class JSONWebServicesOSBFaroApiHelper {
 	readonly apiHelpers: ApiHelpers;
 	readonly basePath: string;
@@ -118,5 +125,14 @@ export class JSONWebServicesOSBFaroApiHelper {
 		).then((response) => {
 			return response.json();
 		});
+	}
+
+	async fetchApiToken(groupId: string, expiresIn: number): Promise<ApiToken> {
+		return this.apiHelpers.post(
+			`${faroConfig.environment.baseUrl}${this.basePath}/main/${groupId}/oauth2/tokens/new?expiresIn=${expiresIn}`,
+			{
+				headers: await this.apiHelpers.getJSONWebServicesHeaders(),
+			}
+		);
 	}
 }

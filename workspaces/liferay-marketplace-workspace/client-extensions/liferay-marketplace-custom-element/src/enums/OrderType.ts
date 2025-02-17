@@ -4,6 +4,8 @@
  */
 
 export enum OrderType {
-	DXP = 'DXPAPP',
+	CLIENTEXTENSION = 'CLIENTEXTENSION',
 	CLOUD = 'CLOUDAPP',
+	DXP = 'DXPAPP',
+	FRAGMENT = 'FRAGMENT',
 }

@@ -30,11 +30,17 @@ export function getProductTypeFromSpecifications(
 		if (specification.specificationKey === 'type') {
 			productType = specification.value.en_US;
 
+			if (productType === 'client-extension') {
+				productType = 'Client Extension';
+			}
 			if (productType === 'cloud') {
 				productType = 'Cloud';
 			}
-			else if (productType === 'dxp') {
+			if (productType === 'dxp') {
 				productType = 'DXP';
+			}
+			if (productType === 'fragment') {
+				productType = 'Fragment';
 			}
 		}
 	});

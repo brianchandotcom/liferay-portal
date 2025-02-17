@@ -563,12 +563,12 @@ public class FragmentEntryInputTemplateNodeContextHelperTest {
 				LocaleUtil.US, String.valueOf(enFileEntryId)
 			).build());
 
-		String esValue = esDateFormat.format(esDate);
-
 		enValue = enDateFormat.format(enDate);
 
 		DateFormat esDateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
 			"yyyy-MM-dd", LocaleUtil.SPAIN);
+
+		String esValue = esDateFormat.format(esDate);
 
 		_testToInputTemplateNodeLocalizedInputValue(
 			objectDefinition.getClassName(), "ObjectField_myLocalizedDate",

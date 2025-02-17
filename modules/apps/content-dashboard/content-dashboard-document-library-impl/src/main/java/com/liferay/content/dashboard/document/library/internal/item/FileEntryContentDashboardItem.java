@@ -739,11 +739,13 @@ public class FileEntryContentDashboardItem
 	}
 
 	private String _getStringValue(String infoFieldName) {
-		InfoItemFieldValues infoItemFieldValues =
-			_infoItemFieldValuesProvider.getInfoItemFieldValues(_fileEntry);
+		if (_infoItemFieldValuesProvider != null) {
+			_infoItemFieldValues =
+				_infoItemFieldValuesProvider.getInfoItemFieldValues(_fileEntry);
+		}
 
 		InfoFieldValue<Object> infoFieldValue =
-			infoItemFieldValues.getInfoFieldValue(infoFieldName);
+			_infoItemFieldValues.getInfoFieldValue(infoFieldName);
 
 		if (infoFieldValue == null) {
 			return StringPool.BLANK;
@@ -837,6 +839,7 @@ public class FileEntryContentDashboardItem
 	private final DLURLHelper _dlURLHelper;
 	private final FileEntry _fileEntry;
 	private final Group _group;
+	private InfoItemFieldValues _infoItemFieldValues;
 	private final InfoItemFieldValuesProvider<FileEntry>
 		_infoItemFieldValuesProvider;
 	private final Language _language;

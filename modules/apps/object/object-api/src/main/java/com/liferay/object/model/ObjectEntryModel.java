@@ -303,6 +303,20 @@ public interface ObjectEntryModel
 	public void setTreePath(String treePath);
 
 	/**
+	 * Returns the version of this object entry.
+	 *
+	 * @return the version of this object entry
+	 */
+	public int getVersion();
+
+	/**
+	 * Sets the version of this object entry.
+	 *
+	 * @param version the version of this object entry
+	 */
+	public void setVersion(int version);
+
+	/**
 	 * Returns the last publish date of this object entry.
 	 *
 	 * @return the last publish date of this object entry

@@ -230,14 +230,14 @@ public interface ObjectEntryVersionModel
 	 *
 	 * @return the version of this object entry version
 	 */
-	public long getVersion();
+	public int getVersion();
 
 	/**
 	 * Sets the version of this object entry version.
 	 *
 	 * @param version the version of this object entry version
 	 */
-	public void setVersion(long version);
+	public void setVersion(int version);
 
 	/**
 	 * Returns the status of this object entry version.

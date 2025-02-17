@@ -74,9 +74,9 @@ public class ObjectEntryModelImpl
 		{"objectEntryFolderId", Types.BIGINT},
 		{"rootObjectEntryId", Types.BIGINT},
 		{"defaultLanguageId", Types.VARCHAR}, {"treePath", Types.VARCHAR},
-		{"lastPublishDate", Types.TIMESTAMP}, {"status", Types.INTEGER},
-		{"statusByUserId", Types.BIGINT}, {"statusByUserName", Types.VARCHAR},
-		{"statusDate", Types.TIMESTAMP}
+		{"version", Types.INTEGER}, {"lastPublishDate", Types.TIMESTAMP},
+		{"status", Types.INTEGER}, {"statusByUserId", Types.BIGINT},
+		{"statusByUserName", Types.VARCHAR}, {"statusDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -98,6 +98,7 @@ public class ObjectEntryModelImpl
 		TABLE_COLUMNS_MAP.put("rootObjectEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("defaultLanguageId", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("treePath", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("version", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("statusByUserId", Types.BIGINT);
@@ -106,7 +107,7 @@ public class ObjectEntryModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table ObjectEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(1000) null,objectEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,objectDefinitionId LONG,objectEntryFolderId LONG,rootObjectEntryId LONG,defaultLanguageId VARCHAR(75) null,treePath STRING null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+		"create table ObjectEntry (mvccVersion LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(1000) null,objectEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,objectDefinitionId LONG,objectEntryFolderId LONG,rootObjectEntryId LONG,defaultLanguageId VARCHAR(75) null,treePath STRING null,version INTEGER,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table ObjectEntry";
 
@@ -317,6 +318,7 @@ public class ObjectEntryModelImpl
 			attributeGetterFunctions.put(
 				"defaultLanguageId", ObjectEntry::getDefaultLanguageId);
 			attributeGetterFunctions.put("treePath", ObjectEntry::getTreePath);
+			attributeGetterFunctions.put("version", ObjectEntry::getVersion);
 			attributeGetterFunctions.put(
 				"lastPublishDate", ObjectEntry::getLastPublishDate);
 			attributeGetterFunctions.put("status", ObjectEntry::getStatus);
@@ -391,6 +393,9 @@ public class ObjectEntryModelImpl
 			attributeSetterBiConsumers.put(
 				"treePath",
 				(BiConsumer<ObjectEntry, String>)ObjectEntry::setTreePath);
+			attributeSetterBiConsumers.put(
+				"version",
+				(BiConsumer<ObjectEntry, Integer>)ObjectEntry::setVersion);
 			attributeSetterBiConsumers.put(
 				"lastPublishDate",
 				(BiConsumer<ObjectEntry, Date>)ObjectEntry::setLastPublishDate);
@@ -763,6 +768,21 @@ public class ObjectEntryModelImpl
 
 	@JSON
 	@Override
+	public int getVersion() {
+		return _version;
+	}
+
+	@Override
+	public void setVersion(int version) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_version = version;
+	}
+
+	@JSON
+	@Override
 	public Date getLastPublishDate() {
 		return _lastPublishDate;
 	}
@@ -1024,6 +1044,7 @@ public class ObjectEntryModelImpl
 		objectEntryImpl.setRootObjectEntryId(getRootObjectEntryId());
 		objectEntryImpl.setDefaultLanguageId(getDefaultLanguageId());
 		objectEntryImpl.setTreePath(getTreePath());
+		objectEntryImpl.setVersion(getVersion());
 		objectEntryImpl.setLastPublishDate(getLastPublishDate());
 		objectEntryImpl.setStatus(getStatus());
 		objectEntryImpl.setStatusByUserId(getStatusByUserId());
@@ -1067,6 +1088,8 @@ public class ObjectEntryModelImpl
 			this.<String>getColumnOriginalValue("defaultLanguageId"));
 		objectEntryImpl.setTreePath(
 			this.<String>getColumnOriginalValue("treePath"));
+		objectEntryImpl.setVersion(
+			this.<Integer>getColumnOriginalValue("version"));
 		objectEntryImpl.setLastPublishDate(
 			this.<Date>getColumnOriginalValue("lastPublishDate"));
 		objectEntryImpl.setStatus(
@@ -1239,6 +1262,8 @@ public class ObjectEntryModelImpl
 			objectEntryCacheModel.treePath = null;
 		}
 
+		objectEntryCacheModel.version = getVersion();
+
 		Date lastPublishDate = getLastPublishDate();
 
 		if (lastPublishDate != null) {
@@ -1346,6 +1371,7 @@ public class ObjectEntryModelImpl
 	private long _rootObjectEntryId;
 	private String _defaultLanguageId;
 	private String _treePath;
+	private int _version;
 	private Date _lastPublishDate;
 	private int _status;
 	private long _statusByUserId;
@@ -1398,6 +1424,7 @@ public class ObjectEntryModelImpl
 		_columnOriginalValues.put("rootObjectEntryId", _rootObjectEntryId);
 		_columnOriginalValues.put("defaultLanguageId", _defaultLanguageId);
 		_columnOriginalValues.put("treePath", _treePath);
+		_columnOriginalValues.put("version", _version);
 		_columnOriginalValues.put("lastPublishDate", _lastPublishDate);
 		_columnOriginalValues.put("status", _status);
 		_columnOriginalValues.put("statusByUserId", _statusByUserId);
@@ -1456,15 +1483,17 @@ public class ObjectEntryModelImpl
 
 		columnBitmasks.put("treePath", 16384L);
 
-		columnBitmasks.put("lastPublishDate", 32768L);
+		columnBitmasks.put("version", 32768L);
 
-		columnBitmasks.put("status", 65536L);
+		columnBitmasks.put("lastPublishDate", 65536L);
 
-		columnBitmasks.put("statusByUserId", 131072L);
+		columnBitmasks.put("status", 131072L);
 
-		columnBitmasks.put("statusByUserName", 262144L);
+		columnBitmasks.put("statusByUserId", 262144L);
 
-		columnBitmasks.put("statusDate", 524288L);
+		columnBitmasks.put("statusByUserName", 524288L);
+
+		columnBitmasks.put("statusDate", 1048576L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

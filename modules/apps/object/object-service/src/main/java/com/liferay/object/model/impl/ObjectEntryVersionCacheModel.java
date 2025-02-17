@@ -157,7 +157,9 @@ public class ObjectEntryVersionCacheModel
 	}
 
 	@Override
-	public void readExternal(ObjectInput objectInput) throws IOException {
+	public void readExternal(ObjectInput objectInput)
+		throws ClassNotFoundException, IOException {
+
 		mvccVersion = objectInput.readLong();
 		uuid = objectInput.readUTF();
 
@@ -171,9 +173,9 @@ public class ObjectEntryVersionCacheModel
 		modifiedDate = objectInput.readLong();
 
 		objectEntryId = objectInput.readLong();
-		content = objectInput.readUTF();
+		content = (String)objectInput.readObject();
 
-		version = objectInput.readLong();
+		version = objectInput.readInt();
 
 		status = objectInput.readInt();
 	}
@@ -208,13 +210,13 @@ public class ObjectEntryVersionCacheModel
 		objectOutput.writeLong(objectEntryId);
 
 		if (content == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeObject("");
 		}
 		else {
-			objectOutput.writeUTF(content);
+			objectOutput.writeObject(content);
 		}
 
-		objectOutput.writeLong(version);
+		objectOutput.writeInt(version);
 
 		objectOutput.writeInt(status);
 	}
@@ -229,7 +231,7 @@ public class ObjectEntryVersionCacheModel
 	public long modifiedDate;
 	public long objectEntryId;
 	public String content;
-	public long version;
+	public int version;
 	public int status;
 
 }

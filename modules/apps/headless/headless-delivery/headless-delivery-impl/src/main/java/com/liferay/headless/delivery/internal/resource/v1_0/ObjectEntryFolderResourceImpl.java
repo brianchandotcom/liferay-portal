@@ -5,11 +5,17 @@
 
 package com.liferay.headless.delivery.internal.resource.v1_0;
 
+import com.liferay.depot.model.DepotEntry;
+import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
 import com.liferay.headless.delivery.dto.v1_0.ObjectEntryFolder;
 import com.liferay.headless.delivery.resource.v1_0.ObjectEntryFolderResource;
+import com.liferay.object.exception.NoSuchObjectEntryFolderException;
 import com.liferay.object.service.ObjectEntryFolderService;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -40,6 +46,17 @@ public class ObjectEntryFolderResourceImpl
 	extends BaseObjectEntryFolderResourceImpl {
 
 	@Override
+	public void deleteObjectEntryFolder(Long objectEntryFolderId)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+			throw new UnsupportedOperationException();
+		}
+
+		_objectEntryFolderService.deleteObjectEntryFolder(objectEntryFolderId);
+	}
+
+	@Override
 	public Page<ObjectEntryFolder> getAssetLibraryObjectEntryFoldersPage(
 			Long assetLibraryId, Boolean flatten, String search,
 			Aggregation aggregation, Filter filter, Pagination pagination,
@@ -52,6 +69,11 @@ public class ObjectEntryFolderResourceImpl
 
 		return _getAssetLibraryObjectEntryFoldersPage(
 			HashMapBuilder.put(
+				"create",
+				addAction(
+					ActionKeys.UPDATE, "postAssetLibraryObjectEntryFolder",
+					_CLASS_NAME, assetLibraryId)
+			).put(
 				"createBatch",
 				addAction(
 					ActionKeys.UPDATE, "postAssetLibraryObjectEntryFolderBatch",
@@ -66,6 +88,67 @@ public class ObjectEntryFolderResourceImpl
 	}
 
 	@Override
+	public ObjectEntryFolder getObjectEntryFolder(Long objectEntryFolderId)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+			throw new UnsupportedOperationException();
+		}
+
+		return _toObjectEntryFolder(
+			_objectEntryFolderService.getObjectEntryFolder(
+				objectEntryFolderId));
+	}
+
+	@Override
+	public ObjectEntryFolder patchObjectEntryFolder(
+			Long objectEntryFolderId, ObjectEntryFolder objectEntryFolder)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+			throw new UnsupportedOperationException();
+		}
+
+		com.liferay.object.model.ObjectEntryFolder persistedObjectEntryFolder =
+			_objectEntryFolderService.getObjectEntryFolder(objectEntryFolderId);
+
+		Long parentObjectEntryFolderId =
+			objectEntryFolder.getParentObjectEntryFolderId();
+
+		if (parentObjectEntryFolderId == null) {
+			parentObjectEntryFolderId =
+				persistedObjectEntryFolder.getParentObjectEntryFolderId();
+		}
+
+		String name = objectEntryFolder.getName();
+
+		if (name == null) {
+			name = persistedObjectEntryFolder.getName();
+		}
+
+		String label = objectEntryFolder.getLabel();
+
+		if (label == null) {
+			label = persistedObjectEntryFolder.getLabel();
+		}
+
+		Map<String, String> labelMap = objectEntryFolder.getLabel_i18n();
+
+		if (labelMap == null) {
+			labelMap = LocalizedMapUtil.getI18nMap(
+				persistedObjectEntryFolder.getLabelMap());
+		}
+
+		return _toObjectEntryFolder(
+			_objectEntryFolderService.updateObjectEntryFolder(
+				objectEntryFolderId, parentObjectEntryFolderId,
+				LocalizedMapUtil.getLocalizedMap(
+					contextAcceptLanguage.getPreferredLocale(), label,
+					labelMap),
+				name));
+	}
+
+	@Override
 	public ObjectEntryFolder postAssetLibraryObjectEntryFolder(
 			Long assetLibraryId, ObjectEntryFolder objectEntryFolder)
 		throws Exception {
@@ -74,7 +157,52 @@ public class ObjectEntryFolderResourceImpl
 			throw new UnsupportedOperationException();
 		}
 
-		return _addObjectEntryFolder(assetLibraryId, null, objectEntryFolder);
+		Long parentObjectEntryFolderId =
+			objectEntryFolder.getParentObjectEntryFolderId();
+
+		if (parentObjectEntryFolderId == null) {
+			parentObjectEntryFolderId = 0L;
+		}
+
+		return _addObjectEntryFolder(
+			assetLibraryId, parentObjectEntryFolderId, objectEntryFolder);
+	}
+
+	@Override
+	public ObjectEntryFolder putObjectEntryFolder(
+			Long objectEntryFolderId, ObjectEntryFolder objectEntryFolder)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+			throw new UnsupportedOperationException();
+		}
+
+		Long parentObjectEntryFolderId =
+			objectEntryFolder.getParentObjectEntryFolderId();
+
+		if (parentObjectEntryFolderId == null) {
+			throw new NoSuchObjectEntryFolderException();
+		}
+
+		try {
+			_objectEntryFolderService.getObjectEntryFolder(objectEntryFolderId);
+		}
+		catch (PortalException portalException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(portalException);
+			}
+
+			return _putObjectEntryFolder(objectEntryFolder);
+		}
+
+		return _toObjectEntryFolder(
+			_objectEntryFolderService.updateObjectEntryFolder(
+				objectEntryFolderId, parentObjectEntryFolderId,
+				LocalizedMapUtil.getLocalizedMap(
+					contextAcceptLanguage.getPreferredLocale(),
+					objectEntryFolder.getLabel(),
+					objectEntryFolder.getLabel_i18n()),
+				objectEntryFolder.getName()));
 	}
 
 	private ObjectEntryFolder _addObjectEntryFolder(
@@ -120,6 +248,27 @@ public class ObjectEntryFolderResourceImpl
 				groupId, group.getCompanyId(), 0L));
 	}
 
+	private ObjectEntryFolder _putObjectEntryFolder(
+			ObjectEntryFolder objectEntryFolder)
+		throws Exception {
+
+		Long assetLibraryId = objectEntryFolder.getAssetLibraryId();
+
+		if (assetLibraryId == null) {
+			throw new NoSuchObjectEntryFolderException();
+		}
+
+		DepotEntry depotEntry = _depotEntryLocalService.fetchDepotEntry(
+			assetLibraryId);
+
+		if (depotEntry == null) {
+			throw new NoSuchObjectEntryFolderException();
+		}
+
+		return postAssetLibraryObjectEntryFolder(
+			depotEntry.getGroupId(), objectEntryFolder);
+	}
+
 	private ObjectEntryFolder _toObjectEntryFolder(
 			com.liferay.object.model.ObjectEntryFolder objectEntryFolder)
 		throws Exception {
@@ -128,16 +277,25 @@ public class ObjectEntryFolderResourceImpl
 			new DefaultDTOConverterContext(
 				contextAcceptLanguage.isAcceptAllLanguages(),
 				HashMapBuilder.put(
-					"create",
+					"delete",
 					addAction(
-						ActionKeys.UPDATE, "postAssetLibraryObjectEntryFolder",
-						_CLASS_NAME, objectEntryFolder.getGroupId())
+						ActionKeys.DELETE, objectEntryFolder,
+						"deleteObjectEntryFolder")
 				).put(
 					"get",
 					addAction(
-						ActionKeys.VIEW,
-						"getAssetLibraryObjectEntryFoldersPage", _CLASS_NAME,
-						objectEntryFolder.getGroupId())
+						ActionKeys.VIEW, objectEntryFolder,
+						"getObjectEntryFolder")
+				).put(
+					"replace",
+					addAction(
+						ActionKeys.UPDATE, objectEntryFolder,
+						"putObjectEntryFolder")
+				).put(
+					"update",
+					addAction(
+						ActionKeys.UPDATE, objectEntryFolder,
+						"patchObjectEntryFolder")
 				).build(),
 				_dtoConverterRegistry,
 				objectEntryFolder.getObjectEntryFolderId(),
@@ -147,6 +305,12 @@ public class ObjectEntryFolderResourceImpl
 
 	private static final String _CLASS_NAME =
 		com.liferay.object.model.ObjectEntryFolder.class.getName();
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ObjectEntryFolderResourceImpl.class);
+
+	@Reference
+	private DepotEntryLocalService _depotEntryLocalService;
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;

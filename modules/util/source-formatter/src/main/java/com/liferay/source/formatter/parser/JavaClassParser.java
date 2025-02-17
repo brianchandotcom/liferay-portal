@@ -49,11 +49,11 @@ public class JavaClassParser {
 			if (anonymousClassContent != null) {
 				anonymousClasses.add(
 					_parseJavaClass(
-						StringPool.BLANK, packageName, importNames,
+						JavaTerm.ACCESS_MODIFIER_PRIVATE, true,
 						anonymousClassContent,
 						SourceUtil.getLineNumber(content, matcher.start()),
-						JavaTerm.ACCESS_MODIFIER_PRIVATE, false, false, false,
-						false, false, false, false, false, true));
+						StringPool.BLANK, importNames, false, false, false,
+						false, false, false, false, packageName, false));
 			}
 		}
 
@@ -147,10 +147,10 @@ public class JavaClassParser {
 		}
 
 		JavaClass javaClass = _parseJavaClass(
-			className, JavaSourceUtil.getPackageName(content),
-			JavaSourceUtil.getImportNames(content), classContent, lineNumber,
-			JavaTerm.ACCESS_MODIFIER_PUBLIC, isAbstract, isFinal, false, isEnum,
-			isInterface, nonsealed, sealed, isStrictfp, false);
+			JavaTerm.ACCESS_MODIFIER_PUBLIC, false, classContent, lineNumber,
+			className, JavaSourceUtil.getImportNames(content), isAbstract,
+			isEnum, isFinal, isInterface, false, isStrictfp, nonsealed,
+			JavaSourceUtil.getPackageName(content), sealed);
 
 		return _parseExtendsImplementsPermits(
 			javaClass, StringUtil.trim(matcher.group(8)));
@@ -320,9 +320,9 @@ public class JavaClassParser {
 			SourceUtil.containsUnquoted(startLine, " interface ")) {
 
 			JavaClass javaClass = _parseJavaClass(
-				_getClassName(startLine), packageName, importNames,
-				javaTermContent, lineNumber, accessModifier, isAbstract,
-				isFinal, isStatic, isEnum, isInterface, false, false, false,
+				accessModifier, false, javaTermContent, lineNumber,
+				_getClassName(startLine), importNames, isAbstract, isEnum,
+				isFinal, isInterface, isStatic, false, false, packageName,
 				false);
 
 			Pattern pattern = Pattern.compile(
@@ -344,8 +344,8 @@ public class JavaClassParser {
 			(startLine.endsWith(StringPool.SEMICOLON) && (x == -1))) {
 
 			return new JavaVariable(
-				_getVariableName(startLine), javaTermContent, accessModifier,
-				lineNumber, isAbstract, isFinal, isStatic);
+				accessModifier, javaTermContent, isAbstract, isFinal, isStatic,
+				lineNumber, _getVariableName(startLine));
 		}
 
 		if (x == -1) {
@@ -359,8 +359,8 @@ public class JavaClassParser {
 			 (spaceCount > 0))) {
 
 			return new JavaMethod(
-				_getConstructorOrMethodName(startLine), javaTermContent,
-				accessModifier, lineNumber, isAbstract, isFinal, isStatic);
+				accessModifier, javaTermContent, isAbstract, isFinal, isStatic,
+				lineNumber, _getConstructorOrMethodName(startLine));
 		}
 
 		if ((spaceCount == 1) ||
@@ -368,8 +368,8 @@ public class JavaClassParser {
 			 (spaceCount == 0))) {
 
 			return new JavaConstructor(
-				_getConstructorOrMethodName(startLine), javaTermContent,
-				accessModifier, lineNumber, isAbstract, isFinal, isStatic);
+				accessModifier, javaTermContent, isAbstract, isFinal, isStatic,
+				lineNumber, _getConstructorOrMethodName(startLine));
 		}
 
 		return null;
@@ -495,17 +495,17 @@ public class JavaClassParser {
 	}
 
 	private static JavaClass _parseJavaClass(
-			String className, String packageName, List<String> importNames,
-			String classContent, int classLineNumber, String accessModifier,
-			boolean isAbstract, boolean isFinal, boolean isStatic,
-			boolean isEnum, boolean isInterface, boolean nonsealed,
-			boolean sealed, boolean isStrictfp, boolean anonymous)
+			String accessModifier, boolean anonymous, String classContent,
+			int classLineNumber, String className, List<String> importNames,
+			boolean isAbstract, boolean isEnum, boolean isFinal,
+			boolean isInterface, boolean isStatic, boolean isStrictfp,
+			boolean nonsealed, String packageName, boolean sealed)
 		throws IOException, ParseException {
 
 		JavaClass javaClass = new JavaClass(
-			className, packageName, importNames, classContent, accessModifier,
-			classLineNumber, isAbstract, isFinal, isStatic, isInterface,
-			nonsealed, sealed, isStrictfp, anonymous);
+			accessModifier, anonymous, classContent, importNames, isAbstract,
+			isFinal, isInterface, isStatic, isStrictfp, classLineNumber,
+			className, nonsealed, packageName, sealed);
 
 		int lineNumber = 0;
 

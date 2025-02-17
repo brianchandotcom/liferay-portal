@@ -19,16 +19,16 @@ import java.util.regex.Pattern;
 public abstract class BaseJavaTerm implements JavaTerm {
 
 	public BaseJavaTerm(
-		String name, String content, String accessModifier, int lineNumber,
-		boolean isAbstract, boolean isFinal, boolean isStatic) {
+		String accessModifier, String content, boolean isAbstract,
+		boolean isFinal, boolean isStatic, int lineNumber, String name) {
 
-		_name = name;
-		_content = content;
 		_accessModifier = accessModifier;
-		_lineNumber = lineNumber;
+		_content = content;
 		_isAbstract = isAbstract;
 		_isFinal = isFinal;
 		_isStatic = isStatic;
+		_lineNumber = lineNumber;
+		_name = name;
 	}
 
 	@Override

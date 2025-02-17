@@ -27,6 +27,7 @@ page import="com.liferay.account.model.AccountEntry" %><%@
 page import="com.liferay.commerce.channel.web.internal.constants.CommerceChannelFDSNames" %><%@
 page import="com.liferay.commerce.channel.web.internal.constants.CommerceChannelScreenNavigationConstants" %><%@
 page import="com.liferay.commerce.channel.web.internal.display.context.CommerceChannelAccountEntryQualifiersDisplayContext" %><%@
+page import="com.liferay.commerce.channel.web.internal.display.context.CommerceChannelCommerceCurrencyDisplayContext" %><%@
 page import="com.liferay.commerce.channel.web.internal.display.context.CommerceChannelCountryDisplayContext" %><%@
 page import="com.liferay.commerce.channel.web.internal.display.context.CommerceChannelDisplayContext" %><%@
 page import="com.liferay.commerce.channel.web.internal.display.context.SiteCommerceChannelTypeDisplayContext" %><%@

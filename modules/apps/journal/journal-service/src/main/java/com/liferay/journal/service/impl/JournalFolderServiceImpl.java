@@ -7,6 +7,7 @@ package com.liferay.journal.service.impl;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureLink;
+import com.liferay.dynamic.data.mapping.service.DDMStructureLinkLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLinkService;
 import com.liferay.dynamic.data.mapping.service.DDMStructureService;
 import com.liferay.dynamic.data.mapping.util.comparator.StructureLinkStructureModifiedDateComparator;
@@ -538,23 +539,16 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		PermissionChecker permissionChecker = getPermissionChecker();
+		JournalFolder folder = getFolder(folderId);
 
-		if (ModelResourcePermissionUtil.contains(
-				_journalFolderModelResourcePermission, permissionChecker,
-				groupId, folderId, ActionKeys.ADVANCED_UPDATE) ||
-			ModelResourcePermissionUtil.contains(
-				_journalFolderModelResourcePermission, permissionChecker,
-				groupId, folderId, ActionKeys.UPDATE)) {
-
-			return journalFolderLocalService.updateFolder(
-				getUserId(), groupId, folderId, parentFolderId, name,
-				description, mergeWithParentFolder, serviceContext);
-		}
-
-		throw new PrincipalException.MustHavePermission(
-			permissionChecker, JournalFolder.class.getName(), folderId,
-			ActionKeys.ADVANCED_UPDATE, ActionKeys.UPDATE);
+		return updateFolder(
+			groupId, folderId, parentFolderId, name, description,
+			TransformUtil.transformToLongArray(
+				_ddmStructureLinkLocalService.getStructureLinks(
+					_classNameLocalService.getClassNameId(JournalFolder.class),
+					folderId),
+				ddmStructureLink -> ddmStructureLink.getStructureId()),
+			folder.getRestrictionType(), mergeWithParentFolder, serviceContext);
 	}
 
 	@Override
@@ -632,6 +626,9 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
+	private DDMStructureLinkLocalService _ddmStructureLinkLocalService;
 
 	@Reference
 	private DDMStructureLinkService _ddmStructureLinkService;

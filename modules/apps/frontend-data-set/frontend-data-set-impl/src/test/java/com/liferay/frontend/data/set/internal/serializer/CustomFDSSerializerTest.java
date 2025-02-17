@@ -164,6 +164,17 @@ public class CustomFDSSerializerTest {
 
 		Assert.assertTrue(nestedFieldsDepth.equals("2"));
 
+		_resetFDSSerializer(fdsAPIURLResolverRegistry);
+
+		// No parameters
+
+		_mockSerializeAPIURL("fdsName", null, "/app", "/endpoint", "schema");
+
+		Assert.assertEquals(
+			"/o/app/endpoint",
+			_customFDSSerializer.serializeAPIURL(
+				"fdsName", _httpServletRequest));
+
 		serviceTrackerMap.close();
 	}
 

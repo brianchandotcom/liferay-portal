@@ -104,7 +104,7 @@ public class SystemFDSSerializerTest {
 	@Test
 	public void testSerializeAPIURL() throws Exception {
 
-		// URL
+		// Nested fields: creator
 
 		ServiceTrackerMap
 			<String,
@@ -128,6 +128,49 @@ public class SystemFDSSerializerTest {
 
 		_registerServices(
 			_registerSystemFDSEntry(
+				"nestedFields=creator", "fdsName", "/app", "/endpoint",
+				"schema"));
+
+		Assert.assertEquals(
+			"/o/app/endpoint?nestedFields=creator",
+			_systemFDSSerializer.serializeAPIURL(
+				"fdsName", _httpServletRequest));
+
+		_unregisterServices();
+
+		// Nested fields: creator and status
+
+		_registerServices(
+			_registerSystemFDSEntry(
+				"nestedFields=creator,status", "fdsName", "/app", "/endpoint",
+				"schema"));
+
+		Assert.assertEquals(
+			"/o/app/endpoint?nestedFields=creator,status",
+			_systemFDSSerializer.serializeAPIURL(
+				"fdsName", _httpServletRequest));
+
+		_unregisterServices();
+
+		// Nested fields depth
+
+		_registerServices(
+			_registerSystemFDSEntry(
+				"nestedFields=creator,status,relation&nestedFieldsDepth=2",
+				"fdsName", "/app", "/endpoint", "schema"));
+
+		Assert.assertEquals(
+			"/o/app/endpoint?nestedFields=creator,status,relation&" +
+				"nestedFieldsDepth=2",
+			_systemFDSSerializer.serializeAPIURL(
+				"fdsName", _httpServletRequest));
+
+		_unregisterServices();
+
+		// No parameters
+
+		_registerServices(
+			_registerSystemFDSEntry(
 				null, "fdsName", "/app", "/endpoint", "schema"));
 
 		Assert.assertEquals(
@@ -136,20 +179,6 @@ public class SystemFDSSerializerTest {
 				"fdsName", _httpServletRequest));
 
 		_unregisterServices();
-
-		// URL with parameters
-
-		_registerServices(
-			_registerSystemFDSEntry(
-				"param=3", "fdsName", "/app", "/endpoint", "schema"));
-
-		Assert.assertEquals(
-			"/o/app/endpoint?param=3",
-			_systemFDSSerializer.serializeAPIURL(
-				"fdsName", _httpServletRequest));
-
-		_unregisterServices();
-
 		serviceTrackerMap.close();
 	}
 

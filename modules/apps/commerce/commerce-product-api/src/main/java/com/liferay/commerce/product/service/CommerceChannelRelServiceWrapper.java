@@ -75,24 +75,6 @@ public class CommerceChannelRelServiceWrapper
 	}
 
 	@Override
-	public java.util.List<CommerceChannelRel> getCommerceChannelCountries(
-			long commerceChannelId, String name, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _commerceChannelRelService.getCommerceChannelCountries(
-			commerceChannelId, name, start, end);
-	}
-
-	@Override
-	public int getCommerceChannelCountriesCount(
-			long commerceChannelId, String name)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _commerceChannelRelService.getCommerceChannelCountriesCount(
-			commerceChannelId, name);
-	}
-
-	@Override
 	public CommerceChannelRel getCommerceChannelRel(long commerceChannelRelId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -143,6 +125,45 @@ public class CommerceChannelRelServiceWrapper
 
 		return _commerceChannelRelService.getCommerceChannelRelsCount(
 			className, classPK, name);
+	}
+
+	@Override
+	public java.util.List<CommerceChannelRel>
+			getCommerceCurrencyCommerceChannelRels(
+				long commerceChannelId, String name, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceChannelRelService.
+			getCommerceCurrencyCommerceChannelRels(
+				commerceChannelId, name, start, end);
+	}
+
+	@Override
+	public int getCommerceCurrencyCommerceChannelRelsCount(
+			long commerceChannelId, String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceChannelRelService.
+			getCommerceCurrencyCommerceChannelRelsCount(
+				commerceChannelId, name);
+	}
+
+	@Override
+	public java.util.List<CommerceChannelRel> getCountryCommerceChannelRels(
+			long commerceChannelId, String name, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceChannelRelService.getCountryCommerceChannelRels(
+			commerceChannelId, name, start, end);
+	}
+
+	@Override
+	public int getCountryCommerceChannelRelsCount(
+			long commerceChannelId, String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceChannelRelService.getCountryCommerceChannelRelsCount(
+			commerceChannelId, name);
 	}
 
 	/**

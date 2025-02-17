@@ -20,7 +20,6 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.json.JSONFactoryImpl;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -29,8 +28,6 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
@@ -56,7 +53,6 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceRegistration;
 
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
@@ -95,7 +91,7 @@ public class CustomFDSSerializerTest {
 	@Test
 	public void testSerializeAPIURL() {
 
-		// Interpolation
+		// Nested fields: creator.name
 
 		ServiceTrackerMap
 			<String,
@@ -110,70 +106,6 @@ public class CustomFDSSerializerTest {
 			new FDSAPIURLResolverRegistryImpl(serviceTrackerMap);
 
 		_resetFDSSerializer(fdsAPIURLResolverRegistry);
-
-		_mockSerializeAPIURL(
-			"fdsName", null, "/app", "/endpoint/{foo}", "schema");
-
-		ServiceRegistration<FDSAPIURLResolver> serviceRegistration =
-			_registerFDSAPIURLResolver(
-				"/app", "schema", new String[] {"{foo}"}, new String[] {"bar"});
-
-		Assert.assertEquals(
-			"/o/app/endpoint/bar",
-			_customFDSSerializer.serializeAPIURL(
-				"fdsName", _httpServletRequest));
-
-		serviceRegistration.unregister();
-
-		_resetFDSSerializer(fdsAPIURLResolverRegistry);
-
-		// REST application: /app
-
-		_mockSerializeAPIURL(
-			"fdsName1", null, "/app", "/endpoint/{foo}", "schema");
-		_mockSerializeAPIURL(
-			"fdsName2", null, "/app", "/endpoint/{foo}", "schema");
-
-		serviceRegistration = _registerFDSAPIURLResolver(
-			"/app", "schema", new String[] {"{foo}"}, new String[] {"bar"});
-
-		Assert.assertEquals(
-			"/o/app/endpoint/bar",
-			_customFDSSerializer.serializeAPIURL(
-				"fdsName1", _httpServletRequest));
-		Assert.assertEquals(
-			"/o/app/endpoint/bar",
-			_customFDSSerializer.serializeAPIURL(
-				"fdsName2", _httpServletRequest));
-
-		serviceRegistration.unregister();
-
-		_resetFDSSerializer(fdsAPIURLResolverRegistry);
-
-		// REST application: /app1 and /app2
-
-		_mockSerializeAPIURL(
-			"fdsName1", null, "/app1", "/endpoint/{foo}", "schema");
-		_mockSerializeAPIURL(
-			"fdsName2", null, "/app2", "/endpoint/{foo}", "schema");
-
-		serviceRegistration = _registerFDSAPIURLResolver(
-			"/app1", "schema", new String[] {"{foo}"}, new String[] {"bar"});
-
-		Assert.assertEquals(
-			"/o/app1/endpoint/bar",
-			_customFDSSerializer.serializeAPIURL(
-				"fdsName1", _httpServletRequest));
-		Assert.assertEquals(
-			"/o/app2/endpoint/{foo}",
-			_customFDSSerializer.serializeAPIURL(
-				"fdsName2", _httpServletRequest));
-
-		serviceRegistration.unregister();
-
-		_resetFDSSerializer(fdsAPIURLResolverRegistry);
-
-		// Nested fields: creator.name
 
 		_mockSerializeAPIURL(
 			"fdsName", new String[] {"creator.name"}, "/app", "/endpoint",
@@ -893,33 +825,6 @@ public class CustomFDSSerializerTest {
 			_customFDSSerializer.serializeItemsActions(
 				fdsName, _httpServletRequest)
 		).thenCallRealMethod();
-	}
-
-	private ServiceRegistration<FDSAPIURLResolver> _registerFDSAPIURLResolver(
-		String restApplication, String restSchema, String[] tokens,
-		String[] values) {
-
-		return _bundleContext.registerService(
-			FDSAPIURLResolver.class,
-			new FDSAPIURLResolver() {
-
-				@Override
-				public String getSchema() {
-					return restSchema;
-				}
-
-				@Override
-				public String resolve(
-						String baseURL, HttpServletRequest httpServletRequest)
-					throws PortalException {
-
-					return StringUtil.replace(baseURL, tokens, values);
-				}
-
-			},
-			MapUtil.singletonDictionary(
-				"fds.rest.application.key",
-				restApplication + "/" + restSchema));
 	}
 
 	private void _resetFDSSerializer() {

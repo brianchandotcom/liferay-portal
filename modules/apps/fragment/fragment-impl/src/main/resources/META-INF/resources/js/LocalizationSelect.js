@@ -87,7 +87,7 @@ export function LocalizationSelect({
 		<LanguagePicker
 			active={active}
 			defaultLocaleId={defaultLanguageId}
-			hideLanguageLabel={hideLanguageLabel}
+			hideTriggerText={hideLanguageLabel}
 			locales={locales}
 			messages={{
 				default: Liferay.Language.get('default'),

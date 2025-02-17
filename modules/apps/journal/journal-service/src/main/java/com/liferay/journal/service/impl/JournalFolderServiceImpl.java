@@ -21,6 +21,7 @@ import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -537,13 +538,22 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		_journalFolderModelResourcePermission.check(
-			getPermissionChecker(),
-			journalFolderLocalService.getFolder(folderId), ActionKeys.UPDATE);
+		PermissionChecker permissionChecker = getPermissionChecker();
+		JournalFolder folder = journalFolderLocalService.getFolder(folderId);
 
-		return journalFolderLocalService.updateFolder(
-			getUserId(), groupId, folderId, parentFolderId, name, description,
-			mergeWithParentFolder, serviceContext);
+		if (_journalFolderModelResourcePermission.contains(
+				permissionChecker, folder, ActionKeys.ADVANCED_UPDATE) ||
+			_journalFolderModelResourcePermission.contains(
+				permissionChecker, folder, ActionKeys.UPDATE)) {
+
+			return journalFolderLocalService.updateFolder(
+				getUserId(), groupId, folderId, parentFolderId, name,
+				description, mergeWithParentFolder, serviceContext);
+		}
+
+		throw new PrincipalException.MustHavePermission(
+			permissionChecker, JournalFolder.class.getName(), folderId,
+			ActionKeys.ADVANCED_UPDATE, ActionKeys.UPDATE);
 	}
 
 	@Override
@@ -553,14 +563,24 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 			boolean mergeWithParentFolder, ServiceContext serviceContext)
 		throws PortalException {
 
-		ModelResourcePermissionUtil.check(
-			_journalFolderModelResourcePermission, getPermissionChecker(),
-			groupId, folderId, ActionKeys.UPDATE);
+		PermissionChecker permissionChecker = getPermissionChecker();
 
-		return journalFolderLocalService.updateFolder(
-			getUserId(), groupId, folderId, parentFolderId, name, description,
-			ddmStructureIds, restrictionType, mergeWithParentFolder,
-			serviceContext);
+		if (ModelResourcePermissionUtil.contains(
+				_journalFolderModelResourcePermission, permissionChecker,
+				groupId, folderId, ActionKeys.ADVANCED_UPDATE) ||
+			ModelResourcePermissionUtil.contains(
+				_journalFolderModelResourcePermission, permissionChecker,
+				groupId, folderId, ActionKeys.UPDATE)) {
+
+			return journalFolderLocalService.updateFolder(
+				getUserId(), groupId, folderId, parentFolderId, name,
+				description, ddmStructureIds, restrictionType,
+				mergeWithParentFolder, serviceContext);
+		}
+
+		throw new PrincipalException.MustHavePermission(
+			permissionChecker, JournalFolder.class.getName(), folderId,
+			ActionKeys.ADVANCED_UPDATE, ActionKeys.UPDATE);
 	}
 
 	private List<DDMStructure> _filterStructures(

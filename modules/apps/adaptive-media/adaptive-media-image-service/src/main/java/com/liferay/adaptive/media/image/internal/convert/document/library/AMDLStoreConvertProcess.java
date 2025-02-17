@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.CompanyConstants;
+import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.util.MaintenanceUtil;
 
@@ -56,10 +57,25 @@ public class AMDLStoreConvertProcess implements DLStoreConvertProcess {
 
 		actionableDynamicQuery.setPerformActionMethod(
 			(AMImageEntry amImageEntry) -> {
+				FileVersion fileVersion = null;
+
+				try {
+					fileVersion = _dlAppService.getFileVersion(
+						amImageEntry.getFileVersionId());
+				}
+				catch (PortalException portalException) {
+					_log.error(
+						"Unable to migrate file version id: " +
+							amImageEntry.getFileVersionId(),
+						portalException);
+				}
+
+				if (fileVersion == null) {
+					return;
+				}
+
 				String fileVersionPath = AMStoreUtil.getFileVersionPath(
-					_dlAppService.getFileVersion(
-						amImageEntry.getFileVersionId()),
-					amImageEntry.getConfigurationUuid());
+					fileVersion, amImageEntry.getConfigurationUuid());
 
 				for (String versionLabel :
 						sourceStore.getFileVersions(

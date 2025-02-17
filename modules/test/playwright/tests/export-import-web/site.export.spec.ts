@@ -17,6 +17,9 @@ export const test = mergeTests(
 	applicationsMenuPageTest,
 	exportImportPagesTest,
 	dataApiHelpersTest,
+	featureFlagsTest({
+		'LPD-35914': {enabled: false, system: true},
+	}),
 	loginTest()
 );
 

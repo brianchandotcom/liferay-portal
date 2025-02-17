@@ -78,6 +78,16 @@ public interface CommerceChannelRelService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceChannelRel> getCommerceChannelCurrencies(
+			long commerceChannelId, String name, int start, int end)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceChannelCurrenciesCount(
+			long commerceChannelId, String name)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceChannelRel getCommerceChannelRel(long commerceChannelRelId)
 		throws PortalException;
 

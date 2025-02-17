@@ -85,6 +85,22 @@ public class CommerceChannelRelServiceUtil {
 			commerceChannelId, name);
 	}
 
+	public static List<CommerceChannelRel> getCommerceChannelCurrencies(
+			long commerceChannelId, String name, int start, int end)
+		throws PortalException {
+
+		return getService().getCommerceChannelCurrencies(
+			commerceChannelId, name, start, end);
+	}
+
+	public static int getCommerceChannelCurrenciesCount(
+			long commerceChannelId, String name)
+		throws PortalException {
+
+		return getService().getCommerceChannelCurrenciesCount(
+			commerceChannelId, name);
+	}
+
 	public static CommerceChannelRel getCommerceChannelRel(
 			long commerceChannelRelId)
 		throws PortalException {

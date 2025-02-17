@@ -299,6 +299,22 @@ public class CommerceChannelRelLocalServiceWrapper
 			commerceChannelId, name);
 	}
 
+	@Override
+	public java.util.List<CommerceChannelRel> getCommerceChannelCurrencies(
+		long commerceChannelId, String name, int start, int end) {
+
+		return _commerceChannelRelLocalService.getCommerceChannelCurrencies(
+			commerceChannelId, name, start, end);
+	}
+
+	@Override
+	public int getCommerceChannelCurrenciesCount(
+		long commerceChannelId, String name) {
+
+		return _commerceChannelRelLocalService.
+			getCommerceChannelCurrenciesCount(commerceChannelId, name);
+	}
+
 	/**
 	 * Returns the commerce channel rel with the primary key.
 	 *

@@ -231,6 +231,14 @@ public interface CommerceChannelRelLocalService
 	public int getCommerceChannelCountriesCount(
 		long commerceChannelId, String name);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceChannelRel> getCommerceChannelCurrencies(
+		long commerceChannelId, String name, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceChannelCurrenciesCount(
+		long commerceChannelId, String name);
+
 	/**
 	 * Returns the commerce channel rel with the primary key.
 	 *

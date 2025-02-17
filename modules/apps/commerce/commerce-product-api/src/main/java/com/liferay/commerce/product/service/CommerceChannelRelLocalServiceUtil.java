@@ -264,6 +264,20 @@ public class CommerceChannelRelLocalServiceUtil {
 			commerceChannelId, name);
 	}
 
+	public static List<CommerceChannelRel> getCommerceChannelCurrencies(
+		long commerceChannelId, String name, int start, int end) {
+
+		return getService().getCommerceChannelCurrencies(
+			commerceChannelId, name, start, end);
+	}
+
+	public static int getCommerceChannelCurrenciesCount(
+		long commerceChannelId, String name) {
+
+		return getService().getCommerceChannelCurrenciesCount(
+			commerceChannelId, name);
+	}
+
 	/**
 	 * Returns the commerce channel rel with the primary key.
 	 *

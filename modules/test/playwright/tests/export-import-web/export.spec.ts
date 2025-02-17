@@ -15,6 +15,7 @@ import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {readFileFromZip} from '../../utils/zip';
 import {companyExportImportPageTest} from './fixtures/companyExportImportPagesTest';
+import {toDateRangeDate, toDateRangeTime} from './utils/dateRangeUtil';
 
 export const test = mergeTests(
 	applicationsMenuPageTest,
@@ -77,6 +78,112 @@ test('cannot export site scoped custom object entries at instance level', async 
 	await page.getByTestId('creationMenuNewButton').nth(1).click();
 
 	await expect(page.getByLabel('Tests 1 Items')).toBeHidden();
+});
+
+test('can export custom object entries at instance level with date filter', async ({
+	apiHelpers,
+	companyExportImportPage,
+}) => {
+	const objectActionApiClient =
+		await apiHelpers.buildRestClient(ObjectDefinitionApi);
+
+	const {body: objectDefinition} =
+		await objectActionApiClient.postObjectDefinition({
+			active: true,
+			externalReferenceCode: 'test',
+			label: {
+				en_US: 'Test',
+			},
+			name: 'Test',
+			objectFields: [
+				{
+					DBType: ObjectField.DBTypeEnum.String,
+					businessType: ObjectField.BusinessTypeEnum.Text,
+					indexed: true,
+					indexedAsKeyword: true,
+					label: {
+						en_US: 'Name',
+					},
+					name: 'name',
+					required: true,
+				},
+			],
+			pluralLabel: {
+				en_US: 'Tests',
+			},
+			portlet: true,
+			scope: 'company',
+			status: {
+				code: 0,
+			},
+		});
+
+	apiHelpers.data.push({id: objectDefinition.id, type: 'objectDefinition'});
+
+	await apiHelpers.objectEntry.postObjectEntry(
+		{externalReferenceCode: '', name: 'test'},
+		'c/tests'
+	);
+
+	const endDate1 = new Date();
+
+	const startDate1 = new Date();
+
+	startDate1.setDate(startDate1.getDate() - 1);
+
+	const exportFilePath1 = await companyExportImportPage.export(
+		'Tests 1 Items',
+		false,
+		toDateRangeDate(endDate1),
+		'',
+		'',
+		toDateRangeDate(startDate1),
+		toDateRangeTime(startDate1)
+	);
+
+	const content1 = await readFileFromZip('C_Test.json', exportFilePath1);
+
+	const json1 = JSON.parse(content1);
+
+	expect(json1.length).toBe(1);
+
+	const endDate2 = new Date();
+
+	endDate2.setDate(endDate2.getDate() - 1);
+
+	const startDate2 = new Date();
+
+	startDate2.setDate(startDate2.getDate() - 2);
+
+	const exportFilePath2 = await companyExportImportPage.export(
+		'Tests 1 Items',
+		false,
+		toDateRangeDate(endDate2),
+		toDateRangeTime(endDate2),
+		'',
+		toDateRangeDate(startDate2),
+		toDateRangeTime(startDate2)
+	);
+
+	const content2 = await readFileFromZip('C_Test.json', exportFilePath2);
+
+	const json2 = JSON.parse(content2);
+
+	expect(json2.length).toBe(0);
+
+	const exportFilePath3 = await companyExportImportPage.export(
+		'Tests 1 Items',
+		false,
+		'',
+		'',
+		'12 Hours'
+	);
+
+	const content3 = await readFileFromZip('C_Test.json', exportFilePath3);
+
+	const json3 = JSON.parse(content3);
+
+	expect(json3.length).toBe(1);
 });
 
 test('can export custom object entries at instance level with permissions', async ({

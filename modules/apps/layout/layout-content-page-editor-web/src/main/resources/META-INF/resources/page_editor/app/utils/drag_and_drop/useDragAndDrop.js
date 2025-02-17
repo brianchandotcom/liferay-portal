@@ -18,6 +18,7 @@ import {getEmptyImage} from 'react-dnd-html5-backend';
 
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 import {config} from '../../config/index';
+import {useIsDisabledCollectionItem} from '../../contexts/CollectionItemContext';
 import {useActiveItemIds, useSelectItem} from '../../contexts/ControlsContext';
 import {useSelectorRef} from '../../contexts/StoreContext';
 import {useGetWidgets} from '../../contexts/WidgetsContext';
@@ -242,6 +243,8 @@ export function useDropClear() {
 }
 
 export function useDropTarget(targetItem, computeHover = defaultComputeHover) {
+	const isDisabledCollectionItem = useIsDisabledCollectionItem();
+
 	const {dispatch, layoutDataRef, state, targetRefs} =
 		useContext(DragAndDropContext);
 
@@ -287,12 +290,22 @@ export function useDropTarget(targetItem, computeHover = defaultComputeHover) {
 	useEffect(() => {
 		const itemId = targetItem.itemId;
 
+		if (isDisabledCollectionItem) {
+			return;
+		}
+
 		targetRefs.set(itemId, targetRef);
 
 		return () => {
 			targetRefs.delete(itemId);
 		};
-	}, [layoutDataRef, targetItem, targetRef, targetRefs]);
+	}, [
+		isDisabledCollectionItem,
+		layoutDataRef,
+		targetItem,
+		targetRef,
+		targetRefs,
+	]);
 
 	const setTargetRef = useCallback(
 		(element) => {

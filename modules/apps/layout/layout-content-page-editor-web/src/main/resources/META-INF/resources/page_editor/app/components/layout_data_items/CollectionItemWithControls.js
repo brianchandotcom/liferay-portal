@@ -13,9 +13,8 @@ import getLayoutDataItemTopperUniqueClassName from '../../utils/getLayoutDataIte
 import TopperEmpty from '../topper/TopperEmpty';
 
 const CollectionItemWithControls = React.forwardRef(({children, item}, ref) => {
-	const {collectionConfig, collectionItem, collectionItemIndex} = useContext(
-		CollectionItemContext
-	);
+	const {collectionConfig, collectionItem, collectionItemIndex, isDisabled} =
+		useContext(CollectionItemContext);
 	const title =
 		collectionItem.title ||
 		collectionItem.name ||
@@ -27,7 +26,7 @@ const CollectionItemWithControls = React.forwardRef(({children, item}, ref) => {
 	return (
 		<div
 			className={classNames('page-editor__collection__block', {
-				'disabled': collectionItemIndex,
+				'disabled': isDisabled,
 				'empty': !title,
 				'flex-grow-1': !children.length,
 			})}

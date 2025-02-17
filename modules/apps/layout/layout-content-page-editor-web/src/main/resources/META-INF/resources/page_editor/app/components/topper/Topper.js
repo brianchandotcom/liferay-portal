@@ -17,7 +17,7 @@ import {ITEM_ACTIVATION_ORIGINS} from '../../config/constants/itemActivationOrig
 import {LAYOUT_DATA_ITEM_TYPES} from '../../config/constants/layoutDataItemTypes';
 import {config} from '../../config/index';
 import {useSetCollectionActiveItemContext} from '../../contexts/CollectionActiveItemContext';
-import {useCollectionItemIndex} from '../../contexts/CollectionItemContext';
+import {useIsDisabledCollectionItem} from '../../contexts/CollectionItemContext';
 import {
 	useActivationOrigin,
 	useActiveItemIds,
@@ -115,8 +115,6 @@ function TopperContent({
 	const isMultiSelect = activeItemIds.length > 1;
 	const isKeyboardTarget = useIsMovementTarget();
 
-	const collectionItemIndex = useCollectionItemIndex();
-
 	const keyboardMovementPosition = useMovementTargetPosition();
 	const selectItem = useSelectItem();
 	const topperLabelId = useId();
@@ -202,7 +200,9 @@ function TopperContent({
 
 	const {elementRef, isFocusable} = useLayoutKeyboardNavigation(item);
 
-	if (collectionItemIndex > 0) {
+	const isDisabledCollectionItem = useIsDisabledCollectionItem();
+
+	if (isDisabledCollectionItem) {
 		return children;
 	}
 

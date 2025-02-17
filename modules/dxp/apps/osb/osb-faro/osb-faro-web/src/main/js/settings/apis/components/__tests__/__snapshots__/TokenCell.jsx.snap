@@ -4,6 +4,7 @@ exports[`TokenCell should render 1`] = `
 <div>
   <td
     class=""
+    data-testid="row-token-4ABC"
   >
     <span
       class="text-secondary mr-1"

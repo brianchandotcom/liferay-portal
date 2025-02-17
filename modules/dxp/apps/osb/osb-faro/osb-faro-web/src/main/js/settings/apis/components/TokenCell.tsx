@@ -10,7 +10,10 @@ const TokenCell: React.FC<
 	const expired = isExpired(expirationDate);
 
 	return (
-		<td className={getCN(className)}>
+		<td
+			className={getCN(className)}
+			data-testid={`row-token-${token.slice(-4)}`}
+		>
 			<span className='text-secondary mr-1'>
 				{Liferay.Language.get('token-ending-in-fragment')}
 			</span>

@@ -250,6 +250,20 @@ public class CommerceChannelRelLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static List<CommerceChannelRel> getCommerceChannelCommerceCurrencies(
+		long commerceChannelId, String name, int start, int end) {
+
+		return getService().getCommerceChannelCommerceCurrencies(
+			commerceChannelId, name, start, end);
+	}
+
+	public static int getCommerceChannelCommerceCurrenciesCount(
+		long commerceChannelId, String name) {
+
+		return getService().getCommerceChannelCommerceCurrenciesCount(
+			commerceChannelId, name);
+	}
+
 	public static List<CommerceChannelRel> getCommerceChannelCountries(
 		long commerceChannelId, String name, int start, int end) {
 

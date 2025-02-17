@@ -184,6 +184,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Stack;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
@@ -7604,16 +7605,8 @@ public class ObjectEntryResourceTest {
 				_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE, ".folder"),
 			Http.Method.POST);
 
-		JSONObject portalInstanceJSONObject = HTTPTestUtil.invokeToJSONObject(
-			JSONUtil.put(
-				"domain", "able.com"
-			).put(
-				"portalInstanceId", "able.com"
-			).put(
-				"virtualHost", "www.able.com"
-			).toString(),
-			"headless-portal-instances/v1.0/portal-instances",
-			Http.Method.POST);
+		JSONObject portalInstanceJSONObject = _getVirtualInstanceJSONObject(
+			"able.com");
 
 		User adminUser = UserTestUtil.getAdminUser(
 			portalInstanceJSONObject.getLong("companyId"));
@@ -7742,12 +7735,6 @@ public class ObjectEntryResourceTest {
 		finally {
 			_objectDefinitionLocalService.deleteObjectDefinition(
 				objectDefinition);
-
-			HTTPTestUtil.invokeToJSONObject(
-				null,
-				"headless-portal-instances/v1.0/portal-instances/" +
-					portalInstanceJSONObject.getString("portalInstanceId"),
-				Http.Method.DELETE);
 		}
 	}
 
@@ -8626,55 +8613,37 @@ public class ObjectEntryResourceTest {
 				objectRelationship1.getObjectDefinitionId1()),
 			_OBJECT_FIELD_NAME_TEXT, RandomTestUtil.randomString());
 
-		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
-			JSONUtil.put(
-				"domain", "able.com"
-			).put(
-				"portalInstanceId", "able.com"
-			).put(
-				"virtualHost", "www.able.com"
-			).toString(),
-			"headless-portal-instances/v1.0/portal-instances",
-			Http.Method.POST);
+		JSONObject jsonObject = _getVirtualInstanceJSONObject("able.com");
 
 		ObjectRelationship objectRelationship2 = _addObjectRelationship(
 			jsonObject.getLong("companyId"));
 
-		try {
-			HTTPTestUtil.customize(
-			).withBaseURL(
-				"http://www.able.com:8080"
-			).withCredentials(
-				"test@able.com", PropsValues.DEFAULT_ADMIN_PASSWORD
-			).apply(
-				() -> {
-					ObjectDefinition objectDefinition =
-						_objectDefinitionLocalService.getObjectDefinition(
-							objectRelationship2.getObjectDefinitionId2());
+		HTTPTestUtil.customize(
+		).withBaseURL(
+			"http://www.able.com:8080"
+		).withCredentials(
+			"test@able.com", PropsValues.DEFAULT_ADMIN_PASSWORD
+		).apply(
+			() -> {
+				ObjectDefinition objectDefinition =
+					_objectDefinitionLocalService.getObjectDefinition(
+						objectRelationship2.getObjectDefinitionId2());
 
-					ObjectField objectField =
-						_objectFieldLocalService.getObjectField(
-							objectRelationship2.getObjectFieldId2());
+				ObjectField objectField =
+					_objectFieldLocalService.getObjectField(
+						objectRelationship2.getObjectFieldId2());
 
-					Assert.assertEquals(
-						400,
-						HTTPTestUtil.invokeToHttpCode(
-							JSONUtil.put(
-								objectField.getName(),
-								objectEntry.getObjectEntryId()
-							).toString(),
-							objectDefinition.getRESTContextPath(),
-							Http.Method.POST));
-				}
-			);
-		}
-		finally {
-			HTTPTestUtil.invokeToJSONObject(
-				null,
-				"headless-portal-instances/v1.0/portal-instances/" +
-					jsonObject.getString("portalInstanceId"),
-				Http.Method.DELETE);
-		}
+				Assert.assertEquals(
+					400,
+					HTTPTestUtil.invokeToHttpCode(
+						JSONUtil.put(
+							objectField.getName(),
+							objectEntry.getObjectEntryId()
+						).toString(),
+						objectDefinition.getRESTContextPath(),
+						Http.Method.POST));
+			}
+		);
 	}
 
 	@Test
@@ -13476,6 +13445,33 @@ public class ObjectEntryResourceTest {
 		}
 
 		return Type.MANY_TO_MANY;
+	}
+
+	private JSONObject _getVirtualInstanceJSONObject(String portalInstanceId)
+		throws Exception {
+
+		JSONObject portalInstanceJSONObject = HTTPTestUtil.invokeToJSONObject(
+			null,
+			"headless-portal-instances/v1.0/portal-instances/" +
+				portalInstanceId,
+			Http.Method.GET);
+
+		if (Objects.equals(
+				portalInstanceJSONObject.getString("status"), "NOT_FOUND")) {
+
+			portalInstanceJSONObject = HTTPTestUtil.invokeToJSONObject(
+				JSONUtil.put(
+					"domain", "able.com"
+				).put(
+					"portalInstanceId", "able.com"
+				).put(
+					"virtualHost", "www.able.com"
+				).toString(),
+				"headless-portal-instances/v1.0/portal-instances",
+				Http.Method.POST);
+		}
+
+		return portalInstanceJSONObject;
 	}
 
 	private JSONObject

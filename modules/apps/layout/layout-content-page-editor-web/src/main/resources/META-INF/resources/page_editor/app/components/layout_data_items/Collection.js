@@ -19,6 +19,7 @@ import {config} from '../../config/index';
 import {
 	CollectionItemContext,
 	CollectionItemContextProvider,
+	useIsDisabledCollectionItem,
 } from '../../contexts/CollectionItemContext';
 import {useDisplayPagePreviewItem} from '../../contexts/DisplayPagePreviewItemContext';
 import {useDispatch, useSelector} from '../../contexts/StoreContext';
@@ -235,6 +236,8 @@ const ItemContext = ({
 	customCollectionSelectorURL,
 	index,
 }) => {
+	const isDisabled = useIsDisabledCollectionItem();
+
 	const contextValue = useMemo(
 		() => ({
 			collectionConfig,
@@ -242,6 +245,7 @@ const ItemContext = ({
 			collectionItem,
 			collectionItemIndex: index,
 			customCollectionSelectorURL,
+			isDisabled: isDisabled || index > 0,
 		}),
 		[
 			collectionConfig,
@@ -249,6 +253,7 @@ const ItemContext = ({
 			collectionItem,
 			index,
 			customCollectionSelectorURL,
+			isDisabled,
 		]
 	);
 

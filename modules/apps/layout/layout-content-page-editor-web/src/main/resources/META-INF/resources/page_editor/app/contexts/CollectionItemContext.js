@@ -26,6 +26,7 @@ export const INITIAL_STATE = {
 	collectionItem: null,
 	collectionItemIndex: null,
 	customCollectionSelectorURL: null,
+	isDisabled: false,
 	setCollectionItemContent: () => null,
 };
 
@@ -49,6 +50,12 @@ const useCollectionConfig = () => {
 	const context = useContext(CollectionItemContext);
 
 	return context.collectionConfig;
+};
+
+const useIsDisabledCollectionItem = () => {
+	const context = useContext(CollectionItemContext);
+
+	return context.isDisabled;
 };
 
 const useGetContent = (
@@ -323,5 +330,6 @@ export {
 	useCustomCollectionSelectorURL,
 	useGetContent,
 	useGetFieldValue,
+	useIsDisabledCollectionItem,
 	useWithinCollection,
 };

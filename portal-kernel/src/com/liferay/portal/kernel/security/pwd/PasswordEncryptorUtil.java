@@ -84,8 +84,15 @@ public class PasswordEncryptorUtil {
 			String encryptedPassword)
 		throws PwdEncryptorException {
 
+		String encryptedPasswordAlgorithm = _getEncryptedPasswordAlgorithm(
+			encryptedPassword);
+
+		if (Validator.isNull(encryptedPasswordAlgorithm)) {
+			return null;
+		}
+
 		PasswordEncryptor passwordEncryptor = _getPasswordEncryptor(
-			_getEncryptedPasswordAlgorithm(encryptedPassword));
+			encryptedPasswordAlgorithm);
 
 		return passwordEncryptor.getEncryptedPasswordAlgorithmSettings(
 			encryptedPassword);

@@ -10,9 +10,12 @@ import {waitForAlert} from '../../utils/waitForAlert';
 export class RoleDefinePermissionsPage {
 	readonly accessInControlPanel: Locator;
 	readonly addToPage: Locator;
+	readonly defineGroupScopePermissionsTab: Locator;
+	readonly definePermissionsTab: Locator;
 	readonly loading: Locator;
 	readonly menuItem: (name: string) => Locator;
 	readonly menuItemByTestId: (id: string) => Locator;
+	readonly noRoleMessage: Locator;
 	readonly page: Page;
 	readonly permissionCheckbox: (permissionName: string) => Locator;
 	readonly portletResourceLabel: Locator;
@@ -25,6 +28,12 @@ export class RoleDefinePermissionsPage {
 	constructor(page: Page) {
 		this.accessInControlPanel = page.getByText('Access in Control Panel');
 		this.addToPage = page.getByText('Add to Page');
+		this.defineGroupScopePermissionsTab = page.getByRole('link', {
+			name: 'Define Group Scope Permissions',
+		});
+		this.definePermissionsTab = page.getByRole('link', {
+			name: 'Define Permissions',
+		});
 		this.loading = page.getByText('Loading');
 		this.menuItem = (name: string) => {
 			return page.getByRole('menuitem', {name});
@@ -32,6 +41,9 @@ export class RoleDefinePermissionsPage {
 		this.menuItemByTestId = (id: string) => {
 			return page.getByTestId(id).getByRole('menuitem');
 		};
+		this.noRoleMessage = page.getByText(
+			'This role does not have any permissions'
+		);
 		this.page = page;
 		this.permissionCheckbox = (permissionName: string) => {
 			return page

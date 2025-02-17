@@ -12,6 +12,9 @@ export class AccountRolesPage {
 	readonly assignUsersButton: Locator;
 	readonly assignUsersTable: DataTablePage;
 	readonly backButton: Locator;
+	readonly definePermissionsButton: Locator;
+	readonly deleteButton: Locator;
+	readonly editButton: Locator;
 	readonly editRoleButton: Locator;
 	readonly page: Page;
 	readonly removeButton: Locator;
@@ -33,6 +36,15 @@ export class AccountRolesPage {
 				.first()
 		);
 		this.backButton = page.getByRole('link', {exact: true, name: 'Back'});
+		this.definePermissionsButton = page.getByRole('menuitem', {
+			name: 'Define Permissions',
+		});
+		this.deleteButton = page.getByRole('link', {
+			name: 'Delete',
+		});
+		this.editButton = page.getByRole('menuitem', {
+			name: 'Edit',
+		});
 		this.editRoleButton = page.locator('svg.lexicon-icon-ellipsis-v');
 		this.page = page;
 		this.removeButton = page.getByRole('button', {name: 'Remove'});

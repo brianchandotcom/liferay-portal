@@ -10,6 +10,9 @@ package com.liferay.commerce.channel.web.internal.constants;
  */
 public class CommerceChannelScreenNavigationConstants {
 
+	public static final String
+		CATEGORY_KEY_COMMERCE_CHANNEL_COMMERCE_CURRENCIES = "currencies";
+
 	public static final String CATEGORY_KEY_COMMERCE_CHANNEL_COUNTRIES =
 		"countries";
 

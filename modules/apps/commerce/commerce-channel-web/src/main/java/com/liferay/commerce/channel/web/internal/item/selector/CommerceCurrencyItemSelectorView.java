@@ -5,7 +5,6 @@
 
 package com.liferay.commerce.channel.web.internal.item.selector;
 
-import com.liferay.commerce.channel.web.internal.item.selector.criterion.CommerceCurrencyItemSelectorCriterion;
 import com.liferay.commerce.channel.web.internal.search.CommerceCurrencyItemSelectorChecker;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyService;

@@ -31,6 +31,9 @@ import org.osgi.service.component.annotations.Deactivate;
 public class FDSAPIURLResolverRegistryImpl
 	implements FDSAPIURLResolverRegistry {
 
+	public FDSAPIURLResolverRegistryImpl() {
+	}
+
 	public FDSAPIURLResolverRegistryImpl(
 		ServiceTrackerMap<String, ServiceWrapper<FDSAPIURLResolver>>
 			serviceTrackerMap) {

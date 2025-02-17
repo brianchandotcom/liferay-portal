@@ -30,6 +30,9 @@ import org.osgi.service.component.annotations.Deactivate;
 public class FDSFilterContextContributorRegistryImpl
 	implements FDSFilterContextContributorRegistry {
 
+	public FDSFilterContextContributorRegistryImpl() {
+	}
+
 	public FDSFilterContextContributorRegistryImpl(
 		ServiceTrackerMap
 			<String, List<ServiceWrapper<FDSFilterContextContributor>>>

@@ -24,6 +24,9 @@ import org.osgi.service.component.annotations.Deactivate;
 @Component(service = FDSItemsActionsRegistry.class)
 public class FDSItemsActionsRegistryImpl implements FDSItemsActionsRegistry {
 
+	public FDSItemsActionsRegistryImpl() {
+	}
+
 	public FDSItemsActionsRegistryImpl(
 		ServiceTrackerMap
 			<String,

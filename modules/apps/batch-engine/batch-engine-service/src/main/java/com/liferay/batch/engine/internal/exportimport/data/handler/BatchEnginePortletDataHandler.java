@@ -21,6 +21,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataException;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
+import com.liferay.exportimport.kernel.lar.UserIdStrategy;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.petra.string.StringPool;
@@ -144,6 +145,18 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 			return portletPreferences;
 		}
 
+		String userIdStrategy = StringPool.BLANK;
+
+		if (UserIdStrategy.CURRENT_USER_ID.equals(
+			MapUtil.getString(
+				portletDataContext.getParameterMap(),
+				PortletDataHandlerKeys.USER_ID_STRATEGY))) {
+
+			userIdStrategy =
+				BatchEngineImportTaskConstants.
+					IMPORT_CREATOR_STRATEGY_KEEP_CREATOR;
+		}
+
 		BatchEngineImportTask batchEngineImportTask =
 			_batchEngineImportTaskService.addBatchEngineImportTask(
 				null, portletDataContext.getCompanyId(), _getUserId(), 100,
@@ -166,6 +179,8 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 					}
 				).put(
 					"createStrategy", CreateStrategy.UPSERT.getDBOperation()
+				).put(
+					"importCreatorStrategy", userIdStrategy
 				).build(),
 				_taskItemDelegateName);
 

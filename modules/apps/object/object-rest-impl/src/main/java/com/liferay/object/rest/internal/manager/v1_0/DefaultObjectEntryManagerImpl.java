@@ -862,6 +862,31 @@ public class DefaultObjectEntryManagerImpl
 				serviceBuilderObjectEntry, scopeKey));
 	}
 
+	@Override
+	public void validateObjectEntry(
+			DTOConverterContext dtoConverterContext,
+			ObjectDefinition objectDefinition, ObjectEntry objectEntry,
+			List<String> objectValidationRulesERC, String scopeKey)
+		throws Exception {
+
+		com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry =
+			objectEntryLocalService.createObjectEntry(0L);
+
+		ServiceContext serviceContext = _createServiceContext(
+			dtoConverterContext, objectDefinition, objectEntry);
+
+		serviceBuilderObjectEntry.setObjectDefinitionId(
+			objectDefinition.getObjectDefinitionId());
+		serviceBuilderObjectEntry.setValues(
+			_toObjectValues(
+				dtoConverterContext.getLocale(), objectDefinition, objectEntry,
+				scopeKey, serviceContext));
+
+		_objectEntryService.validateObjectEntry(
+			getGroupId(objectDefinition, scopeKey), serviceBuilderObjectEntry,
+			objectValidationRulesERC);
+	}
+
 	private Map<String, String> _addAction(
 			String actionName, String methodName,
 			com.liferay.object.model.ObjectEntry serviceBuilderObjectEntry,

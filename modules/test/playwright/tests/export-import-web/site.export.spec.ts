@@ -17,9 +17,6 @@ export const test = mergeTests(
 	applicationsMenuPageTest,
 	exportImportPagesTest,
 	dataApiHelpersTest,
-	featureFlagsTest({
-		'LPD-35914': {enabled: false, system: true},
-	}),
 	loginTest()
 );
 
@@ -42,7 +39,8 @@ async function expectExportName(exportImportPage, taskName: string) {
 
 	await expect(
 		exportImportPage.page
-			.getByText(taskName)
+			.locator('//h2[span[normalize-space()="' + taskName + '"]]')
+			.first()
 			.locator('../..')
 			.getByText('Successful')
 	).toBeVisible();

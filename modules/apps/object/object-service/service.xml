@@ -346,6 +346,27 @@
 			<finder-column name="name" />
 		</finder>
 	</entity>
+	<entity local-service="true" name="ObjectEntryVersion" remote-service="true" uuid="true">
+
+		<!-- PK fields -->
+
+		<column container-model="true" name="objectEntryVersionId" primary="true" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="objectEntryId" type="long" />
+		<column name="content" type="String" />
+		<column name="version" type="int" />
+		<column name="status" type="int" />
+	</entity>
 	<entity local-service="true" name="ObjectField" remote-service="true" uuid="true">
 
 		<!-- External reference code -->

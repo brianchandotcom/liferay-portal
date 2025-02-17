@@ -616,6 +616,11 @@ public class ObjectServiceUpgradeStepRegistrator
 			UpgradeProcessFactory.addColumns(
 				"ObjectEntryVersion", "displayDate DATE null",
 				"reviewDate DATE null"));
+
+		registry.register(
+			"10.17.0", "10.18.0",
+			new com.liferay.object.internal.upgrade.v10_18_0.
+				ObjectFieldUpgradeProcess());
 	}
 
 	@Reference

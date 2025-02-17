@@ -10,11 +10,6 @@ import React from 'react';
 
 import {LocalizationSelect} from '../src/main/resources/META-INF/resources/js/LocalizationSelect';
 
-// jest.mock('frontend-js-web', () => ({
-// 	...jest.requireActual('frontend-js-web'),
-// 	sub: jest.fn((langKey, arg) => langKey.replace('x', arg)),
-// }));
-
 const locales = [
 	{
 		displayName: 'English (United States)',
@@ -31,16 +26,6 @@ const locales = [
 ];
 
 describe('LocalizationSelect', () => {
-
-	// beforeEach(() => {
-	// 	window.Liferay = {
-	// 		...window.Liferay,
-	// 		detach: jest.fn(),
-	// 		fire: jest.fn(),
-	// 		on: jest.fn(),
-	// 	};
-	// });
-
 	it('renders with default props', () => {
 		render(
 			<LocalizationSelect
@@ -83,9 +68,7 @@ describe('LocalizationSelect', () => {
 			/>
 		);
 
-		expect(
-			screen.queryByText('English (United States)')
-		).not.toBeInTheDocument();
+		expect(screen.queryByText('en-US')).not.toBeInTheDocument();
 	});
 
 	it('disables picker when in edit mode', () => {

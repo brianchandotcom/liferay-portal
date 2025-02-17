@@ -11,7 +11,6 @@ import com.liferay.batch.engine.BatchEngineTaskExecuteStatus;
 import com.liferay.batch.engine.BatchEngineTaskOperation;
 import com.liferay.batch.engine.constants.BatchEngineImportTaskConstants;
 import com.liferay.batch.engine.constants.CreateStrategy;
-import com.liferay.batch.engine.model.BatchEngineExportTask;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.batch.engine.service.BatchEngineExportTaskService;
 import com.liferay.batch.engine.service.BatchEngineImportTaskService;
@@ -29,11 +28,9 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
 
-import java.io.File;
 import java.io.InputStream;
 import java.io.Serializable;
 
@@ -148,17 +145,29 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
-		BatchEngineExportTask batchEngineExportTask =
-			_batchEngineExportTaskService.addBatchEngineExportTask(
-				null, portletDataContext.getCompanyId(), _getUserId(), null,
-				_className, "JSON", BatchEngineTaskExecuteStatus.INITIAL.name(),
-				Collections.emptyList(), buildParameters(portletDataContext),
-				_taskItemDelegateName);
+		BatchEngineExportTaskExecutor.Result result =
+			_batchEngineExportTaskExecutor.execute(
+				_batchEngineExportTaskService.addBatchEngineExportTask(
+					null, portletDataContext.getCompanyId(), _getUserId(), null,
+					_className, "JSON",
+					BatchEngineTaskExecuteStatus.INITIAL.name(),
+					Collections.emptyList(),
+					buildParameters(portletDataContext), _taskItemDelegateName),
+				new BatchEngineExportTaskExecutor.Settings() {
 
-		_batchEngineExportTaskExecutor.execute(batchEngineExportTask);
+					@Override
+					public boolean isCompressContent() {
+						return false;
+					}
 
-		portletDataContext.addZipEntry(
-			_fileName, _getBytes(batchEngineExportTask));
+					@Override
+					public boolean isPersistContent() {
+						return false;
+					}
+
+				});
+
+		portletDataContext.addZipEntry(_fileName, result.getInputStream());
 
 		return getExportDataRootElementString(
 			addExportDataRootElement(portletDataContext));
@@ -231,25 +240,6 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 		// TODO LPD-45048
 
 		return 1;
-	}
-
-	private byte[] _getBytes(BatchEngineExportTask batchEngineExportTask)
-		throws Exception {
-
-		try (InputStream inputStream =
-				_batchEngineExportTaskService.openContentInputStream(
-					batchEngineExportTask.getBatchEngineExportTaskId())) {
-
-			// TODO LPD-45048
-
-			File batchZipFile = FileUtil.createTempFile(inputStream);
-
-			File tempFolder = FileUtil.createTempFolder();
-
-			FileUtil.unzip(batchZipFile, tempFolder);
-
-			return FileUtil.getBytes(new File(tempFolder, "export.json"));
-		}
 	}
 
 	private byte[] _getBytes(String fileName, InputStream inputStream)

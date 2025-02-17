@@ -43,6 +43,9 @@ import com.liferay.portal.vulcan.fields.NestedFieldsContext;
 import com.liferay.portal.vulcan.fields.NestedFieldsContextThreadLocal;
 import com.liferay.portal.vulcan.util.NestedFieldsContextUtil;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.Serializable;
 
 import java.util.Collection;
@@ -66,6 +69,27 @@ public class BatchEngineExportTaskExecutorImpl
 
 	@Override
 	public void execute(BatchEngineExportTask batchEngineExportTask) {
+		execute(
+			batchEngineExportTask,
+			new Settings() {
+
+				@Override
+				public boolean isCompressContent() {
+					return true;
+				}
+
+				@Override
+				public boolean isPersistContent() {
+					return true;
+				}
+
+			});
+	}
+
+	@Override
+	public Result execute(
+		BatchEngineExportTask batchEngineExportTask, Settings settings) {
+
 		SafeCloseable safeCloseable =
 			CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 				batchEngineExportTask.getCompanyId(),
@@ -79,13 +103,27 @@ public class BatchEngineExportTaskExecutorImpl
 			_batchEngineExportTaskLocalService.updateBatchEngineExportTask(
 				batchEngineExportTask);
 
-			BatchEngineTaskExecutorUtil.execute(
-				true, () -> _exportItems(batchEngineExportTask),
+			InputStream inputStream = BatchEngineTaskExecutorUtil.execute(
+				true, () -> _exportItems(batchEngineExportTask, settings),
 				_userLocalService.getUser(batchEngineExportTask.getUserId()));
 
 			_updateBatchEngineExportTask(
 				BatchEngineTaskExecuteStatus.COMPLETED, batchEngineExportTask,
 				null);
+
+			return new Result() {
+
+				@Override
+				public BatchEngineExportTask getBatchEngineExportTask() {
+					return batchEngineExportTask;
+				}
+
+				@Override
+				public InputStream getInputStream() {
+					return inputStream;
+				}
+
+			};
 		}
 		catch (Throwable throwable) {
 			_log.error(
@@ -115,6 +153,8 @@ public class BatchEngineExportTaskExecutorImpl
 
 			safeCloseable.close();
 		}
+
+		return null;
 	}
 
 	@Activate
@@ -127,7 +167,8 @@ public class BatchEngineExportTaskExecutorImpl
 				_filterParserProvider, _sortParserProvider);
 	}
 
-	private void _exportItems(BatchEngineExportTask batchEngineExportTask)
+	private InputStream _exportItems(
+			BatchEngineExportTask batchEngineExportTask, Settings settings)
 		throws Exception {
 
 		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
@@ -141,7 +182,7 @@ public class BatchEngineExportTaskExecutorImpl
 		try (BatchEngineExportTaskItemWriter batchEngineExportTaskItemWriter =
 				_getBatchEngineExportTaskItemWriter(
 					batchEngineExportTask, parameters,
-					unsyncByteArrayOutputStream)) {
+					unsyncByteArrayOutputStream, settings)) {
 
 			oldNestedFieldsContext =
 				NestedFieldsContextThreadLocal.getNestedFieldsContext();
@@ -208,18 +249,23 @@ public class BatchEngineExportTaskExecutorImpl
 
 		byte[] content = unsyncByteArrayOutputStream.toByteArray();
 
-		batchEngineExportTask.setContent(
-			new OutputBlob(
-				new UnsyncByteArrayInputStream(content), content.length));
+		if (settings.isPersistContent()) {
+			batchEngineExportTask.setContent(
+				new OutputBlob(
+					new UnsyncByteArrayInputStream(content), content.length));
 
-		_batchEngineExportTaskLocalService.updateBatchEngineExportTask(
-			batchEngineExportTask);
+			_batchEngineExportTaskLocalService.updateBatchEngineExportTask(
+				batchEngineExportTask);
+		}
+
+		return new ByteArrayInputStream(content);
 	}
 
 	private BatchEngineExportTaskItemWriter _getBatchEngineExportTaskItemWriter(
 			BatchEngineExportTask batchEngineExportTask,
 			Map<String, Serializable> parameters,
-			UnsyncByteArrayOutputStream unsyncByteArrayOutputStream)
+			UnsyncByteArrayOutputStream unsyncByteArrayOutputStream,
+			Settings settings)
 		throws Exception {
 
 		BatchEngineExportTaskItemWriterBuilder
@@ -229,6 +275,13 @@ public class BatchEngineExportTaskExecutorImpl
 		BatchEngineTaskContentType batchEngineTaskContentType =
 			BatchEngineTaskContentType.valueOf(
 				batchEngineExportTask.getContentType());
+
+		OutputStream outputStream = unsyncByteArrayOutputStream;
+
+		if (settings.isCompressContent()) {
+			outputStream = _getZipOutputStream(
+				batchEngineTaskContentType, unsyncByteArrayOutputStream);
+		}
 
 		return batchEngineExportTaskItemWriterBuilder.
 			batchEngineTaskContentType(
@@ -248,8 +301,7 @@ public class BatchEngineExportTaskExecutorImpl
 				_itemClassRegistry.getItemClass(
 					batchEngineExportTask.getClassName())
 			).outputStream(
-				_getZipOutputStream(
-					batchEngineTaskContentType, unsyncByteArrayOutputStream)
+				outputStream
 			).parameters(
 				parameters
 			).taskItemDelegateName(

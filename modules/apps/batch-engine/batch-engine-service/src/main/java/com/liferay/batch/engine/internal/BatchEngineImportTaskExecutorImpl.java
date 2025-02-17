@@ -319,7 +319,7 @@ public class BatchEngineImportTaskExecutorImpl
 		}
 	}
 
-	private void _importItems(
+	private Void _importItems(
 			BatchEngineImportTask batchEngineImportTask,
 			BatchEngineTaskItemDelegate<?> batchEngineTaskItemDelegate,
 			File file)
@@ -395,6 +395,8 @@ public class BatchEngineImportTaskExecutorImpl
 					items, processedItemsCount);
 			}
 		}
+
+		return null;
 	}
 
 	private Object _readItem(

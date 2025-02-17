@@ -65,6 +65,7 @@ import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.dao.search.ResultRowSplitter;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -1173,6 +1174,27 @@ public class JournalDisplayContext {
 		).build();
 	}
 
+	public boolean hasAdvancedUpdateDLFolderPermission()
+		throws PortalException {
+
+		if (!FeatureFlagManagerUtil.isEnabled(
+				_themeDisplay.getCompanyId(), "LPD-42452")) {
+
+			return hasUpdateDLFolderPermission();
+		}
+
+		if (_advancedUpdateDLFolderPermission != null) {
+			return _advancedUpdateDLFolderPermission;
+		}
+
+		_advancedUpdateDLFolderPermission = JournalFolderPermission.contains(
+			_themeDisplay.getPermissionChecker(),
+			_themeDisplay.getScopeGroupId(), getFolderId(),
+			ActionKeys.ADVANCED_UPDATE);
+
+		return _advancedUpdateDLFolderPermission;
+	}
+
 	public boolean hasAssetFilter() {
 		if (ArrayUtil.isEmpty(_getAssetCategoryIds()) &&
 			ArrayUtil.isEmpty(_getAssetTagNames())) {
@@ -1217,6 +1239,18 @@ public class JournalDisplayContext {
 		}
 
 		return false;
+	}
+
+	public boolean hasUpdateDLFolderPermission() throws PortalException {
+		if (_updateJournalFolderPermission != null) {
+			return _updateJournalFolderPermission;
+		}
+
+		_updateJournalFolderPermission = JournalFolderPermission.contains(
+			_themeDisplay.getPermissionChecker(),
+			_themeDisplay.getScopeGroupId(), getFolderId(), ActionKeys.UPDATE);
+
+		return _updateJournalFolderPermission;
 	}
 
 	public boolean hasVersionsResults() throws PortalException {
@@ -2117,6 +2151,7 @@ public class JournalDisplayContext {
 		JournalDisplayContext.class);
 
 	private long[] _addMenuFavItems;
+	private Boolean _advancedUpdateDLFolderPermission;
 	private JournalArticle _article;
 	private JournalArticleDisplay _articleDisplay;
 	private SearchContainer<?> _articleSearchContainer;
@@ -2159,5 +2194,6 @@ public class JournalDisplayContext {
 	private final ThemeDisplay _themeDisplay;
 	private final TrashHelper _trashHelper;
 	private String _type;
+	private Boolean _updateJournalFolderPermission;
 
 }

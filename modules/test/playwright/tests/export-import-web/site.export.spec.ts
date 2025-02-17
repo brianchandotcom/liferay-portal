@@ -67,7 +67,8 @@ test('can export at site level with custom export task name', async ({
 
 	await expect(
 		exportImportPage.page
-			.getByText(taskName)
+			.locator('//h2[span[normalize-space()="' + taskName + '"]]')
+			.first()
 			.locator('../..')
 			.getByText('Successful')
 	).toBeVisible();

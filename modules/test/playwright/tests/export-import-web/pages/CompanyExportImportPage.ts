@@ -42,8 +42,9 @@ export class CompanyExportImportPage {
 		await this.exportImportPage.exportButton.click();
 
 		await this.page
-			.getByText(taskName)
-			.locator('../../..')
+			.locator('//h2[span[normalize-space()="' + taskName + '"]]')
+			.first()
+			.locator('../..')
 			.getByText('Successful')
 			.waitFor();
 

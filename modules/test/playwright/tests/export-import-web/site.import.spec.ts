@@ -130,7 +130,8 @@ test(
 
 		await expect(
 			exportImportPage.page
-				.getByText(exportName)
+				.locator('//h2[span[normalize-space()="' + exportName + '"]]')
+				.first()
 				.locator('../..')
 				.getByText('Successful')
 		).toBeVisible();
@@ -225,7 +226,8 @@ test('can import a lar file selecting some items to import', async ({
 
 	await expect(
 		exportImportPage.page
-			.getByText(exportName)
+			.locator('//h2[span[normalize-space()="' + exportName + '"]]')
+			.first()
 			.locator('../..')
 			.getByText('Successful')
 	).toBeVisible();

@@ -121,13 +121,7 @@ export class ExportImportPage {
 		const downloadPromise = this.page.waitForEvent('download');
 
 		await this.page
-			.locator(
-				'//h2[span[normalize-space()="' +
-					name +
-					'"]]/span/a[contains(@href, "/portlet_file_entry/") and contains(@href, "' +
-					name +
-					'")]'
-			)
+			.locator('//h2[span[normalize-space()="' + name + '"]]/span/a')
 			.click();
 
 		const download = await downloadPromise;

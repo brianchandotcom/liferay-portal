@@ -116,21 +116,24 @@ public class OSGiCommandsCheck extends BaseCheck {
 		DetailAST detailAST, List<DetailAST> methodDefinitionDetailASTList,
 		List<String> osgiCommandFunctions) {
 
-		outerLoop:
-		for (String osgiCommandFunction : osgiCommandFunctions) {
-			for (DetailAST methodDefinitionDetailAST :
-					methodDefinitionDetailASTList) {
+		List<String> methodNames = new ArrayList<>();
 
-				String methodName = getName(methodDefinitionDetailAST);
+		for (DetailAST methodDefinitionDetailAST :
+				methodDefinitionDetailASTList) {
 
-				if (osgiCommandFunction.equals(methodName)) {
-					continue outerLoop;
-				}
+			String methodName = getName(methodDefinitionDetailAST);
+
+			if (!methodNames.contains(methodName)) {
+				methodNames.add(methodName);
 			}
+		}
 
-			log(
-				detailAST, _MSG_MISSING_IMPLEMENTED_COMMAND_FUNCTION,
-				osgiCommandFunction);
+		for (String osgiCommandFunction : osgiCommandFunctions) {
+			if (!methodNames.contains(osgiCommandFunction)) {
+				log(
+					detailAST, _MSG_MISSING_IMPLEMENTED_COMMAND_FUNCTION,
+					osgiCommandFunction);
+			}
 		}
 	}
 

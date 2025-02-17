@@ -687,7 +687,7 @@
 			<property name="enabled" value="false" />
 			<message key="implemented.command.function.missing" value="Missing a public method for implementing &quot;{0}&quot;" />
 			<message key="osgi.reference.avoid" value="OSGi references to &quot;*OSGiCommands&quot; classes are not allowed" />
-			<message key="public.method.name.incorrect" value="Public method name in *OSGiCommands class should be the value of &quot;osgi.command.function&quot; property" />
+			<message key="public.method.name.incorrect" value="Name of public method in *OSGiCommands class should be the value of &quot;osgi.command.function&quot; property" />
 		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.OSGiResourceBuilderCheck">
 			<property name="category" value="Styling" />

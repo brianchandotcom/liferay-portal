@@ -29,6 +29,16 @@ import org.osgi.service.component.annotations.Deactivate;
 @Component(service = FDSViewRegistry.class)
 public class FDSViewRegistryImpl implements FDSViewRegistry {
 
+	public FDSViewRegistryImpl() {
+	}
+
+	public FDSViewRegistryImpl(
+		ServiceTrackerMap<String, List<ServiceWrapper<FDSView>>>
+			serviceTrackerMap) {
+
+		_serviceTrackerMap = serviceTrackerMap;
+	}
+
 	@Override
 	public List<FDSView> getFDSViews(String fdsName) {
 		List<ServiceWrapper<FDSView>> fdsViewServiceWrappers =

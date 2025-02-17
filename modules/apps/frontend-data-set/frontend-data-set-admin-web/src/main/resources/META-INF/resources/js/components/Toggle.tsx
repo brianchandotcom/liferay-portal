@@ -13,7 +13,7 @@ interface IHasActive {
 	[key: string]: any;
 }
 
-interface IToggleProps<T extends IHasActive> {
+interface ITogglable<T extends IHasActive> {
 	disabled?: boolean;
 	item: T;
 	toggleChange: (item: T) => Promise<void>;
@@ -23,7 +23,7 @@ const Toggle = <T extends IHasActive>({
 	disabled = false,
 	item,
 	toggleChange,
-}: IToggleProps<T>) => {
+}: ITogglable<T>) => {
 	const label = item.active
 		? Liferay.Language.get('active')
 		: Liferay.Language.get('inactive');

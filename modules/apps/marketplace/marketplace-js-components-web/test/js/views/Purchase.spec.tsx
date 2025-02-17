@@ -40,9 +40,7 @@ describe('MarketplacePurchase', () => {
 	it('rendering component without product specifications', () => {
 		product.productSpecifications = [];
 
-		const productWihtoutSpecifications = new MarketplaceProduct(
-			product
-		);
+		const productWihtoutSpecifications = new MarketplaceProduct(product);
 
 		const {queryByText} = render(
 			<MarketplaceContext.Provider

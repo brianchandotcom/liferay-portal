@@ -34,7 +34,7 @@ describe('ProductCard', () => {
 		) as HTMLButtonElement;
 
 		marketplaceSearchResultsButton.addEventListener('click', onClick);
-		
+
 		fireEvent.click(marketplaceSearchResultsButton);
 
 		expect(onClick).toHaveBeenCalled();

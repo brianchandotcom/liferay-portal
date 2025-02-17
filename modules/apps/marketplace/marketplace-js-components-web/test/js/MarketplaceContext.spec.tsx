@@ -256,7 +256,7 @@ describe('MarketplaceContext', () => {
 
 	it('testing Marketplace Context Provider when not authorized', async () => {
 		marketplaceConfiguration.authorized = false;
-		
+
 		const {queryByText} = render(
 			<MarketplaceContextProvider
 				baseResourceURL={baseResourceURL}

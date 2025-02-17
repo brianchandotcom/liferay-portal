@@ -13,15 +13,15 @@ describe('Header', () => {
 	it('rendering Header with all props', () => {
 		const {container, queryAllByAltText, queryByText, rerender} = render(
 			<ProductPurchase.Header
-			    image="image/src"
+				image="image/src"
 				rightNode="right node"
 				subsectionTitleLeft="left title"
 				subsectionTitleRight="right title"
 				subtitle="subTitle"
 				title="heading"
 			>
-			children
-		</ProductPurchase.Header>
+				children
+			</ProductPurchase.Header>
 		);
 
 		expect(container.querySelector('h1')).toBeTruthy();

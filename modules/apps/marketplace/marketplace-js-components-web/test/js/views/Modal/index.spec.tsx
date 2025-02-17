@@ -75,7 +75,7 @@ describe('MarketplaceModal', () => {
 
 	it('render component while loading', () => {
 		const emptyMockTrigger = <p></p>;
-		
+
 		const {container} = render(
 			<MarketplaceContext.Provider
 				value={

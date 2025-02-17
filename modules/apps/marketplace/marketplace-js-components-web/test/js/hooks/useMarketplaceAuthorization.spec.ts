@@ -46,7 +46,7 @@ describe('useMarketplaceAuthorization', () => {
 			})),
 			fetch: jest.fn(),
 		}));
-		
+
 		await waitFor(() => expect(result.current.data).toEqual(mockResponse));
 
 		expect(result.current).toEqual({data: mockResponse, loading: false});

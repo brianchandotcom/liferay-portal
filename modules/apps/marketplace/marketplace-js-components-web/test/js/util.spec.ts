@@ -44,7 +44,7 @@ describe('sanitizeHTML', () => {
 
 	it('will handle an empty string properly', () => {
 		const sanitized = sanitizeHTML('');
-		
+
 		expect(sanitized).toBe('');
 	});
 

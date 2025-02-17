@@ -10,15 +10,18 @@ package com.liferay.object.validation.rule;
  */
 public class ObjectValidationRuleResult {
 
-	public ObjectValidationRuleResult(String errorMessage) {
-		this(errorMessage, null);
+	public ObjectValidationRuleResult(
+		String errorMessage, String validationKey) {
+
+		this(errorMessage, null, validationKey);
 	}
 
 	public ObjectValidationRuleResult(
-		String errorMessage, String objectFieldName) {
+		String errorMessage, String objectFieldName, String validationKey) {
 
 		_errorMessage = errorMessage;
 		_objectFieldName = objectFieldName;
+		_validationKey = validationKey;
 	}
 
 	public String getErrorMessage() {
@@ -29,7 +32,12 @@ public class ObjectValidationRuleResult {
 		return _objectFieldName;
 	}
 
+	public String getValidationKey() {
+		return _validationKey;
+	}
+
 	private String _errorMessage;
 	private String _objectFieldName;
+	private String _validationKey;
 
 }

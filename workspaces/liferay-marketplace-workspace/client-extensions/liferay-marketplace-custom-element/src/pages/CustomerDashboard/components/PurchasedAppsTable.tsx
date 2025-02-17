@@ -91,10 +91,25 @@ const AppsTable: React.FC<AppsTableProps> = ({items}) => {
 				},
 				{
 					key: 'orderTypeExternalReferenceCode',
-					render: (orderTypeExternalReferenceCode) =>
-						orderTypeExternalReferenceCode === OrderType.DXP
-							? 'DXP'
-							: 'Cloud',
+					render: (orderTypeExternalReferenceCode) => {
+						if (
+							orderTypeExternalReferenceCode ===
+							OrderType.CLIENTEXTENSION
+						) {
+							return 'Client Extension';
+						}
+						if (
+							orderTypeExternalReferenceCode === OrderType.CLOUD
+						) {
+							return 'Cloud';
+						}
+						if (orderTypeExternalReferenceCode === OrderType.DXP) {
+							return 'DXP';
+						}
+						else {
+							return 'Fragment';
+						}
+					},
 					title: i18n.translate('app-type'),
 				},
 				{

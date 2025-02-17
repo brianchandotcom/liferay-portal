@@ -4,11 +4,20 @@
  */
 
 export function getProductOrderTypes(productSpecificationValue: any) {
-	return {
-		externalReferenceCode:
-			productSpecificationValue.toLowerCase() === 'cloud'
-				? 'CLOUDAPP'
-				: 'DXPAPP',
-		name: {},
-	} as OrderType;
+	const productSpecification = productSpecificationValue.toLowerCase();
+
+	if (productSpecification === 'client-extension') {
+		return {externalReferenceCode: 'CLIENTEXTENSION'} as OrderType;
+	}
+	if (productSpecification === 'cloud') {
+		return {externalReferenceCode: 'CLOUDAPP'} as OrderType;
+	}
+	if (productSpecification === 'dxp') {
+		return {externalReferenceCode: 'DXPAPP'} as OrderType;
+	}
+	if (productSpecification === 'fragment') {
+		return {externalReferenceCode: 'FRAGMENT'} as OrderType;
+	}
+
+	return {externalReferenceCode: 'NOTYPE'} as OrderType;
 }

@@ -27,7 +27,12 @@ const Apps = () => {
 	} = usePurchasedOrders({
 		accountId: selectedAccount?.id as number,
 		channelId: Number(Liferay.CommerceContext.commerceChannelId),
-		orderTypeExternalReferenceCodes: ['CLOUDAPP', 'DXPAPP'],
+		orderTypeExternalReferenceCodes: [
+			'CLIENTEXTENSION',
+			'CLOUDAPP',
+			'DXPAPP',
+			'FRAGMENT',
+		],
 		page,
 		pageSize: 10,
 	});

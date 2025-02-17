@@ -26,11 +26,8 @@ import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.dynamic.data.mapping.model.DDMField;
 import com.liferay.dynamic.data.mapping.model.DDMFieldAttribute;
 import com.liferay.dynamic.data.mapping.service.DDMFieldLocalService;
-import com.liferay.info.field.InfoFieldValue;
 import com.liferay.info.item.InfoItemClassDetails;
-import com.liferay.info.item.InfoItemFieldValues;
 import com.liferay.info.item.InfoItemReference;
-import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -94,7 +91,6 @@ public class FileEntryContentDashboardItem
 		DLDisplayContextProvider dlDisplayContextProvider,
 		DLFileEntryMetadataLocalService dlFileEntryMetadataLocalService,
 		DLURLHelper dlURLHelper, FileEntry fileEntry, Group group,
-		InfoItemFieldValuesProvider<FileEntry> infoItemFieldValuesProvider,
 		Language language, Portal portal) {
 
 		if (ListUtil.isEmpty(assetCategories)) {
@@ -122,7 +118,6 @@ public class FileEntryContentDashboardItem
 		_dlURLHelper = dlURLHelper;
 		_fileEntry = fileEntry;
 		_group = group;
-		_infoItemFieldValuesProvider = infoItemFieldValuesProvider;
 		_language = language;
 		_portal = portal;
 	}
@@ -300,7 +295,7 @@ public class FileEntryContentDashboardItem
 
 	@Override
 	public String getDescription(Locale locale) {
-		return _getStringValue("description");
+		return _fileEntry.getDescription();
 	}
 
 	@Override
@@ -655,7 +650,7 @@ public class FileEntryContentDashboardItem
 	}
 
 	private String _getFileName() {
-		return _getStringValue("fileName");
+		return _fileEntry.getFileName();
 	}
 
 	private ContentDashboardItemVersion _getLastContentDashboardItemVersion(
@@ -738,28 +733,6 @@ public class FileEntryContentDashboardItem
 		return LanguageUtil.formatStorageSize(_fileEntry.getSize(), locale);
 	}
 
-	private String _getStringValue(String infoFieldName) {
-		if (_infoItemFieldValuesProvider != null) {
-			_infoItemFieldValues =
-				_infoItemFieldValuesProvider.getInfoItemFieldValues(_fileEntry);
-		}
-
-		InfoFieldValue<Object> infoFieldValue =
-			_infoItemFieldValues.getInfoFieldValue(infoFieldName);
-
-		if (infoFieldValue == null) {
-			return StringPool.BLANK;
-		}
-
-		Object value = infoFieldValue.getValue();
-
-		if (value == null) {
-			return StringPool.BLANK;
-		}
-
-		return value.toString();
-	}
-
 	private URL _getWebDAVURL() {
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
@@ -839,9 +812,6 @@ public class FileEntryContentDashboardItem
 	private final DLURLHelper _dlURLHelper;
 	private final FileEntry _fileEntry;
 	private final Group _group;
-	private InfoItemFieldValues _infoItemFieldValues;
-	private final InfoItemFieldValuesProvider<FileEntry>
-		_infoItemFieldValuesProvider;
 	private final Language _language;
 	private final Portal _portal;
 

@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
@@ -159,7 +158,7 @@ public class SystemFDSSerializer
 				LanguageUtil.get(
 					ResourceBundleUtil.getBundle(
 						"content.Language",
-						_portal.getLocale(httpServletRequest), getClass()),
+						PortalUtil.getLocale(httpServletRequest), getClass()),
 					fdsView.getLabel())
 			).put(
 				"name", fdsView.getName()
@@ -176,7 +175,7 @@ public class SystemFDSSerializer
 
 				Map<String, Object> fdsViewContext =
 					fdsViewContextContributor.getFDSViewContext(
-						fdsView, _portal.getLocale(httpServletRequest));
+						fdsView, PortalUtil.getLocale(httpServletRequest));
 
 				if (fdsViewContext == null) {
 					continue;
@@ -271,8 +270,5 @@ public class SystemFDSSerializer
 			jsonArray.put(jsonObject);
 		}
 	}
-
-	@Reference
-	private Portal _portal;
 
 }

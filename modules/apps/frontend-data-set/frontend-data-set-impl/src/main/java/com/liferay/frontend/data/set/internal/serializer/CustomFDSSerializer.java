@@ -42,7 +42,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -372,7 +372,7 @@ public class CustomFDSSerializer
 
 								FDSCellRendererCET fdsCellRendererCET =
 									(FDSCellRendererCET)cetManager.getCET(
-										_portal.getCompanyId(
+										PortalUtil.getCompanyId(
 											httpServletRequest),
 										String.valueOf(
 											properties.get("renderer")));
@@ -479,7 +479,7 @@ public class CustomFDSSerializer
 		HttpServletRequest httpServletRequest) {
 
 		return _objectDefinitionLocalService.fetchObjectDefinition(
-			_portal.getCompanyId(httpServletRequest), "DataSet");
+			PortalUtil.getCompanyId(httpServletRequest), "DataSet");
 	}
 
 	private ObjectEntry _getObjectEntry(
@@ -853,9 +853,6 @@ public class CustomFDSSerializer
 
 	@Reference
 	private ObjectEntryManagerRegistry _objectEntryManagerRegistry;
-
-	@Reference
-	private Portal _portal;
 
 	private static class ObjectEntryComparator
 		implements Comparator<ObjectEntry> {

@@ -120,8 +120,8 @@ public class LayoutSEOCanonicalURLProviderTest {
 		_themeDisplay.setSiteGroupId(_group.getGroupId());
 	}
 
-	private static Set<Locale> _availableLocales;
-	private static Locale _defaultLocale;
+	private Set<Locale> _availableLocales;
+	private Locale _defaultLocale;
 
 	@DeleteAfterTestRun
 	private Group _group;

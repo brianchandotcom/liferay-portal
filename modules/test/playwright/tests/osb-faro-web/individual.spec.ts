@@ -3,13 +3,15 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {mergeTests} from '@playwright/test';
+import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {loginAnalyticsCloudTest} from '../../fixtures/loginAnalyticsCloudTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {liferayConfig} from '../../liferay.config';
 import getRandomString from '../../utils/getRandomString';
+import {syncAnalyticsCloud} from '../analytics-settings-web/utils/analytics-settings';
 import {createChannel} from './utils/channel';
 import {
 	addBreakdownByAttribute,
@@ -17,6 +19,7 @@ import {
 } from './utils/distribution';
 import {createIndividuals, generateIndividual} from './utils/individuals';
 import {ACPage, navigateToACPageViaURL} from './utils/navigation';
+import {createSitePage} from './utils/portal';
 
 export const test = mergeTests(
 	apiHelpersTest,
@@ -24,6 +27,53 @@ export const test = mergeTests(
 	loginAnalyticsCloudTest(),
 	loginTest()
 );
+
+
+const randomString = getRandomString();
+
+const channelName = 'My Property ' + randomString;
+const pageTitle = 'My Page';
+const siteName = 'My Site ' + randomString;
+
+let channel;
+let project;
+let site;
+
+test.beforeEach(async ({apiHelpers, page}) => {
+	site = await apiHelpers.headlessSite.createSite({
+		name: siteName,
+	});
+
+	await createSitePage({
+		apiHelpers,
+		pageTitle,
+		siteName,
+	});
+
+	const result = await syncAnalyticsCloud({
+		apiHelpers,
+		channelName,
+		page,
+		siteName,
+	});
+
+	channel = result.channel;
+	project = result.project;
+});
+
+test.afterEach(async ({apiHelpers, page}) => {
+	await test.step('Delete channel and delete site on the DXP side', async () => {
+		await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
+			`[${channel.id}]`,
+			project.groupId
+		);
+
+		await page.goto(liferayConfig.environment.baseUrl);
+
+		await apiHelpers.headlessSite.deleteSite(String(site.id));
+	});
+});
+
 
 test(
 	'Add a new breakdown by an attribute and assert that correct results appear',

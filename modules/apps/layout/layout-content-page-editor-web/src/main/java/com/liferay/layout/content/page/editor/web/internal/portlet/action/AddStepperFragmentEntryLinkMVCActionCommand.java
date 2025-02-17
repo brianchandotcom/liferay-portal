@@ -63,7 +63,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = MVCActionCommand.class
 )
 public class AddStepperFragmentEntryLinkMVCActionCommand
-	extends BaseItemFormConfigMVCActionCommand {
+	extends BaseContentPageEditorTransactionalMVCActionCommand {
 
 	protected FragmentEntryLink addFragmentEntryLink(
 			ActionRequest actionRequest)
@@ -243,7 +243,7 @@ public class AddStepperFragmentEntryLinkMVCActionCommand
 				httpServletRequest, httpServletResponse, numberOfSteps,
 				stepperFragmentEntryLink));
 
-		return getLayoutStructureItemChangesJSONObject(
+		return _formItemManager.getLayoutStructureItemChangesJSONObject(
 			addedFragmentEntryLinks, httpServletRequest, httpServletResponse,
 			_jsonFactory.createJSONObject(), layoutStructure,
 			layoutStructureItemChanges);

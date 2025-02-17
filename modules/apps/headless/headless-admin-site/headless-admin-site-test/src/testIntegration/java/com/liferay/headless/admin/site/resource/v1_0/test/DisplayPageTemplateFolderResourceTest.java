@@ -259,10 +259,9 @@ public class DisplayPageTemplateFolderResourceTest
 
 		displayPageTemplateFolder =
 			_testPutSiteSiteByExternalReferenceCodeDisplayPageTemplateFolder(
-				displayPageTemplateFolder, null);
+				displayPageTemplateFolder, StringPool.BLANK);
 
-		Assert.assertEquals(
-			parentDisplayPageTemplateFolder.getExternalReferenceCode(),
+		Assert.assertNull(
 			displayPageTemplateFolder.
 				getParentDisplayPageTemplateFolderExternalReferenceCode());
 

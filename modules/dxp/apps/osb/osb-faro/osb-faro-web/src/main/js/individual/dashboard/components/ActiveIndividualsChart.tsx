@@ -154,9 +154,8 @@ const ActiveIndividualsChart: React.FC<IActiveIndividualsChartProps> = ({
 					<XAxis
 						axisLine={{stroke: AXIS.borderStroke}}
 						dataKey='intervalInitDate'
-						domain={['dataMin', 'dataMax']}
 						interval='preserveStart'
-						padding={{left: 20, right: 20}}
+						stroke={AXIS.gridStroke}
 						tick={getAxisTickText('x', value =>
 							formatXAxisDate(
 								value,
@@ -168,7 +167,6 @@ const ActiveIndividualsChart: React.FC<IActiveIndividualsChartProps> = ({
 						tickLine={false}
 						tickMargin={12}
 						ticks={intervals}
-						type='number'
 					/>
 
 					<XAxis
@@ -182,7 +180,6 @@ const ActiveIndividualsChart: React.FC<IActiveIndividualsChartProps> = ({
 					/>
 
 					<YAxis
-						allowDecimals={false}
 						axisLine={{stroke: AXIS.borderStroke}}
 						label={getYAxisLabel(
 							Liferay.Language.get('individuals'),
@@ -192,9 +189,7 @@ const ActiveIndividualsChart: React.FC<IActiveIndividualsChartProps> = ({
 						name={Liferay.Language.get('individuals')}
 						stroke={AXIS.gridStroke}
 						tick={getAxisTickText('y')}
-						tickCount={6}
 						tickLine={false}
-						type='number'
 						width={yAxisWidth}
 					/>
 
@@ -205,7 +200,7 @@ const ActiveIndividualsChart: React.FC<IActiveIndividualsChartProps> = ({
 						tick={false}
 						tickLine={false}
 						type='number'
-						width={1}
+						width={12}
 						yAxisId='right'
 					/>
 

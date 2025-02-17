@@ -8,6 +8,7 @@ package com.liferay.object.model;
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.base.BaseTable;
 
+import java.sql.Clob;
 import java.sql.Types;
 
 import java.util.Date;
@@ -50,10 +51,11 @@ public class ObjectEntryVersionTable
 	public final Column<ObjectEntryVersionTable, Long> objectEntryId =
 		createColumn(
 			"objectEntryId", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
-	public final Column<ObjectEntryVersionTable, String> content = createColumn(
-		"content", String.class, Types.VARCHAR, Column.FLAG_DEFAULT);
-	public final Column<ObjectEntryVersionTable, Long> version = createColumn(
-		"version", Long.class, Types.BIGINT, Column.FLAG_DEFAULT);
+	public final Column<ObjectEntryVersionTable, Clob> content = createColumn(
+		"content", Clob.class, Types.CLOB, Column.FLAG_DEFAULT);
+	public final Column<ObjectEntryVersionTable, Integer> version =
+		createColumn(
+			"version", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
 	public final Column<ObjectEntryVersionTable, Integer> status = createColumn(
 		"status", Integer.class, Types.INTEGER, Column.FLAG_DEFAULT);
 

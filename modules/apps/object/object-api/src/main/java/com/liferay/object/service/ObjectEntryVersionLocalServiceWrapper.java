@@ -29,6 +29,15 @@ public class ObjectEntryVersionLocalServiceWrapper
 		_objectEntryVersionLocalService = objectEntryVersionLocalService;
 	}
 
+	@Override
+	public com.liferay.object.model.ObjectEntryVersion addObjectEntryVersion(
+			com.liferay.object.model.ObjectEntry objectEntry)
+		throws Exception {
+
+		return _objectEntryVersionLocalService.addObjectEntryVersion(
+			objectEntry);
+	}
+
 	/**
 	 * Adds the object entry version to the database. Also notifies the appropriate model listeners.
 	 *
@@ -324,6 +333,14 @@ public class ObjectEntryVersionLocalServiceWrapper
 
 		return _objectEntryVersionLocalService.getObjectEntryVersions(
 			start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.object.model.ObjectEntryVersion>
+		getObjectEntryVersions(long objectEntryId) {
+
+		return _objectEntryVersionLocalService.getObjectEntryVersions(
+			objectEntryId);
 	}
 
 	/**

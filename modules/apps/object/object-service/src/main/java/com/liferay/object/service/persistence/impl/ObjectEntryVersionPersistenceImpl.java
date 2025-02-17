@@ -1210,6 +1210,516 @@ public class ObjectEntryVersionPersistenceImpl
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 =
 		"objectEntryVersion.companyId = ?";
 
+	private FinderPath _finderPathWithPaginationFindByObjectEntryId;
+	private FinderPath _finderPathWithoutPaginationFindByObjectEntryId;
+	private FinderPath _finderPathCountByObjectEntryId;
+
+	/**
+	 * Returns all the object entry versions where objectEntryId = &#63;.
+	 *
+	 * @param objectEntryId the object entry ID
+	 * @return the matching object entry versions
+	 */
+	@Override
+	public List<ObjectEntryVersion> findByObjectEntryId(long objectEntryId) {
+		return findByObjectEntryId(
+			objectEntryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the object entry versions where objectEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectEntryVersionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param objectEntryId the object entry ID
+	 * @param start the lower bound of the range of object entry versions
+	 * @param end the upper bound of the range of object entry versions (not inclusive)
+	 * @return the range of matching object entry versions
+	 */
+	@Override
+	public List<ObjectEntryVersion> findByObjectEntryId(
+		long objectEntryId, int start, int end) {
+
+		return findByObjectEntryId(objectEntryId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the object entry versions where objectEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectEntryVersionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param objectEntryId the object entry ID
+	 * @param start the lower bound of the range of object entry versions
+	 * @param end the upper bound of the range of object entry versions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching object entry versions
+	 */
+	@Override
+	public List<ObjectEntryVersion> findByObjectEntryId(
+		long objectEntryId, int start, int end,
+		OrderByComparator<ObjectEntryVersion> orderByComparator) {
+
+		return findByObjectEntryId(
+			objectEntryId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the object entry versions where objectEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectEntryVersionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param objectEntryId the object entry ID
+	 * @param start the lower bound of the range of object entry versions
+	 * @param end the upper bound of the range of object entry versions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching object entry versions
+	 */
+	@Override
+	public List<ObjectEntryVersion> findByObjectEntryId(
+		long objectEntryId, int start, int end,
+		OrderByComparator<ObjectEntryVersion> orderByComparator,
+		boolean useFinderCache) {
+
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByObjectEntryId;
+				finderArgs = new Object[] {objectEntryId};
+			}
+		}
+		else if (useFinderCache) {
+			finderPath = _finderPathWithPaginationFindByObjectEntryId;
+			finderArgs = new Object[] {
+				objectEntryId, start, end, orderByComparator
+			};
+		}
+
+		List<ObjectEntryVersion> list = null;
+
+		if (useFinderCache) {
+			list = (List<ObjectEntryVersion>)finderCache.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (ObjectEntryVersion objectEntryVersion : list) {
+					if (objectEntryId !=
+							objectEntryVersion.getObjectEntryId()) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler sb = null;
+
+			if (orderByComparator != null) {
+				sb = new StringBundler(
+					3 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				sb = new StringBundler(3);
+			}
+
+			sb.append(_SQL_SELECT_OBJECTENTRYVERSION_WHERE);
+
+			sb.append(_FINDER_COLUMN_OBJECTENTRYID_OBJECTENTRYID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else {
+				sb.append(ObjectEntryVersionModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(objectEntryId);
+
+				list = (List<ObjectEntryVersion>)QueryUtil.list(
+					query, getDialect(), start, end);
+
+				cacheResult(list);
+
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first object entry version in the ordered set where objectEntryId = &#63;.
+	 *
+	 * @param objectEntryId the object entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching object entry version
+	 * @throws NoSuchObjectEntryVersionException if a matching object entry version could not be found
+	 */
+	@Override
+	public ObjectEntryVersion findByObjectEntryId_First(
+			long objectEntryId,
+			OrderByComparator<ObjectEntryVersion> orderByComparator)
+		throws NoSuchObjectEntryVersionException {
+
+		ObjectEntryVersion objectEntryVersion = fetchByObjectEntryId_First(
+			objectEntryId, orderByComparator);
+
+		if (objectEntryVersion != null) {
+			return objectEntryVersion;
+		}
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("objectEntryId=");
+		sb.append(objectEntryId);
+
+		sb.append("}");
+
+		throw new NoSuchObjectEntryVersionException(sb.toString());
+	}
+
+	/**
+	 * Returns the first object entry version in the ordered set where objectEntryId = &#63;.
+	 *
+	 * @param objectEntryId the object entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching object entry version, or <code>null</code> if a matching object entry version could not be found
+	 */
+	@Override
+	public ObjectEntryVersion fetchByObjectEntryId_First(
+		long objectEntryId,
+		OrderByComparator<ObjectEntryVersion> orderByComparator) {
+
+		List<ObjectEntryVersion> list = findByObjectEntryId(
+			objectEntryId, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last object entry version in the ordered set where objectEntryId = &#63;.
+	 *
+	 * @param objectEntryId the object entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching object entry version
+	 * @throws NoSuchObjectEntryVersionException if a matching object entry version could not be found
+	 */
+	@Override
+	public ObjectEntryVersion findByObjectEntryId_Last(
+			long objectEntryId,
+			OrderByComparator<ObjectEntryVersion> orderByComparator)
+		throws NoSuchObjectEntryVersionException {
+
+		ObjectEntryVersion objectEntryVersion = fetchByObjectEntryId_Last(
+			objectEntryId, orderByComparator);
+
+		if (objectEntryVersion != null) {
+			return objectEntryVersion;
+		}
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("objectEntryId=");
+		sb.append(objectEntryId);
+
+		sb.append("}");
+
+		throw new NoSuchObjectEntryVersionException(sb.toString());
+	}
+
+	/**
+	 * Returns the last object entry version in the ordered set where objectEntryId = &#63;.
+	 *
+	 * @param objectEntryId the object entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching object entry version, or <code>null</code> if a matching object entry version could not be found
+	 */
+	@Override
+	public ObjectEntryVersion fetchByObjectEntryId_Last(
+		long objectEntryId,
+		OrderByComparator<ObjectEntryVersion> orderByComparator) {
+
+		int count = countByObjectEntryId(objectEntryId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<ObjectEntryVersion> list = findByObjectEntryId(
+			objectEntryId, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the object entry versions before and after the current object entry version in the ordered set where objectEntryId = &#63;.
+	 *
+	 * @param objectEntryVersionId the primary key of the current object entry version
+	 * @param objectEntryId the object entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next object entry version
+	 * @throws NoSuchObjectEntryVersionException if a object entry version with the primary key could not be found
+	 */
+	@Override
+	public ObjectEntryVersion[] findByObjectEntryId_PrevAndNext(
+			long objectEntryVersionId, long objectEntryId,
+			OrderByComparator<ObjectEntryVersion> orderByComparator)
+		throws NoSuchObjectEntryVersionException {
+
+		ObjectEntryVersion objectEntryVersion = findByPrimaryKey(
+			objectEntryVersionId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			ObjectEntryVersion[] array = new ObjectEntryVersionImpl[3];
+
+			array[0] = getByObjectEntryId_PrevAndNext(
+				session, objectEntryVersion, objectEntryId, orderByComparator,
+				true);
+
+			array[1] = objectEntryVersion;
+
+			array[2] = getByObjectEntryId_PrevAndNext(
+				session, objectEntryVersion, objectEntryId, orderByComparator,
+				false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected ObjectEntryVersion getByObjectEntryId_PrevAndNext(
+		Session session, ObjectEntryVersion objectEntryVersion,
+		long objectEntryId,
+		OrderByComparator<ObjectEntryVersion> orderByComparator,
+		boolean previous) {
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			sb = new StringBundler(3);
+		}
+
+		sb.append(_SQL_SELECT_OBJECTENTRYVERSION_WHERE);
+
+		sb.append(_FINDER_COLUMN_OBJECTENTRYID_OBJECTENTRYID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				sb.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			sb.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC);
+					}
+					else {
+						sb.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			sb.append(ObjectEntryVersionModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = sb.toString();
+
+		Query query = session.createQuery(sql);
+
+		query.setFirstResult(0);
+		query.setMaxResults(2);
+
+		QueryPos queryPos = QueryPos.getInstance(query);
+
+		queryPos.add(objectEntryId);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						objectEntryVersion)) {
+
+				queryPos.add(orderByConditionValue);
+			}
+		}
+
+		List<ObjectEntryVersion> list = query.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the object entry versions where objectEntryId = &#63; from the database.
+	 *
+	 * @param objectEntryId the object entry ID
+	 */
+	@Override
+	public void removeByObjectEntryId(long objectEntryId) {
+		for (ObjectEntryVersion objectEntryVersion :
+				findByObjectEntryId(
+					objectEntryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					null)) {
+
+			remove(objectEntryVersion);
+		}
+	}
+
+	/**
+	 * Returns the number of object entry versions where objectEntryId = &#63;.
+	 *
+	 * @param objectEntryId the object entry ID
+	 * @return the number of matching object entry versions
+	 */
+	@Override
+	public int countByObjectEntryId(long objectEntryId) {
+		FinderPath finderPath = _finderPathCountByObjectEntryId;
+
+		Object[] finderArgs = new Object[] {objectEntryId};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(2);
+
+			sb.append(_SQL_COUNT_OBJECTENTRYVERSION_WHERE);
+
+			sb.append(_FINDER_COLUMN_OBJECTENTRYID_OBJECTENTRYID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(objectEntryId);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_OBJECTENTRYID_OBJECTENTRYID_2 =
+		"objectEntryVersion.objectEntryId = ?";
+
 	public ObjectEntryVersionPersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
@@ -1822,6 +2332,24 @@ public class ObjectEntryVersionPersistenceImpl
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
 			new String[] {String.class.getName(), Long.class.getName()},
 			new String[] {"uuid_", "companyId"}, false);
+
+		_finderPathWithPaginationFindByObjectEntryId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByObjectEntryId",
+			new String[] {
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			},
+			new String[] {"objectEntryId"}, true);
+
+		_finderPathWithoutPaginationFindByObjectEntryId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByObjectEntryId",
+			new String[] {Long.class.getName()}, new String[] {"objectEntryId"},
+			true);
+
+		_finderPathCountByObjectEntryId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByObjectEntryId",
+			new String[] {Long.class.getName()}, new String[] {"objectEntryId"},
+			false);
 
 		ObjectEntryVersionUtil.setPersistence(this);
 	}

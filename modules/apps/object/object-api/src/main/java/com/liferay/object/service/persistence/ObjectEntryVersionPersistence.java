@@ -331,6 +331,150 @@ public interface ObjectEntryVersionPersistence
 	public int countByUuid_C(String uuid, long companyId);
 
 	/**
+	 * Returns all the object entry versions where objectEntryId = &#63;.
+	 *
+	 * @param objectEntryId the object entry ID
+	 * @return the matching object entry versions
+	 */
+	public java.util.List<ObjectEntryVersion> findByObjectEntryId(
+		long objectEntryId);
+
+	/**
+	 * Returns a range of all the object entry versions where objectEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectEntryVersionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param objectEntryId the object entry ID
+	 * @param start the lower bound of the range of object entry versions
+	 * @param end the upper bound of the range of object entry versions (not inclusive)
+	 * @return the range of matching object entry versions
+	 */
+	public java.util.List<ObjectEntryVersion> findByObjectEntryId(
+		long objectEntryId, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the object entry versions where objectEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectEntryVersionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param objectEntryId the object entry ID
+	 * @param start the lower bound of the range of object entry versions
+	 * @param end the upper bound of the range of object entry versions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching object entry versions
+	 */
+	public java.util.List<ObjectEntryVersion> findByObjectEntryId(
+		long objectEntryId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<ObjectEntryVersion>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the object entry versions where objectEntryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectEntryVersionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param objectEntryId the object entry ID
+	 * @param start the lower bound of the range of object entry versions
+	 * @param end the upper bound of the range of object entry versions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching object entry versions
+	 */
+	public java.util.List<ObjectEntryVersion> findByObjectEntryId(
+		long objectEntryId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<ObjectEntryVersion>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first object entry version in the ordered set where objectEntryId = &#63;.
+	 *
+	 * @param objectEntryId the object entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching object entry version
+	 * @throws NoSuchObjectEntryVersionException if a matching object entry version could not be found
+	 */
+	public ObjectEntryVersion findByObjectEntryId_First(
+			long objectEntryId,
+			com.liferay.portal.kernel.util.OrderByComparator<ObjectEntryVersion>
+				orderByComparator)
+		throws NoSuchObjectEntryVersionException;
+
+	/**
+	 * Returns the first object entry version in the ordered set where objectEntryId = &#63;.
+	 *
+	 * @param objectEntryId the object entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching object entry version, or <code>null</code> if a matching object entry version could not be found
+	 */
+	public ObjectEntryVersion fetchByObjectEntryId_First(
+		long objectEntryId,
+		com.liferay.portal.kernel.util.OrderByComparator<ObjectEntryVersion>
+			orderByComparator);
+
+	/**
+	 * Returns the last object entry version in the ordered set where objectEntryId = &#63;.
+	 *
+	 * @param objectEntryId the object entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching object entry version
+	 * @throws NoSuchObjectEntryVersionException if a matching object entry version could not be found
+	 */
+	public ObjectEntryVersion findByObjectEntryId_Last(
+			long objectEntryId,
+			com.liferay.portal.kernel.util.OrderByComparator<ObjectEntryVersion>
+				orderByComparator)
+		throws NoSuchObjectEntryVersionException;
+
+	/**
+	 * Returns the last object entry version in the ordered set where objectEntryId = &#63;.
+	 *
+	 * @param objectEntryId the object entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching object entry version, or <code>null</code> if a matching object entry version could not be found
+	 */
+	public ObjectEntryVersion fetchByObjectEntryId_Last(
+		long objectEntryId,
+		com.liferay.portal.kernel.util.OrderByComparator<ObjectEntryVersion>
+			orderByComparator);
+
+	/**
+	 * Returns the object entry versions before and after the current object entry version in the ordered set where objectEntryId = &#63;.
+	 *
+	 * @param objectEntryVersionId the primary key of the current object entry version
+	 * @param objectEntryId the object entry ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next object entry version
+	 * @throws NoSuchObjectEntryVersionException if a object entry version with the primary key could not be found
+	 */
+	public ObjectEntryVersion[] findByObjectEntryId_PrevAndNext(
+			long objectEntryVersionId, long objectEntryId,
+			com.liferay.portal.kernel.util.OrderByComparator<ObjectEntryVersion>
+				orderByComparator)
+		throws NoSuchObjectEntryVersionException;
+
+	/**
+	 * Removes all the object entry versions where objectEntryId = &#63; from the database.
+	 *
+	 * @param objectEntryId the object entry ID
+	 */
+	public void removeByObjectEntryId(long objectEntryId);
+
+	/**
+	 * Returns the number of object entry versions where objectEntryId = &#63;.
+	 *
+	 * @param objectEntryId the object entry ID
+	 * @return the number of matching object entry versions
+	 */
+	public int countByObjectEntryId(long objectEntryId);
+
+	/**
 	 * Caches the object entry version in the entity cache if it is enabled.
 	 *
 	 * @param objectEntryVersion the object entry version

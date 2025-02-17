@@ -21,7 +21,6 @@ import com.liferay.document.library.kernel.service.DLFileEntryMetadataLocalServi
 import com.liferay.document.library.util.DLURLHelper;
 import com.liferay.dynamic.data.mapping.service.DDMFieldLocalService;
 import com.liferay.info.item.InfoItemServiceRegistry;
-import com.liferay.info.item.provider.InfoItemFieldValuesProvider;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
@@ -61,10 +60,6 @@ public class FileEntryContentDashboardItemFactory
 			throw new NoSuchModelException();
 		}
 
-		InfoItemFieldValuesProvider<FileEntry> infoItemFieldValuesProvider =
-			infoItemServiceRegistry.getFirstInfoItemService(
-				InfoItemFieldValuesProvider.class, FileEntry.class.getName());
-
 		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
 
 		return new FileEntryContentDashboardItem(
@@ -75,8 +70,8 @@ public class FileEntryContentDashboardItemFactory
 				dlFileEntry.getFileEntryTypeId(), dlFileEntry.getFileEntryId()),
 			_ddmFieldLocalService, _dlDisplayContextProvider,
 			_dlFileEntryMetadataLocalService, _dlURLHelper, fileEntry,
-			_groupLocalService.fetchGroup(fileEntry.getGroupId()),
-			infoItemFieldValuesProvider, _language, _portal);
+			_groupLocalService.fetchGroup(fileEntry.getGroupId()), _language,
+			_portal);
 	}
 
 	@Override

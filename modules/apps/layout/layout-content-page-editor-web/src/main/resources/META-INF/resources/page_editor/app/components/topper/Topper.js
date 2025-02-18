@@ -53,7 +53,6 @@ import {
 	useDropTarget,
 } from '../../utils/drag_and_drop/useDragAndDrop';
 import isStepper from '../../utils/isStepper';
-import {isUnmappedCollection} from '../../utils/isUnmappedCollection';
 import {isUnmappedForm} from '../../utils/isUnmappedForm';
 import toMovementItem from '../../utils/toMovementItem';
 import useDropContainerId from '../../utils/useDropContainerId';
@@ -195,7 +194,8 @@ function TopperContent({
 		(isOverTarget || isKeyboardTarget(item.itemId)) &&
 		!(
 			dropTargetPosition === TARGET_POSITIONS.MIDDLE &&
-			(isUnmappedCollection(item) || isUnmappedForm(item))
+			(item.type === LAYOUT_DATA_ITEM_TYPES.collection ||
+				isUnmappedForm(item))
 		);
 
 	const {elementRef, isFocusable} = useLayoutKeyboardNavigation(item);

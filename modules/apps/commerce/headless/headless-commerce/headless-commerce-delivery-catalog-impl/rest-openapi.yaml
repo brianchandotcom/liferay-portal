@@ -254,6 +254,68 @@ components:
                 - name
                 - type
             type: object
+        Currency:
+            properties:
+                active:
+                    example: true
+                    type: boolean
+                code:
+                    example: USD
+                    type: string
+                externalReferenceCode:
+                    example: AB-34098-789-N
+                    type: string
+                formatPattern:
+                    additionalProperties:
+                        type: string
+                    example:
+                        en_US: Hand Saw
+                        hr_HR: Product Name HR
+                        hu_HU: Product Name HU
+                    type: object
+                id:
+                    example: 30130
+                    format: int64
+                    minimum: 0
+                    type: integer
+                maxFractionDigits:
+                    format: int32
+                    minimum: 0
+                    type: integer
+                minFractionDigits:
+                    format: int32
+                    minimum: 0
+                    type: integer
+                name:
+                    additionalProperties:
+                        type: string
+                    example:
+                        en_US: Hand Saw
+                        hr_HR: Product Name HR
+                        hu_HU: Product Name HU
+                    type: object
+                primary:
+                    example: true
+                    type: boolean
+                priority:
+                    example: 1.2
+                    format: double
+                    type: number
+                rate:
+                    example: 33.54
+                    format: bigdecimal
+                    type: number
+                roundingMode:
+                    enum: [UP, DOWN, CEILING, FLOOR, HALF_UP, HALF_DOWN, HALF_EVEN, UNNECESSARY]
+                    example: HALF_EVEN
+                    type: string
+                symbol:
+                    example: $
+                    type: string
+            required:
+                - code
+                - name
+            type: object
         CustomField:
             description:
                 Represents the value of each custom field. Fields can contain different information types (e.g.,
@@ -2210,6 +2272,90 @@ paths:
                     description:
                         Unexpected error
             tags: ["Sku"]
+    "/channels/by-externalReferenceCode/{externalReferenceCode}/currencies":
+        get:
+            description:
+                Retrieves currencies from selected channel.
+            operationId: getChannelByExternalReferenceCodeCurrenciesPage
+            parameters:
+                - in: path
+                  explode: false
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          Channel ExternalReferenceCode
+                      type: string
+                  style: simple
+                - in: query
+                  name: filter
+                  required: false
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
+                - in: query
+                  name: search
+                  required: false
+                  schema:
+                      type: string
+                - in: query
+                  name: sort
+                  required: false
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Currency"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Currency"
+                                type: array
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            tags: ["Currency"]
     "/channels/by-externalReferenceCode/{externalReferenceCode}/wishlists":
         get:
             description:
@@ -2539,6 +2685,91 @@ paths:
                       - CommerceOpenApiAdmin.write
             summary: Creates or updates an Account.
             tags: ["Account"]
+    "/channels/{channelId}/currencies":
+        get:
+            description:
+                Retrieves currencies from selected channel.
+            operationId: getChannelCurrenciesPage
+            parameters:
+                - in: path
+                  explode: false
+                  name: channelId
+                  required: true
+                  schema:
+                      description:
+                          Channel Id
+                      format: int64
+                      type: integer
+                  style: simple
+                - in: query
+                  name: filter
+                  required: false
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
+                - in: query
+                  name: search
+                  required: false
+                  schema:
+                      type: string
+                - in: query
+                  name: sort
+                  required: false
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Currency"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Currency"
+                                type: array
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            tags: ["Currency"]
     "/channels/{channelId}/products":
         get:
             description:

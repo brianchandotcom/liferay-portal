@@ -2168,6 +2168,12 @@ public class ObjectEntryLocalServiceImpl
 	private ObjectEntry _addObjectEntryVersion(ObjectEntry objectEntry)
 		throws PortalException {
 
+		if (!FeatureFlagManagerUtil.isEnabled(
+				objectEntry.getCompanyId(), "LPD-37104")) {
+
+			return objectEntry;
+		}
+
 		try {
 			ObjectEntryVersion objectEntryVersion =
 				_objectEntryVersionLocalService.addObjectEntryVersion(

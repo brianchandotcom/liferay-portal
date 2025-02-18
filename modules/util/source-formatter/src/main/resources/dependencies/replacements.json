@@ -3317,11 +3317,20 @@
 	{
 		"classNames": [
 			"DLAppLocalService",
-			"DLAppService"
+			"DLAppLocalServiceUtil"
 		],
 		"from": "addFileEntry(long paramName, long paramName, long paramName, String paramName, String paramName, byte[] paramName, ServiceContext paramName)",
 		"issueKey": "LPD-36311",
-		"to": "addFileEntry(null, param#0#, param#1#, param#2#, param#3#, param#4#, param#5#, null, null, param#6#)"
+		"to": "addFileEntry(null, param#0#, param#1#, param#2#, param#3#, param#4#, param#5#, null, null, null, param#6#)"
+	},
+	{
+		"classNames": [
+			"DLAppService",
+			"DLAppServiceUtil"
+		],
+		"from": "addFileEntry(long paramName, long paramName, String paramName, String paramName, byte[] paramName, ServiceContext paramName)",
+		"issueKey": "LPD-36311",
+		"to": "addFileEntry(null, param#0#, param#1#, param#2#, param#3#, param#4#, null, null, null, param#5#)"
 	},
 	{
 		"classNames": [
@@ -4023,7 +4032,7 @@
 		],
 		"from": "addFileEntry(long paramName, long paramName, long paramName, String paramName, String paramName, String paramName, String paramName, String paramName, byte[] paramName, ServiceContext paramName)",
 		"issueKey": "LPS-194818",
-		"to": "addFileEntry(null, param#0#, param#1#, param#2#, param#3#, param#4#, param#5#, null, param#6#, param#7#, param#8#, null, null, param#9#)"
+		"to": "addFileEntry(null, param#0#, param#1#, param#2#, param#3#, param#4#, param#5#, null, param#6#, param#7#, param#8#, null, null, null, param#9#)"
 	},
 	{
 		"from": "ServiceTrackerList<Class<T>, Class<E>>",

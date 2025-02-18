@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = OSGiCommands.class
 )
-public class ReleaseManagerOSGiCommands implements OSGiCommands {
+public class UpgradeOSGiCommands implements OSGiCommands {
 
 	@Descriptor("List pending upgrades")
 	public String check() {
@@ -226,7 +226,7 @@ public class ReleaseManagerOSGiCommands implements OSGiCommands {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ReleaseManagerOSGiCommands.class);
+		UpgradeOSGiCommands.class);
 
 	private BundleContext _bundleContext;
 

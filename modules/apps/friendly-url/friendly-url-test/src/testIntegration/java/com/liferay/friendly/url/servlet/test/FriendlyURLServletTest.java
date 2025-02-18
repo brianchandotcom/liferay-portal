@@ -6,6 +6,12 @@
 package com.liferay.friendly.url.servlet.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationParameterMapFactoryUtil;
+import com.liferay.exportimport.kernel.lar.ExportImportDateUtil;
+import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
+import com.liferay.exportimport.kernel.lar.UserIdStrategy;
+import com.liferay.exportimport.kernel.service.StagingLocalServiceUtil;
+import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
@@ -18,6 +24,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
@@ -44,6 +51,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -70,6 +78,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
@@ -98,7 +107,7 @@ import org.springframework.mock.web.MockServletContext;
  * @author László Csontos
  */
 @LanguageIds(
-	availableLanguageIds = {"en_GB", "en_US", "hu_HU"},
+	availableLanguageIds = {"en_GB", "en_US", "hu_HU", "pt_BR"},
 	defaultLanguageId = "en_US"
 )
 @RunWith(Arquillian.class)
@@ -123,7 +132,8 @@ public class FriendlyURLServletTest {
 		_layout = LayoutTestUtil.addTypePortletLayout(_group);
 
 		List<Locale> availableLocales = Arrays.asList(
-			LocaleUtil.US, LocaleUtil.UK, LocaleUtil.HUNGARY);
+			LocaleUtil.US, LocaleUtil.UK, LocaleUtil.HUNGARY,
+			LocaleUtil.BRAZIL);
 
 		_group = GroupTestUtil.updateDisplaySettings(
 			_group.getGroupId(), availableLocales, LocaleUtil.US);
@@ -155,6 +165,176 @@ public class FriendlyURLServletTest {
 
 		PropsValues.LOCALE_USE_DEFAULT_IF_NOT_AVAILABLE = GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.LOCALE_USE_DEFAULT_IF_NOT_AVAILABLE));
+	}
+
+	@Test
+	public void testCanAccessOldFriendlyURLAfterPublishingWithStaging()
+		throws Exception {
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		UserTestUtil.setUser(TestPropsValues.getUser());
+
+		StagingLocalServiceUtil.enableLocalStaging(
+			TestPropsValues.getUserId(), _group, false, false,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		Group stagingGroup = _group.getStagingGroup();
+
+		Layout layout = LayoutTestUtil.addTypePortletLayout(
+			stagingGroup.getGroupId(), false,
+			HashMapBuilder.put(
+				_portal.getSiteDefaultLocale(stagingGroup), "test"
+			).build(),
+			HashMapBuilder.put(
+				_portal.getSiteDefaultLocale(stagingGroup), "/test"
+			).build());
+
+		String oldFriendlyURL = layout.getFriendlyURL();
+
+		String oldPath = getPath(stagingGroup, layout);
+
+		List<String> portletIds = new ArrayList<>();
+
+		List<Portlet> embeddedPortlets = layout.getEmbeddedPortlets();
+
+		for (Portlet portlet : embeddedPortlets) {
+			portletIds.add(portlet.getPortletId());
+		}
+
+		Map<String, String[]> parameters =
+			ExportImportConfigurationParameterMapFactoryUtil.buildParameterMap(
+				PortletDataHandlerKeys.DATA_STRATEGY_MIRROR_OVERWRITE, false,
+				false, false, false, false, false, false, false, true, false,
+				portletIds, true, false, portletIds, false, portletIds,
+				ExportImportDateUtil.RANGE_FROM_LAST_PUBLISH_DATE, false, true,
+				UserIdStrategy.CURRENT_USER_ID);
+
+		StagingUtil.publishLayouts(
+			TestPropsValues.getUserId(), stagingGroup.getGroupId(),
+			_group.getGroupId(), false, parameters);
+
+		StagingLocalServiceUtil.enableLocalStaging(
+			TestPropsValues.getUserId(), _group, false, false,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		stagingGroup = _group.getStagingGroup();
+
+		layout = LayoutTestUtil.updateFriendlyURL(
+			layout,
+			HashMapBuilder.put(
+				_portal.getSiteDefaultLocale(stagingGroup), "/new-test"
+			).build());
+
+		StagingUtil.publishLayouts(
+			TestPropsValues.getUserId(), stagingGroup.getGroupId(),
+			_group.getGroupId(), false, parameters);
+
+		mockHttpServletRequest.setAttribute(
+			JavaConstants.JAVAX_SERVLET_FORWARD_REQUEST_URI, oldFriendlyURL);
+		mockHttpServletRequest.setPathInfo(oldPath);
+		mockHttpServletRequest.setRequestURI(
+			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING + oldPath);
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		_servlet.service(mockHttpServletRequest, mockHttpServletResponse);
+
+		Assert.assertEquals(
+			layout.getFriendlyURL(),
+			mockHttpServletResponse.getRedirectedUrl());
+	}
+
+	@Test
+	public void testCanAccessOldLocalizedFriendlyURLAfterPublishing()
+		throws Exception {
+
+		UserTestUtil.setUser(TestPropsValues.getUser());
+
+		StagingLocalServiceUtil.enableLocalStaging(
+			TestPropsValues.getUserId(), _group, false, false,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		Group stagingGroup = _group.getStagingGroup();
+
+		Layout layout = LayoutTestUtil.addTypePortletLayout(
+			stagingGroup.getGroupId(), false,
+			HashMapBuilder.put(
+				_portal.getSiteDefaultLocale(stagingGroup), "test"
+			).build(),
+			HashMapBuilder.put(
+				_portal.getSiteDefaultLocale(stagingGroup), "/test"
+			).put(
+				LocaleUtil.BRAZIL, "/teste"
+			).build());
+
+		String oldFriendlyURL = layout.getFriendlyURL(LocaleUtil.BRAZIL);
+
+		String oldPath = getLocalizedPath(
+			stagingGroup, layout, LocaleUtil.BRAZIL);
+
+		List<String> portletIds = new ArrayList<>();
+
+		List<Portlet> embeddedPortlets = layout.getEmbeddedPortlets();
+
+		for (Portlet portlet : embeddedPortlets) {
+			portletIds.add(portlet.getPortletId());
+		}
+
+		Map<String, String[]> parameters =
+			ExportImportConfigurationParameterMapFactoryUtil.buildParameterMap(
+				PortletDataHandlerKeys.DATA_STRATEGY_MIRROR_OVERWRITE, false,
+				false, false, false, false, false, false, false, true, false,
+				portletIds, true, false, portletIds, false, portletIds,
+				ExportImportDateUtil.RANGE_FROM_LAST_PUBLISH_DATE, false, true,
+				UserIdStrategy.CURRENT_USER_ID);
+
+		StagingUtil.publishLayouts(
+			TestPropsValues.getUserId(), stagingGroup.getGroupId(),
+			_group.getGroupId(), false, parameters);
+
+		StagingLocalServiceUtil.enableLocalStaging(
+			TestPropsValues.getUserId(), _group, false, false,
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
+
+		stagingGroup = _group.getStagingGroup();
+
+		layout = LayoutTestUtil.updateFriendlyURL(
+			layout,
+			HashMapBuilder.put(
+				_portal.getSiteDefaultLocale(stagingGroup), "/new-test"
+			).put(
+				LocaleUtil.BRAZIL, "/novo-teste"
+			).build());
+
+		StagingUtil.publishLayouts(
+			TestPropsValues.getUserId(), stagingGroup.getGroupId(),
+			_group.getGroupId(), false, parameters);
+
+		String i18nLanguageId = "pt_BR";
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setAttribute(
+			JavaConstants.JAVAX_SERVLET_FORWARD_REQUEST_URI, oldFriendlyURL);
+		mockHttpServletRequest.setAttribute(
+			WebKeys.I18N_LANGUAGE_ID, i18nLanguageId);
+		mockHttpServletRequest.setPathInfo(oldPath);
+		mockHttpServletRequest.setRequestURI(
+			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING + oldPath);
+		mockHttpServletRequest.setServletPath(i18nLanguageId);
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		_servlet.service(mockHttpServletRequest, mockHttpServletResponse);
+
+		Assert.assertEquals(
+			"/pt" + layout.getFriendlyURL(LocaleUtil.BRAZIL),
+			mockHttpServletResponse.getRedirectedUrl());
 	}
 
 	@Test
@@ -762,6 +942,12 @@ public class FriendlyURLServletTest {
 		}
 
 		return i18nLanguageId;
+	}
+
+	protected String getLocalizedPath(
+		Group group, Layout layout, Locale locale) {
+
+		return group.getFriendlyURL() + layout.getFriendlyURL(locale);
 	}
 
 	protected String getPath(Group group, Layout layout) {

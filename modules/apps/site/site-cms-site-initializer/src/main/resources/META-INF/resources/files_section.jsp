@@ -11,14 +11,18 @@
 FilesSectionDisplayContext filesSectionDisplayContext = (FilesSectionDisplayContext)request.getAttribute(FilesSectionDisplayContext.class.getName());
 %>
 
-<frontend-data-set:headless-display
-	apiURL="<%= filesSectionDisplayContext.getAPIURL() %>"
-	bulkActionDropdownItems="<%= filesSectionDisplayContext.getBulkActionDropdownItems() %>"
-	fdsActionDropdownItems="<%= filesSectionDisplayContext.getFDSActionDropdownItems() %>"
-	formName="fm"
-	id="<%= CMSSiteInitializerFDSNames.FILES_SECTION %>"
-	itemsPerPage="<%= 10 %>"
-	selectedItemsKey="id"
-	selectionType="multiple"
-	style="fluid"
-/>
+<div class="cms-section">
+	<frontend-data-set:headless-display
+		apiURL="<%= filesSectionDisplayContext.getAPIURL() %>"
+		bulkActionDropdownItems="<%= filesSectionDisplayContext.getBulkActionDropdownItems() %>"
+		creationMenu="<%= filesSectionDisplayContext.getCreationMenu() %>"
+		emptyState="<%= filesSectionDisplayContext.getEmptyState() %>"
+		fdsActionDropdownItems="<%= filesSectionDisplayContext.getFDSActionDropdownItems() %>"
+		formName="fm"
+		id="<%= CMSSiteInitializerFDSNames.FILES_SECTION %>"
+		itemsPerPage="<%= 10 %>"
+		selectedItemsKey="id"
+		selectionType="multiple"
+		style="fluid"
+	/>
+</div>

@@ -91,7 +91,7 @@ public class FilesSectionFragmentRenderer implements FragmentRenderer {
 			httpServletRequest.setAttribute(
 				FilesSectionDisplayContext.class.getName(),
 				new FilesSectionDisplayContext(
-					_cmsSiteInitializerConfiguration));
+					_cmsSiteInitializerConfiguration, httpServletRequest));
 
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}

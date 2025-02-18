@@ -44,7 +44,7 @@ import org.osgi.service.jaxrs.whiteboard.JaxrsWhiteboardConstants;
 	property = {"osgi.command.function=check", "osgi.command.scope=jaxrs"},
 	service = OSGiCommands.class
 )
-public class JaxRsServiceRuntimeOSGiCommands implements OSGiCommands {
+public class JaxRsOSGiCommands implements OSGiCommands {
 
 	public void check() {
 		_jaxrsLifecycle.ensureReady();
@@ -442,7 +442,7 @@ public class JaxRsServiceRuntimeOSGiCommands implements OSGiCommands {
 
 	private static final Snapshot<JaxrsServiceRuntime>
 		_jaxrsServiceRuntimeSnapshot = new Snapshot<>(
-			JaxRsServiceRuntimeOSGiCommands.class, JaxrsServiceRuntime.class);
+			JaxRsOSGiCommands.class, JaxrsServiceRuntime.class);
 
 	private BundleContext _bundleContext;
 

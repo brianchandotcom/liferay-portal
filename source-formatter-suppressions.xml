@@ -110,6 +110,7 @@
 		<suppress checks="JavaUpgradeIndexCheck" files="portal-impl/src/com/liferay/portal/upgrade/v6_2_0/UpgradeDocumentLibrary\.java" />
 		<suppress checks="JavaUpgradeIndexCheck" files="portal-impl/src/com/liferay/portal/upgrade/v6_2_0/UpgradeJournal.java" />
 		<suppress checks="JavaUpgradeIndexCheck" files="portal-impl/src/com/liferay/portal/upgrade/v6_2_0/UpgradeSchema\.java" />
+		<suppress checks="JavaVariableTypeCheck" files="portal-impl/src/com/liferay/portal/tools/DBUpgrader\.java" />
 		<suppress checks="JavaVariableTypeCheck" files="portal-impl/test/unit/com/liferay/portal/json/One\.java" />
 		<suppress checks="JavaVariableTypeCheck" files="portal-impl/test/unit/com/liferay/portal/json/Two\.java" />
 		<suppress checks="JavaVariableTypeCheck" files="portal-kernel/src/com/liferay/portal/kernel/io/PathHolder\.java" />

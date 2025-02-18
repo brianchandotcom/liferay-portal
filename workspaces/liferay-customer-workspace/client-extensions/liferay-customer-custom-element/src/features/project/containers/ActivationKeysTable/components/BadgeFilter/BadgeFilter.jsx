@@ -8,7 +8,7 @@ import i18n from '~/utils/I18n';
 import Button from '~/components/Button';
 import {FORMAT_DATE_TYPES} from '~/utils/constants';
 import getDateCustomFormat from '~/utils/getDateCustomFormat';
-import BadgePillFilter from '~/features/project/components/BadgePillFilter';
+import BadgePillFilter from '~/components/BadgePillFilter';
 import {INITIAL_FILTER} from '~/features/project/containers/ActivationKeysTable/utils/constants/initialFilter';
 
 const DNE_YEARS = 100;

@@ -6,9 +6,9 @@
 import {useEffect, useRef, useState} from 'react';
 import i18n from '~/utils/I18n';
 import {Button} from '~/components';
-import getAvailableFieldsCheckboxs from '~/features/project/components/CheckboxFilter/utils/getAvailableFieldsCheckboxs';
-import DropDownWithDrillDown from '~/features/project/components/DropDownWithDrillDown';
-import SearchBar from '~/features/project/components/SearchBar';
+import getAvailableFieldsCheckboxs from '~/components/BEFilter/components/CheckboxFilter/utils/getAvailableFieldsCheckboxs';
+import DropDownWithDrillDown from '~/components/BEFilter/components/DropDownWithDrillDown';
+import SearchBar from '~/components/SearchBar';
 import {
 	getDoesNotExpire,
 	getDropDownAvailableFields,

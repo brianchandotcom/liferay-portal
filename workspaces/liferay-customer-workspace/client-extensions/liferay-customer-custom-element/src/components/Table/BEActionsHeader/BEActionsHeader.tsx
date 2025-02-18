@@ -7,12 +7,12 @@ import Button from '@clayui/button';
 
 import './BEActionsHeader.css';
 
-import SearchBar from '~/features/project/components/SearchBar';
+import SearchBar from '~/components/SearchBar';
 import i18n from '~/utils/I18n';
 
-import {IBEFilter} from '../../utils/constants/IBEFilter';
-import BEFilter from './components/BEFilter';
-import BEBadgeFilter from './components/BEFilter/components/BEBadgeFilter';
+import {IBEFilter} from '../../../features/project/pages/Project/BusinessEvent/utils/constants/IBEFilter';
+import BEFilter from '~/components/BEFilter';
+import BEBadgeFilter from '~/components/BEFilter/components/FilterResults/BEBadgeFilter';
 
 interface IPropsHeader {
 	availableFields: {

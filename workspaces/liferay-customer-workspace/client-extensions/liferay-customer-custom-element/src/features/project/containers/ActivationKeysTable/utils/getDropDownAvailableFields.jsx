@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 import i18n from '~/utils/I18n';
-import CheckboxFilter from '~/features/project/components/CheckboxFilter';
+import CheckboxFilter from '~/components/BEFilter/components/CheckboxFilter';
 import DateFilter from '~/features/project/components/DateFilter';
 import ExpirationDateFilter from '~/features/project/components/ExpirationDateFilter';
 import KeyTypeFilter from '~/features/project/components/KeyTypeFilter';

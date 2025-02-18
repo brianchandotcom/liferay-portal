@@ -4,7 +4,7 @@
  */
 
 import {Button} from '~/components';
-import BadgePillFilter from '~/features/project/components/BadgePillFilter';
+import BadgePillFilter from '~/components/BadgePillFilter';
 import i18n from '~/utils/I18n';
 
 import {BE_INITIAL_FILTER} from '../../../../../utils/BE_INITIAL_FILTER';

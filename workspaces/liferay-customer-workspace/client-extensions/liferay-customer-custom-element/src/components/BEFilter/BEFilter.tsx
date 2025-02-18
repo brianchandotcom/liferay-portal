@@ -5,8 +5,8 @@
 
 import {Button as ClayButton} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
-import CheckboxFilter from '~/features/project/components/CheckboxFilter';
-import DropDownWithDrillDown from '~/features/project/components/DropDownWithDrillDown';
+import CheckboxFilter from '~/components/BEFilter/components/CheckboxFilter';
+import DropDownWithDrillDown from '~/components/BEFilter/components/DropDownWithDrillDown';
 import i18n from '~/utils/I18n';
 
 import {IBEFilter} from '../../../../utils/constants/IBEFilter';

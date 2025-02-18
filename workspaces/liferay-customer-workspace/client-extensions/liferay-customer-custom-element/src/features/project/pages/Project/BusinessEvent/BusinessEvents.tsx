@@ -12,7 +12,7 @@ import {useEffect, useMemo, useState} from 'react';
 import {ButtonDropDown} from '~/components';
 import {IRow} from '~/components/Table';
 import {hasAdminUserAccount} from '~/features/project/containers/ActivationKeysTable/utils/hasAdminUserAccount';
-import BEActionsHeader from '~/features/project/pages/Project/BusinessEvent/components/BEActionsHeader';
+import BEActionsHeader from '~/components/Table/BEActionsHeader';
 import BETable from '~/features/project/pages/Project/BusinessEvent/components/BETable';
 import {getFormattedDate} from '~/features/project/utils/getFormattedDate';
 import useCurrentKoroneikiAccount from '~/hooks/useCurrentKoroneikiAccount';

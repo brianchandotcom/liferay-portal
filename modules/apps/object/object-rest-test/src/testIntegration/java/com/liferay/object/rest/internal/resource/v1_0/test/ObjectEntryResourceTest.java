@@ -12750,6 +12750,27 @@ public class ObjectEntryResourceTest {
 			_objectEntry1.getPrimaryKey(), _objectEntry2.getPrimaryKey(), type);
 	}
 
+	private JSONObject _addPortalInstanceJSONObject() throws Exception {
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+			null, "headless-portal-instances/v1.0/portal-instances/able.com",
+			Http.Method.GET);
+
+		if (Objects.equals(jsonObject.getString("status"), "NOT_FOUND")) {
+			jsonObject = HTTPTestUtil.invokeToJSONObject(
+				JSONUtil.put(
+					"domain", "able.com"
+				).put(
+					"portalInstanceId", "able.com"
+				).put(
+					"virtualHost", "www.able.com"
+				).toString(),
+				"headless-portal-instances/v1.0/portal-instances",
+				Http.Method.POST);
+		}
+
+		return jsonObject;
+	}
+
 	private void _addResourcePermission(String actionId, String name, Role role)
 		throws Exception {
 
@@ -12810,27 +12831,6 @@ public class ObjectEntryResourceTest {
 		user.setEmailAddressVerified(true);
 
 		return UserLocalServiceUtil.updateUser(user);
-	}
-
-	private JSONObject _addPortalInstanceJSONObject() throws Exception {
-		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
-			null, "headless-portal-instances/v1.0/portal-instances/able.com",
-			Http.Method.GET);
-
-		if (Objects.equals(jsonObject.getString("status"), "NOT_FOUND")) {
-			jsonObject = HTTPTestUtil.invokeToJSONObject(
-				JSONUtil.put(
-					"domain", "able.com"
-				).put(
-					"portalInstanceId", "able.com"
-				).put(
-					"virtualHost", "www.able.com"
-				).toString(),
-				"headless-portal-instances/v1.0/portal-instances",
-				Http.Method.POST);
-		}
-
-		return jsonObject;
 	}
 
 	private void _assertAttachmentJSONObject(

@@ -298,10 +298,6 @@ function SpacingSelectorButton({
 									<LengthInput
 										className="mb-3 mt-2 px-3"
 										field={field}
-										onEnter={() => {
-											setActive(false);
-											triggerElement?.focus();
-										}}
 										onValueSelect={onChange}
 										showLabel={false}
 										value={

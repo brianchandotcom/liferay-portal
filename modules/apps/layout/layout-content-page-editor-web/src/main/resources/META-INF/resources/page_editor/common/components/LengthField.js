@@ -15,7 +15,7 @@ import {ConfigurationFieldPropTypes} from '../../prop_types/index';
 
 const RESTORABLE_FIELDS = new Set(['opacity', 'borderWidth']);
 
-export function LengthField({field, onEnter, onValueSelect, value}) {
+export function LengthField({field, onValueSelect, value}) {
 	const selectedViewportSize = useSelector(
 		(state) => state.selectedViewportSize
 	);
@@ -34,7 +34,6 @@ export function LengthField({field, onEnter, onValueSelect, value}) {
 				className={field.icon ? 'mb-0' : null}
 				defaultUnit={field.typeOptions?.defaultUnit}
 				field={field}
-				onEnter={onEnter}
 				onValueSelect={(name, value) => {
 					if (RESTORABLE_FIELDS.has(field.name)) {
 						setShowRestoreButton(true);
@@ -68,7 +67,6 @@ export function LengthField({field, onEnter, onValueSelect, value}) {
 
 LengthField.propTypes = {
 	field: PropTypes.shape(ConfigurationFieldPropTypes).isRequired,
-	onEnter: PropTypes.func,
 	onValueSelect: PropTypes.func.isRequired,
 	value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };

@@ -15,6 +15,8 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 
+import java.util.List;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -59,6 +61,11 @@ public class ObjectEntryVersionLocalServiceImpl
 		objectEntryVersion.setStatus(objectEntry.getStatus());
 
 		return objectEntryVersionPersistence.update(objectEntryVersion);
+	}
+
+	@Override
+	public List<ObjectEntryVersion> getObjectEntryVersions(long objectEntryId) {
+		return objectEntryVersionPersistence.findByObjectEntryId(objectEntryId);
 	}
 
 	@Reference

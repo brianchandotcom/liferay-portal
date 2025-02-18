@@ -28,7 +28,10 @@ import com.liferay.list.type.entry.util.ListTypeEntryUtil;
 import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
+import com.liferay.object.action.util.ObjectActionThreadLocal;
+import com.liferay.object.constants.ObjectActionExecutorConstants;
 import com.liferay.object.constants.ObjectActionKeys;
+import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectFieldValidationConstants;
@@ -68,6 +71,7 @@ import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManager;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManager;
 import com.liferay.object.rest.test.util.BaseObjectEntryManagerImplTestCase;
 import com.liferay.object.rest.test.util.ObjectRelationshipTestUtil;
+import com.liferay.object.service.ObjectActionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFieldService;
@@ -109,6 +113,7 @@ import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.AssertUtils;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.constants.TestDataConstants;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -135,6 +140,7 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
+import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.document.Document;
 import com.liferay.portal.search.hits.SearchHit;
@@ -142,6 +148,7 @@ import com.liferay.portal.search.hits.SearchHits;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.searcher.Searcher;
+import com.liferay.portal.security.script.management.test.rule.ScriptManagementConfigurationTestRule;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -180,6 +187,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 import org.hamcrest.CoreMatchers;
 
@@ -191,6 +199,7 @@ import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestName;
 import org.junit.runner.RunWith;
 
 /**
@@ -206,7 +215,8 @@ public class DefaultObjectEntryManagerImplTest
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
-			PermissionCheckerMethodTestRule.INSTANCE);
+			PermissionCheckerMethodTestRule.INSTANCE,
+			ScriptManagementConfigurationTestRule.INSTANCE);
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
@@ -2079,6 +2089,64 @@ public class DefaultObjectEntryManagerImplTest
 				"pt_BR", objectEntry.getExternalReferenceCode()
 			).build(),
 			objectEntry.getFriendlyUrlPath_i18n());
+
+		objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
+	}
+
+	@Test
+	public void testAddOrUpdateObjectEntryWithObjectAction() throws Exception {
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				Collections.singletonList(
+					new IntegerObjectFieldBuilder(
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).name(
+						"integerObjectField"
+					).build()));
+
+		_addObjectAction(
+			objectDefinition, ObjectActionTriggerConstants.KEY_ON_AFTER_ADD);
+		_addObjectAction(
+			objectDefinition, ObjectActionTriggerConstants.KEY_ON_AFTER_UPDATE);
+
+		int randomInt1 = RandomTestUtil.randomInt();
+
+		ObjectEntry objectEntry = _addObjectEntry(
+			objectDefinition,
+			HashMapBuilder.<String, Object>put(
+				"integerObjectField", randomInt1
+			).build());
+
+		Assert.assertEquals(
+			randomInt1 + 2,
+			MapUtil.getInteger(
+				objectEntry.getProperties(), "integerObjectField"));
+
+		ThreadLocal<Map<Long, Set<Long>>> threadLocal =
+			ReflectionTestUtil.getFieldValue(
+				ObjectActionThreadLocal.class, "_objectEntryIdsMap");
+
+		threadLocal.set(new HashMap<>());
+
+		int randomInt2 = RandomTestUtil.randomInt();
+
+		objectEntry = _defaultObjectEntryManager.updateObjectEntry(
+			_simpleDTOConverterContext, objectDefinition, objectEntry.getId(),
+			new ObjectEntry() {
+				{
+					setProperties(
+						HashMapBuilder.<String, Object>put(
+							"integerObjectField", randomInt2
+						).build());
+				}
+			});
+
+		Assert.assertEquals(
+			randomInt2 + 1,
+			MapUtil.getInteger(
+				objectEntry.getProperties(), "integerObjectField"));
 
 		objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 	}
@@ -5276,6 +5344,9 @@ public class DefaultObjectEntryManagerImplTest
 			});
 	}
 
+	@Rule
+	public TestName testName = new TestName();
+
 	@Override
 	protected void assertObjectEntryProperties(
 			ObjectEntry actualObjectEntry,
@@ -5590,6 +5661,33 @@ public class DefaultObjectEntryManagerImplTest
 					LocaleUtil.US, RandomTestUtil.randomString()));
 
 		return listTypeEntry.getKey();
+	}
+
+	private void _addObjectAction(
+			ObjectDefinition objectDefinition, String objectActionTriggerKey)
+		throws Exception {
+
+		Class<?> clazz = getClass();
+
+		_objectActionLocalService.addObjectAction(
+			RandomTestUtil.randomString(), TestPropsValues.getUserId(),
+			objectDefinition.getObjectDefinitionId(), true, null,
+			RandomTestUtil.randomString(),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			RandomTestUtil.randomString(),
+			ObjectActionExecutorConstants.KEY_GROOVY, objectActionTriggerKey,
+			UnicodePropertiesBuilder.create(
+				true
+			).put(
+				"script",
+				StringUtil.read(
+					clazz,
+					StringBundler.concat(
+						"dependencies/", clazz.getSimpleName(),
+						StringPool.PERIOD, testName.getMethodName(), ".groovy"))
+			).build(),
+			false);
 	}
 
 	private ObjectEntry _addObjectEntry(AccountEntry accountEntry)
@@ -6370,6 +6468,9 @@ public class DefaultObjectEntryManagerImplTest
 
 	private String _localizedMultiselectPicklistObjectFieldName;
 	private Map<String, Object> _localizedObjectFieldI18nValues;
+
+	@Inject
+	private ObjectActionLocalService _objectActionLocalService;
 
 	@DeleteAfterTestRun
 	private ObjectDefinition _objectDefinition1;

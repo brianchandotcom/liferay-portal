@@ -39,7 +39,7 @@ import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 <#assign
 	generatePermissionsJavaMethodSignatures = []
 	javaMethodSignatures = freeMarkerTool.getResourceTestCaseJavaMethodSignatures(configYAML, openAPIYAML, schemaName)
-
+	generateCRUD = freeMarkerTool.generateCRUD(configYAML, javaMethodSignatures, schemaName)
 	generateDepotEntry = freeMarkerTool.containsJavaMethodSignature(javaMethodSignatures, "AssetLibrary")
 />
 
@@ -67,8 +67,14 @@ import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
+import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.ResourceActionLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
@@ -85,12 +91,19 @@ import com.liferay.portal.odata.entity.EntityModel;
 import com.liferay.portal.search.test.rule.SearchTestRule;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.crud.VulcanCRUDItemDelegate;
+import com.liferay.portal.vulcan.crud.VulcanCRUDItemDelegateBuilder;
+import com.liferay.portal.vulcan.crud.VulcanCRUDItemDelegateBuilderRegistry;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
 
 import java.io.File;
 
 import java.lang.reflect.Method;
+
+import java.net.URI;
 
 import java.text.DateFormat;
 
@@ -101,6 +114,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -112,6 +126,10 @@ import java.util.Set;
 import javax.annotation.Generated;
 
 import javax.ws.rs.core.MultivaluedHashMap;
+import javax.ws.rs.core.MultivaluedMap;
+import javax.ws.rs.core.PathSegment;
+import javax.ws.rs.core.UriBuilder;
+import javax.ws.rs.core.UriInfo;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -120,6 +138,9 @@ import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+
+import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.MockHttpServletResponse;
 
 /**
  * @author ${configYAML.author}
@@ -130,7 +151,13 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 	@ClassRule
 	@Rule
-	public static final LiferayIntegrationTestRule liferayIntegrationTestRule = new LiferayIntegrationTestRule();
+	<#if generateCRUD>
+		public static AggregateTestRule aggregateTestRule = new AggregateTestRule(
+			new LiferayIntegrationTestRule(),
+			PermissionCheckerMethodTestRule.INSTANCE);
+	<#else>
+		public static final LiferayIntegrationTestRule liferayIntegrationTestRule = new LiferayIntegrationTestRule();
+	</#if>
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
@@ -157,11 +184,11 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 		_${schemaVarName}Resource.setContextCompany(testCompany);
 
-		com.liferay.portal.kernel.model.User testCompanyAdminUser = UserTestUtil.getAdminUser(testCompany.getCompanyId());
+		_user = UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
 		${schemaVarName}Resource = ${schemaName}Resource.builder(
 		).authentication(
-			testCompanyAdminUser.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD
+			_user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(
 			testCompany.getVirtualHostname(), 8080, "http"
 		).locale(
@@ -171,7 +198,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 		<#if (generatePermissionsJavaMethodSignatures?size > 0)>
 			permissions${schemaName}Resource = ${schemaName}Resource.builder(
 			).authentication(
-				testCompanyAdminUser.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD
+				_user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD
 			).endpoint(
 				testCompany.getVirtualHostname(), 8080, "http"
 			).locale(
@@ -1378,6 +1405,177 @@ public abstract class Base${schemaName}ResourceTestCase {
 					Assert.assertTrue(false);
 				</#if>
 			}
+
+			<#if generateCRUD && stringUtil.equals(javaMethodSignature.methodName, "get" + schemaName) && properties?keys?seq_contains("id")>
+				<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
+					<#if freeMarkerTool.isIdParameter(javaMethodParameter, schemaName) && stringUtil.equals(javaMethodParameter.parameterType, "java.lang.Long")>
+						@Test
+						public void test${javaMethodSignature.methodName?cap_first}MatchesVulcanCRUDItemDelegateGetItem() throws Exception {
+							${schemaName} post${schemaName} = test${javaMethodSignature.methodName?cap_first}_add${schemaName}();
+
+							${schemaName} get${schemaName} = ${schemaVarName}Resource.${javaMethodSignature.methodName}(post${schemaName}.getId());
+
+							VulcanCRUDItemDelegate vulcanCRUDItemDelegate = _vulcanCRUDItemDelegateBuilderRegistry.builder(
+								testCompany,
+								"${schemaJavaType}"
+							).acceptLanguage(
+								new AcceptLanguage() {
+									@Override
+									public List<Locale> getLocales() {
+										return Arrays.asList(LocaleUtil.getDefault());
+									}
+
+									@Override
+									public String getPreferredLanguageId() {
+										return LocaleUtil.toLanguageId(
+											LocaleUtil.getDefault());
+									}
+
+									@Override
+									public Locale getPreferredLocale() {
+										return LocaleUtil.getDefault();
+									}
+								}
+							).groupLocalService(
+								_groupLocalService
+							).httpServletRequest(
+								new MockHttpServletRequest() {
+									@Override
+									public StringBuffer getRequestURL() {
+										return new StringBuffer(UriBuilder.fromPath(StringBundler.concat("http://localhost:8080/o", "${configYAML.application.baseURI}/${openAPIYAML.info.version}${javaMethodSignature.path}".replace("{${javaMethodParameter.parameterName}}", String.valueOf(post${schemaName}.getId())))).build().toString());
+									}
+								}
+							).httpServletResponse(
+								new MockHttpServletResponse()
+							).resourceActionLocalService(
+								_resourceActionLocalService
+							).resourcePermissionLocalService(
+								_resourcePermissionLocalService
+							).roleLocalService(
+								_roleLocalService
+							).scopeChecker(
+								null
+							).uriInfo(
+								testVulcanCRUDItemDelegate_getUriInfo(post${schemaName}.getId())
+							).user(
+								testVulcanCRUDItemDelegate_getUser()
+							).build();
+
+							Object vulcanResponse = vulcanCRUDItemDelegate.getItem(post${schemaName}.getId());
+
+							Assert.assertTrue(equals(get${schemaName}, ${schemaName}SerDes.toDTO(vulcanResponse.toString())));
+						}
+
+						protected UriInfo testVulcanCRUDItemDelegate_getUriInfo(Long id) {
+
+							String path = "${openAPIYAML.info.version}${javaMethodSignature.path}".replace("{${javaMethodParameter.parameterName}}", String.valueOf(id));
+
+							URI requestUri = UriBuilder.fromPath("http://localhost:8080/o${configYAML.application.baseURI}/" + path).build();
+
+							return new UriInfo() {
+								@Override
+								public String getPath() {
+									return path;
+								}
+
+								@Override
+								public String getPath(boolean decode) {
+									return getPath();
+								}
+
+								@Override
+								public List<PathSegment> getPathSegments() {
+									return Collections.emptyList();
+								}
+
+								@Override
+								public List<PathSegment> getPathSegments(boolean decode) {
+									return getPathSegments();
+								}
+
+								@Override
+								public URI getRequestUri() {
+									return requestUri;
+								}
+
+								@Override
+								public UriBuilder getRequestUriBuilder() {
+									return UriBuilder.fromUri(requestUri);
+								}
+
+								@Override
+								public URI getAbsolutePath() {
+									return requestUri;
+								}
+
+								@Override
+								public UriBuilder getAbsolutePathBuilder() {
+									return UriBuilder.fromUri(requestUri);
+								}
+
+								@Override
+								public URI getBaseUri() {
+									return requestUri;
+								}
+
+								@Override
+								public UriBuilder getBaseUriBuilder() {
+									return UriBuilder.fromUri(getBaseUri());
+								}
+
+								@Override
+								public MultivaluedMap<String, String> getPathParameters() {
+									return new MultivaluedHashMap<>();
+								}
+
+								@Override
+								public MultivaluedMap<String, String> getPathParameters(boolean decode) {
+									return getPathParameters();
+								}
+
+								@Override
+								public MultivaluedMap<String, String> getQueryParameters() {
+									return new MultivaluedHashMap<>();
+								}
+
+								@Override
+								public MultivaluedMap<String, String> getQueryParameters(boolean decode) {
+									return getQueryParameters();
+								}
+
+								@Override
+								public List<String> getMatchedURIs() {
+									return Collections.emptyList();
+								}
+
+								@Override
+								public List<String> getMatchedURIs(boolean decode) {
+									return getMatchedURIs();
+								}
+
+								@Override
+								public List<Object> getMatchedResources() {
+									return Collections.emptyList();
+								}
+
+								@Override
+								public URI resolve(URI requestUri) {
+									return getBaseUri().resolve(requestUri);
+								}
+
+								@Override
+								public URI relativize(URI uri) {
+									return getBaseUri().relativize(requestUri);
+								}
+							};
+						}
+
+						protected com.liferay.portal.kernel.model.User testVulcanCRUDItemDelegate_getUser(){
+							return _user;
+						}
+					</#if>
+				</#list>
+			</#if>
 
 			<@getTestGetterMethods
 				getterJavaMethodParametersMap = getterJavaMethodParametersMap
@@ -3662,8 +3860,30 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 	private static DateFormat _dateFormat;
 
+	private static com.liferay.portal.kernel.model.User _user;
+
 	@Inject
 	private ${configYAML.apiPackagePath}.resource.${escapedVersion}.${schemaName}Resource _${schemaVarName}Resource;
+
+	<#if generateCRUD>
+		@Inject
+		private GroupLocalService _groupLocalService;
+
+		@Inject
+		private ResourceActionLocalService _resourceActionLocalService;
+
+		@Inject
+		private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+		@Inject
+		private RoleLocalService _roleLocalService;
+
+		@Inject
+		private UserLocalService _userLocalService;
+
+		@Inject
+		private VulcanCRUDItemDelegateBuilderRegistry _vulcanCRUDItemDelegateBuilderRegistry;
+	</#if>
 
 }
 

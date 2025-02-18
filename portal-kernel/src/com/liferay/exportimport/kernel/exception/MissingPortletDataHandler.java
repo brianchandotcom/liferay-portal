@@ -10,13 +10,13 @@ import com.liferay.portal.kernel.exception.PortalException;
 /**
  * @author Alberto Javier Moreno Lage
  */
-public class MissingObjectDefinitionException extends PortalException {
+public class MissingPortletDataHandler extends PortalException {
 
-	public MissingObjectDefinitionException(String portletDisplayName) {
+	public MissingPortletDataHandler(String portletDisplayName) {
 		_portletDisplayName = portletDisplayName;
 	}
 
-	public String getPortletId() {
+	public String getPortletDisplayName() {
 		return _portletDisplayName;
 	}
 

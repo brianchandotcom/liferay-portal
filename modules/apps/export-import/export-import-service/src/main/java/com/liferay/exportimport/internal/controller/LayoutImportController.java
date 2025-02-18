@@ -15,7 +15,7 @@ import com.liferay.exportimport.kernel.controller.ImportController;
 import com.liferay.exportimport.kernel.exception.LARFileException;
 import com.liferay.exportimport.kernel.exception.LARTypeException;
 import com.liferay.exportimport.kernel.exception.LayoutImportException;
-import com.liferay.exportimport.kernel.exception.MissingObjectDefinitionException;
+import com.liferay.exportimport.kernel.exception.MissingPortletDataHandler;
 import com.liferay.exportimport.kernel.exception.MissingReferenceException;
 import com.liferay.exportimport.kernel.lar.ExportImportHelper;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
@@ -623,7 +623,7 @@ public class LayoutImportController implements ImportController {
 						portletElement.attributeValue(
 							"validate-data-handler"))) {
 
-					throw new MissingObjectDefinitionException(
+					throw new MissingPortletDataHandler(
 						GetterUtil.getString(
 							portletElement.attributeValue("display-name")));
 				}

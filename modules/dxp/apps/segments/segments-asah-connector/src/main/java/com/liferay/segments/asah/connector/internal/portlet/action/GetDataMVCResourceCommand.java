@@ -209,8 +209,6 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 			long segmentsExperienceId)
 		throws Exception {
 
-		Group group = layout.getGroup();
-
 		return JSONUtil.put(
 			"contentPageEditorNamespace",
 			_getContentPageEditorPortletNamespace()
@@ -236,15 +234,6 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 						PortletRequest.ACTION_PHASE)
 				).setActionName(
 					"/layout_content_page_editor/add_segments_experience"
-				).setGlobalParameter(
-					_getContentPageEditorPortletNamespace() + "groupId",
-					group.getGroupId()
-				).setGlobalParameter(
-					_getContentPageEditorPortletNamespace() + "p_l_mode",
-					Constants.EDIT
-				).setGlobalParameter(
-					_getContentPageEditorPortletNamespace() + "plid",
-					layout.getPlid()
 				).buildString()
 			).put(
 				"deleteSegmentsExperimentURL",

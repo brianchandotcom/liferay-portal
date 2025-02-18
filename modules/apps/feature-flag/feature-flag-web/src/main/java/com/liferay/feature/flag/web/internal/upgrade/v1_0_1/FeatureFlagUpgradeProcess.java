@@ -41,15 +41,16 @@ public class FeatureFlagUpgradeProcess extends UpgradeProcess {
 			_OLD_NAMESPACE);
 
 		while (enumeration.hasMoreElements()) {
-			String featureFlag = enumeration.nextElement();
+			String portalPreferenceKey = enumeration.nextElement();
 
 			String value = portalPreferencesImpl.getValue(
-				_OLD_NAMESPACE, featureFlag);
+				_OLD_NAMESPACE, portalPreferenceKey);
 
-			portalPreferencesImpl.reset(_OLD_NAMESPACE, featureFlag);
+			portalPreferencesImpl.reset(_OLD_NAMESPACE, portalPreferenceKey);
 
 			portalPreferencesImpl.setValue(
-				FeatureFlagConstants.PREFERENCE_NAMESPACE, featureFlag, value);
+				FeatureFlagConstants.PREFERENCE_NAMESPACE, portalPreferenceKey,
+				value);
 		}
 
 		portalPreferencesImpl.setValue(

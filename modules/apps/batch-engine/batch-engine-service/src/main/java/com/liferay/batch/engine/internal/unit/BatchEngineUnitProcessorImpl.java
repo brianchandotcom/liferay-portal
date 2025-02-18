@@ -80,12 +80,14 @@ public class BatchEngineUnitProcessorImpl implements BatchEngineUnitProcessor {
 				BatchEngineUnitMetaInfo batchEngineUnitMetaInfo =
 					batchEngineUnit.getBatchEngineUnitMetaInfo();
 
-				String featureFlag = batchEngineUnitMetaInfo.getFeatureFlag();
+				String featureFlagKey =
+					batchEngineUnitMetaInfo.getFeatureFlagKey();
 
-				if (_isFeatureFlagDisabled(featureFlag)) {
+				if (_isFeatureFlagDisabled(featureFlagKey)) {
 					_featureFlagBatchEngineUnitProcessor.
 						registerBatchEngineUnit(
-							batchEngineUnitMetaInfo.getCompanyId(), featureFlag,
+							batchEngineUnitMetaInfo.getCompanyId(),
+							featureFlagKey,
 							() -> {
 								CompletableFuture<Void> localCompletableFuture =
 									new CompletableFuture<>();

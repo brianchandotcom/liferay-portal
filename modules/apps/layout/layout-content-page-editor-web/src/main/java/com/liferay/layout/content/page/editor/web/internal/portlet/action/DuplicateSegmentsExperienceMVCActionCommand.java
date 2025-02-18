@@ -88,9 +88,9 @@ public class DuplicateSegmentsExperienceMVCActionCommand
 
 		SegmentsExperienceUtil.copySegmentsExperienceData(
 			_commentManager, themeDisplay.getScopeGroupId(),
-			themeDisplay.getLayout(), _portletRegistry, segmentsExperienceId,
-			duplicatedSegmentsExperience.getSegmentsExperienceId(),
-			className -> serviceContext, themeDisplay.getUserId());
+			themeDisplay.getLayout(), _portletRegistry, segmentsExperience,
+			duplicatedSegmentsExperience, className -> serviceContext,
+			themeDisplay.getUserId());
 
 		return JSONUtil.put(
 			"fragmentEntryLinks",

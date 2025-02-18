@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.constants.SegmentsExperimentConstants;
+import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.model.SegmentsExperiment;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
@@ -48,17 +49,19 @@ public class SegmentsExperimentModelListener
 			ServiceContext serviceContext =
 				ServiceContextThreadLocal.getServiceContext();
 
-			long defaultSegmentsExperienceId =
-				_segmentsExperienceLocalService.
-					fetchDefaultSegmentsExperienceId(
-						segmentsExperiment.getPlid());
+			SegmentsExperience defaultSegmentsExperience =
+				_segmentsExperienceLocalService.fetchDefaultSegmentsExperience(
+					segmentsExperiment.getPlid());
+
+			SegmentsExperience winnerSegmentsExperience =
+				_segmentsExperienceLocalService.fetchSegmentsExperience(
+					segmentsExperiment.getWinnerSegmentsExperienceId());
 
 			SegmentsExperienceUtil.copySegmentsExperienceData(
 				_commentManager, segmentsExperiment.getGroupId(),
 				_layoutLocalService.getLayout(segmentsExperiment.getPlid()),
-				_portletRegistry,
-				segmentsExperiment.getWinnerSegmentsExperienceId(),
-				defaultSegmentsExperienceId, className -> serviceContext,
+				_portletRegistry, winnerSegmentsExperience,
+				defaultSegmentsExperience, className -> serviceContext,
 				segmentsExperiment.getUserId());
 
 			Layout draftLayout = _layoutLocalService.fetchDraftLayout(
@@ -67,9 +70,8 @@ public class SegmentsExperimentModelListener
 			if (draftLayout != null) {
 				SegmentsExperienceUtil.copySegmentsExperienceData(
 					_commentManager, segmentsExperiment.getGroupId(),
-					draftLayout, _portletRegistry,
-					segmentsExperiment.getWinnerSegmentsExperienceId(),
-					defaultSegmentsExperienceId, className -> serviceContext,
+					draftLayout, _portletRegistry, winnerSegmentsExperience,
+					defaultSegmentsExperience, className -> serviceContext,
 					segmentsExperiment.getUserId());
 			}
 		}

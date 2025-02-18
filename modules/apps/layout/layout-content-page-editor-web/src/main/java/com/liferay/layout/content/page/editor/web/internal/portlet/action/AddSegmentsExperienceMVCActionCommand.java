@@ -80,15 +80,14 @@ public class AddSegmentsExperienceMVCActionCommand
 			actionRequest, themeDisplay.getPlid(), segmentsExperiment,
 			serviceContext);
 
-		long baseSegmentsExperienceId = _getBaseSegmentsExperienceId(
+		SegmentsExperience baseSegmentsExperience = _getBaseSegmentsExperience(
 			themeDisplay.getPlid(), segmentsExperiment);
 
 		SegmentsExperienceUtil.copySegmentsExperienceData(
 			_commentManager, themeDisplay.getScopeGroupId(),
-			themeDisplay.getLayout(), _portletRegistry,
-			baseSegmentsExperienceId,
-			segmentsExperience.getSegmentsExperienceId(),
-			className -> serviceContext, _portal.getUserId(actionRequest));
+			themeDisplay.getLayout(), _portletRegistry, baseSegmentsExperience,
+			segmentsExperience, className -> serviceContext,
+			_portal.getUserId(actionRequest));
 
 		JSONObject jsonObject = JSONUtil.put(
 			"fragmentEntryLinks",
@@ -121,7 +120,7 @@ public class AddSegmentsExperienceMVCActionCommand
 
 		_initializeDraftLayout(
 			themeDisplay.getScopeGroupId(), themeDisplay.getPlid(),
-			segmentsExperience, baseSegmentsExperienceId, serviceContext);
+			segmentsExperience, baseSegmentsExperience, serviceContext);
 
 		return jsonObject;
 	}
@@ -175,15 +174,16 @@ public class AddSegmentsExperienceMVCActionCommand
 			ServiceContextFactory.getInstance(actionRequest));
 	}
 
-	private long _getBaseSegmentsExperienceId(
+	private SegmentsExperience _getBaseSegmentsExperience(
 		long plid, SegmentsExperiment segmentsExperiment) {
 
 		if (segmentsExperiment == null) {
 			return _segmentsExperienceLocalService.
-				fetchDefaultSegmentsExperienceId(plid);
+				fetchDefaultSegmentsExperience(plid);
 		}
 
-		return segmentsExperiment.getSegmentsExperienceId();
+		return _segmentsExperienceLocalService.fetchSegmentsExperience(
+			segmentsExperiment.getSegmentsExperienceId());
 	}
 
 	private JSONObject _getFragmentEntryLinksJSONObject(
@@ -268,7 +268,8 @@ public class AddSegmentsExperienceMVCActionCommand
 
 	private void _initializeDraftLayout(
 			long groupId, long classPK, SegmentsExperience segmentsExperience,
-			long baseSegmentsExperienceId, ServiceContext serviceContext)
+			SegmentsExperience baseSegmentsExperience,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		Layout draftLayout = _layoutLocalService.fetchDraftLayout(classPK);
@@ -276,8 +277,7 @@ public class AddSegmentsExperienceMVCActionCommand
 		if (draftLayout != null) {
 			SegmentsExperienceUtil.copySegmentsExperienceData(
 				_commentManager, groupId, draftLayout, _portletRegistry,
-				baseSegmentsExperienceId,
-				segmentsExperience.getSegmentsExperienceId(),
+				baseSegmentsExperience, segmentsExperience,
 				className -> serviceContext, serviceContext.getUserId());
 		}
 	}

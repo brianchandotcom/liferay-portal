@@ -95,27 +95,8 @@ public class StyleBookEntryItemSelectorViewDescriptor
 					JavaConstants.JAVAX_PORTLET_REQUEST),
 				_portletURL, null, "there-are-no-style-books");
 
-		StyleBookEntry styleFromThemeStyleBookEntry =
-			StyleBookEntryLocalServiceUtil.create();
-
-		styleFromThemeStyleBookEntry.setStyleBookEntryId(0);
-		styleFromThemeStyleBookEntry.setName(
-			LanguageUtil.get(_httpServletRequest, "styles-from-theme"));
-
-		StyleBookEntry defaultStyleBookEntry =
-			StyleBookEntryLocalServiceUtil.fetchDefaultStyleBookEntry(
-				_themeDisplay.getScopeGroupId());
-
-		if (defaultStyleBookEntry == null) {
-			styleFromThemeStyleBookEntry.setDefaultStyleBookEntry(true);
-		}
-
-		List<StyleBookEntry> styleBookEntries = ListUtil.fromArray(
-			styleFromThemeStyleBookEntry);
-
-		styleBookEntries.addAll(_getStyleBookEntries());
-
-		styleBookEntrySearchContainer.setResultsAndTotal(styleBookEntries);
+		styleBookEntrySearchContainer.setResultsAndTotal(
+			_getStyleBookEntries());
 
 		return styleBookEntrySearchContainer;
 	}
@@ -146,13 +127,34 @@ public class StyleBookEntryItemSelectorViewDescriptor
 	}
 
 	private List<StyleBookEntry> _getStyleBookEntries() {
+		StyleBookEntry styleFromThemeStyleBookEntry =
+			StyleBookEntryLocalServiceUtil.create();
+
+		styleFromThemeStyleBookEntry.setStyleBookEntryId(0);
+		styleFromThemeStyleBookEntry.setName(
+			LanguageUtil.get(_httpServletRequest, "styles-from-theme"));
+
+		StyleBookEntry defaultStyleBookEntry =
+			StyleBookEntryLocalServiceUtil.fetchDefaultStyleBookEntry(
+				_themeDisplay.getScopeGroupId());
+
+		if (defaultStyleBookEntry == null) {
+			styleFromThemeStyleBookEntry.setDefaultStyleBookEntry(true);
+		}
+
+		List<StyleBookEntry> styleBookEntries = ListUtil.fromArray(
+			styleFromThemeStyleBookEntry);
+
 		if (!FeatureFlagManagerUtil.isEnabled(
 				_themeDisplay.getCompanyId(), "LPD-30204")) {
 
-			return StyleBookEntryLocalServiceUtil.getStyleBookEntries(
-				StagingUtil.getLiveGroupId(_themeDisplay.getScopeGroupId()),
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-				StyleBookEntryNameComparator.getInstance(true));
+			styleBookEntries.addAll(
+				StyleBookEntryLocalServiceUtil.getStyleBookEntries(
+					StagingUtil.getLiveGroupId(_themeDisplay.getScopeGroupId()),
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					StyleBookEntryNameComparator.getInstance(true)));
+
+			return styleBookEntries;
 		}
 
 		FrontendTokenDefinition frontendTokenDefinition =
@@ -163,9 +165,12 @@ public class StyleBookEntryItemSelectorViewDescriptor
 			return Collections.emptyList();
 		}
 
-		return _styleBookEntryLocalService.getStyleBookEntries(
-			StagingUtil.getLiveGroupId(_themeDisplay.getScopeGroupId()),
-			frontendTokenDefinition.getThemeId());
+		styleBookEntries.addAll(
+			_styleBookEntryLocalService.getStyleBookEntries(
+				StagingUtil.getLiveGroupId(_themeDisplay.getScopeGroupId()),
+				frontendTokenDefinition.getThemeId()));
+
+		return styleBookEntries;
 	}
 
 	private final FrontendTokenDefinitionRegistry

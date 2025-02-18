@@ -1,0 +1,20 @@
+assemble:
+    - fromTask: bootJar
+liferay-sample-commerce-tax-engine:
+    key: liferay-sample-commerce-tax-engine
+    name: Liferay Sample Commerce Tax Engine
+    oAuth2ApplicationExternalReferenceCode: liferay-sample-commerce-tax-engine-oauth-application-user-agent
+    taxEngineTypeSettings:
+        key1: value1
+        key2: value2
+        key3: value3
+        key4: value4
+        key5: value5
+    type: commerceTaxEngine
+liferay-sample-commerce-tax-engine-oauth-application-user-agent:
+    .serviceAddress: localhost:58081
+    .serviceScheme: http
+    name: Liferay Sample Commerce Tax Engine OAuth Application User Agent
+    scopes:
+        - Liferay.Headless.Admin.Workflow.everything
+    type: oAuthApplicationUserAgent

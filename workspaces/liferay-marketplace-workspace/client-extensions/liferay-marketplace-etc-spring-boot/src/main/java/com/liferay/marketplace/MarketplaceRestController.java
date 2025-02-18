@@ -144,7 +144,7 @@ public class MarketplaceRestController extends BaseRestController {
 				new URL(
 					StringBundler.concat(
 						lxcDXPServerProtocol, "://", lxcDXPMainDomain,
-						"/administrator-dashboard#/apps/",
+						"/web/marketplace/administrator-dashboard#/apps/",
 						modelCPDefinitionJSONObject.getLong("CPDefinitionId"))
 				).toString()
 			).put(

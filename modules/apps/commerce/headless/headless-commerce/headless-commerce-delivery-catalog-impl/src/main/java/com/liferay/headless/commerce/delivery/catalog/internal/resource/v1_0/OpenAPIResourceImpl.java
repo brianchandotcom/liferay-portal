@@ -93,6 +93,8 @@ public class OpenAPIResourceImpl {
 
 			add(ChannelResourceImpl.class);
 
+			add(CurrencyResourceImpl.class);
+
 			add(LinkedProductResourceImpl.class);
 
 			add(MappedProductResourceImpl.class);

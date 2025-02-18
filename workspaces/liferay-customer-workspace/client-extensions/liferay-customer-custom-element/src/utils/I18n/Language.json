@@ -77,6 +77,8 @@
 	"business-events": "Business Events",
 	"buyer": "Buyer",
 	"by": "By",
+	"by-checking-this-box-and-clicking-next-below-i-as-an-authorized-representative-of-x-acknowledge-that-x-accepts-the-x-terms-and-conditions-and-privacy-policy-x-these-terms-will-govern-x-s-use-of-liferay-analytics-cloud-unless-x-has-entered-into-a-separate-agreement-with-liferay-that-governs-x-s-use-of-liferay-analytics-cloud": "By checking this box and clicking “Next”, below, I, as an authorized representative of {0}, acknowledge that {0} accepts the {1} Terms and Conditions and Privacy Policy. {2} These terms will govern {0}'s use of Liferay Analytics Cloud unless {0} has entered into a separate agreement with Liferay that governs {0}'s use of Liferay Analytics Cloud.",
+	"by-checking-this-box-and-clicking-submit-below-i-as-an-authorized-representative-of-x-acknowledge-that-x-accepts-the-x-terms-and-conditions-and-privacy-policy-x-these-terms-will-govern-x-s-use-of-liferay-analytics-cloud-unless-x-has-entered-into-a-separate-agreement-with-liferay-that-governs-x-s-use-of-liferay-analytics-cloud": "By checking this box and clicking “Submit”, below, I, as an authorized representative of {0}, acknowledge that {0} accepts the {1} Terms and Conditions and Privacy Policy. {2} These terms will govern {0}'s use of Liferay Analytics Cloud unless {0} has entered into a separate agreement with Liferay that governs {0}'s use of Liferay Analytics Cloud.",
 	"by-finishing-the-activation-form": "by finishing the activation form.",
 	"cancel": "Cancel",
 	"cancel-event": "Cancel Event",

@@ -2,22 +2,29 @@
  * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
+
 import {useQuery} from '@apollo/client';
-import ClayForm from '@clayui/form';
+import ClayForm, {ClayCheckbox} from '@clayui/form';
 import {FieldArray, Formik} from 'formik';
 import {useEffect, useMemo, useState} from 'react';
+import {Button, Input, Select} from '~/components';
 import {useAppPropertiesContext} from '~/contexts/AppPropertiesContext';
-import SearchBuilder from '~/lib/SearchBuilder';
-
 import {
+	STATUS_CODE,
+	STATUS_TAG_TYPE_NAMES,
+} from '~/features/project/utils/constants';
+import {
+	HIGH_PRIORITY_CONTACT_CATEGORIES,
 	addContactRoleLiferay,
 	addContactRoleRaysource,
-	HIGH_PRIORITY_CONTACT_CATEGORIES,
 	removeContactRoleLiferay,
 	removeContactRoleRaysource,
 	updateLiferayContact,
-	updateRaysourceContact
+	updateRaysourceContact,
 } from '~/features/project/utils/getHighPriorityContacts';
+import useBannedDomains from '~/hooks/useBannedDomains';
+import SearchBuilder from '~/lib/SearchBuilder';
+import NotificationQueueService from '~/services/actions/notificationAction';
 import {
 	addAnalyticsCloudWorkspace,
 	addIncidentReportAnalyticsCloud,
@@ -25,26 +32,19 @@ import {
 	getAnalyticsCloudWorkspace,
 	updateAccountSubscriptionGroups,
 } from '~/services/liferay/graphql/queries';
+import {getOrRequestToken} from '~/services/liferay/security/auth/getOrRequestToken';
+import i18n from '~/utils/I18n';
+import getInitialAnalyticsInvite from '~/utils/getInitialAnalyticsInvite';
+import getKebabCase from '~/utils/getKebabCase';
 import {
-	isLowercaseAndNumbers,
 	isValidEmail,
 	isValidEmailDomain,
 	isValidFriendlyURL,
 	maxLength,
 } from '~/utils/validations.form';
-import {
-	STATUS_CODE,
-	STATUS_TAG_TYPE_NAMES,
-} from '~/features/project/utils/constants';
-import i18n from '~/utils/I18n';
-import {Button, Input, Select} from '~/components';
-import SetupHighPriorityContactForm from '~/features/project/containers/HighPriorityContacts/SetupHighPriorityContact';
-import useBannedDomains from '~/hooks/useBannedDomains';
-import NotificationQueueService from '~/services/actions/notificationAction';
-import {getOrRequestToken} from '~/services/liferay/security/auth/getOrRequestToken';
-import getInitialAnalyticsInvite from '~/utils/getInitialAnalyticsInvite';
-import getKebabCase from '~/utils/getKebabCase';
+
 import Layout from '../../../../components/FormLayout';
+import SetupHighPriorityContactForm from '../HighPriorityContacts/SetupHighPriorityContact';
 import IncidentReportInput from './IncidentReportInput';
 
 const BLANK_TEXT = '< none >';
@@ -78,13 +78,13 @@ const SetupAnalyticsCloudPage = ({
 	const [isLoadingSubmitButton, setIsLoadingSubmitButton] = useState(false);
 	const [baseButtonDisabled, setBaseButtonDisabled] = useState(true);
 	const [addHighPriorityContact, setAddHighPriorityContact] = useState([]);
+	const [termAndConditionsChecked, setTermAndConditionsChecked] =
+		useState(false);
 	const [removeHighPriorityContact, setRemoveHighPriorityContact] = useState(
 		[]
 	);
-	const [
-		currentHighPriorityContacts,
-		setCurrentHighPriorityContacts,
-	] = useState([]);
+	const [currentHighPriorityContacts, setCurrentHighPriorityContacts] =
+		useState([]);
 	const [step, setStep] = useState(1);
 
 	const handlePreviousStep = () => {
@@ -244,9 +244,8 @@ const SetupAnalyticsCloudPage = ({
 				}
 
 				if (featureFlags.includes('LPS-181031')) {
-					const notificationTemplateService = new NotificationQueueService(
-						client
-					);
+					const notificationTemplateService =
+						new NotificationQueueService(client);
 
 					await notificationTemplateService.send(
 						'SETUP-ANALYTICS-CLOUD-ENVIRONMENT-NOTIFICATION-TEMPLATE',
@@ -257,7 +256,8 @@ const SetupAnalyticsCloudPage = ({
 							'[%AC_EMAIL_DOMAINS]':
 								analyticsCloud.allowedEmailDomains ||
 								BLANK_TEXT,
-							'[%AC_INCIDENT_REPORT_CONTACT]': emailsCriticalIncident,
+							'[%AC_INCIDENT_REPORT_CONTACT]':
+								emailsCriticalIncident,
 							'[%AC_OWNER_EMAIL]':
 								analyticsCloud.ownerEmailAddress,
 							'[%AC_TIME_ZONE]':
@@ -269,9 +269,17 @@ const SetupAnalyticsCloudPage = ({
 								analyticsCloud.workspaceName,
 							'[%PROJECT_ID]': project?.code,
 							'[%PROJECT_SALESFORCE_ACCOUNT_LINK]':
-							    project?.salesforceAccountKey ? "https://liferay.lightning.force.com/lightning/r/Account/" + project?.salesforceAccountKey + "/view" : BLANK_TEXT,
+								project?.salesforceAccountKey
+									? 'https://liferay.lightning.force.com/lightning/r/Account/' +
+										project?.salesforceAccountKey +
+										'/view'
+									: BLANK_TEXT,
 							'[%PROJECT_SALESFORCE_PROJECT_LINK]':
-							    project?.salesforceProjectKey ? "https://liferay.lightning.force.com/lightning/r/Project__c/" + project?.salesforceProjectKey + "/view" : BLANK_TEXT,
+								project?.salesforceProjectKey
+									? 'https://liferay.lightning.force.com/lightning/r/Project__c/' +
+										project?.salesforceProjectKey +
+										'/view'
+									: BLANK_TEXT,
 						}
 					);
 				}
@@ -341,6 +349,7 @@ const SetupAnalyticsCloudPage = ({
 	};
 
 	const handleButtonClick = () => {
+
 		// eslint-disable-next-line no-unused-expressions
 		step === 1 ? handlePage(false) : handlePreviousStep();
 	};
@@ -371,9 +380,10 @@ const SetupAnalyticsCloudPage = ({
 						<Button
 							disabled={
 								step === 1
-									? baseButtonDisabled
+									? baseButtonDisabled ||
+										!termAndConditionsChecked
 									: isMultiSelectEmpty ||
-									  isLoadingSubmitButton
+										isLoadingSubmitButton
 							}
 							displayType="primary"
 							isLoading={isLoadingSubmitButton}
@@ -399,6 +409,12 @@ const SetupAnalyticsCloudPage = ({
 							render={() => (
 								<>
 									<ClayForm.Group className="pb-1">
+										<div>
+											<h4 className="ml-3 text-neutral-10">
+												{project.name}
+											</h4>
+										</div>
+
 										<Input
 											groupStyle="pb-1"
 											helper={i18n.translate(
@@ -422,9 +438,6 @@ const SetupAnalyticsCloudPage = ({
 
 										<Input
 											groupStyle="pb-1"
-											helper={i18n.translate(
-												'lowercase-letters-and-numbers-only-project-ids-cannot-be-changed'
-											)}
 											label={i18n.translate(
 												'workspace-name'
 											)}
@@ -437,10 +450,6 @@ const SetupAnalyticsCloudPage = ({
 													maxLength(
 														value,
 														MAX_LENGTH
-													),
-												(value) =>
-													isLowercaseAndNumbers(
-														value
 													),
 											]}
 										/>
@@ -521,6 +530,36 @@ const SetupAnalyticsCloudPage = ({
 											placeholder="UTC-04:00"
 											type="text"
 										/>
+
+										<div className="ml-3">
+											<ClayCheckbox
+												checked={
+													termAndConditionsChecked
+												}
+												label={
+													<div
+														dangerouslySetInnerHTML={{
+															__html: i18n.sub(
+																'by-checking-this-box-and-clicking-next-below-i-as-an-authorized-representative-of-x-acknowledge-that-x-accepts-the-x-terms-and-conditions-and-privacy-policy-x-these-terms-will-govern-x-s-use-of-liferay-analytics-cloud-unless-x-has-entered-into-a-separate-agreement-with-liferay-that-governs-x-s-use-of-liferay-analytics-cloud',
+																[
+																	project.name,
+																	'<a href="https://www.liferay.com/documents/d/guest/1012410" rel="noreferrer noopener" target="_blank">',
+																	'</a>',
+																]
+															),
+														}}
+													/>
+												}
+												onChange={() =>
+													setTermAndConditionsChecked(
+														(
+															previousTermAndConditionsChecked
+														) =>
+															!previousTermAndConditionsChecked
+													)
+												}
+											/>
+										</div>
 									</ClayForm.Group>
 								</>
 							)}
@@ -560,7 +599,9 @@ const SetupAnalyticsCloudPage = ({
 				),
 				middleButton: (
 					<Button
-						disabled={baseButtonDisabled}
+						disabled={
+							baseButtonDisabled || !termAndConditionsChecked
+						}
 						displayType="primary"
 						onClick={handleSubmit}
 					>
@@ -580,6 +621,12 @@ const SetupAnalyticsCloudPage = ({
 				render={({pop, push}) => (
 					<>
 						<ClayForm.Group className="pb-1">
+							<div>
+								<h4 className="ml-3 text-neutral-10">
+									{project.name}
+								</h4>
+							</div>
+
 							<Input
 								groupStyle="pb-1"
 								helper={i18n.translate(
@@ -601,9 +648,6 @@ const SetupAnalyticsCloudPage = ({
 
 							<Input
 								groupStyle="pb-1"
-								helper={i18n.translate(
-									'lowercase-letters-and-numbers-only-project-ids-cannot-be-changed'
-								)}
 								label={i18n.translate('workspace-name')}
 								name="activations.workspaceName"
 								placeholder="superbank1"
@@ -611,7 +655,6 @@ const SetupAnalyticsCloudPage = ({
 								type="text"
 								validations={[
 									(value) => maxLength(value, MAX_LENGTH),
-									(value) => isLowercaseAndNumbers(value),
 								]}
 							/>
 
@@ -680,6 +723,34 @@ const SetupAnalyticsCloudPage = ({
 								placeholder="UTC-04:00"
 								type="text"
 							/>
+
+							<div className="ml-3">
+								<ClayCheckbox
+									checked={termAndConditionsChecked}
+									label={
+										<div
+											dangerouslySetInnerHTML={{
+												__html: i18n.sub(
+													'by-checking-this-box-and-clicking-submit-below-i-as-an-authorized-representative-of-x-acknowledge-that-x-accepts-the-x-terms-and-conditions-and-privacy-policy-x-these-terms-will-govern-x-s-use-of-liferay-analytics-cloud-unless-x-has-entered-into-a-separate-agreement-with-liferay-that-governs-x-s-use-of-liferay-analytics-cloud',
+													[
+														project.name,
+														'<a href="https://www.liferay.com/documents/d/guest/1012410" rel="noreferrer noopener" target="_blank">',
+														'</a>',
+													]
+												),
+											}}
+										/>
+									}
+									onChange={() =>
+										setTermAndConditionsChecked(
+											(
+												previousTermAndConditionsChecked
+											) =>
+												!previousTermAndConditionsChecked
+										)
+									}
+								/>
+							</div>
 
 							<ClayForm.Group>
 								{values?.activations?.incidentReportContact?.map(

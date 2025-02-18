@@ -70,7 +70,7 @@ const sub = (word: string, words: string[]) => {
 	words.forEach((value, index) => {
 		const translatedKey = translate(value);
 		const key = `{${index}}`;
-		translatedWord = translatedWord.replace(key, translatedKey);
+		translatedWord = translatedWord.replaceAll(key, translatedKey);
 	});
 
 	return translatedWord;

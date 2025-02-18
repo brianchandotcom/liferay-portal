@@ -239,6 +239,7 @@
 		<column name="rootObjectEntryId" type="long" />
 		<column name="defaultLanguageId" type="String" />
 		<column name="treePath" type="String" />
+		<column name="version" type="int" />
 		<column name="lastPublishDate" type="Date" />
 		<column name="status" type="int" />
 		<column name="statusByUserId" type="long" />

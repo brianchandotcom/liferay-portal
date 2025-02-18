@@ -3,54 +3,29 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Badge} from '..';
 import ClayForm from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayMultiSelect from '@clayui/multi-select';
-import {InternalDispatch} from '@clayui/shared';
 import ClaySticker from '@clayui/sticker';
 import classNames from 'classnames';
-import {FieldHookConfig, useField, useFormikContext} from 'formik';
+import {useField, useFormikContext} from 'formik';
 import {useEffect} from 'react';
 import i18n from '~/utils/I18n';
+import {Badge} from '..';
 import {validateEmailsArray} from '~/utils/validations.form';
-
-import './MultiSelect.css';
-
-interface IItem {
-	email?: string;
-	label?: string;
-	value: string;
-}
-
-interface IProps
-	extends React.ComponentPropsWithoutRef<typeof ClayMultiSelect> {
-	filteredSourceItems?: IItem[] | undefined;
-	groupStyle?: string;
-	items?: IItem[] | undefined;
-	label?: string | undefined;
-	metaErrorCallback?: (error: string | undefined) => void;
-	name?: string;
-	onChange?: InternalDispatch<string> | undefined;
-	required?: boolean;
-	sourceItems?: {email: string}[] | undefined;
-	validations?: Function[] | undefined;
-	values?: IItem[] | undefined;
-}
 
 const MultiSelect = ({
 	filteredSourceItems,
 	groupStyle,
 	items,
 	label,
-	name,
 	metaErrorCallback,
 	onChange,
-	required = false,
 	sourceItems,
-	validations = [],
+	validations,
 	values,
-}: IProps) => {
+	...props
+}) => {
 	const formik = useFormikContext();
 
 	const validateMultiSelect = () => {
@@ -59,50 +34,42 @@ const MultiSelect = ({
 			.filter((error) => !!error);
 
 		const emailErrors = validateEmailsArray(
-			values?.map((item) => item?.email || item?.label) as string[],
-			sourceItems || []
+			values.map((item) => item?.email || item?.label),
+			sourceItems
 		);
 
 		return unfilledField.length ? unfilledField[0] : emailErrors;
 	};
 
 	const [field, meta] = useField({
-		name,
-		label,
+		...props,
 		validate: validateMultiSelect,
-		values,
-	} as unknown as FieldHookConfig<IItem[]>);
+	});
 
 	useEffect(() => {
-		formik.setFieldValue(field?.name, values);
-		formik.validateField(field?.name);
-	}, [field?.name, formik, values]);
+		formik.setFieldValue(props.name, values);
+		formik.validateField(props.name);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [values]);
 
 	useEffect(() => {
-		if (metaErrorCallback) {
-			metaErrorCallback(meta.error);
-		}
+		metaErrorCallback(meta.error);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [meta.error]);
 
-	}, [meta.error, metaErrorCallback]);
-
-	const requiredMultiSelect = (value: number) => {
+	const requiredMultiSelect = (value) => {
 		if (!value) {
 			return i18n.sub(
 				'one-or-more-contacts-are-required-please-select-a-contact-for-x',
-				[label as string]
+				[label]
 			);
 		}
-
-		return undefined;
 	};
 
-	if (required) {
+	if (props.required) {
 		validations = validations
-			? [
-					...validations,
-					(value: string) => requiredMultiSelect(value?.length),
-				]
-			: [(value: string) => requiredMultiSelect(value?.length)];
+			? [...validations, () => requiredMultiSelect(values.length)]
+			: [() => requiredMultiSelect(values.length)];
 	}
 
 	return (
@@ -117,7 +84,7 @@ const MultiSelect = ({
 				<label className="ml-0">
 					{`${label} `}
 
-					{required && (
+					{props.required && (
 						<span className="inline-item-after reference-mark text-warning">
 							<ClayIcon symbol="asterisk" />
 						</span>
@@ -126,17 +93,15 @@ const MultiSelect = ({
 
 				<ClayMultiSelect
 					{...field}
+					{...props}
 					items={items}
-					onChange={(event: any) => onChange?.(event?.target?.value)}
+					onChange={(event) => onChange(event?.target?.value)}
 					sourceItems={filteredSourceItems}
-					value={items?.map((item) => String(item?.value)) as unknown as string}
+					value={items?.value}
 				>
 					{(item, index) => (
 						<ClayMultiSelect.Item
 							key={index}
-							onPointerEnterCapture={() => {}}
-							onPointerLeaveCapture={() => {}}
-							placeholder={item?.label}
 							textValue={item?.label}
 						>
 							<div className="autofit-row autofit-row-center">
@@ -159,11 +124,13 @@ const MultiSelect = ({
 					)}
 				</ClayMultiSelect>
 
-				{meta?.touched && meta?.error && (
-					<Badge>
-						<span className="pl-1">{meta.error}</span>
-					</Badge>
-				)}
+				{(typeof meta.error === 'string' ||
+					meta.error instanceof String) &&
+					meta.touched && (
+						<Badge>
+							<span className="pl-1">{meta.error}</span>
+						</Badge>
+					)}
 			</ClayForm.Group>
 		</div>
 	);

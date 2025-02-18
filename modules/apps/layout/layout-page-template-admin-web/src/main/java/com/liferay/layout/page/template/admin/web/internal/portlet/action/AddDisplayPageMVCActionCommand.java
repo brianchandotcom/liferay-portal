@@ -127,9 +127,9 @@ public class AddDisplayPageMVCActionCommand extends BaseMVCActionCommand {
 			LayoutPageTemplateEntry layoutPageTemplateEntry =
 				_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
 					null, serviceContext.getScopeGroupId(),
-					layoutPageTemplateCollectionId, classNameId, classTypeId,
-					name, masterLayoutPlid, WorkflowConstants.STATUS_DRAFT,
-					serviceContext);
+					layoutPageTemplateCollectionId, null, classNameId,
+					classTypeId, name, masterLayoutPlid,
+					WorkflowConstants.STATUS_DRAFT, serviceContext);
 
 			return JSONUtil.put(
 				"redirectURL",

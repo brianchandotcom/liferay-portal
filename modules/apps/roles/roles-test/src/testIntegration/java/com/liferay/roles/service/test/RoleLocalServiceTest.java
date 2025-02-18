@@ -8,6 +8,7 @@ package com.liferay.roles.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.RoleNameException;
@@ -34,6 +35,7 @@ import com.liferay.portal.kernel.service.TeamLocalService;
 import com.liferay.portal.kernel.service.UserGroupGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -44,6 +46,7 @@ import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -53,6 +56,9 @@ import com.liferay.portal.kernel.util.comparator.RoleRoleIdComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -101,6 +107,148 @@ public class RoleLocalServiceTest {
 	public static void tearDownClass() {
 		_resourcePermissionLocalService.deleteResourcePermission(
 			_resourcePermission);
+	}
+
+	@Test
+	@TestInfo("LPS-159272")
+	public void testAddGroupRoleLoggingAuditMessageProcessor()
+		throws Exception {
+
+		PrintStream printStream = System.out;
+		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
+
+		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
+				new ConfigurationTemporarySwapper(
+					"com.liferay.portal.security.audit.router.configuration." +
+						"LoggingAuditMessageProcessorConfiguration",
+					HashMapDictionaryBuilder.<String, Object>put(
+						"enabled", true
+					).put(
+						"outputToConsole", true
+					).build())) {
+
+			ByteArrayOutputStream byteArrayOutputStream =
+				new ByteArrayOutputStream();
+
+			System.setOut(new PrintStream(byteArrayOutputStream));
+
+			Group group = GroupTestUtil.addGroup();
+
+			group.setSite(true);
+
+			group = _groupLocalService.updateGroup(group);
+
+			_roleLocalService.addGroupRole(group.getGroupId(), role);
+
+			String logContent = byteArrayOutputStream.toString();
+
+			Assert.assertTrue(
+				logContent.contains(
+					"\"groupName\":\"" + group.getGroupKey() + "\""));
+			Assert.assertTrue(
+				logContent.contains("\"roleName\":\"" + role.getName() + "\""));
+			Assert.assertTrue(logContent.contains("\"ASSIGN\""));
+
+			byteArrayOutputStream.reset();
+
+			_roleLocalService.deleteGroupRole(group.getGroupId(), role);
+
+			logContent = byteArrayOutputStream.toString();
+
+			Assert.assertTrue(
+				logContent.contains(
+					"\"groupName\":\"" + group.getGroupKey() + "\""));
+			Assert.assertTrue(
+				logContent.contains("\"roleName\":\"" + role.getName() + "\""));
+			Assert.assertTrue(logContent.contains("\"UNASSIGN\""));
+
+			byteArrayOutputStream.reset();
+
+			Organization organization = OrganizationTestUtil.addOrganization();
+
+			_roleLocalService.addGroupRole(organization.getGroupId(), role);
+
+			logContent = byteArrayOutputStream.toString();
+
+			Assert.assertTrue(
+				logContent.contains(
+					"\"organizationName\":\"" + organization.getName() + "\""));
+			Assert.assertTrue(
+				logContent.contains("\"roleName\":\"" + role.getName() + "\""));
+			Assert.assertTrue(logContent.contains("\"ASSIGN\""));
+
+			byteArrayOutputStream.reset();
+
+			_roleLocalService.deleteGroupRole(organization.getGroupId(), role);
+
+			logContent = byteArrayOutputStream.toString();
+
+			Assert.assertTrue(
+				logContent.contains(
+					"\"organizationName\":\"" + organization.getName() + "\""));
+			Assert.assertTrue(
+				logContent.contains("\"roleName\":\"" + role.getName() + "\""));
+			Assert.assertTrue(logContent.contains("\"UNASSIGN\""));
+
+			byteArrayOutputStream.reset();
+
+			User user = TestPropsValues.getUser();
+
+			_roleLocalService.addUserRole(user.getUserId(), role);
+
+			logContent = byteArrayOutputStream.toString();
+
+			Assert.assertTrue(
+				logContent.contains(
+					"\"userEmailAddress\":\"" + user.getEmailAddress() + "\""));
+			Assert.assertTrue(
+				logContent.contains("\"roleName\":\"" + role.getName() + "\""));
+			Assert.assertTrue(logContent.contains("\"ASSIGN\""));
+
+			byteArrayOutputStream.reset();
+
+			_roleLocalService.deleteUserRole(user.getUserId(), role);
+
+			logContent = byteArrayOutputStream.toString();
+
+			Assert.assertTrue(
+				logContent.contains(
+					"\"userEmailAddress\":\"" + user.getEmailAddress() + "\""));
+			Assert.assertTrue(
+				logContent.contains("\"roleName\":\"" + role.getName() + "\""));
+			Assert.assertTrue(logContent.contains("\"UNASSIGN\""));
+
+			byteArrayOutputStream.reset();
+
+			UserGroup userGroup = UserGroupTestUtil.addUserGroup();
+
+			_roleLocalService.addGroupRole(userGroup.getGroupId(), role);
+
+			logContent = byteArrayOutputStream.toString();
+
+			Assert.assertTrue(
+				logContent.contains(
+					"\"userGroupName\":\"" + userGroup.getName() + "\""));
+			Assert.assertTrue(
+				logContent.contains("\"roleName\":\"" + role.getName() + "\""));
+			Assert.assertTrue(logContent.contains("\"ASSIGN\""));
+
+			byteArrayOutputStream.reset();
+
+			_roleLocalService.deleteGroupRole(userGroup.getGroupId(), role);
+
+			logContent = byteArrayOutputStream.toString();
+
+			Assert.assertTrue(
+				logContent.contains(
+					"\"userGroupName\":\"" + userGroup.getName() + "\""));
+			Assert.assertTrue(
+				logContent.contains("\"roleName\":\"" + role.getName() + "\""));
+			Assert.assertTrue(logContent.contains("\"UNASSIGN\""));
+		}
+		finally {
+			System.setOut(printStream);
+		}
 	}
 
 	@Test

@@ -8873,7 +8873,34 @@ war.path=${app.server.portal.dir}/</echo>
 			</if>
 
 			<echo file="validate_db_upgrade_schemas.sh">
-diff -B --new-line-format='%L' --old-line-format= --unchanged-line-format= ${selenium.output.dir.name}/upgraded-@{upgraded.db.schema}.sql ${selenium.output.dir.name}/fresh-@{fresh.db.schema}.sql || true
+				<![CDATA[
+					#!/bin/bash
+
+					# Input files
+					FILE_FRESH="${selenium.output.dir.name}/fresh-@{fresh.db.schema}.sql"
+					FILE_UPGRADED="${selenium.output.dir.name}/upgraded-@{upgraded.db.schema}.sql"
+
+					# Extract table names from CREATE TABLE statements
+					grep -i "CREATE TABLE" "$FILE_FRESH" | awk '{print $3}' | tr -d '`' > ${selenium.output.dir.name}/tables_fresh.txt
+					grep -i "CREATE TABLE" "$FILE_UPGRADED" | awk '{print $3}' | tr -d '`' > ${selenium.output.dir.name}/tables_upgraded.txt
+
+					# Find tables that are in upgraded dump but not in fresh dump
+					grep -Fxvf ${selenium.output.dir.name}/tables_fresh.txt ${selenium.output.dir.name}/tables_upgraded.txt > ${selenium.output.dir.name}/tables_to_remove.txt
+
+					# Remove SQL related code from tables that are only present in upgraded dump
+					while read -r table; do
+						# Remove the entire CREATE TABLE block for the table
+						sed -i "/^CREATE TABLE \`$table\`/,/ENDCREATE/d" "$FILE_UPGRADED"
+						sed -i "/^CREATE TABLE public.$table/,/^);/d" "$FILE_UPGRADED"
+						sed -i "/^CREATE INDEX.*$TABLE/d" "$FILE_UPGRADED"
+						sed -i "/^CREATE UNIQUE INDEX.*$TABLE/d" "$FILE_UPGRADED"
+						sed -i "/^ALTER TABLE ONLY public\.$table/,/^);/d" "$FILE_UPGRADED"
+						sed -i "/^CREATE RULE update_$table/,/);$/d" "$FILE_UPGRADED"
+						sed -i "/^CREATE RULE delete_$table/,/);$/d" "$FILE_UPGRADED"
+					done < ${selenium.output.dir.name}/tables_to_remove.txt
+
+					diff -y -B -W250 ${selenium.output.dir.name}/upgraded-@{upgraded.db.schema}.sql ${selenium.output.dir.name}/fresh-@{fresh.db.schema}.sql | expand | grep -E -C40 '^.{123} [|><]( |$)' || true
+				]]>
 			</echo>
 
 			<chmod
@@ -8883,27 +8910,18 @@ diff -B --new-line-format='%L' --old-line-format= --unchanged-line-format= ${sel
 
 			<exec executable="./validate_db_upgrade_schemas.sh" outputproperty="database.changes.master" />
 
+			<delete failonerror="false" file="${selenium.output.dir.name}/tables_fresh.txt" />
+			<delete failonerror="false" file="${selenium.output.dir.name}/tables_to_remove.txt" />
+			<delete failonerror="false" file="${selenium.output.dir.name}/tables_upgraded.txt" />
+
 			<if>
 				<not>
 					<equals arg1="${database.changes.master}" arg2="" />
 				</not>
 				<then>
 					<echo file="${selenium.output.dir.name}/@{upgraded.db.schema}-@{fresh.db.schema}-validate-db-schemas.txt">
-Upgraded database is missing the following elements from a fresh database: ${line.separator}${database.changes.master}
-
-diff:${line.separator}${selenium.output.dir.name}/upgraded-@{upgraded.db.schema}.sql > ${selenium.output.dir.name}/fresh-@{fresh.db.schema}.sql
+						Upgraded and fresh schemas differ in the following elements: ${line.separator}${database.changes.master}
 					</echo>
-
-					<echo file="validate_db_upgrade_schemas.sh">
-diff -y -B -W250 ${selenium.output.dir.name}/upgraded-@{upgraded.db.schema}.sql ${selenium.output.dir.name}/fresh-@{fresh.db.schema}.sql | expand | grep -E -C40 '^.{123} [|>]( |$)'
-					</echo>
-
-					<chmod
-						file="validate_db_upgrade_schemas.sh"
-						perm="a+x"
-					/>
-
-					<exec append="true" executable="./validate_db_upgrade_schemas.sh" output="${selenium.output.dir.name}/@{upgraded.db.schema}-@{fresh.db.schema}-validate-db-schemas.txt" />
 				</then>
 				<else>
 					<echo file="${selenium.output.dir.name}/@{upgraded.db.schema}-@{fresh.db.schema}-validate-db-schemas.txt">Database schemas match</echo>

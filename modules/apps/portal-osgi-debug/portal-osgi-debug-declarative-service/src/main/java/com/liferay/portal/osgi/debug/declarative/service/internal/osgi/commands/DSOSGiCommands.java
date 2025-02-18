@@ -6,6 +6,7 @@
 package com.liferay.portal.osgi.debug.declarative.service.internal.osgi.commands;
 
 import com.liferay.osgi.util.osgi.commands.OSGiCommands;
+import com.liferay.portal.osgi.debug.declarative.service.internal.SoftCircularDependencyUtil;
 import com.liferay.portal.osgi.debug.declarative.service.internal.UnsatisfiedComponentUtil;
 
 import org.osgi.framework.BundleContext;
@@ -15,13 +16,22 @@ import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.runtime.ServiceComponentRuntime;
 
 /**
- * @author Tina Tian
+ * @author Shuyang Zhou
  */
 @Component(
-	property = {"osgi.command.function=unsatisfied", "osgi.command.scope=ds"},
+	property = {
+		"osgi.command.function=softCircularDependency",
+		"osgi.command.function=unsatisfied", "osgi.command.scope=ds"
+	},
 	service = OSGiCommands.class
 )
-public class UnsatisfiedComponentOSGiCommands implements OSGiCommands {
+public class DSOSGiCommands implements OSGiCommands {
+
+	public void softCircularDependency() {
+		System.out.println(
+			SoftCircularDependencyUtil.listSoftCircularDependencies(
+				_serviceComponentRuntime, _bundleContext));
+	}
 
 	public void unsatisfied() {
 		System.out.println(

@@ -35,6 +35,7 @@ function BulkActions({
 	fluid,
 	handleCheckboxClick,
 	items,
+	pageSelectedItemsValue,
 	selectItems,
 	selectedItems,
 	selectedItemsKey,
@@ -242,7 +243,7 @@ function BulkActions({
 											}
 											items={items}
 											selectedItemsValue={
-												selectedItemsValue
+												pageSelectedItemsValue
 											}
 										/>
 									</li>

@@ -13,6 +13,7 @@ import ActiveFiltersBar from './controls/filters/ActiveFiltersBar';
 function ManagementBar({
 	bulkActions,
 	creationMenu,
+	deselectItems,
 	fluid,
 	items,
 	selectItems,
@@ -23,12 +24,18 @@ function ManagementBar({
 	showSearch,
 	total,
 }) {
+	const pageSelectedItemsValue = selectedItemsValue.filter((id) =>
+		items.some((item) => item.id === id)
+	);
+
 	function handleCheckboxClick() {
-		if (selectedItemsValue.length === items.length) {
-			return selectItems([]);
+		const itemKeys = items.map((item) => item[selectedItemsKey]);
+
+		if (pageSelectedItemsValue.length === items.length) {
+			return deselectItems(itemKeys);
 		}
 
-		return selectItems(items.map((item) => item[selectedItemsKey]));
+		return selectItems(itemKeys);
 	}
 
 	return (
@@ -39,6 +46,7 @@ function ManagementBar({
 					fluid={fluid}
 					handleCheckboxClick={handleCheckboxClick}
 					items={items}
+					pageSelectedItemsValue={pageSelectedItemsValue}
 					selectItems={selectItems}
 					selectedItems={selectedItems}
 					selectedItemsKey={selectedItemsKey}

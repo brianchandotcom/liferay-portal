@@ -339,24 +339,59 @@ const FrontendDataSet = ({
 		}
 	}, [itemsProp]);
 
-	function selectItems(value) {
+	function deselectItems(value) {
 		if (Array.isArray(value)) {
-			return setSelectedItemsValue(value);
-		}
-
-		if (selectionType === 'single') {
-			return setSelectedItemsValue([value]);
-		}
-
-		const itemAdded = selectedItemsValue.find((item) => item === value);
-
-		if (itemAdded) {
-			setSelectedItemsValue(
-				selectedItemsValue.filter((element) => element !== value)
+			return setSelectedItemsValue(
+				selectedItemsValue.filter((item) => !value.includes(item))
 			);
 		}
+
+		setSelectedItemsValue(
+			selectedItemsValue.filter((item) => item !== value)
+		);
+	}
+
+	function selectItems(value) {
+		if (Liferay.FeatureFlags['LPD-42570']) {
+			if (Array.isArray(value)) {
+				const newItems = value.filter(
+					(item) => !selectedItemsValue.includes(item)
+				);
+
+				return setSelectedItemsValue([
+					...selectedItemsValue,
+					...newItems,
+				]);
+			}
+
+			if (selectedItemsValue.includes(value)) {
+				setSelectedItemsValue(
+					selectedItemsValue.filter((item) => item !== value)
+				);
+			}
+			else {
+				setSelectedItemsValue([...selectedItemsValue, value]);
+			}
+		}
 		else {
-			setSelectedItemsValue(selectedItemsValue.concat(value));
+			if (Array.isArray(value)) {
+				return setSelectedItemsValue(value);
+			}
+
+			if (selectionType === 'single') {
+				return setSelectedItemsValue([value]);
+			}
+
+			const itemAdded = selectedItemsValue.find((item) => item === value);
+
+			if (itemAdded) {
+				setSelectedItemsValue(
+					selectedItemsValue.filter((element) => element !== value)
+				);
+			}
+			else {
+				setSelectedItemsValue(selectedItemsValue.concat(value));
+			}
 		}
 	}
 
@@ -559,6 +594,7 @@ const FrontendDataSet = ({
 			<ManagementBar
 				bulkActions={bulkActions}
 				creationMenu={creationMenu}
+				deselectItems={(items) => deselectItems(items)}
 				fluid={style === 'fluid'}
 				items={items}
 				selectItems={(items) => selectItems(items)}

@@ -7605,11 +7605,11 @@ public class ObjectEntryResourceTest {
 				_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE, ".folder"),
 			Http.Method.POST);
 
-		JSONObject portalInstanceJSONObject = _getVirtualInstanceJSONObject(
+		JSONObject virtualInstanceJSONObject = _addVirtualInstanceJSONObject(
 			"able.com");
 
 		User adminUser = UserTestUtil.getAdminUser(
-			portalInstanceJSONObject.getLong("companyId"));
+			virtualInstanceJSONObject.getLong("companyId"));
 
 		ObjectDefinition objectDefinition =
 			ObjectDefinitionTestUtil.publishObjectDefinition(
@@ -8613,10 +8613,11 @@ public class ObjectEntryResourceTest {
 				objectRelationship1.getObjectDefinitionId1()),
 			_OBJECT_FIELD_NAME_TEXT, RandomTestUtil.randomString());
 
-		JSONObject jsonObject = _getVirtualInstanceJSONObject("able.com");
+		JSONObject virtualInstanceJSONObject = _addVirtualInstanceJSONObject(
+			"able.com");
 
 		ObjectRelationship objectRelationship2 = _addObjectRelationship(
-			jsonObject.getLong("companyId"));
+			virtualInstanceJSONObject.getLong("companyId"));
 
 		HTTPTestUtil.customize(
 		).withBaseURL(
@@ -12812,6 +12813,31 @@ public class ObjectEntryResourceTest {
 		return UserLocalServiceUtil.updateUser(user);
 	}
 
+	private JSONObject _addVirtualInstanceJSONObject(String virtualInstanceId)
+		throws Exception {
+
+		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
+			null,
+			"headless-portal-instances/v1.0/portal-instances/" +
+				virtualInstanceId,
+			Http.Method.GET);
+
+		if (Objects.equals(jsonObject.getString("status"), "NOT_FOUND")) {
+			jsonObject = HTTPTestUtil.invokeToJSONObject(
+				JSONUtil.put(
+					"domain", "able.com"
+				).put(
+					"portalInstanceId", "able.com"
+				).put(
+					"virtualHost", "www.able.com"
+				).toString(),
+				"headless-portal-instances/v1.0/portal-instances",
+				Http.Method.POST);
+		}
+
+		return jsonObject;
+	}
+
 	private void _assertAttachmentJSONObject(
 			DLFileEntry dlFileEntry, String fileBase64, JSONObject jsonObject,
 			JSONObject scopeJSONObject)
@@ -13445,33 +13471,6 @@ public class ObjectEntryResourceTest {
 		}
 
 		return Type.MANY_TO_MANY;
-	}
-
-	private JSONObject _getVirtualInstanceJSONObject(String portalInstanceId)
-		throws Exception {
-
-		JSONObject portalInstanceJSONObject = HTTPTestUtil.invokeToJSONObject(
-			null,
-			"headless-portal-instances/v1.0/portal-instances/" +
-				portalInstanceId,
-			Http.Method.GET);
-
-		if (Objects.equals(
-				portalInstanceJSONObject.getString("status"), "NOT_FOUND")) {
-
-			portalInstanceJSONObject = HTTPTestUtil.invokeToJSONObject(
-				JSONUtil.put(
-					"domain", "able.com"
-				).put(
-					"portalInstanceId", "able.com"
-				).put(
-					"virtualHost", "www.able.com"
-				).toString(),
-				"headless-portal-instances/v1.0/portal-instances",
-				Http.Method.POST);
-		}
-
-		return portalInstanceJSONObject;
 	}
 
 	private JSONObject

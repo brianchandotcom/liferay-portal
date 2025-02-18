@@ -1597,6 +1597,11 @@ public class PortletDataContextImpl implements PortletDataContext {
 			ExportImportClassedModelUtil.getPrimaryKeyObj(stagedModel));
 	}
 
+	@Override
+	public boolean isValidateDataHandler() {
+		return _validateDataHandler;
+	}
+
 	/**
 	 * @see #addDateRangeCriteria(DynamicQuery, String)
 	 */
@@ -1796,6 +1801,11 @@ public class PortletDataContextImpl implements PortletDataContext {
 	@Override
 	public void setUserPersonalSiteGroupId(long userPersonalSiteGroupId) {
 		_userPersonalSiteGroupId = userPersonalSiteGroupId;
+	}
+
+	@Override
+	public void setValidateDataHandler(boolean validateDataHandler) {
+		_validateDataHandler = validateDataHandler;
 	}
 
 	@Override
@@ -2779,6 +2789,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 	private String _type;
 	private transient UserIdStrategy _userIdStrategy;
 	private long _userPersonalSiteGroupId;
+	private boolean _validateDataHandler;
 	private transient ZipReader _zipReader;
 	private transient ZipWriter _zipWriter;
 

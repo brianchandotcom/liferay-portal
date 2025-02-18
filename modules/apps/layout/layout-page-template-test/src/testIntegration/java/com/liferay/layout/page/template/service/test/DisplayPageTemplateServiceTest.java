@@ -55,7 +55,7 @@ public class DisplayPageTemplateServiceTest {
 
 		LayoutPageTemplateEntry displayPageTemplate =
 			_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
-				null, _group.getGroupId(), 0, name,
+				null, _group.getGroupId(), 0, null, name,
 				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0,
 				WorkflowConstants.STATUS_DRAFT,
 				ServiceContextTestUtil.getServiceContext(
@@ -94,7 +94,7 @@ public class DisplayPageTemplateServiceTest {
 		throws PortalException {
 
 		return _layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
-			null, _group.getGroupId(), 0, classNameId, classTypeId,
+			null, _group.getGroupId(), 0, null, classNameId, classTypeId,
 			RandomTestUtil.randomString(), 0, WorkflowConstants.STATUS_DRAFT,
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId()));

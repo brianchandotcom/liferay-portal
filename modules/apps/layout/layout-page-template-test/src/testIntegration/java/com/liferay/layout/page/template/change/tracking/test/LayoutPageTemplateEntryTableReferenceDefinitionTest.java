@@ -64,7 +64,7 @@ public class LayoutPageTemplateEntryTableReferenceDefinitionTest
 		return _layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
 			null, TestPropsValues.getUserId(), group.getGroupId(),
 			_layoutPageTemplateCollection.getLayoutPageTemplateCollectionId(),
-			RandomTestUtil.randomString(),
+			null, RandomTestUtil.randomString(),
 			LayoutPageTemplateEntryTypeConstants.BASIC, 0,
 			WorkflowConstants.STATUS_APPROVED,
 			ServiceContextTestUtil.getServiceContext());

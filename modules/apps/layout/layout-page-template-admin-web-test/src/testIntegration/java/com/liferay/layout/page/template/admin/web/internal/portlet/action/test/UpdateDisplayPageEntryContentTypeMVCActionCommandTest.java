@@ -107,7 +107,7 @@ public class UpdateDisplayPageEntryContentTypeMVCActionCommandTest {
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
-				null, serviceContext.getScopeGroupId(), 0,
+				null, serviceContext.getScopeGroupId(), 0, null,
 				_portal.getClassNameId(JournalArticle.class.getName()),
 				ddmStructure.getStructureId(), RandomTestUtil.randomString(), 0,
 				WorkflowConstants.STATUS_DRAFT, serviceContext);
@@ -170,7 +170,7 @@ public class UpdateDisplayPageEntryContentTypeMVCActionCommandTest {
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
-				null, serviceContext.getScopeGroupId(), 0,
+				null, serviceContext.getScopeGroupId(), 0, null,
 				_portal.getClassNameId(JournalArticle.class.getName()),
 				ddmStructure.getStructureId(), RandomTestUtil.randomString(), 0,
 				WorkflowConstants.STATUS_DRAFT, serviceContext);
@@ -224,7 +224,7 @@ public class UpdateDisplayPageEntryContentTypeMVCActionCommandTest {
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
-				null, serviceContext.getScopeGroupId(), 0, classNameId,
+				null, serviceContext.getScopeGroupId(), 0, null, classNameId,
 				journalArticle.getDDMStructureId(),
 				RandomTestUtil.randomString(), 0,
 				WorkflowConstants.STATUS_DRAFT, serviceContext);

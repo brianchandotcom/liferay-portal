@@ -79,7 +79,7 @@ public class ExportMasterLayoutsMVCResourceCommandTest {
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
 				null, _serviceContext.getUserId(),
-				_serviceContext.getScopeGroupId(), 0, "Master Page One",
+				_serviceContext.getScopeGroupId(), 0, null, "Master Page One",
 				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT, 0,
 				WorkflowConstants.STATUS_APPROVED, _serviceContext);
 
@@ -139,7 +139,8 @@ public class ExportMasterLayoutsMVCResourceCommandTest {
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
 				null, _serviceContext.getUserId(),
-				_serviceContext.getScopeGroupId(), 0, StringUtil.randomString(),
+				_serviceContext.getScopeGroupId(), 0, null,
+				StringUtil.randomString(),
 				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT, 0,
 				WorkflowConstants.STATUS_DRAFT, _serviceContext);
 
@@ -171,7 +172,7 @@ public class ExportMasterLayoutsMVCResourceCommandTest {
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
 				null, _serviceContext.getUserId(),
-				_serviceContext.getScopeGroupId(), 0, "Master Page One",
+				_serviceContext.getScopeGroupId(), 0, null, "Master Page One",
 				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT, 0,
 				WorkflowConstants.STATUS_DRAFT, _serviceContext);
 

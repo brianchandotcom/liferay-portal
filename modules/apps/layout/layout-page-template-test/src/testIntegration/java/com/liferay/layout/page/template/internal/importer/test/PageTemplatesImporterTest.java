@@ -180,7 +180,7 @@ public class PageTemplatesImporterTest {
 				null, TestPropsValues.getUserId(), _group.getGroupId(),
 				layoutPageTemplateCollection.
 					getLayoutPageTemplateCollectionId(),
-				layoutPageTemplateEntryName,
+				null, layoutPageTemplateEntryName,
 				LayoutPageTemplateEntryTypeConstants.BASIC, 0,
 				WorkflowConstants.STATUS_APPROVED, serviceContext);
 
@@ -260,7 +260,7 @@ public class PageTemplatesImporterTest {
 			LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
 				_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
 					null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
-					RandomTestUtil.randomString(),
+					null, RandomTestUtil.randomString(),
 					LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT, 0,
 					WorkflowConstants.STATUS_DRAFT,
 					ServiceContextTestUtil.getServiceContext(
@@ -282,7 +282,7 @@ public class PageTemplatesImporterTest {
 					null, TestPropsValues.getUserId(), _group.getGroupId(),
 					layoutPageTemplateCollection.
 						getLayoutPageTemplateCollectionId(),
-					RandomTestUtil.randomString(),
+					null, RandomTestUtil.randomString(),
 					LayoutPageTemplateEntryTypeConstants.BASIC,
 					masterLayoutPageTemplateEntry.getPlid(),
 					WorkflowConstants.STATUS_APPROVED, serviceContext);
@@ -629,7 +629,7 @@ public class PageTemplatesImporterTest {
 					null, TestPropsValues.getUserId(), _group.getGroupId(),
 					layoutPageTemplateCollection.
 						getLayoutPageTemplateCollectionId(),
-					RandomTestUtil.randomString(),
+					null, RandomTestUtil.randomString(),
 					LayoutPageTemplateEntryTypeConstants.BASIC, 0,
 					WorkflowConstants.STATUS_APPROVED, serviceContext);
 
@@ -712,7 +712,7 @@ public class PageTemplatesImporterTest {
 					null, TestPropsValues.getUserId(), _group.getGroupId(),
 					layoutPageTemplateCollection.
 						getLayoutPageTemplateCollectionId(),
-					RandomTestUtil.randomString(),
+					null, RandomTestUtil.randomString(),
 					LayoutPageTemplateEntryTypeConstants.BASIC, 0,
 					WorkflowConstants.STATUS_APPROVED, serviceContext);
 
@@ -798,7 +798,7 @@ public class PageTemplatesImporterTest {
 					null, TestPropsValues.getUserId(), _group.getGroupId(),
 					layoutPageTemplateCollection.
 						getLayoutPageTemplateCollectionId(),
-					RandomTestUtil.randomString(),
+					null, RandomTestUtil.randomString(),
 					LayoutPageTemplateEntryTypeConstants.BASIC, 0,
 					WorkflowConstants.STATUS_APPROVED, serviceContext);
 
@@ -900,7 +900,7 @@ public class PageTemplatesImporterTest {
 					null, TestPropsValues.getUserId(), _group.getGroupId(),
 					layoutPageTemplateCollection.
 						getLayoutPageTemplateCollectionId(),
-					RandomTestUtil.randomString(),
+					null, RandomTestUtil.randomString(),
 					LayoutPageTemplateEntryTypeConstants.BASIC, 0,
 					WorkflowConstants.STATUS_APPROVED, serviceContext);
 
@@ -1131,7 +1131,7 @@ public class PageTemplatesImporterTest {
 	public void testImportLayoutPageTemplateWithMasterPage() throws Exception {
 		LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-				null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
+				null, TestPropsValues.getUserId(), _group.getGroupId(), 0, null,
 				"Test Master Page",
 				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT, 0,
 				WorkflowConstants.STATUS_DRAFT,

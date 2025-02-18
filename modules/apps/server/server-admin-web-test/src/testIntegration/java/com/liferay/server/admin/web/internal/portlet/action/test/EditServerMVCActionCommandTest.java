@@ -172,7 +172,7 @@ public class EditServerMVCActionCommandTest {
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-				null, _group.getCreatorUserId(), _group.getGroupId(), 0,
+				null, _group.getCreatorUserId(), _group.getGroupId(), 0, null,
 				_portal.getClassNameId(FileEntry.class.getName()), 0,
 				RandomTestUtil.randomString(),
 				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0, true, 0,

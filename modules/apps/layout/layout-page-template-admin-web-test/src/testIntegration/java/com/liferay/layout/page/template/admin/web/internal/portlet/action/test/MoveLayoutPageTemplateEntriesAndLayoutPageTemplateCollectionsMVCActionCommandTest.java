@@ -111,7 +111,7 @@ public class
 				null, TestPropsValues.getUserId(), _group.getGroupId(),
 				LayoutPageTemplateConstants.
 					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-				StringUtil.randomString(),
+				null, StringUtil.randomString(),
 				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0,
 				WorkflowConstants.STATUS_DRAFT, _serviceContext);
 		LayoutPageTemplateEntry layoutPageTemplateEntry2 =
@@ -119,7 +119,7 @@ public class
 				null, TestPropsValues.getUserId(), _group.getGroupId(),
 				LayoutPageTemplateConstants.
 					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-				StringUtil.randomString(),
+				null, StringUtil.randomString(),
 				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0,
 				WorkflowConstants.STATUS_DRAFT, _serviceContext);
 

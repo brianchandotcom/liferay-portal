@@ -550,7 +550,7 @@ public class LayoutStagedModelDataHandlerTest
 		LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
 				null, TestPropsValues.getUserId(), stagingGroup.getGroupId(), 0,
-				"Test Master Page",
+				null, "Test Master Page",
 				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT, 0,
 				WorkflowConstants.STATUS_APPROVED,
 				ServiceContextTestUtil.getServiceContext(
@@ -1539,7 +1539,7 @@ public class LayoutStagedModelDataHandlerTest
 		LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
 				null, TestPropsValues.getUserId(),
-				serviceContext.getScopeGroupId(), 0,
+				serviceContext.getScopeGroupId(), 0, null,
 				RandomTestUtil.randomString(),
 				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT, 0,
 				WorkflowConstants.STATUS_APPROVED, serviceContext);

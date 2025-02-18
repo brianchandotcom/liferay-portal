@@ -76,6 +76,15 @@ const ClassicEditor = ({config}: {config?: EditorConfig}) => {
 				...config,
 			}}
 			editor={BaseClassicEditor}
+			onReady={(editor: BaseClassicEditor) => {
+				editor.ui.view.toolbar.items.map((item: any) => {
+					if (item.buttonView) {
+						item.buttonView.tooltipPosition = 'n';
+					}
+
+					item.tooltipPosition = 'n';
+				});
+			}}
 		/>
 	);
 };

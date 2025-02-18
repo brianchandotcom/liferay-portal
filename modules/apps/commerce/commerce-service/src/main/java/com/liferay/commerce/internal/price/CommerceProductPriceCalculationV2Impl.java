@@ -5,6 +5,7 @@
 
 package com.liferay.commerce.internal.price;
 
+import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.context.CommerceContext;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.model.CommerceMoney;
@@ -38,6 +39,8 @@ import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.model.CommerceChannelAccountEntryRel;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CPInstanceUnitOfMeasureLocalService;
+import com.liferay.commerce.product.service.CommerceChannelAccountEntryRelLocalService;
+import com.liferay.commerce.product.service.CommerceChannelLocalService;
 import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapperFactory;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
@@ -56,6 +59,7 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -1004,10 +1008,109 @@ public class CommerceProductPriceCalculationV2Impl
 			commerceOrderTypeId = commerceOrder.getCommerceOrderTypeId();
 		}
 
-		return commercePriceListDiscovery.getCommercePriceList(
-			cpInstance.getGroupId(), commerceAccountId,
-			commerceContext.getCommerceChannelId(), commerceOrderTypeId,
-			cpInstance.getCPInstanceUuid(), null, type, unitOfMeasureKey);
+		List<String> currencyCodes = new ArrayList<>();
+
+		CommerceCurrency commerceCurrency =
+			commerceContext.getCommerceCurrency();
+
+		currencyCodes.add(commerceCurrency.getCode());
+
+		CommercePriceList commercePriceList =
+			commercePriceListDiscovery.getCommercePriceList(
+				cpInstance.getGroupId(), commerceAccountId,
+				commerceContext.getCommerceChannelId(), commerceOrderTypeId,
+				cpInstance.getCPInstanceUuid(), commerceCurrency.getCode(),
+				type, unitOfMeasureKey);
+
+		if (commercePriceList == null) {
+			AccountEntry accountEntry = commerceContext.getAccountEntry();
+
+			if (accountEntry != null) {
+				CommerceChannelAccountEntryRel
+					currencyCommerceChannelAccountEntryRel =
+						_commerceChannelAccountEntryRelLocalService.
+							fetchCommerceChannelAccountEntryRel(
+								accountEntry.getAccountEntryId(),
+								commerceContext.getCommerceChannelId(),
+								CommerceChannelAccountEntryRelConstants.
+									TYPE_CURRENCY);
+
+				if (currencyCommerceChannelAccountEntryRel != null) {
+					commerceCurrency =
+						_commerceCurrencyLocalService.fetchCommerceCurrency(
+							currencyCommerceChannelAccountEntryRel.
+								getClassPK());
+
+					if ((commerceCurrency != null) &&
+						commerceCurrency.isActive() &&
+						!currencyCodes.contains(commerceCurrency.getCode())) {
+
+						commercePriceList =
+							commercePriceListDiscovery.getCommercePriceList(
+								cpInstance.getGroupId(), commerceAccountId,
+								commerceContext.getCommerceChannelId(),
+								commerceOrderTypeId,
+								cpInstance.getCPInstanceUuid(),
+								commerceCurrency.getCode(), type,
+								unitOfMeasureKey);
+
+						currencyCodes.add(commerceCurrency.getCode());
+					}
+				}
+			}
+		}
+
+		if (commercePriceList == null) {
+			CommerceChannel commerceChannel =
+				_commerceChannelLocalService.fetchCommerceChannel(
+					commerceContext.getCommerceChannelId());
+
+			if (commerceChannel != null) {
+				commerceCurrency =
+					_commerceCurrencyLocalService.fetchCommerceCurrency(
+						commerceChannel.getCompanyId(),
+						commerceChannel.getCommerceCurrencyCode());
+
+				if ((commerceCurrency != null) && commerceCurrency.isActive() &&
+					!currencyCodes.contains(commerceCurrency.getCode())) {
+
+					commercePriceList =
+						commercePriceListDiscovery.getCommercePriceList(
+							cpInstance.getGroupId(), commerceAccountId,
+							commerceContext.getCommerceChannelId(),
+							commerceOrderTypeId, cpInstance.getCPInstanceUuid(),
+							commerceCurrency.getCode(), type, unitOfMeasureKey);
+
+					currencyCodes.add(commerceCurrency.getCode());
+				}
+			}
+		}
+
+		if (commercePriceList == null) {
+			commerceCurrency =
+				_commerceCurrencyLocalService.fetchPrimaryCommerceCurrency(
+					cpInstance.getCompanyId());
+
+			if ((commerceCurrency != null) && commerceCurrency.isActive() &&
+				!currencyCodes.contains(commerceCurrency.getCode())) {
+
+				commercePriceList =
+					commercePriceListDiscovery.getCommercePriceList(
+						cpInstance.getGroupId(), commerceAccountId,
+						commerceContext.getCommerceChannelId(),
+						commerceOrderTypeId, cpInstance.getCPInstanceUuid(),
+						commerceCurrency.getCode(), type, unitOfMeasureKey);
+			}
+		}
+
+		if (commercePriceList == null) {
+			commercePriceList = commercePriceListDiscovery.getCommercePriceList(
+				cpInstance.getGroupId(), commerceAccountId,
+				commerceContext.getCommerceChannelId(), commerceOrderTypeId,
+				cpInstance.getCPInstanceUuid(), null, type, unitOfMeasureKey);
+		}
+
+		return commercePriceList;
 	}
 
 	private CommercePriceListDiscovery _getCommercePriceListDiscovery(
@@ -1359,6 +1462,13 @@ public class CommerceProductPriceCalculationV2Impl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceProductPriceCalculationV2Impl.class);
+
+	@Reference
+	private CommerceChannelAccountEntryRelLocalService
+		_commerceChannelAccountEntryRelLocalService;
+
+	@Reference
+	private CommerceChannelLocalService _commerceChannelLocalService;
 
 	@Reference
 	private CommerceCurrencyLocalService _commerceCurrencyLocalService;

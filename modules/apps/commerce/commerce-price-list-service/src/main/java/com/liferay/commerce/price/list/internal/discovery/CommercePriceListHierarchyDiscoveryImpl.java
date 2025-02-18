@@ -14,7 +14,6 @@ import com.liferay.commerce.product.constants.CommerceChannelAccountEntryRelCons
 import com.liferay.commerce.product.model.CommerceChannelAccountEntryRel;
 import com.liferay.commerce.product.service.CommerceChannelAccountEntryRelLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
 
@@ -36,17 +35,9 @@ public class CommercePriceListHierarchyDiscoveryImpl
 			String currencyCode, String type, String unitOfMeasureKey)
 		throws PortalException {
 
-		CommercePriceList commercePriceList = _getCommercePriceList(
+		return _getCommercePriceList(
 			groupId, commerceAccountId, commerceChannelId, commerceOrderTypeId,
 			currencyCode, type);
-
-		if ((commercePriceList == null) && !Validator.isBlank(currencyCode)) {
-			return _getCommercePriceList(
-				groupId, commerceAccountId, commerceChannelId,
-				commerceOrderTypeId, null, type);
-		}
-
-		return commercePriceList;
 	}
 
 	@Override

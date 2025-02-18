@@ -685,6 +685,7 @@
 			<property name="category" value="Bug Prevention" />
 			<property name="description" value="Perform several checks on `*OSGiCommands` classes." />
 			<property name="enabled" value="false" />
+			<message key="class.name.incorrect" value="Name of class implementing &quot;OSGiCommands&quot; should be the value of &quot;osgi.command.scope&quot; property with &quot;OSGiCommands&quot;" />
 			<message key="implemented.command.function.missing" value="Missing a public method for implementing &quot;{0}&quot;" />
 			<message key="osgi.reference.avoid" value="OSGi references to &quot;*OSGiCommands&quot; classes are not allowed" />
 			<message key="public.method.name.incorrect" value="Name of public method in *OSGiCommands class should be the value of &quot;osgi.command.function&quot; property" />

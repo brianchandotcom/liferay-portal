@@ -7,8 +7,12 @@ package com.liferay.commerce.currency.internal.search.spi.model.index.contributo
 
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.product.constants.CPField;
+import com.liferay.commerce.product.model.CommerceChannelRel;
+import com.liferay.commerce.product.service.CommerceChannelRelLocalService;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
 
@@ -30,6 +34,14 @@ public class CommerceCurrencyModelDocumentContributor
 		Document document, CommerceCurrency commerceCurrency) {
 
 		document.addKeyword(CPField.ACTIVE, commerceCurrency.isActive());
+		document.addKeyword(
+			CPField.CHANNEL_IDS,
+			ListUtil.toLongArray(
+				_commerceChannelRelLocalService.getCommerceChannelRels(
+					CommerceCurrency.class.getName(),
+					commerceCurrency.getCommerceCurrencyId(), QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null),
+				CommerceChannelRel::getCommerceChannelId));
 		document.addText(CPField.CODE, commerceCurrency.getCode());
 		document.addNumberSortable(
 			Field.PRIORITY, commerceCurrency.getPriority());
@@ -53,6 +65,9 @@ public class CommerceCurrencyModelDocumentContributor
 			}
 		}
 	}
+
+	@Reference
+	private CommerceChannelRelLocalService _commerceChannelRelLocalService;
 
 	@Reference
 	private Localization _localization;

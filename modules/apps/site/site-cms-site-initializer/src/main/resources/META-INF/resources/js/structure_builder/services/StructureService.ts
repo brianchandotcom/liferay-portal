@@ -5,8 +5,10 @@
 
 import {API, objectDefinitionUtils} from '@liferay/object-js-components-web';
 
+import {ObjectDefinition} from '../types/ObjectDefinition';
+
 async function saveStructure({name}: {name: string}) {
-	const objectDefinition = {
+	const objectDefinition: ObjectDefinition = {
 		label: {
 			en_US: name,
 		},

@@ -93,8 +93,14 @@ public class ESImportUtil {
 			).build();
 		}
 
+		String submodule = moduleName.substring(i + 1);
+
+		if (!submodule.endsWith(".js")) {
+			submodule += ".js";
+		}
+
 		return absolutePortalURLBuilder.forESModule(
-			moduleName.substring(0, i), moduleName.substring(i + 1)
+			moduleName.substring(0, i), submodule
 		).build();
 	}
 

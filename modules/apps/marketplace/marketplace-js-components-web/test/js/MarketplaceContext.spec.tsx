@@ -245,6 +245,7 @@ describe('MarketplaceContext', () => {
 				<Children />
 			</MarketplaceContextProvider>
 		);
+
 		await act(async () => jest.runAllTimers());
 
 		expect(consoleErrorMock).toHaveBeenCalled();

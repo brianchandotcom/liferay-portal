@@ -36,11 +36,13 @@ globalThis.Liferay.Util = {
 describe('MarketplaceStorefront', () => {
 	afterEach(() => {
 		cleanup();
+
 		jest.clearAllMocks();
 	});
 
 	beforeEach(() => {
 		cleanup();
+
 		jest.clearAllTimers();
 		jest.restoreAllMocks();
 		jest.useFakeTimers();

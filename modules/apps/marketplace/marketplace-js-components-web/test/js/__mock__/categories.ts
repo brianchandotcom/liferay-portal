@@ -12,16 +12,16 @@ const categories = [
 		vocabulary: Vocabularies.APP_CATEGORY,
 	},
 	{
+		name: 'app categry 2',
+		vocabulary: Vocabularies.APP_CATEGORY,
+	},
+	{
 		name: 'edition 1',
 		vocabulary: Vocabularies.EDITION,
 	},
 	{
 		name: 'edition 2',
 		vocabulary: Vocabularies.EDITION,
-	},
-	{
-		name: 'app categry 2',
-		vocabulary: Vocabularies.APP_CATEGORY,
 	},
 	{
 		name: 'platform offering 1',

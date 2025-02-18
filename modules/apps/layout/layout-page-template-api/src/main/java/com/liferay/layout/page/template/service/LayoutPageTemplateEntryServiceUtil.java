@@ -33,27 +33,30 @@ public class LayoutPageTemplateEntryServiceUtil {
 	 */
 	public static LayoutPageTemplateEntry addLayoutPageTemplateEntry(
 			String externalReferenceCode, long groupId,
-			long layoutPageTemplateCollectionId, long classNameId,
+			long layoutPageTemplateCollectionId,
+			String layoutPageTemplateEntryKey, long classNameId,
 			long classTypeId, String name, long masterLayoutPlid, int status,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addLayoutPageTemplateEntry(
 			externalReferenceCode, groupId, layoutPageTemplateCollectionId,
-			classNameId, classTypeId, name, masterLayoutPlid, status,
-			serviceContext);
+			layoutPageTemplateEntryKey, classNameId, classTypeId, name,
+			masterLayoutPlid, status, serviceContext);
 	}
 
 	public static LayoutPageTemplateEntry addLayoutPageTemplateEntry(
 			String externalReferenceCode, long groupId,
-			long layoutPageTemplateCollectionId, String name, int type,
+			long layoutPageTemplateCollectionId,
+			String layoutPageTemplateEntryKey, String name, int type,
 			long masterLayoutPlid, int status,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addLayoutPageTemplateEntry(
 			externalReferenceCode, groupId, layoutPageTemplateCollectionId,
-			name, type, masterLayoutPlid, status, serviceContext);
+			layoutPageTemplateEntryKey, name, type, masterLayoutPlid, status,
+			serviceContext);
 	}
 
 	public static LayoutPageTemplateEntry copyLayoutPageTemplateEntry(

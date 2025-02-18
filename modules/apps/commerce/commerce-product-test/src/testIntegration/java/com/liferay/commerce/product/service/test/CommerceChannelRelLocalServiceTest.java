@@ -149,7 +149,7 @@ public class CommerceChannelRelLocalServiceTest {
 
 		int commerceChannelCommerceCurrenciesCount =
 			_commerceChannelRelLocalService.
-				getCommerceChannelCommerceCurrenciesCount(
+				getCommerceCurrencyCommerceChannelRelsCount(
 					_commerceChannel1.getCommerceChannelId(), StringPool.BLANK);
 
 		CommerceChannelRel commerceChannelRel =
@@ -169,7 +169,7 @@ public class CommerceChannelRelLocalServiceTest {
 
 		Assert.assertEquals(
 			_commerceChannelRelLocalService.
-				getCommerceChannelCommerceCurrenciesCount(
+				getCommerceCurrencyCommerceChannelRelsCount(
 					_commerceChannel1.getCommerceChannelId(), StringPool.BLANK),
 			commerceChannelCommerceCurrenciesCount + 2);
 
@@ -178,7 +178,7 @@ public class CommerceChannelRelLocalServiceTest {
 
 		Assert.assertEquals(
 			_commerceChannelRelLocalService.
-				getCommerceChannelCommerceCurrenciesCount(
+				getCommerceCurrencyCommerceChannelRelsCount(
 					_commerceChannel1.getCommerceChannelId(), StringPool.BLANK),
 			commerceChannelCommerceCurrenciesCount + 1);
 	}

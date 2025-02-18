@@ -2320,13 +2320,12 @@ public class ObjectEntryLocalServiceImpl
 						objectField.getI18nObjectFieldName(),
 						(Serializable)Collections.emptyMap());
 
+				Collection<Serializable> values = newLocalizedValues.values();
+
 				for (Map.Entry<String, Serializable> entry :
 						oldLocalizedValues.entrySet()) {
 
-					if (Objects.equals(
-							entry.getValue(),
-							newLocalizedValues.get(entry.getKey()))) {
-
+					if (values.contains(entry.getValue())) {
 						continue;
 					}
 

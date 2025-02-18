@@ -10,6 +10,7 @@ import {CommerceChannelDefaultsPage} from '../pages/commerce/commerce-account-we
 import {CommerceCartPage} from '../pages/commerce/commerce-cart-content-web/commerceCartPage';
 import {CommerceCartSummaryPage} from '../pages/commerce/commerce-cart-content-web/commerceCartSummaryPage';
 import {CommerceAdminChannelDetailsCountriesPage} from '../pages/commerce/commerce-channel-web/commerceAdminChannelDetailsCountriesPage';
+import {CommerceAdminChannelDetailsCurrenciesPage} from '../pages/commerce/commerce-channel-web/commerceAdminChannelDetailsCurrenciesPage';
 import {CommerceAdminChannelDetailsPage} from '../pages/commerce/commerce-channel-web/commerceAdminChannelDetailsPage';
 import {CommerceAdminChannelsPage} from '../pages/commerce/commerce-channel-web/commerceAdminChannelsPage';
 import {CheckoutPage} from '../pages/commerce/commerce-checkout-web/checkoutPage';
@@ -59,6 +60,7 @@ const commercePagesTest = test.extend<{
 	checkoutPage: CheckoutPage;
 	commerceAccountManagementPage: CommerceAccountManagementPage;
 	commerceAdminChannelDetailsCountriesPage: CommerceAdminChannelDetailsCountriesPage;
+	commerceAdminChannelDetailsCurrenciesPage: CommerceAdminChannelDetailsCurrenciesPage;
 	commerceAdminChannelDetailsPage: CommerceAdminChannelDetailsPage;
 	commerceAdminChannelsPage: CommerceAdminChannelsPage;
 	commerceAdminCurrenciesPage: CommerceAdminCurrenciesPage;
@@ -115,6 +117,9 @@ const commercePagesTest = test.extend<{
 	},
 	commerceAdminChannelDetailsCountriesPage: async ({page}, use) => {
 		await use(new CommerceAdminChannelDetailsCountriesPage(page));
+	},
+	commerceAdminChannelDetailsCurrenciesPage: async ({page}, use) => {
+		await use(new CommerceAdminChannelDetailsCurrenciesPage(page));
 	},
 	commerceAdminChannelDetailsPage: async ({page}, use) => {
 		await use(new CommerceAdminChannelDetailsPage(page));

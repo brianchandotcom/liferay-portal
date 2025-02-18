@@ -14,10 +14,12 @@ import com.liferay.layout.page.template.exception.DuplicateLayoutPageTemplateEnt
 import com.liferay.layout.page.template.exception.LayoutPageTemplateEntryDefaultTemplateException;
 import com.liferay.layout.page.template.exception.LayoutPageTemplateEntryGroupIdException;
 import com.liferay.layout.page.template.exception.LayoutPageTemplateEntryLayoutPageTemplateCollectionIdException;
+import com.liferay.layout.page.template.exception.LayoutPageTemplateEntryLayoutPageTemplateEntryKeyException;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.page.template.test.util.LayoutPageTemplateTestUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -251,6 +253,53 @@ public class LayoutPageTemplateEntryLocalServiceTest {
 		finally {
 			_depotEntryLocalService.deleteDepotEntry(depotEntry);
 		}
+
+		String layoutPageTemplateEntryKey = RandomTestUtil.randomString();
+
+		layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
+				LayoutPageTemplateConstants.
+					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+				layoutPageTemplateEntryKey, 0, 0, RandomTestUtil.randomString(),
+				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT, 0, false, 0,
+				0, 0, WorkflowConstants.STATUS_APPROVED, _serviceContext);
+
+		Assert.assertEquals(
+			layoutPageTemplateEntryKey,
+			layoutPageTemplateEntry.getLayoutPageTemplateEntryKey());
+
+		_testAddLayoutPageTemplateCollectionWithInvalidLayoutPageTemplateCollectionKey(
+			LayoutPageTemplateEntryLayoutPageTemplateEntryKeyException.
+				MustNotBeDuplicate.class,
+			layoutPageTemplateEntryKey,
+			StringBundler.concat(
+				"Duplicate layout page template entry for group ",
+				_group.getGroupId(), " with layout page template entry key ",
+				layoutPageTemplateEntryKey));
+
+		layoutPageTemplateEntryKey =
+			RandomTestUtil.randomString() + StringPool.AMPERSAND +
+				RandomTestUtil.randomString();
+
+		_testAddLayoutPageTemplateCollectionWithInvalidLayoutPageTemplateCollectionKey(
+			LayoutPageTemplateEntryLayoutPageTemplateEntryKeyException.
+				MustNotContainInvalidCharacters.class,
+			layoutPageTemplateEntryKey,
+			StringBundler.concat(
+				"Layout page template entry key ", layoutPageTemplateEntryKey,
+				" must contain only alphanumeric characters, dashes, and ",
+				"underscores"));
+
+		layoutPageTemplateEntryKey = RandomTestUtil.randomString(80);
+
+		_testAddLayoutPageTemplateCollectionWithInvalidLayoutPageTemplateCollectionKey(
+			LayoutPageTemplateEntryLayoutPageTemplateEntryKeyException.
+				MustNotExceedMaximumSize.class,
+			layoutPageTemplateEntryKey,
+			StringBundler.concat(
+				"Layout page template entry key ", layoutPageTemplateEntryKey,
+				" must have fewer than 75 characters"));
 	}
 
 	@Test
@@ -426,6 +475,27 @@ public class LayoutPageTemplateEntryLocalServiceTest {
 		Assert.assertTrue(
 			Validator.isNotNull(
 				layoutPageTemplateEntry.getExternalReferenceCode()));
+	}
+
+	private void
+		_testAddLayoutPageTemplateCollectionWithInvalidLayoutPageTemplateCollectionKey(
+			Class<?> clazz, String layoutPageTemplateEntryKey, String message) {
+
+		try {
+			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
+				null, TestPropsValues.getUserId(), _group.getGroupId(),
+				LayoutPageTemplateConstants.
+					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+				layoutPageTemplateEntryKey, 0, 0, RandomTestUtil.randomString(),
+				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT, 0, false, 0,
+				0, 0, WorkflowConstants.STATUS_APPROVED, _serviceContext);
+
+			Assert.fail();
+		}
+		catch (PortalException portalException) {
+			Assert.assertEquals(clazz, portalException.getClass());
+			Assert.assertEquals(message, portalException.getMessage());
+		}
 	}
 
 	private void

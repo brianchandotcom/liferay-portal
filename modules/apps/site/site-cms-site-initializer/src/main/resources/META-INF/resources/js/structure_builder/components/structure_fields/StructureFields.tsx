@@ -7,7 +7,7 @@ import ClayButton from '@clayui/button';
 import ClayEmptyState from '@clayui/empty-state';
 import React from 'react';
 
-import {getImage} from '../utils/getImage';
+import {getImage} from '../../utils/getImage';
 
 export default function StructureFields() {
 	return (

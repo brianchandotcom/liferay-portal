@@ -95,7 +95,7 @@ public class ESImportUtil {
 
 		String esModulePath = moduleName.substring(i + 1);
 
-		if (!submodule.endsWith(".js")) {
+		if (!esModulePath.endsWith(".js")) {
 			esModulePath += ".js";
 		}
 

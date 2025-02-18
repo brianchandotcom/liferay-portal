@@ -179,7 +179,7 @@
 	<#assign vocabularyNames = assetCategoriesSearchFacetDisplayContext.getVocabularyNames()![] />
 	<@liferay_ui.panel
 		collapsible=true
-		cssClass="search-facet search-facet-display-vocabulary"
+		cssClass="p-4 search-facet search-facet-display-vocabulary"
 		id="${namespace + 'facetAssetCategoriesPanel'}"
 		markupView="lexicon"
 		persistState=true

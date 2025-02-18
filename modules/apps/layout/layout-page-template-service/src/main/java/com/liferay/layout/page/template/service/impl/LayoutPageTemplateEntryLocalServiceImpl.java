@@ -18,6 +18,7 @@ import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeCon
 import com.liferay.layout.page.template.exception.LayoutPageTemplateEntryDefaultTemplateException;
 import com.liferay.layout.page.template.exception.LayoutPageTemplateEntryGroupIdException;
 import com.liferay.layout.page.template.exception.LayoutPageTemplateEntryLayoutPageTemplateCollectionIdException;
+import com.liferay.layout.page.template.exception.LayoutPageTemplateEntryLayoutPageTemplateEntryKeyException;
 import com.liferay.layout.page.template.exception.LayoutPageTemplateEntryNameException;
 import com.liferay.layout.page.template.exception.NoSuchPageTemplateEntryException;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
@@ -137,6 +138,15 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			defaultTemplate, status);
 		_validate(groupId, layoutPageTemplateCollectionId, type);
 
+		if (Validator.isNull(layoutPageTemplateEntryKey)) {
+			layoutPageTemplateEntryKey = _generateLayoutPageTemplateEntryKey(
+				groupId, name);
+		}
+		else {
+			_validateLayoutPageTemplateEntryKey(
+				groupId, layoutPageTemplateEntryKey, type);
+		}
+
 		long layoutPageTemplateEntryId = counterLocalService.increment();
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
@@ -155,12 +165,6 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			serviceContext.getModifiedDate(new Date()));
 		layoutPageTemplateEntry.setLayoutPageTemplateCollectionId(
 			layoutPageTemplateCollectionId);
-
-		if (Validator.isNull(layoutPageTemplateEntryKey)) {
-			layoutPageTemplateEntryKey = _generateLayoutPageTemplateEntryKey(
-				groupId, name);
-		}
-
 		layoutPageTemplateEntry.setLayoutPageTemplateEntryKey(
 			layoutPageTemplateEntryKey);
 		layoutPageTemplateEntry.setClassNameId(classNameId);
@@ -1240,6 +1244,37 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 		}
 
 		_validate(groupId, layoutPageTemplateCollectionId, name, type);
+	}
+
+	private void _validateLayoutPageTemplateEntryKey(
+			long groupId, String layoutPageTemplateEntryKey, int type)
+		throws PortalException {
+
+		if (LayoutValidator.hasBlacklistedChar(layoutPageTemplateEntryKey)) {
+			throw new LayoutPageTemplateEntryLayoutPageTemplateEntryKeyException.MustNotContainInvalidCharacters(
+				layoutPageTemplateEntryKey, type);
+		}
+
+		int layoutPageTemplateEntryKeyMaxLength = ModelHintsUtil.getMaxLength(
+			LayoutPageTemplateEntry.class.getName(),
+			"layoutPageTemplateEntryKey");
+
+		if (layoutPageTemplateEntryKey.length() >
+				layoutPageTemplateEntryKeyMaxLength) {
+
+			throw new LayoutPageTemplateEntryLayoutPageTemplateEntryKeyException.MustNotExceedMaximumSize(
+				layoutPageTemplateEntryKey, layoutPageTemplateEntryKeyMaxLength,
+				type);
+		}
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			layoutPageTemplateEntryPersistence.fetchByG_LPTEK(
+				groupId, layoutPageTemplateEntryKey);
+
+		if (layoutPageTemplateEntry != null) {
+			throw new LayoutPageTemplateEntryLayoutPageTemplateEntryKeyException.MustNotBeDuplicate(
+				groupId, layoutPageTemplateEntryKey, type);
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

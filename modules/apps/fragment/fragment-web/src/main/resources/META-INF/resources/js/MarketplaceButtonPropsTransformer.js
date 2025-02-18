@@ -4,7 +4,7 @@
  */
 
 import {
-	MarketplaceModal,
+	MarketplacePresentationModal,
 	openModalComponent,
 } from '@liferay/layout-js-components-web';
 
@@ -21,7 +21,7 @@ export default function propsTransformer({
 		...props,
 		onClick() {
 			openModalComponent({
-				ModalComponent: MarketplaceModal,
+				ModalComponent: MarketplacePresentationModal,
 				modalComponentProps: {
 					body: additionalProps.body,
 					heading: additionalProps.heading,

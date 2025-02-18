@@ -23,7 +23,7 @@ interface Props {
 	onCloseModal: () => void;
 }
 
-function MarketplaceModal({body, heading, onCloseModal}: Props) {
+function MarketplacePresentationModal({body, heading, onCloseModal}: Props) {
 	const {observer, onClose} = useModal({
 		onClose: () => {
 			onCloseModal();
@@ -88,4 +88,4 @@ function MarketplaceModal({body, heading, onCloseModal}: Props) {
 	);
 }
 
-export default MarketplaceModal;
+export default MarketplacePresentationModal;

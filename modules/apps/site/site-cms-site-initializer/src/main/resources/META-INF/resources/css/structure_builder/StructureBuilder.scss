@@ -21,6 +21,18 @@ $structureFieldsWidth: 448px;
 		}
 	}
 
+	&__fields-tree {
+		&-node {
+			&--field .lexicon-icon {
+				color: $cadmin-blue-l1;
+			}
+
+			&--structure .lexicon-icon {
+				color: $cadmin-orange-l1;
+			}
+		}
+	}
+
 	&__title-input {
 		font-size: 28px;
 	}

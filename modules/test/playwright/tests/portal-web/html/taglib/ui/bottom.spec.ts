@@ -7,6 +7,7 @@ import {expect, mergeTests} from '@playwright/test';
 
 import {dataApiHelpersTest} from '../../../../../fixtures/dataApiHelpersTest';
 import {loginTest} from '../../../../../fixtures/loginTest';
+import {clickAndExpectToBeVisible} from '../../../../../utils/clickAndExpectToBeVisible';
 import getRandomString from '../../../../../utils/getRandomString';
 import getBasicWebContentStructureId from '../../../../../utils/structured-content/getBasicWebContentStructureId';
 
@@ -63,21 +64,15 @@ test(
 
 		await webContentPage.waitFor({state: 'visible'});
 
-		const editWebContentButton = page.locator(
-			`button[aria-label="Actions for ${randomTitle}"]`
-		);
-
-		await editWebContentButton.waitFor({state: 'visible'});
-
-		await editWebContentButton.click();
-
-		const permissionButton = page.getByRole('menuitem', {
-			name: 'Permissions',
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: page.getByRole('menuitem', {
+				name: 'Permissions',
+			}),
+			trigger: page.locator(
+				`button[aria-label="Actions for ${randomTitle}"]`
+			),
 		});
-
-		await permissionButton.waitFor({state: 'visible'});
-
-		await permissionButton.click();
 
 		const permissionHeading = page.getByRole('heading', {
 			name: 'Permissions',

@@ -8,14 +8,9 @@ import ClayIcon from '@clayui/icon';
 import ClayModal, {useModal} from '@clayui/modal';
 import React from 'react';
 
-import './MarketplaceModal.scss';
+import MarketplaceModal from './MarketplaceModal';
 
-import {
-	Marketplace,
-	MarketplaceContextProvider,
-	MarketplaceRest,
-	MarketplaceViews,
-} from '@liferay/marketplace-js-components-web';
+import './MarketplaceModal.scss';
 
 interface Props {
 	body: string;
@@ -52,35 +47,28 @@ function MarketplacePresentationModal({body, heading, onCloseModal}: Props) {
 							{Liferay.Language.get('cancel')}
 						</ClayButton>
 
-						<MarketplaceContextProvider
-							baseResourceURL={MarketplaceRest.getBaseResourceURL()}
-							settings={{productFilter: 'fragments'}}
-						>
-							<Marketplace.Modal
-								trigger={
-									<ClayButton
-										aria-label={Liferay.Language.get(
-											'explore-marketplace'
-										)}
-										displayType="primary"
-										title={Liferay.Language.get(
-											'explore-marketplace'
-										)}
-									>
-										<ClayIcon
-											className="inline-item inline-item-before"
-											symbol="marketplace"
-										/>
+						<MarketplaceModal
+							trigger={
+								<ClayButton
+									aria-label={Liferay.Language.get(
+										'explore-marketplace'
+									)}
+									displayType="primary"
+									title={Liferay.Language.get(
+										'explore-marketplace'
+									)}
+								>
+									<ClayIcon
+										className="inline-item inline-item-before"
+										symbol="marketplace"
+									/>
 
-										{Liferay.Language.get(
-											'explore-marketplace'
-										)}
-									</ClayButton>
-								}
-							>
-								<MarketplaceViews />
-							</Marketplace.Modal>
-						</MarketplaceContextProvider>
+									{Liferay.Language.get(
+										'explore-marketplace'
+									)}
+								</ClayButton>
+							}
+						></MarketplaceModal>
 					</ClayButton.Group>
 				}
 			/>

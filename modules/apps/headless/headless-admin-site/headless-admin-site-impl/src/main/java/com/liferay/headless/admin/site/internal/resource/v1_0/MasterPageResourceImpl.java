@@ -238,7 +238,7 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 				masterPage.getExternalReferenceCode(), groupId,
 				LayoutPageTemplateConstants.
 					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-				masterPage.getName(),
+				masterPage.getKey(), masterPage.getName(),
 				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT, 0,
 				WorkflowConstants.STATUS_DRAFT,
 				_getServiceContext(groupId, masterPage)));

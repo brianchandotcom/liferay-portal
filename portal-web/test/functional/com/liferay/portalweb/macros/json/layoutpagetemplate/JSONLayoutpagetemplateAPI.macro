@@ -13,6 +13,7 @@ definition {
 				-d externalReferenceCode= \
 				-d groupId=${groupId} \
 				-d layoutPageTemplateCollectionId=0 \
+				-d layoutPageTemplateEntryKey= \
 				-d classNameId=${classNameId} \
 				-d classTypeId=${classTypeId} \
 				-d name=${displayPageTemplateEntryName} \
@@ -79,6 +80,7 @@ definition {
 				-d externalReferenceCode= \
 				-d groupId=${groupId} \
 				-d layoutPageTemplateCollectionId=${layoutPageTemplateCollectionId} \
+				-d layoutPageTemplateEntryKey= \
 				-d name=${layoutPageTemplateEntryName} \
 				-d type=${type} \
 				-d masterLayoutPlid=${masterLayoutPlid} \
@@ -102,6 +104,7 @@ definition {
 				-d externalReferenceCode= \
 				-d groupId=${groupId} \
 				-d layoutPageTemplateCollectionId=0 \
+				-d layoutPageTemplateEntryKey= \
 				-d name=${masterPageTemplateEntryName} \
 				-d type=3 \
 				-d masterLayoutPlid=0 \

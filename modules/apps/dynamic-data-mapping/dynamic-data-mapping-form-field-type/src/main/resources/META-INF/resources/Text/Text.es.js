@@ -555,7 +555,7 @@ const Main = ({
 				showCounter={showCounter}
 				syncDelay={syncDelay}
 				valid={valid}
-				value={value ? value : predefinedValue}
+				value={value ?? predefinedValue}
 			/>
 		</FieldBase>
 	);

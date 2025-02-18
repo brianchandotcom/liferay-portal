@@ -1,0 +1,116 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.portal.tools.jakarta.ee.transformer;
+
+import com.liferay.portal.tools.jakarta.ee.transformer.function.ClassRemapperBiFunction;
+
+import java.lang.instrument.ClassFileTransformer;
+import java.lang.instrument.IllegalClassFormatException;
+import java.lang.instrument.Instrumentation;
+
+import java.security.CodeSource;
+import java.security.ProtectionDomain;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Set;
+
+/**
+ * @author Shuyang Zhou
+ */
+public class TransformerAgent {
+
+	public static final Map<String, String> replacementDotMap =
+		new LinkedHashMap<>();
+	public static final Map<String, String> replacementSlashMap =
+		new LinkedHashMap<>();
+	public static final Map<String, String> reverseReplacementDotMap =
+		new HashMap<>();
+
+	public static void premain(
+		String agentArguments, Instrumentation instrumentation) {
+
+		instrumentation.addTransformer(
+			new ClassFileTransformer() {
+
+				@Override
+				public byte[] transform(
+						ClassLoader classLoader, String className,
+						Class<?> classBeingRedefined,
+						ProtectionDomain protectionDomain,
+						byte[] classfileBuffer)
+					throws IllegalClassFormatException {
+
+					if (className.startsWith("org/glowroot/agent/")) {
+						return classfileBuffer;
+					}
+
+					CodeSource codeSource = protectionDomain.getCodeSource();
+
+					return ClassRemapperBiFunction.INSTANCE.apply(
+						"ClassFileTransformer#" +
+							String.valueOf(codeSource.getLocation()) + "^" +
+								className,
+						classfileBuffer);
+				}
+
+			});
+	}
+
+	public static String replace(
+		Map<String, String> replacementMap, String value) {
+
+		for (Map.Entry<String, String> entry : replacementMap.entrySet()) {
+			value = value.replace(entry.getKey(), entry.getValue());
+		}
+
+		return value;
+	}
+
+	private static final Set<String> _fixupSubpackageNames = new HashSet<>(
+		Arrays.asList("annotation.processing"));
+
+	/**
+	 * Postpone these subpackages to avoid major lib upgrade at early stage.
+	 * "annotation", batch", "decorator", "ejb", "enterprise", "faces",
+	 * "inject", interceptor", "jms", "json", "jws", "persistence", "resource",
+	 * "security.auth.message", "security.enterprise", "security.jacc",
+	 * "transaction", "validation", "ws.rs", "xml.bind", "xml.ws", "xml.soap"
+	 */
+	private static final Set<String> _subpackageNames = new HashSet<>(
+		Arrays.asList("activation", "el", "mail", "servlet", "websocket"));
+
+	static {
+		_subpackageNames.forEach(
+			subpackageName -> {
+				String javaxPackage = "javax." + subpackageName;
+				String jakartaPackage = "jakarta." + subpackageName;
+
+				replacementDotMap.put(javaxPackage, jakartaPackage);
+				replacementSlashMap.put(
+					javaxPackage.replace('.', '/'),
+					jakartaPackage.replace('.', '/'));
+				reverseReplacementDotMap.put(jakartaPackage, javaxPackage);
+			});
+
+		// Order matters, fixups need to be put into replacement map later
+
+		_fixupSubpackageNames.forEach(
+			fixupSubpackageName -> {
+				String fixupJavaxPackage = "javax." + fixupSubpackageName;
+				String fixupJakartaPackage = "jakarta." + fixupSubpackageName;
+
+				replacementDotMap.put(fixupJakartaPackage, fixupJavaxPackage);
+				replacementSlashMap.put(
+					fixupJakartaPackage.replace('.', '/'),
+					fixupJavaxPackage.replace('.', '/'));
+			});
+	}
+
+}

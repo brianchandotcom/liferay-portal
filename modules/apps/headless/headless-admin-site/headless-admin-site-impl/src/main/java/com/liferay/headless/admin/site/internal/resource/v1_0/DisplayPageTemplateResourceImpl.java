@@ -344,7 +344,7 @@ public class DisplayPageTemplateResourceImpl
 		return _displayPageTemplateDTOConverter.toDTO(
 			_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
 				displayPageTemplate.getExternalReferenceCode(), groupId,
-				layoutPageTemplateCollectionId,
+				layoutPageTemplateCollectionId, displayPageTemplate.getKey(),
 				_portal.getClassNameId(contentTypeReference.getClassName()),
 				_getClassTypeId(contentTypeReference, groupId),
 				displayPageTemplate.getName(), 0L,

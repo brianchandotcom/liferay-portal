@@ -355,7 +355,8 @@ public class PageTemplateResourceImpl extends BasePageTemplateResourceImpl {
 		return _pageTemplateDTOConverter.toDTO(
 			_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
 				contentPageTemplate.getExternalReferenceCode(), groupId,
-				layoutPageTemplateCollectionId, contentPageTemplate.getName(),
+				layoutPageTemplateCollectionId, contentPageTemplate.getKey(),
+				contentPageTemplate.getName(),
 				LayoutPageTemplateEntryTypeConstants.BASIC, 0L,
 				WorkflowConstants.STATUS_DRAFT,
 				_getServiceContext(groupId, contentPageTemplate)));

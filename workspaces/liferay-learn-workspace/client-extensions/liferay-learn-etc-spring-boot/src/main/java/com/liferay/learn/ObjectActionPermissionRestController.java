@@ -68,11 +68,7 @@ public class ObjectActionPermissionRestController extends BaseRestController {
 			List<Object> actionIds = actionIdsJSONArray.toList();
 
 			actionIds.removeIf(
-				item -> !Arrays.asList(
-					_ALLOWED_ACTION_IDS
-				).contains(
-					item
-				));
+				actionId -> !_allowedActionIds.contains(actionId));
 
 			jsonObject.put("actionIds", actionIds);
 
@@ -125,12 +121,9 @@ public class ObjectActionPermissionRestController extends BaseRestController {
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject1 = jsonArray.getJSONObject(i);
 
-			if (Arrays.asList(
-					_EXCLUDED_OBJECT_DEFINITIONS_EXTERNAL_REFERENCE_CODES
-				).contains(
+			if (_excludedObjectDefinitionsExternalReferenceCodes.contains(
 					jsonObject1.getString(
-						"objectDefinitionExternalReferenceCode2")
-				)) {
+						"objectDefinitionExternalReferenceCode2"))) {
 
 				continue;
 			}
@@ -194,14 +187,11 @@ public class ObjectActionPermissionRestController extends BaseRestController {
 		}
 	}
 
-	private static final String[] _ALLOWED_ACTION_IDS = {
-		"DELETE", "PERMISSIONS", "UPDATE", "VIEW"
-	};
-
-	private static final String[]
-		_EXCLUDED_OBJECT_DEFINITIONS_EXTERNAL_REFERENCE_CODES = {
-			"T4T14_ENROLLMENTS", "T4T14_QUIZ_ANSWER", "T4T14_QUIZ_QUESTION"
-		};
+	private static final List<String> _allowedActionIds = Arrays.asList(
+		"DELETE", "PERMISSIONS", "UPDATE", "VIEW");
+	private static final List<String>
+		_excludedObjectDefinitionsExternalReferenceCodes = Arrays.asList(
+			"T4T14_ENROLLMENTS", "T4T14_QUIZ_ANSWER", "T4T14_QUIZ_QUESTION");
 
 	@Autowired
 	private LiferayOAuth2AccessTokenManager _liferayOAuth2AccessTokenManager;

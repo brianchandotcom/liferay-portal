@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = OSGiCommands.class
 )
-public class PortalAddressOSGiCommands implements OSGiCommands {
+public class AddressOSGiCommands implements OSGiCommands {
 
 	public void initializeCompanyCountries(long companyId) throws Exception {
 		_countryLocalService.deleteCompanyCountries(companyId);
@@ -111,7 +111,7 @@ public class PortalAddressOSGiCommands implements OSGiCommands {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		PortalAddressOSGiCommands.class);
+		AddressOSGiCommands.class);
 
 	@Reference
 	private CompanyLocalService _companyLocalService;

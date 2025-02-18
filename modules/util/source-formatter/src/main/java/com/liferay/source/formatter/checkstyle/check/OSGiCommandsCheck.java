@@ -131,7 +131,9 @@ public class OSGiCommandsCheck extends BaseCheck {
 	private void _checkClassName(DetailAST detailAST, String osgiCommandScope) {
 		String className = getName(detailAST);
 
-		if (!StringUtil.equals(className, osgiCommandScope + "OSGiCommands")) {
+		if (!StringUtil.equalsIgnoreCase(
+				className, osgiCommandScope + "OSGiCommands")) {
+
 			log(detailAST, _MSG_INCORRECT_CLASS_NAME);
 		}
 	}

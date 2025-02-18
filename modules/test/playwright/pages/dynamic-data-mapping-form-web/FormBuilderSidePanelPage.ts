@@ -17,6 +17,7 @@ export class FormBuilderSidePanelPage {
 	readonly paragraphFieldTextarea: Locator;
 	readonly paragraphFieldTitle: Locator;
 	readonly page: Page;
+	readonly predefinedValueField: Locator;
 	readonly requiredFieldToggleSwitch: Locator;
 
 	constructor(page: Page) {
@@ -42,8 +43,8 @@ export class FormBuilderSidePanelPage {
 			.frameLocator('iframe')
 			.locator('.cke_editable');
 		this.paragraphFieldTitle = page.getByPlaceholder('Enter a title.');
-
 		this.page = page;
+		this.predefinedValueField = page.getByLabel('Predefined Value');
 		this.requiredFieldToggleSwitch = page.getByText('Required Field');
 	}
 

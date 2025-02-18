@@ -20,6 +20,48 @@ test.afterEach(async ({formsPage}) => {
 });
 
 test.describe('Manage fields through Form Preview page', () => {
+	test('assert that it is possible to delete the predefined value of a text field', async ({
+		formBuilderPage,
+		formBuilderSidePanelPage,
+	}) => {
+		await formBuilderPage.goToNew();
+
+		await formBuilderPage.fillFormTitle('Form' + getRandomInt());
+
+		await formBuilderSidePanelPage.addFieldByDoubleClick('Text');
+
+		await formBuilderSidePanelPage.advancedTab.click();
+
+		await formBuilderSidePanelPage.predefinedValueField.fill(
+			'predefined value for text field.'
+		);
+
+		const newTabPagePromise = new Promise<Page>((resolve) =>
+			formBuilderPage.page.once('popup', resolve)
+		);
+
+		await formBuilderPage.previewButton.click();
+
+		const newTabPage = await newTabPagePromise;
+
+		await newTabPage.waitForLoadState('domcontentloaded');
+
+		await newTabPage.getByLabel('Text').click();
+
+		await newTabPage.keyboard.press('Control+A');
+
+		await newTabPage.keyboard.press('Backspace');
+
+		// Wait a little bit before doing the assertion since useSyncValue hook takes a few miliseconds to set the value on the text field
+		// Otherwise the test would always pass, even with the bug still present
+
+		await newTabPage.waitForTimeout(1000);
+
+		await expect(newTabPage.getByLabel('Text')).toHaveValue('');
+
+		await newTabPage.close();
+	});
+
 	test('LPD-12824 HTML autocomplete attribute is rendered and has the configured value limited to 20 non-special characters in Date, Numeric and Text field types', async ({
 		formBuilderPage,
 		formBuilderSidePanelPage,

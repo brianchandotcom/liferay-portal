@@ -16,6 +16,7 @@ import com.liferay.headless.admin.site.resource.v1_0.test.util.PageSpecification
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.petra.function.UnsafeRunnable;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -25,6 +26,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
@@ -244,6 +246,31 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 						_getMasterPage(
 							null,
 							liveGroupMasterPage.getExternalReferenceCode())));
+	}
+
+	@Test
+	public void testPostSiteSiteByExternalReferenceCodeMasterPage()
+		throws Exception {
+
+		super.testPostSiteSiteByExternalReferenceCodeMasterPage();
+
+		MasterPage masterPage = randomMasterPage();
+
+		masterPage.setKey(StringPool.BLANK);
+
+		MasterPage postMasterPage =
+			masterPageResource.postSiteSiteByExternalReferenceCodeMasterPage(
+				testGroup.getExternalReferenceCode(), masterPage);
+
+		Assert.assertTrue(Validator.isNotNull(postMasterPage.getKey()));
+
+		masterPage = randomMasterPage();
+
+		postMasterPage =
+			masterPageResource.postSiteSiteByExternalReferenceCodeMasterPage(
+				testGroup.getExternalReferenceCode(), masterPage);
+
+		Assert.assertEquals(masterPage.getKey(), postMasterPage.getKey());
 	}
 
 	@Override

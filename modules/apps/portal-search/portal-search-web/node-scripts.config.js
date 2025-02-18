@@ -5,4 +5,8 @@
 
 module.exports = {
 	main: './src/main/resources/META-INF/resources/js/index.js',
+	submodules: {
+		'search-bar':
+			'./src/main/resources/META-INF/resources/js/searchBarSubmodule.js',
+	},
 };

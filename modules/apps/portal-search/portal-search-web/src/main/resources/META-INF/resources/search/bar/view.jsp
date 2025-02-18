@@ -80,7 +80,7 @@ SearchBarPortletDisplayContext searchBarPortletDisplayContext = (SearchBarPortle
 					<c:when test="<%= searchBarPortletDisplayContext.isSuggestionsEnabled() %>">
 						<div id="<portlet:namespace />reactSearchBar">
 							<react:component
-								module="{ReactSearchBar} from portal-search-web"
+								module="{ReactSearchBar} from portal-search-web/search-bar"
 								props='<%=
 									HashMapBuilder.<String, Object>put(
 										"destinationFriendlyURL", searchBarPortletDisplayContext.getDestinationFriendlyURL()
@@ -185,7 +185,7 @@ SearchBarPortletDisplayContext searchBarPortletDisplayContext = (SearchBarPortle
 					"retainFacetSelections", searchBarPortletDisplayContext.isRetainFacetSelections()
 				).build()
 			%>'
-			module="{SearchBar} from portal-search-web"
+			module="{SearchBar} from portal-search-web/search-bar"
 		/>
 	</c:otherwise>
 </c:choose>

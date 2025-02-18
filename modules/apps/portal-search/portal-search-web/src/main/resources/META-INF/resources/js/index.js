@@ -7,13 +7,11 @@
 
 export {default as CustomFilter} from './CustomFilter';
 export {default as FacetUtil} from './FacetUtil';
-export {default as SearchBar} from './SearchBar';
 export {default as Sort} from './Sort';
 
 // Components
 
 export {default as CustomConfigurationRangeOptions} from './components/CustomConfigurationRangeOptions';
-export {default as ReactSearchBar} from './components/SearchBar';
 export {default as SelectVocabularies} from './components/SelectVocabularies';
 export {default as SortConfigurationOptions} from './components/SortConfigurationOptions';
 export {default as SystemSettingsFieldList} from './components/SystemSettingsFieldList';

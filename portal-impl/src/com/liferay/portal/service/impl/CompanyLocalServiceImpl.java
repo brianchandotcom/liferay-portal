@@ -692,6 +692,12 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		try (SafeCloseable safeCloseable =
 				CompanyThreadLocal.setCompanyIdWithSafeCloseable(companyId)) {
 
+			if (!DBPartition.isPartitionEnabled()) {
+				_extractCompany(company);
+
+				return company;
+			}
+
 			DBPartitionUtil.extractDBPartition(companyId);
 		}
 		catch (Throwable throwable) {
@@ -2444,6 +2450,21 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 				return null;
 			});
+	}
+
+	private void _extractCompany(Company company) throws PortalException {
+		long companyId = company.getCompanyId();
+
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(companyId)) {
+
+			DBPartitionUtil.extractCompany(companyId);
+		}
+		catch (Throwable throwable) {
+			DBPartitionUtil.removeDBPartition(companyId);
+
+			throw new PortalException(throwable);
+		}
 	}
 
 	private long _getNextCompanyId() {

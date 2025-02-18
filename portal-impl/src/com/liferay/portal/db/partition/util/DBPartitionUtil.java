@@ -118,6 +118,10 @@ public class DBPartitionUtil {
 		return true;
 	}
 
+	public static boolean extractCompany(long companyId)
+		throws PortalException {
+	}
+
 	public static boolean extractDBPartition(long companyId)
 		throws PortalException {
 

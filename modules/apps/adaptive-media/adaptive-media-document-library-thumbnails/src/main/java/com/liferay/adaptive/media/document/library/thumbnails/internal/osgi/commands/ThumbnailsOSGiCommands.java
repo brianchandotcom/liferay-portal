@@ -54,7 +54,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = OSGiCommands.class
 )
-public class AMThumbnailsOSGiCommands implements OSGiCommands {
+public class ThumbnailsOSGiCommands implements OSGiCommands {
 
 	public void check(String... companyIds) {
 		System.out.println("Company ID\t# of thumbnails pending migration");
@@ -300,7 +300,7 @@ public class AMThumbnailsOSGiCommands implements OSGiCommands {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		AMThumbnailsOSGiCommands.class);
+		ThumbnailsOSGiCommands.class);
 
 	@Reference
 	private AMImageConfigurationHelper _amImageConfigurationHelper;

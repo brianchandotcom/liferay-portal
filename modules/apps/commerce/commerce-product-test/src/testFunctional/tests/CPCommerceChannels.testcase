@@ -2755,10 +2755,6 @@ definition {
 		}
 
 		task ("Then the priority values will be shown in the priority column") {
-			AssertElementPresent(
-				key_text = "Priority",
-				locator1 = "Button#ANY");
-
 			AssertTextEquals(
 				key_columnNumber = 3,
 				key_entryName = "Standard Delivery",

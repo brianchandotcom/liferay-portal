@@ -404,11 +404,26 @@ public class UpdateLayoutStrutsAction implements StrutsAction {
 			themeDisplay.getPermissionChecker(), portletId,
 			ActionKeys.ADD_TO_PAGE);
 
-		PortletCategory portletCategory = (PortletCategory)WebAppPool.get(
-			themeDisplay.getCompanyId(), WebKeys.PORTLET_CATEGORY);
-
 		Portlet portlet = _portletLocalService.getPortletById(
 			themeDisplay.getCompanyId(), portletId);
+
+		LayoutTypePortlet layoutTypePortlet =
+			themeDisplay.getLayoutTypePortlet();
+
+		if (!portlet.isActive() || !portlet.isInclude() ||
+			(!portlet.isInstanceable() &&
+			 layoutTypePortlet.hasPortletId(portlet.getPortletId())) ||
+			portlet.isSystem() || portlet.isUndeployedPortlet()) {
+
+			throw new PrincipalException.MustHavePermission(
+				themeDisplay.getPermissionChecker(),
+				StringBundler.concat(
+					Portlet.class.getName(), StringPool.UNDERLINE, portletId),
+				0, ActionKeys.ADD_TO_PAGE);
+		}
+
+		PortletCategory portletCategory = (PortletCategory)WebAppPool.get(
+			themeDisplay.getCompanyId(), WebKeys.PORTLET_CATEGORY);
 
 		Set<String> categoryNames = portlet.getCategoryNames();
 

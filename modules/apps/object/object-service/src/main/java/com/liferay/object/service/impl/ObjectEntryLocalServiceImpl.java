@@ -67,6 +67,7 @@ import com.liferay.object.internal.sort.SortDSLQueryVisitor;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectEntryTable;
+import com.liferay.object.model.ObjectEntryVersion;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
 import com.liferay.object.model.ObjectFilter;
@@ -427,9 +428,7 @@ public class ObjectEntryLocalServiceImpl
 				clearObjectEntryIdsMap);
 		}
 
-		_addObjectEntryVersion(objectEntry);
-
-		return objectEntry;
+		return _addObjectEntryVersion(objectEntry);
 	}
 
 	@Override
@@ -1705,9 +1704,7 @@ public class ObjectEntryLocalServiceImpl
 			objectEntry, originalObjectEntry, serviceContext.getLanguageId(),
 			user);
 
-		_addObjectEntryVersion(objectEntry);
-
-		return objectEntry;
+		return _addObjectEntryVersion(objectEntry);
 	}
 
 	@Override
@@ -2164,11 +2161,17 @@ public class ObjectEntryLocalServiceImpl
 		}
 	}
 
-	private void _addObjectEntryVersion(ObjectEntry objectEntry)
+	private ObjectEntry _addObjectEntryVersion(ObjectEntry objectEntry)
 		throws PortalException {
 
 		try {
-			_objectEntryVersionLocalService.addObjectEntryVersion(objectEntry);
+			ObjectEntryVersion objectEntryVersion =
+				_objectEntryVersionLocalService.addObjectEntryVersion(
+					objectEntry);
+
+			objectEntry.setVersion(objectEntryVersion.getVersion());
+
+			return objectEntryPersistence.update(objectEntry);
 		}
 		catch (Exception exception) {
 			throw new PortalException(exception);

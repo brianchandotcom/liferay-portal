@@ -304,6 +304,10 @@ public class SegmentsExperienceLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
+	public static SegmentsExperience fetchDefaultSegmentsExperience(long plid) {
+		return getService().fetchDefaultSegmentsExperience(plid);
+	}
+
 	public static long fetchDefaultSegmentsExperienceId(long plid) {
 		return getService().fetchDefaultSegmentsExperienceId(plid);
 	}

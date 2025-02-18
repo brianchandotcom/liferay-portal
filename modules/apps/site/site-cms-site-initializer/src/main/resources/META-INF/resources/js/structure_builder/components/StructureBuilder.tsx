@@ -7,15 +7,15 @@ import '../../../css/structure_builder/StructureBuilder.scss';
 
 import React from 'react';
 
-import {StructureSettingsContextProvider} from '../contexts/StructureSettingsContext';
+import StateContextProvider from '../contexts/StateContext';
 import ManagementBar from './ManagementBar';
 import StructureFields from './StructureFields';
 import StructureSettings from './StructureSettings';
 
 export default function StructureBuilder() {
 	return (
-		<div className="d-flex flex-column structure-builder__wrapper">
-			<StructureSettingsContextProvider>
+		<StateContextProvider>
+			<div className="d-flex flex-column structure-builder__wrapper">
 				<ManagementBar />
 
 				<div className="d-flex flex-grow-1 p-4">
@@ -23,7 +23,7 @@ export default function StructureBuilder() {
 
 					<StructureSettings />
 				</div>
-			</StructureSettingsContextProvider>
-		</div>
+			</div>
+		</StateContextProvider>
 	);
 }

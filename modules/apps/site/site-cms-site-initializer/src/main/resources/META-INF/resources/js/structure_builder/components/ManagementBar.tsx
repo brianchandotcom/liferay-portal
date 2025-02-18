@@ -9,9 +9,9 @@ import ClayLink from '@clayui/link';
 import {API} from '@liferay/object-js-components-web';
 import {ManagementToolbar} from 'frontend-js-components-web';
 import {openToast} from 'frontend-js-web';
-import React, {useContext} from 'react';
+import React from 'react';
 
-import {StructureSettingsContext} from '../contexts/StructureSettingsContext';
+import {useStateDispatch, useStructureName} from '../contexts/StateContext';
 import StructureService from '../services/StructureService';
 
 export default function ManagementBar() {
@@ -58,7 +58,8 @@ export default function ManagementBar() {
 }
 
 function SaveButton() {
-	const {name, setError} = useContext(StructureSettingsContext);
+	const dispatch = useStateDispatch();
+	const name = useStructureName();
 
 	const onSave = async () => {
 		try {
@@ -72,12 +73,12 @@ function SaveButton() {
 				type: 'success',
 			});
 
-			setError(null);
+			dispatch({error: null, type: 'set-error'});
 		}
 		catch (error) {
 			const {message} = error as API.ErrorDetails;
 
-			setError(message);
+			dispatch({error: message, type: 'set-error'});
 		}
 	};
 

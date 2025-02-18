@@ -7,12 +7,18 @@ import ClayAlert from '@clayui/alert';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayLabel from '@clayui/label';
 import ClayLayout from '@clayui/layout';
-import React, {useContext} from 'react';
+import React from 'react';
 
-import {StructureSettingsContext} from '../contexts/StructureSettingsContext';
+import {
+	useStateDispatch,
+	useStructureError,
+	useStructureName,
+} from '../contexts/StateContext';
 
 export default function StructureSettings() {
-	const {error, name, setName} = useContext(StructureSettingsContext);
+	const dispatch = useStateDispatch();
+	const error = useStructureError();
+	const name = useStructureName();
 
 	return (
 		<ClayLayout.ContainerFluid view>
@@ -33,7 +39,9 @@ export default function StructureSettings() {
 			<ClayForm.Group>
 				<ClayInput
 					className="form-control-inline structure-builder__title-input"
-					onChange={(event) => setName(event.target.value)}
+					onChange={(event) =>
+						dispatch({name: event.target.value, type: 'set-name'})
+					}
 					sizing="lg"
 					type="text"
 					value={name}

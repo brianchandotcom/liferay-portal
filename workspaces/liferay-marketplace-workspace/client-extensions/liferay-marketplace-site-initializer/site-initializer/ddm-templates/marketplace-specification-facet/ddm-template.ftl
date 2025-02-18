@@ -52,7 +52,13 @@
 
 							<span class="custom-control-label font-size-paragraph-small term-name ${(entry.isSelected())?then('facet-term-selected', 'facet-term-unselected')}">
 								<span class="custom-control-label-text">
-									${htmlUtil.escape(entry.getDisplayName())}
+									<#assign displayName = entry.getDisplayName()?replace("-", " ") />
+
+									<#if displayName == 'dxp'>
+										DXP
+									<#else>
+										${htmlUtil.escape(displayName)?capitalize}
+									</#if>
 								</span>
 							</span>
 						</label>

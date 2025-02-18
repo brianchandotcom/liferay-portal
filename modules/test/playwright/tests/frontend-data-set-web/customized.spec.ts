@@ -674,7 +674,7 @@ test(
 	}
 );
 
-test('Select items count label in bulk actions', async ({page}) => {
+test('Check selection behavior', async ({page}) => {
 	const itemsSelectorCheckbox = page.locator('input[name="items-selector"]');
 
 	await test.step('Change delta to 60 items', async () => {
@@ -693,17 +693,7 @@ test('Select items count label in bulk actions', async ({page}) => {
 		await expect(page.getByText('60 of 75 Items Selected')).toBeVisible();
 	});
 
-	await test.step('Unselect all items in current page using the bulk actions checkbox', async () => {
-		await itemsSelectorCheckbox.setChecked(false);
-
-		await expect(itemsSelectorCheckbox).not.toBeChecked();
-	});
-
 	await test.step('Select all items', async () => {
-		await itemsSelectorCheckbox.setChecked(true);
-
-		await expect(page.getByText('60 of 75 Items Selected')).toBeVisible();
-
 		await page.getByLabel('Go to page, 2').click();
 
 		for (let i = 1; i <= 15; i++) {
@@ -717,6 +707,22 @@ test('Select items count label in bulk actions', async ({page}) => {
 		await expect(
 			page.getByText('All Selected (75 of 75 Items)')
 		).toBeVisible();
+	});
+
+	await test.step('Check that selection are preserved through page navigation', async () => {
+		await page.getByLabel('Go to page, 1').click();
+
+		await expect(
+			page.getByText('All Selected (75 of 75 Items)')
+		).toBeVisible();
+	});
+
+	await test.step('Unselect all items in current page using the bulk actions checkbox', async () => {
+		await itemsSelectorCheckbox.setChecked(false);
+
+		await expect(itemsSelectorCheckbox).not.toBeChecked();
+
+		await expect(page.getByText('15 of 75 Items Selected')).toBeVisible();
 	});
 });
 

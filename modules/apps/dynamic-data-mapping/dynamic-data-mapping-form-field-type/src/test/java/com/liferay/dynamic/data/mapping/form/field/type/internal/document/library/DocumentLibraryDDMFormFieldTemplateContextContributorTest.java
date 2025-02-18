@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
@@ -731,10 +730,8 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest {
 			requestBackedPortletURLFactory
 		);
 
-		LiferayPortletURL liferayPortletURL = new TestMockLiferayPortletURL();
-
 		Mockito.doReturn(
-			liferayPortletURL
+			new TestMockLiferayPortletURL()
 		).when(
 			requestBackedPortletURLFactory
 		).createActionURL(
@@ -742,7 +739,7 @@ public class DocumentLibraryDDMFormFieldTemplateContextContributorTest {
 		);
 
 		Mockito.doReturn(
-			liferayPortletURL
+			new TestMockLiferayPortletURL()
 		).when(
 			requestBackedPortletURLFactory
 		).createResourceURL(

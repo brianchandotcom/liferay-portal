@@ -47,7 +47,7 @@ public class LayoutPageTemplateEntryTestUtil {
 				serviceContext.getScopeGroupId(),
 				layoutPageTemplateCollection.
 					getLayoutPageTemplateCollectionId(),
-				RandomTestUtil.randomString(),
+				null, RandomTestUtil.randomString(),
 				LayoutPageTemplateEntryTypeConstants.BASIC, 0,
 				WorkflowConstants.STATUS_DRAFT, serviceContext);
 	}
@@ -73,6 +73,7 @@ public class LayoutPageTemplateEntryTestUtil {
 				serviceContext.getScopeGroupId(),
 				LayoutPageTemplateConstants.
 					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
+				null,
 				PortalUtil.getClassNameId(
 					"com.liferay.asset.kernel.model.AssetCategory"),
 				0, RandomTestUtil.randomString(),
@@ -101,7 +102,7 @@ public class LayoutPageTemplateEntryTestUtil {
 				serviceContext.getScopeGroupId(),
 				LayoutPageTemplateConstants.
 					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-				RandomTestUtil.randomString(),
+				null, RandomTestUtil.randomString(),
 				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT, 0, status,
 				serviceContext);
 	}

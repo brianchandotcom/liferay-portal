@@ -265,7 +265,7 @@ public class LayoutPageTemplateEntryStagedModelDataHandlerTest
 		return _layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
 			null, userId, group.getGroupId(),
 			layoutPageTemplateCollection.getLayoutPageTemplateCollectionId(),
-			"Test Entry", LayoutPageTemplateEntryTypeConstants.BASIC, 0,
+			null, "Test Entry", LayoutPageTemplateEntryTypeConstants.BASIC, 0,
 			WorkflowConstants.STATUS_APPROVED, serviceContext);
 	}
 

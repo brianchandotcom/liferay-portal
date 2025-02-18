@@ -42,8 +42,8 @@ public class DisplayPageTemplateTestUtil {
 
 		return LayoutPageTemplateEntryLocalServiceUtil.
 			addLayoutPageTemplateEntry(
-				null, TestPropsValues.getUserId(), groupId, 0, classNameId,
-				classTypeId, RandomTestUtil.randomString(),
+				null, TestPropsValues.getUserId(), groupId, 0, null,
+				classNameId, classTypeId, RandomTestUtil.randomString(),
 				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0,
 				defaultTemplate, 0, 0, 0, status,
 				ServiceContextTestUtil.getServiceContext(
@@ -60,7 +60,7 @@ public class DisplayPageTemplateTestUtil {
 
 		return LayoutPageTemplateEntryLocalServiceUtil.
 			addLayoutPageTemplateEntry(
-				null, TestPropsValues.getUserId(), groupId, 0, name,
+				null, TestPropsValues.getUserId(), groupId, 0, null, name,
 				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0,
 				WorkflowConstants.STATUS_DRAFT, serviceContext);
 	}

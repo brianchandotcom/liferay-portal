@@ -420,7 +420,7 @@ public class LayoutsImporterTest {
 				organizationSite.getGroupId(),
 				layoutPageTemplateCollection.
 					getLayoutPageTemplateCollectionId(),
-				RandomTestUtil.randomString(),
+				null, RandomTestUtil.randomString(),
 				LayoutPageTemplateEntryTypeConstants.BASIC, 0,
 				WorkflowConstants.STATUS_APPROVED, _serviceContext1);
 
@@ -762,8 +762,8 @@ public class LayoutsImporterTest {
 		_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
 			null, _serviceContext1.getUserId(), _group1.getGroupId(),
 			layoutPageTemplateCollection.getLayoutPageTemplateCollectionId(),
-			"Page Template", LayoutPageTemplateEntryTypeConstants.BASIC, 0,
-			WorkflowConstants.STATUS_APPROVED, _serviceContext1);
+			null, "Page Template", LayoutPageTemplateEntryTypeConstants.BASIC,
+			0, WorkflowConstants.STATUS_APPROVED, _serviceContext1);
 
 		Assert.assertFalse(
 			_layoutsImporter.validateFile(
@@ -790,8 +790,8 @@ public class LayoutsImporterTest {
 		_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
 			null, TestPropsValues.getUserId(), _group1.getGroupId(),
 			layoutPageTemplateCollection.getLayoutPageTemplateCollectionId(),
-			"Page Template", LayoutPageTemplateEntryTypeConstants.BASIC, 0,
-			WorkflowConstants.STATUS_APPROVED, _serviceContext1);
+			null, "Page Template", LayoutPageTemplateEntryTypeConstants.BASIC,
+			0, WorkflowConstants.STATUS_APPROVED, _serviceContext1);
 
 		layoutPageTemplateCollection =
 			_layoutPageTemplateCollectionLocalService.
@@ -904,7 +904,7 @@ public class LayoutsImporterTest {
 			null, TestPropsValues.getUserId(), _group1.getGroupId(),
 			LayoutPageTemplateConstants.
 				PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-			"Basic Web Content Display Page Template",
+			null, "Basic Web Content Display Page Template",
 			LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0,
 			WorkflowConstants.STATUS_APPROVED, _serviceContext1);
 
@@ -924,7 +924,7 @@ public class LayoutsImporterTest {
 			null, TestPropsValues.getUserId(), _group1.getGroupId(),
 			LayoutPageTemplateConstants.
 				PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-			"Basic Web Content Display Page Template",
+			null, "Basic Web Content Display Page Template",
 			LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0,
 			WorkflowConstants.STATUS_APPROVED,
 			ServiceContextTestUtil.getServiceContext(_group1.getGroupId()));
@@ -956,7 +956,7 @@ public class LayoutsImporterTest {
 			null, TestPropsValues.getUserId(), _group1.getGroupId(),
 			LayoutPageTemplateConstants.
 				PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-			"Blogs Display Page Template",
+			null, "Blogs Display Page Template",
 			LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0,
 			WorkflowConstants.STATUS_APPROVED,
 			ServiceContextTestUtil.getServiceContext(_group1.getGroupId()));
@@ -977,7 +977,7 @@ public class LayoutsImporterTest {
 			null, TestPropsValues.getUserId(), _group1.getGroupId(),
 			LayoutPageTemplateConstants.
 				PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-			"Default Master Page",
+			null, "Default Master Page",
 			LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT, 0,
 			WorkflowConstants.STATUS_APPROVED,
 			ServiceContextTestUtil.getServiceContext(_group1.getGroupId()));
@@ -1166,7 +1166,7 @@ public class LayoutsImporterTest {
 		return _layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
 			null, _serviceContext1.getUserId(), _group1.getGroupId(),
 			layoutPageTemplateCollection.getLayoutPageTemplateCollectionId(),
-			RandomTestUtil.randomString(),
+			null, RandomTestUtil.randomString(),
 			LayoutPageTemplateEntryTypeConstants.BASIC, 0,
 			WorkflowConstants.STATUS_APPROVED, _serviceContext1);
 	}

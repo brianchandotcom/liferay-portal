@@ -175,7 +175,8 @@ public class LayoutTypeContentPerformanceTest {
 		return _layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
 			null, TestPropsValues.getUserId(), _group.getGroupId(),
 			layoutPageTemplateCollection.getLayoutPageTemplateCollectionId(),
-			"Page Template One", LayoutPageTemplateEntryTypeConstants.BASIC, 0,
+			null, "Page Template One",
+			LayoutPageTemplateEntryTypeConstants.BASIC, 0,
 			WorkflowConstants.STATUS_APPROVED, _serviceContext);
 	}
 

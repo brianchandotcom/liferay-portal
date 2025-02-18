@@ -301,8 +301,8 @@ public class ExportImportDisplayPagesTest {
 		LayoutPageTemplateEntry layoutPageTemplateEntry1 =
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
 				null, _serviceContext1.getUserId(),
-				_serviceContext1.getScopeGroupId(), 0, classNameId, classTypeId,
-				"Display Page Template One",
+				_serviceContext1.getScopeGroupId(), 0, null, classNameId,
+				classTypeId, "Display Page Template One",
 				LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE, 0,
 				WorkflowConstants.STATUS_APPROVED, _serviceContext1);
 

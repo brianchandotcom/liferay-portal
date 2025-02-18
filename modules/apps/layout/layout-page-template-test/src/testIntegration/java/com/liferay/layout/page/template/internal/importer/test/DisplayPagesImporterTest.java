@@ -98,7 +98,7 @@ public class DisplayPagesImporterTest {
 			LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
 				_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
 					null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
-					RandomTestUtil.randomString(),
+					null, RandomTestUtil.randomString(),
 					LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT, 0,
 					WorkflowConstants.STATUS_DRAFT,
 					ServiceContextTestUtil.getServiceContext(
@@ -107,7 +107,7 @@ public class DisplayPagesImporterTest {
 			LayoutPageTemplateEntry layoutPageTemplateEntry =
 				_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
 					null, TestPropsValues.getUserId(), _group.getGroupId(), 0,
-					_portal.getClassNameId(FileEntry.class.getName()), 0,
+					null, _portal.getClassNameId(FileEntry.class.getName()), 0,
 					RandomTestUtil.randomString(),
 					LayoutPageTemplateEntryTypeConstants.DISPLAY_PAGE,
 					masterLayoutPageTemplateEntry.getPlid(),

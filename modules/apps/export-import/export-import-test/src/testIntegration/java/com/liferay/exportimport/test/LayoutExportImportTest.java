@@ -201,7 +201,7 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 
 		LayoutPageTemplateEntry masterLayoutPageTemplateEntry =
 			_layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
-				null, TestPropsValues.getUserId(), group.getGroupId(), 0,
+				null, TestPropsValues.getUserId(), group.getGroupId(), 0, null,
 				"Test Master Page",
 				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT, 0,
 				WorkflowConstants.STATUS_APPROVED,

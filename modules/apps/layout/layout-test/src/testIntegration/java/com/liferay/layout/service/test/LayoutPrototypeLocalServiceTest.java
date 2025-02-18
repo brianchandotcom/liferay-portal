@@ -78,7 +78,7 @@ public class LayoutPrototypeLocalServiceTest {
 				null, user.getUserId(), _group.getGroupId(),
 				layoutPageTemplateCollection.
 					getLayoutPageTemplateCollectionId(),
-				RandomTestUtil.randomString(),
+				null, RandomTestUtil.randomString(),
 				LayoutPageTemplateEntryTypeConstants.WIDGET_PAGE, 0,
 				WorkflowConstants.STATUS_APPROVED, serviceContext);
 

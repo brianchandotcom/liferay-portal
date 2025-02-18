@@ -441,7 +441,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			try {
 				_transactionAwareInvoke(
 					() -> {
-						extractDBPartitionCompany(companyId);
+						extractCompany(companyId);
 
 						DBPartitionUtil.removeDBPartition(companyId);
 

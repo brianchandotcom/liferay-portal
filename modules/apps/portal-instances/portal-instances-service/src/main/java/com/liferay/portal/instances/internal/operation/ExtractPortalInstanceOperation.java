@@ -56,8 +56,7 @@ public class ExtractPortalInstanceOperation
 					return null;
 				}
 
-				return _companyLocalService.extractDBPartitionCompany(
-					companyId);
+				return _companyLocalService.extractCompany(companyId);
 			},
 			properties);
 	}

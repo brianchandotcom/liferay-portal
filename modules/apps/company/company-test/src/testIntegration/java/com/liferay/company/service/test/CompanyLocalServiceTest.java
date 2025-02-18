@@ -895,11 +895,11 @@ public class CompanyLocalServiceTest {
 	}
 
 	@Test
-	public void testExtractDBPartitionCompany() {
+	public void testExtractCompany() {
 		Assume.assumeFalse(DBPartition.isPartitionEnabled());
 
 		try {
-			_companyLocalService.extractDBPartitionCompany(1L);
+			_companyLocalService.extractCompany(1L);
 
 			Assert.fail();
 		}
@@ -912,7 +912,7 @@ public class CompanyLocalServiceTest {
 	@Test
 	public void testExtractDBPartitionCompanyDefaultCompany() {
 		try {
-			_companyLocalService.extractDBPartitionCompany(
+			_companyLocalService.extractCompany(
 				PortalInstancePool.getDefaultCompanyId());
 
 			Assert.fail();

@@ -23,7 +23,10 @@
 				</div>
 			</#if>
 		</#list>
+		<hr class="solid">
+	<#else>
+		<p class="search-results-empty">
+			${languageUtil.format(locale, "no-results-were-found-that-matched-the-keywords-x", htmlUtil.escape(searchResultsPortletDisplayContext.getKeywords()), false)}
+		</p>
 	</#if>
-
-	<hr class="solid">
 </div>

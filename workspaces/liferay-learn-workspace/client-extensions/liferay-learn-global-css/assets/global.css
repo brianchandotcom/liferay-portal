@@ -1632,6 +1632,11 @@ pre[class*='language-'] {
 }
 
 .search-results {
+	.search-results-empty{
+		color: var(--color-neutral-8, #54555f);
+		font-weight: 400;
+	}
+
 	.search-results-entry {
 		align-items: flex-start;
 		display: flex;

@@ -3,14 +3,14 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import '../../../css/structure_builder/StructureBuilder.scss';
+
 import React from 'react';
 
+import {StructureSettingsContextProvider} from '../contexts/StructureSettingsContext';
 import ManagementBar from './ManagementBar';
 import StructureFields from './StructureFields';
 import StructureSettings from './StructureSettings';
-
-import '../../../css/structure_builder/StructureBuilder.scss';
-import {StructureSettingsContextProvider} from '../contexts/StructureSettingsContext';
 
 export default function StructureBuilder() {
 	return (

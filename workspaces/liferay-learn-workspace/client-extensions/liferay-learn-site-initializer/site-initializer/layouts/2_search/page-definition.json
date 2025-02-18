@@ -153,7 +153,7 @@
 												"widgetConfig": {
 													"displayStyle": "ddmTemplate_LEARN_SEARCH_CATEGORY_FACET_TABS",
 													"frequenciesVisible": "true",
-													"frequencyThreshold": "1",
+													"frequencyThreshold": "0",
 													"maxTerms": "10",
 													"order": "count:desc",
 													"parameterName": "resource-type",
@@ -262,133 +262,76 @@
 									},
 									{
 										"definition": {
+											"customCSS": ".[$FRAGMENT_CLASS$] {\n\t\n}",
 											"fragmentStyle": {
 												"backgroundColor": "colorNeutral1",
 												"borderRadius": "borderRadiusLg",
-												"marginBottom": "4",
-												"paddingBottom": "3",
-												"paddingLeft": "3",
-												"paddingRight": "3",
-												"paddingTop": "3"
+												"marginBottom": "4"
 											},
-											"indexed": true,
-											"layout": {
-												"marginBottom": 2,
-												"paddingBottom": 1,
-												"paddingLeft": 1,
-												"paddingRight": 1,
-												"paddingTop": 1
+											"name": "Capability Category Facet",
+											"widgetInstance": {
+												"widgetConfig": {
+													"displayStyle": "ddmTemplate_LEARN_SEARCH_CATEGORY_FACET",
+													"frequenciesVisible": "false",
+													"frequencyThreshold": "1",
+													"maxTerms": "12",
+													"order": "key:asc",
+													"parameterName": "capability",
+													"vocabularyIds": "[$TAXONOMY_VOCABULARY_ID:Capability$]"
+												},
+												"widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
 											}
 										},
-										"id": "f27a1c18-cb4c-cbd4-63d5-e01c76181bdc",
-										"pageElements": [
-											{
-												"definition": {
-													"customCSS": ".[$FRAGMENT_CLASS$] {\n\t\n}",
-													"widgetInstance": {
-														"widgetConfig": {
-															"displayStyle": "ddmTemplate_LEARN_SEARCH_CATEGORY_FACET",
-															"frequenciesVisible": "false",
-															"frequencyThreshold": "1",
-															"maxTerms": "12",
-															"order": "key:asc",
-															"parameterName": "capability",
-															"vocabularyIds": "[$TAXONOMY_VOCABULARY_ID:Capability$]"
-														},
-														"widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
-													}
-												},
-												"id": "664b911b-9dfe-8b30-33d7-864563d7db02",
-												"type": "Widget"
-											}
-										],
-										"type": "Section"
+										"id": "664b911b-9dfe-8b30-33d7-864563d7db02",
+										"type": "Widget"
 									},
 									{
 										"definition": {
 											"fragmentStyle": {
 												"backgroundColor": "colorNeutral1",
 												"borderRadius": "borderRadiusLg",
-												"marginBottom": "4",
-												"paddingBottom": "3",
-												"paddingLeft": "3",
-												"paddingRight": "3",
-												"paddingTop": "3"
+												"marginBottom": "4"
 											},
-											"indexed": true,
-											"layout": {
-												"marginBottom": 2,
-												"paddingBottom": 1,
-												"paddingLeft": 1,
-												"paddingRight": 1,
-												"paddingTop": 1
+											"name": "Feature Category Facet",
+											"widgetInstance": {
+												"widgetConfig": {
+													"displayStyle": "ddmTemplate_LEARN_SEARCH_CATEGORY_FACET",
+													"frequenciesVisible": "false",
+													"frequencyThreshold": "1",
+													"maxTerms": "50",
+													"order": "key:asc",
+													"parameterName": "feature",
+													"vocabularyIds": "[$TAXONOMY_VOCABULARY_ID:Feature$]"
+												},
+												"widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
 											}
 										},
-										"id": "d5ce4635-a6de-5ee4-03f9-443480233117",
-										"pageElements": [
-											{
-												"definition": {
-													"widgetInstance": {
-														"widgetConfig": {
-															"displayStyle": "ddmTemplate_LEARN_SEARCH_CATEGORY_FACET",
-															"frequenciesVisible": "false",
-															"frequencyThreshold": "1",
-															"maxTerms": "50",
-															"order": "key:asc",
-															"parameterName": "feature",
-															"vocabularyIds": "[$TAXONOMY_VOCABULARY_ID:Feature$]"
-														},
-														"widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
-													}
-												},
-												"id": "742ec5b2-44d3-3adc-5af7-8530c33459e1",
-												"type": "Widget"
-											}
-										],
-										"type": "Section"
+										"id": "742ec5b2-44d3-3adc-5af7-8530c33459e1",
+										"type": "Widget"
 									},
 									{
 										"definition": {
 											"fragmentStyle": {
 												"backgroundColor": "colorNeutral1",
 												"borderRadius": "borderRadiusLg",
-												"marginBottom": "4",
-												"paddingBottom": "3",
-												"paddingLeft": "3",
-												"paddingRight": "3",
-												"paddingTop": "3"
+												"marginBottom": "4"
 											},
-											"indexed": true,
-											"layout": {
-												"marginBottom": 2,
-												"paddingBottom": 1,
-												"paddingLeft": 1,
-												"paddingRight": 1,
-												"paddingTop": 1
+											"name": "Deployment Approach Category Facet",
+											"widgetInstance": {
+												"widgetConfig": {
+													"displayStyle": "ddmTemplate_LEARN_SEARCH_CATEGORY_FACET",
+													"frequenciesVisible": "false",
+													"frequencyThreshold": "1",
+													"maxTerms": "50",
+													"order": "key:asc",
+													"parameterName": "deployment-approach",
+													"vocabularyIds": "[$TAXONOMY_VOCABULARY_ID:Deployment Approach$]"
+												},
+												"widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
 											}
 										},
-										"id": "f0fd9eed-0cc7-31d2-1fd4-8ba62dd77511",
-										"pageElements": [
-											{
-												"definition": {
-													"widgetInstance": {
-														"widgetConfig": {
-															"displayStyle": "ddmTemplate_LEARN_SEARCH_CATEGORY_FACET",
-															"frequenciesVisible": "false",
-															"frequencyThreshold": "1",
-															"maxTerms": "50",
-															"order": "key:asc",
-															"parameterName": "deployment-approach",
-															"vocabularyIds": "[$TAXONOMY_VOCABULARY_ID:Deployment Approach$]"
-														},
-														"widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
-													}
-												},
-												"id": "c5c952a3-47ea-3c6e-0c35-79fbb0be8649",
-												"type": "Widget"
-											}
-										],
-										"type": "Section"
+										"id": "c5c952a3-47ea-3c6e-0c35-79fbb0be8649",
+										"type": "Widget"
 									}
 								],
 								"type": "Section"
@@ -424,7 +367,7 @@
 													"paginationDelta": "20",
 													"paginationDeltaParameterName": "delta",
 													"paginationStartParameterName": "start",
-													"showEmptyResultMessage": "true",
+													"showEmptyResultMessage": "false",
 													"showPagination": "true",
 													"viewInContext": "true"
 												},

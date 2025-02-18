@@ -216,6 +216,8 @@ public class FragmentEntryLinkManagerTest {
 
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
+		Layout draftLayout = layout.fetchDraftLayout();
+
 		InfoItemFormProvider<?> infoItemFormProvider =
 			_infoItemServiceRegistry.getFirstInfoItemService(
 				InfoItemFormProvider.class, objectDefinition.getClassName());
@@ -225,8 +227,6 @@ public class FragmentEntryLinkManagerTest {
 
 		List<InfoField<?>> allInfoFields = ListUtil.filter(
 			infoForm.getAllInfoFields(), InfoField::isEditable);
-
-		Layout draftLayout = layout.fetchDraftLayout();
 
 		JSONObject jsonObject = ContentLayoutTestUtil.addFormToLayout(
 			false,

@@ -31,8 +31,8 @@ public class ObjectEntryFolderAssetRendererFactory
 	public static final String TYPE = "object_entry_folder";
 
 	public ObjectEntryFolderAssetRendererFactory() {
-		setLinkable(true);
 		setClassName(ObjectEntryFolder.class.getName());
+		setLinkable(true);
 		setPortletId(ObjectPortletKeys.OBJECT_DEFINITIONS);
 	}
 

@@ -14,6 +14,11 @@ export class PersonalDataErasurePage {
 	readonly anonymizeButton: Locator;
 	readonly anonymizeMenuItem: Locator;
 	readonly applicationsMenuPage: ApplicationsMenuPage;
+	readonly blogCheckBox: (
+		blogId: string,
+		blogTitle: string,
+		match: boolean
+	) => Locator;
 	readonly journalArticleCheckBox: (
 		articleId: string,
 		articleUrlTitle: string,
@@ -46,6 +51,23 @@ export class PersonalDataErasurePage {
 		this.anonymizeMenuItem = page.getByRole('menuitem', {
 			name: 'Anonymize',
 		});
+		this.blogCheckBox = (
+			blogId: string,
+			blogTitle: string,
+			match: boolean
+		) => {
+			const blogIdLocator = page.locator(`[value="${blogId}"]`);
+
+			return match
+				? this.objectLink(blogTitle)
+						.locator('../..')
+						.filter({has: blogIdLocator})
+						.getByRole('checkbox')
+				: this.objectLink(blogTitle)
+						.locator('../..')
+						.filter({hasNot: blogIdLocator})
+						.getByRole('checkbox');
+		};
 		this.journalArticleCheckBox = (
 			articleId: string,
 			articleUrlTitle: string,

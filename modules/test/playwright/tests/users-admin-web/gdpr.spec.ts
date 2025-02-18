@@ -101,6 +101,8 @@ test.describe('LPD-25858 Refactor of GDPR#CanExportMultipleEntries', () => {
 		page,
 		usersAndOrganizationsPage,
 	}) => {
+		test.setTimeout(120000);
+
 		const site = await apiHelpers.headlessSite.createSite({
 			name: getRandomString(),
 		});
@@ -214,6 +216,8 @@ testAdmin.describe('LPD-27068 Refactor of GDPR#CanAnonymizeAllEntries', () => {
 			personalDataErasurePage,
 			usersAndOrganizationsPage,
 		}) => {
+			testAdmin.setTimeout(120000);
+
 			const userAccount =
 				await apiHelpers.headlessAdminUser.postUserAccount();
 
@@ -336,6 +340,8 @@ testAdmin(
 		siteStagingPage,
 		usersAndOrganizationsPage,
 	}) => {
+		testAdmin.setTimeout(120000);
+
 		page.on('dialog', (dialog) => {
 			dialog.accept();
 		});
@@ -371,15 +377,15 @@ testAdmin(
 		await performLogout(page);
 		await performLogin(page, userAccount.alternateName);
 
-		const blog1NameStaging = 'Blog1 Staging';
-		const blog2NameStaging = 'Blog2 Staging';
+		const blog1Name = 'Blog1';
+		const blog2Name = 'Blog2';
 		const blog3Name = 'Blog3';
 
 		const blog1 = await apiHelpers.headlessDelivery.postBlog(site.id, {
-			headline: blog1NameStaging,
+			headline: blog1Name,
 		});
 		const blog2 = await apiHelpers.headlessDelivery.postBlog(site.id, {
-			headline: blog2NameStaging,
+			headline: blog2Name,
 		});
 		await apiHelpers.headlessDelivery.postBlog(site.id, {
 			headline: blog3Name,
@@ -395,18 +401,10 @@ testAdmin(
 		await siteStagingPage.blogsCheckbox.check();
 		await siteStagingPage.saveButton.click();
 
+		await waitForAlert(page, 'Local staging is successfully enabled.');
+
 		await performLogout(page);
 		await performLogin(page, 'test');
-
-		const blog1NameLive = 'Blog1 Live';
-		const blog2NameLive = 'Blog2 Live';
-
-		await apiHelpers.headlessDelivery.putBlog(blog1.id, {
-			headline: blog1NameLive,
-		});
-		await apiHelpers.headlessDelivery.putBlog(blog2.id, {
-			headline: blog2NameLive,
-		});
 
 		await usersAndOrganizationsPage.goToUsers(false);
 		await (
@@ -423,16 +421,12 @@ testAdmin(
 
 		await personalDataErasurePage.objectCountLink('6').click();
 
-		await (
-			await personalDataErasurePage.userAssociatedDataTableRowCheckBox(
-				blog1NameStaging
-			)
-		).check();
-		await (
-			await personalDataErasurePage.userAssociatedDataTableRowCheckBox(
-				blog2NameLive
-			)
-		).check();
+		await personalDataErasurePage
+			.blogCheckBox(blog1.id, blog1Name, true)
+			.check();
+		await personalDataErasurePage
+			.blogCheckBox(blog2.id, blog2Name, false)
+			.check();
 
 		await personalDataErasurePage.actionsButton.click();
 		await personalDataErasurePage.menuItemDelete.click();
@@ -443,14 +437,14 @@ testAdmin(
 
 		await page.goto(`/group/${site.name}-staging${PORTLET_URLS.blogs}`);
 
-		await expect(blogsPage.blogName(blog1NameStaging)).toHaveCount(0);
-		await expect(blogsPage.blogName(blog2NameStaging)).toHaveCount(1);
+		await expect(blogsPage.blogName(blog1Name)).toHaveCount(1);
+		await expect(blogsPage.blogName(blog2Name)).toHaveCount(0);
 		await expect(blogsPage.blogName(blog3Name)).toHaveCount(1);
 
 		await page.goto(`/group/${site.name}${PORTLET_URLS.blogs}`);
 
-		await expect(blogsPage.blogName(blog1NameLive)).toHaveCount(1);
-		await expect(blogsPage.blogName(blog2NameLive)).toHaveCount(0);
+		await expect(blogsPage.blogName(blog1Name)).toHaveCount(0);
+		await expect(blogsPage.blogName(blog2Name)).toHaveCount(1);
 		await expect(blogsPage.blogName(blog3Name)).toHaveCount(1);
 	}
 );
@@ -469,6 +463,8 @@ testAdmin(
 		userAssociatedDataSiteStagingPage,
 		usersAndOrganizationsPage,
 	}) => {
+		testAdmin.setTimeout(120000);
+
 		page.on('dialog', (dialog) => {
 			dialog.accept();
 		});

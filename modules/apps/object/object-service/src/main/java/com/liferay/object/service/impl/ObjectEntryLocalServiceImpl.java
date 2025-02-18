@@ -89,6 +89,7 @@ import com.liferay.object.scope.ObjectDefinitionScoped;
 import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.search.StrictObjectReindexThreadLocal;
+import com.liferay.object.service.ObjectEntryVersionLocalService;
 import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
@@ -429,6 +430,8 @@ public class ObjectEntryLocalServiceImpl
 			ObjectActionThreadLocal.setClearObjectEntryIdsMap(
 				clearObjectEntryIdsMap);
 		}
+
+		_addObjectEntryVersion(objectEntry);
 
 		return objectEntry;
 	}
@@ -1706,6 +1709,8 @@ public class ObjectEntryLocalServiceImpl
 			objectEntry, originalObjectEntry, serviceContext.getLanguageId(),
 			user);
 
+		_addObjectEntryVersion(objectEntry);
+
 		return objectEntry;
 	}
 
@@ -2160,6 +2165,17 @@ public class ObjectEntryLocalServiceImpl
 			_putLocalizedValues(
 				objectFieldColumn.getName(), (Serializable)localizedValues,
 				values);
+		}
+	}
+
+	private void _addObjectEntryVersion(ObjectEntry objectEntry)
+		throws PortalException {
+
+		try {
+			_objectEntryVersionLocalService.addObjectEntryVersion(objectEntry);
+		}
+		catch (Exception exception) {
+			throw new PortalException(exception);
 		}
 	}
 
@@ -5930,6 +5946,9 @@ public class ObjectEntryLocalServiceImpl
 
 	@Reference
 	private ObjectEntryFolderPersistence _objectEntryFolderPersistence;
+
+	@Reference
+	private ObjectEntryVersionLocalService _objectEntryVersionLocalService;
 
 	@Reference
 	private ObjectFieldBusinessTypeRegistry _objectFieldBusinessTypeRegistry;

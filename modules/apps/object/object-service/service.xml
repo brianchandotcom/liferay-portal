@@ -366,6 +366,12 @@
 		<column name="content" type="String" />
 		<column name="version" type="int" />
 		<column name="status" type="int" />
+
+		<!-- Finder methods -->
+
+		<finder name="ObjectEntryId" return-type="Collection">
+			<finder-column name="objectEntryId" />
+		</finder>
 	</entity>
 	<entity local-service="true" name="ObjectField" remote-service="true" uuid="true">
 

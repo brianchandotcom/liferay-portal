@@ -8,6 +8,7 @@ package com.liferay.commerce.product.service.test;
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.commerce.currency.model.CommerceCurrency;
+import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
 import com.liferay.commerce.product.constants.CommerceChannelConstants;
 import com.liferay.commerce.product.model.CPDefinition;
@@ -36,6 +37,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -170,6 +172,46 @@ public class CommerceChannelRelLocalServiceTest {
 			commerceChannelCountriesCount + 1);
 	}
 
+	@FeatureFlags("LPD-34908")
+	@Test
+	public void testCommerceChannelCurrencyVisibility() throws Exception {
+		List<CommerceCurrency> commerceCurrencies =
+			_commerceCurrencyLocalService.getCommerceCurrencies(
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		int commerceChannelCurrenciesCount =
+			_commerceChannelRelLocalService.getCommerceChannelCurrenciesCount(
+				_commerceChannel1.getCommerceChannelId(), StringPool.BLANK);
+
+		CommerceChannelRel commerceChannelRel =
+			_commerceChannelRelLocalService.addCommerceChannelRel(
+				CommerceCurrency.class.getName(),
+				commerceCurrencies.get(
+					1
+				).getCommerceCurrencyId(),
+				_commerceChannel1.getCommerceChannelId(), _serviceContext);
+
+		_commerceChannelRelLocalService.addCommerceChannelRel(
+			CommerceCurrency.class.getName(),
+			commerceCurrencies.get(
+				2
+			).getCommerceCurrencyId(),
+			_commerceChannel1.getCommerceChannelId(), _serviceContext);
+
+		Assert.assertEquals(
+			_commerceChannelRelLocalService.getCommerceChannelCurrenciesCount(
+				_commerceChannel1.getCommerceChannelId(), StringPool.BLANK),
+			commerceChannelCurrenciesCount + 2);
+
+		_commerceChannelRelLocalService.deleteCommerceChannelRel(
+			commerceChannelRel.getCommerceChannelRelId());
+
+		Assert.assertEquals(
+			_commerceChannelRelLocalService.getCommerceChannelCurrenciesCount(
+				_commerceChannel1.getCommerceChannelId(), StringPool.BLANK),
+			commerceChannelCurrenciesCount + 1);
+	}
+
 	private static User _user;
 
 	private CommerceCatalog _commerceCatalog;
@@ -187,6 +229,9 @@ public class CommerceChannelRelLocalServiceTest {
 	private CommerceChannelRelLocalService _commerceChannelRelLocalService;
 
 	private CommerceCurrency _commerceCurrency;
+
+	@Inject
+	private CommerceCurrencyLocalService _commerceCurrencyLocalService;
 
 	@Inject
 	private CountryLocalService _countryLocalService;

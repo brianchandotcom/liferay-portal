@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = OSGiCommands.class
 )
-public class IndexUpdaterOSGiCommands implements OSGiCommands {
+public class UpgradeOSGiCommands implements OSGiCommands {
 
 	@Descriptor("Update database indexes for a specific module via bundle ID")
 	public String updateIndexes(long bundleId) throws Exception {

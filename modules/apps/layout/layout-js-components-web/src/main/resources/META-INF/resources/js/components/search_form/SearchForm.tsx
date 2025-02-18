@@ -65,7 +65,7 @@ export default function SearchForm({
 								)}
 								borderless
 								displayType="secondary"
-								monospaced={false}
+								monospaced
 								onClick={() => {
 									setSearchValue('');
 									onChange('');

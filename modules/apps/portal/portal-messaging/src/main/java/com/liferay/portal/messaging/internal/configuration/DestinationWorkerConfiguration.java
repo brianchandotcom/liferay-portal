@@ -29,7 +29,7 @@ public interface DestinationWorkerConfiguration {
 
 	@Meta.AD(
 		deflt = "-1", description = "max-queue-size-help",
-		name = "max-queue-size", required = false
+		name = "maximum-queue-size", required = false
 	)
 	public int maxQueueSize();
 

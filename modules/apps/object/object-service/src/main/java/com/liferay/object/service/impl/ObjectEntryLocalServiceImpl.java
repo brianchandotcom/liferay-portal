@@ -2411,10 +2411,17 @@ public class ObjectEntryLocalServiceImpl
 
 		objectActionEngine.executeObjectActions(
 			objectDefinition.getClassName(), companyId, objectActionTrigger,
-			() -> ObjectEntryUtil.getPayloadJSONObject(
-				_dtoConverterRegistry, _jsonFactory, objectActionTrigger,
-				objectDefinition, objectEntry, originalObjectEntry,
-				preferredLanguageId, user),
+			() -> {
+				JSONObject payloadJSONObject =
+					ObjectEntryUtil.getPayloadJSONObject(
+						_dtoConverterRegistry, _jsonFactory,
+						objectActionTrigger, objectDefinition, objectEntry,
+						originalObjectEntry, preferredLanguageId, user);
+
+				objectEntry.setValues(null);
+
+				return payloadJSONObject;
+			},
 			user.getUserId());
 
 		if (!FeatureFlagManagerUtil.isEnabled(
@@ -2438,12 +2445,19 @@ public class ObjectEntryLocalServiceImpl
 		objectActionEngine.executeObjectActions(
 			rootObjectEntry.getModelClassName(), companyId,
 			ObjectActionTriggerConstants.KEY_ON_AFTER_ROOT_UPDATE,
-			() -> ObjectEntryUtil.getPayloadJSONObject(
-				_dtoConverterRegistry, _jsonFactory,
-				ObjectActionTriggerConstants.KEY_ON_AFTER_ROOT_UPDATE,
-				_objectDefinitionPersistence.findByPrimaryKey(
-					rootObjectEntry.getObjectDefinitionId()),
-				rootObjectEntry, null, preferredLanguageId, user),
+			() -> {
+				JSONObject payloadJSONObject =
+					ObjectEntryUtil.getPayloadJSONObject(
+						_dtoConverterRegistry, _jsonFactory,
+						ObjectActionTriggerConstants.KEY_ON_AFTER_ROOT_UPDATE,
+						_objectDefinitionPersistence.fetchByPrimaryKey(
+							rootObjectEntry.getObjectDefinitionId()),
+						rootObjectEntry, null, preferredLanguageId, user);
+
+				rootObjectEntry.setValues(null);
+
+				return payloadJSONObject;
+			},
 			user.getUserId());
 	}
 

@@ -93,6 +93,8 @@ public class OSGiCommandsCheck extends BaseCheck {
 			return;
 		}
 
+		_checkClassName(detailAST, osgiCommandScopes.get(0));
+
 		List<String> osgiCommandFunctions = _getProperties(
 			annotationArrayInitDetailAST, "osgi.command.function");
 
@@ -123,6 +125,14 @@ public class OSGiCommandsCheck extends BaseCheck {
 				"org.osgi.service.component.annotations.Reference")) {
 
 			_checkVariableDeclaration(objBlockDetailAST);
+		}
+	}
+
+	private void _checkClassName(DetailAST detailAST, String osgiCommandScope) {
+		String className = getName(detailAST);
+
+		if (!StringUtil.equals(className, osgiCommandScope + "OSGiCommands")) {
+			log(detailAST, _MSG_INCORRECT_CLASS_NAME);
 		}
 	}
 
@@ -184,7 +194,7 @@ public class OSGiCommandsCheck extends BaseCheck {
 			String typeName = getTypeName(variableDefinitionDetailAST, false);
 
 			if (typeName.endsWith("OSGiCommands")) {
-				log(variableDefinitionDetailAST, _MSG_OSGI_REFERENCE_AVOID);
+				log(variableDefinitionDetailAST, _MSG_AVOID_OSGI_REFERENCE);
 			}
 		}
 	}
@@ -213,13 +223,16 @@ public class OSGiCommandsCheck extends BaseCheck {
 		return osgiCommandProperties;
 	}
 
+	private static final String _MSG_AVOID_OSGI_REFERENCE =
+		"osgi.reference.avoid";
+
+	private static final String _MSG_INCORRECT_CLASS_NAME =
+		"class.name.incorrect";
+
 	private static final String _MSG_INCORRECT_PUBLIC_METHOD_NAME =
 		"public.method.name.incorrect";
 
 	private static final String _MSG_MISSING_IMPLEMENTED_COMMAND_FUNCTION =
 		"implemented.command.function.missing";
-
-	private static final String _MSG_OSGI_REFERENCE_AVOID =
-		"osgi.reference.avoid";
 
 }

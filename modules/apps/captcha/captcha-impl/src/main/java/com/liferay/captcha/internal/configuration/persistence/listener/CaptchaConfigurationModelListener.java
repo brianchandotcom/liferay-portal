@@ -84,6 +84,36 @@ public class CaptchaConfigurationModelListener
 					_getResourceBundle(),
 					"the-recaptcha-private-key-is-not-valid"));
 		}
+
+		String reCaptchaScriptUrl = (String)properties.get(
+			"reCaptchaScriptURL");
+
+		if (!reCaptchaScriptUrl.startsWith("https://www.google.com")) {
+			throw new CaptchaConfigurationException(
+				ResourceBundleUtil.getString(
+					_getResourceBundle(),
+					"the-recaptcha-script-url-is-not-valid"));
+		}
+
+		String reCaptchaNoScriptURL = (String)properties.get(
+			"reCaptchaNoScriptURL");
+
+		if (!reCaptchaNoScriptURL.startsWith("https://www.google.com")) {
+			throw new CaptchaConfigurationException(
+				ResourceBundleUtil.getString(
+					_getResourceBundle(),
+					"the-recaptcha-no-script-url-is-not-valid"));
+		}
+
+		String reCaptchaVerifyURL = (String)properties.get(
+			"reCaptchaVerifyURL");
+
+		if (!reCaptchaVerifyURL.startsWith("https://www.google.com")) {
+			throw new CaptchaConfigurationException(
+				ResourceBundleUtil.getString(
+					_getResourceBundle(),
+					"the-recaptcha-verify-url-is-not-valid"));
+		}
 	}
 
 	private ResourceBundle _resourceBundle;

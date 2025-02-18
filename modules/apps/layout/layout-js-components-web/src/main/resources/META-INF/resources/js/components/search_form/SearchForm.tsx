@@ -6,6 +6,7 @@
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
+import classNames from 'classnames';
 import {debounce} from 'frontend-js-web';
 import React, {useState} from 'react';
 
@@ -15,10 +16,12 @@ export default function SearchForm({
 	className,
 	label,
 	onChange,
+	variant = 'default',
 }: {
 	className?: string;
 	label?: string;
 	onChange: Function;
+	variant?: 'default' | 'white';
 }) {
 	const id = `pageEditorSearchFormInput${nextInputId++}`;
 
@@ -33,6 +36,9 @@ export default function SearchForm({
 			<ClayInput.Group small>
 				<ClayInput.GroupItem>
 					<ClayInput
+						className={classNames({
+							'bg-white': variant === 'white',
+						})}
 						id={id}
 						insetAfter
 						onChange={({target: {value}}) => {
@@ -45,7 +51,13 @@ export default function SearchForm({
 						value={searchValue}
 					/>
 
-					<ClayInput.GroupInsetItem after tag="span">
+					<ClayInput.GroupInsetItem
+						after
+						className={classNames({
+							'bg-white': variant === 'white',
+						})}
+						tag="span"
+					>
 						{searchValue ? (
 							<ClayButtonWithIcon
 								aria-label={Liferay.Language.get(

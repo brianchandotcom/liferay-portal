@@ -694,7 +694,7 @@ const SetupAnalyticsCloudPage = ({
 							</ClayForm.Group>
 						</ClayForm.Group>
 
-						{values?.activations?.incidentReportContact.length >
+						{values?.activations?.incidentReportContact?.length >
 							INITIAL_SETUP_ADMIN_COUNT && (
 							<Button
 								className="ml-3 my-2 text-brandy-secondary"

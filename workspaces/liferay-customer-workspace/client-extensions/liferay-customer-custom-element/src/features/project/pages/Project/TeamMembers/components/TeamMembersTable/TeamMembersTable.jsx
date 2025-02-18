@@ -88,8 +88,8 @@ const TeamMembersTable = ({
 
 	const {data: myUserAccountData, loading: myUserAccountLoading} =
 		useMyUserAccountByAccountExternalReferenceCode(
-			koroneikiAccountLoading,
-			koroneikiAccount?.accountKey
+			koroneikiAccount?.accountKey,
+			koroneikiAccountLoading
 		);
 
 	const loggedUserAccount = myUserAccountData?.myUserAccount;
@@ -185,7 +185,7 @@ const TeamMembersTable = ({
 		useAccountRolesByAccountExternalReferenceCode(
 			koroneikiAccount,
 			koroneikiAccountLoading,
-			!loggedUserAccount?.selectedAccountSummary.hasAdministratorRole
+			!loggedUserAccount?.selectedAccountSummary?.hasAdministratorRole
 		);
 
 	const availableAccountRoles = getRolesFiltered(
@@ -256,7 +256,7 @@ const TeamMembersTable = ({
 			return incidentRoles.some((keyword) => role?.name?.includes(keyword));
 		};
 
-		const roles = getCurrentRoleBriefs(userAccount.selectedAccountSummary);
+		const roles = getCurrentRoleBriefs(userAccount?.selectedAccountSummary);
 
 		if (!roles?.length) {
 			return ['User'];
@@ -281,7 +281,7 @@ const TeamMembersTable = ({
 
 	const handleEdit = () => {
 		const currentAccountRoles =
-			currentUserEditing.selectedAccountSummary.roleBriefs;
+			currentUserEditing?.selectedAccountSummary?.roleBriefs;
 
 		update(
 			currentUserEditing,
@@ -320,7 +320,7 @@ const TeamMembersTable = ({
 			selectedAccountRoleItem?.label
 		);
 		const currentAccountRoles =
-			currentUserEditing.selectedAccountSummary.roleBriefs;
+			currentUserEditing?.selectedAccountSummary?.roleBriefs;
 
 		if (noSupportSeatsAvailable) {
 			for (const role of currentAccountRoles) {
@@ -422,7 +422,7 @@ const TeamMembersTable = ({
 				count={totalUserAccounts}
 				hasAdministratorRole={
 					loggedUserAccount?.selectedAccountSummary
-						.hasAdministratorRole
+						?.hasAdministratorRole
 				}
 				koroneikiAccount={koroneikiAccount}
 				loading={loading}
@@ -444,7 +444,7 @@ const TeamMembersTable = ({
 							className="border-0"
 							columns={getColumns(
 								loggedUserAccount?.selectedAccountSummary
-									.hasAdministratorRole,
+									?.hasAdministratorRole,
 								articleAccountSupportURL
 							)}
 							hasPagination

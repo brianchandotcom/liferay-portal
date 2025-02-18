@@ -9,8 +9,8 @@ import isAccountAdministrator from '~/utils/isAccountAdministrator';
 import isSupportSeatRole from '~/utils/isSupportSeatRole';
 
 export default function useMyUserAccountByAccountExternalReferenceCode(
-	koroneikiAccountLoading,
-	externalReferenceCode
+	externalReferenceCode,
+	koroneikiAccountLoading
 ) {
 	const {data, loading} = useGetMyUserAccount({
 		skip: koroneikiAccountLoading,
@@ -18,16 +18,17 @@ export default function useMyUserAccountByAccountExternalReferenceCode(
 
 	const selectedAccountSummary = useMemo(
 		() =>
-			data?.myUserAccount.accountBriefs.find(
+			data?.myUserAccount?.accountBriefs?.find(
 				(accountBrief) =>
-					accountBrief.externalReferenceCode === externalReferenceCode
+					accountBrief?.externalReferenceCode ===
+					externalReferenceCode
 			),
-		[data?.myUserAccount.accountBriefs, externalReferenceCode]
+		[data?.myUserAccount?.accountBriefs, externalReferenceCode]
 	);
 
 	const hasAdministratorRole = useMemo(
 		() =>
-			selectedAccountSummary?.roleBriefs.some(({name}) =>
+			selectedAccountSummary?.roleBriefs?.some(({name}) =>
 				isAccountAdministrator(name)
 			),
 		[selectedAccountSummary?.roleBriefs]
@@ -35,7 +36,7 @@ export default function useMyUserAccountByAccountExternalReferenceCode(
 
 	const hasSupportSeatRole = useMemo(
 		() =>
-			selectedAccountSummary?.roleBriefs.some(({name}) =>
+			selectedAccountSummary?.roleBriefs?.some(({name}) =>
 				isSupportSeatRole(name)
 			),
 		[selectedAccountSummary?.roleBriefs]

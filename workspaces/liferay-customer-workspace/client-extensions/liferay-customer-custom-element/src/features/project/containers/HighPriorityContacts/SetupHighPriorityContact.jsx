@@ -4,6 +4,7 @@
  */
 
 import ClayForm from '@clayui/form';
+import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {FieldArray, Formik} from 'formik';
 import {useEffect, useMemo, useState} from 'react';
 import {useAppPropertiesContext} from '~/contexts/AppPropertiesContext';
@@ -81,7 +82,7 @@ const SetupHighPriorityContact = ({
 
 	const [rolesId, setRolesId] = useState();
 	const {client} = useAppPropertiesContext();
-	const {data} = useCurrentKoroneikiAccount();
+	const {data: currentKoroneikiAccountData, loading: loadingCurrentKoroneikiAccount } = useCurrentKoroneikiAccount();
 	const projectOnboarding = useOnboarding();
 	const projectPortal = useCustomerPortal();
 
@@ -96,8 +97,8 @@ const SetupHighPriorityContact = ({
 	);
 
 	const koroneikiAccount = useMemo(
-		() => data?.koroneikiAccountByExternalReferenceCode,
-		[data?.koroneikiAccountByExternalReferenceCode]
+		() => currentKoroneikiAccountData?.koroneikiAccountByExternalReferenceCode,
+		[currentKoroneikiAccountData?.koroneikiAccountByExternalReferenceCode]
 	);
 
 	const {updateContacts} = useHighPriorityContacts({
@@ -116,7 +117,7 @@ const SetupHighPriorityContact = ({
 
 	const [
 		,
-		{data: userAccountsData},
+		{data: userAccountsData, loading: loadingUserAccountsData},
 	] = useUserAccountsByAccountExternalReferenceCode(project?.accountKey);
 
 	useEffect(() => {
@@ -125,15 +126,15 @@ const SetupHighPriorityContact = ({
 				highPriorityContactsCategory,
 				userAccountsData?.accountUserAccountsByExternalReferenceCode
 					?.items ?? [],
-				highPriorityContactsCategory.contactsCategory.role
+				highPriorityContactsCategory?.contactsCategory?.role
 			) ?? [];
 
 		const currentCriticalIncidentContacts = highPriorityContacts.map(
 			(highPriorityContact, index) => ({
 				email: highPriorityContact?.email,
-				filter: highPriorityContact.role,
-				filterId: highPriorityContact.roleId,
-				filterLabel: highPriorityContact.name,
+				filter: highPriorityContact?.role,
+				filterId: highPriorityContact?.roleId,
+				filterLabel: highPriorityContact?.name,
 				id: highPriorityContact?.id,
 				label: highPriorityContact?.name,
 				labelRole: highPriorityContact?.labelRole,
@@ -146,7 +147,7 @@ const SetupHighPriorityContact = ({
 			setCurrentContact(currentCriticalIncidentContacts);
 		}
 	}, [
-		highPriorityContactsCategory.contactsCategory.role,
+		highPriorityContactsCategory?.contactsCategory?.role,
 		project,
 		userAccountsData,
 		highPriorityContactsCategory,
@@ -156,6 +157,12 @@ const SetupHighPriorityContact = ({
 	const handleMetaErrorChange = (error, inputName) => {
 		disableSubmit(error, inputName);
 	};
+
+	const loading = loadingCurrentKoroneikiAccount || loadingUserAccountsData;
+
+	if (loading) {
+		return <ClayLoadingIndicator />;
+	}
 
 	return (
 		<FieldArray>

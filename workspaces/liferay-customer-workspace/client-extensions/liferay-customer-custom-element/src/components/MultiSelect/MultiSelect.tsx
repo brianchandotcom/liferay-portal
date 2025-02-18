@@ -19,23 +19,23 @@ import './MultiSelect.css';
 
 interface IItem {
 	email?: string;
-	label: string;
-	value: string | number;
+	label?: string;
+	value: string;
 }
 
 interface IProps
 	extends React.ComponentPropsWithoutRef<typeof ClayMultiSelect> {
-	filteredSourceItems: IItem[];
+	filteredSourceItems?: IItem[] | undefined;
 	groupStyle?: string;
-	items: IItem[];
-	label: string;
-	metaErrorCallback: (error: string | undefined) => void;
+	items?: IItem[] | undefined;
+	label?: string | undefined;
+	metaErrorCallback?: (error: string | undefined) => void;
 	name?: string;
 	onChange?: InternalDispatch<string> | undefined;
 	required?: boolean;
-	sourceItems: {email: string}[];
-	validations?: Function[];
-	values: IItem[];
+	sourceItems?: {email: string}[] | undefined;
+	validations?: Function[] | undefined;
+	values?: IItem[] | undefined;
 }
 
 const MultiSelect = ({
@@ -59,31 +59,37 @@ const MultiSelect = ({
 			.filter((error) => !!error);
 
 		const emailErrors = validateEmailsArray(
-			values.map((item) => item?.email || item?.label),
-			sourceItems
+			values?.map((item) => item?.email || item?.label) as string[],
+			sourceItems || []
 		);
 
 		return unfilledField.length ? unfilledField[0] : emailErrors;
 	};
 
 	const [field, meta] = useField({
+		name,
+		label,
 		validate: validateMultiSelect,
+		values,
 	} as unknown as FieldHookConfig<IItem[]>);
 
 	useEffect(() => {
-		formik.setFieldValue(field.name, values);
-		formik.validateField(field.name);
-	}, [field.name, formik, values]);
+		formik.setFieldValue(field?.name, values);
+		formik.validateField(field?.name);
+	}, [field?.name, formik, values]);
 
 	useEffect(() => {
-		metaErrorCallback(meta.error);
+		if (metaErrorCallback) {
+			metaErrorCallback(meta.error);
+		}
+
 	}, [meta.error, metaErrorCallback]);
 
 	const requiredMultiSelect = (value: number) => {
 		if (!value) {
 			return i18n.sub(
 				'one-or-more-contacts-are-required-please-select-a-contact-for-x',
-				[label]
+				[label as string]
 			);
 		}
 
@@ -94,9 +100,9 @@ const MultiSelect = ({
 		validations = validations
 			? [
 					...validations,
-					(value: string) => requiredMultiSelect(value.length),
+					(value: string) => requiredMultiSelect(value?.length),
 				]
-			: [(value: string) => requiredMultiSelect(value.length)];
+			: [(value: string) => requiredMultiSelect(value?.length)];
 	}
 
 	return (
@@ -119,26 +125,19 @@ const MultiSelect = ({
 				</label>
 
 				<ClayMultiSelect
-					inputName={name}
+					{...field}
 					items={items}
 					onChange={(event: any) => onChange?.(event?.target?.value)}
 					sourceItems={filteredSourceItems}
-					value={
-						items?.map((item) => ({
-							...item,
-							value: `${item.value}`,
-						})) as unknown as string
-					}
+					value={items?.map((item) => String(item?.value)) as unknown as string}
 				>
 					{(item, index) => (
 						<ClayMultiSelect.Item
 							key={index}
-							onChange={() => {}}
 							onPointerEnterCapture={() => {}}
 							onPointerLeaveCapture={() => {}}
 							placeholder={item?.label}
 							textValue={item?.label}
-							value={`${item?.value}`}
 						>
 							<div className="autofit-row autofit-row-center">
 								<div className="autofit-col mr-3">
@@ -160,7 +159,7 @@ const MultiSelect = ({
 					)}
 				</ClayMultiSelect>
 
-				{meta.touched && meta.error && (
+				{meta?.touched && meta?.error && (
 					<Badge>
 						<span className="pl-1">{meta.error}</span>
 					</Badge>

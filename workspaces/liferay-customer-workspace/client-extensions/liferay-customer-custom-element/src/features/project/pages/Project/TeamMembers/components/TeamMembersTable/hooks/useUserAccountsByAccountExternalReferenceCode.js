@@ -392,9 +392,7 @@ export default function useUserAccountsByAccountExternalReferenceCode(
 		supportSeatsCount,
 		{
 			data,
-			loading:
-				koroneikiAccountLoading ||
-				networkStatus === NetworkStatus.loading,
+			loading: networkStatus === NetworkStatus.loading,
 			refetch,
 			remove,
 			search: onSearch,

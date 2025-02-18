@@ -4,5 +4,9 @@
  */
 
 export default function isAccountAdministrator(name: string) {
-	return ['Administrator', 'Partner Manager'].includes(name);
+	return [
+		'Account Administrator',
+		'Administrator',
+		'Partner Manager',
+	].includes(name);
 }

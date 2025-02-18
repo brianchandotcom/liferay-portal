@@ -1,17 +1,28 @@
 /**
- * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
 package com.liferay.portal.osgi.debug.internal.osgi.commands;
 
 import com.liferay.osgi.util.osgi.commands.OSGiCommands;
+import com.liferay.portal.kernel.util.SystemCheckerUtil;
+import com.liferay.portal.kernel.util.URLUtil;
+
+import java.io.IOException;
+
+import java.net.URL;
 
 import java.util.AbstractMap;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Enumeration;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 import java.util.Set;
 import java.util.TreeMap;
 
@@ -20,20 +31,81 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.wiring.BundleCapability;
 import org.osgi.framework.wiring.BundleRequirement;
 import org.osgi.framework.wiring.BundleRevision;
+import org.osgi.framework.wiring.BundleWire;
 import org.osgi.framework.wiring.BundleWiring;
+import org.osgi.framework.wiring.FrameworkWiring;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Shuyang Zhou
+ * @author Tina Tian
  */
 @Component(
 	property = {
-		"osgi.command.function=listCapabilities", "osgi.command.scope=system"
+		"osgi.command.function=check", "osgi.command.function=dc",
+		"osgi.command.function=idc", "osgi.command.function=listCapabilities",
+		"osgi.command.function=listSPIProviders", "osgi.command.scope=system"
 	},
 	service = OSGiCommands.class
 )
-public class CapabilityOSGiCommands implements OSGiCommands {
+public class SystemOSGiCommands implements OSGiCommands {
+
+	public void check() {
+		SystemCheckerUtil.runSystemCheckers(
+			System.out::println, System.out::println);
+	}
+
+	public void dc(long bundleId, long... additionalBundleIds) {
+		List<Bundle> bundles = new ArrayList<>();
+
+		bundles.add(_bundleContext.getBundle(bundleId));
+
+		for (long additionalBundleId : additionalBundleIds) {
+			bundles.add(_bundleContext.getBundle(additionalBundleId));
+		}
+
+		System.out.println(_frameworkWiring.getDependencyClosure(bundles));
+	}
+
+	public void idc(
+		boolean runtime, long bundleId, long... additionalBundleIds) {
+
+		Queue<Bundle> queue = new LinkedList<>();
+
+		queue.add(_bundleContext.getBundle(bundleId));
+
+		for (long additionalBundleId : additionalBundleIds) {
+			queue.add(_bundleContext.getBundle(additionalBundleId));
+		}
+
+		Set<Bundle> invertDependencyClosureBundles = Collections.newSetFromMap(
+			new TreeMap<>());
+
+		Bundle currentBundle = null;
+
+		while ((currentBundle = queue.poll()) != null) {
+			BundleWiring bundleWiring = currentBundle.adapt(BundleWiring.class);
+
+			for (BundleWire bundleWire : bundleWiring.getRequiredWires(null)) {
+				BundleWiring providerBundleWiring =
+					bundleWire.getProviderWiring();
+
+				Bundle providerBundle = providerBundleWiring.getBundle();
+
+				if (invertDependencyClosureBundles.add(providerBundle)) {
+					queue.add(providerBundle);
+				}
+			}
+		}
+
+		if (runtime) {
+			invertDependencyClosureBundles.addAll(
+				_frameworkWiring.getDependencyClosure(
+					invertDependencyClosureBundles));
+		}
+
+		System.out.println(invertDependencyClosureBundles);
+	}
 
 	public void listCapabilities(long bundleId, String... namespaces) {
 		Bundle bundle = _bundleContext.getBundle(bundleId);
@@ -77,9 +149,42 @@ public class CapabilityOSGiCommands implements OSGiCommands {
 		_print(map);
 	}
 
+	public void listSPIProviders(long bundleId, String... spiTypes)
+		throws IOException {
+
+		Bundle bundle = _bundleContext.getBundle(bundleId);
+
+		if (bundle == null) {
+			System.out.println("Invalid bundle ID: " + bundleId);
+
+			return;
+		}
+
+		_print(
+			bundle, bundle.findEntries("/META-INF/services/", null, true),
+			new HashSet<>(Arrays.asList(spiTypes)));
+	}
+
+	public void listSPIProviders(String... spiTypes) throws IOException {
+		Set<String> spiTypesSet = new HashSet<>(Arrays.asList(spiTypes));
+
+		for (Bundle bundle : _bundleContext.getBundles()) {
+			Enumeration<URL> enumeration = bundle.findEntries(
+				"/META-INF/services/", null, true);
+
+			if (enumeration != null) {
+				_print(bundle, enumeration, spiTypesSet);
+			}
+		}
+	}
+
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
+
+		Bundle systemBundle = bundleContext.getBundle(0);
+
+		_frameworkWiring = systemBundle.adapt(FrameworkWiring.class);
 	}
 
 	private void _collect(
@@ -116,6 +221,45 @@ public class CapabilityOSGiCommands implements OSGiCommands {
 			Set<BundleRequirement> bundleRequirements = entry.getValue();
 
 			bundleRequirements.add(bundleRequirement);
+		}
+	}
+
+	private boolean _matches(Set<String> spiTypesSet, URL url) {
+		if (spiTypesSet.isEmpty()) {
+			return true;
+		}
+
+		String path = url.getPath();
+
+		int index = path.lastIndexOf('/');
+
+		return spiTypesSet.contains(path.substring(index + 1));
+	}
+
+	private void _print(
+			Bundle bundle, Enumeration<URL> enumeration,
+			Set<String> spiTypesSet)
+		throws IOException {
+
+		List<URL> urls = new ArrayList<>();
+
+		if (enumeration != null) {
+			while (enumeration.hasMoreElements()) {
+				URL url = enumeration.nextElement();
+
+				if (_matches(spiTypesSet, url)) {
+					urls.add(url);
+				}
+			}
+		}
+
+		if (!urls.isEmpty()) {
+			System.out.println(bundle + ":");
+
+			for (URL url : urls) {
+				System.out.println("\t" + url);
+				System.out.println("\t\t" + URLUtil.toString(url));
+			}
 		}
 	}
 
@@ -186,5 +330,6 @@ public class CapabilityOSGiCommands implements OSGiCommands {
 	}
 
 	private BundleContext _bundleContext;
+	private FrameworkWiring _frameworkWiring;
 
 }

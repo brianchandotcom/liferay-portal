@@ -6,17 +6,21 @@
 import ClayEmptyState from '@clayui/empty-state';
 import React from 'react';
 
+import {useStructureFields} from '../../../structure_builder/contexts/StateContext';
 import {getImage} from '../../../structure_builder/utils/getImage';
 import AddFieldDropdown from './AddFieldDropdown';
+import FieldsTree from './FieldsTree';
 
 export default function StructureFields() {
+	const fields = useStructureFields();
+
 	return (
 		<div className="border p-4 structure-builder__structure-fields">
 			<h3 className="font-weight-semi-bold text-4">
 				{Liferay.Language.get('structure-fields')}
 			</h3>
 
-			<EmptyState />
+			{fields.length ? <FieldsTree fields={fields} /> : <EmptyState />}
 		</div>
 	);
 }

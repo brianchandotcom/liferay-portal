@@ -33,15 +33,15 @@ export class CompanyExportImportPage {
 		this.rangeDateRangeEndTime = page.locator(
 			'[id="_com_liferay_exportimport_web_portlet_CompanyExportPortlet_endTime"]'
 		);
+		this.rangeDateRangeRadioButton = page.getByRole('radio', {
+			name: 'Date Range',
+		});
 		this.rangeDateRangeStartDate = page.locator(
 			'[id="_com_liferay_exportimport_web_portlet_CompanyExportPortlet_startDate"]'
 		);
 		this.rangeDateRangeStartTime = page.locator(
 			'[id="_com_liferay_exportimport_web_portlet_CompanyExportPortlet_startTime"]'
 		);
-		this.rangeDateRangeRadioButton = page.getByRole('radio', {
-			name: 'Date Range',
-		});
 		this.rangeLast = page.locator(
 			'[id="_com_liferay_exportimport_web_portlet_CompanyExportPortlet_last"]'
 		);

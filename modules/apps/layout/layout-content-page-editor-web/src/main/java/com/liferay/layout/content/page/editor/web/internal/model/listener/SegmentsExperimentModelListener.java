@@ -70,8 +70,16 @@ public class SegmentsExperimentModelListener
 			if (draftLayout != null) {
 				SegmentsExperienceUtil.copySegmentsExperienceData(
 					_commentManager, segmentsExperiment.getGroupId(),
-					draftLayout, _portletRegistry, winnerSegmentsExperience,
-					defaultSegmentsExperience, className -> serviceContext,
+					draftLayout, _portletRegistry,
+					_segmentsExperienceLocalService.fetchSegmentsExperience(
+						winnerSegmentsExperience.getGroupId(),
+						winnerSegmentsExperience.getSegmentsExperienceKey(),
+						draftLayout.getPlid()),
+					_segmentsExperienceLocalService.fetchSegmentsExperience(
+						defaultSegmentsExperience.getGroupId(),
+						defaultSegmentsExperience.getSegmentsExperienceKey(),
+						draftLayout.getPlid()),
+					className -> serviceContext,
 					segmentsExperiment.getUserId());
 			}
 		}

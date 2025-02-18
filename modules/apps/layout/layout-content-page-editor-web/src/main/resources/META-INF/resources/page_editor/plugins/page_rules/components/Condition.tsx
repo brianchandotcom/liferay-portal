@@ -199,6 +199,7 @@ function FormFragmentTypeSelectors({
 					onConditionChange({
 						...condition,
 						field: selectedFragment,
+						options: undefined,
 					});
 				}}
 				selectedKey={condition.field}
@@ -215,7 +216,6 @@ function FormFragmentTypeSelectors({
 						onConditionChange({
 							...condition,
 							options: {
-								...condition.options!,
 								type,
 							},
 						});

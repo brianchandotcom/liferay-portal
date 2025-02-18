@@ -20,83 +20,81 @@ test.afterEach(async ({formsPage}) => {
 });
 
 test.describe('Manage fields through Form Preview page', () => {
-	test.describe('Can configure a HTML autocomplete attribute in Date, Numeric and Text field types', () => {
-		test('LPD-12824 HTML autocomplete attribute is rendered and has the configured value limited to 20 non-special characters', async ({
-			formBuilderPage,
-			formBuilderSidePanelPage,
-		}) => {
-			const testData: {
-				expectedValue: string;
-				fieldTitle: FormFieldTypeTitle;
-				inputValue: string;
-			}[] = [
-				{
-					expectedValue: 'bday',
-					fieldTitle: 'Date',
-					inputValue: '+)(*&^%$#@ bday$__%  ',
-				},
-				{
-					expectedValue: 'one-time-code',
-					fieldTitle: 'Numeric',
-					inputValue: '****[][one-time-code&&#()',
-				},
-				{
-					expectedValue: 'transaction-currency',
-					fieldTitle: 'Text',
-					inputValue: 'transaction-currencyextracharacters',
-				},
-			];
+	test('LPD-12824 HTML autocomplete attribute is rendered and has the configured value limited to 20 non-special characters in Date, Numeric and Text field types', async ({
+		formBuilderPage,
+		formBuilderSidePanelPage,
+	}) => {
+		const testData: {
+			expectedValue: string;
+			fieldTitle: FormFieldTypeTitle;
+			inputValue: string;
+		}[] = [
+			{
+				expectedValue: 'bday',
+				fieldTitle: 'Date',
+				inputValue: '+)(*&^%$#@ bday$__%  ',
+			},
+			{
+				expectedValue: 'one-time-code',
+				fieldTitle: 'Numeric',
+				inputValue: '****[][one-time-code&&#()',
+			},
+			{
+				expectedValue: 'transaction-currency',
+				fieldTitle: 'Text',
+				inputValue: 'transaction-currencyextracharacters',
+			},
+		];
 
-			await formBuilderPage.goToNew();
+		await formBuilderPage.goToNew();
 
-			await expect(formBuilderPage.newFormHeading).toBeVisible();
+		await expect(formBuilderPage.newFormHeading).toBeVisible();
 
-			await formBuilderPage.fillFormTitle('Form' + getRandomInt());
+		await formBuilderPage.fillFormTitle('Form' + getRandomInt());
 
-			for (const data of testData) {
-				await formBuilderSidePanelPage.addFieldByDoubleClick(
-					data.fieldTitle
-				);
-
-				await formBuilderSidePanelPage.clickAdvancedTab();
-
-				await expect(
-					formBuilderSidePanelPage.htmlAutocompleteAttributeField
-				).toBeVisible();
-
-				await formBuilderSidePanelPage.htmlAutocompleteAttributeField.fill(
-					data.inputValue
-				);
-
-				await formBuilderSidePanelPage.clickBackButton();
-			}
-
-			const newTabPagePromise = new Promise<Page>((resolve) =>
-				formBuilderPage.page.once('popup', resolve)
+		for (const data of testData) {
+			await formBuilderSidePanelPage.addFieldByDoubleClick(
+				data.fieldTitle
 			);
 
-			await formBuilderPage.previewButton.click();
+			await formBuilderSidePanelPage.clickAdvancedTab();
 
-			const newTabPage = await newTabPagePromise;
+			await expect(
+				formBuilderSidePanelPage.htmlAutocompleteAttributeField
+			).toBeVisible();
 
-			await newTabPage.waitForLoadState('domcontentloaded');
+			await formBuilderSidePanelPage.htmlAutocompleteAttributeField.fill(
+				data.inputValue
+			);
 
-			for (const data of testData) {
-				if (data.fieldTitle === 'Date') {
-					await expect(
-						newTabPage.getByPlaceholder('__/__/____')
-					).toHaveAttribute('autocomplete', data.expectedValue);
+			await formBuilderSidePanelPage.clickBackButton();
+		}
 
-					continue;
-				}
+		const newTabPagePromise = new Promise<Page>((resolve) =>
+			formBuilderPage.page.once('popup', resolve)
+		);
 
+		await formBuilderPage.previewButton.click();
+
+		const newTabPage = await newTabPagePromise;
+
+		await newTabPage.waitForLoadState('domcontentloaded');
+
+		for (const data of testData) {
+			if (data.fieldTitle === 'Date') {
 				await expect(
-					newTabPage.getByLabel(data.fieldTitle)
+					newTabPage.getByPlaceholder('__/__/____')
 				).toHaveAttribute('autocomplete', data.expectedValue);
+
+				continue;
 			}
 
-			await newTabPage.close();
-		});
+			await expect(
+				newTabPage.getByLabel(data.fieldTitle)
+			).toHaveAttribute('autocomplete', data.expectedValue);
+		}
+
+		await newTabPage.close();
 	});
 
 	test('make sure the aria-labelledby reference is present in the captcha form view', async ({

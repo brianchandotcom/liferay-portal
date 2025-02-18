@@ -23,14 +23,14 @@ const targetProducts = [
 
 const TeamMembers = () => {
 	const {setHasSideMenu} = useOutletContext();
-	const {data, loading} = useCurrentKoroneikiAccount();
-	const koroneikiAccount = data?.koroneikiAccountByExternalReferenceCode;
-
+	const {data: dataCurrentKoroneikiAccount, loading: loadingCurrentKoroneikiAccount} = useCurrentKoroneikiAccount();
+	const koroneikiAccount = dataCurrentKoroneikiAccount?.koroneikiAccountByExternalReferenceCode;
 	const {featureFlags} = useAppPropertiesContext();
 
-	const {data: dataSubscriptionGroups} = useQuery(
+	const {data: dataSubscriptionGroups, loading: loadingSubscriptionGroups} = useQuery(
 		getAccountSubscriptionGroups,
 		{
+			skip: loadingCurrentKoroneikiAccount,
 			variables: {
 				filter: new SearchBuilder()
 					.eq('accountKey', koroneikiAccount?.accountKey)
@@ -55,6 +55,8 @@ const TeamMembers = () => {
 			item?.activationStatus === 'Active'
 	);
 
+	const loading = loadingCurrentKoroneikiAccount || loadingSubscriptionGroups;
+
 	useEffect(() => {
 		setHasSideMenu(true);
 	}, [setHasSideMenu]);
@@ -70,21 +72,17 @@ const TeamMembers = () => {
 			</p>
 
 			<div className="mt-4">
-			{koroneikiAccount && !loading && (
 				<TeamMembersTable
 					koroneikiAccount={koroneikiAccount}
 					loading={loading}
 				/>
-			)}
-			{koroneikiAccount && !loading && (
+
 				<ManageProductUsers
 					koroneikiAccount={koroneikiAccount}
 					loading={loading}
 				/>
-			)}
+
 				{featureFlags.includes('LPS-159127') &&
-					koroneikiAccount &&
-					!loading &&
 					accountSubscriptionGroupsNames?.some((groupName) =>
 						targetProducts.includes(groupName)
 					) && (

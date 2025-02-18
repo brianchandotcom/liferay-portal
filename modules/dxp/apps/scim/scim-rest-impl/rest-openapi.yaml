@@ -487,6 +487,10 @@ paths:
                   schema:
                       type: integer
                 - in: query
+                  name: filter
+                  schema:
+                      type: string
+                - in: query
                   name: startIndex
                   schema:
                       type: integer

@@ -6,6 +6,7 @@
 package com.liferay.commerce.product.content.web.internal.portlet.template;
 
 import com.liferay.commerce.product.content.helper.CPCompareContentHelper;
+import com.liferay.commerce.product.content.helper.CPContentHelper;
 import com.liferay.portal.kernel.template.TemplateContextContributor;
 
 import java.util.Map;
@@ -31,9 +32,13 @@ public class CPCompareContentTemplateContextContributor
 		HttpServletRequest httpServletRequest) {
 
 		contextObjects.put("cpCompareContentHelper", _cpCompareContentHelper);
+		contextObjects.put("cpContentHelper", _cpContentHelper);
 	}
 
 	@Reference
 	private CPCompareContentHelper _cpCompareContentHelper;
+
+	@Reference
+	private CPContentHelper _cpContentHelper;
 
 }

@@ -7,6 +7,7 @@ package com.liferay.commerce.product.content.web.internal.portlet.display.templa
 
 import com.liferay.commerce.product.catalog.CPCatalogEntry;
 import com.liferay.commerce.product.constants.CPPortletKeys;
+import com.liferay.commerce.product.content.helper.CPContentHelper;
 import com.liferay.commerce.product.content.web.internal.display.context.CPCompareContentMiniDisplayContext;
 import com.liferay.commerce.product.content.web.internal.portlet.CPCompareContentMiniPortlet;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
@@ -86,6 +87,8 @@ public class CPCompareContentMiniPortletDisplayTemplateHandler
 			"cp-compare-content-mini-display-context",
 			CPCompareContentMiniDisplayContext.class,
 			"cpCompareContentMiniDisplayContext");
+		templateVariableGroup.addVariable(
+			"cp-content-helper", CPContentHelper.class, "cpContentHelper");
 
 		TemplateVariableGroup cpDefinitionsServicesTemplateVariableGroup =
 			new TemplateVariableGroup(

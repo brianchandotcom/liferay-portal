@@ -15,29 +15,6 @@ import {StructureSettingsContext} from '../contexts/StructureSettingsContext';
 import StructureService from '../services/StructureService';
 
 export default function ManagementBar() {
-	const {name, setError} = useContext(StructureSettingsContext);
-
-	const onSave = async () => {
-		try {
-			await StructureService.saveStructure({name});
-
-			openToast({
-				message: Liferay.Util.sub(
-					Liferay.Language.get('x-was-created-successfully'),
-					name
-				),
-				type: 'success',
-			});
-
-			setError(null);
-		}
-		catch (error) {
-			const {message} = error as API.ErrorDetails;
-
-			setError(message);
-		}
-	};
-
 	return (
 		<ManagementToolbar.Container className="border">
 			<ManagementToolbar.ItemList className="c-gap-3" expand>
@@ -67,13 +44,7 @@ export default function ManagementBar() {
 				</ManagementToolbar.Item>
 
 				<ManagementToolbar.Item>
-					<ClayButton
-						displayType="secondary"
-						onClick={onSave}
-						size="sm"
-					>
-						{Liferay.Language.get('save')}
-					</ClayButton>
+					<SaveButton />
 				</ManagementToolbar.Item>
 
 				<ManagementToolbar.Item>
@@ -83,5 +54,36 @@ export default function ManagementBar() {
 				</ManagementToolbar.Item>
 			</ManagementToolbar.ItemList>
 		</ManagementToolbar.Container>
+	);
+}
+
+function SaveButton() {
+	const {name, setError} = useContext(StructureSettingsContext);
+
+	const onSave = async () => {
+		try {
+			await StructureService.saveStructure({name});
+
+			openToast({
+				message: Liferay.Util.sub(
+					Liferay.Language.get('x-was-created-successfully'),
+					name
+				),
+				type: 'success',
+			});
+
+			setError(null);
+		}
+		catch (error) {
+			const {message} = error as API.ErrorDetails;
+
+			setError(message);
+		}
+	};
+
+	return (
+		<ClayButton displayType="secondary" onClick={onSave} size="sm">
+			{Liferay.Language.get('save')}
+		</ClayButton>
 	);
 }

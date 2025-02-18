@@ -293,8 +293,12 @@ public class AddSegmentsExperienceMVCActionCommand
 
 		SegmentsExperienceUtil.copySegmentsExperienceData(
 			_commentManager, groupId, draftLayout, _portletRegistry,
-			baseSegmentsExperience, newSegmentsExperience,
-			className -> serviceContext, serviceContext.getUserId());
+			_segmentsExperienceLocalService.fetchSegmentsExperience(
+				baseSegmentsExperience.getGroupId(),
+				baseSegmentsExperience.getSegmentsExperienceKey(),
+				draftLayout.getPlid()),
+			newSegmentsExperience, className -> serviceContext,
+			serviceContext.getUserId());
 	}
 
 	@Reference

@@ -4,7 +4,8 @@
  */
 
 import ClayEmptyState from '@clayui/empty-state';
-import React from 'react';
+import {SearchForm} from '@liferay/layout-js-components-web';
+import React, {useMemo, useState} from 'react';
 
 import {useStructureFields} from '../../../structure_builder/contexts/StateContext';
 import {getImage} from '../../../structure_builder/utils/getImage';
@@ -14,13 +15,38 @@ import FieldsTree from './FieldsTree';
 export default function StructureFields() {
 	const fields = useStructureFields();
 
+	const [search, setSearch] = useState('');
+
+	const filteredFields = useMemo(() => {
+		return fields.filter((field) =>
+			field.label.toLowerCase().includes(search.toLowerCase())
+		);
+	}, [fields, search]);
+
 	return (
 		<div className="border p-4 structure-builder__structure-fields">
 			<h3 className="font-weight-semi-bold text-4">
 				{Liferay.Language.get('structure-fields')}
 			</h3>
 
-			{fields.length ? <FieldsTree fields={fields} /> : <EmptyState />}
+			{fields.length ? (
+				<>
+					<div className="align-items-center c-gap-2 d-flex">
+						<SearchForm
+							className="flex-grow-1 my-3"
+							label={Liferay.Language.get('search-fields')}
+							onChange={setSearch}
+							variant="white"
+						/>
+
+						<AddFieldDropdown triggerType="icon" />
+					</div>
+
+					<FieldsTree fields={filteredFields} />
+				</>
+			) : (
+				<EmptyState />
+			)}
 		</div>
 	);
 }

@@ -5,17 +5,18 @@
 
 package com.liferay.dynamic.data.mapping.form.web.internal.portlet.action;
 
-import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
-import com.liferay.dynamic.data.mapping.form.web.internal.portlet.action.util.DLFileEntryUtil;
+import com.liferay.dynamic.data.mapping.form.web.internal.portlet.action.util.FileEntryMVCActionCommandUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Igor Costa
@@ -35,11 +36,9 @@ public class DeleteFileEntryMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		DLFileEntryUtil.deleteDLFileEntry(
-			actionRequest, _dlFileEntryLocalService);
+		FileEntryMVCActionCommandUtil.deleteFileEntry(
+			ParamUtil.getLong(actionRequest, "oldFileEntryId"),
+			(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY));
 	}
-
-	@Reference
-	private DLFileEntryLocalService _dlFileEntryLocalService;
 
 }

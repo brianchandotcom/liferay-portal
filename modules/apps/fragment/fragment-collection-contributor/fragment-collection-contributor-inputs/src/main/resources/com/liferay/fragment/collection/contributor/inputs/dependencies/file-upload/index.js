@@ -228,8 +228,12 @@ else {
 						onLocaleChange: (languageId) => {
 							if (defaultLanguageId !== languageId) {
 								if (unlocalizedFieldsState === 'read-only') {
-									selectButton.style.display = 'none';
-									fileName.tabIndex = 0;
+									selectButton.classList.add('d-none');
+
+									fileName.setAttribute('readonly', 'true');
+									fileName.setAttribute('tabindex', '0');
+									fileName.classList.add('form-control');
+
 									if (!fileName.innerText) {
 										fileName.innerText =
 											Liferay.Language.get(
@@ -238,15 +242,21 @@ else {
 									}
 								}
 								else {
-									selectButton.disabled = true;
+									selectButton.setAttribute('disabled', true);
+
 									fileName.classList.add('text-secondary');
 								}
-								removeButton.style.display = 'none';
+
+								removeButton.classList.add('d-none');
 							}
 							else {
 								if (unlocalizedFieldsState === 'read-only') {
-									selectButton.style.display = '';
-									fileName.tabIndex = -1;
+									selectButton.classList.remove('d-none');
+
+									fileName.removeAttribute('readonly');
+									fileName.removeAttribute('tabindex');
+									fileName.classList.remove('form-control');
+
 									if (
 										fileName.innerText ===
 										Liferay.Language.get('not-selected')
@@ -255,10 +265,14 @@ else {
 									}
 								}
 								else {
-									selectButton.disabled = false;
+									selectButton.removeAttribute('disabled');
+
 									fileName.classList.remove('text-secondary');
 								}
-								removeButton.style.display = '';
+
+								if (fileName.innerText) {
+									removeButton.classList.remove('d-none');
+								}
 							}
 						},
 						readOnlyInputLabel: document.getElementById(

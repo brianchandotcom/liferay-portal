@@ -7605,8 +7605,7 @@ public class ObjectEntryResourceTest {
 				_OBJECT_FIELD_NAME_ATTACHMENT_DOCS_AND_MEDIA_SOURCE, ".folder"),
 			Http.Method.POST);
 
-		JSONObject virtualInstanceJSONObject = _addVirtualInstanceJSONObject(
-			"able.com");
+		JSONObject virtualInstanceJSONObject = _addVirtualInstanceJSONObject();
 
 		User adminUser = UserTestUtil.getAdminUser(
 			virtualInstanceJSONObject.getLong("companyId"));
@@ -8613,8 +8612,7 @@ public class ObjectEntryResourceTest {
 				objectRelationship1.getObjectDefinitionId1()),
 			_OBJECT_FIELD_NAME_TEXT, RandomTestUtil.randomString());
 
-		JSONObject virtualInstanceJSONObject = _addVirtualInstanceJSONObject(
-			"able.com");
+		JSONObject virtualInstanceJSONObject = _addVirtualInstanceJSONObject();
 
 		ObjectRelationship objectRelationship2 = _addObjectRelationship(
 			virtualInstanceJSONObject.getLong("companyId"));
@@ -12813,13 +12811,9 @@ public class ObjectEntryResourceTest {
 		return UserLocalServiceUtil.updateUser(user);
 	}
 
-	private JSONObject _addVirtualInstanceJSONObject(String virtualInstanceId)
-		throws Exception {
-
+	private JSONObject _addVirtualInstanceJSONObject() throws Exception {
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(
-			null,
-			"headless-portal-instances/v1.0/portal-instances/" +
-				virtualInstanceId,
+			null, "headless-portal-instances/v1.0/portal-instances/able.com",
 			Http.Method.GET);
 
 		if (Objects.equals(jsonObject.getString("status"), "NOT_FOUND")) {

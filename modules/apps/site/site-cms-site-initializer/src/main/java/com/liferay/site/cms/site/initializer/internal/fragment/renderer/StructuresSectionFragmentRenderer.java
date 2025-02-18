@@ -88,7 +88,7 @@ public class StructuresSectionFragmentRenderer implements FragmentRenderer {
 			httpServletRequest.setAttribute(
 				StructuresSectionDisplayContext.class.getName(),
 				new StructuresSectionDisplayContext(
-					_cmsSiteInitializerConfiguration));
+					_cmsSiteInitializerConfiguration, httpServletRequest));
 
 			RequestDispatcher requestDispatcher =
 				_servletContext.getRequestDispatcher("/structures_section.jsp");

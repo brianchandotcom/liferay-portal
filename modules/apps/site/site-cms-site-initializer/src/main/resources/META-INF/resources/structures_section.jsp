@@ -14,6 +14,7 @@ StructuresSectionDisplayContext structuresSectionDisplayContext = (StructuresSec
 <frontend-data-set:headless-display
 	apiURL="<%= structuresSectionDisplayContext.getAPIURL() %>"
 	bulkActionDropdownItems="<%= structuresSectionDisplayContext.getBulkActionDropdownItems() %>"
+	creationMenu="<%= structuresSectionDisplayContext.getCreationMenu() %>"
 	fdsActionDropdownItems="<%= structuresSectionDisplayContext.getFDSActionDropdownItems() %>"
 	formName="fm"
 	id="<%= CMSSiteInitializerFDSNames.STRUCTURES_SECTION %>"

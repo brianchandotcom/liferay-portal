@@ -104,7 +104,7 @@ import org.osgi.util.promise.Promise;
  * @author Adolfo Pérez
  */
 @RunWith(Arquillian.class)
-public class AMThumbnailsOSGiCommandsTest {
+public class ThumbnailsOSGiCommandsTest {
 
 	@ClassRule
 	@Rule
@@ -263,7 +263,7 @@ public class AMThumbnailsOSGiCommandsTest {
 		promise.getValue();
 
 		Bundle bundle = FrameworkUtil.getBundle(
-			AMThumbnailsOSGiCommandsTest.class);
+			ThumbnailsOSGiCommandsTest.class);
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
@@ -289,7 +289,7 @@ public class AMThumbnailsOSGiCommandsTest {
 
 	private static void _disableDocumentLibraryAM() throws Exception {
 		Bundle bundle = FrameworkUtil.getBundle(
-			AMThumbnailsOSGiCommandsTest.class);
+			ThumbnailsOSGiCommandsTest.class);
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
@@ -325,7 +325,7 @@ public class AMThumbnailsOSGiCommandsTest {
 
 	private static void _enableDocumentLibraryAM() throws Exception {
 		Bundle bundle = FrameworkUtil.getBundle(
-			AMThumbnailsOSGiCommandsTest.class);
+			ThumbnailsOSGiCommandsTest.class);
 
 		BundleContext bundleContext = bundle.getBundleContext();
 
@@ -399,16 +399,16 @@ public class AMThumbnailsOSGiCommandsTest {
 	}
 
 	private byte[] _read(String fileName) throws Exception {
-		return FileUtil.getBytes(AMThumbnailsOSGiCommandsTest.class, fileName);
+		return FileUtil.getBytes(ThumbnailsOSGiCommandsTest.class, fileName);
 	}
 
 	private void _run(String functionName) throws Exception {
-		Class<?> clazz = _amThumbnailsOSGiCommands.getClass();
+		Class<?> clazz = _thumbnailsOSGiCommands.getClass();
 
 		Method method = clazz.getMethod(functionName, String[].class);
 
 		method.invoke(
-			_amThumbnailsOSGiCommands,
+			_thumbnailsOSGiCommands,
 			(Object)new String[] {String.valueOf(_company.getCompanyId())});
 	}
 
@@ -422,11 +422,6 @@ public class AMThumbnailsOSGiCommandsTest {
 
 	@Inject
 	private static AMImageFinder _amImageFinder;
-
-	@Inject(
-		filter = "osgi.command.scope=thumbnails", type = Inject.NoType.class
-	)
-	private static Object _amThumbnailsOSGiCommands;
 
 	@Inject(filter = "type=" + DLProcessorConstants.IMAGE_PROCESSOR)
 	private static DLProcessor _dlProcessor;
@@ -444,6 +439,11 @@ public class AMThumbnailsOSGiCommandsTest {
 
 	@Inject(filter = "default=true")
 	private static Store _store;
+
+	@Inject(
+		filter = "osgi.command.scope=thumbnails", type = Inject.NoType.class
+	)
+	private static Object _thumbnailsOSGiCommands;
 
 	private Company _company;
 	private Group _group;

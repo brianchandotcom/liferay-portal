@@ -61,8 +61,9 @@ public class SegmentsExperienceUtil {
 
 	public static void copySegmentsExperienceData(
 			CommentManager commentManager, long groupId, Layout layout,
-			PortletRegistry portletRegistry, long sourceSegmentsExperienceId,
-			long targetSegmentsExperienceId,
+			PortletRegistry portletRegistry,
+			SegmentsExperience sourceSegmentsExperience,
+			SegmentsExperience targetSegmentsExperience,
 			Function<String, ServiceContext> serviceContextFunction,
 			long userId)
 		throws PortalException {
@@ -74,7 +75,7 @@ public class SegmentsExperienceUtil {
 
 			_copyLayoutData(
 				commentManager, groupId, layout, portletRegistry,
-				sourceSegmentsExperienceId, targetSegmentsExperienceId,
+				sourceSegmentsExperience, targetSegmentsExperience,
 				serviceContextFunction, userId);
 		}
 		catch (Throwable throwable) {
@@ -177,24 +178,27 @@ public class SegmentsExperienceUtil {
 
 	private static void _copyLayoutData(
 			CommentManager commentManager, long groupId, Layout layout,
-			PortletRegistry portletRegistry, long sourceSegmentsExperienceId,
-			long targetSegmentsExperienceId,
+			PortletRegistry portletRegistry,
+			SegmentsExperience sourceSegmentsExperience,
+			SegmentsExperience targetSegmentsExperience,
 			Function<String, ServiceContext> serviceContextFunction,
 			long userId)
 		throws PortalException {
 
 		LayoutStructure layoutStructure =
 			LayoutStructureUtil.getLayoutStructure(
-				groupId, layout.getPlid(), sourceSegmentsExperienceId);
+				groupId, layout.getPlid(),
+				sourceSegmentsExperience.getSegmentsExperienceId());
 
 		JSONObject dataJSONObject = _updateLayoutDataJSONObject(
 			commentManager, groupId, layout, layoutStructure, portletRegistry,
-			sourceSegmentsExperienceId, serviceContextFunction,
-			targetSegmentsExperienceId, userId);
+			sourceSegmentsExperience, serviceContextFunction,
+			targetSegmentsExperience, userId);
 
 		LayoutPageTemplateStructureLocalServiceUtil.
 			updateLayoutPageTemplateStructureData(
-				groupId, layout.getPlid(), targetSegmentsExperienceId,
+				groupId, layout.getPlid(),
+				targetSegmentsExperience.getSegmentsExperienceId(),
 				dataJSONObject.toString());
 	}
 
@@ -323,15 +327,16 @@ public class SegmentsExperienceUtil {
 	private static JSONObject _updateLayoutDataJSONObject(
 			CommentManager commentManager, long groupId, Layout layout,
 			LayoutStructure layoutStructure, PortletRegistry portletRegistry,
-			long sourceSegmentsExperienceId,
+			SegmentsExperience sourceSegmentsExperience,
 			Function<String, ServiceContext> serviceContextFunction,
-			long targetSegmentsExperienceId, long userId)
+			SegmentsExperience targetSegmentsExperience, long userId)
 		throws PortalException {
 
 		List<FragmentEntryLink> fragmentEntryLinks =
 			FragmentEntryLinkLocalServiceUtil.
 				getFragmentEntryLinksBySegmentsExperienceId(
-					groupId, sourceSegmentsExperienceId, layout.getPlid());
+					groupId, sourceSegmentsExperience.getSegmentsExperienceId(),
+					layout.getPlid());
 
 		for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
 			if (fragmentEntryLink.isDeleted()) {
@@ -360,7 +365,7 @@ public class SegmentsExperienceUtil {
 			newFragmentEntryLink.setModifiedDate(new Date());
 			newFragmentEntryLink.setOriginalFragmentEntryLinkId(0);
 			newFragmentEntryLink.setSegmentsExperienceId(
-				targetSegmentsExperienceId);
+				targetSegmentsExperience.getSegmentsExperienceId());
 
 			String newNamespace = StringUtil.randomId();
 
@@ -376,7 +381,7 @@ public class SegmentsExperienceUtil {
 
 			SegmentsExperiment segmentsExperiment =
 				SegmentsExperimentLocalServiceUtil.fetchSegmentsExperiment(
-					layout.getGroupId(), sourceSegmentsExperienceId,
+					groupId, sourceSegmentsExperience.getSegmentsExperienceId(),
 					segmentsExperimentPlid);
 
 			if (Validator.isNull(

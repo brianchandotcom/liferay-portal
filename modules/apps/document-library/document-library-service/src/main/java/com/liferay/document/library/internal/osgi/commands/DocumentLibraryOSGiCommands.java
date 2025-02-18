@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2023 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -7,9 +7,13 @@ package com.liferay.document.library.internal.osgi.commands;
 
 import com.liferay.document.library.kernel.service.DLFileVersionLocalService;
 import com.liferay.document.library.kernel.store.StoreAreaProcessor;
+import com.liferay.document.library.service.DLStorageQuotaLocalService;
 import com.liferay.osgi.util.osgi.commands.OSGiCommands;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.time.Duration;
@@ -27,11 +31,12 @@ import org.osgi.util.tracker.ServiceTracker;
  */
 @Component(
 	property = {
-		"osgi.command.function=cleanUp", "osgi.command.scope=documentLibrary"
+		"osgi.command.function=cleanUp", "osgi.command.function=update",
+		"osgi.command.scope=documentLibrary"
 	},
 	service = OSGiCommands.class
 )
-public class StoreAreaOSGiCommands implements OSGiCommands {
+public class DocumentLibraryOSGiCommands implements OSGiCommands {
 
 	public void cleanUp(long companyId) {
 		StoreAreaProcessor storeAreaProcessor = _serviceTracker.getService();
@@ -53,6 +58,28 @@ public class StoreAreaOSGiCommands implements OSGiCommands {
 			companyId, Integer.MAX_VALUE,
 			name -> !_isDLFileVersionReferenced(companyId, name),
 			StringPool.BLANK, Duration.ofSeconds(1));
+	}
+
+	public void update(String... companyIds) {
+		for (String companyId : companyIds) {
+			try {
+				_dlStorageQuotaLocalService.updateStorageSize(
+					GetterUtil.getLong(companyId));
+
+				System.out.printf(
+					"Successfully updated document library storage quota for " +
+						"company %s%n",
+					companyId);
+			}
+			catch (Exception exception) {
+				_log.error(exception);
+
+				System.out.printf(
+					"Unable to update document library storage quota for " +
+						"company %s. See server log for more details.%n",
+					companyId);
+			}
+		}
 	}
 
 	@Activate
@@ -92,8 +119,14 @@ public class StoreAreaOSGiCommands implements OSGiCommands {
 		return false;
 	}
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		DocumentLibraryOSGiCommands.class);
+
 	@Reference
 	private DLFileVersionLocalService _dlFileVersionLocalService;
+
+	@Reference
+	private DLStorageQuotaLocalService _dlStorageQuotaLocalService;
 
 	private ServiceTracker<StoreAreaProcessor, StoreAreaProcessor>
 		_serviceTracker;

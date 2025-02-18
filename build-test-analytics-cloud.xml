@@ -37,9 +37,40 @@
 									<matches pattern=".*com-liferay-osb-.*" string="@{analytics.cloud.asah.image.name}" />
 								</not>
 								<then>
-									<execute dir="${project.dir}">
-										docker pull @{analytics.cloud.asah.image.name}
-									</execute>
+									<if>
+										<isset property="analytics.cloud.ecr.registry" />
+										<then>
+											<local name="analytics.cloud.ecr.image.name" />
+
+											<beanshell>
+												String analyticsCloudAsahImageName = "@{analytics.cloud.asah.image.name}";
+
+												StringBuilder sb = new StringBuilder();
+
+												sb.append(project.getProperty("analytics.cloud.ecr.registry"));
+												sb.append("/");
+
+												if (!analyticsCloudAsahImageName.matches("([^/\\s]+)/([^:\\s]+)(:([^:\\s]+))?")) {
+													sb.append("library/");
+												}
+
+												sb.append(analyticsCloudAsahImageName);
+
+												project.setProperty("analytics.cloud.ecr.image.name", sb.toString());
+											</beanshell>
+
+											<execute dir="${project.dir}">
+												docker pull ${analytics.cloud.ecr.image.name}
+
+												docker tag ${analytics.cloud.ecr.image.name} @{analytics.cloud.asah.image.name}
+											</execute>
+										</then>
+										<else>
+											<execute dir="${project.dir}">
+												docker pull @{analytics.cloud.asah.image.name}
+											</execute>
+										</else>
+									</if>
 								</then>
 							</if>
 						</sequential>
@@ -713,7 +744,7 @@ OSB_FARO_FRONTEND_URL=${analytics.cloud.faro.frontend.url}</echo>
 
 					String excludedImageNames = project.getProperty("analytics.cloud.image.names.excludes");
 
-					JenkinsResultsParserUtil.pullDockerImageDependencies(new File("@{analytics.cloud.repository.dir}"), excludedImageNames.split(","));
+					JenkinsResultsParserUtil.pullDockerImageDependencies(new File("@{analytics.cloud.repository.dir}"), excludedImageNames.split(","), project.getProperty("analytics.cloud.ecr.registry"));
 				]]>
 			</beanshell>
 		</sequential>

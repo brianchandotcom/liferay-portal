@@ -4,7 +4,7 @@
  */
 
 import {Button} from '~/components';
-import BadgePillFilter from '~/components/BadgePillFilter';
+import BadgeButton from '~/components/BadgeButton';
 import i18n from '~/utils/I18n';
 
 import {BE_INITIAL_FILTER} from '../../../../../utils/BE_INITIAL_FILTER';
@@ -14,7 +14,7 @@ interface IBadgeProps {
 	filtersState: [IBEFilter, React.Dispatch<React.SetStateAction<IBEFilter>>];
 }
 
-const BEBadgeFilter = ({filtersState: [filters, setFilters]}: IBadgeProps) => {
+const FilterResults = ({filtersState: [filters, setFilters]}: IBadgeProps) => {
 	const hasFilterValue = (filters: IBEFilter) => {
 		return Object.values(filters).some(
 			({value}) => Array.isArray(value) && !!value.length
@@ -25,7 +25,7 @@ const BEBadgeFilter = ({filtersState: [filters, setFilters]}: IBadgeProps) => {
 		<div className="bd-highlight d-flex">
 			<div className="bd-highlight col d-flex flex-wrap pl-0 pt-2 w-100">
 				{!!filters.eventType.value?.length && (
-					<BadgePillFilter
+					<BadgeButton
 						filterName={filters.eventType.name}
 						filterValue={filters.eventType.value.join(', ')}
 						onClick={() =>
@@ -41,7 +41,7 @@ const BEBadgeFilter = ({filtersState: [filters, setFilters]}: IBadgeProps) => {
 				)}
 
 				{!!filters.eventStatus.value?.length && (
-					<BadgePillFilter
+					<BadgeButton
 						filterName={filters.eventStatus.name}
 						filterValue={filters.eventStatus.value.join(', ')}
 						onClick={() =>
@@ -79,4 +79,4 @@ const BEBadgeFilter = ({filtersState: [filters, setFilters]}: IBadgeProps) => {
 	);
 };
 
-export default BEBadgeFilter;
+export default FilterResults;

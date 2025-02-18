@@ -6,8 +6,8 @@
 import {useEffect, useRef, useState} from 'react';
 import i18n from '~/utils/I18n';
 import {Button} from '~/components';
-import getAvailableFieldsCheckboxs from '~/components/BEFilter/components/CheckboxFilter/utils/getAvailableFieldsCheckboxs';
-import DropDownWithDrillDown from '~/components/BEFilter/components/DropDownWithDrillDown';
+import getAvailableFieldsCheckboxs from '~/components/Filter/components/FilterCheckbox/utils/getAvailableFieldsCheckboxs';
+import FilterDropdown from '~/components/Filter/components/FilterDropdown';
 import SearchBar from '~/components/SearchBar';
 import {
 	getDoesNotExpire,
@@ -96,7 +96,7 @@ const Filter = ({activationKeys, filtersState: [filters, setFilters]}) => {
 					}}
 				/>
 
-				<DropDownWithDrillDown
+				<FilterDropdown
 					className="align-items-center d-flex"
 					initialActiveMenu="x0a0"
 					menus={getDropDownAvailableFields(

@@ -6,9 +6,9 @@
 import ClayDropDown from '@clayui/drop-down';
 import classNames from 'classnames';
 import {memo, useState} from 'react';
-import DrilldownMenuItems from './components/DrilldownMenuItems';
+import DrilldownMenuItems from './components/FilterDropdownMenuItems';
 
-const DropDownWithDrillDown = ({
+const FilterDropdown = ({
 	alignmentPosition,
 	className,
 	containerElement,
@@ -89,4 +89,4 @@ const DropDownWithDrillDown = ({
 	);
 };
 
-export default memo(DropDownWithDrillDown);
+export default memo(FilterDropdown);

@@ -8,7 +8,7 @@ import i18n from '~/utils/I18n';
 import Button from '~/components/Button';
 import {FORMAT_DATE_TYPES} from '~/utils/constants';
 import getDateCustomFormat from '~/utils/getDateCustomFormat';
-import BadgePillFilter from '~/components/BadgePillFilter';
+import BadgeButton from '~/components/BadgeButton';
 import {INITIAL_FILTER} from '~/features/project/containers/ActivationKeysTable/utils/constants/initialFilter';
 
 const DNE_YEARS = 100;
@@ -96,7 +96,7 @@ const BadgeFilter = ({
 			}
 
 			return (
-				<BadgePillFilter
+				<BadgeButton
 					filterName={filterKeyType.name}
 					filterValue={keyTypesDisplay.join(', ')}
 					onClick={() =>
@@ -143,7 +143,7 @@ const BadgeFilter = ({
 					) && getKeyTypeDisplay(filters.keyType)}
 
 					{!!filters.environmentTypes.value?.length && (
-						<BadgePillFilter
+						<BadgeButton
 							filterName={filters.environmentTypes.name}
 							filterValue={filters.environmentTypes.value.join(
 								', '
@@ -161,7 +161,7 @@ const BadgeFilter = ({
 					)}
 
 					{!!filters.instanceSizes.value?.length && (
-						<BadgePillFilter
+						<BadgeButton
 							filterName={filters.instanceSizes.name}
 							filterValue={filters.instanceSizes.value.join(', ')}
 							onClick={() =>
@@ -177,7 +177,7 @@ const BadgeFilter = ({
 					)}
 
 					{!!filters.productVersions.value?.length && (
-						<BadgePillFilter
+						<BadgeButton
 							filterName={filters.productVersions.name}
 							filterValue={filters.productVersions.value.join(
 								', '
@@ -195,7 +195,7 @@ const BadgeFilter = ({
 					)}
 
 					{!!filters.status.value?.length && (
-						<BadgePillFilter
+						<BadgeButton
 							filterName={filters.status.name}
 							filterValue={filters.status.value.join(', ')}
 							onClick={() =>
@@ -214,7 +214,7 @@ const BadgeFilter = ({
 						filters.expirationDate.value.onOrAfter ||
 						filters.expirationDate.value.onOrBefore
 					) && (
-						<BadgePillFilter
+						<BadgeButton
 							filterName={filters.expirationDate.name}
 							filterValue={getDatesDisplay(
 								filters.expirationDate
@@ -238,7 +238,7 @@ const BadgeFilter = ({
 						filters.startDate.value.onOrAfter ||
 						filters.startDate.value.onOrBefore
 					) && (
-						<BadgePillFilter
+						<BadgeButton
 							filterName={filters.startDate.name}
 							filterValue={getDatesDisplay(filters.startDate)}
 							onClick={() =>

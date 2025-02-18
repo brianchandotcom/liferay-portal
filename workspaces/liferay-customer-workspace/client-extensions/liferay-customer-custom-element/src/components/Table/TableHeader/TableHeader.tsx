@@ -5,14 +5,14 @@
 
 import Button from '@clayui/button';
 
-import './BEActionsHeader.css';
+import './TableHeader.css';
 
 import SearchBar from '~/components/SearchBar';
 import i18n from '~/utils/I18n';
 
 import {IBEFilter} from '../../../features/project/pages/Project/BusinessEvent/utils/constants/IBEFilter';
-import BEFilter from '~/components/BEFilter';
-import BEBadgeFilter from '~/components/BEFilter/components/FilterResults/BEBadgeFilter';
+import Filter from '~/components/Filter';
+import BEBadgeFilter from '~/components/Filter/components/FilterResults/FilterResults';
 
 interface IPropsHeader {
 	availableFields: {
@@ -44,7 +44,7 @@ const BEActionsHeader = ({
 							}}
 						/>
 
-						<BEFilter
+						<Filter
 							availableFields={availableFields}
 							filtersState={[filters, setFilters]}
 						/>

@@ -5,8 +5,8 @@
 
 import {Button as ClayButton} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
-import CheckboxFilter from '~/components/BEFilter/components/CheckboxFilter';
-import DropDownWithDrillDown from '~/components/BEFilter/components/DropDownWithDrillDown';
+import CheckboxFilter from '~/components/Filter/components/FilterCheckbox';
+import DropDownWithDrillDown from '~/components/Filter/components/FilterDropdown';
 import i18n from '~/utils/I18n';
 
 import {IBEFilter} from '../../../../utils/constants/IBEFilter';
@@ -19,7 +19,7 @@ interface IFilterProps {
 	filtersState: [IBEFilter, React.Dispatch<React.SetStateAction<IBEFilter>>];
 }
 
-const BEFilter = ({
+const Filter = ({
 	availableFields,
 	filtersState: [filters, setFilters],
 }: IFilterProps) => {
@@ -98,4 +98,4 @@ const BEFilter = ({
 	);
 };
 
-export default BEFilter;
+export default Filter;

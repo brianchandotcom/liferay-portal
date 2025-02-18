@@ -4,7 +4,7 @@
  */
 import {Button} from '~/components';
 
-const BadgePillFilter = ({filterName, filterValue, onClick}) => (
+const BadgeButton = ({filterName, filterValue, onClick}) => (
 	<div>
 		<div className="align-items-center badge badge-light badge-pill bg-white border border-secondary pl-2 text-neutral-8 text-paragraph-sm">
 			<p className="font-weight-semi-bold mx-1 my-0">
@@ -26,4 +26,4 @@ const BadgePillFilter = ({filterName, filterValue, onClick}) => (
 	</div>
 );
 
-export default BadgePillFilter;
+export default BadgeButton;

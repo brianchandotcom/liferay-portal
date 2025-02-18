@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 import i18n from '~/utils/I18n';
-import CheckboxFilter from '~/components/BEFilter/components/CheckboxFilter';
+import FilterCheckbox from '~/components/Filter/components/FilterCheckbox';
 import DateFilter from '~/features/project/components/DateFilter';
 import ExpirationDateFilter from '~/features/project/components/ExpirationDateFilter';
 import KeyTypeFilter from '~/features/project/components/KeyTypeFilter';
@@ -60,7 +60,7 @@ export function getDropDownAvailableFields(
 		x0a2: [
 			{
 				child: (
-					<CheckboxFilter
+					<FilterCheckbox
 						availableItems={availableFields.environmentTypes}
 						clearCheckboxes={
 							!filters.environmentTypes.value?.length
@@ -122,7 +122,7 @@ export function getDropDownAvailableFields(
 		x0a6: [
 			{
 				child: (
-					<CheckboxFilter
+					<FilterCheckbox
 						availableItems={availableFields.status}
 						clearCheckboxes={!filters.status.value?.length}
 						updateFilters={(checkedItems) =>
@@ -142,7 +142,7 @@ export function getDropDownAvailableFields(
 		x0a7: [
 			{
 				child: (
-					<CheckboxFilter
+					<FilterCheckbox
 						availableItems={availableFields.productVersions}
 						clearCheckboxes={!filters.productVersions.value?.length}
 						updateFilters={(checkedItems) =>
@@ -162,7 +162,7 @@ export function getDropDownAvailableFields(
 		x0a8: [
 			{
 				child: (
-					<CheckboxFilter
+					<FilterCheckbox
 						availableItems={availableFields.instanceSizes}
 						clearCheckboxes={!filters.instanceSizes.value?.length}
 						updateFilters={(checkedItems) =>

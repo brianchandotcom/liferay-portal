@@ -56,7 +56,7 @@ public class LayoutPageTemplateEntryStagedModelRepository
 		return _layoutPageTemplateEntryLocalService.addLayoutPageTemplateEntry(
 			layoutPageTemplateEntry.getExternalReferenceCode(), userId,
 			layoutPageTemplateEntry.getGroupId(),
-			layoutPageTemplateEntry.getLayoutPageTemplateCollectionId(),
+			layoutPageTemplateEntry.getLayoutPageTemplateCollectionId(), null,
 			layoutPageTemplateEntry.getClassNameId(),
 			layoutPageTemplateEntry.getClassTypeId(),
 			layoutPageTemplateEntry.getName(),

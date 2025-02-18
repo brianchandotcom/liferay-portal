@@ -14,7 +14,6 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 import com.puppycrawl.tools.checkstyle.utils.AnnotationUtil;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -58,35 +57,67 @@ public class OSGiCommandsCheck extends BaseCheck {
 
 		List<String> importNames = getImportNames(detailAST);
 
-		if (importNames.contains(
+		if (!importNames.contains(
 				"org.osgi.service.component.annotations.Component")) {
 
-			List<String> osgiCommandFunctions = _getOSGiCommandFunctions(
-				detailAST);
-
-			if (osgiCommandFunctions.isEmpty()) {
-				return;
-			}
-
-			List<DetailAST> methodDefinitionDetailASTList = getAllChildTokens(
-				objBlockDetailAST, false, TokenTypes.METHOD_DEF);
-
-			methodDefinitionDetailASTList = ListUtil.filter(
-				methodDefinitionDetailASTList,
-				methodDefinitionDetailAST -> {
-					DetailAST modifiersDetailAST =
-						methodDefinitionDetailAST.findFirstToken(
-							TokenTypes.MODIFIERS);
-
-					return modifiersDetailAST.branchContains(
-						TokenTypes.LITERAL_PUBLIC);
-				});
-
-			_checkIncorrectPublicMethodName(
-				methodDefinitionDetailASTList, osgiCommandFunctions);
-			_checkMissingUnimplementedMethod(
-				detailAST, methodDefinitionDetailASTList, osgiCommandFunctions);
+			return;
 		}
+
+		DetailAST annotationDetailAST = AnnotationUtil.getAnnotation(
+			detailAST, "Component");
+
+		if (annotationDetailAST == null) {
+			return;
+		}
+
+		DetailAST annotationMemberValuePairDetailAST =
+			getAnnotationMemberValuePairDetailAST(
+				annotationDetailAST, "property");
+
+		if (annotationMemberValuePairDetailAST == null) {
+			return;
+		}
+
+		DetailAST annotationArrayInitDetailAST =
+			annotationMemberValuePairDetailAST.findFirstToken(
+				TokenTypes.ANNOTATION_ARRAY_INIT);
+
+		if (annotationArrayInitDetailAST == null) {
+			return;
+		}
+
+		List<String> osgiCommandScopes = _getProperties(
+			annotationArrayInitDetailAST, "osgi.command.scope");
+
+		if (osgiCommandScopes.isEmpty() || (osgiCommandScopes.size() != 1)) {
+			return;
+		}
+
+		List<String> osgiCommandFunctions = _getProperties(
+			annotationArrayInitDetailAST, "osgi.command.function");
+
+		if (osgiCommandFunctions.isEmpty()) {
+			return;
+		}
+
+		List<DetailAST> methodDefinitionDetailASTList = getAllChildTokens(
+			objBlockDetailAST, false, TokenTypes.METHOD_DEF);
+
+		methodDefinitionDetailASTList = ListUtil.filter(
+			methodDefinitionDetailASTList,
+			methodDefinitionDetailAST -> {
+				DetailAST modifiersDetailAST =
+					methodDefinitionDetailAST.findFirstToken(
+						TokenTypes.MODIFIERS);
+
+				return modifiersDetailAST.branchContains(
+					TokenTypes.LITERAL_PUBLIC);
+			});
+
+		_checkIncorrectPublicMethodName(
+			methodDefinitionDetailASTList, osgiCommandFunctions);
+		_checkMissingUnimplementedMethod(
+			detailAST, methodDefinitionDetailASTList, osgiCommandFunctions);
 
 		if (importNames.contains(
 				"org.osgi.service.component.annotations.Reference")) {
@@ -137,9 +168,9 @@ public class OSGiCommandsCheck extends BaseCheck {
 		}
 	}
 
-	private void _checkVariableDeclaration(DetailAST objBlockDetailAST) {
+	private void _checkVariableDeclaration(DetailAST detailAST) {
 		List<DetailAST> variableDefinitionDetailASTList = getAllChildTokens(
-			objBlockDetailAST, false, TokenTypes.VARIABLE_DEF);
+			detailAST, false, TokenTypes.VARIABLE_DEF);
 
 		for (DetailAST variableDefinitionDetailAST :
 				variableDefinitionDetailASTList) {
@@ -158,35 +189,11 @@ public class OSGiCommandsCheck extends BaseCheck {
 		}
 	}
 
-	private List<String> _getOSGiCommandFunctions(DetailAST detailAST) {
-		List<String> osgiCommandFunctions = new ArrayList<>();
-
-		DetailAST annotationDetailAST = AnnotationUtil.getAnnotation(
-			detailAST, "Component");
-
-		if (annotationDetailAST == null) {
-			Collections.emptyList();
-		}
-
-		DetailAST annotationMemberValuePairDetailAST =
-			getAnnotationMemberValuePairDetailAST(
-				annotationDetailAST, "property");
-
-		if (annotationMemberValuePairDetailAST == null) {
-			Collections.emptyList();
-		}
-
-		DetailAST annotationArrayInitDetailAST =
-			annotationMemberValuePairDetailAST.findFirstToken(
-				TokenTypes.ANNOTATION_ARRAY_INIT);
-
-		if (annotationArrayInitDetailAST == null) {
-			Collections.emptyList();
-		}
+	private List<String> _getProperties(DetailAST detailAST, String name) {
+		List<String> osgiCommandProperties = new ArrayList<>();
 
 		for (DetailAST expressionDetailAST :
-				getAllChildTokens(
-					annotationArrayInitDetailAST, false, TokenTypes.EXPR)) {
+				getAllChildTokens(detailAST, false, TokenTypes.EXPR)) {
 
 			DetailAST firstChildDetailAST = expressionDetailAST.getFirstChild();
 
@@ -198,12 +205,12 @@ public class OSGiCommandsCheck extends BaseCheck {
 				StringUtil.unquote(firstChildDetailAST.getText()),
 				CharPool.EQUAL);
 
-			if (property[0].equals("osgi.command.function")) {
-				osgiCommandFunctions.add(property[1]);
+			if (property[0].equals(name)) {
+				osgiCommandProperties.add(property[1]);
 			}
 		}
 
-		return osgiCommandFunctions;
+		return osgiCommandProperties;
 	}
 
 	private static final String _MSG_INCORRECT_PUBLIC_METHOD_NAME =

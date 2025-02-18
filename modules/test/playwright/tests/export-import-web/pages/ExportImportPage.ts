@@ -21,8 +21,6 @@ export class ExportImportPage {
 	readonly newImportProcess: Locator;
 	readonly page: Page;
 	readonly productMenuPage: ProductMenuPage;
-	readonly rangeDateRangeRadioButton: Locator;
-	readonly rangeLastRadioButton: Locator;
 	readonly title: Locator;
 
 	constructor(page: Page) {
@@ -40,10 +38,6 @@ export class ExportImportPage {
 		});
 		this.page = page;
 		this.productMenuPage = new ProductMenuPage(page);
-		this.rangeDateRangeRadioButton = page.getByRole('radio', {
-			name: 'Date Range',
-		});
-		this.rangeLastRadioButton = page.getByRole('radio', {name: 'Last'});
 		this.title = page.getByPlaceholder('Enter the name of the process');
 	}
 

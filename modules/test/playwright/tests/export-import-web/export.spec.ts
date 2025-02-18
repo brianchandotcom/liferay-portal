@@ -125,20 +125,9 @@ test('can export custom object entries at instance level with date filter', asyn
 		'c/tests'
 	);
 
-	const endDate1 = new Date();
-
-	const startDate1 = new Date();
-
-	startDate1.setDate(startDate1.getDate() - 1);
-
 	const exportFilePath1 = await companyExportImportPage.export(
 		'Tests 1 Items',
-		false,
-		toDateRangeDate(endDate1),
-		'',
-		'',
-		toDateRangeDate(startDate1),
-		toDateRangeTime(startDate1)
+		false
 	);
 
 	const content1 = await readFileFromZip('C_Test.json', exportFilePath1);
@@ -147,22 +136,23 @@ test('can export custom object entries at instance level with date filter', asyn
 
 	expect(json1.length).toBe(1);
 
-	const endDate2 = new Date();
+	const endDate = new Date();
 
-	endDate2.setDate(endDate2.getDate() - 1);
+	endDate.setDate(endDate.getDate() - 1);
 
-	const startDate2 = new Date();
+	const startDate = new Date();
 
-	startDate2.setDate(startDate2.getDate() - 2);
+	startDate.setDate(startDate.getDate() - 2);
 
 	const exportFilePath2 = await companyExportImportPage.export(
 		'Tests 1 Items',
 		false,
-		toDateRangeDate(endDate2),
-		toDateRangeTime(endDate2),
-		'',
-		toDateRangeDate(startDate2),
-		toDateRangeTime(startDate2)
+		{
+			endDate: toDateRangeDate(endDate),
+			endTime: toDateRangeTime(endDate),
+			startDate: toDateRangeDate(startDate),
+			startTime: toDateRangeTime(startDate),
+		}
 	);
 
 	const content2 = await readFileFromZip('C_Test.json', exportFilePath2);
@@ -174,9 +164,9 @@ test('can export custom object entries at instance level with date filter', asyn
 	const exportFilePath3 = await companyExportImportPage.export(
 		'Tests 1 Items',
 		false,
-		'',
-		'',
-		'12 Hours'
+		{
+			rangeLast: '12 Hours',
+		}
 	);
 
 	const content3 = await readFileFromZip('C_Test.json', exportFilePath3);

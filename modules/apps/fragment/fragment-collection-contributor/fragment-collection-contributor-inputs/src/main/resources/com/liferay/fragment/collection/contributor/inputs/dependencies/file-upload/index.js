@@ -193,6 +193,7 @@ else {
 							onFileChange: ({files}) => {
 								if (files?.length) {
 									fileName.innerText = files[0].name;
+
 									showRemoveButton();
 								}
 								else {
@@ -205,12 +206,6 @@ else {
 						inputElement.addEventListener('change', (event) => {
 							onChange(event.target.files);
 						});
-
-						const onSelectFromUserComputer = () => {
-							previousFiles = fileInput.files[0] || null;
-
-							fileInput.click();
-						};
 
 						selectButton.addEventListener(
 							'click',

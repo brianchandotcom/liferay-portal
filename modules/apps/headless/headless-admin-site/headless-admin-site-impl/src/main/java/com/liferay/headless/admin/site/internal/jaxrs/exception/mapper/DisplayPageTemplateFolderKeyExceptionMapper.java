@@ -44,7 +44,7 @@ public class DisplayPageTemplateFolderKeyExceptionMapper
 
 		if (Objects.equals(
 				layoutPageTemplateCollectionLayoutPageTemplateCollectionKeyException.
-					getLayoutPageTemplateCollectionType(),
+					getType(),
 				LayoutPageTemplateCollectionTypeConstants.DISPLAY_PAGE)) {
 
 			name = "display page template folder";

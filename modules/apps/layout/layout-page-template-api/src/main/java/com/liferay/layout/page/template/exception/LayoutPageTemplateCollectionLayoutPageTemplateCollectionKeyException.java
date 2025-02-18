@@ -16,23 +16,22 @@ public class
 	LayoutPageTemplateCollectionLayoutPageTemplateCollectionKeyException
 		extends PortalException {
 
-	public int getLayoutPageTemplateCollectionType() {
-		return _layoutPageTemplateCollectionType;
+	public int getType() {
+		return _type;
 	}
 
 	public static class MustNotBeDuplicate
 		extends LayoutPageTemplateCollectionLayoutPageTemplateCollectionKeyException {
 
 		public MustNotBeDuplicate(
-			long groupId, String layoutPageTemplateCollectionKey,
-			int layoutPageTemplateCollectionType) {
+			long groupId, String layoutPageTemplateCollectionKey, int type) {
 
 			super(
 				StringBundler.concat(
 					"Duplicate layout page template collection for group ",
 					groupId, " with layout page template collection key ",
 					layoutPageTemplateCollectionKey),
-				layoutPageTemplateCollectionType);
+				type);
 		}
 
 	}
@@ -41,8 +40,7 @@ public class
 		extends LayoutPageTemplateCollectionLayoutPageTemplateCollectionKeyException {
 
 		public MustNotContainInvalidCharacters(
-			String layoutPageTemplateCollectionKey,
-			int layoutPageTemplateCollectionType) {
+			String layoutPageTemplateCollectionKey, int type) {
 
 			super(
 				StringBundler.concat(
@@ -50,7 +48,7 @@ public class
 					layoutPageTemplateCollectionKey,
 					" must contain only alphanumeric characters, dashes, and ",
 					"underscores"),
-				layoutPageTemplateCollectionType);
+				type);
 		}
 
 	}
@@ -60,22 +58,20 @@ public class
 
 		public MustNotExceedMaximumSize(
 			String layoutPageTemplateCollectionKey,
-			int layoutPageTemplateCollectionKeyMaxSize,
-			int layoutPageTemplateCollectionType) {
+			int layoutPageTemplateCollectionKeyMaxSize, int type) {
 
 			super(
 				StringBundler.concat(
 					"Layout page template collection key ",
 					layoutPageTemplateCollectionKey, " must have fewer than ",
 					layoutPageTemplateCollectionKeyMaxSize, " characters"),
-				layoutPageTemplateCollectionType);
+				type);
 		}
 
 	}
 
 	private LayoutPageTemplateCollectionLayoutPageTemplateCollectionKeyException() {
-		_layoutPageTemplateCollectionType =
-			LayoutPageTemplateCollectionTypeConstants.BASIC;
+		_type = LayoutPageTemplateCollectionTypeConstants.BASIC;
 	}
 
 	private LayoutPageTemplateCollectionLayoutPageTemplateCollectionKeyException(
@@ -83,16 +79,15 @@ public class
 
 		super(msg);
 
-		_layoutPageTemplateCollectionType =
-			LayoutPageTemplateCollectionTypeConstants.BASIC;
+		_type = LayoutPageTemplateCollectionTypeConstants.BASIC;
 	}
 
 	private LayoutPageTemplateCollectionLayoutPageTemplateCollectionKeyException(
-		String msg, int layoutPageTemplateCollectionType) {
+		String msg, int type) {
 
 		super(msg);
 
-		_layoutPageTemplateCollectionType = layoutPageTemplateCollectionType;
+		_type = type;
 	}
 
 	private LayoutPageTemplateCollectionLayoutPageTemplateCollectionKeyException(
@@ -100,8 +95,7 @@ public class
 
 		super(msg, throwable);
 
-		_layoutPageTemplateCollectionType =
-			LayoutPageTemplateCollectionTypeConstants.BASIC;
+		_type = LayoutPageTemplateCollectionTypeConstants.BASIC;
 	}
 
 	private LayoutPageTemplateCollectionLayoutPageTemplateCollectionKeyException(
@@ -109,10 +103,9 @@ public class
 
 		super(throwable);
 
-		_layoutPageTemplateCollectionType =
-			LayoutPageTemplateCollectionTypeConstants.BASIC;
+		_type = LayoutPageTemplateCollectionTypeConstants.BASIC;
 	}
 
-	private final int _layoutPageTemplateCollectionType;
+	private final int _type;
 
 }

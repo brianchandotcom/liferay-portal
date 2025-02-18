@@ -8,6 +8,8 @@ import {expect, mergeTests} from '@playwright/test';
 import {apiHelpersTest} from '../../../fixtures/apiHelpersTest';
 import {commercePagesTest} from '../../../fixtures/commercePagesTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
+import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import getRandomString from '../../../utils/getRandomString';
 import performLogin, {
@@ -19,6 +21,10 @@ export const test = mergeTests(
 	apiHelpersTest,
 	commercePagesTest,
 	dataApiHelpersTest,
+	isolatedSiteTest,
+	featureFlagsTest({
+		'LPD-34908': {enabled: true},
+	}),
 	loginTest()
 );
 
@@ -188,3 +194,89 @@ test('LPD-30466 Verify users without edit permission cannot click on channel nam
 		await performLogin(page, 'test');
 	}
 });
+
+test(
+	'Manage channel currency visibility from channel page',
+	{tag: '@LPD-48683'},
+	async ({
+		apiHelpers,
+		commerceAdminChannelDetailsCurrenciesPage,
+		commerceAdminChannelDetailsPage,
+		commerceAdminChannelsPage,
+		page,
+		site,
+	}) => {
+		const channel =
+			await apiHelpers.headlessCommerceAdminChannel.postChannel({
+				siteGroupId: site.id,
+			});
+
+		await commerceAdminChannelsPage.goto();
+
+		await (
+			await commerceAdminChannelsPage.channelsTableRowLink(channel.name)
+		).click();
+
+		await commerceAdminChannelDetailsPage.goToCurrencies();
+
+		await commerceAdminChannelDetailsCurrenciesPage.addCurrencyButton.click();
+
+		const currencyName1 = 'US Dollar';
+		const currencyName2 = 'Australian Dollar';
+
+		await (
+			await commerceAdminChannelDetailsCurrenciesPage.currencyFrameCurrency(
+				currencyName1
+			)
+		).check();
+
+		await (
+			await commerceAdminChannelDetailsCurrenciesPage.currencyFrameCurrency(
+				currencyName2
+			)
+		).check();
+
+		await commerceAdminChannelDetailsCurrenciesPage.addCurrencyAddButton.click();
+
+		await expect(
+			(
+				await commerceAdminChannelDetailsCurrenciesPage.currenciesTableRow(
+					0,
+					currencyName1,
+					true
+				)
+			).row
+		).toBeVisible();
+		await expect(
+			(
+				await commerceAdminChannelDetailsCurrenciesPage.currenciesTableRow(
+					0,
+					currencyName2,
+					true
+				)
+			).row
+		).toBeVisible();
+
+		await (
+			await commerceAdminChannelDetailsCurrenciesPage.currenciesTableRowAction(
+				currencyName1,
+				'Remove'
+			)
+		).click();
+
+		await page.reload();
+
+		expect(
+			await commerceAdminChannelDetailsCurrenciesPage.currenciesTableRows()
+		).toHaveLength(1);
+		await expect(
+			(
+				await commerceAdminChannelDetailsCurrenciesPage.currenciesTableRow(
+					0,
+					currencyName2,
+					true
+				)
+			).row
+		).toBeVisible();
+	}
+);

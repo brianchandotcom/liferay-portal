@@ -5,6 +5,7 @@
 
 import ClayButton from '@clayui/button';
 import {Option, Picker} from '@clayui/core';
+import {ClayInput} from '@clayui/form';
 import classNames from 'classnames';
 import React, {MutableRefObject, useEffect} from 'react';
 
@@ -19,7 +20,8 @@ const TriggerLabel = React.forwardRef<HTMLButtonElement, any>(
 			if (ref && triggerRef) {
 
 				// @ts-ignore
-
+				// False positive - react-compiler/react-compiler
+				// eslint-disable-next-line react-compiler/react-compiler
 				triggerRef.current = ref.current;
 			}
 		});
@@ -56,10 +58,22 @@ export default function RuleSelect<T extends string>({
 	triggerRef,
 	...otherProps
 }: RuleSelectProps<T>) {
+	if (!items.length) {
+		return (
+			<ClayInput
+				className="w-auto"
+				readOnly
+				sizing="sm"
+				value={Liferay.Language.get('no-options-available')}
+			/>
+		);
+	}
+
 	return (
 		<Picker
 			as={TriggerLabel}
 			items={getSelectOptions(items)}
+			key={selectedKey}
 			onSelectionChange={(selection: React.Key) =>
 				onSelectionChange(selection as T)
 			}

@@ -19,6 +19,7 @@ import com.liferay.petra.io.unsync.UnsyncBufferedReader;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -312,6 +313,32 @@ public class BatchEngineExportTaskExecutorTest
 		Blob content = _batchEngineExportTask.getContent();
 
 		Assert.assertEquals(0, content.length());
+	}
+
+	@Test
+	public void testExportBlogPostingsWithUncompressedContent() {
+		AssertUtils.assertFailure(
+			IllegalArgumentException.class,
+			"Uncompressed content cannot be stored in the database",
+			() -> _batchEngineExportTaskExecutor.execute(
+				_batchEngineExportTaskLocalService.addBatchEngineExportTask(
+					null, user.getCompanyId(), user.getUserId(), null,
+					BlogPosting.class.getName(), "JSON",
+					BatchEngineTaskExecuteStatus.INITIAL.name(), null,
+					_parameters, null),
+				new BatchEngineExportTaskExecutor.Settings() {
+
+					@Override
+					public boolean isCompressContent() {
+						return false;
+					}
+
+					@Override
+					public boolean isPersistContent() {
+						return true;
+					}
+
+				}));
 	}
 
 	public abstract class BlogPostingMixin {

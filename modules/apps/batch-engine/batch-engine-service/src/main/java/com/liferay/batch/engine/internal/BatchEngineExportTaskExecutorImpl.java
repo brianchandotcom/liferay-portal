@@ -90,6 +90,11 @@ public class BatchEngineExportTaskExecutorImpl
 	public Result execute(
 		BatchEngineExportTask batchEngineExportTask, Settings settings) {
 
+		if (settings.isPersistContent() && !settings.isCompressContent()) {
+			throw new IllegalArgumentException(
+				"Uncompressed content cannot be stored in the database");
+		}
+
 		SafeCloseable safeCloseable =
 			CompanyThreadLocal.setCompanyIdWithSafeCloseable(
 				batchEngineExportTask.getCompanyId(),

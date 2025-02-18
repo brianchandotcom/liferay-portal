@@ -26,8 +26,14 @@ public class ModulesCompilationFailureMessageGenerator
 			return null;
 		}
 
+		Element messageElement = getMessageElement(build.getConsoleText());
+
+		if (messageElement == null) {
+			return null;
+		}
+
 		try {
-			return Dom4JUtil.format(getMessageElement(build.getConsoleText()));
+			return Dom4JUtil.format(messageElement);
 		}
 		catch (IOException ioException) {
 			return ioException.getMessage();
@@ -36,6 +42,12 @@ public class ModulesCompilationFailureMessageGenerator
 
 	@Override
 	public String getMessage(String consoleText) {
+		Element messageElement = getMessageElement(consoleText);
+
+		if (messageElement == null) {
+			return null;
+		}
+
 		try {
 			return Dom4JUtil.format(getMessageElement(consoleText));
 		}

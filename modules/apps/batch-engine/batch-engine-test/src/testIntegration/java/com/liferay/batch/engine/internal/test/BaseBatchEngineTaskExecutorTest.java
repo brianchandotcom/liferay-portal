@@ -187,12 +187,14 @@ public class BaseBatchEngineTaskExecutorTest {
 		}
 
 		@Override
-		public void deleteItem(
+		public BlogPosting deleteItem(
 				BlogPosting blogPosting,
 				Map<String, Serializable> queryParameters)
 			throws Exception {
 
 			_blogsEntryService.deleteEntry(blogPosting.getId());
+
+			return null;
 		}
 
 		@Override

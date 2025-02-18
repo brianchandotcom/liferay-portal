@@ -48,13 +48,14 @@ public abstract class BaseBatchEngineTaskItemDelegate<T>
 			Collection<T> items, Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (T item : items) {
-			deleteItem(item, parameters);
-		}
+		batchEngineImportStrategy.apply(
+			items, item -> deleteItem(item, parameters));
 	}
 
-	public void deleteItem(T item, Map<String, Serializable> parameters)
+	public T deleteItem(T item, Map<String, Serializable> parameters)
 		throws Exception {
+
+		return null;
 	}
 
 	@Override

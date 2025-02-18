@@ -82,7 +82,7 @@ public class KBArticleNavigationFragmentRenderer implements FragmentRenderer {
 						JSONUtil.put(
 							"defaultValue", String.valueOf(_MAX_NESTING_LEVEL)
 						).put(
-							"label", "max-nesting-level"
+							"label", "maximum-nesting-level"
 						).put(
 							"name", "maxNestingLevel"
 						).put(

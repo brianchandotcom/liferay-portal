@@ -4,6 +4,7 @@
  */
 
 export {default as accountAPI} from './Account';
+export {default as currencyAPI} from './Currency';
 export {default as productAPI} from './Product';
 export {default as productOptionValueAPI} from './ProductOptionValue';
 export {default as skuAPI} from './Sku';

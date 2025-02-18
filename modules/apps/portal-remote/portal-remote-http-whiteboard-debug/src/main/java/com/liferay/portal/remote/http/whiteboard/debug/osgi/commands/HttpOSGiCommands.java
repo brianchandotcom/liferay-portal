@@ -30,7 +30,7 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 	property = {"osgi.command.function=check", "osgi.command.scope=http"},
 	service = OSGiCommands.class
 )
-public class CheckServletContextHelperOSGiCommands implements OSGiCommands {
+public class HttpOSGiCommands implements OSGiCommands {
 
 	public void check() {
 		for (List<ServiceReference<ServletContextHelper>> serviceReferences :

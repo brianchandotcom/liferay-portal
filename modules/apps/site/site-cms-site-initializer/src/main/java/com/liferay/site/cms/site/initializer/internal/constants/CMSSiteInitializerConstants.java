@@ -13,12 +13,4 @@ public class CMSSiteInitializerConstants {
 	public static final String BUNDLE_SYMBOLIC_NAME =
 		"com.liferay.site.cms.site.initializer";
 
-	public static final String
-		CONTENT_OBJECT_ENTRY_FOLDER_EXTERNAL_REFERENCE_CODE =
-			"L_CONTENT_OBJECT_ENTRY_FOLDER";
-
-	public static final String
-		FILES_OBJECT_ENTRY_FOLDER_EXTERNAL_REFERENCE_CODE =
-			"L_FILES_OBJECT_ENTRY_FOLDER";
-
 }

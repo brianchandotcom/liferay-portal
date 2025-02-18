@@ -40,8 +40,7 @@ public class GroupModelListener extends BaseModelListener<Group> {
 			}
 
 			_objectEntryFolderLocalService.addObjectEntryFolder(
-				CMSSiteInitializerConstants.
-					CONTENT_OBJECT_ENTRY_FOLDER_EXTERNAL_REFERENCE_CODE,
+				"L_CONTENT_OBJECT_ENTRY_FOLDER",
 				group.getCreatorUserId(), group.getGroupId(),
 				ObjectEntryFolderConstants.
 					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
@@ -50,8 +49,7 @@ public class GroupModelListener extends BaseModelListener<Group> {
 				).build(),
 				"Content", ServiceContextThreadLocal.getServiceContext());
 			_objectEntryFolderLocalService.addObjectEntryFolder(
-				CMSSiteInitializerConstants.
-					FILES_OBJECT_ENTRY_FOLDER_EXTERNAL_REFERENCE_CODE,
+				"L_FILES_OBJECT_ENTRY_FOLDER",
 				group.getCreatorUserId(), group.getGroupId(),
 				ObjectEntryFolderConstants.
 					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
@@ -78,12 +76,10 @@ public class GroupModelListener extends BaseModelListener<Group> {
 			}
 
 			_objectEntryFolderLocalService.deleteObjectEntryFolder(
-				CMSSiteInitializerConstants.
-					CONTENT_OBJECT_ENTRY_FOLDER_EXTERNAL_REFERENCE_CODE,
+				"L_CONTENT_OBJECT_ENTRY_FOLDER",
 				group.getCompanyId(), group.getGroupId());
 			_objectEntryFolderLocalService.deleteObjectEntryFolder(
-				CMSSiteInitializerConstants.
-					FILES_OBJECT_ENTRY_FOLDER_EXTERNAL_REFERENCE_CODE,
+				"L_FILES_OBJECT_ENTRY_FOLDER",
 				group.getCompanyId(), group.getGroupId());
 		}
 		catch (PortalException portalException) {

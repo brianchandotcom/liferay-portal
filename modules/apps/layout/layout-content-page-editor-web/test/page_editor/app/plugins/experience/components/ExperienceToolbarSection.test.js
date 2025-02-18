@@ -4,7 +4,6 @@
  */
 
 import {
-	fireEvent,
 	render,
 	screen,
 	waitFor,
@@ -914,14 +913,9 @@ describe('ExperienceToolbarSection', () => {
 
 		expect(dropdownElement).toBeInTheDocument();
 
-		fireEvent.keyDown(document, {
-			charCode: 27,
-			code: 'Escape',
-			key: 'Escape',
-			keyCode: 27,
-		});
+		await userEvent.keyboard('{Escape}');
 
-		await waitForElementToBeRemoved(dropdownElement);
+		await waitForElementToBeRemoved(dropdownElement, {timeout: 2000});
 		expect(dropdownElement).not.toBeInTheDocument();
 
 		// clickoutside
@@ -936,18 +930,10 @@ describe('ExperienceToolbarSection', () => {
 
 		expect(dropdownElement2).toBeInTheDocument();
 
-		const outerDiv = document.querySelector('body > div');
+		await userEvent.click(document.querySelector('body > div'));
 
-		fireEvent(
-			outerDiv,
-			new MouseEvent('click', {
-				bubbles: true,
-				cancelable: true,
-			})
-		);
+		await waitForElementToBeRemoved(dropdownElement2, {timeout: 2000});
 
-		waitForElementToBeRemoved(dropdownElement2).then(() => {
-			expect(dropdownElement2).not.toBeInTheDocument();
-		});
+		expect(dropdownElement2).not.toBeInTheDocument();
 	});
 });

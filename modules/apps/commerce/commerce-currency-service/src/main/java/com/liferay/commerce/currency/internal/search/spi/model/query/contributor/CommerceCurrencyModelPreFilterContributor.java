@@ -6,8 +6,11 @@
 package com.liferay.commerce.currency.internal.search.spi.model.query.contributor;
 
 import com.liferay.commerce.product.constants.CPField;
+import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.search.filter.TermsFilter;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.search.spi.model.query.contributor.ModelPreFilterContributor;
 import com.liferay.portal.search.spi.model.registrar.ModelSearchSettings;
@@ -30,6 +33,7 @@ public class CommerceCurrencyModelPreFilterContributor
 		SearchContext searchContext) {
 
 		_filterByActive(booleanFilter, searchContext);
+		_filterByChannelIds(booleanFilter, searchContext);
 	}
 
 	private void _filterByActive(
@@ -40,6 +44,21 @@ public class CommerceCurrencyModelPreFilterContributor
 
 		if (active != null) {
 			booleanFilter.addRequiredTerm(CPField.ACTIVE, active);
+		}
+	}
+
+	private void _filterByChannelIds(
+		BooleanFilter booleanFilter, SearchContext searchContext) {
+
+		long[] channelIds = (long[])searchContext.getAttribute(
+			CPField.CHANNEL_IDS);
+
+		if (ArrayUtil.isNotEmpty(channelIds)) {
+			TermsFilter termsFilter = new TermsFilter(CPField.CHANNEL_IDS);
+
+			termsFilter.addValues(ArrayUtil.toStringArray(channelIds));
+
+			booleanFilter.add(termsFilter, BooleanClauseOccur.MUST);
 		}
 	}
 

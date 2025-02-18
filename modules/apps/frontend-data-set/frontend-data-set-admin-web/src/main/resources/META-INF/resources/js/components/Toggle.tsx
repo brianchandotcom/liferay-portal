@@ -8,22 +8,22 @@ import React from 'react';
 
 import '../../css/components/Toggle.scss';
 
-interface IHasActive {
+interface IToggable {
 	active: boolean;
 	[key: string]: any;
 }
 
-interface ITogglable<T extends IHasActive> {
+interface IToggle<T extends IToggable> {
 	disabled?: boolean;
 	item: T;
 	toggleChange: (item: T) => Promise<void>;
 }
 
-const Toggle = <T extends IHasActive>({
+const Toggle = <T extends IToggable>({
 	disabled = false,
 	item,
 	toggleChange,
-}: ITogglable<T>) => {
+}: IToggle<T>) => {
 	const label = item.active
 		? Liferay.Language.get('active')
 		: Liferay.Language.get('inactive');

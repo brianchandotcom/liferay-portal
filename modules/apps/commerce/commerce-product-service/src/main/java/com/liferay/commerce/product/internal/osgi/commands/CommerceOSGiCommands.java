@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = OSGiCommands.class
 )
-public class CPOSGiCommands implements OSGiCommands {
+public class CommerceOSGiCommands implements OSGiCommands {
 
 	public void createProducts(long groupId, String prefix, int quantity)
 		throws PortalException {

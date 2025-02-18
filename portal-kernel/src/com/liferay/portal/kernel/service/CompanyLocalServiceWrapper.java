@@ -306,11 +306,11 @@ public class CompanyLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.Company extractDBPartitionCompany(
+	public com.liferay.portal.kernel.model.Company extractCompany(
 			long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _companyLocalService.extractDBPartitionCompany(companyId);
+		return _companyLocalService.extractCompany(companyId);
 	}
 
 	@Override

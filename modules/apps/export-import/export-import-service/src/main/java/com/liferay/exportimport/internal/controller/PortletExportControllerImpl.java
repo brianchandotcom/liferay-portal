@@ -536,6 +536,10 @@ public class PortletExportControllerImpl implements PortletExportController {
 		element.addAttribute(
 			"schema-version", portletDataHandler.getSchemaVersion());
 
+		if (portletDataContext.isValidateDataHandler()) {
+			element.addAttribute("validate-data-handler", "true");
+		}
+
 		StringBundler configurationOptionsSB = new StringBundler(6);
 
 		if (exportPortletSetup) {

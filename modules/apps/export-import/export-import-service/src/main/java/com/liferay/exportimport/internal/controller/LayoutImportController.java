@@ -619,9 +619,9 @@ public class LayoutImportController implements ImportController {
 				_portletDataHandlerProvider.provide(companyId, portletId);
 
 			if (portletDataHandler == null) {
-				if (portletId.startsWith(
-						"com_liferay_object_web_internal_object_definition" +
-							"s_portlet_ObjectDefinitionsPortlet_")) {
+				if (GetterUtil.getBoolean(
+						portletElement.attributeValue(
+							"validate-data-handler"))) {
 
 					throw new MissingObjectDefinitionException(
 						GetterUtil.getString(

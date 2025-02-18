@@ -20,14 +20,18 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutRevision;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.model.PortletCategory;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portlet.render.PortletRenderParts;
 import com.liferay.portal.kernel.portlet.render.PortletRenderUtil;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutRevisionLocalService;
 import com.liferay.portal.kernel.service.LayoutService;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.servlet.BufferCacheServletResponse;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
@@ -49,6 +53,9 @@ import com.liferay.portal.servlet.NamespaceServletRequest;
 import com.liferay.portal.struts.Action;
 import com.liferay.portal.util.LayoutClone;
 import com.liferay.portal.util.LayoutCloneFactory;
+import com.liferay.portal.util.WebAppPool;
+
+import java.util.Set;
 
 import javax.portlet.PortletPreferences;
 
@@ -95,6 +102,8 @@ public class UpdateLayoutStrutsAction implements StrutsAction {
 			if (portletId == null) {
 				throw new IllegalArgumentException("Portlet ID is null");
 			}
+
+			_checkPortletPermission(portletId, themeDisplay);
 
 			String columnId = ParamUtil.getString(
 				httpServletRequest, "p_p_col_id", null);
@@ -385,6 +394,39 @@ public class UpdateLayoutStrutsAction implements StrutsAction {
 		}
 
 		portletPreferences.store();
+	}
+
+	private void _checkPortletPermission(
+			String portletId, ThemeDisplay themeDisplay)
+		throws Exception {
+
+		PortletPermissionUtil.check(
+			themeDisplay.getPermissionChecker(), portletId,
+			ActionKeys.ADD_TO_PAGE);
+
+		PortletCategory portletCategory = (PortletCategory)WebAppPool.get(
+			themeDisplay.getCompanyId(), WebKeys.PORTLET_CATEGORY);
+
+		Portlet portlet = _portletLocalService.getPortletById(
+			themeDisplay.getCompanyId(), portletId);
+
+		Set<String> categoryNames = portlet.getCategoryNames();
+
+		for (PortletCategory curPortletCategory :
+				portletCategory.getCategories()) {
+
+			if (!curPortletCategory.isHidden() &&
+				categoryNames.contains(curPortletCategory.getName())) {
+
+				return;
+			}
+		}
+
+		throw new PrincipalException.MustHavePermission(
+			themeDisplay.getPermissionChecker(),
+			StringBundler.concat(
+				Portlet.class.getName(), StringPool.UNDERLINE, portletId),
+			0, ActionKeys.ADD_TO_PAGE);
 	}
 
 	@Reference

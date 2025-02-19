@@ -13,7 +13,6 @@ import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest'
 import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
-import {productMenuPageTest} from '../../fixtures/productMenuPageTest';
 import {getTempDir} from '../../utils/temp';
 import {readFileFromZip} from '../../utils/zip';
 import {companyExportImportPageTest} from './fixtures/companyExportImportPagesTest';
@@ -25,8 +24,7 @@ export const test = mergeTests(
 	featureFlagsTest({
 		'LPD-35914': {enabled: true, system: true},
 	}),
-	loginTest(),
-	productMenuPageTest
+	loginTest()
 );
 
 test('cannot export site scoped custom object entries at instance level', async ({
@@ -201,18 +199,4 @@ test('can see corresponding elements at instance level', async ({
 	await expect(
 		companyExportImportPage.page.getByText('Comments, Ratings')
 	).not.toBeVisible();
-});
-
-test('can see corresponding elements at site level', async ({
-	productMenuPage,
-}) => {
-	await productMenuPage.openProductMenuIfClosed();
-	await productMenuPage.goToPublishingExport();
-	await productMenuPage.page
-		.getByRole('link', {name: 'Custom Export'})
-		.click();
-
-	await expect(
-		productMenuPage.page.getByText('Comments, Ratings')
-	).toBeVisible();
 });

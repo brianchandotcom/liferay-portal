@@ -8410,6 +8410,8 @@ public class ObjectEntryResourceTest {
 			_objectDefinition1, _objectDefinition2, TestPropsValues.getUserId(),
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY);
 
+		_objectRelationship1.getObjectFieldId2();
+
 		_objectFieldLocalService.updateRequired(
 			_objectRelationship1.getObjectFieldId2(), true);
 

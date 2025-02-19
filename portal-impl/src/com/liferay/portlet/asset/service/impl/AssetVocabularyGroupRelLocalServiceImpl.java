@@ -5,11 +5,92 @@
 
 package com.liferay.portlet.asset.service.impl;
 
+import com.liferay.asset.kernel.exception.InvalidAssetVocabularyGroupRelException;
+import com.liferay.asset.kernel.model.AssetVocabularyGroupRel;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portlet.asset.service.base.AssetVocabularyGroupRelLocalServiceBaseImpl;
 
+import java.util.List;
+
 /**
- * @author Brian Wing Shun Chan
+ * @author Pei-Jung Lan
  */
 public class AssetVocabularyGroupRelLocalServiceImpl
 	extends AssetVocabularyGroupRelLocalServiceBaseImpl {
+
+	@Override
+	public AssetVocabularyGroupRel addAssetVocabularyGroupRel(
+			long groupId, long vocabularyId)
+		throws PortalException {
+
+		AssetVocabularyGroupRel assetVocabularyGroupRel =
+			assetVocabularyGroupRelPersistence.fetchByG_V(
+				groupId, vocabularyId);
+
+		if (assetVocabularyGroupRel != null) {
+			return assetVocabularyGroupRel;
+		}
+
+		assetVocabularyGroupRel = createAssetVocabularyGroupRel(
+			counterLocalService.increment());
+
+		assetVocabularyGroupRel.setGroupId(groupId);
+		assetVocabularyGroupRel.setVocabularyId(vocabularyId);
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		if (serviceContext != null) {
+			assetVocabularyGroupRel.setUuid(serviceContext.getUuid());
+		}
+
+		return addAssetVocabularyGroupRel(assetVocabularyGroupRel);
+	}
+
+	@Override
+	public void deleteAssetVocabularyGroupRelsByGroupId(long groupId) {
+		assetVocabularyGroupRelPersistence.removeByGroupId(groupId);
+	}
+
+	@Override
+	public void deleteAssetVocabularyGroupRelsByVocabularyId(
+		long vocabularyId) {
+
+		assetVocabularyGroupRelPersistence.removeByVocabularyId(vocabularyId);
+	}
+
+	@Override
+	public List<AssetVocabularyGroupRel> getAssetVocabularyGroupRelsByGroupId(
+		long groupId) {
+
+		return assetVocabularyGroupRelPersistence.findByGroupId(groupId);
+	}
+
+	@Override
+	public List<AssetVocabularyGroupRel>
+		getAssetVocabularyGroupRelsByVocabularyId(long vocabularyId) {
+
+		return assetVocabularyGroupRelPersistence.findByVocabularyId(
+			vocabularyId);
+	}
+
+	@Override
+	public void setAssetVocabularyGroupRels(long vocabularyId, long[] groupIds)
+		throws PortalException {
+
+		if (ArrayUtil.isEmpty(groupIds)) {
+			throw new InvalidAssetVocabularyGroupRelException(
+				"Group IDs cannot be empty");
+		}
+
+		assetVocabularyGroupRelPersistence.removeByVocabularyId(vocabularyId);
+
+		for (long groupId : groupIds) {
+			addAssetVocabularyGroupRel(groupId, vocabularyId);
+		}
+	}
+
 }

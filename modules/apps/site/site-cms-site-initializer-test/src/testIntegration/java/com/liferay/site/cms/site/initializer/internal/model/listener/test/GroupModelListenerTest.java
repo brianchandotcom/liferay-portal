@@ -58,12 +58,12 @@ public class GroupModelListenerTest {
 		Assert.assertEquals(
 			2,
 			_objectEntryFolderLocalService.getObjectEntryFoldersCount(
-				_depotEntry.getCompanyId(), _depotEntry.getGroupId(),
+				_depotEntry.getGroupId(), _depotEntry.getCompanyId(),
 				ObjectEntryFolderConstants.
 					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT));
 
 		AssertUtils.assertEquals(
-			Arrays.asList("Content", "Files"),
+			Arrays.asList("Contents", "Files"),
 			ListUtil.sort(
 				ListUtil.toList(
 					_objectEntryFolderLocalService.getObjectEntryFolders(
@@ -91,7 +91,7 @@ public class GroupModelListenerTest {
 		Assert.assertEquals(
 			0,
 			_objectEntryFolderLocalService.getObjectEntryFoldersCount(
-				depotEntry.getCompanyId(), depotEntry.getGroupId(),
+				depotEntry.getGroupId(), depotEntry.getCompanyId(),
 				ObjectEntryFolderConstants.
 					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT));
 	}

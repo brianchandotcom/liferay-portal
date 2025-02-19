@@ -51,7 +51,7 @@ public class PasswordModifiedFilter extends BasePortalFilter {
 	private String _getRequestPath(HttpServletRequest httpServletRequest) {
 		String requestURI = httpServletRequest.getRequestURI();
 
-		String contextPath = httpServletRequest.getContextPath();
+		String contextPath = PortalUtil.getPathContext();
 
 		if (Validator.isNotNull(contextPath) &&
 			!contextPath.equals(StringPool.SLASH)) {

@@ -9,6 +9,7 @@
 		"@clayui/sticker": "3.125.0",
 		"@clayui/tooltip": "3.119.0",
 		"@liferay/frontend-icons-web": "*",
+		"frontend-js-components-web": "*",
 		"frontend-js-web": "*",
 		"react": "18.2.0"
 	},

@@ -97,12 +97,12 @@ public class SegmentsExperimentServiceImpl
 
 	@Override
 	public SegmentsExperiment fetchSegmentsExperiment(
-			long groupId, String segmentsExperienceKey, long plid)
+			long groupId, String segmentsExperimentKey)
 		throws PortalException {
 
 		SegmentsExperiment segmentsExperiment =
 			segmentsExperimentLocalService.fetchSegmentsExperiment(
-				groupId, segmentsExperienceKey, plid);
+				groupId, segmentsExperimentKey);
 
 		if ((segmentsExperiment != null) &&
 			_segmentsExperimentResourcePermission.contains(
@@ -116,12 +116,12 @@ public class SegmentsExperimentServiceImpl
 
 	@Override
 	public SegmentsExperiment fetchSegmentsExperiment(
-			long groupId, String segmentsExperimentKey)
+			long groupId, String segmentsExperienceKey, long plid)
 		throws PortalException {
 
 		SegmentsExperiment segmentsExperiment =
 			segmentsExperimentLocalService.fetchSegmentsExperiment(
-				groupId, segmentsExperimentKey);
+				groupId, segmentsExperienceKey, plid);
 
 		if ((segmentsExperiment != null) &&
 			_segmentsExperimentResourcePermission.contains(

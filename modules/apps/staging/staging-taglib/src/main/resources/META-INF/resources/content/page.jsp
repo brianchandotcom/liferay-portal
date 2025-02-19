@@ -7,6 +7,10 @@
 
 <%@ include file="/content/init.jsp" %>
 
+<%
+StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHelper();
+%>
+
 <c:if test="<%= !dataSiteLevelPortlets.isEmpty() %>">
 	<aui:fieldset cssClass="options-group" markupView="lexicon">
 		<clay:sheet-section>
@@ -77,15 +81,17 @@
 													/>
 												</div>
 
-												<div class="range-options c-p-4 <%= disableInputs ? "hide" : StringPool.BLANK %>">
-													<clay:icon
-														symbol="reload"
-													/>
+												<c:if test="<%= !stagingGroupHelper.isCompanyGroup(group) %>">
+													<div class="range-options c-p-4 <%= disableInputs ? "hide" : StringPool.BLANK %>">
+														<clay:icon
+															symbol="reload"
+														/>
 
-													<aui:a cssClass="modify-link" href="javascript:void(0);" id="rangeLink" method="get">
-														<liferay-ui:message key="refresh-counts" />
-													</aui:a>
-												</div>
+														<aui:a cssClass="modify-link" href="javascript:void(0);" id="rangeLink" method="get">
+															<liferay-ui:message key="refresh-counts" />
+														</aui:a>
+													</div>
+												</c:if>
 											</div>
 
 											<%

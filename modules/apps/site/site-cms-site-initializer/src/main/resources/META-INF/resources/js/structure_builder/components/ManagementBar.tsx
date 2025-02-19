@@ -63,7 +63,7 @@ function SaveButton() {
 
 	const onSave = async () => {
 		try {
-			await StructureService.saveStructure({name});
+			await StructureService.createStructure({name});
 
 			openToast({
 				message: Liferay.Util.sub(

@@ -7,12 +7,18 @@ import {API} from '@liferay/object-js-components-web';
 
 import buildObjectDefinition from '../utils/buildObjectDefinition';
 
-async function saveStructure({name}: {name: string}) {
-	const objectDefinition = buildObjectDefinition({name});
+async function createStructure({
+	fields,
+	name,
+}: {
+	fields: Field[];
+	name: State['name'];
+}) {
+	const objectDefinition = buildObjectDefinition({fields, name});
 
-	await API.postObjectDefinition(objectDefinition);
+	return await API.postObjectDefinition(objectDefinition);
 }
 
 export default {
-	saveStructure,
+	createStructure,
 };

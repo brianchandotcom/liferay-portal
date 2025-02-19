@@ -36,7 +36,7 @@ public class DataDefinitionUtil {
 		return false;
 	}
 
-	public static void validateDefinitionFields(
+	public static void validateAndUpdateDataDefinitionFields(
 		DataDefinition dataDefinition, DDMStructure ddmStructure) {
 
 		for (DataDefinitionField dataDefinitionField :

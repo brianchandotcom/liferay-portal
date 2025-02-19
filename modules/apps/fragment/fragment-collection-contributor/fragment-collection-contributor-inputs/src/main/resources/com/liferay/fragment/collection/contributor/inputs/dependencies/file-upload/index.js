@@ -271,7 +271,7 @@ else {
 							}
 						},
 						readOnlyInputLabel: document.getElementById(
-							`${fragmentNamespace}-checkbox-read-only`
+							`${fragmentNamespace}-file-upload-read-only`
 						),
 						unlocalizedFieldsState,
 						unlocalizedMessageContainer: document.getElementById(

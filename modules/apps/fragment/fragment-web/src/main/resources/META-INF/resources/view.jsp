@@ -81,34 +81,18 @@ List<FragmentCollectionContributor> fragmentCollectionContributors = fragmentEnt
 								<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-34938") %>'>
 									<li>
 										<div class="marketplace-button">
-											<c:choose>
-												<c:when test='<%= !GetterUtil.getBoolean(SessionClicks.get(request, liferayPortletResponse.getNamespace() + "isMarketplaceButtonVisited", "false")) %>'>
-													<clay:button
-														additionalProps='<%=
-															HashMapBuilder.<String, Object>put(
-																"body", LanguageUtil.get(request, "we-are-excited-to-share-that-marketplace-is-now-part-of-fragments")
-															).put(
-																"heading", LanguageUtil.get(request, "marketplace-is-now-in-fragments")
-															).build()
-														%>'
-														borderless="<%= true %>"
-														displayType="secondary"
-														icon="marketplace"
-														id='<%= liferayPortletResponse.getNamespace() + "isMarketplaceButtonVisited" %>'
-														monospaced="<%= true %>"
-														propsTransformer="{MarketplaceButtonPropsTransformer} from fragment-web"
-														small="<%= true %>"
-														title='<%= LanguageUtil.get(request, "open-marketplace-explorer") %>'
-													/>
-
-													<span class="notification" id="<portlet:namespace />marketplaceBadge"></span>
-												</c:when>
-												<c:otherwise>
-													<react:component
-														module="{MarketplaceModal} from layout-js-components-web"
-													/>
-												</c:otherwise>
-											</c:choose>
+											<react:component
+												module="{MarketplaceButton} from fragment-web"
+												props='<%=
+													HashMapBuilder.<String, Object>put(
+														"body", LanguageUtil.get(request, "we-are-excited-to-share-that-marketplace-is-now-part-of-fragments")
+													).put(
+														"heading", LanguageUtil.get(request, "marketplace-is-now-in-fragments")
+													).put(
+														"isMarketplaceButtonVisited", GetterUtil.getBoolean(SessionClicks.get(request, liferayPortletResponse.getNamespace() + "isMarketplaceButtonVisited", "false"))
+													).build()
+												%>'
+											/>
 										</div>
 									</li>
 								</c:if>

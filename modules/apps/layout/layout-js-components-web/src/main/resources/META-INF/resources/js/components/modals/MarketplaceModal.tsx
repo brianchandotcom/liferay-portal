@@ -13,7 +13,7 @@ import {
 import React, {ReactElement} from 'react';
 
 interface Props {
-	trigger: ReactElement;
+	trigger?: ReactElement;
 }
 
 function MarketplaceModal({trigger}: Props) {

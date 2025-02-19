@@ -32,6 +32,7 @@ import com.liferay.info.type.WebImage;
 import com.liferay.info.type.WebURL;
 import com.liferay.layout.helper.structure.LayoutStructureRulesHelper;
 import com.liferay.layout.taglib.internal.servlet.ServletContextUtil;
+import com.liferay.layout.taglib.internal.util.SegmentsExperienceUtil;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.DropZoneLayoutStructureItem;
@@ -522,6 +523,40 @@ public class RenderLayoutStructureDisplayContext {
 		return LanguageUtil.get(
 			_themeDisplay.getLocale(),
 			"your-information-was-successfully-received");
+	}
+
+	public Map<String, Object> getRulesHandlerComponentContext() {
+		LayoutStructureRulesHelper.LayoutStructureRulesResult
+			layoutStructureRulesResult = _getLayoutStructureRulesResult();
+
+		return HashMapBuilder.<String, Object>put(
+			"evaluateRulesURL",
+			() -> {
+				StringBundler sb = new StringBundler(6);
+
+				sb.append(PortalUtil.getPortalURL(_httpServletRequest));
+				sb.append(_themeDisplay.getPathMain());
+				sb.append("/portal/evaluate_layout_structure_rules?plid=");
+
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)_httpServletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
+
+				sb.append(themeDisplay.getPlid());
+
+				sb.append("&segmentsExperienceId=");
+				sb.append(
+					SegmentsExperienceUtil.getSegmentsExperienceId(
+						_httpServletRequest));
+
+				return sb.toString();
+			}
+		).put(
+			"itemIdsByRuleId",
+			layoutStructureRulesResult.getLayoutStructureRuleIdsMap()
+		).put(
+			"ruleIdsByItemId", layoutStructureRulesResult.getItemIdsMap()
+		).build();
 	}
 
 	public String getStyle(StyledLayoutStructureItem styledLayoutStructureItem)

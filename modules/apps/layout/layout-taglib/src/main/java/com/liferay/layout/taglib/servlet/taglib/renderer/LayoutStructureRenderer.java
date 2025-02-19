@@ -135,6 +135,14 @@ public class LayoutStructureRenderer {
 					getInfoItemActionComponentContext(),
 				"{InfoItemActionHandler} from layout-taglib");
 		}
+
+		if (ListUtil.isNotEmpty(_layoutStructure.getLayoutStructureRules())) {
+			_renderComponent(
+				"RulesHandlerComponent",
+				_renderLayoutStructureDisplayContext.
+					getRulesHandlerComponentContext(),
+				"{RulesHandler} from layout-taglib");
+		}
 	}
 
 	public class LayoutStructureItemRenderTime {

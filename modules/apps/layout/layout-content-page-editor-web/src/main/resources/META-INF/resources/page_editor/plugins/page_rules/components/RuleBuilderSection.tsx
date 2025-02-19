@@ -75,7 +75,13 @@ export function RuleBuilderActionSection({
 				const fragment =
 					fragmentEntryLinks[item.config.fragmentEntryLinkId];
 
-				if (fragment && fragment.fragmentEntryType === 'input') {
+				if (
+					fragment &&
+					fragment.fragmentEntryType === 'input' &&
+					!fragment.fieldTypes?.includes('categorization') &&
+					!fragment.fieldTypes?.includes('localizationSelect') &&
+					!fragment.fieldTypes?.includes('stepper')
+				) {
 					inputFragments.push({
 						label: selectLayoutDataItemLabel(
 							{fragmentEntryLinks, layoutData},
@@ -229,7 +235,7 @@ export function RuleBuilderConditionSection({
 				if (
 					fragment &&
 					fragment.fragmentEntryType === 'input' &&
-					!fragment.fieldTypes?.includes('localizationSelect')
+					fragment.fieldTypes?.includes('boolean')
 				) {
 					inputFragments.push({
 						label: selectLayoutDataItemLabel(

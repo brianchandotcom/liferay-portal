@@ -79,7 +79,7 @@ public abstract class BaseFDSSerializerTestCase {
 			resourceBundleLoader);
 	}
 
-	protected static final HttpServletRequest httpServletRequest = Mockito.mock(
+	protected final HttpServletRequest httpServletRequest = Mockito.mock(
 		HttpServletRequest.class);
 
 }

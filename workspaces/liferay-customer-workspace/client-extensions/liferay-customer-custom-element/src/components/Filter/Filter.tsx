@@ -5,96 +5,90 @@
 
 import {Button as ClayButton} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
-import CheckboxFilter from '~/components/Filter/components/FilterCheckbox';
-import DropDownWithDrillDown from '~/components/Filter/components/FilterDropdown';
 import i18n from '~/utils/I18n';
 
-import {IBEFilter} from '../../../../utils/constants/IBEFilter';
+import FilterCheckbox from './components/FilterCheckbox';
+import FilterDropdown from './components/FilterDropdown';
 
-interface IFilterProps {
-	availableFields: {
-		eventStatus: string[];
-		eventType: string[];
-	};
-	filtersState: [IBEFilter, React.Dispatch<React.SetStateAction<IBEFilter>>];
+export interface IFilterOption {
+	name: string;
+	value: string[];
 }
 
-const Filter = ({
-	availableFields,
-	filtersState: [filters, setFilters],
-}: IFilterProps) => {
-	const menus = {
-		x0a0: [
-			{child: 'x0a1', title: i18n.translate('event-status')},
-			{child: 'x0a2', title: i18n.translate('event-type')},
-		],
-		x0a1: [
-			{
-				child: (
-					<CheckboxFilter
-						availableItems={availableFields.eventStatus}
-						clearCheckboxes={
-							filters.eventStatus.value?.length === 0
-						}
-						updateFilters={(checkedItems: any) =>
-							setFilters((previousFilters) => ({
-								...previousFilters,
-								eventStatus: {
-									...previousFilters.eventStatus,
-									value: checkedItems,
-								},
-							}))
-						}
-					/>
-				),
-				type: 'component',
-			},
-		],
-		x0a2: [
-			{
-				child: (
-					<CheckboxFilter
-						availableItems={availableFields.eventType}
-						clearCheckboxes={filters.eventType.value?.length === 0}
-						updateFilters={(checkedItems: any) =>
-							setFilters((previousFilters) => ({
-								...previousFilters,
-								eventType: {
-									...previousFilters.eventType,
-									value: checkedItems,
-								},
-							}))
-						}
-					/>
-				),
-				type: 'component',
-			},
-		],
+export interface IProps {
+	availableFilters: IFilterOption[];
+	onChange: (selectedFilters: IFilterOption[]) => void;
+	selectedFilters: IFilterOption[];
+}
+
+const Filter = ({availableFilters, onChange, selectedFilters}: IProps) => {
+	const menuItems = availableFilters.map((option) => ({
+		child: option.name,
+		title: i18n.translate(option.name),
+	}));
+
+	const menus: Record<string, any> = {
+		root: menuItems,
 	};
 
-	return (
-		<>
-			<DropDownWithDrillDown
-				alignmentPosition={undefined}
-				className="align-items-center d-flex"
-				containerElement={undefined}
-				initialActiveMenu="x0a0"
-				menuElementAttrs={undefined}
-				menuHeight={undefined}
-				menuWidth={undefined}
-				menus={menus}
-				offsetFn={undefined}
-				trigger={
-					<ClayButton borderless className="text-neutral-10">
-						<span className="inline-item inline-item-before">
-							<ClayIcon symbol="filter" />
-						</span>
+	menuItems.forEach((item) => {
+		const name = item.child;
+		const availableOption = availableFilters.find(
+			(option) => option.name === name
+		);
 
-						{i18n.translate('filters')}
-					</ClayButton>
-				}
-			/>
-		</>
+		if (!availableOption) {
+			console.warn(`Available option not found for name: ${name}`);
+
+			return;
+		}
+
+		menus[name] = [
+			{
+				child: (
+					<FilterCheckbox
+						availableItems={availableOption.value}
+						clearCheckboxes={!selectedFilters.length}
+						updateFilters={(checkedItems: string[]) => {
+							const updatedSelectedFilters = selectedFilters.map(
+								(option) => {
+									if (option.name === name) {
+										return {...option, value: checkedItems};
+									}
+
+									return option;
+								}
+							);
+							onChange(updatedSelectedFilters);
+						}}
+					/>
+				),
+				type: 'component',
+			},
+		];
+	});
+
+	return (
+		<FilterDropdown
+			alignmentPosition={undefined}
+			className="align-items-center d-flex"
+			containerElement={undefined}
+			initialActiveMenu="root"
+			menuElementAttrs={undefined}
+			menuHeight={undefined}
+			menuWidth={undefined}
+			menus={menus}
+			offsetFn={undefined}
+			trigger={
+				<ClayButton borderless className="text-neutral-10">
+					<span className="inline-item inline-item-before">
+						<ClayIcon symbol="filter" />
+					</span>
+
+					{i18n.translate('filters')}
+				</ClayButton>
+			}
+		/>
 	);
 };
 

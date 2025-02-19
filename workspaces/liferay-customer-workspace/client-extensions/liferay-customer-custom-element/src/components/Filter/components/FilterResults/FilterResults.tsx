@@ -7,75 +7,93 @@ import {Button} from '~/components';
 import BadgeButton from '~/components/BadgeButton';
 import i18n from '~/utils/I18n';
 
-import {BE_INITIAL_FILTER} from '../../../../../utils/BE_INITIAL_FILTER';
-import {IBEFilter} from '../../../../../utils/constants/IBEFilter';
+import {IFilterOption} from '../../Filter';
 
-interface IBadgeProps {
-	filtersState: [IBEFilter, React.Dispatch<React.SetStateAction<IBEFilter>>];
+export interface IProps {
+	onChange: (selectedFilters: IFilterOption[]) => void;
+	searchResultsCount: number;
+	searchTerm: string;
+	selectedFilters: IFilterOption[];
 }
 
-const FilterResults = ({filtersState: [filters, setFilters]}: IBadgeProps) => {
-	const hasFilterValue = (filters: IBEFilter) => {
-		return Object.values(filters).some(
-			({value}) => Array.isArray(value) && !!value.length
+const FilterResults = ({
+	onChange,
+	searchResultsCount,
+	searchTerm,
+	selectedFilters,
+}: IProps) => {
+	const hasFilterValue = (selectedFilters: IFilterOption[]) => {
+		return selectedFilters.some((option) => !!option.value.length);
+	};
+
+	const handleClearFilter = (filterName: string) => {
+		onChange(
+			selectedFilters.map((option) => {
+				if (option.name === filterName) {
+					return {...option, value: []};
+				}
+
+				return option;
+			})
 		);
 	};
 
+	const handleClearAllFilters = () => {
+		onChange([]);
+	};
+
 	return (
-		<div className="bd-highlight d-flex">
-			<div className="bd-highlight col d-flex flex-wrap pl-0 pt-2 w-100">
-				{!!filters.eventType.value?.length && (
-					<BadgeButton
-						filterName={filters.eventType.name}
-						filterValue={filters.eventType.value.join(', ')}
-						onClick={() =>
-							setFilters((previousFilters) => ({
-								...previousFilters,
-								eventType: {
-									...previousFilters.eventType,
-									value: [],
-								},
-							}))
-						}
-					/>
-				)}
-
-				{!!filters.eventStatus.value?.length && (
-					<BadgeButton
-						filterName={filters.eventStatus.name}
-						filterValue={filters.eventStatus.value.join(', ')}
-						onClick={() =>
-							setFilters((previousFilters) => ({
-								...previousFilters,
-								eventStatus: {
-									...previousFilters.eventStatus,
-									value: [],
-								},
-							}))
-						}
-					/>
+		<>
+			<div className="d-flex">
+				{searchTerm !== '' && (
+					<p className="font-weight-semi-bold m-0 mt-3 text-paragraph-sm">
+						{searchResultsCount > 1
+							? `${i18n.sub('x-results-for-x', [
+									searchResultsCount.toString(),
+									`"${searchTerm}"`,
+								])}`
+							: `${i18n.sub('x-result-for-x', [
+									searchResultsCount.toString(),
+									`"${searchTerm}"`,
+								])}`}
+					</p>
 				)}
 			</div>
+			<div className="bd-highlight d-flex">
+				<div className="bd-highlight col d-flex flex-wrap pl-0 pt-2 w-100">
+					{selectedFilters.map((option) => {
+						if (option.value.length) {
+							return (
+								<BadgeButton
+									filterName={i18n.translate(option.name)}
+									filterValue={option.value.join(', ')}
+									key={option.name}
+									onClick={() =>
+										handleClearFilter(option.name)
+									}
+								/>
+							);
+						}
 
-			<div className="bd-highlight flex-shrink-2 pt-2">
-				{hasFilterValue(filters) && (
-					<Button
-						borderless
-						className="link"
-						onClick={() => {
-							setFilters({
-								...BE_INITIAL_FILTER,
-								searchTerm: filters.searchTerm,
-							});
-						}}
-						prependIcon="times-circle"
-						small
-					>
-						{i18n.translate('clear-all-filters')}
-					</Button>
-				)}
+						return null;
+					})}
+				</div>
+
+				<div className="bd-highlight flex-shrink-2 pt-2">
+					{hasFilterValue(selectedFilters) && (
+						<Button
+							borderless
+							className="link"
+							onClick={handleClearAllFilters}
+							prependIcon="times-circle"
+							small
+						>
+							{i18n.translate('clear-all-filters')}
+						</Button>
+					)}
+				</div>
 			</div>
-		</div>
+		</>
 	);
 };
 

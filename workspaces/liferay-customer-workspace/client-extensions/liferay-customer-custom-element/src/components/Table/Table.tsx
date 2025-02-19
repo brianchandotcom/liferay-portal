@@ -17,7 +17,7 @@ export interface IRow {
 }
 
 interface IProps {
-	className: string;
+	className?: string;
 	columns: IColumn[];
 	onRowClick?: (row: IRow) => void;
 	rows: IRow[];

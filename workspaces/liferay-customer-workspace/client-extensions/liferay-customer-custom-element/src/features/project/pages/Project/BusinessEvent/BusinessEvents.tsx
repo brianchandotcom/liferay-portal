@@ -10,34 +10,32 @@ import './BusinessEvents.css';
 import {ButtonWithIcon} from '@clayui/core';
 import {useEffect, useMemo, useState} from 'react';
 import {ButtonDropDown} from '~/components';
-import {IRow} from '~/components/Table';
+import {IFilterOption} from '~/components/Filter/Filter';
+import Table, {IRow} from '~/components/Table';
+import TableHeader from '~/components/Table/TableHeader';
 import {hasAdminUserAccount} from '~/features/project/containers/ActivationKeysTable/utils/hasAdminUserAccount';
-import BEActionsHeader from '~/components/Table/TableHeader';
-import BETable from '~/features/project/pages/Project/BusinessEvent/components/BETable';
 import {getFormattedDate} from '~/features/project/utils/getFormattedDate';
 import useCurrentKoroneikiAccount from '~/hooks/useCurrentKoroneikiAccount';
 import {getBusinessEvents} from '~/services/liferay/api';
 import {getFormattedTime} from '~/utils/getFormattedTime';
+import {IOrganizationBrief} from '~/utils/types';
 
 import useMyUserAccountByAccountExternalReferenceCode from '../TeamMembers/components/TeamMembersTable/hooks/useMyUserAccountByAccountExternalReferenceCode';
-import {BE_INITIAL_FILTER} from './utils/BE_INITIAL_FILTER';
-import {IBEFilter} from './utils/constants/IBEFilter';
+import {INITIAL_FILTER} from './utils/constants/initialFilter';
 
 interface IBusinessEventTicket {
 	associatedTickets: string;
 	description: string;
-	eventStatus: IEventStatusOrType;
-	eventType: IEventStatusOrType;
+	eventStatus: Record<string, string>;
+	eventType: Record<string, string>;
 	name: string;
 	targetGoLiveDateTime: string;
 }
 
-interface IEventStatusOrType {
-	name: string;
-}
-
-interface IOrganizationBrief {
-	name: string;
+export interface IState {
+	availableFilters?: IFilterOption[];
+	searchTerm?: string;
+	selectedFilters?: IFilterOption[];
 }
 
 const columns = [
@@ -73,13 +71,10 @@ const BusinessEvents = () => {
 		IBusinessEventTicket[]
 	>([]);
 
-	const [filters, setFilters] = useState<IBEFilter>(BE_INITIAL_FILTER);
-	const [availableFields, setAvailableFields] = useState<{
-		eventStatus: string[];
-		eventType: string[];
-	}>({
-		eventStatus: [],
-		eventType: [],
+	const [filters, setFilters] = useState<IState>({
+		availableFilters: INITIAL_FILTER,
+		searchTerm: '',
+		selectedFilters: [],
 	});
 
 	const {data, loading} = useCurrentKoroneikiAccount();
@@ -111,20 +106,7 @@ const BusinessEvents = () => {
 		isLiferayStaff ||
 		hasFLSOrganizationAssociated;
 
-	const filterEventData = () => {
-		const eventStatusData = ['Open', 'Canceled', 'Completed', 'Overdue'];
-		const eventTypeData = ['Golive', 'Upgrade', 'Migration', 'OtherEvent'];
-
-		const eventStatusSet = new Set<string>(eventStatusData);
-		const eventTypeSet = new Set<string>(eventTypeData);
-
-		setAvailableFields({
-			eventStatus: Array.from(eventStatusSet),
-			eventType: Array.from(eventTypeSet),
-		});
-	};
-
-	const generateFilterQuery = (filters: IBEFilter) => {
+	const generateFilterQuery = (filters: IState) => {
 		const queryParams = Object.entries(filters)
 			.map(([key, {value}]) => {
 				if (Array.isArray(value) && !!value.length) {
@@ -137,7 +119,7 @@ const BusinessEvents = () => {
 			})
 			.filter(Boolean);
 
-		if (filters.searchTerm && filters.searchTerm.trim()) {
+		if (filters.searchTerm?.trim()) {
 			queryParams.push(`(contains(name, '${filters.searchTerm}'))`);
 		}
 
@@ -146,13 +128,26 @@ const BusinessEvents = () => {
 
 	const filterQuery = generateFilterQuery(filters);
 
+	const handleFilterChange = (selectedFilters: IFilterOption[]) => {
+		setFilters((prevFilters) => ({
+			...prevFilters,
+			selectedFilters,
+		}));
+	};
+
+	const handleSearchChange = (searchTerm: string) => {
+		setFilters((prevFilters) => ({
+			...prevFilters,
+			searchTerm,
+		}));
+	};
+
 	useEffect(() => {
 		const fetchBusinessEvents = async () => {
 			try {
 				const businessEventsResponse =
 					await getBusinessEvents(filterQuery);
 
-				filterEventData();
 				setBusinessEventsTickets(businessEventsResponse.items);
 			}
 			catch (error) {
@@ -279,15 +274,19 @@ const BusinessEvents = () => {
 			</div>
 
 			<div className="mb-1">
-				<BEActionsHeader
-					availableFields={availableFields}
-					filtersState={[filters, setFilters]}
-					hasAllEventsPermissions={hasAllEventsPermissions}
+				<TableHeader
+					availableFilters={filters.availableFilters || []}
+					hasCreatePermissions={hasAllEventsPermissions}
+					onFilterChange={handleFilterChange}
+					onSearchChange={handleSearchChange}
+					searchResultsCount={businessEventsTickets.length}
+					searchTerm={filters.searchTerm || ''}
+					selectedFilters={filters.selectedFilters || []}
 				/>
 			</div>
 
 			<div>
-				<BETable columns={columns} rows={rows as unknown as IRow[]} />
+				<Table columns={columns} rows={rows as unknown as IRow[]} />
 			</div>
 		</div>
 	);

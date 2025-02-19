@@ -26,14 +26,6 @@ const SearchBar = ({clearSearchTerm, isBusinessEvent, onSearchSubmit}) => {
 		setSearching(true);
 	};
 
-	useEffect(() => {
-		if (clearSearchTerm) {
-			setTerm('');
-			onSearchSubmit('');
-			setSearching(true);
-		}
-	}, [clearSearchTerm, onSearchSubmit]);
-
 	return (
 		<ClayInput.Group
 			className={classNames('m-0 mr-2', {

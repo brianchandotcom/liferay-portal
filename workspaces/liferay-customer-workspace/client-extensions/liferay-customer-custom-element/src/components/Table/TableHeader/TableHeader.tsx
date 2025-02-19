@@ -7,60 +7,67 @@ import Button from '@clayui/button';
 
 import './TableHeader.css';
 
+import Filter from '~/components/Filter';
+import {IFilterOption} from '~/components/Filter/Filter';
+import FilterResults from '~/components/Filter/components/FilterResults/FilterResults';
 import SearchBar from '~/components/SearchBar';
 import i18n from '~/utils/I18n';
 
-import {IBEFilter} from '../../../features/project/pages/Project/BusinessEvent/utils/constants/IBEFilter';
-import Filter from '~/components/Filter';
-import BEBadgeFilter from '~/components/Filter/components/FilterResults/FilterResults';
-
-interface IPropsHeader {
-	availableFields: {
-		eventStatus: string[];
-		eventType: string[];
-	};
-	filtersState: [IBEFilter, React.Dispatch<React.SetStateAction<IBEFilter>>];
-	hasAllEventsPermissions: boolean;
+interface IProps {
+	availableFilters: IFilterOption[];
+	hasCreatePermissions: boolean;
+	onFilterChange: (selectedFilters: IFilterOption[]) => void;
+	onSearchChange: (searchTerm: string) => void;
+	searchResultsCount: number;
+	searchTerm: string;
+	selectedFilters: IFilterOption[];
 }
 
-const BEActionsHeader = ({
-	availableFields,
-	filtersState: [filters, setFilters],
-	hasAllEventsPermissions,
-}: IPropsHeader) => {
+const TableHeader = ({
+	availableFilters,
+	hasCreatePermissions,
+	onFilterChange,
+	onSearchChange,
+	searchResultsCount,
+	searchTerm,
+	selectedFilters,
+}: IProps) => {
 	return (
 		<div className="d-flex flex-column mt-4">
 			<div className="be-table-header p-3">
 				<div className="d-flex justify-content-between">
 					<div className="d-flex">
 						<SearchBar
-							clearSearchTerm={undefined}
+							clearSearchTerm={() => onSearchChange('')}
 							isBusinessEvent={true}
 							onSearchSubmit={(term: string) => {
-								setFilters((previousFilters) => ({
-									...previousFilters,
-									searchTerm: term,
-								}));
+								onSearchChange(term);
 							}}
 						/>
 
 						<Filter
-							availableFields={availableFields}
-							filtersState={[filters, setFilters]}
+							availableFilters={availableFilters}
+							onChange={onFilterChange}
+							selectedFilters={selectedFilters}
 						/>
 					</div>
 
-					{hasAllEventsPermissions && (
+					{hasCreatePermissions && (
 						<Button className="be-create-event">
 							{i18n.translate('create-event')}
 						</Button>
 					)}
 				</div>
 
-				<BEBadgeFilter filtersState={[filters, setFilters]} />
+				<FilterResults
+					onChange={onFilterChange}
+					searchResultsCount={searchResultsCount}
+					searchTerm={searchTerm}
+					selectedFilters={selectedFilters}
+				/>
 			</div>
 		</div>
 	);
 };
 
-export default BEActionsHeader;
+export default TableHeader;

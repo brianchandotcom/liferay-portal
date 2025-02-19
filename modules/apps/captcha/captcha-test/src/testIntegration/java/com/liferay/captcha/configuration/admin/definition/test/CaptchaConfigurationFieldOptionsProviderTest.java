@@ -19,8 +19,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
@@ -83,17 +81,14 @@ public class CaptchaConfigurationFieldOptionsProviderTest {
 		_assertContainsOption(new SimpleCaptchaImpl(), options);
 		_assertContainsOption(new TestCaptcha(), options);
 
-		Collection<ServiceReference<Captcha>> serviceReferences =
+		ServiceReference<?>[] serviceReferences =
 			_bundleContext.getServiceReferences(
-				Captcha.class,
-				"(component.name=com.liferay.captcha.internal.client." +
-					"extension.FunctionCaptchaImpl)");
-
-		Iterator<ServiceReference<Captcha>> iterator =
-			serviceReferences.iterator();
+				Captcha.class.getName(),
+				"(component.name=com.liferay.captcha.internal.function." +
+					"captcha.FunctionCaptchaImpl)");
 
 		_assertContainsOption(
-			_bundleContext.getService(iterator.next()), options);
+			(Captcha)_bundleContext.getService(serviceReferences[0]), options);
 	}
 
 	public static class TestCaptcha extends SimpleCaptchaImpl {

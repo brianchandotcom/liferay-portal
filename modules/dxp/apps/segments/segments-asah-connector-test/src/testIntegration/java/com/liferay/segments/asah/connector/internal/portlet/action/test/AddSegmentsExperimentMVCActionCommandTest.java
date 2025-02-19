@@ -36,6 +36,7 @@ import com.liferay.segments.exception.DuplicateSegmentsExperimentException;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.model.SegmentsExperiment;
+import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.segments.service.SegmentsExperimentLocalService;
 import com.liferay.segments.test.util.SegmentsTestUtil;
 
@@ -156,7 +157,7 @@ public class AddSegmentsExperimentMVCActionCommandTest {
 			SegmentsExperiment segmentsExperiment =
 				_segmentsExperimentLocalService.fetchSegmentsExperiment(
 					segmentsExperience.getGroupId(),
-					segmentsExperience.getSegmentsExperienceId(),
+					segmentsExperience.getSegmentsExperienceKey(),
 					segmentsExperience.getPlid());
 
 			Assert.assertEquals(
@@ -264,11 +265,15 @@ public class AddSegmentsExperimentMVCActionCommandTest {
 			JSONObject segmentsExperimentJSONObject =
 				(JSONObject)jsonObject.get("segmentsExperiment");
 
+			segmentsExperience =
+				_segmentsExperienceLocalService.fetchSegmentsExperience(
+					segmentsExperimentJSONObject.getLong(
+						"segmentsExperienceId"));
+
 			segmentsExperiment =
 				_segmentsExperimentLocalService.fetchSegmentsExperiment(
 					_group.getGroupId(),
-					segmentsExperimentJSONObject.getLong(
-						"segmentsExperienceId"),
+					segmentsExperience.getSegmentsExperienceKey(),
 					_layout.getPlid());
 
 			Assert.assertNotNull(segmentsExperiment);
@@ -326,11 +331,15 @@ public class AddSegmentsExperimentMVCActionCommandTest {
 				description,
 				segmentsExperimentJSONObject.getString("description"));
 
+			segmentsExperience =
+				_segmentsExperienceLocalService.fetchSegmentsExperience(
+					segmentsExperimentJSONObject.getLong(
+						"segmentsExperienceId"));
+
 			SegmentsExperiment segmentsExperiment =
 				_segmentsExperimentLocalService.fetchSegmentsExperiment(
 					_group.getGroupId(),
-					segmentsExperimentJSONObject.getLong(
-						"segmentsExperienceId"),
+					segmentsExperience.getSegmentsExperienceKey(),
 					_layout.getPlid());
 
 			Assert.assertEquals(
@@ -429,6 +438,9 @@ public class AddSegmentsExperimentMVCActionCommandTest {
 		filter = "mvc.command.name=/segments_experiment/add_segments_experiment"
 	)
 	private MVCActionCommand _mvcActionCommand;
+
+	@Inject
+	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 	@Inject
 	private SegmentsExperimentLocalService _segmentsExperimentLocalService;

@@ -235,7 +235,7 @@ public class SegmentsExperimentRelLocalServiceTest {
 		SegmentsExperimentRel segmentsExperimentRel =
 			_segmentsExperimentRelLocalService.getSegmentsExperimentRel(
 				segmentsExperiment.getSegmentsExperimentId(),
-				segmentsExperiment.getSegmentsExperienceId());
+				segmentsExperiment.getSegmentsExperienceKey());
 
 		_segmentsExperimentRelLocalService.updateSegmentsExperimentRel(
 			segmentsExperimentRel.getSegmentsExperimentRelId(),
@@ -280,7 +280,7 @@ public class SegmentsExperimentRelLocalServiceTest {
 		SegmentsExperimentRel segmentsExperimentRel =
 			_segmentsExperimentRelLocalService.getSegmentsExperimentRel(
 				segmentsExperiment.getSegmentsExperimentId(),
-				segmentsExperiment.getSegmentsExperienceId());
+				segmentsExperiment.getSegmentsExperienceKey());
 
 		_segmentsExperimentRelLocalService.updateSegmentsExperimentRel(
 			segmentsExperimentRel.getSegmentsExperimentRelId(),

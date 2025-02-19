@@ -1980,17 +1980,16 @@ public class ContentPageEditorDisplayContext {
 	}
 
 	private boolean _isSegmentsExperimentVariant() {
-		long segmentsExperienceId = getSegmentsExperienceId();
-
 		SegmentsExperience segmentsExperience =
 			segmentsExperienceLocalService.fetchSegmentsExperience(
-				segmentsExperienceId);
+				getSegmentsExperienceId());
 
 		if ((segmentsExperience != null) && !segmentsExperience.isActive()) {
 			List<SegmentsExperimentRel> segmentsExperimentRels =
 				_segmentsExperimentRelLocalService.
-					getSegmentsExperimentRelsBySegmentsExperienceId(
-						segmentsExperienceId);
+					getSegmentsExperimentRelsBySegmentsExperienceKey(
+						segmentsExperience.getSegmentsExperienceKey(),
+						themeDisplay.getPlid());
 
 			if (ListUtil.isNotEmpty(segmentsExperimentRels)) {
 				return true;

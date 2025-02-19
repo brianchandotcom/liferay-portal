@@ -57,7 +57,7 @@ public class SegmentsExperienceModelListener
 			SegmentsExperiment segmentsExperiment =
 				_segmentsExperimentLocalService.fetchSegmentsExperiment(
 					segmentsExperience.getGroupId(),
-					segmentsExperience.getSegmentsExperienceId(),
+					segmentsExperience.getSegmentsExperienceKey(),
 					segmentsExperience.getPlid());
 
 			if (segmentsExperiment != null) {

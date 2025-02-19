@@ -355,8 +355,9 @@ public class ContentPageLayoutEditorDisplayContext
 		if (segmentsExperience != null) {
 			List<SegmentsExperimentRel> segmentsExperimentRels =
 				_segmentsExperimentRelLocalService.
-					getSegmentsExperimentRelsBySegmentsExperienceId(
-						segmentsExperience.getSegmentsExperienceId());
+					getSegmentsExperimentRelsBySegmentsExperienceKey(
+						segmentsExperience.getSegmentsExperienceKey(),
+						themeDisplay.getPlid());
 
 			if (segmentsExperimentRels.isEmpty()) {
 				return false;

@@ -43,6 +43,7 @@ import com.liferay.product.navigation.control.menu.constants.ProductNavigationCo
 import com.liferay.segments.constants.SegmentsPortletKeys;
 import com.liferay.segments.experiment.web.internal.constants.ProductNavigationControlMenuEntryConstants;
 import com.liferay.segments.manager.SegmentsExperienceManager;
+import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.model.SegmentsExperiment;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.segments.service.SegmentsExperimentService;
@@ -353,21 +354,21 @@ public class SegmentsExperimentProductNavigationControlMenuEntry
 			HttpServletRequest httpServletRequest, ThemeDisplay themeDisplay)
 		throws Exception {
 
-		long segmentsExperienceId = _getSelectedSegmentsExperienceId(
-			httpServletRequest);
-
-		Layout layout = themeDisplay.getLayout();
+		SegmentsExperience segmentsExperience =
+			_segmentsExperienceLocalService.fetchSegmentsExperience(
+				_getSelectedSegmentsExperienceId(httpServletRequest));
 
 		SegmentsExperiment segmentsExperiment =
 			_segmentsExperimentService.fetchSegmentsExperiment(
-				themeDisplay.getScopeGroupId(), segmentsExperienceId,
-				layout.getPlid());
+				themeDisplay.getScopeGroupId(),
+				segmentsExperience.getSegmentsExperienceKey(),
+				themeDisplay.getPlid());
 
 		if (segmentsExperiment != null) {
 			return segmentsExperiment.getSegmentsExperienceId();
 		}
 
-		return segmentsExperienceId;
+		return segmentsExperience.getSegmentsExperienceId();
 	}
 
 	private long _getSelectedSegmentsExperienceId(

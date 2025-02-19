@@ -88,12 +88,13 @@ public class SegmentsExperienceSelectorDisplayContext {
 	}
 
 	private SegmentsExperience _getParentSegmentsExperience(
-		SegmentsExperience segmentsExperience) {
+		SegmentsExperience segmentsExperience, ThemeDisplay themeDisplay) {
 
 		List<SegmentsExperimentRel> segmentsExperimentRels =
 			_segmentsExperimentRelLocalService.
-				getSegmentsExperimentRelsBySegmentsExperienceId(
-					segmentsExperience.getSegmentsExperienceId());
+				getSegmentsExperimentRelsBySegmentsExperienceKey(
+					segmentsExperience.getSegmentsExperienceKey(),
+					themeDisplay.getPlid());
 
 		if (segmentsExperimentRels.isEmpty()) {
 			return null;
@@ -216,7 +217,7 @@ public class SegmentsExperienceSelectorDisplayContext {
 
 		if (segmentsExperience != null) {
 			SegmentsExperience parentSegmentsExperience =
-				_getParentSegmentsExperience(segmentsExperience);
+				_getParentSegmentsExperience(segmentsExperience, _themeDisplay);
 
 			if (parentSegmentsExperience != null) {
 				segmentsExperience = parentSegmentsExperience;

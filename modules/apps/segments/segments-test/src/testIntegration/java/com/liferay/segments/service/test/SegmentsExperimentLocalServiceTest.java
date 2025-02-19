@@ -274,7 +274,7 @@ public class SegmentsExperimentLocalServiceTest {
 		Assert.assertNull(
 			_segmentsExperimentLocalService.fetchSegmentsExperiment(
 				_group.getGroupId(),
-				segmentsExperience.getSegmentsExperienceId(),
+				segmentsExperience.getSegmentsExperienceKey(),
 				segmentsExperience.getPlid()));
 	}
 
@@ -290,7 +290,7 @@ public class SegmentsExperimentLocalServiceTest {
 			SegmentsExperimentConstants.STATUS_RUNNING);
 
 		_segmentsExperimentLocalService.deleteSegmentsExperiment(
-			_group.getGroupId(), segmentsExperience.getSegmentsExperienceId(),
+			_group.getGroupId(), segmentsExperience.getSegmentsExperienceKey(),
 			segmentsExperience.getPlid());
 	}
 
@@ -301,13 +301,13 @@ public class SegmentsExperimentLocalServiceTest {
 		_addSegmentsExperiment(segmentsExperience);
 
 		_segmentsExperimentLocalService.deleteSegmentsExperiment(
-			_group.getGroupId(), segmentsExperience.getSegmentsExperienceId(),
+			_group.getGroupId(), segmentsExperience.getSegmentsExperienceKey(),
 			segmentsExperience.getPlid());
 
 		Assert.assertNull(
 			_segmentsExperimentLocalService.fetchSegmentsExperiment(
 				_group.getGroupId(),
-				segmentsExperience.getSegmentsExperienceId(),
+				segmentsExperience.getSegmentsExperienceKey(),
 				segmentsExperience.getPlid()));
 	}
 
@@ -352,7 +352,7 @@ public class SegmentsExperimentLocalServiceTest {
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
 
 		_segmentsExperimentLocalService.deleteSegmentsExperiment(
-			_group.getGroupId(), segmentsExperience.getSegmentsExperienceId(),
+			_group.getGroupId(), segmentsExperience.getSegmentsExperienceKey(),
 			segmentsExperience.getPlid());
 
 		Assert.assertNull(
@@ -384,12 +384,12 @@ public class SegmentsExperimentLocalServiceTest {
 		Assert.assertNotNull(
 			_segmentsExperimentLocalService.fetchSegmentsExperiment(
 				_group.getGroupId(),
-				segmentsExperience.getSegmentsExperienceId(),
+				segmentsExperience.getSegmentsExperienceKey(),
 				segmentsExperience.getPlid()));
 		Assert.assertNotNull(
 			_segmentsExperimentLocalService.fetchSegmentsExperiment(
 				_group.getGroupId(),
-				segmentsExperiment.getSegmentsExperienceId(),
+				segmentsExperiment.getSegmentsExperienceKey(),
 				segmentsExperience.getPlid()));
 	}
 
@@ -460,7 +460,7 @@ public class SegmentsExperimentLocalServiceTest {
 		SegmentsExperiment actualSegmentsExperiment =
 			_segmentsExperimentLocalService.fetchSegmentsExperiment(
 				_layout.getGroupId(),
-				segmentsExperience2.getSegmentsExperienceId(),
+				segmentsExperience2.getSegmentsExperienceKey(),
 				_layout.getPlid());
 
 		Assert.assertEquals(
@@ -489,12 +489,12 @@ public class SegmentsExperimentLocalServiceTest {
 		Assert.assertNotNull(
 			_segmentsExperimentLocalService.fetchSegmentsExperiment(
 				_group.getGroupId(),
-				segmentsExperience.getSegmentsExperienceId(),
+				segmentsExperience.getSegmentsExperienceKey(),
 				segmentsExperience.getPlid()));
 		Assert.assertNotNull(
 			_segmentsExperimentLocalService.fetchSegmentsExperiment(
 				_group.getGroupId(),
-				segmentsExperiment.getSegmentsExperienceId(),
+				segmentsExperiment.getSegmentsExperienceKey(),
 				segmentsExperience.getPlid()));
 	}
 
@@ -535,11 +535,11 @@ public class SegmentsExperimentLocalServiceTest {
 		SegmentsExperimentRel segmentsExperimentRel =
 			_segmentsExperimentRelLocalService.fetchSegmentsExperimentRel(
 				segmentsExperiment.getSegmentsExperimentId(),
-				segmentsExperiment.getSegmentsExperienceId());
+				segmentsExperiment.getSegmentsExperienceKey());
 		SegmentsExperimentRel variantSegmentsExperimentRel =
 			_segmentsExperimentRelLocalService.fetchSegmentsExperimentRel(
 				segmentsExperiment.getSegmentsExperimentId(),
-				variantSegmentsExperience.getSegmentsExperienceId());
+				variantSegmentsExperience.getSegmentsExperienceKey());
 
 		Assert.assertEquals(
 			segmentsExperienceIdSplitMap.get(

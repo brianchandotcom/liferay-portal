@@ -20,6 +20,7 @@ import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
+import com.liferay.object.entry.util.ObjectEntryThreadLocal;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManager;
@@ -486,6 +487,8 @@ public class CustomFDSSerializer
 				false, null, null, null, null,
 				LocaleUtil.getMostRelevantLocale(), null, null);
 
+		ObjectEntryThreadLocal.setSkipObjectEntryResourcePermission(true);
+
 		DefaultObjectEntryManager defaultObjectEntryManager =
 			DefaultObjectEntryManagerProvider.provide(
 				_objectEntryManagerRegistry.getObjectEntryManager(
@@ -504,6 +507,9 @@ public class CustomFDSSerializer
 					exception);
 			}
 		}
+		finally {
+			ObjectEntryThreadLocal.setSkipObjectEntryResourcePermission(false);
+		}
 
 		return objectEntry;
 	}
@@ -511,6 +517,8 @@ public class CustomFDSSerializer
 	private Collection<ObjectEntry> _getRelatedObjectEntries(
 		ObjectDefinition objectDefinition, ObjectEntry objectEntry,
 		Predicate<ObjectEntry> predicate, String relationshipName) {
+
+		ObjectEntryThreadLocal.setSkipObjectEntryResourcePermission(true);
 
 		Collection<ObjectEntry> objectEntries = null;
 
@@ -543,6 +551,9 @@ public class CustomFDSSerializer
 						relationshipName,
 					exception);
 			}
+		}
+		finally {
+			ObjectEntryThreadLocal.setSkipObjectEntryResourcePermission(false);
 		}
 
 		return objectEntries;

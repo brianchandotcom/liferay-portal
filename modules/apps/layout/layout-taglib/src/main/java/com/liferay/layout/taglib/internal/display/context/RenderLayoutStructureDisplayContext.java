@@ -285,14 +285,14 @@ public class RenderLayoutStructureDisplayContext {
 
 	public Set<String> getDisabledItemIds() {
 		LayoutStructureRulesHelper.LayoutStructureRulesResult
-			layoutStructureRulesResult = _getLayoutStructureRulesResult();
+			layoutStructureRulesResult = getLayoutStructureRulesResult();
 
 		return layoutStructureRulesResult.getDisabledItemIds();
 	}
 
 	public Set<String> getDisplayedItemIds() {
 		LayoutStructureRulesHelper.LayoutStructureRulesResult
-			layoutStructureRulesResult = _getLayoutStructureRulesResult();
+			layoutStructureRulesResult = getLayoutStructureRulesResult();
 
 		return layoutStructureRulesResult.getDisplayedItemIds();
 	}
@@ -309,7 +309,7 @@ public class RenderLayoutStructureDisplayContext {
 
 	public Set<String> getEnabledItemIds() {
 		LayoutStructureRulesHelper.LayoutStructureRulesResult
-			layoutStructureRulesResult = _getLayoutStructureRulesResult();
+			layoutStructureRulesResult = getLayoutStructureRulesResult();
 
 		return layoutStructureRulesResult.getEnabledItemIds();
 	}
@@ -396,7 +396,7 @@ public class RenderLayoutStructureDisplayContext {
 
 	public Set<String> getHiddenItemIds() {
 		LayoutStructureRulesHelper.LayoutStructureRulesResult
-			layoutStructureRulesResult = _getLayoutStructureRulesResult();
+			layoutStructureRulesResult = getLayoutStructureRulesResult();
 
 		return layoutStructureRulesResult.getHiddenItemIds();
 	}
@@ -473,6 +473,28 @@ public class RenderLayoutStructureDisplayContext {
 		return _layoutStructure;
 	}
 
+	public LayoutStructureRulesHelper.LayoutStructureRulesResult
+		getLayoutStructureRulesResult() {
+
+		if (_layoutStructureRulesResult != null) {
+			return _layoutStructureRulesResult;
+		}
+
+		LayoutStructureRulesHelper layoutStructureRulesHelper =
+			ServletContextUtil.getLayoutStructureRulesHelper();
+
+		LayoutStructureRulesHelper.LayoutStructureRulesResult
+			layoutStructureRulesResult =
+				layoutStructureRulesHelper.processLayoutStructureRules(
+					_themeDisplay.getScopeGroupId(), _layoutStructure,
+					_themeDisplay.getPermissionChecker(),
+					_getSegmentsEntryIds());
+
+		_layoutStructureRulesResult = layoutStructureRulesResult;
+
+		return _layoutStructureRulesResult;
+	}
+
 	public List<String> getMainChildrenItemIds() {
 		LayoutStructure layoutStructure = getLayoutStructure();
 
@@ -527,7 +549,7 @@ public class RenderLayoutStructureDisplayContext {
 
 	public Map<String, Object> getRulesHandlerComponentContext() {
 		LayoutStructureRulesHelper.LayoutStructureRulesResult
-			layoutStructureRulesResult = _getLayoutStructureRulesResult();
+			layoutStructureRulesResult = getLayoutStructureRulesResult();
 
 		return HashMapBuilder.<String, Object>put(
 			"evaluateRulesURL",
@@ -991,28 +1013,6 @@ public class RenderLayoutStructureDisplayContext {
 		}
 
 		return null;
-	}
-
-	private LayoutStructureRulesHelper.LayoutStructureRulesResult
-		_getLayoutStructureRulesResult() {
-
-		if (_layoutStructureRulesResult != null) {
-			return _layoutStructureRulesResult;
-		}
-
-		LayoutStructureRulesHelper layoutStructureRulesHelper =
-			ServletContextUtil.getLayoutStructureRulesHelper();
-
-		LayoutStructureRulesHelper.LayoutStructureRulesResult
-			layoutStructureRulesResult =
-				layoutStructureRulesHelper.processLayoutStructureRules(
-					_themeDisplay.getScopeGroupId(), _layoutStructure,
-					_themeDisplay.getPermissionChecker(),
-					_getSegmentsEntryIds());
-
-		_layoutStructureRulesResult = layoutStructureRulesResult;
-
-		return _layoutStructureRulesResult;
 	}
 
 	private String _getMainItemId() {

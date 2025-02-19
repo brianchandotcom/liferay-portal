@@ -4168,7 +4168,6 @@ public class ObjectEntryResourceTest {
 
 		_objectEntry1 = ObjectEntryTestUtil.addObjectEntry(
 			_objectDefinition1, _OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1);
-
 		_objectEntry2 = ObjectEntryTestUtil.addObjectEntry(
 			_objectDefinition2, _OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2);
 
@@ -4204,11 +4203,6 @@ public class ObjectEntryResourceTest {
 
 		// Comparison operators
 
-		String substring = _objectEntry1.getExternalReferenceCode(
-		).substring(
-			0, 3
-		);
-
 		_assertFilterString(
 			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
 			_escape(
@@ -4217,7 +4211,6 @@ public class ObjectEntryResourceTest {
 					objectRelationshipERCObjectFieldName,
 					_objectEntry1.getExternalReferenceCode())),
 			_objectDefinition1);
-
 		_assertFilterString(
 			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
 			_escape(
@@ -4226,6 +4219,11 @@ public class ObjectEntryResourceTest {
 					objectRelationshipERCObjectFieldName,
 					_objectEntry1.getExternalReferenceCode())),
 			_objectDefinition1);
+
+		String substring = _objectEntry1.getExternalReferenceCode(
+		).substring(
+			0, 3
+		);
 
 		_assertFilterString(
 			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
@@ -4243,7 +4241,6 @@ public class ObjectEntryResourceTest {
 					objectRelationshipERCObjectFieldName,
 					_objectEntry1.getExternalReferenceCode())),
 			_objectDefinition1);
-
 		_assertFilterString(
 			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
 			_escape(
@@ -4251,7 +4248,6 @@ public class ObjectEntryResourceTest {
 					"%s/%s lt '%s'", _objectRelationship1.getName(),
 					objectRelationshipERCObjectFieldName, substring + "ZZZZ")),
 			_objectDefinition1);
-
 		_assertFilterString(
 			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
 			_escape(
@@ -4281,7 +4277,6 @@ public class ObjectEntryResourceTest {
 				"contains(%s/%s,'%s')", _objectRelationship1.getName(),
 				objectRelationshipERCObjectFieldName, substring),
 			_objectDefinition1);
-
 		_assertFilterString(
 			_OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1,
 			String.format(

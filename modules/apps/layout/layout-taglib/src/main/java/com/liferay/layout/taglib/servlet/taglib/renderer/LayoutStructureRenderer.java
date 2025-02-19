@@ -251,6 +251,8 @@ public class LayoutStructureRenderer {
 			collectionStyledLayoutStructureItem.getUniqueCssClass());
 		jspWriter.write(StringPool.SPACE);
 		jspWriter.write(collectionStyledLayoutStructureItem.getCssClass());
+		jspWriter.write("\" data-layout-structure-item-id=\"");
+		jspWriter.write(collectionStyledLayoutStructureItem.getItemId());
 		jspWriter.write("\"");
 
 		ListObjectReference listObjectReference =
@@ -707,6 +709,8 @@ public class LayoutStructureRenderer {
 			}
 		}
 
+		jspWriter.write("\" data-layout-structure-item-id=\"");
+		jspWriter.write(containerStyledLayoutStructureItem.getItemId());
 		jspWriter.write("\" style=\"");
 
 		String contentVisibility =
@@ -894,6 +898,8 @@ public class LayoutStructureRenderer {
 		jspWriter.write(StringPool.SPACE);
 		jspWriter.write(
 			formStepContainerStyledLayoutStructureItem.getStyledCssClasses());
+		jspWriter.write("\" data-layout-structure-item-id=\"");
+		jspWriter.write(formStepContainerStyledLayoutStructureItem.getItemId());
 		jspWriter.write("\" style=\"");
 
 		jspWriter.write(
@@ -1007,6 +1013,8 @@ public class LayoutStructureRenderer {
 			}
 		}
 
+		jspWriter.write("\" data-layout-structure-item-id=\"");
+		jspWriter.write(formStyledLayoutStructureItem.getItemId());
 		jspWriter.write(
 			"\" enctype=\"multipart/form-data\" method=\"POST\" style=\"");
 		jspWriter.write(
@@ -1416,6 +1424,8 @@ public class LayoutStructureRenderer {
 		jspWriter.write(rowStyledLayoutStructureItem.getCssClass());
 		jspWriter.write(StringPool.SPACE);
 		jspWriter.write(rowStyledLayoutStructureItem.getStyledCssClasses());
+		jspWriter.write("\" data-layout-structure-item-id=\"");
+		jspWriter.write(rowStyledLayoutStructureItem.getItemId());
 		jspWriter.write("\" style=\"");
 		jspWriter.write(
 			_renderLayoutStructureDisplayContext.getStyle(
@@ -1499,6 +1509,8 @@ public class LayoutStructureRenderer {
 			jspWriter.write(colorCssClasses);
 		}
 
+		jspWriter.write("\" data-layout-structure-item-id=\"");
+		jspWriter.write(fragmentStyledLayoutStructureItem.getItemId());
 		jspWriter.write("\" style=\"");
 		jspWriter.write(
 			_renderLayoutStructureDisplayContext.getStyle(

@@ -447,10 +447,16 @@ public class BatchEngineImportTaskExecutorTest
 	public void testDeleteBlogPostingsWithImportStrategies() throws Exception {
 		List<BlogsEntry> blogsEntries = addBlogsEntries();
 
-		_importBlogPostings(
-			BatchEngineTaskOperation.DELETE,
-			_getBlogPostingsCSVDeleteContent(blogsEntries, true), "CSV", null,
-			BatchEngineImportTaskConstants.IMPORT_STRATEGY_ON_ERROR_FAIL);
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				_CLASS_NAME_BATCH_ENGINE_IMPORT_TASK_EXECUTOR_IMPL,
+				LoggerTestUtil.ERROR)) {
+
+			_importBlogPostings(
+				BatchEngineTaskOperation.DELETE,
+				_getBlogPostingsCSVDeleteContent(blogsEntries, true), "CSV",
+				null,
+				BatchEngineImportTaskConstants.IMPORT_STRATEGY_ON_ERROR_FAIL);
+		}
 
 		Assert.assertEquals(0, _batchEngineImportTask.getProcessedItemsCount());
 		Assert.assertEquals(
@@ -459,10 +465,18 @@ public class BatchEngineImportTaskExecutorTest
 				TestPropsValues.getGroupId(),
 				new QueryDefinition<>(WorkflowConstants.STATUS_ANY)));
 
-		_importBlogPostings(
-			BatchEngineTaskOperation.DELETE,
-			_getBlogPostingsCSVDeleteContent(blogsEntries, true), "CSV", null,
-			BatchEngineImportTaskConstants.IMPORT_STRATEGY_ON_ERROR_CONTINUE);
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.batch.engine.internal.strategy." +
+					"OnErrorContinueBatchEngineImportStrategy",
+				LoggerTestUtil.ERROR)) {
+
+			_importBlogPostings(
+				BatchEngineTaskOperation.DELETE,
+				_getBlogPostingsCSVDeleteContent(blogsEntries, true), "CSV",
+				null,
+				BatchEngineImportTaskConstants.
+					IMPORT_STRATEGY_ON_ERROR_CONTINUE);
+		}
 
 		Assert.assertEquals(
 			ROWS_COUNT + 1, _batchEngineImportTask.getProcessedItemsCount());

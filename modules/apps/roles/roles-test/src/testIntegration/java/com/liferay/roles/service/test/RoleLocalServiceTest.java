@@ -110,30 +110,6 @@ public class RoleLocalServiceTest {
 	}
 
 	@Test
-	@TestInfo("LPS-159272")
-	public void testLoggingAuditMessageProcessorConfigurationEnabled()
-		throws Exception {
-
-		PrintStream printStream = System.out;
-
-		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
-				new ConfigurationTemporarySwapper(
-					"com.liferay.portal.security.audit.router.configuration." +
-						"LoggingAuditMessageProcessorConfiguration",
-					HashMapDictionaryBuilder.<String, Object>put(
-						"enabled", true
-					).put(
-						"outputToConsole", true
-					).build())) {
-
-			_testLoggingAuditMessageProcessorConfigurationEnabled();
-		}
-		finally {
-			System.setOut(printStream);
-		}
-	}
-
-	@Test
 	public void testAddRole() throws Exception {
 		try {
 			RoleTestUtil.addRole(
@@ -709,6 +685,30 @@ public class RoleLocalServiceTest {
 
 		Assert.assertEquals(roles.toString(), 1, roles.size());
 		Assert.assertEquals(teamRole, roles.get(0));
+	}
+
+	@Test
+	@TestInfo("LPS-159272")
+	public void testLoggingAuditMessageProcessorConfigurationEnabled()
+		throws Exception {
+
+		PrintStream printStream = System.out;
+
+		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
+				new ConfigurationTemporarySwapper(
+					"com.liferay.portal.security.audit.router.configuration." +
+						"LoggingAuditMessageProcessorConfiguration",
+					HashMapDictionaryBuilder.<String, Object>put(
+						"enabled", true
+					).put(
+						"outputToConsole", true
+					).build())) {
+
+			_testLoggingAuditMessageProcessorConfigurationEnabled();
+		}
+		finally {
+			System.setOut(printStream);
+		}
 	}
 
 	protected void assertGetTeamRoleMap(

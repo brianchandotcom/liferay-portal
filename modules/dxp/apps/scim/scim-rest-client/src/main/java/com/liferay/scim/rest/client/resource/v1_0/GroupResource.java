@@ -32,11 +32,12 @@ public interface GroupResource {
 		return new Builder();
 	}
 
-	public Object getV2Groups(Integer count, Integer startIndex)
+	public Object getV2Groups(
+			Integer count, Integer startIndex, String filterString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getV2GroupsHttpResponse(
-			Integer count, Integer startIndex)
+			Integer count, Integer startIndex, String filterString)
 		throws Exception;
 
 	public void postV2Group(Group group) throws Exception;
@@ -175,11 +176,12 @@ public interface GroupResource {
 
 	public static class GroupResourceImpl implements GroupResource {
 
-		public Object getV2Groups(Integer count, Integer startIndex)
+		public Object getV2Groups(
+				Integer count, Integer startIndex, String filterString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse = getV2GroupsHttpResponse(
-				count, startIndex);
+				count, startIndex, filterString);
 
 			String content = httpResponse.getContent();
 
@@ -241,7 +243,7 @@ public interface GroupResource {
 		}
 
 		public HttpInvoker.HttpResponse getV2GroupsHttpResponse(
-				Integer count, Integer startIndex)
+				Integer count, Integer startIndex, String filterString)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -271,6 +273,10 @@ public interface GroupResource {
 
 			if (startIndex != null) {
 				httpInvoker.parameter("startIndex", String.valueOf(startIndex));
+			}
+
+			if (filterString != null) {
+				httpInvoker.parameter("filter", filterString);
 			}
 
 			httpInvoker.path(

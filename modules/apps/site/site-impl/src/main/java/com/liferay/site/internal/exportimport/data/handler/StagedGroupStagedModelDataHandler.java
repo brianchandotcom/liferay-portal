@@ -360,6 +360,7 @@ public class StagedGroupStagedModelDataHandler
 		portletDataContext.setScopeGroupId(scopeGroupId);
 		portletDataContext.setScopeType(scopeType);
 		portletDataContext.setScopeLayoutUuid(scopeLayoutUuid);
+		portletDataContext.setValidateDataHandler(false);
 
 		Map<String, Boolean> exportPortletControlsMap =
 			_exportImportHelper.getExportPortletControlsMap(

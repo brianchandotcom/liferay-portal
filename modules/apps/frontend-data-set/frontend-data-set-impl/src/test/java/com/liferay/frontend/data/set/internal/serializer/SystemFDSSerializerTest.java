@@ -1385,7 +1385,7 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 	}
 
 	private FDSView _createFDSViewCards(
-		String description, String href, String image, String sticker,
+		String description, String link, String image, String sticker,
 		String symbol, String title) {
 
 		return new BaseCardsFDSView() {
@@ -1402,7 +1402,7 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 			@Override
 			public String getLink() {
-				return href;
+				return link;
 			}
 
 			@Override

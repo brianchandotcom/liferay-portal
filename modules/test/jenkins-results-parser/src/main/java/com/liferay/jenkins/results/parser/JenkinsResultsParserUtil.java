@@ -788,9 +788,8 @@ public class JenkinsResultsParserUtil {
 			httpURLConnection.setDoOutput(true);
 			httpURLConnection.setRequestMethod("POST");
 
-			HTTPAuthorization httpAuthorization = new BasicHTTPAuthorization(
-				getBuildProperty("jenkins.admin.user.token"),
-				getBuildProperty("jenkins.admin.user.name"));
+			HTTPAuthorization httpAuthorization =
+				_getJenkinsHTTPAuthorization();
 
 			httpURLConnection.setRequestProperty(
 				"Authorization", httpAuthorization.toString());
@@ -851,9 +850,8 @@ public class JenkinsResultsParserUtil {
 
 			httpURLConnection.setRequestMethod("HEAD");
 
-			BasicHTTPAuthorization httpAuthorization =
-				_getBasicHTTPAuthorization(
-					"jenkins.admin.user.token", "jenkins.admin.user.name");
+			HTTPAuthorization httpAuthorization =
+				_getJenkinsHTTPAuthorization();
 
 			httpURLConnection.setRequestProperty(
 				"Authorization", httpAuthorization.toString());
@@ -4889,9 +4887,7 @@ public class JenkinsResultsParserUtil {
 				if ((httpAuthorization == null) &&
 					url.startsWith("https://release.liferay.com")) {
 
-					httpAuthorization = _getBasicHTTPAuthorization(
-						"jenkins.admin.user.password",
-						"jenkins.admin.user.name");
+					httpAuthorization = _getJenkinsHTTPAuthorization();
 				}
 
 				if ((httpAuthorization == null) &&
@@ -4903,8 +4899,7 @@ public class JenkinsResultsParserUtil {
 						url = getLocalURL(url);
 					}
 
-					httpAuthorization = _getBasicHTTPAuthorization(
-						"jenkins.admin.user.token", "jenkins.admin.user.name");
+					httpAuthorization = _getJenkinsHTTPAuthorization();
 				}
 
 				boolean testray1Request = false;
@@ -6360,17 +6355,6 @@ public class JenkinsResultsParserUtil {
 		return key;
 	}
 
-	private static BasicHTTPAuthorization _getBasicHTTPAuthorization(
-			String password, String username)
-		throws IOException {
-
-		Properties buildProperties = getBuildProperties();
-
-		return new BasicHTTPAuthorization(
-			buildProperties.getProperty(password),
-			buildProperties.getProperty(username));
-	}
-
 	private static File _getCacheFile(String key) {
 		String baseDirPath = System.getProperty("java.io.tmpdir");
 
@@ -6634,6 +6618,14 @@ public class JenkinsResultsParserUtil {
 		}
 
 		return _gitWorkingDirectoriesJSONArray;
+	}
+
+	private static HTTPAuthorization _getJenkinsHTTPAuthorization()
+		throws IOException {
+
+		return new BasicHTTPAuthorization(
+			getBuildProperty("jenkins.admin.user.token"),
+			getBuildProperty("jenkins.admin.user.name"));
 	}
 
 	private static Set<Set<String>> _getOrderedOptSets(String... opts) {

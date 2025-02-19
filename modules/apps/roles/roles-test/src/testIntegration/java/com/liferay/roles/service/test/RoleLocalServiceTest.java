@@ -745,6 +745,8 @@ public class RoleLocalServiceTest {
 	private void _testLoggingAuditMessageProcessorConfigurationEnabled()
 		throws Exception {
 
+		// Group assign/unassign
+
 		ByteArrayOutputStream byteArrayOutputStream =
 			new ByteArrayOutputStream();
 
@@ -782,6 +784,8 @@ public class RoleLocalServiceTest {
 
 		byteArrayOutputStream.reset();
 
+		// Organization assign/unassign
+
 		Organization organization = OrganizationTestUtil.addOrganization();
 
 		_roleLocalService.addGroupRole(organization.getGroupId(), role);
@@ -810,6 +814,8 @@ public class RoleLocalServiceTest {
 
 		byteArrayOutputStream.reset();
 
+		// User assign/unassign
+
 		User user = TestPropsValues.getUser();
 
 		_roleLocalService.addUserRole(user.getUserId(), role);
@@ -837,6 +843,8 @@ public class RoleLocalServiceTest {
 				"\"userEmailAddress\":\"" + user.getEmailAddress() + "\""));
 
 		byteArrayOutputStream.reset();
+
+		// User group assign/unassign
 
 		UserGroup userGroup = UserGroupTestUtil.addUserGroup();
 

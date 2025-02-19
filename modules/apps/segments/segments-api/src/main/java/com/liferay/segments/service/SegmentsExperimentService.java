@@ -65,12 +65,12 @@ public interface SegmentsExperimentService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public SegmentsExperiment fetchSegmentsExperiment(
-			long groupId, long segmentsExperienceId, long plid)
+			long groupId, String segmentsExperimentKey)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public SegmentsExperiment fetchSegmentsExperiment(
-			long groupId, String segmentsExperimentKey)
+			long groupId, String segmentsExperienceKey, long plid)
 		throws PortalException;
 
 	/**

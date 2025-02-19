@@ -43,6 +43,7 @@ const test = mergeTests(
 	collectionsPagesTest,
 	featureFlagsTest({
 		'LPD-18221': {enabled: true},
+		'LPD-34938': {enabled: true},
 		'LPS-169837': {enabled: true},
 		'LPS-178052': {enabled: true},
 	}),
@@ -2480,5 +2481,60 @@ test(
 		// Check that the alert is not present
 
 		await expect(page.getByRole('alert')).toHaveCount(0);
+	}
+);
+
+test(
+	'Show Marketplace Button and the related modal in the sidebar',
+	{
+		tag: ['@LPD-48223'],
+	},
+	async ({apiHelpers, page, pageEditorPage, site}) => {
+
+		// Create a new user with admin role
+
+		const user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+		const role =
+			await apiHelpers.headlessAdminUser.getRoleByName('Administrator');
+
+		await apiHelpers.headlessAdminUser.assignUserToRole(
+			role.externalReferenceCode,
+			user.id
+		);
+
+		// Create a page
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			pageDefinition: getPageDefinition(),
+			siteId: site.id,
+			title: getRandomString(),
+		});
+
+		// Go to edit layout and look for the badge in the marketplace button
+
+		await pageEditorPage.goto(layout, site.friendlyUrlPath, user.id);
+
+		const panel = page.getByLabel('Components Panel');
+
+		await panel.waitFor({state: 'visible'});
+
+		await expect(page.locator('[id$="marketplaceBadge"]')).toBeAttached();
+
+		// Click the marketplace button and wait for the modal
+
+		await page.getByTitle('Open Marketplace Explorer').click();
+
+		await expect(
+			page
+				.getByRole('dialog')
+				.getByRole('heading', {name: 'Marketplace is now in'})
+		).toBeVisible();
+
+		await page.getByRole('button', {name: 'Cancel'}).click();
+
+		await expect(
+			page.locator('[id$="marketplaceBadge"]')
+		).not.toBeVisible();
 	}
 );

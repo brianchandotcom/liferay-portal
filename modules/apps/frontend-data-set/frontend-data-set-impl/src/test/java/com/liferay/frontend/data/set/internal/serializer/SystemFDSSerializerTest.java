@@ -51,6 +51,7 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -996,8 +997,8 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 			_registerFDSView(
 				"fdsName",
 				_createFDSViewCards(
-					"longDescription", "thumbnail", "detailURL", "sticker",
-					"icon", "title")),
+					_DESCRIPTION, "thumbnail", _LINK, "sticker", "icon",
+					_TITLE)),
 			_registerSystemFDSEntry(
 				null, "fdsName", "/app", "/endpoint", "schema"));
 
@@ -1014,9 +1015,9 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 				).put(
 					"schema",
 					JSONUtil.put(
-						"description", "longDescription"
+						"description", _DESCRIPTION
 					).put(
-						"href", "detailURL"
+						"href", _LINK
 					).put(
 						"image", "thumbnail"
 					).put(
@@ -1024,7 +1025,7 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 					).put(
 						"symbol", "icon"
 					).put(
-						"title", "title"
+						"title", _TITLE
 					)
 				).put(
 					"thumbnail", "cards2"
@@ -1053,13 +1054,12 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 			_registerFDSView(
 				"fdsName1",
 				_createFDSViewCards(
-					"longDescription", "thumbnail", "detailURL", "sticker",
-					"icon", "title")),
+					_DESCRIPTION, "thumbnail", _LINK, "sticker", "icon",
+					_TITLE)),
 			_registerFDSView(
 				"fdsName2",
 				_createFDSViewList(
-					"longDescription", "thumbnail", "sticker", "icon",
-					"title")),
+					_DESCRIPTION, "thumbnail", "sticker", "icon", _TITLE)),
 			_registerSystemFDSEntry(
 				null, "fdsName1", "/app", "/endpoint", "schema"),
 			_registerSystemFDSEntry(
@@ -1078,9 +1078,9 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 				).put(
 					"schema",
 					JSONUtil.put(
-						"description", "longDescription"
+						"description", _DESCRIPTION
 					).put(
-						"href", "detailURL"
+						"href", _LINK
 					).put(
 						"image", "thumbnail"
 					).put(
@@ -1088,7 +1088,7 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 					).put(
 						"symbol", "icon"
 					).put(
-						"title", "title"
+						"title", _TITLE
 					)
 				).put(
 					"thumbnail", "cards2"
@@ -1111,7 +1111,7 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 				).put(
 					"schema",
 					JSONUtil.put(
-						"description", "longDescription"
+						"description", _DESCRIPTION
 					).put(
 						"image", "thumbnail"
 					).put(
@@ -1119,7 +1119,7 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 					).put(
 						"symbol", "icon"
 					).put(
-						"title", "title"
+						"title", _TITLE
 					)
 				).put(
 					"thumbnail", "list"
@@ -1166,8 +1166,7 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 			_registerFDSView(
 				"fdsName",
 				_createFDSViewList(
-					"longDescription", "thumbnail", "sticker", "icon",
-					"title")),
+					_DESCRIPTION, "thumbnail", "sticker", "icon", _TITLE)),
 			_registerSystemFDSEntry(
 				null, "fdsName", "/app", "/endpoint", "schema"));
 
@@ -1184,7 +1183,7 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 				).put(
 					"schema",
 					JSONUtil.put(
-						"description", "longDescription"
+						"description", _DESCRIPTION
 					).put(
 						"image", "thumbnail"
 					).put(
@@ -1192,7 +1191,7 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 					).put(
 						"symbol", "icon"
 					).put(
-						"title", "title"
+						"title", _TITLE
 					)
 				).put(
 					"thumbnail", "list"
@@ -1208,8 +1207,7 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 		// Shared view
 
 		FDSView cardsView = _createFDSViewCards(
-			"longDescription", "thumbnail", "detailURL", "sticker", "icon",
-			"title");
+			_DESCRIPTION, "thumbnail", _LINK, "sticker", "icon", _TITLE);
 
 		_registerServices(
 			_bundleContext.registerService(
@@ -1593,6 +1591,12 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		_serviceRegistrations.clear();
 	}
+
+	private static final String _DESCRIPTION = RandomTestUtil.randomString();
+
+	private static final String _LINK = RandomTestUtil.randomString();
+
+	private static final String _TITLE = RandomTestUtil.randomString();
 
 	private BundleContext _bundleContext = SystemBundleUtil.getBundleContext();
 	private final List<ServiceRegistration<?>> _serviceRegistrations =

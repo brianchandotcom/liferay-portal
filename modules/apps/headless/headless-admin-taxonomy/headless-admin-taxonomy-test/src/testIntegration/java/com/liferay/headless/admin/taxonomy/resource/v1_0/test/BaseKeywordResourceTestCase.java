@@ -678,8 +678,8 @@ public abstract class BaseKeywordResourceTestCase {
 			testDeleteAssetLibraryKeywordByExternalReferenceCode_addKeyword()
 		throws Exception {
 
-		return keywordResource.postSiteKeyword(
-			testGroup.getGroupId(), randomKeyword());
+		return keywordResource.postAssetLibraryKeyword(
+			testDepotEntry.getDepotEntryId(), randomKeyword());
 	}
 
 	@Test
@@ -710,8 +710,8 @@ public abstract class BaseKeywordResourceTestCase {
 			testGetAssetLibraryKeywordByExternalReferenceCode_addKeyword()
 		throws Exception {
 
-		return keywordResource.postSiteKeyword(
-			testGroup.getGroupId(), randomKeyword());
+		return keywordResource.postAssetLibraryKeyword(
+			testDepotEntry.getDepotEntryId(), randomKeyword());
 	}
 
 	@Test
@@ -925,8 +925,8 @@ public abstract class BaseKeywordResourceTestCase {
 			testPutAssetLibraryKeywordByExternalReferenceCode_addKeyword()
 		throws Exception {
 
-		return keywordResource.postSiteKeyword(
-			testGroup.getGroupId(), randomKeyword());
+		return keywordResource.postAssetLibraryKeyword(
+			testDepotEntry.getDepotEntryId(), randomKeyword());
 	}
 
 	@Test

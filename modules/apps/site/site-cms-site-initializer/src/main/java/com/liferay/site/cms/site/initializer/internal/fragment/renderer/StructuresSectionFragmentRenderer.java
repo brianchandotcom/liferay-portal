@@ -85,13 +85,13 @@ public class StructuresSectionFragmentRenderer implements FragmentRenderer {
 		throws IOException {
 
 		try {
+			RequestDispatcher requestDispatcher =
+				_servletContext.getRequestDispatcher("/structures_section.jsp");
+
 			httpServletRequest.setAttribute(
 				StructuresSectionDisplayContext.class.getName(),
 				new StructuresSectionDisplayContext(
 					_cmsSiteInitializerConfiguration, httpServletRequest));
-
-			RequestDispatcher requestDispatcher =
-				_servletContext.getRequestDispatcher("/structures_section.jsp");
 
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}

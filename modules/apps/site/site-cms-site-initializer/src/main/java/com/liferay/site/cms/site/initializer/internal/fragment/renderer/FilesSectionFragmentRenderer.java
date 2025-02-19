@@ -85,13 +85,13 @@ public class FilesSectionFragmentRenderer implements FragmentRenderer {
 		throws IOException {
 
 		try {
+			RequestDispatcher requestDispatcher =
+				_servletContext.getRequestDispatcher("/files_section.jsp");
+
 			httpServletRequest.setAttribute(
 				FilesSectionDisplayContext.class.getName(),
 				new FilesSectionDisplayContext(
 					_cmsSiteInitializerConfiguration));
-
-			RequestDispatcher requestDispatcher =
-				_servletContext.getRequestDispatcher("/files_section.jsp");
 
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}

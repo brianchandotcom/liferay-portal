@@ -85,14 +85,14 @@ public class CategorizationSectionFragmentRenderer implements FragmentRenderer {
 		throws IOException {
 
 		try {
+			RequestDispatcher requestDispatcher =
+				_servletContext.getRequestDispatcher(
+					"/categorization_section.jsp");
+
 			httpServletRequest.setAttribute(
 				CategorizationSectionDisplayContext.class.getName(),
 				new CategorizationSectionDisplayContext(
 					_cmsSiteInitializerConfiguration));
-
-			RequestDispatcher requestDispatcher =
-				_servletContext.getRequestDispatcher(
-					"/categorization_section.jsp");
 
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}

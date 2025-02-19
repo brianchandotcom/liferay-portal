@@ -37,6 +37,9 @@ public class ScimClientIdKeywordQueryContributor
 		queryHelper.addSearchTerm(
 			booleanQuery, keywordQueryContributorHelper.getSearchContext(),
 			"externalReferenceCode", false);
+		queryHelper.addSearchTerm(
+			booleanQuery, keywordQueryContributorHelper.getSearchContext(),
+			"name", false);
 	}
 
 	@Reference

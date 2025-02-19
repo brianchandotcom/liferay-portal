@@ -287,10 +287,20 @@ public class UserManagerImpl implements UserManager {
 				count
 			).withSearchContext(
 				searchContext -> {
+					searchContext.setAndSearch(true);
 					searchContext.setAttribute(Field.GROUP_ID, 0L);
 					searchContext.setAttribute(
 						"expando__keyword__custom_fields__scimClientId",
 						scimClientId);
+
+					ExpressionNode expressionNode = (ExpressionNode)node;
+
+					if (expressionNode != null) {
+						if (expressionNode.getAttributeValue().contains("displayName")) {
+							searchContext.setAttribute(
+								"name", expressionNode.getValue());
+						}
+					}
 					searchContext.setUserId(serviceContext.getUserId());
 				}
 			).build();

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.captcha.internal.client.extension;
+package com.liferay.captcha.internal.function.captcha;
 
 import com.liferay.captcha.internal.configuration.FunctionCaptchaImplConfiguration;
 import com.liferay.captcha.simplecaptcha.SimpleCaptchaImpl;
@@ -20,7 +20,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	configurationPid = "com.liferay.captcha.internal.configuration.FunctionCaptchaImplConfiguration",
-	factory = "com.liferay.captcha.internal.client.extension.FunctionCaptchaImpl",
+	factory = "com.liferay.captcha.internal.function.captcha.FunctionCaptchaImpl",
 	service = Captcha.class
 )
 public class FunctionCaptchaImpl extends SimpleCaptchaImpl {

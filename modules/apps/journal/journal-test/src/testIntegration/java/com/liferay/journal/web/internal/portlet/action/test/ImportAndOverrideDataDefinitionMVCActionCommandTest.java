@@ -34,9 +34,7 @@ public class ImportAndOverrideDataDefinitionMVCActionCommandTest
 	}
 
 	@Test
-	public void testProcessActionWithDataDefinitionFromPreviousVersion()
-		throws Exception {
-
+	public void testProcessAction() throws Exception {
 		DataDefinition dataDefinition =
 			DataDefinitionTestUtil.addDataDefinition(
 				"journal", dataDefinitionResourceFactory, group.getGroupId(),

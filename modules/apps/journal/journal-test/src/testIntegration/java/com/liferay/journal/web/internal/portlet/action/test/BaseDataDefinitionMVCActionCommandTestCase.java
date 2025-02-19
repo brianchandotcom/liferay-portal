@@ -76,14 +76,13 @@ public abstract class BaseDataDefinitionMVCActionCommandTestCase {
 			new MockLiferayPortletActionRequest(
 				_createMockMultipartHttpServletRequest(fileName));
 
-		mockLiferayPortletActionRequest.addParameter("name", name);
-		mockLiferayPortletActionRequest.addParameter("redirect", "fakeURL");
-
 		if (dataDefinitionId != null) {
 			mockLiferayPortletActionRequest.addParameter(
 				"dataDefinitionId", String.valueOf(dataDefinitionId));
 		}
 
+		mockLiferayPortletActionRequest.addParameter("name", name);
+		mockLiferayPortletActionRequest.addParameter("redirect", "fakeURL");
 		mockLiferayPortletActionRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, _getThemeDisplay());
 

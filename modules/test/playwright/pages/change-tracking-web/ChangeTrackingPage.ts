@@ -406,40 +406,45 @@ export class ChangeTrackingPage {
 		}
 	}
 
-	async viewChanges({changed, site, title, type}) {
+	async viewChanges({
+		changed,
+		isVisible,
+		site,
+		title,
+		type,
+	}: {
+		changed?: string;
+		isVisible?: boolean;
+		site?: string;
+		title: string;
+		type?: string;
+	}) {
+		let fdsRow = this.page.locator('.fds tbody tr').filter({
+			has: this.page.getByText(title),
+		});
+
 		if (changed) {
-			await this.page
-				.locator('.fds tbody tr')
-				.filter({
-					has: this.page.getByText(title),
-				})
-				.filter({
-					has: this.page.getByRole('cell', {name: changed}),
-				})
-				.isVisible();
+			fdsRow = fdsRow.filter({
+				has: this.page.getByRole('cell', {name: changed}),
+			});
 		}
 
 		if (site) {
-			await this.page
-				.locator('.fds tbody tr')
-				.filter({
-					has: this.page.getByText(title),
-				})
-				.filter({
-					has: this.page.getByRole('cell', {name: site}),
-				})
-				.isVisible();
+			fdsRow = fdsRow.filter({
+				has: this.page.getByRole('cell', {name: site}),
+			});
 		}
 		if (type) {
-			await this.page
-				.locator('.fds tbody tr')
-				.filter({
-					has: this.page.getByText(title),
-				})
-				.filter({
-					has: this.page.getByRole('cell', {name: type}),
-				})
-				.isVisible();
+			fdsRow = fdsRow.filter({
+				has: this.page.getByRole('cell', {name: type}),
+			});
+		}
+
+		if (isVisible === true) {
+			await expect(fdsRow).toBeVisible();
+		}
+		else if (isVisible === false) {
+			await expect(fdsRow).toBeHidden();
 		}
 	}
 

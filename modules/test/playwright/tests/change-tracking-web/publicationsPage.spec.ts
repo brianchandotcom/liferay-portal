@@ -601,6 +601,51 @@ test('Create page with existing page template', async ({
 });
 
 test(
+	'Default calendar is hidden after adding widget in widget page',
+	{tag: '@LPD-49292'},
+	async ({
+		apiHelpers,
+		changeTrackingPage,
+		ctCollection,
+		page,
+		widgetPagePage,
+	}) => {
+		const site =
+			await apiHelpers.headlessAdminUser.getSiteByFriendlyUrlPath(
+				'guest'
+			);
+
+		// Create a page with an asset publisher
+
+		const layoutTitle = getRandomString();
+
+		const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+			groupId: site.id,
+			options: {
+				type: 'portlet',
+			},
+			title: layoutTitle,
+		});
+
+		await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
+
+		await widgetPagePage.addPortlet('Asset Publisher');
+
+		// Go to review changes and assert calendar is not present
+
+		await changeTrackingPage.goToReviewChanges(ctCollection.body.name);
+
+		await changeTrackingPage.viewChanges({
+			changed: 'Added',
+			isVisible: false,
+			site: site.name,
+			title: site.name,
+			type: 'Calendar',
+		});
+	}
+);
+
+test(
 	'Page preview available when reviewing publication changes',
 	{tag: '@LPS-148816'},
 	async ({

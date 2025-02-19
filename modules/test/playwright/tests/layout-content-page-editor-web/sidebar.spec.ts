@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {ObjectDefinitionApi} from '@liferay/object-admin-rest-client-js';
 import {expect, mergeTests} from '@playwright/test';
 import {createReadStream} from 'fs';
 import path from 'path';
@@ -31,7 +32,9 @@ import getBasicWebContentStructureId from '../../utils/structured-content/getBas
 import {waitForAlert} from '../../utils/waitForAlert';
 import {journalPagesTest} from '../journal-web/fixtures/journalPagesTest';
 import {ANIMALS_COLLECTION_NAME} from '../setup/page-management-site/constants/animals';
+import {getObjectERC} from '../setup/page-management-site/utils/getObjectERC';
 import getCollectionDefinition from './utils/getCollectionDefinition';
+import getFormContainerDefinition from './utils/getFormContainerDefinition';
 import getFragmentDefinition from './utils/getFragmentDefinition';
 import getGridDefinition from './utils/getGridDefinition';
 import getPageDefinition from './utils/getPageDefinition';
@@ -2281,6 +2284,193 @@ test.describe('Rules Panel', () => {
 			await expect(page.getByText('Heading Example')).toBeVisible();
 
 			await expect(page.getByText('Go Somewhere')).not.toBeVisible();
+		}
+	);
+
+	test(
+		'Apply a page rule with Form input condition',
+		{
+			tag: '@LPD-44720',
+		},
+		async ({apiHelpers, page, pageEditorPage, pageManagementSite}) => {
+
+			// Create a page
+
+			const objectDefinitionApiClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+
+			const {className: objectDefinitionClassName} = (
+				await objectDefinitionApiClient.getObjectDefinitionByExternalReferenceCode(
+					getObjectERC('All Fields')
+				)
+			).body;
+
+			const checkboxId = getRandomString();
+
+			const checkboxDefinition = getFragmentDefinition({
+				fragmentConfig: {
+					inputFieldId: 'ObjectField_boolean',
+				},
+				id: checkboxId,
+				key: 'INPUTS-checkbox',
+			});
+
+			const submitFragmentDefinition = getFragmentDefinition({
+				id: getRandomString(),
+				key: 'INPUTS-submit-button',
+			});
+
+			const headingFragmentDefinition = getFragmentDefinition({
+				id: getRandomString(),
+				key: 'BASIC_COMPONENT-heading',
+			});
+
+			const formDefinition = getFormContainerDefinition({
+				id: getRandomString(),
+				objectDefinitionClassName,
+				pageElements: [checkboxDefinition, submitFragmentDefinition],
+			});
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([
+					formDefinition,
+					headingFragmentDefinition,
+				]),
+				siteId: pageManagementSite.id,
+				title: getRandomString(),
+			});
+
+			await pageEditorPage.goto(
+				layout,
+				pageManagementSite.friendlyUrlPath
+			);
+
+			// Create a rule
+
+			await pageEditorPage.goToSidebarTab('Page Rules');
+
+			const modal = page.locator('.modal-dialog');
+
+			await clickAndExpectToBeVisible({
+				target: modal.getByRole('heading', {name: 'New Rule'}),
+				trigger: page.getByRole('button', {name: 'New Rule'}),
+			});
+
+			// Create new rule
+
+			const ruleName = getRandomString();
+
+			await modal.getByLabel('Rule Name').fill(ruleName);
+
+			// Add condition when the checkbox is checked
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('option', {name: 'Form Fragment'}),
+				trigger: page.getByLabel('Select Item for the Condition'),
+			});
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('option', {name: 'Checkbox'}),
+				trigger: page.getByLabel('Select Fragment'),
+			});
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('option', {name: 'Is Equal To'}),
+				trigger: page.getByLabel('Select Type'),
+			});
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('option', {name: 'True'}),
+				trigger: page.getByLabel('Select Value'),
+			});
+
+			// Add action to disable the submit button
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('option', {name: 'Disable'}),
+				trigger: page.getByLabel('Select Action'),
+			});
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('option', {name: 'Form Button'}),
+				trigger: page
+					.getByLabel('Actions', {exact: true})
+					.getByLabel('Select Fragment'),
+			});
+
+			// Add action to hide the heading
+
+			await page.getByRole('button', {name: 'Add Action'}).click();
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('option', {name: 'Hide'}),
+				trigger: page.getByLabel('Select Action').last(),
+			});
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('option', {name: 'Heading'}),
+				trigger: page
+					.getByLabel('Actions', {exact: true})
+					.getByLabel('Select Fragment')
+					.last(),
+			});
+
+			await modal
+				.getByRole('button', {exact: true, name: 'Save'})
+				.click();
+
+			await waitForAlert(
+				page,
+				'Success:The rule was created successfully.'
+			);
+
+			// Publish the page
+
+			await pageEditorPage.publishPage();
+
+			// Assert rule works
+
+			await page.goto(
+				`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
+
+			// Wait for rules to be loaded
+
+			await page.waitForTimeout(1000);
+
+			// Check the checkbox and assert the submit button is disabled and the heading is hidden
+
+			await page.getByLabel('Boolean (Read Only)', {exact: true}).check();
+
+			await expect(
+				page.getByRole('button', {name: 'Submit'})
+			).toBeDisabled();
+
+			await expect(
+				page.getByText('Heading Example', {exact: true})
+			).not.toBeVisible();
+
+			// Uncheck the checkbox and assert the submit button is enabled and the heading is visible
+
+			await page
+				.getByLabel('Boolean (Read Only)', {exact: true})
+				.uncheck();
+
+			await expect(
+				page.getByRole('button', {name: 'Submit'})
+			).toBeEnabled();
+
+			await expect(
+				page.getByText('Heading Example', {exact: true})
+			).toBeVisible();
 		}
 	);
 

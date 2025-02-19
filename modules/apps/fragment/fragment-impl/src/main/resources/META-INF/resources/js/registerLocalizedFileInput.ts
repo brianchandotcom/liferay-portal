@@ -68,14 +68,12 @@ export function registerLocalizedFileInput({
 	Liferay.on('localizationSelect:localeChanged', ({languageId}) => {
 		currentLanguageId = languageId;
 
-		const translationInput = getOrCreateTranslationInput(
-			inputName,
-			languageId,
-			localizationInputsContainer,
-			namespace
+		const {input: translationInput} = getTranslationInput(
+			namespace,
+			languageId
 		);
 
-		if (inputElement && translationInput.files?.length) {
+		if (inputElement && translationInput?.files?.length) {
 			copyFilesToInput(translationInput.files, inputElement);
 
 			onFileChange?.({files: translationInput.files, languageId});
@@ -125,9 +123,9 @@ function getOrCreateTranslationInput(
 	localizationInputsContainer: HTMLElement,
 	namespace: string
 ) {
-	const inputId = `${namespace}${inputName}_${languageId}`;
+	const {input, inputId} = getTranslationInput(namespace, languageId);
 
-	let translationInput = document.getElementById(inputId) as HTMLInputElement;
+	let translationInput = input;
 
 	if (!translationInput) {
 		translationInput = document.createElement('input');
@@ -138,5 +136,14 @@ function getOrCreateTranslationInput(
 		localizationInputsContainer.appendChild(translationInput);
 	}
 
-	return translationInput;
+	return translationInput as HTMLInputElement;
+}
+
+function getTranslationInput(namespace: string, languageId: string) {
+	const inputId = `${namespace}-file-upload-_${languageId}`;
+
+	return {
+		input: document.getElementById(inputId) as HTMLInputElement,
+		inputId,
+	};
 }

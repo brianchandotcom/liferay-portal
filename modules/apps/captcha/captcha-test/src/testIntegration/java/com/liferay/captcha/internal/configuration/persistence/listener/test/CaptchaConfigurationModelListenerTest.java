@@ -67,20 +67,20 @@ public class CaptchaConfigurationModelListenerTest {
 			"https://www.test.com/recaptcha/api/siteverify");
 
 		_assertPropertyThrowsException(
-			properties, "The reCAPTCHA verify url is not valid.");
+			properties, "The reCAPTCHA verify URL is not valid.");
 
 		properties.put(
 			"reCaptchaNoScriptURL",
 			"https://www.test.com/recaptcha/api/fallback?k=");
 
 		_assertPropertyThrowsException(
-			properties, "The reCAPTCHA no script url is not valid.");
+			properties, "The reCAPTCHA no script URL is not valid.");
 
 		properties.put(
 			"reCaptchaScriptURL", "https://www.test.com/recaptcha/api.js");
 
 		_assertPropertyThrowsException(
-			properties, "The reCAPTCHA script url is not valid.");
+			properties, "The reCAPTCHA script URL is not valid.");
 	}
 
 	private void _assertPropertyThrowsException(

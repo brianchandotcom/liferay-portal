@@ -237,10 +237,10 @@ public class SegmentsExperimentRelLocalServiceUtil {
 	}
 
 	public static SegmentsExperimentRel fetchSegmentsExperimentRel(
-		long segmentsExperimentId, long segmentsExperienceId) {
+		long segmentsExperimentId, String segmentsExperienceKey) {
 
 		return getService().fetchSegmentsExperimentRel(
-			segmentsExperimentId, segmentsExperienceId);
+			segmentsExperimentId, segmentsExperienceKey);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
@@ -289,11 +289,11 @@ public class SegmentsExperimentRelLocalServiceUtil {
 	}
 
 	public static SegmentsExperimentRel getSegmentsExperimentRel(
-			long segmentsExperimentId, long segmentsExperienceId)
+			long segmentsExperimentId, String segmentsExperienceKey)
 		throws PortalException {
 
 		return getService().getSegmentsExperimentRel(
-			segmentsExperimentId, segmentsExperienceId);
+			segmentsExperimentId, segmentsExperienceKey);
 	}
 
 	/**
@@ -320,11 +320,11 @@ public class SegmentsExperimentRelLocalServiceUtil {
 	}
 
 	public static List<SegmentsExperimentRel>
-		getSegmentsExperimentRelsBySegmentsExperienceId(
-			long segmentsExperienceId) {
+		getSegmentsExperimentRelsBySegmentsExperienceKey(
+			String segmentsExperienceKey, long plid) {
 
-		return getService().getSegmentsExperimentRelsBySegmentsExperienceId(
-			segmentsExperienceId);
+		return getService().getSegmentsExperimentRelsBySegmentsExperienceKey(
+			segmentsExperienceKey, plid);
 	}
 
 	/**

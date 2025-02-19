@@ -63,7 +63,7 @@ public interface SegmentsExperimentRelService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public SegmentsExperimentRel getSegmentsExperimentRel(
-			long segmentsExperimentId, long segmentsExperienceId)
+			long segmentsExperimentId, String segmentsExperienceKey)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

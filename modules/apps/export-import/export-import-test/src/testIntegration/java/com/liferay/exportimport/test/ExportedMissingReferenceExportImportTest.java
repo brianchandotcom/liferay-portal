@@ -301,7 +301,7 @@ public class ExportedMissingReferenceExportImportTest
 
 		PortletBag portletBag = PortletBagPool.get(portletId);
 
-		Snapshot<PortletDataHandler> snapshot =
+		Snapshot<PortletDataHandler> portletDataHandlerSnapshot =
 			ReflectionTestUtil.getAndSetFieldValue(
 				portletBag, "_portletDataHandlerSnapshot",
 				new Snapshot<PortletDataHandler>(
@@ -315,7 +315,8 @@ public class ExportedMissingReferenceExportImportTest
 				});
 
 		return () -> ReflectionTestUtil.setFieldValue(
-			portletBag, "_portletDataHandlerSnapshot", snapshot);
+			portletBag, "_portletDataHandlerSnapshot",
+			portletDataHandlerSnapshot);
 	}
 
 	private void _testMissingDummyOrder(boolean missingFirst) throws Exception {

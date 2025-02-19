@@ -1189,7 +1189,7 @@ public class LayoutStructureRenderer {
 							fragmentStyledLayoutStructureItem.getItemId())) {
 
 					defaultFragmentRendererContext.setAttribute(
-						"	enabled", Boolean.TRUE);
+						"enabled", Boolean.TRUE);
 				}
 
 				FragmentRendererController fragmentRendererController =

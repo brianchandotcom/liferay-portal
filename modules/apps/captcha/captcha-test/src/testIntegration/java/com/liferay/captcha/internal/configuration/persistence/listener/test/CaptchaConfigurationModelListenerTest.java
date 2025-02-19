@@ -17,8 +17,11 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Dictionary;
+import java.util.Locale;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -35,60 +38,80 @@ public class CaptchaConfigurationModelListenerTest {
 	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
 		new LiferayIntegrationTestRule();
 
-	@Test
-	public void testOnBeforeSave() {
+	@BeforeClass
+	public static void setUpClass() {
+		_locale = LocaleThreadLocal.getThemeDisplayLocale();
+
 		LocaleThreadLocal.setThemeDisplayLocale(LocaleUtil.ENGLISH);
 
-		Dictionary<String, Object> properties =
-			HashMapDictionaryBuilder.<String, Object>put(
-				"captchaEngine", ReCaptchaImpl.class.getName()
-			).put(
-				"reCaptchaNoScriptURL",
-				"https://www.google.com/recaptcha/api/fallback?k="
-			).put(
-				"reCaptchaScriptURL", "https://www.google.com/recaptcha/api.js"
-			).put(
-				"reCaptchaVerifyURL",
-				"https://www.google.com/recaptcha/api/siteverify"
-			).build();
-
-		_assertPropertyThrowsException(
-			properties, "The reCAPTCHA public key is not valid.");
-
-		properties.put("reCaptchaPublicKey", "test");
-
-		_assertPropertyThrowsException(
-			properties, "The reCAPTCHA private key is not valid.");
-
-		properties.put("reCaptchaPrivateKey", "test");
-
-		properties.put(
-			"reCaptchaVerifyURL",
-			"https://www.test.com/recaptcha/api/siteverify");
-
-		_assertPropertyThrowsException(
-			properties, "The reCAPTCHA verify URL is not valid.");
-
-		properties.put(
+		_reCaptchaProperties = HashMapDictionaryBuilder.<String, Object>put(
+			"captchaEngine", ReCaptchaImpl.class.getName()
+		).put(
 			"reCaptchaNoScriptURL",
-			"https://www.test.com/recaptcha/api/fallback?k=");
+			"https://www.google.com/recaptcha/api/fallback?k="
+		).put(
+			"reCaptchaPrivateKey", "test"
+		).put(
+			"reCaptchaPublicKey", "test"
+		).put(
+			"reCaptchaScriptURL", "https://www.google.com/recaptcha/api.js"
+		).put(
+			"reCaptchaVerifyURL",
+			"https://www.google.com/recaptcha/api/siteverify"
+		).build();
+	}
 
+	@AfterClass
+	public static void tearDownClass() {
+		LocaleThreadLocal.setThemeDisplayLocale(_locale);
+	}
+
+	@Test
+	public void testValidateReCaptchaNoScriptURL() throws Exception {
 		_assertPropertyThrowsException(
-			properties, "The reCAPTCHA no script URL is not valid.");
+			"reCaptchaNoScriptURL",
+			"https://www.test.com/recaptcha/api/fallback?k=",
+			"The reCAPTCHA no script URL is not valid.");
+	}
 
-		properties.put(
-			"reCaptchaScriptURL", "https://www.test.com/recaptcha/api.js");
-
+	@Test
+	public void testValidateReCaptchaPrivateKey() throws Exception {
 		_assertPropertyThrowsException(
-			properties, "The reCAPTCHA script URL is not valid.");
+			"reCaptchaPrivateKey", StringPool.BLANK,
+			"The reCAPTCHA private key is not valid.");
+	}
+
+	@Test
+	public void testValidateReCaptchaPublicKey() throws Exception {
+		_assertPropertyThrowsException(
+			"reCaptchaPublicKey", StringPool.BLANK,
+			"The reCAPTCHA public key is not valid.");
+	}
+
+	@Test
+	public void testValidateReCaptchaScriptURL() throws Exception {
+		_assertPropertyThrowsException(
+			"reCaptchaScriptURL", "https://www.test.com/recaptcha/api.js",
+			"The reCAPTCHA script URL is not valid.");
+	}
+
+	@Test
+	public void testValidateReCaptchaVerifyURL() throws Exception {
+		_assertPropertyThrowsException(
+			"reCaptchaVerifyURL",
+			"https://www.test.com/recaptcha/api/siteverify",
+			"The reCAPTCHA verify URL is not valid.");
 	}
 
 	private void _assertPropertyThrowsException(
-		Dictionary<String, Object> properties, String exceptionMessage) {
+			String key, String value, String exceptionMessage)
+		throws Exception {
 
-		try {
+		try (AutoCloseable autoCloseable = _swapReCaptchaConfiguration(
+				_reCaptchaProperties, key, value)) {
+
 			_configurationModelListener.onBeforeSave(
-				StringPool.BLANK, properties);
+				StringPool.BLANK, _reCaptchaProperties);
 
 			Assert.fail();
 		}
@@ -102,6 +125,17 @@ public class CaptchaConfigurationModelListenerTest {
 				));
 		}
 	}
+
+	private AutoCloseable _swapReCaptchaConfiguration(
+		Dictionary<String, Object> properties, String key, String value) {
+
+		String previousValue = (String)properties.put(key, value);
+
+		return () -> properties.put(key, previousValue);
+	}
+
+	private static Locale _locale;
+	private static Dictionary<String, Object> _reCaptchaProperties;
 
 	@Inject(
 		filter = "model.class.name=com.liferay.captcha.configuration.CaptchaConfiguration"

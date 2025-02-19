@@ -9,7 +9,6 @@ import {
 	makeFetch,
 	useConfig,
 } from 'data-engine-js-components-web';
-import {FieldChangeEventHandler} from 'dynamic-data-mapping-form-field-type';
 import {openSelectionModal} from 'frontend-js-web';
 import React, {ChangeEventHandler, useRef, useState} from 'react';
 
@@ -18,7 +17,9 @@ import {validateFileExtension, validateFileSize} from './util/attachment';
 
 import './Attachment.scss';
 
-export type Attachment = {
+import {LocalizedValue} from 'dynamic-data-mapping-form-field-type/src/main/resources/META-INF/resources/types';
+
+export type AttachmentFile = {
 	contentURL: string;
 	title: string;
 };
@@ -30,38 +31,38 @@ type File = {
 	title: string;
 };
 
-export interface AttachmentBaseProps {
+export interface AttachmentBaseProps<TValue> {
 	acceptedFileExtensions: string;
-	contentURL: string;
+	attachment: AttachmentFile | null;
 	error: {} | {displayErrors: boolean; errorMessage: string; valid: boolean};
 	fileSource: string;
+	handleDelete: () => void;
 	maximumFileSize: number;
-	onChange: FieldChangeEventHandler<string>;
+	onAttachmentChange: (attachment: AttachmentFile, id: string) => void;
 	overallMaximumUploadRequestSize: number;
 	readOnly: boolean;
 	setError: React.Dispatch<React.SetStateAction<{}>>;
 	tip: string;
-	title: string;
 	url: string;
+	value: TValue;
 }
 
 export default function AttachmentBase({
 	acceptedFileExtensions,
-	contentURL,
+	attachment,
 	fileSource,
+	handleDelete,
 	maximumFileSize,
-	onChange,
+	onAttachmentChange,
 	overallMaximumUploadRequestSize,
 	readOnly,
 	setError,
-	title,
 	url,
-}: AttachmentBaseProps) {
+}: AttachmentBaseProps<string | LocalizedValue<string>>) {
 	const {portletNamespace} = useConfig();
+
 	const inputRef = useRef<HTMLInputElement>(null);
-	const [attachment, setAttachment] = useState<Attachment | null>(
-		contentURL && title ? {contentURL, title} : null
-	);
+
 	const [isLoading, setLoading] = useState(false);
 
 	const handleSelectedItem = (selectedItem: any) => {
@@ -86,19 +87,14 @@ export default function AttachmentBase({
 			setError(error);
 		}
 		else {
-			setAttachment({
-				contentURL: selectedItemValue.url,
-				title: selectedItemValue.title,
-			});
-
-			onChange({target: {value: selectedItemValue.fileEntryId}});
+			onAttachmentChange(
+				{
+					contentURL: selectedItemValue.url,
+					title: selectedItemValue.title,
+				},
+				selectedItemValue.fileEntryId
+			);
 		}
-	};
-
-	const handleDelete = () => {
-		setAttachment(null);
-
-		onChange({target: {value: ''}}); // TODO: fix backend to support null
 	};
 
 	const handleUpload: ChangeEventHandler<HTMLInputElement> = async ({
@@ -136,12 +132,10 @@ export default function AttachmentBase({
 					});
 				}
 				else {
-					setAttachment({
-						contentURL: file.contentURL,
-						title: file.title,
-					});
-
-					onChange({target: {value: file.fileEntryId}});
+					onAttachmentChange(
+						{contentURL: file.contentURL, title: file.title},
+						file.fileEntryId
+					);
 				}
 			}
 			finally {

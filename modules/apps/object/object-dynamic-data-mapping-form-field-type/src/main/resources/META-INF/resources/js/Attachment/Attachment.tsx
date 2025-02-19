@@ -4,16 +4,78 @@
  */
 
 import {ReactFieldBase as FieldBase} from 'dynamic-data-mapping-form-field-type';
+import {
+	FieldChangeEventHandler,
+	LocalizedValue,
+} from 'dynamic-data-mapping-form-field-type/src/main/resources/META-INF/resources/types';
+import {
+	AvailableLocale,
+	EditingLocale,
+} from 'dynamic-data-mapping-form-field-type/src/main/resources/META-INF/resources/util/localizable/LocalesDropdown';
 import React, {useState} from 'react';
 
-import AttachmentBase, {AttachmentBaseProps} from './AttachmentBase';
+import AttachmentBase, {
+	AttachmentBaseProps,
+	AttachmentFile,
+} from './AttachmentBase';
+import AttachmentLocalizedObjectField from './AttachmentLocalizedObjectField';
+
+export interface AttachmentProps
+	extends AttachmentBaseProps<string | LocalizedValue<string>> {
+	availableLocales: AvailableLocale[];
+	contentURL?: string;
+	defaultLocale: EditingLocale;
+	fieldName: string;
+	fileEntryProperties: AttachmentFile | LocalizedValue<AttachmentFile>;
+	localizedObjectField: boolean;
+	onChange: FieldChangeEventHandler<string | LocalizedValue<string>>;
+	title?: string;
+}
 
 export default function Attachment({
+	contentURL,
+	fileEntryProperties,
+	localizedObjectField,
+	onChange,
 	readOnly,
 	tip,
+	title,
+	value,
 	...otherProps
-}: AttachmentBaseProps) {
+}: AttachmentProps) {
+	const isLocalizedObjectField: boolean =
+		Liferay.FeatureFlags['LPD-32050'] && !!localizedObjectField;
+
+	const getAttachment = () => {
+		if (Liferay.FeatureFlags['LPD-32050']) {
+			return fileEntryProperties;
+		}
+		else if (contentURL && title) {
+			return {contentURL, title};
+		}
+
+		return null;
+	};
+
+	const [attachment, setAttachment] = useState<AttachmentFile | null>(
+		getAttachment() as AttachmentFile | null
+	);
 	const [error, setError] = useState({});
+
+	const handleAttachmentChange = (
+		attachmentValue: AttachmentFile,
+		fileId: string
+	) => {
+		setAttachment(attachmentValue);
+
+		onChange({target: {value: fileId}});
+	};
+
+	const handleDelete = () => {
+		setAttachment(null);
+
+		onChange({target: {value: ''}}); // TODO: fix backend to support null
+	};
 
 	return (
 		<FieldBase
@@ -22,13 +84,32 @@ export default function Attachment({
 			{...otherProps}
 			{...error}
 		>
-			<AttachmentBase
-				{...otherProps}
-				error={error}
-				readOnly={readOnly}
-				setError={setError}
-				tip={tip}
-			/>
+			{isLocalizedObjectField ? (
+				<AttachmentLocalizedObjectField
+					{...otherProps}
+					error={error}
+					fileEntryProperties={
+						fileEntryProperties as LocalizedValue<AttachmentFile>
+					}
+					onChange={onChange}
+					readOnly={readOnly}
+					setError={setError}
+					tip={tip}
+					value={value as LocalizedValue<string>}
+				/>
+			) : (
+				<AttachmentBase
+					{...otherProps}
+					attachment={attachment}
+					error={error}
+					handleDelete={handleDelete}
+					onAttachmentChange={handleAttachmentChange}
+					readOnly={readOnly}
+					setError={setError}
+					tip={tip}
+					value={value as string}
+				/>
+			)}
 		</FieldBase>
 	);
 }

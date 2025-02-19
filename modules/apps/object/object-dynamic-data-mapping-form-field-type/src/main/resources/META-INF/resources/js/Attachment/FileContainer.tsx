@@ -8,10 +8,10 @@ import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import React from 'react';
 
-import {Attachment} from './AttachmentBase';
+import {AttachmentFile} from './AttachmentBase';
 
 interface FileProps {
-	attachment: Attachment | null;
+	attachment: AttachmentFile | null;
 	loading?: boolean;
 	onDelete: () => void;
 	readOnly: boolean;

@@ -107,6 +107,7 @@ export type {
 	AvailableLocale,
 	EditingLocale,
 } from './util/localizable/LocalesDropdown';
+export {default as LocalesDropdown} from './util/localizable/LocalesDropdown';
 
 export {
 	Captcha,

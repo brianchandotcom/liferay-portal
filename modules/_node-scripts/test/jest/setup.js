@@ -36,3 +36,21 @@ if (!global.createRange) {
 global.fetch = require('jest-fetch-mock');
 
 global.themeDisplay = global.Liferay.ThemeDisplay;
+
+// JSDom does not support `Image.decode()` natively
+
+if (!global.Image.prototype.decode) {
+	Object.defineProperty(global.Image.prototype, 'decode', {
+		get() {
+			return () => Promise.resolve();
+		},
+	});
+}
+
+// JSDom does not support `crypto` natively
+
+if (!global.crypto) {
+	Object.defineProperty(global, 'crypto', {
+		value: require('crypto'),
+	});
+}

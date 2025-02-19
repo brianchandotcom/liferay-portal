@@ -278,6 +278,37 @@
 			<finder-column arrayable-operator="OR" name="visibilityType" />
 		</finder>
 	</entity>
+	<entity local-service="true" name="AssetVocabularyGroupRel" remote-service="true" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="assetVocabularyGroupRelId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+
+		<!-- Other fields -->
+
+		<column name="vocabularyId" type="long" />
+
+		<!-- Finder methods -->
+
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
+		</finder>
+		<finder name="VocabularyId" return-type="Collection">
+			<finder-column name="vocabularyId" />
+		</finder>
+		<finder name="G_V" return-type="AssetVocabularyGroupRel">
+			<finder-column name="groupId" />
+			<finder-column name="vocabularyId" />
+		</finder>
+	</entity>
 	<exceptions>
 		<exception>AssetCategory</exception>
 		<exception>AssetCategoryLimit</exception>
@@ -295,6 +326,7 @@
 		<exception>DuplicateVocabulary</exception>
 		<exception>DuplicateVocabularyExternalReferenceCode</exception>
 		<exception>InvalidAssetCategory</exception>
+		<exception>InvalidAssetVocabularyGroupRel</exception>
 		<exception>VocabularyName</exception>
 	</exceptions>
 </service-builder>

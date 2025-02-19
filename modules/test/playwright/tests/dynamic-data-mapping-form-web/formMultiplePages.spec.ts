@@ -127,7 +127,7 @@ test.describe('Can render forms with multiple pages through page templates', () 
 			await formBuilderSidePanelPage.clickBackButton();
 		}
 
-		await formBuilderPage.publishButton.click();
+		await formBuilderPage.clickPublishFormButton();
 
 		await pageEditorPage.goto(layout, site.friendlyUrlPath);
 

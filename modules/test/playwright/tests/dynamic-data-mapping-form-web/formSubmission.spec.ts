@@ -86,27 +86,30 @@ test.describe('Manage forms through submission page', () => {
 
 		await virtualInstanceFormsPage.openForm('Form with data provider');
 
-		const pagePromise = virtualInstancePage.waitForEvent('popup');
-
 		const virtualInstanceFormBuilderPage = new FormBuilderPage(
 			virtualInstancePage
 		);
 
-		await virtualInstanceFormBuilderPage.openFormSubmission();
+		await virtualInstanceFormBuilderPage.clickPublishFormButton();
 
-		const virtualInstanceFormSubmissionPage = await pagePromise;
+		const formSubmissionURL =
+			await virtualInstanceFormBuilderPage.getFormSubmissionURL();
 
-		await virtualInstanceFormSubmissionPage
-			.getByRole('button', {name: 'Submit'})
-			.click();
+		await virtualInstancePage.goto(formSubmissionURL, {
+			waitUntil: 'networkidle',
+		});
+
+		await virtualInstancePage.getByRole('button', {name: 'Submit'}).click();
 
 		await expect(
-			virtualInstanceFormSubmissionPage.getByText(
+			virtualInstancePage.getByText(
 				'Your information was successfully received. Thank you for filling out the form.'
 			)
 		).toBeVisible();
 
-		await virtualInstanceFormSubmissionPage.close();
+		await virtualInstanceFormsPage.goTo();
+
+		await virtualInstanceFormsPage.openForm('Form with data provider');
 
 		await virtualInstanceFormBuilderPage.entriesTab.click();
 
@@ -116,7 +119,6 @@ test.describe('Manage forms through submission page', () => {
 	});
 
 	test('can submit manual entry while using data provider autofill rule', async ({
-		context,
 		formBuilderPage,
 		formsPage,
 		page,
@@ -135,23 +137,25 @@ test.describe('Manage forms through submission page', () => {
 
 		await formsPage.openForm('Form with data provider');
 
-		const pagePromise = context.waitForEvent('page');
+		await formBuilderPage.clickPublishFormButton();
 
-		await formBuilderPage.openFormSubmission();
+		const formSubmissionURL = await formBuilderPage.getFormSubmissionURL();
 
-		const formSubmissionPage = await pagePromise;
+		await page.goto(formSubmissionURL, {waitUntil: 'networkidle'});
 
-		await formSubmissionPage.getByLabel('Population').fill('123456');
+		await page.getByLabel('Population').fill('123456');
 
-		await formSubmissionPage.getByRole('button', {name: 'Submit'}).click();
+		await page.getByRole('button', {name: 'Submit'}).click();
 
 		await expect(
-			formSubmissionPage.getByText(
+			page.getByText(
 				'Your information was successfully received. Thank you for filling out the form.'
 			)
 		).toBeVisible();
 
-		await formSubmissionPage.close();
+		await formsPage.goTo();
+
+		await formsPage.openForm('Form with data provider');
 
 		await formBuilderPage.entriesTab.click();
 

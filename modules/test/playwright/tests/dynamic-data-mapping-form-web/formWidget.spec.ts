@@ -108,11 +108,7 @@ test.describe('Forms widget', () => {
 			}
 		}
 
-		await formBuilderPage.publishButton.click();
-
-		await expect(
-			page.getByText('Your request completed successfully')
-		).toBeVisible();
+		await formBuilderPage.clickPublishFormButton();
 
 		await pageEditorPage.goto(layout, site.friendlyUrlPath);
 

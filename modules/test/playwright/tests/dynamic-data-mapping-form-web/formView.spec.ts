@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Page, expect, mergeTests} from '@playwright/test';
+import {expect, mergeTests} from '@playwright/test';
 
 import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
 import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
@@ -37,7 +37,6 @@ test.describe('FormView when form storage type is object', () => {
 		formBuilderPage,
 		formBuilderSidePanelPage,
 		formSettingsModalPage,
-		formsPage,
 		page,
 	}) => {
 		const objectDefinition =
@@ -79,25 +78,21 @@ test.describe('FormView when form storage type is object', () => {
 
 		await page.waitForTimeout(200);
 
-		const newTabPagePromise = new Promise<Page>((resolve) =>
-			formBuilderPage.page.once('popup', resolve)
-		);
-
 		await formBuilderPage.clickSaveButton();
 
-		await formBuilderPage.openFormSubmission();
+		await formBuilderPage.clickPublishFormButton();
 
-		const newTabPage = await newTabPagePromise;
+		const formSubmissionURL = await formBuilderPage.getFormSubmissionURL();
 
-		newTabPage.setViewportSize({height: 1080, width: 1920});
+		await page.goto(formSubmissionURL, {waitUntil: 'networkidle'});
 
 		await expect(
-			newTabPage.getByRole('button', {
+			page.getByRole('button', {
 				name: 'Save',
 			})
 		).toBeVisible();
 
-		await newTabPage.close();
+		await page.goto('/');
 
 		await applicationsMenuPage.goToProcessBuilder();
 
@@ -108,32 +103,12 @@ test.describe('FormView when form storage type is object', () => {
 			objectDefinition.label['en_US']
 		);
 
-		await page.goto('/');
-
-		await formsPage.goTo();
-
-		await formsPage.clickFormTitle(formTitle);
-
-		await formBuilderPage.unpublishButton.click();
-
-		await page.waitForTimeout(200);
-
-		const newTabPagePromise2 = new Promise<Page>((resolve) =>
-			formBuilderPage.page.once('popup', resolve)
-		);
-
-		await formBuilderPage.openFormSubmission();
-
-		const newTabPage2 = await newTabPagePromise2;
-
-		await page.waitForTimeout(200);
+		await page.goto(formSubmissionURL, {waitUntil: 'networkidle'});
 
 		await expect(
-			newTabPage2.getByRole('button', {
+			page.getByRole('button', {
 				name: 'Submit for Workflow',
 			})
 		).toBeVisible();
-
-		await newTabPage2.close();
 	});
 });

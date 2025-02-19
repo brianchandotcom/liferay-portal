@@ -23,9 +23,9 @@ test.beforeEach(({page}) => {
 });
 
 test('can interact with a large list of fields on the form entries page', async ({
-	context,
 	formBuilderPage,
 	formBuilderSidePanelPage,
+	formsPage,
 	page,
 }) => {
 	await formBuilderPage.goToNew();
@@ -38,27 +38,27 @@ test('can interact with a large list of fields on the form entries page', async 
 		await formBuilderSidePanelPage.clickBackButton();
 	}
 
-	await formBuilderPage.publishButton.click();
+	await formBuilderPage.clickPublishFormButton();
 
-	const pagePromise = context.waitForEvent('page');
+	const formSubmissionURL = await formBuilderPage.getFormSubmissionURL();
 
-	await formBuilderPage.openFormSubmission();
-
-	const formSubmissionPage = await pagePromise;
+	await page.goto(formSubmissionURL, {waitUntil: 'networkidle'});
 
 	const formEntry = getRandomString();
 
-	await formSubmissionPage.getByLabel('Text 29').fill(formEntry);
+	await page.getByLabel('Text 29').fill(formEntry);
 
-	await formSubmissionPage.getByRole('button', {name: 'Submit'}).click();
+	await page.getByRole('button', {name: 'Submit'}).click();
 
 	await expect(
-		formSubmissionPage.getByText(
+		page.getByText(
 			'Your information was successfully received. Thank you for filling out the form.'
 		)
 	).toBeVisible();
 
-	await formSubmissionPage.close();
+	await formsPage.goTo();
+
+	await formsPage.openForm('Untitled Form');
 
 	await formBuilderPage.entriesTab.click();
 

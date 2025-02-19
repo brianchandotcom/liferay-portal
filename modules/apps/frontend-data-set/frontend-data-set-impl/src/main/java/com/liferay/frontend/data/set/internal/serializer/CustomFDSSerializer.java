@@ -261,14 +261,13 @@ public class CustomFDSSerializer
 	public JSONArray serializeViews(
 		String fdsName, HttpServletRequest httpServletRequest) {
 
-		String defaultVisualizationMode = String.valueOf(
-			getDataSetObjectEntryProperties(
-				fdsName, httpServletRequest
-			).get(
-				"defaultVisualizationMode"
-			));
-
 		JSONArray jsonArray = _jsonFactory.createJSONArray();
+
+		Map<String, Object> dataSetObjectEntryProperties =
+			getDataSetObjectEntryProperties(fdsName, httpServletRequest);
+
+		String defaultVisualizationMode = String.valueOf(
+			dataSetObjectEntryProperties.get("defaultVisualizationMode"));
 
 		jsonArray.put(
 			() -> {
@@ -328,6 +327,46 @@ public class CustomFDSSerializer
 					return null;
 				}
 
+				JSONArray fieldsJSONArray = JSONUtil.toJSONArray(
+					objectEntries,
+					(ObjectEntry objectEntry) -> {
+						Map<String, Object> properties =
+							objectEntry.getProperties();
+
+						JSONObject jsonObject = JSONUtil.put(
+							"contentRenderer",
+							String.valueOf(properties.get("renderer"))
+						).put(
+							"fieldName",
+							String.valueOf(properties.get("fieldName"))
+						).put(
+							"label",
+							MapUtil.getWithFallbackKey(
+								properties, "label", "fieldName")
+						).put(
+							"sortable", (boolean)properties.get("sortable")
+						);
+
+						String rendererType = String.valueOf(
+							properties.get("rendererType"));
+
+						if (!Objects.equals(rendererType, "clientExtension")) {
+							return jsonObject;
+						}
+
+						FDSCellRendererCET fdsCellRendererCET =
+							(FDSCellRendererCET)cetManager.getCET(
+								PortalUtil.getCompanyId(httpServletRequest),
+								String.valueOf(properties.get("renderer")));
+
+						return jsonObject.put(
+							"contentRendererClientExtension", true
+						).put(
+							"contentRendererModuleURL",
+							"default from " + fdsCellRendererCET.getURL()
+						);
+					});
+
 				return JSONUtil.put(
 					"contentRenderer", "table"
 				).put(
@@ -339,52 +378,7 @@ public class CustomFDSSerializer
 				).put(
 					"schema",
 					JSONUtil.put(
-						"fields",
-						JSONUtil.toJSONArray(
-							objectEntries,
-							(ObjectEntry objectEntry) -> {
-								Map<String, Object> properties =
-									objectEntry.getProperties();
-
-								JSONObject jsonObject = JSONUtil.put(
-									"contentRenderer",
-									String.valueOf(properties.get("renderer"))
-								).put(
-									"fieldName",
-									String.valueOf(properties.get("fieldName"))
-								).put(
-									"label",
-									MapUtil.getWithFallbackKey(
-										properties, "label", "fieldName")
-								).put(
-									"sortable",
-									(boolean)properties.get("sortable")
-								);
-
-								String rendererType = String.valueOf(
-									properties.get("rendererType"));
-
-								if (!Objects.equals(
-										rendererType, "clientExtension")) {
-
-									return jsonObject;
-								}
-
-								FDSCellRendererCET fdsCellRendererCET =
-									(FDSCellRendererCET)cetManager.getCET(
-										PortalUtil.getCompanyId(
-											httpServletRequest),
-										String.valueOf(
-											properties.get("renderer")));
-
-								return jsonObject.put(
-									"contentRendererClientExtension", true
-								).put(
-									"contentRendererModuleURL",
-									"default from " +
-										fdsCellRendererCET.getURL()
-								);
-							})
+						"fields", fieldsJSONArray
 					).put(
 						"thumbnail", "table"
 					)

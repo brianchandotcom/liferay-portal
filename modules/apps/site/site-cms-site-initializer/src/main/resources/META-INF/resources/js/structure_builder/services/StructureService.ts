@@ -5,6 +5,7 @@
 
 import {API} from '@liferay/object-js-components-web';
 
+import {Field, State} from '../contexts/StateContext';
 import buildObjectDefinition from '../utils/buildObjectDefinition';
 
 async function createStructure({
@@ -19,6 +20,30 @@ async function createStructure({
 	return await API.postObjectDefinition(objectDefinition);
 }
 
+async function publishStructure({id}: {id: State['id']}) {
+	if (!id) {
+		return;
+	}
+
+	return await API.postObjectDefinitionPublish(id);
+}
+
+async function updateStructure({
+	fields,
+	id,
+	name,
+}: {
+	fields: Field[];
+	id: State['id'];
+	name: string;
+}) {
+	const objectDefinition = buildObjectDefinition({fields, id, name});
+
+	return await API.putObjectDefinition(objectDefinition);
+}
+
 export default {
 	createStructure,
+	publishStructure,
+	updateStructure,
 };

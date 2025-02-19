@@ -132,6 +132,9 @@ public class PicklistObjectFieldBusinessType
 
 				return localizedValue;
 			}
+		).putAll(
+			ObjectFieldBusinessType.super.getProperties(
+				objectField, objectFieldRenderingContext)
 		).build();
 	}
 

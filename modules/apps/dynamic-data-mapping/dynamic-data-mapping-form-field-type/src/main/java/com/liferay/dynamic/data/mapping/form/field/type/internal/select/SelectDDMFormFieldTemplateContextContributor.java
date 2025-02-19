@@ -9,12 +9,15 @@ import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldOptionsFacto
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTemplateContextContributor;
 import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.form.field.type.internal.util.DDMFormFieldTypeUtil;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalService;
+import com.liferay.dynamic.data.mapping.util.DDMFormFieldTemplateContextContributorUtil;
+import com.liferay.dynamic.data.mapping.util.DDMFormFieldValueUtil;
 import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.list.type.util.comparator.ListTypeEntryNameComparator;
@@ -28,6 +31,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -72,6 +76,9 @@ public class SelectDDMFormFieldTemplateContextContributor
 		DDMFormField ddmFormField,
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
 
+		DDMForm ddmForm = ddmFormField.getDDMForm();
+		boolean localizedObjectField = GetterUtil.getBoolean(
+			ddmFormField.getProperty("localizedObjectField"));
 		ObjectField objectField = _getObjectField(
 			ddmFormField, ddmFormFieldRenderingContext);
 
@@ -83,6 +90,8 @@ public class SelectDDMFormFieldTemplateContextContributor
 		).put(
 			"defaultSearch",
 			GetterUtil.getBoolean(ddmFormField.getProperty("defaultSearch"))
+		).put(
+			"localizedObjectField", localizedObjectField
 		).put(
 			"multiple",
 			getMultiple(ddmFormField, ddmFormFieldRenderingContext, objectField)
@@ -116,9 +125,34 @@ public class SelectDDMFormFieldTemplateContextContributor
 				"tooltip")
 		).put(
 			"value",
-			getValue(
-				GetterUtil.getString(
-					ddmFormFieldRenderingContext.getValue(), "[]"))
+			() -> {
+				if (localizedObjectField) {
+					JSONObject localizedValueJSONObject =
+						DDMFormFieldValueUtil.getValueJSONObject(
+							ddmFormFieldRenderingContext);
+
+					Map<String, Object> localizedValue =
+						localizedValueJSONObject.toMap();
+
+					for (Map.Entry<String, Object> entry :
+							localizedValue.entrySet()) {
+
+						localizedValue.put(
+							entry.getKey(),
+							getValue(
+								GetterUtil.getString(entry.getValue(), "[]")));
+					}
+
+					return jsonFactory.createJSONObject(localizedValue);
+				}
+
+				return getValue(
+					GetterUtil.getString(
+						ddmFormFieldRenderingContext.getValue(), "[]"));
+			}
+		).putAll(
+			DDMFormFieldTemplateContextContributorUtil.getLocaleMap(
+				ddmForm.getDefaultLocale())
 		).build();
 	}
 

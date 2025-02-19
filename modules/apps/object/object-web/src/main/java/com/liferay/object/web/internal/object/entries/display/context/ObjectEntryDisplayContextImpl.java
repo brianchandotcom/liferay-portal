@@ -107,6 +107,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -126,6 +127,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
@@ -881,8 +883,15 @@ public class ObjectEntryDisplayContextImpl
 
 		DDMForm ddmForm = new DDMForm();
 
-		ddmForm.addAvailableLocale(_objectRequestHelper.getDefaultLocale());
-		ddmForm.setDefaultLocale(_objectRequestHelper.getDefaultLocale());
+		Locale defaultLocale = _objectRequestHelper.getDefaultLocale();
+
+		if (objectEntry != null) {
+			defaultLocale = LocaleUtil.fromLanguageId(
+				objectEntry.getDefaultLanguageId());
+		}
+
+		ddmForm.addAvailableLocale(defaultLocale);
+		ddmForm.setDefaultLocale(defaultLocale);
 
 		ObjectDefinition objectDefinition = getObjectDefinition1();
 
@@ -1036,6 +1045,12 @@ public class ObjectEntryDisplayContextImpl
 
 		properties.forEach(
 			(key, value) -> ddmFormField.setProperty(key, value));
+
+		if (objectEntry != null) {
+			ddmFormField.setProperty(
+				"defaultLocale",
+				LocaleUtil.fromLanguageId(objectEntry.getDefaultLanguageId()));
+		}
 
 		ddmFormField.setProperty(
 			"objectFieldId", String.valueOf(objectField.getObjectFieldId()));

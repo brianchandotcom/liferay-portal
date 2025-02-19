@@ -226,6 +226,7 @@ const Main = ({
 				defaultLocale,
 				value,
 			})}
+			defaultLocale={defaultLocale}
 			displayStyle={displayStyle}
 			editingLocale={editingLocale}
 			fieldName={fieldName}

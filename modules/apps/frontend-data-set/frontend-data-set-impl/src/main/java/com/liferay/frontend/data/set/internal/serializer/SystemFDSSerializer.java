@@ -143,9 +143,7 @@ public class SystemFDSSerializer
 
 		JSONArray jsonArray = JSONUtil.putAll();
 
-		List<FDSView> fdsViews = fdsViewRegistry.getFDSViews(fdsName);
-
-		for (FDSView fdsView : fdsViews) {
+		for (FDSView fdsView : fdsViewRegistry.getFDSViews(fdsName)) {
 			JSONObject jsonObject = JSONUtil.put(
 				"contentRenderer", fdsView.getContentRenderer()
 			).put(

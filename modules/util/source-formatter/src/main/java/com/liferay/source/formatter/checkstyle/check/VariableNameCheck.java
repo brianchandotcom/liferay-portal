@@ -867,14 +867,20 @@ public class VariableNameCheck extends BaseCheck {
 			return null;
 		}
 
-		DetailAST parameterDetailAST = getParameterDetailAST(
+		DetailAST firstParameterExprDetailAST = getFirstParameterExprDetailAST(
 			firstChildDetailAST.getParent());
 
-		if (parameterDetailAST.getType() != TokenTypes.STRING_LITERAL) {
+		if (firstParameterExprDetailAST == null) {
 			return null;
 		}
 
-		String s = parameterDetailAST.getText();
+		firstChildDetailAST = firstParameterExprDetailAST.getFirstChild();
+
+		if (firstChildDetailAST.getType() != TokenTypes.STRING_LITERAL) {
+			return null;
+		}
+
+		String s = firstChildDetailAST.getText();
 
 		s = TextFormatter.format(
 			StringUtil.replace(

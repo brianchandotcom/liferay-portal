@@ -85,15 +85,22 @@ public class ThreadContextClassLoaderCheck extends BaseCheck {
 					contextClassLoaderVariableDefDetailAST);
 			}
 			else if (Objects.equals(methodName, "setContextClassLoader")) {
-				DetailAST parameterDetailAST = getParameterDetailAST(
-					parentDetailAST);
+				DetailAST firstParameterExprDetailAST =
+					getFirstParameterExprDetailAST(parentDetailAST);
+
+				if (firstParameterExprDetailAST == null) {
+					continue;
+				}
+
+				DetailAST firstChildDetailAST =
+					firstParameterExprDetailAST.getFirstChild();
 
 				if (Objects.equals(
 						contextClassLoaderVariableName,
-						parameterDetailAST.getText())) {
+						firstChildDetailAST.getText())) {
 
 					log(
-						parameterDetailAST,
+						firstChildDetailAST,
 						_MSG_THREAD_CONTEXT_CLASS_LOADER_UTIL_USE);
 				}
 			}

@@ -64,10 +64,17 @@ public class URLInputStreamCheck extends BaseCheck {
 			}
 		}
 
-		DetailAST parameterDetailAST = getParameterDetailAST(
+		DetailAST firstParameterExprDetailAST = getFirstParameterExprDetailAST(
 			methodCallDetailAST);
 
-		if (_isURLOpenStream(parameterDetailAST)) {
+		if (firstParameterExprDetailAST == null) {
+			return;
+		}
+
+		DetailAST firstChildDetailAST =
+			firstParameterExprDetailAST.getFirstChild();
+
+		if (_isURLOpenStream(firstChildDetailAST)) {
 			String actualUsage = StringBundler.concat(
 				variableName, StringPool.PERIOD, methodName,
 				StringPool.OPEN_PARENTHESIS, StringPool.CLOSE_PARENTHESIS);
@@ -76,10 +83,10 @@ public class URLInputStreamCheck extends BaseCheck {
 				methodCallDetailAST, _MSG_REPLACE_USAGE, expectedUsage,
 				actualUsage);
 		}
-		else if (parameterDetailAST.getType() == TokenTypes.IDENT) {
+		else if (firstChildDetailAST.getType() == TokenTypes.IDENT) {
 			DetailAST parameterDefinitionDetailAST =
 				getVariableDefinitionDetailAST(
-					parameterDetailAST, parameterDetailAST.getText());
+					firstChildDetailAST, firstChildDetailAST.getText());
 
 			if ((parameterDefinitionDetailAST == null) ||
 				!Objects.equals(
@@ -99,7 +106,7 @@ public class URLInputStreamCheck extends BaseCheck {
 			DetailAST exprDetailAST = assignDetailAST.findFirstToken(
 				TokenTypes.EXPR);
 
-			DetailAST firstChildDetailAST = exprDetailAST.getFirstChild();
+			firstChildDetailAST = exprDetailAST.getFirstChild();
 
 			if (_isURLOpenStream(firstChildDetailAST)) {
 				String actualUsage = StringBundler.concat(

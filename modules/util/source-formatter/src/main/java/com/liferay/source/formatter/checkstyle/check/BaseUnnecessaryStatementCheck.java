@@ -204,9 +204,14 @@ public abstract class BaseUnnecessaryStatementCheck extends BaseCheck {
 
 		String methodName = getMethodName(methodCallDetailAST);
 
-		if (!methodName.equals("toString") ||
-			(getParameterDetailAST(methodCallDetailAST) != null)) {
+		if (!methodName.equals("toString")) {
+			return;
+		}
 
+		List<DetailAST> parameterExprDetailASTList =
+			getParameterExprDetailASTList(methodCallDetailAST);
+
+		if (!parameterExprDetailASTList.isEmpty()) {
 			return;
 		}
 

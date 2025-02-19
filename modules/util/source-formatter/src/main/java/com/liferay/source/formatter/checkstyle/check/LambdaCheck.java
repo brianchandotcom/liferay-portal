@@ -8,6 +8,8 @@ package com.liferay.source.formatter.checkstyle.check;
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
+import java.util.List;
+
 /**
  * @author Hugo Huijser
  */
@@ -48,10 +50,10 @@ public class LambdaCheck extends BaseCheck {
 				return;
 			}
 
-			DetailAST parameterDetailAST = getParameterDetailAST(
-				firstChildDetailAST);
+			List<DetailAST> parameterExprDetailASTList =
+				getParameterExprDetailASTList(firstChildDetailAST);
 
-			if (parameterDetailAST != null) {
+			if (!parameterExprDetailASTList.isEmpty()) {
 				return;
 			}
 

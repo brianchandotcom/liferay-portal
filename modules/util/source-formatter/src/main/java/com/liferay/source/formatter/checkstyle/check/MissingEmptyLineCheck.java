@@ -354,9 +354,11 @@ public class MissingEmptyLineCheck extends BaseCheck {
 					getAttributeValues(_ENFORCE_EMPTY_LINE_BEFORE_METHOD_NAMES);
 
 				String methodName = getMethodName(detailAST);
+				List<DetailAST> parameterExprDetailASTList =
+					getParameterExprDetailASTList(detailAST);
 
 				if (enforceEmptyLineBeforeMethodNames.contains(methodName) &&
-					Validator.isNull(getParameterDetailAST(detailAST))) {
+					parameterExprDetailASTList.isEmpty()) {
 
 					log(
 						startLineNumber,

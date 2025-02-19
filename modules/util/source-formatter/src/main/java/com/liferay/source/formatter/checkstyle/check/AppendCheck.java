@@ -38,16 +38,20 @@ public class AppendCheck extends BaseStringConcatenationCheck {
 				continue;
 			}
 
-			DetailAST parameterDetailAST = getParameterDetailAST(
-				methodCallDetailAST);
+			DetailAST methodCallFirstParameterExprDetailAST =
+				getFirstParameterExprDetailAST(methodCallDetailAST);
 
-			if (parameterDetailAST == null) {
+			if (methodCallFirstParameterExprDetailAST == null) {
 				continue;
 			}
 
-			_checkPlusOperator(parameterDetailAST);
+			DetailAST methodCallFirstParameterDetailAST =
+				methodCallFirstParameterExprDetailAST.getFirstChild();
 
-			if ((parameterDetailAST.getType() != TokenTypes.STRING_LITERAL) ||
+			_checkPlusOperator(methodCallFirstParameterDetailAST);
+
+			if ((methodCallFirstParameterDetailAST.getType() !=
+					TokenTypes.STRING_LITERAL) ||
 				_containsMethodCall(
 					detailAST, variableName, "setIndex", "setStringAt")) {
 
@@ -66,21 +70,26 @@ public class AppendCheck extends BaseStringConcatenationCheck {
 					continue;
 				}
 
-				DetailAST nextParameterDetailAST = getParameterDetailAST(
-					nextMethodCallDetailAST);
+				DetailAST nextMethodCallFirstParameterExprDetailAST =
+					getFirstParameterExprDetailAST(nextMethodCallDetailAST);
 
-				if (nextParameterDetailAST != null) {
-					if (nextParameterDetailAST.getType() ==
+				if (nextMethodCallFirstParameterExprDetailAST != null) {
+					DetailAST nextMethodCallFirstParameterDetailAST =
+						nextMethodCallFirstParameterExprDetailAST.
+							getFirstChild();
+
+					if (nextMethodCallFirstParameterDetailAST.getType() ==
 							TokenTypes.STRING_LITERAL) {
 
 						_checkLiteralStrings(
 							methodCallDetailAST, nextMethodCallDetailAST,
-							parameterDetailAST.getText(),
-							nextParameterDetailAST.getText());
+							methodCallFirstParameterDetailAST.getText(),
+							nextMethodCallFirstParameterDetailAST.getText());
 					}
 					else {
 						checkCombineOperand(
-							parameterDetailAST, nextParameterDetailAST);
+							methodCallFirstParameterDetailAST,
+							nextMethodCallFirstParameterDetailAST);
 					}
 				}
 			}
@@ -100,15 +109,22 @@ public class AppendCheck extends BaseStringConcatenationCheck {
 				continue;
 			}
 
-			DetailAST previousParameterDetailAST = getParameterDetailAST(
-				previousMethodCallDetailAST);
+			DetailAST previousMethodCallFirstParameterExprDetailAST =
+				getFirstParameterExprDetailAST(previousMethodCallDetailAST);
 
-			if ((previousParameterDetailAST != null) &&
-				(previousParameterDetailAST.getType() !=
-					TokenTypes.STRING_LITERAL)) {
+			if (previousMethodCallFirstParameterExprDetailAST == null) {
+				continue;
+			}
+
+			DetailAST previousMethodCallFirstParameterDetailAST =
+				previousMethodCallFirstParameterExprDetailAST.getFirstChild();
+
+			if (previousMethodCallFirstParameterDetailAST.getType() !=
+					TokenTypes.STRING_LITERAL) {
 
 				checkCombineOperand(
-					parameterDetailAST, previousParameterDetailAST);
+					methodCallFirstParameterDetailAST,
+					previousMethodCallFirstParameterDetailAST);
 			}
 		}
 	}

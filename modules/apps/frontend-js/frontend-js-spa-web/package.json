@@ -9,7 +9,7 @@
 		"build": "node-scripts build",
 		"checkFormat": "node-scripts format --check",
 		"format": "node-scripts format",
-		"test": "USE_REACT_16=true node-scripts test"
+		"test": "node-scripts test"
 	},
 	"version": "5.0.62"
 }

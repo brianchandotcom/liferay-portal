@@ -64,24 +64,25 @@ public class TextExtractorTest {
 		Class<?> tesseractOCRParserClass = classLoader.loadClass(
 			"org.apache.tika.parser.ocr.TesseractOCRParser");
 
-		Map<String, Boolean> map = ReflectionTestUtil.getAndSetFieldValue(
-			tesseractOCRParserClass, "TESSERACT_PRESENT",
-			new HashMap<String, Boolean>() {
+		Map<String, Boolean> tesseractPresent =
+			ReflectionTestUtil.getAndSetFieldValue(
+				tesseractOCRParserClass, "TESSERACT_PRESENT",
+				new HashMap<String, Boolean>() {
 
-				@Override
-				public boolean containsKey(Object key) {
-					return true;
-				}
+					@Override
+					public boolean containsKey(Object key) {
+						return true;
+					}
 
-				@Override
-				public Boolean get(Object key) {
-					return Boolean.FALSE;
-				}
+					@Override
+					public Boolean get(Object key) {
+						return Boolean.FALSE;
+					}
 
-			});
+				});
 
 		_resetTikaConfigCloseable = () -> ReflectionTestUtil.setFieldValue(
-			tesseractOCRParserClass, "TESSERACT_PRESENT", map);
+			tesseractOCRParserClass, "TESSERACT_PRESENT", tesseractPresent);
 	}
 
 	@AfterClass

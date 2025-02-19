@@ -19,7 +19,7 @@ export default function RulesSidebar() {
 				{Liferay.Language.get('page-rules')}
 			</SidebarPanelHeader>
 
-			<div className="p-3">
+			<div className="overflow-auto p-3">
 				{rules.length ? <RulesList /> : <RulesEmptyState />}
 			</div>
 		</>

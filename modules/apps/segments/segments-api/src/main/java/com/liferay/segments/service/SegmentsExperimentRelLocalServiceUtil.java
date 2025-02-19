@@ -319,6 +319,14 @@ public class SegmentsExperimentRelLocalServiceUtil {
 		return getService().getSegmentsExperimentRels(segmentsExperimentId);
 	}
 
+	public static List<SegmentsExperimentRel>
+		getSegmentsExperimentRelsBySegmentsExperienceId(
+			String segmentsExperienceKey, long plid) {
+
+		return getService().getSegmentsExperimentRelsBySegmentsExperienceId(
+			segmentsExperienceKey, plid);
+	}
+
 	/**
 	 * Returns the number of segments experiment rels.
 	 *

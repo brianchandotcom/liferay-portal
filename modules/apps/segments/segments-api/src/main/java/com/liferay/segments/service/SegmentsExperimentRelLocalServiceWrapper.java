@@ -364,6 +364,16 @@ public class SegmentsExperimentRelLocalServiceWrapper
 			segmentsExperimentId);
 	}
 
+	@Override
+	public java.util.List<SegmentsExperimentRel>
+		getSegmentsExperimentRelsBySegmentsExperienceId(
+			String segmentsExperienceKey, long plid) {
+
+		return _segmentsExperimentRelLocalService.
+			getSegmentsExperimentRelsBySegmentsExperienceId(
+				segmentsExperienceKey, plid);
+	}
+
 	/**
 	 * Returns the number of segments experiment rels.
 	 *

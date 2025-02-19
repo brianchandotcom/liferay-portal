@@ -87,6 +87,11 @@ public class CalendarCTDisplayRenderer extends BaseCTDisplayRenderer<Calendar> {
 	}
 
 	@Override
+	public boolean isHideable(Calendar calendar) {
+		return calendar.isDefaultCalendar();
+	}
+
+	@Override
 	protected void buildDisplay(DisplayBuilder<Calendar> displayBuilder) {
 		Calendar calendar = displayBuilder.getModel();
 

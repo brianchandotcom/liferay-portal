@@ -11,7 +11,12 @@ import {ManagementToolbar} from 'frontend-js-components-web';
 import {openToast} from 'frontend-js-web';
 import React from 'react';
 
-import {useStateDispatch, useStructureName} from '../contexts/StateContext';
+import {
+	useStateDispatch,
+	useStructureId,
+	useStructureName,
+	useStructureStatus,
+} from '../contexts/StateContext';
 import StructureService from '../services/StructureService';
 
 export default function ManagementBar() {
@@ -48,9 +53,7 @@ export default function ManagementBar() {
 				</ManagementToolbar.Item>
 
 				<ManagementToolbar.Item>
-					<ClayButton displayType="primary" size="sm">
-						{Liferay.Language.get('publish')}
-					</ClayButton>
+					<PublishButton />
 				</ManagementToolbar.Item>
 			</ManagementToolbar.ItemList>
 		</ManagementToolbar.Container>
@@ -85,6 +88,49 @@ function SaveButton() {
 	return (
 		<ClayButton displayType="secondary" onClick={onSave} size="sm">
 			{Liferay.Language.get('save')}
+		</ClayButton>
+	);
+}
+
+function PublishButton() {
+	const dispatch = useStateDispatch();
+	const id = useStructureId();
+	const name = useStructureName();
+	const status = useStructureStatus();
+
+	if (status === 'published') {
+		return null;
+	}
+
+	const onPublish = async () => {
+		try {
+			await StructureService.publishStructure({id});
+
+			openToast({
+				message: Liferay.Util.sub(
+					Liferay.Language.get('x-was-published-successfully'),
+					name
+				),
+				type: 'success',
+			});
+
+			dispatch({type: 'publish-structure'});
+		}
+		catch (error) {
+			const {message} = error as API.ErrorDetails;
+
+			dispatch({error: message, type: 'set-error'});
+		}
+	};
+
+	return (
+		<ClayButton
+			disabled={status === 'new'}
+			displayType="primary"
+			onClick={onPublish}
+			size="sm"
+		>
+			{Liferay.Language.get('publish')}
 		</ClayButton>
 	);
 }

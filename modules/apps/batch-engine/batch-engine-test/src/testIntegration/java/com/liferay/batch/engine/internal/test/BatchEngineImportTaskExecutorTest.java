@@ -453,6 +453,11 @@ public class BatchEngineImportTaskExecutorTest
 			BatchEngineImportTaskConstants.IMPORT_STRATEGY_ON_ERROR_FAIL);
 
 		Assert.assertEquals(0, _batchEngineImportTask.getProcessedItemsCount());
+		Assert.assertEquals(
+			initialCount + blogsEntries.size(),
+			blogsEntryLocalService.getGroupEntriesCount(
+				TestPropsValues.getGroupId(),
+				new QueryDefinition<>(WorkflowConstants.STATUS_ANY)));
 
 		_importBlogPostings(
 			BatchEngineTaskOperation.DELETE,

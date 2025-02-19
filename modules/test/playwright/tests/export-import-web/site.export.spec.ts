@@ -22,7 +22,7 @@ export const test = mergeTests(
 		'LPD-35914': {enabled: false, system: true},
 	}),
 	loginTest(),
-    productMenuPageTest
+	productMenuPageTest
 );
 
 export const testWithStagingInInstanceFF = mergeTests(

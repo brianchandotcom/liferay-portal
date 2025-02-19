@@ -8,6 +8,7 @@ package com.liferay.scim.rest.internal.resource.v1_0;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.expando.kernel.service.ExpandoValueLocalService;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
@@ -57,13 +58,13 @@ public class UserResourceImpl extends BaseUserResourceImpl {
 	}
 
 	@Override
-	public Object getV2Users(Integer count, Integer startIndex)
+	public Object getV2Users(Integer count, Integer startIndex, Filter filter)
 		throws Exception {
 
 		return _buildResponse(
 			_userResourceManager.listWithGET(
-				_userManager, null, startIndex, count, null, null, null, null,
-				null));
+				_userManager, contextHttpServletRequest.getParameter("filter"),
+				startIndex, count, null, null, null, null, null));
 	}
 
 	@Override

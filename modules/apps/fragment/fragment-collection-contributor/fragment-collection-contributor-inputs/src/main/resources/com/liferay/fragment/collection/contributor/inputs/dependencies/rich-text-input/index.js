@@ -12,7 +12,7 @@ if (layoutMode !== 'edit') {
 		});
 	});
 
-	if (input.readOnly) {
+	if (input.readOnly || input.attributes?.disabled) {
 		editorPromise.then((editor) => {
 			editor.setReadOnly(true);
 		});

@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -295,10 +296,9 @@ public class UserManagerImpl implements UserManager {
 					ExpressionNode expressionNode = (ExpressionNode)node;
 
 					if ((expressionNode != null) &&
-						expressionNode.getAttributeValue(
-						).contains(
-							"displayName"
-						)) {
+						StringUtil.contains(
+							expressionNode.getAttributeValue(), "displayName",
+							StringPool.COLON)) {
 
 						searchContext.setAttribute(
 							"name", expressionNode.getValue());
@@ -389,20 +389,17 @@ public class UserManagerImpl implements UserManager {
 					ExpressionNode expressionNode = (ExpressionNode)node;
 
 					if (expressionNode != null) {
-						if (expressionNode.getAttributeValue(
-							).contains(
-								"externalId"
-							)) {
+						String value = expressionNode.getAttributeValue();
+
+						if (StringUtil.contains(
+								value, "externalId", StringPool.COLON)) {
 
 							searchContext.setAttribute(
 								"externalReferenceCode",
 								expressionNode.getValue());
 						}
-
-						if (expressionNode.getAttributeValue(
-							).contains(
-								"userName"
-							)) {
+						else if (StringUtil.contains(
+									value, "userName", StringPool.COLON)) {
 
 							searchContext.setAttribute(
 								"screenName", expressionNode.getValue());

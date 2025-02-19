@@ -24,15 +24,17 @@
 		 ${dataFactory.toInsertSQL(segmentsExperienceModel)}
 
 		<#list contentLayoutModels as contentLayoutModel>
+			<#assign
+				fragmentEntryLinkModels = dataFactory.newFragmentEntryLinkModels(journalArticleModel, contentLayoutModel, segmentsExperienceModel.getSegmentsExperienceId())
+
+				layoutPageTemplateStructureModel = dataFactory.newLayoutPageTemplateStructureModel(contentLayoutModel)
+			/>
+
 			${dataFactory.toInsertSQL(contentLayoutModel)}
 
 			${dataFactory.toInsertSQL(dataFactory.newLayoutFriendlyURLModel(contentLayoutModel))}
 
-			<#assign layoutPageTemplateStructureModel = dataFactory.newLayoutPageTemplateStructureModel(contentLayoutModel) />
-
 			${dataFactory.toInsertSQL(layoutPageTemplateStructureModel)}
-
-			<#assign fragmentEntryLinkModels = dataFactory.newFragmentEntryLinkModels(journalArticleModel, contentLayoutModel, segmentsExperienceModel.getSegmentsExperienceId()) />
 
 			<#list fragmentEntryLinkModels as fragmentEntryLinkModel>
 				${dataFactory.toInsertSQL(fragmentEntryLinkModel)}

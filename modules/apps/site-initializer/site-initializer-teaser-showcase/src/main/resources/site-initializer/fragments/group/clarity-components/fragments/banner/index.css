@@ -1,4 +1,4 @@
 .clarity-gradient-container {
-  background: linear-gradient(180deg, #22c1c3 0.88%, #187474 40%);
-  background-blend-mode: normal, soft-light;
+	background: linear-gradient(180deg, #22c1c3 0.88%, #187474 40%);
+	background-blend-mode: normal, soft-light;
 }

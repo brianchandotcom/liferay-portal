@@ -55,6 +55,8 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -343,13 +345,20 @@ public class FileEntryContentDashboardItemTest {
 		PermissionThreadLocal.setPermissionChecker(
 			PermissionCheckerFactoryUtil.create(user));
 
-		ContentDashboardItemAction contentDashboardItemAction =
-			versionableContentDashboardItem.
-				getDefaultContentDashboardItemAction(mockHttpServletRequest);
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.content.dashboard.document.library.internal." +
+					"item.FileEntryContentDashboardItem",
+				LoggerTestUtil.ERROR)) {
 
-		Assert.assertEquals(
-			ContentDashboardItemAction.Type.VIEW,
-			contentDashboardItemAction.getType());
+			ContentDashboardItemAction contentDashboardItemAction =
+				versionableContentDashboardItem.
+					getDefaultContentDashboardItemAction(
+						mockHttpServletRequest);
+
+			Assert.assertEquals(
+				ContentDashboardItemAction.Type.VIEW,
+				contentDashboardItemAction.getType());
+		}
 	}
 
 	@Test

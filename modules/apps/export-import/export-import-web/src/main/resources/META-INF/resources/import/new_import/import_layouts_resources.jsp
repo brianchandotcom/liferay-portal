@@ -258,31 +258,33 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 														PortletDataHandlerControl[] importMetadataControls = portletDataHandler.getImportMetadataControls();
 														%>
 
-														<ul class="hide" id="<portlet:namespace />showChangeContent_<%= portlet.getRootPortletId() %>">
-															<li>
-																<span class="selected-labels" id="<portlet:namespace />selectedContent_<%= portlet.getRootPortletId() %>"></span>
+														<c:if test="<%= !portlet.getRootPortletId().startsWith(ObjectPortletKeys.OBJECT_DEFINITIONS) %>">
+															<ul class="hide" id="<portlet:namespace />showChangeContent_<%= portlet.getRootPortletId() %>">
+																<li>
+																	<span class="selected-labels" id="<portlet:namespace />selectedContent_<%= portlet.getRootPortletId() %>"></span>
 
-																<clay:button
-																	cssClass="content-link modify-link pr-1"
-																	data-portletid="<%= portlet.getRootPortletId() %>"
-																	data-portlettitle="<%= portletTitle %>"
-																	displayType="link"
-																	id='<%= liferayPortletResponse.getNamespace() + "contentLink_" + portlet.getRootPortletId() %>'
-																	label="change"
-																/>
+																	<clay:button
+																		cssClass="content-link modify-link pr-1"
+																		data-portletid="<%= portlet.getRootPortletId() %>"
+																		data-portlettitle="<%= portletTitle %>"
+																		displayType="link"
+																		id='<%= liferayPortletResponse.getNamespace() + "contentLink_" + portlet.getRootPortletId() %>'
+																		label="change"
+																	/>
 
-																<span id="<portlet:namespace />rightContentArrow_<%= portlet.getRootPortletId() %>">
-																	<clay:icon
-																		symbol="angle-right-small"
-																	/>
-																</span>
-																<span class="hide" id="<portlet:namespace />downContentArrow_<%= portlet.getRootPortletId() %>">
-																	<clay:icon
-																		symbol="angle-down-small"
-																	/>
-																</span>
-															</li>
-														</ul>
+																	<span id="<portlet:namespace />rightContentArrow_<%= portlet.getRootPortletId() %>">
+																		<clay:icon
+																			symbol="angle-right-small"
+																		/>
+																	</span>
+																	<span class="hide" id="<portlet:namespace />downContentArrow_<%= portlet.getRootPortletId() %>">
+																		<clay:icon
+																			symbol="angle-down-small"
+																		/>
+																	</span>
+																</li>
+															</ul>
+														</c:if>
 
 														<c:if test="<%= ArrayUtil.isNotEmpty(importControls) || ArrayUtil.isNotEmpty(importMetadataControls) %>">
 															<div class="hide" id="<portlet:namespace />content_<%= portlet.getRootPortletId() %>">

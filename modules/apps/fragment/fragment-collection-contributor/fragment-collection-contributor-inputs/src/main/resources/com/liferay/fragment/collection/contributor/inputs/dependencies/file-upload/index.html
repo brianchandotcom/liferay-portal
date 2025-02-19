@@ -1,5 +1,6 @@
 [#assign
-	localFileUploaded = false
+	disabled = input.attributes.disabled?? && input.attributes.disabled,
+	localFileUploaded = false,
 	showDocumentLibrarySelector = input.attributes.selectFromDocumentLibrary?? && input.attributes.selectFromDocumentLibrary
 ]
 
@@ -29,7 +30,7 @@
 					</strong>
 				</small>
 
-				<button class="btn btn-monospaced btn-outline-borderless btn-outline-secondary d-none ml-1" id="${fragmentEntryLinkNamespace}-file-upload-remove-button" type="button">
+				<button class="btn btn-monospaced btn-outline-borderless btn-outline-secondary d-none ml-1" [#if disabled]disabled[/#if] id="${fragmentEntryLinkNamespace}-file-upload-remove-button" type="button">
 					[@clay["icon"] symbol="times-circle-full" /]
 				</button>
 			</div>

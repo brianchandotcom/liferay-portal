@@ -103,7 +103,7 @@ public class CookiesDomainTest {
 
 		mockHttpServletRequest.setServerName("www.liferay.com");
 
-		Object value = ReflectionTestUtil.getAndSetFieldValue(
+		Object sessionCookieDomain = ReflectionTestUtil.getAndSetFieldValue(
 			CookiesManagerImpl.class, "_SESSION_COOKIE_DOMAIN",
 			"www.example.com");
 
@@ -114,7 +114,8 @@ public class CookiesDomainTest {
 		}
 		finally {
 			ReflectionTestUtil.setFieldValue(
-				CookiesManagerImpl.class, "_SESSION_COOKIE_DOMAIN", value);
+				CookiesManagerImpl.class, "_SESSION_COOKIE_DOMAIN",
+				sessionCookieDomain);
 		}
 	}
 
@@ -125,9 +126,10 @@ public class CookiesDomainTest {
 
 		mockHttpServletRequest.setServerName("www.liferay.com");
 
-		Object value = ReflectionTestUtil.getAndSetFieldValue(
-			CookiesManagerImpl.class, "_SESSION_COOKIE_USE_FULL_HOSTNAME",
-			Boolean.FALSE);
+		Object sessionCookieUseFullHostname =
+			ReflectionTestUtil.getAndSetFieldValue(
+				CookiesManagerImpl.class, "_SESSION_COOKIE_USE_FULL_HOSTNAME",
+				Boolean.FALSE);
 
 		try {
 			Assert.assertEquals(
@@ -137,7 +139,7 @@ public class CookiesDomainTest {
 		finally {
 			ReflectionTestUtil.setFieldValue(
 				CookiesManagerImpl.class, "_SESSION_COOKIE_USE_FULL_HOSTNAME",
-				value);
+				sessionCookieUseFullHostname);
 		}
 	}
 
@@ -148,9 +150,10 @@ public class CookiesDomainTest {
 
 		mockHttpServletRequest.setServerName("www.liferay.com");
 
-		Object value = ReflectionTestUtil.getAndSetFieldValue(
-			CookiesManagerImpl.class, "_SESSION_COOKIE_USE_FULL_HOSTNAME",
-			Boolean.TRUE);
+		Object sessionCookieUseFullHostname =
+			ReflectionTestUtil.getAndSetFieldValue(
+				CookiesManagerImpl.class, "_SESSION_COOKIE_USE_FULL_HOSTNAME",
+				Boolean.TRUE);
 
 		try {
 			Assert.assertEquals(
@@ -160,7 +163,7 @@ public class CookiesDomainTest {
 		finally {
 			ReflectionTestUtil.setFieldValue(
 				CookiesManagerImpl.class, "_SESSION_COOKIE_USE_FULL_HOSTNAME",
-				value);
+				sessionCookieUseFullHostname);
 		}
 	}
 

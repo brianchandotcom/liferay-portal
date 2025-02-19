@@ -115,7 +115,6 @@ public class RoleLocalServiceTest {
 		throws Exception {
 
 		PrintStream printStream = System.out;
-		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(
@@ -127,7 +126,7 @@ public class RoleLocalServiceTest {
 						"outputToConsole", true
 					).build())) {
 
-			_testAddGroupRoleWithLoggingAuditMessageProcessor(role);
+			_testAddGroupRoleWithLoggingAuditMessageProcessor();
 		}
 		finally {
 			System.setOut(printStream);
@@ -743,7 +742,7 @@ public class RoleLocalServiceTest {
 			RandomTestUtil.randomString(), null, new ServiceContext());
 	}
 
-	private void _testAddGroupRoleWithLoggingAuditMessageProcessor(Role role)
+	private void _testAddGroupRoleWithLoggingAuditMessageProcessor()
 		throws Exception {
 
 		ByteArrayOutputStream byteArrayOutputStream =
@@ -756,6 +755,8 @@ public class RoleLocalServiceTest {
 		group.setSite(true);
 
 		group = _groupLocalService.updateGroup(group);
+
+		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
 		_roleLocalService.addGroupRole(group.getGroupId(), role);
 

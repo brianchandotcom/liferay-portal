@@ -350,6 +350,19 @@ public abstract class BaseCheck extends AbstractCheck {
 		return endLineNumber;
 	}
 
+	protected DetailAST getFirstParameterExprDetailAST(
+		DetailAST methodCallDetailAST) {
+
+		List<DetailAST> parameterExprDetailASTList =
+			getParameterExprDetailASTList(methodCallDetailAST);
+
+		if (parameterExprDetailASTList.isEmpty()) {
+			return null;
+		}
+
+		return parameterExprDetailASTList.get(0);
+	}
+
 	protected String getFullyQualifiedTypeName(
 		DetailAST typeDetailAST, boolean checkPackage) {
 
@@ -606,18 +619,13 @@ public abstract class BaseCheck extends AbstractCheck {
 			parametersDetailAST, false, TokenTypes.PARAMETER_DEF);
 	}
 
-	protected DetailAST getParameterDetailAST(DetailAST methodCallDetailAST) {
+	protected List<DetailAST> getParameterExprDetailASTList(
+		DetailAST methodCallDetailAST) {
+
 		DetailAST elistDetailAST = methodCallDetailAST.findFirstToken(
 			TokenTypes.ELIST);
 
-		DetailAST exprDetailAST = elistDetailAST.findFirstToken(
-			TokenTypes.EXPR);
-
-		if (exprDetailAST == null) {
-			return null;
-		}
-
-		return exprDetailAST.getFirstChild();
+		return getAllChildTokens(elistDetailAST, false, TokenTypes.EXPR);
 	}
 
 	protected List<String> getParameterNames(DetailAST detailAST) {

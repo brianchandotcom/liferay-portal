@@ -8,21 +8,27 @@
 						"key": "learn-capability-search-page",
 						"siteKey": "Guest"
 					},
-					"fragmentConfig": {},
-					"fragmentFields": [],
+					"fragmentConfig": {
+					},
+					"fragmentFields": [
+					],
 					"indexed": true
 				},
 				"id": "da6953a4-d056-277f-be2d-c53f74c8cc52",
 				"pageElements": [
 					{
-						"definition": {},
+						"definition": {
+						},
 						"id": "be6050fc-dca5-1dd5-d209-8b6be31f3718",
 						"pageElements": [
 							{
 								"definition": {
-									"cssClasses": ["learn-banner"],
+									"cssClasses": [
+										"learn-banner"
+									],
 									"indexed": true,
-									"layout": {},
+									"layout": {
+									},
 									"name": "Banner Container"
 								},
 								"id": "6a130234-4939-8781-572b-220a62eb93e0",
@@ -55,7 +61,8 @@
 														"textColor": ""
 													},
 													"indexed": true,
-													"layout": {}
+													"layout": {
+													}
 												},
 												"id": "a48c452e-eecb-ba53-db44-ff8e2489e549",
 												"pageElements": [
@@ -73,7 +80,8 @@
 																{
 																	"id": "element-text",
 																	"value": {
-																		"fragmentLink": {},
+																		"fragmentLink": {
+																		},
 																		"text": {
 																			"defaultFragmentInlineValue": {
 																				"value": "Capability"
@@ -122,7 +130,8 @@
 																		"paddingTop": "6px"
 																	},
 																	"indexed": true,
-																	"layout": {}
+																	"layout": {
+																	}
 																},
 																"id": "cffeb5d8-ef1c-0bac-0d27-845ace65e11d",
 																"pageElements": [
@@ -148,7 +157,8 @@
 																								}
 																							}
 																						},
-																						"fragmentLink": {}
+																						"fragmentLink": {
+																						}
 																					}
 																				}
 																			],
@@ -174,7 +184,8 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"mapping": {
 																						"fieldKey": "AssetCategory_name",
@@ -210,18 +221,18 @@
 															},
 															"widgetInstance": {
 																"widgetConfig": {
-																	"federatedSearchKey": "",
-																	"suggestionsContributorConfigurations": "{\"contributorName\":\"basic\",\"displayGroupName\":\"suggestions\",\"size\":5}",
-																	"showStagedResults": "false",
-																	"searchScope": "this-site",
-																	"suggestionsEnabled": "false",
 																	"destination": "",
-																	"invisible": "false",
-																	"displayStyleGroupId": "32483059",
-																	"suggestionsDisplayThreshold": "2",
 																	"displayStyle": "ddmTemplate_LEARN_SEARCH_BAR",
-																	"scopeParameterName": "scope",
+																	"displayStyleGroupId": "32483059",
+																	"federatedSearchKey": "",
+																	"invisible": "false",
 																	"keywordsParameterName": "q",
+																	"scopeParameterName": "scope",
+																	"searchScope": "this-site",
+																	"showStagedResults": "false",
+																	"suggestionsContributorConfigurations": "{\"contributorName\": \"basic\", \"displayGroupName\": \"suggestions\", \"size\": 5}",
+																	"suggestionsDisplayThreshold": "2",
+																	"suggestionsEnabled": "false",
 																	"useAdvancedSearchSyntax": "false"
 																},
 																"widgetName": "com_liferay_portal_search_web_search_bar_portlet_SearchBarPortlet"
@@ -241,12 +252,16 @@
 							},
 							{
 								"definition": {
-									"cssClasses": ["learn-category"],
+									"cssClasses": [
+										"learn-category"
+									],
 									"fragmentStyle": {
 										"maxWidth": "var(--container-max-xl)"
 									},
 									"indexed": true,
-									"layout": {"widthType": "Fixed"},
+									"layout": {
+										"widthType": "Fixed"
+									},
 									"name": "Description Container"
 								},
 								"id": "0c7ffcc2-7565-2f16-23c7-bcb6731feb44",
@@ -265,7 +280,8 @@
 												{
 													"id": "element-text",
 													"value": {
-														"fragmentLink": {},
+														"fragmentLink": {
+														},
 														"text": {
 															"mapping": {
 																"fieldKey": "AssetCategory_description",
@@ -329,7 +345,9 @@
 												}
 											],
 											"indexed": true,
-											"layout": {"widthType": "Fixed"}
+											"layout": {
+												"widthType": "Fixed"
+											}
 										},
 										"id": "4e801af8-5498-4286-9de2-157f7553b661",
 										"pageElements": [
@@ -362,13 +380,13 @@
 														"definition": {
 															"widgetInstance": {
 																"widgetConfig": {
-																	"vocabularyIds": "32495659",
 																	"displayStyle": "ddmTemplate_LEARN_SEARCH_CATEGORY_FACET",
-																	"maxTerms": "100",
-																	"frequencyThreshold": "1",
 																	"frequenciesVisible": "false",
+																	"frequencyThreshold": "1",
+																	"maxTerms": "100",
+																	"order": "key:asc",
 																	"parameterName": "feature",
-																	"order": "key:asc"
+																	"vocabularyIds": "32495659"
 																},
 																"widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
 															}
@@ -396,14 +414,14 @@
 													},
 													"widgetInstance": {
 														"widgetConfig": {
-															"vocabularyIds": "33946164",
 															"displayStyle": "ddmTemplate_LEARN_SEARCH_CATEGORY_FACET",
-															"maxTerms": "100",
-															"frequencyThreshold": "1",
-															"frequenciesVisible": "false",
-															"parameterName": "deployment-approach",
 															"displayStyleGroupId": "32483059",
-															"order": "key:asc"
+															"frequenciesVisible": "false",
+															"frequencyThreshold": "1",
+															"maxTerms": "100",
+															"order": "key:asc",
+															"parameterName": "deployment-approach",
+															"vocabularyIds": "33946164"
 														},
 														"widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
 													}
@@ -440,14 +458,14 @@
 														"definition": {
 															"widgetInstance": {
 																"widgetConfig": {
-																	"vocabularyIds": "33946127",
 																	"displayStyle": "ddmTemplate_LEARN_SEARCH_CATEGORY_FACET",
-																	"maxTerms": "12",
-																	"frequencyThreshold": "1",
-																	"frequenciesVisible": "false",
-																	"parameterName": "capability",
 																	"displayStyleGroupId": "32483059",
-																	"order": "key:asc"
+																	"frequenciesVisible": "false",
+																	"frequencyThreshold": "1",
+																	"maxTerms": "12",
+																	"order": "key:asc",
+																	"parameterName": "capability",
+																	"vocabularyIds": "33946127"
 																},
 																"widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
 															}
@@ -463,7 +481,9 @@
 									},
 									{
 										"definition": {
-											"fragmentStyle": {"width": "100%"},
+											"fragmentStyle": {
+												"width": "100%"
+											},
 											"indexed": true,
 											"layout": {
 												"contentDisplay": "FlexRow",
@@ -480,7 +500,8 @@
 														"width": "100%"
 													},
 													"indexed": true,
-													"layout": {}
+													"layout": {
+													}
 												},
 												"id": "1a19138e-75ff-34c0-f9a2-395dc8822b23",
 												"pageElements": [
@@ -488,18 +509,18 @@
 														"definition": {
 															"widgetInstance": {
 																"widgetConfig": {
-																	"viewInContext": "true",
-																	"fieldsToDisplay": "",
-																	"federatedSearchKey": "",
-																	"displayStyle": "ddmTemplate_LEARN_SEARCH_RESULTS",
 																	"displayInDocumentForm": "false",
-																	"paginationDelta": "20",
-																	"showEmptyResultMessage": "true",
-																	"paginationStartParameterName": "start",
-																	"showPagination": "true",
-																	"paginationDeltaParameterName": "delta",
+																	"displayStyle": "ddmTemplate_LEARN_SEARCH_RESULTS",
 																	"displayStyleGroupId": "32483059",
-																	"highlightEnabled": "true"
+																	"federatedSearchKey": "",
+																	"fieldsToDisplay": "",
+																	"highlightEnabled": "true",
+																	"paginationDelta": "20",
+																	"paginationDeltaParameterName": "delta",
+																	"paginationStartParameterName": "start",
+																	"showEmptyResultMessage": "true",
+																	"showPagination": "true",
+																	"viewInContext": "true"
 																},
 																"widgetName": "com_liferay_portal_search_web_search_results_portlet_SearchResultsPortlet"
 															}
@@ -514,9 +535,9 @@
 															},
 															"widgetInstance": {
 																"widgetConfig": {
-																	"federatedSearchKey": "",
 																	"allowEmptySearches": "true",
-																	"basicFacetSelection": "false"
+																	"basicFacetSelection": "false",
+																	"federatedSearchKey": ""
 																},
 																"widgetName": "com_liferay_portal_search_web_search_options_portlet_SearchOptionsPortlet"
 															}
@@ -560,12 +581,14 @@
 	},
 	"settings": {
 		"colorSchemeName": "01",
-		"masterPage": {"key": "liferay-learn"},
+		"masterPage": {
+			"key": "liferay-learn"
+		},
 		"themeName": "Dialect",
 		"themeSettings": {
-			"lfr-theme:regular:show-header-search": "false",
-			"lfr-theme:regular:show-header": "false",
 			"lfr-theme:regular:show-footer": "false",
+			"lfr-theme:regular:show-header": "false",
+			"lfr-theme:regular:show-header-search": "false",
 			"lfr-theme:regular:wrap-widget-page-content": "false"
 		}
 	},

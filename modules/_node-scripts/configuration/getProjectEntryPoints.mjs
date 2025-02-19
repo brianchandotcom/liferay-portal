@@ -14,10 +14,13 @@ import projectScopeRequire from '../util/projectScopeRequire.mjs';
  * {
  *   main: 'src/main/resources/META-INF/resources/index.js',
  *   submodules: {
- *   	foo: 'src/main/resources/META-INF/resources/foo.js'
+ *     foo: 'src/main/resources/META-INF/resources/foo.js'
  *   },
  *   typescript: {
- *   	main: 'src/main/resources/META-INF/resources/index.d.ts'
+ *     main: 'src/main/resources/META-INF/resources/index.d.ts'
+ *     submodules: {
+ *       foo: 'src/main/resources/META-INF/resources/foo.d.ts'
+ *     }
  *   }
  * }
  */
@@ -29,19 +32,21 @@ export default function getProjectEntryPoints(projectDir = '.') {
 
 	const projectDirectory = path.basename(projectDir);
 
-	const entryPoints = {};
+	const entryPoints = {
+		typescript: {},
+	};
 
 	if (main) {
 		verifyResourcePath(main, 'main', projectDirectory);
 
 		entryPoints.main = main;
-		entryPoints.typescript = main;
+		entryPoints.typescript.main = main;
 	}
 
 	if (typescript && typescript.main) {
 		verifyResourcePath(typescript.main, 'typescript', projectDirectory);
 
-		entryPoints.typescript = typescript.main;
+		entryPoints.typescript.main = typescript.main;
 	}
 
 	if (submodules) {
@@ -50,6 +55,18 @@ export default function getProjectEntryPoints(projectDir = '.') {
 		});
 
 		entryPoints.submodules = submodules;
+		entryPoints.typescript.submodules = submodules;
+	}
+
+	if (typescript && typescript.submodules) {
+		Object.values(typescript.submodules).forEach((submodulePath) => {
+			verifyResourcePath(submodulePath, 'submodule', projectDirectory);
+		});
+
+		entryPoints.typescript.submodules = {
+			...entryPoints.typescript.submodules,
+			...typescript.submodules,
+		};
 	}
 
 	return entryPoints;

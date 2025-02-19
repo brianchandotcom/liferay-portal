@@ -407,8 +407,10 @@ public interface ProductResource {
 			httpInvoker.path("channelId", channelId);
 			httpInvoker.path("friendlyUrlPath", friendlyUrlPath);
 
-			httpInvoker.userNameAndPassword(
-				_builder._login + ":" + _builder._password);
+			if ((_builder._login != null) && (_builder._password != null)) {
+				httpInvoker.userNameAndPassword(
+					_builder._login + ":" + _builder._password);
+			}
 
 			return httpInvoker.invoke();
 		}

@@ -88,14 +88,27 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 	%>
 
 		<li class="tree-item <%= ((exportModelCount > 0) || showAllPortlets) ? StringPool.BLANK : "deletions" %>">
-			<liferay-staging:checkbox
-				checked="<%= showPortletDataInput %>"
-				deletions="<%= modelDeletionCount %>"
-				disabled="<%= disableInputs %>"
-				items="<%= exportModelCount %>"
-				label="<%= portletTitle %>"
-				name="<%= PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE + portlet.getPortletId() %>"
-			/>
+			<c:choose>
+				<c:when test="<%= portlet.getRootPortletId().startsWith(ObjectPortletKeys.OBJECT_DEFINITIONS) %>">
+					<liferay-staging:checkbox
+						checked="<%= showPortletDataInput %>"
+						deletions="<%= modelDeletionCount %>"
+						disabled="<%= disableInputs %>"
+						label="<%= portletTitle %>"
+						name="<%= PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE + portlet.getPortletId() %>"
+					/>
+				</c:when>
+				<c:otherwise>
+					<liferay-staging:checkbox
+						checked="<%= showPortletDataInput %>"
+						deletions="<%= modelDeletionCount %>"
+						disabled="<%= disableInputs %>"
+						items="<%= exportModelCount %>"
+						label="<%= portletTitle %>"
+						name="<%= PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE + portlet.getPortletId() %>"
+					/>
+				</c:otherwise>
+			</c:choose>
 
 			<%
 			String portletId = portlet.getPortletId();

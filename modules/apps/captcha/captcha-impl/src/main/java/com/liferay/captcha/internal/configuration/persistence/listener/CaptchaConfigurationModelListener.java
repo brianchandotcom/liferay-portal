@@ -65,6 +65,16 @@ public class CaptchaConfigurationModelListener
 	private void _validateReCaptchaKeys(Dictionary<String, Object> properties)
 		throws CaptchaConfigurationException {
 
+		String reCaptchaNoScriptURL = (String)properties.get(
+			"reCaptchaNoScriptURL");
+
+		if (!reCaptchaNoScriptURL.startsWith("https://www.google.com")) {
+			throw new CaptchaConfigurationException(
+				ResourceBundleUtil.getString(
+					_getResourceBundle(),
+					"the-recaptcha-no-script-url-is-not-valid"));
+		}
+
 		String reCaptchaPublicKey = (String)properties.get(
 			"reCaptchaPublicKey");
 
@@ -93,16 +103,6 @@ public class CaptchaConfigurationModelListener
 				ResourceBundleUtil.getString(
 					_getResourceBundle(),
 					"the-recaptcha-script-url-is-not-valid"));
-		}
-
-		String reCaptchaNoScriptURL = (String)properties.get(
-			"reCaptchaNoScriptURL");
-
-		if (!reCaptchaNoScriptURL.startsWith("https://www.google.com")) {
-			throw new CaptchaConfigurationException(
-				ResourceBundleUtil.getString(
-					_getResourceBundle(),
-					"the-recaptcha-no-script-url-is-not-valid"));
 		}
 
 		String reCaptchaVerifyURL = (String)properties.get(

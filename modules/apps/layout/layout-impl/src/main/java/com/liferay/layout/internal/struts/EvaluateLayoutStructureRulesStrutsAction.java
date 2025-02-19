@@ -26,6 +26,7 @@ import com.liferay.segments.SegmentsEntryRetriever;
 import com.liferay.segments.context.RequestContextMapper;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -100,9 +101,9 @@ public class EvaluateLayoutStructureRulesStrutsAction implements StrutsAction {
 			if (_log.isDebugEnabled()) {
 				_log.debug(jsonException);
 			}
-
-			throw new UnsupportedOperationException(jsonException);
 		}
+
+		return Collections.emptyMap();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

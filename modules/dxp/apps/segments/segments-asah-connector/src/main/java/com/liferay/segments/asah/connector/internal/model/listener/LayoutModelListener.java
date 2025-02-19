@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.segments.asah.connector.internal.client.AsahFaroBackendClientImpl;
 import com.liferay.segments.asah.connector.internal.processor.AsahSegmentsExperimentProcessor;
 import com.liferay.segments.asah.connector.internal.util.AsahUtil;
+import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.model.SegmentsExperiment;
 import com.liferay.segments.service.SegmentsEntryLocalService;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
@@ -48,11 +49,14 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 				return;
 			}
 
+			SegmentsExperience segmentsExperience =
+				_segmentsExperienceLocalService.fetchDefaultSegmentsExperience(
+					layout.getPlid());
+
 			SegmentsExperiment segmentsExperiment =
 				_segmentsExperimentLocalService.fetchSegmentsExperiment(
 					layout.getGroupId(),
-					_segmentsExperienceLocalService.
-						fetchDefaultSegmentsExperienceId(layout.getPlid()),
+					segmentsExperience.getSegmentsExperienceKey(),
 					layout.getPlid());
 
 			if (segmentsExperiment != null) {

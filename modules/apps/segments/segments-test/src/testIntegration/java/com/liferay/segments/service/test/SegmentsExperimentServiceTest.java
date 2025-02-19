@@ -185,7 +185,7 @@ public class SegmentsExperimentServiceTest {
 			Assert.assertNull(
 				_segmentsExperimentService.fetchSegmentsExperiment(
 					layout.getGroupId(),
-					segmentsExperiment.getSegmentsExperienceId(),
+					segmentsExperiment.getSegmentsExperienceKey(),
 					layout.getPlid()));
 		}
 	}
@@ -205,7 +205,7 @@ public class SegmentsExperimentServiceTest {
 				segmentsExperiment,
 				_segmentsExperimentService.fetchSegmentsExperiment(
 					layout.getGroupId(),
-					segmentsExperiment.getSegmentsExperienceId(),
+					segmentsExperiment.getSegmentsExperienceKey(),
 					layout.getPlid()));
 		}
 	}

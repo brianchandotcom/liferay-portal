@@ -135,9 +135,18 @@ public class AddSegmentsExperimentMVCActionCommand
 			actionRequest, "segmentsExperienceId");
 		long plid = ParamUtil.getLong(actionRequest, "plid");
 
-		SegmentsExperiment segmentsExperiment =
-			_segmentsExperimentService.fetchSegmentsExperiment(
-				serviceContext.getScopeGroupId(), segmentsExperienceId, plid);
+		SegmentsExperience segmentsExperience =
+			_segmentsExperienceLocalService.fetchSegmentsExperience(
+				segmentsExperienceId);
+
+		SegmentsExperiment segmentsExperiment = null;
+
+		if (segmentsExperience != null) {
+			segmentsExperiment =
+				_segmentsExperimentService.fetchSegmentsExperiment(
+					serviceContext.getScopeGroupId(),
+					segmentsExperience.getSegmentsExperienceKey(), plid);
+		}
 
 		if (segmentsExperiment != null) {
 			if (segmentsExperiment.getStatus() ==
@@ -190,7 +199,7 @@ public class AddSegmentsExperimentMVCActionCommand
 		SegmentsExperimentRel segmentsExperimentRel =
 			_segmentsExperimentRelService.getSegmentsExperimentRel(
 				segmentsExperiment.getSegmentsExperimentId(),
-				segmentsExperiment.getSegmentsExperienceId());
+				segmentsExperiment.getSegmentsExperienceKey());
 
 		return JSONUtil.put(
 			"segmentsExperiment",

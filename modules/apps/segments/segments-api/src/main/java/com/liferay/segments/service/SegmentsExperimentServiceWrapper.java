@@ -70,20 +70,20 @@ public class SegmentsExperimentServiceWrapper
 
 	@Override
 	public SegmentsExperiment fetchSegmentsExperiment(
-			long groupId, long segmentsExperienceId, long plid)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _segmentsExperimentService.fetchSegmentsExperiment(
-			groupId, segmentsExperienceId, plid);
-	}
-
-	@Override
-	public SegmentsExperiment fetchSegmentsExperiment(
 			long groupId, String segmentsExperimentKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _segmentsExperimentService.fetchSegmentsExperiment(
 			groupId, segmentsExperimentKey);
+	}
+
+	@Override
+	public SegmentsExperiment fetchSegmentsExperiment(
+			long groupId, String segmentsExperienceKey, long plid)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _segmentsExperimentService.fetchSegmentsExperiment(
+			groupId, segmentsExperienceKey, plid);
 	}
 
 	/**

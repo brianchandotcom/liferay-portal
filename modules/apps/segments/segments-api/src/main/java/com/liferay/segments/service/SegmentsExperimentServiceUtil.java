@@ -63,19 +63,19 @@ public class SegmentsExperimentServiceUtil {
 	}
 
 	public static SegmentsExperiment fetchSegmentsExperiment(
-			long groupId, long segmentsExperienceId, long plid)
-		throws PortalException {
-
-		return getService().fetchSegmentsExperiment(
-			groupId, segmentsExperienceId, plid);
-	}
-
-	public static SegmentsExperiment fetchSegmentsExperiment(
 			long groupId, String segmentsExperimentKey)
 		throws PortalException {
 
 		return getService().fetchSegmentsExperiment(
 			groupId, segmentsExperimentKey);
+	}
+
+	public static SegmentsExperiment fetchSegmentsExperiment(
+			long groupId, String segmentsExperienceKey, long plid)
+		throws PortalException {
+
+		return getService().fetchSegmentsExperiment(
+			groupId, segmentsExperienceKey, plid);
 	}
 
 	/**

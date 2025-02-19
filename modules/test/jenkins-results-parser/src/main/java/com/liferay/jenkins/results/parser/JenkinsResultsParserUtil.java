@@ -6379,8 +6379,22 @@ public class JenkinsResultsParserUtil {
 	}
 
 	private static File _getCacheFile(String key) {
+		String baseDirPath = System.getProperty("java.io.tmpdir");
+
+		if (isCINode()) {
+			String baseRepositoryDirPath = "/opt/dev/projects/github";
+
+			try {
+				baseRepositoryDirPath = getBuildProperty("base.repository.dir");
+			}
+			catch (IOException ioException) {
+			}
+
+			baseDirPath = baseRepositoryDirPath + "/liferay-jenkins-ee/tmp";
+		}
+
 		String fileName = combine(
-			System.getProperty("java.io.tmpdir"), "/jenkins-cached-files/",
+			baseDirPath, "/jenkins-cached-files/",
 			String.valueOf(key.hashCode()), ".txt");
 
 		return new File(fileName);

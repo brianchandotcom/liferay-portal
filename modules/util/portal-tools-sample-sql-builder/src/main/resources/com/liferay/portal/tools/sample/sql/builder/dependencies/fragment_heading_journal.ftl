@@ -15,7 +15,13 @@
 	/>
 
 	<#list dataFactory.getSequence(dataFactory.maxContentLayoutCount) as contentLayoutCount>
-		<#assign contentLayoutModels = dataFactory.newContentPageLayoutModels(groupId, groupId + "_web_content_" + contentLayoutCount) />
+		<#assign
+			contentLayoutModels = dataFactory.newContentPageLayoutModels(groupId, groupId + "_web_content_" + contentLayoutCount)
+
+			segmentsExperienceModel = dataFactory.newSegmentsExperienceModel(contentLayoutModels)
+		 />
+
+		 ${dataFactory.toInsertSQL(segmentsExperienceModel)}
 
 		<#list contentLayoutModels as contentLayoutModel>
 			${dataFactory.toInsertSQL(contentLayoutModel)}
@@ -25,12 +31,6 @@
 			<#assign layoutPageTemplateStructureModel = dataFactory.newLayoutPageTemplateStructureModel(contentLayoutModel) />
 
 			${dataFactory.toInsertSQL(layoutPageTemplateStructureModel)}
-
-			<#assign
-				segmentsExperienceModel = dataFactory.newSegmentsExperienceModel(groupId, 0, "DEFAULT", contentLayoutModel.plid, "Default", 0)
-			/>
-
-			${dataFactory.toInsertSQL(segmentsExperienceModel)}
 
 			<#assign fragmentEntryLinkModels = dataFactory.newFragmentEntryLinkModels(journalArticleModel, contentLayoutModel, segmentsExperienceModel.getSegmentsExperienceId()) />
 

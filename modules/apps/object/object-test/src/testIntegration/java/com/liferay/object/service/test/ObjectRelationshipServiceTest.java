@@ -271,8 +271,7 @@ public class ObjectRelationshipServiceTest {
 		}
 	}
 
-	private void _testAddObjectRelationshipMappingTableValues(
-			String objectRelationshipType)
+	private void _testAddObjectRelationshipMappingTableValues(String type)
 		throws Exception {
 
 		ObjectDefinition objectDefinition1 =
@@ -287,7 +286,7 @@ public class ObjectRelationshipServiceTest {
 				objectDefinition2.getObjectDefinitionId(), 0,
 				ObjectRelationshipConstants.DELETION_TYPE_CASCADE, false,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
-				StringUtil.randomId(), false, objectRelationshipType, null);
+				StringUtil.randomId(), false, type, null);
 
 		ObjectEntry objectEntry1 = _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
@@ -327,8 +326,7 @@ public class ObjectRelationshipServiceTest {
 			new String[] {ActionKeys.UPDATE});
 
 		if (Objects.equals(
-				ObjectRelationshipConstants.TYPE_ONE_TO_MANY,
-				objectRelationshipType)) {
+				ObjectRelationshipConstants.TYPE_ONE_TO_MANY, type)) {
 
 			_objectRelationshipService.addObjectRelationshipMappingTableValues(
 				objectRelationship.getObjectRelationshipId(),

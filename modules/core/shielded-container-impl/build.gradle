@@ -2,3 +2,34 @@ dependencies {
 	compileOnly group: "org.apache.felix", name: "org.apache.felix.http.servlet-api", version: "1.1.2"
 	compileOnly project(":core:shielded-container-api")
 }
+
+private boolean _isJakartaAppServer() {
+	if ((liferay.appServerType == "tomcat") && liferay.appServer.version.startsWith("10.")) {
+		return true;
+	}
+
+	if ((liferay.appServerType == "jboss") && liferay.appServer.version.startsWith("8.")) {
+		return true;
+	}
+
+	return false;
+}
+
+if (!_isJakartaAppServer()) {
+	task updateSPIFile(type: Zip)
+
+	jar {
+		finalizedBy updateSPIFile
+	}
+
+	updateSPIFile {
+		from {
+			zipTree(jar.archivePath)
+		}
+		rename("jakarta.servlet.ServletContainerInitializer", "javax.servlet.ServletContainerInitializer")
+
+		doLast {
+			archivePath.renameTo(jar.archivePath)
+		}
+	}
+}

@@ -387,6 +387,17 @@ export async function postObjectDefinitionPublish(objectDefinitionId: number) {
 	);
 }
 
+export async function putObjectDefinition(
+	objectDefinition: Partial<ObjectDefinition>
+) {
+	return await save<ObjectDefinition>({
+		item: objectDefinition,
+		method: 'PUT',
+		returnValue: true,
+		url: `/o/object-admin/v1.0/object-definitions/${objectDefinition.id}`,
+	});
+}
+
 export async function putObjectDefinitionByExternalReferenceCode(
 	objectDefinition: Partial<ObjectDefinition>
 ) {

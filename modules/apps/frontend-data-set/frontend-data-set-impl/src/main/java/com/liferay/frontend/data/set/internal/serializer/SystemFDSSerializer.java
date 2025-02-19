@@ -18,7 +18,11 @@ import com.liferay.frontend.data.set.filter.FDSFilterContextContributor;
 import com.liferay.frontend.data.set.filter.FDSFilterContextContributorRegistry;
 import com.liferay.frontend.data.set.filter.FDSFilterRegistry;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
+import com.liferay.frontend.data.set.model.FDSSortItem;
+import com.liferay.frontend.data.set.model.FDSSortItemList;
 import com.liferay.frontend.data.set.serializer.FDSSerializer;
+import com.liferay.frontend.data.set.sort.FDSSorts;
+import com.liferay.frontend.data.set.sort.FDSSortsRegistry;
 import com.liferay.frontend.data.set.view.FDSView;
 import com.liferay.frontend.data.set.view.FDSViewContextContributor;
 import com.liferay.frontend.data.set.view.FDSViewContextContributorRegistry;
@@ -138,6 +142,19 @@ public class SystemFDSSerializer
 	}
 
 	@Override
+	public FDSSortItemList serializeSorts(
+		String fdsName, HttpServletRequest httpServletRequest) {
+
+		FDSSorts fdsSorts = fdsSortsRegistry.getFDSSorts(fdsName);
+
+		if (fdsSorts == null) {
+			return FDSSortItemList.of((FDSSortItem)null);
+		}
+
+		return fdsSorts.getFDSSortItemList(httpServletRequest);
+	}
+
+	@Override
 	public JSONArray serializeViews(
 		String fdsName, HttpServletRequest httpServletRequest) {
 
@@ -207,6 +224,9 @@ public class SystemFDSSerializer
 
 	@Reference
 	protected FDSItemsActionsRegistry fdsItemsActionsRegistry;
+
+	@Reference
+	protected FDSSortsRegistry fdsSortsRegistry;
 
 	@Reference
 	protected FDSViewContextContributorRegistry

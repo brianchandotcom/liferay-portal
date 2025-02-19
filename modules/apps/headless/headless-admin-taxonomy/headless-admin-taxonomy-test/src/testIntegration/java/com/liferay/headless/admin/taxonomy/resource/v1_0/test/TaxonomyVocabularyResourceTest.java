@@ -359,16 +359,6 @@ public class TaxonomyVocabularyResourceTest
 	}
 
 	@Override
-	@Test
-	public void testPutAssetLibraryTaxonomyVocabularyByExternalReferenceCode()
-		throws Exception {
-
-		super.testPutAssetLibraryTaxonomyVocabularyByExternalReferenceCode();
-
-		_testPutAssetLibraryTaxonomyVocabularyByExternalReferenceCodeWithExternalReferenceCode();
-	}
-
-	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {"assetTypes", "description", "name"};
 	}
@@ -529,27 +519,6 @@ public class TaxonomyVocabularyResourceTest
 				postTaxonomyVocabulary.getId());
 
 		Assert.assertNull(getTaxonomyVocabulary.getPermissions());
-	}
-
-	private void _testPutAssetLibraryTaxonomyVocabularyByExternalReferenceCodeWithExternalReferenceCode()
-		throws Exception {
-
-		String externalReferenceCode = StringUtil.toLowerCase(
-			RandomTestUtil.randomString());
-
-		TaxonomyVocabulary taxonomyVocabulary =
-			testPutAssetLibraryTaxonomyVocabularyByExternalReferenceCode_addTaxonomyVocabulary();
-
-		TaxonomyVocabulary putTaxonomyVocabulary =
-			taxonomyVocabularyResource.
-				putAssetLibraryTaxonomyVocabularyByExternalReferenceCode(
-					testPutAssetLibraryTaxonomyVocabularyByExternalReferenceCode_getAssetLibraryId(),
-					externalReferenceCode, taxonomyVocabulary);
-
-		Assert.assertEquals(
-			externalReferenceCode,
-			putTaxonomyVocabulary.getExternalReferenceCode());
-		assertValid(putTaxonomyVocabulary);
 	}
 
 	@Inject

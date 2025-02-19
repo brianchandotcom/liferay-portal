@@ -7,7 +7,7 @@ package com.liferay.frontend.data.set.sample.web.internal.display.context;
 
 import com.liferay.frontend.data.set.sample.web.internal.constants.FDSSampleFDSNames;
 import com.liferay.frontend.data.set.sample.web.internal.model.UserEntry;
-import com.liferay.frontend.data.set.sample.web.internal.util.FDSSerializerUtil;
+import com.liferay.frontend.data.set.sample.web.internal.serializer.FDSSerializerUtil;
 import com.liferay.frontend.data.set.serializer.FDSSerializer;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;

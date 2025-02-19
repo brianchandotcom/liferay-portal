@@ -8,19 +8,3 @@ if (jakartaAppServer) {
 		rename("jakarta.servlet.ServletContainerInitializer", "javax.servlet.ServletContainerInitializer")
 	}
 }
-
-private boolean _isJakartaAppServer() {
-	if ((liferay.appServerType == "jboss") && liferay.appServer.version.startsWith("8.")) {
-		return true;
-	}
-
-	if ((liferay.appServerType == "tomcat") && liferay.appServer.version.startsWith("10.")) {
-		return true;
-	}
-
-	if ((liferay.appServerType == "wildfly") && liferay.appServer.version.startsWith("30.")) {
-		return true;
-	}
-
-	return false;
-}

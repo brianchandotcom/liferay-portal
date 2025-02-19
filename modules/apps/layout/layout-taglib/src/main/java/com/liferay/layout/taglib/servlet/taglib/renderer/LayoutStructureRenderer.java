@@ -37,6 +37,7 @@ import com.liferay.layout.constants.LayoutWebKeys;
 import com.liferay.layout.display.page.LayoutDisplayPageObjectProvider;
 import com.liferay.layout.display.page.LayoutDisplayPageProvider;
 import com.liferay.layout.display.page.constants.LayoutDisplayPageWebKeys;
+import com.liferay.layout.helper.structure.LayoutStructureRulesHelper;
 import com.liferay.layout.list.retriever.ListObjectReference;
 import com.liferay.layout.responsive.ResponsiveLayoutStructureUtil;
 import com.liferay.layout.taglib.internal.display.context.RenderCollectionLayoutStructureItemDisplayContext;
@@ -76,6 +77,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -136,7 +138,14 @@ public class LayoutStructureRenderer {
 				"{InfoItemActionHandler} from layout-taglib");
 		}
 
-		if (ListUtil.isNotEmpty(_layoutStructure.getLayoutStructureRules())) {
+		LayoutStructureRulesHelper.LayoutStructureRulesResult
+			layoutStructureRulesResult =
+				_renderLayoutStructureDisplayContext.
+					getLayoutStructureRulesResult();
+
+		if (MapUtil.isNotEmpty(
+				layoutStructureRulesResult.getLayoutStructureRuleIdsMap())) {
+
 			_renderComponent(
 				"RulesHandlerComponent",
 				_renderLayoutStructureDisplayContext.

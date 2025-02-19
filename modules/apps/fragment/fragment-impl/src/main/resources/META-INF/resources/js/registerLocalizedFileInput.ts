@@ -39,10 +39,6 @@ export function registerLocalizedFileInput({
 		);
 
 		if (inputElement) {
-			if (defaultLanguageId !== currentLanguageId) {
-				removeButton.disabled = true;
-			}
-
 			copyFilesToInput(defaultLanguageInput.files, inputElement);
 
 			onFileChange?.({
@@ -80,8 +76,6 @@ export function registerLocalizedFileInput({
 		);
 
 		if (inputElement && translationInput.files?.length) {
-			removeButton.disabled = false;
-
 			copyFilesToInput(translationInput.files, inputElement);
 
 			onFileChange?.({files: translationInput.files, languageId});
@@ -101,8 +95,6 @@ export function registerLocalizedFileInput({
 			);
 
 			if (value?.length) {
-				removeButton.disabled = false;
-
 				copyFilesToInput(value, translationInput);
 			}
 
@@ -127,7 +119,7 @@ function copyFilesToInput(fileList: FileList | null, input: HTMLInputElement) {
 	input.files = dataTransfer.files;
 }
 
-export default function getOrCreateTranslationInput(
+function getOrCreateTranslationInput(
 	inputName: string,
 	languageId: string,
 	localizationInputsContainer: HTMLElement,

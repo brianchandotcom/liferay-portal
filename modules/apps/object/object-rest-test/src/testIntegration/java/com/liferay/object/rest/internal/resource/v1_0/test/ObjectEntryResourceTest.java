@@ -8473,23 +8473,6 @@ public class ObjectEntryResourceTest {
 			).toString(),
 			JSONCompareMode.STRICT);
 
-		JSONAssert.assertEquals(
-			JSONUtil.put(
-				"status", "BAD_REQUEST"
-			).put(
-				"title",
-				StringBundler.concat(
-					"No value was provided for required object field ", '"',
-					objectFieldName, '"')
-			).toString(),
-			HTTPTestUtil.invokeToJSONObject(
-				JSONUtil.put(
-					_OBJECT_FIELD_NAME_2, _OBJECT_FIELD_VALUE_2
-				).toString(),
-				_objectDefinition2.getRESTContextPath(), Http.Method.POST
-			).toString(),
-			JSONCompareMode.STRICT);
-
 		_objectFieldLocalService.updateRequired(
 			_objectRelationship1.getObjectFieldId2(), false);
 

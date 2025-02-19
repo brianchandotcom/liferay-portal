@@ -1,3 +1,5 @@
+[#assign disabled = input.attributes.disabled?? && input.attributes.disabled]
+
 <div class="select-from-list">
 	<div class="form-group [#if  input.errorMessage?has_content]has-error[/#if] mb-0">
 		<label class="[#if !input.showLabel || !input.label?has_content]sr-only[/#if]" data-localizable="${input.localizable?string('true', 'false')}" id="${fragmentEntryLinkNamespace}-select-from-list-input-label">
@@ -14,14 +16,14 @@
 			<div class="d-flex">
 				<div class="align-items-end input-group">
 					<div class="input-group-item input-group-prepend">
-						<input aria-autocomplete="list" aria-controls="${fragmentEntryLinkNamespace}-listbox" aria-expanded="false" aria-labelledby="${fragmentEntryLinkNamespace}-select-from-list-input-label [#if  input.errorMessage?has_content]${fragmentEntryLinkNamespace}-select-from-list-input-error-message[/#if]" class="form-control" id="${fragmentEntryLinkNamespace}-select-from-list-input" name="" placeholder="${languageUtil.get(locale, "choose-an-option")}" role="combobox" type="text" ${input.required?then('required', '')} [#if input.attributes.selectedOptionLabel??]value="${input.attributes.selectedOptionLabel}"[/#if] />
+						<input aria-autocomplete="list" aria-controls="${fragmentEntryLinkNamespace}-listbox" aria-expanded="false" aria-labelledby="${fragmentEntryLinkNamespace}-select-from-list-input-label [#if  input.errorMessage?has_content]${fragmentEntryLinkNamespace}-select-from-list-input-error-message[/#if]" class="form-control" [#if disabled]disabled[/#if] id="${fragmentEntryLinkNamespace}-select-from-list-input" name="" placeholder="${languageUtil.get(locale, "choose-an-option")}" role="combobox" type="text" ${input.required?then('required', '')} [#if input.attributes.selectedOptionLabel??]value="${input.attributes.selectedOptionLabel}"[/#if] />
 
 						<input id="${fragmentEntryLinkNamespace}-value-input" name="${input.name}" type="hidden" [#if input.attributes.selectedOptionValue??]value="${input.value}"[/#if] />
 						<input id="${fragmentEntryLinkNamespace}-label-input" name="${input.name}-label" type="hidden" [#if input.attributes.selectedOptionLabel??]value="${input.attributes.selectedOptionLabel}"[/#if] />
 					</div>
 
 					<span class="input-group-append input-group-item input-group-item-shrink">
-						<button aria-controls="${fragmentEntryLinkNamespace}-listbox" [#if input.showHelpText && input.helpText?has_content]aria-describedby="${fragmentEntryLinkNamespace}-help-text"[/#if] aria-expanded="false" class="btn btn-secondary" type="button">
+						<button aria-controls="${fragmentEntryLinkNamespace}-listbox" [#if input.showHelpText && input.helpText?has_content]aria-describedby="${fragmentEntryLinkNamespace}-help-text"[/#if] aria-expanded="false" class="btn btn-secondary" [#if disabled]disabled[/#if] type="button">
 							[@clay["icon"] symbol="caret-double" /]
 						</button>
 					</span>

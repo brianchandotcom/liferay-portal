@@ -19,7 +19,7 @@
 					[/#if]
 
 					<div class="custom-control mb-0">
-						<input class="custom-control-input" [#if values?seq_contains(option.value)]checked[/#if] id="${fragmentEntryLinkNamespace}-checkbox-${option.value}" name="${input.name}" [#if input.readOnly]readonly[/#if] ${input.required?then('required', '')} type="checkbox" value="${option.value}" />
+						<input class="custom-control-input" [#if values?seq_contains(option.value)]checked[/#if] [#if input.attributes.disabled?? && input.attributes.disabled]disabled[/#if] id="${fragmentEntryLinkNamespace}-checkbox-${option.value}" name="${input.name}" [#if input.readOnly]readonly[/#if] ${input.required?then('required', '')} type="checkbox" value="${option.value}" />
 
 						<label class="custom-control-label" for="${fragmentEntryLinkNamespace}-checkbox-${option.value}">
 							<span class="custom-control-label-text">${htmlUtil.escape(option.label)}</span>
@@ -28,7 +28,7 @@
 				[/#list]
 
 				[#if configuration.numberOfOptions < options?size && !configuration.showAllOptions ]
-					<button class="btn btn-secondary btn-sm mt-1 multiselect-list-button" type="button">
+					<button class="btn btn-secondary btn-sm mt-1 multiselect-list-button" [#if input.attributes.disabled?? && input.attributes.disabled]disabled[/#if] type="button">
 						${languageUtil.get(locale, "show-all")}
 					</button>
 				[/#if]

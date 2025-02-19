@@ -146,13 +146,6 @@ test(
 		await test.step('Close breakdown tab', async () => {
 			await page.getByLabel('Close').click();
 		});
-
-		await test.step('Delete the property that was used during automation execution', async () => {
-			await apiHelpers.jsonWebServicesOSBFaro.deleteChannel(
-				`[${channel.id}]`,
-				project.groupId
-			);
-		});
 	}
 );
 

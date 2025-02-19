@@ -996,7 +996,7 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 			_registerFDSView(
 				"fdsName",
 				_createFDSViewCards(
-					"longDescription", "detailURL", "thumbnail", "sticker",
+					"longDescription", "thumbnail", "detailURL", "sticker",
 					"icon", "title")),
 			_registerSystemFDSEntry(
 				null, "fdsName", "/app", "/endpoint", "schema"));
@@ -1053,7 +1053,7 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 			_registerFDSView(
 				"fdsName1",
 				_createFDSViewCards(
-					"longDescription", "detailURL", "thumbnail", "sticker",
+					"longDescription", "thumbnail", "detailURL", "sticker",
 					"icon", "title")),
 			_registerFDSView(
 				"fdsName2",
@@ -1208,7 +1208,7 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 		// Shared view
 
 		FDSView cardsView = _createFDSViewCards(
-			"longDescription", "detailURL", "thumbnail", "sticker", "icon",
+			"longDescription", "thumbnail", "detailURL", "sticker", "icon",
 			"title");
 
 		_registerServices(
@@ -1385,7 +1385,7 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 	}
 
 	private FDSView _createFDSViewCards(
-		String description, String link, String image, String sticker,
+		String description, String image, String link, String sticker,
 		String symbol, String title) {
 
 		return new BaseCardsFDSView() {

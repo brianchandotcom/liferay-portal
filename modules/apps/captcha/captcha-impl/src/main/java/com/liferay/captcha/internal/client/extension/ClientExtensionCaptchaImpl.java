@@ -5,7 +5,7 @@
 
 package com.liferay.captcha.internal.client.extension;
 
-import com.liferay.captcha.configuration.ClientExtensionCaptchaImplConfiguration;
+import com.liferay.captcha.internal.configuration.ClientExtensionCaptchaImplConfiguration;
 import com.liferay.captcha.simplecaptcha.SimpleCaptchaImpl;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.captcha.Captcha;
@@ -19,7 +19,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Pedro Victor Silvestre
  */
 @Component(
-	configurationPid = "com.liferay.captcha.configuration.ClientExtensionCaptchaImplConfiguration",
+	configurationPid = "com.liferay.captcha.internal.configuration.ClientExtensionCaptchaImplConfiguration",
 	factory = "com.liferay.captcha.internal.client.extension.ClientExtensionCaptchaImpl",
 	service = Captcha.class
 )

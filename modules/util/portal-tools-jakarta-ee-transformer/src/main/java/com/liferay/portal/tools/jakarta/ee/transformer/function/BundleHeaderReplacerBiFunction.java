@@ -56,11 +56,11 @@ public class BundleHeaderReplacerBiFunction
 				}
 
 				if (!Objects.equals(value, newValue)) {
-					sb.append("key : ");
+					sb.append("key: ");
 					sb.append(entry.getKey());
-					sb.append(", old value : ");
+					sb.append(", old value: ");
 					sb.append(value);
-					sb.append(", new value : ");
+					sb.append(", new value: ");
 					sb.append(newValue);
 					sb.append(", ");
 				}

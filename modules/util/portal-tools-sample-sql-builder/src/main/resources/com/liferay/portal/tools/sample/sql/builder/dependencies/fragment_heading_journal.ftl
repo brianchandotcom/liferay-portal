@@ -30,17 +30,17 @@
 				layoutPageTemplateStructureModel = dataFactory.newLayoutPageTemplateStructureModel(contentLayoutModel)
 			/>
 
-			${dataFactory.toInsertSQL(contentLayoutModel)}
-
-			${dataFactory.toInsertSQL(dataFactory.newLayoutFriendlyURLModel(contentLayoutModel))}
-
-			${dataFactory.toInsertSQL(layoutPageTemplateStructureModel)}
-
 			<#list fragmentEntryLinkModels as fragmentEntryLinkModel>
 				${dataFactory.toInsertSQL(fragmentEntryLinkModel)}
 
 				${dataFactory.toInsertSQL(dataFactory.newLayoutClassedModelUsageModel(groupId, contentLayoutModel.plid, "${fragmentEntryLinkModel.fragmentEntryLinkId}", journalArticleResourceModel))}
 			</#list>
+
+			${dataFactory.toInsertSQL(dataFactory.newLayoutFriendlyURLModel(contentLayoutModel))}
+
+			${dataFactory.toInsertSQL(contentLayoutModel)}
+
+			${dataFactory.toInsertSQL(layoutPageTemplateStructureModel)}
 
 			${dataFactory.toInsertSQL(dataFactory.newLayoutPageTemplateStructureRelModel(contentLayoutModel, layoutPageTemplateStructureModel, fragmentEntryLinkModels))}
 

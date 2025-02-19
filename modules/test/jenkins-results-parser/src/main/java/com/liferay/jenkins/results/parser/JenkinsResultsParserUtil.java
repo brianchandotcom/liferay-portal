@@ -4895,16 +4895,6 @@ public class JenkinsResultsParserUtil {
 				}
 
 				if ((httpAuthorization == null) &&
-					url.matches("https://liferay.spiraservice.net.+")) {
-
-					Properties buildProperties = getBuildProperties();
-
-					httpAuthorization = new BasicHTTPAuthorization(
-						buildProperties.getProperty("spira.admin.user.token"),
-						buildProperties.getProperty("spira.admin.user.name"));
-				}
-
-				if ((httpAuthorization == null) &&
 					url.matches(
 						"https?:\\/\\/test-[135]-\\d+(?:\\.liferay\\.com)?.*?" +
 							"|http:\\/\\/localhost:8081.*?")) {

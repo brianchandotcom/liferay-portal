@@ -54,6 +54,7 @@ Require-Capability:\
 	osgi.extender;\
 		filter:="(&(osgi.extender=osgi.configurator)(version>=1.0)(!(version>=2.0)))"
 -include ~../common.bnd
+-fixupmessages.directory: Classes found in the wrong directory: ...;is:=ignore
 -removeheaders:\
 	Bnd-LastModified,\
 	DSTAMP,\

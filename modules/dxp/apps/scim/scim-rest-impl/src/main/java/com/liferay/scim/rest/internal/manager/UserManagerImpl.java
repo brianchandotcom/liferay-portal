@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
@@ -295,12 +294,16 @@ public class UserManagerImpl implements UserManager {
 
 					ExpressionNode expressionNode = (ExpressionNode)node;
 
-					if (expressionNode != null) {
-						if (expressionNode.getAttributeValue().contains("displayName")) {
-							searchContext.setAttribute(
-								"name", expressionNode.getValue());
-						}
+					if ((expressionNode != null) &&
+						expressionNode.getAttributeValue(
+						).contains(
+							"displayName"
+						)) {
+
+						searchContext.setAttribute(
+							"name", expressionNode.getValue());
 					}
+
 					searchContext.setUserId(serviceContext.getUserId());
 				}
 			).build();
@@ -386,11 +389,21 @@ public class UserManagerImpl implements UserManager {
 					ExpressionNode expressionNode = (ExpressionNode)node;
 
 					if (expressionNode != null) {
-						if (expressionNode.getAttributeValue().contains("externalId")) {
+						if (expressionNode.getAttributeValue(
+							).contains(
+								"externalId"
+							)) {
+
 							searchContext.setAttribute(
-								"externalReferenceCode", expressionNode.getValue());
+								"externalReferenceCode",
+								expressionNode.getValue());
 						}
-						if (expressionNode.getAttributeValue().contains("userName")) {
+
+						if (expressionNode.getAttributeValue(
+							).contains(
+								"userName"
+							)) {
+
 							searchContext.setAttribute(
 								"screenName", expressionNode.getValue());
 						}

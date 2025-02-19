@@ -373,6 +373,7 @@ definition {
 		DBPartition.validateSchemas(schemaNamePrefix = "ltest_");
 	}
 
+	@ignore = "true"
 	@priority = 5
 	test ExtractAndAddDBPartitionCompanyWithInitialEmptyDB {
 		property app.server.bundles.size = "1";

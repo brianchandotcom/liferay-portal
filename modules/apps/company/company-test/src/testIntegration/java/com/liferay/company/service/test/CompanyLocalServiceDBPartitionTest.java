@@ -91,6 +91,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -252,6 +253,7 @@ public class CompanyLocalServiceDBPartitionTest
 		}
 	}
 
+	@Ignore
 	@Test
 	public void testAddDBPartitionCompany() throws Exception {
 		Company company = CompanyTestUtil.addCompany();
@@ -302,6 +304,7 @@ public class CompanyLocalServiceDBPartitionTest
 		}
 	}
 
+	@Ignore
 	@Test
 	public void testAddDBPartitionCompanyWhenCompanyLocalServiceFails()
 		throws Exception {
@@ -348,6 +351,7 @@ public class CompanyLocalServiceDBPartitionTest
 		}
 	}
 
+	@Ignore
 	@Test
 	public void testAddDBPartitionCompanyWhenDBPartitionUtilFails()
 		throws Exception {

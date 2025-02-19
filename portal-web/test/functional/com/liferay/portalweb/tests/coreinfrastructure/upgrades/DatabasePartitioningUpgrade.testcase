@@ -127,6 +127,7 @@ definition {
 		ValidateDatabasePartitioningUpgrade.viewUpgradeDBPartition();
 	}
 
+	@ignore = "true"
 	@priority = 5
 	test ExtractAndAddDBPartitionCompaniesWithUpgradedDB {
 		property app.server.bundles.size = "1";

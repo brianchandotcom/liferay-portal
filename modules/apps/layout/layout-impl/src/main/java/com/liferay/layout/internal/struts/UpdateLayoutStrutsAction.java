@@ -421,10 +421,10 @@ public class UpdateLayoutStrutsAction implements StrutsAction {
 				0, ActionKeys.ADD_TO_PAGE);
 		}
 
+		Set<String> categoryNames = portlet.getCategoryNames();
+
 		PortletCategory portletCategory = (PortletCategory)WebAppPool.get(
 			themeDisplay.getCompanyId(), WebKeys.PORTLET_CATEGORY);
-
-		Set<String> categoryNames = portlet.getCategoryNames();
 
 		for (PortletCategory curPortletCategory :
 				portletCategory.getCategories()) {

@@ -491,8 +491,8 @@ public abstract class BaseDocumentMetadataSetResourceTestCase {
 			testDeleteAssetLibraryDocumentMetadataSetByExternalReferenceCode_addDocumentMetadataSet()
 		throws Exception {
 
-		return documentMetadataSetResource.postSiteDocumentMetadataSet(
-			testGroup.getGroupId(), randomDocumentMetadataSet());
+		return documentMetadataSetResource.postAssetLibraryDocumentMetadataSet(
+			testDepotEntry.getDepotEntryId(), randomDocumentMetadataSet());
 	}
 
 	@Test
@@ -524,8 +524,8 @@ public abstract class BaseDocumentMetadataSetResourceTestCase {
 			testGetAssetLibraryDocumentMetadataSetByExternalReferenceCode_addDocumentMetadataSet()
 		throws Exception {
 
-		return documentMetadataSetResource.postSiteDocumentMetadataSet(
-			testGroup.getGroupId(), randomDocumentMetadataSet());
+		return documentMetadataSetResource.postAssetLibraryDocumentMetadataSet(
+			testDepotEntry.getDepotEntryId(), randomDocumentMetadataSet());
 	}
 
 	@Test
@@ -745,8 +745,8 @@ public abstract class BaseDocumentMetadataSetResourceTestCase {
 			testPutAssetLibraryDocumentMetadataSetByExternalReferenceCode_addDocumentMetadataSet()
 		throws Exception {
 
-		return documentMetadataSetResource.postSiteDocumentMetadataSet(
-			testGroup.getGroupId(), randomDocumentMetadataSet());
+		return documentMetadataSetResource.postAssetLibraryDocumentMetadataSet(
+			testDepotEntry.getDepotEntryId(), randomDocumentMetadataSet());
 	}
 
 	@Test

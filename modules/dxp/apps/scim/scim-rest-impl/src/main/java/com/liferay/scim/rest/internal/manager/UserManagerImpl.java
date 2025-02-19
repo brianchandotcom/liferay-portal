@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
@@ -73,6 +74,7 @@ import org.wso2.charon3.core.objects.Group;
 import org.wso2.charon3.core.objects.User;
 import org.wso2.charon3.core.objects.plainobjects.GroupsGetResponse;
 import org.wso2.charon3.core.objects.plainobjects.UsersGetResponse;
+import org.wso2.charon3.core.utils.codeutils.ExpressionNode;
 import org.wso2.charon3.core.utils.codeutils.Node;
 import org.wso2.charon3.core.utils.codeutils.SearchRequest;
 
@@ -363,12 +365,27 @@ public class UserManagerImpl implements UserManager {
 				count
 			).withSearchContext(
 				searchContext -> {
+					searchContext.setAndSearch(true);
 					searchContext.setAttribute(Field.GROUP_ID, 0L);
 					searchContext.setAttribute(
 						Field.STATUS, WorkflowConstants.STATUS_APPROVED);
 					searchContext.setAttribute(
 						"expando__keyword__custom_fields__scimClientId",
 						scimClientId);
+
+					ExpressionNode expressionNode = (ExpressionNode)node;
+
+					if (expressionNode != null) {
+						if (expressionNode.getAttributeValue().contains("externalId")) {
+							searchContext.setAttribute(
+								"externalReferenceCode", expressionNode.getValue());
+						}
+						if (expressionNode.getAttributeValue().contains("userName")) {
+							searchContext.setAttribute(
+								"screenName", expressionNode.getValue());
+						}
+					}
+
 					searchContext.setUserId(serviceContext.getUserId());
 				}
 			).build();

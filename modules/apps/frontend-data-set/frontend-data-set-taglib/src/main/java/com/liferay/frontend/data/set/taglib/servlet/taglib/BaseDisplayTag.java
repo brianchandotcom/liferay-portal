@@ -208,11 +208,11 @@ public class BaseDisplayTag extends AttributesTagSupport {
 		_portletURL = null;
 		_propsTransformer = null;
 		_propsTransformerServletContext = null;
-		fdsSerializer = null;
 		_randomNamespace = null;
 		_selectedItems = null;
 		_uniformActionsDisplay = false;
 		_viewsJSONArray = null;
+		fdsSerializer = null;
 	}
 
 	protected void doClearTag() {

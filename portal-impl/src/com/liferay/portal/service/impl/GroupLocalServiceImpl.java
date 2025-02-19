@@ -161,6 +161,7 @@ import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.comparator.GroupIdComparator;
 import com.liferay.portal.kernel.util.comparator.GroupNameComparator;
+import com.liferay.portal.model.impl.GroupModelImpl;
 import com.liferay.portal.model.impl.LayoutImpl;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.service.base.GroupLocalServiceBaseImpl;
@@ -5429,7 +5430,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(
 				"select liveGroupId, groupId from Group_ where liveGroupId " +
-					"!= 0");
+					"!= 0" + GroupModelImpl.ORDER_BY_SQL);
 
 			sqlQuery.addScalar("liveGroupId", Type.LONG);
 			sqlQuery.addScalar("groupId", Type.LONG);

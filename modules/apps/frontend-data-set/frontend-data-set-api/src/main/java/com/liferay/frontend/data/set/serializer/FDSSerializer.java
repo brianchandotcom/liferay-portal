@@ -7,6 +7,7 @@ package com.liferay.frontend.data.set.serializer;
 
 import com.liferay.frontend.data.set.filter.FDSFilter;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
+import com.liferay.frontend.data.set.model.FDSSortItemList;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.portal.kernel.json.JSONArray;
 
@@ -40,6 +41,9 @@ public interface FDSSerializer {
 		String fdsName, HttpServletRequest httpServletRequest);
 
 	public List<FDSActionDropdownItem> serializeItemsActions(
+		String fdsName, HttpServletRequest httpServletRequest);
+
+	public FDSSortItemList serializeSorts(
 		String fdsName, HttpServletRequest httpServletRequest);
 
 	public JSONArray serializeViews(

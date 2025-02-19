@@ -9,39 +9,52 @@ import fs from 'fs/promises';
 import * as path from 'path';
 import {getComparator} from 'playwright-core/lib/utils';
 
+import {accountSettingsPagesTest} from '../../fixtures/accountSettingsPagesTest';
+import {accountsPagesTest} from '../../fixtures/accountsPagesTest';
+import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
 import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {depotAdminPageTest} from '../../fixtures/depotAdminPageTest';
 import {documentLibraryPagesTest} from '../../fixtures/documentLibraryPages.fixtures';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {objectPagesTest} from '../../fixtures/objectPagesTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {pageTemplatesPagesTest} from '../../fixtures/pageTemplatesPagesTest';
 import {productMenuPageTest} from '../../fixtures/productMenuPageTest';
+import {usersAndOrganizationsPagesTest} from '../../fixtures/usersAndOrganizationsPagesTest';
 import {wikiPagesTest} from '../../fixtures/wikiPagesTest';
 import getRandomString from '../../utils/getRandomString';
+import performLogin, {performLogout, userData} from '../../utils/performLogin';
 import {getTempDir} from '../../utils/temp';
+import {waitForAlert} from '../../utils/waitForAlert';
+import {readFileFromZip} from '../../utils/zip';
 import {companyExportImportPageTest} from './fixtures/companyExportImportPagesTest';
 import {exportImportPagesTest} from './fixtures/exportImportPagesTest';
 import {stagingPageTest} from './fixtures/stagingPageTest';
 import {openImportFieldset} from './utils/openImportFieldset';
 
 export const test = mergeTests(
+	accountSettingsPagesTest,
+	accountsPagesTest,
+	applicationsMenuPageTest,
 	companyExportImportPageTest,
 	dataApiHelpersTest,
 	depotAdminPageTest,
 	documentLibraryPagesTest,
+	exportImportPagesTest,
 	featureFlagsTest({
 		'LPD-35013': {enabled: true},
 		'LPD-35914': {enabled: false, system: true},
 	}),
-	exportImportPagesTest,
 	isolatedSiteTest,
 	loginTest(),
+	objectPagesTest,
 	pageEditorPagesTest,
 	pageTemplatesPagesTest,
 	productMenuPageTest,
 	stagingPageTest,
+	usersAndOrganizationsPagesTest,
 	wikiPagesTest
 );
 
@@ -375,3 +388,331 @@ test('can see corresponding elements at site level', async ({
 
 	await expect(exportImportPage.page.getByText('Copy as New:')).toBeVisible();
 });
+
+test(
+	'can import custom object entries with original creator, and creator user does exist in the current environment',
+	{
+		tag: '@LPD-43217',
+	},
+	async ({
+		apiHelpers,
+		applicationsMenuPage,
+		companyExportImportPage,
+		editUserPage,
+		page,
+		usersAndOrganizationsPage,
+		viewObjectDefinitionsPage,
+	}) => {
+		const newObjectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFolderExternalReferenceCode: 'default',
+				status: {code: 0},
+			});
+
+		const user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+		userData[user.alternateName] = {
+			name: user.givenName,
+			password: 'test',
+			surname: user.familyName,
+		};
+
+		await applicationsMenuPage.goToUsersAndOrganizations();
+		await usersAndOrganizationsPage.goToUser(user.name);
+		await editUserPage.rolesLink.click();
+
+		await editUserPage.selectRegularRolesButton.click();
+
+		await editUserPage
+			.selectRegularRolesChooseButton('Administrator')
+			.click();
+
+		await editUserPage.selectRegularRolesButton.click();
+
+		await editUserPage.selectRegularRolesChooseButton('Power User').click();
+
+		await editUserPage.saveButton.click();
+
+		await performLogout(page);
+
+		await performLogin(page, user.alternateName);
+
+		await applicationsMenuPage.goToObjects();
+		await viewObjectDefinitionsPage.clickEditObjectDefinitionLink(
+			newObjectDefinition.name
+		);
+		await page.getByLabel('Panel Link', {exact: true}).click();
+		await page.getByRole('option', {name: 'Object'}).click();
+		await page.getByRole('button', {name: 'Save'}).click();
+		await applicationsMenuPage.goToObjectDefinition(
+			newObjectDefinition.name
+		);
+		await page.getByText('Add ' + newObjectDefinition.name).click();
+		await page.getByLabel('textField').fill('testText');
+		await page.getByRole('button', {name: 'Save'}).click();
+		await waitForAlert(
+			page,
+			'Success:Your request completed successfully.'
+		);
+
+		const exportFilePath = await companyExportImportPage.export(
+			newObjectDefinition.name + ' 1 Items'
+		);
+
+		await applicationsMenuPage.goToObjectDefinition(
+			newObjectDefinition.name
+		);
+		await page.getByRole('button', {name: 'Actions'}).click();
+		await page.getByRole('menuitem', {name: 'Delete'}).click();
+		await page.getByRole('button', {name: 'Delete'}).click();
+		await waitForAlert(
+			page,
+			'Success:Your request completed successfully.'
+		);
+
+		await performLogout(page);
+
+		await performLogin(page, 'test');
+
+		await companyExportImportPage.import(exportFilePath);
+
+		await applicationsMenuPage.goToObjectDefinition(
+			newObjectDefinition.name
+		);
+		await expect(
+			page.getByRole('cell', {
+				name: user.givenName + ' ' + user.familyName,
+			})
+		).toBeVisible();
+
+		await viewObjectDefinitionsPage.goto();
+
+		await viewObjectDefinitionsPage.clickObjectDefinitionActionButton(
+			newObjectDefinition.label['en_US']
+		);
+
+		await viewObjectDefinitionsPage.deleteObjectDefinitionOption.click();
+		await viewObjectDefinitionsPage.page
+			.getByPlaceholder('Confirm Object Definition Name')
+			.fill(newObjectDefinition.name);
+		await viewObjectDefinitionsPage.page
+			.getByRole('button', {name: 'Delete'})
+			.click();
+	}
+);
+
+test(
+	'can import custom object entries with original creator, but creator user does not exist in the current environment',
+	{
+		tag: '@LPD-43217',
+	},
+	async ({
+		apiHelpers,
+		applicationsMenuPage,
+		companyExportImportPage,
+		editUserPage,
+		page,
+		usersAndOrganizationsPage,
+		viewObjectDefinitionsPage,
+	}) => {
+		const newObjectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFolderExternalReferenceCode: 'default',
+				status: {code: 0},
+			});
+
+		const user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+		userData[user.alternateName] = {
+			name: user.givenName,
+			password: 'test',
+			surname: user.familyName,
+		};
+
+		await applicationsMenuPage.goToUsersAndOrganizations();
+		await usersAndOrganizationsPage.goToUser(user.name);
+		await editUserPage.rolesLink.click();
+
+		await editUserPage.selectRegularRolesButton.click();
+
+		await editUserPage
+			.selectRegularRolesChooseButton('Administrator')
+			.click();
+
+		await editUserPage.selectRegularRolesButton.click();
+
+		await editUserPage.selectRegularRolesChooseButton('Power User').click();
+
+		await editUserPage.saveButton.click();
+
+		await performLogout(page);
+
+		await performLogin(page, user.alternateName);
+
+		await applicationsMenuPage.goToObjects();
+		await viewObjectDefinitionsPage.clickEditObjectDefinitionLink(
+			newObjectDefinition.name
+		);
+		await page.getByLabel('Panel Link', {exact: true}).click();
+		await page.getByRole('option', {name: 'Object'}).click();
+		await page.getByRole('button', {name: 'Save'}).click();
+		await applicationsMenuPage.goToObjectDefinition(
+			newObjectDefinition.name
+		);
+		await page.getByText('Add ' + newObjectDefinition.name).click();
+		await page.getByLabel('textField').fill('testText');
+		await page.getByRole('button', {name: 'Save'}).click();
+		await waitForAlert(
+			page,
+			'Success:Your request completed successfully.'
+		);
+
+		const exportFilePath = await companyExportImportPage.export(
+			newObjectDefinition.name + ' 1 Items'
+		);
+
+		await applicationsMenuPage.goToObjectDefinition(
+			newObjectDefinition.name
+		);
+		await page.getByRole('button', {name: 'Actions'}).click();
+		await page.getByRole('menuitem', {name: 'Delete'}).click();
+		await page.getByRole('button', {name: 'Delete'}).click();
+		await waitForAlert(
+			page,
+			'Success:Your request completed successfully.'
+		);
+
+		await performLogout(page);
+		await performLogin(page, 'test');
+		await apiHelpers.headlessAdminUser.deleteUserAccount(Number(user.id));
+
+		await companyExportImportPage.import(exportFilePath);
+
+		await applicationsMenuPage.goToObjectDefinition(
+			newObjectDefinition.name
+		);
+		await expect(page.getByRole('cell', {name: 'Test Test'})).toBeVisible();
+
+		await viewObjectDefinitionsPage.goto();
+
+		await viewObjectDefinitionsPage.clickObjectDefinitionActionButton(
+			newObjectDefinition.label['en_US']
+		);
+
+		await viewObjectDefinitionsPage.deleteObjectDefinitionOption.click();
+		await viewObjectDefinitionsPage.page
+			.getByPlaceholder('Confirm Object Definition Name')
+			.fill(newObjectDefinition.name);
+		await viewObjectDefinitionsPage.page
+			.getByRole('button', {name: 'Delete'})
+			.click();
+	}
+);
+
+test(
+	'can import custom object entries with current user as creator',
+	{
+		tag: '@LPD-43217',
+	},
+	async ({
+		apiHelpers,
+		applicationsMenuPage,
+		companyExportImportPage,
+		editUserPage,
+		page,
+		usersAndOrganizationsPage,
+		viewObjectDefinitionsPage,
+	}) => {
+		const newObjectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFolderExternalReferenceCode: 'default',
+				status: {code: 0},
+			});
+
+		const user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+		userData[user.alternateName] = {
+			name: user.givenName,
+			password: 'test',
+			surname: user.familyName,
+		};
+
+		await applicationsMenuPage.goToUsersAndOrganizations();
+		await usersAndOrganizationsPage.goToUser(user.name);
+		await editUserPage.rolesLink.click();
+
+		await editUserPage.selectRegularRolesButton.click();
+
+		await editUserPage
+			.selectRegularRolesChooseButton('Administrator')
+			.click();
+
+		await editUserPage.selectRegularRolesButton.click();
+
+		await editUserPage.selectRegularRolesChooseButton('Power User').click();
+
+		await editUserPage.saveButton.click();
+
+		await performLogout(page);
+
+		await performLogin(page, user.alternateName);
+
+		await applicationsMenuPage.goToObjects();
+		await viewObjectDefinitionsPage.clickEditObjectDefinitionLink(
+			newObjectDefinition.name
+		);
+		await page.getByLabel('Panel Link', {exact: true}).click();
+		await page.getByRole('option', {name: 'Object'}).click();
+		await page.getByRole('button', {name: 'Save'}).click();
+		await applicationsMenuPage.goToObjectDefinition(
+			newObjectDefinition.name
+		);
+		await page.getByText('Add ' + newObjectDefinition.name).click();
+		await page.getByLabel('textField').fill('testText');
+		await page.getByRole('button', {name: 'Save'}).click();
+		await waitForAlert(
+			page,
+			'Success:Your request completed successfully.'
+		);
+
+		const exportFilePath = await companyExportImportPage.export(
+			newObjectDefinition.name + ' 1 Items'
+		);
+
+		await applicationsMenuPage.goToObjectDefinition(
+			newObjectDefinition.name
+		);
+		await page.getByRole('button', {name: 'Actions'}).click();
+		await page.getByRole('menuitem', {name: 'Delete'}).click();
+		await page.getByRole('button', {name: 'Delete'}).click();
+		await waitForAlert(
+			page,
+			'Success:Your request completed successfully.'
+		);
+
+		await performLogout(page);
+
+		await performLogin(page, 'test');
+
+		await companyExportImportPage.import(exportFilePath, false, true);
+
+		await applicationsMenuPage.goToObjectDefinition(
+			newObjectDefinition.name
+		);
+		await expect(page.getByRole('cell', {name: 'Test Test'})).toBeVisible();
+
+		await viewObjectDefinitionsPage.goto();
+
+		await viewObjectDefinitionsPage.clickObjectDefinitionActionButton(
+			newObjectDefinition.label['en_US']
+		);
+
+		await viewObjectDefinitionsPage.deleteObjectDefinitionOption.click();
+		await viewObjectDefinitionsPage.page
+			.getByPlaceholder('Confirm Object Definition Name')
+			.fill(newObjectDefinition.name);
+		await viewObjectDefinitionsPage.page
+			.getByRole('button', {name: 'Delete'})
+			.click();
+	}
+);

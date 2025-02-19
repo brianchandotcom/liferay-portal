@@ -415,6 +415,13 @@ export class ApplicationsMenuPage {
 		await this.objectsMenuItem.click();
 	}
 
+	async goToObjectDefinition(objectDefinitionName: string) {
+		await this.goToControlPanel();
+		await this.page
+			.getByRole('menuitem', {name: objectDefinitionName})
+			.click();
+	}
+
 	async goToPicklists() {
 		await this.goToControlPanel();
 		await this.picklistsMenuItem.click();

@@ -122,6 +122,7 @@ export class CompanyExportImportPage {
 		filePath: string,
 		includePermissions: boolean = false,
 		expectedErrorMessage?: string
+		useCurrentUser: boolean = false
 	): Promise<void> {
 		await this.applicationsMenuPage.goToImport();
 
@@ -141,6 +142,10 @@ export class CompanyExportImportPage {
 
 		if (includePermissions) {
 			await this.exportImportPage.importPermissionsButton.click();
+		}
+
+		if (useCurrentUser) {
+			await this.exportImportPage.useCurrentUserAsAuthorCheckbox.check();
 		}
 
 		await this.exportImportPage.importButton.click();

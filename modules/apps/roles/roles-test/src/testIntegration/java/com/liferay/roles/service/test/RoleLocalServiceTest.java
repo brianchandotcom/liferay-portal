@@ -111,7 +111,7 @@ public class RoleLocalServiceTest {
 
 	@Test
 	@TestInfo("LPS-159272")
-	public void testAddGroupRoleWithLoggingAuditMessageProcessor()
+	public void testLoggingAuditMessageProcessorConfigurationEnabled()
 		throws Exception {
 
 		PrintStream printStream = System.out;
@@ -126,7 +126,7 @@ public class RoleLocalServiceTest {
 						"outputToConsole", true
 					).build())) {
 
-			_testAddGroupRoleWithLoggingAuditMessageProcessor();
+			_testLoggingAuditMessageProcessorConfigurationEnabled();
 		}
 		finally {
 			System.setOut(printStream);
@@ -742,7 +742,7 @@ public class RoleLocalServiceTest {
 			RandomTestUtil.randomString(), null, new ServiceContext());
 	}
 
-	private void _testAddGroupRoleWithLoggingAuditMessageProcessor()
+	private void _testLoggingAuditMessageProcessorConfigurationEnabled()
 		throws Exception {
 
 		ByteArrayOutputStream byteArrayOutputStream =

@@ -5,11 +5,53 @@
 
 package com.liferay.portlet.asset.service.impl;
 
+import com.liferay.asset.kernel.model.AssetVocabularyGroupRel;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portlet.asset.service.base.AssetVocabularyGroupRelServiceBaseImpl;
+import com.liferay.portlet.asset.service.permission.AssetVocabularyPermission;
+
+import java.util.List;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Pei-Jung Lan
  */
 public class AssetVocabularyGroupRelServiceImpl
 	extends AssetVocabularyGroupRelServiceBaseImpl {
+
+	@Override
+	public AssetVocabularyGroupRel addAssetVocabularyGroupRel(
+			long groupId, long vocabularyId)
+		throws PortalException {
+
+		AssetVocabularyPermission.check(
+			getPermissionChecker(), vocabularyId, ActionKeys.UPDATE);
+
+		return assetVocabularyGroupRelLocalService.addAssetVocabularyGroupRel(
+			groupId, vocabularyId);
+	}
+
+	@Override
+	public List<AssetVocabularyGroupRel>
+			getAssetVocabularyGroupRelsByVocabularyId(long vocabularyId)
+		throws PortalException {
+
+		AssetVocabularyPermission.check(
+			getPermissionChecker(), vocabularyId, ActionKeys.VIEW);
+
+		return assetVocabularyGroupRelLocalService.
+			getAssetVocabularyGroupRelsByVocabularyId(vocabularyId);
+	}
+
+	@Override
+	public void setAssetVocabularyGroupRels(long vocabularyId, long[] groupIds)
+		throws PortalException {
+
+		AssetVocabularyPermission.check(
+			getPermissionChecker(), vocabularyId, ActionKeys.UPDATE);
+
+		assetVocabularyGroupRelLocalService.setAssetVocabularyGroupRels(
+			vocabularyId, groupIds);
+	}
+
 }

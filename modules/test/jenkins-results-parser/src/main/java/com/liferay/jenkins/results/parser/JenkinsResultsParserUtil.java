@@ -851,6 +851,13 @@ public class JenkinsResultsParserUtil {
 
 			httpURLConnection.setRequestMethod("HEAD");
 
+			BasicHTTPAuthorization httpAuthorizationHeader =
+				_getHTTPAuthorization(
+					"jenkins.admin.user.token", "jenkins.admin.user.name");
+
+			httpURLConnection.setRequestProperty(
+				"Authorization", httpAuthorizationHeader.toString());
+
 			httpURLConnection.connect();
 
 			int responseCode = httpURLConnection.getResponseCode();
@@ -4884,12 +4891,9 @@ public class JenkinsResultsParserUtil {
 				if ((httpAuthorizationHeader == null) &&
 					url.startsWith("https://release.liferay.com")) {
 
-					Properties buildProperties = getBuildProperties();
-
-					httpAuthorizationHeader = new BasicHTTPAuthorization(
-						buildProperties.getProperty(
-							"jenkins.admin.user.password"),
-						buildProperties.getProperty("jenkins.admin.user.name"));
+					httpAuthorizationHeader = _getHTTPAuthorization(
+						"jenkins.admin.user.password",
+						"jenkins.admin.user.name");
 				}
 
 				if ((httpAuthorizationHeader == null) &&
@@ -4911,14 +4915,8 @@ public class JenkinsResultsParserUtil {
 						url = getLocalURL(url);
 					}
 
-					Properties buildProperties = getBuildProperties();
-
-					String jenkinsAdminUserToken = buildProperties.getProperty(
-						"jenkins.admin.user.token");
-
-					httpAuthorizationHeader = new BasicHTTPAuthorization(
-						jenkinsAdminUserToken,
-						buildProperties.getProperty("jenkins.admin.user.name"));
+					httpAuthorizationHeader = _getHTTPAuthorization(
+						"jenkins.admin.user.token", "jenkins.admin.user.name");
 				}
 
 				boolean testray1Request = false;
@@ -6627,6 +6625,17 @@ public class JenkinsResultsParserUtil {
 		}
 
 		return _gitWorkingDirectoriesJSONArray;
+	}
+
+	private static BasicHTTPAuthorization _getHTTPAuthorization(
+			String password, String username)
+		throws IOException {
+
+		Properties buildProperties = getBuildProperties();
+
+		return new BasicHTTPAuthorization(
+			buildProperties.getProperty(password),
+			buildProperties.getProperty(username));
 	}
 
 	private static Set<Set<String>> _getOrderedOptSets(String... opts) {

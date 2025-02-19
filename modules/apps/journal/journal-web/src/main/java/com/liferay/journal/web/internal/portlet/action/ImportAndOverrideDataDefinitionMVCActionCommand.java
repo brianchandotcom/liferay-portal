@@ -72,7 +72,7 @@ public class ImportAndOverrideDataDefinitionMVCActionCommand
 			DDMStructure ddmStructure =
 				_ddmStructureLocalService.getDDMStructure(dataDefinitionId);
 
-			DataDefinitionUtil.validateDefinitionFields(
+			DataDefinitionUtil.updateDataDefinitionFields(
 				dataDefinition, ddmStructure);
 
 			dataDefinition.setExternalReferenceCode(

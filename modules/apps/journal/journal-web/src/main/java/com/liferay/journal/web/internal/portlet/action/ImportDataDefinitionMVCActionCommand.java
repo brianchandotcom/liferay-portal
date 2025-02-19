@@ -62,7 +62,7 @@ public class ImportDataDefinitionMVCActionCommand extends BaseMVCActionCommand {
 					ParamUtil.getString(actionRequest, "name")
 				).build());
 
-			DataDefinitionUtil.validateDefinitionFields(dataDefinition, null);
+			DataDefinitionUtil.updateDataDefinitionFields(dataDefinition, null);
 
 			DataDefinitionResource.Builder dataDefinitionResourcedBuilder =
 				_dataDefinitionResourceFactory.create();

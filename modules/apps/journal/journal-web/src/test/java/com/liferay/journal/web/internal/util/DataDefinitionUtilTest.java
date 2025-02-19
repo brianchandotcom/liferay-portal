@@ -46,10 +46,10 @@ public class DataDefinitionUtilTest {
 	}
 
 	@Test
-	public void testValidateDefinitionFields() {
-		_testValidateDefinitionFieldsWithExistingDataDefinition();
-		_testValidateDefinitionFieldsWithExistingInvalidName();
-		_testValidateDefinitionFieldsWithNewDataDefinition();
+	public void testUpdateDataDefinitionFields() {
+		_testUpdateDataDefinitionFieldsWithExistingDataAndUpdateDefinition();
+		_testUpdateDataDefinitionFieldsWithExistingInvalidName();
+		_testUpdateDataDefinitionFieldsWithNewDataAndUpdateDefinition();
 	}
 
 	private DataDefinition _getDataDefinition() {
@@ -138,13 +138,13 @@ public class DataDefinitionUtilTest {
 		return ddmStructure;
 	}
 
-	private void _testValidateDefinitionFieldsWithExistingDataDefinition() {
+	private void _testUpdateDataDefinitionFieldsWithExistingDataAndUpdateDefinition() {
 		DataDefinition dataDefinition = _getDataDefinition();
 
 		String existingFieldName = DDMFormFieldUtil.getDDMFormFieldName(
 			_fieldName);
 
-		DataDefinitionUtil.validateDefinitionFields(
+		DataDefinitionUtil.updateDataDefinitionFields(
 			dataDefinition, _getDDMStructure(existingFieldName));
 
 		String newFieldName = _getDataDefinitionFieldName(dataDefinition);
@@ -154,10 +154,10 @@ public class DataDefinitionUtilTest {
 		Assert.assertEquals(existingFieldName, newFieldName);
 	}
 
-	private void _testValidateDefinitionFieldsWithExistingInvalidName() {
+	private void _testUpdateDataDefinitionFieldsWithExistingInvalidName() {
 		DataDefinition dataDefinition = _getDataDefinition();
 
-		DataDefinitionUtil.validateDefinitionFields(
+		DataDefinitionUtil.updateDataDefinitionFields(
 			dataDefinition, _getDDMStructure(_fieldName));
 
 		String newFieldName = _getDataDefinitionFieldName(dataDefinition);
@@ -165,10 +165,10 @@ public class DataDefinitionUtilTest {
 		Assert.assertTrue(DataDefinitionUtil.isValidFieldName(newFieldName));
 	}
 
-	private void _testValidateDefinitionFieldsWithNewDataDefinition() {
+	private void _testUpdateDataDefinitionFieldsWithNewDataAndUpdateDefinition() {
 		DataDefinition dataDefinition = _getDataDefinition();
 
-		DataDefinitionUtil.validateDefinitionFields(dataDefinition, null);
+		DataDefinitionUtil.updateDataDefinitionFields(dataDefinition, null);
 
 		Assert.assertTrue(
 			DataDefinitionUtil.isValidFieldName(

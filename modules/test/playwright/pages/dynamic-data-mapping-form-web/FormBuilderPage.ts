@@ -9,6 +9,7 @@ import {waitForAlert} from '../../utils/waitForAlert';
 import {FormsPage} from './FormsPage';
 
 export class FormBuilderPage {
+	readonly copyButton: Locator;
 	readonly entriesTab: Locator;
 	readonly formsPage: FormsPage;
 	readonly formSettingsButton: Locator;
@@ -24,9 +25,11 @@ export class FormBuilderPage {
 	readonly requireCaptchaToggle: Locator;
 	readonly saveButton: Locator;
 	readonly settingsAdvancedTab: Locator;
+	readonly shareButton: Locator;
 	readonly unpublishButton: Locator;
 
 	constructor(page: Page) {
+		this.copyButton = page.getByLabel('Copy');
 		this.entriesTab = page.getByRole('button', {name: 'Entries'});
 		this.formsPage = new FormsPage(page);
 		this.formSettingsButton = page.getByRole('button', {name: 'Settings'});
@@ -47,6 +50,7 @@ export class FormBuilderPage {
 		this.requireCaptchaToggle = page.getByLabel('Require CAPTCHA');
 		this.saveButton = page.getByRole('button', {name: 'Save'});
 		this.settingsAdvancedTab = page.getByRole('tab', {name: 'Advanced'});
+		this.shareButton = page.getByRole('button', {name: 'Share'});
 		this.unpublishButton = page.getByRole('button', {
 			exact: true,
 			name: 'Unpublish',
@@ -71,6 +75,22 @@ export class FormBuilderPage {
 		await this.formTitle.fill(title);
 	}
 
+	async getFormSubmissionURL() {
+		await this.shareButton.click();
+
+		await this.copyButton.click();
+
+		const formSubmissionURL = await this.page.evaluate(() => {
+			const urlInput = document.querySelector(
+				'input.form-control[readonly]'
+			) as HTMLInputElement;
+
+			return urlInput.value;
+		});
+
+		return formSubmissionURL;
+	}
+
 	async goToNew(siteUrl?: Site['friendlyUrlPath']) {
 		await this.formsPage.goTo(siteUrl);
 
@@ -84,14 +104,5 @@ export class FormBuilderPage {
 			.locator('.ddm-field .form-group')
 			.getByLabel(fieldLabel, {exact: true})
 			.click({force: true});
-	}
-
-	async openFormSubmission() {
-		await this.page
-			.locator('#ToastAlertContainer')
-			.getByLabel('Close')
-			.click();
-
-		await this.openFormButton.click();
 	}
 }

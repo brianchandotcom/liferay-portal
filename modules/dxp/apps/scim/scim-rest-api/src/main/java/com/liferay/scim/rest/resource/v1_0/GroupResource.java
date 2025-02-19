@@ -46,7 +46,7 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface GroupResource {
 
-	public Object getV2Groups(Integer count, Integer startIndex)
+	public Object getV2Groups(Integer count, Integer startIndex, Filter filter)
 		throws Exception;
 
 	public Response postV2Group(Group group) throws Exception;

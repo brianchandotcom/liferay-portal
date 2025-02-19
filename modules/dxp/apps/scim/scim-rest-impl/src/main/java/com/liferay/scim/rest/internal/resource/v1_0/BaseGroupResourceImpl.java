@@ -59,6 +59,10 @@ public abstract class BaseGroupResourceImpl implements GroupResource {
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "filter"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "startIndex"
 			)
 		}
@@ -76,7 +80,8 @@ public abstract class BaseGroupResourceImpl implements GroupResource {
 			Integer count,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("startIndex")
-			Integer startIndex)
+			Integer startIndex,
+			@javax.ws.rs.core.Context Filter filter)
 		throws Exception {
 
 		return null;

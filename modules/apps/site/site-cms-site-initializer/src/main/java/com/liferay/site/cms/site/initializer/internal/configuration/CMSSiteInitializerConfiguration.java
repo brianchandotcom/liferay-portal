@@ -12,7 +12,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Sam Ziemer
  */
-@ExtendedObjectClassDefinition(category = "assets")
+@ExtendedObjectClassDefinition(category = "assets", generateUI = false)
 @Meta.OCD(
 	id = "com.liferay.site.cms.site.initializer.internal.configuration.CMSSiteInitializerConfiguration",
 	localization = "content/Language",

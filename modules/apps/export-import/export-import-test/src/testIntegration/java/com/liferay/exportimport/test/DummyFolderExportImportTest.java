@@ -7,7 +7,6 @@ package com.liferay.exportimport.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
-import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepositoryRegistryUtil;
@@ -24,7 +23,6 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Date;
@@ -157,8 +155,5 @@ public class DummyFolderExportImportTest
 
 	private static DummyFolderStagedModelDataHandler
 		_dummyFolderStagedModelDataHandler;
-
-	@Inject
-	private StagedModelDataHandler<DummyFolder> _stagedModelDataHandler;
 
 }

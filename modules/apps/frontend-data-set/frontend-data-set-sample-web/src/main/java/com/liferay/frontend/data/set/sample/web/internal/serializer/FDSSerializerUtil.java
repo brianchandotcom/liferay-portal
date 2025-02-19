@@ -14,13 +14,12 @@ import com.liferay.portal.kernel.module.service.Snapshot;
 public class FDSSerializerUtil {
 
 	public static FDSSerializer getFDSSerializer() {
-		return _fdsSerializerSnapshot.get();
+		return _snapshot.get();
 	}
 
-	private static final Snapshot<FDSSerializer> _fdsSerializerSnapshot =
-		new Snapshot<>(
-			FDSSerializerUtil.class, FDSSerializer.class,
-			"(frontend.data.set.serializer.type=" + FDSSerializer.TYPE_SYSTEM +
-				")");
+	private static final Snapshot<FDSSerializer> _snapshot = new Snapshot<>(
+		FDSSerializerUtil.class, FDSSerializer.class,
+		"(frontend.data.set.serializer.type=" + FDSSerializer.TYPE_SYSTEM +
+			")");
 
 }

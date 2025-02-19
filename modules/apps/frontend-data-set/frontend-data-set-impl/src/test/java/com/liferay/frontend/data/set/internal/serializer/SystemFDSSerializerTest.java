@@ -961,15 +961,6 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		ServiceTrackerMap
 			<String,
-			 List<ServiceTrackerCustomizerFactory.ServiceWrapper<FDSView>>>
-				viewServiceTrackerMap =
-					ServiceTrackerMapFactory.openMultiValueMap(
-						_bundleContext, FDSView.class, "frontend.data.set.name",
-						ServiceTrackerCustomizerFactory.<FDSView>serviceWrapper(
-							_bundleContext));
-
-		ServiceTrackerMap
-			<String,
 			 List
 				 <ServiceTrackerCustomizerFactory.ServiceWrapper
 					 <FDSViewContextContributor>>>
@@ -981,12 +972,21 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 									<FDSViewContextContributor>serviceWrapper(
 										_bundleContext));
 
-		_systemFDSSerializer.fdsViewRegistry = new FDSViewRegistryImpl(
-			viewServiceTrackerMap);
-
 		_systemFDSSerializer.fdsViewContextContributorRegistry =
 			new FDSViewContextContributorRegistryImpl(
 				viewContextContributorServiceTrackerMap);
+
+		ServiceTrackerMap
+			<String,
+			 List<ServiceTrackerCustomizerFactory.ServiceWrapper<FDSView>>>
+				viewServiceTrackerMap =
+					ServiceTrackerMapFactory.openMultiValueMap(
+						_bundleContext, FDSView.class, "frontend.data.set.name",
+						ServiceTrackerCustomizerFactory.<FDSView>serviceWrapper(
+							_bundleContext));
+
+		_systemFDSSerializer.fdsViewRegistry = new FDSViewRegistryImpl(
+			viewServiceTrackerMap);
 
 		mockLanguage();
 

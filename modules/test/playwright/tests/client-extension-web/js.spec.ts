@@ -469,7 +469,9 @@ test('JS client extension can be created with name translations while having a l
 
 		await clickAndExpectToBeVisible({
 			autoClick: true,
-			target: page.getByRole('menuitem', {name: 'spanish'}),
+			target: page.getByRole('menuitem', {
+				name: 'Not translated into Spanish.',
+			}),
 			trigger: page.getByRole('button', {
 				exact: false,
 				name: 'Current translation',
@@ -502,7 +504,9 @@ test('JS client extension can be created with name translations while having a l
 
 		await clickAndExpectToBeVisible({
 			autoClick: true,
-			target: page.getByRole('menuitem', {name: 'spanish'}),
+			target: page.getByRole('menuitem', {
+				name: 'Translated into Spanish.',
+			}),
 			trigger: page.getByRole('button', {
 				exact: false,
 				name: 'Current translation',

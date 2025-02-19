@@ -505,6 +505,8 @@ public class EvaluateLayoutStructureRulesStrutsActionTest {
 		mockHttpServletRequest.setParameter(
 			"layoutStructureRuleIds", layoutStructureRuleIds);
 		mockHttpServletRequest.setParameter(
+			"plid", String.valueOf(_layout.getPlid()));
+		mockHttpServletRequest.setParameter(
 			"segmentsExperienceId",
 			String.valueOf(
 				_segmentsExperienceLocalService.

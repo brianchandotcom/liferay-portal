@@ -169,17 +169,18 @@ public class UserResourceTest extends BaseUserResourceTestCase {
 	public void testGetV2Users() throws Exception {
 		UserTestUtil.addUser();
 
-		_assertListResponse(userResource.getV2Users(5, 0), 0, 0);
+		_assertListResponse(userResource.getV2Users(5, 0, null), 0, 0);
 
 		User user1 = testDeleteV2User_addUser();
 		User user2 = testDeleteV2User_addUser();
 
-		_assertListResponse(userResource.getV2Users(5, 0), 2, 2, user1, user2);
+		_assertListResponse(
+			userResource.getV2Users(5, 0, null), 2, 2, user1, user2);
 
 		User user3 = testDeleteV2User_addUser();
 
 		_assertListResponse(
-			userResource.getV2Users(5, 3), 3, 1, user1, user2, user3);
+			userResource.getV2Users(5, 3, null), 3, 1, user1, user2, user3);
 
 		long userId = GetterUtil.getLong(user3.getId());
 
@@ -191,12 +192,34 @@ public class UserResourceTest extends BaseUserResourceTestCase {
 
 		_reindexUser(userId);
 
-		_assertListResponse(userResource.getV2Users(5, 0), 2, 2, user1, user2);
+		_assertListResponse(
+			userResource.getV2Users(5, 0, null), 2, 2, user1, user2);
+
+		_assertListResponse(
+			userResource.getV2Users(
+				5, 0, "externalId eq \"" + user1.getExternalId() + "\""),
+			1, 1, user1);
+
+		_assertListResponse(
+			userResource.getV2Users(
+				5, 0,
+				"externalId eq \"" + RandomTestUtil.randomString() + "\""),
+			0, 0);
+
+		_assertListResponse(
+			userResource.getV2Users(
+				5, 0, "userName eq \"" + user1.getUserName() + "\""),
+			1, 1, user1);
+
+		_assertListResponse(
+			userResource.getV2Users(
+				5, 0, "userName eq \"" + RandomTestUtil.randomString() + "\""),
+			0, 0);
 
 		ConfigurationTestUtil.deleteConfiguration(_pid);
 
 		assertHttpResponseStatusCode(
-			404, userResource.getV2UsersHttpResponse(5, 0));
+			404, userResource.getV2UsersHttpResponse(5, 0, null));
 	}
 
 	@Override

@@ -33,7 +33,7 @@ liferay-learn-etc-spring-boot-oauth-application-user-agent:
         - c_lesson.everything
         - c_module.everything
         - c_p2s3examresult.everything
-        - c_p2s3examresultsynchronization.everything
+        - c_p2s3examresultssynchronization.everything
         - c_quiz.everything
     type: oAuthApplicationUserAgent
 liferay-learn-etc-spring-boot-object-action-course:

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Locator, Page} from '@playwright/test';
+import {Locator, Page, expect} from '@playwright/test';
 
 import {PORTLET_URLS} from '../../../utils/portletUrls';
 
@@ -18,6 +18,31 @@ export class SitesAdminPage {
 
 		this.searchButton = this.page.getByLabel('Search for', {exact: true});
 		this.searchInput = this.page.getByPlaceholder('Search for');
+	}
+
+	async assertActions(
+		siteName: string,
+		allowedActions = [],
+		disallowedActions = []
+	) {
+		await this.page
+			.getByRole('row', {name: siteName})
+			.getByLabel('Show Actions')
+			.click();
+
+		for (const allowedAction of allowedActions) {
+			await expect(
+				this.page.getByRole('menuitem', {name: allowedAction})
+			).toBeVisible();
+		}
+
+		for (const disallowedAction of disallowedActions) {
+			await expect(
+				this.page.getByRole('menuitem', {name: disallowedAction})
+			).not.toBeVisible();
+		}
+
+		await this.page.keyboard.press('Escape');
 	}
 
 	async goto(siteUrl?: Site['friendlyUrlPath']) {

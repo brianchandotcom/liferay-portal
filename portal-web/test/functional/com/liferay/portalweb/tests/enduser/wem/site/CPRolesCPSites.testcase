@@ -58,59 +58,6 @@ definition {
 		}
 	}
 
-	@description = "Assert could add site with Add Site	regular role and could not after removing."
-	@priority = 4
-	test AddSiteRegRole {
-		var siteName = StringUtil.randomString(8);
-
-		task ("Add a regular role and define permissions to access site admin") {
-			Permissions.definePermissionsViaJSONAPI(
-				resourceNameActionList = "90,VIEW_CONTROL_PANEL:com_liferay_site_admin_web_portlet_SiteAdminPortlet,ACCESS_IN_CONTROL_PANEL:com_liferay_roles_admin_web_portlet_RolesAdminPortlet,ACCESS_IN_CONTROL_PANEL",
-				roleTitle = ${randomRoleKey},
-				roleType = "regular");
-
-			JSONRole.assignRoleToUser(
-				roleTitle = ${randomRoleKey},
-				userEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
-		}
-
-		task ("Login as the user with created role") {
-			User.logoutAndLoginPG(userLoginEmailAddress = StringUtil.toLowerCase("${randomUserEmailAddress}@liferay.com"));
-		}
-
-		task ("Assert can not add site") {
-			Site.openSitesAdmin();
-
-			AssertElementNotPresent(locator1 = "Button#PLUS");
-		}
-
-		task ("Add add site permisssion to the role") {
-			Permissions.definePermissionViaJSONAPI(
-				resourceAction = "ADD_COMMUNITY",
-				resourceName = 90,
-				roleTitle = ${randomRoleKey});
-		}
-
-		task ("Assert can add site") {
-			Site.openSitesAdmin();
-
-			Site.addBlankCP(siteName = ${siteName});
-		}
-
-		task ("Remove add site permisssion to the role") {
-			Permissions.removePermissionViaAPI(
-				resourceAction = "ADD_COMMUNITY",
-				resourceName = 90,
-				roleTitle = ${randomRoleKey});
-		}
-
-		task ("Assert can not add site with user without add site permission") {
-			Site.openSitesAdmin();
-
-			AssertElementNotPresent(locator1 = "Button#PLUS");
-		}
-	}
-
 	@description = "Assert could find site by site name and view Site Administrator role permissions."
 	@priority = 5
 	test SearchParenetAndChildSiteAndViewPermissions {

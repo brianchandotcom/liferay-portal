@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.kernel.notifications.UserNotificationManagerUtil;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -156,12 +157,12 @@ public class SegmentsExperimentLocalServiceImpl
 
 	@Override
 	public SegmentsExperiment deleteSegmentsExperiment(
-			long groupId, long segmentsExperienceId, long plid)
+			long groupId, String segmentsExperienceKey, long plid)
 		throws PortalException {
 
 		SegmentsExperiment segmentsExperiment =
 			segmentsExperimentLocalService.fetchSegmentsExperiment(
-				groupId, segmentsExperienceId, plid);
+				groupId, segmentsExperienceKey, plid);
 
 		return segmentsExperimentLocalService.deleteSegmentsExperiment(
 			segmentsExperiment);
@@ -205,11 +206,23 @@ public class SegmentsExperimentLocalServiceImpl
 
 	@Override
 	public SegmentsExperiment fetchSegmentsExperiment(
-		long groupId, long segmentsExperienceId, long plid) {
+		long groupId, String segmentsExperimentKey) {
+
+		return segmentsExperimentPersistence.fetchByG_S(
+			groupId, segmentsExperimentKey);
+	}
+
+	@Override
+	public SegmentsExperiment fetchSegmentsExperiment(
+		long groupId, String segmentsExperienceKey, long plid) {
+
+		SegmentsExperience segmentsExperience =
+			_segmentsExperienceLocalService.fetchSegmentsExperience(
+				groupId, segmentsExperienceKey, _getPublishedLayoutPlid(plid));
 
 		for (SegmentsExperimentRel segmentsExperimentRel :
 				_segmentsExperimentRelPersistence.findBySegmentsExperienceId(
-					segmentsExperienceId)) {
+					segmentsExperience.getSegmentsExperienceId())) {
 
 			SegmentsExperiment segmentsExperiment =
 				segmentsExperimentPersistence.fetchByPrimaryKey(
@@ -223,14 +236,6 @@ public class SegmentsExperimentLocalServiceImpl
 		}
 
 		return null;
-	}
-
-	@Override
-	public SegmentsExperiment fetchSegmentsExperiment(
-		long groupId, String segmentsExperimentKey) {
-
-		return segmentsExperimentPersistence.fetchByG_S(
-			groupId, segmentsExperimentKey);
 	}
 
 	@Override
@@ -359,6 +364,16 @@ public class SegmentsExperimentLocalServiceImpl
 			segmentsExperimentPersistence.findByPrimaryKey(
 				segmentsExperimentId),
 			winnerSegmentsExperienceId, status);
+	}
+
+	private long _getPublishedLayoutPlid(long plid) {
+		Layout layout = _layoutLocalService.fetchLayout(plid);
+
+		if ((layout != null) && layout.isDraftLayout()) {
+			return layout.getClassPK();
+		}
+
+		return plid;
 	}
 
 	private DynamicQuery _getSegmentsExperienceIdsDynamicQuery(
@@ -518,10 +533,14 @@ public class SegmentsExperimentLocalServiceImpl
 			long winnerSegmentsExperienceId, int status)
 		throws PortalException {
 
+		SegmentsExperience winnerSegmentsExperience =
+			_segmentsExperienceLocalService.getSegmentsExperience(
+				winnerSegmentsExperienceId);
+
 		SegmentsExperimentRel segmentsExperimentRel =
 			_segmentsExperimentRelLocalService.fetchSegmentsExperimentRel(
 				segmentsExperiment.getSegmentsExperimentId(),
-				winnerSegmentsExperienceId);
+				winnerSegmentsExperience.getSegmentsExperienceKey());
 
 		if (segmentsExperimentRel == null) {
 			throw new WinnerSegmentsExperienceException(
@@ -591,9 +610,13 @@ public class SegmentsExperimentLocalServiceImpl
 			long groupId, long segmentsExperienceId, long plid)
 		throws PortalException {
 
+		SegmentsExperience segmentsExperience =
+			_segmentsExperienceLocalService.getSegmentsExperience(
+				segmentsExperienceId);
+
 		SegmentsExperiment segmentsExperiment =
 			segmentsExperimentLocalService.fetchSegmentsExperiment(
-				groupId, segmentsExperienceId, plid);
+				groupId, segmentsExperience.getSegmentsExperienceKey(), plid);
 
 		if (segmentsExperiment == null) {
 			return;
@@ -694,6 +717,9 @@ public class SegmentsExperimentLocalServiceImpl
 			throw new SegmentsExperimentTypeException();
 		}
 	}
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private Portal _portal;

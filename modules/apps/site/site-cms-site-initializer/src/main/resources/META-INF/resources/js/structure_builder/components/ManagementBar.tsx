@@ -13,6 +13,7 @@ import React from 'react';
 
 import {
 	useStateDispatch,
+	useStructureFields,
 	useStructureId,
 	useStructureName,
 	useStructureStatus,
@@ -62,21 +63,54 @@ export default function ManagementBar() {
 
 function SaveButton() {
 	const dispatch = useStateDispatch();
+	const fields = useStructureFields();
+	const structureId = useStructureId();
 	const name = useStructureName();
+	const status = useStructureStatus();
+
+	const create = async () => {
+		const {id, objectFields} = await StructureService.createStructure({
+			fields,
+			name,
+		});
+
+		openToast({
+			message: Liferay.Util.sub(
+				Liferay.Language.get('x-was-created-successfully'),
+				name
+			),
+			type: 'success',
+		});
+
+		dispatch({id, objectFields, type: 'create-structure'});
+	};
+
+	const update = async () => {
+		const {objectFields} = await StructureService.updateStructure({
+			fields,
+			id: structureId,
+			name,
+		});
+
+		openToast({
+			message: Liferay.Util.sub(
+				Liferay.Language.get('x-was-updated-successfully'),
+				name
+			),
+			type: 'success',
+		});
+
+		dispatch({objectFields, type: 'update-structure'});
+	};
 
 	const onSave = async () => {
 		try {
-			await StructureService.createStructure({name});
-
-			openToast({
-				message: Liferay.Util.sub(
-					Liferay.Language.get('x-was-created-successfully'),
-					name
-				),
-				type: 'success',
-			});
-
-			dispatch({error: null, type: 'set-error'});
+			if (status === 'new') {
+				await create();
+			}
+			else {
+				await update();
+			}
 		}
 		catch (error) {
 			const {message} = error as API.ErrorDetails;
@@ -86,7 +120,11 @@ function SaveButton() {
 	};
 
 	return (
-		<ClayButton displayType="secondary" onClick={onSave} size="sm">
+		<ClayButton
+			displayType={status === 'published' ? 'primary' : 'secondary'}
+			onClick={onSave}
+			size="sm"
+		>
 			{Liferay.Language.get('save')}
 		</ClayButton>
 	);

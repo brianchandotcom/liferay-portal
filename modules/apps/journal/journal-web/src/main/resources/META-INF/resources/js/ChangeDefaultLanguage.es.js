@@ -31,9 +31,7 @@ function ChangeDefaultLanguage(props) {
 	return (
 		<div className="article-default-language">
 			<p className="mb-0">
-				<b>{`${Liferay.Language.get(
-					'default-language'
-				)}: `}</b>
+				<b>{`${Liferay.Language.get('default-language')}: `}</b>
 
 				{props.strings[selectedDefaultLanguage]}
 			</p>

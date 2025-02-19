@@ -179,12 +179,10 @@ public class SystemFDSSerializer
 					continue;
 				}
 
-				for (Map.Entry<String, Object> fdsViewContextEntry :
+				for (Map.Entry<String, Object> entry :
 						fdsViewContext.entrySet()) {
 
-					jsonObject.put(
-						fdsViewContextEntry.getKey(),
-						fdsViewContextEntry.getValue());
+					jsonObject.put(entry.getKey(), entry.getValue());
 				}
 			}
 

@@ -102,7 +102,8 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessor
 		if (segmentsExperienceId != -1) {
 			SegmentsExperiment segmentsExperiment =
 				_segmentsExperimentLocalService.fetchSegmentsExperiment(
-					themeDisplay.getScopeGroupId(), segmentsExperienceId, plid);
+					themeDisplay.getScopeGroupId(),
+					_getSegmentsExperienceKey(segmentsExperienceId), plid);
 
 			if (segmentsExperiment != null) {
 				httpServletRequest.setAttribute(
@@ -136,7 +137,8 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessor
 
 		SegmentsExperiment segmentsExperiment =
 			_segmentsExperimentLocalService.fetchSegmentsExperiment(
-				themeDisplay.getScopeGroupId(), segmentsExperienceId, plid);
+				themeDisplay.getScopeGroupId(),
+				_getSegmentsExperienceKey(segmentsExperienceId), plid);
 
 		if (segmentsExperiment == null) {
 			if (_log.isDebugEnabled()) {

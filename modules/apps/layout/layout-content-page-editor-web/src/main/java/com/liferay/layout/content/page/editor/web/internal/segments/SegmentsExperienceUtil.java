@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.segments.constants.SegmentsExperimentConstants;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.model.SegmentsExperiment;
+import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
 import com.liferay.segments.service.SegmentsExperienceServiceUtil;
 import com.liferay.segments.service.SegmentsExperimentLocalServiceUtil;
 
@@ -308,9 +309,13 @@ public class SegmentsExperienceUtil {
 		Layout layout = LayoutLocalServiceUtil.getLayout(
 			draftLayout.getClassPK());
 
+		SegmentsExperience segmentsExperience =
+			SegmentsExperienceLocalServiceUtil.fetchSegmentsExperience(
+				segmentsExperienceId);
+
 		return SegmentsExperimentLocalServiceUtil.fetchSegmentsExperiment(
-			themeDisplay.getScopeGroupId(), segmentsExperienceId,
-			layout.getPlid());
+			themeDisplay.getScopeGroupId(),
+			segmentsExperience.getSegmentsExperienceKey(), layout.getPlid());
 	}
 
 	private static String _getSegmentsExperimentURL(
@@ -381,7 +386,8 @@ public class SegmentsExperienceUtil {
 
 			SegmentsExperiment segmentsExperiment =
 				SegmentsExperimentLocalServiceUtil.fetchSegmentsExperiment(
-					groupId, sourceSegmentsExperience.getSegmentsExperienceId(),
+					groupId,
+					sourceSegmentsExperience.getSegmentsExperienceKey(),
 					segmentsExperimentPlid);
 
 			if (Validator.isNull(

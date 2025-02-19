@@ -42,6 +42,7 @@ import com.liferay.segments.constants.SegmentsExperimentConstants;
 import com.liferay.segments.constants.SegmentsPortletKeys;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.model.SegmentsExperiment;
+import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.segments.service.SegmentsExperienceService;
 import com.liferay.segments.service.SegmentsExperimentRelService;
 import com.liferay.segments.service.SegmentsExperimentService;
@@ -144,9 +145,13 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 			long groupId, long plid, long segmentsExperienceId)
 		throws PortalException {
 
+		SegmentsExperience segmentsExperience =
+			_segmentsExperienceLocalService.fetchSegmentsExperience(
+				segmentsExperienceId);
+
 		SegmentsExperiment segmentsExperiment =
 			_segmentsExperimentService.fetchSegmentsExperiment(
-				groupId, segmentsExperienceId, plid);
+				groupId, segmentsExperience.getSegmentsExperienceKey(), plid);
 
 		if (segmentsExperiment == null) {
 			return null;
@@ -169,7 +174,7 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 				segmentsExperiment.getStatus(), status.getValue())) {
 
 			if (experiment.getWinnerDXPVariantId() != null) {
-				SegmentsExperience segmentsExperience =
+				segmentsExperience =
 					_segmentsExperienceService.getSegmentsExperience(
 						segmentsExperiment.getGroupId(),
 						experiment.getWinnerDXPVariantId(),
@@ -194,8 +199,13 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 			Layout layout, long segmentsExperienceId)
 		throws Exception {
 
+		SegmentsExperience segmentsExperience =
+			_segmentsExperienceLocalService.fetchSegmentsExperience(
+				segmentsExperienceId);
+
 		return _segmentsExperimentService.fetchSegmentsExperiment(
-			layout.getGroupId(), segmentsExperienceId, layout.getPlid());
+			layout.getGroupId(), segmentsExperience.getSegmentsExperienceKey(),
+			layout.getPlid());
 	}
 
 	private String _getContentPageEditorPortletNamespace() {
@@ -485,6 +495,9 @@ public class GetDataMVCResourceCommand extends BaseMVCResourceCommand {
 
 	@Reference
 	private PortletURLFactory _portletURLFactory;
+
+	@Reference
+	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 	@Reference
 	private SegmentsExperienceService _segmentsExperienceService;

@@ -5,5 +5,5 @@ liferay-learn-etc-cron-2-oauth-application-headless-server:
     .serviceScheme: http
     name: Liferay Learn Etc Cron 2 Oauth Application Headless Server
     scopes:
-        - c_p2s3examresultsynchronization.everything
+        - c_p2s3examresultssynchronization.everything
     type: oAuthApplicationHeadlessServer

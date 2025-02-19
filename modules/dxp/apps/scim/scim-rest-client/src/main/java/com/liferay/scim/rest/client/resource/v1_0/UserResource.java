@@ -32,11 +32,12 @@ public interface UserResource {
 		return new Builder();
 	}
 
-	public Object getV2Users(Integer count, Integer startIndex)
+	public Object getV2Users(
+			Integer count, Integer startIndex, String filterString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getV2UsersHttpResponse(
-			Integer count, Integer startIndex)
+			Integer count, Integer startIndex, String filterString)
 		throws Exception;
 
 	public void postV2User(User user) throws Exception;
@@ -174,11 +175,12 @@ public interface UserResource {
 
 	public static class UserResourceImpl implements UserResource {
 
-		public Object getV2Users(Integer count, Integer startIndex)
+		public Object getV2Users(
+				Integer count, Integer startIndex, String filterString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse = getV2UsersHttpResponse(
-				count, startIndex);
+				count, startIndex, filterString);
 
 			String content = httpResponse.getContent();
 
@@ -240,7 +242,7 @@ public interface UserResource {
 		}
 
 		public HttpInvoker.HttpResponse getV2UsersHttpResponse(
-				Integer count, Integer startIndex)
+				Integer count, Integer startIndex, String filterString)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -270,6 +272,10 @@ public interface UserResource {
 
 			if (startIndex != null) {
 				httpInvoker.parameter("startIndex", String.valueOf(startIndex));
+			}
+
+			if (filterString != null) {
+				httpInvoker.parameter("filter", filterString);
 			}
 
 			httpInvoker.path(

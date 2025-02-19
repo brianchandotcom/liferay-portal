@@ -8395,7 +8395,7 @@ public class ObjectEntryResourceTest {
 	}
 
 	@Test
-	public void testPostCustomObjectEntryWithRequiredObjectField()
+	public void testPostCustomObjectEntryWithOneToManyRequiredRelationshipValidation()
 		throws Exception {
 
 		JSONObject jsonObject = HTTPTestUtil.invokeToJSONObject(

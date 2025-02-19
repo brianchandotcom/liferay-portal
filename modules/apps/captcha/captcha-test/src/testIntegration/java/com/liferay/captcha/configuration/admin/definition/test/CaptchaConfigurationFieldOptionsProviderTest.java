@@ -60,8 +60,8 @@ public class CaptchaConfigurationFieldOptionsProviderTest {
 			).build());
 
 		_pid = ConfigurationTestUtil.createFactoryConfiguration(
-			"com.liferay.captcha.configuration.internal." +
-				"ClientExtensionCaptchaImplConfiguration",
+			"com.liferay.captcha.internal.configuration." +
+				"FunctionCaptchaImplConfiguration",
 			HashMapDictionaryBuilder.<String, Object>put(
 				"captchaName", "ClientExtensionCaptcha"
 			).build());
@@ -87,7 +87,7 @@ public class CaptchaConfigurationFieldOptionsProviderTest {
 			_bundleContext.getServiceReferences(
 				Captcha.class,
 				"(component.name=com.liferay.captcha.internal.client." +
-					"extension.ClientExtensionCaptchaImpl)");
+					"extension.FunctionCaptchaImpl)");
 
 		Iterator<ServiceReference<Captcha>> iterator =
 			serviceReferences.iterator();

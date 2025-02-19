@@ -15,7 +15,7 @@ import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.util.DDMFormFieldUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -65,23 +65,27 @@ public class DataDefinitionUtil {
 		Map<String, Object> customProperties =
 			dataDefinitionField.getCustomProperties();
 
-		if ((customProperties != null) &&
-			customProperties.containsKey("fieldReference")) {
+		if (customProperties == null) {
+			return null;
+		}
 
-			String fieldReference = GetterUtil.getString(
-				customProperties.get("fieldReference"));
+		String fieldReference = MapUtil.getString(
+			customProperties, "fieldReference");
 
-			DDMForm ddmForm = ddmStructure.getDDMForm();
+		if (Validator.isNull(fieldReference)) {
+			return null;
+		}
 
-			Map<String, DDMFormField> ddmFormFieldsReferencesMap =
-				ddmForm.getDDMFormFieldsReferencesMap(true);
+		DDMForm ddmForm = ddmStructure.getDDMForm();
 
-			if (ddmFormFieldsReferencesMap.containsKey(fieldReference)) {
-				DDMFormField ddmFormField = ddmFormFieldsReferencesMap.get(
-					fieldReference);
+		Map<String, DDMFormField> ddmFormFieldsReferencesMap =
+			ddmForm.getDDMFormFieldsReferencesMap(true);
 
-				return ddmFormField.getName();
-			}
+		if (ddmFormFieldsReferencesMap.containsKey(fieldReference)) {
+			DDMFormField ddmFormField = ddmFormFieldsReferencesMap.get(
+				fieldReference);
+
+			return ddmFormField.getName();
 		}
 
 		return null;

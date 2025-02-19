@@ -482,7 +482,7 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		_registerServices(
 			_registerFDSFilter(
-				_createFDSDateRangeFilter(
+				_createFDSFilterDate(
 					"createDate", "By Creation Date",
 					new DateFDSFilterItem(16, 3, 1977),
 					new DateFDSFilterItem(0, 0, 0),
@@ -562,13 +562,13 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		_registerServices(
 			_registerFDSFilter(
-				_createFDSDateRangeFilter(
+				_createFDSFilterDate(
 					"createDate", "By Creation Date",
 					new DateFDSFilterItem(1, 1, 1980),
 					new DateFDSFilterItem(0, 0, 0), null),
 				"fdsName1"),
 			_registerFDSFilter(
-				_createFDSDateRangeFilter(
+				_createFDSFilterDate(
 					"modifiedDate", "By Modification Date",
 					new DateFDSFilterItem(1, 1, 1980),
 					new DateFDSFilterItem(0, 0, 0), null),
@@ -835,7 +835,7 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		// Shared filters
 
-		FDSFilter dateRangeFDSFilter = _createFDSDateRangeFilter(
+		FDSFilter dateRangeFDSFilter = _createFDSFilterDate(
 			"createDate", "By Creation Date", new DateFDSFilterItem(1, 1, 1980),
 			new DateFDSFilterItem(0, 0, 0), null);
 
@@ -998,7 +998,7 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 					"frontend.data.set.view.name", FDSConstants.CARDS)),
 			_registerFDSView(
 				"fdsName",
-				_createFDSCardsView(
+				_createFDSViewCards(
 					"longDescription", "detailURL", "thumbnail", "sticker",
 					"icon", "title")),
 			_registerSystemFDSEntry(
@@ -1055,12 +1055,12 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 					"frontend.data.set.view.name", FDSConstants.LIST)),
 			_registerFDSView(
 				"fdsName1",
-				_createFDSCardsView(
+				_createFDSViewCards(
 					"longDescription", "detailURL", "thumbnail", "sticker",
 					"icon", "title")),
 			_registerFDSView(
 				"fdsName2",
-				_createFDSListView(
+				_createFDSViewList(
 					"longDescription", "thumbnail", "sticker", "icon",
 					"title")),
 			_registerSystemFDSEntry(
@@ -1168,7 +1168,7 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 					"frontend.data.set.view.name", FDSConstants.LIST)),
 			_registerFDSView(
 				"fdsName",
-				_createFDSListView(
+				_createFDSViewList(
 					"longDescription", "thumbnail", "sticker", "icon",
 					"title")),
 			_registerSystemFDSEntry(
@@ -1210,7 +1210,7 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		// Shared view
 
-		FDSView cardsView = _createFDSCardsView(
+		FDSView cardsView = _createFDSViewCards(
 			"longDescription", "detailURL", "thumbnail", "sticker", "icon",
 			"title");
 
@@ -1347,7 +1347,7 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 		serviceTrackerMap2.close();
 	}
 
-	private FDSView _createFDSCardsView(
+	private FDSView _createFDSViewCards(
 		String description, String href, String image, String sticker,
 		String symbol, String title) {
 
@@ -1386,7 +1386,7 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 		};
 	}
 
-	private FDSFilter _createFDSDateRangeFilter(
+	private FDSFilter _createFDSFilterDate(
 		String id, String label, DateFDSFilterItem maxDateFDSFilterItem,
 		DateFDSFilterItem minDateFDSFilterItem,
 		Map<String, Object> preloadedData) {
@@ -1426,7 +1426,7 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 		};
 	}
 
-	private FDSView _createFDSListView(
+	private FDSView _createFDSViewList(
 		String description, String image, String sticker, String symbol,
 		String title) {
 

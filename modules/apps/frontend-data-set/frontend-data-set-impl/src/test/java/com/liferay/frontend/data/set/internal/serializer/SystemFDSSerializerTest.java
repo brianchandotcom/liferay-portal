@@ -184,6 +184,7 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 				"fdsName", httpServletRequest));
 
 		_unregisterServices();
+
 		serviceTrackerMap.close();
 	}
 

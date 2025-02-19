@@ -5,6 +5,7 @@
 
 import {Locator, Page, expect} from '@playwright/test';
 
+import {waitForAlert} from '../../utils/waitForAlert';
 import {FormsPage} from './FormsPage';
 
 export class FormBuilderPage {
@@ -39,19 +40,27 @@ export class FormBuilderPage {
 		});
 		this.page = page;
 		this.previewButton = page.getByRole('button', {name: 'Preview'});
-		this.publishButton = page.getByRole('button', {name: 'Publish'});
+		this.publishButton = page.getByRole('button', {
+			exact: true,
+			name: 'Publish',
+		});
 		this.requireCaptchaToggle = page.getByLabel('Require CAPTCHA');
 		this.saveButton = page.getByRole('button', {name: 'Save'});
 		this.settingsAdvancedTab = page.getByRole('tab', {name: 'Advanced'});
-		this.unpublishButton = page.getByRole('button', {name: 'Unpublish'});
-	}
-
-	async clickOpenFormButton() {
-		await this.openFormButton.click();
+		this.unpublishButton = page.getByRole('button', {
+			exact: true,
+			name: 'Unpublish',
+		});
 	}
 
 	async clickPreviewButton() {
 		await this.previewButton.click();
+	}
+
+	async clickPublishFormButton() {
+		await this.publishButton.click();
+
+		await waitForAlert(this.page);
 	}
 
 	async clickSaveButton() {
@@ -78,8 +87,6 @@ export class FormBuilderPage {
 	}
 
 	async openFormSubmission() {
-		await this.publishButton.click();
-
 		await this.page
 			.locator('#ToastAlertContainer')
 			.getByLabel('Close')

@@ -35,10 +35,10 @@
 			</div>
 
 			[#if !input.localizable && input.attributes.unlocalizedFieldsMessage??]
-			<div aria-label="${input.attributes.unlocalizedFieldsMessage}" class="d-none lfr-portal-tooltip mt-1" data-title="${input.attributes.unlocalizedFieldsMessage}" id="${fragmentEntryLinkNamespace}-unlocalized-info" role="tooltip" tabindex="0">
-				[@clay["icon"] className="ml-2 mt-0 text-secondary" symbol="question-circle-full" /]
-			</div>
-		[/#if]
+				<div aria-label="${input.attributes.unlocalizedFieldsMessage}" class="d-none lfr-portal-tooltip mt-1" data-title="${input.attributes.unlocalizedFieldsMessage}" id="${fragmentEntryLinkNamespace}-unlocalized-info" role="tooltip" tabindex="0">
+					[@clay["icon"] className="ml-2 mt-0 text-secondary" symbol="question-circle-full" /]
+				</div>
+			[/#if]
 		</div>
 	</div>
 

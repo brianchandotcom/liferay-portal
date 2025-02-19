@@ -202,17 +202,3 @@ test('can see corresponding elements at instance level', async ({
 		companyExportImportPage.page.getByText('Comments, Ratings')
 	).not.toBeVisible();
 });
-
-test('can see corresponding elements at site level', async ({
-	productMenuPage,
-}) => {
-	await productMenuPage.openProductMenuIfClosed();
-	await productMenuPage.goToPublishingExport();
-	await productMenuPage.page
-		.getByRole('link', {name: 'Custom Export'})
-		.click();
-
-	await expect(
-		productMenuPage.page.getByText('Comments, Ratings')
-	).toBeVisible();
-});

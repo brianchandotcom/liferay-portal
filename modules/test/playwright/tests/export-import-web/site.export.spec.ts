@@ -9,10 +9,10 @@ import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest'
 import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {productMenuPageTest} from '../../fixtures/productMenuPageTest';
 import getRandomString from '../../utils/getRandomString';
 import {getTempDir} from '../../utils/temp';
 import {exportImportPagesTest} from './fixtures/exportImportPagesTest';
-import {productMenuPageTest} from '../../fixtures/productMenuPageTest';
 
 export const test = mergeTests(
 	applicationsMenuPageTest,

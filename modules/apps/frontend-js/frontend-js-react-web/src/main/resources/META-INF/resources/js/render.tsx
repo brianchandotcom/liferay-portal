@@ -75,7 +75,7 @@ export default function render(
 		if (hasBodyContent) {
 			const tagBodyContent = container.querySelector('.tag-body-content');
 
-			if (tagBodyContent && tagBodyContent.children.length) {
+			if (tagBodyContent?.children.length) {
 				componentProps.children = tagBodyContent.children;
 			}
 		}

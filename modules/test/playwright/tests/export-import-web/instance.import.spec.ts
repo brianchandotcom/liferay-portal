@@ -358,7 +358,7 @@ test('can see corresponding elements at instance level', async ({
 	apiHelpers.data.push({id: objectDefinition.id, type: 'objectDefinition'});
 
 	const exportFilePath =
-		await companyExportImportPage.export('Tests 1 Items');
+		await companyExportImportPage.export('Tests');
 
 	await companyExportImportPage.page.goto('/');
 
@@ -370,6 +370,10 @@ test('can see corresponding elements at instance level', async ({
 
 	await expect(
 		companyExportImportPage.page.getByText('Comments, Ratings')
+	).not.toBeVisible();
+
+	await expect(
+		companyExportImportPage.page.getByText('C_Tests Change')
 	).not.toBeVisible();
 
 	await expect(

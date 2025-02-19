@@ -53,29 +53,11 @@ public class DocumentMetadataSetResourceTest
 	}
 
 	@Override
-	protected DocumentMetadataSet
-			testDeleteAssetLibraryDocumentMetadataSetByExternalReferenceCode_addDocumentMetadataSet()
-		throws Exception {
-
-		return documentMetadataSetResource.postSiteDocumentMetadataSet(
-			testDepotEntry.getGroupId(), randomDocumentMetadataSet());
-	}
-
-	@Override
 	protected Long
 			testDeleteAssetLibraryDocumentMetadataSetByExternalReferenceCode_getAssetLibraryId()
 		throws Exception {
 
 		return testDepotEntry.getDepotEntryId();
-	}
-
-	@Override
-	protected DocumentMetadataSet
-			testGetAssetLibraryDocumentMetadataSetByExternalReferenceCode_addDocumentMetadataSet()
-		throws Exception {
-
-		return documentMetadataSetResource.postSiteDocumentMetadataSet(
-			testDepotEntry.getGroupId(), randomDocumentMetadataSet());
 	}
 
 	@Override

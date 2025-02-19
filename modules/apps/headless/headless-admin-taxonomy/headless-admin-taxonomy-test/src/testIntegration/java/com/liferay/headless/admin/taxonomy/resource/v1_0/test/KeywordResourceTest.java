@@ -405,29 +405,11 @@ public class KeywordResourceTest extends BaseKeywordResourceTestCase {
 	}
 
 	@Override
-	protected Keyword
-			testDeleteAssetLibraryKeywordByExternalReferenceCode_addKeyword()
-		throws Exception {
-
-		return keywordResource.postAssetLibraryKeyword(
-			testDepotEntry.getDepotEntryId(), randomKeyword());
-	}
-
-	@Override
 	protected Long
 			testDeleteAssetLibraryKeywordByExternalReferenceCode_getAssetLibraryId()
 		throws Exception {
 
 		return testDepotEntry.getDepotEntryId();
-	}
-
-	@Override
-	protected Keyword
-			testGetAssetLibraryKeywordByExternalReferenceCode_addKeyword()
-		throws Exception {
-
-		return keywordResource.postAssetLibraryKeyword(
-			testDepotEntry.getDepotEntryId(), randomKeyword());
 	}
 
 	@Override

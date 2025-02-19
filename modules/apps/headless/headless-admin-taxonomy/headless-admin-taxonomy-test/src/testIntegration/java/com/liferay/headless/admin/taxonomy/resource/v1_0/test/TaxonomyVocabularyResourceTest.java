@@ -401,29 +401,11 @@ public class TaxonomyVocabularyResourceTest
 	}
 
 	@Override
-	protected TaxonomyVocabulary
-			testDeleteAssetLibraryTaxonomyVocabularyByExternalReferenceCode_addTaxonomyVocabulary()
-		throws Exception {
-
-		return taxonomyVocabularyResource.postAssetLibraryTaxonomyVocabulary(
-			testDepotEntry.getDepotEntryId(), randomTaxonomyVocabulary());
-	}
-
-	@Override
 	protected Long
 			testDeleteAssetLibraryTaxonomyVocabularyByExternalReferenceCode_getAssetLibraryId()
 		throws Exception {
 
 		return testDepotEntry.getDepotEntryId();
-	}
-
-	@Override
-	protected TaxonomyVocabulary
-			testGetAssetLibraryTaxonomyVocabularyByExternalReferenceCode_addTaxonomyVocabulary()
-		throws Exception {
-
-		return testPostAssetLibraryTaxonomyVocabulary_addTaxonomyVocabulary(
-			randomTaxonomyVocabulary());
 	}
 
 	@Override

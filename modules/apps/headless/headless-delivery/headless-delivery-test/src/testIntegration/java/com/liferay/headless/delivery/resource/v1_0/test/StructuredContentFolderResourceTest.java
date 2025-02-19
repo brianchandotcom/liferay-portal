@@ -541,29 +541,11 @@ public class StructuredContentFolderResourceTest
 	}
 
 	@Override
-	protected StructuredContentFolder
-			testDeleteAssetLibraryStructuredContentFolderByExternalReferenceCode_addStructuredContentFolder()
-		throws Exception {
-
-		return testPostAssetLibraryStructuredContentFolder_addStructuredContentFolder(
-			randomStructuredContentFolder());
-	}
-
-	@Override
 	protected Long
 			testDeleteAssetLibraryStructuredContentFolderByExternalReferenceCode_getAssetLibraryId()
 		throws Exception {
 
 		return testDepotEntry.getDepotEntryId();
-	}
-
-	@Override
-	protected StructuredContentFolder
-			testGetAssetLibraryStructuredContentFolderByExternalReferenceCode_addStructuredContentFolder()
-		throws Exception {
-
-		return testPostAssetLibraryStructuredContentFolder_addStructuredContentFolder(
-			randomStructuredContentFolder());
 	}
 
 	@Override
@@ -610,15 +592,6 @@ public class StructuredContentFolderResourceTest
 		throws Exception {
 
 		return testDepotEntry.getDepotEntryId();
-	}
-
-	@Override
-	protected StructuredContentFolder
-			testPutAssetLibraryStructuredContentFolderByExternalReferenceCode_addStructuredContentFolder()
-		throws Exception {
-
-		return testPostAssetLibraryStructuredContentFolder_addStructuredContentFolder(
-			randomStructuredContentFolder());
 	}
 
 	@Override

@@ -3,22 +3,6 @@ dependencies {
 	compileOnly project(":core:shielded-container-api")
 }
 
-private boolean _isJakartaAppServer() {
-	if ((liferay.appServerType == "jboss") && liferay.appServer.version.startsWith("8.")) {
-		return true;
-	}
-
-	if ((liferay.appServerType == "tomcat") && liferay.appServer.version.startsWith("10.")) {
-		return true;
-	}
-
-	if ((liferay.appServerType == "wildfly") && liferay.appServer.version.startsWith("30.")) {
-		return true;
-	}
-
-	return false;
-}
-
 if (!_isJakartaAppServer()) {
 	task updateSPIFile(type: Zip)
 
@@ -36,4 +20,20 @@ if (!_isJakartaAppServer()) {
 			archivePath.renameTo(jar.archivePath)
 		}
 	}
+}
+
+private boolean _isJakartaAppServer() {
+	if ((liferay.appServerType == "jboss") && liferay.appServer.version.startsWith("8.")) {
+		return true;
+	}
+
+	if ((liferay.appServerType == "tomcat") && liferay.appServer.version.startsWith("10.")) {
+		return true;
+	}
+
+	if ((liferay.appServerType == "wildfly") && liferay.appServer.version.startsWith("30.")) {
+		return true;
+	}
+
+	return false;
 }

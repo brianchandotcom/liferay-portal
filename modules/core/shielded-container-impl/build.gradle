@@ -3,7 +3,7 @@ dependencies {
 	compileOnly project(":core:shielded-container-api")
 }
 
-if (!_isJakartaAppServer()) {
+if (jakartaAppServer) {
 	jar {
 		rename("jakarta.servlet.ServletContainerInitializer", "javax.servlet.ServletContainerInitializer")
 	}

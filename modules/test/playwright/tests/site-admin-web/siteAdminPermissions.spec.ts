@@ -18,6 +18,7 @@ export const test = mergeTests(
 );
 
 let roleId: number;
+let siteId: string;
 let userId: number;
 
 test.afterEach(async ({apiHelpers, page}) => {
@@ -27,11 +28,16 @@ test.afterEach(async ({apiHelpers, page}) => {
 		await apiHelpers.headlessAdminUser.deleteRole(roleId);
 	}
 
+	if (siteId) {
+		await apiHelpers.headlessSite.deleteSite(siteId);
+	}
+
 	if (userId) {
 		await apiHelpers.headlessAdminUser.deleteUserAccount(userId);
 	}
 
 	roleId = null;
+	siteId = null;
 	userId = null;
 });
 
@@ -141,4 +147,77 @@ test('User cannot add site without Add Site permission', async ({
 	await sitesAdminPage.goto();
 
 	await expect(page.getByRole('link', {name: 'Add Site'})).not.toBeVisible();
+});
+
+test('User can view site when a member of the site', async ({
+	apiHelpers,
+	page,
+	sitesAdminPage,
+}) => {
+	const user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+	userData[user.alternateName] = {
+		name: user.givenName,
+		password: 'test',
+		surname: user.familyName,
+	};
+
+	userId = Number(user.id);
+
+	const companyId = await page.evaluate(() => {
+		return Liferay.ThemeDisplay.getCompanyId();
+	});
+
+	const role = await apiHelpers.headlessAdminUser.postRole({
+		name: getRandomString(),
+		rolePermissions: [
+			{
+				actionIds: ['VIEW_CONTROL_PANEL'],
+				primaryKey: companyId,
+				resourceName: '90',
+				scope: 1,
+			},
+			{
+				actionIds: ['ACCESS_IN_CONTROL_PANEL'],
+				primaryKey: companyId,
+				resourceName:
+					'com_liferay_site_admin_web_portlet_SiteAdminPortlet',
+				scope: 1,
+			},
+		],
+	});
+
+	roleId = role.id;
+
+	await apiHelpers.headlessAdminUser.assignUserToRole(
+		role.externalReferenceCode,
+		user.id
+	);
+
+	const site = await apiHelpers.headlessSite.createSite({
+		name: getRandomString(),
+	});
+
+	siteId = site.id;
+
+	const siteMemberRole =
+		await apiHelpers.headlessAdminUser.getRoleByName('Site Member');
+
+	await apiHelpers.headlessAdminUser.assignUserToSite(
+		siteMemberRole.id,
+		siteId,
+		user.id
+	);
+
+	await performUserSwitch(page, user.alternateName);
+
+	await sitesAdminPage.goto();
+
+	await expect(page.getByRole('link', {name: site.name})).toBeVisible();
+
+	await sitesAdminPage.searchSite(site.name);
+
+	await expect(
+		page.getByText(`1 Result Found for "${site.name}"`)
+	).toBeVisible();
 });

@@ -70,6 +70,7 @@ export const PORTLET_URLS = {
 		'/~/control_panel/manage?p_p_id=com_liferay_portal_security_service_access_policy_web_portlet_SAPPortlet&p_p_lifecycle=0&p_p_state=maximized',
 	siteMemberships: '/~/control_panel/manage/-/site_memberships',
 	siteSettings: '/~/control_panel/manage/-/site/settings',
+	sites: '/~/control_panel/manage/-/sites/sites',
 	staging:
 		'/~/control_panel/manage?p_p_id=com_liferay_staging_processes_web_portlet_StagingProcessesPortlet',
 	styleBooks: '/~/control_panel/manage/-/style_books/style_books',

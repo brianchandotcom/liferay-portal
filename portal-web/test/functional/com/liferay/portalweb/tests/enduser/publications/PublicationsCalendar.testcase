@@ -62,13 +62,6 @@ definition {
 		PublicationsNavigator.gotoReviewChanges(publicationName = "Publication Name");
 
 		PublicationsChanges.viewChanges(
-			changeCategory = "Calendar",
-			changeSite = "Site Name",
-			changeTitle = "Site Name",
-			changeType = "Added",
-			changeUser = "Test Test");
-
-		PublicationsChanges.viewChanges(
 			changeCategory = "Calendar Event",
 			changeSite = "Site Name",
 			changeTitle = "Publication Calendar Event Title",

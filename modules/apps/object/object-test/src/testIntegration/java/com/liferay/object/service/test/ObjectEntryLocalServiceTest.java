@@ -477,7 +477,8 @@ public class ObjectEntryLocalServiceTest {
 			_objectRelationshipLocalService.addObjectRelationship(
 				null, TestPropsValues.getUserId(),
 				_irrelevantObjectDefinition.getObjectDefinitionId(),
-				_objectDefinition.getObjectDefinitionId(), 0,
+				_objectDefinition.getObjectDefinitionId(),
+				0,
 				ObjectRelationshipConstants.DELETION_TYPE_PREVENT, false,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				StringUtil.randomId(), false,
@@ -920,8 +921,7 @@ public class ObjectEntryLocalServiceTest {
 				).build()));
 
 		String objectFieldName = _objectFieldLocalService.getObjectField(
-			_objectRelationship.getObjectFieldId2()
-		).getName();
+			_objectRelationship.getObjectFieldId2()).getName();
 
 		_objectFieldLocalService.updateRequired(
 			_objectRelationship.getObjectFieldId2(), true);
@@ -4765,6 +4765,13 @@ public class ObjectEntryLocalServiceTest {
 			0, _objectDefinition.getObjectDefinitionId(), values);
 	}
 
+	private ObjectEntry _addDraftObjectEntry(Map<String, Serializable> values)
+		throws Exception {
+
+		return _addObjectEntry(
+			0, _draftObjectDefinition.getObjectDefinitionId(), values);
+	}
+
 	private ObjectValidationRule _addObjectValidationRule(
 			ObjectDefinition objectDefinition, String script)
 		throws PortalException {
@@ -4867,6 +4874,23 @@ public class ObjectEntryLocalServiceTest {
 			count,
 			_objectEntryLocalService.getObjectEntriesCount(
 				0, _objectDefinition.getObjectDefinitionId()));
+		Assert.assertEquals(count, _count());
+	}
+
+	private void _assertDraftCount(int count) throws Exception {
+		Assert.assertEquals(
+			count,
+			_assetEntryLocalService.getEntriesCount(
+				new AssetEntryQuery() {
+					{
+						setClassName(_draftObjectDefinition.getClassName());
+						setVisible(null);
+					}
+				}));
+		Assert.assertEquals(
+			count,
+			_objectEntryLocalService.getObjectEntriesCount(
+				0, _draftObjectDefinition.getObjectDefinitionId()));
 		Assert.assertEquals(count, _count());
 	}
 
@@ -5821,6 +5845,8 @@ public class ObjectEntryLocalServiceTest {
 	@Inject
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
 
+	private  ObjectRelationship _objectRelationship;
+
 	@Inject
 	private ObjectEntryLocalService _objectEntryLocalService;
 
@@ -5834,8 +5860,6 @@ public class ObjectEntryLocalServiceTest {
 
 	@Inject
 	private ObjectFieldSettingLocalService _objectFieldSettingLocalService;
-
-	private ObjectRelationship _objectRelationship;
 
 	@Inject
 	private ObjectRelationshipLocalService _objectRelationshipLocalService;

@@ -5525,9 +5525,8 @@ public class ObjectEntryLocalServiceImpl
 					ObjectFieldConstants.BUSINESS_TYPE_RELATIONSHIP)) {
 
 			if (Validator.isNull(GetterUtil.getLong(value)) &&
-				objectField.isRequired() &&
-				(serviceContext.getWorkflowAction() !=
-					WorkflowConstants.ACTION_SAVE_DRAFT)) {
+				objectField.isRequired() && serviceContext.getWorkflowAction() !=
+											WorkflowConstants.ACTION_SAVE_DRAFT) {
 
 				throw new ObjectEntryValuesException.Required(
 					objectField.getName());

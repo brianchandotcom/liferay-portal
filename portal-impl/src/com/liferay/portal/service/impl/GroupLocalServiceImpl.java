@@ -1538,7 +1538,20 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	@Override
 	public Group fetchStagingGroup(long liveGroupId) {
 		if (_cacheableQueryLimitLPD28122 <= 0) {
-			return groupPersistence.fetchByLiveGroupId_Last(liveGroupId, null);
+			List<Group> groups = groupPersistence.findByLiveGroupId(
+				liveGroupId);
+
+			if (groups.isEmpty()) {
+				return null;
+			}
+
+			if ((groups.size() > 1) && _log.isWarnEnabled()) {
+				_log.warn(
+					"Duplicated staging group for group with id " +
+						liveGroupId);
+			}
+
+			return groups.get(groups.size() - 1);
 		}
 
 		Map<Long, Long> stagingGroupIds =
@@ -5444,7 +5457,14 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			Map<Long, Long> stagingGroupIds = new HashMap<>();
 
 			for (Object[] result : results) {
-				stagingGroupIds.put((Long)result[0], (Long)result[1]);
+				Long originalValue = stagingGroupIds.put(
+					(Long)result[0], (Long)result[1]);
+
+				if ((originalValue != null) && _log.isWarnEnabled()) {
+					_log.warn(
+						"Duplicated staging group for group with id " +
+							result[0]);
+				}
 			}
 
 			return stagingGroupIds;

@@ -5,11 +5,15 @@
 
 package com.liferay.style.book.web.internal.util;
 
-import com.liferay.client.extension.type.CET;
-import com.liferay.client.extension.type.manager.CETManager;
+import com.liferay.frontend.token.definition.FrontendTokenDefinition;
+import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
+import com.liferay.frontend.token.definition.constants.FrontendTokenDefinitionConstants;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.Theme;
-import com.liferay.portal.kernel.service.ThemeLocalServiceUtil;
+import com.liferay.portal.kernel.module.service.Snapshot;
+import com.liferay.portal.kernel.util.WebKeys;
+
+import java.util.Locale;
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -19,36 +23,51 @@ import javax.servlet.http.HttpServletRequest;
 public class StyleBookUtil {
 
 	public static String getThemeName(
-		CETManager cetManager, long companyId,
-		HttpServletRequest httpServletRequest, String themeId) {
+		long companyId, HttpServletRequest httpServletRequest, String themeId) {
 
-		String name = themeId;
+		FrontendTokenDefinition frontendTokenDefinition =
+			_getFrontendTokenDefinition(companyId, themeId);
 
-		Theme theme = ThemeLocalServiceUtil.fetchTheme(companyId, themeId);
-
-		if (theme != null) {
-			name = LanguageUtil.format(
-				httpServletRequest, "x-theme", theme.getName());
-		}
-		else {
-			CET cet = cetManager.getCET(companyId, themeId);
-
-			if (cet != null) {
-				name = LanguageUtil.format(
-					httpServletRequest, "x-theme-css-client-extension",
-					cet.getName());
-			}
+		if (frontendTokenDefinition == null) {
+			return themeId;
 		}
 
-		return name;
+		Locale locale = (Locale)httpServletRequest.getAttribute(WebKeys.LOCALE);
+
+		if (Objects.equals(
+				frontendTokenDefinition.getThemeType(),
+				FrontendTokenDefinitionConstants.THEME_TYPE_BUNDLE)) {
+
+			return LanguageUtil.format(
+				httpServletRequest, "x-theme",
+				frontendTokenDefinition.getThemeName(locale));
+		}
+
+		return LanguageUtil.format(
+			httpServletRequest, "x-theme-css-client-extension",
+			frontendTokenDefinition.getThemeName(locale));
 	}
 
-	public static boolean isThemeInactive(CET cet, Theme theme) {
-		if ((cet == null) && (theme == null)) {
+	public static boolean isThemeInactive(long companyId, String themeId) {
+		if (_getFrontendTokenDefinition(companyId, themeId) == null) {
 			return true;
 		}
 
 		return false;
 	}
+
+	private static FrontendTokenDefinition _getFrontendTokenDefinition(
+		long companyId, String themeId) {
+
+		FrontendTokenDefinitionRegistry frontendTokenDefinitionRegistry =
+			_frontendTokenDefinitionRegistrySnapshot.get();
+
+		return frontendTokenDefinitionRegistry.getFrontendTokenDefinition(
+			companyId, themeId);
+	}
+
+	private static final Snapshot<FrontendTokenDefinitionRegistry>
+		_frontendTokenDefinitionRegistrySnapshot = new Snapshot<>(
+			StyleBookUtil.class, FrontendTokenDefinitionRegistry.class);
 
 }

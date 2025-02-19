@@ -13,6 +13,7 @@ import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.upload.criterion.UploadItemSelectorCriterion;
 import com.liferay.petra.function.UnsafeConsumer;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
@@ -62,9 +63,10 @@ public class StyleBookEntryActionDropdownItemsProvider {
 			).build();
 		}
 
-		if (StyleBookUtil.isThemeInactive(
-				_cetManager, _styleBookEntry.getCompanyId(),
-				_styleBookEntry.getThemeId())) {
+		if (FeatureFlagManagerUtil.isEnabled(
+				_themeDisplay.getCompanyId(), "LPD-30204") &&
+			StyleBookUtil.isThemeInactive(
+				_styleBookEntry.getCompanyId(), _styleBookEntry.getThemeId())) {
 
 			return DropdownItemListBuilder.addGroup(
 				dropdownGroupItem -> {

@@ -1537,6 +1537,10 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 	@Override
 	public Group fetchStagingGroup(long liveGroupId) {
+		if (liveGroupId == 0) {
+			return null;
+		}
+
 		if (_cacheableQueryLimitLPD28122 <= 0) {
 			List<Group> groups = groupPersistence.findByLiveGroupId(
 				liveGroupId);

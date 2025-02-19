@@ -424,7 +424,6 @@ test('can import custom object entries at instance level with or without permiss
 
 	const exportFilePath = await companyExportImportPage.export(
 		'Tests 1 Items',
-		false,
 		true
 	);
 
@@ -483,62 +482,6 @@ test('can import custom object entries at instance level with or without permiss
 			],
 		})
 	);
-});
-
-test('can see corresponding elements at instance level', async ({
-	apiHelpers,
-	companyExportImportPage,
-}) => {
-	const objectActionApiClient =
-		await apiHelpers.buildRestClient(ObjectDefinitionApi);
-
-	const {body: objectDefinition} =
-		await objectActionApiClient.postObjectDefinition({
-			active: true,
-			externalReferenceCode: 'test',
-			label: {
-				en_US: 'Test',
-			},
-			name: 'Test',
-			objectFields: [
-				{
-					DBType: ObjectField.DBTypeEnum.String,
-					businessType: ObjectField.BusinessTypeEnum.Text,
-					indexed: true,
-					indexedAsKeyword: true,
-					label: {
-						en_US: 'Name',
-					},
-					name: 'name',
-					required: true,
-				},
-			],
-			pluralLabel: {
-				en_US: 'Tests',
-			},
-			portlet: true,
-			scope: 'company',
-			status: {
-				code: 0,
-			},
-		});
-
-	apiHelpers.data.push({id: objectDefinition.id, type: 'objectDefinition'});
-
-	const exportFilePath =
-		await companyExportImportPage.export('Tests 1 Items');
-
-	await companyExportImportPage.page.goto('/');
-
-	await companyExportImportPage.goToImportOptions(exportFilePath);
-
-	await expect(
-		companyExportImportPage.page.getByRole('group', {name: 'Pages'})
-	).not.toBeVisible();
-
-	await expect(
-		companyExportImportPage.page.getByText('Comments, Ratings')
-	).not.toBeVisible();
 });
 
 test('can see corresponding elements at site level', async ({

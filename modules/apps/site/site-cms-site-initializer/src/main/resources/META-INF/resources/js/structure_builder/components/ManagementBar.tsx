@@ -15,6 +15,7 @@ import {
 	useStateDispatch,
 	useStructureFields,
 	useStructureId,
+	useStructureLabel,
 	useStructureName,
 	useStructureStatus,
 } from '../contexts/StateContext';
@@ -64,38 +65,42 @@ export default function ManagementBar() {
 function SaveButton() {
 	const dispatch = useStateDispatch();
 	const fields = useStructureFields();
-	const structureId = useStructureId();
-	const name = useStructureName();
+	const label = useStructureLabel();
 	const status = useStructureStatus();
+	const structureId = useStructureId();
+	const structureName = useStructureName();
 
 	const create = async () => {
-		const {id, objectFields} = await StructureService.createStructure({
-			fields,
-			name,
-		});
+		const {id, name, objectFields} = await StructureService.createStructure(
+			{
+				fields,
+				label,
+			}
+		);
 
 		openToast({
 			message: Liferay.Util.sub(
 				Liferay.Language.get('x-was-created-successfully'),
-				name
+				label
 			),
 			type: 'success',
 		});
 
-		dispatch({id, objectFields, type: 'create-structure'});
+		dispatch({id, name, objectFields, type: 'create-structure'});
 	};
 
 	const update = async () => {
 		const {objectFields} = await StructureService.updateStructure({
 			fields,
 			id: structureId,
-			name,
+			label,
+			name: structureName,
 		});
 
 		openToast({
 			message: Liferay.Util.sub(
 				Liferay.Language.get('x-was-updated-successfully'),
-				name
+				label
 			),
 			type: 'success',
 		});
@@ -133,7 +138,7 @@ function SaveButton() {
 function PublishButton() {
 	const dispatch = useStateDispatch();
 	const id = useStructureId();
-	const name = useStructureName();
+	const label = useStructureLabel();
 	const status = useStructureStatus();
 
 	if (status === 'published') {
@@ -147,7 +152,7 @@ function PublishButton() {
 			openToast({
 				message: Liferay.Util.sub(
 					Liferay.Language.get('x-was-published-successfully'),
-					name
+					label
 				),
 				type: 'success',
 			});

@@ -12,13 +12,13 @@ import React from 'react';
 import {
 	useStateDispatch,
 	useStructureError,
-	useStructureName,
+	useStructureLabel,
 } from '../contexts/StateContext';
 
 export default function StructureSettings() {
 	const dispatch = useStateDispatch();
 	const error = useStructureError();
-	const name = useStructureName();
+	const label = useStructureLabel();
 
 	return (
 		<ClayLayout.ContainerFluid view>
@@ -40,11 +40,11 @@ export default function StructureSettings() {
 				<ClayInput
 					className="form-control-inline structure-builder__title-input"
 					onChange={(event) =>
-						dispatch({name: event.target.value, type: 'set-name'})
+						dispatch({label: event.target.value, type: 'set-label'})
 					}
 					sizing="lg"
 					type="text"
-					value={name}
+					value={label}
 				/>
 			</ClayForm.Group>
 		</ClayLayout.ContainerFluid>

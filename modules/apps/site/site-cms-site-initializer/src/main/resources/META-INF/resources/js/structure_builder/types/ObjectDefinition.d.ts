@@ -21,7 +21,7 @@ export type ObjectDefinition = {
 	label: {
 		en_US: string;
 	};
-	name: string;
+	name?: string;
 	objectFields?: ObjectField[];
 	pluralLabel: {
 		en_US: string;

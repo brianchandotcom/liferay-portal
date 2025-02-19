@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {objectDefinitionUtils} from '@liferay/object-js-components-web';
 import React, {
 	Dispatch,
 	ReactNode,
@@ -15,7 +16,7 @@ import {ObjectField} from '../types/ObjectDefinition';
 import findAvailableFieldName from '../utils/findAvailableFieldName';
 import updateFields from '../utils/updateFields';
 
-const DEFAULT_STRUCTURE_NAME = Liferay.Language.get('untitled-structure');
+const DEFAULT_STRUCTURE_LABEL = Liferay.Language.get('untitled-structure');
 
 export type FieldType = 'text';
 
@@ -32,6 +33,7 @@ export type State = {
 	error: string | null;
 	fields: Map<string, Field>;
 	id: number | null;
+	label: string;
 	name: string;
 	status: Status;
 };
@@ -40,7 +42,8 @@ const INITIAL_STATE: State = {
 	error: null,
 	fields: new Map(),
 	id: null,
-	name: DEFAULT_STRUCTURE_NAME,
+	label: DEFAULT_STRUCTURE_LABEL,
+	name: objectDefinitionUtils.normalizeName(DEFAULT_STRUCTURE_LABEL),
 	status: 'new',
 };
 
@@ -48,6 +51,7 @@ type AddFieldAction = {field: Field; type: 'add-field'};
 
 type CreateStructureAction = {
 	id: number;
+	name: string;
 	objectFields: ObjectField[];
 	type: 'create-structure';
 };
@@ -56,7 +60,7 @@ type PublishStructureAction = {type: 'publish-structure'};
 
 type SetErrorAction = {error: string | null; type: 'set-error'};
 
-type SetNameAction = {name: string; type: 'set-name'};
+type setLabelAction = {label: string; type: 'set-label'};
 
 type UpdateStructureAction = {
 	objectFields: ObjectField[];
@@ -69,7 +73,7 @@ type Action =
 	| PublishStructureAction
 	| UpdateStructureAction
 	| SetErrorAction
-	| SetNameAction;
+	| setLabelAction;
 
 function reducer(state: State, action: Action) {
 	switch (action.type) {
@@ -92,6 +96,7 @@ function reducer(state: State, action: Action) {
 				error: null,
 				fields,
 				id: action.id,
+				name: action.name,
 				status: 'draft' as Status,
 			};
 		}
@@ -108,8 +113,8 @@ function reducer(state: State, action: Action) {
 		}
 		case 'set-error':
 			return {...state, error: action.error};
-		case 'set-name':
-			return {...state, name: action.name};
+		case 'set-label':
+			return {...state, label: action.label};
 		default:
 			return state;
 	}
@@ -159,6 +164,12 @@ function useStructureId() {
 	return state.id;
 }
 
+function useStructureLabel() {
+	const {state} = useContext(StateContext);
+
+	return state.label;
+}
+
 function useStructureName() {
 	const {state} = useContext(StateContext);
 
@@ -177,6 +188,7 @@ export {
 	useStructureError,
 	useStructureFields,
 	useStructureId,
+	useStructureLabel,
 	useStructureName,
 	useStructureStatus,
 };

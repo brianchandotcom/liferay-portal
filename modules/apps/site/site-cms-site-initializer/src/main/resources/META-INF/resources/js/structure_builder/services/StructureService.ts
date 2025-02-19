@@ -3,19 +3,25 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {API} from '@liferay/object-js-components-web';
+import {API, objectDefinitionUtils} from '@liferay/object-js-components-web';
 
 import {Field, State} from '../contexts/StateContext';
 import buildObjectDefinition from '../utils/buildObjectDefinition';
 
 async function createStructure({
 	fields,
-	name,
+	label,
+	name = objectDefinitionUtils.normalizeName(label),
 }: {
 	fields: Field[];
-	name: State['name'];
+	label: State['label'];
+	name?: State['name'];
 }) {
-	const objectDefinition = buildObjectDefinition({fields, name});
+	const objectDefinition = buildObjectDefinition({
+		fields,
+		label,
+		name,
+	});
 
 	return await API.postObjectDefinition(objectDefinition);
 }
@@ -31,13 +37,15 @@ async function publishStructure({id}: {id: State['id']}) {
 async function updateStructure({
 	fields,
 	id,
+	label,
 	name,
 }: {
 	fields: Field[];
 	id: State['id'];
-	name: string;
+	label: State['label'];
+	name: State['name'];
 }) {
-	const objectDefinition = buildObjectDefinition({fields, id, name});
+	const objectDefinition = buildObjectDefinition({fields, id, label, name});
 
 	return await API.putObjectDefinition(objectDefinition);
 }

@@ -3,8 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {objectDefinitionUtils} from '@liferay/object-js-components-web';
-
 import {Field, State} from '../contexts/StateContext';
 import {ObjectDefinition} from '../types/ObjectDefinition';
 import {FIELD_TYPE_BUSINESS_TYPE} from './fieldType';
@@ -12,17 +10,18 @@ import {FIELD_TYPE_BUSINESS_TYPE} from './fieldType';
 export default function buildObjectDefinition({
 	fields = [],
 	id,
+	label,
 	name,
 }: {
 	fields?: Field[];
 	id?: State['id'];
-	name: State['name'];
+	label: State['label'];
+	name?: string;
 }): ObjectDefinition {
 	const objectDefinition: ObjectDefinition = {
 		label: {
-			en_US: name,
+			en_US: label,
 		},
-		name: objectDefinitionUtils.normalizeName(name),
 		objectFields: fields.map((field) => ({
 			businessType: FIELD_TYPE_BUSINESS_TYPE[field.type],
 			externalReferenceCode: field.erc,
@@ -34,13 +33,17 @@ export default function buildObjectDefinition({
 			required: false,
 		})),
 		pluralLabel: {
-			en_US: name,
+			en_US: label,
 		},
 		scope: 'company',
 	};
 
 	if (id) {
 		objectDefinition.id = id;
+	}
+
+	if (name) {
+		objectDefinition.name = name;
 	}
 
 	return objectDefinition;

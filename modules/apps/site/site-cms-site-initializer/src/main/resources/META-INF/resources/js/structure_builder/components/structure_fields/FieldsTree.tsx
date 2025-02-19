@@ -11,7 +11,7 @@ import React, {useMemo} from 'react';
 import {
 	Field,
 	FieldType,
-	useStructureName,
+	useStructureLabel,
 } from '../../../structure_builder/contexts/StateContext';
 import {FIELD_TYPE_ICON} from '../../../structure_builder/utils/fieldType';
 
@@ -23,7 +23,7 @@ type TreeItem = {
 };
 
 export default function FieldsTree({fields}: {fields: Field[]}) {
-	const structureName = useStructureName();
+	const structureLabel = useStructureLabel();
 
 	const items: TreeItem[] = useMemo(() => {
 		return [
@@ -34,10 +34,10 @@ export default function FieldsTree({fields}: {fields: Field[]}) {
 				})),
 				icon: 'edit-layout',
 				id: 'root',
-				label: structureName,
+				label: structureLabel,
 			},
 		];
-	}, [fields, structureName]);
+	}, [fields, structureLabel]);
 
 	return (
 		<ClayTreeView

@@ -7,6 +7,8 @@ package com.liferay.asset.categories.search.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.model.AssetVocabularyGroupRel;
+import com.liferay.asset.kernel.service.AssetVocabularyGroupRelLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
@@ -20,8 +22,10 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -39,6 +43,7 @@ import com.liferay.users.admin.test.util.search.GroupBlueprint;
 import com.liferay.users.admin.test.util.search.GroupSearchFixture;
 import com.liferay.users.admin.test.util.search.UserSearchFixture;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -101,6 +106,13 @@ public class AssetVocabularyIndexerIndexedFieldsTest {
 
 		AssetVocabulary assetVocabulary =
 			_assetVocabularyFixture.createAssetVocabulary("新しい商品");
+
+		Group group1 = GroupTestUtil.addGroup();
+		Group group2 = GroupTestUtil.addGroup();
+
+		_assetVocabularyGroupRelLocalService.setAssetVocabularyGroupRels(
+			assetVocabulary.getVocabularyId(),
+			new long[] {group1.getGroupId(), group2.getGroupId()});
 
 		String searchTerm = "新しい";
 
@@ -208,6 +220,19 @@ public class AssetVocabularyIndexerIndexedFieldsTest {
 		).put(
 			"groupExternalReferenceCode", _group.getExternalReferenceCode()
 		).put(
+			"groupIds",
+			() -> {
+				List<Long> groupIds = ListUtil.toList(
+					_assetVocabularyGroupRelLocalService.
+						getAssetVocabularyGroupRelsByVocabularyId(
+							assetVocabulary.getVocabularyId()),
+					AssetVocabularyGroupRel::getGroupId);
+
+				Collections.sort(groupIds);
+
+				return String.valueOf(groupIds);
+			}
+		).put(
 			"name_sortable", StringUtil.lowerCase(assetVocabulary.getName())
 		).put(
 			"scopeGroupExternalReferenceCode", _group.getExternalReferenceCode()
@@ -280,6 +305,11 @@ public class AssetVocabularyIndexerIndexedFieldsTest {
 	private List<AssetVocabulary> _assetVocabularies;
 
 	private AssetVocabularyFixture _assetVocabularyFixture;
+
+	@Inject
+	private AssetVocabularyGroupRelLocalService
+		_assetVocabularyGroupRelLocalService;
+
 	private Locale _defaultLocale;
 	private Group _group;
 

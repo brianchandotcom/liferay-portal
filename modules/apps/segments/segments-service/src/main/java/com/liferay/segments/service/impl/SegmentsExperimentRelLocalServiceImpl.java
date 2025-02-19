@@ -7,8 +7,10 @@ package com.liferay.segments.service.impl;
 
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
@@ -142,19 +144,37 @@ public class SegmentsExperimentRelLocalServiceImpl
 
 	@Override
 	public SegmentsExperimentRel fetchSegmentsExperimentRel(
-		long segmentsExperimentId, long segmentsExperienceId) {
+		long segmentsExperimentId, String segmentsExperienceKey) {
+
+		SegmentsExperiment segmentsExperiment =
+			_segmentsExperimentPersistence.fetchByPrimaryKey(
+				segmentsExperimentId);
+
+		SegmentsExperience segmentsExperience =
+			_segmentsExperienceLocalService.fetchSegmentsExperience(
+				segmentsExperiment.getGroupId(), segmentsExperienceKey,
+				_getPublishedLayoutPlid(segmentsExperiment.getPlid()));
 
 		return segmentsExperimentRelPersistence.fetchByS_S(
-			segmentsExperimentId, segmentsExperienceId);
+			segmentsExperimentId, segmentsExperience.getSegmentsExperienceId());
 	}
 
 	@Override
 	public SegmentsExperimentRel getSegmentsExperimentRel(
-			long segmentsExperimentId, long segmentsExperienceId)
+			long segmentsExperimentId, String segmentsExperienceKey)
 		throws PortalException {
 
+		SegmentsExperiment segmentsExperiment =
+			_segmentsExperimentPersistence.fetchByPrimaryKey(
+				segmentsExperimentId);
+
+		SegmentsExperience segmentsExperience =
+			_segmentsExperienceLocalService.fetchSegmentsExperience(
+				segmentsExperiment.getGroupId(), segmentsExperienceKey,
+				_getPublishedLayoutPlid(segmentsExperiment.getPlid()));
+
 		return segmentsExperimentRelPersistence.findByS_S(
-			segmentsExperimentId, segmentsExperienceId);
+			segmentsExperimentId, segmentsExperience.getSegmentsExperienceId());
 	}
 
 	@Override
@@ -167,11 +187,18 @@ public class SegmentsExperimentRelLocalServiceImpl
 
 	@Override
 	public List<SegmentsExperimentRel>
-		getSegmentsExperimentRelsBySegmentsExperienceId(
-			long segmentsExperienceId) {
+		getSegmentsExperimentRelsBySegmentsExperienceKey(
+			String segmentsExperienceKey, long plid) {
+
+		Layout layout = _layoutLocalService.fetchLayout(plid);
+
+		SegmentsExperience segmentsExperience =
+			_segmentsExperienceLocalService.fetchSegmentsExperience(
+				layout.getGroupId(), segmentsExperienceKey,
+				_getPublishedLayoutPlid(layout.getPlid()));
 
 		return segmentsExperimentRelPersistence.findBySegmentsExperienceId(
-			segmentsExperienceId);
+			segmentsExperience.getSegmentsExperienceId());
 	}
 
 	@Override
@@ -228,6 +255,16 @@ public class SegmentsExperimentRelLocalServiceImpl
 		return segmentsExperimentRelPersistence.update(segmentsExperimentRel);
 	}
 
+	private long _getPublishedLayoutPlid(long plid) {
+		Layout layout = _layoutLocalService.fetchLayout(plid);
+
+		if ((layout != null) && layout.isDraftLayout()) {
+			return layout.getClassPK();
+		}
+
+		return plid;
+	}
+
 	private SegmentsExperimentRel _updateSegmentsExperimentRelSplit(
 			SegmentsExperimentRel segmentsExperimentRel, double split)
 		throws PortalException {
@@ -263,6 +300,9 @@ public class SegmentsExperimentRelLocalServiceImpl
 			throw new LockedSegmentsExperimentException(segmentsExperimentId);
 		}
 	}
+
+	@Reference
+	private LayoutLocalService _layoutLocalService;
 
 	@Reference
 	private SegmentsExperienceLocalService _segmentsExperienceLocalService;

@@ -234,6 +234,10 @@ export function openConfirmModal({
 
 export function openModal(props: Object): void;
 
+export function openPortletModal(props: Object): void;
+
+export function openPortletWindow(props: Object): void;
+
 export function openSelectionModal<T>(init: {
 	buttonAddLabel?: string;
 	buttonCancelLabel?: string;
@@ -252,6 +256,8 @@ export function openSelectionModal<T>(init: {
 	url?: string;
 	zIndex?: number;
 }): void;
+
+export function openSimpleInputModal(props: Object): void;
 
 export function openToast({
 	autoClose,

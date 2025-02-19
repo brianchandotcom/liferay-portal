@@ -41,3 +41,16 @@ export {
 	selectedLanguageIdAtom,
 } from './translation_manager/state';
 export {default as Treeview} from './treeview/Treeview';
+
+export {
+	openAlertModal,
+	openCategorySelectionModal,
+	openConfirmModal,
+	openModal,
+	openPortletModal,
+	openPortletWindow,
+	openSelectionModal,
+	openSimpleInputModal,
+	openTagSelectionModal,
+	openToast,
+} from 'frontend-js-web';

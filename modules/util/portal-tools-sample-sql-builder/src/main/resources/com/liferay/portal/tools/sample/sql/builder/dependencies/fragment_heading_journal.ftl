@@ -14,33 +14,37 @@
 		_journalDDMTemplateModel = defaultJournalDDMTemplateModel
 	/>
 
-	<#list dataFactory.newContentLayoutModels(groupId) as contentLayoutModel>
-		${dataFactory.toInsertSQL(contentLayoutModel)}
+	<#list dataFactory.getSequence(dataFactory.maxContentLayoutCount) as contentLayoutCount>
+		<#assign contentLayoutModels = dataFactory.newContentPageLayoutModels(groupId, groupId + "_web_content_" + contentLayoutCount) />
 
-		${dataFactory.toInsertSQL(dataFactory.newLayoutFriendlyURLModel(contentLayoutModel))}
+		<#list contentLayoutModels as contentLayoutModel>
+			${dataFactory.toInsertSQL(contentLayoutModel)}
 
-		<#assign layoutPageTemplateStructureModel = dataFactory.newLayoutPageTemplateStructureModel(contentLayoutModel) />
+			${dataFactory.toInsertSQL(dataFactory.newLayoutFriendlyURLModel(contentLayoutModel))}
 
-		${dataFactory.toInsertSQL(layoutPageTemplateStructureModel)}
+			<#assign layoutPageTemplateStructureModel = dataFactory.newLayoutPageTemplateStructureModel(contentLayoutModel) />
 
-		<#assign
-			segmentsExperienceModel = dataFactory.newSegmentsExperienceModel(groupId, 0, "DEFAULT", contentLayoutModel.plid, "Default", 0)
-		/>
+			${dataFactory.toInsertSQL(layoutPageTemplateStructureModel)}
 
-	 	${dataFactory.toInsertSQL(segmentsExperienceModel)}
+			<#assign
+				segmentsExperienceModel = dataFactory.newSegmentsExperienceModel(groupId, 0, "DEFAULT", contentLayoutModel.plid, "Default", 0)
+			/>
 
-		<#assign fragmentEntryLinkModels = dataFactory.newFragmentEntryLinkModels(journalArticleModel, contentLayoutModel, segmentsExperienceModel.getSegmentsExperienceId()) />
+			${dataFactory.toInsertSQL(segmentsExperienceModel)}
 
-		<#list fragmentEntryLinkModels as fragmentEntryLinkModel>
-			${dataFactory.toInsertSQL(fragmentEntryLinkModel)}
+			<#assign fragmentEntryLinkModels = dataFactory.newFragmentEntryLinkModels(journalArticleModel, contentLayoutModel, segmentsExperienceModel.getSegmentsExperienceId()) />
 
-			${dataFactory.toInsertSQL(dataFactory.newLayoutClassedModelUsageModel(groupId, contentLayoutModel.plid, "${fragmentEntryLinkModel.fragmentEntryLinkId}", journalArticleResourceModel))}
+			<#list fragmentEntryLinkModels as fragmentEntryLinkModel>
+				${dataFactory.toInsertSQL(fragmentEntryLinkModel)}
+
+				${dataFactory.toInsertSQL(dataFactory.newLayoutClassedModelUsageModel(groupId, contentLayoutModel.plid, "${fragmentEntryLinkModel.fragmentEntryLinkId}", journalArticleResourceModel))}
+			</#list>
+
+			<#assign layoutPageTemplateStructureRelModel = dataFactory.newLayoutPageTemplateStructureRelModel(contentLayoutModel, layoutPageTemplateStructureModel, fragmentEntryLinkModels) />
+
+			${dataFactory.toInsertSQL(layoutPageTemplateStructureRelModel)}
+
+			${csvFileWriter.write("fragment", virtualHostModel.hostname + "," + groupModel.friendlyURL + "," + contentLayoutModel.friendlyURL + "\n")}
 		</#list>
-
-		<#assign layoutPageTemplateStructureRelModel = dataFactory.newLayoutPageTemplateStructureRelModel(contentLayoutModel, layoutPageTemplateStructureModel, fragmentEntryLinkModels) />
-
-		${dataFactory.toInsertSQL(layoutPageTemplateStructureRelModel)}
-
-		${csvFileWriter.write("fragment", virtualHostModel.hostname + "," + groupModel.friendlyURL + "," + contentLayoutModel.friendlyURL + "\n")}
 	</#list>
 </#if>

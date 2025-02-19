@@ -851,12 +851,12 @@ public class JenkinsResultsParserUtil {
 
 			httpURLConnection.setRequestMethod("HEAD");
 
-			BasicHTTPAuthorization httpAuthorizationHeader =
-				_getHTTPAuthorization(
+			BasicHTTPAuthorization httpAuthorization =
+				_getBasicHTTPAuthorization(
 					"jenkins.admin.user.token", "jenkins.admin.user.name");
 
 			httpURLConnection.setRequestProperty(
-				"Authorization", httpAuthorizationHeader.toString());
+				"Authorization", httpAuthorization.toString());
 
 			httpURLConnection.connect();
 
@@ -4636,15 +4636,14 @@ public class JenkinsResultsParserUtil {
 	public static BufferedReader toBufferedReader(
 			String url, boolean checkCache, int maxRetries,
 			HttpRequestMethod httpRequestMethod, String postContent,
-			int retryPeriod, int timeout,
-			HTTPAuthorization httpAuthorizationHeader)
+			int retryPeriod, int timeout, HTTPAuthorization httpAuthorization)
 		throws IOException {
 
 		return new BufferedReader(
 			new InputStreamReader(
 				toInputStream(
 					url, checkCache, maxRetries, httpRequestMethod, postContent,
-					retryPeriod, timeout, httpAuthorizationHeader)));
+					retryPeriod, timeout, httpAuthorization)));
 	}
 
 	public static String toDateString(Date date) {
@@ -4797,8 +4796,7 @@ public class JenkinsResultsParserUtil {
 	public static InputStream toInputStream(
 			String url, boolean checkCache, int maxRetries,
 			HttpRequestMethod httpRequestMethod, String postContent,
-			int retryPeriod, int timeout,
-			HTTPAuthorization httpAuthorizationHeader)
+			int retryPeriod, int timeout, HTTPAuthorization httpAuthorization)
 		throws IOException {
 
 		if (url.startsWith("file:") &&
@@ -4877,36 +4875,36 @@ public class JenkinsResultsParserUtil {
 					}
 				}
 
-				if ((httpAuthorizationHeader == null) &&
+				if ((httpAuthorization == null) &&
 					(gitHubAPICall ||
 					 url.startsWith(
 						 "https://raw.githubusercontent.com/liferay/"))) {
 
 					Properties buildProperties = getBuildProperties();
 
-					httpAuthorizationHeader = new TokenHTTPAuthorization(
+					httpAuthorization = new TokenHTTPAuthorization(
 						buildProperties.getProperty("github.access.token"));
 				}
 
-				if ((httpAuthorizationHeader == null) &&
+				if ((httpAuthorization == null) &&
 					url.startsWith("https://release.liferay.com")) {
 
-					httpAuthorizationHeader = _getHTTPAuthorization(
+					httpAuthorization = _getBasicHTTPAuthorization(
 						"jenkins.admin.user.password",
 						"jenkins.admin.user.name");
 				}
 
-				if ((httpAuthorizationHeader == null) &&
+				if ((httpAuthorization == null) &&
 					url.matches("https://liferay.spiraservice.net.+")) {
 
 					Properties buildProperties = getBuildProperties();
 
-					httpAuthorizationHeader = new BasicHTTPAuthorization(
+					httpAuthorization = new BasicHTTPAuthorization(
 						buildProperties.getProperty("spira.admin.user.token"),
 						buildProperties.getProperty("spira.admin.user.name"));
 				}
 
-				if ((httpAuthorizationHeader == null) &&
+				if ((httpAuthorization == null) &&
 					url.matches(
 						"https?:\\/\\/test-[135]-\\d+(?:\\.liferay\\.com)?.*?" +
 							"|http:\\/\\/localhost:8081.*?")) {
@@ -4915,7 +4913,7 @@ public class JenkinsResultsParserUtil {
 						url = getLocalURL(url);
 					}
 
-					httpAuthorizationHeader = _getHTTPAuthorization(
+					httpAuthorization = _getBasicHTTPAuthorization(
 						"jenkins.admin.user.token", "jenkins.admin.user.name");
 				}
 
@@ -4925,10 +4923,10 @@ public class JenkinsResultsParserUtil {
 					testray1Request = true;
 				}
 
-				if ((httpAuthorizationHeader == null) && testray1Request) {
+				if ((httpAuthorization == null) && testray1Request) {
 					Properties buildProperties = getBuildProperties();
 
-					httpAuthorizationHeader = new BasicHTTPAuthorization(
+					httpAuthorization = new BasicHTTPAuthorization(
 						getProperty(
 							buildProperties, "testray.admin.user.password"),
 						getProperty(
@@ -4937,8 +4935,7 @@ public class JenkinsResultsParserUtil {
 
 				Matcher testray2URLMatcher = _testray2URLPattern.matcher(url);
 
-				if ((httpAuthorizationHeader == null) &&
-					testray2URLMatcher.find() &&
+				if ((httpAuthorization == null) && testray2URLMatcher.find() &&
 					!url.contains("/o/oauth2/token")) {
 
 					Properties buildProperties = getBuildProperties();
@@ -4957,9 +4954,8 @@ public class JenkinsResultsParserUtil {
 						buildProperties, "testray.oauth2.client.secret",
 						lxcEnvironment);
 
-					httpAuthorizationHeader =
-						new ClientCredentialsHTTPAuthorization(
-							clientId, clientSecret, tokenURL);
+					httpAuthorization = new ClientCredentialsHTTPAuthorization(
+						clientId, clientSecret, tokenURL);
 				}
 
 				URL urlObject = new URL(url);
@@ -5008,12 +5004,11 @@ public class JenkinsResultsParserUtil {
 						}
 					}
 
-					if (httpAuthorizationHeader != null) {
+					if (httpAuthorization != null) {
 						httpURLConnection.setRequestProperty(
 							"accept", "application/json");
 						httpURLConnection.setRequestProperty(
-							"Authorization",
-							httpAuthorizationHeader.toString());
+							"Authorization", httpAuthorization.toString());
 
 						if (!testray1Request) {
 							httpURLConnection.setRequestProperty(
@@ -5098,7 +5093,7 @@ public class JenkinsResultsParserUtil {
 							"http://(test-\\d+-\\d+)(/.*)",
 							"https://$1.liferay.com$2"),
 						checkCache, maxRetries, httpRequestMethod, postContent,
-						retryPeriod, timeout, httpAuthorizationHeader);
+						retryPeriod, timeout, httpAuthorization);
 				}
 
 				String exceptionMessage = ioException.getMessage();
@@ -5472,13 +5467,13 @@ public class JenkinsResultsParserUtil {
 
 	public static String toString(
 			String url, boolean checkCache, HttpRequestMethod httpRequestMethod,
-			String postContent, HTTPAuthorization httpAuthorizationHeader)
+			String postContent, HTTPAuthorization httpAuthorization)
 		throws IOException {
 
 		return toString(
 			url, checkCache, _RETRIES_SIZE_MAX_DEFAULT, httpRequestMethod,
 			postContent, _SECONDS_RETRY_PERIOD_DEFAULT, _MILLIS_TIMEOUT_DEFAULT,
-			httpAuthorizationHeader, false);
+			httpAuthorization, false);
 	}
 
 	public static String toString(String url, boolean checkCache, int timeout)
@@ -5492,8 +5487,8 @@ public class JenkinsResultsParserUtil {
 	public static String toString(
 			String url, boolean checkCache, int maxRetries,
 			HttpRequestMethod httpRequestMethod, String postContent,
-			int retryPeriod, int timeout,
-			HTTPAuthorization httpAuthorizationHeader, boolean expectResponse)
+			int retryPeriod, int timeout, HTTPAuthorization httpAuthorization,
+			boolean expectResponse)
 		throws IOException {
 
 		long start = System.currentTimeMillis();
@@ -5502,8 +5497,7 @@ public class JenkinsResultsParserUtil {
 			for (int i = 0; i < 2; i++) {
 				try (BufferedReader bufferedReader = toBufferedReader(
 						url, checkCache, maxRetries, httpRequestMethod,
-						postContent, retryPeriod, timeout,
-						httpAuthorizationHeader)) {
+						postContent, retryPeriod, timeout, httpAuthorization)) {
 
 					StringBuilder sb = new StringBuilder();
 
@@ -6376,6 +6370,17 @@ public class JenkinsResultsParserUtil {
 		return key;
 	}
 
+	private static BasicHTTPAuthorization _getBasicHTTPAuthorization(
+			String password, String username)
+		throws IOException {
+
+		Properties buildProperties = getBuildProperties();
+
+		return new BasicHTTPAuthorization(
+			buildProperties.getProperty(password),
+			buildProperties.getProperty(username));
+	}
+
 	private static File _getCacheFile(String key) {
 		String baseDirPath = System.getProperty("java.io.tmpdir");
 
@@ -6639,17 +6644,6 @@ public class JenkinsResultsParserUtil {
 		}
 
 		return _gitWorkingDirectoriesJSONArray;
-	}
-
-	private static BasicHTTPAuthorization _getHTTPAuthorization(
-			String password, String username)
-		throws IOException {
-
-		Properties buildProperties = getBuildProperties();
-
-		return new BasicHTTPAuthorization(
-			buildProperties.getProperty(password),
-			buildProperties.getProperty(username));
 	}
 
 	private static Set<Set<String>> _getOrderedOptSets(String... opts) {

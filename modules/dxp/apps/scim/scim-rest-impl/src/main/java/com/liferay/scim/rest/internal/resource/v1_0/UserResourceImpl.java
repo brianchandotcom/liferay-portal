@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.service.UserGroupService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.scim.rest.dto.v1_0.User;
@@ -63,7 +64,8 @@ public class UserResourceImpl extends BaseUserResourceImpl {
 
 		return _buildResponse(
 			_userResourceManager.listWithGET(
-				_userManager, contextHttpServletRequest.getParameter("filter"),
+				_userManager,
+				ParamUtil.getString(contextHttpServletRequest, "filter", null),
 				startIndex, count, null, null, null, null, null));
 	}
 

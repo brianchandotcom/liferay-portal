@@ -963,27 +963,24 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 			<String,
 			 List
 				 <ServiceTrackerCustomizerFactory.ServiceWrapper
-					 <FDSViewContextContributor>>>
-						serviceTrackerMap1 =
-							ServiceTrackerMapFactory.openMultiValueMap(
-								_bundleContext, FDSViewContextContributor.class,
-								"frontend.data.set.view.name",
-								ServiceTrackerCustomizerFactory.
-									<FDSViewContextContributor>serviceWrapper(
-										_bundleContext));
+					 <FDSViewContextContributor>>> serviceTrackerMap1 =
+						ServiceTrackerMapFactory.openMultiValueMap(
+							_bundleContext, FDSViewContextContributor.class,
+							"frontend.data.set.view.name",
+							ServiceTrackerCustomizerFactory.
+								<FDSViewContextContributor>serviceWrapper(
+									_bundleContext));
 
 		_systemFDSSerializer.fdsViewContextContributorRegistry =
-			new FDSViewContextContributorRegistryImpl(
-				serviceTrackerMap1);
+			new FDSViewContextContributorRegistryImpl(serviceTrackerMap1);
 
 		ServiceTrackerMap
 			<String,
 			 List<ServiceTrackerCustomizerFactory.ServiceWrapper<FDSView>>>
-				serviceTrackerMap2 =
-					ServiceTrackerMapFactory.openMultiValueMap(
-						_bundleContext, FDSView.class, "frontend.data.set.name",
-						ServiceTrackerCustomizerFactory.<FDSView>serviceWrapper(
-							_bundleContext));
+				serviceTrackerMap2 = ServiceTrackerMapFactory.openMultiValueMap(
+					_bundleContext, FDSView.class, "frontend.data.set.name",
+					ServiceTrackerCustomizerFactory.<FDSView>serviceWrapper(
+						_bundleContext));
 
 		_systemFDSSerializer.fdsViewRegistry = new FDSViewRegistryImpl(
 			serviceTrackerMap2);
@@ -1347,45 +1344,6 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 		serviceTrackerMap2.close();
 	}
 
-	private FDSView _createFDSViewCards(
-		String description, String href, String image, String sticker,
-		String symbol, String title) {
-
-		return new BaseCardsFDSView() {
-
-			@Override
-			public String getDescription() {
-				return description;
-			}
-
-			@Override
-			public String getImage() {
-				return image;
-			}
-
-			@Override
-			public String getLink() {
-				return href;
-			}
-
-			@Override
-			public String getSticker() {
-				return sticker;
-			}
-
-			@Override
-			public String getSymbol() {
-				return symbol;
-			}
-
-			@Override
-			public String getTitle() {
-				return title;
-			}
-
-		};
-	}
-
 	private FDSFilter _createFDSFilterDate(
 		String id, String label, DateFDSFilterItem maxDateFDSFilterItem,
 		DateFDSFilterItem minDateFDSFilterItem,
@@ -1421,6 +1379,45 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 			@Override
 			public Map<String, Object> getPreloadedData() {
 				return preloadedData;
+			}
+
+		};
+	}
+
+	private FDSView _createFDSViewCards(
+		String description, String href, String image, String sticker,
+		String symbol, String title) {
+
+		return new BaseCardsFDSView() {
+
+			@Override
+			public String getDescription() {
+				return description;
+			}
+
+			@Override
+			public String getImage() {
+				return image;
+			}
+
+			@Override
+			public String getLink() {
+				return href;
+			}
+
+			@Override
+			public String getSticker() {
+				return sticker;
+			}
+
+			@Override
+			public String getSymbol() {
+				return symbol;
+			}
+
+			@Override
+			public String getTitle() {
+				return title;
 			}
 
 		};

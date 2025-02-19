@@ -337,18 +337,32 @@ test('can see corresponding elements at instance level', async ({
 			},
 		});
 	apiHelpers.data.push({id: objectDefinition.id, type: 'objectDefinition'});
+
 	await apiHelpers.objectEntry.postObjectEntry({name: 'test'}, 'c/tests');
+
 	await companyExportImportPage.applicationsMenuPage.goToExport();
+
 	await companyExportImportPage.page
 		.getByTestId('creationMenuNewButton')
 		.nth(1)
 		.click();
+		
 	await expect(
 		companyExportImportPage.page.getByText('Comments, Ratings')
 	).not.toBeVisible();
-	await companyExportImportPage.page.getByLabel('Tests 1 Items').click();
+
+	await expect(
+		companyExportImportPage.page.getByText('Tests 1 Items')
+	).not.toBeVisible();
+
+	await companyExportImportPage.page.getByLabel('Tests').click();
+
 	await expect(
 		companyExportImportPage.page.getByText('C_Test Change')
+	).not.toBeVisible();
+
+	await expect(
+		companyExportImportPage.page.getByRole('link', { name: 'Refresh Counts' })
 	).not.toBeVisible();
 });
 

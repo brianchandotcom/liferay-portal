@@ -68,7 +68,7 @@ public class CaptchaConfigurationModelListener
 		String reCaptchaNoScriptURL = (String)properties.get(
 			"reCaptchaNoScriptURL");
 
-		if (!reCaptchaNoScriptURL.startsWith("https://www.google.com")) {
+		if (!reCaptchaNoScriptURL.startsWith(_RECAPTCHA_URL)) {
 			throw new CaptchaConfigurationException(
 				ResourceBundleUtil.getString(
 					_getResourceBundle(),
@@ -98,7 +98,7 @@ public class CaptchaConfigurationModelListener
 		String reCaptchaScriptUrl = (String)properties.get(
 			"reCaptchaScriptURL");
 
-		if (!reCaptchaScriptUrl.startsWith("https://www.google.com")) {
+		if (!reCaptchaScriptUrl.startsWith(_RECAPTCHA_URL)) {
 			throw new CaptchaConfigurationException(
 				ResourceBundleUtil.getString(
 					_getResourceBundle(),
@@ -108,13 +108,15 @@ public class CaptchaConfigurationModelListener
 		String reCaptchaVerifyURL = (String)properties.get(
 			"reCaptchaVerifyURL");
 
-		if (!reCaptchaVerifyURL.startsWith("https://www.google.com")) {
+		if (!reCaptchaVerifyURL.startsWith(_RECAPTCHA_URL)) {
 			throw new CaptchaConfigurationException(
 				ResourceBundleUtil.getString(
 					_getResourceBundle(),
 					"the-recaptcha-verify-url-is-not-valid"));
 		}
 	}
+
+	private static final String _RECAPTCHA_URL = "https://www.google.com";
 
 	private ResourceBundle _resourceBundle;
 

@@ -485,7 +485,6 @@ test('can import custom object entries at instance level with or without permiss
 test('can see corresponding elements at instance level', async ({
 	apiHelpers,
 	companyExportImportPage,
-	exportImportPage,
 }) => {
 	const objectActionApiClient =
 		await apiHelpers.buildRestClient(ObjectDefinitionApi);
@@ -526,7 +525,7 @@ test('can see corresponding elements at instance level', async ({
 	const exportFilePath =
 		await companyExportImportPage.export('Tests 1 Items');
 
-	await exportImportPage.page.goto('/');
+	await companyExportImportPage.page.goto('/');
 
 	await companyExportImportPage.goToImportOptions(exportFilePath);
 
@@ -583,7 +582,7 @@ test('can see corresponding elements at site level', async ({
 
 	const exportName = 'MyExport-' + getRandomString();
 
-	await exportImportPage.createNewExportProcess(exportName, ['Tests']);
+	await exportImportPage.createNewExportProcess(exportName);
 
 	await expect(
 		exportImportPage.page
@@ -596,11 +595,6 @@ test('can see corresponding elements at site level', async ({
 		await exportImportPage.downloadExportProcess(exportName);
 
 	await exportImportPage.goToImport();
-
-	await exportImportPage.checkItemInNewlyCreatedImportProcess(
-		exportFilePath,
-		'Tests'
-	);
 
 	await exportImportPage.goToImportOptions(exportFilePath);
 

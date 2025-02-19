@@ -40,9 +40,7 @@
 				${dataFactory.toInsertSQL(dataFactory.newLayoutClassedModelUsageModel(groupId, contentLayoutModel.plid, "${fragmentEntryLinkModel.fragmentEntryLinkId}", journalArticleResourceModel))}
 			</#list>
 
-			<#assign layoutPageTemplateStructureRelModel = dataFactory.newLayoutPageTemplateStructureRelModel(contentLayoutModel, layoutPageTemplateStructureModel, fragmentEntryLinkModels) />
-
-			${dataFactory.toInsertSQL(layoutPageTemplateStructureRelModel)}
+			${dataFactory.toInsertSQL(dataFactory.newLayoutPageTemplateStructureRelModel(contentLayoutModel, layoutPageTemplateStructureModel, fragmentEntryLinkModels))}
 
 			${csvFileWriter.write("fragment", virtualHostModel.hostname + "," + groupModel.friendlyURL + "," + contentLayoutModel.friendlyURL + "\n")}
 		</#list>

@@ -920,11 +920,11 @@ public class ObjectEntryLocalServiceTest {
 					"listTypeEntryKeyRequired", "listTypeEntryKey1"
 				).build()));
 
-		_objectFieldLocalService.updateRequired(
-			_objectRelationship.getObjectFieldId2(), true);
-
 		ObjectField objectField = _objectFieldLocalService.getObjectField(
 			_objectRelationship.getObjectFieldId2());
+
+		_objectFieldLocalService.updateRequired(
+			_objectRelationship.getObjectFieldId2(), true);
 
 		AssertUtils.assertFailure(
 			ObjectEntryValuesException.Required.class,

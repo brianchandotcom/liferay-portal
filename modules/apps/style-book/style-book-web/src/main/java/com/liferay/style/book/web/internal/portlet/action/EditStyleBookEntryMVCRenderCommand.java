@@ -5,7 +5,6 @@
 
 package com.liferay.style.book.web.internal.portlet.action;
 
-import com.liferay.client.extension.type.manager.CETManager;
 import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
 import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
 import com.liferay.item.selector.ItemSelector;
@@ -39,16 +38,13 @@ public class EditStyleBookEntryMVCRenderCommand implements MVCRenderCommand {
 		renderRequest.setAttribute(
 			EditStyleBookEntryDisplayContext.class.getName(),
 			new EditStyleBookEntryDisplayContext(
-				_cetManager, _fragmentCollectionContributorRegistry,
+				_fragmentCollectionContributorRegistry,
 				_frontendTokenDefinitionRegistry,
 				_portal.getHttpServletRequest(renderRequest), _itemSelector,
 				renderResponse));
 
 		return "/edit_style_book_entry.jsp";
 	}
-
-	@Reference
-	private CETManager _cetManager;
 
 	@Reference
 	private FragmentCollectionContributorRegistry

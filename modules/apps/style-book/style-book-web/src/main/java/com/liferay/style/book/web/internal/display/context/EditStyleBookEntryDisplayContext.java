@@ -5,7 +5,6 @@
 
 package com.liferay.style.book.web.internal.display.context;
 
-import com.liferay.client.extension.type.manager.CETManager;
 import com.liferay.fragment.collection.item.selector.FragmentCollectionItemSelectorReturnType;
 import com.liferay.fragment.collection.item.selector.criterion.FragmentCollectionItemSelectorCriterion;
 import com.liferay.fragment.contributor.FragmentCollectionContributor;
@@ -84,14 +83,12 @@ import javax.servlet.http.HttpServletRequest;
 public class EditStyleBookEntryDisplayContext {
 
 	public EditStyleBookEntryDisplayContext(
-		CETManager cetManager,
 		FragmentCollectionContributorRegistry
 			fragmentCollectionContributorRegistry,
 		FrontendTokenDefinitionRegistry frontendTokenDefinitionRegistry,
 		HttpServletRequest httpServletRequest, ItemSelector itemSelector,
 		RenderResponse renderResponse) {
 
-		_cetManager = cetManager;
 		_fragmentCollectionContributorRegistry =
 			fragmentCollectionContributorRegistry;
 		_frontendTokenDefinitionRegistry = frontendTokenDefinitionRegistry;
@@ -586,8 +583,8 @@ public class EditStyleBookEntryDisplayContext {
 	private String _getThemeName() {
 		if (FeatureFlagManagerUtil.isEnabled("LPD-30204")) {
 			return StyleBookUtil.getThemeName(
-				_cetManager, _styleBookEntry.getCompanyId(),
-				_httpServletRequest, _styleBookEntry.getThemeId());
+				_styleBookEntry.getCompanyId(), _httpServletRequest,
+				_styleBookEntry.getThemeId());
 		}
 
 		Group group = _themeDisplay.getScopeGroup();
@@ -613,7 +610,6 @@ public class EditStyleBookEntryDisplayContext {
 	private static final Log _log = LogFactoryUtil.getLog(
 		EditStyleBookEntryDisplayContext.class.getName());
 
-	private final CETManager _cetManager;
 	private final FragmentCollectionContributorRegistry
 		_fragmentCollectionContributorRegistry;
 	private final FrontendTokenDefinitionRegistry

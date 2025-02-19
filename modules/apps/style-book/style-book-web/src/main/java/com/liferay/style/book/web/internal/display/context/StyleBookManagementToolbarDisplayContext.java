@@ -15,6 +15,7 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemListBuilder;
 import com.liferay.frontend.token.definition.FrontendTokenDefinition;
 import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
+import com.liferay.frontend.token.definition.constants.FrontendTokenDefinitionConstants;
 import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -34,6 +35,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.portlet.ResourceURL;
 
@@ -224,9 +226,10 @@ public class StyleBookManagementToolbarDisplayContext
 				_frontendTokenDefinitionRegistry.getFrontendTokenDefinitions(
 					_themeDisplay.getCompanyId())) {
 
-			if (_cetManager.isCETAvailable(
-					_themeDisplay.getCompanyId(),
-					frontendTokenDefinition.getThemeId())) {
+			if (Objects.equals(
+					frontendTokenDefinition.getThemeType(),
+					FrontendTokenDefinitionConstants.
+						THEME_TYPE_THEME_CSS_CET)) {
 
 				CET cet = _cetManager.getCET(
 					_themeDisplay.getCompanyId(),
@@ -245,8 +248,7 @@ public class StyleBookManagementToolbarDisplayContext
 				HashMapBuilder.<String, Object>put(
 					"name",
 					StyleBookUtil.getThemeName(
-						_cetManager, _themeDisplay.getCompanyId(),
-						httpServletRequest,
+						_themeDisplay.getCompanyId(), httpServletRequest,
 						frontendTokenDefinition.getThemeId())
 				).put(
 					"themeId", frontendTokenDefinition.getThemeId()

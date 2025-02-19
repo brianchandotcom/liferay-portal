@@ -193,7 +193,8 @@ public class NotificationTemplateLocalServiceImpl
 			getActionableDynamicQuery();
 
 		actionableDynamicQuery.setAddCriteriaMethod(
-			dynamicQuery -> RestrictionsFactoryUtil.eq("companyId", companyId));
+			dynamicQuery -> dynamicQuery.add(
+				RestrictionsFactoryUtil.eq("companyId", companyId)));
 		actionableDynamicQuery.setPerformActionMethod(
 			(NotificationTemplate notificationTemplate) ->
 				deleteNotificationTemplate(notificationTemplate));

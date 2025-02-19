@@ -1,0 +1,34 @@
+<StagedGroup>
+  <model class="com.liferay.portal.model.impl.GroupImpl">
+    <__cachedModel>false</__cachedModel>
+    <__new>false</__new>
+    <__mvccVersion>0</__mvccVersion>
+    <__ctCollectionId>0</__ctCollectionId>
+    <__uuid>a745acde-f715-332e-98f8-90b5eed279d2</__uuid>
+    <__externalReferenceCode>a745acde-f715-332e-98f8-90b5eed279d2</__externalReferenceCode>
+    <__groupId>31207</__groupId>
+    <__companyId>49752562761386</__companyId>
+    <__creatorUserId>20096</__creatorUserId>
+    <__modifiedDate>2025-02-19 15:08:50.469 UTC</__modifiedDate>
+    <__setModifiedDate>false</__setModifiedDate>
+    <__classNameId>31206</__classNameId>
+    <__classPK>0</__classPK>
+    <__parentGroupId>0</__parentGroupId>
+    <__liveGroupId>0</__liveGroupId>
+    <__treePath>/31207/</__treePath>
+    <__groupKey>0</__groupKey>
+    <__name></__name>
+    <__description></__description>
+    <__type>2</__type>
+    <__typeSettings></__typeSettings>
+    <__manualMembership>true</__manualMembership>
+    <__membershipRestriction>0</__membershipRestriction>
+    <__friendlyURL>/export-import</__friendlyURL>
+    <__site>false</__site>
+    <__remoteStagingGroupCount>0</__remoteStagingGroupCount>
+    <__inheritContent>false</__inheritContent>
+    <__active>true</__active>
+    <__columnBitmask>0</__columnBitmask>
+  </model>
+  <__group class="com.liferay.portal.model.impl.GroupImpl" reference="../model"/>
+</StagedGroup>

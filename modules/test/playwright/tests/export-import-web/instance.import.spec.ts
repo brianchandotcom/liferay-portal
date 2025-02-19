@@ -140,7 +140,7 @@ test('can only import custom object entries when their definitions are already i
 
 	expect(
 		companyExportImportPage.page.getByText(
-			'The file test.object.portlet.lar cannot be imported.The object definition "'
+			'The Data Handler for the "Tests" portlet is missing from the system.'
 		)
 	).toBeVisible();
 

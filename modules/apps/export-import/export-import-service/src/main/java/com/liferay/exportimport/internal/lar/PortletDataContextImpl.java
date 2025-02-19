@@ -1598,8 +1598,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	@Override
-	public boolean isValidateDataHandler() {
-		return _validateDataHandler;
+	public boolean isValidateExistingDataHandler() {
+		return _validateExistingDataHandler;
 	}
 
 	/**
@@ -1804,8 +1804,10 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	@Override
-	public void setValidateDataHandler(boolean validateDataHandler) {
-		_validateDataHandler = validateDataHandler;
+	public void setValidateExistingDataHandler(
+		boolean validateExistingDataHandler) {
+
+		_validateExistingDataHandler = validateExistingDataHandler;
 	}
 
 	@Override
@@ -2789,7 +2791,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 	private String _type;
 	private transient UserIdStrategy _userIdStrategy;
 	private long _userPersonalSiteGroupId;
-	private boolean _validateDataHandler;
+	private boolean _validateExistingDataHandler;
 	private transient ZipReader _zipReader;
 	private transient ZipWriter _zipWriter;
 

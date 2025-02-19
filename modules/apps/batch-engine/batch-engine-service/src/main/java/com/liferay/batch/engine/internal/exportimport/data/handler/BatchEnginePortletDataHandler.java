@@ -118,7 +118,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 
 				});
 
-		portletDataContext.setValidateDataHandler(true);
+		portletDataContext.setValidateExistingDataHandler(true);
 
 		portletDataContext.addZipEntry(_fileName, result.getInputStream());
 

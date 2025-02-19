@@ -370,7 +370,7 @@ public interface PortletDataContext extends Serializable {
 
 	public boolean isStagedModelCounted(StagedModel stagedModel);
 
-	public boolean isValidateDataHandler();
+	public boolean isValidateExistingDataHandler();
 
 	public boolean isWithinDateRange(Date modifiedDate);
 
@@ -442,7 +442,8 @@ public interface PortletDataContext extends Serializable {
 
 	public void setUserPersonalSiteGroupId(long userPersonalSiteGroupId);
 
-	public void setValidateDataHandler(boolean validateDataHandler);
+	public void setValidateExistingDataHandler(
+		boolean validateExistingDataHandler);
 
 	public void setZipReader(ZipReader zipReader);
 

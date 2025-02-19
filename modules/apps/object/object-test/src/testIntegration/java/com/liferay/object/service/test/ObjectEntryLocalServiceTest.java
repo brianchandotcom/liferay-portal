@@ -909,6 +909,17 @@ public class ObjectEntryLocalServiceTest {
 						RandomTestUtil.randomString())
 				).build()));
 
+		AssertUtils.assertFailure(
+			ObjectEntryValuesException.Required.class,
+			"No value was provided for required object field " +
+				"\"emailAddressRequired\"",
+			() -> _addObjectEntry(
+				HashMapBuilder.<String, Serializable>put(
+					"firstName", "Judas"
+				).put(
+					"listTypeEntryKeyRequired", "listTypeEntryKey1"
+				).build()));
+
 		_objectFieldLocalService.updateRequired(
 			_objectRelationship.getObjectFieldId2(), true);
 
@@ -931,17 +942,6 @@ public class ObjectEntryLocalServiceTest {
 
 		_objectFieldLocalService.updateRequired(
 			_objectRelationship.getObjectFieldId2(), false);
-
-		AssertUtils.assertFailure(
-			ObjectEntryValuesException.Required.class,
-			"No value was provided for required object field " +
-				"\"emailAddressRequired\"",
-			() -> _addObjectEntry(
-				HashMapBuilder.<String, Serializable>put(
-					"firstName", "Judas"
-				).put(
-					"listTypeEntryKeyRequired", "listTypeEntryKey1"
-				).build()));
 
 		AssertUtils.assertFailure(
 			ObjectEntryValuesException.Required.class,

@@ -1068,15 +1068,6 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 			_registerSystemFDSEntry(
 				null, "fdsName2", "/app", "/endpoint", "schema"));
 
-		JSONAssert.assertNotEquals(
-			_systemFDSSerializer.serializeViews(
-				"fdsName1", httpServletRequest
-			).toString(),
-			_systemFDSSerializer.serializeViews(
-				"fdsName2", httpServletRequest
-			).toString(),
-			JSONCompareMode.STRICT);
-
 		JSONAssert.assertEquals(
 			JSONUtil.putAll(
 				JSONUtil.put(
@@ -1110,7 +1101,6 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 				"fdsName1", httpServletRequest
 			).toString(),
 			JSONCompareMode.STRICT);
-
 		JSONAssert.assertEquals(
 			JSONUtil.putAll(
 				JSONUtil.put(
@@ -1137,6 +1127,14 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 				).put(
 					"thumbnail", "list"
 				)
+			).toString(),
+			_systemFDSSerializer.serializeViews(
+				"fdsName2", httpServletRequest
+			).toString(),
+			JSONCompareMode.STRICT);
+		JSONAssert.assertNotEquals(
+			_systemFDSSerializer.serializeViews(
+				"fdsName1", httpServletRequest
 			).toString(),
 			_systemFDSSerializer.serializeViews(
 				"fdsName2", httpServletRequest

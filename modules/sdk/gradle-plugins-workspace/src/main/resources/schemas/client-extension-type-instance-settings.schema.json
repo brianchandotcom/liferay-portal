@@ -654,7 +654,7 @@
 					"type": "string"
 				},
 				"pid": {
-					"const": "com.liferay.captcha.configuration.ClientExtensionCaptchaImplConfiguration"
+					"const": "com.liferay.captcha.internal.configuration.ClientExtensionCaptchaImplConfiguration"
 				}
 			},
 			"required": [
@@ -4219,7 +4219,7 @@
 				"com.liferay.asset.categories.configuration.AssetCategoriesCompanyConfiguration",
 				"com.liferay.batch.engine.configuration.BatchEngineTaskCompanyConfiguration",
 				"com.liferay.captcha.configuration.CaptchaConfiguration",
-				"com.liferay.captcha.configuration.ClientExtensionCaptchaImplConfiguration",
+				"com.liferay.captcha.internal.configuration.ClientExtensionCaptchaImplConfiguration",
 				"com.liferay.change.tracking.configuration.CTCollectionEmailConfiguration",
 				"com.liferay.change.tracking.configuration.CTConflictConfiguration",
 				"com.liferay.change.tracking.configuration.CTSettingsConfiguration",

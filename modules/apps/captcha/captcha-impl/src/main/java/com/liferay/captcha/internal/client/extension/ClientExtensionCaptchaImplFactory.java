@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Pedro Victor Silvestre
  */
 @Component(
-	configurationPid = "com.liferay.captcha.configuration.ClientExtensionCaptchaImplConfiguration",
+	configurationPid = "com.liferay.captcha.internal.configuration.ClientExtensionCaptchaImplConfiguration",
 	configurationPolicy = ConfigurationPolicy.REQUIRE, service = {}
 )
 public class ClientExtensionCaptchaImplFactory {

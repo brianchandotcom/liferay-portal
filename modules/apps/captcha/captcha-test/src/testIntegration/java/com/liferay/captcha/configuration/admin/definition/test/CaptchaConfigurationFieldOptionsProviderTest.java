@@ -60,7 +60,7 @@ public class CaptchaConfigurationFieldOptionsProviderTest {
 			).build());
 
 		_pid = ConfigurationTestUtil.createFactoryConfiguration(
-			"com.liferay.captcha.configuration." +
+			"com.liferay.captcha.configuration.internal." +
 				"ClientExtensionCaptchaImplConfiguration",
 			HashMapDictionaryBuilder.<String, Object>put(
 				"captchaName", "ClientExtensionCaptcha"

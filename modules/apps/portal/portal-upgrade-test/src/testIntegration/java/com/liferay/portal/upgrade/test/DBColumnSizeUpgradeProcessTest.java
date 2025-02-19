@@ -85,12 +85,11 @@ public class DBColumnSizeUpgradeProcessTest {
 
 			Assert.assertTrue(resultSet.next());
 
+			Assert.assertEquals(2000, resultSet.getInt("COLUMN_SIZE"));
 			Assert.assertTrue(
 				StringUtil.equalsIgnoreCase(
 					dbInspector.normalizeName(_getVarcharTemplate()),
 					resultSet.getString("TYPE_NAME")));
-
-			Assert.assertEquals(2000, resultSet.getInt("COLUMN_SIZE"));
 
 			Assert.assertFalse(resultSet.next());
 		}

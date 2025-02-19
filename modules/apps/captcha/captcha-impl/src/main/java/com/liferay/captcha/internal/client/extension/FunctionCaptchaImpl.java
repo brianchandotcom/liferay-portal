@@ -5,7 +5,7 @@
 
 package com.liferay.captcha.internal.client.extension;
 
-import com.liferay.captcha.internal.configuration.ClientExtensionCaptchaImplConfiguration;
+import com.liferay.captcha.internal.configuration.FunctionCaptchaImplConfiguration;
 import com.liferay.captcha.simplecaptcha.SimpleCaptchaImpl;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.captcha.Captcha;
@@ -19,25 +19,24 @@ import org.osgi.service.component.annotations.Component;
  * @author Pedro Victor Silvestre
  */
 @Component(
-	configurationPid = "com.liferay.captcha.internal.configuration.ClientExtensionCaptchaImplConfiguration",
-	factory = "com.liferay.captcha.internal.client.extension.ClientExtensionCaptchaImpl",
+	configurationPid = "com.liferay.captcha.internal.configuration.FunctionCaptchaImplConfiguration",
+	factory = "com.liferay.captcha.internal.client.extension.FunctionCaptchaImpl",
 	service = Captcha.class
 )
-public class ClientExtensionCaptchaImpl extends SimpleCaptchaImpl {
+public class FunctionCaptchaImpl extends SimpleCaptchaImpl {
 
 	@Override
 	public String getName() {
-		return _clientExtensionCaptchaImplConfiguration.captchaName();
+		return _functionCaptchaImplConfiguration.captchaName();
 	}
 
 	@Activate
 	protected void activate(Map<String, Object> properties) {
-		_clientExtensionCaptchaImplConfiguration =
-			ConfigurableUtil.createConfigurable(
-				ClientExtensionCaptchaImplConfiguration.class, properties);
+		_functionCaptchaImplConfiguration = ConfigurableUtil.createConfigurable(
+			FunctionCaptchaImplConfiguration.class, properties);
 	}
 
-	private volatile ClientExtensionCaptchaImplConfiguration
-		_clientExtensionCaptchaImplConfiguration;
+	private volatile FunctionCaptchaImplConfiguration
+		_functionCaptchaImplConfiguration;
 
 }

@@ -17,9 +17,9 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 @Meta.OCD(
 	factory = true,
-	id = "com.liferay.captcha.internal.configuration.ClientExtensionCaptchaImplConfiguration"
+	id = "com.liferay.captcha.internal.configuration.FunctionCaptchaImplConfiguration"
 )
-public interface ClientExtensionCaptchaImplConfiguration {
+public interface FunctionCaptchaImplConfiguration {
 
 	@Meta.AD
 	public String captchaName();

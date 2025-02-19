@@ -26,10 +26,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Pedro Victor Silvestre
  */
 @Component(
-	configurationPid = "com.liferay.captcha.internal.configuration.ClientExtensionCaptchaImplConfiguration",
+	configurationPid = "com.liferay.captcha.internal.configuration.FunctionCaptchaImplConfiguration",
 	configurationPolicy = ConfigurationPolicy.REQUIRE, service = {}
 )
-public class ClientExtensionCaptchaImplFactory {
+public class FunctionCaptchaImplFactory {
 
 	@Activate
 	protected void activate(
@@ -39,8 +39,7 @@ public class ClientExtensionCaptchaImplFactory {
 			HashMapDictionaryBuilder.<String, Object>put(
 				"captcha.engine.impl",
 				StringBundler.concat(
-					ClientExtensionCaptchaImpl.class.getName(),
-					StringPool.POUND,
+					FunctionCaptchaImpl.class.getName(), StringPool.POUND,
 					ConfigurationFactoryUtil.getExternalReferenceCode(
 						properties))
 			).putAll(
@@ -58,10 +57,10 @@ public class ClientExtensionCaptchaImplFactory {
 	}
 
 	@Reference(
-		target = "(component.factory=com.liferay.captcha.internal.client.extension.ClientExtensionCaptchaImpl)"
+		target = "(component.factory=com.liferay.captcha.internal.client.extension.FunctionCaptchaImpl)"
 	)
-	private ComponentFactory<ClientExtensionCaptchaImpl> _componentFactory;
+	private ComponentFactory<FunctionCaptchaImpl> _componentFactory;
 
-	private ComponentInstance<ClientExtensionCaptchaImpl> _componentInstance;
+	private ComponentInstance<FunctionCaptchaImpl> _componentInstance;
 
 }

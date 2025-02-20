@@ -68,48 +68,40 @@ public class CaptchaConfigurationModelListenerTest {
 	}
 
 	@Test
-	public void testValidateReCaptchaNoScriptURL() throws Exception {
-		_assertPropertyThrowsException(
+	public void testOnBeforeSave() throws Exception {
+		_testOnBeforeSave(
 			"reCaptchaNoScriptURL",
 			"https://www.test.com/recaptcha/api/fallback?k=",
 			_language.get(
 				LocaleUtil.US, "the-recaptcha-no-script-url-is-not-valid"));
-	}
-
-	@Test
-	public void testValidateReCaptchaPrivateKey() throws Exception {
-		_assertPropertyThrowsException(
+		_testOnBeforeSave(
 			"reCaptchaPrivateKey", StringPool.BLANK,
 			_language.get(
 				LocaleUtil.US, "the-recaptcha-public-key-is-not-valid"));
-	}
-
-	@Test
-	public void testValidateReCaptchaPublicKey() throws Exception {
-		_assertPropertyThrowsException(
+		_testOnBeforeSave(
 			"reCaptchaPublicKey", StringPool.BLANK,
 			_language.get(
 				LocaleUtil.US, "the-recaptcha-private-key-is-not-valid"));
-	}
-
-	@Test
-	public void testValidateReCaptchaScriptURL() throws Exception {
-		_assertPropertyThrowsException(
+		_testOnBeforeSave(
 			"reCaptchaScriptURL", "https://www.test.com/recaptcha/api.js",
 			_language.get(
 				LocaleUtil.US, "the-recaptcha-script-url-is-not-valid"));
-	}
-
-	@Test
-	public void testValidateReCaptchaVerifyURL() throws Exception {
-		_assertPropertyThrowsException(
+		_testOnBeforeSave(
 			"reCaptchaVerifyURL",
 			"https://www.test.com/recaptcha/api/siteverify",
 			_language.get(
 				LocaleUtil.US, "the-recaptcha-verify-url-is-not-valid"));
 	}
 
-	private void _assertPropertyThrowsException(
+	private AutoCloseable _swapReCaptchaConfiguration(
+		Dictionary<String, Object> properties, String key, String value) {
+
+		String previousValue = (String)properties.put(key, value);
+
+		return () -> properties.put(key, previousValue);
+	}
+
+	private void _testOnBeforeSave(
 			String key, String value, String exceptionMessage)
 		throws Exception {
 
@@ -130,14 +122,6 @@ public class CaptchaConfigurationModelListenerTest {
 					exceptionMessage
 				));
 		}
-	}
-
-	private AutoCloseable _swapReCaptchaConfiguration(
-		Dictionary<String, Object> properties, String key, String value) {
-
-		String previousValue = (String)properties.put(key, value);
-
-		return () -> properties.put(key, previousValue);
 	}
 
 	private static Locale _locale;

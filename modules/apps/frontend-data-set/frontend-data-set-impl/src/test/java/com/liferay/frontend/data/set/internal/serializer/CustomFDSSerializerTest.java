@@ -357,7 +357,7 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 			_customFDSSerializer.serializeFilters(
 				"fdsName", httpServletRequest
 			).toString(),
-			JSONCompareMode.LENIENT);
+			JSONCompareMode.STRICT);
 
 		_resetFDSSerializer();
 
@@ -415,7 +415,7 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 			_customFDSSerializer.serializeFilters(
 				"fdsName", httpServletRequest
 			).toString(),
-			JSONCompareMode.LENIENT);
+			JSONCompareMode.STRICT);
 
 		_resetFDSSerializer();
 
@@ -472,7 +472,7 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 			_customFDSSerializer.serializeFilters(
 				"fdsName1", httpServletRequest
 			).toString(),
-			JSONCompareMode.LENIENT);
+			JSONCompareMode.STRICT);
 		JSONAssert.assertEquals(
 			JSONUtil.putAll(
 				JSONUtil.put(
@@ -501,7 +501,7 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 			_customFDSSerializer.serializeFilters(
 				"fdsName2", httpServletRequest
 			).toString(),
-			JSONCompareMode.LENIENT);
+			JSONCompareMode.STRICT);
 
 		_resetFDSSerializer();
 
@@ -589,7 +589,7 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 			_customFDSSerializer.serializeFilters(
 				"fdsName", httpServletRequest
 			).toString(),
-			JSONCompareMode.LENIENT);
+			JSONCompareMode.STRICT);
 	}
 
 	@Test

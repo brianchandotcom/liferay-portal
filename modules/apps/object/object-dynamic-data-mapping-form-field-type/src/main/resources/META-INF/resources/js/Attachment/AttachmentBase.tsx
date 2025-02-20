@@ -9,7 +9,7 @@ import {
 	makeFetch,
 	useConfig,
 } from 'data-engine-js-components-web';
-import {openSelectionModal} from 'frontend-js-web';
+import {openSelectionModal} from 'frontend-js-components-web';
 import React, {ChangeEventHandler, useRef, useState} from 'react';
 
 import FileContainer from './FileContainer';

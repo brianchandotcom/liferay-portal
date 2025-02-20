@@ -94,16 +94,18 @@ public class BatchEngineImportTaskItemReaderUtil {
 				ObjectMapper objectMapper;
 
 				try {
-					objectMapper = _getObjectMapper(
-						field, keepCreatorInfo);
+					objectMapper = _getObjectMapper(field, keepCreatorInfo);
 
 					field.set(
 						item,
 						objectMapper.convertValue(
 							entry.getValue(), field.getType()));
 				}
+				catch (Exception exception) {
+					_log.error(
+						"Failed to convert value for field" + field.getName(),
+						exception);
 
-				catch (Exception exception){
 					objectMapper = _csvObjectMapper;
 
 					field.set(
@@ -300,22 +302,23 @@ public class BatchEngineImportTaskItemReaderUtil {
 	private static final Log _log = LogFactoryUtil.getLog(
 		BatchEngineImportTaskItemReaderUtil.class);
 
+	private static final ObjectMapper _csvObjectMapper = new ObjectMapper() {
+		{
+			SimpleModule simpleModule = new SimpleModule();
+
+			simpleModule.addDeserializer(
+				Map.class, new MapStdCSVDeserializer());
+
+			registerModule(simpleModule);
+		}
+	};
+
 	private static final Pattern _multiselectPicklistPattern = Pattern.compile(
 		"key_\\d+|name_\\d+");
 
 	private static final ObjectMapper _objectMapper = new ObjectMapper() {
 		{
 			SimpleModule simpleModule = new SimpleModule();
-
-			registerModule(simpleModule);
-		}
-	};
-
-	private static final ObjectMapper _csvObjectMapper = new ObjectMapper() {
-		{
-			SimpleModule simpleModule = new SimpleModule();
-
-			simpleModule.addDeserializer(Map.class, new MapStdCSVDeserializer());
 
 			registerModule(simpleModule);
 		}

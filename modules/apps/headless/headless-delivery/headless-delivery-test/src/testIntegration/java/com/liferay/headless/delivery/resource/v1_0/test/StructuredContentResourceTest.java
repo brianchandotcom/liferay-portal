@@ -11,8 +11,6 @@ import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.blogs.model.BlogsEntry;
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.blogs.test.util.BlogsTestUtil;
 import com.liferay.data.engine.rest.dto.v2_0.DataDefinition;
 import com.liferay.data.engine.rest.resource.v2_0.DataDefinitionResource;
@@ -61,8 +59,10 @@ import com.liferay.layout.page.template.test.util.DisplayPageTemplateTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -619,124 +619,6 @@ public class StructuredContentResourceTest
 		assertValid(postStructuredContent3);
 	}
 
-	@Test
-	public void testPostStructuredContentWithBatch() throws Exception {
-		Locale locale = LocaleUtil.getDefault();
-
-		StructuredContent randomStructuredContent1 = _randomStructuredContent(
-			locale);
-
-		String batchEndpoint =
-			"headless-delivery/v1.0/sites/" + testGroup.getGroupId() +
-			"/structured-contents/batch";
-
-		JSONObject batchJobJSONObject = HTTPTestUtil.invokeToJSONObject(
-			_createBatchBody(
-				randomStructuredContent1.getContentStructureId()
-			).toString(),
-			batchEndpoint, Http.Method.POST);
-
-		String externalReferenceCode = batchJobJSONObject.getString(
-			"externalReferenceCode");
-
-		Assert.assertNotNull(
-			"Batch job externalReferenceCode must be provided",
-			externalReferenceCode);
-
-		String statusEndpoint =
-			"headless-batch-engine/v1.0/import-task" +
-			"/by-external-reference-code/" + externalReferenceCode;
-
-		JSONObject batchStatusJSONObject = null;
-		int maxRetries = 20;
-		int retry = 0;
-
-		while (retry < maxRetries) {
-			batchStatusJSONObject = HTTPTestUtil.invokeToJSONObject(
-				null, statusEndpoint, Http.Method.GET);
-
-			String executeStatus = batchStatusJSONObject.getString(
-				"executeStatus");
-
-			if (StringUtil.equals(executeStatus, "COMPLETED") ||
-				StringUtil.equals(executeStatus, "FAILED")) {
-
-				Assert.assertEquals("COMPLETED", executeStatus);
-
-				break;
-			}
-
-			Thread.sleep(1000);
-			retry++;
-		}
-
-		Assert.assertNotNull(
-			"Batch job status JSON must not be null", batchStatusJSONObject);
-	}
-
-	private JSONArray _createBatchBody(long structureId) {
-		JSONObject structuredContentJSONObject = JSONUtil.put(
-			"availableLanguages", JSONUtil.putAll("en-US", "es-ES")
-		).put(
-			"contentFields",
-			JSONFactoryUtil.createJSONArray(
-			).put(
-				JSONUtil.put(
-					"contentFieldValue", JSONUtil.put("data", "1")
-				).put(
-					"contentFieldValue_i18n",
-					JSONUtil.put(
-						"en_US", JSONUtil.put("data", "1")
-					).put(
-						"es-ES", JSONUtil.put("data", "1 Hindi")
-					)
-				).put(
-					"dataType", "string"
-				).put(
-					"inputControl", "text"
-				).put(
-					"label", "Text"
-				).put(
-					"name", "MyText"
-				).put(
-					"nestedContentFields", JSONFactoryUtil.createJSONArray()
-				).put(
-					"repeatable", false
-				)
-			)
-		).put(
-			"contentStructureId", structureId
-		).put(
-			"permissions",
-			JSONFactoryUtil.createJSONArray(
-			).put(
-				JSONUtil.put(
-					"actionIds", JSONUtil.put("VIEW")
-				).put(
-					"roleName", "Guest"
-				)
-			)
-		).put(
-			"priority", 0
-		).put(
-			"structuredContentFolderId", 0
-		).put(
-			"taxonomyCategoryIds", JSONFactoryUtil.createJSONArray()
-		).put(
-			"title", "Section - 2"
-		).put(
-			"title_i18n",
-			JSONUtil.put(
-				"en_US", "Section - 2"
-			).put(
-				"es-ES", "Section - 2 Hindi"
-			)
-		);
-
-		JSONArray batchPayloadJSONArray = JSONFactoryUtil.createJSONArray();
-
-		return batchPayloadJSONArray.put(structuredContentJSONObject);
-	}
 	@Override
 	@Test
 	public void testPostStructuredContentFolderStructuredContent()
@@ -766,6 +648,61 @@ public class StructuredContentResourceTest
 		Assert.assertTrue(
 			postStructuredContent.getRenderedContents()[0].
 				getMarkedAsDefault());
+	}
+
+	@Test
+	public void testPostStructuredContentWithBatch() throws Exception {
+		Locale locale = LocaleUtil.getDefault();
+
+		StructuredContent randomStructuredContent1 = _randomStructuredContent(
+			locale);
+
+		String batchEndpoint =
+			"headless-delivery/v1.0/sites/" + testGroup.getGroupId() +
+				"/structured-contents/batch";
+
+		JSONObject batchJobJSONObject = HTTPTestUtil.invokeToJSONObject(
+			_createBatchBody(
+				randomStructuredContent1.getContentStructureId()
+			).toString(),
+			batchEndpoint, Http.Method.POST);
+
+		String externalReferenceCode = batchJobJSONObject.getString(
+			"externalReferenceCode");
+
+		Assert.assertNotNull(
+			"Batch job externalReferenceCode must be provided",
+			externalReferenceCode);
+
+		String statusEndpoint =
+			"headless-batch-engine/v1.0/import-task" +
+				"/by-external-reference-code/" + externalReferenceCode;
+
+		JSONObject batchStatusJSONObject = null;
+		int maxRetries = 20;
+		int retry = 0;
+
+		while (retry < maxRetries) {
+			batchStatusJSONObject = HTTPTestUtil.invokeToJSONObject(
+				null, statusEndpoint, Http.Method.GET);
+
+			String executeStatus = batchStatusJSONObject.getString(
+				"executeStatus");
+
+			if (StringUtil.equals(executeStatus, "COMPLETED") ||
+				StringUtil.equals(executeStatus, "FAILED")) {
+
+				Assert.assertEquals("COMPLETED", executeStatus);
+
+				break;
+			}
+
+			Thread.sleep(1000);
+			retry++;
+		}
+
+		Assert.assertNotNull(
+			"Batch job status JSON must not be null", batchStatusJSONObject);
 	}
 
 	@Override
@@ -1155,6 +1092,70 @@ public class StructuredContentResourceTest
 		).header(
 			"X-Accept-All-Languages", "true"
 		).build();
+	}
+
+	private JSONArray _createBatchBody(long structureId) {
+		JSONObject structuredContentJSONObject = JSONUtil.put(
+			"availableLanguages", JSONUtil.putAll("en-US", "es-ES")
+		).put(
+			"contentFields",
+			JSONFactoryUtil.createJSONArray(
+			).put(
+				JSONUtil.put(
+					"contentFieldValue", JSONUtil.put("data", "1")
+				).put(
+					"contentFieldValue_i18n",
+					JSONUtil.put(
+						"en_US", JSONUtil.put("data", "1")
+					).put(
+						"es-ES", JSONUtil.put("data", "1 Hindi")
+					)
+				).put(
+					"dataType", "string"
+				).put(
+					"inputControl", "text"
+				).put(
+					"label", "Text"
+				).put(
+					"name", "MyText"
+				).put(
+					"nestedContentFields", JSONFactoryUtil.createJSONArray()
+				).put(
+					"repeatable", false
+				)
+			)
+		).put(
+			"contentStructureId", structureId
+		).put(
+			"permissions",
+			JSONFactoryUtil.createJSONArray(
+			).put(
+				JSONUtil.put(
+					"actionIds", JSONUtil.put("VIEW")
+				).put(
+					"roleName", "Guest"
+				)
+			)
+		).put(
+			"priority", 0
+		).put(
+			"structuredContentFolderId", 0
+		).put(
+			"taxonomyCategoryIds", JSONFactoryUtil.createJSONArray()
+		).put(
+			"title", "Section - 2"
+		).put(
+			"title_i18n",
+			JSONUtil.put(
+				"en_US", "Section - 2"
+			).put(
+				"es-ES", "Section - 2 Hindi"
+			)
+		);
+
+		JSONArray batchPayloadJSONArray = JSONFactoryUtil.createJSONArray();
+
+		return batchPayloadJSONArray.put(structuredContentJSONObject);
 	}
 
 	private DDMFormField _createDDMFormField(

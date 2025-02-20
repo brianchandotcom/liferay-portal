@@ -4,7 +4,8 @@
  */
 
 import {CommerceServiceProvider} from 'commerce-frontend-js';
-import {openSelectionModal, openToast, sessionStorage} from 'frontend-js-web';
+import {openSelectionModal, openToast} from 'frontend-js-components-web';
+import {sessionStorage} from 'frontend-js-web';
 
 function handleEvent({
 	fieldName,

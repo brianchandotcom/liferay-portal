@@ -4,12 +4,11 @@
  */
 
 import {
-	addParams,
-	navigate,
 	openConfirmModal,
 	openModal,
 	openSelectionModal,
-} from 'frontend-js-web';
+} from 'frontend-js-components-web';
+import {addParams, navigate} from 'frontend-js-web';
 
 const ACTIONS = {
 	checkin({checkinURL}, portletNamespace) {

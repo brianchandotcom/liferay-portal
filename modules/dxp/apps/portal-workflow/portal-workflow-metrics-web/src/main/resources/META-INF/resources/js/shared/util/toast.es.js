@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {openToast as liferayToast} from 'frontend-js-web';
+import {openToast as liferayToast} from 'frontend-js-components-web';
 
 export function openErrorToast({message}) {
 	openToast(message, Liferay.Language.get('error'), 'danger');

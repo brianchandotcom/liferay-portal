@@ -16,7 +16,7 @@ public class BatchEngineUnitMetaInfo {
 	public static BatchEngineUnitMetaInfo readFrom(Deserializer deserializer) {
 		boolean advanced = deserializer.readBoolean();
 		long companyId = deserializer.readLong();
-		String featureFlagKey = deserializer.readString();
+		String featureFlag = deserializer.readString();
 		boolean multiCompany = deserializer.readBoolean();
 
 		int pathCount = deserializer.readInt();
@@ -28,16 +28,16 @@ public class BatchEngineUnitMetaInfo {
 		}
 
 		return new BatchEngineUnitMetaInfo(
-			advanced, companyId, featureFlagKey, multiCompany, paths);
+			advanced, companyId, featureFlag, multiCompany, paths);
 	}
 
 	public BatchEngineUnitMetaInfo(
-		boolean advanced, long companyId, String featureFlagKey,
+		boolean advanced, long companyId, String featureFlag,
 		boolean multiCompany, String[] paths) {
 
 		_advanced = advanced;
 		_companyId = companyId;
-		_featureFlagKey = featureFlagKey;
+		_featureFlag = featureFlag;
 		_multiCompany = multiCompany;
 		_paths = paths;
 	}
@@ -46,8 +46,8 @@ public class BatchEngineUnitMetaInfo {
 		return _companyId;
 	}
 
-	public String getFeatureFlagKey() {
-		return _featureFlagKey;
+	public String getFeatureFlag() {
+		return _featureFlag;
 	}
 
 	public String[] getPaths() {
@@ -65,7 +65,7 @@ public class BatchEngineUnitMetaInfo {
 	public void writeTo(Serializer serializer) {
 		serializer.writeBoolean(_advanced);
 		serializer.writeLong(_companyId);
-		serializer.writeString(_featureFlagKey);
+		serializer.writeString(_featureFlag);
 		serializer.writeBoolean(_multiCompany);
 
 		serializer.writeInt(_paths.length);
@@ -77,7 +77,7 @@ public class BatchEngineUnitMetaInfo {
 
 	private final boolean _advanced;
 	private final long _companyId;
-	private final String _featureFlagKey;
+	private final String _featureFlag;
 	private final boolean _multiCompany;
 	private final String[] _paths;
 

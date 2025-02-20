@@ -4,7 +4,7 @@
  */
 
 import ClayButton from '@clayui/button';
-import {openConfirmModal} from 'frontend-js-web';
+import {openConfirmModal} from 'frontend-js-components-web';
 import React from 'react';
 
 import {config} from '../config/index';

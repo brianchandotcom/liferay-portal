@@ -10,8 +10,7 @@ import ClayIcon from '@clayui/icon';
 import ClayModal, {useModal} from '@clayui/modal';
 import {ScreenReaderAnnouncerContextProvider} from '@liferay/layout-js-components-web';
 import classNames from 'classnames';
-import {useId} from 'frontend-js-components-web';
-import {openToast} from 'frontend-js-web';
+import {openToast, useId} from 'frontend-js-components-web';
 import React, {useEffect, useRef, useState} from 'react';
 import {v4 as uuidv4} from 'uuid';
 

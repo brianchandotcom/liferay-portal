@@ -10,7 +10,8 @@ import ClayLayout from '@clayui/layout';
 import ClayLink from '@clayui/link';
 import ClayList from '@clayui/list';
 import classNames from 'classnames';
-import {navigate, openConfirmModal, setSessionValue} from 'frontend-js-web';
+import {openConfirmModal} from 'frontend-js-components-web';
+import {navigate, setSessionValue} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React from 'react';
 

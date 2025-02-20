@@ -15,8 +15,8 @@ import {
 	useEventListener,
 	useIsMounted,
 } from '@liferay/frontend-js-react-web';
-import {useId, useSessionState} from 'frontend-js-components-web';
-import {COOKIE_TYPES, navigate, openToast} from 'frontend-js-web';
+import {openToast, useId, useSessionState} from 'frontend-js-components-web';
+import {COOKIE_TYPES, navigate} from 'frontend-js-web';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 import {config} from '../../../app/config/index';

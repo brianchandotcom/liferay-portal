@@ -4,7 +4,8 @@
  */
 
 import {useEventListener} from '@liferay/frontend-js-react-web';
-import {openToast, sub} from 'frontend-js-web';
+import {openToast} from 'frontend-js-components-web';
+import {sub} from 'frontend-js-web';
 import {useEffect, useRef} from 'react';
 
 import {FRAGMENT_ENTRY_TYPES} from '../../config/constants/fragmentEntryTypes';

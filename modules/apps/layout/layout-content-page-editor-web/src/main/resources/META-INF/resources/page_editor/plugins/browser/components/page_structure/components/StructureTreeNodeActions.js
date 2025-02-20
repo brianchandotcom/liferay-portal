@@ -8,7 +8,7 @@ import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import {FocusScope} from '@clayui/shared';
 import classNames from 'classnames';
-import {openToast} from 'frontend-js-web';
+import {openToast} from 'frontend-js-components-web';
 import React, {useCallback, useMemo, useRef, useState} from 'react';
 import {flushSync} from 'react-dom';
 

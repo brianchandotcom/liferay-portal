@@ -34,9 +34,12 @@ jest.mock(
 	() => jest.fn(() => [{id: 'condition-id'}])
 );
 
-jest.mock('frontend-js-web', () => ({
-	...jest.requireActual('frontend-js-web'),
+jest.mock('frontend-js-components-web', () => ({
+	...jest.requireActual('frontend-js-components-web'),
 	openToast: jest.fn(),
+}));
+
+jest.mock('frontend-js-web', () => ({
 	sub: jest.fn((langKey, arg) => langKey.replace('x', arg)),
 }));
 

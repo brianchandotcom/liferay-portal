@@ -6,7 +6,7 @@
 import ClayButton from '@clayui/button';
 import ClayDropDown, {Align} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
-import {openModal, openToast} from 'frontend-js-web';
+import {openModal, openToast} from 'frontend-js-components-web';
 import PropTypes from 'prop-types';
 import React, {useMemo, useState} from 'react';
 

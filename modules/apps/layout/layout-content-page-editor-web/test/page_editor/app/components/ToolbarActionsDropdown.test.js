@@ -6,7 +6,7 @@
 import '@testing-library/jest-dom/extend-expect';
 import {render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import {openConfirmModal} from 'frontend-js-web';
+import {openConfirmModal} from 'frontend-js-components-web';
 import React from 'react';
 
 import ToolbarActionsDropdown from '../../../../src/main/resources/META-INF/resources/page_editor/app/components/ToolbarActionsDropdown';
@@ -29,8 +29,8 @@ const INITIAL_STATE = {
 	undoHistory: [{}],
 };
 
-jest.mock('frontend-js-web', () => ({
-	...jest.requireActual('frontend-js-web'),
+jest.mock('frontend-js-components-web', () => ({
+	...jest.requireActual('frontend-js-components-web'),
 	openConfirmModal: jest.fn(({onConfirm}) => onConfirm(false)),
 }));
 

@@ -6,7 +6,7 @@
 import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayForm, {ClayCheckbox} from '@clayui/form';
 import {useControlledState} from '@liferay/layout-js-components-web';
-import {openToast} from 'frontend-js-web';
+import {openToast} from 'frontend-js-components-web';
 import PropTypes from 'prop-types';
 import React from 'react';
 

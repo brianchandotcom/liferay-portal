@@ -8,8 +8,7 @@ import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput, ClayToggle} from '@clayui/form';
 import ClayPanel from '@clayui/panel';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
-import {useId} from 'frontend-js-components-web';
-import {openToast} from 'frontend-js-web';
+import {openToast, useId} from 'frontend-js-components-web';
 import React, {useCallback, useEffect, useState} from 'react';
 
 import {CheckboxField} from '../../../../../../app/components/fragment_configuration_fields/CheckboxField';

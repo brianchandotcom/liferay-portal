@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {openModal} from 'frontend-js-web';
+import {openModal} from 'frontend-js-components-web';
 
 type Props = {
 	buttonLabel: string;
@@ -11,7 +11,7 @@ type Props = {
 	onCancel?: () => void;
 	onConfirm?: () => void;
 	status: 'info' | 'warning';
-	text: string;
+	text?: string;
 	title: string;
 };
 

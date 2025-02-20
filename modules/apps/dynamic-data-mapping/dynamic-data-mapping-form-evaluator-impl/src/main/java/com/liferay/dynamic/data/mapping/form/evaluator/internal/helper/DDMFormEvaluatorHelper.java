@@ -24,6 +24,7 @@ import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueAccesso
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueEditingAware;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueLocalizer;
 import com.liferay.dynamic.data.mapping.form.field.type.DefaultDDMFormFieldValueAccessor;
+import com.liferay.dynamic.data.mapping.form.field.type.constants.DDMFormFieldTypeConstants;
 import com.liferay.dynamic.data.mapping.form.page.change.DDMFormPageChange;
 import com.liferay.dynamic.data.mapping.form.page.change.DDMFormPageChangeRegistry;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
@@ -36,16 +37,21 @@ import com.liferay.dynamic.data.mapping.model.DDMFormLayoutPage;
 import com.liferay.dynamic.data.mapping.model.DDMFormLayoutRow;
 import com.liferay.dynamic.data.mapping.model.DDMFormRule;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
+import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.util.NumericDDMFormFieldUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -561,6 +567,69 @@ public class DDMFormEvaluatorHelper {
 
 		DDMFormFieldValueAccessor<?> ddmFormFieldValueAccessor =
 			getDDMFormFieldValueAccessor(ddmFormField.getType());
+
+		if (GetterUtil.getBoolean(
+				ddmFormField.getProperty("localizedObjectField")) &&
+			ddmFormField.isRequired()) {
+
+			Value value = ddmFormFieldValue.getValue();
+
+			String valueString = value.getString(
+				_ddmFormEvaluatorEvaluateRequest.getLocale());
+
+			if (Validator.isNull(valueString)) {
+				return true;
+			}
+
+			JSONObject jsonObject;
+
+			try {
+				jsonObject = JSONFactoryUtil.createJSONObject(valueString);
+			}
+			catch (JSONException jsonException) {
+				_log.error(jsonException);
+
+				return true;
+			}
+
+			DDMFormFieldValue localizedObjectFieldDDMFormFieldValue =
+				new DDMFormFieldValue();
+
+			localizedObjectFieldDDMFormFieldValue.setName(
+				ddmFormFieldValue.getName());
+
+			String defaultLanguageId;
+
+			try {
+				JSONObject defaultLocaleJSONObject =
+					JSONFactoryUtil.createJSONObject(
+						String.valueOf(
+							ddmFormField.getProperty("defaultLocale")));
+
+				defaultLanguageId = defaultLocaleJSONObject.getString(
+					"localeId");
+			}
+			catch (JSONException jsonException) {
+				_log.error(jsonException);
+
+				return true;
+			}
+
+			localizedObjectFieldDDMFormFieldValue.setValue(
+				new UnlocalizedValue(jsonObject.getString(defaultLanguageId)));
+
+			if (StringUtil.equals(
+					DDMFormFieldTypeConstants.LOCALIZABLE_TEXT,
+					ddmFormField.getType())) {
+
+				ddmFormFieldValueAccessor = getDDMFormFieldValueAccessor(
+					DDMFormFieldTypeConstants.TEXT);
+			}
+
+			return ddmFormFieldValueAccessor.isEmpty(
+				localizedObjectFieldDDMFormFieldValue,
+				LocaleUtil.fromLanguageId(defaultLanguageId));
+		}
 
 		return ddmFormFieldValueAccessor.isEmpty(
 			ddmFormFieldValue, _ddmFormEvaluatorEvaluateRequest.getLocale());

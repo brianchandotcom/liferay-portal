@@ -96,8 +96,8 @@ public class DefaultOrderEntityTest {
 		DefinedDefaultOrderEntry definedDefaultOrderEntry =
 			_definedDefaultOrderEntryPersistence.create((long)testData[0]);
 
-		definedDefaultOrderEntry.setName((String)testData[1]);
 		definedDefaultOrderEntry.setModifiedDate((Date)testData[2]);
+		definedDefaultOrderEntry.setName((String)testData[1]);
 
 		return _definedDefaultOrderEntryPersistence.update(
 			definedDefaultOrderEntry);
@@ -109,8 +109,8 @@ public class DefaultOrderEntityTest {
 		UndefinedDefaultOrderEntry undefinedDefaultOrderEntry =
 			_undefinedDefaultOrderEntryPersistence.create((long)testData[0]);
 
-		undefinedDefaultOrderEntry.setName((String)testData[1]);
 		undefinedDefaultOrderEntry.setModifiedDate((Date)testData[2]);
+		undefinedDefaultOrderEntry.setName((String)testData[1]);
 
 		return _undefinedDefaultOrderEntryPersistence.update(
 			undefinedDefaultOrderEntry);

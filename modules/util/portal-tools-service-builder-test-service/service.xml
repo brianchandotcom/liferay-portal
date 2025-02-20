@@ -116,10 +116,13 @@
 
 		<column name="definedDefaultOrderEntryId" primary="true" type="long" />
 
+		<!-- Audit fields -->
+
+		<column name="modifiedDate" type="Date" />
+
 		<!-- Other fields -->
 
 		<column name="name" type="String" />
-		<column name="modifiedDate" type="Date" />
 
 		<!-- Order -->
 
@@ -565,10 +568,13 @@
 
 		<column name="undefinedDefaultOrderEntryId" primary="true" type="long" />
 
+		<!-- Audit fields -->
+
+		<column name="modifiedDate" type="Date" />
+
 		<!-- Other fields -->
 
 		<column name="name" type="String" />
-		<column name="modifiedDate" type="Date" />
 
 		<!-- Finder methods -->
 

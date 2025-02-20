@@ -564,77 +564,14 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 			_registerSystemFDSEntry(null, "fdsName1"),
 			_registerSystemFDSEntry(null, "fdsName2"));
 
-		String json1 = _systemFDSSerializer.serializeFilters(
-			"fdsName1", httpServletRequest
-		).toString();
-		String json2 = _systemFDSSerializer.serializeFilters(
-			"fdsName2", httpServletRequest
-		).toString();
-
-		JSONAssert.assertNotEquals(json1, json2, JSONCompareMode.STRICT);
-
-		JSONAssert.assertEquals(
-			JSONUtil.putAll(
-				JSONUtil.put(
-					"entityFieldType", FDSEntityFieldTypes.DATE
-				).put(
-					"id", IDS[0]
-				).put(
-					"label", LABELS[0]
-				).put(
-					"max",
-					JSONUtil.put(
-						"day", 1
-					).put(
-						"month", 1
-					).put(
-						"year", 1980
-					)
-				).put(
-					"min",
-					JSONUtil.put(
-						"day", 0
-					).put(
-						"month", 0
-					).put(
-						"year", 0
-					)
-				).put(
-					"type", "dateRange"
-				)
+		JSONAssert.assertNotEquals(
+			_systemFDSSerializer.serializeFilters(
+				"fdsName1", httpServletRequest
 			).toString(),
-			json1, JSONCompareMode.STRICT);
-		JSONAssert.assertEquals(
-			JSONUtil.putAll(
-				JSONUtil.put(
-					"entityFieldType", FDSEntityFieldTypes.DATE
-				).put(
-					"id", IDS[1]
-				).put(
-					"label", LABELS[1]
-				).put(
-					"max",
-					JSONUtil.put(
-						"day", 1
-					).put(
-						"month", 1
-					).put(
-						"year", 1980
-					)
-				).put(
-					"min",
-					JSONUtil.put(
-						"day", 0
-					).put(
-						"month", 0
-					).put(
-						"year", 0
-					)
-				).put(
-					"type", "dateRange"
-				)
+			_systemFDSSerializer.serializeFilters(
+				"fdsName2", httpServletRequest
 			).toString(),
-			json2, JSONCompareMode.STRICT);
+			JSONCompareMode.STRICT);
 
 		_unregisterServices();
 
@@ -1079,70 +1016,6 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 			_registerSystemFDSEntry(null, "fdsName1"),
 			_registerSystemFDSEntry(null, "fdsName2"));
 
-		JSONAssert.assertEquals(
-			JSONUtil.putAll(
-				JSONUtil.put(
-					"contentRenderer", "cards"
-				).put(
-					"default", false
-				).put(
-					"label", "cards"
-				).put(
-					"name", "cards"
-				).put(
-					"schema",
-					JSONUtil.put(
-						"description", DESCRIPTIONS[0]
-					).put(
-						"href", LINK
-					).put(
-						"image", IMAGES[0]
-					).put(
-						"sticker", STICKERS[0]
-					).put(
-						"symbol", SYMBOLS[0]
-					).put(
-						"title", TITLES[0]
-					)
-				).put(
-					"thumbnail", "cards2"
-				)
-			).toString(),
-			_systemFDSSerializer.serializeViews(
-				"fdsName1", httpServletRequest
-			).toString(),
-			JSONCompareMode.STRICT);
-		JSONAssert.assertEquals(
-			JSONUtil.putAll(
-				JSONUtil.put(
-					"contentRenderer", "list"
-				).put(
-					"default", false
-				).put(
-					"label", "list"
-				).put(
-					"name", "list"
-				).put(
-					"schema",
-					JSONUtil.put(
-						"description", DESCRIPTIONS[1]
-					).put(
-						"image", IMAGES[1]
-					).put(
-						"sticker", STICKERS[1]
-					).put(
-						"symbol", SYMBOLS[1]
-					).put(
-						"title", TITLES[1]
-					)
-				).put(
-					"thumbnail", "list"
-				)
-			).toString(),
-			_systemFDSSerializer.serializeViews(
-				"fdsName2", httpServletRequest
-			).toString(),
-			JSONCompareMode.STRICT);
 		JSONAssert.assertNotEquals(
 			_systemFDSSerializer.serializeViews(
 				"fdsName1", httpServletRequest

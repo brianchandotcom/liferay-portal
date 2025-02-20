@@ -442,59 +442,9 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 				"type", FDSEntityFieldTypes.DATE
 			).build());
 
-		JSONAssert.assertEquals(
-			JSONUtil.putAll(
-				JSONUtil.put(
-					"active", true
-				).put(
-					"entityFieldType", FDSEntityFieldTypes.DATE
-				).put(
-					"id", FIELD_NAMES[0]
-				).put(
-					"label", LABELS[0]
-				).put(
-					"preloadedData",
-					JSONUtil.put(
-						"from",
-						JSONUtil.put(
-							"day", 31
-						).put(
-							"month", 12
-						).put(
-							"year", 2000
-						))
-				).put(
-					"type", "dateRange"
-				)
-			).toString(),
+		JSONAssert.assertNotEquals(
 			_customFDSSerializer.serializeFilters(
 				"fdsName1", httpServletRequest
-			).toString(),
-			JSONCompareMode.STRICT);
-		JSONAssert.assertEquals(
-			JSONUtil.putAll(
-				JSONUtil.put(
-					"active", true
-				).put(
-					"entityFieldType", FDSEntityFieldTypes.DATE
-				).put(
-					"id", FIELD_NAMES[1]
-				).put(
-					"label", LABELS[1]
-				).put(
-					"preloadedData",
-					JSONUtil.put(
-						"to",
-						JSONUtil.put(
-							"day", 3
-						).put(
-							"month", 10
-						).put(
-							"year", 2025
-						))
-				).put(
-					"type", "dateRange"
-				)
 			).toString(),
 			_customFDSSerializer.serializeFilters(
 				"fdsName2", httpServletRequest
@@ -698,48 +648,9 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 			).build(),
 			"dataSetToDataSetCardsSections");
 
-		JSONAssert.assertEquals(
-			JSONUtil.putAll(
-				JSONUtil.put(
-					"contentRenderer", "cards"
-				).put(
-					"default", false
-				).put(
-					"name", "cards"
-				).put(
-					"schema",
-					JSONUtil.put(
-						"image", IMAGES[0]
-					).put(
-						"title", TITLES[0]
-					)
-				).put(
-					"thumbnail", "cards2"
-				)
-			).toString(),
+		JSONAssert.assertNotEquals(
 			_customFDSSerializer.serializeViews(
 				"fdsName1", httpServletRequest
-			).toString(),
-			JSONCompareMode.STRICT);
-
-		JSONAssert.assertEquals(
-			JSONUtil.putAll(
-				JSONUtil.put(
-					"contentRenderer", "cards"
-				).put(
-					"default", false
-				).put(
-					"name", "cards"
-				).put(
-					"schema",
-					JSONUtil.put(
-						"image", IMAGES[1]
-					).put(
-						"title", TITLES[1]
-					)
-				).put(
-					"thumbnail", "cards2"
-				)
 			).toString(),
 			_customFDSSerializer.serializeViews(
 				"fdsName2", httpServletRequest

@@ -12,8 +12,9 @@ import {
 	FeatureIndicator,
 	LearnMessage,
 	LearnResourcesContext,
+	openSelectionModal,
 } from 'frontend-js-components-web';
-import {navigate, openSelectionModal} from 'frontend-js-web';
+import {navigate} from 'frontend-js-web';
 import React, {useContext, useEffect, useRef, useState} from 'react';
 
 import NamespaceContext from '../NamespaceContext';

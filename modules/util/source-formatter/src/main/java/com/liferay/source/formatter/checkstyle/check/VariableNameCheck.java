@@ -79,67 +79,7 @@ public class VariableNameCheck extends BaseCheck {
 			_checkExceptionVariableName(detailAST, name, typeName);
 		}
 
-		DetailAST parentDetailAST = getParentWithTokenType(
-			detailAST, TokenTypes.CLASS_DEF, TokenTypes.CTOR_DEF,
-			TokenTypes.METHOD_DEF);
-
-		if (parentDetailAST == null) {
-			return;
-		}
-
-		List<DetailAST> assignDetailASTList = getAllChildTokens(
-			parentDetailAST, true, TokenTypes.ASSIGN);
-
-		for (DetailAST assignDetailAST : assignDetailASTList) {
-			firstChildDetailAST = assignDetailAST.getFirstChild();
-
-			if (firstChildDetailAST == null) {
-				continue;
-			}
-
-			String methodName = StringPool.BLANK;
-
-			if (equals(assignDetailAST.getParent(), detailAST)) {
-				if (firstChildDetailAST.getType() != TokenTypes.EXPR) {
-					continue;
-				}
-
-				firstChildDetailAST = firstChildDetailAST.getFirstChild();
-
-				if (firstChildDetailAST.getType() == TokenTypes.METHOD_CALL) {
-					methodName = getMethodName(firstChildDetailAST);
-
-					if (methodName.equals("stream")) {
-						firstChildDetailAST =
-							firstChildDetailAST.getFirstChild();
-
-						if (firstChildDetailAST.getType() == TokenTypes.DOT) {
-							firstChildDetailAST =
-								firstChildDetailAST.getFirstChild();
-
-							_checkTypo(
-								detailAST, name,
-								firstChildDetailAST.getText() + "Stream",
-								false);
-						}
-					}
-				}
-			}
-			else if ((firstChildDetailAST.getType() == TokenTypes.IDENT) &&
-					 name.equals(firstChildDetailAST.getText())) {
-
-				DetailAST nextSiblingDetailAST =
-					firstChildDetailAST.getNextSibling();
-
-				if (nextSiblingDetailAST.getType() == TokenTypes.METHOD_CALL) {
-					methodName = getMethodName(nextSiblingDetailAST);
-				}
-			}
-
-			if (methodName.matches("get[A-Z].*")) {
-				_checkTypo(detailAST, name, methodName.substring(3), false);
-			}
-		}
+		_checkByMethodCall(detailAST, name);
 	}
 
 	protected String getExpectedVariableName(String typeName) {
@@ -244,6 +184,71 @@ public class VariableNameCheck extends BaseCheck {
 				log(
 					detailAST, _MSG_INCORRECT_ENDING_VARIABLE_2, variableName,
 					expectedVariableName);
+			}
+		}
+	}
+
+	private void _checkByMethodCall(DetailAST detailAST, String variableName) {
+		DetailAST parentDetailAST = getParentWithTokenType(
+			detailAST, TokenTypes.CLASS_DEF, TokenTypes.CTOR_DEF,
+			TokenTypes.METHOD_DEF);
+
+		if (parentDetailAST == null) {
+			return;
+		}
+
+		List<DetailAST> assignDetailASTList = getAllChildTokens(
+			parentDetailAST, true, TokenTypes.ASSIGN);
+
+		for (DetailAST assignDetailAST : assignDetailASTList) {
+			DetailAST firstChildDetailAST = assignDetailAST.getFirstChild();
+
+			if (firstChildDetailAST == null) {
+				continue;
+			}
+
+			String methodName = StringPool.BLANK;
+
+			if (equals(assignDetailAST.getParent(), detailAST)) {
+				if (firstChildDetailAST.getType() != TokenTypes.EXPR) {
+					continue;
+				}
+
+				firstChildDetailAST = firstChildDetailAST.getFirstChild();
+
+				if (firstChildDetailAST.getType() == TokenTypes.METHOD_CALL) {
+					methodName = getMethodName(firstChildDetailAST);
+
+					if (methodName.equals("stream")) {
+						firstChildDetailAST =
+							firstChildDetailAST.getFirstChild();
+
+						if (firstChildDetailAST.getType() == TokenTypes.DOT) {
+							firstChildDetailAST =
+								firstChildDetailAST.getFirstChild();
+
+							_checkTypo(
+								detailAST, variableName,
+								firstChildDetailAST.getText() + "Stream",
+								false);
+						}
+					}
+				}
+			}
+			else if ((firstChildDetailAST.getType() == TokenTypes.IDENT) &&
+					 variableName.equals(firstChildDetailAST.getText())) {
+
+				DetailAST nextSiblingDetailAST =
+					firstChildDetailAST.getNextSibling();
+
+				if (nextSiblingDetailAST.getType() == TokenTypes.METHOD_CALL) {
+					methodName = getMethodName(nextSiblingDetailAST);
+				}
+			}
+
+			if (methodName.matches("get[A-Z].*")) {
+				_checkTypo(
+					detailAST, variableName, methodName.substring(3), false);
 			}
 		}
 	}

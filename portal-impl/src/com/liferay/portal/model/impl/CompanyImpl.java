@@ -290,7 +290,7 @@ public class CompanyImpl extends CompanyBaseImpl {
 		VirtualHost virtualHost = null;
 
 		try {
-			virtualHost = VirtualHostLocalServiceUtil.fetchVirtualHost(
+			virtualHost = VirtualHostLocalServiceUtil.fetchDefaultVirtualHost(
 				getCompanyId(), 0);
 		}
 		catch (Exception exception) {

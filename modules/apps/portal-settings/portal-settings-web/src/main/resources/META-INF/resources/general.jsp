@@ -27,7 +27,7 @@
 
 		<liferay-ui:error exception="<%= CompanyVirtualHostException.class %>" message="please-enter-a-valid-virtual-host" />
 
-		<aui:input bean="<%= VirtualHostLocalServiceUtil.fetchVirtualHost(company.getCompanyId(), 0) %>" fieldParam="virtualHostname" label="virtual-host" model="<%= VirtualHost.class %>" name="hostname" />
+		<aui:input bean="<%= VirtualHostLocalServiceUtil.fetchDefaultVirtualHost(company.getCompanyId(), 0) %>" fieldParam="virtualHostname" label="virtual-host" model="<%= VirtualHost.class %>" name="hostname" />
 	</clay:col>
 
 	<clay:col

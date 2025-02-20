@@ -78,7 +78,6 @@ public class DefaultOrderEntityTest {
 		Assert.assertTrue(
 			undefinedDefaultOrderEntry2.compareTo(undefinedDefaultOrderEntry1) >
 				0);
-
 		Assert.assertEquals(
 			undefinedDefaultOrderEntry2,
 			_undefinedDefaultOrderEntryPersistence.fetchByName(name));

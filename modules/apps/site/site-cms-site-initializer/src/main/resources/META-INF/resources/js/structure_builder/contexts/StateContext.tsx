@@ -67,7 +67,7 @@ type UpdateStructureAction = {
 	type: 'update-structure';
 };
 
-type Action =
+export type Action =
 	| AddFieldAction
 	| CreateStructureAction
 	| PublishStructureAction
@@ -183,6 +183,7 @@ function useStructureStatus() {
 }
 
 export {
+	StateContext,
 	StateContextProvider,
 	useStateDispatch,
 	useStructureError,

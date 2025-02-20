@@ -7,6 +7,7 @@ package com.liferay.portal.util.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -15,6 +16,7 @@ import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.service.VirtualHostLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.TreeMapBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
@@ -45,9 +47,11 @@ public class PortalImplLayoutRelativeURLTest extends BasePortalImplURLTestCase {
 
 		LayoutSet publicLayoutSet = publicLayout.getLayoutSet();
 
-		_virtualHostLocalService.updateVirtualHost(
+		_virtualHostLocalService.updateVirtualHosts(
 			company.getCompanyId(), publicLayoutSet.getLayoutSetId(),
-			VIRTUAL_HOSTNAME);
+			TreeMapBuilder.put(
+				VIRTUAL_HOSTNAME, StringPool.BLANK
+			).build());
 
 		_privateLayoutRelativeURL =
 			PropsValues.LAYOUT_FRIENDLY_URL_PRIVATE_GROUP_SERVLET_MAPPING +

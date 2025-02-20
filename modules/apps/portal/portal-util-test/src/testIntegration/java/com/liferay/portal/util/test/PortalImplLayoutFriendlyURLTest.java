@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.TreeMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -133,8 +134,11 @@ public class PortalImplLayoutFriendlyURLTest {
 			RandomTestUtil.randomString() + "." +
 				RandomTestUtil.randomString(3);
 
-		_virtualHostLocalService.updateVirtualHost(
-			_company.getCompanyId(), layoutSet.getLayoutSetId(), hostname);
+		_virtualHostLocalService.updateVirtualHosts(
+			_company.getCompanyId(), layoutSet.getLayoutSetId(),
+			TreeMapBuilder.put(
+				hostname, StringPool.BLANK
+			).build());
 
 		return hostname;
 	}

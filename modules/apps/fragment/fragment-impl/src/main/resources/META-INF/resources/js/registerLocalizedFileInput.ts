@@ -5,7 +5,7 @@
 
 type Args = {
 	defaultLanguageId: string;
-	inputElement?: HTMLInputElement;
+	inputElement: HTMLInputElement;
 	inputName: string;
 	localizationInputsContainer: HTMLElement;
 	namespace: string;
@@ -38,8 +38,8 @@ export function registerLocalizedFileInput({
 			namespace
 		);
 
-		if (inputElement) {
-			copyFilesToInput(defaultLanguageInput.files, inputElement);
+		if (defaultLanguageInput.files) {
+			transferFilesToInput(defaultLanguageInput.files, inputElement);
 
 			onFileChange?.({
 				files: defaultLanguageInput.files,
@@ -74,7 +74,7 @@ export function registerLocalizedFileInput({
 		);
 
 		if (inputElement && translationInput?.files?.length) {
-			copyFilesToInput(translationInput.files, inputElement);
+			transferFilesToInput(translationInput.files, inputElement);
 
 			onFileChange?.({files: translationInput.files, languageId});
 		}
@@ -84,7 +84,7 @@ export function registerLocalizedFileInput({
 	});
 
 	return {
-		onChange: (value: FileList) => {
+		onChange: (files: FileList) => {
 			const translationInput = getOrCreateTranslationInput(
 				inputName,
 				currentLanguageId,
@@ -92,8 +92,8 @@ export function registerLocalizedFileInput({
 				namespace
 			);
 
-			if (value?.length) {
-				copyFilesToInput(value, translationInput);
+			if (files?.length) {
+				transferFilesToInput(files, translationInput);
 			}
 
 			Liferay.fire('localizationSelect:updateTranslationStatus', {
@@ -101,20 +101,6 @@ export function registerLocalizedFileInput({
 			});
 		},
 	};
-}
-
-function copyFilesToInput(fileList: FileList | null, input: HTMLInputElement) {
-	const dataTransfer = new DataTransfer();
-
-	if (fileList?.length) {
-		const filesArray = Array.from(fileList);
-
-		filesArray.forEach((file) => {
-			dataTransfer.items.add(file);
-		});
-	}
-
-	input.files = dataTransfer.files;
 }
 
 function getOrCreateTranslationInput(
@@ -146,4 +132,16 @@ function getTranslationInput(namespace: string, languageId: string) {
 		input: document.getElementById(inputId) as HTMLInputElement,
 		inputId,
 	};
+}
+
+function transferFilesToInput(files: FileList, input: HTMLInputElement) {
+	const dataTransfer = new DataTransfer();
+
+	if (files?.length) {
+		[...files].forEach((file) => {
+			dataTransfer.items.add(file);
+		});
+	}
+
+	input.files = dataTransfer.files;
 }

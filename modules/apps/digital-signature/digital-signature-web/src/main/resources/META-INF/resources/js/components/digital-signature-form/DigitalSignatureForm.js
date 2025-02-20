@@ -8,12 +8,12 @@ import ClayCard from '@clayui/card';
 import ClayForm from '@clayui/form';
 import ClayLayout from '@clayui/layout';
 import {useFormik} from 'formik';
+import {openToast} from 'frontend-js-components-web';
 import {
 	createResourceURL,
 	fetch,
 	navigate,
 	objectToFormData,
-	openToast,
 } from 'frontend-js-web';
 import React, {useContext} from 'react';
 

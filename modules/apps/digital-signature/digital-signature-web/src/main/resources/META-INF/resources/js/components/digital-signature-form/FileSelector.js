@@ -4,7 +4,8 @@
  */
 
 import ClayButton from '@clayui/button';
-import {createPortletURL, openSelectionModal} from 'frontend-js-web';
+import {openSelectionModal} from 'frontend-js-components-web';
+import {createPortletURL} from 'frontend-js-web';
 import React, {useContext} from 'react';
 
 import {AppContext} from '../../AppContext';

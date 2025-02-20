@@ -4,14 +4,14 @@
  */
 
 import {cleanup} from '@testing-library/react';
-import {openToast} from 'frontend-js-web';
+import {openToast} from 'frontend-js-components-web';
 
 import {
 	errorToast,
 	successToast,
 } from '../../../src/main/resources/META-INF/resources/js/utils/toast';
 
-jest.mock('frontend-js-web', () => {
+jest.mock('frontend-js-components-web', () => {
 	return {
 		openToast: jest.fn(),
 	};

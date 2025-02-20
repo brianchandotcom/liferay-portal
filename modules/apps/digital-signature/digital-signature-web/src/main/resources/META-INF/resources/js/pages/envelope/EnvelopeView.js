@@ -7,12 +7,8 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
-import {
-	createActionURL,
-	createResourceURL,
-	fetch,
-	openToast,
-} from 'frontend-js-web';
+import {openToast} from 'frontend-js-components-web';
+import {createActionURL, createResourceURL, fetch} from 'frontend-js-web';
 import React, {useContext, useEffect, useState} from 'react';
 
 import {AppContext} from '../../AppContext';

@@ -47,9 +47,9 @@ public class DataDefinitionUtilTest {
 
 	@Test
 	public void testUpdateDataDefinitionFields() {
-		_testUpdateDataDefinitionFieldsWithExistingDataAndUpdateDefinition();
-		_testUpdateDataDefinitionFieldsWithExistingInvalidName();
-		_testUpdateDataDefinitionFieldsWithNewDataAndUpdateDefinition();
+		_testUpdateDataDefinitionFields();
+		_testUpdateDataDefinitionFieldsWithExistingFieldName();
+		_testUpdateDataDefinitionFieldsWithExistingInvalidFieldName();
 	}
 
 	private DataDefinition _getDataDefinition() {
@@ -138,7 +138,17 @@ public class DataDefinitionUtilTest {
 		return ddmStructure;
 	}
 
-	private void _testUpdateDataDefinitionFieldsWithExistingDataAndUpdateDefinition() {
+	private void _testUpdateDataDefinitionFields() {
+		DataDefinition dataDefinition = _getDataDefinition();
+
+		DataDefinitionUtil.updateDataDefinitionFields(dataDefinition, null);
+
+		Assert.assertTrue(
+			DataDefinitionUtil.isValidFieldName(
+				_getDataDefinitionFieldName(dataDefinition)));
+	}
+
+	private void _testUpdateDataDefinitionFieldsWithExistingFieldName() {
 		DataDefinition dataDefinition = _getDataDefinition();
 
 		String existingFieldName = DDMFormFieldUtil.getDDMFormFieldName(
@@ -154,7 +164,7 @@ public class DataDefinitionUtilTest {
 		Assert.assertEquals(existingFieldName, newFieldName);
 	}
 
-	private void _testUpdateDataDefinitionFieldsWithExistingInvalidName() {
+	private void _testUpdateDataDefinitionFieldsWithExistingInvalidFieldName() {
 		DataDefinition dataDefinition = _getDataDefinition();
 
 		DataDefinitionUtil.updateDataDefinitionFields(
@@ -163,16 +173,6 @@ public class DataDefinitionUtilTest {
 		String newFieldName = _getDataDefinitionFieldName(dataDefinition);
 
 		Assert.assertTrue(DataDefinitionUtil.isValidFieldName(newFieldName));
-	}
-
-	private void _testUpdateDataDefinitionFieldsWithNewDataAndUpdateDefinition() {
-		DataDefinition dataDefinition = _getDataDefinition();
-
-		DataDefinitionUtil.updateDataDefinitionFields(dataDefinition, null);
-
-		Assert.assertTrue(
-			DataDefinitionUtil.isValidFieldName(
-				_getDataDefinitionFieldName(dataDefinition)));
 	}
 
 	private String _fieldName;

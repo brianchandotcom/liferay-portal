@@ -82,14 +82,14 @@ test(
 			await creationModal.searchInput.press('Enter');
 
 			await expect(classicSampleListItem).toBeVisible();
-			await expect(customizedSampleListItem).toBeHidden();
+			await expect(customizedSampleListItem).not.toBeAttached();
 
 			await creationModal.searchInput.fill('aaa');
 
 			await creationModal.searchInput.press('Enter');
 
-			await expect(classicSampleListItem).toBeHidden();
-			await expect(customizedSampleListItem).toBeHidden();
+			await expect(classicSampleListItem).not.toBeAttached();
+			await expect(customizedSampleListItem).not.toBeAttached();
 
 			await expect(
 				creationModal.container.getByText('No Results Found')
@@ -265,7 +265,7 @@ test(
 				actionsPage.page
 					.locator('.dropdown-menu.show')
 					.getByRole('menuitem', {name: 'Edit'})
-			).toBeHidden();
+			).not.toBeAttached();
 
 			await firstDropdownToggle.click();
 		});
@@ -308,7 +308,7 @@ test(
 				actionsPage.page
 					.locator('.dropdown-menu.show')
 					.getByRole('menuitem', {name: 'Edit'})
-			).toBeHidden();
+			).not.toBeAttached();
 
 			await firstDropdownToggle.click();
 		});
@@ -342,7 +342,7 @@ test(
 
 			await waitForAlert(systemDataSetsPage.page);
 
-			await expect(customizedSampleRow).toBeHidden();
+			await expect(customizedSampleRow).not.toBeAttached();
 		});
 
 		await test.step('Check that deleted data set is again available for import ', async () => {

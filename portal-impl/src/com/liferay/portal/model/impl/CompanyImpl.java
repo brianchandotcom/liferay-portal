@@ -11,8 +11,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.encryptor.EncryptorUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.model.CompanyInfo;
@@ -287,17 +285,9 @@ public class CompanyImpl extends CompanyBaseImpl {
 			return _virtualHostname;
 		}
 
-		VirtualHost virtualHost = null;
-
-		try {
-			virtualHost = VirtualHostLocalServiceUtil.fetchDefaultVirtualHost(
+		VirtualHost virtualHost =
+			VirtualHostLocalServiceUtil.fetchDefaultVirtualHost(
 				getCompanyId(), 0);
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-		}
 
 		if (virtualHost == null) {
 			return StringPool.BLANK;
@@ -476,8 +466,6 @@ public class CompanyImpl extends CompanyBaseImpl {
 
 		return defaultValue;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(CompanyImpl.class);
 
 	private CompanyInfo _companyInfo;
 

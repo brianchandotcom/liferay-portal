@@ -5,7 +5,8 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
-import {fetch, objectToFormData, openToast, sub} from 'frontend-js-web';
+import {openToast} from 'frontend-js-components-web';
+import {fetch, objectToFormData, sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 
 import {DELETION_TYPES} from '../constants/deletionTypes';

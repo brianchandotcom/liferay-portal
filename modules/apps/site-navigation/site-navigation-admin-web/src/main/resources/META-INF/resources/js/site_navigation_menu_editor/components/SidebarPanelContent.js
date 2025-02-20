@@ -8,12 +8,11 @@ import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
-import {useSessionState} from 'frontend-js-components-web';
+import {openConfirmModal, useSessionState} from 'frontend-js-components-web';
 import {
 	fetch,
 	getPortletNamespace,
 	objectToFormData,
-	openConfirmModal,
 	runScriptsInElement,
 } from 'frontend-js-web';
 import PropTypes from 'prop-types';

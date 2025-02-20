@@ -24,7 +24,6 @@
 			<#assign
 				categoryHref = cpAssetCategoriesNavigationDisplayContext.getFriendlyURL(currentCategory.getCategoryId(), themeDisplay)
 \				categoryName = currentCategory.getName()
-				propertyName = "alphaCode"
 			/>
 
 			<#if cpAssetCategoriesNavigationDisplayContext.getDefaultImageSrc(currentCategory.getCategoryId())??>

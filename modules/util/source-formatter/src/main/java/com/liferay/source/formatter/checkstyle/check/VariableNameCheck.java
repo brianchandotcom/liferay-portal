@@ -843,8 +843,8 @@ public class VariableNameCheck extends BaseCheck {
 
 		if (!variableName.matches("(?i).*" + expectedVariableName + "[0-9]*")) {
 			log(
-				detailAST, _MSG_INCORRECT_ENDING_VARIABLE_2, variableName,
-				expectedVariableName);
+				detailAST, _MSG_INCORRECT_ENDING_VARIABLE_2,
+				className + "." + methodName, expectedVariableName);
 		}
 	}
 

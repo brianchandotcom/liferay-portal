@@ -1023,7 +1023,7 @@
 			<property name="enforceTypeNames" value="" />
 			<message key="variable.incorrect.count" value="Rename variable &quot;{0}&quot; to &quot;{1}&quot; (and increment counts for other variables &quot;{0}*&quot;)" />
 			<message key="variable.incorrect.ending.1" value="Name of variable with type &quot;{0}&quot; should end with &quot;{1}&quot;" />
-			<message key="variable.incorrect.ending.2" value="Name of variable &quot;{0}&quot; should end with &quot;{1}&quot;" />
+			<message key="variable.incorrect.ending.2" value="Name of variable assigned by &quot;{0}&quot; should end with &quot;{1}&quot;" />
 			<message key="variable.name.incorrect.for.statement" value="Use format &quot;curVariableName&quot; for variable &quot;{0}&quot;" />
 			<message key="variable.rename" value="Rename variable &quot;{0}&quot; to &quot;{1}&quot;" />
 			<message key="variable.typo" value="Typo in variable &quot;{0}&quot;, expected variable name &quot;{1}&quot;" />

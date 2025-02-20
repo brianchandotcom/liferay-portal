@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.PortletConstants;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoaderUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -187,11 +188,13 @@ public class FrontendTokenDefinitionRegistryImpl
 			List<FrontendTokenDefinitionImpl> frontendTokenDefinitionImpls =
 				new ArrayList<>();
 
-			for (String themeId : getThemeIds(bundle)) {
+			for (Map<String, String> themeData : getThemesData(bundle)) {
 				frontendTokenDefinitionImpls.add(
 					new FrontendTokenDefinitionImpl(
 						jsonFactory.createJSONObject(json), jsonFactory,
-						resourceBundleLoader, themeId, StringPool.BLANK, FrontendTokenDefinitionConstants.THEME_TYPE_BUNDLE));
+						resourceBundleLoader, themeData.get("id"),
+						themeData.get("name"),
+						FrontendTokenDefinitionConstants.THEME_TYPE_BUNDLE));
 			}
 
 			return frontendTokenDefinitionImpls;
@@ -223,7 +226,7 @@ public class FrontendTokenDefinitionRegistryImpl
 		return webContextPath;
 	}
 
-	protected List<String> getThemeIds(Bundle bundle) {
+	protected List<Map<String, String>> getThemesData(Bundle bundle) {
 		URL url = bundle.getEntry("WEB-INF/liferay-look-and-feel.xml");
 
 		if (url == null) {
@@ -231,29 +234,33 @@ public class FrontendTokenDefinitionRegistryImpl
 		}
 
 		try {
-			List<String> themeIds = new ArrayList<>();
-
-			String servletContextName = getServletContextName(bundle);
+			List<Map<String, String>> themesData = new ArrayList<>();
 
 			String xml = URLUtil.toString(url);
 
 			xml = xml.replaceAll(StringPool.NEW_LINE, StringPool.SPACE);
 
-			Matcher matcher = _themeIdPattern.matcher(xml);
+			Matcher matcher = _themePattern.matcher(xml);
+
+			String servletContextName = getServletContextName(bundle);
 
 			while (matcher.find()) {
 				String themeId = matcher.group(1);
 
 				if (servletContextName != null) {
-					themeId =
-						themeId + PortletConstants.WAR_SEPARATOR +
-							servletContextName;
+					themeId +=
+						PortletConstants.WAR_SEPARATOR + servletContextName;
 				}
 
-				themeIds.add(portal.getJsSafePortletId(themeId));
+				themesData.add(
+					HashMapBuilder.put(
+						"id", portal.getJsSafePortletId(themeId)
+					).put(
+						"name", matcher.group(2)
+					).build());
 			}
 
-			return themeIds;
+			return themesData;
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(
@@ -370,8 +377,8 @@ public class FrontendTokenDefinitionRegistryImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		FrontendTokenDefinitionRegistryImpl.class);
 
-	private static final Pattern _themeIdPattern = Pattern.compile(
-		"<theme id=\"([^\"]*)\"[^>]*>");
+	private static final Pattern _themePattern = Pattern.compile(
+		"<theme id=\"([^\"]*)\"[^>]* name=\"([^\"]*)\"[^>]*>");
 
 	private BundleTracker<List<FrontendTokenDefinitionImpl>> _bundleTracker;
 

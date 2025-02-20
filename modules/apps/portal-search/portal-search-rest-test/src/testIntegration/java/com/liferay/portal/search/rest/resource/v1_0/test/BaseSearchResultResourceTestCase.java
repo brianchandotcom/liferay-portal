@@ -171,6 +171,7 @@ public abstract class BaseSearchResultResourceTestCase {
 		SearchResult searchResult = randomSearchResult();
 
 		searchResult.setDescription(regex);
+		searchResult.setEntryClassName(regex);
 		searchResult.setItemURL(regex);
 		searchResult.setTitle(regex);
 
@@ -181,6 +182,7 @@ public abstract class BaseSearchResultResourceTestCase {
 		searchResult = SearchResultSerDes.toDTO(json);
 
 		Assert.assertEquals(regex, searchResult.getDescription());
+		Assert.assertEquals(regex, searchResult.getEntryClassName());
 		Assert.assertEquals(regex, searchResult.getItemURL());
 		Assert.assertEquals(regex, searchResult.getTitle());
 	}
@@ -637,6 +639,14 @@ public abstract class BaseSearchResultResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("entryClassName", additionalAssertFieldName)) {
+				if (searchResult.getEntryClassName() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("itemURL", additionalAssertFieldName)) {
 				if (searchResult.getItemURL() == null) {
 					valid = false;
@@ -828,6 +838,17 @@ public abstract class BaseSearchResultResourceTestCase {
 				if (!Objects.deepEquals(
 						searchResult1.getEmbedded(),
 						searchResult2.getEmbedded())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("entryClassName", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						searchResult1.getEntryClassName(),
+						searchResult2.getEntryClassName())) {
 
 					return false;
 				}
@@ -1091,6 +1112,52 @@ public abstract class BaseSearchResultResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("entryClassName")) {
+			Object object = searchResult.getEntryClassName();
+
+			String value = String.valueOf(object);
+
+			if (operator.equals("contains")) {
+				sb = new StringBundler();
+
+				sb.append("contains(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 2)) {
+					sb.append(value.substring(1, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else if (operator.equals("startswith")) {
+				sb = new StringBundler();
+
+				sb.append("startswith(");
+				sb.append(entityFieldName);
+				sb.append(",'");
+
+				if ((object != null) && (value.length() > 1)) {
+					sb.append(value.substring(0, value.length() - 1));
+				}
+				else {
+					sb.append(value);
+				}
+
+				sb.append("')");
+			}
+			else {
+				sb.append("'");
+				sb.append(value);
+				sb.append("'");
+			}
+
+			return sb.toString();
+		}
+
 		if (entityFieldName.equals("itemURL")) {
 			Object object = searchResult.getItemURL();
 
@@ -1236,6 +1303,8 @@ public abstract class BaseSearchResultResourceTestCase {
 				dateCreated = RandomTestUtil.nextDate();
 				dateModified = RandomTestUtil.nextDate();
 				description = StringUtil.toLowerCase(
+					RandomTestUtil.randomString());
+				entryClassName = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				itemURL = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				title = StringUtil.toLowerCase(RandomTestUtil.randomString());

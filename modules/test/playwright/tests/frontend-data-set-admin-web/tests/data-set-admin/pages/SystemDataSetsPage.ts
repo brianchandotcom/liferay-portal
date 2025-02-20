@@ -8,6 +8,7 @@ import {Locator, Page, expect} from '@playwright/test';
 import {ApplicationsMenuPage} from '../../../../../pages/product-navigation-applications-menu/ApplicationsMenuPage';
 
 export class SystemDataSetsPage {
+	readonly activeToggle: Locator;
 	private readonly applicationsMenuPage: ApplicationsMenuPage;
 	readonly createButton: Locator;
 	readonly creationModal: {
@@ -18,11 +19,13 @@ export class SystemDataSetsPage {
 		readonly listItems: Locator;
 		readonly searchInput: Locator;
 	};
+	readonly inactiveToggle: Locator;
 	readonly page: Page;
 	readonly pageContainer: Locator;
 	private readonly systemDataSetsTab: Locator;
 
 	constructor(page: Page) {
+		this.activeToggle = page.getByLabel('Active', {exact: true});
 		this.applicationsMenuPage = new ApplicationsMenuPage(page);
 
 		const systemDataSetsPageContainer = page.locator('.system-data-sets');
@@ -49,6 +52,7 @@ export class SystemDataSetsPage {
 			listItems: creationModalContainer.getByRole('listitem'),
 			searchInput: creationModalContainer.getByPlaceholder('Search'),
 		};
+		this.inactiveToggle = page.getByLabel('Inactive', {exact: true});
 		this.page = page;
 		this.pageContainer = systemDataSetsPageContainer;
 		this.systemDataSetsTab = page

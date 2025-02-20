@@ -39,9 +39,9 @@ test.afterEach(async ({dataSetManagerApiHelpers}) => {
 
 test(
 	'Import a system data set to customize',
-	{tag: ['@LPD-37531', '@LPD-40949']},
+	{tag: ['@LPD-37531', '@LPD-40949', '@LPD-49128']},
 	async ({actionsPage, fdsSamplePage, page, site, systemDataSetsPage}) => {
-		await test.step('Add FDS Sample widget for object definition generation', async () => {
+		await test.step('Add FDS Sample Widget for object definition generation', async () => {
 			await fdsSamplePage.setupFDSSampleWidget({site});
 		});
 
@@ -157,7 +157,7 @@ test(
 			hasText: 'Customized Sample',
 		});
 
-		await test.step('System data sets are imported', async () => {
+		await test.step('Check system data set is imported and are "Active" by default', async () => {
 			await expect(customizedSampleRow).toBeVisible();
 
 			expect(
@@ -169,6 +169,30 @@ test(
 				fdsRows.filter({
 					hasText: 'React Sample',
 				})
+			).toBeVisible();
+
+			await expect(
+				systemDataSetsPage.activeToggle.first()
+			).toBeVisible();
+		});
+
+		await test.step('Can deactivate the system data set', async () => {
+			await systemDataSetsPage.activeToggle.first().click();
+
+			await waitForAlert(page);
+
+			await expect(
+				systemDataSetsPage.inactiveToggle.first()
+			).toBeVisible();
+		});
+
+		await test.step('Can activate the system data set', async () => {
+			await systemDataSetsPage.inactiveToggle.first().click();
+
+			await waitForAlert(page);
+
+			await expect(
+				systemDataSetsPage.activeToggle.first()
 			).toBeVisible();
 		});
 

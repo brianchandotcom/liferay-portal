@@ -14,6 +14,7 @@ modules/apps/asset/
 modules/apps/asset/asset-auto-tagger-google-cloud-natural-language-test    @liferay-content-management
 modules/apps/asset/asset-auto-tagger-opennlp-test    @liferay-content-management
 modules/apps/asset/asset-auto-tagger-test    @liferay-content-management
+modules/apps/asset/asset-categories-admin-web    @liferay-content-management
 modules/apps/asset/asset-categories-test    @liferay-content-management
 modules/apps/asset/asset-category-property-test    @liferay-content-management
 modules/apps/asset/asset-display-page-api    @liferay-page-management
@@ -38,8 +39,9 @@ modules/apps/asset/asset-publisher-api    @liferay-content-management
 modules/apps/asset/asset-publisher-layout-prototype    @liferay-content-management
 modules/apps/asset/asset-publisher-test    @liferay-content-management
 modules/apps/asset/asset-publisher-web    @liferay-content-management
-modules/apps/asset/asset-publisher-web    @liferay-content-management
+modules/apps/asset/asset-taglib    @liferay-content-management
 modules/apps/asset/asset-taglib-test    @liferay-content-management
+modules/apps/asset/asset-tags-admin-web    @liferay-content-management
 modules/apps/asset/asset-tags-test    @liferay-content-management
 modules/apps/asset/asset-test    @liferay-content-management
 modules/apps/asset/asset-test-util    @liferay-content-management
@@ -205,7 +207,7 @@ modules/apps/object/object-rest-impl    @liferay-headless
 modules/apps/object/object-rest-test    @liferay-headless
 modules/apps/on-demand-admin/    @liferay-commerce
 modules/apps/organizations/    @liferay-commerce
-modules/apps/password-policies-admin/
+modules/apps/password-policies-admin/    @liferay-appsec
 modules/apps/plugins-admin/
 modules/apps/portal-background-task/    @liferay-core-infra
 modules/apps/portal-cache/    @liferay-core-infra

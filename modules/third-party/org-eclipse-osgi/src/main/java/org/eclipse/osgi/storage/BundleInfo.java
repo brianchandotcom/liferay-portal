@@ -25,9 +25,11 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
+import java.util.function.BiFunction;
 import org.eclipse.osgi.container.Module;
 import org.eclipse.osgi.container.ModuleContainerAdaptor.ModuleEvent;
 import org.eclipse.osgi.container.ModuleRevision;
@@ -148,7 +150,13 @@ public final class BundleInfo {
 									}
 								}
 							}
-							rawHeaders = Collections.unmodifiableMap(merged);
+
+							if (_bundleHeaderReplacerBiFunction == null) {
+								rawHeaders = Collections.unmodifiableMap(merged);
+							}
+							else {
+								rawHeaders = Collections.unmodifiableMap((Map<String, String>)(Map)_bundleHeaderReplacerBiFunction.apply(bundleFile + "#", (Map<Object, Object>)(Map)merged));
+							}
 						} catch (Exception e) {
 							if (e instanceof RuntimeException) {
 								throw (RuntimeException) e;
@@ -639,4 +647,35 @@ public final class BundleInfo {
 		}
 	}
 
+	private static final BiFunction
+		<String, Map<Object, Object>, Map<Object, Object>>
+			_bundleHeaderReplacerBiFunction;
+
+	static {
+		ClassLoader classLoader = ClassLoader.getSystemClassLoader();
+
+		Object instance = null;
+
+		try {
+			Class<?> clazz = classLoader.loadClass(
+				"com.liferay.portal.tools.jakarta.ee.transformer.function." +
+					"BundleHeaderReplacerBiFunction");
+
+			instance = clazz.newInstance();
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			if (!(reflectiveOperationException instanceof
+					ClassNotFoundException)) {
+
+				throw new ExceptionInInitializerError(
+					reflectiveOperationException);
+			}
+		}
+
+		_bundleHeaderReplacerBiFunction =
+			(BiFunction<String, Map<Object, Object>, Map<Object, Object>>)
+				instance;
+	}
+
 }
+/* @generated */

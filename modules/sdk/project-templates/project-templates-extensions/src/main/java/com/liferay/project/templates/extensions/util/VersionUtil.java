@@ -117,7 +117,7 @@ public class VersionUtil {
 
 	private static final Pattern _liferayQuarterlyVersionPattern =
 		Pattern.compile(
-			"^(?<major>2\\d{3})\\.q(?<minor>[1234])\\.(?<micro>\\d+)$");
+			"^(?<major>2\\d{3})\\.q(?<minor>[1234])\\.(?<micro>\\d+)(-.*)?$");
 	private static final Pattern _liferayVersionPattern = Pattern.compile(
 		"^([7-9]|[1-9]\\d{1}|[1-9]\\d{2})\\.(\\d+)((\\.)(\\d+|\\d+-[1-9])" +
 			"(-\\d+|(\\.(((e|f)p)|u)?[0-9]+(-[0-9]+)?))?)?$");

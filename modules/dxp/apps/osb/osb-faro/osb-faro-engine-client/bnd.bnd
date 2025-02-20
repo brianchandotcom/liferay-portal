@@ -218,3 +218,4 @@ Import-Package:\
 	\
 	*
 -dsannotations-options: inherit
+-fixupmessages "Classes found in the wrong directory"; restrict:=error; is:=ignore

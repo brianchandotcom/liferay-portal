@@ -104,4 +104,8 @@ test('can see corresponding elements at site level', async ({
 	await expect(
 		productMenuPage.page.getByText('Comments, Ratings')
 	).toBeVisible();
+
+	await expect(
+		productMenuPage.page.getByRole('link', { name: 'Refresh Counts' })
+	).toBeVisible();
 });

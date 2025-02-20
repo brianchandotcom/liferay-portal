@@ -728,6 +728,7 @@ test.describe('Manage object entries through View Object Entries', () => {
 		for (const objectField of objectFields) {
 			switch (objectField.businessType) {
 				case ObjectField.BusinessTypeEnum.Attachment: {
+					await viewObjectEntriesPage.selectFileButton.click();
 					await viewObjectEntriesPage.selectFileFromDocumentsAndMedia(
 						ATTACHMENT_FILE_NAME
 					);
@@ -969,6 +970,8 @@ test.describe('Manage object entries through View Object Entries', () => {
 		await viewObjectEntriesPage.clickAddObjectEntry(
 			objectDefinition.label['en_US']
 		);
+
+		await viewObjectEntriesPage.selectFileButton.click();
 
 		await viewObjectEntriesPage.selectFileFromDocumentsAndMedia(
 			ATTACHMENT_FILE_NAME

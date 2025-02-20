@@ -132,6 +132,7 @@ const objectFieldbusinessTypeInfo: {
 
 function isLocalizable(businessType: ObjectFieldBusinessTypes) {
 	const localizableBusinessTypes: ObjectFieldBusinessTypes[] = [
+		'attachment',
 		'boolean',
 		'date',
 		'dateTime',

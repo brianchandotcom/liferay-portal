@@ -139,8 +139,6 @@ export class ViewObjectEntriesPage {
 	}
 
 	async selectFileFromDocumentsAndMedia(fileName: string) {
-		await this.selectFileButton.click();
-
 		await this.selectFileIframe
 			.getByRole('link', {name: 'Sites and Libraries'})
 			.click();

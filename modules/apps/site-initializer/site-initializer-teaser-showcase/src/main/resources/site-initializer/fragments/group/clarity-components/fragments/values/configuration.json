@@ -5,7 +5,7 @@
 				{
 					"dataType": "string",
 					"defaultValue": false,
-					"description": "Specify the size of the watermark circle that is controlled using Bootstrap utility classes (e.g., `sm`, `lg`).",
+					"description": "Specify the size of the watermark circle that is controlled using Bootstrap utility classes (e.g. sm and lg).",
 					"label": "Size",
 					"name": "circleSize",
 					"type": "select",

@@ -15,6 +15,8 @@ liferay-learn-etc-spring-boot-oauth-application-headless-server:
         - c_learningpathstep.everything
         - c_lesson.everything
         - c_module.everything
+        - c_p2s3examresult.everything
+        - c_p2s3examresultssynchronization.everything
         - c_quiz.everything
         - c_quizanswer.everything.read
         - c_quizquestion.everything.read

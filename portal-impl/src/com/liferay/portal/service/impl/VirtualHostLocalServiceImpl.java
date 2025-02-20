@@ -55,6 +55,21 @@ import java.util.TreeMap;
 public class VirtualHostLocalServiceImpl
 	extends VirtualHostLocalServiceBaseImpl {
 
+	@Override
+	public VirtualHost fetchDefaultVirtualHost(
+		long companyId, long layoutSetId) {
+
+		for (VirtualHost virtualHost :
+				getVirtualHosts(companyId, layoutSetId)) {
+
+			if (virtualHost.isDefaultVirtualHost()) {
+				return virtualHost;
+			}
+		}
+
+		return null;
+	}
+
 	/**
 	 * @deprecated As of Mueller (7.2.x), replaced by {@link
 	 *             #getVirtualHosts(long, long)}

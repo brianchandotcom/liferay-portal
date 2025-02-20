@@ -14,7 +14,7 @@ Company selCompany = (Company)request.getAttribute(WebKeys.SEL_COMPANY);
 
 long companyId = BeanParamUtil.getLong(selCompany, request, "companyId");
 
-VirtualHost virtualHost = VirtualHostLocalServiceUtil.fetchVirtualHost(companyId, 0);
+VirtualHost virtualHost = VirtualHostLocalServiceUtil.fetchDefaultVirtualHost(companyId, 0);
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);

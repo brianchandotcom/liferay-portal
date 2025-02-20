@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {openModal, openToast} from 'frontend-js-web';
+import {openModal, openToast} from 'frontend-js-components-web';
 
 import ServiceProvider from '../ServiceProvider/index';
 import {DEFAULT_ORDER_DETAILS_PORTLET_ID} from '../components/mini_cart/util/constants';

@@ -30,7 +30,7 @@ import './Multishipping.scss';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
-import {openConfirmModal} from 'frontend-js-web';
+import {openConfirmModal} from 'frontend-js-components-web';
 
 import AddDeliveryGroupButton from './AddDeliveryGroupButton';
 import DeliveryGroupHeaderCell from './DeliveryGroupHeaderCell';

@@ -6,7 +6,7 @@
 import ClayButton from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
-import {openConfirmModal} from 'frontend-js-web';
+import {openConfirmModal} from 'frontend-js-components-web';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 

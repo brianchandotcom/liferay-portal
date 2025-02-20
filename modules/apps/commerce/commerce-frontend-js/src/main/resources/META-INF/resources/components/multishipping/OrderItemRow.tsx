@@ -11,7 +11,8 @@ import {useModal} from '@clayui/modal';
 import ClayTable from '@clayui/table';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import classNames from 'classnames';
-import {debounce, openConfirmModal} from 'frontend-js-web';
+import {openConfirmModal} from 'frontend-js-components-web';
+import {debounce} from 'frontend-js-web';
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 
 // @ts-ignore

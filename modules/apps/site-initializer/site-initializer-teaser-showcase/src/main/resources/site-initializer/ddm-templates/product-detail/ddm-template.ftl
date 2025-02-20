@@ -1,18 +1,22 @@
 <#if cpCatalogEntry??>
 	<#assign
-		cpDefinitionId = cpCatalogEntry.getCPDefinitionId()productName = cpCatalogEntry.getName()
-		productSkus = cpCatalogEntry.getCPSkus()productShortDescription = cpCatalogEntry.getShortDescription()
-		productDescription = cpCatalogEntry.getDescription()commerceContext = renderRequest.getAttribute("COMMERCE_CONTEXT")
-		account = commerceContext.getAccountEntry()accountId = account.getAccountEntryId()
-		defaultImageURL = cpContentHelper.getDefaultImageFileURL(accountId, cpDefinitionId)
-		productImages = cpContentHelper.getImages(cpDefinitionId, true, themeDisplay)
+		commerceContext = renderRequest.getAttribute("COMMERCE_CONTEXT")
+		cpDefinitionId = cpCatalogEntry.getCPDefinitionId()
+
+		accountEntry = commerceContext.getAccountEntry()
+
+		accountEntryId = account.getAccountEntryId()
 		cpAttachmentFileEntries = cpContentHelper.getCPMedias(cpDefinitionId, themeDisplay)
 		cpDefinitionSpecificationOptionValues = cpContentHelper.getCPDefinitionSpecificationOptionValues(cpDefinitionId)
 		cpOptionCategories = cpContentHelper.getCPOptionCategories(themeDisplay.getCompanyId())
+		defaultImageURL = cpContentHelper.getDefaultImageFileURL(accountEntryId, cpDefinitionId)
+		productDescription = cpCatalogEntry.getDescription()
+		productImages = cpContentHelper.getImages(cpDefinitionId, true, themeDisplay)
+		productName = cpCatalogEntry.getName()
+		productShortDescription = cpCatalogEntry.getShortDescription()
+		productSkus = cpCatalogEntry.getCPSkus()
 		stockQuantity = cpContentHelper.getStockQuantity(request)
 	/>
-
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 
 	<style>
 		.content {
@@ -185,8 +189,7 @@
 									<tbody>
 										<#list cpOptionCategories as cpOptionCategory>
 											<#assign
-												categorizedCPDefinitionSpecificationOptionValues = cpContentHelper.getCategorizedCPDefinitionSpecificationOptionValues(cpDefinitionId,
-												cpOptionCategory.getCPOptionCategoryId())
+												categorizedCPDefinitionSpecificationOptionValues = cpContentHelper.getCategorizedCPDefinitionSpecificationOptionValues(cpDefinitionId, cpOptionCategory.getCPOptionCategoryId())
 											/>
 
 											<#if categorizedCPDefinitionSpecificationOptionValues?has_content>

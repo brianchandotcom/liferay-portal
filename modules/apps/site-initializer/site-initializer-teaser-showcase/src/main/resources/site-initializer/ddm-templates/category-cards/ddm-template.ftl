@@ -34,8 +34,7 @@
 			</#switch>
 
 			<#assign
-				categoryHref = cpAssetCategoriesNavigationDisplayContext
-					.getFriendlyURL(currentCategory.getCategoryId(), themeDisplay)
+				categoryHref = cpAssetCategoriesNavigationDisplayContext.getFriendlyURL(currentCategory.getCategoryId(), themeDisplay)
 				categoryId = currentCategory.getCategoryId()
 				categoryName = currentCategory.getName()
 				propertyName = "alphaCode"

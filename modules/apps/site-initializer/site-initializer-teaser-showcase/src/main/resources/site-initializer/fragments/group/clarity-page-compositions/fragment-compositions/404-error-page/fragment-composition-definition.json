@@ -1,0 +1,185 @@
+{
+	"definition": {
+		"fragmentStyle": {
+			"borderWidth": "0",
+			"marginBottom": "4",
+			"marginTop": "5",
+			"paddingBottom": "5",
+			"paddingTop": "5"
+		},
+		"indexed": true,
+		"layout": {
+			"align": "Center",
+			"contentDisplay": "FlexColumn",
+			"marginBottom": 2,
+			"marginTop": 4,
+			"paddingBottom": 4,
+			"paddingTop": 4
+		},
+		"name": "404 Error Page"
+	},
+	"pageElements": [
+		{
+			"definition": {
+				"fragment": {
+					"key": "BASIC_COMPONENT-image"
+				},
+				"fragmentConfig": {
+					"imageSize": "w-100"
+				},
+				"fragmentFields": [
+					{
+						"id": "image-square",
+						"value": {
+							"fragmentImage": {
+								"description": {
+									"value_i18n": {
+										"en_US": ""
+									}
+								},
+								"url": {
+									"value_i18n": {
+									}
+								}
+							},
+							"fragmentLink": {
+							}
+						}
+					}
+				],
+				"indexed": true
+			},
+			"type": "Fragment"
+		},
+		{
+			"definition": {
+				"fragment": {
+					"key": "BASIC_COMPONENT-heading"
+				},
+				"fragmentConfig": {
+					"headingLevel": "h1"
+				},
+				"fragmentFields": [
+					{
+						"id": "element-text",
+						"value": {
+							"fragmentLink": {
+							},
+							"text": {
+								"value_i18n": {
+									"ar_SA": "لم يتم العثور على الصفحة",
+									"ca_ES": "No s'ha trobat la pàgina",
+									"de_DE": "Seite nicht gefunden",
+									"en_US": "Sorry, this page does not exist.",
+									"es_ES": "Página no encontrada",
+									"fi_FI": "Sivua ei löydy",
+									"fr_FR": "Page introuvable",
+									"hu_HU": "Az oldal nem található",
+									"ja_JP": "ページが見つかりません",
+									"nl_NL": "Pagina niet gevonden",
+									"pt_BR": "Página não encontrada",
+									"sv_SE": "Sidan hittades inte",
+									"zh_CN": "找不到页面"
+								}
+							}
+						}
+					}
+				],
+				"fragmentStyle": {
+					"fontFamily": "fontFamilySansSerif",
+					"fontSize": "fontSizeLg",
+					"fontWeight": "fontWeightBolder",
+					"marginBottom": "3",
+					"textAlign": "center"
+				},
+				"indexed": true
+			},
+			"type": "Fragment"
+		},
+		{
+			"definition": {
+				"fragmentStyle": {
+					"borderColor": "gray400Color",
+					"borderRadius": "5px",
+					"paddingBottom": "4",
+					"paddingLeft": "3",
+					"paddingRight": "3",
+					"paddingTop": "4",
+					"width": "800px"
+				},
+				"indexed": true,
+				"layout": {
+					"align": "Center",
+					"borderColor": "gray400Color",
+					"contentDisplay": "FlexColumn",
+					"paddingBottom": 2,
+					"paddingLeft": 1,
+					"paddingRight": 1,
+					"paddingTop": 2
+				},
+				"name": "User Actions"
+			},
+			"pageElements": [
+				{
+					"definition": {
+						"fragmentStyle": {
+							"minWidth": "500px"
+						},
+						"widgetInstance": {
+							"widgetConfig": {
+								"destination": "/search",
+								"displayStyle": "ddmTemplate_38404",
+								"displayStyleGroupId": "37203",
+								"federatedSearchKey": "",
+								"invisible": "false",
+								"keywordsParameterName": "q",
+								"scopeParameterName": "scope",
+								"searchScope": "this-site",
+								"showStagedResults": "false",
+								"suggestionsContributorConfigurations": "{\"contributorName\": \"basic\", \"displayGroupName\": \"suggestions\", \"size\": 5}",
+								"suggestionsDisplayThreshold": "2",
+								"suggestionsEnabled": "true",
+								"useAdvancedSearchSyntax": "false"
+							},
+							"widgetName": "com_liferay_portal_search_web_search_bar_portlet_SearchBarPortlet"
+						}
+					},
+					"type": "Widget"
+				},
+				{
+					"definition": {
+						"fragment": {
+							"key": "BASIC_COMPONENT-button"
+						},
+						"fragmentConfig": {
+							"buttonSize": "nm",
+							"buttonType": "primary",
+							"type": "link"
+						},
+						"fragmentFields": [
+							{
+								"id": "link",
+								"value": {
+									"fragmentLink": {
+									},
+									"text": {
+										"value_i18n": {
+											"en_US": "Back to Homepage"
+										}
+									}
+								}
+							}
+						],
+						"fragmentStyle": {
+							"marginTop": "5"
+						},
+						"indexed": true
+					},
+					"type": "Fragment"
+				}
+			],
+			"type": "Section"
+		}
+	],
+	"type": "Section"
+}

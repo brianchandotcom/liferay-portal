@@ -1,0 +1,665 @@
+{
+	"definition": {
+		"indexed": true,
+		"layout": {
+		},
+		"name": "Blog Page"
+	},
+	"pageElements": [
+		{
+			"definition": {
+				"fragmentStyle": {
+					"backgroundColor": "#FDFBF7",
+					"paddingBottom": "5",
+					"paddingLeft": "5",
+					"paddingRight": "5",
+					"paddingTop": "5"
+				},
+				"indexed": true,
+				"layout": {
+					"paddingBottom": 4,
+					"paddingLeft": 4,
+					"paddingRight": 4,
+					"paddingTop": 4
+				},
+				"name": "Banner"
+			},
+			"pageElements": [
+				{
+					"definition": {
+						"fragmentStyle": {
+							"backgroundColor": "#FFFFFF",
+							"borderRadius": "10px",
+							"paddingBottom": "4",
+							"paddingLeft": "4",
+							"paddingRight": "4",
+							"paddingTop": "4"
+						},
+						"indexed": true,
+						"layout": {
+							"paddingBottom": 2,
+							"paddingLeft": 2,
+							"paddingRight": 2,
+							"paddingTop": 2
+						},
+						"name": "Banner Content"
+					},
+					"pageElements": [
+						{
+							"definition": {
+								"gutters": true,
+								"indexed": true,
+								"modulesPerRow": 2,
+								"numberOfColumns": 2,
+								"reverseOrder": false,
+								"rowViewports": [
+									{
+										"id": "landscapeMobile",
+										"rowViewportDefinition": {
+											"modulesPerRow": 1
+										}
+									},
+									{
+										"id": "portraitMobile",
+										"rowViewportDefinition": {
+										}
+									},
+									{
+										"id": "tablet",
+										"rowViewportDefinition": {
+										}
+									}
+								],
+								"verticalAlignment": "middle"
+							},
+							"pageElements": [
+								{
+									"definition": {
+										"columnViewports": [
+											{
+												"columnViewportDefinition": {
+													"size": 12
+												},
+												"id": "landscapeMobile"
+											},
+											{
+												"columnViewportDefinition": {
+												},
+												"id": "portraitMobile"
+											},
+											{
+												"columnViewportDefinition": {
+												},
+												"id": "tablet"
+											}
+										],
+										"size": 6
+									},
+									"pageElements": [
+										{
+											"definition": {
+												"fragment": {
+													"key": "BASIC_COMPONENT-paragraph"
+												},
+												"fragmentConfig": {
+												},
+												"fragmentFields": [
+													{
+														"id": "element-text",
+														"value": {
+															"fragmentLink": {
+															},
+															"text": {
+																"value_i18n": {
+																	"en_US": "INNOVATION"
+																}
+															}
+														}
+													}
+												],
+												"fragmentStyle": {
+													"fontWeight": "fontWeightBolder",
+													"marginBottom": "3"
+												},
+												"indexed": true
+											},
+											"type": "Fragment"
+										},
+										{
+											"definition": {
+												"fragment": {
+													"key": "BASIC_COMPONENT-heading"
+												},
+												"fragmentConfig": {
+													"headingLevel": "h1"
+												},
+												"fragmentFields": [
+													{
+														"id": "element-text",
+														"value": {
+															"fragmentLink": {
+															},
+															"text": {
+																"value_i18n": {
+																	"en_US": "Innovations in EyewearTechnology: Beyond Clear Vision"
+																}
+															}
+														}
+													}
+												],
+												"fragmentStyle": {
+													"marginBottom": "3"
+												},
+												"indexed": true
+											},
+											"type": "Fragment"
+										},
+										{
+											"definition": {
+												"fragment": {
+													"key": "BASIC_COMPONENT-paragraph"
+												},
+												"fragmentConfig": {
+												},
+												"fragmentFields": [
+													{
+														"id": "element-text",
+														"value": {
+															"fragmentLink": {
+															},
+															"text": {
+																"value_i18n": {
+																	"en_US": "Take advantage of exclusive offers on the latest products to deliver exceptional value for your business and your customers."
+																}
+															}
+														}
+													}
+												],
+												"fragmentStyle": {
+													"marginBottom": "3"
+												},
+												"indexed": true
+											},
+											"type": "Fragment"
+										},
+										{
+											"definition": {
+												"fragment": {
+													"key": "BASIC_COMPONENT-button"
+												},
+												"fragmentConfig": {
+													"buttonSize": "nm",
+													"buttonType": "primary",
+													"type": "link"
+												},
+												"fragmentFields": [
+													{
+														"id": "link",
+														"value": {
+															"fragmentLink": {
+															},
+															"text": {
+																"value_i18n": {
+																	"en_US": "Read More"
+																}
+															}
+														}
+													}
+												],
+												"indexed": true
+											},
+											"type": "Fragment"
+										}
+									],
+									"type": "Column"
+								},
+								{
+									"definition": {
+										"columnViewports": [
+											{
+												"columnViewportDefinition": {
+													"size": 12
+												},
+												"id": "landscapeMobile"
+											},
+											{
+												"columnViewportDefinition": {
+												},
+												"id": "portraitMobile"
+											},
+											{
+												"columnViewportDefinition": {
+												},
+												"id": "tablet"
+											}
+										],
+										"size": 6
+									},
+									"pageElements": [
+										{
+											"definition": {
+												"fragmentStyle": {
+													"borderColor": "0px center"
+												},
+												"indexed": true,
+												"layout": {
+													"borderColor": "0px center"
+												},
+												"name": "Image Container"
+											},
+											"pageElements": [
+												{
+													"definition": {
+														"fragment": {
+															"key": "BASIC_COMPONENT-image"
+														},
+														"fragmentConfig": {
+															"imageSize": "w-100"
+														},
+														"fragmentFields": [
+															{
+																"id": "image-square",
+																"value": {
+																	"fragmentImage": {
+																		"description": {
+																			"value_i18n": {
+																				"en_US": ""
+																			}
+																		},
+																		"url": {
+																			"value_i18n": {
+																			}
+																		}
+																	},
+																	"fragmentLink": {
+																	}
+																}
+															}
+														],
+														"fragmentStyle": {
+															"borderColor": "#00000000",
+															"borderRadius": "10px",
+															"borderWidth": "1px",
+															"overflow": "hidden"
+														},
+														"indexed": true
+													},
+													"type": "Fragment"
+												}
+											],
+											"type": "Section"
+										}
+									],
+									"type": "Column"
+								}
+							],
+							"type": "Row"
+						}
+					],
+					"type": "Section"
+				}
+			],
+			"type": "Section"
+		},
+		{
+			"definition": {
+				"fragmentStyle": {
+					"paddingBottom": "5",
+					"paddingLeft": "5",
+					"paddingRight": "5",
+					"paddingTop": "5"
+				},
+				"indexed": true,
+				"layout": {
+					"paddingBottom": 4,
+					"paddingLeft": 4,
+					"paddingRight": 4,
+					"paddingTop": 4
+				},
+				"name": "Main Content"
+			},
+			"pageElements": [
+				{
+					"definition": {
+						"indexed": true,
+						"layout": {
+							"align": "Center",
+							"contentDisplay": "FlexRow",
+							"justify": "Center"
+						},
+						"name": "Search and Filter"
+					},
+					"pageElements": [
+						{
+							"definition": {
+								"fragment": {
+									"key": "com.liferay.fragment.renderer.collection.filter.internal.CollectionFilterFragmentRenderer"
+								},
+								"fragmentConfig": {
+								},
+								"fragmentFields": [
+								],
+								"fragmentStyle": {
+									"marginBottom": "4",
+									"maxWidth": "750px",
+									"minWidth": "600px"
+								},
+								"indexed": true
+							},
+							"type": "Fragment"
+						}
+					],
+					"type": "Section"
+				},
+				{
+					"definition": {
+						"indexed": true,
+						"layout": {
+						},
+						"name": "Blog Articles"
+					},
+					"pageElements": [
+						{
+							"definition": {
+								"collectionViewports": [
+									{
+										"collectionViewportDefinition": {
+											"numberOfColumns": 1
+										},
+										"id": "landscapeMobile"
+									},
+									{
+										"collectionViewportDefinition": {
+											"numberOfColumns": 1
+										},
+										"id": "portraitMobile"
+									},
+									{
+										"collectionViewportDefinition": {
+											"numberOfColumns": 1
+										},
+										"id": "tablet"
+									}
+								],
+								"displayAllItems": false,
+								"displayAllPages": true,
+								"layout": {
+									"flexWrap": "Wrap",
+									"justify": "Center"
+								},
+								"listItemStyle": "",
+								"listStyle": "",
+								"numberOfColumns": 3,
+								"numberOfItems": 5,
+								"numberOfItemsPerPage": 9,
+								"numberOfPages": 5,
+								"paginationType": "Numeric",
+								"showAllItems": false,
+								"templateKey": ""
+							},
+							"pageElements": [
+								{
+									"definition": {
+										"collectionItemConfig": {
+										}
+									},
+									"pageElements": [
+										{
+											"definition": {
+												"fragment": {
+													"key": "card",
+													"siteKey": "[$GROUP_KEY$]"
+												},
+												"fragmentConfig": {
+												},
+												"fragmentFields": [
+													{
+														"id": "card-image",
+														"value": {
+															"fragmentImage": {
+																"url": {
+																	"value_i18n": {
+																	}
+																}
+															},
+															"fragmentLink": {
+															}
+														}
+													},
+													{
+														"id": "summary",
+														"value": {
+															"fragmentLink": {
+															}
+														}
+													},
+													{
+														"id": "card-title",
+														"value": {
+															"fragmentLink": {
+															}
+														}
+													},
+													{
+														"id": "card-link",
+														"value": {
+															"fragmentLink": {
+															}
+														}
+													},
+													{
+														"id": "category",
+														"value": {
+															"fragmentLink": {
+															}
+														}
+													}
+												],
+												"indexed": true
+											},
+											"type": "Fragment"
+										}
+									],
+									"type": "CollectionItem"
+								}
+							],
+							"type": "Collection"
+						}
+					],
+					"type": "Section"
+				}
+			],
+			"type": "Section"
+		},
+		{
+			"definition": {
+				"fragmentStyle": {
+					"paddingBottom": "5",
+					"paddingLeft": "5",
+					"paddingRight": "5",
+					"paddingTop": "5"
+				},
+				"indexed": true,
+				"layout": {
+					"paddingBottom": 4,
+					"paddingLeft": 4,
+					"paddingRight": 4,
+					"paddingTop": 4
+				},
+				"name": "Subscribe"
+			},
+			"pageElements": [
+				{
+					"definition": {
+						"fragmentStyle": {
+							"backgroundColor": "#1D8C8C",
+							"borderRadius": "1.5rem",
+							"paddingBottom": "3",
+							"paddingTop": "3"
+						},
+						"indexed": true,
+						"layout": {
+							"paddingBottom": 1,
+							"paddingTop": 1
+						},
+						"name": "Subscribe Content"
+					},
+					"pageElements": [
+						{
+							"definition": {
+								"gutters": true,
+								"indexed": true,
+								"modulesPerRow": 2,
+								"numberOfColumns": 2,
+								"reverseOrder": false,
+								"rowViewports": [
+									{
+										"id": "landscapeMobile",
+										"rowViewportDefinition": {
+											"modulesPerRow": 1
+										}
+									},
+									{
+										"id": "portraitMobile",
+										"rowViewportDefinition": {
+										}
+									},
+									{
+										"id": "tablet",
+										"rowViewportDefinition": {
+										}
+									}
+								],
+								"verticalAlignment": "middle"
+							},
+							"pageElements": [
+								{
+									"definition": {
+										"columnViewports": [
+											{
+												"columnViewportDefinition": {
+													"size": 12
+												},
+												"id": "landscapeMobile"
+											},
+											{
+												"columnViewportDefinition": {
+												},
+												"id": "portraitMobile"
+											},
+											{
+												"columnViewportDefinition": {
+												},
+												"id": "tablet"
+											}
+										],
+										"size": 10
+									},
+									"pageElements": [
+										{
+											"definition": {
+												"fragment": {
+													"key": "BASIC_COMPONENT-paragraph"
+												},
+												"fragmentConfig": {
+												},
+												"fragmentFields": [
+													{
+														"id": "element-text",
+														"value": {
+															"fragmentLink": {
+															},
+															"text": {
+																"value_i18n": {
+																	"en_US": "Eyewear Enthusiast? Subscribe for the Latest Trends &amp; More!"
+																}
+															}
+														}
+													}
+												],
+												"fragmentStyle": {
+													"fontSize": "1.125rem",
+													"fontWeight": "fontWeightBold",
+													"paddingBottom": "4",
+													"paddingLeft": "6",
+													"paddingRight": "4",
+													"paddingTop": "4",
+													"textColor": "customControlBackgroundColor"
+												},
+												"indexed": true
+											},
+											"type": "Fragment"
+										}
+									],
+									"type": "Column"
+								},
+								{
+									"definition": {
+										"columnViewports": [
+											{
+												"columnViewportDefinition": {
+													"size": 12
+												},
+												"id": "landscapeMobile"
+											},
+											{
+												"columnViewportDefinition": {
+												},
+												"id": "portraitMobile"
+											},
+											{
+												"columnViewportDefinition": {
+												},
+												"id": "tablet"
+											}
+										],
+										"size": 2
+									},
+									"pageElements": [
+										{
+											"definition": {
+												"fragment": {
+													"key": "dialect-dialect-button",
+													"siteKey": "[$GROUP_KEY$]"
+												},
+												"fragmentConfig": {
+													"buttonSize": "",
+													"iconName": "share",
+													"inverted": true,
+													"style": "primary",
+													"type": "solid",
+													"uppercase": false
+												},
+												"fragmentFields": [
+													{
+														"id": "link",
+														"value": {
+															"fragmentLink": {
+															},
+															"text": {
+																"value_i18n": {
+																	"en_US": "Subscribe"
+																}
+															}
+														}
+													}
+												],
+												"indexed": true
+											},
+											"type": "Fragment"
+										}
+									],
+									"type": "Column"
+								}
+							],
+							"type": "Row"
+						}
+					],
+					"type": "Section"
+				}
+			],
+			"type": "Section"
+		}
+	],
+	"type": "Section"
+}

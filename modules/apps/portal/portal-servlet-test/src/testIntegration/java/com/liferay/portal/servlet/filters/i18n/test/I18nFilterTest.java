@@ -6,6 +6,7 @@
 package com.liferay.portal.servlet.filters.i18n.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutSet;
@@ -15,10 +16,13 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.PrefsPropsTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TreeMapBuilder;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -138,6 +142,44 @@ public class I18nFilterTest {
 			LocaleUtil.toLanguageId(LocaleUtil.SPAIN),
 			_getPrependI18nLanguageId(
 				3, LocaleUtil.US, LocaleUtil.SPAIN, null, null, null));
+	}
+
+	@Test
+	public void testGetRedirectWithoutVirtualHost() throws Exception {
+		_testGetRedirect(0, "localhost", null, null);
+		_testGetRedirect(1, "localhost", null, null);
+		_testGetRedirect(
+			2, "localhost",
+			"/" + _portal.getI18nPathLanguageId(LocaleUtil.US, null), null);
+		_testGetRedirect(3, "localhost", null, null);
+	}
+
+	@Test
+	public void testGetRedirectWithVirtualHost() throws Exception {
+		String layoutHostname =
+			RandomTestUtil.randomString(6) + "." +
+				RandomTestUtil.randomString(3);
+
+		LayoutSet layoutSet = _group.getPublicLayoutSet();
+
+		_virtualHostLocalService.updateVirtualHosts(
+			_group.getCompanyId(), layoutSet.getLayoutSetId(),
+			TreeMapBuilder.put(
+				StringUtil.toLowerCase(layoutHostname),
+				LocaleUtil.toLanguageId(LocaleUtil.SPAIN)
+			).build());
+
+		_testGetRedirect(
+			0, layoutHostname, null, LocaleUtil.toLanguageId(LocaleUtil.SPAIN));
+		_testGetRedirect(
+			1, layoutHostname,
+			"/" + _portal.getI18nPathLanguageId(LocaleUtil.SPAIN, null), null);
+		_testGetRedirect(
+			2, layoutHostname,
+			"/" + _portal.getI18nPathLanguageId(LocaleUtil.SPAIN, null), null);
+		_testGetRedirect(
+			3, layoutHostname,
+			"/" + _portal.getI18nPathLanguageId(LocaleUtil.SPAIN, null), null);
 	}
 
 	@Test
@@ -341,6 +383,37 @@ public class I18nFilterTest {
 		}
 	}
 
+	private void _testGetRedirect(
+			int localePrependFriendlyURLStyle, String hostName, String redirect,
+			String i18nLanguageId)
+		throws Exception {
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.addHeader("Host", hostName);
+		mockHttpServletRequest.setServerName(hostName);
+
+		long companyId = PortalInstances.getCompanyId(mockHttpServletRequest);
+
+		try (SafeCloseable safeCloseable =
+				PrefsPropsTestUtil.swapWithSafeCloseable(
+					companyId, PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE,
+					localePrependFriendlyURLStyle)) {
+
+			Assert.assertEquals(
+				redirect,
+				ReflectionTestUtil.invoke(
+					_i18nFilter, "getRedirect",
+					new Class<?>[] {HttpServletRequest.class},
+					mockHttpServletRequest));
+		}
+
+		Assert.assertEquals(
+			i18nLanguageId,
+			mockHttpServletRequest.getAttribute(WebKeys.I18N_LANGUAGE_ID));
+	}
+
 	@DeleteAfterTestRun
 	private Group _group;
 
@@ -349,6 +422,9 @@ public class I18nFilterTest {
 
 	@Inject
 	private Language _language;
+
+	@Inject
+	private Portal _portal;
 
 	@DeleteAfterTestRun
 	private User _user;

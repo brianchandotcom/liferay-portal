@@ -9,13 +9,7 @@ type Args = {
 	inputName: string;
 	localizationInputsContainer: HTMLElement;
 	namespace: string;
-	onFileChange?: ({
-		files,
-		languageId,
-	}: {
-		files: FileList | null;
-		languageId: string;
-	}) => void;
+	onLocaleChange: (input: HTMLInputElement, languageId: string) => void;
 	removeButton: HTMLButtonElement;
 };
 
@@ -25,12 +19,12 @@ export function registerLocalizedFileInput({
 	inputName,
 	localizationInputsContainer,
 	namespace,
-	onFileChange,
+	onLocaleChange,
 	removeButton,
 }: Args) {
 	let currentLanguageId = defaultLanguageId;
 
-	const setDefaultValue = (languageId: string) => {
+	const setDefaultValue = () => {
 		const defaultLanguageInput = getOrCreateTranslationInput(
 			inputName,
 			defaultLanguageId,
@@ -40,11 +34,6 @@ export function registerLocalizedFileInput({
 
 		if (defaultLanguageInput.files) {
 			transferFilesToInput(defaultLanguageInput.files, inputElement);
-
-			onFileChange?.({
-				files: defaultLanguageInput.files,
-				languageId,
-			});
 		}
 	};
 
@@ -60,7 +49,7 @@ export function registerLocalizedFileInput({
 
 		translationInput.files = dataTransfer.files;
 
-		setDefaultValue(currentLanguageId);
+		setDefaultValue();
 	};
 
 	removeButton.addEventListener('click', onRemoveFile);
@@ -73,13 +62,16 @@ export function registerLocalizedFileInput({
 			languageId
 		);
 
-		if (inputElement && translationInput?.files?.length) {
-			transferFilesToInput(translationInput.files, inputElement);
-
-			onFileChange?.({files: translationInput.files, languageId});
+		if (translationInput) {
+			onLocaleChange(translationInput, languageId);
 		}
 		else {
-			setDefaultValue(languageId);
+			const {input: defaultTranslationInput} = getTranslationInput(
+				namespace,
+				defaultLanguageId
+			);
+
+			onLocaleChange(defaultTranslationInput, defaultLanguageId);
 		}
 	});
 

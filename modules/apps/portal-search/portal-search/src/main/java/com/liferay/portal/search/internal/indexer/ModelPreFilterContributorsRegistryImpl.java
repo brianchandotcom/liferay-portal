@@ -7,12 +7,12 @@ package com.liferay.portal.search.internal.indexer;
 
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.search.spi.model.query.contributor.ModelPreFilterContributor;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import org.osgi.framework.BundleContext;
@@ -132,20 +132,10 @@ public class ModelPreFilterContributorsRegistryImpl
 	private List<String> _getMandatoryContributorNames(
 		List<ModelPreFilterContributor> mandatoryContributors) {
 
-		if (mandatoryContributors == null) {
-			return Collections.emptyList();
-		}
-
-		List<String> mandatoryContributorNames = new ArrayList<>();
-
-		for (ModelPreFilterContributor modelPreFilterContributor :
-				mandatoryContributors) {
-
-			mandatoryContributorNames.add(
-				_getClassName(modelPreFilterContributor));
-		}
-
-		return mandatoryContributorNames;
+		return TransformUtil.transform(
+			mandatoryContributors,
+			modelPreFilterContributor -> _getClassName(
+				modelPreFilterContributor));
 	}
 
 	private List<ModelPreFilterContributor> _getMandatoryContributors() {

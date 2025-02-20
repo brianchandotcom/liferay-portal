@@ -1,132 +1,58 @@
 [
 	{
-		"actions": [
-		],
-		"description": "",
 		"name": "Critical Incident Contact",
-		"subtype": "",
 		"type": 6
 	},
 	{
-		"actions": [
-		],
-		"description": "",
 		"name": "Customer",
-		"subtype": "",
 		"type": 1
 	},
 	{
-		"actions": [
-		],
-		"description": "",
 		"name": "Data Breach Contact",
-		"subtype": "",
 		"type": 6
 	},
 	{
-		"actions": [
-		],
-		"description": "",
 		"name": "Liferay Staff",
-		"subtype": "",
 		"type": 1
 	},
 	{
-		"actions": [
-		],
-		"description": "",
 		"name": "Partner",
-		"subtype": "",
 		"type": 1
 	},
 	{
-		"actions": [
-		],
-		"description": "",
 		"name": "Partner Manager",
-		"subtype": "",
 		"type": 6
 	},
 	{
-		"actions": [
-		],
-		"description": "",
 		"name": "Partner Marketing User",
-		"subtype": "",
 		"type": 6
 	},
 	{
-		"actions": [
-		],
-		"description": "",
 		"name": "Partner Member",
-		"subtype": "",
 		"type": 6
 	},
 	{
-		"actions": [
-		],
-		"description": "",
 		"name": "Partner Sales User",
-		"subtype": "",
 		"type": 6
 	},
 	{
-		"actions": [
-		],
-		"description": "",
 		"name": "Partner Technical User",
-		"subtype": "",
 		"type": 6
 	},
 	{
-		"actions": [
-		],
-		"description": "",
 		"name": "Provisioning",
-		"subtype": "",
 		"type": 6
 	},
 	{
-		"actions": [
-		],
-		"description": "",
 		"name": "Provisioning Admin",
-		"subtype": "",
 		"type": 1
 	},
 	{
-		"actions": [
-		],
-		"description": "",
 		"name": "Requester",
-		"subtype": "",
 		"type": 6
 	},
 	{
-		"actions": [
-		],
-		"description": "",
 		"name": "Security Incident Contact",
-		"subtype": "",
 		"type": 6
-	},
-	{
-		"actions": [
-			{
-				"actionId": "VIEW",
-				"resource": "com.liferay.notification.model.NotificationTemplate",
-				"scope": 1
-			},
-			{
-				"actionId": "ADD_NOTIFICATION_QUEUE_ENTRY",
-				"resource": "com.liferay.notification.queue",
-				"scope": 1
-			}
-		],
-		"description": "",
-		"name": "User",
-		"subtype": "",
-		"type": 1
 	}
 ]

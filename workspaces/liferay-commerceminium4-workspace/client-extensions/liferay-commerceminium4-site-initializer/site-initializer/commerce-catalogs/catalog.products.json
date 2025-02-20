@@ -8,7 +8,7 @@
 		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
 		"displayAvailability": true,
 		"displayStockQuantity": true,
-		"externalReferenceCode": "MIN93015",
+		"externalReferenceCode": "MINX93015",
 		"height": 2,
 		"images": [
 			"product_image_24.png"
@@ -19,7 +19,7 @@
 		"name": "ABS Sensor",
 		"price": 50,
 		"promoPrice": 0,
-		"sku": "MIN93015",
+		"sku": "MINX93015",
 		"specificationOptions": [
 			{
 				"key": "quantity",
@@ -58,7 +58,7 @@
 		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
 		"displayAvailability": true,
 		"displayStockQuantity": true,
-		"externalReferenceCode": "MIN93016",
+		"externalReferenceCode": "MINX93016",
 		"height": 2.5,
 		"images": [
 			"product_image_103.png"
@@ -84,11 +84,11 @@
 						"value": "12"
 					}
 				],
-				"externalReferenceCode": "MIN93016A",
+				"externalReferenceCode": "MINX93016A",
 				"manufacturerPartNumber": "BB98319",
 				"price": 80,
 				"promoPrice": 72,
-				"sku": "MIN93016A",
+				"sku": "MINX93016A",
 				"warehouse1": 100,
 				"warehouse2": 40,
 				"warehouse3": 100
@@ -100,11 +100,11 @@
 						"value": "48"
 					}
 				],
-				"externalReferenceCode": "MIN93016B",
+				"externalReferenceCode": "MINX93016B",
 				"manufacturerPartNumber": "BB98320",
 				"price": 80,
 				"promoPrice": 72,
-				"sku": "MIN93016B",
+				"sku": "MINX93016B",
 				"warehouse1": 100,
 				"warehouse2": 20,
 				"warehouse3": 60
@@ -116,11 +116,11 @@
 						"value": "112"
 					}
 				],
-				"externalReferenceCode": "MIN93016C",
+				"externalReferenceCode": "MINX93016C",
 				"manufacturerPartNumber": "BB98321",
 				"price": 80,
 				"promoPrice": 72,
-				"sku": "MIN93016C",
+				"sku": "MINX93016C",
 				"warehouse1": 100,
 				"warehouse2": 100,
 				"warehouse3": 40
@@ -160,7 +160,7 @@
 		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
 		"displayAvailability": true,
 		"displayStockQuantity": true,
-		"externalReferenceCode": "MIN93017",
+		"externalReferenceCode": "MINX93017",
 		"height": 2.5,
 		"images": [
 			"product_image_103.png"
@@ -171,7 +171,7 @@
 		"name": "Premium Brake Fluid",
 		"price": 100,
 		"promoPrice": 90,
-		"sku": "MIN93017",
+		"sku": "MINX93017",
 		"specificationOptions": [
 			{
 				"key": "quantity",
@@ -209,7 +209,7 @@
 		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
 		"displayAvailability": true,
 		"displayStockQuantity": true,
-		"externalReferenceCode": "MIN93027",
+		"externalReferenceCode": "MINX93027",
 		"height": 8.7,
 		"images": [
 			"default_product_image.png"
@@ -220,7 +220,7 @@
 		"name": "Wear Sensors",
 		"price": 60,
 		"promoPrice": 0,
-		"sku": "MIN93027",
+		"sku": "MINX93027",
 		"specificationOptions": [
 			{
 				"key": "quantity",
@@ -255,7 +255,7 @@
 		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
 		"displayAvailability": true,
 		"displayStockQuantity": true,
-		"externalReferenceCode": "MIN93018",
+		"externalReferenceCode": "MINX93018",
 		"height": 8.7,
 		"images": [
 			"product_image_83.png"
@@ -269,7 +269,7 @@
 		"relatedProducts": [
 			"Wear Sensors"
 		],
-		"sku": "MIN93018",
+		"sku": "MINX93018",
 		"specificationOptions": [
 			{
 				"key": "quantity",
@@ -311,7 +311,7 @@
 		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
 		"displayAvailability": true,
 		"displayStockQuantity": true,
-		"externalReferenceCode": "MIN93019",
+		"externalReferenceCode": "MINX93019",
 		"height": 8.7,
 		"images": [
 			"product_image_83.png"
@@ -325,7 +325,7 @@
 		"relatedProducts": [
 			"Wear Sensors"
 		],
-		"sku": "MIN93019",
+		"sku": "MINX93019",
 		"specificationOptions": [
 			{
 				"key": "quantity",
@@ -367,7 +367,7 @@
 		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
 		"displayAvailability": true,
 		"displayStockQuantity": true,
-		"externalReferenceCode": "MIN93020",
+		"externalReferenceCode": "MINX93020",
 		"height": 1.7,
 		"images": [
 			"product_image_30.png"
@@ -378,7 +378,7 @@
 		"name": "Brake Rotors",
 		"price": 40,
 		"promoPrice": 0,
-		"sku": "MIN93020",
+		"sku": "MINX93020",
 		"specificationOptions": [
 			{
 				"key": "quantity",
@@ -420,7 +420,7 @@
 		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
 		"displayAvailability": true,
 		"displayStockQuantity": true,
-		"externalReferenceCode": "MIN93021",
+		"externalReferenceCode": "MINX93021",
 		"height": 5.3,
 		"images": [
 			"default_product_image.png"
@@ -431,7 +431,7 @@
 		"name": "Calipers",
 		"price": 90,
 		"promoPrice": 0,
-		"sku": "MIN93021",
+		"sku": "MINX93021",
 		"specificationOptions": [
 			{
 				"key": "quantity",
@@ -470,7 +470,7 @@
 		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
 		"displayAvailability": true,
 		"displayStockQuantity": true,
-		"externalReferenceCode": "MIN93022",
+		"externalReferenceCode": "MINX93022",
 		"height": 18,
 		"images": [
 			"default_product_image.png"
@@ -496,11 +496,11 @@
 						"value": "6"
 					}
 				],
-				"externalReferenceCode": "MIN93022A",
+				"externalReferenceCode": "MINX93022A",
 				"manufacturerPartNumber": "BB98327",
 				"price": 120,
 				"promoPrice": 0,
-				"sku": "MIN93022A",
+				"sku": "MINX93022A",
 				"warehouse1": 40,
 				"warehouse2": 40,
 				"warehouse3": 40
@@ -512,11 +512,11 @@
 						"value": "24"
 					}
 				],
-				"externalReferenceCode": "MIN93022B",
+				"externalReferenceCode": "MINX93022B",
 				"manufacturerPartNumber": "BB98328",
 				"price": 120,
 				"promoPrice": 0,
-				"sku": "MIN93022B",
+				"sku": "MINX93022B",
 				"warehouse1": 40,
 				"warehouse2": 20,
 				"warehouse3": 20
@@ -528,11 +528,11 @@
 						"value": "48"
 					}
 				],
-				"externalReferenceCode": "MIN93022C",
+				"externalReferenceCode": "MINX93022C",
 				"manufacturerPartNumber": "BB98329",
 				"price": 120,
 				"promoPrice": 0,
-				"sku": "MIN93022C",
+				"sku": "MINX93022C",
 				"warehouse1": 40,
 				"warehouse2": 100,
 				"warehouse3": 100
@@ -573,7 +573,7 @@
 		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
 		"displayAvailability": true,
 		"displayStockQuantity": true,
-		"externalReferenceCode": "MIN93023",
+		"externalReferenceCode": "MINX93023",
 		"height": 18,
 		"images": [
 			"product_image_42.png"
@@ -584,7 +584,7 @@
 		"name": "Timing Belt",
 		"price": 600,
 		"promoPrice": 0,
-		"sku": "MIN93023",
+		"sku": "MINX93023",
 		"specificationOptions": [
 			{
 				"key": "quantity",
@@ -623,7 +623,7 @@
 		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
 		"displayAvailability": true,
 		"displayStockQuantity": true,
-		"externalReferenceCode": "MIN93024",
+		"externalReferenceCode": "MINX93024",
 		"height": 3.8,
 		"images": [
 			"product_image_77.png",
@@ -638,7 +638,7 @@
 		"relatedProducts": [
 			"Wear Sensors"
 		],
-		"sku": "MIN93024",
+		"sku": "MINX93024",
 		"specificationOptions": [
 			{
 				"key": "quantity",
@@ -677,7 +677,7 @@
 		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
 		"displayAvailability": true,
 		"displayStockQuantity": true,
-		"externalReferenceCode": "MIN93025",
+		"externalReferenceCode": "MINX93025",
 		"height": 3.8,
 		"images": [
 			"product_image_77.png",
@@ -692,7 +692,7 @@
 		"relatedProducts": [
 			"Wear Sensors"
 		],
-		"sku": "MIN93025",
+		"sku": "MINX93025",
 		"specificationOptions": [
 			{
 				"key": "quantity",
@@ -731,7 +731,7 @@
 		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
 		"displayAvailability": true,
 		"displayStockQuantity": true,
-		"externalReferenceCode": "MIN93026",
+		"externalReferenceCode": "MINX93026",
 		"height": 3.8,
 		"images": [
 			"product_image_77.png",
@@ -746,7 +746,7 @@
 		"relatedProducts": [
 			"Wear Sensors"
 		],
-		"sku": "MIN93026",
+		"sku": "MINX93026",
 		"specificationOptions": [
 			{
 				"key": "quantity",
@@ -785,7 +785,7 @@
 		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
 		"displayAvailability": true,
 		"displayStockQuantity": true,
-		"externalReferenceCode": "MIN00673",
+		"externalReferenceCode": "MINX00673",
 		"height": 1.7,
 		"images": [
 			"default_product_image.png"
@@ -796,7 +796,7 @@
 		"name": "Bearings",
 		"price": 70,
 		"promoPrice": 0,
-		"sku": "MIN00673",
+		"sku": "MINX00673",
 		"specificationOptions": [
 			{
 				"key": "quantity",
@@ -835,7 +835,7 @@
 		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
 		"displayAvailability": true,
 		"displayStockQuantity": true,
-		"externalReferenceCode": "MIN00674",
+		"externalReferenceCode": "MINX00674",
 		"height": 5.3,
 		"images": [
 			"default_product_image.png"
@@ -846,7 +846,7 @@
 		"name": "Cams",
 		"price": 695,
 		"promoPrice": 0,
-		"sku": "MIN00674",
+		"sku": "MINX00674",
 		"specificationOptions": [
 			{
 				"key": "quantity",
@@ -885,7 +885,7 @@
 		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
 		"displayAvailability": true,
 		"displayStockQuantity": true,
-		"externalReferenceCode": "MIN00675",
+		"externalReferenceCode": "MINX00675",
 		"height": 18,
 		"images": [
 			"default_product_image.png"
@@ -896,7 +896,7 @@
 		"name": "Engine Mount",
 		"price": 120,
 		"promoPrice": 0,
-		"sku": "MIN00675",
+		"sku": "MINX00675",
 		"specificationOptions": [
 			{
 				"key": "quantity",
@@ -935,7 +935,7 @@
 		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
 		"displayAvailability": true,
 		"displayStockQuantity": true,
-		"externalReferenceCode": "MIN00676",
+		"externalReferenceCode": "MINX00676",
 		"height": 2.5,
 		"images": [
 			"product_image_46.png"
@@ -946,7 +946,7 @@
 		"name": "Oil Filter",
 		"price": 450,
 		"promoPrice": 0,
-		"sku": "MIN00676",
+		"sku": "MINX00676",
 		"specificationOptions": [
 			{
 				"key": "quantity",
@@ -981,7 +981,7 @@
 		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
 		"displayAvailability": true,
 		"displayStockQuantity": true,
-		"externalReferenceCode": "MIN00677",
+		"externalReferenceCode": "MINX00677",
 		"height": 2,
 		"images": [
 			"product_image_33.png"
@@ -992,7 +992,7 @@
 		"name": "Oil Pump",
 		"price": 79,
 		"promoPrice": 0,
-		"sku": "MIN00677",
+		"sku": "MINX00677",
 		"specificationOptions": [
 			{
 				"key": "quantity",
@@ -1031,7 +1031,7 @@
 		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
 		"displayAvailability": true,
 		"displayStockQuantity": true,
-		"externalReferenceCode": "MIN00678",
+		"externalReferenceCode": "MINX00678",
 		"height": 2.5,
 		"images": [
 			"default_product_image.png"
@@ -1042,7 +1042,7 @@
 		"name": "Piston",
 		"price": 14,
 		"promoPrice": 0,
-		"sku": "MIN00678",
+		"sku": "MINX00678",
 		"specificationOptions": [
 			{
 				"key": "quantity",
@@ -1081,7 +1081,7 @@
 		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
 		"displayAvailability": true,
 		"displayStockQuantity": true,
-		"externalReferenceCode": "MIN00679",
+		"externalReferenceCode": "MINX00679",
 		"height": 8.7,
 		"images": [
 			"default_product_image.png"
@@ -1092,7 +1092,7 @@
 		"name": "Pulley Kit",
 		"price": 201,
 		"promoPrice": 0,
-		"sku": "MIN00679",
+		"sku": "MINX00679",
 		"specificationOptions": [
 			{
 				"key": "quantity",
@@ -1131,7 +1131,7 @@
 		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
 		"displayAvailability": true,
 		"displayStockQuantity": true,
-		"externalReferenceCode": "MIN00680",
+		"externalReferenceCode": "MINX00680",
 		"height": 1.7,
 		"images": [
 			"default_product_image.png"
@@ -1142,7 +1142,7 @@
 		"name": "Seal",
 		"price": 30,
 		"promoPrice": 0,
-		"sku": "MIN00680",
+		"sku": "MINX00680",
 		"specificationOptions": [
 			{
 				"key": "quantity",
@@ -1181,7 +1181,7 @@
 		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
 		"displayAvailability": true,
 		"displayStockQuantity": true,
-		"externalReferenceCode": "MIN00681",
+		"externalReferenceCode": "MINX00681",
 		"height": 5.3,
 		"images": [
 			"product_image_94.png"
@@ -1192,7 +1192,7 @@
 		"name": "Timing Chain Tensioner",
 		"price": 30,
 		"promoPrice": 0,
-		"sku": "MIN00681",
+		"sku": "MINX00681",
 		"specificationOptions": [
 			{
 				"key": "quantity",
@@ -1231,7 +1231,7 @@
 		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
 		"displayAvailability": true,
 		"displayStockQuantity": true,
-		"externalReferenceCode": "MIN00682",
+		"externalReferenceCode": "MINX00682",
 		"height": 18,
 		"images": [
 			"default_product_image.png"
@@ -1242,7 +1242,7 @@
 		"name": "Timing Chain",
 		"price": 23,
 		"promoPrice": 0,
-		"sku": "MIN00682",
+		"sku": "MINX00682",
 		"specificationOptions": [
 			{
 				"key": "quantity",
@@ -1281,7 +1281,7 @@
 		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
 		"displayAvailability": true,
 		"displayStockQuantity": true,
-		"externalReferenceCode": "MIN00683",
+		"externalReferenceCode": "MINX00683",
 		"height": 1.7,
 		"images": [
 			"default_product_image.png"
@@ -1292,7 +1292,7 @@
 		"name": "Valve Cover Grommets",
 		"price": 6,
 		"promoPrice": 0,
-		"sku": "MIN00683",
+		"sku": "MINX00683",
 		"specificationOptions": [
 			{
 				"key": "quantity",
@@ -1331,7 +1331,7 @@
 		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
 		"displayAvailability": true,
 		"displayStockQuantity": true,
-		"externalReferenceCode": "MIN77822",
+		"externalReferenceCode": "MINX77822",
 		"height": 5.3,
 		"images": [
 			"default_product_image.png"
@@ -1342,7 +1342,7 @@
 		"name": "Catalytic Converters",
 		"price": 106,
 		"promoPrice": 0,
-		"sku": "MIN77822",
+		"sku": "MINX77822",
 		"specificationOptions": [
 			{
 				"key": "quantity",
@@ -1381,7 +1381,7 @@
 		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
 		"displayAvailability": true,
 		"displayStockQuantity": true,
-		"externalReferenceCode": "MIN77823",
+		"externalReferenceCode": "MINX77823",
 		"height": 18,
 		"images": [
 			"default_product_image.png"
@@ -1392,7 +1392,7 @@
 		"name": "Exhaust Clamps",
 		"price": 9,
 		"promoPrice": 0,
-		"sku": "MIN77823",
+		"sku": "MINX77823",
 		"specificationOptions": [
 			{
 				"key": "quantity",
@@ -1431,7 +1431,7 @@
 		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
 		"displayAvailability": true,
 		"displayStockQuantity": true,
-		"externalReferenceCode": "MIN77824",
+		"externalReferenceCode": "MINX77824",
 		"height": 2.5,
 		"images": [
 			"default_product_image.png"
@@ -1442,7 +1442,7 @@
 		"name": "Muffler/Resonators",
 		"price": 32,
 		"promoPrice": 0,
-		"sku": "MIN77824",
+		"sku": "MINX77824",
 		"specificationOptions": [
 			{
 				"key": "quantity",
@@ -1481,7 +1481,7 @@
 		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
 		"displayAvailability": true,
 		"displayStockQuantity": true,
-		"externalReferenceCode": "MIN77825",
+		"externalReferenceCode": "MINX77825",
 		"height": 2,
 		"images": [
 			"default_product_image.png"
@@ -1492,7 +1492,7 @@
 		"name": "Lift Support",
 		"price": 20,
 		"promoPrice": 0,
-		"sku": "MIN77825",
+		"sku": "MINX77825",
 		"specificationOptions": [
 			{
 				"key": "quantity",
@@ -1531,7 +1531,7 @@
 		"description": "Includes wastegate actuator. Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment.",
 		"displayAvailability": true,
 		"displayStockQuantity": true,
-		"externalReferenceCode": "MIN19999",
+		"externalReferenceCode": "MINX19999",
 		"filterAccountGroups": [
 			"North American Accounts"
 		],
@@ -1547,7 +1547,7 @@
 		"name": "Turbocharger",
 		"price": 665,
 		"promoPrice": 0,
-		"sku": "MIN19999",
+		"sku": "MINX19999",
 		"specificationOptions": [
 			{
 				"key": "quantity",
@@ -1586,7 +1586,7 @@
 		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
 		"displayAvailability": true,
 		"displayStockQuantity": true,
-		"externalReferenceCode": "MIN38794",
+		"externalReferenceCode": "MINX38794",
 		"height": 1.7,
 		"images": [
 			"default_product_image.png"
@@ -1597,7 +1597,7 @@
 		"name": "Ball Joints",
 		"price": 152,
 		"promoPrice": 0,
-		"sku": "MIN38794",
+		"sku": "MINX38794",
 		"specificationOptions": [
 			{
 				"key": "quantity",
@@ -1636,7 +1636,7 @@
 		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
 		"displayAvailability": true,
 		"displayStockQuantity": true,
-		"externalReferenceCode": "MIN38795",
+		"externalReferenceCode": "MINX38795",
 		"height": 5.3,
 		"images": [
 			"default_product_image.png"
@@ -1647,7 +1647,7 @@
 		"name": "Bushings",
 		"price": 18,
 		"promoPrice": 0,
-		"sku": "MIN38795",
+		"sku": "MINX38795",
 		"specificationOptions": [
 			{
 				"key": "quantity",
@@ -1686,7 +1686,7 @@
 		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
 		"displayAvailability": true,
 		"displayStockQuantity": true,
-		"externalReferenceCode": "MIN38796",
+		"externalReferenceCode": "MINX38796",
 		"height": 18,
 		"images": [
 			"default_product_image.png"
@@ -1697,7 +1697,7 @@
 		"name": "CV Axles",
 		"price": 89,
 		"promoPrice": 0,
-		"sku": "MIN38796",
+		"sku": "MINX38796",
 		"specificationOptions": [
 			{
 				"key": "quantity",
@@ -1732,7 +1732,7 @@
 		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
 		"displayAvailability": true,
 		"displayStockQuantity": true,
-		"externalReferenceCode": "MIN38797",
+		"externalReferenceCode": "MINX38797",
 		"height": 2.5,
 		"images": [
 			"product_image_20.png"
@@ -1743,7 +1743,7 @@
 		"name": "Universal CV Boot",
 		"price": 185,
 		"promoPrice": 0,
-		"sku": "MIN38797",
+		"sku": "MINX38797",
 		"specificationOptions": [
 			{
 				"key": "quantity",
@@ -1778,7 +1778,7 @@
 		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
 		"displayAvailability": true,
 		"displayStockQuantity": true,
-		"externalReferenceCode": "MIN38798",
+		"externalReferenceCode": "MINX38798",
 		"height": 2,
 		"images": [
 			"default_product_image.png"
@@ -1789,7 +1789,7 @@
 		"name": "Hub Bearing Assembly - Rear",
 		"price": 175,
 		"promoPrice": 0,
-		"sku": "MIN38798",
+		"sku": "MINX38798",
 		"specificationOptions": [
 			{
 				"key": "quantity",
@@ -1824,7 +1824,7 @@
 		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
 		"displayAvailability": true,
 		"displayStockQuantity": true,
-		"externalReferenceCode": "MIN38799",
+		"externalReferenceCode": "MINX38799",
 		"height": 2.5,
 		"images": [
 			"product_image_13.png",
@@ -1836,7 +1836,7 @@
 		"name": "Coil Spring - Rear",
 		"price": 104,
 		"promoPrice": 0,
-		"sku": "MIN38799",
+		"sku": "MINX38799",
 		"specificationOptions": [
 			{
 				"key": "quantity",
@@ -1871,7 +1871,7 @@
 		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
 		"displayAvailability": true,
 		"displayStockQuantity": true,
-		"externalReferenceCode": "MIN38800",
+		"externalReferenceCode": "MINX38800",
 		"height": 8.7,
 		"images": [
 			"default_product_image.png"
@@ -1882,7 +1882,7 @@
 		"name": "Power Steering Pump",
 		"price": 160,
 		"promoPrice": 0,
-		"sku": "MIN38800",
+		"sku": "MINX38800",
 		"specificationOptions": [
 			{
 				"key": "quantity",
@@ -1921,7 +1921,7 @@
 		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
 		"displayAvailability": true,
 		"displayStockQuantity": true,
-		"externalReferenceCode": "MIN38801",
+		"externalReferenceCode": "MINX38801",
 		"height": 1.7,
 		"images": [
 			"default_product_image.png"
@@ -1932,7 +1932,7 @@
 		"name": "Differential Ring and Pinion - Universal",
 		"price": 211,
 		"promoPrice": 0,
-		"sku": "MIN38801",
+		"sku": "MINX38801",
 		"specificationOptions": [
 			{
 				"key": "quantity",
@@ -1967,7 +1967,7 @@
 		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
 		"displayAvailability": true,
 		"displayStockQuantity": true,
-		"externalReferenceCode": "MIN38802",
+		"externalReferenceCode": "MINX38802",
 		"height": 5.3,
 		"images": [
 			"default_product_image.png"
@@ -1978,7 +1978,7 @@
 		"name": "Shock Absorber",
 		"price": 75,
 		"promoPrice": 0,
-		"sku": "MIN38802",
+		"sku": "MINX38802",
 		"specificationOptions": [
 			{
 				"key": "quantity",
@@ -2013,7 +2013,7 @@
 		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
 		"displayAvailability": true,
 		"displayStockQuantity": true,
-		"externalReferenceCode": "MIN38803",
+		"externalReferenceCode": "MINX38803",
 		"height": 18,
 		"images": [
 			"default_product_image.png"
@@ -2024,7 +2024,7 @@
 		"name": "Shock Strut - Front",
 		"price": 129,
 		"promoPrice": 0,
-		"sku": "MIN38803",
+		"sku": "MINX38803",
 		"specificationOptions": [
 			{
 				"key": "quantity",
@@ -2063,7 +2063,7 @@
 		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
 		"displayAvailability": true,
 		"displayStockQuantity": true,
-		"externalReferenceCode": "MIN38804",
+		"externalReferenceCode": "MINX38804",
 		"height": 1.7,
 		"images": [
 			"default_product_image.png"
@@ -2074,7 +2074,7 @@
 		"name": "Tie Rod End Tool",
 		"price": 35,
 		"promoPrice": 0,
-		"sku": "MIN38804",
+		"sku": "MINX38804",
 		"specificationOptions": [
 			{
 				"key": "quantity",
@@ -2113,7 +2113,7 @@
 		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
 		"displayAvailability": true,
 		"displayStockQuantity": true,
-		"externalReferenceCode": "MIN38805",
+		"externalReferenceCode": "MINX38805",
 		"height": 5.3,
 		"images": [
 			"product_image_103.png"
@@ -2124,7 +2124,7 @@
 		"name": "Wheel Bearing Grease",
 		"price": 54,
 		"promoPrice": 0,
-		"sku": "MIN38805",
+		"sku": "MINX38805",
 		"specificationOptions": [
 			{
 				"key": "quantity",
@@ -2155,7 +2155,7 @@
 		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
 		"displayAvailability": true,
 		"displayStockQuantity": true,
-		"externalReferenceCode": "MIN55853",
+		"externalReferenceCode": "MINX55853",
 		"height": 18,
 		"images": [
 			"default_product_image.png"
@@ -2166,7 +2166,7 @@
 		"name": "CV Axles",
 		"price": 89,
 		"promoPrice": 0,
-		"sku": "MIN55853",
+		"sku": "MINX55853",
 		"specificationOptions": [
 			{
 				"key": "quantity",
@@ -2201,7 +2201,7 @@
 		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
 		"displayAvailability": true,
 		"displayStockQuantity": true,
-		"externalReferenceCode": "MIN55854",
+		"externalReferenceCode": "MINX55854",
 		"height": 2.5,
 		"images": [
 			"product_image_20.png"
@@ -2212,7 +2212,7 @@
 		"name": "Universal CV Boot",
 		"price": 185,
 		"promoPrice": 0,
-		"sku": "MIN55854",
+		"sku": "MINX55854",
 		"specificationOptions": [
 			{
 				"key": "quantity",
@@ -2247,7 +2247,7 @@
 		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
 		"displayAvailability": true,
 		"displayStockQuantity": true,
-		"externalReferenceCode": "MIN55855",
+		"externalReferenceCode": "MINX55855",
 		"height": 2,
 		"images": [
 			"default_product_image.png"
@@ -2258,7 +2258,7 @@
 		"name": "Drive Shafts",
 		"price": 396,
 		"promoPrice": 0,
-		"sku": "MIN55855",
+		"sku": "MINX55855",
 		"specificationOptions": [
 			{
 				"key": "quantity",
@@ -2289,7 +2289,7 @@
 		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
 		"displayAvailability": true,
 		"displayStockQuantity": true,
-		"externalReferenceCode": "MIN55856",
+		"externalReferenceCode": "MINX55856",
 		"height": 2.5,
 		"images": [
 			"product_image_103.png"
@@ -2300,7 +2300,7 @@
 		"name": "Transmission Fluid",
 		"price": 42,
 		"promoPrice": 0,
-		"sku": "MIN55856",
+		"sku": "MINX55856",
 		"specificationOptions": [
 			{
 				"key": "quantity",
@@ -2331,7 +2331,7 @@
 		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
 		"displayAvailability": true,
 		"displayStockQuantity": true,
-		"externalReferenceCode": "MIN55857",
+		"externalReferenceCode": "MINX55857",
 		"height": 1.7,
 		"images": [
 			"default_product_image.png"
@@ -2342,7 +2342,7 @@
 		"name": "Mount",
 		"price": 3,
 		"promoPrice": 0,
-		"sku": "MIN55857",
+		"sku": "MINX55857",
 		"specificationOptions": [
 			{
 				"key": "quantity",
@@ -2381,7 +2381,7 @@
 		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
 		"displayAvailability": true,
 		"displayStockQuantity": true,
-		"externalReferenceCode": "MIN55858",
+		"externalReferenceCode": "MINX55858",
 		"height": 5.3,
 		"images": [
 			"default_product_image.png"
@@ -2392,7 +2392,7 @@
 		"name": "Wheel Seal - Front",
 		"price": 4,
 		"promoPrice": 0,
-		"sku": "MIN55858",
+		"sku": "MINX55858",
 		"specificationOptions": [
 			{
 				"key": "quantity",
@@ -2423,7 +2423,7 @@
 		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
 		"displayAvailability": true,
 		"displayStockQuantity": true,
-		"externalReferenceCode": "MIN55859",
+		"externalReferenceCode": "MINX55859",
 		"height": 18,
 		"images": [
 			"default_product_image.png"
@@ -2434,7 +2434,7 @@
 		"name": "Torque Converters",
 		"price": 34,
 		"promoPrice": 0,
-		"sku": "MIN55859",
+		"sku": "MINX55859",
 		"specificationOptions": [
 			{
 				"key": "quantity",
@@ -2473,7 +2473,7 @@
 		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
 		"displayAvailability": true,
 		"displayStockQuantity": true,
-		"externalReferenceCode": "MIN55860",
+		"externalReferenceCode": "MINX55860",
 		"height": 2.5,
 		"images": [
 			"default_product_image.png"
@@ -2484,7 +2484,7 @@
 		"name": "Transmission Cooler Line Assembly",
 		"price": 15,
 		"promoPrice": 0,
-		"sku": "MIN55860",
+		"sku": "MINX55860",
 		"specificationOptions": [
 			{
 				"key": "quantity",
@@ -2523,7 +2523,7 @@
 		"description": "Product designed and manufactured to accommodate OEM applications. All products are tested and inspected in an ISO-9000 compliant environment",
 		"displayAvailability": true,
 		"displayStockQuantity": true,
-		"externalReferenceCode": "MIN55861",
+		"externalReferenceCode": "MINX55861",
 		"height": 2,
 		"images": [
 			"product_image_64.png"
@@ -2534,7 +2534,7 @@
 		"name": "U-Joint",
 		"price": 24,
 		"promoPrice": 0,
-		"sku": "MIN55861",
+		"sku": "MINX55861",
 		"specificationOptions": [
 			{
 				"key": "quantity",

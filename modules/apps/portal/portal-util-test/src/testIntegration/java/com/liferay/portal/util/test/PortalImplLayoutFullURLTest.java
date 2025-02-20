@@ -6,9 +6,11 @@
 package com.liferay.portal.util.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.service.VirtualHostLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.util.TreeMapBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -34,9 +36,11 @@ public class PortalImplLayoutFullURLTest extends BasePortalImplURLTestCase {
 	public void testFromCompanyVirtualHost() throws Exception {
 		LayoutSet publicLayoutSet = publicLayout.getLayoutSet();
 
-		_virtualHostLocalService.updateVirtualHost(
+		_virtualHostLocalService.updateVirtualHosts(
 			company.getCompanyId(), publicLayoutSet.getLayoutSetId(),
-			VIRTUAL_HOSTNAME);
+			TreeMapBuilder.put(
+				VIRTUAL_HOSTNAME, StringPool.BLANK
+			).build());
 
 		new URL(
 			portal.getLayoutFullURL(

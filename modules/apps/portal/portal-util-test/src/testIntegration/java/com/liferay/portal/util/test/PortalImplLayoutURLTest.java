@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
+import com.liferay.portal.kernel.util.TreeMapBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -185,9 +186,11 @@ public class PortalImplLayoutURLTest extends BasePortalImplURLTestCase {
 
 		LayoutSet publicLayoutSet = publicLayout.getLayoutSet();
 
-		_virtualHostLocalService.updateVirtualHost(
+		_virtualHostLocalService.updateVirtualHosts(
 			company.getCompanyId(), publicLayoutSet.getLayoutSetId(),
-			_PUBLIC_LAYOUT_SET_VIRTUAL_HOSTNAME);
+			TreeMapBuilder.put(
+				_PUBLIC_LAYOUT_SET_VIRTUAL_HOSTNAME, StringPool.BLANK
+			).build());
 
 		// Test generated layout URL for Control Panel navigating from the
 		// public layout
@@ -217,9 +220,11 @@ public class PortalImplLayoutURLTest extends BasePortalImplURLTestCase {
 
 		LayoutSet publicLayoutSet = publicLayout.getLayoutSet();
 
-		_virtualHostLocalService.updateVirtualHost(
+		_virtualHostLocalService.updateVirtualHosts(
 			company.getCompanyId(), publicLayoutSet.getLayoutSetId(),
-			_PUBLIC_LAYOUT_SET_VIRTUAL_HOSTNAME);
+			TreeMapBuilder.put(
+				_PUBLIC_LAYOUT_SET_VIRTUAL_HOSTNAME, StringPool.BLANK
+			).build());
 
 		// Create group for public layout (will be used as scope group)
 

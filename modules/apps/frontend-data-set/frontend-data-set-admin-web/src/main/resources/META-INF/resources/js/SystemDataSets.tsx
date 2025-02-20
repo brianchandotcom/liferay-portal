@@ -245,8 +245,7 @@ const SystemDataSets = ({
 	namespace: string;
 	systemDataSets: Array<ISystemDataSet>;
 }) => {
-	const [toggleDisabled, setToogleDisabled] =
-			useState<boolean>(false);
+	const [toggleDisabled, setToogleDisabled] = useState<boolean>(false);
 
 	const getAPIURL = () => {
 		if (!systemDataSets.length) {
@@ -314,15 +313,13 @@ const SystemDataSets = ({
 		});
 	};
 
-	const updateActive = async (
-		{
-			itemData,
-			loadData
-		}: {
-			itemData: IDataSet,
-			loadData: Function
-		}
-	) => {
+	const updateActive = async ({
+		itemData,
+		loadData,
+	}: {
+		itemData: IDataSet;
+		loadData: Function;
+	}) => {
 		setToogleDisabled(true);
 
 		const response = await fetch(
@@ -382,11 +379,21 @@ const SystemDataSets = ({
 		itemData: IDataSet;
 		loadData: Function;
 	}) {
-		return Toggle({
-			disabled: toggleDisabled,
-			item: itemData,
-			toggleChange: () => updateActive({itemData, loadData})
-		});
+		if (itemData.actions.update) {
+			return Toggle({
+				disabled: toggleDisabled,
+				item: itemData,
+				toggleChange: () => updateActive({itemData, loadData}),
+			});
+		}
+
+		return (
+			<ClayLabel displayType={itemData.active ? 'success' : 'secondary'}>
+				{itemData.active
+					? Liferay.Language.get('active')
+					: Liferay.Language.get('inactive')}
+			</ClayLabel>
+		);
 	};
 
 	const views = [

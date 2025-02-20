@@ -329,8 +329,11 @@ const Table = ({
 					<ClayTable.Cell className="drag-handle-cell" />
 
 					{fields.map((field) => (
-						<ClayTable.Cell className={`cell-${field.name}`}
-							headingCell key={field.name}>
+						<ClayTable.Cell
+							className={`cell-${field.name}`}
+							headingCell
+							key={field.name}
+						>
 							{field.label}
 						</ClayTable.Cell>
 					))}

@@ -7,7 +7,8 @@ import ClayForm from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayTabs from '@clayui/tabs';
 import {useIsMounted, usePrevious} from '@liferay/frontend-js-react-web';
-import {debounce, fetch, navigate, openToast, sub} from 'frontend-js-web';
+import {openToast} from 'frontend-js-components-web';
+import {debounce, fetch, navigate, sub} from 'frontend-js-web';
 import React, {useCallback, useEffect, useState} from 'react';
 
 import CodeMirrorEditor from './CodeMirrorEditor';

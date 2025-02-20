@@ -7,12 +7,8 @@ import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
 import ClayTable from '@clayui/table';
-import {
-	createPortletURL,
-	getPortletId,
-	openSelectionModal,
-	sub,
-} from 'frontend-js-web';
+import {openSelectionModal} from 'frontend-js-components-web';
+import {createPortletURL, getPortletId, sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 
 export default function FormFragmentsConfiguration({

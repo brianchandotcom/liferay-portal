@@ -4,7 +4,8 @@
  */
 
 import {render} from '@liferay/frontend-js-react-web';
-import {getCheckedCheckboxes, openSelectionModal} from 'frontend-js-web';
+import {openSelectionModal} from 'frontend-js-components-web';
+import {getCheckedCheckboxes} from 'frontend-js-web';
 
 import AddFragmentModal from './AddFragmentModal';
 import openDeleteFragmentModal from './openDeleteFragmentModal';

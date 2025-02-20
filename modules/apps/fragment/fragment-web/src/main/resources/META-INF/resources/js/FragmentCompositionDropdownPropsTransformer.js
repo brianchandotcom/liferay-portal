@@ -6,8 +6,8 @@
 import {
 	openSelectionModal,
 	openSimpleInputModal,
-	setFormValues,
-} from 'frontend-js-web';
+} from 'frontend-js-components-web';
+import {setFormValues} from 'frontend-js-web';
 
 import openDeleteFragmentModal from './openDeleteFragmentModal';
 

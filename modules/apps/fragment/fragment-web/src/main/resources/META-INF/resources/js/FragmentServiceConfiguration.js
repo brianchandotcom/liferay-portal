@@ -6,7 +6,8 @@
 import ClayButton from '@clayui/button';
 import ClayForm, {ClayCheckbox} from '@clayui/form';
 import ClayModal, {useModal} from '@clayui/modal';
-import {fetch, objectToFormData, openToast} from 'frontend-js-web';
+import {openToast} from 'frontend-js-components-web';
+import {fetch, objectToFormData} from 'frontend-js-web';
 import React, {useState} from 'react';
 
 const FEEDBACK_MESSAGES = {

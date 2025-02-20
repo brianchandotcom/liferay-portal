@@ -1245,7 +1245,11 @@
 
 	Util.Window = Window;
 
-	Liferay.Util = Util;
+	if (!Liferay.Util) {
+		Liferay.Util = {};
+	}
+
+	Object.assign(Liferay.Util, Util);
 
 	// 0-200: Theme Developer
 	// 200-400: Portlet Developer

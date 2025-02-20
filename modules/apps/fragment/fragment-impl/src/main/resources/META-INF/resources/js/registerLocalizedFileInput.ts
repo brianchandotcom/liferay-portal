@@ -5,6 +5,7 @@
 
 type Args = {
 	defaultLanguageId: string;
+	initialValues: Record<string, any>;
 	inputElement: HTMLInputElement;
 	inputName: string;
 	localizationInputsContainer: HTMLElement;
@@ -15,7 +16,7 @@ type Args = {
 
 export function registerLocalizedFileInput({
 	defaultLanguageId,
-	inputElement,
+	initialValues,
 	inputName,
 	localizationInputsContainer,
 	namespace,
@@ -54,6 +55,19 @@ export function registerLocalizedFileInput({
 
 	removeButton.addEventListener('click', onRemoveFile);
 
+	if (Object.keys(initialValues).length) {
+		Object.entries(initialValues).forEach(([languageId, {fileEntryId}]) => {
+			const input = getOrCreateTranslationInput(
+				inputName,
+				languageId,
+				localizationInputsContainer,
+				namespace
+			);
+
+			input.value = fileEntryId;
+		});
+	}
+
 	Liferay.on('localizationSelect:localeChanged', ({languageId}) => {
 		currentLanguageId = languageId;
 
@@ -81,7 +95,8 @@ export function registerLocalizedFileInput({
 				inputName,
 				currentLanguageId,
 				localizationInputsContainer,
-				namespace
+				namespace,
+				'file'
 			);
 
 			if (files?.length) {
@@ -99,7 +114,8 @@ function getOrCreateTranslationInput(
 	inputName: string,
 	languageId: string,
 	localizationInputsContainer: HTMLElement,
-	namespace: string
+	namespace: string,
+	type: 'file' | 'hidden' = 'hidden'
 ) {
 	const {input, inputId} = getTranslationInput(namespace, languageId);
 
@@ -107,11 +123,15 @@ function getOrCreateTranslationInput(
 
 	if (!translationInput) {
 		translationInput = document.createElement('input');
-		translationInput.type = 'file';
+		translationInput.type = type;
 		translationInput.id = inputId;
 		translationInput.name = `${inputName}_${languageId}`;
 		translationInput.className = 'd-none';
 		localizationInputsContainer.appendChild(translationInput);
+	}
+	else if (translationInput.type === 'hidden' && type === 'file') {
+		translationInput.value = '';
+		translationInput.type = 'file';
 	}
 
 	return translationInput as HTMLInputElement;

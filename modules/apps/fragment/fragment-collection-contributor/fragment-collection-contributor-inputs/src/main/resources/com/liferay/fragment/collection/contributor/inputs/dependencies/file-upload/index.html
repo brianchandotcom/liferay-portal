@@ -11,7 +11,7 @@
 <div class="file-upload">
 	<div class="form-group [#if input.errorMessage?has_content]has-error[/#if] mb-0">
 		<label class="[#if !input.showLabel || !input.label?has_content]sr-only[/#if]" data-localizable="${input.localizable?string('true', 'false')}" id="${fragmentEntryLinkNamespace}-file-upload-label">
-			${htmlUtil.escape(input.label)} 
+			${htmlUtil.escape(input.label)}
 
 			<span id="${fragmentEntryLinkNamespace}-file-upload-read-only" class="[#if !input.readOnly]d-none[/#if]">(${languageUtil.get(locale, "read-only")})</span>
 
@@ -34,7 +34,7 @@
 					[#if input.attributes.fileName??]${htmlUtil.escape(input.attributes.fileName)}[/#if]
 				</strong>
 
-				<button class="btn btn-monospaced btn-outline-borderless btn-outline-secondary d-none" [#if disabled]disabled[/#if] id="${fragmentEntryLinkNamespace}-file-upload-remove-button" type="button">
+				<button class="btn btn-monospaced btn-outline-borderless btn-outline-secondary d-none lfr-portal-tooltip" [#if disabled]disabled[/#if] id="${fragmentEntryLinkNamespace}-file-upload-remove-button" title="${languageUtil.get(locale, 'remove-item')}" type="button">
 					[@clay["icon"] symbol="times-circle-full" /]
 				</button>
 

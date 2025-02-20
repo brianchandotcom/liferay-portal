@@ -6,12 +6,10 @@
 type Args = {
 	defaultLanguageId: string;
 	initialValues: Record<string, any>;
-	inputElement: HTMLInputElement;
 	inputName: string;
 	localizationInputsContainer: HTMLElement;
 	namespace: string;
 	onLocaleChange: (input: HTMLInputElement, languageId: string) => void;
-	removeButton: HTMLButtonElement;
 };
 
 export function registerLocalizedFileInput({
@@ -21,39 +19,8 @@ export function registerLocalizedFileInput({
 	localizationInputsContainer,
 	namespace,
 	onLocaleChange,
-	removeButton,
 }: Args) {
 	let currentLanguageId = defaultLanguageId;
-
-	const setDefaultValue = () => {
-		const defaultLanguageInput = getOrCreateTranslationInput(
-			inputName,
-			defaultLanguageId,
-			localizationInputsContainer,
-			namespace
-		);
-
-		if (defaultLanguageInput.files) {
-			transferFilesToInput(defaultLanguageInput.files, inputElement);
-		}
-	};
-
-	const onRemoveFile = () => {
-		const translationInput = getOrCreateTranslationInput(
-			inputName,
-			currentLanguageId,
-			localizationInputsContainer,
-			namespace
-		);
-
-		const dataTransfer = new DataTransfer();
-
-		translationInput.files = dataTransfer.files;
-
-		setDefaultValue();
-	};
-
-	removeButton.addEventListener('click', onRemoveFile);
 
 	if (Object.keys(initialValues).length) {
 		Object.entries(initialValues).forEach(([languageId, {fileEntryId}]) => {
@@ -106,6 +73,15 @@ export function registerLocalizedFileInput({
 			Liferay.fire('localizationSelect:updateTranslationStatus', {
 				languageId: currentLanguageId,
 			});
+		},
+		onRemoveFile: () => {
+			const {input: translationInput} = getTranslationInput(
+				namespace,
+				currentLanguageId
+			);
+
+			translationInput.type = 'hidden';
+			translationInput.value = '';
 		},
 	};
 }

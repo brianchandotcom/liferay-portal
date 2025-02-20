@@ -91,13 +91,26 @@ public class BatchEngineImportTaskItemReaderUtil {
 			if (field != null) {
 				field.setAccessible(true);
 
-				ObjectMapper objectMapper = _getObjectMapper(
-					field, keepCreatorInfo);
+				ObjectMapper objectMapper;
 
-				field.set(
-					item,
-					objectMapper.convertValue(
-						entry.getValue(), field.getType()));
+				try {
+					objectMapper = _getObjectMapper(
+						field, keepCreatorInfo);
+
+					field.set(
+						item,
+						objectMapper.convertValue(
+							entry.getValue(), field.getType()));
+				}
+
+				catch (Exception exception){
+					objectMapper = _csvObjectMapper;
+
+					field.set(
+						item,
+						objectMapper.convertValue(
+							entry.getValue(), field.getType()));
+				}
 
 				continue;
 			}
@@ -254,7 +267,7 @@ public class BatchEngineImportTaskItemReaderUtil {
 					SimpleModule simpleModule = new SimpleModule();
 
 					simpleModule.addDeserializer(
-						Map.class, new MapStdDeserializer());
+						Map.class, new MapStdCSVDeserializer());
 
 					registerModule(simpleModule);
 				}
@@ -294,16 +307,24 @@ public class BatchEngineImportTaskItemReaderUtil {
 		{
 			SimpleModule simpleModule = new SimpleModule();
 
-			simpleModule.addDeserializer(Map.class, new MapStdDeserializer());
+			registerModule(simpleModule);
+		}
+	};
+
+	private static final ObjectMapper _csvObjectMapper = new ObjectMapper() {
+		{
+			SimpleModule simpleModule = new SimpleModule();
+
+			simpleModule.addDeserializer(Map.class, new MapStdCSVDeserializer());
 
 			registerModule(simpleModule);
 		}
 	};
 
-	private static class MapStdDeserializer
+	private static class MapStdCSVDeserializer
 		extends StdDeserializer<Map<String, Object>> {
 
-		public MapStdDeserializer() {
+		public MapStdCSVDeserializer() {
 			this(Map.class);
 		}
 
@@ -313,30 +334,20 @@ public class BatchEngineImportTaskItemReaderUtil {
 				DeserializationContext deserializationContext)
 			throws IOException {
 
-			try {
-				return deserializationContext.readValue(
-					jsonParser, LinkedHashMap.class);
+			Map<String, Object> map = new LinkedHashMap<>();
+
+			String string = jsonParser.getValueAsString();
+
+			for (String line : string.split(StringPool.RETURN_NEW_LINE)) {
+				String[] lineParts = line.split(StringPool.COLON);
+
+				map.put(lineParts[0], lineParts[1]);
 			}
-			catch (Exception exception) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(exception);
-				}
 
-				Map<String, Object> map = new LinkedHashMap<>();
-
-				String string = jsonParser.getValueAsString();
-
-				for (String line : string.split(StringPool.RETURN_NEW_LINE)) {
-					String[] lineParts = line.split(StringPool.COLON);
-
-					map.put(lineParts[0], lineParts[1]);
-				}
-
-				return map;
-			}
+			return map;
 		}
 
-		protected MapStdDeserializer(Class<?> clazz) {
+		protected MapStdCSVDeserializer(Class<?> clazz) {
 			super(clazz);
 		}
 

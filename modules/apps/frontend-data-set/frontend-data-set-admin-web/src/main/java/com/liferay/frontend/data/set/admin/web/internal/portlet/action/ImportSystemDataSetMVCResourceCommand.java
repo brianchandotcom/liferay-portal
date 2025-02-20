@@ -344,8 +344,14 @@ public class ImportSystemDataSetMVCResourceCommand
 				Map<String, Object> data =
 					(Map<String, Object>)fdsActionDropdownItem.get("data");
 
+				Object id = data.get("id");
+
+				if (id == null) {
+					continue;
+				}
+
 				_objectEntryService.addOrUpdateObjectEntry(
-					String.valueOf(data.get("id")), 0, objectDefinitionId,
+					String.valueOf(id), 0, objectDefinitionId,
 					HashMapBuilder.<String, Serializable>put(
 						"icon",
 						() -> _getOptionalValue(

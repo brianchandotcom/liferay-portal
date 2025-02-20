@@ -4,7 +4,7 @@
  */
 
 import {convertToFormData, makeFetch} from 'data-engine-js-components-web';
-import {openToast} from 'frontend-js-web';
+import {openToast} from 'frontend-js-components-web';
 
 const openNotification = ({error, message}) => {
 	const openToastParams = {message};

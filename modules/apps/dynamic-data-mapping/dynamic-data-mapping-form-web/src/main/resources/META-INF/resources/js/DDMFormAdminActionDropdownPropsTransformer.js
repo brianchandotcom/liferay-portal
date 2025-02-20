@@ -4,7 +4,7 @@
  */
 
 import {getSpritemap} from '@liferay/frontend-icons-web';
-import {openConfirmModal, openModal} from 'frontend-js-web';
+import {openConfirmModal, openModal} from 'frontend-js-components-web';
 
 import {openShareFormModal} from './components/share-form/openShareFormModal.es';
 

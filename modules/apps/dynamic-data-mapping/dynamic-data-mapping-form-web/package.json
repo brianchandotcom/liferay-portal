@@ -23,6 +23,7 @@
 		"data-engine-js-components-web": "*",
 		"data-engine-taglib": "*",
 		"dynamic-data-mapping-form-field-type": "*",
+		"frontend-js-components-web": "*",
 		"frontend-js-web": "*",
 		"object-hash": "^2.0.1",
 		"react": "18.2.0",

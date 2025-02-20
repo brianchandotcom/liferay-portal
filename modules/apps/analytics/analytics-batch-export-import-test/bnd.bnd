@@ -1,0 +1,3 @@
+Bundle-Name: Liferay Analytics Batch Export Import Test
+Bundle-SymbolicName: com.liferay.analytics.batch.exportimport.test
+Bundle-Version: 1.0.0

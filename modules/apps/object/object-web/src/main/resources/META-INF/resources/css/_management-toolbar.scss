@@ -16,6 +16,12 @@
 		top: 56px;
 	}
 
+	.management-bar {
+		.container-fluid {
+			max-width: 1920px !important;
+		}
+	}
+
 	.navbar {
 		position: relative !important;
 	}

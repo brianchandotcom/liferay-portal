@@ -7,9 +7,8 @@ import {
 	openModal,
 	openSelectionModal,
 	openToast,
-	setFormValues,
-	sub,
-} from 'frontend-js-web';
+} from 'frontend-js-components-web';
+import {setFormValues, sub} from 'frontend-js-web';
 
 import openDeleteCategoryModal from './openDeleteCategoryModal';
 

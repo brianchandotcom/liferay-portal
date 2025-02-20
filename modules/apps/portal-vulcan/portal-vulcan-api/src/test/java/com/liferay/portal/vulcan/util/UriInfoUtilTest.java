@@ -115,11 +115,10 @@ public class UriInfoUtilTest {
 		_setPathContext(path, pathContext);
 
 		_assertUriBuilder(
-			1, pathContext + path, 1, 0, _uriBuilder, _uriInfo,
-			pathContext + path);
-
-		_assertUriBuilder(
 			1, pathContext + path, 0, 0, _uriBuilder, _uriInfo,
+			pathContext + path);
+		_assertUriBuilder(
+			1, pathContext + path, 1, 0, _uriBuilder, _uriInfo,
 			pathContext + path);
 	}
 

@@ -4,7 +4,8 @@
  */
 
 import {CommerceServiceProvider, commerceEvents} from 'commerce-frontend-js';
-import {createPortletURL, openToast} from 'frontend-js-web';
+import {openToast} from 'frontend-js-components-web';
+import {createPortletURL} from 'frontend-js-web';
 
 export default function ({
 	defaultLanguageId,

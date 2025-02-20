@@ -4,7 +4,7 @@
  */
 
 import {CommerceServiceProvider} from 'commerce-frontend-js';
-import {openToast} from 'frontend-js-web';
+import {openToast} from 'frontend-js-components-web';
 
 import {CommerceReturnItemPicklistDataRenderer} from './CommerceReturnItemPicklistDataRenderer';
 import {CommerceReturnItemReceivedDataRenderer} from './CommerceReturnItemReceivedDataRenderer';

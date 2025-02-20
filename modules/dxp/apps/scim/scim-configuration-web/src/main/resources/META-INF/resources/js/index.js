@@ -4,7 +4,8 @@
  */
 
 import ClipboardJS from 'clipboard';
-import {PortletBase, openToast} from 'frontend-js-web';
+import {openToast} from 'frontend-js-components-web';
+import {PortletBase} from 'frontend-js-web';
 
 /**
  * @class InfoPanel

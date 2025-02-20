@@ -1,6 +1,7 @@
 {
 	"dependencies": {
 		"clipboard": "2.0.4",
+		"frontend-js-components-web": "*",
 		"frontend-js-web": "*"
 	},
 	"description": "",

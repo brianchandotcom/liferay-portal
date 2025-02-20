@@ -78,7 +78,7 @@ public class JAASTest {
 
 	@BeforeClass
 	public static void setUpClass() {
-		_originalJAASEnabled = ReflectionTestUtil.getAndSetFieldValue(
+		_originalPortalJaasEnable = ReflectionTestUtil.getAndSetFieldValue(
 			PropsValues.class, "PORTAL_JAAS_ENABLE", true);
 
 		Configuration.setConfiguration(new JAASConfiguration());
@@ -89,7 +89,7 @@ public class JAASTest {
 		Configuration.setConfiguration(null);
 
 		ReflectionTestUtil.setFieldValue(
-			PropsValues.class, "PORTAL_JAAS_ENABLE", _originalJAASEnabled);
+			PropsValues.class, "PORTAL_JAAS_ENABLE", _originalPortalJaasEnable);
 	}
 
 	@Before
@@ -266,7 +266,7 @@ public class JAASTest {
 		}
 	}
 
-	private static Boolean _originalJAASEnabled;
+	private static Boolean _originalPortalJaasEnable;
 
 	private User _user;
 

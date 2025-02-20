@@ -17,6 +17,7 @@ export {
 	AddToWishList,
 	Autocomplete,
 	AutocompleteComponent,
+	CurrencySelector,
 	compareCheckbox,
 	DropdownMenu,
 	DropdownMenuComponent,

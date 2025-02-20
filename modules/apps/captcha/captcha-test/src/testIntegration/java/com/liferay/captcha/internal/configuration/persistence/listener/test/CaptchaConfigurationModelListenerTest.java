@@ -74,10 +74,10 @@ public class CaptchaConfigurationModelListenerTest {
 			"the-recaptcha-no-script-url-is-not-valid", "reCaptchaNoScriptURL",
 			"https://www.test.com/recaptcha/api/fallback?k=");
 		_testOnBeforeSave(
-			"the-recaptcha-public-key-is-not-valid", "reCaptchaPrivateKey",
+			"the-recaptcha-private-key-is-not-valid", "reCaptchaPrivateKey",
 			StringPool.BLANK);
 		_testOnBeforeSave(
-			"the-recaptcha-private-key-is-not-valid", "reCaptchaPublicKey",
+			"the-recaptcha-public-key-is-not-valid", "reCaptchaPublicKey",
 			StringPool.BLANK);
 		_testOnBeforeSave(
 			"the-recaptcha-script-url-is-not-valid", "reCaptchaScriptURL",

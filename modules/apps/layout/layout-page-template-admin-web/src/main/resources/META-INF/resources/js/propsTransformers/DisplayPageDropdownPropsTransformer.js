@@ -9,9 +9,8 @@ import {
 	openModal,
 	openSelectionModal,
 	openSimpleInputModal,
-	setFormValues,
-	sub,
-} from 'frontend-js-web';
+} from 'frontend-js-components-web';
+import {setFormValues, sub} from 'frontend-js-web';
 
 import openContentTypeModal from '../commands/openContentTypeModal';
 import openDeletePageTemplateModal from '../commands/openDeletePageTemplateModal';

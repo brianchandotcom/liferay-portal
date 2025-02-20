@@ -4,12 +4,12 @@
  */
 
 import {
-	createPortletURL,
 	openConfirmModal,
 	openModal,
 	openSelectionModal,
 	openSimpleInputModal,
-} from 'frontend-js-web';
+} from 'frontend-js-components-web';
+import {createPortletURL} from 'frontend-js-web';
 
 import openDeletePageTemplateModal from '../commands/openDeletePageTemplateModal';
 

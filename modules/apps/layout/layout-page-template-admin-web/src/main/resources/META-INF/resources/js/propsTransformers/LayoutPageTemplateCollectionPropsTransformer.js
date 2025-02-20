@@ -7,12 +7,8 @@ import {
 	CreationModal,
 	openModalComponent,
 } from '@liferay/layout-js-components-web';
-import {
-	openModal,
-	openSelectionModal,
-	setFormValues,
-	sub,
-} from 'frontend-js-web';
+import {openModal, openSelectionModal} from 'frontend-js-components-web';
+import {setFormValues, sub} from 'frontend-js-web';
 
 import openDeletePageTemplateModal from '../commands/openDeletePageTemplateModal';
 

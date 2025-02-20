@@ -4,7 +4,7 @@
  */
 
 import {getSpritemap} from '@liferay/frontend-icons-web';
-import {openSimpleInputModal} from 'frontend-js-web';
+import {openSimpleInputModal} from 'frontend-js-components-web';
 
 export default function SelectLayoutPageTemplateEntryMasterLayoutVerticalCardPropsTransformer({
 	additionalProps: {

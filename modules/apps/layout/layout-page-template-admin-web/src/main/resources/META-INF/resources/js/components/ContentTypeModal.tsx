@@ -6,7 +6,8 @@
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayModal, {useModal} from '@clayui/modal';
-import {fetch, navigate, openModal} from 'frontend-js-web';
+import {openModal} from 'frontend-js-components-web';
+import {fetch, navigate} from 'frontend-js-web';
 import React, {useCallback, useRef, useState} from 'react';
 
 import openInUseModal from '../commands/openInUseModal';

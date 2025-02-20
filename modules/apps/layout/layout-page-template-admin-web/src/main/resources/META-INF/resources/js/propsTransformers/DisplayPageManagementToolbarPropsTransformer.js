@@ -7,11 +7,8 @@ import {
 	CreationModal,
 	openModalComponent,
 } from '@liferay/layout-js-components-web';
-import {
-	getCheckedCheckboxes,
-	openSelectionModal,
-	setFormValues,
-} from 'frontend-js-web';
+import {openSelectionModal} from 'frontend-js-components-web';
+import {getCheckedCheckboxes, setFormValues} from 'frontend-js-web';
 
 import openDeletePageTemplateModal from '../commands/openDeletePageTemplateModal';
 

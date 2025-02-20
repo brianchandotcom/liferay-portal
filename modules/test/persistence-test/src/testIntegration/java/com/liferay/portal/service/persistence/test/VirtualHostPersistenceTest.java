@@ -199,15 +199,6 @@ public class VirtualHostPersistenceTest {
 	}
 
 	@Test
-	public void testCountByC_L_D() throws Exception {
-		_persistence.countByC_L_D(
-			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
-			RandomTestUtil.randomBoolean());
-
-		_persistence.countByC_L_D(0L, 0L, RandomTestUtil.randomBoolean());
-	}
-
-	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		VirtualHost newVirtualHost = addVirtualHost();
 
@@ -502,22 +493,6 @@ public class VirtualHostPersistenceTest {
 			ReflectionTestUtil.invoke(
 				virtualHost, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "hostname"));
-
-		Assert.assertEquals(
-			Long.valueOf(virtualHost.getCompanyId()),
-			ReflectionTestUtil.<Long>invoke(
-				virtualHost, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "companyId"));
-		Assert.assertEquals(
-			Long.valueOf(virtualHost.getLayoutSetId()),
-			ReflectionTestUtil.<Long>invoke(
-				virtualHost, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "layoutSetId"));
-		Assert.assertEquals(
-			Boolean.valueOf(virtualHost.getDefaultVirtualHost()),
-			ReflectionTestUtil.<Boolean>invoke(
-				virtualHost, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "defaultVirtualHost"));
 	}
 
 	protected VirtualHost addVirtualHost() throws Exception {

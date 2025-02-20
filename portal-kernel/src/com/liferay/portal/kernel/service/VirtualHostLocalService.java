@@ -198,15 +198,11 @@ public interface VirtualHostLocalService
 		DynamicQuery dynamicQuery, Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public VirtualHost fetchVirtualHost(long virtualHostId);
+	public VirtualHost fetchDefaultVirtualHost(
+		long companyId, long layoutSetId);
 
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 #getVirtualHosts(long, long)}
-	 */
-	@Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public VirtualHost fetchVirtualHost(long companyId, long layoutSetId);
+	public VirtualHost fetchVirtualHost(long virtualHostId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public VirtualHost fetchVirtualHost(String hostname);
@@ -243,15 +239,6 @@ public interface VirtualHostLocalService
 	public VirtualHost getVirtualHost(long virtualHostId)
 		throws PortalException;
 
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 #getVirtualHosts(long, long)}
-	 */
-	@Deprecated
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public VirtualHost getVirtualHost(long companyId, long layoutSetId)
-		throws PortalException;
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public VirtualHost getVirtualHost(String hostname) throws PortalException;
 
@@ -286,14 +273,6 @@ public interface VirtualHostLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long getVirtualHostsCount(
 		long excludedLayoutSetId, String[] virtualHostNames);
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 #updateVirtualHosts(long, long, TreeMap)}
-	 */
-	@Deprecated
-	public VirtualHost updateVirtualHost(
-		long companyId, long layoutSetId, String hostname);
 
 	/**
 	 * Updates the virtual host in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

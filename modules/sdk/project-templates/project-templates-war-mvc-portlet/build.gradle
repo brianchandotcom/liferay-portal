@@ -1,3 +1,6 @@
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
+
 dependencies {
 	compileOnly group: "biz.aQute.bnd", name: "biz.aQute.bnd", version: "6.4.0"
 	compileOnly group: "com.beust", name: "jcommander", version: "1.82"

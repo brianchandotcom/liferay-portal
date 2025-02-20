@@ -349,14 +349,15 @@ public class RenderLayoutStructureTagTest {
 				submitButtonFragmentStyledLayoutStructureItem.
 					getFragmentEntryLinkId());
 
-		String submitButtonIdAttr =
+		String submitButtonIdAttribute =
 			"id=\"fragment-" + submitButtonFragmentEntryLink.getNamespace() +
 				"-submit-button\"";
 
 		Assert.assertTrue(
 			content,
 			StringUtil.contains(
-				content, "disabled " + submitButtonIdAttr, StringPool.BLANK));
+				content, "disabled " + submitButtonIdAttribute,
+				StringPool.BLANK));
 
 		FragmentStyledLayoutStructureItem
 			textInputFragmentStyledLayoutStructureItem =
@@ -370,13 +371,14 @@ public class RenderLayoutStructureTagTest {
 				textInputFragmentStyledLayoutStructureItem.
 					getFragmentEntryLinkId());
 
-		String textInputIdAttr =
+		String textInputIdAttribute =
 			"id=\"" + textInputFragmentEntryLink.getNamespace() +
 				"-text-input\"";
 
 		Assert.assertFalse(
 			content,
-			StringUtil.contains(content, textInputIdAttr, StringPool.BLANK));
+			StringUtil.contains(
+				content, textInputIdAttribute, StringPool.BLANK));
 
 		content = _getRenderLayoutHTML(
 			layout, Collections.emptyMap(),
@@ -385,15 +387,17 @@ public class RenderLayoutStructureTagTest {
 
 		Assert.assertTrue(
 			content,
-			StringUtil.contains(content, submitButtonIdAttr, StringPool.BLANK));
+			StringUtil.contains(
+				content, submitButtonIdAttribute, StringPool.BLANK));
 		Assert.assertFalse(
 			content,
 			StringUtil.contains(
-				content, "disabled " + submitButtonIdAttr, StringPool.BLANK));
-
+				content, "disabled " + submitButtonIdAttribute,
+				StringPool.BLANK));
 		Assert.assertTrue(
 			content,
-			StringUtil.contains(content, textInputIdAttr, StringPool.BLANK));
+			StringUtil.contains(
+				content, textInputIdAttribute, StringPool.BLANK));
 	}
 
 	@Test
@@ -2264,9 +2268,7 @@ public class RenderLayoutStructureTagTest {
 				RandomTestUtil.randomString());
 
 		layoutStructureRule.setActionsJSONArray(actionsJSONArray);
-
 		layoutStructureRule.setConditionsJSONArray(conditionsJSONArray);
-
 		layoutStructureRule.setConditionType(conditionType);
 
 		_layoutPageTemplateStructureLocalService.

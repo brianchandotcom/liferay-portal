@@ -4,15 +4,12 @@
 
 		accountEntry = commerceContext.getAccountEntry()
 		
-		accountEntryId = account.getAccountEntryId()
-		cpDefinitionId = cpCatalogEntry.getCPDefinitionId()
-
-		cpAttachmentFileEntries = cpContentHelper.getCPMedias(cpDefinitionId, themeDisplay)
-		cpDefinitionSpecificationOptionValues = cpContentHelper.getCPDefinitionSpecificationOptionValues(cpDefinitionId)
+		cpAttachmentFileEntries = cpContentHelper.getCPMedias(cpCatalogEntry.getCPDefinitionId(), themeDisplay)
+		cpDefinitionSpecificationOptionValues = cpContentHelper.getCPDefinitionSpecificationOptionValues(cpCatalogEntry.getCPDefinitionId())
 		cpOptionCategories = cpContentHelper.getCPOptionCategories(themeDisplay.getCompanyId())
-		defaultImageURL = cpContentHelper.getDefaultImageFileURL(accountEntryId, cpDefinitionId)
+		defaultImageURL = cpContentHelper.getDefaultImageFileURL(account.getAccountEntryId(), cpCatalogEntry.getCPDefinitionId())
 		productDescription = cpCatalogEntry.getDescription()
-		productImages = cpContentHelper.getImages(cpDefinitionId, true, themeDisplay)
+		productImages = cpContentHelper.getImages(cpCatalogEntry.getCPDefinitionId(), true, themeDisplay)
 		productName = cpCatalogEntry.getName()
 		productShortDescription = cpCatalogEntry.getShortDescription()
 		productSkus = cpCatalogEntry.getCPSkus()

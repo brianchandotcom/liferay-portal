@@ -7,15 +7,17 @@ type Args = {
 	defaultLanguageId: string;
 	initialValues: Record<string, any>;
 	inputName: string;
+	isFromDocumentLibrary: boolean;
 	localizationInputsContainer: HTMLElement;
 	namespace: string;
-	onLocaleChange: (input: HTMLInputElement, languageId: string) => void;
+	onLocaleChange: (input: HTMLInputElement) => void;
 };
 
 export function registerLocalizedFileInput({
 	defaultLanguageId,
 	initialValues,
 	inputName,
+	isFromDocumentLibrary,
 	localizationInputsContainer,
 	namespace,
 	onLocaleChange,
@@ -23,16 +25,19 @@ export function registerLocalizedFileInput({
 	let currentLanguageId = defaultLanguageId;
 
 	if (Object.keys(initialValues).length) {
-		Object.entries(initialValues).forEach(([languageId, {fileEntryId}]) => {
-			const input = getOrCreateTranslationInput(
-				inputName,
-				languageId,
-				localizationInputsContainer,
-				namespace
-			);
+		Object.entries(initialValues).forEach(
+			([languageId, {fileEntryId, name}]) => {
+				const input = getOrCreateTranslationInput(
+					inputName,
+					languageId,
+					localizationInputsContainer,
+					namespace
+				);
 
-			input.value = fileEntryId;
-		});
+				input.value = fileEntryId;
+				input.dataset.fileName = name;
+			}
+		);
 	}
 
 	Liferay.on('localizationSelect:localeChanged', ({languageId}) => {
@@ -40,11 +45,11 @@ export function registerLocalizedFileInput({
 
 		const {input: translationInput} = getTranslationInput(
 			namespace,
-			languageId
+			currentLanguageId
 		);
 
 		if (translationInput) {
-			onLocaleChange(translationInput, languageId);
+			onLocaleChange(translationInput);
 		}
 		else {
 			const {input: defaultTranslationInput} = getTranslationInput(
@@ -52,22 +57,39 @@ export function registerLocalizedFileInput({
 				defaultLanguageId
 			);
 
-			onLocaleChange(defaultTranslationInput, defaultLanguageId);
+			onLocaleChange(defaultTranslationInput);
 		}
 	});
 
 	return {
-		onChange: (files: FileList) => {
-			const translationInput = getOrCreateTranslationInput(
-				inputName,
-				currentLanguageId,
-				localizationInputsContainer,
-				namespace,
-				'file'
-			);
+		onChange: (value: FileList | string, fileName: string) => {
+			let translationInput = null;
 
-			if (files?.length) {
-				transferFilesToInput(files, translationInput);
+			if (isFromDocumentLibrary) {
+				translationInput = getOrCreateTranslationInput(
+					inputName,
+					currentLanguageId,
+					localizationInputsContainer,
+					namespace
+				);
+
+				translationInput.value = value as string;
+				translationInput.dataset.fileName = fileName;
+			}
+			else {
+				const files = value as FileList;
+
+				translationInput = getOrCreateTranslationInput(
+					inputName,
+					currentLanguageId,
+					localizationInputsContainer,
+					namespace,
+					'file'
+				);
+
+				if (files?.length) {
+					transferFilesToInput(files, translationInput);
+				}
 			}
 
 			Liferay.fire('localizationSelect:updateTranslationStatus', {
@@ -75,13 +97,15 @@ export function registerLocalizedFileInput({
 			});
 		},
 		onRemoveFile: () => {
-			const {input: translationInput} = getTranslationInput(
-				namespace,
-				currentLanguageId
+			const translationInput = getOrCreateTranslationInput(
+				inputName,
+				currentLanguageId,
+				localizationInputsContainer,
+				namespace
 			);
 
-			translationInput.type = 'hidden';
 			translationInput.value = '';
+			translationInput.dataset.fileName = '';
 		},
 	};
 }
@@ -132,4 +156,5 @@ function transferFilesToInput(files: FileList, input: HTMLInputElement) {
 	}
 
 	input.files = dataTransfer.files;
+	input.dataset.fileName = dataTransfer.files[0].name;
 }

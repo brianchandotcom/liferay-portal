@@ -6,15 +6,19 @@
 import '@testing-library/jest-dom/extend-expect';
 import {act, render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import {fetch, openModal} from 'frontend-js-web';
+import {openModal} from 'frontend-js-components-web';
+import {fetch} from 'frontend-js-web';
 import * as React from 'react';
 
 import LayoutPageTemplateEntryCard from '../../src/main/resources/META-INF/resources/js/LayoutPageTemplateEntryCard';
 
+jest.mock('frontend-js-components-web', () => ({
+	openModal: jest.fn(),
+}));
+
 jest.mock('frontend-js-web', () => ({
 	createPortletURL: jest.fn(),
 	fetch: jest.fn(),
-	openModal: jest.fn(),
 }));
 
 const openModalMock = openModal as jest.Mock<typeof openModal>;

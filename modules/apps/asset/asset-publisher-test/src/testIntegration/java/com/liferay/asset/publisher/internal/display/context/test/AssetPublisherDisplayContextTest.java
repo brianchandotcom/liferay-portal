@@ -6,8 +6,12 @@
 package com.liferay.asset.publisher.internal.display.context.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.model.AssetVocabulary;
+import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.constants.AssetPublisherWebKeys;
 import com.liferay.asset.publisher.util.AssetEntryResult;
@@ -112,11 +116,24 @@ public class AssetPublisherDisplayContextTest {
 	}
 
 	@Test
-	public void testGetAssetEntryResultsFilterByAssetTags() throws Exception {
-		String assetTagName = RandomTestUtil.randomString();
+	public void testGetAssetEntryResultsFilterByAssetCategory()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext();
+
+		AssetVocabulary assetVocabulary =
+			_assetVocabularyLocalService.addVocabulary(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.randomString(), serviceContext);
+
+		AssetCategory assetCategory = _assetCategoryLocalService.addCategory(
+			TestPropsValues.getUserId(), _group.getGroupId(),
+			RandomTestUtil.randomString(), assetVocabulary.getVocabularyId(),
+			serviceContext);
 
 		JournalArticle journalArticle = _addJournalArticle(
-			new String[] {assetTagName});
+			new long[] {assetCategory.getCategoryId()}, null);
 
 		AssetEntry expectedAssetEntry = _assetEntryLocalService.getEntry(
 			JournalArticle.class.getName(),
@@ -130,16 +147,46 @@ public class AssetPublisherDisplayContextTest {
 
 		portletPreferences.setValue("selectionStyle", "dynamic");
 
-		_testGetAssetEntryResultsFilterByAssetTags(
-			_getAssetEntryResults(portletPreferences), 2);
+		_testGetAssetEntryResults(_getAssetEntryResults(portletPreferences), 2);
+
+		portletPreferences.setValue("queryContains0", "true");
+		portletPreferences.setValue("queryName0", "assetCategories");
+		portletPreferences.setValue(
+			"queryValues0", String.valueOf(assetCategory.getCategoryId()));
+
+		List<AssetEntry> assetEntries = _testGetAssetEntryResults(
+			_getAssetEntryResults(portletPreferences), 1);
+
+		Assert.assertEquals(expectedAssetEntry, assetEntries.get(0));
+	}
+
+	@Test
+	public void testGetAssetEntryResultsFilterByAssetTags() throws Exception {
+		String assetTagName = RandomTestUtil.randomString();
+
+		JournalArticle journalArticle = _addJournalArticle(
+			null, new String[] {assetTagName});
+
+		AssetEntry expectedAssetEntry = _assetEntryLocalService.getEntry(
+			JournalArticle.class.getName(),
+			journalArticle.getResourcePrimKey());
+
+		JournalTestUtil.addArticle(
+			_group.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		PortletPreferences portletPreferences = new PortletPreferencesImpl();
+
+		portletPreferences.setValue("selectionStyle", "dynamic");
+
+		_testGetAssetEntryResults(_getAssetEntryResults(portletPreferences), 2);
 
 		portletPreferences.setValue("queryContains0", "true");
 		portletPreferences.setValue("queryName0", "assetTags");
 		portletPreferences.setValue("queryValues0", assetTagName);
 
-		List<AssetEntry> assetEntries =
-			_testGetAssetEntryResultsFilterByAssetTags(
-				_getAssetEntryResults(portletPreferences), 1);
+		List<AssetEntry> assetEntries = _testGetAssetEntryResults(
+			_getAssetEntryResults(portletPreferences), 1);
 
 		Assert.assertEquals(expectedAssetEntry, assetEntries.get(0));
 	}
@@ -189,12 +236,14 @@ public class AssetPublisherDisplayContextTest {
 		return _assetEntryLocalService.updateAssetEntry(assetEntry);
 	}
 
-	private JournalArticle _addJournalArticle(String[] assetTagNames)
+	private JournalArticle _addJournalArticle(
+			long[] assetCategoryIds, String[] assetTagNames)
 		throws Exception {
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
+		serviceContext.setAssetCategoryIds(assetCategoryIds);
 		serviceContext.setAssetTagNames(assetTagNames);
 
 		return JournalTestUtil.addArticle(
@@ -270,7 +319,7 @@ public class AssetPublisherDisplayContextTest {
 		return themeDisplay;
 	}
 
-	private List<AssetEntry> _testGetAssetEntryResultsFilterByAssetTags(
+	private List<AssetEntry> _testGetAssetEntryResults(
 		List<AssetEntryResult> assetEntryResults, int expectedAssetEntries) {
 
 		Assert.assertEquals(
@@ -296,10 +345,9 @@ public class AssetPublisherDisplayContextTest {
 		portletPreferences.setValue("orderByType1", "ASC");
 		portletPreferences.setValue("selectionStyle", "dynamic");
 
-		List<AssetEntry> assetEntries =
-			_testGetAssetEntryResultsFilterByAssetTags(
-				_getAssetEntryResults(portletPreferences),
-				expectedAssetEntries.size());
+		List<AssetEntry> assetEntries = _testGetAssetEntryResults(
+			_getAssetEntryResults(portletPreferences),
+			expectedAssetEntries.size());
 
 		for (int i = 0; i < assetEntries.size(); i++) {
 			Assert.assertEquals(
@@ -308,7 +356,7 @@ public class AssetPublisherDisplayContextTest {
 
 		portletPreferences.setValue("orderByType1", "DESC");
 
-		assetEntries = _testGetAssetEntryResultsFilterByAssetTags(
+		assetEntries = _testGetAssetEntryResults(
 			_getAssetEntryResults(portletPreferences),
 			expectedAssetEntries.size());
 
@@ -325,7 +373,13 @@ public class AssetPublisherDisplayContextTest {
 	private static ConfigurationAdmin _configurationAdmin;
 
 	@Inject
+	private AssetCategoryLocalService _assetCategoryLocalService;
+
+	@Inject
 	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Inject
+	private AssetVocabularyLocalService _assetVocabularyLocalService;
 
 	private Company _company;
 

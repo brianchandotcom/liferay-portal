@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
@@ -72,41 +73,36 @@ public class CaptchaConfigurationModelListenerTest {
 		_testOnBeforeSave(
 			"reCaptchaNoScriptURL",
 			"https://www.test.com/recaptcha/api/fallback?k=",
-			_language.get(
-				LocaleUtil.US, "the-recaptcha-no-script-url-is-not-valid"));
+			"the-recaptcha-no-script-url-is-not-valid");
 		_testOnBeforeSave(
 			"reCaptchaPrivateKey", StringPool.BLANK,
-			_language.get(
-				LocaleUtil.US, "the-recaptcha-public-key-is-not-valid"));
+			"the-recaptcha-public-key-is-not-valid");
 		_testOnBeforeSave(
 			"reCaptchaPublicKey", StringPool.BLANK,
-			_language.get(
-				LocaleUtil.US, "the-recaptcha-private-key-is-not-valid"));
+			"the-recaptcha-private-key-is-not-valid");
 		_testOnBeforeSave(
 			"reCaptchaScriptURL", "https://www.test.com/recaptcha/api.js",
-			_language.get(
-				LocaleUtil.US, "the-recaptcha-script-url-is-not-valid"));
+			"the-recaptcha-script-url-is-not-valid");
 		_testOnBeforeSave(
 			"reCaptchaVerifyURL",
 			"https://www.test.com/recaptcha/api/siteverify",
-			_language.get(
-				LocaleUtil.US, "the-recaptcha-verify-url-is-not-valid"));
+			"the-recaptcha-verify-url-is-not-valid");
 	}
 
 	private AutoCloseable _swapReCaptchaConfiguration(
-		Dictionary<String, Object> properties, String key, String value) {
+		String key, String value) {
 
-		String previousValue = (String)properties.put(key, value);
+		String previousValue = (String)_reCaptchaProperties.put(key, value);
 
-		return () -> properties.put(key, previousValue);
+		return () -> _reCaptchaProperties.put(key, previousValue);
 	}
 
 	private void _testOnBeforeSave(
-			String key, String value, String exceptionMessage)
+			String key, String value, String exceptionMessageKey)
 		throws Exception {
 
 		try (AutoCloseable autoCloseable = _swapReCaptchaConfiguration(
-				_reCaptchaProperties, key, value)) {
+				key, value)) {
 
 			_configurationModelListener.onBeforeSave(
 				StringPool.BLANK, _reCaptchaProperties);
@@ -117,10 +113,10 @@ public class CaptchaConfigurationModelListenerTest {
 					configurationModelListenerException) {
 
 			Assert.assertTrue(
-				configurationModelListenerException.getMessage(
-				).contains(
-					exceptionMessage
-				));
+				StringUtil.contains(
+					configurationModelListenerException.getMessage(),
+					_language.get(LocaleUtil.US, exceptionMessageKey),
+					StringPool.BLANK));
 		}
 	}
 

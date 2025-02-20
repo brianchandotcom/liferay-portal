@@ -4,14 +4,16 @@
  */
 
 import {
-	createActionURL,
-	createRenderURL,
-	fetch,
-	getCheckedCheckboxes,
 	openConfirmModal,
 	openModal,
 	openSelectionModal,
 	openToast,
+} from 'frontend-js-components-web';
+import {
+	createActionURL,
+	createRenderURL,
+	fetch,
+	getCheckedCheckboxes,
 	postForm,
 } from 'frontend-js-web';
 

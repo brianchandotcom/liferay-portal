@@ -3,12 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {
-	getCheckedCheckboxes,
-	openConfirmModal,
-	openSelectionModal,
-	sub,
-} from 'frontend-js-web';
+import {openConfirmModal, openSelectionModal} from 'frontend-js-components-web';
+import {getCheckedCheckboxes, sub} from 'frontend-js-web';
 
 function addEntity(portletNamespace, inputName, entity) {
 	const addUserIdsInput = document.getElementById(

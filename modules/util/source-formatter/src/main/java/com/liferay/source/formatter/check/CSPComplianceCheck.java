@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -165,12 +166,22 @@ public class CSPComplianceCheck extends BaseTagAttributesCheck {
 				if (fileName.endsWith(".jsp") || fileName.endsWith(".jspf") ||
 					fileName.endsWith(".jspx")) {
 
-					addMessage(
-						fileName,
-						StringBundler.concat(
-							"Use <aui:", tagName, "> tag instead of <", tagName,
-							">, see LPD-18227"),
-						lineNumber);
+					if (_illegalTagAuiReplacements.contains(tagName)) {
+						addMessage(
+							fileName,
+							StringBundler.concat(
+								"Use <aui:", tagName, "> tag instead of <",
+								tagName, ">, see LPD-18227"),
+							lineNumber);
+					}
+					else {
+						addMessage(
+							fileName,
+							StringBundler.concat(
+								"Remove usage of <", tagName,
+								"> tag, see LPD-47204"),
+							lineNumber);
+					}
 				}
 				else if (fileName.endsWith(".ftl")) {
 					_checkMissingAttribute(
@@ -228,5 +239,8 @@ public class CSPComplianceCheck extends BaseTagAttributesCheck {
 
 	private static final String _ILLEGAL_TAG_NAMES_DATA_KEY =
 		"illegalTagNamesData";
+
+	private static final List<String> _illegalTagAuiReplacements =
+		Arrays.asList("link:rel=\"stylesheet\"", "script", "style");
 
 }

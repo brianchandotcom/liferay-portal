@@ -42,19 +42,21 @@ async function setAndCheckSorting({
 	await commerceThemeMiniumCatalogPage.configurationIFrameCloseButton.click();
 	await page.reload();
 
-	expect(
+	await expect(
 		await commerceThemeMiniumCatalogPage.orderByButton.innerText()
 	).toContain(sortingOption1);
-	expect(
+	await expect(
 		await commerceThemeMiniumCatalogPage.firstCardItem.innerText()
 	).toContain(firstCardItem);
 
 	await commerceThemeMiniumCatalogPage.orderByButton.click();
 	await commerceThemeMiniumCatalogPage.selectSorting(sortingOption2);
 
-	expect(
-		await commerceThemeMiniumCatalogPage.firstCardItem.innerText()
-	).toContain(firstCardItemAfterChange);
+	await expect(async () => {
+		await expect(
+			await commerceThemeMiniumCatalogPage.firstCardItem.innerText()
+		).toContain(firstCardItemAfterChange);
+	}).toPass();
 }
 
 test('LPD-18714 Setting default sort for commerce products', async ({

@@ -22,6 +22,10 @@ html#{$cadmin-selector} .cadmin {
 				&.drag-handle-cell {
 					width: 0;
 				}
+
+				&.cell-active {
+					min-width: 150px;
+				}
 			}
 		}
 

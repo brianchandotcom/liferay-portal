@@ -5,7 +5,12 @@
 
 package com.liferay.portlet.tck.bridge;
 
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
+import com.liferay.portal.kernel.cookies.CookiesManager;
+import com.liferay.portal.kernel.cookies.constants.CookiesConstants;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -29,6 +34,8 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.tck.bridge.configuration.PortletTCKBridgeConfiguration;
 
 import java.io.File;
+
+import java.lang.reflect.Field;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -70,14 +77,33 @@ public class PortletTCKBridge {
 			ConfigurableUtil.createConfigurable(
 				PortletTCKBridgeConfiguration.class, properties);
 
-		String configFile = portletTCKBridgeConfiguration.configFile();
-
 		InitialRequestSyncUtil.registerSyncCallable(
 			() -> {
-				_setUpPortletTCKSite(company, configFile);
+				_setUpPortletTCKSite(
+					company, portletTCKBridgeConfiguration.configFile());
+
+				_setUpCookies(portletTCKBridgeConfiguration.cookieNames());
 
 				return null;
 			});
+	}
+
+	private void _setUpCookies(String[] cookieNames) {
+		try {
+			Field field = ReflectionUtil.getDeclaredField(
+				_cookiesManager.getClass(), "_knownCookies");
+
+			Map<String, Integer> knowCookies = (Map<String, Integer>)field.get(
+				_cookiesManager);
+
+			for (String cookieName : cookieNames) {
+				knowCookies.put(
+					cookieName, CookiesConstants.CONSENT_TYPE_NECESSARY);
+			}
+		}
+		catch (Exception exception) {
+			_log.error(exception);
+		}
 	}
 
 	private void _setUpPortletTCKSite(Company company, String configFile)
@@ -149,11 +175,17 @@ public class PortletTCKBridge {
 
 	private static final String _TCK_SITE_GROUP_NAME = "Portlet TCK";
 
+	private static final Log _log = LogFactoryUtil.getLog(
+		PortletTCKBridge.class);
+
 	private static final Pattern _portletContextPattern = Pattern.compile(
 		"/(tck-.*)(-[0-9.]+)-SNAPSHOT");
 
 	@Reference
 	private CompanyLocalService _companyLocalService;
+
+	@Reference
+	private CookiesManager _cookiesManager;
 
 	@Reference
 	private GroupLocalService _groupLocalService;

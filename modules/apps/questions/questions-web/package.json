@@ -24,6 +24,7 @@
 		"asset-taglib": "*",
 		"classnames": "2.3.1",
 		"frontend-editor-ckeditor-web": "*",
+		"frontend-js-components-web": "*",
 		"frontend-js-web": "*",
 		"graphql-hooks": "4.4.0",
 		"graphql-hooks-memcache": "^2.1.1",

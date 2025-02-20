@@ -1,0 +1,57 @@
+{
+	"fieldSets": [
+		{
+			"fields": [
+				{
+					"dataType": "string",
+					"defaultValue": "nav-primary",
+					"label": "style",
+					"name": "navType",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "primary",
+								"value": "nav-primary"
+							},
+							{
+								"label": "secondary",
+								"value": "nav-secondary"
+							},
+							{
+								"label": "tertiary",
+								"value": "nav-tertiary"
+							}
+						]
+					}
+				},
+				{
+					"dataType": "string",
+					"defaultValue": "nav-horizontal",
+					"label": "orientation",
+					"name": "orientation",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "horizontal",
+								"value": "nav-horizontal"
+							},
+							{
+								"label": "vertical",
+								"value": "nav-vertical"
+							}
+						]
+					}
+				},
+				{
+					"dataType": "string",
+					"defaultValue": false,
+					"label": "inverted",
+					"name": "inverted",
+					"type": "checkbox"
+				}
+			]
+		}
+	]
+}

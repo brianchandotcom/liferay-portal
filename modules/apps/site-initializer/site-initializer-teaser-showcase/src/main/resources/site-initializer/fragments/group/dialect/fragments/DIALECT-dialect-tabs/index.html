@@ -1,0 +1,41 @@
+<div class="[#if (configuration.tabDirection === 'nav-vertical')]align-items-md-start d-md-flex[/#if]">
+	<nav class="navbar navbar-collapse-absolute navbar-expand-md p-0">
+		<div class="d-md-none nav nav-${configuration.tabStyle} ${configuration.tabActiveBarPosition} ${configuration.tabDirection}">
+			<button aria-controls="navigationBarCollapse-${fragmentEntryLinkNamespace}" aria-expanded="false" aria-label="Tabs Toggle Navigation" class="active collapsed nav-link navbar-toggler navbar-toggler-link" data-toggle="collapse">
+				<span class="navbar-text-truncate">Tab 1</span>
+
+				[@clay["icon"] symbol="caret-bottom" /]
+			</button>
+		</div>
+
+		<div class="bg-white collapse navbar-collapse p-0" id="navigationBarCollapse-${fragmentEntryLinkNamespace}">
+			<ul class="navbar-nav nav nav-${configuration.tabStyle} ${configuration.tabActiveBarPosition} ${configuration.tabDirection}" role="tablist">
+				[#list 0..configuration.numberOfTabs-1 as i]
+					<li class="nav-item">
+						<button aria-controls="tabPanel${i+1}-${fragmentEntryLinkNamespace}" aria-selected="false" class="active nav-link navbar-text-truncate w-100" data-fragment-namespace="${fragmentEntryLinkNamespace}" id="tab${i+1}-${fragmentEntryLinkNamespace}" role="tab">
+							[#if configuration.iconAlignment === 'left']
+								[@clay["icon"] symbol="${configuration.iconName}" /]
+							[/#if]
+
+							<span data-lfr-editable-id="title${i+1}" data-lfr-editable-type="text" data-lfr-priority="${i+1}" tabindex="-1">
+								Tab ${i+1}
+							</span>
+
+							[#if configuration.iconAlignment === 'right']
+								[@clay["icon"] symbol="${configuration.iconName}" /]
+							[/#if]
+						</button>
+					</li>
+				[/#list]
+			</ul>
+		</div>
+	</nav>
+
+	<div class="h-100 tab-panel w-100">
+		[#list 0..configuration.numberOfTabs-1 as i]
+			<div aria-labelledby="tab${i+1}-${fragmentEntryLinkNamespace}" class="d-none tab-panel-item" data-fragment-namespace="${fragmentEntryLinkNamespace}" id="tabPanel${i+1}-${fragmentEntryLinkNamespace}" role="tabpanel" tabindex="0">
+				<lfr-drop-zone data-lfr-drop-zone-id="${i+1}" data-lfr-priority="${i+1}" />
+			</div>
+		[/#list]
+	</div>
+</div>

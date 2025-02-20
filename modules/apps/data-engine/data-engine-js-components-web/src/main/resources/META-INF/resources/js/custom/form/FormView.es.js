@@ -5,7 +5,8 @@
 
 import '../../../css/main.scss';
 
-import {fetch, openModal} from 'frontend-js-web';
+import {openModal} from 'frontend-js-components-web';
+import {fetch} from 'frontend-js-web';
 import React, {
 	useCallback,
 	useEffect,

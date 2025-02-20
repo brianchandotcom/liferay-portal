@@ -12,13 +12,16 @@ import PageTemplateModal from '../../../src/main/resources/META-INF/resources/js
 
 import '@testing-library/jest-dom/extend-expect';
 
+jest.mock('frontend-js-components-web', () => ({
+	openToast: jest.fn(),
+}));
+
 jest.mock('frontend-js-web', () => {
 	const actual = jest.requireActual('frontend-js-web');
 
 	return {
 		...actual,
 		fetch: jest.fn(() => Promise.resolve({json: () => {}})),
-		openToast: jest.fn(),
 		sub: jest.fn((langKey, arg) => langKey.replace('x', arg)),
 	};
 });

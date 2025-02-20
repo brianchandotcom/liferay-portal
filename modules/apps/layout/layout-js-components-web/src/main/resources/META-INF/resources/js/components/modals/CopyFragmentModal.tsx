@@ -7,7 +7,8 @@ import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput, ClaySelectWithOption} from '@clayui/form';
 import ClayModal, {useModal} from '@clayui/modal';
-import {fetch, navigate, openToast, sub} from 'frontend-js-web';
+import {openToast} from 'frontend-js-components-web';
+import {fetch, navigate, sub} from 'frontend-js-web';
 import React, {FormEvent, useMemo, useState} from 'react';
 
 import FormField from './FormField';

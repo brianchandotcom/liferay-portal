@@ -6,6 +6,7 @@
 		"@clayui/label": "3.111.0",
 		"@clayui/nav": "3.127.0",
 		"@clayui/shared": "3.119.0",
+		"frontend-js-components-web": "*",
 		"frontend-js-web": "*",
 		"react": "18.2.0"
 	},

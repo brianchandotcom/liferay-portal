@@ -747,7 +747,7 @@ public class VariableNameCheck extends BaseCheck {
 
 				_checkVariableNameByMethodCall(
 					firstChildDetailAST, variableName, "ReflectionTestUtil",
-					"getAndSetFieldValue");
+					"getAndSetFieldValue", detailAST);
 
 				methodName = getMethodName(firstChildDetailAST);
 
@@ -776,7 +776,7 @@ public class VariableNameCheck extends BaseCheck {
 
 				_checkVariableNameByMethodCall(
 					nextSiblingDetailAST, variableName, "ReflectionTestUtil",
-					"getAndSetFieldValue");
+					"getAndSetFieldValue", firstChildDetailAST);
 
 				methodName = getMethodName(nextSiblingDetailAST);
 
@@ -790,10 +790,10 @@ public class VariableNameCheck extends BaseCheck {
 	}
 
 	private void _checkVariableNameByMethodCall(
-		DetailAST detailAST, String variableName, String className,
-		String methodName) {
+		DetailAST methodCallDetailAST, String variableName, String className,
+		String methodName, DetailAST detailAST) {
 
-		DetailAST firstChildDetailAST = detailAST.getFirstChild();
+		DetailAST firstChildDetailAST = methodCallDetailAST.getFirstChild();
 
 		if ((firstChildDetailAST == null) ||
 			(firstChildDetailAST.getType() != TokenTypes.DOT)) {

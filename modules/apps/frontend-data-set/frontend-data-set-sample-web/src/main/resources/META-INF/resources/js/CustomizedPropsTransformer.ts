@@ -4,7 +4,7 @@
  */
 
 import {IInternalRenderer} from '@liferay/frontend-data-set-web';
-import {openModal} from 'frontend-js-web';
+import {openModal} from 'frontend-js-components-web';
 
 import CustomAuthorTableCell from './CustomAuthorTableCell';
 
@@ -63,8 +63,8 @@ export default function propsTransformer({
 					buttons: [
 						{
 							label: 'OK',
-							onClick: ({closeModal}: {closeModal: Function}) => {
-								closeModal();
+							onClick: ({processClose}) => {
+								processClose();
 
 								loadData();
 							},

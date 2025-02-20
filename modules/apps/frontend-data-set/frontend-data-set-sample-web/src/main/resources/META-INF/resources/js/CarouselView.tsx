@@ -55,7 +55,11 @@ const CarouselView = ({
 					<img
 						alt={items[selectedIndex][schema.title]}
 						className="main-image"
-						src={items[selectedIndex][schema.image]}
+						src={
+							schema.image
+								? items[selectedIndex][schema.image]
+								: undefined
+						}
 					/>
 
 					<div className="card-info">

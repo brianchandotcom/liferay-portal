@@ -6,7 +6,8 @@
 import ClayAlert from '@clayui/alert';
 import ClayLayout from '@clayui/layout';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
-import {fetch, navigate, openConfirmModal, unescapeHTML} from 'frontend-js-web';
+import {openConfirmModal} from 'frontend-js-components-web';
+import {fetch, navigate, unescapeHTML} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useMemo, useReducer, useState} from 'react';
 

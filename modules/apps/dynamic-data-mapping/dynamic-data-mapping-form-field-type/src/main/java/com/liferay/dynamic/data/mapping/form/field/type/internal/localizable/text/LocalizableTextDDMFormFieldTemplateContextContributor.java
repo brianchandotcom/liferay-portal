@@ -72,6 +72,11 @@ public class LocalizableTextDDMFormFieldTemplateContextContributor
 					ddmForm.getDefaultLocale()));
 		}
 
+		parameters.put(
+			"localizedObjectField",
+			GetterUtil.getBoolean(
+				ddmFormField.getProperty("localizedObjectField")));
+
 		String predefinedValue = _getPredefinedValue(
 			ddmFormField, ddmFormFieldRenderingContext);
 

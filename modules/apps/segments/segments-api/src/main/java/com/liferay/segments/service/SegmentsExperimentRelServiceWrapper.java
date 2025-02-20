@@ -60,11 +60,11 @@ public class SegmentsExperimentRelServiceWrapper
 
 	@Override
 	public SegmentsExperimentRel getSegmentsExperimentRel(
-			long segmentsExperimentId, long segmentsExperienceId)
+			long segmentsExperimentId, String segmentsExperienceKey)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _segmentsExperimentRelService.getSegmentsExperimentRel(
-			segmentsExperimentId, segmentsExperienceId);
+			segmentsExperimentId, segmentsExperienceKey);
 	}
 
 	@Override

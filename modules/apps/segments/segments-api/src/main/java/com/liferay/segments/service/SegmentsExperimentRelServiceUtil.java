@@ -57,11 +57,11 @@ public class SegmentsExperimentRelServiceUtil {
 	}
 
 	public static SegmentsExperimentRel getSegmentsExperimentRel(
-			long segmentsExperimentId, long segmentsExperienceId)
+			long segmentsExperimentId, String segmentsExperienceKey)
 		throws PortalException {
 
 		return getService().getSegmentsExperimentRel(
-			segmentsExperimentId, segmentsExperienceId);
+			segmentsExperimentId, segmentsExperienceKey);
 	}
 
 	public static List<SegmentsExperimentRel> getSegmentsExperimentRels(

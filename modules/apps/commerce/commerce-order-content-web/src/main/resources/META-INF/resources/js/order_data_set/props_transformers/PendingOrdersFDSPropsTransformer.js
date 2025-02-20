@@ -4,7 +4,8 @@
  */
 
 import {CommerceServiceProvider, commerceEvents} from 'commerce-frontend-js';
-import {openConfirmModal, openToast, sub} from 'frontend-js-web';
+import {openConfirmModal, openToast} from 'frontend-js-components-web';
+import {sub} from 'frontend-js-web';
 
 import {openOrderNameModal} from './util';
 

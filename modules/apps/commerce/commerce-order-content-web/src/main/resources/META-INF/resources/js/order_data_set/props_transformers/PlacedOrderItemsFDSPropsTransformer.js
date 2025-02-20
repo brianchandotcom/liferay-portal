@@ -4,7 +4,8 @@
  */
 
 import {MiniCartUtils} from 'commerce-frontend-js';
-import {createPortletURL, openModal} from 'frontend-js-web';
+import {openModal} from 'frontend-js-components-web';
+import {createPortletURL} from 'frontend-js-web';
 
 import ProductOptionsDataRenderer from '../data_renderers/ProductOptionsDataRenderer';
 import ProductURLDataRenderer from '../data_renderers/ProductURLDataRenderer';

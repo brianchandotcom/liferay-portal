@@ -5,7 +5,7 @@
 
 import ClayMultiStepNav from '@clayui/multi-step-nav';
 import {commerceEvents} from 'commerce-frontend-js';
-import {openToast} from 'frontend-js-web';
+import {openToast} from 'frontend-js-components-web';
 import React, {useCallback, useEffect, useState} from 'react';
 
 import {getOrder} from './util';

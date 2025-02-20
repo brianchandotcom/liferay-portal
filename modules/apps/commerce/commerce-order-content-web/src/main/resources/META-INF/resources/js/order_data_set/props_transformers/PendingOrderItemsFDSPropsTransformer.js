@@ -8,7 +8,7 @@ import {
 	MiniCartUtils,
 	commerceEvents,
 } from 'commerce-frontend-js';
-import {openToast} from 'frontend-js-web';
+import {openToast} from 'frontend-js-components-web';
 
 import ProductOptionsDataRenderer from '../data_renderers/ProductOptionsDataRenderer';
 import ProductURLDataRenderer from '../data_renderers/ProductURLDataRenderer';

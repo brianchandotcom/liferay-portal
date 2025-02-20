@@ -11,7 +11,8 @@ import ClayForm, {
 import ClayIcon from '@clayui/icon';
 import classnames from 'classnames';
 import {CommerceServiceProvider} from 'commerce-frontend-js';
-import {openToast, sub} from 'frontend-js-web';
+import {openToast} from 'frontend-js-components-web';
+import {sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 const InfoBoxModalAddressInput = ({

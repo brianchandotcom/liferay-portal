@@ -4,7 +4,8 @@
  */
 
 import {CommerceServiceProvider, commerceEvents} from 'commerce-frontend-js';
-import {createPortletURL, openModal, openToast} from 'frontend-js-web';
+import {openModal, openToast} from 'frontend-js-components-web';
+import {createPortletURL} from 'frontend-js-web';
 
 function toggleModalTitleTooltip(isShow) {
 	const tooltipElement = document.querySelector(

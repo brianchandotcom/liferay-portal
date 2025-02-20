@@ -6,7 +6,8 @@
 import ClayButton from '@clayui/button';
 import {useModal} from '@clayui/modal';
 import {CommerceServiceProvider, commerceEvents} from 'commerce-frontend-js';
-import {openToast, sub} from 'frontend-js-web';
+import {openToast} from 'frontend-js-components-web';
+import {sub} from 'frontend-js-web';
 import React, {useCallback, useEffect, useState} from 'react';
 
 import InfoBoxModal from '../InfoBoxModal';

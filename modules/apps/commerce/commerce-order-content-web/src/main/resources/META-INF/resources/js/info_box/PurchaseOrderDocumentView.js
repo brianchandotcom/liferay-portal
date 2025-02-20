@@ -7,7 +7,8 @@ import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import {CommerceServiceProvider} from 'commerce-frontend-js';
-import {openToast, sub} from 'frontend-js-web';
+import {openToast} from 'frontend-js-components-web';
+import {sub} from 'frontend-js-web';
 import React, {useRef, useState} from 'react';
 
 import {isEditable} from '../util';

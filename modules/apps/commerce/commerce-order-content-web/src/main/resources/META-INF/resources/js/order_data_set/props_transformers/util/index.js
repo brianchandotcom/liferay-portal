@@ -4,7 +4,7 @@
  */
 
 import {CommerceServiceProvider} from 'commerce-frontend-js';
-import {openModal, openToast} from 'frontend-js-web';
+import {openModal, openToast} from 'frontend-js-components-web';
 
 const DeliveryOrderAPI = CommerceServiceProvider.DeliveryOrderAPI('v1');
 const DeliveryCartAPI = CommerceServiceProvider.DeliveryCartAPI('v1');

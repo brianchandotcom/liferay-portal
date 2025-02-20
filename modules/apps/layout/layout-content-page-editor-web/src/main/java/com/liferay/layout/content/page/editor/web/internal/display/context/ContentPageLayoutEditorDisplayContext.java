@@ -183,10 +183,15 @@ public class ContentPageLayoutEditorDisplayContext
 			SegmentsExperienceUtil.getAvailableSegmentsExperiences(
 				httpServletRequest));
 		stateContext.put("layoutDataList", _getLayoutDataList());
+
+		SegmentsExperience segmentsExperience =
+			segmentsExperienceLocalService.fetchSegmentsExperience(
+				getSegmentsExperienceId());
+
 		stateContext.put(
 			"segmentsExperimentStatus",
 			SegmentsExperienceUtil.getSegmentsExperimentStatus(
-				themeDisplay, getSegmentsExperienceId()));
+				themeDisplay, segmentsExperience.getSegmentsExperienceKey()));
 
 		Map<String, Object> permissionsContext =
 			(Map<String, Object>)stateContext.get("permissions");

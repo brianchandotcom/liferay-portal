@@ -42,7 +42,6 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.segments.constants.SegmentsExperimentConstants;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.model.SegmentsExperiment;
-import com.liferay.segments.service.SegmentsExperienceLocalServiceUtil;
 import com.liferay.segments.service.SegmentsExperienceServiceUtil;
 import com.liferay.segments.service.SegmentsExperimentLocalServiceUtil;
 
@@ -122,7 +121,7 @@ public class SegmentsExperienceUtil {
 					"segmentsExperimentStatus",
 					getSegmentsExperimentStatus(
 						themeDisplay,
-						segmentsExperience.getSegmentsExperienceId())
+						segmentsExperience.getSegmentsExperienceKey())
 				).put(
 					"segmentsExperimentURL",
 					_getSegmentsExperimentURL(
@@ -155,11 +154,12 @@ public class SegmentsExperienceUtil {
 	}
 
 	public static Map<String, Object> getSegmentsExperimentStatus(
-			ThemeDisplay themeDisplay, long segmentsExperienceId)
-		throws Exception {
+		ThemeDisplay themeDisplay, String segmentsExperienceKey) {
 
-		SegmentsExperiment segmentsExperiment = _getSegmentsExperiment(
-			themeDisplay, segmentsExperienceId);
+		SegmentsExperiment segmentsExperiment =
+			SegmentsExperimentLocalServiceUtil.fetchSegmentsExperiment(
+				themeDisplay.getScopeGroupId(), segmentsExperienceKey,
+				themeDisplay.getPlid());
 
 		if (segmentsExperiment == null) {
 			return null;
@@ -300,24 +300,6 @@ public class SegmentsExperienceUtil {
 			existingPortletPreferences.getPortletId(), jxPortletPreferences);
 	}
 
-	private static SegmentsExperiment _getSegmentsExperiment(
-			ThemeDisplay themeDisplay, long segmentsExperienceId)
-		throws Exception {
-
-		SegmentsExperience segmentsExperience =
-			SegmentsExperienceLocalServiceUtil.fetchSegmentsExperience(
-				segmentsExperienceId);
-
-		Layout draftLayout = themeDisplay.getLayout();
-
-		Layout layout = LayoutLocalServiceUtil.getLayout(
-			draftLayout.getClassPK());
-
-		return SegmentsExperimentLocalServiceUtil.fetchSegmentsExperiment(
-			themeDisplay.getScopeGroupId(),
-			segmentsExperience.getSegmentsExperienceKey(), layout.getPlid());
-	}
-
 	private static String _getSegmentsExperimentURL(
 		ThemeDisplay themeDisplay, String layoutFullURL,
 		long segmentsExperienceId) {
@@ -378,17 +360,11 @@ public class SegmentsExperienceUtil {
 				JSONFactoryUtil.createJSONObject(
 					fragmentEntryLink.getEditableValues());
 
-			long segmentsExperimentPlid = layout.getPlid();
-
-			if (layout.isDraftLayout()) {
-				segmentsExperimentPlid = layout.getClassPK();
-			}
-
 			SegmentsExperiment segmentsExperiment =
 				SegmentsExperimentLocalServiceUtil.fetchSegmentsExperiment(
 					groupId,
 					sourceSegmentsExperience.getSegmentsExperienceKey(),
-					segmentsExperimentPlid);
+					layout.getPlid());
 
 			if (Validator.isNull(
 					editableValuesJSONObject.getString("instanceId")) &&

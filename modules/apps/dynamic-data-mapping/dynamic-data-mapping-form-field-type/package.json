@@ -26,6 +26,7 @@
 		"classnames": "2.3.1",
 		"data-engine-js-components-web": "*",
 		"frontend-editor-ckeditor-web": "*",
+		"frontend-js-components-web": "*",
 		"frontend-js-web": "*",
 		"leaflet": "1.7.1",
 		"moment": "2.29.4",

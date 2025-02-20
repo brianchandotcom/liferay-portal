@@ -14,7 +14,8 @@ import {
 	useConfig,
 	useFormState,
 } from 'data-engine-js-components-web';
-import {formatStorage, openSelectionModal, sub} from 'frontend-js-web';
+import {openSelectionModal} from 'frontend-js-components-web';
+import {formatStorage, sub} from 'frontend-js-web';
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 
 import FieldBase from '../FieldBase/ReactFieldBase.es';

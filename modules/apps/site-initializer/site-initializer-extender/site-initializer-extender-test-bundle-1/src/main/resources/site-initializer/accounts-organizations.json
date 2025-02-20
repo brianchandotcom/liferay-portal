@@ -10,5 +10,11 @@
 		"organizations": [
 			"TESTORGANIZATION2"
 		]
+	},
+	{
+		"accountExternalReferenceCode": "TESTACCOUNT2",
+		"organizations": [
+			"TESTORGANIZATION2"
+		]
 	}
 ]

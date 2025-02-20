@@ -10,5 +10,11 @@
 		"accounts": [
 			"TESTACCOUNT2"
 		]
+	},
+	{
+		"accountGroupExternalReferenceCode": "TESTACCOUNTGROUP2",
+		"accounts": [
+			"TESTACCOUNT2"
+		]
 	}
 ]

@@ -4,7 +4,7 @@
  */
 
 import ClipboardJS from 'clipboard';
-import {openToast} from 'frontend-js-web';
+import {openToast} from 'frontend-js-components-web';
 
 export default function initializeClipboard({selector}) {
 	const clipboardJS = new ClipboardJS(selector);

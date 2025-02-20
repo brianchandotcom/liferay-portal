@@ -6,12 +6,8 @@
 import ClayIcon from '@clayui/icon';
 import {State} from '@liferay/frontend-js-state-web';
 import classNames from 'classnames';
-import {
-	STATUS_CODE,
-	formatStorage,
-	openSelectionModal,
-	sub,
-} from 'frontend-js-web';
+import {openSelectionModal} from 'frontend-js-components-web';
+import {STATUS_CODE, formatStorage, sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useRef, useState} from 'react';
 

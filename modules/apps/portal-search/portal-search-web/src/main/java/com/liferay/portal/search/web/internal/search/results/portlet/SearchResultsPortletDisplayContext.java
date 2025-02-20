@@ -5,6 +5,7 @@
 
 package com.liferay.portal.search.web.internal.search.results.portlet;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
@@ -154,16 +155,10 @@ public class SearchResultsPortletDisplayContext implements Serializable {
 	public List<SearchResultSummaryDisplayContext>
 		translateSearchResultSummaryDisplayContexts(List<Document> documents) {
 
-		List<SearchResultSummaryDisplayContext>
-			searchResultSummaryDisplayContexts = new ArrayList<>();
-
-		for (Document doc : documents) {
-			searchResultSummaryDisplayContexts.add(
-				Objects.requireNonNull(
-					getSearchResultSummaryDisplayContext(doc)));
-		}
-
-		return searchResultSummaryDisplayContexts;
+		return TransformUtil.transform(
+			documents,
+			document -> Objects.requireNonNull(
+				getSearchResultSummaryDisplayContext(document)));
 	}
 
 	private long _displayStyleGroupId;

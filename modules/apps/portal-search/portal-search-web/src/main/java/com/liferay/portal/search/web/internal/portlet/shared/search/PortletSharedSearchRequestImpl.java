@@ -9,6 +9,7 @@ import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -47,7 +48,6 @@ import com.liferay.portal.search.web.search.request.SearchSettingsContributor;
 import com.liferay.segments.manager.SegmentsExperienceManager;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -180,23 +180,20 @@ public class PortletSharedSearchRequestImpl
 	private List<Portlet> _getInstantiatedPortlets(
 		Layout layout, long segmentsExperienceId) {
 
-		List<Portlet> instantiatedPortlets = new ArrayList<>();
+		return TransformUtil.transform(
+			_getSegmentExperiencePortletIds(layout, segmentsExperienceId),
+			segmentExperiencePortletId -> {
+				Portlet portlet = portletLocalService.getPortletById(
+					layout.getCompanyId(), segmentExperiencePortletId);
 
-		Set<String> segmentExperiencePortletIds =
-			_getSegmentExperiencePortletIds(layout, segmentsExperienceId);
+				if (portlet.isInstanceable() &&
+					Validator.isNotNull(portlet.getInstanceId())) {
 
-		for (String segmentExperiencePortletId : segmentExperiencePortletIds) {
-			Portlet portlet = portletLocalService.getPortletById(
-				layout.getCompanyId(), segmentExperiencePortletId);
+					return portlet;
+				}
 
-			if (portlet.isInstanceable() &&
-				Validator.isNotNull(portlet.getInstanceId())) {
-
-				instantiatedPortlets.add(portlet);
-			}
-		}
-
-		return instantiatedPortlets;
+				return null;
+			});
 	}
 
 	private List<Portlet> _getPortlets(
@@ -277,28 +274,16 @@ public class PortletSharedSearchRequestImpl
 	private List<SearchSettingsContributor> _getSearchSettingsContributors(
 		ThemeDisplay themeDisplay, RenderRequest renderRequest) {
 
-		List<SearchSettingsContributor> searchSettingsContributors =
-			new ArrayList<>();
-
 		SegmentsExperienceManager segmentsExperienceManager =
 			new SegmentsExperienceManager(_segmentsExperienceLocalService);
 
-		List<Portlet> portlets = _getPortlets(
-			themeDisplay.getLayout(),
-			segmentsExperienceManager.getSegmentsExperienceId(
-				_portal.getHttpServletRequest(renderRequest)));
-
-		for (Portlet portlet : portlets) {
-			SearchSettingsContributor searchSettingsContributor =
-				_getSearchSettingsContributor(
-					portlet, themeDisplay, renderRequest);
-
-			if (searchSettingsContributor != null) {
-				searchSettingsContributors.add(searchSettingsContributor);
-			}
-		}
-
-		return searchSettingsContributors;
+		return TransformUtil.transform(
+			_getPortlets(
+				themeDisplay.getLayout(),
+				segmentsExperienceManager.getSegmentsExperienceId(
+					_portal.getHttpServletRequest(renderRequest))),
+			portlet -> _getSearchSettingsContributor(
+				portlet, themeDisplay, renderRequest));
 	}
 
 	private Set<String> _getSegmentExperiencePortletIds(

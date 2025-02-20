@@ -5,6 +5,7 @@
 
 package com.liferay.portal.search.opensearch2.internal.search.engine.adapter.index;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -195,57 +196,51 @@ public class AnalyzeIndexRequestExecutorImpl
 	private List<AnalysisIndexResponseToken> _translateAnalyzeTokens(
 		List<AnalyzeToken> analyzeTokens) {
 
-		List<AnalysisIndexResponseToken> analysisIndexResponseTokens =
-			new ArrayList<>();
+		return TransformUtil.transform(
+			analyzeTokens,
+			analyzeToken -> {
+				AnalysisIndexResponseToken analysisIndexResponseToken =
+					new AnalysisIndexResponseToken(analyzeToken.token());
 
-		for (AnalyzeToken analyzeToken : analyzeTokens) {
-			AnalysisIndexResponseToken analysisIndexResponseToken =
-				new AnalysisIndexResponseToken(analyzeToken.token());
+				analysisIndexResponseToken.setEndOffset(
+					Math.toIntExact(analyzeToken.endOffset()));
+				analysisIndexResponseToken.setPosition(
+					Math.toIntExact(analyzeToken.position()));
 
-			analysisIndexResponseToken.setEndOffset(
-				Math.toIntExact(analyzeToken.endOffset()));
-			analysisIndexResponseToken.setPosition(
-				Math.toIntExact(analyzeToken.position()));
+				if (analyzeToken.positionLength() != null) {
+					analysisIndexResponseToken.setPositionLength(
+						Math.toIntExact(analyzeToken.positionLength()));
+				}
 
-			if (analyzeToken.positionLength() != null) {
-				analysisIndexResponseToken.setPositionLength(
-					Math.toIntExact(analyzeToken.positionLength()));
-			}
+				analysisIndexResponseToken.setStartOffset(
+					Math.toIntExact(analyzeToken.startOffset()));
+				analysisIndexResponseToken.setType(analyzeToken.type());
 
-			analysisIndexResponseToken.setStartOffset(
-				Math.toIntExact(analyzeToken.startOffset()));
-			analysisIndexResponseToken.setType(analyzeToken.type());
-
-			analysisIndexResponseTokens.add(analysisIndexResponseToken);
-		}
-
-		return analysisIndexResponseTokens;
+				return analysisIndexResponseToken;
+			});
 	}
 
 	private List<AnalysisIndexResponseToken> _translateExplainAnalyzeTokens(
 		List<ExplainAnalyzeToken> explainAnalyzeTokens) {
 
-		List<AnalysisIndexResponseToken> analysisIndexResponseTokens =
-			new ArrayList<>();
+		return TransformUtil.transform(
+			explainAnalyzeTokens,
+			explainAnalyzeToken -> {
+				AnalysisIndexResponseToken analysisIndexResponseToken =
+					new AnalysisIndexResponseToken(explainAnalyzeToken.token());
 
-		for (ExplainAnalyzeToken explainAnalyzeToken : explainAnalyzeTokens) {
-			AnalysisIndexResponseToken analysisIndexResponseToken =
-				new AnalysisIndexResponseToken(explainAnalyzeToken.token());
+				analysisIndexResponseToken.setEndOffset(
+					Math.toIntExact(explainAnalyzeToken.endOffset()));
+				analysisIndexResponseToken.setPosition(
+					Math.toIntExact(explainAnalyzeToken.position()));
+				analysisIndexResponseToken.setPositionLength(
+					Math.toIntExact(explainAnalyzeToken.positionlength()));
+				analysisIndexResponseToken.setStartOffset(
+					Math.toIntExact(explainAnalyzeToken.startOffset()));
+				analysisIndexResponseToken.setType(explainAnalyzeToken.type());
 
-			analysisIndexResponseToken.setEndOffset(
-				Math.toIntExact(explainAnalyzeToken.endOffset()));
-			analysisIndexResponseToken.setPosition(
-				Math.toIntExact(explainAnalyzeToken.position()));
-			analysisIndexResponseToken.setPositionLength(
-				Math.toIntExact(explainAnalyzeToken.positionlength()));
-			analysisIndexResponseToken.setStartOffset(
-				Math.toIntExact(explainAnalyzeToken.startOffset()));
-			analysisIndexResponseToken.setType(explainAnalyzeToken.type());
-
-			analysisIndexResponseTokens.add(analysisIndexResponseToken);
-		}
-
-		return analysisIndexResponseTokens;
+				return analysisIndexResponseToken;
+			});
 	}
 
 	@Reference

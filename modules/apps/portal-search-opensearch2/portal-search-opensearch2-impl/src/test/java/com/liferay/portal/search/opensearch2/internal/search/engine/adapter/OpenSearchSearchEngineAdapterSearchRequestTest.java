@@ -5,6 +5,7 @@
 
 package com.liferay.portal.search.opensearch2.internal.search.engine.adapter;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -49,7 +50,6 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.io.IOException;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -564,15 +564,10 @@ public class OpenSearchSearchEngineAdapterSearchRequestTest
 		List<SuggestSearchResult.Entry.Option>
 			suggestSearchResultEntryOptions) {
 
-		List<String> options = new ArrayList<>();
-
-		for (SuggestSearchResult.Entry.Option suggestSearchResultEntryOption :
-				suggestSearchResultEntryOptions) {
-
-			options.add(suggestSearchResultEntryOption.getText());
-		}
-
-		return options;
+		return TransformUtil.transform(
+			suggestSearchResultEntryOptions,
+			suggestSearchResultEntryOption ->
+				suggestSearchResultEntryOption.getText());
 	}
 
 	private static final long _DEFAULT_COMPANY_ID = 12345;

@@ -10,7 +10,8 @@ import Icon from '@clayui/icon';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import {API, stringUtils} from '@liferay/object-js-components-web';
 import classNames from 'classnames';
-import {openToast, sub} from 'frontend-js-web';
+import {openToast} from 'frontend-js-components-web';
+import {sub} from 'frontend-js-web';
 import React from 'react';
 import {Node, useStoreState, useZoomPanHelper} from 'react-flow-renderer';
 

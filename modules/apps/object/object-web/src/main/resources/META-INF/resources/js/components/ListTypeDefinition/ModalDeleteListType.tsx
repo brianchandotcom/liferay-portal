@@ -7,7 +7,7 @@ import ClayButton from '@clayui/button';
 import {Text} from '@clayui/core';
 import ClayModal, {useModal} from '@clayui/modal';
 import {API} from '@liferay/object-js-components-web';
-import {openToast} from 'frontend-js-web';
+import {openToast} from 'frontend-js-components-web';
 import React, {useEffect, useState} from 'react';
 
 export interface IModalState extends Partial<ListTypeEntry> {

@@ -12,7 +12,8 @@ import {
 
 } from '@liferay/frontend-data-set-web';
 import classNames from 'classnames';
-import {openToast, sessionStorage} from 'frontend-js-web';
+import {openToast} from 'frontend-js-components-web';
+import {sessionStorage} from 'frontend-js-web';
 import React, {useEffect, useMemo, useState} from 'react';
 
 import {defaultFDSDataSetProps, formatActionURL} from '../../utils/fds';

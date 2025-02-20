@@ -5,8 +5,11 @@
 
 import {API} from '@liferay/object-js-components-web';
 import classNames from 'classnames';
-import {LearnMessage, LearnResourcesContext} from 'frontend-js-components-web';
-import {openToast} from 'frontend-js-web';
+import {
+	LearnMessage,
+	LearnResourcesContext,
+	openToast,
+} from 'frontend-js-components-web';
 import React, {useCallback, useState} from 'react';
 import ReactFlow, {
 	Background,
@@ -124,21 +127,23 @@ function DiagramBuilder() {
 			if (unsupportedObjectRelationship?.errorMessage) {
 				openToast({
 					message: unsupportedObjectRelationship?.errorMessage,
-					toastProps: unsupportedObjectRelationship.learnMessage && {
-						actions: (
-							<LearnResourcesContext.Provider
-								value={learnResourceContext}
-							>
-								<LearnMessage
-									className="alert-link"
-									resource="object-web"
-									resourceKey={
-										unsupportedObjectRelationship.learnMessage
-									}
-								/>
-							</LearnResourcesContext.Provider>
-						),
-					},
+					toastProps: unsupportedObjectRelationship.learnMessage
+						? {
+								actions: (
+									<LearnResourcesContext.Provider
+										value={learnResourceContext}
+									>
+										<LearnMessage
+											className="alert-link"
+											resource="object-web"
+											resourceKey={
+												unsupportedObjectRelationship.learnMessage
+											}
+										/>
+									</LearnResourcesContext.Provider>
+								),
+							}
+						: undefined,
 					type: 'warning',
 				});
 			}

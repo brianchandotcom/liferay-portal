@@ -12,8 +12,7 @@ import {
 	constantsUtils,
 	invalidateRequired,
 } from '@liferay/object-js-components-web';
-import {InputLocalized} from 'frontend-js-components-web';
-import {openToast} from 'frontend-js-web';
+import {InputLocalized, openToast} from 'frontend-js-components-web';
 import React, {useEffect, useState} from 'react';
 
 import {defaultLanguageId} from '../../utils/constants';

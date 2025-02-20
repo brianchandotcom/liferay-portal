@@ -4,7 +4,8 @@
  */
 
 import {API} from '@liferay/object-js-components-web';
-import {createResourceURL, openModal, sub} from 'frontend-js-web';
+import {openModal} from 'frontend-js-components-web';
+import {createResourceURL, sub} from 'frontend-js-web';
 import {SetStateAction} from 'react';
 
 import {exportObjectEntity} from '../../utils/exportObjectEntity';

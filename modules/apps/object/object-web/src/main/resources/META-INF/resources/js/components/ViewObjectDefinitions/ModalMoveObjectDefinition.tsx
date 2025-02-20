@@ -15,8 +15,8 @@ import {
 	arrayUtils,
 	stringUtils,
 } from '@liferay/object-js-components-web';
-import {ManagementToolbar} from 'frontend-js-components-web';
-import {openToast, sub} from 'frontend-js-web';
+import {ManagementToolbar, openToast} from 'frontend-js-components-web';
+import {sub} from 'frontend-js-web';
 import React, {useEffect, useMemo, useState} from 'react';
 
 import {defaultLanguageId} from '../../utils/constants';

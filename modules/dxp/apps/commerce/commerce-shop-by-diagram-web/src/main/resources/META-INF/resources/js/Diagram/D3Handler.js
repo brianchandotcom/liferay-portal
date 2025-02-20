@@ -4,7 +4,7 @@
  */
 
 import {drag as d3drag, event as d3event, select as d3select} from 'd3';
-import {openToast} from 'frontend-js-web';
+import {openToast} from 'frontend-js-components-web';
 
 import DiagramZoomHandler from '../utilities/DiagramZoomHandler';
 import {

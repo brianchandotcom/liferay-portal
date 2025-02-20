@@ -4,7 +4,8 @@
  */
 
 import {State} from '@liferay/frontend-js-state-web';
-import {fetch, navigate, openToast} from 'frontend-js-web';
+import {openToast} from 'frontend-js-components-web';
+import {fetch, navigate} from 'frontend-js-web';
 import {imageSelectorImageAtom} from 'item-selector-taglib';
 
 export const HEADERS = new Headers({

@@ -34,7 +34,6 @@ function AccountSelector({
 	currentCommerceAccount: account,
 	currentCommerceOrder: order,
 	hasAddCommerceOrderPermission,
-	hasCommerceOpenOrderContentPortlet,
 	hasManageAccountsPermission,
 	orderTypes,
 	refreshPageOnAccountSelected: forceRefresh,
@@ -155,9 +154,6 @@ function AccountSelector({
 						hasAddCommerceOrderPermission={
 							hasAddCommerceOrderPermission
 						}
-						hasCommerceOpenOrderContentPortlet={
-							hasCommerceOpenOrderContentPortlet
-						}
 						orderTypes={orderTypes}
 						selectOrderURL={selectOrderURL}
 						setCurrentView={setCurrentView}
@@ -203,7 +199,6 @@ AccountSelector.propTypes = {
 		}),
 	}),
 	hasAddCommerceOrderPermission: PropTypes.bool,
-	hasCommerceOpenOrderContentPortlet: PropTypes.bool,
 	hasManageAccountsPermission: PropTypes.bool,
 	orderTypes: PropTypes.array,
 	refreshPageOnAccountSelected: PropTypes.bool,

@@ -21,10 +21,9 @@ import com.liferay.commerce.frontend.taglib.internal.model.WorkflowStatusModel;
 import com.liferay.commerce.frontend.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderType;
+import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.service.CommerceOrderTypeLocalService;
-import com.liferay.commerce.util.CommerceOrderInfoItemUtil;
-import com.liferay.friendly.url.provider.FriendlyURLSeparatorProvider;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
@@ -47,7 +46,6 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -96,7 +94,9 @@ public class AccountSelectorTag extends IncludeTag {
 			_accountEntry = commerceContext.getAccountEntry();
 			_accountEntryAllowedTypes =
 				commerceContext.getAccountEntryAllowedTypes();
-			_addCommerceOrderURL = _getAddCommerceOrderURL(httpServletRequest);
+			_addCommerceOrderURL =
+				_commerceOrderHttpHelper.getCommerceCartBaseURL(
+					httpServletRequest);
 			_checkoutURL = _getCheckoutURL(httpServletRequest);
 			_commerceOrder = commerceContext.getCommerceOrder();
 
@@ -155,6 +155,8 @@ public class AccountSelectorTag extends IncludeTag {
 
 		setServletContext(ServletContextUtil.getServletContext());
 
+		_commerceOrderHttpHelper =
+			ServletContextUtil.getCommerceOrderHttpHelper();
 		_commerceOrderPortletResourcePermission =
 			ServletContextUtil.getCommerceOrderPortletResourcePermission();
 		_commerceOrderTypeLocalService =
@@ -177,6 +179,7 @@ public class AccountSelectorTag extends IncludeTag {
 		_commerceChannelGroupId = 0;
 		_commerceChannelId = 0;
 		_commerceOrder = null;
+		_commerceOrderHttpHelper = null;
 		_commerceOrderPortletResourcePermission = null;
 		_commerceOrderTypeLocalService = null;
 		_configurationProvider = null;
@@ -259,10 +262,6 @@ public class AccountSelectorTag extends IncludeTag {
 			"liferay-commerce:account-selector:hasAddCommerceOrderPermission",
 			_hasAddCommerceOrderPermission());
 		httpServletRequest.setAttribute(
-			"liferay-commerce:account-selector:" +
-				"hasCommerceOpenOrderContentPortlet",
-			_hasCommerceOpenOrderContentPortlet(httpServletRequest));
-		httpServletRequest.setAttribute(
 			"liferay-commerce:account-selector:hasManageAccountsPermission",
 			_hasManageAccountsPermission());
 		httpServletRequest.setAttribute(
@@ -276,26 +275,6 @@ public class AccountSelectorTag extends IncludeTag {
 			_setCurrentAccountURL);
 		httpServletRequest.setAttribute(
 			"liferay-commerce:account-selector:spritemap", _spritemap);
-	}
-
-	private String _getAddCommerceOrderURL(
-			HttpServletRequest httpServletRequest)
-		throws PortalException {
-
-		if (_hasCommerceOpenOrderContentPortlet(httpServletRequest)) {
-			return PortletURLBuilder.create(
-				_getPortletURL(
-					httpServletRequest,
-					CommercePortletKeys.COMMERCE_OPEN_ORDER_CONTENT)
-			).setActionName(
-				"/commerce_open_order_content/edit_commerce_order"
-			).setCMD(
-				Constants.ADD
-			).buildString();
-		}
-
-		return CommerceOrderInfoItemUtil.getCommerceOrderFriendlyURL(
-			_friendlyURLSeparatorProviderSnapshot.get(), httpServletRequest);
 	}
 
 	private String _getCheckoutURL(HttpServletRequest httpServletRequest)
@@ -437,25 +416,6 @@ public class AccountSelectorTag extends IncludeTag {
 			CommerceOrderActionKeys.ADD_COMMERCE_ORDER);
 	}
 
-	private boolean _hasCommerceOpenOrderContentPortlet(
-		HttpServletRequest httpServletRequest) {
-
-		try {
-			long plid = PortalUtil.getPlidFromPortletId(
-				PortalUtil.getScopeGroupId(httpServletRequest),
-				CommercePortletKeys.COMMERCE_OPEN_ORDER_CONTENT);
-
-			if (plid > 0) {
-				return true;
-			}
-		}
-		catch (PortalException portalException) {
-			_log.error(portalException);
-		}
-
-		return false;
-	}
-
 	private boolean _hasManageAccountsPermission() {
 		if (_themeDisplay == null) {
 			return false;
@@ -481,9 +441,6 @@ public class AccountSelectorTag extends IncludeTag {
 	private static final Log _log = LogFactoryUtil.getLog(
 		AccountSelectorTag.class);
 
-	private static final Snapshot<FriendlyURLSeparatorProvider>
-		_friendlyURLSeparatorProviderSnapshot = new Snapshot<>(
-			AccountSelectorTag.class, FriendlyURLSeparatorProvider.class);
 	private static final Snapshot<ModelResourcePermission<User>>
 		_userModelResourcePermissionSnapshot = new Snapshot<>(
 			ServletContextUtil.class,
@@ -497,6 +454,7 @@ public class AccountSelectorTag extends IncludeTag {
 	private long _commerceChannelGroupId;
 	private long _commerceChannelId;
 	private CommerceOrder _commerceOrder;
+	private CommerceOrderHttpHelper _commerceOrderHttpHelper;
 	private PortletResourcePermission _commerceOrderPortletResourcePermission;
 	private CommerceOrderTypeLocalService _commerceOrderTypeLocalService;
 	private ConfigurationProvider _configurationProvider;

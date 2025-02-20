@@ -37,8 +37,6 @@
 				).put(
 					"guestOrderEnabled", guestOrderEnabled
 				).put(
-					"hasCommerceOpenOrderContentPortlet", hasCommerceOpenOrderContentPortlet
-				).put(
 					"id", commerceChannelId
 				).put(
 					"itemsQuantity", itemsQuantity

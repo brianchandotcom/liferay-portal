@@ -32,6 +32,9 @@ public interface CommerceOrderHttpHelper {
 			String uuid, long groupId)
 		throws PortalException;
 
+	public String getCommerceCartBaseURL(HttpServletRequest httpServletRequest)
+		throws PortalException;
+
 	public String getCommerceCartPortletURL(
 			HttpServletRequest httpServletRequest)
 		throws PortalException;
@@ -57,6 +60,10 @@ public interface CommerceOrderHttpHelper {
 
 	public CommerceOrder getCurrentCommerceOrder(
 			HttpServletRequest httpServletRequest)
+		throws PortalException;
+
+	public boolean hasCommerceOrderPortlet(
+			HttpServletRequest httpServletRequest, String portletKey)
 		throws PortalException;
 
 	public boolean isGuestCheckoutEnabled(HttpServletRequest httpServletRequest)

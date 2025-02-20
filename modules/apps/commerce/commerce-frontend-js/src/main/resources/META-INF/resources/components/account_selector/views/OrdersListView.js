@@ -21,7 +21,6 @@ function OrdersListView({
 	currentAccount,
 	disabled,
 	hasAddCommerceOrderPermission,
-	hasCommerceOpenOrderContentPortlet,
 	orderTypes,
 	selectOrderURL,
 	setCurrentView,
@@ -99,7 +98,6 @@ function OrdersListView({
 							accountId: currentAccount.id,
 							commerceChannelId,
 							currencyCode,
-							hasCommerceOpenOrderContentPortlet,
 							orderDetailURL: createOrderURL,
 							orderTypes,
 						});

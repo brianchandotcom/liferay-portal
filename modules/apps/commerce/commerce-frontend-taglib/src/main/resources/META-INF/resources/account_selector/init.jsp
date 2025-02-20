@@ -32,7 +32,6 @@ String currencyCode = (String)request.getAttribute("liferay-commerce:account-sel
 CurrentCommerceAccountModel currentCommerceAccount = (CurrentCommerceAccountModel)request.getAttribute("liferay-commerce:account-selector:currentCommerceAccount");
 CurrentCommerceOrderModel currentCommerceOrder = (CurrentCommerceOrderModel)request.getAttribute("liferay-commerce:account-selector:currentCommerceOrder");
 boolean hasAddCommerceOrderPermission = (boolean)request.getAttribute("liferay-commerce:account-selector:hasAddCommerceOrderPermission");
-boolean hasCommerceOpenOrderContentPortlet = (boolean)request.getAttribute("liferay-commerce:account-selector:hasCommerceOpenOrderContentPortlet");
 boolean hasManageAccountsPermission = (boolean)request.getAttribute("liferay-commerce:account-selector:hasManageAccountsPermission");
 JSONArray orderTypesJSONArray = (JSONArray)request.getAttribute("liferay-commerce:account-selector:orderTypes");
 String selectOrderURL = (String)request.getAttribute("liferay-commerce:account-selector:selectOrderURL");

@@ -51,7 +51,6 @@ function MiniCart({
 	displayDiscountLevels,
 	displayTotalItemsQuantity,
 	guestOrderEnabled,
-	hasCommerceOpenOrderContentPortlet,
 	itemsQuantity,
 	labels,
 	onAddToCart,
@@ -131,7 +130,6 @@ function MiniCart({
 						orderDetailURL: !orderDetailURL
 							? regenerateOrderDetailURL(
 									currentURLs.baseOrderDetailURL,
-									hasCommerceOpenOrderContentPortlet,
 									updatedCart.id,
 									updatedCart.orderUUID
 								)
@@ -158,7 +156,7 @@ function MiniCart({
 				showErrorNotification(error);
 			}
 		},
-		[hasCommerceOpenOrderContentPortlet, onAddToCart]
+		[onAddToCart]
 	);
 
 	const updateReplacedSKUList = useCallback(

@@ -9,6 +9,7 @@
 export const DEFAULT_ORDER_DETAILS_PORTLET_ID =
 	'com_liferay_commerce_order_content_web_internal_portlet_' +
 	'CommerceOpenOrderContentPortlet';
+export const ORDER_ID_PARAMETER = 'commerceOrderId';
 export const ORDER_UUID_PARAMETER = 'commerceOrderUuid';
 export const WORKFLOW_STATUS_APPROVED = 0;
 export const PRODUCT_QUANTITY_NOT_VALID_ERROR = Liferay.Language.get(

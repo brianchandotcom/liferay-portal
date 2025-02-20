@@ -9,6 +9,7 @@ import com.liferay.account.model.AccountEntry;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.model.CommerceOrderType;
 import com.liferay.commerce.model.CommerceReturn;
+import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.order.content.web.internal.constants.CommerceOrderFragmentFDSNames;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CommerceChannelLocalService;
@@ -40,11 +41,9 @@ import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
-import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
@@ -381,17 +380,18 @@ public class OrdersDataSetFragmentRenderer implements FragmentRenderer {
 			).put(
 				"currencyCode", commerceChannel.getCommerceCurrencyCode()
 			).put(
-				"hasCommerceOpenOrderContentPortlet",
-				_hasCommerceOpenOrderContentPortlet(httpServletRequest)
-			).put(
-				"orderDetailURL", _getOrderURL(httpServletRequest)
+				"orderDetailURL",
+				_commerceOrderHttpHelper.getCommerceCartBaseURL(
+					httpServletRequest)
 			).build();
 		}
 		else if (fdsName.equals(CommerceOrderFragmentFDSNames.PLACED_ORDERS)) {
 			return HashMapBuilder.<String, Object>put(
 				"namespace", namespace
 			).put(
-				"orderDetailURL", _getOrderURL(httpServletRequest)
+				"orderDetailURL",
+				_commerceOrderHttpHelper.getCommerceCartBaseURL(
+					httpServletRequest)
 			).build();
 		}
 
@@ -423,32 +423,12 @@ public class OrdersDataSetFragmentRenderer implements FragmentRenderer {
 
 		return CreationMenuBuilder.addPrimaryDropdownItem(
 			dropdownItem -> {
-				dropdownItem.setHref("addCommerceOrder");
+				dropdownItem.setHref("createCommerceCart");
 				dropdownItem.setLabel(
 					_language.get(httpServletRequest, "add-order"));
 				dropdownItem.setTarget("event");
 			}
 		).build();
-	}
-
-	private String _getOrderURL(HttpServletRequest httpServletRequest)
-		throws Exception {
-
-		if (_hasCommerceOpenOrderContentPortlet(httpServletRequest)) {
-			return PortletURLBuilder.create(
-				_portletURLFactory.create(
-					httpServletRequest,
-					CommercePortletKeys.COMMERCE_OPEN_ORDER_CONTENT,
-					PortletRequest.ACTION_PHASE)
-			).setActionName(
-				"/commerce_open_order_content/edit_commerce_order"
-			).setCMD(
-				Constants.ADD
-			).buildString();
-		}
-
-		return CommerceOrderInfoItemUtil.getCommerceOrderFriendlyURL(
-			_friendlyURLSeparatorProviderSnapshot.get(), httpServletRequest);
 	}
 
 	private Map<String, Object> _getReturnableOrderItemsContextParams(
@@ -496,21 +476,6 @@ public class OrdersDataSetFragmentRenderer implements FragmentRenderer {
 		).buildString();
 	}
 
-	private boolean _hasCommerceOpenOrderContentPortlet(
-			HttpServletRequest httpServletRequest)
-		throws Exception {
-
-		long plid = _portal.getPlidFromPortletId(
-			_portal.getScopeGroupId(httpServletRequest),
-			CommercePortletKeys.COMMERCE_OPEN_ORDER_CONTENT);
-
-		if (plid > 0) {
-			return true;
-		}
-
-		return false;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		OrdersDataSetFragmentRenderer.class);
 
@@ -526,6 +491,9 @@ public class OrdersDataSetFragmentRenderer implements FragmentRenderer {
 	private CommerceChannelLocalService _commerceChannelLocalService;
 
 	@Reference
+	private CommerceOrderHttpHelper _commerceOrderHttpHelper;
+
+	@Reference
 	private CommerceOrderTypeLocalService _commerceOrderTypeLocalService;
 
 	@Reference
@@ -539,9 +507,6 @@ public class OrdersDataSetFragmentRenderer implements FragmentRenderer {
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private PortletURLFactory _portletURLFactory;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.commerce.order.content.web)"

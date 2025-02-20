@@ -247,7 +247,6 @@ export function hasPriceOnApplication(cartItems) {
 
 export function regenerateOrderDetailURL(
 	baseOrderDetailURL,
-	hasCommerceOpenOrderContentPortlet,
 	orderId,
 	orderUUID
 ) {
@@ -257,7 +256,7 @@ export function regenerateOrderDetailURL(
 		);
 	}
 
-	if (hasCommerceOpenOrderContentPortlet) {
+	if (baseOrderDetailURL.includes(DEFAULT_ORDER_DETAILS_PORTLET_ID)) {
 		if (!orderUUID) {
 			throw new Error(
 				'Cannot generate a new Order Detail URL. Invalid "orderUUID"'

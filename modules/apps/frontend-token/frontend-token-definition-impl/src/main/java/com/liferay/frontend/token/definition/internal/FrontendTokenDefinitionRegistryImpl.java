@@ -11,6 +11,7 @@ import com.liferay.client.extension.service.ClientExtensionEntryRelLocalService;
 import com.liferay.client.extension.type.ThemeCSSCET;
 import com.liferay.frontend.token.definition.FrontendTokenDefinition;
 import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
+import com.liferay.frontend.token.definition.constants.FrontendTokenDefinitionConstants;
 import com.liferay.frontend.token.definition.internal.validator.FrontendTokenDefinitionJSONValidator;
 import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.petra.concurrent.DCLSingleton;
@@ -190,7 +191,7 @@ public class FrontendTokenDefinitionRegistryImpl
 				frontendTokenDefinitionImpls.add(
 					new FrontendTokenDefinitionImpl(
 						jsonFactory.createJSONObject(json), jsonFactory,
-						resourceBundleLoader, themeId, StringPool.BLANK));
+						resourceBundleLoader, themeId, StringPool.BLANK, FrontendTokenDefinitionConstants.THEME_TYPE_BUNDLE));
 			}
 
 			return frontendTokenDefinitionImpls;
@@ -285,7 +286,8 @@ public class FrontendTokenDefinitionRegistryImpl
 					jsonFactory,
 					ResourceBundleLoaderUtil.getPortalResourceBundleLoader(),
 					themeCSSCET.getExternalReferenceCode(),
-					StringPool.BLANK));
+					themeCSSCET.getName(),
+					FrontendTokenDefinitionConstants.THEME_TYPE_THEME_CSS_CET));
 		}
 		catch (JSONException | JSONValidatorException exception) {
 			_log.error(

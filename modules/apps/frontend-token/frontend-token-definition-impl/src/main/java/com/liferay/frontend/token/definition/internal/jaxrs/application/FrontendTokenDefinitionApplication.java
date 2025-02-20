@@ -114,7 +114,7 @@ public class FrontendTokenDefinitionApplication extends Application {
 
 		return new FrontendTokenDefinitionImpl(
 			_jsonFactory.createJSONObject(json), _jsonFactory, null,
-			StringPool.BLANK, StringPool.BLANK);
+			StringPool.BLANK, StringPool.BLANK, StringPool.BLANK);
 	}
 
 	private Response _getResponse(File file, Locale locale)

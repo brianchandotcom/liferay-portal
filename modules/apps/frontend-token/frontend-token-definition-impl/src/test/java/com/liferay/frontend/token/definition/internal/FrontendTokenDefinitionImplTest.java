@@ -52,7 +52,8 @@ public class FrontendTokenDefinitionImplTest {
 		FrontendTokenDefinition frontendTokenDefinition =
 			new FrontendTokenDefinitionImpl(
 				jsonFactory.createJSONObject(_FRONTEND_TOKEN_DEFINITION_JSON),
-				jsonFactory, null, "theme_id", RandomTestUtil.randomString());
+				jsonFactory, null, "theme_id", RandomTestUtil.randomString(),
+				RandomTestUtil.randomString());
 
 		Collection<FrontendTokenCategory> frontendTokenCategories =
 			frontendTokenDefinition.getFrontendTokenCategories();
@@ -111,7 +112,8 @@ public class FrontendTokenDefinitionImplTest {
 		FrontendTokenDefinition frontendTokenDefinition =
 			new FrontendTokenDefinitionImpl(
 				jsonFactory.createJSONObject(_FRONTEND_TOKEN_DEFINITION_JSON),
-				jsonFactory, null, "theme_id", RandomTestUtil.randomString());
+				jsonFactory, null, "theme_id", RandomTestUtil.randomString(),
+				RandomTestUtil.randomString());
 
 		Collection<FrontendTokenCategory> frontendTokenCategories =
 			frontendTokenDefinition.getFrontendTokenCategories();
@@ -168,7 +170,8 @@ public class FrontendTokenDefinitionImplTest {
 		FrontendTokenDefinition frontendTokenDefinition =
 			new FrontendTokenDefinitionImpl(
 				jsonFactory.createJSONObject(_FRONTEND_TOKEN_DEFINITION_JSON),
-				jsonFactory, null, "theme_id", RandomTestUtil.randomString());
+				jsonFactory, null, "theme_id", RandomTestUtil.randomString(),
+				RandomTestUtil.randomString());
 
 		Collection<FrontendTokenCategory> frontendTokenCategories =
 			frontendTokenDefinition.getFrontendTokenCategories();
@@ -248,7 +251,7 @@ public class FrontendTokenDefinitionImplTest {
 			new FrontendTokenDefinitionImpl(
 				jsonFactory.createJSONObject(_FRONTEND_TOKEN_DEFINITION_JSON),
 				jsonFactory, resourceBundleLoader, "theme_id",
-				RandomTestUtil.randomString());
+				RandomTestUtil.randomString(), RandomTestUtil.randomString());
 
 		JSONObject jsonObject = frontendTokenDefinitionImpl.getJSONObject(
 			LocaleUtil.ENGLISH);

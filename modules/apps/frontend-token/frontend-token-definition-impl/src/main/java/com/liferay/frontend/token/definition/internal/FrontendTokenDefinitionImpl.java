@@ -30,12 +30,13 @@ public class FrontendTokenDefinitionImpl implements FrontendTokenDefinition {
 	public FrontendTokenDefinitionImpl(
 		JSONObject jsonObject, JSONFactory jsonFactory,
 		ResourceBundleLoader resourceBundleLoader, String themeId,
-		String themeName) {
+		String themeName, String themeType) {
 
 		_jsonFactory = jsonFactory;
 		_resourceBundleLoader = resourceBundleLoader;
 		_themeId = themeId;
 		_themeName = themeName;
+		_themeType = themeType;
 
 		_jsonLocalizer = createJSONLocalizer(jsonObject);
 
@@ -99,6 +100,11 @@ public class FrontendTokenDefinitionImpl implements FrontendTokenDefinition {
 			_themeName, LocaleUtil.toLanguageId(locale));
 	}
 
+	@Override
+	public String getThemeType() {
+		return _themeType;
+	}
+
 	protected JSONLocalizer createJSONLocalizer(JSONObject jsonObject) {
 		return new JSONLocalizer(
 			_jsonFactory.looseSerializeDeep(jsonObject), _jsonFactory,
@@ -117,5 +123,6 @@ public class FrontendTokenDefinitionImpl implements FrontendTokenDefinition {
 	private final ResourceBundleLoader _resourceBundleLoader;
 	private final String _themeId;
 	private final String _themeName;
+	private final String _themeType;
 
 }

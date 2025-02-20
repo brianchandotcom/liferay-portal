@@ -102,9 +102,9 @@ public class BatchEngineImportTaskItemReaderUtil {
 							entry.getValue(), field.getType()));
 				}
 				catch (Exception exception) {
-					_log.error(
-						"Failed to convert value for field" + field.getName(),
-						exception);
+					if (_log.isDebugEnabled()) {
+						_log.debug(exception);
+					}
 
 					objectMapper = _csvObjectMapper;
 

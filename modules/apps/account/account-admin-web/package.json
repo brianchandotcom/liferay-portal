@@ -6,6 +6,7 @@
 		"@clayui/layout": "3.111.0",
 		"@clayui/multi-select": "3.127.0",
 		"@liferay/address-web": "*",
+		"frontend-js-components-web": "*",
 		"frontend-js-web": "*",
 		"react": "18.2.0"
 	},

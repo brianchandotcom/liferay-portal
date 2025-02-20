@@ -4,13 +4,11 @@
  */
 
 import {
-	getCheckedCheckboxes,
 	openConfirmModal,
 	openModal,
 	openSelectionModal,
-	postForm,
-	sub,
-} from 'frontend-js-web';
+} from 'frontend-js-components-web';
+import {getCheckedCheckboxes, postForm, sub} from 'frontend-js-web';
 
 function openInviteAccountUsersModal(
 	accountEntryName,

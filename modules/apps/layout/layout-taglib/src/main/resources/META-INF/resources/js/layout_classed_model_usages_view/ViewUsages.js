@@ -7,7 +7,8 @@ import {ClayButtonWithIcon} from '@clayui/button';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {ClayPaginationWithBasicItems} from '@clayui/pagination';
 import ClayTable from '@clayui/table';
-import {fetch, openModal, openToast} from 'frontend-js-web';
+import {openModal, openToast} from 'frontend-js-components-web';
+import {fetch} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 export default function ViewUsages({getUsagesURL}) {

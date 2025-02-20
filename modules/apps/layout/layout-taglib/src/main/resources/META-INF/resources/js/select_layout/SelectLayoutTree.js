@@ -10,7 +10,8 @@ import {ClayCheckbox} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import classNames from 'classnames';
-import {debounce, fetch, getOpener, openToast, sub} from 'frontend-js-web';
+import {openToast} from 'frontend-js-components-web';
+import {debounce, fetch, getOpener, sub} from 'frontend-js-web';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 
 export default function SelectLayoutTree({

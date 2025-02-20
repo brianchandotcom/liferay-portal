@@ -3,12 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {
-	escapeHTML,
-	navigate,
-	objectToFormData,
-	openToast,
-} from 'frontend-js-web';
+import {openToast} from 'frontend-js-components-web';
+import {escapeHTML, navigate, objectToFormData} from 'frontend-js-web';
 
 const INTERACTION_NOTIFICATION = 'notification';
 const INTERACTION_PAGE = 'page';

@@ -4,10 +4,10 @@
  */
 
 import {State} from '@liferay/frontend-js-state-web';
+import {openConfirmModal} from 'frontend-js-components-web';
 import {
 	fetch,
 	normalizeFriendlyURL,
-	openConfirmModal,
 	toggleBoxes,
 	toggleDisabled,
 } from 'frontend-js-web';

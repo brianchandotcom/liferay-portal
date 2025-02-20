@@ -16,7 +16,8 @@ import ClayList from '@clayui/list';
 import ClayModal from '@clayui/modal';
 import ClaySticker from '@clayui/sticker';
 import classNames from 'classnames';
-import {fetch, navigate, openModal} from 'frontend-js-web';
+import {openModal} from 'frontend-js-components-web';
+import {fetch, navigate} from 'frontend-js-web';
 
 import {
 	API_URL,

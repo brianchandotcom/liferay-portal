@@ -6,7 +6,8 @@
 import ClayBreadcrumb from '@clayui/breadcrumb';
 import ClayLayout from '@clayui/layout';
 import {IClientExtensionRenderer} from '@liferay/frontend-data-set-web';
-import {fetch, openModal, sub} from 'frontend-js-web';
+import {openModal} from 'frontend-js-components-web';
+import {fetch, sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import {visit} from '../../components/AddDataSourceFieldsModalContent';

@@ -2903,6 +2903,264 @@ test.describe('Form Localization', () => {
 	);
 
 	test(
+		'Can remove a translation and keep its value in the attachment form field',
+		{tag: '@LPD-46482'},
+		async ({apiHelpers, page, pageEditorPage, pageManagementSite}) => {
+			const chooseFileFromDocumentLibrary = async (
+				fileUploadFragment: Locator,
+				name: string
+			) => {
+				await fileUploadFragment
+					.getByText('Select File', {exact: true})
+					.click();
+
+				const iframe = page.frameLocator('iframe');
+
+				await expect(
+					iframe.getByText(
+						'Drag & Drop Your Files or Browse to Upload'
+					)
+				).toBeVisible();
+
+				await iframe.getByText(name).click();
+
+				await expect(iframe.getByText(name)).not.toBeVisible();
+			};
+
+			// Create object definition
+
+			const objectDefinitionAPIClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+
+			const {body: objectDefinition} =
+				await objectDefinitionAPIClient.postObjectDefinition({
+					active: true,
+					enableLocalization: true,
+					externalReferenceCode: 'attachmentERC',
+					label: {
+						en_US: 'Attachment',
+					},
+					name: 'Attachment',
+					objectFields: [
+						{
+							DBType: ObjectField.DBTypeEnum.Long,
+							businessType:
+								ObjectField.BusinessTypeEnum.Attachment,
+							defaultValue: 'null',
+							externalReferenceCode: 'filesFromComputerERC',
+							label: {
+								en_US: 'Files from Computer',
+							},
+							localized: true,
+							name: 'filesFromComputer',
+							objectFieldSettings: [
+								{
+									name: 'acceptedFileExtensions',
+									value: 'jpeg, jpg, pdf, png',
+								} as any,
+								{
+									name: 'maximumFileSize',
+									value: 100,
+								} as any,
+								{
+									name: 'fileSource',
+									value: 'userComputer',
+								} as any,
+								{
+									name: 'showFilesInDocumentsAndMedia',
+									value: false,
+								} as any,
+							],
+							required: false,
+						},
+						{
+							DBType: ObjectField.DBTypeEnum.Long,
+							businessType:
+								ObjectField.BusinessTypeEnum.Attachment,
+							defaultValue: 'null',
+							externalReferenceCode: 'filesFromLibraryERC',
+							label: {
+								en_US: 'Files from Document Library',
+							},
+							localized: true,
+							name: 'filesFromLibrary',
+							objectFieldSettings: [
+								{
+									name: 'acceptedFileExtensions',
+									value: 'jpeg, jpg, pdf, png',
+								} as any,
+								{
+									name: 'maximumFileSize',
+									value: 100,
+								} as any,
+								{
+									name: 'fileSource',
+									value: 'documentsAndMedia',
+								} as any,
+							],
+							required: false,
+						},
+					],
+					pluralLabel: {
+						en_US: 'Attachments',
+					},
+					portlet: true,
+					scope: 'company',
+					status: {
+						code: 0,
+					},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			// Create a page with a Form fragment
+
+			const formId = getRandomString();
+
+			const formDefinition = getFormContainerDefinition({
+				id: formId,
+			});
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([formDefinition]),
+				siteId: pageManagementSite.id,
+				title: getRandomString(),
+			});
+
+			await pageEditorPage.goto(
+				layout,
+				pageManagementSite.friendlyUrlPath
+			);
+
+			// Map the form to the Plant object and publish the page
+
+			await pageEditorPage.mapFormFragment(formId, 'Attachment', 'all', {
+				addLocalizationSelect: true,
+			});
+
+			await pageEditorPage.publishPage();
+
+			await page.goto(
+				`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
+
+			// Select file from computer in the default language
+
+			const fileChooserPromise = page.waitForEvent('filechooser');
+
+			const firstFileUploadFragment = page
+				.locator('.file-upload')
+				.first();
+
+			await firstFileUploadFragment
+				.getByText('Select File', {exact: true})
+				.click();
+
+			const fileChooser = await fileChooserPromise;
+
+			await fileChooser.setFiles(
+				path.join(__dirname, '/dependencies/file_upload_image_1.jpg')
+			);
+
+			await expect(
+				firstFileUploadFragment.getByText('file_upload_image_1.jpg')
+			).toBeVisible();
+
+			// Select file from document library in the default language
+
+			const secondFileUploadFragment = page
+				.locator('.file-upload')
+				.nth(1);
+
+			await chooseFileFromDocumentLibrary(
+				secondFileUploadFragment,
+				'balinese.jpg'
+			);
+
+			// Change the translation to spanish and remove the files
+
+			const trigger = page.getByLabel(
+				'Select a language, current language:'
+			);
+
+			await trigger.waitFor();
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('option', {
+					name: 'Spanish (Spain) Language',
+				}),
+				trigger,
+			});
+
+			await firstFileUploadFragment.getByTitle('Remove Item').click();
+
+			await expect(
+				firstFileUploadFragment.getByText('file_upload_image_1.jpg')
+			).not.toBeVisible();
+
+			await secondFileUploadFragment.getByTitle('Remove Item').click();
+
+			await expect(
+				secondFileUploadFragment.getByText('balinese.jpg')
+			).not.toBeVisible();
+
+			// Check that the translations are kept properly
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('option', {
+					name: 'English (United States) Language',
+				}),
+				trigger,
+			});
+
+			await expect(
+				firstFileUploadFragment.getByText('file_upload_image_1.jpg')
+			).toBeVisible();
+
+			await expect(
+				secondFileUploadFragment.getByText('balinese.jpg')
+			).toBeVisible();
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('option', {
+					name: 'Spanish (Spain) Language',
+				}),
+				trigger,
+			});
+
+			await expect(
+				firstFileUploadFragment.getByText('file_upload_image_1.jpg')
+			).not.toBeVisible();
+
+			await expect(
+				secondFileUploadFragment.getByText('balinese.jpg')
+			).not.toBeVisible();
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('option', {
+					name: 'Catalan (Spain) Language',
+				}),
+				trigger,
+			});
+
+			await expect(
+				firstFileUploadFragment.getByText('file_upload_image_1.jpg')
+			).toBeVisible();
+
+			await expect(
+				secondFileUploadFragment.getByText('balinese.jpg')
+			).toBeVisible();
+		}
+	);
+
+	test(
 		'Shows a warning modal when the page is published and there is a Localization Select fragment but no localizable fields',
 		{tag: '@LPD-37927'},
 		async ({apiHelpers, page, pageEditorPage, pageManagementSite}) => {

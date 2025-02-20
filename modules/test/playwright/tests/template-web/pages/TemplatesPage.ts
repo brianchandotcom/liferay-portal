@@ -92,16 +92,22 @@ export class TemplatesPage {
 			name: type,
 		});
 
+		const moreButton = this.page.getByRole('button', {name: 'More'});
+
 		await clickAndExpectToBeVisible({
-			autoClick: true,
-			target: typeOption
-				.or(this.page.getByRole('button', {name: 'More'}))
-				.first(),
+			target: moreButton,
 			trigger: this.page.getByRole('button', {name: 'New'}),
 		});
 
 		if (await typeOption.isVisible()) {
 			await typeOption.click();
+		}
+		else {
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: typeOption,
+				trigger: moreButton,
+			});
 		}
 
 		// Wait until the editor is loaded

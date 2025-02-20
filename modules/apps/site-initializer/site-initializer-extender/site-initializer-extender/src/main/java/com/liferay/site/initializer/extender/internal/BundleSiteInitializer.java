@@ -9,8 +9,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
-import com.liferay.account.model.AccountEntryModel;
 import com.liferay.account.model.AccountGroup;
+import com.liferay.account.model.AccountGroupRel;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountEntryOrganizationRelLocalService;
 import com.liferay.account.service.AccountGroupLocalService;
@@ -151,7 +151,6 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
-import com.liferay.portal.kernel.model.OrganizationModel;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.Theme;
@@ -618,10 +617,20 @@ public class BundleSiteInitializer implements SiteInitializer {
 				continue;
 			}
 
-			_accountGroupRelService.addAccountGroupRels(
-				accountGroup.getAccountGroupId(), AccountEntry.class.getName(),
-				ListUtil.toLongArray(
-					accountEntries, AccountEntryModel::getAccountEntryId));
+			for (AccountEntry accountEntry : accountEntries) {
+				AccountGroupRel accountGroupRel =
+					_accountGroupRelService.fetchAccountGroupRel(
+						accountGroup.getAccountGroupId(),
+						AccountEntry.class.getName(),
+						accountEntry.getAccountEntryId());
+
+				if (accountGroupRel == null) {
+					_accountGroupRelService.addAccountGroupRel(
+						accountGroup.getAccountGroupId(),
+						AccountEntry.class.getName(),
+						accountEntry.getAccountEntryId());
+				}
+			}
 		}
 	}
 
@@ -692,18 +701,19 @@ public class BundleSiteInitializer implements SiteInitializer {
 				continue;
 			}
 
-			List<com.liferay.portal.kernel.model.Organization> organizations =
-				new ArrayList<>();
+			List<Long> organizationIds = new ArrayList<>();
 
 			for (int j = 0; j < organizationJSONArray.length(); j++) {
-				organizations.add(
+				com.liferay.portal.kernel.model.Organization organization =
 					_organizationLocalService.
 						getOrganizationByExternalReferenceCode(
 							organizationJSONArray.getString(j),
-							serviceContext.getCompanyId()));
+							serviceContext.getCompanyId());
+
+				organizationIds.add(organization.getOrganizationId());
 			}
 
-			if (ListUtil.isEmpty(organizations)) {
+			if (ListUtil.isEmpty(organizationIds)) {
 				continue;
 			}
 
@@ -717,11 +727,16 @@ public class BundleSiteInitializer implements SiteInitializer {
 				continue;
 			}
 
-			_accountEntryOrganizationRelLocalService.
-				addAccountEntryOrganizationRels(
-					accountEntry.getAccountEntryId(),
-					ListUtil.toLongArray(
-						organizations, OrganizationModel::getOrganizationId));
+			for (Long organizationId : organizationIds) {
+				if (!_accountEntryOrganizationRelLocalService.
+						hasAccountEntryOrganizationRel(
+							accountEntry.getAccountEntryId(), organizationId)) {
+
+					_accountEntryOrganizationRelLocalService.
+						addAccountEntryOrganizationRel(
+							accountEntry.getAccountEntryId(), organizationId);
+				}
+			}
 		}
 	}
 

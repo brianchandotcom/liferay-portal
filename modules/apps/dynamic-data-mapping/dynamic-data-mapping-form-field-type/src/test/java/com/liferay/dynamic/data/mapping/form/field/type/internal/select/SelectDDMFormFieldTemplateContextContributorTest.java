@@ -71,11 +71,10 @@ public class SelectDDMFormFieldTemplateContextContributorTest
 		setUpLanguageUtil();
 
 		_setUpDDMFormInstanceLocalService();
-
-		PropsTestUtil.setProps("collator.rules", "<<<");
-
 		_setUpJSONFactory();
 		_setUpLocaleThreadLocal();
+
+		PropsTestUtil.setProps("collator.rules", "<<<");
 
 		ReflectionTestUtil.setFieldValue(
 			_selectDDMFormFieldTemplateContextContributor, "_language",

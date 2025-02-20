@@ -104,7 +104,7 @@ public class OrganizationMultiLanguageSearchTest {
 
 		setLocale(locale);
 
-		String keywords = "organization";
+		String keywords = "liferay";
 
 		_organizationFixture.createOrganization(keywords);
 

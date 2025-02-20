@@ -70,17 +70,6 @@ public class VirtualHostLocalServiceImpl
 		return null;
 	}
 
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             #getVirtualHosts(long, long)}
-	 */
-	@Deprecated
-	@Override
-	public VirtualHost fetchVirtualHost(long companyId, long layoutSetId) {
-		return virtualHostPersistence.fetchByC_L_D(
-			companyId, layoutSetId, true);
-	}
-
 	@Override
 	public VirtualHost fetchVirtualHost(String hostname) {
 		if (Validator.isIPv6Address(hostname)) {
@@ -106,18 +95,6 @@ public class VirtualHostLocalServiceImpl
 		}
 
 		return virtualHost;
-	}
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             #getVirtualHosts(long, long)}
-	 */
-	@Deprecated
-	@Override
-	public VirtualHost getVirtualHost(long companyId, long layoutSetId)
-		throws PortalException {
-
-		return virtualHostPersistence.findByC_L_D(companyId, layoutSetId, true);
 	}
 
 	@Override
@@ -178,28 +155,6 @@ public class VirtualHostLocalServiceImpl
 
 		return virtualHostPersistence.countByNotL_H(
 			excludedLayoutSetId, virtualHostNames);
-	}
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 *             #updateVirtualHosts(long, long, TreeMap)}
-	 */
-	@Deprecated
-	@Override
-	public VirtualHost updateVirtualHost(
-		long companyId, long layoutSetId, String hostname) {
-
-		List<VirtualHost> virtualHosts = updateVirtualHosts(
-			companyId, layoutSetId,
-			TreeMapBuilder.put(
-				hostname, StringPool.BLANK
-			).build());
-
-		if (virtualHosts.isEmpty()) {
-			return null;
-		}
-
-		return virtualHosts.get(0);
 	}
 
 	@Override

@@ -805,8 +805,8 @@ public class DataFactory {
 		return BenchmarksPropsValues.MAX_DL_FOLDER_DEPTH;
 	}
 
-	public int getMaxFragmentsPerLayoutCount() {
-		return BenchmarksPropsValues.MAX_FRAGMENTS_PER_LAYOUT_COUNT;
+	public int getMaxFragmentHeadingsCount() {
+		return BenchmarksPropsValues.MAX_FRAGMENT_HEADINGS_COUNT;
 	}
 
 	public int getMaxGroupCount() {
@@ -4393,8 +4393,8 @@ public class DataFactory {
 		List<FragmentEntryLinkModel> fragmentEntryLinkModels =
 			new ArrayList<>();
 
-		for (int i = 0;
-			 i < BenchmarksPropsValues.MAX_FRAGMENTS_PER_LAYOUT_COUNT; i++) {
+		for (int i = 0; i < BenchmarksPropsValues.MAX_FRAGMENT_HEADINGS_COUNT;
+			 i++) {
 
 			fragmentEntryLinkModels.add(
 				newFragmentEntryLinkModel(

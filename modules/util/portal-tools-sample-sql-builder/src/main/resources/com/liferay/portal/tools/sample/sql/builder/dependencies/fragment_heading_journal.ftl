@@ -1,4 +1,4 @@
-<#if (dataFactory.maxContentLayoutCount > 0) && (dataFactory.maxFragmentsPerLayoutCount > 0)>
+<#if (dataFactory.maxContentLayoutCount > 0) && (dataFactory.maxFragmentHeadingsCount > 0)>
 	<#assign
 		journalArticleResourceModel = dataFactory.newJournalArticleResourceModel(groupId)
 

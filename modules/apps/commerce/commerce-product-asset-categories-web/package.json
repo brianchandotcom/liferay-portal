@@ -1,6 +1,7 @@
 {
 	"dependencies": {
 		"@liferay/frontend-icons-web": "*",
+		"frontend-js-components-web": "*",
 		"frontend-js-web": "*"
 	},
 	"main": "js/index.js",

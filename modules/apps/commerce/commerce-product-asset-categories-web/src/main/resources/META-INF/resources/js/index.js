@@ -4,7 +4,7 @@
  */
 
 import {getSpritemap} from '@liferay/frontend-icons-web';
-import {openSelectionModal} from 'frontend-js-web';
+import {openSelectionModal} from 'frontend-js-components-web';
 
 export function EditAssetCategoryCPDisplayLayout({
 	assetCategory,

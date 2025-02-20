@@ -106,6 +106,6 @@ test('can see corresponding elements at site level', async ({
 	).toBeVisible();
 
 	await expect(
-		productMenuPage.page.getByRole('link', { name: 'Refresh Counts' })
+		productMenuPage.page.getByRole('link', {name: 'Refresh Counts'})
 	).toBeVisible();
 });

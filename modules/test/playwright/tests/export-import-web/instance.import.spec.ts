@@ -357,8 +357,7 @@ test('can see corresponding elements at instance level', async ({
 
 	apiHelpers.data.push({id: objectDefinition.id, type: 'objectDefinition'});
 
-	const exportFilePath =
-		await companyExportImportPage.export('Tests');
+	const exportFilePath = await companyExportImportPage.export('Tests');
 
 	await companyExportImportPage.page.goto('/');
 

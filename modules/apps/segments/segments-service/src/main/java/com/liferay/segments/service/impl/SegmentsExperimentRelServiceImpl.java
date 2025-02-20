@@ -79,12 +79,12 @@ public class SegmentsExperimentRelServiceImpl
 
 	@Override
 	public SegmentsExperimentRel getSegmentsExperimentRel(
-			long segmentsExperimentId, long segmentsExperienceId)
+			long segmentsExperimentId, String segmentsExperienceKey)
 		throws PortalException {
 
 		SegmentsExperimentRel segmentsExperimentRel =
 			segmentsExperimentRelLocalService.getSegmentsExperimentRel(
-				segmentsExperimentId, segmentsExperienceId);
+				segmentsExperimentId, segmentsExperienceKey);
 
 		_segmentsExperimentResourcePermission.check(
 			getPermissionChecker(), segmentsExperimentId, ActionKeys.VIEW);

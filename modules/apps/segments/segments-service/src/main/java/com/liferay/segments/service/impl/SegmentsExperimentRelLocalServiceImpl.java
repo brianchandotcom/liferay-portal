@@ -186,6 +186,22 @@ public class SegmentsExperimentRelLocalServiceImpl
 	}
 
 	@Override
+	public List<SegmentsExperimentRel>
+		getSegmentsExperimentRelsBySegmentsExperienceId(
+			String segmentsExperienceKey, long plid) {
+
+		Layout layout = _layoutLocalService.fetchLayout(plid);
+
+		SegmentsExperience segmentsExperience =
+			_segmentsExperienceLocalService.fetchSegmentsExperience(
+				layout.getGroupId(), segmentsExperienceKey,
+				_getPublishedLayoutPlid(layout.getPlid()));
+
+		return segmentsExperimentRelPersistence.findBySegmentsExperienceId(
+			segmentsExperience.getSegmentsExperienceId());
+	}
+
+	@Override
 	public SegmentsExperimentRel updateSegmentsExperimentRel(
 			long segmentsExperimentRelId, double split)
 		throws PortalException {

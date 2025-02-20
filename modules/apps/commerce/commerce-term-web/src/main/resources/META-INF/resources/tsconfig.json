@@ -1,5 +1,5 @@
 {
-	"@generated": "6da366c85d9afe3d0540431638f77120bf35a506",
+	"@generated": "5ce00355b59b8e5cf5917c712b89dadb6df46821",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -14,6 +14,9 @@
 		"paths": {
 			"commerce-frontend-js": [
 				"../../../../../../commerce-frontend-js/src/main/resources/META-INF/resources/index.js"
+			],
+			"frontend-js-components-web": [
+				"../../../../../../../frontend-js/frontend-js-components-web/src/main/resources/META-INF/resources/index.ts"
 			],
 			"frontend-js-web": [
 				"../../../../../../../frontend-js/frontend-js-web/src/main/resources/META-INF/resources/index.d.ts"
@@ -37,6 +40,9 @@
 	"references": [
 		{
 			"path": "../../../../../../commerce-frontend-js/src/main/resources/META-INF/resources/tsconfig.json"
+		},
+		{
+			"path": "../../../../../../../frontend-js/frontend-js-components-web/src/main/resources/META-INF/resources/tsconfig.json"
 		},
 		{
 			"path": "../../../../../../../frontend-js/frontend-js-web/src/main/resources/META-INF/resources/tsconfig.json"

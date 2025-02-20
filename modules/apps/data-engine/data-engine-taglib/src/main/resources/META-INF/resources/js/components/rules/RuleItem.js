@@ -8,7 +8,7 @@ import ClayLabel from '@clayui/label';
 import ClayPanel from '@clayui/panel';
 import classNames from 'classnames';
 import {useFormState} from 'data-engine-js-components-web';
-import {openConfirmModal} from 'frontend-js-web';
+import {openConfirmModal} from 'frontend-js-components-web';
 import React from 'react';
 
 import {

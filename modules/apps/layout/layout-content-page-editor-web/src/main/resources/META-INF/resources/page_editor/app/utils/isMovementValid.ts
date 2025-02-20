@@ -76,6 +76,11 @@ export function isMovementValid({
 				'this-form-component-can-only-be-placed-inside-a-mapped-form-container'
 			);
 		}
+		else if (reason === 'disabled-part-of-collection') {
+			message = Liferay.Language.get(
+				'fragments-can-only-be-dropped-in-the-first-collection-item'
+			);
+		}
 		else if (reason === 'existing-stepper') {
 			message = Liferay.Language.get(
 				'forms-can-only-contain-one-stepper'

@@ -9,12 +9,12 @@ import com.liferay.client.extension.util.spring.boot3.BaseRestController;
 import com.liferay.client.extension.util.spring.boot3.LiferayOAuth2AccessTokenManager;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -223,11 +223,18 @@ public class ObjectActionExamResultsSynchronizationRestController
 
 			put(
 				_getAuthorization(),
-				HashMapBuilder.<String, Object>put(
-					"actionIds", new String[] {"VIEW"}
+				new JSONArray(
 				).put(
-					"roleName", "Guest"
-				).build(
+					new JSONObject(
+					).put(
+						"actionIds",
+						new JSONArray(
+						).put(
+							"VIEW"
+						)
+					).put(
+						"roleName", "Guest"
+					)
 				).toString(),
 				StringBundler.concat(
 					lxcDXPServerProtocol, "://", lxcDXPMainDomain,

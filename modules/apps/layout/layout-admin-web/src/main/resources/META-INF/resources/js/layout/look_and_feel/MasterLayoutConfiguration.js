@@ -7,7 +7,7 @@ import {ClayButtonWithIcon} from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
-import {openSelectionModal} from 'frontend-js-web';
+import {openSelectionModal} from 'frontend-js-components-web';
 import React, {useEffect, useState} from 'react';
 
 const DEFAULT_MASTER_LAYOUT_PLID = '0';

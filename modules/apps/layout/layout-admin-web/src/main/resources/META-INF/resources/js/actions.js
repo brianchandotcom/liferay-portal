@@ -4,12 +4,11 @@
  */
 
 import {
-	fetch,
-	navigate,
 	openConfirmModal,
 	openModal,
 	openToast,
-} from 'frontend-js-web';
+} from 'frontend-js-components-web';
+import {fetch, navigate} from 'frontend-js-web';
 
 import openDeleteLayoutModal from './openDeleteLayoutModal';
 

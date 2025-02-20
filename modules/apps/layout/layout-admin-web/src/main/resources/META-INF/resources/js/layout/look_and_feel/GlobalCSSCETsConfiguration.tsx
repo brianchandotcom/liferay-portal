@@ -7,7 +7,7 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayTable from '@clayui/table';
 import classNames from 'classnames';
-import {openSelectionModal, openToast} from 'frontend-js-web';
+import {openSelectionModal, openToast} from 'frontend-js-components-web';
 import React, {useMemo, useState} from 'react';
 
 import {GlobalCETOptionsDropDown} from './GlobalCETOptionsDropDown';

@@ -8,7 +8,7 @@ import {
 	openModal,
 	openSelectionModal,
 	openSimpleInputModal,
-} from 'frontend-js-web';
+} from 'frontend-js-components-web';
 
 import openDeleteLayoutModal from './openDeleteLayoutModal';
 

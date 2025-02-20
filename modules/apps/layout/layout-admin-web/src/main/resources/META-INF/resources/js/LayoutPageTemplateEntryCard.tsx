@@ -7,7 +7,8 @@ import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import ClayCard from '@clayui/card';
 import ClayIcon from '@clayui/icon';
 import ClayModal, {useModal} from '@clayui/modal';
-import {createPortletURL, fetch, openModal} from 'frontend-js-web';
+import {openModal} from 'frontend-js-components-web';
+import {createPortletURL, fetch} from 'frontend-js-web';
 import {
 	KeyboardEvent,
 	MouseEvent,

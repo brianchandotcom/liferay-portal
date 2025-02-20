@@ -6,12 +6,12 @@
 import '@testing-library/jest-dom/extend-expect';
 import {render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import {openSelectionModal} from 'frontend-js-web';
+import {openSelectionModal} from 'frontend-js-components-web';
 import * as React from 'react';
 
 import ThemeCSSReplacementSelector from '../../../../src/main/resources/META-INF/resources/js/ThemeCSSReplacementSelector';
 
-jest.mock('frontend-js-web', () => ({
+jest.mock('frontend-js-components-web', () => ({
 	openSelectionModal: jest.fn(),
 }));
 

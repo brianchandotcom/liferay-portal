@@ -6,7 +6,7 @@
 import ClayAlert from '@clayui/alert';
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
-import {openSelectionModal} from 'frontend-js-web';
+import {openSelectionModal} from 'frontend-js-components-web';
 import React, {useState} from 'react';
 
 export default function ThemeSpritemapCETsConfiguration({

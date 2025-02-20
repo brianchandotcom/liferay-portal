@@ -10,7 +10,7 @@ import {
 	ObjectValidationRule,
 	ObjectValidationRuleApi,
 } from '@liferay/object-admin-rest-client-js';
-import {Page, expect, mergeTests} from '@playwright/test';
+import {Locator, Page, expect, mergeTests} from '@playwright/test';
 import path from 'path';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
@@ -2627,6 +2627,278 @@ test.describe('Form Localization', () => {
 				en_US: '1971-01-01T00:00:00.000Z',
 				es_ES: '1971-01-02T01:01:00.000Z',
 			});
+		}
+	);
+
+	test(
+		'Can translate attachment form fields',
+		{tag: '@LPD-46482'},
+		async ({apiHelpers, page, pageEditorPage, pageManagementSite}) => {
+			const chooseFileFromDocumentLibrary = async (
+				fileUploadFragment: Locator,
+				name: string
+			) => {
+				await fileUploadFragment
+					.getByText('Select File', {exact: true})
+					.click();
+
+				const iframe = page.frameLocator('iframe');
+
+				await expect(
+					iframe.getByText(
+						'Drag & Drop Your Files or Browse to Upload'
+					)
+				).toBeVisible();
+
+				await iframe.getByText(name).click();
+
+				await expect(iframe.getByText(name)).not.toBeVisible();
+			};
+
+			// Create object definition
+
+			const objectDefinitionAPIClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+
+			const {body: objectDefinition} =
+				await objectDefinitionAPIClient.postObjectDefinition({
+					active: true,
+					enableLocalization: true,
+					externalReferenceCode: 'attachmentERC',
+					label: {
+						en_US: 'Attachment',
+					},
+					name: 'Attachment',
+					objectFields: [
+						{
+							DBType: ObjectField.DBTypeEnum.Long,
+							businessType:
+								ObjectField.BusinessTypeEnum.Attachment,
+							defaultValue: 'null',
+							externalReferenceCode: 'filesFromComputerERC',
+							label: {
+								en_US: 'Files from Computer',
+							},
+							localized: true,
+							name: 'filesFromComputer',
+							objectFieldSettings: [
+								{
+									name: 'acceptedFileExtensions',
+									value: 'jpeg, jpg, pdf, png',
+								} as any,
+								{
+									name: 'maximumFileSize',
+									value: 100,
+								} as any,
+								{
+									name: 'fileSource',
+									value: 'userComputer',
+								} as any,
+								{
+									name: 'showFilesInDocumentsAndMedia',
+									value: false,
+								} as any,
+							],
+							required: false,
+						},
+						{
+							DBType: ObjectField.DBTypeEnum.Long,
+							businessType:
+								ObjectField.BusinessTypeEnum.Attachment,
+							defaultValue: 'null',
+							externalReferenceCode: 'filesFromLibraryERC',
+							label: {
+								en_US: 'Files from Document Library',
+							},
+							localized: true,
+							name: 'filesFromLibrary',
+							objectFieldSettings: [
+								{
+									name: 'acceptedFileExtensions',
+									value: 'jpeg, jpg, pdf, png',
+								} as any,
+								{
+									name: 'maximumFileSize',
+									value: 100,
+								} as any,
+								{
+									name: 'fileSource',
+									value: 'documentsAndMedia',
+								} as any,
+							],
+							required: false,
+						},
+					],
+					pluralLabel: {
+						en_US: 'Attachments',
+					},
+					portlet: true,
+					scope: 'company',
+					status: {
+						code: 0,
+					},
+				});
+
+			apiHelpers.data.push({
+				id: objectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			// Create a page with a Form fragment
+
+			const formId = getRandomString();
+
+			const formDefinition = getFormContainerDefinition({
+				id: formId,
+			});
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([formDefinition]),
+				siteId: pageManagementSite.id,
+				title: getRandomString(),
+			});
+
+			await pageEditorPage.goto(
+				layout,
+				pageManagementSite.friendlyUrlPath
+			);
+
+			// Map the form to the Attachment object and publish the page
+
+			await pageEditorPage.mapFormFragment(formId, 'Attachment', 'all', {
+				addLocalizationSelect: true,
+			});
+
+			await pageEditorPage.publishPage();
+
+			await page.goto(
+				`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
+
+			// Select file from computer in the default language
+
+			const fileChooserPromise = page.waitForEvent('filechooser');
+
+			const firstFileUploadFragment = page
+				.locator('.file-upload')
+				.first();
+
+			await firstFileUploadFragment
+				.getByText('Select File', {exact: true})
+				.click();
+
+			const fileChooser = await fileChooserPromise;
+
+			await fileChooser.setFiles(
+				path.join(__dirname, '/dependencies/file_upload_image_1.jpg')
+			);
+
+			await expect(
+				firstFileUploadFragment.getByText('file_upload_image_1.jpg')
+			).toBeVisible();
+
+			// Select file from document library in the default language
+
+			const secondFileUploadFragment = page
+				.locator('.file-upload')
+				.nth(1);
+
+			await chooseFileFromDocumentLibrary(
+				secondFileUploadFragment,
+				'balinese.jpg'
+			);
+
+			// Change the translation to spanish and update the files
+
+			const spanishOption = page.getByRole('option', {
+				name: 'Spanish (Spain) Language',
+			});
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: spanishOption,
+				trigger: page.getByLabel(
+					'Select a language, current language:'
+				),
+			});
+
+			await fileChooser.setFiles(
+				path.join(__dirname, '/dependencies/file_upload_image_2.jpg')
+			);
+
+			// Check that the files have been selected and the fields have been translated
+
+			await expect(
+				firstFileUploadFragment.getByText('file_upload_image_2.jpg')
+			).toBeVisible();
+
+			await chooseFileFromDocumentLibrary(
+				secondFileUploadFragment,
+				'cats.jpg'
+			);
+
+			await page
+				.getByLabel('Select a language, current language:')
+				.click();
+
+			await expect(spanishOption).toContainText('Language: Translated');
+
+			// Choose other language to check the default values
+
+			const catalanOption = page.getByRole('option', {
+				name: 'Catalan (Spain) Language',
+			});
+
+			await expect(catalanOption).toContainText(
+				'Language: Not Translated'
+			);
+
+			await catalanOption.click();
+
+			await expect(
+				firstFileUploadFragment.getByText('file_upload_image_1.jpg')
+			).toBeVisible();
+
+			await expect(
+				secondFileUploadFragment.getByText('balinese.jpg')
+			).toBeVisible();
+
+			// Submit the form
+
+			await page.getByRole('button', {name: 'Submit'}).click();
+
+			await expect(
+				page.getByText(
+					'Thank you. Your information was successfully received.'
+				)
+			).toBeVisible();
+
+			// Check the object entry
+
+			const {items} =
+				await apiHelpers.objectEntry.getObjectDefinitionObjectEntries(
+					'c/attachments'
+				);
+
+			const item = items[0];
+
+			const filesFromComputer = Object.entries(
+				item.filesFromComputer_i18n
+			).map(([locale, value]: [string, any]) => [locale, value.name]);
+
+			expect(filesFromComputer).toStrictEqual([
+				['en_US', 'file_upload_image_1.jpg'],
+				['es_ES', 'file_upload_image_2.jpg'],
+			]);
+
+			const filesFromLibrary = Object.entries(
+				item.filesFromLibrary_i18n
+			).map(([locale, value]: [string, any]) => [locale, value.name]);
+
+			expect(filesFromLibrary).toStrictEqual([
+				['en_US', 'balinese.jpg'],
+				['es_ES', 'cats.jpg'],
+			]);
 		}
 	);
 

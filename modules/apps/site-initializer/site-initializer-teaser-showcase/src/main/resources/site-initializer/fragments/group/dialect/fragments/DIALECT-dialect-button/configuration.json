@@ -5,25 +5,25 @@
 				{
 					"dataType": "string",
 					"defaultValue": "solid",
-					"label": "type",
+					"label": "Type",
 					"name": "type",
 					"type": "select",
 					"typeOptions": {
 						"validValues": [
 							{
-								"label": "solid",
+								"label": "Solid",
 								"value": "solid"
 							},
 							{
-								"label": "ghost",
+								"label": "Ghost",
 								"value": "ghost"
 							},
 							{
-								"label": "borderless",
+								"label": "Borderless",
 								"value": "borderless"
 							},
 							{
-								"label": "rounded",
+								"label": "Rounded",
 								"value": "rounded"
 							}
 						]
@@ -32,7 +32,7 @@
 				{
 					"dataType": "string",
 					"defaultValue": "primary",
-					"label": "style",
+					"label": "Style",
 					"name": "style",
 					"type": "select",
 					"typeOptions": {
@@ -52,21 +52,21 @@
 				{
 					"dataType": "string",
 					"defaultValue": "",
-					"label": "size",
+					"label": "Size",
 					"name": "buttonSize",
 					"type": "select",
 					"typeOptions": {
 						"validValues": [
 							{
-								"label": "small",
+								"label": "Small",
 								"value": "btn-sm"
 							},
 							{
-								"label": "medium",
+								"label": "Medium",
 								"value": ""
 							},
 							{
-								"label": "large",
+								"label": "Large",
 								"value": "btn-lg"
 							}
 						]
@@ -75,14 +75,14 @@
 				{
 					"dataType": "string",
 					"defaultValue": false,
-					"label": "inverted",
+					"label": "Inverted",
 					"name": "inverted",
 					"type": "checkbox"
 				},
 				{
 					"dataType": "string",
 					"defaultValue": false,
-					"label": "uppercase",
+					"label": "Uppercase",
 					"name": "uppercase",
 					"type": "checkbox"
 				}

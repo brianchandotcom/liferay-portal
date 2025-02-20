@@ -5,25 +5,25 @@
 				{
 					"dataType": "string",
 					"defaultValue": "",
-					"label": "type",
+					"label": "Type",
 					"name": "type",
 					"type": "select",
 					"typeOptions": {
 						"validValues": [
 							{
-								"label": "outline",
+								"label": "Outline",
 								"value": ""
 							},
 							{
-								"label": "inverse",
+								"label": "Inverse",
 								"value": "-inverse"
 							},
 							{
-								"label": "tonal",
+								"label": "Tonal",
 								"value": "-tonal"
 							},
 							{
-								"label": "borderless",
+								"label": "Borderless",
 								"value": "-borderless"
 							}
 						]
@@ -32,7 +32,7 @@
 				{
 					"dataType": "string",
 					"defaultValue": "primary",
-					"label": "variant",
+					"label": "Variant",
 					"name": "variant",
 					"type": "select",
 					"typeOptions": {
@@ -67,17 +67,17 @@
 				{
 					"dataType": "string",
 					"defaultValue": "small",
-					"label": "size",
+					"label": "Size",
 					"name": "size",
 					"type": "select",
 					"typeOptions": {
 						"validValues": [
 							{
-								"label": "small",
+								"label": "Small",
 								"value": ""
 							},
 							{
-								"label": "large",
+								"label": "Large",
 								"value": "label-lg"
 							}
 						]
@@ -86,14 +86,14 @@
 				{
 					"dataType": "string",
 					"defaultValue": "",
-					"label": "icon-before",
+					"label": "Icon Before",
 					"name": "iconBefore",
 					"type": "text"
 				},
 				{
 					"dataType": "string",
 					"defaultValue": "",
-					"label": "icon-after",
+					"label": "Icon After",
 					"name": "iconAfter",
 					"type": "text"
 				}

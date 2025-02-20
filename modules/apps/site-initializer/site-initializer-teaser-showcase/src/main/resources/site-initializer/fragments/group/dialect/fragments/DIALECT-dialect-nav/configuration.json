@@ -5,21 +5,21 @@
 				{
 					"dataType": "string",
 					"defaultValue": "nav-primary",
-					"label": "style",
+					"label": "Style",
 					"name": "navType",
 					"type": "select",
 					"typeOptions": {
 						"validValues": [
 							{
-								"label": "primary",
+								"label": "Primary",
 								"value": "nav-primary"
 							},
 							{
-								"label": "secondary",
+								"label": "Secondary",
 								"value": "nav-secondary"
 							},
 							{
-								"label": "tertiary",
+								"label": "Tertiary",
 								"value": "nav-tertiary"
 							}
 						]
@@ -28,17 +28,17 @@
 				{
 					"dataType": "string",
 					"defaultValue": "nav-horizontal",
-					"label": "orientation",
+					"label": "Orientation",
 					"name": "orientation",
 					"type": "select",
 					"typeOptions": {
 						"validValues": [
 							{
-								"label": "horizontal",
+								"label": "Horizontal",
 								"value": "nav-horizontal"
 							},
 							{
-								"label": "vertical",
+								"label": "Vertical",
 								"value": "nav-vertical"
 							}
 						]
@@ -47,7 +47,7 @@
 				{
 					"dataType": "string",
 					"defaultValue": false,
-					"label": "inverted",
+					"label": "Inverted",
 					"name": "inverted",
 					"type": "checkbox"
 				}

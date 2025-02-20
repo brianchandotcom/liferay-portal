@@ -5,7 +5,7 @@
 				{
 					"dataType": "string",
 					"defaultValue": "h1",
-					"label": "text-type",
+					"label": "Text Type",
 					"name": "textType",
 					"type": "select",
 					"typeOptions": {
@@ -41,39 +41,39 @@
 								"value": "h6"
 							},
 							{
-								"label": "paragraph-large",
+								"label": "Paragraph Large",
 								"value": "text-paragraph-lg"
 							},
 							{
-								"label": "paragraph-medium",
+								"label": "Paragraph Medium",
 								"value": "text-paragraph"
 							},
 							{
-								"label": "paragraph-small",
+								"label": "Paragraph Small",
 								"value": "text-paragraph-sm"
 							},
 							{
-								"label": "paragraph-xsmall",
+								"label": "Paragraph XSmall",
 								"value": "text-paragraph-xs"
 							},
 							{
-								"label": "paragraph-xxsmall",
+								"label": "Paragraph XXSmall",
 								"value": "text-paragraph-xxs"
 							},
 							{
-								"label": "small-caps",
+								"label": "Small Caps",
 								"value": "text-small-caps"
 							},
 							{
-								"label": "link-large",
+								"label": "Link Large",
 								"value": "text-link-lg"
 							},
 							{
-								"label": "link-medium",
+								"label": "Link Medium",
 								"value": "text-link-md"
 							},
 							{
-								"label": "link-small",
+								"label": "Link Small",
 								"value": "text-link-sm"
 							}
 						]
@@ -82,7 +82,7 @@
 				{
 					"dataType": "string",
 					"defaultValue": false,
-					"label": "truncate-text",
+					"label": "Truncate Text",
 					"name": "truncateText",
 					"type": "checkbox"
 				}

@@ -5,7 +5,7 @@
 				{
 					"dataType": "int",
 					"defaultValue": "4",
-					"label": "number-of-tabs",
+					"label": "Number of Tabs",
 					"name": "numberOfTabs",
 					"type": "text",
 					"typeOptions": {
@@ -18,25 +18,25 @@
 				{
 					"dataType": "string",
 					"defaultValue": "underline",
-					"label": "tab-style",
+					"label": "Tab Style",
 					"name": "tabStyle",
 					"type": "select",
 					"typeOptions": {
 						"validValues": [
 							{
-								"label": "primary",
+								"label": "Primary",
 								"value": "underline"
 							},
 							{
-								"label": "secondary",
+								"label": "Secondary",
 								"value": "secondary"
 							},
 							{
-								"label": "tertiary",
+								"label": "Tertiary",
 								"value": "tertiary"
 							},
 							{
-								"label": "segment",
+								"label": "Segment",
 								"value": "segment"
 							}
 						]
@@ -45,18 +45,18 @@
 				{
 					"dataType": "string",
 					"defaultValue": "horizontal",
-					"description": "tab-direction",
-					"label": "tab-direction",
+					"description": "Specifies the direction in which tabs are displayed, either horizontally or vertically.",
+					"label": "Tab Direction",
 					"name": "tabDirection",
 					"type": "select",
 					"typeOptions": {
 						"validValues": [
 							{
-								"label": "vertical",
+								"label": "Vertical",
 								"value": "nav-vertical"
 							},
 							{
-								"label": "horizontal",
+								"label": "Horizontal",
 								"value": ""
 							}
 						]
@@ -65,18 +65,18 @@
 				{
 					"dataType": "string",
 					"defaultValue": "bottom",
-					"description": "tab-active-bar-position",
-					"label": "tab-active-bar-position",
+					"description": "Determines the placement of the active tab indicator, either at the bottom (default) or top of the tabs.",
+					"label": "Tab Active Bar Postion",
 					"name": "tabActiveBarPosition",
 					"type": "select",
 					"typeOptions": {
 						"validValues": [
 							{
-								"label": "bottom",
+								"label": "Bottom",
 								"value": ""
 							},
 							{
-								"label": "top",
+								"label": "Top",
 								"value": "nav-active-bar-top"
 							}
 						]
@@ -85,15 +85,15 @@
 				{
 					"dataType": "string",
 					"defaultValue": "check-circle",
-					"label": "icon-name",
+					"label": "Icon Name",
 					"name": "iconName",
 					"type": "text"
 				},
 				{
 					"dataType": "string",
 					"defaultValue": "none",
-					"description": "icon-alignment",
-					"label": "icon-alignment",
+					"description": "Controls the position of the icon relative to the text, with options to display it on the right, left, or not at all.",
+					"label": "Icon Alignment",
 					"name": "iconAlignment",
 					"type": "select",
 					"typeOptions": {
@@ -111,7 +111,7 @@
 					}
 				}
 			],
-			"label": "tabs-options"
+			"label": "Tabs Options"
 		}
 	]
 }

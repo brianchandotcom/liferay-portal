@@ -7,7 +7,7 @@ import {
 	openConfirmModal,
 	openModal,
 	openSimpleInputModal,
-} from 'frontend-js-web';
+} from 'frontend-js-components-web';
 
 import openDeleteSiteNavigationMenuModal from './openDeleteSiteNavigationMenuModal';
 

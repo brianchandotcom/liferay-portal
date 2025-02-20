@@ -10,6 +10,7 @@ import com.liferay.captcha.recaptcha.ReCaptchaImpl;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListener;
 import com.liferay.portal.configuration.persistence.listener.ConfigurationModelListenerException;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -71,28 +72,32 @@ public class CaptchaConfigurationModelListenerTest {
 		_assertPropertyThrowsException(
 			"reCaptchaNoScriptURL",
 			"https://www.test.com/recaptcha/api/fallback?k=",
-			"The reCAPTCHA no script URL is not valid.");
+			_language.get(
+				LocaleUtil.US, "the-recaptcha-no-script-url-is-not-valid"));
 	}
 
 	@Test
 	public void testValidateReCaptchaPrivateKey() throws Exception {
 		_assertPropertyThrowsException(
 			"reCaptchaPrivateKey", StringPool.BLANK,
-			"The reCAPTCHA private key is not valid.");
+			_language.get(
+				LocaleUtil.US, "the-recaptcha-public-key-is-not-valid"));
 	}
 
 	@Test
 	public void testValidateReCaptchaPublicKey() throws Exception {
 		_assertPropertyThrowsException(
 			"reCaptchaPublicKey", StringPool.BLANK,
-			"The reCAPTCHA public key is not valid.");
+			_language.get(
+				LocaleUtil.US, "the-recaptcha-private-key-is-not-valid"));
 	}
 
 	@Test
 	public void testValidateReCaptchaScriptURL() throws Exception {
 		_assertPropertyThrowsException(
 			"reCaptchaScriptURL", "https://www.test.com/recaptcha/api.js",
-			"The reCAPTCHA script URL is not valid.");
+			_language.get(
+				LocaleUtil.US, "the-recaptcha-script-url-is-not-valid"));
 	}
 
 	@Test
@@ -100,7 +105,8 @@ public class CaptchaConfigurationModelListenerTest {
 		_assertPropertyThrowsException(
 			"reCaptchaVerifyURL",
 			"https://www.test.com/recaptcha/api/siteverify",
-			"The reCAPTCHA verify URL is not valid.");
+			_language.get(
+				LocaleUtil.US, "the-recaptcha-verify-url-is-not-valid"));
 	}
 
 	private void _assertPropertyThrowsException(
@@ -141,5 +147,8 @@ public class CaptchaConfigurationModelListenerTest {
 		filter = "model.class.name=com.liferay.captcha.configuration.CaptchaConfiguration"
 	)
 	private ConfigurationModelListener _configurationModelListener;
+
+	@Inject
+	private Language _language;
 
 }

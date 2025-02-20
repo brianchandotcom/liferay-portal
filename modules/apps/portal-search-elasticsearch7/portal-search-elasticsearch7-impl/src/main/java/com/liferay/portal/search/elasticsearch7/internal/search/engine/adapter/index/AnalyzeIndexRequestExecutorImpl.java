@@ -5,6 +5,7 @@
 
 package com.liferay.portal.search.elasticsearch7.internal.search.engine.adapter.index;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch7.internal.connection.ElasticsearchClientResolver;
@@ -228,28 +229,26 @@ public class AnalyzeIndexRequestExecutorImpl
 	private List<AnalysisIndexResponseToken> _translateAnalyzeResponseTokens(
 		List<AnalyzeResponse.AnalyzeToken> analyzeTokens) {
 
-		List<AnalysisIndexResponseToken> analysisIndexResponseTokens =
-			new ArrayList<>();
+		return TransformUtil.transform(
+			analyzeTokens,
+			analyzeToken -> {
+				AnalysisIndexResponseToken analysisIndexResponseToken =
+					new AnalysisIndexResponseToken(analyzeToken.getTerm());
 
-		for (AnalyzeResponse.AnalyzeToken analyzeToken : analyzeTokens) {
-			AnalysisIndexResponseToken analysisIndexResponseToken =
-				new AnalysisIndexResponseToken(analyzeToken.getTerm());
+				analysisIndexResponseToken.setAttributes(
+					analyzeToken.getAttributes());
+				analysisIndexResponseToken.setEndOffset(
+					analyzeToken.getEndOffset());
+				analysisIndexResponseToken.setPosition(
+					analyzeToken.getPosition());
+				analysisIndexResponseToken.setPositionLength(
+					analyzeToken.getPositionLength());
+				analysisIndexResponseToken.setStartOffset(
+					analyzeToken.getStartOffset());
+				analysisIndexResponseToken.setType(analyzeToken.getType());
 
-			analysisIndexResponseToken.setAttributes(
-				analyzeToken.getAttributes());
-			analysisIndexResponseToken.setEndOffset(
-				analyzeToken.getEndOffset());
-			analysisIndexResponseToken.setPosition(analyzeToken.getPosition());
-			analysisIndexResponseToken.setPositionLength(
-				analyzeToken.getPositionLength());
-			analysisIndexResponseToken.setStartOffset(
-				analyzeToken.getStartOffset());
-			analysisIndexResponseToken.setType(analyzeToken.getType());
-
-			analysisIndexResponseTokens.add(analysisIndexResponseToken);
-		}
-
-		return analysisIndexResponseTokens;
+				return analysisIndexResponseToken;
+			});
 	}
 
 	@Reference

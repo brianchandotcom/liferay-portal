@@ -5,6 +5,7 @@
 
 package com.liferay.portal.scheduler.quartz.internal;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
@@ -551,24 +552,21 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 
 		groupName = _fixMaxLength(groupName, _groupNameMaxLength, storageType);
 
-		List<SchedulerResponse> schedulerResponses = new ArrayList<>();
+		return TransformUtil.transform(
+			scheduler.getJobKeys(GroupMatcher.jobGroupEquals(groupName)),
+			jobKey -> {
+				SchedulerResponse schedulerResponse = getScheduledJob(
+					scheduler, jobKey);
 
-		Set<JobKey> jobKeys = scheduler.getJobKeys(
-			GroupMatcher.jobGroupEquals(groupName));
+				if ((schedulerResponse != null) &&
+					((storageType == null) ||
+					 (storageType == schedulerResponse.getStorageType()))) {
 
-		for (JobKey jobKey : jobKeys) {
-			SchedulerResponse schedulerResponse = getScheduledJob(
-				scheduler, jobKey);
+					return schedulerResponse;
+				}
 
-			if ((schedulerResponse != null) &&
-				((storageType == null) ||
-				 (storageType == schedulerResponse.getStorageType()))) {
-
-				schedulerResponses.add(schedulerResponse);
-			}
-		}
-
-		return schedulerResponses;
+				return null;
+			});
 	}
 
 	protected void schedule(

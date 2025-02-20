@@ -5,6 +5,7 @@
 
 package com.liferay.portal.configuration.settings.internal;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.exception.NoSuchPortletItemException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -16,7 +17,6 @@ import com.liferay.portal.kernel.settings.ArchivedSettings;
 import com.liferay.portal.kernel.settings.ArchivedSettingsFactory;
 import com.liferay.portal.kernel.settings.SettingsException;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.PortletPreferences;
@@ -49,19 +49,12 @@ public class ArchivedSettingsFactoryImpl implements ArchivedSettingsFactory {
 	public List<ArchivedSettings> getPortletInstanceArchivedSettingsList(
 		long groupId, String portletId) {
 
-		List<ArchivedSettings> archivedSettingsList = new ArrayList<>();
-
-		List<PortletItem> portletItems =
+		return TransformUtil.transform(
 			_portletItemLocalService.getPortletItems(
 				groupId, portletId,
 				com.liferay.portal.kernel.model.PortletPreferences.class.
-					getName());
-
-		for (PortletItem portletItem : portletItems) {
-			archivedSettingsList.add(new ArchivedSettingsImpl(portletItem));
-		}
-
-		return archivedSettingsList;
+					getName()),
+			portletItem -> new ArchivedSettingsImpl(portletItem));
 	}
 
 	private PortletItem _getPortletItem(

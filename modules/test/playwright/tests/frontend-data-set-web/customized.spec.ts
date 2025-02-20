@@ -42,6 +42,36 @@ test.beforeEach(async ({fdsSamplePage, page, site}) => {
 });
 
 test(
+	'Check filter is preloaded when entering on an FDS page for first time',
+	{
+		tag: ['@LPS-150047'],
+	},
+	async ({page}) => {
+		await test.step('Check the active filters are displayed with "Blue, Green, Yellow"', async () => {
+			await expect(
+				page.getByRole('button', {name: 'Color: Blue, Green, Yellow'})
+			).toBeVisible();
+		});
+
+		await test.step('Check the results only show results with colors Blue, Green, and Yellow', async () => {
+			expect(
+				await page.getByRole('cell', {name: 'Green'}).count()
+			).toBeGreaterThan(0);
+			expect(
+				await page.getByRole('cell', {name: 'Blue'}).count()
+			).toBeGreaterThan(0);
+			expect(
+				await page.getByRole('cell', {name: 'Yellow'}).count()
+			).toBeGreaterThan(0);
+
+			expect(await page.getByRole('cell', {name: 'Red'}).count()).toEqual(
+				0
+			);
+		});
+	}
+);
+
+test(
 	'Check behavior of custom views',
 	{
 		tag: ['@LPS-130101'],

@@ -120,59 +120,6 @@ definition {
 			groupName = "Site Name");
 	}
 
-	@description = "This is a use case for LPS-83147."
-	@priority = 3
-	test ActivateStagingWithPageScopedWebContent {
-		task ("Enable Scope Configuration") {
-			Portlet.enableScopeConfiguration();
-		}
-
-		JSONLayout.addWidgetToPublicLayout(
-			groupName = "Site Name",
-			layoutName = "Staging Test Page",
-			widgetName = "Web Content Display");
-
-		Navigator.openSiteURL(siteName = "Site Name");
-
-		MouseOver(locator1 = "Portlet#PORTLET_CONTENT");
-
-		WebContentDisplayPortlet.configureScope(scopeSelection = "Staging Test Page");
-
-		Navigator.openSiteURL(siteName = "Site Name");
-
-		MouseOver(locator1 = "Portlet#PORTLET_CONTENT");
-
-		WebContentDisplayPortlet.viewConfigureScope(scopeSelection = "Staging Test Page");
-
-		var pageScopeId = JSONLayout.getPageScopeIdByGroupName(groupName = "Site Name");
-
-		echo("Page Scope ID is: ${pageScopeId}");
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = ${pageScopeId});
-
-		WebContentNavigator.gotoAddCP();
-
-		WebContent.addCP(
-			webContentContent = "WC WebContent Content",
-			webContentTitle = "WC WebContent Title");
-
-		WebContent.publishWithPermissions();
-
-		JSONStaging.enableLocalStaging(groupName = "Site Name");
-
-		AssertConsoleTextNotPresent(value1 = "DataIntegrityViolationException");
-
-		AssertConsoleTextNotPresent(value1 = "SystemException");
-
-		WebContentNavigator.openWebContentAdmin(siteURLKey = ${pageScopeId});
-
-		var key_webContentTitle = "WC WebContent Title";
-
-		AssertTextEquals.assertPartialText(
-			locator1 = "WC#ENTRY_LIST_TITLE_ON_LIVE",
-			value1 = "WC WebContent Title");
-	}
-
 	@description = "This is a use case for LPS-94325."
 	@priority = 3
 	test ActivateStagingWithWCDOnFragment {

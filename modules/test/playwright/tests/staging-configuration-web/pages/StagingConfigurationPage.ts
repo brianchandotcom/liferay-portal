@@ -28,7 +28,8 @@ export class StagingConfigurationPage {
 
 	async gotoStagingConfiguration(siteUrl?: Site['friendlyUrlPath']) {
 		await this.page.goto(
-			`/group${siteUrl || '/guest'}${PORTLET_URLS.staging}`
+			`/group${siteUrl || '/guest'}${PORTLET_URLS.staging}`,
+			{waitUntil: 'domcontentloaded'}
 		);
 	}
 

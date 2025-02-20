@@ -31,7 +31,7 @@ export class UIElementsPage {
 		this.setupUpdatedAlert = page.getByText(
 			'Success:You have successfully updated the setup.'
 		);
-		this.anySuccessAlert = page.getByText('successfully.');
+		this.anySuccessAlert = page.locator('.alert-success');
 		this.closeClickable = page.getByLabel('close', {exact: true});
 		this.publishButton = page.getByLabel('Publish', {exact: true});
 	}

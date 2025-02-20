@@ -5,6 +5,7 @@
 
 import {FrameLocator, Locator, Page} from '@playwright/test';
 
+import {PORTLET_URLS} from '../../utils/portletUrls';
 import {UIElementsPage} from '../uielements/UIElementsPage';
 
 export class WebContentDisplayPage {
@@ -14,6 +15,8 @@ export class WebContentDisplayPage {
 	readonly configurationFrame: FrameLocator;
 	readonly configurationFrameSelectButton: Locator;
 	readonly configurationOption: Locator;
+	readonly scopeTab: Locator;
+	readonly scopeOptions: Locator;
 	readonly saveButton: Locator;
 	readonly selectButton: Locator;
 	readonly selectWebContentButton: Locator;
@@ -30,10 +33,13 @@ export class WebContentDisplayPage {
 	readonly webContentToSelect: Locator;
 
 	constructor(page: Page) {
-		this.app = page.getByTestId('app-loaded');
+		this.page = page;
 		this.configurationFrame = page.frameLocator(
-			'iframe[title="Configuration"]'
+			'iframe[title*="Configuration"]'
 		);
+
+		this.app = page.getByTestId('app-loaded');
+
 		this.configurationFrameSelectButton = this.configurationFrame.getByRole(
 			'button',
 			{
@@ -44,12 +50,17 @@ export class WebContentDisplayPage {
 			exact: true,
 			name: 'Configuration',
 		});
-		this.page = page;
+		this.scopeOptions = this.configurationFrame.locator(
+			'[id="_com_liferay_portlet_configuration_web_portlet_PortletConfigurationPortlet_scope"]'
+		);
 		this.saveButton = page
 			.frameLocator('iframe[title*="Web Content Display"]')
 			.getByRole('button', {
 				name: 'Save',
 			});
+		this.scopeTab = this.configurationFrame.getByRole('link', {
+			name: 'Scope Deprecated',
+		});
 		this.selectButton = this.app.getByRole('button', {
 			name: 'Select',
 		});
@@ -94,13 +105,31 @@ export class WebContentDisplayPage {
 			this.selectWebContentFrame.locator('[data-qa-id="row"]');
 	}
 
+	async gotoWebContentAdmin(pageScopeId: string) {
+		await this.page.goto(`/group/${pageScopeId}${PORTLET_URLS.journal}`, {
+			waitUntil: 'domcontentloaded',
+		});
+	}
+
+	async goToConfiguration() {
+		await this.webContentDisplay.waitFor({state: 'visible'});
+		await this.webContentDisplayContent.hover();
+		await this.webContentDisplayContent.click();
+
+		await this.page
+			.locator('[id*="JournalContentPortlet"]')
+			.getByRole('button', {name: 'Options'})
+			.click();
+		await this.configurationOption.click();
+	}
+
 	async addWebContentWithDisplay(webContentName?: string) {
 		await this.webContentDisplay.waitFor({state: 'visible'});
 		await this.webContentDisplayContent.hover();
 		await this.webContentDisplayContent.click();
 
 		await this.page
-			.locator('#wrapper')
+			.locator('[id*="JournalContentPortlet"]')
 			.getByRole('button', {name: 'Options'})
 			.click();
 		await this.configurationOption.click();
@@ -157,6 +186,11 @@ export class WebContentDisplayPage {
 		}
 
 		await this.saveConfigurationFrameOptions();
+	}
+
+	async setScope(scope: string) {
+		await this.scopeTab.click();
+		await this.scopeOptions.selectOption(`layout,${scope}`);
 	}
 
 	async addWebContentWithWidget(webContentName: string) {

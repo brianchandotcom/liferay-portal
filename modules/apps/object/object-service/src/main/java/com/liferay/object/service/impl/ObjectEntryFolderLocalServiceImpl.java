@@ -58,11 +58,11 @@ public class ObjectEntryFolderLocalServiceImpl
 		User user = _userLocalService.getUser(userId);
 
 		_validateExternalReferenceCode(
-			externalReferenceCode, user.getCompanyId(), groupId);
+			externalReferenceCode, groupId, user.getCompanyId());
 
 		_validateParentObjectEntryFolderId(groupId, parentObjectEntryFolderId);
 		_validateName(
-			user.getCompanyId(), groupId, 0, parentObjectEntryFolderId, name);
+			groupId, user.getCompanyId(), 0, parentObjectEntryFolderId, name);
 
 		ObjectEntryFolder objectEntryFolder =
 			objectEntryFolderPersistence.create(
@@ -222,7 +222,7 @@ public class ObjectEntryFolderLocalServiceImpl
 		_validateParentObjectEntryFolderId(
 			objectEntryFolder.getGroupId(), parentObjectEntryFolderId);
 		_validateName(
-			objectEntryFolder.getCompanyId(), objectEntryFolder.getGroupId(),
+			objectEntryFolder.getGroupId(), objectEntryFolder.getCompanyId(),
 			objectEntryFolderId, parentObjectEntryFolderId, name);
 
 		objectEntryFolder.setParentObjectEntryFolderId(

@@ -1072,6 +1072,59 @@ public class FreeMarkerTool {
 		return false;
 	}
 
+	public boolean isDeleteByERCMethod(
+		JavaMethodSignature javaMethodSignature, String schemaName) {
+
+		if (StringUtil.matches(
+				javaMethodSignature.getMethodName(),
+				"deleteByExternalReferenceCode") ||
+			StringUtil.matches(
+				javaMethodSignature.getMethodName(),
+				"delete" + schemaName + "ByExternalReferenceCode")) {
+
+			List<JavaMethodParameter> javaMethodParameters =
+				javaMethodSignature.getJavaMethodParameters();
+
+			for (JavaMethodParameter javaMethodParameter :
+					javaMethodParameters) {
+
+				if (StringUtil.equals(
+						javaMethodParameter.getParameterName(),
+						"externalReferenceCode")) {
+
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
+	public boolean isDeleteByIdMethod(
+		JavaMethodSignature javaMethodSignature, String schemaName) {
+
+		if (StringUtil.matches(
+				javaMethodSignature.getMethodName(), "delete" + schemaName)) {
+
+			List<JavaMethodParameter> javaMethodParameters =
+				javaMethodSignature.getJavaMethodParameters();
+
+			for (JavaMethodParameter javaMethodParameter :
+					javaMethodParameters) {
+
+				if (isIdParameter(javaMethodParameter, schemaName) &&
+					StringUtil.equals(
+						javaMethodParameter.getParameterType(),
+						"java.lang.Long")) {
+
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
 	public boolean isDTOSchemaProperty(
 		ConfigYAML configYAML, String propertyName, Schema schema,
 		Map<String, Schema> schemas) {

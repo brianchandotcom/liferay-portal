@@ -145,8 +145,10 @@ public abstract class Base${schemaName}ResourceImpl
 			parentSchemaName = javaMethodSignature.parentSchemaName!
 		/>
 
-		<#if stringUtil.equals(javaMethodSignature.methodName, "delete" + schemaName)>
-			<#assign deleteBatchJavaMethodSignature = javaMethodSignature />
+		<#if freeMarkerTool.isDeleteByIdMethod(javaMethodSignature, schemaName)>
+			<#assign deleteByIdJavaMethodSignature = javaMethodSignature />
+		<#elseif freeMarkerTool.isDeleteByERCMethod(javaMethodSignature, schemaName)>
+			<#assign deleteByERCJavaMethodSignature = javaMethodSignature />
 		<#elseif stringUtil.equals(javaMethodSignature.methodName, "get" + schemaName)>
 			<#assign getByIdJavaMethodSignature = javaMethodSignature />
 		<#elseif stringUtil.equals(javaMethodSignature.methodName, "get" + schemaName + "ByExternalReferenceCode") || stringUtil.equals(javaMethodSignature.methodName, "get" + parentSchemaName + schemaName + "ByExternalReferenceCode")>
@@ -990,15 +992,26 @@ public abstract class Base${schemaName}ResourceImpl
 
 		@Override
 		public void delete(Collection<${javaDataType}> ${schemaVarNames}, Map<String, Serializable> parameters) throws Exception {
-			<#if deleteBatchJavaMethodSignature?? && (properties?keys?seq_contains("id") || properties?keys?seq_contains(schemaVarName + "Id"))>
+			<#if deleteByIdJavaMethodSignature?? || deleteByERCJavaMethodSignature??>
 				UnsafeFunction<${javaDataType}, ${javaDataType}, Exception> ${schemaVarName}UnsafeFunction = ${schemaVarName} -> {
-					<#if properties?keys?seq_contains("id")>
-						delete${schemaName}(${schemaVarName}.getId());
-					<#else>
-						delete${schemaName}(${schemaVarName}.get${schemaName}Id());
+					<#if deleteByIdJavaMethodSignature??>
+							<#if properties?keys?seq_contains("id")>
+								if(${schemaVarName}.getId() != null) {
+									${deleteByIdJavaMethodSignature.methodName}(${schemaVarName}.getId());
+							<#else>
+								if(${schemaVarName}.get${schemaName}Id() != null) {
+									${deleteByIdJavaMethodSignature.methodName}(${schemaVarName}.get${schemaName}Id());
+							</#if>
+							return ${schemaVarName};
+						}
 					</#if>
-
-					return ${schemaVarName};
+					<#if deleteByERCJavaMethodSignature??>
+						<#if deleteByIdJavaMethodSignature??>else </#if>if(${schemaVarName}.getExternalReferenceCode() != null) {
+							${deleteByERCJavaMethodSignature.methodName}(${schemaVarName}.getExternalReferenceCode());
+							return ${schemaVarName};
+						}
+					</#if>
+					throw new UnsupportedOperationException("Unable to delete ${schemaVarName}. No valid identifier provided.");
 				};
 
 				if (contextBatchUnsafeBiConsumer != null) {

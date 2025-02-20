@@ -116,14 +116,14 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessorTest {
 				_segmentsExperienceRequestProcessor.getSegmentsExperienceIds(
 					_getMockHttpServletRequest(), new MockHttpServletResponse(),
 					_group.getGroupId(), _layout.getPlid(),
-					new long[] {segmentsExperience.getSegmentsEntryId()});
+					new long[] {segmentsExperience.getSegmentsExperienceId()});
 
 			Assert.assertEquals(
 				Arrays.toString(segmentsExperienceIds), 1,
 				segmentsExperienceIds.length);
 
 			Assert.assertEquals(
-				segmentsExperience.getSegmentsEntryId(),
+				segmentsExperience.getSegmentsExperienceId(),
 				segmentsExperienceIds[0]);
 		}
 	}
@@ -464,14 +464,14 @@ public class SegmentsExperimentSegmentsExperienceRequestProcessorTest {
 					_getMockHttpServletRequest(), new MockHttpServletResponse(),
 					_group.getGroupId(), _layout.getPlid(),
 					new long[] {segmentsEntry.getSegmentsEntryId()},
-					new long[] {segmentsExperience.getSegmentsEntryId()});
+					new long[] {segmentsExperience.getSegmentsExperienceId()});
 
 			Assert.assertEquals(
 				Arrays.toString(segmentsExperienceIds), 1,
 				segmentsExperienceIds.length);
 
 			Assert.assertEquals(
-				segmentsExperience.getSegmentsEntryId(),
+				segmentsExperience.getSegmentsExperienceId(),
 				segmentsExperienceIds[0]);
 		}
 	}

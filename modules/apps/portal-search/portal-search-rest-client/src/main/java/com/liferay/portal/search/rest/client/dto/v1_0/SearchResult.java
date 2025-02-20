@@ -133,6 +133,27 @@ public class SearchResult implements Cloneable, Serializable {
 
 	protected Object embedded;
 
+	public String getEntryClassName() {
+		return entryClassName;
+	}
+
+	public void setEntryClassName(String entryClassName) {
+		this.entryClassName = entryClassName;
+	}
+
+	public void setEntryClassName(
+		UnsafeSupplier<String, Exception> entryClassNameUnsafeSupplier) {
+
+		try {
+			entryClassName = entryClassNameUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String entryClassName;
+
 	public String getItemURL() {
 		return itemURL;
 	}

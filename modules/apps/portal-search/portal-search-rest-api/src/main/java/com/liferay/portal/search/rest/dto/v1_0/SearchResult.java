@@ -263,6 +263,47 @@ public class SearchResult implements Serializable {
 	@JsonIgnore
 	private Supplier<Object> _embeddedSupplier;
 
+	@Schema(description = "The object entry class name.")
+	public String getEntryClassName() {
+		if (_entryClassNameSupplier != null) {
+			entryClassName = _entryClassNameSupplier.get();
+
+			_entryClassNameSupplier = null;
+		}
+
+		return entryClassName;
+	}
+
+	public void setEntryClassName(String entryClassName) {
+		this.entryClassName = entryClassName;
+
+		_entryClassNameSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setEntryClassName(
+		UnsafeSupplier<String, Exception> entryClassNameUnsafeSupplier) {
+
+		_entryClassNameSupplier = () -> {
+			try {
+				return entryClassNameUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(description = "The object entry class name.")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String entryClassName;
+
+	@JsonIgnore
+	private Supplier<String> _entryClassNameSupplier;
+
 	@Schema(description = "The link to the embedded item.")
 	public String getItemURL() {
 		if (_itemURLSupplier != null) {
@@ -496,6 +537,22 @@ public class SearchResult implements Serializable {
 			else {
 				sb.append(embedded);
 			}
+		}
+
+		String entryClassName = getEntryClassName();
+
+		if (entryClassName != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"entryClassName\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(entryClassName));
+
+			sb.append("\"");
 		}
 
 		String itemURL = getItemURL();

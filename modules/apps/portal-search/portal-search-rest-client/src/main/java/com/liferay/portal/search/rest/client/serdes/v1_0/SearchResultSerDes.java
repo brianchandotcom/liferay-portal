@@ -123,6 +123,20 @@ public class SearchResultSerDes {
 			}
 		}
 
+		if (searchResult.getEntryClassName() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"entryClassName\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(searchResult.getEntryClassName()));
+
+			sb.append("\"");
+		}
+
 		if (searchResult.getItemURL() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -223,6 +237,15 @@ public class SearchResultSerDes {
 			map.put("embedded", String.valueOf(searchResult.getEmbedded()));
 		}
 
+		if (searchResult.getEntryClassName() == null) {
+			map.put("entryClassName", null);
+		}
+		else {
+			map.put(
+				"entryClassName",
+				String.valueOf(searchResult.getEntryClassName()));
+		}
+
 		if (searchResult.getItemURL() == null) {
 			map.put("itemURL", null);
 		}
@@ -277,6 +300,9 @@ public class SearchResultSerDes {
 			else if (Objects.equals(jsonParserFieldName, "embedded")) {
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "entryClassName")) {
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "itemURL")) {
 				return false;
 			}
@@ -321,6 +347,12 @@ public class SearchResultSerDes {
 			else if (Objects.equals(jsonParserFieldName, "embedded")) {
 				if (jsonParserFieldValue != null) {
 					searchResult.setEmbedded((Object)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "entryClassName")) {
+				if (jsonParserFieldValue != null) {
+					searchResult.setEntryClassName(
+						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "itemURL")) {

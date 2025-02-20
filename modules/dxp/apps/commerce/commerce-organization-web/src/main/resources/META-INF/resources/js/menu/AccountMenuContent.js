@@ -4,7 +4,8 @@
  */
 
 import ClayDropDown from '@clayui/drop-down';
-import {openConfirmModal, sub} from 'frontend-js-web';
+import {openConfirmModal} from 'frontend-js-components-web';
+import {sub} from 'frontend-js-web';
 import React, {useContext} from 'react';
 
 import ChartContext from '../ChartContext';

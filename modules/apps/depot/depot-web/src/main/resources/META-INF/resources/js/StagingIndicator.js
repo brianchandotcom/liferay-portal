@@ -5,7 +5,7 @@
 
 import {Align, ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
-import {openModal} from 'frontend-js-web';
+import {openModal} from 'frontend-js-components-web';
 import PropTypes from 'prop-types';
 import React from 'react';
 

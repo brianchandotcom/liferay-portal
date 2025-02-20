@@ -13,6 +13,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalService;
+import com.liferay.dynamic.data.mapping.test.util.BaseDDMFormFieldTemplateContextContributorTestCase;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormFieldOptionsTestUtil;
 import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
@@ -25,7 +26,6 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -53,7 +53,8 @@ import org.mockito.Mockito;
 /**
  * @author Marcellus Tavares
  */
-public class SelectDDMFormFieldTemplateContextContributorTest {
+public class SelectDDMFormFieldTemplateContextContributorTest
+	extends BaseDDMFormFieldTemplateContextContributorTestCase {
 
 	@ClassRule
 	@Rule
@@ -62,6 +63,8 @@ public class SelectDDMFormFieldTemplateContextContributorTest {
 
 	@Before
 	public void setUp() throws Exception {
+		setUpLanguageUtil();
+
 		_setUpDDMFormInstanceLocalService();
 
 		PropsTestUtil.setProps("collator.rules", "<<<");
@@ -71,7 +74,7 @@ public class SelectDDMFormFieldTemplateContextContributorTest {
 
 		ReflectionTestUtil.setFieldValue(
 			_selectDDMFormFieldTemplateContextContributor, "_language",
-			Mockito.mock(Language.class));
+			language);
 		ReflectionTestUtil.setFieldValue(
 			_selectDDMFormFieldTemplateContextContributor,
 			"_listTypeEntryLocalService", _listTypeEntryLocalService);
@@ -302,6 +305,7 @@ public class SelectDDMFormFieldTemplateContextContributorTest {
 	public void testGetParameters1() throws Exception {
 		DDMFormField ddmFormField = new DDMFormField("field", "select");
 
+		ddmFormField.setDDMForm(getDDMForm());
 		ddmFormField.setProperty("dataSourceType", "data-provider");
 
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
@@ -359,6 +363,7 @@ public class SelectDDMFormFieldTemplateContextContributorTest {
 	public void testGetParameters2() throws Exception {
 		DDMFormField ddmFormField = new DDMFormField("field", "select");
 
+		ddmFormField.setDDMForm(getDDMForm());
 		ddmFormField.setMultiple(true);
 		ddmFormField.setProperty("dataSourceType", "manual");
 		ddmFormField.setProperty("showEmptyOption", false);

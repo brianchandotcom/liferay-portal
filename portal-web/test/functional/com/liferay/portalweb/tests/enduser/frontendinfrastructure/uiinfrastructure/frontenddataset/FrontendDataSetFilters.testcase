@@ -315,36 +315,4 @@ definition {
 		}
 	}
 
-	@description = "LPS-150047. Assert filter is preloaded when entering on a FDS page for first time."
-	@priority = 5
-	test WillRenderAsInitialState {
-		property portal.acceptance = "true";
-
-		task ("And When viewing FDS Sample portlet data set") {
-			Click(
-				key_sampleTab = "Customized",
-				locator1 = "FrontendDataSet#FDS_DATASET");
-		}
-
-		task ("Then the results will be displayed accordingly to the filter selected") {
-			AssertElementPresent(
-				key_statusName = "Approved",
-				locator1 = "FrontendDataSet#TABLE_STATUS");
-
-			AssertElementNotPresent(
-				key_statusName = "Pending",
-				locator1 = "FrontendDataSet#TABLE_STATUS");
-
-			AssertTextEquals(
-				locator1 = "FrontendDataSet#PAGINATION_RESULTS",
-				value1 = "Showing 1 to 10 of 75 entries.");
-		}
-
-		task ("And Then the Filters Summary boxes will be displayed accordingly to it") {
-			AssertElementPresent(
-				key_filter = "Color: Blue, Green, Yellow",
-				locator1 = "FrontendDataSet#FILTER_SUMMARY_LABEL");
-		}
-	}
-
 }

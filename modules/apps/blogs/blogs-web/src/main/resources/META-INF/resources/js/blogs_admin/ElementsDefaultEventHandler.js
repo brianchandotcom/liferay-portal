@@ -3,11 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {
-	DefaultEventHandler,
-	openConfirmModal,
-	openWindow,
-} from 'frontend-js-web';
+import {openConfirmModal} from 'frontend-js-components-web';
+import {DefaultEventHandler, openWindow} from 'frontend-js-web';
 
 class ElementsDefaultEventHandler extends DefaultEventHandler {
 	created(props) {

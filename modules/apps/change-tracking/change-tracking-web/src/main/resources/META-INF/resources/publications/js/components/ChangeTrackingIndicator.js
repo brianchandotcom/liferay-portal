@@ -13,11 +13,11 @@ import ClayList from '@clayui/list';
 import ClayModal, {useModal} from '@clayui/modal';
 import ClayPopover from '@clayui/popover';
 import ClaySticker from '@clayui/sticker';
+import {openConfirmModal} from 'frontend-js-components-web';
 import {
 	createPortletURL,
 	fetch,
 	navigate as navigateUtil,
-	openConfirmModal,
 	sub,
 } from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';

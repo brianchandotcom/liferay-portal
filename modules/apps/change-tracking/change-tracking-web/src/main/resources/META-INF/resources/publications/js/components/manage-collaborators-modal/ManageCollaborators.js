@@ -13,15 +13,12 @@ import ClayMultiSelect from '@clayui/multi-select';
 import ClaySticker from '@clayui/sticker';
 import ClayTable from '@clayui/table';
 import ClayTabs from '@clayui/tabs';
-import {FeatureIndicator} from 'frontend-js-components-web';
 import {
-	fetch,
-	getOpener,
-	objectToFormData,
+	FeatureIndicator,
 	openConfirmModal,
 	openToast,
-	sub,
-} from 'frontend-js-web';
+} from 'frontend-js-components-web';
+import {fetch, getOpener, objectToFormData, sub} from 'frontend-js-web';
 import React, {useCallback, useRef, useState} from 'react';
 
 import CollaboratorRow from './CollaboratorRow';

@@ -14,14 +14,16 @@ import ClayLink from '@clayui/link';
 import ClayNavigationBar from '@clayui/navigation-bar';
 import ClayTable from '@clayui/table';
 import classNames from 'classnames';
-import {FeatureIndicator} from 'frontend-js-components-web';
+import {
+	FeatureIndicator,
+	openConfirmModal,
+	openSimpleInputModal,
+	openToast,
+} from 'frontend-js-components-web';
 import {
 	createPortletURL,
 	fetch,
 	navigate as navigateUtil,
-	openConfirmModal,
-	openSimpleInputModal,
-	openToast,
 } from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 

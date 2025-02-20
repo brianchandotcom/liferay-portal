@@ -70,7 +70,7 @@ public class PortalImplCanonicalURLTest {
 
 	@BeforeClass
 	public static void setUpClass() throws PortalException {
-		_originalVirtualHostDefaultSiteName =
+		_originalVirtualHostsDefaultSiteName =
 			ReflectionTestUtil.getAndSetFieldValue(
 				PropsValues.class, "VIRTUAL_HOSTS_DEFAULT_SITE_NAME", "Guest");
 		_originalWebServerHTTPPort = ReflectionTestUtil.getAndSetFieldValue(
@@ -104,7 +104,7 @@ public class PortalImplCanonicalURLTest {
 
 		ReflectionTestUtil.setFieldValue(
 			PropsValues.class, "VIRTUAL_HOSTS_DEFAULT_SITE_NAME",
-			_originalVirtualHostDefaultSiteName);
+			_originalVirtualHostsDefaultSiteName);
 		ReflectionTestUtil.setFieldValue(
 			PropsValues.class, "WEB_SERVER_HTTP_PORT",
 			_originalWebServerHTTPPort);
@@ -709,7 +709,7 @@ public class PortalImplCanonicalURLTest {
 
 	private static Locale _defaultLocale;
 	private static int _defaultPrependStyle;
-	private static String _originalVirtualHostDefaultSiteName;
+	private static String _originalVirtualHostsDefaultSiteName;
 	private static int _originalWebServerHTTPPort;
 	private static int _originalWebServerHTTPSPort;
 

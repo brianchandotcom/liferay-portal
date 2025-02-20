@@ -43,6 +43,7 @@ export {
 export {default as Treeview} from './treeview/Treeview';
 
 export {
+	ModalStatus,
 	openAlertModal,
 	openCategorySelectionModal,
 	openConfirmModal,

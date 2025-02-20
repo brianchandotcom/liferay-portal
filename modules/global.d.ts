@@ -6,6 +6,10 @@
 /// <reference path="apps/oauth2-provider/oauth2-provider-web/src/main/resources/META-INF/resources/js/liferay.d.ts" />
 
 declare module Liferay {
+	interface EventHandler {
+		detach: () => number;
+	}
+
 	export const FeatureFlags: {[key: string]: boolean};
 	export const SPA: any;
 	export function fire(type: string, context?: any): void;

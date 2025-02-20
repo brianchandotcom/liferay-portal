@@ -218,6 +218,70 @@ export function objectToFormData(
 	namespace?: string
 ): FormData;
 
+export interface ModalButtonOnClick {
+	(args: {processClose: () => void}): void;
+}
+
+export interface ModalContainerProps {
+	className?: string;
+}
+
+export type ModalSize = 'full-screen' | 'lg' | 'md' | 'sm';
+
+export type ModalStatus = 'danger' | 'info' | 'success' | 'warning';
+
+export interface ModalProps {
+	bodyComponent?: any;
+	bodyHTML?: string;
+	buttons?: {
+		autoFocus?: boolean;
+		displayType?:
+			| 'danger'
+			| 'info'
+			| 'link'
+			| 'primary'
+			| 'secondary'
+			| 'success'
+			| 'unstyled'
+			| 'warning'
+			| null;
+		formId?: string;
+		id?: string;
+		label?: string;
+		onClick?: ModalButtonOnClick;
+		type?: 'cancel' | 'submit';
+	}[];
+	center?: boolean;
+	className?: string;
+	containerProps?: ModalContainerProps;
+	contentComponent?:
+		| typeof React.Component
+		| (({closeModal}: {closeModal: () => void}) => React.JSX.Element);
+	customEvents?: {
+		name: string;
+		onEvent: EventHandler;
+	}[];
+	disableAutoClose?: boolean;
+	disableHeader?: boolean;
+	footerCssClass?: string;
+	headerCssClass?: string;
+	headerHTML?: string;
+	height?: string;
+	id?: string;
+	iframeBodyCssClass?: string;
+	iframeProps?: {
+		[prop: string]: string;
+	};
+	onClose?: EventHandler;
+	onOpen?: IframeOnOpen;
+	role?: string;
+	size?: ModalSize;
+	status?: ModalStatus;
+	title?: string;
+	url?: URL | string;
+	zIndex?: number;
+}
+
 export function openAlertModal({message}: {message: string}): void;
 
 export function openConfirmModal({
@@ -232,7 +296,9 @@ export function openConfirmModal({
 	title?: string;
 }): void;
 
-export function openModal(props: Object): void;
+export interface OpenModalProps extends ModalProps {}
+
+export function openModal(props: OpenModalProps): void;
 
 export function openPortletModal(props: Object): void;
 

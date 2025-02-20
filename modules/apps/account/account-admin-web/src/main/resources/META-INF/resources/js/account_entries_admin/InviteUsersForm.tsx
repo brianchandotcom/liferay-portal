@@ -7,7 +7,8 @@ import ClayButton from '@clayui/button';
 import ClayForm from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLayout from '@clayui/layout';
-import {openConfirmModal, sub} from 'frontend-js-web';
+import {openConfirmModal} from 'frontend-js-components-web';
+import {sub} from 'frontend-js-web';
 import React, {FormEventHandler, useState} from 'react';
 
 import InviteUserFormGroup from './InviteUsersFormGroup';

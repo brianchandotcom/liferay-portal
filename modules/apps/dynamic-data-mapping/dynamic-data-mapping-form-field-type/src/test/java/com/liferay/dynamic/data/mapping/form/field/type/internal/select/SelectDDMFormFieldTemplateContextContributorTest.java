@@ -26,6 +26,8 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.PropsTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -37,6 +39,7 @@ import com.liferay.portal.test.rule.LiferayUnitTestRule;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -49,6 +52,8 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import org.mockito.Mockito;
+
+import org.skyscreamer.jsonassert.JSONAssert;
 
 /**
  * @author Marcellus Tavares
@@ -307,11 +312,11 @@ public class SelectDDMFormFieldTemplateContextContributorTest
 
 		ddmFormField.setDDMForm(getDDMForm());
 		ddmFormField.setProperty("dataSourceType", "data-provider");
+		ddmFormField.setProperty("localizedObjectField", false);
 
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
-			new DDMFormFieldRenderingContext();
+			createDDMFormFieldRenderingContext();
 
-		ddmFormFieldRenderingContext.setLocale(LocaleUtil.US);
 		ddmFormFieldRenderingContext.setValue("[\"value 1\"]");
 
 		_setUpDDMFormFieldOptionsFactory(
@@ -326,6 +331,9 @@ public class SelectDDMFormFieldTemplateContextContributorTest
 
 		Assert.assertTrue(parameters.containsKey("dataSourceType"));
 		Assert.assertEquals("data-provider", parameters.get("dataSourceType"));
+
+		Assert.assertTrue(parameters.containsKey("localizedObjectField"));
+		Assert.assertFalse((boolean)parameters.get("localizedObjectField"));
 
 		Assert.assertTrue(parameters.containsKey("multiple"));
 		Assert.assertFalse((boolean)parameters.get("multiple"));
@@ -366,12 +374,18 @@ public class SelectDDMFormFieldTemplateContextContributorTest
 		ddmFormField.setDDMForm(getDDMForm());
 		ddmFormField.setMultiple(true);
 		ddmFormField.setProperty("dataSourceType", "manual");
+		ddmFormField.setProperty("localizedObjectField", true);
 		ddmFormField.setProperty("showEmptyOption", false);
 
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
-			new DDMFormFieldRenderingContext();
+			createDDMFormFieldRenderingContext();
 
-		ddmFormFieldRenderingContext.setLocale(LocaleUtil.US);
+		ddmFormFieldRenderingContext.setValue(
+			JSONUtil.put(
+				"en_US", "value 1"
+			).put(
+				"pt_BR", "value 2"
+			).toString());
 
 		LocalizedValue predefinedValue = new LocalizedValue();
 
@@ -392,6 +406,9 @@ public class SelectDDMFormFieldTemplateContextContributorTest
 
 		Assert.assertTrue(parameters.containsKey("dataSourceType"));
 		Assert.assertEquals("manual", parameters.get("dataSourceType"));
+
+		Assert.assertTrue(parameters.containsKey("localizedObjectField"));
+		Assert.assertTrue((boolean)parameters.get("localizedObjectField"));
 
 		Assert.assertTrue(parameters.containsKey("multiple"));
 		Assert.assertTrue((boolean)parameters.get("multiple"));
@@ -431,6 +448,18 @@ public class SelectDDMFormFieldTemplateContextContributorTest
 			predefinedValueParameter.contains("value 3"));
 
 		Assert.assertFalse((boolean)parameters.get("showEmptyOption"));
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"en_US",
+				JSONFactoryUtil.createJSONArray(
+					Collections.singletonList("value 1"))
+			).put(
+				"pt_BR",
+				JSONFactoryUtil.createJSONArray(
+					Collections.singletonList("value 2"))
+			).toString(),
+			String.valueOf(parameters.get("value")), false);
 	}
 
 	@Test

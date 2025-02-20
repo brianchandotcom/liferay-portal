@@ -609,66 +609,6 @@ public interface VirtualHostPersistence
 	public int countByNotL_H(long layoutSetId, String[] hostnames);
 
 	/**
-	 * Returns the virtual host where companyId = &#63; and layoutSetId = &#63; and defaultVirtualHost = &#63; or throws a <code>NoSuchVirtualHostException</code> if it could not be found.
-	 *
-	 * @param companyId the company ID
-	 * @param layoutSetId the layout set ID
-	 * @param defaultVirtualHost the default virtual host
-	 * @return the matching virtual host
-	 * @throws NoSuchVirtualHostException if a matching virtual host could not be found
-	 */
-	public VirtualHost findByC_L_D(
-			long companyId, long layoutSetId, boolean defaultVirtualHost)
-		throws NoSuchVirtualHostException;
-
-	/**
-	 * Returns the virtual host where companyId = &#63; and layoutSetId = &#63; and defaultVirtualHost = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param companyId the company ID
-	 * @param layoutSetId the layout set ID
-	 * @param defaultVirtualHost the default virtual host
-	 * @return the matching virtual host, or <code>null</code> if a matching virtual host could not be found
-	 */
-	public VirtualHost fetchByC_L_D(
-		long companyId, long layoutSetId, boolean defaultVirtualHost);
-
-	/**
-	 * Returns the virtual host where companyId = &#63; and layoutSetId = &#63; and defaultVirtualHost = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param companyId the company ID
-	 * @param layoutSetId the layout set ID
-	 * @param defaultVirtualHost the default virtual host
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the matching virtual host, or <code>null</code> if a matching virtual host could not be found
-	 */
-	public VirtualHost fetchByC_L_D(
-		long companyId, long layoutSetId, boolean defaultVirtualHost,
-		boolean useFinderCache);
-
-	/**
-	 * Removes the virtual host where companyId = &#63; and layoutSetId = &#63; and defaultVirtualHost = &#63; from the database.
-	 *
-	 * @param companyId the company ID
-	 * @param layoutSetId the layout set ID
-	 * @param defaultVirtualHost the default virtual host
-	 * @return the virtual host that was removed
-	 */
-	public VirtualHost removeByC_L_D(
-			long companyId, long layoutSetId, boolean defaultVirtualHost)
-		throws NoSuchVirtualHostException;
-
-	/**
-	 * Returns the number of virtual hosts where companyId = &#63; and layoutSetId = &#63; and defaultVirtualHost = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param layoutSetId the layout set ID
-	 * @param defaultVirtualHost the default virtual host
-	 * @return the number of matching virtual hosts
-	 */
-	public int countByC_L_D(
-		long companyId, long layoutSetId, boolean defaultVirtualHost);
-
-	/**
 	 * Caches the virtual host in the entity cache if it is enabled.
 	 *
 	 * @param virtualHost the virtual host

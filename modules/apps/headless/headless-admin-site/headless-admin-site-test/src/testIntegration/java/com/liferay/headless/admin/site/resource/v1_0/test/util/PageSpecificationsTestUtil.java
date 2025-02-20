@@ -119,27 +119,31 @@ public class PageSpecificationsTestUtil {
 
 		assertPageSpecifications(layout, pageSpecifications);
 
-		ContentPageSpecification contentPageSpecification =
+		ContentPageSpecification publishedContentPageSpecification =
 			(ContentPageSpecification)pageSpecifications[0];
 
 		Assert.assertEquals(
-			contentPageSpecification.getStatus(),
+			publishedContentPageSpecification.getStatus(),
 			PageSpecification.Status.DRAFT);
 
-		contentPageSpecification.setExternalReferenceCode(
+		publishedContentPageSpecification.setExternalReferenceCode(
 			layout.getExternalReferenceCode());
 
 		_assertProblemException(
-			() -> unsafeFunction.apply(contentPageSpecification));
+			() -> unsafeFunction.apply(publishedContentPageSpecification));
 
 		Assert.assertEquals(
 			draftLayout.getStatus(), WorkflowConstants.STATUS_APPROVED);
 
-		contentPageSpecification.setExternalReferenceCode(
+		ContentPageSpecification draftContentPageSpecification =
+			(ContentPageSpecification)pageSpecifications[1];
+
+		draftContentPageSpecification.setExternalReferenceCode(
 			draftLayout.getExternalReferenceCode());
+		draftContentPageSpecification.setStatus(PageSpecification.Status.DRAFT);
 
 		assertContentPageSpecification(
-			unsafeFunction.apply(contentPageSpecification),
+			unsafeFunction.apply(draftContentPageSpecification),
 			draftLayout.getPlid());
 
 		draftLayout = LayoutLocalServiceUtil.getLayout(draftLayout.getPlid());
@@ -148,7 +152,7 @@ public class PageSpecificationsTestUtil {
 			draftLayout.getStatus(), WorkflowConstants.STATUS_DRAFT);
 
 		_assertProblemException(
-			() -> unsafeFunction.apply(contentPageSpecification));
+			() -> unsafeFunction.apply(draftContentPageSpecification));
 
 		ContentLayoutTestUtil.publishLayout(layout.fetchDraftLayout(), layout);
 
@@ -157,24 +161,24 @@ public class PageSpecificationsTestUtil {
 		Assert.assertEquals(
 			draftLayout.getStatus(), WorkflowConstants.STATUS_APPROVED);
 
-		contentPageSpecification.setExternalReferenceCode(
+		publishedContentPageSpecification.setExternalReferenceCode(
 			draftLayout.getExternalReferenceCode());
 
-		contentPageSpecification.setStatus(PageSpecification.Status.APPROVED);
+		publishedContentPageSpecification.setStatus(
+			PageSpecification.Status.APPROVED);
 
 		_assertProblemException(
-			() -> unsafeFunction.apply(contentPageSpecification));
+			() -> unsafeFunction.apply(publishedContentPageSpecification));
 
-		contentPageSpecification.setExternalReferenceCode(
+		publishedContentPageSpecification.setExternalReferenceCode(
 			layout.getExternalReferenceCode());
 
 		_assertProblemException(
-			() -> unsafeFunction.apply(contentPageSpecification));
+			() -> unsafeFunction.apply(publishedContentPageSpecification));
 
-		contentPageSpecification.setExternalReferenceCode(
+		draftContentPageSpecification.setExternalReferenceCode(
 			draftLayout.getExternalReferenceCode());
-
-		contentPageSpecification.setStatus(PageSpecification.Status.DRAFT);
+		draftContentPageSpecification.setStatus(PageSpecification.Status.DRAFT);
 
 		draftLayout = LayoutLocalServiceUtil.getLayout(draftLayout.getPlid());
 
@@ -182,21 +186,21 @@ public class PageSpecificationsTestUtil {
 			draftLayout.getStatus(), WorkflowConstants.STATUS_APPROVED);
 
 		assertContentPageSpecification(
-			unsafeFunction.apply(contentPageSpecification),
+			unsafeFunction.apply(draftContentPageSpecification),
 			draftLayout.getPlid());
 
 		_assertProblemException(
-			() -> unsafeFunction.apply(contentPageSpecification));
+			() -> unsafeFunction.apply(draftContentPageSpecification));
 
 		draftLayout = LayoutLocalServiceUtil.updateStatus(
 			TestPropsValues.getUserId(), draftLayout.getPlid(),
 			WorkflowConstants.STATUS_APPROVED, serviceContext);
 
-		contentPageSpecification.setExternalReferenceCode((String)null);
-		contentPageSpecification.setStatus((PageSpecification.Status)null);
+		draftContentPageSpecification.setExternalReferenceCode((String)null);
+		draftContentPageSpecification.setStatus((PageSpecification.Status)null);
 
 		assertContentPageSpecification(
-			unsafeFunction.apply(contentPageSpecification),
+			unsafeFunction.apply(draftContentPageSpecification),
 			draftLayout.getPlid());
 
 		draftLayout = LayoutLocalServiceUtil.getLayout(draftLayout.getPlid());
@@ -205,7 +209,7 @@ public class PageSpecificationsTestUtil {
 			draftLayout.getStatus(), WorkflowConstants.STATUS_DRAFT);
 
 		_assertProblemException(
-			() -> unsafeFunction.apply(contentPageSpecification));
+			() -> unsafeFunction.apply(draftContentPageSpecification));
 	}
 
 	private static void _assertProblemException(

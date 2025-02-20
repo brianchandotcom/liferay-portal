@@ -4,12 +4,11 @@
  */
 
 import {
-	fetch,
-	getCheckedCheckboxes,
 	openConfirmModal,
 	openSimpleInputModal,
 	openToast,
-} from 'frontend-js-web';
+} from 'frontend-js-components-web';
+import {fetch, getCheckedCheckboxes} from 'frontend-js-web';
 
 function handleCreationMenuClick(
 	event,

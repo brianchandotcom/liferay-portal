@@ -4,11 +4,11 @@
  */
 
 import {
-	fetch,
 	openConfirmModal,
 	openSimpleInputModal,
 	openToast,
-} from 'frontend-js-web';
+} from 'frontend-js-components-web';
+import {fetch} from 'frontend-js-web';
 
 function deleteEntry(deleteURL) {
 	openConfirmModal({

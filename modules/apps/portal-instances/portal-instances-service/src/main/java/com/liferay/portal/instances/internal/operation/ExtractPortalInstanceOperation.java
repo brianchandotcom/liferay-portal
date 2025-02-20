@@ -23,8 +23,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.portal.instances.internal.configuration.ExtractPortalInstanceConfiguration",
-	configurationPolicy = ConfigurationPolicy.REQUIRE, enabled = false,
-	service = {}
+	configurationPolicy = ConfigurationPolicy.REQUIRE, service = {}
 )
 public class ExtractPortalInstanceOperation
 	extends BasePortalInstanceOperation {

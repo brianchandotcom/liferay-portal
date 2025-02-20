@@ -6,7 +6,6 @@
 package com.liferay.portal.instances.internal.component.enabler;
 
 import com.liferay.portal.instances.internal.operation.CopyPortalInstanceOperation;
-import com.liferay.portal.instances.internal.operation.ExtractPortalInstanceOperation;
 import com.liferay.portal.instances.internal.operation.InsertPortalInstanceOperation;
 import com.liferay.portal.kernel.db.partition.DBPartition;
 
@@ -25,8 +24,6 @@ public class ComponentEnabler {
 		if (DBPartition.isPartitionEnabled()) {
 			componentContext.enableComponent(
 				CopyPortalInstanceOperation.class.getName());
-			componentContext.enableComponent(
-				ExtractPortalInstanceOperation.class.getName());
 			componentContext.enableComponent(
 				InsertPortalInstanceOperation.class.getName());
 		}

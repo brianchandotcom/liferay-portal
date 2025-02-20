@@ -803,7 +803,7 @@ public class VariableNameCheck extends BaseCheck {
 
 		List<String> names = getNames(firstChildDetailAST, false);
 
-		if ((names.size() != 2) && (names.size() != 3)) {
+		if (names.size() != 2) {
 			return;
 		}
 
@@ -819,7 +819,7 @@ public class VariableNameCheck extends BaseCheck {
 		List<DetailAST> parameterExprDetailASTList =
 			getParameterExprDetailASTList(firstChildDetailAST.getParent());
 
-		if (parameterExprDetailASTList.size() <= 2) {
+		if (parameterExprDetailASTList.size() < 2) {
 			return;
 		}
 

@@ -181,6 +181,7 @@ public class BatchEnginePortletDataHandlerTest {
 		return _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), 0L,
 			_objectDefinition.getObjectDefinitionId(),
+			null,
 			HashMapBuilder.put(
 				_OBJECT_FIELD_NAME, objectFieldValue
 			).build(),

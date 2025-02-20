@@ -84,6 +84,7 @@ import com.liferay.portal.language.override.service.PLOEntryLocalService;
 import com.liferay.portal.security.service.access.policy.service.SAPEntryLocalService;
 import com.liferay.segments.service.SegmentsEntryLocalService;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
+import com.liferay.site.configuration.manager.MenuAccessConfigurationManager;
 import com.liferay.site.initializer.SiteInitializer;
 import com.liferay.site.initializer.SiteInitializerFactory;
 import com.liferay.site.initializer.extender.internal.file.backed.osgi.FileBackedBundleDelegate;
@@ -150,6 +151,7 @@ public class SiteInitializerFactoryImpl implements SiteInitializerFactory {
 			_layoutUtilityPageEntryLocalService, _listTypeDefinitionResource,
 			_listTypeDefinitionResourceFactory, _listTypeEntryLocalService,
 			_listTypeEntryResource, _listTypeEntryResourceFactory,
+			_menuAccessConfigurationManager,
 			_notificationTemplateResourceFactory, _objectActionLocalService,
 			_objectDefinitionLocalService, _objectDefinitionResourceFactory,
 			_objectEntryLocalService, _objectEntryManager,
@@ -337,6 +339,9 @@ public class SiteInitializerFactoryImpl implements SiteInitializerFactory {
 
 	@Reference
 	private ListTypeEntryResource.Factory _listTypeEntryResourceFactory;
+
+	@Reference
+	private MenuAccessConfigurationManager _menuAccessConfigurationManager;
 
 	@Reference
 	private NotificationTemplateResource.Factory

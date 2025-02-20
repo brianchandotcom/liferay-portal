@@ -244,11 +244,12 @@ public class VariableNameCheck extends BaseCheck {
 				if (nextSiblingDetailAST.getType() == TokenTypes.METHOD_CALL) {
 					methodName = getMethodName(nextSiblingDetailAST);
 				}
-			}
 
-			if (methodName.matches("get[A-Z].*")) {
-				_checkTypo(
-					detailAST, variableName, methodName.substring(3), false);
+				if (methodName.matches("get[A-Z].*")) {
+					_checkTypo(
+						detailAST, variableName, methodName.substring(3),
+						false);
+				}
 			}
 		}
 	}

@@ -4,6 +4,7 @@
 		"@clayui/form": "3.128.0",
 		"@clayui/icon": "3.128.0",
 		"asset-taglib": "*",
+		"frontend-js-components-web": "*",
 		"frontend-js-web": "*",
 		"prop-types": "15.7.2",
 		"react": "18.2.0"

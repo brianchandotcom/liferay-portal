@@ -4,7 +4,8 @@
  */
 
 import ClayList from '@clayui/list';
-import {openConfirmModal, openToast, sub} from 'frontend-js-web';
+import {openConfirmModal, openToast} from 'frontend-js-components-web';
+import {sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 import {DndProvider} from 'react-dnd';

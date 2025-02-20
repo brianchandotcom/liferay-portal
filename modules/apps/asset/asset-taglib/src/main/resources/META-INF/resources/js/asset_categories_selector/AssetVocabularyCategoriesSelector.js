@@ -10,12 +10,8 @@ import ClayIcon from '@clayui/icon';
 import ClayMultiSelect from '@clayui/multi-select';
 import {usePrevious} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
-import {
-	createPortletURL,
-	fetch,
-	openSelectionModal,
-	sub,
-} from 'frontend-js-web';
+import {openSelectionModal} from 'frontend-js-components-web';
+import {createPortletURL, fetch, sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useRef, useState} from 'react';
 

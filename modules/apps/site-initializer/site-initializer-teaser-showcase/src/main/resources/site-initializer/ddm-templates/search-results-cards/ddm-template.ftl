@@ -22,30 +22,22 @@
 	}
 </style>
 
-<#assign
-	accountEntry = commerceContext.getAccountEntry()
-	accountEntryId = account.getAccountEntryId()
-	commerceChannelId = commerceContext.getCommerceChannelId()
-	commerceContext = renderRequest.getAttribute("COMMERCE_CONTEXT")
-/>
+<#assign accountEntryId = renderRequest.getAttribute("COMMERCE_CONTEXT").getAccountEntry().getAccountEntryId() />
 
 <div class="product-card-tiles">
 	<#if entries?has_content>
 		<#list entries as curCPCatalogEntry>
 			<#assign
+				productId = curCPCatalogEntry.getCProductId()
+
 				cpDefinitionId = curCPCatalogEntry.getCPDefinitionId()
-				productDetail = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels/${chanelId}/products/${productId}?accountId=${accountId}&nestedFields=categories,productSpecifications")
+				productDetail = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels/${chanelId}/products/${productId}?accountId=${accountEntryId}&nestedFields=categories,productSpecifications")
 
 				categories = productDetail.categories
-				cpDefaultImageFileVersion = cpContentHelper.getCPDefinitionImageFileVersion(cpDefinitionId, request)
-				defaultImageFileURL = cpContentHelper.getDefaultImageFileURL(accountEntryId, cpDefinitionId)
 				featuredSpecificationKeys = ["fit", "weight", "material"]
 				friendlyURL = cpContentHelper.getFriendlyURL(curCPCatalogEntry, themeDisplay)
 				isSuggested = false
-				productDescription = curCPCatalogEntry.getDescription()
-				productId = curCPCatalogEntry.getCProductId()
 				productName = curCPCatalogEntry.getName()
-				productShortDescription = curCPCatalogEntry.getShortDescription()
 				productSpecifications = productDetail.productSpecifications
 				suggestedClass = ""
 				tags = productDetail.tags
@@ -98,8 +90,8 @@
 								</#list>
 							</#if>
 
-							<#if specifications?has_content>
-								<#list specifications as specification>
+							<#if productSpecifications?has_content>
+								<#list productSpecifications as specification>
 									<#if featuredSpecificationKeys?seq_contains(specification.specificationKey)>
 										<span class="badge badge-secondary">${specification.value}"</span>
 									</#if>

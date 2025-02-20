@@ -22,29 +22,19 @@
 	}
 </style>
 
-<#assign
-	accountEntryId = account.getAccountEntryId()
-	commerceChannelId = commerceContext.getCommerceChannelId()
-	commerceContext = renderRequest.getAttribute("COMMERCE_CONTEXT")
-/>
+<#assign accountEntryId = renderRequest.getAttribute("COMMERCE_CONTEXT").getAccount().getAccountEntryId() />
 
 <div class="product-card-tiles">
 	<#if entries?has_content>
 		<#list entries as curCPCatalogEntry>
 			<#assign
-				cpDefinitionId = curCPCatalogEntry.getCPDefinitionId()
-				productDetail = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels/${chanelId}/products/${productId}?accountId=${accountId}&nestedFields=categories,productSpecifications")
+				productId = curCPCatalogEntry.getCProductId()
 
-				categories = productDetail.categories
-				cpDefaultImageFileVersion = cpContentHelper.getCPDefinitionImageFileVersion(cpDefinitionId, request)
-				defaultImageFileURL = cpContentHelper.getDefaultImageFileURL(accountEntryId, cpDefinitionId)
-				featuredSpecificationKeys = ["fit", "weight", "material"]
+				productDetail = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels/${chanelId}/products/${productId}?accountId=${accountEntryId}&nestedFields=productSpecifications")
+
 				friendlyURL = cpContentHelper.getFriendlyURL(curCPCatalogEntry, themeDisplay)
 				isSuggested = false
-				productDescription = curCPCatalogEntry.getDescription()
-				productId = curCPCatalogEntry.getCProductId()
 				productName = curCPCatalogEntry.getName()
-				productShortDescription = curCPCatalogEntry.getShortDescription()
 				productSpecifications = productDetail.productSpecifications
 				suggestedClass = ""
 				tags = productDetail.tags
@@ -71,7 +61,7 @@
 
 					<p>Product</p>
 
-					<#list specifications as spec>
+					<#list productSpecifications as spec>
 						<#if spec??>
 							<div>${spec}</div>
 						</#if>

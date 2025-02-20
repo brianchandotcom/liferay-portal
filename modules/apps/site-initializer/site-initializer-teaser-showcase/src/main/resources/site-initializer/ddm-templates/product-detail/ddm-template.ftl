@@ -1,9 +1,11 @@
 <#if cpCatalogEntry??>
 	<#assign
+		accountEntryId = renderRequest.getAttribute("COMMERCE_CONTEXT").getAccountEntry().getAccountEntryId()
+
 		cpAttachmentFileEntries = cpContentHelper.getCPMedias(cpCatalogEntry.getCPDefinitionId(), themeDisplay)
 		cpDefinitionSpecificationOptionValues = cpContentHelper.getCPDefinitionSpecificationOptionValues(cpCatalogEntry.getCPDefinitionId())
 		cpOptionCategories = cpContentHelper.getCPOptionCategories(themeDisplay.getCompanyId())
-		defaultImageURL = cpContentHelper.getDefaultImageFileURL(account.getAccountEntryId(), cpCatalogEntry.getCPDefinitionId())
+		defaultImageURL = cpContentHelper.getDefaultImageFileURL(accountEntryId, cpCatalogEntry.getCPDefinitionId())
 		productDescription = cpCatalogEntry.getDescription()
 		productImages = cpContentHelper.getImages(cpCatalogEntry.getCPDefinitionId(), true, themeDisplay)
 		productName = cpCatalogEntry.getName()

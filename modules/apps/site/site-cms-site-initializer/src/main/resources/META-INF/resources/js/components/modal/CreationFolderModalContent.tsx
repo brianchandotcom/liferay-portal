@@ -49,17 +49,21 @@ export default function CreationFolderModalContent({
 							<ClayInput id="folderName" type="text" />
 						</Form.Group>
 
-						<Form.Group>
-							<label htmlFor="space">
-								{Liferay.Language.get('space')}
-							</label>
+						{assetLibraries.length === 1 ? (
+							<input type="hidden" value={assetLibraries[0].id} />
+						) : (
+							<Form.Group>
+								<label htmlFor="space">
+									{Liferay.Language.get('space')}
+								</label>
 
-							<Picker id="space" items={assetLibraries}>
-								{({id, name}) => (
-									<Option key={id}>{name}</Option>
-								)}
-							</Picker>
-						</Form.Group>
+								<Picker id="space" items={assetLibraries}>
+									{({id, name}) => (
+										<Option key={id}>{name}</Option>
+									)}
+								</Picker>
+							</Form.Group>
+						)}
 					</>
 				)}
 			</ClayModal.Body>

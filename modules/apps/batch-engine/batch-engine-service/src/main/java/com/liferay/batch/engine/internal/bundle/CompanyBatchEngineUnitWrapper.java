@@ -61,7 +61,7 @@ public class CompanyBatchEngineUnitWrapper implements BundleBatchEngineUnit {
 
 		return new BatchEngineUnitMetaInfo(
 			batchEngineUnitMetaInfo.isAdvanced(), _company.getCompanyId(),
-			batchEngineUnitMetaInfo.getFeatureFlagKey(),
+			batchEngineUnitMetaInfo.getFeatureFlag(),
 			batchEngineUnitMetaInfo.isMultiCompany(),
 			batchEngineUnitMetaInfo.getPaths());
 	}

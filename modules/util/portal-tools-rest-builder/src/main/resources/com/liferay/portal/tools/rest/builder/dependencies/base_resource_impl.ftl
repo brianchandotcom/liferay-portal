@@ -992,17 +992,18 @@ public abstract class Base${schemaName}ResourceImpl
 
 		@Override
 		public void delete(Collection<${javaDataType}> ${schemaVarNames}, Map<String, Serializable> parameters) throws Exception {
-			UnsafeFunction<${javaDataType}, ${javaDataType}, Exception> ${schemaVarName}UnsafeFunction = ${schemaVarName} -> {
-				<#if deleteBatchJavaMethodSignature?? && properties?keys?seq_contains("id")>
-					delete${schemaName}(${schemaVarName}.getId());
-				<#elseif deleteBatchJavaMethodSignature?? && properties?keys?seq_contains(schemaVarName + "Id")>
-					delete${schemaName}(${schemaVarName}.get${schemaName}Id());
-				<#else>
-					throw new UnsupportedOperationException("This method needs to be implemented");
-				</#if>
+			<#if deleteBatchJavaMethodSignature?? && (properties?keys?seq_contains("id") || properties?keys?seq_contains(schemaVarName + "Id"))>
+				UnsafeFunction<${javaDataType}, ${javaDataType}, Exception> ${schemaVarName}UnsafeFunction = ${schemaVarName} -> {
+					<#if deleteBatchJavaMethodSignature?? && properties?keys?seq_contains("id")>
+						delete${schemaName}(${schemaVarName}.getId());
+					<#elseif deleteBatchJavaMethodSignature?? && properties?keys?seq_contains(schemaVarName + "Id")>
+						delete${schemaName}(${schemaVarName}.get${schemaName}Id());
+					<#else>
+						throw new UnsupportedOperationException("This method needs to be implemented");
+					</#if>
 
-				return ${schemaVarName};
-			};
+					return ${schemaVarName};
+				};
 
 			<#if createStrategies?has_content>
 				if (contextBatchUnsafeBiConsumer != null) {
@@ -1016,6 +1017,7 @@ public abstract class Base${schemaName}ResourceImpl
 						${schemaVarName}UnsafeFunction.apply(${schemaVarName});
 					}
 				}
+			</#if>
 			<#else>
 				throw new UnsupportedOperationException("This method needs to be implemented");
 			</#if>

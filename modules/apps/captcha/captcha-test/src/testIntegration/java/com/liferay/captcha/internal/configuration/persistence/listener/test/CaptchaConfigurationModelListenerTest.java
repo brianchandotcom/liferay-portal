@@ -71,34 +71,32 @@ public class CaptchaConfigurationModelListenerTest {
 	@Test
 	public void testOnBeforeSave() throws Exception {
 		_testOnBeforeSave(
-			"reCaptchaNoScriptURL",
-			"https://www.test.com/recaptcha/api/fallback?k=",
-			"the-recaptcha-no-script-url-is-not-valid");
+			"the-recaptcha-no-script-url-is-not-valid", "reCaptchaNoScriptURL",
+			"https://www.test.com/recaptcha/api/fallback?k=");
 		_testOnBeforeSave(
-			"reCaptchaPrivateKey", StringPool.BLANK,
-			"the-recaptcha-public-key-is-not-valid");
+			"the-recaptcha-public-key-is-not-valid", "reCaptchaPrivateKey",
+			StringPool.BLANK);
 		_testOnBeforeSave(
-			"reCaptchaPublicKey", StringPool.BLANK,
-			"the-recaptcha-private-key-is-not-valid");
+			"the-recaptcha-private-key-is-not-valid", "reCaptchaPublicKey",
+			StringPool.BLANK);
 		_testOnBeforeSave(
-			"reCaptchaScriptURL", "https://www.test.com/recaptcha/api.js",
-			"the-recaptcha-script-url-is-not-valid");
+			"the-recaptcha-script-url-is-not-valid", "reCaptchaScriptURL",
+			"https://www.test.com/recaptcha/api.js");
 		_testOnBeforeSave(
-			"reCaptchaVerifyURL",
-			"https://www.test.com/recaptcha/api/siteverify",
-			"the-recaptcha-verify-url-is-not-valid");
+			"the-recaptcha-verify-url-is-not-valid", "reCaptchaVerifyURL",
+			"https://www.test.com/recaptcha/api/siteverify");
 	}
 
 	private AutoCloseable _swapReCaptchaConfiguration(
 		String key, String value) {
 
-		String previousValue = (String)_reCaptchaProperties.put(key, value);
+		String originalValue = (String)_reCaptchaProperties.put(key, value);
 
-		return () -> _reCaptchaProperties.put(key, previousValue);
+		return () -> _reCaptchaProperties.put(key, originalValue);
 	}
 
 	private void _testOnBeforeSave(
-			String key, String value, String exceptionMessageKey)
+			String exceptionMessageKey, String key, String value)
 		throws Exception {
 
 		try (AutoCloseable autoCloseable = _swapReCaptchaConfiguration(

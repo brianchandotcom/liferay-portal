@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {ModalStatus} from 'frontend-js-components-web';
+
 import {TRenderer} from './FrontendDataSetContext';
 
 export declare function FrontendDataSet({
@@ -123,7 +125,7 @@ export interface IItemActionsData {
 	permissionKey?: string;
 	requestBody?: string;
 	size?: 'sm' | 'lg' | 'full-screen';
-	status?: string;
+	status?: ModalStatus;
 	successMessage?: string;
 	title?: string;
 }

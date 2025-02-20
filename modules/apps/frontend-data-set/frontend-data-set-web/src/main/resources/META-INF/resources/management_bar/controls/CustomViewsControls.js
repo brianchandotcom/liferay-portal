@@ -8,8 +8,12 @@ import {Option, Picker} from '@clayui/core';
 import ClayDropDown from '@clayui/drop-down';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import {ManagementToolbar} from 'frontend-js-components-web';
-import {fetch, objectToFormData, openModal, openToast} from 'frontend-js-web';
+import {
+	ManagementToolbar,
+	openModal,
+	openToast,
+} from 'frontend-js-components-web';
+import {fetch, objectToFormData} from 'frontend-js-web';
 import React, {useContext, useRef, useState} from 'react';
 
 import FrontendDataSetContext from '../../FrontendDataSetContext';

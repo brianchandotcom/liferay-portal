@@ -9,7 +9,6 @@ import com.liferay.analytics.batch.exportimport.internal.dto.v1_0.converter.cons
 import com.liferay.analytics.batch.exportimport.internal.engine.util.DTOConverterUtil;
 import com.liferay.analytics.dxp.entity.rest.dto.v1_0.DXPEntity;
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
-import com.liferay.analytics.settings.configuration.AnalyticsConfigurationRegistry;
 import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
 import com.liferay.batch.engine.pagination.Page;
@@ -81,7 +80,8 @@ public class ExpandoColumnAnalyticsDXPEntityBatchEngineTaskItemDelegate
 	}
 
 	private DynamicQuery _buildDynamicQuery(
-		long companyId, Map<String, Serializable> parameters) {
+			long companyId, Map<String, Serializable> parameters)
+		throws Exception {
 
 		ExpandoTable organizationExpandoTable =
 			_expandoTableLocalService.fetchTable(
@@ -105,8 +105,7 @@ public class ExpandoColumnAnalyticsDXPEntityBatchEngineTaskItemDelegate
 		Property nameProperty = PropertyFactoryUtil.forName("name");
 
 		AnalyticsConfiguration analyticsConfiguration =
-			_analyticsConfigurationRegistry.getAnalyticsConfiguration(
-				companyId);
+			_analyticsSettingsManager.getAnalyticsConfiguration(companyId);
 
 		if ((organizationExpandoTable != null) && (userExpandoTable != null)) {
 			dynamicQuery.add(
@@ -129,9 +128,6 @@ public class ExpandoColumnAnalyticsDXPEntityBatchEngineTaskItemDelegate
 
 		return buildDynamicQuery(companyId, dynamicQuery, parameters);
 	}
-
-	@Reference
-	private AnalyticsConfigurationRegistry _analyticsConfigurationRegistry;
 
 	@Reference
 	private AnalyticsSettingsManager _analyticsSettingsManager;

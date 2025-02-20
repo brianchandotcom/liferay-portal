@@ -94,6 +94,10 @@ components:
                     type: string
                 embedded:
                     type: object
+                entryClassName:
+                    description:
+                        The object entry class name.
+                    type: string
                 itemURL:
                     description:
                         The link to the embedded item.

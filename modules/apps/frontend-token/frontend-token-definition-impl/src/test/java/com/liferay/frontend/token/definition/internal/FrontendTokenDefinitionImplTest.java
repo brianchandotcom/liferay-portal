@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -51,7 +52,7 @@ public class FrontendTokenDefinitionImplTest {
 		FrontendTokenDefinition frontendTokenDefinition =
 			new FrontendTokenDefinitionImpl(
 				jsonFactory.createJSONObject(_FRONTEND_TOKEN_DEFINITION_JSON),
-				jsonFactory, null, "theme_id");
+				jsonFactory, null, "theme_id", RandomTestUtil.randomString());
 
 		Collection<FrontendTokenCategory> frontendTokenCategories =
 			frontendTokenDefinition.getFrontendTokenCategories();
@@ -110,7 +111,7 @@ public class FrontendTokenDefinitionImplTest {
 		FrontendTokenDefinition frontendTokenDefinition =
 			new FrontendTokenDefinitionImpl(
 				jsonFactory.createJSONObject(_FRONTEND_TOKEN_DEFINITION_JSON),
-				jsonFactory, null, "theme_id");
+				jsonFactory, null, "theme_id", RandomTestUtil.randomString());
 
 		Collection<FrontendTokenCategory> frontendTokenCategories =
 			frontendTokenDefinition.getFrontendTokenCategories();
@@ -167,7 +168,7 @@ public class FrontendTokenDefinitionImplTest {
 		FrontendTokenDefinition frontendTokenDefinition =
 			new FrontendTokenDefinitionImpl(
 				jsonFactory.createJSONObject(_FRONTEND_TOKEN_DEFINITION_JSON),
-				jsonFactory, null, "theme_id");
+				jsonFactory, null, "theme_id", RandomTestUtil.randomString());
 
 		Collection<FrontendTokenCategory> frontendTokenCategories =
 			frontendTokenDefinition.getFrontendTokenCategories();
@@ -246,7 +247,8 @@ public class FrontendTokenDefinitionImplTest {
 		FrontendTokenDefinitionImpl frontendTokenDefinitionImpl =
 			new FrontendTokenDefinitionImpl(
 				jsonFactory.createJSONObject(_FRONTEND_TOKEN_DEFINITION_JSON),
-				jsonFactory, resourceBundleLoader, "theme_id");
+				jsonFactory, resourceBundleLoader, "theme_id",
+				RandomTestUtil.randomString());
 
 		JSONObject jsonObject = frontendTokenDefinitionImpl.getJSONObject(
 			LocaleUtil.ENGLISH);

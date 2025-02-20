@@ -15,6 +15,8 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -27,11 +29,13 @@ public class FrontendTokenDefinitionImpl implements FrontendTokenDefinition {
 
 	public FrontendTokenDefinitionImpl(
 		JSONObject jsonObject, JSONFactory jsonFactory,
-		ResourceBundleLoader resourceBundleLoader, String themeId) {
+		ResourceBundleLoader resourceBundleLoader, String themeId,
+		String themeName) {
 
 		_jsonFactory = jsonFactory;
 		_resourceBundleLoader = resourceBundleLoader;
 		_themeId = themeId;
+		_themeName = themeName;
 
 		_jsonLocalizer = createJSONLocalizer(jsonObject);
 
@@ -89,6 +93,12 @@ public class FrontendTokenDefinitionImpl implements FrontendTokenDefinition {
 		return _themeId;
 	}
 
+	@Override
+	public String getThemeName(Locale locale) {
+		return LocalizationUtil.getLocalization(
+			_themeName, LocaleUtil.toLanguageId(locale));
+	}
+
 	protected JSONLocalizer createJSONLocalizer(JSONObject jsonObject) {
 		return new JSONLocalizer(
 			_jsonFactory.looseSerializeDeep(jsonObject), _jsonFactory,
@@ -106,5 +116,6 @@ public class FrontendTokenDefinitionImpl implements FrontendTokenDefinition {
 	private final JSONLocalizer _jsonLocalizer;
 	private final ResourceBundleLoader _resourceBundleLoader;
 	private final String _themeId;
+	private final String _themeName;
 
 }

@@ -190,7 +190,7 @@ public class FrontendTokenDefinitionRegistryImpl
 				frontendTokenDefinitionImpls.add(
 					new FrontendTokenDefinitionImpl(
 						jsonFactory.createJSONObject(json), jsonFactory,
-						resourceBundleLoader, themeId));
+						resourceBundleLoader, themeId, StringPool.BLANK));
 			}
 
 			return frontendTokenDefinitionImpls;
@@ -284,7 +284,8 @@ public class FrontendTokenDefinitionRegistryImpl
 						themeCSSCET.getFrontendTokenDefinitionJSON()),
 					jsonFactory,
 					ResourceBundleLoaderUtil.getPortalResourceBundleLoader(),
-					themeCSSCET.getExternalReferenceCode()));
+					themeCSSCET.getExternalReferenceCode(),
+					StringPool.BLANK));
 		}
 		catch (JSONException | JSONValidatorException exception) {
 			_log.error(

@@ -10,16 +10,15 @@ import com.liferay.portal.kernel.util.ProxyFactory;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
 import com.liferay.portal.util.PortalImpl;
 
-import java.io.IOException;
-
 import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+
+import org.mockito.Mockito;
 
 /**
  * @author Christopher Kian
@@ -32,15 +31,25 @@ public class PasswordModifiedFilterTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Test
-	public void testDoFilter() throws IOException, ServletException {
+	public void testDoFilter() throws Exception {
 		PortalUtil portalUtil = new PortalUtil();
 
-		portalUtil.setPortal(new PortalImpl());
+		portalUtil.setPortal(
+			new PortalImpl() {
+
+				@Override
+				public String getPathContext() {
+					return "/test";
+				}
+
+			});
 
 		PasswordModifiedFilter passwordModifiedFilter =
 			new PasswordModifiedFilter();
 
-		passwordModifiedFilter.doFilter(
+		FilterChain filterChain = Mockito.mock(FilterChain.class);
+
+		passwordModifiedFilter.processFilter(
 			new HttpServletRequestWrapper(
 				ProxyFactory.newDummyInstance(HttpServletRequest.class)) {
 
@@ -51,11 +60,17 @@ public class PasswordModifiedFilterTest {
 
 				@Override
 				public String getRequestURI() {
-					return "/c/portal/status";
+					return "/test/path";
 				}
 
 			},
-			null, ProxyFactory.newDummyInstance(FilterChain.class));
+			null, filterChain);
+
+		Mockito.verify(
+			filterChain
+		).doFilter(
+			Mockito.any(), Mockito.any()
+		);
 	}
 
 }

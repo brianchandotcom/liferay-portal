@@ -55,12 +55,12 @@ public class ObjectActionExamResultsSynchronizationRestController
 
 		try {
 			OffsetDateTime offsetDateTime =
-				_getLatestSuccessfulExecutionOffsetDateTime(jwt);
+				_getLatestSuccessfulExecutionOffsetDateTime();
 
 			while (offsetDateTime.isBefore(
 						OffsetDateTime.now(ZoneOffset.UTC))) {
 
-				examResultAmount += _importExamResults(jwt, offsetDateTime);
+				examResultAmount += _importExamResults(offsetDateTime);
 
 				offsetDateTime = offsetDateTime.plusDays(7);
 			}
@@ -77,7 +77,7 @@ public class ObjectActionExamResultsSynchronizationRestController
 				).getLong(
 					"classPK"
 				),
-				examResultAmount, System.currentTimeMillis() - startTime, jwt,
+				examResultAmount, System.currentTimeMillis() - startTime,
 				status);
 		}
 
@@ -93,12 +93,15 @@ public class ObjectActionExamResultsSynchronizationRestController
 		return "";
 	}
 
-	private OffsetDateTime _getLatestSuccessfulExecutionOffsetDateTime(
-		Jwt jwt) {
+	private String _getAuthorization() {
+		return _liferayOAuth2AccessTokenManager.getAuthorization(
+			"liferay-learn-etc-spring-boot-oauth-application-headless-server");
+	}
 
+	private OffsetDateTime _getLatestSuccessfulExecutionOffsetDateTime() {
 		JSONObject jsonObject = new JSONObject(
 			get(
-				"Bearer " + jwt.getTokenValue(),
+				_getAuthorization(),
 				StringBundler.concat(
 					lxcDXPServerProtocol, "://", lxcDXPMainDomain,
 					"/o/c/p2s3examresultssynchronizations/scopes/",
@@ -176,7 +179,7 @@ public class ObjectActionExamResultsSynchronizationRestController
 		).toString();
 	}
 
-	private int _importExamResults(Jwt jwt, OffsetDateTime offsetDateTime) {
+	private int _importExamResults(OffsetDateTime offsetDateTime) {
 		JSONArray jsonArray = new JSONArray(
 			post(
 				null,
@@ -211,7 +214,7 @@ public class ObjectActionExamResultsSynchronizationRestController
 
 			JSONObject responseJSONObject = new JSONObject(
 				put(
-					"Bearer " + jwt.getTokenValue(), _getPayload(jsonObject),
+					_getAuthorization(), _getPayload(jsonObject),
 					StringBundler.concat(
 						lxcDXPServerProtocol, "://", lxcDXPMainDomain,
 						"/o/c/p2s3examresults/scopes/", _siteGroupId,
@@ -219,7 +222,7 @@ public class ObjectActionExamResultsSynchronizationRestController
 						jsonObject.getLong("id"))));
 
 			put(
-				"Bearer " + jwt.getTokenValue(),
+				_getAuthorization(),
 				HashMapBuilder.<String, Object>put(
 					"actionIds", new String[] {"VIEW"}
 				).put(
@@ -236,11 +239,11 @@ public class ObjectActionExamResultsSynchronizationRestController
 	}
 
 	private void _updateExamResultsSynchronization(
-		Long classPK, int examResultAmount, long executionTime, Jwt jwt,
+		Long classPK, int examResultAmount, long executionTime,
 		String synchronizationStatus) {
 
 		patch(
-			"Bearer " + jwt.getTokenValue(),
+			_getAuthorization(),
 			new JSONObject(
 			).put(
 				"examResultAmount", examResultAmount

@@ -9,6 +9,7 @@ import com.liferay.client.extension.util.spring.boot3.BaseRestController;
 import com.liferay.client.extension.util.spring.boot3.LiferayOAuth2AccessTokenManager;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
@@ -208,12 +209,27 @@ public class ObjectActionExamResultsSynchronizationRestController
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
+			JSONObject responseJSONObject = new JSONObject(
+				put(
+					"Bearer " + jwt.getTokenValue(), _getPayload(jsonObject),
+					StringBundler.concat(
+						lxcDXPServerProtocol, "://", lxcDXPMainDomain,
+						"/o/c/p2s3examresults/scopes/", _siteGroupId,
+						"/by-external-reference-code/",
+						jsonObject.getLong("id"))));
+
 			put(
-				"Bearer " + jwt.getTokenValue(), _getPayload(jsonObject),
+				"Bearer " + jwt.getTokenValue(),
+				HashMapBuilder.<String, Object>put(
+					"actionIds", new String[] {"VIEW"}
+				).put(
+					"roleName", "Guest"
+				).build(
+				).toString(),
 				StringBundler.concat(
 					lxcDXPServerProtocol, "://", lxcDXPMainDomain,
-					"/o/c/p2s3examresults/scopes/", _siteGroupId,
-					"/by-external-reference-code/", jsonObject.getLong("id")));
+					"/o/c/p2s3examresults/", responseJSONObject.getLong("id"),
+					"/permissions"));
 		}
 
 		return jsonArray.length();

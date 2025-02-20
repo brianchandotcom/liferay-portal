@@ -65,9 +65,9 @@ const ClassicEditor = ({config}: {config?: EditorConfig}) => {
 		toolbar: ['undo', 'redo', '|', 'bold', 'italic', 'underline'],
 		ui: {
 			viewportOffset: {
-				top: 56
-			}
-		}
+				top: 56,
+			},
+		},
 	};
 
 	if (!Liferay.FeatureFlags['LPD-11235']) {

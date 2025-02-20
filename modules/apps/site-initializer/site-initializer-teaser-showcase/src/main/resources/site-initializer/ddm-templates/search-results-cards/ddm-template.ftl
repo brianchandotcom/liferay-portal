@@ -53,13 +53,9 @@
 			/>
 
 			<#if cpContentHelper.getDefaultCPSku(curCPCatalogEntry)?has_content>
-				<#assign
-					sku = cpContentHelper.getDefaultCPSku(curCPCatalogEntry).getSku()
-				/>
+				<#assign sku = cpContentHelper.getDefaultCPSku(curCPCatalogEntry).getSku() />
 			<#else>
-				<#assign
-					sku = ""
-				/>
+				<#assign sku = "" />
 			</#if>
 
 			<#if tags?seq_contains("suggested")>

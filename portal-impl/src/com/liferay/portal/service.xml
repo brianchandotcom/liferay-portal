@@ -3015,11 +3015,6 @@
 			<finder-column comparator="!=" name="layoutSetId" />
 			<finder-column arrayable-operator="OR" name="hostname" />
 		</finder>
-		<finder name="C_L_D" return-type="VirtualHost">
-			<finder-column name="companyId" />
-			<finder-column name="layoutSetId" />
-			<finder-column name="defaultVirtualHost" />
-		</finder>
 	</entity>
 	<entity local-service="true" name="WebDAVProps" remote-service="false">
 

@@ -5,8 +5,7 @@
 
 import ClayButton from '@clayui/button';
 import {ClayInput} from '@clayui/form';
-import {FieldBase} from 'frontend-js-components-web';
-import {openModal} from 'frontend-js-web';
+import {FieldBase, openModal} from 'frontend-js-components-web';
 import React, {useState} from 'react';
 
 import {EditClientOAuth2ModalContent} from './modals/EditClientOAuth2ModalContent';

@@ -11,6 +11,7 @@
 		"@clayui/label": "3.128.0",
 		"@clayui/layout": "3.128.0",
 		"@clayui/link": "3.128.0",
+		"@clayui/loading-indicator": "3.128.0",
 		"@clayui/modal": "3.128.0",
 		"@liferay/frontend-js-react-web": "*",
 		"@liferay/layout-js-components-web": "*",

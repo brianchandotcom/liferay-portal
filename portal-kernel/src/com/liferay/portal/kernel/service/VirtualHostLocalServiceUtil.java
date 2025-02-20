@@ -196,19 +196,14 @@ public class VirtualHostLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static VirtualHost fetchVirtualHost(long virtualHostId) {
-		return getService().fetchVirtualHost(virtualHostId);
-	}
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 #getVirtualHosts(long, long)}
-	 */
-	@Deprecated
-	public static VirtualHost fetchVirtualHost(
+	public static VirtualHost fetchDefaultVirtualHost(
 		long companyId, long layoutSetId) {
 
-		return getService().fetchVirtualHost(companyId, layoutSetId);
+		return getService().fetchDefaultVirtualHost(companyId, layoutSetId);
+	}
+
+	public static VirtualHost fetchVirtualHost(long virtualHostId) {
+		return getService().fetchVirtualHost(virtualHostId);
 	}
 
 	public static VirtualHost fetchVirtualHost(String hostname) {
@@ -259,17 +254,6 @@ public class VirtualHostLocalServiceUtil {
 		return getService().getVirtualHost(virtualHostId);
 	}
 
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 #getVirtualHosts(long, long)}
-	 */
-	@Deprecated
-	public static VirtualHost getVirtualHost(long companyId, long layoutSetId)
-		throws PortalException {
-
-		return getService().getVirtualHost(companyId, layoutSetId);
-	}
-
 	public static VirtualHost getVirtualHost(String hostname)
 		throws PortalException {
 
@@ -315,17 +299,6 @@ public class VirtualHostLocalServiceUtil {
 
 		return getService().getVirtualHostsCount(
 			excludedLayoutSetId, virtualHostNames);
-	}
-
-	/**
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link
-	 #updateVirtualHosts(long, long, TreeMap)}
-	 */
-	@Deprecated
-	public static VirtualHost updateVirtualHost(
-		long companyId, long layoutSetId, String hostname) {
-
-		return getService().updateVirtualHost(companyId, layoutSetId, hostname);
 	}
 
 	/**

@@ -6,14 +6,8 @@
 import ClayAlert from '@clayui/alert';
 import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
-import {
-	fetch,
-	navigate,
-	objectToFormData,
-	openSelectionModal,
-	openToast,
-	sub,
-} from 'frontend-js-web';
+import {openSelectionModal, openToast} from 'frontend-js-components-web';
+import {fetch, navigate, objectToFormData, sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 const TPL_ERROR_MESSAGES = `<span>{0}</span><ul class="mb-0 mt-2 pl-3">{1}</ul>`;

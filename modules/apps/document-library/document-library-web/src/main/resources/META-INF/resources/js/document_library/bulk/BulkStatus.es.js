@@ -5,7 +5,8 @@
 
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useTimeout} from '@liferay/frontend-js-react-web';
-import {fetch, openToast} from 'frontend-js-web';
+import {openToast} from 'frontend-js-components-web';
+import {fetch} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useCallback, useEffect, useReducer} from 'react';
 

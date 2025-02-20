@@ -23,7 +23,7 @@
 					"type", "warning"
 				).build()
 			%>'
-			module="{openToast} from frontend-js-web"
+			module="{openToast} from frontend-js-components-web"
 		/>
 	</c:if>
 
@@ -36,7 +36,7 @@
 					"message", scheduledDocumentMessage
 				).build()
 			%>'
-			module="{openToast} from frontend-js-web"
+			module="{openToast} from frontend-js-components-web"
 		/>
 	</c:if>
 </c:if>

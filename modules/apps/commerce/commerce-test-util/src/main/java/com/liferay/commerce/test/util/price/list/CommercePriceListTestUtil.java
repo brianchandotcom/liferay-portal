@@ -6,6 +6,7 @@
 package com.liferay.commerce.test.util.price.list;
 
 import com.liferay.commerce.currency.model.CommerceCurrency;
+import com.liferay.commerce.currency.service.CommerceCurrencyLocalServiceUtil;
 import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
 import com.liferay.commerce.price.list.constants.CommercePriceListConstants;
 import com.liferay.commerce.price.list.model.CommercePriceList;
@@ -220,8 +221,13 @@ public class CommercePriceListTestUtil {
 			ServiceContextTestUtil.getServiceContext(groupId);
 
 		CommerceCurrency commerceCurrency =
-			CommerceCurrencyTestUtil.addCommerceCurrency(
+			CommerceCurrencyLocalServiceUtil.fetchPrimaryCommerceCurrency(
 				serviceContext.getCompanyId());
+
+		if (commerceCurrency == null) {
+			commerceCurrency = CommerceCurrencyTestUtil.addCommerceCurrency(
+				serviceContext.getCompanyId());
+		}
 
 		return addCommercePriceList(
 			groupId, catalogBasePriceList, commerceCurrency.getCode(), type,

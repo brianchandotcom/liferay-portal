@@ -20,6 +20,7 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizer
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -185,24 +186,24 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 		// Different creation menu
 
 		_mockSerializeCreationMenu(
-			"fdsName1", new String[] {"New 1.1", "New 1.2"});
-		_mockSerializeCreationMenu("fdsName2", new String[] {"New 2"});
+			"fdsName1", new String[] {TITLES[0], TITLES[1]});
+		_mockSerializeCreationMenu("fdsName2", new String[] {TITLES[2]});
 
 		CreationMenu creationMenu1 = _customFDSSerializer.serializeCreationMenu(
 			"fdsName1", httpServletRequest);
 
 		Assert.assertEquals(2, _getPrimaryItemsSize(creationMenu1));
-		Assert.assertFalse(_containsTitle(creationMenu1, "New 2"));
-		Assert.assertTrue(_containsTitle(creationMenu1, "New 1.1"));
-		Assert.assertTrue(_containsTitle(creationMenu1, "New 1.2"));
+		Assert.assertFalse(_containsTitle(creationMenu1, TITLES[2]));
+		Assert.assertTrue(_containsTitle(creationMenu1, TITLES[0]));
+		Assert.assertTrue(_containsTitle(creationMenu1, TITLES[1]));
 
 		CreationMenu creationMenu2 = _customFDSSerializer.serializeCreationMenu(
 			"fdsName2", httpServletRequest);
 
 		Assert.assertEquals(1, _getPrimaryItemsSize(creationMenu2));
-		Assert.assertFalse(_containsTitle(creationMenu2, "New 1.1"));
-		Assert.assertFalse(_containsTitle(creationMenu2, "New 1.2"));
-		Assert.assertTrue(_containsTitle(creationMenu2, "New 2"));
+		Assert.assertFalse(_containsTitle(creationMenu2, TITLES[0]));
+		Assert.assertFalse(_containsTitle(creationMenu2, TITLES[1]));
+		Assert.assertTrue(_containsTitle(creationMenu2, TITLES[2]));
 
 		_resetFDSSerializer();
 
@@ -219,10 +220,8 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		// Shared creation menu
 
-		String[] titles = {"New A", "New B"};
-
-		_testSerializeCreationMenu("fdsName1", titles);
-		_testSerializeCreationMenu("fdsName2", titles);
+		_testSerializeCreationMenu("fdsName1", TITLES);
+		_testSerializeCreationMenu("fdsName2", TITLES);
 	}
 
 	@Test
@@ -335,9 +334,9 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 			HashMapBuilder.<String, Object>put(
 				"clientExtensionEntryERC", cetExternalReferenceCode
 			).put(
-				"fieldName", "channelId"
+				"fieldName", FIELD_NAMES[0]
 			).put(
-				"label", "By Channel CX"
+				"label", LABELS[0]
 			).build());
 
 		JSONAssert.assertEquals(
@@ -348,9 +347,9 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 				).put(
 					"entityFieldType", "string"
 				).put(
-					"id", "channelId"
+					"id", FIELD_NAMES[0]
 				).put(
-					"label", "By Channel CX"
+					"label", LABELS[0]
 				).put(
 					"type", "clientExtension"
 				)
@@ -366,16 +365,16 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		_mockSerializeFilters(
 			"fdsName",
-			HashMapBuilder.put(
-				"fieldName", (Object)"createDate"
+			HashMapBuilder.<String, Object>put(
+				"fieldName", FIELD_NAMES[0]
 			).put(
-				"from", (Object)"2000-12-31T00:00:00.000Z"
+				"from", "2000-12-31T00:00:00.000Z"
 			).put(
-				"label", (Object)"By Creation Date"
+				"label", LABELS[0]
 			).put(
 				"to", "2025-10-03T00:00:00.000Z"
 			).put(
-				"type", (Object)FDSEntityFieldTypes.DATE
+				"type", FDSEntityFieldTypes.DATE
 			).build());
 
 		JSONAssert.assertEquals(
@@ -383,11 +382,11 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 				JSONUtil.put(
 					"active", true
 				).put(
-					"entityFieldType", "date"
+					"entityFieldType", FDSEntityFieldTypes.DATE
 				).put(
-					"id", "createDate"
+					"id", FIELD_NAMES[0]
 				).put(
-					"label", "By Creation Date"
+					"label", LABELS[0]
 				).put(
 					"preloadedData",
 					JSONUtil.put(
@@ -424,25 +423,25 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		_mockSerializeFilters(
 			"fdsName1",
-			HashMapBuilder.put(
-				"fieldName", (Object)"createDate"
+			HashMapBuilder.<String, Object>put(
+				"fieldName", FIELD_NAMES[0]
 			).put(
-				"from", (Object)"2000-12-31T00:00:00.000Z"
+				"from", "2000-12-31T00:00:00.000Z"
 			).put(
-				"label", (Object)"By Creation Date"
+				"label", LABELS[0]
 			).put(
-				"type", (Object)FDSEntityFieldTypes.DATE
+				"type", FDSEntityFieldTypes.DATE
 			).build());
 		_mockSerializeFilters(
 			"fdsName2",
-			HashMapBuilder.put(
-				"fieldName", (Object)"modifiedDate"
+			HashMapBuilder.<String, Object>put(
+				"fieldName", FIELD_NAMES[1]
 			).put(
-				"label", (Object)"By Modification Date"
+				"label", LABELS[1]
 			).put(
-				"to", (Object)"2025-10-03T00:00:00.000Z"
+				"to", "2025-10-03T00:00:00.000Z"
 			).put(
-				"type", (Object)FDSEntityFieldTypes.DATE
+				"type", FDSEntityFieldTypes.DATE
 			).build());
 
 		JSONAssert.assertEquals(
@@ -450,11 +449,11 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 				JSONUtil.put(
 					"active", true
 				).put(
-					"entityFieldType", "date"
+					"entityFieldType", FDSEntityFieldTypes.DATE
 				).put(
-					"id", "createDate"
+					"id", FIELD_NAMES[0]
 				).put(
-					"label", "By Creation Date"
+					"label", LABELS[0]
 				).put(
 					"preloadedData",
 					JSONUtil.put(
@@ -479,11 +478,11 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 				JSONUtil.put(
 					"active", true
 				).put(
-					"entityFieldType", "date"
+					"entityFieldType", FDSEntityFieldTypes.DATE
 				).put(
-					"id", "modifiedDate"
+					"id", FIELD_NAMES[1]
 				).put(
-					"label", "By Modification Date"
+					"label", LABELS[1]
 				).put(
 					"preloadedData",
 					JSONUtil.put(
@@ -523,31 +522,33 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		_mockSerializeFilters(
 			"fdsName",
-			HashMapBuilder.put(
-				"fieldName", (Object)"channelId"
+			HashMapBuilder.<String, Object>put(
+				"fieldName", FIELD_NAMES[0]
 			).put(
-				"include", (Object)true
+				"include", true
 			).put(
-				"itemKey", (Object)"channelId"
+				"itemKey", ITEM_KEY
 			).put(
-				"itemLabel", (Object)"name"
+				"itemLabel", LABELS[0]
 			).put(
-				"label", (Object)"By Channel"
+				"label", LABELS[1]
 			).put(
-				"multiple", (Object)true
+				"multiple", true
 			).put(
 				"preselectedValues",
-				(Object)"[{\"label\":\"site 1\",\"value\":\"20192\"}]"
+				StringBundler.concat(
+					"[{\"label\":\"", LABELS[2], "\",\"value\":\"", IDS[2],
+					"\"}]")
 			).put(
-				"restApplication", (Object)"/analytics-settings-rest/v1.0"
+				"restApplication", "/analytics-settings-rest/v1.0"
 			).put(
-				"restEndpoint", (Object)"/v1.0/channels"
+				"restEndpoint", "/v1.0/channels"
 			).put(
-				"restSchema", (Object)"Channel"
+				"restSchema", "Channel"
 			).put(
-				"source", (Object)"/o/analytics-settings-rest/v1.0/channels"
+				"source", "/o/analytics-settings-rest/v1.0/channels"
 			).put(
-				"sourceType", (Object)"API_REST_APPLICATION"
+				"sourceType", "API_REST_APPLICATION"
 			).build());
 
 		JSONAssert.assertEquals(
@@ -559,13 +560,13 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 				).put(
 					"entityFieldType", "string"
 				).put(
-					"id", "channelId"
+					"id", FIELD_NAMES[0]
 				).put(
-					"itemKey", "channelId"
+					"itemKey", ITEM_KEY
 				).put(
-					"itemLabel", "name"
+					"itemLabel", LABELS[0]
 				).put(
-					"label", "By Channel"
+					"label", LABELS[1]
 				).put(
 					"multiple", true
 				).put(
@@ -576,9 +577,9 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 						"selectedItems",
 						JSONUtil.putAll(
 							JSONUtil.put(
-								"label", "site 1"
+								"label", LABELS[2]
 							).put(
-								"value", "20192"
+								"value", IDS[2]
 							))
 					)
 				).put(
@@ -597,25 +598,25 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 		// Different items actions
 
 		_mockSerializeItemsActions(
-			"fdsName1", new String[] {"New 1.1", "New 1.2"});
-		_mockSerializeItemsActions("fdsName2", new String[] {"New 2"});
+			"fdsName1", new String[] {LABELS[0], LABELS[1]});
+		_mockSerializeItemsActions("fdsName2", new String[] {LABELS[2]});
 
 		List<FDSActionDropdownItem> fdsActionDropdownItems1 =
 			_customFDSSerializer.serializeItemsActions(
 				"fdsName1", httpServletRequest);
 
-		Assert.assertFalse(_containsLabel(fdsActionDropdownItems1, "New 2"));
-		Assert.assertTrue(_containsLabel(fdsActionDropdownItems1, "New 1.1"));
-		Assert.assertTrue(_containsLabel(fdsActionDropdownItems1, "New 1.2"));
+		Assert.assertFalse(_containsLabel(fdsActionDropdownItems1, LABELS[2]));
+		Assert.assertTrue(_containsLabel(fdsActionDropdownItems1, LABELS[0]));
+		Assert.assertTrue(_containsLabel(fdsActionDropdownItems1, LABELS[1]));
 		Assert.assertTrue(fdsActionDropdownItems1.size() == 2);
 
 		List<FDSActionDropdownItem> fdsActionDropdownItems2 =
 			_customFDSSerializer.serializeItemsActions(
 				"fdsName2", httpServletRequest);
 
-		Assert.assertFalse(_containsLabel(fdsActionDropdownItems2, "New 1.1"));
-		Assert.assertFalse(_containsLabel(fdsActionDropdownItems2, "New 1.2"));
-		Assert.assertTrue(_containsLabel(fdsActionDropdownItems2, "New 2"));
+		Assert.assertFalse(_containsLabel(fdsActionDropdownItems2, LABELS[1]));
+		Assert.assertFalse(_containsLabel(fdsActionDropdownItems2, LABELS[0]));
+		Assert.assertTrue(_containsLabel(fdsActionDropdownItems2, LABELS[2]));
 		Assert.assertTrue(fdsActionDropdownItems2.size() == 1);
 
 		_resetFDSSerializer();
@@ -633,10 +634,8 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		// Shared items actions
 
-		String[] labels = {"New A", "New B"};
-
-		_testSerializeItemsActions("fdsName1", labels);
-		_testSerializeItemsActions("fdsName2", labels);
+		_testSerializeItemsActions("fdsName1", LABELS);
+		_testSerializeItemsActions("fdsName2", LABELS);
 	}
 
 	@Test
@@ -649,9 +648,9 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 		_mockSerializeViewsCardsOrList(
 			"fdsName",
 			HashMapBuilder.put(
-				"name", "title"
+				"image", IMAGES[0]
 			).put(
-				"thumbnail", "image"
+				"title", TITLES[0]
 			).build(),
 			"dataSetToDataSetCardsSections");
 
@@ -666,9 +665,9 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 				).put(
 					"schema",
 					JSONUtil.put(
-						"image", "thumbnail"
+						"image", IMAGES[0]
 					).put(
-						"title", "name"
+						"title", TITLES[0]
 					)
 				).put(
 					"thumbnail", "cards2"
@@ -686,18 +685,18 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 		_mockSerializeViewsCardsOrList(
 			"fdsName1",
 			HashMapBuilder.put(
-				"name", "title"
+				"image", IMAGES[0]
 			).put(
-				"thumbnail", "image"
+				"title", TITLES[0]
 			).build(),
 			"dataSetToDataSetCardsSections");
 
 		_mockSerializeViewsCardsOrList(
 			"fdsName2",
 			HashMapBuilder.put(
-				"image", "image"
+				"image", IMAGES[1]
 			).put(
-				"title", "title"
+				"title", TITLES[1]
 			).build(),
 			"dataSetToDataSetCardsSections");
 
@@ -712,9 +711,9 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 				).put(
 					"schema",
 					JSONUtil.put(
-						"image", "thumbnail"
+						"image", IMAGES[0]
 					).put(
-						"title", "name"
+						"title", TITLES[0]
 					)
 				).put(
 					"thumbnail", "cards2"
@@ -736,9 +735,9 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 				).put(
 					"schema",
 					JSONUtil.put(
-						"image", "image"
+						"image", IMAGES[1]
 					).put(
-						"title", "title"
+						"title", TITLES[1]
 					)
 				).put(
 					"thumbnail", "cards2"
@@ -770,9 +769,9 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 		_mockSerializeViewsCardsOrList(
 			"fdsName",
 			HashMapBuilder.put(
-				"name", "title"
+				"image", IMAGES[0]
 			).put(
-				"thumbnail", "image"
+				"title", TITLES[0]
 			).build(),
 			"dataSetToDataSetListSections");
 
@@ -787,9 +786,9 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 				).put(
 					"schema",
 					JSONUtil.put(
-						"image", "thumbnail"
+						"image", IMAGES[0]
 					).put(
-						"title", "name"
+						"title", TITLES[0]
 					)
 				).put(
 					"thumbnail", "list"
@@ -805,9 +804,9 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 		// Shared view
 
 		Map<String, String> sectionsMap = HashMapBuilder.put(
-			"name", "title"
+			"image", IMAGES[0]
 		).put(
-			"thumbnail", "image"
+			"title", TITLES[0]
 		).build();
 
 		_mockSerializeViewsCardsOrList(
@@ -832,9 +831,9 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		tableSectionObjectEntriesProperties.add(
 			HashMapBuilder.<String, Object>put(
-				"fieldName", "creator.name"
+				"fieldName", FIELD_NAMES[0]
 			).put(
-				"label", "Creator"
+				"label", LABELS[0]
 			).put(
 				"renderer", "ActionLink"
 			).put(
@@ -849,9 +848,9 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		tableSectionObjectEntriesProperties.add(
 			HashMapBuilder.<String, Object>put(
-				"fieldName", "description"
+				"fieldName", FIELD_NAMES[1]
 			).put(
-				"label", "Description"
+				"label", LABELS[1]
 			).put(
 				"renderer", cetExternalReferenceCode
 			).put(
@@ -864,9 +863,9 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		tableSectionObjectEntriesProperties.add(
 			HashMapBuilder.<String, Object>put(
-				"fieldName", "createDate"
+				"fieldName", FIELD_NAMES[2]
 			).put(
-				"label", "Created"
+				"label", LABELS[2]
 			).put(
 				"renderer", "default"
 			).put(
@@ -896,9 +895,9 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 							JSONUtil.put(
 								"contentRenderer", "ActionLink"
 							).put(
-								"fieldName", "creator.name"
+								"fieldName", FIELD_NAMES[0]
 							).put(
-								"label", "Creator"
+								"label", LABELS[0]
 							).put(
 								"sortable", true
 							),
@@ -911,18 +910,18 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 								"default from /o/" + cetExternalReferenceCode +
 									"/index.js"
 							).put(
-								"fieldName", "description"
+								"fieldName", FIELD_NAMES[1]
 							).put(
-								"label", "Description"
+								"label", LABELS[1]
 							).put(
 								"sortable", false
 							),
 							JSONUtil.put(
 								"contentRenderer", "default"
 							).put(
-								"fieldName", "createDate"
+								"fieldName", FIELD_NAMES[2]
 							).put(
-								"label", "Created"
+								"label", LABELS[2]
 							).put(
 								"sortable", false
 							))
@@ -1017,8 +1016,8 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 			_customFDSSerializer.getDataSetObjectEntryProperties(
 				fdsName, httpServletRequest)
 		).thenReturn(
-			HashMapBuilder.put(
-				"restApplication", (Object)restApplication
+			HashMapBuilder.<String, Object>put(
+				"restApplication", restApplication
 			).put(
 				"restEndpoint", restEndpoint
 			).put(
@@ -1032,8 +1031,8 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 				ObjectEntry objectEntry = new ObjectEntry();
 
 				objectEntry.setProperties(
-					HashMapBuilder.put(
-						"fieldName", (Object)fieldName
+					HashMapBuilder.<String, Object>put(
+						"fieldName", fieldName
 					).build());
 
 				return objectEntry;
@@ -1059,8 +1058,8 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 				ObjectEntry objectEntry = new ObjectEntry();
 
 				objectEntry.setProperties(
-					HashMapBuilder.put(
-						"title", (Object)title
+					HashMapBuilder.<String, Object>put(
+						"title", title
 					).build());
 
 				return objectEntry;
@@ -1117,8 +1116,8 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 				ObjectEntry objectEntry = new ObjectEntry();
 
 				objectEntry.setProperties(
-					HashMapBuilder.put(
-						"label", (Object)label
+					HashMapBuilder.<String, Object>put(
+						"label", label
 					).build());
 
 				return objectEntry;
@@ -1154,10 +1153,10 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 			ObjectEntry objectEntry = new ObjectEntry();
 
 			objectEntry.setProperties(
-				HashMapBuilder.put(
-					"fieldName", (Object)sectionMapEntry.getKey()
+				HashMapBuilder.<String, Object>put(
+					"fieldName", sectionMapEntry.getValue()
 				).put(
-					"name", (Object)sectionMapEntry.getValue()
+					"name", sectionMapEntry.getKey()
 				).build());
 
 			objectEntries.add(objectEntry);

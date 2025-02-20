@@ -51,7 +51,6 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -209,7 +208,7 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 		List<FDSActionDropdownItem> fdsActionDropdownItems1 =
 			ListUtil.fromArray(
 				new FDSActionDropdownItem(
-					null, "trash", "delete", "delete", "delete", "delete",
+					null, ICONS[0], IDS[0], LABELS[0], "delete", "delete",
 					"headless"));
 
 		_registerServices(
@@ -225,8 +224,8 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 		List<FDSActionDropdownItem> fdsActionDropdownItems2 =
 			ListUtil.fromArray(
 				new FDSActionDropdownItem(
-					null, "cog", "permissions", "permissions", "get",
-					"permissions", "modal-permissions"));
+					null, ICONS[1], IDS[1], LABELS[1], "get", "permissions",
+					"modal-permissions"));
 
 		_registerServices(
 			_registerFDSBulkActions(fdsActionDropdownItems2, "fdsName2"),
@@ -263,7 +262,7 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		fdsActionDropdownItems1 = ListUtil.fromArray(
 			new FDSActionDropdownItem(
-				null, "trash", "delete", "delete", "delete", "delete",
+				null, ICONS[0], IDS[0], LABELS[0], "delete", "delete",
 				"headless"));
 
 		_registerServices(
@@ -304,7 +303,9 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		CreationMenu creationMenu1 = CreationMenuBuilder.addDropdownItem(
 			DropdownItemBuilder.setIcon(
-				"times"
+				ICONS[0]
+			).setLabel(
+				LABELS[0]
 			).build()
 		).build();
 
@@ -320,7 +321,9 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		CreationMenu creationMenu2 = CreationMenuBuilder.addDropdownItem(
 			DropdownItemBuilder.setIcon(
-				"cog"
+				ICONS[1]
+			).setLabel(
+				LABELS[1]
 			).build()
 		).build();
 
@@ -359,7 +362,9 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		creationMenu1 = CreationMenuBuilder.addDropdownItem(
 			DropdownItemBuilder.setIcon(
-				"times"
+				ICONS[0]
+			).setLabel(
+				LABELS[0]
 			).build()
 		).build();
 
@@ -421,25 +426,25 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 					@Override
 					public String getId() {
-						return "fooField";
+						return IDS[0];
 					}
 
 					@Override
 					public String getLabel() {
-						return "Foo label";
+						return LABELS[0];
 					}
 
 					@Override
 					public String getModuleURL() {
-						return "/o/foo-filter/bar.js";
+						return URL;
 					}
 
 					@Override
 					public Map<String, Object> getPreloadedData() {
 						return new HashMapBuilder<>().<String, Object>put(
-							"fooParam1", "bar1"
+							IDS[1], LABELS[1]
 						).put(
-							"fooParam2", "bar2"
+							IDS[2], LABELS[2]
 						).build();
 					}
 
@@ -456,17 +461,17 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 		JSONAssert.assertEquals(
 			JSONUtil.putAll(
 				JSONUtil.put(
-					"clientExtensionFilterURL", "/o/foo-filter/bar.js"
+					"clientExtensionFilterURL", URL
 				).put(
-					"id", "fooField"
+					"id", IDS[0]
 				).put(
-					"label", "Foo label"
+					"label", LABELS[0]
 				).put(
 					"preloadedData",
 					JSONUtil.put(
-						"fooParam1", "bar1"
+						IDS[1], LABELS[1]
 					).put(
-						"fooParam2", "bar2"
+						IDS[2], LABELS[2]
 					)
 				).put(
 					"type", "clientExtension"
@@ -484,8 +489,7 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 		_registerServices(
 			_registerFDSFilter(
 				_createFDSFilterDate(
-					"createDate", "By Creation Date",
-					new DateFDSFilterItem(16, 3, 1977),
+					IDS[0], LABELS[0], new DateFDSFilterItem(16, 3, 1977),
 					new DateFDSFilterItem(0, 0, 0),
 					new HashMapBuilder<>().<String, Object>put(
 						"from", new DateFDSFilterItem(30, 11, 1985)
@@ -504,11 +508,11 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 		JSONAssert.assertEquals(
 			JSONUtil.putAll(
 				JSONUtil.put(
-					"entityFieldType", "date"
+					"entityFieldType", FDSEntityFieldTypes.DATE
 				).put(
-					"id", "createDate"
+					"id", IDS[0]
 				).put(
-					"label", "By Creation Date"
+					"label", LABELS[0]
 				).put(
 					"max",
 					JSONUtil.put(
@@ -564,14 +568,12 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 		_registerServices(
 			_registerFDSFilter(
 				_createFDSFilterDate(
-					"createDate", "By Creation Date",
-					new DateFDSFilterItem(1, 1, 1980),
+					IDS[0], LABELS[0], new DateFDSFilterItem(1, 1, 1980),
 					new DateFDSFilterItem(0, 0, 0), null),
 				"fdsName1"),
 			_registerFDSFilter(
 				_createFDSFilterDate(
-					"modifiedDate", "By Modification Date",
-					new DateFDSFilterItem(1, 1, 1980),
+					IDS[1], LABELS[1], new DateFDSFilterItem(1, 1, 1980),
 					new DateFDSFilterItem(0, 0, 0), null),
 				"fdsName2"),
 			_bundleContext.registerService(
@@ -596,11 +598,11 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 		JSONAssert.assertEquals(
 			JSONUtil.putAll(
 				JSONUtil.put(
-					"entityFieldType", "date"
+					"entityFieldType", FDSEntityFieldTypes.DATE
 				).put(
-					"id", "createDate"
+					"id", IDS[0]
 				).put(
-					"label", "By Creation Date"
+					"label", LABELS[0]
 				).put(
 					"max",
 					JSONUtil.put(
@@ -627,11 +629,11 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 		JSONAssert.assertEquals(
 			JSONUtil.putAll(
 				JSONUtil.put(
-					"entityFieldType", "date"
+					"entityFieldType", FDSEntityFieldTypes.DATE
 				).put(
-					"id", "modifiedDate"
+					"id", IDS[1]
 				).put(
-					"label", "By Modification Date"
+					"label", LABELS[1]
 				).put(
 					"max",
 					JSONUtil.put(
@@ -666,17 +668,17 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 					@Override
 					public String getId() {
-						return "id";
+						return IDS[0];
 					}
 
 					@Override
 					public String getLabel() {
-						return "label";
+						return LABELS[0];
 					}
 
 					@Override
 					public String getType() {
-						return "type";
+						return "dateRange";
 					}
 
 					@Override
@@ -721,8 +723,7 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 					@Override
 					public String getAPIURL() {
-						return "/o/headless-admin-taxonomy/v1.0/taxonomy-" +
-							"categories/0/taxonomy-categories?sort=name:asc";
+						return URL;
 					}
 
 					@Override
@@ -732,22 +733,22 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 					@Override
 					public String getId() {
-						return "categoryIds";
+						return IDS[0];
 					}
 
 					@Override
 					public String getItemKey() {
-						return "id";
+						return ITEM_KEY;
 					}
 
 					@Override
 					public String getItemLabel() {
-						return "label";
+						return LABELS[0];
 					}
 
 					@Override
 					public String getLabel() {
-						return "By Category";
+						return LABELS[1];
 					}
 
 					@Override
@@ -762,8 +763,8 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 						getSelectionFDSFilterItems(Locale locale) {
 
 						return ListUtil.fromArray(
-							new SelectionFDSFilterItem("animal", 1),
-							new SelectionFDSFilterItem("vegetable", 2));
+							new SelectionFDSFilterItem(LABELS[2], IDS[2]),
+							new SelectionFDSFilterItem(LABELS[3], IDS[3]));
 					}
 
 					@Override
@@ -789,36 +790,34 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 		JSONAssert.assertEquals(
 			JSONUtil.putAll(
 				JSONUtil.put(
-					"apiURL",
-					"/o/headless-admin-taxonomy/v1.0/taxonomy-" +
-						"categories/0/taxonomy-categories?sort=name:asc"
+					"apiURL", URL
 				).put(
 					"autocompleteEnabled", true
 				).put(
-					"entityFieldType", "collection"
+					"entityFieldType", FDSEntityFieldTypes.COLLECTION
 				).put(
-					"id", "categoryIds"
+					"id", IDS[0]
 				).put(
 					"inputPlaceholder", "search"
 				).put(
-					"itemKey", "id"
+					"itemKey", ITEM_KEY
 				).put(
-					"itemLabel", "label"
+					"itemLabel", LABELS[0]
 				).put(
 					"items",
 					JSONUtil.putAll(
 						JSONUtil.put(
-							"label", "animal"
+							"label", LABELS[2]
 						).put(
-							"value", 1
+							"value", IDS[2]
 						),
 						JSONUtil.put(
-							"label", "vegetable"
+							"label", LABELS[3]
 						).put(
-							"value", 2
+							"value", IDS[3]
 						))
 				).put(
-					"label", "By Category"
+					"label", LABELS[1]
 				).put(
 					"multiple", true
 				).put(
@@ -837,7 +836,7 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 		// Shared filters
 
 		FDSFilter dateRangeFDSFilter = _createFDSFilterDate(
-			"createDate", "By Creation Date", new DateFDSFilterItem(1, 1, 1980),
+			FIELD_NAMES[0], LABELS[0], new DateFDSFilterItem(1, 1, 1980),
 			new DateFDSFilterItem(0, 0, 0), null);
 
 		_registerServices(
@@ -883,14 +882,14 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 		List<FDSActionDropdownItem> fdsActionDropdownItems1 =
 			ListUtil.fromArray(
 				new FDSActionDropdownItem(
-					null, "trash", "delete", "delete", "delete", "delete",
+					null, ICONS[0], IDS[0], LABELS[0], "delete", "delete",
 					"headless"));
 
 		List<FDSActionDropdownItem> fdsActionDropdownItems2 =
 			ListUtil.fromArray(
 				new FDSActionDropdownItem(
-					null, "cog", "permissions", "permissions", "get",
-					"permissions", "modal-permissions"));
+					null, ICONS[1], IDS[1], LABELS[1], "get", "permissions",
+					"modal-permissions"));
 
 		_registerServices(
 			_registerFDSItemsActions(fdsActionDropdownItems1, "fdsName1"),
@@ -933,7 +932,7 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		fdsActionDropdownItems1 = ListUtil.fromArray(
 			new FDSActionDropdownItem(
-				null, "trash", "delete", "delete", "delete", "delete",
+				null, ICONS[0], IDS[0], LABELS[0], "delete", "delete",
 				"headless"));
 
 		_registerServices(
@@ -997,8 +996,8 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 			_registerFDSView(
 				"fdsName",
 				_createFDSViewCards(
-					_DESCRIPTION, "thumbnail", _LINK, "sticker", "icon",
-					_TITLE)),
+					DESCRIPTIONS[0], IMAGES[0], LINK, STICKERS[0], SYMBOLS[0],
+					TITLES[0])),
 			_registerSystemFDSEntry(
 				null, "fdsName", "/app", "/endpoint", "schema"));
 
@@ -1015,17 +1014,17 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 				).put(
 					"schema",
 					JSONUtil.put(
-						"description", _DESCRIPTION
+						"description", DESCRIPTIONS[0]
 					).put(
-						"href", _LINK
+						"href", LINK
 					).put(
-						"image", "thumbnail"
+						"image", IMAGES[0]
 					).put(
-						"sticker", "sticker"
+						"sticker", STICKERS[0]
 					).put(
-						"symbol", "icon"
+						"symbol", SYMBOLS[0]
 					).put(
-						"title", _TITLE
+						"title", TITLES[0]
 					)
 				).put(
 					"thumbnail", "cards2"
@@ -1054,12 +1053,13 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 			_registerFDSView(
 				"fdsName1",
 				_createFDSViewCards(
-					_DESCRIPTION, "thumbnail", _LINK, "sticker", "icon",
-					_TITLE)),
+					DESCRIPTIONS[0], IMAGES[0], LINK, STICKERS[0], SYMBOLS[0],
+					TITLES[0])),
 			_registerFDSView(
 				"fdsName2",
 				_createFDSViewList(
-					_DESCRIPTION, "thumbnail", "sticker", "icon", _TITLE)),
+					DESCRIPTIONS[1], IMAGES[1], STICKERS[1], SYMBOLS[1],
+					TITLES[1])),
 			_registerSystemFDSEntry(
 				null, "fdsName1", "/app", "/endpoint", "schema"),
 			_registerSystemFDSEntry(
@@ -1078,17 +1078,17 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 				).put(
 					"schema",
 					JSONUtil.put(
-						"description", _DESCRIPTION
+						"description", DESCRIPTIONS[0]
 					).put(
-						"href", _LINK
+						"href", LINK
 					).put(
-						"image", "thumbnail"
+						"image", IMAGES[0]
 					).put(
-						"sticker", "sticker"
+						"sticker", STICKERS[0]
 					).put(
-						"symbol", "icon"
+						"symbol", SYMBOLS[0]
 					).put(
-						"title", _TITLE
+						"title", TITLES[0]
 					)
 				).put(
 					"thumbnail", "cards2"
@@ -1111,15 +1111,15 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 				).put(
 					"schema",
 					JSONUtil.put(
-						"description", _DESCRIPTION
+						"description", DESCRIPTIONS[1]
 					).put(
-						"image", "thumbnail"
+						"image", IMAGES[1]
 					).put(
-						"sticker", "sticker"
+						"sticker", STICKERS[1]
 					).put(
-						"symbol", "icon"
+						"symbol", SYMBOLS[1]
 					).put(
-						"title", _TITLE
+						"title", TITLES[1]
 					)
 				).put(
 					"thumbnail", "list"
@@ -1166,7 +1166,8 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 			_registerFDSView(
 				"fdsName",
 				_createFDSViewList(
-					_DESCRIPTION, "thumbnail", "sticker", "icon", _TITLE)),
+					DESCRIPTIONS[0], IMAGES[0], STICKERS[0], SYMBOLS[0],
+					TITLES[0])),
 			_registerSystemFDSEntry(
 				null, "fdsName", "/app", "/endpoint", "schema"));
 
@@ -1183,15 +1184,15 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 				).put(
 					"schema",
 					JSONUtil.put(
-						"description", _DESCRIPTION
+						"description", DESCRIPTIONS[0]
 					).put(
-						"image", "thumbnail"
+						"image", IMAGES[0]
 					).put(
-						"sticker", "sticker"
+						"sticker", STICKERS[0]
 					).put(
-						"symbol", "icon"
+						"symbol", SYMBOLS[0]
 					).put(
-						"title", _TITLE
+						"title", TITLES[0]
 					)
 				).put(
 					"thumbnail", "list"
@@ -1207,7 +1208,8 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 		// Shared view
 
 		FDSView cardsView = _createFDSViewCards(
-			_DESCRIPTION, "thumbnail", _LINK, "sticker", "icon", _TITLE);
+			DESCRIPTIONS[0], IMAGES[0], LINK, STICKERS[0], SYMBOLS[0],
+			TITLES[0]);
 
 		_registerServices(
 			_bundleContext.registerService(
@@ -1249,19 +1251,19 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 							new FDSTableSchemaBuilderImpl();
 
 						return fdsTableSchemaBuilder.add(
-							"thumbnail", "picture",
+							FIELD_NAMES[0], LABELS[0],
 							fdsTableSchemaField ->
 								fdsTableSchemaField.setContentRenderer(
-									"imageRenderer")
+									CONTENT_RENDERERS[0])
 						).add(
-							"name", "name",
+							FIELD_NAMES[1], LABELS[1],
+							fdsTableSchemaField ->
+								fdsTableSchemaField.setContentRenderer(
+									CONTENT_RENDERERS[1])
+						).add(
+							FIELD_NAMES[2], LABELS[2],
 							fdsTableSchemaField ->
 								fdsTableSchemaField.setSortable(true)
-						).add(
-							"id", "id",
-							fdsTableSchemaField ->
-								fdsTableSchemaField.setContentRenderer(
-									"idRenderer")
 						).build();
 					}
 
@@ -1292,13 +1294,26 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 						"fields",
 						JSONUtil.putAll(
 							JSONUtil.put(
-								"contentRenderer", "imageRenderer"
+								"contentRenderer", CONTENT_RENDERERS[0]
 							).put(
 								"contentRendererClientExtension", false
 							).put(
-								"fieldName", "thumbnail"
+								"fieldName", FIELD_NAMES[0]
 							).put(
-								"label", "picture"
+								"label", LABELS[0]
+							).put(
+								"localizeLabel", true
+							).put(
+								"sortable", false
+							),
+							JSONUtil.put(
+								"contentRenderer", CONTENT_RENDERERS[1]
+							).put(
+								"contentRendererClientExtension", false
+							).put(
+								"fieldName", FIELD_NAMES[1]
+							).put(
+								"label", LABELS[1]
 							).put(
 								"localizeLabel", true
 							).put(
@@ -1307,26 +1322,13 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 							JSONUtil.put(
 								"contentRendererClientExtension", false
 							).put(
-								"fieldName", "name"
+								"fieldName", FIELD_NAMES[2]
 							).put(
-								"label", "name"
+								"label", LABELS[2]
 							).put(
 								"localizeLabel", true
 							).put(
 								"sortable", true
-							),
-							JSONUtil.put(
-								"contentRenderer", "idRenderer"
-							).put(
-								"contentRendererClientExtension", false
-							).put(
-								"fieldName", "id"
-							).put(
-								"label", "id"
-							).put(
-								"localizeLabel", true
-							).put(
-								"sortable", false
 							)))
 				).put(
 					"thumbnail", "table"
@@ -1591,12 +1593,6 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		_serviceRegistrations.clear();
 	}
-
-	private static final String _DESCRIPTION = RandomTestUtil.randomString();
-
-	private static final String _LINK = RandomTestUtil.randomString();
-
-	private static final String _TITLE = RandomTestUtil.randomString();
 
 	private BundleContext _bundleContext = SystemBundleUtil.getBundleContext();
 	private final List<ServiceRegistration<?>> _serviceRegistrations =

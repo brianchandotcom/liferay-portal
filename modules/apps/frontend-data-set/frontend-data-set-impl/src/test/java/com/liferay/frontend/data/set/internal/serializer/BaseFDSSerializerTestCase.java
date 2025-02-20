@@ -10,6 +10,7 @@ import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoader;
 import com.liferay.portal.kernel.resource.bundle.ResourceBundleLoaderUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -78,6 +79,35 @@ public abstract class BaseFDSSerializerTestCase {
 		ResourceBundleLoaderUtil.setPortalResourceBundleLoader(
 			resourceBundleLoader);
 	}
+
+	protected static final String[] CONTENT_RENDERERS =
+		RandomTestUtil.randomStrings(2);
+
+	protected static final String[] DESCRIPTIONS = RandomTestUtil.randomStrings(
+		2);
+
+	protected static final String[] FIELD_NAMES = RandomTestUtil.randomStrings(
+		3);
+
+	protected static final String[] ICONS = RandomTestUtil.randomStrings(2);
+
+	protected static final String[] IDS = RandomTestUtil.randomStrings(4);
+
+	protected static final String[] IMAGES = RandomTestUtil.randomStrings(2);
+
+	protected static final String ITEM_KEY = RandomTestUtil.randomString();
+
+	protected static final String[] LABELS = RandomTestUtil.randomStrings(4);
+
+	protected static final String LINK = RandomTestUtil.randomString();
+
+	protected static final String[] STICKERS = RandomTestUtil.randomStrings(2);
+
+	protected static final String[] SYMBOLS = RandomTestUtil.randomStrings(2);
+
+	protected static final String[] TITLES = RandomTestUtil.randomStrings(3);
+
+	protected static final String URL = RandomTestUtil.randomString();
 
 	protected final HttpServletRequest httpServletRequest = Mockito.mock(
 		HttpServletRequest.class);

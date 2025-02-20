@@ -109,9 +109,7 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		_resetFDSSerializer(fdsAPIURLResolverRegistry);
 
-		_mockSerializeAPIURL(
-			"fdsName", new String[] {"creator.name"}, "/app", "/endpoint",
-			"schema");
+		_mockSerializeAPIURL("fdsName", new String[] {"creator.name"});
 
 		Assert.assertEquals(
 			"/o/app/endpoint?nestedFields=creator",
@@ -123,8 +121,7 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 		// Nested fields: creator.name and status.id
 
 		_mockSerializeAPIURL(
-			"fdsName", new String[] {"creator.name", "status.id"}, "/app",
-			"/endpoint", "schema");
+			"fdsName", new String[] {"creator.name", "status.id"});
 
 		String url = _customFDSSerializer.serializeAPIURL(
 			"fdsName", httpServletRequest);
@@ -145,8 +142,9 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		_mockSerializeAPIURL(
 			"fdsName",
-			new String[] {"creator.name", "status.id", "relation.creator.name"},
-			"/app", "/endpoint", "schema");
+			new String[] {
+				"creator.name", "status.id", "relation.creator.name"
+			});
 
 		url = _customFDSSerializer.serializeAPIURL(
 			"fdsName", httpServletRequest);
@@ -170,7 +168,7 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		// No parameters
 
-		_mockSerializeAPIURL("fdsName", null, "/app", "/endpoint", "schema");
+		_mockSerializeAPIURL("fdsName", null);
 
 		Assert.assertEquals(
 			"/o/app/endpoint",
@@ -1003,9 +1001,12 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 		return dropdownItems.size();
 	}
 
-	private void _mockSerializeAPIURL(
-		String fdsName, String[] fieldNames, String restApplication,
-		String restEndpoint, String restSchema) {
+	private void _mockSerializeAPIURL(String fdsName, String[] fieldNames) {
+		String restApplication = "/app";
+
+		String restEndpoint = "/endpoint";
+
+		String restSchema = "schema";
 
 		Mockito.when(
 			_customFDSSerializer.createFDSAPIURLBuilder(

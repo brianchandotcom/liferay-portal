@@ -3,26 +3,54 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Page} from '@playwright/test';
+import {Locator, Page} from '@playwright/test';
 import path from 'path';
 
 import {ApplicationsMenuPage} from '../../../pages/product-navigation-applications-menu/ApplicationsMenuPage';
+import {DateOptions} from '../types/dateOptions';
 import {ExportImportPage} from './ExportImportPage';
 
 export class CompanyExportImportPage {
 	readonly page: Page;
 	readonly applicationsMenuPage: ApplicationsMenuPage;
 	readonly exportImportPage: ExportImportPage;
+	readonly rangeDateRangeEndDate: Locator;
+	readonly rangeDateRangeEndTime: Locator;
+	readonly rangeDateRangeRadioButton: Locator;
+	readonly rangeDateRangeStartDate: Locator;
+	readonly rangeDateRangeStartTime: Locator;
+	readonly rangeLast: Locator;
+	readonly rangeLastRadioButton: Locator;
 
 	constructor(page: Page) {
 		this.page = page;
 		this.applicationsMenuPage = new ApplicationsMenuPage(page);
 		this.exportImportPage = new ExportImportPage(page);
+		this.rangeDateRangeEndDate = page.locator(
+			'[id="_com_liferay_exportimport_web_portlet_CompanyExportPortlet_endDate"]'
+		);
+		this.rangeDateRangeEndTime = page.locator(
+			'[id="_com_liferay_exportimport_web_portlet_CompanyExportPortlet_endTime"]'
+		);
+		this.rangeDateRangeRadioButton = page.getByRole('radio', {
+			name: 'Date Range',
+		});
+		this.rangeDateRangeStartDate = page.locator(
+			'[id="_com_liferay_exportimport_web_portlet_CompanyExportPortlet_startDate"]'
+		);
+		this.rangeDateRangeStartTime = page.locator(
+			'[id="_com_liferay_exportimport_web_portlet_CompanyExportPortlet_startTime"]'
+		);
+		this.rangeLast = page.locator(
+			'[id="_com_liferay_exportimport_web_portlet_CompanyExportPortlet_last"]'
+		);
+		this.rangeLastRadioButton = page.getByRole('radio', {name: 'Last'});
 	}
 
 	async export(
 		itemLabel: string,
 		includePermissions: boolean = false,
+		dateOptions?: DateOptions,
 		taskName?: string
 	): Promise<string> {
 		await this.applicationsMenuPage.goToExport();
@@ -37,6 +65,31 @@ export class CompanyExportImportPage {
 
 		if (includePermissions) {
 			await this.exportImportPage.exportPermissionsButton.click();
+		}
+
+		if (dateOptions?.endDate || dateOptions?.startDate) {
+			await this.rangeDateRangeRadioButton.check();
+
+			if (dateOptions.endDate) {
+				await this.rangeDateRangeEndDate.fill(dateOptions.endDate);
+			}
+
+			if (dateOptions.endTime) {
+				await this.rangeDateRangeEndTime.fill(dateOptions.endTime);
+			}
+
+			if (dateOptions.startDate) {
+				await this.rangeDateRangeStartDate.fill(dateOptions.startDate);
+			}
+
+			if (dateOptions.startTime) {
+				await this.rangeDateRangeStartTime.fill(dateOptions.startTime);
+			}
+		}
+		else if (dateOptions?.rangeLast) {
+			await this.rangeLastRadioButton.check();
+
+			await this.rangeLast.selectOption(dateOptions.rangeLast);
 		}
 
 		await this.exportImportPage.exportButton.click();

@@ -198,7 +198,7 @@ public class ImportSystemDataSetMVCResourceCommand
 				}
 
 				_objectEntryService.addObjectEntry(
-					0, objectDefinitionId, objectEntryValues,
+					0, objectDefinitionId, null, objectEntryValues,
 					new ServiceContext());
 			}
 		}
@@ -242,7 +242,7 @@ public class ImportSystemDataSetMVCResourceCommand
 		}
 		else {
 			_objectEntryService.addObjectEntry(
-				0, objectDefinitionId,
+				0, objectDefinitionId, null,
 				HashMapBuilder.<String, Serializable>put(
 					"r_dataSetToDataSetActions_l_dataSetId", dataSetId
 				).put(
@@ -274,7 +274,7 @@ public class ImportSystemDataSetMVCResourceCommand
 					(Map<String, Object>)fdsActionDropdownItem.get("data");
 
 				_objectEntryService.addObjectEntry(
-					0, objectDefinitionId,
+					0, objectDefinitionId, null,
 					HashMapBuilder.<String, Serializable>put(
 						"confirmationMessage_i18n",
 						() -> _getLocalizeableValue(
@@ -368,7 +368,7 @@ public class ImportSystemDataSetMVCResourceCommand
 		}
 		else {
 			_objectEntryService.addObjectEntry(
-				0, objectDefinitionId,
+				0, objectDefinitionId, null,
 				HashMapBuilder.<String, Serializable>put(
 					"r_dataSetToDataSetActions_l_dataSetId", dataSetId
 				).put(

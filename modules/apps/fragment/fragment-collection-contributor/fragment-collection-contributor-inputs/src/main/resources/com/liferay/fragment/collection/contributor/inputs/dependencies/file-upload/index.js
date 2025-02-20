@@ -182,6 +182,18 @@ else {
 						);
 					}
 					else {
+						const initialValues = Object.fromEntries(
+							Object.keys(input.valueI18n).map((key) => [
+								key,
+								{
+									fileEntryId: input.valueI18n[key],
+									name:
+										input.attributes.fileNameI18n[key] ||
+										'',
+								},
+							])
+						);
+
 						const {onChange} = registerLocalizedFileInput({
 							defaultLanguageId,
 							initialValues: input.valueI18n,
@@ -190,17 +202,26 @@ else {
 							localizationInputsContainer:
 								inputElement.parentNode,
 							namespace: fragmentNamespace,
-							onFileChange: ({files}) => {
-								if (files?.length) {
-									fileName.innerText = files[0].name;
+							onLocaleChange: (input, languageId) => {
+								if (
+									input.type === 'file' &&
+									input.files?.length
+								) {
+									fileName.innerText = input.files[0].name;
+								}
+								else if (input.type === 'hidden') {
+									fileName.innerText = input.value
+										? initialValues[languageId]?.name
+										: '';
+								}
 
-									showRemoveButton();
+								if (fileName.innerText) {
+									removeButton.classList.remove('d-none');
 								}
 								else {
-									onRemoveFile();
+									removeButton.classList.add('d-none');
 								}
 							},
-							removeButton,
 						});
 
 						inputElement.addEventListener('change', (event) => {

@@ -8,24 +8,17 @@
 	<#assign groupKey = currentURL?substring(currentURL?index_of('/web/') + 5, currentURL?index_of('/products')) />
 </#if>
 
-<#assign
-	contactsImage = "/documents/d/${groupKey}/contacts-png"
-	eyeglassesImage = "/documents/d/${groupKey}/eyeglasses-png"
-	lensesImage = "/documents/d/${groupKey}/lenses-png"
-	sunglassesImage = "/documents/d/${groupKey}/sunglasses-png"
-/>
-
 <div class="row widget-mode-card">
 	<#if entries?has_content>
 		<#list entries as currentCategory>
 			<#if currentCategory.getName() == "Contacts">
-				<#assign categoryImage = contactsImage />
+				<#assign categoryImage = "/documents/d/${groupKey}/contacts-png" />
 			<#elseif currentCategory.getName() == "Eyeglasses">
-				<#assign categoryImage = eyeglassesImage />
+				<#assign categoryImage = "/documents/d/${groupKey}/eyeglasses-png" />
 			<#elseif currentCategory.getName() == "Lenses">
-				<#assign categoryImage = lensesImage />
+				<#assign categoryImage = "/documents/d/${groupKey}/lenses-png" />
 			<#elseif currentCategory.getName() == "Sunglasses">
-				<#assign categoryImage = sunglassesImage />
+				<#assign categoryImage = "/documents/d/${groupKey}/sunglasses-png" />
 			</#if>
 
 			<#assign

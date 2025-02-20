@@ -116,10 +116,8 @@
 					<div class="p-3 right-side">
 						<header>
 							<div class="d-flex justify-content-between">
-								<@liferay_commerce_ui["availability-label"]
-									CPCatalogEntry=cpCatalogEntry
-									namespace=renderResponse.namespace
-								/>
+								<@liferay_commerce_ui["availability-label"] CPCatalogEntry=cpCatalogEntry namespace=renderResponse.namespace />
+
 								<@liferay.language_format arguments="${stockQuantity}" key="x-in-stock" />
 							</div>
 						</header>
@@ -137,9 +135,10 @@
 						</div>
 
 						<div class="mt-3 mb-5 pr-3 content">${productShortDescription}</div>
+					
 						<div class="mt-3 mb-5 pr-3 content">${productDescription}</div>
+					
 						<@liferay_commerce_ui["price"] CPCatalogEntry=cpCatalogEntry />
-						</div>
 					</div>
 				</div>
 			</div>
@@ -165,18 +164,14 @@
 											<#assign cont = 1 />
 
 											<#list cpDefinitionSpecificationOptionValues as cpDefinitionSpecificationOptionValue>
-												<#assign
-													cpSpecificationOption = cpDefinitionSpecificationOptionValue.getCPSpecificationOption()
-												/>
+												<#assign cpSpecificationOption = cpDefinitionSpecificationOptionValue.getCPSpecificationOption() />
 
 												<tr>
 													<td class="specification-term table-cell-minw-150 table-title prdct"></td>
-													<td class="specification-term">
-														${cpSpecificationOption.getTitle(locale)}
-													</td>
-													<td class="specification-desc table-cell-expand prdct">
-														${cpDefinitionSpecificationOptionValue.getValue(locale)}
-													</td>
+
+													<td class="specification-term">${cpSpecificationOption.getTitle(locale)}</td>
+
+													<td class="specification-desc table-cell-expand prdct">${cpDefinitionSpecificationOptionValue.getValue(locale)}</td>
 												</tr>
 											</#list>
 										</#if>
@@ -188,26 +183,20 @@
 								<table class="table table-sm">
 									<tbody>
 										<#list cpOptionCategories as cpOptionCategory>
-											<#assign
-												categorizedCPDefinitionSpecificationOptionValues = cpContentHelper.getCategorizedCPDefinitionSpecificationOptionValues(cpDefinitionId, cpOptionCategory.getCPOptionCategoryId())
-											/>
+											<#assign categorizedCPDefinitionSpecificationOptionValues = cpContentHelper.getCategorizedCPDefinitionSpecificationOptionValues(cpDefinitionId, cpOptionCategory.getCPOptionCategoryId()) />
 
 											<#if categorizedCPDefinitionSpecificationOptionValues?has_content>
 												<#assign cont = 1 />
 
 												<#list categorizedCPDefinitionSpecificationOptionValues as cpDefinitionSpecificationOptionValue>
-													<#assign
-														cpSpecificationOption = cpDefinitionSpecificationOptionValue.getCPSpecificationOption()
-													/>
+													<#assign cpSpecificationOption = cpDefinitionSpecificationOptionValue.getCPSpecificationOption() />
 
 													<tr>
 														<td class="specification-term table-cell-minw-150 table-title prdct"></td>
-														<td class="specification-term">
-															${cpSpecificationOption.getTitle(locale)}
-														</td>
-														<td class="specification-desc table-cell-expand prdct">
-																${cpDefinitionSpecificationOptionValue.getValue(locale)}
-														</td>
+
+														<td class="specification-term">${cpSpecificationOption.getTitle(locale)}</td>
+
+														<td class="specification-desc table-cell-expand prdct">${cpDefinitionSpecificationOptionValue.getValue(locale)}</td>
 													</tr>
 												</#list>
 											</#if>
@@ -244,9 +233,9 @@
 										<#list cpAttachmentFileEntries as cpAttachmentFileEntry>
 											<tr>
 												<td class="specification-term table-cell-minw-150 table-title prdct"></td>
-												<td class="specification-term">
-													${cpAttachmentFileEntry.getTitle()}
-												</td>
+
+												<td class="specification-term">${cpAttachmentFileEntry.getTitle()}</td>
+												
 												<td class="specification-desc table-cell-expand prdct">
 													<a href="${cpAttachmentFileEntry.getDownloadURL()}" target="_blank">
 														<@clay["icon"] symbol="download" />

@@ -18,20 +18,15 @@
 <div class="row widget-mode-card">
 	<#if entries?has_content>
 		<#list entries as currentCategory>
-			<#switch currentCategory.getName()>
-				<#case "Contacts">
-					<#assign categoryImage = contactsImage />
-					<#break>
-				<#case "Eyeglasses">
-					<#assign categoryImage = eyeglassesImage />
-					<#break>
-				<#case "Lenses">
-					<#assign categoryImage = lensesImage />
-					<#break>
-				<#case "Sunglasses">
-					<#assign categoryImage = sunglassesImage />
-					<#break>
-			</#switch>
+			<#if currentCategory.getName() == "Contacts">
+				<#assign categoryImage = contactsImage />
+			<#elseif currentCategory.getName() == "Eyeglasses">
+				<#assign categoryImage = eyeglassesImage />
+			<#elseif currentCategory.getName() == "Lenses">
+				<#assign categoryImage = lensesImage />
+			<#elseif currentCategory.getName() == "Sunglasses">
+				<#assign categoryImage = sunglassesImage />
+			</#if>
 
 			<#assign
 				categoryHref = cpAssetCategoriesNavigationDisplayContext.getFriendlyURL(currentCategory.getCategoryId(), themeDisplay)

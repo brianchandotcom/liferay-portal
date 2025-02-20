@@ -3,13 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {
-	delegate,
-	fetch,
-	openSelectionModal,
-	openToast,
-	toggleRadio,
-} from 'frontend-js-web';
+import {openSelectionModal, openToast} from 'frontend-js-components-web';
+import {delegate, fetch, toggleRadio} from 'frontend-js-web';
 
 export default function ({actionURL, namespace, portletNamespace, portletURL}) {
 	const form = document.getElementById(`${namespace}fm`);

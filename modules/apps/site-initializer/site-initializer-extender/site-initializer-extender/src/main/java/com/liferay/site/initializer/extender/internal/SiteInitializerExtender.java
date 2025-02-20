@@ -86,6 +86,7 @@ import com.liferay.portal.security.service.access.policy.service.SAPEntryLocalSe
 import com.liferay.portal.util.PropsValues;
 import com.liferay.segments.service.SegmentsEntryLocalService;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
+import com.liferay.site.configuration.manager.MenuAccessConfigurationManager;
 import com.liferay.site.initializer.extender.internal.file.backed.osgi.FileBackedBundleDelegate;
 import com.liferay.site.initializer.extender.internal.file.backed.servlet.FileBackedServletContextDelegate;
 import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService;
@@ -165,7 +166,7 @@ public class SiteInitializerExtender
 				_layoutUtilityPageEntryLocalService,
 				_listTypeDefinitionResource, _listTypeDefinitionResourceFactory,
 				_listTypeEntryLocalService, _listTypeEntryResource,
-				_listTypeEntryResourceFactory,
+				_listTypeEntryResourceFactory, _menuAccessConfigurationManager,
 				_notificationTemplateResourceFactory, _objectActionLocalService,
 				_objectDefinitionLocalService, _objectDefinitionResourceFactory,
 				_objectEntryLocalService, _objectEntryManager,
@@ -286,7 +287,7 @@ public class SiteInitializerExtender
 				_layoutUtilityPageEntryLocalService,
 				_listTypeDefinitionResource, _listTypeDefinitionResourceFactory,
 				_listTypeEntryLocalService, _listTypeEntryResource,
-				_listTypeEntryResourceFactory,
+				_listTypeEntryResourceFactory, _menuAccessConfigurationManager,
 				_notificationTemplateResourceFactory, _objectActionLocalService,
 				_objectDefinitionLocalService, _objectDefinitionResourceFactory,
 				_objectEntryLocalService, _objectEntryManager,
@@ -481,6 +482,9 @@ public class SiteInitializerExtender
 
 	@Reference
 	private ListTypeEntryResource.Factory _listTypeEntryResourceFactory;
+
+	@Reference
+	private MenuAccessConfigurationManager _menuAccessConfigurationManager;
 
 	@Reference
 	private NotificationTemplateResource.Factory

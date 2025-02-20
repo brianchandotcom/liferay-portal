@@ -215,6 +215,7 @@ import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsEntryLocalService;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
+import com.liferay.site.configuration.manager.MenuAccessConfigurationManager;
 import com.liferay.site.exception.InitializationException;
 import com.liferay.site.initializer.SiteInitializer;
 import com.liferay.site.initializer.extender.CommerceSiteInitializer;
@@ -316,6 +317,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		ListTypeEntryLocalService listTypeEntryLocalService,
 		ListTypeEntryResource listTypeEntryResource,
 		ListTypeEntryResource.Factory listTypeEntryResourceFactory,
+		MenuAccessConfigurationManager menuAccessConfigurationManager,
 		NotificationTemplateResource.Factory
 			notificationTemplateResourceFactory,
 		ObjectActionLocalService objectActionLocalService,
@@ -410,6 +412,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_listTypeEntryLocalService = listTypeEntryLocalService;
 		_listTypeEntryResource = listTypeEntryResource;
 		_listTypeEntryResourceFactory = listTypeEntryResourceFactory;
+		_menuAccessConfigurationManager = menuAccessConfigurationManager;
 		_notificationTemplateResourceFactory =
 			notificationTemplateResourceFactory;
 		_objectActionLocalService = objectActionLocalService;
@@ -4522,6 +4525,29 @@ public class BundleSiteInitializer implements SiteInitializer {
 			jsonObject.getInt("membershipRestriction"));
 
 		_groupLocalService.updateGroup(group);
+
+		List<Long> roleIds = new ArrayList<>();
+
+		JSONArray accessToControlMenuRoleNamesJSONArray =
+			jsonObject.getJSONArray("accessToControlMenuRoleNames");
+
+		if (accessToControlMenuRoleNamesJSONArray != null) {
+			for (int i = 0; i < accessToControlMenuRoleNamesJSONArray.length();
+				 i++) {
+
+				Role role = _roleLocalService.fetchRole(
+					serviceContext.getCompanyId(),
+					accessToControlMenuRoleNamesJSONArray.getString(i));
+
+				if (role != null) {
+					roleIds.add(role.getRoleId());
+				}
+			}
+		}
+
+		_menuAccessConfigurationManager.updateMenuAccessConfiguration(
+			serviceContext.getScopeGroupId(), ArrayUtil.toStringArray(roleIds),
+			jsonObject.getBoolean("showControlMenuByRole"));
 	}
 
 	private void _addSiteSettings(ServiceContext serviceContext)
@@ -6049,6 +6075,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private final ListTypeEntryLocalService _listTypeEntryLocalService;
 	private final ListTypeEntryResource _listTypeEntryResource;
 	private final ListTypeEntryResource.Factory _listTypeEntryResourceFactory;
+	private final MenuAccessConfigurationManager
+		_menuAccessConfigurationManager;
 	private final NotificationTemplateResource.Factory
 		_notificationTemplateResourceFactory;
 	private final ObjectActionLocalService _objectActionLocalService;

@@ -9,8 +9,11 @@ import ClayForm, {ClayCheckbox, ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import ClayLabel from '@clayui/label';
 import classNames from 'classnames';
-import {TranslationAdminSelector} from 'frontend-js-components-web';
-import {fetch, objectToFormData, openSelectionModal} from 'frontend-js-web';
+import {
+	TranslationAdminSelector,
+	openSelectionModal,
+} from 'frontend-js-components-web';
+import {fetch, objectToFormData} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useEffect, useState} from 'react';
 

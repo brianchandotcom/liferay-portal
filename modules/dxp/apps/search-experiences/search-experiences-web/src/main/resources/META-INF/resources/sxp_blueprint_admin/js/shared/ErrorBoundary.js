@@ -4,7 +4,7 @@
  */
 
 import ClayEmptyState from '@clayui/empty-state';
-import {openToast} from 'frontend-js-web';
+import {openToast} from 'frontend-js-components-web';
 import React, {Component} from 'react';
 
 import {DEFAULT_ERROR} from '../utils/errorMessages';

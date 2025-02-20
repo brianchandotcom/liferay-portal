@@ -8,7 +8,8 @@ import ClayLayout from '@clayui/layout';
 import ClayList from '@clayui/list';
 import {ClayModalProvider, Context as ClayModalContext} from '@clayui/modal';
 import ClayProgressBar from '@clayui/progress-bar';
-import {fetch, localStorage, openToast} from 'frontend-js-web';
+import {openToast} from 'frontend-js-components-web';
+import {fetch, localStorage} from 'frontend-js-web';
 import React, {
 	useCallback,
 	useContext,

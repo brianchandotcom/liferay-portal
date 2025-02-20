@@ -10,8 +10,8 @@ import ClayLayout from '@clayui/layout';
 import ClayPanel from '@clayui/panel';
 import ClayTabs from '@clayui/tabs';
 import classNames from 'classnames';
-import {InputLocalized} from 'frontend-js-components-web';
-import {fetch, openModal} from 'frontend-js-web';
+import {InputLocalized, openModal} from 'frontend-js-components-web';
+import {fetch} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import RequiredMark from '../../../components/RequiredMark';

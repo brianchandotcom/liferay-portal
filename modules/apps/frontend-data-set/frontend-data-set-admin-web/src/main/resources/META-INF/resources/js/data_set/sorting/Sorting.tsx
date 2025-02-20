@@ -10,8 +10,8 @@ import ClayLabel from '@clayui/label';
 import ClayLayout from '@clayui/layout';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayModal from '@clayui/modal';
-import {InputLocalized} from 'frontend-js-components-web';
-import {fetch, openModal} from 'frontend-js-web';
+import {InputLocalized, openModal} from 'frontend-js-components-web';
+import {fetch} from 'frontend-js-web';
 import fuzzy from 'fuzzy';
 import React, {useCallback, useEffect, useState} from 'react';
 

@@ -15,8 +15,8 @@ import {
 	IClientExtensionRenderer,
 	IInternalRenderer,
 } from '@liferay/frontend-data-set-web';
-import {InputLocalized} from 'frontend-js-components-web';
-import {fetch, openModal} from 'frontend-js-web';
+import {InputLocalized, openModal} from 'frontend-js-components-web';
+import {fetch} from 'frontend-js-web';
 import fuzzy from 'fuzzy';
 import React, {useEffect, useState} from 'react';
 

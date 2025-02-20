@@ -9,7 +9,8 @@ import ClayForm, {ClayInput} from '@clayui/form';
 import ClayModal from '@clayui/modal';
 import {FrontendDataSet} from '@liferay/frontend-data-set-web';
 import classNames from 'classnames';
-import {fetch, navigate, openModal} from 'frontend-js-web';
+import {openModal} from 'frontend-js-components-web';
+import {fetch, navigate} from 'frontend-js-web';
 import React, {useState} from 'react';
 
 import '../css/DataSets.scss';

@@ -7,8 +7,7 @@ import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayLayout from '@clayui/layout';
 import classNames from 'classnames';
-import {InputLocalized} from 'frontend-js-components-web';
-import {openModal} from 'frontend-js-web';
+import {InputLocalized, openModal} from 'frontend-js-components-web';
 import React, {useState} from 'react';
 
 import AddDataSourceFieldsModalContent from '../../../components/AddDataSourceFieldsModalContent';

@@ -4,7 +4,8 @@
  */
 
 import {ClayButtonWithIcon} from '@clayui/button';
-import {fetch, objectToFormData, openToast, sub} from 'frontend-js-web';
+import {openToast} from 'frontend-js-components-web';
+import {fetch, objectToFormData, sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 

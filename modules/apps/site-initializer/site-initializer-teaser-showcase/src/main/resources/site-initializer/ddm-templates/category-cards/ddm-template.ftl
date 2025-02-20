@@ -23,12 +23,11 @@
 
 			<#assign
 				categoryHref = cpAssetCategoriesNavigationDisplayContext.getFriendlyURL(currentCategory.getCategoryId(), themeDisplay)
-				categoryId = currentCategory.getCategoryId()
-				categoryName = currentCategory.getName()
+\				categoryName = currentCategory.getName()
 				propertyName = "alphaCode"
 			/>
 
-			<#if cpAssetCategoriesNavigationDisplayContext.getDefaultImageSrc(categoryId)??>
+			<#if cpAssetCategoriesNavigationDisplayContext.getDefaultImageSrc(currentCategory.getCategoryId())??>
 				<#assign cardImage = true />
 			<#else>
 				<#assign cardImage = false />

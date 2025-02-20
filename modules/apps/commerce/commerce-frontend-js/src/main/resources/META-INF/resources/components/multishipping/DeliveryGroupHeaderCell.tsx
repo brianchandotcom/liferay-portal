@@ -8,7 +8,7 @@ import DropDown from '@clayui/drop-down';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useModal} from '@clayui/modal';
 import ClayTable from '@clayui/table';
-import {openConfirmModal} from 'frontend-js-web';
+import {openConfirmModal} from 'frontend-js-components-web';
 import React, {useCallback} from 'react';
 
 import DeliveryGroupModal from './DeliveryGroupModal';

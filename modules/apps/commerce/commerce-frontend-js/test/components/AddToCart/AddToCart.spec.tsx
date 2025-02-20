@@ -70,9 +70,9 @@ const props = {
 	size: 'sm',
 };
 
-jest.mock('frontend-js-web', () => {
+jest.mock('frontend-js-components-web', () => {
 	return {
-		...jest.requireActual('frontend-js-web'),
+		...jest.requireActual('frontend-js-components-web'),
 		openToast: jest.fn(),
 	};
 });

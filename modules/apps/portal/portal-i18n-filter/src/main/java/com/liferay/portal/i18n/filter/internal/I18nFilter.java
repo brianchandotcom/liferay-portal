@@ -113,6 +113,15 @@ public class I18nFilter extends BasePortalFilter {
 			PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE);
 
 		if (localePrependFriendlyURLStyle == 0) {
+			String virtualHostLanguageId =
+				(String)httpServletRequest.getAttribute(
+					WebKeys.VIRTUAL_HOST_LANGUAGE_ID);
+
+			if (Validator.isNotNull(virtualHostLanguageId)) {
+				httpServletRequest.setAttribute(
+					WebKeys.I18N_LANGUAGE_ID, virtualHostLanguageId);
+			}
+
 			return null;
 		}
 

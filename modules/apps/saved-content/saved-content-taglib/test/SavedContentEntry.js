@@ -8,17 +8,19 @@ import userEvent from '@testing-library/user-event';
 import React from 'react';
 
 import '@testing-library/jest-dom/extend-expect';
-import {
-	fetch as mockedFetch,
-	openToast as mockedOpenToast,
-} from 'frontend-js-web';
+import {openToast as mockedOpenToast} from 'frontend-js-components-web';
+import {fetch as mockedFetch} from 'frontend-js-web';
 
 import {SavedContentEntry} from '../src/main/resources/META-INF/resources/js/index';
+
+jest.mock('frontend-js-components-web', () => ({
+	...jest.requireActual('frontend-js-components-web'),
+	openToast: jest.fn(),
+}));
 
 jest.mock('frontend-js-web', () => ({
 	...jest.requireActual('frontend-js-web'),
 	fetch: jest.fn(),
-	openToast: jest.fn(),
 	sub: jest.fn((langKey, arg) => langKey.replace('x', arg)),
 }));
 

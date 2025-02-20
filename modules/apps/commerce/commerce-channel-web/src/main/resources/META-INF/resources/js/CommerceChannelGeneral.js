@@ -4,7 +4,7 @@
  */
 
 import {Autocomplete} from 'commerce-frontend-js';
-import {openSelectionModal} from 'frontend-js-web';
+import {openSelectionModal} from 'frontend-js-components-web';
 
 export default function ({
 	autocompleteInitialLabel,

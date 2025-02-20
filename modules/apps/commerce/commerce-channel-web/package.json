@@ -5,6 +5,7 @@
 		"@clayui/loading-indicator": "3.111.0",
 		"@liferay/marketplace-js-components-web": "*",
 		"commerce-frontend-js": "*",
+		"frontend-js-components-web": "*",
 		"frontend-js-web": "*",
 		"jest-fetch-mock": "3.0.3",
 		"react": "18.2.0",

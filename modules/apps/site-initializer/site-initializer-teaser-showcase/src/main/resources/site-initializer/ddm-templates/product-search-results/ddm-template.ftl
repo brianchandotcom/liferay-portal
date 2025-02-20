@@ -21,8 +21,8 @@
 		color: #ffffff !important;
 	}
 </style>
+
 <#assign
-	accountEntry = commerceContext.getAccountEntry()
 	accountEntryId = account.getAccountEntryId()
 	commerceChannelId = commerceContext.getCommerceChannelId()
 	commerceContext = renderRequest.getAttribute("COMMERCE_CONTEXT")

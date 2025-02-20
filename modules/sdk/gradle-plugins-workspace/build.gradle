@@ -4,6 +4,9 @@ apply plugin: "de.undercouch.download"
 
 task downloadNodeInfo(type: Download)
 
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
+
 String gradleVersion = "8.5"
 
 if (Boolean.getBoolean("gradle.test.enabled")) {

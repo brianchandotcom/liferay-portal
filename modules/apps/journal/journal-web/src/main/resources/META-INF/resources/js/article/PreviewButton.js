@@ -4,7 +4,7 @@
  */
 
 import ClayButton from '@clayui/button';
-import {openModal, openToast} from 'frontend-js-web';
+import {openModal, openToast} from 'frontend-js-components-web';
 import React from 'react';
 
 export default function PreviewButton({

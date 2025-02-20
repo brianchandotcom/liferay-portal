@@ -4,15 +4,12 @@
  */
 
 import {
-	addParams,
-	createPortletURL,
-	navigate,
 	openCategorySelectionModal,
 	openModal,
 	openSelectionModal,
 	openTagSelectionModal,
-	sub,
-} from 'frontend-js-web';
+} from 'frontend-js-components-web';
+import {addParams, createPortletURL, navigate, sub} from 'frontend-js-web';
 
 import openDeleteArticleModal from './modals/openDeleteArticleModal';
 import openPublishArticlesModal from './modals/openPublishArticlesModal';

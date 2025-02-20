@@ -6,7 +6,8 @@
 import ClayButton from '@clayui/button';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
-import {getPortletNamespace, openSelectionModal, sub} from 'frontend-js-web';
+import {openSelectionModal} from 'frontend-js-components-web';
+import {getPortletNamespace, sub} from 'frontend-js-web';
 import React from 'react';
 
 export default function AssetDisplayPageSelector({

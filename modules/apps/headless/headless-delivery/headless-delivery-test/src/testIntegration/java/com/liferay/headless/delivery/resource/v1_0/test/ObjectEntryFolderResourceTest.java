@@ -6,12 +6,14 @@
 package com.liferay.headless.delivery.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.test.rule.FeatureFlags;
 
 import org.junit.runner.RunWith;
 
 /**
  * @author Alicia García
  */
+@FeatureFlags("LPD-32649")
 @RunWith(Arquillian.class)
 public class ObjectEntryFolderResourceTest
 	extends BaseObjectEntryFolderResourceTestCase {

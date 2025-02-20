@@ -95,10 +95,10 @@ public class CaptchaConfigurationModelListener
 					"the-recaptcha-private-key-is-not-valid"));
 		}
 
-		String reCaptchaScriptUrl = (String)properties.get(
+		String reCaptchaScriptURL = (String)properties.get(
 			"reCaptchaScriptURL");
 
-		if (!reCaptchaScriptUrl.startsWith(_RECAPTCHA_URL)) {
+		if (!reCaptchaScriptURL.startsWith(_RECAPTCHA_URL)) {
 			throw new CaptchaConfigurationException(
 				ResourceBundleUtil.getString(
 					_getResourceBundle(),

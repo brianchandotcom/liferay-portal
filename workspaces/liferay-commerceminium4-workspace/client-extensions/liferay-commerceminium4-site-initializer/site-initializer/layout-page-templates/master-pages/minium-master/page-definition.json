@@ -6,7 +6,7 @@
 					"cssClasses": [
 						"commerce-side-navigation"
 					],
-					"customCSS": ".commerce-side-navigation {\n    --commerce-header-user-height: 4rem;\n  --commerce-side-bar: 215px;\n}\n\n.[$FRAGMENT_CLASS$] {\n  display: flex;\n}",
+					"customCSS": ":root {\n --commerce-header-user-height: 4rem;\n  --commerce-side-bar: 215px;\n}\n\n.[$FRAGMENT_CLASS$] {\n display: flex;\n}",
 					"indexed": true,
 					"layout": {
 					}
@@ -105,6 +105,24 @@
 									}
 								},
 								"pageElements": [
+									{
+										"definition": {
+											"cssClasses": [
+												"d-flex",
+												"justify-content-center"
+											],
+											"customCSS": ".[$FRAGMENT_CLASS$] {\npadding: 1rem 0.5rem;\n}\n\n.[$FRAGMENT_CLASS$] .btn {\nbackground-color: transparent;\ncolor: var(--gray-400);\n}\n\n.[$FRAGMENT_CLASS$] .btn:hover {\nbackground-color: rgba(255, 255, 255, 0.1) !important;\n}",
+											"fragment": {
+												"key": "com.liferay.commerce.currency.web.internal.fragment.renderer.CurrencySelectorFragmentRenderer"
+											},
+											"fragmentConfig": {
+											},
+											"fragmentFields": [
+											],
+											"indexed": true
+										},
+										"type": "Fragment"
+									},
 									{
 										"definition": {
 											"cssClasses": [

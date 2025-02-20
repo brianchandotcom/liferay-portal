@@ -3,6 +3,7 @@
 		"pageElements": [
 			{
 				"definition": {
+					"customCSS": ".[$FRAGMENT_CLASS$] .management-bar > .container-fluid {\nmax-width: var(--container-max-xl, 1248px);\n}",
 					"widgetInstance": {
 						"widgetConfig": {
 						},

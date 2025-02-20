@@ -31,13 +31,36 @@
 									},
 									"fragmentConfig": {
 										"showAccountMenu": true,
-										"showCurrencyMenu": false,
-										"showLanguageMenu": true
+										"showCurrencyMenu": true,
+										"showLanguageMenu": false
 									},
 									"fragmentFields": [
 									],
 									"indexed": true
 								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragmentDropZoneId": "1"
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "com.liferay.commerce.currency.web.internal.fragment.renderer.CurrencySelectorFragmentRenderer"
+													},
+													"fragmentConfig": {
+													},
+													"fragmentFields": [
+													],
+													"indexed": true
+												},
+												"type": "Fragment"
+											}
+										],
+										"type": "FragmentDropZone"
+									}
+								],
 								"type": "Fragment"
 							},
 							{

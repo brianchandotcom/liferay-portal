@@ -485,6 +485,7 @@
 				"pageElements": [
 					{
 						"definition": {
+							"customCSS": ".[$FRAGMENT_CLASS$] nav.navbar.navbar-collapse-relative.navbar-expand-md.navbar-underline.navigation-bar.navigation-bar-light::before {\n    background-color: var(--white);\n    content: '';\n    height: -webkit-fill-available;\n    left: 50%;\n    margin-left: -50vw;\n    position: absolute;\n    width: 100vw;\n}",
 							"fragment": {
 								"key": "BASIC_COMPONENT-tabs"
 							},

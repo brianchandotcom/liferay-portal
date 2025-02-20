@@ -16,6 +16,7 @@ String id = (String)request.getAttribute("liferay-frontend:screen-navigation:id"
 boolean inverted = (boolean)request.getAttribute("liferay-frontend:screen-navigation:inverted");
 String menubarCssClass = (String)request.getAttribute("liferay-frontend:screen-navigation:menubarCssClass");
 Object modelContext = (Object)request.getAttribute("liferay-frontend:screen-navigation:modelContext");
+String navBarCssClass = (String)request.getAttribute("liferay-frontend:screen-navigation:navBarCssClass");
 String navCssClass = (String)request.getAttribute("liferay-frontend:screen-navigation:navCssClass");
 PortletURL portletURL = (PortletURL)request.getAttribute("liferay-frontend:screen-navigation:portletURL");
 ScreenNavigationCategory selectedScreenNavigationCategory = (ScreenNavigationCategory)request.getAttribute("liferay-frontend:screen-navigation:selectedScreenNavigationCategory");
@@ -34,6 +35,7 @@ LiferayPortletResponse finalLiferayPortletResponse = liferayPortletResponse;
 
 			<clay:navigation-bar
 				activeItemAriaCurrent='<%= ListUtil.isNotEmpty(screenNavigationEntries) && (screenNavigationEntries.size() > 1) ? "false" : "page" %>'
+				cssClass="<%= navBarCssClass %>"
 				inverted="<%= inverted %>"
 				navigationItems='<%=
 					new JSPNavigationItemList(pageContext) {

@@ -100,6 +100,10 @@ public class ScreenNavigationTag extends IncludeTag {
 		return _context;
 	}
 
+	public String getNavBarCssClass() {
+		return _navBarCssClass;
+	}
+
 	public String getNavCssClass() {
 		return _navCssClass;
 	}
@@ -152,6 +156,10 @@ public class ScreenNavigationTag extends IncludeTag {
 		_modelBean = modelBean;
 	}
 
+	public void setNavBarCssClass(String navBarCssClass) {
+		_navBarCssClass = navBarCssClass;
+	}
+
 	public void setNavCssClass(String navCssClass) {
 		_navCssClass = navCssClass;
 	}
@@ -182,6 +190,7 @@ public class ScreenNavigationTag extends IncludeTag {
 		_menubarCssClass =
 			"menubar menubar-transparent menubar-vertical-expand-md";
 		_modelBean = null;
+		_navBarCssClass = StringPool.BLANK;
 		_navCssClass = "col-md-3";
 		_portletURL = null;
 		_screenNavigationCategories = null;
@@ -244,6 +253,9 @@ public class ScreenNavigationTag extends IncludeTag {
 		httpServletRequest.setAttribute(
 			"liferay-frontend:screen-navigation:modelContext",
 			getModelContext());
+		httpServletRequest.setAttribute(
+			"liferay-frontend:screen-navigation:navBarCssClass",
+			_navBarCssClass);
 		httpServletRequest.setAttribute(
 			"liferay-frontend:screen-navigation:navCssClass", _navCssClass);
 		httpServletRequest.setAttribute(
@@ -370,6 +382,7 @@ public class ScreenNavigationTag extends IncludeTag {
 	private String _menubarCssClass =
 		"menubar menubar-transparent menubar-vertical-expand-md";
 	private Object _modelBean;
+	private String _navBarCssClass = StringPool.BLANK;
 	private String _navCssClass = "col-md-3";
 	private PortletURL _portletURL;
 	private List<ScreenNavigationCategory> _screenNavigationCategories;

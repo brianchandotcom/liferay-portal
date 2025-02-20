@@ -755,6 +755,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>navBarCssClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>navCssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

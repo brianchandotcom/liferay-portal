@@ -722,6 +722,8 @@ public class VariableNameCheck extends BaseCheck {
 			return;
 		}
 
+		String absolutePath = getAbsolutePath();
+
 		List<DetailAST> assignDetailASTList = getAllChildTokens(
 			parentDetailAST, true, TokenTypes.ASSIGN);
 
@@ -745,9 +747,11 @@ public class VariableNameCheck extends BaseCheck {
 					continue;
 				}
 
-				_checkVariableNameByMethodCall(
-					firstChildDetailAST, variableName, "ReflectionTestUtil",
-					"getAndSetFieldValue", detailAST);
+				if (absolutePath.contains("/test/")) {
+					_checkVariableNameByMethodCall(
+						firstChildDetailAST, variableName, "ReflectionTestUtil",
+						"getAndSetFieldValue", detailAST);
+				}
 
 				methodName = getMethodName(firstChildDetailAST);
 
@@ -774,9 +778,12 @@ public class VariableNameCheck extends BaseCheck {
 					continue;
 				}
 
-				_checkVariableNameByMethodCall(
-					nextSiblingDetailAST, variableName, "ReflectionTestUtil",
-					"getAndSetFieldValue", firstChildDetailAST);
+				if (absolutePath.contains("/test/")) {
+					_checkVariableNameByMethodCall(
+						nextSiblingDetailAST, variableName,
+						"ReflectionTestUtil", "getAndSetFieldValue",
+						firstChildDetailAST);
+				}
 
 				methodName = getMethodName(nextSiblingDetailAST);
 

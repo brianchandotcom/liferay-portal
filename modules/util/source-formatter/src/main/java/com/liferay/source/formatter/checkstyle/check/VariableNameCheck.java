@@ -810,34 +810,34 @@ public class VariableNameCheck extends BaseCheck {
 		String methodCallClassName = names.get(0);
 		String methodCallMethodName = names.get(1);
 
-		if (StringUtil.equals(className, methodCallClassName) &&
-			StringUtil.equals(methodName, methodCallMethodName)) {
+		if (!StringUtil.equals(className, methodCallClassName) ||
+			!StringUtil.equals(methodName, methodCallMethodName)) {
 
-			List<DetailAST> parameterExprDetailASTList =
-				getParameterExprDetailASTList(firstChildDetailAST.getParent());
+			return;
+		}
 
-			if (parameterExprDetailASTList.size() <= 2) {
-				return;
-			}
+		List<DetailAST> parameterExprDetailASTList =
+			getParameterExprDetailASTList(firstChildDetailAST.getParent());
 
-			DetailAST exprDetailAST = parameterExprDetailASTList.get(1);
+		if (parameterExprDetailASTList.size() <= 2) {
+			return;
+		}
 
-			firstChildDetailAST = exprDetailAST.getFirstChild();
+		DetailAST exprDetailAST = parameterExprDetailASTList.get(1);
 
-			if (firstChildDetailAST.getType() != TokenTypes.STRING_LITERAL) {
-				return;
-			}
+		firstChildDetailAST = exprDetailAST.getFirstChild();
 
-			String expectedVariableName = _getExpectedVariableName(
-				firstChildDetailAST.getText());
+		if (firstChildDetailAST.getType() != TokenTypes.STRING_LITERAL) {
+			return;
+		}
 
-			if (!variableName.matches(
-					"(?i).*" + expectedVariableName + "[0-9]*")) {
+		String expectedVariableName = _getExpectedVariableName(
+			firstChildDetailAST.getText());
 
-				log(
-					detailAST, _MSG_INCORRECT_ENDING_VARIABLE_2, variableName,
-					expectedVariableName);
-			}
+		if (!variableName.matches("(?i).*" + expectedVariableName + "[0-9]*")) {
+			log(
+				detailAST, _MSG_INCORRECT_ENDING_VARIABLE_2, variableName,
+				expectedVariableName);
 		}
 	}
 

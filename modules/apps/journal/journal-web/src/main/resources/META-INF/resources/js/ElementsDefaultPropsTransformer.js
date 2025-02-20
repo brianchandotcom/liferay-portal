@@ -4,11 +4,11 @@
  */
 
 import {
-	addParams,
 	openConfirmModal,
 	openModal,
 	openSelectionModal,
-} from 'frontend-js-web';
+} from 'frontend-js-components-web';
+import {addParams} from 'frontend-js-web';
 
 import openDeleteArticleModal from './modals/openDeleteArticleModal';
 

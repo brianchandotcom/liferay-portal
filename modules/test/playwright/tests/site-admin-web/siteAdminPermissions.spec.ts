@@ -220,7 +220,13 @@ test('User can view site when a member of the site', async ({
 	await sitesAdminPage.assertActions(
 		site.name,
 		['Leave Site'],
-		['Add Child Site', 'Deactivate', 'Delete', 'Go to Site Settings']
+		[
+			'Add Child Site',
+			'Deactivate',
+			'Delete',
+			'Go to Pages',
+			'Go to Site Settings',
+		]
 	);
 });
 
@@ -302,14 +308,100 @@ test('User can manage child site with Manage Subsites permission', async ({
 	await sitesAdminPage.assertActions(
 		site.name,
 		['Leave Site'],
-		['Add Child Site', 'Deactivate', 'Delete', 'Go to Site Settings']
+		[
+			'Add Child Site',
+			'Deactivate',
+			'Delete',
+			'Go to Pages',
+			'Go to Site Settings',
+		]
 	);
 
-	await sitesAdminPage.assertActions(childSite.name, [
-		'Add Child Site',
-		'Deactivate',
-		'Delete',
-		'Go to Site Settings',
-		'Leave Site',
-	]);
+	await sitesAdminPage.assertActions(
+		childSite.name,
+		[
+			'Add Child Site',
+			'Deactivate',
+			'Delete',
+			'Go to Site Settings',
+			'Leave Site',
+		],
+		['Go to Pages']
+	);
+});
+
+test('User can go to site pages with Manage Pages permission', async ({
+	apiHelpers,
+	page,
+	sitesAdminPage,
+}) => {
+	user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+	userData[user.alternateName] = {
+		name: user.givenName,
+		password: 'test',
+		surname: user.familyName,
+	};
+
+	const companyId = await page.evaluate(() => {
+		return Liferay.ThemeDisplay.getCompanyId();
+	});
+
+	role = await apiHelpers.headlessAdminUser.postRole({
+		name: getRandomString(),
+		rolePermissions: [
+			{
+				actionIds: ['VIEW_CONTROL_PANEL'],
+				primaryKey: companyId,
+				resourceName: '90',
+				scope: 1,
+			},
+			{
+				actionIds: ['MANAGE_LAYOUTS'],
+				primaryKey: companyId,
+				resourceName: 'com.liferay.portal.kernel.model.Group',
+				scope: 1,
+			},
+			{
+				actionIds: ['ACCESS_IN_CONTROL_PANEL'],
+				primaryKey: companyId,
+				resourceName:
+					'com_liferay_site_admin_web_portlet_SiteAdminPortlet',
+				scope: 1,
+			},
+		],
+	});
+
+	await apiHelpers.headlessAdminUser.assignUserToRole(
+		role.externalReferenceCode,
+		user.id
+	);
+
+	site = await apiHelpers.headlessSite.createSite({
+		name: getRandomString(),
+	});
+
+	await apiHelpers.jsonWebServicesLayout.addLayout({
+		groupId: site.id,
+		title: getRandomString(),
+	});
+
+	const siteMemberRole =
+		await apiHelpers.headlessAdminUser.getRoleByName('Site Member');
+
+	await apiHelpers.headlessAdminUser.assignUserToSite(
+		siteMemberRole.id,
+		site.id,
+		user.id
+	);
+
+	await performUserSwitch(page, user.alternateName);
+
+	await sitesAdminPage.goto();
+
+	await sitesAdminPage.assertActions(
+		site.name,
+		['Go to Pages', 'Leave Site'],
+		['Add Child Site', 'Deactivate', 'Delete', 'Go to Site Settings']
+	);
 });

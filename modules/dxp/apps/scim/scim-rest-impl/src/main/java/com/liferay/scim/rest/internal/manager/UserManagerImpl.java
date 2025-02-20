@@ -389,17 +389,17 @@ public class UserManagerImpl implements UserManager {
 					ExpressionNode expressionNode = (ExpressionNode)node;
 
 					if (expressionNode != null) {
-						String value = expressionNode.getAttributeValue();
-
 						if (StringUtil.contains(
-								value, "externalId", StringPool.COLON)) {
+								expressionNode.getAttributeValue(),
+								"externalId", StringPool.COLON)) {
 
 							searchContext.setAttribute(
 								"externalReferenceCode",
 								expressionNode.getValue());
 						}
 						else if (StringUtil.contains(
-									value, "userName", StringPool.COLON)) {
+									expressionNode.getAttributeValue(),
+									"userName", StringPool.COLON)) {
 
 							searchContext.setAttribute(
 								"screenName", expressionNode.getValue());

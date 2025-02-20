@@ -243,17 +243,15 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static void clearCache() {
-		File cacheDirectory = new File(
-			System.getProperty("java.io.tmpdir"), "jenkins-cached-files");
+		File cacheDir = _getCacheDir();
 
-		System.out.println(
-			"Clearing cache " + getCanonicalPath(cacheDirectory));
+		System.out.println("Clearing cache " + getCanonicalPath(cacheDir));
 
-		if (!cacheDirectory.exists()) {
+		if (!cacheDir.exists()) {
 			return;
 		}
 
-		delete(cacheDirectory);
+		delete(cacheDir);
 	}
 
 	public static String combine(String... strings) {
@@ -6355,7 +6353,7 @@ public class JenkinsResultsParserUtil {
 		return key;
 	}
 
-	private static File _getCacheFile(String key) {
+	private static File _getCacheDir() {
 		String baseDirPath = System.getProperty("java.io.tmpdir");
 
 		if (isCINode()) {
@@ -6365,13 +6363,25 @@ public class JenkinsResultsParserUtil {
 				baseRepositoryDirPath = getBuildProperty("base.repository.dir");
 			}
 			catch (IOException ioException) {
+				System.out.println(
+					"WARNING: Unable to get property 'base.repository.dir'");
 			}
 
 			baseDirPath = baseRepositoryDirPath + "/liferay-jenkins-ee/tmp";
 		}
 
+		File cacheDirectory = new File(baseDirPath, "jenkins-cached-files");
+
+		if (!cacheDirectory.exists()) {
+			cacheDirectory.mkdirs();
+		}
+
+		return cacheDirectory;
+	}
+
+	private static File _getCacheFile(String key) {
 		String fileName = combine(
-			baseDirPath, "/jenkins-cached-files/",
+			getCanonicalPath(_getCacheDir()), "/",
 			String.valueOf(key.hashCode()), ".txt");
 
 		return new File(fileName);

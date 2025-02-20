@@ -787,13 +787,13 @@ public class AccountEntryLocalServiceTest {
 			"accountGroupIds", new long[] {accountGroup.getAccountGroupId()});
 
 		_assertSearchWithParams(
-			params,
+			StringPool.BLANK, params,
 			AccountEntryTestUtil.addAccountEntry(
 				AccountEntryArgs.withAccountGroups(accountGroup)));
 
 		_accountGroupLocalService.deleteAccountGroup(accountGroup);
 
-		_assertSearchWithParams(params);
+		_assertSearchWithParams(StringPool.BLANK, params);
 	}
 
 	@Test
@@ -804,6 +804,7 @@ public class AccountEntryLocalServiceTest {
 		User user2 = UserTestUtil.addUser();
 
 		_assertSearchWithParams(
+			StringPool.BLANK,
 			_getLinkedHashMap(
 				"accountUserIds",
 				new long[] {user1.getUserId(), user2.getUserId()}),
@@ -815,14 +816,18 @@ public class AccountEntryLocalServiceTest {
 
 	@Test
 	public void testSearchByAllowNewUserMembership() throws Exception {
+		String name = RandomTestUtil.randomString();
+
 		AccountEntry businessAccountEntry1 =
-			AccountEntryTestUtil.addAccountEntry();
+			AccountEntryTestUtil.addAccountEntry(
+				AccountEntryArgs.withName(name));
 		AccountEntry businessAccountEntry2 =
-			AccountEntryTestUtil.addAccountEntry();
+			AccountEntryTestUtil.addAccountEntry(
+				AccountEntryArgs.withName(name));
 		AccountEntry personAccountEntry1 = AccountEntryTestUtil.addAccountEntry(
-			AccountEntryArgs.TYPE_PERSON);
+			AccountEntryArgs.TYPE_PERSON, AccountEntryArgs.withName(name));
 		AccountEntry personAccountEntry2 = AccountEntryTestUtil.addAccountEntry(
-			AccountEntryArgs.TYPE_PERSON);
+			AccountEntryArgs.TYPE_PERSON, AccountEntryArgs.withName(name));
 
 		User user = UserTestUtil.addUser();
 
@@ -832,13 +837,13 @@ public class AccountEntryLocalServiceTest {
 			personAccountEntry2.getAccountEntryId(), user.getUserId());
 
 		_assertSearchWithParams(
-			null, businessAccountEntry1, businessAccountEntry2,
+			name, null, businessAccountEntry1, businessAccountEntry2,
 			personAccountEntry1, personAccountEntry2);
 		_assertSearchWithParams(
-			_getLinkedHashMap("allowNewUserMembership", Boolean.TRUE),
+			name, _getLinkedHashMap("allowNewUserMembership", Boolean.TRUE),
 			businessAccountEntry1, businessAccountEntry2, personAccountEntry1);
 		_assertSearchWithParams(
-			_getLinkedHashMap("allowNewUserMembership", Boolean.FALSE),
+			name, _getLinkedHashMap("allowNewUserMembership", Boolean.FALSE),
 			personAccountEntry2);
 	}
 
@@ -850,6 +855,7 @@ public class AccountEntryLocalServiceTest {
 		String emailDomain2 = "bar.com";
 
 		_assertSearchWithParams(
+			StringPool.BLANK,
 			_getLinkedHashMap(
 				"domains", new String[] {emailDomain1, emailDomain2}),
 			AccountEntryTestUtil.addAccountEntry(
@@ -884,16 +890,19 @@ public class AccountEntryLocalServiceTest {
 			AccountEntryArgs.withOrganizations(organization));
 
 		_assertSearchWithParams(
+			StringPool.BLANK,
 			_getLinkedHashMap(
 				"organizationIds",
 				new long[] {parentOrganization.getOrganizationId()}),
 			accountEntry1);
 		_assertSearchWithParams(
+			StringPool.BLANK,
 			_getLinkedHashMap(
 				"organizationIds",
 				new long[] {organization.getOrganizationId()}),
 			accountEntry2);
 		_assertSearchWithParams(
+			StringPool.BLANK,
 			_getLinkedHashMap(
 				"organizationIds",
 				new long[] {
@@ -911,6 +920,7 @@ public class AccountEntryLocalServiceTest {
 			AccountEntryTestUtil.addAccountEntry();
 
 		_assertSearchWithParams(
+			StringPool.BLANK,
 			_getLinkedHashMap(
 				"parentAccountEntryId", parentAccountEntry.getAccountEntryId()),
 			AccountEntryTestUtil.addAccountEntry(
@@ -920,44 +930,56 @@ public class AccountEntryLocalServiceTest {
 
 	@Test
 	public void testSearchByStatus() throws Exception {
-		AccountEntry activeAccountEntry =
-			AccountEntryTestUtil.addAccountEntry();
+		String name = RandomTestUtil.randomString();
+
+		AccountEntry activeAccountEntry = AccountEntryTestUtil.addAccountEntry(
+			AccountEntryArgs.withName(name));
 		AccountEntry inactiveAccountEntry =
 			AccountEntryTestUtil.addAccountEntry(
-				AccountEntryArgs.STATUS_INACTIVE);
+				AccountEntryArgs.STATUS_INACTIVE,
+				AccountEntryArgs.withName(name));
 
 		_assertSearchWithParams(
+			name,
 			_getLinkedHashMap("status", WorkflowConstants.STATUS_APPROVED),
 			activeAccountEntry);
-		_assertSearchWithParams(null, activeAccountEntry);
+		_assertSearchWithParams(name, null, activeAccountEntry);
 		_assertSearchWithParams(
+			name,
 			_getLinkedHashMap("status", WorkflowConstants.STATUS_INACTIVE),
 			inactiveAccountEntry);
 		_assertSearchWithParams(
-			_getLinkedHashMap("status", WorkflowConstants.STATUS_ANY),
+			name, _getLinkedHashMap("status", WorkflowConstants.STATUS_ANY),
 			activeAccountEntry, inactiveAccountEntry);
 	}
 
 	@Test
 	public void testSearchByType() throws Exception {
-		AccountEntry businessAccountEntry =
-			AccountEntryTestUtil.addAccountEntry();
-		AccountEntry personAccountEntry = AccountEntryTestUtil.addAccountEntry(
-			AccountEntryArgs.TYPE_PERSON);
+		String name = RandomTestUtil.randomString();
 
-		_assertSearchWithParams(null, businessAccountEntry, personAccountEntry);
+		AccountEntry businessAccountEntry =
+			AccountEntryTestUtil.addAccountEntry(
+				AccountEntryArgs.withName(name));
+		AccountEntry personAccountEntry = AccountEntryTestUtil.addAccountEntry(
+			AccountEntryArgs.TYPE_PERSON, AccountEntryArgs.withName(name));
 
 		_assertSearchWithParams(
+			name, null, businessAccountEntry, personAccountEntry);
+
+		_assertSearchWithParams(
+			name,
 			_getLinkedHashMap(
 				"types",
 				new String[] {AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS}),
 			businessAccountEntry);
 		_assertSearchWithParams(
+			name,
 			_getLinkedHashMap(
 				"types",
 				new String[] {AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON}),
 			personAccountEntry);
 		_assertSearchWithParams(
+			name,
 			_getLinkedHashMap(
 				"types",
 				new String[] {
@@ -966,7 +988,7 @@ public class AccountEntryLocalServiceTest {
 				}),
 			businessAccountEntry, personAccountEntry);
 		_assertSearchWithParams(
-			_getLinkedHashMap("types", new String[] {"invalidType"}));
+			name, _getLinkedHashMap("types", new String[] {"invalidType"}));
 	}
 
 	@Test
@@ -1319,13 +1341,13 @@ public class AccountEntryLocalServiceTest {
 	}
 
 	private void _assertSearchWithParams(
-			LinkedHashMap<String, Object> params,
+			String keywords, LinkedHashMap<String, Object> params,
 			AccountEntry... expectedAccountEntries)
 		throws Exception {
 
 		BaseModelSearchResult<AccountEntry> baseModelSearchResult =
 			_accountEntryLocalService.searchAccountEntries(
-				TestPropsValues.getCompanyId(), null, params, 0, 10, null,
+				TestPropsValues.getCompanyId(), keywords, params, 0, 10, null,
 				false);
 
 		Assert.assertEquals(

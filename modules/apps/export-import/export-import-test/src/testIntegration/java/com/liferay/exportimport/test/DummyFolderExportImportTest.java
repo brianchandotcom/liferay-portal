@@ -10,7 +10,6 @@ import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepositoryRegistryUtil;
-import com.liferay.exportimport.test.util.constants.DummyFolderPortletKeys;
 import com.liferay.exportimport.test.util.exportimport.data.handler.DummyFolderStagedModelDataHandler;
 import com.liferay.exportimport.test.util.lar.BasePortletExportImportTestCase;
 import com.liferay.exportimport.test.util.model.DummyFolder;
@@ -29,7 +28,6 @@ import java.util.Date;
 import java.util.Map;
 
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -47,19 +45,6 @@ public class DummyFolderExportImportTest
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@BeforeClass
-	public static void setUpClass() {
-		_dummyFolderStagedModelDataHandler =
-			(DummyFolderStagedModelDataHandler)
-				StagedModelDataHandlerRegistryUtil.getStagedModelDataHandler(
-					DummyFolder.class.getName());
-	}
-
-	@Override
-	public String getPortletId() throws Exception {
-		return DummyFolderPortletKeys.DUMMY_FOLDER;
-	}
-
 	@Before
 	@Override
 	public void setUp() throws Exception {
@@ -71,6 +56,13 @@ public class DummyFolderExportImportTest
 			(StagedModelRepository<DummyFolder>)
 				StagedModelRepositoryRegistryUtil.getStagedModelRepository(
 					DummyFolder.class.getName());
+
+		_dummyFolderStagedModelDataHandler =
+			(DummyFolderStagedModelDataHandler)
+				StagedModelDataHandlerRegistryUtil.getStagedModelDataHandler(
+					DummyFolder.class.getName());
+
+		_dummyFolderStagedModelDataHandler.setEnabled(true);
 
 		DynamicQueryFactoryUtil dynamicQueryFactoryUtil =
 			new DynamicQueryFactoryUtil();
@@ -90,8 +82,6 @@ public class DummyFolderExportImportTest
 				}
 
 			});
-
-		_dummyFolderStagedModelDataHandler.setEnabled(true);
 	}
 
 	@Override

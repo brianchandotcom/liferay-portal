@@ -1459,7 +1459,7 @@ public class CTCollectionLocalServiceImpl
 			ctEntry.getModelClassNameId(), ctEntry.getModelClassPK());
 
 		if ((model == null) ||
-			!_ctDisplayRendererRegistry.isMoveable(
+			!_ctDisplayRendererRegistry.isMovable(
 				model, ctEntry.getModelClassNameId())) {
 
 			return false;

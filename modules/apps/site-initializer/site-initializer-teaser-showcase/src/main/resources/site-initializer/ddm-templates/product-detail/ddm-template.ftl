@@ -1,11 +1,12 @@
 <#if cpCatalogEntry??>
 	<#assign
 		commerceContext = renderRequest.getAttribute("COMMERCE_CONTEXT")
-		cpDefinitionId = cpCatalogEntry.getCPDefinitionId()
 
 		accountEntry = commerceContext.getAccountEntry()
-
+		
 		accountEntryId = account.getAccountEntryId()
+		cpDefinitionId = cpCatalogEntry.getCPDefinitionId()
+
 		cpAttachmentFileEntries = cpContentHelper.getCPMedias(cpDefinitionId, themeDisplay)
 		cpDefinitionSpecificationOptionValues = cpContentHelper.getCPDefinitionSpecificationOptionValues(cpDefinitionId)
 		cpOptionCategories = cpContentHelper.getCPOptionCategories(themeDisplay.getCompanyId())
@@ -116,9 +117,15 @@
 					<div class="p-3 right-side">
 						<header>
 							<div class="d-flex justify-content-between">
-								<@liferay_commerce_ui["availability-label"] CPCatalogEntry=cpCatalogEntry namespace=renderResponse.namespace />
+								<@liferay_commerce_ui["availability-label"]
+									CPCatalogEntry=cpCatalogEntry
+									namespace=renderResponse.namespace
+								/>
 
-								<@liferay.language_format arguments="${stockQuantity}" key="x-in-stock" />
+								<@liferay.language_format
+									arguments="${stockQuantity}"
+									key="x-in-stock"
+								/>
 							</div>
 						</header>
 
@@ -135,9 +142,9 @@
 						</div>
 
 						<div class="mt-3 mb-5 pr-3 content">${productShortDescription}</div>
-					
+
 						<div class="mt-3 mb-5 pr-3 content">${productDescription}</div>
-					
+
 						<@liferay_commerce_ui["price"] CPCatalogEntry=cpCatalogEntry />
 					</div>
 				</div>
@@ -235,7 +242,7 @@
 												<td class="specification-term table-cell-minw-150 table-title prdct"></td>
 
 												<td class="specification-term">${cpAttachmentFileEntry.getTitle()}</td>
-												
+
 												<td class="specification-desc table-cell-expand prdct">
 													<a href="${cpAttachmentFileEntry.getDownloadURL()}" target="_blank">
 														<@clay["icon"] symbol="download" />

@@ -33,12 +33,10 @@
 	<#if entries?has_content>
 		<#list entries as curCPCatalogEntry>
 			<#assign
-				categories = productDetail.categories
 				cpDefinitionId = curCPCatalogEntry.getCPDefinitionId()
-				productSpecifications = productDetail.productSpecifications
-
 				productDetail = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels/${chanelId}/products/${productId}?accountId=${accountId}&nestedFields=categories,productSpecifications")
 
+				categories = productDetail.categories
 				cpDefaultImageFileVersion = cpContentHelper.getCPDefinitionImageFileVersion(cpDefinitionId, request)
 				defaultImageFileURL = cpContentHelper.getDefaultImageFileURL(accountEntryId, cpDefinitionId)
 				featuredSpecificationKeys = ["fit", "weight", "material"]
@@ -48,6 +46,7 @@
 				productId = curCPCatalogEntry.getCProductId()
 				productName = curCPCatalogEntry.getName()
 				productShortDescription = curCPCatalogEntry.getShortDescription()
+				productSpecifications = productDetail.productSpecifications
 				suggestedClass = ""
 				tags = productDetail.tags
 			/>

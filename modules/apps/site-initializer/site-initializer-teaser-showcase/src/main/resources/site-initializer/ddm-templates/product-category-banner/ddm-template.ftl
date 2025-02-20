@@ -5,9 +5,7 @@
 />
 
 <#if cpCategoryContentDisplayContext.getDefaultImageSrc()??>
-	<#assign
-		image = cpCategoryContentDisplayContext.getDefaultImageSrc()
-	/>
+	<#assign image = cpCategoryContentDisplayContext.getDefaultImageSrc() />
 </#if>
 
 <#if assetCategory??>

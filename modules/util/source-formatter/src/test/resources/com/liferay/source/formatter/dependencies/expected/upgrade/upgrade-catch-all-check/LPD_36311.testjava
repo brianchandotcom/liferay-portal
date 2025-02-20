@@ -18,8 +18,9 @@ public class LPD_36311 {
 		ServiceContext serviceContext) {
 
 		_dlAppLocalService.addFileEntry(123, repositoryId, folderId, sourceFileName, mimeType, bytes, serviceContext);
-		_dlAppLocalService.addFileEntry(null, userId, repositoryId, folderId, sourceFileName, mimeType, bytes, null, null, serviceContext);
-		_dlAppService.addFileEntry(null, userId, repositoryId, folderId, sourceFileName, mimeType, bytes, null, null, serviceContext);
+		_dlAppLocalService.addFileEntry(null, userId, repositoryId, folderId, sourceFileName, mimeType, bytes, null, null, null, serviceContext);
+		_dlAppService.addFileEntry(123, folderId, sourceFileName, mimeType, bytes, serviceContext);
+		_dlAppService.addFileEntry(null, repositoryId, folderId, sourceFileName, mimeType, bytes, null, null, null, serviceContext);
 	}
 
 	@Reference

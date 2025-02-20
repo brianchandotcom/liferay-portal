@@ -8,7 +8,8 @@ import {
 	checkCookieConsentForTypes,
 	openCookieConsentModal,
 } from '@liferay/cookies-banner-web';
-import {COOKIE_TYPES, openAlertModal} from 'frontend-js-web';
+import {openAlertModal} from 'frontend-js-components-web';
+import {COOKIE_TYPES} from 'frontend-js-web';
 import React from 'react';
 
 export function Cookies() {

@@ -8,7 +8,8 @@ import ClayDatePicker from '@clayui/date-picker';
 import ClayForm, {ClayInput, ClaySelectWithOption} from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import classnames from 'classnames';
-import {dateUtils, openToast} from 'frontend-js-web';
+import {openToast} from 'frontend-js-components-web';
+import {dateUtils} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useCallback, useContext, useEffect, useState} from 'react';
 

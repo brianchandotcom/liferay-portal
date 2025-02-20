@@ -5,7 +5,8 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayDropDown from '@clayui/drop-down';
-import {dateUtils, openConfirmModal, openToast, sub} from 'frontend-js-web';
+import {openConfirmModal, openToast} from 'frontend-js-components-web';
+import {dateUtils, sub} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useCallback, useContext, useEffect, useState} from 'react';
 

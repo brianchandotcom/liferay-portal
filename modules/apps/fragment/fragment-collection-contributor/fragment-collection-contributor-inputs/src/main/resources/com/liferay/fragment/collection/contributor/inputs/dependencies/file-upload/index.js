@@ -194,38 +194,47 @@ else {
 							])
 						);
 
-						const {onChange} = registerLocalizedFileInput({
-							defaultLanguageId,
-							initialValues,
-							inputElement,
-							inputName: input.name,
-							localizationInputsContainer:
-								inputElement.parentNode,
-							namespace: fragmentNamespace,
-							onLocaleChange: (input, languageId) => {
-								if (
-									input.type === 'file' &&
-									input.files?.length
-								) {
-									fileName.innerText = input.files[0].name;
-								}
-								else if (input.type === 'hidden') {
-									fileName.innerText = input.value
-										? initialValues[languageId]?.name
-										: '';
-								}
+						const {onChange, onRemoveFile} =
+							registerLocalizedFileInput({
+								defaultLanguageId,
+								initialValues,
+								inputName: input.name,
+								localizationInputsContainer:
+									inputElement.parentNode,
+								namespace: fragmentNamespace,
+								onLocaleChange: (input, languageId) => {
+									if (
+										input.type === 'file' &&
+										input.files?.length
+									) {
+										fileName.innerText =
+											input.files[0].name;
+									}
+									else if (input.type === 'hidden') {
+										fileName.innerText = input.value
+											? initialValues[languageId]?.name
+											: '';
+									}
 
-								if (fileName.innerText) {
-									removeButton.classList.remove('d-none');
-								}
-								else {
-									removeButton.classList.add('d-none');
-								}
-							},
-						});
+									if (fileName.innerText) {
+										removeButton.classList.remove('d-none');
+									}
+									else {
+										removeButton.classList.add('d-none');
+									}
+								},
+							});
 
 						inputElement.addEventListener('change', (event) => {
 							onChange(event.target.files);
+						});
+
+						removeButton.addEventListener('click', () => {
+							fileName.innerText = '';
+
+							removeButton.classList.add('d-none');
+
+							onRemoveFile();
 						});
 
 						selectButton.addEventListener(

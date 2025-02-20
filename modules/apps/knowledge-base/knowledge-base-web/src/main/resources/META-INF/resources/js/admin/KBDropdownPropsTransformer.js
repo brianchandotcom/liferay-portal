@@ -4,15 +4,12 @@
  */
 
 import {
-	addParams,
-	fetch,
-	objectToFormData,
 	openConfirmModal,
 	openModal,
 	openSelectionModal,
 	openToast,
-	sub,
-} from 'frontend-js-web';
+} from 'frontend-js-components-web';
+import {addParams, fetch, objectToFormData, sub} from 'frontend-js-web';
 
 import showSuccessMessage from './utils/showSuccessMessage';
 

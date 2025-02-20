@@ -1,0 +1,467 @@
+{
+	"definition": {
+		"indexed": true,
+		"layout": {
+		},
+		"name": "Job Opening Display"
+	},
+	"pageElements": [
+		{
+			"definition": {
+				"fragmentStyle": {
+					"paddingBottom": "5",
+					"paddingLeft": "5",
+					"paddingRight": "3",
+					"paddingTop": "5"
+				},
+				"indexed": true,
+				"layout": {
+					"paddingBottom": 4,
+					"paddingLeft": 4,
+					"paddingRight": 1,
+					"paddingTop": 4
+				},
+				"name": "Job Title"
+			},
+			"pageElements": [
+				{
+					"definition": {
+						"fragment": {
+							"key": "heading-1",
+							"siteKey": "[$GROUP_KEY$]"
+						},
+						"fragmentConfig": {
+							"headingSize": "1"
+						},
+						"fragmentFields": [
+							{
+								"id": "page-title-fragment-right",
+								"value": {
+									"fragmentLink": {
+									}
+								}
+							},
+							{
+								"id": "page-title-fragment-left",
+								"value": {
+									"fragmentLink": {
+									}
+								}
+							}
+						],
+						"indexed": true
+					},
+					"type": "Fragment"
+				},
+				{
+					"definition": {
+						"fragment": {
+							"key": "BASIC_COMPONENT-paragraph"
+						},
+						"fragmentConfig": {
+						},
+						"fragmentFields": [
+							{
+								"id": "element-text",
+								"value": {
+									"fragmentLink": {
+									}
+								}
+							}
+						],
+						"indexed": true
+					},
+					"type": "Fragment"
+				}
+			],
+			"type": "Section"
+		},
+		{
+			"definition": {
+				"fragmentStyle": {
+					"paddingBottom": "5",
+					"paddingLeft": "5",
+					"paddingRight": "3",
+					"paddingTop": "5"
+				},
+				"indexed": true,
+				"layout": {
+					"paddingBottom": 4,
+					"paddingLeft": 4,
+					"paddingRight": 1,
+					"paddingTop": 4
+				},
+				"name": "Job Details"
+			},
+			"pageElements": [
+				{
+					"definition": {
+						"fragmentStyle": {
+							"paddingLeft": "9",
+							"paddingRight": "9"
+						},
+						"indexed": true,
+						"layout": {
+						},
+						"name": "Role Overview"
+					},
+					"pageElements": [
+						{
+							"definition": {
+								"fragment": {
+									"key": "BASIC_COMPONENT-heading"
+								},
+								"fragmentConfig": {
+									"headingLevel": "h4"
+								},
+								"fragmentFields": [
+									{
+										"id": "element-text",
+										"value": {
+											"fragmentLink": {
+											},
+											"text": {
+												"value_i18n": {
+													"en_US": "Role Overview"
+												}
+											}
+										}
+									}
+								],
+								"fragmentStyle": {
+									"marginBottom": "5"
+								},
+								"indexed": true
+							},
+							"type": "Fragment"
+						},
+						{
+							"definition": {
+								"fragment": {
+									"key": "BASIC_COMPONENT-html"
+								},
+								"fragmentConfig": {
+								},
+								"fragmentFields": [
+									{
+										"id": "element-html",
+										"value": {
+											"html": {
+												"value_i18n": {
+												}
+											}
+										}
+									}
+								],
+								"indexed": true
+							},
+							"type": "Fragment"
+						}
+					],
+					"type": "Section"
+				},
+				{
+					"definition": {
+						"fragmentStyle": {
+							"paddingLeft": "9",
+							"paddingRight": "9"
+						},
+						"indexed": true,
+						"layout": {
+						},
+						"name": "Key Responsibilities"
+					},
+					"pageElements": [
+						{
+							"definition": {
+								"fragment": {
+									"key": "BASIC_COMPONENT-heading"
+								},
+								"fragmentConfig": {
+									"headingLevel": "h4"
+								},
+								"fragmentFields": [
+									{
+										"id": "element-text",
+										"value": {
+											"fragmentLink": {
+											},
+											"text": {
+												"value_i18n": {
+													"en_US": "Key Responsibilities"
+												}
+											}
+										}
+									}
+								],
+								"fragmentStyle": {
+									"marginBottom": "5",
+									"marginTop": "5"
+								},
+								"indexed": true
+							},
+							"type": "Fragment"
+						},
+						{
+							"definition": {
+								"fragment": {
+									"key": "BASIC_COMPONENT-html"
+								},
+								"fragmentConfig": {
+								},
+								"fragmentFields": [
+									{
+										"id": "element-html",
+										"value": {
+											"html": {
+												"value_i18n": {
+												}
+											}
+										}
+									}
+								],
+								"indexed": true
+							},
+							"type": "Fragment"
+						}
+					],
+					"type": "Section"
+				},
+				{
+					"definition": {
+						"fragmentStyle": {
+							"paddingLeft": "9",
+							"paddingRight": "9"
+						},
+						"indexed": true,
+						"layout": {
+						},
+						"name": "Qualifications and Skills"
+					},
+					"pageElements": [
+						{
+							"definition": {
+								"fragment": {
+									"key": "BASIC_COMPONENT-heading"
+								},
+								"fragmentConfig": {
+									"headingLevel": "h4"
+								},
+								"fragmentFields": [
+									{
+										"id": "element-text",
+										"value": {
+											"fragmentLink": {
+											},
+											"text": {
+												"value_i18n": {
+													"en_US": "Qualifications and Skills"
+												}
+											}
+										}
+									}
+								],
+								"fragmentStyle": {
+									"marginBottom": "5",
+									"marginTop": "5"
+								},
+								"indexed": true
+							},
+							"type": "Fragment"
+						},
+						{
+							"definition": {
+								"fragment": {
+									"key": "BASIC_COMPONENT-html"
+								},
+								"fragmentConfig": {
+								},
+								"fragmentFields": [
+									{
+										"id": "element-html",
+										"value": {
+											"html": {
+												"value_i18n": {
+												}
+											}
+										}
+									}
+								],
+								"indexed": true
+							},
+							"type": "Fragment"
+						}
+					],
+					"type": "Section"
+				},
+				{
+					"definition": {
+						"fragmentStyle": {
+							"paddingLeft": "9",
+							"paddingRight": "9"
+						},
+						"indexed": true,
+						"layout": {
+						},
+						"name": "Why Join"
+					},
+					"pageElements": [
+						{
+							"definition": {
+								"fragment": {
+									"key": "BASIC_COMPONENT-heading"
+								},
+								"fragmentConfig": {
+									"headingLevel": "h4"
+								},
+								"fragmentFields": [
+									{
+										"id": "element-text",
+										"value": {
+											"fragmentLink": {
+											},
+											"text": {
+												"value_i18n": {
+													"en_US": "Why Join Clarity"
+												}
+											}
+										}
+									}
+								],
+								"fragmentStyle": {
+									"marginBottom": "5",
+									"marginTop": "5"
+								},
+								"indexed": true
+							},
+							"type": "Fragment"
+						},
+						{
+							"definition": {
+								"fragment": {
+									"key": "BASIC_COMPONENT-html"
+								},
+								"fragmentConfig": {
+								},
+								"fragmentFields": [
+									{
+										"id": "element-html",
+										"value": {
+											"html": {
+												"value_i18n": {
+													"en_US": "\t<p class=\"mb-0\">\n\t\tAt Clarity, we believe our employees are the heart and soul of our success. You'll join a company that values its people and is committed to providing a supportive and rewarding work environment. We offer competitive compensation and benefits packages, alongside opportunities for professional development. Here, you'll play a key role in shaping a positive employee experience and directly contribute to Clarity's continued growth and success.\n\t</p>\n"
+												}
+											}
+										}
+									}
+								],
+								"indexed": true
+							},
+							"type": "Fragment"
+						}
+					],
+					"type": "Section"
+				},
+				{
+					"definition": {
+						"fragmentStyle": {
+							"marginTop": "6",
+							"paddingLeft": "9",
+							"paddingRight": "9"
+						},
+						"indexed": true,
+						"layout": {
+							"contentDisplay": "FlexRow",
+							"marginTop": 6
+						},
+						"name": "User Actions"
+					},
+					"pageElements": [
+						{
+							"definition": {
+								"fragment": {
+									"key": "dialect-dialect-button",
+									"siteKey": "[$GROUP_KEY$]"
+								},
+								"fragmentConfig": {
+									"buttonSize": "",
+									"iconName": "",
+									"inverted": false,
+									"style": "primary",
+									"type": "ghost",
+									"uppercase": false
+								},
+								"fragmentFields": [
+									{
+										"id": "link",
+										"value": {
+											"fragmentLink": {
+											},
+											"text": {
+												"value_i18n": {
+													"en_US": "Back to Open Positions"
+												}
+											}
+										}
+									}
+								],
+								"indexed": true
+							},
+							"type": "Fragment"
+						},
+						{
+							"definition": {
+								"fragment": {
+									"key": "dialect-dialect-button",
+									"siteKey": "[$GROUP_KEY$]"
+								},
+								"fragmentConfig": {
+									"buttonSize": "",
+									"iconName": "",
+									"inverted": false,
+									"style": "primary",
+									"type": "solid",
+									"uppercase": false
+								},
+								"fragmentFields": [
+									{
+										"id": "link",
+										"value": {
+											"fragmentLink": {
+											},
+											"text": {
+												"value_i18n": {
+													"en_US": "Apply Now"
+												}
+											}
+										}
+									},
+									{
+										"id": "text",
+										"value": {
+											"fragmentLink": {
+											},
+											"text": {
+												"value_i18n": {
+													"en_US": "Apply Now"
+												}
+											}
+										}
+									}
+								],
+								"fragmentStyle": {
+									"marginLeft": "3"
+								},
+								"indexed": true
+							},
+							"type": "Fragment"
+						}
+					],
+					"type": "Section"
+				}
+			],
+			"type": "Section"
+		}
+	],
+	"type": "Section"
+}

@@ -1,0 +1,459 @@
+{
+	"definition": {
+		"indexed": true,
+		"layout": {
+		},
+		"name": "Blog Post Page"
+	},
+	"pageElements": [
+		{
+			"definition": {
+				"fragmentStyle": {
+					"paddingBottom": "6",
+					"paddingLeft": "7",
+					"paddingRight": "7",
+					"paddingTop": "7"
+				},
+				"indexed": true,
+				"layout": {
+					"paddingBottom": 6,
+					"paddingLeft": 8,
+					"paddingRight": 8,
+					"paddingTop": 8
+				},
+				"name": "Banner"
+			},
+			"pageElements": [
+				{
+					"definition": {
+						"fragmentStyle": {
+							"borderRadius": "15px",
+							"maxHeight": "460px",
+							"overflow": "hidden"
+						},
+						"indexed": true,
+						"layout": {
+						},
+						"name": "Image Wrapper"
+					},
+					"pageElements": [
+						{
+							"definition": {
+								"fragment": {
+									"key": "BASIC_COMPONENT-image"
+								},
+								"fragmentConfig": {
+									"imageSize": "w-100"
+								},
+								"fragmentFields": [
+									{
+										"id": "image-square",
+										"value": {
+											"fragmentImage": {
+												"url": {
+													"value_i18n": {
+													}
+												}
+											},
+											"fragmentLink": {
+											}
+										}
+									}
+								],
+								"indexed": true
+							},
+							"type": "Fragment"
+						}
+					],
+					"type": "Section"
+				}
+			],
+			"type": "Section"
+		},
+		{
+			"definition": {
+				"fragmentStyle": {
+					"paddingBottom": "5",
+					"paddingLeft": "7",
+					"paddingRight": "7",
+					"paddingTop": "5"
+				},
+				"indexed": true,
+				"layout": {
+					"paddingBottom": 4,
+					"paddingLeft": 8,
+					"paddingRight": 8,
+					"paddingTop": 4
+				},
+				"name": "Content Header"
+			},
+			"pageElements": [
+				{
+					"definition": {
+						"fragment": {
+							"key": "BASIC_COMPONENT-paragraph"
+						},
+						"fragmentConfig": {
+						},
+						"fragmentFields": [
+							{
+								"id": "element-text",
+								"value": {
+									"fragmentLink": {
+									}
+								}
+							}
+						],
+						"indexed": true
+					},
+					"type": "Fragment"
+				},
+				{
+					"definition": {
+						"fragment": {
+							"key": "BASIC_COMPONENT-heading"
+						},
+						"fragmentConfig": {
+							"headingLevel": "h1"
+						},
+						"fragmentFields": [
+							{
+								"id": "element-text",
+								"value": {
+									"fragmentLink": {
+									}
+								}
+							}
+						],
+						"fragmentStyle": {
+							"marginBottom": "3",
+							"marginTop": "3"
+						},
+						"indexed": true
+					},
+					"type": "Fragment"
+				},
+				{
+					"definition": {
+						"gutters": true,
+						"indexed": true,
+						"modulesPerRow": 2,
+						"numberOfColumns": 2,
+						"reverseOrder": false,
+						"rowViewports": [
+							{
+								"id": "landscapeMobile",
+								"rowViewportDefinition": {
+									"modulesPerRow": 1
+								}
+							},
+							{
+								"id": "portraitMobile",
+								"rowViewportDefinition": {
+								}
+							},
+							{
+								"id": "tablet",
+								"rowViewportDefinition": {
+								}
+							}
+						],
+						"verticalAlignment": "top"
+					},
+					"pageElements": [
+						{
+							"definition": {
+								"columnViewports": [
+									{
+										"columnViewportDefinition": {
+											"size": 12
+										},
+										"id": "landscapeMobile"
+									},
+									{
+										"columnViewportDefinition": {
+										},
+										"id": "portraitMobile"
+									},
+									{
+										"columnViewportDefinition": {
+										},
+										"id": "tablet"
+									}
+								],
+								"size": 3
+							},
+							"type": "Column"
+						},
+						{
+							"definition": {
+								"columnViewports": [
+									{
+										"columnViewportDefinition": {
+											"size": 12
+										},
+										"id": "landscapeMobile"
+									},
+									{
+										"columnViewportDefinition": {
+										},
+										"id": "portraitMobile"
+									},
+									{
+										"columnViewportDefinition": {
+										},
+										"id": "tablet"
+									}
+								],
+								"size": 9
+							},
+							"pageElements": [
+								{
+									"definition": {
+										"fragment": {
+											"key": "dialect-dialect-button",
+											"siteKey": "[$GROUP_KEY$]"
+										},
+										"fragmentConfig": {
+											"buttonSize": "btn-sm",
+											"iconName": "share",
+											"inverted": false,
+											"style": "primary",
+											"type": "ghost",
+											"uppercase": false
+										},
+										"fragmentFields": [
+											{
+												"id": "link",
+												"value": {
+													"fragmentLink": {
+													}
+												}
+											},
+											{
+												"id": "text",
+												"value": {
+													"fragmentLink": {
+													},
+													"text": {
+														"value_i18n": {
+															"en_US": "Share"
+														}
+													}
+												}
+											}
+										],
+										"fragmentStyle": {
+											"textAlign": "right"
+										},
+										"indexed": true
+									},
+									"type": "Fragment"
+								}
+							],
+							"type": "Column"
+						}
+					],
+					"type": "Row"
+				}
+			],
+			"type": "Section"
+		},
+		{
+			"definition": {
+				"fragmentStyle": {
+					"paddingBottom": "5",
+					"paddingLeft": "7",
+					"paddingRight": "7",
+					"paddingTop": "5"
+				},
+				"indexed": true,
+				"layout": {
+					"paddingBottom": 4,
+					"paddingLeft": 8,
+					"paddingRight": 8,
+					"paddingTop": 4
+				},
+				"name": "Article Content"
+			},
+			"pageElements": [
+				{
+					"definition": {
+						"fragment": {
+							"key": "BASIC_COMPONENT-html"
+						},
+						"fragmentConfig": {
+						},
+						"fragmentFields": [
+							{
+								"id": "element-html",
+								"value": {
+									"html": {
+										"value_i18n": {
+										}
+									}
+								}
+							}
+						],
+						"indexed": true
+					},
+					"type": "Fragment"
+				}
+			],
+			"type": "Section"
+		},
+		{
+			"definition": {
+				"fragmentStyle": {
+					"paddingBottom": "5",
+					"paddingLeft": "7",
+					"paddingRight": "7",
+					"paddingTop": "5"
+				},
+				"indexed": true,
+				"layout": {
+					"paddingBottom": 4,
+					"paddingLeft": 8,
+					"paddingRight": 8,
+					"paddingTop": 4
+				},
+				"name": "Related Content"
+			},
+			"pageElements": [
+				{
+					"definition": {
+						"fragment": {
+							"key": "BASIC_COMPONENT-heading"
+						},
+						"fragmentConfig": {
+							"headingLevel": "h2"
+						},
+						"fragmentFields": [
+							{
+								"id": "element-text",
+								"value": {
+									"fragmentLink": {
+									},
+									"text": {
+										"value_i18n": {
+											"en_US": "Related Content"
+										}
+									}
+								}
+							}
+						],
+						"fragmentStyle": {
+							"marginBottom": "5",
+							"textAlign": "center"
+						},
+						"indexed": true
+					},
+					"type": "Fragment"
+				},
+				{
+					"definition": {
+						"widgetInstance": {
+							"widgetConfig": {
+								"abstractLength": "200",
+								"anyAssetType": "true",
+								"anyClassTypeDLFileEntryAssetRendererFactory": "true",
+								"anyClassTypeJournalArticleAssetRendererFactory": "true",
+								"assetLinkBehavior": "viewInPortlet",
+								"assetVocabularyId": "",
+								"classNameIds": [
+									"29844",
+									"46786",
+									"30030",
+									"29884",
+									"29890",
+									"29981",
+									"20009",
+									"43663",
+									"29614",
+									"29323",
+									"20014",
+									"29855",
+									"46679",
+									"29825",
+									"29189"
+								],
+								"classTypeIdsDLFileEntryAssetRendererFactory": "0,30617,30623",
+								"classTypeIdsJournalArticleAssetRendererFactory": "30648,37762,37766,37770,37774,39793,52138",
+								"customUserAttributes": "",
+								"delta": "3",
+								"displayStyle": "abstracts",
+								"displayStyleGroupId": "37203",
+								"emailAssetEntryAddedBody_ar_SA": "Dear [$TO_NAME$],<br /><br />\n\nThis is an autogenerated email for the [$PORTLET_NAME$] portlet.<br /><br />\n\nThe following asset entries have been added to [$PORTLET_TITLE$]: [$ASSET_ENTRIES$].<br /><br />\n\nSincerely,<br />\n[$FROM_NAME$]<br />\n[$FROM_ADDRESS$]",
+								"emailAssetEntryAddedBody_ca_ES": "Dear [$TO_NAME$],<br /><br />\n\nThis is an autogenerated email for the [$PORTLET_NAME$] portlet.<br /><br />\n\nThe following asset entries have been added to [$PORTLET_TITLE$]: [$ASSET_ENTRIES$].<br /><br />\n\nSincerely,<br />\n[$FROM_NAME$]<br />\n[$FROM_ADDRESS$]",
+								"emailAssetEntryAddedBody_de_DE": "Dear [$TO_NAME$],<br /><br />\n\nThis is an autogenerated email for the [$PORTLET_NAME$] portlet.<br /><br />\n\nThe following asset entries have been added to [$PORTLET_TITLE$]: [$ASSET_ENTRIES$].<br /><br />\n\nSincerely,<br />\n[$FROM_NAME$]<br />\n[$FROM_ADDRESS$]",
+								"emailAssetEntryAddedBody_en_US": "<p>Dear [$TO_NAME$],<br />\n<br />\nThis is an autogenerated email for the [$PORTLET_NAME$] portlet.<br />\n<br />\nThe following asset entries have been added to [$PORTLET_TITLE$]: [$ASSET_ENTRIES$].<br />\n<br />\nSincerely,<br />\n[$FROM_NAME$]<br />\n[$FROM_ADDRESS$]</p>\n",
+								"emailAssetEntryAddedBody_es_ES": "Dear [$TO_NAME$],<br /><br />\n\nThis is an autogenerated email for the [$PORTLET_NAME$] portlet.<br /><br />\n\nThe following asset entries have been added to [$PORTLET_TITLE$]: [$ASSET_ENTRIES$].<br /><br />\n\nSincerely,<br />\n[$FROM_NAME$]<br />\n[$FROM_ADDRESS$]",
+								"emailAssetEntryAddedBody_fi_FI": "Dear [$TO_NAME$],<br /><br />\n\nThis is an autogenerated email for the [$PORTLET_NAME$] portlet.<br /><br />\n\nThe following asset entries have been added to [$PORTLET_TITLE$]: [$ASSET_ENTRIES$].<br /><br />\n\nSincerely,<br />\n[$FROM_NAME$]<br />\n[$FROM_ADDRESS$]",
+								"emailAssetEntryAddedBody_fr_FR": "Dear [$TO_NAME$],<br /><br />\n\nThis is an autogenerated email for the [$PORTLET_NAME$] portlet.<br /><br />\n\nThe following asset entries have been added to [$PORTLET_TITLE$]: [$ASSET_ENTRIES$].<br /><br />\n\nSincerely,<br />\n[$FROM_NAME$]<br />\n[$FROM_ADDRESS$]",
+								"emailAssetEntryAddedBody_hu_HU": "Dear [$TO_NAME$],<br /><br />\n\nThis is an autogenerated email for the [$PORTLET_NAME$] portlet.<br /><br />\n\nThe following asset entries have been added to [$PORTLET_TITLE$]: [$ASSET_ENTRIES$].<br /><br />\n\nSincerely,<br />\n[$FROM_NAME$]<br />\n[$FROM_ADDRESS$]",
+								"emailAssetEntryAddedBody_ja_JP": "Dear [$TO_NAME$],<br /><br />\n\nThis is an autogenerated email for the [$PORTLET_NAME$] portlet.<br /><br />\n\nThe following asset entries have been added to [$PORTLET_TITLE$]: [$ASSET_ENTRIES$].<br /><br />\n\nSincerely,<br />\n[$FROM_NAME$]<br />\n[$FROM_ADDRESS$]",
+								"emailAssetEntryAddedBody_nl_NL": "Dear [$TO_NAME$],<br /><br />\n\nThis is an autogenerated email for the [$PORTLET_NAME$] portlet.<br /><br />\n\nThe following asset entries have been added to [$PORTLET_TITLE$]: [$ASSET_ENTRIES$].<br /><br />\n\nSincerely,<br />\n[$FROM_NAME$]<br />\n[$FROM_ADDRESS$]",
+								"emailAssetEntryAddedBody_pt_BR": "Dear [$TO_NAME$],<br /><br />\n\nThis is an autogenerated email for the [$PORTLET_NAME$] portlet.<br /><br />\n\nThe following asset entries have been added to [$PORTLET_TITLE$]: [$ASSET_ENTRIES$].<br /><br />\n\nSincerely,<br />\n[$FROM_NAME$]<br />\n[$FROM_ADDRESS$]",
+								"emailAssetEntryAddedBody_sv_SE": "Dear [$TO_NAME$],<br /><br />\n\nThis is an autogenerated email for the [$PORTLET_NAME$] portlet.<br /><br />\n\nThe following asset entries have been added to [$PORTLET_TITLE$]: [$ASSET_ENTRIES$].<br /><br />\n\nSincerely,<br />\n[$FROM_NAME$]<br />\n[$FROM_ADDRESS$]",
+								"emailAssetEntryAddedBody_zh_CN": "Dear [$TO_NAME$],<br /><br />\n\nThis is an autogenerated email for the [$PORTLET_NAME$] portlet.<br /><br />\n\nThe following asset entries have been added to [$PORTLET_TITLE$]: [$ASSET_ENTRIES$].<br /><br />\n\nSincerely,<br />\n[$FROM_NAME$]<br />\n[$FROM_ADDRESS$]",
+								"emailAssetEntryAddedEnabled": "true",
+								"emailAssetEntryAddedSubject_ar_SA": "New Asset Entries Added to [$PORTLET_TITLE$]",
+								"emailAssetEntryAddedSubject_ca_ES": "New Asset Entries Added to [$PORTLET_TITLE$]",
+								"emailAssetEntryAddedSubject_de_DE": "New Asset Entries Added to [$PORTLET_TITLE$]",
+								"emailAssetEntryAddedSubject_es_ES": "New Asset Entries Added to [$PORTLET_TITLE$]",
+								"emailAssetEntryAddedSubject_fi_FI": "New Asset Entries Added to [$PORTLET_TITLE$]",
+								"emailAssetEntryAddedSubject_fr_FR": "New Asset Entries Added to [$PORTLET_TITLE$]",
+								"emailAssetEntryAddedSubject_hu_HU": "New Asset Entries Added to [$PORTLET_TITLE$]",
+								"emailAssetEntryAddedSubject_ja_JP": "New Asset Entries Added to [$PORTLET_TITLE$]",
+								"emailAssetEntryAddedSubject_nl_NL": "New Asset Entries Added to [$PORTLET_TITLE$]",
+								"emailAssetEntryAddedSubject_pt_BR": "New Asset Entries Added to [$PORTLET_TITLE$]",
+								"emailAssetEntryAddedSubject_sv_SE": "New Asset Entries Added to [$PORTLET_TITLE$]",
+								"emailAssetEntryAddedSubject_zh_CN": "New Asset Entries Added to [$PORTLET_TITLE$]",
+								"emailFromAddress": "test@domain.invalid",
+								"emailFromName": "Joe Bloggs",
+								"enableCommentRatings": "false",
+								"enableComments": "false",
+								"enableFlags": "false",
+								"enablePermissions": "true",
+								"enablePrint": "false",
+								"enableRatings": "false",
+								"enableRelatedAssets": "false",
+								"enableRss": "false",
+								"enableSubscriptions": "false",
+								"enableViewCountIncrement": "false",
+								"mergeUrlTags": "false",
+								"metadataFields": "author,modified-date",
+								"orderByColumn1": "modifiedDate",
+								"orderByColumn2": "title",
+								"orderByType1": "DESC",
+								"orderByType2": "ASC",
+								"paginationType": "none",
+								"queryAndOperator0": "true",
+								"queryContains0": "true",
+								"queryName0": "assetTags",
+								"rssDelta": "20",
+								"rssDisplayStyle": "abstract",
+								"rssFeedType": "atom_1.0",
+								"rssName": "Related Assets",
+								"selectionStyle": "dynamic",
+								"showAddContentButton": "false",
+								"showAssetTitle": "true",
+								"showAvailableLocales": "false",
+								"showContextLink": "true",
+								"showExtraInfo": "true",
+								"showMetadataDescriptions": "false",
+								"socialBookmarksDisplayStyle": "inline",
+								"socialBookmarksTypes": "facebook,linkedin,twitter",
+								"subtypeFieldsFilterEnabled": "false"
+							},
+							"widgetName": "com_liferay_asset_publisher_web_portlet_RelatedAssetsPortlet"
+						}
+					},
+					"type": "Widget"
+				}
+			],
+			"type": "Section"
+		}
+	],
+	"type": "Section"
+}

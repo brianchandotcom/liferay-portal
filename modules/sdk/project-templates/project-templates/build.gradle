@@ -10,6 +10,9 @@ task testAPIJar(type: Jar, dependsOn: testClasses)
 task uploadProjectTemplateArchives
 task writeProjectTemplateVersions
 
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
+
 Set<Project> projectTemplateProjects = project.parent.subprojects.findAll {
 	(!it.name.equals("project-templates-extensions")) && it.name.startsWith("project-templates")
 }

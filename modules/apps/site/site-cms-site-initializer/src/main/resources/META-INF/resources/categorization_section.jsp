@@ -7,18 +7,10 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-CategorizationSectionDisplayContext categorizationSectionDisplayContext = (CategorizationSectionDisplayContext)request.getAttribute(CategorizationSectionDisplayContext.class.getName());
-%>
-
-<frontend-data-set:headless-display
-	apiURL="<%= categorizationSectionDisplayContext.getAPIURL() %>"
-	bulkActionDropdownItems="<%= categorizationSectionDisplayContext.getBulkActionDropdownItems() %>"
-	fdsActionDropdownItems="<%= categorizationSectionDisplayContext.getFDSActionDropdownItems() %>"
-	formName="fm"
-	id="<%= CMSSiteInitializerFDSNames.CATEGORIZATION_SECTION %>"
-	itemsPerPage="<%= 10 %>"
-	selectedItemsKey="id"
-	selectionType="multiple"
-	style="fluid"
-/>
+<div class="cms-section">
+	<div id="<%= CMSSiteInitializerFDSNames.CATEGORIZATION_SECTION %>">
+		<react:component
+			module="{CategorizationMainView} from site-cms-site-initializer"
+		/>
+	</div>
+</div>

@@ -5,10 +5,10 @@
 		"description": "This specification is about the material of the frame.",
 		"facetable": true,
 		"key": "frame-material",
-		"title": "Frame Material",
 		"productSpecificationValue": {
 			"en_US": "Metal"
-		}
+		},
+		"title": "Frame Material"
 	},
 	{
 		"categoryKey": "frame-description",
@@ -16,10 +16,10 @@
 		"description": "This specification is about the color of the frame.",
 		"facetable": true,
 		"key": "frame-color",
-		"title": "Frame Color",
 		"productSpecificationValue": {
 			"en_US": "Gold"
-		}
+		},
+		"title": "Frame Color"
 	},
 	{
 		"categoryKey": "frame-description",
@@ -27,10 +27,10 @@
 		"description": "This specification is about the size of the frame (in default units).",
 		"facetable": false,
 		"key": "frame-size",
-		"title": "Frame Size",
 		"productSpecificationValue": {
 			"en_US": "54-20"
-		}
+		},
+		"title": "Frame Size"
 	},
 	{
 		"categoryKey": "frame-description",
@@ -38,10 +38,10 @@
 		"description": "This specification is about the material of the frame.",
 		"facetable": true,
 		"key": "frame-material",
-		"title": "Frame Material",
 		"productSpecificationValue": {
 			"en_US": "Metal"
-		}
+		},
+		"title": "Frame Material"
 	},
 	{
 		"categoryKey": "frame-description",
@@ -49,10 +49,10 @@
 		"description": "This specification is about the color of the frame.",
 		"facetable": true,
 		"key": "frame-color",
-		"title": "Frame Color",
 		"productSpecificationValue": {
 			"en_US": "Blue"
-		}
+		},
+		"title": "Frame Color"
 	},
 	{
 		"categoryKey": "frame-description",
@@ -60,10 +60,10 @@
 		"description": "This specification is about the material of the frame.",
 		"facetable": true,
 		"key": "frame-material",
-		"title": "Frame Material",
 		"productSpecificationValue": {
 			"en_US": "Plastic"
-		}
+		},
+		"title": "Frame Material"
 	},
 	{
 		"categoryKey": "frame-description",
@@ -71,10 +71,10 @@
 		"description": "This specification is about the color of the frame.",
 		"facetable": true,
 		"key": "frame-color",
-		"title": "Frame Color",
 		"productSpecificationValue": {
 			"en_US": "Pink"
-		}
+		},
+		"title": "Frame Color"
 	},
 	{
 		"categoryKey": "frame-description",
@@ -82,10 +82,10 @@
 		"description": "This specification is about the material of the frame.",
 		"facetable": true,
 		"key": "frame-material",
-		"title": "Frame Material",
 		"productSpecificationValue": {
 			"en_US": "Plastic"
-		}
+		},
+		"title": "Frame Material"
 	},
 	{
 		"categoryKey": "frame-description",
@@ -93,10 +93,10 @@
 		"description": "This specification is about the color of the frame.",
 		"facetable": true,
 		"key": "frame-color",
-		"title": "Frame Color",
 		"productSpecificationValue": {
 			"en_US": "Black"
-		}
+		},
+		"title": "Frame Color"
 	},
 	{
 		"categoryKey": "frame-description",
@@ -104,10 +104,10 @@
 		"description": "This specification is about the material of the frame.",
 		"facetable": true,
 		"key": "frame-material",
-		"title": "Frame Material",
 		"productSpecificationValue": {
 			"en_US": "Soft"
-		}
+		},
+		"title": "Frame Material"
 	},
 	{
 		"categoryKey": "frame-description",
@@ -115,10 +115,10 @@
 		"description": "This specification is about the material of the frame.",
 		"facetable": true,
 		"key": "frame-material",
-		"title": "Frame Material",
 		"productSpecificationValue": {
 			"en_US": "Hard"
-		}
+		},
+		"title": "Frame Material"
 	},
 	{
 		"categoryKey": "frame-description",
@@ -126,10 +126,10 @@
 		"description": "This specification is about the size of the frame (in default units).",
 		"facetable": false,
 		"key": "frame-size",
-		"title": "Frame Size",
 		"productSpecificationValue": {
 			"en_US": "One-Size"
-		}
+		},
+		"title": "Frame Size"
 	},
 	{
 		"categoryKey": "frame-description",
@@ -137,10 +137,10 @@
 		"description": "This specification is about the size of the frame (in default units).",
 		"facetable": false,
 		"key": "frame-size",
-		"title": "Frame Size",
 		"productSpecificationValue": {
 			"en_US": "One-Size"
-		}
+		},
+		"title": "Frame Size"
 	},
 	{
 		"categoryKey": "frame-description",
@@ -148,10 +148,10 @@
 		"description": "This specification is about the color of the frame.",
 		"facetable": true,
 		"key": "frame-color",
-		"title": "Frame Color",
 		"productSpecificationValue": {
 			"en_US": "Black"
-		}
+		},
+		"title": "Frame Color"
 	},
 	{
 		"categoryKey": "frame-description",
@@ -159,10 +159,10 @@
 		"description": "This specification is about the color of the frame.",
 		"facetable": true,
 		"key": "frame-color",
-		"title": "Frame Color",
 		"productSpecificationValue": {
 			"en_US": "Black"
-		}
+		},
+		"title": "Frame Color"
 	},
 	{
 		"categoryKey": "frame-description",
@@ -170,10 +170,10 @@
 		"description": "This specification is about the color of the frame.",
 		"facetable": true,
 		"key": "frame-color",
-		"title": "Frame Color",
 		"productSpecificationValue": {
 			"en_US": "Pink"
-		}
+		},
+		"title": "Frame Color"
 	},
 	{
 		"categoryKey": "frame-description",
@@ -181,10 +181,10 @@
 		"description": "This specification is about the color of the frame.",
 		"facetable": true,
 		"key": "frame-color",
-		"title": "Frame Color",
 		"productSpecificationValue": {
 			"en_US": "Gold"
-		}
+		},
+		"title": "Frame Color"
 	},
 	{
 		"categoryKey": "frame-description",
@@ -192,10 +192,10 @@
 		"description": "This specification is about the color of the frame.",
 		"facetable": true,
 		"key": "frame-color",
-		"title": "Frame Color",
 		"productSpecificationValue": {
 			"en_US": "Black"
-		}
+		},
+		"title": "Frame Color"
 	},
 	{
 		"categoryKey": "frame-description",
@@ -203,10 +203,10 @@
 		"description": "This specification is about the material of the frame.",
 		"facetable": true,
 		"key": "frame-material",
-		"title": "Frame Material",
 		"productSpecificationValue": {
 			"en_US": "Metal"
-		}
+		},
+		"title": "Frame Material"
 	},
 	{
 		"categoryKey": "frame-description",
@@ -214,10 +214,10 @@
 		"description": "This specification is about the color of the frame.",
 		"facetable": true,
 		"key": "frame-color",
-		"title": "Frame Color",
 		"productSpecificationValue": {
 			"en_US": "Transparent"
-		}
+		},
+		"title": "Frame Color"
 	},
 	{
 		"categoryKey": "frame-description",
@@ -225,10 +225,10 @@
 		"description": "This specification is about the color of the frame.",
 		"facetable": true,
 		"key": "frame-color",
-		"title": "Frame Color",
 		"productSpecificationValue": {
 			"en_US": "Black"
-		}
+		},
+		"title": "Frame Color"
 	},
 	{
 		"categoryKey": "frame-description",
@@ -236,10 +236,10 @@
 		"description": "This specification is about the color of the frame.",
 		"facetable": true,
 		"key": "frame-color",
-		"title": "Frame Color",
 		"productSpecificationValue": {
 			"en_US": "Black"
-		}
+		},
+		"title": "Frame Color"
 	},
 	{
 		"categoryKey": "frame-description",
@@ -247,10 +247,10 @@
 		"description": "This specification is about the color of the frame.",
 		"facetable": true,
 		"key": "frame-color",
-		"title": "Frame Color",
 		"productSpecificationValue": {
 			"en_US": "Black"
-		}
+		},
+		"title": "Frame Color"
 	},
 	{
 		"categoryKey": "frame-description",
@@ -258,10 +258,10 @@
 		"description": "This specification is about the color of the frame.",
 		"facetable": true,
 		"key": "frame-color",
-		"title": "Frame Color",
 		"productSpecificationValue": {
 			"en_US": "Red"
-		}
+		},
+		"title": "Frame Color"
 	},
 	{
 		"categoryKey": "frame-description",
@@ -269,10 +269,10 @@
 		"description": "This specification is about the color of the frame.",
 		"facetable": true,
 		"key": "frame-color",
-		"title": "Frame Color",
 		"productSpecificationValue": {
 			"en_US": "Black"
-		}
+		},
+		"title": "Frame Color"
 	},
 	{
 		"categoryKey": "frame-description",
@@ -280,10 +280,10 @@
 		"description": "This specification is about the color of the frame.",
 		"facetable": true,
 		"key": "frame-color",
-		"title": "Frame Color",
 		"productSpecificationValue": {
 			"en_US": "Transparent"
-		}
+		},
+		"title": "Frame Color"
 	},
 	{
 		"categoryKey": "frame-description",
@@ -291,9 +291,9 @@
 		"description": "This specification is about the color of the frame.",
 		"facetable": true,
 		"key": "frame-color",
-		"title": "Frame Color",
 		"productSpecificationValue": {
 			"en_US": "Orange"
-		}
+		},
+		"title": "Frame Color"
 	}
 ]

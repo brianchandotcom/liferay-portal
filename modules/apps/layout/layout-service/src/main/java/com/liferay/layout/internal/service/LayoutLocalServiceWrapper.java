@@ -120,15 +120,13 @@ public class LayoutLocalServiceWrapper
 
 	@Override
 	public Layout copyLayoutContent(
-			long segmentsExperienceId, Layout sourceLayout, Layout targetLayout)
+			long sourceSegmentsExperienceId, Layout sourceLayout,
+			long targetSegmentsExperienceId, Layout targetLayout)
 		throws Exception {
 
 		return _copyLayoutContent(
-			true, sourceLayout, new long[] {segmentsExperienceId}, targetLayout,
-			new long[] {
-				_segmentsExperienceLocalService.
-					fetchDefaultSegmentsExperienceId(targetLayout.getPlid())
-			});
+			true, sourceLayout, new long[] {sourceSegmentsExperienceId},
+			targetLayout, new long[] {targetSegmentsExperienceId});
 	}
 
 	@Override

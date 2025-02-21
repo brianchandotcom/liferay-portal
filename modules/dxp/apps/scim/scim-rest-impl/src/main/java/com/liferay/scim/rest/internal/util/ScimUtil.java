@@ -101,7 +101,7 @@ public class ScimUtil {
 
 		ScimUser scimUser = new ScimUser();
 
-		scimUser.setActive(user.getActive());
+		scimUser.setActive(_calculateActive(user));
 		scimUser.setAutoScreenName(
 			PrefsPropsUtil.getBoolean(
 				companyId, PropsKeys.USERS_SCREEN_NAME_ALWAYS_AUTOGENERATE));
@@ -175,7 +175,7 @@ public class ScimUtil {
 		user.replaceEmails(
 			Collections.singletonList(
 				new MultiValuedComplexType(
-					"default", true, null, scimUser.getEmailAddress(), null)));
+					"work", true, null, scimUser.getEmailAddress(), null)));
 
 		ScimName scimName = new ScimName();
 
@@ -220,6 +220,22 @@ public class ScimUtil {
 		user.setUserName(scimUser.getScreenName());
 
 		return user;
+	}
+
+	private static boolean _calculateActive(User user) {
+		try {
+			return user.getActive();
+		}
+		catch (ClassCastException classCastException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(classCastException);
+			}
+
+			SimpleAttribute attribute = (SimpleAttribute)user.getAttribute(
+				"active");
+
+			return Boolean.parseBoolean((String)attribute.getValue());
+		}
 	}
 
 	private static AttributeSchema _createAttributeSchema() {

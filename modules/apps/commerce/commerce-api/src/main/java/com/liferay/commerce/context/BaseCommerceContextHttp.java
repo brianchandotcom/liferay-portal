@@ -31,6 +31,7 @@ import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.cookies.CookiesManagerUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
@@ -39,6 +40,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.HashMap;
 import java.util.List;
@@ -164,6 +166,22 @@ public class BaseCommerceContextHttp implements CommerceContext {
 	public CommerceCurrency getCommerceCurrency() throws PortalException {
 		if (_commerceCurrency != null) {
 			return _commerceCurrency;
+		}
+
+		String commerceCurrencyCode = CookiesManagerUtil.getCookieValue(
+			CommerceCurrency.class.getName() + StringPool.POUND +
+				getCommerceChannelGroupId(),
+			_httpServletRequest);
+
+		if (!Validator.isBlank(commerceCurrencyCode)) {
+			_commerceCurrency =
+				_commerceCurrencyLocalService.fetchCommerceCurrency(
+					_portal.getCompanyId(_httpServletRequest),
+					commerceCurrencyCode);
+
+			if ((_commerceCurrency != null) && _commerceCurrency.isActive()) {
+				return _commerceCurrency;
+			}
 		}
 
 		long commerceChannelId = 0;

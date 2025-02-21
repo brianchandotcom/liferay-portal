@@ -46,6 +46,29 @@ import java.util.regex.Pattern;
  */
 public class BatchEngineImportTaskItemReaderUtil {
 
+	private static boolean isCSVMapColumn(Class<?> clazz, Object value) {
+		if (!Map.class.isAssignableFrom(clazz)) {
+			return false;
+		}
+
+		String mapString = value.toString();
+
+		if (mapString == null || mapString.isEmpty()) {
+			return false;
+		}
+
+		String[] entries = mapString.split(StringPool.RETURN_NEW_LINE);
+
+		for (String entry : entries) {
+			if (!entry.contains(StringPool.COLON)) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+
 	public static <T> T convertValue(
 			BatchEngineImportTask batchEngineImportTask, Class<T> itemClass,
 			Map<String, Object> fieldNameValueMap,
@@ -93,33 +116,21 @@ public class BatchEngineImportTaskItemReaderUtil {
 
 				ObjectMapper objectMapper;
 
-				try {
+				Class<?> fieldType = field.getType();
+				Object entryValue = entry.getValue();
+
+				if (isCSVMapColumn(fieldType, entryValue)){
+					objectMapper = _csvObjectMapper;
+				}
+
+				else {
 					objectMapper = _getObjectMapper(field, keepCreatorInfo);
-
-					field.set(
-						item,
-						objectMapper.convertValue(
-							entry.getValue(), field.getType()));
 				}
-				catch (Exception exception) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(exception);
-					}
 
-					// Maybe it's a CSV column
-
-					if (Map.class.isAssignableFrom(field.getType())) {
-						objectMapper = _csvObjectMapper;
-
-						field.set(
-							item,
-							objectMapper.convertValue(
-								entry.getValue(), field.getType()));
-					}
-					else {
-						throw exception;
-					}
-				}
+				field.set(
+					item,
+					objectMapper.convertValue(
+						entryValue, fieldType));
 
 				continue;
 			}

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.Searcher;
+import com.liferay.scim.rest.dto.v1_0.PatchOp;
 import com.liferay.scim.rest.dto.v1_0.User;
 import com.liferay.scim.rest.internal.manager.UserManagerImpl;
 import com.liferay.scim.rest.internal.manager.UserResourceManagerImpl;
@@ -67,6 +68,15 @@ public class UserResourceImpl extends BaseUserResourceImpl {
 				_userManager,
 				ParamUtil.getString(contextHttpServletRequest, "filter", null),
 				startIndex, count, null, null, null, null, null));
+	}
+
+	@Override
+	public Response patchV2User(String id, PatchOp operations)
+		throws Exception {
+
+		return _buildResponse(
+			_userResourceManager.updateWithPATCH(
+				id, operations.toString(), _userManager, null, null));
 	}
 
 	@Override

@@ -856,7 +856,7 @@ public class DBPartitionUtil {
 				}
 				catch (SQLException sqlException) {
 					throw new PortalException(
-						"Unable to roll back schema creation", sqlException);
+						"Unable to roll back schema extraction", sqlException);
 				}
 			}
 

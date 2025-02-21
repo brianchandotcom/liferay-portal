@@ -10,7 +10,7 @@ import {
 	fieldsUtils,
 	objectDefinitionUtils,
 } from '@liferay/object-js-components-web';
-import React, {useState} from 'react';
+import React, {useMemo, useState} from 'react';
 
 import {DefinitionOfTerms} from './DefinitionOfTerms';
 import {GeneralTerms} from './GeneralTerms';
@@ -30,13 +30,15 @@ function hasLocalizedField(
 
 	const selectedObjectDefinition =
 		objectDefinitionUtils.findObjectDefinitionById(
-			objectDefinitions,
-			entityId
+			entityId,
+			objectDefinitions
 		);
 
-	return Boolean(
-		selectedObjectDefinition &&
-			fieldsUtils.hasLocalizedField(selectedObjectDefinition!)
+	return (
+		!!selectedObjectDefinition &&
+		fieldsUtils.hasLocalizedField(
+			selectedObjectDefinition as ObjectDefinition
+		)
 	);
 }
 
@@ -46,8 +48,23 @@ export default function DefinitionOfTermsContainer({
 }: DefinitionOfTermsContainerProps) {
 	const [selectedEntityId, setSelectedEntityId] = useState<number>(0);
 
+	const localizedFields = useMemo(() => {
+		return hasLocalizedField(objectDefinitions, selectedEntityId);
+	}, [objectDefinitions, selectedEntityId]);
+
 	return (
 		<Card title={Liferay.Language.get('definition-of-terms')}>
+			{localizedFields && (
+				<ClayAlert
+					displayType="info"
+					title={`${Liferay.Language.get('info')}:`}
+				>
+					{Liferay.Language.get(
+						'this-object-includes-translatable-fields.-notification-terms-always-use-the-object-entrys-default-language'
+					)}
+				</ClayAlert>
+			)}
+
 			<Text as="span" color="secondary">
 				{Liferay.Language.get(
 					'use-terms-to-populate-fields-dynamically-with-the-exception-of-the-freemarker-template-editor'

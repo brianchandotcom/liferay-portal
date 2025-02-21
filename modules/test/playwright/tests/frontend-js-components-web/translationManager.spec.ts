@@ -8,9 +8,9 @@ import {expect, mergeTests} from '@playwright/test';
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {clickAndExpectToBeHidden} from '../../utils/clickAndExpectToBeHidden';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import {jsComponentsSamplePageTest} from './fixtures/jsComponentsSamplePageTest';
-import {clickAndExpectToBeHidden} from '../../utils/clickAndExpectToBeHidden';
 
 export const test = mergeTests(
 	apiHelpersTest,

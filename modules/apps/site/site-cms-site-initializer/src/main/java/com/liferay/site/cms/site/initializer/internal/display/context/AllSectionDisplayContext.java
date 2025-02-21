@@ -31,13 +31,6 @@ public class AllSectionDisplayContext extends BaseSectionDisplayContext {
 	public CreationMenu getCreationMenu() {
 		return CreationMenuBuilder.addPrimaryDropdownItem(
 			dropdownItem -> {
-				dropdownItem.putData("action", "createFolder");
-				dropdownItem.setIcon("folder");
-				dropdownItem.setLabel(
-					LanguageUtil.get(_httpServletRequest, "folder"));
-			}
-		).addPrimaryDropdownItem(
-			dropdownItem -> {
 				dropdownItem.setIcon("forms");
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "basic-content"));

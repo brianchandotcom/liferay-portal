@@ -21,6 +21,7 @@ ContentsSectionDisplayContext contentsSectionDisplayContext = (ContentsSectionDi
 		formName="fm"
 		id="<%= CMSSiteInitializerFDSNames.CONTENTS_SECTION %>"
 		itemsPerPage="<%= 10 %>"
+		propsTransformer="{ContentFDSPropsTransformer} from site-cms-site-initializer"
 		selectedItemsKey="id"
 		selectionType="multiple"
 		style="fluid"

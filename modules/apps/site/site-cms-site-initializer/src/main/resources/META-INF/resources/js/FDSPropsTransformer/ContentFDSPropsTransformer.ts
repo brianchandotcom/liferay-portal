@@ -7,7 +7,7 @@ import {openModal} from 'frontend-js-web';
 
 import CreationFolderModalContent from '../components/modal/CreationFolderModalContent';
 
-export default function AllFDSPropsTransformer({...props}) {
+export default function ContentFDSPropsTransformer({...props}) {
 	return {
 		...props,
 		onCreationActionClick: ({action}: {action: string}) => {

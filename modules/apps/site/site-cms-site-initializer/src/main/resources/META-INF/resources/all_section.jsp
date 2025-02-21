@@ -21,7 +21,6 @@ AllSectionDisplayContext allSectionDisplayContext = (AllSectionDisplayContext)re
 		formName="fm"
 		id="<%= CMSSiteInitializerFDSNames.ALL_SECTION %>"
 		itemsPerPage="<%= 10 %>"
-		propsTransformer="{AllFDSPropsTransformer} from site-cms-site-initializer"
 		selectedItemsKey="id"
 		selectionType="multiple"
 		style="fluid"

@@ -2470,8 +2470,8 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		// Virtual host
 
 		VirtualHost companyVirtualHost =
-			_virtualHostLocalService.fetchDefaultVirtualHost(
-				company.getCompanyId(), 0);
+			_virtualHostLocalService.fetchCompanyDefaultVirtualHost(
+				company.getCompanyId());
 
 		_virtualHostLocalService.deleteVirtualHost(companyVirtualHost);
 

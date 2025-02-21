@@ -685,8 +685,25 @@ public abstract class BasePriceListResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (PriceList priceList : priceLists) {
-			deletePriceList(priceList.getId());
+		UnsafeFunction<PriceList, PriceList, Exception>
+			priceListUnsafeFunction = priceList -> {
+				deletePriceList(priceList.getId());
+
+				return priceList;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				priceLists, priceListUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				priceLists, priceListUnsafeFunction::apply);
+		}
+		else {
+			for (PriceList priceList : priceLists) {
+				priceListUnsafeFunction.apply(priceList);
+			}
 		}
 	}
 

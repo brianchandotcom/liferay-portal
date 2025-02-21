@@ -433,8 +433,22 @@ public abstract class BasePinResourceImpl
 			Collection<Pin> pins, Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (Pin pin : pins) {
+		UnsafeFunction<Pin, Pin, Exception> pinUnsafeFunction = pin -> {
 			deletePin(pin.getId());
+
+			return pin;
+		};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(pins, pinUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(pins, pinUnsafeFunction::apply);
+		}
+		else {
+			for (Pin pin : pins) {
+				pinUnsafeFunction.apply(pin);
+			}
 		}
 	}
 

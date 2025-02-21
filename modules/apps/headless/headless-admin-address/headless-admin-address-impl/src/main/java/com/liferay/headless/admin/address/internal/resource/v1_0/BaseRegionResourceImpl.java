@@ -751,8 +751,24 @@ public abstract class BaseRegionResourceImpl
 			Collection<Region> regions, Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (Region region : regions) {
-			deleteRegion(region.getId());
+		UnsafeFunction<Region, Region, Exception> regionUnsafeFunction =
+			region -> {
+				deleteRegion(region.getId());
+
+				return region;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(regions, regionUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				regions, regionUnsafeFunction::apply);
+		}
+		else {
+			for (Region region : regions) {
+				regionUnsafeFunction.apply(region);
+			}
 		}
 	}
 

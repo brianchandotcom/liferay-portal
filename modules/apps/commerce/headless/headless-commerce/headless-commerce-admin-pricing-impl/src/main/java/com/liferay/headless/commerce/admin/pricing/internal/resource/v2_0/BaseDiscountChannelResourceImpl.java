@@ -415,8 +415,25 @@ public abstract class BaseDiscountChannelResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (DiscountChannel discountChannel : discountChannels) {
-			deleteDiscountChannel(discountChannel.getDiscountChannelId());
+		UnsafeFunction<DiscountChannel, DiscountChannel, Exception>
+			discountChannelUnsafeFunction = discountChannel -> {
+				deleteDiscountChannel(discountChannel.getDiscountChannelId());
+
+				return discountChannel;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				discountChannels, discountChannelUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				discountChannels, discountChannelUnsafeFunction::apply);
+		}
+		else {
+			for (DiscountChannel discountChannel : discountChannels) {
+				discountChannelUnsafeFunction.apply(discountChannel);
+			}
 		}
 	}
 

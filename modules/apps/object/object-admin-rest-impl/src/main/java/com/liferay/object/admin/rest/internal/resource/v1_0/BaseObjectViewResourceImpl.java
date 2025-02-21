@@ -648,8 +648,25 @@ public abstract class BaseObjectViewResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (ObjectView objectView : objectViews) {
-			deleteObjectView(objectView.getId());
+		UnsafeFunction<ObjectView, ObjectView, Exception>
+			objectViewUnsafeFunction = objectView -> {
+				deleteObjectView(objectView.getId());
+
+				return objectView;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				objectViews, objectViewUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				objectViews, objectViewUnsafeFunction::apply);
+		}
+		else {
+			for (ObjectView objectView : objectViews) {
+				objectViewUnsafeFunction.apply(objectView);
+			}
 		}
 	}
 

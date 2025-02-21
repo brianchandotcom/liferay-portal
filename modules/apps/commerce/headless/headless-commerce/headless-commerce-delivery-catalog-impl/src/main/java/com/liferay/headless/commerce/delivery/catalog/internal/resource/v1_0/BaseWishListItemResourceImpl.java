@@ -290,9 +290,12 @@ public abstract class BaseWishListItemResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (WishListItem wishListItem : wishListItems) {
-			deleteWishListItem(wishListItem.getId());
-		}
+		UnsafeFunction<WishListItem, WishListItem, Exception>
+			wishListItemUnsafeFunction = wishListItem -> {
+				deleteWishListItem(wishListItem.getId());
+
+				return wishListItem;
+			};
 	}
 
 	public Set<String> getAvailableCreateStrategies() {

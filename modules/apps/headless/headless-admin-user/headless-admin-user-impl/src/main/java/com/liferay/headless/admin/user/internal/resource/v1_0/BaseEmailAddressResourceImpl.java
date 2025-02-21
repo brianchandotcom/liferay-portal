@@ -755,9 +755,12 @@ public abstract class BaseEmailAddressResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (EmailAddress emailAddress : emailAddresses) {
-			deleteEmailAddress(emailAddress.getId());
-		}
+		UnsafeFunction<EmailAddress, EmailAddress, Exception>
+			emailAddressUnsafeFunction = emailAddress -> {
+				deleteEmailAddress(emailAddress.getId());
+
+				return emailAddress;
+			};
 	}
 
 	public Set<String> getAvailableCreateStrategies() {

@@ -731,8 +731,25 @@ public abstract class BaseReplenishmentItemResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (ReplenishmentItem replenishmentItem : replenishmentItems) {
-			deleteReplenishmentItem(replenishmentItem.getId());
+		UnsafeFunction<ReplenishmentItem, ReplenishmentItem, Exception>
+			replenishmentItemUnsafeFunction = replenishmentItem -> {
+				deleteReplenishmentItem(replenishmentItem.getId());
+
+				return replenishmentItem;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				replenishmentItems, replenishmentItemUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				replenishmentItems, replenishmentItemUnsafeFunction::apply);
+		}
+		else {
+			for (ReplenishmentItem replenishmentItem : replenishmentItems) {
+				replenishmentItemUnsafeFunction.apply(replenishmentItem);
+			}
 		}
 	}
 

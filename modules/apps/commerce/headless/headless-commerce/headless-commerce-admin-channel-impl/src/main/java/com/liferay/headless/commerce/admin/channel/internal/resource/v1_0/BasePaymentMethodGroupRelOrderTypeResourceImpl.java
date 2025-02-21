@@ -273,13 +273,16 @@ public abstract class BasePaymentMethodGroupRelOrderTypeResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (PaymentMethodGroupRelOrderType paymentMethodGroupRelOrderType :
-				paymentMethodGroupRelOrderTypes) {
+		UnsafeFunction
+			<PaymentMethodGroupRelOrderType, PaymentMethodGroupRelOrderType,
+			 Exception> paymentMethodGroupRelOrderTypeUnsafeFunction =
+				paymentMethodGroupRelOrderType -> {
+					deletePaymentMethodGroupRelOrderType(
+						paymentMethodGroupRelOrderType.
+							getPaymentMethodGroupRelOrderTypeId());
 
-			deletePaymentMethodGroupRelOrderType(
-				paymentMethodGroupRelOrderType.
-					getPaymentMethodGroupRelOrderTypeId());
-		}
+					return paymentMethodGroupRelOrderType;
+				};
 	}
 
 	public Set<String> getAvailableCreateStrategies() {

@@ -685,8 +685,25 @@ public abstract class BaseCatalogResourceImpl
 			Collection<Catalog> catalogs, Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (Catalog catalog : catalogs) {
-			deleteCatalog(catalog.getId());
+		UnsafeFunction<Catalog, Catalog, Exception> catalogUnsafeFunction =
+			catalog -> {
+				deleteCatalog(catalog.getId());
+
+				return catalog;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				catalogs, catalogUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				catalogs, catalogUnsafeFunction::apply);
+		}
+		else {
+			for (Catalog catalog : catalogs) {
+				catalogUnsafeFunction.apply(catalog);
+			}
 		}
 	}
 

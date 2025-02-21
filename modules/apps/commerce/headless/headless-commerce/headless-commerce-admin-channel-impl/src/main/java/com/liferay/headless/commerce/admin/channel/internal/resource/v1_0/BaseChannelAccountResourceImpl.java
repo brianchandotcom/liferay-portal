@@ -369,8 +369,25 @@ public abstract class BaseChannelAccountResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (ChannelAccount channelAccount : channelAccounts) {
-			deleteChannelAccount(channelAccount.getChannelAccountId());
+		UnsafeFunction<ChannelAccount, ChannelAccount, Exception>
+			channelAccountUnsafeFunction = channelAccount -> {
+				deleteChannelAccount(channelAccount.getChannelAccountId());
+
+				return channelAccount;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				channelAccounts, channelAccountUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				channelAccounts, channelAccountUnsafeFunction::apply);
+		}
+		else {
+			for (ChannelAccount channelAccount : channelAccounts) {
+				channelAccountUnsafeFunction.apply(channelAccount);
+			}
 		}
 	}
 

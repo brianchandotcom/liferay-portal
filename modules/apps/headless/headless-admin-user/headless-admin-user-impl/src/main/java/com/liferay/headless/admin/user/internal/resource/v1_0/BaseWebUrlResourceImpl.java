@@ -742,9 +742,12 @@ public abstract class BaseWebUrlResourceImpl
 			Collection<WebUrl> webUrls, Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (WebUrl webUrl : webUrls) {
-			deleteWebUrl(webUrl.getId());
-		}
+		UnsafeFunction<WebUrl, WebUrl, Exception> webUrlUnsafeFunction =
+			webUrl -> {
+				deleteWebUrl(webUrl.getId());
+
+				return webUrl;
+			};
 	}
 
 	public Set<String> getAvailableCreateStrategies() {

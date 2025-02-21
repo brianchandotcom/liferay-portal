@@ -762,8 +762,25 @@ public abstract class BaseMeasurementUnitResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (MeasurementUnit measurementUnit : measurementUnits) {
-			deleteMeasurementUnit(measurementUnit.getId());
+		UnsafeFunction<MeasurementUnit, MeasurementUnit, Exception>
+			measurementUnitUnsafeFunction = measurementUnit -> {
+				deleteMeasurementUnit(measurementUnit.getId());
+
+				return measurementUnit;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				measurementUnits, measurementUnitUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				measurementUnits, measurementUnitUnsafeFunction::apply);
+		}
+		else {
+			for (MeasurementUnit measurementUnit : measurementUnits) {
+				measurementUnitUnsafeFunction.apply(measurementUnit);
+			}
 		}
 	}
 

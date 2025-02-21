@@ -347,12 +347,13 @@ public abstract class BaseAccountAddressChannelResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (AccountAddressChannel accountAddressChannel :
-				accountAddressChannels) {
+		UnsafeFunction<AccountAddressChannel, AccountAddressChannel, Exception>
+			accountAddressChannelUnsafeFunction = accountAddressChannel -> {
+				deleteAccountAddressChannel(
+					accountAddressChannel.getAccountAddressChannelId());
 
-			deleteAccountAddressChannel(
-				accountAddressChannel.getAccountAddressChannelId());
-		}
+				return accountAddressChannel;
+			};
 	}
 
 	public Set<String> getAvailableCreateStrategies() {

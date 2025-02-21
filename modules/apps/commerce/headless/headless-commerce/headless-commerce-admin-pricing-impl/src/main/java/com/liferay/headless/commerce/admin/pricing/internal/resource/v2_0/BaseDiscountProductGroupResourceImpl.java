@@ -433,11 +433,29 @@ public abstract class BaseDiscountProductGroupResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (DiscountProductGroup discountProductGroup :
-				discountProductGroups) {
+		UnsafeFunction<DiscountProductGroup, DiscountProductGroup, Exception>
+			discountProductGroupUnsafeFunction = discountProductGroup -> {
+				deleteDiscountProductGroup(
+					discountProductGroup.getDiscountProductGroupId());
 
-			deleteDiscountProductGroup(
-				discountProductGroup.getDiscountProductGroupId());
+				return discountProductGroup;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				discountProductGroups, discountProductGroupUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				discountProductGroups,
+				discountProductGroupUnsafeFunction::apply);
+		}
+		else {
+			for (DiscountProductGroup discountProductGroup :
+					discountProductGroups) {
+
+				discountProductGroupUnsafeFunction.apply(discountProductGroup);
+			}
 		}
 	}
 

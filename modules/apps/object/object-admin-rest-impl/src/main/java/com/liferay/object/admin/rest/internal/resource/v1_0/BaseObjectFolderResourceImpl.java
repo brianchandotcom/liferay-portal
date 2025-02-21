@@ -616,8 +616,25 @@ public abstract class BaseObjectFolderResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (ObjectFolder objectFolder : objectFolders) {
-			deleteObjectFolder(objectFolder.getId());
+		UnsafeFunction<ObjectFolder, ObjectFolder, Exception>
+			objectFolderUnsafeFunction = objectFolder -> {
+				deleteObjectFolder(objectFolder.getId());
+
+				return objectFolder;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				objectFolders, objectFolderUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				objectFolders, objectFolderUnsafeFunction::apply);
+		}
+		else {
+			for (ObjectFolder objectFolder : objectFolders) {
+				objectFolderUnsafeFunction.apply(objectFolder);
+			}
 		}
 	}
 

@@ -405,8 +405,25 @@ public abstract class BaseTermOrderTypeResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (TermOrderType termOrderType : termOrderTypes) {
-			deleteTermOrderType(termOrderType.getTermOrderTypeId());
+		UnsafeFunction<TermOrderType, TermOrderType, Exception>
+			termOrderTypeUnsafeFunction = termOrderType -> {
+				deleteTermOrderType(termOrderType.getTermOrderTypeId());
+
+				return termOrderType;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				termOrderTypes, termOrderTypeUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				termOrderTypes, termOrderTypeUnsafeFunction::apply);
+		}
+		else {
+			for (TermOrderType termOrderType : termOrderTypes) {
+				termOrderTypeUnsafeFunction.apply(termOrderType);
+			}
 		}
 	}
 

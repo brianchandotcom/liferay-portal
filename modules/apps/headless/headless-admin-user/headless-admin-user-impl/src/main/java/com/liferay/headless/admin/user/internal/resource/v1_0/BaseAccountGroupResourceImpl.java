@@ -989,8 +989,25 @@ public abstract class BaseAccountGroupResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (AccountGroup accountGroup : accountGroups) {
-			deleteAccountGroup(accountGroup.getId());
+		UnsafeFunction<AccountGroup, AccountGroup, Exception>
+			accountGroupUnsafeFunction = accountGroup -> {
+				deleteAccountGroup(accountGroup.getId());
+
+				return accountGroup;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				accountGroups, accountGroupUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				accountGroups, accountGroupUnsafeFunction::apply);
+		}
+		else {
+			for (AccountGroup accountGroup : accountGroups) {
+				accountGroupUnsafeFunction.apply(accountGroup);
+			}
 		}
 	}
 

@@ -478,10 +478,32 @@ public abstract class BaseNotificationQueueEntryResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (NotificationQueueEntry notificationQueueEntry :
-				notificationQueueEntries) {
+		UnsafeFunction
+			<NotificationQueueEntry, NotificationQueueEntry, Exception>
+				notificationQueueEntryUnsafeFunction =
+					notificationQueueEntry -> {
+						deleteNotificationQueueEntry(
+							notificationQueueEntry.getId());
 
-			deleteNotificationQueueEntry(notificationQueueEntry.getId());
+						return notificationQueueEntry;
+					};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				notificationQueueEntries, notificationQueueEntryUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				notificationQueueEntries,
+				notificationQueueEntryUnsafeFunction::apply);
+		}
+		else {
+			for (NotificationQueueEntry notificationQueueEntry :
+					notificationQueueEntries) {
+
+				notificationQueueEntryUnsafeFunction.apply(
+					notificationQueueEntry);
+			}
 		}
 	}
 

@@ -1994,8 +1994,25 @@ public abstract class BaseDocumentFolderResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (DocumentFolder documentFolder : documentFolders) {
-			deleteDocumentFolder(documentFolder.getId());
+		UnsafeFunction<DocumentFolder, DocumentFolder, Exception>
+			documentFolderUnsafeFunction = documentFolder -> {
+				deleteDocumentFolder(documentFolder.getId());
+
+				return documentFolder;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				documentFolders, documentFolderUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				documentFolders, documentFolderUnsafeFunction::apply);
+		}
+		else {
+			for (DocumentFolder documentFolder : documentFolders) {
+				documentFolderUnsafeFunction.apply(documentFolder);
+			}
 		}
 	}
 

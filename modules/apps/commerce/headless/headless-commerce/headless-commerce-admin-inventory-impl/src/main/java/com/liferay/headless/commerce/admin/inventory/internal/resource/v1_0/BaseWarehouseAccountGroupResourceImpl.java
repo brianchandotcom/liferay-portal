@@ -436,11 +436,30 @@ public abstract class BaseWarehouseAccountGroupResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (WarehouseAccountGroup warehouseAccountGroup :
-				warehouseAccountGroups) {
+		UnsafeFunction<WarehouseAccountGroup, WarehouseAccountGroup, Exception>
+			warehouseAccountGroupUnsafeFunction = warehouseAccountGroup -> {
+				deleteWarehouseAccountGroup(
+					warehouseAccountGroup.getWarehouseAccountGroupId());
 
-			deleteWarehouseAccountGroup(
-				warehouseAccountGroup.getWarehouseAccountGroupId());
+				return warehouseAccountGroup;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				warehouseAccountGroups, warehouseAccountGroupUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				warehouseAccountGroups,
+				warehouseAccountGroupUnsafeFunction::apply);
+		}
+		else {
+			for (WarehouseAccountGroup warehouseAccountGroup :
+					warehouseAccountGroups) {
+
+				warehouseAccountGroupUnsafeFunction.apply(
+					warehouseAccountGroup);
+			}
 		}
 	}
 

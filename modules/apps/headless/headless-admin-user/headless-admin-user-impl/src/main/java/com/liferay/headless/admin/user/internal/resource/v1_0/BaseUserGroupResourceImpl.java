@@ -879,8 +879,25 @@ public abstract class BaseUserGroupResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (UserGroup userGroup : userGroups) {
-			deleteUserGroup(userGroup.getId());
+		UnsafeFunction<UserGroup, UserGroup, Exception>
+			userGroupUnsafeFunction = userGroup -> {
+				deleteUserGroup(userGroup.getId());
+
+				return userGroup;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				userGroups, userGroupUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				userGroups, userGroupUnsafeFunction::apply);
+		}
+		else {
+			for (UserGroup userGroup : userGroups) {
+				userGroupUnsafeFunction.apply(userGroup);
+			}
 		}
 	}
 

@@ -650,8 +650,25 @@ public abstract class BaseOptionCategoryResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (OptionCategory optionCategory : optionCategories) {
-			deleteOptionCategory(optionCategory.getId());
+		UnsafeFunction<OptionCategory, OptionCategory, Exception>
+			optionCategoryUnsafeFunction = optionCategory -> {
+				deleteOptionCategory(optionCategory.getId());
+
+				return optionCategory;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				optionCategories, optionCategoryUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				optionCategories, optionCategoryUnsafeFunction::apply);
+		}
+		else {
+			for (OptionCategory optionCategory : optionCategories) {
+				optionCategoryUnsafeFunction.apply(optionCategory);
+			}
 		}
 	}
 

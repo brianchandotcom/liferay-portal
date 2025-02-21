@@ -460,13 +460,36 @@ public abstract class BaseProductConfigurationListAccountGroupResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (ProductConfigurationListAccountGroup
-				productConfigurationListAccountGroup :
-					productConfigurationListAccountGroups) {
+		UnsafeFunction
+			<ProductConfigurationListAccountGroup,
+			 ProductConfigurationListAccountGroup, Exception>
+				productConfigurationListAccountGroupUnsafeFunction =
+					productConfigurationListAccountGroup -> {
+						deleteProductConfigurationListAccountGroup(
+							productConfigurationListAccountGroup.
+								getProductConfigurationListAccountGroupId());
 
-			deleteProductConfigurationListAccountGroup(
-				productConfigurationListAccountGroup.
-					getProductConfigurationListAccountGroupId());
+						return productConfigurationListAccountGroup;
+					};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				productConfigurationListAccountGroups,
+				productConfigurationListAccountGroupUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				productConfigurationListAccountGroups,
+				productConfigurationListAccountGroupUnsafeFunction::apply);
+		}
+		else {
+			for (ProductConfigurationListAccountGroup
+					productConfigurationListAccountGroup :
+						productConfigurationListAccountGroups) {
+
+				productConfigurationListAccountGroupUnsafeFunction.apply(
+					productConfigurationListAccountGroup);
+			}
 		}
 	}
 

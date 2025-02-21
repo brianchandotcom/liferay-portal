@@ -432,8 +432,25 @@ public abstract class BaseGroupedProductResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (GroupedProduct groupedProduct : groupedProducts) {
-			deleteGroupedProduct(groupedProduct.getId());
+		UnsafeFunction<GroupedProduct, GroupedProduct, Exception>
+			groupedProductUnsafeFunction = groupedProduct -> {
+				deleteGroupedProduct(groupedProduct.getId());
+
+				return groupedProduct;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				groupedProducts, groupedProductUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				groupedProducts, groupedProductUnsafeFunction::apply);
+		}
+		else {
+			for (GroupedProduct groupedProduct : groupedProducts) {
+				groupedProductUnsafeFunction.apply(groupedProduct);
+			}
 		}
 	}
 

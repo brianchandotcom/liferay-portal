@@ -1040,8 +1040,25 @@ public abstract class BaseNavigationMenuResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (NavigationMenu navigationMenu : navigationMenus) {
-			deleteNavigationMenu(navigationMenu.getId());
+		UnsafeFunction<NavigationMenu, NavigationMenu, Exception>
+			navigationMenuUnsafeFunction = navigationMenu -> {
+				deleteNavigationMenu(navigationMenu.getId());
+
+				return navigationMenu;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				navigationMenus, navigationMenuUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				navigationMenus, navigationMenuUnsafeFunction::apply);
+		}
+		else {
+			for (NavigationMenu navigationMenu : navigationMenus) {
+				navigationMenuUnsafeFunction.apply(navigationMenu);
+			}
 		}
 	}
 

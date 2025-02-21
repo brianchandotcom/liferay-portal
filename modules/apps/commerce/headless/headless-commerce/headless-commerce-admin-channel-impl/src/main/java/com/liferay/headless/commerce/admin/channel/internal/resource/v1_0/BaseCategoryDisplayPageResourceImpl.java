@@ -470,8 +470,27 @@ public abstract class BaseCategoryDisplayPageResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (CategoryDisplayPage categoryDisplayPage : categoryDisplayPages) {
-			deleteCategoryDisplayPage(categoryDisplayPage.getId());
+		UnsafeFunction<CategoryDisplayPage, CategoryDisplayPage, Exception>
+			categoryDisplayPageUnsafeFunction = categoryDisplayPage -> {
+				deleteCategoryDisplayPage(categoryDisplayPage.getId());
+
+				return categoryDisplayPage;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				categoryDisplayPages, categoryDisplayPageUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				categoryDisplayPages, categoryDisplayPageUnsafeFunction::apply);
+		}
+		else {
+			for (CategoryDisplayPage categoryDisplayPage :
+					categoryDisplayPages) {
+
+				categoryDisplayPageUnsafeFunction.apply(categoryDisplayPage);
+			}
 		}
 	}
 

@@ -2753,8 +2753,25 @@ public abstract class BaseStructuredContentResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (StructuredContent structuredContent : structuredContents) {
-			deleteStructuredContent(structuredContent.getId());
+		UnsafeFunction<StructuredContent, StructuredContent, Exception>
+			structuredContentUnsafeFunction = structuredContent -> {
+				deleteStructuredContent(structuredContent.getId());
+
+				return structuredContent;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				structuredContents, structuredContentUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				structuredContents, structuredContentUnsafeFunction::apply);
+		}
+		else {
+			for (StructuredContent structuredContent : structuredContents) {
+				structuredContentUnsafeFunction.apply(structuredContent);
+			}
 		}
 	}
 

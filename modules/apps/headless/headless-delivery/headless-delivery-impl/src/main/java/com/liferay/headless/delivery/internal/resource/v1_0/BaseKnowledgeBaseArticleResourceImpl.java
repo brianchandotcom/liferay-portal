@@ -2016,10 +2016,28 @@ public abstract class BaseKnowledgeBaseArticleResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (KnowledgeBaseArticle knowledgeBaseArticle :
-				knowledgeBaseArticles) {
+		UnsafeFunction<KnowledgeBaseArticle, KnowledgeBaseArticle, Exception>
+			knowledgeBaseArticleUnsafeFunction = knowledgeBaseArticle -> {
+				deleteKnowledgeBaseArticle(knowledgeBaseArticle.getId());
 
-			deleteKnowledgeBaseArticle(knowledgeBaseArticle.getId());
+				return knowledgeBaseArticle;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				knowledgeBaseArticles, knowledgeBaseArticleUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				knowledgeBaseArticles,
+				knowledgeBaseArticleUnsafeFunction::apply);
+		}
+		else {
+			for (KnowledgeBaseArticle knowledgeBaseArticle :
+					knowledgeBaseArticles) {
+
+				knowledgeBaseArticleUnsafeFunction.apply(knowledgeBaseArticle);
+			}
 		}
 	}
 

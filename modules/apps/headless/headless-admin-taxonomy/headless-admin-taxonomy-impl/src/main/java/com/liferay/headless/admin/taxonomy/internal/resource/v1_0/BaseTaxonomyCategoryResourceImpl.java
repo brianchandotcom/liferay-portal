@@ -1390,8 +1390,25 @@ public abstract class BaseTaxonomyCategoryResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (TaxonomyCategory taxonomyCategory : taxonomyCategories) {
-			deleteTaxonomyCategory(taxonomyCategory.getId());
+		UnsafeFunction<TaxonomyCategory, TaxonomyCategory, Exception>
+			taxonomyCategoryUnsafeFunction = taxonomyCategory -> {
+				deleteTaxonomyCategory(taxonomyCategory.getId());
+
+				return taxonomyCategory;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				taxonomyCategories, taxonomyCategoryUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				taxonomyCategories, taxonomyCategoryUnsafeFunction::apply);
+		}
+		else {
+			for (TaxonomyCategory taxonomyCategory : taxonomyCategories) {
+				taxonomyCategoryUnsafeFunction.apply(taxonomyCategory);
+			}
 		}
 	}
 

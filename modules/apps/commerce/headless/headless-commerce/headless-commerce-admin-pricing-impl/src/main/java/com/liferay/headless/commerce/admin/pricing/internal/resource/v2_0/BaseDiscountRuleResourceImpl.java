@@ -463,8 +463,25 @@ public abstract class BaseDiscountRuleResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (DiscountRule discountRule : discountRules) {
-			deleteDiscountRule(discountRule.getId());
+		UnsafeFunction<DiscountRule, DiscountRule, Exception>
+			discountRuleUnsafeFunction = discountRule -> {
+				deleteDiscountRule(discountRule.getId());
+
+				return discountRule;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				discountRules, discountRuleUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				discountRules, discountRuleUnsafeFunction::apply);
+		}
+		else {
+			for (DiscountRule discountRule : discountRules) {
+				discountRuleUnsafeFunction.apply(discountRule);
+			}
 		}
 	}
 

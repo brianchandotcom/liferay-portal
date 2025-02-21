@@ -417,8 +417,26 @@ public abstract class BaseWarehouseChannelResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (WarehouseChannel warehouseChannel : warehouseChannels) {
-			deleteWarehouseChannel(warehouseChannel.getWarehouseChannelId());
+		UnsafeFunction<WarehouseChannel, WarehouseChannel, Exception>
+			warehouseChannelUnsafeFunction = warehouseChannel -> {
+				deleteWarehouseChannel(
+					warehouseChannel.getWarehouseChannelId());
+
+				return warehouseChannel;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				warehouseChannels, warehouseChannelUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				warehouseChannels, warehouseChannelUnsafeFunction::apply);
+		}
+		else {
+			for (WarehouseChannel warehouseChannel : warehouseChannels) {
+				warehouseChannelUnsafeFunction.apply(warehouseChannel);
+			}
 		}
 	}
 

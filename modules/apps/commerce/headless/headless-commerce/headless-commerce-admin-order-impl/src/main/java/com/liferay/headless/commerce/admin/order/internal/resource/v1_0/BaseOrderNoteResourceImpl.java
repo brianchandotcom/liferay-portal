@@ -552,8 +552,25 @@ public abstract class BaseOrderNoteResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (OrderNote orderNote : orderNotes) {
-			deleteOrderNote(orderNote.getId());
+		UnsafeFunction<OrderNote, OrderNote, Exception>
+			orderNoteUnsafeFunction = orderNote -> {
+				deleteOrderNote(orderNote.getId());
+
+				return orderNote;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				orderNotes, orderNoteUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				orderNotes, orderNoteUnsafeFunction::apply);
+		}
+		else {
+			for (OrderNote orderNote : orderNotes) {
+				orderNoteUnsafeFunction.apply(orderNote);
+			}
 		}
 	}
 

@@ -1866,8 +1866,25 @@ public abstract class BaseCommentResourceImpl
 			Collection<Comment> comments, Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (Comment comment : comments) {
-			deleteComment(comment.getId());
+		UnsafeFunction<Comment, Comment, Exception> commentUnsafeFunction =
+			comment -> {
+				deleteComment(comment.getId());
+
+				return comment;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				comments, commentUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				comments, commentUnsafeFunction::apply);
+		}
+		else {
+			for (Comment comment : comments) {
+				commentUnsafeFunction.apply(comment);
+			}
 		}
 	}
 

@@ -415,8 +415,25 @@ public abstract class BaseDiscountAccountResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (DiscountAccount discountAccount : discountAccounts) {
-			deleteDiscountAccount(discountAccount.getDiscountAccountId());
+		UnsafeFunction<DiscountAccount, DiscountAccount, Exception>
+			discountAccountUnsafeFunction = discountAccount -> {
+				deleteDiscountAccount(discountAccount.getDiscountAccountId());
+
+				return discountAccount;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				discountAccounts, discountAccountUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				discountAccounts, discountAccountUnsafeFunction::apply);
+		}
+		else {
+			for (DiscountAccount discountAccount : discountAccounts) {
+				discountAccountUnsafeFunction.apply(discountAccount);
+			}
 		}
 	}
 

@@ -269,12 +269,16 @@ public abstract class BaseShippingFixedOptionTermResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (ShippingFixedOptionTerm shippingFixedOptionTerm :
-				shippingFixedOptionTerms) {
+		UnsafeFunction
+			<ShippingFixedOptionTerm, ShippingFixedOptionTerm, Exception>
+				shippingFixedOptionTermUnsafeFunction =
+					shippingFixedOptionTerm -> {
+						deleteShippingFixedOptionTerm(
+							shippingFixedOptionTerm.
+								getShippingFixedOptionTermId());
 
-			deleteShippingFixedOptionTerm(
-				shippingFixedOptionTerm.getShippingFixedOptionTermId());
-		}
+						return shippingFixedOptionTerm;
+					};
 	}
 
 	public Set<String> getAvailableCreateStrategies() {

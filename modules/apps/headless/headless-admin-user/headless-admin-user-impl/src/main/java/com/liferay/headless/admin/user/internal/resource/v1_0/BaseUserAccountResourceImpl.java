@@ -2567,8 +2567,25 @@ public abstract class BaseUserAccountResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (UserAccount userAccount : userAccounts) {
-			deleteUserAccount(userAccount.getId());
+		UnsafeFunction<UserAccount, UserAccount, Exception>
+			userAccountUnsafeFunction = userAccount -> {
+				deleteUserAccount(userAccount.getId());
+
+				return userAccount;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				userAccounts, userAccountUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				userAccounts, userAccountUnsafeFunction::apply);
+		}
+		else {
+			for (UserAccount userAccount : userAccounts) {
+				userAccountUnsafeFunction.apply(userAccount);
+			}
 		}
 	}
 

@@ -529,8 +529,25 @@ public abstract class BaseCurrencyResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (Currency currency : currencies) {
-			deleteCurrency(currency.getId());
+		UnsafeFunction<Currency, Currency, Exception> currencyUnsafeFunction =
+			currency -> {
+				deleteCurrency(currency.getId());
+
+				return currency;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				currencies, currencyUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				currencies, currencyUnsafeFunction::apply);
+		}
+		else {
+			for (Currency currency : currencies) {
+				currencyUnsafeFunction.apply(currency);
+			}
 		}
 	}
 

@@ -375,11 +375,12 @@ public abstract class BaseAvailabilityEstimateResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (AvailabilityEstimate availabilityEstimate :
-				availabilityEstimates) {
+		UnsafeFunction<AvailabilityEstimate, AvailabilityEstimate, Exception>
+			availabilityEstimateUnsafeFunction = availabilityEstimate -> {
+				deleteAvailabilityEstimate(availabilityEstimate.getId());
 
-			deleteAvailabilityEstimate(availabilityEstimate.getId());
-		}
+				return availabilityEstimate;
+			};
 	}
 
 	public Set<String> getAvailableCreateStrategies() {

@@ -581,8 +581,25 @@ public abstract class BaseWikiPageAttachmentResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (WikiPageAttachment wikiPageAttachment : wikiPageAttachments) {
-			deleteWikiPageAttachment(wikiPageAttachment.getId());
+		UnsafeFunction<WikiPageAttachment, WikiPageAttachment, Exception>
+			wikiPageAttachmentUnsafeFunction = wikiPageAttachment -> {
+				deleteWikiPageAttachment(wikiPageAttachment.getId());
+
+				return wikiPageAttachment;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				wikiPageAttachments, wikiPageAttachmentUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				wikiPageAttachments, wikiPageAttachmentUnsafeFunction::apply);
+		}
+		else {
+			for (WikiPageAttachment wikiPageAttachment : wikiPageAttachments) {
+				wikiPageAttachmentUnsafeFunction.apply(wikiPageAttachment);
+			}
 		}
 	}
 

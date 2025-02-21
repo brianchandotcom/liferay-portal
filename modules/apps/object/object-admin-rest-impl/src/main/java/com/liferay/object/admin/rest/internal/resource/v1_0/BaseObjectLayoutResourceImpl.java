@@ -618,8 +618,25 @@ public abstract class BaseObjectLayoutResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (ObjectLayout objectLayout : objectLayouts) {
-			deleteObjectLayout(objectLayout.getId());
+		UnsafeFunction<ObjectLayout, ObjectLayout, Exception>
+			objectLayoutUnsafeFunction = objectLayout -> {
+				deleteObjectLayout(objectLayout.getId());
+
+				return objectLayout;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				objectLayouts, objectLayoutUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				objectLayouts, objectLayoutUnsafeFunction::apply);
+		}
+		else {
+			for (ObjectLayout objectLayout : objectLayouts) {
+				objectLayoutUnsafeFunction.apply(objectLayout);
+			}
 		}
 	}
 

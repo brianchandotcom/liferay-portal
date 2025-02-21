@@ -414,8 +414,27 @@ public abstract class BaseProductGroupProductResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (ProductGroupProduct productGroupProduct : productGroupProducts) {
-			deleteProductGroupProduct(productGroupProduct.getId());
+		UnsafeFunction<ProductGroupProduct, ProductGroupProduct, Exception>
+			productGroupProductUnsafeFunction = productGroupProduct -> {
+				deleteProductGroupProduct(productGroupProduct.getId());
+
+				return productGroupProduct;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				productGroupProducts, productGroupProductUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				productGroupProducts, productGroupProductUnsafeFunction::apply);
+		}
+		else {
+			for (ProductGroupProduct productGroupProduct :
+					productGroupProducts) {
+
+				productGroupProductUnsafeFunction.apply(productGroupProduct);
+			}
 		}
 	}
 

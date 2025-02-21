@@ -524,8 +524,25 @@ public abstract class BaseCTRemoteResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (CTRemote ctRemote : ctRemotes) {
-			deleteCTRemote(ctRemote.getId());
+		UnsafeFunction<CTRemote, CTRemote, Exception> ctRemoteUnsafeFunction =
+			ctRemote -> {
+				deleteCTRemote(ctRemote.getId());
+
+				return ctRemote;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				ctRemotes, ctRemoteUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				ctRemotes, ctRemoteUnsafeFunction::apply);
+		}
+		else {
+			for (CTRemote ctRemote : ctRemotes) {
+				ctRemoteUnsafeFunction.apply(ctRemote);
+			}
 		}
 	}
 

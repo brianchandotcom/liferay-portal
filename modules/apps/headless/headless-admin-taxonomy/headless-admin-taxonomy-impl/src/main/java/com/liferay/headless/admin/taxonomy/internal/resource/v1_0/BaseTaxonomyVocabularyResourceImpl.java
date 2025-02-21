@@ -2032,8 +2032,25 @@ public abstract class BaseTaxonomyVocabularyResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (TaxonomyVocabulary taxonomyVocabulary : taxonomyVocabularies) {
-			deleteTaxonomyVocabulary(taxonomyVocabulary.getId());
+		UnsafeFunction<TaxonomyVocabulary, TaxonomyVocabulary, Exception>
+			taxonomyVocabularyUnsafeFunction = taxonomyVocabulary -> {
+				deleteTaxonomyVocabulary(taxonomyVocabulary.getId());
+
+				return taxonomyVocabulary;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				taxonomyVocabularies, taxonomyVocabularyUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				taxonomyVocabularies, taxonomyVocabularyUnsafeFunction::apply);
+		}
+		else {
+			for (TaxonomyVocabulary taxonomyVocabulary : taxonomyVocabularies) {
+				taxonomyVocabularyUnsafeFunction.apply(taxonomyVocabulary);
+			}
 		}
 	}
 

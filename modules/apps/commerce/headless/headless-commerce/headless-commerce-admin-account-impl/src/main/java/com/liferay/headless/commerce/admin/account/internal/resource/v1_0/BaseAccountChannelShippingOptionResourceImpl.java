@@ -498,11 +498,33 @@ public abstract class BaseAccountChannelShippingOptionResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (AccountChannelShippingOption accountChannelShippingOption :
-				accountChannelShippingOptions) {
+		UnsafeFunction
+			<AccountChannelShippingOption, AccountChannelShippingOption,
+			 Exception> accountChannelShippingOptionUnsafeFunction =
+				accountChannelShippingOption -> {
+					deleteAccountChannelShippingOption(
+						accountChannelShippingOption.getId());
 
-			deleteAccountChannelShippingOption(
-				accountChannelShippingOption.getId());
+					return accountChannelShippingOption;
+				};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				accountChannelShippingOptions,
+				accountChannelShippingOptionUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				accountChannelShippingOptions,
+				accountChannelShippingOptionUnsafeFunction::apply);
+		}
+		else {
+			for (AccountChannelShippingOption accountChannelShippingOption :
+					accountChannelShippingOptions) {
+
+				accountChannelShippingOptionUnsafeFunction.apply(
+					accountChannelShippingOption);
+			}
 		}
 	}
 

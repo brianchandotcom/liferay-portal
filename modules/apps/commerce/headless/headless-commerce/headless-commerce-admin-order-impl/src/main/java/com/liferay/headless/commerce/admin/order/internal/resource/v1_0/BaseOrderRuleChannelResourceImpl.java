@@ -416,8 +416,26 @@ public abstract class BaseOrderRuleChannelResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (OrderRuleChannel orderRuleChannel : orderRuleChannels) {
-			deleteOrderRuleChannel(orderRuleChannel.getOrderRuleChannelId());
+		UnsafeFunction<OrderRuleChannel, OrderRuleChannel, Exception>
+			orderRuleChannelUnsafeFunction = orderRuleChannel -> {
+				deleteOrderRuleChannel(
+					orderRuleChannel.getOrderRuleChannelId());
+
+				return orderRuleChannel;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				orderRuleChannels, orderRuleChannelUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				orderRuleChannels, orderRuleChannelUnsafeFunction::apply);
+		}
+		else {
+			for (OrderRuleChannel orderRuleChannel : orderRuleChannels) {
+				orderRuleChannelUnsafeFunction.apply(orderRuleChannel);
+			}
 		}
 	}
 

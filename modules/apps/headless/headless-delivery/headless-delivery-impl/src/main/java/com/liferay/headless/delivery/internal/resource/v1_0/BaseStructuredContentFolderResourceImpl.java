@@ -2072,10 +2072,33 @@ public abstract class BaseStructuredContentFolderResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (StructuredContentFolder structuredContentFolder :
-				structuredContentFolders) {
+		UnsafeFunction
+			<StructuredContentFolder, StructuredContentFolder, Exception>
+				structuredContentFolderUnsafeFunction =
+					structuredContentFolder -> {
+						deleteStructuredContentFolder(
+							structuredContentFolder.getId());
 
-			deleteStructuredContentFolder(structuredContentFolder.getId());
+						return structuredContentFolder;
+					};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				structuredContentFolders,
+				structuredContentFolderUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				structuredContentFolders,
+				structuredContentFolderUnsafeFunction::apply);
+		}
+		else {
+			for (StructuredContentFolder structuredContentFolder :
+					structuredContentFolders) {
+
+				structuredContentFolderUnsafeFunction.apply(
+					structuredContentFolder);
+			}
 		}
 	}
 

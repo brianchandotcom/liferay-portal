@@ -415,8 +415,26 @@ public abstract class BaseDiscountCategoryResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (DiscountCategory discountCategory : discountCategories) {
-			deleteDiscountCategory(discountCategory.getDiscountCategoryId());
+		UnsafeFunction<DiscountCategory, DiscountCategory, Exception>
+			discountCategoryUnsafeFunction = discountCategory -> {
+				deleteDiscountCategory(
+					discountCategory.getDiscountCategoryId());
+
+				return discountCategory;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				discountCategories, discountCategoryUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				discountCategories, discountCategoryUnsafeFunction::apply);
+		}
+		else {
+			for (DiscountCategory discountCategory : discountCategories) {
+				discountCategoryUnsafeFunction.apply(discountCategory);
+			}
 		}
 	}
 

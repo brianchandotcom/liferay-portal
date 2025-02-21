@@ -762,8 +762,25 @@ public abstract class BasePaymentResourceImpl
 			Collection<Payment> payments, Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (Payment payment : payments) {
-			deletePayment(payment.getId());
+		UnsafeFunction<Payment, Payment, Exception> paymentUnsafeFunction =
+			payment -> {
+				deletePayment(payment.getId());
+
+				return payment;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				payments, paymentUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				payments, paymentUnsafeFunction::apply);
+		}
+		else {
+			for (Payment payment : payments) {
+				paymentUnsafeFunction.apply(payment);
+			}
 		}
 	}
 

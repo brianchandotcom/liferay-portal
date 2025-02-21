@@ -538,8 +538,25 @@ public abstract class BaseMappedProductResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (MappedProduct mappedProduct : mappedProducts) {
-			deleteMappedProduct(mappedProduct.getId());
+		UnsafeFunction<MappedProduct, MappedProduct, Exception>
+			mappedProductUnsafeFunction = mappedProduct -> {
+				deleteMappedProduct(mappedProduct.getId());
+
+				return mappedProduct;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				mappedProducts, mappedProductUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				mappedProducts, mappedProductUnsafeFunction::apply);
+		}
+		else {
+			for (MappedProduct mappedProduct : mappedProducts) {
+				mappedProductUnsafeFunction.apply(mappedProduct);
+			}
 		}
 	}
 

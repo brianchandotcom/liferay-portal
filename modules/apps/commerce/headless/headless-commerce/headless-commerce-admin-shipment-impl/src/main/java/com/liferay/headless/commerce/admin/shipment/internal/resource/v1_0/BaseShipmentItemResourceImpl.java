@@ -499,9 +499,12 @@ public abstract class BaseShipmentItemResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (ShipmentItem shipmentItem : shipmentItems) {
-			deleteShipmentItem(shipmentItem.getId());
-		}
+		UnsafeFunction<ShipmentItem, ShipmentItem, Exception>
+			shipmentItemUnsafeFunction = shipmentItem -> {
+				deleteShipmentItem(shipmentItem.getId());
+
+				return shipmentItem;
+			};
 	}
 
 	public Set<String> getAvailableCreateStrategies() {

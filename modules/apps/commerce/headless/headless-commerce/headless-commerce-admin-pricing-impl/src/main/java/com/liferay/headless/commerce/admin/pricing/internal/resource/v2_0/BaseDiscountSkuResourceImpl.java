@@ -401,8 +401,25 @@ public abstract class BaseDiscountSkuResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (DiscountSku discountSku : discountSkus) {
-			deleteDiscountSku(discountSku.getDiscountSkuId());
+		UnsafeFunction<DiscountSku, DiscountSku, Exception>
+			discountSkuUnsafeFunction = discountSku -> {
+				deleteDiscountSku(discountSku.getDiscountSkuId());
+
+				return discountSku;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				discountSkus, discountSkuUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				discountSkus, discountSkuUnsafeFunction::apply);
+		}
+		else {
+			for (DiscountSku discountSku : discountSkus) {
+				discountSkuUnsafeFunction.apply(discountSku);
+			}
 		}
 	}
 

@@ -842,8 +842,25 @@ public abstract class BaseShipmentResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (Shipment shipment : shipments) {
-			deleteShipment(shipment.getId());
+		UnsafeFunction<Shipment, Shipment, Exception> shipmentUnsafeFunction =
+			shipment -> {
+				deleteShipment(shipment.getId());
+
+				return shipment;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				shipments, shipmentUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				shipments, shipmentUnsafeFunction::apply);
+		}
+		else {
+			for (Shipment shipment : shipments) {
+				shipmentUnsafeFunction.apply(shipment);
+			}
 		}
 	}
 

@@ -415,9 +415,12 @@ public abstract class BaseDiscountRuleResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (DiscountRule discountRule : discountRules) {
-			deleteDiscountRule(discountRule.getId());
-		}
+		UnsafeFunction<DiscountRule, DiscountRule, Exception>
+			discountRuleUnsafeFunction = discountRule -> {
+				deleteDiscountRule(discountRule.getId());
+
+				return discountRule;
+			};
 	}
 
 	public Set<String> getAvailableCreateStrategies() {

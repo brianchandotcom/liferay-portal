@@ -408,8 +408,26 @@ public abstract class BaseOrderRuleAccountResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (OrderRuleAccount orderRuleAccount : orderRuleAccounts) {
-			deleteOrderRuleAccount(orderRuleAccount.getOrderRuleAccountId());
+		UnsafeFunction<OrderRuleAccount, OrderRuleAccount, Exception>
+			orderRuleAccountUnsafeFunction = orderRuleAccount -> {
+				deleteOrderRuleAccount(
+					orderRuleAccount.getOrderRuleAccountId());
+
+				return orderRuleAccount;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				orderRuleAccounts, orderRuleAccountUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				orderRuleAccounts, orderRuleAccountUnsafeFunction::apply);
+		}
+		else {
+			for (OrderRuleAccount orderRuleAccount : orderRuleAccounts) {
+				orderRuleAccountUnsafeFunction.apply(orderRuleAccount);
+			}
 		}
 	}
 

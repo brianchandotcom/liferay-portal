@@ -1512,8 +1512,25 @@ public abstract class BaseKeywordResourceImpl
 			Collection<Keyword> keywords, Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (Keyword keyword : keywords) {
-			deleteKeyword(keyword.getId());
+		UnsafeFunction<Keyword, Keyword, Exception> keywordUnsafeFunction =
+			keyword -> {
+				deleteKeyword(keyword.getId());
+
+				return keyword;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				keywords, keywordUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				keywords, keywordUnsafeFunction::apply);
+		}
+		else {
+			for (Keyword keyword : keywords) {
+				keywordUnsafeFunction.apply(keyword);
+			}
 		}
 	}
 

@@ -463,8 +463,25 @@ public abstract class BaseSkuUnitOfMeasureResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (SkuUnitOfMeasure skuUnitOfMeasure : skuUnitOfMeasures) {
-			deleteSkuUnitOfMeasure(skuUnitOfMeasure.getId());
+		UnsafeFunction<SkuUnitOfMeasure, SkuUnitOfMeasure, Exception>
+			skuUnitOfMeasureUnsafeFunction = skuUnitOfMeasure -> {
+				deleteSkuUnitOfMeasure(skuUnitOfMeasure.getId());
+
+				return skuUnitOfMeasure;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				skuUnitOfMeasures, skuUnitOfMeasureUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				skuUnitOfMeasures, skuUnitOfMeasureUnsafeFunction::apply);
+		}
+		else {
+			for (SkuUnitOfMeasure skuUnitOfMeasure : skuUnitOfMeasures) {
+				skuUnitOfMeasureUnsafeFunction.apply(skuUnitOfMeasure);
+			}
 		}
 	}
 

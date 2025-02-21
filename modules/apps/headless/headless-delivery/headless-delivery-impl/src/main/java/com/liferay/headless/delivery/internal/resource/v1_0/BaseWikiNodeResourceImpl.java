@@ -1100,8 +1100,25 @@ public abstract class BaseWikiNodeResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (WikiNode wikiNode : wikiNodes) {
-			deleteWikiNode(wikiNode.getId());
+		UnsafeFunction<WikiNode, WikiNode, Exception> wikiNodeUnsafeFunction =
+			wikiNode -> {
+				deleteWikiNode(wikiNode.getId());
+
+				return wikiNode;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				wikiNodes, wikiNodeUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				wikiNodes, wikiNodeUnsafeFunction::apply);
+		}
+		else {
+			for (WikiNode wikiNode : wikiNodes) {
+				wikiNodeUnsafeFunction.apply(wikiNode);
+			}
 		}
 	}
 

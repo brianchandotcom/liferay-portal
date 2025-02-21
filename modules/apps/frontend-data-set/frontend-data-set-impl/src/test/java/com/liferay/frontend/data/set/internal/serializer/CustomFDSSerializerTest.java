@@ -20,7 +20,6 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizer
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.function.transform.TransformUtil;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -484,9 +483,13 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 				"multiple", true
 			).put(
 				"preselectedValues",
-				StringBundler.concat(
-					"[{\"label\":\"", LABELS[2], "\",\"value\":\"", IDS[2],
-					"\"}]")
+				JSONUtil.put(
+					JSONUtil.put(
+						"label", LABELS[2]
+					).put(
+						"value", IDS[2]
+					)
+				).toString()
 			).put(
 				"restApplication", "/analytics-settings-rest/v1.0"
 			).put(

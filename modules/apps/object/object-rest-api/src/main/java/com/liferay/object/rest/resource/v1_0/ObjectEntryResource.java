@@ -84,6 +84,10 @@ public interface ObjectEntryResource {
 			String externalReferenceCode, ObjectEntry objectEntry)
 		throws Exception;
 
+	public Page<ObjectEntry> getByExternalReferenceCodeVersionsPage(
+			String externalReferenceCode, Pagination pagination)
+		throws Exception;
+
 	public void
 			putByExternalReferenceCodeObjectEntryExternalReferenceCodeObjectActionObjectActionName(
 				String objectEntryExternalReferenceCode,
@@ -144,6 +148,10 @@ public interface ObjectEntryResource {
 			putObjectEntryPermissionsPage(
 				Long objectEntryId,
 				com.liferay.portal.vulcan.permission.Permission[] permissions)
+		throws Exception;
+
+	public Page<ObjectEntry> getObjectEntriesVersionsPage(
+			Long objectEntryId, Pagination pagination)
 		throws Exception;
 
 	public Page<ObjectEntry> getScopeScopeKeyPage(

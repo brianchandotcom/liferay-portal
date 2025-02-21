@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.HashMap;
 import java.util.List;
@@ -60,7 +61,8 @@ public class BaseCommerceContext implements CommerceContext {
 		CommerceCurrencyLocalService commerceCurrencyLocalService,
 		CommerceOrderService commerceOrderService,
 		ConfigurationProvider configurationProvider,
-		CPConfigurationListDiscovery cpConfigurationListDiscovery) {
+		CPConfigurationListDiscovery cpConfigurationListDiscovery,
+		String currencyCode) {
 
 		_companyId = companyId;
 		_commerceChannelGroupId = commerceChannelGroupId;
@@ -75,6 +77,7 @@ public class BaseCommerceContext implements CommerceContext {
 		_commerceCurrencyLocalService = commerceCurrencyLocalService;
 		_commerceOrderService = commerceOrderService;
 		_cpConfigurationListDiscovery = cpConfigurationListDiscovery;
+		_currencyCode = currencyCode;
 
 		try {
 			if (getCommerceChannelGroupId() > 0) {
@@ -159,6 +162,16 @@ public class BaseCommerceContext implements CommerceContext {
 	public CommerceCurrency getCommerceCurrency() throws PortalException {
 		if (_commerceCurrency != null) {
 			return _commerceCurrency;
+		}
+
+		if (!Validator.isBlank(_currencyCode)) {
+			CommerceCurrency commerceCurrency =
+				_commerceCurrencyLocalService.fetchCommerceCurrency(
+					_companyId, _currencyCode);
+
+			if ((commerceCurrency != null) && commerceCurrency.isActive()) {
+				return commerceCurrency;
+			}
 		}
 
 		CommerceChannel commerceChannel =
@@ -341,6 +354,7 @@ public class BaseCommerceContext implements CommerceContext {
 	private final long _companyId;
 	private final CPConfigurationListDiscovery _cpConfigurationListDiscovery;
 	private Map<Long, CPConfigurationList> _cpConfigurationLists;
+	private final String _currencyCode;
 	private final long _orderId;
 
 }

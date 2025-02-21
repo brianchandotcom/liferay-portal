@@ -801,17 +801,6 @@ public class UserPersistenceTest {
 				"emailAddress"));
 
 		Assert.assertEquals(
-			Long.valueOf(user.getCompanyId()),
-			ReflectionTestUtil.<Long>invoke(
-				user, "getColumnOriginalValue", new Class<?>[] {String.class},
-				"companyId"));
-		Assert.assertEquals(
-			Long.valueOf(user.getFacebookId()),
-			ReflectionTestUtil.<Long>invoke(
-				user, "getColumnOriginalValue", new Class<?>[] {String.class},
-				"facebookId"));
-
-		Assert.assertEquals(
 			user.getExternalReferenceCode(),
 			ReflectionTestUtil.invoke(
 				user, "getColumnOriginalValue", new Class<?>[] {String.class},

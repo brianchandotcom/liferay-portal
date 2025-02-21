@@ -1296,45 +1296,149 @@ public interface UserPersistence
 	public int countByC_EA(long companyId, String emailAddress);
 
 	/**
-	 * Returns the user where companyId = &#63; and facebookId = &#63; or throws a <code>NoSuchUserException</code> if it could not be found.
+	 * Returns all the users where companyId = &#63; and facebookId = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param facebookId the facebook ID
-	 * @return the matching user
+	 * @return the matching users
+	 */
+	public java.util.List<User> findByC_FID(long companyId, long facebookId);
+
+	/**
+	 * Returns a range of all the users where companyId = &#63; and facebookId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param facebookId the facebook ID
+	 * @param start the lower bound of the range of users
+	 * @param end the upper bound of the range of users (not inclusive)
+	 * @return the range of matching users
+	 */
+	public java.util.List<User> findByC_FID(
+		long companyId, long facebookId, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the users where companyId = &#63; and facebookId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param facebookId the facebook ID
+	 * @param start the lower bound of the range of users
+	 * @param end the upper bound of the range of users (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching users
+	 */
+	public java.util.List<User> findByC_FID(
+		long companyId, long facebookId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<User>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the users where companyId = &#63; and facebookId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param facebookId the facebook ID
+	 * @param start the lower bound of the range of users
+	 * @param end the upper bound of the range of users (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching users
+	 */
+	public java.util.List<User> findByC_FID(
+		long companyId, long facebookId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<User>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first user in the ordered set where companyId = &#63; and facebookId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param facebookId the facebook ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching user
 	 * @throws NoSuchUserException if a matching user could not be found
 	 */
-	public User findByC_FID(long companyId, long facebookId)
+	public User findByC_FID_First(
+			long companyId, long facebookId,
+			com.liferay.portal.kernel.util.OrderByComparator<User>
+				orderByComparator)
 		throws NoSuchUserException;
 
 	/**
-	 * Returns the user where companyId = &#63; and facebookId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the first user in the ordered set where companyId = &#63; and facebookId = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param facebookId the facebook ID
-	 * @return the matching user, or <code>null</code> if a matching user could not be found
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching user, or <code>null</code> if a matching user could not be found
 	 */
-	public User fetchByC_FID(long companyId, long facebookId);
+	public User fetchByC_FID_First(
+		long companyId, long facebookId,
+		com.liferay.portal.kernel.util.OrderByComparator<User>
+			orderByComparator);
 
 	/**
-	 * Returns the user where companyId = &#63; and facebookId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the last user in the ordered set where companyId = &#63; and facebookId = &#63;.
 	 *
 	 * @param companyId the company ID
 	 * @param facebookId the facebook ID
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the matching user, or <code>null</code> if a matching user could not be found
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching user
+	 * @throws NoSuchUserException if a matching user could not be found
 	 */
-	public User fetchByC_FID(
-		long companyId, long facebookId, boolean useFinderCache);
-
-	/**
-	 * Removes the user where companyId = &#63; and facebookId = &#63; from the database.
-	 *
-	 * @param companyId the company ID
-	 * @param facebookId the facebook ID
-	 * @return the user that was removed
-	 */
-	public User removeByC_FID(long companyId, long facebookId)
+	public User findByC_FID_Last(
+			long companyId, long facebookId,
+			com.liferay.portal.kernel.util.OrderByComparator<User>
+				orderByComparator)
 		throws NoSuchUserException;
+
+	/**
+	 * Returns the last user in the ordered set where companyId = &#63; and facebookId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param facebookId the facebook ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching user, or <code>null</code> if a matching user could not be found
+	 */
+	public User fetchByC_FID_Last(
+		long companyId, long facebookId,
+		com.liferay.portal.kernel.util.OrderByComparator<User>
+			orderByComparator);
+
+	/**
+	 * Returns the users before and after the current user in the ordered set where companyId = &#63; and facebookId = &#63;.
+	 *
+	 * @param userId the primary key of the current user
+	 * @param companyId the company ID
+	 * @param facebookId the facebook ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next user
+	 * @throws NoSuchUserException if a user with the primary key could not be found
+	 */
+	public User[] findByC_FID_PrevAndNext(
+			long userId, long companyId, long facebookId,
+			com.liferay.portal.kernel.util.OrderByComparator<User>
+				orderByComparator)
+		throws NoSuchUserException;
+
+	/**
+	 * Removes all the users where companyId = &#63; and facebookId = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param facebookId the facebook ID
+	 */
+	public void removeByC_FID(long companyId, long facebookId);
 
 	/**
 	 * Returns the number of users where companyId = &#63; and facebookId = &#63;.

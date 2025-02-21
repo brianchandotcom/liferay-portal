@@ -1011,9 +1011,7 @@ public class UserLocalServiceUtil {
 	 * @param facebookId the user's Facebook ID
 	 * @return the user with the Facebook ID, or <code>null</code> if a user
 	 with the Facebook ID could not be found
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
 	 */
-	@Deprecated
 	public static User fetchUserByFacebookId(long companyId, long facebookId) {
 		return getService().fetchUserByFacebookId(companyId, facebookId);
 	}
@@ -1660,21 +1658,6 @@ public class UserLocalServiceUtil {
 
 		return getService().getUserByExternalReferenceCode(
 			externalReferenceCode, companyId);
-	}
-
-	/**
-	 * Returns the user with the Facebook ID.
-	 *
-	 * @param companyId the primary key of the user's company
-	 * @param facebookId the user's Facebook ID
-	 * @return the user with the Facebook ID
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static User getUserByFacebookId(long companyId, long facebookId)
-		throws PortalException {
-
-		return getService().getUserByFacebookId(companyId, facebookId);
 	}
 
 	/**
@@ -2662,21 +2645,6 @@ public class UserLocalServiceUtil {
 
 		return getService().updateExternalReferenceCode(
 			user, externalReferenceCode);
-	}
-
-	/**
-	 * Updates the user's Facebook ID.
-	 *
-	 * @param userId the primary key of the user
-	 * @param facebookId the user's new Facebook ID
-	 * @return the user
-	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
-	 */
-	@Deprecated
-	public static User updateFacebookId(long userId, long facebookId)
-		throws PortalException {
-
-		return getService().updateFacebookId(userId, facebookId);
 	}
 
 	/**

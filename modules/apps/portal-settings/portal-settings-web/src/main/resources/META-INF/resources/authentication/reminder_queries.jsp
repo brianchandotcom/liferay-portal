@@ -10,7 +10,7 @@
 <aui:fieldset>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 
-	<aui:input helpMessage="users-recovery-queries-enabled-help" label="users-recovery-queries-enabled" name='<%= "settings--" + PropsKeys.USERS_REMINDER_QUERIES_ENABLED + "--" %>' type="checkbox" value="<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.USERS_REMINDER_QUERIES_ENABLED, PropsValues.USERS_REMINDER_QUERIES_ENABLED) %>" />
+	<aui:input helpMessage="users-recovery-queries-enabled-help" label="enabled" name='<%= "settings--" + PropsKeys.USERS_REMINDER_QUERIES_ENABLED + "--" %>' type="checkbox" value="<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.USERS_REMINDER_QUERIES_ENABLED, PropsValues.USERS_REMINDER_QUERIES_ENABLED) %>" />
 
 	<aui:input helpMessage="users-recovery-queries-custom-question-enabled-help" label="users-recovery-queries-custom-question-enabled" name='<%= "settings--" + PropsKeys.USERS_REMINDER_QUERIES_CUSTOM_QUESTION_ENABLED + "--" %>' type="checkbox" value="<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.USERS_REMINDER_QUERIES_CUSTOM_QUESTION_ENABLED, PropsValues.USERS_REMINDER_QUERIES_CUSTOM_QUESTION_ENABLED) %>" />
 

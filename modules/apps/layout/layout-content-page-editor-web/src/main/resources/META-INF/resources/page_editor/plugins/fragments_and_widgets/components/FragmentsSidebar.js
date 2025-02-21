@@ -6,13 +6,11 @@
 import {ClayButtonWithIcon} from '@clayui/button';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
 import {
-	MarketplaceModal,
+	MarketplaceButton,
 	SearchForm,
 	SearchResultsMessage,
 	isNullOrUndefined,
-	openModalComponent,
 } from '@liferay/layout-js-components-web';
-import classNames from 'classnames';
 import {useSessionState} from 'frontend-js-components-web';
 import {sub} from 'frontend-js-web';
 import React, {useEffect, useMemo, useState} from 'react';
@@ -147,8 +145,6 @@ export default function FragmentsSidebar() {
 		FRAGMENTS_DISPLAY_STYLES.LIST
 	);
 
-	const [isMarketplaceButtonVisited, setIsMarketplaceButtonVisited] =
-		useState(config.isMarketplaceButtonVisited);
 	const [searchValue, setSearchValue] = useState(null);
 	const [showReorderModal, setShowReorderModal] = useState(false);
 
@@ -293,57 +289,18 @@ export default function FragmentsSidebar() {
 					/>
 
 					{Liferay.FeatureFlags['LPD-34938'] && (
-						<>
-							<ClayButtonWithIcon
-								aria-haspopup="dialog"
-								aria-label={Liferay.Language.get(
-									'open-marketplace-explorer'
-								)}
-								borderless
-								className={classNames(
-									'marketplace-button ml-2',
-									{
-										notification:
-											!isMarketplaceButtonVisited,
-									}
-								)}
-								data-tooltip-align="top"
-								displayType="secondary"
-								onClick={() => {
-									if (!isMarketplaceButtonVisited) {
-										Liferay.Util.Session.set(
-											`${config.portletNamespace}isMarketplaceButtonVisited`,
-											true
-										);
-										setIsMarketplaceButtonVisited(true);
-									}
-
-									openModalComponent({
-										ModalComponent: MarketplaceModal,
-										modalComponentProps: {
-											body: Liferay.Language.get(
-												'we-are-excited-to-share-that-marketplace-is-now-part-of-page-builder'
-											),
-											heading: Liferay.Language.get(
-												'marketplace-is-now-in-page-builder'
-											),
-										},
-									});
-								}}
-								size="sm"
-								symbol="marketplace"
-								title={Liferay.Language.get(
-									'open-marketplace-explorer'
-								)}
-							/>
-
-							{!isMarketplaceButtonVisited && (
-								<span
-									className="notification"
-									id={`${config.portletNamespace}marketplaceBadge`}
-								></span>
+						<MarketplaceButton
+							body={Liferay.Language.get(
+								'we-are-excited-to-share-that-marketplace-is-now-part-of-page-builder'
 							)}
-						</>
+							heading={Liferay.Language.get(
+								'marketplace-is-now-in-page-builder'
+							)}
+							isMarketplaceButtonVisited={
+								config.isMarketplaceButtonVisited
+							}
+							portletNamespace={config.portletNamespace}
+						/>
 					)}
 				</div>
 

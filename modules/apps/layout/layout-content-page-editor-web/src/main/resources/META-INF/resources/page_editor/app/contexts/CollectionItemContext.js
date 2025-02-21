@@ -24,6 +24,7 @@ export const INITIAL_STATE = {
 	collectionConfig: null,
 	collectionId: null,
 	collectionItem: null,
+	collectionItemId: null,
 	collectionItemIndex: null,
 	customCollectionSelectorURL: null,
 	isDisabled: false,
@@ -33,6 +34,12 @@ export const INITIAL_STATE = {
 const CollectionItemContext = React.createContext(INITIAL_STATE);
 
 const CollectionItemContextProvider = CollectionItemContext.Provider;
+
+const useCollectionItemId = () => {
+	const context = useContext(CollectionItemContext);
+
+	return context.collectionItemId;
+};
 
 const useCollectionItemIndex = () => {
 	const context = useContext(CollectionItemContext);
@@ -81,7 +88,8 @@ const useGetContent = (
 		classPK: collectionItemClassPK,
 		externalReferenceCode: collectionItemExternalReferenceCode,
 	} = collectionItemContext.collectionItem || {};
-	const {collectionItemIndex} = collectionItemContext;
+
+	const {collectionItemId} = collectionItemContext;
 
 	const {
 		className: displayPagePreviewItemClassName,
@@ -151,7 +159,7 @@ const useGetContent = (
 				(content) => {
 					dispatch(
 						updateFragmentEntryLinkContent({
-							collectionItemIndex,
+							collectionItemId,
 							content,
 							fragmentEntryLinkId,
 						})
@@ -160,7 +168,7 @@ const useGetContent = (
 			);
 		}
 	}, [
-		collectionItemIndex,
+		collectionItemId,
 		dispatch,
 		editableValues,
 		fieldSets,
@@ -194,8 +202,8 @@ const useGetContent = (
 	}, [addPendingItem, editableValues, fragmentEntryLinkId]);
 
 	return (
-		(!isNullOrUndefined(collectionItemIndex)
-			? collectionContent[collectionItemIndex]
+		(!isNullOrUndefined(collectionItemId)
+			? collectionContent[collectionItemId]
 			: null) || content
 	);
 };
@@ -326,6 +334,7 @@ export {
 	CollectionItemContext,
 	CollectionItemContextProvider,
 	useCollectionConfig,
+	useCollectionItemId,
 	useCollectionItemIndex,
 	useCustomCollectionSelectorURL,
 	useGetContent,

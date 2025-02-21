@@ -369,10 +369,10 @@ export default function fragmentEntryLinksReducer(
 
 			let collectionContent = fragmentEntryLink.collectionContent || {};
 
-			if (!isNullOrUndefined(action.collectionItemIndex)) {
+			if (!isNullOrUndefined(action.collectionItemId)) {
 				collectionContent = {
 					...collectionContent,
-					[action.collectionItemIndex]: action.content,
+					[action.collectionItemId]: action.content,
 				};
 			}
 

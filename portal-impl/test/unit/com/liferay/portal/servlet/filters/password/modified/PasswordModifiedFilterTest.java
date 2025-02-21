@@ -31,7 +31,7 @@ public class PasswordModifiedFilterTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Test
-	public void testDoFilter() throws Exception {
+	public void testProcessFilter() throws Exception {
 		PortalUtil portalUtil = new PortalUtil();
 
 		portalUtil.setPortal(

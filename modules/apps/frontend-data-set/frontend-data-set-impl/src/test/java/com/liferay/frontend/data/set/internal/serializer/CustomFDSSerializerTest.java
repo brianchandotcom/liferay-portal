@@ -218,8 +218,8 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		// Shared creation menu
 
-		_testSerializeCreationMenu("fdsName1", TITLES);
-		_testSerializeCreationMenu("fdsName2", TITLES);
+		_testSerializeCreationMenu("fdsName1");
+		_testSerializeCreationMenu("fdsName2");
 	}
 
 	@Test
@@ -582,8 +582,8 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		// Shared items actions
 
-		_testSerializeItemsActions("fdsName1", LABELS);
-		_testSerializeItemsActions("fdsName2", LABELS);
+		_testSerializeItemsActions("fdsName1");
+		_testSerializeItemsActions("fdsName2");
 	}
 
 	@Test
@@ -914,9 +914,7 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 	private void _mockSerializeAPIURL(String fdsName, String[] fieldNames) {
 		String restApplication = "/app";
-
 		String restEndpoint = "/endpoint";
-
 		String restSchema = "schema";
 
 		Mockito.when(
@@ -1234,31 +1232,31 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 			fdsAPIURLResolverRegistry;
 	}
 
-	private void _testSerializeCreationMenu(String fdsName, String[] titles) {
-		_mockSerializeCreationMenu(fdsName, titles);
+	private void _testSerializeCreationMenu(String fdsName) {
+		_mockSerializeCreationMenu(fdsName, TITLES);
 
 		CreationMenu creationMenu = _customFDSSerializer.serializeCreationMenu(
 			fdsName, httpServletRequest);
 
-		for (String title : titles) {
+		for (String title : TITLES) {
 			Assert.assertTrue(_containsTitle(creationMenu, title));
 		}
 
-		Assert.assertEquals(titles.length, _getPrimaryItemsSize(creationMenu));
+		Assert.assertEquals(TITLES.length, _getPrimaryItemsSize(creationMenu));
 	}
 
-	private void _testSerializeItemsActions(String fdsName, String[] labels) {
-		_mockSerializeItemsActions(fdsName, labels);
+	private void _testSerializeItemsActions(String fdsName) {
+		_mockSerializeItemsActions(fdsName, LABELS);
 
 		List<FDSActionDropdownItem> fdsActionDropdownItems =
 			_customFDSSerializer.serializeItemsActions(
 				fdsName, httpServletRequest);
 
-		for (String label : labels) {
+		for (String label : LABELS) {
 			Assert.assertTrue(_containsLabel(fdsActionDropdownItems, label));
 		}
 
-		Assert.assertTrue(labels.length == fdsActionDropdownItems.size());
+		Assert.assertTrue(LABELS.length == fdsActionDropdownItems.size());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -42,14 +42,14 @@ public interface SkuResource {
 			getChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkusPage(
 				String channelExternalReferenceCode,
 				String productExternalReferenceCode, Long accountId,
-				Pagination pagination)
+				String currencyCode, Pagination pagination)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			getChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkusPageHttpResponse(
 				String channelExternalReferenceCode,
 				String productExternalReferenceCode, Long accountId,
-				Pagination pagination)
+				String currencyCode, Pagination pagination)
 		throws Exception;
 
 	public Sku
@@ -70,39 +70,41 @@ public interface SkuResource {
 			getChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuByExternalReferenceCodeSkuExternalReferenceCode(
 				String channelExternalReferenceCode,
 				String productExternalReferenceCode,
-				String skuExternalReferenceCode, Long accountId)
+				String skuExternalReferenceCode, Long accountId,
+				String currencyCode)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			getChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuByExternalReferenceCodeSkuExternalReferenceCodeHttpResponse(
 				String channelExternalReferenceCode,
 				String productExternalReferenceCode,
-				String skuExternalReferenceCode, Long accountId)
+				String skuExternalReferenceCode, Long accountId,
+				String currencyCode)
 		throws Exception;
 
 	public Sku
 			postChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuBySkuOption(
 				String channelExternalReferenceCode,
 				String productExternalReferenceCode, Long accountId,
-				java.math.BigDecimal quantity, String skuUnitOfMeasureKey,
-				SkuOption[] skuOptions)
+				String currencyCode, java.math.BigDecimal quantity,
+				String skuUnitOfMeasureKey, SkuOption[] skuOptions)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			postChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuBySkuOptionHttpResponse(
 				String channelExternalReferenceCode,
 				String productExternalReferenceCode, Long accountId,
-				java.math.BigDecimal quantity, String skuUnitOfMeasureKey,
-				SkuOption[] skuOptions)
+				String currencyCode, java.math.BigDecimal quantity,
+				String skuUnitOfMeasureKey, SkuOption[] skuOptions)
 		throws Exception;
 
 	public Page<Sku> getChannelProductSkusPage(
-			Long channelId, Long productId, Long accountId,
+			Long channelId, Long productId, Long accountId, String currencyCode,
 			Pagination pagination)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getChannelProductSkusPageHttpResponse(
-			Long channelId, Long productId, Long accountId,
+			Long channelId, Long productId, Long accountId, String currencyCode,
 			Pagination pagination)
 		throws Exception;
 
@@ -117,7 +119,7 @@ public interface SkuResource {
 		throws Exception;
 
 	public Sku postChannelProductSkuBySkuOption(
-			Long channelId, Long productId, Long accountId,
+			Long channelId, Long productId, Long accountId, String currencyCode,
 			java.math.BigDecimal quantity, String skuUnitOfMeasureKey,
 			SkuOption[] skuOptions)
 		throws Exception;
@@ -125,16 +127,18 @@ public interface SkuResource {
 	public HttpInvoker.HttpResponse
 			postChannelProductSkuBySkuOptionHttpResponse(
 				Long channelId, Long productId, Long accountId,
-				java.math.BigDecimal quantity, String skuUnitOfMeasureKey,
-				SkuOption[] skuOptions)
+				String currencyCode, java.math.BigDecimal quantity,
+				String skuUnitOfMeasureKey, SkuOption[] skuOptions)
 		throws Exception;
 
 	public Sku getChannelProductSku(
-			Long channelId, Long productId, Long skuId, Long accountId)
+			Long channelId, Long productId, Long skuId, Long accountId,
+			String currencyCode)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getChannelProductSkuHttpResponse(
-			Long channelId, Long productId, Long skuId, Long accountId)
+			Long channelId, Long productId, Long skuId, Long accountId,
+			String currencyCode)
 		throws Exception;
 
 	public static class Builder {
@@ -249,13 +253,13 @@ public interface SkuResource {
 				getChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkusPage(
 					String channelExternalReferenceCode,
 					String productExternalReferenceCode, Long accountId,
-					Pagination pagination)
+					String currencyCode, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkusPageHttpResponse(
 					channelExternalReferenceCode, productExternalReferenceCode,
-					accountId, pagination);
+					accountId, currencyCode, pagination);
 
 			String content = httpResponse.getContent();
 
@@ -320,7 +324,7 @@ public interface SkuResource {
 				getChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkusPageHttpResponse(
 					String channelExternalReferenceCode,
 					String productExternalReferenceCode, Long accountId,
-					Pagination pagination)
+					String currencyCode, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -346,6 +350,11 @@ public interface SkuResource {
 
 			if (accountId != null) {
 				httpInvoker.parameter("accountId", String.valueOf(accountId));
+			}
+
+			if (currencyCode != null) {
+				httpInvoker.parameter(
+					"currencyCode", String.valueOf(currencyCode));
 			}
 
 			if (pagination != null) {
@@ -510,13 +519,14 @@ public interface SkuResource {
 				getChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuByExternalReferenceCodeSkuExternalReferenceCode(
 					String channelExternalReferenceCode,
 					String productExternalReferenceCode,
-					String skuExternalReferenceCode, Long accountId)
+					String skuExternalReferenceCode, Long accountId,
+					String currencyCode)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuByExternalReferenceCodeSkuExternalReferenceCodeHttpResponse(
 					channelExternalReferenceCode, productExternalReferenceCode,
-					skuExternalReferenceCode, accountId);
+					skuExternalReferenceCode, accountId, currencyCode);
 
 			String content = httpResponse.getContent();
 
@@ -581,7 +591,8 @@ public interface SkuResource {
 				getChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuByExternalReferenceCodeSkuExternalReferenceCodeHttpResponse(
 					String channelExternalReferenceCode,
 					String productExternalReferenceCode,
-					String skuExternalReferenceCode, Long accountId)
+					String skuExternalReferenceCode, Long accountId,
+					String currencyCode)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -609,6 +620,11 @@ public interface SkuResource {
 				httpInvoker.parameter("accountId", String.valueOf(accountId));
 			}
 
+			if (currencyCode != null) {
+				httpInvoker.parameter(
+					"currencyCode", String.valueOf(currencyCode));
+			}
+
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
@@ -633,14 +649,15 @@ public interface SkuResource {
 				postChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuBySkuOption(
 					String channelExternalReferenceCode,
 					String productExternalReferenceCode, Long accountId,
-					java.math.BigDecimal quantity, String skuUnitOfMeasureKey,
-					SkuOption[] skuOptions)
+					String currencyCode, java.math.BigDecimal quantity,
+					String skuUnitOfMeasureKey, SkuOption[] skuOptions)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				postChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuBySkuOptionHttpResponse(
 					channelExternalReferenceCode, productExternalReferenceCode,
-					accountId, quantity, skuUnitOfMeasureKey, skuOptions);
+					accountId, currencyCode, quantity, skuUnitOfMeasureKey,
+					skuOptions);
 
 			String content = httpResponse.getContent();
 
@@ -705,8 +722,8 @@ public interface SkuResource {
 				postChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuBySkuOptionHttpResponse(
 					String channelExternalReferenceCode,
 					String productExternalReferenceCode, Long accountId,
-					java.math.BigDecimal quantity, String skuUnitOfMeasureKey,
-					SkuOption[] skuOptions)
+					String currencyCode, java.math.BigDecimal quantity,
+					String skuUnitOfMeasureKey, SkuOption[] skuOptions)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -742,6 +759,11 @@ public interface SkuResource {
 				httpInvoker.parameter("accountId", String.valueOf(accountId));
 			}
 
+			if (currencyCode != null) {
+				httpInvoker.parameter(
+					"currencyCode", String.valueOf(currencyCode));
+			}
+
 			if (quantity != null) {
 				httpInvoker.parameter("quantity", String.valueOf(quantity));
 			}
@@ -771,12 +793,12 @@ public interface SkuResource {
 
 		public Page<Sku> getChannelProductSkusPage(
 				Long channelId, Long productId, Long accountId,
-				Pagination pagination)
+				String currencyCode, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getChannelProductSkusPageHttpResponse(
-					channelId, productId, accountId, pagination);
+					channelId, productId, accountId, currencyCode, pagination);
 
 			String content = httpResponse.getContent();
 
@@ -839,7 +861,7 @@ public interface SkuResource {
 
 		public HttpInvoker.HttpResponse getChannelProductSkusPageHttpResponse(
 				Long channelId, Long productId, Long accountId,
-				Pagination pagination)
+				String currencyCode, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -865,6 +887,11 @@ public interface SkuResource {
 
 			if (accountId != null) {
 				httpInvoker.parameter("accountId", String.valueOf(accountId));
+			}
+
+			if (currencyCode != null) {
+				httpInvoker.parameter(
+					"currencyCode", String.valueOf(currencyCode));
 			}
 
 			if (pagination != null) {
@@ -1018,13 +1045,13 @@ public interface SkuResource {
 
 		public Sku postChannelProductSkuBySkuOption(
 				Long channelId, Long productId, Long accountId,
-				java.math.BigDecimal quantity, String skuUnitOfMeasureKey,
-				SkuOption[] skuOptions)
+				String currencyCode, java.math.BigDecimal quantity,
+				String skuUnitOfMeasureKey, SkuOption[] skuOptions)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				postChannelProductSkuBySkuOptionHttpResponse(
-					channelId, productId, accountId, quantity,
+					channelId, productId, accountId, currencyCode, quantity,
 					skuUnitOfMeasureKey, skuOptions);
 
 			String content = httpResponse.getContent();
@@ -1089,8 +1116,8 @@ public interface SkuResource {
 		public HttpInvoker.HttpResponse
 				postChannelProductSkuBySkuOptionHttpResponse(
 					Long channelId, Long productId, Long accountId,
-					java.math.BigDecimal quantity, String skuUnitOfMeasureKey,
-					SkuOption[] skuOptions)
+					String currencyCode, java.math.BigDecimal quantity,
+					String skuUnitOfMeasureKey, SkuOption[] skuOptions)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -1126,6 +1153,11 @@ public interface SkuResource {
 				httpInvoker.parameter("accountId", String.valueOf(accountId));
 			}
 
+			if (currencyCode != null) {
+				httpInvoker.parameter(
+					"currencyCode", String.valueOf(currencyCode));
+			}
+
 			if (quantity != null) {
 				httpInvoker.parameter("quantity", String.valueOf(quantity));
 			}
@@ -1152,12 +1184,13 @@ public interface SkuResource {
 		}
 
 		public Sku getChannelProductSku(
-				Long channelId, Long productId, Long skuId, Long accountId)
+				Long channelId, Long productId, Long skuId, Long accountId,
+				String currencyCode)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getChannelProductSkuHttpResponse(
-					channelId, productId, skuId, accountId);
+					channelId, productId, skuId, accountId, currencyCode);
 
 			String content = httpResponse.getContent();
 
@@ -1219,7 +1252,8 @@ public interface SkuResource {
 		}
 
 		public HttpInvoker.HttpResponse getChannelProductSkuHttpResponse(
-				Long channelId, Long productId, Long skuId, Long accountId)
+				Long channelId, Long productId, Long skuId, Long accountId,
+				String currencyCode)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -1245,6 +1279,11 @@ public interface SkuResource {
 
 			if (accountId != null) {
 				httpInvoker.parameter("accountId", String.valueOf(accountId));
+			}
+
+			if (currencyCode != null) {
+				httpInvoker.parameter(
+					"currencyCode", String.valueOf(currencyCode));
 			}
 
 			httpInvoker.path(

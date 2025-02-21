@@ -47,20 +47,23 @@ public interface WishListItemResource {
 			String callbackURL, Object object)
 		throws Exception;
 
-	public WishListItem getWishListItem(Long wishListItemId, Long accountId)
+	public WishListItem getWishListItem(
+			Long wishListItemId, Long accountId, String currencyCode)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getWishListItemHttpResponse(
-			Long wishListItemId, Long accountId)
+			Long wishListItemId, Long accountId, String currencyCode)
 		throws Exception;
 
 	public Page<WishListItem> getWishlistWishListWishListItemsPage(
-			Long wishListId, Long accountId, Pagination pagination)
+			Long wishListId, Long accountId, String currencyCode,
+			Pagination pagination)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			getWishlistWishListWishListItemsPageHttpResponse(
-				Long wishListId, Long accountId, Pagination pagination)
+				Long wishListId, Long accountId, String currencyCode,
+				Pagination pagination)
 		throws Exception;
 
 	public WishListItem postWishlistWishListWishListItem(
@@ -383,11 +386,12 @@ public interface WishListItemResource {
 			return httpInvoker.invoke();
 		}
 
-		public WishListItem getWishListItem(Long wishListItemId, Long accountId)
+		public WishListItem getWishListItem(
+				Long wishListItemId, Long accountId, String currencyCode)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse = getWishListItemHttpResponse(
-				wishListItemId, accountId);
+				wishListItemId, accountId, currencyCode);
 
 			String content = httpResponse.getContent();
 
@@ -449,7 +453,7 @@ public interface WishListItemResource {
 		}
 
 		public HttpInvoker.HttpResponse getWishListItemHttpResponse(
-				Long wishListItemId, Long accountId)
+				Long wishListItemId, Long accountId, String currencyCode)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -477,6 +481,11 @@ public interface WishListItemResource {
 				httpInvoker.parameter("accountId", String.valueOf(accountId));
 			}
 
+			if (currencyCode != null) {
+				httpInvoker.parameter(
+					"currencyCode", String.valueOf(currencyCode));
+			}
+
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +
 					_builder._port + _builder._contextPath +
@@ -493,12 +502,13 @@ public interface WishListItemResource {
 		}
 
 		public Page<WishListItem> getWishlistWishListWishListItemsPage(
-				Long wishListId, Long accountId, Pagination pagination)
+				Long wishListId, Long accountId, String currencyCode,
+				Pagination pagination)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getWishlistWishListWishListItemsPageHttpResponse(
-					wishListId, accountId, pagination);
+					wishListId, accountId, currencyCode, pagination);
 
 			String content = httpResponse.getContent();
 
@@ -561,7 +571,8 @@ public interface WishListItemResource {
 
 		public HttpInvoker.HttpResponse
 				getWishlistWishListWishListItemsPageHttpResponse(
-					Long wishListId, Long accountId, Pagination pagination)
+					Long wishListId, Long accountId, String currencyCode,
+					Pagination pagination)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -587,6 +598,11 @@ public interface WishListItemResource {
 
 			if (accountId != null) {
 				httpInvoker.parameter("accountId", String.valueOf(accountId));
+			}
+
+			if (currencyCode != null) {
+				httpInvoker.parameter(
+					"currencyCode", String.valueOf(currencyCode));
 			}
 
 			if (pagination != null) {

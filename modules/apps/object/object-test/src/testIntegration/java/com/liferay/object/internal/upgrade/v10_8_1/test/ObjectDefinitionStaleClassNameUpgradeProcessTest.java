@@ -83,7 +83,7 @@ public class ObjectDefinitionStaleClassNameUpgradeProcessTest {
 	}
 
 	private static final String _CLASS_NAME =
-		"com.liferay.object.internal.upgrade.v10_7_1." +
+		"com.liferay.object.internal.upgrade.v10_8_1." +
 			"ObjectDefinitionStaleClassNameUpgradeProcess";
 
 	@Inject(

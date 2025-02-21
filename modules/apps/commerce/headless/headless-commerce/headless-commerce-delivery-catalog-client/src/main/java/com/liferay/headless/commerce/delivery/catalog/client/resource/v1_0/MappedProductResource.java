@@ -35,14 +35,15 @@ public interface MappedProductResource {
 	}
 
 	public Page<MappedProduct> getChannelProductMappedProductsPage(
-			Long channelId, Long productId, Long accountId, String search,
-			Pagination pagination, String sortString)
+			Long channelId, Long productId, Long accountId, String currencyCode,
+			String search, Pagination pagination, String sortString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			getChannelProductMappedProductsPageHttpResponse(
-				Long channelId, Long productId, Long accountId, String search,
-				Pagination pagination, String sortString)
+				Long channelId, Long productId, Long accountId,
+				String currencyCode, String search, Pagination pagination,
+				String sortString)
 		throws Exception;
 
 	public static class Builder {
@@ -155,14 +156,15 @@ public interface MappedProductResource {
 		implements MappedProductResource {
 
 		public Page<MappedProduct> getChannelProductMappedProductsPage(
-				Long channelId, Long productId, Long accountId, String search,
-				Pagination pagination, String sortString)
+				Long channelId, Long productId, Long accountId,
+				String currencyCode, String search, Pagination pagination,
+				String sortString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getChannelProductMappedProductsPageHttpResponse(
-					channelId, productId, accountId, search, pagination,
-					sortString);
+					channelId, productId, accountId, currencyCode, search,
+					pagination, sortString);
 
 			String content = httpResponse.getContent();
 
@@ -226,7 +228,8 @@ public interface MappedProductResource {
 		public HttpInvoker.HttpResponse
 				getChannelProductMappedProductsPageHttpResponse(
 					Long channelId, Long productId, Long accountId,
-					String search, Pagination pagination, String sortString)
+					String currencyCode, String search, Pagination pagination,
+					String sortString)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -252,6 +255,11 @@ public interface MappedProductResource {
 
 			if (accountId != null) {
 				httpInvoker.parameter("accountId", String.valueOf(accountId));
+			}
+
+			if (currencyCode != null) {
+				httpInvoker.parameter(
+					"currencyCode", String.valueOf(currencyCode));
 			}
 
 			if (search != null) {

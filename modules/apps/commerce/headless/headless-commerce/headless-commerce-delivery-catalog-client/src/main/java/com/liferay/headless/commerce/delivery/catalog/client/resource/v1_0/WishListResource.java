@@ -35,13 +35,14 @@ public interface WishListResource {
 	}
 
 	public Page<WishList> getChannelByExternalReferenceCodeWishListsPage(
-			String externalReferenceCode, Long accountId, Pagination pagination)
+			String externalReferenceCode, Long accountId, String currencyCode,
+			Pagination pagination)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			getChannelByExternalReferenceCodeWishListsPageHttpResponse(
 				String externalReferenceCode, Long accountId,
-				Pagination pagination)
+				String currencyCode, Pagination pagination)
 		throws Exception;
 
 	public WishList postChannelByExternalReferenceCodeWishList(
@@ -54,11 +55,13 @@ public interface WishListResource {
 		throws Exception;
 
 	public Page<WishList> getChannelWishListsPage(
-			Long channelId, Long accountId, Pagination pagination)
+			Long channelId, Long accountId, String currencyCode,
+			Pagination pagination)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getChannelWishListsPageHttpResponse(
-			Long channelId, Long accountId, Pagination pagination)
+			Long channelId, Long accountId, String currencyCode,
+			Pagination pagination)
 		throws Exception;
 
 	public WishList postChannelWishList(
@@ -204,12 +207,12 @@ public interface WishListResource {
 
 		public Page<WishList> getChannelByExternalReferenceCodeWishListsPage(
 				String externalReferenceCode, Long accountId,
-				Pagination pagination)
+				String currencyCode, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getChannelByExternalReferenceCodeWishListsPageHttpResponse(
-					externalReferenceCode, accountId, pagination);
+					externalReferenceCode, accountId, currencyCode, pagination);
 
 			String content = httpResponse.getContent();
 
@@ -273,7 +276,7 @@ public interface WishListResource {
 		public HttpInvoker.HttpResponse
 				getChannelByExternalReferenceCodeWishListsPageHttpResponse(
 					String externalReferenceCode, Long accountId,
-					Pagination pagination)
+					String currencyCode, Pagination pagination)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -299,6 +302,11 @@ public interface WishListResource {
 
 			if (accountId != null) {
 				httpInvoker.parameter("accountId", String.valueOf(accountId));
+			}
+
+			if (currencyCode != null) {
+				httpInvoker.parameter(
+					"currencyCode", String.valueOf(currencyCode));
 			}
 
 			if (pagination != null) {
@@ -439,12 +447,13 @@ public interface WishListResource {
 		}
 
 		public Page<WishList> getChannelWishListsPage(
-				Long channelId, Long accountId, Pagination pagination)
+				Long channelId, Long accountId, String currencyCode,
+				Pagination pagination)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getChannelWishListsPageHttpResponse(
-					channelId, accountId, pagination);
+					channelId, accountId, currencyCode, pagination);
 
 			String content = httpResponse.getContent();
 
@@ -506,7 +515,8 @@ public interface WishListResource {
 		}
 
 		public HttpInvoker.HttpResponse getChannelWishListsPageHttpResponse(
-				Long channelId, Long accountId, Pagination pagination)
+				Long channelId, Long accountId, String currencyCode,
+				Pagination pagination)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -532,6 +542,11 @@ public interface WishListResource {
 
 			if (accountId != null) {
 				httpInvoker.parameter("accountId", String.valueOf(accountId));
+			}
+
+			if (currencyCode != null) {
+				httpInvoker.parameter(
+					"currencyCode", String.valueOf(currencyCode));
 			}
 
 			if (pagination != null) {

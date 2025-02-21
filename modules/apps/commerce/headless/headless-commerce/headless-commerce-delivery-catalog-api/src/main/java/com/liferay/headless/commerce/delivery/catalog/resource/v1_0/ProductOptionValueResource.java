@@ -53,7 +53,8 @@ public interface ProductOptionValueResource {
 				String channelExternalReferenceCode,
 				String productExternalReferenceCode,
 				String productOptionExternalReferenceCode, Long accountId,
-				Long productOptionValueId, Long skuId, Pagination pagination)
+				String currencyCode, Long productOptionValueId, Long skuId,
+				Pagination pagination)
 		throws Exception;
 
 	public Page<ProductOptionValue>
@@ -61,22 +62,22 @@ public interface ProductOptionValueResource {
 				String channelExternalReferenceCode,
 				String productExternalReferenceCode,
 				String productOptionExternalReferenceCode, Long accountId,
-				Long productOptionValueId, Long skuId, Pagination pagination,
-				SkuOption[] skuOptions)
+				String currencyCode, Long productOptionValueId, Long skuId,
+				Pagination pagination, SkuOption[] skuOptions)
 		throws Exception;
 
 	public Page<ProductOptionValue>
 			getChannelProductProductOptionProductOptionValuesPage(
 				Long channelId, Long productId, Long productOptionId,
-				Long accountId, Long productOptionValueId, Long skuId,
-				Pagination pagination)
+				Long accountId, String currencyCode, Long productOptionValueId,
+				Long skuId, Pagination pagination)
 		throws Exception;
 
 	public Page<ProductOptionValue>
 			postChannelProductProductOptionProductOptionValuesPage(
 				Long channelId, Long productId, Long productOptionId,
-				Long accountId, Long productOptionValueId, Long skuId,
-				Pagination pagination, SkuOption[] skuOptions)
+				Long accountId, String currencyCode, Long productOptionValueId,
+				Long skuId, Pagination pagination, SkuOption[] skuOptions)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

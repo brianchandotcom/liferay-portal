@@ -52,6 +52,7 @@ import {config as dynamicDataMappingFormWebConfig} from './tests/dynamic-data-ma
 import {config as exportImportWebConfig} from './tests/export-import-web/config';
 import {config as featureFlagWebConfig} from './tests/feature-flag-web/config';
 import {config as fragmentWebConfig} from './tests/fragment-web/config';
+import {config as friendlyURLConfig} from './tests/friendly-url-web/config';
 import {config as frontendDataSetAdminWebConfig} from './tests/frontend-data-set-admin-web/config';
 import {config as frontendDataSetWebConfig} from './tests/frontend-data-set-web/config';
 import {config as frontendEditorCKEditorWebConfig} from './tests/frontend-editor-ckeditor-web/config';
@@ -183,6 +184,7 @@ export default defineConfig({
 		exportImportWebConfig,
 		featureFlagWebConfig,
 		fragmentWebConfig,
+		friendlyURLConfig,
 		frontendDataSetAdminWebConfig,
 		frontendDataSetWebConfig,
 		frontendEditorCKEditorWebConfig,

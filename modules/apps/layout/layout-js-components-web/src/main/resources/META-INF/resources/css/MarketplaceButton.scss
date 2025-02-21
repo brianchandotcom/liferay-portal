@@ -1,3 +1,7 @@
+@import 'cadmin-variables';
+
+@import 'atlas-variables';
+
 .marketplace-button {
 	position: relative;
 
@@ -14,4 +18,8 @@
 		width: 10px;
 		z-index: 1;
 	}
+}
+
+html#{$cadmin-selector} .cadmin .marketplace-button {
+	@extend .marketplace-button;
 }

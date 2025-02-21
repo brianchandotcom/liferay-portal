@@ -4,12 +4,13 @@
  */
 
 import {ClayButtonWithIcon} from '@clayui/button';
-import {
-	MarketplaceModal,
-	MarketplacePresentationModal,
-	openModalComponent,
-} from '@liferay/layout-js-components-web';
 import React, {useCallback, useState} from 'react';
+
+import MarketplaceModal from './MarketplaceModal';
+import MarketplacePresentationModal from './MarketplacePresentationModal';
+import openModalComponent from './openModalComponent';
+
+import '../../../css/MarketplaceButton.scss';
 
 interface Props {
 	body: string;
@@ -44,7 +45,7 @@ function MarketplaceButton({
 	}
 
 	return (
-		<>
+		<div className="marketplace-button">
 			<ClayButtonWithIcon
 				aria-label={Liferay.Language.get('open-marketplace-explorer')}
 				borderless
@@ -61,7 +62,7 @@ function MarketplaceButton({
 				className="notification"
 				id={`${portletNamespace}marketplaceBadge`}
 			></span>
-		</>
+		</div>
 	);
 }
 

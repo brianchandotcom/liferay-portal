@@ -16,6 +16,7 @@ export {default as ImportOptionsModal} from './components/import/ImportOptionsMo
 export {default as ImportResults} from './components/import/ImportResults';
 export {default as LengthInput} from './components/length_input/LengthInput';
 export {default as CreationModal} from './components/modals/CreationModal';
+export {default as MarketplaceButton} from './components/modals/MarketplaceButton';
 export {default as MarketplaceModal} from './components/modals/MarketplaceModal';
 export {default as MarketplacePresentationModal} from './components/modals/MarketplacePresentationModal';
 export {default as openModalComponent} from './components/modals/openModalComponent';

@@ -82,7 +82,7 @@ List<FragmentCollectionContributor> fragmentCollectionContributors = fragmentEnt
 									<li>
 										<div class="marketplace-button">
 											<react:component
-												module="{MarketplaceButton} from fragment-web"
+												module="{MarketplaceButton} from layout-js-components-web"
 												props='<%=
 													HashMapBuilder.<String, Object>put(
 														"body", LanguageUtil.get(request, "we-are-excited-to-share-that-marketplace-is-now-part-of-fragments")

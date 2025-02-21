@@ -13,7 +13,6 @@ export {default as FragmentEntryDropdownPropsTransformer} from './FragmentEntryD
 export {default as FragmentEntryUsagesManagementToolbarPropsTransformer} from './FragmentEntryUsagesManagementToolbarPropsTransformer';
 export {default as FragmentServiceConfiguration} from './FragmentServiceConfiguration';
 export {default as ImportFragments} from './ImportFragments';
-export {default as MarketplaceButton} from './MarketplaceButton';
 export {default as ViewContributedFragmentEntriesManagementToolbarPropsTransformer} from './ViewContributedFragmentEntriesManagementToolbarPropsTransformer';
 export {default as ViewFragmentEntriesManagementToolbarPropsTransformer} from './ViewFragmentEntriesManagementToolbarPropsTransformer';
 export {default as FragmentEditor} from './fragment-editor/FragmentEditor';

@@ -286,8 +286,8 @@ public class CompanyImpl extends CompanyBaseImpl {
 		}
 
 		VirtualHost virtualHost =
-			VirtualHostLocalServiceUtil.fetchDefaultVirtualHost(
-				getCompanyId(), 0);
+			VirtualHostLocalServiceUtil.fetchCompanyDefaultVirtualHost(
+				getCompanyId());
 
 		if (virtualHost == null) {
 			return StringPool.BLANK;

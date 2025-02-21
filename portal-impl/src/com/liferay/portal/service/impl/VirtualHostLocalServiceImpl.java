@@ -54,12 +54,8 @@ public class VirtualHostLocalServiceImpl
 	extends VirtualHostLocalServiceBaseImpl {
 
 	@Override
-	public VirtualHost fetchDefaultVirtualHost(
-		long companyId, long layoutSetId) {
-
-		for (VirtualHost virtualHost :
-				getVirtualHosts(companyId, layoutSetId)) {
-
+	public VirtualHost fetchCompanyDefaultVirtualHost(long companyId) {
+		for (VirtualHost virtualHost : getVirtualHosts(companyId, 0)) {
 			if (virtualHost.isDefaultVirtualHost()) {
 				return virtualHost;
 			}

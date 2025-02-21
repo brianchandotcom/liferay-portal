@@ -124,10 +124,10 @@ public class SystemOSGiCommands implements OSGiCommands {
 			map = new TreeMap<>();
 
 		for (String namespace : namespaces) {
-			_collect(bundle, map, namespace);
+			_collectCapabilities(bundle, map, namespace);
 		}
 
-		_print(map);
+		_listCapabilities(map);
 	}
 
 	public void listCapabilities(String... namespaces) {
@@ -142,11 +142,11 @@ public class SystemOSGiCommands implements OSGiCommands {
 
 		for (String namespace : namespaces) {
 			for (Bundle bundle : bundles) {
-				_collect(bundle, map, namespace);
+				_collectCapabilities(bundle, map, namespace);
 			}
 		}
 
-		_print(map);
+		_listCapabilities(map);
 	}
 
 	public void listSPIProviders(long bundleId, String... spiTypes)
@@ -160,7 +160,7 @@ public class SystemOSGiCommands implements OSGiCommands {
 			return;
 		}
 
-		_print(
+		_listSPIProviders(
 			bundle, bundle.findEntries("/META-INF/services/", null, true),
 			new HashSet<>(Arrays.asList(spiTypes)));
 	}
@@ -176,7 +176,7 @@ public class SystemOSGiCommands implements OSGiCommands {
 				continue;
 			}
 
-			_print(bundle, enumeration, spiTypesSet);
+			_listSPIProviders(bundle, enumeration, spiTypesSet);
 		}
 	}
 
@@ -189,7 +189,7 @@ public class SystemOSGiCommands implements OSGiCommands {
 		_frameworkWiring = systemBundle.adapt(FrameworkWiring.class);
 	}
 
-	private void _collect(
+	private void _collectCapabilities(
 		Bundle bundle,
 		Map<String, Map.Entry<Set<BundleCapability>, Set<BundleRequirement>>>
 			map,
@@ -238,7 +238,7 @@ public class SystemOSGiCommands implements OSGiCommands {
 		return spiTypesSet.contains(path.substring(index + 1));
 	}
 
-	private void _print(
+	private void _listSPIProviders(
 			Bundle bundle, Enumeration<URL> enumeration,
 			Set<String> spiTypesSet)
 		throws IOException {
@@ -265,7 +265,7 @@ public class SystemOSGiCommands implements OSGiCommands {
 		}
 	}
 
-	private void _print(
+	private void _listCapabilities(
 		Map<String, Map.Entry<Set<BundleCapability>, Set<BundleRequirement>>>
 			map) {
 

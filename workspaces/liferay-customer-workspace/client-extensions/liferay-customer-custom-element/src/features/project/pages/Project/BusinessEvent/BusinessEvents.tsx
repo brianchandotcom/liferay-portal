@@ -128,11 +128,34 @@ const BusinessEvents = () => {
 
 	const filterQuery = generateFilterQuery(filters);
 
-	const handleFilterChange = (selectedFilters: IFilterOption[]) => {
-		setFilters((prevFilters) => ({
-			...prevFilters,
-			selectedFilters,
-		}));
+	const handleFilterChange = (newFilterOptions: IFilterOption[]) => {
+		setFilters((prevFilters) => {
+			let updatedFilters: IFilterOption[] = prevFilters.selectedFilters
+				? [...prevFilters.selectedFilters]
+				: [];
+
+			if (newFilterOptions && !!newFilterOptions.length) {
+				newFilterOptions.forEach((newOption) => {
+					updatedFilters = updatedFilters.filter(
+						(filter) => filter.name !== newOption.name
+					);
+					updatedFilters.push(newOption);
+				});
+			}
+			else {
+				updatedFilters = updatedFilters.filter(
+					(filter) =>
+						filter.name !==
+						(prevFilters.selectedFilters?.length &&
+							prevFilters.selectedFilters[0].name)
+				);
+			}
+
+			return {
+				...prevFilters,
+				selectedFilters: updatedFilters,
+			};
+		});
 	};
 
 	const handleSearchChange = (searchTerm: string) => {
@@ -199,9 +222,9 @@ const BusinessEvents = () => {
 									)}
 									borderless
 									className="text-neutral-5"
-									onPointerEnterCapture={() => {}}
-									onPointerLeaveCapture={() => {}}
-									placeholder=""
+									onPointerEnterCapture={undefined}
+									onPointerLeaveCapture={undefined}
+									placeholder={undefined}
 									symbol="ellipsis-v"
 								/>
 							}

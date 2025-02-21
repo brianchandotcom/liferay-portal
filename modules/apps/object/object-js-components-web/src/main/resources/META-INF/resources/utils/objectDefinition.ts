@@ -15,3 +15,12 @@ export function normalizeName(str: string) {
 
 	return removeAllSpecialCharacters(join);
 }
+
+export function findObjectDefinitionById(
+	id: number,
+	objectDefinitions: ObjectDefinition[]
+) {
+	return objectDefinitions.find(
+		(objectDefinition) => objectDefinition.id === Number(id)
+	);
+}

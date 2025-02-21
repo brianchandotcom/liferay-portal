@@ -35,6 +35,7 @@ public class ImageStorageUpgradeProcess extends UpgradeProcess {
 		ActionableDynamicQuery actionableDynamicQuery =
 			_imageLocalService.getActionableDynamicQuery();
 
+		actionableDynamicQuery.setParallel(true);
 		actionableDynamicQuery.setPerformActionMethod(
 			(Image image) -> {
 				String fileName = _getFileName(image);

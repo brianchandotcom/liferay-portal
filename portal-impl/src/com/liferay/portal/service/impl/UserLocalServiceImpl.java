@@ -2264,6 +2264,10 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 */
 	@Override
 	public User fetchUserByFacebookId(long companyId, long facebookId) {
+		if (facebookId == 0) {
+			return null;
+		}
+
 		List<User> users = userPersistence.findByC_FID(companyId, facebookId);
 
 		if (users.isEmpty()) {

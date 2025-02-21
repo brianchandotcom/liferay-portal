@@ -18,4 +18,8 @@ public interface CommerceContextFactory {
 		long companyId, long commerceChannelGroupId, long userId, long orderId,
 		long commerceAccountId);
 
+	public CommerceContext create(
+		long companyId, long commerceChannelGroupId, long userId, long orderId,
+		long commerceAccountId, String currencyCode);
+
 }

@@ -14,6 +14,8 @@ import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.segments.model.SegmentsExperience;
+import com.liferay.segments.service.SegmentsExperienceLocalService;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -60,8 +62,19 @@ public class SaveVariantSegmentsExperienceMVCActionCommand
 		long segmentsExperienceId = ParamUtil.getLong(
 			actionRequest, "segmentsExperienceId");
 
+		SegmentsExperience sourceSegmentsExperience =
+			_segmentsExperienceLocalService.fetchSegmentsExperience(
+				segmentsExperienceId);
+
+		SegmentsExperience targetSegmentsExperience =
+			_segmentsExperienceLocalService.fetchSegmentsExperience(
+				layout.getGroupId(),
+				sourceSegmentsExperience.getSegmentsExperienceKey(),
+				layout.getPlid());
+
 		_layoutLocalService.copyLayoutContent(
-			segmentsExperienceId, draftLayout, layout);
+			sourceSegmentsExperience.getSegmentsExperienceId(), draftLayout,
+			targetSegmentsExperience.getSegmentsExperienceId(), layout);
 
 		hideDefaultSuccessMessage(actionRequest);
 
@@ -70,5 +83,8 @@ public class SaveVariantSegmentsExperienceMVCActionCommand
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 }

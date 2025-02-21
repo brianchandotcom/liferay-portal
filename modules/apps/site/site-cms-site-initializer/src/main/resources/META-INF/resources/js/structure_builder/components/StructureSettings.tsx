@@ -38,6 +38,7 @@ export default function StructureSettings() {
 
 			<ClayForm.Group>
 				<ClayInput
+					aria-label={Liferay.Language.get('structure-label')}
 					className="form-control-inline structure-builder__title-input"
 					onChange={(event) =>
 						dispatch({label: event.target.value, type: 'set-label'})

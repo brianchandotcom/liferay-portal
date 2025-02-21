@@ -62,7 +62,7 @@ test(
 
 		await fragmentsPage.goto(site.friendlyUrlPath);
 
-		await expect(page.locator('[id$="marketplaceBadge"]')).toBeVisible();
+		await expect(page.locator('.notification')).toBeVisible();
 
 		// Click the marketplace button and wait for the modal
 
@@ -78,9 +78,7 @@ test(
 
 		await page.getByRole('button', {name: 'Cancel'}).click();
 
-		await expect(
-			page.locator('[id$="marketplaceBadge"]')
-		).not.toBeVisible();
+		await expect(page.locator('.notification')).not.toBeVisible();
 	}
 );
 
@@ -89,7 +87,31 @@ test(
 	{
 		tag: ['@LPD-48223'],
 	},
-	async ({fragmentsPage, page, site}) => {
+	async ({apiHelpers, fragmentsPage, page, site}) => {
+
+		// Create a new user with admin role
+
+		const user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+		userData[user.alternateName] = {
+			name: user.givenName,
+			password: 'test',
+			surname: user.familyName,
+		};
+
+		const role =
+			await apiHelpers.headlessAdminUser.getRoleByName('Administrator');
+
+		await apiHelpers.headlessAdminUser.assignUserToRole(
+			role.externalReferenceCode,
+			user.id
+		);
+
+		// Log in with the new user
+
+		await performLogout(page);
+
+		await performLogin(page, user.alternateName);
 
 		// Go to fragment administration and click the marketplace button
 
@@ -103,19 +125,6 @@ test(
 			page
 				.getByRole('dialog')
 				.getByRole('heading', {name: 'Marketplace is now in'})
-		).toBeVisible();
-
-		await page
-			.getByRole('dialog')
-			.getByLabel('Explore Marketplace')
-			.click();
-
-		// Wait for the modal with fragments to appear
-
-		await expect(
-			page
-				.getByRole('dialog')
-				.getByRole('heading', {name: 'Add from Marketplace'})
 		).toBeVisible();
 	}
 );

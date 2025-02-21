@@ -225,12 +225,6 @@ public class DBPartitionUtil {
 	}
 
 	public static String getExtractedPartitionName(long companyId) {
-		if ((companyId == CompanyConstants.SYSTEM) ||
-			(companyId == _defaultCompanyId)) {
-
-			return _defaultPartitionName;
-		}
-
 		return _DATABASE_EXTRACTED_PARTITION_SCHEMA_NAME_PREFIX + companyId;
 	}
 

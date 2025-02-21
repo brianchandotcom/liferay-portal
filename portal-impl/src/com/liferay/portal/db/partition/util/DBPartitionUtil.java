@@ -120,6 +120,21 @@ public class DBPartitionUtil {
 
 	public static boolean extractCompany(long companyId)
 		throws PortalException {
+
+		if (DBPartition.isPartitionEnabled() ||
+			(companyId == _defaultCompanyId)) {
+
+			return false;
+		}
+
+		try (SafeCloseable safeCloseable =
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+					_defaultCompanyId)) {
+
+			_extractCompany(companyId);
+		}
+
+		return true;
 	}
 
 	public static boolean extractDBPartition(long companyId)
@@ -213,8 +228,13 @@ public class DBPartitionUtil {
 	public static Map<String, String> getConfigurations(long companyId)
 		throws SQLException {
 
-		Connection connection = CurrentConnectionUtil.getConnection(
-			InfrastructureUtil.getDataSource());
+		DataSource dataSource = InfrastructureUtil.getDataSource();
+
+		Connection connection = CurrentConnectionUtil.getConnection(dataSource);
+
+		if (connection == null) {
+			connection = dataSource.getConnection();
+		}
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				StringBundler.concat(
@@ -266,6 +286,31 @@ public class DBPartitionUtil {
 		}
 
 		return true;
+	}
+
+	public static void insertExtractedConfiguration(
+			long companyId, String configurationId, String dictionary)
+		throws SQLException {
+
+		DataSource dataSource = InfrastructureUtil.getDataSource();
+
+		Connection connection = CurrentConnectionUtil.getConnection(dataSource);
+
+		if (connection == null) {
+			connection = dataSource.getConnection();
+		}
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				StringBundler.concat(
+					"insert into ", _getExtractedPartitionName(companyId),
+					".Configuration_ (configurationId, dictionary",
+					") values (?, ?)"))) {
+
+			preparedStatement.setString(1, configurationId);
+			preparedStatement.setString(2, dictionary);
+
+			preparedStatement.executeUpdate();
+		}
 	}
 
 	public static boolean removeDBPartition(long companyId)
@@ -800,6 +845,78 @@ public class DBPartitionUtil {
 		}
 		catch (Exception exception) {
 			throw new PortalException(exception);
+		}
+	}
+
+	private static void _extractCompany(long companyId) throws PortalException {
+		Connection connection = CurrentConnectionUtil.getConnection(
+			InfrastructureUtil.getDataSource());
+
+		String extractedPartitionName = _getExtractedPartitionName(companyId);
+
+		try {
+			try (PreparedStatement preparedStatement =
+					connection.prepareStatement(
+						_dbPartitionDB.getCreatePartitionSQL(
+							connection, extractedPartitionName))) {
+
+				preparedStatement.executeUpdate();
+
+				List<Long> companyIds = ListUtil.fromArray(
+					PortalInstancePool.getCompanyIds());
+
+				DatabaseMetaData databaseMetaData = connection.getMetaData();
+
+				DBInspector dbInspector = new DBInspector(connection);
+
+				try (ResultSet resultSet = databaseMetaData.getTables(
+						_dbPartitionDB.getCatalog(
+							connection, _defaultPartitionName),
+						_dbPartitionDB.getSchema(
+							connection, _defaultPartitionName),
+						null, new String[] {"TABLE"});
+					Statement statement = connection.createStatement()) {
+
+					while (resultSet.next()) {
+						String tableName = resultSet.getString("TABLE_NAME");
+
+						if (StringUtil.equalsIgnoreCase(
+								tableName, "Configuration_")) {
+
+							statement.executeUpdate(
+								_dbPartitionDB.getCreateTableSQL(
+									connection, _defaultPartitionName,
+									extractedPartitionName, tableName));
+
+							continue;
+						}
+
+						if (dbInspector.isObjectTable(companyIds, tableName) &&
+							!tableName.contains(String.valueOf(companyId))) {
+
+							continue;
+						}
+
+						_extractTable(
+							companyId, connection, tableName, statement,
+							dbInspector, false);
+					}
+				}
+			}
+		}
+		catch (Exception exception) {
+			try (Statement statement = connection.createStatement()) {
+				statement.executeUpdate(
+					_dbPartitionDB.getDropPartitionSQL(
+						extractedPartitionName));
+			}
+			catch (SQLException sqlException) {
+				throw new PortalException(
+					"Unable to roll back schema extraction", sqlException);
+			}
+
+			throw new PortalException(
+				"Extraction of company was rolled back", exception);
 		}
 	}
 

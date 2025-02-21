@@ -204,6 +204,32 @@ public class CommerceChannelRelServiceImpl
 			className, classPK, name, true);
 	}
 
+	@Override
+	public List<CommerceChannelRel> getCommerceCurrencyCommerceChannelRels(
+			long commerceChannelId, String name, int start, int end)
+		throws PortalException {
+
+		_commerceChannelModelResourcePermission.check(
+			getPermissionChecker(), commerceChannelId, ActionKeys.VIEW);
+
+		return commerceChannelRelLocalService.
+			getCommerceCurrencyCommerceChannelRels(
+				commerceChannelId, name, start, end);
+	}
+
+	@Override
+	public int getCommerceCurrencyCommerceChannelRelsCount(
+			long commerceChannelId, String name)
+		throws PortalException {
+
+		_commerceChannelModelResourcePermission.check(
+			getPermissionChecker(), commerceChannelId, ActionKeys.VIEW);
+
+		return commerceChannelRelLocalService.
+			getCommerceCurrencyCommerceChannelRelsCount(
+				commerceChannelId, name);
+	}
+
 	@Reference(
 		target = "(model.class.name=com.liferay.commerce.product.model.CommerceChannel)"
 	)

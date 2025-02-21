@@ -6,7 +6,9 @@
 package com.liferay.site.cms.site.initializer.internal.model.listener;
 
 import com.liferay.object.constants.ObjectEntryFolderConstants;
+import com.liferay.object.entry.util.ObjectEntryFolderThreadLocal;
 import com.liferay.object.service.ObjectEntryFolderLocalService;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
@@ -53,9 +55,6 @@ public class GroupModelListener extends BaseModelListener<Group> {
 			return;
 		}
 
-		// TODO We need to protect L_ in ObjectEntryFolderLocalServiceImpl
-		// via a thread local
-
 		_objectEntryFolderLocalService.addObjectEntryFolder(
 			"L_CONTENTS", group.getCreatorUserId(), group.getGroupId(),
 			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
@@ -80,10 +79,16 @@ public class GroupModelListener extends BaseModelListener<Group> {
 			return;
 		}
 
-		_objectEntryFolderLocalService.deleteObjectEntryFolder(
-			"L_CONTENTS", group.getGroupId(), group.getCompanyId());
-		_objectEntryFolderLocalService.deleteObjectEntryFolder(
-			"L_FILES", group.getGroupId(), group.getCompanyId());
+		try (SafeCloseable safeCloseable =
+				ObjectEntryFolderThreadLocal.
+					setSkipSystemObjectEntryFolderProtectionWithSafeCloseable(
+						true)) {
+
+			_objectEntryFolderLocalService.deleteObjectEntryFolder(
+				"L_CONTENTS", group.getGroupId(), group.getCompanyId());
+			_objectEntryFolderLocalService.deleteObjectEntryFolder(
+				"L_FILES", group.getGroupId(), group.getCompanyId());
+		}
 	}
 
 	@Reference

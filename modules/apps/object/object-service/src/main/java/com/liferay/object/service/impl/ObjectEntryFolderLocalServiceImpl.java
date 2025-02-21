@@ -6,6 +6,7 @@
 package com.liferay.object.service.impl;
 
 import com.liferay.object.constants.ObjectEntryFolderConstants;
+import com.liferay.object.entry.util.ObjectEntryFolderThreadLocal;
 import com.liferay.object.exception.DuplicateObjectEntryFolderExternalReferenceCodeException;
 import com.liferay.object.exception.ObjectEntryFolderNameException;
 import com.liferay.object.exception.ObjectEntryFolderScopeException;
@@ -28,6 +29,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
@@ -120,6 +122,17 @@ public class ObjectEntryFolderLocalServiceImpl
 	public ObjectEntryFolder deleteObjectEntryFolder(
 			ObjectEntryFolder objectEntryFolder)
 		throws PortalException {
+
+		if (!ObjectEntryFolderThreadLocal.
+				isSkipSystemObjectEntryFolderProtection() &&
+			StringUtil.startsWith(
+				objectEntryFolder.getExternalReferenceCode(), "L_")) {
+
+			throw new PortalException(
+				"Object entry folder " +
+					objectEntryFolder.getExternalReferenceCode() +
+						" cannot be deleted");
+		}
 
 		// Object entries
 

@@ -47,9 +47,3 @@ if (testClassGroupIndex) {
 	gradle.ext.testClassGroupIndex = testClassGroupIndex
 	gradle.ext.testClassGroups = properties["TEST_CLASS_GROUPS"]
 }
-
-if (Boolean.getBoolean("build.jakarta.transformer.enabled") && gradle.startParameter.taskNames.contains("clean")) {
-	gradle.beforeProject {
-		delete new File(rootDir.parentFile, "build/_jakarta-transformer")
-	}
-}

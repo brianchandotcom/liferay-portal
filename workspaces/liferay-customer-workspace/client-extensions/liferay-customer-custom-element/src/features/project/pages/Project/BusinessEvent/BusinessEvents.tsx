@@ -199,6 +199,9 @@ const BusinessEvents = () => {
 									)}
 									borderless
 									className="text-neutral-5"
+									onPointerEnterCapture={() => {}}
+									onPointerLeaveCapture={() => {}}
+									placeholder=""
 									symbol="ellipsis-v"
 								/>
 							}

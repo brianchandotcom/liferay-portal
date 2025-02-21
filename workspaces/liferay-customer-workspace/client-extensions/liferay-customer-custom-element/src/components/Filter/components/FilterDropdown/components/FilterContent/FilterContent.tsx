@@ -8,7 +8,7 @@ import {ClayCheckbox} from '@clayui/form';
 import {useEffect, useState} from 'react';
 import i18n from '~/utils/I18n';
 
-const FilterCheckbox = ({availableItems, clearCheckboxes, updateFilters}) => {
+const FilterContent = ({availableItems, clearCheckboxes, updateFilters}) => {
 	const [checkedItems, setCheckedItems] = useState([]);
 
 	const itemDisplayMap = {
@@ -65,4 +65,4 @@ const FilterCheckbox = ({availableItems, clearCheckboxes, updateFilters}) => {
 		</div>
 	);
 };
-export default FilterCheckbox;
+export default FilterContent;

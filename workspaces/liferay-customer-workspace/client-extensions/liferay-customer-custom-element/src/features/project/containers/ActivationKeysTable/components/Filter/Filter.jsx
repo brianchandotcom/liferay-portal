@@ -6,7 +6,7 @@
 import {useEffect, useRef, useState} from 'react';
 import i18n from '~/utils/I18n';
 import {Button} from '~/components';
-import getAvailableFieldsCheckboxs from '~/components/Filter/components/FilterCheckbox/utils/getAvailableFieldsCheckboxs';
+import getAvailableFieldsCheckboxs from '../../utils/getAvailableFieldsCheckboxs';
 import FilterDropdown from '~/components/Filter/components/FilterDropdown';
 import SearchBar from '~/components/SearchBar';
 import {

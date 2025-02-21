@@ -6,7 +6,7 @@
 import ClayDropDown from '@clayui/drop-down';
 import classNames from 'classnames';
 import {memo, useState} from 'react';
-import DrilldownMenuItems from './components/FilterDropdownMenuItems';
+import DrilldownMenuItems from './components/FilterNavigation';
 
 const FilterDropdown = ({
 	alignmentPosition,

@@ -10,7 +10,7 @@ import React from 'react';
 
 import {CSSTransition} from 'react-transition-group';
 
-const FilterDropdownMenuItems = ({
+const FilterNavigation = ({
 	active,
 	direction,
 	header,
@@ -128,4 +128,4 @@ const FilterDropdownMenuItems = ({
 	);
 };
 
-export default FilterDropdownMenuItems;
+export default FilterNavigation;

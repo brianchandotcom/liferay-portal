@@ -298,8 +298,14 @@ public class BatchEngineExportTaskExecutorTest
 			_batchEngineExportTaskLocalService.getBatchEngineExportTask(
 				_batchEngineExportTask.getBatchEngineExportTaskId());
 
+		BatchEngineExportTask resultBatchEngineExportTask =
+			result.getBatchEngineExportTask();
+
 		Assert.assertEquals(
-			_batchEngineExportTask, result.getBatchEngineExportTask());
+			_batchEngineExportTask, resultBatchEngineExportTask);
+		Assert.assertEquals(
+			_batchEngineExportTask.getMvccVersion(),
+			resultBatchEngineExportTask.getMvccVersion());
 
 		Assert.assertEquals(
 			BatchEngineTaskExecuteStatus.COMPLETED.toString(),

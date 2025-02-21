@@ -9,6 +9,7 @@ import {CommerceDNDTablePage} from '../commerceDNDTablePage';
 
 export class CommerceAdminProductConfigurationEntriesPage extends CommerceDNDTablePage {
 	readonly differenceIcon: (locator?: Locator | Page) => Locator;
+	readonly noResultsText: Locator;
 	readonly page: Page;
 
 	constructor(page: Page) {
@@ -19,6 +20,7 @@ export class CommerceAdminProductConfigurationEntriesPage extends CommerceDNDTab
 		this.differenceIcon = (locator = page) => {
 			return locator.locator('.product-configuration-value .icon');
 		};
+		this.noResultsText = page.getByText('No Results Found');
 		this.page = page;
 	}
 }

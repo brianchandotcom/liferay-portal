@@ -328,7 +328,7 @@ test('LPD-43013 Configuration Entry form in side panel', async ({
 
 	await (
 		await commerceAdminProductConfigurationEntriesPage.tableRowLink({
-			colIndex: 0,
+			colIndex: 1,
 			rowValue: product.name['en_US'],
 		})
 	).click();
@@ -400,7 +400,7 @@ test('LPD-43013 Configuration Entry form in side panel', async ({
 
 	await (
 		await commerceAdminProductConfigurationEntriesPage.tableRowLink({
-			colIndex: 0,
+			colIndex: 1,
 			rowValue: product.name['en_US'],
 		})
 	).click();
@@ -525,7 +525,7 @@ test('LPD-43013 Configuration Entry form in side panel for virtual products', as
 
 	await (
 		await commerceAdminProductConfigurationEntriesPage.tableRowLink({
-			colIndex: 0,
+			colIndex: 1,
 			rowValue: product.name['en_US'],
 		})
 	).click();
@@ -905,7 +905,7 @@ test('LPD-37886 Can filter configuration entries dataset', async ({
 		await expect(
 			(
 				await commerceAdminProductConfigurationEntriesPage.tableRow(
-					0,
+					1,
 					product2.name['en_US'],
 					true
 				)
@@ -923,29 +923,9 @@ test('LPD-37886 Can filter configuration entries dataset', async ({
 		true
 	);
 
-	try {
-		await expect(
-			(
-				await commerceAdminProductConfigurationEntriesPage.tableRow(
-					0,
-					product1.name['en_US'],
-					true
-				)
-			).row
-		).toHaveCount(0);
-		await expect(
-			(
-				await commerceAdminProductConfigurationEntriesPage.tableRow(
-					0,
-					product2.name['en_US'],
-					true
-				)
-			).row
-		).toHaveCount(0);
-	}
-	catch (error) {
-		expect(error).toBeDefined();
-	}
+	await expect(
+		commerceAdminProductConfigurationEntriesPage.noResultsText
+	).toBeVisible();
 
 	await commerceAdminProductConfigurationEntriesPage.resetFiltersButton.click();
 	await commerceAdminProductConfigurationEntriesPage.addDataSetFilter(
@@ -967,7 +947,7 @@ test('LPD-37886 Can filter configuration entries dataset', async ({
 		await expect(
 			(
 				await commerceAdminProductConfigurationEntriesPage.tableRow(
-					0,
+					1,
 					product2.name['en_US'],
 					true
 				)

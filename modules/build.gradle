@@ -7,6 +7,9 @@ import com.liferay.gradle.util.copy.StripPathSegmentsAction
 
 import groovy.json.JsonSlurper
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
+
 import java.nio.file.Path
 
 import java.util.Objects
@@ -15,6 +18,10 @@ import java.util.concurrent.ConcurrentSkipListSet
 import org.apache.tools.ant.DirectoryScanner
 import org.apache.tools.ant.filters.ReplaceTokens
 
+import org.gradle.api.artifacts.transform.InputArtifact;
+import org.gradle.api.artifacts.transform.TransformAction;
+import org.gradle.api.artifacts.transform.TransformOutputs;
+import org.gradle.api.artifacts.transform.TransformParameters;
 import org.gradle.api.attributes.LibraryElements
 import org.gradle.api.execution.TaskExecutionGraph
 import org.gradle.plugins.ide.api.XmlFileContentMerger
@@ -44,6 +51,51 @@ ext {
 		"com.liferay.portal.tools.theme.builder.version": "1.1.9",
 		"com.liferay.portal.vulcan.api.version": "9.3.1"
 	]
+}
+
+abstract class JakartaTransformerTransformAction implements TransformAction<TransformParameters.None> {
+
+	public static final String ARTIFACT_TYPE = "jakarta-transformed-jar";
+
+	protected static Logger logger;
+	protected static ClassLoader classLoader;
+	protected static File propertiesFile;
+
+	@org.gradle.api.tasks.Classpath
+	@InputArtifact
+	abstract Provider<FileSystemLocation> getInputArtifact();
+
+	@Override
+	public void transform(TransformOutputs outputs) {
+		File inputJarFile = inputArtifact.get().asFile
+
+		String fileName = inputJarFile.name
+
+		if (fileName.contains('.')) {
+			fileName = fileName.replaceFirst(/(\.[^.]+)$/, '-JAKARTA-SNAPSHOT$1')
+		}
+
+		File outputJarFile = outputs.file(fileName)
+
+		Class<?> jakartaTransformerCLIClass = Class.forName("org.eclipse.transformer.cli.JakartaTransformerCLI", true, classLoader);
+
+		Constructor<?> jakartaTransformerCLIClassConstructor = jakartaTransformerCLIClass.getConstructor(PrintStream.class, PrintStream.class, String[].class);
+		Method runMethod = jakartaTransformerCLIClass.getMethod("run");
+
+		PrintStream errorPrintStream = new PrintStream(new ByteArrayOutputStream());
+		PrintStream standardPrintStream = new PrintStream(new ByteArrayOutputStream());
+
+		Object resultCode = runMethod.invoke(
+			jakartaTransformerCLIClassConstructor.newInstance(
+				standardPrintStream, errorPrintStream, ["--quiet", "--versions", propertiesFile.absolutePath, inputJarFile.absolutePath, outputJarFile.absolutePath ] as String[]));
+
+		if (!Objects.equals(resultCode.toString(), "Success")) {
+			throw new GradleException("Jakarta: ERROR ${resultCode}\n${errorPrintStream}")
+		}
+
+		logger.info("Jakarta:  {} -> {}", inputJarFile, outputJarFile);
+	}
+
 }
 
 task portalYarnCheckFormat
@@ -91,6 +143,14 @@ if (Boolean.getBoolean("build.jakarta.transformer.enabled")) {
 			url System.properties["repository.url"] ?: "https://repository-cdn.liferay.com/nexus/content/groups/public"
 		}
 	}
+
+	URLClassLoader urlClassLoader = new URLClassLoader(
+		configurations.jakartaTransformer.collect { it.toURI() }.collect{ it.toURL() }.toArray(new URL[0]),
+		null as java.lang.ClassLoader);
+
+	JakartaTransformerTransformAction.classLoader = urlClassLoader
+	JakartaTransformerTransformAction.logger = project.logger
+	JakartaTransformerTransformAction.propertiesFile = project.file("liferay-jakarta-versions.properties")
 }
 
 if (FileUtil.exists(rootProject, "private/yarn.lock")) {
@@ -814,106 +874,50 @@ gradle.beforeProject {
 			pluginManager.withPlugin("com.liferay.jasper.jspc") {
 				configurations {
 					compileJspClasspath
-					compileJspClasspathTransform
-
-					jspC {
+					compileJspClasspathTransform {
 						attributes {
-							attribute(LibraryElements.LIBRARY_ELEMENTS_ATTRIBUTE, objects.named(LibraryElements, LibraryElements.JAR))
-						}
-
-						resolutionStrategy {
-							dependencySubstitution {
-								dependencySubstitutions ->
-
-								all {
-									DependencySubstitution dependencySubstitution ->
-									ComponentSelector requested = dependencySubstitution.requested
-
-									if (requested instanceof ModuleComponentSelector) {
-										if (requested.group == "javax.servlet.jsp.jstl" && requested.module == "javax.servlet.jsp.jstl-api") {
-											dependencySubstitution.useTarget group: "jakarta.servlet.jsp.jstl", name: "jakarta.servlet.jsp.jstl-api", version: "3.0.2"
-										}
-										if (requested.group == "org.apache.tomcat" && requested.module == "tomcat-jasper") {
-											dependencySubstitution.useTarget group: "org.apache.tomcat", name: "tomcat-jasper", version: "10.1.34"
-										}
-										if (requested.group == "org.glassfish.web" && requested.module == "javax.servlet.jsp.jstl") {
-											dependencySubstitution.useTarget group: "org.glassfish.web", name: "jakarta.servlet.jsp.jstl", version: "3.0.1"
-										}
-									}
-								}
-							}
+							attribute(ArtifactTypeDefinition.ARTIFACT_TYPE_ATTRIBUTE, JakartaTransformerTransformAction.ARTIFACT_TYPE)
 						}
 					}
+					jspCClasspath
 				}
 
 				dependencies {
 					compileJspClasspath files(Project.class.classLoader.getURLs())
-					compileJspClasspath files(project.provider { _transformToJakarta(jakartaOutputDir, rootProject.configurations.jakartaTransformer, configurations.compileJspClasspathTransform, generateJSPJava) })
 					compileJspClasspath group: "org.apache.tomcat", name: "tomcat-jasper", version: "10.1.34"
 					compileJspClasspathTransform group: "com.liferay", name: "com.liferay.gradle.plugins.jasper.jspc", transitive: false, version: "2.0.20"
+					jspCClasspath files(tasks.named(sourceSets.main.compileJavaTaskName))
+					jspCClasspath files(tasks.named(sourceSets.main.processResourcesTaskName))
+					jspCClasspath group: "jakarta.servlet.jsp.jstl", name: "jakarta.servlet.jsp.jstl-api", version: "3.0.2"
+					jspCClasspath group: "org.apache.tomcat", name: "tomcat-jasper", version: "10.1.34"
+					jspCClasspath group: "org.glassfish.web", name: "jakarta.servlet.jsp.jstl", version: "3.0.1"
 				}
 
-				tasks.named("compileJSP") {
-					doFirst {
-						FileCollection jarFiles = files(classpath.files.findAll { it.name.endsWith(".jar") })
+				FileCollection jspCClasspathFileCollection = configurations[sourceSets.main.compileClasspathConfigurationName] + configurations.jspCClasspath
 
-						classpath = files(classpath - jarFiles) + _transformToJakarta(jakartaOutputDir, rootProject.configurations.jakartaTransformer, jarFiles, it)
-					}
+				tasks.named("compileJSP") {
+					classpath = jspCClasspathFileCollection
 				}
 
 				tasks.named("generateJSPJava") {
-					Task generateJSPJava ->
-
-					compileJspClasspath = configurations.compileJspClasspath
-
-					doFirst {
-						FileCollection jarFiles = files(jspCClasspath.files.findAll { it.name.endsWith(".jar") })
-
-						jspCClasspath = files(jspCClasspath - jarFiles) + _transformToJakarta(jakartaOutputDir, rootProject.configurations.jakartaTransformer, jarFiles, it)
-					}
+					compileJspClasspath = configurations.compileJspClasspath + configurations.compileJspClasspathTransform
+					jspCClasspath = jspCClasspathFileCollection
 				}
 			}
 
 			pluginManager.withPlugin("java") {
-				configurations.compileClasspath.attributes {
-					attribute(LibraryElements.LIBRARY_ELEMENTS_ATTRIBUTE, objects.named(LibraryElements, LibraryElements.JAR))
-				}
-
-				configurations.testCompileClasspath.attributes {
-					attribute(LibraryElements.LIBRARY_ELEMENTS_ATTRIBUTE, objects.named(LibraryElements, LibraryElements.JAR))
-				}
-
-				configurations.testIntegrationCompileClasspath.attributes {
-					attribute(LibraryElements.LIBRARY_ELEMENTS_ATTRIBUTE, objects.named(LibraryElements, LibraryElements.JAR))
-				}
-
-				tasks.named("compileJava") {
-					doFirst {
-						FileCollection jarFiles = files(classpath.files.findAll { it.name.endsWith(".jar") })
-
-						classpath = files(classpath.files - jarFiles) + _transformToJakarta(jakartaOutputDir, rootProject.configurations.jakartaTransformer, jarFiles, it)
+				dependencies {
+					registerTransform(JakartaTransformerTransformAction) {
+						from.attribute(ArtifactTypeDefinition.ARTIFACT_TYPE_ATTRIBUTE, ArtifactTypeDefinition.JAR_TYPE)
+						to.attribute(ArtifactTypeDefinition.ARTIFACT_TYPE_ATTRIBUTE, JakartaTransformerTransformAction.ARTIFACT_TYPE)
 					}
 				}
 
-				tasks.named("compileTestIntegrationJava") {
-					doFirst {
-						FileCollection jarFiles = files(classpath.files.findAll { it.name.endsWith(".jar") })
+				sourceSets.configureEach {
+					SourceSet sourceSet ->
 
-						classpath = files(classpath - jarFiles) + _transformToJakarta(jakartaOutputDir, rootProject.configurations.jakartaTransformer, jarFiles, it)
-					}
-				}
-
-				tasks.named("compileTestJava") {
-					doFirst {
-						FileCollection jarFiles = files(classpath.files.findAll { it.name.endsWith(".jar") })
-
-						classpath = files(classpath - jarFiles) + _transformToJakarta(jakartaOutputDir, rootProject.configurations.jakartaTransformer, jarFiles, it)
-					}
-				}
-
-				tasks.named("jar") {
-					classpath = tasks.named("compileJava").map {
-						it.classpath
+					configurations[sourceSet.compileClasspathConfigurationName].attributes {
+						attribute(ArtifactTypeDefinition.ARTIFACT_TYPE_ATTRIBUTE, JakartaTransformerTransformAction.ARTIFACT_TYPE)
 					}
 				}
 			}

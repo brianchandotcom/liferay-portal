@@ -805,10 +805,28 @@ public abstract class BaseNotificationTemplateResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (NotificationTemplate notificationTemplate :
-				notificationTemplates) {
+		UnsafeFunction<NotificationTemplate, NotificationTemplate, Exception>
+			notificationTemplateUnsafeFunction = notificationTemplate -> {
+				deleteNotificationTemplate(notificationTemplate.getId());
 
-			deleteNotificationTemplate(notificationTemplate.getId());
+				return notificationTemplate;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				notificationTemplates, notificationTemplateUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				notificationTemplates,
+				notificationTemplateUnsafeFunction::apply);
+		}
+		else {
+			for (NotificationTemplate notificationTemplate :
+					notificationTemplates) {
+
+				notificationTemplateUnsafeFunction.apply(notificationTemplate);
+			}
 		}
 	}
 

@@ -459,13 +459,36 @@ public abstract class BaseProductConfigurationListOrderTypeResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (ProductConfigurationListOrderType
-				productConfigurationListOrderType :
-					productConfigurationListOrderTypes) {
+		UnsafeFunction
+			<ProductConfigurationListOrderType,
+			 ProductConfigurationListOrderType, Exception>
+				productConfigurationListOrderTypeUnsafeFunction =
+					productConfigurationListOrderType -> {
+						deleteProductConfigurationListOrderType(
+							productConfigurationListOrderType.
+								getProductConfigurationListOrderTypeId());
 
-			deleteProductConfigurationListOrderType(
-				productConfigurationListOrderType.
-					getProductConfigurationListOrderTypeId());
+						return productConfigurationListOrderType;
+					};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				productConfigurationListOrderTypes,
+				productConfigurationListOrderTypeUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				productConfigurationListOrderTypes,
+				productConfigurationListOrderTypeUnsafeFunction::apply);
+		}
+		else {
+			for (ProductConfigurationListOrderType
+					productConfigurationListOrderType :
+						productConfigurationListOrderTypes) {
+
+				productConfigurationListOrderTypeUnsafeFunction.apply(
+					productConfigurationListOrderType);
+			}
 		}
 	}
 

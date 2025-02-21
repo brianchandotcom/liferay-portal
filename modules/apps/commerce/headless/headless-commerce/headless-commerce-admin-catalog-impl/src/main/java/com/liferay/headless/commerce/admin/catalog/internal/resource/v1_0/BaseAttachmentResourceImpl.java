@@ -1010,8 +1010,25 @@ public abstract class BaseAttachmentResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (Attachment attachment : attachments) {
-			deleteAttachment(attachment.getId());
+		UnsafeFunction<Attachment, Attachment, Exception>
+			attachmentUnsafeFunction = attachment -> {
+				deleteAttachment(attachment.getId());
+
+				return attachment;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				attachments, attachmentUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				attachments, attachmentUnsafeFunction::apply);
+		}
+		else {
+			for (Attachment attachment : attachments) {
+				attachmentUnsafeFunction.apply(attachment);
+			}
 		}
 	}
 

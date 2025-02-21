@@ -604,8 +604,24 @@ public abstract class BaseOptionResourceImpl
 			Collection<Option> options, Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (Option option : options) {
-			deleteOption(option.getId());
+		UnsafeFunction<Option, Option, Exception> optionUnsafeFunction =
+			option -> {
+				deleteOption(option.getId());
+
+				return option;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(options, optionUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				options, optionUnsafeFunction::apply);
+		}
+		else {
+			for (Option option : options) {
+				optionUnsafeFunction.apply(option);
+			}
 		}
 	}
 

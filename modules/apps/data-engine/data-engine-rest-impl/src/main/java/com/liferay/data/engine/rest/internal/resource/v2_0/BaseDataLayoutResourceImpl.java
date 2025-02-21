@@ -632,8 +632,25 @@ public abstract class BaseDataLayoutResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (DataLayout dataLayout : dataLayouts) {
-			deleteDataLayout(dataLayout.getId());
+		UnsafeFunction<DataLayout, DataLayout, Exception>
+			dataLayoutUnsafeFunction = dataLayout -> {
+				deleteDataLayout(dataLayout.getId());
+
+				return dataLayout;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				dataLayouts, dataLayoutUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				dataLayouts, dataLayoutUnsafeFunction::apply);
+		}
+		else {
+			for (DataLayout dataLayout : dataLayouts) {
+				dataLayoutUnsafeFunction.apply(dataLayout);
+			}
 		}
 	}
 

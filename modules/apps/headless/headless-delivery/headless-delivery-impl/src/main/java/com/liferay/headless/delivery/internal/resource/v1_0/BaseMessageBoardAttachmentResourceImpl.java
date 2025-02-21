@@ -854,10 +854,32 @@ public abstract class BaseMessageBoardAttachmentResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (MessageBoardAttachment messageBoardAttachment :
-				messageBoardAttachments) {
+		UnsafeFunction
+			<MessageBoardAttachment, MessageBoardAttachment, Exception>
+				messageBoardAttachmentUnsafeFunction =
+					messageBoardAttachment -> {
+						deleteMessageBoardAttachment(
+							messageBoardAttachment.getId());
 
-			deleteMessageBoardAttachment(messageBoardAttachment.getId());
+						return messageBoardAttachment;
+					};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				messageBoardAttachments, messageBoardAttachmentUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				messageBoardAttachments,
+				messageBoardAttachmentUnsafeFunction::apply);
+		}
+		else {
+			for (MessageBoardAttachment messageBoardAttachment :
+					messageBoardAttachments) {
+
+				messageBoardAttachmentUnsafeFunction.apply(
+					messageBoardAttachment);
+			}
 		}
 	}
 

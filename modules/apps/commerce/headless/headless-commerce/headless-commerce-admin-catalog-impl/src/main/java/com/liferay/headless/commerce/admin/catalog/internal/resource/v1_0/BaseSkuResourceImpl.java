@@ -877,8 +877,22 @@ public abstract class BaseSkuResourceImpl
 			Collection<Sku> skus, Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (Sku sku : skus) {
+		UnsafeFunction<Sku, Sku, Exception> skuUnsafeFunction = sku -> {
 			deleteSku(sku.getId());
+
+			return sku;
+		};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(skus, skuUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(skus, skuUnsafeFunction::apply);
+		}
+		else {
+			for (Sku sku : skus) {
+				skuUnsafeFunction.apply(sku);
+			}
 		}
 	}
 

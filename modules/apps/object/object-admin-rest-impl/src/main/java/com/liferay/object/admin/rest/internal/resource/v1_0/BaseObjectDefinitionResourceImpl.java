@@ -812,8 +812,25 @@ public abstract class BaseObjectDefinitionResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (ObjectDefinition objectDefinition : objectDefinitions) {
-			deleteObjectDefinition(objectDefinition.getId());
+		UnsafeFunction<ObjectDefinition, ObjectDefinition, Exception>
+			objectDefinitionUnsafeFunction = objectDefinition -> {
+				deleteObjectDefinition(objectDefinition.getId());
+
+				return objectDefinition;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				objectDefinitions, objectDefinitionUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				objectDefinitions, objectDefinitionUnsafeFunction::apply);
+		}
+		else {
+			for (ObjectDefinition objectDefinition : objectDefinitions) {
+				objectDefinitionUnsafeFunction.apply(objectDefinition);
+			}
 		}
 	}
 

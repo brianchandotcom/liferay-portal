@@ -348,9 +348,12 @@ public abstract class BaseWarehouseResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (Warehouse warehouse : warehouses) {
-			deleteWarehouse(warehouse.getId());
-		}
+		UnsafeFunction<Warehouse, Warehouse, Exception>
+			warehouseUnsafeFunction = warehouse -> {
+				deleteWarehouse(warehouse.getId());
+
+				return warehouse;
+			};
 	}
 
 	public Set<String> getAvailableCreateStrategies() {

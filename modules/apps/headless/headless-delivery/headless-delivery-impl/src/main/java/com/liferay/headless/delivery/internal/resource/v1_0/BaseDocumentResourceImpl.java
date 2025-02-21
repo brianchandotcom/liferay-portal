@@ -2248,8 +2248,25 @@ public abstract class BaseDocumentResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (Document document : documents) {
-			deleteDocument(document.getId());
+		UnsafeFunction<Document, Document, Exception> documentUnsafeFunction =
+			document -> {
+				deleteDocument(document.getId());
+
+				return document;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				documents, documentUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				documents, documentUnsafeFunction::apply);
+		}
+		else {
+			for (Document document : documents) {
+				documentUnsafeFunction.apply(document);
+			}
 		}
 	}
 

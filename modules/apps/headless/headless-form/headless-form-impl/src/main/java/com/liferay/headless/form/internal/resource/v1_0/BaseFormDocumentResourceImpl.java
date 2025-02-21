@@ -195,9 +195,12 @@ public abstract class BaseFormDocumentResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (FormDocument formDocument : formDocuments) {
-			deleteFormDocument(formDocument.getId());
-		}
+		UnsafeFunction<FormDocument, FormDocument, Exception>
+			formDocumentUnsafeFunction = formDocument -> {
+				deleteFormDocument(formDocument.getId());
+
+				return formDocument;
+			};
 	}
 
 	public Set<String> getAvailableCreateStrategies() {

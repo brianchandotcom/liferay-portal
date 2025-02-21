@@ -277,9 +277,12 @@ public abstract class BaseProductChannelResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (ProductChannel productChannel : productChannels) {
-			deleteProductChannel(productChannel.getId());
-		}
+		UnsafeFunction<ProductChannel, ProductChannel, Exception>
+			productChannelUnsafeFunction = productChannel -> {
+				deleteProductChannel(productChannel.getId());
+
+				return productChannel;
+			};
 	}
 
 	public Set<String> getAvailableCreateStrategies() {

@@ -417,9 +417,26 @@ public abstract class BaseWarehouseOrderTypeResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (WarehouseOrderType warehouseOrderType : warehouseOrderTypes) {
-			deleteWarehouseOrderType(
-				warehouseOrderType.getWarehouseOrderTypeId());
+		UnsafeFunction<WarehouseOrderType, WarehouseOrderType, Exception>
+			warehouseOrderTypeUnsafeFunction = warehouseOrderType -> {
+				deleteWarehouseOrderType(
+					warehouseOrderType.getWarehouseOrderTypeId());
+
+				return warehouseOrderType;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				warehouseOrderTypes, warehouseOrderTypeUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				warehouseOrderTypes, warehouseOrderTypeUnsafeFunction::apply);
+		}
+		else {
+			for (WarehouseOrderType warehouseOrderType : warehouseOrderTypes) {
+				warehouseOrderTypeUnsafeFunction.apply(warehouseOrderType);
+			}
 		}
 	}
 

@@ -1752,8 +1752,25 @@ public abstract class BaseOrganizationResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (Organization organization : organizations) {
-			deleteOrganization(organization.getId());
+		UnsafeFunction<Organization, Organization, Exception>
+			organizationUnsafeFunction = organization -> {
+				deleteOrganization(organization.getId());
+
+				return organization;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				organizations, organizationUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				organizations, organizationUnsafeFunction::apply);
+		}
+		else {
+			for (Organization organization : organizations) {
+				organizationUnsafeFunction.apply(organization);
+			}
 		}
 	}
 

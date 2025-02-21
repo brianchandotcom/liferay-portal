@@ -1207,8 +1207,25 @@ public abstract class BasePostalAddressResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (PostalAddress postalAddress : postalAddresses) {
-			deletePostalAddress(postalAddress.getId());
+		UnsafeFunction<PostalAddress, PostalAddress, Exception>
+			postalAddressUnsafeFunction = postalAddress -> {
+				deletePostalAddress(postalAddress.getId());
+
+				return postalAddress;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				postalAddresses, postalAddressUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				postalAddresses, postalAddressUnsafeFunction::apply);
+		}
+		else {
+			for (PostalAddress postalAddress : postalAddresses) {
+				postalAddressUnsafeFunction.apply(postalAddress);
+			}
 		}
 	}
 

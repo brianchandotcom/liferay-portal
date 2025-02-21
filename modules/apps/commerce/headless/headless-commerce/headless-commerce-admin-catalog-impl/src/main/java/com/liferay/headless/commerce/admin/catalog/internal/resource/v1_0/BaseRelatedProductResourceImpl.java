@@ -448,8 +448,25 @@ public abstract class BaseRelatedProductResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (RelatedProduct relatedProduct : relatedProducts) {
-			deleteRelatedProduct(relatedProduct.getId());
+		UnsafeFunction<RelatedProduct, RelatedProduct, Exception>
+			relatedProductUnsafeFunction = relatedProduct -> {
+				deleteRelatedProduct(relatedProduct.getId());
+
+				return relatedProduct;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				relatedProducts, relatedProductUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				relatedProducts, relatedProductUnsafeFunction::apply);
+		}
+		else {
+			for (RelatedProduct relatedProduct : relatedProducts) {
+				relatedProductUnsafeFunction.apply(relatedProduct);
+			}
 		}
 	}
 

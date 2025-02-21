@@ -359,9 +359,12 @@ public abstract class BaseProductOptionValueResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (ProductOptionValue productOptionValue : productOptionValues) {
-			deleteProductOptionValue(productOptionValue.getId());
-		}
+		UnsafeFunction<ProductOptionValue, ProductOptionValue, Exception>
+			productOptionValueUnsafeFunction = productOptionValue -> {
+				deleteProductOptionValue(productOptionValue.getId());
+
+				return productOptionValue;
+			};
 	}
 
 	public Set<String> getAvailableCreateStrategies() {

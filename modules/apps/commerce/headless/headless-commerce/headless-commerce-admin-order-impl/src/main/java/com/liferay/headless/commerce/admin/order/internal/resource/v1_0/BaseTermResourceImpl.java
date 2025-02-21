@@ -641,8 +641,22 @@ public abstract class BaseTermResourceImpl
 			Collection<Term> terms, Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (Term term : terms) {
+		UnsafeFunction<Term, Term, Exception> termUnsafeFunction = term -> {
 			deleteTerm(term.getId());
+
+			return term;
+		};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(terms, termUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(terms, termUnsafeFunction::apply);
+		}
+		else {
+			for (Term term : terms) {
+				termUnsafeFunction.apply(term);
+			}
 		}
 	}
 

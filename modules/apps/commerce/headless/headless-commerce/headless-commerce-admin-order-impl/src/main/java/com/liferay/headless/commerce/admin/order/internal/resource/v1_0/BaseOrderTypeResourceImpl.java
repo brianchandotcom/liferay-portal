@@ -704,8 +704,25 @@ public abstract class BaseOrderTypeResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (OrderType orderType : orderTypes) {
-			deleteOrderType(orderType.getId());
+		UnsafeFunction<OrderType, OrderType, Exception>
+			orderTypeUnsafeFunction = orderType -> {
+				deleteOrderType(orderType.getId());
+
+				return orderType;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				orderTypes, orderTypeUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				orderTypes, orderTypeUnsafeFunction::apply);
+		}
+		else {
+			for (OrderType orderType : orderTypes) {
+				orderTypeUnsafeFunction.apply(orderType);
+			}
 		}
 	}
 

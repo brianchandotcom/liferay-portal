@@ -613,8 +613,25 @@ public abstract class BaseBlogPostingImageResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (BlogPostingImage blogPostingImage : blogPostingImages) {
-			deleteBlogPostingImage(blogPostingImage.getId());
+		UnsafeFunction<BlogPostingImage, BlogPostingImage, Exception>
+			blogPostingImageUnsafeFunction = blogPostingImage -> {
+				deleteBlogPostingImage(blogPostingImage.getId());
+
+				return blogPostingImage;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				blogPostingImages, blogPostingImageUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				blogPostingImages, blogPostingImageUnsafeFunction::apply);
+		}
+		else {
+			for (BlogPostingImage blogPostingImage : blogPostingImages) {
+				blogPostingImageUnsafeFunction.apply(blogPostingImage);
+			}
 		}
 	}
 

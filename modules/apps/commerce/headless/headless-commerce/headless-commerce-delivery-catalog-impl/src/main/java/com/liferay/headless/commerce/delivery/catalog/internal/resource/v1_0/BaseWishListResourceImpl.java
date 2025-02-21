@@ -415,9 +415,12 @@ public abstract class BaseWishListResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (WishList wishList : wishLists) {
-			deleteWishList(wishList.getId());
-		}
+		UnsafeFunction<WishList, WishList, Exception> wishListUnsafeFunction =
+			wishList -> {
+				deleteWishList(wishList.getId());
+
+				return wishList;
+			};
 	}
 
 	public Set<String> getAvailableCreateStrategies() {

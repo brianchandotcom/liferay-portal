@@ -423,11 +423,30 @@ public abstract class BaseOrderRuleAccountGroupResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (OrderRuleAccountGroup orderRuleAccountGroup :
-				orderRuleAccountGroups) {
+		UnsafeFunction<OrderRuleAccountGroup, OrderRuleAccountGroup, Exception>
+			orderRuleAccountGroupUnsafeFunction = orderRuleAccountGroup -> {
+				deleteOrderRuleAccountGroup(
+					orderRuleAccountGroup.getOrderRuleAccountGroupId());
 
-			deleteOrderRuleAccountGroup(
-				orderRuleAccountGroup.getOrderRuleAccountGroupId());
+				return orderRuleAccountGroup;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				orderRuleAccountGroups, orderRuleAccountGroupUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				orderRuleAccountGroups,
+				orderRuleAccountGroupUnsafeFunction::apply);
+		}
+		else {
+			for (OrderRuleAccountGroup orderRuleAccountGroup :
+					orderRuleAccountGroups) {
+
+				orderRuleAccountGroupUnsafeFunction.apply(
+					orderRuleAccountGroup);
+			}
 		}
 	}
 

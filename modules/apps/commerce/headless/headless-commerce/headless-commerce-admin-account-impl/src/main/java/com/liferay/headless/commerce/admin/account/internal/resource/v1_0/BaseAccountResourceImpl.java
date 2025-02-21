@@ -718,8 +718,25 @@ public abstract class BaseAccountResourceImpl
 			Collection<Account> accounts, Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (Account account : accounts) {
-			deleteAccount(account.getId());
+		UnsafeFunction<Account, Account, Exception> accountUnsafeFunction =
+			account -> {
+				deleteAccount(account.getId());
+
+				return account;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				accounts, accountUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				accounts, accountUnsafeFunction::apply);
+		}
+		else {
+			for (Account account : accounts) {
+				accountUnsafeFunction.apply(account);
+			}
 		}
 	}
 

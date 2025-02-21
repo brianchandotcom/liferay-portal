@@ -1031,8 +1031,23 @@ public abstract class BaseOrderResourceImpl
 			Collection<Order> orders, Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (Order order : orders) {
+		UnsafeFunction<Order, Order, Exception> orderUnsafeFunction = order -> {
 			deleteOrder(order.getId());
+
+			return order;
+		};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(orders, orderUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				orders, orderUnsafeFunction::apply);
+		}
+		else {
+			for (Order order : orders) {
+				orderUnsafeFunction.apply(order);
+			}
 		}
 	}
 

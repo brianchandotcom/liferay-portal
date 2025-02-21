@@ -416,8 +416,26 @@ public abstract class BaseDiscountOrderTypeResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (DiscountOrderType discountOrderType : discountOrderTypes) {
-			deleteDiscountOrderType(discountOrderType.getDiscountOrderTypeId());
+		UnsafeFunction<DiscountOrderType, DiscountOrderType, Exception>
+			discountOrderTypeUnsafeFunction = discountOrderType -> {
+				deleteDiscountOrderType(
+					discountOrderType.getDiscountOrderTypeId());
+
+				return discountOrderType;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				discountOrderTypes, discountOrderTypeUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				discountOrderTypes, discountOrderTypeUnsafeFunction::apply);
+		}
+		else {
+			for (DiscountOrderType discountOrderType : discountOrderTypes) {
+				discountOrderTypeUnsafeFunction.apply(discountOrderType);
+			}
 		}
 	}
 

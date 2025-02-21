@@ -857,10 +857,28 @@ public abstract class BaseDataRecordCollectionResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (DataRecordCollection dataRecordCollection :
-				dataRecordCollections) {
+		UnsafeFunction<DataRecordCollection, DataRecordCollection, Exception>
+			dataRecordCollectionUnsafeFunction = dataRecordCollection -> {
+				deleteDataRecordCollection(dataRecordCollection.getId());
 
-			deleteDataRecordCollection(dataRecordCollection.getId());
+				return dataRecordCollection;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				dataRecordCollections, dataRecordCollectionUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				dataRecordCollections,
+				dataRecordCollectionUnsafeFunction::apply);
+		}
+		else {
+			for (DataRecordCollection dataRecordCollection :
+					dataRecordCollections) {
+
+				dataRecordCollectionUnsafeFunction.apply(dataRecordCollection);
+			}
 		}
 	}
 

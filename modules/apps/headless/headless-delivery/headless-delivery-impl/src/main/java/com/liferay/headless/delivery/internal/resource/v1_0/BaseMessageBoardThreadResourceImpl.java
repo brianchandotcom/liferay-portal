@@ -1668,8 +1668,25 @@ public abstract class BaseMessageBoardThreadResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (MessageBoardThread messageBoardThread : messageBoardThreads) {
-			deleteMessageBoardThread(messageBoardThread.getId());
+		UnsafeFunction<MessageBoardThread, MessageBoardThread, Exception>
+			messageBoardThreadUnsafeFunction = messageBoardThread -> {
+				deleteMessageBoardThread(messageBoardThread.getId());
+
+				return messageBoardThread;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				messageBoardThreads, messageBoardThreadUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				messageBoardThreads, messageBoardThreadUnsafeFunction::apply);
+		}
+		else {
+			for (MessageBoardThread messageBoardThread : messageBoardThreads) {
+				messageBoardThreadUnsafeFunction.apply(messageBoardThread);
+			}
 		}
 	}
 

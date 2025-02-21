@@ -709,8 +709,25 @@ public abstract class BaseObjectRelationshipResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (ObjectRelationship objectRelationship : objectRelationships) {
-			deleteObjectRelationship(objectRelationship.getId());
+		UnsafeFunction<ObjectRelationship, ObjectRelationship, Exception>
+			objectRelationshipUnsafeFunction = objectRelationship -> {
+				deleteObjectRelationship(objectRelationship.getId());
+
+				return objectRelationship;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				objectRelationships, objectRelationshipUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				objectRelationships, objectRelationshipUnsafeFunction::apply);
+		}
+		else {
+			for (ObjectRelationship objectRelationship : objectRelationships) {
+				objectRelationshipUnsafeFunction.apply(objectRelationship);
+			}
 		}
 	}
 

@@ -269,12 +269,16 @@ public abstract class BasePaymentMethodGroupRelTermResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (PaymentMethodGroupRelTerm paymentMethodGroupRelTerm :
-				paymentMethodGroupRelTerms) {
+		UnsafeFunction
+			<PaymentMethodGroupRelTerm, PaymentMethodGroupRelTerm, Exception>
+				paymentMethodGroupRelTermUnsafeFunction =
+					paymentMethodGroupRelTerm -> {
+						deletePaymentMethodGroupRelTerm(
+							paymentMethodGroupRelTerm.
+								getPaymentMethodGroupRelTermId());
 
-			deletePaymentMethodGroupRelTerm(
-				paymentMethodGroupRelTerm.getPaymentMethodGroupRelTermId());
-		}
+						return paymentMethodGroupRelTerm;
+					};
 	}
 
 	public Set<String> getAvailableCreateStrategies() {

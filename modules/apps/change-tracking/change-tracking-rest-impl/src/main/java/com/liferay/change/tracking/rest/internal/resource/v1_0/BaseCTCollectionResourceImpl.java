@@ -871,8 +871,25 @@ public abstract class BaseCTCollectionResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (CTCollection ctCollection : ctCollections) {
-			deleteCTCollection(ctCollection.getId());
+		UnsafeFunction<CTCollection, CTCollection, Exception>
+			ctCollectionUnsafeFunction = ctCollection -> {
+				deleteCTCollection(ctCollection.getId());
+
+				return ctCollection;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				ctCollections, ctCollectionUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				ctCollections, ctCollectionUnsafeFunction::apply);
+		}
+		else {
+			for (CTCollection ctCollection : ctCollections) {
+				ctCollectionUnsafeFunction.apply(ctCollection);
+			}
 		}
 	}
 

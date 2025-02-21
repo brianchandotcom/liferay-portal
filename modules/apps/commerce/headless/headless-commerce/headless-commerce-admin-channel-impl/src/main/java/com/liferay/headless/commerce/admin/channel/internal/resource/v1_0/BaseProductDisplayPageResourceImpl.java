@@ -452,8 +452,25 @@ public abstract class BaseProductDisplayPageResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (ProductDisplayPage productDisplayPage : productDisplayPages) {
-			deleteProductDisplayPage(productDisplayPage.getId());
+		UnsafeFunction<ProductDisplayPage, ProductDisplayPage, Exception>
+			productDisplayPageUnsafeFunction = productDisplayPage -> {
+				deleteProductDisplayPage(productDisplayPage.getId());
+
+				return productDisplayPage;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				productDisplayPages, productDisplayPageUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				productDisplayPages, productDisplayPageUnsafeFunction::apply);
+		}
+		else {
+			for (ProductDisplayPage productDisplayPage : productDisplayPages) {
+				productDisplayPageUnsafeFunction.apply(productDisplayPage);
+			}
 		}
 	}
 

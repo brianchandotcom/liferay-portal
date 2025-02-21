@@ -783,8 +783,25 @@ public abstract class BaseCartItemResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (CartItem cartItem : cartItems) {
-			deleteCartItem(cartItem.getId());
+		UnsafeFunction<CartItem, CartItem, Exception> cartItemUnsafeFunction =
+			cartItem -> {
+				deleteCartItem(cartItem.getId());
+
+				return cartItem;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				cartItems, cartItemUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				cartItems, cartItemUnsafeFunction::apply);
+		}
+		else {
+			for (CartItem cartItem : cartItems) {
+				cartItemUnsafeFunction.apply(cartItem);
+			}
 		}
 	}
 

@@ -554,8 +554,25 @@ public abstract class BaseTierPriceResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (TierPrice tierPrice : tierPrices) {
-			deleteTierPrice(tierPrice.getId());
+		UnsafeFunction<TierPrice, TierPrice, Exception>
+			tierPriceUnsafeFunction = tierPrice -> {
+				deleteTierPrice(tierPrice.getId());
+
+				return tierPrice;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				tierPrices, tierPriceUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				tierPrices, tierPriceUnsafeFunction::apply);
+		}
+		else {
+			for (TierPrice tierPrice : tierPrices) {
+				tierPriceUnsafeFunction.apply(tierPrice);
+			}
 		}
 	}
 

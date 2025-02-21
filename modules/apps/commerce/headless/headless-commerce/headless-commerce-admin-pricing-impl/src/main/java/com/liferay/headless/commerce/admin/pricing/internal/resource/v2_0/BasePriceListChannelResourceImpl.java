@@ -416,8 +416,26 @@ public abstract class BasePriceListChannelResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (PriceListChannel priceListChannel : priceListChannels) {
-			deletePriceListChannel(priceListChannel.getPriceListChannelId());
+		UnsafeFunction<PriceListChannel, PriceListChannel, Exception>
+			priceListChannelUnsafeFunction = priceListChannel -> {
+				deletePriceListChannel(
+					priceListChannel.getPriceListChannelId());
+
+				return priceListChannel;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				priceListChannels, priceListChannelUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				priceListChannels, priceListChannelUnsafeFunction::apply);
+		}
+		else {
+			for (PriceListChannel priceListChannel : priceListChannels) {
+				priceListChannelUnsafeFunction.apply(priceListChannel);
+			}
 		}
 	}
 

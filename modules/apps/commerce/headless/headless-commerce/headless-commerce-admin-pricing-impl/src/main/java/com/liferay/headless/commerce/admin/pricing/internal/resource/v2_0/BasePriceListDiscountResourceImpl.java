@@ -399,8 +399,26 @@ public abstract class BasePriceListDiscountResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (PriceListDiscount priceListDiscount : priceListDiscounts) {
-			deletePriceListDiscount(priceListDiscount.getPriceListDiscountId());
+		UnsafeFunction<PriceListDiscount, PriceListDiscount, Exception>
+			priceListDiscountUnsafeFunction = priceListDiscount -> {
+				deletePriceListDiscount(
+					priceListDiscount.getPriceListDiscountId());
+
+				return priceListDiscount;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				priceListDiscounts, priceListDiscountUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				priceListDiscounts, priceListDiscountUnsafeFunction::apply);
+		}
+		else {
+			for (PriceListDiscount priceListDiscount : priceListDiscounts) {
+				priceListDiscountUnsafeFunction.apply(priceListDiscount);
+			}
 		}
 	}
 

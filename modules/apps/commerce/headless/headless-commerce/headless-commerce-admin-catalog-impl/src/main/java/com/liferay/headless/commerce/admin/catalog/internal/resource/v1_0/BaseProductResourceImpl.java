@@ -824,8 +824,25 @@ public abstract class BaseProductResourceImpl
 			Collection<Product> products, Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (Product product : products) {
-			deleteProduct(product.getId());
+		UnsafeFunction<Product, Product, Exception> productUnsafeFunction =
+			product -> {
+				deleteProduct(product.getId());
+
+				return product;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				products, productUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				products, productUnsafeFunction::apply);
+		}
+		else {
+			for (Product product : products) {
+				productUnsafeFunction.apply(product);
+			}
 		}
 	}
 

@@ -341,9 +341,12 @@ public abstract class BaseTaxCategoryResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (TaxCategory taxCategory : taxCategories) {
-			deleteTaxCategory(taxCategory.getId());
-		}
+		UnsafeFunction<TaxCategory, TaxCategory, Exception>
+			taxCategoryUnsafeFunction = taxCategory -> {
+				deleteTaxCategory(taxCategory.getId());
+
+				return taxCategory;
+			};
 	}
 
 	public Set<String> getAvailableCreateStrategies() {

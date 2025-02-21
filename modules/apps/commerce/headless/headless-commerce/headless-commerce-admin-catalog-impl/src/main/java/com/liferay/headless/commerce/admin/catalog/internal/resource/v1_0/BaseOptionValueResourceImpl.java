@@ -576,8 +576,25 @@ public abstract class BaseOptionValueResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (OptionValue optionValue : optionValues) {
-			deleteOptionValue(optionValue.getId());
+		UnsafeFunction<OptionValue, OptionValue, Exception>
+			optionValueUnsafeFunction = optionValue -> {
+				deleteOptionValue(optionValue.getId());
+
+				return optionValue;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				optionValues, optionValueUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				optionValues, optionValueUnsafeFunction::apply);
+		}
+		else {
+			for (OptionValue optionValue : optionValues) {
+				optionValueUnsafeFunction.apply(optionValue);
+			}
 		}
 	}
 

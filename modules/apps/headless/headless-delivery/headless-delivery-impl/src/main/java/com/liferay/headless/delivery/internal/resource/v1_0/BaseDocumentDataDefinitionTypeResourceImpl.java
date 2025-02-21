@@ -809,11 +809,33 @@ public abstract class BaseDocumentDataDefinitionTypeResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (DocumentDataDefinitionType documentDataDefinitionType :
-				documentDataDefinitionTypes) {
+		UnsafeFunction
+			<DocumentDataDefinitionType, DocumentDataDefinitionType, Exception>
+				documentDataDefinitionTypeUnsafeFunction =
+					documentDataDefinitionType -> {
+						deleteDocumentDataDefinitionType(
+							documentDataDefinitionType.getId());
 
-			deleteDocumentDataDefinitionType(
-				documentDataDefinitionType.getId());
+						return documentDataDefinitionType;
+					};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				documentDataDefinitionTypes,
+				documentDataDefinitionTypeUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				documentDataDefinitionTypes,
+				documentDataDefinitionTypeUnsafeFunction::apply);
+		}
+		else {
+			for (DocumentDataDefinitionType documentDataDefinitionType :
+					documentDataDefinitionTypes) {
+
+				documentDataDefinitionTypeUnsafeFunction.apply(
+					documentDataDefinitionType);
+			}
 		}
 	}
 

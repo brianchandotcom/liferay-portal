@@ -398,9 +398,26 @@ public abstract class BasePriceListOrderTypeResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (PriceListOrderType priceListOrderType : priceListOrderTypes) {
-			deletePriceListOrderType(
-				priceListOrderType.getPriceListOrderTypeId());
+		UnsafeFunction<PriceListOrderType, PriceListOrderType, Exception>
+			priceListOrderTypeUnsafeFunction = priceListOrderType -> {
+				deletePriceListOrderType(
+					priceListOrderType.getPriceListOrderTypeId());
+
+				return priceListOrderType;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				priceListOrderTypes, priceListOrderTypeUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				priceListOrderTypes, priceListOrderTypeUnsafeFunction::apply);
+		}
+		else {
+			for (PriceListOrderType priceListOrderType : priceListOrderTypes) {
+				priceListOrderTypeUnsafeFunction.apply(priceListOrderType);
+			}
 		}
 	}
 

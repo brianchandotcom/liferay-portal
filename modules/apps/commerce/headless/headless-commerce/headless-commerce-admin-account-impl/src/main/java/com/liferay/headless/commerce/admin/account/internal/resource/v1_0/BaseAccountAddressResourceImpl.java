@@ -758,8 +758,25 @@ public abstract class BaseAccountAddressResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (AccountAddress accountAddress : accountAddresses) {
-			deleteAccountAddress(accountAddress.getId());
+		UnsafeFunction<AccountAddress, AccountAddress, Exception>
+			accountAddressUnsafeFunction = accountAddress -> {
+				deleteAccountAddress(accountAddress.getId());
+
+				return accountAddress;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				accountAddresses, accountAddressUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				accountAddresses, accountAddressUnsafeFunction::apply);
+		}
+		else {
+			for (AccountAddress accountAddress : accountAddresses) {
+				accountAddressUnsafeFunction.apply(accountAddress);
+			}
 		}
 	}
 

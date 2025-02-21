@@ -625,10 +625,33 @@ public abstract class BaseKnowledgeBaseAttachmentResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (KnowledgeBaseAttachment knowledgeBaseAttachment :
-				knowledgeBaseAttachments) {
+		UnsafeFunction
+			<KnowledgeBaseAttachment, KnowledgeBaseAttachment, Exception>
+				knowledgeBaseAttachmentUnsafeFunction =
+					knowledgeBaseAttachment -> {
+						deleteKnowledgeBaseAttachment(
+							knowledgeBaseAttachment.getId());
 
-			deleteKnowledgeBaseAttachment(knowledgeBaseAttachment.getId());
+						return knowledgeBaseAttachment;
+					};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				knowledgeBaseAttachments,
+				knowledgeBaseAttachmentUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				knowledgeBaseAttachments,
+				knowledgeBaseAttachmentUnsafeFunction::apply);
+		}
+		else {
+			for (KnowledgeBaseAttachment knowledgeBaseAttachment :
+					knowledgeBaseAttachments) {
+
+				knowledgeBaseAttachmentUnsafeFunction.apply(
+					knowledgeBaseAttachment);
+			}
 		}
 	}
 

@@ -672,8 +672,25 @@ public abstract class BaseSpecificationResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (Specification specification : specifications) {
-			deleteSpecification(specification.getId());
+		UnsafeFunction<Specification, Specification, Exception>
+			specificationUnsafeFunction = specification -> {
+				deleteSpecification(specification.getId());
+
+				return specification;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				specifications, specificationUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				specifications, specificationUnsafeFunction::apply);
+		}
+		else {
+			for (Specification specification : specifications) {
+				specificationUnsafeFunction.apply(specification);
+			}
 		}
 	}
 

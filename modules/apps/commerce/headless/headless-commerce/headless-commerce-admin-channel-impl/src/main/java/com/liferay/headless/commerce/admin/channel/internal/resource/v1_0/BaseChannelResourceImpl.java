@@ -802,8 +802,25 @@ public abstract class BaseChannelResourceImpl
 			Collection<Channel> channels, Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (Channel channel : channels) {
-			deleteChannel(channel.getId());
+		UnsafeFunction<Channel, Channel, Exception> channelUnsafeFunction =
+			channel -> {
+				deleteChannel(channel.getId());
+
+				return channel;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				channels, channelUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				channels, channelUnsafeFunction::apply);
+		}
+		else {
+			for (Channel channel : channels) {
+				channelUnsafeFunction.apply(channel);
+			}
 		}
 	}
 

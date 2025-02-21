@@ -1031,8 +1031,25 @@ public abstract class BaseWikiPageResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (WikiPage wikiPage : wikiPages) {
-			deleteWikiPage(wikiPage.getId());
+		UnsafeFunction<WikiPage, WikiPage, Exception> wikiPageUnsafeFunction =
+			wikiPage -> {
+				deleteWikiPage(wikiPage.getId());
+
+				return wikiPage;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				wikiPages, wikiPageUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				wikiPages, wikiPageUnsafeFunction::apply);
+		}
+		else {
+			for (WikiPage wikiPage : wikiPages) {
+				wikiPageUnsafeFunction.apply(wikiPage);
+			}
 		}
 	}
 

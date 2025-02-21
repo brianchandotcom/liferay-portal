@@ -743,9 +743,11 @@ public abstract class BasePhoneResourceImpl
 			Collection<Phone> phones, Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (Phone phone : phones) {
+		UnsafeFunction<Phone, Phone, Exception> phoneUnsafeFunction = phone -> {
 			deletePhone(phone.getId());
-		}
+
+			return phone;
+		};
 	}
 
 	public Set<String> getAvailableCreateStrategies() {

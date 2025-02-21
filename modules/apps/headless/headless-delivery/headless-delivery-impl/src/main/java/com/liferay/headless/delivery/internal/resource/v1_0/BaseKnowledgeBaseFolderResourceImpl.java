@@ -1301,8 +1301,27 @@ public abstract class BaseKnowledgeBaseFolderResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (KnowledgeBaseFolder knowledgeBaseFolder : knowledgeBaseFolders) {
-			deleteKnowledgeBaseFolder(knowledgeBaseFolder.getId());
+		UnsafeFunction<KnowledgeBaseFolder, KnowledgeBaseFolder, Exception>
+			knowledgeBaseFolderUnsafeFunction = knowledgeBaseFolder -> {
+				deleteKnowledgeBaseFolder(knowledgeBaseFolder.getId());
+
+				return knowledgeBaseFolder;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				knowledgeBaseFolders, knowledgeBaseFolderUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				knowledgeBaseFolders, knowledgeBaseFolderUnsafeFunction::apply);
+		}
+		else {
+			for (KnowledgeBaseFolder knowledgeBaseFolder :
+					knowledgeBaseFolders) {
+
+				knowledgeBaseFolderUnsafeFunction.apply(knowledgeBaseFolder);
+			}
 		}
 	}
 

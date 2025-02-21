@@ -683,8 +683,25 @@ public abstract class BaseListTypeDefinitionResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (ListTypeDefinition listTypeDefinition : listTypeDefinitions) {
-			deleteListTypeDefinition(listTypeDefinition.getId());
+		UnsafeFunction<ListTypeDefinition, ListTypeDefinition, Exception>
+			listTypeDefinitionUnsafeFunction = listTypeDefinition -> {
+				deleteListTypeDefinition(listTypeDefinition.getId());
+
+				return listTypeDefinition;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				listTypeDefinitions, listTypeDefinitionUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				listTypeDefinitions, listTypeDefinitionUnsafeFunction::apply);
+		}
+		else {
+			for (ListTypeDefinition listTypeDefinition : listTypeDefinitions) {
+				listTypeDefinitionUnsafeFunction.apply(listTypeDefinition);
+			}
 		}
 	}
 

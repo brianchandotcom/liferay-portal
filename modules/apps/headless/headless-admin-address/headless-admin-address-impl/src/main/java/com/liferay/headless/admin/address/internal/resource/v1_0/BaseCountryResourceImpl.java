@@ -688,8 +688,25 @@ public abstract class BaseCountryResourceImpl
 			Collection<Country> countries, Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (Country country : countries) {
-			deleteCountry(country.getId());
+		UnsafeFunction<Country, Country, Exception> countryUnsafeFunction =
+			country -> {
+				deleteCountry(country.getId());
+
+				return country;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				countries, countryUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				countries, countryUnsafeFunction::apply);
+		}
+		else {
+			for (Country country : countries) {
+				countryUnsafeFunction.apply(country);
+			}
 		}
 	}
 

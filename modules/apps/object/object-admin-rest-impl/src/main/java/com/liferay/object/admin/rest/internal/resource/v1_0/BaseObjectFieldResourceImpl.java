@@ -757,8 +757,25 @@ public abstract class BaseObjectFieldResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (ObjectField objectField : objectFields) {
-			deleteObjectField(objectField.getId());
+		UnsafeFunction<ObjectField, ObjectField, Exception>
+			objectFieldUnsafeFunction = objectField -> {
+				deleteObjectField(objectField.getId());
+
+				return objectField;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				objectFields, objectFieldUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				objectFields, objectFieldUnsafeFunction::apply);
+		}
+		else {
+			for (ObjectField objectField : objectFields) {
+				objectFieldUnsafeFunction.apply(objectField);
+			}
 		}
 	}
 

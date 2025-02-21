@@ -412,9 +412,12 @@ public abstract class BaseProductOptionResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (ProductOption productOption : productOptions) {
-			deleteProductOption(productOption.getId());
-		}
+		UnsafeFunction<ProductOption, ProductOption, Exception>
+			productOptionUnsafeFunction = productOption -> {
+				deleteProductOption(productOption.getId());
+
+				return productOption;
+			};
 	}
 
 	public Set<String> getAvailableCreateStrategies() {

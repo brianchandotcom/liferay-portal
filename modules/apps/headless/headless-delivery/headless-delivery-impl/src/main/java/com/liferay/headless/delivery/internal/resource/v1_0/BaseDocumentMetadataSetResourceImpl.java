@@ -1030,8 +1030,27 @@ public abstract class BaseDocumentMetadataSetResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (DocumentMetadataSet documentMetadataSet : documentMetadataSets) {
-			deleteDocumentMetadataSet(documentMetadataSet.getId());
+		UnsafeFunction<DocumentMetadataSet, DocumentMetadataSet, Exception>
+			documentMetadataSetUnsafeFunction = documentMetadataSet -> {
+				deleteDocumentMetadataSet(documentMetadataSet.getId());
+
+				return documentMetadataSet;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				documentMetadataSets, documentMetadataSetUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				documentMetadataSets, documentMetadataSetUnsafeFunction::apply);
+		}
+		else {
+			for (DocumentMetadataSet documentMetadataSet :
+					documentMetadataSets) {
+
+				documentMetadataSetUnsafeFunction.apply(documentMetadataSet);
+			}
 		}
 	}
 

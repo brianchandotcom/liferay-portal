@@ -332,12 +332,15 @@ public abstract class BaseProductVirtualSettingsFileEntryResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (ProductVirtualSettingsFileEntry productVirtualSettingsFileEntry :
-				productVirtualSettingsFileEntries) {
+		UnsafeFunction
+			<ProductVirtualSettingsFileEntry, ProductVirtualSettingsFileEntry,
+			 Exception> productVirtualSettingsFileEntryUnsafeFunction =
+				productVirtualSettingsFileEntry -> {
+					deleteProductVirtualSettingsFileEntry(
+						productVirtualSettingsFileEntry.getId());
 
-			deleteProductVirtualSettingsFileEntry(
-				productVirtualSettingsFileEntry.getId());
-		}
+					return productVirtualSettingsFileEntry;
+				};
 	}
 
 	public Set<String> getAvailableCreateStrategies() {

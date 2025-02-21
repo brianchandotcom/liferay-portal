@@ -287,9 +287,12 @@ public abstract class BaseProductAccountGroupResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (ProductAccountGroup productAccountGroup : productAccountGroups) {
-			deleteProductAccountGroup(productAccountGroup.getId());
-		}
+		UnsafeFunction<ProductAccountGroup, ProductAccountGroup, Exception>
+			productAccountGroupUnsafeFunction = productAccountGroup -> {
+				deleteProductAccountGroup(productAccountGroup.getId());
+
+				return productAccountGroup;
+			};
 	}
 
 	public Set<String> getAvailableCreateStrategies() {

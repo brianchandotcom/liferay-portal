@@ -654,8 +654,25 @@ public abstract class BaseOrderRuleResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (OrderRule orderRule : orderRules) {
-			deleteOrderRule(orderRule.getId());
+		UnsafeFunction<OrderRule, OrderRule, Exception>
+			orderRuleUnsafeFunction = orderRule -> {
+				deleteOrderRule(orderRule.getId());
+
+				return orderRule;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				orderRules, orderRuleUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				orderRules, orderRuleUnsafeFunction::apply);
+		}
+		else {
+			for (OrderRule orderRule : orderRules) {
+				orderRuleUnsafeFunction.apply(orderRule);
+			}
 		}
 	}
 

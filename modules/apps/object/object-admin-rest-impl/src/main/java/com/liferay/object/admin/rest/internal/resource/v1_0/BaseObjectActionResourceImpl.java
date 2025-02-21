@@ -703,8 +703,25 @@ public abstract class BaseObjectActionResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (ObjectAction objectAction : objectActions) {
-			deleteObjectAction(objectAction.getId());
+		UnsafeFunction<ObjectAction, ObjectAction, Exception>
+			objectActionUnsafeFunction = objectAction -> {
+				deleteObjectAction(objectAction.getId());
+
+				return objectAction;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				objectActions, objectActionUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				objectActions, objectActionUnsafeFunction::apply);
+		}
+		else {
+			for (ObjectAction objectAction : objectActions) {
+				objectActionUnsafeFunction.apply(objectAction);
+			}
 		}
 	}
 

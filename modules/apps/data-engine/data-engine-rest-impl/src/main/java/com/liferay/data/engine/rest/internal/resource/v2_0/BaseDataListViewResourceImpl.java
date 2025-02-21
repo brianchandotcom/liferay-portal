@@ -551,8 +551,25 @@ public abstract class BaseDataListViewResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (DataListView dataListView : dataListViews) {
-			deleteDataListView(dataListView.getId());
+		UnsafeFunction<DataListView, DataListView, Exception>
+			dataListViewUnsafeFunction = dataListView -> {
+				deleteDataListView(dataListView.getId());
+
+				return dataListView;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				dataListViews, dataListViewUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				dataListViews, dataListViewUnsafeFunction::apply);
+		}
+		else {
+			for (DataListView dataListView : dataListViews) {
+				dataListViewUnsafeFunction.apply(dataListView);
+			}
 		}
 	}
 

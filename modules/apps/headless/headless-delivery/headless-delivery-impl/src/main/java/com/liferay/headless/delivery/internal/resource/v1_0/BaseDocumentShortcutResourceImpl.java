@@ -1014,8 +1014,25 @@ public abstract class BaseDocumentShortcutResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (DocumentShortcut documentShortcut : documentShortcuts) {
-			deleteDocumentShortcut(documentShortcut.getId());
+		UnsafeFunction<DocumentShortcut, DocumentShortcut, Exception>
+			documentShortcutUnsafeFunction = documentShortcut -> {
+				deleteDocumentShortcut(documentShortcut.getId());
+
+				return documentShortcut;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				documentShortcuts, documentShortcutUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				documentShortcuts, documentShortcutUnsafeFunction::apply);
+		}
+		else {
+			for (DocumentShortcut documentShortcut : documentShortcuts) {
+				documentShortcutUnsafeFunction.apply(documentShortcut);
+			}
 		}
 	}
 

@@ -767,10 +767,28 @@ public abstract class BaseObjectValidationRuleResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (ObjectValidationRule objectValidationRule :
-				objectValidationRules) {
+		UnsafeFunction<ObjectValidationRule, ObjectValidationRule, Exception>
+			objectValidationRuleUnsafeFunction = objectValidationRule -> {
+				deleteObjectValidationRule(objectValidationRule.getId());
 
-			deleteObjectValidationRule(objectValidationRule.getId());
+				return objectValidationRule;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				objectValidationRules, objectValidationRuleUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				objectValidationRules,
+				objectValidationRuleUnsafeFunction::apply);
+		}
+		else {
+			for (ObjectValidationRule objectValidationRule :
+					objectValidationRules) {
+
+				objectValidationRuleUnsafeFunction.apply(objectValidationRule);
+			}
 		}
 	}
 

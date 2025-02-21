@@ -272,13 +272,16 @@ public abstract class BaseShippingFixedOptionOrderTypeResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (ShippingFixedOptionOrderType shippingFixedOptionOrderType :
-				shippingFixedOptionOrderTypes) {
+		UnsafeFunction
+			<ShippingFixedOptionOrderType, ShippingFixedOptionOrderType,
+			 Exception> shippingFixedOptionOrderTypeUnsafeFunction =
+				shippingFixedOptionOrderType -> {
+					deleteShippingFixedOptionOrderType(
+						shippingFixedOptionOrderType.
+							getShippingFixedOptionOrderTypeId());
 
-			deleteShippingFixedOptionOrderType(
-				shippingFixedOptionOrderType.
-					getShippingFixedOptionOrderTypeId());
-		}
+					return shippingFixedOptionOrderType;
+				};
 	}
 
 	public Set<String> getAvailableCreateStrategies() {

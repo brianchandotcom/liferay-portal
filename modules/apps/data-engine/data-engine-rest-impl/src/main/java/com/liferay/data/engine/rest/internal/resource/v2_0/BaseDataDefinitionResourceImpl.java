@@ -989,9 +989,12 @@ public abstract class BaseDataDefinitionResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (DataDefinition dataDefinition : dataDefinitions) {
-			deleteDataDefinition(dataDefinition.getId());
-		}
+		UnsafeFunction<DataDefinition, DataDefinition, Exception>
+			dataDefinitionUnsafeFunction = dataDefinition -> {
+				deleteDataDefinition(dataDefinition.getId());
+
+				return dataDefinition;
+			};
 	}
 
 	public Set<String> getAvailableCreateStrategies() {

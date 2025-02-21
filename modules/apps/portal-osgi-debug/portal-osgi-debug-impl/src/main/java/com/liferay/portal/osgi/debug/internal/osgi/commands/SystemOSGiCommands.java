@@ -226,18 +226,6 @@ public class SystemOSGiCommands implements OSGiCommands {
 		}
 	}
 
-	private boolean _matches(Set<String> spiTypesSet, URL url) {
-		if (spiTypesSet.isEmpty()) {
-			return true;
-		}
-
-		String path = url.getPath();
-
-		int index = path.lastIndexOf('/');
-
-		return spiTypesSet.contains(path.substring(index + 1));
-	}
-
 	private void _listSPIProviders(
 			Bundle bundle, Enumeration<URL> enumeration,
 			Set<String> spiTypesSet)
@@ -249,7 +237,15 @@ public class SystemOSGiCommands implements OSGiCommands {
 			while (enumeration.hasMoreElements()) {
 				URL url = enumeration.nextElement();
 
-				if (_matches(spiTypesSet, url)) {
+				if (!spiTypesSet.isEmpty()) {
+					continue;
+				}
+
+				String path = url.getPath();
+
+				int index = path.lastIndexOf('/');
+
+				if (spiTypesSet.contains(path.substring(index + 1))) {
 					urls.add(url);
 				}
 			}

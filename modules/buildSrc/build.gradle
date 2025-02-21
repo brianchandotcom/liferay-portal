@@ -1,0 +1,11 @@
+buildscript {
+	apply from: rootProject.file("../build-buildscript.gradle"), to: buildscript
+}
+
+apply plugin: "com.liferay.source.formatter"
+
+repositories {
+	maven {
+		url System.properties["repository.url"] ?: "https://repository-cdn.liferay.com/nexus/content/groups/public"
+	}
+}

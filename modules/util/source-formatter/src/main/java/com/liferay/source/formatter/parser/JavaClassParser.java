@@ -68,8 +68,9 @@ public class JavaClassParser {
 		Pattern pattern = Pattern.compile(
 			StringBundler.concat(
 				"\n(public\\s+)?(abstract\\s+)?(final\\s+)?@?",
-				"(strictfp\\s+)?((non-)?sealed\\s+)?(class|enum|interface)\\s+",
-				className, "([<|\\s][^\\{]*)\\{"));
+				"(strictfp\\s+)?((non-)?sealed\\s+)?(class|enum|interface|",
+				"record)\\s+", className,
+				"(\\s*\\(.*?\\))?([<|\\s][^\\{]*)\\{"));
 
 		Matcher matcher = pattern.matcher(content);
 
@@ -153,7 +154,7 @@ public class JavaClassParser {
 			JavaSourceUtil.getPackageName(content), sealed);
 
 		return _parseExtendsImplementsPermits(
-			javaClass, StringUtil.trim(matcher.group(8)));
+			javaClass, StringUtil.trim(matcher.group(9)));
 	}
 
 	private static String _getAnonymousClassContent(

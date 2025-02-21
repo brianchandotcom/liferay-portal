@@ -15,6 +15,7 @@ import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.scim.rest.dto.v1_0.PatchOp;
 import com.liferay.scim.rest.dto.v1_0.QueryAttributes;
 import com.liferay.scim.rest.dto.v1_0.User;
 
@@ -56,6 +57,8 @@ public interface UserResource {
 	public Response deleteV2User(String id) throws Exception;
 
 	public Object getV2UserById(String id) throws Exception;
+
+	public Response patchV2User(String id, PatchOp patchOp) throws Exception;
 
 	public Response putV2User(String id, User user) throws Exception;
 

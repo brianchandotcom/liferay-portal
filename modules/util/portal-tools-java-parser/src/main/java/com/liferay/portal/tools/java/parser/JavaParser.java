@@ -1248,7 +1248,8 @@ public class JavaParser {
 		if (((detailAST.getType() == TokenTypes.ANNOTATION_DEF) ||
 			 (detailAST.getType() == TokenTypes.CLASS_DEF) ||
 			 (detailAST.getType() == TokenTypes.ENUM_DEF) ||
-			 (detailAST.getType() == TokenTypes.INTERFACE_DEF)) &&
+			 (detailAST.getType() == TokenTypes.INTERFACE_DEF) ||
+			 (detailAST.getType() == TokenTypes.RECORD_DEF)) &&
 			((parentDetailAST == null) ||
 			 (parentDetailAST.getType() != TokenTypes.OBJBLOCK))) {
 

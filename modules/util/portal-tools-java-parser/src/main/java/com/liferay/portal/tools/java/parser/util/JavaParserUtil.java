@@ -46,6 +46,7 @@ import com.liferay.portal.tools.java.parser.JavaOperator;
 import com.liferay.portal.tools.java.parser.JavaOperatorExpression;
 import com.liferay.portal.tools.java.parser.JavaPackageDefinition;
 import com.liferay.portal.tools.java.parser.JavaParameter;
+import com.liferay.portal.tools.java.parser.JavaRecordComponent;
 import com.liferay.portal.tools.java.parser.JavaReturnStatement;
 import com.liferay.portal.tools.java.parser.JavaSignature;
 import com.liferay.portal.tools.java.parser.JavaSimpleValue;
@@ -96,7 +97,8 @@ public class JavaParserUtil {
 		if ((detailAST.getType() == TokenTypes.ANNOTATION_DEF) ||
 			(detailAST.getType() == TokenTypes.CLASS_DEF) ||
 			(detailAST.getType() == TokenTypes.ENUM_DEF) ||
-			(detailAST.getType() == TokenTypes.INTERFACE_DEF)) {
+			(detailAST.getType() == TokenTypes.INTERFACE_DEF) ||
+			(detailAST.getType() == TokenTypes.RECORD_DEF)) {
 
 			javaTerm = _parseJavaClassDefinition(detailAST);
 		}
@@ -950,6 +952,14 @@ public class JavaParserUtil {
 
 			javaClassDefinition.setPermittedClassJavaTypes(
 				permittedClassJavaTypes);
+		}
+
+		DetailAST recordComponentsDetailAST =
+			definitionDetailAST.findFirstToken(TokenTypes.RECORD_COMPONENTS);
+
+		if (recordComponentsDetailAST != null) {
+			javaClassDefinition.setJavaRecordComponent(
+				_parseRecordComponents(definitionDetailAST));
 		}
 
 		return javaClassDefinition;
@@ -1941,6 +1951,49 @@ public class JavaParserUtil {
 
 			childDetailAST = childDetailAST.getNextSibling();
 		}
+	}
+
+	private static List<JavaRecordComponent> _parseRecordComponents(
+		DetailAST detailAST) {
+
+		List<JavaRecordComponent> javaRecordComponents = new ArrayList<>();
+
+		DetailAST recordComponentsDetailAST = detailAST.findFirstToken(
+			TokenTypes.RECORD_COMPONENTS);
+
+		if (recordComponentsDetailAST == null) {
+			return javaRecordComponents;
+		}
+
+		List<DetailAST> recordComponentDefinitionDetailASTList =
+			DetailASTUtil.getAllChildTokens(
+				recordComponentsDetailAST, false,
+				TokenTypes.RECORD_COMPONENT_DEF);
+
+		for (DetailAST recordComponentDefinitionDetailAST :
+				recordComponentDefinitionDetailASTList) {
+
+			DetailAST typeDetailAST =
+				recordComponentDefinitionDetailAST.findFirstToken(
+					TokenTypes.TYPE);
+
+			JavaType javaType = _parseJavaType(typeDetailAST);
+
+			DetailAST ellipsisDetailAST =
+				recordComponentDefinitionDetailAST.findFirstToken(
+					TokenTypes.ELLIPSIS);
+
+			if (ellipsisDetailAST != null) {
+				javaType.setVarargs(true);
+			}
+
+			JavaRecordComponent javaRecordComponent = new JavaRecordComponent(
+				_getName(recordComponentDefinitionDetailAST), javaType);
+
+			javaRecordComponents.add(javaRecordComponent);
+		}
+
+		return javaRecordComponents;
 	}
 
 	private static final int[] _SIMPLE_TYPES = {

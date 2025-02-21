@@ -21,8 +21,6 @@ import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporaryS
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -35,10 +33,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import java.io.Serializable;
-
 import java.util.Collections;
-import java.util.Map;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -80,9 +75,6 @@ public class ExpandoColumnAnalyticsDXPEntityBatchEngineTaskItemDelegateTest {
 			_expandoTable.getTableId(), "customField",
 			ExpandoColumnConstants.STRING);
 		_expandoColumnLocalService.addColumn(
-			_expandoTable.getTableId(), "testField",
-			ExpandoColumnConstants.STRING);
-		_expandoColumnLocalService.addColumn(
 			_expandoTable.getTableId(), "customField3",
 			ExpandoColumnConstants.STRING);
 		_expandoColumnLocalService.addColumn(
@@ -93,6 +85,9 @@ public class ExpandoColumnAnalyticsDXPEntityBatchEngineTaskItemDelegateTest {
 			ExpandoColumnConstants.STRING);
 		_expandoColumnLocalService.addColumn(
 			_expandoTable.getTableId(), "customField6",
+			ExpandoColumnConstants.STRING);
+		_expandoColumnLocalService.addColumn(
+			_expandoTable.getTableId(), "testField",
 			ExpandoColumnConstants.STRING);
 
 		ReflectionTestUtil.setFieldValue(
@@ -107,11 +102,6 @@ public class ExpandoColumnAnalyticsDXPEntityBatchEngineTaskItemDelegateTest {
 
 	@Test
 	public void testSendExpandoColumnAnalytics() throws Exception {
-		Map<String, Serializable> parameter = Collections.emptyMap();
-		String search = null;
-		Filter filter = null;
-		Sort[] sorts = null;
-
 		try (CompanyConfigurationTemporarySwapper
 				companyConfigurationTemporarySwapper =
 					new CompanyConfigurationTemporarySwapper(
@@ -121,19 +111,16 @@ public class ExpandoColumnAnalyticsDXPEntityBatchEngineTaskItemDelegateTest {
 						).put(
 							"syncedUserFieldNames",
 							new String[] {
-								"customField", "testField", "customField5"
+								"customField", "customField5", "testField"
 							}
 						).build())) {
 
-			Pagination pagination = Pagination.of(1, 7);
-
 			Page<DXPEntity> resultPage = _batchEngineTaskItemDelegate.read(
-				filter, pagination, sorts, parameter, search);
+				null, Pagination.of(1, 7), null, Collections.emptyMap(), null);
 
-			Assert.assertEquals(
-				3,
-				resultPage.getItems(
-				).size());
+			Page<DXPEntity> dxpEntitiesPage = resultPage.getItens();
+
+			Assert.assertEquals(3, dxpEntitiesPage.size());
 		}
 	}
 

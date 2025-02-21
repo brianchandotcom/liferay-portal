@@ -10,7 +10,7 @@ import React from 'react';
 
 import MarketplaceModal from './MarketplaceModal';
 
-import './MarketplaceModal.scss';
+import '../../../css/MarketplaceModal.scss';
 
 interface Props {
 	body: string;

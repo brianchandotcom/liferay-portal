@@ -831,6 +831,48 @@ public class ObjectEntry implements Serializable {
 	@JsonIgnore
 	private Supplier<Long[]> _taxonomyCategoryIdsSupplier;
 
+	@io.swagger.v3.oas.annotations.media.Schema
+	@Valid
+	public Version getVersion() {
+		if (_versionSupplier != null) {
+			version = _versionSupplier.get();
+
+			_versionSupplier = null;
+		}
+
+		return version;
+	}
+
+	public void setVersion(Version version) {
+		this.version = version;
+
+		_versionSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setVersion(
+		UnsafeSupplier<Version, Exception> versionUnsafeSupplier) {
+
+		_versionSupplier = () -> {
+			try {
+				return versionUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Version version;
+
+	@JsonIgnore
+	private Supplier<Version> _versionSupplier;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -894,6 +936,9 @@ public class ObjectEntry implements Serializable {
 		}
 		else if (Objects.equals(propertyName, "taxonomyCategoryIds")) {
 			return getTaxonomyCategoryIds();
+		}
+		else if (Objects.equals(propertyName, "version")) {
+			return getVersion();
 		}
 		else {
 			if (properties.containsKey(propertyName)) {
@@ -1242,6 +1287,18 @@ public class ObjectEntry implements Serializable {
 			}
 
 			sb.append("]");
+		}
+
+		Version version = getVersion();
+
+		if (version != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"version\": ");
+
+			sb.append(String.valueOf(version));
 		}
 
 		sb.append("}");

@@ -914,6 +914,29 @@ public class ContentPageEditorDisplayContext {
 			infoCollectionProviderItemSelectorCriterion);
 	}
 
+	protected long getDraftSegmentsExperienceId(
+		long plid, long segmentsExperienceId) {
+
+		SegmentsExperience segmentsExperience =
+			segmentsExperienceLocalService.fetchSegmentsExperience(
+				segmentsExperienceId);
+
+		if (segmentsExperience == null) {
+			return segmentsExperienceId;
+		}
+
+		segmentsExperience =
+			segmentsExperienceLocalService.fetchSegmentsExperience(
+				segmentsExperience.getGroupId(),
+				segmentsExperience.getSegmentsExperienceKey(), plid);
+
+		if (segmentsExperience == null) {
+			return segmentsExperienceId;
+		}
+
+		return segmentsExperience.getSegmentsExperienceId();
+	}
+
 	protected String getFragmentEntryActionURL(String action) {
 		return getFragmentEntryActionURL(action, null);
 	}
@@ -1027,6 +1050,9 @@ public class ContentPageEditorDisplayContext {
 				_segmentsExperienceManager.getSegmentsExperienceId(
 					httpServletRequest);
 		}
+
+		_segmentsExperienceId = getDraftSegmentsExperienceId(
+			themeDisplay.getPlid(), _segmentsExperienceId);
 
 		return _segmentsExperienceId;
 	}

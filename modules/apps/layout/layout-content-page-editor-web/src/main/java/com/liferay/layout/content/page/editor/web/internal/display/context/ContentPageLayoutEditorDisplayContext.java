@@ -233,6 +233,9 @@ public class ContentPageLayoutEditorDisplayContext
 			_segmentsExperienceId = super.getSegmentsExperienceId();
 		}
 
+		_segmentsExperienceId = getDraftSegmentsExperienceId(
+			themeDisplay.getPlid(), _segmentsExperienceId);
+
 		return _segmentsExperienceId;
 	}
 

@@ -185,8 +185,6 @@ if (FileUtil.exists(rootProject, "private/yarn.lock")) {
 
 buildDir = new File(rootDir.parentFile, "build")
 
-File jakartaOutputDir = new File(buildDir, "_jakarta-transformer")
-
 for (String gradleVersion in ["8.5"]) {
 	String gradleDistributionURL = "https://services.gradle.org/distributions/gradle-${gradleVersion}-all.zip"
 	String suffix = gradleVersion.replace(".", "")
@@ -1038,48 +1036,6 @@ private boolean _hasTestClasses(Task task, String testClassesDirName) {
 	}
 
 	return true
-}
-
-private synchronized FileCollection _transformToJakarta(File jakartaOutputDir, Configuration jakartaTransformerConfiguration, FileCollection jarFiles, Task task) {
-	FileCollection newJarFiles = task.project.objects.fileCollection()
-
-	File jakartaVersionsPropertiesFile = task.project.rootProject.file("liferay-jakarta-versions.properties")
-	URLClassLoader urlClassLoader = new URLClassLoader(jakartaTransformerConfiguration.files.collect { it.toURI() }.collect{ it.toURL() }.toArray(new URL[0]), null as java.lang.ClassLoader)
-
-	jarFiles.files.each {
-		File jarFile ->
-
-		String fileName = jarFile.name.contains('.') ? jarFile.name.replaceFirst(/(\.[^.]+)$/, '-JAKARTA-SNAPSHOT$1') : jarFile.name
-
-		File file = new File(jakartaOutputDir, fileName)
-
-		newJarFiles.from(file)
-
-		if (file.exists()) {
-			task.logger.lifecycle "Jakarta: CACHE ${task.project.name}:${task.name} ${FileUtil.relativize(jarFile, jakartaOutputDir.parentFile.parentFile.parentFile)} -> ${FileUtil.relativize(file, jakartaOutputDir.parentFile.parentFile.parentFile)}"
-
-			return
-		}
-
-		Class<?> jakartaTransformerCLIClass = Class.forName("org.eclipse.transformer.cli.JakartaTransformerCLI", true, urlClassLoader)
-
-		Object jakartaTransformerCLIClassConstructor = jakartaTransformerCLIClass.getConstructor(PrintStream, PrintStream, String[].class)
-		Object runMethod = jakartaTransformerCLIClass.getMethod("run")
-
-		PrintStream errorPrintStream = new PrintStream(new ByteArrayOutputStream())
-		PrintStream standardPrintStream = new PrintStream(new ByteArrayOutputStream())
-
-		Object resultCode = runMethod.invoke(jakartaTransformerCLIClassConstructor.newInstance(standardPrintStream, errorPrintStream, ["--quiet", "--versions", jakartaVersionsPropertiesFile.absolutePath, jarFile.absolutePath, file.absolutePath] as String[]))
-
-		if (resultCode.toString() == "Success") {
-			task.logger.lifecycle "Jakarta: ${task.project.name}:${task.name} ${FileUtil.relativize(jarFile, jakartaOutputDir.parentFile.parentFile.parentFile)} -> ${FileUtil.relativize(file, jakartaOutputDir.parentFile.parentFile.parentFile)}"
-		}
-		else {
-			throw new GradleException("Jakarta: ERROR ${resultCode}\n${errorPrintStream}")
-		}
-	}
-
-	return newJarFiles
 }
 
 private void _updateGradleSourcePaths(String gradleVersion, EclipseModel eclipseModel) {

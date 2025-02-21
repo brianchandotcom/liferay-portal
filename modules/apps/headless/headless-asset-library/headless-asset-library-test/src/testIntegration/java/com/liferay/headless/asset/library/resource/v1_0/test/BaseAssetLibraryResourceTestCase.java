@@ -18,8 +18,10 @@ import com.liferay.depot.service.DepotEntryLocalServiceUtil;
 import com.liferay.headless.asset.library.client.dto.v1_0.AssetLibrary;
 import com.liferay.headless.asset.library.client.http.HttpInvoker;
 import com.liferay.headless.asset.library.client.pagination.Page;
+import com.liferay.headless.asset.library.client.pagination.Pagination;
 import com.liferay.headless.asset.library.client.resource.v1_0.AssetLibraryResource;
 import com.liferay.headless.asset.library.client.serdes.v1_0.AssetLibrarySerDes;
+import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -34,6 +36,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
@@ -196,6 +199,276 @@ public abstract class BaseAssetLibraryResourceTestCase {
 		Assert.assertEquals(regex, assetLibrary.getDescription());
 		Assert.assertEquals(regex, assetLibrary.getExternalReferenceCode());
 		Assert.assertEquals(regex, assetLibrary.getName());
+	}
+
+	@Test
+	public void testGetAssetLibrariesPage() throws Exception {
+		Page<AssetLibrary> page = assetLibraryResource.getAssetLibrariesPage(
+			RandomTestUtil.randomString(), Pagination.of(1, 10), null);
+
+		long totalCount = page.getTotalCount();
+
+		AssetLibrary assetLibrary1 = testGetAssetLibrariesPage_addAssetLibrary(
+			randomAssetLibrary());
+
+		AssetLibrary assetLibrary2 = testGetAssetLibrariesPage_addAssetLibrary(
+			randomAssetLibrary());
+
+		page = assetLibraryResource.getAssetLibrariesPage(
+			null, Pagination.of(1, 10), null);
+
+		Assert.assertEquals(totalCount + 2, page.getTotalCount());
+
+		assertContains(assetLibrary1, (List<AssetLibrary>)page.getItems());
+		assertContains(assetLibrary2, (List<AssetLibrary>)page.getItems());
+		assertValid(page, testGetAssetLibrariesPage_getExpectedActions());
+
+		assetLibraryResource.deleteAssetLibrary(assetLibrary1.getId());
+
+		assetLibraryResource.deleteAssetLibrary(assetLibrary2.getId());
+	}
+
+	protected Map<String, Map<String, String>>
+			testGetAssetLibrariesPage_getExpectedActions()
+		throws Exception {
+
+		Map<String, Map<String, String>> expectedActions = new HashMap<>();
+
+		return expectedActions;
+	}
+
+	@Test
+	public void testGetAssetLibrariesPageWithPagination() throws Exception {
+		Page<AssetLibrary> assetLibraryPage =
+			assetLibraryResource.getAssetLibrariesPage(null, null, null);
+
+		int totalCount = GetterUtil.getInteger(
+			assetLibraryPage.getTotalCount());
+
+		AssetLibrary assetLibrary1 = testGetAssetLibrariesPage_addAssetLibrary(
+			randomAssetLibrary());
+
+		AssetLibrary assetLibrary2 = testGetAssetLibrariesPage_addAssetLibrary(
+			randomAssetLibrary());
+
+		AssetLibrary assetLibrary3 = testGetAssetLibrariesPage_addAssetLibrary(
+			randomAssetLibrary());
+
+		// See com.liferay.portal.vulcan.internal.configuration.HeadlessAPICompanyConfiguration#pageSizeLimit
+
+		int pageSizeLimit = 500;
+
+		if (totalCount >= (pageSizeLimit - 2)) {
+			Page<AssetLibrary> page1 =
+				assetLibraryResource.getAssetLibrariesPage(
+					null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
+
+			Assert.assertEquals(totalCount + 3, page1.getTotalCount());
+
+			assertContains(assetLibrary1, (List<AssetLibrary>)page1.getItems());
+
+			Page<AssetLibrary> page2 =
+				assetLibraryResource.getAssetLibrariesPage(
+					null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
+
+			assertContains(assetLibrary2, (List<AssetLibrary>)page2.getItems());
+
+			Page<AssetLibrary> page3 =
+				assetLibraryResource.getAssetLibrariesPage(
+					null,
+					Pagination.of(
+						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
+						pageSizeLimit),
+					null);
+
+			assertContains(assetLibrary3, (List<AssetLibrary>)page3.getItems());
+		}
+		else {
+			Page<AssetLibrary> page1 =
+				assetLibraryResource.getAssetLibrariesPage(
+					null, Pagination.of(1, totalCount + 2), null);
+
+			List<AssetLibrary> assetLibraries1 =
+				(List<AssetLibrary>)page1.getItems();
+
+			Assert.assertEquals(
+				assetLibraries1.toString(), totalCount + 2,
+				assetLibraries1.size());
+
+			Page<AssetLibrary> page2 =
+				assetLibraryResource.getAssetLibrariesPage(
+					null, Pagination.of(2, totalCount + 2), null);
+
+			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
+
+			List<AssetLibrary> assetLibraries2 =
+				(List<AssetLibrary>)page2.getItems();
+
+			Assert.assertEquals(
+				assetLibraries2.toString(), 1, assetLibraries2.size());
+
+			Page<AssetLibrary> page3 =
+				assetLibraryResource.getAssetLibrariesPage(
+					null, Pagination.of(1, (int)totalCount + 3), null);
+
+			assertContains(assetLibrary1, (List<AssetLibrary>)page3.getItems());
+			assertContains(assetLibrary2, (List<AssetLibrary>)page3.getItems());
+			assertContains(assetLibrary3, (List<AssetLibrary>)page3.getItems());
+		}
+	}
+
+	@Test
+	public void testGetAssetLibrariesPageWithSortDateTime() throws Exception {
+		testGetAssetLibrariesPageWithSort(
+			EntityField.Type.DATE_TIME,
+			(entityField, assetLibrary1, assetLibrary2) -> {
+				BeanTestUtil.setProperty(
+					assetLibrary1, entityField.getName(),
+					new Date(System.currentTimeMillis() - (2 * Time.MINUTE)));
+			});
+	}
+
+	@Test
+	public void testGetAssetLibrariesPageWithSortDouble() throws Exception {
+		testGetAssetLibrariesPageWithSort(
+			EntityField.Type.DOUBLE,
+			(entityField, assetLibrary1, assetLibrary2) -> {
+				BeanTestUtil.setProperty(
+					assetLibrary1, entityField.getName(), 0.1);
+				BeanTestUtil.setProperty(
+					assetLibrary2, entityField.getName(), 0.5);
+			});
+	}
+
+	@Test
+	public void testGetAssetLibrariesPageWithSortInteger() throws Exception {
+		testGetAssetLibrariesPageWithSort(
+			EntityField.Type.INTEGER,
+			(entityField, assetLibrary1, assetLibrary2) -> {
+				BeanTestUtil.setProperty(
+					assetLibrary1, entityField.getName(), 0);
+				BeanTestUtil.setProperty(
+					assetLibrary2, entityField.getName(), 1);
+			});
+	}
+
+	@Test
+	public void testGetAssetLibrariesPageWithSortString() throws Exception {
+		testGetAssetLibrariesPageWithSort(
+			EntityField.Type.STRING,
+			(entityField, assetLibrary1, assetLibrary2) -> {
+				Class<?> clazz = assetLibrary1.getClass();
+
+				String entityFieldName = entityField.getName();
+
+				Method method = clazz.getMethod(
+					"get" + StringUtil.upperCaseFirstLetter(entityFieldName));
+
+				Class<?> returnType = method.getReturnType();
+
+				if (returnType.isAssignableFrom(Map.class)) {
+					BeanTestUtil.setProperty(
+						assetLibrary1, entityFieldName,
+						Collections.singletonMap("Aaa", "Aaa"));
+					BeanTestUtil.setProperty(
+						assetLibrary2, entityFieldName,
+						Collections.singletonMap("Bbb", "Bbb"));
+				}
+				else if (entityFieldName.contains("email")) {
+					BeanTestUtil.setProperty(
+						assetLibrary1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+					BeanTestUtil.setProperty(
+						assetLibrary2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()) +
+									"@liferay.com");
+				}
+				else {
+					BeanTestUtil.setProperty(
+						assetLibrary1, entityFieldName,
+						"aaa" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+					BeanTestUtil.setProperty(
+						assetLibrary2, entityFieldName,
+						"bbb" +
+							StringUtil.toLowerCase(
+								RandomTestUtil.randomString()));
+				}
+			});
+	}
+
+	protected void testGetAssetLibrariesPageWithSort(
+			EntityField.Type type,
+			UnsafeTriConsumer
+				<EntityField, AssetLibrary, AssetLibrary, Exception>
+					unsafeTriConsumer)
+		throws Exception {
+
+		List<EntityField> entityFields = getEntityFields(type);
+
+		if (entityFields.isEmpty()) {
+			return;
+		}
+
+		AssetLibrary assetLibrary1 = randomAssetLibrary();
+		AssetLibrary assetLibrary2 = randomAssetLibrary();
+
+		for (EntityField entityField : entityFields) {
+			unsafeTriConsumer.accept(entityField, assetLibrary1, assetLibrary2);
+		}
+
+		assetLibrary1 = testGetAssetLibrariesPage_addAssetLibrary(
+			assetLibrary1);
+
+		assetLibrary2 = testGetAssetLibrariesPage_addAssetLibrary(
+			assetLibrary2);
+
+		Page<AssetLibrary> page = assetLibraryResource.getAssetLibrariesPage(
+			null, null, null);
+
+		for (EntityField entityField : entityFields) {
+			Page<AssetLibrary> ascPage =
+				assetLibraryResource.getAssetLibrariesPage(
+					null, Pagination.of(1, (int)page.getTotalCount() + 1),
+					entityField.getName() + ":asc");
+
+			assertContains(
+				assetLibrary1, (List<AssetLibrary>)ascPage.getItems());
+			assertContains(
+				assetLibrary2, (List<AssetLibrary>)ascPage.getItems());
+
+			Page<AssetLibrary> descPage =
+				assetLibraryResource.getAssetLibrariesPage(
+					null, Pagination.of(1, (int)page.getTotalCount() + 1),
+					entityField.getName() + ":desc");
+
+			assertContains(
+				assetLibrary2, (List<AssetLibrary>)descPage.getItems());
+			assertContains(
+				assetLibrary1, (List<AssetLibrary>)descPage.getItems());
+		}
+	}
+
+	protected AssetLibrary testGetAssetLibrariesPage_addAssetLibrary(
+			AssetLibrary assetLibrary)
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Test

@@ -107,7 +107,7 @@ public class ResourceUtilTest extends ResourceUtil {
 		_testResolve(
 			getURIResolver(_tempDirectory, 10 * 1000, new URI(_VALID_URL)));
 
-		String invalidDomain = "invalid.releases.liferay.com";
+		String invalidDomain = "invalid.sample.com";
 
 		String invalidURL = "https://" + invalidDomain;
 

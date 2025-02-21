@@ -90,7 +90,6 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.exception.InfoFormException;
-import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -141,7 +140,6 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
@@ -309,22 +307,7 @@ public class RenderLayoutStructureTagTest {
 		Map<String, String> inputTypesMap = _addFormToLayout(
 			objectDefinition.getClassName(), draftLayout);
 
-		_addLayoutStructureRule(
-			_getActionsJSONArray(
-				LinkedHashMapBuilder.put(
-					inputTypesMap.get(TextInfoFieldType.INSTANCE.getName()),
-					"hide"
-				).put(
-					inputTypesMap.get(
-						DefaultInputFragmentEntryConfigurationProvider.
-							FORM_INPUT_SUBMIT_BUTTON),
-					"disable"
-				).build()),
-			_getConditionsJSONArray(
-				LinkedHashMapBuilder.<String, Object>put(
-					"user", String.valueOf(TestPropsValues.getUserId())
-				).build()),
-			"all", draftLayout);
+		_addLayoutStructureRule(inputTypesMap, draftLayout);
 
 		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
 
@@ -2251,8 +2234,7 @@ public class RenderLayoutStructureTagTest {
 	}
 
 	private void _addLayoutStructureRule(
-			JSONArray actionsJSONArray, JSONArray conditionsJSONArray,
-			String conditionType, Layout layout)
+			Map<String, String> inputTypesMap, Layout layout)
 		throws Exception {
 
 		long segmentsExperienceId =
@@ -2267,9 +2249,43 @@ public class RenderLayoutStructureTagTest {
 			layoutStructure.addLayoutStructureRule(
 				RandomTestUtil.randomString());
 
-		layoutStructureRule.setActionsJSONArray(actionsJSONArray);
-		layoutStructureRule.setConditionsJSONArray(conditionsJSONArray);
-		layoutStructureRule.setConditionType(conditionType);
+		layoutStructureRule.setActionsJSONArray(
+			JSONUtil.putAll(
+				JSONUtil.put(
+					"id", RandomTestUtil.randomString()
+				).put(
+					"itemId",
+					inputTypesMap.get(TextInfoFieldType.INSTANCE.getName())
+				).put(
+					"type", "hide"
+				),
+				JSONUtil.put(
+					"id", RandomTestUtil.randomString()
+				).put(
+					"itemId",
+					inputTypesMap.get(
+						DefaultInputFragmentEntryConfigurationProvider.
+							FORM_INPUT_SUBMIT_BUTTON)
+				).put(
+					"type", "disable"
+				)));
+		layoutStructureRule.setConditionsJSONArray(
+			JSONUtil.put(
+				JSONUtil.put(
+					"field", "user"
+				).put(
+					"id", RandomTestUtil.randomString()
+				).put(
+					"options",
+					JSONUtil.put(
+						"type", "equal"
+					).put(
+						"value", String.valueOf(TestPropsValues.getUserId())
+					)
+				).put(
+					"type", "user"
+				)));
+		layoutStructureRule.setConditionType("all");
 
 		_layoutPageTemplateStructureLocalService.
 			updateLayoutPageTemplateStructureData(
@@ -2510,59 +2526,6 @@ public class RenderLayoutStructureTagTest {
 				_jsonDDMFormDeserializer.deserialize(builder.build());
 
 		return ddmFormDeserializerDeserializeResponse.getDDMForm();
-	}
-
-	private JSONArray _getActionsJSONArray(Map<String, String> itemIdMap) {
-		JSONArray jsonArray = _jsonFactory.createJSONArray();
-
-		for (Map.Entry<String, String> entry : itemIdMap.entrySet()) {
-			jsonArray.put(
-				JSONUtil.put(
-					"id", RandomTestUtil.randomString()
-				).put(
-					"itemId", entry.getKey()
-				).put(
-					"type", entry.getValue()
-				));
-		}
-
-		return jsonArray;
-	}
-
-	private JSONArray _getConditionsJSONArray(Map<String, Object> fieldMap) {
-		JSONArray jsonArray = _jsonFactory.createJSONArray();
-
-		for (Map.Entry<String, Object> entry : fieldMap.entrySet()) {
-			String field = entry.getKey();
-
-			jsonArray.put(
-				JSONUtil.put(
-					"field", field
-				).put(
-					"id", RandomTestUtil.randomString()
-				).put(
-					"options",
-					JSONUtil.put(
-						"type", "equal"
-					).put(
-						"value", entry.getValue()
-					)
-				).put(
-					"type",
-					() -> {
-						if (Objects.equals(field, "role") ||
-							Objects.equals(field, "segment") ||
-							Objects.equals(field, "user")) {
-
-							return "user";
-						}
-
-						return "form";
-					}
-				));
-		}
-
-		return jsonArray;
 	}
 
 	private LayoutStructure _getDefaultMasterLayoutStructure() {

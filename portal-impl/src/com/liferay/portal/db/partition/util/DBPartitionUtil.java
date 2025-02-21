@@ -224,10 +224,6 @@ public class DBPartitionUtil {
 		}
 	}
 
-	public static String getExtractedPartitionName(long companyId) {
-		return _DATABASE_EXTRACTED_PARTITION_SCHEMA_NAME_PREFIX + companyId;
-	}
-
 	public static String getPartitionKey(Object key) {
 		if (!DBPartition.isPartitionEnabled()) {
 			return key.toString();
@@ -667,7 +663,7 @@ public class DBPartitionUtil {
 		Connection connection = CurrentConnectionUtil.getConnection(
 			InfrastructureUtil.getDataSource());
 
-		String extractedPartitionName = getExtractedPartitionName(companyId);
+		String extractedPartitionName = _getExtractedPartitionName(companyId);
 		String partitionName = getPartitionName(companyId);
 
 		try (AutoCloseable autoCloseable = _disableAutoCommit(connection);
@@ -785,7 +781,7 @@ public class DBPartitionUtil {
 
 			statement.executeUpdate(
 				_dbPartitionDB.getDropPartitionSQL(
-					getExtractedPartitionName(companyId)));
+					_getExtractedPartitionName(companyId)));
 
 			connection.commit();
 		}
@@ -886,7 +882,7 @@ public class DBPartitionUtil {
 			boolean deleteSourceData)
 		throws Exception {
 
-		String partitionName = getExtractedPartitionName(companyId);
+		String partitionName = _getExtractedPartitionName(companyId);
 
 		statement.executeUpdate(
 			_dbPartitionDB.getDropViewSQL(partitionName, tableName));
@@ -1145,6 +1141,10 @@ public class DBPartitionUtil {
 			StringPool.OPEN_PARENTHESIS, StringUtil.merge(columnNames),
 			") select ", StringUtil.merge(columnNames), " from ",
 			fromPartitionName, StringPool.PERIOD, fromTableName, whereClause);
+	}
+
+	private static String _getExtractedPartitionName(long companyId) {
+		return _DATABASE_EXTRACTED_PARTITION_SCHEMA_NAME_PREFIX + companyId;
 	}
 
 	private static String _getQuartzWhereClauseSQL(

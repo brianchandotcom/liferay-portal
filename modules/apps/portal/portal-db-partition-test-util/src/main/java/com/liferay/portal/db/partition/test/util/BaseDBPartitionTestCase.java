@@ -211,6 +211,12 @@ public abstract class BaseDBPartitionTestCase {
 			" (testColumn bigint primary key, companyId bigint)";
 	}
 
+	protected static String getExtractedPartitionName(long companyId) {
+		return ReflectionTestUtil.invoke(
+			DBPartitionUtil.class, "_getExtractedPartitionName",
+			new Class<?>[] {long.class}, companyId);
+	}
+
 	protected static String getPartitionName(long companyId) {
 		if (companyId == PortalInstancePool.getDefaultCompanyId()) {
 			return defaultPartitionName;

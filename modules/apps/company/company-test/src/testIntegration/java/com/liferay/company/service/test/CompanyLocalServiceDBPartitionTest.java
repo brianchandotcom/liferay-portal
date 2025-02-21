@@ -669,13 +669,11 @@ public class CompanyLocalServiceDBPartitionTest
 			Assert.assertTrue(
 				dbPartitionDB.isPartitionCreated(
 					connection,
-					DBPartitionUtil.getExtractedPartitionName(
-						company.getCompanyId())));
+					getExtractedPartitionName(company.getCompanyId())));
 
 			_checkStandaloneDBPartitionTables(
-				DBPartitionUtil.getExtractedPartitionName(
-					company.getCompanyId()),
-				true, "Company", "VirtualHost");
+				getExtractedPartitionName(company.getCompanyId()), true,
+				"Company", "VirtualHost");
 
 			_checkStandaloneDBPartitionTables(
 				DBPartitionUtil.getPartitionName(company.getCompanyId()), false,
@@ -694,8 +692,7 @@ public class CompanyLocalServiceDBPartitionTest
 		finally {
 			db.runSQL(
 				dbPartitionDB.getDropPartitionSQL(
-					DBPartitionUtil.getExtractedPartitionName(
-						company.getCompanyId())));
+					getExtractedPartitionName(company.getCompanyId())));
 
 			companyLocalService.deleteCompany(company);
 		}
@@ -737,8 +734,7 @@ public class CompanyLocalServiceDBPartitionTest
 			Assert.assertFalse(
 				dbPartitionDB.isPartitionCreated(
 					connection,
-					DBPartitionUtil.getExtractedPartitionName(
-						company.getCompanyId())));
+					getExtractedPartitionName(company.getCompanyId())));
 			Assert.assertEquals(
 				tablesCount, _getTablesCount(company.getCompanyId()));
 			Assert.assertEquals(
@@ -750,8 +746,7 @@ public class CompanyLocalServiceDBPartitionTest
 		finally {
 			db.runSQL(
 				dbPartitionDB.getDropPartitionSQL(
-					DBPartitionUtil.getExtractedPartitionName(
-						company.getCompanyId())));
+					getExtractedPartitionName(company.getCompanyId())));
 
 			companyLocalService.deleteCompany(company);
 		}

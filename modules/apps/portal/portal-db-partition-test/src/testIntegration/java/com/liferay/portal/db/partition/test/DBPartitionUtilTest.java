@@ -325,8 +325,7 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 			for (long companyId : COMPANY_IDS) {
 				List<String> views = viewNames.get(companyId);
 
-				String schemaName = DBPartitionUtil.getExtractedPartitionName(
-					companyId);
+				String schemaName = getExtractedPartitionName(companyId);
 
 				Assert.assertEquals(
 					tablesCount.get(companyId) + views.size(),
@@ -374,7 +373,7 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 			for (long companyId : COMPANY_IDS) {
 				db.runSQL(
 					dbPartitionDB.getDropPartitionSQL(
-						DBPartitionUtil.getExtractedPartitionName(companyId)));
+						getExtractedPartitionName(companyId)));
 			}
 
 			deletePartitionRequiredData();

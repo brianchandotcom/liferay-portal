@@ -184,9 +184,9 @@ public class SystemOSGiCommands implements OSGiCommands {
 	protected void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
 
-		Bundle systemBundle = bundleContext.getBundle(0);
+		Bundle bundle = bundleContext.getBundle(0);
 
-		_frameworkWiring = systemBundle.adapt(FrameworkWiring.class);
+		_frameworkWiring = bundle.adapt(FrameworkWiring.class);
 	}
 
 	private void _collectCapabilities(

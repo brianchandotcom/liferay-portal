@@ -1,0 +1,45 @@
+/**
+ * SPDX-FileCopyrightText: (c) 2024 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+
+package com.liferay.source.formatter.dependencies.upgrade;
+
+import org.osgi.service.component.annotations.Reference;
+
+/**
+ * @author Regisson Aguiar
+ */
+public class LPD_49109 {
+
+	public void method(
+		long userId, long groupId, long repositoryId, long folderId,
+		String sourceFileName, String mimeType, String title,
+		String description, String changeLog, long fileEntryTypeId,
+		Map<String, DDMFormValues> ddmFormValuesMap, File file,
+		InputStream inputStream, long size, ServiceContext serviceContext) {
+
+		DLFileEntryLocalServiceUtil.addFileEntry(123, groupId, repositoryId, folderId, sourceFileName, mimeType, title, description, changeLog, fileEntryTypeId, ddmFormValuesMap, file, inputStream, size, serviceContext);
+		DLFileEntryLocalServiceUtil.addFileEntry(userId, groupId, repositoryId, folderId, sourceFileName, mimeType, title, description, changeLog, fileEntryTypeId, ddmFormValuesMap, file, inputStream, size, serviceContext);
+		_dlFileEntryLocalService.addFileEntry(userId, groupId, repositoryId, folderId, sourceFileName, mimeType, title, description, changeLog, fileEntryTypeId, ddmFormValuesMap, file, inputStream, size, serviceContext);
+	}
+
+	public void method(
+		long groupId, long repositoryId, long folderId, String sourceFileName,
+		String mimeType, String title, String description, String changeLog,
+		long fileEntryTypeId, Map<String, DDMFormValues> ddmFormValuesMap,
+		File file, InputStream inputStream, long size,
+		ServiceContext serviceContext) {
+
+		DLFileEntryServiceUtil.addFileEntry(123, repositoryId, folderId, sourceFileName, mimeType, title, description, changeLog, fileEntryTypeId, ddmFormValuesMap, file, inputStream, size, serviceContext);
+		DLFileEntryServiceUtil.addFileEntry(groupId, repositoryId, folderId, sourceFileName, mimeType, title, description, changeLog, fileEntryTypeId, ddmFormValuesMap, file, inputStream, size, serviceContext);
+		_dlFileEntryService.addFileEntry(groupId, repositoryId, folderId, sourceFileName, mimeType, title, description, changeLog, fileEntryTypeId, ddmFormValuesMap, file, inputStream, size, serviceContext);
+	}
+
+	@Reference
+	private DLFileEntryLocalService _dlFileEntryLocalService;
+
+	@Reference
+	private DLFileEntryService _dlFileEntryService;
+
+}

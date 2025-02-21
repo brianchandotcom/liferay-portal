@@ -217,7 +217,8 @@ public abstract class BaseProductOptionValueResourceTestCase {
 			productOptionValueResource.
 				getChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeProductOptionByExternalReferenceCodeProductOptionExternalReferenceCodeProductOptionValuesPage(
 					channelExternalReferenceCode, productExternalReferenceCode,
-					productOptionExternalReferenceCode, null, null, null,
+					productOptionExternalReferenceCode, null,
+					RandomTestUtil.randomString(), null, null,
 					Pagination.of(1, 10));
 
 		long totalCount = page.getTotalCount();
@@ -239,7 +240,8 @@ public abstract class BaseProductOptionValueResourceTestCase {
 						irrelevantChannelExternalReferenceCode,
 						irrelevantProductExternalReferenceCode,
 						irrelevantProductOptionExternalReferenceCode, null,
-						null, null, Pagination.of(1, (int)totalCount + 1));
+						null, null, null,
+						Pagination.of(1, (int)totalCount + 1));
 
 			Assert.assertEquals(totalCount + 1, page.getTotalCount());
 
@@ -268,7 +270,7 @@ public abstract class BaseProductOptionValueResourceTestCase {
 			productOptionValueResource.
 				getChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeProductOptionByExternalReferenceCodeProductOptionExternalReferenceCodeProductOptionValuesPage(
 					channelExternalReferenceCode, productExternalReferenceCode,
-					productOptionExternalReferenceCode, null, null, null,
+					productOptionExternalReferenceCode, null, null, null, null,
 					Pagination.of(1, 10));
 
 		Assert.assertEquals(totalCount + 2, page.getTotalCount());
@@ -311,7 +313,8 @@ public abstract class BaseProductOptionValueResourceTestCase {
 			productOptionValueResource.
 				getChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeProductOptionByExternalReferenceCodeProductOptionExternalReferenceCodeProductOptionValuesPage(
 					channelExternalReferenceCode, productExternalReferenceCode,
-					productOptionExternalReferenceCode, null, null, null, null);
+					productOptionExternalReferenceCode, null, null, null, null,
+					null);
 
 		int totalCount = GetterUtil.getInteger(
 			productOptionValuePage.getTotalCount());
@@ -342,6 +345,7 @@ public abstract class BaseProductOptionValueResourceTestCase {
 						channelExternalReferenceCode,
 						productExternalReferenceCode,
 						productOptionExternalReferenceCode, null, null, null,
+						null,
 						Pagination.of(
 							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
 							pageSizeLimit));
@@ -358,6 +362,7 @@ public abstract class BaseProductOptionValueResourceTestCase {
 						channelExternalReferenceCode,
 						productExternalReferenceCode,
 						productOptionExternalReferenceCode, null, null, null,
+						null,
 						Pagination.of(
 							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
 							pageSizeLimit));
@@ -372,6 +377,7 @@ public abstract class BaseProductOptionValueResourceTestCase {
 						channelExternalReferenceCode,
 						productExternalReferenceCode,
 						productOptionExternalReferenceCode, null, null, null,
+						null,
 						Pagination.of(
 							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
 							pageSizeLimit));
@@ -387,7 +393,7 @@ public abstract class BaseProductOptionValueResourceTestCase {
 						channelExternalReferenceCode,
 						productExternalReferenceCode,
 						productOptionExternalReferenceCode, null, null, null,
-						Pagination.of(1, totalCount + 2));
+						null, Pagination.of(1, totalCount + 2));
 
 			List<ProductOptionValue> productOptionValues1 =
 				(List<ProductOptionValue>)page1.getItems();
@@ -402,7 +408,7 @@ public abstract class BaseProductOptionValueResourceTestCase {
 						channelExternalReferenceCode,
 						productExternalReferenceCode,
 						productOptionExternalReferenceCode, null, null, null,
-						Pagination.of(2, totalCount + 2));
+						null, Pagination.of(2, totalCount + 2));
 
 			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
@@ -419,7 +425,7 @@ public abstract class BaseProductOptionValueResourceTestCase {
 						channelExternalReferenceCode,
 						productExternalReferenceCode,
 						productOptionExternalReferenceCode, null, null, null,
-						Pagination.of(1, (int)totalCount + 3));
+						null, Pagination.of(1, (int)totalCount + 3));
 
 			assertContains(
 				productOptionValue1,
@@ -517,7 +523,8 @@ public abstract class BaseProductOptionValueResourceTestCase {
 		Page<ProductOptionValue> page =
 			productOptionValueResource.
 				getChannelProductProductOptionProductOptionValuesPage(
-					channelId, productId, productOptionId, null, null, null,
+					channelId, productId, productOptionId, null,
+					RandomTestUtil.randomString(), null, null,
 					Pagination.of(1, 10));
 
 		long totalCount = page.getTotalCount();
@@ -535,7 +542,7 @@ public abstract class BaseProductOptionValueResourceTestCase {
 				productOptionValueResource.
 					getChannelProductProductOptionProductOptionValuesPage(
 						irrelevantChannelId, irrelevantProductId,
-						irrelevantProductOptionId, null, null, null,
+						irrelevantProductOptionId, null, null, null, null,
 						Pagination.of(1, (int)totalCount + 1));
 
 			Assert.assertEquals(totalCount + 1, page.getTotalCount());
@@ -564,7 +571,7 @@ public abstract class BaseProductOptionValueResourceTestCase {
 			productOptionValueResource.
 				getChannelProductProductOptionProductOptionValuesPage(
 					channelId, productId, productOptionId, null, null, null,
-					Pagination.of(1, 10));
+					null, Pagination.of(1, 10));
 
 		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
@@ -603,7 +610,7 @@ public abstract class BaseProductOptionValueResourceTestCase {
 			productOptionValueResource.
 				getChannelProductProductOptionProductOptionValuesPage(
 					channelId, productId, productOptionId, null, null, null,
-					null);
+					null, null);
 
 		int totalCount = GetterUtil.getInteger(
 			productOptionValuePage.getTotalCount());
@@ -632,6 +639,7 @@ public abstract class BaseProductOptionValueResourceTestCase {
 				productOptionValueResource.
 					getChannelProductProductOptionProductOptionValuesPage(
 						channelId, productId, productOptionId, null, null, null,
+						null,
 						Pagination.of(
 							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
 							pageSizeLimit));
@@ -646,6 +654,7 @@ public abstract class BaseProductOptionValueResourceTestCase {
 				productOptionValueResource.
 					getChannelProductProductOptionProductOptionValuesPage(
 						channelId, productId, productOptionId, null, null, null,
+						null,
 						Pagination.of(
 							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
 							pageSizeLimit));
@@ -658,6 +667,7 @@ public abstract class BaseProductOptionValueResourceTestCase {
 				productOptionValueResource.
 					getChannelProductProductOptionProductOptionValuesPage(
 						channelId, productId, productOptionId, null, null, null,
+						null,
 						Pagination.of(
 							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
 							pageSizeLimit));
@@ -671,7 +681,7 @@ public abstract class BaseProductOptionValueResourceTestCase {
 				productOptionValueResource.
 					getChannelProductProductOptionProductOptionValuesPage(
 						channelId, productId, productOptionId, null, null, null,
-						Pagination.of(1, totalCount + 2));
+						null, Pagination.of(1, totalCount + 2));
 
 			List<ProductOptionValue> productOptionValues1 =
 				(List<ProductOptionValue>)page1.getItems();
@@ -684,7 +694,7 @@ public abstract class BaseProductOptionValueResourceTestCase {
 				productOptionValueResource.
 					getChannelProductProductOptionProductOptionValuesPage(
 						channelId, productId, productOptionId, null, null, null,
-						Pagination.of(2, totalCount + 2));
+						null, Pagination.of(2, totalCount + 2));
 
 			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
@@ -699,7 +709,7 @@ public abstract class BaseProductOptionValueResourceTestCase {
 				productOptionValueResource.
 					getChannelProductProductOptionProductOptionValuesPage(
 						channelId, productId, productOptionId, null, null, null,
-						Pagination.of(1, (int)totalCount + 3));
+						null, Pagination.of(1, (int)totalCount + 3));
 
 			assertContains(
 				productOptionValue1,

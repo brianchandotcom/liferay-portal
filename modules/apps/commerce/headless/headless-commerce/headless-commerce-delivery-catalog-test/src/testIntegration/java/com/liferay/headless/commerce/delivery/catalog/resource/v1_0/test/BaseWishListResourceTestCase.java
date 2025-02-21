@@ -190,7 +190,8 @@ public abstract class BaseWishListResourceTestCase {
 
 		Page<WishList> page =
 			wishListResource.getChannelByExternalReferenceCodeWishListsPage(
-				externalReferenceCode, null, Pagination.of(1, 10));
+				externalReferenceCode, null, RandomTestUtil.randomString(),
+				Pagination.of(1, 10));
 
 		long totalCount = page.getTotalCount();
 
@@ -202,7 +203,7 @@ public abstract class BaseWishListResourceTestCase {
 
 			page =
 				wishListResource.getChannelByExternalReferenceCodeWishListsPage(
-					irrelevantExternalReferenceCode, null,
+					irrelevantExternalReferenceCode, null, null,
 					Pagination.of(1, (int)totalCount + 1));
 
 			Assert.assertEquals(totalCount + 1, page.getTotalCount());
@@ -223,7 +224,7 @@ public abstract class BaseWishListResourceTestCase {
 				externalReferenceCode, randomWishList());
 
 		page = wishListResource.getChannelByExternalReferenceCodeWishListsPage(
-			externalReferenceCode, null, Pagination.of(1, 10));
+			externalReferenceCode, null, null, Pagination.of(1, 10));
 
 		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
@@ -258,7 +259,7 @@ public abstract class BaseWishListResourceTestCase {
 
 		Page<WishList> wishListPage =
 			wishListResource.getChannelByExternalReferenceCodeWishListsPage(
-				externalReferenceCode, null, null);
+				externalReferenceCode, null, null, null);
 
 		int totalCount = GetterUtil.getInteger(wishListPage.getTotalCount());
 
@@ -281,7 +282,7 @@ public abstract class BaseWishListResourceTestCase {
 		if (totalCount >= (pageSizeLimit - 2)) {
 			Page<WishList> page1 =
 				wishListResource.getChannelByExternalReferenceCodeWishListsPage(
-					externalReferenceCode, null,
+					externalReferenceCode, null, null,
 					Pagination.of(
 						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
 						pageSizeLimit));
@@ -292,7 +293,7 @@ public abstract class BaseWishListResourceTestCase {
 
 			Page<WishList> page2 =
 				wishListResource.getChannelByExternalReferenceCodeWishListsPage(
-					externalReferenceCode, null,
+					externalReferenceCode, null, null,
 					Pagination.of(
 						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
 						pageSizeLimit));
@@ -301,7 +302,7 @@ public abstract class BaseWishListResourceTestCase {
 
 			Page<WishList> page3 =
 				wishListResource.getChannelByExternalReferenceCodeWishListsPage(
-					externalReferenceCode, null,
+					externalReferenceCode, null, null,
 					Pagination.of(
 						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
 						pageSizeLimit));
@@ -311,7 +312,7 @@ public abstract class BaseWishListResourceTestCase {
 		else {
 			Page<WishList> page1 =
 				wishListResource.getChannelByExternalReferenceCodeWishListsPage(
-					externalReferenceCode, null,
+					externalReferenceCode, null, null,
 					Pagination.of(1, totalCount + 2));
 
 			List<WishList> wishLists1 = (List<WishList>)page1.getItems();
@@ -321,7 +322,7 @@ public abstract class BaseWishListResourceTestCase {
 
 			Page<WishList> page2 =
 				wishListResource.getChannelByExternalReferenceCodeWishListsPage(
-					externalReferenceCode, null,
+					externalReferenceCode, null, null,
 					Pagination.of(2, totalCount + 2));
 
 			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
@@ -332,7 +333,7 @@ public abstract class BaseWishListResourceTestCase {
 
 			Page<WishList> page3 =
 				wishListResource.getChannelByExternalReferenceCodeWishListsPage(
-					externalReferenceCode, null,
+					externalReferenceCode, null, null,
 					Pagination.of(1, (int)totalCount + 3));
 
 			assertContains(wishList1, (List<WishList>)page3.getItems());
@@ -395,7 +396,8 @@ public abstract class BaseWishListResourceTestCase {
 			testGetChannelWishListsPage_getIrrelevantChannelId();
 
 		Page<WishList> page = wishListResource.getChannelWishListsPage(
-			channelId, null, Pagination.of(1, 10));
+			channelId, null, RandomTestUtil.randomString(),
+			Pagination.of(1, 10));
 
 		long totalCount = page.getTotalCount();
 
@@ -405,7 +407,7 @@ public abstract class BaseWishListResourceTestCase {
 					irrelevantChannelId, randomIrrelevantWishList());
 
 			page = wishListResource.getChannelWishListsPage(
-				irrelevantChannelId, null,
+				irrelevantChannelId, null, null,
 				Pagination.of(1, (int)totalCount + 1));
 
 			Assert.assertEquals(totalCount + 1, page.getTotalCount());
@@ -424,7 +426,7 @@ public abstract class BaseWishListResourceTestCase {
 			channelId, randomWishList());
 
 		page = wishListResource.getChannelWishListsPage(
-			channelId, null, Pagination.of(1, 10));
+			channelId, null, null, Pagination.of(1, 10));
 
 		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
@@ -452,7 +454,7 @@ public abstract class BaseWishListResourceTestCase {
 		Long channelId = testGetChannelWishListsPage_getChannelId();
 
 		Page<WishList> wishListPage = wishListResource.getChannelWishListsPage(
-			channelId, null, null);
+			channelId, null, null, null);
 
 		int totalCount = GetterUtil.getInteger(wishListPage.getTotalCount());
 
@@ -471,7 +473,7 @@ public abstract class BaseWishListResourceTestCase {
 
 		if (totalCount >= (pageSizeLimit - 2)) {
 			Page<WishList> page1 = wishListResource.getChannelWishListsPage(
-				channelId, null,
+				channelId, null, null,
 				Pagination.of(
 					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
 					pageSizeLimit));
@@ -481,7 +483,7 @@ public abstract class BaseWishListResourceTestCase {
 			assertContains(wishList1, (List<WishList>)page1.getItems());
 
 			Page<WishList> page2 = wishListResource.getChannelWishListsPage(
-				channelId, null,
+				channelId, null, null,
 				Pagination.of(
 					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
 					pageSizeLimit));
@@ -489,7 +491,7 @@ public abstract class BaseWishListResourceTestCase {
 			assertContains(wishList2, (List<WishList>)page2.getItems());
 
 			Page<WishList> page3 = wishListResource.getChannelWishListsPage(
-				channelId, null,
+				channelId, null, null,
 				Pagination.of(
 					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
 					pageSizeLimit));
@@ -498,7 +500,7 @@ public abstract class BaseWishListResourceTestCase {
 		}
 		else {
 			Page<WishList> page1 = wishListResource.getChannelWishListsPage(
-				channelId, null, Pagination.of(1, totalCount + 2));
+				channelId, null, null, Pagination.of(1, totalCount + 2));
 
 			List<WishList> wishLists1 = (List<WishList>)page1.getItems();
 
@@ -506,7 +508,7 @@ public abstract class BaseWishListResourceTestCase {
 				wishLists1.toString(), totalCount + 2, wishLists1.size());
 
 			Page<WishList> page2 = wishListResource.getChannelWishListsPage(
-				channelId, null, Pagination.of(2, totalCount + 2));
+				channelId, null, null, Pagination.of(2, totalCount + 2));
 
 			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
@@ -515,7 +517,7 @@ public abstract class BaseWishListResourceTestCase {
 			Assert.assertEquals(wishLists2.toString(), 1, wishLists2.size());
 
 			Page<WishList> page3 = wishListResource.getChannelWishListsPage(
-				channelId, null, Pagination.of(1, (int)totalCount + 3));
+				channelId, null, null, Pagination.of(1, (int)totalCount + 3));
 
 			assertContains(wishList1, (List<WishList>)page3.getItems());
 			assertContains(wishList2, (List<WishList>)page3.getItems());

@@ -162,6 +162,10 @@ public abstract class BaseWishListItemResourceImpl
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "accountId"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "currencyCode"
 			)
 		}
 	)
@@ -179,7 +183,10 @@ public abstract class BaseWishListItemResourceImpl
 			Long wishListItemId,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("accountId")
-			Long accountId)
+			Long accountId,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("currencyCode")
+			String currencyCode)
 		throws Exception {
 
 		return new WishListItem();
@@ -202,6 +209,10 @@ public abstract class BaseWishListItemResourceImpl
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "accountId"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "currencyCode"
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
@@ -228,6 +239,9 @@ public abstract class BaseWishListItemResourceImpl
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("accountId")
 			Long accountId,
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("currencyCode")
+			String currencyCode,
 			@javax.ws.rs.core.Context Pagination pagination)
 		throws Exception {
 
@@ -387,7 +401,7 @@ public abstract class BaseWishListItemResourceImpl
 
 	@Override
 	public WishListItem getItem(Long id) throws Exception {
-		return getWishListItem(id, null);
+		return getWishListItem(id, null, null);
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

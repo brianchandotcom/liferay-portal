@@ -207,7 +207,7 @@ public abstract class BaseSkuResourceTestCase {
 			skuResource.
 				getChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkusPage(
 					channelExternalReferenceCode, productExternalReferenceCode,
-					null, Pagination.of(1, 10));
+					null, RandomTestUtil.randomString(), Pagination.of(1, 10));
 
 		long totalCount = page.getTotalCount();
 
@@ -224,7 +224,7 @@ public abstract class BaseSkuResourceTestCase {
 				skuResource.
 					getChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkusPage(
 						irrelevantChannelExternalReferenceCode,
-						irrelevantProductExternalReferenceCode, null,
+						irrelevantProductExternalReferenceCode, null, null,
 						Pagination.of(1, (int)totalCount + 1));
 
 			Assert.assertEquals(totalCount + 1, page.getTotalCount());
@@ -251,7 +251,7 @@ public abstract class BaseSkuResourceTestCase {
 			skuResource.
 				getChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkusPage(
 					channelExternalReferenceCode, productExternalReferenceCode,
-					null, Pagination.of(1, 10));
+					null, null, Pagination.of(1, 10));
 
 		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
@@ -287,7 +287,7 @@ public abstract class BaseSkuResourceTestCase {
 			skuResource.
 				getChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkusPage(
 					channelExternalReferenceCode, productExternalReferenceCode,
-					null, null);
+					null, null, null);
 
 		int totalCount = GetterUtil.getInteger(skuPage.getTotalCount());
 
@@ -315,7 +315,7 @@ public abstract class BaseSkuResourceTestCase {
 				skuResource.
 					getChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkusPage(
 						channelExternalReferenceCode,
-						productExternalReferenceCode, null,
+						productExternalReferenceCode, null, null,
 						Pagination.of(
 							(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
 							pageSizeLimit));
@@ -328,7 +328,7 @@ public abstract class BaseSkuResourceTestCase {
 				skuResource.
 					getChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkusPage(
 						channelExternalReferenceCode,
-						productExternalReferenceCode, null,
+						productExternalReferenceCode, null, null,
 						Pagination.of(
 							(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
 							pageSizeLimit));
@@ -339,7 +339,7 @@ public abstract class BaseSkuResourceTestCase {
 				skuResource.
 					getChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkusPage(
 						channelExternalReferenceCode,
-						productExternalReferenceCode, null,
+						productExternalReferenceCode, null, null,
 						Pagination.of(
 							(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
 							pageSizeLimit));
@@ -351,7 +351,7 @@ public abstract class BaseSkuResourceTestCase {
 				skuResource.
 					getChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkusPage(
 						channelExternalReferenceCode,
-						productExternalReferenceCode, null,
+						productExternalReferenceCode, null, null,
 						Pagination.of(1, totalCount + 2));
 
 			List<Sku> skus1 = (List<Sku>)page1.getItems();
@@ -362,7 +362,7 @@ public abstract class BaseSkuResourceTestCase {
 				skuResource.
 					getChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkusPage(
 						channelExternalReferenceCode,
-						productExternalReferenceCode, null,
+						productExternalReferenceCode, null, null,
 						Pagination.of(2, totalCount + 2));
 
 			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
@@ -375,7 +375,7 @@ public abstract class BaseSkuResourceTestCase {
 				skuResource.
 					getChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkusPage(
 						channelExternalReferenceCode,
-						productExternalReferenceCode, null,
+						productExternalReferenceCode, null, null,
 						Pagination.of(1, (int)totalCount + 3));
 
 			assertContains(sku1, (List<Sku>)page3.getItems());
@@ -460,7 +460,7 @@ public abstract class BaseSkuResourceTestCase {
 					testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuByExternalReferenceCodeSkuExternalReferenceCode_getChannelExternalReferenceCode(),
 					testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuByExternalReferenceCodeSkuExternalReferenceCode_getProductExternalReferenceCode(),
 					testGetChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuByExternalReferenceCodeSkuExternalReferenceCode_getSkuExternalReferenceCode(),
-					null);
+					null, null);
 
 		assertEquals(postSku, getSku);
 		assertValid(getSku);
@@ -707,7 +707,8 @@ public abstract class BaseSkuResourceTestCase {
 			testGetChannelProductSkusPage_getIrrelevantProductId();
 
 		Page<Sku> page = skuResource.getChannelProductSkusPage(
-			channelId, productId, null, Pagination.of(1, 10));
+			channelId, productId, null, RandomTestUtil.randomString(),
+			Pagination.of(1, 10));
 
 		long totalCount = page.getTotalCount();
 
@@ -717,7 +718,7 @@ public abstract class BaseSkuResourceTestCase {
 				randomIrrelevantSku());
 
 			page = skuResource.getChannelProductSkusPage(
-				irrelevantChannelId, irrelevantProductId, null,
+				irrelevantChannelId, irrelevantProductId, null, null,
 				Pagination.of(1, (int)totalCount + 1));
 
 			Assert.assertEquals(totalCount + 1, page.getTotalCount());
@@ -736,7 +737,7 @@ public abstract class BaseSkuResourceTestCase {
 			channelId, productId, randomSku());
 
 		page = skuResource.getChannelProductSkusPage(
-			channelId, productId, null, Pagination.of(1, 10));
+			channelId, productId, null, null, Pagination.of(1, 10));
 
 		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
@@ -764,7 +765,7 @@ public abstract class BaseSkuResourceTestCase {
 		Long productId = testGetChannelProductSkusPage_getProductId();
 
 		Page<Sku> skuPage = skuResource.getChannelProductSkusPage(
-			channelId, productId, null, null);
+			channelId, productId, null, null, null);
 
 		int totalCount = GetterUtil.getInteger(skuPage.getTotalCount());
 
@@ -783,7 +784,7 @@ public abstract class BaseSkuResourceTestCase {
 
 		if (totalCount >= (pageSizeLimit - 2)) {
 			Page<Sku> page1 = skuResource.getChannelProductSkusPage(
-				channelId, productId, null,
+				channelId, productId, null, null,
 				Pagination.of(
 					(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
 					pageSizeLimit));
@@ -793,7 +794,7 @@ public abstract class BaseSkuResourceTestCase {
 			assertContains(sku1, (List<Sku>)page1.getItems());
 
 			Page<Sku> page2 = skuResource.getChannelProductSkusPage(
-				channelId, productId, null,
+				channelId, productId, null, null,
 				Pagination.of(
 					(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
 					pageSizeLimit));
@@ -801,7 +802,7 @@ public abstract class BaseSkuResourceTestCase {
 			assertContains(sku2, (List<Sku>)page2.getItems());
 
 			Page<Sku> page3 = skuResource.getChannelProductSkusPage(
-				channelId, productId, null,
+				channelId, productId, null, null,
 				Pagination.of(
 					(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
 					pageSizeLimit));
@@ -810,14 +811,16 @@ public abstract class BaseSkuResourceTestCase {
 		}
 		else {
 			Page<Sku> page1 = skuResource.getChannelProductSkusPage(
-				channelId, productId, null, Pagination.of(1, totalCount + 2));
+				channelId, productId, null, null,
+				Pagination.of(1, totalCount + 2));
 
 			List<Sku> skus1 = (List<Sku>)page1.getItems();
 
 			Assert.assertEquals(skus1.toString(), totalCount + 2, skus1.size());
 
 			Page<Sku> page2 = skuResource.getChannelProductSkusPage(
-				channelId, productId, null, Pagination.of(2, totalCount + 2));
+				channelId, productId, null, null,
+				Pagination.of(2, totalCount + 2));
 
 			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
@@ -826,7 +829,7 @@ public abstract class BaseSkuResourceTestCase {
 			Assert.assertEquals(skus2.toString(), 1, skus2.size());
 
 			Page<Sku> page3 = skuResource.getChannelProductSkusPage(
-				channelId, productId, null,
+				channelId, productId, null, null,
 				Pagination.of(1, (int)totalCount + 3));
 
 			assertContains(sku1, (List<Sku>)page3.getItems());
@@ -908,7 +911,7 @@ public abstract class BaseSkuResourceTestCase {
 		Sku getSku = skuResource.getChannelProductSku(
 			testGetChannelProductSku_getChannelId(),
 			testGetChannelProductSku_getProductId(postSku), postSku.getId(),
-			null);
+			null, null);
 
 		assertEquals(postSku, getSku);
 		assertValid(getSku);

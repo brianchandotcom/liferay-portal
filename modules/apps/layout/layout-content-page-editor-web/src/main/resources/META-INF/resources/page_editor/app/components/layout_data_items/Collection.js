@@ -19,6 +19,7 @@ import {config} from '../../config/index';
 import {
 	CollectionItemContext,
 	CollectionItemContextProvider,
+	useCollectionItemId,
 	useIsDisabledCollectionItem,
 } from '../../contexts/CollectionItemContext';
 import {useDisplayPagePreviewItem} from '../../contexts/DisplayPagePreviewItemContext';
@@ -238,16 +239,20 @@ const ItemContext = ({
 }) => {
 	const isDisabled = useIsDisabledCollectionItem();
 
+	const ancestorId = useCollectionItemId();
+
 	const contextValue = useMemo(
 		() => ({
 			collectionConfig,
 			collectionId,
 			collectionItem,
+			collectionItemId: `${ancestorId}_${index}`,
 			collectionItemIndex: index,
 			customCollectionSelectorURL,
 			isDisabled: isDisabled || index > 0,
 		}),
 		[
+			ancestorId,
 			collectionConfig,
 			collectionId,
 			collectionItem,

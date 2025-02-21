@@ -798,15 +798,6 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		throw new UnsupportedOperationException();
 	}
 
-	@Override
-	public Layout copyLayoutContent(
-			long[] segmentsExperienceIds, Layout sourceLayout,
-			Layout targetLayout)
-		throws Exception {
-
-		throw new UnsupportedOperationException();
-	}
-
 	/**
 	 * Deletes the layout, its child layouts, and its associated resources.
 	 *

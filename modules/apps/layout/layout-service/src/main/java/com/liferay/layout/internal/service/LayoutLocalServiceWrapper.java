@@ -107,12 +107,15 @@ public class LayoutLocalServiceWrapper
 	public Layout copyLayoutContent(Layout sourceLayout, Layout targetLayout)
 		throws Exception {
 
-		return copyLayoutContent(
+		long[] sourceSegmentsExperiencesIds =
 			TransformUtil.transformToLongArray(
 				_segmentsExperienceLocalService.getSegmentsExperiences(
 					sourceLayout.getGroupId(), sourceLayout.getPlid()),
-				SegmentsExperienceModel::getSegmentsExperienceId),
-			sourceLayout, targetLayout);
+				SegmentsExperienceModel::getSegmentsExperienceId);
+
+		return _copyLayoutContent(
+			false, sourceLayout, sourceSegmentsExperiencesIds, targetLayout,
+			sourceSegmentsExperiencesIds);
 	}
 
 	@Override
@@ -126,17 +129,6 @@ public class LayoutLocalServiceWrapper
 				_segmentsExperienceLocalService.
 					fetchDefaultSegmentsExperienceId(targetLayout.getPlid())
 			});
-	}
-
-	@Override
-	public Layout copyLayoutContent(
-			long[] segmentsExperiencesIds, Layout sourceLayout,
-			Layout targetLayout)
-		throws Exception {
-
-		return _copyLayoutContent(
-			false, sourceLayout, segmentsExperiencesIds, targetLayout,
-			segmentsExperiencesIds);
 	}
 
 	@Override

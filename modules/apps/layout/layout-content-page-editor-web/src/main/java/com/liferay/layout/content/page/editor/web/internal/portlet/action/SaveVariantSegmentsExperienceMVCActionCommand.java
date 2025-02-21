@@ -61,7 +61,7 @@ public class SaveVariantSegmentsExperienceMVCActionCommand
 			actionRequest, "segmentsExperienceId");
 
 		_layoutLocalService.copyLayoutContent(
-			new long[] {segmentsExperienceId}, draftLayout, layout);
+			segmentsExperienceId, draftLayout, layout);
 
 		hideDefaultSuccessMessage(actionRequest);
 

@@ -1,5 +1,10 @@
 {
+	"accessToControlMenuRoleNames": [
+		"Test Role 1",
+		"Test Role 3"
+	],
 	"manualMembership": "true",
 	"membershipRestriction": "0",
+	"showControlMenuByRole": "true",
 	"typeSite": "1"
 }

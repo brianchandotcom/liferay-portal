@@ -56,8 +56,8 @@ public class CompanyLocalServiceImplTest {
 			VirtualHostLocalServiceUtil.class);
 
 		_virtualHostLocalServiceUtilMockedStatic.when(
-			() -> VirtualHostLocalServiceUtil.fetchDefaultVirtualHost(
-				Mockito.anyLong(), Mockito.anyLong())
+			() -> VirtualHostLocalServiceUtil.fetchCompanyDefaultVirtualHost(
+				Mockito.anyLong())
 		).thenReturn(
 			virtualHost
 		);

@@ -5183,7 +5183,7 @@ public class PortalImpl implements Portal {
 				long companyId = getCompanyId(httpServletRequest);
 
 				try {
-					userId = JAASHelper.getJaasUserId(companyId, remoteUser);
+					userId = JAASHelper.getJAASUserId(companyId, remoteUser);
 				}
 				catch (Exception exception) {
 					if (_log.isWarnEnabled()) {

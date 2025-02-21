@@ -71,7 +71,8 @@ public class CapsNameCheck extends BaseCheck {
 	}
 
 	private static final String[][] _ALL_CAPS_STRINGS = {
-		{"DDL", "Ddl"}, {"DDM", "Ddm"}, {"DL", "Dl"}, {"PK", "Pk"}
+		{"DDL", "Ddl"}, {"DDM", "Ddm"}, {"DL", "Dl"}, {"JAAS", "Jaas"},
+		{"PK", "Pk"}
 	};
 
 	private static final String _MSG_RENAME = "rename";

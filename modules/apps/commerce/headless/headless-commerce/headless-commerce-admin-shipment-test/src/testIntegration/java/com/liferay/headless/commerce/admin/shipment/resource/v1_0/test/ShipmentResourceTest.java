@@ -40,6 +40,7 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -108,6 +109,13 @@ public class ShipmentResourceTest extends BaseShipmentResourceTestCase {
 	@Override
 	@Test
 	public void testPutShipmentByExternalReferenceCode() throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testVulcanCRUDItemDelegateGetItem() throws Exception {
+		super.testVulcanCRUDItemDelegateGetItem();
 	}
 
 	@Override

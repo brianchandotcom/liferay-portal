@@ -9,6 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
+import com.liferay.object.entry.util.ObjectEntryFolderThreadLocal;
 import com.liferay.object.exception.DuplicateObjectEntryFolderExternalReferenceCodeException;
 import com.liferay.object.exception.ObjectEntryFolderNameException;
 import com.liferay.object.exception.ObjectEntryFolderScopeException;
@@ -19,7 +20,9 @@ import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -145,6 +148,9 @@ public class ObjectEntryFolderLocalServiceTest {
 
 	@Test
 	public void testDeleteObjectEntryFolder() throws Exception {
+
+		// Nonsystem folder
+
 		ObjectEntryFolder objectEntryFolder1 = _addObjectEntryFolder(
 			StringUtil.randomString(), _group.getGroupId(),
 			StringUtil.randomString(),
@@ -177,6 +183,46 @@ public class ObjectEntryFolderLocalServiceTest {
 		Assert.assertNull(
 			_objectEntryFolderLocalService.fetchObjectEntryFolder(
 				objectEntryFolder3.getObjectEntryFolderId()));
+
+		// Protected system folder
+
+		String externalReferenceCode = "L_" + StringUtil.randomString();
+
+		AssertUtils.assertFailure(
+			PortalException.class,
+			"Object entry folder " + externalReferenceCode +
+				" cannot be deleted",
+			() -> {
+				ObjectEntryFolder systemObjectEntryFolder =
+					_addObjectEntryFolder(
+						externalReferenceCode, _group.getGroupId(),
+						StringUtil.randomString(),
+						ObjectEntryFolderConstants.
+							PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT);
+
+				_objectEntryFolderLocalService.deleteObjectEntryFolder(
+					systemObjectEntryFolder.getObjectEntryFolderId());
+			});
+
+		// Unprotected system folder
+
+		ObjectEntryFolder systemObjectEntryFolder = _addObjectEntryFolder(
+			"L_" + StringUtil.randomString(), _group.getGroupId(),
+			StringUtil.randomString(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT);
+
+		try (SafeCloseable safeCloseable =
+				ObjectEntryFolderThreadLocal.
+					setSkipSystemObjectEntryFolderProtectionWithSafeCloseable(
+						true)) {
+
+			_objectEntryFolderLocalService.deleteObjectEntryFolder(
+				systemObjectEntryFolder.getObjectEntryFolderId());
+		}
+
+		Assert.assertNull(
+			_objectEntryFolderLocalService.fetchObjectEntryFolder(
+				systemObjectEntryFolder.getObjectEntryFolderId()));
 	}
 
 	@Test

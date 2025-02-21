@@ -20,6 +20,26 @@ interface DefinitionOfTermsContainerProps {
 	objectDefinitions: ObjectDefinition[];
 }
 
+function hasLocalizedField(
+	objectDefinitions: ObjectDefinition[],
+	entityId: number
+): boolean {
+	if (!objectDefinitions.length || !entityId) {
+		return false;
+	}
+
+	const selectedObjectDefinition =
+		objectDefinitionUtils.findObjectDefinitionById(
+			objectDefinitions,
+			entityId
+		);
+
+	return Boolean(
+		selectedObjectDefinition &&
+			fieldsUtils.hasLocalizedField(selectedObjectDefinition!)
+	);
+}
+
 export default function DefinitionOfTermsContainer({
 	baseResourceURL,
 	objectDefinitions,

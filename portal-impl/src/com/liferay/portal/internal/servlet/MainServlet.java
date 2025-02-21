@@ -983,7 +983,7 @@ public class MainServlet extends HttpServlet {
 
 		if (PropsValues.PORTAL_JAAS_ENABLE) {
 			try {
-				userId = JAASHelper.getJaasUserId(companyId, remoteUser);
+				userId = JAASHelper.getJAASUserId(companyId, remoteUser);
 			}
 			catch (Exception exception) {
 				if (_log.isWarnEnabled()) {

@@ -622,6 +622,8 @@ public class SearchResultResourceImpl extends BaseSearchResultResourceImpl {
 				_setTitle(assetRenderer, fields, searchResult, summary);
 			}
 
+			searchResult.setEntryClassName(() -> entryClassName);
+
 			_setDTOFields(
 				embedded, entryClassName, entryClassPK, fields, searchResult);
 			_setDateCreated(document, fields, searchResult);

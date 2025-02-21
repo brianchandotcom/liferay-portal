@@ -16,10 +16,12 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.Portal;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -71,7 +73,8 @@ public class FeatureFlagApplication extends Application {
 				TransformUtil.transform(
 					_getDependentFeatureFlags(featureFlagsBag, key),
 					featureFlag -> _toMap(
-						companyId, featureFlag, featureFlagsBag))
+						companyId, featureFlag, featureFlagsBag,
+						_portal.getLocale(httpServletRequest)))
 			).build(),
 			MediaType.APPLICATION_JSON
 		).build();
@@ -100,16 +103,19 @@ public class FeatureFlagApplication extends Application {
 				).build();
 			}
 
+			Locale locale = _portal.getLocale(httpServletRequest);
+
 			return Response.ok(
 				HashMapBuilder.<String, Object>put(
 					"dependentFeatureFlags",
 					TransformUtil.transform(
 						_getDependentFeatureFlags(featureFlagsBag, key),
 						dependentFeatureFlag -> _toMap(
-							companyId, dependentFeatureFlag, featureFlagsBag))
+							companyId, dependentFeatureFlag, featureFlagsBag,
+							locale))
 				).put(
 					"featureFlag",
-					_toMap(companyId, featureFlag, featureFlagsBag)
+					_toMap(companyId, featureFlag, featureFlagsBag, locale)
 				).build(),
 				MediaType.APPLICATION_JSON
 			).build();
@@ -153,13 +159,13 @@ public class FeatureFlagApplication extends Application {
 
 	private Map<String, Object> _toMap(
 		long companyId, FeatureFlag featureFlag,
-		FeatureFlagsBag featureFlagsBag) {
+		FeatureFlagsBag featureFlagsBag, Locale locale) {
 
 		FeatureFlagDisplay featureFlagDisplay = new FeatureFlagDisplay(
 			companyId,
 			_getDependencyFeatureFlags(
 				companyId, featureFlagsBag, featureFlag.getKey()),
-			featureFlag, null);
+			featureFlag, locale);
 
 		return HashMapBuilder.<String, Object>put(
 			"companyId", featureFlagDisplay.getCompanyId()
@@ -186,5 +192,8 @@ public class FeatureFlagApplication extends Application {
 
 	@Reference
 	private FeatureFlagsBagProvider _featureFlagsBagProvider;
+
+	@Reference
+	private Portal _portal;
 
 }

@@ -93,6 +93,40 @@ components:
                         The attribute's significant value, e.g., email address, phone number.
                     type: string
             type: object
+        Operation:
+            properties:
+                op:
+                    description:
+                        The method that should be used in the operation. Possible values add remove replace
+                    pattern: "^[Aa][dd]|[Rr][emove]|[Rr][eplace]$"
+                    type: string
+                path:
+                    description:
+                        Add the path to specify the attribute/sub-attribute that should be updated.
+                    type: string
+                value:
+                    description:
+                        The value that should be updated.
+                    oneOf:
+                        - type: boolean
+                        - type: integer
+                        - type: number
+                        - type: string
+            type: object
+        PatchOp:
+            properties:
+                Operations:
+                    items:
+                        $ref: "#/components/schemas/Operation"
+                    type: array
+                schemas:
+                    description:
+                        the schema associated to this operation
+                    items:
+                        enum: ["urn:ietf:params:scim:api:messages:2.0:PatchOp"]
+                        type: string
+                    type: array
+            type: object
         QueryAttributes:
             properties:
                 attributes:
@@ -592,6 +626,33 @@ paths:
                     description:
                         If the resource exists, the server responds with HTTP status code 200 (OK) and includes the
                         result in the body of the response.
+            tags: ["User"]
+        patch:
+            description:
+                Updates a user.
+            operationId: patchV2User
+            parameters:
+                - in: path
+                  name: id
+                  required: true
+                  schema:
+                      type: string
+            requestBody:
+                content:
+                    application/scim+json:
+                        schema:
+                            $ref: "#/components/schemas/PatchOp"
+            responses:
+                200:
+                    content:
+                        application/scim+json:
+                            schema:
+                                oneOf:
+                                    - format: binary
+                                      type: string
+                                    - $ref: "#/components/schemas/User"
+                    description:
+                        The User was successfully updated.
             tags: ["User"]
         put:
             description:

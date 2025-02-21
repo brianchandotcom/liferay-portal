@@ -186,7 +186,10 @@ public class ObjectEntryFolderLocalServiceTest {
 
 		// Protected system folder
 
-		String externalReferenceCode = "L_" + StringUtil.randomString();
+		String externalReferenceCode =
+			ObjectEntryFolderConstants.
+				EXTERNAL_REFERENCE_CODE_PREFIX_SYSTEM_OBJECT_ENTRY_FOLDER +
+					StringUtil.randomString();
 
 		AssertUtils.assertFailure(
 			PortalException.class,
@@ -207,8 +210,10 @@ public class ObjectEntryFolderLocalServiceTest {
 		// Unprotected system folder
 
 		ObjectEntryFolder systemObjectEntryFolder = _addObjectEntryFolder(
-			"L_" + StringUtil.randomString(), _group.getGroupId(),
-			StringUtil.randomString(),
+			ObjectEntryFolderConstants.
+				EXTERNAL_REFERENCE_CODE_PREFIX_SYSTEM_OBJECT_ENTRY_FOLDER +
+					StringUtil.randomString(),
+			_group.getGroupId(), StringUtil.randomString(),
 			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT);
 
 		try (SafeCloseable safeCloseable =

@@ -126,7 +126,9 @@ public class ObjectEntryFolderLocalServiceImpl
 		if (!ObjectEntryFolderThreadLocal.
 				isSkipSystemObjectEntryFolderProtection() &&
 			StringUtil.startsWith(
-				objectEntryFolder.getExternalReferenceCode(), "L_")) {
+				objectEntryFolder.getExternalReferenceCode(),
+				ObjectEntryFolderConstants.
+					EXTERNAL_REFERENCE_CODE_PREFIX_SYSTEM_OBJECT_ENTRY_FOLDER)) {
 
 			throw new PortalException(
 				"Object entry folder " +

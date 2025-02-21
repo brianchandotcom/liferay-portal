@@ -7,10 +7,28 @@ import Button, {ClayButtonWithIcon} from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import React from 'react';
-
 import {CSSTransition} from 'react-transition-group';
 
-const FilterNavigation = ({
+interface FilterNavigationItem {
+	child?: React.ReactNode;
+	className?: string;
+	disabled?: boolean;
+	onClick?: (event: React.MouseEvent) => void;
+	symbol?: string;
+	title?: string;
+	type?: 'divider' | 'component' | 'item';
+}
+
+interface IProps {
+	active: boolean;
+	direction: 'prev' | 'next';
+	header?: string;
+	items?: FilterNavigationItem[];
+	onBack: () => void;
+	onForward: (title: string, child: React.ReactNode) => void;
+}
+
+const FilterNavigation: React.FC<IProps> = ({
 	active,
 	direction,
 	header,
@@ -71,55 +89,62 @@ const FilterNavigation = ({
 									type,
 								},
 								j
-							) =>
-								type === 'divider' ? (
-									<li
-										aria-hidden="true"
-										className="dropdown-divider"
-										key={`${j}-divider`}
-										role="presentation"
-									/>
-								) : type === 'component' ? (
-									<React.Fragment key={`${j}-${title}`}>
-										{child}
-									</React.Fragment>
-								) : (
-									<li key={`${j}-${title}`}>
-										<Button
-											className={classNames(
-												'dropdown-item',
-												className
-											)}
-											disabled={disabled}
-											displayType="unstyled"
-											onClick={(event) => {
-												if (onClick) {
-													onClick(event);
-												}
+							) => (
+								<React.Fragment key={`${j}-${title || j}`}>
+									{' '}
 
-												if (title && child) {
-													onForward(title, child);
-												}
-											}}
-										>
-											{symbol && (
-												<span className="dropdown-item-indicator-start">
-													<ClayIcon symbol={symbol} />
+									{/* Key should always exist */}
+									{type === 'divider' && (
+										<li
+											aria-hidden="true"
+											className="dropdown-divider"
+											role="presentation"
+										/>
+									)}
+									{type === 'component' && child}
+									{type === 'item' && title && (
+										<li>
+											<Button
+												className={classNames(
+													'dropdown-item',
+													className
+												)}
+												disabled={disabled}
+												displayType="unstyled"
+												onClick={(event) => {
+													onClick && onClick(event);
+
+													if (child) {
+														title &&
+															onForward(
+																title,
+																child
+															);
+													}
+												}}
+											>
+												{symbol && (
+													<span className="dropdown-item-indicator-start">
+														<ClayIcon
+															symbol={symbol}
+														/>
+													</span>
+												)}
+
+												<span className="dropdown-item-indicator-text-end">
+													{title}
 												</span>
-											)}
 
-											<span className="dropdown-item-indicator-text-end">
-												{title}
-											</span>
-
-											{child && (
-												<span className="dropdown-item-indicator-end">
-													<ClayIcon symbol="angle-right" />
-												</span>
-											)}
-										</Button>
-									</li>
-								)
+												{child && (
+													<span className="dropdown-item-indicator-end">
+														<ClayIcon symbol="angle-right" />
+													</span>
+												)}
+											</Button>
+										</li>
+									)}
+								</React.Fragment>
+							)
 						)}
 					</ul>
 				)}

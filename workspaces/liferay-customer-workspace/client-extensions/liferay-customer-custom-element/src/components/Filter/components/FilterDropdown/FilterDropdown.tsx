@@ -5,10 +5,33 @@
 
 import ClayDropDown from '@clayui/drop-down';
 import classNames from 'classnames';
-import {memo, useState} from 'react';
-import DrilldownMenuItems from './components/FilterNavigation';
+import {JSXElementConstructor, memo, useState} from 'react';
 
-const FilterDropdown = ({
+import FilterNavigation from './components/FilterNavigation';
+
+import type {AlignPoints} from '@clayui/shared';
+
+interface IProps {
+	alignmentPosition?: number | undefined;
+	className?: string;
+	containerElement?: JSXElementConstructor<any> | 'div' | 'li' | undefined;
+	initialActiveMenu: string;
+	menuElementAttrs?: React.HTMLAttributes<HTMLElement>;
+	menuHeight?: 'auto' | undefined;
+	menuWidth?: 'sm' | 'shrink' | 'full' | undefined;
+	menus: Record<
+		string,
+		{
+			child?: React.ReactNode;
+			title: string;
+			type?: 'divider' | 'component' | 'item';
+		}[]
+	>;
+	offsetFn?: (points: AlignPoints) => [number, number];
+	trigger: React.ReactElement;
+}
+
+const FilterDropdown: React.FC<IProps> = ({
 	alignmentPosition,
 	className,
 	containerElement,
@@ -20,9 +43,9 @@ const FilterDropdown = ({
 	offsetFn,
 	trigger,
 }) => {
-	const [activeMenu, setActiveMenu] = useState(initialActiveMenu);
-	const [direction, setDirection] = useState();
-	const [history, setHistory] = useState([]);
+	const [activeMenu, setActiveMenu] = useState<string>(initialActiveMenu);
+	const [direction, setDirection] = useState<'prev' | 'next'>('next');
+	const [history, setHistory] = useState<{id: string; title: string}[]>([]);
 	const [active, setActive] = useState(false);
 
 	const menuIds = Object.keys(menus);
@@ -48,42 +71,35 @@ const FilterDropdown = ({
 			trigger={trigger}
 		>
 			<div>
-				{menuIds.map((menuKey) => {
-					return (
-						<DrilldownMenuItems
-							active={activeMenu === menuKey}
-							direction={direction}
-							header={
-								activeMenu === menuKey && !!history.length
-									? history.slice(-1)[0].title
-									: undefined
-							}
-							items={menus[menuKey]}
-							key={menuKey}
-							onBack={() => {
-								const [parent] = history.slice(-1);
+				{menuIds.map((menuKey) => (
+					<FilterNavigation
+						active={activeMenu === menuKey}
+						direction={direction}
+						header={
+							activeMenu === menuKey && !!history.length
+								? history.slice(-1)[0].title
+								: undefined
+						}
+						items={menus[menuKey]}
+						key={menuKey}
+						onBack={() => {
+							const [parent] = history.slice(-1);
 
-								setHistory(
-									history.slice(0, history.length - 1)
-								);
+							setHistory(history.slice(0, history.length - 1));
 
-								setDirection('prev');
+							setDirection('next');
 
-								setActiveMenu(parent.id);
-							}}
-							onForward={(title, childId) => {
-								setHistory([
-									...history,
-									{id: activeMenu, title},
-								]);
+							parent && setActiveMenu(parent.id);
+						}}
+						onForward={(title, child) => {
+							setHistory([...history, {id: activeMenu, title}]);
 
-								setDirection('next');
+							setDirection('prev');
 
-								setActiveMenu(childId);
-							}}
-						/>
-					);
-				})}
+							setActiveMenu(child as string);
+						}}
+					/>
+				))}
 			</div>
 		</ClayDropDown>
 	);

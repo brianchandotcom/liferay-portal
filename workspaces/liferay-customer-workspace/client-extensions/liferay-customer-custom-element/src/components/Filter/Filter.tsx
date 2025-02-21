@@ -7,8 +7,8 @@ import {Button as ClayButton} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
 import i18n from '~/utils/I18n';
 
-import FilterCheckbox from './components/FilterCheckbox';
 import FilterDropdown from './components/FilterDropdown';
+import FilterContent from './components/FilterDropdown/components/FilterContent';
 
 export interface IFilterOption {
 	name: string;
@@ -22,45 +22,22 @@ export interface IProps {
 }
 
 const Filter = ({availableFilters, onChange, selectedFilters}: IProps) => {
-	const menuItems = availableFilters.map((option) => ({
-		child: option.name,
-		title: i18n.translate(option.name),
-	}));
-
 	const menus: Record<string, any> = {
-		root: menuItems,
+		root: availableFilters.map((filter) => ({
+			child: filter.name,
+			title: i18n.translate(filter.name),
+			type: 'item',
+		})),
 	};
 
-	menuItems.forEach((item) => {
-		const name = item.child;
-		const availableOption = availableFilters.find(
-			(option) => option.name === name
-		);
-
-		if (!availableOption) {
-			console.warn(`Available option not found for name: ${name}`);
-
-			return;
-		}
-
-		menus[name] = [
+	availableFilters.forEach((filter) => {
+		menus[filter.name] = [
 			{
 				child: (
-					<FilterCheckbox
-						availableItems={availableOption.value}
-						clearCheckboxes={!selectedFilters.length}
-						updateFilters={(checkedItems: string[]) => {
-							const updatedSelectedFilters = selectedFilters.map(
-								(option) => {
-									if (option.name === name) {
-										return {...option, value: checkedItems};
-									}
-
-									return option;
-								}
-							);
-							onChange(updatedSelectedFilters);
-						}}
+					<FilterContent
+						filter={filter}
+						onChange={onChange}
+						selectedFilters={selectedFilters}
 					/>
 				),
 				type: 'component',

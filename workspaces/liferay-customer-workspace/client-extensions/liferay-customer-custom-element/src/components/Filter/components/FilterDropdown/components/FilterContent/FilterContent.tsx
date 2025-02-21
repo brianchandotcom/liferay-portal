@@ -5,49 +5,74 @@
 
 import ClayButton from '@clayui/button';
 import {ClayCheckbox} from '@clayui/form';
-import {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
+import {IFilterOption} from '~/components/Filter/Filter';
 import i18n from '~/utils/I18n';
 
-const FilterContent = ({availableItems, clearCheckboxes, updateFilters}) => {
-	const [checkedItems, setCheckedItems] = useState([]);
+interface IProps {
+	filter: IFilterOption;
+	onChange: (selectedFilters: IFilterOption[]) => void;
+	selectedFilters: IFilterOption[];
+}
 
-	const itemDisplayMap = {
-		Golive: 'Go-Live',
-		OtherEvent: 'Other Event',
-	};
-
-	const displayItems = availableItems.map((item) => {
-		return {
-			display: itemDisplayMap[item] || item,
-			value: item,
-		};
-	});
-
-	const handleSelectedCheckbox = (checkedItem) => {
-		if (checkedItems.includes(checkedItem)) {
-			return setCheckedItems(
-				checkedItems.filter((item) => item !== checkedItem)
-			);
-		}
-
-		setCheckedItems([...checkedItems, checkedItem]);
-	};
+const FilterContent: React.FC<IProps> = ({
+	filter,
+	onChange,
+	selectedFilters,
+}) => {
+	const [localSelectedValues, setLocalSelectedValues] = React.useState<
+		string[]
+	>(
+		selectedFilters.find(
+			(selectedFilter) => selectedFilter.name === filter.name
+		)?.value || []
+	);
 
 	useEffect(() => {
-		if (clearCheckboxes) {
-			setCheckedItems([]);
+		setLocalSelectedValues(
+			selectedFilters.find(
+				(selectedFilter) => selectedFilter.name === filter.name
+			)?.value || []
+		);
+	}, [selectedFilters, filter.name]);
+
+	const handleCheckboxChange = (value: string, checked: boolean) => {
+		let updatedValues = [...localSelectedValues];
+
+		if (checked) {
+			updatedValues.push(value);
 		}
-	}, [clearCheckboxes]);
+		else {
+			updatedValues = updatedValues.filter((v) => v !== value);
+		}
+
+		setLocalSelectedValues(updatedValues);
+	};
+
+	const handleClick = () => {
+		const updatedFilter: IFilterOption = {
+			name: filter.name,
+			value: localSelectedValues,
+		};
+
+		onChange(
+			selectedFilters
+				.filter((selectedFilter) => selectedFilter.name !== filter.name)
+				.concat(localSelectedValues.length ? updatedFilter : [])
+		);
+	};
 
 	return (
 		<div className="w-100">
 			<div className="filter-content pt-2 px-3">
-				{displayItems?.map(({display, value}, index) => (
+				{filter.value.map((value) => (
 					<ClayCheckbox
-						checked={checkedItems.includes(value)}
-						key={`${value}-${index}`}
-						label={display}
-						onChange={() => handleSelectedCheckbox(value)}
+						checked={localSelectedValues.includes(value)}
+						key={`${filter.name}-${value}`}
+						label={i18n.translate(value)}
+						onChange={(event) =>
+							handleCheckboxChange(value, event.target.checked)
+						}
 					/>
 				))}
 			</div>
@@ -55,8 +80,7 @@ const FilterContent = ({availableItems, clearCheckboxes, updateFilters}) => {
 			<div className="mb-3 mt-2 mx-3">
 				<ClayButton
 					className="w-100"
-					onClick={() => updateFilters(checkedItems)}
-					required
+					onClick={handleClick}
 					small={true}
 				>
 					{i18n.translate('apply')}
@@ -65,4 +89,5 @@ const FilterContent = ({availableItems, clearCheckboxes, updateFilters}) => {
 		</div>
 	);
 };
+
 export default FilterContent;

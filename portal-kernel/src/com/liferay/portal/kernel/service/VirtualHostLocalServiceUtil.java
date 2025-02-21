@@ -196,10 +196,8 @@ public class VirtualHostLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static VirtualHost fetchDefaultVirtualHost(
-		long companyId, long layoutSetId) {
-
-		return getService().fetchDefaultVirtualHost(companyId, layoutSetId);
+	public static VirtualHost fetchCompanyDefaultVirtualHost(long companyId) {
+		return getService().fetchCompanyDefaultVirtualHost(companyId);
 	}
 
 	public static VirtualHost fetchVirtualHost(long virtualHostId) {

@@ -198,8 +198,7 @@ public interface VirtualHostLocalService
 		DynamicQuery dynamicQuery, Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public VirtualHost fetchDefaultVirtualHost(
-		long companyId, long layoutSetId);
+	public VirtualHost fetchCompanyDefaultVirtualHost(long companyId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public VirtualHost fetchVirtualHost(long virtualHostId);

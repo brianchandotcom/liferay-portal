@@ -1,10 +1,7 @@
 function getCookie(name) {
 	const cookieName = `${name}=`;
-  	const decodedCookie = decodeURIComponent(document.cookie);
 
-	const cookies = decodedCookie.split(';');
-
-	for (let cookie of cookies) {
+	for (let cookie of decodeURIComponent(document.cookie).split(';')) {
 		cookie = cookie.trimStart();
 
 		if (cookie.startsWith(cookieName)) {

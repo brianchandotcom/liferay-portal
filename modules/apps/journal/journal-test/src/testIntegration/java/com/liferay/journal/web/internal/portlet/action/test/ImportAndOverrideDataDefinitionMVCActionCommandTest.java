@@ -16,6 +16,8 @@ import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.Inject;
 
 import org.junit.Assert;
@@ -69,8 +71,14 @@ public class ImportAndOverrideDataDefinitionMVCActionCommandTest
 
 		String previousTextFieldName = "Text1";
 
-		Assert.assertEquals(
-			previousTextFieldName, dataDefinitionFields[0].getName());
+		Assert.assertTrue(
+			StringUtil.startsWith(
+				dataDefinitionFields[0].getName(), previousTextFieldName));
+
+		String suffix = StringUtil.removeSubstring(
+			dataDefinitionFields[0].getName(), previousTextFieldName);
+
+		Assert.assertTrue(Validator.isNumber(suffix));
 	}
 
 	private String _read(String fileName) throws Exception {

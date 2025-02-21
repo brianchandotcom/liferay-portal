@@ -106,12 +106,17 @@ public class BatchEngineImportTaskItemReaderUtil {
 						_log.debug(exception);
 					}
 
-					objectMapper = _csvObjectMapper;
-
-					field.set(
-						item,
-						objectMapper.convertValue(
-							entry.getValue(), field.getType()));
+					// Maybe it's a CSV column
+					if (Map.class.isAssignableFrom(field.getType())) {
+						objectMapper = _csvObjectMapper;
+						field.set(
+							item,
+							objectMapper.convertValue(
+								entry.getValue(), field.getType()));
+					}
+					else {
+						throw exception;
+					}
 				}
 
 				continue;

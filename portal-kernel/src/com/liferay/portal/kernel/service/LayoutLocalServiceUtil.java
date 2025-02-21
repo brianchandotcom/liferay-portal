@@ -400,20 +400,13 @@ public class LayoutLocalServiceUtil {
 	}
 
 	public static Layout copyLayoutContent(
-			long segmentsExperienceId, Layout sourceLayout, Layout targetLayout)
+			long sourceSegmentsExperienceId, Layout sourceLayout,
+			long targetSegmentsExperienceId, Layout targetLayout)
 		throws Exception {
 
 		return getService().copyLayoutContent(
-			segmentsExperienceId, sourceLayout, targetLayout);
-	}
-
-	public static Layout copyLayoutContent(
-			long[] segmentsExperienceIds, Layout sourceLayout,
-			Layout targetLayout)
-		throws Exception {
-
-		return getService().copyLayoutContent(
-			segmentsExperienceIds, sourceLayout, targetLayout);
+			sourceSegmentsExperienceId, sourceLayout,
+			targetSegmentsExperienceId, targetLayout);
 	}
 
 	/**

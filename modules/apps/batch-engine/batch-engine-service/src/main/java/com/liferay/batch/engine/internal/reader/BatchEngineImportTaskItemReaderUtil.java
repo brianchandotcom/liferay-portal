@@ -107,8 +107,10 @@ public class BatchEngineImportTaskItemReaderUtil {
 					}
 
 					// Maybe it's a CSV column
+
 					if (Map.class.isAssignableFrom(field.getType())) {
 						objectMapper = _csvObjectMapper;
+
 						field.set(
 							item,
 							objectMapper.convertValue(

@@ -108,13 +108,16 @@ public class JavaParserUtil {
 		else if (detailAST.getType() == TokenTypes.ANNOTATION_FIELD_DEF) {
 			javaTerm = _parseJavaAnnotationFieldDefinition(detailAST);
 		}
+		else if (detailAST.getType() == TokenTypes.COMPACT_CTOR_DEF) {
+			javaTerm = _parseJavaConstructorDefinition(detailAST, true);
+		}
 		else if ((detailAST.getType() == TokenTypes.CTOR_CALL) ||
 				 (detailAST.getType() == TokenTypes.SUPER_CTOR_CALL)) {
 
 			javaTerm = _parseJavaConstructorCall(detailAST);
 		}
 		else if (detailAST.getType() == TokenTypes.CTOR_DEF) {
-			javaTerm = _parseJavaConstructorDefinition(detailAST);
+			javaTerm = _parseJavaConstructorDefinition(detailAST, false);
 		}
 		else if (detailAST.getType() == TokenTypes.DO_WHILE) {
 			javaTerm = _parseJavaWhileStatement(detailAST);
@@ -627,7 +630,7 @@ public class JavaParserUtil {
 				_parseJavaAnnotations(
 					annotationFieldDefinitionDetailAST.findFirstToken(
 						TokenTypes.MODIFIERS)),
-				_parseJavaSignature(annotationFieldDefinitionDetailAST));
+				_parseJavaSignature(annotationFieldDefinitionDetailAST, false));
 
 		DetailAST literalDefaultDetailAST =
 			annotationFieldDefinitionDetailAST.findFirstToken(
@@ -981,13 +984,15 @@ public class JavaParserUtil {
 	}
 
 	private static JavaConstructorDefinition _parseJavaConstructorDefinition(
-		DetailAST constructorDefinitionDetailAST) {
+		DetailAST constructorDefinitionDetailAST,
+		boolean compactRecordConstructor) {
 
 		return new JavaConstructorDefinition(
 			_parseJavaAnnotations(
 				constructorDefinitionDetailAST.findFirstToken(
 					TokenTypes.MODIFIERS)),
-			_parseJavaSignature(constructorDefinitionDetailAST));
+			_parseJavaSignature(
+				constructorDefinitionDetailAST, compactRecordConstructor));
 	}
 
 	private static JavaContinueStatement _parseJavaContinueStatement(
@@ -1469,7 +1474,7 @@ public class JavaParserUtil {
 		return new JavaMethodDefinition(
 			_parseJavaAnnotations(
 				methodDefinitionDetailAST.findFirstToken(TokenTypes.MODIFIERS)),
-			_parseJavaSignature(methodDefinitionDetailAST));
+			_parseJavaSignature(methodDefinitionDetailAST, false));
 	}
 
 	private static JavaMethodReference _parseJavaMethodReference(
@@ -1619,7 +1624,9 @@ public class JavaParserUtil {
 		return javaReturnStatement;
 	}
 
-	private static JavaSignature _parseJavaSignature(DetailAST detailAST) {
+	private static JavaSignature _parseJavaSignature(
+		DetailAST detailAST, boolean compactRecordConstructor) {
+
 		DetailAST identDetailAST = detailAST.findFirstToken(TokenTypes.IDENT);
 		DetailAST modifiersDetailAST = detailAST.findFirstToken(
 			TokenTypes.MODIFIERS);
@@ -1639,7 +1646,7 @@ public class JavaParserUtil {
 				TokenTypes.TYPE_PARAMETER),
 			_parseJavaParameters(
 				detailAST.findFirstToken(TokenTypes.PARAMETERS)),
-			exceptionJavaTypes);
+			exceptionJavaTypes, compactRecordConstructor);
 	}
 
 	private static JavaSwitchCaseStatement _parseJavaSwitchCaseStatement(

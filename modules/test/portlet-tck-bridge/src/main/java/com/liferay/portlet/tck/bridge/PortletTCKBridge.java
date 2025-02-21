@@ -93,11 +93,11 @@ public class PortletTCKBridge {
 			Field field = ReflectionUtil.getDeclaredField(
 				_cookiesManager.getClass(), "_knownCookies");
 
-			Map<String, Integer> knowCookies = (Map<String, Integer>)field.get(
+			Map<String, Integer> knownCookies = (Map<String, Integer>)field.get(
 				_cookiesManager);
 
 			for (String cookieName : cookieNames) {
-				knowCookies.put(
+				knownCookies.put(
 					cookieName, CookiesConstants.CONSENT_TYPE_NECESSARY);
 			}
 		}

@@ -81,7 +81,7 @@ public interface SamlProviderConfiguration {
 	)
 	public int defaultAssertionLifetime();
 
-	@Meta.AD(id = "saml.enabled", name = "saml-enabled", required = false)
+	@Meta.AD(id = "saml.enabled", name = "enabled", required = false)
 	public boolean enabled();
 
 	@Meta.AD(

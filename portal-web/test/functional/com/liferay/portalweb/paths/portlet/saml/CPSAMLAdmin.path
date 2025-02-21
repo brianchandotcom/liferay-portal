@@ -62,7 +62,7 @@
 </tr>
 <tr>
 	<td>SAML_ENABLED_CHECKBOX</td>
-	<td>//input[contains(@id,'saml-enabled') and @type='checkbox']</td>
+	<td>//input[contains(@id,'enabled') and @type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>

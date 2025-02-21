@@ -659,7 +659,132 @@ public class DBPartitionUtil {
 		}
 	}
 
-	private static void _copySchema(long companyId) throws PortalException {
+	private static void _deleteCompanyData(
+			long companyId, String tableName, String fromPartitionName,
+			Statement statement)
+		throws Exception {
+
+		_deleteData(
+			tableName, fromPartitionName, statement,
+			" where companyId = " + companyId);
+	}
+
+	private static void _deleteData(
+			String tableName, String fromPartitionName, Statement statement,
+			String whereClause)
+		throws Exception {
+
+		statement.executeUpdate(
+			StringBundler.concat(
+				"delete from ", fromPartitionName, StringPool.PERIOD, tableName,
+				whereClause));
+	}
+
+	private static AutoCloseable _disableAutoCommit(Connection connection)
+		throws Exception {
+
+		boolean autoCommit = connection.getAutoCommit();
+
+		connection.setAutoCommit(false);
+
+		return () -> connection.setAutoCommit(autoCommit);
+	}
+
+	private static void _dropDBPartition(long companyId)
+		throws PortalException {
+
+		Connection connection = CurrentConnectionUtil.getConnection(
+			InfrastructureUtil.getDataSource());
+
+		DBInspector dbInspector = new DBInspector(connection);
+
+		try {
+			DatabaseMetaData databaseMetaData = connection.getMetaData();
+
+			try (ResultSet resultSet = databaseMetaData.getTables(
+					_dbPartitionDB.getCatalog(
+						connection, _defaultPartitionName),
+					_dbPartitionDB.getSchema(connection, _defaultPartitionName),
+					null, new String[] {"TABLE"});
+				Statement statement = connection.createStatement()) {
+
+				while (resultSet.next()) {
+					String tableName = resultSet.getString("TABLE_NAME");
+
+					if (!dbInspector.isControlTable(tableName)) {
+						continue;
+					}
+
+					if (dbInspector.hasColumn(tableName, "companyId")) {
+						_deleteCompanyData(
+							companyId, tableName, _defaultPartitionName,
+							statement);
+					}
+					else if (_isCopyableQuartzTable(tableName)) {
+						_deleteData(
+							tableName, _defaultPartitionName, statement,
+							_getQuartzWhereClauseSQL(companyId, tableName));
+					}
+				}
+
+				statement.executeUpdate(
+					_dbPartitionDB.getDropPartitionSQL(
+						getPartitionName(companyId)));
+			}
+		}
+		catch (Exception exception) {
+			throw new PortalException(exception);
+		}
+	}
+
+	private static void _extractDBPartition(long companyId)
+		throws PortalException {
+
+		Connection connection = CurrentConnectionUtil.getConnection(
+			InfrastructureUtil.getDataSource());
+
+		DBInspector dbInspector = new DBInspector(connection);
+
+		try {
+			_extractSchema(companyId);
+
+			DatabaseMetaData databaseMetaData = connection.getMetaData();
+
+			try (ResultSet resultSet = databaseMetaData.getTables(
+					_dbPartitionDB.getCatalog(
+						connection, _defaultPartitionName),
+					_dbPartitionDB.getSchema(connection, _defaultPartitionName),
+					null, new String[] {"TABLE"});
+				Statement statement = connection.createStatement()) {
+
+				while (resultSet.next()) {
+					String tableName = resultSet.getString("TABLE_NAME");
+
+					if (dbInspector.isControlTable(tableName)) {
+						_extractTable(
+							companyId, connection, tableName, statement,
+							dbInspector, false);
+					}
+				}
+			}
+		}
+		catch (Exception exception) {
+			try (Statement statement = connection.createStatement()) {
+				statement.executeUpdate(
+					_dbPartitionDB.getDropPartitionSQL(
+						_getExtractedPartitionName(companyId)));
+			}
+			catch (SQLException sqlException) {
+				throw new PortalException(
+					"Unable to roll back schema extraction", sqlException);
+			}
+
+			throw new PortalException(
+				"Extraction of database partition was rolled back", exception);
+		}
+	}
+
+	private static void _extractSchema(long companyId) throws PortalException {
 		Connection connection = CurrentConnectionUtil.getConnection(
 			InfrastructureUtil.getDataSource());
 
@@ -736,143 +861,6 @@ public class DBPartitionUtil {
 			}
 
 			throw new PortalException(exception);
-		}
-	}
-
-	private static void _deleteCompanyData(
-			long companyId, String tableName, String fromPartitionName,
-			Statement statement)
-		throws Exception {
-
-		_deleteData(
-			tableName, fromPartitionName, statement,
-			" where companyId = " + companyId);
-	}
-
-	private static void _deleteData(
-			String tableName, String fromPartitionName, Statement statement,
-			String whereClause)
-		throws Exception {
-
-		statement.executeUpdate(
-			StringBundler.concat(
-				"delete from ", fromPartitionName, StringPool.PERIOD, tableName,
-				whereClause));
-	}
-
-	private static AutoCloseable _disableAutoCommit(Connection connection)
-		throws Exception {
-
-		boolean autoCommit = connection.getAutoCommit();
-
-		connection.setAutoCommit(false);
-
-		return () -> connection.setAutoCommit(autoCommit);
-	}
-
-	private static void _dropCopiedSchema(long companyId)
-		throws PortalException {
-
-		Connection connection = CurrentConnectionUtil.getConnection(
-			InfrastructureUtil.getDataSource());
-
-		try (AutoCloseable autoCloseable = _disableAutoCommit(connection);
-			Statement statement = connection.createStatement()) {
-
-			statement.executeUpdate(
-				_dbPartitionDB.getDropPartitionSQL(
-					_getExtractedPartitionName(companyId)));
-
-			connection.commit();
-		}
-		catch (Exception exception) {
-			throw new PortalException(exception);
-		}
-	}
-
-	private static void _dropDBPartition(long companyId)
-		throws PortalException {
-
-		Connection connection = CurrentConnectionUtil.getConnection(
-			InfrastructureUtil.getDataSource());
-
-		DBInspector dbInspector = new DBInspector(connection);
-
-		try {
-			DatabaseMetaData databaseMetaData = connection.getMetaData();
-
-			try (ResultSet resultSet = databaseMetaData.getTables(
-					_dbPartitionDB.getCatalog(
-						connection, _defaultPartitionName),
-					_dbPartitionDB.getSchema(connection, _defaultPartitionName),
-					null, new String[] {"TABLE"});
-				Statement statement = connection.createStatement()) {
-
-				while (resultSet.next()) {
-					String tableName = resultSet.getString("TABLE_NAME");
-
-					if (!dbInspector.isControlTable(tableName)) {
-						continue;
-					}
-
-					if (dbInspector.hasColumn(tableName, "companyId")) {
-						_deleteCompanyData(
-							companyId, tableName, _defaultPartitionName,
-							statement);
-					}
-					else if (_isCopyableQuartzTable(tableName)) {
-						_deleteData(
-							tableName, _defaultPartitionName, statement,
-							_getQuartzWhereClauseSQL(companyId, tableName));
-					}
-				}
-
-				statement.executeUpdate(
-					_dbPartitionDB.getDropPartitionSQL(
-						getPartitionName(companyId)));
-			}
-		}
-		catch (Exception exception) {
-			throw new PortalException(exception);
-		}
-	}
-
-	private static void _extractDBPartition(long companyId)
-		throws PortalException {
-
-		Connection connection = CurrentConnectionUtil.getConnection(
-			InfrastructureUtil.getDataSource());
-
-		DBInspector dbInspector = new DBInspector(connection);
-
-		try {
-			_copySchema(companyId);
-
-			DatabaseMetaData databaseMetaData = connection.getMetaData();
-
-			try (ResultSet resultSet = databaseMetaData.getTables(
-					_dbPartitionDB.getCatalog(
-						connection, _defaultPartitionName),
-					_dbPartitionDB.getSchema(connection, _defaultPartitionName),
-					null, new String[] {"TABLE"});
-				Statement statement = connection.createStatement()) {
-
-				while (resultSet.next()) {
-					String tableName = resultSet.getString("TABLE_NAME");
-
-					if (dbInspector.isControlTable(tableName)) {
-						_extractTable(
-							companyId, connection, tableName, statement,
-							dbInspector, false);
-					}
-				}
-			}
-		}
-		catch (Exception exception) {
-			_dropCopiedSchema(companyId);
-
-			throw new PortalException(
-				"Extraction of database partition was rolled back", exception);
 		}
 	}
 

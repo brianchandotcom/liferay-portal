@@ -53,11 +53,13 @@ public interface WishListItemResource {
 	public Response deleteWishListItemBatch(String callbackURL, Object object)
 		throws Exception;
 
-	public WishListItem getWishListItem(Long wishListItemId, Long accountId)
+	public WishListItem getWishListItem(
+			Long wishListItemId, Long accountId, String currencyCode)
 		throws Exception;
 
 	public Page<WishListItem> getWishlistWishListWishListItemsPage(
-			Long wishListId, Long accountId, Pagination pagination)
+			Long wishListId, Long accountId, String currencyCode,
+			Pagination pagination)
 		throws Exception;
 
 	public WishListItem postWishlistWishListWishListItem(

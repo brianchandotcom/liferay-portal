@@ -48,8 +48,8 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface MappedProductResource {
 
 	public Page<MappedProduct> getChannelProductMappedProductsPage(
-			Long channelId, Long productId, Long accountId, String search,
-			Pagination pagination, Sort[] sorts)
+			Long channelId, Long productId, Long accountId, String currencyCode,
+			String search, Pagination pagination, Sort[] sorts)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

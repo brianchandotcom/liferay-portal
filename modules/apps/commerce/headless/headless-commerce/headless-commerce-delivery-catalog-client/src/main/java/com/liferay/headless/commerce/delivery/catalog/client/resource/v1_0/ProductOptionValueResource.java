@@ -42,7 +42,8 @@ public interface ProductOptionValueResource {
 				String channelExternalReferenceCode,
 				String productExternalReferenceCode,
 				String productOptionExternalReferenceCode, Long accountId,
-				Long productOptionValueId, Long skuId, Pagination pagination)
+				String currencyCode, Long productOptionValueId, Long skuId,
+				Pagination pagination)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
@@ -50,7 +51,8 @@ public interface ProductOptionValueResource {
 				String channelExternalReferenceCode,
 				String productExternalReferenceCode,
 				String productOptionExternalReferenceCode, Long accountId,
-				Long productOptionValueId, Long skuId, Pagination pagination)
+				String currencyCode, Long productOptionValueId, Long skuId,
+				Pagination pagination)
 		throws Exception;
 
 	public Page<ProductOptionValue>
@@ -58,8 +60,8 @@ public interface ProductOptionValueResource {
 				String channelExternalReferenceCode,
 				String productExternalReferenceCode,
 				String productOptionExternalReferenceCode, Long accountId,
-				Long productOptionValueId, Long skuId, Pagination pagination,
-				SkuOption[] skuOptions)
+				String currencyCode, Long productOptionValueId, Long skuId,
+				Pagination pagination, SkuOption[] skuOptions)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
@@ -67,36 +69,36 @@ public interface ProductOptionValueResource {
 				String channelExternalReferenceCode,
 				String productExternalReferenceCode,
 				String productOptionExternalReferenceCode, Long accountId,
-				Long productOptionValueId, Long skuId, Pagination pagination,
-				SkuOption[] skuOptions)
+				String currencyCode, Long productOptionValueId, Long skuId,
+				Pagination pagination, SkuOption[] skuOptions)
 		throws Exception;
 
 	public Page<ProductOptionValue>
 			getChannelProductProductOptionProductOptionValuesPage(
 				Long channelId, Long productId, Long productOptionId,
-				Long accountId, Long productOptionValueId, Long skuId,
-				Pagination pagination)
+				Long accountId, String currencyCode, Long productOptionValueId,
+				Long skuId, Pagination pagination)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			getChannelProductProductOptionProductOptionValuesPageHttpResponse(
 				Long channelId, Long productId, Long productOptionId,
-				Long accountId, Long productOptionValueId, Long skuId,
-				Pagination pagination)
+				Long accountId, String currencyCode, Long productOptionValueId,
+				Long skuId, Pagination pagination)
 		throws Exception;
 
 	public Page<ProductOptionValue>
 			postChannelProductProductOptionProductOptionValuesPage(
 				Long channelId, Long productId, Long productOptionId,
-				Long accountId, Long productOptionValueId, Long skuId,
-				Pagination pagination, SkuOption[] skuOptions)
+				Long accountId, String currencyCode, Long productOptionValueId,
+				Long skuId, Pagination pagination, SkuOption[] skuOptions)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse
 			postChannelProductProductOptionProductOptionValuesPageHttpResponse(
 				Long channelId, Long productId, Long productOptionId,
-				Long accountId, Long productOptionValueId, Long skuId,
-				Pagination pagination, SkuOption[] skuOptions)
+				Long accountId, String currencyCode, Long productOptionValueId,
+				Long skuId, Pagination pagination, SkuOption[] skuOptions)
 		throws Exception;
 
 	public static class Builder {
@@ -213,14 +215,14 @@ public interface ProductOptionValueResource {
 					String channelExternalReferenceCode,
 					String productExternalReferenceCode,
 					String productOptionExternalReferenceCode, Long accountId,
-					Long productOptionValueId, Long skuId,
+					String currencyCode, Long productOptionValueId, Long skuId,
 					Pagination pagination)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeProductOptionByExternalReferenceCodeProductOptionExternalReferenceCodeProductOptionValuesPageHttpResponse(
 					channelExternalReferenceCode, productExternalReferenceCode,
-					productOptionExternalReferenceCode, accountId,
+					productOptionExternalReferenceCode, accountId, currencyCode,
 					productOptionValueId, skuId, pagination);
 
 			String content = httpResponse.getContent();
@@ -287,7 +289,7 @@ public interface ProductOptionValueResource {
 					String channelExternalReferenceCode,
 					String productExternalReferenceCode,
 					String productOptionExternalReferenceCode, Long accountId,
-					Long productOptionValueId, Long skuId,
+					String currencyCode, Long productOptionValueId, Long skuId,
 					Pagination pagination)
 			throws Exception {
 
@@ -314,6 +316,11 @@ public interface ProductOptionValueResource {
 
 			if (accountId != null) {
 				httpInvoker.parameter("accountId", String.valueOf(accountId));
+			}
+
+			if (currencyCode != null) {
+				httpInvoker.parameter(
+					"currencyCode", String.valueOf(currencyCode));
 			}
 
 			if (productOptionValueId != null) {
@@ -359,14 +366,14 @@ public interface ProductOptionValueResource {
 					String channelExternalReferenceCode,
 					String productExternalReferenceCode,
 					String productOptionExternalReferenceCode, Long accountId,
-					Long productOptionValueId, Long skuId,
+					String currencyCode, Long productOptionValueId, Long skuId,
 					Pagination pagination, SkuOption[] skuOptions)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				postChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeProductOptionByExternalReferenceCodeProductOptionExternalReferenceCodeProductOptionValuesPageHttpResponse(
 					channelExternalReferenceCode, productExternalReferenceCode,
-					productOptionExternalReferenceCode, accountId,
+					productOptionExternalReferenceCode, accountId, currencyCode,
 					productOptionValueId, skuId, pagination, skuOptions);
 
 			String content = httpResponse.getContent();
@@ -433,7 +440,7 @@ public interface ProductOptionValueResource {
 					String channelExternalReferenceCode,
 					String productExternalReferenceCode,
 					String productOptionExternalReferenceCode, Long accountId,
-					Long productOptionValueId, Long skuId,
+					String currencyCode, Long productOptionValueId, Long skuId,
 					Pagination pagination, SkuOption[] skuOptions)
 			throws Exception {
 
@@ -468,6 +475,11 @@ public interface ProductOptionValueResource {
 
 			if (accountId != null) {
 				httpInvoker.parameter("accountId", String.valueOf(accountId));
+			}
+
+			if (currencyCode != null) {
+				httpInvoker.parameter(
+					"currencyCode", String.valueOf(currencyCode));
 			}
 
 			if (productOptionValueId != null) {
@@ -511,14 +523,15 @@ public interface ProductOptionValueResource {
 		public Page<ProductOptionValue>
 				getChannelProductProductOptionProductOptionValuesPage(
 					Long channelId, Long productId, Long productOptionId,
-					Long accountId, Long productOptionValueId, Long skuId,
+					Long accountId, String currencyCode,
+					Long productOptionValueId, Long skuId,
 					Pagination pagination)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				getChannelProductProductOptionProductOptionValuesPageHttpResponse(
 					channelId, productId, productOptionId, accountId,
-					productOptionValueId, skuId, pagination);
+					currencyCode, productOptionValueId, skuId, pagination);
 
 			String content = httpResponse.getContent();
 
@@ -582,7 +595,8 @@ public interface ProductOptionValueResource {
 		public HttpInvoker.HttpResponse
 				getChannelProductProductOptionProductOptionValuesPageHttpResponse(
 					Long channelId, Long productId, Long productOptionId,
-					Long accountId, Long productOptionValueId, Long skuId,
+					Long accountId, String currencyCode,
+					Long productOptionValueId, Long skuId,
 					Pagination pagination)
 			throws Exception {
 
@@ -609,6 +623,11 @@ public interface ProductOptionValueResource {
 
 			if (accountId != null) {
 				httpInvoker.parameter("accountId", String.valueOf(accountId));
+			}
+
+			if (currencyCode != null) {
+				httpInvoker.parameter(
+					"currencyCode", String.valueOf(currencyCode));
 			}
 
 			if (productOptionValueId != null) {
@@ -648,14 +667,16 @@ public interface ProductOptionValueResource {
 		public Page<ProductOptionValue>
 				postChannelProductProductOptionProductOptionValuesPage(
 					Long channelId, Long productId, Long productOptionId,
-					Long accountId, Long productOptionValueId, Long skuId,
+					Long accountId, String currencyCode,
+					Long productOptionValueId, Long skuId,
 					Pagination pagination, SkuOption[] skuOptions)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				postChannelProductProductOptionProductOptionValuesPageHttpResponse(
 					channelId, productId, productOptionId, accountId,
-					productOptionValueId, skuId, pagination, skuOptions);
+					currencyCode, productOptionValueId, skuId, pagination,
+					skuOptions);
 
 			String content = httpResponse.getContent();
 
@@ -719,7 +740,8 @@ public interface ProductOptionValueResource {
 		public HttpInvoker.HttpResponse
 				postChannelProductProductOptionProductOptionValuesPageHttpResponse(
 					Long channelId, Long productId, Long productOptionId,
-					Long accountId, Long productOptionValueId, Long skuId,
+					Long accountId, String currencyCode,
+					Long productOptionValueId, Long skuId,
 					Pagination pagination, SkuOption[] skuOptions)
 			throws Exception {
 
@@ -754,6 +776,11 @@ public interface ProductOptionValueResource {
 
 			if (accountId != null) {
 				httpInvoker.parameter("accountId", String.valueOf(accountId));
+			}
+
+			if (currencyCode != null) {
+				httpInvoker.parameter(
+					"currencyCode", String.valueOf(currencyCode));
 			}
 
 			if (productOptionValueId != null) {

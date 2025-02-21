@@ -49,7 +49,8 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface WishListResource {
 
 	public Page<WishList> getChannelByExternalReferenceCodeWishListsPage(
-			String externalReferenceCode, Long accountId, Pagination pagination)
+			String externalReferenceCode, Long accountId, String currencyCode,
+			Pagination pagination)
 		throws Exception;
 
 	public WishList postChannelByExternalReferenceCodeWishList(
@@ -57,7 +58,8 @@ public interface WishListResource {
 		throws Exception;
 
 	public Page<WishList> getChannelWishListsPage(
-			Long channelId, Long accountId, Pagination pagination)
+			Long channelId, Long accountId, String currencyCode,
+			Pagination pagination)
 		throws Exception;
 
 	public WishList postChannelWishList(

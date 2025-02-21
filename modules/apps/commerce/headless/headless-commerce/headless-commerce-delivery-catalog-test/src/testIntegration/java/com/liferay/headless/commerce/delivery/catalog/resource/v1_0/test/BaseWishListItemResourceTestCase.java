@@ -198,15 +198,22 @@ public abstract class BaseWishListItemResourceTestCase {
 		assertHttpResponseStatusCode(
 			404,
 			wishListItemResource.getWishListItemHttpResponse(
-				wishListItem.getId(), testDeleteWishListItem_getAccountId()));
+				wishListItem.getId(), testDeleteWishListItem_getAccountId(),
+				testDeleteWishListItem_getCurrencyCode()));
 
 		assertHttpResponseStatusCode(
 			404,
 			wishListItemResource.getWishListItemHttpResponse(
-				0L, testDeleteWishListItem_getAccountId()));
+				0L, testDeleteWishListItem_getAccountId(),
+				testDeleteWishListItem_getCurrencyCode()));
 	}
 
 	protected Long testDeleteWishListItem_getAccountId() throws Exception {
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	protected String testDeleteWishListItem_getCurrencyCode() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
 	}
@@ -303,7 +310,7 @@ public abstract class BaseWishListItemResourceTestCase {
 		WishListItem postWishListItem = testGetWishListItem_addWishListItem();
 
 		WishListItem getWishListItem = wishListItemResource.getWishListItem(
-			postWishListItem.getId(), null);
+			postWishListItem.getId(), null, null);
 
 		assertEquals(postWishListItem, getWishListItem);
 		assertValid(getWishListItem);
@@ -424,7 +431,8 @@ public abstract class BaseWishListItemResourceTestCase {
 
 		Page<WishListItem> page =
 			wishListItemResource.getWishlistWishListWishListItemsPage(
-				wishListId, null, Pagination.of(1, 10));
+				wishListId, null, RandomTestUtil.randomString(),
+				Pagination.of(1, 10));
 
 		long totalCount = page.getTotalCount();
 
@@ -434,7 +442,7 @@ public abstract class BaseWishListItemResourceTestCase {
 					irrelevantWishListId, randomIrrelevantWishListItem());
 
 			page = wishListItemResource.getWishlistWishListWishListItemsPage(
-				irrelevantWishListId, null,
+				irrelevantWishListId, null, null,
 				Pagination.of(1, (int)totalCount + 1));
 
 			Assert.assertEquals(totalCount + 1, page.getTotalCount());
@@ -456,7 +464,7 @@ public abstract class BaseWishListItemResourceTestCase {
 				wishListId, randomWishListItem());
 
 		page = wishListItemResource.getWishlistWishListWishListItemsPage(
-			wishListId, null, Pagination.of(1, 10));
+			wishListId, null, null, Pagination.of(1, 10));
 
 		Assert.assertEquals(totalCount + 2, page.getTotalCount());
 
@@ -491,7 +499,7 @@ public abstract class BaseWishListItemResourceTestCase {
 
 		Page<WishListItem> wishListItemPage =
 			wishListItemResource.getWishlistWishListWishListItemsPage(
-				wishListId, null, null);
+				wishListId, null, null, null);
 
 		int totalCount = GetterUtil.getInteger(
 			wishListItemPage.getTotalCount());
@@ -515,7 +523,7 @@ public abstract class BaseWishListItemResourceTestCase {
 		if (totalCount >= (pageSizeLimit - 2)) {
 			Page<WishListItem> page1 =
 				wishListItemResource.getWishlistWishListWishListItemsPage(
-					wishListId, null,
+					wishListId, null, null,
 					Pagination.of(
 						(int)Math.ceil((totalCount + 1.0) / pageSizeLimit),
 						pageSizeLimit));
@@ -526,7 +534,7 @@ public abstract class BaseWishListItemResourceTestCase {
 
 			Page<WishListItem> page2 =
 				wishListItemResource.getWishlistWishListWishListItemsPage(
-					wishListId, null,
+					wishListId, null, null,
 					Pagination.of(
 						(int)Math.ceil((totalCount + 2.0) / pageSizeLimit),
 						pageSizeLimit));
@@ -535,7 +543,7 @@ public abstract class BaseWishListItemResourceTestCase {
 
 			Page<WishListItem> page3 =
 				wishListItemResource.getWishlistWishListWishListItemsPage(
-					wishListId, null,
+					wishListId, null, null,
 					Pagination.of(
 						(int)Math.ceil((totalCount + 3.0) / pageSizeLimit),
 						pageSizeLimit));
@@ -545,7 +553,7 @@ public abstract class BaseWishListItemResourceTestCase {
 		else {
 			Page<WishListItem> page1 =
 				wishListItemResource.getWishlistWishListWishListItemsPage(
-					wishListId, null, Pagination.of(1, totalCount + 2));
+					wishListId, null, null, Pagination.of(1, totalCount + 2));
 
 			List<WishListItem> wishListItems1 =
 				(List<WishListItem>)page1.getItems();
@@ -556,7 +564,7 @@ public abstract class BaseWishListItemResourceTestCase {
 
 			Page<WishListItem> page2 =
 				wishListItemResource.getWishlistWishListWishListItemsPage(
-					wishListId, null, Pagination.of(2, totalCount + 2));
+					wishListId, null, null, Pagination.of(2, totalCount + 2));
 
 			Assert.assertEquals(totalCount + 3, page2.getTotalCount());
 
@@ -568,7 +576,8 @@ public abstract class BaseWishListItemResourceTestCase {
 
 			Page<WishListItem> page3 =
 				wishListItemResource.getWishlistWishListWishListItemsPage(
-					wishListId, null, Pagination.of(1, (int)totalCount + 3));
+					wishListId, null, null,
+					Pagination.of(1, (int)totalCount + 3));
 
 			assertContains(wishListItem1, (List<WishListItem>)page3.getItems());
 			assertContains(wishListItem2, (List<WishListItem>)page3.getItems());

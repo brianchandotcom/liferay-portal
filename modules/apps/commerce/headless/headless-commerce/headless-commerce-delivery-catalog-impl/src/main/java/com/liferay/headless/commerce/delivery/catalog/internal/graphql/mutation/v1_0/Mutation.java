@@ -143,6 +143,7 @@ public class Mutation {
 				@GraphQLName("productOptionExternalReferenceCode") String
 					productOptionExternalReferenceCode,
 				@GraphQLName("accountId") Long accountId,
+				@GraphQLName("currencyCode") String currencyCode,
 				@GraphQLName("productOptionValueId") Long productOptionValueId,
 				@GraphQLName("skuId") Long skuId,
 				@GraphQLName("pageSize") int pageSize,
@@ -160,7 +161,7 @@ public class Mutation {
 							channelExternalReferenceCode,
 							productExternalReferenceCode,
 							productOptionExternalReferenceCode, accountId,
-							productOptionValueId, skuId,
+							currencyCode, productOptionValueId, skuId,
 							Pagination.of(page, pageSize), skuOptions);
 
 				return paginationPage.getItems();
@@ -176,6 +177,7 @@ public class Mutation {
 				@GraphQLName("productId") Long productId,
 				@GraphQLName("productOptionId") Long productOptionId,
 				@GraphQLName("accountId") Long accountId,
+				@GraphQLName("currencyCode") String currencyCode,
 				@GraphQLName("productOptionValueId") Long productOptionValueId,
 				@GraphQLName("skuId") Long skuId,
 				@GraphQLName("pageSize") int pageSize,
@@ -191,7 +193,7 @@ public class Mutation {
 					productOptionValueResource.
 						postChannelProductProductOptionProductOptionValuesPage(
 							channelId, productId, productOptionId, accountId,
-							productOptionValueId, skuId,
+							currencyCode, productOptionValueId, skuId,
 							Pagination.of(page, pageSize), skuOptions);
 
 				return paginationPage.getItems();
@@ -232,6 +234,7 @@ public class Mutation {
 				@GraphQLName("productExternalReferenceCode") String
 					productExternalReferenceCode,
 				@GraphQLName("accountId") Long accountId,
+				@GraphQLName("currencyCode") String currencyCode,
 				@GraphQLName("quantity") java.math.BigDecimal quantity,
 				@GraphQLName("skuUnitOfMeasureKey") String skuUnitOfMeasureKey,
 				@GraphQLName("skuOptions") SkuOption[] skuOptions)
@@ -243,8 +246,8 @@ public class Mutation {
 				skuResource.
 					postChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuBySkuOption(
 						channelExternalReferenceCode,
-						productExternalReferenceCode, accountId, quantity,
-						skuUnitOfMeasureKey, skuOptions));
+						productExternalReferenceCode, accountId, currencyCode,
+						quantity, skuUnitOfMeasureKey, skuOptions));
 	}
 
 	@GraphQLField(
@@ -271,6 +274,7 @@ public class Mutation {
 			@GraphQLName("channelId") Long channelId,
 			@GraphQLName("productId") Long productId,
 			@GraphQLName("accountId") Long accountId,
+			@GraphQLName("currencyCode") String currencyCode,
 			@GraphQLName("quantity") java.math.BigDecimal quantity,
 			@GraphQLName("skuUnitOfMeasureKey") String skuUnitOfMeasureKey,
 			@GraphQLName("skuOptions") SkuOption[] skuOptions)
@@ -279,8 +283,8 @@ public class Mutation {
 		return _applyComponentServiceObjects(
 			_skuResourceComponentServiceObjects, this::_populateResourceContext,
 			skuResource -> skuResource.postChannelProductSkuBySkuOption(
-				channelId, productId, accountId, quantity, skuUnitOfMeasureKey,
-				skuOptions));
+				channelId, productId, accountId, currencyCode, quantity,
+				skuUnitOfMeasureKey, skuOptions));
 	}
 
 	@GraphQLField

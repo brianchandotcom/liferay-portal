@@ -53,7 +53,7 @@ public interface SkuResource {
 			getChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkusPage(
 				String channelExternalReferenceCode,
 				String productExternalReferenceCode, Long accountId,
-				Pagination pagination)
+				String currencyCode, Pagination pagination)
 		throws Exception;
 
 	public Sku
@@ -67,19 +67,20 @@ public interface SkuResource {
 			getChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuByExternalReferenceCodeSkuExternalReferenceCode(
 				String channelExternalReferenceCode,
 				String productExternalReferenceCode,
-				String skuExternalReferenceCode, Long accountId)
+				String skuExternalReferenceCode, Long accountId,
+				String currencyCode)
 		throws Exception;
 
 	public Sku
 			postChannelByExternalReferenceCodeChannelExternalReferenceCodeProductByExternalReferenceCodeProductExternalReferenceCodeSkuBySkuOption(
 				String channelExternalReferenceCode,
 				String productExternalReferenceCode, Long accountId,
-				java.math.BigDecimal quantity, String skuUnitOfMeasureKey,
-				SkuOption[] skuOptions)
+				String currencyCode, java.math.BigDecimal quantity,
+				String skuUnitOfMeasureKey, SkuOption[] skuOptions)
 		throws Exception;
 
 	public Page<Sku> getChannelProductSkusPage(
-			Long channelId, Long productId, Long accountId,
+			Long channelId, Long productId, Long accountId, String currencyCode,
 			Pagination pagination)
 		throws Exception;
 
@@ -89,13 +90,14 @@ public interface SkuResource {
 		throws Exception;
 
 	public Sku postChannelProductSkuBySkuOption(
-			Long channelId, Long productId, Long accountId,
+			Long channelId, Long productId, Long accountId, String currencyCode,
 			java.math.BigDecimal quantity, String skuUnitOfMeasureKey,
 			SkuOption[] skuOptions)
 		throws Exception;
 
 	public Sku getChannelProductSku(
-			Long channelId, Long productId, Long skuId, Long accountId)
+			Long channelId, Long productId, Long skuId, Long accountId,
+			String currencyCode)
 		throws Exception;
 
 	public default void setContextAcceptLanguage(

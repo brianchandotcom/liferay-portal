@@ -215,11 +215,9 @@ public class VirtualHostLocalServiceWrapper
 	}
 
 	@Override
-	public VirtualHost fetchDefaultVirtualHost(
-		long companyId, long layoutSetId) {
-
-		return _virtualHostLocalService.fetchDefaultVirtualHost(
-			companyId, layoutSetId);
+	public VirtualHost fetchCompanyDefaultVirtualHost(long companyId) {
+		return _virtualHostLocalService.fetchCompanyDefaultVirtualHost(
+			companyId);
 	}
 
 	@Override

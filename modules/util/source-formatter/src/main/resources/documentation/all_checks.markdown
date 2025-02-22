@@ -440,6 +440,7 @@ PythonImportsCheck | [Styling](styling_checks.markdown#styling-checks) | .py | S
 PythonStylingCheck | [Styling](styling_checks.markdown#styling-checks) | .py | Applies rules to enforce consistency in code style. |
 PythonWhitespaceCheck | [Styling](styling_checks.markdown#styling-checks) | .py | Finds missing and unnecessary whitespace. |
 RESTDTOSetCallCheck | [Performance](performance_checks.markdown#performance-checks) | .java | Ensures using set calls with `UnsafeSupplier` parameter for REST DTO. |
+RecordClassCheck | [Performance](performance_checks.markdown#performance-checks) | .java | Finds usage of `record`. |
 RedundantBranchingStatementCheck | [Performance](performance_checks.markdown#performance-checks) | .java | Finds unnecessary branching (`break`, `continue` or `return`) statements. |
 [RedundantLogCheck](check/redundant_log_check.markdown#redundantlogcheck) | [Performance](performance_checks.markdown#performance-checks) | .java | Finds unnecessary logs. |
 ReferenceAnnotationCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | .java | Performs several checks on classes with @Reference annotation. |

@@ -727,6 +727,11 @@ public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 	}
 
 	@Test
+	public void testRecordClass() throws Exception {
+		test("RecordClass.testjava", "Do not declare record class", 11);
+	}
+
+	@Test
 	public void testRedundantCommas() throws Exception {
 		test("RedundantCommas.testjava");
 	}

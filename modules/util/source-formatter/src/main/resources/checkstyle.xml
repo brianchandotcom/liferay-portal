@@ -732,6 +732,11 @@
 			<message key="keyword.reserved" value="Do not use &quot;{0}&quot; to set parameter &quot;{1}&quot;, use &quot;{2}&quot; instead" />
 			<message key="string.cast.unneeded" value="No need to cast parameter to &quot;String&quot; when passing to method &quot;{0}&quot;" />
 		</module>
+		<module name="com.liferay.source.formatter.checkstyle.check.RecordClassCheck">
+			<property name="category" value="Performance" />
+			<property name="description" value="Finds usage of `record`." />
+			<message key="record.class.avoid" value="Do not declare record class" />
+		</module>
 		<module name="com.liferay.source.formatter.checkstyle.check.RedundantBranchingStatementCheck">
 			<property name="category" value="Performance" />
 			<property name="description" value="Finds unnecessary branching (`break`, `continue` or `return`) statements." />

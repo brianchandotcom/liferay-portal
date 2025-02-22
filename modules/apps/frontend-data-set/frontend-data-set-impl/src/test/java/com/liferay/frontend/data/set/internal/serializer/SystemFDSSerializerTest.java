@@ -27,6 +27,7 @@ import com.liferay.frontend.data.set.internal.filter.DateRangeFDSFilterContextCo
 import com.liferay.frontend.data.set.internal.filter.FDSFilterContextContributorRegistryImpl;
 import com.liferay.frontend.data.set.internal.filter.FDSFilterRegistryImpl;
 import com.liferay.frontend.data.set.internal.filter.SelectionFDSFilterContextContributor;
+import com.liferay.frontend.data.set.internal.sort.FDSSortsRegistryImpl;
 import com.liferay.frontend.data.set.internal.url.FDSAPIURLResolverRegistryImpl;
 import com.liferay.frontend.data.set.internal.view.FDSViewContextContributorRegistryImpl;
 import com.liferay.frontend.data.set.internal.view.FDSViewRegistryImpl;
@@ -35,6 +36,10 @@ import com.liferay.frontend.data.set.internal.view.list.ListFDSViewContextContri
 import com.liferay.frontend.data.set.internal.view.table.FDSTableSchemaBuilderImpl;
 import com.liferay.frontend.data.set.internal.view.table.TableFDSViewContextContributor;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
+import com.liferay.frontend.data.set.model.FDSSortItemBuilder;
+import com.liferay.frontend.data.set.model.FDSSortItemList;
+import com.liferay.frontend.data.set.model.FDSSortItemListBuilder;
+import com.liferay.frontend.data.set.sort.FDSSorts;
 import com.liferay.frontend.data.set.url.FDSAPIURLResolver;
 import com.liferay.frontend.data.set.view.FDSView;
 import com.liferay.frontend.data.set.view.FDSViewContextContributor;
@@ -858,6 +863,139 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 	}
 
 	@Test
+	public void testSerializeSortItems() throws Exception {
+
+		// Different sorts
+
+		ServiceTrackerMap
+			<String, ServiceTrackerCustomizerFactory.ServiceWrapper<FDSSorts>>
+				serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+					_bundleContext, FDSSorts.class, "frontend.data.set.name",
+					ServiceTrackerCustomizerFactory.<FDSSorts>serviceWrapper(
+						_bundleContext));
+
+		_systemFDSSerializer.fdsSortsRegistry = new FDSSortsRegistryImpl(
+			serviceTrackerMap);
+
+		FDSSortItemList fdsSortItemList1 = FDSSortItemListBuilder.add(
+			FDSSortItemBuilder.setActive(
+				true
+			).setDirection(
+				"asc"
+			).setKey(
+				IDS[0]
+			).setLabel(
+				LABELS[0]
+			).build()
+		).add(
+			FDSSortItemBuilder.setActive(
+				false
+			).setDirection(
+				"desc"
+			).setKey(
+				IDS[1]
+			).setLabel(
+				LABELS[1]
+			).build()
+		).add(
+			FDSSortItemBuilder.setActive(
+				false
+			).setDirection(
+				"desc"
+			).setKey(
+				IDS[2]
+			).setLabel(
+				LABELS[2]
+			).build()
+		).build();
+
+		_registerServices(
+			_registerFDSSorts("fdsName1", fdsSortItemList1),
+			_registerSystemFDSEntry(null, "fdsName1"));
+
+		Assert.assertEquals(
+			fdsSortItemList1,
+			_systemFDSSerializer.serializeSorts(
+				"fdsName1", httpServletRequest));
+
+		FDSSortItemList fdsSortItemList2 = FDSSortItemListBuilder.add(
+			FDSSortItemBuilder.setActive(
+				false
+			).setDirection(
+				"asc"
+			).setKey(
+				IDS[2]
+			).setLabel(
+				LABELS[0]
+			).build()
+		).add(
+			FDSSortItemBuilder.setActive(
+				true
+			).setDirection(
+				"asc"
+			).setKey(
+				IDS[1]
+			).setLabel(
+				LABELS[1]
+			).build()
+		).add(
+			FDSSortItemBuilder.setActive(
+				false
+			).setDirection(
+				"asc"
+			).setKey(
+				IDS[0]
+			).setLabel(
+				LABELS[2]
+			).build()
+		).build();
+
+		_registerServices(
+			_registerFDSSorts("fdsName2", fdsSortItemList2),
+			_registerSystemFDSEntry(null, "fdsName2"));
+
+		Assert.assertEquals(
+			fdsSortItemList2,
+			_systemFDSSerializer.serializeSorts(
+				"fdsName2", httpServletRequest));
+
+		Assert.assertNotEquals(
+			_systemFDSSerializer.serializeSorts("fdsName1", httpServletRequest),
+			_systemFDSSerializer.serializeSorts(
+				"fdsName2", httpServletRequest));
+
+		_unregisterServices();
+
+		// No sorts
+
+		_registerServices(_registerSystemFDSEntry(null, "fdsName"));
+
+		Assert.assertTrue(
+			_systemFDSSerializer.serializeSorts(
+				"fdsName", httpServletRequest
+			).isEmpty());
+
+		_unregisterServices();
+
+		// Shared sort
+
+		_registerServices(
+			_registerFDSSorts("fdsName1", fdsSortItemList1),
+			_registerFDSSorts("fdsName2", fdsSortItemList1),
+			_registerSystemFDSEntry(null, "fdsName1"),
+			_registerSystemFDSEntry(null, "fdsName2"));
+
+		Assert.assertEquals(
+			_systemFDSSerializer.serializeSorts("fdsName1", httpServletRequest),
+			_systemFDSSerializer.serializeSorts(
+				"fdsName2", httpServletRequest));
+
+		_unregisterServices();
+
+		serviceTrackerMap.close();
+	}
+
+	@Test
 	public void testSerializeViews() throws Exception {
 
 		// Cards view
@@ -1313,6 +1451,24 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 					HttpServletRequest httpServletRequest) {
 
 					return fdsActionDropdownItems;
+				}
+
+			},
+			MapUtil.singletonDictionary("frontend.data.set.name", fdsName));
+	}
+
+	private ServiceRegistration<FDSSorts> _registerFDSSorts(
+		String fdsName, FDSSortItemList fdsSortItemList) {
+
+		return _bundleContext.registerService(
+			FDSSorts.class,
+			new FDSSorts() {
+
+				@Override
+				public FDSSortItemList getFDSSortItemList(
+					HttpServletRequest httpServletRequest) {
+
+					return fdsSortItemList;
 				}
 
 			},

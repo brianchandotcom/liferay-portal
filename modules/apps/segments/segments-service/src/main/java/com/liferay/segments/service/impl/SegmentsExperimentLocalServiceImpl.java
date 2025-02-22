@@ -544,7 +544,7 @@ public class SegmentsExperimentLocalServiceImpl
 		if (winnerSegmentsExperience == null) {
 			throw new WinnerSegmentsExperienceException(
 				"Winner segments experience " + winnerSegmentsExperienceId +
-					" no found");
+					" does not exist");
 		}
 
 		SegmentsExperimentRel segmentsExperimentRel =
@@ -555,7 +555,7 @@ public class SegmentsExperimentLocalServiceImpl
 		if (segmentsExperimentRel == null) {
 			throw new WinnerSegmentsExperienceException(
 				"Winner segments experience " + winnerSegmentsExperienceId +
-					" no found");
+					" does not exist");
 		}
 
 		UnicodeProperties typeSettingsUnicodeProperties =

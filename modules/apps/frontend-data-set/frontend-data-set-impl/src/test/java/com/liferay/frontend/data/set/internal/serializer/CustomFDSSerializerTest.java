@@ -11,6 +11,8 @@ import com.liferay.client.extension.type.manager.CETManager;
 import com.liferay.frontend.data.set.constants.FDSEntityFieldTypes;
 import com.liferay.frontend.data.set.internal.url.FDSAPIURLResolverRegistryImpl;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
+import com.liferay.frontend.data.set.model.FDSSortItem;
+import com.liferay.frontend.data.set.model.FDSSortItemList;
 import com.liferay.frontend.data.set.url.FDSAPIURLResolver;
 import com.liferay.frontend.data.set.url.FDSAPIURLResolverRegistry;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
@@ -42,6 +44,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Properties;
 import java.util.function.Predicate;
 
@@ -590,6 +593,89 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 	}
 
 	@Test
+	public void testSerializeSorts() throws Exception {
+
+		// Different sorts
+
+		Map<String, Object> sortProperties1 =
+			HashMapBuilder.<String, Object>put(
+				"default", true
+			).put(
+				"fieldName", FIELD_NAMES[0]
+			).put(
+				"label", LABELS[0]
+			).put(
+				"orderType", "asc"
+			).build();
+
+		Map<String, Object> sortProperties2 =
+			HashMapBuilder.<String, Object>put(
+				"default", false
+			).put(
+				"fieldName", FIELD_NAMES[1]
+			).put(
+				"label", LABELS[1]
+			).put(
+				"orderType", "desc"
+			).build();
+
+		_mockSerializeSorts("fdsName1", sortProperties1, sortProperties2);
+
+		Map<String, Object> sortProperties3 =
+			HashMapBuilder.<String, Object>put(
+				"default", true
+			).put(
+				"fieldName", FIELD_NAMES[2]
+			).put(
+				"label", LABELS[2]
+			).put(
+				"orderType", "asc"
+			).build();
+
+		_mockSerializeSorts("fdsName2", sortProperties3);
+
+		FDSSortItemList fdsSortItemList1 = _customFDSSerializer.serializeSorts(
+			"fdsName1", httpServletRequest);
+
+		Assert.assertFalse(
+			_containsSortProperties(fdsSortItemList1, sortProperties3));
+		Assert.assertTrue(
+			_containsSortProperties(fdsSortItemList1, sortProperties1));
+		Assert.assertTrue(
+			_containsSortProperties(fdsSortItemList1, sortProperties2));
+		Assert.assertTrue(fdsSortItemList1.size() == 2);
+
+		FDSSortItemList fdsSortItemList2 = _customFDSSerializer.serializeSorts(
+			"fdsName2", httpServletRequest);
+
+		Assert.assertFalse(
+			_containsSortProperties(fdsSortItemList2, sortProperties1));
+		Assert.assertFalse(
+			_containsSortProperties(fdsSortItemList2, sortProperties2));
+		Assert.assertTrue(
+			_containsSortProperties(fdsSortItemList2, sortProperties3));
+		Assert.assertTrue(fdsSortItemList2.size() == 1);
+
+		_resetFDSSerializer();
+
+		// No sorts
+
+		_mockSerializeSorts("fdsName", null);
+
+		Assert.assertTrue(
+			_customFDSSerializer.serializeSorts(
+				"fdsName", httpServletRequest
+			).isEmpty());
+
+		_resetFDSSerializer();
+
+		// Shared sorts
+
+		_testSerializeSorts("fdsName1", sortProperties1, sortProperties2);
+		_testSerializeSorts("fdsName2", sortProperties1, sortProperties2);
+	}
+
+	@Test
 	public void testSerializeViews() throws Exception {
 
 		// Cards view
@@ -862,6 +948,27 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 		return false;
 	}
 
+	private boolean _containsSortProperties(
+		FDSSortItemList fdsSortItemList, Map<String, Object> sortProperties) {
+
+		for (FDSSortItem fdsSortItem : fdsSortItemList) {
+			if (Objects.equals(
+					fdsSortItem.get("active"), sortProperties.get("default")) &&
+				Objects.equals(
+					fdsSortItem.get("direction"),
+					sortProperties.get("orderType")) &&
+				Objects.equals(
+					fdsSortItem.get("key"), sortProperties.get("fieldName")) &&
+				Objects.equals(
+					fdsSortItem.get("label"), sortProperties.get("label"))) {
+
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	private boolean _containsTitle(CreationMenu creationMenu, String title) {
 		for (DropdownItem dropdownItem :
 				(List<DropdownItem>)creationMenu.get("primaryItems")) {
@@ -1048,6 +1155,33 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 		Mockito.when(
 			_customFDSSerializer.serializeItemsActions(
 				fdsName, httpServletRequest)
+		).thenCallRealMethod();
+	}
+
+	private void _mockSerializeSorts(
+		String fdsName, Map<String, Object>... sortsMaps) {
+
+		List<ObjectEntry> objectEntries = TransformUtil.transformToList(
+			sortsMaps,
+			sortsMap -> {
+				ObjectEntry objectEntry = new ObjectEntry();
+
+				objectEntry.setProperties(sortsMap);
+
+				return objectEntry;
+			});
+
+		Mockito.when(
+			_customFDSSerializer.getSortedRelatedObjectEntries(
+				Mockito.eq(fdsName), Mockito.eq(httpServletRequest),
+				Mockito.any(), Mockito.eq("sortsOrder"),
+				Mockito.eq("dataSetToDataSetSorts"))
+		).thenReturn(
+			objectEntries
+		);
+
+		Mockito.when(
+			_customFDSSerializer.serializeSorts(fdsName, httpServletRequest)
 		).thenCallRealMethod();
 	}
 
@@ -1260,6 +1394,22 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 		}
 
 		Assert.assertTrue(LABELS.length == fdsActionDropdownItems.size());
+	}
+
+	private void _testSerializeSorts(
+		String fdsName, Map<String, Object>... sortMaps) {
+
+		_mockSerializeSorts(fdsName, sortMaps);
+
+		FDSSortItemList fdsSortItemList = _customFDSSerializer.serializeSorts(
+			fdsName, httpServletRequest);
+
+		for (Map<String, Object> sortMap : sortMaps) {
+			Assert.assertTrue(
+				_containsSortProperties(fdsSortItemList, sortMap));
+		}
+
+		Assert.assertTrue(sortMaps.length == fdsSortItemList.size());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

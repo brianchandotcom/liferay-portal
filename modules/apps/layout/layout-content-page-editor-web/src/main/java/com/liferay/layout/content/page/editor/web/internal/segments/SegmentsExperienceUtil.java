@@ -304,14 +304,14 @@ public class SegmentsExperienceUtil {
 			ThemeDisplay themeDisplay, long segmentsExperienceId)
 		throws Exception {
 
+		SegmentsExperience segmentsExperience =
+			SegmentsExperienceLocalServiceUtil.fetchSegmentsExperience(
+				segmentsExperienceId);
+
 		Layout draftLayout = themeDisplay.getLayout();
 
 		Layout layout = LayoutLocalServiceUtil.getLayout(
 			draftLayout.getClassPK());
-
-		SegmentsExperience segmentsExperience =
-			SegmentsExperienceLocalServiceUtil.fetchSegmentsExperience(
-				segmentsExperienceId);
 
 		return SegmentsExperimentLocalServiceUtil.fetchSegmentsExperiment(
 			themeDisplay.getScopeGroupId(),

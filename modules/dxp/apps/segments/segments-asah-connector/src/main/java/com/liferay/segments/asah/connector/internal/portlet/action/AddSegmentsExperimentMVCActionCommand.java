@@ -135,11 +135,11 @@ public class AddSegmentsExperimentMVCActionCommand
 			actionRequest, "segmentsExperienceId");
 		long plid = ParamUtil.getLong(actionRequest, "plid");
 
+		SegmentsExperiment segmentsExperiment = null;
+
 		SegmentsExperience segmentsExperience =
 			_segmentsExperienceLocalService.fetchSegmentsExperience(
 				segmentsExperienceId);
-
-		SegmentsExperiment segmentsExperiment = null;
 
 		if (segmentsExperience != null) {
 			segmentsExperiment =

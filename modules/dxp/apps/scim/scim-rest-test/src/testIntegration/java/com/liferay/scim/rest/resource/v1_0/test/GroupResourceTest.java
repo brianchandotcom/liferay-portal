@@ -184,7 +184,6 @@ public class GroupResourceTest extends BaseGroupResourceTestCase {
 			groupResource.getV2Groups(
 				5, 0, "displayName eq \"" + group1.getDisplayName() + "\""),
 			1, 1, group1);
-
 		_assertListResponse(
 			groupResource.getV2Groups(
 				5, 0,

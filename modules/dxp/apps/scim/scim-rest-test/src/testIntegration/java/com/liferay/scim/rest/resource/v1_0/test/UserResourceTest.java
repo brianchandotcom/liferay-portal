@@ -194,27 +194,23 @@ public class UserResourceTest extends BaseUserResourceTestCase {
 
 		_assertListResponse(
 			userResource.getV2Users(5, 0, null), 2, 2, user1, user2);
-
-		_assertListResponse(
-			userResource.getV2Users(
-				5, 0, "externalId eq \"" + user1.getExternalId() + "\""),
-			1, 1, user1);
-
 		_assertListResponse(
 			userResource.getV2Users(
 				5, 0,
 				"externalId eq \"" + RandomTestUtil.randomString() + "\""),
 			0, 0);
-
 		_assertListResponse(
 			userResource.getV2Users(
-				5, 0, "userName eq \"" + user1.getUserName() + "\""),
+				5, 0, "externalId eq \"" + user1.getExternalId() + "\""),
 			1, 1, user1);
-
 		_assertListResponse(
 			userResource.getV2Users(
 				5, 0, "userName eq \"" + RandomTestUtil.randomString() + "\""),
 			0, 0);
+		_assertListResponse(
+			userResource.getV2Users(
+				5, 0, "userName eq \"" + user1.getUserName() + "\""),
+			1, 1, user1);
 
 		ConfigurationTestUtil.deleteConfiguration(_pid);
 

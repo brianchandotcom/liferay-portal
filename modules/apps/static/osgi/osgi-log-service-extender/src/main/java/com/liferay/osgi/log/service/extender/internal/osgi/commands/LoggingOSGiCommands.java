@@ -25,9 +25,9 @@ import org.osgi.service.log.admin.LoggerContext;
 /**
  * @author Raymond Augé
  */
-public class LoggingLevelsOSGiCommands implements OSGiCommands {
+public class LoggingOSGiCommands implements OSGiCommands {
 
-	public LoggingLevelsOSGiCommands(LoggerAdmin loggerAdmin) {
+	public LoggingOSGiCommands(LoggerAdmin loggerAdmin) {
 		_loggerAdmin = loggerAdmin;
 	}
 
@@ -86,7 +86,7 @@ public class LoggingLevelsOSGiCommands implements OSGiCommands {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		LoggingLevelsOSGiCommands.class);
+		LoggingOSGiCommands.class);
 
 	private final LoggerAdmin _loggerAdmin;
 

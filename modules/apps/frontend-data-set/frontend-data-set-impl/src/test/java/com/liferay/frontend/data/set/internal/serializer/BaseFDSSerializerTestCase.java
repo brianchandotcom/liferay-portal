@@ -86,6 +86,8 @@ public abstract class BaseFDSSerializerTestCase {
 	protected static final String[] DESCRIPTIONS = RandomTestUtil.randomStrings(
 		2);
 
+	protected static final String[] FDS_NAMES = RandomTestUtil.randomStrings(2);
+
 	protected static final String[] FIELD_NAMES = RandomTestUtil.randomStrings(
 		3);
 

@@ -111,22 +111,22 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		_resetFDSSerializer(fdsAPIURLResolverRegistry);
 
-		_mockSerializeAPIURL("fdsName", new String[] {"creator.name"});
+		_mockSerializeAPIURL(FDS_NAMES[0], new String[] {"creator.name"});
 
 		Assert.assertEquals(
 			"/o/app/endpoint?nestedFields=creator",
 			_customFDSSerializer.serializeAPIURL(
-				"fdsName", httpServletRequest));
+				FDS_NAMES[0], httpServletRequest));
 
 		_resetFDSSerializer(fdsAPIURLResolverRegistry);
 
 		// Nested fields: creator.name and status.id
 
 		_mockSerializeAPIURL(
-			"fdsName", new String[] {"creator.name", "status.id"});
+			FDS_NAMES[0], new String[] {"creator.name", "status.id"});
 
 		String url = _customFDSSerializer.serializeAPIURL(
-			"fdsName", httpServletRequest);
+			FDS_NAMES[0], httpServletRequest);
 
 		Assert.assertTrue(url.startsWith("/o/app/endpoint?"));
 
@@ -143,13 +143,13 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 		// Nested fields depth
 
 		_mockSerializeAPIURL(
-			"fdsName",
+			FDS_NAMES[0],
 			new String[] {
 				"creator.name", "status.id", "relation.creator.name"
 			});
 
 		url = _customFDSSerializer.serializeAPIURL(
-			"fdsName", httpServletRequest);
+			FDS_NAMES[0], httpServletRequest);
 
 		Assert.assertTrue(url.startsWith("/o/app/endpoint?"));
 
@@ -170,12 +170,12 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		// No parameters
 
-		_mockSerializeAPIURL("fdsName", null);
+		_mockSerializeAPIURL(FDS_NAMES[0], null);
 
 		Assert.assertEquals(
 			"/o/app/endpoint",
 			_customFDSSerializer.serializeAPIURL(
-				"fdsName", httpServletRequest));
+				FDS_NAMES[0], httpServletRequest));
 
 		serviceTrackerMap.close();
 	}
@@ -186,11 +186,11 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 		// Different creation menu
 
 		_mockSerializeCreationMenu(
-			"fdsName1", new String[] {TITLES[0], TITLES[1]});
-		_mockSerializeCreationMenu("fdsName2", new String[] {TITLES[2]});
+			FDS_NAMES[0], new String[] {TITLES[0], TITLES[1]});
+		_mockSerializeCreationMenu(FDS_NAMES[1], new String[] {TITLES[2]});
 
 		CreationMenu creationMenu1 = _customFDSSerializer.serializeCreationMenu(
-			"fdsName1", httpServletRequest);
+			FDS_NAMES[0], httpServletRequest);
 
 		Assert.assertEquals(2, _getPrimaryItemsSize(creationMenu1));
 		Assert.assertFalse(_containsTitle(creationMenu1, TITLES[2]));
@@ -198,7 +198,7 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 		Assert.assertTrue(_containsTitle(creationMenu1, TITLES[1]));
 
 		CreationMenu creationMenu2 = _customFDSSerializer.serializeCreationMenu(
-			"fdsName2", httpServletRequest);
+			FDS_NAMES[1], httpServletRequest);
 
 		Assert.assertEquals(1, _getPrimaryItemsSize(creationMenu2));
 		Assert.assertFalse(_containsTitle(creationMenu2, TITLES[0]));
@@ -209,19 +209,19 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		// No creation menu
 
-		_mockSerializeCreationMenu("fdsName", null);
+		_mockSerializeCreationMenu(FDS_NAMES[0], null);
 
 		Assert.assertTrue(
 			_customFDSSerializer.serializeCreationMenu(
-				"fdsName", httpServletRequest
+				FDS_NAMES[0], httpServletRequest
 			).isEmpty());
 
 		_resetFDSSerializer();
 
 		// Shared creation menu
 
-		_testSerializeCreationMenu("fdsName1");
-		_testSerializeCreationMenu("fdsName2");
+		_testSerializeCreationMenu(FDS_NAMES[0]);
+		_testSerializeCreationMenu(FDS_NAMES[1]);
 	}
 
 	@Test
@@ -330,7 +330,7 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 		_customFDSSerializer.cetManager = cetManager;
 
 		_mockSerializeFilters(
-			"fdsName",
+			FDS_NAMES[0],
 			HashMapBuilder.<String, Object>put(
 				"clientExtensionEntryERC", cetExternalReferenceCode
 			).put(
@@ -355,7 +355,7 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 				)
 			).toString(),
 			_customFDSSerializer.serializeFilters(
-				"fdsName", httpServletRequest
+				FDS_NAMES[0], httpServletRequest
 			).toString(),
 			JSONCompareMode.STRICT);
 
@@ -364,7 +364,7 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 		// Date range filter
 
 		_mockSerializeFilters(
-			"fdsName",
+			FDS_NAMES[0],
 			HashMapBuilder.<String, Object>put(
 				"fieldName", FIELD_NAMES[0]
 			).put(
@@ -413,7 +413,7 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 				)
 			).toString(),
 			_customFDSSerializer.serializeFilters(
-				"fdsName", httpServletRequest
+				FDS_NAMES[0], httpServletRequest
 			).toString(),
 			JSONCompareMode.STRICT);
 
@@ -422,7 +422,7 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 		// Different filters
 
 		_mockSerializeFilters(
-			"fdsName1",
+			FDS_NAMES[0],
 			HashMapBuilder.<String, Object>put(
 				"fieldName", FIELD_NAMES[0]
 			).put(
@@ -433,7 +433,7 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 				"type", FDSEntityFieldTypes.DATE
 			).build());
 		_mockSerializeFilters(
-			"fdsName2",
+			FDS_NAMES[1],
 			HashMapBuilder.<String, Object>put(
 				"fieldName", FIELD_NAMES[1]
 			).put(
@@ -446,10 +446,10 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		JSONAssert.assertNotEquals(
 			_customFDSSerializer.serializeFilters(
-				"fdsName1", httpServletRequest
+				FDS_NAMES[0], httpServletRequest
 			).toString(),
 			_customFDSSerializer.serializeFilters(
-				"fdsName2", httpServletRequest
+				FDS_NAMES[1], httpServletRequest
 			).toString(),
 			JSONCompareMode.STRICT);
 
@@ -457,12 +457,12 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		// No filter
 
-		_mockSerializeFilters("fdsName", null);
+		_mockSerializeFilters(FDS_NAMES[0], null);
 
 		JSONAssert.assertEquals(
 			"[]",
 			_customFDSSerializer.serializeFilters(
-				"fdsName", httpServletRequest
+				FDS_NAMES[0], httpServletRequest
 			).toString(),
 			JSONCompareMode.STRICT);
 
@@ -471,7 +471,7 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 		// Selection filter
 
 		_mockSerializeFilters(
-			"fdsName",
+			FDS_NAMES[0],
 			HashMapBuilder.<String, Object>put(
 				"fieldName", FIELD_NAMES[0]
 			).put(
@@ -541,7 +541,7 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 				)
 			).toString(),
 			_customFDSSerializer.serializeFilters(
-				"fdsName", httpServletRequest
+				FDS_NAMES[0], httpServletRequest
 			).toString(),
 			JSONCompareMode.STRICT);
 	}
@@ -552,12 +552,12 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 		// Different items actions
 
 		_mockSerializeItemsActions(
-			"fdsName1", new String[] {LABELS[0], LABELS[1]});
-		_mockSerializeItemsActions("fdsName2", new String[] {LABELS[2]});
+			FDS_NAMES[0], new String[] {LABELS[0], LABELS[1]});
+		_mockSerializeItemsActions(FDS_NAMES[1], new String[] {LABELS[2]});
 
 		List<FDSActionDropdownItem> fdsActionDropdownItems1 =
 			_customFDSSerializer.serializeItemsActions(
-				"fdsName1", httpServletRequest);
+				FDS_NAMES[0], httpServletRequest);
 
 		Assert.assertFalse(_containsLabel(fdsActionDropdownItems1, LABELS[2]));
 		Assert.assertTrue(_containsLabel(fdsActionDropdownItems1, LABELS[0]));
@@ -566,7 +566,7 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		List<FDSActionDropdownItem> fdsActionDropdownItems2 =
 			_customFDSSerializer.serializeItemsActions(
-				"fdsName2", httpServletRequest);
+				FDS_NAMES[1], httpServletRequest);
 
 		Assert.assertFalse(_containsLabel(fdsActionDropdownItems2, LABELS[1]));
 		Assert.assertFalse(_containsLabel(fdsActionDropdownItems2, LABELS[0]));
@@ -577,19 +577,19 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		// No items actions
 
-		_mockSerializeItemsActions("fdsName", null);
+		_mockSerializeItemsActions(FDS_NAMES[0], null);
 
 		Assert.assertTrue(
 			_customFDSSerializer.serializeItemsActions(
-				"fdsName", httpServletRequest
+				FDS_NAMES[0], httpServletRequest
 			).isEmpty());
 
 		_resetFDSSerializer();
 
 		// Shared items actions
 
-		_testSerializeItemsActions("fdsName1");
-		_testSerializeItemsActions("fdsName2");
+		_testSerializeItemsActions(FDS_NAMES[0]);
+		_testSerializeItemsActions(FDS_NAMES[1]);
 	}
 
 	@Test
@@ -619,7 +619,7 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 				"orderType", "desc"
 			).build();
 
-		_mockSerializeSorts("fdsName1", sortProperties1, sortProperties2);
+		_mockSerializeSorts(FDS_NAMES[0], sortProperties1, sortProperties2);
 
 		Map<String, Object> sortProperties3 =
 			HashMapBuilder.<String, Object>put(
@@ -632,10 +632,10 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 				"orderType", "asc"
 			).build();
 
-		_mockSerializeSorts("fdsName2", sortProperties3);
+		_mockSerializeSorts(FDS_NAMES[1], sortProperties3);
 
 		FDSSortItemList fdsSortItemList1 = _customFDSSerializer.serializeSorts(
-			"fdsName1", httpServletRequest);
+			FDS_NAMES[0], httpServletRequest);
 
 		Assert.assertFalse(
 			_containsSortProperties(fdsSortItemList1, sortProperties3));
@@ -646,7 +646,7 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 		Assert.assertTrue(fdsSortItemList1.size() == 2);
 
 		FDSSortItemList fdsSortItemList2 = _customFDSSerializer.serializeSorts(
-			"fdsName2", httpServletRequest);
+			FDS_NAMES[1], httpServletRequest);
 
 		Assert.assertFalse(
 			_containsSortProperties(fdsSortItemList2, sortProperties1));
@@ -660,19 +660,19 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		// No sorts
 
-		_mockSerializeSorts("fdsName", null);
+		_mockSerializeSorts(FDS_NAMES[0], null);
 
 		Assert.assertTrue(
 			_customFDSSerializer.serializeSorts(
-				"fdsName", httpServletRequest
+				FDS_NAMES[0], httpServletRequest
 			).isEmpty());
 
 		_resetFDSSerializer();
 
 		// Shared sorts
 
-		_testSerializeSorts("fdsName1", sortProperties1, sortProperties2);
-		_testSerializeSorts("fdsName2", sortProperties1, sortProperties2);
+		_testSerializeSorts(FDS_NAMES[0], sortProperties1, sortProperties2);
+		_testSerializeSorts(FDS_NAMES[1], sortProperties1, sortProperties2);
 	}
 
 	@Test
@@ -683,7 +683,7 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 		mockLanguage();
 
 		_mockSerializeViewsCardsOrList(
-			"fdsName",
+			FDS_NAMES[0],
 			HashMapBuilder.put(
 				"image", IMAGES[0]
 			).put(
@@ -711,7 +711,7 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 				)
 			).toString(),
 			_customFDSSerializer.serializeViews(
-				"fdsName", httpServletRequest
+				FDS_NAMES[0], httpServletRequest
 			).toString(),
 			JSONCompareMode.STRICT);
 
@@ -720,7 +720,7 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 		// Different views
 
 		_mockSerializeViewsCardsOrList(
-			"fdsName1",
+			FDS_NAMES[0],
 			HashMapBuilder.put(
 				"image", IMAGES[0]
 			).put(
@@ -729,7 +729,7 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 			"dataSetToDataSetCardsSections");
 
 		_mockSerializeViewsCardsOrList(
-			"fdsName2",
+			FDS_NAMES[1],
 			HashMapBuilder.put(
 				"image", IMAGES[1]
 			).put(
@@ -739,10 +739,10 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		JSONAssert.assertNotEquals(
 			_customFDSSerializer.serializeViews(
-				"fdsName1", httpServletRequest
+				FDS_NAMES[0], httpServletRequest
 			).toString(),
 			_customFDSSerializer.serializeViews(
-				"fdsName2", httpServletRequest
+				FDS_NAMES[1], httpServletRequest
 			).toString(),
 			JSONCompareMode.STRICT);
 
@@ -751,12 +751,13 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 		// Empty view
 
 		_mockSerializeViewsCardsOrList(
-			"fdsName", Collections.emptyMap(), "dataSetToDataSetListSections");
+			FDS_NAMES[0], Collections.emptyMap(),
+			"dataSetToDataSetListSections");
 
 		JSONAssert.assertEquals(
 			"[]",
 			_customFDSSerializer.serializeViews(
-				"fdsName", httpServletRequest
+				FDS_NAMES[0], httpServletRequest
 			).toString(),
 			JSONCompareMode.STRICT);
 
@@ -765,7 +766,7 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 		// List view
 
 		_mockSerializeViewsCardsOrList(
-			"fdsName",
+			FDS_NAMES[0],
 			HashMapBuilder.put(
 				"image", IMAGES[0]
 			).put(
@@ -793,7 +794,7 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 				)
 			).toString(),
 			_customFDSSerializer.serializeViews(
-				"fdsName", httpServletRequest
+				FDS_NAMES[0], httpServletRequest
 			).toString(),
 			JSONCompareMode.STRICT);
 
@@ -808,19 +809,21 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 		).build();
 
 		_mockSerializeViewsCardsOrList(
-			"fdsName1", sectionsMap, "dataSetToDataSetListSections");
+			FDS_NAMES[0], sectionsMap, "dataSetToDataSetListSections");
 
 		_mockSerializeViewsCardsOrList(
-			"fdsName2", sectionsMap, "dataSetToDataSetListSections");
+			FDS_NAMES[1], sectionsMap, "dataSetToDataSetListSections");
 
 		JSONAssert.assertEquals(
 			_customFDSSerializer.serializeViews(
-				"fdsName1", httpServletRequest
+				FDS_NAMES[0], httpServletRequest
 			).toString(),
 			_customFDSSerializer.serializeViews(
-				"fdsName2", httpServletRequest
+				FDS_NAMES[1], httpServletRequest
 			).toString(),
 			JSONCompareMode.STRICT);
+
+		_resetFDSSerializer();
 
 		// Table view
 
@@ -875,7 +878,7 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 			).build());
 
 		_mockSerializeViewsTable(
-			"fdsName", tableSectionObjectEntriesProperties);
+			FDS_NAMES[0], tableSectionObjectEntriesProperties);
 
 		JSONAssert.assertEquals(
 			JSONUtil.putAll(
@@ -929,7 +932,7 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 				)
 			).toString(),
 			_customFDSSerializer.serializeViews(
-				"fdsName", httpServletRequest
+				FDS_NAMES[0], httpServletRequest
 			).toString(),
 			JSONCompareMode.STRICT);
 

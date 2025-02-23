@@ -14,7 +14,7 @@ updateFileVersions {
 	replaceOnlyIf([{
 		String group, String replacement, String content, File contentFile ->
 
-		if (contentFile.parentFile.name == "source-formatter") {
+		if (contentFile.parentFile.name in ["portal-tools-rest-builder", "portal-tools-service-builder", "source-formatter"]) {
 			return true
 		}
 

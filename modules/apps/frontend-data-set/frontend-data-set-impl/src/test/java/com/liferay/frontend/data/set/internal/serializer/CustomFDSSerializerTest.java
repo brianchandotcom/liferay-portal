@@ -23,6 +23,8 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.json.JSONFactoryImpl;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONSerializer;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -220,8 +222,27 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		// Shared creation menu
 
-		_testSerializeCreationMenu(FDS_NAMES[0]);
-		_testSerializeCreationMenu(FDS_NAMES[1]);
+		_mockSerializeCreationMenu(FDS_NAMES[0], TITLES);
+		_mockSerializeCreationMenu(FDS_NAMES[1], TITLES);
+
+		JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
+
+		JSONAssert.assertEquals(
+			jsonSerializer.serializeDeep(
+				_customFDSSerializer.serializeCreationMenu(
+					FDS_NAMES[0], httpServletRequest)
+			).toString(),
+			jsonSerializer.serializeDeep(
+				_customFDSSerializer.serializeCreationMenu(
+					FDS_NAMES[1], httpServletRequest)
+			).toString(),
+			JSONCompareMode.STRICT);
+
+		Assert.assertEquals(
+			TITLES.length,
+			_getPrimaryItemsSize(
+				_customFDSSerializer.serializeCreationMenu(
+					FDS_NAMES[1], httpServletRequest)));
 	}
 
 	@Test
@@ -468,6 +489,35 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		_resetFDSSerializer();
 
+		// Shared filter
+
+		Map<String, Object> filterProperties =
+			HashMapBuilder.<String, Object>put(
+				"fieldName", FIELD_NAMES[0]
+			).put(
+				"from", "2000-12-31T00:00:00.000Z"
+			).put(
+				"label", LABELS[0]
+			).put(
+				"to", "2025-10-03T00:00:00.000Z"
+			).put(
+				"type", FDSEntityFieldTypes.DATE
+			).build();
+
+		_mockSerializeFilters(FDS_NAMES[0], filterProperties);
+		_mockSerializeFilters(FDS_NAMES[1], filterProperties);
+
+		JSONAssert.assertEquals(
+			_customFDSSerializer.serializeFilters(
+				FDS_NAMES[0], httpServletRequest
+			).toString(),
+			_customFDSSerializer.serializeFilters(
+				FDS_NAMES[1], httpServletRequest
+			).toString(),
+			JSONCompareMode.STRICT);
+
+		_resetFDSSerializer();
+
 		// Selection filter
 
 		_mockSerializeFilters(
@@ -588,8 +638,27 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		// Shared items actions
 
-		_testSerializeItemsActions(FDS_NAMES[0]);
-		_testSerializeItemsActions(FDS_NAMES[1]);
+		_mockSerializeItemsActions(FDS_NAMES[0], LABELS);
+		_mockSerializeItemsActions(FDS_NAMES[1], LABELS);
+
+		JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
+
+		JSONAssert.assertEquals(
+			jsonSerializer.serializeDeep(
+				_customFDSSerializer.serializeItemsActions(
+					FDS_NAMES[0], httpServletRequest)
+			).toString(),
+			jsonSerializer.serializeDeep(
+				_customFDSSerializer.serializeItemsActions(
+					FDS_NAMES[1], httpServletRequest)
+			).toString(),
+			JSONCompareMode.STRICT);
+
+		Assert.assertEquals(
+			_customFDSSerializer.serializeItemsActions(
+				FDS_NAMES[0], httpServletRequest
+			).size(),
+			LABELS.length);
 	}
 
 	@Test
@@ -671,8 +740,21 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		// Shared sorts
 
-		_testSerializeSorts(FDS_NAMES[0], sortProperties1, sortProperties2);
-		_testSerializeSorts(FDS_NAMES[1], sortProperties1, sortProperties2);
+		_mockSerializeSorts(FDS_NAMES[0], sortProperties1, sortProperties2);
+		_mockSerializeSorts(FDS_NAMES[1], sortProperties1, sortProperties2);
+
+		JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
+
+		JSONAssert.assertEquals(
+			jsonSerializer.serializeDeep(
+				_customFDSSerializer.serializeSorts(
+					FDS_NAMES[0], httpServletRequest)
+			).toString(),
+			jsonSerializer.serializeDeep(
+				_customFDSSerializer.serializeSorts(
+					FDS_NAMES[1], httpServletRequest)
+			).toString(),
+			JSONCompareMode.STRICT);
 	}
 
 	@Test
@@ -1370,49 +1452,6 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		_customFDSSerializer.fdsAPIURLResolverRegistry =
 			fdsAPIURLResolverRegistry;
-	}
-
-	private void _testSerializeCreationMenu(String fdsName) {
-		_mockSerializeCreationMenu(fdsName, TITLES);
-
-		CreationMenu creationMenu = _customFDSSerializer.serializeCreationMenu(
-			fdsName, httpServletRequest);
-
-		for (String title : TITLES) {
-			Assert.assertTrue(_containsTitle(creationMenu, title));
-		}
-
-		Assert.assertEquals(TITLES.length, _getPrimaryItemsSize(creationMenu));
-	}
-
-	private void _testSerializeItemsActions(String fdsName) {
-		_mockSerializeItemsActions(fdsName, LABELS);
-
-		List<FDSActionDropdownItem> fdsActionDropdownItems =
-			_customFDSSerializer.serializeItemsActions(
-				fdsName, httpServletRequest);
-
-		for (String label : LABELS) {
-			Assert.assertTrue(_containsLabel(fdsActionDropdownItems, label));
-		}
-
-		Assert.assertTrue(LABELS.length == fdsActionDropdownItems.size());
-	}
-
-	private void _testSerializeSorts(
-		String fdsName, Map<String, Object>... sortMaps) {
-
-		_mockSerializeSorts(fdsName, sortMaps);
-
-		FDSSortItemList fdsSortItemList = _customFDSSerializer.serializeSorts(
-			fdsName, httpServletRequest);
-
-		for (Map<String, Object> sortMap : sortMaps) {
-			Assert.assertTrue(
-				_containsSortProperties(fdsSortItemList, sortMap));
-		}
-
-		Assert.assertTrue(sortMaps.length == fdsSortItemList.size());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

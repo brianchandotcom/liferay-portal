@@ -5,6 +5,7 @@
 
 package com.liferay.portal.upgrade.internal.graph;
 
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.upgrade.internal.registry.UpgradeInfo;
 
@@ -80,39 +81,37 @@ public class ReleaseGraphManager {
 	public List<List<UpgradeInfo>> getUpgradeInfosList(
 		String fromVersionString) {
 
-		List<List<UpgradeInfo>> upgradeInfosList = new ArrayList<>();
-
 		List<String> endVertices = getEndVertices();
 
 		endVertices.remove(fromVersionString);
 
-		for (String endVertex : endVertices) {
-			List<UpgradeInfo> upgradeInfos = getUpgradeInfos(
-				fromVersionString, endVertex);
+		return TransformUtil.transform(
+			endVertices,
+			endVertex -> {
+				List<UpgradeInfo> upgradeInfos = getUpgradeInfos(
+					fromVersionString, endVertex);
 
-			if (!upgradeInfos.isEmpty()) {
-				upgradeInfosList.add(upgradeInfos);
-			}
-		}
+				if (!upgradeInfos.isEmpty()) {
+					return upgradeInfos;
+				}
 
-		return upgradeInfosList;
+				return null;
+			});
 	}
 
 	protected List<String> getEndVertices() {
-		List<String> endVertices = new ArrayList<>();
+		return TransformUtil.transform(
+			_directedGraph.vertexSet(),
+			vertex -> {
+				Set<UpgradeProcessEdge> upgradeProcessEdges =
+					_directedGraph.outgoingEdgesOf(vertex);
 
-		Set<String> vertices = _directedGraph.vertexSet();
+				if (upgradeProcessEdges.isEmpty()) {
+					return vertex;
+				}
 
-		for (String vertex : vertices) {
-			Set<UpgradeProcessEdge> upgradeProcessEdges =
-				_directedGraph.outgoingEdgesOf(vertex);
-
-			if (upgradeProcessEdges.isEmpty()) {
-				endVertices.add(vertex);
-			}
-		}
-
-		return endVertices;
+				return null;
+			});
 	}
 
 	private final DirectedGraph<String, UpgradeProcessEdge> _directedGraph;

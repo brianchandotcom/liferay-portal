@@ -2367,41 +2367,33 @@ public class GraphQLServletExtender {
 		public List<GraphQLError> processErrors(
 			List<GraphQLError> graphQLErrors) {
 
-			List<GraphQLError> processedErrors = new ArrayList<>();
+			return TransformUtil.transform(
+				graphQLErrors,
+				graphQLError -> {
+					if (_isNotFoundException(graphQLError) &&
+						!_isRequiredField(graphQLError)) {
 
-			for (GraphQLError graphQLError : graphQLErrors) {
-				if (_isNotFoundException(graphQLError) &&
-					!_isRequiredField(graphQLError)) {
+						return null;
+					}
 
-					continue;
-				}
+					if (_isForbiddenException(graphQLError)) {
+						return _getExtendedGraphQLError(
+							graphQLError, Response.Status.FORBIDDEN);
+					}
+					else if (_isNotFoundException(graphQLError)) {
+						return _getExtendedGraphQLError(
+							graphQLError, Response.Status.NOT_FOUND);
+					}
+					else if (_isClientErrorException(graphQLError) ||
+							 _isStatusException(graphQLError)) {
 
-				if (_isForbiddenException(graphQLError)) {
-					processedErrors.add(
-						_getExtendedGraphQLError(
-							graphQLError, Response.Status.FORBIDDEN));
-				}
-				else if (_isNotFoundException(graphQLError)) {
-					processedErrors.add(
-						_getExtendedGraphQLError(
-							graphQLError, Response.Status.NOT_FOUND));
-				}
-				else if (_isClientErrorException(graphQLError) ||
-						 _isStatusException(graphQLError)) {
+						return _getExtendedGraphQLError(
+							graphQLError, Response.Status.BAD_REQUEST);
+					}
 
-					processedErrors.add(
-						_getExtendedGraphQLError(
-							graphQLError, Response.Status.BAD_REQUEST));
-				}
-				else {
-					processedErrors.add(
-						_getExtendedGraphQLError(
-							graphQLError,
-							Response.Status.INTERNAL_SERVER_ERROR));
-				}
-			}
-
-			return processedErrors;
+					return _getExtendedGraphQLError(
+						graphQLError, Response.Status.INTERNAL_SERVER_ERROR);
+				});
 		}
 
 		private GraphQLError _getExtendedGraphQLError(

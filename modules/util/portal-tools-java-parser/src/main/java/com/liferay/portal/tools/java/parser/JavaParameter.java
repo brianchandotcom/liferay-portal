@@ -16,11 +16,11 @@ import java.util.List;
 public class JavaParameter extends BaseJavaTerm {
 
 	public JavaParameter(
-		String name, List<JavaSimpleValue> modifiers, JavaType javaType) {
+		JavaType javaType, List<JavaSimpleValue> modifiers, String name) {
 
-		_name = new JavaSimpleValue(name);
-		_modifiers = modifiers;
 		_javaType = javaType;
+		_modifiers = modifiers;
+		_name = new JavaSimpleValue(name);
 	}
 
 	@Override

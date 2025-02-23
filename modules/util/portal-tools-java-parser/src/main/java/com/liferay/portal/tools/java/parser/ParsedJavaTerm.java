@@ -26,16 +26,16 @@ import java.util.regex.Pattern;
 public class ParsedJavaTerm implements Comparable<ParsedJavaTerm> {
 
 	public ParsedJavaTerm(
-		String content, Position startPosition, Position endPosition,
-		String className, String precedingNestedCodeBlockClassName,
-		String followingNestedCodeBlockClassName) {
+		String className, String content, Position endPosition,
+		String followingNestedCodeBlockClassName,
+		String precedingNestedCodeBlockClassName, Position startPosition) {
 
-		_content = content;
-		_startPosition = startPosition;
-		_endPosition = endPosition;
 		_className = className;
-		_precedingNestedCodeBlockClassName = precedingNestedCodeBlockClassName;
+		_content = content;
+		_endPosition = endPosition;
 		_followingNestedCodeBlockClassName = followingNestedCodeBlockClassName;
+		_precedingNestedCodeBlockClassName = precedingNestedCodeBlockClassName;
+		_startPosition = startPosition;
 	}
 
 	@Override

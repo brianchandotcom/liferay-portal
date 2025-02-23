@@ -16,13 +16,13 @@ import java.util.List;
 public class JavaClassDefinition extends BaseJavaTerm {
 
 	public JavaClassDefinition(
-		String type, List<JavaAnnotation> javaAnnotations,
-		List<JavaSimpleValue> modifiers, JavaType classJavaType) {
+		JavaType classJavaType, List<JavaAnnotation> javaAnnotations,
+		List<JavaSimpleValue> modifiers, String type) {
 
-		_type = type;
+		_classJavaType = classJavaType;
 		_javaAnnotations = javaAnnotations;
 		_modifiers = modifiers;
-		_classJavaType = classJavaType;
+		_type = type;
 	}
 
 	public void setExtendedClassJavaTypes(

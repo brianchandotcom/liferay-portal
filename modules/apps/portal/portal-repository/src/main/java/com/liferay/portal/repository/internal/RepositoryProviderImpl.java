@@ -18,6 +18,7 @@ import com.liferay.document.library.kernel.service.DLFileEntryService;
 import com.liferay.document.library.kernel.service.DLFileShortcutLocalService;
 import com.liferay.document.library.kernel.service.DLFileVersionLocalService;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.NoSuchRepositoryException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -216,30 +217,18 @@ public class RepositoryProviderImpl implements RepositoryProvider {
 	public List<LocalRepository> getGroupLocalRepositories(long groupId)
 		throws PortalException {
 
-		List<LocalRepository> localRepositories = new ArrayList<>();
-
-		List<Long> repositoryIds = getGroupRepositoryIds(groupId);
-
-		for (long repositoryId : repositoryIds) {
-			localRepositories.add(getLocalRepository(repositoryId));
-		}
-
-		return localRepositories;
+		return TransformUtil.transform(
+			getGroupRepositoryIds(groupId),
+			repositoryId -> getLocalRepository(repositoryId));
 	}
 
 	@Override
 	public List<Repository> getGroupRepositories(long groupId)
 		throws PortalException {
 
-		List<Repository> repositories = new ArrayList<>();
-
-		List<Long> repositoryIds = getGroupRepositoryIds(groupId);
-
-		for (long repositoryId : repositoryIds) {
-			repositories.add(getRepository(repositoryId));
-		}
-
-		return repositories;
+		return TransformUtil.transform(
+			getGroupRepositoryIds(groupId),
+			repositoryId -> getRepository(repositoryId));
 	}
 
 	@Override

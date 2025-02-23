@@ -349,29 +349,33 @@ public class JavaClassParser {
 				lineNumber, _getVariableName(startLine));
 		}
 
-		if ((x == -1) && !startLine.matches("public [A-Z]\\w* \\{")) {
+		int spaceCount = StringUtil.count(startLine, CharPool.SPACE);
+
+		if (x == -1) {
+			if (accessModifier.equals(JavaTerm.ACCESS_MODIFIER_PUBLIC) &&
+				(spaceCount == 2)) {
+
+				return new JavaConstructor(
+					accessModifier, javaTermContent, isAbstract, isFinal,
+					isStatic, lineNumber,
+					_getConstructorOrMethodName(startLine));
+			}
+
 			return null;
 		}
 
-		int spaceCount = StringUtil.count(startLine, CharPool.SPACE);
-
-		if ((x != -1) &&
-			(isStatic || (spaceCount > 1) ||
-			 (accessModifier.equals(JavaTerm.ACCESS_MODIFIER_DEFAULT) &&
-			  (spaceCount > 0)))) {
+		if (isStatic || (spaceCount > 1) ||
+			(accessModifier.equals(JavaTerm.ACCESS_MODIFIER_DEFAULT) &&
+			 (spaceCount > 0))) {
 
 			return new JavaMethod(
 				accessModifier, javaTermContent, isAbstract, isFinal, isStatic,
 				lineNumber, _getConstructorOrMethodName(startLine));
 		}
 
-		if (((x != -1) &&
-			 ((spaceCount == 1) ||
-			  (accessModifier.equals(JavaTerm.ACCESS_MODIFIER_DEFAULT) &&
-			   (spaceCount == 0)))) ||
-			((x == -1) &&
-			 accessModifier.equals(JavaTerm.ACCESS_MODIFIER_PUBLIC) &&
-			 (spaceCount == 2))) {
+		if ((spaceCount == 1) ||
+			(accessModifier.equals(JavaTerm.ACCESS_MODIFIER_DEFAULT) &&
+			 (spaceCount == 0))) {
 
 			return new JavaConstructor(
 				accessModifier, javaTermContent, isAbstract, isFinal, isStatic,

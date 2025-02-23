@@ -1023,17 +1023,10 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 	private List<User> _getUsers(long groupId, long roleId)
 		throws PortalException {
 
-		List<User> users = new ArrayList<>();
-
-		List<UserGroupRole> userGroupGroupRoles =
+		return TransformUtil.transform(
 			_userGroupRoleLocalService.getUserGroupRolesByGroupAndRole(
-				groupId, roleId);
-
-		for (UserGroupRole userGroupRole : userGroupGroupRoles) {
-			users.add(userGroupRole.getUser());
-		}
-
-		return users;
+				groupId, roleId),
+			userGroupRole -> userGroupRole.getUser());
 	}
 
 	private boolean _hasAssignableUsers(

@@ -12,9 +12,9 @@ import com.liferay.petra.string.StringBundler;
  */
 public class JavaRecordComponent extends BaseJavaTerm {
 
-	public JavaRecordComponent(String name, JavaType javaType) {
-		_name = new JavaSimpleValue(name);
+	public JavaRecordComponent(JavaType javaType, String name) {
 		_javaType = javaType;
+		_name = new JavaSimpleValue(name);
 	}
 
 	@Override

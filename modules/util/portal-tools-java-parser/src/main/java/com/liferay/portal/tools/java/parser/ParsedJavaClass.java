@@ -28,9 +28,8 @@ public class ParsedJavaClass {
 		String followingNestedCodeBlockClassName) {
 
 		ParsedJavaTerm parsedJavaTerm = new ParsedJavaTerm(
-			content, startPosition, endPosition, className,
-			precedingNestedCodeBlockClassName,
-			followingNestedCodeBlockClassName);
+			className, content, endPosition, followingNestedCodeBlockClassName,
+			precedingNestedCodeBlockClassName, startPosition);
 
 		if (_firstParsedJavaTerm == null) {
 			_firstParsedJavaTerm = parsedJavaTerm;

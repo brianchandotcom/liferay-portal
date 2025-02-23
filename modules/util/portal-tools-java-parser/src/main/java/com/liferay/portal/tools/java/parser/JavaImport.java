@@ -12,9 +12,9 @@ import com.liferay.petra.string.StringBundler;
  */
 public class JavaImport extends BaseJavaTerm {
 
-	public JavaImport(String name, boolean isStatic) {
-		_name = new JavaSimpleValue(name);
+	public JavaImport(boolean isStatic, String name) {
 		_isStatic = isStatic;
+		_name = new JavaSimpleValue(name);
 	}
 
 	@Override

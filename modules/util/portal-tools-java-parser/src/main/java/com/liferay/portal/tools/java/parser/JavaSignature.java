@@ -16,18 +16,18 @@ import java.util.Objects;
 public class JavaSignature extends BaseJavaTerm {
 
 	public JavaSignature(
-		String objectName, List<JavaSimpleValue> modifiers,
-		JavaType returnJavaType, List<JavaType> genericJavaTypes,
-		List<JavaParameter> javaParameters, List<JavaType> exceptionJavaTypes,
-		boolean compactRecordConstructor) {
+		boolean compactRecordConstructor, List<JavaType> exceptionJavaTypes,
+		List<JavaType> genericJavaTypes, List<JavaParameter> javaParameters,
+		List<JavaSimpleValue> modifiers, String objectName,
+		JavaType returnJavaType) {
 
-		_objectName = new JavaSimpleValue(objectName);
-		_modifiers = modifiers;
-		_returnJavaType = returnJavaType;
+		_compactRecordConstructor = compactRecordConstructor;
+		_exceptionJavaTypes = exceptionJavaTypes;
 		_genericJavaTypes = genericJavaTypes;
 		_javaParameters = javaParameters;
-		_exceptionJavaTypes = exceptionJavaTypes;
-		_compactRecordConstructor = compactRecordConstructor;
+		_modifiers = modifiers;
+		_objectName = new JavaSimpleValue(objectName);
+		_returnJavaType = returnJavaType;
 	}
 
 	public String getIndent() {

@@ -16,16 +16,16 @@ import java.util.List;
  */
 public class JavaType extends BaseJavaTerm implements Comparable<JavaType> {
 
-	public JavaType(String name, int arrayDimension) {
-		this(name, null, arrayDimension);
+	public JavaType(
+		int arrayDimension, List<JavaAnnotation> javaAnnotations, String name) {
+
+		_arrayDimension = arrayDimension;
+		_javaAnnotations = javaAnnotations;
+		_name = new JavaSimpleValue(name);
 	}
 
-	public JavaType(
-		String name, List<JavaAnnotation> javaAnnotations, int arrayDimension) {
-
-		_name = new JavaSimpleValue(name);
-		_javaAnnotations = javaAnnotations;
-		_arrayDimension = arrayDimension;
+	public JavaType(int arrayDimension, String name) {
+		this(arrayDimension, null, name);
 	}
 
 	@Override

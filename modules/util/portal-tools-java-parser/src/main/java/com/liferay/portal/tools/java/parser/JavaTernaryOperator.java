@@ -14,12 +14,12 @@ public class JavaTernaryOperator extends BaseJavaExpression {
 
 	public JavaTernaryOperator(
 		JavaExpression conditionJavaExpression,
-		JavaExpression trueValueJavaExpression,
-		JavaExpression falseValueJavaExpression) {
+		JavaExpression falseValueJavaExpression,
+		JavaExpression trueValueJavaExpression) {
 
 		_conditionJavaExpression = conditionJavaExpression;
-		_trueValueJavaExpression = trueValueJavaExpression;
 		_falseValueJavaExpression = falseValueJavaExpression;
+		_trueValueJavaExpression = trueValueJavaExpression;
 	}
 
 	@Override

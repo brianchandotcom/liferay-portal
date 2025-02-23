@@ -352,16 +352,15 @@ public class JavaClassParser {
 		int spaceCount = StringUtil.count(startLine, CharPool.SPACE);
 
 		if (x == -1) {
-			if (accessModifier.equals(JavaTerm.ACCESS_MODIFIER_PUBLIC) &&
-				(spaceCount == 2)) {
+			if (!accessModifier.equals(JavaTerm.ACCESS_MODIFIER_PUBLIC) ||
+				(spaceCount != 2)) {
 
-				return new JavaConstructor(
-					accessModifier, javaTermContent, isAbstract, isFinal,
-					isStatic, lineNumber,
-					_getConstructorOrMethodName(startLine));
+				return null;
 			}
 
-			return null;
+			return new JavaConstructor(
+				accessModifier, javaTermContent, isAbstract, isFinal, isStatic,
+				lineNumber, _getConstructorOrMethodName(startLine));
 		}
 
 		if (isStatic || (spaceCount > 1) ||

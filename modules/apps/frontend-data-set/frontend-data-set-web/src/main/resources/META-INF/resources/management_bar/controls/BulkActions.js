@@ -35,6 +35,7 @@ function BulkActions({
 	fluid,
 	handleCheckboxClick,
 	items,
+	onClear,
 	pageSelectedItemsValue,
 	selectItems,
 	selectedItems,
@@ -270,6 +271,19 @@ function BulkActions({
 											)}
 								</span>
 
+								{Liferay.FeatureFlags['LPD-42570'] && (
+									<ClayLink
+										className="ml-3"
+										href="#"
+										onClick={(event) => {
+											event.preventDefault();
+											onClear();
+										}}
+									>
+										{Liferay.Language.get('clear')}
+									</ClayLink>
+								)}
+
 								<ClayLink
 									className="ml-3"
 									href="#"
@@ -343,6 +357,7 @@ BulkActions.propTypes = {
 	),
 	handleCheckboxClick: PropTypes.func.isRequired,
 	items: PropTypes.array.isRequired,
+	onClear: PropTypes.func.isRequired,
 	selectedItemsKey: PropTypes.string.isRequired,
 	selectedItemsValue: PropTypes.array.isRequired,
 	total: PropTypes.number,

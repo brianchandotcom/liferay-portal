@@ -614,6 +614,7 @@ const FrontendDataSet = ({
 				deselectItems={(items) => deselectItems(items)}
 				fluid={style === 'fluid'}
 				items={items}
+				onBulkActionsClear={() => deselectItems(selectedItemsValue)}
 				selectItems={(items) => selectItems(items)}
 				selectedItems={selectedItems}
 				selectedItemsKey={selectedItemsKey}

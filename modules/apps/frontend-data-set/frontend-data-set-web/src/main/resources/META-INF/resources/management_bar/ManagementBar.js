@@ -16,6 +16,7 @@ function ManagementBar({
 	deselectItems,
 	fluid,
 	items,
+	onBulkActionsClear,
 	selectItems,
 	selectedItems,
 	selectedItemsKey,
@@ -46,6 +47,7 @@ function ManagementBar({
 					fluid={fluid}
 					handleCheckboxClick={handleCheckboxClick}
 					items={items}
+					onClear={onBulkActionsClear}
 					pageSelectedItemsValue={pageSelectedItemsValue}
 					selectItems={selectItems}
 					selectedItems={selectedItems}
@@ -83,8 +85,10 @@ ManagementBar.propTypes = {
 		primaryItems: PropTypes.array,
 		secondaryItems: PropTypes.array,
 	}),
+	deselectItems: PropTypes.func.isRequired,
 	fluid: PropTypes.bool,
 	items: PropTypes.array.isRequired,
+	onBulkActionsClear: PropTypes.func.isRequired,
 	selectItems: PropTypes.func.isRequired,
 	selectedItems: PropTypes.array,
 	selectedItemsKey: PropTypes.string,

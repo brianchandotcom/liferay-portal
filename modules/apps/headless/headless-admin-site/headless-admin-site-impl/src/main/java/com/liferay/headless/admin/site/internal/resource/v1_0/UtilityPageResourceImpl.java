@@ -141,7 +141,7 @@ public class UtilityPageResourceImpl extends BaseUtilityPageResourceImpl {
 						siteExternalReferenceCode));
 
 		return (ContentPageSpecification)_pageSpecificationDTOConverter.toDTO(
-			LayoutUtil.addDraftToPublishedLayout(
+			LayoutUtil.addDraftToLayout(
 				contentPageSpecification,
 				_layoutLocalService.getLayout(layoutUtilityPageEntry.getPlid()),
 				ServiceContextUtil.createServiceContext(

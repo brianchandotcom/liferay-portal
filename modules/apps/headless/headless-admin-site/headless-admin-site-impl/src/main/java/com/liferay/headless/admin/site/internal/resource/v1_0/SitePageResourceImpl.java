@@ -185,7 +185,7 @@ public class SitePageResourceImpl extends BaseSitePageResourceImpl {
 		}
 
 		return (ContentPageSpecification)_pageSpecificationDTOConverter.toDTO(
-			LayoutUtil.addDraftToPublishedLayout(
+			LayoutUtil.addDraftToLayout(
 				contentPageSpecification, layout,
 				ServiceContextUtil.createServiceContext(
 					layout.getGroupId(), contextHttpServletRequest,

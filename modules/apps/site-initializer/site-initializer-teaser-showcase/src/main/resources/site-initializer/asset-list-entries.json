@@ -104,7 +104,8 @@
 		"title": "Announcements",
 		"unicodeProperties": {
 			"classNameIds": "com.liferay.journal.model.JournalArticle",
-			"filterBy": []
+			"filterBy": [
+			]
 		}
 	},
 	{
@@ -112,7 +113,8 @@
 		"title": "Helpful Articles Dynamic",
 		"unicodeProperties": {
 			"classNameIds": "com.liferay.journal.model.JournalArticle",
-			"filterBy": []
+			"filterBy": [
+			]
 		}
 	},
 	{
@@ -120,15 +122,17 @@
 		"title": "Leadership",
 		"unicodeProperties": {
 			"classNameIds": "com.liferay.journal.model.JournalArticle",
-			"filterBy": []
+			"filterBy": [
+			]
 		}
 	},
 	{
-		"title": "Blogs",
 		"externalReferenceCode": "BLOGS_COLLECTION",
+		"title": "Blogs",
 		"unicodeProperties": {
 			"classNameIds": "com.liferay.blogs.model.BlogsEntry",
-			"filterBy": []
+			"filterBy": [
+			]
 		}
 	}
 ]

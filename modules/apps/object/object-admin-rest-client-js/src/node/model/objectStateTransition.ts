@@ -4,20 +4,25 @@
  */
 
 
-export class ObjectStateTransition {
-	'key'?: string;
+/**
+ * @author Javier Gamarra
+ * @generated
+ */
 
-	static discriminator: string | undefined = undefined;
+	export class ObjectStateTransition {
+			'key'?: string;
 
-	static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-		{
-			"name": "key",
-			"baseName": "key",
-			"type": "string"
+		static discriminator: string | undefined = undefined;
+
+		static attributeTypeMap: Array<{baseName: string, name: string, type: string}> = [
+				{
+					"baseName": "key",
+					"name": "key",
+					"type": "string"
+				}
+		];
+
+		static getAttributeTypeMap() {
+				return ObjectStateTransition.attributeTypeMap;
 		}
-	];
-
-	static getAttributeTypeMap() {
-		return ObjectStateTransition.attributeTypeMap;
 	}
-}

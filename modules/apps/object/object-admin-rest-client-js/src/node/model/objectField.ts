@@ -3,166 +3,171 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import { ObjectFieldSetting } from './objectFieldSetting';
+			import { ObjectFieldSetting } from './objectFieldSetting';
 
-export class ObjectField {
-	'DBType'?: 'BigDecimal' | 'Boolean' | 'Clob' | 'Date' | 'DateTime' | 'Double' | 'Integer' | 'Long' | 'String';
-	'actions'?: { [key: string]: { [key: string]: string; }; };
-	'businessType'?: 'Aggregation' | 'Attachment' | 'AutoIncrement' | 'Boolean' | 'Date' | 'DateTime' | 'Decimal' | 'Encrypted' | 'Formula' | 'Integer' | 'LongInteger' | 'LongText' | 'MultiselectPicklist' | 'Picklist' | 'PrecisionDecimal' | 'Relationship' | 'RichText' | 'Text';
-	'defaultValue'?: string;
-	'externalReferenceCode'?: string;
-	'id'?: number;
-	'indexed'?: boolean;
-	'indexedAsKeyword'?: boolean;
-	'indexedLanguageId'?: string;
-	'label'?: { [key: string]: string; };
-	'listTypeDefinitionExternalReferenceCode'?: string;
-	'listTypeDefinitionId'?: number;
-	'localized'?: boolean;
-	'name'?: string;
-	'objectDefinitionExternalReferenceCode1'?: string;
-	'objectFieldSettings'?: Array<ObjectFieldSetting>;
-	'objectRelationshipExternalReferenceCode'?: string;
-	'readOnly'?: 'conditional' | 'false' | 'true';
-	'readOnlyConditionExpression'?: string;
-	'relationshipType'?: 'oneToMany' | 'oneToOne';
-	'required'?: boolean;
-	'state'?: boolean;
-	'system'?: boolean;
-	'type'?: 'BigDecimal' | 'Boolean' | 'Clob' | 'Date' | 'DateTime' | 'Double' | 'Integer' | 'Long' | 'String';
-	'unique'?: boolean;
+/**
+ * @author Javier Gamarra
+ * @generated
+ */
 
-	static discriminator: string | undefined = undefined;
+	export class ObjectField {
+			'DBType'?: 'BigDecimal' | 'Boolean' | 'Clob' | 'Date' | 'DateTime' | 'Double' | 'Integer' | 'Long' | 'String';
+			'actions'?: { [key: string]: { [key: string]: string; }; };
+			'businessType'?: 'Aggregation' | 'Attachment' | 'AutoIncrement' | 'Boolean' | 'Date' | 'DateTime' | 'Decimal' | 'Encrypted' | 'Formula' | 'Integer' | 'LongInteger' | 'LongText' | 'MultiselectPicklist' | 'Picklist' | 'PrecisionDecimal' | 'Relationship' | 'RichText' | 'Text';
+			'defaultValue'?: string;
+			'externalReferenceCode'?: string;
+			'id'?: number;
+			'indexed'?: boolean;
+			'indexedAsKeyword'?: boolean;
+			'indexedLanguageId'?: string;
+			'label'?: { [key: string]: string; };
+			'listTypeDefinitionExternalReferenceCode'?: string;
+			'listTypeDefinitionId'?: number;
+			'localized'?: boolean;
+			'name'?: string;
+			'objectDefinitionExternalReferenceCode1'?: string;
+			'objectFieldSettings'?: Array<ObjectFieldSetting>;
+			'objectRelationshipExternalReferenceCode'?: string;
+			'readOnly'?: 'conditional' | 'false' | 'true';
+			'readOnlyConditionExpression'?: string;
+			'relationshipType'?: 'oneToMany' | 'oneToOne';
+			'required'?: boolean;
+			'state'?: boolean;
+			'system'?: boolean;
+			'type'?: 'BigDecimal' | 'Boolean' | 'Clob' | 'Date' | 'DateTime' | 'Double' | 'Integer' | 'Long' | 'String';
+			'unique'?: boolean;
 
-	static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-		{
-			"name": "DBType",
-			"baseName": "DBType",
-			"type": "'BigDecimal' | 'Boolean' | 'Clob' | 'Date' | 'DateTime' | 'Double' | 'Integer' | 'Long' | 'String'"
-		},
-		{
-			"name": "actions",
-			"baseName": "actions",
-			"type": "{ [key: string]: { [key: string]: string; }; }"
-		},
-		{
-			"name": "businessType",
-			"baseName": "businessType",
-			"type": "'Aggregation' | 'Attachment' | 'AutoIncrement' | 'Boolean' | 'Date' | 'DateTime' | 'Decimal' | 'Encrypted' | 'Formula' | 'Integer' | 'LongInteger' | 'LongText' | 'MultiselectPicklist' | 'Picklist' | 'PrecisionDecimal' | 'Relationship' | 'RichText' | 'Text'"
-		},
-		{
-			"name": "defaultValue",
-			"baseName": "defaultValue",
-			"type": "string"
-		},
-		{
-			"name": "externalReferenceCode",
-			"baseName": "externalReferenceCode",
-			"type": "string"
-		},
-		{
-			"name": "id",
-			"baseName": "id",
-			"type": "number"
-		},
-		{
-			"name": "indexed",
-			"baseName": "indexed",
-			"type": "boolean"
-		},
-		{
-			"name": "indexedAsKeyword",
-			"baseName": "indexedAsKeyword",
-			"type": "boolean"
-		},
-		{
-			"name": "indexedLanguageId",
-			"baseName": "indexedLanguageId",
-			"type": "string"
-		},
-		{
-			"name": "label",
-			"baseName": "label",
-			"type": "{ [key: string]: string; }"
-		},
-		{
-			"name": "listTypeDefinitionExternalReferenceCode",
-			"baseName": "listTypeDefinitionExternalReferenceCode",
-			"type": "string"
-		},
-		{
-			"name": "listTypeDefinitionId",
-			"baseName": "listTypeDefinitionId",
-			"type": "number"
-		},
-		{
-			"name": "localized",
-			"baseName": "localized",
-			"type": "boolean"
-		},
-		{
-			"name": "name",
-			"baseName": "name",
-			"type": "string"
-		},
-		{
-			"name": "objectDefinitionExternalReferenceCode1",
-			"baseName": "objectDefinitionExternalReferenceCode1",
-			"type": "string"
-		},
-		{
-			"name": "objectFieldSettings",
-			"baseName": "objectFieldSettings",
-			"type": "Array<ObjectFieldSetting>"
-		},
-		{
-			"name": "objectRelationshipExternalReferenceCode",
-			"baseName": "objectRelationshipExternalReferenceCode",
-			"type": "string"
-		},
-		{
-			"name": "readOnly",
-			"baseName": "readOnly",
-			"type": "'conditional' | 'false' | 'true'"
-		},
-		{
-			"name": "readOnlyConditionExpression",
-			"baseName": "readOnlyConditionExpression",
-			"type": "string"
-		},
-		{
-			"name": "relationshipType",
-			"baseName": "relationshipType",
-			"type": "'oneToMany' | 'oneToOne'"
-		},
-		{
-			"name": "required",
-			"baseName": "required",
-			"type": "boolean"
-		},
-		{
-			"name": "state",
-			"baseName": "state",
-			"type": "boolean"
-		},
-		{
-			"name": "system",
-			"baseName": "system",
-			"type": "boolean"
-		},
-		{
-			"name": "type",
-			"baseName": "type",
-			"type": "'BigDecimal' | 'Boolean' | 'Clob' | 'Date' | 'DateTime' | 'Double' | 'Integer' | 'Long' | 'String'"
-		},
-		{
-			"name": "unique",
-			"baseName": "unique",
-			"type": "boolean"
+		static discriminator: string | undefined = undefined;
+
+		static attributeTypeMap: Array<{baseName: string, name: string, type: string}> = [
+				{
+					"baseName": "DBType",
+					"name": "DBType",
+					"type": "'BigDecimal' | 'Boolean' | 'Clob' | 'Date' | 'DateTime' | 'Double' | 'Integer' | 'Long' | 'String'"
+				},
+				{
+					"baseName": "actions",
+					"name": "actions",
+					"type": "{ [key: string]: { [key: string]: string; }; }"
+				},
+				{
+					"baseName": "businessType",
+					"name": "businessType",
+					"type": "'Aggregation' | 'Attachment' | 'AutoIncrement' | 'Boolean' | 'Date' | 'DateTime' | 'Decimal' | 'Encrypted' | 'Formula' | 'Integer' | 'LongInteger' | 'LongText' | 'MultiselectPicklist' | 'Picklist' | 'PrecisionDecimal' | 'Relationship' | 'RichText' | 'Text'"
+				},
+				{
+					"baseName": "defaultValue",
+					"name": "defaultValue",
+					"type": "string"
+				},
+				{
+					"baseName": "externalReferenceCode",
+					"name": "externalReferenceCode",
+					"type": "string"
+				},
+				{
+					"baseName": "id",
+					"name": "id",
+					"type": "number"
+				},
+				{
+					"baseName": "indexed",
+					"name": "indexed",
+					"type": "boolean"
+				},
+				{
+					"baseName": "indexedAsKeyword",
+					"name": "indexedAsKeyword",
+					"type": "boolean"
+				},
+				{
+					"baseName": "indexedLanguageId",
+					"name": "indexedLanguageId",
+					"type": "string"
+				},
+				{
+					"baseName": "label",
+					"name": "label",
+					"type": "{ [key: string]: string; }"
+				},
+				{
+					"baseName": "listTypeDefinitionExternalReferenceCode",
+					"name": "listTypeDefinitionExternalReferenceCode",
+					"type": "string"
+				},
+				{
+					"baseName": "listTypeDefinitionId",
+					"name": "listTypeDefinitionId",
+					"type": "number"
+				},
+				{
+					"baseName": "localized",
+					"name": "localized",
+					"type": "boolean"
+				},
+				{
+					"baseName": "name",
+					"name": "name",
+					"type": "string"
+				},
+				{
+					"baseName": "objectDefinitionExternalReferenceCode1",
+					"name": "objectDefinitionExternalReferenceCode1",
+					"type": "string"
+				},
+				{
+					"baseName": "objectFieldSettings",
+					"name": "objectFieldSettings",
+					"type": "Array<ObjectFieldSetting>"
+				},
+				{
+					"baseName": "objectRelationshipExternalReferenceCode",
+					"name": "objectRelationshipExternalReferenceCode",
+					"type": "string"
+				},
+				{
+					"baseName": "readOnly",
+					"name": "readOnly",
+					"type": "'conditional' | 'false' | 'true'"
+				},
+				{
+					"baseName": "readOnlyConditionExpression",
+					"name": "readOnlyConditionExpression",
+					"type": "string"
+				},
+				{
+					"baseName": "relationshipType",
+					"name": "relationshipType",
+					"type": "'oneToMany' | 'oneToOne'"
+				},
+				{
+					"baseName": "required",
+					"name": "required",
+					"type": "boolean"
+				},
+				{
+					"baseName": "state",
+					"name": "state",
+					"type": "boolean"
+				},
+				{
+					"baseName": "system",
+					"name": "system",
+					"type": "boolean"
+				},
+				{
+					"baseName": "type",
+					"name": "type",
+					"type": "'BigDecimal' | 'Boolean' | 'Clob' | 'Date' | 'DateTime' | 'Double' | 'Integer' | 'Long' | 'String'"
+				},
+				{
+					"baseName": "unique",
+					"name": "unique",
+					"type": "boolean"
+				}
+		];
+
+		static getAttributeTypeMap() {
+				return ObjectField.attributeTypeMap;
 		}
-	];
-
-	static getAttributeTypeMap() {
-		return ObjectField.attributeTypeMap;
 	}
-}

@@ -4,26 +4,31 @@
  */
 
 
-export class FacetValue {
-	'numberOfOccurrences'?: number;
-	'term'?: string;
+/**
+ * @author David Truong
+ * @generated
+ */
 
-	static discriminator: string | undefined = undefined;
+	export class FacetValue {
+			'numberOfOccurrences'?: number;
+			'term'?: string;
 
-	static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-		{
-			"name": "numberOfOccurrences",
-			"baseName": "numberOfOccurrences",
-			"type": "number"
-		},
-		{
-			"name": "term",
-			"baseName": "term",
-			"type": "string"
+		static discriminator: string | undefined = undefined;
+
+		static attributeTypeMap: Array<{baseName: string, name: string, type: string}> = [
+				{
+					"baseName": "numberOfOccurrences",
+					"name": "numberOfOccurrences",
+					"type": "number"
+				},
+				{
+					"baseName": "term",
+					"name": "term",
+					"type": "string"
+				}
+		];
+
+		static getAttributeTypeMap() {
+				return FacetValue.attributeTypeMap;
 		}
-	];
-
-	static getAttributeTypeMap() {
-		return FacetValue.attributeTypeMap;
 	}
-}

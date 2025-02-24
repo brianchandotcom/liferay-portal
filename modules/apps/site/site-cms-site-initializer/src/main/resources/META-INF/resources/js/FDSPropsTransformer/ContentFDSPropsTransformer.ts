@@ -5,13 +5,35 @@
 
 import createFolderAction from './actions/createFolderAction';
 
-export default function ContentFDSPropsTransformer({...props}) {
+const ACTIONS: Record<string, (data: any) => void> = {
+	createFolder: createFolderAction,
+};
+
+export default function ContentFDSPropsTransformer({
+	creationMenu,
+	...otherProps
+}: {
+	creationMenu: any;
+	otherProps: any;
+}) {
 	return {
-		...props,
-		onCreationActionClick: ({action}: {action: string}) => {
-			if (action === 'createFolder') {
-				createFolderAction();
-			}
+		...otherProps,
+		creationMenu: {
+			...creationMenu,
+			primaryItems: creationMenu.primaryItems.map(
+				(item: {data: {action: string}}) => {
+					return {
+						...item,
+						onClick() {
+							const action = item.data.action;
+
+							if (action) {
+								ACTIONS[action](item.data);
+							}
+						},
+					};
+				}
+			),
 		},
 	};
 }

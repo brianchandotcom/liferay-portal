@@ -4,6 +4,7 @@
  */
 
 import ClayButton from '@clayui/button';
+import ClayDropDown, {Align} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import {useCallback, useMemo, useState} from 'react';
 import ReactDOMServer from 'react-dom/server';
@@ -46,11 +47,7 @@ import HeadlessCommerceAdminCatalogImpl from '../../../../../../services/rest/He
 import {base64ToText, fileToBase64} from '../../../../../../utils/file';
 import ResourceRequirements from './ResourceRequirements';
 import UploadAppPackagesComponent from './components/UploadAppPackages';
-
-type ProvideAppBuildPageProps = {
-	onClickBack: () => void;
-	onClickContinue: () => void;
-};
+import {ProductTypeOptions} from './constants/productTypes';
 
 type BodyProductSpecificationProps = {
 	productId: number;
@@ -58,11 +55,23 @@ type BodyProductSpecificationProps = {
 	value: number | string;
 };
 
+type ProductTypeOption = {
+	description: string;
+	label: string;
+	value: ProductType;
+};
+
+type ProvideAppBuildPageProps = {
+	onClickBack: () => void;
+	onClickContinue: () => void;
+};
+
 export function ProvideAppBuildPage({
 	onClickBack,
 	onClickContinue,
 }: ProvideAppBuildPageProps) {
 	const [isProcessing, setProcessing] = useState(false);
+	const [active, setActive] = useState(false);
 
 	const [
 		{
@@ -388,6 +397,14 @@ export function ProvideAppBuildPage({
 		handleResetAppPackages();
 	};
 
+	const getType = (value: ProductType) => {
+		const type = ProductTypeOptions.find(
+			(option: ProductTypeOption) => option.value === value
+		);
+
+		return type ? type.label : 'Unknown';
+	};
+
 	const buildAppPackageVersions = Object.keys(buildAppPackages ?? {});
 	const buildAppPackageValues = Object.values(buildAppPackages ?? {}) ?? [];
 	const isCloud = appType.value === 'cloud';
@@ -456,43 +473,59 @@ export function ProvideAppBuildPage({
 				)}
 				tooltipText={i18n.translate('more-info')}
 			>
-				<div className="provide-app-build-page-cloud-compatible-container">
-					<RadioCard
-						description={i18n.translate(
-							'create-a-cloud-app-to-be-delivered-as-a-live-service'
-						)}
-						icon="check-circle"
-						onChange={() => handleAppTypeChange(ProductType.CLOUD)}
-						selected={appType.value === ProductType.CLOUD}
-						title={i18n.translate('yes')}
-						tooltip={ReactDOMServer.renderToString(
-							<span>
-								{i18n.translate(
-									'the-app-submission-is-compatible-with-liferay-experience-cloud-and'
-								)}
-								<a
-									href="https://learn.liferay.com/web/guest/w/dxp/building-applications/client-extensions#client-extensions"
-									target="_blank"
+				<div className="app-type">
+					<div className="provide-app-build-page-cloud-compatible-container">
+						<ClayDropDown
+							active={active}
+							alignmentPosition={Align.BottomLeft}
+							className="app-type-dropdown"
+							onActiveChange={setActive}
+							trigger={
+								<ClayButton
+									className="align-items-center app-type-dropdown d-flex justify-content-between"
+									displayType="secondary"
+									onClick={() => setActive(!active)}
 								>
-									{i18n.translate('client-extensions')}
-								</a>
-								.
-							</span>
-						)}
-					/>
+									<div className="align-items-center d-flex justify-content-between w-100">
+										<span>
+											{appType.value
+												? getType(
+														appType.value as ProductType
+													)
+												: i18n.translate(
+														'choose-an-option'
+													)}
+										</span>
 
-					<RadioCard
-						description={i18n.translate(
-							'create-a-dxp-app-to-be-delivered-as-a-download'
-						)}
-						icon="times-circle"
-						onChange={() => handleAppTypeChange(ProductType.DXP)}
-						selected={appType.value === ProductType.DXP}
-						title={i18n.translate('no')}
-						tooltip={i18n.translate(
-							'the-app-submission-is-integrates-with-liferay-dxp-version-7-4-or-later'
-						)}
-					/>
+										<ClayIcon symbol="caret-bottom" />
+									</div>
+								</ClayButton>
+							}
+						>
+							<ClayDropDown.ItemList className="app-type-list-unstyled">
+								{ProductTypeOptions.map(
+									(option: ProductTypeOption) => (
+										<ClayDropDown.Item
+											key={option.value}
+											onClick={() => {
+												setActive(false);
+												handleAppTypeChange(
+													option.value
+												);
+											}}
+										>
+											<span className="d-flex flex-column">
+												<strong>{option.label}</strong>
+												<span>
+													{option.description}
+												</span>
+											</span>
+										</ClayDropDown.Item>
+									)
+								)}
+							</ClayDropDown.ItemList>
+						</ClayDropDown>
+					</div>
 				</div>
 			</Section>
 

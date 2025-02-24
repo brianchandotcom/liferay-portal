@@ -17,6 +17,7 @@ import {CardSection} from './CardSection';
 import {App} from './ReviewAndSubmitAppPageUtil';
 
 import './CardSectionsBody.scss';
+import {ProductTypeOptions} from '../ProvideAppBuildPage/constants/productTypes';
 
 interface CardSectionsBodyProps {
 	app: App;
@@ -30,6 +31,16 @@ export function CardSectionsBody({
 	readonly,
 }: CardSectionsBodyProps) {
 	const isCloud = app?.type === 'cloud';
+
+	const getAppType = (value: string) => {
+		const type = ProductTypeOptions.find(
+			(apptype) => apptype.value === value
+		);
+
+		return type;
+	};
+
+	const appType = getAppType(app?.type);
 
 	return (
 		<>
@@ -110,6 +121,14 @@ export function CardSectionsBody({
 			{isApp && (
 				<>
 					<CardSection required sectionName="Build">
+						<div className="card-section-body-section-file">
+							<CardView
+								description={appType?.description as string}
+								icon={' '}
+								title={appType?.label as string}
+							/>
+						</div>
+
 						<div className="card-section-body-section-file">
 							<div className="card-section-body-section-file-container">
 								<ClayIcon

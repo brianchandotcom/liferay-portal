@@ -50,4 +50,24 @@ export const offeringTypesDescription = {
 			label: i18n.translate('liferay-saas'),
 		},
 	],
+	[ProductType.FRAGMENTS]: [
+		{
+			description: i18n.translate(
+				'the-dxp-app-is-module-based-and-is-compatible-with-7-4-builds-of-liferay-dxp'
+			),
+			label: i18n.translate('liferay-self-hosted'),
+		},
+		{
+			description: i18n.translate(
+				'the-dxp-app-is-module-based-and-is-compatible-with-7-4-builds-of-liferay-dxp-self-managed-liferay-cloud-formerly-dxp-cloud'
+			),
+			label: i18n.translate('liferay-paas'),
+		},
+		{
+			description: i18n.translate(
+				'dxp-module-based-apps-are-not-supported-on-liferay-experience-cloud-lxc'
+			),
+			label: i18n.translate('liferay-saas'),
+		},
+	],
 } as const;

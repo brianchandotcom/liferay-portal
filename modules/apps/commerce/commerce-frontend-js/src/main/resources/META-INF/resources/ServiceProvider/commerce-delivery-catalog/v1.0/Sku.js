@@ -12,18 +12,23 @@ function resolveSkusPath(
 	channelId,
 	productId,
 	accountId,
+	currencyCode,
 	quantity,
 	skuUnitOfMeasureKey
 ) {
 	let path = `${basePath}${VERSION}/channels/${channelId}/products/${productId}/skus/by-sku-option`;
 
-	if (accountId || quantity || skuUnitOfMeasureKey) {
+	if (accountId || currencyCode || quantity || skuUnitOfMeasureKey) {
 		path += `?`;
 
 		const params = new URLSearchParams();
 
 		if (accountId) {
 			params.append('accountId', accountId);
+		}
+
+		if (currencyCode) {
+			params.append('currencyCode', currencyCode);
 		}
 
 		if (quantity) {
@@ -40,7 +45,14 @@ function resolveSkusPath(
 	return path;
 }
 
-function resolveSkuPath(basePath, channelId, productId, skuId, accountId) {
+function resolveSkuPath(
+	basePath,
+	channelId,
+	productId,
+	skuId,
+	accountId,
+	currencyCode
+) {
 	let path = `${basePath}${VERSION}/channels/${channelId}/products/${productId}/skus/${skuId}`;
 
 	if (accountId) {
@@ -52,6 +64,10 @@ function resolveSkuPath(basePath, channelId, productId, skuId, accountId) {
 			params.append('accountId', accountId);
 		}
 
+		if (currencyCode) {
+			params.append('currencyCode', currencyCode);
+		}
+
 		path += params.toString();
 	}
 
@@ -60,14 +76,28 @@ function resolveSkuPath(basePath, channelId, productId, skuId, accountId) {
 
 export default function Sku(basePath) {
 	return {
-		getChannelProductSku: (channelId, productId, skuId, accountId) =>
+		getChannelProductSku: (
+			channelId,
+			productId,
+			skuId,
+			accountId,
+			currencyCode
+		) =>
 			AJAX.GET(
-				resolveSkuPath(basePath, channelId, productId, skuId, accountId)
+				resolveSkuPath(
+					basePath,
+					channelId,
+					productId,
+					skuId,
+					accountId,
+					currencyCode
+				)
 			),
 		postChannelProductSkuBySkuOption: (
 			channelId,
 			productId,
 			accountId,
+			currencyCode,
 			quantity,
 			skuUnitOfMeasureKey,
 			...params
@@ -78,6 +108,7 @@ export default function Sku(basePath) {
 					channelId,
 					productId,
 					accountId,
+					currencyCode,
 					quantity,
 					skuUnitOfMeasureKey
 				),

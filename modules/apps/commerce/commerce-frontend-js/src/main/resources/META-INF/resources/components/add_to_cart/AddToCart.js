@@ -265,6 +265,11 @@ function AddToCart({
 						accountId={account.id}
 						channelId={channel.id}
 						cpInstanceId={cpInstance.skuId}
+						currencyCode={
+							Liferay.CommerceContext
+								? Liferay.CommerceContext.currency.currencyCode
+								: ''
+						}
 						namespace={settings.namespace}
 						productConfiguration={settings.productConfiguration}
 						productId={productId}

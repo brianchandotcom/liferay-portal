@@ -157,7 +157,9 @@ function RequestQuote({
 								skuUnitOfMeasure: cpInstance.skuUnitOfMeasure,
 							},
 						],
-						currencyCode: channel.currencyCode,
+						currencyCode: Liferay.CommerceContext
+							? Liferay.CommerceContext.currency.currencyCode
+							: '',
 					})
 						.then((order) => {
 							liferayNavigate(

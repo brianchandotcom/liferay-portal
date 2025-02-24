@@ -58,6 +58,9 @@ function UnitOfMeasureSelector({
 				channelId,
 				productId,
 				accountId,
+				Liferay.CommerceContext
+					? Liferay.CommerceContext.currency.currencyCode
+					: '',
 				quantity,
 				skuUnitOfMeasureKey,
 				options || skuOptionsAtomState.skuOptions
@@ -88,7 +91,10 @@ function UnitOfMeasureSelector({
 				channelId,
 				productId,
 				cpInstanceId,
-				accountId
+				accountId,
+				Liferay.CommerceContext
+					? Liferay.CommerceContext.currency.currencyCode
+					: ''
 			).then((cpInstance) => {
 				const skuUnitOfMeasures = cpInstance.skuUnitOfMeasures || [];
 

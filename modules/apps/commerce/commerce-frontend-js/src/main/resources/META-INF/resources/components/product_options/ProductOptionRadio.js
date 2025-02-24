@@ -209,6 +209,9 @@ const ProductOptionRadio = ({
 			channelId,
 			productId,
 			accountId,
+			Liferay.CommerceContext
+				? Liferay.CommerceContext.currency.currencyCode
+				: '',
 			minQuantity,
 			null,
 			currentSkuOptions
@@ -283,6 +286,9 @@ const ProductOptionRadio = ({
 				productId,
 				productOption.id,
 				accountId,
+				Liferay.CommerceContext
+					? Liferay.CommerceContext.currency.currencyCode
+					: '',
 				selectedProductOptionValue?.productOptionValueId,
 				skuId,
 				1,

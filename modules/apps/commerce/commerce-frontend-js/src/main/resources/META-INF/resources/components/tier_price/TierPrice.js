@@ -181,7 +181,10 @@ function TierPrice({
 					channelId,
 					productId,
 					cpInstanceId,
-					accountId
+					accountId,
+					Liferay.CommerceContext
+						? Liferay.CommerceContext.currency.currencyCode
+						: ''
 				)
 				.then((cpInstance) => {
 					handleCPInstanceChanged({cpInstance});

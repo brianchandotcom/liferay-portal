@@ -45,10 +45,6 @@ dependencies {
 	}
 }
 
-deploy {
-	dependsOn downloadNode
-}
-
 deployDependencies {
 	from (configurations.compileClasspath) {
 		include "checkstyle-*.jar"

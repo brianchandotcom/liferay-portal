@@ -48,7 +48,7 @@ public abstract class BaseGlobJobProperty
 
 		String relativePath = getRelativePath();
 
-		for (String glob : value.split(",")) {
+		for (String glob : value.split(",(?![^{}]*})")) {
 			String relativeGlob = relativePath + "/" + glob;
 
 			relativeGlob = relativeGlob.replaceAll("/+", "/");

@@ -200,7 +200,7 @@ function getJobPropertiesElements(job_properties) {
 
 		for (let [name, value] of Object.entries(properties)) {
 			if (value.includes(",")) {
-				value = "\\<br />&nbsp;&nbsp;" + value.replaceAll(",", ",\\<br />&nbsp;&nbsp;");
+				value = "\\<br />&nbsp;&nbsp;" + value.replaceAll(/,(?![^{}]*\})/g, ",<br />&nbsp;&nbsp;");
 			}
 			else if (name.includes("query")) {
 				var pqlQueryLines = getPQLQueryLines(value, 1);

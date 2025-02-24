@@ -1474,9 +1474,9 @@ public abstract class Base${schemaName}ResourceTestCase {
 						testVulcanCRUDItemDelegate_getUser()
 					).build();
 
-					Object vulcanResponse = vulcanCRUDItemDelegate.getItem(post${schemaName}.getId());
+					Object item = vulcanCRUDItemDelegate.getItem(post${schemaName}.getId());
 
-					Assert.assertTrue(equals(get${schemaName}, ${schemaName}SerDes.toDTO(vulcanResponse.toString())));
+					Assert.assertTrue(equals(get${schemaName}, ${schemaName}SerDes.toDTO(item.toString())));
 				}
 
 				protected UriInfo testVulcanCRUDItemDelegate_getUriInfo(Long id) {

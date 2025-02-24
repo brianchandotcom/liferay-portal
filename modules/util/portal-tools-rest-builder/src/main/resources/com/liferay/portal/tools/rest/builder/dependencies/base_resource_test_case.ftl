@@ -1414,10 +1414,6 @@ public abstract class Base${schemaName}ResourceTestCase {
 					${schemaName} get${schemaName} = ${schemaVarName}Resource.${javaMethodSignature.methodName}(
 
 					<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
-						<#if !javaMethodParameter?is_first>
-							,
-						</#if>
-
 						<#if stringUtil.equals(javaMethodParameter.parameterName, "pagination")>
 							Pagination.of(1, 2)
 						<#elseif freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation)>
@@ -1432,6 +1428,8 @@ public abstract class Base${schemaName}ResourceTestCase {
 						<#else>
 							null
 						</#if>
+
+						<#sep>, </#sep>
 					</#list>
 
 					);

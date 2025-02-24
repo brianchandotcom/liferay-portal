@@ -4,44 +4,49 @@
  */
 
 
-export class ObjectViewFilterColumn {
-	'filterType'?: 'excludes' | 'includes';
-	'id'?: number;
-	'json'?: string;
-	'objectFieldName'?: string;
-	'valueSummary'?: string;
+/**
+ * @author Javier Gamarra
+ * @generated
+ */
 
-	static discriminator: string | undefined = undefined;
+	export class ObjectViewFilterColumn {
+			'filterType'?: 'excludes' | 'includes';
+			'id'?: number;
+			'json'?: string;
+			'objectFieldName'?: string;
+			'valueSummary'?: string;
 
-	static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-		{
-			"name": "filterType",
-			"baseName": "filterType",
-			"type": "'excludes' | 'includes'"
-		},
-		{
-			"name": "id",
-			"baseName": "id",
-			"type": "number"
-		},
-		{
-			"name": "json",
-			"baseName": "json",
-			"type": "string"
-		},
-		{
-			"name": "objectFieldName",
-			"baseName": "objectFieldName",
-			"type": "string"
-		},
-		{
-			"name": "valueSummary",
-			"baseName": "valueSummary",
-			"type": "string"
+		static discriminator: string | undefined = undefined;
+
+		static attributeTypeMap: Array<{baseName: string, name: string, type: string}> = [
+				{
+					"baseName": "filterType",
+					"name": "filterType",
+					"type": "'excludes' | 'includes'"
+				},
+				{
+					"baseName": "id",
+					"name": "id",
+					"type": "number"
+				},
+				{
+					"baseName": "json",
+					"name": "json",
+					"type": "string"
+				},
+				{
+					"baseName": "objectFieldName",
+					"name": "objectFieldName",
+					"type": "string"
+				},
+				{
+					"baseName": "valueSummary",
+					"name": "valueSummary",
+					"type": "string"
+				}
+		];
+
+		static getAttributeTypeMap() {
+				return ObjectViewFilterColumn.attributeTypeMap;
 		}
-	];
-
-	static getAttributeTypeMap() {
-		return ObjectViewFilterColumn.attributeTypeMap;
 	}
-}

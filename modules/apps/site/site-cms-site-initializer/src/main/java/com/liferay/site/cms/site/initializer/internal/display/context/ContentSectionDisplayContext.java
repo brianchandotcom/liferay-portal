@@ -9,16 +9,25 @@ import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.cms.site.initializer.internal.configuration.CMSSiteInitializerConfiguration;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import javax.portlet.ActionRequest;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -29,10 +38,14 @@ public class ContentSectionDisplayContext {
 
 	public ContentSectionDisplayContext(
 		CMSSiteInitializerConfiguration cmsSiteInitializerConfiguration,
-		HttpServletRequest httpServletRequest) {
+		HttpServletRequest httpServletRequest, Language language) {
 
 		_cmsSiteInitializerConfiguration = cmsSiteInitializerConfiguration;
 		_httpServletRequest = httpServletRequest;
+		_language = language;
+
+		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
 	public String getAPIURL() {
@@ -57,25 +70,25 @@ public class ContentSectionDisplayContext {
 			dropdownItem -> {
 				dropdownItem.setIcon("forms");
 				dropdownItem.setLabel(
-					LanguageUtil.get(_httpServletRequest, "basic-content"));
+					_language.get(_httpServletRequest, "basic-content"));
 			}
 		).addPrimaryDropdownItem(
 			dropdownItem -> {
 				dropdownItem.setIcon("blogs");
 				dropdownItem.setLabel(
-					LanguageUtil.get(_httpServletRequest, "blog"));
+					_language.get(_httpServletRequest, "blog"));
 			}
 		).addPrimaryDropdownItem(
 			dropdownItem -> {
 				dropdownItem.setIcon("wiki");
 				dropdownItem.setLabel(
-					LanguageUtil.get(_httpServletRequest, "knowledge-base"));
+					_language.get(_httpServletRequest, "knowledge-base"));
 			}
 		).addPrimaryDropdownItem(
 			dropdownItem -> {
 				dropdownItem.setIcon("folder");
 				dropdownItem.setLabel(
-					LanguageUtil.get(_httpServletRequest, "folder"));
+					_language.get(_httpServletRequest, "folder"));
 			}
 		).build();
 	}
@@ -83,22 +96,47 @@ public class ContentSectionDisplayContext {
 	public Map<String, Object> getEmptyState() {
 		return HashMapBuilder.<String, Object>put(
 			"description",
-			LanguageUtil.get(
+			_language.get(
 				_httpServletRequest,
 				"click-new-to-create-your-first-piece-of-content")
 		).put(
 			"image", "/states/cms_empty_state_content.svg"
 		).put(
-			"title", LanguageUtil.get(_httpServletRequest, "no-content-yet")
+			"title", _language.get(_httpServletRequest, "no-content-yet")
 		).build();
 	}
 
 	public List<FDSActionDropdownItem> getFDSActionDropdownItems() {
-		return new ArrayList<>();
+		return ListUtil.fromArray(
+			new FDSActionDropdownItem(
+				PortletURLBuilder.create(
+					PortalUtil.getControlPanelPortletURL(
+						_httpServletRequest,
+						"com_liferay_portlet_configuration_web_portlet_" +
+							"PortletConfigurationPortlet",
+						ActionRequest.RENDER_PHASE)
+				).setMVCPath(
+					"/edit_permissions.jsp"
+				).setRedirect(
+					_themeDisplay.getURLCurrent()
+				).setParameter(
+					"modelResource", ObjectEntryFolder.class.getName()
+				).setParameter(
+					"modelResourceDescription", "{embedded.name}"
+				).setParameter(
+					"resourcePrimKey", "{embedded.id}"
+				).setWindowState(
+					LiferayWindowState.POP_UP
+				).buildString(),
+				"password-policies", "permissions",
+				_language.get(_httpServletRequest, "permissions"), "get", null,
+				"modal-permissions"));
 	}
 
 	private final CMSSiteInitializerConfiguration
 		_cmsSiteInitializerConfiguration;
 	private final HttpServletRequest _httpServletRequest;
+	private final Language _language;
+	private final ThemeDisplay _themeDisplay;
 
 }

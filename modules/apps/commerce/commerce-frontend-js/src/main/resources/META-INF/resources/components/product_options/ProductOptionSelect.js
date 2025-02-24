@@ -281,6 +281,9 @@ const ProductOptionSelect = ({
 			channelId,
 			productId,
 			accountId,
+			Liferay.CommerceContext
+				? Liferay.CommerceContext.currency.currencyCode
+				: '',
 			minQuantity,
 			null,
 			currentSkuOptions
@@ -371,6 +374,9 @@ const ProductOptionSelect = ({
 				productId,
 				productOption.id,
 				accountId,
+				Liferay.CommerceContext
+					? Liferay.CommerceContext.currency.currencyCode
+					: '',
 				productOptionValueId,
 				skuId,
 				1,

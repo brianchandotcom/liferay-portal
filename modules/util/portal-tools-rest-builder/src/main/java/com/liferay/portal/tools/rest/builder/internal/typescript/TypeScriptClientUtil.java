@@ -75,14 +75,16 @@ public class TypeScriptClientUtil {
 
 		for (Map.Entry<String, Map<String, Object>> entry : entries) {
 			_createFile(
-				entry.getValue(), copyrightFile, files, "typescript/api",
+				entry.getValue(), configYAML, copyrightFile, files,
+				"typescript/api",
 				StringBundler.concat(
 					baseClientDir.getPath(), "/src/node/api/",
 					StringUtil.lowerCaseFirstLetter(entry.getKey()), "Api.ts"));
 		}
 
 		_createFile(
-			_buildApisContext(entries), copyrightFile, files, "typescript/apis",
+			_buildApisContext(entries), configYAML, copyrightFile, files,
+			"typescript/apis",
 			baseClientDir.getPath() + "/src/node/api/apis.ts");
 
 		Components components = openAPIYAML.getComponents();
@@ -93,7 +95,7 @@ public class TypeScriptClientUtil {
 			for (Map.Entry<String, Schema> entry : schemaMap.entrySet()) {
 				_createFile(
 					_buildModelContext(entry.getKey(), entry.getValue()),
-					copyrightFile, files, "typescript/model",
+					configYAML, copyrightFile, files, "typescript/model",
 					StringBundler.concat(
 						baseClientDir.getPath(), "/src/node/model/",
 						StringUtil.lowerCaseFirstLetter(entry.getKey()),
@@ -102,12 +104,12 @@ public class TypeScriptClientUtil {
 		}
 
 		_createFile(
-			Collections.singletonMap("schemaMap", schemaMap), copyrightFile,
-			files, "typescript/models",
+			Collections.singletonMap("schemaMap", schemaMap), configYAML,
+			copyrightFile, files, "typescript/models",
 			baseClientDir.getPath() + "/src/node/model/models.ts");
 
 		_createFile(
-			null, copyrightFile, files, "typescript/api_global",
+			null, configYAML, copyrightFile, files, "typescript/api_global",
 			baseClientDir.getPath() + "/src/node/api.ts");
 
 		FileUtil.deleteFiles(baseClientDir.getPath(), files);
@@ -466,13 +468,24 @@ public class TypeScriptClientUtil {
 	}
 
 	private static void _createFile(
-			Map<String, Object> context, File copyrightFile, List<File> files,
-			String name, String path)
+			Map<String, Object> context, ConfigYAML configYAML,
+			File copyrightFile, List<File> files, String name, String path)
 		throws Exception {
 
 		File file = new File(path);
 
 		files.add(file);
+
+		if (context != null) {
+			context = HashMapBuilder.<String, Object>putAll(
+				context
+			).put(
+				"configYAML", configYAML
+			).build();
+		}
+		else {
+			context = Collections.singletonMap("configYAML", configYAML);
+		}
 
 		FileUtil.write(
 			file,

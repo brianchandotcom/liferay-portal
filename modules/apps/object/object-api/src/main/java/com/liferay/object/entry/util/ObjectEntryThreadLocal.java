@@ -6,6 +6,7 @@
 package com.liferay.object.entry.util;
 
 import com.liferay.petra.lang.CentralizedThreadLocal;
+import com.liferay.petra.lang.SafeCloseable;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -49,6 +50,13 @@ public class ObjectEntryThreadLocal {
 		_disassociateRelatedModels.set(disassociateRelatedModels);
 	}
 
+	public static SafeCloseable setDisassociateRelatedModelsWithSafeCloseable(
+		boolean disassociateRelatedModels) {
+
+		return _disassociateRelatedModels.setWithSafeCloseable(
+			disassociateRelatedModels);
+	}
+
 	public static void setSkipObjectEntryResourcePermission(
 		boolean skipObjectEntryResourcePermission) {
 
@@ -68,8 +76,8 @@ public class ObjectEntryThreadLocal {
 		_skipReadOnlyObjectFieldsValidation.set(skipReadOnlyValidation);
 	}
 
-	private static final ThreadLocal<Boolean> _disassociateRelatedModels =
-		new CentralizedThreadLocal<>(
+	private static final CentralizedThreadLocal<Boolean>
+		_disassociateRelatedModels = new CentralizedThreadLocal<>(
 			ObjectEntryThreadLocal.class + "._disassociateRelatedModels",
 			() -> false);
 	private static final ThreadLocal<Boolean>

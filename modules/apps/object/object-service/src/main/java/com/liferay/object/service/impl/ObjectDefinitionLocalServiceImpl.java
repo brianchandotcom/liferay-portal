@@ -1645,17 +1645,11 @@ public class ObjectDefinitionLocalServiceImpl
 				(ObjectEntry objectEntry) ->
 					_objectEntryLocalService.deleteObjectEntry(objectEntry));
 
-			boolean disassociateRelatedModels =
-				ObjectEntryThreadLocal.isDisassociateRelatedModels();
-
-			try {
-				ObjectEntryThreadLocal.setDisassociateRelatedModels(true);
+			try (SafeCloseable safeCloseable =
+					ObjectEntryThreadLocal.
+						setDisassociateRelatedModelsWithSafeCloseable(true)) {
 
 				actionableDynamicQuery.performActions();
-			}
-			finally {
-				ObjectEntryThreadLocal.setDisassociateRelatedModels(
-					disassociateRelatedModels);
 			}
 		}
 

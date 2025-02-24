@@ -40,7 +40,7 @@ public class BatchEnginePortletDataHandlerUtilTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		_dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
@@ -60,7 +60,7 @@ public class BatchEnginePortletDataHandlerUtilTest {
 	}
 
 	@Test
-	public void testBuildParametersWithEndDate() throws Exception {
+	public void testBuildParametersWithEndDate() {
 		Date endDate = _getDate(0);
 
 		Map<String, Serializable> parameters =
@@ -73,7 +73,7 @@ public class BatchEnginePortletDataHandlerUtilTest {
 	}
 
 	@Test
-	public void testBuildParametersWithEndDateAndStartDate() throws Exception {
+	public void testBuildParametersWithEndDateAndStartDate() {
 		Date endDate = _getDate(0);
 		Date startDate = _getDate(-1);
 
@@ -89,7 +89,7 @@ public class BatchEnginePortletDataHandlerUtilTest {
 	}
 
 	@Test
-	public void testBuildParametersWithNoDates() throws Exception {
+	public void testBuildParametersWithNoDates() {
 		Map<String, Serializable> parameters =
 			BatchEnginePortletDataHandlerUtil.buildParameters(
 				_mockPortletDataContext(null, null));
@@ -98,7 +98,7 @@ public class BatchEnginePortletDataHandlerUtilTest {
 	}
 
 	@Test
-	public void testBuildParametersWithStartDate() throws Exception {
+	public void testBuildParametersWithStartDate() {
 		Date startDate = _getDate(-1);
 
 		Map<String, Serializable> parameters =

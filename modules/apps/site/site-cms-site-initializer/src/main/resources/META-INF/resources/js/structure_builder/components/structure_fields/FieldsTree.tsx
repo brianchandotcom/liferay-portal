@@ -23,6 +23,7 @@ type TreeItem = {
 	icon: string;
 	id: string;
 	label: string;
+	name?: string;
 	type?: FieldType;
 };
 
@@ -35,8 +36,9 @@ export default function FieldsTree({fields}: {fields: Field[]}) {
 			{
 				children: fields.map((field) => ({
 					icon: FIELD_TYPE_ICON[field.type],
-					id: field.name,
+					id: field.erc,
 					label: field.label,
+					name: field.name,
 					type: field.type,
 				})),
 				icon: 'edit-layout',
@@ -45,6 +47,16 @@ export default function FieldsTree({fields}: {fields: Field[]}) {
 			},
 		];
 	}, [fields, structureLabel]);
+
+	const onItemClick = (item: TreeItem) => {
+		dispatch({
+			item:
+				item.id === 'root'
+					? {type: 'structure'}
+					: {erc: item.id, type: 'field'},
+			type: 'select-item',
+		});
+	};
 
 	const deleteField = (fieldName: string) =>
 		dispatch({
@@ -62,7 +74,7 @@ export default function FieldsTree({fields}: {fields: Field[]}) {
 		>
 			{(item) => (
 				<ClayTreeView.Item>
-					<ClayTreeView.ItemStack>
+					<ClayTreeView.ItemStack onClick={() => onItemClick(item)}>
 						<ClayIcon symbol={item.icon} />
 
 						<span className="ml-1">{item.label}</span>
@@ -79,7 +91,7 @@ export default function FieldsTree({fields}: {fields: Field[]}) {
 													'delete-field'
 												),
 												onClick: () =>
-													deleteField(item.id),
+													deleteField(item.name!),
 												symbolLeft: 'trash',
 											},
 										]}
@@ -96,6 +108,7 @@ export default function FieldsTree({fields}: {fields: Field[]}) {
 										}
 									/>
 								}
+								onClick={() => onItemClick(item)}
 							>
 								<ClayIcon
 									className={classNames({

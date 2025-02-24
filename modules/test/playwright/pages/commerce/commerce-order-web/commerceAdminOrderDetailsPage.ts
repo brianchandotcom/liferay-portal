@@ -23,12 +23,26 @@ export class CommerceAdminOrderDetailsPage extends CommerceDNDTablePage {
 	readonly orderDetailsModalHeader: (headname: string) => Promise<Locator>;
 	readonly orderDetailsModalField: (fieldName: string) => Promise<Locator>;
 	readonly orderDetailsTab: (tabName: string) => Promise<Locator>;
+	readonly orderItemActions: Locator;
+	readonly orderItemActionEdit: Locator;
+	readonly orderItemFrame: FrameLocator;
+	readonly orderItemDecimalQuantity: Locator;
+	readonly orderItemQuantityColumn: (quantity: string) => Promise<Locator>;
+	readonly orderItemSaveButton: Locator;
+	readonly orderNote: (note: string) => Promise<Locator>;
 	readonly orderNotesLink: Locator;
+	readonly orderNotesTextArea: Locator;
+	readonly orderSummaryLink: Locator;
+	readonly orderSummaryFrame: FrameLocator;
+	readonly orderSummarySubtotal: Locator;
+	readonly orderSummarySubtotalInput: Locator;
+	readonly orderSummarySaveButton: Locator;
 	readonly page: Page;
 	readonly paymentMethodRadioButton: (
 		paymentMethod: string
 	) => Promise<Locator>;
 	readonly reorderButton: Locator;
+	readonly saveButton: Locator;
 	readonly selectDeliveryTerms: Locator;
 	readonly selectPaymentTerms: Locator;
 	readonly submitModalButton: Locator;
@@ -73,10 +87,40 @@ export class CommerceAdminOrderDetailsPage extends CommerceDNDTablePage {
 		this.orderDetailsTab = async (tabName: string) => {
 			return page.getByRole('link', {exact: true, name: tabName});
 		};
+		this.orderItemActions = page.getByRole('button', {name: 'Actions'});
+		this.orderItemActionEdit = page.getByRole('menuitem', {name: 'Edit'});
+		this.orderItemFrame = page.frameLocator('iframe');
+		this.orderItemDecimalQuantity =
+			this.orderItemFrame.getByLabel('Decimal Quantity');
+		this.orderItemSaveButton = this.orderItemFrame.getByRole('button', {
+			name: 'Save',
+		});
+		this.orderItemQuantityColumn = async (quantity: string) => {
+			return page.getByRole('gridcell', {exact: true, name: quantity});
+		};
+		this.orderNote = async (tabName: string) => {
+			return page.getByText(tabName);
+		};
 		this.orderNotesLink = page.getByRole('link', {
 			exact: true,
 			name: 'Notes',
 		});
+		this.orderNotesTextArea = page.getByPlaceholder('Type your note here.');
+		this.orderSummaryLink = page.locator('#order-summary-modal');
+		this.orderSummaryFrame = page.frameLocator(
+			'iframe[title="Order Summary"]'
+		);
+		this.orderSummarySubtotal = page.locator(
+			'div:nth-child(2) > .summary-table-item'
+		);
+		this.orderSummarySubtotalInput = this.orderSummaryFrame.getByLabel(
+			'Subtotal',
+			{exact: true}
+		);
+		this.orderSummarySaveButton = this.orderSummaryFrame.getByRole(
+			'button',
+			{name: 'Submit'}
+		);
 		this.page = page;
 		this.paymentMethodRadioButton = async (paymentMethod: string) => {
 			return this.editPaymentMethodFrame
@@ -88,6 +132,7 @@ export class CommerceAdminOrderDetailsPage extends CommerceDNDTablePage {
 			exact: true,
 			name: 'Reorder',
 		});
+		this.saveButton = this.page.getByRole('button', {name: 'Save'});
 		this.selectPaymentTerms = this.page
 			.frameLocator('iframe[title="Payment Terms"]')
 			.getByLabel('Title');

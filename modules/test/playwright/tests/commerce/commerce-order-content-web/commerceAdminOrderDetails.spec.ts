@@ -12,7 +12,7 @@ import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {getRandomInt} from '../../../utils/getRandomInt';
 import getRandomString from '../../../utils/getRandomString';
-import performLogin, {performLogout} from '../../../utils/performLogin';
+import {performLoginViaApi, performLogout} from '../../../utils/performLogin';
 import {waitForAlert} from '../../../utils/waitForAlert';
 import {miniumSetUp} from '../utils/commerce';
 
@@ -378,7 +378,7 @@ test('COMMERCE-11888. As a supplier user, I can edit the order details, payments
 	apiHelpers.data.push({id: order.id, type: 'order'});
 
 	await performLogout(page);
-	await performLogin(page, 'demo.unprivileged');
+	await performLoginViaApi(page, 'demo.unprivileged');
 
 	await applicationsMenuPage.goToCommerceOrders(false);
 
@@ -511,6 +511,40 @@ test('COMMERCE-11888. As a supplier user, I can edit the order details, payments
 			'Order Type'
 		)
 	).toContainText(orderType.name['en_US']);
+
+	await commerceAdminOrderDetailsPage.orderSummaryLink.click();
+
+	await commerceAdminOrderDetailsPage.orderSummarySubtotalInput.fill('2');
+
+	await commerceAdminOrderDetailsPage.orderSummarySaveButton.click();
+
+	await expect(
+		await commerceAdminOrderDetailsPage.orderSummarySubtotal
+	).toContainText('2');
+
+	await commerceAdminOrderDetailsPage.orderItemActions.click();
+
+	await commerceAdminOrderDetailsPage.orderItemActionEdit.click();
+
+	await commerceAdminOrderDetailsPage.orderItemDecimalQuantity.fill('3');
+
+	await commerceAdminOrderDetailsPage.orderItemSaveButton.click();
+
+	await expect(
+		await commerceAdminOrderDetailsPage.orderItemQuantityColumn('3')
+	).toBeVisible();
+
+	await (
+		await commerceAdminOrderDetailsPage.orderDetailsTab('Notes')
+	).click();
+
+	await commerceAdminOrderDetailsPage.orderNotesTextArea.fill('Note test');
+
+	await commerceAdminOrderDetailsPage.saveButton.click();
+
+	await expect(
+		await commerceAdminOrderDetailsPage.orderNote('Note test')
+	).toBeVisible();
 
 	await (
 		await commerceAdminOrderDetailsPage.orderDetailsTab('Payments')

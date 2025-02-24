@@ -9,7 +9,6 @@ import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
 import {debounce} from 'frontend-js-web';
-import imagePromise from 'image-promise';
 import React, {useEffect, useRef, useState} from 'react';
 
 const KEY_CODE_ENTER = 13;
@@ -72,7 +71,10 @@ const DocumentPreviewer = ({baseImageURL, initialPage, totalPages}) => {
 		let pagePromise = loadedPages[page] && loadedPages[page].pagePromise;
 
 		if (!pagePromise) {
-			pagePromise = imagePromise(`${baseImageURL}${page}`).then(() => {
+			const image = new Image();
+			image.src = `${baseImageURL}${page}`;
+
+			pagePromise = image.decode().then(() => {
 				loadedPages[page].loaded = true;
 			});
 

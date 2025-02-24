@@ -5,8 +5,6 @@
 
 module.exports = {
 	exports: [
-		'html-to-image',
-		'jspdf',
 		'@liferay/js-api',
 		'@liferay/js-api/data-set',
 		'cropperjs/dist/cropper.css',
@@ -34,10 +32,7 @@ module.exports = {
 		'highlight.js/lib/languages/java',
 		'highlight.js/lib/languages/javascript',
 		'highlight.js/lib/languages/plaintext',
-		'image-promise',
 		'liferay-ckeditor',
-		'lodash.groupby',
-		'lodash.isequal',
 		'moment',
 		'moment/min/moment-with-locales',
 		'numeral',
@@ -60,10 +55,7 @@ module.exports = {
 		'highlight.js/lib/languages/java': ['*', 'default'],
 		'highlight.js/lib/languages/javascript': ['*', 'default'],
 		'highlight.js/lib/languages/plaintext': ['*', 'default'],
-		'image-promise': ['*', 'default'],
 		'liferay-ckeditor': [],
-		'lodash.groupby': ['*', 'default'],
-		'lodash.isequal': ['*', 'default'],
 		'moment': ['*', 'default'],
 		'moment/min/moment-with-locales': ['*', 'default'],
 		'numeral': ['*', 'default'],

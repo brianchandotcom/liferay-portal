@@ -10,8 +10,6 @@ import projectScopeRequire from '../util/projectScopeRequire.mjs';
  * Something like:
  *
  * [
- *   'html-to-image',
- *   'jspdf',
  *   '@liferay/js-api',
  *   '@liferay/js-api/data-set',
  * ]

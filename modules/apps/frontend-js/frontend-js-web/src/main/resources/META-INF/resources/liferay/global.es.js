@@ -3,9 +3,6 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import groupBy from 'lodash.groupby';
-import isEqual from 'lodash.isequal';
-
 import loadClientExtensions from '../utils/client_extensions/loadClientExtensions';
 import loadEditorClientExtensions from '../utils/client_extensions/loadEditorClientExtensions';
 import DynamicInlineScroll from './DynamicInlineScroll.es';
@@ -272,14 +269,11 @@ Liferay.Util.getSelectedOptionValues = getSelectedOptionValues;
 Liferay.Util.getTop = getTop;
 Liferay.Util.getURLWithSessionId = getURLWithSessionId;
 Liferay.Util.getWindow = getWindow;
-Liferay.Util.groupBy = groupBy;
 
 /**
  * @deprecated As of Athanasius (7.3.x), replaced by `import {inBrowserView} from 'frontend-js-web'`
  */
 Liferay.Util.inBrowserView = inBrowserView;
-
-Liferay.Util.isEqual = isEqual;
 
 /**
  * @deprecated As of Athanasius (7.3.x), replaced by `import {isPhone} from 'frontend-js-web'`

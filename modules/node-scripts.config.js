@@ -10,7 +10,7 @@
  */
 
 module.exports = {
-	hash: '3c6a6857aa1877f385424e720d0063b3cc106764518d4147d6dafa336f299846',
+	hash: '51379dae6e39c2420fb69dc2dd7f17e6988a250c0b894bf672fe6929d16bea36',
 	imports: {
 		'@liferay/accessibility-settings-state-web': [],
 		'@liferay/address-web': [],
@@ -29,8 +29,6 @@ module.exports = {
 			'codemirror/lib/codemirror.css',
 		],
 		'@liferay/frontend-js-dependencies-web': [
-			'html-to-image',
-			'jspdf',
 			'@liferay/js-api',
 			'@liferay/js-api/data-set',
 			'cropperjs/dist/cropper.css',
@@ -58,10 +56,7 @@ module.exports = {
 			'highlight.js/lib/languages/java',
 			'highlight.js/lib/languages/javascript',
 			'highlight.js/lib/languages/plaintext',
-			'image-promise',
 			'liferay-ckeditor',
-			'lodash.groupby',
-			'lodash.isequal',
 			'moment',
 			'moment/min/moment-with-locales',
 			'numeral',
@@ -224,10 +219,7 @@ module.exports = {
 		'highlight.js/lib/languages/java': ['*', 'default'],
 		'highlight.js/lib/languages/javascript': ['*', 'default'],
 		'highlight.js/lib/languages/plaintext': ['*', 'default'],
-		'image-promise': ['*', 'default'],
 		'liferay-ckeditor': [],
-		'lodash.groupby': ['*', 'default'],
-		'lodash.isequal': ['*', 'default'],
 		'moment': ['*', 'default'],
 		'moment/min/moment-with-locales': ['*', 'default'],
 		'numeral': ['*', 'default'],

@@ -123,6 +123,7 @@ import com.liferay.portal.language.override.service.PLOEntryLocalService;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
@@ -163,7 +164,9 @@ public class ObjectDefinitionLocalServiceTest {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new LiferayIntegrationTestRule();
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(),
+			PermissionCheckerMethodTestRule.INSTANCE);
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
@@ -854,39 +857,28 @@ public class ObjectDefinitionLocalServiceTest {
 			depotEntry2.getGroupId(), objectDefinition1.getObjectDefinitionId(),
 			Collections.emptyMap());
 
-		String originalName = PrincipalThreadLocal.getName();
+		objectDefinition1 =
+			_objectDefinitionLocalService.updateCustomObjectDefinition(
+				null, objectDefinition1.getObjectDefinitionId(), 0, 0,
+				objectDefinition1.getObjectFolderId(), 0, false,
+				objectDefinition1.isActive(), objectDefinition1.getClassName(),
+				true, false, true, false, false, false, false,
+				LocalizedMapUtil.getLocalizedMap("Able"), "Able", null, null,
+				false, LocalizedMapUtil.getLocalizedMap("Ables"),
+				objectDefinition1.getScope(), objectDefinition1.getStatus(),
+				Collections.singletonList(
+					new ObjectDefinitionSettingBuilder(
+					).name(
+						ObjectDefinitionSettingConstants.NAME_ACCEPTED_GROUP_IDS
+					).value(
+						String.valueOf(depotEntry2.getGroupId())
+					).build()));
 
-		try {
-			PrincipalThreadLocal.setName(TestPropsValues.getUserId());
-
-			objectDefinition1 =
-				_objectDefinitionLocalService.updateCustomObjectDefinition(
-					null, objectDefinition1.getObjectDefinitionId(), 0, 0,
-					objectDefinition1.getObjectFolderId(), 0, false,
-					objectDefinition1.isActive(),
-					objectDefinition1.getClassName(), true, false, true, false,
-					false, false, false,
-					LocalizedMapUtil.getLocalizedMap("Able"), "Able", null,
-					null, false, LocalizedMapUtil.getLocalizedMap("Ables"),
-					objectDefinition1.getScope(), objectDefinition1.getStatus(),
-					Collections.singletonList(
-						new ObjectDefinitionSettingBuilder(
-						).name(
-							ObjectDefinitionSettingConstants.
-								NAME_ACCEPTED_GROUP_IDS
-						).value(
-							String.valueOf(depotEntry2.getGroupId())
-						).build()));
-
-			_assertObjectDefinitionSettingsValues(
-				objectDefinition1.getObjectDefinitionSettings(),
-				Collections.singletonMap(
-					ObjectDefinitionSettingConstants.NAME_ACCEPTED_GROUP_IDS,
-					String.valueOf(depotEntry2.getGroupId())));
-		}
-		finally {
-			PrincipalThreadLocal.setName(originalName);
-		}
+		_assertObjectDefinitionSettingsValues(
+			objectDefinition1.getObjectDefinitionSettings(),
+			Collections.singletonMap(
+				ObjectDefinitionSettingConstants.NAME_ACCEPTED_GROUP_IDS,
+				String.valueOf(depotEntry2.getGroupId())));
 
 		Assert.assertNull(
 			_objectEntryLocalService.fetchObjectEntry(

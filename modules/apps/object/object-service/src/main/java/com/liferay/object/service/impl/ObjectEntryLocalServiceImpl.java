@@ -1893,6 +1893,8 @@ public class ObjectEntryLocalServiceImpl
 				serviceContext.getLanguageId(), user);
 		}
 
+		_updateLatestObjectEntryVersion(objectEntry);
+
 		return objectEntry;
 	}
 

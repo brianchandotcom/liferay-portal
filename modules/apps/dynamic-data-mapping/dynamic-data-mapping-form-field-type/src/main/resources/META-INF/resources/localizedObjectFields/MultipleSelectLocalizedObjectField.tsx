@@ -4,7 +4,8 @@
  */
 
 import {ClayInput} from '@clayui/form';
-import React, {useEffect, useRef, useState} from 'react';
+import {stringUtils} from '@liferay/object-js-components-web';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 
 import {MultipleSelectBase} from '../Select/MultipleSelectBase';
 import {MultipleSelectBaseProps} from '../Select/select.d';
@@ -109,6 +110,22 @@ export default function MultipleSelectLocalizedObjectField({
 		setCurrentEditingLocale(updatedLocale);
 	};
 
+	const localizedOptions = useMemo(() => {
+		return options.map((option) => ({
+			...option,
+			label: stringUtils.getLocalizableLabel({
+				labels: option.labelMap,
+				preferredLanguageId: currentEditingLocale.localeId,
+			}),
+		}));
+	}, [options, currentEditingLocale.localeId]);
+
+	const handleAsyncOptions = useCallback(() => {
+		return new Promise((resolve) => {
+			resolve(localizedOptions);
+		});
+	}, [localizedOptions]);
+
 	return (
 		<ClayInput.Group>
 			<MultipleSelectBase
@@ -119,7 +136,8 @@ export default function MultipleSelectLocalizedObjectField({
 				label={label}
 				name={name}
 				onChange={handleChange}
-				options={options}
+				onLoadMore={handleAsyncOptions}
+				options={localizedOptions}
 				readOnly={readOnly}
 				required={required}
 				tip={tip}

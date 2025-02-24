@@ -178,7 +178,8 @@ public class SiteInitializerExtension {
 		SegmentsExperienceLocalService segmentsExperienceLocalService,
 		ServletContext servletContext,
 		ArchivedSettingsFactory archivedSettingsFactory, Bundle siteBundle,
-		Bundle siteInitializerExtenderBundle, SiteNavigationMenuItemLocalService siteNavigationMenuItemLocalService,
+		Bundle siteInitializerExtenderBundle,
+		SiteNavigationMenuItemLocalService siteNavigationMenuItemLocalService,
 		SiteNavigationMenuItemTypeRegistry siteNavigationMenuItemTypeRegistry,
 		SiteNavigationMenuLocalService siteNavigationMenuLocalService,
 		StructuredContentFolderResource.Factory

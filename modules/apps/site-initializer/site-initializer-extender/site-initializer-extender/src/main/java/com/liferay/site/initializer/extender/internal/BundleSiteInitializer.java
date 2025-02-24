@@ -303,7 +303,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 		KnowledgeBaseFolderResource.Factory knowledgeBaseFolderResourceFactory,
 		LayoutLocalService layoutLocalService,
 		LayoutPageTemplateEntryLocalService layoutPageTemplateEntryLocalService,
-		LayoutsImporter layoutsImporter, LayoutPageTemplateStructureLocalService
+		LayoutsImporter layoutsImporter,
+		LayoutPageTemplateStructureLocalService
 			layoutPageTemplateStructureLocalService,
 		LayoutPageTemplateStructureRelLocalService
 			layoutPageTemplateStructureRelLocalService,
@@ -337,7 +338,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 		SegmentsEntryLocalService segmentsEntryLocalService,
 		SegmentsExperienceLocalService segmentsExperienceLocalService,
 		ArchivedSettingsFactory archivedSettingsFactory, Bundle siteBundle,
-		Bundle siteInitializerExtenderBundle, SiteNavigationMenuItemLocalService siteNavigationMenuItemLocalService,
+		Bundle siteInitializerExtenderBundle,
+		SiteNavigationMenuItemLocalService siteNavigationMenuItemLocalService,
 		SiteNavigationMenuItemTypeRegistry siteNavigationMenuItemTypeRegistry,
 		SiteNavigationMenuLocalService siteNavigationMenuLocalService,
 		StructuredContentFolderResource.Factory
@@ -367,7 +369,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_assetLinkLocalService = assetLinkLocalService;
 		_assetListEntryLocalService = assetListEntryLocalService;
 		_blogPostingResourceFactory = blogPostingResourceFactory;
-		_siteBundle = siteBundle;
 		_cetManager = cetManager;
 		_clientExtensionEntryLocalService = clientExtensionEntryLocalService;
 		_companyLocalService = companyLocalService;
@@ -432,6 +433,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_segmentsEntryLocalService = segmentsEntryLocalService;
 		_segmentsExperienceLocalService = segmentsExperienceLocalService;
 		_archivedSettingsFactory = archivedSettingsFactory;
+		_siteBundle = siteBundle;
 		_siteInitializerExtenderBundle = siteInitializerExtenderBundle;
 		_siteNavigationMenuItemLocalService =
 			siteNavigationMenuItemLocalService;
@@ -801,7 +803,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 
 		commerceSiteInitializer.addCPDefinitions(
-			_siteBundle, serviceContext, _servletContext, stringUtilReplaceValues);
+			_siteBundle, serviceContext, _servletContext,
+			stringUtilReplaceValues);
 	}
 
 	private void _addExpandoValues(
@@ -1850,7 +1853,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 					).build(),
 					null, DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY, null,
 					TemplateConstants.LANG_TYPE_FTL,
-					SiteInitializerUtil.read(_siteBundle, "ddm-template.ftl", url),
+					SiteInitializerUtil.read(
+						_siteBundle, "ddm-template.ftl", url),
 					false, false, null, null, serviceContext);
 
 				if (Objects.equals(
@@ -1886,7 +1890,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 					).build(),
 					null, DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY, null,
 					TemplateConstants.LANG_TYPE_FTL,
-					SiteInitializerUtil.read(_siteBundle, "ddm-template.ftl", url),
+					SiteInitializerUtil.read(
+						_siteBundle, "ddm-template.ftl", url),
 					false, false, null, null, serviceContext);
 			}
 
@@ -5983,7 +5988,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private final AssetLinkLocalService _assetLinkLocalService;
 	private final AssetListEntryLocalService _assetListEntryLocalService;
 	private final BlogPostingResource.Factory _blogPostingResourceFactory;
-	private final Bundle _siteBundle;
 	private final CETManager _cetManager;
 	private final ClassLoader _classLoader;
 	private final Map<String, String> _classNameIdStringUtilReplaceValues;
@@ -6060,6 +6064,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private final SegmentsExperienceLocalService
 		_segmentsExperienceLocalService;
 	private ServletContext _servletContext;
+	private final Bundle _siteBundle;
 	private final Bundle _siteInitializerExtenderBundle;
 	private final SiteNavigationMenuItemLocalService
 		_siteNavigationMenuItemLocalService;

@@ -176,9 +176,8 @@ public class SiteInitializerExtender
 				_portletPreferencesLocalService, _resourceActionLocalService,
 				_resourcePermissionLocalService, _roleLocalService,
 				_sapEntryLocalService, _segmentsEntryLocalService,
-				_segmentsExperienceLocalService, null,
-				_archivedSettingsFactory, bundle,
-				_bundleContext.getBundle(),
+				_segmentsExperienceLocalService, null, _archivedSettingsFactory,
+				bundle, _bundleContext.getBundle(),
 				_siteNavigationMenuItemLocalService,
 				_siteNavigationMenuItemTypeRegistry,
 				_siteNavigationMenuLocalService,
@@ -299,11 +298,14 @@ public class SiteInitializerExtender
 				_portletPreferencesLocalService, _resourceActionLocalService,
 				_resourcePermissionLocalService, _roleLocalService,
 				_sapEntryLocalService, _segmentsEntryLocalService,
-				_segmentsExperienceLocalService, ProxyUtil.newDelegateProxyInstance(
+				_segmentsExperienceLocalService,
+				ProxyUtil.newDelegateProxyInstance(
 					ServletContext.class.getClassLoader(), ServletContext.class,
 					new FileBackedServletContextDelegate(
 						file, fileKey, symbolicName),
-					null), _archivedSettingsFactory, ProxyUtil.newDelegateProxyInstance(
+					null),
+				_archivedSettingsFactory,
+				ProxyUtil.newDelegateProxyInstance(
 					Bundle.class.getClassLoader(), Bundle.class,
 					new FileBackedBundleDelegate(
 						_bundleContext, file, _jsonFactory, symbolicName),

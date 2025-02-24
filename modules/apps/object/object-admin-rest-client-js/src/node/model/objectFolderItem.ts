@@ -3,46 +3,51 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import { ObjectDefinition } from './objectDefinition';
+			import { ObjectDefinition } from './objectDefinition';
 
-export class ObjectFolderItem {
-	'linkedObjectDefinition'?: boolean;
-	'objectDefinition'?: ObjectDefinition;
-	'objectDefinitionExternalReferenceCode'?: string;
-	'positionX'?: number;
-	'positionY'?: number;
+/**
+ * @author Javier Gamarra
+ * @generated
+ */
 
-	static discriminator: string | undefined = undefined;
+	export class ObjectFolderItem {
+			'linkedObjectDefinition'?: boolean;
+			'objectDefinition'?: ObjectDefinition;
+			'objectDefinitionExternalReferenceCode'?: string;
+			'positionX'?: number;
+			'positionY'?: number;
 
-	static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-		{
-			"name": "linkedObjectDefinition",
-			"baseName": "linkedObjectDefinition",
-			"type": "boolean"
-		},
-		{
-			"name": "objectDefinition",
-			"baseName": "objectDefinition",
-			"type": "ObjectDefinition"
-		},
-		{
-			"name": "objectDefinitionExternalReferenceCode",
-			"baseName": "objectDefinitionExternalReferenceCode",
-			"type": "string"
-		},
-		{
-			"name": "positionX",
-			"baseName": "positionX",
-			"type": "number"
-		},
-		{
-			"name": "positionY",
-			"baseName": "positionY",
-			"type": "number"
+		static discriminator: string | undefined = undefined;
+
+		static attributeTypeMap: Array<{baseName: string, name: string, type: string}> = [
+				{
+					"baseName": "linkedObjectDefinition",
+					"name": "linkedObjectDefinition",
+					"type": "boolean"
+				},
+				{
+					"baseName": "objectDefinition",
+					"name": "objectDefinition",
+					"type": "ObjectDefinition"
+				},
+				{
+					"baseName": "objectDefinitionExternalReferenceCode",
+					"name": "objectDefinitionExternalReferenceCode",
+					"type": "string"
+				},
+				{
+					"baseName": "positionX",
+					"name": "positionX",
+					"type": "number"
+				},
+				{
+					"baseName": "positionY",
+					"name": "positionY",
+					"type": "number"
+				}
+		];
+
+		static getAttributeTypeMap() {
+				return ObjectFolderItem.attributeTypeMap;
 		}
-	];
-
-	static getAttributeTypeMap() {
-		return ObjectFolderItem.attributeTypeMap;
 	}
-}

@@ -4,26 +4,31 @@
  */
 
 
-export class ObjectValidationRuleSetting {
-	'name'?: string;
-	'value'?: object;
+/**
+ * @author Javier Gamarra
+ * @generated
+ */
 
-	static discriminator: string | undefined = undefined;
+	export class ObjectValidationRuleSetting {
+			'name'?: string;
+			'value'?: object;
 
-	static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-		{
-			"name": "name",
-			"baseName": "name",
-			"type": "string"
-		},
-		{
-			"name": "value",
-			"baseName": "value",
-			"type": "object"
+		static discriminator: string | undefined = undefined;
+
+		static attributeTypeMap: Array<{baseName: string, name: string, type: string}> = [
+				{
+					"baseName": "name",
+					"name": "name",
+					"type": "string"
+				},
+				{
+					"baseName": "value",
+					"name": "value",
+					"type": "object"
+				}
+		];
+
+		static getAttributeTypeMap() {
+				return ObjectValidationRuleSetting.attributeTypeMap;
 		}
-	];
-
-	static getAttributeTypeMap() {
-		return ObjectValidationRuleSetting.attributeTypeMap;
 	}
-}

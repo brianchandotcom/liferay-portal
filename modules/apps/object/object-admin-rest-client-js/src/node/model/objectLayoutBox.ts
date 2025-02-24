@@ -3,52 +3,57 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import { ObjectLayoutRow } from './objectLayoutRow';
+			import { ObjectLayoutRow } from './objectLayoutRow';
 
-export class ObjectLayoutBox {
-	'collapsable'?: boolean;
-	'id'?: number;
-	'name'?: { [key: string]: string; };
-	'objectLayoutRows'?: Array<ObjectLayoutRow>;
-	'priority'?: number;
-	'type'?: 'categorization' | 'regular';
+/**
+ * @author Javier Gamarra
+ * @generated
+ */
 
-	static discriminator: string | undefined = undefined;
+	export class ObjectLayoutBox {
+			'collapsable'?: boolean;
+			'id'?: number;
+			'name'?: { [key: string]: string; };
+			'objectLayoutRows'?: Array<ObjectLayoutRow>;
+			'priority'?: number;
+			'type'?: 'categorization' | 'regular';
 
-	static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-		{
-			"name": "collapsable",
-			"baseName": "collapsable",
-			"type": "boolean"
-		},
-		{
-			"name": "id",
-			"baseName": "id",
-			"type": "number"
-		},
-		{
-			"name": "name",
-			"baseName": "name",
-			"type": "{ [key: string]: string; }"
-		},
-		{
-			"name": "objectLayoutRows",
-			"baseName": "objectLayoutRows",
-			"type": "Array<ObjectLayoutRow>"
-		},
-		{
-			"name": "priority",
-			"baseName": "priority",
-			"type": "number"
-		},
-		{
-			"name": "type",
-			"baseName": "type",
-			"type": "'categorization' | 'regular'"
+		static discriminator: string | undefined = undefined;
+
+		static attributeTypeMap: Array<{baseName: string, name: string, type: string}> = [
+				{
+					"baseName": "collapsable",
+					"name": "collapsable",
+					"type": "boolean"
+				},
+				{
+					"baseName": "id",
+					"name": "id",
+					"type": "number"
+				},
+				{
+					"baseName": "name",
+					"name": "name",
+					"type": "{ [key: string]: string; }"
+				},
+				{
+					"baseName": "objectLayoutRows",
+					"name": "objectLayoutRows",
+					"type": "Array<ObjectLayoutRow>"
+				},
+				{
+					"baseName": "priority",
+					"name": "priority",
+					"type": "number"
+				},
+				{
+					"baseName": "type",
+					"name": "type",
+					"type": "'categorization' | 'regular'"
+				}
+		];
+
+		static getAttributeTypeMap() {
+				return ObjectLayoutBox.attributeTypeMap;
 		}
-	];
-
-	static getAttributeTypeMap() {
-		return ObjectLayoutBox.attributeTypeMap;
 	}
-}

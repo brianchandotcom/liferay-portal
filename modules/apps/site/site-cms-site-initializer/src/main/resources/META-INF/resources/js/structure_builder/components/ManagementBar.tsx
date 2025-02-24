@@ -7,8 +7,7 @@ import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
 import ClayLink from '@clayui/link';
 import {API} from '@liferay/object-js-components-web';
-import {ManagementToolbar} from 'frontend-js-components-web';
-import {openToast} from 'frontend-js-web';
+import {ManagementToolbar, openToast} from 'frontend-js-components-web';
 import React from 'react';
 
 import {

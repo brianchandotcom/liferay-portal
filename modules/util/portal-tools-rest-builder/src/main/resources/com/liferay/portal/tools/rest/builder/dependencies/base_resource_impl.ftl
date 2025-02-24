@@ -994,12 +994,10 @@ public abstract class Base${schemaName}ResourceImpl
 		public void delete(Collection<${javaDataType}> ${schemaVarNames}, Map<String, Serializable> parameters) throws Exception {
 			<#if deleteBatchJavaMethodSignature?? && (properties?keys?seq_contains("id") || properties?keys?seq_contains(schemaVarName + "Id"))>
 				UnsafeFunction<${javaDataType}, ${javaDataType}, Exception> ${schemaVarName}UnsafeFunction = ${schemaVarName} -> {
-					<#if deleteBatchJavaMethodSignature?? && properties?keys?seq_contains("id")>
+					<#if properties?keys?seq_contains("id")>
 						delete${schemaName}(${schemaVarName}.getId());
-					<#elseif deleteBatchJavaMethodSignature?? && properties?keys?seq_contains(schemaVarName + "Id")>
-						delete${schemaName}(${schemaVarName}.get${schemaName}Id());
 					<#else>
-						throw new UnsupportedOperationException("This method needs to be implemented");
+						delete${schemaName}(${schemaVarName}.get${schemaName}Id());
 					</#if>
 
 					return ${schemaVarName};

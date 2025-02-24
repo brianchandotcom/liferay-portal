@@ -4,8 +4,9 @@
  */
 
 import createFolderAction from './actions/createFolderAction';
+import addOnClickToCreationMenuItems from './utils/addOnClickToCreationMenuItems';
 
-const ACTIONS: Record<string, (data: any) => void> = {
+const ACTIONS = {
 	createFolder: createFolderAction,
 };
 
@@ -20,19 +21,9 @@ export default function FilesFDSPropsTransformer({
 		...otherProps,
 		creationMenu: {
 			...creationMenu,
-			primaryItems: creationMenu.primaryItems.map(
-				(item: {data: {action: string}}) => {
-					return {
-						...item,
-						onClick() {
-							const action = item.data.action;
-
-							if (action) {
-								ACTIONS[action](item.data);
-							}
-						},
-					};
-				}
+			primaryItems: addOnClickToCreationMenuItems(
+				creationMenu.primaryItems,
+				ACTIONS
 			),
 		},
 	};

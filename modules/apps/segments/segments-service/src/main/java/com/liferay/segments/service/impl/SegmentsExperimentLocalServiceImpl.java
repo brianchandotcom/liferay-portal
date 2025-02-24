@@ -397,7 +397,7 @@ public class SegmentsExperimentLocalServiceImpl
 		return dynamicQuery;
 	}
 
-	private SegmentsExperience _publishSegmentsExperienceVariant(
+	private void _publishSegmentsExperienceVariant(
 		SegmentsExperience controlSegmentsExperience,
 		SegmentsExperience variantSegmentsExperience) {
 
@@ -456,8 +456,6 @@ public class SegmentsExperimentLocalServiceImpl
 
 				return null;
 			});
-
-		return variantSegmentsExperience;
 	}
 
 	private void _sendNotificationEvent(SegmentsExperiment segmentsExperiment)
@@ -532,7 +530,7 @@ public class SegmentsExperimentLocalServiceImpl
 		return segmentsExperiment;
 	}
 
-	private SegmentsExperiment _updateWinnerSegmentsExperienceId(
+	private void _updateWinnerSegmentsExperienceId(
 			SegmentsExperiment segmentsExperiment,
 			long winnerSegmentsExperienceId, int status)
 		throws PortalException {
@@ -582,8 +580,6 @@ public class SegmentsExperimentLocalServiceImpl
 				_segmentsExperienceLocalService.getSegmentsExperience(
 					winnerSegmentsExperienceId));
 		}
-
-		return segmentsExperiment;
 	}
 
 	private void _validate(

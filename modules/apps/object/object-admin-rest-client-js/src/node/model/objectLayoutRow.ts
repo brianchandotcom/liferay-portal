@@ -3,34 +3,39 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import { ObjectLayoutColumn } from './objectLayoutColumn';
+			import { ObjectLayoutColumn } from './objectLayoutColumn';
 
-export class ObjectLayoutRow {
-	'id'?: number;
-	'objectLayoutColumns'?: Array<ObjectLayoutColumn>;
-	'priority'?: number;
+/**
+ * @author Javier Gamarra
+ * @generated
+ */
 
-	static discriminator: string | undefined = undefined;
+	export class ObjectLayoutRow {
+			'id'?: number;
+			'objectLayoutColumns'?: Array<ObjectLayoutColumn>;
+			'priority'?: number;
 
-	static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-		{
-			"name": "id",
-			"baseName": "id",
-			"type": "number"
-		},
-		{
-			"name": "objectLayoutColumns",
-			"baseName": "objectLayoutColumns",
-			"type": "Array<ObjectLayoutColumn>"
-		},
-		{
-			"name": "priority",
-			"baseName": "priority",
-			"type": "number"
+		static discriminator: string | undefined = undefined;
+
+		static attributeTypeMap: Array<{baseName: string, name: string, type: string}> = [
+				{
+					"baseName": "id",
+					"name": "id",
+					"type": "number"
+				},
+				{
+					"baseName": "objectLayoutColumns",
+					"name": "objectLayoutColumns",
+					"type": "Array<ObjectLayoutColumn>"
+				},
+				{
+					"baseName": "priority",
+					"name": "priority",
+					"type": "number"
+				}
+		];
+
+		static getAttributeTypeMap() {
+				return ObjectLayoutRow.attributeTypeMap;
 		}
-	];
-
-	static getAttributeTypeMap() {
-		return ObjectLayoutRow.attributeTypeMap;
 	}
-}

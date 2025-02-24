@@ -3,142 +3,147 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import { ObjectField } from './objectField';
+			import { ObjectField } from './objectField';
 
-export class ObjectRelationship {
-	'actions'?: { [key: string]: { [key: string]: string; }; };
-	'deletionType'?: 'cascade' | 'disassociate' | 'prevent';
-	'edge'?: boolean;
-	'externalReferenceCode'?: string;
-	'id'?: number;
-	'label'?: { [key: string]: string; };
-	'name'?: string;
-	'objectDefinitionExternalReferenceCode1'?: string;
-	'objectDefinitionExternalReferenceCode2'?: string;
-	'objectDefinitionId1'?: number;
-	'objectDefinitionId2'?: number;
-	'objectDefinitionModifiable2'?: boolean;
-	'objectDefinitionName2'?: string;
-	'objectDefinitionScope2'?: string;
-	'objectDefinitionSystem2'?: boolean;
-	'objectField'?: ObjectField;
-	'parameterObjectFieldId'?: number;
-	'parameterObjectFieldName'?: string;
-	'reverse'?: boolean;
-	'system'?: boolean;
-	'type'?: 'oneToMany' | 'oneToOne' | 'manyToMany';
+/**
+ * @author Javier Gamarra
+ * @generated
+ */
 
-	static discriminator: string | undefined = undefined;
+	export class ObjectRelationship {
+			'actions'?: { [key: string]: { [key: string]: string; }; };
+			'deletionType'?: 'cascade' | 'disassociate' | 'prevent';
+			'edge'?: boolean;
+			'externalReferenceCode'?: string;
+			'id'?: number;
+			'label'?: { [key: string]: string; };
+			'name'?: string;
+			'objectDefinitionExternalReferenceCode1'?: string;
+			'objectDefinitionExternalReferenceCode2'?: string;
+			'objectDefinitionId1'?: number;
+			'objectDefinitionId2'?: number;
+			'objectDefinitionModifiable2'?: boolean;
+			'objectDefinitionName2'?: string;
+			'objectDefinitionScope2'?: string;
+			'objectDefinitionSystem2'?: boolean;
+			'objectField'?: ObjectField;
+			'parameterObjectFieldId'?: number;
+			'parameterObjectFieldName'?: string;
+			'reverse'?: boolean;
+			'system'?: boolean;
+			'type'?: 'oneToMany' | 'oneToOne' | 'manyToMany';
 
-	static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-		{
-			"name": "actions",
-			"baseName": "actions",
-			"type": "{ [key: string]: { [key: string]: string; }; }"
-		},
-		{
-			"name": "deletionType",
-			"baseName": "deletionType",
-			"type": "'cascade' | 'disassociate' | 'prevent'"
-		},
-		{
-			"name": "edge",
-			"baseName": "edge",
-			"type": "boolean"
-		},
-		{
-			"name": "externalReferenceCode",
-			"baseName": "externalReferenceCode",
-			"type": "string"
-		},
-		{
-			"name": "id",
-			"baseName": "id",
-			"type": "number"
-		},
-		{
-			"name": "label",
-			"baseName": "label",
-			"type": "{ [key: string]: string; }"
-		},
-		{
-			"name": "name",
-			"baseName": "name",
-			"type": "string"
-		},
-		{
-			"name": "objectDefinitionExternalReferenceCode1",
-			"baseName": "objectDefinitionExternalReferenceCode1",
-			"type": "string"
-		},
-		{
-			"name": "objectDefinitionExternalReferenceCode2",
-			"baseName": "objectDefinitionExternalReferenceCode2",
-			"type": "string"
-		},
-		{
-			"name": "objectDefinitionId1",
-			"baseName": "objectDefinitionId1",
-			"type": "number"
-		},
-		{
-			"name": "objectDefinitionId2",
-			"baseName": "objectDefinitionId2",
-			"type": "number"
-		},
-		{
-			"name": "objectDefinitionModifiable2",
-			"baseName": "objectDefinitionModifiable2",
-			"type": "boolean"
-		},
-		{
-			"name": "objectDefinitionName2",
-			"baseName": "objectDefinitionName2",
-			"type": "string"
-		},
-		{
-			"name": "objectDefinitionScope2",
-			"baseName": "objectDefinitionScope2",
-			"type": "string"
-		},
-		{
-			"name": "objectDefinitionSystem2",
-			"baseName": "objectDefinitionSystem2",
-			"type": "boolean"
-		},
-		{
-			"name": "objectField",
-			"baseName": "objectField",
-			"type": "ObjectField"
-		},
-		{
-			"name": "parameterObjectFieldId",
-			"baseName": "parameterObjectFieldId",
-			"type": "number"
-		},
-		{
-			"name": "parameterObjectFieldName",
-			"baseName": "parameterObjectFieldName",
-			"type": "string"
-		},
-		{
-			"name": "reverse",
-			"baseName": "reverse",
-			"type": "boolean"
-		},
-		{
-			"name": "system",
-			"baseName": "system",
-			"type": "boolean"
-		},
-		{
-			"name": "type",
-			"baseName": "type",
-			"type": "'oneToMany' | 'oneToOne' | 'manyToMany'"
+		static discriminator: string | undefined = undefined;
+
+		static attributeTypeMap: Array<{baseName: string, name: string, type: string}> = [
+				{
+					"baseName": "actions",
+					"name": "actions",
+					"type": "{ [key: string]: { [key: string]: string; }; }"
+				},
+				{
+					"baseName": "deletionType",
+					"name": "deletionType",
+					"type": "'cascade' | 'disassociate' | 'prevent'"
+				},
+				{
+					"baseName": "edge",
+					"name": "edge",
+					"type": "boolean"
+				},
+				{
+					"baseName": "externalReferenceCode",
+					"name": "externalReferenceCode",
+					"type": "string"
+				},
+				{
+					"baseName": "id",
+					"name": "id",
+					"type": "number"
+				},
+				{
+					"baseName": "label",
+					"name": "label",
+					"type": "{ [key: string]: string; }"
+				},
+				{
+					"baseName": "name",
+					"name": "name",
+					"type": "string"
+				},
+				{
+					"baseName": "objectDefinitionExternalReferenceCode1",
+					"name": "objectDefinitionExternalReferenceCode1",
+					"type": "string"
+				},
+				{
+					"baseName": "objectDefinitionExternalReferenceCode2",
+					"name": "objectDefinitionExternalReferenceCode2",
+					"type": "string"
+				},
+				{
+					"baseName": "objectDefinitionId1",
+					"name": "objectDefinitionId1",
+					"type": "number"
+				},
+				{
+					"baseName": "objectDefinitionId2",
+					"name": "objectDefinitionId2",
+					"type": "number"
+				},
+				{
+					"baseName": "objectDefinitionModifiable2",
+					"name": "objectDefinitionModifiable2",
+					"type": "boolean"
+				},
+				{
+					"baseName": "objectDefinitionName2",
+					"name": "objectDefinitionName2",
+					"type": "string"
+				},
+				{
+					"baseName": "objectDefinitionScope2",
+					"name": "objectDefinitionScope2",
+					"type": "string"
+				},
+				{
+					"baseName": "objectDefinitionSystem2",
+					"name": "objectDefinitionSystem2",
+					"type": "boolean"
+				},
+				{
+					"baseName": "objectField",
+					"name": "objectField",
+					"type": "ObjectField"
+				},
+				{
+					"baseName": "parameterObjectFieldId",
+					"name": "parameterObjectFieldId",
+					"type": "number"
+				},
+				{
+					"baseName": "parameterObjectFieldName",
+					"name": "parameterObjectFieldName",
+					"type": "string"
+				},
+				{
+					"baseName": "reverse",
+					"name": "reverse",
+					"type": "boolean"
+				},
+				{
+					"baseName": "system",
+					"name": "system",
+					"type": "boolean"
+				},
+				{
+					"baseName": "type",
+					"name": "type",
+					"type": "'oneToMany' | 'oneToOne' | 'manyToMany'"
+				}
+		];
+
+		static getAttributeTypeMap() {
+				return ObjectRelationship.attributeTypeMap;
 		}
-	];
-
-	static getAttributeTypeMap() {
-		return ObjectRelationship.attributeTypeMap;
 	}
-}

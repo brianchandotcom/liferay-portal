@@ -4,38 +4,43 @@
  */
 
 
-export class ObjectViewColumn {
-	'id'?: number;
-	'label'?: { [key: string]: string; };
-	'objectFieldName'?: string;
-	'priority'?: number;
+/**
+ * @author Javier Gamarra
+ * @generated
+ */
 
-	static discriminator: string | undefined = undefined;
+	export class ObjectViewColumn {
+			'id'?: number;
+			'label'?: { [key: string]: string; };
+			'objectFieldName'?: string;
+			'priority'?: number;
 
-	static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-		{
-			"name": "id",
-			"baseName": "id",
-			"type": "number"
-		},
-		{
-			"name": "label",
-			"baseName": "label",
-			"type": "{ [key: string]: string; }"
-		},
-		{
-			"name": "objectFieldName",
-			"baseName": "objectFieldName",
-			"type": "string"
-		},
-		{
-			"name": "priority",
-			"baseName": "priority",
-			"type": "number"
+		static discriminator: string | undefined = undefined;
+
+		static attributeTypeMap: Array<{baseName: string, name: string, type: string}> = [
+				{
+					"baseName": "id",
+					"name": "id",
+					"type": "number"
+				},
+				{
+					"baseName": "label",
+					"name": "label",
+					"type": "{ [key: string]: string; }"
+				},
+				{
+					"baseName": "objectFieldName",
+					"name": "objectFieldName",
+					"type": "string"
+				},
+				{
+					"baseName": "priority",
+					"name": "priority",
+					"type": "number"
+				}
+		];
+
+		static getAttributeTypeMap() {
+				return ObjectViewColumn.attributeTypeMap;
 		}
-	];
-
-	static getAttributeTypeMap() {
-		return ObjectViewColumn.attributeTypeMap;
 	}
-}

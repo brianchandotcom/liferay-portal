@@ -3,28 +3,33 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import { FacetValue } from './facetValue';
+			import { FacetValue } from './facetValue';
 
-export class Facet {
-	'facetCriteria'?: string;
-	'facetValues'?: Array<FacetValue>;
+/**
+ * @author Javier Gamarra
+ * @generated
+ */
 
-	static discriminator: string | undefined = undefined;
+	export class Facet {
+			'facetCriteria'?: string;
+			'facetValues'?: Array<FacetValue>;
 
-	static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-		{
-			"name": "facetCriteria",
-			"baseName": "facetCriteria",
-			"type": "string"
-		},
-		{
-			"name": "facetValues",
-			"baseName": "facetValues",
-			"type": "Array<FacetValue>"
+		static discriminator: string | undefined = undefined;
+
+		static attributeTypeMap: Array<{baseName: string, name: string, type: string}> = [
+				{
+					"baseName": "facetCriteria",
+					"name": "facetCriteria",
+					"type": "string"
+				},
+				{
+					"baseName": "facetValues",
+					"name": "facetValues",
+					"type": "Array<FacetValue>"
+				}
+		];
+
+		static getAttributeTypeMap() {
+				return Facet.attributeTypeMap;
 		}
-	];
-
-	static getAttributeTypeMap() {
-		return Facet.attributeTypeMap;
 	}
-}

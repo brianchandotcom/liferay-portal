@@ -4,32 +4,37 @@
  */
 
 
-export class UnreferencedTestEntity {
-	'description'?: string;
-	'id'?: number;
-	'property_with_hyphens'?: string;
+/**
+ * @author Alejandro Tardín
+ * @generated
+ */
 
-	static discriminator: string | undefined = undefined;
+	export class UnreferencedTestEntity {
+			'description'?: string;
+			'id'?: number;
+			'property_with_hyphens'?: string;
 
-	static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-		{
-			"name": "description",
-			"baseName": "description",
-			"type": "string"
-		},
-		{
-			"name": "id",
-			"baseName": "id",
-			"type": "number"
-		},
-		{
-			"name": "property_with_hyphens",
-			"baseName": "property_with_hyphens",
-			"type": "string"
+		static discriminator: string | undefined = undefined;
+
+		static attributeTypeMap: Array<{baseName: string, name: string, type: string}> = [
+				{
+					"baseName": "description",
+					"name": "description",
+					"type": "string"
+				},
+				{
+					"baseName": "id",
+					"name": "id",
+					"type": "number"
+				},
+				{
+					"baseName": "property_with_hyphens",
+					"name": "property_with_hyphens",
+					"type": "string"
+				}
+		];
+
+		static getAttributeTypeMap() {
+				return UnreferencedTestEntity.attributeTypeMap;
 		}
-	];
-
-	static getAttributeTypeMap() {
-		return UnreferencedTestEntity.attributeTypeMap;
 	}
-}

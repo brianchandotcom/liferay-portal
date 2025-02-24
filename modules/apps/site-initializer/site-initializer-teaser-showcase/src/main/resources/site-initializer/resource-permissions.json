@@ -4,24 +4,6 @@
 			"VIEW"
 		],
 		"primKey": "0",
-		"resourceName": "com.liferay.blogs.model.BlogsEntry",
-		"roleName": "Guest",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com_liferay_asset_categories_admin_web_portlet_AssetCategoriesAdminPortlet",
-		"roleName": "Guest",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"VIEW"
-		],
-		"primKey": "0",
 		"resourceName": "com.liferay.asset.kernel.model.AssetCategory",
 		"roleName": "Guest",
 		"scope": "1"
@@ -40,6 +22,33 @@
 			"VIEW"
 		],
 		"primKey": "0",
+		"resourceName": "com.liferay.blogs.model.BlogsEntry",
+		"roleName": "Guest",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com_liferay_asset_categories_admin_web_portlet_AssetCategoriesAdminPortlet",
+		"roleName": "Guest",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
+		"resourceName": "com_liferay_commerce_product_asset_categories_navigation_web_internal_portlet_CPAssetCategoriesNavigationPortlet",
+		"roleName": "Guest",
+		"scope": "1"
+	},
+	{
+		"actionIds": [
+			"VIEW"
+		],
+		"primKey": "0",
 		"resourceName": "com_liferay_commerce_product_content_web_internal_portlet_CPCategoryContentPortlet",
 		"roleName": "Guest",
 		"scope": "1"
@@ -50,15 +59,6 @@
 		],
 		"primKey": "0",
 		"resourceName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet",
-		"roleName": "Guest",
-		"scope": "1"
-	},
-	{
-		"actionIds": [
-			"VIEW"
-		],
-		"primKey": "0",
-		"resourceName": "com_liferay_commerce_product_asset_categories_navigation_web_internal_portlet_CPAssetCategoriesNavigationPortlet",
 		"roleName": "Guest",
 		"scope": "1"
 	}

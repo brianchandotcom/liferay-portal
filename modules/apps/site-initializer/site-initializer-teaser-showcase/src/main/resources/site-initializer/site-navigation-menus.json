@@ -70,15 +70,15 @@
 				"name_i18n": {
 					"en_US": "Privacy Policy"
 				},
-				"url": "/o/headless-delivery/v1.0/structured-contents/62660",
-				"type": "url"
+				"type": "url",
+				"url": "/o/headless-delivery/v1.0/structured-contents/62660"
 			},
 			{
 				"name_i18n": {
 					"en_US": "Terms of Use"
 				},
-				"url": "/o/headless-delivery/v1.0/structured-contents/62651",
-				"type": "url"
+				"type": "url",
+				"url": "/o/headless-delivery/v1.0/structured-contents/62651"
 			}
 		],
 		"name": "Footer Legal Menu",

@@ -4,32 +4,37 @@
  */
 
 
-export class Status {
-	'code'?: number;
-	'label'?: string;
-	'label_i18n'?: string;
+/**
+ * @author David Truong
+ * @generated
+ */
 
-	static discriminator: string | undefined = undefined;
+	export class Status {
+			'code'?: number;
+			'label'?: string;
+			'label_i18n'?: string;
 
-	static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-		{
-			"name": "code",
-			"baseName": "code",
-			"type": "number"
-		},
-		{
-			"name": "label",
-			"baseName": "label",
-			"type": "string"
-		},
-		{
-			"name": "label_i18n",
-			"baseName": "label_i18n",
-			"type": "string"
+		static discriminator: string | undefined = undefined;
+
+		static attributeTypeMap: Array<{baseName: string, name: string, type: string}> = [
+				{
+					"baseName": "code",
+					"name": "code",
+					"type": "number"
+				},
+				{
+					"baseName": "label",
+					"name": "label",
+					"type": "string"
+				},
+				{
+					"baseName": "label_i18n",
+					"name": "label_i18n",
+					"type": "string"
+				}
+		];
+
+		static getAttributeTypeMap() {
+				return Status.attributeTypeMap;
 		}
-	];
-
-	static getAttributeTypeMap() {
-		return Status.attributeTypeMap;
 	}
-}

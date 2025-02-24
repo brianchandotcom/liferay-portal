@@ -3,16 +3,21 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import { TestEntity } from './testEntity';
+			import { TestEntity } from './testEntity';
 
-export class ChildTestEntity3 extends TestEntity {
+/**
+ * @author Alejandro Tardín
+ * @generated
+ */
 
-	static discriminator: string | undefined = undefined;
+	export class ChildTestEntity3 extends TestEntity {
 
-	static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-	];
+		static discriminator: string | undefined = undefined;
 
-	static getAttributeTypeMap() {
-		return super.getAttributeTypeMap().concat(ChildTestEntity3.attributeTypeMap);
+		static attributeTypeMap: Array<{baseName: string, name: string, type: string}> = [
+		];
+
+		static getAttributeTypeMap() {
+				return super.getAttributeTypeMap().concat(ChildTestEntity3.attributeTypeMap);
+		}
 	}
-}

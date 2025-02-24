@@ -3,64 +3,69 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import { ObjectFolderItem } from './objectFolderItem';
+			import { ObjectFolderItem } from './objectFolderItem';
 
-export class ObjectFolder {
-	'actions'?: { [key: string]: { [key: string]: string; }; };
-	'dateCreated'?: Date;
-	'dateModified'?: Date;
-	'externalReferenceCode'?: string;
-	'id'?: number;
-	'label'?: { [key: string]: string; };
-	'name'?: string;
-	'objectFolderItems'?: Array<ObjectFolderItem>;
+/**
+ * @author Javier Gamarra
+ * @generated
+ */
 
-	static discriminator: string | undefined = undefined;
+	export class ObjectFolder {
+			'actions'?: { [key: string]: { [key: string]: string; }; };
+			'dateCreated'?: Date;
+			'dateModified'?: Date;
+			'externalReferenceCode'?: string;
+			'id'?: number;
+			'label'?: { [key: string]: string; };
+			'name'?: string;
+			'objectFolderItems'?: Array<ObjectFolderItem>;
 
-	static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-		{
-			"name": "actions",
-			"baseName": "actions",
-			"type": "{ [key: string]: { [key: string]: string; }; }"
-		},
-		{
-			"name": "dateCreated",
-			"baseName": "dateCreated",
-			"type": "Date"
-		},
-		{
-			"name": "dateModified",
-			"baseName": "dateModified",
-			"type": "Date"
-		},
-		{
-			"name": "externalReferenceCode",
-			"baseName": "externalReferenceCode",
-			"type": "string"
-		},
-		{
-			"name": "id",
-			"baseName": "id",
-			"type": "number"
-		},
-		{
-			"name": "label",
-			"baseName": "label",
-			"type": "{ [key: string]: string; }"
-		},
-		{
-			"name": "name",
-			"baseName": "name",
-			"type": "string"
-		},
-		{
-			"name": "objectFolderItems",
-			"baseName": "objectFolderItems",
-			"type": "Array<ObjectFolderItem>"
+		static discriminator: string | undefined = undefined;
+
+		static attributeTypeMap: Array<{baseName: string, name: string, type: string}> = [
+				{
+					"baseName": "actions",
+					"name": "actions",
+					"type": "{ [key: string]: { [key: string]: string; }; }"
+				},
+				{
+					"baseName": "dateCreated",
+					"name": "dateCreated",
+					"type": "Date"
+				},
+				{
+					"baseName": "dateModified",
+					"name": "dateModified",
+					"type": "Date"
+				},
+				{
+					"baseName": "externalReferenceCode",
+					"name": "externalReferenceCode",
+					"type": "string"
+				},
+				{
+					"baseName": "id",
+					"name": "id",
+					"type": "number"
+				},
+				{
+					"baseName": "label",
+					"name": "label",
+					"type": "{ [key: string]: string; }"
+				},
+				{
+					"baseName": "name",
+					"name": "name",
+					"type": "string"
+				},
+				{
+					"baseName": "objectFolderItems",
+					"name": "objectFolderItems",
+					"type": "Array<ObjectFolderItem>"
+				}
+		];
+
+		static getAttributeTypeMap() {
+				return ObjectFolder.attributeTypeMap;
 		}
-	];
-
-	static getAttributeTypeMap() {
-		return ObjectFolder.attributeTypeMap;
 	}
-}

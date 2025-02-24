@@ -5,28 +5,33 @@
 
 
 /**
-* A EntityModelResource test entity with no filterable fields.
-*/
-export class EntityModelResourceTestEntity1 {
-	'id'?: number;
-	'name'?: string;
+ * @author Alejandro Tardín
+ * @generated
+ */
 
-	static discriminator: string | undefined = undefined;
+	/**
+	* A EntityModelResource test entity with no filterable fields.
+	*/
+	export class EntityModelResourceTestEntity1 {
+			'id'?: number;
+			'name'?: string;
 
-	static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-		{
-			"name": "id",
-			"baseName": "id",
-			"type": "number"
-		},
-		{
-			"name": "name",
-			"baseName": "name",
-			"type": "string"
+		static discriminator: string | undefined = undefined;
+
+		static attributeTypeMap: Array<{baseName: string, name: string, type: string}> = [
+				{
+					"baseName": "id",
+					"name": "id",
+					"type": "number"
+				},
+				{
+					"baseName": "name",
+					"name": "name",
+					"type": "string"
+				}
+		];
+
+		static getAttributeTypeMap() {
+				return EntityModelResourceTestEntity1.attributeTypeMap;
 		}
-	];
-
-	static getAttributeTypeMap() {
-		return EntityModelResourceTestEntity1.attributeTypeMap;
 	}
-}

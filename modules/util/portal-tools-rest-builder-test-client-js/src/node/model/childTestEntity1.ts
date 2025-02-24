@@ -3,22 +3,27 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import { TestEntity } from './testEntity';
+			import { TestEntity } from './testEntity';
 
-export class ChildTestEntity1 extends TestEntity {
-	'property1'?: string;
+/**
+ * @author Alejandro Tardín
+ * @generated
+ */
 
-	static discriminator: string | undefined = undefined;
+	export class ChildTestEntity1 extends TestEntity {
+			'property1'?: string;
 
-	static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-		{
-			"name": "property1",
-			"baseName": "property1",
-			"type": "string"
+		static discriminator: string | undefined = undefined;
+
+		static attributeTypeMap: Array<{baseName: string, name: string, type: string}> = [
+				{
+					"baseName": "property1",
+					"name": "property1",
+					"type": "string"
+				}
+		];
+
+		static getAttributeTypeMap() {
+				return super.getAttributeTypeMap().concat(ChildTestEntity1.attributeTypeMap);
 		}
-	];
-
-	static getAttributeTypeMap() {
-		return super.getAttributeTypeMap().concat(ChildTestEntity1.attributeTypeMap);
 	}
-}

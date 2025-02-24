@@ -5,76 +5,81 @@
 
 
 /**
-* Another server to create and publish publications.
-*/
-export class CTRemote {
-	'actions'?: { [key: string]: { [key: string]: string; }; };
-	'clientId'?: string;
-	'clientSecret'?: string;
-	'dateCreated'?: Date;
-	'dateModified'?: Date;
-	'description'?: string;
-	'id'?: number;
-	'name'?: string;
-	'ownerName'?: string;
-	'url'?: string;
+ * @author David Truong
+ * @generated
+ */
 
-	static discriminator: string | undefined = undefined;
+	/**
+	* Another server to create and publish publications.
+	*/
+	export class CTRemote {
+			'actions'?: { [key: string]: { [key: string]: string; }; };
+			'clientId'?: string;
+			'clientSecret'?: string;
+			'dateCreated'?: Date;
+			'dateModified'?: Date;
+			'description'?: string;
+			'id'?: number;
+			'name'?: string;
+			'ownerName'?: string;
+			'url'?: string;
 
-	static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-		{
-			"name": "actions",
-			"baseName": "actions",
-			"type": "{ [key: string]: { [key: string]: string; }; }"
-		},
-		{
-			"name": "clientId",
-			"baseName": "clientId",
-			"type": "string"
-		},
-		{
-			"name": "clientSecret",
-			"baseName": "clientSecret",
-			"type": "string"
-		},
-		{
-			"name": "dateCreated",
-			"baseName": "dateCreated",
-			"type": "Date"
-		},
-		{
-			"name": "dateModified",
-			"baseName": "dateModified",
-			"type": "Date"
-		},
-		{
-			"name": "description",
-			"baseName": "description",
-			"type": "string"
-		},
-		{
-			"name": "id",
-			"baseName": "id",
-			"type": "number"
-		},
-		{
-			"name": "name",
-			"baseName": "name",
-			"type": "string"
-		},
-		{
-			"name": "ownerName",
-			"baseName": "ownerName",
-			"type": "string"
-		},
-		{
-			"name": "url",
-			"baseName": "url",
-			"type": "string"
+		static discriminator: string | undefined = undefined;
+
+		static attributeTypeMap: Array<{baseName: string, name: string, type: string}> = [
+				{
+					"baseName": "actions",
+					"name": "actions",
+					"type": "{ [key: string]: { [key: string]: string; }; }"
+				},
+				{
+					"baseName": "clientId",
+					"name": "clientId",
+					"type": "string"
+				},
+				{
+					"baseName": "clientSecret",
+					"name": "clientSecret",
+					"type": "string"
+				},
+				{
+					"baseName": "dateCreated",
+					"name": "dateCreated",
+					"type": "Date"
+				},
+				{
+					"baseName": "dateModified",
+					"name": "dateModified",
+					"type": "Date"
+				},
+				{
+					"baseName": "description",
+					"name": "description",
+					"type": "string"
+				},
+				{
+					"baseName": "id",
+					"name": "id",
+					"type": "number"
+				},
+				{
+					"baseName": "name",
+					"name": "name",
+					"type": "string"
+				},
+				{
+					"baseName": "ownerName",
+					"name": "ownerName",
+					"type": "string"
+				},
+				{
+					"baseName": "url",
+					"name": "url",
+					"type": "string"
+				}
+		];
+
+		static getAttributeTypeMap() {
+				return CTRemote.attributeTypeMap;
 		}
-	];
-
-	static getAttributeTypeMap() {
-		return CTRemote.attributeTypeMap;
 	}
-}

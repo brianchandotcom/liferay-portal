@@ -130,10 +130,10 @@ public class JAASTest {
 					ServletContextPool.get(StringPool.BLANK), HttpMethods.GET,
 					StringPool.SLASH);
 
-			mockHttpServletRequest.setRemoteUser(
-				String.valueOf(_user.getScreenName()));
 			mockHttpServletRequest.setAttribute(
 				WebKeys.COMPANY_ID, TestPropsValues.getCompanyId());
+			mockHttpServletRequest.setRemoteUser(
+				String.valueOf(_user.getScreenName()));
 
 			try {
 				User user = PortalUtil.getUser(mockHttpServletRequest);

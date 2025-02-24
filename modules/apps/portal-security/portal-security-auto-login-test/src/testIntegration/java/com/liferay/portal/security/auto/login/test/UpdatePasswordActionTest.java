@@ -101,7 +101,6 @@ public class UpdatePasswordActionTest {
 		mockHttpServletRequest.addParameter("password2", password);
 
 		mockHttpServletRequest.addParameter("p_auth", "test");
-
 		mockHttpServletRequest.setAttribute(
 			WebKeys.COMPANY_ID, company.getCompanyId());
 

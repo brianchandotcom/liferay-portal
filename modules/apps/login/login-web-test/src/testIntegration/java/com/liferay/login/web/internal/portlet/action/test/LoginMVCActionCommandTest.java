@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -106,13 +106,13 @@ public class LoginMVCActionCommandTest {
 			String redirectLocation =
 				customMockLiferayPortletActionResponse.getRedirectLocation();
 
-			Layout utilityPageLayout = _layoutLocalService.getLayout(
+			Layout layout = _layoutLocalService.getLayout(
 				layoutUtilityPageEntry.getPlid());
 
 			Assert.assertTrue(
 				redirectLocation.contains(_group.getFriendlyURL()));
 			Assert.assertTrue(
-				redirectLocation.contains(utilityPageLayout.getFriendlyURL()));
+				redirectLocation.contains(layout.getFriendlyURL()));
 			_assertParameter(
 				redirectLocation, "p_p_id", LoginPortletKeys.LOGIN);
 			_assertParameter(redirectLocation, "p_p_lifecycle", "0");
@@ -214,9 +214,9 @@ public class LoginMVCActionCommandTest {
 		mockLiferayPortletActionRequest.addParameter(
 			"password", "wrongpassword");
 		mockLiferayPortletActionRequest.setAttribute(
-			WebKeys.COMPANY_ID, TestPropsValues.getCompanyId());
-		mockLiferayPortletActionRequest.setAttribute(
 			JavaConstants.JAVAX_PORTLET_CONFIG, _getLiferayPortletConfig());
+		mockLiferayPortletActionRequest.setAttribute(
+			WebKeys.COMPANY_ID, TestPropsValues.getCompanyId());
 
 		ThemeDisplay themeDisplay = _getThemeDisplay();
 
@@ -243,7 +243,7 @@ public class LoginMVCActionCommandTest {
 		themeDisplay.setScopeGroupId(_group.getGroupId());
 		themeDisplay.setSiteGroupId(_group.getGroupId());
 		themeDisplay.setUser(
-			UserLocalServiceUtil.getGuestUser(_group.getCompanyId()));
+			_userLocalService.getGuestUser(_group.getCompanyId()));
 
 		return themeDisplay;
 	}
@@ -267,6 +267,9 @@ public class LoginMVCActionCommandTest {
 	private PortletLocalService _portletLocalService;
 
 	private ServiceContext _serviceContext;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 	private class CustomMockLiferayPortletActionResponse
 		extends MockLiferayPortletActionResponse {

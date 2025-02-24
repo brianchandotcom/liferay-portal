@@ -8,7 +8,7 @@ package com.liferay.portal.security.content.security.policy.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
+import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.FeatureFlags;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.io.BufferedReader;
@@ -67,7 +68,7 @@ public class ContentSecurityPolicyFilterTest {
 
 	@Test
 	public void testProcessFilter() throws Exception {
-		Company testCompany = CompanyLocalServiceUtil.getCompany(
+		Company company = _companyLocalService.getCompany(
 			TestPropsValues.getCompanyId());
 
 		try (CompanyConfigurationTemporarySwapper
@@ -75,8 +76,7 @@ public class ContentSecurityPolicyFilterTest {
 					_getCompanyConfigurationTemporarySwapper(false, null, "")) {
 
 			HttpURLConnection httpURLConnection = _openHttpURLConnection(
-				"http://" + testCompany.getVirtualHostname() +
-					":8080/web/guest");
+				"http://" + company.getVirtualHostname() + ":8080/web/guest");
 
 			Map<String, List<String>> headerFields =
 				httpURLConnection.getHeaderFields();
@@ -92,8 +92,7 @@ public class ContentSecurityPolicyFilterTest {
 					_getCompanyConfigurationTemporarySwapper(true, null, "")) {
 
 			HttpURLConnection httpURLConnection = _openHttpURLConnection(
-				"http://" + testCompany.getVirtualHostname() +
-					":8080/web/guest");
+				"http://" + company.getVirtualHostname() + ":8080/web/guest");
 
 			Map<String, List<String>> headerFields =
 				httpURLConnection.getHeaderFields();
@@ -116,8 +115,7 @@ public class ContentSecurityPolicyFilterTest {
 						true, null, policy)) {
 
 			HttpURLConnection httpURLConnection = _openHttpURLConnection(
-				"http://" + testCompany.getVirtualHostname() +
-					":8080/web/guest");
+				"http://" + company.getVirtualHostname() + ":8080/web/guest");
 
 			Map<String, List<String>> headerFields =
 				httpURLConnection.getHeaderFields();
@@ -142,8 +140,7 @@ public class ContentSecurityPolicyFilterTest {
 						true, null, policy)) {
 
 			HttpURLConnection httpURLConnection = _openHttpURLConnection(
-				"http://" + testCompany.getVirtualHostname() +
-					":8080/web/guest");
+				"http://" + company.getVirtualHostname() + ":8080/web/guest");
 
 			Map<String, List<String>> headerFields =
 				httpURLConnection.getHeaderFields();
@@ -189,8 +186,7 @@ public class ContentSecurityPolicyFilterTest {
 						policy)) {
 
 			HttpURLConnection httpURLConnection = _openHttpURLConnection(
-				"http://" + testCompany.getVirtualHostname() +
-					":8080/web/guest");
+				"http://" + company.getVirtualHostname() + ":8080/web/guest");
 
 			Map<String, List<String>> headerFields =
 				httpURLConnection.getHeaderFields();
@@ -252,5 +248,8 @@ public class ContentSecurityPolicyFilterTest {
 
 		return httpURLConnection;
 	}
+
+	@Inject
+	private CompanyLocalService _companyLocalService;
 
 }

@@ -8,15 +8,22 @@ package com.liferay.object.dynamic.data.mapping.form.field.type.internal.multi.s
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTemplateContextContributor;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
+import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.dynamic.data.mapping.util.DDMFormFieldTemplateContextContributorUtil;
+import com.liferay.list.type.model.ListTypeEntry;
+import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.dynamic.data.mapping.form.field.type.constants.ObjectDDMFormFieldTypeConstants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pedro Leite
@@ -39,10 +46,70 @@ public class MultiSelectPicklistDDMFormFieldTemplateContextContributor
 			"localizedObjectField",
 			GetterUtil.getBoolean(
 				ddmFormField.getProperty("localizedObjectField"))
+		).put(
+			"options",
+			() -> {
+				DDMFormFieldOptions ddmFormFieldOptions =
+					(DDMFormFieldOptions)ddmFormField.getProperty("options");
+				List<Map<String, Object>> options = new ArrayList<>();
+
+				for (String optionValue :
+						ddmFormFieldOptions.getOptionsValues()) {
+
+					if (optionValue == null) {
+						continue;
+					}
+
+					options.add(
+						HashMapBuilder.<String, Object>put(
+							"label",
+							() -> {
+								LocalizedValue localizedValue =
+									ddmFormFieldOptions.getOptionLabels(
+										optionValue);
+
+								return localizedValue.getString(
+									localizedValue.getDefaultLocale());
+							}
+						).put(
+							"labelMap",
+							() -> {
+								long listTypeDefinitionId = GetterUtil.getLong(
+									ddmFormField.getProperty(
+										"listTypeDefinitionId"));
+
+								if (listTypeDefinitionId == 0) {
+									return null;
+								}
+
+								ListTypeEntry listTypeEntry =
+									_listTypeEntryLocalService.
+										fetchListTypeEntry(
+											listTypeDefinitionId, optionValue);
+
+								if (listTypeEntry == null) {
+									return null;
+								}
+
+								return listTypeEntry.getNameMap();
+							}
+						).put(
+							"reference",
+							ddmFormFieldOptions.getOptionReference(optionValue)
+						).put(
+							"value", optionValue
+						).build());
+				}
+
+				return options;
+			}
 		).putAll(
 			DDMFormFieldTemplateContextContributorUtil.getLocaleMap(
 				ddmForm.getDefaultLocale())
 		).build();
 	}
+
+	@Reference
+	private ListTypeEntryLocalService _listTypeEntryLocalService;
 
 }

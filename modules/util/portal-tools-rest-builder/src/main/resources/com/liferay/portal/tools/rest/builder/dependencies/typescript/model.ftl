@@ -6,6 +6,11 @@
 	</#list>
 </#if>
 
+/**
+ * @author ${configYAML.author}
+ * @generated
+ */
+
 <#if description??>
 	/**
 	* ${description}

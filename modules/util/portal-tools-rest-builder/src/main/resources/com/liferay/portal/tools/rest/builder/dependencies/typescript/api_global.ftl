@@ -1,3 +1,7 @@
-// This is the entrypoint for the package
+/**
+ * @author ${configYAML.author}
+ * @generated
+ */
+
 export * from './api/apis';
 export * from './model/models';

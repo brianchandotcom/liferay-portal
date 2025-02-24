@@ -7,12 +7,11 @@ package com.liferay.headless.builder.internal.osgi.commands.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.headless.builder.test.BaseTestCase;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-
-import java.lang.reflect.Method;
 
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -33,12 +32,9 @@ public class HeadlessBuilderOSGiCommandsTest extends BaseTestCase {
 
 	@Test
 	public void testReset() throws Exception {
-		Class<?> clazz = _headlessBuilderOSGiCommands.getClass();
-
-		Method method = clazz.getMethod("reset", long.class);
-
-		method.invoke(
-			_headlessBuilderOSGiCommands, TestPropsValues.getCompanyId());
+		ReflectionTestUtil.invoke(
+			_headlessBuilderOSGiCommands, "reset", new Class<?>[] {long.class},
+			TestPropsValues.getCompanyId());
 	}
 
 	@Inject(

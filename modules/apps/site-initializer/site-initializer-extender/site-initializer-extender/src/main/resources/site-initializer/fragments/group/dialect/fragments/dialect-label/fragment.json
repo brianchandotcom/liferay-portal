@@ -1,0 +1,9 @@
+{
+	"configurationPath": "configuration.json",
+	"cssPath": "index.css",
+	"htmlPath": "index.html",
+	"icon": "tag",
+	"jsPath": "index.js",
+	"name": "Dialect Label",
+	"type": "component"
+}

@@ -1,5 +1,0 @@
-Bundle-Name: Liferay Fragment Collection Contributor Dialect
-Bundle-SymbolicName: com.liferay.fragment.collection.contributor.dialect
-Bundle-Version: 1.0.0
-Web-ContextPath: /fragment-collection-contributor-dialect
--dsannotations-options: inherit

@@ -72,12 +72,34 @@ public class PageSpecificationsTestUtil {
 		Assert.assertTrue(ArrayUtil.isNotEmpty(pageSpecifications));
 
 		if (!layout.isTypeAssetDisplay() && !layout.isTypeContent()) {
-			_assertWidgetPageSpecifications(layout, pageSpecifications);
+			Assert.assertEquals(
+				Arrays.toString(pageSpecifications), 1,
+				pageSpecifications.length);
+
+			PageSpecification pageSpecification = pageSpecifications[0];
+
+			Assert.assertEquals(
+				layout.getExternalReferenceCode(),
+				pageSpecification.getExternalReferenceCode());
+			Assert.assertEquals(
+				PageSpecification.Status.APPROVED,
+				pageSpecification.getStatus());
+			Assert.assertEquals(
+				PageSpecification.Type.WIDGET_PAGE_SPECIFICATION,
+				pageSpecification.getType());
 
 			return;
 		}
 
-		_assertContentPageSpecifications(layout, pageSpecifications);
+		Assert.assertEquals(
+			Arrays.toString(pageSpecifications), 2, pageSpecifications.length);
+
+		assertContentPageSpecification(pageSpecifications[0], layout.getPlid());
+
+		Layout draftLayout = layout.fetchDraftLayout();
+
+		assertContentPageSpecification(
+			pageSpecifications[1], draftLayout.getPlid());
 	}
 
 	public static void testPostSiteSiteByExternalReferenceCodePageSpecification(
@@ -185,21 +207,6 @@ public class PageSpecificationsTestUtil {
 			() -> unsafeFunction.apply(contentPageSpecification));
 	}
 
-	private static void _assertContentPageSpecifications(
-		Layout layout, PageSpecification[] pageSpecifications)
-		throws Exception {
-
-		Assert.assertEquals(
-			Arrays.toString(pageSpecifications), 2, pageSpecifications.length);
-
-		assertContentPageSpecification(pageSpecifications[0], layout.getPlid());
-
-		Layout draftLayout = layout.fetchDraftLayout();
-
-		assertContentPageSpecification(
-			pageSpecifications[1], draftLayout.getPlid());
-	}
-
 	private static void _assertProblemException(
 			UnsafeRunnable<Exception> unsafeRunnable)
 		throws Exception {
@@ -214,24 +221,6 @@ public class PageSpecificationsTestUtil {
 			Assert.assertEquals("BAD_REQUEST", problem.getStatus());
 			Assert.assertNull(problem.getTitle());
 		}
-	}
-
-	private static void _assertWidgetPageSpecifications(
-		Layout layout, PageSpecification[] pageSpecifications) {
-
-		Assert.assertEquals(
-			Arrays.toString(pageSpecifications), 1, pageSpecifications.length);
-
-		PageSpecification pageSpecification = pageSpecifications[0];
-
-		Assert.assertEquals(
-			layout.getExternalReferenceCode(),
-			pageSpecification.getExternalReferenceCode());
-		Assert.assertEquals(
-			PageSpecification.Status.APPROVED, pageSpecification.getStatus());
-		Assert.assertEquals(
-			PageSpecification.Type.WIDGET_PAGE_SPECIFICATION,
-			pageSpecification.getType());
 	}
 
 	private static boolean _isPublished(Layout draftLayout) {

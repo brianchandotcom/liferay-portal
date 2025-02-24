@@ -8,7 +8,7 @@
 		"externalReferenceCode": "CLASSIC-AVIATOR-SUNGLASSES",
 		"height": 0,
 		"images": [
-			"product_1.png"
+			"product_1.jpg"
 		],
 		"minStockQuantity": 5,
 		"name": "Classic Aviator Sunglasses",
@@ -23,233 +23,13 @@
 	},
 	{
 		"categories": [
-			"Contacts"
-		],
-		"cost": 0,
-		"description": "",
-		"externalReferenceCode": "AQUACOMFORT-PLUS-DAILIES",
-		"height": 0,
-		"images": [
-			"product_2.png"
-		],
-		"minStockQuantity": 5,
-		"name": "AquaComfort Plus Dailies",
-		"options": [
-		],
-		"price": 0,
-		"promoPrice": 0,
-		"sku": "AQUACOMFORT-PLUS-DAILIES",
-		"warehouse1": 60,
-		"weight": 0,
-		"width": 0
-	},
-	{
-		"categories": [
-			"Lenses"
-		],
-		"cost": 0,
-		"description": "",
-		"externalReferenceCode": "SINGLE-VISION-LENSES",
-		"height": 0,
-		"images": [
-			"product_3.png"
-		],
-		"minStockQuantity": 5,
-		"name": "Single Vision Lenses",
-		"options": [
-		],
-		"price": 0,
-		"promoPrice": 0,
-		"sku": "SINGLE-VISION-LENSES",
-		"warehouse1": 60,
-		"weight": 0,
-		"width": 0
-	},
-	{
-		"categories": [
-			"Sunglasses"
-		],
-		"cost": 101,
-		"description": "",
-		"externalReferenceCode": "FAMILY-PRESCRIPTION-SUNGLASSES",
-		"height": 0,
-		"images": [
-			"product_4.png"
-		],
-		"minStockQuantity": 5,
-		"name": "Family Prescription Sunglasses",
-		"options": [
-		],
-		"price": 101,
-		"promoPrice": 202,
-		"sku": "FAMILY-PRESCRIPTION-SUNGLASSES",
-		"warehouse1": 60,
-		"weight": 0,
-		"width": 0
-	},
-	{
-		"categories": [
-			"Sunglasses"
-		],
-		"cost": 101,
-		"description": "",
-		"externalReferenceCode": "KIDS-PRESCRIPTION-SUNGLASSES",
-		"height": 0,
-		"images": [
-			"product_5.png"
-		],
-		"minStockQuantity": 5,
-		"name": "Kids Prescription Sunglasses",
-		"options": [
-		],
-		"price": 101,
-		"promoPrice": 202,
-		"sku": "KIDS-PRESCRIPTION-SUNGLASSES",
-		"warehouse1": 60,
-		"weight": 0,
-		"width": 0
-	},
-	{
-		"categories": [
-			"Eyeglasses"
-		],
-		"cost": 101,
-		"description": "",
-		"externalReferenceCode": "KIDS-PRESCRIPTION-EYEGLASSES",
-		"height": 0,
-		"images": [
-			"product_6.png"
-		],
-		"minStockQuantity": 5,
-		"name": "Kids Prescription Eyeglasses",
-		"options": [
-		],
-		"price": 101,
-		"promoPrice": 202,
-		"sku": "KIDS-PRESCRIPTION-EYEGLASSES",
-		"warehouse1": 60,
-		"weight": 0,
-		"width": 0
-	},
-	{
-		"categories": [
-			"Eyeglasses"
-		],
-		"cost": 101,
-		"description": "",
-		"externalReferenceCode": "FAMILY-PRESCRIPTION-EYEGLASSES",
-		"height": 0,
-		"images": [
-			"product_7.png"
-		],
-		"minStockQuantity": 5,
-		"name": "Family Prescription Eyeglasses",
-		"options": [
-		],
-		"price": 101,
-		"promoPrice": 202,
-		"sku": "FAMILY-PRESCRIPTION-EYEGLASSES",
-		"warehouse1": 60,
-		"weight": 0,
-		"width": 0
-	},
-	{
-		"categories": [
-			"Contacts"
-		],
-		"cost": 101,
-		"description": "",
-		"externalReferenceCode": "SOFT-CONTACTS",
-		"height": 0,
-		"images": [
-			"product_8.png"
-		],
-		"minStockQuantity": 5,
-		"name": "Soft Contacts",
-		"options": [
-		],
-		"price": 101,
-		"promoPrice": 202,
-		"sku": "SOFT-CONTACTS",
-		"warehouse1": 60,
-		"weight": 0,
-		"width": 0
-	},
-	{
-		"categories": [
-			"Contacts"
-		],
-		"cost": 101,
-		"description": "",
-		"externalReferenceCode": "HARD-CONTACTS",
-		"height": 0,
-		"images": [
-			"product_9.png"
-		],
-		"minStockQuantity": 5,
-		"name": "Hard Contacts",
-		"options": [
-		],
-		"price": 101,
-		"promoPrice": 202,
-		"sku": "HARD-CONTACTS",
-		"warehouse1": 60,
-		"weight": 0,
-		"width": 0
-	},
-	{
-		"categories": [
-			"Lenses"
-		],
-		"cost": 101,
-		"description": "",
-		"externalReferenceCode": "TINTED-LENSES",
-		"height": 0,
-		"images": [
-			"product_10.png"
-		],
-		"minStockQuantity": 5,
-		"name": "Tinted Lenses",
-		"options": [
-		],
-		"price": 101,
-		"promoPrice": 202,
-		"sku": "TINTED-LENSES",
-		"warehouse1": 60,
-		"weight": 0,
-		"width": 0
-	},
-	{
-		"categories": [
-			"Lenses"
-		],
-		"cost": 101,
-		"description": "",
-		"externalReferenceCode": "POLARIZED-LENSES",
-		"height": 0,
-		"images": [
-			"product_11.png"
-		],
-		"minStockQuantity": 5,
-		"name": "Polarized Lenses",
-		"options": [
-		],
-		"price": 101,
-		"promoPrice": 202,
-		"sku": "POLARIZED-LENSES",
-		"warehouse1": 60,
-		"weight": 0,
-		"width": 0
-	},
-	{
-		"categories": [
 		],
 		"cost": 0,
 		"description": "",
 		"externalReferenceCode": "SPORTS-SUNGLASSES",
 		"height": 0,
 		"images": [
-			"product_12.png"
+			"product_2.jpg"
 		],
 		"minStockQuantity": 5,
 		"name": "Sports Sunglasses",
@@ -271,7 +51,7 @@
 		"externalReferenceCode": "RETRO-ROUND-SUNGLASSES",
 		"height": 0,
 		"images": [
-			"product_13.png"
+			"product_3.jpg"
 		],
 		"minStockQuantity": 5,
 		"name": "Retro Round Sunglasses",
@@ -293,7 +73,7 @@
 		"externalReferenceCode": "CAT-EYE-SUNGLASSES",
 		"height": 0,
 		"images": [
-			"product_14.png"
+			"product_4.jpg"
 		],
 		"minStockQuantity": 5,
 		"name": "Cat Eye Sunglasses",
@@ -314,7 +94,7 @@
 		"externalReferenceCode": "OVERSIZED-SQUARE-SUNGLASSES",
 		"height": 0,
 		"images": [
-			"product_15.png"
+			"product_5.jpg"
 		],
 		"minStockQuantity": 5,
 		"name": "Oversized Square Sunglasses",
@@ -336,7 +116,7 @@
 		"externalReferenceCode": "ROUND-METAL-SUNGLASSES",
 		"height": 0,
 		"images": [
-			"product_16.png"
+			"product_6.jpg"
 		],
 		"minStockQuantity": 5,
 		"name": "Round Metal Sunglasses",
@@ -358,7 +138,7 @@
 		"externalReferenceCode": "CLEARVISION-1-DAY-CONTACT-LENSES",
 		"height": 0,
 		"images": [
-			"product_17.png"
+			"product_7.jpg"
 		],
 		"minStockQuantity": 5,
 		"name": "ClearVision 1-Day Contact Lenses",
@@ -380,7 +160,7 @@
 		"externalReferenceCode": "BIOFINITY-MONTHLY-CONTACT-LENSES",
 		"height": 0,
 		"images": [
-			"product_18.png"
+			"product_8.jpg"
 		],
 		"minStockQuantity": 5,
 		"name": "Biofinity Monthly Contact Lenses",
@@ -402,7 +182,7 @@
 		"externalReferenceCode": "AIR-OPTIX-AQUA-MONTHLY-LENSES",
 		"height": 0,
 		"images": [
-			"product_19.png"
+			"product_9.jpg"
 		],
 		"minStockQuantity": 5,
 		"name": "Air Optix Aqua Monthly Lenses",
@@ -424,7 +204,7 @@
 		"externalReferenceCode": "AIR-OPTIX-COLORS",
 		"height": 0,
 		"images": [
-			"product_20.png"
+			"product_10.jpg"
 		],
 		"minStockQuantity": 5,
 		"name": "Air Optix Colors",
@@ -446,7 +226,7 @@
 		"externalReferenceCode": "BIFOCAL-LENSES",
 		"height": 0,
 		"images": [
-			"product_21.png"
+			"product_11.jpg"
 		],
 		"minStockQuantity": 5,
 		"name": "Bifocal Lenses",
@@ -468,7 +248,7 @@
 		"externalReferenceCode": "PROGRESSIVE-LENSES",
 		"height": 0,
 		"images": [
-			"product_22.png"
+			"product_12.jpg"
 		],
 		"minStockQuantity": 5,
 		"name": "Progressive Lenses",
@@ -490,7 +270,7 @@
 		"externalReferenceCode": "CLEAR-LENSES",
 		"height": 0,
 		"images": [
-			"product_23.png"
+			"product_13.jpg"
 		],
 		"minStockQuantity": 5,
 		"name": "Clear Lenses",
@@ -512,7 +292,7 @@
 		"externalReferenceCode": "BLUE-LIGHT-BLOCKING-LENSES",
 		"height": 0,
 		"images": [
-			"product_24.png"
+			"product_14.jpg"
 		],
 		"minStockQuantity": 5,
 		"name": "Blue Light Blocking Lenses",
@@ -534,7 +314,7 @@
 		"externalReferenceCode": "FRESHLOOK-COLORBLENDS",
 		"height": 0,
 		"images": [
-			"product_25.png"
+			"product_15.jpg"
 		],
 		"minStockQuantity": 5,
 		"name": "FreshLook ColorBlends",
@@ -556,7 +336,7 @@
 		"externalReferenceCode": "BIOFINITY-TORIC-LENSES",
 		"height": 0,
 		"images": [
-			"product_26.png"
+			"product_16.jpg"
 		],
 		"minStockQuantity": 5,
 		"name": "Biofinity Toric Lenses",
@@ -578,7 +358,7 @@
 		"externalReferenceCode": "SOPHISTICATED-RECTANGLE",
 		"height": 0,
 		"images": [
-			"product_27.png"
+			"product_17.jpg"
 		],
 		"minStockQuantity": 5,
 		"name": "Sophisticated Rectangle",
@@ -600,7 +380,7 @@
 		"externalReferenceCode": "TRENDY-OVERSIZED",
 		"height": 0,
 		"images": [
-			"product_28.png"
+			"product_18.jpg"
 		],
 		"minStockQuantity": 5,
 		"name": "Trendy Oversized",
@@ -622,7 +402,7 @@
 		"externalReferenceCode": "ELEGANT-CAT-EYE",
 		"height": 0,
 		"images": [
-			"product_29.png"
+			"product_19.jpg"
 		],
 		"minStockQuantity": 5,
 		"name": "Elegant Cat Eye",
@@ -644,7 +424,7 @@
 		"externalReferenceCode": "MODERN-RECTANGLE",
 		"height": 0,
 		"images": [
-			"product_30.png"
+			"product_20.jpg"
 		],
 		"minStockQuantity": 5,
 		"name": "Modern Rectangle",
@@ -666,7 +446,7 @@
 		"externalReferenceCode": "VINTAGE-ROUND",
 		"height": 0,
 		"images": [
-			"product_31.png"
+			"product_21.jpg"
 		],
 		"minStockQuantity": 5,
 		"name": "Vintage Round",
@@ -688,7 +468,7 @@
 		"externalReferenceCode": "CLASSIC-AVIATOR",
 		"height": 0,
 		"images": [
-			"product_32.png"
+			"product_22.jpg"
 		],
 		"minStockQuantity": 5,
 		"name": "Classic Aviator",
@@ -710,7 +490,7 @@
 		"externalReferenceCode": "MULTIFOCAL-LENSES",
 		"height": 0,
 		"images": [
-			"product_33.png"
+			"product_23.jpg"
 		],
 		"minStockQuantity": 5,
 		"name": "Multifocal Lenses",
@@ -735,7 +515,7 @@
 		"externalReferenceCode": "TORIC-LENSES",
 		"height": 0,
 		"images": [
-			"product_34.png"
+			"product_24.jpg"
 		],
 		"minStockQuantity": 5,
 		"name": "Toric Lenses",
@@ -760,7 +540,7 @@
 		"externalReferenceCode": "MONTHLY-DISPOSABLE-LENSES",
 		"height": 0,
 		"images": [
-			"product_35.png"
+			"product_25.jpg"
 		],
 		"minStockQuantity": 5,
 		"name": "Monthly Disposable Lenses",
@@ -785,7 +565,7 @@
 		"externalReferenceCode": "DAILY-DISPOSABLE-LENSES",
 		"height": 0,
 		"images": [
-			"product_36.png"
+			"product_26.jpg"
 		],
 		"minStockQuantity": 5,
 		"name": "Daily Disposable Lenses",
@@ -810,7 +590,7 @@
 		"externalReferenceCode": "PHOTOCHROMIC-LENSES",
 		"height": 0,
 		"images": [
-			"product_37.png"
+			"product_27.jpg"
 		],
 		"minStockQuantity": 5,
 		"name": "Photochromic Lenses",
@@ -835,7 +615,7 @@
 		"externalReferenceCode": "ACUVUE-OASYS-FOR-ASTIGMATISM",
 		"height": 0,
 		"images": [
-			"product_38.png"
+			"product_28.jpg"
 		],
 		"minStockQuantity": 5,
 		"name": "Acuvue Oasys for Astigmatism",

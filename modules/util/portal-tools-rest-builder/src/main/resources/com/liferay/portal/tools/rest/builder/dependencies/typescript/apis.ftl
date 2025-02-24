@@ -8,6 +8,11 @@ import * as http from 'http';
 	export * from './${apiContext.classname?uncap_first}';
 </#list>
 
+/**
+ * @author ${configYAML.author}
+ * @generated
+ */
+
 export class HttpError extends Error {
 	constructor (
 		public response: http.IncomingMessage,

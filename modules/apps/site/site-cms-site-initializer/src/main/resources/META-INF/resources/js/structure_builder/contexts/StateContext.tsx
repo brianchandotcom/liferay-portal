@@ -56,6 +56,8 @@ type CreateStructureAction = {
 	type: 'create-structure';
 };
 
+type DeleteFieldAction = {fieldName: Field['name']; type: 'delete-field'};
+
 type PublishStructureAction = {type: 'publish-structure'};
 
 type SetErrorAction = {error: string | null; type: 'set-error'};
@@ -70,6 +72,7 @@ type UpdateStructureAction = {
 export type Action =
 	| AddFieldAction
 	| CreateStructureAction
+	| DeleteFieldAction
 	| PublishStructureAction
 	| UpdateStructureAction
 	| SetErrorAction
@@ -99,6 +102,15 @@ function reducer(state: State, action: Action) {
 				name: action.name,
 				status: 'draft' as Status,
 			};
+		}
+		case 'delete-field': {
+			const {fieldName} = action;
+
+			const nextFields = new Map(state.fields);
+
+			nextFields.delete(fieldName);
+
+			return {...state, fields: nextFields};
 		}
 		case 'publish-structure':
 			return {...state, error: null, status: 'published' as Status};

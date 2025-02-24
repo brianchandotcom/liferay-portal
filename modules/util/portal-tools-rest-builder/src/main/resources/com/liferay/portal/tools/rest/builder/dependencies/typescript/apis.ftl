@@ -1,11 +1,19 @@
+import * as http from 'http';
+
 <#list apiContexts as apiContext>
-export * from './${apiContext.classname?uncap_first}';
-import { ${apiContext.classname} } from './${apiContext.classname?uncap_first}';
+	import {${apiContext.classname}} from './${apiContext.classname?uncap_first}';
 </#list>
 
-import * as http from 'http';
+<#list apiContexts as apiContext>
+	export * from './${apiContext.classname?uncap_first}';
+</#list>
+
 export class HttpError extends Error {
-	constructor (public response: http.IncomingMessage, public body: any, public statusCode?: number) {
+	constructor (
+		public response: http.IncomingMessage,
+		public body: any,
+		public statusCode?: number
+	) {
 		super('HTTP request failed');
 		this.name = 'HttpError';
 	}

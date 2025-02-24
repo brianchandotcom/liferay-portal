@@ -167,6 +167,12 @@ export default function StateContextProvider({
 	);
 }
 
+function useSelectedItem() {
+	const {state} = useContext(StateContext);
+
+	return state.selectedItem;
+}
+
 function useStateDispatch() {
 	return useContext(StateContext).dispatch;
 }
@@ -210,6 +216,7 @@ function useStructureStatus() {
 export {
 	StateContext,
 	StateContextProvider,
+	useSelectedItem,
 	useStateDispatch,
 	useStructureError,
 	useStructureFields,

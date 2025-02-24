@@ -3,7 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {ClayButtonWithIcon} from '@clayui/button';
 import {TreeView as ClayTreeView} from '@clayui/core';
+import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import React, {useMemo} from 'react';
@@ -11,6 +13,7 @@ import React, {useMemo} from 'react';
 import {
 	Field,
 	FieldType,
+	useStateDispatch,
 	useStructureLabel,
 } from '../../../structure_builder/contexts/StateContext';
 import {FIELD_TYPE_ICON} from '../../../structure_builder/utils/fieldType';
@@ -24,6 +27,7 @@ type TreeItem = {
 };
 
 export default function FieldsTree({fields}: {fields: Field[]}) {
+	const dispatch = useStateDispatch();
 	const structureLabel = useStructureLabel();
 
 	const items: TreeItem[] = useMemo(() => {
@@ -41,6 +45,12 @@ export default function FieldsTree({fields}: {fields: Field[]}) {
 			},
 		];
 	}, [fields, structureLabel]);
+
+	const deleteField = (fieldName: string) =>
+		dispatch({
+			fieldName,
+			type: 'delete-field',
+		});
 
 	return (
 		<ClayTreeView
@@ -60,7 +70,33 @@ export default function FieldsTree({fields}: {fields: Field[]}) {
 
 					<ClayTreeView.Group items={item.children}>
 						{(item) => (
-							<ClayTreeView.Item>
+							<ClayTreeView.Item
+								actions={
+									<ClayDropDownWithItems
+										items={[
+											{
+												label: Liferay.Language.get(
+													'delete-field'
+												),
+												onClick: () =>
+													deleteField(item.id),
+												symbolLeft: 'trash',
+											},
+										]}
+										trigger={
+											<ClayButtonWithIcon
+												aria-label={Liferay.Language.get(
+													'field-options'
+												)}
+												borderless
+												displayType="unstyled"
+												size="sm"
+												symbol="ellipsis-v"
+											/>
+										}
+									/>
+								}
+							>
 								<ClayIcon
 									className={classNames({
 										'structure-builder__fields-tree-node--field-icon':

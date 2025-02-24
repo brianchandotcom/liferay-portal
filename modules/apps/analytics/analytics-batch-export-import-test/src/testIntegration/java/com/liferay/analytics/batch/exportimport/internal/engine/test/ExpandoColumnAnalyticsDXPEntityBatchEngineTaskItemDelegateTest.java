@@ -1,5 +1,5 @@
 /**
- * SPDX-FileCopyrightText: (c) 2000 Liferay, Inc. https://liferay.com
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.util.Collection;
 import java.util.Collections;
 
 import org.junit.After;
@@ -118,9 +119,10 @@ public class ExpandoColumnAnalyticsDXPEntityBatchEngineTaskItemDelegateTest {
 			Page<DXPEntity> resultPage = _batchEngineTaskItemDelegate.read(
 				null, Pagination.of(1, 7), null, Collections.emptyMap(), null);
 
-			Page<DXPEntity> dxpEntitiesPage = resultPage.getItens();
+			Collection<DXPEntity> dxpEntitiesPage = resultPage.getItems();
 
-			Assert.assertEquals(3, dxpEntitiesPage.size());
+			Assert.assertEquals(
+				dxpEntitiesPage.toString(), 3, dxpEntitiesPage.size());
 		}
 	}
 

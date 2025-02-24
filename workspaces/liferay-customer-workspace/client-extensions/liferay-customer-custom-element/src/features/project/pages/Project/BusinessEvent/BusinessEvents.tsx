@@ -14,15 +14,12 @@ import {ButtonDropDown} from '~/components';
 import {IFilterOption} from '~/components/Filter/Filter';
 import Table, {IRow} from '~/components/Table';
 import TableHeader from '~/components/Table/TableHeader';
-import {hasAdminUserAccount} from '~/features/project/containers/ActivationKeysTable/utils/hasAdminUserAccount';
 import {useCustomerPortal} from '~/features/project/context';
 import {getFormattedDate} from '~/features/project/utils/getFormattedDate';
-import useCurrentKoroneikiAccount from '~/hooks/useCurrentKoroneikiAccount';
 import {getBusinessEvents} from '~/services/liferay/api';
 import {getFormattedTime} from '~/utils/getFormattedTime';
-import {IOrganizationBrief} from '~/utils/types';
 
-import useMyUserAccountByAccountExternalReferenceCode from '../TeamMembers/components/TeamMembersTable/hooks/useMyUserAccountByAccountExternalReferenceCode';
+import useHasAllEventsPermissions from './hooks/useHasAllEventsPermissions';
 import {INITIAL_FILTER} from './utils/constants/initialFilter';
 
 export interface IBusinessEventTicket {
@@ -79,38 +76,12 @@ const BusinessEvents = () => {
 		searchTerm: '',
 		selectedFilters: [],
 	});
-	const {data, loading} = useCurrentKoroneikiAccount();
-	const koroneikiAccount = data?.koroneikiAccountByExternalReferenceCode;
-
-	const {data: myUserAccountData} =
-		useMyUserAccountByAccountExternalReferenceCode(
-			koroneikiAccount?.accountKey,
-			loading
-		);
-	const loggedUserAccount = myUserAccountData?.myUserAccount;
 
 	const [businessEventsTickets, setBusinessEventsTickets] = useState<
 		IBusinessEventTicket[]
 	>([]);
 
-	const isAdminUserAccount = hasAdminUserAccount(myUserAccountData);
-	const hasProjectAdminOrRequesterRole =
-		loggedUserAccount?.selectedAccountSummary?.hasSupportSeatRole;
-	const isLiferayStaff = loggedUserAccount?.isLiferayStaff;
-
-	const hasFLSOrganizationAssociated = useMemo<boolean>(
-		() =>
-			loggedUserAccount?.organizationBriefs?.some(
-				(orgBrief: IOrganizationBrief) => orgBrief.name.includes('FLS')
-			) ?? false,
-		[loggedUserAccount?.organizationBriefs]
-	);
-
-	const hasAllEventsPermissions =
-		isAdminUserAccount ||
-		hasProjectAdminOrRequesterRole ||
-		isLiferayStaff ||
-		hasFLSOrganizationAssociated;
+	const hasAllEventsPermissions = useHasAllEventsPermissions();
 
 	const navigate = useNavigate();
 
@@ -246,9 +217,6 @@ const BusinessEvents = () => {
 										)}
 										borderless
 										className="text-neutral-5"
-										onPointerEnterCapture={undefined}
-										onPointerLeaveCapture={undefined}
-										placeholder={undefined}
 										symbol="ellipsis-v"
 									/>
 								}

@@ -5,9 +5,10 @@
 
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useEffect, useMemo, useState} from 'react';
-import {HashRouter, Route, Routes} from 'react-router-dom';
+import {HashRouter, Outlet, Route, Routes} from 'react-router-dom';
 import {useAppPropertiesContext} from '~/contexts/AppPropertiesContext';
 import getKebabCase from '~/utils/getKebabCase';
+import BusinessEventForm from '~/features/project/containers/BusinessEventForm';
 import DeactivateKeysTable from '~/features/project/containers/DeactivateKeysTable';
 import GenerateNewKey from '~/features/project/containers/GenerateNewKey';
 import {useCustomerPortal} from '~/features/project/context';
@@ -271,6 +272,7 @@ const ProjectRoutes = () => {
 						<Route path="business-events">
 							<Route element={<BusinessEvents />} index />
 							<Route element={<BusinessEventsItem />} path=":id"/>
+							<Route element={<BusinessEventForm />} path="new"/>
 						</Route>
 					)}
 

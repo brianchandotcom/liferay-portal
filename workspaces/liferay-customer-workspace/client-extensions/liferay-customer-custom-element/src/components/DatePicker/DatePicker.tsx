@@ -4,32 +4,34 @@
  */
 
 import {Badge} from '..';
-import ClayForm, {ClayInput} from '@clayui/form';
+import ClayForm from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
-import {FieldHookConfig, useField} from 'formik';
+import {useField} from 'formik';
 import {required, validate} from '~/utils/validations.form';
 
-import './Input.css';
+import './DatePicker.css';
 
-interface IProps extends React.ComponentPropsWithoutRef<typeof ClayInput> {
+import ClayDatePicker from '@clayui/date-picker';
+
+interface IProps {
 	badgeClassName?: string;
-	disableError?: boolean;
 	groupStyle?: string;
-	helper?: any;
+	helper?: string;
 	label: string;
+	name: string;
+	required?: boolean;
 	validations?: Function[];
 }
 
-const Input = ({
+const DatePicker: React.FC<IProps> = ({
 	badgeClassName,
-	disableError,
 	groupStyle,
 	helper,
 	label,
-	validations,
+	validations = [],
 	...props
-}: IProps) => {
+}) => {
 	if (props.required) {
 		validations = validations
 			? [...validations, (value: string) => required(value)]
@@ -38,21 +40,23 @@ const Input = ({
 
 	const [field, meta] = useField({
 		...props,
-		validate: validations
-			? (value: string) => validate(validations, value)
-			: undefined,
-	} as FieldHookConfig<string>);
+		validate: (value) => validate(validations, value),
+	});
+
+	const getStyleStatus = () => {
+		if (meta.touched) {
+			return meta.error ? 'has-error' : 'has-success';
+		}
+
+		return;
+	};
 
 	return (
 		<ClayForm.Group
-			className={classNames('w-100', {
-				groupStyle,
-				'has-error': meta.touched && meta.error,
-				'has-success': meta.touched && !meta.error,
-			})}
+			className={classNames('w-100', getStyleStatus(), groupStyle)}
 		>
 			<label>
-				{`${label} `}
+				{label}
 
 				{props.required && (
 					<span className="inline-item-after reference-mark text-warning">
@@ -60,22 +64,22 @@ const Input = ({
 					</span>
 				)}
 
-				<ClayInput {...field} {...props} />
+				<ClayDatePicker {...field} {...props} />
 			</label>
 
-			{typeof meta.error === 'string' && meta.touched && !disableError ? (
+			{meta.touched && meta.error && props.required && (
 				<Badge badgeClassName={badgeClassName}>
 					<span className="pl-1">{meta.error}</span>
 				</Badge>
-			) : (
-				helper && (
-					<div className="ml-3 pl-3 pr-2 text-neutral-6 text-paragraph-sm">
-						{helper}
-					</div>
-				)
+			)}
+
+			{helper && (
+				<div className="ml-3 pl-3 text-neutral-6 text-paragraph-sm">
+					{helper}
+				</div>
 			)}
 		</ClayForm.Group>
 	);
 };
 
-export default Input;
+export default DatePicker;

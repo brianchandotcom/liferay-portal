@@ -59,6 +59,26 @@ export const addAnalyticsCloudWorkspace = gql`
 	}
 `;
 
+export const addBusinessEvent = gql`
+	mutation addBusinessEvent($businessEvent: InputC_BusinessEvent!) {
+		createBusinessEvent(input: $businessEvent)
+			@rest(
+				method: "POST"
+				type: "C_BusinessEvent"
+				path: "/c/businessevents/"
+			) {
+			currentLiferayVersion
+			description
+			eventType
+			impactedZendeskTicketIds
+			name
+			newLiferayVersione
+			targetGoLiveDateTime
+			timeZone
+		}
+	}
+`;
+
 export const addDXPCloudEnvironment = gql`
 	mutation addDXPCloudEnvironment(
 		$DXPCloudEnvironment: InputC_DXPCloudEnvironment!

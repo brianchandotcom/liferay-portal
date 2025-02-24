@@ -12,6 +12,9 @@ import {required, validate} from '~/utils/validations.form';
 
 import './Select.css';
 
+import PopoverIconButton from '~/features/project/components/PopoverIconButton';
+import i18n from '~/utils/I18n';
+
 interface IOption {
 	disabled?: boolean;
 	label: string;
@@ -19,20 +22,30 @@ interface IOption {
 }
 
 interface IProps {
+	badgeClassName?: string;
 	groupStyle?: string;
 	helper?: string;
 	label: string;
+	link?: string;
+	linkText?: string;
 	name: string;
 	options: IOption[];
 	required?: boolean;
+	showPopover?: boolean;
+	text?: string;
 	validations?: Function[];
 }
 
 const Select: React.FC<IProps> = ({
+	badgeClassName,
 	groupStyle,
 	helper,
 	label,
+	link,
+	linkText,
 	options,
+	showPopover,
+	text,
 	validations = [],
 	...props
 }) => {
@@ -68,6 +81,21 @@ const Select: React.FC<IProps> = ({
 					</span>
 				)}
 
+				{showPopover && (
+					<PopoverIconButton
+						alignPosition="top"
+						formatedHTML={i18n.sub(text || '', [
+							'<a href="' +
+								link +
+								'" target="_blank">' +
+								i18n.translate(linkText || '') +
+								'</a>',
+						])}
+						iconSize="xs"
+						isSubscriptionCard
+					/>
+				)}
+
 				<div className="position-relative">
 					<ClayIcon className="select-icon" symbol="caret-bottom" />
 
@@ -85,7 +113,7 @@ const Select: React.FC<IProps> = ({
 			</label>
 
 			{meta.touched && meta.error && props.required && (
-				<Badge>
+				<Badge badgeClassName={badgeClassName}>
 					<span className="pl-1">{meta.error}</span>
 				</Badge>
 			)}

@@ -7,6 +7,7 @@ import Button from '@clayui/button';
 
 import './TableHeader.css';
 
+import {Link} from 'react-router-dom';
 import Filter from '~/components/Filter';
 import {IFilterOption} from '~/components/Filter/Filter';
 import FilterResults from '~/components/Filter/components/FilterResults/FilterResults';
@@ -53,9 +54,11 @@ const TableHeader = ({
 					</div>
 
 					{hasCreatePermissions && (
-						<Button className="be-create-event">
-							{i18n.translate('create-event')}
-						</Button>
+						<Link to="new">
+							<Button className="be-create-event">
+								{i18n.translate('create-event')}
+							</Button>
+						</Link>
 					)}
 				</div>
 

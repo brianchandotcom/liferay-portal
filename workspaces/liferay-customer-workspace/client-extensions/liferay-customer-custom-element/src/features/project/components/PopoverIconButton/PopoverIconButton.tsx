@@ -10,6 +10,7 @@ type Writeable<T> = {-readonly [P in keyof T]: T[P]};
 
 type PopoverIconButtonProps = {
 	alignPosition?: Writeable<(typeof ALIGN_POSITIONS)[number]>;
+	formatedHTML?: string;
 	iconSize?: 'regular' | 'sm' | 'xs';
 	isSubscriptionCard?: boolean;
 	popoverLink?: {textLink: string; url: string};
@@ -18,6 +19,7 @@ type PopoverIconButtonProps = {
 
 const PopoverIconButton: React.FC<PopoverIconButtonProps> = ({
 	alignPosition = 'bottom',
+	formatedHTML,
 	iconSize = 'sm',
 	isSubscriptionCard,
 	popoverLink,
@@ -42,17 +44,26 @@ const PopoverIconButton: React.FC<PopoverIconButtonProps> = ({
 				/>
 			}
 		>
-			<p className="font-weight-bold m-0">
-				{popoverText}
-				&nbsp;
-				<a
-					href={popoverLink?.url}
-					rel="noopener noreferrer"
-					target="_blank"
-				>
-					{popoverLink?.textLink}
-				</a>
-			</p>
+			{formatedHTML ? (
+				<p
+					className="font-weight-bold m-0"
+					dangerouslySetInnerHTML={{
+						__html: formatedHTML,
+					}}
+				/>
+			) : (
+				<p className="font-weight-bold m-0">
+					{popoverText}
+					&nbsp;
+					<a
+						href={popoverLink?.url}
+						rel="noopener noreferrer"
+						target="_blank"
+					>
+						{popoverLink?.textLink}
+					</a>
+				</p>
+			)}
 		</ClayPopover>
 	);
 };

@@ -115,7 +115,7 @@ export function ModalPublishObjectDefinitions({
 		// eslint-disable-next-line no-async-promise-executor
 		return new Promise<ObjectDefinition | number>(async (resolve) => {
 			try {
-				const objectDefinitionResponse =
+				const objectDefinitionResponse: any =
 					await API.postObjectDefinitionPublish(objectDefinitionId);
 
 				const objectDefinitionResponseJSON =

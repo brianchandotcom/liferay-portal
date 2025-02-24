@@ -137,9 +137,8 @@ export default function EditObjectDetails({
 			}
 
 			if (!draft) {
-				const publishResponse = await API.postObjectDefinitionPublish(
-					values.id as number
-				);
+				const publishResponse: any =
+					await API.postObjectDefinitionPublish(values.id as number);
 
 				if (!publishResponse.ok) {
 					const {title} = (await publishResponse.json()) as {

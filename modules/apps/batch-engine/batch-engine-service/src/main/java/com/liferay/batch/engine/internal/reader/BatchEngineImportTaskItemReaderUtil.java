@@ -89,23 +89,10 @@ public class BatchEngineImportTaskItemReaderUtil {
 			if (field != null) {
 				field.setAccessible(true);
 
-				ObjectMapper objectMapper;
-
-				Class<?> fieldType = field.getType();
-				Object entryValue = entry.getValue();
-
-				if (Objects.equals(
-						batchEngineImportTask.getContentType(), "CSV") &&
-					_isCSVMapColumn(fieldType, entryValue)) {
-
-					objectMapper = _csvObjectMapper;
-				}
-				else {
-					objectMapper = _getObjectMapper(field, keepCreatorInfo);
-				}
+				ObjectMapper objectMapper = _getObjectMapper(field, keepCreatorInfo, batchEngineImportTask ,entry);
 
 				field.set(
-					item, objectMapper.convertValue(entryValue, fieldType));
+					item, objectMapper.convertValue(entry.getValue(), field.getType()));
 
 				continue;
 			}
@@ -251,7 +238,8 @@ public class BatchEngineImportTaskItemReaderUtil {
 	}
 
 	private static ObjectMapper _getObjectMapper(
-			Field field, boolean keepCreatorInfo)
+			Field field, boolean keepCreatorInfo,BatchEngineImportTask batchEngineImportTask,
+			Map.Entry<String, Object> entry)
 		throws IllegalAccessException, InstantiationException {
 
 		if (keepCreatorInfo && StringUtil.equals(field.getName(), "creator")) {
@@ -260,9 +248,6 @@ public class BatchEngineImportTaskItemReaderUtil {
 					addMixIn(field.getType(), CreatorMixin.class);
 
 					SimpleModule simpleModule = new SimpleModule();
-
-					simpleModule.addDeserializer(
-						Map.class, new MapStdCSVDeserializer());
 
 					registerModule(simpleModule);
 				}
@@ -273,6 +258,10 @@ public class BatchEngineImportTaskItemReaderUtil {
 			JsonDeserialize.class);
 
 		if (ArrayUtil.isEmpty(jsonDeserializes)) {
+			if (Objects.equals(
+				batchEngineImportTask.getContentType(), "CSV") && _isCSVMapColumn(field.getType(), entry.getValue())) {
+				return _csvObjectMapper;
+			}
 			return _objectMapper;
 		}
 

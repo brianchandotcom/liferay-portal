@@ -58,6 +58,10 @@ public abstract class BaseUserResourceImpl implements UserResource {
 			),
 			@io.swagger.v3.oas.annotations.Parameter(
 				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "filter"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
 				name = "startIndex"
 			)
 		}
@@ -75,7 +79,8 @@ public abstract class BaseUserResourceImpl implements UserResource {
 			Integer count,
 			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
 			@javax.ws.rs.QueryParam("startIndex")
-			Integer startIndex)
+			Integer startIndex,
+			@javax.ws.rs.core.Context Filter filter)
 		throws Exception {
 
 		return null;

@@ -659,6 +659,86 @@ public class DBPartitionUtil {
 		}
 	}
 
+	private static void _copySchema(long companyId) throws PortalException {
+		Connection connection = CurrentConnectionUtil.getConnection(
+			InfrastructureUtil.getDataSource());
+
+		String extractedPartitionName = _getExtractedPartitionName(companyId);
+		String partitionName = getPartitionName(companyId);
+
+		try (AutoCloseable autoCloseable = _disableAutoCommit(connection);
+			PreparedStatement preparedStatement = connection.prepareStatement(
+				_dbPartitionDB.getCreatePartitionSQL(
+					connection, extractedPartitionName))) {
+
+			preparedStatement.executeUpdate();
+
+			DatabaseMetaData databaseMetaData = connection.getMetaData();
+
+			try (SafeCloseable safeCloseable = CompanyThreadLocal.lock(
+					companyId);
+				ResultSet resultSet = databaseMetaData.getTables(
+					_dbPartitionDB.getCatalog(connection, partitionName),
+					_dbPartitionDB.getSchema(connection, partitionName), null,
+					new String[] {"TABLE", "VIEW"});
+				Statement statement = connection.createStatement()) {
+
+				while (resultSet.next()) {
+					String fromTableName = resultSet.getString("TABLE_NAME");
+
+					if (Objects.equals(
+							resultSet.getString("TABLE_TYPE"), "VIEW")) {
+
+						statement.executeUpdate(
+							_dbPartitionDB.getCreateViewSQL(
+								_defaultPartitionName, extractedPartitionName,
+								fromTableName));
+
+						continue;
+					}
+
+					statement.executeUpdate(
+						_dbPartitionDB.getCreateTableSQL(
+							connection, partitionName, extractedPartitionName,
+							fromTableName, fromTableName));
+
+					statement.executeUpdate(
+						_getCopyDataSQL(
+							partitionName, extractedPartitionName,
+							fromTableName, fromTableName,
+							_getColumnNames(connection, fromTableName),
+							StringPool.BLANK));
+				}
+			}
+
+			try (Statement statement = connection.createStatement()) {
+				for (String createRuleSQL :
+						_dbPartitionDB.getCreateRulesSQL(
+							extractedPartitionName)) {
+
+					statement.executeUpdate(createRuleSQL);
+				}
+			}
+
+			connection.commit();
+		}
+		catch (Exception exception) {
+			if (!_dbPartitionDB.isDDLTransactional()) {
+				try (Statement statement = connection.createStatement()) {
+					statement.executeUpdate(
+						_dbPartitionDB.getDropPartitionSQL(
+							extractedPartitionName));
+				}
+				catch (SQLException sqlException) {
+					throw new PortalException(
+						"Unable to roll back schema extraction", sqlException);
+				}
+			}
+
+			throw new PortalException(exception);
+		}
+	}
+
 	private static void _deleteCompanyData(
 			long companyId, String tableName, String fromPartitionName,
 			Statement statement)
@@ -746,7 +826,7 @@ public class DBPartitionUtil {
 		DBInspector dbInspector = new DBInspector(connection);
 
 		try {
-			_extractSchema(companyId);
+			_copySchema(companyId);
 
 			DatabaseMetaData databaseMetaData = connection.getMetaData();
 
@@ -781,86 +861,6 @@ public class DBPartitionUtil {
 
 			throw new PortalException(
 				"Extraction of database partition was rolled back", exception);
-		}
-	}
-
-	private static void _extractSchema(long companyId) throws PortalException {
-		Connection connection = CurrentConnectionUtil.getConnection(
-			InfrastructureUtil.getDataSource());
-
-		String extractedPartitionName = _getExtractedPartitionName(companyId);
-		String partitionName = getPartitionName(companyId);
-
-		try (AutoCloseable autoCloseable = _disableAutoCommit(connection);
-			PreparedStatement preparedStatement = connection.prepareStatement(
-				_dbPartitionDB.getCreatePartitionSQL(
-					connection, extractedPartitionName))) {
-
-			preparedStatement.executeUpdate();
-
-			DatabaseMetaData databaseMetaData = connection.getMetaData();
-
-			try (SafeCloseable safeCloseable = CompanyThreadLocal.lock(
-					companyId);
-				ResultSet resultSet = databaseMetaData.getTables(
-					_dbPartitionDB.getCatalog(connection, partitionName),
-					_dbPartitionDB.getSchema(connection, partitionName), null,
-					new String[] {"TABLE", "VIEW"});
-				Statement statement = connection.createStatement()) {
-
-				while (resultSet.next()) {
-					String fromTableName = resultSet.getString("TABLE_NAME");
-
-					if (Objects.equals(
-							resultSet.getString("TABLE_TYPE"), "VIEW")) {
-
-						statement.executeUpdate(
-							_dbPartitionDB.getCreateViewSQL(
-								_defaultPartitionName, extractedPartitionName,
-								fromTableName));
-
-						continue;
-					}
-
-					statement.executeUpdate(
-						_dbPartitionDB.getCreateTableSQL(
-							connection, partitionName, extractedPartitionName,
-							fromTableName, fromTableName));
-
-					statement.executeUpdate(
-						_getCopyDataSQL(
-							partitionName, extractedPartitionName,
-							fromTableName, fromTableName,
-							_getColumnNames(connection, fromTableName),
-							StringPool.BLANK));
-				}
-			}
-
-			try (Statement statement = connection.createStatement()) {
-				for (String createRuleSQL :
-						_dbPartitionDB.getCreateRulesSQL(
-							extractedPartitionName)) {
-
-					statement.executeUpdate(createRuleSQL);
-				}
-			}
-
-			connection.commit();
-		}
-		catch (Exception exception) {
-			if (!_dbPartitionDB.isDDLTransactional()) {
-				try (Statement statement = connection.createStatement()) {
-					statement.executeUpdate(
-						_dbPartitionDB.getDropPartitionSQL(
-							extractedPartitionName));
-				}
-				catch (SQLException sqlException) {
-					throw new PortalException(
-						"Unable to roll back schema extraction", sqlException);
-				}
-			}
-
-			throw new PortalException(exception);
 		}
 	}
 

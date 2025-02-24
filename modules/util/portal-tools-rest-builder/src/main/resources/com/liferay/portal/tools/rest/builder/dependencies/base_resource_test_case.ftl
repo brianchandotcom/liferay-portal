@@ -1414,17 +1414,10 @@ public abstract class Base${schemaName}ResourceTestCase {
 					${schemaName} get${schemaName} = ${schemaVarName}Resource.${javaMethodSignature.methodName}(
 
 					<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
-						<#if stringUtil.equals(javaMethodParameter.parameterName, "pagination")>
-							Pagination.of(1, 2)
-						<#elseif freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation)>
-							<#if freeMarkerTool.isIdParameter(javaMethodParameter, schemaName) && stringUtil.equals(javaMethodParameter.parameterType, "java.lang.Long")>
-								<#assign idJavaMethodParameter = javaMethodParameter />
-								post${schemaName}.getId()
-							<#elseif properties?keys?seq_contains(javaMethodParameter.parameterName)>
-								<#if freeMarkerTool.isParameterNameSchemaRelated(javaMethodParameter.parameterName, javaMethodSignature.path, schemaName)>
-									post${schemaName}.get${javaMethodParameter.parameterName?cap_first}()
-								</#if>
-							</#if>
+						<#if freeMarkerTool.isIdParameter(javaMethodParameter, schemaName)>
+							<#assign idJavaMethodParameter = javaMethodParameter />
+
+							post${schemaName}.getId()
 						<#else>
 							null
 						</#if>

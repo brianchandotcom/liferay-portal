@@ -748,6 +748,19 @@ public abstract class BasePhoneResourceImpl
 
 			return phone;
 		};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(phones, phoneUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				phones, phoneUnsafeFunction::apply);
+		}
+		else {
+			for (Phone phone : phones) {
+				phoneUnsafeFunction.apply(phone);
+			}
+		}
 	}
 
 	public Set<String> getAvailableCreateStrategies() {

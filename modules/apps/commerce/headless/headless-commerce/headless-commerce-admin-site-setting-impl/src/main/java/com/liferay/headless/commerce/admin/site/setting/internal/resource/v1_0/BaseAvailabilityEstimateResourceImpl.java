@@ -381,6 +381,23 @@ public abstract class BaseAvailabilityEstimateResourceImpl
 
 				return availabilityEstimate;
 			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				availabilityEstimates, availabilityEstimateUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				availabilityEstimates,
+				availabilityEstimateUnsafeFunction::apply);
+		}
+		else {
+			for (AvailabilityEstimate availabilityEstimate :
+					availabilityEstimates) {
+
+				availabilityEstimateUnsafeFunction.apply(availabilityEstimate);
+			}
+		}
 	}
 
 	public Set<String> getAvailableCreateStrategies() {

@@ -201,6 +201,20 @@ public abstract class BaseFormDocumentResourceImpl
 
 				return formDocument;
 			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				formDocuments, formDocumentUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				formDocuments, formDocumentUnsafeFunction::apply);
+		}
+		else {
+			for (FormDocument formDocument : formDocuments) {
+				formDocumentUnsafeFunction.apply(formDocument);
+			}
+		}
 	}
 
 	public Set<String> getAvailableCreateStrategies() {

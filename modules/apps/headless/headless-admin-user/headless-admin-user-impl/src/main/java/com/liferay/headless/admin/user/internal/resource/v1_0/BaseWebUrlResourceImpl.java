@@ -748,6 +748,19 @@ public abstract class BaseWebUrlResourceImpl
 
 				return webUrl;
 			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(webUrls, webUrlUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				webUrls, webUrlUnsafeFunction::apply);
+		}
+		else {
+			for (WebUrl webUrl : webUrls) {
+				webUrlUnsafeFunction.apply(webUrl);
+			}
+		}
 	}
 
 	public Set<String> getAvailableCreateStrategies() {

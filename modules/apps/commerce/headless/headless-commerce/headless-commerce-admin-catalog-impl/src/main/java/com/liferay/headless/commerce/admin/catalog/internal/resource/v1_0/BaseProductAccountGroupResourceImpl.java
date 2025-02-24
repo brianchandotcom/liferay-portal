@@ -293,6 +293,22 @@ public abstract class BaseProductAccountGroupResourceImpl
 
 				return productAccountGroup;
 			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				productAccountGroups, productAccountGroupUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				productAccountGroups, productAccountGroupUnsafeFunction::apply);
+		}
+		else {
+			for (ProductAccountGroup productAccountGroup :
+					productAccountGroups) {
+
+				productAccountGroupUnsafeFunction.apply(productAccountGroup);
+			}
+		}
 	}
 
 	public Set<String> getAvailableCreateStrategies() {

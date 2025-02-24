@@ -283,6 +283,20 @@ public abstract class BaseProductChannelResourceImpl
 
 				return productChannel;
 			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				productChannels, productChannelUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				productChannels, productChannelUnsafeFunction::apply);
+		}
+		else {
+			for (ProductChannel productChannel : productChannels) {
+				productChannelUnsafeFunction.apply(productChannel);
+			}
+		}
 	}
 
 	public Set<String> getAvailableCreateStrategies() {

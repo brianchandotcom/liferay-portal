@@ -340,6 +340,25 @@ public abstract class BaseSkuVirtualSettingsFileEntryResourceImpl
 
 					return skuVirtualSettingsFileEntry;
 				};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				skuVirtualSettingsFileEntries,
+				skuVirtualSettingsFileEntryUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				skuVirtualSettingsFileEntries,
+				skuVirtualSettingsFileEntryUnsafeFunction::apply);
+		}
+		else {
+			for (SkuVirtualSettingsFileEntry skuVirtualSettingsFileEntry :
+					skuVirtualSettingsFileEntries) {
+
+				skuVirtualSettingsFileEntryUnsafeFunction.apply(
+					skuVirtualSettingsFileEntry);
+			}
+		}
 	}
 
 	public Set<String> getAvailableCreateStrategies() {

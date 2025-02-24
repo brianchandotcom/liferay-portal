@@ -187,8 +187,25 @@ public abstract class BaseExperimentResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (Experiment experiment : experiments) {
-			deleteExperiment(experiment.getId());
+		UnsafeFunction<Experiment, Experiment, Exception>
+			experimentUnsafeFunction = experiment -> {
+				deleteExperiment(experiment.getId());
+
+				return experiment;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				experiments, experimentUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				experiments, experimentUnsafeFunction::apply);
+		}
+		else {
+			for (Experiment experiment : experiments) {
+				experimentUnsafeFunction.apply(experiment);
+			}
 		}
 	}
 

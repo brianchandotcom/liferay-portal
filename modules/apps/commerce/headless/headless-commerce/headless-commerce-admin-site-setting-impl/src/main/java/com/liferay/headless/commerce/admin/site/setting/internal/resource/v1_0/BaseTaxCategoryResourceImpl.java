@@ -347,6 +347,20 @@ public abstract class BaseTaxCategoryResourceImpl
 
 				return taxCategory;
 			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				taxCategories, taxCategoryUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				taxCategories, taxCategoryUnsafeFunction::apply);
+		}
+		else {
+			for (TaxCategory taxCategory : taxCategories) {
+				taxCategoryUnsafeFunction.apply(taxCategory);
+			}
+		}
 	}
 
 	public Set<String> getAvailableCreateStrategies() {

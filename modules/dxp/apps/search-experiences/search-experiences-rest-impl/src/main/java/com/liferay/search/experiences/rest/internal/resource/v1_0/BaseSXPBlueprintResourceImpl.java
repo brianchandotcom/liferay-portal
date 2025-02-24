@@ -765,8 +765,25 @@ public abstract class BaseSXPBlueprintResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (SXPBlueprint sxpBlueprint : sxpBlueprints) {
-			deleteSXPBlueprint(sxpBlueprint.getId());
+		UnsafeFunction<SXPBlueprint, SXPBlueprint, Exception>
+			sxpBlueprintUnsafeFunction = sxpBlueprint -> {
+				deleteSXPBlueprint(sxpBlueprint.getId());
+
+				return sxpBlueprint;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				sxpBlueprints, sxpBlueprintUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				sxpBlueprints, sxpBlueprintUnsafeFunction::apply);
+		}
+		else {
+			for (SXPBlueprint sxpBlueprint : sxpBlueprints) {
+				sxpBlueprintUnsafeFunction.apply(sxpBlueprint);
+			}
 		}
 	}
 

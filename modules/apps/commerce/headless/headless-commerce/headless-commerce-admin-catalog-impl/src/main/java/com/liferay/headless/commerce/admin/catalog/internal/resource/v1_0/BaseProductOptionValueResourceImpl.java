@@ -365,6 +365,20 @@ public abstract class BaseProductOptionValueResourceImpl
 
 				return productOptionValue;
 			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				productOptionValues, productOptionValueUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				productOptionValues, productOptionValueUnsafeFunction::apply);
+		}
+		else {
+			for (ProductOptionValue productOptionValue : productOptionValues) {
+				productOptionValueUnsafeFunction.apply(productOptionValue);
+			}
+		}
 	}
 
 	public Set<String> getAvailableCreateStrategies() {

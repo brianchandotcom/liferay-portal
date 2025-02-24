@@ -382,6 +382,20 @@ public abstract class BaseCTProcessResourceImpl
 
 				return ctProcess;
 			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				ctProcesses, ctProcessUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				ctProcesses, ctProcessUnsafeFunction::apply);
+		}
+		else {
+			for (CTProcess ctProcess : ctProcesses) {
+				ctProcessUnsafeFunction.apply(ctProcess);
+			}
+		}
 	}
 
 	public Set<String> getAvailableCreateStrategies() {

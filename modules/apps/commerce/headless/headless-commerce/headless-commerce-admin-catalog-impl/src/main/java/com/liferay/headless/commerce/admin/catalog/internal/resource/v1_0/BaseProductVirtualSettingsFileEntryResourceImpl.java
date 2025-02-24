@@ -341,6 +341,26 @@ public abstract class BaseProductVirtualSettingsFileEntryResourceImpl
 
 					return productVirtualSettingsFileEntry;
 				};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				productVirtualSettingsFileEntries,
+				productVirtualSettingsFileEntryUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				productVirtualSettingsFileEntries,
+				productVirtualSettingsFileEntryUnsafeFunction::apply);
+		}
+		else {
+			for (ProductVirtualSettingsFileEntry
+					productVirtualSettingsFileEntry :
+						productVirtualSettingsFileEntries) {
+
+				productVirtualSettingsFileEntryUnsafeFunction.apply(
+					productVirtualSettingsFileEntry);
+			}
+		}
 	}
 
 	public Set<String> getAvailableCreateStrategies() {

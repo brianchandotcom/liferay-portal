@@ -421,6 +421,20 @@ public abstract class BaseDiscountRuleResourceImpl
 
 				return discountRule;
 			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				discountRules, discountRuleUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				discountRules, discountRuleUnsafeFunction::apply);
+		}
+		else {
+			for (DiscountRule discountRule : discountRules) {
+				discountRuleUnsafeFunction.apply(discountRule);
+			}
+		}
 	}
 
 	public Set<String> getAvailableCreateStrategies() {

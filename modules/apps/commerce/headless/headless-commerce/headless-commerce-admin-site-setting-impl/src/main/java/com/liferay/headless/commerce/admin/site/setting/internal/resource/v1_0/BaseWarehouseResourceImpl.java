@@ -354,6 +354,20 @@ public abstract class BaseWarehouseResourceImpl
 
 				return warehouse;
 			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				warehouses, warehouseUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				warehouses, warehouseUnsafeFunction::apply);
+		}
+		else {
+			for (Warehouse warehouse : warehouses) {
+				warehouseUnsafeFunction.apply(warehouse);
+			}
+		}
 	}
 
 	public Set<String> getAvailableCreateStrategies() {

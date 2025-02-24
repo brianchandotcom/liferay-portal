@@ -529,13 +529,12 @@ public class CustomFDSSerializer
 			new DefaultDTOConverterContext(
 				false, null, null, null, null,
 				LocaleUtil.getMostRelevantLocale(), null, null);
-
-		ObjectEntryThreadLocal.setSkipObjectEntryResourcePermission(true);
-
 		DefaultObjectEntryManager defaultObjectEntryManager =
 			DefaultObjectEntryManagerProvider.provide(
 				_objectEntryManagerRegistry.getObjectEntryManager(
 					objectDefinition.getStorageType()));
+
+		ObjectEntryThreadLocal.setSkipObjectEntryResourcePermission(true);
 
 		try {
 			objectEntry = defaultObjectEntryManager.getObjectEntry(
@@ -561,14 +560,14 @@ public class CustomFDSSerializer
 		ObjectDefinition objectDefinition, ObjectEntry objectEntry,
 		Predicate<ObjectEntry> predicate, String relationshipName) {
 
-		ObjectEntryThreadLocal.setSkipObjectEntryResourcePermission(true);
-
 		Collection<ObjectEntry> objectEntries = null;
 
 		DefaultObjectEntryManager defaultObjectEntryManager =
 			DefaultObjectEntryManagerProvider.provide(
 				_objectEntryManagerRegistry.getObjectEntryManager(
 					objectDefinition.getStorageType()));
+
+		ObjectEntryThreadLocal.setSkipObjectEntryResourcePermission(true);
 
 		try {
 			Page<ObjectEntry> relatedObjectEntriesPage =

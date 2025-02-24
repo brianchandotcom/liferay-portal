@@ -30,6 +30,7 @@ import java.io.Serializable;
 
 import java.lang.management.ManagementFactory;
 
+import java.util.function.Consumer;
 import java.util.jar.Attributes;
 import java.util.jar.JarFile;
 import java.util.jar.JarOutputStream;
@@ -306,10 +307,7 @@ public class PortalCacheExtenderTest {
 		}
 	}
 
-	private String _generateXMLContent(
-		int cacheEntries, String[] cacheNames, int maxElementsInMemory,
-		int timeToIdleSeconds) {
-
+	private String _generateXMLContent(Consumer<StringBundler> consumer) {
 		StringBundler sb = new StringBundler();
 
 		sb.append("<ehcache dynamicConfig=\"true\" monitoring=\"off\" ");
@@ -317,21 +315,31 @@ public class PortalCacheExtenderTest {
 		sb.append("/XMLSchema-instance\" xsi:noNamespaceSchemaLocation=\"");
 		sb.append("http://www.ehcache.org/ehcache.xsd\">");
 
-		for (int i = 1; i <= cacheEntries; i++) {
-			for (String cacheName : cacheNames) {
-				sb.append("<cache maxElementsInMemory=\"");
-				sb.append(maxElementsInMemory);
-				sb.append("\" name=\"");
-				sb.append(cacheName + i);
-				sb.append("\" timeToIdleSeconds=\"");
-				sb.append(timeToIdleSeconds);
-				sb.append("\"> </cache>");
-			}
-		}
+		consumer.accept(sb);
 
 		sb.append("\" </ehcache>");
 
 		return sb.toString();
+	}
+
+	private String _generateXMLContent(
+		int cacheEntries, String[] cacheNames, int maxElementsInMemory,
+		int timeToIdleSeconds) {
+
+		return _generateXMLContent(
+			sb -> {
+				for (int i = 1; i <= cacheEntries; i++) {
+					for (String cacheName : cacheNames) {
+						sb.append("<cache maxElementsInMemory=\"");
+						sb.append(maxElementsInMemory);
+						sb.append("\" name=\"");
+						sb.append(cacheName + i);
+						sb.append("\" timeToIdleSeconds=\"");
+						sb.append(timeToIdleSeconds);
+						sb.append("\"> </cache>");
+					}
+				}
+			});
 	}
 
 	private Bundle _installBundle(

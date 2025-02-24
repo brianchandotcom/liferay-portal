@@ -35,6 +35,7 @@ export type State = {
 	id: number | null;
 	label: string;
 	name: string;
+	selectedItem: {type: 'structure'} | {id: string; type: 'field'};
 	status: Status;
 };
 
@@ -44,6 +45,7 @@ const INITIAL_STATE: State = {
 	id: null,
 	label: DEFAULT_STRUCTURE_LABEL,
 	name: objectDefinitionUtils.normalizeName(DEFAULT_STRUCTURE_LABEL),
+	selectedItem: {type: 'structure'},
 	status: 'new',
 };
 
@@ -60,6 +62,11 @@ type DeleteFieldAction = {fieldName: Field['name']; type: 'delete-field'};
 
 type PublishStructureAction = {type: 'publish-structure'};
 
+type SelectItemAction = {
+	item: {type: 'structure'} | {id: string; type: 'field'};
+	type: 'select-item';
+};
+
 type SetErrorAction = {error: string | null; type: 'set-error'};
 
 type setLabelAction = {label: string; type: 'set-label'};
@@ -74,9 +81,10 @@ export type Action =
 	| CreateStructureAction
 	| DeleteFieldAction
 	| PublishStructureAction
-	| UpdateStructureAction
+	| SelectItemAction
 	| SetErrorAction
-	| setLabelAction;
+	| setLabelAction
+	| UpdateStructureAction;
 
 function reducer(state: State, action: Action) {
 	switch (action.type) {
@@ -122,6 +130,11 @@ function reducer(state: State, action: Action) {
 				error: null,
 				fields,
 			};
+		}
+		case 'select-item': {
+			const {item} = action;
+
+			return {...state, selectedItem: item};
 		}
 		case 'set-error':
 			return {...state, error: action.error};

@@ -643,16 +643,6 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 				pageTemplateSet.getExternalReferenceCode(), pageTemplate);
 	}
 
-	private void _assertPageSpecifications(
-			Layout layout, PageSpecification[] pageSpecifications)
-		throws Exception {
-
-		Assert.assertFalse(layout.isPublished());
-
-		PageSpecificationsTestUtil.assertPageSpecifications(
-			layout, pageSpecifications);
-	}
-
 	private void
 			_assertPostSiteSiteByExternalReferenceCodePageTemplatePageSpecificationProblemException(
 				String pageTemplateExternalReferenceCode)
@@ -969,9 +959,13 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 					getPageTemplate.getExternalReferenceCode(),
 					testGroup.getGroupId());
 
-		_assertPageSpecifications(
-			_layoutLocalService.getLayout(layoutPageTemplateEntry.getPlid()),
-			getPageTemplate.getPageSpecifications());
+		Layout layout = _layoutLocalService.getLayout(
+			layoutPageTemplateEntry.getPlid());
+
+		Assert.assertFalse(layout.isPublished());
+
+		PageSpecificationsTestUtil.assertPageSpecifications(
+			layout, getPageTemplate.getPageSpecifications());
 	}
 
 	private void _testPatchSiteSiteByExternalReferenceCodePageTemplate(

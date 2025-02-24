@@ -21,6 +21,7 @@ FilesSectionDisplayContext filesSectionDisplayContext = (FilesSectionDisplayCont
 		formName="fm"
 		id="<%= CMSSiteInitializerFDSNames.FILES_SECTION %>"
 		itemsPerPage="<%= 10 %>"
+		propsTransformer="{FilesFDSPropsTransformer} from site-cms-site-initializer"
 		selectedItemsKey="id"
 		selectionType="multiple"
 		style="fluid"

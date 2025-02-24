@@ -49,6 +49,7 @@ public class FilesSectionDisplayContext extends BaseSectionDisplayContext {
 			}
 		).addPrimaryDropdownItem(
 			dropdownItem -> {
+				dropdownItem.putData("action", "createFolder");
 				dropdownItem.setIcon("folder");
 				dropdownItem.setLabel(
 					LanguageUtil.get(httpServletRequest, "folder"));

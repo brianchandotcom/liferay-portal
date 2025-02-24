@@ -5,7 +5,7 @@
 
 import createFolderAction from './actions/createFolderAction';
 
-export default function ContentFDSPropsTransformer({...props}) {
+export default function FilesFDSPropsTransformer({...props}) {
 	return {
 		...props,
 		onCreationActionClick: ({action}: {action: string}) => {

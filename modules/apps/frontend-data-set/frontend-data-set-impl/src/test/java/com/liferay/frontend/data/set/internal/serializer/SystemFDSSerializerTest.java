@@ -959,7 +959,6 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 			fdsSortItemList2,
 			_systemFDSSerializer.serializeSorts(
 				FDS_NAMES[1], httpServletRequest));
-
 		Assert.assertNotEquals(
 			_systemFDSSerializer.serializeSorts(
 				FDS_NAMES[0], httpServletRequest),

@@ -666,39 +666,36 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		// Different sorts
 
-		Map<String, Object> properties1 =
-			HashMapBuilder.<String, Object>put(
-				"default", true
-			).put(
-				"fieldName", FIELD_NAMES[0]
-			).put(
-				"label", LABELS[0]
-			).put(
-				"orderType", "asc"
-			).build();
-		Map<String, Object> properties2 =
-			HashMapBuilder.<String, Object>put(
-				"default", false
-			).put(
-				"fieldName", FIELD_NAMES[1]
-			).put(
-				"label", LABELS[1]
-			).put(
-				"orderType", "desc"
-			).build();
+		Map<String, Object> properties1 = HashMapBuilder.<String, Object>put(
+			"default", true
+		).put(
+			"fieldName", FIELD_NAMES[0]
+		).put(
+			"label", LABELS[0]
+		).put(
+			"orderType", "asc"
+		).build();
+		Map<String, Object> properties2 = HashMapBuilder.<String, Object>put(
+			"default", false
+		).put(
+			"fieldName", FIELD_NAMES[1]
+		).put(
+			"label", LABELS[1]
+		).put(
+			"orderType", "desc"
+		).build();
 
 		_mockSerializeSorts(FDS_NAMES[0], properties1, properties2);
 
-		Map<String, Object> properties3 =
-			HashMapBuilder.<String, Object>put(
-				"default", true
-			).put(
-				"fieldName", FIELD_NAMES[2]
-			).put(
-				"label", LABELS[2]
-			).put(
-				"orderType", "asc"
-			).build();
+		Map<String, Object> properties3 = HashMapBuilder.<String, Object>put(
+			"default", true
+		).put(
+			"fieldName", FIELD_NAMES[2]
+		).put(
+			"label", LABELS[2]
+		).put(
+			"orderType", "asc"
+		).build();
 
 		_mockSerializeSorts(FDS_NAMES[1], properties3);
 

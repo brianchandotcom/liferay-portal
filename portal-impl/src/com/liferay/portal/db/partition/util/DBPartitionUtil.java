@@ -659,26 +659,23 @@ public class DBPartitionUtil {
 		}
 	}
 
-	private static void _copySchema(Connection connection, long companyId)
+	private static void _copySchema(
+			Connection connection, String sourcePartitionName,
+			String targetPartitionName)
 		throws SQLException {
-
-		String extractedPartitionName = _getExtractedPartitionName(companyId);
-		String partitionName = getPartitionName(companyId);
 
 		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				_dbPartitionDB.getCreatePartitionSQL(
-					connection, extractedPartitionName))) {
+					connection, targetPartitionName))) {
 
 			preparedStatement.executeUpdate();
 
 			DatabaseMetaData databaseMetaData = connection.getMetaData();
 
-			try (SafeCloseable safeCloseable = CompanyThreadLocal.lock(
-					companyId);
-				ResultSet resultSet = databaseMetaData.getTables(
-					_dbPartitionDB.getCatalog(connection, partitionName),
-					_dbPartitionDB.getSchema(connection, partitionName), null,
-					new String[] {"TABLE", "VIEW"});
+			try (ResultSet resultSet = databaseMetaData.getTables(
+					_dbPartitionDB.getCatalog(connection, sourcePartitionName),
+					_dbPartitionDB.getSchema(connection, sourcePartitionName),
+					null, new String[] {"TABLE", "VIEW"});
 				Statement statement = connection.createStatement()) {
 
 				while (resultSet.next()) {
@@ -689,7 +686,7 @@ public class DBPartitionUtil {
 
 						statement.executeUpdate(
 							_dbPartitionDB.getCreateViewSQL(
-								_defaultPartitionName, extractedPartitionName,
+								_defaultPartitionName, targetPartitionName,
 								fromTableName));
 
 						continue;
@@ -697,12 +694,12 @@ public class DBPartitionUtil {
 
 					statement.executeUpdate(
 						_dbPartitionDB.getCreateTableSQL(
-							connection, partitionName, extractedPartitionName,
-							fromTableName, fromTableName));
+							connection, sourcePartitionName,
+							targetPartitionName, fromTableName, fromTableName));
 
 					statement.executeUpdate(
 						_getCopyDataSQL(
-							partitionName, extractedPartitionName,
+							sourcePartitionName, targetPartitionName,
 							fromTableName, fromTableName,
 							_getColumnNames(connection, fromTableName),
 							StringPool.BLANK));
@@ -711,8 +708,7 @@ public class DBPartitionUtil {
 
 			try (Statement statement = connection.createStatement()) {
 				for (String createRuleSQL :
-						_dbPartitionDB.getCreateRulesSQL(
-							extractedPartitionName)) {
+						_dbPartitionDB.getCreateRulesSQL(targetPartitionName)) {
 
 					statement.executeUpdate(createRuleSQL);
 				}
@@ -806,8 +802,11 @@ public class DBPartitionUtil {
 
 		DBInspector dbInspector = new DBInspector(connection);
 
+		String targetPartitionName = _getExtractedPartitionName(companyId);
+
 		try (AutoCloseable autoCloseable = _disableAutoCommit(connection)) {
-			_copySchema(connection, companyId);
+			_copySchema(
+				connection, getPartitionName(companyId), targetPartitionName);
 
 			DatabaseMetaData databaseMetaData = connection.getMetaData();
 
@@ -836,7 +835,7 @@ public class DBPartitionUtil {
 				try (Statement statement = connection.createStatement()) {
 					statement.executeUpdate(
 						_dbPartitionDB.getDropPartitionSQL(
-							_getExtractedPartitionName(companyId)));
+							targetPartitionName));
 				}
 				catch (SQLException sqlException) {
 					throw new PortalException(

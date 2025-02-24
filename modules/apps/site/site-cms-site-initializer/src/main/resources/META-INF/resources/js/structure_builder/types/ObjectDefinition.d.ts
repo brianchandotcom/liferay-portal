@@ -7,7 +7,7 @@ import {FieldBusinessType} from '../utils/fieldType';
 
 export type ObjectField = {
 	businessType: FieldBusinessType;
-	externalReferenceCode?: number;
+	externalReferenceCode: string;
 	label: {
 		en_US: string;
 	};

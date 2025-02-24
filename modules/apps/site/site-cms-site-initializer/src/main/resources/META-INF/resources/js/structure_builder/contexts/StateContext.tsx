@@ -69,7 +69,7 @@ type SelectItemAction = {
 
 type SetErrorAction = {error: string | null; type: 'set-error'};
 
-type setLabelAction = {label: string; type: 'set-label'};
+type SetLabelAction = {label: string; type: 'set-label'};
 
 type UpdateStructureAction = {
 	objectFields: ObjectField[];
@@ -83,7 +83,7 @@ export type Action =
 	| PublishStructureAction
 	| SelectItemAction
 	| SetErrorAction
-	| setLabelAction
+	| SetLabelAction
 	| UpdateStructureAction;
 
 function reducer(state: State, action: Action) {

@@ -10,6 +10,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.ModelListenerException;
@@ -72,17 +73,11 @@ public class GroupModelListener extends BaseModelListener<Group> {
 			(ObjectEntry objectEntry) ->
 				_objectEntryLocalService.deleteObjectEntry(objectEntry));
 
-		boolean disassociateRelatedModels =
-			ObjectEntryThreadLocal.isDisassociateRelatedModels();
-
-		try {
-			ObjectEntryThreadLocal.setDisassociateRelatedModels(true);
+		try (SafeCloseable safeCloseable =
+				ObjectEntryThreadLocal.
+					setDisassociateRelatedModelsWithSafeCloseable(true)) {
 
 			actionableDynamicQuery.performActions();
-		}
-		finally {
-			ObjectEntryThreadLocal.setDisassociateRelatedModels(
-				disassociateRelatedModels);
 		}
 	}
 

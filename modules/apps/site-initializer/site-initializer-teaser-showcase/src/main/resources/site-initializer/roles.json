@@ -1,0 +1,37 @@
+[
+	{
+		"name": "D4B8 Business Development Manager",
+		"scope": 1,
+		"type": 1
+	},
+	{
+		"name": "Distributor",
+		"scope": 1,
+		"type": 1
+	},
+	{
+		"name": "IT Manager",
+		"scope": 1,
+		"type": 1
+	},
+	{
+		"name": "Marketing Coordinator",
+		"scope": 1,
+		"type": 1
+	},
+	{
+		"name": "Marketing Manager",
+		"scope": 1,
+		"type": 1
+	},
+	{
+		"name": "Supplier",
+		"scope": 1,
+		"type": 1
+	},
+	{
+		"name": "Web Developer",
+		"scope": 1,
+		"type": 1
+	}
+]

@@ -17,8 +17,6 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.liferay.batch.engine.action.ItemReaderPostAction;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -45,29 +43,6 @@ import java.util.regex.Pattern;
  * @author Ivica Cardic
  */
 public class BatchEngineImportTaskItemReaderUtil {
-
-	private static boolean isCSVMapColumn(Class<?> clazz, Object value) {
-		if (!Map.class.isAssignableFrom(clazz)) {
-			return false;
-		}
-
-		String mapString = value.toString();
-
-		if (mapString == null || mapString.isEmpty()) {
-			return false;
-		}
-
-		String[] entries = mapString.split(StringPool.RETURN_NEW_LINE);
-
-		for (String entry : entries) {
-			if (!entry.contains(StringPool.COLON)) {
-				return false;
-			}
-		}
-
-		return true;
-	}
-
 
 	public static <T> T convertValue(
 			BatchEngineImportTask batchEngineImportTask, Class<T> itemClass,
@@ -119,18 +94,15 @@ public class BatchEngineImportTaskItemReaderUtil {
 				Class<?> fieldType = field.getType();
 				Object entryValue = entry.getValue();
 
-				if (isCSVMapColumn(fieldType, entryValue)){
+				if (_isCSVMapColumn(fieldType, entryValue)) {
 					objectMapper = _csvObjectMapper;
 				}
-
 				else {
 					objectMapper = _getObjectMapper(field, keepCreatorInfo);
 				}
 
 				field.set(
-					item,
-					objectMapper.convertValue(
-						entryValue, fieldType));
+					item, objectMapper.convertValue(entryValue, fieldType));
 
 				continue;
 			}
@@ -317,8 +289,27 @@ public class BatchEngineImportTaskItemReaderUtil {
 		};
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		BatchEngineImportTaskItemReaderUtil.class);
+	private static boolean _isCSVMapColumn(Class<?> clazz, Object value) {
+		if (!Map.class.isAssignableFrom(clazz)) {
+			return false;
+		}
+
+		String mapString = value.toString();
+
+		if ((mapString == null) || mapString.isEmpty()) {
+			return false;
+		}
+
+		String[] entries = mapString.split(StringPool.RETURN_NEW_LINE);
+
+		for (String entry : entries) {
+			if (!entry.contains(StringPool.COLON)) {
+				return false;
+			}
+		}
+
+		return true;
+	}
 
 	private static final ObjectMapper _csvObjectMapper = new ObjectMapper() {
 		{

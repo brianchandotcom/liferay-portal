@@ -676,7 +676,6 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 			).put(
 				"orderType", "asc"
 			).build();
-
 		Map<String, Object> sortProperties2 =
 			HashMapBuilder.<String, Object>put(
 				"default", false

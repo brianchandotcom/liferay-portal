@@ -18,6 +18,7 @@ import {FIELD_TYPE_ICON} from '../../../structure_builder/utils/fieldType';
 type TreeItem = {
 	children?: TreeItem[];
 	icon: string;
+	id: string;
 	label: string;
 	type?: FieldType;
 };
@@ -29,8 +30,10 @@ export default function FieldsTree({fields}: {fields: Field[]}) {
 		return [
 			{
 				children: fields.map((field) => ({
-					...field,
 					icon: FIELD_TYPE_ICON[field.type],
+					id: field.name,
+					label: field.label,
+					type: field.type,
 				})),
 				icon: 'edit-layout',
 				id: 'root',

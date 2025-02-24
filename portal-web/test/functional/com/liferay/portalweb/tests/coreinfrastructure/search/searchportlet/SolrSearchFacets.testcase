@@ -242,7 +242,7 @@ definition {
 
 		WebContent.addCP(webContentTitle = "WebContent Title 1.1");
 
-		WebContent.publishWithPermissions();
+		WebContent.publishExistingWCArticleWithPermissions();
 
 		WebContent.viewVersion(
 			version = "1.1",

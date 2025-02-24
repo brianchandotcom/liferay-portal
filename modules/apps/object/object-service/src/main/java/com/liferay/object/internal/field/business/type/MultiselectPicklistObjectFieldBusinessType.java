@@ -112,6 +112,8 @@ public class MultiselectPicklistObjectFieldBusinessType
 		return HashMapBuilder.<String, Object>put(
 			"defaultSearch", true
 		).put(
+			"listTypeDefinitionId", objectField.getListTypeDefinitionId()
+		).put(
 			"multiple", true
 		).put(
 			"options",

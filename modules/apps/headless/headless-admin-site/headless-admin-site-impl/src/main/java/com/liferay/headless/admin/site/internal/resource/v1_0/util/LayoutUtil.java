@@ -52,7 +52,7 @@ import java.util.Objects;
  */
 public class LayoutUtil {
 
-	public static Layout addDraftToPublishedLayout(
+	public static Layout addDraftToLayout(
 			ContentPageSpecification contentPageSpecification, Layout layout,
 			ServiceContext serviceContext)
 		throws Exception {

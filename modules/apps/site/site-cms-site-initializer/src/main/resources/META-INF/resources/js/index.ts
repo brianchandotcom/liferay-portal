@@ -4,4 +4,5 @@
  */
 
 export {default as ContentFDSPropsTransformer} from './FDSPropsTransformer/ContentFDSPropsTransformer';
+export {default as FilesFDSPropsTransformer} from './FDSPropsTransformer/FilesFDSPropsTransformer';
 export {default as StructureBuilder} from './structure_builder/components/StructureBuilder';

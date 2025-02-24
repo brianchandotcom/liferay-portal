@@ -5,11 +5,8 @@
 
 package com.liferay.batch.engine.internal.exportimport.data.handler;
 
-import com.liferay.batch.engine.BatchEngineExportTaskExecutor;
-import com.liferay.batch.engine.service.BatchEngineExportTaskService;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
@@ -35,7 +32,7 @@ import org.mockito.Mockito;
 /**
  * @author Petteri Karttunen
  */
-public class BatchEnginePortletDataHandlerTest {
+public class BatchEnginePortletDataHandlerUtilTest {
 
 	@ClassRule
 	@Rule
@@ -44,10 +41,6 @@ public class BatchEnginePortletDataHandlerTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_batchEnginePortletDataHandler = new BatchEnginePortletDataHandler(
-			_batchEngineExportTaskExecutor, _batchEngineExportTaskService, null,
-			null, RandomTestUtil.randomString(), RandomTestUtil.randomString());
-
 		_dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
 			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
@@ -71,7 +64,7 @@ public class BatchEnginePortletDataHandlerTest {
 		Date endDate = _getDate(0);
 
 		Map<String, Serializable> parameters =
-			_batchEnginePortletDataHandler.buildParameters(
+			BatchEnginePortletDataHandlerUtil.buildParameters(
 				_mockPortletDataContext(endDate, null));
 
 		Assert.assertEquals(
@@ -85,7 +78,7 @@ public class BatchEnginePortletDataHandlerTest {
 		Date startDate = _getDate(-1);
 
 		Map<String, Serializable> parameters =
-			_batchEnginePortletDataHandler.buildParameters(
+			BatchEnginePortletDataHandlerUtil.buildParameters(
 				_mockPortletDataContext(endDate, startDate));
 
 		Assert.assertEquals(
@@ -98,7 +91,7 @@ public class BatchEnginePortletDataHandlerTest {
 	@Test
 	public void testBuildParametersWithNoDates() throws Exception {
 		Map<String, Serializable> parameters =
-			_batchEnginePortletDataHandler.buildParameters(
+			BatchEnginePortletDataHandlerUtil.buildParameters(
 				_mockPortletDataContext(null, null));
 
 		Assert.assertNull(parameters.get("filter"));
@@ -109,7 +102,7 @@ public class BatchEnginePortletDataHandlerTest {
 		Date startDate = _getDate(-1);
 
 		Map<String, Serializable> parameters =
-			_batchEnginePortletDataHandler.buildParameters(
+			BatchEnginePortletDataHandlerUtil.buildParameters(
 				_mockPortletDataContext(null, startDate));
 
 		Assert.assertEquals(
@@ -146,11 +139,6 @@ public class BatchEnginePortletDataHandlerTest {
 		return portletDataContext;
 	}
 
-	private final BatchEngineExportTaskExecutor _batchEngineExportTaskExecutor =
-		Mockito.mock(BatchEngineExportTaskExecutor.class);
-	private final BatchEngineExportTaskService _batchEngineExportTaskService =
-		Mockito.mock(BatchEngineExportTaskService.class);
-	private BatchEnginePortletDataHandler _batchEnginePortletDataHandler;
 	private DateFormat _dateFormat;
 	private MockedStatic<FastDateFormatFactoryUtil>
 		_fastDateFormatFactoryUtilMockedStatic;

@@ -58,11 +58,16 @@ public class ObjectEntryVersionLocalServiceImpl
 			ObjectEntry objectEntry)
 		throws PortalException {
 
-		return _updateObjectEntryVersion(
-			objectEntryVersionPersistence.findByObjectEntryId_First(
+		ObjectEntryVersion objectEntryVersion =
+			objectEntryVersionPersistence.fetchByObjectEntryId_First(
 				objectEntry.getObjectEntryId(),
-				ObjectEntryVersionVersionComparator.getInstance(false)),
-			objectEntry);
+				ObjectEntryVersionVersionComparator.getInstance(false));
+
+		if (objectEntryVersion == null) {
+			return null;
+		}
+
+		return _updateObjectEntryVersion(objectEntryVersion, objectEntry);
 	}
 
 	private ObjectEntryVersion _updateObjectEntryVersion(

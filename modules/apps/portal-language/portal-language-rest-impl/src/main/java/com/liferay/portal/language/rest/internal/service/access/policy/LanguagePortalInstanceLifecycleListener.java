@@ -54,7 +54,7 @@ public class LanguagePortalInstanceLifecycleListener
 
 		_sapEntryLocalService.addSAPEntry(
 			_userLocalService.getGuestUserId(companyId), _SAP_ENTRY_SIGNATURES,
-			false, true, _SAP_ENTRY_NAME,
+			true, true, _SAP_ENTRY_NAME,
 			ResourceBundleUtil.getLocalizationMap(
 				ResourceBundleLoaderUtil.getPortalResourceBundleLoader(),
 				_ACCESS_POLICY_ENTRY_LANGUAGE_ID),

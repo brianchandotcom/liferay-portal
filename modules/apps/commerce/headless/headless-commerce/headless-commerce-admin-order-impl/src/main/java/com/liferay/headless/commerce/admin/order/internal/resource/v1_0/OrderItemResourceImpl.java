@@ -643,6 +643,7 @@ public class OrderItemResourceImpl extends BaseOrderItemResourceImpl {
 		serviceContext.setAttribute("validateOrder", Boolean.FALSE);
 
 		commerceOrderItem = _commerceOrderItemService.updateCommerceOrderItem(
+			orderItem.getExternalReferenceCode(),
 			commerceOrderItem.getCommerceOrderItemId(),
 			GetterUtil.getString(
 				orderItem.getOptions(), commerceOrderItem.getJson()),

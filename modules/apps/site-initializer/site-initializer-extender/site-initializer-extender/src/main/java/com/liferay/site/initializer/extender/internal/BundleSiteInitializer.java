@@ -258,6 +258,7 @@ import java.util.TreeSet;
 import javax.servlet.ServletContext;
 
 import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
 import org.osgi.framework.wiring.BundleWiring;
 
 /**
@@ -862,12 +863,12 @@ public class BundleSiteInitializer implements SiteInitializer {
 	}
 
 	private void _addFragmentEntries(
-			long groupId, String parentResourcePath,
+			Bundle bundle, long groupId, String parentResourcePath,
 			ServiceContext serviceContext,
 			Map<String, String> stringUtilReplaceValues)
 		throws Exception {
 
-		Enumeration<URL> enumeration = _bundle.findEntries(
+		Enumeration<URL> enumeration = bundle.findEntries(
 			parentResourcePath, StringPool.STAR, true);
 
 		if (enumeration == null) {
@@ -919,13 +920,35 @@ public class BundleSiteInitializer implements SiteInitializer {
 			serviceContext.getCompanyId());
 
 		_addFragmentEntries(
-			group.getGroupId(), "/site-initializer/fragments/company",
+			_bundle, group.getGroupId(), "/site-initializer/fragments/company",
 			serviceContext, stringUtilReplaceValues);
 
 		_addFragmentEntries(
-			serviceContext.getScopeGroupId(),
+			_bundle, serviceContext.getScopeGroupId(),
 			"/site-initializer/fragments/group", serviceContext,
 			stringUtilReplaceValues);
+
+		if (_dialectThemeDetected) {
+			BundleContext bundleContext = _bundle.getBundleContext();
+
+			Bundle[] bundles = bundleContext.getBundles();
+
+			for (Bundle bundle : bundles) {
+				if (!Objects.equals(
+						bundle.getSymbolicName(),
+						"com.liferay.site.initializer.extender")) {
+
+					continue;
+				}
+
+				_addFragmentEntries(
+					bundle, serviceContext.getScopeGroupId(),
+					"/site-initializer/fragments/group", serviceContext,
+					stringUtilReplaceValues);
+
+				break;
+			}
+		}
 	}
 
 	private void _addKeywords(
@@ -5217,7 +5240,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 				addOrUpdateKnowledgeBaseArticlesR, addOrUpdateLayoutsContentR,
 				addOrUpdateSegmentsEntriesR, addOrUpdateUserGroupsR)
 		).put(
-			addFragmentEntriesR, _dependsOn(addOrUpdateDocumentsR)
+			addFragmentEntriesR,
+			_dependsOn(addOrUpdateDocumentsR, updateLayoutSetsR)
 		).put(
 			addKeywordsR, _dependsOn(addOrUpdateDepotEntriesR)
 		).put(
@@ -5564,6 +5588,10 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		if (ListUtil.isNotEmpty(themes)) {
 			Theme theme = themes.get(0);
+
+			if (Objects.equals(theme.getName(), "Dialect")) {
+				_dialectThemeDetected = true;
+			}
 
 			return theme.getThemeId();
 		}
@@ -5998,6 +6026,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private final DepotEntryGroupRelLocalService
 		_depotEntryGroupRelLocalService;
 	private final DepotEntryLocalService _depotEntryLocalService;
+	private boolean _dialectThemeDetected;
 	private final DLFileEntryTypeLocalService _dlFileEntryTypeLocalService;
 	private final DLURLHelper _dlURLHelper;
 	private final DocumentFolderResource.Factory _documentFolderResourceFactory;

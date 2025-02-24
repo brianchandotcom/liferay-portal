@@ -3,59 +3,64 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import { CTProcess } from './cTProcess';
-import { Facet } from './facet';
+			import { CTProcess } from './cTProcess';
+			import { Facet } from './facet';
 
-export class PageCTProcess {
-	'actions'?: { [key: string]: { [key: string]: string; }; };
-	'facets'?: Array<Facet>;
-	'items'?: Array<CTProcess>;
-	'lastPage'?: number;
-	'page'?: number;
-	'pageSize'?: number;
-	'totalCount'?: number;
+/**
+ * @author David Truong
+ * @generated
+ */
 
-	static discriminator: string | undefined = undefined;
+	export class PageCTProcess {
+			'actions'?: { [key: string]: { [key: string]: string; }; };
+			'facets'?: Array<Facet>;
+			'items'?: Array<CTProcess>;
+			'lastPage'?: number;
+			'page'?: number;
+			'pageSize'?: number;
+			'totalCount'?: number;
 
-	static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-		{
-			"name": "actions",
-			"baseName": "actions",
-			"type": "{ [key: string]: { [key: string]: string; }; }"
-		},
-		{
-			"name": "facets",
-			"baseName": "facets",
-			"type": "Array<Facet>"
-		},
-		{
-			"name": "items",
-			"baseName": "items",
-			"type": "Array<CTProcess>"
-		},
-		{
-			"name": "lastPage",
-			"baseName": "lastPage",
-			"type": "number"
-		},
-		{
-			"name": "page",
-			"baseName": "page",
-			"type": "number"
-		},
-		{
-			"name": "pageSize",
-			"baseName": "pageSize",
-			"type": "number"
-		},
-		{
-			"name": "totalCount",
-			"baseName": "totalCount",
-			"type": "number"
+		static discriminator: string | undefined = undefined;
+
+		static attributeTypeMap: Array<{baseName: string, name: string, type: string}> = [
+				{
+					"baseName": "actions",
+					"name": "actions",
+					"type": "{ [key: string]: { [key: string]: string; }; }"
+				},
+				{
+					"baseName": "facets",
+					"name": "facets",
+					"type": "Array<Facet>"
+				},
+				{
+					"baseName": "items",
+					"name": "items",
+					"type": "Array<CTProcess>"
+				},
+				{
+					"baseName": "lastPage",
+					"name": "lastPage",
+					"type": "number"
+				},
+				{
+					"baseName": "page",
+					"name": "page",
+					"type": "number"
+				},
+				{
+					"baseName": "pageSize",
+					"name": "pageSize",
+					"type": "number"
+				},
+				{
+					"baseName": "totalCount",
+					"name": "totalCount",
+					"type": "number"
+				}
+		];
+
+		static getAttributeTypeMap() {
+				return PageCTProcess.attributeTypeMap;
 		}
-	];
-
-	static getAttributeTypeMap() {
-		return PageCTProcess.attributeTypeMap;
 	}
-}

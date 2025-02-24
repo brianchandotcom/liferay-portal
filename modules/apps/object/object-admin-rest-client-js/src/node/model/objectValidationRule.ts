@@ -3,112 +3,117 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import { ObjectValidationRuleSetting } from './objectValidationRuleSetting';
+			import { ObjectValidationRuleSetting } from './objectValidationRuleSetting';
 
-export class ObjectValidationRule {
-	'actions'?: { [key: string]: { [key: string]: string; }; };
-	'active'?: boolean;
-	'dateCreated'?: Date;
-	'dateModified'?: Date;
-	'engine'?: string;
-	'engineLabel'?: string;
-	'errorLabel'?: { [key: string]: string; };
-	'externalReferenceCode'?: string;
-	'id'?: number;
-	'name'?: { [key: string]: string; };
-	'objectDefinitionExternalReferenceCode'?: string;
-	'objectDefinitionId'?: number;
-	'objectValidationRuleSettings'?: Array<ObjectValidationRuleSetting>;
-	'outputType'?: 'fullValidation' | 'partialValidation';
-	'script'?: string;
-	'system'?: boolean;
+/**
+ * @author Javier Gamarra
+ * @generated
+ */
 
-	static discriminator: string | undefined = undefined;
+	export class ObjectValidationRule {
+			'actions'?: { [key: string]: { [key: string]: string; }; };
+			'active'?: boolean;
+			'dateCreated'?: Date;
+			'dateModified'?: Date;
+			'engine'?: string;
+			'engineLabel'?: string;
+			'errorLabel'?: { [key: string]: string; };
+			'externalReferenceCode'?: string;
+			'id'?: number;
+			'name'?: { [key: string]: string; };
+			'objectDefinitionExternalReferenceCode'?: string;
+			'objectDefinitionId'?: number;
+			'objectValidationRuleSettings'?: Array<ObjectValidationRuleSetting>;
+			'outputType'?: 'fullValidation' | 'partialValidation';
+			'script'?: string;
+			'system'?: boolean;
 
-	static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-		{
-			"name": "actions",
-			"baseName": "actions",
-			"type": "{ [key: string]: { [key: string]: string; }; }"
-		},
-		{
-			"name": "active",
-			"baseName": "active",
-			"type": "boolean"
-		},
-		{
-			"name": "dateCreated",
-			"baseName": "dateCreated",
-			"type": "Date"
-		},
-		{
-			"name": "dateModified",
-			"baseName": "dateModified",
-			"type": "Date"
-		},
-		{
-			"name": "engine",
-			"baseName": "engine",
-			"type": "string"
-		},
-		{
-			"name": "engineLabel",
-			"baseName": "engineLabel",
-			"type": "string"
-		},
-		{
-			"name": "errorLabel",
-			"baseName": "errorLabel",
-			"type": "{ [key: string]: string; }"
-		},
-		{
-			"name": "externalReferenceCode",
-			"baseName": "externalReferenceCode",
-			"type": "string"
-		},
-		{
-			"name": "id",
-			"baseName": "id",
-			"type": "number"
-		},
-		{
-			"name": "name",
-			"baseName": "name",
-			"type": "{ [key: string]: string; }"
-		},
-		{
-			"name": "objectDefinitionExternalReferenceCode",
-			"baseName": "objectDefinitionExternalReferenceCode",
-			"type": "string"
-		},
-		{
-			"name": "objectDefinitionId",
-			"baseName": "objectDefinitionId",
-			"type": "number"
-		},
-		{
-			"name": "objectValidationRuleSettings",
-			"baseName": "objectValidationRuleSettings",
-			"type": "Array<ObjectValidationRuleSetting>"
-		},
-		{
-			"name": "outputType",
-			"baseName": "outputType",
-			"type": "'fullValidation' | 'partialValidation'"
-		},
-		{
-			"name": "script",
-			"baseName": "script",
-			"type": "string"
-		},
-		{
-			"name": "system",
-			"baseName": "system",
-			"type": "boolean"
+		static discriminator: string | undefined = undefined;
+
+		static attributeTypeMap: Array<{baseName: string, name: string, type: string}> = [
+				{
+					"baseName": "actions",
+					"name": "actions",
+					"type": "{ [key: string]: { [key: string]: string; }; }"
+				},
+				{
+					"baseName": "active",
+					"name": "active",
+					"type": "boolean"
+				},
+				{
+					"baseName": "dateCreated",
+					"name": "dateCreated",
+					"type": "Date"
+				},
+				{
+					"baseName": "dateModified",
+					"name": "dateModified",
+					"type": "Date"
+				},
+				{
+					"baseName": "engine",
+					"name": "engine",
+					"type": "string"
+				},
+				{
+					"baseName": "engineLabel",
+					"name": "engineLabel",
+					"type": "string"
+				},
+				{
+					"baseName": "errorLabel",
+					"name": "errorLabel",
+					"type": "{ [key: string]: string; }"
+				},
+				{
+					"baseName": "externalReferenceCode",
+					"name": "externalReferenceCode",
+					"type": "string"
+				},
+				{
+					"baseName": "id",
+					"name": "id",
+					"type": "number"
+				},
+				{
+					"baseName": "name",
+					"name": "name",
+					"type": "{ [key: string]: string; }"
+				},
+				{
+					"baseName": "objectDefinitionExternalReferenceCode",
+					"name": "objectDefinitionExternalReferenceCode",
+					"type": "string"
+				},
+				{
+					"baseName": "objectDefinitionId",
+					"name": "objectDefinitionId",
+					"type": "number"
+				},
+				{
+					"baseName": "objectValidationRuleSettings",
+					"name": "objectValidationRuleSettings",
+					"type": "Array<ObjectValidationRuleSetting>"
+				},
+				{
+					"baseName": "outputType",
+					"name": "outputType",
+					"type": "'fullValidation' | 'partialValidation'"
+				},
+				{
+					"baseName": "script",
+					"name": "script",
+					"type": "string"
+				},
+				{
+					"baseName": "system",
+					"name": "system",
+					"type": "boolean"
+				}
+		];
+
+		static getAttributeTypeMap() {
+				return ObjectValidationRule.attributeTypeMap;
 		}
-	];
-
-	static getAttributeTypeMap() {
-		return ObjectValidationRule.attributeTypeMap;
 	}
-}

@@ -9,7 +9,6 @@ import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
-import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
@@ -120,7 +119,7 @@ public class ContentSectionDisplayContext {
 				).setRedirect(
 					_themeDisplay.getURLCurrent()
 				).setParameter(
-					"modelResource", ObjectEntryFolder.class.getName()
+					"modelResource", "{entryClassName}"
 				).setParameter(
 					"modelResourceDescription", "{embedded.name}"
 				).setParameter(

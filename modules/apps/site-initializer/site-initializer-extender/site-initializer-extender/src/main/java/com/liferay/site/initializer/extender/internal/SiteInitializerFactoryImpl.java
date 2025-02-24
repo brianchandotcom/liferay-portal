@@ -120,7 +120,7 @@ public class SiteInitializerFactoryImpl implements SiteInitializerFactory {
 			symbolicName = "Liferay Site Initializer - File - " + fileKey;
 		}
 
-		Bundle bundle = ProxyUtil.newDelegateProxyInstance(
+		Bundle siteBundle = ProxyUtil.newDelegateProxyInstance(
 			Bundle.class.getClassLoader(), Bundle.class,
 			new FileBackedBundleDelegate(
 				_bundleContext, file, _jsonFactory, symbolicName),
@@ -132,7 +132,7 @@ public class SiteInitializerFactoryImpl implements SiteInitializerFactory {
 			_accountResourceFactory, _accountRoleLocalService,
 			_accountRoleResourceFactory, _assetCategoryLocalService,
 			_assetEntryLocalService, _assetLinkLocalService,
-			_assetListEntryLocalService, _blogPostingResourceFactory, bundle,
+			_assetListEntryLocalService, _blogPostingResourceFactory,
 			_cetManager, _clientExtensionEntryLocalService,
 			_companyLocalService, _configurationProvider,
 			_dataDefinitionResourceFactory, _ddmStructureLocalService,
@@ -160,8 +160,8 @@ public class SiteInitializerFactoryImpl implements SiteInitializerFactory {
 			_portletPreferencesLocalService, _resourceActionLocalService,
 			_resourcePermissionLocalService, _roleLocalService,
 			_sapEntryLocalService, _segmentsEntryLocalService,
-			_segmentsExperienceLocalService, _archivedSettingsFactory,
-			_siteNavigationMenuItemLocalService,
+			_segmentsExperienceLocalService, _archivedSettingsFactory, siteBundle,
+			_bundleContext.getBundle(), _siteNavigationMenuItemLocalService,
 			_siteNavigationMenuItemTypeRegistry,
 			_siteNavigationMenuLocalService,
 			_structuredContentFolderResourceFactory,

@@ -152,7 +152,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 	@ClassRule
 	@Rule
 	<#if generateCRUD>
-		public static AggregateTestRule aggregateTestRule = new AggregateTestRule(
+		public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 	<#else>

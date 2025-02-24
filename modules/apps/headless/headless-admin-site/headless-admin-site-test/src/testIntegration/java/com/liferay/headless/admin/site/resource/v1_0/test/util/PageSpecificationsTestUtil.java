@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.Arrays;
-import java.util.Objects;
 
 import org.junit.Assert;
 
@@ -30,20 +29,35 @@ import org.junit.Assert;
 public class PageSpecificationsTestUtil {
 
 	public static void assertContentPageSpecification(
-		Layout layout, PageSpecification pageSpecification) {
+			PageSpecification pageSpecification, long plid)
+		throws Exception {
+
+		Layout layout = LayoutLocalServiceUtil.getLayout(plid);
 
 		Assert.assertEquals(
 			layout.getExternalReferenceCode(),
 			pageSpecification.getExternalReferenceCode());
 
 		if (layout.isDraftLayout()) {
-			Assert.assertEquals(
-				PageSpecification.Status.DRAFT, pageSpecification.getStatus());
+			if (layout.isApproved()) {
+				Assert.assertEquals(
+					PageSpecification.Status.APPROVED,
+					pageSpecification.getStatus());
+			}
+			else {
+				Assert.assertEquals(
+					PageSpecification.Status.DRAFT,
+					pageSpecification.getStatus());
+			}
 		}
-		else {
+		else if (_isPublished(layout.fetchDraftLayout())) {
 			Assert.assertEquals(
 				PageSpecification.Status.APPROVED,
 				pageSpecification.getStatus());
+		}
+		else {
+			Assert.assertEquals(
+				PageSpecification.Status.DRAFT, pageSpecification.getStatus());
 		}
 
 		Assert.assertEquals(
@@ -52,7 +66,8 @@ public class PageSpecificationsTestUtil {
 	}
 
 	public static void assertPageSpecifications(
-		Layout layout, PageSpecification[] pageSpecifications) {
+			Layout layout, PageSpecification[] pageSpecifications)
+		throws Exception {
 
 		Assert.assertTrue(ArrayUtil.isNotEmpty(pageSpecifications));
 
@@ -100,6 +115,15 @@ public class PageSpecificationsTestUtil {
 		contentPageSpecification.setExternalReferenceCode(
 			draftLayout.getExternalReferenceCode());
 
+		assertContentPageSpecification(
+			unsafeFunction.apply(contentPageSpecification),
+			draftLayout.getPlid());
+
+		draftLayout = LayoutLocalServiceUtil.getLayout(draftLayout.getPlid());
+
+		Assert.assertEquals(
+			draftLayout.getStatus(), WorkflowConstants.STATUS_DRAFT);
+
 		_assertProblemException(
 			() -> unsafeFunction.apply(contentPageSpecification));
 
@@ -129,13 +153,14 @@ public class PageSpecificationsTestUtil {
 
 		contentPageSpecification.setStatus(PageSpecification.Status.DRAFT);
 
-		assertContentPageSpecification(
-			draftLayout, unsafeFunction.apply(contentPageSpecification));
-
 		draftLayout = LayoutLocalServiceUtil.getLayout(draftLayout.getPlid());
 
 		Assert.assertEquals(
-			draftLayout.getStatus(), WorkflowConstants.STATUS_DRAFT);
+			draftLayout.getStatus(), WorkflowConstants.STATUS_APPROVED);
+
+		assertContentPageSpecification(
+			unsafeFunction.apply(contentPageSpecification),
+			draftLayout.getPlid());
 
 		_assertProblemException(
 			() -> unsafeFunction.apply(contentPageSpecification));
@@ -148,7 +173,8 @@ public class PageSpecificationsTestUtil {
 		contentPageSpecification.setStatus((PageSpecification.Status)null);
 
 		assertContentPageSpecification(
-			draftLayout, unsafeFunction.apply(contentPageSpecification));
+			unsafeFunction.apply(contentPageSpecification),
+			draftLayout.getPlid());
 
 		draftLayout = LayoutLocalServiceUtil.getLayout(draftLayout.getPlid());
 
@@ -160,73 +186,18 @@ public class PageSpecificationsTestUtil {
 	}
 
 	private static void _assertContentPageSpecifications(
-		Layout layout, PageSpecification[] pageSpecifications) {
-
-		Layout draftLayout = layout.fetchDraftLayout();
-
-		if (!_isPublished(draftLayout)) {
-			Assert.assertEquals(
-				Arrays.toString(pageSpecifications), 1,
-				pageSpecifications.length);
-
-			assertContentPageSpecification(draftLayout, pageSpecifications[0]);
-
-			return;
-		}
-
-		if (Objects.equals(
-				draftLayout.getStatus(), WorkflowConstants.STATUS_APPROVED)) {
-
-			Assert.assertEquals(
-				Arrays.toString(pageSpecifications), 1,
-				pageSpecifications.length);
-
-			assertContentPageSpecification(layout, pageSpecifications[0]);
-
-			return;
-		}
+		Layout layout, PageSpecification[] pageSpecifications)
+		throws Exception {
 
 		Assert.assertEquals(
 			Arrays.toString(pageSpecifications), 2, pageSpecifications.length);
 
-		PageSpecification pageSpecification1 = pageSpecifications[0];
+		assertContentPageSpecification(pageSpecifications[0], layout.getPlid());
 
-		Assert.assertEquals(
-			PageSpecification.Type.CONTENT_PAGE_SPECIFICATION,
-			pageSpecification1.getType());
+		Layout draftLayout = layout.fetchDraftLayout();
 
-		PageSpecification pageSpecification2 = pageSpecifications[1];
-
-		Assert.assertEquals(
-			PageSpecification.Type.CONTENT_PAGE_SPECIFICATION,
-			pageSpecification2.getType());
-
-		if (Objects.equals(
-				layout.getExternalReferenceCode(),
-				pageSpecification1.getExternalReferenceCode())) {
-
-			Assert.assertEquals(
-				PageSpecification.Status.APPROVED,
-				pageSpecification1.getStatus());
-			Assert.assertEquals(
-				draftLayout.getExternalReferenceCode(),
-				pageSpecification2.getExternalReferenceCode());
-			Assert.assertEquals(
-				PageSpecification.Status.DRAFT, pageSpecification2.getStatus());
-
-			return;
-		}
-
-		Assert.assertEquals(
-			draftLayout.getExternalReferenceCode(),
-			pageSpecification1.getExternalReferenceCode());
-		Assert.assertEquals(
-			PageSpecification.Status.DRAFT, pageSpecification1.getStatus());
-		Assert.assertEquals(
-			layout.getExternalReferenceCode(),
-			pageSpecification2.getExternalReferenceCode());
-		Assert.assertEquals(
-			PageSpecification.Status.APPROVED, pageSpecification2.getStatus());
+		assertContentPageSpecification(
+			pageSpecifications[1], draftLayout.getPlid());
 	}
 
 	private static void _assertProblemException(

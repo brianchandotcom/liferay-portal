@@ -53,8 +53,16 @@ public class AssetLibraryDTOConverter
 	public AssetLibrary toDTO(DTOConverterContext dtoConverterContext)
 		throws Exception {
 
-		DepotEntry depotEntry = _depotEntryLocalService.getGroupDepotEntry(
-			(Long)dtoConverterContext.getId());
+		return toDTO(
+			dtoConverterContext,
+			_depotEntryLocalService.getGroupDepotEntry(
+				(Long)dtoConverterContext.getId()));
+	}
+
+	@Override
+	public AssetLibrary toDTO(
+			DTOConverterContext dtoConverterContext, DepotEntry depotEntry)
+		throws Exception {
 
 		Group group = depotEntry.getGroup();
 

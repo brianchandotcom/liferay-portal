@@ -54,6 +54,7 @@ import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 	import com.liferay.depot.service.DepotEntryLocalServiceUtil;
 </#if>
 
+import com.liferay.oauth2.provider.scope.ScopeChecker;
 import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
@@ -1466,7 +1467,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 					).roleLocalService(
 						_roleLocalService
 					).scopeChecker(
-						null
+						_scopeChecker
 					).uriInfo(
 						testVulcanCRUDItemDelegate_getUriInfo(post${schemaName}.getId())
 					).user(
@@ -3887,6 +3888,9 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 		@Inject
 		private RoleLocalService _roleLocalService;
+
+		@Inject
+		private ScopeChecker _scopeChecker;
 
 		@Inject
 		private UserLocalService _userLocalService;

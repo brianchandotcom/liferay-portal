@@ -374,6 +374,16 @@ public class ObjectEntryVersionLocalServiceWrapper
 		return _objectEntryVersionLocalService.getPersistedModel(primaryKeyObj);
 	}
 
+	@Override
+	public com.liferay.object.model.ObjectEntryVersion
+			updateLatestObjectEntryVersion(
+				com.liferay.object.model.ObjectEntry objectEntry)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectEntryVersionLocalService.updateLatestObjectEntryVersion(
+			objectEntry);
+	}
+
 	/**
 	 * Updates the object entry version in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

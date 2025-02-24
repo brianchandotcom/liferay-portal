@@ -331,6 +331,13 @@ public class ObjectEntryVersionLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static ObjectEntryVersion updateLatestObjectEntryVersion(
+			com.liferay.object.model.ObjectEntry objectEntry)
+		throws PortalException {
+
+		return getService().updateLatestObjectEntryVersion(objectEntry);
+	}
+
 	/**
 	 * Updates the object entry version in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *

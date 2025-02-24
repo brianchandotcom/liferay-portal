@@ -171,7 +171,9 @@ public class PageSpecificationResourceImpl
 				true, true, contextCompany.getCompanyId(),
 				siteExternalReferenceCode));
 
-		if (!_isPageSpecificationSupported(layout)) {
+		if (!layout.isTypeAssetDisplay() && !layout.isTypeContent() &&
+			!layout.isTypePortlet()) {
+
 			throw new UnsupportedOperationException();
 		}
 
@@ -461,18 +463,6 @@ public class PageSpecificationResourceImpl
 		}
 
 		throw new UnsupportedOperationException();
-	}
-
-	private boolean _isPageSpecificationSupported(Layout layout) {
-		if (LayoutUtil.isPublished(layout)) {
-			if (!layout.isApproved() || !layout.isDraftLayout()) {
-				return true;
-			}
-
-			return false;
-		}
-
-		return layout.isDraftLayout();
 	}
 
 	private void _preparePatch(

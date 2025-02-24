@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.TimeoutException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Kenji Heigel
@@ -20,6 +22,9 @@ public class CloudStorageSyncUtil {
 
 	public static final String GCP_BUCKET_PATH_JENKINS_CI_DATA =
 		"gs://jenkins-ci-data";
+
+	public static final String GCP_BUCKET_PATH_LIFERAY_RELEASE_CANDIDATES =
+		"gs://liferay-releases-candidates";
 
 	public static final String GCP_BUCKET_PATH_PATCHER_SHARED =
 		"gs://patcher-shared";
@@ -44,6 +49,50 @@ public class CloudStorageSyncUtil {
 		commands.add(sb.toString());
 
 		_executeCommands(commands.toArray(new String[0]));
+	}
+
+	public static String getSignedURL(String url, String file, int duration)
+		throws IOException, TimeoutException {
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(url) ||
+			JenkinsResultsParserUtil.isNullOrEmpty(file)) {
+
+			return null;
+		}
+
+		List<String> commands = new ArrayList<>();
+
+		commands.add(_getGCPAuthenticationCommand(url, url));
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("gcloud storage sign-url ");
+		sb.append(url);
+		sb.append(" --private-key-file=");
+		sb.append(file);
+		sb.append(" --duration=");
+		sb.append(duration);
+		sb.append("m");
+
+		commands.add(sb.toString());
+
+		Process process = JenkinsResultsParserUtil.executeBashCommands(
+			true, commands.toArray(new String[0]));
+
+		String gcloudOutput = JenkinsResultsParserUtil.readInputStream(
+			process.getInputStream());
+
+		String regex = "https:\\/\\/storage.googleapis.com\\/.*";
+
+		Pattern pattern = Pattern.compile(regex);
+
+		Matcher matcher = pattern.matcher(gcloudOutput);
+
+		if (matcher.find()) {
+			return matcher.group(0);
+		}
+
+		return null;
 	}
 
 	public static void syncGCPFiles(String source, String destination)
@@ -100,7 +149,10 @@ public class CloudStorageSyncUtil {
 		String gcpApplicationCredentialFilePath = null;
 
 		if (source.startsWith(GCP_BUCKET_PATH_JENKINS_CI_DATA) ||
-			destination.startsWith(GCP_BUCKET_PATH_JENKINS_CI_DATA)) {
+			destination.startsWith(GCP_BUCKET_PATH_JENKINS_CI_DATA) ||
+			source.startsWith(GCP_BUCKET_PATH_LIFERAY_RELEASE_CANDIDATES) ||
+			destination.startsWith(
+				GCP_BUCKET_PATH_LIFERAY_RELEASE_CANDIDATES)) {
 
 			gcpApplicationCredentialFilePath = _buildProperties.getProperty(
 				"google.application.crendential.file[jenkins]");

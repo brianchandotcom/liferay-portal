@@ -659,15 +659,13 @@ public class DBPartitionUtil {
 		}
 	}
 
-	private static void _copySchema(long companyId) throws PortalException {
-		Connection connection = CurrentConnectionUtil.getConnection(
-			InfrastructureUtil.getDataSource());
+	private static void _copySchema(Connection connection, long companyId)
+		throws SQLException {
 
 		String extractedPartitionName = _getExtractedPartitionName(companyId);
 		String partitionName = getPartitionName(companyId);
 
-		try (AutoCloseable autoCloseable = _disableAutoCommit(connection);
-			PreparedStatement preparedStatement = connection.prepareStatement(
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
 				_dbPartitionDB.getCreatePartitionSQL(
 					connection, extractedPartitionName))) {
 
@@ -719,23 +717,6 @@ public class DBPartitionUtil {
 					statement.executeUpdate(createRuleSQL);
 				}
 			}
-
-			connection.commit();
-		}
-		catch (Exception exception) {
-			if (!_dbPartitionDB.isDDLTransactional()) {
-				try (Statement statement = connection.createStatement()) {
-					statement.executeUpdate(
-						_dbPartitionDB.getDropPartitionSQL(
-							extractedPartitionName));
-				}
-				catch (SQLException sqlException) {
-					throw new PortalException(
-						"Unable to roll back schema extraction", sqlException);
-				}
-			}
-
-			throw new PortalException(exception);
 		}
 	}
 
@@ -825,8 +806,8 @@ public class DBPartitionUtil {
 
 		DBInspector dbInspector = new DBInspector(connection);
 
-		try {
-			_copySchema(companyId);
+		try (AutoCloseable autoCloseable = _disableAutoCommit(connection)) {
+			_copySchema(connection, companyId);
 
 			DatabaseMetaData databaseMetaData = connection.getMetaData();
 
@@ -847,16 +828,20 @@ public class DBPartitionUtil {
 					}
 				}
 			}
+
+			connection.commit();
 		}
 		catch (Exception exception) {
-			try (Statement statement = connection.createStatement()) {
-				statement.executeUpdate(
-					_dbPartitionDB.getDropPartitionSQL(
-						_getExtractedPartitionName(companyId)));
-			}
-			catch (SQLException sqlException) {
-				throw new PortalException(
-					"Unable to roll back schema extraction", sqlException);
+			if (!_dbPartitionDB.isDDLTransactional()) {
+				try (Statement statement = connection.createStatement()) {
+					statement.executeUpdate(
+						_dbPartitionDB.getDropPartitionSQL(
+							_getExtractedPartitionName(companyId)));
+				}
+				catch (SQLException sqlException) {
+					throw new PortalException(
+						"Unable to roll back schema extraction", sqlException);
+				}
 			}
 
 			throw new PortalException(

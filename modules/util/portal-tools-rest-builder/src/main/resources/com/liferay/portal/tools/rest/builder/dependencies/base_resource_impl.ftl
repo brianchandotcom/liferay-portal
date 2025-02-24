@@ -1003,7 +1003,6 @@ public abstract class Base${schemaName}ResourceImpl
 					return ${schemaVarName};
 				};
 
-			<#if createStrategies?has_content>
 				if (contextBatchUnsafeBiConsumer != null) {
 					contextBatchUnsafeBiConsumer.accept(${schemaVarNames}, ${schemaVarName}UnsafeFunction);
 				}
@@ -1015,7 +1014,6 @@ public abstract class Base${schemaName}ResourceImpl
 						${schemaVarName}UnsafeFunction.apply(${schemaVarName});
 					}
 				}
-			</#if>
 			<#else>
 				throw new UnsupportedOperationException("This method needs to be implemented");
 			</#if>

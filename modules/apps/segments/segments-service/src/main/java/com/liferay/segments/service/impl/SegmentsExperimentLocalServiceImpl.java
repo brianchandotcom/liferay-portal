@@ -399,6 +399,7 @@ public class SegmentsExperimentLocalServiceImpl
 
 	private void _publishSegmentsExperienceVariant(
 		SegmentsExperience controlSegmentsExperience,
+		String newSegmentsExperienceKey,
 		SegmentsExperience variantSegmentsExperience) {
 
 		int originalPriority = controlSegmentsExperience.getPriority();
@@ -421,9 +422,7 @@ public class SegmentsExperimentLocalServiceImpl
 			_setSegmentsExperienceKeyProperty(controlSegmentsExperience);
 
 			controlSegmentsExperience.setSegmentsExperienceKey(
-				String.valueOf(
-					counterLocalService.increment(
-						SegmentsExperience.class.getName())));
+				newSegmentsExperienceKey);
 		}
 
 		_segmentsExperienceLocalService.updateSegmentsExperience(
@@ -574,9 +573,30 @@ public class SegmentsExperimentLocalServiceImpl
 			(winnerSegmentsExperienceId !=
 				segmentsExperiment.getSegmentsExperienceId())) {
 
+			Layout layout = _layoutLocalService.fetchLayout(
+				segmentsExperiment.getPlid());
+
+			Layout draftLayout = layout.fetchDraftLayout();
+
+			String newSegmentsExperienceKey = String.valueOf(
+				counterLocalService.increment(
+					SegmentsExperience.class.getName()));
+
+			_publishSegmentsExperienceVariant(
+				_segmentsExperienceLocalService.getSegmentsExperience(
+					draftLayout.getGroupId(),
+					segmentsExperiment.getSegmentsExperienceKey(),
+					draftLayout.getPlid()),
+				newSegmentsExperienceKey,
+				_segmentsExperienceLocalService.getSegmentsExperience(
+					draftLayout.getGroupId(),
+					winnerSegmentsExperience.getSegmentsExperienceKey(),
+					draftLayout.getPlid()));
+
 			_publishSegmentsExperienceVariant(
 				_segmentsExperienceLocalService.getSegmentsExperience(
 					segmentsExperiment.getSegmentsExperienceId()),
+				newSegmentsExperienceKey,
 				_segmentsExperienceLocalService.getSegmentsExperience(
 					winnerSegmentsExperienceId));
 		}

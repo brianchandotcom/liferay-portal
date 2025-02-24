@@ -12,11 +12,14 @@ import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.cache.configuration.PortalCacheManagerConfiguration;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -158,6 +161,35 @@ public class PortalCacheExtenderTest {
 	}
 
 	@Test
+	public void testRequireSerializationConfig() throws Exception {
+		String defaultConfigCacheName = RandomTestUtil.randomString();
+		String diskPersistentConfigCacheName = RandomTestUtil.randomString();
+		String overflowToDiskConfigCacheName = RandomTestUtil.randomString();
+
+		_multiVmXML = _generateXMLContent(
+			sb -> {
+				sb.append("<cache maxElementsInMemory=\"1000\" name=\"");
+				sb.append(defaultConfigCacheName);
+				sb.append("\"> </cache>");
+
+				sb.append("<cache diskPersistent=\"true\" ");
+				sb.append("maxElementsInMemory=\"1000\" name=\"");
+				sb.append(diskPersistentConfigCacheName);
+				sb.append("\"> </cache>");
+
+				sb.append("<cache maxElementsInMemory=\"1000\" name=\"");
+				sb.append(overflowToDiskConfigCacheName);
+				sb.append("\" overflowToDisk=\"true\"> </cache>");
+			});
+
+		_bundle = _installBundle(_BUNDLE_SYMBOLIC_NAME, _multiVmXML, null);
+
+		_assertRequireSerialization(defaultConfigCacheName, false);
+		_assertRequireSerialization(diskPersistentConfigCacheName, true);
+		_assertRequireSerialization(overflowToDiskConfigCacheName, true);
+	}
+
+	@Test
 	public void testUpdateConfig() throws Exception {
 		_multiVmXML = _generateXMLContent(
 			1, new String[] {_CACHE_NAME_MULTI}, 1001, 51);
@@ -271,6 +303,21 @@ public class PortalCacheExtenderTest {
 		Assert.assertEquals(
 			timeToIdleSeconds,
 			mBeanServer.getAttribute(objectName, "TimeToIdleSeconds"));
+	}
+
+	private void _assertRequireSerialization(
+		String cacheName, boolean requireSerialization) {
+
+		PortalCacheManagerConfiguration portalCacheManagerConfiguration =
+			ReflectionTestUtil.getFieldValue(
+				_multiVMPortalCacheManager, "_portalCacheManagerConfiguration");
+
+		Assert.assertEquals(
+			requireSerialization,
+			ReflectionTestUtil.getFieldValue(
+				portalCacheManagerConfiguration.getPortalCacheConfiguration(
+					cacheName),
+				"_requireSerialization"));
 	}
 
 	private InputStream _createBundle(

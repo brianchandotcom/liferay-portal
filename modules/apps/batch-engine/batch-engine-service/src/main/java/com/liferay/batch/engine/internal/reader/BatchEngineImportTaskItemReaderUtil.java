@@ -94,7 +94,9 @@ public class BatchEngineImportTaskItemReaderUtil {
 				Class<?> fieldType = field.getType();
 				Object entryValue = entry.getValue();
 
-				if (_isCSVMapColumn(fieldType, entryValue)) {
+				if (Objects.equals(
+					batchEngineImportTask.getContentType(),
+					"CSV") && _isCSVMapColumn(fieldType, entryValue)) {
 					objectMapper = _csvObjectMapper;
 				}
 				else {

@@ -274,6 +274,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		AccountResource.Factory accountResourceFactory,
 		AccountRoleLocalService accountRoleLocalService,
 		AccountRoleResource.Factory accountRoleResourceFactory,
+		ArchivedSettingsFactory archivedSettingsFactory,
 		AssetCategoryLocalService assetCategoryLocalService,
 		AssetEntryLocalService assetEntryLocalService,
 		AssetLinkLocalService assetLinkLocalService,
@@ -337,8 +338,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		SAPEntryLocalService sapEntryLocalService,
 		SegmentsEntryLocalService segmentsEntryLocalService,
 		SegmentsExperienceLocalService segmentsExperienceLocalService,
-		ArchivedSettingsFactory archivedSettingsFactory, Bundle siteBundle,
-		Bundle siteInitializerExtenderBundle,
+		Bundle siteBundle, Bundle siteInitializerExtenderBundle,
 		SiteNavigationMenuItemLocalService siteNavigationMenuItemLocalService,
 		SiteNavigationMenuItemTypeRegistry siteNavigationMenuItemTypeRegistry,
 		SiteNavigationMenuLocalService siteNavigationMenuLocalService,
@@ -364,6 +364,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_accountResourceFactory = accountResourceFactory;
 		_accountRoleLocalService = accountRoleLocalService;
 		_accountRoleResourceFactory = accountRoleResourceFactory;
+		_archivedSettingsFactory = archivedSettingsFactory;
 		_assetCategoryLocalService = assetCategoryLocalService;
 		_assetEntryLocalService = assetEntryLocalService;
 		_assetLinkLocalService = assetLinkLocalService;
@@ -432,7 +433,6 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_sapEntryLocalService = sapEntryLocalService;
 		_segmentsEntryLocalService = segmentsEntryLocalService;
 		_segmentsExperienceLocalService = segmentsExperienceLocalService;
-		_archivedSettingsFactory = archivedSettingsFactory;
 		_siteBundle = siteBundle;
 		_siteInitializerExtenderBundle = siteInitializerExtenderBundle;
 		_siteNavigationMenuItemLocalService =

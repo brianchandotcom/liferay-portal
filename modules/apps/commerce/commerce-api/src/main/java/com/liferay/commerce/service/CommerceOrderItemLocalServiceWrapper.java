@@ -837,6 +837,19 @@ public class CommerceOrderItemLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.commerce.model.CommerceOrderItem updateCommerceOrderItem(
+			String externalReferenceCode, long userId, long commerceOrderItemId,
+			String json, java.math.BigDecimal quantity,
+			com.liferay.commerce.context.CommerceContext commerceContext,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _commerceOrderItemLocalService.updateCommerceOrderItem(
+			externalReferenceCode, userId, commerceOrderItemId, json, quantity,
+			commerceContext, serviceContext);
+	}
+
+	@Override
 	public com.liferay.commerce.model.CommerceOrderItem
 			updateCommerceOrderItemDeliveryDate(
 				long commerceOrderItemId, java.util.Date requestedDeliveryDate)

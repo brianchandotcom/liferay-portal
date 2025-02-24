@@ -3,8 +3,41 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import ClayBreadcrumb from '@clayui/breadcrumb';
+import ClayLayout from '@clayui/layout';
 import React from 'react';
 
+import {
+	useStateDispatch,
+	useStructureFields,
+	useStructureLabel,
+} from '../contexts/StateContext';
+
 export default function StructureFieldSettings({fieldERC}: {fieldERC: string}) {
-	return <div></div>;
+	const dispatch = useStateDispatch();
+	const structureLabel = useStructureLabel();
+	const fields = useStructureFields();
+
+	const field = fields.find((field) => field.erc === fieldERC);
+
+	return (
+		<ClayLayout.ContainerFluid view>
+			<ClayBreadcrumb
+				items={[
+					{
+						label: structureLabel,
+						onClick: () => {
+							dispatch({
+								item: {type: 'structure'},
+								type: 'select-item',
+							});
+						},
+					},
+					{
+						label: field!.label,
+					},
+				]}
+			/>
+		</ClayLayout.ContainerFluid>
+	);
 }

@@ -1708,6 +1708,12 @@ public class ObjectEntryLocalServiceImpl
 			objectEntry, originalObjectEntry, serviceContext.getLanguageId(),
 			user);
 
+		if (objectEntry.isPending()) {
+			_updateLatestObjectEntryVersion(objectEntry);
+
+			return objectEntry;
+		}
+
 		return _addObjectEntryVersion(objectEntry);
 	}
 
@@ -4937,6 +4943,19 @@ public class ObjectEntryLocalServiceImpl
 				userId, assetEntry.getEntryId(), assetLinkEntryIds,
 				AssetLinkConstants.TYPE_RELATED);
 		}
+	}
+
+	private void _updateLatestObjectEntryVersion(ObjectEntry objectEntry)
+		throws PortalException {
+
+		if (!FeatureFlagManagerUtil.isEnabled(
+				objectEntry.getCompanyId(), "LPD-37104")) {
+
+			return;
+		}
+
+		_objectEntryVersionLocalService.updateLatestObjectEntryVersion(
+			objectEntry);
 	}
 
 	private void _updateResourcePermissions(

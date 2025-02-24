@@ -9,6 +9,7 @@ import com.liferay.object.entry.util.ObjectEntryDTOConverterUtil;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectEntryVersion;
 import com.liferay.object.service.base.ObjectEntryVersionLocalServiceBaseImpl;
+import com.liferay.object.util.comparator.ObjectEntryVersionVersionComparator;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -39,7 +40,34 @@ public class ObjectEntryVersionLocalServiceImpl
 			objectEntryVersionPersistence.create(
 				counterLocalService.increment());
 
-		objectEntryVersion.setCompanyId(objectEntry.getCompanyId());
+		int count = objectEntryVersionPersistence.countByObjectEntryId(
+			objectEntry.getObjectEntryId());
+
+		objectEntryVersion.setVersion(++count);
+
+		return _updateObjectEntryVersion(objectEntryVersion, objectEntry);
+	}
+
+	@Override
+	public List<ObjectEntryVersion> getObjectEntryVersions(long objectEntryId) {
+		return objectEntryVersionPersistence.findByObjectEntryId(objectEntryId);
+	}
+
+	@Override
+	public ObjectEntryVersion updateLatestObjectEntryVersion(
+			ObjectEntry objectEntry)
+		throws PortalException {
+
+		return _updateObjectEntryVersion(
+			objectEntryVersionPersistence.findByObjectEntryId_First(
+				objectEntry.getObjectEntryId(),
+				ObjectEntryVersionVersionComparator.getInstance(false)),
+			objectEntry);
+	}
+
+	private ObjectEntryVersion _updateObjectEntryVersion(
+			ObjectEntryVersion objectEntryVersion, ObjectEntry objectEntry)
+		throws PortalException {
 
 		User user = _userLocalService.getUser(objectEntry.getUserId());
 
@@ -67,11 +95,6 @@ public class ObjectEntryVersionLocalServiceImpl
 		objectEntryVersion.setStatus(objectEntry.getStatus());
 
 		return objectEntryVersionPersistence.update(objectEntryVersion);
-	}
-
-	@Override
-	public List<ObjectEntryVersion> getObjectEntryVersions(long objectEntryId) {
-		return objectEntryVersionPersistence.findByObjectEntryId(objectEntryId);
 	}
 
 	@Reference

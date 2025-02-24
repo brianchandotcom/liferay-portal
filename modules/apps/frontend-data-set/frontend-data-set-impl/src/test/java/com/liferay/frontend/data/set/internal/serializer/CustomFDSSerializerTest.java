@@ -666,7 +666,7 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		// Different sorts
 
-		Map<String, Object> sortProperties1 =
+		Map<String, Object> properties1 =
 			HashMapBuilder.<String, Object>put(
 				"default", true
 			).put(
@@ -676,7 +676,7 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 			).put(
 				"orderType", "asc"
 			).build();
-		Map<String, Object> sortProperties2 =
+		Map<String, Object> properties2 =
 			HashMapBuilder.<String, Object>put(
 				"default", false
 			).put(
@@ -687,9 +687,9 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 				"orderType", "desc"
 			).build();
 
-		_mockSerializeSorts(FDS_NAMES[0], sortProperties1, sortProperties2);
+		_mockSerializeSorts(FDS_NAMES[0], properties1, properties2);
 
-		Map<String, Object> sortProperties3 =
+		Map<String, Object> properties3 =
 			HashMapBuilder.<String, Object>put(
 				"default", true
 			).put(
@@ -700,28 +700,28 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 				"orderType", "asc"
 			).build();
 
-		_mockSerializeSorts(FDS_NAMES[1], sortProperties3);
+		_mockSerializeSorts(FDS_NAMES[1], properties3);
 
 		FDSSortItemList fdsSortItemList1 = _customFDSSerializer.serializeSorts(
 			FDS_NAMES[0], httpServletRequest);
 
 		Assert.assertFalse(
-			_containsSortProperties(fdsSortItemList1, sortProperties3));
+			_containsSortProperties(fdsSortItemList1, properties3));
 		Assert.assertTrue(
-			_containsSortProperties(fdsSortItemList1, sortProperties1));
+			_containsSortProperties(fdsSortItemList1, properties1));
 		Assert.assertTrue(
-			_containsSortProperties(fdsSortItemList1, sortProperties2));
+			_containsSortProperties(fdsSortItemList1, properties2));
 		Assert.assertTrue(fdsSortItemList1.size() == 2);
 
 		FDSSortItemList fdsSortItemList2 = _customFDSSerializer.serializeSorts(
 			FDS_NAMES[1], httpServletRequest);
 
 		Assert.assertFalse(
-			_containsSortProperties(fdsSortItemList2, sortProperties1));
+			_containsSortProperties(fdsSortItemList2, properties1));
 		Assert.assertFalse(
-			_containsSortProperties(fdsSortItemList2, sortProperties2));
+			_containsSortProperties(fdsSortItemList2, properties2));
 		Assert.assertTrue(
-			_containsSortProperties(fdsSortItemList2, sortProperties3));
+			_containsSortProperties(fdsSortItemList2, properties3));
 		Assert.assertTrue(fdsSortItemList2.size() == 1);
 
 		_resetFDSSerializer();
@@ -739,8 +739,8 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		// Shared sorts
 
-		_mockSerializeSorts(FDS_NAMES[0], sortProperties1, sortProperties2);
-		_mockSerializeSorts(FDS_NAMES[1], sortProperties1, sortProperties2);
+		_mockSerializeSorts(FDS_NAMES[0], properties1, properties2);
+		_mockSerializeSorts(FDS_NAMES[1], properties1, properties2);
 
 		JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
 
@@ -1031,18 +1031,18 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 	}
 
 	private boolean _containsSortProperties(
-		FDSSortItemList fdsSortItemList, Map<String, Object> sortProperties) {
+		FDSSortItemList fdsSortItemList, Map<String, Object> properties) {
 
 		for (FDSSortItem fdsSortItem : fdsSortItemList) {
 			if (Objects.equals(
-					fdsSortItem.get("active"), sortProperties.get("default")) &&
+					fdsSortItem.get("active"), properties.get("default")) &&
 				Objects.equals(
 					fdsSortItem.get("direction"),
-					sortProperties.get("orderType")) &&
+					properties.get("orderType")) &&
 				Objects.equals(
-					fdsSortItem.get("key"), sortProperties.get("fieldName")) &&
+					fdsSortItem.get("key"), properties.get("fieldName")) &&
 				Objects.equals(
-					fdsSortItem.get("label"), sortProperties.get("label"))) {
+					fdsSortItem.get("label"), properties.get("label"))) {
 
 				return true;
 			}
@@ -1241,14 +1241,14 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 	}
 
 	private void _mockSerializeSorts(
-		String fdsName, Map<String, Object>... sortsMaps) {
+		String fdsName, Map<String, Object>... propertiesMap) {
 
 		List<ObjectEntry> objectEntries = TransformUtil.transformToList(
-			sortsMaps,
-			sortsMap -> {
+			propertiesMap,
+			properties -> {
 				ObjectEntry objectEntry = new ObjectEntry();
 
-				objectEntry.setProperties(sortsMap);
+				objectEntry.setProperties(properties);
 
 				return objectEntry;
 			});

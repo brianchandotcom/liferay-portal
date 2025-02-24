@@ -279,6 +279,25 @@ public abstract class BaseShippingFixedOptionTermResourceImpl
 
 						return shippingFixedOptionTerm;
 					};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				shippingFixedOptionTerms,
+				shippingFixedOptionTermUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				shippingFixedOptionTerms,
+				shippingFixedOptionTermUnsafeFunction::apply);
+		}
+		else {
+			for (ShippingFixedOptionTerm shippingFixedOptionTerm :
+					shippingFixedOptionTerms) {
+
+				shippingFixedOptionTermUnsafeFunction.apply(
+					shippingFixedOptionTerm);
+			}
+		}
 	}
 
 	public Set<String> getAvailableCreateStrategies() {

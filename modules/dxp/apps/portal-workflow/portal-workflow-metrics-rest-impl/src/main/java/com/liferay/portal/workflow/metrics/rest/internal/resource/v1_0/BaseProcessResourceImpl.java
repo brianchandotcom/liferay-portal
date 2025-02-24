@@ -382,8 +382,25 @@ public abstract class BaseProcessResourceImpl
 			Collection<Process> processes, Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (Process process : processes) {
-			deleteProcess(process.getId());
+		UnsafeFunction<Process, Process, Exception> processUnsafeFunction =
+			process -> {
+				deleteProcess(process.getId());
+
+				return process;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				processes, processUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				processes, processUnsafeFunction::apply);
+		}
+		else {
+			for (Process process : processes) {
+				processUnsafeFunction.apply(process);
+			}
 		}
 	}
 

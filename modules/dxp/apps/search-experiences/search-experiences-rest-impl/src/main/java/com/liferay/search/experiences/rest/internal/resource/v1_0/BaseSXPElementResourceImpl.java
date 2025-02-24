@@ -797,8 +797,25 @@ public abstract class BaseSXPElementResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (SXPElement sxpElement : sxpElements) {
-			deleteSXPElement(sxpElement.getId());
+		UnsafeFunction<SXPElement, SXPElement, Exception>
+			sxpElementUnsafeFunction = sxpElement -> {
+				deleteSXPElement(sxpElement.getId());
+
+				return sxpElement;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				sxpElements, sxpElementUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				sxpElements, sxpElementUnsafeFunction::apply);
+		}
+		else {
+			for (SXPElement sxpElement : sxpElements) {
+				sxpElementUnsafeFunction.apply(sxpElement);
+			}
 		}
 	}
 

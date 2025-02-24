@@ -282,6 +282,25 @@ public abstract class BaseShippingFixedOptionOrderTypeResourceImpl
 
 					return shippingFixedOptionOrderType;
 				};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				shippingFixedOptionOrderTypes,
+				shippingFixedOptionOrderTypeUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				shippingFixedOptionOrderTypes,
+				shippingFixedOptionOrderTypeUnsafeFunction::apply);
+		}
+		else {
+			for (ShippingFixedOptionOrderType shippingFixedOptionOrderType :
+					shippingFixedOptionOrderTypes) {
+
+				shippingFixedOptionOrderTypeUnsafeFunction.apply(
+					shippingFixedOptionOrderType);
+			}
+		}
 	}
 
 	public Set<String> getAvailableCreateStrategies() {

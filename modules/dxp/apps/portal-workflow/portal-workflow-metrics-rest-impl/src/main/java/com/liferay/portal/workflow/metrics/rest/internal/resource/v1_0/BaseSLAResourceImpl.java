@@ -517,8 +517,22 @@ public abstract class BaseSLAResourceImpl
 			Collection<SLA> slas, Map<String, Serializable> parameters)
 		throws Exception {
 
-		for (SLA sla : slas) {
+		UnsafeFunction<SLA, SLA, Exception> slaUnsafeFunction = sla -> {
 			deleteSLA(sla.getId());
+
+			return sla;
+		};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(slas, slaUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(slas, slaUnsafeFunction::apply);
+		}
+		else {
+			for (SLA sla : slas) {
+				slaUnsafeFunction.apply(sla);
+			}
 		}
 	}
 

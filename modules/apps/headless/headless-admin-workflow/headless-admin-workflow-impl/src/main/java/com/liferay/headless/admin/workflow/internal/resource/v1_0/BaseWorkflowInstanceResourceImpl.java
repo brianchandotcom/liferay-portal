@@ -400,6 +400,20 @@ public abstract class BaseWorkflowInstanceResourceImpl
 
 				return workflowInstance;
 			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				workflowInstances, workflowInstanceUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				workflowInstances, workflowInstanceUnsafeFunction::apply);
+		}
+		else {
+			for (WorkflowInstance workflowInstance : workflowInstances) {
+				workflowInstanceUnsafeFunction.apply(workflowInstance);
+			}
+		}
 	}
 
 	public Set<String> getAvailableCreateStrategies() {

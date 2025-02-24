@@ -995,6 +995,20 @@ public abstract class BaseDataDefinitionResourceImpl
 
 				return dataDefinition;
 			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				dataDefinitions, dataDefinitionUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				dataDefinitions, dataDefinitionUnsafeFunction::apply);
+		}
+		else {
+			for (DataDefinition dataDefinition : dataDefinitions) {
+				dataDefinitionUnsafeFunction.apply(dataDefinition);
+			}
+		}
 	}
 
 	public Set<String> getAvailableCreateStrategies() {

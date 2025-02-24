@@ -296,6 +296,20 @@ public abstract class BaseWishListItemResourceImpl
 
 				return wishListItem;
 			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				wishListItems, wishListItemUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				wishListItems, wishListItemUnsafeFunction::apply);
+		}
+		else {
+			for (WishListItem wishListItem : wishListItems) {
+				wishListItemUnsafeFunction.apply(wishListItem);
+			}
+		}
 	}
 
 	public Set<String> getAvailableCreateStrategies() {

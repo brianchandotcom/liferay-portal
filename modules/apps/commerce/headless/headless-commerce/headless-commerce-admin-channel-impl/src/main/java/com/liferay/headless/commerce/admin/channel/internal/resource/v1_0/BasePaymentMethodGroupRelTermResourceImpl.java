@@ -279,6 +279,25 @@ public abstract class BasePaymentMethodGroupRelTermResourceImpl
 
 						return paymentMethodGroupRelTerm;
 					};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				paymentMethodGroupRelTerms,
+				paymentMethodGroupRelTermUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				paymentMethodGroupRelTerms,
+				paymentMethodGroupRelTermUnsafeFunction::apply);
+		}
+		else {
+			for (PaymentMethodGroupRelTerm paymentMethodGroupRelTerm :
+					paymentMethodGroupRelTerms) {
+
+				paymentMethodGroupRelTermUnsafeFunction.apply(
+					paymentMethodGroupRelTerm);
+			}
+		}
 	}
 
 	public Set<String> getAvailableCreateStrategies() {

@@ -761,6 +761,20 @@ public abstract class BaseEmailAddressResourceImpl
 
 				return emailAddress;
 			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				emailAddresses, emailAddressUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				emailAddresses, emailAddressUnsafeFunction::apply);
+		}
+		else {
+			for (EmailAddress emailAddress : emailAddresses) {
+				emailAddressUnsafeFunction.apply(emailAddress);
+			}
+		}
 	}
 
 	public Set<String> getAvailableCreateStrategies() {

@@ -505,6 +505,20 @@ public abstract class BaseShipmentItemResourceImpl
 
 				return shipmentItem;
 			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				shipmentItems, shipmentItemUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				shipmentItems, shipmentItemUnsafeFunction::apply);
+		}
+		else {
+			for (ShipmentItem shipmentItem : shipmentItems) {
+				shipmentItemUnsafeFunction.apply(shipmentItem);
+			}
+		}
 	}
 
 	public Set<String> getAvailableCreateStrategies() {

@@ -39,431 +39,481 @@ test.beforeEach(
 );
 
 test.describe('Translation Manager', () => {
-	test('Assert the localization dropdown is rendered alongside the localized input', async ({
-		page,
-	}) => {
-		const localizedInputContainer = page
-			.locator('.input-localized.input-localized-input')
-			.first();
+	test(
+		'Assert the localization dropdown is rendered alongside the localized input',
+		{tag: '@LPD-47235'},
+		async ({page}) => {
+			const localizedInputContainer = page
+				.locator('.input-localized.input-localized-input')
+				.first();
 
-		await test.step('Assert the localized input is rendered', async () => {
-			expect(localizedInputContainer).toBeVisible();
-		});
-
-		await test.step('Assert the localization dropdown is rendered', async () => {
-			const localizedTriggerButton =
-				localizedInputContainer.getByRole('button');
-
-			expect(localizedTriggerButton).toBeVisible();
-
-			const translationDropdown = page.getByRole('menuitem', {
-				name: 'Not translated into Catalan.',
+			await test.step('Assert the localized input is rendered', async () => {
+				expect(localizedInputContainer).toBeVisible();
 			});
 
-			await clickAndExpectToBeVisible({
-				target: translationDropdown,
-				trigger: localizedTriggerButton,
+			await test.step('Assert the localization dropdown is rendered', async () => {
+				const localizedTriggerButton =
+					localizedInputContainer.getByRole('button');
+
+				expect(localizedTriggerButton).toBeVisible();
+
+				const translationDropdown = page.getByRole('menuitem', {
+					name: 'Not translated into Catalan.',
+				});
+
+				await clickAndExpectToBeVisible({
+					target: translationDropdown,
+					trigger: localizedTriggerButton,
+				});
 			});
-		});
-	});
+		}
+	);
 
-	test('Assert the click on a translation updates the localized input', async ({
-		page,
-	}) => {
-		const localizedInputContainer = page
-			.locator('.input-localized.input-localized-input')
-			.first();
+	test(
+		'Assert the click on a translation updates the localized input',
+		{tag: '@LPD-47235'},
+		async ({page}) => {
+			const localizedInputContainer = page
+				.locator('.input-localized.input-localized-input')
+				.first();
 
-		const localizedInput = localizedInputContainer.getByRole('textbox');
+			const localizedInput = localizedInputContainer.getByRole('textbox');
 
-		await test.step('Fill the localized input with a translation', async () => {
-			await expect(localizedInputContainer).toBeVisible();
+			await test.step('Fill the localized input with a translation', async () => {
+				await expect(localizedInputContainer).toBeVisible();
 
-			await localizedInput.fill('Translation');
-		});
-
-		await test.step('Click on a translation', async () => {
-			const translationManagerTriggerButton =
-				localizedInputContainer.getByRole('button');
-
-			const translationManagerCatalanChoice = page.getByRole('menuitem', {
-				name: 'Not translated into Catalan.',
-			});
-
-			await clickAndExpectToBeVisible({
-				target: translationManagerCatalanChoice,
-				trigger: translationManagerTriggerButton,
-			});
-
-			await translationManagerCatalanChoice.click();
-
-			const translationText = page.locator('text=Translation').first();
-
-			await expect(translationText).toBeVisible();
-			await expect(localizedInput).not.toContainText('Translation');
-		});
-	});
-
-	test('Assert the click on a translation changes the translation manager trigger text', async ({
-		page,
-	}) => {
-		const localizedInputContainer = page
-			.locator('.input-localized.input-localized-input')
-			.first();
-
-		await test.step('Click on a translation', async () => {
-			const translationManagerTriggerButton =
-				localizedInputContainer.getByRole('button');
-
-			const translationManagerCatalanChoice = page.getByRole('menuitem', {
-				name: 'Not translated into Catalan.',
+				await localizedInput.fill('Translation');
 			});
 
-			await clickAndExpectToBeVisible({
-				target: translationManagerCatalanChoice,
-				trigger: translationManagerTriggerButton,
+			await test.step('Click on a translation', async () => {
+				const translationManagerTriggerButton =
+					localizedInputContainer.getByRole('button');
+
+				const translationManagerCatalanChoice = page.getByRole(
+					'menuitem',
+					{
+						name: 'Not translated into Catalan.',
+					}
+				);
+
+				await clickAndExpectToBeVisible({
+					target: translationManagerCatalanChoice,
+					trigger: translationManagerTriggerButton,
+				});
+
+				await translationManagerCatalanChoice.click();
+
+				const translationText = page
+					.locator('text=Translation')
+					.first();
+
+				await expect(translationText).toBeVisible();
+				await expect(localizedInput).not.toContainText('Translation');
 			});
+		}
+	);
 
-			await translationManagerCatalanChoice.click();
+	test(
+		'Assert the click on a translation changes the translation manager trigger text',
+		{tag: '@LPD-47235'},
+		async ({page}) => {
+			const localizedInputContainer = page
+				.locator('.input-localized.input-localized-input')
+				.first();
 
-			await expect(translationManagerTriggerButton).toHaveText('ca-ES');
-		});
-	});
+			await test.step('Click on a translation', async () => {
+				const translationManagerTriggerButton =
+					localizedInputContainer.getByRole('button');
 
-	test('Assert translation manager button exists for Admin users', async ({
-		page,
-	}) => {
-		const adminLocalizedInputContainer = page
-			.getByText('Admin English (United States')
-			.first()
-			.locator('.input-localized.input-localized-input')
-			.first();
+				const translationManagerCatalanChoice = page.getByRole(
+					'menuitem',
+					{
+						name: 'Not translated into Catalan.',
+					}
+				);
 
-		await test.step('Click on a translation', async () => {
-			const translationManagerTriggerButton =
-				adminLocalizedInputContainer.getByRole('button');
+				await clickAndExpectToBeVisible({
+					target: translationManagerCatalanChoice,
+					trigger: translationManagerTriggerButton,
+				});
+
+				await translationManagerCatalanChoice.click();
+
+				await expect(translationManagerTriggerButton).toHaveText(
+					'ca-ES'
+				);
+			});
+		}
+	);
+
+	test(
+		'Assert translation manager button exists for Admin users',
+		{tag: '@LPD-47235'},
+		async ({page}) => {
+			const adminLocalizedInputContainer = page
+				.getByText('Admin English (United States')
+				.first()
+				.locator('.input-localized.input-localized-input')
+				.first();
+
+			await test.step('Click on a translation', async () => {
+				const translationManagerTriggerButton =
+					adminLocalizedInputContainer.getByRole('button');
+
+				const translationManageButton = page.getByRole('button', {
+					name: 'Manage Translations',
+				});
+
+				await clickAndExpectToBeVisible({
+					target: translationManageButton,
+					trigger: translationManagerTriggerButton,
+				});
+			});
+		}
+	);
+
+	test(
+		'Assert the translation manager is opened when Manage Translations is clicked',
+		{tag: '@LPD-47235'},
+		async ({page}) => {
+			const adminLocalizedInputContainer = page
+				.getByText('Admin English (United States')
+				.first()
+				.locator('.input-localized.input-localized-input')
+				.first();
 
 			const translationManageButton = page.getByRole('button', {
 				name: 'Manage Translations',
 			});
 
-			await clickAndExpectToBeVisible({
-				target: translationManageButton,
-				trigger: translationManagerTriggerButton,
+			await test.step('Click on a translation', async () => {
+				const translationManagerTriggerButton =
+					adminLocalizedInputContainer.getByRole('button');
+
+				await clickAndExpectToBeVisible({
+					target: translationManageButton,
+					trigger: translationManagerTriggerButton,
+				});
 			});
-		});
-	});
 
-	test('Assert the translation manager is opened when Manage Translations is clicked', async ({
-		page,
-	}) => {
-		const adminLocalizedInputContainer = page
-			.getByText('Admin English (United States')
-			.first()
-			.locator('.input-localized.input-localized-input')
-			.first();
+			await test.step('Assert the translation manager is opened', async () => {
+				const translationManagerDialog = page.getByRole('dialog', {
+					name: 'Manage Translations',
+				});
 
-		const translationManageButton = page.getByRole('button', {
-			name: 'Manage Translations',
-		});
-
-		await test.step('Click on a translation', async () => {
-			const translationManagerTriggerButton =
-				adminLocalizedInputContainer.getByRole('button');
-
-			await clickAndExpectToBeVisible({
-				target: translationManageButton,
-				trigger: translationManagerTriggerButton,
+				await clickAndExpectToBeVisible({
+					target: translationManagerDialog,
+					trigger: translationManageButton,
+				});
 			});
-		});
+		}
+	);
 
-		await test.step('Assert the translation manager is opened', async () => {
+	test(
+		'Assert that clicking on cancel closes the translation manager and discards the changes',
+		{tag: '@LPD-47235'},
+		async ({page}) => {
+			const adminLocalizedInputContainer = page
+				.getByText('Admin English (United States)')
+				.first()
+				.locator('.input-localized.input-localized-input')
+				.first();
+
+			const translationManageButton = page.getByRole('button', {
+				name: 'Manage Translations',
+			});
+
+			await test.step('Click on a translation', async () => {
+				const translationManagerTriggerButton =
+					adminLocalizedInputContainer.getByRole('button');
+
+				await clickAndExpectToBeVisible({
+					target: translationManageButton,
+					trigger: translationManagerTriggerButton,
+				});
+			});
+
 			const translationManagerDialog = page.getByRole('dialog', {
 				name: 'Manage Translations',
 			});
 
-			await clickAndExpectToBeVisible({
-				target: translationManagerDialog,
-				trigger: translationManageButton,
-			});
-		});
-	});
-
-	test('Assert that clicking on cancel closes the translation manager and discards the changes', async ({
-		page,
-	}) => {
-		const adminLocalizedInputContainer = page
-			.getByText('Admin English (United States)')
-			.first()
-			.locator('.input-localized.input-localized-input')
-			.first();
-
-		const translationManageButton = page.getByRole('button', {
-			name: 'Manage Translations',
-		});
-
-		await test.step('Click on a translation', async () => {
-			const translationManagerTriggerButton =
-				adminLocalizedInputContainer.getByRole('button');
-
-			await clickAndExpectToBeVisible({
-				target: translationManageButton,
-				trigger: translationManagerTriggerButton,
-			});
-		});
-
-		const translationManagerDialog = page.getByRole('dialog', {
-			name: 'Manage Translations',
-		});
-
-		await test.step('Assert the translation manager is opened', async () => {
-			await clickAndExpectToBeVisible({
-				target: translationManagerDialog,
-				trigger: translationManageButton,
-			});
-		});
-
-		await test.step('Delete a translation', async () => {
-			const translationRow = translationManagerDialog.getByRole('row', {
-				name: 'Catalan (Spain)',
+			await test.step('Assert the translation manager is opened', async () => {
+				await clickAndExpectToBeVisible({
+					target: translationManagerDialog,
+					trigger: translationManageButton,
+				});
 			});
 
-			const deleteButton = translationRow.getByRole('button', {
-				name: 'Delete',
+			await test.step('Delete a translation', async () => {
+				const translationRow = translationManagerDialog.getByRole(
+					'row',
+					{
+						name: 'Catalan (Spain)',
+					}
+				);
+
+				const deleteButton = translationRow.getByRole('button', {
+					name: 'Delete',
+				});
+
+				await deleteButton.click();
 			});
 
-			await deleteButton.click();
-		});
+			await test.step('Click on cancel', async () => {
+				const cancelButton = translationManagerDialog.getByRole(
+					'button',
+					{
+						name: 'Cancel',
+					}
+				);
 
-		await test.step('Click on cancel', async () => {
-			const cancelButton = translationManagerDialog.getByRole('button', {
-				name: 'Cancel',
+				await cancelButton.click();
+
+				await expect(translationManagerDialog).not.toBeVisible();
 			});
 
-			await cancelButton.click();
+			await test.step('Assert the translation was not deleted', async () => {
+				const translationManagerTriggerButton =
+					adminLocalizedInputContainer.getByRole('button');
 
-			await expect(translationManagerDialog).not.toBeVisible();
-		});
+				const translationManagerCatalanChoice = page.getByRole(
+					'menuitem',
+					{
+						name: 'Not translated into Catalan.',
+					}
+				);
 
-		await test.step('Assert the translation was not deleted', async () => {
-			const translationManagerTriggerButton =
-				adminLocalizedInputContainer.getByRole('button');
+				await clickAndExpectToBeVisible({
+					target: translationManagerCatalanChoice,
+					trigger: translationManagerTriggerButton,
+				});
 
-			const translationManagerCatalanChoice = page.getByRole('menuitem', {
-				name: 'Not translated into Catalan.',
+				await translationManagerCatalanChoice.click();
+
+				await expect(translationManagerTriggerButton).toHaveText(
+					'ca-ES'
+				);
+			});
+		}
+	);
+
+	test(
+		'Assert that a new language can be added to the translation manager',
+		{tag: '@LPD-47235'},
+		async ({page}) => {
+			const adminLocalizedInputContainer = page
+				.getByText('Admin English (United States)')
+				.first()
+				.locator('.input-localized.input-localized-input')
+				.first();
+
+			const translationManageButton = page.getByRole('button', {
+				name: 'Manage Translations',
 			});
 
-			await clickAndExpectToBeVisible({
-				target: translationManagerCatalanChoice,
-				trigger: translationManagerTriggerButton,
+			await test.step('Click on a translation', async () => {
+				const translationManagerTriggerButton =
+					adminLocalizedInputContainer.getByRole('button');
+
+				await clickAndExpectToBeVisible({
+					target: translationManageButton,
+					trigger: translationManagerTriggerButton,
+				});
 			});
 
-			await translationManagerCatalanChoice.click();
-
-			await expect(translationManagerTriggerButton).toHaveText('ca-ES');
-		});
-	});
-
-	test('Assert that a new language can be added to the translation manager', async ({
-		page,
-	}) => {
-		const adminLocalizedInputContainer = page
-			.getByText('Admin English (United States)')
-			.first()
-			.locator('.input-localized.input-localized-input')
-			.first();
-
-		const translationManageButton = page.getByRole('button', {
-			name: 'Manage Translations',
-		});
-
-		await test.step('Click on a translation', async () => {
-			const translationManagerTriggerButton =
-				adminLocalizedInputContainer.getByRole('button');
-
-			await clickAndExpectToBeVisible({
-				target: translationManageButton,
-				trigger: translationManagerTriggerButton,
-			});
-		});
-
-		const translationManagerDialog = page.getByRole('dialog', {
-			name: 'Manage Translations',
-		});
-
-		await test.step('Assert the translation manager is opened', async () => {
-			await clickAndExpectToBeVisible({
-				target: translationManagerDialog,
-				trigger: translationManageButton,
-			});
-		});
-
-		const newLanguageOption = page.getByRole('menuitem', {
-			name: 'de-DE',
-		});
-
-		test.step('Add a new language', async () => {
-			const addNewLanguageButton = page.getByLabel('Add', {exact: true});
-
-			await clickAndExpectToBeVisible({
-				target: newLanguageOption,
-				trigger: addNewLanguageButton,
+			const translationManagerDialog = page.getByRole('dialog', {
+				name: 'Manage Translations',
 			});
 
-			await newLanguageOption.click();
-		});
-
-		test.step('Assert the new language is added to the translation manager', async () => {
-			const newLanguageTranslateOption = page.getByRole('menuitem', {
-				name: 'Not translated into German.',
+			await test.step('Assert the translation manager is opened', async () => {
+				await clickAndExpectToBeVisible({
+					target: translationManagerDialog,
+					trigger: translationManageButton,
+				});
 			});
 
-			await clickAndExpectToBeVisible({
-				target: newLanguageTranslateOption,
-				trigger: newLanguageOption,
+			const newLanguageOption = page.getByRole('menuitem', {
+				name: 'de-DE',
 			});
 
-			const doneButton = translationManagerDialog.getByRole('button', {
-				name: 'Done',
+			test.step('Add a new language', async () => {
+				const addNewLanguageButton = page.getByLabel('Add', {
+					exact: true,
+				});
+
+				await clickAndExpectToBeVisible({
+					target: newLanguageOption,
+					trigger: addNewLanguageButton,
+				});
+
+				await newLanguageOption.click();
 			});
 
-			await expect(doneButton).toBeVisible();
+			test.step('Assert the new language is added to the translation manager', async () => {
+				const newLanguageTranslateOption = page.getByRole('menuitem', {
+					name: 'Not translated into German.',
+				});
 
-			clickAndExpectToBeHidden({
-				target: translationManagerDialog,
-				trigger: doneButton,
-			});
-		});
+				await clickAndExpectToBeVisible({
+					target: newLanguageTranslateOption,
+					trigger: newLanguageOption,
+				});
 
-		test.step('Assert the new language is listed as an option', async () => {
-			const translationManagerTriggerButton =
-				adminLocalizedInputContainer.getByRole('button');
+				const doneButton = translationManagerDialog.getByRole(
+					'button',
+					{
+						name: 'Done',
+					}
+				);
 
-			await expect(translationManagerTriggerButton).toBeVisible();
+				await expect(doneButton).toBeVisible();
 
-			const newLanguageTranslateOption = page.getByRole('menuitem', {
-				name: 'Not translated into German.',
-			});
-
-			await clickAndExpectToBeVisible({
-				target: newLanguageTranslateOption,
-				trigger: translationManagerTriggerButton,
-			});
-		});
-	});
-
-	test('Assert that languages can be searched in the translation manager', async ({
-		page,
-	}) => {
-		const adminLocalizedInputContainer = page
-			.getByText('Admin English (United States)')
-			.first()
-			.locator('.input-localized.input-localized-input')
-			.first();
-
-		const translationManageButton = page.getByRole('button', {
-			name: 'Manage Translations',
-		});
-
-		await test.step('Click on a translation', async () => {
-			const translationManagerTriggerButton =
-				adminLocalizedInputContainer.getByRole('button');
-
-			await clickAndExpectToBeVisible({
-				target: translationManageButton,
-				trigger: translationManagerTriggerButton,
-			});
-		});
-
-		const translationManagerDialog = page.getByRole('dialog', {
-			name: 'Manage Translations',
-		});
-
-		await test.step('Assert the translation manager is opened', async () => {
-			await clickAndExpectToBeVisible({
-				target: translationManagerDialog,
-				trigger: translationManageButton,
-			});
-		});
-
-		await test.step('Search for a language', async () => {
-			const searchInput = page.getByPlaceholder('Search');
-
-			await searchInput.fill('Catalan');
-
-			const searchResult = page.getByRole('row', {
-				name: 'Catalan (Spain)',
+				clickAndExpectToBeHidden({
+					target: translationManagerDialog,
+					trigger: doneButton,
+				});
 			});
 
-			await expect(searchResult).toBeVisible();
-		});
+			test.step('Assert the new language is listed as an option', async () => {
+				const translationManagerTriggerButton =
+					adminLocalizedInputContainer.getByRole('button');
 
-		await test.step('Assert languages not matching are hidden', async () => {
-			const searchResult = page.getByRole('row', {
-				name: 'English (United States)',
+				await expect(translationManagerTriggerButton).toBeVisible();
+
+				const newLanguageTranslateOption = page.getByRole('menuitem', {
+					name: 'Not translated into German.',
+				});
+
+				await clickAndExpectToBeVisible({
+					target: newLanguageTranslateOption,
+					trigger: translationManagerTriggerButton,
+				});
+			});
+		}
+	);
+
+	test(
+		'Assert that languages can be searched in the translation manager',
+		{tag: '@LPD-47235'},
+		async ({page}) => {
+			const adminLocalizedInputContainer = page
+				.getByText('Admin English (United States)')
+				.first()
+				.locator('.input-localized.input-localized-input')
+				.first();
+
+			const translationManageButton = page.getByRole('button', {
+				name: 'Manage Translations',
 			});
 
-			await expect(searchResult).not.toBeVisible();
-		});
-	});
+			await test.step('Click on a translation', async () => {
+				const translationManagerTriggerButton =
+					adminLocalizedInputContainer.getByRole('button');
 
-	test('Assert that a language can be deleted from the translation manager', async ({
-		page,
-	}) => {
-		const adminLocalizedInputContainer = page
-			.getByText('Admin English (United States)')
-			.first()
-			.locator('.input-localized.input-localized-input')
-			.first();
-
-		const translationManageButton = page.getByRole('button', {
-			name: 'Manage Translations',
-		});
-
-		await test.step('Click on a translation', async () => {
-			const translationManagerTriggerButton =
-				adminLocalizedInputContainer.getByRole('button');
-
-			await clickAndExpectToBeVisible({
-				target: translationManageButton,
-				trigger: translationManagerTriggerButton,
-			});
-		});
-
-		const translationManagerDialog = page.getByRole('dialog', {
-			name: 'Manage Translations',
-		});
-
-		await test.step('Assert the translation manager is opened', async () => {
-			await clickAndExpectToBeVisible({
-				target: translationManagerDialog,
-				trigger: translationManageButton,
-			});
-		});
-
-		await test.step('Delete a language', async () => {
-			const translationRow = translationManagerDialog.getByRole('row', {
-				name: 'French (France)',
+				await clickAndExpectToBeVisible({
+					target: translationManageButton,
+					trigger: translationManagerTriggerButton,
+				});
 			});
 
-			const deleteButton = translationRow.getByRole('button', {
-				name: 'Delete',
+			const translationManagerDialog = page.getByRole('dialog', {
+				name: 'Manage Translations',
 			});
 
-			await clickAndExpectToBeHidden({
-				target: translationRow,
-				trigger: deleteButton,
-			});
-		});
-
-		await test.step('Save and close the translation manager', async () => {
-			const doneButton = translationManagerDialog.getByRole('button', {
-				name: 'Done',
+			await test.step('Assert the translation manager is opened', async () => {
+				await clickAndExpectToBeVisible({
+					target: translationManagerDialog,
+					trigger: translationManageButton,
+				});
 			});
 
-			await doneButton.click();
+			await test.step('Search for a language', async () => {
+				const searchInput = page.getByPlaceholder('Search');
 
-			await expect(translationManagerDialog).not.toBeVisible();
-		});
-	});
+				await searchInput.fill('Catalan');
+
+				const searchResult = page.getByRole('row', {
+					name: 'Catalan (Spain)',
+				});
+
+				await expect(searchResult).toBeVisible();
+			});
+
+			await test.step('Assert languages not matching are hidden', async () => {
+				const searchResult = page.getByRole('row', {
+					name: 'English (United States)',
+				});
+
+				await expect(searchResult).not.toBeVisible();
+			});
+		}
+	);
+
+	test(
+		'Assert that a language can be deleted from the translation manager',
+		{tag: '@LPD-47235'},
+		async ({page}) => {
+			const adminLocalizedInputContainer = page
+				.getByText('Admin English (United States)')
+				.first()
+				.locator('.input-localized.input-localized-input')
+				.first();
+
+			const translationManageButton = page.getByRole('button', {
+				name: 'Manage Translations',
+			});
+
+			await test.step('Click on a translation', async () => {
+				const translationManagerTriggerButton =
+					adminLocalizedInputContainer.getByRole('button');
+
+				await clickAndExpectToBeVisible({
+					target: translationManageButton,
+					trigger: translationManagerTriggerButton,
+				});
+			});
+
+			const translationManagerDialog = page.getByRole('dialog', {
+				name: 'Manage Translations',
+			});
+
+			await test.step('Assert the translation manager is opened', async () => {
+				await clickAndExpectToBeVisible({
+					target: translationManagerDialog,
+					trigger: translationManageButton,
+				});
+			});
+
+			await test.step('Delete a language', async () => {
+				const translationRow = translationManagerDialog.getByRole(
+					'row',
+					{
+						name: 'French (France)',
+					}
+				);
+
+				const deleteButton = translationRow.getByRole('button', {
+					name: 'Delete',
+				});
+
+				await clickAndExpectToBeHidden({
+					target: translationRow,
+					trigger: deleteButton,
+				});
+			});
+
+			await test.step('Save and close the translation manager', async () => {
+				const doneButton = translationManagerDialog.getByRole(
+					'button',
+					{
+						name: 'Done',
+					}
+				);
+
+				await doneButton.click();
+
+				await expect(translationManagerDialog).not.toBeVisible();
+			});
+		}
+	);
 });

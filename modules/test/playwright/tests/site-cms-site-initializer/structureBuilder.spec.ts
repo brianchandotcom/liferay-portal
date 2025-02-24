@@ -58,9 +58,14 @@ test('Structures can be saved and published', async ({
 		await structureBuilderPage.publishStructure();
 	}).not.toPass();
 
-	// Add a field
+	// Add two fields
 
 	await structureBuilderPage.addField('Text');
+	await structureBuilderPage.addField('Text');
+
+	// Remove a field
+
+	await structureBuilderPage.deleteField({label: 'Text', nth: 1});
 
 	// Save it again and publish it
 

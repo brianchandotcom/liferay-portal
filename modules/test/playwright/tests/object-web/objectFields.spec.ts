@@ -164,6 +164,41 @@ test.describe('Manage object fields through Model Builder', () => {
 		);
 	});
 
+	test('assert that field entry translation is disabled by default', async ({
+		modelBuilderDiagramPage,
+		modelBuilderLeftSidebarPage,
+		modelBuilderObjectDefinitionNodePage,
+		page,
+	}) => {
+		const {objectDefinitions} = createdEntities;
+
+		const [objectDefinition] = objectDefinitions;
+
+		await modelBuilderDiagramPage.goto({objectFolderName: 'Default'});
+
+		await modelBuilderLeftSidebarPage.sidebarItems
+			.filter({hasText: objectDefinition.name})
+			.click();
+
+		await modelBuilderObjectDefinitionNodePage.openAddNewObjectFieldOrRelationshipModal(
+			objectDefinition.name,
+			modelBuilderDiagramPage.objectDefinitionNodes,
+			modelBuilderObjectDefinitionNodePage.addObjectFieldButton
+		);
+
+		await modelBuilderObjectDefinitionNodePage.fillObjectFieldLabelInput(
+			'objectFieldLabel' + getRandomInt()
+		);
+
+		await modelBuilderObjectDefinitionNodePage.selectNewObjectFieldBusinessTypeOption(
+			'Decimal'
+		);
+
+		await expect(
+			page.getByRole('switch', {name: 'Enable Entry Translation'})
+		).not.toBeChecked();
+	});
+
 	test('can add picklist object field to object definition node', async ({
 		apiHelpers,
 		modelBuilderDiagramPage,

@@ -21,9 +21,12 @@ import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.odata.entity.EntityField;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.junit.Assert;
@@ -231,6 +234,11 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 	}
 
 	@Override
+	protected Collection<EntityField> getEntityFields() throws Exception {
+		return new ArrayList<>();
+	}
+
+	@Override
 	protected AssetLibrary randomAssetLibrary() throws Exception {
 		return new AssetLibrary() {
 			{
@@ -277,6 +285,14 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 			depotEntry.getDepotEntryId(), testGroup.getGroupId());
 
 		return assetLibraryResource.getAssetLibrary(assetLibrary.getId());
+	}
+
+	@Override
+	protected AssetLibrary testGetAssetLibrariesPage_addAssetLibrary(
+			AssetLibrary assetLibrary)
+		throws Exception {
+
+		return _addAssetLibrary();
 	}
 
 	@Override

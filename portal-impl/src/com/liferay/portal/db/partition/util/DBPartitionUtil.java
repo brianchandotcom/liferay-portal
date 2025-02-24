@@ -461,39 +461,33 @@ public class DBPartitionUtil {
 		Connection connection = CurrentConnectionUtil.getConnection(
 			InfrastructureUtil.getDataSource());
 
-		DBInspector dbInspector = new DBInspector(connection);
-
 		String fromPartitionName = getPartitionName(fromCompanyId);
 		List<String> quartzTableNames = new ArrayList<>();
 		String toPartitionName = getPartitionName(toCompanyId);
 
-		try (AutoCloseable autoCloseable = _disableAutoCommit(connection);
-			PreparedStatement preparedStatement = connection.prepareStatement(
-				_dbPartitionDB.getCreatePartitionSQL(
-					connection, toPartitionName))) {
+		try (SafeCloseable safeCloseable = CompanyThreadLocal.lock(
+				fromCompanyId);
+			AutoCloseable autoCloseable = _disableAutoCommit(connection)) {
 
-			preparedStatement.executeUpdate();
+			_copySchema(connection, fromPartitionName, toPartitionName);
 
 			DatabaseMetaData databaseMetaData = connection.getMetaData();
 
-			try (SafeCloseable safeCloseable = CompanyThreadLocal.lock(
-					fromCompanyId);
-				ResultSet resultSet = databaseMetaData.getTables(
+			try (ResultSet resultSet = databaseMetaData.getTables(
 					_dbPartitionDB.getCatalog(connection, fromPartitionName),
 					_dbPartitionDB.getSchema(connection, fromPartitionName),
 					null, new String[] {"TABLE", "VIEW"});
 				Statement statement = connection.createStatement()) {
+
+				DBInspector dbInspector = new DBInspector(connection);
+
+				DB db = DBManagerUtil.getDB();
 
 				while (resultSet.next()) {
 					String fromTableName = resultSet.getString("TABLE_NAME");
 
 					if (Objects.equals(
 							resultSet.getString("TABLE_TYPE"), "VIEW")) {
-
-						statement.executeUpdate(
-							_dbPartitionDB.getCreateViewSQL(
-								_defaultPartitionName, toPartitionName,
-								fromTableName));
 
 						if (_isCopyableQuartzTable(fromTableName)) {
 							_copyQuartzTableRow(
@@ -510,26 +504,23 @@ public class DBPartitionUtil {
 						fromTableName, String.valueOf(fromCompanyId),
 						String.valueOf(toCompanyId));
 
-					statement.executeUpdate(
-						_dbPartitionDB.getCreateTableSQL(
-							connection, fromPartitionName, toPartitionName,
-							fromTableName, toTableName));
+					String partitionTableName =
+						toPartitionName + StringPool.PERIOD + toTableName;
+
+					if (fromTableName.contains(String.valueOf(fromCompanyId))) {
+						db.runSQL(
+							connection,
+							StringBundler.concat(
+								"alter_table_name ", toPartitionName,
+								StringPool.PERIOD, fromTableName,
+								StringPool.SPACE, partitionTableName));
+					}
 
 					if (StringUtil.equalsIgnoreCase(
 							fromTableName, "Configuration_")) {
 
 						continue;
 					}
-
-					statement.executeUpdate(
-						_getCopyDataSQL(
-							fromPartitionName, toPartitionName, fromTableName,
-							toTableName,
-							_getColumnNames(connection, fromTableName),
-							StringPool.BLANK));
-
-					String partitionTableName =
-						toPartitionName + StringPool.PERIOD + toTableName;
 
 					if (dbInspector.hasColumn(fromTableName, "companyId")) {
 						statement.executeUpdate(
@@ -596,14 +587,6 @@ public class DBPartitionUtil {
 								fromCompanyId, "' and scope = ",
 								ResourceConstants.SCOPE_COMPANY));
 					}
-				}
-			}
-
-			try (Statement statement = connection.createStatement()) {
-				for (String createRuleSQL :
-						_dbPartitionDB.getCreateRulesSQL(toPartitionName)) {
-
-					statement.executeUpdate(createRuleSQL);
 				}
 			}
 
@@ -804,7 +787,9 @@ public class DBPartitionUtil {
 
 		String targetPartitionName = _getExtractedPartitionName(companyId);
 
-		try (AutoCloseable autoCloseable = _disableAutoCommit(connection)) {
+		try (SafeCloseable safeCloseable = CompanyThreadLocal.lock(companyId);
+			AutoCloseable autoCloseable = _disableAutoCommit(connection)) {
+
 			_copySchema(
 				connection, getPartitionName(companyId), targetPartitionName);
 

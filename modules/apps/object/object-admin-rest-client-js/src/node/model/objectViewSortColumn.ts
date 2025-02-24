@@ -4,38 +4,43 @@
  */
 
 
-export class ObjectViewSortColumn {
-	'id'?: number;
-	'objectFieldName'?: string;
-	'priority'?: number;
-	'sortOrder'?: 'asc' | 'desc';
+/**
+ * @author Javier Gamarra
+ * @generated
+ */
 
-	static discriminator: string | undefined = undefined;
+	export class ObjectViewSortColumn {
+			'id'?: number;
+			'objectFieldName'?: string;
+			'priority'?: number;
+			'sortOrder'?: 'asc' | 'desc';
 
-	static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-		{
-			"name": "id",
-			"baseName": "id",
-			"type": "number"
-		},
-		{
-			"name": "objectFieldName",
-			"baseName": "objectFieldName",
-			"type": "string"
-		},
-		{
-			"name": "priority",
-			"baseName": "priority",
-			"type": "number"
-		},
-		{
-			"name": "sortOrder",
-			"baseName": "sortOrder",
-			"type": "'asc' | 'desc'"
+		static discriminator: string | undefined = undefined;
+
+		static attributeTypeMap: Array<{baseName: string, name: string, type: string}> = [
+				{
+					"baseName": "id",
+					"name": "id",
+					"type": "number"
+				},
+				{
+					"baseName": "objectFieldName",
+					"name": "objectFieldName",
+					"type": "string"
+				},
+				{
+					"baseName": "priority",
+					"name": "priority",
+					"type": "number"
+				},
+				{
+					"baseName": "sortOrder",
+					"name": "sortOrder",
+					"type": "'asc' | 'desc'"
+				}
+		];
+
+		static getAttributeTypeMap() {
+				return ObjectViewSortColumn.attributeTypeMap;
 		}
-	];
-
-	static getAttributeTypeMap() {
-		return ObjectViewSortColumn.attributeTypeMap;
 	}
-}

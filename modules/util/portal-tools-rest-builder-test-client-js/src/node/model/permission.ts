@@ -4,32 +4,37 @@
  */
 
 
-export class Permission {
-	'actionIds'?: Array<string>;
-	'roleName'?: string;
-	'xml'?: object;
+/**
+ * @author Alejandro Tardín
+ * @generated
+ */
 
-	static discriminator: string | undefined = undefined;
+	export class Permission {
+			'actionIds'?: Array<string>;
+			'roleName'?: string;
+			'xml'?: object;
 
-	static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-		{
-			"name": "actionIds",
-			"baseName": "actionIds",
-			"type": "Array<string>"
-		},
-		{
-			"name": "roleName",
-			"baseName": "roleName",
-			"type": "string"
-		},
-		{
-			"name": "xml",
-			"baseName": "xml",
-			"type": "object"
+		static discriminator: string | undefined = undefined;
+
+		static attributeTypeMap: Array<{baseName: string, name: string, type: string}> = [
+				{
+					"baseName": "actionIds",
+					"name": "actionIds",
+					"type": "Array<string>"
+				},
+				{
+					"baseName": "roleName",
+					"name": "roleName",
+					"type": "string"
+				},
+				{
+					"baseName": "xml",
+					"name": "xml",
+					"type": "object"
+				}
+		];
+
+		static getAttributeTypeMap() {
+				return Permission.attributeTypeMap;
 		}
-	];
-
-	static getAttributeTypeMap() {
-		return Permission.attributeTypeMap;
 	}
-}

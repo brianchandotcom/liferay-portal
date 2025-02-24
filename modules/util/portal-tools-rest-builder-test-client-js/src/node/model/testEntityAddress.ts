@@ -5,58 +5,63 @@
 
 
 /**
-* https://www.schema.org/Document
-*/
-export class TestEntityAddress {
-	'dateCreated'?: Date;
-	'dateModified'?: Date;
-	'description'?: string;
-	'documentId'?: number;
-	'id'?: number;
-	'jsonProperty'?: string;
-	'name'?: string;
+ * @author Alejandro Tardín
+ * @generated
+ */
 
-	static discriminator: string | undefined = undefined;
+	/**
+	* https://www.schema.org/Document
+	*/
+	export class TestEntityAddress {
+			'dateCreated'?: Date;
+			'dateModified'?: Date;
+			'description'?: string;
+			'documentId'?: number;
+			'id'?: number;
+			'jsonProperty'?: string;
+			'name'?: string;
 
-	static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-		{
-			"name": "dateCreated",
-			"baseName": "dateCreated",
-			"type": "Date"
-		},
-		{
-			"name": "dateModified",
-			"baseName": "dateModified",
-			"type": "Date"
-		},
-		{
-			"name": "description",
-			"baseName": "description",
-			"type": "string"
-		},
-		{
-			"name": "documentId",
-			"baseName": "documentId",
-			"type": "number"
-		},
-		{
-			"name": "id",
-			"baseName": "id",
-			"type": "number"
-		},
-		{
-			"name": "jsonProperty",
-			"baseName": "jsonProperty",
-			"type": "string"
-		},
-		{
-			"name": "name",
-			"baseName": "name",
-			"type": "string"
+		static discriminator: string | undefined = undefined;
+
+		static attributeTypeMap: Array<{baseName: string, name: string, type: string}> = [
+				{
+					"baseName": "dateCreated",
+					"name": "dateCreated",
+					"type": "Date"
+				},
+				{
+					"baseName": "dateModified",
+					"name": "dateModified",
+					"type": "Date"
+				},
+				{
+					"baseName": "description",
+					"name": "description",
+					"type": "string"
+				},
+				{
+					"baseName": "documentId",
+					"name": "documentId",
+					"type": "number"
+				},
+				{
+					"baseName": "id",
+					"name": "id",
+					"type": "number"
+				},
+				{
+					"baseName": "jsonProperty",
+					"name": "jsonProperty",
+					"type": "string"
+				},
+				{
+					"baseName": "name",
+					"name": "name",
+					"type": "string"
+				}
+		];
+
+		static getAttributeTypeMap() {
+				return TestEntityAddress.attributeTypeMap;
 		}
-	];
-
-	static getAttributeTypeMap() {
-		return TestEntityAddress.attributeTypeMap;
 	}
-}

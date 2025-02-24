@@ -4,38 +4,43 @@
  */
 
 
-export class ObjectLayoutColumn {
-	'id'?: number;
-	'objectFieldName'?: string;
-	'priority'?: number;
-	'size'?: number;
+/**
+ * @author Javier Gamarra
+ * @generated
+ */
 
-	static discriminator: string | undefined = undefined;
+	export class ObjectLayoutColumn {
+			'id'?: number;
+			'objectFieldName'?: string;
+			'priority'?: number;
+			'size'?: number;
 
-	static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-		{
-			"name": "id",
-			"baseName": "id",
-			"type": "number"
-		},
-		{
-			"name": "objectFieldName",
-			"baseName": "objectFieldName",
-			"type": "string"
-		},
-		{
-			"name": "priority",
-			"baseName": "priority",
-			"type": "number"
-		},
-		{
-			"name": "size",
-			"baseName": "size",
-			"type": "number"
+		static discriminator: string | undefined = undefined;
+
+		static attributeTypeMap: Array<{baseName: string, name: string, type: string}> = [
+				{
+					"baseName": "id",
+					"name": "id",
+					"type": "number"
+				},
+				{
+					"baseName": "objectFieldName",
+					"name": "objectFieldName",
+					"type": "string"
+				},
+				{
+					"baseName": "priority",
+					"name": "priority",
+					"type": "number"
+				},
+				{
+					"baseName": "size",
+					"name": "size",
+					"type": "number"
+				}
+		];
+
+		static getAttributeTypeMap() {
+				return ObjectLayoutColumn.attributeTypeMap;
 		}
-	];
-
-	static getAttributeTypeMap() {
-		return ObjectLayoutColumn.attributeTypeMap;
 	}
-}

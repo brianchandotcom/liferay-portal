@@ -3,34 +3,39 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import { ObjectStateTransition } from './objectStateTransition';
+			import { ObjectStateTransition } from './objectStateTransition';
 
-export class ObjectState {
-	'id'?: number;
-	'key'?: string;
-	'objectStateTransitions'?: Array<ObjectStateTransition>;
+/**
+ * @author Javier Gamarra
+ * @generated
+ */
 
-	static discriminator: string | undefined = undefined;
+	export class ObjectState {
+			'id'?: number;
+			'key'?: string;
+			'objectStateTransitions'?: Array<ObjectStateTransition>;
 
-	static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-		{
-			"name": "id",
-			"baseName": "id",
-			"type": "number"
-		},
-		{
-			"name": "key",
-			"baseName": "key",
-			"type": "string"
-		},
-		{
-			"name": "objectStateTransitions",
-			"baseName": "objectStateTransitions",
-			"type": "Array<ObjectStateTransition>"
+		static discriminator: string | undefined = undefined;
+
+		static attributeTypeMap: Array<{baseName: string, name: string, type: string}> = [
+				{
+					"baseName": "id",
+					"name": "id",
+					"type": "number"
+				},
+				{
+					"baseName": "key",
+					"name": "key",
+					"type": "string"
+				},
+				{
+					"baseName": "objectStateTransitions",
+					"name": "objectStateTransitions",
+					"type": "Array<ObjectStateTransition>"
+				}
+		];
+
+		static getAttributeTypeMap() {
+				return ObjectState.attributeTypeMap;
 		}
-	];
-
-	static getAttributeTypeMap() {
-		return ObjectState.attributeTypeMap;
 	}
-}

@@ -1407,174 +1407,193 @@ public abstract class Base${schemaName}ResourceTestCase {
 			}
 
 			<#if generateCRUD && stringUtil.equals(javaMethodSignature.methodName, "get" + schemaName) && properties?keys?seq_contains("id")>
-				<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
-					<#if freeMarkerTool.isIdParameter(javaMethodParameter, schemaName) && stringUtil.equals(javaMethodParameter.parameterType, "java.lang.Long")>
-						@Test
-						public void test${javaMethodSignature.methodName?cap_first}MatchesVulcanCRUDItemDelegateGetItem() throws Exception {
-							${schemaName} post${schemaName} = test${javaMethodSignature.methodName?cap_first}_add${schemaName}();
+				@Test
+				public void test${javaMethodSignature.methodName?cap_first}MatchesVulcanCRUDItemDelegateGetItem() throws Exception {
+					${schemaName} post${schemaName} = test${javaMethodSignature.methodName?cap_first}_add${schemaName}();
 
-							${schemaName} get${schemaName} = ${schemaVarName}Resource.${javaMethodSignature.methodName}(post${schemaName}.getId());
+					${schemaName} get${schemaName} = ${schemaVarName}Resource.${javaMethodSignature.methodName}(
 
-							VulcanCRUDItemDelegate vulcanCRUDItemDelegate = _vulcanCRUDItemDelegateBuilderRegistry.builder(
-								testCompany,
-								"${schemaJavaType}"
-							).acceptLanguage(
-								new AcceptLanguage() {
-									@Override
-									public List<Locale> getLocales() {
-										return Arrays.asList(LocaleUtil.getDefault());
-									}
+					<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
+						<#if !javaMethodParameter?is_first>
+							,
+						</#if>
 
-									@Override
-									public String getPreferredLanguageId() {
-										return LocaleUtil.toLanguageId(
-											LocaleUtil.getDefault());
-									}
+						<#if stringUtil.equals(javaMethodParameter.parameterName, "pagination")>
+							Pagination.of(1, 2)
+						<#elseif freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation)>
+							<#if freeMarkerTool.isIdParameter(javaMethodParameter, schemaName) && stringUtil.equals(javaMethodParameter.parameterType, "java.lang.Long")>
+								<#assign idJavaMethodParameter = javaMethodParameter />
+								post${schemaName}.getId()
+							<#elseif properties?keys?seq_contains(javaMethodParameter.parameterName)>
+								<#if freeMarkerTool.isParameterNameSchemaRelated(javaMethodParameter.parameterName, javaMethodSignature.path, schemaName)>
+									post${schemaName}.get${javaMethodParameter.parameterName?cap_first}()
+								</#if>
+							</#if>
+						<#else>
+							null
+						</#if>
+					</#list>
 
-									@Override
-									public Locale getPreferredLocale() {
-										return LocaleUtil.getDefault();
-									}
-								}
-							).groupLocalService(
-								_groupLocalService
-							).httpServletRequest(
-								new MockHttpServletRequest() {
-									@Override
-									public StringBuffer getRequestURL() {
-										return new StringBuffer(UriBuilder.fromPath(StringBundler.concat("http://localhost:8080/o", "${configYAML.application.baseURI}/${openAPIYAML.info.version}${javaMethodSignature.path}".replace("{${javaMethodParameter.parameterName}}", String.valueOf(post${schemaName}.getId())))).build().toString());
-									}
-								}
-							).httpServletResponse(
-								new MockHttpServletResponse()
-							).resourceActionLocalService(
-								_resourceActionLocalService
-							).resourcePermissionLocalService(
-								_resourcePermissionLocalService
-							).roleLocalService(
-								_roleLocalService
-							).scopeChecker(
-								null
-							).uriInfo(
-								testVulcanCRUDItemDelegate_getUriInfo(post${schemaName}.getId())
-							).user(
-								testVulcanCRUDItemDelegate_getUser()
-							).build();
+					);
 
-							Object vulcanResponse = vulcanCRUDItemDelegate.getItem(post${schemaName}.getId());
+					VulcanCRUDItemDelegate vulcanCRUDItemDelegate = _vulcanCRUDItemDelegateBuilderRegistry.builder(
+						testCompany,
+						"${schemaJavaType}"
+					).acceptLanguage(
+						new AcceptLanguage() {
+							@Override
+							public List<Locale> getLocales() {
+								return Arrays.asList(LocaleUtil.getDefault());
+							}
 
-							Assert.assertTrue(equals(get${schemaName}, ${schemaName}SerDes.toDTO(vulcanResponse.toString())));
+							@Override
+							public String getPreferredLanguageId() {
+								return LocaleUtil.toLanguageId(
+									LocaleUtil.getDefault());
+							}
+
+							@Override
+							public Locale getPreferredLocale() {
+								return LocaleUtil.getDefault();
+							}
+						}
+					).groupLocalService(
+						_groupLocalService
+					).httpServletRequest(
+						new MockHttpServletRequest() {
+							@Override
+							public StringBuffer getRequestURL() {
+								return new StringBuffer(UriBuilder.fromPath(StringBundler.concat("http://localhost:8080/o", "${configYAML.application.baseURI}/${openAPIYAML.info.version}${javaMethodSignature.path}".replace("{${idJavaMethodParameter.parameterName}}", String.valueOf(post${schemaName}.getId())))).build().toString());
+							}
+						}
+					).httpServletResponse(
+						new MockHttpServletResponse()
+					).resourceActionLocalService(
+						_resourceActionLocalService
+					).resourcePermissionLocalService(
+						_resourcePermissionLocalService
+					).roleLocalService(
+						_roleLocalService
+					).scopeChecker(
+						null
+					).uriInfo(
+						testVulcanCRUDItemDelegate_getUriInfo(post${schemaName}.getId())
+					).user(
+						testVulcanCRUDItemDelegate_getUser()
+					).build();
+
+					Object vulcanResponse = vulcanCRUDItemDelegate.getItem(post${schemaName}.getId());
+
+					Assert.assertTrue(equals(get${schemaName}, ${schemaName}SerDes.toDTO(vulcanResponse.toString())));
+				}
+
+				protected UriInfo testVulcanCRUDItemDelegate_getUriInfo(Long id) {
+
+					String path = "${openAPIYAML.info.version}${javaMethodSignature.path}".replace("{${idJavaMethodParameter.parameterName}}", String.valueOf(id));
+
+					URI requestUri = UriBuilder.fromPath("http://localhost:8080/o${configYAML.application.baseURI}/" + path).build();
+
+					return new UriInfo() {
+						@Override
+						public String getPath() {
+							return path;
 						}
 
-						protected UriInfo testVulcanCRUDItemDelegate_getUriInfo(Long id) {
-
-							String path = "${openAPIYAML.info.version}${javaMethodSignature.path}".replace("{${javaMethodParameter.parameterName}}", String.valueOf(id));
-
-							URI requestUri = UriBuilder.fromPath("http://localhost:8080/o${configYAML.application.baseURI}/" + path).build();
-
-							return new UriInfo() {
-								@Override
-								public String getPath() {
-									return path;
-								}
-
-								@Override
-								public String getPath(boolean decode) {
-									return getPath();
-								}
-
-								@Override
-								public List<PathSegment> getPathSegments() {
-									return Collections.emptyList();
-								}
-
-								@Override
-								public List<PathSegment> getPathSegments(boolean decode) {
-									return getPathSegments();
-								}
-
-								@Override
-								public URI getRequestUri() {
-									return requestUri;
-								}
-
-								@Override
-								public UriBuilder getRequestUriBuilder() {
-									return UriBuilder.fromUri(requestUri);
-								}
-
-								@Override
-								public URI getAbsolutePath() {
-									return requestUri;
-								}
-
-								@Override
-								public UriBuilder getAbsolutePathBuilder() {
-									return UriBuilder.fromUri(requestUri);
-								}
-
-								@Override
-								public URI getBaseUri() {
-									return requestUri;
-								}
-
-								@Override
-								public UriBuilder getBaseUriBuilder() {
-									return UriBuilder.fromUri(getBaseUri());
-								}
-
-								@Override
-								public MultivaluedMap<String, String> getPathParameters() {
-									return new MultivaluedHashMap<>();
-								}
-
-								@Override
-								public MultivaluedMap<String, String> getPathParameters(boolean decode) {
-									return getPathParameters();
-								}
-
-								@Override
-								public MultivaluedMap<String, String> getQueryParameters() {
-									return new MultivaluedHashMap<>();
-								}
-
-								@Override
-								public MultivaluedMap<String, String> getQueryParameters(boolean decode) {
-									return getQueryParameters();
-								}
-
-								@Override
-								public List<String> getMatchedURIs() {
-									return Collections.emptyList();
-								}
-
-								@Override
-								public List<String> getMatchedURIs(boolean decode) {
-									return getMatchedURIs();
-								}
-
-								@Override
-								public List<Object> getMatchedResources() {
-									return Collections.emptyList();
-								}
-
-								@Override
-								public URI resolve(URI requestUri) {
-									return getBaseUri().resolve(requestUri);
-								}
-
-								@Override
-								public URI relativize(URI uri) {
-									return getBaseUri().relativize(requestUri);
-								}
-							};
+						@Override
+						public String getPath(boolean decode) {
+							return getPath();
 						}
 
-						protected com.liferay.portal.kernel.model.User testVulcanCRUDItemDelegate_getUser(){
-							return _user;
+						@Override
+						public List<PathSegment> getPathSegments() {
+							return Collections.emptyList();
 						}
-					</#if>
-				</#list>
+
+						@Override
+						public List<PathSegment> getPathSegments(boolean decode) {
+							return getPathSegments();
+						}
+
+						@Override
+						public URI getRequestUri() {
+							return requestUri;
+						}
+
+						@Override
+						public UriBuilder getRequestUriBuilder() {
+							return UriBuilder.fromUri(requestUri);
+						}
+
+						@Override
+						public URI getAbsolutePath() {
+							return requestUri;
+						}
+
+						@Override
+						public UriBuilder getAbsolutePathBuilder() {
+							return UriBuilder.fromUri(requestUri);
+						}
+
+						@Override
+						public URI getBaseUri() {
+							return requestUri;
+						}
+
+						@Override
+						public UriBuilder getBaseUriBuilder() {
+							return UriBuilder.fromUri(getBaseUri());
+						}
+
+						@Override
+						public MultivaluedMap<String, String> getPathParameters() {
+							return new MultivaluedHashMap<>();
+						}
+
+						@Override
+						public MultivaluedMap<String, String> getPathParameters(boolean decode) {
+							return getPathParameters();
+						}
+
+						@Override
+						public MultivaluedMap<String, String> getQueryParameters() {
+							return new MultivaluedHashMap<>();
+						}
+
+						@Override
+						public MultivaluedMap<String, String> getQueryParameters(boolean decode) {
+							return getQueryParameters();
+						}
+
+						@Override
+						public List<String> getMatchedURIs() {
+							return Collections.emptyList();
+						}
+
+						@Override
+						public List<String> getMatchedURIs(boolean decode) {
+							return getMatchedURIs();
+						}
+
+						@Override
+						public List<Object> getMatchedResources() {
+							return Collections.emptyList();
+						}
+
+						@Override
+						public URI resolve(URI requestUri) {
+							return getBaseUri().resolve(requestUri);
+						}
+
+						@Override
+						public URI relativize(URI uri) {
+							return getBaseUri().relativize(requestUri);
+						}
+					};
+				}
+
+				protected com.liferay.portal.kernel.model.User testVulcanCRUDItemDelegate_getUser(){
+					return _user;
+				}
 			</#if>
 
 			<@getTestGetterMethods

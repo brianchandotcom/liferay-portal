@@ -278,7 +278,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		AssetEntryLocalService assetEntryLocalService,
 		AssetLinkLocalService assetLinkLocalService,
 		AssetListEntryLocalService assetListEntryLocalService,
-		BlogPostingResource.Factory blogPostingResourceFactory, Bundle bundle,
+		BlogPostingResource.Factory blogPostingResourceFactory,
 		CETManager cetManager,
 		ClientExtensionEntryLocalService clientExtensionEntryLocalService,
 		CompanyLocalService companyLocalService,
@@ -303,8 +303,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		KnowledgeBaseFolderResource.Factory knowledgeBaseFolderResourceFactory,
 		LayoutLocalService layoutLocalService,
 		LayoutPageTemplateEntryLocalService layoutPageTemplateEntryLocalService,
-		LayoutsImporter layoutsImporter,
-		LayoutPageTemplateStructureLocalService
+		LayoutsImporter layoutsImporter, LayoutPageTemplateStructureLocalService
 			layoutPageTemplateStructureLocalService,
 		LayoutPageTemplateStructureRelLocalService
 			layoutPageTemplateStructureRelLocalService,
@@ -337,8 +336,8 @@ public class BundleSiteInitializer implements SiteInitializer {
 		SAPEntryLocalService sapEntryLocalService,
 		SegmentsEntryLocalService segmentsEntryLocalService,
 		SegmentsExperienceLocalService segmentsExperienceLocalService,
-		ArchivedSettingsFactory archivedSettingsFactory,
-		SiteNavigationMenuItemLocalService siteNavigationMenuItemLocalService,
+		ArchivedSettingsFactory archivedSettingsFactory, Bundle siteBundle,
+		Bundle siteInitializerExtenderBundle, SiteNavigationMenuItemLocalService siteNavigationMenuItemLocalService,
 		SiteNavigationMenuItemTypeRegistry siteNavigationMenuItemTypeRegistry,
 		SiteNavigationMenuLocalService siteNavigationMenuLocalService,
 		StructuredContentFolderResource.Factory
@@ -368,7 +367,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_assetLinkLocalService = assetLinkLocalService;
 		_assetListEntryLocalService = assetListEntryLocalService;
 		_blogPostingResourceFactory = blogPostingResourceFactory;
-		_bundle = bundle;
+		_bundle = siteBundle;
 		_cetManager = cetManager;
 		_clientExtensionEntryLocalService = clientExtensionEntryLocalService;
 		_companyLocalService = companyLocalService;
@@ -433,6 +432,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_segmentsEntryLocalService = segmentsEntryLocalService;
 		_segmentsExperienceLocalService = segmentsExperienceLocalService;
 		_archivedSettingsFactory = archivedSettingsFactory;
+		_siteInitializerExtenderBundle = siteInitializerExtenderBundle;
 		_siteNavigationMenuItemLocalService =
 			siteNavigationMenuItemLocalService;
 		_siteNavigationMenuItemTypeRegistry =
@@ -6060,6 +6060,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private final SegmentsExperienceLocalService
 		_segmentsExperienceLocalService;
 	private ServletContext _servletContext;
+	private final Bundle _siteInitializerExtenderBundle;
 	private final SiteNavigationMenuItemLocalService
 		_siteNavigationMenuItemLocalService;
 	private final SiteNavigationMenuItemTypeRegistry

@@ -146,7 +146,7 @@ public class SiteInitializerExtender
 				_accountRoleResourceFactory, _assetCategoryLocalService,
 				_assetEntryLocalService, _assetLinkLocalService,
 				_assetListEntryLocalService, _blogPostingResourceFactory,
-				bundle, _cetManager, _clientExtensionEntryLocalService,
+				_cetManager, _clientExtensionEntryLocalService,
 				_companyLocalService, _configurationProvider,
 				_dataDefinitionResourceFactory, _ddmStructureLocalService,
 				_ddmTemplateLocalService, _defaultDDMStructureHelper,
@@ -176,7 +176,9 @@ public class SiteInitializerExtender
 				_portletPreferencesLocalService, _resourceActionLocalService,
 				_resourcePermissionLocalService, _roleLocalService,
 				_sapEntryLocalService, _segmentsEntryLocalService,
-				_segmentsExperienceLocalService, null, _archivedSettingsFactory,
+				_segmentsExperienceLocalService, null,
+				_archivedSettingsFactory, bundle,
+				_bundleContext.getBundle(),
 				_siteNavigationMenuItemLocalService,
 				_siteNavigationMenuItemTypeRegistry,
 				_siteNavigationMenuLocalService,
@@ -267,11 +269,6 @@ public class SiteInitializerExtender
 				_accountRoleResourceFactory, _assetCategoryLocalService,
 				_assetEntryLocalService, _assetLinkLocalService,
 				_assetListEntryLocalService, _blogPostingResourceFactory,
-				ProxyUtil.newDelegateProxyInstance(
-					Bundle.class.getClassLoader(), Bundle.class,
-					new FileBackedBundleDelegate(
-						_bundleContext, file, _jsonFactory, symbolicName),
-					null),
 				_cetManager, _clientExtensionEntryLocalService,
 				_companyLocalService, _configurationProvider,
 				_dataDefinitionResourceFactory, _ddmStructureLocalService,
@@ -302,13 +299,16 @@ public class SiteInitializerExtender
 				_portletPreferencesLocalService, _resourceActionLocalService,
 				_resourcePermissionLocalService, _roleLocalService,
 				_sapEntryLocalService, _segmentsEntryLocalService,
-				_segmentsExperienceLocalService,
-				ProxyUtil.newDelegateProxyInstance(
+				_segmentsExperienceLocalService, ProxyUtil.newDelegateProxyInstance(
 					ServletContext.class.getClassLoader(), ServletContext.class,
 					new FileBackedServletContextDelegate(
 						file, fileKey, symbolicName),
+					null), _archivedSettingsFactory, ProxyUtil.newDelegateProxyInstance(
+					Bundle.class.getClassLoader(), Bundle.class,
+					new FileBackedBundleDelegate(
+						_bundleContext, file, _jsonFactory, symbolicName),
 					null),
-				_archivedSettingsFactory, _siteNavigationMenuItemLocalService,
+				_bundleContext.getBundle(), _siteNavigationMenuItemLocalService,
 				_siteNavigationMenuItemTypeRegistry,
 				_siteNavigationMenuLocalService,
 				_structuredContentFolderResourceFactory,

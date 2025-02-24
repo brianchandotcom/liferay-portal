@@ -22,20 +22,8 @@ export {default as delegate} from './liferay/delegate/delegate.es';
 export {default as Disposable} from './liferay/events/Disposable';
 export {default as EventEmitter} from './liferay/events/EventEmitter';
 export {default as EventHandler} from './liferay/events/EventHandler';
-export {
-	openModal,
-	openPortletModal,
-	openPortletWindow,
-	openSelectionModal,
-} from './liferay/modal/Modal';
-export {default as openSimpleInputModal} from './liferay/modal/commands/OpenSimpleInputModal.es';
-export {default as openCategorySelectionModal} from './liferay/modal/commands/openCategorySelectionModal';
-export {default as openTagSelectionModal} from './liferay/modal/commands/openTagSelectionModal';
-export {default as openAlertModal} from './liferay/modal/commands/open_alert_modal';
-export {default as openConfirmModal} from './liferay/modal/commands/open_confirm_modal';
 export {default as STATUS_CODE} from './liferay/status_code';
 export {default as throttle} from './liferay/throttle.es';
-export {openToast} from './liferay/toast/commands/OpenToast.es';
 export {default as addParams} from './liferay/util/add_params';
 export {default as getCountries} from './liferay/util/address/get_countries.es';
 export {default as getRegions} from './liferay/util/address/get_regions.es';

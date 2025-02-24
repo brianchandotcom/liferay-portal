@@ -3,17 +3,12 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {openModal} from '../../../../src/main/resources/META-INF/resources/liferay/modal/Modal';
-import openConfirmModal from '../../../../src/main/resources/META-INF/resources/liferay/modal/commands/open_confirm_modal';
+import openConfirmModal from '../../../src/main/resources/META-INF/resources/modal/commands/openConfirmModal';
+import openModal from '../../../src/main/resources/META-INF/resources/modal/commands/openModal';
 
 jest.mock(
-	'../../../../src/main/resources/META-INF/resources/liferay/modal/Modal',
-	() => ({
-		...jest.requireActual(
-			'../../../../src/main/resources/META-INF/resources/liferay/modal/Modal'
-		),
-		openModal: jest.fn((args) => args),
-	})
+	'../../../src/main/resources/META-INF/resources/modal/commands/openModal',
+	() => jest.fn((args) => args)
 );
 
 describe('openConfirmModal', () => {

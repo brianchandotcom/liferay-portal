@@ -4,11 +4,13 @@
  */
 
 import '@testing-library/jest-dom';
+
+import '@testing-library/jest-dom/extend-expect';
 import {fireEvent, render} from '@testing-library/react';
-import React from 'react';
+import * as React from 'react';
 import {act} from 'react-dom/test-utils';
 
-import {Modal} from '../../../src/main/resources/META-INF/resources/liferay/modal/Modal';
+import Modal from '../../../src/main/resources/META-INF/resources/modal/components/Modal';
 
 describe('Modal', () => {
 	beforeAll(() => {

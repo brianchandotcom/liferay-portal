@@ -3,15 +3,17 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayAlert from '@clayui/alert';
+import ClayAlert, {DisplayType} from '@clayui/alert';
 import {render} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
-import React from 'react';
+import {buildFragment} from 'frontend-js-web';
+import React, {MouseEvent, ReactNode} from 'react';
+
+// @ts-ignore
+
 import {v4 as uuidv4} from 'uuid';
 
-import buildFragment from '../../util/build_fragment';
-
-import '../../../css/notification.scss';
+import './notification.scss';
 
 const DEFAULT_ALERT_CONTAINER_ID = 'ToastAlertContainer';
 
@@ -22,6 +24,7 @@ const DEFAULT_RENDER_DATA = {
 const DEFAULT_TOAST_TYPE_TITLES = {
 	danger: Liferay.Language.get('error'),
 	info: Liferay.Language.get('info'),
+	secondary: '',
 	success: Liferay.Language.get('success'),
 	warning: Liferay.Language.get('warning'),
 };
@@ -34,9 +37,17 @@ const TPL_ALERT_CONTAINER = `
 	</div>
 `;
 
-const getRootElement = ({container, containerId}) => {
+const getRootElement = ({
+	container,
+	containerId,
+}: {
+	container?: HTMLElement;
+	containerId?: string;
+}) => {
 	if (container || containerId) {
-		container = container || document.getElementById(containerId);
+		container =
+			container ||
+			(document.getElementById(containerId as string) as HTMLElement);
 
 		if (container) {
 			const child = document.createElement('div');
@@ -52,7 +63,7 @@ const getRootElement = ({container, containerId}) => {
 	if (!alertFixed) {
 		alertFixed = buildFragment(TPL_ALERT_CONTAINER).querySelector(
 			'.alert-container.container'
-		);
+		) as HTMLElement;
 
 		alertFixed = document.body.appendChild(alertFixed);
 	}
@@ -63,12 +74,38 @@ const getRootElement = ({container, containerId}) => {
 
 	const fragmentContainer = document.querySelector(
 		`.alert-notifications.alert-notifications-fixed`
-	);
+	) as HTMLElement;
 
 	fragmentContainer.appendChild(container);
 
 	return container;
 };
+
+const rootsMap = new Map();
+
+export interface OpenToastProps {
+	autoClose?: number | boolean;
+	container?: HTMLElement;
+	containerId?: string;
+	message?: string;
+	onClick?: ({
+		event,
+		onClose,
+	}: {
+		event: MouseEvent;
+		onClose: (event: CloseEvent) => void;
+	}) => void;
+	onClose?: ({event}: {event: CloseEvent}) => void;
+	renderData?: {portletId: string};
+	title?: string;
+	toastProps?: {
+		actions?: ReactNode; // Element | React.JSX.Element;
+		autoClose?: number | boolean;
+		className?: string;
+	};
+	type?: DisplayType;
+	variant?: 'feedback' | 'stripe' | 'inline';
+}
 
 /**
  * Function that implements the Toast pattern, which allows to present feedback
@@ -87,8 +124,6 @@ const getRootElement = ({container, containerId}) => {
  * @review
  */
 
-const rootsMap = new Map();
-
 function openToast({
 	autoClose = TOAST_AUTO_CLOSE_INTERVAL,
 	container,
@@ -101,7 +136,7 @@ function openToast({
 	toastProps = {},
 	type = 'success',
 	variant,
-}) {
+}: OpenToastProps) {
 	const id = uuidv4();
 
 	const rootElement = getRootElement({container, containerId});
@@ -116,14 +151,14 @@ function openToast({
 		}
 	};
 
-	const onCloseFn = (event) => {
+	const onCloseFn = (event: CloseEvent) => {
 		if (onClose) {
 			onClose({event});
 		}
 
 		if (!event || !event.defaultPrevented) {
 			if (!container || !containerId) {
-				rootElement.parentNode.removeChild(rootElement);
+				rootElement.parentNode?.removeChild(rootElement);
 			}
 
 			cleanUp();
@@ -146,7 +181,7 @@ function openToast({
 			autoClose={autoClose}
 			displayType={type}
 			onClick={(event) => onClick({event, onClose: onCloseFn})}
-			onClose={onCloseFn}
+			onClose={onCloseFn as () => void}
 			variant={variant}
 			{...toastProps}
 			className={classNames('mb-3', toastProps?.className)}
@@ -164,5 +199,4 @@ function openToast({
 	rootsMap.set(id, root);
 }
 
-export {openToast};
 export default openToast;

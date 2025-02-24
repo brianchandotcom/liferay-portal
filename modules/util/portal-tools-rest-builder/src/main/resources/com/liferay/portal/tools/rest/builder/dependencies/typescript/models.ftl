@@ -8,6 +8,11 @@ import localVarRequest from 'request';
 	export * from './${key?uncap_first}';
 </#list>
 
+/**
+ * @author ${configYAML.author}
+ * @generated
+ */
+
 export interface RequestDetailedFile {
 	options?: {
 		contentType?: string;

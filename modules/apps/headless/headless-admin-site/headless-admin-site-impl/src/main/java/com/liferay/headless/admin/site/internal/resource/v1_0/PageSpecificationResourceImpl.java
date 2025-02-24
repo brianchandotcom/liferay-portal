@@ -500,22 +500,17 @@ public class PageSpecificationResourceImpl
 
 		Layout draftLayout = layout.fetchDraftLayout();
 
-		if (LayoutUtil.isPublished(layout)) {
-			if ((draftLayout != null) && !draftLayout.isApproved()) {
-				return ListUtil.fromArray(
-					_pageSpecificationDTOConverter.toDTO(layout),
-					_pageSpecificationDTOConverter.toDTO(draftLayout));
+		if (draftLayout == null) {
+			if (!layout.isTypePortlet()) {
+				throw new UnsupportedOperationException();
 			}
 
 			return ListUtil.fromArray(
 				_pageSpecificationDTOConverter.toDTO(layout));
 		}
 
-		if (draftLayout == null) {
-			throw new UnsupportedOperationException();
-		}
-
 		return ListUtil.fromArray(
+			_pageSpecificationDTOConverter.toDTO(layout),
 			_pageSpecificationDTOConverter.toDTO(draftLayout));
 	}
 

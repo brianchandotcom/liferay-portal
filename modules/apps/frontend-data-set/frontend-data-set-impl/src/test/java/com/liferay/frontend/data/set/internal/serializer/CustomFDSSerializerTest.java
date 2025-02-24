@@ -1016,8 +1016,6 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 				FDS_NAMES[0], httpServletRequest
 			).toString(),
 			JSONCompareMode.STRICT);
-
-		_resetFDSSerializer();
 	}
 
 	private boolean _containsLabel(

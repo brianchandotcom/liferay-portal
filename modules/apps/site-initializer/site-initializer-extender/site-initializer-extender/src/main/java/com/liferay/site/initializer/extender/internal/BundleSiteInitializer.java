@@ -367,7 +367,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_assetLinkLocalService = assetLinkLocalService;
 		_assetListEntryLocalService = assetListEntryLocalService;
 		_blogPostingResourceFactory = blogPostingResourceFactory;
-		_bundle = siteBundle;
+		_siteBundle = siteBundle;
 		_cetManager = cetManager;
 		_clientExtensionEntryLocalService = clientExtensionEntryLocalService;
 		_companyLocalService = companyLocalService;
@@ -453,7 +453,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		_workflowDefinitionResourceFactory = workflowDefinitionResourceFactory;
 		_zipWriterFactory = zipWriterFactory;
 
-		BundleWiring bundleWiring = _bundle.adapt(BundleWiring.class);
+		BundleWiring bundleWiring = _siteBundle.adapt(BundleWiring.class);
 
 		_classLoader = bundleWiring.getClassLoader();
 
@@ -465,7 +465,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 	@Override
 	public String getDescription(Locale locale) {
-		Dictionary<String, String> headers = _bundle.getHeaders(
+		Dictionary<String, String> headers = _siteBundle.getHeaders(
 			StringPool.BLANK);
 
 		return GetterUtil.getString(
@@ -474,12 +474,12 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 	@Override
 	public String getKey() {
-		return _bundle.getSymbolicName();
+		return _siteBundle.getSymbolicName();
 	}
 
 	@Override
 	public String getName(Locale locale) {
-		Dictionary<String, String> headers = _bundle.getHeaders(
+		Dictionary<String, String> headers = _siteBundle.getHeaders(
 			StringPool.BLANK);
 
 		return GetterUtil.getString(
@@ -551,7 +551,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 	@Override
 	public boolean isActive(long companyId) {
-		Dictionary<String, String> headers = _bundle.getHeaders(
+		Dictionary<String, String> headers = _siteBundle.getHeaders(
 			StringPool.BLANK);
 
 		String featureFlagKey = headers.get(
@@ -801,7 +801,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 		}
 
 		commerceSiteInitializer.addCPDefinitions(
-			_bundle, serviceContext, _servletContext, stringUtilReplaceValues);
+			_siteBundle, serviceContext, _servletContext, stringUtilReplaceValues);
 	}
 
 	private void _addExpandoValues(
@@ -867,7 +867,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			Map<String, String> stringUtilReplaceValues)
 		throws Exception {
 
-		Enumeration<URL> enumeration = _bundle.findEntries(
+		Enumeration<URL> enumeration = _siteBundle.findEntries(
 			parentResourcePath, StringPool.STAR, true);
 
 		if (enumeration == null) {
@@ -1038,7 +1038,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			Map<String, String> stringUtilReplaceValues)
 		throws Exception {
 
-		Enumeration<URL> enumeration = _bundle.findEntries(
+		Enumeration<URL> enumeration = _siteBundle.findEntries(
 			"/site-initializer/layout-page-templates", StringPool.STAR, true);
 
 		if (enumeration == null) {
@@ -1110,7 +1110,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			Map<String, String> stringUtilReplaceValues)
 		throws Exception {
 
-		Enumeration<URL> enumeration = _bundle.findEntries(
+		Enumeration<URL> enumeration = _siteBundle.findEntries(
 			"/site-initializer/layout-utility-page-entries", StringPool.STAR,
 			true);
 
@@ -1798,7 +1798,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 				String.valueOf(ddmTemplate.getTemplateId()));
 		}
 
-		Enumeration<URL> enumeration = _bundle.findEntries(
+		Enumeration<URL> enumeration = _siteBundle.findEntries(
 			"/site-initializer/ddm-templates", "ddm-template.json", true);
 
 		if (enumeration == null) {
@@ -1850,7 +1850,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 					).build(),
 					null, DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY, null,
 					TemplateConstants.LANG_TYPE_FTL,
-					SiteInitializerUtil.read(_bundle, "ddm-template.ftl", url),
+					SiteInitializerUtil.read(_siteBundle, "ddm-template.ftl", url),
 					false, false, null, null, serviceContext);
 
 				if (Objects.equals(
@@ -1886,7 +1886,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 					).build(),
 					null, DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY, null,
 					TemplateConstants.LANG_TYPE_FTL,
-					SiteInitializerUtil.read(_bundle, "ddm-template.ftl", url),
+					SiteInitializerUtil.read(_siteBundle, "ddm-template.ftl", url),
 					false, false, null, null, serviceContext);
 			}
 
@@ -3034,7 +3034,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		JSONObject bodyJSONObject = _jsonFactory.createJSONObject();
 
-		Enumeration<URL> enumeration = _bundle.findEntries(
+		Enumeration<URL> enumeration = _siteBundle.findEntries(
 			resourcePath, "*.html", true);
 
 		if (enumeration == null) {
@@ -4547,7 +4547,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private void _addStyleBookEntries(ServiceContext serviceContext)
 		throws Exception {
 
-		Enumeration<URL> enumeration = _bundle.findEntries(
+		Enumeration<URL> enumeration = _siteBundle.findEntries(
 			"/site-initializer/style-books", StringPool.STAR, true);
 
 		if (enumeration == null) {
@@ -5983,7 +5983,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 	private final AssetLinkLocalService _assetLinkLocalService;
 	private final AssetListEntryLocalService _assetListEntryLocalService;
 	private final BlogPostingResource.Factory _blogPostingResourceFactory;
-	private final Bundle _bundle;
+	private final Bundle _siteBundle;
 	private final CETManager _cetManager;
 	private final ClassLoader _classLoader;
 	private final Map<String, String> _classNameIdStringUtilReplaceValues;

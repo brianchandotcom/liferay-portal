@@ -1,0 +1,141 @@
+[
+	{
+		"externalReferenceCode": "FOOTER-PRODUCTS-MENU",
+		"menuItems": [
+			{
+				"name_i18n": {
+					"en_US": "Contacts"
+				},
+				"type": "url",
+				"url": "/web/clarity/g/contacts"
+			},
+			{
+				"name_i18n": {
+					"en_US": "Eyeglasses"
+				},
+				"type": "url",
+				"url": "/web/clarity/g/eyeglasses"
+			},
+			{
+				"name_i18n": {
+					"en_US": "Lenses"
+				},
+				"type": "url",
+				"url": "/web/clarity/g/lenses"
+			},
+			{
+				"name_i18n": {
+					"en_US": "Sunglasses"
+				},
+				"type": "url",
+				"url": "/web/clarity/g/sunglasses"
+			}
+		],
+		"name": "Footer Products Menu",
+		"type": "node"
+	},
+	{
+		"externalReferenceCode": "FOOTER-ABOUT-US-MENU",
+		"menuItems": [
+			{
+				"friendlyURL": "/careers",
+				"name": "Careers",
+				"type": "layout"
+			},
+			{
+				"friendlyURL": "/about-us",
+				"name": "About us",
+				"type": "layout"
+			}
+		],
+		"name": "Footer About Us Menu",
+		"type": "node"
+	},
+	{
+		"externalReferenceCode": "FOOTER-GET-IN-TOUCH-MENU",
+		"menuItems": [
+			{
+				"friendlyURL": "/contact-us",
+				"name": "Contact Us",
+				"type": "layout"
+			}
+		],
+		"name": "Footer Get In Touch Menu",
+		"type": "node"
+	},
+	{
+		"externalReferenceCode": "FOOTER_LEGAL_MENU",
+		"menuItems": [
+			{
+				"name_i18n": {
+					"en_US": "Privacy Policy"
+				},
+				"url": "/o/headless-delivery/v1.0/structured-contents/62660",
+				"type": "url"
+			},
+			{
+				"name_i18n": {
+					"en_US": "Terms of Use"
+				},
+				"url": "/o/headless-delivery/v1.0/structured-contents/62651",
+				"type": "url"
+			}
+		],
+		"name": "Footer Legal Menu",
+		"type": "node"
+	},
+	{
+		"externalReferenceCode": "FOOTER-RESOURCES-MENU",
+		"menuItems": [
+			{
+				"friendlyURL": "/blog",
+				"name": "Blog",
+				"type": "layout"
+			},
+			{
+				"friendlyURL": "/faq",
+				"name": "FAQ",
+				"type": "layout"
+			}
+		],
+		"name": "Footer Resources Menu",
+		"type": "node"
+	},
+	{
+		"externalReferenceCode": "HEADER-PAGE-MENU",
+		"menuItems": [
+			{
+				"friendlyURL": "/about-us",
+				"name": "About Us",
+				"type": "layout"
+			},
+			{
+				"friendlyURL": "/blog",
+				"name": "Blog",
+				"type": "layout"
+			},
+			{
+				"friendlyURL": "/careers",
+				"name": "Careers",
+				"type": "layout"
+			},
+			{
+				"friendlyURL": "/contact-us",
+				"name": "Contact Us",
+				"type": "layout"
+			},
+			{
+				"friendlyURL": "/faq",
+				"name": "FAQ",
+				"type": "layout"
+			},
+			{
+				"friendlyURL": "/products",
+				"name": "Products",
+				"type": "layout"
+			}
+		],
+		"name": "Header Page Menu",
+		"type": "node"
+	}
+]

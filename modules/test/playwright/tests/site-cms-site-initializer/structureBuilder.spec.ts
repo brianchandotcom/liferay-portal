@@ -7,20 +7,11 @@ import {ObjectDefinitionApi} from '@liferay/object-admin-rest-client-js';
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
-import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {getRandomInt} from '../../utils/getRandomInt';
 import {cmsPagesTest} from './fixtures/cmsPagesTest';
 
-const test = mergeTests(
-	apiHelpersTest,
-	cmsPagesTest,
-	featureFlagsTest({
-		'LPD-11232': {enabled: true},
-		'LPD-17809': {enabled: true},
-	}),
-	loginTest()
-);
+const test = mergeTests(apiHelpersTest, cmsPagesTest, loginTest());
 
 test('Structures can be saved and published', async ({
 	apiHelpers,

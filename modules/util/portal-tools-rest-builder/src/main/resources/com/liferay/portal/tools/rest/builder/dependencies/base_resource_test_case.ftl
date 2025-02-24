@@ -1416,8 +1416,6 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 					<#list javaMethodSignature.javaMethodParameters as javaMethodParameter>
 						<#if freeMarkerTool.isIdParameter(javaMethodParameter, schemaName)>
-							<#assign idJavaMethodParameter = javaMethodParameter />
-
 							post${schemaName}.getId()
 						<#else>
 							null
@@ -1455,7 +1453,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 						new MockHttpServletRequest() {
 							@Override
 							public StringBuffer getRequestURL() {
-								return new StringBuffer(UriBuilder.fromPath(StringBundler.concat("http://localhost:8080/o", "${configYAML.application.baseURI}/${openAPIYAML.info.version}${javaMethodSignature.path}".replace("{${idJavaMethodParameter.parameterName}}", String.valueOf(post${schemaName}.getId())))).build().toString());
+								return new StringBuffer("http://localhost:8080/o");
 							}
 						}
 					).httpServletResponse(
@@ -1481,9 +1479,9 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 				protected UriInfo testVulcanCRUDItemDelegate_getUriInfo(Long id) {
 
-					String path = "${openAPIYAML.info.version}${javaMethodSignature.path}".replace("{${idJavaMethodParameter.parameterName}}", String.valueOf(id));
+					String path = RandomTestUtil.randomString();
 
-					URI requestUri = UriBuilder.fromPath("http://localhost:8080/o${configYAML.application.baseURI}/" + path).build();
+					URI requestUri = UriBuilder.fromPath("http://localhost:8080/o/" + path).build();
 
 					return new UriInfo() {
 						@Override

@@ -1,3 +1,32 @@
+.app-type {
+	border: none;
+	width: 600px;
+
+	&-dropdown {
+		width: 600px;
+	}
+}
+
+.app-type-list-unstyled {
+	width: 584px !important;
+
+	.dropdown-item {
+		max-width: 584px !important;
+
+		&:hover {
+			border-radius: 6px !important;
+			color: #0053f0 !important;
+			transition: all 0.3s ease-in-out;
+		}
+	}
+}
+
+.dropdown-menu {
+	border-radius: 10px !important;
+	max-width: none !important;
+	padding: 8px !important;
+}
+
 .provide-app-build-page {
 	&-container {
 		width: 37.5rem;

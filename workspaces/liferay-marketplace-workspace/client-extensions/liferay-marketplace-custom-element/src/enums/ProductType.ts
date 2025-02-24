@@ -4,6 +4,7 @@
  */
 
 export enum ProductType {
-	DXP = 'dxp',
 	CLOUD = 'cloud',
+	DXP = 'dxp',
+	FRAGMENTS = 'fragments',
 }

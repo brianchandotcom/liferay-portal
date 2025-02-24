@@ -61,7 +61,7 @@ public class LayoutUtil {
 			 !Objects.equals(
 				 contentPageSpecification.getStatus(),
 				 PageSpecification.Status.DRAFT)) ||
-			layout.isDraftLayout() || !isPublished(layout)) {
+			layout.isDraftLayout()) {
 
 			throw new UnsupportedOperationException();
 		}

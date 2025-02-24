@@ -461,21 +461,22 @@ public class DBPartitionUtil {
 		Connection connection = CurrentConnectionUtil.getConnection(
 			InfrastructureUtil.getDataSource());
 
-		String fromPartitionName = getPartitionName(fromCompanyId);
 		List<String> quartzTableNames = new ArrayList<>();
-		String toPartitionName = getPartitionName(toCompanyId);
+
+		String sourcePartitionName = getPartitionName(fromCompanyId);
+		String targetPartitionName = getPartitionName(toCompanyId);
 
 		try (SafeCloseable safeCloseable = CompanyThreadLocal.lock(
 				fromCompanyId);
 			AutoCloseable autoCloseable = _disableAutoCommit(connection)) {
 
-			_copySchema(connection, fromPartitionName, toPartitionName);
+			_copySchema(connection, sourcePartitionName, targetPartitionName);
 
 			DatabaseMetaData databaseMetaData = connection.getMetaData();
 
 			try (ResultSet resultSet = databaseMetaData.getTables(
-					_dbPartitionDB.getCatalog(connection, fromPartitionName),
-					_dbPartitionDB.getSchema(connection, fromPartitionName),
+					_dbPartitionDB.getCatalog(connection, sourcePartitionName),
+					_dbPartitionDB.getSchema(connection, sourcePartitionName),
 					null, new String[] {"TABLE", "VIEW"});
 				Statement statement = connection.createStatement()) {
 
@@ -505,13 +506,13 @@ public class DBPartitionUtil {
 						String.valueOf(toCompanyId));
 
 					String partitionTableName =
-						toPartitionName + StringPool.PERIOD + toTableName;
+						targetPartitionName + StringPool.PERIOD + toTableName;
 
 					if (fromTableName.contains(String.valueOf(fromCompanyId))) {
 						db.runSQL(
 							connection,
 							StringBundler.concat(
-								"alter_table_name ", toPartitionName,
+								"alter_table_name ", targetPartitionName,
 								StringPool.PERIOD, fromTableName,
 								StringPool.SPACE, partitionTableName));
 					}
@@ -600,7 +601,8 @@ public class DBPartitionUtil {
 
 				try (Statement statement = connection.createStatement()) {
 					statement.executeUpdate(
-						_dbPartitionDB.getDropPartitionSQL(toPartitionName));
+						_dbPartitionDB.getDropPartitionSQL(
+							targetPartitionName));
 
 					for (String tableName : quartzTableNames) {
 						_deleteData(

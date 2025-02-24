@@ -1408,7 +1408,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 			<#if generateCRUD && stringUtil.equals(javaMethodSignature.methodName, "get" + schemaName) && properties?keys?seq_contains("id")>
 				@Test
-				public void test${javaMethodSignature.methodName?cap_first}MatchesVulcanCRUDItemDelegateGetItem() throws Exception {
+				public void testVulcanCRUDItemDelegateGetItem() throws Exception {
 					${schemaName} post${schemaName} = test${javaMethodSignature.methodName?cap_first}_add${schemaName}();
 
 					${schemaName} get${schemaName} = ${schemaVarName}Resource.${javaMethodSignature.methodName}(

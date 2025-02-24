@@ -14,7 +14,8 @@
 			"biometric",
 			"futuristic"
 		],
-		"relatedContents": []
+		"relatedContents": [
+		]
 	},
 	{
 		"alternativeHeadline": "Blue Light Glasses: The Shield Against Digital Eye Strain",
@@ -31,7 +32,8 @@
 			"blue light",
 			"colored"
 		],
-		"relatedContents": []
+		"relatedContents": [
+		]
 	},
 	{
 		"alternativeHeadline": "Find Your Perfect Frames With Celebrity Eyewear Inspiration",
@@ -49,7 +51,8 @@
 			"mens",
 			"womens"
 		],
-		"relatedContents": []
+		"relatedContents": [
+		]
 	},
 	{
 		"alternativeHeadline": "Glass vs Plastic: A Lens Material Showdown",
@@ -70,7 +73,8 @@
 			"plastic",
 			"womens"
 		],
-		"relatedContents": []
+		"relatedContents": [
+		]
 	},
 	{
 		"alternativeHeadline": "Going Beyond Clear Vision",
@@ -87,7 +91,8 @@
 			"mens",
 			"womens"
 		],
-		"relatedContents": [],
+		"relatedContents": [
+		],
 		"taxonomyCategoryIds": [
 			"[#TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/group/blog-posts.vocabulary/technology.category.json#]"
 		]
@@ -106,7 +111,8 @@
 		"keywords": [
 			"industrial"
 		],
-		"relatedContents": [],
+		"relatedContents": [
+		],
 		"taxonomyCategoryIds": [
 			"[#TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/group/blog-posts.vocabulary/innovation.category.json#]"
 		]
@@ -127,7 +133,8 @@
 			"mens",
 			"printed"
 		],
-		"relatedContents": [],
+		"relatedContents": [
+		],
 		"taxonomyCategoryIds": [
 			"[#TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/group/blog-posts.vocabulary/innovation.category.json#]"
 		]
@@ -143,8 +150,10 @@
 			"caption": "",
 			"imageId": "[#DOCUMENT_FILE_ENTRY_ID:/site-initializer/documents/group/Blogs/blog_8.jpeg#]"
 		},
-		"keywords": [],
-		"relatedContents": [],
+		"keywords": [
+		],
+		"relatedContents": [
+		],
 		"taxonomyCategoryIds": [
 			"[#TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/group/blog-posts.vocabulary/innovation.category.json#]"
 		]
@@ -164,7 +173,8 @@
 			"daily",
 			"sun"
 		],
-		"relatedContents": [],
+		"relatedContents": [
+		],
 		"taxonomyCategoryIds": [
 			"[#TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/group/blog-posts.vocabulary/technology.category.json#]"
 		]
@@ -183,7 +193,8 @@
 		"keywords": [
 			"industrial"
 		],
-		"relatedContents": [],
+		"relatedContents": [
+		],
 		"taxonomyCategoryIds": [
 			"[#TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/group/blog-posts.vocabulary/innovation.category.json#]"
 		]
@@ -203,7 +214,8 @@
 			"industrial",
 			"lasik"
 		],
-		"relatedContents": [],
+		"relatedContents": [
+		],
 		"taxonomyCategoryIds": [
 			"[#TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/group/blog-posts.vocabulary/health.category.json#]"
 		]
@@ -222,7 +234,8 @@
 		"keywords": [
 			"lasik"
 		],
-		"relatedContents": [],
+		"relatedContents": [
+		],
 		"taxonomyCategoryIds": [
 			"[#TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/group/blog-posts.vocabulary/health.category.json#]"
 		]
@@ -244,7 +257,8 @@
 			"mens",
 			"womens"
 		],
-		"relatedContents": [],
+		"relatedContents": [
+		],
 		"taxonomyCategoryIds": [
 			"[#TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/group/blog-posts.vocabulary/health.category.json#]"
 		]
@@ -265,7 +279,8 @@
 			"mens",
 			"womens"
 		],
-		"relatedContents": [],
+		"relatedContents": [
+		],
 		"taxonomyCategoryIds": [
 			"[#TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/group/blog-posts.vocabulary/health.category.json#]"
 		]
@@ -285,7 +300,8 @@
 			"diet",
 			"nutrition"
 		],
-		"relatedContents": [],
+		"relatedContents": [
+		],
 		"taxonomyCategoryIds": [
 			"[#TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/group/blog-posts.vocabulary/health.category.json#]"
 		]
@@ -305,7 +321,8 @@
 			"mens",
 			"womens"
 		],
-		"relatedContents": [],
+		"relatedContents": [
+		],
 		"taxonomyCategoryIds": [
 			"[#TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/group/blog-posts.vocabulary/health.category.json#]"
 		]
@@ -325,7 +342,8 @@
 			"daily",
 			"diet"
 		],
-		"relatedContents": [],
+		"relatedContents": [
+		],
 		"taxonomyCategoryIds": [
 			"[#TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/group/blog-posts.vocabulary/health.category.json#]"
 		]
@@ -346,7 +364,8 @@
 			"summer",
 			"sun"
 		],
-		"relatedContents": [],
+		"relatedContents": [
+		],
 		"taxonomyCategoryIds": [
 			"[#TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/group/blog-posts.vocabulary/technology.category.json#]"
 		]
@@ -366,7 +385,8 @@
 			"industrial",
 			"sports"
 		],
-		"relatedContents": [],
+		"relatedContents": [
+		],
 		"taxonomyCategoryIds": [
 			"[#TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/group/blog-posts.vocabulary/innovation.category.json#]"
 		]

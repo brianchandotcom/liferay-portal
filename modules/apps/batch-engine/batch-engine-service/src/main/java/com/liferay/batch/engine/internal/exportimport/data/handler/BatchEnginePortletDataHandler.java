@@ -23,21 +23,16 @@ import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.io.unsync.UnsyncByteArrayOutputStream;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
 
 import java.io.InputStream;
 import java.io.Serializable;
 
-import java.text.Format;
-
 import java.util.Collections;
-import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -93,52 +88,6 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 		return true;
 	}
 
-	protected Map<String, Serializable> buildParameters(
-		PortletDataContext portletDataContext) {
-
-		return HashMapBuilder.<String, Serializable>put(
-			"batchNestedFields",
-			() -> {
-				if (MapUtil.getBoolean(
-						portletDataContext.getParameterMap(),
-						PortletDataHandlerKeys.PERMISSIONS)) {
-
-					return "permissions";
-				}
-
-				return null;
-			}
-		).put(
-			"filter",
-			() -> {
-				if ((portletDataContext.getEndDate() == null) &&
-					(portletDataContext.getStartDate() == null)) {
-
-					return null;
-				}
-
-				StringBundler sb = new StringBundler(5);
-
-				if (portletDataContext.getEndDate() != null) {
-					sb.append("dateModified le ");
-					sb.append(_format.format(portletDataContext.getEndDate()));
-				}
-
-				if (portletDataContext.getStartDate() != null) {
-					if (sb.length() > 0) {
-						sb.append(" and ");
-					}
-
-					sb.append("dateModified ge ");
-					sb.append(
-						_format.format(portletDataContext.getStartDate()));
-				}
-
-				return sb.toString();
-			}
-		).build();
-	}
-
 	@Override
 	protected String doExportData(
 			PortletDataContext portletDataContext, String portletId,
@@ -152,7 +101,9 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 					_className, "JSON",
 					BatchEngineTaskExecuteStatus.INITIAL.name(),
 					Collections.emptyList(),
-					buildParameters(portletDataContext), _taskItemDelegateName),
+					BatchEnginePortletDataHandlerUtil.buildParameters(
+						portletDataContext),
+					_taskItemDelegateName),
 				new BatchEngineExportTaskExecutor.Settings() {
 
 					@Override
@@ -267,10 +218,6 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 
 		return permissionChecker.getUserId();
 	}
-
-	private static final Format _format =
-		FastDateFormatFactoryUtil.getSimpleDateFormat(
-			"yyyy-MM-dd'T'HH:mm:ss'Z'");
 
 	private final BatchEngineExportTaskExecutor _batchEngineExportTaskExecutor;
 	private final BatchEngineExportTaskService _batchEngineExportTaskService;

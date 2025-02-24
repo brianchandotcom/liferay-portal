@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Locator, Page} from '@playwright/test';
+import {Locator, Page, expect} from '@playwright/test';
 
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import {PORTLET_URLS} from '../../../utils/portletUrls';
@@ -57,6 +57,36 @@ export class StructureBuilderPage {
 		await this.labelInput.fill(label);
 
 		await this.page.locator('span.label-item').click();
+	}
+
+	async deleteField({label, nth = 0}: {label: string; nth?: number}) {
+		const count = await this.page
+			.locator('.treeview-link', {
+				hasText: label,
+			})
+			.count();
+
+		const treeItem = this.page
+			.locator('.treeview-link', {
+				hasText: label,
+			})
+			.nth(nth);
+
+		if (treeItem) {
+			await treeItem.click();
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: this.page.getByRole('menuitem', {name: 'Delete Field'}),
+				trigger: treeItem.getByLabel('Field Options'),
+			});
+
+			await expect(
+				this.page.locator('.treeview-link', {
+					hasText: label,
+				})
+			).toHaveCount(count - 1);
+		}
 	}
 
 	async publishStructure() {

@@ -37,8 +37,7 @@ export const AddDataSource: React.FC<IAddDataSourceProps> = ({
 							groupId,
 							onClose: close
 						});
-					},
-					subtitle: Liferay.Language.get('supports-liferay-70+')
+					}
 				},
 				ENABLE_SALESFORCE && {
 					iconName: 'salesforce-logo',

@@ -55,7 +55,7 @@ exports[`AddDataSource should render 1`] = `
         <div
           class="description"
         >
-          Add a Data Source to bring in data from various sources in to Analytics Cloud. Analytics Cloud automatic integration is supported for Liferay Portal version 7.0+.
+          Add a Data Source to bring in data from various sources in to Analytics Cloud.
         </div>
       </div>
       <div
@@ -98,15 +98,10 @@ exports[`AddDataSource should render 1`] = `
                   class="title"
                 >
                   <div
-                    class="h4"
+                    class="h4 m-0"
                   >
                     Liferay DXP
                   </div>
-                </div>
-                <div
-                  class="subtitle"
-                >
-                  Supports Liferay 7.0+
                 </div>
               </div>
             </button>

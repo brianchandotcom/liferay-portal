@@ -11,7 +11,6 @@ import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.exportimport.kernel.service.StagingLocalService;
 import com.liferay.headless.admin.site.client.dto.v1_0.ContentPageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.ContentPageTemplate;
-import com.liferay.headless.admin.site.client.dto.v1_0.PageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageTemplate;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageTemplateSet;
 import com.liferay.headless.admin.site.client.dto.v1_0.WidgetPageTemplate;
@@ -43,7 +42,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -646,29 +644,13 @@ public class PageTemplateResourceTest extends BasePageTemplateResourceTestCase {
 	}
 
 	private void _assertPageSpecifications(
-		Layout layout, PageSpecification[] pageSpecifications) {
+			Layout layout, PageSpecification[] pageSpecifications)
+		throws Exception {
 
 		Assert.assertFalse(layout.isPublished());
 
-		Assert.assertTrue(ArrayUtil.isNotEmpty(pageSpecifications));
-
-		Assert.assertEquals(
-			Arrays.toString(pageSpecifications), 1, pageSpecifications.length);
-
-		Layout draftLayout = layout.fetchDraftLayout();
-
-		PageSpecification pageSpecification = pageSpecifications[0];
-
-		Assert.assertEquals(
-			draftLayout.getExternalReferenceCode(),
-			pageSpecification.getExternalReferenceCode());
-
-		Assert.assertEquals(
-			PageSpecification.Status.DRAFT, pageSpecification.getStatus());
-
-		Assert.assertEquals(
-			PageSpecification.Type.CONTENT_PAGE_SPECIFICATION,
-			pageSpecification.getType());
+		PageSpecificationsTestUtil.assertPageSpecifications(
+			layout, pageSpecifications);
 	}
 
 	private void

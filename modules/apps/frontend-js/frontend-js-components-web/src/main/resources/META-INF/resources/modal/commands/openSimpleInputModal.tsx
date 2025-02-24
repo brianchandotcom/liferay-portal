@@ -6,7 +6,11 @@
 import {render} from '@liferay/frontend-js-react-web';
 import React from 'react';
 
-import SimpleInputModal from '../components/SimpleInputModal.es';
+import SimpleInputModal, {
+	SimpleInputModalProps,
+} from '../components/SimpleInputModal';
+
+import type {Root} from 'react-dom/client';
 
 const DEFAULT_MODAL_CONTAINER_ID = 'modalContainer';
 
@@ -14,10 +18,10 @@ const DEFAULT_RENDER_DATA = {
 	portletId: 'UNKNOWN_PORTLET_ID',
 };
 
-let container;
-let root;
+let container: HTMLDivElement | null = null;
+let root: Root | null = null;
 
-function openSimpleInputModalImplementation({
+export default function openSimpleInputModalImplementation({
 	alert,
 	buttonSubmitLabel,
 	center,
@@ -38,7 +42,7 @@ function openSimpleInputModalImplementation({
 	onFormSuccess,
 	required,
 	size,
-}) {
+}: SimpleInputModalProps) {
 	const cleanUp = () => {
 		if (container && root) {
 			root.unmount();
@@ -70,7 +74,7 @@ function openSimpleInputModalImplementation({
 			formSubmitURL={formSubmitURL}
 			idFieldName={idFieldName}
 			idFieldValue={idFieldValue}
-			initialVisible="true"
+			initialVisible={true}
 			mainFieldComponent={mainFieldComponent}
 			mainFieldLabel={mainFieldLabel}
 			mainFieldName={mainFieldName}
@@ -95,7 +99,7 @@ let didEmitDeprecationWarning = false;
  *
  * @deprecated As of Athanasius (7.3.x), replaced by the default export
  */
-export function openSimpleInputModal(data) {
+export function openSimpleInputModal(data: SimpleInputModalProps) {
 	if (process.env.NODE_ENV === 'development' && !didEmitDeprecationWarning) {
 		console.warn(
 			'The named "openSimpleInputModal" export is deprecated: use the default export instead'
@@ -106,5 +110,3 @@ export function openSimpleInputModal(data) {
 
 	return openSimpleInputModalImplementation.call(null, data);
 }
-
-export default openSimpleInputModalImplementation;

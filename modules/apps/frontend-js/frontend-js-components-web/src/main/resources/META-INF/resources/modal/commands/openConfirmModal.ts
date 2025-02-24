@@ -3,10 +3,24 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {escapeHTML} from '../../util/html_util';
-import {openModal} from '../Modal';
+import {escapeHTML} from 'frontend-js-web';
 
-const openConfirmModal = ({message, onConfirm, status, title}) => {
+import {ModalStatus} from '../components/Modal';
+import openModal from './openModal';
+
+export interface OpenConfirmModalProps {
+	message: string;
+	onConfirm: (confirm: boolean) => void;
+	status?: ModalStatus;
+	title?: string;
+}
+
+export default function openConfirmModal({
+	message,
+	onConfirm,
+	status,
+	title,
+}: OpenConfirmModalProps) {
 	if (Liferay.CustomDialogs.enabled) {
 		openModal({
 			bodyHTML: escapeHTML(message),
@@ -39,6 +53,4 @@ const openConfirmModal = ({message, onConfirm, status, title}) => {
 	else {
 		onConfirm(confirm(message));
 	}
-};
-
-export default openConfirmModal;
+}

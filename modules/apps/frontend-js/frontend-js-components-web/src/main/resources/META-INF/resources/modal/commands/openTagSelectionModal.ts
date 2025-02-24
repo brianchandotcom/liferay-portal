@@ -3,17 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-// @ts-ignore
+import {addParams, navigate} from 'frontend-js-web';
 
-import addParams from '../../util/add_params';
-
-// @ts-ignore
-
-import navigate from '../../util/navigate.es';
-
-// @ts-ignore
-
-import {openSelectionModal} from '../Modal';
+import openSelectionModal from './openSelectionModal';
 
 interface Tag {
 	qaId: string;

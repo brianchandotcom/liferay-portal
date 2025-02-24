@@ -3,10 +3,15 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {escapeHTML} from '../../util/html_util';
-import {openModal} from '../Modal';
+import {escapeHTML} from 'frontend-js-web';
 
-const openAlertModal = ({message}) => {
+import openModal from './openModal';
+
+export interface OpenAlertModalProps {
+	message: string;
+}
+
+export default function openAlertModal({message}: OpenAlertModalProps) {
 	if (Liferay.CustomDialogs.enabled) {
 		openModal({
 			bodyHTML: escapeHTML(message),
@@ -26,6 +31,4 @@ const openAlertModal = ({message}) => {
 	else {
 		alert(message);
 	}
-};
-
-export default openAlertModal;
+}

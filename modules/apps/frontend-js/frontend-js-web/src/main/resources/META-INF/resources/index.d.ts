@@ -38,6 +38,8 @@ export function align(
 	autoBestAlign: boolean
 ): string;
 
+export function buildFragment(htmlString: string): DocumentFragment;
+
 /* Cancels the scheduled debounced function. */
 export function cancelDebounce(debounced: (...args: any[]) => void): void;
 
@@ -84,7 +86,7 @@ export function decodeUpdateString(
  * given selector or target element.
  */
 export function delegate(
-	element: Element,
+	element: Document | Element,
 	eventName: string,
 	selector: string,
 	callback: (event: any) => void
@@ -98,6 +100,8 @@ export function encodeFormAsString(
 	portletId: string,
 	form: HTMLFormElement
 ): string;
+
+export function escapeHTML(html: string): string;
 
 /**
  * Fetches a resource. A thin wrapper around ES6 Fetch API, with standardized
@@ -218,143 +222,7 @@ export function objectToFormData(
 	namespace?: string
 ): FormData;
 
-export interface ModalButtonOnClick {
-	(args: {processClose: () => void}): void;
-}
-
-export interface ModalContainerProps {
-	className?: string;
-}
-
-export type ModalSize = 'full-screen' | 'lg' | 'md' | 'sm';
-
-export type ModalStatus = 'danger' | 'info' | 'success' | 'warning';
-
-export interface ModalProps {
-	bodyComponent?: any;
-	bodyHTML?: string;
-	buttons?: {
-		autoFocus?: boolean;
-		displayType?:
-			| 'danger'
-			| 'info'
-			| 'link'
-			| 'primary'
-			| 'secondary'
-			| 'success'
-			| 'unstyled'
-			| 'warning'
-			| null;
-		formId?: string;
-		id?: string;
-		label?: string;
-		onClick?: ModalButtonOnClick;
-		type?: 'cancel' | 'submit';
-	}[];
-	center?: boolean;
-	className?: string;
-	containerProps?: ModalContainerProps;
-	contentComponent?:
-		| typeof React.Component
-		| (({closeModal}: {closeModal: () => void}) => React.JSX.Element);
-	customEvents?: {
-		name: string;
-		onEvent: EventHandler;
-	}[];
-	disableAutoClose?: boolean;
-	disableHeader?: boolean;
-	footerCssClass?: string;
-	headerCssClass?: string;
-	headerHTML?: string;
-	height?: string;
-	id?: string;
-	iframeBodyCssClass?: string;
-	iframeProps?: {
-		[prop: string]: string;
-	};
-	onClose?: EventHandler;
-	onOpen?: IframeOnOpen;
-	role?: string;
-	size?: ModalSize;
-	status?: ModalStatus;
-	title?: string;
-	url?: URL | string;
-	zIndex?: number;
-}
-
-export function openAlertModal({message}: {message: string}): void;
-
-export function openConfirmModal({
-	message,
-	onConfirm,
-	status,
-	title,
-}: {
-	message: string;
-	onConfirm: (confirmed: boolean) => void;
-	status?: string;
-	title?: string;
-}): void;
-
-export interface OpenModalProps extends ModalProps {}
-
-export function openModal(props: OpenModalProps): void;
-
-export function openPortletModal(props: Object): void;
-
-export function openPortletWindow(props: Object): void;
-
-export function openSelectionModal<T>(init: {
-	buttonAddLabel?: string;
-	buttonCancelLabel?: string;
-	containerProps?: Object;
-	customSelectEvent?: boolean;
-	height?: string;
-	id?: string;
-	iframeBodyCssClass?: string;
-	multiple?: boolean;
-	onClose?: () => void;
-	onSelect?: (item: T) => void;
-	selectEventName?: string;
-	selectedData?: any;
-	size?: 'full-screen' | 'lg' | 'md' | 'sm';
-	title?: string;
-	url?: string;
-	zIndex?: number;
-}): void;
-
-export function openSimpleInputModal(props: Object): void;
-
-export function openToast({
-	autoClose,
-	container,
-	containerId,
-	message,
-	onClick,
-	onClose,
-	renderData,
-	title,
-	toastProps,
-	type,
-	variant,
-}: {
-	autoClose?: number | boolean;
-	container?: HTMLElement;
-	containerId?: string;
-	message?: string;
-	onClick?: () => void;
-	onClose?: () => void;
-	renderData?: {portletId: string};
-	title?: string;
-	toastProps?: Object;
-	type?: string;
-	variant?: string;
-}): void;
-
 export function openWindow(config: object, callback?: Function): void;
-
-export {default as openCategorySelectionModal} from './liferay/modal/commands/openCategorySelectionModal';
-export {default as openTagSelectionModal} from './liferay/modal/commands/openTagSelectionModal';
 
 /**
  * Registers a portlet client with the portlet hub.
@@ -420,6 +288,8 @@ export function toggleSelectBox(
 	value: any,
 	toggleBoxId: string
 ): void;
+
+export function unescapeHTML(html: string): string;
 
 /**
  * Used by the portlet hub methods to check the number and types of the

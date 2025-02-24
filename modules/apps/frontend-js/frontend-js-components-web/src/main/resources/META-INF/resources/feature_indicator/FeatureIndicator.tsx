@@ -76,7 +76,7 @@ export default function FeatureIndicator({
 						closeOnClickOutside
 						data-tooltip-align={tooltipAlign}
 						disableScroll
-						header={Liferay.Language.get(popoverTitle)}
+						header={popoverTitle}
 						id={ariaControlsId}
 						onShowChange={setShow}
 						role="dialog"

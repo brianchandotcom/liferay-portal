@@ -7,6 +7,8 @@ package com.liferay.segments.model.impl;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.segments.constants.SegmentsExperimentConstants;
@@ -47,7 +49,7 @@ public class SegmentsExperienceImpl extends SegmentsExperienceBaseImpl {
 		SegmentsExperiment segmentsExperiment =
 			SegmentsExperimentLocalServiceUtil.fetchSegmentsExperiment(
 				getGroupId(), segmentsExperience.getSegmentsExperienceKey(),
-				getPlid());
+				_getPublishedLayoutPlid());
 
 		if ((segmentsExperiment == null) ||
 			!ArrayUtil.contains(
@@ -67,6 +69,16 @@ public class SegmentsExperienceImpl extends SegmentsExperienceBaseImpl {
 		_typeSettingsUnicodeProperties = typeSettingsUnicodeProperties;
 
 		super.setTypeSettings(_typeSettingsUnicodeProperties.toString());
+	}
+
+	private long _getPublishedLayoutPlid() {
+		Layout layout = LayoutLocalServiceUtil.fetchLayout(getPlid());
+
+		if ((layout != null) && layout.isDraftLayout()) {
+			return layout.getClassPK();
+		}
+
+		return getPlid();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

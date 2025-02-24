@@ -674,17 +674,18 @@ public class PageSpecificationResourceTest
 	}
 
 	private void _assertPageSpecificationsPage(
-			Page<PageSpecification> page, Layout... layouts)
+			Layout layout, Page<PageSpecification> page)
 		throws Exception {
 
-		Assert.assertEquals(layouts.length, page.getTotalCount());
+		Assert.assertEquals(2, page.getTotalCount());
 
-		for (PageSpecification pageSpecification : page.getItems()) {
-			_assertPageSpecification(
-				_getLayout(
-					pageSpecification.getExternalReferenceCode(), layouts),
-				pageSpecification);
-		}
+		List<PageSpecification> pageSpecifications = ListUtil.fromCollection(
+			page.getItems());
+
+		_assertPageSpecification(layout, pageSpecifications.get(0));
+
+		_assertPageSpecification(
+			layout.fetchDraftLayout(), pageSpecifications.get(1));
 	}
 
 	private void _assertProblemException(
@@ -717,6 +718,8 @@ public class PageSpecificationResourceTest
 
 		_modifyPageExperiences(contentPageSpecification.getPageExperiences());
 		_modifySettings(serviceContext, contentPageSpecification.getSettings());
+
+		contentPageSpecification.setStatus(PageSpecification.Status.DRAFT);
 
 		PageSpecification putPageSpecification =
 			pageSpecificationResource.
@@ -873,20 +876,6 @@ public class PageSpecificationResourceTest
 				setJavascript(() -> javaScript);
 			}
 		};
-	}
-
-	private Layout _getLayout(String externalReferenceCode, Layout... layouts)
-		throws Exception {
-
-		for (Layout layout : layouts) {
-			if (Objects.equals(
-					externalReferenceCode, layout.getExternalReferenceCode())) {
-
-				return _layoutLocalService.getLayout(layout.getPlid());
-			}
-		}
-
-		return null;
 	}
 
 	private long _getMasterLayoutPlid(ServiceContext serviceContext)
@@ -1161,6 +1150,15 @@ public class PageSpecificationResourceTest
 		};
 	}
 
+	private boolean _isPublished(Layout draftLayout) {
+		if (draftLayout == null) {
+			return true;
+		}
+
+		return GetterUtil.getBoolean(
+			draftLayout.getTypeSettingsProperty("published"));
+	}
+
 	private void _modifyPageExperiences(PageExperience[] pageExperiences) {
 		for (PageExperience pageExperience : pageExperiences) {
 			List<PageElement> dropZonePageElements =
@@ -1328,13 +1326,25 @@ public class PageSpecificationResourceTest
 			layout, pageSpecification.getSettings());
 
 		if (layout.isDraftLayout()) {
-			Assert.assertEquals(
-				PageSpecification.Status.DRAFT, pageSpecification.getStatus());
+			if (layout.isApproved()) {
+				Assert.assertEquals(
+					PageSpecification.Status.APPROVED,
+					pageSpecification.getStatus());
+			}
+			else {
+				Assert.assertEquals(
+					PageSpecification.Status.DRAFT,
+					pageSpecification.getStatus());
+			}
 		}
-		else {
+		else if (_isPublished(layout.fetchDraftLayout())) {
 			Assert.assertEquals(
 				PageSpecification.Status.APPROVED,
 				pageSpecification.getStatus());
+		}
+		else {
+			Assert.assertEquals(
+				PageSpecification.Status.DRAFT, pageSpecification.getStatus());
 		}
 
 		if (layout.isTypeAssetDisplay() || layout.isTypeContent()) {
@@ -1352,44 +1362,33 @@ public class PageSpecificationResourceTest
 				Layout layout, ServiceContext serviceContext)
 		throws Exception {
 
-		_assertProblemException(
-			() ->
-				pageSpecificationResource.
-					getSiteSiteByExternalReferenceCodePageSpecification(
-						testGroup.getExternalReferenceCode(),
-						layout.getExternalReferenceCode()));
+		_testGetSiteSiteByExternalReferenceCodePageSpecification(layout);
 
 		Layout draftLayout = layout.fetchDraftLayout();
 
 		_testGetSiteSiteByExternalReferenceCodePageSpecification(draftLayout);
 
-		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
-
-		_assertProblemException(
-			() ->
-				pageSpecificationResource.
-					getSiteSiteByExternalReferenceCodePageSpecification(
-						testGroup.getExternalReferenceCode(),
-						draftLayout.getExternalReferenceCode()));
-
-		_testGetSiteSiteByExternalReferenceCodePageSpecification(layout);
-
-		_layoutLocalService.updateStatus(
+		draftLayout = _layoutLocalService.updateStatus(
 			TestPropsValues.getUserId(), draftLayout.getPlid(),
 			WorkflowConstants.STATUS_DRAFT, serviceContext);
 
-		_testGetSiteSiteByExternalReferenceCodePageSpecification(draftLayout);
 		_testGetSiteSiteByExternalReferenceCodePageSpecification(layout);
+		_testGetSiteSiteByExternalReferenceCodePageSpecification(draftLayout);
 
 		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
 
-		_assertProblemException(
-			() ->
-				pageSpecificationResource.
-					getSiteSiteByExternalReferenceCodePageSpecification(
-						testGroup.getExternalReferenceCode(),
-						draftLayout.getExternalReferenceCode()));
+		layout = _layoutLocalService.getLayout(layout.getPlid());
+
 		_testGetSiteSiteByExternalReferenceCodePageSpecification(layout);
+		_testGetSiteSiteByExternalReferenceCodePageSpecification(
+			layout.fetchDraftLayout());
+
+		draftLayout = _layoutLocalService.updateStatus(
+			TestPropsValues.getUserId(), draftLayout.getPlid(),
+			WorkflowConstants.STATUS_DRAFT, serviceContext);
+
+		_testGetSiteSiteByExternalReferenceCodePageSpecification(layout);
+		_testGetSiteSiteByExternalReferenceCodePageSpecification(draftLayout);
 	}
 
 	private void _testPageSpecificationsPage(
@@ -1397,26 +1396,25 @@ public class PageSpecificationResourceTest
 			UnsafeSupplier<Page<PageSpecification>, Exception> unsafeSupplier)
 		throws Exception {
 
-		Layout draftLayout = layout.fetchDraftLayout();
+		_assertPageSpecificationsPage(layout, unsafeSupplier.get());
 
-		_assertPageSpecificationsPage(unsafeSupplier.get(), draftLayout);
+		Layout draftLayout = layout.fetchDraftLayout();
 
 		_layoutLocalService.updateStatus(
 			TestPropsValues.getUserId(), draftLayout.getPlid(),
 			WorkflowConstants.STATUS_DRAFT, serviceContext);
 
-		_assertPageSpecificationsPage(unsafeSupplier.get(), draftLayout);
+		_assertPageSpecificationsPage(layout, unsafeSupplier.get());
 
 		ContentLayoutTestUtil.publishLayout(draftLayout, layout);
 
-		_assertPageSpecificationsPage(unsafeSupplier.get(), layout);
+		_assertPageSpecificationsPage(layout, unsafeSupplier.get());
 
 		_layoutLocalService.updateStatus(
 			TestPropsValues.getUserId(), draftLayout.getPlid(),
 			WorkflowConstants.STATUS_DRAFT, serviceContext);
 
-		_assertPageSpecificationsPage(
-			unsafeSupplier.get(), layout, draftLayout);
+		_assertPageSpecificationsPage(layout, unsafeSupplier.get());
 	}
 
 	private void _testPatchSiteSiteByExternalReferenceCodePageSpecification(
@@ -1475,12 +1473,15 @@ public class PageSpecificationResourceTest
 
 		_modifyPageExperiences(contentPageSpecification.getPageExperiences());
 
+		contentPageSpecification.setStatus(PageSpecification.Status.DRAFT);
+
 		_testPatchSiteSiteByExternalReferenceCodePageSpecification(
 			contentPageSpecification,
 			() -> new ContentPageSpecification() {
 				{
 					setPageExperiences(
 						contentPageSpecification::getPageExperiences);
+					setStatus(PageSpecification.Status.DRAFT);
 					setType(() -> Type.CONTENT_PAGE_SPECIFICATION);
 				}
 			});

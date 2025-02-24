@@ -16,6 +16,7 @@ import com.liferay.headless.admin.site.dto.v1_0.PageExperience;
 import com.liferay.headless.admin.site.dto.v1_0.PageSpecification;
 import com.liferay.headless.admin.site.dto.v1_0.Settings;
 import com.liferay.headless.admin.site.dto.v1_0.WidgetPageSpecification;
+import com.liferay.headless.admin.site.internal.resource.v1_0.util.LayoutUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructureRel;
@@ -34,6 +35,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.segments.service.SegmentsExperienceService;
@@ -42,6 +44,7 @@ import com.liferay.style.book.service.StyleBookEntryLocalService;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -345,7 +348,15 @@ public class PageSpecificationDTOConverter
 				setSettings(() -> _setSettings(layout));
 				setStatus(
 					() -> {
-						if (!layout.isDraftLayout()) {
+						if (layout.isDraftLayout()) {
+							if (layout.isApproved()) {
+								return Status.APPROVED;
+							}
+
+							return Status.DRAFT;
+						}
+
+						if (LayoutUtil.isPublished(layout)) {
 							return Status.APPROVED;
 						}
 

@@ -57,13 +57,14 @@ export default function FieldsTree({fields}: {fields: Field[]}) {
 
 					<ClayTreeView.Group items={item.children}>
 						{(item) => (
-							<ClayTreeView.Item
-								className={classNames({
-									'structure-builder__fields-tree-node--field':
-										Boolean(item.type),
-								})}
-							>
-								<ClayIcon symbol={item.icon} />
+							<ClayTreeView.Item>
+								<ClayIcon
+									className={classNames({
+										'structure-builder__fields-tree-node--field-icon':
+											Boolean(item.type),
+									})}
+									symbol={item.icon}
+								/>
 
 								<span className="ml-1">{item.label}</span>
 							</ClayTreeView.Item>

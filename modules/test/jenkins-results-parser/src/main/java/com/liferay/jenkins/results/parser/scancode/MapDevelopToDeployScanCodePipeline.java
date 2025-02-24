@@ -5,6 +5,7 @@
 
 package com.liferay.jenkins.results.parser.scancode;
 
+import com.liferay.jenkins.results.parser.CloudStorageSyncUtil;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 
 import java.io.IOException;
@@ -39,15 +40,15 @@ public class MapDevelopToDeployScanCodePipeline extends BaseScanCodePipeline {
 	}
 
 	public JSONObject getJSONObject() throws IOException {
-		JSONObject jsonObject = new JSONObject();
+		String tomcatURL = getTomcatURL();
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(tomcatURL)) {
+			throw new NullPointerException("Tomcat url is null");
+		}
 
 		List<String> inputURLs = new ArrayList<>();
 
-		String tomcatURL = JenkinsResultsParserUtil.getBuildParameter(
-			_buildURL, "TEST_PORTAL_RELEASE_TOMCAT_URL");
-
 		inputURLs.add(tomcatURL + "#to");
-
 		inputURLs.add(getReleaseTarballLink());
 		inputURLs.add(
 			JenkinsResultsParserUtil.getBuildProperty("scancode.tar.gz.url"));
@@ -62,6 +63,8 @@ public class MapDevelopToDeployScanCodePipeline extends BaseScanCodePipeline {
 			JenkinsResultsParserUtil.getBuildParameter(
 				_buildURL, "TEST_PORTAL_RELEASE_VERSION");
 		SimpleDateFormat simpleDateFormat = getSimpleDateFormat();
+
+		JSONObject jsonObject = new JSONObject();
 
 		jsonObject.put(
 			"execute_now", true
@@ -98,6 +101,30 @@ public class MapDevelopToDeployScanCodePipeline extends BaseScanCodePipeline {
 		return sb.toString();
 	}
 
+	public String getTomcatURL() {
+		String tomcatURL = JenkinsResultsParserUtil.getBuildParameter(
+			_buildURL, "TEST_PORTAL_RELEASE_TOMCAT_URL");
+
+		if (!tomcatURL.matches(_GCP_URL_REGEX + ".*")) {
+			return tomcatURL;
+		}
+
+		tomcatURL = tomcatURL.replaceAll(_GCP_URL_REGEX, "gs://");
+
+		try {
+			String credentialsFile = JenkinsResultsParserUtil.getBuildProperty(
+				"google.application.crendential.file[jenkins]");
+
+			return CloudStorageSyncUtil.getSignedURL(
+				tomcatURL, credentialsFile, 15);
+		}
+		catch (Exception exception) {
+			exception.printStackTrace();
+		}
+
+		return null;
+	}
+
 	protected MapDevelopToDeployScanCodePipeline(
 		String buildURL, String pipelineName) {
 
@@ -106,6 +133,9 @@ public class MapDevelopToDeployScanCodePipeline extends BaseScanCodePipeline {
 		_buildURL = buildURL;
 		_pipelineName = pipelineName;
 	}
+
+	private static final String _GCP_URL_REGEX =
+		"https:\\/\\/storage.(cloud\\.google\\.com|googleapis\\.com)\\/";
 
 	private final String _buildURL;
 	private final String _pipelineName;

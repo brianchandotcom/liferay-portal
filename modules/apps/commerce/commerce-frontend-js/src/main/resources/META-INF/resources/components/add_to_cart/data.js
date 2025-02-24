@@ -64,6 +64,10 @@ export async function addToCart(
 	skuOptions,
 	skuOptionsNamespace
 ) {
+	const currencyCode = Liferay.CommerceContext
+		? Liferay.CommerceContext.currency.currencyCode
+		: '';
+
 	if (!cartId) {
 		const newCart = await CartResource.createCartByChannelId(channel.id, {
 			accountId,
@@ -75,7 +79,7 @@ export async function addToCart(
 					skuOptionsNamespace
 				)
 			),
-			currencyCode: channel.currencyCode,
+			currencyCode,
 			orderTypeId,
 		});
 

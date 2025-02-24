@@ -13,6 +13,7 @@ function resolveProductOptionValuesPath(
 	productId,
 	productOptionId,
 	accountId,
+	currencyCode,
 	productOptionValueId,
 	skuId,
 	page,
@@ -20,13 +21,24 @@ function resolveProductOptionValuesPath(
 ) {
 	let path = `${basePath}${VERSION}/channels/${channelId}/products/${productId}/product-options/${productOptionId}/product-option-values`;
 
-	if (accountId || productOptionValueId || skuId || page || pageSize) {
+	if (
+		accountId ||
+		currencyCode ||
+		productOptionValueId ||
+		skuId ||
+		page ||
+		pageSize
+	) {
 		path += `?`;
 
 		const params = new URLSearchParams();
 
 		if (accountId) {
 			params.append('accountId', accountId);
+		}
+
+		if (currencyCode) {
+			params.append('currencyCode', currencyCode);
 		}
 
 		if (productOptionValueId) {
@@ -58,6 +70,7 @@ export default function ProductOptionValue(basePath) {
 			productId,
 			productOptionId,
 			accountId,
+			currencyCode,
 			productOptionValueId,
 			skuId,
 			page,
@@ -71,6 +84,7 @@ export default function ProductOptionValue(basePath) {
 					productId,
 					productOptionId,
 					accountId,
+					currencyCode,
 					productOptionValueId,
 					skuId,
 					page,
@@ -83,6 +97,7 @@ export default function ProductOptionValue(basePath) {
 			productId,
 			productOptionId,
 			accountId,
+			currencyCode,
 			productOptionValueId,
 			skuId,
 			page,
@@ -96,6 +111,7 @@ export default function ProductOptionValue(basePath) {
 					productId,
 					productOptionId,
 					accountId,
+					currencyCode,
 					productOptionValueId,
 					skuId,
 					page,

@@ -419,7 +419,7 @@ public class PageSpecificationResourceImpl
 		Layout layout = _layoutLocalService.getLayout(draftLayout.getClassPK());
 
 		try {
-			boolean published = layout.isPublished();
+			boolean published = LayoutUtil.isPublished(layout);
 
 			draftLayout = _layoutLocalService.copyLayoutContent(
 				layout, draftLayout);

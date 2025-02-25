@@ -38,10 +38,4 @@ public interface CMSSiteInitializerConfiguration {
 	)
 	public String[] filesClassNames();
 
-	@Meta.AD(
-		deflt = "com.liferay.dynamic.data.mapping.model.DDMStructure",
-		name = "structures-class-names", required = false
-	)
-	public String[] structuresClassNames();
-
 }

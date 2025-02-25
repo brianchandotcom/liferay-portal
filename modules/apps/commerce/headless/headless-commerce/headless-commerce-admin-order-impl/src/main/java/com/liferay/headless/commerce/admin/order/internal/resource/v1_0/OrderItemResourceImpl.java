@@ -299,7 +299,7 @@ public class OrderItemResourceImpl extends BaseOrderItemResourceImpl {
 
 		CommerceOrderItem commerceOrderItem =
 			_commerceOrderItemService.updateCommerceOrderItem(
-				id, GetterUtil.getString(orderItem.getOptions(), "[]"),
+				null, id, GetterUtil.getString(orderItem.getOptions(), "[]"),
 				BigDecimal.valueOf(
 					GetterUtil.getInteger(orderItem.getQuantity())),
 				_commerceContextFactory.create(
@@ -414,7 +414,7 @@ public class OrderItemResourceImpl extends BaseOrderItemResourceImpl {
 		else {
 			commerceOrderItem =
 				_commerceOrderItemService.updateCommerceOrderItem(
-					commerceOrderItem.getCommerceOrderItemId(),
+					null, commerceOrderItem.getCommerceOrderItemId(),
 					GetterUtil.getString(orderItem.getOptions(), "[]"),
 					BigDecimal.valueOf(
 						GetterUtil.getInteger(orderItem.getQuantity())),
@@ -643,6 +643,7 @@ public class OrderItemResourceImpl extends BaseOrderItemResourceImpl {
 		serviceContext.setAttribute("validateOrder", Boolean.FALSE);
 
 		commerceOrderItem = _commerceOrderItemService.updateCommerceOrderItem(
+			orderItem.getExternalReferenceCode(),
 			commerceOrderItem.getCommerceOrderItemId(),
 			GetterUtil.getString(
 				orderItem.getOptions(), commerceOrderItem.getJson()),

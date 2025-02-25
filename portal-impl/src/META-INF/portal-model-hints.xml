@@ -1468,7 +1468,9 @@
 		<field name="userId" type="long" />
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
-		<field name="classExternalReferenceCode" type="String" />
+		<field name="classExternalReferenceCode" type="String">
+			<hint name="max-length">1000</hint>
+		</field>
 		<field name="classNameId" type="long" />
 		<field name="classPK" type="long" />
 		<field name="classUuid" type="String" />

@@ -15,7 +15,6 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * @author Iván Zaera Avellón
@@ -157,11 +156,6 @@ public class CSPComplianceCheck extends BaseTagAttributesCheck {
 					break;
 				}
 
-				String substring = content.substring(lastIndex + 1, x);
-
-				insideScriplet = _isInsideScripletTag(
-					substring, insideScriplet);
-
 				String tagString = getTag(content, x);
 
 				if (Validator.isNull(tagString) ||
@@ -175,6 +169,9 @@ public class CSPComplianceCheck extends BaseTagAttributesCheck {
 
 				if (fileName.endsWith(".jsp") || fileName.endsWith(".jspf") ||
 					fileName.endsWith(".jspx")) {
+
+					insideScriplet = _isInsideScriplet(
+						content.substring(lastIndex + 1, x), insideScriplet);
 
 					if (insideScriplet) {
 						continue;
@@ -197,12 +194,16 @@ public class CSPComplianceCheck extends BaseTagAttributesCheck {
 							lineNumber);
 					}
 				}
-				else if (fileName.endsWith(".ftl") && _illegalTagAuiReplacements.contains(tagName)) {
+				else if (fileName.endsWith(".ftl") &&
+						 _illegalTagAuiReplacements.contains(tagName)) {
+
 					_checkMissingAttribute(
 						fileName, tagName, "${nonceAttribute}", tagString,
 						lineNumber);
 				}
-				else if (fileName.endsWith(".vm") && _illegalTagAuiReplacements.contains(tagName)) {
+				else if (fileName.endsWith(".vm") &&
+						 _illegalTagAuiReplacements.contains(tagName)) {
+
 					_checkMissingAttribute(
 						fileName, tagName, "$nonceAttribute", tagString,
 						lineNumber);
@@ -242,9 +243,7 @@ public class CSPComplianceCheck extends BaseTagAttributesCheck {
 		return -1;
 	}
 
-	private boolean _isInsideScripletTag(
-		String content, boolean currentState) {
-
+	private boolean _isInsideScriplet(String content, boolean currentState) {
 		int lastClosedIndex = content.lastIndexOf("%>");
 		int lastOpenIndex = content.lastIndexOf("<%");
 

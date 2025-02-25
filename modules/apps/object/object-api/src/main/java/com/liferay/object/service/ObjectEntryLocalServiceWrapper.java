@@ -586,6 +586,14 @@ public class ObjectEntryLocalServiceWrapper
 	}
 
 	@Override
+	public int getObjectEntryFolderObjectEntriesCount(
+		long groupId, long objectEntryFolderId) {
+
+		return _objectEntryLocalService.getObjectEntryFolderObjectEntriesCount(
+			groupId, objectEntryFolderId);
+	}
+
+	@Override
 	public java.util.List<com.liferay.object.model.ObjectEntry>
 			getOneToManyObjectEntries(
 				long groupId, long objectRelationshipId, long primaryKey,

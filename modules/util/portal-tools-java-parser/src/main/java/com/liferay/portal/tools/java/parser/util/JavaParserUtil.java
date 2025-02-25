@@ -1490,12 +1490,11 @@ public class JavaParserUtil {
 		}
 
 		return new JavaMethodReference(
-			lastChildDetailAST.getText(),
 			_parseGenericJavaTypes(
 				methodReferenceDetailAST.findFirstToken(
 					TokenTypes.TYPE_ARGUMENTS),
 				TokenTypes.TYPE_ARGUMENT),
-			referenceJavaExpression);
+			lastChildDetailAST.getText(), referenceJavaExpression);
 	}
 
 	private static JavaNewArrayInstantiation _parseJavaNewArrayInstantiation(

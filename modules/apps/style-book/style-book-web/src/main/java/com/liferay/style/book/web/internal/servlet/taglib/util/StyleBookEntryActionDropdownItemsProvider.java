@@ -315,6 +315,8 @@ public class StyleBookEntryActionDropdownItemsProvider {
 					!_styleBookEntry.isDefaultStyleBookEntry()
 				).setParameter(
 					"styleBookEntryId", _styleBookEntry.getStyleBookEntryId()
+				).setParameter(
+					"themeId", _styleBookEntry.getThemeId()
 				).buildString());
 
 			StyleBookEntry defaultStyleBookEntry =

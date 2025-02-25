@@ -48,8 +48,8 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 
 		StyleBookDisplayContext styleBookDisplayContext =
 			new StyleBookDisplayContext(
-				httpServletRequest, liferayPortletRequest,
-				liferayPortletResponse);
+				_frontendTokenDefinitionRegistry, httpServletRequest,
+				liferayPortletRequest, liferayPortletResponse);
 
 		renderRequest.setAttribute(
 			FrontendTokenDefinitionRegistry.class.getName(),

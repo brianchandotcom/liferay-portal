@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.style.book.constants.StyleBookActionKeys;
@@ -174,9 +175,35 @@ public class StyleBookVerticalCard
 
 	@Override
 	public String getStickerTitle() {
-		if (_styleBookEntry.isDefaultStyleBookEntry()) {
-			return LanguageUtil.get(
-				_themeDisplay.getLocale(), "marked-as-default");
+		if (!_styleBookEntry.isDefaultStyleBookEntry()) {
+			return null;
+		}
+
+		if (FeatureFlagManagerUtil.isEnabled(
+				_themeDisplay.getCompanyId(), "LPD-30204")) {
+
+			return LanguageUtil.format(
+				_themeDisplay.getLocale(), "marked-as-default-for-x",
+				StyleBookUtil.getThemeName(
+					_themeDisplay.getCompanyId(),
+					PortalUtil.getHttpServletRequest(_renderRequest),
+					_styleBookEntry.getThemeId()));
+		}
+
+		return LanguageUtil.get(_themeDisplay.getLocale(), "marked-as-default");
+	}
+
+	@Override
+	public String getSubtitle() {
+		if (FeatureFlagManagerUtil.isEnabled(
+				_themeDisplay.getCompanyId(), "LPD-30204")) {
+
+			return LanguageUtil.format(
+				_themeDisplay.getLocale(), "based-on-x",
+				StyleBookUtil.getThemeName(
+					_themeDisplay.getCompanyId(),
+					PortalUtil.getHttpServletRequest(_renderRequest),
+					_styleBookEntry.getThemeId()));
 		}
 
 		return null;

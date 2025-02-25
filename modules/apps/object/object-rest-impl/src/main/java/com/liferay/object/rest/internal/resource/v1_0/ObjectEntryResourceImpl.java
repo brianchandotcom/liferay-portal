@@ -400,12 +400,24 @@ public class ObjectEntryResourceImpl extends BaseObjectEntryResourceImpl {
 			String scopeKey, ValidateRequest validateRequest)
 		throws Exception {
 
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-37056")) {
+
+			throw new UnsupportedOperationException();
+		}
+
 		return _validateObjectEntry(scopeKey, validateRequest);
 	}
 
 	@Override
 	public ValidateResult postValidate(ValidateRequest validateRequest)
 		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled(
+				contextCompany.getCompanyId(), "LPD-37056")) {
+
+			throw new UnsupportedOperationException();
+		}
 
 		return _validateObjectEntry(null, validateRequest);
 	}

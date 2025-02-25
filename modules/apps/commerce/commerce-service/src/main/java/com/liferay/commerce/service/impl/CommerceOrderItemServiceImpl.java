@@ -468,8 +468,9 @@ public class CommerceOrderItemServiceImpl
 
 	@Override
 	public CommerceOrderItem updateCommerceOrderItem(
-			long commerceOrderItemId, String json, BigDecimal quantity,
-			CommerceContext commerceContext, ServiceContext serviceContext)
+			String externalReferenceCode, long commerceOrderItemId, String json,
+			BigDecimal quantity, CommerceContext commerceContext,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		CommerceOrderItem commerceOrderItem =
@@ -481,8 +482,9 @@ public class CommerceOrderItemServiceImpl
 			ActionKeys.UPDATE);
 
 		return commerceOrderItemLocalService.updateCommerceOrderItem(
-			getUserId(), commerceOrderItem.getCommerceOrderItemId(), json,
-			quantity, commerceContext, serviceContext);
+			externalReferenceCode, getUserId(),
+			commerceOrderItem.getCommerceOrderItemId(), json, quantity,
+			commerceContext, serviceContext);
 	}
 
 	@Override

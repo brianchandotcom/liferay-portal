@@ -682,6 +682,12 @@ public class DBPartitionUtil {
 							connection, sourcePartitionName,
 							targetPartitionName, fromTableName, fromTableName));
 
+					if (StringUtil.equalsIgnoreCase(
+							fromTableName, "Configuration_")) {
+
+						continue;
+					}
+
 					statement.executeUpdate(
 						_getCopyDataSQL(
 							sourcePartitionName, targetPartitionName,

@@ -8,7 +8,6 @@ package com.liferay.site.cms.site.initializer.internal.display.context;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
-import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
@@ -105,7 +104,7 @@ public class ContentsSectionDisplayContext extends BaseSectionDisplayContext {
 				).setRedirect(
 					_themeDisplay.getURLCurrent()
 				).setParameter(
-					"modelResource", ObjectEntryFolder.class.getName()
+					"modelResource", "{entryClassName}"
 				).setParameter(
 					"modelResourceDescription", "{embedded.name}"
 				).setParameter(

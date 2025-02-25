@@ -170,16 +170,12 @@ public class PortalCacheExtenderTest {
 			sb -> {
 				sb.append("<cache maxElementsInMemory=\"1000\" name=\"");
 				sb.append(defaultConfigCacheName);
-				sb.append("\"> </cache>");
-
-				sb.append("<cache diskPersistent=\"true\" ");
+				sb.append("\" /><cache diskPersistent=\"true\" ");
 				sb.append("maxElementsInMemory=\"1000\" name=\"");
 				sb.append(diskPersistentConfigCacheName);
-				sb.append("\"> </cache>");
-
-				sb.append("<cache maxElementsInMemory=\"1000\" name=\"");
+				sb.append("\" /><cache maxElementsInMemory=\"1000\" name=\"");
 				sb.append(overflowToDiskConfigCacheName);
-				sb.append("\" overflowToDisk=\"true\"> </cache>");
+				sb.append("\" overflowToDisk=\"true\" />");
 			});
 
 		_bundle = _installBundle(_BUNDLE_SYMBOLIC_NAME, _multiVmXML, null);
@@ -383,7 +379,7 @@ public class PortalCacheExtenderTest {
 						sb.append(cacheName + i);
 						sb.append("\" timeToIdleSeconds=\"");
 						sb.append(timeToIdleSeconds);
-						sb.append("\"> </cache>");
+						sb.append("\" />");
 					}
 				}
 			});

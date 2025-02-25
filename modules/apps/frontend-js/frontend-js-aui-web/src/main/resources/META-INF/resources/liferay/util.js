@@ -18,17 +18,9 @@
 
 	const STR_RIGHT_SQUARE_BRACKET = ']';
 
-	const Window = {
-		_map: {},
+	Liferay.Util = Liferay.Util ?? {};
 
-		getById(id) {
-			const instance = this;
-
-			return instance._map[id];
-		},
-	};
-
-	const Util = {
+	Object.assign(Liferay.Util, {
 		_getEditableInstance(title) {
 			let editable = Util._EDITABLE;
 
@@ -111,6 +103,16 @@
 			}
 
 			return editable;
+		},
+
+		Window: {
+			_map: {},
+
+			getById(id) {
+				const instance = this;
+
+				return instance._map[id];
+			},
 		},
 
 		/**
@@ -746,7 +748,7 @@
 				'input[type=checkbox]'
 			);
 		},
-	};
+	});
 
 	Liferay.provide(
 		Util,
@@ -1242,14 +1244,6 @@
 		},
 		['liferay-util-window']
 	);
-
-	Util.Window = Window;
-
-	if (!Liferay.Util) {
-		Liferay.Util = {};
-	}
-
-	Object.assign(Liferay.Util, Util);
 
 	// 0-200: Theme Developer
 	// 200-400: Portlet Developer

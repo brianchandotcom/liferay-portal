@@ -106,7 +106,7 @@ RankingPortletDisplayContext rankingPortletDisplayContext = (RankingPortletDispl
 />
 
 <clay:container-fluid
-	fullWidth="<%= true %>"
+	size="xxxl"
 >
 	<aui:form method="post" name="fm">
 		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />

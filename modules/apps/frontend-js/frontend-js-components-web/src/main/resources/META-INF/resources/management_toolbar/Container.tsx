@@ -25,7 +25,7 @@ export default function Container({
 				}
 			)}
 		>
-			<ClayLayout.ContainerFluid size={false}>
+			<ClayLayout.ContainerFluid size="xxxl">
 				{children}
 			</ClayLayout.ContainerFluid>
 		</nav>

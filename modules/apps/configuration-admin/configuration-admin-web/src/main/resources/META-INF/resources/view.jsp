@@ -34,7 +34,7 @@ ExtendedObjectClassDefinition.Scope scope = configurationScopeDisplayContext.get
 
 <clay:container-fluid
 	cssClass="container-view"
-	fullWidth="<%= true %>"
+	size="xxxl"
 >
 	<c:if test="<%= scope.equals(ExtendedObjectClassDefinition.Scope.COMPANY) || scope.equals(ExtendedObjectClassDefinition.Scope.SYSTEM) %>">
 

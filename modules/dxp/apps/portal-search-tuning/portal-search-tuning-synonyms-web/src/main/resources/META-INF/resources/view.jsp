@@ -42,7 +42,7 @@ SynonymsDisplayContext synonymsDisplayContext = (SynonymsDisplayContext)request.
 </portlet:actionURL>
 
 <clay:container-fluid
-	fullWidth="<%= true %>"
+	size="xxxl"
 >
 	<aui:form action="<%= deleteSynonymSetActionURL %>" method="post" name="fm">
 		<aui:input name="deletedSynonymSetsString" type="hidden" value="" />

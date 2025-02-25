@@ -194,8 +194,9 @@ public interface CommerceOrderItemService extends BaseService {
 		throws PortalException;
 
 	public CommerceOrderItem updateCommerceOrderItem(
-			long commerceOrderItemId, String json, BigDecimal quantity,
-			CommerceContext commerceContext, ServiceContext serviceContext)
+			String externalReferenceCode, long commerceOrderItemId, String json,
+			BigDecimal quantity, CommerceContext commerceContext,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	public CommerceOrderItem updateCommerceOrderItemDeliveryDate(

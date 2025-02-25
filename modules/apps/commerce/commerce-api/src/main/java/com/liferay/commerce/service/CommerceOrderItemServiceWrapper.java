@@ -322,15 +322,15 @@ public class CommerceOrderItemServiceWrapper
 
 	@Override
 	public com.liferay.commerce.model.CommerceOrderItem updateCommerceOrderItem(
-			long commerceOrderItemId, String json,
+			String externalReferenceCode, long commerceOrderItemId, String json,
 			java.math.BigDecimal quantity,
 			com.liferay.commerce.context.CommerceContext commerceContext,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _commerceOrderItemService.updateCommerceOrderItem(
-			commerceOrderItemId, json, quantity, commerceContext,
-			serviceContext);
+			externalReferenceCode, commerceOrderItemId, json, quantity,
+			commerceContext, serviceContext);
 	}
 
 	@Override

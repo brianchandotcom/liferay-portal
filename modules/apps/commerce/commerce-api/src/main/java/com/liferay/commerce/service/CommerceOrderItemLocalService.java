@@ -513,14 +513,14 @@ public interface CommerceOrderItemLocalService
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceOrderItem updateCommerceOrderItem(
 			long userId, long commerceOrderItemId, String json,
-			BigDecimal quantity, CommerceContext commerceContext,
-			ServiceContext serviceContext)
+			BigDecimal quantity, ServiceContext serviceContext)
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceOrderItem updateCommerceOrderItem(
-			long userId, long commerceOrderItemId, String json,
-			BigDecimal quantity, ServiceContext serviceContext)
+			String externalReferenceCode, long userId, long commerceOrderItemId,
+			String json, BigDecimal quantity, CommerceContext commerceContext,
+			ServiceContext serviceContext)
 		throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)

@@ -291,7 +291,7 @@
 																"fieldKey": "LayoutPageTemplateEntry_34256",
 																"itemReference": {
 																	"className": "com.liferay.asset.kernel.model.AssetCategory",
-																	"classPK": 33225
+																	"classPK": "[$TAXONOMY_CATEGORY_ID:Cloud$]"
 																}
 															}
 														}
@@ -338,7 +338,7 @@
 																			},
 																			"url": {
 																				"value_i18n": {
-																					"en_US": "/documents/d/liferay-learn/cloud-svg"
+																					"en_US": "[$DOCUMENT_URL:/site-initializer/documents/group/icons/cloud.svg$]"
 																				}
 																			}
 																		},
@@ -448,7 +448,7 @@
 																"fieldKey": "LayoutPageTemplateEntry_34256",
 																"itemReference": {
 																	"className": "com.liferay.asset.kernel.model.AssetCategory",
-																	"classPK": 33193
+																	"classPK": "[$TAXONOMY_CATEGORY_ID:Commerce$]"
 																}
 															}
 														}
@@ -490,7 +490,7 @@
 																		"fragmentImage": {
 																			"url": {
 																				"value_i18n": {
-																					"en_US": "/documents/d/liferay-learn/commerce-svg"
+																					"en_US": "[$DOCUMENT_URL:/site-initializer/documents/group/icons/commerce.svg$]"
 																				}
 																			}
 																		},
@@ -600,7 +600,7 @@
 																"fieldKey": "LayoutPageTemplateEntry_34256",
 																"itemReference": {
 																	"className": "com.liferay.asset.kernel.model.AssetCategory",
-																	"classPK": 33201
+																	"classPK": "[$TAXONOMY_CATEGORY_ID:Content Management System$]"
 																}
 															}
 														}
@@ -642,7 +642,7 @@
 																		"fragmentImage": {
 																			"url": {
 																				"value_i18n": {
-																					"en_US": "/documents/d/liferay-learn/content_ms-svg"
+																					"en_US": "[$DOCUMENT_URL:/site-initializer/documents/group/icons/content_ms.svg$]" 
 																				}
 																			}
 																		},
@@ -752,7 +752,7 @@
 																"fieldKey": "LayoutPageTemplateEntry_34256",
 																"itemReference": {
 																	"className": "com.liferay.asset.kernel.model.AssetCategory",
-																	"classPK": 33197
+																	"classPK": "[$TAXONOMY_CATEGORY_ID:Development and Tooling$]"
 																}
 															}
 														}
@@ -794,7 +794,7 @@
 																		"fragmentImage": {
 																			"url": {
 																				"value_i18n": {
-																					"en_US": "/documents/d/liferay-learn/development_t-svg"
+																					"en_US": "[$DOCUMENT_URL:/site-initializer/documents/group/icons/development_t.svg $]"
 																				}
 																			}
 																		},
@@ -904,7 +904,7 @@
 																"fieldKey": "LayoutPageTemplateEntry_34256",
 																"itemReference": {
 																	"className": "com.liferay.asset.kernel.model.AssetCategory",
-																	"classPK": 33217
+																	"classPK": "[$TAXONOMY_CATEGORY_ID:Digital Asset Management$]"
 																}
 															}
 														}
@@ -946,7 +946,7 @@
 																		"fragmentImage": {
 																			"url": {
 																				"value_i18n": {
-																					"en_US": "/documents/d/liferay-learn/digital_ams-svg"
+																					"en_US": "[$DOCUMENT_URL:/site-initializer/documents/group/icons/digital_ams.svg$]"
 																				}
 																			}
 																		},
@@ -1056,7 +1056,7 @@
 																"fieldKey": "LayoutPageTemplateEntry_34256",
 																"itemReference": {
 																	"className": "com.liferay.asset.kernel.model.AssetCategory",
-																	"classPK": 33213
+																	"classPK": "[$TAXONOMY_CATEGORY_ID:DXP Self-Hosted Installation, Maintenance, and Administration$]"
 																}
 															}
 														}
@@ -1098,7 +1098,7 @@
 																		"fragmentImage": {
 																			"url": {
 																				"value_i18n": {
-																					"en_US": "/documents/d/liferay-learn/dxp_shima-svg"
+																					"en_US": "[$DOCUMENT_URL:/site-initializer/documents/group/icons/dxp_shima.svg$]"
 																				}
 																			}
 																		},
@@ -1208,7 +1208,7 @@
 																"fieldKey": "LayoutPageTemplateEntry_34256",
 																"itemReference": {
 																	"className": "com.liferay.asset.kernel.model.AssetCategory",
-																	"classPK": 33233
+																	"classPK": "[$TAXONOMY_CATEGORY_ID:Integration$]"
 																}
 															}
 														}
@@ -1250,7 +1250,7 @@
 																		"fragmentImage": {
 																			"url": {
 																				"value_i18n": {
-																					"en_US": "/documents/d/liferay-learn/integration-svg"
+																					"en_US": "[$DOCUMENT_URL:/site-initializer/documents/group/icons/integration.svg$]"
 																				}
 																			}
 																		},
@@ -1360,7 +1360,7 @@
 																"fieldKey": "LayoutPageTemplateEntry_34256",
 																"itemReference": {
 																	"className": "com.liferay.asset.kernel.model.AssetCategory",
-																	"classPK": 33205
+																	"classPK": "[$TAXONOMY_CATEGORY_ID:Personalization$]"
 																}
 															}
 														}
@@ -1402,7 +1402,7 @@
 																		"fragmentImage": {
 																			"url": {
 																				"value_i18n": {
-																					"en_US": "/documents/d/liferay-learn/personalization-svg"
+																					"en_US": "[$DOCUMENT_URL:/site-initializer/documents/group/icons/personalization.svg$]"
 																				}
 																			}
 																		},
@@ -1512,7 +1512,7 @@
 																"fieldKey": "LayoutPageTemplateEntry_34256",
 																"itemReference": {
 																	"className": "com.liferay.asset.kernel.model.AssetCategory",
-																	"classPK": 33209
+																	"classPK": "[$TAXONOMY_CATEGORY_ID:Platform$]"
 																}
 															}
 														}
@@ -1554,7 +1554,7 @@
 																		"fragmentImage": {
 																			"url": {
 																				"value_i18n": {
-																					"en_US": "/documents/d/liferay-learn/platform-svg"
+																					"en_US": "[$DOCUMENT_URL:/site-initializer/documents/group/icons/platform.svg$]"
 																				}
 																			}
 																		},
@@ -1664,7 +1664,7 @@
 																"fieldKey": "LayoutPageTemplateEntry_34256",
 																"itemReference": {
 																	"className": "com.liferay.asset.kernel.model.AssetCategory",
-																	"classPK": 33221
+																	"classPK": "[$TAXONOMY_CATEGORY_ID:Search$]"
 																}
 															}
 														}
@@ -1706,7 +1706,7 @@
 																		"fragmentImage": {
 																			"url": {
 																				"value_i18n": {
-																					"en_US": "/documents/d/liferay-learn/search-svg"
+																					"en_US": "[$DOCUMENT_URL:/site-initializer/documents/group/icons/search.svg$]"
 																				}
 																			}
 																		},
@@ -1816,7 +1816,7 @@
 																"fieldKey": "LayoutPageTemplateEntry_34256",
 																"itemReference": {
 																	"className": "com.liferay.asset.kernel.model.AssetCategory",
-																	"classPK": 33237
+																	"classPK": "[$TAXONOMY_CATEGORY_ID:Security$]"
 																}
 															}
 														}
@@ -1858,7 +1858,7 @@
 																		"fragmentImage": {
 																			"url": {
 																				"value_i18n": {
-																					"en_US": "/documents/d/liferay-learn/security-svg"
+																					"en_US": "[$DOCUMENT_URL:/site-initializer/documents/group/icons/security.svg$]"
 																				}
 																			}
 																		},
@@ -1968,7 +1968,7 @@
 																"fieldKey": "LayoutPageTemplateEntry_34256",
 																"itemReference": {
 																	"className": "com.liferay.asset.kernel.model.AssetCategory",
-																	"classPK": 33229
+																	"classPK": "[$TAXONOMY_CATEGORY_ID:Sites$]"
 																}
 															}
 														}
@@ -2010,7 +2010,7 @@
 																		"fragmentImage": {
 																			"url": {
 																				"value_i18n": {
-																					"en_US": "/documents/d/liferay-learn/sites-svg"
+																					"en_US": "[$DOCUMENT_URL:/site-initializer/documents/group/icons/sites.svg$]"
 																				}
 																			}
 																		},
@@ -2201,7 +2201,7 @@
 																				"fragmentImage": {
 																					"url": {
 																						"value_i18n": {
-																							"en_US": "/documents/d/liferay-learn/analytics_c-svg"
+																							"en_US": "[$DOCUMENT_URL:/site-initializer/documents/group/icons/analytics_c.svg$]"
 																						}
 																					}
 																				},
@@ -2350,7 +2350,7 @@
 																				"fragmentImage": {
 																					"url": {
 																						"value_i18n": {
-																							"en_US": "/documents/d/liferay-learn/commerce_product-svg"
+																							"en_US": "[$DOCUMENT_URL:/site-initializer/documents/group/icons/commerce_product.svg$]"
 																						}
 																					}
 																				},
@@ -2499,7 +2499,7 @@
 																				"fragmentImage": {
 																					"url": {
 																						"value_i18n": {
-																							"en_US": "/documents/d/liferay-learn/dxp_p-svg"
+																							"en_US": "[$DOCUMENT_URL:/site-initializer/documents/group/icons/dxp_p.svg$]"
 																						}
 																					}
 																				},
@@ -2648,7 +2648,7 @@
 																				"fragmentImage": {
 																					"url": {
 																						"value_i18n": {
-																							"en_US": "/documents/d/liferay-learn/dxp_c-svg"
+																							"en_US": "[$DOCUMENT_URL:/site-initializer/documents/group/icons/dxp_c.svg$]"
 																						}
 																					}
 																				},
@@ -2797,7 +2797,7 @@
 																				"fragmentImage": {
 																					"url": {
 																						"value_i18n": {
-																							"en_US": "/documents/d/liferay-learn/reference-svg"
+																							"en_US": "[$DOCUMENT_URL:/site-initializer/documents/group/icons/reference.svg$]"
 																						}
 																					}
 																				},

@@ -10,5 +10,5 @@
 		"format": "node-scripts format",
 		"test": "USE_REACT_16=true node-scripts test"
 	},
-	"version": "1.0.30"
+	"version": "1.0.31"
 }

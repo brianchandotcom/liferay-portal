@@ -118,7 +118,19 @@ function reducer(state: State, action: Action) {
 
 			nextFields.delete(fieldName);
 
-			return {...state, fields: nextFields};
+			let nextState = {...state, fields: nextFields};
+
+			if (
+				'name' in state.selectedItem &&
+				state.selectedItem.name === fieldName
+			) {
+				nextState = {
+					...nextState,
+					selectedItem: INITIAL_STATE.selectedItem,
+				};
+			}
+
+			return nextState;
 		}
 		case 'publish-structure':
 			return {...state, error: null, status: 'published' as Status};

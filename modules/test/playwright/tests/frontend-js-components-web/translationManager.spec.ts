@@ -6,6 +6,7 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
+import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {clickAndExpectToBeHidden} from '../../utils/clickAndExpectToBeHidden';
@@ -13,6 +14,7 @@ import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import {jsComponentsSamplePageTest} from './fixtures/jsComponentsSamplePageTest';
 
 export const test = mergeTests(
+	dataApiHelpersTest,
 	apiHelpersTest,
 	jsComponentsSamplePageTest,
 	isolatedSiteTest,

@@ -55,19 +55,18 @@ public class DataDefinitionUtilTest {
 	private DataDefinition _getDataDefinition() {
 		DataDefinition dataDefinition = new DataDefinition();
 
-		dataDefinition.setDefaultDataLayout(_getDataLayout(_fieldName));
-
 		DataDefinitionField dataDefinitionField = new DataDefinitionField();
 
 		dataDefinitionField.setCustomProperties(
 			HashMapBuilder.<String, Object>put(
 				"fieldReference", _fieldReference
 			).build());
-
 		dataDefinitionField.setName(_fieldName);
 
 		dataDefinition.setDataDefinitionFields(
 			new DataDefinitionField[] {dataDefinitionField});
+
+		dataDefinition.setDefaultDataLayout(_getDataLayout(_fieldName));
 
 		return dataDefinition;
 	}
@@ -160,7 +159,6 @@ public class DataDefinitionUtilTest {
 		String newFieldName = _getDataDefinitionFieldName(dataDefinition);
 
 		Assert.assertTrue(DataDefinitionUtil.isValidFieldName(newFieldName));
-
 		Assert.assertEquals(existingFieldName, newFieldName);
 	}
 

@@ -1893,7 +1893,7 @@ public class ObjectEntryLocalServiceImpl
 				serviceContext.getLanguageId(), user);
 		}
 
-		if (originalObjectEntry.isPending()) {
+		if (originalObjectEntry.isDraft() || originalObjectEntry.isPending()) {
 			_updateLatestObjectEntryVersion(objectEntry);
 
 			return objectEntry;

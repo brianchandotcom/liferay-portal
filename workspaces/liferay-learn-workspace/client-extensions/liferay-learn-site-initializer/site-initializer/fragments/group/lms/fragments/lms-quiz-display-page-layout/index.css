@@ -33,8 +33,9 @@
 	font-family: var(--font-family-sans-serif, 'Source Sans 3') !important;
 	height: 100% !important;
 	margin-right: var(--spacer-4, 1.5rem) !important;
+	max-width: 370px;
+	min-width: 370px;
 	padding: var(--spacer-2, 0.5rem) !important;
-	width: 20%;
 }
 
 .lesson-layout-container > div:nth-child(3) {
@@ -205,6 +206,7 @@
 	align-content: center;
 	background-color: transparent;
 	justify-content: center;
+	min-width: 2rem;
 }
 
 .side-nav .panel-header .module-title span {

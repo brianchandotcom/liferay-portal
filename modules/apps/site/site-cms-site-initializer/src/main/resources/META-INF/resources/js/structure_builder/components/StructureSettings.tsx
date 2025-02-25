@@ -61,5 +61,5 @@ export default function () {
 		return <StructureSettings />;
 	}
 
-	return <StructureFieldSettings fieldERC={selectedItem.erc} />;
+	return <StructureFieldSettings fieldName={selectedItem.name} />;
 }

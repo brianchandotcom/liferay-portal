@@ -36,9 +36,8 @@ export default function FieldsTree({fields}: {fields: Field[]}) {
 			{
 				children: fields.map((field) => ({
 					icon: FIELD_TYPE_ICON[field.type],
-					id: field.erc,
+					id: field.name,
 					label: field.label,
-					name: field.name,
 					type: field.type,
 				})),
 				icon: 'edit-layout',
@@ -53,7 +52,7 @@ export default function FieldsTree({fields}: {fields: Field[]}) {
 			item:
 				item.id === 'root'
 					? {type: 'structure'}
-					: {erc: item.id, type: 'field'},
+					: {name: item.id, type: 'field'},
 			type: 'select-item',
 		});
 	};
@@ -91,7 +90,7 @@ export default function FieldsTree({fields}: {fields: Field[]}) {
 													'delete-field'
 												),
 												onClick: () =>
-													deleteField(item.name!),
+													deleteField(item.id),
 												symbolLeft: 'trash',
 											},
 										]}

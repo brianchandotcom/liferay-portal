@@ -35,7 +35,7 @@ export type State = {
 	id: number | null;
 	label: string;
 	name: string;
-	selectedItem: {type: 'structure'} | {erc: string; type: 'field'};
+	selectedItem: {type: 'structure'} | {name: string; type: 'field'};
 	status: Status;
 };
 
@@ -63,7 +63,7 @@ type DeleteFieldAction = {fieldName: Field['name']; type: 'delete-field'};
 type PublishStructureAction = {type: 'publish-structure'};
 
 type SelectItemAction = {
-	item: {type: 'structure'} | {erc: string; type: 'field'};
+	item: {type: 'structure'} | {name: string; type: 'field'};
 	type: 'select-item';
 };
 

@@ -297,6 +297,18 @@ public class CommerceOrderItemServiceUtil {
 			serviceContext);
 	}
 
+	public static CommerceOrderItem updateCommerceOrderItem(
+			String externalReferenceCode, long commerceOrderItemId, String json,
+			java.math.BigDecimal quantity,
+			com.liferay.commerce.context.CommerceContext commerceContext,
+			com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws PortalException {
+
+		return getService().updateCommerceOrderItem(
+			externalReferenceCode, commerceOrderItemId, json, quantity,
+			commerceContext, serviceContext);
+	}
+
 	public static CommerceOrderItem updateCommerceOrderItemDeliveryDate(
 			long commerceOrderItemId, java.util.Date requestedDeliveryDate)
 		throws PortalException {

@@ -1894,6 +1894,25 @@ public class GraphQLServletExtender {
 		else if (String.class.equals(clazz)) {
 			return Scalars.GraphQLString;
 		}
+		else if (clazz.isArray()) {
+			Class<?> realClazz = clazz.getComponentType();
+
+			String key = (input ? "Input" : "") + realClazz.getSimpleName();
+
+			if (graphQLTypes.containsKey(key)) {
+				return new GraphQLList(graphQLTypes.get(key));
+			}
+
+			key =
+				(input ? "Input" : "") +
+					StringUtil.replace(clazz.getName(), '.', '_');
+
+			if (graphQLTypes.containsKey(key)) {
+				return new GraphQLList(graphQLTypes.get(key));
+			}
+
+			return new GraphQLList(_mapGraphQLScalarType);
+		}
 
 		String key = (input ? "Input" : "") + clazz.getSimpleName();
 

@@ -55,7 +55,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Feliphe Marinho
  */
-@FeatureFlags("LPD-37104")
+@FeatureFlags("LPD-17564")
 @RunWith(Arquillian.class)
 public class ObjectEntryVersionLocalServiceTest {
 

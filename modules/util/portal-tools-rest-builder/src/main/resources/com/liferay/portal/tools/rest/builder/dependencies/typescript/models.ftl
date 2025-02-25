@@ -39,12 +39,10 @@ const typeMap: {[index: string]: any} = {
 	</#list>
 }
 
-// Check if a string starts with another string without using es6 features
 function startsWith(str: string, match: string): boolean {
 	return str.substring(0, match.length) === match;
 }
 
-// Check if a string ends with another string without using es6 features
 function endsWith(str: string, match: string): boolean {
 	return str.length >= match.length && str.substring(str.length - match.length) === match;
 }
@@ -66,23 +64,22 @@ export class ObjectSerializer {
 			return expectedType;
 		} else {
 			if (!typeMap[expectedType]) {
-				return expectedType; // w/e we don't know the type
+				return expectedType;
 			}
 
-			// Check the discriminator
 			const discriminatorProperty = typeMap[expectedType].discriminator;
 			if (discriminatorProperty === null) {
-				return expectedType; // the type does not have a discriminator. use it.
+				return expectedType;
 			} else {
 				if (data[discriminatorProperty]) {
 					var discriminatorType = data[discriminatorProperty];
 					if(typeMap[discriminatorType]){
-						return discriminatorType; // use the type given in the discriminator
+						return discriminatorType;
 					} else {
-						return expectedType; // discriminator did not map to a type
+						return expectedType;
 					}
 				} else {
-					return expectedType; // discriminator was not present (or an empty string)
+					return expectedType;
 				}
 			}
 		}
@@ -94,13 +91,13 @@ export class ObjectSerializer {
 		} else if (primitives.indexOf(type.toLowerCase()) !== -1) {
 			return data;
 		} else if (endsWith(type, nullableSuffix)) {
-			const subType: string = type.slice(0, -nullableSuffix.length); // Type | null => Type
+			const subType: string = type.slice(0, -nullableSuffix.length);
 			return ObjectSerializer.serialize(data, subType);
 		} else if (endsWith(type, optionalSuffix)) {
-			const subType: string = type.slice(0, -optionalSuffix.length); // Type | undefined => Type
+			const subType: string = type.slice(0, -optionalSuffix.length);
 			return ObjectSerializer.serialize(data, subType);
 		} else if (startsWith(type, arrayPrefix)) {
-			const subType: string = type.slice(arrayPrefix.length, -arraySuffix.length); // Array<Type> => Type
+			const subType: string = type.slice(arrayPrefix.length, -arraySuffix.length);
 			const transformedData: any[] = [];
 			for (let index = 0; index < data.length; index++) {
 				const datum = data[index];
@@ -108,7 +105,7 @@ export class ObjectSerializer {
 			}
 			return transformedData;
 		} else if (startsWith(type, mapPrefix)) {
-			const subType: string = type.slice(mapPrefix.length, -mapSuffix.length); // { [key: string]: Type; } => Type
+			const subType: string = type.slice(mapPrefix.length, -mapSuffix.length);
 			const transformedData: { [key: string]: any } = {};
 			for (const key in data) {
 				transformedData[key] = ObjectSerializer.serialize(
@@ -120,14 +117,12 @@ export class ObjectSerializer {
 		} else if (type === 'Date') {
 			return data.toISOString();
 		} else {
-			if (!typeMap[type]) { // in case we dont know the type
+			if (!typeMap[type]) {
 				return data;
 			}
 
-			// Get the actual type of this object
 			type = this.findCorrectType(data, type);
 
-			// get the map for the correct type.
 			const attributeTypes = typeMap[type].getAttributeTypeMap();
 			const instance: {[index: string]: any} = {};
 			for (let index = 0; index < attributeTypes.length; index++) {
@@ -139,20 +134,19 @@ export class ObjectSerializer {
 	}
 
 	public static deserialize(data: any, type: string): any {
-		// polymorphism may change the actual type.
 		type = ObjectSerializer.findCorrectType(data, type);
 		if (data === undefined) {
 			return data;
 		} else if (primitives.indexOf(type.toLowerCase()) !== -1) {
 			return data;
 		} else if (endsWith(type, nullableSuffix)) {
-			const subType: string = type.slice(0, -nullableSuffix.length); // Type | null => Type
+			const subType: string = type.slice(0, -nullableSuffix.length);
 			return ObjectSerializer.deserialize(data, subType);
 		} else if (endsWith(type, optionalSuffix)) {
-			const subType: string = type.slice(0, -optionalSuffix.length); // Type | undefined => Type
+			const subType: string = type.slice(0, -optionalSuffix.length);
 			return ObjectSerializer.deserialize(data, subType);
 		} else if (startsWith(type, arrayPrefix)) {
-			const subType: string = type.slice(arrayPrefix.length, -arraySuffix.length); // Array<Type> => Type
+			const subType: string = type.slice(arrayPrefix.length, -arraySuffix.length);
 			const transformedData: any[] = [];
 			for (let index = 0; index < data.length; index++) {
 				const datum = data[index];
@@ -160,7 +154,7 @@ export class ObjectSerializer {
 			}
 			return transformedData;
 		} else if (startsWith(type, mapPrefix)) {
-			const subType: string = type.slice(mapPrefix.length, -mapSuffix.length); // { [key: string]: Type; } => Type
+			const subType: string = type.slice(mapPrefix.length, -mapSuffix.length);
 			const transformedData: { [key: string]: any } = {};
 			for (const key in data) {
 				transformedData[key] = ObjectSerializer.deserialize(
@@ -172,7 +166,7 @@ export class ObjectSerializer {
 		} else if (type === 'Date') {
 			return new Date(data);
 		} else {
-			if (!typeMap[type]) { // dont know the type
+			if (!typeMap[type]) {
 				return data;
 			}
 			const instance = new typeMap[type]();
@@ -254,7 +248,6 @@ export class VoidAuth implements Authentication {
 	public username: string = '';
 
 	applyToRequest(_: localVarRequest.Options): void {
-		// Do nothing
 	}
 }
 

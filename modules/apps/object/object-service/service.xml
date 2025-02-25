@@ -1165,9 +1165,9 @@
 		<exception>ObjectDefinitionPluralLabel</exception>
 		<exception>ObjectDefinitionPortlet</exception>
 		<exception>ObjectDefinitionRootObjectDefinitionId</exception>
+		<exception>ObjectDefinitionScope</exception>
 		<exception>ObjectDefinitionSettingName</exception>
 		<exception>ObjectDefinitionSettingValue</exception>
-		<exception>ObjectDefinitionScope</exception>
 		<exception>ObjectDefinitionStatus</exception>
 		<exception>ObjectDefinitionSystem</exception>
 		<exception>ObjectDefinitionVersion</exception>

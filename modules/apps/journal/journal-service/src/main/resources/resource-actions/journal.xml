@@ -125,7 +125,7 @@
 			<guest-unsupported>
 				<action-key>ADD_ARTICLE</action-key>
 				<action-key>ADD_SUBFOLDER</action-key>
-				<action-key>ADVANCE_UPDATE</action-key>
+				<action-key>ADVANCED_UPDATE</action-key>
 				<action-key>SUBSCRIBE</action-key>
 				<action-key>UPDATE</action-key>
 			</guest-unsupported>

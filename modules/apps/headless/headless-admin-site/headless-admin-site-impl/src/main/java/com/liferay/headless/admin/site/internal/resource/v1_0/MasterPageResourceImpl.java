@@ -280,20 +280,18 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 
 		ItemExternalReference itemExternalReference = masterPage.getThumbnail();
 
-		if ((itemExternalReference != null) &&
-			Validator.isNotNull(
+		if ((itemExternalReference == null) ||
+			Validator.isNull(
 				itemExternalReference.getExternalReferenceCode())) {
 
-			FileEntry fileEntry =
-				_portletFileRepository.
-					getPortletFileEntryByExternalReferenceCode(
-						itemExternalReference.getExternalReferenceCode(),
-						groupId);
-
-			return fileEntry.getFileEntryId();
+			return 0;
 		}
 
-		return 0;
+		FileEntry fileEntry =
+			_portletFileRepository.getPortletFileEntryByExternalReferenceCode(
+				itemExternalReference.getExternalReferenceCode(), groupId);
+
+		return fileEntry.getFileEntryId();
 	}
 
 	private ServiceContext _getServiceContext(

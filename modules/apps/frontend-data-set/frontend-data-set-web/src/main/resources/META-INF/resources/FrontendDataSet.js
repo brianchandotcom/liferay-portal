@@ -767,6 +767,14 @@ const FrontendDataSet = ({
 		});
 	}
 
+	function onItemsChange({itemKey = 'id', itemsChanged}) {
+		const updatedItems = new Map(
+			[...items, ...itemsChanged].map((item) => [item[itemKey], item])
+		);
+
+		setItems(Array.from(updatedItems.values()));
+	}
+
 	function updateItem(itemKey, property, valuePath, value = null) {
 		const itemChanges = getCurrentItemUpdates(
 			items,
@@ -938,6 +946,7 @@ const FrontendDataSet = ({
 				nestedItemsReferenceKey,
 				onActionDropdownItemClick,
 				onBulkActionItemClick,
+				onItemsChange,
 				onSearch,
 				onSelect,
 				openModal,

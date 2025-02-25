@@ -609,6 +609,7 @@ function CellRenderer({
 		customDataRenderers,
 		customRenderers,
 		loadData,
+		onItemsChange,
 		openSidePanel,
 	}: IFrontendDataSetContext = useContext(FrontendDataSetContext);
 	const [{modifiedFields}] = useContext(ViewsContext) as any;
@@ -665,6 +666,7 @@ function CellRenderer({
 						itemData={itemData}
 						itemId={itemId}
 						loadData={loadData}
+						onItemsChange={onItemsChange}
 						openSidePanel={openSidePanel}
 						options={field}
 						rootPropertyName={rootPropertyName}

@@ -579,7 +579,8 @@ public class PortalUpgradeProcessRegistryImpl
 		upgradeVersionTreeMap.put(
 			new Version(31, 15, 2),
 			UpgradeProcessFactory.alterColumnType(
-				"SystemEvent", "classExternalReferenceCode", "VARCHAR(1000) null"));
+				"SystemEvent", "classExternalReferenceCode",
+				"VARCHAR(1000) null"));
 	}
 
 }

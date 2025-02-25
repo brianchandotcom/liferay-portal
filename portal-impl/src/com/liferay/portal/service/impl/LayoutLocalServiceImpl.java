@@ -1067,8 +1067,18 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 	@Override
 	public Layout fetchDraftLayout(long plid) {
-		return layoutPersistence.fetchByC_C(
+		List<Layout> layouts = layoutPersistence.findByC_C(
 			_classNameLocalService.getClassNameId(Layout.class), plid);
+
+		if (layouts.isEmpty()) {
+			return null;
+		}
+
+		if (layouts.size() > 1) {
+			_log.error("Multiple draft layouts exist for primary key " + plid);
+		}
+
+		return layouts.get(layouts.size() - 1);
 	}
 
 	@Override
@@ -1116,10 +1126,21 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 	@Override
 	public Layout fetchLayoutByIconImageId(
-			boolean privateLayout, long iconImageId)
-		throws PortalException {
+		boolean privateLayout, long iconImageId) {
 
-		return layoutPersistence.fetchByP_I(privateLayout, iconImageId);
+		List<Layout> layouts = layoutPersistence.findByP_I(
+			privateLayout, iconImageId);
+
+		if (layouts.isEmpty()) {
+			return null;
+		}
+
+		if (layouts.size() > 1) {
+			_log.error(
+				"Multiple layouts exist for icon image ID " + iconImageId);
+		}
+
+		return layouts.get(layouts.size() - 1);
 	}
 
 	/**

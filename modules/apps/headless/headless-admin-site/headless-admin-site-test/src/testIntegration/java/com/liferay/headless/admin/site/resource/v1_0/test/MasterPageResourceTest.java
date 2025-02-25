@@ -138,16 +138,6 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 	@Ignore
 	@Override
 	@Test
-	public void testGetSiteSiteByExternalReferenceCodeMasterPagesPageWithPagination()
-		throws Exception {
-
-		super.
-			testGetSiteSiteByExternalReferenceCodeMasterPagesPageWithPagination();
-	}
-
-	@Ignore
-	@Override
-	@Test
 	public void testGetSiteSiteByExternalReferenceCodeMasterPagesPageWithSortDateTime()
 		throws Exception {
 

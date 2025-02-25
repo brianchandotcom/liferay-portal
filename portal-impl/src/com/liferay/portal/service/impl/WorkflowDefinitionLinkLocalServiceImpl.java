@@ -138,26 +138,6 @@ public class WorkflowDefinitionLinkLocalServiceImpl
 	}
 
 	@Override
-	public WorkflowDefinitionLink getDefaultWorkflowDefinitionLink(
-			long companyId, String className, long classPK, long typePK)
-		throws PortalException {
-
-		return workflowDefinitionLinkPersistence.findByG_C_C_C_T(
-			WorkflowConstants.DEFAULT_GROUP_ID, companyId,
-			_classNameLocalService.getClassNameId(className), classPK, typePK);
-	}
-
-	@Override
-	public WorkflowDefinitionLink getWorkflowDefinitionLink(
-			long companyId, long groupId, String className, long classPK,
-			long typePK)
-		throws PortalException {
-
-		return getWorkflowDefinitionLink(
-			companyId, groupId, className, classPK, typePK, false);
-	}
-
-	@Override
 	public WorkflowDefinitionLink getWorkflowDefinitionLink(
 			long companyId, long groupId, String className, long classPK,
 			long typePK, boolean strict)

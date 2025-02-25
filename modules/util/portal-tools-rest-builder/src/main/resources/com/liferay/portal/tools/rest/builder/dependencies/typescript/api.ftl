@@ -116,7 +116,6 @@ export class ${classname} {
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
 			<#if singleOperation.produces?? && singleOperation.produces?has_content>
 				const produces = [<#list singleOperation.produces as mediaType>'${mediaType}'<#sep>, </#list>];
-				// give precedence to 'application/json'
 				if (produces.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
@@ -128,7 +127,6 @@ export class ${classname} {
 			<#if singleOperation.allParams??>
 				<#list singleOperation.allParams as param>
 					<#if param.required>
-						// verify required parameter '${param.name}' is not null or undefined
 						if (${param.name} === null || ${param.name} === undefined) {
 							throw new Error('Required parameter ${param.name} was null or undefined when calling ${singleOperation.nickname}.');
 						}

@@ -521,15 +521,20 @@ test.describe('Localized object entries are saved correctly', () => {
 		const objectDefinitionLabel = 'ObjectDefinitionLabel' + getRandomInt();
 		const objectDefinitionName = 'ObjectDefinitionName' + getRandomInt();
 
-		const {listTypeDefinitionItems, objectFields, titleObjectFieldName} =
-			await mockObjectFields({
-				apiHelpers,
-				localizeAllLocalizable: true,
-				objectFieldBusinessTypes: [
-					'multiselectPicklist',
-					'multiselectPicklist',
-				],
-			});
+		const {
+			listTypeDefinitionItems,
+			objectFields,
+			titleObjectFieldName,
+			translatedListTypeDefinitionItems,
+		} = await mockObjectFields({
+			apiHelpers,
+			localeToTranslateListTypeItems: 'ca_ES',
+			localizeAllLocalizable: true,
+			objectFieldBusinessTypes: [
+				'multiselectPicklist',
+				'multiselectPicklist',
+			],
+		});
 
 		const objectDefinitionAPIClient =
 			await apiHelpers.buildRestClient(ObjectDefinitionApi);
@@ -650,11 +655,15 @@ test.describe('Localized object entries are saved correctly', () => {
 
 		await catalanOption.first().click();
 
-		expect(itemLocators[0]).toHaveCount(1);
+		const catalanItemLocators = translatedListTypeDefinitionItems.map(
+			(item) => page.getByRole('row', {name: `Remove ${item}`})
+		);
+
+		expect(catalanItemLocators[0]).toHaveCount(1);
 
 		for (let index = 1; index <= 2; index++) {
-			await expect(itemLocators[index].nth(0)).toBeVisible();
-			await expect(itemLocators[index].nth(1)).toBeVisible();
+			await expect(catalanItemLocators[index].nth(0)).toBeVisible();
+			await expect(catalanItemLocators[index].nth(1)).toBeVisible();
 		}
 
 		// remove some of the items from catalan entry
@@ -675,8 +684,8 @@ test.describe('Localized object entries are saved correctly', () => {
 		// expect only the remaining to be visible
 
 		async function expectFinalCatalanState() {
-			await expect(itemLocators[0]).toBeVisible();
-			await expect(itemLocators[1]).toBeVisible();
+			await expect(catalanItemLocators[0]).toBeVisible();
+			await expect(catalanItemLocators[1]).toBeVisible();
 		}
 
 		await expectFinalCatalanState();

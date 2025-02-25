@@ -2181,7 +2181,7 @@ public class ObjectEntryLocalServiceImpl
 		throws PortalException {
 
 		if (!FeatureFlagManagerUtil.isEnabled(
-				objectEntry.getCompanyId(), "LPD-37104")) {
+				objectEntry.getCompanyId(), "LPD-17564")) {
 
 			return objectEntry;
 		}
@@ -4955,7 +4955,7 @@ public class ObjectEntryLocalServiceImpl
 		throws PortalException {
 
 		if (!FeatureFlagManagerUtil.isEnabled(
-				objectEntry.getCompanyId(), "LPD-37104")) {
+				objectEntry.getCompanyId(), "LPD-17564")) {
 
 			return;
 		}

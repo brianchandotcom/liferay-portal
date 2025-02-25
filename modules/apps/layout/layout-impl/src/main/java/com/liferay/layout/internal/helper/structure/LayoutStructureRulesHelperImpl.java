@@ -42,12 +42,11 @@ public class LayoutStructureRulesHelperImpl
 		PermissionChecker permissionChecker, long[] segmentsEntryIds) {
 
 		Map<String, List<String>> itemIdsMap = new HashMap<>();
+		JSONArray jsonArray = _jsonFactory.createJSONArray();
 		Map<String, List<String>> layoutStructureRuleIdsMap = new HashMap<>();
 		LayoutStructureRulesContext layoutStructureRulesContext =
 			new LayoutStructureRulesContext(
 				groupId, permissionChecker, segmentsEntryIds);
-
-		JSONArray jsonArray = _jsonFactory.createJSONArray();
 
 		for (LayoutStructureRule layoutStructureRule :
 				layoutStructure.getLayoutStructureRules()) {

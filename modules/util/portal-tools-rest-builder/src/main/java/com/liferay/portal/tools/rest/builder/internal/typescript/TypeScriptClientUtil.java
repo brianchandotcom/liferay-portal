@@ -86,7 +86,7 @@ public class TypeScriptClientUtil {
 			null, configYAML, copyrightFile, files, "typescript/api_global",
 			baseClientDir.getPath() + "/src/node/api.ts");
 		_createFile(
-			_buildApiContexts(entries), configYAML, copyrightFile, files,
+			_buildAPIContexts(entries), configYAML, copyrightFile, files,
 			"typescript/apis",
 			baseClientDir.getPath() + "/src/node/api/apis.ts");
 
@@ -212,7 +212,7 @@ public class TypeScriptClientUtil {
 			"([ \\t]+)schemas:", "$1schemas:\n$1$1" + schemaYAMLString);
 	}
 
-	private static Map<String, Object> _buildApiContexts(
+	private static Map<String, Object> _buildAPIContexts(
 		Set<Map.Entry<String, Map<String, Object>>> entries) {
 
 		List<Map<String, Object>> apiContexts = new ArrayList<>();

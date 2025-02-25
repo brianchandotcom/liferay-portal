@@ -4,73 +4,75 @@
  */
 
 import i18n from '~/utils/I18n';
-import {IBusinessEvent} from '~/utils/types';
 
 import './BusinessEventsItemDetails.css';
+import {IBusinessEventTicket} from '../../../../BusinessEvents';
 
-interface IProps {
-	businessEvent: IBusinessEvent;
+interface BusinessEventsItemDetailsProps {
+	eventTicket: IBusinessEventTicket;
 }
 
-const BusinessEventsItemDetails = ({businessEvent}: IProps) => {
+const BusinessEventsItemDetails = ({
+	eventTicket,
+}: BusinessEventsItemDetailsProps) => {
 	return (
 		<div className="event-detail-container">
-			{businessEvent?.eventType && (
+			{eventTicket?.eventType?.name && (
 				<div className="event-detail-item mb-4">
 					<div className="event-detail-title mb-1 text-neutral-8">
 						{i18n.translate('event-type')}
 					</div>
 
 					<div className="d-inline-block event-detail-value font-weight-semi-bold rounded text-neutral-9">
-						{businessEvent?.eventType}
+						{eventTicket?.eventType.name}
 					</div>
 				</div>
 			)}
 
-			{businessEvent?.currentLiferayVersion && (
+			{eventTicket?.currentLiferayVersion?.name && (
 				<div className="event-detail-item mb-4">
 					<div className="event-detail-title mb-1 text-neutral-8">
 						{i18n.translate('current-version')}
 					</div>
 
 					<div className="d-inline-block event-detail-value font-weight-semi-bold rounded text-neutral-9">
-						{businessEvent?.currentLiferayVersion}
+						{eventTicket?.currentLiferayVersion.name}
 					</div>
 				</div>
 			)}
 
-			{businessEvent?.newLiferayVersion && (
+			{eventTicket?.newLiferayVersion?.name && (
 				<div className="event-detail-item mb-4">
 					<div className="event-detail-title mb-1 text-neutral-8">
 						{i18n.translate('new-version')}
 					</div>
 
 					<div className="d-inline-block event-detail-value font-weight-semi-bold rounded text-neutral-9">
-						{businessEvent?.newLiferayVersion}
+						{eventTicket?.newLiferayVersion.name}
 					</div>
 				</div>
 			)}
 
-			{businessEvent?.targetGoLiveDateTime && (
+			{eventTicket?.targetGoLiveDateTime && (
 				<div className="event-detail-item mb-4">
 					<div className="event-detail-title mb-1 text-neutral-8">
 						{i18n.translate('target-go-live-date')}
 					</div>
 
 					<div className="d-inline-block event-detail-value font-weight-semi-bold rounded text-neutral-9">
-						{businessEvent?.targetGoLiveDateTime?.toString()}
+						{eventTicket?.targetGoLiveDateTime}
 					</div>
 				</div>
 			)}
 
-			{businessEvent?.associatedTickets && (
+			{eventTicket?.associatedTickets && (
 				<div className="event-detail-item mb-4">
 					<div className="event-detail-title mb-1 text-neutral-8">
 						{i18n.translate('associated-tickets')}
 					</div>
 
 					<div className="d-inline-block event-detail-value font-weight-semi-bold rounded text-neutral-9">
-						{businessEvent?.associatedTickets}
+						{eventTicket?.associatedTickets}
 					</div>
 				</div>
 			)}

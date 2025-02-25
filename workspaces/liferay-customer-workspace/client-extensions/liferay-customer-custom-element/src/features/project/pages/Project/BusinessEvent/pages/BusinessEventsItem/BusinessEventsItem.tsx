@@ -3,45 +3,43 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {useEffect, useState} from 'react';
+import {Link, useParams} from 'react-router-dom';
+
+import './BusinessEventsItem.css';
+
 import {Nav} from '@clayui/core';
 import ClayIcon from '@clayui/icon';
 import NavigationBar from '@clayui/navigation-bar';
-import {useEffect, useState} from 'react';
-import {Link, useParams} from 'react-router-dom';
-import {ButtonDropDown} from '~/components';
+import {ButtonDropDown, Skeleton} from '~/components';
+import {getBusinessEventsById} from '~/services/liferay/api';
 import i18n from '~/utils/I18n';
-import {IBusinessEvent} from '~/utils/types';
+import {IProject} from '~/utils/types';
 
+import {IBusinessEventTicket} from '../../BusinessEvents';
 import BusinessEventsItemActivityHistory from './components/BusinessEventsItemActivityHistory';
 import BusinessEventsItemDetails from './components/BusinessEventsItemDetails';
 import BusinessEventsItemEdition from './components/BusinessEventsItemEdition';
 
-import './BusinessEventsItem.css';
-
-import ClayLoadingIndicator from '@clayui/loading-indicator';
-import {getBusinessEventById} from '~/services/liferay/api';
-
-const BusinessEventsItem = () => {
-	const {accountKey, id} = useParams<{accountKey: string; id: string}>();
-	const [businessEvent, setBusinessEvent] = useState<IBusinessEvent | null>(
+const BusinessEventsItem = ({accountKey}: IProject) => {
+	const {id} = useParams();
+	const [eventTicket, setEventTicket] = useState<IBusinessEventTicket | null>(
 		null
 	);
 	const [loading, setLoading] = useState(true);
+	const [activeTab, setActiveTab] = useState('event-details');
+	const [currentIndex, setCurrentIndex] = useState(0);
+	const [isEditing, setIsEditing] = useState(false);
 
 	useEffect(() => {
 		if (id) {
 			const fetchEvent = async () => {
 				try {
-					setLoading(true);
-
-					const eventData = await getBusinessEventById(id);
-
-					setBusinessEvent(eventData);
+					const eventData = await getBusinessEventsById(id);
+					setEventTicket(eventData);
 				}
 				catch (error) {
 					console.error('Error', error);
-
-					setBusinessEvent(null);
 				}
 				finally {
 					setLoading(false);
@@ -52,19 +50,11 @@ const BusinessEventsItem = () => {
 		}
 	}, [id]);
 
-	const [activeTab, setActiveTab] = useState('event-details');
-	const [currentIndex, setCurrentIndex] = useState(0);
-	const [isEditing, setIsEditing] = useState(false);
-
 	if (loading) {
-		return (
-			<div className="mx-auto">
-				<ClayLoadingIndicator size="sm" />
-			</div>
-		);
+		return <div>{i18n.translate('loading')}</div>;
 	}
 
-	if (!businessEvent) {
+	if (!eventTicket) {
 		return <div>{i18n.translate('no-data-found')}</div>;
 	}
 
@@ -93,7 +83,6 @@ const BusinessEventsItem = () => {
 
 	const handleOnClick = (index: number) => {
 		setCurrentIndex(index);
-
 		if (index === 0) {
 			setActiveTab('event-details');
 		}
@@ -138,14 +127,14 @@ const BusinessEventsItem = () => {
 
 			<div>
 				<div
-					className={`align-items-center font-weight-semi-bold be-status be-status-${businessEvent?.eventStatus?.toLowerCase()} mb-1 d-inline px-2 py-1`}
+					className={`align-items-center font-weight-semi-bold be-status be-status-${eventTicket?.eventStatus?.name.toLowerCase()} mb-1 d-inline px-2 py-1`}
 				>
-					{businessEvent?.eventStatus}
+					{eventTicket?.eventStatus?.name}
 				</div>
 
 				<div className="d-flex justify-content-between mb-4 mt-2">
 					<div className="font-weight-bold text-neutral-10">
-						<h3>{businessEvent.name}</h3>
+						<h3>{eventTicket.name}</h3>
 					</div>
 
 					<div>
@@ -156,16 +145,20 @@ const BusinessEventsItem = () => {
 
 			<div className="mb-4">
 				<NavigationBar triggerLabel={i18n.translate(activeTab)}>
-					{getNavItems()}
+					{loading ? (
+						<div>
+							<Skeleton align="left" height={20} width={100} />
+						</div>
+					) : (
+						getNavItems()
+					)}
 				</NavigationBar>
 			</div>
 
 			<div className="mt-4">
 				{activeTab === 'event-details' &&
 					(!isEditing ? (
-						<BusinessEventsItemDetails
-							businessEvent={businessEvent}
-						/>
+						<BusinessEventsItemDetails eventTicket={eventTicket} />
 					) : (
 						<BusinessEventsItemEdition />
 					))}

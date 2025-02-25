@@ -2,15 +2,19 @@ import http from 'http';
 
 import localVarRequest from 'request';
 /* tslint:disable:no-unused-locals */
-import { Authentication, Interceptor, ObjectSerializer, VoidAuth } from '../model/models';
-
+import {
+	Authentication,
+	Interceptor,
+	ObjectSerializer,
+	VoidAuth,
+} from '../model/models';
 <#if imports??>
 	<#list imports?sort_by("classname") as import>
-		import { ${import.classname} } from '../model/${import.classname?uncap_first}';
+		import {${import.classname}} from '../model/${import.classname?uncap_first}';
 	</#list>
 </#if>
 
-import { HttpError } from './apis';
+import {HttpError} from './apis';
 const defaultBasePath = 'http://localhost';
 
 /**
@@ -18,29 +22,33 @@ const defaultBasePath = 'http://localhost';
  * @generated
  */
 
-export enum ${classname}ApiKeys {
-}
+export enum ${classname}ApiKeys {}
 
 export class ${classname} {
 	protected _basePath = defaultBasePath;
-	protected _defaultHeaders : any = {};
-	protected _useQuerystring : boolean = false;
+	protected _defaultHeaders: any = {};
+	protected _useQuerystring: boolean = false;
 
 	protected authentications = {
-		'default': <Authentication>new VoidAuth(),
-	}
+		default: <Authentication>new VoidAuth(),
+	};
 
 	protected interceptors: Interceptor[] = [];
 
 	constructor(basePath?: string);
-	constructor(basePathOrUsername: string, password?: string, basePath?: string) {
+	constructor(
+		basePathOrUsername: string,
+		password?: string,
+		basePath?: string
+	) {
 		if (password) {
 			if (basePath) {
 				this.basePath = basePath;
 			}
-		} else {
+		}
+		else {
 			if (basePathOrUsername) {
-				this.basePath = basePathOrUsername
+				this.basePath = basePathOrUsername;
 			}
 		}
 	}
@@ -70,7 +78,8 @@ export class ${classname} {
 	}
 
 	public setApiKey(key: ${classname}ApiKeys, value: string) {
-		(this.authentications as any)[${classname}ApiKeys[key]].apiKey = value;
+		(this.authentications as any)[${classname}ApiKeys[key]].apiKey =
+			value;
 	}
 
 	public addInterceptor(interceptor: Interceptor) {
@@ -86,14 +95,14 @@ export class ${classname} {
 			 </#list>
 		 </#if>
 		 */
-		public async ${singleOperation.nickname} (
+		public async ${singleOperation.nickname}(
 			<#if singleOperation.allParams??>
 				<#list singleOperation.allParams as param>
 					${param.name}${param.required?then('', '?')}: ${param.dataType},
 				</#list>
 			</#if>
 			options: {
-				headers: {[name: string]: string}
+				headers: {[name: string]: string};
 			} = {headers: {}}
 		): Promise<{
 			<#if singleOperation.returnType??>
@@ -177,19 +186,29 @@ export class ${classname} {
 					localVarRequest(localVarRequestOptions, (error, response, body) => {
 						if (error) {
 							reject(error);
-						} else {
-							if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-								<#if singleOperation.returnType??>
-									body = ObjectSerializer.deserialize(body, "${singleOperation.returnType}");
-								</#if>
-								resolve({ body: body, response: response });
-							} else {
-								reject(new HttpError(body, response, response.statusCode));
+						}
+						else {
+							if (
+								response.statusCode &&
+								response.statusCode >= 200 &&
+								response.statusCode <= 299
+							) {
+								resolve({body, response});
+							}
+							else {
+								reject(
+									new HttpError(
+										body,
+										response,
+										response.statusCode
+									)
+								);
 							}
 						}
-					});
-				});
+					}
+				);
 			});
-		}
+		});
+	}
 	</#list>
 }

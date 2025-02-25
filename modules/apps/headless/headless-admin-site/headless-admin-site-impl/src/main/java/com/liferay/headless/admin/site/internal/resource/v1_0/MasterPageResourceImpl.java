@@ -227,31 +227,34 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 					GetterUtil.getBoolean(masterPage.getMarkedAsDefault()));
 		}
 
+		long previewFileEntryId = _getPreviewFileEntryId(groupId, masterPage);
+
+		if (previewFileEntryId !=
+				layoutPageTemplateEntry.getPreviewFileEntryId()) {
+
+			layoutPageTemplateEntry =
+				_layoutPageTemplateEntryService.updateLayoutPageTemplateEntry(
+					layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
+					previewFileEntryId);
+		}
+
 		return _masterPageDTOConverter.toDTO(
 			_layoutPageTemplateEntryService.updateLayoutPageTemplateEntry(
 				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
 				masterPage.getName()));
 	}
 
+	@Override
+	protected void preparePatch(
+		MasterPage masterPage, MasterPage existingMasterPage) {
+
+		if (masterPage.getThumbnail() != null) {
+			existingMasterPage.setThumbnail(masterPage::getThumbnail);
+		}
+	}
+
 	private MasterPage _addMasterPage(long groupId, MasterPage masterPage)
 		throws Exception {
-
-		long previewFileEntryId = 0;
-
-		ItemExternalReference itemExternalReference = masterPage.getThumbnail();
-
-		if ((itemExternalReference != null) &&
-			Validator.isNotNull(
-				itemExternalReference.getExternalReferenceCode())) {
-
-			FileEntry fileEntry =
-				_portletFileRepository.
-					getPortletFileEntryByExternalReferenceCode(
-						itemExternalReference.getExternalReferenceCode(),
-						groupId);
-
-			previewFileEntryId = fileEntry.getFileEntryId();
-		}
 
 		boolean defaultTemplate = false;
 		int status = WorkflowConstants.STATUS_DRAFT;
@@ -268,8 +271,29 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 				masterPage.getKey(), 0, 0, masterPage.getName(),
 				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT,
-				previewFileEntryId, defaultTemplate, 0, 0, 0, status,
-				_getServiceContext(groupId, masterPage)));
+				_getPreviewFileEntryId(groupId, masterPage), defaultTemplate, 0,
+				0, 0, status, _getServiceContext(groupId, masterPage)));
+	}
+
+	private long _getPreviewFileEntryId(long groupId, MasterPage masterPage)
+		throws Exception {
+
+		ItemExternalReference itemExternalReference = masterPage.getThumbnail();
+
+		if ((itemExternalReference != null) &&
+			Validator.isNotNull(
+				itemExternalReference.getExternalReferenceCode())) {
+
+			FileEntry fileEntry =
+				_portletFileRepository.
+					getPortletFileEntryByExternalReferenceCode(
+						itemExternalReference.getExternalReferenceCode(),
+						groupId);
+
+			return fileEntry.getFileEntryId();
+		}
+
+		return 0;
 	}
 
 	private ServiceContext _getServiceContext(

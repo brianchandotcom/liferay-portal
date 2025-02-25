@@ -69,8 +69,7 @@
 													{
 														"definition": {
 															"fragment": {
-																"key": "dialect-text",
-																"siteKey": "Liferay Learn"
+																"key": "DIALECT-dialect-text"
 															},
 															"fragmentConfig": {
 																"textType": "text-paragraph-lg",
@@ -83,27 +82,19 @@
 																		"fragmentLink": {
 																		},
 																		"text": {
-																			"mapping": {
-																				"fieldKey": "AssetCategory_vocabulary",
-																				"itemReference": {
-																					"className": "com.liferay.asset.kernel.model.AssetCategory",
-																					"classPK": 32495601
-																				}
+																			"value_i18n": {
+																				"en_US": "Capability"
 																			}
 																		}
 																	}
 																}
 															],
 															"fragmentStyle": {
-																"backgroundColor": "",
-																"fontSize": "1rem",
-																"fontWeight": "600",
-																"marginBottom": "3",
-																"textColor": ""
+																"marginBottom": "3"
 															},
 															"indexed": true
 														},
-														"id": "5c9bb23e-ed31-b6b8-e3f1-4bffa4481678",
+														"id": "8430e088-f6c8-dbc5-2ea7-2cd8ffda825a",
 														"type": "Fragment"
 													},
 													{

@@ -12,8 +12,8 @@ import com.liferay.frontend.data.set.constants.FDSEntityFieldTypes;
 import com.liferay.frontend.data.set.filter.FDSFilter;
 import com.liferay.frontend.data.set.internal.url.FDSAPIURLBuilder;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
+import com.liferay.frontend.data.set.model.FDSSortItem;
 import com.liferay.frontend.data.set.model.FDSSortItemBuilder;
-import com.liferay.frontend.data.set.model.FDSSortItemList;
 import com.liferay.frontend.data.set.serializer.FDSSerializer;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
@@ -261,44 +261,36 @@ public class CustomFDSSerializer
 	}
 
 	@Override
-	public FDSSortItemList serializeSorts(
+	public List<FDSSortItem> serializeSorts(
 		String fdsName, HttpServletRequest httpServletRequest) {
 
-		FDSSortItemList fdsSortItemList = new FDSSortItemList();
+		return TransformUtil.transform(
+			getSortedRelatedObjectEntries(
+				fdsName, httpServletRequest, (Predicate<ObjectEntry>)null,
+				"sortsOrder", "dataSetToDataSetSorts"),
+			objectEntry -> {
+				Map<String, Object> properties = objectEntry.getProperties();
 
-		fdsSortItemList.addAll(
-			TransformUtil.transform(
-				getSortedRelatedObjectEntries(
-					fdsName, httpServletRequest, (Predicate<ObjectEntry>)null,
-					"sortsOrder", "dataSetToDataSetSorts"),
-				objectEntry -> {
-					Map<String, Object> properties =
-						objectEntry.getProperties();
+				String label = (String)properties.get("label");
 
-					String label = (String)properties.get("label");
+				if (Validator.isNull(label)) {
+					Map<String, String> labelI18n =
+						(Map<String, String>)properties.get("label_i18n");
 
-					if (Validator.isNull(label)) {
-						Map<String, String> labelI18n =
-							(Map<String, String>)properties.get("label_i18n");
+					label = labelI18n.get(
+						LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()));
+				}
 
-						label = labelI18n.get(
-							LocaleUtil.toLanguageId(
-								LocaleUtil.getSiteDefault()));
-					}
-
-					return FDSSortItemBuilder.setActive(
-						Boolean.valueOf(
-							String.valueOf(properties.get("default")))
-					).setDirection(
-						String.valueOf(properties.get("orderType"))
-					).setKey(
-						String.valueOf(properties.get("fieldName"))
-					).setLabel(
-						label
-					).build();
-				}));
-
-		return fdsSortItemList;
+				return FDSSortItemBuilder.setActive(
+					Boolean.valueOf(String.valueOf(properties.get("default")))
+				).setDirection(
+					String.valueOf(properties.get("orderType"))
+				).setKey(
+					String.valueOf(properties.get("fieldName"))
+				).setLabel(
+					label
+				).build();
+			});
 	}
 
 	@Override

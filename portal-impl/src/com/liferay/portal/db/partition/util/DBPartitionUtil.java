@@ -466,8 +466,8 @@ public class DBPartitionUtil {
 		String sourcePartitionName = getPartitionName(fromCompanyId);
 		String targetPartitionName = getPartitionName(toCompanyId);
 
-		try (SafeCloseable safeCloseable = CompanyThreadLocal.lock(
-				fromCompanyId);
+		try (SafeCloseable safeCloseable1 =
+				CompanyThreadLocal.setCompanyIdWithSafeCloseable(fromCompanyId);
 			AutoCloseable autoCloseable = _disableAutoCommit(connection)) {
 
 			_copySchema(connection, sourcePartitionName, targetPartitionName);
@@ -509,12 +509,17 @@ public class DBPartitionUtil {
 						targetPartitionName + StringPool.PERIOD + toTableName;
 
 					if (fromTableName.contains(String.valueOf(fromCompanyId))) {
-						db.runSQL(
-							connection,
-							StringBundler.concat(
-								"alter_table_name ", targetPartitionName,
-								StringPool.PERIOD, fromTableName,
-								StringPool.SPACE, partitionTableName));
+						try (SafeCloseable safeCloseable2 =
+								CompanyThreadLocal.
+									setCompanyIdWithSafeCloseable(
+										toCompanyId)) {
+
+							db.runSQL(
+								connection,
+								StringBundler.concat(
+									"alter_table_name ", fromTableName,
+									StringPool.SPACE, toTableName));
+						}
 					}
 
 					if (StringUtil.equalsIgnoreCase(

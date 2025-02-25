@@ -6,7 +6,9 @@
 package com.liferay.multi.factor.authentication.timebased.otp.web.internal.display.context;
 
 import com.liferay.multi.factor.authentication.timebased.otp.web.internal.constants.MFATimeBasedOTPWebKeys;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -39,10 +41,12 @@ public class MFATimeBasedOTPCheckerDisplayContext {
 	public Map<String, Object> getContext() throws PortalException {
 		return HashMapBuilder.<String, Object>put(
 			"account",
-			HtmlUtil.escapeJS(
-				PortalUtil.getSelectedUser(
-					_httpServletRequest
-				).getEmailAddress())
+			() -> {
+				User selectedUser = PortalUtil.getSelectedUser(
+					_httpServletRequest);
+
+				return selectedUser.getEmailAddress();
+			}
 		).put(
 			"algorithm",
 			HtmlUtil.escapeJS(
@@ -63,11 +67,13 @@ public class MFATimeBasedOTPCheckerDisplayContext {
 					MFATimeBasedOTPWebKeys.MFA_TIME_BASED_OTP_DIGITS))
 		).put(
 			"issuer",
-			HtmlUtil.escapeJS(
-				GetterUtil.getString(
-					_httpServletRequest.getAttribute(
-						MFATimeBasedOTPWebKeys.
-							MFA_TIME_BASED_OTP_COMPANY_NAME)))
+			StringUtil.replace(
+				HtmlUtil.escapeJS(
+					GetterUtil.getString(
+						_httpServletRequest.getAttribute(
+							MFATimeBasedOTPWebKeys.
+								MFA_TIME_BASED_OTP_COMPANY_NAME))),
+				"\\x20", " ")
 		).put(
 			"secret",
 			HtmlUtil.escapeJS(

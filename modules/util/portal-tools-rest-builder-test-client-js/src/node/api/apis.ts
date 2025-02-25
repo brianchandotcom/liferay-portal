@@ -9,15 +9,15 @@ import * as http from 'http';
 	import {EntityModelResourceTestEntity1Api} from './entityModelResourceTestEntity1Api';
 	import {EntityModelResourceTestEntity2Api} from './entityModelResourceTestEntity2Api';
 	import {SiteTestEntityApi} from './siteTestEntityApi';
-	import {TestEntityApi} from './testEntityApi';
 	import {TestEntityAddressApi} from './testEntityAddressApi';
+	import {TestEntityApi} from './testEntityApi';
 
 	export * from './companyTestEntityApi';
 	export * from './entityModelResourceTestEntity1Api';
 	export * from './entityModelResourceTestEntity2Api';
 	export * from './siteTestEntityApi';
-	export * from './testEntityApi';
 	export * from './testEntityAddressApi';
+	export * from './testEntityApi';
 
 /**
  * @author Alejandro Tardín
@@ -25,7 +25,7 @@ import * as http from 'http';
  */
 
 export class HttpError extends Error {
-	constructor (
+	constructor(
 		public response: http.IncomingMessage,
 		public body: any,
 		public statusCode?: number
@@ -35,4 +35,11 @@ export class HttpError extends Error {
 	}
 }
 
-export const APIS = [CompanyTestEntityApi, EntityModelResourceTestEntity1Api, EntityModelResourceTestEntity2Api, SiteTestEntityApi, TestEntityApi, TestEntityAddressApi];
+export const APIS = [
+	CompanyTestEntityApi,
+	EntityModelResourceTestEntity1Api,
+	EntityModelResourceTestEntity2Api,
+	SiteTestEntityApi,
+	TestEntityAddressApi,
+	TestEntityApi,
+];

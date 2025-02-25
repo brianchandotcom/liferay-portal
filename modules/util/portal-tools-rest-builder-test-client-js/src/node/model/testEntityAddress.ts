@@ -21,44 +21,48 @@
 			'jsonProperty'?: string;
 			'name'?: string;
 
-		static discriminator: string | undefined = undefined;
+		static 'discriminator': string | undefined = undefined;
 
-		static attributeTypeMap: Array<{baseName: string, name: string, type: string}> = [
-				{
-					"baseName": "dateCreated",
-					"name": "dateCreated",
-					"type": "Date"
-				},
-				{
-					"baseName": "dateModified",
-					"name": "dateModified",
-					"type": "Date"
-				},
-				{
-					"baseName": "description",
-					"name": "description",
-					"type": "string"
-				},
-				{
-					"baseName": "documentId",
-					"name": "documentId",
-					"type": "number"
-				},
-				{
-					"baseName": "id",
-					"name": "id",
-					"type": "number"
-				},
-				{
-					"baseName": "jsonProperty",
-					"name": "jsonProperty",
-					"type": "string"
-				},
-				{
-					"baseName": "name",
-					"name": "name",
-					"type": "string"
-				}
+	static 'attributeTypeMap': Array<{
+		baseName: string;
+		name: string;
+		type: string;
+	}> = [
+		{
+			baseName: 'dateCreated',
+			name: 'dateCreated',
+			type: 'Date',
+		},
+		{
+			baseName: 'dateModified',
+			name: 'dateModified',
+			type: 'Date',
+		},
+		{
+			baseName: 'description',
+			name: 'description',
+			type: 'string',
+		},
+		{
+			baseName: 'documentId',
+			name: 'documentId',
+			type: 'number',
+		},
+		{
+			baseName: 'id',
+			name: 'id',
+			type: 'number',
+		},
+		{
+			baseName: 'jsonProperty',
+			name: 'jsonProperty',
+			type: 'string',
+		},
+		{
+			baseName: 'name',
+			name: 'name',
+			type: 'string',
+		},
 		];
 
 		static getAttributeTypeMap() {

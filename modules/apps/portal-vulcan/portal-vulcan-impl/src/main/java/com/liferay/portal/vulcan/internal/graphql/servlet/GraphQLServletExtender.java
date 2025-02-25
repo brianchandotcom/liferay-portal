@@ -1244,6 +1244,26 @@ public class GraphQLServletExtender {
 		return graphQLObjectTypeBuilder.build();
 	}
 
+	private GraphQLType _getGraphQLType(
+		Class<?> clazz, Map<String, GraphQLType> graphQLTypes, boolean input) {
+
+		String prefix = input ? "Input" : "";
+
+		String key = prefix + clazz.getSimpleName();
+
+		if (graphQLTypes.containsKey(key)) {
+			return graphQLTypes.get(key);
+		}
+
+		key = prefix + StringUtil.replace(clazz.getName(), '.', '_');
+
+		if (graphQLTypes.containsKey(key)) {
+			return graphQLTypes.get(key);
+		}
+
+		return _mapGraphQLScalarType;
+	}
+
 	private GraphQLObjectType _getPageGraphQLObjectType(
 		GraphQLType facetGraphQLType, GraphQLType objectGraphQLType,
 		String name) {
@@ -1895,40 +1915,11 @@ public class GraphQLServletExtender {
 			return Scalars.GraphQLString;
 		}
 		else if (clazz.isArray()) {
-			Class<?> realClazz = clazz.getComponentType();
-
-			String key = (input ? "Input" : "") + realClazz.getSimpleName();
-
-			if (graphQLTypes.containsKey(key)) {
-				return new GraphQLList(graphQLTypes.get(key));
-			}
-
-			key =
-				(input ? "Input" : "") +
-					StringUtil.replace(clazz.getName(), '.', '_');
-
-			if (graphQLTypes.containsKey(key)) {
-				return new GraphQLList(graphQLTypes.get(key));
-			}
-
-			return new GraphQLList(_mapGraphQLScalarType);
+			return new GraphQLList(
+				_getGraphQLType(clazz.getComponentType(), graphQLTypes, input));
 		}
 
-		String key = (input ? "Input" : "") + clazz.getSimpleName();
-
-		if (graphQLTypes.containsKey(key)) {
-			return graphQLTypes.get(key);
-		}
-
-		key =
-			(input ? "Input" : "") +
-				StringUtil.replace(clazz.getName(), '.', '_');
-
-		if (graphQLTypes.containsKey(key)) {
-			return graphQLTypes.get(key);
-		}
-
-		return _mapGraphQLScalarType;
+		return _getGraphQLType(clazz, graphQLTypes, input);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

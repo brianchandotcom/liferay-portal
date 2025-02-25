@@ -724,6 +724,16 @@ test('Check selection behavior', async ({page}) => {
 
 		await expect(page.getByText('15 of 75 Items Selected')).toBeVisible();
 	});
+
+	await test.step('Unselect all items using clear button', async () => {
+		await page.getByText('Clear').click();
+
+		await expect(itemsSelectorCheckbox).not.toBeChecked();
+
+		await expect(
+			page.getByText('15 of 75 Items Selected')
+		).not.toBeVisible();
+	});
 });
 
 accountSettingsTest(

@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Iván Zaera Avellón
@@ -145,12 +146,21 @@ public class CSPComplianceCheck extends BaseTagAttributesCheck {
 
 			int x = -1;
 
+			boolean insideScriplet = false;
+
 			while (true) {
+				int lastIndex = x;
+
 				x = lowerCaseContent.indexOf("<" + tagName, x + 1);
 
 				if (x == -1) {
 					break;
 				}
+
+				String substring = content.substring(lastIndex + 1, x);
+
+				insideScriplet = _isInsideScripletTag(
+					substring, insideScriplet);
 
 				String tagString = getTag(content, x);
 
@@ -165,6 +175,10 @@ public class CSPComplianceCheck extends BaseTagAttributesCheck {
 
 				if (fileName.endsWith(".jsp") || fileName.endsWith(".jspf") ||
 					fileName.endsWith(".jspx")) {
+
+					if (insideScriplet) {
+						continue;
+					}
 
 					if (_illegalTagAuiReplacements.contains(tagName)) {
 						addMessage(
@@ -226,6 +240,23 @@ public class CSPComplianceCheck extends BaseTagAttributesCheck {
 		}
 
 		return -1;
+	}
+
+	private boolean _isInsideScripletTag(
+		String content, boolean currentState) {
+
+		int lastClosedIndex = content.lastIndexOf("%>");
+		int lastOpenIndex = content.lastIndexOf("<%");
+
+		if (lastOpenIndex > lastClosedIndex) {
+			return true;
+		}
+
+		if (lastClosedIndex > lastOpenIndex) {
+			return false;
+		}
+
+		return currentState;
 	}
 
 	private static final String _IGNORED_FTL_TAG_PREFIXES_KEY =

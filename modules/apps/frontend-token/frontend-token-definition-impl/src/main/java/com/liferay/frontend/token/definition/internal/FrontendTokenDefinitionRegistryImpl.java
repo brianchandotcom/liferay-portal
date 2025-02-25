@@ -188,7 +188,7 @@ public class FrontendTokenDefinitionRegistryImpl
 			List<FrontendTokenDefinitionImpl> frontendTokenDefinitionImpls =
 				new ArrayList<>();
 
-			for (Map<String, String> themeData : getThemesData(bundle)) {
+			for (Map<String, String> themeData : getThemeDataList(bundle)) {
 				frontendTokenDefinitionImpls.add(
 					new FrontendTokenDefinitionImpl(
 						jsonFactory.createJSONObject(json), jsonFactory,
@@ -226,7 +226,7 @@ public class FrontendTokenDefinitionRegistryImpl
 		return webContextPath;
 	}
 
-	protected List<Map<String, String>> getThemesData(Bundle bundle) {
+	protected List<Map<String, String>> getThemeDataList(Bundle bundle) {
 		URL url = bundle.getEntry("WEB-INF/liferay-look-and-feel.xml");
 
 		if (url == null) {
@@ -234,7 +234,7 @@ public class FrontendTokenDefinitionRegistryImpl
 		}
 
 		try {
-			List<Map<String, String>> themesData = new ArrayList<>();
+			List<Map<String, String>> themeDataList = new ArrayList<>();
 
 			String xml = URLUtil.toString(url);
 
@@ -252,7 +252,7 @@ public class FrontendTokenDefinitionRegistryImpl
 						PortletConstants.WAR_SEPARATOR + servletContextName;
 				}
 
-				themesData.add(
+				themeDataList.add(
 					HashMapBuilder.put(
 						"id", portal.getJsSafePortletId(themeId)
 					).put(
@@ -260,7 +260,7 @@ public class FrontendTokenDefinitionRegistryImpl
 					).build());
 			}
 
-			return themesData;
+			return themeDataList;
 		}
 		catch (IOException ioException) {
 			throw new RuntimeException(

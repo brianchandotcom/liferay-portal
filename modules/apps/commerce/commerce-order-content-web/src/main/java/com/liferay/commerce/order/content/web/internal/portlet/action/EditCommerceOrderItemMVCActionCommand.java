@@ -68,7 +68,7 @@ public class EditCommerceOrderItemMVCActionCommand
 						commerceOrderItemId);
 
 				_commerceOrderItemService.updateCommerceOrderItem(
-					commerceOrderItem.getCommerceOrderItemId(),
+					null, commerceOrderItem.getCommerceOrderItemId(),
 					commerceOrderItem.getJson(),
 					_commerceOrderItemQuantityFormatter.parse(
 						actionRequest, CommerceOrderItem.class.getName(),

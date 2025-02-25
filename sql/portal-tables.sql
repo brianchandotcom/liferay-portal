@@ -1398,7 +1398,7 @@ create table SystemEvent (
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
-	classExternalReferenceCode VARCHAR(75) null,
+	classExternalReferenceCode VARCHAR(1000) null,
 	classNameId LONG,
 	classPK LONG,
 	classUuid VARCHAR(75) null,

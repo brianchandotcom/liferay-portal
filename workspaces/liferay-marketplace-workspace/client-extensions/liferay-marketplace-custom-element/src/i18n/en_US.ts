@@ -441,12 +441,12 @@ export default {
 		'The app submission is compatible with Liferay SaaS and ',
 	'the-app-submission-is-integrates-with-liferay-dxp-version-7-4-or-later':
 		'The app submission is integrates with Liferay DXP version 7.4 or later.',
+	'the-cloud-app-is-client-extension-based-and-compatible-with-liferay-saas-it-fully-supports-and-deploys-on-extension-environments':
+		'The cloud app is client extension based and compatible with Liferay SaaS. It fully supports and deploys on extension environments.',
 	'the-cloud-app-is-client-extension-based-and-is-compatible-with-a-customer’s-self-hosted-environment':
 		'The cloud app is client extension based and is compatible with a customer’s self-hosted environment.',
-	'the-cloud-app-is-client-extension-based-and-is-compatible-with-liferay-experience-cloud-lxc-it-fully-supports-and-deploys-on-extension-environments-in-lxc':
-		'The cloud app is client extension based and is compatible with Liferay SaaS. It fully supports and deploys on extension environments.',
-	'the-cloud-app-is-client-extension-based-and-is-compatible-with-liferay’s-self-managed-formerly-dxp-cloud-offering':
-		'The cloud app is client extension based and is compatible with Liferay’s Self-Managed offering.',
+	'the-cloud-app-is-client-extension-based-and-is-compatible-with-liferays-self-managed-offering':
+		'The Cloud app is client extension based and is compatible with Liferay’s Self-Managed offering.',
 	'the-dxp-app-is-module-based-and-is-compatible-with-7-4-builds-of-liferay-dxp':
 		'The DXP app is module-based and is compatible with 7.4 builds of Liferay DXP.',
 	'the-dxp-app-is-module-based-and-is-compatible-with-7-4-builds-of-liferay-dxp-self-managed-liferay-cloud-formerly-dxp-cloud':

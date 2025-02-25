@@ -26,6 +26,9 @@ export const acceptFileTypes = {
 		'application/java-archive': ['.jar'],
 		'application/octet-stream': ['.war'],
 	},
+	[ProductType.FRAGMENTS]: {
+		'application/java-archive': ['.zip'],
+	},
 };
 
 export const UPLOAD_MAX_SIZE = 500_000_000;
@@ -103,7 +106,8 @@ export function UploadAppPackagesComponent({
 					}
 					buttonText={i18n.translate('select-a-file')}
 					description={
-						appType.value === ProductType.CLOUD
+						appType.value === ProductType.CLOUD ||
+						ProductType.FRAGMENTS
 							? i18n.translate(
 									'only-zip-files-are-allowed-max-file-size-is-500-mb'
 								)

@@ -17,14 +17,13 @@ export const offeringTypesDescription = {
 		},
 		{
 			description: i18n.translate(
-				'the-cloud-app-is-client-extension-based-and-is-compatible-with-liferay’s-self-managed-formerly-dxp-cloud-offering'
+				'the-cloud-app-is-client-extension-based-and-is-compatible-with-liferays-self-managed-offering'
 			),
-			disabled: true,
 			label: i18n.translate('liferay-paas'),
 		},
 		{
 			description: i18n.translate(
-				'the-cloud-app-is-client-extension-based-and-is-compatible-with-liferay-experience-cloud-lxc-it-fully-supports-and-deploys-on-extension-environments-in-lxc'
+				'the-cloud-app-is-client-extension-based-and-compatible-with-liferay-saas-it-fully-supports-and-deploys-on-extension-environments'
 			),
 			label: i18n.translate('liferay-saas'),
 		},

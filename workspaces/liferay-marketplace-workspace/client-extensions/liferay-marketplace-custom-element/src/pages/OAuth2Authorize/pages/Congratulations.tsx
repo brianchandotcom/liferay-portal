@@ -50,6 +50,10 @@ const Congratulations = () => {
 				channelId: Liferay.CommerceContext.commerceChannelId,
 				cloudProject: environment?.projectId,
 				references: {
+					fragmentsFilter: SearchBuilder.lambda(
+						'categoryNames',
+						'Fragments'
+					),
 					paymentMethodFilter: SearchBuilder.lambda(
 						'categoryNames',
 						'Payment Integration'

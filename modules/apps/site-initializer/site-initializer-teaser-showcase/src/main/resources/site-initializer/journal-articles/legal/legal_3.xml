@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US" version="1.0">
+	<dynamic-element field-reference="text" index-type="text" instance-id="iIREuAVp" name="text" type="rich_text">
+		<dynamic-content language-id="en_US">
+			<![CDATA[
+				<p>Last Updated: Wednesday May 1, 2024</p>
+				<p>Introduction</p>
+				<p>This Privacy Policy explains how Clarity Vision Solutions ("we," "us," or "our") collects, uses, and discloses information from users of our website located at www.clarityvisionsolutions.com ("Website").</p>
+				<p>What information do we collect?</p>
+				<p>We may collect the following information from you:</p>
+				<p>Information you provide directly: This includes information you submit through forms on our Website, such as your name, email address, comments, and feedback.<br /> Automatically collected information: We may automatically collect certain information about your use of the Website, such as your IP address, browser type, operating system, referring URL, and the pages you visit on our Website. This information is collected using cookies and similar technologies.<br /> How do we use your information?</p>
+				<p>We may use your information for the following purposes:</p>
+				<p>To operate and maintain the Website;<br /> To respond to your inquiries and requests;<br /> To send you information about our website and services;<br /> To improve the Website and user experience;<br /> To analyze how users interact with the Website;<br /> To comply with legal and regulatory requirements.<br />Sharing your information</p>
+				<p>We may share your information with third-party service providers who help us operate and maintain the Website. We will only share your information with third-party service providers who have agreed to comply with strict privacy standards.</p>
+				<p>We will not sell or share your personal information with third-party advertisers without your consent.</p>
+				<p>Cookies and similar technologies</p>
+				<p>We use cookies and similar technologies to collect information about your use of the Website. You can control cookies through your web browser settings. However, blocking all cookies may limit your ability to use the Website.</p>
+				<p>Your choices</p>
+				<p>You have a number of choices regarding your information:</p>
+				<p>You can opt out of receiving marketing communications from us.<br /> You can request to access, update, or delete your personal information.<br /> Data retention</p>
+				<p>We will retain your information for as long as necessary to fulfill the purposes described in this Privacy Policy, unless a longer retention period is required or permitted by law.</p>
+				<p>Children's privacy</p>
+				<p>Our Website is not intended for children under the age of 18. We do not knowingly collect personal information from children under 18.</p>
+				<p>Security</p>
+				<p>We take reasonable steps to protect your information from unauthorized access, disclosure, alteration, or destruction. However, no website or internet transmission is completely secure.</p>
+				<p>Links to other websites</p>
+				<p>Our Website may contain links to other websites that are not owned or controlled by us. We are not responsible for the privacy practices of other websites.</p>
+				<p>Changes to this Privacy Policy</p>
+				<p>We may update this Privacy Policy from time to time. The updated Privacy Policy will be posted on our Website. We encourage you to review this Privacy Policy regularly to stay informed of any changes.</p>
+				<p>Contact Us</p>
+				<p>If you have any questions about this Privacy Policy, please contact us at contact@clarityvisionsolutions.com</p>
+			]]>
+		</dynamic-content>
+	</dynamic-element>
+</root>

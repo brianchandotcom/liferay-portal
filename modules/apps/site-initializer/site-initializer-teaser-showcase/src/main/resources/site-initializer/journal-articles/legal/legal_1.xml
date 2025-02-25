@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US" version="1.0">
+	<dynamic-element field-reference="text" index-type="text" instance-id="670DL86s" name="text" type="rich_text">
+		<dynamic-content language-id="en_US">
+			<![CDATA[
+				<p>Last Updated: Wednesday May 1, 2024</p>
+				<p>Introduction</p>
+				<p>This Cookie Policy explains how [Your Company Name] ("we," "us," or "our") uses cookies and similar technologies on our website(s) located at [Website URL(s)] ("Website").</p>
+				<p>What are Cookies?</p>
+				<p>Cookies are small text files that are placed on your computer or mobile device by a website when you visit the site. They store information about your visit and usage, such as your browsing preferences, login information, and other actions you take on the website.</p>
+				<p>What types of Cookies do we use?</p>
+				<p>We use a variety of cookies and similar technologies on our website for different purposes. Here are the main types:</p>
+				<p>Essential Cookies: These cookies are strictly necessary for the operation of our website. They enable you to navigate the site and use its features, such as accessing secure areas and using shopping carts. Without these cookies, our website would not function properly.<br /> Performance Cookies: These cookies collect information about how you use our website, such as the pages you visit and the links you click. We use this information to analyze website traffic and improve the performance and user experience of our website.<br /> Functionality Cookies: These cookies allow our website to remember your preferences, such as your preferred language or region. This allows us to personalize your browsing experience.<br /> Targeting or Advertising Cookies: These cookies may be placed on your device by us or our third-party advertising partners. They collect information about your browsing habits across different websites and are used to build a profile of your interests. This information is then used to show you targeted advertisements on our website and other websites you visit.<br /> Your Cookie Preferences</p>
+				<p>You have a number of options regarding the use of cookies on our website:</p>
+				<p>Browser Controls: Most web browsers allow you to control cookies through their settings. You can choose to block or delete cookies, or to be notified when a website is trying to set a cookie on your device. However, blocking all cookies may limit your ability to use our website and other websites.<br /> Consent Management Tool: We may also provide a consent management tool on our website that allows you to manage your cookie preferences.<br /> Your Consent</p>
+				<p>By using our website, you consent to the use of cookies in accordance with this Cookie Policy.</p>
+				<p>Changes to this Cookie Policy</p>
+				<p>We may update this Cookie Policy from time to time. The updated Cookie Policy will be posted on our website. We encourage you to review this Cookie Policy regularly to stay informed of any changes.</p>
+				<p>Contact Us</p>
+				<p>If you have any questions about this Cookie Policy, please contact us at [Your Email Address].</p>
+				<p>Additional Information</p>
+				<p>You can learn more about cookies and similar technologies at the following resources:</p>
+				<p>All About Cookies: https://www.allaboutcookies.org/ <br /> Your Online Choices: https://www.youronlinechoices.com/ <br /> Please note: This is a sample Cookie Policy and may need to be modified to comply with specific laws and regulations that apply to your business and location. You may also want to consult with a legal professional to ensure your Cookie Policy is compliant.</p>
+			]]>
+		</dynamic-content>
+	</dynamic-element>
+</root>

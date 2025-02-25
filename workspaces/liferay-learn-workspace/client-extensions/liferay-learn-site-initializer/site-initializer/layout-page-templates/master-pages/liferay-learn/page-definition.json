@@ -8,8 +8,10 @@
 						"key": "navigation-container",
 						"siteKey": "Liferay Learn"
 					},
-					"fragmentConfig": {},
-					"fragmentFields": [],
+					"fragmentConfig": {
+					},
+					"fragmentFields": [
+					],
 					"indexed": true
 				},
 				"id": "34c3bff4-7af8-5104-323a-861fbf5e37e8",
@@ -31,7 +33,8 @@
 										"inverted": false,
 										"maxWidth": "1552px"
 									},
-									"fragmentFields": [],
+									"fragmentFields": [
+									],
 									"indexed": true
 								},
 								"id": "0707a724-1a48-56ec-f241-bd24b6ed62ee",
@@ -71,14 +74,16 @@
 																	"id": "html",
 																	"value": {
 																		"html": {
-																			"value_i18n": {}
+																			"value_i18n": {
+																			}
 																		}
 																	}
 																},
 																{
 																	"id": "title",
 																	"value": {
-																		"fragmentLink": {},
+																		"fragmentLink": {
+																		},
 																		"text": {
 																			"value_i18n": {
 																				"en_US": "Liferay Sites"
@@ -125,7 +130,8 @@
 																				{
 																					"id": "title",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "Liferay.com"
@@ -167,7 +173,8 @@
 																				{
 																					"id": "title",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "Community"
@@ -209,7 +216,8 @@
 																				{
 																					"id": "title",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "Marketplace"
@@ -239,19 +247,22 @@
 																"alignDropdown": "left",
 																"hideLabel": false
 															},
-															"fragmentFields": [],
+															"fragmentFields": [
+															],
 															"indexed": true
 														},
 														"id": "7d3fb854-412d-84d1-2975-9d3d5d55e195",
 														"pageElements": [
 															{
-																"definition": {},
+																"definition": {
+																},
 																"id": "ff6da317-acae-8d8c-7954-64d026d2a44c",
 																"pageElements": [
 																	{
 																		"definition": {
 																			"widgetInstance": {
-																				"widgetConfig": {},
+																				"widgetConfig": {
+																				},
 																				"widgetName": "com_liferay_site_navigation_language_web_portlet_SiteNavigationLanguagePortlet"
 																			}
 																		},
@@ -288,10 +299,10 @@
 																"url": {
 																	"layout": {
 																		"groupId": "33105",
+																		"layoutId": "7",
 																		"layoutUuid": "da7b7736-101e-1308-47fa-07e8049c5434",
 																		"privateLayout": false,
-																		"title": "Search",
-																		"layoutId": "7"
+																		"title": "Search"
 																	}
 																}
 															},
@@ -300,7 +311,8 @@
 																	"id": "html",
 																	"value": {
 																		"html": {
-																			"value_i18n": {}
+																			"value_i18n": {
+																			}
 																		}
 																	}
 																}
@@ -317,11 +329,12 @@
 																"siteKey": "Liferay Learn"
 															},
 															"fragmentConfig": {
-																"alignDropdown": "right",
 																"additionalItems": true,
+																"alignDropdown": "right",
 																"hideLabel": true
 															},
-															"fragmentFields": [],
+															"fragmentFields": [
+															],
 															"indexed": true
 														},
 														"id": "e32d1ef3-0980-9d66-2357-8d4896405181",
@@ -351,14 +364,16 @@
 																					"id": "html",
 																					"value": {
 																						"html": {
-																							"value_i18n": {}
+																							"value_i18n": {
+																							}
 																						}
 																					}
 																				},
 																				{
 																					"id": "title",
 																					"value": {
-																						"fragmentLink": {}
+																						"fragmentLink": {
+																						}
 																					}
 																				}
 																			],
@@ -391,11 +406,12 @@
 									"fragmentConfig": {
 										"backgroundColor": "var(--color-brand-primary-darken-5)",
 										"closeButton": "Close",
-										"menuButton": "Menu",
 										"inverted": true,
-										"maxWidth": "1552px"
+										"maxWidth": "1552px",
+										"menuButton": "Menu"
 									},
-									"fragmentFields": [],
+									"fragmentFields": [
+									],
 									"indexed": true
 								},
 								"id": "c81b5f27-f8e6-961d-03ed-e6767afdad15",
@@ -418,10 +434,10 @@
 															"en_US": {
 																"layout": {
 																	"groupId": "33105",
+																	"layoutId": "5",
 																	"layoutUuid": "58511bff-a8b6-be9b-6857-04ef91004047",
 																	"privateLayout": false,
-																	"title": "Home",
-																	"layoutId": "5"
+																	"title": "Home"
 																}
 															}
 														}
@@ -430,7 +446,8 @@
 														{
 															"id": "siteTitle",
 															"value": {
-																"fragmentLink": {},
+																"fragmentLink": {
+																},
 																"text": {
 																	"value_i18n": {
 																		"en_US": "Learn"
@@ -459,12 +476,14 @@
 														"key": "mega-menu-dropdown",
 														"siteKey": "Liferay Learn"
 													},
-													"fragmentConfig": {},
+													"fragmentConfig": {
+													},
 													"fragmentFields": [
 														{
 															"id": "title",
 															"value": {
-																"fragmentLink": {},
+																"fragmentLink": {
+																},
 																"text": {
 																	"value_i18n": {
 																		"en_US": "Documentation"
@@ -507,7 +526,8 @@
 																				{
 																					"id": "title",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "Capabilities"
@@ -534,14 +554,15 @@
 																							},
 																							"fragmentConfig": {
 																								"external": false,
-																								"visual": "icon",
-																								"url": ""
+																								"url": "",
+																								"visual": "icon"
 																							},
 																							"fragmentFields": [
 																								{
 																									"id": "description",
 																									"value": {
-																										"fragmentLink": {},
+																										"fragmentLink": {
+																										},
 																										"text": {
 																											"value_i18n": {
 																												"en_US": "Use Liferay's Cloud infrastructure to launch your solutions more quickly and securely."
@@ -562,7 +583,8 @@
 																								{
 																									"id": "title",
 																									"value": {
-																										"fragmentLink": {},
+																										"fragmentLink": {
+																										},
 																										"text": {
 																											"value_i18n": {
 																												"en_US": "Cloud"
@@ -584,14 +606,15 @@
 																							},
 																							"fragmentConfig": {
 																								"external": false,
-																								"visual": "icon",
-																								"url": ""
+																								"url": "",
+																								"visual": "icon"
 																							},
 																							"fragmentFields": [
 																								{
 																									"id": "description",
 																									"value": {
-																										"fragmentLink": {},
+																										"fragmentLink": {
+																										},
 																										"text": {
 																											"value_i18n": {
 																												"en_US": "Increase orders with enriching product information, easy ordering tools, and product recommendations."
@@ -612,7 +635,8 @@
 																								{
 																									"id": "title",
 																									"value": {
-																										"fragmentLink": {},
+																										"fragmentLink": {
+																										},
 																										"text": {
 																											"value_i18n": {
 																												"en_US": "Commerce"
@@ -634,14 +658,15 @@
 																							},
 																							"fragmentConfig": {
 																								"external": false,
-																								"visual": "icon",
-																								"url": ""
+																								"url": "",
+																								"visual": "icon"
 																							},
 																							"fragmentFields": [
 																								{
 																									"id": "description",
 																									"value": {
-																										"fragmentLink": {},
+																										"fragmentLink": {
+																										},
 																										"text": {
 																											"value_i18n": {
 																												"en_US": "Create, publish, and manage content, pages, and multimedia across different channels faster."
@@ -662,7 +687,8 @@
 																								{
 																									"id": "title",
 																									"value": {
-																										"fragmentLink": {},
+																										"fragmentLink": {
+																										},
 																										"text": {
 																											"value_i18n": {
 																												"en_US": "Content Management System"
@@ -684,14 +710,15 @@
 																							},
 																							"fragmentConfig": {
 																								"external": false,
-																								"visual": "icon",
-																								"url": ""
+																								"url": "",
+																								"visual": "icon"
 																							},
 																							"fragmentFields": [
 																								{
 																									"id": "description",
 																									"value": {
-																										"fragmentLink": {},
+																										"fragmentLink": {
+																										},
 																										"text": {
 																											"value_i18n": {
 																												"en_US": "Deploy, configure, and maintain Liferay DXP on your own infrastructure."
@@ -712,7 +739,8 @@
 																								{
 																									"id": "title",
 																									"value": {
-																										"fragmentLink": {},
+																										"fragmentLink": {
+																										},
 																										"text": {
 																											"value_i18n": {
 																												"en_US": "Development and Tooling"
@@ -734,14 +762,15 @@
 																							},
 																							"fragmentConfig": {
 																								"external": false,
-																								"visual": "icon",
-																								"url": ""
+																								"url": "",
+																								"visual": "icon"
 																							},
 																							"fragmentFields": [
 																								{
 																									"id": "description",
 																									"value": {
-																										"fragmentLink": {},
+																										"fragmentLink": {
+																										},
 																										"text": {
 																											"value_i18n": {
 																												"en_US": "Use Liferay's Cloud infrastructure to launch your solutions more quickly and securely."
@@ -762,7 +791,8 @@
 																								{
 																									"id": "title",
 																									"value": {
-																										"fragmentLink": {},
+																										"fragmentLink": {
+																										},
 																										"text": {
 																											"value_i18n": {
 																												"en_US": "Digital Asset Mangement"
@@ -784,14 +814,15 @@
 																							},
 																							"fragmentConfig": {
 																								"external": false,
-																								"visual": "icon",
-																								"url": ""
+																								"url": "",
+																								"visual": "icon"
 																							},
 																							"fragmentFields": [
 																								{
 																									"id": "description",
 																									"value": {
-																										"fragmentLink": {},
+																										"fragmentLink": {
+																										},
 																										"text": {
 																											"value_i18n": {
 																												"en_US": "Discover all of DXP's product capabilities"
@@ -812,7 +843,8 @@
 																								{
 																									"id": "title",
 																									"value": {
-																										"fragmentLink": {},
+																										"fragmentLink": {
+																										},
 																										"text": {
 																											"value_i18n": {
 																												"en_US": "All Capabilities"
@@ -847,7 +879,8 @@
 																				{
 																					"id": "title",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "Products"
@@ -874,14 +907,15 @@
 																							},
 																							"fragmentConfig": {
 																								"external": false,
-																								"visual": "icon",
-																								"url": ""
+																								"url": "",
+																								"visual": "icon"
 																							},
 																							"fragmentFields": [
 																								{
 																									"id": "description",
 																									"value": {
-																										"fragmentLink": {},
+																										"fragmentLink": {
+																										},
 																										"text": {
 																											"value_i18n": {
 																												"en_US": "Understand your audience with integrated analytics for Liferay DXP."
@@ -902,7 +936,8 @@
 																								{
 																									"id": "title",
 																									"value": {
-																										"fragmentLink": {},
+																										"fragmentLink": {
+																										},
 																										"text": {
 																											"value_i18n": {
 																												"en_US": "Analytics Cloud"
@@ -924,14 +959,15 @@
 																							},
 																							"fragmentConfig": {
 																								"external": false,
-																								"visual": "icon",
-																								"url": ""
+																								"url": "",
+																								"visual": "icon"
 																							},
 																							"fragmentFields": [
 																								{
 																									"id": "description",
 																									"value": {
-																										"fragmentLink": {},
+																										"fragmentLink": {
+																										},
 																										"text": {
 																											"value_i18n": {
 																												"en_US": "Launch modern B2B commerce experiences on Liferay DXP."
@@ -952,7 +988,8 @@
 																								{
 																									"id": "title",
 																									"value": {
-																										"fragmentLink": {},
+																										"fragmentLink": {
+																										},
 																										"text": {
 																											"value_i18n": {
 																												"en_US": "Commerce"
@@ -974,14 +1011,15 @@
 																							},
 																							"fragmentConfig": {
 																								"external": false,
-																								"visual": "icon",
-																								"url": ""
+																								"url": "",
+																								"visual": "icon"
 																							},
 																							"fragmentFields": [
 																								{
 																									"id": "description",
 																									"value": {
-																										"fragmentLink": {},
+																										"fragmentLink": {
+																										},
 																										"text": {
 																											"value_i18n": {
 																												"en_US": "Enterprise PaaS tailored for Liferay Digital Experience Platform."
@@ -1002,7 +1040,8 @@
 																								{
 																									"id": "title",
 																									"value": {
-																										"fragmentLink": {},
+																										"fragmentLink": {
+																										},
 																										"text": {
 																											"value_i18n": {
 																												"en_US": "Liferay Cloud"
@@ -1024,14 +1063,15 @@
 																							},
 																							"fragmentConfig": {
 																								"external": false,
-																								"visual": "icon",
-																								"url": ""
+																								"url": "",
+																								"visual": "icon"
 																							},
 																							"fragmentFields": [
 																								{
 																									"id": "description",
 																									"value": {
-																										"fragmentLink": {},
+																										"fragmentLink": {
+																										},
 																										"text": {
 																											"value_i18n": {
 																												"en_US": "Transition from legacy systems and build digital experiences on a single powerful platform."
@@ -1052,7 +1092,8 @@
 																								{
 																									"id": "title",
 																									"value": {
-																										"fragmentLink": {},
+																										"fragmentLink": {
+																										},
 																										"text": {
 																											"value_i18n": {
 																												"en_US": "DXP"
@@ -1074,14 +1115,15 @@
 																							},
 																							"fragmentConfig": {
 																								"external": false,
-																								"visual": "icon",
-																								"url": ""
+																								"url": "",
+																								"visual": "icon"
 																							},
 																							"fragmentFields": [
 																								{
 																									"id": "description",
 																									"value": {
-																										"fragmentLink": {},
+																										"fragmentLink": {
+																										},
 																										"text": {
 																											"value_i18n": {
 																												"en_US": "Documents and resources to further help implementation."
@@ -1102,7 +1144,8 @@
 																								{
 																									"id": "title",
 																									"value": {
-																										"fragmentLink": {},
+																										"fragmentLink": {
+																										},
 																										"text": {
 																											"value_i18n": {
 																												"en_US": "Reference"
@@ -1140,12 +1183,14 @@
 														"key": "mega-menu-dropdown",
 														"siteKey": "Liferay Learn"
 													},
-													"fragmentConfig": {},
+													"fragmentConfig": {
+													},
 													"fragmentFields": [
 														{
 															"id": "title",
 															"value": {
-																"fragmentLink": {},
+																"fragmentLink": {
+																},
 																"text": {
 																	"value_i18n": {
 																		"en_US": "Education"
@@ -1191,7 +1236,8 @@
 																				{
 																					"id": "title",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "Browse Resources"
@@ -1221,14 +1267,15 @@
 																							},
 																							"fragmentConfig": {
 																								"external": false,
-																								"visual": "icon",
-																								"url": ""
+																								"url": "",
+																								"visual": "icon"
 																							},
 																							"fragmentFields": [
 																								{
 																									"id": "description",
 																									"value": {
-																										"fragmentLink": {},
+																										"fragmentLink": {
+																										},
 																										"text": {
 																											"value_i18n": {
 																												"en_US": "Become a Liferay master with guided content created by Liferay experts."
@@ -1249,7 +1296,8 @@
 																								{
 																									"id": "title",
 																									"value": {
-																										"fragmentLink": {},
+																										"fragmentLink": {
+																										},
 																										"text": {
 																											"value_i18n": {
 																												"en_US": "Nav Item Resources"
@@ -1287,7 +1335,8 @@
 																				{
 																					"id": "title",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "Jump In"
@@ -1317,14 +1366,15 @@
 																							},
 																							"fragmentConfig": {
 																								"external": false,
-																								"visual": "icon",
-																								"url": ""
+																								"url": "",
+																								"visual": "icon"
 																							},
 																							"fragmentFields": [
 																								{
 																									"id": "description",
 																									"value": {
-																										"fragmentLink": {},
+																										"fragmentLink": {
+																										},
 																										"text": {
 																											"value_i18n": {
 																												"en_US": "Learn at your own pace with self-directed courses that guide you through specific topics in-depth."
@@ -1345,7 +1395,8 @@
 																								{
 																									"id": "title",
 																									"value": {
-																										"fragmentLink": {},
+																										"fragmentLink": {
+																										},
 																										"text": {
 																											"value_i18n": {
 																												"en_US": "Courses"
@@ -1367,14 +1418,15 @@
 																							},
 																							"fragmentConfig": {
 																								"external": false,
-																								"visual": "icon",
-																								"url": ""
+																								"url": "",
+																								"visual": "icon"
 																							},
 																							"fragmentFields": [
 																								{
 																									"id": "description",
 																									"value": {
-																										"fragmentLink": {},
+																										"fragmentLink": {
+																										},
 																										"text": {
 																											"value_i18n": {
 																												"en_US": "Take a structured learning path tailored to your role and experience level, ensuring you gain the Liferay skills you need."
@@ -1395,7 +1447,8 @@
 																								{
 																									"id": "title",
 																									"value": {
-																										"fragmentLink": {},
+																										"fragmentLink": {
+																										},
 																										"text": {
 																											"value_i18n": {
 																												"en_US": "Learning Paths"
@@ -1417,14 +1470,15 @@
 																							},
 																							"fragmentConfig": {
 																								"external": false,
-																								"visual": "icon",
-																								"url": ""
+																								"url": "",
+																								"visual": "icon"
 																							},
 																							"fragmentFields": [
 																								{
 																									"id": "description",
 																									"value": {
-																										"fragmentLink": {},
+																										"fragmentLink": {
+																										},
 																										"text": {
 																											"value_i18n": {
 																												"en_US": "Elevate your Liferay skills, showcase your expertise, and unlock new opportunities with our industry recognized certifications."
@@ -1445,7 +1499,8 @@
 																								{
 																									"id": "title",
 																									"value": {
-																										"fragmentLink": {},
+																										"fragmentLink": {
+																										},
 																										"text": {
 																											"value_i18n": {
 																												"en_US": "Certifications"
@@ -1487,7 +1542,12 @@
 				"type": "Fragment"
 			},
 			{
-				"definition": {"fragmentSettings": {"unallowedFragments": []}},
+				"definition": {
+					"fragmentSettings": {
+						"unallowedFragments": [
+						]
+					}
+				},
 				"id": "149d2e0b-7f6d-bc1c-c840-e1a1fb7933f2",
 				"type": "DropZone"
 			},
@@ -1510,7 +1570,8 @@
 						"maxWidth": "var(--container-max-xl)"
 					},
 					"indexed": true,
-					"layout": {},
+					"layout": {
+					},
 					"name": "Footer"
 				},
 				"id": "cab69f52-e36b-1407-89f7-706c8f107b8f",
@@ -1558,7 +1619,9 @@
 										}
 									],
 									"indexed": true,
-									"layout": {"contentDisplay": "FlexRow"},
+									"layout": {
+										"contentDisplay": "FlexRow"
+									},
 									"name": "Footer-Contents-Top"
 								},
 								"id": "19741e3c-4d9d-6c6c-cd9e-82f5d510ae56",
@@ -1605,7 +1668,8 @@
 															"fragment": {
 																"key": "BASIC_COMPONENT-html"
 															},
-															"fragmentConfig": {},
+															"fragmentConfig": {
+															},
 															"fragmentFields": [
 																{
 																	"id": "element-html",
@@ -1809,7 +1873,9 @@
 													"id": "tablet"
 												}
 											],
-											"fragmentStyle": {"width": "75%"},
+											"fragmentStyle": {
+												"width": "75%"
+											},
 											"fragmentViewports": [
 												{
 													"fragmentViewportStyle": {
@@ -1847,7 +1913,8 @@
 													{
 														"definition": {
 															"indexed": true,
-															"layout": {},
+															"layout": {
+															},
 															"name": "Capabilities-Title"
 														},
 														"id": "aadb323b-de1e-9757-1f8a-5609290fba35",
@@ -1866,7 +1933,8 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "Capabilities"
@@ -1894,7 +1962,8 @@
 																"capabilities-link-container"
 															],
 															"indexed": true,
-															"layout": {},
+															"layout": {
+															},
 															"name": "Capabalities-Links"
 														},
 														"id": "3e9c171b-8ae9-2dcd-1645-e3682e4b5cf7",
@@ -1957,7 +2026,8 @@
 													{
 														"definition": {
 															"indexed": true,
-															"layout": {},
+															"layout": {
+															},
 															"name": "Products-Title"
 														},
 														"id": "76bca64f-1498-dfdb-7eca-705806df4b9c",
@@ -1976,7 +2046,8 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "Product"
@@ -2243,7 +2314,8 @@
 															{
 																"definition": {
 																	"indexed": true,
-																	"layout": {},
+																	"layout": {
+																	},
 																	"name": "Contact-Title"
 																},
 																"id": "8ba742f0-5477-1aa4-d433-2e47f328347b",
@@ -2262,7 +2334,8 @@
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "Contact Us"
@@ -2288,7 +2361,8 @@
 															{
 																"definition": {
 																	"indexed": true,
-																	"layout": {},
+																	"layout": {
+																	},
 																	"name": "Contact-Links"
 																},
 																"id": "e2ff9ebc-8159-cf3d-aeec-76a3e3e126f1",
@@ -2351,7 +2425,8 @@
 															{
 																"definition": {
 																	"indexed": true,
-																	"layout": {},
+																	"layout": {
+																	},
 																	"name": "Connect-Title"
 																},
 																"id": "4381333a-f43e-2c60-0047-7b70ea646531",
@@ -2370,7 +2445,8 @@
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "Connect"
@@ -2409,7 +2485,8 @@
 																			"fragment": {
 																				"key": "BASIC_COMPONENT-html"
 																			},
-																			"fragmentConfig": {},
+																			"fragmentConfig": {
+																			},
 																			"fragmentFields": [
 																				{
 																					"id": "element-html",
@@ -2433,7 +2510,8 @@
 																			"fragment": {
 																				"key": "BASIC_COMPONENT-html"
 																			},
-																			"fragmentConfig": {},
+																			"fragmentConfig": {
+																			},
 																			"fragmentFields": [
 																				{
 																					"id": "element-html",
@@ -2457,7 +2535,8 @@
 																			"fragment": {
 																				"key": "BASIC_COMPONENT-html"
 																			},
-																			"fragmentConfig": {},
+																			"fragmentConfig": {
+																			},
 																			"fragmentFields": [
 																				{
 																					"id": "element-html",
@@ -2481,7 +2560,8 @@
 																			"fragment": {
 																				"key": "BASIC_COMPONENT-html"
 																			},
-																			"fragmentConfig": {},
+																			"fragmentConfig": {
+																			},
 																			"fragmentFields": [
 																				{
 																					"id": "element-html",
@@ -2505,7 +2585,8 @@
 																			"fragment": {
 																				"key": "BASIC_COMPONENT-html"
 																			},
-																			"fragmentConfig": {},
+																			"fragmentConfig": {
+																			},
 																			"fragmentFields": [
 																				{
 																					"id": "element-html",
@@ -2529,7 +2610,8 @@
 																			"fragment": {
 																				"key": "BASIC_COMPONENT-html"
 																			},
-																			"fragmentConfig": {},
+																			"fragmentConfig": {
+																			},
 																			"fragmentFields": [
 																				{
 																					"id": "element-html",
@@ -2591,7 +2673,8 @@
 											"fragment": {
 												"key": "BASIC_COMPONENT-html"
 											},
-											"fragmentConfig": {},
+											"fragmentConfig": {
+											},
 											"fragmentFields": [
 												{
 													"id": "element-html",
@@ -2614,7 +2697,8 @@
 											"fragment": {
 												"key": "BASIC_COMPONENT-html"
 											},
-											"fragmentConfig": {},
+											"fragmentConfig": {
+											},
 											"fragmentFields": [
 												{
 													"id": "element-html",
@@ -2652,12 +2736,15 @@
 				"name": "Liferay Learn Global CSS"
 			}
 		],
-		"styleBook": {"key": "liferay-learn", "name": "Liferay Learn"},
+		"styleBook": {
+			"key": "liferay-learn",
+			"name": "Liferay Learn"
+		},
 		"themeName": "Dialect",
 		"themeSettings": {
-			"lfr-theme:regular:show-header-search": "false",
-			"lfr-theme:regular:show-header": "false",
 			"lfr-theme:regular:show-footer": "false",
+			"lfr-theme:regular:show-header": "false",
+			"lfr-theme:regular:show-header-search": "false",
 			"lfr-theme:regular:wrap-widget-page-content": "false"
 		}
 	},

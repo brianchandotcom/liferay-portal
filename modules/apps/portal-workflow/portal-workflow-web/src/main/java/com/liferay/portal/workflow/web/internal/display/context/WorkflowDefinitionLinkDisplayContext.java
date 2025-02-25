@@ -97,7 +97,7 @@ public class WorkflowDefinitionLinkDisplayContext {
 			_workflowDefinitionLinkLocalService.
 				fetchDefaultWorkflowDefinitionLink(
 					_workflowDefinitionLinkRequestHelper.getCompanyId(),
-					className, 0, 0);
+					className);
 
 		if (defaultWorkflowDefinitionLink == null) {
 			return null;
@@ -361,7 +361,7 @@ public class WorkflowDefinitionLinkDisplayContext {
 				_workflowDefinitionLinkLocalService.
 					fetchDefaultWorkflowDefinitionLink(
 						_workflowDefinitionLinkRequestHelper.getCompanyId(),
-						className, 0, 0);
+						className);
 		}
 		else {
 			workflowDefinitionLink =

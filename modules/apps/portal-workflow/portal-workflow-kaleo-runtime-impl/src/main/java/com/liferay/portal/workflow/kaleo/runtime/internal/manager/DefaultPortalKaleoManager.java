@@ -250,8 +250,7 @@ public class DefaultPortalKaleoManager
 
 		WorkflowDefinitionLink workflowDefinitionLink =
 			workflowDefinitionLinkLocalService.
-				fetchDefaultWorkflowDefinitionLink(
-					companyId, assetClassName, 0, 0);
+				fetchDefaultWorkflowDefinitionLink(companyId, assetClassName);
 
 		if (workflowDefinitionLink != null) {
 			return;

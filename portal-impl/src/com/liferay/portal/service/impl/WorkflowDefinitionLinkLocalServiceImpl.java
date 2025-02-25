@@ -82,11 +82,11 @@ public class WorkflowDefinitionLinkLocalServiceImpl
 
 	@Override
 	public WorkflowDefinitionLink fetchDefaultWorkflowDefinitionLink(
-		long companyId, String className, long classPK, long typePK) {
+		long companyId, String className) {
 
 		return workflowDefinitionLinkPersistence.fetchByG_C_C_C_T(
 			WorkflowConstants.DEFAULT_GROUP_ID, companyId,
-			_classNameLocalService.getClassNameId(className), classPK, typePK);
+			_classNameLocalService.getClassNameId(className), 0, 0);
 	}
 
 	@Override

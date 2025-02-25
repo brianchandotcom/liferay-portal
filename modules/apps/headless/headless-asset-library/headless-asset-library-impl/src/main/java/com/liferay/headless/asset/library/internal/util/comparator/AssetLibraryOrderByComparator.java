@@ -38,8 +38,9 @@ public class AssetLibraryOrderByComparator<T> extends OrderByComparator<T> {
 				"Columns length is not an even number");
 		}
 
-		_columns = columns;
 		_locale = locale;
+
+		_columns = columns;
 	}
 
 	@Override

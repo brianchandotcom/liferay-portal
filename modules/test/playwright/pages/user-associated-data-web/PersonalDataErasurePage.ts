@@ -14,11 +14,6 @@ export class PersonalDataErasurePage {
 	readonly anonymizeButton: Locator;
 	readonly anonymizeMenuItem: Locator;
 	readonly applicationsMenuPage: ApplicationsMenuPage;
-	readonly blogCheckBox: (
-		blogId: string,
-		blogTitle: string,
-		match: boolean
-	) => Locator;
 	readonly deleteMenuItem: Locator;
 	readonly documentsAndMediaRadioButton: Locator;
 	readonly journalArticleCheckBox: (
@@ -27,6 +22,11 @@ export class PersonalDataErasurePage {
 		match: boolean
 	) => Locator;
 	readonly menuItemDelete: Locator;
+	readonly objectCheckBox: (
+		blogId: string,
+		blogTitle: string,
+		match: boolean
+	) => Locator;
 	readonly objectCountLink: (objectCountNumber: string) => Locator;
 	readonly page: Page;
 	readonly pageTitle: Locator;
@@ -53,23 +53,6 @@ export class PersonalDataErasurePage {
 		this.anonymizeMenuItem = page.getByRole('menuitem', {
 			name: 'Anonymize',
 		});
-		this.blogCheckBox = (
-			blogId: string,
-			blogTitle: string,
-			match: boolean
-		) => {
-			const blogIdLocator = page.locator(`[value="${blogId}"]`);
-
-			return match
-				? this.objectLink(blogTitle)
-						.locator('../..')
-						.filter({has: blogIdLocator})
-						.getByRole('checkbox')
-				: this.objectLink(blogTitle)
-						.locator('../..')
-						.filter({hasNot: blogIdLocator})
-						.getByRole('checkbox');
-		};
 		this.deleteMenuItem = page.getByRole('menuitem', {name: 'Delete'});
 		this.documentsAndMediaRadioButton = page.locator(
 			'input[type="radio"][value="com.liferay.document.library.uad"]'
@@ -94,6 +77,23 @@ export class PersonalDataErasurePage {
 						.getByRole('checkbox');
 		};
 		this.menuItemDelete = page.getByRole('menuitem', {name: 'Delete'});
+		this.objectCheckBox = (
+			objectId: string,
+			objectTitle: string,
+			match: boolean
+		) => {
+			const blogIdLocator = page.locator(`[value="${objectId}"]`);
+
+			return match
+				? this.objectLink(objectTitle)
+						.locator('../..')
+						.filter({has: blogIdLocator})
+						.getByRole('checkbox')
+				: this.objectLink(objectTitle)
+						.locator('../..')
+						.filter({hasNot: blogIdLocator})
+						.getByRole('checkbox');
+		};
 		this.objectCountLink = (objectCountNumber: string) => {
 			return page.getByRole('link', {name: objectCountNumber});
 		};

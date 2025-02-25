@@ -422,10 +422,10 @@ testAdmin(
 		await personalDataErasurePage.objectCountLink('6').click();
 
 		await personalDataErasurePage
-			.blogCheckBox(blog1.id, blog1Name, true)
+			.objectCheckBox(blog1.id, blog1Name, true)
 			.check();
 		await personalDataErasurePage
-			.blogCheckBox(blog2.id, blog2Name, false)
+			.objectCheckBox(blog2.id, blog2Name, false)
 			.check();
 
 		await personalDataErasurePage.actionsButton.click();
@@ -630,7 +630,8 @@ testAdmin(
 );
 
 testAdmin(
-	'LPD-48828 Can delete multiple entries from an application',
+	'Can delete multiple entries from an application',
+	{tag: '@LPD-48828'},
 	async ({
 		apiHelpers,
 		page,
@@ -745,7 +746,8 @@ testAdmin(
 );
 
 testAdmin(
-	'LPD-48828 Can anonymize multiple entries from an application',
+	'Can anonymize multiple entries from an application',
+	{tag: '@LPD-48828'},
 	async ({
 		apiHelpers,
 		page,
@@ -854,74 +856,209 @@ testAdmin(
 
 		await expect(page.getByText(anonymousUser)).toHaveCount(2);
 
-		await userAssociatedDataDocumentLibraryPage
-			.mediaLink(folder.name)
-			.click();
-
-		await expect(
-			userAssociatedDataDocumentLibraryPage.toogleInfoPanelButtonForFolder
-		).toBeVisible();
-
-		await userAssociatedDataDocumentLibraryPage.toogleInfoPanelButtonForFolder.click();
-
-		await expect(
-			userAssociatedDataDocumentLibraryPage.infoPanelSideBarCreatedByText
-		).toContainText(anonymousUser);
+		await userAssociatedDataDocumentLibraryPage.checkFolderCreator(
+			folder,
+			anonymousUser
+		);
 
 		await page.goto(`/group/${site.name}${PORTLET_URLS.documentLibrary}`);
 
-		await userAssociatedDataDocumentLibraryPage
-			.mediaLink(attachment1.title)
-			.click();
-
-		await expect(
-			userAssociatedDataDocumentLibraryPage.toogleInfoPanelButtonForFiles
-		).toBeVisible();
-
-		await expect(async () => {
-			await userAssociatedDataDocumentLibraryPage.toogleInfoPanelButtonForFiles.click();
-
-			await expect(
-				userAssociatedDataDocumentLibraryPage.infoPanelSideBarOwnerText
-			).toBeVisible();
-		}).toPass();
-
-		await expect(
-			userAssociatedDataDocumentLibraryPage.infoPanelSideBarOwnerText
-		).toContainText(anonymousUser);
-		await expect(
-			userAssociatedDataDocumentLibraryPage.infoPanelSideBarCreatedByText
-		).toContainText(anonymousUser);
-		await expect(
-			userAssociatedDataDocumentLibraryPage.infoPanelSideBarModifiedByText
-		).toContainText(anonymousUser);
+		await userAssociatedDataDocumentLibraryPage.checkDocumentCreator(
+			attachment1,
+			anonymousUser
+		);
 
 		await page.goto(`/group/${site.name}${PORTLET_URLS.documentLibrary}`);
 
-		await userAssociatedDataDocumentLibraryPage
-			.mediaLink(attachment2.title)
-			.click();
+		await userAssociatedDataDocumentLibraryPage.checkDocumentCreator(
+			attachment2,
+			anonymousUser
+		);
+	}
+);
+
+testAdmin(
+	'Can anonymize all staged data from DM',
+	{tag: '@LPD-49859'},
+	async ({
+		apiHelpers,
+		page,
+		personalDataErasurePage,
+		productMenuPage,
+		siteStagingPage,
+		userAssociatedDataDocumentLibraryPage,
+		usersAndOrganizationsPage,
+	}) => {
+		page.on('dialog', (dialog) => {
+			dialog.accept().catch(() => {});
+		});
+
+		const userAccount =
+			await apiHelpers.headlessAdminUser.postUserAccount();
+
+		userData[userAccount.alternateName] = {
+			name: userAccount.givenName,
+			password: 'test',
+			surname: userAccount.familyName,
+		};
+
+		const role =
+			await apiHelpers.headlessAdminUser.getRoleByName('Administrator');
+
+		await apiHelpers.headlessAdminUser.postRoleByExternalReferenceCodeUserAccountAssociation(
+			role.externalReferenceCode,
+			userAccount.id
+		);
+
+		await performLogout(page);
+		await performLoginViaApi(page, userAccount.alternateName);
+
+		const site = await apiHelpers.headlessSite.createSite({
+			name: getRandomString(),
+		});
+
+		const layout = await apiHelpers.headlessDelivery.createSitePage({
+			siteId: site.id,
+			title: 'Page' + getRandomInt(),
+		});
+
+		apiHelpers.data.push({id: site.id, type: 'site'});
+
+		const folder = await apiHelpers.headlessDelivery.postDocumentFolder(
+			site.id
+		);
+
+		const attachment1 = await apiHelpers.headlessDelivery.postDocument(
+			site.id,
+			createReadStream(
+				path.join(__dirname, '/dependencies/attachment.docx')
+			)
+		);
+
+		const attachment2 = await apiHelpers.headlessDelivery.postDocument(
+			site.id,
+			createReadStream(
+				path.join(__dirname, '/dependencies/attachment.jpeg')
+			)
+		);
+
+		await performLogout(page);
+		await performLoginViaApi(page, 'test');
+
+		await page.goto(`/group/${site.name}/${layout.friendlyUrlPath}`);
+
+		await productMenuPage.openProductMenuButton.click();
+		await productMenuPage.publishingButton.click();
+		await productMenuPage.stagingMenuItem.click();
+		await siteStagingPage.localStagingCheckbox.check();
+		await siteStagingPage.blogsCheckbox.check();
+		await siteStagingPage.saveButton.click();
+
+		await waitForAlert(page, 'Local staging is successfully enabled.');
+
+		await usersAndOrganizationsPage.goToUsers(false);
+		await (
+			await usersAndOrganizationsPage.usersTableRowActions(
+				userAccount.alternateName
+			)
+		).click();
+		await usersAndOrganizationsPage.deletePersonalDataMenuItem.click();
+
+		await waitForAlert(page);
 
 		await expect(
-			userAssociatedDataDocumentLibraryPage.toogleInfoPanelButtonForFiles
+			personalDataErasurePage.selectAllItemsOnPageCheckbox
 		).toBeVisible();
 
-		await expect(async () => {
-			await userAssociatedDataDocumentLibraryPage.toogleInfoPanelButtonForFiles.click();
+		await personalDataErasurePage.documentsAndMediaRadioButton.check();
+		await personalDataErasurePage
+			.objectCheckBox(folder.id, folder.name, false)
+			.check();
+		await personalDataErasurePage
+			.objectCheckBox(attachment1.id, attachment1.fileName, false)
+			.check();
+		await personalDataErasurePage
+			.objectCheckBox(attachment2.id, attachment2.fileName, false)
+			.check();
+		await personalDataErasurePage.actionsButton.click();
+		await personalDataErasurePage.anonymizeMenuItem.click();
 
-			await expect(
-				userAssociatedDataDocumentLibraryPage.infoPanelSideBarOwnerText
-			).toBeVisible();
-		}).toPass();
+		await expect(
+			personalDataErasurePage.objectCheckBox(
+				folder.id,
+				folder.name,
+				false
+			)
+		).not.toBeVisible();
+		await expect(
+			personalDataErasurePage.objectCheckBox(
+				attachment1.id,
+				attachment1.fileName,
+				false
+			)
+		).not.toBeVisible();
+		await expect(
+			personalDataErasurePage.objectCheckBox(
+				attachment2.id,
+				attachment2.fileName,
+				false
+			)
+		).not.toBeVisible();
 
-		await expect(
-			userAssociatedDataDocumentLibraryPage.infoPanelSideBarOwnerText
-		).toContainText(anonymousUser);
-		await expect(
-			userAssociatedDataDocumentLibraryPage.infoPanelSideBarCreatedByText
-		).toContainText(anonymousUser);
-		await expect(
-			userAssociatedDataDocumentLibraryPage.infoPanelSideBarModifiedByText
-		).toContainText(anonymousUser);
+		await waitForAlert(page);
+
+		await page.goto(`/group/${site.name}${PORTLET_URLS.documentLibrary}`);
+
+		const anonymousUserName = 'Anonymous Anonymous';
+
+		await expect(page.getByText(anonymousUserName)).toHaveCount(0);
+
+		await userAssociatedDataDocumentLibraryPage.checkFolderCreator(
+			folder,
+			userAccount.name
+		);
+
+		await page.goto(`/group/${site.name}${PORTLET_URLS.documentLibrary}`);
+
+		await userAssociatedDataDocumentLibraryPage.checkDocumentCreator(
+			attachment1,
+			userAccount.name
+		);
+
+		await page.goto(`/group/${site.name}${PORTLET_URLS.documentLibrary}`);
+
+		await userAssociatedDataDocumentLibraryPage.checkDocumentCreator(
+			attachment2,
+			userAccount.name
+		);
+
+		await page.goto(
+			`/group/${site.name}-staging${PORTLET_URLS.documentLibrary}`
+		);
+
+		await expect(page.getByText(anonymousUserName)).toHaveCount(2);
+
+		await userAssociatedDataDocumentLibraryPage.checkFolderCreator(
+			folder,
+			anonymousUserName
+		);
+
+		await page.goto(
+			`/group/${site.name}-staging${PORTLET_URLS.documentLibrary}`
+		);
+
+		await userAssociatedDataDocumentLibraryPage.checkDocumentCreator(
+			attachment1,
+			anonymousUserName
+		);
+
+		await page.goto(
+			`/group/${site.name}-staging${PORTLET_URLS.documentLibrary}`
+		);
+
+		await userAssociatedDataDocumentLibraryPage.checkDocumentCreator(
+			attachment2,
+			anonymousUserName
+		);
 	}
 );

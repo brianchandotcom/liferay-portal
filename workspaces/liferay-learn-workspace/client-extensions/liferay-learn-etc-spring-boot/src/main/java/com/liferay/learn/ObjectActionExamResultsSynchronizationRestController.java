@@ -210,16 +210,16 @@ public class ObjectActionExamResultsSynchronizationRestController
 		}
 
 		for (int i = 0; i < jsonArray.length(); i++) {
-			JSONObject jsonObject = jsonArray.getJSONObject(i);
+			JSONObject jsonObject1 = jsonArray.getJSONObject(i);
 
-			JSONObject responseJSONObject = new JSONObject(
+			JSONObject jsonObject2 = new JSONObject(
 				put(
-					_getAuthorization(), _getPayload(jsonObject),
+					_getAuthorization(), _getPayload(jsonObject1),
 					StringBundler.concat(
 						lxcDXPServerProtocol, "://", lxcDXPMainDomain,
 						"/o/c/p2s3examresults/scopes/", _siteGroupId,
 						"/by-external-reference-code/",
-						jsonObject.getLong("id"))));
+						jsonObject1.getLong("id"))));
 
 			put(
 				_getAuthorization(),
@@ -238,7 +238,7 @@ public class ObjectActionExamResultsSynchronizationRestController
 				).toString(),
 				StringBundler.concat(
 					lxcDXPServerProtocol, "://", lxcDXPMainDomain,
-					"/o/c/p2s3examresults/", responseJSONObject.getLong("id"),
+					"/o/c/p2s3examresults/", jsonObject2.getLong("id"),
 					"/permissions"));
 		}
 

@@ -2548,7 +2548,7 @@
 		<finder name="EmailAddress" return-type="Collection">
 			<finder-column name="emailAddress" />
 		</finder>
-		<finder name="PortraitId" return-type="User">
+		<finder name="PortraitId" return-type="Collection">
 			<finder-column name="portraitId" />
 		</finder>
 		<finder db-index="false" name="GtU_C" return-type="Collection" where="type_ = 1">

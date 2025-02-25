@@ -5,6 +5,7 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import {openToast} from 'frontend-js-components-web';
+import {fetch} from 'frontend-js-web';
 import React, {useContext} from 'react';
 
 // @ts-ignore

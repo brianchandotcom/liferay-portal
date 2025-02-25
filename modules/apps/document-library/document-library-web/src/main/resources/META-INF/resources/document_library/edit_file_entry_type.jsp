@@ -56,7 +56,7 @@ renderResponse.setTitle((fileEntryType == null) ? LanguageUtil.get(request, "new
 
 	<nav class="component-tbar subnav-tbar-light tbar tbar-metadata-type">
 		<clay:container-fluid
-			fullWidth="<%= true %>"
+			size="xxxl"
 		>
 			<ul class="tbar-nav">
 				<li class="tbar-item tbar-item-expand">

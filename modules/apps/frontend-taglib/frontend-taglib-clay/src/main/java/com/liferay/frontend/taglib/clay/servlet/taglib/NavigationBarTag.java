@@ -101,9 +101,12 @@ public class NavigationBarTag extends BaseContainerTag {
 		if (_navigationItems != null) {
 			JspWriter jspWriter = pageContext.getOut();
 
-			jspWriter.write("<div class=\"container-fluid\"><div class=\"");
+			jspWriter.write(
+				"<div class=\"container-fluid container-fluid-max-xxxl\">");
+			jspWriter.write("<div class=\"");
 			jspWriter.write("collapse navbar-collapse\"><div class=\"");
-			jspWriter.write("container-fluid\"><ul class=\"navbar-nav\">");
+			jspWriter.write("container-fluid container-fluid-max-xxxl\">");
+			jspWriter.write("<ul class=\"navbar-nav\">");
 
 			for (int i = 0; i < _navigationItems.size(); i++) {
 				NavigationItem navigationItem = _navigationItems.get(i);

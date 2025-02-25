@@ -29,7 +29,7 @@ export default function Search({
 			{onlySearch ? (
 				content
 			) : (
-				<ClayLayout.ContainerFluid size={false}>
+				<ClayLayout.ContainerFluid size="xxxl">
 					{content}
 				</ClayLayout.ContainerFluid>
 			)}

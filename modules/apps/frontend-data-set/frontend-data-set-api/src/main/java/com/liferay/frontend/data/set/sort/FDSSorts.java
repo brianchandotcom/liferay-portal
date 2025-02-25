@@ -6,7 +6,9 @@
 package com.liferay.frontend.data.set.sort;
 
 import com.liferay.frontend.data.set.FDSEntryItemImportPolicy;
-import com.liferay.frontend.data.set.model.FDSSortItemList;
+import com.liferay.frontend.data.set.model.FDSSortItem;
+
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -19,7 +21,7 @@ public interface FDSSorts {
 		return FDSEntryItemImportPolicy.DETACHED;
 	}
 
-	public FDSSortItemList getFDSSortItemList(
+	public List<FDSSortItem> getFDSSortItems(
 		HttpServletRequest httpServletRequest);
 
 }

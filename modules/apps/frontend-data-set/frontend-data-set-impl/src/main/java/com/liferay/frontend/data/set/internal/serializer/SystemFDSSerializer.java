@@ -19,7 +19,6 @@ import com.liferay.frontend.data.set.filter.FDSFilterContextContributorRegistry;
 import com.liferay.frontend.data.set.filter.FDSFilterRegistry;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.data.set.model.FDSSortItem;
-import com.liferay.frontend.data.set.model.FDSSortItemList;
 import com.liferay.frontend.data.set.serializer.FDSSerializer;
 import com.liferay.frontend.data.set.sort.FDSSorts;
 import com.liferay.frontend.data.set.sort.FDSSortsRegistry;
@@ -142,16 +141,16 @@ public class SystemFDSSerializer
 	}
 
 	@Override
-	public FDSSortItemList serializeSorts(
+	public List<FDSSortItem> serializeSorts(
 		String fdsName, HttpServletRequest httpServletRequest) {
 
 		FDSSorts fdsSorts = fdsSortsRegistry.getFDSSorts(fdsName);
 
 		if (fdsSorts == null) {
-			return FDSSortItemList.of((FDSSortItem)null);
+			return Collections.emptyList();
 		}
 
-		return fdsSorts.getFDSSortItemList(httpServletRequest);
+		return fdsSorts.getFDSSortItems(httpServletRequest);
 	}
 
 	@Override

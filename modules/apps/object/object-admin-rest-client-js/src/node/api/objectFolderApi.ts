@@ -7,12 +7,16 @@ import http from 'http';
 
 import localVarRequest from 'request';
 /* tslint:disable:no-unused-locals */
-import { Authentication, Interceptor, ObjectSerializer, VoidAuth } from '../model/models';
+import {
+	Authentication,
+	Interceptor,
+	ObjectSerializer,
+	VoidAuth,
+} from '../model/models';
+		import {ObjectFolder} from '../model/objectFolder';
+		import {PageObjectFolder} from '../model/pageObjectFolder';
 
-		import { ObjectFolder } from '../model/objectFolder';
-		import { PageObjectFolder } from '../model/pageObjectFolder';
-
-import { HttpError } from './apis';
+import {HttpError} from './apis';
 const defaultBasePath = 'http://localhost';
 
 /**
@@ -20,29 +24,33 @@ const defaultBasePath = 'http://localhost';
  * @generated
  */
 
-export enum ObjectFolderApiApiKeys {
-}
+export enum ObjectFolderApiApiKeys {}
 
 export class ObjectFolderApi {
 	protected _basePath = defaultBasePath;
-	protected _defaultHeaders : any = {};
-	protected _useQuerystring : boolean = false;
+	protected _defaultHeaders: any = {};
+	protected _useQuerystring: boolean = false;
 
 	protected authentications = {
-		'default': <Authentication>new VoidAuth(),
-	}
+		default: <Authentication>new VoidAuth(),
+	};
 
 	protected interceptors: Interceptor[] = [];
 
 	constructor(basePath?: string);
-	constructor(basePathOrUsername: string, password?: string, basePath?: string) {
+	constructor(
+		basePathOrUsername: string,
+		password?: string,
+		basePath?: string
+	) {
 		if (password) {
 			if (basePath) {
 				this.basePath = basePath;
 			}
-		} else {
+		}
+		else {
 			if (basePathOrUsername) {
-				this.basePath = basePathOrUsername
+				this.basePath = basePathOrUsername;
 			}
 		}
 	}
@@ -72,7 +80,8 @@ export class ObjectFolderApi {
 	}
 
 	public setApiKey(key: ObjectFolderApiApiKeys, value: string) {
-		(this.authentications as any)[ObjectFolderApiApiKeys[key]].apiKey = value;
+		(this.authentications as any)[ObjectFolderApiApiKeys[key]].apiKey =
+			value;
 	}
 
 	public addInterceptor(interceptor: Interceptor) {
@@ -83,10 +92,10 @@ export class ObjectFolderApi {
 		 * 
 				 * @param objectFolderId 
 		 */
-		public async deleteObjectFolder (
+		public async deleteObjectFolder(
 					objectFolderId: number,
 			options: {
-				headers: {[name: string]: string}
+				headers: {[name: string]: string};
 			} = {headers: {}}
 		): Promise<{
 				body?: any;
@@ -101,7 +110,6 @@ export class ObjectFolderApi {
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
 				const produces = ['application/json', 'application/xml'];
-				// give precedence to 'application/json'
 				if (produces.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
@@ -109,7 +117,6 @@ export class ObjectFolderApi {
 				}
 			const localVarFormParams: any = {};
 
-						// verify required parameter 'objectFolderId' is not null or undefined
 						if (objectFolderId === null || objectFolderId === undefined) {
 							throw new Error('Required parameter objectFolderId was null or undefined when calling deleteObjectFolder.');
 						}
@@ -147,25 +154,38 @@ export class ObjectFolderApi {
 					localVarRequest(localVarRequestOptions, (error, response, body) => {
 						if (error) {
 							reject(error);
-						} else {
-							if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-								resolve({ body: body, response: response });
-							} else {
-								reject(new HttpError(body, response, response.statusCode));
+						}
+						else {
+							if (
+								response.statusCode &&
+								response.statusCode >= 200 &&
+								response.statusCode <= 299
+							) {
+								resolve({body, response});
+							}
+							else {
+								reject(
+									new HttpError(
+										body,
+										response,
+										response.statusCode
+									)
+								);
 							}
 						}
-					});
-				});
+					}
+				);
 			});
-		}
+		});
+	}
 		/**
 		 * 
 				 * @param objectFolderId 
 		 */
-		public async getObjectFolder (
+		public async getObjectFolder(
 					objectFolderId: number,
 			options: {
-				headers: {[name: string]: string}
+				headers: {[name: string]: string};
 			} = {headers: {}}
 		): Promise<{
 				body: ObjectFolder;
@@ -180,7 +200,6 @@ export class ObjectFolderApi {
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
 				const produces = ['application/json', 'application/xml'];
-				// give precedence to 'application/json'
 				if (produces.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
@@ -188,7 +207,6 @@ export class ObjectFolderApi {
 				}
 			const localVarFormParams: any = {};
 
-						// verify required parameter 'objectFolderId' is not null or undefined
 						if (objectFolderId === null || objectFolderId === undefined) {
 							throw new Error('Required parameter objectFolderId was null or undefined when calling getObjectFolder.');
 						}
@@ -226,26 +244,38 @@ export class ObjectFolderApi {
 					localVarRequest(localVarRequestOptions, (error, response, body) => {
 						if (error) {
 							reject(error);
-						} else {
-							if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-									body = ObjectSerializer.deserialize(body, "ObjectFolder");
-								resolve({ body: body, response: response });
-							} else {
-								reject(new HttpError(body, response, response.statusCode));
+						}
+						else {
+							if (
+								response.statusCode &&
+								response.statusCode >= 200 &&
+								response.statusCode <= 299
+							) {
+								resolve({body, response});
+							}
+							else {
+								reject(
+									new HttpError(
+										body,
+										response,
+										response.statusCode
+									)
+								);
 							}
 						}
-					});
-				});
+					}
+				);
 			});
-		}
+		});
+	}
 		/**
 		 * 
 				 * @param externalReferenceCode 
 		 */
-		public async getObjectFolderByExternalReferenceCode (
+		public async getObjectFolderByExternalReferenceCode(
 					externalReferenceCode: string,
 			options: {
-				headers: {[name: string]: string}
+				headers: {[name: string]: string};
 			} = {headers: {}}
 		): Promise<{
 				body: ObjectFolder;
@@ -260,7 +290,6 @@ export class ObjectFolderApi {
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
 				const produces = ['application/json', 'application/xml'];
-				// give precedence to 'application/json'
 				if (produces.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
@@ -268,7 +297,6 @@ export class ObjectFolderApi {
 				}
 			const localVarFormParams: any = {};
 
-						// verify required parameter 'externalReferenceCode' is not null or undefined
 						if (externalReferenceCode === null || externalReferenceCode === undefined) {
 							throw new Error('Required parameter externalReferenceCode was null or undefined when calling getObjectFolderByExternalReferenceCode.');
 						}
@@ -306,18 +334,30 @@ export class ObjectFolderApi {
 					localVarRequest(localVarRequestOptions, (error, response, body) => {
 						if (error) {
 							reject(error);
-						} else {
-							if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-									body = ObjectSerializer.deserialize(body, "ObjectFolder");
-								resolve({ body: body, response: response });
-							} else {
-								reject(new HttpError(body, response, response.statusCode));
+						}
+						else {
+							if (
+								response.statusCode &&
+								response.statusCode >= 200 &&
+								response.statusCode <= 299
+							) {
+								resolve({body, response});
+							}
+							else {
+								reject(
+									new HttpError(
+										body,
+										response,
+										response.statusCode
+									)
+								);
 							}
 						}
-					});
-				});
+					}
+				);
 			});
-		}
+		});
+	}
 		/**
 		 * 
 				 * @param page 
@@ -325,13 +365,13 @@ export class ObjectFolderApi {
 				 * @param search 
 				 * @param Accept_Language 
 		 */
-		public async getObjectFoldersPage (
+		public async getObjectFoldersPage(
 					page?: number,
 					pageSize?: number,
 					search?: string,
 					Accept_Language?: string,
 			options: {
-				headers: {[name: string]: string}
+				headers: {[name: string]: string};
 			} = {headers: {}}
 		): Promise<{
 				body: PageObjectFolder;
@@ -342,7 +382,6 @@ export class ObjectFolderApi {
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
 				const produces = ['application/json', 'application/xml'];
-				// give precedence to 'application/json'
 				if (produces.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
@@ -393,28 +432,40 @@ export class ObjectFolderApi {
 					localVarRequest(localVarRequestOptions, (error, response, body) => {
 						if (error) {
 							reject(error);
-						} else {
-							if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-									body = ObjectSerializer.deserialize(body, "PageObjectFolder");
-								resolve({ body: body, response: response });
-							} else {
-								reject(new HttpError(body, response, response.statusCode));
+						}
+						else {
+							if (
+								response.statusCode &&
+								response.statusCode >= 200 &&
+								response.statusCode <= 299
+							) {
+								resolve({body, response});
+							}
+							else {
+								reject(
+									new HttpError(
+										body,
+										response,
+										response.statusCode
+									)
+								);
 							}
 						}
-					});
-				});
+					}
+				);
 			});
-		}
+		});
+	}
 		/**
 		 * 
 				 * @param objectFolderId 
 				 * @param ObjectFolder 
 		 */
-		public async patchObjectFolder (
+		public async patchObjectFolder(
 					objectFolderId: number,
 					ObjectFolder?: ObjectFolder,
 			options: {
-				headers: {[name: string]: string}
+				headers: {[name: string]: string};
 			} = {headers: {}}
 		): Promise<{
 				body: ObjectFolder;
@@ -429,7 +480,6 @@ export class ObjectFolderApi {
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
 				const produces = ['application/json', 'application/xml'];
-				// give precedence to 'application/json'
 				if (produces.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
@@ -437,7 +487,6 @@ export class ObjectFolderApi {
 				}
 			const localVarFormParams: any = {};
 
-						// verify required parameter 'objectFolderId' is not null or undefined
 						if (objectFolderId === null || objectFolderId === undefined) {
 							throw new Error('Required parameter objectFolderId was null or undefined when calling patchObjectFolder.');
 						}
@@ -476,26 +525,38 @@ export class ObjectFolderApi {
 					localVarRequest(localVarRequestOptions, (error, response, body) => {
 						if (error) {
 							reject(error);
-						} else {
-							if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-									body = ObjectSerializer.deserialize(body, "ObjectFolder");
-								resolve({ body: body, response: response });
-							} else {
-								reject(new HttpError(body, response, response.statusCode));
+						}
+						else {
+							if (
+								response.statusCode &&
+								response.statusCode >= 200 &&
+								response.statusCode <= 299
+							) {
+								resolve({body, response});
+							}
+							else {
+								reject(
+									new HttpError(
+										body,
+										response,
+										response.statusCode
+									)
+								);
 							}
 						}
-					});
-				});
+					}
+				);
 			});
-		}
+		});
+	}
 		/**
 		 * 
 				 * @param ObjectFolder 
 		 */
-		public async postObjectFolder (
+		public async postObjectFolder(
 					ObjectFolder?: ObjectFolder,
 			options: {
-				headers: {[name: string]: string}
+				headers: {[name: string]: string};
 			} = {headers: {}}
 		): Promise<{
 				body: ObjectFolder;
@@ -506,7 +567,6 @@ export class ObjectFolderApi {
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
 				const produces = ['application/json', 'application/xml'];
-				// give precedence to 'application/json'
 				if (produces.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
@@ -549,28 +609,40 @@ export class ObjectFolderApi {
 					localVarRequest(localVarRequestOptions, (error, response, body) => {
 						if (error) {
 							reject(error);
-						} else {
-							if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-									body = ObjectSerializer.deserialize(body, "ObjectFolder");
-								resolve({ body: body, response: response });
-							} else {
-								reject(new HttpError(body, response, response.statusCode));
+						}
+						else {
+							if (
+								response.statusCode &&
+								response.statusCode >= 200 &&
+								response.statusCode <= 299
+							) {
+								resolve({body, response});
+							}
+							else {
+								reject(
+									new HttpError(
+										body,
+										response,
+										response.statusCode
+									)
+								);
 							}
 						}
-					});
-				});
+					}
+				);
 			});
-		}
+		});
+	}
 		/**
 		 * 
 				 * @param objectFolderId 
 				 * @param ObjectFolder 
 		 */
-		public async putObjectFolder (
+		public async putObjectFolder(
 					objectFolderId: number,
 					ObjectFolder?: ObjectFolder,
 			options: {
-				headers: {[name: string]: string}
+				headers: {[name: string]: string};
 			} = {headers: {}}
 		): Promise<{
 				body: ObjectFolder;
@@ -585,7 +657,6 @@ export class ObjectFolderApi {
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
 				const produces = ['application/json', 'application/xml'];
-				// give precedence to 'application/json'
 				if (produces.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
@@ -593,7 +664,6 @@ export class ObjectFolderApi {
 				}
 			const localVarFormParams: any = {};
 
-						// verify required parameter 'objectFolderId' is not null or undefined
 						if (objectFolderId === null || objectFolderId === undefined) {
 							throw new Error('Required parameter objectFolderId was null or undefined when calling putObjectFolder.');
 						}
@@ -632,28 +702,40 @@ export class ObjectFolderApi {
 					localVarRequest(localVarRequestOptions, (error, response, body) => {
 						if (error) {
 							reject(error);
-						} else {
-							if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-									body = ObjectSerializer.deserialize(body, "ObjectFolder");
-								resolve({ body: body, response: response });
-							} else {
-								reject(new HttpError(body, response, response.statusCode));
+						}
+						else {
+							if (
+								response.statusCode &&
+								response.statusCode >= 200 &&
+								response.statusCode <= 299
+							) {
+								resolve({body, response});
+							}
+							else {
+								reject(
+									new HttpError(
+										body,
+										response,
+										response.statusCode
+									)
+								);
 							}
 						}
-					});
-				});
+					}
+				);
 			});
-		}
+		});
+	}
 		/**
 		 * 
 				 * @param externalReferenceCode 
 				 * @param ObjectFolder 
 		 */
-		public async putObjectFolderByExternalReferenceCode (
+		public async putObjectFolderByExternalReferenceCode(
 					externalReferenceCode: string,
 					ObjectFolder?: ObjectFolder,
 			options: {
-				headers: {[name: string]: string}
+				headers: {[name: string]: string};
 			} = {headers: {}}
 		): Promise<{
 				body: ObjectFolder;
@@ -668,7 +750,6 @@ export class ObjectFolderApi {
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
 				const produces = ['application/json', 'application/xml'];
-				// give precedence to 'application/json'
 				if (produces.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
@@ -676,7 +757,6 @@ export class ObjectFolderApi {
 				}
 			const localVarFormParams: any = {};
 
-						// verify required parameter 'externalReferenceCode' is not null or undefined
 						if (externalReferenceCode === null || externalReferenceCode === undefined) {
 							throw new Error('Required parameter externalReferenceCode was null or undefined when calling putObjectFolderByExternalReferenceCode.');
 						}
@@ -715,16 +795,28 @@ export class ObjectFolderApi {
 					localVarRequest(localVarRequestOptions, (error, response, body) => {
 						if (error) {
 							reject(error);
-						} else {
-							if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-									body = ObjectSerializer.deserialize(body, "ObjectFolder");
-								resolve({ body: body, response: response });
-							} else {
-								reject(new HttpError(body, response, response.statusCode));
+						}
+						else {
+							if (
+								response.statusCode &&
+								response.statusCode >= 200 &&
+								response.statusCode <= 299
+							) {
+								resolve({body, response});
+							}
+							else {
+								reject(
+									new HttpError(
+										body,
+										response,
+										response.statusCode
+									)
+								);
 							}
 						}
-					});
-				});
+					}
+				);
 			});
-		}
+		});
+	}
 }

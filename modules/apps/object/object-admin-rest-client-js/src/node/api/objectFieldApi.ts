@@ -7,12 +7,16 @@ import http from 'http';
 
 import localVarRequest from 'request';
 /* tslint:disable:no-unused-locals */
-import { Authentication, Interceptor, ObjectSerializer, VoidAuth } from '../model/models';
+import {
+	Authentication,
+	Interceptor,
+	ObjectSerializer,
+	VoidAuth,
+} from '../model/models';
+		import {ObjectField} from '../model/objectField';
+		import {PageObjectField} from '../model/pageObjectField';
 
-		import { ObjectField } from '../model/objectField';
-		import { PageObjectField } from '../model/pageObjectField';
-
-import { HttpError } from './apis';
+import {HttpError} from './apis';
 const defaultBasePath = 'http://localhost';
 
 /**
@@ -20,29 +24,33 @@ const defaultBasePath = 'http://localhost';
  * @generated
  */
 
-export enum ObjectFieldApiApiKeys {
-}
+export enum ObjectFieldApiApiKeys {}
 
 export class ObjectFieldApi {
 	protected _basePath = defaultBasePath;
-	protected _defaultHeaders : any = {};
-	protected _useQuerystring : boolean = false;
+	protected _defaultHeaders: any = {};
+	protected _useQuerystring: boolean = false;
 
 	protected authentications = {
-		'default': <Authentication>new VoidAuth(),
-	}
+		default: <Authentication>new VoidAuth(),
+	};
 
 	protected interceptors: Interceptor[] = [];
 
 	constructor(basePath?: string);
-	constructor(basePathOrUsername: string, password?: string, basePath?: string) {
+	constructor(
+		basePathOrUsername: string,
+		password?: string,
+		basePath?: string
+	) {
 		if (password) {
 			if (basePath) {
 				this.basePath = basePath;
 			}
-		} else {
+		}
+		else {
 			if (basePathOrUsername) {
-				this.basePath = basePathOrUsername
+				this.basePath = basePathOrUsername;
 			}
 		}
 	}
@@ -72,7 +80,8 @@ export class ObjectFieldApi {
 	}
 
 	public setApiKey(key: ObjectFieldApiApiKeys, value: string) {
-		(this.authentications as any)[ObjectFieldApiApiKeys[key]].apiKey = value;
+		(this.authentications as any)[ObjectFieldApiApiKeys[key]].apiKey =
+			value;
 	}
 
 	public addInterceptor(interceptor: Interceptor) {
@@ -83,10 +92,10 @@ export class ObjectFieldApi {
 		 * 
 				 * @param objectFieldId 
 		 */
-		public async deleteObjectField (
+		public async deleteObjectField(
 					objectFieldId: number,
 			options: {
-				headers: {[name: string]: string}
+				headers: {[name: string]: string};
 			} = {headers: {}}
 		): Promise<{
 				body?: any;
@@ -101,7 +110,6 @@ export class ObjectFieldApi {
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
 				const produces = ['application/json', 'application/xml'];
-				// give precedence to 'application/json'
 				if (produces.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
@@ -109,7 +117,6 @@ export class ObjectFieldApi {
 				}
 			const localVarFormParams: any = {};
 
-						// verify required parameter 'objectFieldId' is not null or undefined
 						if (objectFieldId === null || objectFieldId === undefined) {
 							throw new Error('Required parameter objectFieldId was null or undefined when calling deleteObjectField.');
 						}
@@ -147,17 +154,30 @@ export class ObjectFieldApi {
 					localVarRequest(localVarRequestOptions, (error, response, body) => {
 						if (error) {
 							reject(error);
-						} else {
-							if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-								resolve({ body: body, response: response });
-							} else {
-								reject(new HttpError(body, response, response.statusCode));
+						}
+						else {
+							if (
+								response.statusCode &&
+								response.statusCode >= 200 &&
+								response.statusCode <= 299
+							) {
+								resolve({body, response});
+							}
+							else {
+								reject(
+									new HttpError(
+										body,
+										response,
+										response.statusCode
+									)
+								);
 							}
 						}
-					});
-				});
+					}
+				);
 			});
-		}
+		});
+	}
 		/**
 		 * 
 				 * @param externalReferenceCode 
@@ -167,7 +187,7 @@ export class ObjectFieldApi {
 				 * @param search 
 				 * @param sort 
 		 */
-		public async getObjectDefinitionByExternalReferenceCodeObjectFieldsPage (
+		public async getObjectDefinitionByExternalReferenceCodeObjectFieldsPage(
 					externalReferenceCode: string,
 					filter?: string,
 					page?: number,
@@ -175,7 +195,7 @@ export class ObjectFieldApi {
 					search?: string,
 					sort?: string,
 			options: {
-				headers: {[name: string]: string}
+				headers: {[name: string]: string};
 			} = {headers: {}}
 		): Promise<{
 				body: PageObjectField;
@@ -190,7 +210,6 @@ export class ObjectFieldApi {
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
 				const produces = ['application/json', 'application/xml'];
-				// give precedence to 'application/json'
 				if (produces.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
@@ -198,7 +217,6 @@ export class ObjectFieldApi {
 				}
 			const localVarFormParams: any = {};
 
-						// verify required parameter 'externalReferenceCode' is not null or undefined
 						if (externalReferenceCode === null || externalReferenceCode === undefined) {
 							throw new Error('Required parameter externalReferenceCode was null or undefined when calling getObjectDefinitionByExternalReferenceCodeObjectFieldsPage.');
 						}
@@ -251,18 +269,30 @@ export class ObjectFieldApi {
 					localVarRequest(localVarRequestOptions, (error, response, body) => {
 						if (error) {
 							reject(error);
-						} else {
-							if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-									body = ObjectSerializer.deserialize(body, "PageObjectField");
-								resolve({ body: body, response: response });
-							} else {
-								reject(new HttpError(body, response, response.statusCode));
+						}
+						else {
+							if (
+								response.statusCode &&
+								response.statusCode >= 200 &&
+								response.statusCode <= 299
+							) {
+								resolve({body, response});
+							}
+							else {
+								reject(
+									new HttpError(
+										body,
+										response,
+										response.statusCode
+									)
+								);
 							}
 						}
-					});
-				});
+					}
+				);
 			});
-		}
+		});
+	}
 		/**
 		 * 
 				 * @param objectDefinitionId 
@@ -272,7 +302,7 @@ export class ObjectFieldApi {
 				 * @param search 
 				 * @param sort 
 		 */
-		public async getObjectDefinitionObjectFieldsPage (
+		public async getObjectDefinitionObjectFieldsPage(
 					objectDefinitionId: number,
 					filter?: string,
 					page?: number,
@@ -280,7 +310,7 @@ export class ObjectFieldApi {
 					search?: string,
 					sort?: string,
 			options: {
-				headers: {[name: string]: string}
+				headers: {[name: string]: string};
 			} = {headers: {}}
 		): Promise<{
 				body: PageObjectField;
@@ -295,7 +325,6 @@ export class ObjectFieldApi {
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
 				const produces = ['application/json', 'application/xml'];
-				// give precedence to 'application/json'
 				if (produces.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
@@ -303,7 +332,6 @@ export class ObjectFieldApi {
 				}
 			const localVarFormParams: any = {};
 
-						// verify required parameter 'objectDefinitionId' is not null or undefined
 						if (objectDefinitionId === null || objectDefinitionId === undefined) {
 							throw new Error('Required parameter objectDefinitionId was null or undefined when calling getObjectDefinitionObjectFieldsPage.');
 						}
@@ -356,26 +384,38 @@ export class ObjectFieldApi {
 					localVarRequest(localVarRequestOptions, (error, response, body) => {
 						if (error) {
 							reject(error);
-						} else {
-							if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-									body = ObjectSerializer.deserialize(body, "PageObjectField");
-								resolve({ body: body, response: response });
-							} else {
-								reject(new HttpError(body, response, response.statusCode));
+						}
+						else {
+							if (
+								response.statusCode &&
+								response.statusCode >= 200 &&
+								response.statusCode <= 299
+							) {
+								resolve({body, response});
+							}
+							else {
+								reject(
+									new HttpError(
+										body,
+										response,
+										response.statusCode
+									)
+								);
 							}
 						}
-					});
-				});
+					}
+				);
 			});
-		}
+		});
+	}
 		/**
 		 * 
 				 * @param objectFieldId 
 		 */
-		public async getObjectField (
+		public async getObjectField(
 					objectFieldId: number,
 			options: {
-				headers: {[name: string]: string}
+				headers: {[name: string]: string};
 			} = {headers: {}}
 		): Promise<{
 				body: ObjectField;
@@ -390,7 +430,6 @@ export class ObjectFieldApi {
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
 				const produces = ['application/json', 'application/xml'];
-				// give precedence to 'application/json'
 				if (produces.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
@@ -398,7 +437,6 @@ export class ObjectFieldApi {
 				}
 			const localVarFormParams: any = {};
 
-						// verify required parameter 'objectFieldId' is not null or undefined
 						if (objectFieldId === null || objectFieldId === undefined) {
 							throw new Error('Required parameter objectFieldId was null or undefined when calling getObjectField.');
 						}
@@ -436,28 +474,40 @@ export class ObjectFieldApi {
 					localVarRequest(localVarRequestOptions, (error, response, body) => {
 						if (error) {
 							reject(error);
-						} else {
-							if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-									body = ObjectSerializer.deserialize(body, "ObjectField");
-								resolve({ body: body, response: response });
-							} else {
-								reject(new HttpError(body, response, response.statusCode));
+						}
+						else {
+							if (
+								response.statusCode &&
+								response.statusCode >= 200 &&
+								response.statusCode <= 299
+							) {
+								resolve({body, response});
+							}
+							else {
+								reject(
+									new HttpError(
+										body,
+										response,
+										response.statusCode
+									)
+								);
 							}
 						}
-					});
-				});
+					}
+				);
 			});
-		}
+		});
+	}
 		/**
 		 * 
 				 * @param objectFieldId 
 				 * @param ObjectField 
 		 */
-		public async patchObjectField (
+		public async patchObjectField(
 					objectFieldId: number,
 					ObjectField?: ObjectField,
 			options: {
-				headers: {[name: string]: string}
+				headers: {[name: string]: string};
 			} = {headers: {}}
 		): Promise<{
 				body: ObjectField;
@@ -472,7 +522,6 @@ export class ObjectFieldApi {
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
 				const produces = ['application/json', 'application/xml'];
-				// give precedence to 'application/json'
 				if (produces.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
@@ -480,7 +529,6 @@ export class ObjectFieldApi {
 				}
 			const localVarFormParams: any = {};
 
-						// verify required parameter 'objectFieldId' is not null or undefined
 						if (objectFieldId === null || objectFieldId === undefined) {
 							throw new Error('Required parameter objectFieldId was null or undefined when calling patchObjectField.');
 						}
@@ -519,28 +567,40 @@ export class ObjectFieldApi {
 					localVarRequest(localVarRequestOptions, (error, response, body) => {
 						if (error) {
 							reject(error);
-						} else {
-							if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-									body = ObjectSerializer.deserialize(body, "ObjectField");
-								resolve({ body: body, response: response });
-							} else {
-								reject(new HttpError(body, response, response.statusCode));
+						}
+						else {
+							if (
+								response.statusCode &&
+								response.statusCode >= 200 &&
+								response.statusCode <= 299
+							) {
+								resolve({body, response});
+							}
+							else {
+								reject(
+									new HttpError(
+										body,
+										response,
+										response.statusCode
+									)
+								);
 							}
 						}
-					});
-				});
+					}
+				);
 			});
-		}
+		});
+	}
 		/**
 		 * 
 				 * @param externalReferenceCode 
 				 * @param ObjectField 
 		 */
-		public async postObjectDefinitionByExternalReferenceCodeObjectField (
+		public async postObjectDefinitionByExternalReferenceCodeObjectField(
 					externalReferenceCode: string,
 					ObjectField?: ObjectField,
 			options: {
-				headers: {[name: string]: string}
+				headers: {[name: string]: string};
 			} = {headers: {}}
 		): Promise<{
 				body: ObjectField;
@@ -555,7 +615,6 @@ export class ObjectFieldApi {
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
 				const produces = ['application/json', 'application/xml'];
-				// give precedence to 'application/json'
 				if (produces.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
@@ -563,7 +622,6 @@ export class ObjectFieldApi {
 				}
 			const localVarFormParams: any = {};
 
-						// verify required parameter 'externalReferenceCode' is not null or undefined
 						if (externalReferenceCode === null || externalReferenceCode === undefined) {
 							throw new Error('Required parameter externalReferenceCode was null or undefined when calling postObjectDefinitionByExternalReferenceCodeObjectField.');
 						}
@@ -602,28 +660,40 @@ export class ObjectFieldApi {
 					localVarRequest(localVarRequestOptions, (error, response, body) => {
 						if (error) {
 							reject(error);
-						} else {
-							if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-									body = ObjectSerializer.deserialize(body, "ObjectField");
-								resolve({ body: body, response: response });
-							} else {
-								reject(new HttpError(body, response, response.statusCode));
+						}
+						else {
+							if (
+								response.statusCode &&
+								response.statusCode >= 200 &&
+								response.statusCode <= 299
+							) {
+								resolve({body, response});
+							}
+							else {
+								reject(
+									new HttpError(
+										body,
+										response,
+										response.statusCode
+									)
+								);
 							}
 						}
-					});
-				});
+					}
+				);
 			});
-		}
+		});
+	}
 		/**
 		 * 
 				 * @param objectDefinitionId 
 				 * @param ObjectField 
 		 */
-		public async postObjectDefinitionObjectField (
+		public async postObjectDefinitionObjectField(
 					objectDefinitionId: number,
 					ObjectField?: ObjectField,
 			options: {
-				headers: {[name: string]: string}
+				headers: {[name: string]: string};
 			} = {headers: {}}
 		): Promise<{
 				body: ObjectField;
@@ -638,7 +708,6 @@ export class ObjectFieldApi {
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
 				const produces = ['application/json', 'application/xml'];
-				// give precedence to 'application/json'
 				if (produces.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
@@ -646,7 +715,6 @@ export class ObjectFieldApi {
 				}
 			const localVarFormParams: any = {};
 
-						// verify required parameter 'objectDefinitionId' is not null or undefined
 						if (objectDefinitionId === null || objectDefinitionId === undefined) {
 							throw new Error('Required parameter objectDefinitionId was null or undefined when calling postObjectDefinitionObjectField.');
 						}
@@ -685,28 +753,40 @@ export class ObjectFieldApi {
 					localVarRequest(localVarRequestOptions, (error, response, body) => {
 						if (error) {
 							reject(error);
-						} else {
-							if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-									body = ObjectSerializer.deserialize(body, "ObjectField");
-								resolve({ body: body, response: response });
-							} else {
-								reject(new HttpError(body, response, response.statusCode));
+						}
+						else {
+							if (
+								response.statusCode &&
+								response.statusCode >= 200 &&
+								response.statusCode <= 299
+							) {
+								resolve({body, response});
+							}
+							else {
+								reject(
+									new HttpError(
+										body,
+										response,
+										response.statusCode
+									)
+								);
 							}
 						}
-					});
-				});
+					}
+				);
 			});
-		}
+		});
+	}
 		/**
 		 * 
 				 * @param objectFieldId 
 				 * @param ObjectField 
 		 */
-		public async putObjectField (
+		public async putObjectField(
 					objectFieldId: number,
 					ObjectField?: ObjectField,
 			options: {
-				headers: {[name: string]: string}
+				headers: {[name: string]: string};
 			} = {headers: {}}
 		): Promise<{
 				body: ObjectField;
@@ -721,7 +801,6 @@ export class ObjectFieldApi {
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
 				const produces = ['application/json', 'application/xml'];
-				// give precedence to 'application/json'
 				if (produces.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
@@ -729,7 +808,6 @@ export class ObjectFieldApi {
 				}
 			const localVarFormParams: any = {};
 
-						// verify required parameter 'objectFieldId' is not null or undefined
 						if (objectFieldId === null || objectFieldId === undefined) {
 							throw new Error('Required parameter objectFieldId was null or undefined when calling putObjectField.');
 						}
@@ -768,16 +846,28 @@ export class ObjectFieldApi {
 					localVarRequest(localVarRequestOptions, (error, response, body) => {
 						if (error) {
 							reject(error);
-						} else {
-							if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-									body = ObjectSerializer.deserialize(body, "ObjectField");
-								resolve({ body: body, response: response });
-							} else {
-								reject(new HttpError(body, response, response.statusCode));
+						}
+						else {
+							if (
+								response.statusCode &&
+								response.statusCode >= 200 &&
+								response.statusCode <= 299
+							) {
+								resolve({body, response});
+							}
+							else {
+								reject(
+									new HttpError(
+										body,
+										response,
+										response.statusCode
+									)
+								);
 							}
 						}
-					});
-				});
+					}
+				);
 			});
-		}
+		});
+	}
 }

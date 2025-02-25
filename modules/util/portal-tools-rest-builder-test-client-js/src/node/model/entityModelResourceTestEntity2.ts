@@ -16,19 +16,23 @@
 			'id'?: number;
 			'name'?: string;
 
-		static discriminator: string | undefined = undefined;
+		static 'discriminator': string | undefined = undefined;
 
-		static attributeTypeMap: Array<{baseName: string, name: string, type: string}> = [
-				{
-					"baseName": "id",
-					"name": "id",
-					"type": "number"
-				},
-				{
-					"baseName": "name",
-					"name": "name",
-					"type": "string"
-				}
+	static 'attributeTypeMap': Array<{
+		baseName: string;
+		name: string;
+		type: string;
+	}> = [
+		{
+			baseName: 'id',
+			name: 'id',
+			type: 'number',
+		},
+		{
+			baseName: 'name',
+			name: 'name',
+			type: 'string',
+		},
 		];
 
 		static getAttributeTypeMap() {

@@ -7,12 +7,16 @@ import http from 'http';
 
 import localVarRequest from 'request';
 /* tslint:disable:no-unused-locals */
-import { Authentication, Interceptor, ObjectSerializer, VoidAuth } from '../model/models';
+import {
+	Authentication,
+	Interceptor,
+	ObjectSerializer,
+	VoidAuth,
+} from '../model/models';
+		import {PageSiteTestEntity} from '../model/pageSiteTestEntity';
+		import {SiteTestEntity} from '../model/siteTestEntity';
 
-		import { PageSiteTestEntity } from '../model/pageSiteTestEntity';
-		import { SiteTestEntity } from '../model/siteTestEntity';
-
-import { HttpError } from './apis';
+import {HttpError} from './apis';
 const defaultBasePath = 'http://localhost';
 
 /**
@@ -20,29 +24,33 @@ const defaultBasePath = 'http://localhost';
  * @generated
  */
 
-export enum SiteTestEntityApiApiKeys {
-}
+export enum SiteTestEntityApiApiKeys {}
 
 export class SiteTestEntityApi {
 	protected _basePath = defaultBasePath;
-	protected _defaultHeaders : any = {};
-	protected _useQuerystring : boolean = false;
+	protected _defaultHeaders: any = {};
+	protected _useQuerystring: boolean = false;
 
 	protected authentications = {
-		'default': <Authentication>new VoidAuth(),
-	}
+		default: <Authentication>new VoidAuth(),
+	};
 
 	protected interceptors: Interceptor[] = [];
 
 	constructor(basePath?: string);
-	constructor(basePathOrUsername: string, password?: string, basePath?: string) {
+	constructor(
+		basePathOrUsername: string,
+		password?: string,
+		basePath?: string
+	) {
 		if (password) {
 			if (basePath) {
 				this.basePath = basePath;
 			}
-		} else {
+		}
+		else {
 			if (basePathOrUsername) {
-				this.basePath = basePathOrUsername
+				this.basePath = basePathOrUsername;
 			}
 		}
 	}
@@ -72,7 +80,8 @@ export class SiteTestEntityApi {
 	}
 
 	public setApiKey(key: SiteTestEntityApiApiKeys, value: string) {
-		(this.authentications as any)[SiteTestEntityApiApiKeys[key]].apiKey = value;
+		(this.authentications as any)[SiteTestEntityApiApiKeys[key]].apiKey =
+			value;
 	}
 
 	public addInterceptor(interceptor: Interceptor) {
@@ -83,10 +92,10 @@ export class SiteTestEntityApi {
 		 * 
 				 * @param siteId 
 		 */
-		public async getSiteSiteTestEntitiesPage (
+		public async getSiteSiteTestEntitiesPage(
 					siteId: number,
 			options: {
-				headers: {[name: string]: string}
+				headers: {[name: string]: string};
 			} = {headers: {}}
 		): Promise<{
 				body: PageSiteTestEntity;
@@ -101,7 +110,6 @@ export class SiteTestEntityApi {
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
 				const produces = ['application/json', 'application/xml'];
-				// give precedence to 'application/json'
 				if (produces.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
@@ -109,7 +117,6 @@ export class SiteTestEntityApi {
 				}
 			const localVarFormParams: any = {};
 
-						// verify required parameter 'siteId' is not null or undefined
 						if (siteId === null || siteId === undefined) {
 							throw new Error('Required parameter siteId was null or undefined when calling getSiteSiteTestEntitiesPage.');
 						}
@@ -147,28 +154,40 @@ export class SiteTestEntityApi {
 					localVarRequest(localVarRequestOptions, (error, response, body) => {
 						if (error) {
 							reject(error);
-						} else {
-							if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-									body = ObjectSerializer.deserialize(body, "PageSiteTestEntity");
-								resolve({ body: body, response: response });
-							} else {
-								reject(new HttpError(body, response, response.statusCode));
+						}
+						else {
+							if (
+								response.statusCode &&
+								response.statusCode >= 200 &&
+								response.statusCode <= 299
+							) {
+								resolve({body, response});
+							}
+							else {
+								reject(
+									new HttpError(
+										body,
+										response,
+										response.statusCode
+									)
+								);
 							}
 						}
-					});
-				});
+					}
+				);
 			});
-		}
+		});
+	}
 		/**
 		 * 
 				 * @param externalReferenceCode 
 				 * @param siteId 
 		 */
-		public async getSiteSiteTestEntityByExternalReferenceCode (
+		public async getSiteSiteTestEntityByExternalReferenceCode(
 					externalReferenceCode: string,
 					siteId: number,
 			options: {
-				headers: {[name: string]: string}
+				headers: {[name: string]: string};
 			} = {headers: {}}
 		): Promise<{
 				body: SiteTestEntity;
@@ -187,7 +206,6 @@ export class SiteTestEntityApi {
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
 				const produces = ['application/json', 'application/xml'];
-				// give precedence to 'application/json'
 				if (produces.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
@@ -195,11 +213,9 @@ export class SiteTestEntityApi {
 				}
 			const localVarFormParams: any = {};
 
-						// verify required parameter 'externalReferenceCode' is not null or undefined
 						if (externalReferenceCode === null || externalReferenceCode === undefined) {
 							throw new Error('Required parameter externalReferenceCode was null or undefined when calling getSiteSiteTestEntityByExternalReferenceCode.');
 						}
-						// verify required parameter 'siteId' is not null or undefined
 						if (siteId === null || siteId === undefined) {
 							throw new Error('Required parameter siteId was null or undefined when calling getSiteSiteTestEntityByExternalReferenceCode.');
 						}
@@ -237,26 +253,38 @@ export class SiteTestEntityApi {
 					localVarRequest(localVarRequestOptions, (error, response, body) => {
 						if (error) {
 							reject(error);
-						} else {
-							if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-									body = ObjectSerializer.deserialize(body, "SiteTestEntity");
-								resolve({ body: body, response: response });
-							} else {
-								reject(new HttpError(body, response, response.statusCode));
+						}
+						else {
+							if (
+								response.statusCode &&
+								response.statusCode >= 200 &&
+								response.statusCode <= 299
+							) {
+								resolve({body, response});
+							}
+							else {
+								reject(
+									new HttpError(
+										body,
+										response,
+										response.statusCode
+									)
+								);
 							}
 						}
-					});
-				});
+					}
+				);
 			});
-		}
+		});
+	}
 		/**
 		 * 
 				 * @param siteTestEntityId 
 		 */
-		public async getSiteTestEntity (
+		public async getSiteTestEntity(
 					siteTestEntityId: number,
 			options: {
-				headers: {[name: string]: string}
+				headers: {[name: string]: string};
 			} = {headers: {}}
 		): Promise<{
 				body: SiteTestEntity;
@@ -271,7 +299,6 @@ export class SiteTestEntityApi {
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
 				const produces = ['application/json', 'application/xml'];
-				// give precedence to 'application/json'
 				if (produces.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
@@ -279,7 +306,6 @@ export class SiteTestEntityApi {
 				}
 			const localVarFormParams: any = {};
 
-						// verify required parameter 'siteTestEntityId' is not null or undefined
 						if (siteTestEntityId === null || siteTestEntityId === undefined) {
 							throw new Error('Required parameter siteTestEntityId was null or undefined when calling getSiteTestEntity.');
 						}
@@ -317,28 +343,40 @@ export class SiteTestEntityApi {
 					localVarRequest(localVarRequestOptions, (error, response, body) => {
 						if (error) {
 							reject(error);
-						} else {
-							if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-									body = ObjectSerializer.deserialize(body, "SiteTestEntity");
-								resolve({ body: body, response: response });
-							} else {
-								reject(new HttpError(body, response, response.statusCode));
+						}
+						else {
+							if (
+								response.statusCode &&
+								response.statusCode >= 200 &&
+								response.statusCode <= 299
+							) {
+								resolve({body, response});
+							}
+							else {
+								reject(
+									new HttpError(
+										body,
+										response,
+										response.statusCode
+									)
+								);
 							}
 						}
-					});
-				});
+					}
+				);
 			});
-		}
+		});
+	}
 		/**
 		 * 
 				 * @param siteTestEntityId 
 				 * @param roleNames 
 		 */
-		public async getSiteTestEntityPermissionsPage (
+		public async getSiteTestEntityPermissionsPage(
 					siteTestEntityId: number,
 					roleNames?: string,
 			options: {
-				headers: {[name: string]: string}
+				headers: {[name: string]: string};
 			} = {headers: {}}
 		): Promise<{
 				body?: any;
@@ -353,7 +391,6 @@ export class SiteTestEntityApi {
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
 				const produces = ['application/json', 'application/xml'];
-				// give precedence to 'application/json'
 				if (produces.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
@@ -361,7 +398,6 @@ export class SiteTestEntityApi {
 				}
 			const localVarFormParams: any = {};
 
-						// verify required parameter 'siteTestEntityId' is not null or undefined
 						if (siteTestEntityId === null || siteTestEntityId === undefined) {
 							throw new Error('Required parameter siteTestEntityId was null or undefined when calling getSiteTestEntityPermissionsPage.');
 						}
@@ -402,27 +438,40 @@ export class SiteTestEntityApi {
 					localVarRequest(localVarRequestOptions, (error, response, body) => {
 						if (error) {
 							reject(error);
-						} else {
-							if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-								resolve({ body: body, response: response });
-							} else {
-								reject(new HttpError(body, response, response.statusCode));
+						}
+						else {
+							if (
+								response.statusCode &&
+								response.statusCode >= 200 &&
+								response.statusCode <= 299
+							) {
+								resolve({body, response});
+							}
+							else {
+								reject(
+									new HttpError(
+										body,
+										response,
+										response.statusCode
+									)
+								);
 							}
 						}
-					});
-				});
+					}
+				);
 			});
-		}
+		});
+	}
 		/**
 		 * 
 				 * @param siteId 
 				 * @param SiteTestEntity 
 		 */
-		public async postSiteSiteTestEntity (
+		public async postSiteSiteTestEntity(
 					siteId: number,
 					SiteTestEntity?: SiteTestEntity,
 			options: {
-				headers: {[name: string]: string}
+				headers: {[name: string]: string};
 			} = {headers: {}}
 		): Promise<{
 				body: SiteTestEntity;
@@ -437,7 +486,6 @@ export class SiteTestEntityApi {
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
 				const produces = ['application/json', 'application/xml'];
-				// give precedence to 'application/json'
 				if (produces.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
@@ -445,7 +493,6 @@ export class SiteTestEntityApi {
 				}
 			const localVarFormParams: any = {};
 
-						// verify required parameter 'siteId' is not null or undefined
 						if (siteId === null || siteId === undefined) {
 							throw new Error('Required parameter siteId was null or undefined when calling postSiteSiteTestEntity.');
 						}
@@ -484,30 +531,42 @@ export class SiteTestEntityApi {
 					localVarRequest(localVarRequestOptions, (error, response, body) => {
 						if (error) {
 							reject(error);
-						} else {
-							if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-									body = ObjectSerializer.deserialize(body, "SiteTestEntity");
-								resolve({ body: body, response: response });
-							} else {
-								reject(new HttpError(body, response, response.statusCode));
+						}
+						else {
+							if (
+								response.statusCode &&
+								response.statusCode >= 200 &&
+								response.statusCode <= 299
+							) {
+								resolve({body, response});
+							}
+							else {
+								reject(
+									new HttpError(
+										body,
+										response,
+										response.statusCode
+									)
+								);
 							}
 						}
-					});
-				});
+					}
+				);
 			});
-		}
+		});
+	}
 		/**
 		 * 
 				 * @param externalReferenceCode 
 				 * @param siteId 
 				 * @param SiteTestEntity 
 		 */
-		public async putSiteSiteTestEntityByExternalReferenceCode (
+		public async putSiteSiteTestEntityByExternalReferenceCode(
 					externalReferenceCode: string,
 					siteId: number,
 					SiteTestEntity?: SiteTestEntity,
 			options: {
-				headers: {[name: string]: string}
+				headers: {[name: string]: string};
 			} = {headers: {}}
 		): Promise<{
 				body: SiteTestEntity;
@@ -526,7 +585,6 @@ export class SiteTestEntityApi {
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
 				const produces = ['application/json', 'application/xml'];
-				// give precedence to 'application/json'
 				if (produces.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
@@ -534,11 +592,9 @@ export class SiteTestEntityApi {
 				}
 			const localVarFormParams: any = {};
 
-						// verify required parameter 'externalReferenceCode' is not null or undefined
 						if (externalReferenceCode === null || externalReferenceCode === undefined) {
 							throw new Error('Required parameter externalReferenceCode was null or undefined when calling putSiteSiteTestEntityByExternalReferenceCode.');
 						}
-						// verify required parameter 'siteId' is not null or undefined
 						if (siteId === null || siteId === undefined) {
 							throw new Error('Required parameter siteId was null or undefined when calling putSiteSiteTestEntityByExternalReferenceCode.');
 						}
@@ -577,28 +633,40 @@ export class SiteTestEntityApi {
 					localVarRequest(localVarRequestOptions, (error, response, body) => {
 						if (error) {
 							reject(error);
-						} else {
-							if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-									body = ObjectSerializer.deserialize(body, "SiteTestEntity");
-								resolve({ body: body, response: response });
-							} else {
-								reject(new HttpError(body, response, response.statusCode));
+						}
+						else {
+							if (
+								response.statusCode &&
+								response.statusCode >= 200 &&
+								response.statusCode <= 299
+							) {
+								resolve({body, response});
+							}
+							else {
+								reject(
+									new HttpError(
+										body,
+										response,
+										response.statusCode
+									)
+								);
 							}
 						}
-					});
-				});
+					}
+				);
 			});
-		}
+		});
+	}
 		/**
 		 * 
 				 * @param siteTestEntityId 
 				 * @param SiteTestEntity 
 		 */
-		public async putSiteTestEntity (
+		public async putSiteTestEntity(
 					siteTestEntityId: number,
 					SiteTestEntity?: SiteTestEntity,
 			options: {
-				headers: {[name: string]: string}
+				headers: {[name: string]: string};
 			} = {headers: {}}
 		): Promise<{
 				body: SiteTestEntity;
@@ -613,7 +681,6 @@ export class SiteTestEntityApi {
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
 				const produces = ['application/json', 'application/xml'];
-				// give precedence to 'application/json'
 				if (produces.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
@@ -621,7 +688,6 @@ export class SiteTestEntityApi {
 				}
 			const localVarFormParams: any = {};
 
-						// verify required parameter 'siteTestEntityId' is not null or undefined
 						if (siteTestEntityId === null || siteTestEntityId === undefined) {
 							throw new Error('Required parameter siteTestEntityId was null or undefined when calling putSiteTestEntity.');
 						}
@@ -660,26 +726,38 @@ export class SiteTestEntityApi {
 					localVarRequest(localVarRequestOptions, (error, response, body) => {
 						if (error) {
 							reject(error);
-						} else {
-							if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-									body = ObjectSerializer.deserialize(body, "SiteTestEntity");
-								resolve({ body: body, response: response });
-							} else {
-								reject(new HttpError(body, response, response.statusCode));
+						}
+						else {
+							if (
+								response.statusCode &&
+								response.statusCode >= 200 &&
+								response.statusCode <= 299
+							) {
+								resolve({body, response});
+							}
+							else {
+								reject(
+									new HttpError(
+										body,
+										response,
+										response.statusCode
+									)
+								);
 							}
 						}
-					});
-				});
+					}
+				);
 			});
-		}
+		});
+	}
 		/**
 		 * 
 				 * @param siteTestEntityId 
 		 */
-		public async putSiteTestEntityPermissionsPage (
+		public async putSiteTestEntityPermissionsPage(
 					siteTestEntityId: number,
 			options: {
-				headers: {[name: string]: string}
+				headers: {[name: string]: string};
 			} = {headers: {}}
 		): Promise<{
 				body?: any;
@@ -694,7 +772,6 @@ export class SiteTestEntityApi {
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
 				const produces = ['application/json', 'application/xml'];
-				// give precedence to 'application/json'
 				if (produces.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
@@ -702,7 +779,6 @@ export class SiteTestEntityApi {
 				}
 			const localVarFormParams: any = {};
 
-						// verify required parameter 'siteTestEntityId' is not null or undefined
 						if (siteTestEntityId === null || siteTestEntityId === undefined) {
 							throw new Error('Required parameter siteTestEntityId was null or undefined when calling putSiteTestEntityPermissionsPage.');
 						}
@@ -740,15 +816,28 @@ export class SiteTestEntityApi {
 					localVarRequest(localVarRequestOptions, (error, response, body) => {
 						if (error) {
 							reject(error);
-						} else {
-							if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-								resolve({ body: body, response: response });
-							} else {
-								reject(new HttpError(body, response, response.statusCode));
+						}
+						else {
+							if (
+								response.statusCode &&
+								response.statusCode >= 200 &&
+								response.statusCode <= 299
+							) {
+								resolve({body, response});
+							}
+							else {
+								reject(
+									new HttpError(
+										body,
+										response,
+										response.statusCode
+									)
+								);
 							}
 						}
-					});
-				});
+					}
+				);
 			});
-		}
+		});
+	}
 }

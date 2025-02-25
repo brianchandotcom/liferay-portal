@@ -18,29 +18,33 @@
 			'properties1'?: { [key: string]: object; };
 			'properties2'?: { [key: string]: object; };
 
-		static discriminator: string | undefined = undefined;
+		static 'discriminator': string | undefined = undefined;
 
-		static attributeTypeMap: Array<{baseName: string, name: string, type: string}> = [
-				{
-					"baseName": "description",
-					"name": "description",
-					"type": "string"
-				},
-				{
-					"baseName": "name",
-					"name": "name",
-					"type": "string"
-				},
-				{
-					"baseName": "properties1",
-					"name": "properties1",
-					"type": "{ [key: string]: object; }"
-				},
-				{
-					"baseName": "properties2",
-					"name": "properties2",
-					"type": "{ [key: string]: object; }"
-				}
+	static 'attributeTypeMap': Array<{
+		baseName: string;
+		name: string;
+		type: string;
+	}> = [
+		{
+			baseName: 'description',
+			name: 'description',
+			type: 'string',
+		},
+		{
+			baseName: 'name',
+			name: 'name',
+			type: 'string',
+		},
+		{
+			baseName: 'properties1',
+			name: 'properties1',
+			type: '{ [key: string]: object; }',
+		},
+		{
+			baseName: 'properties2',
+			name: 'properties2',
+			type: '{ [key: string]: object; }',
+		},
 		];
 
 		static getAttributeTypeMap() {

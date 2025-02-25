@@ -14,24 +14,28 @@
 			'id'?: number;
 			'property_with_hyphens'?: string;
 
-		static discriminator: string | undefined = undefined;
+		static 'discriminator': string | undefined = undefined;
 
-		static attributeTypeMap: Array<{baseName: string, name: string, type: string}> = [
-				{
-					"baseName": "description",
-					"name": "description",
-					"type": "string"
-				},
-				{
-					"baseName": "id",
-					"name": "id",
-					"type": "number"
-				},
-				{
-					"baseName": "property_with_hyphens",
-					"name": "property_with_hyphens",
-					"type": "string"
-				}
+	static 'attributeTypeMap': Array<{
+		baseName: string;
+		name: string;
+		type: string;
+	}> = [
+		{
+			baseName: 'description',
+			name: 'description',
+			type: 'string',
+		},
+		{
+			baseName: 'id',
+			name: 'id',
+			type: 'number',
+		},
+		{
+			baseName: 'property_with_hyphens',
+			name: 'property_with_hyphens',
+			type: 'string',
+		},
 		];
 
 		static getAttributeTypeMap() {

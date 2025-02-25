@@ -394,7 +394,7 @@ create index IX_241D10A4 on SocialActivitySet (userId, type_, classNameId, class
 create index IX_6D0C8733 on SocialActivitySet (userId, type_, groupId, classNameId);
 
 create index IX_384788CD on SocialActivitySetting (groupId, activityType);
-create index IX_D984AABA on SocialActivitySetting (groupId, classNameId, activityType, name[$COLUMN_LENGTH:75$]);
+create unique index IX_4FC6CD18 on SocialActivitySetting (groupId, classNameId, activityType, name[$COLUMN_LENGTH:75$], ctCollectionId);
 
 create index IX_61171E99 on SocialRelation (companyId);
 create index IX_5E1F07A2 on SocialRelation (type_, companyId);

@@ -337,8 +337,20 @@ public class StyleBookEntryActionDropdownItemsProvider {
 						defaultStyleBookEntryName, _styleBookEntry.getName()
 					}));
 
-			dropdownItem.setLabel(
-				LanguageUtil.get(_httpServletRequest, "mark-as-default"));
+			if (FeatureFlagManagerUtil.isEnabled(
+					_themeDisplay.getCompanyId(), "LPD-30204")) {
+
+				dropdownItem.setLabel(
+					LanguageUtil.format(
+						_httpServletRequest, "mark-as-default-for-x",
+						StyleBookUtil.getThemeName(
+							_themeDisplay.getCompanyId(), _httpServletRequest,
+							_styleBookEntry.getThemeId())));
+			}
+			else {
+				dropdownItem.setLabel(
+					LanguageUtil.get(_httpServletRequest, "mark-as-default"));
+			}
 		};
 	}
 

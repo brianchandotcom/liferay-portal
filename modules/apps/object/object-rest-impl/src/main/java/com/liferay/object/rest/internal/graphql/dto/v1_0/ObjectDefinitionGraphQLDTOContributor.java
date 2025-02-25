@@ -130,6 +130,15 @@ public class ObjectDefinitionGraphQLDTOContributor
 					GraphQLDTOProperty.of(
 						objectField.getName(), FileEntry.class));
 			}
+			else if (Objects.equals(
+						objectField.getBusinessType(),
+						ObjectFieldConstants.
+							BUSINESS_TYPE_MULTISELECT_PICKLIST)) {
+
+				graphQLDTOProperties.add(
+					GraphQLDTOProperty.of(
+						objectField.getName(), ListEntry[].class));
+			}
 			else if (objectField.getListTypeDefinitionId() != 0) {
 				graphQLDTOProperties.add(
 					GraphQLDTOProperty.of(

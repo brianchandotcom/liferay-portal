@@ -21,6 +21,7 @@ import com.liferay.headless.delivery.dto.v1_0.MessageBoardMessage;
 import com.liferay.headless.delivery.dto.v1_0.MessageBoardSection;
 import com.liferay.headless.delivery.dto.v1_0.MessageBoardThread;
 import com.liferay.headless.delivery.dto.v1_0.NavigationMenu;
+import com.liferay.headless.delivery.dto.v1_0.ObjectEntryFolder;
 import com.liferay.headless.delivery.dto.v1_0.Rating;
 import com.liferay.headless.delivery.dto.v1_0.SitePage;
 import com.liferay.headless.delivery.dto.v1_0.StructuredContent;
@@ -48,6 +49,7 @@ import com.liferay.headless.delivery.resource.v1_0.MessageBoardMessageResource;
 import com.liferay.headless.delivery.resource.v1_0.MessageBoardSectionResource;
 import com.liferay.headless.delivery.resource.v1_0.MessageBoardThreadResource;
 import com.liferay.headless.delivery.resource.v1_0.NavigationMenuResource;
+import com.liferay.headless.delivery.resource.v1_0.ObjectEntryFolderResource;
 import com.liferay.headless.delivery.resource.v1_0.SitePageResource;
 import com.liferay.headless.delivery.resource.v1_0.StructuredContentFolderResource;
 import com.liferay.headless.delivery.resource.v1_0.StructuredContentResource;
@@ -249,6 +251,14 @@ public class Mutation {
 
 		_navigationMenuResourceComponentServiceObjects =
 			navigationMenuResourceComponentServiceObjects;
+	}
+
+	public static void setObjectEntryFolderResourceComponentServiceObjects(
+		ComponentServiceObjects<ObjectEntryFolderResource>
+			objectEntryFolderResourceComponentServiceObjects) {
+
+		_objectEntryFolderResourceComponentServiceObjects =
+			objectEntryFolderResourceComponentServiceObjects;
 	}
 
 	public static void setSitePageResourceComponentServiceObjects(
@@ -4765,6 +4775,62 @@ public class Mutation {
 	}
 
 	@GraphQLField
+	public Response createAssetLibraryObjectEntryFoldersPageExportBatch(
+			@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("sort") String sortsString,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_objectEntryFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			objectEntryFolderResource ->
+				objectEntryFolderResource.
+					postAssetLibraryObjectEntryFoldersPageExportBatch(
+						Long.valueOf(assetLibraryId), search,
+						_filterBiFunction.apply(
+							objectEntryFolderResource, filterString),
+						_sortsBiFunction.apply(
+							objectEntryFolderResource, sortsString),
+						callbackURL, contentType, fieldNames));
+	}
+
+	@GraphQLField
+	public ObjectEntryFolder createAssetLibraryObjectEntryFolder(
+			@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
+			@GraphQLName("objectEntryFolder") ObjectEntryFolder
+				objectEntryFolder)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_objectEntryFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			objectEntryFolderResource ->
+				objectEntryFolderResource.postAssetLibraryObjectEntryFolder(
+					Long.valueOf(assetLibraryId), objectEntryFolder));
+	}
+
+	@GraphQLField
+	public Response createAssetLibraryObjectEntryFolderBatch(
+			@GraphQLName("assetLibraryId") @NotEmpty String assetLibraryId,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_objectEntryFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			objectEntryFolderResource ->
+				objectEntryFolderResource.
+					postAssetLibraryObjectEntryFolderBatch(
+						Long.valueOf(assetLibraryId), callbackURL, object));
+	}
+
+	@GraphQLField
 	public Response createSiteSitePagesPageExportBatch(
 			@GraphQLName("siteKey") @NotEmpty String siteKey,
 			@GraphQLName("search") String search,
@@ -6707,6 +6773,28 @@ public class Mutation {
 			_vulcanBatchEngineImportTaskResource);
 	}
 
+	private void _populateResourceContext(
+			ObjectEntryFolderResource objectEntryFolderResource)
+		throws Exception {
+
+		objectEntryFolderResource.setContextAcceptLanguage(_acceptLanguage);
+		objectEntryFolderResource.setContextCompany(_company);
+		objectEntryFolderResource.setContextHttpServletRequest(
+			_httpServletRequest);
+		objectEntryFolderResource.setContextHttpServletResponse(
+			_httpServletResponse);
+		objectEntryFolderResource.setContextUriInfo(_uriInfo);
+		objectEntryFolderResource.setContextUser(_user);
+		objectEntryFolderResource.setGroupLocalService(_groupLocalService);
+		objectEntryFolderResource.setRoleLocalService(_roleLocalService);
+
+		objectEntryFolderResource.setVulcanBatchEngineExportTaskResource(
+			_vulcanBatchEngineExportTaskResource);
+
+		objectEntryFolderResource.setVulcanBatchEngineImportTaskResource(
+			_vulcanBatchEngineImportTaskResource);
+	}
+
 	private void _populateResourceContext(SitePageResource sitePageResource)
 		throws Exception {
 
@@ -6872,6 +6960,8 @@ public class Mutation {
 		_messageBoardThreadResourceComponentServiceObjects;
 	private static ComponentServiceObjects<NavigationMenuResource>
 		_navigationMenuResourceComponentServiceObjects;
+	private static ComponentServiceObjects<ObjectEntryFolderResource>
+		_objectEntryFolderResourceComponentServiceObjects;
 	private static ComponentServiceObjects<SitePageResource>
 		_sitePageResourceComponentServiceObjects;
 	private static ComponentServiceObjects<StructuredContentResource>

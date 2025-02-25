@@ -28,6 +28,7 @@ import com.liferay.headless.delivery.internal.resource.v1_0.MessageBoardMessageR
 import com.liferay.headless.delivery.internal.resource.v1_0.MessageBoardSectionResourceImpl;
 import com.liferay.headless.delivery.internal.resource.v1_0.MessageBoardThreadResourceImpl;
 import com.liferay.headless.delivery.internal.resource.v1_0.NavigationMenuResourceImpl;
+import com.liferay.headless.delivery.internal.resource.v1_0.ObjectEntryFolderResourceImpl;
 import com.liferay.headless.delivery.internal.resource.v1_0.SitePageResourceImpl;
 import com.liferay.headless.delivery.internal.resource.v1_0.StructuredContentFolderResourceImpl;
 import com.liferay.headless.delivery.internal.resource.v1_0.StructuredContentResourceImpl;
@@ -55,6 +56,7 @@ import com.liferay.headless.delivery.resource.v1_0.MessageBoardMessageResource;
 import com.liferay.headless.delivery.resource.v1_0.MessageBoardSectionResource;
 import com.liferay.headless.delivery.resource.v1_0.MessageBoardThreadResource;
 import com.liferay.headless.delivery.resource.v1_0.NavigationMenuResource;
+import com.liferay.headless.delivery.resource.v1_0.ObjectEntryFolderResource;
 import com.liferay.headless.delivery.resource.v1_0.SitePageResource;
 import com.liferay.headless.delivery.resource.v1_0.StructuredContentFolderResource;
 import com.liferay.headless.delivery.resource.v1_0.StructuredContentResource;
@@ -126,6 +128,8 @@ public class ServletDataImpl implements ServletData {
 			_messageBoardThreadResourceComponentServiceObjects);
 		Mutation.setNavigationMenuResourceComponentServiceObjects(
 			_navigationMenuResourceComponentServiceObjects);
+		Mutation.setObjectEntryFolderResourceComponentServiceObjects(
+			_objectEntryFolderResourceComponentServiceObjects);
 		Mutation.setSitePageResourceComponentServiceObjects(
 			_sitePageResourceComponentServiceObjects);
 		Mutation.setStructuredContentResourceComponentServiceObjects(
@@ -181,6 +185,8 @@ public class ServletDataImpl implements ServletData {
 			_messageBoardThreadResourceComponentServiceObjects);
 		Query.setNavigationMenuResourceComponentServiceObjects(
 			_navigationMenuResourceComponentServiceObjects);
+		Query.setObjectEntryFolderResourceComponentServiceObjects(
+			_objectEntryFolderResourceComponentServiceObjects);
 		Query.setSitePageResourceComponentServiceObjects(
 			_sitePageResourceComponentServiceObjects);
 		Query.setStructuredContentResourceComponentServiceObjects(
@@ -1460,6 +1466,21 @@ public class ServletDataImpl implements ServletData {
 							NavigationMenuResourceImpl.class,
 							"putSiteNavigationMenuPermissionsPage"));
 					put(
+						"mutation#createAssetLibraryObjectEntryFoldersPageExportBatch",
+						new ObjectValuePair<>(
+							ObjectEntryFolderResourceImpl.class,
+							"postAssetLibraryObjectEntryFoldersPageExportBatch"));
+					put(
+						"mutation#createAssetLibraryObjectEntryFolder",
+						new ObjectValuePair<>(
+							ObjectEntryFolderResourceImpl.class,
+							"postAssetLibraryObjectEntryFolder"));
+					put(
+						"mutation#createAssetLibraryObjectEntryFolderBatch",
+						new ObjectValuePair<>(
+							ObjectEntryFolderResourceImpl.class,
+							"postAssetLibraryObjectEntryFolderBatch"));
+					put(
 						"mutation#createSiteSitePagesPageExportBatch",
 						new ObjectValuePair<>(
 							SitePageResourceImpl.class,
@@ -2482,6 +2503,11 @@ public class ServletDataImpl implements ServletData {
 							NavigationMenuResourceImpl.class,
 							"getSiteNavigationMenuPermissionsPage"));
 					put(
+						"query#assetLibraryObjectEntryFolders",
+						new ObjectValuePair<>(
+							ObjectEntryFolderResourceImpl.class,
+							"getAssetLibraryObjectEntryFoldersPage"));
+					put(
 						"query#sitePages",
 						new ObjectValuePair<>(
 							SitePageResourceImpl.class,
@@ -3073,6 +3099,10 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<NavigationMenuResource>
 		_navigationMenuResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<ObjectEntryFolderResource>
+		_objectEntryFolderResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<SitePageResource>

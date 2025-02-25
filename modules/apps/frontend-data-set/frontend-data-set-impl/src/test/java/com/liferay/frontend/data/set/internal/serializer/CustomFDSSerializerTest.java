@@ -12,7 +12,6 @@ import com.liferay.frontend.data.set.constants.FDSEntityFieldTypes;
 import com.liferay.frontend.data.set.internal.url.FDSAPIURLResolverRegistryImpl;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.data.set.model.FDSSortItem;
-import com.liferay.frontend.data.set.model.FDSSortItemList;
 import com.liferay.frontend.data.set.url.FDSAPIURLResolver;
 import com.liferay.frontend.data.set.url.FDSAPIURLResolverRegistry;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
@@ -703,27 +702,27 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		_mockSerializeSorts(FDS_NAMES[1], sortProperties3);
 
-		FDSSortItemList fdsSortItemList1 = _customFDSSerializer.serializeSorts(
+		List<FDSSortItem> fdsSortItems1 = _customFDSSerializer.serializeSorts(
 			FDS_NAMES[0], httpServletRequest);
 
 		Assert.assertFalse(
-			_containsSortProperties(fdsSortItemList1, sortProperties3));
+			_containsSortProperties(fdsSortItems1, sortProperties3));
 		Assert.assertTrue(
-			_containsSortProperties(fdsSortItemList1, sortProperties1));
+			_containsSortProperties(fdsSortItems1, sortProperties1));
 		Assert.assertTrue(
-			_containsSortProperties(fdsSortItemList1, sortProperties2));
-		Assert.assertTrue(fdsSortItemList1.size() == 2);
+			_containsSortProperties(fdsSortItems1, sortProperties2));
+		Assert.assertTrue(fdsSortItems1.size() == 2);
 
-		FDSSortItemList fdsSortItemList2 = _customFDSSerializer.serializeSorts(
+		List<FDSSortItem> fdsSortItems2 = _customFDSSerializer.serializeSorts(
 			FDS_NAMES[1], httpServletRequest);
 
 		Assert.assertFalse(
-			_containsSortProperties(fdsSortItemList2, sortProperties1));
+			_containsSortProperties(fdsSortItems2, sortProperties1));
 		Assert.assertFalse(
-			_containsSortProperties(fdsSortItemList2, sortProperties2));
+			_containsSortProperties(fdsSortItems2, sortProperties2));
 		Assert.assertTrue(
-			_containsSortProperties(fdsSortItemList2, sortProperties3));
-		Assert.assertTrue(fdsSortItemList2.size() == 1);
+			_containsSortProperties(fdsSortItems2, sortProperties3));
+		Assert.assertTrue(fdsSortItems2.size() == 1);
 
 		_resetFDSSerializer();
 
@@ -1034,9 +1033,9 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 	}
 
 	private boolean _containsSortProperties(
-		FDSSortItemList fdsSortItemList, Map<String, Object> sortProperties) {
+		List<FDSSortItem> fdsSortItems, Map<String, Object> sortProperties) {
 
-		for (FDSSortItem fdsSortItem : fdsSortItemList) {
+		for (FDSSortItem fdsSortItem : fdsSortItems) {
 			if (Objects.equals(
 					fdsSortItem.get("active"), sortProperties.get("default")) &&
 				Objects.equals(

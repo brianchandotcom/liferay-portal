@@ -11,7 +11,7 @@ import {
 	Field,
 	useStateDispatch,
 } from '../../../structure_builder/contexts/StateContext';
-import {FIELD_TYPE_DEFAULT_FIELD} from '../../../structure_builder/utils/fieldType';
+import {getDefaultField} from '../../../structure_builder/utils/fieldType';
 
 export default function AddFieldDropdown({
 	triggerType = 'text',
@@ -22,7 +22,7 @@ export default function AddFieldDropdown({
 
 	const addField = (type: Field['type']) =>
 		dispatch({
-			field: FIELD_TYPE_DEFAULT_FIELD[type],
+			field: getDefaultField(type),
 			type: 'add-field',
 		});
 

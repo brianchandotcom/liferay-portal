@@ -7,9 +7,12 @@
 
 import {v4 as uuidv4} from 'uuid';
 
-export const FIELD_TYPE_DEFAULT_FIELD = {
+import {Field} from '../contexts/StateContext';
+
+// Constants
+
+const FIELD_TYPE_DEFAULT_FIELD = {
 	text: {
-		erc: uuidv4(),
 		label: Liferay.Language.get('text'),
 		name: 'text',
 		type: 'text',
@@ -24,5 +27,13 @@ export const FIELD_TYPE_BUSINESS_TYPE = {
 	text: 'Text',
 } as const;
 
+// Types
+
 export type FieldBusinessType =
 	(typeof FIELD_TYPE_BUSINESS_TYPE)[keyof typeof FIELD_TYPE_BUSINESS_TYPE];
+
+// Functions
+
+export function getDefaultField(type: Field['type']) {
+	return {...FIELD_TYPE_DEFAULT_FIELD[type], erc: uuidv4()};
+}

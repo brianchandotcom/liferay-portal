@@ -151,14 +151,14 @@ public class CloudStorageSyncUtil {
 			gcpApplicationCredentialFilePath = _buildProperties.getProperty(
 				"google.application.crendential.file[jenkins]");
 		}
-		else if (source.startsWith(GCP_BUCKET_PATH_PATCHER_SHARED) ||
-				 destination.startsWith(GCP_BUCKET_PATH_PATCHER_SHARED)) {
+		else if (destination.startsWith(GCP_BUCKET_PATH_PATCHER_SHARED) ||
+				 source.startsWith(GCP_BUCKET_PATH_PATCHER_SHARED)) {
 
 			gcpApplicationCredentialFilePath = _buildProperties.getProperty(
 				"google.application.crendential.file[patcher]");
 		}
-		else if (source.startsWith(GCP_BUCKET_PATH_TESTRAY_RESULTS) ||
-				 destination.startsWith(GCP_BUCKET_PATH_TESTRAY_RESULTS)) {
+		else if (destination.startsWith(GCP_BUCKET_PATH_TESTRAY_RESULTS) ||
+				 source.startsWith(GCP_BUCKET_PATH_TESTRAY_RESULTS)) {
 
 			gcpApplicationCredentialFilePath = _buildProperties.getProperty(
 				"google.application.crendential.file[testray]");

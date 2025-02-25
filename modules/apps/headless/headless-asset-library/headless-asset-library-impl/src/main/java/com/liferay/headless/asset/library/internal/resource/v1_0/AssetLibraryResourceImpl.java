@@ -114,9 +114,9 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 
 		DepotEntry depotEntry = _depotEntryService.getGroupDepotEntry(siteId);
 
-		Group group = depotEntry.getGroup();
-
 		String name = assetLibrary.getName();
+
+		Group group = depotEntry.getGroup();
 
 		if (name == null) {
 			name = group.getName(contextAcceptLanguage.getPreferredLocale());

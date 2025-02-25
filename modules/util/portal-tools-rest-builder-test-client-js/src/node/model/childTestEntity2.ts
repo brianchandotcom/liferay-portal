@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-			import { TestEntity } from './testEntity';
+			import {TestEntity} from './testEntity';
 
 /**
  * @author Alejandro Tardín
@@ -13,14 +13,18 @@
 	export class ChildTestEntity2 extends TestEntity {
 			'property2'?: string;
 
-		static discriminator: string | undefined = undefined;
+		static 'discriminator': string | undefined = undefined;
 
-		static attributeTypeMap: Array<{baseName: string, name: string, type: string}> = [
-				{
-					"baseName": "property2",
-					"name": "property2",
-					"type": "string"
-				}
+	static 'attributeTypeMap': Array<{
+		baseName: string;
+		name: string;
+		type: string;
+	}> = [
+		{
+			baseName: 'property2',
+			name: 'property2',
+			type: 'string',
+		},
 		];
 
 		static getAttributeTypeMap() {

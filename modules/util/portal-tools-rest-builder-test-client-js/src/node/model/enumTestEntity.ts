@@ -12,14 +12,18 @@
 	export class EnumTestEntity {
 			'testEnum'?: '-1em' | '-0.95em' | '1em' | '0.95em';
 
-		static discriminator: string | undefined = undefined;
+		static 'discriminator': string | undefined = undefined;
 
-		static attributeTypeMap: Array<{baseName: string, name: string, type: string}> = [
-				{
-					"baseName": "testEnum",
-					"name": "testEnum",
-					"type": "'-1em' | '-0.95em' | '1em' | '0.95em'"
-				}
+	static 'attributeTypeMap': Array<{
+		baseName: string;
+		name: string;
+		type: string;
+	}> = [
+		{
+			baseName: 'testEnum',
+			name: 'testEnum',
+			type: ''-1em' | '-0.95em' | '1em' | '0.95em'',
+		},
 		];
 
 		static getAttributeTypeMap() {

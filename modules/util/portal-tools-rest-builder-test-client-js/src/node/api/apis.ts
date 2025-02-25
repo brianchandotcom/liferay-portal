@@ -25,7 +25,7 @@ import * as http from 'http';
  */
 
 export class HttpError extends Error {
-	constructor (
+	constructor(
 		public response: http.IncomingMessage,
 		public body: any,
 		public statusCode?: number
@@ -35,4 +35,11 @@ export class HttpError extends Error {
 	}
 }
 
-export const APIS = [CompanyTestEntityApi, EntityModelResourceTestEntity1Api, EntityModelResourceTestEntity2Api, SiteTestEntityApi, TestEntityApi, TestEntityAddressApi];
+export const APIS = [
+	CompanyTestEntityApi,
+	EntityModelResourceTestEntity1Api,
+	EntityModelResourceTestEntity2Api,
+	SiteTestEntityApi,
+	TestEntityApi,
+	TestEntityAddressApi,
+];

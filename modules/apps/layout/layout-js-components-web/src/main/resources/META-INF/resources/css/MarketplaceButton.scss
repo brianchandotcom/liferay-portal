@@ -2,22 +2,15 @@
 
 @import 'atlas-variables';
 
-.marketplace-button {
-	position: relative;
-
-	.notification {
-		background-color: $primary;
-		border: 2px $gray-200 solid;
-		border-radius: 50%;
-		height: 10px;
-		margin: 0;
-		padding: 1px;
-		position: absolute;
-		right: 4px;
-		top: 3px;
-		width: 10px;
-		z-index: 1;
-	}
+.marketplace-button.notification:after {
+	background-color: $cadmin-primary;
+	border: 2px $white solid;
+	border-radius: 50%;
+	content: '';
+	padding: 3px;
+	position: absolute;
+	transform: translate(7px, -7px);
+	z-index: 1;
 }
 
 html#{$cadmin-selector} .cadmin .marketplace-button {

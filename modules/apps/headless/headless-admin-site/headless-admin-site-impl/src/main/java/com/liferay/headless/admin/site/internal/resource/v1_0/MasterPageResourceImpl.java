@@ -6,6 +6,7 @@
 package com.liferay.headless.admin.site.internal.resource.v1_0;
 
 import com.liferay.headless.admin.site.dto.v1_0.ContentPageSpecification;
+import com.liferay.headless.admin.site.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.site.dto.v1_0.MasterPage;
 import com.liferay.headless.admin.site.dto.v1_0.PageSpecification;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.GroupUtil;
@@ -19,6 +20,8 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryService;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -233,13 +236,31 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 	private MasterPage _addMasterPage(long groupId, MasterPage masterPage)
 		throws Exception {
 
+		long previewFileEntryId = 0;
+
+		ItemExternalReference itemExternalReference = masterPage.getThumbnail();
+
+		if ((itemExternalReference != null) &&
+			Validator.isNotNull(
+				itemExternalReference.getExternalReferenceCode())) {
+
+			FileEntry fileEntry =
+				_portletFileRepository.
+					getPortletFileEntryByExternalReferenceCode(
+						itemExternalReference.getExternalReferenceCode(),
+						groupId);
+
+			previewFileEntryId = fileEntry.getFileEntryId();
+		}
+
 		return _masterPageDTOConverter.toDTO(
 			_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
 				masterPage.getExternalReferenceCode(), groupId,
 				LayoutPageTemplateConstants.
 					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
-				masterPage.getKey(), masterPage.getName(),
-				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT, 0,
+				masterPage.getKey(), 0, 0, masterPage.getName(),
+				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT,
+				previewFileEntryId, false, 0, 0, 0,
 				WorkflowConstants.STATUS_DRAFT,
 				_getServiceContext(groupId, masterPage)));
 	}
@@ -275,5 +296,8 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 	)
 	private DTOConverter<Layout, PageSpecification>
 		_pageSpecificationDTOConverter;
+
+	@Reference
+	private PortletFileRepository _portletFileRepository;
 
 }

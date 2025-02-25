@@ -55,9 +55,12 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
+import com.liferay.object.model.ObjectValidationRule;
 import com.liferay.object.rest.dto.v1_0.Folder;
 import com.liferay.object.rest.dto.v1_0.Link;
 import com.liferay.object.rest.dto.v1_0.Scope;
+import com.liferay.object.rest.dto.v1_0.ValidateRequest;
+import com.liferay.object.rest.dto.v1_0.ValidateResult;
 import com.liferay.object.rest.resource.v1_0.ObjectEntryResource;
 import com.liferay.object.rest.test.util.ObjectEntryTestUtil;
 import com.liferay.object.rest.test.util.ObjectFieldTestUtil;
@@ -108,6 +111,7 @@ import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.security.auth.GuestOrUserUtil;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -121,6 +125,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.ModelPermissionsFactory;
+import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -8744,6 +8749,132 @@ public class ObjectEntryResourceTest {
 		);
 	}
 
+	@FeatureFlags("LPD-37056")
+	@Test
+	public void testPostScopeScopeKeyValidate() throws Exception {
+		ObjectField textObjectField = _objectFieldLocalService.getObjectField(
+			_siteScopedObjectDefinition1.getObjectDefinitionId(),
+			_OBJECT_FIELD_NAME_1);
+
+		String error1 = RandomTestUtil.randomString();
+
+		ObjectValidationRule objectValidationRule =
+			_objectValidationRuleLocalService.addObjectValidationRule(
+				StringUtil.randomString(), TestPropsValues.getUserId(),
+				_siteScopedObjectDefinition1.getObjectDefinitionId(), true,
+				ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
+				LocalizedMapUtil.getLocalizedMap(error1),
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				ObjectValidationRuleConstants.OUTPUT_TYPE_FULL_VALIDATION,
+				textObjectField.getName() + " == \"foo\"", false,
+				Collections.emptyList());
+
+		String error2 = RandomTestUtil.randomString();
+
+		_objectValidationRuleLocalService.addObjectValidationRule(
+			StringUtil.randomString(), TestPropsValues.getUserId(),
+			_siteScopedObjectDefinition1.getObjectDefinitionId(), true,
+			ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
+			LocalizedMapUtil.getLocalizedMap(error2),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			ObjectValidationRuleConstants.OUTPUT_TYPE_PARTIAL_VALIDATION,
+			"NOT(isInteger(" + textObjectField.getName() + "))", false,
+			Arrays.asList(
+				new ObjectValidationRuleSettingBuilder(
+				).name(
+					ObjectValidationRuleSettingConstants.
+						NAME_OUTPUT_OBJECT_FIELD_ID
+				).value(
+					String.valueOf(textObjectField.getObjectFieldId())
+				).build()));
+
+		PermissionChecker originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+		String originalName = PrincipalThreadLocal.getName();
+
+		try {
+			User user = _addUser("test1", "test1");
+
+			_resourcePermissionLocalService.removeResourcePermission(
+				TestPropsValues.getCompanyId(), ObjectEntry.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(_objectEntry5.getObjectEntryId()),
+				user.getRoleIds()[0], ActionKeys.ADD_ENTRY);
+
+			_setUpPermissionThreadLocal(user);
+
+			ObjectEntryResource objectEntryResource = _getObjectEntryResource(
+				_siteScopedObjectDefinition1, TestPropsValues.getUser());
+
+			AssertUtils.assertFailure(
+				PrincipalException.MustHavePermission.class,
+				StringBundler.concat(
+					"User ", user.getUserId(),
+					" must have ADD_OBJECT_ENTRY permission for ",
+					_siteScopedObjectDefinition1.getResourceName(), " ",
+					TestPropsValues.getGroupId()),
+				() -> objectEntryResource.postScopeScopeKeyValidate(
+					String.valueOf(TestPropsValues.getGroupId()),
+					_getValidateRequest(
+						HashMapBuilder.<String, Object>put(
+							textObjectField.getName(), StringUtil.randomString()
+						).build(),
+						objectValidationRule.getExternalReferenceCode())));
+
+			_setUpPermissionThreadLocal(TestPropsValues.getUser());
+
+			ValidateResult validateResult =
+				objectEntryResource.postScopeScopeKeyValidate(
+					String.valueOf(TestPropsValues.getGroupId()),
+					_getValidateRequest(
+						HashMapBuilder.<String, Object>put(
+							textObjectField.getName(), StringUtil.randomString()
+						).build(),
+						objectValidationRule.getExternalReferenceCode()));
+
+			Assert.assertFalse(validateResult.getSuccess());
+
+			Assert.assertEquals(
+				error1, validateResult.getValidateErrors()[0].getErrorMessage());
+
+			validateResult = objectEntryResource.postScopeScopeKeyValidate(
+				String.valueOf(TestPropsValues.getGroupId()),
+				_getValidateRequest(
+					HashMapBuilder.<String, Object>put(
+						textObjectField.getName(), "foo"
+					).build(),
+					objectValidationRule.getExternalReferenceCode()));
+
+			Assert.assertTrue(validateResult.getSuccess());
+
+			Assert.assertTrue(ArrayUtil.isEmpty(validateResult.getValidateErrors()));
+
+			validateResult = objectEntryResource.postScopeScopeKeyValidate(
+				String.valueOf(TestPropsValues.getGroupId()),
+				_getValidateRequest(
+					HashMapBuilder.<String, Object>put(
+						textObjectField.getName(), RandomTestUtil.randomInt()
+					).build()));
+
+			Assert.assertFalse(validateResult.getSuccess());
+
+			Assert.assertEquals(
+				error1, validateResult.getValidateErrors()[0].getErrorMessage());
+
+			Assert.assertEquals(
+				error2, validateResult.getValidateErrors()[1].getErrorMessage());
+
+			Assert.assertEquals(
+				textObjectField.getName(),
+				validateResult.getValidateErrors()[1].getObjectFieldName());
+		}
+		finally {
+			PermissionThreadLocal.setPermissionChecker(
+				originalPermissionChecker);
+			PrincipalThreadLocal.setName(originalName);
+		}
+	}
+
 	@Test
 	public void testPostSiteScopedCustomObjectEntryInUserGroup()
 		throws Exception {
@@ -8768,6 +8899,126 @@ public class ObjectEntryResourceTest {
 
 		Assert.assertEquals(
 			_OBJECT_FIELD_VALUE_1, jsonObject.getInt(_OBJECT_FIELD_NAME_1));
+	}
+
+	@FeatureFlags("LPD-37056")
+	@Test
+	public void testPostValidate() throws Exception {
+		ObjectField textObjectField = _objectFieldLocalService.getObjectField(
+			_objectDefinition1.getObjectDefinitionId(),
+			_OBJECT_FIELD_NAME_TEXT);
+
+		String error1 = RandomTestUtil.randomString();
+
+		ObjectValidationRule objectValidationRule =
+			_objectValidationRuleLocalService.addObjectValidationRule(
+				StringUtil.randomString(), TestPropsValues.getUserId(),
+				_objectDefinition1.getObjectDefinitionId(), true,
+				ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
+				LocalizedMapUtil.getLocalizedMap(error1),
+				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+				ObjectValidationRuleConstants.OUTPUT_TYPE_FULL_VALIDATION,
+				textObjectField.getName() + " == \"foo\"", false,
+				Collections.emptyList());
+
+		String error2 = RandomTestUtil.randomString();
+
+		_objectValidationRuleLocalService.addObjectValidationRule(
+			StringUtil.randomString(), TestPropsValues.getUserId(),
+			_objectDefinition1.getObjectDefinitionId(), true,
+			ObjectValidationRuleConstants.ENGINE_TYPE_DDM,
+			LocalizedMapUtil.getLocalizedMap(error2),
+			LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
+			ObjectValidationRuleConstants.OUTPUT_TYPE_PARTIAL_VALIDATION,
+			"NOT(isInteger(" + textObjectField.getName() + "))", false,
+			Arrays.asList(
+				new ObjectValidationRuleSettingBuilder(
+				).name(
+					ObjectValidationRuleSettingConstants.
+						NAME_OUTPUT_OBJECT_FIELD_ID
+				).value(
+					String.valueOf(textObjectField.getObjectFieldId())
+				).build()));
+
+		PermissionChecker originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+		String originalName = PrincipalThreadLocal.getName();
+
+		try {
+			User user = _addUser("test1", "test1");
+
+			_resourcePermissionLocalService.removeResourcePermission(
+				TestPropsValues.getCompanyId(), ObjectEntry.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL,
+				String.valueOf(_objectEntry5.getObjectEntryId()),
+				user.getRoleIds()[0], ActionKeys.ADD_ENTRY);
+
+			_setUpPermissionThreadLocal(user);
+
+			ObjectEntryResource objectEntryResource = _getObjectEntryResource(
+				_objectDefinition1, TestPropsValues.getUser());
+
+			AssertUtils.assertFailure(
+				PrincipalException.MustHavePermission.class,
+				StringBundler.concat(
+					"User ", user.getUserId(),
+					" must have ADD_OBJECT_ENTRY permission for ",
+					_objectDefinition1.getResourceName(), " "),
+				() -> objectEntryResource.postValidate(
+					_getValidateRequest(
+						HashMapBuilder.<String, Object>put(
+							textObjectField.getName(), StringUtil.randomString()
+						).build(),
+						objectValidationRule.getExternalReferenceCode())));
+
+			_setUpPermissionThreadLocal(TestPropsValues.getUser());
+
+			ValidateResult validateResult = objectEntryResource.postValidate(
+				_getValidateRequest(
+					HashMapBuilder.<String, Object>put(
+						textObjectField.getName(), StringUtil.randomString()
+					).build(),
+					objectValidationRule.getExternalReferenceCode()));
+
+			Assert.assertFalse(validateResult.getSuccess());
+
+			Assert.assertEquals(
+				error1, validateResult.getValidateErrors()[0].getErrorMessage());
+
+			validateResult = objectEntryResource.postValidate(
+				_getValidateRequest(
+					HashMapBuilder.<String, Object>put(
+						textObjectField.getName(), "foo"
+					).build(),
+					objectValidationRule.getExternalReferenceCode()));
+
+			Assert.assertTrue(validateResult.getSuccess());
+
+			Assert.assertTrue(ArrayUtil.isEmpty(validateResult.getValidateErrors()));
+
+			validateResult = objectEntryResource.postValidate(
+				_getValidateRequest(
+					HashMapBuilder.<String, Object>put(
+						textObjectField.getName(), RandomTestUtil.randomInt()
+					).build()));
+
+			Assert.assertFalse(validateResult.getSuccess());
+
+			Assert.assertEquals(
+				error1, validateResult.getValidateErrors()[0].getErrorMessage());
+
+			Assert.assertEquals(
+				error2, validateResult.getValidateErrors()[1].getErrorMessage());
+
+			Assert.assertEquals(
+				textObjectField.getName(),
+				validateResult.getValidateErrors()[1].getObjectFieldName());
+		}
+		finally {
+			PermissionThreadLocal.setPermissionChecker(
+				originalPermissionChecker);
+			PrincipalThreadLocal.setName(originalName);
+		}
 	}
 
 	@Test
@@ -13579,6 +13830,27 @@ public class ObjectEntryResourceTest {
 		return Type.MANY_TO_MANY;
 	}
 
+	private ValidateRequest _getValidateRequest(
+		Map<String, Object> values, String... validationKeys) {
+
+		com.liferay.object.rest.dto.v1_0.ObjectEntry objectEntry =
+			new com.liferay.object.rest.dto.v1_0.ObjectEntry();
+
+		objectEntry.setProperties((values != null) ? values : new HashMap<>());
+
+		String[] localValidationKeys = validationKeys;
+
+		return new ValidateRequest() {
+			{
+				if (localValidationKeys != null) {
+					setValidationKeys(() -> localValidationKeys);
+				}
+
+				setEntry(() -> objectEntry);
+			}
+		};
+	}
+
 	private JSONObject
 			_patchPutByExternalReferenceCodeCustomObjectEntryWithPermissions(
 				Http.Method httpMethod, boolean nestedFields,
@@ -13738,6 +14010,13 @@ public class ObjectEntryResourceTest {
 			});
 
 		objectEntry.setProperties(properties);
+	}
+
+	private void _setUpPermissionThreadLocal(User user) {
+		PrincipalThreadLocal.setName(user.getUserId());
+
+		PermissionThreadLocal.setPermissionChecker(
+			PermissionCheckerFactoryUtil.create(user));
 	}
 
 	private void _testFilterObjectEntriesByRelatedLocalizedObjectEntries(

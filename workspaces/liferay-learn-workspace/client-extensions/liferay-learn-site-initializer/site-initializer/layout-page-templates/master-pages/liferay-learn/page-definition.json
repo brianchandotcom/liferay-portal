@@ -92,6 +92,9 @@
 																	}
 																}
 															],
+															"fragmentStyle": {
+																"marginLeft": "-12px"
+															},
 															"indexed": true
 														},
 														"id": "a7bc88c1-436e-185a-3dc1-416025e36b12",
@@ -140,6 +143,9 @@
 																					}
 																				}
 																			],
+																			"fragmentStyle": {
+																				"minWidth": "240px"
+																			},
 																			"indexed": true
 																		},
 																		"id": "6c59fef7-5867-0da6-739a-1e1cbfd574e3",
@@ -365,6 +371,7 @@
 																					"value": {
 																						"html": {
 																							"value_i18n": {
+																								"en_US": "<svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<path d=\"M19.4689 4.00049H16.475C16.2001 4.00049 15.9766 4.22405 15.9766 4.50004V7.49398C15.9766 7.77 16.2001 7.99353 16.4761 7.99353H19.4701C19.746 7.99353 19.9696 7.76997 19.9696 7.49398V4.50004C19.9685 4.22402 19.745 4.00049 19.4689 4.00049Z\" fill=\"currentColor\"></path>\n<path d=\"M7.49447 9.9884H4.50053C4.22451 9.9884 4.00098 10.2119 4.00098 10.488V13.4819C4.00098 13.7579 4.22454 13.9814 4.50053 13.9814H7.49447C7.77049 13.9814 7.9929 13.7579 7.9929 13.4819V10.488C7.9929 10.2119 7.76934 9.9884 7.49447 9.9884Z\" fill=\"currentColor\"></path>\n<path d=\"M13.4808 9.9884H10.4869C10.2108 9.9884 9.9873 10.2119 9.9873 10.488V13.4819C9.9873 13.7579 10.2108 13.9814 10.4869 13.9814H13.4808C13.7568 13.9814 13.9803 13.7579 13.9803 13.4819V10.488C13.9803 10.2119 13.7568 9.9884 13.4808 9.9884Z\" fill=\"currentColor\"></path>\n<path d=\"M19.4691 9.9884H16.4751C16.1991 9.9884 15.9756 10.2119 15.9756 10.488V13.4819C15.9756 13.7579 16.1991 13.9814 16.4751 13.9814H19.4691C19.7451 13.9814 19.9686 13.7579 19.9686 13.4819V10.488C19.9686 10.2119 19.7451 9.9884 19.4691 9.9884Z\" fill=\"currentColor\"></path>\n<path d=\"M7.49447 15.9762H4.50053C4.22451 15.9762 4.00098 16.1998 4.00098 16.4758V19.4697C4.00098 19.7446 4.22454 19.9681 4.50053 19.9681H7.49447C7.77049 19.9681 7.9929 19.7446 7.9929 19.4686V16.4746C7.9929 16.1998 7.76934 15.9762 7.49447 15.9762Z\" fill=\"currentColor\"></path>\n<path d=\"M13.4808 15.9762H10.4869C10.2108 15.9762 9.9873 16.1998 9.9873 16.4758V19.4697C9.9873 19.7457 10.2108 19.9692 10.4869 19.9692H13.4808C13.7568 19.9692 13.9803 19.7457 13.9803 19.4697V16.4758C13.9803 16.1998 13.7568 15.9762 13.4808 15.9762Z\" fill=\"currentColor\"></path>\n<path d=\"M19.4691 15.9762H16.4751C16.1991 15.9762 15.9756 16.1998 15.9756 16.4758V19.4697C15.9756 19.7457 16.1991 19.9693 16.4751 19.9693H19.4691C19.7451 19.9681 19.9686 19.7446 19.9686 19.4686V16.4746C19.9686 16.1998 19.7451 15.9762 19.4691 15.9762Z\" fill=\"currentColor\"></path>\n<path d=\"M7.49447 4.00049H4.50053C4.22451 4.00049 4.00098 4.22405 4.00098 4.50004V7.49398C4.00098 7.76888 4.22454 7.99241 4.50053 7.99241H7.49447C7.77049 7.99241 7.9929 7.76885 7.9929 7.49285V4.50008C7.9929 4.22405 7.76934 4.00049 7.49447 4.00049Z\" fill=\"currentColor\"></path>\n<path d=\"M13.4808 4.00049H10.4869C10.2108 4.00049 9.9873 4.22405 9.9873 4.50004V7.49398C9.9873 7.77 10.2108 7.99353 10.4869 7.99353H13.4808C13.7568 7.99353 13.9803 7.76997 13.9803 7.49398V4.50004C13.9803 4.22402 13.7568 4.00049 13.4808 4.00049Z\" fill=\"currentColor\"></path>\n</svg>"
 																							}
 																						}
 																					}
@@ -373,6 +380,11 @@
 																					"id": "title",
 																					"value": {
 																						"fragmentLink": {
+																						},
+																						"text": {
+																							"value_i18n": {
+																								"en_US": "Dashboard"
+																							}
 																						}
 																					}
 																				}
@@ -1714,7 +1726,7 @@
 														"definition": {
 															"fragment": {
 																"key": "dialect-text",
-																"siteKey": "Guest"
+																"siteKey": "Liferay Learn"
 															},
 															"fragmentConfig": {
 																"textType": "text-paragraph",
@@ -1751,7 +1763,7 @@
 														"definition": {
 															"fragment": {
 																"key": "dialect-text",
-																"siteKey": "Guest"
+																"siteKey": "Liferay Learn"
 															},
 															"fragmentConfig": {
 																"textType": "text-paragraph",
@@ -1788,7 +1800,7 @@
 														"definition": {
 															"fragment": {
 																"key": "dialect-text",
-																"siteKey": "Guest"
+																"siteKey": "Liferay Learn"
 															},
 															"fragmentConfig": {
 																"textType": "text-paragraph",
@@ -1825,7 +1837,7 @@
 														"definition": {
 															"fragment": {
 																"key": "dialect-text",
-																"siteKey": "Guest"
+																"siteKey": "Liferay Learn"
 															},
 															"fragmentConfig": {
 																"textType": "text-paragraph",
@@ -1930,7 +1942,7 @@
 																"definition": {
 																	"fragment": {
 																		"key": "dialect-text",
-																		"siteKey": "Guest"
+																		"siteKey": "Liferay Learn"
 																	},
 																	"fragmentConfig": {
 																		"textType": "text-paragraph-lg",
@@ -1979,7 +1991,7 @@
 																"definition": {
 																	"fragment": {
 																		"key": "dialect-text",
-																		"siteKey": "Guest"
+																		"siteKey": "Liferay Learn"
 																	},
 																	"fragmentConfig": {
 																		"textType": "text-paragraph",
@@ -2046,7 +2058,7 @@
 																"definition": {
 																	"fragment": {
 																		"key": "dialect-text",
-																		"siteKey": "Guest"
+																		"siteKey": "Liferay Learn"
 																	},
 																	"fragmentConfig": {
 																		"textType": "text-paragraph-lg",
@@ -2103,7 +2115,7 @@
 																"definition": {
 																	"fragment": {
 																		"key": "dialect-text",
-																		"siteKey": "Guest"
+																		"siteKey": "Liferay Learn"
 																	},
 																	"fragmentConfig": {
 																		"textType": "text-paragraph",
@@ -2141,7 +2153,7 @@
 																"definition": {
 																	"fragment": {
 																		"key": "dialect-text",
-																		"siteKey": "Guest"
+																		"siteKey": "Liferay Learn"
 																	},
 																	"fragmentConfig": {
 																		"textType": "text-paragraph",
@@ -2179,7 +2191,7 @@
 																"definition": {
 																	"fragment": {
 																		"key": "dialect-text",
-																		"siteKey": "Guest"
+																		"siteKey": "Liferay Learn"
 																	},
 																	"fragmentConfig": {
 																		"textType": "text-paragraph",
@@ -2217,7 +2229,7 @@
 																"definition": {
 																	"fragment": {
 																		"key": "dialect-text",
-																		"siteKey": "Guest"
+																		"siteKey": "Liferay Learn"
 																	},
 																	"fragmentConfig": {
 																		"textType": "text-paragraph",
@@ -2255,7 +2267,7 @@
 																"definition": {
 																	"fragment": {
 																		"key": "dialect-text",
-																		"siteKey": "Guest"
+																		"siteKey": "Liferay Learn"
 																	},
 																	"fragmentConfig": {
 																		"textType": "text-paragraph",
@@ -2320,7 +2332,7 @@
 																"definition": {
 																	"fragment": {
 																		"key": "dialect-text",
-																		"siteKey": "Guest"
+																		"siteKey": "Liferay Learn"
 																	},
 																	"fragmentConfig": {
 																		"textType": "text-paragraph-lg",
@@ -2373,7 +2385,7 @@
 																"definition": {
 																	"fragment": {
 																		"key": "dialect-text",
-																		"siteKey": "Guest"
+																		"siteKey": "Liferay Learn"
 																	},
 																	"fragmentConfig": {
 																		"textType": "text-paragraph",
@@ -2384,12 +2396,6 @@
 																			"id": "element-text",
 																			"value": {
 																				"fragmentLink": {
-																					"value": {
-																						"href": {
-																							"mapping": {
-																							}
-																						}
-																					}
 																				},
 																				"text": {
 																					"value_i18n": {
@@ -2409,7 +2415,7 @@
 																"definition": {
 																	"fragment": {
 																		"key": "dialect-text",
-																		"siteKey": "Guest"
+																		"siteKey": "Liferay Learn"
 																	},
 																	"fragmentConfig": {
 																		"textType": "text-paragraph",
@@ -2420,12 +2426,6 @@
 																			"id": "element-text",
 																			"value": {
 																				"fragmentLink": {
-																					"value": {
-																						"href": {
-																							"mapping": {
-																							}
-																						}
-																					}
 																				},
 																				"text": {
 																					"value_i18n": {
@@ -2445,7 +2445,7 @@
 																"definition": {
 																	"fragment": {
 																		"key": "dialect-text",
-																		"siteKey": "Guest"
+																		"siteKey": "Liferay Learn"
 																	},
 																	"fragmentConfig": {
 																		"textType": "text-paragraph",
@@ -2529,7 +2529,7 @@
 																		"definition": {
 																			"fragment": {
 																				"key": "dialect-text",
-																				"siteKey": "Guest"
+																				"siteKey": "Liferay Learn"
 																			},
 																			"fragmentConfig": {
 																				"textType": "text-paragraph-lg",
@@ -2576,7 +2576,7 @@
 																		"definition": {
 																			"fragment": {
 																				"key": "dialect-text",
-																				"siteKey": "Guest"
+																				"siteKey": "Liferay Learn"
 																			},
 																			"fragmentConfig": {
 																				"textType": "text-paragraph",
@@ -2643,7 +2643,7 @@
 																		"definition": {
 																			"fragment": {
 																				"key": "dialect-text",
-																				"siteKey": "Guest"
+																				"siteKey": "Liferay Learn"
 																			},
 																			"fragmentConfig": {
 																				"textType": "text-paragraph-lg",

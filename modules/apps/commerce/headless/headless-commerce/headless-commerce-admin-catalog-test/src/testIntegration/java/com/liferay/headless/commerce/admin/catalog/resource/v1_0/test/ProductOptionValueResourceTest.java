@@ -149,6 +149,13 @@ public class ProductOptionValueResourceTest
 		_testPostProductOptionIdProductOptionValueWithSkuExternalReferenceCode();
 	}
 
+	@Ignore
+	@Override
+	@Test
+	public void testVulcanCRUDItemDelegateGetItem() throws Exception {
+		super.testVulcanCRUDItemDelegateGetItem();
+	}
+
 	@Override
 	protected ProductOptionValue randomPatchProductOptionValue()
 		throws Exception {

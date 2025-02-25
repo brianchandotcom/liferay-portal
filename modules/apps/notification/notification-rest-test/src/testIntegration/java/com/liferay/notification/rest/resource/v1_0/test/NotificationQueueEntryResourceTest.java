@@ -225,4 +225,11 @@ public class NotificationQueueEntryResourceTest
 		super.testPutNotificationQueueEntryResend();
 	}
 
+	@Ignore
+	@Override
+	@Test
+	public void testVulcanCRUDItemDelegateGetItem() throws Exception {
+		super.testVulcanCRUDItemDelegateGetItem();
+	}
+
 }

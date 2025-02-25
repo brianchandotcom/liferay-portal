@@ -179,8 +179,6 @@ public class BuildDatabaseUtil {
 			return;
 		}
 
-		String currentNetworkName = _getCurrentNetworkName();
-
 		List<String> distNodesList = new ArrayList<>(
 			Arrays.asList(distNodes.split(",")));
 
@@ -190,12 +188,6 @@ public class BuildDatabaseUtil {
 					distNodesList);
 
 				distNodesList.remove(distNode);
-
-				if (!JenkinsResultsParserUtil.isJenkinsSlaveInNetwork(
-						distNode, currentNetworkName)) {
-
-					continue;
-				}
 
 				String[] commands = new String[2];
 
@@ -271,6 +263,13 @@ public class BuildDatabaseUtil {
 							"Unable to download ",
 							BuildDatabase.FILE_NAME_BUILD_DATABASE, "\n\n",
 							errorText));
+				}
+
+				if (!buildDatabaseFile.exists()) {
+					System.out.println(
+						"Failed to get build-database.json from " + distNode);
+
+					continue;
 				}
 
 				break;

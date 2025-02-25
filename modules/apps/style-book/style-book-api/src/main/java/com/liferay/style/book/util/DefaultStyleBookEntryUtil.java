@@ -6,10 +6,12 @@
 package com.liferay.style.book.util;
 
 import com.liferay.exportimport.kernel.staging.StagingUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutSet;
+import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.style.book.model.StyleBookEntry;
 import com.liferay.style.book.service.StyleBookEntryLocalServiceUtil;
 
@@ -32,22 +34,21 @@ public class DefaultStyleBookEntryUtil {
 			}
 		}
 
-		if ((styleBookEntry == null) &&
-			Validator.isNotNull(layout.getThemeId())) {
-
-			styleBookEntry =
-				StyleBookEntryLocalServiceUtil.fetchDefaultStyleBookEntry(
-					StagingUtil.getLiveGroupId(layout.getGroupId()),
-					layout.getThemeId());
+		if (styleBookEntry != null) {
+			return styleBookEntry;
 		}
 
-		if (styleBookEntry == null) {
-			LayoutSet layoutSet = layout.getLayoutSet();
+		try {
+			Theme theme = layout.getTheme();
 
 			styleBookEntry =
 				StyleBookEntryLocalServiceUtil.fetchDefaultStyleBookEntry(
 					StagingUtil.getLiveGroupId(layout.getGroupId()),
-					layoutSet.getThemeId());
+					theme.getThemeId());
+		}
+		catch (PortalException portalException) {
+			_log.error(
+				"Unable to get layout's default style book", portalException);
 		}
 
 		return styleBookEntry;
@@ -67,5 +68,8 @@ public class DefaultStyleBookEntryUtil {
 
 		return getDefaultMasterStyleBookEntry(layout);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DefaultStyleBookEntryUtil.class);
 
 }

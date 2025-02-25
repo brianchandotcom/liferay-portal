@@ -358,8 +358,33 @@ public class WorkflowDefinitionLinkDisplayContext {
 			WorkflowDefinition workflowDefinition, String className)
 		throws PortalException {
 
-		WorkflowDefinitionLink workflowDefinitionLink =
-			_getWorkflowDefinitionLink(className);
+		WorkflowDefinitionLink workflowDefinitionLink = null;
+
+		try {
+			if (isControlPanelPortlet()) {
+				workflowDefinitionLink =
+					_workflowDefinitionLinkLocalService.
+						getDefaultWorkflowDefinitionLink(
+							_workflowDefinitionLinkRequestHelper.getCompanyId(),
+							className, 0, 0);
+			}
+			else {
+				workflowDefinitionLink =
+					_workflowDefinitionLinkLocalService.
+						getWorkflowDefinitionLink(
+							_workflowDefinitionLinkRequestHelper.getCompanyId(),
+							getGroupId(), className, 0, 0, true);
+			}
+		}
+		catch (NoSuchWorkflowDefinitionLinkException
+					noSuchWorkflowDefinitionLinkException) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(noSuchWorkflowDefinitionLinkException);
+			}
+		}
 
 		if (workflowDefinitionLink == null) {
 			return false;
@@ -523,35 +548,6 @@ public class WorkflowDefinitionLinkDisplayContext {
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		return portletDisplay.getPortletName();
-	}
-
-	private WorkflowDefinitionLink _getWorkflowDefinitionLink(String className)
-		throws PortalException {
-
-		try {
-			if (isControlPanelPortlet()) {
-				return _workflowDefinitionLinkLocalService.
-					getDefaultWorkflowDefinitionLink(
-						_workflowDefinitionLinkRequestHelper.getCompanyId(),
-						className, 0, 0);
-			}
-
-			return _workflowDefinitionLinkLocalService.
-				getWorkflowDefinitionLink(
-					_workflowDefinitionLinkRequestHelper.getCompanyId(),
-					getGroupId(), className, 0, 0, true);
-		}
-		catch (NoSuchWorkflowDefinitionLinkException
-					noSuchWorkflowDefinitionLinkException) {
-
-			// LPS-52675
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchWorkflowDefinitionLinkException);
-			}
-
-			return null;
-		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

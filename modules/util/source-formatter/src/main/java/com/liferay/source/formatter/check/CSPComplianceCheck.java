@@ -197,12 +197,12 @@ public class CSPComplianceCheck extends BaseTagAttributesCheck {
 							lineNumber);
 					}
 				}
-				else if (fileName.endsWith(".ftl")) {
+				else if (fileName.endsWith(".ftl") && _illegalTagAuiReplacements.contains(tagName)) {
 					_checkMissingAttribute(
 						fileName, tagName, "${nonceAttribute}", tagString,
 						lineNumber);
 				}
-				else if (fileName.endsWith(".vm")) {
+				else if (fileName.endsWith(".vm") && _illegalTagAuiReplacements.contains(tagName)) {
 					_checkMissingAttribute(
 						fileName, tagName, "$nonceAttribute", tagString,
 						lineNumber);

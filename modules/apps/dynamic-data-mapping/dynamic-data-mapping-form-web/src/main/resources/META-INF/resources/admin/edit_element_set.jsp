@@ -35,6 +35,7 @@ renderResponse.setTitle((structure == null) ? LanguageUtil.get(request, "new-ele
 <div class="portlet-forms" id="<portlet:namespace />formContainer">
 	<div class="forms-navigation-bar">
 		<clay:navigation-bar
+			cssClass="lfr-forms__edit-navigation-bar"
 			inverted="<%= true %>"
 			navigationItems="<%= ddmFormAdminDisplayContext.getElementSetBuilderNavigationItems() %>"
 		/>

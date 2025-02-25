@@ -266,7 +266,9 @@ test('LPD-43390 Create child configuration list', async ({
 		{label: 'Master'}
 	);
 	await commerceAdminProductConfigurationListsPage.addConfigurationListParentList.click();
-	await commerceAdminProductConfigurationListsPage.addConfigurationListParentListElement.click();
+	await commerceAdminProductConfigurationListsPage
+		.addConfigurationListParentListElement()
+		.click();
 	await commerceAdminProductConfigurationListsPage.addConfigurationListSaveButton.click();
 
 	await expect(
@@ -1049,7 +1051,9 @@ test('LPD-43013 Edit child configuration list', async ({
 		{label: 'Master'}
 	);
 	await commerceAdminProductConfigurationListsPage.addConfigurationListParentList.click();
-	await commerceAdminProductConfigurationListsPage.addConfigurationListParentListElement.click();
+	await commerceAdminProductConfigurationListsPage
+		.addConfigurationListParentListElement()
+		.click();
 	await commerceAdminProductConfigurationListsPage.addConfigurationListSaveButton.click();
 
 	await expect(
@@ -1309,12 +1313,35 @@ test('LPD-44818 Show difference icons', async ({
 
 	await applicationsMenuPage.goToCommerceProductConfigurationLists();
 
-	await (
-		await commerceAdminProductConfigurationListsPage.tableRowLink({
-			colIndex: 0,
-			rowValue: configurationList.name,
-		})
-	).click();
+	await commerceAdminProductConfigurationListsPage.addConfigurationList.click();
+
+	await expect(
+		commerceAdminProductConfigurationListsPage.addConfigurationListParentList
+	).toBeVisible();
+
+	await commerceAdminProductConfigurationListsPage.addConfigurationListName.fill(
+		`Child Configuration ${catalog.name}`
+	);
+	await commerceAdminProductConfigurationListsPage.addConfigurationListPriority.fill(
+		'1'
+	);
+	await commerceAdminProductConfigurationListsPage.addConfigurationListCatalog.selectOption(
+		{label: catalog.name}
+	);
+	await commerceAdminProductConfigurationListsPage.addConfigurationListParentList.click();
+	await commerceAdminProductConfigurationListsPage
+		.addConfigurationListParentListElement(
+			`Master Configuration ${catalog.name}`
+		)
+		.click();
+	await commerceAdminProductConfigurationListsPage.addConfigurationListSaveButton.click();
+
+	await expect(
+		commerceAdminProductConfigurationListPage.parentCPConfigurationListNameInput
+	).toBeDisabled();
+	await expect(
+		commerceAdminProductConfigurationListPage.parentCPConfigurationListNameInput
+	).toHaveValue(`Master Configuration ${catalog.name}`);
 
 	await commerceAdminProductConfigurationListPage.entriesMenuItem.click();
 
@@ -1331,7 +1358,7 @@ test('LPD-44818 Show difference icons', async ({
 
 	await (
 		await commerceAdminProductConfigurationEntriesPage.tableRowLink({
-			colIndex: 0,
+			colIndex: 1,
 			rowValue: product.name['en_US'],
 		})
 	).click();
@@ -1343,6 +1370,32 @@ test('LPD-44818 Show difference icons', async ({
 	await commerceAdminProductConfigurationEntryPage.maxOrderQuantityInput.fill(
 		'400'
 	);
+
+	await commerceAdminProductConfigurationEntryPage.saveButton.click();
+
+	await waitForAlert(page);
+
+	await page.reload();
+
+	await expect(
+		commerceAdminProductConfigurationEntriesPage.differenceIcon()
+	).toHaveCount(0);
+
+	await (
+		await commerceAdminProductConfigurationEntriesPage.tableRowLink({
+			colIndex: 1,
+			rowValue: product.name['en_US'],
+		})
+	).click();
+
+	await expect(
+		commerceAdminProductConfigurationEntryPage.sidePanelTitle
+	).toBeVisible();
+
+	await commerceAdminProductConfigurationEntryPage.maxOrderQuantityInput.fill(
+		'500'
+	);
+
 	await commerceAdminProductConfigurationEntryPage.visibleInput.click();
 
 	await commerceAdminProductConfigurationEntryPage.saveButton.click();
@@ -1356,7 +1409,7 @@ test('LPD-44818 Show difference icons', async ({
 		commerceAdminProductConfigurationEntriesPage.differenceIcon(
 			(
 				await commerceAdminProductConfigurationEntriesPage.tableRow(
-					0,
+					1,
 					product.name['en_US']
 				)
 			).column
@@ -1366,7 +1419,7 @@ test('LPD-44818 Show difference icons', async ({
 		commerceAdminProductConfigurationEntriesPage.differenceIcon(
 			(
 				await commerceAdminProductConfigurationEntriesPage.tableRow(
-					1,
+					2,
 					'no'
 				)
 			).column
@@ -1376,7 +1429,7 @@ test('LPD-44818 Show difference icons', async ({
 		commerceAdminProductConfigurationEntriesPage.differenceIcon(
 			(
 				await commerceAdminProductConfigurationEntriesPage.tableRow(
-					2,
+					3,
 					'yes'
 				)
 			).column
@@ -1385,13 +1438,13 @@ test('LPD-44818 Show difference icons', async ({
 
 	await (
 		await commerceAdminProductConfigurationEntriesPage.tableRowLink({
-			colIndex: 0,
+			colIndex: 1,
 			rowValue: product.name['en_US'],
 		})
 	).click();
 
 	await commerceAdminProductConfigurationEntryPage.maxOrderQuantityInput.fill(
-		'10000'
+		'400'
 	);
 	await commerceAdminProductConfigurationEntryPage.visibleInput.click();
 

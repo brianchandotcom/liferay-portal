@@ -11,7 +11,9 @@ export class CommerceAdminProductConfigurationListsPage extends CommerceDNDTable
 	readonly addConfigurationList: Locator;
 	readonly addConfigurationListCatalog: Locator;
 	readonly addConfigurationListName: Locator;
-	readonly addConfigurationListParentListElement: Locator;
+	readonly addConfigurationListParentListElement: (
+		parentConfigurationName?: string
+	) => Locator;
 	readonly addConfigurationListParentList: Locator;
 	readonly addConfigurationListPriority: Locator;
 	readonly addConfigurationListSaveButton: Locator;
@@ -35,10 +37,13 @@ export class CommerceAdminProductConfigurationListsPage extends CommerceDNDTable
 		this.addConfigurationListCatalog =
 			this.frame.getByLabel('Catalog Required');
 		this.addConfigurationListName = this.frame.getByLabel('Name Required');
-		this.addConfigurationListParentListElement = this.frame.getByRole(
-			'menuitem',
-			{name: 'Master Configuration Master'}
-		);
+		this.addConfigurationListParentListElement = (
+			parentConfigurationName: string = 'Master Configuration Master'
+		) => {
+			return this.frame.getByRole('menuitem', {
+				name: parentConfigurationName,
+			});
+		};
 		this.addConfigurationListParentList =
 			this.frame.getByPlaceholder('Type Here');
 		this.addConfigurationListPriority =

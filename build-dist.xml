@@ -113,6 +113,33 @@
 		</sequential>
 	</macrodef>
 
+	<target name="attach-jakarta-ee-transformer-agent">
+		<if>
+			<and>
+				<equals arg1="${app.server.type}" arg2="tomcat" />
+				<matches pattern="10\.\d+\.\d+" string="${app.server.version}" />
+			</and>
+			<then>
+				<var name="transformer.agent" value="-javaagent:${CATALINA_HOME}/../tools/portal-tools-jakarta-ee-transformer/com.liferay.portal.tools.jakarta.ee.transformer.jar" />
+
+				<if>
+					<not>
+						<resourcecontains
+							resource="${app.server.tomcat.bin.dir}/setenv.sh"
+							substring="${transformer.agent}"
+						/>
+					</not>
+					<then>
+						<echo append="true" file="${app.server.tomcat.bin.dir}/setenv.sh">
+							<![CDATA[
+CATALINA_OPTS="${transformer.agent} -Djakarta.ee.transformer.bundle.header.replacer.logging.disabled=true -Djakarta.ee.transformer.class.remapper.logging.disabled=true -Djakarta.ee.transformer.reverse.text.replacer.disabled=true -Djakarta.ee.transformer.text.replacer.logging.disabled=true ${CATALINA_OPTS}"]]>
+						</echo>
+					</then>
+				</if>
+			</then>
+		</if>
+	</target>
+
 	<target name="build-dist-jboss">
 		<app-server-properties-update>
 			app.server.type=jboss
@@ -1077,6 +1104,11 @@ org.apache.level=WARNING]]>
 				<include name="*.sh" />
 			</fileset>
 		</chmod>
+
+		<antcall target="attach-jakarta-ee-transformer-agent">
+			<param name="app.server.type" value="tomcat" />
+			<param name="app.server.version" value="${app.server.tomcat.version}" />
+		</antcall>
 
 		<antcall target="unzip-glowroot" />
 	</target>

@@ -145,18 +145,6 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 			return portletPreferences;
 		}
 
-		String userIdStrategy = StringPool.BLANK;
-
-		if (UserIdStrategy.CURRENT_USER_ID.equals(
-			MapUtil.getString(
-				portletDataContext.getParameterMap(),
-				PortletDataHandlerKeys.USER_ID_STRATEGY))) {
-
-			userIdStrategy =
-				BatchEngineImportTaskConstants.
-					IMPORT_CREATOR_STRATEGY_KEEP_CREATOR;
-		}
-
 		BatchEngineImportTask batchEngineImportTask =
 			_batchEngineImportTaskService.addBatchEngineImportTask(
 				null, portletDataContext.getCompanyId(), _getUserId(), 100,
@@ -180,7 +168,8 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 				).put(
 					"createStrategy", CreateStrategy.UPSERT.getDBOperation()
 				).put(
-					"importCreatorStrategy", userIdStrategy
+					"importCreatorStrategy",
+					_getImportCreatorStrategy(portletDataContext)
 				).build(),
 				_taskItemDelegateName);
 
@@ -232,6 +221,21 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 		}
 
 		return unsyncByteArrayOutputStream.toByteArray();
+	}
+
+	private String _getImportCreatorStrategy(
+		PortletDataContext portletDataContext) {
+
+		if (UserIdStrategy.CURRENT_USER_ID.equals(
+				MapUtil.getString(
+					portletDataContext.getParameterMap(),
+					PortletDataHandlerKeys.USER_ID_STRATEGY))) {
+
+			return BatchEngineImportTaskConstants.
+				IMPORT_CREATOR_STRATEGY_KEEP_CREATOR;
+		}
+
+		return StringPool.BLANK;
 	}
 
 	private long _getUserId() {

@@ -3297,6 +3297,43 @@ public class ObjectEntryLocalServiceTest {
 	}
 
 	@Test
+	public void testDeleteObjectEntryWithLongExternalReferenceCode()
+		throws Exception {
+
+		ObjectEntry objectEntry1 = _addObjectEntry(
+			HashMapBuilder.<String, Serializable>put(
+				"emailAddressRequired", "peter@liferay.com"
+			).put(
+				"firstName", "Peter"
+			).put(
+				"listTypeEntryKeyRequired", "listTypeEntryKey1"
+			).build());
+
+		objectEntry1.setExternalReferenceCode(
+			RandomTestUtil.randomString(1000));
+
+		objectEntry1 = _objectEntryLocalService.updateObjectEntry(objectEntry1);
+
+		_assertCount(1);
+
+		_objectEntryLocalService.deleteObjectEntry(
+			objectEntry1.getObjectEntryId());
+
+		List<SystemEvent> systemEvents =
+			_systemEventLocalService.getSystemEvents(
+				0, _portal.getClassNameId(objectEntry1.getModelClassName()),
+				objectEntry1.getPrimaryKey());
+
+		SystemEvent systemEvent = systemEvents.get(0);
+
+		Assert.assertEquals(
+			objectEntry1.getExternalReferenceCode(),
+			systemEvent.getClassExternalReferenceCode());
+		Assert.assertEquals(
+			SystemEventConstants.TYPE_DELETE, systemEvent.getType());
+	}
+
+	@Test
 	public void testDeleteObjectEntryWithObjectDefinitionTree()
 		throws Exception {
 

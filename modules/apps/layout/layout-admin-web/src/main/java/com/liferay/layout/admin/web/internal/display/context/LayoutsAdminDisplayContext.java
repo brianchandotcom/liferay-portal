@@ -1357,6 +1357,8 @@ public class LayoutsAdminDisplayContext {
 					ClientExtensionEntryConstants.TYPE_THEME_CSS);
 
 		return HashMapBuilder.<String, Object>put(
+			"helpText", _getHelpText()
+		).put(
 			"isReadOnly", isReadOnly()
 		).put(
 			"placeholder", _getPlaceholder()
@@ -2140,6 +2142,44 @@ public class LayoutsAdminDisplayContext {
 	private long[] _getGroupIds() {
 		return PortalUtil.getCurrentAndAncestorSiteGroupIds(
 			themeDisplay.getScopeGroupId());
+	}
+
+	private String _getHelpText() {
+		Layout selLayout = getSelLayout();
+
+		if (selLayout == null) {
+			return null;
+		}
+
+		ClientExtensionEntryRel clientExtensionEntryRel =
+			ClientExtensionEntryRelLocalServiceUtil.
+				fetchClientExtensionEntryRel(
+					PortalUtil.getClassNameId(Layout.class),
+					selLayout.getMasterLayoutPlid(),
+					ClientExtensionEntryConstants.TYPE_THEME_CSS);
+
+		if (clientExtensionEntryRel == null) {
+			LayoutSet selLayoutSet = getSelLayoutSet();
+
+			clientExtensionEntryRel =
+				ClientExtensionEntryRelLocalServiceUtil.
+					fetchClientExtensionEntryRel(
+						PortalUtil.getClassNameId(LayoutSet.class),
+						selLayoutSet.getLayoutSetId(),
+						ClientExtensionEntryConstants.TYPE_THEME_CSS);
+		}
+
+		if (clientExtensionEntryRel != null) {
+			CET cet = _cetManager.getCET(
+				themeDisplay.getCompanyId(),
+				clientExtensionEntryRel.getCETExternalReferenceCode());
+
+			return LanguageUtil.format(
+				themeDisplay.getLocale(), "x-is-applied",
+				cet.getName(themeDisplay.getLocale()));
+		}
+
+		return null;
 	}
 
 	private String _getLayoutMessage(Layout layout) throws PortalException {

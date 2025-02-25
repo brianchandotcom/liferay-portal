@@ -45,7 +45,8 @@ const Card = ({item, schema}: {item: any; schema: ICardSchema}) => {
 			(element) => selectedItemsKey && element === item[selectedItemsKey]
 		);
 	const imageProps =
-		schema.image && imagePropsTransformer(item[schema.image]);
+		schema.image &&
+		imagePropsTransformer(getLocalizedValue(item, schema.image)?.value);
 	const localizedDescription = getLocalizedValue(
 		item,
 		schema.description

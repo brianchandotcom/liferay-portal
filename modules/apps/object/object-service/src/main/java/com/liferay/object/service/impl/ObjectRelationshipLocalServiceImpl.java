@@ -2286,12 +2286,14 @@ public class ObjectRelationshipLocalServiceImpl
 			ObjectDefinition objectDefinition2)
 		throws PortalException {
 
-		if (StringUtil.equals(
+		if ((StringUtil.equals(
 				objectDefinition1.getScope(),
-				ObjectDefinitionConstants.SCOPE_DEPOT) ^
-			StringUtil.equals(
-				objectDefinition2.getScope(),
-				ObjectDefinitionConstants.SCOPE_DEPOT)) {
+				ObjectDefinitionConstants.SCOPE_DEPOT) ||
+			 StringUtil.equals(
+				 objectDefinition2.getScope(),
+				 ObjectDefinitionConstants.SCOPE_DEPOT)) &&
+			!StringUtil.equals(
+				objectDefinition1.getScope(), objectDefinition2.getScope())) {
 
 			throw new ObjectDefinitionScopeException(
 				"An object definition scoped by depot can only be related to " +

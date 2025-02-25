@@ -541,7 +541,9 @@ public abstract class Base${schemaName}ResourceTestCase {
 							,
 						</#if>
 
-						<#if stringUtil.equals(javaMethodParameter.parameterName, "pagination")>
+						<#if stringUtil.equals(javaMethodParameter.parameterName, "keywords")>
+							null
+						<#elseif stringUtil.equals(javaMethodParameter.parameterName, "pagination")>
 							Pagination.of(1, 10)
 						<#elseif stringUtil.equals(javaMethodParameter.parameterName, "search")>
 							null

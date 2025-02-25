@@ -44,9 +44,9 @@ public class CardsFDSViewContextContributor
 			HashMapBuilder.<String, Object>put(
 				"description", baseCardsFDSView.getDescription()
 			).put(
-				"href", baseCardsFDSView.getLink()
-			).put(
 				"image", baseCardsFDSView.getImage()
+			).put(
+				"link", baseCardsFDSView.getLink()
 			).put(
 				"sticker", baseCardsFDSView.getSticker()
 			).put(

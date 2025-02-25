@@ -378,11 +378,13 @@ export async function postObjectDefinition(
 }
 
 export async function postObjectDefinitionPublish(objectDefinitionId: number) {
-	return await save({
-		item: {},
-		method: 'POST',
-		url: `/o/object-admin/v1.0/object-definitions/${objectDefinitionId}/publish`,
-	});
+	return await fetch(
+		`/o/object-admin/v1.0/object-definitions/${objectDefinitionId}/publish`,
+		{
+			headers,
+			method: 'POST',
+		}
+	);
 }
 
 export async function putObjectDefinition(

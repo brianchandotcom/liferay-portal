@@ -14,6 +14,20 @@ declare module Liferay {
 		detach: () => number;
 	}
 
+	interface IZIndex {
+		ALERT: number;
+		DOCK: number;
+		DOCK_PARENT: number;
+		DRAG_ITEM: number;
+		DROP_AREA: number;
+		DROP_POSITION: number;
+		MENU: number;
+		OVERLAY: number;
+		POPOVER: number;
+		TOOLTIP: number;
+		WINDOW: number;
+	}
+
 	export const FeatureFlags: {
 		[key: string]: boolean;
 	};
@@ -73,4 +87,6 @@ declare module Liferay {
 		events: string | string[],
 		callback?: (event?: any) => void
 	): EventHandler;
+
+	export const zIndex: IZIndex;
 }

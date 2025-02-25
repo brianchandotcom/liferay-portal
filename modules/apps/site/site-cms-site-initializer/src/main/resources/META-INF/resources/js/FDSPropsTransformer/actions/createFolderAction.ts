@@ -7,10 +7,11 @@ import {openModal} from 'frontend-js-components-web';
 
 import CreationFolderModalContent from '../../components/modal/CreationFolderModalContent';
 
-export default function createFolderAction() {
+export default function createFolderAction(data: {assetLibraryId?: string}) {
 	openModal({
 		contentComponent: ({closeModal}: {closeModal: voidReturn}) =>
 			CreationFolderModalContent({
+				...data,
 				closeModal,
 			}),
 		size: 'sm',

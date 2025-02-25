@@ -13,21 +13,27 @@ import React, {useEffect, useState} from 'react';
 import {getAssetsLibrariesByCompany} from '../../api/api';
 
 export default function CreationFolderModalContent({
+	assetLibraryId,
 	closeModal,
 }: {
+	assetLibraryId?: string;
 	closeModal: voidReturn;
 }) {
 	const [assetLibraries, setAssetsLibraries] = useState<
-		{id: number; name: string}[]
-	>([]);
-	const [loading, setLoading] = useState(true);
+		{id: string; name: string}[]
+	>(assetLibraryId ? [{id: assetLibraryId, name: ''}] : []);
+	const [loading, setLoading] = useState(false);
 
 	useEffect(() => {
-		getAssetsLibrariesByCompany().then((result: any) => {
-			setAssetsLibraries(result);
-			setLoading(false);
-		});
-	}, []);
+		if (!assetLibraryId) {
+			setLoading(true);
+
+			getAssetsLibrariesByCompany().then((result: any) => {
+				setAssetsLibraries(result);
+				setLoading(false);
+			});
+		}
+	}, [assetLibraryId]);
 
 	return (
 		<>

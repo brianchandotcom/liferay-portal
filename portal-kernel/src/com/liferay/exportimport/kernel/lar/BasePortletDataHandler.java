@@ -140,11 +140,15 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 			portletDataContext.addDeletionSystemEventStagedModelTypes(
 				getDeletionSystemEventStagedModelTypes());
 
-			for (PortletDataHandlerControl portletDataHandlerControl :
-					getExportControls()) {
+			PortletDataHandlerControl[] exportControls = getExportControls();
 
-				addUncheckedModelAdditionCount(
-					portletDataContext, portletDataHandlerControl);
+			if (exportControls != null) {
+				for (PortletDataHandlerControl portletDataHandlerControl :
+						exportControls) {
+
+					addUncheckedModelAdditionCount(
+						portletDataContext, portletDataHandlerControl);
+				}
 			}
 
 			return doExportData(

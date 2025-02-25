@@ -10,9 +10,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 /**
  * @author Alberto Javier Moreno Lage
  */
-public class MissingPortletDataHandler extends PortalException {
+public class MissingPortletDataHandlerException extends PortalException {
 
-	public MissingPortletDataHandler(String portletDisplayName) {
+	public MissingPortletDataHandlerException(String portletDisplayName) {
 		_portletDisplayName = portletDisplayName;
 	}
 

@@ -36,6 +36,11 @@ components:
                     description:
                         The asset's type (e.g., `BlogPosting`, `Document`, etc.).
                     type: string
+                typeId:
+                    description:
+                        The classNameId of the asset's type.
+                    format: int64
+                    type: integer
             type: object
         Creator:
             description:
@@ -349,6 +354,12 @@ components:
                         type: object
                     readOnly: true
                     type: object
+                assetLibraries:
+                    description:
+                        A list of asset libraries (spaces) that this vocabulary is associated with.
+                    items:
+                        $ref: "#/components/schemas/AssetLibrary"
+                    type: array
                 assetLibraryKey:
                     readOnly: true
                     type: string
@@ -400,6 +411,10 @@ components:
                     format: int64
                     readOnly: true
                     type: integer
+                multiValued:
+                    description:
+                        Whether multiple categories can be associated with this vocabulary.
+                    type: boolean
                 name:
                     description:
                         The vocabulary's name.
@@ -434,6 +449,11 @@ components:
                     enum: [Anyone, Members, Owner]
                     type: string
                     writeOnly: true
+                visibilityType:
+                    description:
+                        The vocabulary's visibility type.
+                    enum: [PUBLIC, INTERNAL]
+                    type: string
             required:
                 - name
             type: object
@@ -1861,6 +1881,87 @@ paths:
                         application/json: {}
                         application/xml: {}
             tags: ["TaxonomyCategory"]
+    "/taxonomy-vocabularies":
+        get:
+            description:
+                Gets all taxonomy vocabularies that were created in CMS. Does not retrieve vocabularies created in DXP.
+                CMS vocabularies are distinguished by having a `groupId = 0`.
+            operationId: getTaxonomyVocabulariesPage
+            parameters:
+                - in: query
+                  name: aggregationTerms
+                  schema:
+                      items:
+                          type: string
+                      type: array
+                - in: query
+                  name: fields
+                  schema:
+                      type: string
+                - in: query
+                  name: filter
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  schema:
+                      type: integer
+                - in: query
+                  name: restrictFields
+                  schema:
+                      type: string
+                - in: query
+                  name: search
+                  schema:
+                      type: string
+                - in: query
+                  name: sort
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/TaxonomyVocabulary"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/TaxonomyVocabulary"
+                                type: array
+                    description:
+                        successful operation
+            tags: ["TaxonomyVocabulary"]
+        post:
+            description:
+                Creates the asset library's taxonomy vocabulary in the given spaces.
+            operationId: postTaxonomyVocabulary
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/TaxonomyVocabulary"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/TaxonomyVocabulary"
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/TaxonomyVocabulary"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/TaxonomyVocabulary"
+                    description:
+                        successful operation
+            tags: ["TaxonomyVocabulary"]
     "/taxonomy-vocabularies/{taxonomyVocabularyId}":
         delete:
             description:

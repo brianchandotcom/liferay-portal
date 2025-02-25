@@ -348,7 +348,7 @@
 			<finder-column name="classNameId" />
 			<finder-column name="activityType" />
 		</finder>
-		<finder name="G_C_A_N" return-type="SocialActivitySetting">
+		<finder name="G_C_A_N" return-type="SocialActivitySetting" unique="true">
 			<finder-column name="groupId" />
 			<finder-column name="classNameId" />
 			<finder-column name="activityType" />

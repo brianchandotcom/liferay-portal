@@ -39,10 +39,6 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class MarketplaceCommandLineRunner implements CommandLineRunner {
 
 	public void run(String... args) throws Exception {
-		if (_log.isInfoEnabled()) {
-			_log.info("Running...");
-		}
-
 		_processInProgressTrials();
 
 		_processOnHoldTrials();

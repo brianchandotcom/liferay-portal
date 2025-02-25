@@ -153,12 +153,13 @@ public class SetupAdminAutoLoginTest {
 		httpSession.setAttribute(
 			"LIFERAY_SHARED_AUTHENTICATION_TOKEN#CSRF", "test");
 
-		Layout layout = LayoutLocalServiceUtil.getLayout(
-			PortalUtil.getControlPanelPlid(_company.getCompanyId()));
-
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
 		themeDisplay.setCompany(_company);
+
+		Layout layout = LayoutLocalServiceUtil.getLayout(
+			PortalUtil.getControlPanelPlid(_company.getCompanyId()));
+
 		themeDisplay.setLayout(layout);
 		themeDisplay.setLayoutSet(layout.getLayoutSet());
 

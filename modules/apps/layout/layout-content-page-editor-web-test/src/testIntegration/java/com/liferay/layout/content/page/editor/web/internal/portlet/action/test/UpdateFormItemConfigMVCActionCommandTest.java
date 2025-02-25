@@ -37,8 +37,6 @@ import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.layout.util.constants.LayoutDataItemTypeConstants;
 import com.liferay.layout.util.structure.ContainerStyledLayoutStructureItem;
-import com.liferay.layout.util.structure.FormStepContainerStyledLayoutStructureItem;
-import com.liferay.layout.util.structure.FormStepLayoutStructureItem;
 import com.liferay.layout.util.structure.FormStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.FragmentStyledLayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructure;
@@ -150,7 +148,7 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 
 	@Test
 	@TestInfo("LPD-31772")
-	public void testUpdateFormItemConfigMVCActionCommandDecreasingNumberOfStepsWithFeatureFlagEnabled()
+	public void testUpdateFormItemConfigMVCActionCommandDecreasingNumberOfSteps()
 		throws Exception {
 
 		LayoutStructure layoutStructure =
@@ -310,7 +308,7 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 
 	@Test
 	@TestInfo("LPD-31772")
-	public void testUpdateFormItemConfigMVCActionCommandIncreasingNumberOfStepsWithFeatureFlagEnabled()
+	public void testUpdateFormItemConfigMVCActionCommandIncreasingNumberOfSteps()
 		throws Exception {
 
 		LayoutStructure layoutStructure = new LayoutStructure();
@@ -533,68 +531,8 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 	}
 
 	@Test
-	public void testUpdateFormItemConfigMVCActionCommandMappingFormChangingFormTypeMultistep()
-		throws Exception {
-
-		LayoutStructure layoutStructure = LayoutStructure.of(_readLayoutData());
-
-		FormStyledLayoutStructureItem formStyledLayoutStructureItem =
-			(FormStyledLayoutStructureItem)
-				layoutStructure.getLayoutStructureItem("formId");
-
-		ReflectionTestUtil.invoke(
-			_mvcActionCommand, "_updateFormStyledLayoutStructureItemFormType",
-			new Class<?>[] {
-				List.class, FormStyledLayoutStructureItem.class,
-				HttpServletRequest.class, HttpServletResponse.class,
-				String.class, Layout.class, LayoutStructure.class, int.class,
-				String.class, int.class, long.class, ServiceContext.class,
-				long.class
-			},
-			new ArrayList<>(), formStyledLayoutStructureItem, null, null,
-			"multistep", _draftLayout, layoutStructure, 2, "simple", 2,
-			_segmentsExperienceId,
-			ServiceContextTestUtil.getServiceContext(_group.getGroupId()), 0);
-
-		List<String> childrenItemIds =
-			formStyledLayoutStructureItem.getChildrenItemIds();
-
-		Assert.assertEquals(
-			childrenItemIds.toString(), 1, childrenItemIds.size());
-
-		LayoutStructureItem layoutStructureItem =
-			layoutStructure.getLayoutStructureItem(childrenItemIds.get(0));
-
-		Assert.assertTrue(
-			layoutStructureItem instanceof
-				FormStepContainerStyledLayoutStructureItem);
-
-		childrenItemIds = layoutStructureItem.getChildrenItemIds();
-
-		Assert.assertEquals(
-			childrenItemIds.toString(), 2, childrenItemIds.size());
-
-		layoutStructureItem = layoutStructure.getLayoutStructureItem(
-			childrenItemIds.get(0));
-
-		Assert.assertTrue(
-			layoutStructureItem instanceof FormStepLayoutStructureItem);
-
-		childrenItemIds = layoutStructureItem.getChildrenItemIds();
-
-		Assert.assertEquals(
-			childrenItemIds.toString(), 1, childrenItemIds.size());
-
-		layoutStructureItem = layoutStructure.getLayoutStructureItem(
-			childrenItemIds.get(0));
-
-		Assert.assertTrue(
-			layoutStructureItem instanceof ContainerStyledLayoutStructureItem);
-	}
-
-	@Test
 	@TestInfo("LPD-31772")
-	public void testUpdateFormItemConfigMVCActionCommandMappingFormChangingFormTypeMultistepWithFeatureFlagEnabled()
+	public void testUpdateFormItemConfigMVCActionCommandMappingFormChangingFormTypeMultistep()
 		throws Exception {
 
 		LayoutStructure layoutStructure = new LayoutStructure();
@@ -680,7 +618,7 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 	}
 
 	@Test
-	public void testUpdateFormItemConfigMVCActionCommandMappingFormChangingFormTypeSimple()
+	public void testUpdateFormItemConfigMVCActionCommandMappingFormChangingFormTypeSimple1()
 		throws Exception {
 
 		LayoutStructure layoutStructure = LayoutStructure.of(_readLayoutData());
@@ -732,7 +670,7 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 
 	@Test
 	@TestInfo("LPD-31772")
-	public void testUpdateFormItemConfigMVCActionCommandMappingFormChangingFormTypeSimpleWithFeatureFlagEnabled()
+	public void testUpdateFormItemConfigMVCActionCommandMappingFormChangingFormTypeSimple2()
 		throws Exception {
 
 		LayoutStructure layoutStructure =

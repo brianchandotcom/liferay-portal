@@ -8,6 +8,7 @@
 <%@ include file="/init.jsp" %>
 
 <clay:navigation-bar
+	cssClass="lfr-forms__navigation-bar"
 	inverted="<%= true %>"
 	navigationItems="<%= ddmDataProviderDisplayContext.getNavigationItems(liferayPortletRequest, liferayPortletResponse) %>"
 />

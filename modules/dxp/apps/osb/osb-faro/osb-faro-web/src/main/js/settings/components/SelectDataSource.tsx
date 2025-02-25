@@ -47,12 +47,20 @@ const SelectDataSource: React.FC<ISelectDataSourceProps> = ({
 
 									<div className='details'>
 										<div className='title'>
-											<div className='h4'>{name}</div>
+											<div
+												className={getCN('h4', {
+													'm-0': !subtitle
+												})}
+											>
+												{name}
+											</div>
 										</div>
 
-										<div className='subtitle'>
-											{subtitle}
-										</div>
+										{subtitle && (
+											<div className='subtitle'>
+												{subtitle}
+											</div>
+										)}
 									</div>
 								</ClayLink>
 							) : (
@@ -71,12 +79,20 @@ const SelectDataSource: React.FC<ISelectDataSourceProps> = ({
 
 									<div className='details'>
 										<div className='title'>
-											<div className='h4'>{name}</div>
+											<div
+												className={getCN('h4', {
+													'm-0': !subtitle
+												})}
+											>
+												{name}
+											</div>
 										</div>
 
-										<div className='subtitle'>
-											{subtitle}
-										</div>
+										{subtitle && (
+											<div className='subtitle'>
+												{subtitle}
+											</div>
+										)}
 									</div>
 								</ClayButton>
 							)

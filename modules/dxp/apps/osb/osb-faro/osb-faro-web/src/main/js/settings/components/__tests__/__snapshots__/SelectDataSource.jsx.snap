@@ -37,14 +37,11 @@ exports[`SelectDataSource should render 1`] = `
               class="title"
             >
               <div
-                class="h4"
+                class="h4 m-0"
               >
                 test
               </div>
             </div>
-            <div
-              class="subtitle"
-            />
           </div>
         </a>
         <a
@@ -70,14 +67,11 @@ exports[`SelectDataSource should render 1`] = `
               class="title"
             >
               <div
-                class="h4"
+                class="h4 m-0"
               >
                 test1
               </div>
             </div>
-            <div
-              class="subtitle"
-            />
           </div>
         </a>
       </div>
@@ -114,14 +108,11 @@ exports[`SelectDataSource should render 1`] = `
               class="title"
             >
               <div
-                class="h4"
+                class="h4 m-0"
               >
                 test1
               </div>
             </div>
-            <div
-              class="subtitle"
-            />
           </div>
         </button>
       </div>

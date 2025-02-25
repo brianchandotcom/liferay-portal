@@ -105,17 +105,37 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 		long groupId = GroupUtil.getGroupId(
 			true, contextCompany.getCompanyId(), siteExternalReferenceCode);
 
+		if (Validator.isNull(search)) {
+			return Page.of(
+				transform(
+					_layoutPageTemplateEntryService.
+						getLayoutPageTemplateEntries(
+							groupId,
+							LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT,
+							pagination.getStartPosition(),
+							pagination.getEndPosition(), null),
+					layoutPageTemplateEntry -> _masterPageDTOConverter.toDTO(
+						layoutPageTemplateEntry)),
+				pagination,
+				_layoutPageTemplateEntryService.
+					getLayoutPageTemplateEntriesCount(
+						groupId,
+						LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT));
+		}
+
 		return Page.of(
 			transform(
 				_layoutPageTemplateEntryService.getLayoutPageTemplateEntries(
-					groupId, LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT,
+					groupId, 0, 0, search,
+					LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT,
 					pagination.getStartPosition(), pagination.getEndPosition(),
 					null),
 				layoutPageTemplateEntry -> _masterPageDTOConverter.toDTO(
 					layoutPageTemplateEntry)),
 			pagination,
 			_layoutPageTemplateEntryService.getLayoutPageTemplateEntriesCount(
-				groupId, LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT));
+				groupId, 0, 0, search,
+				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT));
 	}
 
 	@Override

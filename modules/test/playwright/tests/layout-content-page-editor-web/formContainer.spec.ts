@@ -3784,7 +3784,7 @@ test.describe('Form Localization', () => {
 			await expect(firstMultiSelectOption).not.toBeChecked();
 			await expect(secondMultiSelectOption).not.toBeChecked();
 
-			await expect(page.getByText('Not Selected')).toHaveAttribute(
+			await expect(page.getByText('No file selected')).toHaveAttribute(
 				'readonly'
 			);
 		}

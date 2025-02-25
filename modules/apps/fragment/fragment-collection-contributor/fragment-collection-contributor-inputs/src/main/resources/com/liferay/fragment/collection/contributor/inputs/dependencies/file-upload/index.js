@@ -187,9 +187,7 @@ else {
 
 									if (!fileName.innerText) {
 										fileName.innerText =
-											Liferay.Language.get(
-												'not-selected'
-											);
+											fileName.dataset.placeholder;
 									}
 								}
 								else {
@@ -210,7 +208,7 @@ else {
 
 									if (
 										fileName.innerText ===
-										Liferay.Language.get('not-selected')
+										fileName.dataset.placeholder
 									) {
 										fileName.innerText = '';
 									}

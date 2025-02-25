@@ -919,28 +919,6 @@ public class LayoutPersistenceTest {
 				"privateLayout"));
 
 		Assert.assertEquals(
-			Boolean.valueOf(layout.getPrivateLayout()),
-			ReflectionTestUtil.<Boolean>invoke(
-				layout, "getColumnOriginalValue", new Class<?>[] {String.class},
-				"privateLayout"));
-		Assert.assertEquals(
-			Long.valueOf(layout.getIconImageId()),
-			ReflectionTestUtil.<Long>invoke(
-				layout, "getColumnOriginalValue", new Class<?>[] {String.class},
-				"iconImageId"));
-
-		Assert.assertEquals(
-			Long.valueOf(layout.getClassNameId()),
-			ReflectionTestUtil.<Long>invoke(
-				layout, "getColumnOriginalValue", new Class<?>[] {String.class},
-				"classNameId"));
-		Assert.assertEquals(
-			Long.valueOf(layout.getClassPK()),
-			ReflectionTestUtil.<Long>invoke(
-				layout, "getColumnOriginalValue", new Class<?>[] {String.class},
-				"classPK"));
-
-		Assert.assertEquals(
 			Long.valueOf(layout.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(
 				layout, "getColumnOriginalValue", new Class<?>[] {String.class},

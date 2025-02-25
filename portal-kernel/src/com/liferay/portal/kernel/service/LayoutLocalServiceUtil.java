@@ -661,10 +661,6 @@ public class LayoutLocalServiceUtil {
 		return getService().fetchLayout(groupId, privateLayout, layoutId);
 	}
 
-	public static Layout fetchLayout(long classNameId, long classPK) {
-		return getService().fetchLayout(classNameId, classPK);
-	}
-
 	public static Layout fetchLayout(
 		String uuid, long groupId, boolean privateLayout) {
 

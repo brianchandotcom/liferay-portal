@@ -59,6 +59,26 @@ public class ObjectEntryFolderServiceWrapper
 			objectEntryFolderId);
 	}
 
+	@Override
+	public java.util.List<com.liferay.object.model.ObjectEntryFolder>
+			getObjectEntryFolders(
+				long groupId, long companyId, long parentObjectEntryFolderId,
+				int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectEntryFolderService.getObjectEntryFolders(
+			groupId, companyId, parentObjectEntryFolderId, start, end);
+	}
+
+	@Override
+	public int getObjectEntryFoldersCount(
+			long groupId, long companyId, long parentObjectEntryFolderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _objectEntryFolderService.getObjectEntryFoldersCount(
+			groupId, companyId, parentObjectEntryFolderId);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *

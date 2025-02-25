@@ -25,6 +25,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.image.ImageToolUtil;
+import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.image.ImageBag;
@@ -796,7 +797,12 @@ public class WebServerServlet extends HttpServlet {
 			((usersImageMaxWidth > 0) &&
 			 (image.getWidth() > usersImageMaxWidth))) {
 
-			User user = UserLocalServiceUtil.getUserByPortraitId(imageId);
+			User user = UserLocalServiceUtil.fetchUserByPortraitId(imageId);
+
+			if (user == null) {
+				throw new NoSuchUserException(
+					"No user with portrait ID " + imageId);
+			}
 
 			UserLocalServiceUtil.updatePortrait(
 				user.getUserId(), image.getTextObj());

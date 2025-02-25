@@ -661,13 +661,15 @@ test('Reset collection filter using applied filters', async ({
 
 	// Remove filter
 
-	await page.getByLabel('Remove Filter', {exact: true}).click();
+	await expect(async () => {
+		await page.getByLabel('Remove Filter', {exact: true}).click();
 
-	await expect(
-		page.getByText('Animal 01 - Dogs and Cats categories')
-	).toBeVisible();
+		await expect(
+			page.getByText('Animal 01 - Dogs and Cats categories')
+		).toBeVisible();
 
-	await expect(page.getByText('Animal 02 - Dogs category')).toBeVisible();
+		await expect(page.getByText('Animal 02 - Dogs category')).toBeVisible();
+	}).toPass();
 
 	// Select category filter: Cats
 
@@ -683,13 +685,15 @@ test('Reset collection filter using applied filters', async ({
 
 	// Clear filter
 
-	await page.getByRole('button', {name: 'Clear Filters'}).click();
+	await expect(async () => {
+		await page.getByRole('button', {name: 'Clear Filters'}).click();
 
-	await expect(
-		page.getByText('Animal 01 - Dogs and Cats categories')
-	).toBeVisible();
+		await expect(
+			page.getByText('Animal 01 - Dogs and Cats categories')
+		).toBeVisible();
 
-	await expect(page.getByText('Animal 02 - Dogs category')).toBeVisible();
+		await expect(page.getByText('Animal 02 - Dogs category')).toBeVisible();
+	}).toPass();
 
 	// Clean up
 

@@ -26,8 +26,6 @@ const test = mergeTests(
 	loginTest()
 );
 
-const accountSettingsTest = mergeTests(test, accountSettingsPagesTest);
-
 let fdsSamplePageURL: string;
 
 test.beforeEach(async ({fdsSamplePage, page, site}) => {
@@ -43,7 +41,7 @@ test.beforeEach(async ({fdsSamplePage, page, site}) => {
 });
 
 test(
-	'Check FDS initial state',
+	'Check behavior of filters',
 	{
 		tag: ['@LPS-150047'],
 	},
@@ -494,51 +492,104 @@ test('Check behavior of item actions', async ({fdsSamplePage, page}) => {
 	});
 });
 
-test('Use client extensions', async ({fdsSamplePage, page}) => {
-	await test.step('Assert that the cell renderer is invoked and the apple emoji is visible', async () => {
-		const firstColorCell = fdsSamplePage.table.container
-			.locator('td.cell-color')
-			.first();
+test('Check behavior of selection', async ({fdsSamplePage, page}) => {
+	await test.step('Check bulk actions', async () => {
+		const firstItemCheckbox = fdsSamplePage.table.container
+			.locator('tbody .cell-select-item')
+			.first()
+			.getByRole('checkbox');
 
-		await expect(firstColorCell).toContainText('🍏');
+		await test.step('Select one of the items in the table', async () => {
+			await firstItemCheckbox.check();
+		});
+
+		await test.step('Open ellipsis actions menu', async () => {
+			await page.locator('.bulk-actions').getByLabel('Actions').click();
+		});
+
+		await test.step('Check the bulk actions are listed', async () => {
+			await expect(
+				page.locator('.dropdown-menu.show').getByRole('menuitem')
+			).toHaveText('Label');
+		});
+
+		await test.step('Close ellipsis actions menu', async () => {
+			await page.locator('.bulk-actions').getByLabel('Actions').click();
+
+			await expect(page.locator('.dropdown-menu.show')).toBeHidden();
+		});
+
+		await test.step('Deselect the item to reset to original state', async () => {
+			await firstItemCheckbox.uncheck();
+		});
 	});
 
-	await test.step('Assert that the filter client extension is working', async () => {
-		const clientExtensionMenuItem = page.getByRole('menuitem', {
-			name: 'Client Extension',
+	await test.step('Check items count display', async () => {
+		const itemsSelectorCheckbox = page.locator(
+			'input[name="items-selector"]'
+		);
+
+		await test.step('Change delta to 60 items', async () => {
+			await page.getByLabel('Items Per Page').click();
+
+			await page.getByRole('option', {name: '60 Items'}).click();
+
+			await expect(
+				page.getByText('Showing 1 to 60 of 75 entries.')
+			).toBeVisible();
 		});
 
-		const filterButton = page
-			.locator('.filters-dropdown')
-			.getByText('Filter');
+		await test.step('Select all items in current page using the bulk actions checkbox', async () => {
+			await itemsSelectorCheckbox.setChecked(true);
 
-		await expect(filterButton).toBeInViewport();
-
-		await clickAndExpectToBeVisible({
-			autoClick: true,
-			target: clientExtensionMenuItem,
-			trigger: filterButton,
+			await expect(
+				page.getByText('60 of 75 Items Selected')
+			).toBeVisible();
 		});
 
-		const filterInput = page.getByPlaceholder('Search with Odata');
+		await test.step('Select all items', async () => {
+			await page.getByLabel('Go to page, 2').click();
 
-		await expect(filterInput).toBeInViewport();
+			for (let i = 1; i <= 15; i++) {
+				await page
+					.locator(
+						`tbody tr:nth-child(${i}) > .cell-select-item input[type="checkbox"]`
+					)
+					.setChecked(true);
+			}
 
-		await filterInput.fill("title eq 'Sample97'");
+			await expect(
+				page.getByText('All Selected (75 of 75 Items)')
+			).toBeVisible();
+		});
 
-		await expect(filterInput).toHaveValue("title eq 'Sample97'");
+		await test.step('Check that selection are preserved through page navigation', async () => {
+			await page.getByLabel('Go to page, 1').click();
 
-		const submitButton = page.getByRole('button', {name: 'Submit'});
+			await expect(
+				page.getByText('All Selected (75 of 75 Items)')
+			).toBeVisible();
+		});
 
-		await expect(submitButton).toBeInViewport();
+		await test.step('Unselect all items in current page using the bulk actions checkbox', async () => {
+			await itemsSelectorCheckbox.setChecked(false);
 
-		await submitButton.click();
+			await expect(itemsSelectorCheckbox).not.toBeChecked();
 
-		await expect(page.getByText('Sample97', {exact: true})).toBeVisible();
+			await expect(
+				page.getByText('15 of 75 Items Selected')
+			).toBeVisible();
+		});
 
-		const bodyRows = fdsSamplePage.table.container.locator('tbody tr');
+		await test.step('Unselect all items using clear button', async () => {
+			await page.getByText('Clear').click();
 
-		expect(await bodyRows.count()).toEqual(1);
+			await expect(itemsSelectorCheckbox).not.toBeChecked();
+
+			await expect(
+				page.getByText('15 of 75 Items Selected')
+			).not.toBeVisible();
+		});
 	});
 });
 
@@ -657,67 +708,89 @@ test(
 	}
 );
 
-test('Check selection behavior', async ({page}) => {
-	const itemsSelectorCheckbox = page.locator('input[name="items-selector"]');
+test(
+	'Hide column and assert correct visibility of columns',
+	{tag: '@LPD-45051'},
+	async ({page}) => {
+		const initialBodyCellText = await page.locator('td').nth(1).innerText();
 
-	await test.step('Change delta to 60 items', async () => {
-		await page.getByLabel('Items Per Page').click();
+		const rowAction = page.locator('td .component-action').first();
 
-		await page.getByRole('option', {name: '60 Items'}).click();
+		await test.step('Check that row actions are present', async () => {
+			await expect(rowAction).toBeAttached();
+		});
 
-		await expect(
-			page.getByText('Showing 1 to 60 of 75 entries.')
-		).toBeVisible();
+		await test.step('Hide the first column', async () => {
+			const button = page.getByLabel('Manage Columns Visibility');
+
+			await expect(button).toBeAttached();
+
+			await button.click();
+
+			const menuItem = page.getByRole('menuitem').nth(0);
+
+			await menuItem.click();
+		});
+
+		await test.step('Check that the first column is hidden and the row actions are still present', async () => {
+			await expect(page.locator('td').nth(1)).not.toHaveText(
+				initialBodyCellText
+			);
+
+			await expect(rowAction).toBeAttached();
+		});
+	}
+);
+
+test('Use client extensions', async ({fdsSamplePage, page}) => {
+	await test.step('Assert that the cell renderer is invoked and the apple emoji is visible', async () => {
+		const firstColorCell = fdsSamplePage.table.container
+			.locator('td.cell-color')
+			.first();
+
+		await expect(firstColorCell).toContainText('🍏');
 	});
 
-	await test.step('Select all items in current page using the bulk actions checkbox', async () => {
-		await itemsSelectorCheckbox.setChecked(true);
+	await test.step('Assert that the filter client extension is working', async () => {
+		const clientExtensionMenuItem = page.getByRole('menuitem', {
+			name: 'Client Extension',
+		});
 
-		await expect(page.getByText('60 of 75 Items Selected')).toBeVisible();
-	});
+		const filterButton = page
+			.locator('.filters-dropdown')
+			.getByText('Filter');
 
-	await test.step('Select all items', async () => {
-		await page.getByLabel('Go to page, 2').click();
+		await expect(filterButton).toBeInViewport();
 
-		for (let i = 1; i <= 15; i++) {
-			await page
-				.locator(
-					`tbody tr:nth-child(${i}) > .cell-select-item input[type="checkbox"]`
-				)
-				.setChecked(true);
-		}
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: clientExtensionMenuItem,
+			trigger: filterButton,
+		});
 
-		await expect(
-			page.getByText('All Selected (75 of 75 Items)')
-		).toBeVisible();
-	});
+		const filterInput = page.getByPlaceholder('Search with Odata');
 
-	await test.step('Check that selection are preserved through page navigation', async () => {
-		await page.getByLabel('Go to page, 1').click();
+		await expect(filterInput).toBeInViewport();
 
-		await expect(
-			page.getByText('All Selected (75 of 75 Items)')
-		).toBeVisible();
-	});
+		await filterInput.fill("title eq 'Sample97'");
 
-	await test.step('Unselect all items in current page using the bulk actions checkbox', async () => {
-		await itemsSelectorCheckbox.setChecked(false);
+		await expect(filterInput).toHaveValue("title eq 'Sample97'");
 
-		await expect(itemsSelectorCheckbox).not.toBeChecked();
+		const submitButton = page.getByRole('button', {name: 'Submit'});
 
-		await expect(page.getByText('15 of 75 Items Selected')).toBeVisible();
-	});
+		await expect(submitButton).toBeInViewport();
 
-	await test.step('Unselect all items using clear button', async () => {
-		await page.getByText('Clear').click();
+		await submitButton.click();
 
-		await expect(itemsSelectorCheckbox).not.toBeChecked();
+		await expect(page.getByText('Sample97', {exact: true})).toBeVisible();
 
-		await expect(
-			page.getByText('15 of 75 Items Selected')
-		).not.toBeVisible();
+		const bodyRows = fdsSamplePage.table.container.locator('tbody tr');
+
+		expect(await bodyRows.count()).toEqual(1);
 	});
 });
+
+const accountSettingsTest = mergeTests(test, accountSettingsPagesTest);
 
 accountSettingsTest(
 	'Set time zone from theme display in a datetime renderer',
@@ -757,40 +830,6 @@ accountSettingsTest(
 			await accountSettingsPage.goToDisplaySettings();
 
 			await accountSettingsPage.setTimeZone('UTC');
-		});
-	}
-);
-
-test(
-	'Hide column and assert correct visibility of columns',
-	{tag: '@LPD-45051'},
-	async ({page}) => {
-		const initialBodyCellText = await page.locator('td').nth(1).innerText();
-
-		const rowAction = page.locator('td .component-action').first();
-
-		await test.step('Check that row actions are present', async () => {
-			await expect(rowAction).toBeAttached();
-		});
-
-		await test.step('Hide the first column', async () => {
-			const button = page.getByLabel('Manage Columns Visibility');
-
-			await expect(button).toBeAttached();
-
-			await button.click();
-
-			const menuItem = page.getByRole('menuitem').nth(0);
-
-			await menuItem.click();
-		});
-
-		await test.step('Check that the first column is hidden and the row actions are still present', async () => {
-			await expect(page.locator('td').nth(1)).not.toHaveText(
-				initialBodyCellText
-			);
-
-			await expect(rowAction).toBeAttached();
 		});
 	}
 );

@@ -4,21 +4,8 @@ dependencies {
 }
 
 if (!_isJakartaAppServer()) {
-	task updateSPIFile(type: Zip)
-
 	jar {
-		finalizedBy updateSPIFile
-	}
-
-	updateSPIFile {
-		from {
-			zipTree(jar.archivePath)
-		}
 		rename("jakarta.servlet.ServletContainerInitializer", "javax.servlet.ServletContainerInitializer")
-
-		doLast {
-			archivePath.renameTo(jar.archivePath)
-		}
 	}
 }
 

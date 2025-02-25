@@ -67,6 +67,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 			new PortletDataHandlerBoolean(
 				taskItemDelegateName, taskItemDelegateName, true, true, null,
 				className));
+		setImportControls(null);
 	}
 
 	@Override

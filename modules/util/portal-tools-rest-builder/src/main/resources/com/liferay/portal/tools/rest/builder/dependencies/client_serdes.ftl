@@ -466,32 +466,37 @@ public class ${schemaName}SerDes {
 	}
 
 	private static String _toJSON(Object value) {
+		if (value == null) {
+			return "null";
+		}
+
 		if (value instanceof Map) {
 			return _toJSON((Map)value);
 		}
+		if (value != null) {
+			Class<?> clazz = value.getClass();
 
-		Class<?> clazz = value.getClass();
+				if (clazz.isArray()) {
+					StringBuilder sb = new StringBuilder("[");
 
-		if (clazz.isArray()) {
-			StringBuilder sb = new StringBuilder("[");
+					Object[] values = (Object[])value;
 
-			Object[] values = (Object[])value;
+					for (int i = 0; i < values.length; i++) {
+						sb.append(_toJSON(values[i]));
 
-			for (int i = 0; i < values.length; i++) {
-				sb.append(_toJSON(values[i]));
+						if ((i + 1) < values.length) {
+							sb.append(", ");
+						}
+					}
 
-				if ((i + 1) < values.length) {
-					sb.append(", ");
+					sb.append("]");
+
+					return sb.toString();
 				}
-			}
 
-			sb.append("]");
-
-			return sb.toString();
-		}
-
-		if (value instanceof String) {
-			return "\"" + _escape(value) + "\"";
+				if (value instanceof String) {
+					return "\"" + _escape(value) + "\"";
+				}
 		}
 
 		return String.valueOf(value);

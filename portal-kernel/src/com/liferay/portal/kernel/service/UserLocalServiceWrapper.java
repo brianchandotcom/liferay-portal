@@ -1870,19 +1870,6 @@ public class UserLocalServiceWrapper
 	}
 
 	/**
-	 * Returns the user with the portrait ID.
-	 *
-	 * @param portraitId the user's portrait ID
-	 * @return the user with the portrait ID
-	 */
-	@Override
-	public User getUserByPortraitId(long portraitId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _userLocalService.getUserByPortraitId(portraitId);
-	}
-
-	/**
 	 * Returns the user with the screen name.
 	 *
 	 * @param companyId the primary key of the user's company

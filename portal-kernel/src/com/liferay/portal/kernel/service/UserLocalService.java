@@ -1361,15 +1361,6 @@ public interface UserLocalService
 	public User getUserById(long companyId, long userId) throws PortalException;
 
 	/**
-	 * Returns the user with the portrait ID.
-	 *
-	 * @param portraitId the user's portrait ID
-	 * @return the user with the portrait ID
-	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public User getUserByPortraitId(long portraitId) throws PortalException;
-
-	/**
 	 * Returns the user with the screen name.
 	 *
 	 * @param companyId the primary key of the user's company

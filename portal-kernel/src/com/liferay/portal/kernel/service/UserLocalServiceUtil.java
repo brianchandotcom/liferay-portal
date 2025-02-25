@@ -1684,18 +1684,6 @@ public class UserLocalServiceUtil {
 	}
 
 	/**
-	 * Returns the user with the portrait ID.
-	 *
-	 * @param portraitId the user's portrait ID
-	 * @return the user with the portrait ID
-	 */
-	public static User getUserByPortraitId(long portraitId)
-		throws PortalException {
-
-		return getService().getUserByPortraitId(portraitId);
-	}
-
-	/**
 	 * Returns the user with the screen name.
 	 *
 	 * @param companyId the primary key of the user's company

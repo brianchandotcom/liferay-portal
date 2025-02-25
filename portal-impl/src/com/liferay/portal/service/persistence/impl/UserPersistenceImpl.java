@@ -53,7 +53,6 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.impl.UserImpl;
@@ -2441,88 +2440,473 @@ public class UserPersistenceImpl
 	private static final String _FINDER_COLUMN_EMAILADDRESS_EMAILADDRESS_3 =
 		"(user.emailAddress IS NULL OR user.emailAddress = '')";
 
-	private FinderPath _finderPathFetchByPortraitId;
+	private FinderPath _finderPathWithPaginationFindByPortraitId;
+	private FinderPath _finderPathWithoutPaginationFindByPortraitId;
+	private FinderPath _finderPathCountByPortraitId;
 
 	/**
-	 * Returns the user where portraitId = &#63; or throws a <code>NoSuchUserException</code> if it could not be found.
+	 * Returns all the users where portraitId = &#63;.
 	 *
 	 * @param portraitId the portrait ID
-	 * @return the matching user
-	 * @throws NoSuchUserException if a matching user could not be found
+	 * @return the matching users
 	 */
 	@Override
-	public User findByPortraitId(long portraitId) throws NoSuchUserException {
-		User user = fetchByPortraitId(portraitId);
-
-		if (user == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("portraitId=");
-			sb.append(portraitId);
-
-			sb.append("}");
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
-			}
-
-			throw new NoSuchUserException(sb.toString());
-		}
-
-		return user;
+	public List<User> findByPortraitId(long portraitId) {
+		return findByPortraitId(
+			portraitId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns the user where portraitId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns a range of all the users where portraitId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserModelImpl</code>.
+	 * </p>
 	 *
 	 * @param portraitId the portrait ID
-	 * @return the matching user, or <code>null</code> if a matching user could not be found
+	 * @param start the lower bound of the range of users
+	 * @param end the upper bound of the range of users (not inclusive)
+	 * @return the range of matching users
 	 */
 	@Override
-	public User fetchByPortraitId(long portraitId) {
-		return fetchByPortraitId(portraitId, true);
+	public List<User> findByPortraitId(long portraitId, int start, int end) {
+		return findByPortraitId(portraitId, start, end, null);
 	}
 
 	/**
-	 * Returns the user where portraitId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns an ordered range of all the users where portraitId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserModelImpl</code>.
+	 * </p>
 	 *
 	 * @param portraitId the portrait ID
+	 * @param start the lower bound of the range of users
+	 * @param end the upper bound of the range of users (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching users
+	 */
+	@Override
+	public List<User> findByPortraitId(
+		long portraitId, int start, int end,
+		OrderByComparator<User> orderByComparator) {
+
+		return findByPortraitId(
+			portraitId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the users where portraitId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserModelImpl</code>.
+	 * </p>
+	 *
+	 * @param portraitId the portrait ID
+	 * @param start the lower bound of the range of users
+	 * @param end the upper bound of the range of users (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param useFinderCache whether to use the finder cache
-	 * @return the matching user, or <code>null</code> if a matching user could not be found
+	 * @return the ordered range of matching users
 	 */
 	@Override
-	public User fetchByPortraitId(long portraitId, boolean useFinderCache) {
+	public List<User> findByPortraitId(
+		long portraitId, int start, int end,
+		OrderByComparator<User> orderByComparator, boolean useFinderCache) {
+
 		try (SafeCloseable safeCloseable =
 				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
 					User.class)) {
 
+			FinderPath finderPath = null;
 			Object[] finderArgs = null;
 
-			if (useFinderCache) {
-				finderArgs = new Object[] {portraitId};
+			if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+
+				if (useFinderCache) {
+					finderPath = _finderPathWithoutPaginationFindByPortraitId;
+					finderArgs = new Object[] {portraitId};
+				}
+			}
+			else if (useFinderCache) {
+				finderPath = _finderPathWithPaginationFindByPortraitId;
+				finderArgs = new Object[] {
+					portraitId, start, end, orderByComparator
+				};
 			}
 
-			Object result = null;
+			List<User> list = null;
 
 			if (useFinderCache) {
-				result = FinderCacheUtil.getResult(
-					_finderPathFetchByPortraitId, finderArgs, this);
-			}
+				list = (List<User>)FinderCacheUtil.getResult(
+					finderPath, finderArgs, this);
 
-			if (result instanceof User) {
-				User user = (User)result;
+				if ((list != null) && !list.isEmpty()) {
+					for (User user : list) {
+						if (portraitId != user.getPortraitId()) {
+							list = null;
 
-				if (portraitId != user.getPortraitId()) {
-					result = null;
+							break;
+						}
+					}
 				}
 			}
 
-			if (result == null) {
-				StringBundler sb = new StringBundler(3);
+			if (list == null) {
+				StringBundler sb = null;
+
+				if (orderByComparator != null) {
+					sb = new StringBundler(
+						3 + (orderByComparator.getOrderByFields().length * 2));
+				}
+				else {
+					sb = new StringBundler(3);
+				}
 
 				sb.append(_SQL_SELECT_USER_WHERE);
+
+				sb.append(_FINDER_COLUMN_PORTRAITID_PORTRAITID_2);
+
+				if (orderByComparator != null) {
+					appendOrderByComparator(
+						sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+				}
+				else {
+					sb.append(UserModelImpl.ORDER_BY_JPQL);
+				}
+
+				String sql = sb.toString();
+
+				Session session = null;
+
+				try {
+					session = openSession();
+
+					Query query = session.createQuery(sql);
+
+					QueryPos queryPos = QueryPos.getInstance(query);
+
+					queryPos.add(portraitId);
+
+					list = (List<User>)QueryUtil.list(
+						query, getDialect(), start, end);
+
+					cacheResult(list);
+
+					if (useFinderCache) {
+						FinderCacheUtil.putResult(finderPath, finderArgs, list);
+					}
+				}
+				catch (Exception exception) {
+					throw processException(exception);
+				}
+				finally {
+					closeSession(session);
+				}
+			}
+
+			return list;
+		}
+	}
+
+	/**
+	 * Returns the first user in the ordered set where portraitId = &#63;.
+	 *
+	 * @param portraitId the portrait ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching user
+	 * @throws NoSuchUserException if a matching user could not be found
+	 */
+	@Override
+	public User findByPortraitId_First(
+			long portraitId, OrderByComparator<User> orderByComparator)
+		throws NoSuchUserException {
+
+		User user = fetchByPortraitId_First(portraitId, orderByComparator);
+
+		if (user != null) {
+			return user;
+		}
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("portraitId=");
+		sb.append(portraitId);
+
+		sb.append("}");
+
+		throw new NoSuchUserException(sb.toString());
+	}
+
+	/**
+	 * Returns the first user in the ordered set where portraitId = &#63;.
+	 *
+	 * @param portraitId the portrait ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching user, or <code>null</code> if a matching user could not be found
+	 */
+	@Override
+	public User fetchByPortraitId_First(
+		long portraitId, OrderByComparator<User> orderByComparator) {
+
+		List<User> list = findByPortraitId(portraitId, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last user in the ordered set where portraitId = &#63;.
+	 *
+	 * @param portraitId the portrait ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching user
+	 * @throws NoSuchUserException if a matching user could not be found
+	 */
+	@Override
+	public User findByPortraitId_Last(
+			long portraitId, OrderByComparator<User> orderByComparator)
+		throws NoSuchUserException {
+
+		User user = fetchByPortraitId_Last(portraitId, orderByComparator);
+
+		if (user != null) {
+			return user;
+		}
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("portraitId=");
+		sb.append(portraitId);
+
+		sb.append("}");
+
+		throw new NoSuchUserException(sb.toString());
+	}
+
+	/**
+	 * Returns the last user in the ordered set where portraitId = &#63;.
+	 *
+	 * @param portraitId the portrait ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching user, or <code>null</code> if a matching user could not be found
+	 */
+	@Override
+	public User fetchByPortraitId_Last(
+		long portraitId, OrderByComparator<User> orderByComparator) {
+
+		int count = countByPortraitId(portraitId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<User> list = findByPortraitId(
+			portraitId, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the users before and after the current user in the ordered set where portraitId = &#63;.
+	 *
+	 * @param userId the primary key of the current user
+	 * @param portraitId the portrait ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next user
+	 * @throws NoSuchUserException if a user with the primary key could not be found
+	 */
+	@Override
+	public User[] findByPortraitId_PrevAndNext(
+			long userId, long portraitId,
+			OrderByComparator<User> orderByComparator)
+		throws NoSuchUserException {
+
+		User user = findByPrimaryKey(userId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			User[] array = new UserImpl[3];
+
+			array[0] = getByPortraitId_PrevAndNext(
+				session, user, portraitId, orderByComparator, true);
+
+			array[1] = user;
+
+			array[2] = getByPortraitId_PrevAndNext(
+				session, user, portraitId, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected User getByPortraitId_PrevAndNext(
+		Session session, User user, long portraitId,
+		OrderByComparator<User> orderByComparator, boolean previous) {
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			sb = new StringBundler(3);
+		}
+
+		sb.append(_SQL_SELECT_USER_WHERE);
+
+		sb.append(_FINDER_COLUMN_PORTRAITID_PORTRAITID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				sb.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			sb.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC);
+					}
+					else {
+						sb.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			sb.append(UserModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = sb.toString();
+
+		Query query = session.createQuery(sql);
+
+		query.setFirstResult(0);
+		query.setMaxResults(2);
+
+		QueryPos queryPos = QueryPos.getInstance(query);
+
+		queryPos.add(portraitId);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(user)) {
+
+				queryPos.add(orderByConditionValue);
+			}
+		}
+
+		List<User> list = query.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the users where portraitId = &#63; from the database.
+	 *
+	 * @param portraitId the portrait ID
+	 */
+	@Override
+	public void removeByPortraitId(long portraitId) {
+		for (User user :
+				findByPortraitId(
+					portraitId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+
+			remove(user);
+		}
+	}
+
+	/**
+	 * Returns the number of users where portraitId = &#63;.
+	 *
+	 * @param portraitId the portrait ID
+	 * @return the number of matching users
+	 */
+	@Override
+	public int countByPortraitId(long portraitId) {
+		try (SafeCloseable safeCloseable =
+				CTPersistenceHelperUtil.setCTCollectionIdWithSafeCloseable(
+					User.class)) {
+
+			FinderPath finderPath = _finderPathCountByPortraitId;
+
+			Object[] finderArgs = new Object[] {portraitId};
+
+			Long count = (Long)FinderCacheUtil.getResult(
+				finderPath, finderArgs, this);
+
+			if (count == null) {
+				StringBundler sb = new StringBundler(2);
+
+				sb.append(_SQL_COUNT_USER_WHERE);
 
 				sb.append(_FINDER_COLUMN_PORTRAITID_PORTRAITID_2);
 
@@ -2539,36 +2923,9 @@ public class UserPersistenceImpl
 
 					queryPos.add(portraitId);
 
-					List<User> list = query.list();
+					count = (Long)query.uniqueResult();
 
-					if (list.isEmpty()) {
-						if (useFinderCache) {
-							FinderCacheUtil.putResult(
-								_finderPathFetchByPortraitId, finderArgs, list);
-						}
-					}
-					else {
-						if (list.size() > 1) {
-							Collections.sort(list, Collections.reverseOrder());
-
-							if (_log.isWarnEnabled()) {
-								if (!useFinderCache) {
-									finderArgs = new Object[] {portraitId};
-								}
-
-								_log.warn(
-									"UserPersistenceImpl.fetchByPortraitId(long, boolean) with parameters (" +
-										StringUtil.merge(finderArgs) +
-											") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
-							}
-						}
-
-						User user = list.get(0);
-
-						result = user;
-
-						cacheResult(user);
-					}
+					FinderCacheUtil.putResult(finderPath, finderArgs, count);
 				}
 				catch (Exception exception) {
 					throw processException(exception);
@@ -2578,43 +2935,8 @@ public class UserPersistenceImpl
 				}
 			}
 
-			if (result instanceof List<?>) {
-				return null;
-			}
-			else {
-				return (User)result;
-			}
+			return count.intValue();
 		}
-	}
-
-	/**
-	 * Removes the user where portraitId = &#63; from the database.
-	 *
-	 * @param portraitId the portrait ID
-	 * @return the user that was removed
-	 */
-	@Override
-	public User removeByPortraitId(long portraitId) throws NoSuchUserException {
-		User user = findByPortraitId(portraitId);
-
-		return remove(user);
-	}
-
-	/**
-	 * Returns the number of users where portraitId = &#63;.
-	 *
-	 * @param portraitId the portrait ID
-	 * @return the number of matching users
-	 */
-	@Override
-	public int countByPortraitId(long portraitId) {
-		User user = fetchByPortraitId(portraitId);
-
-		if (user == null) {
-			return 0;
-		}
-
-		return 1;
 	}
 
 	private static final String _FINDER_COLUMN_PORTRAITID_PORTRAITID_2 =
@@ -7880,10 +8202,6 @@ public class UserPersistenceImpl
 				user);
 
 			FinderCacheUtil.putResult(
-				_finderPathFetchByPortraitId,
-				new Object[] {user.getPortraitId()}, user);
-
-			FinderCacheUtil.putResult(
 				_finderPathFetchByC_U,
 				new Object[] {user.getCompanyId(), user.getUserId()}, user);
 
@@ -7994,11 +8312,6 @@ public class UserPersistenceImpl
 
 			FinderCacheUtil.putResult(
 				_finderPathFetchByContactId, args, userModelImpl);
-
-			args = new Object[] {userModelImpl.getPortraitId()};
-
-			FinderCacheUtil.putResult(
-				_finderPathFetchByPortraitId, args, userModelImpl);
 
 			args = new Object[] {
 				userModelImpl.getCompanyId(), userModelImpl.getUserId()
@@ -10576,10 +10889,23 @@ public class UserPersistenceImpl
 			new String[] {String.class.getName()},
 			new String[] {"emailAddress"}, false);
 
-		_finderPathFetchByPortraitId = new FinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByPortraitId",
+		_finderPathWithPaginationFindByPortraitId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByPortraitId",
+			new String[] {
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			},
+			new String[] {"portraitId"}, true);
+
+		_finderPathWithoutPaginationFindByPortraitId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByPortraitId",
 			new String[] {Long.class.getName()}, new String[] {"portraitId"},
 			true);
+
+		_finderPathCountByPortraitId = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByPortraitId",
+			new String[] {Long.class.getName()}, new String[] {"portraitId"},
+			false);
 
 		_finderPathWithPaginationFindByGtU_C = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGtU_C",

@@ -659,38 +659,139 @@ public interface UserPersistence
 	public int countByEmailAddress(String emailAddress);
 
 	/**
-	 * Returns the user where portraitId = &#63; or throws a <code>NoSuchUserException</code> if it could not be found.
+	 * Returns all the users where portraitId = &#63;.
 	 *
 	 * @param portraitId the portrait ID
-	 * @return the matching user
+	 * @return the matching users
+	 */
+	public java.util.List<User> findByPortraitId(long portraitId);
+
+	/**
+	 * Returns a range of all the users where portraitId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserModelImpl</code>.
+	 * </p>
+	 *
+	 * @param portraitId the portrait ID
+	 * @param start the lower bound of the range of users
+	 * @param end the upper bound of the range of users (not inclusive)
+	 * @return the range of matching users
+	 */
+	public java.util.List<User> findByPortraitId(
+		long portraitId, int start, int end);
+
+	/**
+	 * Returns an ordered range of all the users where portraitId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserModelImpl</code>.
+	 * </p>
+	 *
+	 * @param portraitId the portrait ID
+	 * @param start the lower bound of the range of users
+	 * @param end the upper bound of the range of users (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching users
+	 */
+	public java.util.List<User> findByPortraitId(
+		long portraitId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<User>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the users where portraitId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>UserModelImpl</code>.
+	 * </p>
+	 *
+	 * @param portraitId the portrait ID
+	 * @param start the lower bound of the range of users
+	 * @param end the upper bound of the range of users (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching users
+	 */
+	public java.util.List<User> findByPortraitId(
+		long portraitId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<User>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first user in the ordered set where portraitId = &#63;.
+	 *
+	 * @param portraitId the portrait ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching user
 	 * @throws NoSuchUserException if a matching user could not be found
 	 */
-	public User findByPortraitId(long portraitId) throws NoSuchUserException;
+	public User findByPortraitId_First(
+			long portraitId,
+			com.liferay.portal.kernel.util.OrderByComparator<User>
+				orderByComparator)
+		throws NoSuchUserException;
 
 	/**
-	 * Returns the user where portraitId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the first user in the ordered set where portraitId = &#63;.
 	 *
 	 * @param portraitId the portrait ID
-	 * @return the matching user, or <code>null</code> if a matching user could not be found
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching user, or <code>null</code> if a matching user could not be found
 	 */
-	public User fetchByPortraitId(long portraitId);
+	public User fetchByPortraitId_First(
+		long portraitId,
+		com.liferay.portal.kernel.util.OrderByComparator<User>
+			orderByComparator);
 
 	/**
-	 * Returns the user where portraitId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the last user in the ordered set where portraitId = &#63;.
 	 *
 	 * @param portraitId the portrait ID
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the matching user, or <code>null</code> if a matching user could not be found
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching user
+	 * @throws NoSuchUserException if a matching user could not be found
 	 */
-	public User fetchByPortraitId(long portraitId, boolean useFinderCache);
+	public User findByPortraitId_Last(
+			long portraitId,
+			com.liferay.portal.kernel.util.OrderByComparator<User>
+				orderByComparator)
+		throws NoSuchUserException;
 
 	/**
-	 * Removes the user where portraitId = &#63; from the database.
+	 * Returns the last user in the ordered set where portraitId = &#63;.
 	 *
 	 * @param portraitId the portrait ID
-	 * @return the user that was removed
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching user, or <code>null</code> if a matching user could not be found
 	 */
-	public User removeByPortraitId(long portraitId) throws NoSuchUserException;
+	public User fetchByPortraitId_Last(
+		long portraitId,
+		com.liferay.portal.kernel.util.OrderByComparator<User>
+			orderByComparator);
+
+	/**
+	 * Returns the users before and after the current user in the ordered set where portraitId = &#63;.
+	 *
+	 * @param userId the primary key of the current user
+	 * @param portraitId the portrait ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next user
+	 * @throws NoSuchUserException if a user with the primary key could not be found
+	 */
+	public User[] findByPortraitId_PrevAndNext(
+			long userId, long portraitId,
+			com.liferay.portal.kernel.util.OrderByComparator<User>
+				orderByComparator)
+		throws NoSuchUserException;
+
+	/**
+	 * Removes all the users where portraitId = &#63; from the database.
+	 *
+	 * @param portraitId the portrait ID
+	 */
+	public void removeByPortraitId(long portraitId);
 
 	/**
 	 * Returns the number of users where portraitId = &#63;.

@@ -79,14 +79,8 @@ public class CloudStorageSyncUtil {
 		Process process = JenkinsResultsParserUtil.executeBashCommands(
 			true, commands.toArray(new String[0]));
 
-		String gcloudOutput = JenkinsResultsParserUtil.readInputStream(
-			process.getInputStream());
-
-		String regex = "https:\\/\\/storage.googleapis.com\\/.*";
-
-		Pattern pattern = Pattern.compile(regex);
-
-		Matcher matcher = pattern.matcher(gcloudOutput);
+		Matcher matcher = _signedUrlPattern.matcher(
+			JenkinsResultsParserUtil.readInputStream(process.getInputStream()));
 
 		if (matcher.find()) {
 			return matcher.group(0);
@@ -148,11 +142,11 @@ public class CloudStorageSyncUtil {
 
 		String gcpApplicationCredentialFilePath = null;
 
-		if (source.startsWith(GCP_BUCKET_PATH_JENKINS_CI_DATA) ||
-			destination.startsWith(GCP_BUCKET_PATH_JENKINS_CI_DATA) ||
-			source.startsWith(GCP_BUCKET_PATH_LIFERAY_RELEASE_CANDIDATES) ||
+		if (destination.startsWith(GCP_BUCKET_PATH_JENKINS_CI_DATA) ||
 			destination.startsWith(
-				GCP_BUCKET_PATH_LIFERAY_RELEASE_CANDIDATES)) {
+				GCP_BUCKET_PATH_LIFERAY_RELEASE_CANDIDATES) ||
+			source.startsWith(GCP_BUCKET_PATH_JENKINS_CI_DATA) ||
+			source.startsWith(GCP_BUCKET_PATH_LIFERAY_RELEASE_CANDIDATES)) {
 
 			gcpApplicationCredentialFilePath = _buildProperties.getProperty(
 				"google.application.crendential.file[jenkins]");
@@ -185,6 +179,8 @@ public class CloudStorageSyncUtil {
 	}
 
 	private static final Properties _buildProperties;
+	private static final Pattern _signedUrlPattern = Pattern.compile(
+		"https:\\/\\/storage.googleapis.com\\/.*");
 
 	static {
 		_buildProperties = new Properties() {

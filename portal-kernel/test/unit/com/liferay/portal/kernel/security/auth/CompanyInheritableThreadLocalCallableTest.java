@@ -45,9 +45,7 @@ public class CompanyInheritableThreadLocalCallableTest {
 		_test(CompanyConstants.SYSTEM, false);
 	}
 
-	private void _test(Long companyId, boolean locked)
-		throws Exception {
-
+	private void _test(Long companyId, boolean locked) throws Exception {
 		CompanyThreadLocal.setCompanyId(companyId);
 
 		Assert.assertEquals(

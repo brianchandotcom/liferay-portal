@@ -245,7 +245,7 @@ const SystemDataSets = ({
 	namespace: string;
 	systemDataSets: Array<ISystemDataSet>;
 }) => {
-	const [toggleDisabled, setToogleDisabled] = useState<boolean>(false);
+	const [toggleDisabled, setToogleDisabled] = useState(false);
 
 	const getAPIURL = () => {
 		if (!systemDataSets.length) {
@@ -315,10 +315,10 @@ const SystemDataSets = ({
 
 	const updateActive = async ({
 		itemData,
-		loadData,
+		onItemsChange,
 	}: {
 		itemData: IDataSet;
-		loadData: Function;
+		onItemsChange: Function;
 	}) => {
 		setToogleDisabled(true);
 
@@ -337,11 +337,18 @@ const SystemDataSets = ({
 			return;
 		}
 
-		openDefaultSuccessToast();
+		const systemDataSet: IDataSet = await response.json();
+
+		if (systemDataSet?.id) {
+			onItemsChange({itemsChanged: [systemDataSet]});
+
+			openDefaultSuccessToast();
+		}
+		else {
+			openDefaultFailureToast();
+		}
 
 		setToogleDisabled(false);
-
-		loadData();
 	};
 
 	const creationMenu = {
@@ -374,16 +381,16 @@ const SystemDataSets = ({
 
 	const toggleRenderer = function ({
 		itemData,
-		loadData,
+		onItemsChange,
 	}: {
 		itemData: IDataSet;
-		loadData: Function;
+		onItemsChange: Function;
 	}) {
 		if (itemData.actions.update) {
 			return Toggle({
 				disabled: toggleDisabled,
 				item: itemData,
-				toggleChange: () => updateActive({itemData, loadData}),
+				toggleChange: () => updateActive({itemData, onItemsChange}),
 			});
 		}
 

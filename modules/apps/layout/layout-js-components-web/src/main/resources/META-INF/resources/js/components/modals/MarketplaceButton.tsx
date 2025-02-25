@@ -12,6 +12,8 @@ import openModalComponent from './openModalComponent';
 
 import '../../../css/MarketplaceButton.scss';
 
+import classNames from 'classnames';
+
 interface Props {
 	body: string;
 	heading: string;
@@ -45,24 +47,20 @@ function MarketplaceButton({
 	}
 
 	return (
-		<div className="marketplace-button">
-			<ClayButtonWithIcon
-				aria-label={Liferay.Language.get('open-marketplace-explorer')}
-				borderless
-				displayType="secondary"
-				id={`${portletNamespace}isMarketplaceButtonVisited`}
-				monospaced
-				onClick={handleClick}
-				size="sm"
-				symbol="marketplace"
-				title={Liferay.Language.get('open-marketplace-explorer')}
-			/>
-
-			<span
-				className="notification"
-				id={`${portletNamespace}marketplaceBadge`}
-			></span>
-		</div>
+		<ClayButtonWithIcon
+			aria-label={Liferay.Language.get('open-marketplace-explorer')}
+			borderless
+			className={classNames('marketplace-button ml-2', {
+				notification: !isMarketplaceButtonVisited,
+			})}
+			displayType="secondary"
+			id={`${portletNamespace}isMarketplaceButtonVisited`}
+			monospaced
+			onClick={handleClick}
+			size="sm"
+			symbol="marketplace"
+			title={Liferay.Language.get('open-marketplace-explorer')}
+		/>
 	);
 }
 

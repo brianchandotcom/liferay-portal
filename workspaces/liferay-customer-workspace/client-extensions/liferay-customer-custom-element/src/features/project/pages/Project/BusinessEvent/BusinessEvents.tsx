@@ -76,6 +76,9 @@ const BusinessEvents = () => {
 		searchTerm: '',
 		selectedFilters: [],
 	});
+	const [businessEventsTickets, setBusinessEventsTickets] = useState<
+		IBusinessEventTicket[]
+	>([]);
 
 	const [businessEventsTickets, setBusinessEventsTickets] = useState<
 		IBusinessEventTicket[]

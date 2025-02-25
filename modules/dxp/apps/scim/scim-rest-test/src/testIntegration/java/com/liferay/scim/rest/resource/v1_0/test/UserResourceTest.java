@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -37,6 +38,8 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.scim.rest.client.dto.v1_0.MultiValuedAttribute;
 import com.liferay.scim.rest.client.dto.v1_0.Name;
+import com.liferay.scim.rest.client.dto.v1_0.Operation;
+import com.liferay.scim.rest.client.dto.v1_0.PatchOp;
 import com.liferay.scim.rest.client.dto.v1_0.User;
 import com.liferay.scim.rest.client.dto.v1_0.UserSchemaExtension;
 import com.liferay.scim.rest.client.http.HttpInvoker;
@@ -220,6 +223,62 @@ public class UserResourceTest extends BaseUserResourceTestCase {
 
 	@Override
 	@Test
+	@TestInfo("LPD-48895")
+	public void testPatchV2User() throws Exception {
+		User user1 = testDeleteV2User_addUser();
+
+		String newTitle = StringUtil.toLowerCase(RandomTestUtil.randomString());
+
+		Operation operation = new Operation();
+
+		operation.setOp("replace");
+		operation.setPath("title");
+		operation.setValue(newTitle);
+
+		PatchOp patchOperation = new PatchOp();
+
+		patchOperation.setOperations(new Operation[] {operation});
+		patchOperation.setSchemas(
+			new String[] {"\"urn:ietf:params:scim:api:messages:2.0:PatchOp\""});
+
+		HttpInvoker.HttpResponse httpResponse1 =
+			userResource.patchV2UserHttpResponse(user1.getId(), patchOperation);
+
+		assertHttpResponseStatusCode(200, httpResponse1);
+
+		User patchedUser1 = User.toDTO(httpResponse1.getContent());
+
+		assertValid(patchedUser1);
+
+		Assert.assertEquals(patchedUser1.getTitle(), newTitle);
+
+		operation.setOp("replace");
+		operation.setPath("active");
+		operation.setValue(false);
+
+		patchOperation.setOperations(new Operation[] {operation});
+
+		HttpInvoker.HttpResponse httpResponse2 =
+			userResource.patchV2UserHttpResponse(user1.getId(), patchOperation);
+
+		assertHttpResponseStatusCode(200, httpResponse2);
+
+		User patchedUser2 = User.toDTO(httpResponse2.getContent());
+
+		assertValid(patchedUser2);
+
+		Assert.assertEquals(patchedUser2.getActive(), false);
+
+		ConfigurationTestUtil.deleteConfiguration(_pid);
+
+		assertHttpResponseStatusCode(
+			404,
+			userResource.patchV2UserHttpResponse(
+				randomUser().getId(), patchOperation));
+	}
+
+	@Override
+	@Test
 	public void testPostV2User() throws Exception {
 		User postUser1 = randomUser();
 
@@ -393,7 +452,7 @@ public class UserResourceTest extends BaseUserResourceTestCase {
 				new MultiValuedAttribute() {
 					{
 						primary = true;
-						type = "default";
+						type = "work";
 						value = user.getUserName() + "@liferay.com";
 					}
 				}

@@ -9,6 +9,7 @@ import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
 import com.liferay.headless.delivery.dto.v1_0.ObjectEntryFolder;
 import com.liferay.headless.delivery.resource.v1_0.ObjectEntryFolderResource;
 import com.liferay.object.service.ObjectEntryFolderService;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
@@ -45,6 +46,10 @@ public class ObjectEntryFolderResourceImpl
 			Sort[] sorts)
 		throws Exception {
 
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+			throw new UnsupportedOperationException();
+		}
+
 		return _getAssetLibraryObjectEntryFoldersPage(
 			HashMapBuilder.put(
 				"createBatch",
@@ -64,6 +69,10 @@ public class ObjectEntryFolderResourceImpl
 	public ObjectEntryFolder postAssetLibraryObjectEntryFolder(
 			Long assetLibraryId, ObjectEntryFolder objectEntryFolder)
 		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+			throw new UnsupportedOperationException();
+		}
 
 		return _addObjectEntryFolder(assetLibraryId, null, objectEntryFolder);
 	}

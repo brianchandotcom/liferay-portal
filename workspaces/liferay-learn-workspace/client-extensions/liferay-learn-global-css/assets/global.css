@@ -1632,7 +1632,7 @@ pre[class*='language-'] {
 }
 
 .search-results {
-	.search-results-empty{
+	.search-results-empty {
 		color: var(--color-neutral-8, #54555f);
 		font-weight: 400;
 	}

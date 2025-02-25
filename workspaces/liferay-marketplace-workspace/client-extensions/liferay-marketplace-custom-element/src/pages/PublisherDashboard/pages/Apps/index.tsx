@@ -17,6 +17,7 @@ import PublisherAppsTable from '../../components/PublisherAppsTable';
 
 const Apps = () => {
 	const [page, setPage] = useState(1);
+	const [pageSize, setPageSize] = useState(20);
 	const {catalogId} = useOutletContext<any>();
 	const {data: supplierAccount} = useAccount();
 	const navigate = useNavigate();
@@ -27,7 +28,7 @@ const Apps = () => {
 		isLoading,
 	} = useSWR(
 		catalogId
-			? `/user-published-apps/${supplierAccount?.id}/${page}/${catalogId}`
+			? `/user-published-apps/${supplierAccount?.id}/${page}/${catalogId}/${pageSize}`
 			: null,
 		() =>
 			HeadlessCommerceAdminCatalogImpl.getProducts(
@@ -43,6 +44,7 @@ const Apps = () => {
 					'nestedFields':
 						'attachments,images,productSpecifications,skus',
 					'page': page.toString(),
+					'pageSize': pageSize.toString(),
 					'skus.accountId': '-1',
 					'sort': 'createDate:desc',
 				})
@@ -67,9 +69,13 @@ const Apps = () => {
 
 			{!!publishedProductTable?.items?.length && (
 				<ClayPaginationBarWithBasicItems
-					activeDelta={publishedProductTable.pageSize}
+					activeDelta={pageSize}
 					activePage={page}
 					ellipsisBuffer={3}
+					onDeltaChange={(newDelta) => {
+						setPageSize(newDelta);
+						setPage(1);
+					}}
 					onPageChange={setPage}
 					totalItems={publishedProductTable.totalCount}
 				/>

@@ -682,8 +682,7 @@ public class LayoutLocalServiceUtil {
 	}
 
 	public static Layout fetchLayoutByIconImageId(
-			boolean privateLayout, long iconImageId)
-		throws PortalException {
+		boolean privateLayout, long iconImageId) {
 
 		return getService().fetchLayoutByIconImageId(
 			privateLayout, iconImageId);

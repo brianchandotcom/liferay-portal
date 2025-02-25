@@ -293,14 +293,35 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 				testGroup.getExternalReferenceCode(), masterPage);
 
 		Assert.assertTrue(Validator.isNotNull(postMasterPage.getKey()));
+		Assert.assertNull(postMasterPage.getThumbnail());
 
 		masterPage = randomMasterPage();
+
+		Repository repository = _portletFileRepository.addPortletRepository(
+			testGroup.getGroupId(), RandomTestUtil.randomString(),
+			ServiceContextTestUtil.getServiceContext(
+				testGroup, TestPropsValues.getUserId()));
+
+		FileEntry fileEntry = _addPortletFileEntry(repository.getDlFolderId());
+
+		masterPage.setThumbnail(
+			() -> new ItemExternalReference() {
+				{
+					setClassName(FileEntry.class.getName());
+					setExternalReferenceCode(
+						fileEntry.getExternalReferenceCode());
+				}
+			});
 
 		postMasterPage =
 			masterPageResource.postSiteSiteByExternalReferenceCodeMasterPage(
 				testGroup.getExternalReferenceCode(), masterPage);
 
 		Assert.assertEquals(masterPage.getKey(), postMasterPage.getKey());
+
+		_assertThumbnailItemExternalReference(
+			fileEntry.getExternalReferenceCode(),
+			postMasterPage.getThumbnail());
 	}
 
 	@Override
@@ -497,6 +518,23 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 		}
 	}
 
+	private void _assertThumbnailItemExternalReference(
+		String expectedExternalReferenceCode,
+		ItemExternalReference itemExternalReference) {
+
+		if (expectedExternalReferenceCode != null) {
+			Assert.assertEquals(
+				FileEntry.class.getName(),
+				itemExternalReference.getClassName());
+			Assert.assertEquals(
+				expectedExternalReferenceCode,
+				itemExternalReference.getExternalReferenceCode());
+		}
+		else {
+			Assert.assertNull(itemExternalReference);
+		}
+	}
+
 	private void _enableLocalStaging() throws Exception {
 		_stagingLocalService.enableLocalStaging(
 			TestPropsValues.getUserId(), testGroup, true, false,
@@ -683,20 +721,8 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 		Assert.assertEquals(
 			expectedMarkedAsDefault, patchMasterPage.getMarkedAsDefault());
 
-		ItemExternalReference itemExternalReference =
-			patchMasterPage.getThumbnail();
-
-		if (expectedExternalReferenceCode != null) {
-			Assert.assertEquals(
-				FileEntry.class.getName(),
-				itemExternalReference.getClassName());
-			Assert.assertEquals(
-				expectedExternalReferenceCode,
-				itemExternalReference.getExternalReferenceCode());
-		}
-		else {
-			Assert.assertNull(itemExternalReference);
-		}
+		_assertThumbnailItemExternalReference(
+			expectedExternalReferenceCode, patchMasterPage.getThumbnail());
 	}
 
 	private void _testPutSiteSiteByExternalReferenceCodeMasterPage(
@@ -712,20 +738,9 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 		assertEquals(masterPage, putMasterPage);
 		assertValid(putMasterPage);
 
-		ItemExternalReference itemExternalReference =
-			putMasterPage.getThumbnail();
-
-		if (expectedThumbnailExternalReferenceCode != null) {
-			Assert.assertEquals(
-				FileEntry.class.getName(),
-				itemExternalReference.getClassName());
-			Assert.assertEquals(
-				expectedThumbnailExternalReferenceCode,
-				itemExternalReference.getExternalReferenceCode());
-		}
-		else {
-			Assert.assertNull(itemExternalReference);
-		}
+		_assertThumbnailItemExternalReference(
+			expectedThumbnailExternalReferenceCode,
+			putMasterPage.getThumbnail());
 	}
 
 	private void _updateLayoutPageTemplateEntryStatus(

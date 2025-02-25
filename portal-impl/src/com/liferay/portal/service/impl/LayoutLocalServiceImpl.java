@@ -1067,7 +1067,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 	@Override
 	public Layout fetchDraftLayout(long plid) {
-		return fetchLayout(
+		return layoutPersistence.fetchByC_C(
 			_classNameLocalService.getClassNameId(Layout.class), plid);
 	}
 
@@ -1095,11 +1095,6 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		long groupId, boolean privateLayout, long layoutId) {
 
 		return layoutPersistence.fetchByG_P_L(groupId, privateLayout, layoutId);
-	}
-
-	@Override
-	public Layout fetchLayout(long classNameId, long classPK) {
-		return layoutPersistence.fetchByC_C(classNameId, classPK);
 	}
 
 	@Override

@@ -65,16 +65,14 @@ public class HeadlessBuilderOSGiCommands implements OSGiCommands {
 			}
 		}
 
-		for (String processedFileName :
-				Arrays.asList(
-					"00.list.type.definition", "01.object.definition")) {
+		File dataFolder = bundle.getDataFile("");
 
-			File processedFile = bundle.getDataFile(
-				".com.liferay.headless.builder.internal.batch." +
-					processedFileName + ".batch.engine.data.json.0.processed");
+		File[] files = dataFolder.listFiles(
+			(dir, name) -> name.endsWith(".processed"));
 
-			if ((processedFile != null) && processedFile.exists()) {
-				processedFile.delete();
+		if (files != null) {
+			for (File file : files) {
+				file.delete();
 			}
 		}
 

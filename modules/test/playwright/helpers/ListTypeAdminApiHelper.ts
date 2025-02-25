@@ -40,12 +40,14 @@ export class ListTypeAdminApiHelper {
 
 	async postListTypeEntry(
 		listTypeDefinitionExternalReferenceCode: string,
-		listTypeEntryName: string
+		englishListTypeEntryName: string,
+		translatedNames?: LocalizedValue<string>
 	): Promise<ListTypeDefinition> {
 		const requestBody = {
-			key: listTypeEntryName.toLocaleLowerCase(),
+			key: englishListTypeEntryName.toLocaleLowerCase(),
 			name_i18n: {
-				en_US: listTypeEntryName,
+				en_US: englishListTypeEntryName,
+				...translatedNames,
 			},
 		};
 

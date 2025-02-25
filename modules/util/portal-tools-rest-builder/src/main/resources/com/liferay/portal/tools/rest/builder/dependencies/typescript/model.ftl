@@ -1,7 +1,7 @@
 <#if imports??>
 	<#list imports?sort_by("classname") as import>
 		<#if import.classname?lower_case != modelName?lower_case>
-			import { ${import.classname} } from './${import.classname?uncap_first}';
+			import {${import.classname}} from './${import.classname?uncap_first}';
 		</#if>
 	</#list>
 </#if>
@@ -28,16 +28,20 @@
 			'${property.name}'?: ${property.type};
 		</#list>
 
-		static discriminator: string | undefined = <#if discriminator??>"${discriminator}"<#else>undefined</#if>;
+		static 'discriminator': string | undefined = <#if discriminator??>"${discriminator}"<#else>undefined</#if>;
 
-		static attributeTypeMap: Array<{baseName: string, name: string, type: string}> = [
-			<#list properties as property>
-				{
-					"baseName": "${property.name}",
-					"name": "${property.name}",
-					"type": "${property.type}"
-				}<#if property_has_next>,</#if>
-			</#list>
+	static 'attributeTypeMap': Array<{
+		baseName: string;
+		name: string;
+		type: string;
+	}> = [
+	<#list properties as property>
+		{
+			baseName: '${property.name}',
+			name: '${property.name}',
+			type: '${property.type}',
+		},
+	</#list>
 		];
 
 		static getAttributeTypeMap() {

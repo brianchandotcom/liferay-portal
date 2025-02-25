@@ -13,19 +13,23 @@
 			'numberOfOccurrences'?: number;
 			'term'?: string;
 
-		static discriminator: string | undefined = undefined;
+		static 'discriminator': string | undefined = undefined;
 
-		static attributeTypeMap: Array<{baseName: string, name: string, type: string}> = [
-				{
-					"baseName": "numberOfOccurrences",
-					"name": "numberOfOccurrences",
-					"type": "number"
-				},
-				{
-					"baseName": "term",
-					"name": "term",
-					"type": "string"
-				}
+	static 'attributeTypeMap': Array<{
+		baseName: string;
+		name: string;
+		type: string;
+	}> = [
+		{
+			baseName: 'numberOfOccurrences',
+			name: 'numberOfOccurrences',
+			type: 'number',
+		},
+		{
+			baseName: 'term',
+			name: 'term',
+			type: 'string',
+		},
 		];
 
 		static getAttributeTypeMap() {

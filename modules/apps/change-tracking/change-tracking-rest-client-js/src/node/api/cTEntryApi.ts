@@ -7,12 +7,16 @@ import http from 'http';
 
 import localVarRequest from 'request';
 /* tslint:disable:no-unused-locals */
-import { Authentication, Interceptor, ObjectSerializer, VoidAuth } from '../model/models';
+import {
+	Authentication,
+	Interceptor,
+	ObjectSerializer,
+	VoidAuth,
+} from '../model/models';
+		import {CTEntry} from '../model/cTEntry';
+		import {PageCTEntry} from '../model/pageCTEntry';
 
-		import { CTEntry } from '../model/cTEntry';
-		import { PageCTEntry } from '../model/pageCTEntry';
-
-import { HttpError } from './apis';
+import {HttpError} from './apis';
 const defaultBasePath = 'http://localhost';
 
 /**
@@ -20,29 +24,33 @@ const defaultBasePath = 'http://localhost';
  * @generated
  */
 
-export enum CTEntryApiApiKeys {
-}
+export enum CTEntryApiApiKeys {}
 
 export class CTEntryApi {
 	protected _basePath = defaultBasePath;
-	protected _defaultHeaders : any = {};
-	protected _useQuerystring : boolean = false;
+	protected _defaultHeaders: any = {};
+	protected _useQuerystring: boolean = false;
 
 	protected authentications = {
-		'default': <Authentication>new VoidAuth(),
-	}
+		default: <Authentication>new VoidAuth(),
+	};
 
 	protected interceptors: Interceptor[] = [];
 
 	constructor(basePath?: string);
-	constructor(basePathOrUsername: string, password?: string, basePath?: string) {
+	constructor(
+		basePathOrUsername: string,
+		password?: string,
+		basePath?: string
+	) {
 		if (password) {
 			if (basePath) {
 				this.basePath = basePath;
 			}
-		} else {
+		}
+		else {
 			if (basePathOrUsername) {
-				this.basePath = basePathOrUsername
+				this.basePath = basePathOrUsername;
 			}
 		}
 	}
@@ -72,7 +80,8 @@ export class CTEntryApi {
 	}
 
 	public setApiKey(key: CTEntryApiApiKeys, value: string) {
-		(this.authentications as any)[CTEntryApiApiKeys[key]].apiKey = value;
+		(this.authentications as any)[CTEntryApiApiKeys[key]].apiKey =
+			value;
 	}
 
 	public addInterceptor(interceptor: Interceptor) {
@@ -89,7 +98,7 @@ export class CTEntryApi {
 				 * @param showHideable 
 				 * @param sort 
 		 */
-		public async getCtCollectionCTEntriesPage (
+		public async getCtCollectionCTEntriesPage(
 					ctCollectionId: number,
 					filter?: string,
 					page?: number,
@@ -98,7 +107,7 @@ export class CTEntryApi {
 					showHideable?: boolean,
 					sort?: string,
 			options: {
-				headers: {[name: string]: string}
+				headers: {[name: string]: string};
 			} = {headers: {}}
 		): Promise<{
 				body: PageCTEntry;
@@ -113,7 +122,6 @@ export class CTEntryApi {
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
 				const produces = ['application/json', 'application/xml'];
-				// give precedence to 'application/json'
 				if (produces.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
@@ -121,7 +129,6 @@ export class CTEntryApi {
 				}
 			const localVarFormParams: any = {};
 
-						// verify required parameter 'ctCollectionId' is not null or undefined
 						if (ctCollectionId === null || ctCollectionId === undefined) {
 							throw new Error('Required parameter ctCollectionId was null or undefined when calling getCtCollectionCTEntriesPage.');
 						}
@@ -177,30 +184,42 @@ export class CTEntryApi {
 					localVarRequest(localVarRequestOptions, (error, response, body) => {
 						if (error) {
 							reject(error);
-						} else {
-							if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-									body = ObjectSerializer.deserialize(body, "PageCTEntry");
-								resolve({ body: body, response: response });
-							} else {
-								reject(new HttpError(body, response, response.statusCode));
+						}
+						else {
+							if (
+								response.statusCode &&
+								response.statusCode >= 200 &&
+								response.statusCode <= 299
+							) {
+								resolve({body, response});
+							}
+							else {
+								reject(
+									new HttpError(
+										body,
+										response,
+										response.statusCode
+									)
+								);
 							}
 						}
-					});
-				});
+					}
+				);
 			});
-		}
+		});
+	}
 		/**
 		 * 
 				 * @param ctCollectionId 
 				 * @param modelClassNameId 
 				 * @param modelClassPK 
 		 */
-		public async getCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK (
+		public async getCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK(
 					ctCollectionId: number,
 					modelClassNameId: number,
 					modelClassPK: number,
 			options: {
-				headers: {[name: string]: string}
+				headers: {[name: string]: string};
 			} = {headers: {}}
 		): Promise<{
 				body: CTEntry;
@@ -223,7 +242,6 @@ export class CTEntryApi {
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
 				const produces = ['application/json', 'application/xml'];
-				// give precedence to 'application/json'
 				if (produces.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
@@ -231,15 +249,12 @@ export class CTEntryApi {
 				}
 			const localVarFormParams: any = {};
 
-						// verify required parameter 'ctCollectionId' is not null or undefined
 						if (ctCollectionId === null || ctCollectionId === undefined) {
 							throw new Error('Required parameter ctCollectionId was null or undefined when calling getCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK.');
 						}
-						// verify required parameter 'modelClassNameId' is not null or undefined
 						if (modelClassNameId === null || modelClassNameId === undefined) {
 							throw new Error('Required parameter modelClassNameId was null or undefined when calling getCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK.');
 						}
-						// verify required parameter 'modelClassPK' is not null or undefined
 						if (modelClassPK === null || modelClassPK === undefined) {
 							throw new Error('Required parameter modelClassPK was null or undefined when calling getCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK.');
 						}
@@ -277,18 +292,30 @@ export class CTEntryApi {
 					localVarRequest(localVarRequestOptions, (error, response, body) => {
 						if (error) {
 							reject(error);
-						} else {
-							if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-									body = ObjectSerializer.deserialize(body, "CTEntry");
-								resolve({ body: body, response: response });
-							} else {
-								reject(new HttpError(body, response, response.statusCode));
+						}
+						else {
+							if (
+								response.statusCode &&
+								response.statusCode >= 200 &&
+								response.statusCode <= 299
+							) {
+								resolve({body, response});
+							}
+							else {
+								reject(
+									new HttpError(
+										body,
+										response,
+										response.statusCode
+									)
+								);
 							}
 						}
-					});
-				});
+					}
+				);
 			});
-		}
+		});
+	}
 		/**
 		 * 
 				 * @param classNameId 
@@ -300,7 +327,7 @@ export class CTEntryApi {
 				 * @param siteId 
 				 * @param sort 
 		 */
-		public async getCTEntriesHistoryPage (
+		public async getCTEntriesHistoryPage(
 					classNameId: number,
 					classPK?: number,
 					filter?: string,
@@ -310,7 +337,7 @@ export class CTEntryApi {
 					siteId?: number,
 					sort?: string,
 			options: {
-				headers: {[name: string]: string}
+				headers: {[name: string]: string};
 			} = {headers: {}}
 		): Promise<{
 				body: PageCTEntry;
@@ -321,7 +348,6 @@ export class CTEntryApi {
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
 				const produces = ['application/json', 'application/xml'];
-				// give precedence to 'application/json'
 				if (produces.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
@@ -329,7 +355,6 @@ export class CTEntryApi {
 				}
 			const localVarFormParams: any = {};
 
-						// verify required parameter 'classNameId' is not null or undefined
 						if (classNameId === null || classNameId === undefined) {
 							throw new Error('Required parameter classNameId was null or undefined when calling getCTEntriesHistoryPage.');
 						}
@@ -391,26 +416,38 @@ export class CTEntryApi {
 					localVarRequest(localVarRequestOptions, (error, response, body) => {
 						if (error) {
 							reject(error);
-						} else {
-							if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-									body = ObjectSerializer.deserialize(body, "PageCTEntry");
-								resolve({ body: body, response: response });
-							} else {
-								reject(new HttpError(body, response, response.statusCode));
+						}
+						else {
+							if (
+								response.statusCode &&
+								response.statusCode >= 200 &&
+								response.statusCode <= 299
+							) {
+								resolve({body, response});
+							}
+							else {
+								reject(
+									new HttpError(
+										body,
+										response,
+										response.statusCode
+									)
+								);
 							}
 						}
-					});
-				});
+					}
+				);
 			});
-		}
+		});
+	}
 		/**
 		 * 
 				 * @param ctEntryId 
 		 */
-		public async getCTEntry (
+		public async getCTEntry(
 					ctEntryId: number,
 			options: {
-				headers: {[name: string]: string}
+				headers: {[name: string]: string};
 			} = {headers: {}}
 		): Promise<{
 				body: CTEntry;
@@ -425,7 +462,6 @@ export class CTEntryApi {
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
 				const produces = ['application/json', 'application/xml'];
-				// give precedence to 'application/json'
 				if (produces.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
@@ -433,7 +469,6 @@ export class CTEntryApi {
 				}
 			const localVarFormParams: any = {};
 
-						// verify required parameter 'ctEntryId' is not null or undefined
 						if (ctEntryId === null || ctEntryId === undefined) {
 							throw new Error('Required parameter ctEntryId was null or undefined when calling getCTEntry.');
 						}
@@ -471,16 +506,28 @@ export class CTEntryApi {
 					localVarRequest(localVarRequestOptions, (error, response, body) => {
 						if (error) {
 							reject(error);
-						} else {
-							if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-									body = ObjectSerializer.deserialize(body, "CTEntry");
-								resolve({ body: body, response: response });
-							} else {
-								reject(new HttpError(body, response, response.statusCode));
+						}
+						else {
+							if (
+								response.statusCode &&
+								response.statusCode >= 200 &&
+								response.statusCode <= 299
+							) {
+								resolve({body, response});
+							}
+							else {
+								reject(
+									new HttpError(
+										body,
+										response,
+										response.statusCode
+									)
+								);
 							}
 						}
-					});
-				});
+					}
+				);
 			});
-		}
+		});
+	}
 }

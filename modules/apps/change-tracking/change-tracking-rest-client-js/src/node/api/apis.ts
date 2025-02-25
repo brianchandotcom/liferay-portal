@@ -21,7 +21,7 @@ import * as http from 'http';
  */
 
 export class HttpError extends Error {
-	constructor (
+	constructor(
 		public response: http.IncomingMessage,
 		public body: any,
 		public statusCode?: number
@@ -31,4 +31,9 @@ export class HttpError extends Error {
 	}
 }
 
-export const APIS = [CTCollectionApi, CTEntryApi, CTProcessApi, CTRemoteApi];
+export const APIS = [
+	CTCollectionApi,
+	CTEntryApi,
+	CTProcessApi,
+	CTRemoteApi,
+];

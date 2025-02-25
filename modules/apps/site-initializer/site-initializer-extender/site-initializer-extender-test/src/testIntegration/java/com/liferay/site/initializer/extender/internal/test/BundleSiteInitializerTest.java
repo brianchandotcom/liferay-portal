@@ -4368,7 +4368,7 @@ public class BundleSiteInitializerTest {
 			workflowDefinitionTest1.getDescription());
 
 		WorkflowDefinitionLink workflowDefinitionLink1 =
-			_workflowDefinitionLinkLocalService.getWorkflowDefinitionLink(
+			_workflowDefinitionLinkLocalService.fetchWorkflowDefinitionLink(
 				_group.getCompanyId(), 0, "com.liferay.blogs.model.BlogsEntry",
 				0, 0);
 
@@ -4391,7 +4391,7 @@ public class BundleSiteInitializerTest {
 			workflowDefinitionTest2.getDescription());
 
 		WorkflowDefinitionLink workflowDefinitionLink2 =
-			_workflowDefinitionLinkLocalService.getWorkflowDefinitionLink(
+			_workflowDefinitionLinkLocalService.fetchWorkflowDefinitionLink(
 				_group.getCompanyId(), _group.getGroupId(),
 				"com.liferay.search.experiences.model.SXPBlueprint", 0, 0);
 

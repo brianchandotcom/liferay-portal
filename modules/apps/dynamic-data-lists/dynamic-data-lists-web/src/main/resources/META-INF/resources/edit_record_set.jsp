@@ -111,13 +111,7 @@ if (ddlDisplayContext.isAdminPortlet()) {
 						<aui:select label="workflow" name="workflowDefinition">
 
 							<%
-							WorkflowDefinitionLink workflowDefinitionLink = null;
-
-							try {
-								workflowDefinitionLink = WorkflowDefinitionLinkLocalServiceUtil.getWorkflowDefinitionLink(company.getCompanyId(), themeDisplay.getScopeGroupId(), DDLRecordSet.class.getName(), recordSetId, 0, true);
-							}
-							catch (NoSuchWorkflowDefinitionLinkException nswdle) {
-							}
+							WorkflowDefinitionLink workflowDefinitionLink = WorkflowDefinitionLinkLocalServiceUtil.fetchWorkflowDefinitionLink(company.getCompanyId(), themeDisplay.getScopeGroupId(), DDLRecordSet.class.getName(), recordSetId, 0, true);
 							%>
 
 							<aui:option><liferay-ui:message key="no-workflow" /></aui:option>

@@ -7,11 +7,8 @@ package com.liferay.portal.workflow.web.internal.display.context;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.exception.NoSuchWorkflowDefinitionLinkException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -355,35 +352,22 @@ public class WorkflowDefinitionLinkDisplayContext {
 	}
 
 	public boolean isWorkflowDefinitionSelected(
-			WorkflowDefinition workflowDefinition, String className)
-		throws PortalException {
+		WorkflowDefinition workflowDefinition, String className) {
 
 		WorkflowDefinitionLink workflowDefinitionLink = null;
 
-		try {
-			if (isControlPanelPortlet()) {
-				workflowDefinitionLink =
-					_workflowDefinitionLinkLocalService.
-						getDefaultWorkflowDefinitionLink(
-							_workflowDefinitionLinkRequestHelper.getCompanyId(),
-							className, 0, 0);
-			}
-			else {
-				workflowDefinitionLink =
-					_workflowDefinitionLinkLocalService.
-						getWorkflowDefinitionLink(
-							_workflowDefinitionLinkRequestHelper.getCompanyId(),
-							getGroupId(), className, 0, 0, true);
-			}
+		if (isControlPanelPortlet()) {
+			workflowDefinitionLink =
+				_workflowDefinitionLinkLocalService.
+					fetchDefaultWorkflowDefinitionLink(
+						_workflowDefinitionLinkRequestHelper.getCompanyId(),
+						className, 0, 0);
 		}
-		catch (NoSuchWorkflowDefinitionLinkException
-					noSuchWorkflowDefinitionLinkException) {
-
-			// LPS-52675
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchWorkflowDefinitionLinkException);
-			}
+		else {
+			workflowDefinitionLink =
+				_workflowDefinitionLinkLocalService.fetchWorkflowDefinitionLink(
+					_workflowDefinitionLinkRequestHelper.getCompanyId(),
+					getGroupId(), className, 0, 0, true);
 		}
 
 		if (workflowDefinitionLink == null) {
@@ -549,9 +533,6 @@ public class WorkflowDefinitionLinkDisplayContext {
 
 		return portletDisplay.getPortletName();
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		WorkflowDefinitionLinkDisplayContext.class);
 
 	private final HttpServletRequest _httpServletRequest;
 	private final LiferayPortletRequest _liferayPortletRequest;

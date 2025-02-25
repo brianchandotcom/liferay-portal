@@ -39,11 +39,8 @@ import com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriteri
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.exception.NoSuchWorkflowDefinitionLinkException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -396,26 +393,12 @@ public class CommerceChannelDisplayContext
 	public WorkflowDefinitionLink getWorkflowDefinitionLink(long typePK)
 		throws PortalException {
 
-		WorkflowDefinitionLink workflowDefinitionLink = null;
-
 		CommerceChannel commerceChannel = getCommerceChannel();
 
-		try {
-			workflowDefinitionLink =
-				_workflowDefinitionLinkLocalService.getWorkflowDefinitionLink(
-					_commerceChannelRequestHelper.getCompanyId(),
-					commerceChannel.getGroupId(), CommerceOrder.class.getName(),
-					0, typePK, true);
-		}
-		catch (NoSuchWorkflowDefinitionLinkException
-					noSuchWorkflowDefinitionLinkException) {
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(noSuchWorkflowDefinitionLinkException);
-			}
-		}
-
-		return workflowDefinitionLink;
+		return _workflowDefinitionLinkLocalService.fetchWorkflowDefinitionLink(
+			_commerceChannelRequestHelper.getCompanyId(),
+			commerceChannel.getGroupId(), CommerceOrder.class.getName(), 0,
+			typePK, true);
 	}
 
 	public boolean hasAddChannelPermission() {
@@ -624,9 +607,6 @@ public class CommerceChannelDisplayContext
 
 		return _commerceOrderFieldsConfiguration;
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		CommerceChannelDisplayContext.class);
 
 	private final AccountEntryService _accountEntryService;
 	private CommerceAccountGroupServiceConfiguration

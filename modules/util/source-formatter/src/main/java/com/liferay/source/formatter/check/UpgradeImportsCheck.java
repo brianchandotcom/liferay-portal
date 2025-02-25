@@ -111,14 +111,14 @@ public class UpgradeImportsCheck extends BaseFileCheck {
 			!StringUtil.equals(
 				matcher.group(), matcher.group(1) + newClassName)) {
 
-			List<String> importsName = _getImportNames(fileName, content);
+			List<String> importNames = _getImportNames(fileName, content);
 
 			String importName = _getImportName(
 				StringUtil.upperCaseFirstLetter(newClassName));
 
 			if ((fileName.endsWith("java") &&
 				 ((importName == null) || !content.contains(importName))) ||
-				importsName.stream(
+				importNames.stream(
 				).anyMatch(
 					name -> StringUtil.endsWith(
 						name, "." + StringUtil.upperCaseFirstLetter(className))

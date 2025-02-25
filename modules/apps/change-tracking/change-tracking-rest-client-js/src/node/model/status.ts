@@ -14,24 +14,28 @@
 			'label'?: string;
 			'label_i18n'?: string;
 
-		static discriminator: string | undefined = undefined;
+		static 'discriminator': string | undefined = undefined;
 
-		static attributeTypeMap: Array<{baseName: string, name: string, type: string}> = [
-				{
-					"baseName": "code",
-					"name": "code",
-					"type": "number"
-				},
-				{
-					"baseName": "label",
-					"name": "label",
-					"type": "string"
-				},
-				{
-					"baseName": "label_i18n",
-					"name": "label_i18n",
-					"type": "string"
-				}
+	static 'attributeTypeMap': Array<{
+		baseName: string;
+		name: string;
+		type: string;
+	}> = [
+		{
+			baseName: 'code',
+			name: 'code',
+			type: 'number',
+		},
+		{
+			baseName: 'label',
+			name: 'label',
+			type: 'string',
+		},
+		{
+			baseName: 'label_i18n',
+			name: 'label_i18n',
+			type: 'string',
+		},
 		];
 
 		static getAttributeTypeMap() {

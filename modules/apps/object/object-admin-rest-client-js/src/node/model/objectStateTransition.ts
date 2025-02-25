@@ -12,14 +12,18 @@
 	export class ObjectStateTransition {
 			'key'?: string;
 
-		static discriminator: string | undefined = undefined;
+		static 'discriminator': string | undefined = undefined;
 
-		static attributeTypeMap: Array<{baseName: string, name: string, type: string}> = [
-				{
-					"baseName": "key",
-					"name": "key",
-					"type": "string"
-				}
+	static 'attributeTypeMap': Array<{
+		baseName: string;
+		name: string;
+		type: string;
+	}> = [
+		{
+			baseName: 'key',
+			name: 'key',
+			type: 'string',
+		},
 		];
 
 		static getAttributeTypeMap() {

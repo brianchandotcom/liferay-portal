@@ -4,7 +4,7 @@
 	"layoutTemplateId": "[$PORTAL_PROPERTY:default.guest.public.layout.template.id$]",
 	"name": "[$PORTAL_PROPERTY:default.guest.public.layout.name$]",
 	"name_i18n": {
-		"es_ES": "[$PORTAL_PROPERTY:default.user.private.layout.name$]"
+		"es_ES": "[$PORTAL_PROPERTY:default.guest.public.layout.name$]"
 	},
 	"priority": "1",
 	"private": false,

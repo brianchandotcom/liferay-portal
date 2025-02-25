@@ -83,6 +83,9 @@ public class TypeScriptClientUtil {
 		}
 
 		_createFile(
+			null, configYAML, copyrightFile, files, "typescript/api_global",
+			baseClientDir.getPath() + "/src/node/api.ts");
+		_createFile(
 			_buildApisContext(entries), configYAML, copyrightFile, files,
 			"typescript/apis",
 			baseClientDir.getPath() + "/src/node/api/apis.ts");
@@ -107,10 +110,6 @@ public class TypeScriptClientUtil {
 			Collections.singletonMap("schemaMap", schemaMap), configYAML,
 			copyrightFile, files, "typescript/models",
 			baseClientDir.getPath() + "/src/node/model/models.ts");
-
-		_createFile(
-			null, configYAML, copyrightFile, files, "typescript/api_global",
-			baseClientDir.getPath() + "/src/node/api.ts");
 
 		FileUtil.deleteFiles(baseClientDir.getPath(), files);
 	}

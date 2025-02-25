@@ -22,7 +22,6 @@ export default function canBeRemoved(
 
 		case LAYOUT_DATA_ITEM_TYPES.formStep:
 			return (
-				Liferay.FeatureFlags['LPD-31772'] &&
 				!hasDropZoneChild(item, layoutData) &&
 				!isFirstStep(item, layoutData)
 			);

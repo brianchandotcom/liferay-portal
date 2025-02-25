@@ -40,7 +40,6 @@ import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructureItemUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -116,10 +115,6 @@ public class FormItemManager {
 			layout, layoutStructure, layoutStructureItemChanges,
 			numberOfSteps - childrenItemIds.size(), segmentsExperienceId,
 			serviceContext);
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-31772")) {
-			return layoutStructureItemChanges;
-		}
 
 		childrenItemIds =
 			formStepContainerStyledLayoutStructureItem.getChildrenItemIds();
@@ -353,8 +348,7 @@ public class FormItemManager {
 					continue;
 				}
 
-				if (FeatureFlagManagerUtil.isEnabled("LPD-31772") &&
-					Objects.equals(
+				if (Objects.equals(
 						_getFragmentEntryLinkFormButtonType(
 							fragmentStyledLayoutStructureItem.
 								getFragmentEntryLinkId()),
@@ -416,9 +410,8 @@ public class FormItemManager {
 					layoutStructure.getLayoutStructureItem(
 						formStepLayoutStructureItemChildrenItemId);
 
-				if (FeatureFlagManagerUtil.isEnabled("LPD-31772") &&
-					(layoutStructureItem instanceof
-						FragmentStyledLayoutStructureItem)) {
+				if (layoutStructureItem instanceof
+						FragmentStyledLayoutStructureItem) {
 
 					FragmentStyledLayoutStructureItem
 						fragmentStyledLayoutStructureItem =
@@ -460,10 +453,6 @@ public class FormItemManager {
 		for (String childrenItemId : initialFormChildrenItemIds) {
 			layoutStructureItemChanges.addRemovedLayoutStructureItems(
 				layoutStructure.getLayoutStructureItem(childrenItemId));
-		}
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-31772")) {
-			return layoutStructureItemChanges;
 		}
 
 		for (String childrenItemId :
@@ -681,9 +670,8 @@ public class FormItemManager {
 				LayoutStructureItem layoutStructureItem =
 					layoutStructure.getLayoutStructureItem(childrenItemId);
 
-				if (FeatureFlagManagerUtil.isEnabled("LPD-31772") &&
-					(layoutStructureItem instanceof
-						FragmentStyledLayoutStructureItem)) {
+				if (layoutStructureItem instanceof
+						FragmentStyledLayoutStructureItem) {
 
 					FragmentStyledLayoutStructureItem
 						fragmentStyledLayoutStructureItem =
@@ -722,10 +710,6 @@ public class FormItemManager {
 				Collections.singletonList(
 					formStepLayoutStructureItem.getItemId()),
 				Collections.emptyList());
-		}
-
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-31772")) {
-			return layoutStructureItemChanges;
 		}
 
 		for (String childrenItemId :
@@ -1016,15 +1000,13 @@ public class FormItemManager {
 			_defaultInputFragmentEntryConfigurationProvider.
 				getDefaultInputFragmentEntryKeysJSONObject(layout.getGroupId());
 
-		if (FeatureFlagManagerUtil.isEnabled("LPD-31772")) {
-			layoutStructureItemChanges.addAddedLayoutStructureItems(
-				_addFormButtonFragmentStyledLayoutStructureItem(
-					addedFragmentEntryLinks,
-					defaultInputFragmentEntryKeysJSONObject, httpServletRequest,
-					httpServletResponse, layout, layoutStructure,
-					lastFormStepLayoutStructureItem, segmentsExperienceId,
-					serviceContext, "next"));
-		}
+		layoutStructureItemChanges.addAddedLayoutStructureItems(
+			_addFormButtonFragmentStyledLayoutStructureItem(
+				addedFragmentEntryLinks,
+				defaultInputFragmentEntryKeysJSONObject, httpServletRequest,
+				httpServletResponse, layout, layoutStructure,
+				lastFormStepLayoutStructureItem, segmentsExperienceId,
+				serviceContext, "next"));
 
 		for (int i = 0; i < numberOfSteps; i++) {
 			LayoutStructureItem layoutStructureItem =
@@ -1033,10 +1015,6 @@ public class FormItemManager {
 
 			layoutStructureItemChanges.addAddedLayoutStructureItems(
 				layoutStructureItem);
-
-			if (!FeatureFlagManagerUtil.isEnabled("LPD-31772")) {
-				continue;
-			}
 
 			layoutStructureItemChanges.addAddedLayoutStructureItems(
 				_addFormButtonFragmentStyledLayoutStructureItem(

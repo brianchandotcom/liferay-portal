@@ -61,6 +61,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.servlet.PortletServlet;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -78,7 +79,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -148,8 +148,8 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 		ServiceContextThreadLocal.popServiceContext();
 	}
 
-	@FeatureFlags("LPD-31772")
 	@Test
+	@TestInfo("LPD-31772")
 	public void testUpdateFormItemConfigMVCActionCommandDecreasingNumberOfStepsWithFeatureFlagEnabled()
 		throws Exception {
 
@@ -308,8 +308,8 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 		}
 	}
 
-	@FeatureFlags("LPD-31772")
 	@Test
+	@TestInfo("LPD-31772")
 	public void testUpdateFormItemConfigMVCActionCommandIncreasingNumberOfStepsWithFeatureFlagEnabled()
 		throws Exception {
 
@@ -592,8 +592,8 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 			layoutStructureItem instanceof ContainerStyledLayoutStructureItem);
 	}
 
-	@FeatureFlags("LPD-31772")
 	@Test
+	@TestInfo("LPD-31772")
 	public void testUpdateFormItemConfigMVCActionCommandMappingFormChangingFormTypeMultistepWithFeatureFlagEnabled()
 		throws Exception {
 
@@ -730,8 +730,8 @@ public class UpdateFormItemConfigMVCActionCommandTest {
 			layoutStructureItem instanceof ContainerStyledLayoutStructureItem);
 	}
 
-	@FeatureFlags("LPD-31772")
 	@Test
+	@TestInfo("LPD-31772")
 	public void testUpdateFormItemConfigMVCActionCommandMappingFormChangingFormTypeSimpleWithFeatureFlagEnabled()
 		throws Exception {
 

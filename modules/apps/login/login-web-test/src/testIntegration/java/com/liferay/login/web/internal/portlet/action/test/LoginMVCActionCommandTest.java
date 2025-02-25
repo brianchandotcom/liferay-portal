@@ -106,13 +106,15 @@ public class LoginMVCActionCommandTest {
 			String redirectLocation =
 				customMockLiferayPortletActionResponse.getRedirectLocation();
 
+			Assert.assertTrue(
+				redirectLocation.contains(_group.getFriendlyURL()));
+
 			Layout layout = _layoutLocalService.getLayout(
 				layoutUtilityPageEntry.getPlid());
 
 			Assert.assertTrue(
-				redirectLocation.contains(_group.getFriendlyURL()));
-			Assert.assertTrue(
 				redirectLocation.contains(layout.getFriendlyURL()));
+
 			_assertParameter(
 				redirectLocation, "p_p_id", LoginPortletKeys.LOGIN);
 			_assertParameter(redirectLocation, "p_p_lifecycle", "0");
@@ -229,16 +231,18 @@ public class LoginMVCActionCommandTest {
 	}
 
 	private ThemeDisplay _getThemeDisplay() throws Exception {
-		Layout layout = _layoutLocalService.getLayout(
-			TestPropsValues.getPlid());
-
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 
 		themeDisplay.setCompany(
 			CompanyLocalServiceUtil.fetchCompany(
 				TestPropsValues.getCompanyId()));
+
+		Layout layout = _layoutLocalService.getLayout(
+			TestPropsValues.getPlid());
+
 		themeDisplay.setLayout(layout);
 		themeDisplay.setLayoutSet(layout.getLayoutSet());
+
 		themeDisplay.setPlid(TestPropsValues.getPlid());
 		themeDisplay.setScopeGroupId(_group.getGroupId());
 		themeDisplay.setSiteGroupId(_group.getGroupId());

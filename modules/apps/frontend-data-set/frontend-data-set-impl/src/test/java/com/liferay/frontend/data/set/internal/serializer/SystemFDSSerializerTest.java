@@ -36,6 +36,7 @@ import com.liferay.frontend.data.set.internal.view.list.ListFDSViewContextContri
 import com.liferay.frontend.data.set.internal.view.table.FDSTableSchemaBuilderImpl;
 import com.liferay.frontend.data.set.internal.view.table.TableFDSViewContextContributor;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
+import com.liferay.frontend.data.set.model.FDSSortItem;
 import com.liferay.frontend.data.set.model.FDSSortItemBuilder;
 import com.liferay.frontend.data.set.model.FDSSortItemList;
 import com.liferay.frontend.data.set.model.FDSSortItemListBuilder;
@@ -959,6 +960,7 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 			fdsSortItemList2,
 			_systemFDSSerializer.serializeSorts(
 				FDS_NAMES[1], httpServletRequest));
+
 		Assert.assertNotEquals(
 			_systemFDSSerializer.serializeSorts(
 				FDS_NAMES[0], httpServletRequest),
@@ -1462,17 +1464,17 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 	}
 
 	private ServiceRegistration<FDSSorts> _registerFDSSorts(
-		String fdsName, FDSSortItemList fdsSortItemList) {
+		String fdsName, List<FDSSortItem> fdsSortItems) {
 
 		return _bundleContext.registerService(
 			FDSSorts.class,
 			new FDSSorts() {
 
 				@Override
-				public FDSSortItemList getFDSSortItemList(
+				public List<FDSSortItem> getFDSSortItems(
 					HttpServletRequest httpServletRequest) {
 
-					return fdsSortItemList;
+					return fdsSortItems;
 				}
 
 			},

@@ -10,7 +10,7 @@ import React from 'react';
 import {
 	Field,
 	useStateDispatch,
-	useStructureFields,
+	useStructureField,
 	useStructureLabel,
 } from '../contexts/StateContext';
 
@@ -21,9 +21,7 @@ export default function StructureFieldSettings({
 }) {
 	const dispatch = useStateDispatch();
 	const structureLabel = useStructureLabel();
-	const fields = useStructureFields();
-
-	const field = fields.find((field) => field.name === fieldName);
+	const field = useStructureField(fieldName);
 
 	return (
 		<ClayLayout.ContainerFluid view>

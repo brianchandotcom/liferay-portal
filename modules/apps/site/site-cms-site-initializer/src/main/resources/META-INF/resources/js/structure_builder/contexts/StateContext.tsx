@@ -183,6 +183,12 @@ function useStructureError() {
 	return state.error;
 }
 
+function useStructureField(name: Field['name']) {
+	const {state} = useContext(StateContext);
+
+	return state.fields.get(name);
+}
+
 function useStructureFields() {
 	const {state} = useContext(StateContext);
 
@@ -219,6 +225,7 @@ export {
 	useSelectedItem,
 	useStateDispatch,
 	useStructureError,
+	useStructureField,
 	useStructureFields,
 	useStructureId,
 	useStructureLabel,

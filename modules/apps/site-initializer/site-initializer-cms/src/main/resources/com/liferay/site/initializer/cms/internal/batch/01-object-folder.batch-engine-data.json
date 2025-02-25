@@ -5,7 +5,7 @@
 		"parameters": {
 			"containsHeaders": "true",
 			"createStrategy": "UPSERT",
-			"featureFlag": "LPD-17809",
+			"featureFlag": "LPD-17564",
 			"importStrategy": "ON_ERROR_FAIL",
 			"updateStrategy": "UPDATE"
 		},

@@ -47,7 +47,7 @@ public class GroupModelListener extends BaseModelListener<Group> {
 
 	private void _onAfterCreate(Group group) throws Exception {
 		if (!FeatureFlagManagerUtil.isEnabled(
-				group.getCompanyId(), "LPD-17809") ||
+				group.getCompanyId(), "LPD-17564") ||
 			!group.isDepot()) {
 
 			return;
@@ -74,7 +74,7 @@ public class GroupModelListener extends BaseModelListener<Group> {
 
 	private void _onBeforeRemove(Group group) throws Exception {
 		if (!FeatureFlagManagerUtil.isEnabled(
-				group.getCompanyId(), "LPD-17809") ||
+				group.getCompanyId(), "LPD-17564") ||
 			!group.isDepot()) {
 
 			return;

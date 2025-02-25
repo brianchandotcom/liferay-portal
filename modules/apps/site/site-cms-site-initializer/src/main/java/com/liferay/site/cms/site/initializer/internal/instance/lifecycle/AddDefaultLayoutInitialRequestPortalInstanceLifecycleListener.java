@@ -51,7 +51,7 @@ public class AddDefaultLayoutInitialRequestPortalInstanceLifecycleListener
 
 	@Override
 	protected void doPortalInstanceRegistered(long companyId) throws Exception {
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-17809")) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
 			return;
 		}
 

@@ -47,7 +47,7 @@ public class ObjectEntryDocumentContributor
 		document.add(field);
 
 		if (FeatureFlagManagerUtil.isEnabled(
-				objectEntry.getCompanyId(), "LPD-42474")) {
+				objectEntry.getCompanyId(), "LPD-17564")) {
 
 			document.addKeyword(
 				Field.FOLDER_ID, objectEntry.getObjectEntryFolderId());

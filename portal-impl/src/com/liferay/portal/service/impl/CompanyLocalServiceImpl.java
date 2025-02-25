@@ -1586,7 +1586,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		for (String groupName : systemGroups) {
 			if (groupName.equals(GroupConstants.CMS) &&
-				!FeatureFlagManagerUtil.isEnabled("LPD-17809")) {
+				!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
 
 				continue;
 			}

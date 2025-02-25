@@ -849,7 +849,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 		for (String groupKey : systemGroups) {
 			if (groupKey.equals(GroupConstants.CMS) &&
-				!FeatureFlagManagerUtil.isEnabled("LPD-17809")) {
+				!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
 
 				continue;
 			}

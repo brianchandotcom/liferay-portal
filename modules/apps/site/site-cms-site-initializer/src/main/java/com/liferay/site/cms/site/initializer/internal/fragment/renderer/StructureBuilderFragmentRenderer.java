@@ -54,7 +54,7 @@ public class StructureBuilderFragmentRenderer implements FragmentRenderer {
 				WebKeys.THEME_DISPLAY);
 
 		if (!FeatureFlagManagerUtil.isEnabled(
-				themeDisplay.getCompanyId(), "LPD-17809")) {
+				themeDisplay.getCompanyId(), "LPD-17564")) {
 
 			return false;
 		}

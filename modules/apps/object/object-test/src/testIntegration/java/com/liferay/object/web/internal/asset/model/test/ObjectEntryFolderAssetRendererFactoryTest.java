@@ -36,7 +36,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Mikel Lorza
  */
-@FeatureFlags("LPD-17809")
+@FeatureFlags("LPD-17564")
 @RunWith(Arquillian.class)
 public class ObjectEntryFolderAssetRendererFactoryTest {
 

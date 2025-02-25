@@ -43,7 +43,7 @@ public class GroupModelListenerTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@FeatureFlags("LPD-17809")
+	@FeatureFlags("LPD-17564")
 	@Test
 	public void testAddDepotEntry() throws Exception {
 		_depotEntry = _depotEntryLocalService.addDepotEntry(
@@ -74,7 +74,7 @@ public class GroupModelListenerTest {
 					ObjectEntryFolder::getName)));
 	}
 
-	@FeatureFlags("LPD-17809")
+	@FeatureFlags("LPD-17564")
 	@Test
 	public void testDeleteDepotEntry() throws Exception {
 		DepotEntry depotEntry = _depotEntryLocalService.addDepotEntry(

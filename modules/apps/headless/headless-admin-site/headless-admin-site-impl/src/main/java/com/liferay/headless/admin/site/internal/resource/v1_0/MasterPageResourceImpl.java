@@ -253,6 +253,14 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 			previewFileEntryId = fileEntry.getFileEntryId();
 		}
 
+		boolean defaultTemplate = false;
+		int status = WorkflowConstants.STATUS_DRAFT;
+
+		if (GetterUtil.getBoolean(masterPage.getMarkedAsDefault())) {
+			defaultTemplate = true;
+			status = WorkflowConstants.STATUS_APPROVED;
+		}
+
 		return _masterPageDTOConverter.toDTO(
 			_layoutPageTemplateEntryService.addLayoutPageTemplateEntry(
 				masterPage.getExternalReferenceCode(), groupId,
@@ -260,8 +268,7 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 					PARENT_LAYOUT_PAGE_TEMPLATE_COLLECTION_ID_DEFAULT,
 				masterPage.getKey(), 0, 0, masterPage.getName(),
 				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT,
-				previewFileEntryId, false, 0, 0, 0,
-				WorkflowConstants.STATUS_DRAFT,
+				previewFileEntryId, defaultTemplate, 0, 0, 0, status,
 				_getServiceContext(groupId, masterPage)));
 	}
 

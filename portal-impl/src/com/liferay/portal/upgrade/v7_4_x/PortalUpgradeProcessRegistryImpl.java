@@ -575,6 +575,11 @@ public class PortalUpgradeProcessRegistryImpl
 			new Version(31, 15, 1),
 			new DBColumnSizeUpgradeProcess(
 				DBType.ORACLE, "number", 30, 20, "DOUBLE"));
+
+		upgradeVersionTreeMap.put(
+			new Version(31, 15, 2),
+			UpgradeProcessFactory.alterColumnType(
+				"SystemEvent", "classExternalReferenceCode", "VARCHAR(1000) null"));
 	}
 
 }

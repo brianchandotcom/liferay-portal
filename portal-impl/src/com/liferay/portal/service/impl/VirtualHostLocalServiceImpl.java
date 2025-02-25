@@ -83,8 +83,8 @@ public class VirtualHostLocalServiceImpl
 			return null;
 		}
 
-		if ((defaultVirtualHosts.size() > 1) && _log.isWarnEnabled()) {
-			_log.warn(
+		if (defaultVirtualHosts.size() > 1) {
+			_log.error(
 				"Duplicated default virtual host for company " + companyId);
 		}
 

@@ -13,7 +13,6 @@ import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutFriendlyURL;
-import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.LayoutFriendlyURLLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -77,8 +76,7 @@ public class LayoutUpgradeProcessTest {
 				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT, 0,
 				WorkflowConstants.STATUS_DRAFT, _serviceContext);
 
-		Layout draftLayout = _layoutLocalService.fetchLayout(
-			_classNameLocalService.getClassNameId(Layout.class),
+		Layout draftLayout = _layoutLocalService.fetchDraftLayout(
 			layoutPageTemplateEntry.getPlid());
 
 		Layout layout = _layoutLocalService.getLayout(draftLayout.getClassPK());
@@ -144,8 +142,7 @@ public class LayoutUpgradeProcessTest {
 				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT, 0,
 				WorkflowConstants.STATUS_DRAFT, _serviceContext);
 
-		Layout draftLayout = _layoutLocalService.fetchLayout(
-			_classNameLocalService.getClassNameId(Layout.class),
+		Layout draftLayout = _layoutLocalService.fetchDraftLayout(
 			layoutPageTemplateEntry.getPlid());
 
 		Layout layout = _layoutLocalService.getLayout(draftLayout.getClassPK());
@@ -159,8 +156,7 @@ public class LayoutUpgradeProcessTest {
 				LayoutPageTemplateEntryTypeConstants.MASTER_LAYOUT, 0,
 				WorkflowConstants.STATUS_DRAFT, _serviceContext);
 
-		Layout duplicateDraftLayout = _layoutLocalService.fetchLayout(
-			_classNameLocalService.getClassNameId(Layout.class),
+		Layout duplicateDraftLayout = _layoutLocalService.fetchDraftLayout(
 			duplicateLayoutPageTemplateEntry.getPlid());
 
 		Layout duplicateLayout = _layoutLocalService.getLayout(
@@ -218,9 +214,6 @@ public class LayoutUpgradeProcessTest {
 		filter = "(&(component.name=com.liferay.layout.internal.upgrade.registry.LayoutServiceUpgradeStepRegistrator))"
 	)
 	private static UpgradeStepRegistrator _upgradeStepRegistrator;
-
-	@Inject
-	private ClassNameLocalService _classNameLocalService;
 
 	@DeleteAfterTestRun
 	private Group _group;

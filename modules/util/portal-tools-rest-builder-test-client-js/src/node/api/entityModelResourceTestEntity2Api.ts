@@ -7,11 +7,15 @@ import http from 'http';
 
 import localVarRequest from 'request';
 /* tslint:disable:no-unused-locals */
-import { Authentication, Interceptor, ObjectSerializer, VoidAuth } from '../model/models';
+import {
+	Authentication,
+	Interceptor,
+	ObjectSerializer,
+	VoidAuth,
+} from '../model/models';
+		import {EntityModelResourceTestEntity2} from '../model/entityModelResourceTestEntity2';
 
-		import { EntityModelResourceTestEntity2 } from '../model/entityModelResourceTestEntity2';
-
-import { HttpError } from './apis';
+import {HttpError} from './apis';
 const defaultBasePath = 'http://localhost';
 
 /**
@@ -19,29 +23,33 @@ const defaultBasePath = 'http://localhost';
  * @generated
  */
 
-export enum EntityModelResourceTestEntity2ApiApiKeys {
-}
+export enum EntityModelResourceTestEntity2ApiApiKeys {}
 
 export class EntityModelResourceTestEntity2Api {
 	protected _basePath = defaultBasePath;
-	protected _defaultHeaders : any = {};
-	protected _useQuerystring : boolean = false;
+	protected _defaultHeaders: any = {};
+	protected _useQuerystring: boolean = false;
 
 	protected authentications = {
-		'default': <Authentication>new VoidAuth(),
-	}
+		default: <Authentication>new VoidAuth(),
+	};
 
 	protected interceptors: Interceptor[] = [];
 
 	constructor(basePath?: string);
-	constructor(basePathOrUsername: string, password?: string, basePath?: string) {
+	constructor(
+		basePathOrUsername: string,
+		password?: string,
+		basePath?: string
+	) {
 		if (password) {
 			if (basePath) {
 				this.basePath = basePath;
 			}
-		} else {
+		}
+		else {
 			if (basePathOrUsername) {
-				this.basePath = basePathOrUsername
+				this.basePath = basePathOrUsername;
 			}
 		}
 	}
@@ -71,7 +79,8 @@ export class EntityModelResourceTestEntity2Api {
 	}
 
 	public setApiKey(key: EntityModelResourceTestEntity2ApiApiKeys, value: string) {
-		(this.authentications as any)[EntityModelResourceTestEntity2ApiApiKeys[key]].apiKey = value;
+		(this.authentications as any)[EntityModelResourceTestEntity2ApiApiKeys[key]].apiKey =
+			value;
 	}
 
 	public addInterceptor(interceptor: Interceptor) {
@@ -82,10 +91,10 @@ export class EntityModelResourceTestEntity2Api {
 		 * Retrieve a EntityModelResourceTestEntity2 item. (EntityModelResource and VulcanBatchEngineTaskItemDelegate interfaces will not be implemented automatically)
 				 * @param entityModelResourceTestEntity2Id 
 		 */
-		public async getEntityModelResourceTestEntities2EntityModelResourceTestEntity2 (
+		public async getEntityModelResourceTestEntities2EntityModelResourceTestEntity2(
 					entityModelResourceTestEntity2Id: number,
 			options: {
-				headers: {[name: string]: string}
+				headers: {[name: string]: string};
 			} = {headers: {}}
 		): Promise<{
 				body: EntityModelResourceTestEntity2;
@@ -100,7 +109,6 @@ export class EntityModelResourceTestEntity2Api {
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
 				const produces = ['application/json', 'application/xml'];
-				// give precedence to 'application/json'
 				if (produces.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
@@ -108,7 +116,6 @@ export class EntityModelResourceTestEntity2Api {
 				}
 			const localVarFormParams: any = {};
 
-						// verify required parameter 'entityModelResourceTestEntity2Id' is not null or undefined
 						if (entityModelResourceTestEntity2Id === null || entityModelResourceTestEntity2Id === undefined) {
 							throw new Error('Required parameter entityModelResourceTestEntity2Id was null or undefined when calling getEntityModelResourceTestEntities2EntityModelResourceTestEntity2.');
 						}
@@ -146,16 +153,28 @@ export class EntityModelResourceTestEntity2Api {
 					localVarRequest(localVarRequestOptions, (error, response, body) => {
 						if (error) {
 							reject(error);
-						} else {
-							if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-									body = ObjectSerializer.deserialize(body, "EntityModelResourceTestEntity2");
-								resolve({ body: body, response: response });
-							} else {
-								reject(new HttpError(body, response, response.statusCode));
+						}
+						else {
+							if (
+								response.statusCode &&
+								response.statusCode >= 200 &&
+								response.statusCode <= 299
+							) {
+								resolve({body, response});
+							}
+							else {
+								reject(
+									new HttpError(
+										body,
+										response,
+										response.statusCode
+									)
+								);
 							}
 						}
-					});
-				});
+					}
+				);
 			});
-		}
+		});
+	}
 }

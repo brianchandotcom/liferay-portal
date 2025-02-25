@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-			import { CTRemote } from './cTRemote';
-			import { Facet } from './facet';
+			import {CTRemote} from './cTRemote';
+			import {Facet} from './facet';
 
 /**
  * @author David Truong
@@ -20,44 +20,48 @@
 			'pageSize'?: number;
 			'totalCount'?: number;
 
-		static discriminator: string | undefined = undefined;
+		static 'discriminator': string | undefined = undefined;
 
-		static attributeTypeMap: Array<{baseName: string, name: string, type: string}> = [
-				{
-					"baseName": "actions",
-					"name": "actions",
-					"type": "{ [key: string]: { [key: string]: string; }; }"
-				},
-				{
-					"baseName": "facets",
-					"name": "facets",
-					"type": "Array<Facet>"
-				},
-				{
-					"baseName": "items",
-					"name": "items",
-					"type": "Array<CTRemote>"
-				},
-				{
-					"baseName": "lastPage",
-					"name": "lastPage",
-					"type": "number"
-				},
-				{
-					"baseName": "page",
-					"name": "page",
-					"type": "number"
-				},
-				{
-					"baseName": "pageSize",
-					"name": "pageSize",
-					"type": "number"
-				},
-				{
-					"baseName": "totalCount",
-					"name": "totalCount",
-					"type": "number"
-				}
+	static 'attributeTypeMap': Array<{
+		baseName: string;
+		name: string;
+		type: string;
+	}> = [
+		{
+			baseName: 'actions',
+			name: 'actions',
+			type: '{ [key: string]: { [key: string]: string; }; }',
+		},
+		{
+			baseName: 'facets',
+			name: 'facets',
+			type: 'Array<Facet>',
+		},
+		{
+			baseName: 'items',
+			name: 'items',
+			type: 'Array<CTRemote>',
+		},
+		{
+			baseName: 'lastPage',
+			name: 'lastPage',
+			type: 'number',
+		},
+		{
+			baseName: 'page',
+			name: 'page',
+			type: 'number',
+		},
+		{
+			baseName: 'pageSize',
+			name: 'pageSize',
+			type: 'number',
+		},
+		{
+			baseName: 'totalCount',
+			name: 'totalCount',
+			type: 'number',
+		},
 		];
 
 		static getAttributeTypeMap() {

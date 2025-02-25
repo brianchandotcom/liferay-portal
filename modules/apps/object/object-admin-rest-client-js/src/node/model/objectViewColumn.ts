@@ -15,29 +15,33 @@
 			'objectFieldName'?: string;
 			'priority'?: number;
 
-		static discriminator: string | undefined = undefined;
+		static 'discriminator': string | undefined = undefined;
 
-		static attributeTypeMap: Array<{baseName: string, name: string, type: string}> = [
-				{
-					"baseName": "id",
-					"name": "id",
-					"type": "number"
-				},
-				{
-					"baseName": "label",
-					"name": "label",
-					"type": "{ [key: string]: string; }"
-				},
-				{
-					"baseName": "objectFieldName",
-					"name": "objectFieldName",
-					"type": "string"
-				},
-				{
-					"baseName": "priority",
-					"name": "priority",
-					"type": "number"
-				}
+	static 'attributeTypeMap': Array<{
+		baseName: string;
+		name: string;
+		type: string;
+	}> = [
+		{
+			baseName: 'id',
+			name: 'id',
+			type: 'number',
+		},
+		{
+			baseName: 'label',
+			name: 'label',
+			type: '{ [key: string]: string; }',
+		},
+		{
+			baseName: 'objectFieldName',
+			name: 'objectFieldName',
+			type: 'string',
+		},
+		{
+			baseName: 'priority',
+			name: 'priority',
+			type: 'number',
+		},
 		];
 
 		static getAttributeTypeMap() {

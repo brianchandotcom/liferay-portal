@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-			import { ObjectState } from './objectState';
+			import {ObjectState} from './objectState';
 
 /**
  * @author Javier Gamarra
@@ -14,19 +14,23 @@
 			'id'?: number;
 			'objectStates'?: Array<ObjectState>;
 
-		static discriminator: string | undefined = undefined;
+		static 'discriminator': string | undefined = undefined;
 
-		static attributeTypeMap: Array<{baseName: string, name: string, type: string}> = [
-				{
-					"baseName": "id",
-					"name": "id",
-					"type": "number"
-				},
-				{
-					"baseName": "objectStates",
-					"name": "objectStates",
-					"type": "Array<ObjectState>"
-				}
+	static 'attributeTypeMap': Array<{
+		baseName: string;
+		name: string;
+		type: string;
+	}> = [
+		{
+			baseName: 'id',
+			name: 'id',
+			type: 'number',
+		},
+		{
+			baseName: 'objectStates',
+			name: 'objectStates',
+			type: 'Array<ObjectState>',
+		},
 		];
 
 		static getAttributeTypeMap() {

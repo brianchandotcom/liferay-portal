@@ -15,29 +15,33 @@
 			'priority'?: number;
 			'sortOrder'?: 'asc' | 'desc';
 
-		static discriminator: string | undefined = undefined;
+		static 'discriminator': string | undefined = undefined;
 
-		static attributeTypeMap: Array<{baseName: string, name: string, type: string}> = [
-				{
-					"baseName": "id",
-					"name": "id",
-					"type": "number"
-				},
-				{
-					"baseName": "objectFieldName",
-					"name": "objectFieldName",
-					"type": "string"
-				},
-				{
-					"baseName": "priority",
-					"name": "priority",
-					"type": "number"
-				},
-				{
-					"baseName": "sortOrder",
-					"name": "sortOrder",
-					"type": "'asc' | 'desc'"
-				}
+	static 'attributeTypeMap': Array<{
+		baseName: string;
+		name: string;
+		type: string;
+	}> = [
+		{
+			baseName: 'id',
+			name: 'id',
+			type: 'number',
+		},
+		{
+			baseName: 'objectFieldName',
+			name: 'objectFieldName',
+			type: 'string',
+		},
+		{
+			baseName: 'priority',
+			name: 'priority',
+			type: 'number',
+		},
+		{
+			baseName: 'sortOrder',
+			name: 'sortOrder',
+			type: ''asc' | 'desc'',
+		},
 		];
 
 		static getAttributeTypeMap() {

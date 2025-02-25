@@ -77,6 +77,7 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.exportimport.staging.StagingAdvicesThreadLocal;
+import com.liferay.segments.constants.SegmentsExperienceConstants;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.model.SegmentsExperienceModel;
 import com.liferay.segments.service.SegmentsExperienceLocalService;
@@ -416,6 +417,20 @@ public class LayoutLocalServiceWrapper
 				updateLayoutPageTemplateStructureData(
 					targetLayout.getGroupId(), targetLayout.getPlid(),
 					entry.getValue(), dataJSONObject.toString());
+
+			SegmentsExperience targetSegmentsExperience =
+				_segmentsExperienceLocalService.fetchSegmentsExperience(
+					entry.getValue());
+
+			SegmentsExperience sourceSegmentsExperience =
+				_segmentsExperienceLocalService.fetchSegmentsExperience(
+					entry.getKey());
+
+			targetSegmentsExperience.setPriority(
+				sourceSegmentsExperience.getPriority());
+
+			_segmentsExperienceLocalService.updateSegmentsExperience(
+				targetSegmentsExperience);
 		}
 
 		_fragmentEntryLinkLocalService.deleteFragmentEntryLinks(
@@ -737,6 +752,8 @@ public class LayoutLocalServiceWrapper
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
+		int minPriority = Integer.MIN_VALUE;
+
 		for (long segmentsExperienceId : segmentsExperiencesIds) {
 			SegmentsExperience sourceSegmentsExperience =
 				_segmentsExperienceLocalService.fetchSegmentsExperience(
@@ -752,6 +769,16 @@ public class LayoutLocalServiceWrapper
 				segmentsExperienceIdsMap.put(
 					sourceSegmentsExperience.getSegmentsExperienceId(),
 					targetSegmentsExperience.getSegmentsExperienceId());
+
+				if (!Objects.equals(
+						SegmentsExperienceConstants.KEY_DEFAULT,
+						targetSegmentsExperience.getSegmentsExperienceKey())) {
+
+					targetSegmentsExperience.setPriority(minPriority++);
+
+					_segmentsExperienceLocalService.updateSegmentsExperience(
+						targetSegmentsExperience);
+				}
 
 				continue;
 			}
@@ -772,6 +799,7 @@ public class LayoutLocalServiceWrapper
 			newSegmentsExperience.setSegmentsExperienceKey(
 				sourceSegmentsExperience.getSegmentsExperienceKey());
 			newSegmentsExperience.setPlid(targetLayout.getPlid());
+			newSegmentsExperience.setPriority(minPriority++);
 
 			_segmentsExperienceLocalService.addSegmentsExperience(
 				newSegmentsExperience);

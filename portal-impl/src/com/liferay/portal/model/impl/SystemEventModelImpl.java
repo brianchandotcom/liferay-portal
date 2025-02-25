@@ -99,7 +99,7 @@ public class SystemEventModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table SystemEvent (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,systemEventId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,classExternalReferenceCode VARCHAR(75) null,classNameId LONG,classPK LONG,classUuid VARCHAR(75) null,referrerClassNameId LONG,parentSystemEventId LONG,systemEventSetKey LONG,type_ INTEGER,extraData TEXT null,primary key (systemEventId, ctCollectionId))";
+		"create table SystemEvent (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,systemEventId LONG not null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,classExternalReferenceCode VARCHAR(1000) null,classNameId LONG,classPK LONG,classUuid VARCHAR(75) null,referrerClassNameId LONG,parentSystemEventId LONG,systemEventSetKey LONG,type_ INTEGER,extraData TEXT null,primary key (systemEventId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table SystemEvent";
 

@@ -7,12 +7,16 @@ import http from 'http';
 
 import localVarRequest from 'request';
 /* tslint:disable:no-unused-locals */
-import { Authentication, Interceptor, ObjectSerializer, VoidAuth } from '../model/models';
+import {
+	Authentication,
+	Interceptor,
+	ObjectSerializer,
+	VoidAuth,
+} from '../model/models';
+		import {ObjectAction} from '../model/objectAction';
+		import {PageObjectAction} from '../model/pageObjectAction';
 
-		import { ObjectAction } from '../model/objectAction';
-		import { PageObjectAction } from '../model/pageObjectAction';
-
-import { HttpError } from './apis';
+import {HttpError} from './apis';
 const defaultBasePath = 'http://localhost';
 
 /**
@@ -20,29 +24,33 @@ const defaultBasePath = 'http://localhost';
  * @generated
  */
 
-export enum ObjectActionApiApiKeys {
-}
+export enum ObjectActionApiApiKeys {}
 
 export class ObjectActionApi {
 	protected _basePath = defaultBasePath;
-	protected _defaultHeaders : any = {};
-	protected _useQuerystring : boolean = false;
+	protected _defaultHeaders: any = {};
+	protected _useQuerystring: boolean = false;
 
 	protected authentications = {
-		'default': <Authentication>new VoidAuth(),
-	}
+		default: <Authentication>new VoidAuth(),
+	};
 
 	protected interceptors: Interceptor[] = [];
 
 	constructor(basePath?: string);
-	constructor(basePathOrUsername: string, password?: string, basePath?: string) {
+	constructor(
+		basePathOrUsername: string,
+		password?: string,
+		basePath?: string
+	) {
 		if (password) {
 			if (basePath) {
 				this.basePath = basePath;
 			}
-		} else {
+		}
+		else {
 			if (basePathOrUsername) {
-				this.basePath = basePathOrUsername
+				this.basePath = basePathOrUsername;
 			}
 		}
 	}
@@ -72,7 +80,8 @@ export class ObjectActionApi {
 	}
 
 	public setApiKey(key: ObjectActionApiApiKeys, value: string) {
-		(this.authentications as any)[ObjectActionApiApiKeys[key]].apiKey = value;
+		(this.authentications as any)[ObjectActionApiApiKeys[key]].apiKey =
+			value;
 	}
 
 	public addInterceptor(interceptor: Interceptor) {
@@ -83,10 +92,10 @@ export class ObjectActionApi {
 		 * 
 				 * @param objectActionId 
 		 */
-		public async deleteObjectAction (
+		public async deleteObjectAction(
 					objectActionId: number,
 			options: {
-				headers: {[name: string]: string}
+				headers: {[name: string]: string};
 			} = {headers: {}}
 		): Promise<{
 				body?: any;
@@ -101,7 +110,6 @@ export class ObjectActionApi {
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
 				const produces = ['application/json', 'application/xml'];
-				// give precedence to 'application/json'
 				if (produces.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
@@ -109,7 +117,6 @@ export class ObjectActionApi {
 				}
 			const localVarFormParams: any = {};
 
-						// verify required parameter 'objectActionId' is not null or undefined
 						if (objectActionId === null || objectActionId === undefined) {
 							throw new Error('Required parameter objectActionId was null or undefined when calling deleteObjectAction.');
 						}
@@ -147,25 +154,38 @@ export class ObjectActionApi {
 					localVarRequest(localVarRequestOptions, (error, response, body) => {
 						if (error) {
 							reject(error);
-						} else {
-							if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-								resolve({ body: body, response: response });
-							} else {
-								reject(new HttpError(body, response, response.statusCode));
+						}
+						else {
+							if (
+								response.statusCode &&
+								response.statusCode >= 200 &&
+								response.statusCode <= 299
+							) {
+								resolve({body, response});
+							}
+							else {
+								reject(
+									new HttpError(
+										body,
+										response,
+										response.statusCode
+									)
+								);
 							}
 						}
-					});
-				});
+					}
+				);
 			});
-		}
+		});
+	}
 		/**
 		 * 
 				 * @param objectActionId 
 		 */
-		public async getObjectAction (
+		public async getObjectAction(
 					objectActionId: number,
 			options: {
-				headers: {[name: string]: string}
+				headers: {[name: string]: string};
 			} = {headers: {}}
 		): Promise<{
 				body: ObjectAction;
@@ -180,7 +200,6 @@ export class ObjectActionApi {
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
 				const produces = ['application/json', 'application/xml'];
-				// give precedence to 'application/json'
 				if (produces.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
@@ -188,7 +207,6 @@ export class ObjectActionApi {
 				}
 			const localVarFormParams: any = {};
 
-						// verify required parameter 'objectActionId' is not null or undefined
 						if (objectActionId === null || objectActionId === undefined) {
 							throw new Error('Required parameter objectActionId was null or undefined when calling getObjectAction.');
 						}
@@ -226,18 +244,30 @@ export class ObjectActionApi {
 					localVarRequest(localVarRequestOptions, (error, response, body) => {
 						if (error) {
 							reject(error);
-						} else {
-							if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-									body = ObjectSerializer.deserialize(body, "ObjectAction");
-								resolve({ body: body, response: response });
-							} else {
-								reject(new HttpError(body, response, response.statusCode));
+						}
+						else {
+							if (
+								response.statusCode &&
+								response.statusCode >= 200 &&
+								response.statusCode <= 299
+							) {
+								resolve({body, response});
+							}
+							else {
+								reject(
+									new HttpError(
+										body,
+										response,
+										response.statusCode
+									)
+								);
 							}
 						}
-					});
-				});
+					}
+				);
 			});
-		}
+		});
+	}
 		/**
 		 * 
 				 * @param externalReferenceCode 
@@ -246,14 +276,14 @@ export class ObjectActionApi {
 				 * @param search 
 				 * @param sort 
 		 */
-		public async getObjectDefinitionByExternalReferenceCodeObjectActionsPage (
+		public async getObjectDefinitionByExternalReferenceCodeObjectActionsPage(
 					externalReferenceCode: string,
 					page?: number,
 					pageSize?: number,
 					search?: string,
 					sort?: string,
 			options: {
-				headers: {[name: string]: string}
+				headers: {[name: string]: string};
 			} = {headers: {}}
 		): Promise<{
 				body: PageObjectAction;
@@ -268,7 +298,6 @@ export class ObjectActionApi {
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
 				const produces = ['application/json', 'application/xml'];
-				// give precedence to 'application/json'
 				if (produces.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
@@ -276,7 +305,6 @@ export class ObjectActionApi {
 				}
 			const localVarFormParams: any = {};
 
-						// verify required parameter 'externalReferenceCode' is not null or undefined
 						if (externalReferenceCode === null || externalReferenceCode === undefined) {
 							throw new Error('Required parameter externalReferenceCode was null or undefined when calling getObjectDefinitionByExternalReferenceCodeObjectActionsPage.');
 						}
@@ -326,18 +354,30 @@ export class ObjectActionApi {
 					localVarRequest(localVarRequestOptions, (error, response, body) => {
 						if (error) {
 							reject(error);
-						} else {
-							if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-									body = ObjectSerializer.deserialize(body, "PageObjectAction");
-								resolve({ body: body, response: response });
-							} else {
-								reject(new HttpError(body, response, response.statusCode));
+						}
+						else {
+							if (
+								response.statusCode &&
+								response.statusCode >= 200 &&
+								response.statusCode <= 299
+							) {
+								resolve({body, response});
+							}
+							else {
+								reject(
+									new HttpError(
+										body,
+										response,
+										response.statusCode
+									)
+								);
 							}
 						}
-					});
-				});
+					}
+				);
 			});
-		}
+		});
+	}
 		/**
 		 * 
 				 * @param objectDefinitionId 
@@ -346,14 +386,14 @@ export class ObjectActionApi {
 				 * @param search 
 				 * @param sort 
 		 */
-		public async getObjectDefinitionObjectActionsPage (
+		public async getObjectDefinitionObjectActionsPage(
 					objectDefinitionId: number,
 					page?: number,
 					pageSize?: number,
 					search?: string,
 					sort?: string,
 			options: {
-				headers: {[name: string]: string}
+				headers: {[name: string]: string};
 			} = {headers: {}}
 		): Promise<{
 				body: PageObjectAction;
@@ -368,7 +408,6 @@ export class ObjectActionApi {
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
 				const produces = ['application/json', 'application/xml'];
-				// give precedence to 'application/json'
 				if (produces.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
@@ -376,7 +415,6 @@ export class ObjectActionApi {
 				}
 			const localVarFormParams: any = {};
 
-						// verify required parameter 'objectDefinitionId' is not null or undefined
 						if (objectDefinitionId === null || objectDefinitionId === undefined) {
 							throw new Error('Required parameter objectDefinitionId was null or undefined when calling getObjectDefinitionObjectActionsPage.');
 						}
@@ -426,28 +464,40 @@ export class ObjectActionApi {
 					localVarRequest(localVarRequestOptions, (error, response, body) => {
 						if (error) {
 							reject(error);
-						} else {
-							if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-									body = ObjectSerializer.deserialize(body, "PageObjectAction");
-								resolve({ body: body, response: response });
-							} else {
-								reject(new HttpError(body, response, response.statusCode));
+						}
+						else {
+							if (
+								response.statusCode &&
+								response.statusCode >= 200 &&
+								response.statusCode <= 299
+							) {
+								resolve({body, response});
+							}
+							else {
+								reject(
+									new HttpError(
+										body,
+										response,
+										response.statusCode
+									)
+								);
 							}
 						}
-					});
-				});
+					}
+				);
 			});
-		}
+		});
+	}
 		/**
 		 * 
 				 * @param objectActionId 
 				 * @param ObjectAction 
 		 */
-		public async patchObjectAction (
+		public async patchObjectAction(
 					objectActionId: number,
 					ObjectAction?: ObjectAction,
 			options: {
-				headers: {[name: string]: string}
+				headers: {[name: string]: string};
 			} = {headers: {}}
 		): Promise<{
 				body: ObjectAction;
@@ -462,7 +512,6 @@ export class ObjectActionApi {
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
 				const produces = ['application/json', 'application/xml'];
-				// give precedence to 'application/json'
 				if (produces.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
@@ -470,7 +519,6 @@ export class ObjectActionApi {
 				}
 			const localVarFormParams: any = {};
 
-						// verify required parameter 'objectActionId' is not null or undefined
 						if (objectActionId === null || objectActionId === undefined) {
 							throw new Error('Required parameter objectActionId was null or undefined when calling patchObjectAction.');
 						}
@@ -509,28 +557,40 @@ export class ObjectActionApi {
 					localVarRequest(localVarRequestOptions, (error, response, body) => {
 						if (error) {
 							reject(error);
-						} else {
-							if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-									body = ObjectSerializer.deserialize(body, "ObjectAction");
-								resolve({ body: body, response: response });
-							} else {
-								reject(new HttpError(body, response, response.statusCode));
+						}
+						else {
+							if (
+								response.statusCode &&
+								response.statusCode >= 200 &&
+								response.statusCode <= 299
+							) {
+								resolve({body, response});
+							}
+							else {
+								reject(
+									new HttpError(
+										body,
+										response,
+										response.statusCode
+									)
+								);
 							}
 						}
-					});
-				});
+					}
+				);
 			});
-		}
+		});
+	}
 		/**
 		 * 
 				 * @param externalReferenceCode 
 				 * @param ObjectAction 
 		 */
-		public async postObjectDefinitionByExternalReferenceCodeObjectAction (
+		public async postObjectDefinitionByExternalReferenceCodeObjectAction(
 					externalReferenceCode: string,
 					ObjectAction?: ObjectAction,
 			options: {
-				headers: {[name: string]: string}
+				headers: {[name: string]: string};
 			} = {headers: {}}
 		): Promise<{
 				body: ObjectAction;
@@ -545,7 +605,6 @@ export class ObjectActionApi {
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
 				const produces = ['application/json', 'application/xml'];
-				// give precedence to 'application/json'
 				if (produces.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
@@ -553,7 +612,6 @@ export class ObjectActionApi {
 				}
 			const localVarFormParams: any = {};
 
-						// verify required parameter 'externalReferenceCode' is not null or undefined
 						if (externalReferenceCode === null || externalReferenceCode === undefined) {
 							throw new Error('Required parameter externalReferenceCode was null or undefined when calling postObjectDefinitionByExternalReferenceCodeObjectAction.');
 						}
@@ -592,28 +650,40 @@ export class ObjectActionApi {
 					localVarRequest(localVarRequestOptions, (error, response, body) => {
 						if (error) {
 							reject(error);
-						} else {
-							if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-									body = ObjectSerializer.deserialize(body, "ObjectAction");
-								resolve({ body: body, response: response });
-							} else {
-								reject(new HttpError(body, response, response.statusCode));
+						}
+						else {
+							if (
+								response.statusCode &&
+								response.statusCode >= 200 &&
+								response.statusCode <= 299
+							) {
+								resolve({body, response});
+							}
+							else {
+								reject(
+									new HttpError(
+										body,
+										response,
+										response.statusCode
+									)
+								);
 							}
 						}
-					});
-				});
+					}
+				);
 			});
-		}
+		});
+	}
 		/**
 		 * 
 				 * @param objectDefinitionId 
 				 * @param ObjectAction 
 		 */
-		public async postObjectDefinitionObjectAction (
+		public async postObjectDefinitionObjectAction(
 					objectDefinitionId: number,
 					ObjectAction?: ObjectAction,
 			options: {
-				headers: {[name: string]: string}
+				headers: {[name: string]: string};
 			} = {headers: {}}
 		): Promise<{
 				body: ObjectAction;
@@ -628,7 +698,6 @@ export class ObjectActionApi {
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
 				const produces = ['application/json', 'application/xml'];
-				// give precedence to 'application/json'
 				if (produces.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
@@ -636,7 +705,6 @@ export class ObjectActionApi {
 				}
 			const localVarFormParams: any = {};
 
-						// verify required parameter 'objectDefinitionId' is not null or undefined
 						if (objectDefinitionId === null || objectDefinitionId === undefined) {
 							throw new Error('Required parameter objectDefinitionId was null or undefined when calling postObjectDefinitionObjectAction.');
 						}
@@ -675,28 +743,40 @@ export class ObjectActionApi {
 					localVarRequest(localVarRequestOptions, (error, response, body) => {
 						if (error) {
 							reject(error);
-						} else {
-							if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-									body = ObjectSerializer.deserialize(body, "ObjectAction");
-								resolve({ body: body, response: response });
-							} else {
-								reject(new HttpError(body, response, response.statusCode));
+						}
+						else {
+							if (
+								response.statusCode &&
+								response.statusCode >= 200 &&
+								response.statusCode <= 299
+							) {
+								resolve({body, response});
+							}
+							else {
+								reject(
+									new HttpError(
+										body,
+										response,
+										response.statusCode
+									)
+								);
 							}
 						}
-					});
-				});
+					}
+				);
 			});
-		}
+		});
+	}
 		/**
 		 * 
 				 * @param objectActionId 
 				 * @param ObjectAction 
 		 */
-		public async putObjectAction (
+		public async putObjectAction(
 					objectActionId: number,
 					ObjectAction?: ObjectAction,
 			options: {
-				headers: {[name: string]: string}
+				headers: {[name: string]: string};
 			} = {headers: {}}
 		): Promise<{
 				body: ObjectAction;
@@ -711,7 +791,6 @@ export class ObjectActionApi {
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
 				const produces = ['application/json', 'application/xml'];
-				// give precedence to 'application/json'
 				if (produces.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
@@ -719,7 +798,6 @@ export class ObjectActionApi {
 				}
 			const localVarFormParams: any = {};
 
-						// verify required parameter 'objectActionId' is not null or undefined
 						if (objectActionId === null || objectActionId === undefined) {
 							throw new Error('Required parameter objectActionId was null or undefined when calling putObjectAction.');
 						}
@@ -758,16 +836,28 @@ export class ObjectActionApi {
 					localVarRequest(localVarRequestOptions, (error, response, body) => {
 						if (error) {
 							reject(error);
-						} else {
-							if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-									body = ObjectSerializer.deserialize(body, "ObjectAction");
-								resolve({ body: body, response: response });
-							} else {
-								reject(new HttpError(body, response, response.statusCode));
+						}
+						else {
+							if (
+								response.statusCode &&
+								response.statusCode >= 200 &&
+								response.statusCode <= 299
+							) {
+								resolve({body, response});
+							}
+							else {
+								reject(
+									new HttpError(
+										body,
+										response,
+										response.statusCode
+									)
+								);
 							}
 						}
-					});
-				});
+					}
+				);
 			});
-		}
+		});
+	}
 }

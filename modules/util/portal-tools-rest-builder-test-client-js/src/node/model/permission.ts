@@ -14,24 +14,28 @@
 			'roleName'?: string;
 			'xml'?: object;
 
-		static discriminator: string | undefined = undefined;
+		static 'discriminator': string | undefined = undefined;
 
-		static attributeTypeMap: Array<{baseName: string, name: string, type: string}> = [
-				{
-					"baseName": "actionIds",
-					"name": "actionIds",
-					"type": "Array<string>"
-				},
-				{
-					"baseName": "roleName",
-					"name": "roleName",
-					"type": "string"
-				},
-				{
-					"baseName": "xml",
-					"name": "xml",
-					"type": "object"
-				}
+	static 'attributeTypeMap': Array<{
+		baseName: string;
+		name: string;
+		type: string;
+	}> = [
+		{
+			baseName: 'actionIds',
+			name: 'actionIds',
+			type: 'Array<string>',
+		},
+		{
+			baseName: 'roleName',
+			name: 'roleName',
+			type: 'string',
+		},
+		{
+			baseName: 'xml',
+			name: 'xml',
+			type: 'object',
+		},
 		];
 
 		static getAttributeTypeMap() {

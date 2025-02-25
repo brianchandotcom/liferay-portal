@@ -16,34 +16,38 @@
 			'objectFieldName'?: string;
 			'valueSummary'?: string;
 
-		static discriminator: string | undefined = undefined;
+		static 'discriminator': string | undefined = undefined;
 
-		static attributeTypeMap: Array<{baseName: string, name: string, type: string}> = [
-				{
-					"baseName": "filterType",
-					"name": "filterType",
-					"type": "'excludes' | 'includes'"
-				},
-				{
-					"baseName": "id",
-					"name": "id",
-					"type": "number"
-				},
-				{
-					"baseName": "json",
-					"name": "json",
-					"type": "string"
-				},
-				{
-					"baseName": "objectFieldName",
-					"name": "objectFieldName",
-					"type": "string"
-				},
-				{
-					"baseName": "valueSummary",
-					"name": "valueSummary",
-					"type": "string"
-				}
+	static 'attributeTypeMap': Array<{
+		baseName: string;
+		name: string;
+		type: string;
+	}> = [
+		{
+			baseName: 'filterType',
+			name: 'filterType',
+			type: ''excludes' | 'includes'',
+		},
+		{
+			baseName: 'id',
+			name: 'id',
+			type: 'number',
+		},
+		{
+			baseName: 'json',
+			name: 'json',
+			type: 'string',
+		},
+		{
+			baseName: 'objectFieldName',
+			name: 'objectFieldName',
+			type: 'string',
+		},
+		{
+			baseName: 'valueSummary',
+			name: 'valueSummary',
+			type: 'string',
+		},
 		];
 
 		static getAttributeTypeMap() {

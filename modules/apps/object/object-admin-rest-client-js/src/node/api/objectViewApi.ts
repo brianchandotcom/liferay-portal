@@ -7,12 +7,16 @@ import http from 'http';
 
 import localVarRequest from 'request';
 /* tslint:disable:no-unused-locals */
-import { Authentication, Interceptor, ObjectSerializer, VoidAuth } from '../model/models';
+import {
+	Authentication,
+	Interceptor,
+	ObjectSerializer,
+	VoidAuth,
+} from '../model/models';
+		import {ObjectView} from '../model/objectView';
+		import {PageObjectView} from '../model/pageObjectView';
 
-		import { ObjectView } from '../model/objectView';
-		import { PageObjectView } from '../model/pageObjectView';
-
-import { HttpError } from './apis';
+import {HttpError} from './apis';
 const defaultBasePath = 'http://localhost';
 
 /**
@@ -20,29 +24,33 @@ const defaultBasePath = 'http://localhost';
  * @generated
  */
 
-export enum ObjectViewApiApiKeys {
-}
+export enum ObjectViewApiApiKeys {}
 
 export class ObjectViewApi {
 	protected _basePath = defaultBasePath;
-	protected _defaultHeaders : any = {};
-	protected _useQuerystring : boolean = false;
+	protected _defaultHeaders: any = {};
+	protected _useQuerystring: boolean = false;
 
 	protected authentications = {
-		'default': <Authentication>new VoidAuth(),
-	}
+		default: <Authentication>new VoidAuth(),
+	};
 
 	protected interceptors: Interceptor[] = [];
 
 	constructor(basePath?: string);
-	constructor(basePathOrUsername: string, password?: string, basePath?: string) {
+	constructor(
+		basePathOrUsername: string,
+		password?: string,
+		basePath?: string
+	) {
 		if (password) {
 			if (basePath) {
 				this.basePath = basePath;
 			}
-		} else {
+		}
+		else {
 			if (basePathOrUsername) {
-				this.basePath = basePathOrUsername
+				this.basePath = basePathOrUsername;
 			}
 		}
 	}
@@ -72,7 +80,8 @@ export class ObjectViewApi {
 	}
 
 	public setApiKey(key: ObjectViewApiApiKeys, value: string) {
-		(this.authentications as any)[ObjectViewApiApiKeys[key]].apiKey = value;
+		(this.authentications as any)[ObjectViewApiApiKeys[key]].apiKey =
+			value;
 	}
 
 	public addInterceptor(interceptor: Interceptor) {
@@ -83,10 +92,10 @@ export class ObjectViewApi {
 		 * 
 				 * @param objectViewId 
 		 */
-		public async deleteObjectView (
+		public async deleteObjectView(
 					objectViewId: number,
 			options: {
-				headers: {[name: string]: string}
+				headers: {[name: string]: string};
 			} = {headers: {}}
 		): Promise<{
 				body?: any;
@@ -101,7 +110,6 @@ export class ObjectViewApi {
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
 				const produces = ['application/json', 'application/xml'];
-				// give precedence to 'application/json'
 				if (produces.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
@@ -109,7 +117,6 @@ export class ObjectViewApi {
 				}
 			const localVarFormParams: any = {};
 
-						// verify required parameter 'objectViewId' is not null or undefined
 						if (objectViewId === null || objectViewId === undefined) {
 							throw new Error('Required parameter objectViewId was null or undefined when calling deleteObjectView.');
 						}
@@ -147,17 +154,30 @@ export class ObjectViewApi {
 					localVarRequest(localVarRequestOptions, (error, response, body) => {
 						if (error) {
 							reject(error);
-						} else {
-							if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-								resolve({ body: body, response: response });
-							} else {
-								reject(new HttpError(body, response, response.statusCode));
+						}
+						else {
+							if (
+								response.statusCode &&
+								response.statusCode >= 200 &&
+								response.statusCode <= 299
+							) {
+								resolve({body, response});
+							}
+							else {
+								reject(
+									new HttpError(
+										body,
+										response,
+										response.statusCode
+									)
+								);
 							}
 						}
-					});
-				});
+					}
+				);
 			});
-		}
+		});
+	}
 		/**
 		 * 
 				 * @param externalReferenceCode 
@@ -167,7 +187,7 @@ export class ObjectViewApi {
 				 * @param sort 
 				 * @param Accept_Language 
 		 */
-		public async getObjectDefinitionByExternalReferenceCodeObjectViewsPage (
+		public async getObjectDefinitionByExternalReferenceCodeObjectViewsPage(
 					externalReferenceCode: string,
 					page?: number,
 					pageSize?: number,
@@ -175,7 +195,7 @@ export class ObjectViewApi {
 					sort?: string,
 					Accept_Language?: string,
 			options: {
-				headers: {[name: string]: string}
+				headers: {[name: string]: string};
 			} = {headers: {}}
 		): Promise<{
 				body: PageObjectView;
@@ -190,7 +210,6 @@ export class ObjectViewApi {
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
 				const produces = ['application/json', 'application/xml'];
-				// give precedence to 'application/json'
 				if (produces.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
@@ -198,7 +217,6 @@ export class ObjectViewApi {
 				}
 			const localVarFormParams: any = {};
 
-						// verify required parameter 'externalReferenceCode' is not null or undefined
 						if (externalReferenceCode === null || externalReferenceCode === undefined) {
 							throw new Error('Required parameter externalReferenceCode was null or undefined when calling getObjectDefinitionByExternalReferenceCodeObjectViewsPage.');
 						}
@@ -248,18 +266,30 @@ export class ObjectViewApi {
 					localVarRequest(localVarRequestOptions, (error, response, body) => {
 						if (error) {
 							reject(error);
-						} else {
-							if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-									body = ObjectSerializer.deserialize(body, "PageObjectView");
-								resolve({ body: body, response: response });
-							} else {
-								reject(new HttpError(body, response, response.statusCode));
+						}
+						else {
+							if (
+								response.statusCode &&
+								response.statusCode >= 200 &&
+								response.statusCode <= 299
+							) {
+								resolve({body, response});
+							}
+							else {
+								reject(
+									new HttpError(
+										body,
+										response,
+										response.statusCode
+									)
+								);
 							}
 						}
-					});
-				});
+					}
+				);
 			});
-		}
+		});
+	}
 		/**
 		 * 
 				 * @param objectDefinitionId 
@@ -269,7 +299,7 @@ export class ObjectViewApi {
 				 * @param sort 
 				 * @param Accept_Language 
 		 */
-		public async getObjectDefinitionObjectViewsPage (
+		public async getObjectDefinitionObjectViewsPage(
 					objectDefinitionId: number,
 					page?: number,
 					pageSize?: number,
@@ -277,7 +307,7 @@ export class ObjectViewApi {
 					sort?: string,
 					Accept_Language?: string,
 			options: {
-				headers: {[name: string]: string}
+				headers: {[name: string]: string};
 			} = {headers: {}}
 		): Promise<{
 				body: PageObjectView;
@@ -292,7 +322,6 @@ export class ObjectViewApi {
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
 				const produces = ['application/json', 'application/xml'];
-				// give precedence to 'application/json'
 				if (produces.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
@@ -300,7 +329,6 @@ export class ObjectViewApi {
 				}
 			const localVarFormParams: any = {};
 
-						// verify required parameter 'objectDefinitionId' is not null or undefined
 						if (objectDefinitionId === null || objectDefinitionId === undefined) {
 							throw new Error('Required parameter objectDefinitionId was null or undefined when calling getObjectDefinitionObjectViewsPage.');
 						}
@@ -350,26 +378,38 @@ export class ObjectViewApi {
 					localVarRequest(localVarRequestOptions, (error, response, body) => {
 						if (error) {
 							reject(error);
-						} else {
-							if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-									body = ObjectSerializer.deserialize(body, "PageObjectView");
-								resolve({ body: body, response: response });
-							} else {
-								reject(new HttpError(body, response, response.statusCode));
+						}
+						else {
+							if (
+								response.statusCode &&
+								response.statusCode >= 200 &&
+								response.statusCode <= 299
+							) {
+								resolve({body, response});
+							}
+							else {
+								reject(
+									new HttpError(
+										body,
+										response,
+										response.statusCode
+									)
+								);
 							}
 						}
-					});
-				});
+					}
+				);
 			});
-		}
+		});
+	}
 		/**
 		 * 
 				 * @param objectViewId 
 		 */
-		public async getObjectView (
+		public async getObjectView(
 					objectViewId: number,
 			options: {
-				headers: {[name: string]: string}
+				headers: {[name: string]: string};
 			} = {headers: {}}
 		): Promise<{
 				body: ObjectView;
@@ -384,7 +424,6 @@ export class ObjectViewApi {
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
 				const produces = ['application/json', 'application/xml'];
-				// give precedence to 'application/json'
 				if (produces.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
@@ -392,7 +431,6 @@ export class ObjectViewApi {
 				}
 			const localVarFormParams: any = {};
 
-						// verify required parameter 'objectViewId' is not null or undefined
 						if (objectViewId === null || objectViewId === undefined) {
 							throw new Error('Required parameter objectViewId was null or undefined when calling getObjectView.');
 						}
@@ -430,28 +468,40 @@ export class ObjectViewApi {
 					localVarRequest(localVarRequestOptions, (error, response, body) => {
 						if (error) {
 							reject(error);
-						} else {
-							if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-									body = ObjectSerializer.deserialize(body, "ObjectView");
-								resolve({ body: body, response: response });
-							} else {
-								reject(new HttpError(body, response, response.statusCode));
+						}
+						else {
+							if (
+								response.statusCode &&
+								response.statusCode >= 200 &&
+								response.statusCode <= 299
+							) {
+								resolve({body, response});
+							}
+							else {
+								reject(
+									new HttpError(
+										body,
+										response,
+										response.statusCode
+									)
+								);
 							}
 						}
-					});
-				});
+					}
+				);
 			});
-		}
+		});
+	}
 		/**
 		 * 
 				 * @param externalReferenceCode 
 				 * @param ObjectView 
 		 */
-		public async postObjectDefinitionByExternalReferenceCodeObjectView (
+		public async postObjectDefinitionByExternalReferenceCodeObjectView(
 					externalReferenceCode: string,
 					ObjectView?: ObjectView,
 			options: {
-				headers: {[name: string]: string}
+				headers: {[name: string]: string};
 			} = {headers: {}}
 		): Promise<{
 				body: ObjectView;
@@ -466,7 +516,6 @@ export class ObjectViewApi {
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
 				const produces = ['application/json', 'application/xml'];
-				// give precedence to 'application/json'
 				if (produces.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
@@ -474,7 +523,6 @@ export class ObjectViewApi {
 				}
 			const localVarFormParams: any = {};
 
-						// verify required parameter 'externalReferenceCode' is not null or undefined
 						if (externalReferenceCode === null || externalReferenceCode === undefined) {
 							throw new Error('Required parameter externalReferenceCode was null or undefined when calling postObjectDefinitionByExternalReferenceCodeObjectView.');
 						}
@@ -513,28 +561,40 @@ export class ObjectViewApi {
 					localVarRequest(localVarRequestOptions, (error, response, body) => {
 						if (error) {
 							reject(error);
-						} else {
-							if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-									body = ObjectSerializer.deserialize(body, "ObjectView");
-								resolve({ body: body, response: response });
-							} else {
-								reject(new HttpError(body, response, response.statusCode));
+						}
+						else {
+							if (
+								response.statusCode &&
+								response.statusCode >= 200 &&
+								response.statusCode <= 299
+							) {
+								resolve({body, response});
+							}
+							else {
+								reject(
+									new HttpError(
+										body,
+										response,
+										response.statusCode
+									)
+								);
 							}
 						}
-					});
-				});
+					}
+				);
 			});
-		}
+		});
+	}
 		/**
 		 * 
 				 * @param objectDefinitionId 
 				 * @param ObjectView 
 		 */
-		public async postObjectDefinitionObjectView (
+		public async postObjectDefinitionObjectView(
 					objectDefinitionId: number,
 					ObjectView?: ObjectView,
 			options: {
-				headers: {[name: string]: string}
+				headers: {[name: string]: string};
 			} = {headers: {}}
 		): Promise<{
 				body: ObjectView;
@@ -549,7 +609,6 @@ export class ObjectViewApi {
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
 				const produces = ['application/json', 'application/xml'];
-				// give precedence to 'application/json'
 				if (produces.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
@@ -557,7 +616,6 @@ export class ObjectViewApi {
 				}
 			const localVarFormParams: any = {};
 
-						// verify required parameter 'objectDefinitionId' is not null or undefined
 						if (objectDefinitionId === null || objectDefinitionId === undefined) {
 							throw new Error('Required parameter objectDefinitionId was null or undefined when calling postObjectDefinitionObjectView.');
 						}
@@ -596,26 +654,38 @@ export class ObjectViewApi {
 					localVarRequest(localVarRequestOptions, (error, response, body) => {
 						if (error) {
 							reject(error);
-						} else {
-							if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-									body = ObjectSerializer.deserialize(body, "ObjectView");
-								resolve({ body: body, response: response });
-							} else {
-								reject(new HttpError(body, response, response.statusCode));
+						}
+						else {
+							if (
+								response.statusCode &&
+								response.statusCode >= 200 &&
+								response.statusCode <= 299
+							) {
+								resolve({body, response});
+							}
+							else {
+								reject(
+									new HttpError(
+										body,
+										response,
+										response.statusCode
+									)
+								);
 							}
 						}
-					});
-				});
+					}
+				);
 			});
-		}
+		});
+	}
 		/**
 		 * 
 				 * @param objectViewId 
 		 */
-		public async postObjectViewCopy (
+		public async postObjectViewCopy(
 					objectViewId: number,
 			options: {
-				headers: {[name: string]: string}
+				headers: {[name: string]: string};
 			} = {headers: {}}
 		): Promise<{
 				body: ObjectView;
@@ -630,7 +700,6 @@ export class ObjectViewApi {
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
 				const produces = ['application/json', 'application/xml'];
-				// give precedence to 'application/json'
 				if (produces.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
@@ -638,7 +707,6 @@ export class ObjectViewApi {
 				}
 			const localVarFormParams: any = {};
 
-						// verify required parameter 'objectViewId' is not null or undefined
 						if (objectViewId === null || objectViewId === undefined) {
 							throw new Error('Required parameter objectViewId was null or undefined when calling postObjectViewCopy.');
 						}
@@ -676,28 +744,40 @@ export class ObjectViewApi {
 					localVarRequest(localVarRequestOptions, (error, response, body) => {
 						if (error) {
 							reject(error);
-						} else {
-							if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-									body = ObjectSerializer.deserialize(body, "ObjectView");
-								resolve({ body: body, response: response });
-							} else {
-								reject(new HttpError(body, response, response.statusCode));
+						}
+						else {
+							if (
+								response.statusCode &&
+								response.statusCode >= 200 &&
+								response.statusCode <= 299
+							) {
+								resolve({body, response});
+							}
+							else {
+								reject(
+									new HttpError(
+										body,
+										response,
+										response.statusCode
+									)
+								);
 							}
 						}
-					});
-				});
+					}
+				);
 			});
-		}
+		});
+	}
 		/**
 		 * 
 				 * @param objectViewId 
 				 * @param ObjectView 
 		 */
-		public async putObjectView (
+		public async putObjectView(
 					objectViewId: number,
 					ObjectView?: ObjectView,
 			options: {
-				headers: {[name: string]: string}
+				headers: {[name: string]: string};
 			} = {headers: {}}
 		): Promise<{
 				body: ObjectView;
@@ -712,7 +792,6 @@ export class ObjectViewApi {
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
 				const produces = ['application/json', 'application/xml'];
-				// give precedence to 'application/json'
 				if (produces.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
@@ -720,7 +799,6 @@ export class ObjectViewApi {
 				}
 			const localVarFormParams: any = {};
 
-						// verify required parameter 'objectViewId' is not null or undefined
 						if (objectViewId === null || objectViewId === undefined) {
 							throw new Error('Required parameter objectViewId was null or undefined when calling putObjectView.');
 						}
@@ -759,16 +837,28 @@ export class ObjectViewApi {
 					localVarRequest(localVarRequestOptions, (error, response, body) => {
 						if (error) {
 							reject(error);
-						} else {
-							if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-									body = ObjectSerializer.deserialize(body, "ObjectView");
-								resolve({ body: body, response: response });
-							} else {
-								reject(new HttpError(body, response, response.statusCode));
+						}
+						else {
+							if (
+								response.statusCode &&
+								response.statusCode >= 200 &&
+								response.statusCode <= 299
+							) {
+								resolve({body, response});
+							}
+							else {
+								reject(
+									new HttpError(
+										body,
+										response,
+										response.statusCode
+									)
+								);
 							}
 						}
-					});
-				});
+					}
+				);
 			});
-		}
+		});
+	}
 }

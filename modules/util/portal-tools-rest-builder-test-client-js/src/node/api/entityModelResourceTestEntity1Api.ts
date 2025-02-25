@@ -7,11 +7,15 @@ import http from 'http';
 
 import localVarRequest from 'request';
 /* tslint:disable:no-unused-locals */
-import { Authentication, Interceptor, ObjectSerializer, VoidAuth } from '../model/models';
+import {
+	Authentication,
+	Interceptor,
+	ObjectSerializer,
+	VoidAuth,
+} from '../model/models';
+		import {PageEntityModelResourceTestEntity1} from '../model/pageEntityModelResourceTestEntity1';
 
-		import { PageEntityModelResourceTestEntity1 } from '../model/pageEntityModelResourceTestEntity1';
-
-import { HttpError } from './apis';
+import {HttpError} from './apis';
 const defaultBasePath = 'http://localhost';
 
 /**
@@ -19,29 +23,33 @@ const defaultBasePath = 'http://localhost';
  * @generated
  */
 
-export enum EntityModelResourceTestEntity1ApiApiKeys {
-}
+export enum EntityModelResourceTestEntity1ApiApiKeys {}
 
 export class EntityModelResourceTestEntity1Api {
 	protected _basePath = defaultBasePath;
-	protected _defaultHeaders : any = {};
-	protected _useQuerystring : boolean = false;
+	protected _defaultHeaders: any = {};
+	protected _useQuerystring: boolean = false;
 
 	protected authentications = {
-		'default': <Authentication>new VoidAuth(),
-	}
+		default: <Authentication>new VoidAuth(),
+	};
 
 	protected interceptors: Interceptor[] = [];
 
 	constructor(basePath?: string);
-	constructor(basePathOrUsername: string, password?: string, basePath?: string) {
+	constructor(
+		basePathOrUsername: string,
+		password?: string,
+		basePath?: string
+	) {
 		if (password) {
 			if (basePath) {
 				this.basePath = basePath;
 			}
-		} else {
+		}
+		else {
 			if (basePathOrUsername) {
-				this.basePath = basePathOrUsername
+				this.basePath = basePathOrUsername;
 			}
 		}
 	}
@@ -71,7 +79,8 @@ export class EntityModelResourceTestEntity1Api {
 	}
 
 	public setApiKey(key: EntityModelResourceTestEntity1ApiApiKeys, value: string) {
-		(this.authentications as any)[EntityModelResourceTestEntity1ApiApiKeys[key]].apiKey = value;
+		(this.authentications as any)[EntityModelResourceTestEntity1ApiApiKeys[key]].apiKey =
+			value;
 	}
 
 	public addInterceptor(interceptor: Interceptor) {
@@ -81,9 +90,9 @@ export class EntityModelResourceTestEntity1Api {
 		/**
 		 * Retrieve all EntityModelResourceTestEntity1 items.
 		 */
-		public async getEntityModelResourceTestEntities1Page (
+		public async getEntityModelResourceTestEntities1Page(
 			options: {
-				headers: {[name: string]: string}
+				headers: {[name: string]: string};
 			} = {headers: {}}
 		): Promise<{
 				body: PageEntityModelResourceTestEntity1;
@@ -94,7 +103,6 @@ export class EntityModelResourceTestEntity1Api {
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
 				const produces = ['application/json', 'application/xml'];
-				// give precedence to 'application/json'
 				if (produces.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
@@ -136,16 +144,28 @@ export class EntityModelResourceTestEntity1Api {
 					localVarRequest(localVarRequestOptions, (error, response, body) => {
 						if (error) {
 							reject(error);
-						} else {
-							if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-									body = ObjectSerializer.deserialize(body, "PageEntityModelResourceTestEntity1");
-								resolve({ body: body, response: response });
-							} else {
-								reject(new HttpError(body, response, response.statusCode));
+						}
+						else {
+							if (
+								response.statusCode &&
+								response.statusCode >= 200 &&
+								response.statusCode <= 299
+							) {
+								resolve({body, response});
+							}
+							else {
+								reject(
+									new HttpError(
+										body,
+										response,
+										response.statusCode
+									)
+								);
 							}
 						}
-					});
-				});
+					}
+				);
 			});
-		}
+		});
+	}
 }

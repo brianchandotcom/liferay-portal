@@ -7,12 +7,16 @@ import http from 'http';
 
 import localVarRequest from 'request';
 /* tslint:disable:no-unused-locals */
-import { Authentication, Interceptor, ObjectSerializer, VoidAuth } from '../model/models';
+import {
+	Authentication,
+	Interceptor,
+	ObjectSerializer,
+	VoidAuth,
+} from '../model/models';
+		import {ObjectRelationship} from '../model/objectRelationship';
+		import {PageObjectRelationship} from '../model/pageObjectRelationship';
 
-		import { ObjectRelationship } from '../model/objectRelationship';
-		import { PageObjectRelationship } from '../model/pageObjectRelationship';
-
-import { HttpError } from './apis';
+import {HttpError} from './apis';
 const defaultBasePath = 'http://localhost';
 
 /**
@@ -20,29 +24,33 @@ const defaultBasePath = 'http://localhost';
  * @generated
  */
 
-export enum ObjectRelationshipApiApiKeys {
-}
+export enum ObjectRelationshipApiApiKeys {}
 
 export class ObjectRelationshipApi {
 	protected _basePath = defaultBasePath;
-	protected _defaultHeaders : any = {};
-	protected _useQuerystring : boolean = false;
+	protected _defaultHeaders: any = {};
+	protected _useQuerystring: boolean = false;
 
 	protected authentications = {
-		'default': <Authentication>new VoidAuth(),
-	}
+		default: <Authentication>new VoidAuth(),
+	};
 
 	protected interceptors: Interceptor[] = [];
 
 	constructor(basePath?: string);
-	constructor(basePathOrUsername: string, password?: string, basePath?: string) {
+	constructor(
+		basePathOrUsername: string,
+		password?: string,
+		basePath?: string
+	) {
 		if (password) {
 			if (basePath) {
 				this.basePath = basePath;
 			}
-		} else {
+		}
+		else {
 			if (basePathOrUsername) {
-				this.basePath = basePathOrUsername
+				this.basePath = basePathOrUsername;
 			}
 		}
 	}
@@ -72,7 +80,8 @@ export class ObjectRelationshipApi {
 	}
 
 	public setApiKey(key: ObjectRelationshipApiApiKeys, value: string) {
-		(this.authentications as any)[ObjectRelationshipApiApiKeys[key]].apiKey = value;
+		(this.authentications as any)[ObjectRelationshipApiApiKeys[key]].apiKey =
+			value;
 	}
 
 	public addInterceptor(interceptor: Interceptor) {
@@ -83,10 +92,10 @@ export class ObjectRelationshipApi {
 		 * 
 				 * @param objectRelationshipId 
 		 */
-		public async deleteObjectRelationship (
+		public async deleteObjectRelationship(
 					objectRelationshipId: number,
 			options: {
-				headers: {[name: string]: string}
+				headers: {[name: string]: string};
 			} = {headers: {}}
 		): Promise<{
 				body?: any;
@@ -101,7 +110,6 @@ export class ObjectRelationshipApi {
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
 				const produces = ['application/json', 'application/xml'];
-				// give precedence to 'application/json'
 				if (produces.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
@@ -109,7 +117,6 @@ export class ObjectRelationshipApi {
 				}
 			const localVarFormParams: any = {};
 
-						// verify required parameter 'objectRelationshipId' is not null or undefined
 						if (objectRelationshipId === null || objectRelationshipId === undefined) {
 							throw new Error('Required parameter objectRelationshipId was null or undefined when calling deleteObjectRelationship.');
 						}
@@ -147,17 +154,30 @@ export class ObjectRelationshipApi {
 					localVarRequest(localVarRequestOptions, (error, response, body) => {
 						if (error) {
 							reject(error);
-						} else {
-							if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-								resolve({ body: body, response: response });
-							} else {
-								reject(new HttpError(body, response, response.statusCode));
+						}
+						else {
+							if (
+								response.statusCode &&
+								response.statusCode >= 200 &&
+								response.statusCode <= 299
+							) {
+								resolve({body, response});
+							}
+							else {
+								reject(
+									new HttpError(
+										body,
+										response,
+										response.statusCode
+									)
+								);
 							}
 						}
-					});
-				});
+					}
+				);
 			});
-		}
+		});
+	}
 		/**
 		 * 
 				 * @param externalReferenceCode 
@@ -167,7 +187,7 @@ export class ObjectRelationshipApi {
 				 * @param search 
 				 * @param sort 
 		 */
-		public async getObjectDefinitionByExternalReferenceCodeObjectRelationshipsPage (
+		public async getObjectDefinitionByExternalReferenceCodeObjectRelationshipsPage(
 					externalReferenceCode: string,
 					filter?: string,
 					page?: number,
@@ -175,7 +195,7 @@ export class ObjectRelationshipApi {
 					search?: string,
 					sort?: string,
 			options: {
-				headers: {[name: string]: string}
+				headers: {[name: string]: string};
 			} = {headers: {}}
 		): Promise<{
 				body: PageObjectRelationship;
@@ -190,7 +210,6 @@ export class ObjectRelationshipApi {
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
 				const produces = ['application/json', 'application/xml'];
-				// give precedence to 'application/json'
 				if (produces.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
@@ -198,7 +217,6 @@ export class ObjectRelationshipApi {
 				}
 			const localVarFormParams: any = {};
 
-						// verify required parameter 'externalReferenceCode' is not null or undefined
 						if (externalReferenceCode === null || externalReferenceCode === undefined) {
 							throw new Error('Required parameter externalReferenceCode was null or undefined when calling getObjectDefinitionByExternalReferenceCodeObjectRelationshipsPage.');
 						}
@@ -251,18 +269,30 @@ export class ObjectRelationshipApi {
 					localVarRequest(localVarRequestOptions, (error, response, body) => {
 						if (error) {
 							reject(error);
-						} else {
-							if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-									body = ObjectSerializer.deserialize(body, "PageObjectRelationship");
-								resolve({ body: body, response: response });
-							} else {
-								reject(new HttpError(body, response, response.statusCode));
+						}
+						else {
+							if (
+								response.statusCode &&
+								response.statusCode >= 200 &&
+								response.statusCode <= 299
+							) {
+								resolve({body, response});
+							}
+							else {
+								reject(
+									new HttpError(
+										body,
+										response,
+										response.statusCode
+									)
+								);
 							}
 						}
-					});
-				});
+					}
+				);
 			});
-		}
+		});
+	}
 		/**
 		 * 
 				 * @param objectDefinitionId 
@@ -272,7 +302,7 @@ export class ObjectRelationshipApi {
 				 * @param search 
 				 * @param sort 
 		 */
-		public async getObjectDefinitionObjectRelationshipsPage (
+		public async getObjectDefinitionObjectRelationshipsPage(
 					objectDefinitionId: number,
 					filter?: string,
 					page?: number,
@@ -280,7 +310,7 @@ export class ObjectRelationshipApi {
 					search?: string,
 					sort?: string,
 			options: {
-				headers: {[name: string]: string}
+				headers: {[name: string]: string};
 			} = {headers: {}}
 		): Promise<{
 				body: PageObjectRelationship;
@@ -295,7 +325,6 @@ export class ObjectRelationshipApi {
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
 				const produces = ['application/json', 'application/xml'];
-				// give precedence to 'application/json'
 				if (produces.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
@@ -303,7 +332,6 @@ export class ObjectRelationshipApi {
 				}
 			const localVarFormParams: any = {};
 
-						// verify required parameter 'objectDefinitionId' is not null or undefined
 						if (objectDefinitionId === null || objectDefinitionId === undefined) {
 							throw new Error('Required parameter objectDefinitionId was null or undefined when calling getObjectDefinitionObjectRelationshipsPage.');
 						}
@@ -356,26 +384,38 @@ export class ObjectRelationshipApi {
 					localVarRequest(localVarRequestOptions, (error, response, body) => {
 						if (error) {
 							reject(error);
-						} else {
-							if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-									body = ObjectSerializer.deserialize(body, "PageObjectRelationship");
-								resolve({ body: body, response: response });
-							} else {
-								reject(new HttpError(body, response, response.statusCode));
+						}
+						else {
+							if (
+								response.statusCode &&
+								response.statusCode >= 200 &&
+								response.statusCode <= 299
+							) {
+								resolve({body, response});
+							}
+							else {
+								reject(
+									new HttpError(
+										body,
+										response,
+										response.statusCode
+									)
+								);
 							}
 						}
-					});
-				});
+					}
+				);
 			});
-		}
+		});
+	}
 		/**
 		 * 
 				 * @param objectRelationshipId 
 		 */
-		public async getObjectRelationship (
+		public async getObjectRelationship(
 					objectRelationshipId: number,
 			options: {
-				headers: {[name: string]: string}
+				headers: {[name: string]: string};
 			} = {headers: {}}
 		): Promise<{
 				body: ObjectRelationship;
@@ -390,7 +430,6 @@ export class ObjectRelationshipApi {
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
 				const produces = ['application/json', 'application/xml'];
-				// give precedence to 'application/json'
 				if (produces.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
@@ -398,7 +437,6 @@ export class ObjectRelationshipApi {
 				}
 			const localVarFormParams: any = {};
 
-						// verify required parameter 'objectRelationshipId' is not null or undefined
 						if (objectRelationshipId === null || objectRelationshipId === undefined) {
 							throw new Error('Required parameter objectRelationshipId was null or undefined when calling getObjectRelationship.');
 						}
@@ -436,28 +474,40 @@ export class ObjectRelationshipApi {
 					localVarRequest(localVarRequestOptions, (error, response, body) => {
 						if (error) {
 							reject(error);
-						} else {
-							if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-									body = ObjectSerializer.deserialize(body, "ObjectRelationship");
-								resolve({ body: body, response: response });
-							} else {
-								reject(new HttpError(body, response, response.statusCode));
+						}
+						else {
+							if (
+								response.statusCode &&
+								response.statusCode >= 200 &&
+								response.statusCode <= 299
+							) {
+								resolve({body, response});
+							}
+							else {
+								reject(
+									new HttpError(
+										body,
+										response,
+										response.statusCode
+									)
+								);
 							}
 						}
-					});
-				});
+					}
+				);
 			});
-		}
+		});
+	}
 		/**
 		 * 
 				 * @param externalReferenceCode 
 				 * @param ObjectRelationship 
 		 */
-		public async postObjectDefinitionByExternalReferenceCodeObjectRelationship (
+		public async postObjectDefinitionByExternalReferenceCodeObjectRelationship(
 					externalReferenceCode: string,
 					ObjectRelationship?: ObjectRelationship,
 			options: {
-				headers: {[name: string]: string}
+				headers: {[name: string]: string};
 			} = {headers: {}}
 		): Promise<{
 				body: ObjectRelationship;
@@ -472,7 +522,6 @@ export class ObjectRelationshipApi {
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
 				const produces = ['application/json', 'application/xml'];
-				// give precedence to 'application/json'
 				if (produces.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
@@ -480,7 +529,6 @@ export class ObjectRelationshipApi {
 				}
 			const localVarFormParams: any = {};
 
-						// verify required parameter 'externalReferenceCode' is not null or undefined
 						if (externalReferenceCode === null || externalReferenceCode === undefined) {
 							throw new Error('Required parameter externalReferenceCode was null or undefined when calling postObjectDefinitionByExternalReferenceCodeObjectRelationship.');
 						}
@@ -519,28 +567,40 @@ export class ObjectRelationshipApi {
 					localVarRequest(localVarRequestOptions, (error, response, body) => {
 						if (error) {
 							reject(error);
-						} else {
-							if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-									body = ObjectSerializer.deserialize(body, "ObjectRelationship");
-								resolve({ body: body, response: response });
-							} else {
-								reject(new HttpError(body, response, response.statusCode));
+						}
+						else {
+							if (
+								response.statusCode &&
+								response.statusCode >= 200 &&
+								response.statusCode <= 299
+							) {
+								resolve({body, response});
+							}
+							else {
+								reject(
+									new HttpError(
+										body,
+										response,
+										response.statusCode
+									)
+								);
 							}
 						}
-					});
-				});
+					}
+				);
 			});
-		}
+		});
+	}
 		/**
 		 * 
 				 * @param objectDefinitionId 
 				 * @param ObjectRelationship 
 		 */
-		public async postObjectDefinitionObjectRelationship (
+		public async postObjectDefinitionObjectRelationship(
 					objectDefinitionId: number,
 					ObjectRelationship?: ObjectRelationship,
 			options: {
-				headers: {[name: string]: string}
+				headers: {[name: string]: string};
 			} = {headers: {}}
 		): Promise<{
 				body: ObjectRelationship;
@@ -555,7 +615,6 @@ export class ObjectRelationshipApi {
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
 				const produces = ['application/json', 'application/xml'];
-				// give precedence to 'application/json'
 				if (produces.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
@@ -563,7 +622,6 @@ export class ObjectRelationshipApi {
 				}
 			const localVarFormParams: any = {};
 
-						// verify required parameter 'objectDefinitionId' is not null or undefined
 						if (objectDefinitionId === null || objectDefinitionId === undefined) {
 							throw new Error('Required parameter objectDefinitionId was null or undefined when calling postObjectDefinitionObjectRelationship.');
 						}
@@ -602,28 +660,40 @@ export class ObjectRelationshipApi {
 					localVarRequest(localVarRequestOptions, (error, response, body) => {
 						if (error) {
 							reject(error);
-						} else {
-							if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-									body = ObjectSerializer.deserialize(body, "ObjectRelationship");
-								resolve({ body: body, response: response });
-							} else {
-								reject(new HttpError(body, response, response.statusCode));
+						}
+						else {
+							if (
+								response.statusCode &&
+								response.statusCode >= 200 &&
+								response.statusCode <= 299
+							) {
+								resolve({body, response});
+							}
+							else {
+								reject(
+									new HttpError(
+										body,
+										response,
+										response.statusCode
+									)
+								);
 							}
 						}
-					});
-				});
+					}
+				);
 			});
-		}
+		});
+	}
 		/**
 		 * 
 				 * @param objectRelationshipId 
 				 * @param ObjectRelationship 
 		 */
-		public async putObjectRelationship (
+		public async putObjectRelationship(
 					objectRelationshipId: number,
 					ObjectRelationship?: ObjectRelationship,
 			options: {
-				headers: {[name: string]: string}
+				headers: {[name: string]: string};
 			} = {headers: {}}
 		): Promise<{
 				body: ObjectRelationship;
@@ -638,7 +708,6 @@ export class ObjectRelationshipApi {
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
 				const produces = ['application/json', 'application/xml'];
-				// give precedence to 'application/json'
 				if (produces.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
@@ -646,7 +715,6 @@ export class ObjectRelationshipApi {
 				}
 			const localVarFormParams: any = {};
 
-						// verify required parameter 'objectRelationshipId' is not null or undefined
 						if (objectRelationshipId === null || objectRelationshipId === undefined) {
 							throw new Error('Required parameter objectRelationshipId was null or undefined when calling putObjectRelationship.');
 						}
@@ -685,28 +753,40 @@ export class ObjectRelationshipApi {
 					localVarRequest(localVarRequestOptions, (error, response, body) => {
 						if (error) {
 							reject(error);
-						} else {
-							if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-									body = ObjectSerializer.deserialize(body, "ObjectRelationship");
-								resolve({ body: body, response: response });
-							} else {
-								reject(new HttpError(body, response, response.statusCode));
+						}
+						else {
+							if (
+								response.statusCode &&
+								response.statusCode >= 200 &&
+								response.statusCode <= 299
+							) {
+								resolve({body, response});
+							}
+							else {
+								reject(
+									new HttpError(
+										body,
+										response,
+										response.statusCode
+									)
+								);
 							}
 						}
-					});
-				});
+					}
+				);
 			});
-		}
+		});
+	}
 		/**
 		 * 
 				 * @param externalReferenceCode 
 				 * @param ObjectRelationship 
 		 */
-		public async putObjectRelationshipByExternalReferenceCode (
+		public async putObjectRelationshipByExternalReferenceCode(
 					externalReferenceCode: string,
 					ObjectRelationship?: ObjectRelationship,
 			options: {
-				headers: {[name: string]: string}
+				headers: {[name: string]: string};
 			} = {headers: {}}
 		): Promise<{
 				body: ObjectRelationship;
@@ -721,7 +801,6 @@ export class ObjectRelationshipApi {
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
 				const produces = ['application/json', 'application/xml'];
-				// give precedence to 'application/json'
 				if (produces.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
@@ -729,7 +808,6 @@ export class ObjectRelationshipApi {
 				}
 			const localVarFormParams: any = {};
 
-						// verify required parameter 'externalReferenceCode' is not null or undefined
 						if (externalReferenceCode === null || externalReferenceCode === undefined) {
 							throw new Error('Required parameter externalReferenceCode was null or undefined when calling putObjectRelationshipByExternalReferenceCode.');
 						}
@@ -768,16 +846,28 @@ export class ObjectRelationshipApi {
 					localVarRequest(localVarRequestOptions, (error, response, body) => {
 						if (error) {
 							reject(error);
-						} else {
-							if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-									body = ObjectSerializer.deserialize(body, "ObjectRelationship");
-								resolve({ body: body, response: response });
-							} else {
-								reject(new HttpError(body, response, response.statusCode));
+						}
+						else {
+							if (
+								response.statusCode &&
+								response.statusCode >= 200 &&
+								response.statusCode <= 299
+							) {
+								resolve({body, response});
+							}
+							else {
+								reject(
+									new HttpError(
+										body,
+										response,
+										response.statusCode
+									)
+								);
 							}
 						}
-					});
-				});
+					}
+				);
 			});
-		}
+		});
+	}
 }

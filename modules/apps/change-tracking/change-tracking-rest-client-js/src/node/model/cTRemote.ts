@@ -24,59 +24,63 @@
 			'ownerName'?: string;
 			'url'?: string;
 
-		static discriminator: string | undefined = undefined;
+		static 'discriminator': string | undefined = undefined;
 
-		static attributeTypeMap: Array<{baseName: string, name: string, type: string}> = [
-				{
-					"baseName": "actions",
-					"name": "actions",
-					"type": "{ [key: string]: { [key: string]: string; }; }"
-				},
-				{
-					"baseName": "clientId",
-					"name": "clientId",
-					"type": "string"
-				},
-				{
-					"baseName": "clientSecret",
-					"name": "clientSecret",
-					"type": "string"
-				},
-				{
-					"baseName": "dateCreated",
-					"name": "dateCreated",
-					"type": "Date"
-				},
-				{
-					"baseName": "dateModified",
-					"name": "dateModified",
-					"type": "Date"
-				},
-				{
-					"baseName": "description",
-					"name": "description",
-					"type": "string"
-				},
-				{
-					"baseName": "id",
-					"name": "id",
-					"type": "number"
-				},
-				{
-					"baseName": "name",
-					"name": "name",
-					"type": "string"
-				},
-				{
-					"baseName": "ownerName",
-					"name": "ownerName",
-					"type": "string"
-				},
-				{
-					"baseName": "url",
-					"name": "url",
-					"type": "string"
-				}
+	static 'attributeTypeMap': Array<{
+		baseName: string;
+		name: string;
+		type: string;
+	}> = [
+		{
+			baseName: 'actions',
+			name: 'actions',
+			type: '{ [key: string]: { [key: string]: string; }; }',
+		},
+		{
+			baseName: 'clientId',
+			name: 'clientId',
+			type: 'string',
+		},
+		{
+			baseName: 'clientSecret',
+			name: 'clientSecret',
+			type: 'string',
+		},
+		{
+			baseName: 'dateCreated',
+			name: 'dateCreated',
+			type: 'Date',
+		},
+		{
+			baseName: 'dateModified',
+			name: 'dateModified',
+			type: 'Date',
+		},
+		{
+			baseName: 'description',
+			name: 'description',
+			type: 'string',
+		},
+		{
+			baseName: 'id',
+			name: 'id',
+			type: 'number',
+		},
+		{
+			baseName: 'name',
+			name: 'name',
+			type: 'string',
+		},
+		{
+			baseName: 'ownerName',
+			name: 'ownerName',
+			type: 'string',
+		},
+		{
+			baseName: 'url',
+			name: 'url',
+			type: 'string',
+		},
 		];
 
 		static getAttributeTypeMap() {

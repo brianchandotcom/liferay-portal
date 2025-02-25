@@ -8,7 +8,6 @@ import React, {createContext} from 'react';
 export const initialState = {
 	isPanelStateOpen: false,
 	layoutReportsDataURL: '',
-	learnResources: {},
 };
 
 export const ConstantsContext = createContext(initialState);
@@ -18,7 +17,6 @@ interface Props {
 	constants: {
 		isPanelStateOpen: boolean;
 		layoutReportsDataURL: string;
-		learnResources: object;
 	};
 }
 

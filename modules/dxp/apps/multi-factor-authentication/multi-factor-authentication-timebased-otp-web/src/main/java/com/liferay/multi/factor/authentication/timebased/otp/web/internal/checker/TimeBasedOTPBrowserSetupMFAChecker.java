@@ -18,6 +18,7 @@ import com.liferay.multi.factor.authentication.timebased.otp.service.MFATimeBase
 import com.liferay.multi.factor.authentication.timebased.otp.web.internal.configuration.MFATimeBasedOTPConfiguration;
 import com.liferay.multi.factor.authentication.timebased.otp.web.internal.constants.MFATimeBasedOTPEventTypes;
 import com.liferay.multi.factor.authentication.timebased.otp.web.internal.constants.MFATimeBasedOTPWebKeys;
+import com.liferay.multi.factor.authentication.timebased.otp.web.internal.display.context.MFATimeBasedOTPCheckerDisplayContext;
 import com.liferay.multi.factor.authentication.timebased.otp.web.internal.util.MFATimeBasedOTPUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -115,6 +116,10 @@ public class TimeBasedOTPBrowserSetupMFAChecker
 
 			httpServletRequest.setAttribute(
 				MFATimeBasedOTPWebKeys.MFA_TIME_BASED_OTP_ALGORITHM, "SHA1");
+			httpServletRequest.setAttribute(
+				MFATimeBasedOTPWebKeys.
+					MFA_TIME_BASED_OTP_CHECKER_DISPLAY_CONTEXT,
+				new MFATimeBasedOTPCheckerDisplayContext(httpServletRequest));
 			httpServletRequest.setAttribute(
 				MFATimeBasedOTPWebKeys.MFA_TIME_BASED_OTP_COMPANY_NAME,
 				company.getName());

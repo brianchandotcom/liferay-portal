@@ -8,11 +8,9 @@
 <%@ include file="/init.jsp" %>
 
 <%
-User selectedUser = PortalUtil.getSelectedUser(request);
-
-String mfaTimeBasedOTPAlgorithm = GetterUtil.getString(request.getAttribute(MFATimeBasedOTPWebKeys.MFA_TIME_BASED_OTP_ALGORITHM));
-String mfaTimeBasedOTPCompanyName = GetterUtil.getString(request.getAttribute(MFATimeBasedOTPWebKeys.MFA_TIME_BASED_OTP_COMPANY_NAME));
 String mfaTimeBasedOTPSharedSecret = GetterUtil.getString(request.getAttribute(MFATimeBasedOTPWebKeys.MFA_TIME_BASED_OTP_SHARED_SECRET));
+
+MFATimeBasedOTPCheckerDisplayContext mfaTimeBasedOTPCheckerDisplayContext = (MFATimeBasedOTPCheckerDisplayContext)request.getAttribute(MFATimeBasedOTPWebKeys.MFA_TIME_BASED_OTP_CHECKER_DISPLAY_CONTEXT);
 %>
 
 <div class="sheet-section">
@@ -32,22 +30,6 @@ String mfaTimeBasedOTPSharedSecret = GetterUtil.getString(request.getAttribute(M
 </div>
 
 <liferay-frontend:component
-	context='<%=
-		HashMapBuilder.<String, Object>put(
-			"account", HtmlUtil.escapeJS(selectedUser.getEmailAddress())
-		).put(
-			"algorithm", HtmlUtil.escapeJS(mfaTimeBasedOTPAlgorithm)
-		).put(
-			"containerId", portletDisplay.getNamespace() + "qrcode"
-		).put(
-			"counter", GetterUtil.getInteger(request.getAttribute(MFATimeBasedOTPWebKeys.MFA_TIME_BASED_OTP_TIME_COUNTER))
-		).put(
-			"digits", GetterUtil.getInteger(request.getAttribute(MFATimeBasedOTPWebKeys.MFA_TIME_BASED_OTP_DIGITS))
-		).put(
-			"issuer", HtmlUtil.escapeJS(mfaTimeBasedOTPCompanyName)
-		).put(
-			"secret", HtmlUtil.escapeJS(mfaTimeBasedOTPSharedSecret)
-		).build()
-	%>'
+	context="<%= mfaTimeBasedOTPCheckerDisplayContext.getContext() %>"
 	module="{generateQRCode} from multi-factor-authentication-timebased-otp-web"
 />

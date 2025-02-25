@@ -721,8 +721,7 @@ public class LayoutLocalServiceWrapper
 
 	@Override
 	public Layout fetchLayoutByIconImageId(
-			boolean privateLayout, long iconImageId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		boolean privateLayout, long iconImageId) {
 
 		return _layoutLocalService.fetchLayoutByIconImageId(
 			privateLayout, iconImageId);

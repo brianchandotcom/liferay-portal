@@ -606,8 +606,7 @@ public interface LayoutLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Layout fetchLayoutByIconImageId(
-			boolean privateLayout, long iconImageId)
-		throws PortalException;
+		boolean privateLayout, long iconImageId);
 
 	/**
 	 * Returns the layout matching the UUID, group, and privacy.

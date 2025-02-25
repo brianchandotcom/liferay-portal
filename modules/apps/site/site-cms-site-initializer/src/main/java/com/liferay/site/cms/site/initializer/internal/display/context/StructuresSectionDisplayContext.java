@@ -34,6 +34,13 @@ public class StructuresSectionDisplayContext extends BaseSectionDisplayContext {
 	}
 
 	@Override
+	public String getAPIURL() {
+		return "/o/object-admin/v1.0/object-definitions?filter=" +
+			"objectFolderExternalReferenceCode eq 'L_CMS_CONTENT_STRUCTURES' " +
+				"or objectFolderExternalReferenceCode eq 'L_CMS_FILE_TYPES'";
+	}
+
+	@Override
 	public CreationMenu getCreationMenu() {
 		return CreationMenuBuilder.addPrimaryDropdownItem(
 			dropdownItem -> {
@@ -48,11 +55,6 @@ public class StructuresSectionDisplayContext extends BaseSectionDisplayContext {
 					LanguageUtil.get(httpServletRequest, "file"));
 			}
 		).build();
-	}
-
-	@Override
-	public String[] getEntryClassNames() {
-		return cmsSiteInitializerConfiguration.structuresClassNames();
 	}
 
 	private String _getHref() {

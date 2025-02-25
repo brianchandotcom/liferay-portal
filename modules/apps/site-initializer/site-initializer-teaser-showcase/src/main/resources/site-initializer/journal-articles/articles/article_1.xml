@@ -9,14 +9,16 @@
 		</dynamic-content>
 	</dynamic-element>
 	<dynamic-element field-reference="headline" index-type="text" instance-id="YqUNKFk5" name="headline" type="rich_text">
-		<dynamic-content language-id="en_US"><![CDATA[
-			<table>
-				<tbody>
-					<tr>
-						<td align="left">Summer 2024 Collaboration</td>
-					</tr>
-				</tbody>
-			</table>]]>
+		<dynamic-content language-id="en_US">
+			<![CDATA[
+				<table>
+					<tbody>
+						<tr>
+							<td align="left">Summer 2024 Collaboration</td>
+						</tr>
+					</tbody>
+				</table>
+			]]>
 		</dynamic-content>
 	</dynamic-element>
 	<dynamic-element field-reference="content" index-type="text" instance-id="qcgFj2vf" name="content" type="rich_text">

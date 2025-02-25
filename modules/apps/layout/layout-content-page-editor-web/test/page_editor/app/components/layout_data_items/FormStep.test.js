@@ -13,18 +13,33 @@ import StoreMother from '../../../../../src/main/resources/META-INF/resources/pa
 
 const DEFAULT_CONFIG = {classNameId: '0'};
 
+const LAYOUT_DATA = {
+	deletedItems: [],
+	items: {
+		formStep: {
+			children: [],
+			config: DEFAULT_CONFIG,
+			itemId: 'formStep',
+			parentId: 'formStepContainer',
+			type: LAYOUT_DATA_ITEM_TYPES.formStep,
+		},
+		formStepContainer: {
+			children: ['formStep'],
+			itemId: 'formStepContainer',
+			type: LAYOUT_DATA_ITEM_TYPES.formStepContainer,
+		},
+	},
+};
+
 describe('FormStep', () => {
 	it('renders a form stepper with a dropzone and verify that the correct message appears when the dropzone is empty', () => {
 		render(
-			<StoreMother.Component>
-				<FormStepWithControls
-					item={{
-						children: [],
-						config: DEFAULT_CONFIG,
-						itemId: 'formStep',
-						type: LAYOUT_DATA_ITEM_TYPES.formStep,
-					}}
-				/>
+			<StoreMother.Component
+				getState={() => ({
+					layoutData: LAYOUT_DATA,
+				})}
+			>
+				<FormStepWithControls item={LAYOUT_DATA.items.formStep} />
 			</StoreMother.Component>
 		);
 

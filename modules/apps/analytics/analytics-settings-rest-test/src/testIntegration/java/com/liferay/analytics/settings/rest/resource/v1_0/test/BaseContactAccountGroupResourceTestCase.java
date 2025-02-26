@@ -186,7 +186,7 @@ public abstract class BaseContactAccountGroupResourceTestCase {
 	public void testGetContactAccountGroupsPage() throws Exception {
 		Page<ContactAccountGroup> page =
 			contactAccountGroupResource.getContactAccountGroupsPage(
-				RandomTestUtil.randomString(), Pagination.of(1, 10), null);
+				null, Pagination.of(1, 10), null);
 
 		long totalCount = page.getTotalCount();
 

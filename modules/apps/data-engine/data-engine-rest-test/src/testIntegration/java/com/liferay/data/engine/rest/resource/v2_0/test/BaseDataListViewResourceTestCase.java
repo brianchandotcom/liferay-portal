@@ -218,8 +218,7 @@ public abstract class BaseDataListViewResourceTestCase {
 
 		Page<DataListView> page =
 			dataListViewResource.getDataDefinitionDataListViewsPage(
-				dataDefinitionId, RandomTestUtil.randomString(),
-				Pagination.of(1, 10), null);
+				dataDefinitionId, null, Pagination.of(1, 10), null);
 
 		long totalCount = page.getTotalCount();
 

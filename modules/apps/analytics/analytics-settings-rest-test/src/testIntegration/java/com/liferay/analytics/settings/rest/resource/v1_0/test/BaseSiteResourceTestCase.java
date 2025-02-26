@@ -188,7 +188,7 @@ public abstract class BaseSiteResourceTestCase {
 	@Test
 	public void testGetSitesPage() throws Exception {
 		Page<Site> page = siteResource.getSitesPage(
-			RandomTestUtil.randomString(), Pagination.of(1, 10), null);
+			null, Pagination.of(1, 10), null);
 
 		long totalCount = page.getTotalCount();
 

@@ -62,6 +62,7 @@ else {
 						input.attributes.unlocalizedFieldsState;
 
 					registerUnlocalizedInput({
+						changeTextDirection: false,
 						defaultLanguageId,
 						onLocaleChange: (languageId) => {
 							const editingDefaultLanguage =

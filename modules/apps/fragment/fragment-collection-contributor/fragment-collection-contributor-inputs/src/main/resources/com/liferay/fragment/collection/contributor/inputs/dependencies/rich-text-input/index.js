@@ -57,6 +57,7 @@ if (layoutMode !== 'edit') {
 				}
 				else {
 					registerUnlocalizedInput({
+						changeTextDirection: false,
 						defaultLanguageId,
 						onLocaleChange: (languageId) => {
 							editorPromise.then((editor) => {
@@ -71,6 +72,11 @@ if (layoutMode !== 'edit') {
 								const isReadOnly =
 									input.attributes.unlocalizedFieldsState ===
 									'read-only';
+
+								editor.config.contentsLangDirection =
+									Liferay.Language.direction[languageId];
+
+								editor.setData(editor.getData());
 
 								if (languageId === defaultLanguageId) {
 									editor.setReadOnly(false);
@@ -117,6 +123,11 @@ if (layoutMode !== 'edit') {
 						unlocalizedMessageContainer: document.getElementById(
 							`${fragmentNamespace}-unlocalized-info`
 						),
+					});
+
+					editorPromise.then((editor) => {
+						editor.config.contentsLangDirection =
+							Liferay.Language.direction[defaultLanguageId];
 					});
 				}
 			}

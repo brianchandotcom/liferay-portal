@@ -4,6 +4,7 @@
  */
 
 type Args = {
+	changeTextDirection?: boolean;
 	defaultLanguageId: Liferay.Language.Locale;
 	inputElement?: HTMLInputElement;
 	onLocaleChange?: (languageId: string) => void;
@@ -13,6 +14,7 @@ type Args = {
 };
 
 export function registerUnlocalizedInput({
+	changeTextDirection = true,
 	defaultLanguageId,
 	inputElement,
 	onLocaleChange,
@@ -33,6 +35,13 @@ export function registerUnlocalizedInput({
 				'd-none',
 				editingDefaultLanguage
 			);
+
+			if (changeTextDirection) {
+				inputElement?.setAttribute(
+					'dir',
+					Liferay.Language.direction[languageId]!
+				);
+			}
 
 			// Change state of the input to disabled/readonly for non default language
 

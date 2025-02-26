@@ -11,7 +11,11 @@ import {
 	Field,
 	useStateDispatch,
 } from '../../../structure_builder/contexts/StateContext';
-import {getDefaultField} from '../../../structure_builder/utils/fieldType';
+import {
+	FIELD_TYPES,
+	FIELD_TYPE_LABEL,
+	getDefaultField,
+} from '../../../structure_builder/utils/fieldType';
 
 export default function AddFieldDropdown({
 	triggerType = 'text',
@@ -28,12 +32,10 @@ export default function AddFieldDropdown({
 
 	return (
 		<ClayDropDownWithItems
-			items={[
-				{
-					label: Liferay.Language.get('text'),
-					onClick: () => addField('text'),
-				},
-			]}
+			items={FIELD_TYPES.map((type) => ({
+				label: FIELD_TYPE_LABEL[type],
+				onClick: () => addField(type),
+			}))}
 			trigger={
 				triggerType === 'text' ? (
 					<ClayButton displayType="secondary" size="sm">

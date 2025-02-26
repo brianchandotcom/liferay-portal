@@ -10,10 +10,12 @@ import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import React, {useMemo} from 'react';
 
-import {FIELD_TYPE_ICON} from '../../../structure_builder/utils/fieldType';
+import {
+	FIELD_TYPE_ICON,
+	FieldType,
+} from '../../../structure_builder/utils/fieldType';
 import {
 	Field,
-	FieldType,
 	useSelector,
 	useStateDispatch,
 } from '../../contexts/StateContext';

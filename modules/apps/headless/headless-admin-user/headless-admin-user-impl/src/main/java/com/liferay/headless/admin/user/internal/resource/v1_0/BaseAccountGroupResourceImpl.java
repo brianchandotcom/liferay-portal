@@ -7,6 +7,7 @@ package com.liferay.headless.admin.user.internal.resource.v1_0;
 
 import com.liferay.headless.admin.user.dto.v1_0.AccountGroup;
 import com.liferay.headless.admin.user.resource.v1_0.AccountGroupResource;
+import com.liferay.lazy.referencing.kernel.LazyReferencingThreadLocal;
 import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
@@ -205,7 +206,7 @@ public abstract class BaseAccountGroupResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-user/v1.0/account-groups' -d $'{"customFields": ___, "description": ___, "externalReferenceCode": ___, "name": ___, "permissions": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-user/v1.0/account-groups' -d $'{"accountBriefs": ___, "creator": ___, "customFields": ___, "description": ___, "externalReferenceCode": ___, "name": ___, "permissions": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Creates a new account group"
@@ -420,7 +421,7 @@ public abstract class BaseAccountGroupResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-admin-user/v1.0/account-groups/by-external-reference-code/{externalReferenceCode}' -d $'{"customFields": ___, "description": ___, "externalReferenceCode": ___, "name": ___, "permissions": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-admin-user/v1.0/account-groups/by-external-reference-code/{externalReferenceCode}' -d $'{"accountBriefs": ___, "creator": ___, "customFields": ___, "description": ___, "externalReferenceCode": ___, "name": ___, "permissions": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Updates the account with information sent in the request body. Only the provided fields are updated."
@@ -482,7 +483,7 @@ public abstract class BaseAccountGroupResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/headless-admin-user/v1.0/account-groups/by-external-reference-code/{externalReferenceCode}' -d $'{"customFields": ___, "description": ___, "externalReferenceCode": ___, "name": ___, "permissions": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-admin-user/v1.0/account-groups/by-external-reference-code/{externalReferenceCode}' -d $'{"accountBriefs": ___, "creator": ___, "customFields": ___, "description": ___, "externalReferenceCode": ___, "name": ___, "permissions": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Replaces the account group with information sent in the request body. Any missing fields are deleted unless they are required."
@@ -624,7 +625,7 @@ public abstract class BaseAccountGroupResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-admin-user/v1.0/account-groups/{accountGroupId}' -d $'{"customFields": ___, "description": ___, "externalReferenceCode": ___, "name": ___, "permissions": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-admin-user/v1.0/account-groups/{accountGroupId}' -d $'{"accountBriefs": ___, "creator": ___, "customFields": ___, "description": ___, "externalReferenceCode": ___, "name": ___, "permissions": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Updates the account group with information sent in the request body. Only the provided fields are updated."
@@ -682,7 +683,7 @@ public abstract class BaseAccountGroupResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/headless-admin-user/v1.0/account-groups/{accountGroupId}' -d $'{"customFields": ___, "description": ___, "externalReferenceCode": ___, "name": ___, "permissions": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-admin-user/v1.0/account-groups/{accountGroupId}' -d $'{"accountBriefs": ___, "creator": ___, "customFields": ___, "description": ___, "externalReferenceCode": ___, "name": ___, "permissions": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Replaces the account group with information sent in the request body. Any missing fields are deleted unless they are required."
@@ -915,71 +916,82 @@ public abstract class BaseAccountGroupResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeFunction<AccountGroup, AccountGroup, Exception>
-			accountGroupUnsafeFunction = null;
+		try {
+			LazyReferencingThreadLocal.setLazyReferencingEnabled(true);
 
-		String createStrategy = (String)parameters.getOrDefault(
-			"createStrategy", "INSERT");
+			UnsafeFunction<AccountGroup, AccountGroup, Exception>
+				accountGroupUnsafeFunction = null;
 
-		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
-			accountGroupUnsafeFunction = accountGroup -> postAccountGroup(
-				accountGroup);
-		}
+			String createStrategy = (String)parameters.getOrDefault(
+				"createStrategy", "INSERT");
 
-		if (StringUtil.equalsIgnoreCase(createStrategy, "UPSERT")) {
-			String updateStrategy = (String)parameters.getOrDefault(
-				"updateStrategy", "UPDATE");
-
-			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				accountGroupUnsafeFunction =
-					accountGroup -> putAccountGroupByExternalReferenceCode(
-						accountGroup.getExternalReferenceCode(), accountGroup);
+			if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
+				accountGroupUnsafeFunction = accountGroup -> postAccountGroup(
+					accountGroup);
 			}
 
-			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
-				accountGroupUnsafeFunction = accountGroup -> {
-					AccountGroup persistedAccountGroup = null;
+			if (StringUtil.equalsIgnoreCase(createStrategy, "UPSERT")) {
+				String updateStrategy = (String)parameters.getOrDefault(
+					"updateStrategy", "UPDATE");
 
-					try {
-						AccountGroup getAccountGroup =
-							getAccountGroupByExternalReferenceCode(
-								accountGroup.getExternalReferenceCode());
-
-						persistedAccountGroup = patchAccountGroup(
-							getAccountGroup.getId() != null ?
-								getAccountGroup.getId() :
-									_parseLong(
-										(String)parameters.get(
-											"accountGroupId")),
+				if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
+					accountGroupUnsafeFunction =
+						accountGroup -> putAccountGroupByExternalReferenceCode(
+							accountGroup.getExternalReferenceCode(),
 							accountGroup);
-					}
-					catch (NoSuchModelException noSuchModelException) {
-						persistedAccountGroup = postAccountGroup(accountGroup);
-					}
+				}
 
-					return persistedAccountGroup;
-				};
+				if (StringUtil.equalsIgnoreCase(
+						updateStrategy, "PARTIAL_UPDATE")) {
+
+					accountGroupUnsafeFunction = accountGroup -> {
+						AccountGroup persistedAccountGroup = null;
+
+						try {
+							AccountGroup getAccountGroup =
+								getAccountGroupByExternalReferenceCode(
+									accountGroup.getExternalReferenceCode());
+
+							persistedAccountGroup = patchAccountGroup(
+								getAccountGroup.getId() != null ?
+									getAccountGroup.getId() :
+										_parseLong(
+											(String)parameters.get(
+												"accountGroupId")),
+								accountGroup);
+						}
+						catch (NoSuchModelException noSuchModelException) {
+							persistedAccountGroup = postAccountGroup(
+								accountGroup);
+						}
+
+						return persistedAccountGroup;
+					};
+				}
+			}
+
+			if (accountGroupUnsafeFunction == null) {
+				throw new NotSupportedException(
+					"Create strategy \"" + createStrategy +
+						"\" is not supported for AccountGroup");
+			}
+
+			if (contextBatchUnsafeBiConsumer != null) {
+				contextBatchUnsafeBiConsumer.accept(
+					accountGroups, accountGroupUnsafeFunction);
+			}
+			else if (contextBatchUnsafeConsumer != null) {
+				contextBatchUnsafeConsumer.accept(
+					accountGroups, accountGroupUnsafeFunction::apply);
+			}
+			else {
+				for (AccountGroup accountGroup : accountGroups) {
+					accountGroupUnsafeFunction.apply(accountGroup);
+				}
 			}
 		}
-
-		if (accountGroupUnsafeFunction == null) {
-			throw new NotSupportedException(
-				"Create strategy \"" + createStrategy +
-					"\" is not supported for AccountGroup");
-		}
-
-		if (contextBatchUnsafeBiConsumer != null) {
-			contextBatchUnsafeBiConsumer.accept(
-				accountGroups, accountGroupUnsafeFunction);
-		}
-		else if (contextBatchUnsafeConsumer != null) {
-			contextBatchUnsafeConsumer.accept(
-				accountGroups, accountGroupUnsafeFunction::apply);
-		}
-		else {
-			for (AccountGroup accountGroup : accountGroups) {
-				accountGroupUnsafeFunction.apply(accountGroup);
-			}
+		finally {
+			LazyReferencingThreadLocal.setLazyReferencingEnabled(false);
 		}
 	}
 

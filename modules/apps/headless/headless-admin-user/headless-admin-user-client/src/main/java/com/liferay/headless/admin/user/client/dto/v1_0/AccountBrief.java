@@ -105,6 +105,25 @@ public class AccountBrief implements Cloneable, Serializable {
 
 	protected RoleBrief[] roleBriefs;
 
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public void setType(UnsafeSupplier<String, Exception> typeUnsafeSupplier) {
+		try {
+			type = typeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String type;
+
 	@Override
 	public AccountBrief clone() throws CloneNotSupportedException {
 		return (AccountBrief)super.clone();

@@ -1,24 +1,3 @@
-.lfr-asset-column-details {
-	.lfr-asset-actions {
-		float: right;
-		position: absolute;
-		right: 10px;
-		z-index: 1;
-	}
-
-	.task-content-author {
-		padding-top: 1em;
-	}
-
-	.task-content-actions {
-		float: right;
-
-		.btn-secondary {
-			padding: 0;
-		}
-	}
-}
-
 .asset-icon .lexicon-icon {
 	height: 32px;
 	width: 32px;
@@ -44,11 +23,41 @@
 	}
 }
 
+.lfr-asset-column-details {
+	.lfr-asset-actions {
+		float: right;
+		position: absolute;
+		right: 10px;
+		z-index: 1;
+	}
+
+	.task-content-author {
+		padding-top: 1em;
+	}
+
+	.task-content-actions {
+		float: right;
+
+		.btn-secondary {
+			padding: 0;
+		}
+	}
+}
+
 .portlet-workflow {
 	.taglib-user-display {
 		min-width: 110px;
 		.user-name {
 			font-size: 1em;
+		}
+	}
+}
+
+#portlet_com_liferay_portal_workflow_web_portlet_ControlPanelWorkflowPortlet {
+	.lfr-workflow__navigation-bar,
+	.management-bar {
+		.container-fluid {
+			max-width: 1920px;
 		}
 	}
 }

@@ -12,9 +12,10 @@ import {PublishProductPayload, Steps} from '../../types';
 export class PublisherAppPage {
 	readonly addPackagesButton: Locator;
 	readonly backButton: Locator;
-	readonly cloudCompatibleRadio: Locator;
+	readonly cloudDropdownOption: Locator;
 	readonly confirmButton: Locator;
 	readonly continueButton: Locator;
+	readonly dxpDropdownOption: Locator;
 	readonly form: {
 		build: {
 			cpu: Locator;
@@ -36,10 +37,12 @@ export class PublisherAppPage {
 			version: Locator;
 		};
 	};
+	readonly fragmentDropdownOption: Locator;
 	protected publishProductPayload: PublishProductPayload;
 	readonly logoUploadButton: Locator;
 	readonly page: Page;
 	readonly paidPriceModel: Locator;
+	readonly selectAppTypeDropdown: Locator;
 	readonly selectFileButton: Locator;
 	readonly standardLicenses: Locator;
 	readonly submissionCheckbox: Locator;
@@ -51,10 +54,14 @@ export class PublisherAppPage {
 			name: 'Add Package(s)',
 		});
 		this.backButton = page.getByRole('button', {name: 'Back'});
-		this.cloudCompatibleRadio = page.locator('.radio-card-button-icon');
-
+		this.cloudDropdownOption = page.getByRole('menuitem', {
+			name: 'Cloud App Backend client',
+		});
 		this.confirmButton = page.getByRole('button', {name: 'Confirm'});
 		this.continueButton = page.getByRole('button', {name: 'Continue'});
+		this.dxpDropdownOption = page.getByRole('menuitem', {
+			name: 'DXP App Module-based apps',
+		});
 		this.form = {
 			build: {
 				cpu: page.getByPlaceholder('Enter the number of CPUs'),
@@ -80,12 +87,18 @@ export class PublisherAppPage {
 				version: page.getByPlaceholder('0.0.0'),
 			},
 		};
+		this.fragmentDropdownOption = page.getByRole('menuitem', {
+			name: 'Fragment/Collection of',
+		});
 		this.logoUploadButton = page.getByText('Upload Image');
 		this.page = page;
 		this.paidPriceModel = page
 			.locator('div')
 			.filter({hasText: /^Paid$/})
 			.first();
+		this.selectAppTypeDropdown = page.getByRole('button', {
+			name: 'Choose an option',
+		});
 		this.selectFileButton = page.getByRole('button', {
 			name: 'Select a file',
 		});
@@ -165,8 +178,10 @@ export class PublisherAppPage {
 	async fillBuild() {
 		expect(this.continueButton).toBeDisabled();
 
-		if (this.publishProductPayload.cloudCompatible) {
-			await this.cloudCompatibleRadio.first().click();
+		if (this.publishProductPayload.appType === 'cloud') {
+			await this.selectAppTypeDropdown.click();
+
+			await this.cloudDropdownOption.first().click();
 
 			await this.form.build.cpu.fill(
 				this.publishProductPayload.resourceRequirements.cpus.toString()
@@ -175,8 +190,17 @@ export class PublisherAppPage {
 				this.publishProductPayload.resourceRequirements.ram.toString()
 			);
 		}
-		else {
-			await this.cloudCompatibleRadio.last().click();
+
+		if (this.publishProductPayload.appType === 'dxp') {
+			await this.selectAppTypeDropdown.click();
+
+			await this.dxpDropdownOption.first().click();
+		}
+
+		if (this.publishProductPayload.appType === 'fragment') {
+			await this.selectAppTypeDropdown.click();
+
+			await this.fragmentDropdownOption.first().click();
 		}
 
 		for (const compatibleOffering of this.publishProductPayload

@@ -20,8 +20,8 @@ type ContactUs = {
 };
 
 export type PublishProductPayload = {
+	appType: string;
 	categories: string[];
-	cloudCompatible: boolean;
 	compatibleOfferings: string[];
 	description: string;
 	dxpVersions: string[];

@@ -19,9 +19,9 @@ export const ORDER_ITEMS = {
 
 export const products = {
 	cloud_free: {
+		appType: 'cloud',
 		categories: ['Analytics and Optimization'],
-		cloudCompatible: true,
-		compatibleOfferings: ['Liferay SaaS'],
+		compatibleOfferings: ['Liferay PaaS', 'Liferay SaaS'],
 		description: 'My free cloud app',
 		dxpVersions: ['7.3'],
 		logo: path.join(dependenciesFolder, 'marketplace-icon.png'),
@@ -39,9 +39,9 @@ export const products = {
 		zipFiles: [path.join(dependenciesFolder, 'folder.marketplace.zip')],
 	},
 	cloud_paid: {
+		appType: 'cloud',
 		categories: ['Customer Data Management'],
-		cloudCompatible: true,
-		compatibleOfferings: ['Liferay SaaS'],
+		compatibleOfferings: ['Liferay PaaS', 'Liferay SaaS'],
 		description: 'My paid cloud app',
 		dxpVersions: ['7.3'],
 		logo: path.join(dependenciesFolder, 'marketplace-icon.png'),
@@ -68,8 +68,8 @@ export const products = {
 		zipFiles: [path.join(dependenciesFolder, 'folder.marketplace.zip')],
 	},
 	dxp_free: {
+		appType: 'dxp',
 		categories: ['Analytics and Optimization'],
-		cloudCompatible: false,
 		compatibleOfferings: ['Liferay Self-Hosted', 'Liferay PaaS'],
 		description: 'My free Dxp app',
 		dxpVersions: ['7.3'],
@@ -84,8 +84,8 @@ export const products = {
 		zipFiles: [path.join(dependenciesFolder, 'folder.marketplace.zip')],
 	},
 	dxp_paid: {
+		appType: 'dxp',
 		categories: ['Customer Data Management'],
-		cloudCompatible: false,
 		compatibleOfferings: ['Liferay Self-Hosted', 'Liferay PaaS'],
 		description: 'My paid cloud app',
 		dxpVersions: ['7.3'],
@@ -111,6 +111,59 @@ export const products = {
 			version: '1.0.0',
 		},
 		zipFiles: [path.join(dependenciesFolder, 'folder.marketplace.zip')],
+	},
+	fragment_free: {
+		appType: 'fragment',
+		categories: ['Fragment'],
+		compatibleOfferings: [
+			'Liferay Self-Hosted',
+			'Liferay PaaS',
+			'Liferay SaaS',
+		],
+		description: 'My free Fragment app',
+		dxpVersions: ['7.3'],
+		logo: path.join(dependenciesFolder, 'marketplace-icon.png'),
+		name: 'Fragment - Free',
+		priceModel: 'free',
+		tags: ['Business Use'],
+		version: {
+			notes: 'Lorem Ipsum...',
+			version: '1.0.0',
+		},
+		zipFiles: [path.join(dependenciesFolder, 'folder.fragment.zip')],
+	},
+	fragment_paid: {
+		appType: 'fragment',
+		categories: ['Fragment'],
+		compatibleOfferings: [
+			'Liferay Self-Hosted',
+			'Liferay PaaS',
+			'Liferay SaaS',
+		],
+		description: 'My paid Fragment app',
+		dxpVersions: ['7.3'],
+		logo: path.join(dependenciesFolder, 'marketplace-icon.png'),
+		name: 'Fragment - Paid',
+		price: {
+			developer: 50,
+			standard: 150,
+		},
+		priceModel: 'paid',
+		resourceRequirements: {
+			cpus: 0,
+			ram: 0,
+		},
+		support: {
+			publisherWebsiteUrl: 'www.liferay.com',
+			supportEmail: 'test@liferay.com',
+			supportPhone: '+00 00 000000000',
+		},
+		tags: ['Client Extension Type'],
+		version: {
+			notes: 'Lorem Ipsum...',
+			version: '1.0.0',
+		},
+		zipFiles: [path.join(dependenciesFolder, 'folder.fragment.zip')],
 	},
 } as const;
 

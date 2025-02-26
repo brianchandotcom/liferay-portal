@@ -4,7 +4,8 @@
 			{
 				"definition": {
 					"indexed": true,
-					"layout": {},
+					"layout": {
+					},
 					"name": "Page Header"
 				},
 				"pageElements": [
@@ -13,7 +14,8 @@
 							"fragment": {
 								"key": "BASIC_COMPONENT-html"
 							},
-							"fragmentConfig": {},
+							"fragmentConfig": {
+							},
 							"fragmentFields": [
 								{
 									"id": "element-html",
@@ -71,11 +73,13 @@
 										},
 										{
 											"id": "portraitMobile",
-											"rowViewportDefinition": {}
+											"rowViewportDefinition": {
+											}
 										},
 										{
 											"id": "tablet",
-											"rowViewportDefinition": {}
+											"rowViewportDefinition": {
+											}
 										}
 									],
 									"verticalAlignment": "middle"
@@ -91,11 +95,13 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "tablet"
 												}
 											],
@@ -184,11 +190,13 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "tablet"
 												}
 											],
@@ -245,11 +253,13 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "tablet"
 												}
 											],
@@ -324,7 +334,8 @@
 																"iconSize": "1rem",
 																"loginPage": "/web/[$GROUP_KEY$]/sign-in"
 															},
-															"fragmentFields": [],
+															"fragmentFields": [
+															],
 															"indexed": true
 														},
 														"type": "Fragment"
@@ -347,7 +358,8 @@
 			{
 				"definition": {
 					"indexed": true,
-					"layout": {},
+					"layout": {
+					},
 					"name": "Page Body"
 				},
 				"pageElements": [
@@ -454,11 +466,13 @@
 										},
 										{
 											"id": "portraitMobile",
-											"rowViewportDefinition": {}
+											"rowViewportDefinition": {
+											}
 										},
 										{
 											"id": "tablet",
-											"rowViewportDefinition": {}
+											"rowViewportDefinition": {
+											}
 										}
 									],
 									"verticalAlignment": "middle"
@@ -474,11 +488,13 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "tablet"
 												}
 											],
@@ -501,7 +517,8 @@
 															"fragment": {
 																"key": "BASIC_COMPONENT-html"
 															},
-															"fragmentConfig": {},
+															"fragmentConfig": {
+															},
 															"fragmentFields": [
 																{
 																	"id": "element-html",
@@ -534,11 +551,13 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "tablet"
 												}
 											],
@@ -600,9 +619,9 @@
 		"colorSchemeName": "01",
 		"themeName": "Classic",
 		"themeSettings": {
-			"lfr-theme:regular:show-header-search": "false",
-			"lfr-theme:regular:show-header": "false",
 			"lfr-theme:regular:show-footer": "false",
+			"lfr-theme:regular:show-header": "false",
+			"lfr-theme:regular:show-header-search": "false",
 			"lfr-theme:regular:wrap-widget-page-content": "false"
 		}
 	},

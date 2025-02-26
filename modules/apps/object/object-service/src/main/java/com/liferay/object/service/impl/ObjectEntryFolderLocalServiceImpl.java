@@ -246,7 +246,7 @@ public class ObjectEntryFolderLocalServiceImpl
 	public ObjectEntryFolder updateObjectEntryFolder(
 			long userId, long objectEntryFolderId,
 			long parentObjectEntryFolderId, Map<Locale, String> labelMap,
-			String name)
+			String name, ServiceContext serviceContext)
 		throws PortalException {
 
 		ObjectEntryFolder objectEntryFolder =

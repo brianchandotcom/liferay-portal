@@ -163,7 +163,8 @@ public class ObjectEntryFolderServiceImpl
 	@Override
 	public ObjectEntryFolder updateObjectEntryFolder(
 			long objectEntryFolderId, long parentObjectEntryFolderId,
-			Map<Locale, String> labelMap, String name)
+			Map<Locale, String> labelMap, String name,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		_modelResourcePermission.check(
@@ -171,7 +172,7 @@ public class ObjectEntryFolderServiceImpl
 
 		return objectEntryFolderLocalService.updateObjectEntryFolder(
 			getUserId(), objectEntryFolderId, parentObjectEntryFolderId,
-			labelMap, name);
+			labelMap, name, serviceContext);
 	}
 
 	@Reference(

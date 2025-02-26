@@ -7,6 +7,7 @@ package com.liferay.portal.search.internal.buffer.util;
 
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.change.tracking.CTCollectionThreadLocal;
 import com.liferay.portal.kernel.concurrent.SystemExecutorServiceUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -15,6 +16,7 @@ import com.liferay.portal.kernel.module.service.Snapshot;
 import com.liferay.portal.kernel.search.IndexWriterHelper;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.search.internal.buffer.BufferOverflowThreadLocal;
@@ -52,6 +54,9 @@ public class IndexerRequestBufferExecutorUtil {
 			return;
 		}
 
+		long companyId = CompanyThreadLocal.getCompanyId();
+		long ctCollectionId = CTCollectionThreadLocal.getCTCollectionId();
+
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
 
@@ -61,11 +66,11 @@ public class IndexerRequestBufferExecutorUtil {
 
 		ServiceContext finalServiceContext = serviceContext;
 
-		ExecutorService executorService =
-			SystemExecutorServiceUtil.getExecutorService();
-
 		IndexerRequestBuffer transferCopyIndexerRequestBuffer =
 			indexerRequestBuffer.transferCopy();
+
+		ExecutorService executorService =
+			SystemExecutorServiceUtil.getExecutorService();
 
 		AtomicReference<Future<?>> futureReference = new AtomicReference<>();
 
@@ -74,7 +79,10 @@ public class IndexerRequestBufferExecutorUtil {
 				ServiceContextThreadLocal.pushServiceContext(
 					finalServiceContext);
 
-				try (SafeCloseable safeCloseable = SearchContext.openBatchMode(
+				try (SafeCloseable safeCloseable1 =
+						CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+							companyId, ctCollectionId);
+					SafeCloseable safeCloseable2 = SearchContext.openBatchMode(
 						false)) {
 
 					_execute(

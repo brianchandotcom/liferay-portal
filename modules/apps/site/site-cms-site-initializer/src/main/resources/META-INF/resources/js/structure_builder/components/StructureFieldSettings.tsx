@@ -4,6 +4,7 @@
  */
 
 import ClayBreadcrumb from '@clayui/breadcrumb';
+import ClayForm, {ClayToggle} from '@clayui/form';
 import ClayLabel from '@clayui/label';
 import ClayLayout from '@clayui/layout';
 import ClayTabs from '@clayui/tabs';
@@ -13,6 +14,8 @@ import {useSelector, useStateDispatch} from '../contexts/StateContext';
 import selectStructureField from '../selectors/selectStructureField';
 import selectStructureLabel from '../selectors/selectStructureLabel';
 import {Field} from '../utils/field';
+import ERCInput from './ERCInput';
+import TextInput from './TextInput';
 
 export default function StructureFieldSettings({
 	fieldName,
@@ -69,7 +72,54 @@ export default function StructureFieldSettings({
 }
 
 function GeneralTab({field}: {field: Field}) {
-	return <div></div>;
+	return (
+		<>
+			<div className="pb-2">
+				<p className="font-weight-semi-bold mb-0 text-3">
+					{Liferay.Language.get('field-type')}
+				</p>
+
+				<ClayLabel displayType="info">{field.type}</ClayLabel>
+			</div>
+
+			<div className="mt-4 pb-2">
+				<TextInput
+					label={Liferay.Language.get('field-name')}
+					onValueChange={() => {}}
+					value={field.name}
+				/>
+
+				<TextInput
+					className="mb-0"
+					label={Liferay.Language.get('label')}
+					onValueChange={() => {}}
+					value={field.name}
+				/>
+			</div>
+
+			<div className="mt-4 pb-2">
+				<ClayForm.Group className="mb-3">
+					<ClayToggle
+						label={Liferay.Language.get('mandatory')}
+						onToggle={() => {}}
+						toggled={false}
+					/>
+				</ClayForm.Group>
+
+				<ClayForm.Group className="mb-0">
+					<ClayToggle
+						label={Liferay.Language.get('localizable')}
+						onToggle={() => {}}
+						toggled={false}
+					/>
+				</ClayForm.Group>
+			</div>
+
+			<div className="mt-4">
+				<ERCInput onValueChange={() => {}} value="" />
+			</div>
+		</>
+	);
 }
 
 function SearchTab() {

@@ -8,6 +8,7 @@ package com.liferay.site.cms.site.initializer.internal.display.context;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
@@ -40,6 +41,14 @@ public class ContentsSectionDisplayContext extends BaseSectionDisplayContext {
 
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+	}
+
+	@Override
+	public List<DropdownItem> getBulkActionDropdownItems() {
+		return ListUtil.fromArray(
+			new FDSActionDropdownItem(
+				"#", "document", "sampleBulkAction",
+				_language.get(httpServletRequest, "label"), null, null, null));
 	}
 
 	@Override

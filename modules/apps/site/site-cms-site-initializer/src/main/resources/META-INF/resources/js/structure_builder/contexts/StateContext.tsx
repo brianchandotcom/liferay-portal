@@ -64,7 +64,8 @@ type SetErrorAction = {error: string | null; type: 'set-error'};
 type SetLabelAction = {label: string; type: 'set-label'};
 
 type UpdateStructureAction = {
-	objectFields: ObjectField[];
+	name?: string;
+	objectFields?: ObjectField[];
 	type: 'update-structure';
 };
 
@@ -127,12 +128,22 @@ function reducer(state: State, action: Action) {
 		case 'publish-structure':
 			return {...state, error: null, status: 'published' as Status};
 		case 'update-structure': {
-			const fields = updateFields(state.fields, action.objectFields);
+			let nextFields = state.fields;
+			let nextName = state.name;
+
+			if (action.objectFields) {
+				nextFields = updateFields(state.fields, action.objectFields);
+			}
+
+			if (action.name) {
+				nextName = action.name;
+			}
 
 			return {
 				...state,
 				error: null,
-				fields,
+				fields: nextFields,
+				name: nextName,
 			};
 		}
 		case 'select-item': {

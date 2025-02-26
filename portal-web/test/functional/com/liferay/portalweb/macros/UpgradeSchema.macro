@@ -11,7 +11,7 @@ definition {
 		if (!(contains(${result}, "Database schemas match"))) {
 			echo(${result});
 
-			fail("Failed to validate DB schemas.");
+			fail("Missing database upgrade: Check log to find differences between fresh and upgraded schemas.");
 		}
 		else {
 			echo("Database schemas match between fresh database and upgraded database.");

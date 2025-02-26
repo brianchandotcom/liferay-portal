@@ -568,10 +568,10 @@ public class ObjectFieldLocalServiceImpl
 			return ObjectEntryTable.INSTANCE;
 		}
 
+		SystemObjectDefinitionManager systemObjectDefinitionManager = null;
+
 		ObjectDefinition objectDefinition =
 			_objectDefinitionPersistence.fetchByPrimaryKey(objectDefinitionId);
-
-		SystemObjectDefinitionManager systemObjectDefinitionManager = null;
 
 		if (objectDefinition.isUnmodifiableSystemObject()) {
 			systemObjectDefinitionManager =

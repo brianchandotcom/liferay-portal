@@ -5,6 +5,7 @@
 
 package com.liferay.ant.manifest.helper;
 
+import com.liferay.ant.manifest.helper.util.CpeIdUtil;
 import com.liferay.ant.manifest.helper.util.Validator;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.OSDetector;
@@ -63,7 +64,7 @@ public class ManifestHelperTask extends Task {
 
 		project.setProperty("build.revision", getBuildRevision());
 		project.setProperty("build.time", getDateString(new Date()));
-		project.setProperty("cpe.identifier", getCpeId());
+		project.setProperty("cpe.identifier", CpeIdUtil.getCpeId(project));
 		project.setProperty(
 			"release.info.build.date",
 			String.valueOf(ReleaseInfo.getBuildDate()));
@@ -114,45 +115,6 @@ public class ManifestHelperTask extends Task {
 		}
 
 		return StringPool.BLANK;
-	}
-
-	protected String getCpeId() {
-		try {
-			String patchVersion = "*";
-			String product = "portal";
-			String version =
-				ReleaseInfo.getVersion() +
-					project.getProperty("release.info.version.file.suffix");
-
-			if (ReleaseInfo.isDXP()) {
-				String versionDisplayName = ReleaseInfo.getVersionDisplayName();
-
-				int periodLastIndex = versionDisplayName.lastIndexOf(
-					StringPool.PERIOD);
-
-				patchVersion = versionDisplayName.substring(
-					periodLastIndex + 1);
-
-				if (patchVersion.endsWith(" LTS")) {
-					patchVersion = patchVersion.substring(
-						0, patchVersion.indexOf(" LTS"));
-				}
-
-				product = "dxp";
-
-				String qVersion = versionDisplayName.substring(
-					0, periodLastIndex);
-
-				version = qVersion.toLowerCase();
-			}
-
-			return String.format(
-				"cpe:2.3:a:liferay:%s:%s:%s:*:*:*:*:*:*", product, version,
-				patchVersion);
-		}
-		catch (Exception exception) {
-			throw new RuntimeException(exception);
-		}
 	}
 
 	protected String getDateString(Date date) {

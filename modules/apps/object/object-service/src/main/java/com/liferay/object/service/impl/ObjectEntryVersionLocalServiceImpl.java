@@ -48,7 +48,6 @@ public class ObjectEntryVersionLocalServiceImpl
 		objectEntryVersion.setCreateDate(objectEntry.getCreateDate());
 		objectEntryVersion.setModifiedDate(objectEntry.getModifiedDate());
 		objectEntryVersion.setObjectEntryId(objectEntry.getObjectEntryId());
-
 		objectEntryVersion.setContent(
 			ObjectEntryDTOConverterUtil.toDTO(
 				_dtoConverterRegistry, _jsonFactory, objectEntry, user));

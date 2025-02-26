@@ -7,7 +7,11 @@ import getFileProjectDir from '../util/getFileProjectDir.mjs';
 
 export default async function extractProjectDirs(modifiedFiles) {
 	modifiedFiles = modifiedFiles.filter(
-		(file) => file.endsWith('.ts') || file.endsWith('.tsx')
+		(file) =>
+			file.endsWith('.ts') ||
+			file.endsWith('.tsx') ||
+			file.endsWith('package.json') ||
+			file.endsWith('tsconfig.json')
 	);
 	modifiedFiles = modifiedFiles.filter((file) => file.startsWith('modules/'));
 	modifiedFiles = modifiedFiles.map((file) => file.substring(8));

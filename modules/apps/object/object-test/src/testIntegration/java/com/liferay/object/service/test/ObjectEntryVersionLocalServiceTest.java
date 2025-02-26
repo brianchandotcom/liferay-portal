@@ -78,6 +78,8 @@ public class ObjectEntryVersionLocalServiceTest {
 				"textObjectFieldName", "textObjectFieldValue1"
 			).build());
 
+		Assert.assertEquals(1, objectEntry.getVersion());
+
 		_assertObjectEntryVersions(
 			Arrays.asList(
 				_createObjectEntryVersion(
@@ -87,14 +89,14 @@ public class ObjectEntryVersionLocalServiceTest {
 			_objectEntryVersionLocalService.getObjectEntryVersions(
 				objectEntry.getObjectEntryId()));
 
-		Assert.assertEquals(1, objectEntry.getVersion());
-
-		_objectEntryLocalService.updateObjectEntry(
+		objectEntry = _objectEntryLocalService.updateObjectEntry(
 			TestPropsValues.getUserId(), objectEntry.getObjectEntryId(),
 			HashMapBuilder.<String, Serializable>put(
 				"textObjectFieldName", "textObjectFieldValue2"
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
+
+		Assert.assertEquals(2, objectEntry.getVersion());
 
 		_assertObjectEntryVersions(
 			Arrays.asList(
@@ -108,11 +110,6 @@ public class ObjectEntryVersionLocalServiceTest {
 					2)),
 			_objectEntryVersionLocalService.getObjectEntryVersions(
 				objectEntry.getObjectEntryId()));
-
-		objectEntry = _objectEntryLocalService.getObjectEntry(
-			objectEntry.getObjectEntryId());
-
-		Assert.assertEquals(2, objectEntry.getVersion());
 	}
 
 	private void _assertObjectEntryVersions(

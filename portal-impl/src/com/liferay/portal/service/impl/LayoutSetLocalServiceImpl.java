@@ -190,7 +190,8 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 		}
 
 		if (layoutSets.size() > 1) {
-			_log.error("Multiple layout sets exist for logo ID " + logoId);
+			_log.error(
+				"Logo ID " + logoId + " is used by more than one layout set");
 		}
 
 		return layoutSets.get(layoutSets.size() - 1);

@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.UserGroupService;
+import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
@@ -77,6 +79,35 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 
 		_depotEntryGroupRelService.deleteDepotEntryGroupRel(
 			depotEntryGroupRel.getDepotEntryGroupRelId());
+
+		return getAssetLibrary(assetLibraryId);
+	}
+
+	@Override
+	public AssetLibrary deleteAssetLibraryUserAccountUser(
+			Long assetLibraryId, Long userId)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+			throw new UnsupportedOperationException();
+		}
+
+		_userService.unsetGroupUsers(assetLibraryId, new long[] {userId}, null);
+
+		return getAssetLibrary(assetLibraryId);
+	}
+
+	@Override
+	public AssetLibrary deleteAssetLibraryUserGroup(
+			Long assetLibraryId, Long userGroupId)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+			throw new UnsupportedOperationException();
+		}
+
+		_userGroupService.unsetGroupUserGroups(
+			assetLibraryId, new long[] {userGroupId});
 
 		return getAssetLibrary(assetLibraryId);
 	}
@@ -203,6 +234,35 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 		return getAssetLibrary(assetLibraryId);
 	}
 
+	@Override
+	public AssetLibrary postAssetLibraryUserAccountUser(
+			Long assetLibraryId, Long userId)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+			throw new UnsupportedOperationException();
+		}
+
+		_userService.addGroupUsers(assetLibraryId, new long[] {userId}, null);
+
+		return getAssetLibrary(assetLibraryId);
+	}
+
+	@Override
+	public AssetLibrary postAssetLibraryUserGroup(
+			Long assetLibraryId, Long userGroupId)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
+			throw new UnsupportedOperationException();
+		}
+
+		_userGroupService.addGroupUserGroups(
+			assetLibraryId, new long[] {userGroupId});
+
+		return getAssetLibrary(assetLibraryId);
+	}
+
 	private ServiceContext _getServiceContext() throws Exception {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DepotEntry.class.getName(), contextHttpServletRequest);
@@ -271,5 +331,11 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
+
+	@Reference
+	private UserGroupService _userGroupService;
+
+	@Reference
+	private UserService _userService;
 
 }

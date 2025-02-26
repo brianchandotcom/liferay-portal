@@ -14,18 +14,16 @@ import com.liferay.message.boards.model.MBMessage;
 import com.liferay.message.boards.service.MBCategoryLocalService;
 import com.liferay.message.boards.service.MBMessageLocalService;
 import com.liferay.message.boards.service.MBMessageService;
-import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.pop.MessageListener;
 import com.liferay.portal.kernel.pop.MessageListenerException;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -76,12 +74,11 @@ public class MessageListenerImpl implements MessageListener {
 				return false;
 			}
 
-			Company company = _getCompany(messageIdString);
-
 			MBCategory category = _mbCategoryLocalService.getCategory(
 				MBMailUtil.getCategoryId(messageIdString));
 
-			if ((category.getCompanyId() != company.getCompanyId()) &&
+			if ((category.getCompanyId() !=
+					CompanyThreadLocal.getCompanyId()) &&
 				!category.isRoot()) {
 
 				return false;
@@ -100,7 +97,7 @@ public class MessageListenerImpl implements MessageListener {
 			}
 
 			_userLocalService.getUserByEmailAddress(
-				company.getCompanyId(), from);
+				CompanyThreadLocal.getCompanyId(), from);
 
 			return true;
 		}
@@ -135,8 +132,6 @@ public class MessageListenerImpl implements MessageListener {
 
 				return;
 			}
-
-			Company company = _getCompany(messageIdString);
 
 			if (_log.isDebugEnabled()) {
 				_log.debug("Message id " + messageIdString);
@@ -183,7 +178,7 @@ public class MessageListenerImpl implements MessageListener {
 			}
 
 			User user = _userLocalService.getUserByEmailAddress(
-				company.getCompanyId(), from);
+				CompanyThreadLocal.getCompanyId(), from);
 
 			String subject = null;
 
@@ -267,26 +262,6 @@ public class MessageListenerImpl implements MessageListener {
 		return MessageListenerImpl.class.getName();
 	}
 
-	private Company _getCompany(String messageIdString) throws Exception {
-		int pos =
-			messageIdString.indexOf(CharPool.AT) +
-				PropsValues.POP_SERVER_SUBDOMAIN.length() + 1;
-
-		if (PropsValues.POP_SERVER_SUBDOMAIN.length() > 0) {
-			pos++;
-		}
-
-		int endPos = messageIdString.indexOf(CharPool.GREATER_THAN, pos);
-
-		if (endPos == -1) {
-			endPos = messageIdString.length();
-		}
-
-		String mx = messageIdString.substring(pos, endPos);
-
-		return _companyLocalService.getCompanyByMx(mx);
-	}
-
 	private String _getMessageIdString(List<String> recipients, Message message)
 		throws Exception {
 
@@ -327,9 +302,6 @@ public class MessageListenerImpl implements MessageListener {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		MessageListenerImpl.class);
-
-	@Reference
-	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private HtmlParser _htmlParser;

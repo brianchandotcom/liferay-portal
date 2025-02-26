@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.template.react.renderer.ComponentDescriptor;
 import com.liferay.portal.template.react.renderer.ReactRenderer;
 
@@ -87,11 +88,18 @@ public class FDSRendererImpl implements FDSRenderer {
 				() -> fdsSerializer.serializeViews(fdsName, httpServletRequest)
 			).build());
 
+		String finalPropsTransformer = fdsSerializer.serializePropsTransformer(
+			fdsName, httpServletRequest);
+
+		if (Validator.isNull(finalPropsTransformer)) {
+			finalPropsTransformer = propsTransformer;
+		}
+
 		try {
 			_reactRenderer.renderReact(
 				new ComponentDescriptor(
 					"{FrontendDataSet} from frontend-data-set-web", componentId,
-					null, inline, propsTransformer),
+					null, inline, finalPropsTransformer),
 				props, httpServletRequest, writer);
 		}
 		catch (Exception exception) {

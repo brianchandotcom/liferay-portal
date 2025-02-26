@@ -156,6 +156,20 @@ public class SystemFDSSerializer
 	}
 
 	@Override
+	public String serializePropsTransformer(
+		String fdsName, HttpServletRequest httpServletRequest) {
+
+		SystemFDSEntry systemFDSEntry =
+			systemFDSEntryRegistry.getSystemFDSEntry(fdsName);
+
+		if (systemFDSEntry == null) {
+			return null;
+		}
+
+		return systemFDSEntry.getPropsTransformer();
+	}
+
+	@Override
 	public List<FDSSortItem> serializeSorts(
 		String fdsName, HttpServletRequest httpServletRequest) {
 

@@ -103,6 +103,9 @@ public abstract class BaseFDSSerializerTestCase {
 
 	protected static final String LINK = RandomTestUtil.randomString();
 
+	protected static final String[] PROPS_TRANSFORMERS =
+		RandomTestUtil.randomStrings(2);
+
 	protected static final String[] STICKERS = RandomTestUtil.randomStrings(2);
 
 	protected static final String[] SYMBOLS = RandomTestUtil.randomStrings(2);

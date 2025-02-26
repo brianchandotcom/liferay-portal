@@ -138,7 +138,8 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 		);
 
 		_registerServices(
-			_registerSystemFDSEntry("nestedFields=creator", FDS_NAMES[0]));
+			_registerSystemFDSEntry(
+				"nestedFields=creator", FDS_NAMES[0], null));
 
 		Assert.assertEquals(
 			"/o/app/endpoint?nestedFields=creator",
@@ -151,7 +152,7 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		_registerServices(
 			_registerSystemFDSEntry(
-				"nestedFields=creator,status", FDS_NAMES[0]));
+				"nestedFields=creator,status", FDS_NAMES[0], null));
 
 		Assert.assertEquals(
 			"/o/app/endpoint?nestedFields=creator,status",
@@ -165,7 +166,7 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 		_registerServices(
 			_registerSystemFDSEntry(
 				"nestedFields=creator,status,relation&nestedFieldsDepth=2",
-				FDS_NAMES[0]));
+				FDS_NAMES[0], null));
 
 		Assert.assertEquals(
 			"/o/app/endpoint?nestedFields=creator,status,relation&" +
@@ -177,7 +178,7 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		// No parameters
 
-		_registerServices(_registerSystemFDSEntry(null, FDS_NAMES[0]));
+		_registerServices(_registerSystemFDSEntry(null, FDS_NAMES[0], null));
 
 		Assert.assertEquals(
 			"/o/app/endpoint",
@@ -214,7 +215,7 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		_registerServices(
 			_registerFDSBulkActions(fdsActionDropdownItems1, FDS_NAMES[0]),
-			_registerSystemFDSEntry(null, FDS_NAMES[0]));
+			_registerSystemFDSEntry(null, FDS_NAMES[0], null));
 
 		Assert.assertEquals(
 			fdsActionDropdownItems1,
@@ -229,7 +230,7 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		_registerServices(
 			_registerFDSBulkActions(fdsActionDropdownItems2, FDS_NAMES[1]),
-			_registerSystemFDSEntry(null, FDS_NAMES[1]));
+			_registerSystemFDSEntry(null, FDS_NAMES[1], null));
 
 		Assert.assertEquals(
 			fdsActionDropdownItems2,
@@ -246,7 +247,7 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		// No bulk actions
 
-		_registerServices(_registerSystemFDSEntry(null, FDS_NAMES[0]));
+		_registerServices(_registerSystemFDSEntry(null, FDS_NAMES[0], null));
 
 		Assert.assertTrue(
 			_systemFDSSerializer.serializeBulkActions(
@@ -265,8 +266,8 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 		_registerServices(
 			_registerFDSBulkActions(fdsActionDropdownItems1, FDS_NAMES[0]),
 			_registerFDSBulkActions(fdsActionDropdownItems1, FDS_NAMES[1]),
-			_registerSystemFDSEntry(null, FDS_NAMES[0]),
-			_registerSystemFDSEntry(null, FDS_NAMES[1]));
+			_registerSystemFDSEntry(null, FDS_NAMES[0], null),
+			_registerSystemFDSEntry(null, FDS_NAMES[1], null));
 
 		Assert.assertEquals(
 			_systemFDSSerializer.serializeBulkActions(
@@ -306,7 +307,7 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		_registerServices(
 			_registerFDSCreationMenu(creationMenu1, FDS_NAMES[0]),
-			_registerSystemFDSEntry(null, FDS_NAMES[0]));
+			_registerSystemFDSEntry(null, FDS_NAMES[0], null));
 
 		Assert.assertEquals(
 			creationMenu1,
@@ -323,7 +324,7 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		_registerServices(
 			_registerFDSCreationMenu(creationMenu2, FDS_NAMES[1]),
-			_registerSystemFDSEntry(null, FDS_NAMES[1]));
+			_registerSystemFDSEntry(null, FDS_NAMES[1], null));
 
 		Assert.assertEquals(
 			creationMenu2,
@@ -340,7 +341,7 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		// No creation menu
 
-		_registerServices(_registerSystemFDSEntry(null, FDS_NAMES[0]));
+		_registerServices(_registerSystemFDSEntry(null, FDS_NAMES[0], null));
 
 		Assert.assertTrue(
 			_systemFDSSerializer.serializeCreationMenu(
@@ -362,8 +363,8 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 		_registerServices(
 			_registerFDSCreationMenu(creationMenu1, FDS_NAMES[0]),
 			_registerFDSCreationMenu(creationMenu1, FDS_NAMES[1]),
-			_registerSystemFDSEntry(null, FDS_NAMES[0]),
-			_registerSystemFDSEntry(null, FDS_NAMES[1]));
+			_registerSystemFDSEntry(null, FDS_NAMES[0], null),
+			_registerSystemFDSEntry(null, FDS_NAMES[1], null));
 
 		Assert.assertEquals(
 			_systemFDSSerializer.serializeCreationMenu(
@@ -444,7 +445,7 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 				new ClientExtensionFDSFilterContextContributor(),
 				MapUtil.singletonDictionary(
 					"frontend.data.set.filter.type", "clientExtension")),
-			_registerSystemFDSEntry(null, FDS_NAMES[0]));
+			_registerSystemFDSEntry(null, FDS_NAMES[0], null));
 
 		JSONAssert.assertEquals(
 			JSONUtil.putAll(
@@ -490,7 +491,7 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 				new DateRangeFDSFilterContextContributor(),
 				MapUtil.singletonDictionary(
 					"frontend.data.set.filter.type", "dateRange")),
-			_registerSystemFDSEntry(null, FDS_NAMES[0]));
+			_registerSystemFDSEntry(null, FDS_NAMES[0], null));
 
 		JSONAssert.assertEquals(
 			JSONUtil.putAll(
@@ -568,8 +569,8 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 				new DateRangeFDSFilterContextContributor(),
 				MapUtil.singletonDictionary(
 					"frontend.data.set.filter.type", "dateRange")),
-			_registerSystemFDSEntry(null, FDS_NAMES[0]),
-			_registerSystemFDSEntry(null, FDS_NAMES[1]));
+			_registerSystemFDSEntry(null, FDS_NAMES[0], null),
+			_registerSystemFDSEntry(null, FDS_NAMES[1], null));
 
 		JSONAssert.assertNotEquals(
 			_systemFDSSerializer.serializeFilters(
@@ -610,7 +611,7 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 				},
 				FDS_NAMES[0]),
-			_registerSystemFDSEntry(null, FDS_NAMES[0]));
+			_registerSystemFDSEntry(null, FDS_NAMES[0], null));
 
 		JSONAssert.assertEquals(
 			"[]",
@@ -623,7 +624,7 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		// No filter
 
-		_registerServices(_registerSystemFDSEntry(null, FDS_NAMES[0]));
+		_registerServices(_registerSystemFDSEntry(null, FDS_NAMES[0], null));
 
 		JSONAssert.assertEquals(
 			"[]",
@@ -703,7 +704,7 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 				new SelectionFDSFilterContextContributor(),
 				MapUtil.singletonDictionary(
 					"frontend.data.set.filter.type", "selection")),
-			_registerSystemFDSEntry(null, FDS_NAMES[0]));
+			_registerSystemFDSEntry(null, FDS_NAMES[0], null));
 
 		JSONAssert.assertEquals(
 			JSONUtil.putAll(
@@ -760,8 +761,8 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 		_registerServices(
 			_registerFDSFilter(dateRangeFDSFilter, FDS_NAMES[0]),
 			_registerFDSFilter(dateRangeFDSFilter, FDS_NAMES[1]),
-			_registerSystemFDSEntry(null, FDS_NAMES[0]),
-			_registerSystemFDSEntry(null, FDS_NAMES[1]));
+			_registerSystemFDSEntry(null, FDS_NAMES[0], null),
+			_registerSystemFDSEntry(null, FDS_NAMES[1], null));
 
 		JSONAssert.assertEquals(
 			_systemFDSSerializer.serializeFilters(
@@ -810,8 +811,8 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 		_registerServices(
 			_registerFDSItemsActions(fdsActionDropdownItems1, FDS_NAMES[0]),
 			_registerFDSItemsActions(fdsActionDropdownItems2, FDS_NAMES[1]),
-			_registerSystemFDSEntry(null, FDS_NAMES[0]),
-			_registerSystemFDSEntry(null, FDS_NAMES[1]));
+			_registerSystemFDSEntry(null, FDS_NAMES[0], null),
+			_registerSystemFDSEntry(null, FDS_NAMES[1], null));
 
 		Assert.assertEquals(
 			fdsActionDropdownItems1,
@@ -831,7 +832,7 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		// No items actions
 
-		_registerServices(_registerSystemFDSEntry(null, FDS_NAMES[0]));
+		_registerServices(_registerSystemFDSEntry(null, FDS_NAMES[0], null));
 
 		Assert.assertTrue(
 			_systemFDSSerializer.serializeItemsActions(
@@ -850,8 +851,8 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 		_registerServices(
 			_registerFDSItemsActions(fdsActionDropdownItems1, FDS_NAMES[0]),
 			_registerFDSItemsActions(fdsActionDropdownItems1, FDS_NAMES[1]),
-			_registerSystemFDSEntry(null, FDS_NAMES[0]),
-			_registerSystemFDSEntry(null, FDS_NAMES[1]));
+			_registerSystemFDSEntry(null, FDS_NAMES[0], null),
+			_registerSystemFDSEntry(null, FDS_NAMES[1], null));
 
 		Assert.assertEquals(
 			_systemFDSSerializer.serializeItemsActions(
@@ -862,6 +863,54 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 		_unregisterServices();
 
 		serviceTrackerMap.close();
+	}
+
+	@Test
+	public void testSerializePropsTransformer() throws Exception {
+
+		// Different props transformer
+
+		_registerServices(
+			_registerSystemFDSEntry(null, FDS_NAMES[0], PROPS_TRANSFORMERS[0]),
+			_registerSystemFDSEntry(null, FDS_NAMES[1], PROPS_TRANSFORMERS[1]));
+
+		Assert.assertEquals(
+			PROPS_TRANSFORMERS[0],
+			_systemFDSSerializer.serializePropsTransformer(
+				FDS_NAMES[0], httpServletRequest));
+
+		Assert.assertEquals(
+			PROPS_TRANSFORMERS[1],
+			_systemFDSSerializer.serializePropsTransformer(
+				FDS_NAMES[1], httpServletRequest));
+
+		_unregisterServices();
+
+		// No props transformer
+
+		_registerServices(_registerSystemFDSEntry(null, FDS_NAMES[0], null));
+
+		Assert.assertEquals(
+			null,
+			_systemFDSSerializer.serializePropsTransformer(
+				FDS_NAMES[0], httpServletRequest));
+
+		_unregisterServices();
+
+		// Shared props transformer
+
+		_registerServices(
+			_registerSystemFDSEntry(null, FDS_NAMES[0], PROPS_TRANSFORMERS[0]),
+			_registerSystemFDSEntry(null, FDS_NAMES[1], PROPS_TRANSFORMERS[0]));
+
+		Assert.assertEquals(
+			PROPS_TRANSFORMERS[0],
+			_systemFDSSerializer.serializePropsTransformer(
+				FDS_NAMES[0], httpServletRequest),
+			_systemFDSSerializer.serializePropsTransformer(
+				FDS_NAMES[1], httpServletRequest));
+
+		_unregisterServices();
 	}
 
 	@Test
@@ -913,7 +962,7 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		_registerServices(
 			_registerFDSSorts(FDS_NAMES[0], fdsSortItemList1),
-			_registerSystemFDSEntry(null, FDS_NAMES[0]));
+			_registerSystemFDSEntry(null, FDS_NAMES[0], null));
 
 		Assert.assertEquals(
 			fdsSortItemList1,
@@ -954,7 +1003,7 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		_registerServices(
 			_registerFDSSorts(FDS_NAMES[1], fdsSortItemList2),
-			_registerSystemFDSEntry(null, FDS_NAMES[1]));
+			_registerSystemFDSEntry(null, FDS_NAMES[1], null));
 
 		Assert.assertEquals(
 			fdsSortItemList2,
@@ -971,7 +1020,7 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		// No sorts
 
-		_registerServices(_registerSystemFDSEntry(null, FDS_NAMES[0]));
+		_registerServices(_registerSystemFDSEntry(null, FDS_NAMES[0], null));
 
 		Assert.assertTrue(
 			_systemFDSSerializer.serializeSorts(
@@ -985,8 +1034,8 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 		_registerServices(
 			_registerFDSSorts(FDS_NAMES[0], fdsSortItemList1),
 			_registerFDSSorts(FDS_NAMES[1], fdsSortItemList1),
-			_registerSystemFDSEntry(null, FDS_NAMES[0]),
-			_registerSystemFDSEntry(null, FDS_NAMES[1]));
+			_registerSystemFDSEntry(null, FDS_NAMES[0], null),
+			_registerSystemFDSEntry(null, FDS_NAMES[1], null));
 
 		Assert.assertEquals(
 			_systemFDSSerializer.serializeSorts(
@@ -1073,7 +1122,7 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 				MapUtil.singletonDictionary(
 					"frontend.data.set.view.name", FDSConstants.CARDS)),
 			_registerFDSView(FDS_NAMES[0], cardsFDSView),
-			_registerSystemFDSEntry(null, FDS_NAMES[0]));
+			_registerSystemFDSEntry(null, FDS_NAMES[0], null));
 
 		JSONAssert.assertEquals(
 			JSONUtil.putAll(
@@ -1155,8 +1204,8 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 					"frontend.data.set.view.name", FDSConstants.LIST)),
 			_registerFDSView(FDS_NAMES[0], cardsFDSView),
 			_registerFDSView(FDS_NAMES[1], listFDSView),
-			_registerSystemFDSEntry(null, FDS_NAMES[0]),
-			_registerSystemFDSEntry(null, FDS_NAMES[1]));
+			_registerSystemFDSEntry(null, FDS_NAMES[0], null),
+			_registerSystemFDSEntry(null, FDS_NAMES[1], null));
 
 		JSONAssert.assertNotEquals(
 			_systemFDSSerializer.serializeViews(
@@ -1171,7 +1220,7 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		// Empty view
 
-		_registerServices(_registerSystemFDSEntry(null, FDS_NAMES[0]));
+		_registerServices(_registerSystemFDSEntry(null, FDS_NAMES[0], null));
 
 		JSONAssert.assertEquals(
 			"[]",
@@ -1191,7 +1240,7 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 				MapUtil.singletonDictionary(
 					"frontend.data.set.view.name", FDSConstants.LIST)),
 			_registerFDSView(FDS_NAMES[0], listFDSView),
-			_registerSystemFDSEntry(null, FDS_NAMES[0]));
+			_registerSystemFDSEntry(null, FDS_NAMES[0], null));
 
 		JSONAssert.assertEquals(
 			JSONUtil.putAll(
@@ -1237,8 +1286,8 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 					"frontend.data.set.view.name", FDSConstants.CARDS)),
 			_registerFDSView(FDS_NAMES[0], cardsFDSView),
 			_registerFDSView(FDS_NAMES[1], cardsFDSView),
-			_registerSystemFDSEntry(null, FDS_NAMES[0]),
-			_registerSystemFDSEntry(null, FDS_NAMES[1]));
+			_registerSystemFDSEntry(null, FDS_NAMES[0], null),
+			_registerSystemFDSEntry(null, FDS_NAMES[1], null));
 
 		JSONAssert.assertEquals(
 			_systemFDSSerializer.serializeViews(
@@ -1291,7 +1340,7 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 					}
 
 				}),
-			_registerSystemFDSEntry(null, FDS_NAMES[0]));
+			_registerSystemFDSEntry(null, FDS_NAMES[0], null));
 
 		JSONAssert.assertEquals(
 			JSONUtil.putAll(
@@ -1500,7 +1549,8 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 	}
 
 	private ServiceRegistration<SystemFDSEntry> _registerSystemFDSEntry(
-		String additionalURLParameters, String fdsName) {
+		String additionalURLParameters, String fdsName,
+		String propsTransformer) {
 
 		return _bundleContext.registerService(
 			SystemFDSEntry.class,
@@ -1519,6 +1569,11 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 				@Override
 				public String getName() {
 					return fdsName;
+				}
+
+				@Override
+				public String getPropsTransformer() {
+					return propsTransformer;
 				}
 
 				@Override

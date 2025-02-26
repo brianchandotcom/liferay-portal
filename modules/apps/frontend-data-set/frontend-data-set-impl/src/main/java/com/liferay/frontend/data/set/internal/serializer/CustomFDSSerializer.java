@@ -270,6 +270,15 @@ public class CustomFDSSerializer
 	}
 
 	@Override
+	public String serializePropsTransformer(
+		String fdsName, HttpServletRequest httpServletRequest) {
+
+		// Custom data sets don't support propsTransformer at this moment
+
+		return null;
+	}
+
+	@Override
 	public List<FDSSortItem> serializeSorts(
 		String fdsName, HttpServletRequest httpServletRequest) {
 

@@ -50,6 +50,9 @@ public interface FDSSerializer {
 	public List<FDSActionDropdownItem> serializeItemsActions(
 		String fdsName, HttpServletRequest httpServletRequest);
 
+	public String serializePropsTransformer(
+		String fdsName, HttpServletRequest httpServletRequest);
+
 	public List<FDSSortItem> serializeSorts(
 		String fdsName, HttpServletRequest httpServletRequest);
 

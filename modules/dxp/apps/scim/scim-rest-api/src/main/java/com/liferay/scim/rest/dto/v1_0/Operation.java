@@ -52,7 +52,7 @@ public class Operation implements Serializable {
 	}
 
 	@Schema(
-		description = "The method that should be used in the operation. Possible values add remove replace"
+		description = "The method that should be used in the operation. Possible values are add, remove and replace."
 	)
 	public String getOp() {
 		if (_opSupplier != null) {
@@ -86,7 +86,7 @@ public class Operation implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "The method that should be used in the operation. Possible values add remove replace"
+		description = "The method that should be used in the operation. Possible values are add, remove and replace."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String op;
@@ -95,7 +95,7 @@ public class Operation implements Serializable {
 	private Supplier<String> _opSupplier;
 
 	@Schema(
-		description = "Add the path to specify the attribute/sub-attribute that should be updated."
+		description = "The path to the specify attribute/sub-attribute that should be updated."
 	)
 	public String getPath() {
 		if (_pathSupplier != null) {
@@ -129,7 +129,7 @@ public class Operation implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "Add the path to specify the attribute/sub-attribute that should be updated."
+		description = "The path to the specify attribute/sub-attribute that should be updated."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String path;

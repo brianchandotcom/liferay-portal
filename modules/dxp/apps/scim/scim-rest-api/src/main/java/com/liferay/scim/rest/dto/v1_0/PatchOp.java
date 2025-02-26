@@ -92,7 +92,7 @@ public class PatchOp implements Serializable {
 	@JsonIgnore
 	private Supplier<Operation[]> _OperationsSupplier;
 
-	@Schema(description = "the schema associated to this operation")
+	@Schema(description = "The schema associated to this operation.")
 	public String[] getSchemas() {
 		if (_schemasSupplier != null) {
 			schemas = _schemasSupplier.get();
@@ -126,7 +126,7 @@ public class PatchOp implements Serializable {
 		};
 	}
 
-	@GraphQLField(description = "the schema associated to this operation")
+	@GraphQLField(description = "The schema associated to this operation.")
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String[] schemas;
 

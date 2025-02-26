@@ -315,17 +315,6 @@
 				"minor": 0,
 				"qualifier": ""
 			},
-			"servletContextName": "com.liferay.release.feature.flag.web",
-			"state": 0,
-			"verified": true
-		},
-		{
-			"schemaVersion": {
-				"major": 1,
-				"micro": 0,
-				"minor": 0,
-				"qualifier": ""
-			},
 			"servletContextName": "com.liferay.portal.search.tuning.synonyms.web",
 			"state": 0,
 			"verified": true

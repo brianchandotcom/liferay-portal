@@ -605,15 +605,15 @@ public class DBPartitionUtil {
 				(exception1 instanceof SchedulerException)) {
 
 				try (Statement statement = connection.createStatement()) {
-					statement.executeUpdate(
-						_dbPartitionDB.getDropPartitionSQL(
-							targetPartitionName));
-
 					for (String tableName : quartzTableNames) {
 						_deleteData(
 							tableName, _defaultPartitionName, statement,
 							_getQuartzWhereClauseSQL(toCompanyId, tableName));
 					}
+
+					statement.executeUpdate(
+						_dbPartitionDB.getDropPartitionSQL(
+							targetPartitionName));
 				}
 				catch (Exception exception2) {
 					throw new PortalException(

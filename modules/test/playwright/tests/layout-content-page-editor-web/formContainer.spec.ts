@@ -4177,6 +4177,294 @@ test.describe('Form Localization', () => {
 			);
 		}
 	);
+
+	test(
+		'Visualize text fields in RTL languages',
+		{tag: '@LPD-48787'},
+		async ({apiHelpers, page, pageEditorPage, site}) => {
+			const objectDefinitionApiClient =
+				await apiHelpers.buildRestClient(ObjectDefinitionApi);
+
+			const listTypeDefinition =
+				await apiHelpers.listTypeAdmin.postRandomListTypeDefinition();
+
+			for (const option of ['Spain', 'Italy']) {
+				await apiHelpers.listTypeAdmin.postListTypeEntry(
+					listTypeDefinition.externalReferenceCode,
+					option
+				);
+			}
+
+			const objectFields = [
+				{
+					DBType: ObjectField.DBTypeEnum.Clob,
+					businessType: ObjectField.BusinessTypeEnum.RichText,
+					externalReferenceCode: 'richTextERC',
+					indexed: true,
+					indexedAsKeyword: false,
+					label: {
+						en_US: 'Rich Text',
+					},
+					localized: true,
+					name: 'richText',
+					required: false,
+				},
+				{
+					DBType: ObjectField.DBTypeEnum.Clob,
+					businessType: ObjectField.BusinessTypeEnum.LongText,
+					externalReferenceCode: 'longTextERC',
+					indexed: true,
+					indexedAsKeyword: false,
+					label: {
+						en_US: 'Long Text',
+					},
+					localized: true,
+					name: 'longText',
+					required: false,
+				},
+				{
+					DBType: ObjectField.DBTypeEnum.String,
+					businessType: ObjectField.BusinessTypeEnum.Text,
+					externalReferenceCode: 'text',
+					indexed: true,
+					indexedAsKeyword: false,
+					label: {
+						en_US: 'Text',
+					},
+					localized: true,
+					name: 'text',
+					required: false,
+				},
+				{
+					DBType: ObjectField.DBTypeEnum.Integer,
+					externalReferenceCode: 'numeric-erc',
+					indexed: true,
+					indexedAsKeyword: false,
+					indexedLanguageId: '',
+					label: {
+						en_US: 'Numeric',
+					},
+					name: 'numeric',
+				},
+				{
+					DBType: ObjectField.DBTypeEnum.DateTime,
+					externalReferenceCode: 'date-time-erc',
+					indexed: true,
+					indexedAsKeyword: false,
+					label: {
+						en_US: 'Date And Time',
+					},
+					name: 'dateAndTime',
+					objectFieldSettings: [
+						{
+							name: 'timeStorage',
+							value: {},
+						},
+					],
+				},
+				{
+					DBType: ObjectField.DBTypeEnum.Date,
+					externalReferenceCode: 'date-erc',
+					indexed: true,
+					indexedAsKeyword: false,
+					label: {
+						en_US: 'Date',
+					},
+					name: 'date',
+				},
+				{
+					DBType: ObjectField.DBTypeEnum.String,
+					businessType: ObjectField.BusinessTypeEnum.Picklist,
+					externalReferenceCode: 'selectERC',
+					indexed: true,
+					indexedAsKeyword: false,
+					label: {
+						en_US: 'Select',
+					},
+					listTypeDefinitionExternalReferenceCode:
+						listTypeDefinition.externalReferenceCode,
+					listTypeDefinitionId: listTypeDefinition.id,
+					localized: true,
+					name: 'select',
+					required: false,
+				},
+			];
+
+			// Create an object with localizable fields
+
+			const {body: localizableObjectDefinition} =
+				await objectDefinitionApiClient.postObjectDefinition({
+					active: true,
+					enableLocalization: true,
+					externalReferenceCode: 'localizableFieldsGroupERC',
+					label: {
+						en_US: 'Localizable Fields Group',
+					},
+					name: 'LocalizableFieldsGroup',
+					objectFields,
+					panelCategoryKey: 'control_panel.object',
+					pluralLabel: {
+						en_US: 'Localizable Fields Groups',
+					},
+					portlet: true,
+					scope: 'company',
+					status: {
+						code: 0,
+					},
+				});
+
+			apiHelpers.data.push({
+				id: localizableObjectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			// Create an object with unlocalizable fields
+
+			const {body: nonLocalizableObjectDefinition} =
+				await objectDefinitionApiClient.postObjectDefinition({
+					active: true,
+					enableLocalization: true,
+					externalReferenceCode: 'UnlocalizableFieldsGroupERC',
+					label: {
+						en_US: 'Unlocalizable Fields Group',
+					},
+					name: 'UnlocalizableFieldsGroup',
+					objectFields: objectFields.map((field) => ({
+						...field,
+						localized: true,
+					})),
+					panelCategoryKey: 'control_panel.object',
+					pluralLabel: {
+						en_US: 'Unlocalizable Fields Groups',
+					},
+					portlet: true,
+					scope: 'company',
+					status: {
+						code: 0,
+					},
+				});
+
+			apiHelpers.data.push({
+				id: nonLocalizableObjectDefinition.id,
+				type: 'objectDefinition',
+			});
+
+			// Create a page with two Forms for both objects
+
+			const localizableFormId = getRandomString();
+
+			const localizableFormDefinition = getFormContainerDefinition({
+				id: localizableFormId,
+			});
+
+			const unlocalizableFormId = getRandomString();
+
+			const unlocalizableFormDefinition = getFormContainerDefinition({
+				id: unlocalizableFormId,
+			});
+
+			const layout = await apiHelpers.headlessDelivery.createSitePage({
+				pageDefinition: getPageDefinition([
+					localizableFormDefinition,
+					unlocalizableFormDefinition,
+				]),
+				siteId: site.id,
+				title: getRandomString(),
+			});
+
+			await pageEditorPage.goto(layout, site.friendlyUrlPath);
+
+			// Map the forms to both objects and publish the page
+
+			await pageEditorPage.mapFormFragment(
+				localizableFormId,
+				'Localizable Fields Group',
+				'all',
+				{
+					addLocalizationSelect: true,
+				}
+			);
+
+			await pageEditorPage.mapFormFragment(
+				unlocalizableFormId,
+				'Unlocalizable Fields Group',
+				'all'
+			);
+
+			await pageEditorPage.publishPage();
+
+			// Go to view mode and check the "dir" attribute of the fields
+
+			await page.goto(
+				`/web${site.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
+
+			const localizableForm = page
+				.locator('.lfr-layout-structure-item-form')
+				.first();
+
+			const unlocalizableForm = page
+				.locator('.lfr-layout-structure-item-form')
+				.nth(1);
+
+			const getFields = (form: Locator) => [
+				form.getByRole('textbox', {
+					exact: true,
+					name: 'Text',
+				}),
+				form.getByRole('textbox', {
+					exact: true,
+					name: 'Long Text',
+				}),
+				form.getByLabel('Numeric'),
+				form.getByRole('textbox', {
+					exact: true,
+					name: 'Date',
+				}),
+				form.getByRole('textbox', {
+					exact: true,
+					name: 'Date And Time',
+				}),
+				form.frameLocator('iframe[title="editor"]').locator('html'),
+				form.getByPlaceholder('Choose an Option'),
+			];
+
+			// Check the "dir" attribute before changing the translation language
+
+			const localizableFields = getFields(localizableForm);
+			const unlocalizableFields = getFields(unlocalizableForm);
+
+			for (const field of localizableFields) {
+				await expect(field).toHaveAttribute('dir', 'ltr');
+			}
+
+			for (const field of unlocalizableFields) {
+				await expect(field).toHaveAttribute('dir', 'ltr');
+			}
+
+			// Change the translation language
+
+			await clickAndExpectToBeVisible({
+				autoClick: true,
+				target: page.getByRole('option', {
+					name: 'Arabic (Saudi Arabia) Language',
+				}),
+				trigger: page.getByLabel(
+					'Select a language, current language:'
+				),
+			});
+
+			// Check the "dir" attribute after changing the translation language
+
+			for (const field of localizableFields) {
+				await expect(field).toHaveAttribute('dir', 'rtl');
+			}
+
+			for (const field of unlocalizableFields) {
+				await expect(field).toHaveAttribute('dir', 'rtl');
+			}
+		}
+	);
 });
 
 test.describe('Numeric input field', () => {

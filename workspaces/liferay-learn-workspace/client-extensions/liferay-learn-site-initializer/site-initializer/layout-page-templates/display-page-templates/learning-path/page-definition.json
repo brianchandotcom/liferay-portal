@@ -1,0 +1,83 @@
+{
+	"pageElement": {
+		"id": "885ebf5c-fdff-7df9-4306-a613edad3f45",
+		"pageElements": [
+			{
+				"definition": {
+					"fragment": {"key": "import-lms", "siteKey": "Guest"},
+					"fragmentConfig": {},
+					"fragmentFields": [],
+					"indexed": true
+				},
+				"id": "b3f02493-bd12-0416-94be-773f45025c9d",
+				"type": "Fragment"
+			},
+			{
+				"definition": {
+					"fragment": {
+						"key": "page-loading-indicator",
+						"siteKey": "Guest"
+					},
+					"fragmentConfig": {"loadingTextKey": ""},
+					"fragmentFields": [],
+					"indexed": true
+				},
+				"id": "68be5f66-b89b-f624-4cdf-ce57872c1508",
+				"type": "Fragment"
+			},
+			{
+				"definition": {
+					"cssClasses": ["learning-path-steps-page"],
+					"fragmentStyle": {"marginTop": "2rem", "width": "100%"},
+					"fragmentViewports": [
+						{
+							"fragmentViewportStyle": {
+								"paddingLeft": "0",
+								"paddingRight": "0",
+								"width": "90%"
+							},
+							"id": "tablet"
+						}
+					],
+					"indexed": true,
+					"layout": {},
+					"name": "Main"
+				},
+				"id": "4358742c-bea2-c2e4-26b4-0f310c31bcc1",
+				"pageElements": [
+					{
+						"definition": {
+							"fragmentStyle": {
+								"marginLeft": "auto",
+								"marginRight": "auto",
+								"maxWidth": "1600px",
+								"paddingLeft": "4",
+								"paddingRight": "4"
+							},
+							"widgetInstance": {
+								"widgetConfig": {},
+								"widgetName": "com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet_57868206215768_LXC_liferay_lms_learning_path_steps"
+							}
+						},
+						"id": "bb71c2eb-b99e-492e-8117-692d294af529",
+						"type": "Widget"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"colorSchemeName": "01",
+		"masterPage": {"key": "liferay-learn"},
+		"themeName": "Dialect",
+		"themeSettings": {
+			"lfr-theme:regular:show-header-search": "false",
+			"lfr-theme:regular:show-header": "false",
+			"lfr-theme:regular:show-footer": "false",
+			"lfr-theme:regular:wrap-widget-page-content": "false"
+		}
+	},
+	"version": 1.1
+}

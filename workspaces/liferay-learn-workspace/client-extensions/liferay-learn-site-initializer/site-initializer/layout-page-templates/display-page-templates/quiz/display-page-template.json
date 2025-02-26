@@ -1,0 +1,9 @@
+{
+	"contentSubtype": {
+		"subtypeKey": "T4T14_QUIZ"
+	},
+    "contentType": {
+		"className": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:Quiz$]"
+	},
+	"name": "Quiz"
+}

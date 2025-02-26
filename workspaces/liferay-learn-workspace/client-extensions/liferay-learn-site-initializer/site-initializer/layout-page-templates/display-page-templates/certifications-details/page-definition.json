@@ -1,0 +1,331 @@
+{
+	"pageElement": {
+		"id": "7dac487c-1cca-6bdf-12f5-a5a9590ef97b",
+		"pageElements": [
+			{
+				"definition": {
+					"customCSS": ".[$FRAGMENT_CLASS$] {\n}",
+					"fragmentStyle": {
+						"borderRadius": "20px",
+						"fontFamily": "\"Source Sans 3\", system-ui",
+						"hidden": true,
+						"paddingBottom": "4",
+						"paddingLeft": "16px",
+						"paddingRight": "16px",
+						"paddingTop": "4",
+						"width": "100%"
+					},
+					"indexed": true,
+					"layout": {"paddingBottom": 2, "paddingTop": 2},
+					"name": "Header Container"
+				},
+				"id": "2b511e7c-d7cd-6426-5b18-bf5f3c090f1b",
+				"pageElements": [
+					{
+						"definition": {
+							"customCSS": ".[$FRAGMENT_CLASS$] {\nbackground: linear-gradient(91.07deg, #001742 0%, #0011A8 24.6%, #0B5FFF 49%, #0B5FFF 74.5%, #0B5FFF 100%),\nradial-gradient(26.56% 43.82% at 0% 0%, #00256B 20.83%, rgba(0, 37, 107, 0) 100%) /* warning: gradient uses a rotation that is not supported by CSS and may not behave as expected */,\nradial-gradient(14.55% 34.6% at 100% 34.6%, rgba(55, 124, 255, 0.68) 0%, rgba(55, 124, 255, 0) 100%);\n\n}",
+							"fragmentStyle": {
+								"borderRadius": "10px",
+								"height": "216px"
+							},
+							"indexed": true,
+							"layout": {
+								"contentDisplay": "FlexRow",
+								"justify": "SpaceBetween"
+							},
+							"name": "Header Banner"
+						},
+						"id": "05bac50a-0416-f633-7b53-62f2be687410",
+						"pageElements": [
+							{
+								"definition": {
+									"customCSS": ".[$FRAGMENT_CLASS$] {\n  @media(max-width: 799px) {\n    h1 {\n    \tfont-size: 1.6rem;\n    }\n\t}\n  \n  @media(max-width: 651px) {\n     h1 {\n    \tfont-size: 1.3rem;\n    }\n  }\n}",
+									"fragmentStyle": {
+										"maxHeight": "216px",
+										"paddingBottom": "4",
+										"paddingLeft": "4",
+										"paddingRight": "4",
+										"paddingTop": "4",
+										"width": "100%"
+									},
+									"indexed": true,
+									"layout": {
+										"paddingBottom": 2,
+										"paddingLeft": 2,
+										"paddingRight": 2,
+										"paddingTop": 2
+									},
+									"name": "Header Content"
+								},
+								"id": "a3e8afe8-52bb-96c0-c491-ab7adf77fd93",
+								"pageElements": [
+									{
+										"definition": {
+											"fragmentStyle": {
+												"backgroundColor": "#F7F6F9",
+												"borderRadius": "50rem",
+												"height": "40px",
+												"marginBottom": "2rem",
+												"width": "165px"
+											},
+											"indexed": true,
+											"layout": {
+												"align": "Center",
+												"contentDisplay": "FlexRow",
+												"justify": "Center"
+											},
+											"name": "Assessment Tag"
+										},
+										"id": "92cca0ac-ea69-2055-84a8-76b6bc8267db",
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "BASIC_COMPONENT-image"
+													},
+													"fragmentConfig": {
+														"imageSize": "w-0"
+													},
+													"fragmentFields": [
+														{
+															"id": "image-square",
+															"value": {
+																"fragmentImage": {
+																	"description": {
+																		"value_i18n": {
+																			"en_US": ""
+																		}
+																	},
+																	"url": {
+																		"value_i18n": {
+																			"en_US": "/documents/d/guest/clip-path-group-png?imagePreview=1"
+																		}
+																	}
+																},
+																"fragmentLink": {}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"marginRight": "1"
+													},
+													"indexed": true
+												},
+												"id": "ee7edc7f-c7e8-9c53-4f39-ad6cf3957df3",
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragment": {
+														"key": "dialect-text",
+														"siteKey": "Guest"
+													},
+													"fragmentConfig": {
+														"textType": "h5",
+														"truncateText": false
+													},
+													"fragmentFields": [
+														{
+															"id": "element-text",
+															"value": {
+																"fragmentLink": {},
+																"text": {
+																	"value_i18n": {
+																		"en_US": "Certification"
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"fontWeight": "600",
+														"textColor": "#0B5FFF"
+													},
+													"indexed": true
+												},
+												"id": "cc71ca07-9f86-f93e-0f4f-38471dc66041",
+												"type": "Fragment"
+											}
+										],
+										"type": "Section"
+									},
+									{
+										"definition": {
+											"cssClasses": ["title-banner"],
+											"fragment": {
+												"key": "dialect-text",
+												"siteKey": "Guest"
+											},
+											"fragmentConfig": {
+												"textType": "h1",
+												"truncateText": false
+											},
+											"fragmentFields": [
+												{
+													"id": "element-text",
+													"value": {
+														"fragmentLink": {},
+														"text": {
+															"mapping": {
+																"fieldKey": "ObjectField_title",
+																"itemReference": {
+																	"contextSource": "DisplayPageItem"
+																}
+															}
+														}
+													}
+												}
+											],
+											"fragmentStyle": {
+												"fontWeight": "700",
+												"paddingBottom": "32px",
+												"textColor": "#FFFFFF"
+											},
+											"indexed": true
+										},
+										"id": "1eebb4de-8a5a-5ea3-b994-c75e7d88125a",
+										"type": "Fragment"
+									},
+									{
+										"definition": {
+											"cssClasses": ["course-info-tag"],
+											"fragmentStyle": {
+												"backgroundColor": "#E6EBF5",
+												"borderRadius": "4px",
+												"height": "24px",
+												"paddingBottom": "2",
+												"paddingTop": "2",
+												"textColor": "#1C3667",
+												"width": "105px"
+											},
+											"indexed": true,
+											"layout": {
+												"align": "Center",
+												"contentDisplay": "FlexRow",
+												"justify": "Center"
+											},
+											"name": "Tag Persona"
+										},
+										"id": "62f98900-c461-4740-626f-a0c7f56744ef",
+										"pageElements": [
+											{
+												"definition": {
+													"cssClasses": [
+														"card-tag__persona"
+													],
+													"fragment": {
+														"key": "dialect-text",
+														"siteKey": "Guest"
+													},
+													"fragmentConfig": {
+														"textType": "text-paragraph-sm",
+														"truncateText": false
+													},
+													"fragmentFields": [
+														{
+															"id": "element-text",
+															"value": {
+																"fragmentLink": {},
+																"text": {
+																	"mapping": {
+																		"fieldKey": "ObjectField_persona",
+																		"itemReference": {
+																			"contextSource": "DisplayPageItem"
+																		}
+																	}
+																}
+															}
+														}
+													],
+													"indexed": true
+												},
+												"id": "45fdcb3f-5fe2-cb87-6665-652ac75ed906",
+												"type": "Fragment"
+											}
+										],
+										"type": "Section"
+									}
+								],
+								"type": "Section"
+							},
+							{
+								"definition": {
+									"customCSS": ".[$FRAGMENT_CLASS$] {\n    position: relative;\n    overflow: hidden;\n}",
+									"fragment": {
+										"key": "BASIC_COMPONENT-image"
+									},
+									"fragmentConfig": {"imageSize": "w-0"},
+									"fragmentFields": [
+										{
+											"id": "image-square",
+											"value": {
+												"fragmentImage": {
+													"description": {
+														"value_i18n": {
+															"en_US": ""
+														}
+													},
+													"url": {
+														"value_i18n": {
+															"en_US": "/documents/d/guest/waves-svg?imagePreview=1"
+														}
+													}
+												},
+												"fragmentLink": {}
+											}
+										}
+									],
+									"indexed": true
+								},
+								"id": "84116938-93e4-7ba2-d52e-905ab5fd52db",
+								"type": "Fragment"
+							}
+						],
+						"type": "Section"
+					}
+				],
+				"type": "Section"
+			},
+			{
+				"definition": {
+					"fragmentStyle": {"width": "100%"},
+					"indexed": true,
+					"layout": {}
+				},
+				"id": "27f40d9f-5a8f-ffab-ab85-968e937ba444",
+				"pageElements": [
+					{
+						"definition": {
+							"customCSS": ".[$FRAGMENT_CLASS$] {\n}",
+							"fragmentStyle": {
+								"marginLeft": "auto",
+								"marginRight": "auto",
+								"maxWidth": " var(--container-max-xl);"
+							},
+							"widgetInstance": {
+								"widgetConfig": {},
+								"widgetName": "com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet_57868206215768_LXC_liferay_lms_certifications_details"
+							}
+						},
+						"id": "0600fadb-4b14-00d5-fd3c-6fcda81357a4",
+						"type": "Widget"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"colorSchemeName": "01",
+		"masterPage": {"key": "liferay-learn"},
+		"themeName": "Dialect",
+		"themeSettings": {
+			"lfr-theme:regular:show-header-search": "false",
+			"lfr-theme:regular:show-header": "false",
+			"lfr-theme:regular:show-footer": "false",
+			"lfr-theme:regular:wrap-widget-page-content": "false"
+		}
+	},
+	"version": 1.1
+}

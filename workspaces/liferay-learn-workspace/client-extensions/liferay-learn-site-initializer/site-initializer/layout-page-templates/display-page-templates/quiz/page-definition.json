@@ -1,0 +1,122 @@
+{
+	"pageElement": {
+		"id": "597760e9-637f-1c54-932e-bc45d0a5e6a2",
+		"pageElements": [
+			{
+				"definition": {
+					"fragment": {
+						"key": "com.liferay.knowledge.base.web.internal.fragment.renderer.KBArticleNavigationFragmentRenderer"
+					},
+					"fragmentConfig": {},
+					"fragmentFields": [],
+					"indexed": true
+				},
+				"id": "050ef39c-623f-4559-59ad-23c7f5b1fd7e",
+				"type": "Fragment"
+			},
+			{
+				"definition": {
+					"cssClasses": ["learn-education"],
+					"customCSS": ".[$FRAGMENT_CLASS$] {\n   \n}",
+					"fragmentStyle": {"paddingTop": "4"},
+					"fragmentViewports": [
+						{
+							"fragmentViewportStyle": {
+								"paddingLeft": "0",
+								"paddingRight": "0",
+								"width": "90%"
+							},
+							"id": "tablet"
+						}
+					],
+					"indexed": true,
+					"layout": {
+						"contentDisplay": "FlexColumn",
+						"paddingTop": 2,
+						"widthType": "Fixed"
+					}
+				},
+				"id": "9ef05974-35ba-0679-d930-90899ccdb7e4",
+				"pageElements": [
+					{
+						"definition": {
+							"customCSS": ".course-top-banner {\n\n}",
+							"fragment": {
+								"key": "lesson-top-banner",
+								"siteKey": "Guest"
+							},
+							"fragmentConfig": {"assetType": "quiz"},
+							"fragmentFields": [],
+							"indexed": true
+						},
+						"id": "966dc998-9928-0efa-183c-fc51c58f7308",
+						"type": "Fragment"
+					},
+					{
+						"definition": {
+							"customCSS": ".[$FRAGMENT_CLASS$] {\n  \n}",
+							"fragment": {
+								"key": "lms-lesson-display-page-layout-(copy)",
+								"siteKey": "Guest"
+							},
+							"fragmentConfig": {},
+							"fragmentFields": [],
+							"fragmentStyle": {
+								"borderColor": "#282934",
+								"fontFamily": "fontFamilySansSerif",
+								"fontWeight": "600",
+								"marginTop": "4",
+								"maxWidth": "1600px",
+								"minHeight": "300px",
+								"textColor": "#282934"
+							},
+							"indexed": true
+						},
+						"id": "63cc39b6-ee6c-872d-c631-081eb3c76f46",
+						"pageElements": [
+							{
+								"definition": {},
+								"id": "c429731b-6c56-5234-7f64-35ca9d2fcc95",
+								"pageElements": [
+									{
+										"definition": {
+											"cssClasses": ["learn-quiz-view"],
+											"fragment": {
+												"key": "lms-quiz-display-page-layout-(copy)",
+												"siteKey": "Guest"
+											},
+											"fragmentConfig": {
+												"educationPageUrl": "/education",
+												"badgePageUrl": "/user-dashboard"
+											},
+											"fragmentFields": [],
+											"indexed": true
+										},
+										"id": "6a23d3de-4ca3-92be-4b2a-4bedaa1a1ccf",
+										"type": "Fragment"
+									}
+								],
+								"type": "FragmentDropZone"
+							}
+						],
+						"type": "Fragment"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"colorSchemeName": "01",
+		"masterPage": {"key": "liferay-learn"},
+		"themeName": "Dialect",
+		"themeSettings": {
+			"lfr-theme:regular:show-header-search": "false",
+			"lfr-theme:regular:show-header": "false",
+			"lfr-theme:regular:show-footer": "false",
+			"lfr-theme:regular:wrap-widget-page-content": "false"
+		}
+	},
+	"version": 1.1
+}

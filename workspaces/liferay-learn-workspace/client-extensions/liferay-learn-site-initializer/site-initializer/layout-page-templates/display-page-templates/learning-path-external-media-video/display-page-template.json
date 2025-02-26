@@ -1,0 +1,9 @@
+{
+	"contentSubtype": {
+		"subtypeKey": "T4T14_EXTERNAL_MEDIA"
+	},
+    "contentType": {
+		"className": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:ExternalMedia$]"
+	},
+	"name": "Learning Path External Media Video"
+}

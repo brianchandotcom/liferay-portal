@@ -1,0 +1,247 @@
+{
+	"pageElement": {
+		"id": "885ebf5c-fdff-7df9-4306-a613edad3f45",
+		"pageElements": [
+			{
+				"definition": {
+					"cssClasses": ["breadcrumb-container"],
+					"fragmentStyle": {
+						"paddingBottom": "4",
+						"paddingLeft": "4",
+						"paddingRight": "4",
+						"paddingTop": "4"
+					},
+					"indexed": true,
+					"layout": {
+						"contentDisplay": "FlexRow",
+						"justify": "SpaceBetween",
+						"paddingBottom": 2,
+						"paddingLeft": 2,
+						"paddingRight": 2,
+						"paddingTop": 2,
+						"widthType": "Fixed"
+					}
+				},
+				"id": "7b372d6e-588d-b667-aaa1-6abb6fb33416",
+				"pageElements": [
+					{
+						"definition": {
+							"fragment": {
+								"key": "dialect-text",
+								"siteKey": "Guest"
+							},
+							"fragmentConfig": {
+								"textType": "h1",
+								"truncateText": false
+							},
+							"fragmentFields": [
+								{
+									"id": "element-text",
+									"value": {
+										"fragmentLink": {},
+										"text": {
+											"mapping": {
+												"fieldKey": "ddmTemplate__ddmTemplate_34407743",
+												"itemReference": {
+													"contextSource": "DisplayPageItem"
+												}
+											}
+										}
+									}
+								}
+							],
+							"indexed": true
+						},
+						"id": "ee2af129-6ca9-1b5e-5b23-68af4fe2156b",
+						"type": "Fragment"
+					},
+					{
+						"definition": {
+							"cssClasses": ["submit-button"],
+							"fragment": {
+								"key": "dialect-button",
+								"siteKey": "Guest"
+							},
+							"fragmentConfig": {
+								"uppercase": false,
+								"style": "primary",
+								"inverted": true,
+								"type": "solid",
+								"buttonSize": ""
+							},
+							"fragmentFields": [
+								{
+									"id": "link",
+									"value": {
+										"fragmentLink": {
+											"value": {
+												"href": {
+													"value_i18n": {
+														"en_US": "https://liferay.dev/ask/questions/liferay-learn-feedback/new"
+													}
+												}
+											}
+										},
+										"text": {
+											"value_i18n": {
+												"en_US": "Submit Feedback"
+											}
+										}
+									}
+								}
+							],
+							"fragmentStyle": {
+								"borderColor": "#3F404B00",
+								"fontFamily": "fontFamilySansSerif",
+								"fontWeight": "600"
+							},
+							"indexed": true
+						},
+						"id": "e95e9c97-05bc-be30-4604-a3b1033f1ea0",
+						"type": "Fragment"
+					}
+				],
+				"type": "Section"
+			},
+			{
+				"definition": {
+					"fragmentStyle": {
+						"paddingBottom": "4",
+						"paddingLeft": "4",
+						"paddingRight": "4",
+						"paddingTop": "4"
+					},
+					"indexed": true,
+					"layout": {
+						"contentDisplay": "FlexColumn",
+						"justify": "SpaceBetween",
+						"paddingBottom": 2,
+						"paddingLeft": 2,
+						"paddingRight": 2,
+						"paddingTop": 2,
+						"widthType": "Fixed"
+					}
+				},
+				"id": "65f9d517-8f5c-7813-4ee2-3402fd94a971",
+				"pageElements": [
+					{
+						"definition": {
+							"fragment": {
+								"key": "dialect-text",
+								"siteKey": "Guest"
+							},
+							"fragmentConfig": {
+								"textType": "h1",
+								"truncateText": false
+							},
+							"fragmentFields": [
+								{
+									"id": "element-text",
+									"value": {
+										"fragmentLink": {},
+										"text": {
+											"mapping": {
+												"fieldKey": "ObjectField_title",
+												"itemReference": {
+													"contextSource": "DisplayPageItem"
+												}
+											}
+										}
+									}
+								}
+							],
+							"fragmentStyle": {"marginBottom": "3"},
+							"indexed": true
+						},
+						"id": "72ceee61-61f7-84af-6a3c-cd95b8692181",
+						"type": "Fragment"
+					},
+					{
+						"definition": {
+							"fragment": {
+								"key": "mappable-video",
+								"siteKey": "Guest"
+							},
+							"fragmentConfig": {
+								"hideControls": false,
+								"videoWidth": "",
+								"useMappableUrl": true,
+								"loop": false,
+								"mute": true,
+								"autoPlay": false,
+								"align": "flex-start",
+								"url": "",
+								"videoHeight": ""
+							},
+							"fragmentFields": [
+								{
+									"id": "mappableUrl",
+									"value": {
+										"fragmentLink": {},
+										"text": {
+											"mapping": {
+												"fieldKey": "ObjectField_url",
+												"itemReference": {
+													"contextSource": "DisplayPageItem"
+												}
+											}
+										}
+									}
+								}
+							],
+							"indexed": true
+						},
+						"id": "47703749-45d8-8338-bb0e-a4302026911a",
+						"type": "Fragment"
+					},
+					{
+						"definition": {
+							"fragment": {
+								"key": "dialect-text",
+								"siteKey": "Guest"
+							},
+							"fragmentConfig": {
+								"textType": "text-paragraph",
+								"truncateText": false
+							},
+							"fragmentFields": [
+								{
+									"id": "element-text",
+									"value": {
+										"fragmentLink": {},
+										"text": {
+											"mapping": {
+												"fieldKey": "ObjectField_description",
+												"itemReference": {
+													"contextSource": "DisplayPageItem"
+												}
+											}
+										}
+									}
+								}
+							],
+							"fragmentStyle": {"marginTop": "3"},
+							"indexed": true
+						},
+						"id": "7c99e4c7-6b38-4eff-cefb-b5d698f91bf5",
+						"type": "Fragment"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"settings": {
+		"colorSchemeName": "01",
+		"masterPage": {"key": "liferay-learn"},
+		"themeName": "Dialect",
+		"themeSettings": {
+			"lfr-theme:regular:show-header-search": "false",
+			"lfr-theme:regular:show-header": "false",
+			"lfr-theme:regular:show-footer": "false",
+			"lfr-theme:regular:wrap-widget-page-content": "false"
+		}
+	},
+	"version": 1.1
+}

@@ -1,0 +1,9 @@
+{
+	"contentSubtype": {
+		"subtypeKey": "T4T13_LEARNING_PATH"
+	},
+    "contentType": {
+		"className": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:LearningPath$]"
+	},
+	"name": "Learning Path"
+}

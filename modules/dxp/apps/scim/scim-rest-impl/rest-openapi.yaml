@@ -112,6 +112,7 @@ components:
                         - type: integer
                         - type: number
                         - type: string
+                        - type: array
             type: object
         PatchOp:
             properties:
@@ -486,6 +487,27 @@ paths:
                     description:
                         If the resource exists, the server responds with HTTP status code 200 (OK) and includes the
                         result in the body of the response.
+            tags: ["Group"]
+        patch:
+            description:
+                Updates a group.
+            operationId: patchV2Group
+            parameters:
+                - in: path
+                  name: id
+                  required: true
+                  schema:
+                      type: string
+            requestBody:
+                content:
+                    application/scim+json:
+                        schema:
+                            $ref: "#/components/schemas/PatchOp"
+            responses:
+                204:
+                    description:
+                        In response to a successful DELETE, the server SHALL return a successful HTTP status code 204
+                        (No Content).
             tags: ["Group"]
         put:
             description:

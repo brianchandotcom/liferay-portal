@@ -13,12 +13,11 @@ import React, {
 } from 'react';
 
 import {ObjectField} from '../types/ObjectDefinition';
+import {FieldType} from '../utils/fieldType';
 import findAvailableFieldName from '../utils/findAvailableFieldName';
 import updateFields from '../utils/updateFields';
 
 const DEFAULT_STRUCTURE_LABEL = Liferay.Language.get('untitled-structure');
-
-export type FieldType = 'text';
 
 type Status = 'new' | 'draft' | 'published';
 

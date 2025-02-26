@@ -54,7 +54,7 @@ public class ContentsSectionTableFDSView extends BaseTableFDSView {
 		).add(
 			"embedded.status", "status"
 		).add(
-			"embdedded.actions", "actions"
+			"embedded.actions", "actions"
 		).build();
 	}
 

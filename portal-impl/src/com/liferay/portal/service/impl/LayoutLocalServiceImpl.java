@@ -1079,7 +1079,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		}
 
 		if (layouts.size() > 1) {
-			_log.error("Multiple draft layouts exist for primary key " + plid);
+			_log.error("Layout ID " + plid + " has more than one draft");
 		}
 
 		return layouts.get(layouts.size() - 1);
@@ -1145,7 +1145,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		if (layouts.size() > 1) {
 			_log.error(
-				"Multiple layouts exist for icon image ID " + iconImageId);
+				"Image ID " + iconImageId + " is used by more than one layout");
 		}
 
 		return layouts.get(layouts.size() - 1);

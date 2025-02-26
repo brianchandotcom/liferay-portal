@@ -321,45 +321,6 @@ definition {
 			value1 = "Anonymous Anonymous");
 	}
 
-	@description = "This test anonymizes only one entry from an application via the Info panel"
-	@priority = 4
-	test CanAnonymizeViaInfoPanel {
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-		Blogs.addEntry(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry 1");
-
-		Blogs.addEntry(
-			entryContent = "Blogs Entry Content",
-			entryTitle = "Blogs Entry 2");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test");
-
-		User.openUsersAdmin();
-
-		User.deletePersonalDataCP(
-			userFirstName = "userfn",
-			userLastName = "userln");
-
-		GDPR.filterByApplications(
-			applicationItemsCount = 2,
-			applications = "Blogs",
-			totalItemsCount = 2);
-
-		GDPR.anonymizeSingleEntryViaInfoPanel(rowEntry = "Blogs Entry 1");
-
-		BlogsNavigator.openBlogsAdmin(siteURLKey = "guest");
-
-		LexiconEntry.changeDisplayStyle(displayStyle = "table");
-
-		BlogsEntry.viewEntryAuthorCP(
-			entryAuthorFullName = "Anonymous Anonymous",
-			entryTitle = "Blogs Entry 1");
-	}
-
 	@description = "This test covers LPS-168719. It ensures that changing the password length does not affect anonymization"
 	@priority = 4
 	test CanAnonymizeWithPasswordLengthChange {

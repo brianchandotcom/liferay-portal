@@ -95,12 +95,14 @@ public class ZendeskService {
 				new JSONObject(
 				).put(
 					"request",
-					new JSONObject().put(
+					new JSONObject(
+					).put(
 						"comment",
 						new JSONObject(
 						).put(
 							"html_body", htmlBody
-						))
+						)
+					)
 				).toString())
 		).retrieve(
 		).bodyToMono(

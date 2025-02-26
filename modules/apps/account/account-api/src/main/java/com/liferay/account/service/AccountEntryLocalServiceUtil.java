@@ -81,6 +81,15 @@ public class AccountEntryLocalServiceUtil {
 			emailAddress, logoBytes, taxIdNumber, type, status, serviceContext);
 	}
 
+	public static AccountEntry addIncompleteAccountEntry(
+			String externalReferenceCode, long companyId, long userId,
+			String name, String type)
+		throws Exception {
+
+		return getService().addIncompleteAccountEntry(
+			externalReferenceCode, companyId, userId, name, type);
+	}
+
 	public static AccountEntry addOrUpdateAccountEntry(
 			String externalReferenceCode, long userId,
 			long parentAccountEntryId, String name, String description,

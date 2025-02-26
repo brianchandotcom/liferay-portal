@@ -2,23 +2,32 @@
 	<#include "custom_object_definitions.ftl">
 
 	<#assign
-		layoutModel = dataFactory.newContentLayoutModel(groupId, objectDefinitionModel.getName(), null)
+		name = objectDefinitionModel.getName()
 
-		fragmentEntryLinkModels = dataFactory.newObjectFieldsFragmentEntryLinkModels(layoutModel, objectFieldModels)
-		layoutPageTemplateStructureModel = dataFactory.newLayoutPageTemplateStructureModel(layoutModel)
+		contentLayoutModels = dataFactory.newContentPageLayoutModels(groupId, name)
 	/>
 
-	${dataFactory.toInsertSQL(layoutModel)}
+	<#list contentLayoutModels as contentLayoutModel>
+		<#assign
+			fragmentEntryLinkModels = dataFactory.newObjectFieldsFragmentEntryLinkModels(contentLayoutModel, objectFieldModels)
 
-	${dataFactory.toInsertSQL(dataFactory.newLayoutFriendlyURLModel(layoutModel))}
+			layoutPageTemplateStructureModel = dataFactory.newLayoutPageTemplateStructureModel(contentLayoutModel)
+		/>
 
-	<#list fragmentEntryLinkModels as fragmentEntryLinkModel>
-		${dataFactory.toInsertSQL(fragmentEntryLinkModel)}
+		${dataFactory.toInsertSQL(contentLayoutModel)}
+
+		${dataFactory.toInsertSQL(dataFactory.newLayoutFriendlyURLModel(contentLayoutModel))}
+
+		<#list fragmentEntryLinkModels as fragmentEntryLinkModel>
+			${dataFactory.toInsertSQL(fragmentEntryLinkModel)}
+		</#list>
+
+		${dataFactory.toInsertSQL(layoutPageTemplateStructureModel)}
+
+		${dataFactory.toInsertSQL(dataFactory.newObjectDefinitionLayoutPageTemplateStructureRelModel(fragmentEntryLinkModels, layoutPageTemplateStructureModel, objectDefinitionModel))}
+
+		 <#if contentLayoutModel.friendlyURL?contains(name)>
+			${csvFileWriter.write("objectDefinition", virtualHostModel.hostname + "," + groupModel.friendlyURL + "," + contentLayoutModel.getFriendlyURL() + "\n")}
+		</#if>
 	</#list>
-
-	${dataFactory.toInsertSQL(layoutPageTemplateStructureModel)}
-
-	${dataFactory.toInsertSQL(dataFactory.newObjectDefinitionLayoutPageTemplateStructureRelModel(fragmentEntryLinkModels, layoutPageTemplateStructureModel, objectDefinitionModel))}
-
-	${csvFileWriter.write("objectDefinition", virtualHostModel.hostname + "," + groupModel.friendlyURL + "," + layoutModel.getFriendlyURL() + "\n")}
 </#list>

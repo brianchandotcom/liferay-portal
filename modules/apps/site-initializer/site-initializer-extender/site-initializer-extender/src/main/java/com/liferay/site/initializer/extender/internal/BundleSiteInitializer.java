@@ -5722,8 +5722,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		stringUtilReplaceValues.put(
 			"OBJECT_DEFINITION_PORTLET_ID:" + name,
-			ObjectPortletKeys.OBJECT_DEFINITIONS +
-				StringUtil.split(className, StringPool.POUND)[1]);
+			StringBundler.concat(
+				ObjectPortletKeys.OBJECT_DEFINITIONS, StringPool.UNDERLINE,
+				StringUtil.split(className, StringPool.POUND)[1]));
 	}
 
 	private void _setDefaultLayoutUtilityPageEntries(

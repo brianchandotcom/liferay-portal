@@ -67,7 +67,9 @@ public class XMLEmptyLinesCheck extends BaseEmptyLinesCheck {
 
 		Matcher matcher = _emptyLineBetweenTagsPattern.matcher(content);
 
-		if (matcher.find()) {
+		if (matcher.find() &&
+			!XMLSourceUtil.isInsideCDATAMarkup(content, matcher.start())) {
+
 			return StringUtil.replaceFirst(
 				content, "\n\n", "\n", matcher.end(1));
 		}

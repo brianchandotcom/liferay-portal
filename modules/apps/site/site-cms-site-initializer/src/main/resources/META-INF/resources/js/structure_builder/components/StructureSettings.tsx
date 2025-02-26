@@ -7,6 +7,7 @@ import ClayAlert from '@clayui/alert';
 import ClayForm, {ClayInput} from '@clayui/form';
 import ClayLabel from '@clayui/label';
 import ClayLayout from '@clayui/layout';
+import ClayTabs from '@clayui/tabs';
 import React from 'react';
 
 import {useSelector, useStateDispatch} from '../contexts/StateContext';
@@ -48,6 +49,28 @@ export function StructureSettings() {
 					value={label}
 				/>
 			</ClayForm.Group>
+
+			<ClayTabs>
+				<ClayTabs.List>
+					<ClayTabs.Item>
+						{Liferay.Language.get('general')}
+					</ClayTabs.Item>
+
+					<ClayTabs.Item>
+						{Liferay.Language.get('validations')}
+					</ClayTabs.Item>
+				</ClayTabs.List>
+
+				<ClayTabs.Panels fade>
+					<ClayTabs.TabPane>
+						<GeneralTab />
+					</ClayTabs.TabPane>
+
+					<ClayTabs.TabPane>
+						<ValidationsTab />
+					</ClayTabs.TabPane>
+				</ClayTabs.Panels>
+			</ClayTabs>
 		</ClayLayout.ContainerFluid>
 	);
 }
@@ -60,4 +83,12 @@ export default function () {
 	}
 
 	return <StructureFieldSettings fieldName={selectedItem.name} />;
+}
+
+function GeneralTab() {
+	return <div>General</div>;
+}
+
+function ValidationsTab() {
+	return <div></div>;
 }

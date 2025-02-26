@@ -6,6 +6,7 @@ package ${configYAML.apiPackagePath}.internal.resource.${escapedVersion};
 
 import ${configYAML.apiPackagePath}.resource.${escapedVersion}.${schemaName}Resource;
 
+import com.liferay.lazy.referencing.kernel.LazyReferencingThreadLocal;
 import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeBiFunction;
 import com.liferay.petra.function.UnsafeConsumer;
@@ -581,413 +582,420 @@ public abstract class Base${schemaName}ResourceImpl
 		@Override
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		public void create(Collection<${javaDataType}> ${schemaVarNames}, Map<String, Serializable> parameters) throws Exception {
-			<#if createStrategies?has_content>
-				UnsafeFunction<${javaDataType}, ${javaDataType}, Exception> ${schemaVarName}UnsafeFunction = null;
+			try {
+				LazyReferencingThreadLocal.setLazyReferencingEnabled(true);
 
-				String createStrategy = (String)parameters.getOrDefault("createStrategy", "INSERT");
-			</#if>
+				<#if createStrategies?has_content>
+					UnsafeFunction<${javaDataType}, ${javaDataType}, Exception> ${schemaVarName}UnsafeFunction = null;
 
-			<#if createStrategies?seq_contains("INSERT")>
-				<#assign parentParameterNames = [] />
+					String createStrategy = (String)parameters.getOrDefault("createStrategy", "INSERT");
+				</#if>
 
-				if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
-					<#if postBatchJavaMethodSignature??>
-						<#if stringUtil.equals(javaDataType, postBatchJavaMethodSignature.returnType)>
-							${schemaVarName}UnsafeFunction = ${schemaVarName} -> ${postBatchJavaMethodSignature.methodName}(
-						<#else>
-							${schemaVarName}UnsafeFunction = ${schemaVarName} -> {
-								${postBatchJavaMethodSignature.methodName}(
-						</#if>
+				<#if createStrategies?seq_contains("INSERT")>
+					<#assign parentParameterNames = [] />
 
-						<@getPOSTBatchJavaMethodParameters
-							javaMethodParameters = postBatchJavaMethodSignature.javaMethodParameters
-							schemaVarName = schemaVarName
-						/>
-
-						);
-
-						<#if !stringUtil.equals(javaDataType, postBatchJavaMethodSignature.returnType)>
-								return null;
-							};
-						</#if>
-					</#if>
-
-					<#if postParentBatchJavaMethodSignatures?has_content>
-						<#list postParentBatchJavaMethodSignatures as postParentBatchJavaMethodSignature>
-							<#assign parentParameterNames = parentParameterNames + [postParentBatchJavaMethodSignature.parentSchemaName!?uncap_first + "Id"] />
-
-							if (parameters.containsKey("${postParentBatchJavaMethodSignature.parentSchemaName?uncap_first}Id")) {
-								<#if stringUtil.equals(javaDataType, postParentBatchJavaMethodSignature.returnType)>
-									${schemaVarName}UnsafeFunction = ${schemaVarName} -> ${postParentBatchJavaMethodSignature.methodName}(
-								<#else>
-									${schemaVarName}UnsafeFunction = ${schemaVarName} -> {
-										${postParentBatchJavaMethodSignature.methodName}(
-								</#if>
-
-								<@getPOSTBatchJavaMethodParameters
-									javaMethodParameters = postParentBatchJavaMethodSignature.javaMethodParameters
-									schemaVarName = schemaVarName
-								/>
-
-								);
-
-								<#if !stringUtil.equals(javaDataType, postParentBatchJavaMethodSignature.returnType)>
-										return null;
-									};
-								</#if>
-							}
-
-							<#if postParentBatchJavaMethodSignature?has_next>
-								else
-							</#if>
-						</#list>
-					</#if>
-
-					<#if postParentByERCBatchJavaMethodSignatures?has_content>
-						<#list postParentByERCBatchJavaMethodSignatures as postParentByERCBatchJavaMethodSignature>
-							<#assign parentParameterNames = parentParameterNames + [postParentByERCBatchJavaMethodSignature.javaMethodParameters[0].parameterName] />
-
-							<#if postParentBatchJavaMethodSignatures?has_content>
-								else
-							</#if>
-
-							if (parameters.containsKey("${postParentByERCBatchJavaMethodSignature.javaMethodParameters[0].parameterName}")) {
-								<#if stringUtil.equals(javaDataType, postParentByERCBatchJavaMethodSignature.returnType)>
-									${schemaVarName}UnsafeFunction = ${schemaVarName} -> ${postParentByERCBatchJavaMethodSignature.methodName}(
-								<#else>
-									${schemaVarName}UnsafeFunction = ${schemaVarName} -> {
-										${postParentByERCBatchJavaMethodSignature.methodName}(
-								</#if>
-
-								<@getPOSTBatchJavaMethodParameters
-									javaMethodParameters = postParentByERCBatchJavaMethodSignature.javaMethodParameters
-									schemaVarName = schemaVarName
-								/>
-
-								);
-
-								<#if !stringUtil.equals(javaDataType, postParentByERCBatchJavaMethodSignature.returnType)>
-										return null;
-									};
-								</#if>
-							}
-
-							<#if postParentByERCBatchJavaMethodSignature?has_next>
-								else
-							</#if>
-						</#list>
-					</#if>
-
-					<#if postAssetLibraryBatchJavaMethodSignature??>
-						<#assign parentParameterNames = parentParameterNames + ["assetLibraryId"] />
-
-						<#if postParentBatchJavaMethodSignatures?has_content || postParentByERCBatchJavaMethodSignatures?has_content>
-							else
-						</#if>
-
-						if (parameters.containsKey("assetLibraryId")) {
-							<#if stringUtil.equals(javaDataType, postAssetLibraryBatchJavaMethodSignature.returnType)>
-								${schemaVarName}UnsafeFunction = ${schemaVarName} -> ${postAssetLibraryBatchJavaMethodSignature.methodName}(
+					if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
+						<#if postBatchJavaMethodSignature??>
+							<#if stringUtil.equals(javaDataType, postBatchJavaMethodSignature.returnType)>
+								${schemaVarName}UnsafeFunction = ${schemaVarName} -> ${postBatchJavaMethodSignature.methodName}(
 							<#else>
-								${schemaVarName}UnsafeFunction = ${schemaVarName} -> { ${postAssetLibraryBatchJavaMethodSignature.methodName}(
+								${schemaVarName}UnsafeFunction = ${schemaVarName} -> {
+									${postBatchJavaMethodSignature.methodName}(
 							</#if>
 
 							<@getPOSTBatchJavaMethodParameters
-								javaMethodParameters = postAssetLibraryBatchJavaMethodSignature.javaMethodParameters
+								javaMethodParameters = postBatchJavaMethodSignature.javaMethodParameters
 								schemaVarName = schemaVarName
 							/>
 
 							);
 
-							<#if !stringUtil.equals(javaDataType, postAssetLibraryBatchJavaMethodSignature.returnType)>
+							<#if !stringUtil.equals(javaDataType, postBatchJavaMethodSignature.returnType)>
 									return null;
 								};
 							</#if>
-						}
-					</#if>
-
-					<#if postSiteBatchJavaMethodSignature??>
-						<#assign parentParameterNames = parentParameterNames + ["siteId"] />
-
-						<#if postParentBatchJavaMethodSignatures?has_content || postParentByERCBatchJavaMethodSignatures?has_content || postAssetLibraryBatchJavaMethodSignature??>
-							else
 						</#if>
 
-						if (parameters.containsKey("siteId")) {
-							<#if stringUtil.equals(javaDataType, postSiteBatchJavaMethodSignature.returnType)>
-								${schemaVarName}UnsafeFunction = ${schemaVarName} -> ${postSiteBatchJavaMethodSignature.methodName}(
-							<#else>
-								${schemaVarName}UnsafeFunction = ${schemaVarName} -> { ${postSiteBatchJavaMethodSignature.methodName}(
-							</#if>
+						<#if postParentBatchJavaMethodSignatures?has_content>
+							<#list postParentBatchJavaMethodSignatures as postParentBatchJavaMethodSignature>
+								<#assign parentParameterNames = parentParameterNames + [postParentBatchJavaMethodSignature.parentSchemaName!?uncap_first + "Id"] />
 
-							<@getPOSTBatchJavaMethodParameters
-								javaMethodParameters = postSiteBatchJavaMethodSignature.javaMethodParameters
-								schemaVarName = schemaVarName
-							/>
-
-							);
-
-							<#if !stringUtil.equals(javaDataType, postSiteBatchJavaMethodSignature.returnType)>
-									return null;
-								};
-							</#if>
-						}
-					</#if>
-
-					<#if !postBatchJavaMethodSignature?? && parentParameterNames?has_content>
-						else {
-							throw new NotSupportedException("One of the following parameters must be specified: [${parentParameterNames?join(", ")}]");
-						}
-					</#if>
-				}
-			</#if>
-
-			<#if createStrategies?seq_contains("UPSERT")>
-				if (StringUtil.equalsIgnoreCase(createStrategy, "UPSERT")) {
-					String updateStrategy = (String)parameters.getOrDefault("updateStrategy", "UPDATE");
-
-					<#if putByERCBatchJavaMethodSignature??>
-						if(StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-							<#if stringUtil.equals(javaDataType, putByERCBatchJavaMethodSignature.returnType)>
-								${schemaVarName}UnsafeFunction = ${schemaVarName} -> ${putByERCBatchJavaMethodSignature.methodName}(
-							<#else>
-								${schemaVarName}UnsafeFunction = ${schemaVarName} -> { ${putByERCBatchJavaMethodSignature.methodName}(
-							</#if>
-
-							<#list putByERCBatchJavaMethodSignature.javaMethodParameters as javaMethodParameter>
-								<#if stringUtil.equals(javaMethodParameter.parameterName, "externalReferenceCode")>
-									${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}()
-								<#elseif putByERCBatchJavaMethodSignature.parentSchemaName?? && stringUtil.equals(javaMethodParameter.parameterName, putByERCBatchJavaMethodSignature.parentSchemaName!?uncap_first + "Id")>
-									<#if properties?keys?seq_contains(javaMethodParameter.parameterName)>
-										${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}() != null ?
-										${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}() :
-									</#if>
-
-									<@castParameters
-										type = javaMethodParameter.parameterType
-										value = "${javaMethodParameter.parameterName}"
-									/>
-								<#elseif stringUtil.equals(javaMethodParameter.parameterName, schemaVarName)>
-									${schemaVarName}
-								<#else>
-									null
-								</#if>
-
-								<#sep>, </#sep>
-							</#list>
-							);
-
-							<#if !stringUtil.equals(javaDataType, putByERCBatchJavaMethodSignature.returnType)>
-									return null;
-								};
-							</#if>
-						}
-					</#if>
-
-					<#if getByERCBatchJavaMethodSignature?? && patchBatchJavaMethodSignature?? && (postAssetLibraryBatchJavaMethodSignature?? || postBatchJavaMethodSignature?? || postParentBatchJavaMethodSignatures?has_content || postParentByERCBatchJavaMethodSignatures?has_content || postSiteBatchJavaMethodSignature??)>
-						if(StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
-							${schemaVarName}UnsafeFunction = ${schemaVarName} -> {
-								${schemaName} persisted${schemaName} = null;
-
-								try {
-									${schemaName} get${schemaName} = ${getByERCBatchJavaMethodSignature.methodName}(
-
-									<#list getByERCBatchJavaMethodSignature.javaMethodParameters as javaMethodParameter>
-										<#if stringUtil.equals(javaMethodParameter.parameterName, "externalReferenceCode")>
-											${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}()
-										<#elseif getByERCBatchJavaMethodSignature.parentSchemaName?? && stringUtil.equals(javaMethodParameter.parameterName, getByERCBatchJavaMethodSignature.parentSchemaName!?uncap_first + "Id")>
-											<#if properties?keys?seq_contains(javaMethodParameter.parameterName)>
-												${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}() != null ?
-												${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}() :
-											</#if>
-
-											<@castParameters
-												type = javaMethodParameter.parameterType
-												value = "${javaMethodParameter.parameterName}"
-											/>
-										<#elseif stringUtil.equals(javaMethodParameter.parameterName, schemaVarName)>
-											${schemaVarName}
-										<#else>
-											null
-										</#if>
-
-										<#sep>, </#sep>
-									</#list>
-
-									);
-
-									<#if stringUtil.equals(javaDataType, patchBatchJavaMethodSignature.returnType)>
-										persisted${schemaName} = patch${schemaName}(
+								if (parameters.containsKey("${postParentBatchJavaMethodSignature.parentSchemaName?uncap_first}Id")) {
+									<#if stringUtil.equals(javaDataType, postParentBatchJavaMethodSignature.returnType)>
+										${schemaVarName}UnsafeFunction = ${schemaVarName} -> ${postParentBatchJavaMethodSignature.methodName}(
 									<#else>
-										patch${schemaName}(
+										${schemaVarName}UnsafeFunction = ${schemaVarName} -> {
+											${postParentBatchJavaMethodSignature.methodName}(
 									</#if>
 
-									<#list patchBatchJavaMethodSignature.javaMethodParameters as javaMethodParameter>
-										<#if stringUtil.equals(javaMethodParameter.parameterName, schemaVarName)>
-											${schemaVarName}
-										<#elseif stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Id") || stringUtil.equals(javaMethodParameter.parameterName, "id")>
-											<#if properties?keys?seq_contains("id")>
-												get${schemaName}.getId() != null ? get${schemaName}.getId() :
-											<#elseif properties?keys?seq_contains(schemaVarName + "Id")>
-												(get${schemaName}.get${schemaName}Id() != null) ? get${schemaName}.get${schemaName}Id() :
-											</#if>
-
-											<@castParameters
-												type = javaMethodParameter.parameterType
-												value = "${schemaVarName}Id"
-											/>
-										<#elseif stringUtil.equals(javaMethodParameter.parameterName, "multipartBody")>
-											null
-										<#else>
-											${javaMethodParameter.parameterName}
-										</#if>
-
-										<#sep>, </#sep>
-									</#list>
+									<@getPOSTBatchJavaMethodParameters
+										javaMethodParameters = postParentBatchJavaMethodSignature.javaMethodParameters
+										schemaVarName = schemaVarName
+									/>
 
 									);
+
+									<#if !stringUtil.equals(javaDataType, postParentBatchJavaMethodSignature.returnType)>
+											return null;
+										};
+									</#if>
 								}
-								catch (NoSuchModelException noSuchModelException) {
-									<#assign parentParameterNames = [] />
 
-									<#if postBatchJavaMethodSignature?? && !postParentBatchJavaMethodSignatures?has_content && !postParentByERCBatchJavaMethodSignatures?has_content>
-										persisted${schemaName} = ${postBatchJavaMethodSignature.methodName}(
+								<#if postParentBatchJavaMethodSignature?has_next>
+									else
+								</#if>
+							</#list>
+						</#if>
 
-										<@getPOSTBatchJavaMethodParameters
-											javaMethodParameters = postBatchJavaMethodSignature.javaMethodParameters
-											schemaVarName = schemaVarName
+						<#if postParentByERCBatchJavaMethodSignatures?has_content>
+							<#list postParentByERCBatchJavaMethodSignatures as postParentByERCBatchJavaMethodSignature>
+								<#assign parentParameterNames = parentParameterNames + [postParentByERCBatchJavaMethodSignature.javaMethodParameters[0].parameterName] />
+
+								<#if postParentBatchJavaMethodSignatures?has_content>
+									else
+								</#if>
+
+								if (parameters.containsKey("${postParentByERCBatchJavaMethodSignature.javaMethodParameters[0].parameterName}")) {
+									<#if stringUtil.equals(javaDataType, postParentByERCBatchJavaMethodSignature.returnType)>
+										${schemaVarName}UnsafeFunction = ${schemaVarName} -> ${postParentByERCBatchJavaMethodSignature.methodName}(
+									<#else>
+										${schemaVarName}UnsafeFunction = ${schemaVarName} -> {
+											${postParentByERCBatchJavaMethodSignature.methodName}(
+									</#if>
+
+									<@getPOSTBatchJavaMethodParameters
+										javaMethodParameters = postParentByERCBatchJavaMethodSignature.javaMethodParameters
+										schemaVarName = schemaVarName
+									/>
+
+									);
+
+									<#if !stringUtil.equals(javaDataType, postParentByERCBatchJavaMethodSignature.returnType)>
+											return null;
+										};
+									</#if>
+								}
+
+								<#if postParentByERCBatchJavaMethodSignature?has_next>
+									else
+								</#if>
+							</#list>
+						</#if>
+
+						<#if postAssetLibraryBatchJavaMethodSignature??>
+							<#assign parentParameterNames = parentParameterNames + ["assetLibraryId"] />
+
+							<#if postParentBatchJavaMethodSignatures?has_content || postParentByERCBatchJavaMethodSignatures?has_content>
+								else
+							</#if>
+
+							if (parameters.containsKey("assetLibraryId")) {
+								<#if stringUtil.equals(javaDataType, postAssetLibraryBatchJavaMethodSignature.returnType)>
+									${schemaVarName}UnsafeFunction = ${schemaVarName} -> ${postAssetLibraryBatchJavaMethodSignature.methodName}(
+								<#else>
+									${schemaVarName}UnsafeFunction = ${schemaVarName} -> { ${postAssetLibraryBatchJavaMethodSignature.methodName}(
+								</#if>
+
+								<@getPOSTBatchJavaMethodParameters
+									javaMethodParameters = postAssetLibraryBatchJavaMethodSignature.javaMethodParameters
+									schemaVarName = schemaVarName
+								/>
+
+								);
+
+								<#if !stringUtil.equals(javaDataType, postAssetLibraryBatchJavaMethodSignature.returnType)>
+										return null;
+									};
+								</#if>
+							}
+						</#if>
+
+						<#if postSiteBatchJavaMethodSignature??>
+							<#assign parentParameterNames = parentParameterNames + ["siteId"] />
+
+							<#if postParentBatchJavaMethodSignatures?has_content || postParentByERCBatchJavaMethodSignatures?has_content || postAssetLibraryBatchJavaMethodSignature??>
+								else
+							</#if>
+
+							if (parameters.containsKey("siteId")) {
+								<#if stringUtil.equals(javaDataType, postSiteBatchJavaMethodSignature.returnType)>
+									${schemaVarName}UnsafeFunction = ${schemaVarName} -> ${postSiteBatchJavaMethodSignature.methodName}(
+								<#else>
+									${schemaVarName}UnsafeFunction = ${schemaVarName} -> { ${postSiteBatchJavaMethodSignature.methodName}(
+								</#if>
+
+								<@getPOSTBatchJavaMethodParameters
+									javaMethodParameters = postSiteBatchJavaMethodSignature.javaMethodParameters
+									schemaVarName = schemaVarName
+								/>
+
+								);
+
+								<#if !stringUtil.equals(javaDataType, postSiteBatchJavaMethodSignature.returnType)>
+										return null;
+									};
+								</#if>
+							}
+						</#if>
+
+						<#if !postBatchJavaMethodSignature?? && parentParameterNames?has_content>
+							else {
+								throw new NotSupportedException("One of the following parameters must be specified: [${parentParameterNames?join(", ")}]");
+							}
+						</#if>
+					}
+				</#if>
+
+				<#if createStrategies?seq_contains("UPSERT")>
+					if (StringUtil.equalsIgnoreCase(createStrategy, "UPSERT")) {
+						String updateStrategy = (String)parameters.getOrDefault("updateStrategy", "UPDATE");
+
+						<#if putByERCBatchJavaMethodSignature??>
+							if(StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
+								<#if stringUtil.equals(javaDataType, putByERCBatchJavaMethodSignature.returnType)>
+									${schemaVarName}UnsafeFunction = ${schemaVarName} -> ${putByERCBatchJavaMethodSignature.methodName}(
+								<#else>
+									${schemaVarName}UnsafeFunction = ${schemaVarName} -> { ${putByERCBatchJavaMethodSignature.methodName}(
+								</#if>
+
+								<#list putByERCBatchJavaMethodSignature.javaMethodParameters as javaMethodParameter>
+									<#if stringUtil.equals(javaMethodParameter.parameterName, "externalReferenceCode")>
+										${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}()
+									<#elseif putByERCBatchJavaMethodSignature.parentSchemaName?? && stringUtil.equals(javaMethodParameter.parameterName, putByERCBatchJavaMethodSignature.parentSchemaName!?uncap_first + "Id")>
+										<#if properties?keys?seq_contains(javaMethodParameter.parameterName)>
+											${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}() != null ?
+											${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}() :
+										</#if>
+
+										<@castParameters
+											type = javaMethodParameter.parameterType
+											value = "${javaMethodParameter.parameterName}"
 										/>
+									<#elseif stringUtil.equals(javaMethodParameter.parameterName, schemaVarName)>
+										${schemaVarName}
+									<#else>
+										null
+									</#if>
+
+									<#sep>, </#sep>
+								</#list>
+								);
+
+								<#if !stringUtil.equals(javaDataType, putByERCBatchJavaMethodSignature.returnType)>
+										return null;
+									};
+								</#if>
+							}
+						</#if>
+
+						<#if getByERCBatchJavaMethodSignature?? && patchBatchJavaMethodSignature?? && (postAssetLibraryBatchJavaMethodSignature?? || postBatchJavaMethodSignature?? || postParentBatchJavaMethodSignatures?has_content || postParentByERCBatchJavaMethodSignatures?has_content || postSiteBatchJavaMethodSignature??)>
+							if(StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
+								${schemaVarName}UnsafeFunction = ${schemaVarName} -> {
+									${schemaName} persisted${schemaName} = null;
+
+									try {
+										${schemaName} get${schemaName} = ${getByERCBatchJavaMethodSignature.methodName}(
+
+										<#list getByERCBatchJavaMethodSignature.javaMethodParameters as javaMethodParameter>
+											<#if stringUtil.equals(javaMethodParameter.parameterName, "externalReferenceCode")>
+												${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}()
+											<#elseif getByERCBatchJavaMethodSignature.parentSchemaName?? && stringUtil.equals(javaMethodParameter.parameterName, getByERCBatchJavaMethodSignature.parentSchemaName!?uncap_first + "Id")>
+												<#if properties?keys?seq_contains(javaMethodParameter.parameterName)>
+													${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}() != null ?
+													${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}() :
+												</#if>
+
+												<@castParameters
+													type = javaMethodParameter.parameterType
+													value = "${javaMethodParameter.parameterName}"
+												/>
+											<#elseif stringUtil.equals(javaMethodParameter.parameterName, schemaVarName)>
+												${schemaVarName}
+											<#else>
+												null
+											</#if>
+
+											<#sep>, </#sep>
+										</#list>
 
 										);
-									</#if>
 
-									<#if postParentBatchJavaMethodSignatures?has_content || postParentByERCBatchJavaMethodSignatures?has_content>
-										<#list postParentBatchJavaMethodSignatures as postParentBatchJavaMethodSignature>
-											<#assign parentParameterNames = parentParameterNames + [postParentBatchJavaMethodSignature.parentSchemaName!?uncap_first + "Id"] />
-
-											if (parameters.containsKey("${postParentBatchJavaMethodSignature.parentSchemaName?uncap_first}Id")) {
-												persisted${schemaName} = ${postParentBatchJavaMethodSignature.methodName}(
-
-												<@getPOSTBatchJavaMethodParameters
-													javaMethodParameters = postParentBatchJavaMethodSignature.javaMethodParameters
-													schemaVarName = schemaVarName
-												/>
-
-												);
-
-											}
-
-											<#if postParentBatchJavaMethodSignature?has_next>
-												else
-											</#if>
-										</#list>
-
-										<#list postParentByERCBatchJavaMethodSignatures as postParentByERCBatchJavaMethodSignature>
-											<#assign parentParameterNames = parentParameterNames + [postParentByERCBatchJavaMethodSignature.javaMethodParameters[0].parameterName] />
-
-											<#if postParentBatchJavaMethodSignatures?has_content>
-												else
-											</#if>
-
-											if (parameters.containsKey("${postParentByERCBatchJavaMethodSignature.javaMethodParameters[0].parameterName}")) {
-												persisted${schemaName} = ${postParentByERCBatchJavaMethodSignature.methodName}(
-
-												<@getPOSTBatchJavaMethodParameters
-													javaMethodParameters = postParentByERCBatchJavaMethodSignature.javaMethodParameters
-													schemaVarName = schemaVarName
-												/>
-
-												);
-											}
-
-											<#if postParentByERCBatchJavaMethodSignature?has_next>
-												else
-											</#if>
-										</#list>
-
-										<#if postBatchJavaMethodSignature??>
-											else {
-												persisted${schemaName} = ${postBatchJavaMethodSignature.methodName}(
-
-												<@getPOSTBatchJavaMethodParameters
-													javaMethodParameters = postBatchJavaMethodSignature.javaMethodParameters
-													schemaVarName = schemaVarName
-												/>
-
-												);
-											}
+										<#if stringUtil.equals(javaDataType, patchBatchJavaMethodSignature.returnType)>
+											persisted${schemaName} = patch${schemaName}(
+										<#else>
+											patch${schemaName}(
 										</#if>
-									</#if>
 
-									<#if postAssetLibraryBatchJavaMethodSignature??>
-										<#assign parentParameterNames = parentParameterNames + ["assetLibraryId"] />
+										<#list patchBatchJavaMethodSignature.javaMethodParameters as javaMethodParameter>
+											<#if stringUtil.equals(javaMethodParameter.parameterName, schemaVarName)>
+												${schemaVarName}
+											<#elseif stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Id") || stringUtil.equals(javaMethodParameter.parameterName, "id")>
+												<#if properties?keys?seq_contains("id")>
+													get${schemaName}.getId() != null ? get${schemaName}.getId() :
+												<#elseif properties?keys?seq_contains(schemaVarName + "Id")>
+													(get${schemaName}.get${schemaName}Id() != null) ? get${schemaName}.get${schemaName}Id() :
+												</#if>
+
+												<@castParameters
+													type = javaMethodParameter.parameterType
+													value = "${schemaVarName}Id"
+												/>
+											<#elseif stringUtil.equals(javaMethodParameter.parameterName, "multipartBody")>
+												null
+											<#else>
+												${javaMethodParameter.parameterName}
+											</#if>
+
+											<#sep>, </#sep>
+										</#list>
+
+										);
+									}
+									catch (NoSuchModelException noSuchModelException) {
+										<#assign parentParameterNames = [] />
+
+										<#if postBatchJavaMethodSignature?? && !postParentBatchJavaMethodSignatures?has_content && !postParentByERCBatchJavaMethodSignatures?has_content>
+											persisted${schemaName} = ${postBatchJavaMethodSignature.methodName}(
+
+											<@getPOSTBatchJavaMethodParameters
+												javaMethodParameters = postBatchJavaMethodSignature.javaMethodParameters
+												schemaVarName = schemaVarName
+											/>
+
+											);
+										</#if>
 
 										<#if postParentBatchJavaMethodSignatures?has_content || postParentByERCBatchJavaMethodSignatures?has_content>
-											else
+											<#list postParentBatchJavaMethodSignatures as postParentBatchJavaMethodSignature>
+												<#assign parentParameterNames = parentParameterNames + [postParentBatchJavaMethodSignature.parentSchemaName!?uncap_first + "Id"] />
+
+												if (parameters.containsKey("${postParentBatchJavaMethodSignature.parentSchemaName?uncap_first}Id")) {
+													persisted${schemaName} = ${postParentBatchJavaMethodSignature.methodName}(
+
+													<@getPOSTBatchJavaMethodParameters
+														javaMethodParameters = postParentBatchJavaMethodSignature.javaMethodParameters
+														schemaVarName = schemaVarName
+													/>
+
+													);
+
+												}
+
+												<#if postParentBatchJavaMethodSignature?has_next>
+													else
+												</#if>
+											</#list>
+
+											<#list postParentByERCBatchJavaMethodSignatures as postParentByERCBatchJavaMethodSignature>
+												<#assign parentParameterNames = parentParameterNames + [postParentByERCBatchJavaMethodSignature.javaMethodParameters[0].parameterName] />
+
+												<#if postParentBatchJavaMethodSignatures?has_content>
+													else
+												</#if>
+
+												if (parameters.containsKey("${postParentByERCBatchJavaMethodSignature.javaMethodParameters[0].parameterName}")) {
+													persisted${schemaName} = ${postParentByERCBatchJavaMethodSignature.methodName}(
+
+													<@getPOSTBatchJavaMethodParameters
+														javaMethodParameters = postParentByERCBatchJavaMethodSignature.javaMethodParameters
+														schemaVarName = schemaVarName
+													/>
+
+													);
+												}
+
+												<#if postParentByERCBatchJavaMethodSignature?has_next>
+													else
+												</#if>
+											</#list>
+
+											<#if postBatchJavaMethodSignature??>
+												else {
+													persisted${schemaName} = ${postBatchJavaMethodSignature.methodName}(
+
+													<@getPOSTBatchJavaMethodParameters
+														javaMethodParameters = postBatchJavaMethodSignature.javaMethodParameters
+														schemaVarName = schemaVarName
+													/>
+
+													);
+												}
+											</#if>
 										</#if>
 
-										if (parameters.containsKey("assetLibraryId")) {
-											persisted${schemaName} = ${postAssetLibraryBatchJavaMethodSignature.methodName}(
+										<#if postAssetLibraryBatchJavaMethodSignature??>
+											<#assign parentParameterNames = parentParameterNames + ["assetLibraryId"] />
 
-											<@getPOSTBatchJavaMethodParameters
-												javaMethodParameters = postAssetLibraryBatchJavaMethodSignature.javaMethodParameters
-												schemaVarName = schemaVarName
-											/>
+											<#if postParentBatchJavaMethodSignatures?has_content || postParentByERCBatchJavaMethodSignatures?has_content>
+												else
+											</#if>
 
-											);
-										}
-									</#if>
+											if (parameters.containsKey("assetLibraryId")) {
+												persisted${schemaName} = ${postAssetLibraryBatchJavaMethodSignature.methodName}(
 
-									<#if postSiteBatchJavaMethodSignature??>
-										<#if postParentBatchJavaMethodSignatures?has_content || postParentByERCBatchJavaMethodSignatures?has_content || postAssetLibraryBatchJavaMethodSignature??>
-											else
+												<@getPOSTBatchJavaMethodParameters
+													javaMethodParameters = postAssetLibraryBatchJavaMethodSignature.javaMethodParameters
+													schemaVarName = schemaVarName
+												/>
+
+												);
+											}
 										</#if>
 
-										if (parameters.containsKey("siteId")) {
-											persisted${schemaName} = ${postSiteBatchJavaMethodSignature.methodName}(
+										<#if postSiteBatchJavaMethodSignature??>
+											<#if postParentBatchJavaMethodSignatures?has_content || postParentByERCBatchJavaMethodSignatures?has_content || postAssetLibraryBatchJavaMethodSignature??>
+												else
+											</#if>
 
-											<@getPOSTBatchJavaMethodParameters
-												javaMethodParameters = postSiteBatchJavaMethodSignature.javaMethodParameters
-												schemaVarName = schemaVarName
-											/>
+											if (parameters.containsKey("siteId")) {
+												persisted${schemaName} = ${postSiteBatchJavaMethodSignature.methodName}(
 
-											);
-										}
-									</#if>
+												<@getPOSTBatchJavaMethodParameters
+													javaMethodParameters = postSiteBatchJavaMethodSignature.javaMethodParameters
+													schemaVarName = schemaVarName
+												/>
 
-									<#if !postBatchJavaMethodSignature?? && parentParameterNames?has_content>
-										else {
-											throw new NotSupportedException("One of the following parameters must be specified: [${parentParameterNames?join(", ")}]");
-										}
-									</#if>
-								}
+												);
+											}
+										</#if>
 
-								return persisted${schemaName};
-							};
-						}
-					</#if>
-				}
-			</#if>
+										<#if !postBatchJavaMethodSignature?? && parentParameterNames?has_content>
+											else {
+												throw new NotSupportedException("One of the following parameters must be specified: [${parentParameterNames?join(", ")}]");
+											}
+										</#if>
+									}
 
-			<#if createStrategies?has_content>
-				if (${schemaVarName}UnsafeFunction == null) {
-					throw new NotSupportedException("Create strategy \"" + createStrategy + "\" is not supported for ${schemaVarName?cap_first}");
-				}
-
-				if (contextBatchUnsafeBiConsumer != null) {
-					contextBatchUnsafeBiConsumer.accept(${schemaVarNames}, ${schemaVarName}UnsafeFunction);
-				}
-				else if (contextBatchUnsafeConsumer != null) {
-					contextBatchUnsafeConsumer.accept(${schemaVarNames}, ${schemaVarName}UnsafeFunction::apply);
-				}
-				else {
-					for (${javaDataType} ${schemaVarName} : ${schemaVarNames}) {
-						${schemaVarName}UnsafeFunction.apply(${schemaVarName});
+									return persisted${schemaName};
+								};
+							}
+						</#if>
 					}
-				}
-			<#else>
-				throw new UnsupportedOperationException("This method needs to be implemented");
-			</#if>
+				</#if>
+
+				<#if createStrategies?has_content>
+					if (${schemaVarName}UnsafeFunction == null) {
+						throw new NotSupportedException("Create strategy \"" + createStrategy + "\" is not supported for ${schemaVarName?cap_first}");
+					}
+
+					if (contextBatchUnsafeBiConsumer != null) {
+						contextBatchUnsafeBiConsumer.accept(${schemaVarNames}, ${schemaVarName}UnsafeFunction);
+					}
+					else if (contextBatchUnsafeConsumer != null) {
+						contextBatchUnsafeConsumer.accept(${schemaVarNames}, ${schemaVarName}UnsafeFunction::apply);
+					}
+					else {
+						for (${javaDataType} ${schemaVarName} : ${schemaVarNames}) {
+							${schemaVarName}UnsafeFunction.apply(${schemaVarName});
+						}
+					}
+				<#else>
+					throw new UnsupportedOperationException("This method needs to be implemented");
+				</#if>
+			}
+			finally {
+				LazyReferencingThreadLocal.setLazyReferencingEnabled(false);
+			}
 		}
 
 		@Override

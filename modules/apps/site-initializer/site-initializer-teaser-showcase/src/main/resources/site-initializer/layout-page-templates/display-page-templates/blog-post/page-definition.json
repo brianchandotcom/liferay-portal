@@ -4,7 +4,8 @@
 			{
 				"definition": {
 					"indexed": true,
-					"layout": {},
+					"layout": {
+					},
 					"name": "Blog Post Page"
 				},
 				"pageElements": [
@@ -34,7 +35,8 @@
 										"overflow": "hidden"
 									},
 									"indexed": true,
-									"layout": {},
+									"layout": {
+									},
 									"name": "Image Wrapper"
 								},
 								"pageElements": [
@@ -60,7 +62,8 @@
 																}
 															}
 														},
-														"fragmentLink": {}
+														"fragmentLink": {
+														}
 													}
 												}
 											],
@@ -97,12 +100,14 @@
 									"fragment": {
 										"key": "BASIC_COMPONENT-paragraph"
 									},
-									"fragmentConfig": {},
+									"fragmentConfig": {
+									},
 									"fragmentFields": [
 										{
 											"id": "element-text",
 											"value": {
-												"fragmentLink": {},
+												"fragmentLink": {
+												},
 												"text": {
 													"mapping": {
 														"fieldKey": "AssetVocabulary_[$TAXONOMY_VOCABULARY_ID:Blog Posts$]",
@@ -130,7 +135,8 @@
 										{
 											"id": "element-text",
 											"value": {
-												"fragmentLink": {},
+												"fragmentLink": {
+												},
 												"text": {
 													"mapping": {
 														"fieldKey": "BlogsEntry_title",
@@ -166,11 +172,13 @@
 										},
 										{
 											"id": "portraitMobile",
-											"rowViewportDefinition": {}
+											"rowViewportDefinition": {
+											}
 										},
 										{
 											"id": "tablet",
-											"rowViewportDefinition": {}
+											"rowViewportDefinition": {
+											}
 										}
 									],
 									"verticalAlignment": "top"
@@ -186,11 +194,13 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "tablet"
 												}
 											],
@@ -208,11 +218,13 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "tablet"
 												}
 											],
@@ -226,24 +238,26 @@
 														"siteKey": "[$GROUP_KEY$]"
 													},
 													"fragmentConfig": {
-														"uppercase": false,
+														"buttonSize": "btn-sm",
 														"iconName": "share",
+														"inverted": false,
 														"style": "primary",
 														"type": "ghost",
-														"inverted": false,
-														"buttonSize": "btn-sm"
+														"uppercase": false
 													},
 													"fragmentFields": [
 														{
 															"id": "link",
 															"value": {
-																"fragmentLink": {}
+																"fragmentLink": {
+																}
 															}
 														},
 														{
 															"id": "text",
 															"value": {
-																"fragmentLink": {},
+																"fragmentLink": {
+																},
 																"text": {
 																	"value_i18n": {
 																		"en_US": "Share"
@@ -291,7 +305,8 @@
 									"fragment": {
 										"key": "BASIC_COMPONENT-html"
 									},
-									"fragmentConfig": {},
+									"fragmentConfig": {
+									},
 									"fragmentFields": [
 										{
 											"id": "element-html",
@@ -327,10 +342,10 @@
 		},
 		"themeName": "Classic",
 		"themeSettings": {
+			"lfr-theme:regular:show-footer": "false",
 			"lfr-theme:regular:show-header": "false",
-			"lfr-theme:regular:wrap-widget-page-content": "false",
 			"lfr-theme:regular:show-header-search": "false",
-			"lfr-theme:regular:show-footer": "false"
+			"lfr-theme:regular:wrap-widget-page-content": "false"
 		}
 	},
 	"version": 1.1

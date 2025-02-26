@@ -43,11 +43,13 @@
 										},
 										{
 											"id": "portraitMobile",
-											"rowViewportDefinition": {}
+											"rowViewportDefinition": {
+											}
 										},
 										{
 											"id": "tablet",
-											"rowViewportDefinition": {}
+											"rowViewportDefinition": {
+											}
 										}
 									],
 									"verticalAlignment": "top"
@@ -63,11 +65,13 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "tablet"
 												}
 											],
@@ -79,8 +83,10 @@
 													"fragment": {
 														"key": "com.liferay.commerce.product.content.web.internal.fragment.renderer.ImageGalleryFragmentRenderer"
 													},
-													"fragmentConfig": {},
-													"fragmentFields": [],
+													"fragmentConfig": {
+													},
+													"fragmentFields": [
+													],
 													"indexed": true
 												},
 												"type": "Fragment"
@@ -98,11 +104,13 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "tablet"
 												}
 											],
@@ -116,7 +124,8 @@
 														"paddingRight": "2"
 													},
 													"indexed": true,
-													"layout": {},
+													"layout": {
+													},
 													"name": "Description Container"
 												},
 												"pageElements": [
@@ -132,7 +141,8 @@
 																{
 																	"id": "element-text",
 																	"value": {
-																		"fragmentLink": {},
+																		"fragmentLink": {
+																		},
 																		"text": {
 																			"mapping": {
 																				"fieldKey": "CPDefinition_name",
@@ -154,12 +164,14 @@
 															"fragment": {
 																"key": "BASIC_COMPONENT-paragraph"
 															},
-															"fragmentConfig": {},
+															"fragmentConfig": {
+															},
 															"fragmentFields": [
 																{
 																	"id": "element-text",
 																	"value": {
-																		"fragmentLink": {},
+																		"fragmentLink": {
+																		},
 																		"text": {
 																			"mapping": {
 																				"fieldKey": "CPDefinition_sku",
@@ -184,7 +196,8 @@
 															"fragment": {
 																"key": "BASIC_COMPONENT-html"
 															},
-															"fragmentConfig": {},
+															"fragmentConfig": {
+															},
 															"fragmentFields": [
 																{
 																	"id": "element-html",
@@ -214,9 +227,9 @@
 																"key": "BASIC_COMPONENT-button"
 															},
 															"fragmentConfig": {
+																"buttonSize": "nm",
 																"buttonType": "primary",
-																"type": "link",
-																"buttonSize": "nm"
+																"type": "link"
 															},
 															"fragmentFields": [
 																{
@@ -299,7 +312,8 @@
 										{
 											"id": "element-text",
 											"value": {
-												"fragmentLink": {},
+												"fragmentLink": {
+												},
 												"text": {
 													"value_i18n": {
 														"en_US": "Specifications"
@@ -382,7 +396,8 @@
 										"pageElements": [
 											{
 												"definition": {
-													"collectionItemConfig": {}
+													"collectionItemConfig": {
+													}
 												},
 												"id": "741cbf96-fabe-8158-a9bc-d4552f0c1016",
 												"pageElements": [
@@ -406,11 +421,13 @@
 																},
 																{
 																	"id": "portraitMobile",
-																	"rowViewportDefinition": {}
+																	"rowViewportDefinition": {
+																	}
 																},
 																{
 																	"id": "tablet",
-																	"rowViewportDefinition": {}
+																	"rowViewportDefinition": {
+																	}
 																}
 															],
 															"verticalAlignment": "top"
@@ -426,11 +443,13 @@
 																			"id": "landscapeMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "portraitMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "tablet"
 																		}
 																	],
@@ -442,12 +461,14 @@
 																			"fragment": {
 																				"key": "BASIC_COMPONENT-paragraph"
 																			},
-																			"fragmentConfig": {},
+																			"fragmentConfig": {
+																			},
 																			"fragmentFields": [
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"mapping": {
 																								"fieldKey": "CPDefinitionSpecificationOptionValue_name",
@@ -484,11 +505,13 @@
 																			"id": "landscapeMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "portraitMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "tablet"
 																		}
 																	],
@@ -500,12 +523,14 @@
 																			"fragment": {
 																				"key": "BASIC_COMPONENT-paragraph"
 																			},
-																			"fragmentConfig": {},
+																			"fragmentConfig": {
+																			},
 																			"fragmentFields": [
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"mapping": {
 																								"fieldKey": "CPDefinitionSpecificationOptionValue_value",
@@ -571,7 +596,8 @@
 										{
 											"id": "element-text",
 											"value": {
-												"fragmentLink": {},
+												"fragmentLink": {
+												},
 												"text": {
 													"value_i18n": {
 														"en_US": "Attachments"
@@ -654,7 +680,8 @@
 										"pageElements": [
 											{
 												"definition": {
-													"collectionItemConfig": {}
+													"collectionItemConfig": {
+													}
 												},
 												"pageElements": [
 													{
@@ -677,11 +704,13 @@
 																},
 																{
 																	"id": "portraitMobile",
-																	"rowViewportDefinition": {}
+																	"rowViewportDefinition": {
+																	}
 																},
 																{
 																	"id": "tablet",
-																	"rowViewportDefinition": {}
+																	"rowViewportDefinition": {
+																	}
 																}
 															],
 															"verticalAlignment": "top"
@@ -697,11 +726,13 @@
 																			"id": "landscapeMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "portraitMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "tablet"
 																		}
 																	],
@@ -713,12 +744,14 @@
 																			"fragment": {
 																				"key": "BASIC_COMPONENT-paragraph"
 																			},
-																			"fragmentConfig": {},
+																			"fragmentConfig": {
+																			},
 																			"fragmentFields": [
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"mapping": {
 																								"fieldKey": "CPAttachmentFileEntry_title",
@@ -755,11 +788,13 @@
 																			"id": "landscapeMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "portraitMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "tablet"
 																		}
 																	],
@@ -772,9 +807,9 @@
 																				"key": "BASIC_COMPONENT-button"
 																			},
 																			"fragmentConfig": {
+																				"buttonSize": "sm",
 																				"buttonType": "link",
-																				"type": "link",
-																				"buttonSize": "sm"
+																				"type": "link"
 																			},
 																			"fragmentFields": [
 																				{
@@ -836,10 +871,10 @@
 		},
 		"themeName": "Classic",
 		"themeSettings": {
+			"lfr-theme:regular:show-footer": "false",
 			"lfr-theme:regular:show-header": "false",
-			"lfr-theme:regular:wrap-widget-page-content": "false",
 			"lfr-theme:regular:show-header-search": "false",
-			"lfr-theme:regular:show-footer": "false"
+			"lfr-theme:regular:wrap-widget-page-content": "false"
 		}
 	},
 	"version": 1.1

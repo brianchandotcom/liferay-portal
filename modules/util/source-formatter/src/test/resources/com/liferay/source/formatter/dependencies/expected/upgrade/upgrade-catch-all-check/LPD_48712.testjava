@@ -28,12 +28,13 @@ public class LPD_48712 {
 		CPAttachmentFileEntryServiceUtil.addCPAttachmentFileEntry(groupId, classNameId, classPK, fileEntryId, false, null, displayDateMonth, displayDateDay, displayDateYear, displayDateHour, displayDateMinute, expirationDateMonth, expirationDateDay, expirationDateYear, expirationDateHour, expirationDateMinute, neverExpire, true, titleMap, json, priority, type, serviceContext);
 		_cpAttachmentFileEntryLocalService.addCPAttachmentFileEntry(externalReferenceCode, userId, groupId, classNameId, classPK, fileEntryId, false, null, displayDateMonth, displayDateDay, displayDateYear, displayDateHour, displayDateMinute, expirationDateMonth, expirationDateDay, expirationDateYear, expirationDateHour, expirationDateMinute, neverExpire, true, titleMap, json, priority, type, serviceContext);
 		_cpAttachmentFileEntryService.addCPAttachmentFileEntry(groupId, classNameId, classPK, fileEntryId, false, null, displayDateMonth, displayDateDay, displayDateYear, displayDateHour, displayDateMinute, expirationDateMonth, expirationDateDay, expirationDateYear, expirationDateHour, expirationDateMinute, neverExpire, true, titleMap, json, priority, type, serviceContext);
-
-		@Reference
-		private CPAttachmentFileEntryLocalService _cpAttachmentFileEntryLocalService;
-
-		@Reference
-		private CPAttachmentFileEntryService _cpAttachmentFileEntryService;
 	}
+
+	@Reference
+	private CPAttachmentFileEntryLocalService
+		_cpAttachmentFileEntryLocalService;
+
+	@Reference
+	private CPAttachmentFileEntryService _cpAttachmentFileEntryService;
 
 }

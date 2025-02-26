@@ -162,7 +162,7 @@ public class DispatchTriggerLocalServiceTest {
 				dispatchTrigger.getDispatchTaskClusterMode()),
 			0, 0, 0, 0, 0, true, false, calendar.get(Calendar.MONTH),
 			calendar.get(Calendar.DATE), calendar.get(Calendar.YEAR),
-			calendar.get(Calendar.HOUR), calendar.get(Calendar.MINUTE),
+			calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE),
 			timeZoneId);
 
 		TimeZone timeZone = TimeZone.getTimeZone(timeZoneId);
@@ -699,11 +699,13 @@ public class DispatchTriggerLocalServiceTest {
 			dispatchTrigger.getDispatchTriggerId(), true, cronExpression,
 			dispatchTaskClusterMode, endCalendar.get(Calendar.MONTH),
 			endCalendar.get(Calendar.DAY_OF_MONTH),
-			endCalendar.get(Calendar.YEAR), endCalendar.get(Calendar.HOUR),
+			endCalendar.get(Calendar.YEAR),
+			endCalendar.get(Calendar.HOUR_OF_DAY),
 			endCalendar.get(Calendar.MINUTE), false, true,
 			startCalendar.get(Calendar.MONTH),
 			startCalendar.get(Calendar.DAY_OF_MONTH),
-			startCalendar.get(Calendar.YEAR), startCalendar.get(Calendar.HOUR),
+			startCalendar.get(Calendar.YEAR),
+			startCalendar.get(Calendar.HOUR_OF_DAY),
 			startCalendar.get(Calendar.MINUTE), "UTC");
 
 		Thread.sleep(1000);

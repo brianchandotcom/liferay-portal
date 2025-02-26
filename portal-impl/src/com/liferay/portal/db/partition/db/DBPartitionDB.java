@@ -97,10 +97,6 @@ public interface DBPartitionDB {
 
 	public boolean isDDLTransactional();
 
-	public boolean isPartitionCreated(
-			Connection connection, String partitionName)
-		throws SQLException;
-
 	public void setPartition(Connection connection, String partitionName)
 		throws SQLException;
 

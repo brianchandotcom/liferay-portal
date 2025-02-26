@@ -9,7 +9,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 
 import java.sql.Connection;
-import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -65,24 +64,6 @@ public class DBPartitionMySQLDB implements DBPartitionDB {
 
 	@Override
 	public boolean isDDLTransactional() {
-		return false;
-	}
-
-	@Override
-	public boolean isPartitionCreated(
-			Connection connection, String partitionName)
-		throws SQLException {
-
-		DatabaseMetaData databaseMetaData = connection.getMetaData();
-
-		try (ResultSet resultSet = databaseMetaData.getCatalogs()) {
-			while (resultSet.next()) {
-				if (partitionName.equals(resultSet.getString("TABLE_CAT"))) {
-					return true;
-				}
-			}
-		}
-
 		return false;
 	}
 

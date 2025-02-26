@@ -16,7 +16,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.sql.Connection;
-import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -199,24 +198,6 @@ public class DBPartitionPostgreSQLDB implements DBPartitionDB {
 	@Override
 	public boolean isDDLTransactional() {
 		return true;
-	}
-
-	@Override
-	public boolean isPartitionCreated(
-			Connection connection, String partitionName)
-		throws SQLException {
-
-		DatabaseMetaData databaseMetaData = connection.getMetaData();
-
-		try (ResultSet resultSet = databaseMetaData.getSchemas()) {
-			while (resultSet.next()) {
-				if (partitionName.equals(resultSet.getString("TABLE_SCHEM"))) {
-					return true;
-				}
-			}
-		}
-
-		return false;
 	}
 
 	@Override

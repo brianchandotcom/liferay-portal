@@ -3721,6 +3721,12 @@
 		"to": "updateCPAttachmentFileEntry(param#0#, param#1#, param#2#, false, null, param#3#, param#4#, param#5#, param#6#, param#7#, param#8#, param#9#, param#10#, param#11#, param#12#, param#13#, true, param#14#, param#15#, param#16#, param#17#, param#18#)"
 	},
 	{
+		"from": "SitemapManager.addURLElement",
+		"issueKey": "LPD-50074",
+		"newReference": "SitemapManager _sitemapManager",
+		"to": "_sitemapManager.addURLElement"
+	},
+	{
 		"from": "CookieKeys.COMMERCE_CONTINUE_AS_GUEST",
 		"issueKey": "LPS-159679",
 		"newImports": [

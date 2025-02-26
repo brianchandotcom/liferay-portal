@@ -11,12 +11,8 @@ import {Field} from '../contexts/StateContext';
 
 // Constants
 
-const FIELD_TYPE_DEFAULT_FIELD = {
-	text: {
-		label: Liferay.Language.get('text'),
-		name: 'text',
-		type: 'text',
-	},
+const FIELD_TYPE_LABEL = {
+	text: Liferay.Language.get('text'),
 } as const;
 
 export const FIELD_TYPE_ICON = {
@@ -35,5 +31,10 @@ export type FieldBusinessType =
 // Functions
 
 export function getDefaultField(type: Field['type']) {
-	return {...FIELD_TYPE_DEFAULT_FIELD[type], erc: uuidv4()};
+	return {
+		erc: uuidv4(),
+		label: FIELD_TYPE_LABEL[type],
+		name: normalizeName(type),
+		type,
+	};
 }

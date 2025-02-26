@@ -74,6 +74,11 @@ dependencies {
 	testImplementation project(":apps:static:portal-configuration:portal-configuration-persistence-api")
 }
 
+jarSources {
+	dependsOn buildCreoleLexer
+	dependsOn buildCreoleParser
+}
+
 liferayOSGi {
 	expandCompileInclude = true
 }

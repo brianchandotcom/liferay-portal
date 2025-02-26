@@ -6,7 +6,7 @@
 package com.liferay.object.service.impl;
 
 import com.liferay.object.constants.ObjectEntryFolderConstants;
-import com.liferay.object.entry.util.ObjectEntryFolderThreadLocal;
+import com.liferay.object.entry.folder.util.ObjectEntryFolderThreadLocal;
 import com.liferay.object.exception.DuplicateObjectEntryFolderExternalReferenceCodeException;
 import com.liferay.object.exception.ObjectEntryFolderNameException;
 import com.liferay.object.exception.ObjectEntryFolderScopeException;

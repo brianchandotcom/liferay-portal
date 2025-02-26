@@ -13,7 +13,7 @@ import React, {useMemo} from 'react';
 import {
 	FIELD_TYPE_ICON,
 	FieldType,
-} from '../../../structure_builder/utils/fieldType';
+} from '../../../structure_builder/utils/field';
 import {
 	Field,
 	useSelector,

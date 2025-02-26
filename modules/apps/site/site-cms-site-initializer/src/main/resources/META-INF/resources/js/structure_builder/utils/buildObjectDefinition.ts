@@ -5,7 +5,7 @@
 
 import {Field, State} from '../contexts/StateContext';
 import {ObjectDefinition} from '../types/ObjectDefinition';
-import {FIELD_TYPE_BUSINESS_TYPE} from './fieldType';
+import {FIELD_TYPE_BUSINESS_TYPE} from './field';
 
 export default function buildObjectDefinition({
 	fields = [],

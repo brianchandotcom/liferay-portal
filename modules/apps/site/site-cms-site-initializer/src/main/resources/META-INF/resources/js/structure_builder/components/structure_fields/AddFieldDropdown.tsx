@@ -15,7 +15,7 @@ import {
 	FIELD_TYPES,
 	FIELD_TYPE_LABEL,
 	getDefaultField,
-} from '../../../structure_builder/utils/fieldType';
+} from '../../../structure_builder/utils/field';
 
 export default function AddFieldDropdown({
 	triggerType = 'text',

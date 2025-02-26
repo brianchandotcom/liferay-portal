@@ -178,6 +178,10 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 	public LayoutSet fetchLayoutSetByLogoId(
 		boolean privateLayout, long logoId) {
 
+		if (logoId <= 0) {
+			return null;
+		}
+
 		List<LayoutSet> layoutSets = layoutSetPersistence.findByP_L(
 			privateLayout, logoId);
 

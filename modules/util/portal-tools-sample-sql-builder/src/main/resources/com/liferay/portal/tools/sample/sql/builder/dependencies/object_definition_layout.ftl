@@ -7,6 +7,8 @@
 		contentLayoutModels = dataFactory.newContentPageLayoutModels(groupId, name)
 	/>
 
+	${dataFactory.toInsertSQL(dataFactory.newSegmentsExperienceModel(contentLayoutModels))}
+
 	<#list contentLayoutModels as contentLayoutModel>
 		<#assign
 			fragmentEntryLinkModels = dataFactory.newObjectFieldsFragmentEntryLinkModels(contentLayoutModel, objectFieldModels)

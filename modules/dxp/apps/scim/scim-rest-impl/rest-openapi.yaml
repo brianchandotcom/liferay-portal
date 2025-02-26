@@ -97,12 +97,12 @@ components:
             properties:
                 op:
                     description:
-                        The method that should be used in the operation. Possible values add remove replace
+                        The method that should be used in the operation. Possible values are add, remove and replace.
                     pattern: "^[Aa][dd]|[Rr][emove]|[Rr][eplace]$"
                     type: string
                 path:
                     description:
-                        Add the path to specify the attribute/sub-attribute that should be updated.
+                        The path to the specify attribute/sub-attribute that should be updated.
                     type: string
                 value:
                     description:
@@ -121,7 +121,7 @@ components:
                     type: array
                 schemas:
                     description:
-                        the schema associated to this operation
+                        The schema associated to this operation.
                     items:
                         enum: ["urn:ietf:params:scim:api:messages:2.0:PatchOp"]
                         type: string

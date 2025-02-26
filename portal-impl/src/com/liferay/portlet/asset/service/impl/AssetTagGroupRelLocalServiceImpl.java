@@ -6,8 +6,11 @@
 package com.liferay.portlet.asset.service.impl;
 
 import com.liferay.asset.kernel.exception.AssetTagGroupRelGroupIdException;
+import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.model.AssetTagGroupRel;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -45,7 +48,11 @@ public class AssetTagGroupRelLocalServiceImpl
 			assetTagGroupRel.setUuid(serviceContext.getUuid());
 		}
 
-		return addAssetTagGroupRel(assetTagGroupRel);
+		assetTagGroupRel = addAssetTagGroupRel(assetTagGroupRel);
+
+		_reindexAssetTag(tagId);
+
+		return assetTagGroupRel;
 	}
 
 	@Override
@@ -81,6 +88,13 @@ public class AssetTagGroupRelLocalServiceImpl
 		for (long groupId : groupIds) {
 			addAssetTagGroupRel(groupId, tagId);
 		}
+	}
+
+	private void _reindexAssetTag(long tagId) throws PortalException {
+		Indexer<AssetTag> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			AssetTag.class);
+
+		indexer.reindex(AssetTag.class.getName(), tagId);
 	}
 
 }

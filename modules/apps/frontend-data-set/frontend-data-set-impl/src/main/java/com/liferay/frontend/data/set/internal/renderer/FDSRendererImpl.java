@@ -46,57 +46,65 @@ public class FDSRendererImpl implements FDSRenderer {
 		FDSSerializer fdsSerializer = _getFirstAvailableFDSSerializer(
 			fdsName, httpServletRequest);
 
-		if (fdsSerializer == null) {
-			_log.error("No FDSSerializer is available for " + fdsName);
-
-			return;
-		}
-
 		Map<String, Object> props = new HashMap<>();
 
 		if (baseProps != null) {
 			props.putAll(baseProps);
 		}
 
-		props.putAll(
-			HashMapBuilder.<String, Object>put(
-				"apiURL",
-				() -> fdsSerializer.serializeAPIURL(fdsName, httpServletRequest)
-			).put(
-				"bulkActions",
-				() -> fdsSerializer.serializeBulkActions(
-					fdsName, httpServletRequest)
-			).put(
-				"creationMenu",
-				() -> fdsSerializer.serializeCreationMenu(
-					fdsName, httpServletRequest)
-			).put(
-				"currentURL", _portal.getCurrentURL(httpServletRequest)
-			).put(
-				"filters",
-				() -> fdsSerializer.serializeFilters(
-					fdsName, httpServletRequest)
-			).put(
-				"itemsActions",
-				() -> fdsSerializer.serializeItemsActions(
-					fdsName, httpServletRequest)
-			).put(
-				"pagination",
-				() -> fdsSerializer.serializePagination(
-					fdsName, httpServletRequest)
-			).put(
-				"sorts",
-				() -> fdsSerializer.serializeSorts(fdsName, httpServletRequest)
-			).put(
-				"views",
-				() -> fdsSerializer.serializeViews(fdsName, httpServletRequest)
-			).build());
+		String finalPropsTransformer = propsTransformer;
 
-		String finalPropsTransformer = fdsSerializer.serializePropsTransformer(
-			fdsName, httpServletRequest);
+		if (fdsSerializer == null) {
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"No FDSSerializer is available for " + fdsName +
+						". Passing props through.");
+			}
+		}
+		else {
+			props.putAll(
+				HashMapBuilder.<String, Object>put(
+					"apiURL",
+					() -> fdsSerializer.serializeAPIURL(
+						fdsName, httpServletRequest)
+				).put(
+					"bulkActions",
+					() -> fdsSerializer.serializeBulkActions(
+						fdsName, httpServletRequest)
+				).put(
+					"creationMenu",
+					() -> fdsSerializer.serializeCreationMenu(
+						fdsName, httpServletRequest)
+				).put(
+					"currentURL", _portal.getCurrentURL(httpServletRequest)
+				).put(
+					"filters",
+					() -> fdsSerializer.serializeFilters(
+						fdsName, httpServletRequest)
+				).put(
+					"itemsActions",
+					() -> fdsSerializer.serializeItemsActions(
+						fdsName, httpServletRequest)
+				).put(
+					"pagination",
+					() -> fdsSerializer.serializePagination(
+						fdsName, httpServletRequest)
+				).put(
+					"sorts",
+					() -> fdsSerializer.serializeSorts(
+						fdsName, httpServletRequest)
+				).put(
+					"views",
+					() -> fdsSerializer.serializeViews(
+						fdsName, httpServletRequest)
+				).build());
 
-		if (Validator.isNull(finalPropsTransformer)) {
-			finalPropsTransformer = propsTransformer;
+			finalPropsTransformer = fdsSerializer.serializePropsTransformer(
+				fdsName, httpServletRequest);
+
+			if (Validator.isNull(finalPropsTransformer)) {
+				finalPropsTransformer = propsTransformer;
+			}
 		}
 
 		try {

@@ -118,38 +118,37 @@ public class ManifestHelperTask extends Task {
 
 	protected String getCpeId() {
 		try {
-			StringBuilder sb = new StringBuilder();
+			String patchVersion = "*";
+			String product = "portal";
+			String version =
+				ReleaseInfo.getVersion() +
+					project.getProperty("release.info.version.file.suffix");
 
 			if (ReleaseInfo.isDXP()) {
-				sb.append("cpe:2.3:a:liferay:dxp:");
-
 				String versionDisplayName = ReleaseInfo.getVersionDisplayName();
 
-				String qVersion = versionDisplayName.substring(
-					0, versionDisplayName.lastIndexOf(StringPool.PERIOD));
+				int periodLastIndex = versionDisplayName.lastIndexOf(
+					StringPool.PERIOD);
 
-				String patchVersion = versionDisplayName.substring(
-					versionDisplayName.lastIndexOf(StringPool.PERIOD) + 1);
+				patchVersion = versionDisplayName.substring(
+					periodLastIndex + 1);
 
 				if (patchVersion.endsWith(" LTS")) {
 					patchVersion = patchVersion.substring(
-						0, versionDisplayName.indexOf(" LTS"));
+						0, patchVersion.indexOf(" LTS"));
 				}
 
-				sb.append(qVersion.toLowerCase());
-				sb.append(StringPool.COLON);
-				sb.append(patchVersion);
-				sb.append(":*:*:*:*:*:*");
-			}
-			else {
-				sb.append("cpe:2.3:a:liferay:portal:");
-				sb.append(ReleaseInfo.getVersion());
-				sb.append(
-					project.getProperty("release.info.version.file.suffix"));
-				sb.append(":*:*:*:*:*:*:*");
+				product = "dxp";
+
+				String qVersion = versionDisplayName.substring(
+					0, periodLastIndex);
+
+				version = qVersion.toLowerCase();
 			}
 
-			return sb.toString();
+			return String.format(
+				"cpe:2.3:a:liferay:%s:%s:%s:*:*:*:*:*:*", product, version,
+				patchVersion);
 		}
 		catch (Exception exception) {
 			throw new RuntimeException(exception);

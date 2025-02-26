@@ -218,15 +218,6 @@ public class CompanyPersistenceTest {
 	}
 
 	@Test
-	public void testCountByMx() throws Exception {
-		_persistence.countByMx("");
-
-		_persistence.countByMx("null");
-
-		_persistence.countByMx((String)null);
-	}
-
-	@Test
 	public void testCountByLogoId() throws Exception {
 		_persistence.countByLogoId(RandomTestUtil.nextLong());
 
@@ -524,12 +515,6 @@ public class CompanyPersistenceTest {
 			ReflectionTestUtil.invoke(
 				company, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "webId"));
-
-		Assert.assertEquals(
-			company.getMx(),
-			ReflectionTestUtil.invoke(
-				company, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "mx"));
 	}
 
 	protected Company addCompany() throws Exception {

@@ -133,20 +133,6 @@ public class CompanyServiceWrapper
 	}
 
 	/**
-	 * Returns the company with the mail domian.
-	 *
-	 * @param mx the company's mail domain
-	 * @return Returns the company with the mail domain
-	 */
-	@Override
-	public com.liferay.portal.kernel.model.Company getCompanyByMx(
-			java.lang.String mx)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _companyService.getCompanyByMx(mx);
-	}
-
-	/**
 	 * Returns the company with the virtual host name.
 	 *
 	 * @param virtualHost the company's virtual host name

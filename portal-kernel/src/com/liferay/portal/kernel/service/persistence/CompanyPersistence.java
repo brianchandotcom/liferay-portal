@@ -73,48 +73,6 @@ public interface CompanyPersistence extends BasePersistence<Company> {
 	public int countByWebId(String webId);
 
 	/**
-	 * Returns the company where mx = &#63; or throws a <code>NoSuchCompanyException</code> if it could not be found.
-	 *
-	 * @param mx the mx
-	 * @return the matching company
-	 * @throws NoSuchCompanyException if a matching company could not be found
-	 */
-	public Company findByMx(String mx) throws NoSuchCompanyException;
-
-	/**
-	 * Returns the company where mx = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param mx the mx
-	 * @return the matching company, or <code>null</code> if a matching company could not be found
-	 */
-	public Company fetchByMx(String mx);
-
-	/**
-	 * Returns the company where mx = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param mx the mx
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the matching company, or <code>null</code> if a matching company could not be found
-	 */
-	public Company fetchByMx(String mx, boolean useFinderCache);
-
-	/**
-	 * Removes the company where mx = &#63; from the database.
-	 *
-	 * @param mx the mx
-	 * @return the company that was removed
-	 */
-	public Company removeByMx(String mx) throws NoSuchCompanyException;
-
-	/**
-	 * Returns the number of companies where mx = &#63;.
-	 *
-	 * @param mx the mx
-	 * @return the number of matching companies
-	 */
-	public int countByMx(String mx);
-
-	/**
 	 * Returns all the companies where logoId = &#63;.
 	 *
 	 * @param logoId the logo ID

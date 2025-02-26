@@ -123,16 +123,6 @@ public class CompanyServiceUtil {
 	}
 
 	/**
-	 * Returns the company with the mail domian.
-	 *
-	 * @param mx the company's mail domain
-	 * @return Returns the company with the mail domain
-	 */
-	public static Company getCompanyByMx(String mx) throws PortalException {
-		return getService().getCompanyByMx(mx);
-	}
-
-	/**
 	 * Returns the company with the virtual host name.
 	 *
 	 * @param virtualHost the company's virtual host name

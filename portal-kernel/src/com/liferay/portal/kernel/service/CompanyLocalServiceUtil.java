@@ -403,16 +403,6 @@ public class CompanyLocalServiceUtil {
 	}
 
 	/**
-	 * Returns the company with the mail domain.
-	 *
-	 * @param mx the company's mail domain
-	 * @return the company with the mail domain
-	 */
-	public static Company getCompanyByMx(String mx) throws PortalException {
-		return getService().getCompanyByMx(mx);
-	}
-
-	/**
 	 * Returns the company with the virtual host name.
 	 *
 	 * @param virtualHostname the company's virtual host name

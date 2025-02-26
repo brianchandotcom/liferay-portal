@@ -122,15 +122,6 @@ public interface CompanyService extends BaseService {
 	public Company getCompanyById(long companyId) throws PortalException;
 
 	/**
-	 * Returns the company with the mail domian.
-	 *
-	 * @param mx the company's mail domain
-	 * @return Returns the company with the mail domain
-	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Company getCompanyByMx(String mx) throws PortalException;
-
-	/**
 	 * Returns the company with the virtual host name.
 	 *
 	 * @param virtualHost the company's virtual host name

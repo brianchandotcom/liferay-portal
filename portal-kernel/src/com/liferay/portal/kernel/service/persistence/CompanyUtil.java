@@ -167,62 +167,6 @@ public class CompanyUtil {
 	}
 
 	/**
-	 * Returns the company where mx = &#63; or throws a <code>NoSuchCompanyException</code> if it could not be found.
-	 *
-	 * @param mx the mx
-	 * @return the matching company
-	 * @throws NoSuchCompanyException if a matching company could not be found
-	 */
-	public static Company findByMx(String mx)
-		throws com.liferay.portal.kernel.exception.NoSuchCompanyException {
-
-		return getPersistence().findByMx(mx);
-	}
-
-	/**
-	 * Returns the company where mx = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param mx the mx
-	 * @return the matching company, or <code>null</code> if a matching company could not be found
-	 */
-	public static Company fetchByMx(String mx) {
-		return getPersistence().fetchByMx(mx);
-	}
-
-	/**
-	 * Returns the company where mx = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param mx the mx
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the matching company, or <code>null</code> if a matching company could not be found
-	 */
-	public static Company fetchByMx(String mx, boolean useFinderCache) {
-		return getPersistence().fetchByMx(mx, useFinderCache);
-	}
-
-	/**
-	 * Removes the company where mx = &#63; from the database.
-	 *
-	 * @param mx the mx
-	 * @return the company that was removed
-	 */
-	public static Company removeByMx(String mx)
-		throws com.liferay.portal.kernel.exception.NoSuchCompanyException {
-
-		return getPersistence().removeByMx(mx);
-	}
-
-	/**
-	 * Returns the number of companies where mx = &#63;.
-	 *
-	 * @param mx the mx
-	 * @return the number of matching companies
-	 */
-	public static int countByMx(String mx) {
-		return getPersistence().countByMx(mx);
-	}
-
-	/**
 	 * Returns all the companies where logoId = &#63;.
 	 *
 	 * @param logoId the logo ID

@@ -460,19 +460,6 @@ public class CompanyLocalServiceWrapper
 	}
 
 	/**
-	 * Returns the company with the mail domain.
-	 *
-	 * @param mx the company's mail domain
-	 * @return the company with the mail domain
-	 */
-	@Override
-	public com.liferay.portal.kernel.model.Company getCompanyByMx(String mx)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return _companyLocalService.getCompanyByMx(mx);
-	}
-
-	/**
 	 * Returns the company with the virtual host name.
 	 *
 	 * @param virtualHostname the company's virtual host name

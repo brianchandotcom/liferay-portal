@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.impl.CompanyImpl;
 import com.liferay.portal.model.impl.CompanyModelImpl;
 
@@ -39,7 +38,6 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -251,195 +249,6 @@ public class CompanyPersistenceImpl
 
 	private static final String _FINDER_COLUMN_WEBID_WEBID_3 =
 		"(company.webId IS NULL OR company.webId = '')";
-
-	private FinderPath _finderPathFetchByMx;
-
-	/**
-	 * Returns the company where mx = &#63; or throws a <code>NoSuchCompanyException</code> if it could not be found.
-	 *
-	 * @param mx the mx
-	 * @return the matching company
-	 * @throws NoSuchCompanyException if a matching company could not be found
-	 */
-	@Override
-	public Company findByMx(String mx) throws NoSuchCompanyException {
-		Company company = fetchByMx(mx);
-
-		if (company == null) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			sb.append("mx=");
-			sb.append(mx);
-
-			sb.append("}");
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(sb.toString());
-			}
-
-			throw new NoSuchCompanyException(sb.toString());
-		}
-
-		return company;
-	}
-
-	/**
-	 * Returns the company where mx = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param mx the mx
-	 * @return the matching company, or <code>null</code> if a matching company could not be found
-	 */
-	@Override
-	public Company fetchByMx(String mx) {
-		return fetchByMx(mx, true);
-	}
-
-	/**
-	 * Returns the company where mx = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param mx the mx
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the matching company, or <code>null</code> if a matching company could not be found
-	 */
-	@Override
-	public Company fetchByMx(String mx, boolean useFinderCache) {
-		mx = Objects.toString(mx, "");
-
-		Object[] finderArgs = null;
-
-		if (useFinderCache) {
-			finderArgs = new Object[] {mx};
-		}
-
-		Object result = null;
-
-		if (useFinderCache) {
-			result = FinderCacheUtil.getResult(
-				_finderPathFetchByMx, finderArgs, this);
-		}
-
-		if (result instanceof Company) {
-			Company company = (Company)result;
-
-			if (!Objects.equals(mx, company.getMx())) {
-				result = null;
-			}
-		}
-
-		if (result == null) {
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(_SQL_SELECT_COMPANY_WHERE);
-
-			boolean bindMx = false;
-
-			if (mx.isEmpty()) {
-				sb.append(_FINDER_COLUMN_MX_MX_3);
-			}
-			else {
-				bindMx = true;
-
-				sb.append(_FINDER_COLUMN_MX_MX_2);
-			}
-
-			String sql = sb.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query query = session.createQuery(sql);
-
-				QueryPos queryPos = QueryPos.getInstance(query);
-
-				if (bindMx) {
-					queryPos.add(mx);
-				}
-
-				List<Company> list = query.list();
-
-				if (list.isEmpty()) {
-					if (useFinderCache) {
-						FinderCacheUtil.putResult(
-							_finderPathFetchByMx, finderArgs, list);
-					}
-				}
-				else {
-					if (list.size() > 1) {
-						Collections.sort(list, Collections.reverseOrder());
-
-						if (_log.isWarnEnabled()) {
-							if (!useFinderCache) {
-								finderArgs = new Object[] {mx};
-							}
-
-							_log.warn(
-								"CompanyPersistenceImpl.fetchByMx(String, boolean) with parameters (" +
-									StringUtil.merge(finderArgs) +
-										") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
-						}
-					}
-
-					Company company = list.get(0);
-
-					result = company;
-
-					cacheResult(company);
-				}
-			}
-			catch (Exception exception) {
-				throw processException(exception);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (Company)result;
-		}
-	}
-
-	/**
-	 * Removes the company where mx = &#63; from the database.
-	 *
-	 * @param mx the mx
-	 * @return the company that was removed
-	 */
-	@Override
-	public Company removeByMx(String mx) throws NoSuchCompanyException {
-		Company company = findByMx(mx);
-
-		return remove(company);
-	}
-
-	/**
-	 * Returns the number of companies where mx = &#63;.
-	 *
-	 * @param mx the mx
-	 * @return the number of matching companies
-	 */
-	@Override
-	public int countByMx(String mx) {
-		Company company = fetchByMx(mx);
-
-		if (company == null) {
-			return 0;
-		}
-
-		return 1;
-	}
-
-	private static final String _FINDER_COLUMN_MX_MX_2 = "company.mx = ?";
-
-	private static final String _FINDER_COLUMN_MX_MX_3 =
-		"(company.mx IS NULL OR company.mx = '')";
 
 	private FinderPath _finderPathWithPaginationFindByLogoId;
 	private FinderPath _finderPathWithoutPaginationFindByLogoId;
@@ -959,9 +768,6 @@ public class CompanyPersistenceImpl
 		FinderCacheUtil.putResult(
 			_finderPathFetchByWebId, new Object[] {company.getWebId()},
 			company);
-
-		FinderCacheUtil.putResult(
-			_finderPathFetchByMx, new Object[] {company.getMx()}, company);
 	}
 
 	private int _valueObjectFinderCacheListThreshold;
@@ -1051,10 +857,6 @@ public class CompanyPersistenceImpl
 
 		FinderCacheUtil.putResult(
 			_finderPathFetchByWebId, args, companyModelImpl);
-
-		args = new Object[] {companyModelImpl.getMx()};
-
-		FinderCacheUtil.putResult(_finderPathFetchByMx, args, companyModelImpl);
 	}
 
 	/**
@@ -1511,10 +1313,6 @@ public class CompanyPersistenceImpl
 			FINDER_CLASS_NAME_ENTITY, "fetchByWebId",
 			new String[] {String.class.getName()}, new String[] {"webId"},
 			true);
-
-		_finderPathFetchByMx = new FinderPath(
-			FINDER_CLASS_NAME_ENTITY, "fetchByMx",
-			new String[] {String.class.getName()}, new String[] {"mx"}, true);
 
 		_finderPathWithPaginationFindByLogoId = new FinderPath(
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByLogoId",

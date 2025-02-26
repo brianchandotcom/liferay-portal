@@ -352,15 +352,6 @@ public interface CompanyLocalService
 	public Company getCompanyById(long companyId) throws PortalException;
 
 	/**
-	 * Returns the company with the mail domain.
-	 *
-	 * @param mx the company's mail domain
-	 * @return the company with the mail domain
-	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Company getCompanyByMx(String mx) throws PortalException;
-
-	/**
 	 * Returns the company with the virtual host name.
 	 *
 	 * @param virtualHostname the company's virtual host name

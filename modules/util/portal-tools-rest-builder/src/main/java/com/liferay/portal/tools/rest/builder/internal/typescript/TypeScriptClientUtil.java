@@ -216,21 +216,21 @@ public class TypeScriptClientUtil {
 
 		Map<String, PathItem> pathItems = openAPIYAML.getPathItems();
 
-		Map<String, List<Map<String, Object>>> tagOperationsMap =
+		Map<String, List<Map<String, Object>>> operationsDataByTag =
 			new HashMap<>();
 
 		for (Map.Entry<String, PathItem> entry : pathItems.entrySet()) {
 			for (Operation operation :
 					OpenAPIParserUtil.getOperations(entry.getValue())) {
 
-				List<String> tags = operation.getTags();
+				List<String> operationTags = operation.getTags();
 
-				List<Map<String, Object>> operations =
-					tagOperationsMap.computeIfAbsent(
-						tags.get(0), k -> new ArrayList<>());
+				List<Map<String, Object>> operationsData =
+					operationsDataByTag.computeIfAbsent(
+						operationTags.get(0), k -> new ArrayList<>());
 
-				operations.add(
-					_buildOperationMap(
+				operationsData.add(
+					_buildOperationDataMap(
 						configYAML, openAPIYAML, operation, entry.getKey()));
 			}
 		}
@@ -238,20 +238,20 @@ public class TypeScriptClientUtil {
 		Map<String, Map<String, Object>> apiContexts = new HashMap<>();
 
 		for (Map.Entry<String, List<Map<String, Object>>> entry :
-				tagOperationsMap.entrySet()) {
+			operationsDataByTag.entrySet()) {
 
 			Map<String, Object> apiContext = HashMapBuilder.<String, Object>put(
 				"classname", entry.getKey() + "Api"
 			).put(
-				"operations", entry.getValue()
+				"operationsData", entry.getValue()
 			).build();
 
 			Set<Map<String, String>> allImports = new LinkedHashSet<>();
 
-			for (Map<String, Object> tagOperation : entry.getValue()) {
-				if (tagOperation.containsKey("imports")) {
+			for (Map<String, Object> operationData : entry.getValue()) {
+				if (operationData.containsKey("imports")) {
 					Collection<Map<String, String>> imports =
-						(Collection<Map<String, String>>)tagOperation.remove(
+						(Collection<Map<String, String>>)operationData.remove(
 							"imports");
 
 					allImports.addAll(imports);
@@ -347,11 +347,11 @@ public class TypeScriptClientUtil {
 		return modelContext;
 	}
 
-	private static Map<String, Object> _buildOperationMap(
+	private static Map<String, Object> _buildOperationDataMap(
 		ConfigYAML configYAML, OpenAPIYAML openAPIYAML, Operation operation,
 		String path) {
 
-		Map<String, Object> operationMap = HashMapBuilder.<String, Object>put(
+		Map<String, Object> operationDataMap = HashMapBuilder.<String, Object>put(
 			"httpMethod",
 			StringUtil.toUpperCase(OpenAPIParserUtil.getHTTPMethod(operation))
 		).put(
@@ -383,17 +383,17 @@ public class TypeScriptClientUtil {
 			}
 
 			if (!produces.isEmpty()) {
-				operationMap.put("produces", new ArrayList<>(produces));
+				operationDataMap.put("produces", new ArrayList<>(produces));
 			}
 		}
 
 		Set<Map<String, String>> imports = new HashSet<>();
 
 		Collection<Map<String, Object>> operationParams =
-			_getAllOperationParams(operation, operationMap, imports);
+			_getAllOperationParams(operation, operationDataMap, imports);
 
 		if (!operationParams.isEmpty()) {
-			operationMap.put("allParams", operationParams);
+			operationDataMap.put("allParams", operationParams);
 		}
 
 		String returnType = null;
@@ -429,13 +429,13 @@ public class TypeScriptClientUtil {
 			}
 		}
 
-		operationMap.put("returnType", returnType);
+		operationDataMap.put("returnType", returnType);
 
 		if (!imports.isEmpty()) {
-			operationMap.put("imports", new ArrayList<>(imports));
+			operationDataMap.put("imports", new ArrayList<>(imports));
 		}
 
-		return operationMap;
+		return operationDataMap;
 	}
 
 	private static void _createBuildGradleFile(

@@ -10,13 +10,14 @@ import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import React, {useMemo} from 'react';
 
+import {FIELD_TYPE_ICON} from '../../../structure_builder/utils/fieldType';
 import {
 	Field,
 	FieldType,
+	useSelector,
 	useStateDispatch,
-	useStructureLabel,
-} from '../../../structure_builder/contexts/StateContext';
-import {FIELD_TYPE_ICON} from '../../../structure_builder/utils/fieldType';
+} from '../../contexts/StateContext';
+import selectStructureLabel from '../../selectors/selectStructureLabel';
 
 type TreeItem = {
 	children?: TreeItem[];
@@ -29,7 +30,7 @@ type TreeItem = {
 
 export default function FieldsTree({fields}: {fields: Field[]}) {
 	const dispatch = useStateDispatch();
-	const structureLabel = useStructureLabel();
+	const structureLabel = useSelector(selectStructureLabel);
 
 	const items: TreeItem[] = useMemo(() => {
 		return [

@@ -10,17 +10,18 @@ import ClayLayout from '@clayui/layout';
 import React from 'react';
 
 import {
-	useSelectedItem,
+	useSelector,
 	useStateDispatch,
-	useStructureError,
-	useStructureLabel,
 } from '../contexts/StateContext';
+import selectSelectedItem from '../selectors/selectSelectedItem';
+import selectStructureError from '../selectors/selectStructureError';
+import selectStructureLabel from '../selectors/selectStructureLabel';
 import StructureFieldSettings from './StructureFieldSettings';
 
 export function StructureSettings() {
 	const dispatch = useStateDispatch();
-	const error = useStructureError();
-	const label = useStructureLabel();
+	const error = useSelector(selectStructureError);
+	const label = useSelector(selectStructureLabel);
 
 	return (
 		<ClayLayout.ContainerFluid view>
@@ -55,7 +56,7 @@ export function StructureSettings() {
 }
 
 export default function () {
-	const selectedItem = useSelectedItem();
+	const selectedItem = useSelector(selectSelectedItem);
 
 	if (selectedItem.type === 'structure') {
 		return <StructureSettings />;

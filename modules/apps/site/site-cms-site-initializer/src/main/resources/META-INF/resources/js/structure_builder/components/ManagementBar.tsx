@@ -11,13 +11,14 @@ import {ManagementToolbar, openToast} from 'frontend-js-components-web';
 import React from 'react';
 
 import {
+	useSelector,
 	useStateDispatch,
-	useStructureFields,
-	useStructureId,
-	useStructureLabel,
-	useStructureName,
-	useStructureStatus,
 } from '../contexts/StateContext';
+import selectStructureFields from '../selectors/selectStructureFields';
+import selectStructureId from '../selectors/selectStructureId';
+import selectStructureLabel from '../selectors/selectStructureLabel';
+import selectStructureName from '../selectors/selectStructureName';
+import selectStructureStatus from '../selectors/selectStructureStatus';
 import StructureService from '../services/StructureService';
 
 export default function ManagementBar() {
@@ -63,11 +64,11 @@ export default function ManagementBar() {
 
 function SaveButton() {
 	const dispatch = useStateDispatch();
-	const fields = useStructureFields();
-	const label = useStructureLabel();
-	const status = useStructureStatus();
-	const structureId = useStructureId();
-	const structureName = useStructureName();
+	const fields = useSelector(selectStructureFields);
+	const label = useSelector(selectStructureLabel);
+	const status = useSelector(selectStructureStatus);
+	const structureId = useSelector(selectStructureId);
+	const structureName = useSelector(selectStructureName);
 
 	const create = async () => {
 		const {id, name, objectFields} = await StructureService.createStructure(
@@ -136,9 +137,9 @@ function SaveButton() {
 
 function PublishButton() {
 	const dispatch = useStateDispatch();
-	const id = useStructureId();
-	const label = useStructureLabel();
-	const status = useStructureStatus();
+	const id = useSelector(selectStructureId);
+	const label = useSelector(selectStructureLabel);
+	const status = useSelector(selectStructureStatus);
 
 	if (status === 'published') {
 		return null;

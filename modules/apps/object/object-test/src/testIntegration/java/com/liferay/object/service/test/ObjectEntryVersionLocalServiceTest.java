@@ -11,6 +11,7 @@ import com.liferay.object.field.builder.TextObjectFieldBuilder;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectEntryVersion;
+import com.liferay.object.related.models.test.util.ObjectEntryTestUtil;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectEntryVersionLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
@@ -69,15 +70,13 @@ public class ObjectEntryVersionLocalServiceTest {
 						"textObjectFieldName"
 					).build()));
 
-		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
-			TestPropsValues.getUserId(), 0,
-			objectDefinition.getObjectDefinitionId(),
+		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
+			0, objectDefinition.getObjectDefinitionId(),
 			HashMapBuilder.<String, Serializable>put(
 				"externalReferenceCode", "externalReferenceCodeValue"
 			).put(
 				"textObjectFieldName", "textObjectFieldValue1"
-			).build(),
-			ServiceContextTestUtil.getServiceContext());
+			).build());
 
 		_assertObjectEntryVersions(
 			Arrays.asList(

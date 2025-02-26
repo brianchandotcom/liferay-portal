@@ -24,6 +24,7 @@ public class AccountBriefUtil {
 					accountEntry::getExternalReferenceCode);
 				setId(accountEntry::getAccountEntryId);
 				setName(accountEntry::getName);
+				setType(accountEntry::getType);
 			}
 		};
 	}

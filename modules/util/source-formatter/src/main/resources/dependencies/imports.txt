@@ -178,6 +178,7 @@ com.liferay.journal.model.JournalFolderConstants=com.liferay.journal.constants.J
 com.liferay.journal.model.JournalStructureConstants=com.liferay.journal.constants.JournalStructureConstants
 com.liferay.layout.admin.kernel.util.Sitemap=com.liferay.site.util.Sitemap
 com.liferay.layout.admin.kernel.util.SitemapURLProvider=com.liferay.site.util.SitemapURLProvider
+com.liferay.layout.admin.kernel.util.SitemapUtil=com.liferay.site.manager.SitemapManager
 com.liferay.layout.display.page.LayoutDisplayPageProviderTracker=com.liferay.layout.display.page.LayoutDisplayPageProviderRegistry
 com.liferay.layout.page.template.LayoutPageTemplateEntryTypeConstants=com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants
 com.liferay.mail.model.FileAttachment=com.liferay.mail.kernel.model.FileAttachment

@@ -1,10 +1,10 @@
 import * as http from 'http';
 
-<#list apiContexts as apiContext>
+<#list apisContext?sort_by("classname") as apiContext>
 	import {${apiContext.classname}} from './${apiContext.classname?uncap_first}';
 </#list>
 
-<#list apiContexts as apiContext>
+<#list apisContext?sort_by("classname") as apiContext>
 	export * from './${apiContext.classname?uncap_first}';
 </#list>
 
@@ -25,7 +25,7 @@ export class HttpError extends Error {
 }
 
 export const APIS = [
-<#list apiContexts as apiContext>
+<#list apisContext?sort_by("classname") as apiContext>
 	${apiContext.classname},
 </#list>
 ];

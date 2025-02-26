@@ -224,7 +224,8 @@ public class PasswordPolicyLocalServiceImpl
 	public PasswordPolicy getDefaultPasswordPolicy(long companyId)
 		throws PortalException {
 
-		return passwordPolicyPersistence.findByC_DP(companyId, true);
+		return passwordPolicyPersistence.fetchByC_N(
+			companyId, PropsValues.PASSWORDS_DEFAULT_POLICY_NAME);
 	}
 
 	@Override
@@ -268,8 +269,8 @@ public class PasswordPolicyLocalServiceImpl
 			user.getCompanyId());
 
 		if (count == 1) {
-			return passwordPolicyPersistence.findByC_DP(
-				user.getCompanyId(), true);
+			return passwordPolicyPersistence.fetchByC_N(
+				user.getCompanyId(), PropsValues.PASSWORDS_DEFAULT_POLICY_NAME);
 		}
 
 		PasswordPolicyRel passwordPolicyRel =
@@ -285,8 +286,8 @@ public class PasswordPolicyLocalServiceImpl
 			user.getUserId());
 
 		if (organizationIds.length == 0) {
-			return passwordPolicyPersistence.findByC_DP(
-				user.getCompanyId(), true);
+			return passwordPolicyPersistence.fetchByC_N(
+				user.getCompanyId(), PropsValues.PASSWORDS_DEFAULT_POLICY_NAME);
 		}
 
 		return getPasswordPolicy(user.getCompanyId(), organizationIds);

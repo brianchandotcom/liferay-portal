@@ -81,6 +81,10 @@ public class FDSRendererImpl implements FDSRenderer {
 				() -> fdsSerializer.serializeItemsActions(
 					fdsName, httpServletRequest)
 			).put(
+				"pagination",
+				() -> fdsSerializer.serializePagination(
+					fdsName, httpServletRequest)
+			).put(
 				"sorts",
 				() -> fdsSerializer.serializeSorts(fdsName, httpServletRequest)
 			).put(

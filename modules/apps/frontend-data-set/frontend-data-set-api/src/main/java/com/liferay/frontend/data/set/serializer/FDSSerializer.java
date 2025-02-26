@@ -10,6 +10,7 @@ import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.data.set.model.FDSSortItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONObject;
 
 import java.util.List;
 
@@ -48,6 +49,9 @@ public interface FDSSerializer {
 		String fdsName, HttpServletRequest httpServletRequest);
 
 	public List<FDSActionDropdownItem> serializeItemsActions(
+		String fdsName, HttpServletRequest httpServletRequest);
+
+	public JSONObject serializePagination(
 		String fdsName, HttpServletRequest httpServletRequest);
 
 	public String serializePropsTransformer(

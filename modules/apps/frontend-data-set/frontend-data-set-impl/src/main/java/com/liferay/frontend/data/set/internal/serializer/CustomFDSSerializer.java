@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -49,6 +50,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterContext;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.pagination.Page;
@@ -267,6 +269,53 @@ public class CustomFDSSerializer
 
 				return fdsActionDropdownItem;
 			});
+	}
+
+	@Override
+	public JSONObject serializePagination(
+		String fdsName, HttpServletRequest httpServletRequest) {
+
+		Map<String, Object> properties = getDataSetObjectEntryProperties(
+			fdsName, httpServletRequest);
+
+		return JSONUtil.put(
+			"deltas",
+			() -> {
+				String[] listOfItemsPerPage = StringUtil.split(
+					String.valueOf(properties.get("listOfItemsPerPage")),
+					StringPool.COMMA_AND_SPACE);
+
+				if (ArrayUtil.isNotEmpty(listOfItemsPerPage)) {
+					return JSONUtil.toJSONArray(
+						listOfItemsPerPage,
+						(String itemsPerPage) -> {
+							if (GetterUtil.getInteger(itemsPerPage) < 1) {
+								return null;
+							}
+
+							return JSONUtil.put(
+								"label", GetterUtil.getInteger(itemsPerPage));
+						});
+				}
+
+				return JSONUtil.toJSONArray(
+					ListUtil.fromArray(
+						PropsValues.SEARCH_CONTAINER_PAGE_DELTA_VALUES),
+					itemsPerPage -> JSONUtil.put("label", itemsPerPage));
+			}
+		).put(
+			"initialDelta",
+			() -> {
+				Integer defaultItemsPerPage = GetterUtil.getInteger(
+					String.valueOf(properties.get("defaultItemsPerPage")));
+
+				if (defaultItemsPerPage > 1) {
+					return defaultItemsPerPage;
+				}
+
+				return PropsValues.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA;
+			}
+		);
 	}
 
 	@Override

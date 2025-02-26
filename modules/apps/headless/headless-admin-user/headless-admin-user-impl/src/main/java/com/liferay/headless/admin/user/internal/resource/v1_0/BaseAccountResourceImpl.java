@@ -7,6 +7,7 @@ package com.liferay.headless.admin.user.internal.resource.v1_0;
 
 import com.liferay.headless.admin.user.dto.v1_0.Account;
 import com.liferay.headless.admin.user.resource.v1_0.AccountResource;
+import com.liferay.lazy.referencing.kernel.LazyReferencingThreadLocal;
 import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
@@ -1625,66 +1626,79 @@ public abstract class BaseAccountResourceImpl
 			Collection<Account> accounts, Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeFunction<Account, Account, Exception> accountUnsafeFunction =
-			null;
+		try {
+			LazyReferencingThreadLocal.setLazyReferencingEnabled(true);
 
-		String createStrategy = (String)parameters.getOrDefault(
-			"createStrategy", "INSERT");
+			UnsafeFunction<Account, Account, Exception> accountUnsafeFunction =
+				null;
 
-		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
-			accountUnsafeFunction = account -> postAccount(account);
-		}
+			String createStrategy = (String)parameters.getOrDefault(
+				"createStrategy", "INSERT");
 
-		if (StringUtil.equalsIgnoreCase(createStrategy, "UPSERT")) {
-			String updateStrategy = (String)parameters.getOrDefault(
-				"updateStrategy", "UPDATE");
-
-			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				accountUnsafeFunction =
-					account -> putAccountByExternalReferenceCode(
-						account.getExternalReferenceCode(), account);
+			if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
+				accountUnsafeFunction = account -> postAccount(account);
 			}
 
-			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
-				accountUnsafeFunction = account -> {
-					Account persistedAccount = null;
+			if (StringUtil.equalsIgnoreCase(createStrategy, "UPSERT")) {
+				String updateStrategy = (String)parameters.getOrDefault(
+					"updateStrategy", "UPDATE");
 
-					try {
-						Account getAccount = getAccountByExternalReferenceCode(
-							account.getExternalReferenceCode());
+				if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
+					accountUnsafeFunction =
+						account -> putAccountByExternalReferenceCode(
+							account.getExternalReferenceCode(), account);
+				}
 
-						persistedAccount = patchAccount(
-							getAccount.getId() != null ? getAccount.getId() :
-								_parseLong((String)parameters.get("accountId")),
-							account);
-					}
-					catch (NoSuchModelException noSuchModelException) {
-						persistedAccount = postAccount(account);
-					}
+				if (StringUtil.equalsIgnoreCase(
+						updateStrategy, "PARTIAL_UPDATE")) {
 
-					return persistedAccount;
-				};
+					accountUnsafeFunction = account -> {
+						Account persistedAccount = null;
+
+						try {
+							Account getAccount =
+								getAccountByExternalReferenceCode(
+									account.getExternalReferenceCode());
+
+							persistedAccount = patchAccount(
+								getAccount.getId() != null ?
+									getAccount.getId() :
+										_parseLong(
+											(String)parameters.get(
+												"accountId")),
+								account);
+						}
+						catch (NoSuchModelException noSuchModelException) {
+							persistedAccount = postAccount(account);
+						}
+
+						return persistedAccount;
+					};
+				}
+			}
+
+			if (accountUnsafeFunction == null) {
+				throw new NotSupportedException(
+					"Create strategy \"" + createStrategy +
+						"\" is not supported for Account");
+			}
+
+			if (contextBatchUnsafeBiConsumer != null) {
+				contextBatchUnsafeBiConsumer.accept(
+					accounts, accountUnsafeFunction);
+			}
+			else if (contextBatchUnsafeConsumer != null) {
+				contextBatchUnsafeConsumer.accept(
+					accounts, accountUnsafeFunction::apply);
+			}
+			else {
+				for (Account account : accounts) {
+					accountUnsafeFunction.apply(account);
+				}
 			}
 		}
-
-		if (accountUnsafeFunction == null) {
-			throw new NotSupportedException(
-				"Create strategy \"" + createStrategy +
-					"\" is not supported for Account");
-		}
-
-		if (contextBatchUnsafeBiConsumer != null) {
-			contextBatchUnsafeBiConsumer.accept(
-				accounts, accountUnsafeFunction);
-		}
-		else if (contextBatchUnsafeConsumer != null) {
-			contextBatchUnsafeConsumer.accept(
-				accounts, accountUnsafeFunction::apply);
-		}
-		else {
-			for (Account account : accounts) {
-				accountUnsafeFunction.apply(account);
-			}
+		finally {
+			LazyReferencingThreadLocal.setLazyReferencingEnabled(false);
 		}
 	}
 

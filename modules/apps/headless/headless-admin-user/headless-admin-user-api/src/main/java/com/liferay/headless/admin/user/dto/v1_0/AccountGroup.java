@@ -95,7 +95,7 @@ public class AccountGroup implements Serializable {
 	@GraphQLField(
 		description = "The list of accounts associated with this account group."
 	)
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected AccountBrief[] accountBriefs;
 
 	@JsonIgnore
@@ -184,7 +184,7 @@ public class AccountGroup implements Serializable {
 	}
 
 	@GraphQLField(description = "The user who created the account group.")
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Creator creator;
 
 	@JsonIgnore

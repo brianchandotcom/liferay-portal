@@ -105,6 +105,20 @@ public class AccountBriefSerDes {
 			sb.append("]");
 		}
 
+		if (accountBrief.getType() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"type\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(accountBrief.getType()));
+
+			sb.append("\"");
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -154,6 +168,13 @@ public class AccountBriefSerDes {
 			map.put("roleBriefs", String.valueOf(accountBrief.getRoleBriefs()));
 		}
 
+		if (accountBrief.getType() == null) {
+			map.put("type", null);
+		}
+		else {
+			map.put("type", String.valueOf(accountBrief.getType()));
+		}
+
 		return map;
 	}
 
@@ -182,6 +203,9 @@ public class AccountBriefSerDes {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "roleBriefs")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "type")) {
 				return false;
 			}
 
@@ -224,6 +248,11 @@ public class AccountBriefSerDes {
 					}
 
 					accountBrief.setRoleBriefs(roleBriefsArray);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "type")) {
+				if (jsonParserFieldValue != null) {
+					accountBrief.setType((String)jsonParserFieldValue);
 				}
 			}
 		}

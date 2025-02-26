@@ -137,6 +137,88 @@ public class Creator implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _contentTypeSupplier;
 
+	@Schema(description = "The user's email address.")
+	public String getEmailAddress() {
+		if (_emailAddressSupplier != null) {
+			emailAddress = _emailAddressSupplier.get();
+
+			_emailAddressSupplier = null;
+		}
+
+		return emailAddress;
+	}
+
+	public void setEmailAddress(String emailAddress) {
+		this.emailAddress = emailAddress;
+
+		_emailAddressSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setEmailAddress(
+		UnsafeSupplier<String, Exception> emailAddressUnsafeSupplier) {
+
+		_emailAddressSupplier = () -> {
+			try {
+				return emailAddressUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(description = "The user's email address.")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String emailAddress;
+
+	@JsonIgnore
+	private Supplier<String> _emailAddressSupplier;
+
+	@Schema(description = "The user's external reference code.")
+	public String getExternalReferenceCode() {
+		if (_externalReferenceCodeSupplier != null) {
+			externalReferenceCode = _externalReferenceCodeSupplier.get();
+
+			_externalReferenceCodeSupplier = null;
+		}
+
+		return externalReferenceCode;
+	}
+
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		this.externalReferenceCode = externalReferenceCode;
+
+		_externalReferenceCodeSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setExternalReferenceCode(
+		UnsafeSupplier<String, Exception> externalReferenceCodeUnsafeSupplier) {
+
+		_externalReferenceCodeSupplier = () -> {
+			try {
+				return externalReferenceCodeUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(description = "The user's external reference code.")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String externalReferenceCode;
+
+	@JsonIgnore
+	private Supplier<String> _externalReferenceCodeSupplier;
+
 	@Schema(description = "The user's surname (last name).")
 	public String getFamilyName() {
 		if (_familyNameSupplier != null) {
@@ -172,7 +254,7 @@ public class Creator implements Serializable {
 	}
 
 	@GraphQLField(description = "The user's surname (last name).")
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String familyName;
 
 	@JsonIgnore
@@ -213,7 +295,7 @@ public class Creator implements Serializable {
 	}
 
 	@GraphQLField(description = "The user's first name.")
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String givenName;
 
 	@JsonIgnore
@@ -379,6 +461,47 @@ public class Creator implements Serializable {
 	@JsonIgnore
 	private Supplier<String> _profileURLSupplier;
 
+	@Schema(description = "The user's screen name.")
+	public String getScreenName() {
+		if (_screenNameSupplier != null) {
+			screenName = _screenNameSupplier.get();
+
+			_screenNameSupplier = null;
+		}
+
+		return screenName;
+	}
+
+	public void setScreenName(String screenName) {
+		this.screenName = screenName;
+
+		_screenNameSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setScreenName(
+		UnsafeSupplier<String, Exception> screenNameUnsafeSupplier) {
+
+		_screenNameSupplier = () -> {
+			try {
+				return screenNameUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(description = "The user's screen name.")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String screenName;
+
+	@JsonIgnore
+	private Supplier<String> _screenNameSupplier;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -434,6 +557,38 @@ public class Creator implements Serializable {
 			sb.append("\"");
 
 			sb.append(_escape(contentType));
+
+			sb.append("\"");
+		}
+
+		String emailAddress = getEmailAddress();
+
+		if (emailAddress != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"emailAddress\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(emailAddress));
+
+			sb.append("\"");
+		}
+
+		String externalReferenceCode = getExternalReferenceCode();
+
+		if (externalReferenceCode != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"externalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(externalReferenceCode));
 
 			sb.append("\"");
 		}
@@ -526,6 +681,22 @@ public class Creator implements Serializable {
 			sb.append("\"");
 
 			sb.append(_escape(profileURL));
+
+			sb.append("\"");
+		}
+
+		String screenName = getScreenName();
+
+		if (screenName != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"screenName\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(screenName));
 
 			sb.append("\"");
 		}

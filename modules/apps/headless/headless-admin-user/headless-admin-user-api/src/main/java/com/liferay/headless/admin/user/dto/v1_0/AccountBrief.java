@@ -88,7 +88,7 @@ public class AccountBrief implements Serializable {
 	}
 
 	@GraphQLField(description = "The account's external reference code.")
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalReferenceCode;
 
 	@JsonIgnore
@@ -166,7 +166,7 @@ public class AccountBrief implements Serializable {
 	}
 
 	@GraphQLField(description = "The account's name.")
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String name;
 
 	@JsonIgnore
@@ -213,6 +213,45 @@ public class AccountBrief implements Serializable {
 
 	@JsonIgnore
 	private Supplier<RoleBrief[]> _roleBriefsSupplier;
+
+	@Schema(description = "The account's type.")
+	public String getType() {
+		if (_typeSupplier != null) {
+			type = _typeSupplier.get();
+
+			_typeSupplier = null;
+		}
+
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+
+		_typeSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setType(UnsafeSupplier<String, Exception> typeUnsafeSupplier) {
+		_typeSupplier = () -> {
+			try {
+				return typeUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(description = "The account's type.")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String type;
+
+	@JsonIgnore
+	private Supplier<String> _typeSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -305,6 +344,22 @@ public class AccountBrief implements Serializable {
 			}
 
 			sb.append("]");
+		}
+
+		String type = getType();
+
+		if (type != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"type\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(type));
+
+			sb.append("\"");
 		}
 
 		sb.append("}");

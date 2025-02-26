@@ -8,6 +8,7 @@ package com.liferay.headless.admin.user.internal.resource.v1_0;
 import com.liferay.headless.admin.user.dto.v1_0.Organization;
 import com.liferay.headless.admin.user.dto.v1_0.UserAccount;
 import com.liferay.headless.admin.user.resource.v1_0.OrganizationResource;
+import com.liferay.lazy.referencing.kernel.LazyReferencingThreadLocal;
 import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
@@ -1680,69 +1681,81 @@ public abstract class BaseOrganizationResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		UnsafeFunction<Organization, Organization, Exception>
-			organizationUnsafeFunction = null;
+		try {
+			LazyReferencingThreadLocal.setLazyReferencingEnabled(true);
 
-		String createStrategy = (String)parameters.getOrDefault(
-			"createStrategy", "INSERT");
+			UnsafeFunction<Organization, Organization, Exception>
+				organizationUnsafeFunction = null;
 
-		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
-			organizationUnsafeFunction = organization -> postOrganization(
-				organization);
-		}
+			String createStrategy = (String)parameters.getOrDefault(
+				"createStrategy", "INSERT");
 
-		if (StringUtil.equalsIgnoreCase(createStrategy, "UPSERT")) {
-			String updateStrategy = (String)parameters.getOrDefault(
-				"updateStrategy", "UPDATE");
-
-			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-				organizationUnsafeFunction =
-					organization -> putOrganizationByExternalReferenceCode(
-						organization.getExternalReferenceCode(), organization);
+			if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
+				organizationUnsafeFunction = organization -> postOrganization(
+					organization);
 			}
 
-			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
-				organizationUnsafeFunction = organization -> {
-					Organization persistedOrganization = null;
+			if (StringUtil.equalsIgnoreCase(createStrategy, "UPSERT")) {
+				String updateStrategy = (String)parameters.getOrDefault(
+					"updateStrategy", "UPDATE");
 
-					try {
-						Organization getOrganization =
-							getOrganizationByExternalReferenceCode(
-								organization.getExternalReferenceCode());
-
-						persistedOrganization = patchOrganization(
-							getOrganization.getId() != null ?
-								getOrganization.getId() :
-									(String)parameters.get("organizationId"),
+				if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
+					organizationUnsafeFunction =
+						organization -> putOrganizationByExternalReferenceCode(
+							organization.getExternalReferenceCode(),
 							organization);
-					}
-					catch (NoSuchModelException noSuchModelException) {
-						persistedOrganization = postOrganization(organization);
-					}
+				}
 
-					return persistedOrganization;
-				};
+				if (StringUtil.equalsIgnoreCase(
+						updateStrategy, "PARTIAL_UPDATE")) {
+
+					organizationUnsafeFunction = organization -> {
+						Organization persistedOrganization = null;
+
+						try {
+							Organization getOrganization =
+								getOrganizationByExternalReferenceCode(
+									organization.getExternalReferenceCode());
+
+							persistedOrganization = patchOrganization(
+								getOrganization.getId() != null ?
+									getOrganization.getId() :
+										(String)parameters.get(
+											"organizationId"),
+								organization);
+						}
+						catch (NoSuchModelException noSuchModelException) {
+							persistedOrganization = postOrganization(
+								organization);
+						}
+
+						return persistedOrganization;
+					};
+				}
+			}
+
+			if (organizationUnsafeFunction == null) {
+				throw new NotSupportedException(
+					"Create strategy \"" + createStrategy +
+						"\" is not supported for Organization");
+			}
+
+			if (contextBatchUnsafeBiConsumer != null) {
+				contextBatchUnsafeBiConsumer.accept(
+					organizations, organizationUnsafeFunction);
+			}
+			else if (contextBatchUnsafeConsumer != null) {
+				contextBatchUnsafeConsumer.accept(
+					organizations, organizationUnsafeFunction::apply);
+			}
+			else {
+				for (Organization organization : organizations) {
+					organizationUnsafeFunction.apply(organization);
+				}
 			}
 		}
-
-		if (organizationUnsafeFunction == null) {
-			throw new NotSupportedException(
-				"Create strategy \"" + createStrategy +
-					"\" is not supported for Organization");
-		}
-
-		if (contextBatchUnsafeBiConsumer != null) {
-			contextBatchUnsafeBiConsumer.accept(
-				organizations, organizationUnsafeFunction);
-		}
-		else if (contextBatchUnsafeConsumer != null) {
-			contextBatchUnsafeConsumer.accept(
-				organizations, organizationUnsafeFunction::apply);
-		}
-		else {
-			for (Organization organization : organizations) {
-				organizationUnsafeFunction.apply(organization);
-			}
+		finally {
+			LazyReferencingThreadLocal.setLazyReferencingEnabled(false);
 		}
 	}
 

@@ -68,6 +68,20 @@ public class RoleBriefSerDes {
 			sb.append(roleBrief.getId());
 		}
 
+		if (roleBrief.getKey() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"key\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(roleBrief.getKey()));
+
+			sb.append("\"");
+		}
+
 		if (roleBrief.getName() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -136,6 +150,13 @@ public class RoleBriefSerDes {
 			map.put("id", String.valueOf(roleBrief.getId()));
 		}
 
+		if (roleBrief.getKey() == null) {
+			map.put("key", null);
+		}
+		else {
+			map.put("key", String.valueOf(roleBrief.getKey()));
+		}
+
 		if (roleBrief.getName() == null) {
 			map.put("name", null);
 		}
@@ -180,6 +201,9 @@ public class RoleBriefSerDes {
 			else if (Objects.equals(jsonParserFieldName, "id")) {
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "key")) {
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {
 				return false;
 			}
@@ -207,6 +231,11 @@ public class RoleBriefSerDes {
 			else if (Objects.equals(jsonParserFieldName, "id")) {
 				if (jsonParserFieldValue != null) {
 					roleBrief.setId(Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "key")) {
+				if (jsonParserFieldValue != null) {
+					roleBrief.setKey((String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "name")) {

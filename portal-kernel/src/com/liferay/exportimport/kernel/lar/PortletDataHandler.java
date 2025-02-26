@@ -290,6 +290,8 @@ public interface PortletDataHandler {
 		return true;
 	}
 
+	public boolean isModelCountSupported();
+
 	/**
 	 * Returns whether the data exported by this handler should be included by
 	 * default when publishing to live. This should only be <code>true</code>

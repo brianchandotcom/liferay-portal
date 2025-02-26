@@ -4,6 +4,6 @@
 	"htmlPath": "index.html",
 	"icon": "tabs",
 	"jsPath": "index.js",
-	"name": "dialect-tabs",
+	"name": "Dialect Tabs",
 	"type": "component"
 }

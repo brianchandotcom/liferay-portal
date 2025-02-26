@@ -13,7 +13,7 @@ import React, {
 } from 'react';
 
 import {ObjectField} from '../types/ObjectDefinition';
-import {FieldType} from '../utils/fieldType';
+import {FieldType} from '../utils/field';
 import findAvailableFieldName from '../utils/findAvailableFieldName';
 import updateFields from '../utils/updateFields';
 

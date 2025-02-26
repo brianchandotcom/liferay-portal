@@ -1,7 +1,0 @@
-<?xml version="1.0"?>
-
-<Configuration strict="true">
-	<Loggers>
-		<Logger level="INFO" name="operation.com.liferay.portal.instances.internal.BasePortalInstanceOperation" />
-	</Loggers>
-</Configuration>

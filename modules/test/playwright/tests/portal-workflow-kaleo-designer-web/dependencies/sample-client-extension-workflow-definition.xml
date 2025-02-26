@@ -1,0 +1,117 @@
+<?xml version="1.0"?>
+
+<workflow-definition
+	xmlns="urn:liferay.com:liferay-workflow_7.4.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="urn:liferay.com:liferay-workflow_7.4.0 http://www.liferay.com/dtd/liferay-workflow-definition_7_4_0.xsd"
+>
+	<name>21321b2f-07b2-d1bf-ed68-fae2addb60bc</name>
+	<version>5</version>
+	<state>
+		<name>7377d575-8949-4cdc-8efe-23ff465a8ffc</name>
+		<description>Start</description>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						414.00001452318503,
+						-45.39474435757753
+					]
+				}
+			]]>
+		</metadata>
+		<initial>true</initial>
+		<labels>
+			<label language-id="en_US">
+				Start
+			</label>
+		</labels>
+		<transitions>
+			<transition>
+				<labels>
+					<label language-id="es_ES">
+						Custom Label
+					</label>
+				</labels>
+				<name>c33174dd-6748-4487-ba0e-466aabb72212</name>
+				<target>Timestamp</target>
+				<default>true</default>
+			</transition>
+		</transitions>
+	</state>
+	<state>
+		<name>e3fdbd72-34ee-4741-9365-cd4d729ad148</name>
+		<description>End</description>
+		<metadata>
+			<![CDATA[
+				{
+					"terminal": true,
+					"xy": [
+						305,
+						401
+					]
+				}
+			]]>
+		</metadata>
+		<actions>
+			<action>
+				<name>Approve</name>
+				<description></description>
+				<status>0</status>
+				<priority>1</priority>
+				<execution-type>onEntry</execution-type>
+			</action>
+		</actions>
+		<labels>
+			<label language-id="en_US">
+				End
+			</label>
+		</labels>
+	</state>
+	<task>
+		<name>Timestamp</name>
+		<description>Task</description>
+		<metadata>
+			<![CDATA[
+				{
+					"xy": [
+						368.54690828103526,
+						151.4999876043965
+					]
+				}
+			]]>
+		</metadata>
+		<actions>
+			<action>
+				<name>timestamp</name>
+				<description></description>
+				<script>
+					<![CDATA[]]>
+				</script>
+				<script-language>function#liferay-sample-etc-spring-boot-workflow-action-1</script-language>
+				<priority>1</priority>
+				<execution-type>onEntry</execution-type>
+			</action>
+		</actions>
+		<assignments>
+			<user />
+		</assignments>
+		<labels>
+			<label language-id="en_US">
+				Task
+			</label>
+		</labels>
+		<transitions>
+			<transition>
+				<labels>
+					<label language-id="es_ES">
+						Approve
+					</label>
+				</labels>
+				<name>approve</name>
+				<target>e3fdbd72-34ee-4741-9365-cd4d729ad148</target>
+				<default>true</default>
+			</transition>
+		</transitions>
+	</task>
+</workflow-definition>

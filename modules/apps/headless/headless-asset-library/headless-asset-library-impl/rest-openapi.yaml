@@ -74,6 +74,11 @@ components:
                     format: int64
                     readOnly: true
                     type: integer
+                usersCount:
+                    description:
+                        The asset library's users count.
+                    readOnly: true
+                    type: integer
 info:
     description:
         "A Java client JAR is available for use with the group ID 'com.liferay', artifact ID
@@ -314,6 +319,116 @@ paths:
                       type: integer
                 - in: path
                   name: toSiteId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/AssetLibrary"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/AssetLibrary"
+            tags: ["AssetLibrary"]
+    /asset-libraries/{assetLibraryId}/user-accounts/{userId}:
+        delete:
+            description:
+                Removes the user from the asset library. Returns the asset library.
+            operationId: deleteAssetLibraryUserAccountUser
+            parameters:
+                - in: path
+                  name: assetLibraryId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: userId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/AssetLibrary"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/AssetLibrary"
+            tags: ["AssetLibrary"]
+        post:
+            description:
+                Adds the user to the asset library. Returns the asset library.
+            operationId: postAssetLibraryUserAccountUser
+            parameters:
+                - in: path
+                  name: assetLibraryId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: userId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/AssetLibrary"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/AssetLibrary"
+            tags: ["AssetLibrary"]
+    /asset-libraries/{assetLibraryId}/user-groups/{userGroupId}:
+        delete:
+            description:
+                Removes the user group from the asset library. Returns the asset library.
+            operationId: deleteAssetLibraryUserGroup
+            parameters:
+                - in: path
+                  name: assetLibraryId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: userGroupId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/AssetLibrary"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/AssetLibrary"
+            tags: ["AssetLibrary"]
+        post:
+            description:
+                Adds the user group to the asset library. Returns the asset library.
+            operationId: postAssetLibraryUserGroup
+            parameters:
+                - in: path
+                  name: assetLibraryId
+                  required: true
+                  schema:
+                      format: int64
+                      type: integer
+                - in: path
+                  name: userGroupId
                   required: true
                   schema:
                       format: int64

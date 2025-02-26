@@ -120,6 +120,7 @@ export class DataTablePage {
 		};
 		this.newButton = page
 			.getByTestId('creationMenuNewButton')
+			.or(page.locator('.management-bar'))
 			.getByText('New');
 		this.orderButton = page.getByLabel('Order');
 		this.orderMenuItem = (option: string) => {
@@ -173,13 +174,27 @@ export class DataTablePage {
 	}
 
 	async changeView(view: string) {
-		await this.selectViewButton.click();
-
 		if (view === 'List') {
+			await expect(async () => {
+				await this.selectViewButton.click();
+
+				await expect(this.selectViewListButton).toBeVisible({
+					timeout: 100,
+				});
+			}).toPass();
+
 			await this.selectViewListButton.click();
 
 			return;
 		}
+
+		await expect(async () => {
+			await this.selectViewButton.click();
+
+			await expect(this.selectViewTableButton).toBeVisible({
+				timeout: 100,
+			});
+		}).toPass();
 
 		await this.selectViewTableButton.click();
 	}

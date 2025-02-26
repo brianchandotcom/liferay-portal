@@ -18,5 +18,6 @@ type Segment = {
 
 type SegmentsEntry = {
 	groupId: string;
+	nameCurrentValue: string;
 	segmentsEntryId: string;
 };

@@ -100,11 +100,13 @@ export function ModalUnbindObjectDefinition({
 										'please-confirm-before-unbinding-the-root-x'
 									),
 									[
-										stringUtils.getLocalizableLabel(
-											rootObjectDefinition?.defaultLanguageId as Liferay.Language.Locale,
-											rootObjectDefinition?.label,
-											rootObjectDefinition?.name
-										),
+										stringUtils.getLocalizableLabel({
+											fallbackLabel:
+												rootObjectDefinition?.name,
+											fallbackLanguageId:
+												rootObjectDefinition?.defaultLanguageId as Liferay.Language.Locale,
+											labels: rootObjectDefinition?.label,
+										}),
 									]
 								)
 							: sub(
@@ -112,16 +114,20 @@ export function ModalUnbindObjectDefinition({
 										'please-confirm-before-unbinding-the-object-x-from-the-root-x'
 									),
 									[
-										stringUtils.getLocalizableLabel(
-											selectedObjectDefinitionToUnbind?.defaultLanguageId as Liferay.Language.Locale,
-											selectedObjectDefinitionToUnbind?.label,
-											selectedObjectDefinitionToUnbind?.name
-										),
-										stringUtils.getLocalizableLabel(
-											rootObjectDefinition?.defaultLanguageId as Liferay.Language.Locale,
-											rootObjectDefinition?.label,
-											rootObjectDefinition?.name
-										),
+										stringUtils.getLocalizableLabel({
+											fallbackLabel:
+												selectedObjectDefinitionToUnbind?.name,
+											fallbackLanguageId:
+												selectedObjectDefinitionToUnbind?.defaultLanguageId as Liferay.Language.Locale,
+											labels: selectedObjectDefinitionToUnbind?.label,
+										}),
+										stringUtils.getLocalizableLabel({
+											fallbackLabel:
+												rootObjectDefinition?.name,
+											fallbackLanguageId:
+												rootObjectDefinition?.defaultLanguageId as Liferay.Language.Locale,
+											labels: rootObjectDefinition?.label,
+										}),
 									]
 								)}
 					</span>

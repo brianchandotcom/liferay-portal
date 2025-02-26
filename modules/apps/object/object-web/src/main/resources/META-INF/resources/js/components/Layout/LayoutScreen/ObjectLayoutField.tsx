@@ -62,11 +62,11 @@ export function ObjectLayoutField({
 							}}
 						/>
 					}
-					title={stringUtils.getLocalizableLabel(
-						creationLanguageId,
-						objectField.label,
-						objectField.name
-					)}
+					title={stringUtils.getLocalizableLabel({
+						fallbackLabel: objectField.name,
+						fallbackLanguageId: creationLanguageId,
+						labels: objectField.label,
+					})}
 				>
 					<small className="text-secondary">
 						{objectFieldBusinessTypeInfo?.label} |{' '}

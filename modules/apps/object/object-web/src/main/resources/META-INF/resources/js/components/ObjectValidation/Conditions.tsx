@@ -70,11 +70,11 @@ export function Conditions({
 	const objectFieldsItems = useMemo(() => {
 		return customObjectFields.map(
 			({externalReferenceCode, label, name}) => ({
-				label: stringUtils.getLocalizableLabel(
-					creationLanguageId,
-					label,
-					name
-				),
+				label: stringUtils.getLocalizableLabel({
+					fallbackLabel: name,
+					fallbackLanguageId: creationLanguageId,
+					labels: label,
+				}),
 				value: externalReferenceCode,
 			})
 		);

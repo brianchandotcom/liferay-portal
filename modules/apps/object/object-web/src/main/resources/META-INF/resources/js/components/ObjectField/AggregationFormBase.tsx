@@ -90,22 +90,24 @@ export function AggregationFormBase({
 
 	const filteredObjectRelationships = useMemo(() => {
 		return objectRelationships?.map(({label, name}) => ({
-			label: stringUtils.getLocalizableLabel(
-				creationLanguageId2 as Liferay.Language.Locale,
-				label,
-				name
-			),
+			label: stringUtils.getLocalizableLabel({
+				fallbackLabel: name,
+				fallbackLanguageId:
+					creationLanguageId2 as Liferay.Language.Locale,
+				labels: label,
+			}),
 			value: name,
 		})) as LabelValueObject[];
 	}, [creationLanguageId2, objectRelationships]);
 
 	const filteredObjectRelationshipFields = useMemo(() => {
 		return objectRelationshipFields?.map(({label, name}) => ({
-			label: stringUtils.getLocalizableLabel(
-				creationLanguageId2 as Liferay.Language.Locale,
-				label,
-				name
-			),
+			label: stringUtils.getLocalizableLabel({
+				fallbackLabel: name,
+				fallbackLanguageId:
+					creationLanguageId2 as Liferay.Language.Locale,
+				labels: label,
+			}),
 			value: name,
 		}));
 	}, [creationLanguageId2, objectRelationshipFields]);

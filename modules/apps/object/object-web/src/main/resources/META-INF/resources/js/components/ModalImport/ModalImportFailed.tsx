@@ -85,11 +85,12 @@ export function ModalImportFailed({
 									importedObjectDefinition.name
 								)
 							: undefined,
-						label: stringUtils.getLocalizableLabel(
-							importedObjectDefinition.defaultLanguageId,
-							importedObjectDefinition.label,
-							importedObjectDefinition.name
-						),
+						label: stringUtils.getLocalizableLabel({
+							fallbackLabel: importedObjectDefinition.name,
+							fallbackLanguageId:
+								importedObjectDefinition.defaultLanguageId,
+							labels: importedObjectDefinition.label,
+						}),
 						success: !failedObjectDefinition,
 					} as ImportedObjectDefinitionsStatus;
 				});

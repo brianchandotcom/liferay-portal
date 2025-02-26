@@ -12,7 +12,6 @@ import {stringUtils} from '@liferay/object-js-components-web';
 import {createResourceURL} from 'frontend-js-web';
 import React, {SetStateAction} from 'react';
 
-import {defaultLanguageId} from '../../utils/constants';
 import {exportObjectEntity} from '../../utils/exportObjectEntity';
 import {ModalImportProperties} from './ViewObjectDefinitions';
 
@@ -179,11 +178,11 @@ export default function ObjectFoldersSideBar({
 							>
 								<span className="lfr__object-web-view-object-definitions-object-folder-list-item-label">
 									<Text truncate>
-										{stringUtils.getLocalizableLabel(
-											defaultLanguageId,
-											currentObjectFolder.label,
-											currentObjectFolder.name
-										)}
+										{stringUtils.getLocalizableLabel({
+											fallbackLabel:
+												currentObjectFolder.name,
+											labels: currentObjectFolder.label,
+										})}
 									</Text>
 								</span>
 							</ClayList.Item>

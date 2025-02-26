@@ -123,11 +123,11 @@ export default function Fields({
 					handleTriggerDeleteObjectField({
 						baseResourceURL,
 						objectFieldId: itemData?.id,
-						objectFieldLabel: stringUtils.getLocalizableLabel(
-							creationLanguageId!,
-							itemData.label,
-							itemData.name
-						),
+						objectFieldLabel: stringUtils.getLocalizableLabel({
+							fallbackLabel: itemData.name,
+							fallbackLanguageId: creationLanguageId!,
+							labels: itemData.label,
+						}),
 						onAfterDelete: () => {
 							setTimeout(() => window.location.reload(), 1500);
 						},
@@ -247,11 +247,13 @@ export default function Fields({
 										Liferay.Language.get(
 											'the-object-field-x-cannot-be-deleted-because-it-is-the-only-custom-object-field-of-the-published-object-definition'
 										),
-										`${stringUtils.getLocalizableLabel(
-											creationLanguageId as Liferay.Language.Locale,
-											deletedObjectField.label,
-											deletedObjectField.name
-										)}`
+										`${stringUtils.getLocalizableLabel({
+											fallbackLabel:
+												deletedObjectField.name,
+											fallbackLanguageId:
+												creationLanguageId as Liferay.Language.Locale,
+											labels: deletedObjectField.label,
+										})}`
 									)}
 								</Text>
 							) : (
@@ -260,11 +262,13 @@ export default function Fields({
 										Liferay.Language.get(
 											'the-object-field-x-cannot-be-deleted-because-it-is-used-in-a-unique-composite-key-validation'
 										),
-										`${stringUtils.getLocalizableLabel(
-											creationLanguageId as Liferay.Language.Locale,
-											deletedObjectField.label,
-											deletedObjectField.name
-										)}`
+										`${stringUtils.getLocalizableLabel({
+											fallbackLabel:
+												deletedObjectField.name,
+											fallbackLanguageId:
+												creationLanguageId as Liferay.Language.Locale,
+											labels: deletedObjectField.label,
+										})}`
 									)}
 								</Text>
 							)

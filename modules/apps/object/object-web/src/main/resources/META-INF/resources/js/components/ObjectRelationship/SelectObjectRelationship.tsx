@@ -30,11 +30,12 @@ export function SelectObjectRelationship({
 		() =>
 			objectFields.map(({label, name}) => {
 				return {
-					label: stringUtils.getLocalizableLabel(
-						creationLanguageId as Liferay.Language.Locale,
-						label,
-						name
-					),
+					label: stringUtils.getLocalizableLabel({
+						fallbackLabel: name,
+						fallbackLanguageId:
+							creationLanguageId as Liferay.Language.Locale,
+						labels: label,
+					}),
 					value: name,
 				};
 			}),

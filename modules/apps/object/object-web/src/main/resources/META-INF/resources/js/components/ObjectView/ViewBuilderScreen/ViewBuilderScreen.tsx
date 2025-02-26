@@ -46,11 +46,11 @@ const ViewBuilderScreen: React.FC<
 
 		parentWindow.Liferay.fire('openModalSelectObjectFields', {
 			getName: ({label, name}: ObjectField) =>
-				stringUtils.getLocalizableLabel(
-					creationLanguageId,
-					label,
-					name
-				),
+				stringUtils.getLocalizableLabel({
+					fallbackLabel: name,
+					fallbackLanguageId: creationLanguageId,
+					labels: label,
+				}),
 			header: Liferay.Language.get('add-columns'),
 			items: objectFields.map((objectField) => {
 				return {

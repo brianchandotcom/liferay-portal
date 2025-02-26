@@ -221,10 +221,10 @@ export default function EditObjectValidation({
 	return (
 		<SidePanelForm
 			onSubmit={handleSubmit}
-			title={stringUtils.getLocalizableLabel(
-				creationLanguageId,
-				values.name
-			)}
+			title={stringUtils.getLocalizableLabel({
+				fallbackLanguageId: creationLanguageId,
+				labels: values.name,
+			})}
 		>
 			<ClayTabs className="side-panel-iframe__tabs">
 				{TABS.map(({label}, index) =>

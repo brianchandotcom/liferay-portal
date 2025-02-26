@@ -10,7 +10,6 @@ import {stringUtils} from '@liferay/object-js-components-web';
 import classNames from 'classnames';
 import React from 'react';
 
-import {defaultLanguageId} from '../../../utils/constants';
 import {useObjectFolderContext} from '../ModelBuilderContext/objectFolderContext';
 import {TYPES} from '../ModelBuilderContext/typesEnum';
 
@@ -47,18 +46,17 @@ export default function EditObjectFolderHeader({
 									Liferay.Language.get(
 										'object-folder-label'
 									) +
-									`: ${stringUtils.getLocalizableLabel(
-										defaultLanguageId,
-										selectedObjectFolder.label,
-										selectedObjectFolder.name
-									)}`
+									`: ${stringUtils.getLocalizableLabel({
+										fallbackLabel:
+											selectedObjectFolder.name,
+										labels: selectedObjectFolder.label,
+									})}`
 								}
 							>
-								{stringUtils.getLocalizableLabel(
-									defaultLanguageId,
-									selectedObjectFolder.label,
-									selectedObjectFolder.name
-								)}
+								{stringUtils.getLocalizableLabel({
+									fallbackLabel: selectedObjectFolder.name,
+									labels: selectedObjectFolder.label,
+								})}
 							</span>
 						</ClayTooltipProvider>
 					</div>

@@ -37,11 +37,12 @@ export function EntryDisplayContainer({
 	const titleFieldOptions = useMemo(() => {
 		return nonRelationshipObjectFieldsInfo?.map(({label, name}) => {
 			return {
-				label: stringUtils.getLocalizableLabel(
-					values.defaultLanguageId as Liferay.Language.Locale,
-					label,
-					name
-				),
+				label: stringUtils.getLocalizableLabel({
+					fallbackLabel: name,
+					fallbackLanguageId:
+						values.defaultLanguageId as Liferay.Language.Locale,
+					labels: label,
+				}),
 				value: name,
 			};
 		});

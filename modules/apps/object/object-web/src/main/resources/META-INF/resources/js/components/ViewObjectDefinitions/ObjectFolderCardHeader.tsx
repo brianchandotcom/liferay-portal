@@ -9,8 +9,6 @@ import ClayIcon from '@clayui/icon';
 import {stringUtils} from '@liferay/object-js-components-web';
 import React from 'react';
 
-import {defaultLanguageId} from '../../utils/constants';
-
 interface ObjectFolderCardHeaderProps {
 	items: IItem[];
 	modelBuilderURL: string;
@@ -27,11 +25,10 @@ export default function ObjectFolderCardHeader({
 			<div>
 				<div className="d-flex lfr__object-web-view-object-definitions-title-kebab">
 					<span className="lfr__object-web-view-object-definitions-title mb-0">
-						{stringUtils.getLocalizableLabel(
-							defaultLanguageId,
-							selectedObjectFolder?.label,
-							selectedObjectFolder?.name
-						)}
+						{stringUtils.getLocalizableLabel({
+							fallbackLabel: selectedObjectFolder?.name,
+							labels: selectedObjectFolder?.label,
+						})}
 					</span>
 
 					{selectedObjectFolder && (

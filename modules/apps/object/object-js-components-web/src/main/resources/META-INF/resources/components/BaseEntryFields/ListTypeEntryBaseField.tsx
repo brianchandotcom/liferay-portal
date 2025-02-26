@@ -44,10 +44,10 @@ export function ListTypeEntryBaseField({
 					error={error}
 					items={picklistItems.map((item) => ({
 						label: creationLanguageId
-							? getLocalizableLabel(
-									creationLanguageId,
-									item.name_i18n
-								)
+							? getLocalizableLabel({
+									fallbackLanguageId: creationLanguageId,
+									labels: item.name_i18n,
+								})
 							: item.name,
 						value: item.key,
 					}))}

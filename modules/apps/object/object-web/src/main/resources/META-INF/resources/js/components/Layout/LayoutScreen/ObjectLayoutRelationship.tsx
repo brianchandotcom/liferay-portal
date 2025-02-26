@@ -31,11 +31,11 @@ export function ObjectLayoutRelationship({
 		<>
 			<Panel key={`field_${objectRelationshipId}`}>
 				<PanelSimpleBody
-					title={stringUtils.getLocalizableLabel(
-						creationLanguageId,
-						objectRelationship.label,
-						objectRelationship.name
-					)}
+					title={stringUtils.getLocalizableLabel({
+						fallbackLabel: objectRelationship.name,
+						fallbackLanguageId: creationLanguageId,
+						labels: objectRelationship.label,
+					})}
 				>
 					<small className="text-secondary">
 						{Liferay.Language.get('relationship')} |{' '}

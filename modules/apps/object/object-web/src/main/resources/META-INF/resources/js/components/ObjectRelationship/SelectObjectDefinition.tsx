@@ -51,11 +51,12 @@ export default function SelectObjectDefinition({
 	const objectDefinitionsItems = useMemo(() => {
 		return objectDefinitions.map(
 			({externalReferenceCode, label, name, system}) => ({
-				label: stringUtils.getLocalizableLabel(
-					creationLanguageId as Liferay.Language.Locale,
-					label,
-					name
-				),
+				label: stringUtils.getLocalizableLabel({
+					fallbackLabel: name,
+					fallbackLanguageId:
+						creationLanguageId as Liferay.Language.Locale,
+					labels: label,
+				}),
 				system,
 				value: externalReferenceCode,
 			})

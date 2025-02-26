@@ -161,11 +161,13 @@ export function BuilderScreen({
 															)
 													: filter
 														? viewColumn?.objectFieldBusinessType
-														: getLocalizableLabel(
-																creationLanguageId as Liferay.Language.Locale,
-																viewColumn?.label,
-																viewColumn.objectFieldName
-															)
+														: getLocalizableLabel({
+																fallbackLabel:
+																	viewColumn.objectFieldName,
+																fallbackLanguageId:
+																	creationLanguageId as Liferay.Language.Locale,
+																labels: viewColumn?.label,
+															})
 											}
 											thirdColumnValues={
 												viewColumn?.valueList ??

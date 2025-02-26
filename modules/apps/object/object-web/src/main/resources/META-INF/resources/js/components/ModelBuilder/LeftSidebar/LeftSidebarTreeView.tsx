@@ -107,10 +107,11 @@ export default function LeftSidebarTreeView({
 						message: sub(
 							Liferay.Language.get('x-was-moved-successfully'),
 							`<strong>${Liferay.Util.escapeHTML(
-								stringUtils.getLocalizableLabel(
-									objectDefinitionToBeMoved.defaultLanguageId,
-									objectDefinitionToBeMoved.label
-								)
+								stringUtils.getLocalizableLabel({
+									fallbackLanguageId:
+										objectDefinitionToBeMoved.defaultLanguageId,
+									labels: objectDefinitionToBeMoved.label,
+								})
 							)}</strong>`
 						),
 						type: 'success',

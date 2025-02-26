@@ -107,10 +107,10 @@ const ObjectLayoutTabs: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 										/>
 									</>
 								}
-								title={stringUtils.getLocalizableLabel(
-									creationLanguageId,
-									name
-								)}
+								title={stringUtils.getLocalizableLabel({
+									fallbackLanguageId: creationLanguageId,
+									labels: name,
+								})}
 								type="regular"
 							/>
 
@@ -132,8 +132,11 @@ const ObjectLayoutTabs: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 													collapsable={collapsable}
 													key={`box_${boxIndex}`}
 													label={stringUtils.getLocalizableLabel(
-														creationLanguageId,
-														name
+														{
+															fallbackLanguageId:
+																creationLanguageId,
+															labels: name,
+														}
 													)}
 													objectLayoutRows={
 														objectLayoutRows

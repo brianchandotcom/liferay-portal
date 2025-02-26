@@ -337,11 +337,12 @@ export function ObjectRelationshipFormBase({
 								name="currentObjectInput"
 								readOnly={true}
 								required
-								value={stringUtils.getLocalizableLabel(
-									objectDefinition2?.defaultLanguageId as Liferay.Language.Locale,
-									objectDefinition2?.label,
-									objectDefinition2?.name
-								)}
+								value={stringUtils.getLocalizableLabel({
+									fallbackLabel: objectDefinition2?.name,
+									fallbackLanguageId:
+										objectDefinition2?.defaultLanguageId as Liferay.Language.Locale,
+									labels: objectDefinition2?.label,
+								})}
 							/>
 						) : (
 							<SelectObjectDefinition
@@ -380,11 +381,12 @@ export function ObjectRelationshipFormBase({
 								name="currentObjectInput"
 								readOnly={true}
 								required
-								value={stringUtils.getLocalizableLabel(
-									objectDefinition1?.defaultLanguageId as Liferay.Language.Locale,
-									objectDefinition1?.label,
-									objectDefinition1?.name
-								)}
+								value={stringUtils.getLocalizableLabel({
+									fallbackLabel: objectDefinition1?.name,
+									fallbackLanguageId:
+										objectDefinition1?.defaultLanguageId as Liferay.Language.Locale,
+									labels: objectDefinition1?.label,
+								})}
 							/>
 						) : (
 							<SelectObjectDefinition

@@ -232,11 +232,11 @@ const viewReducer = (state: TState, action: TAction) => {
 						newObjectViewColumns.push({
 							...viewColumn,
 							defaultSort: false,
-							fieldLabel: stringUtils.getLocalizableLabel(
-								creationLanguageId,
-								objectField.label,
-								objectField.name
-							),
+							fieldLabel: stringUtils.getLocalizableLabel({
+								fallbackLabel: objectField.name,
+								fallbackLanguageId: creationLanguageId,
+								labels: objectField.label,
+							}),
 							label: viewColumn.label,
 							objectFieldBusinessType: objectField.businessType,
 						});
@@ -250,11 +250,11 @@ const viewReducer = (state: TState, action: TAction) => {
 						if (objectField.name === sortColumn.objectFieldName) {
 							newObjectViewSortColumns.push({
 								...sortColumn,
-								fieldLabel: stringUtils.getLocalizableLabel(
-									creationLanguageId,
-									objectField.label,
-									objectField.name
-								),
+								fieldLabel: stringUtils.getLocalizableLabel({
+									fallbackLabel: objectField.name,
+									fallbackLanguageId: creationLanguageId,
+									labels: objectField.label,
+								}),
 							});
 						}
 					});
@@ -309,11 +309,11 @@ const viewReducer = (state: TState, action: TAction) => {
 					...filterColumn,
 					definition,
 					fieldLabel: objectField
-						? stringUtils.getLocalizableLabel(
-								creationLanguageId,
-								objectField.label,
-								objectField.name
-							)
+						? stringUtils.getLocalizableLabel({
+								fallbackLabel: objectField.name,
+								fallbackLanguageId: creationLanguageId,
+								labels: objectField.label,
+							})
 						: '',
 					filterBy: objectFieldName,
 					filterType,
@@ -361,11 +361,11 @@ const viewReducer = (state: TState, action: TAction) => {
 					return {
 						...item,
 						defaultSort: defaultSortColumn ? true : false,
-						fieldLabel: stringUtils.getLocalizableLabel(
-							creationLanguageId,
-							item.label,
-							item.name
-						),
+						fieldLabel: stringUtils.getLocalizableLabel({
+							fallbackLabel: item.name,
+							fallbackLanguageId: creationLanguageId,
+							labels: item.label,
+						}),
 						label: item.label,
 						objectFieldBusinessType: item.businessType,
 						objectFieldName: item.name,
@@ -421,10 +421,10 @@ const viewReducer = (state: TState, action: TAction) => {
 								: [],
 						}
 					: null,
-				fieldLabel: stringUtils.getLocalizableLabel(
-					creationLanguageId,
-					label
-				),
+				fieldLabel: stringUtils.getLocalizableLabel({
+					fallbackLanguageId: creationLanguageId,
+					labels: label,
+				}),
 				filterBy: label[defaultLanguageId],
 				filterType: filterTypeValue,
 				label,
@@ -491,10 +491,10 @@ const viewReducer = (state: TState, action: TAction) => {
 			const [label] = labels;
 
 			const newSortColumnItem: TObjectViewSortColumn = {
-				fieldLabel: stringUtils.getLocalizableLabel(
-					creationLanguageId,
-					label
-				),
+				fieldLabel: stringUtils.getLocalizableLabel({
+					fallbackLanguageId: creationLanguageId,
+					labels: label,
+				}),
 				label,
 				objectFieldName,
 				sortOrder: selectedObjetSortValue,

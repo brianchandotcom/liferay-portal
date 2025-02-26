@@ -98,9 +98,13 @@ export function ModalImportWarning({
 												<Row>
 													<Cell>
 														{stringUtils.getLocalizableLabel(
-															objectDefinition.defaultLanguageId,
-															objectDefinition.label,
-															objectDefinition.name
+															{
+																fallbackLabel:
+																	objectDefinition.name,
+																fallbackLanguageId:
+																	objectDefinition.defaultLanguageId,
+																labels: objectDefinition.label,
+															}
 														)}
 													</Cell>
 												</Row>

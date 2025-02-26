@@ -52,11 +52,12 @@ export function Attachments({
 			children: fields.map(({id, label, name}) => {
 				return {
 					checked: attachmentObjectFieldIds.has(id as number),
-					label: stringUtils.getLocalizableLabel(
-						selectedObjectDefinitionItem?.defaultLanguageId as Locale,
-						label,
-						name
-					),
+					label: stringUtils.getLocalizableLabel({
+						fallbackLabel: name,
+						fallbackLanguageId:
+							selectedObjectDefinitionItem?.defaultLanguageId as Locale,
+						labels: label,
+					}),
 					value: id?.toString() as string,
 				};
 			}),
@@ -103,11 +104,11 @@ export function Attachments({
 				if (!system) {
 					newObjectDefinitionItems.push({
 						id,
-						label: stringUtils.getLocalizableLabel(
-							defaultLanguageId,
-							label,
-							name
-						),
+						label: stringUtils.getLocalizableLabel({
+							fallbackLabel: name,
+							fallbackLanguageId: defaultLanguageId,
+							labels: label,
+						}),
 						value: externalReferenceCode,
 					});
 				}

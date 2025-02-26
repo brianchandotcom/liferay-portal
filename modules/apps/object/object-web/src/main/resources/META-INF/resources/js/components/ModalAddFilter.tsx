@@ -152,11 +152,12 @@ export function ModalAddFilter({
 
 	const filterByItems = useMemo(() => {
 		return objectFields.map(({id, label, name}) => ({
-			label: stringUtils.getLocalizableLabel(
-				creationLanguageId as Liferay.Language.Locale,
-				label,
-				name
-			),
+			label: stringUtils.getLocalizableLabel({
+				fallbackLabel: name,
+				fallbackLanguageId:
+					creationLanguageId as Liferay.Language.Locale,
+				labels: label,
+			}),
 			value: id,
 		})) as LabelValueObject<number>[];
 	}, [creationLanguageId, objectFields]);

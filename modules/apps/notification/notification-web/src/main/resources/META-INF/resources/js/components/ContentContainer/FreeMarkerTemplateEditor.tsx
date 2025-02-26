@@ -51,11 +51,11 @@ export function FreeMarkerTemplateEditor({
 
 		return availableObjectDefinitions.map(
 			({defaultLanguageId, id, label, name}) => ({
-				label: stringUtils.getLocalizableLabel(
-					defaultLanguageId,
-					label,
-					name
-				),
+				label: stringUtils.getLocalizableLabel({
+					fallbackLabel: name,
+					fallbackLanguageId: defaultLanguageId,
+					labels: label,
+				}),
 				value: id,
 			})
 		) as LabelValueObject<number>[];

@@ -66,11 +66,11 @@ export function ObjectDefinitionNodeFields({
 						>
 							<div className="lfr-objects__model-builder-node-field-label">
 								<span>
-									{stringUtils.getLocalizableLabel(
-										defaultLanguageId,
-										objectField.label,
-										objectField.name
-									)}
+									{stringUtils.getLocalizableLabel({
+										fallbackLabel: objectField.name,
+										fallbackLanguageId: defaultLanguageId,
+										labels: objectField.label,
+									})}
 								</span>
 							</div>
 

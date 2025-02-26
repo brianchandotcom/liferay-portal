@@ -15,7 +15,6 @@ import {sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 import {Elements, FlowElement, isNode} from 'react-flow-renderer';
 
-import {defaultLanguageId} from '../../../utils/constants';
 import {TYPES} from '../ModelBuilderContext/typesEnum';
 import {ObjectRelationshipEdgeData, TAction} from '../types';
 
@@ -465,9 +464,11 @@ export function ModalPublishObjectDefinitions({
 													weight="semi-bold"
 												>
 													{stringUtils.getLocalizableLabel(
-														defaultLanguageId,
-														data?.label,
-														data?.name
+														{
+															fallbackLabel:
+																data?.name,
+															labels: data?.label,
+														}
 													)}
 												</Text>
 											</div>

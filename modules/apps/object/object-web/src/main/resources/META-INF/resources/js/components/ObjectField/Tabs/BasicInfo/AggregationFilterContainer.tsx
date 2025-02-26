@@ -153,11 +153,12 @@ export function AggregationFilterContainer({
 					);
 
 					const aggregationFilter: AggregationFilters = {
-						fieldLabel: stringUtils.getLocalizableLabel(
-							creationLanguageId2 as Liferay.Language.Locale,
-							objectField?.label,
-							objectField?.name || filterBy
-						),
+						fieldLabel: stringUtils.getLocalizableLabel({
+							fallbackLabel: objectField?.name || filterBy,
+							fallbackLanguageId:
+								creationLanguageId2 as Liferay.Language.Locale,
+							labels: objectField?.label,
+						}),
 						filterBy,
 						filterType,
 						label: objectField?.label,
@@ -350,11 +351,12 @@ export function AggregationFilterContainer({
 			const newAggregationFilters = [
 				...aggregationFilters,
 				{
-					fieldLabel: stringUtils.getLocalizableLabel(
-						creationLanguageId2 as Liferay.Language.Locale,
-						fieldLabel,
-						objectFieldName
-					),
+					fieldLabel: stringUtils.getLocalizableLabel({
+						fallbackLabel: objectFieldName,
+						fallbackLanguageId:
+							creationLanguageId2 as Liferay.Language.Locale,
+						labels: fieldLabel,
+					}),
 					filterBy,
 					filterType,
 					label: fieldLabel,

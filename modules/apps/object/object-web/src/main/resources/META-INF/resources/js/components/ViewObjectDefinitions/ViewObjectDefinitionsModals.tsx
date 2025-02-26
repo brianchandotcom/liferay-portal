@@ -251,9 +251,13 @@ export function ViewObjectDefinitionsModals({
 											'x-is-being-used-by-a-root-object-and-cannot-be-deleted'
 										),
 										`<strong>"${stringUtils.getLocalizableLabel(
-											selectedObjectDefinition.defaultLanguageId,
-											selectedObjectDefinition.label,
-											selectedObjectDefinition.name
+											{
+												fallbackLabel:
+													selectedObjectDefinition.name,
+												fallbackLanguageId:
+													selectedObjectDefinition.defaultLanguageId,
+												labels: selectedObjectDefinition.label,
+											}
 										)}"</strong>`
 									),
 								}}

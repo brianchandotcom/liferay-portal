@@ -38,11 +38,12 @@ export default function CurrentObjectDefinition({
 				name="currentObjectInput"
 				readOnly={readOnly}
 				required
-				value={stringUtils.getLocalizableLabel(
-					currentObjectDefinition?.defaultLanguageId as Liferay.Language.Locale,
-					currentObjectDefinition?.label,
-					currentObjectDefinition?.name
-				)}
+				value={stringUtils.getLocalizableLabel({
+					fallbackLabel: currentObjectDefinition?.name,
+					fallbackLanguageId:
+						currentObjectDefinition?.defaultLanguageId as Liferay.Language.Locale,
+					labels: currentObjectDefinition?.label,
+				})}
 			/>
 
 			{!hideReverseButton && (

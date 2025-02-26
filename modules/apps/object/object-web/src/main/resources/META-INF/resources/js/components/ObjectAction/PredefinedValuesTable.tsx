@@ -126,11 +126,11 @@ export default function PredefinedValuesTable({
 
 					label: (
 						<div className="lfr-object-web__predefined-values-table-field">
-							{stringUtils.getLocalizableLabel(
-								creationLanguageId,
-								label,
-								name
-							)}
+							{stringUtils.getLocalizableLabel({
+								fallbackLabel: name,
+								fallbackLanguageId: creationLanguageId,
+								labels: label,
+							})}
 
 							{objectFieldsMap.get(name)?.required === true && (
 								<span className="lfr-object-web__predefined-values-table-reference-mark">
@@ -298,11 +298,11 @@ export default function PredefinedValuesTable({
 
 			parentWindow.Liferay.fire('openModalSelectObjectFields', {
 				getLabel: ({label, name}: ObjectField) =>
-					stringUtils.getLocalizableLabel(
-						creationLanguageId,
-						label,
-						name
-					),
+					stringUtils.getLocalizableLabel({
+						fallbackLabel: name,
+						fallbackLanguageId: creationLanguageId,
+						labels: label,
+					}),
 				getName: ({name}: ObjectField) => name,
 				header: Liferay.Language.get('add-fields'),
 				items: currentObjectDefinitionFields

@@ -61,12 +61,13 @@ export function getLabel<T extends ObjectMap<any>>(
 	}
 
 	return typeof value === 'object'
-		? stringUtils.getLocalizableLabel(
-				objectDefinitionDefaultLanguageId,
-				value as LocalizedValue<string>,
-				(value as {[key: string]: string})['name'] ??
-					(value as {[key: string]: string})['label_i18n']
-			)
+		? stringUtils.getLocalizableLabel({
+				fallbackLabel:
+					(value as {[key: string]: string})['name'] ??
+					(value as {[key: string]: string})['label_i18n'],
+				fallbackLanguageId: objectDefinitionDefaultLanguageId,
+				labels: value as LocalizedValue<string>,
+			})
 		: String(value);
 }
 

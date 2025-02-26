@@ -36,7 +36,10 @@ export default function BasicInfoScreen() {
 
 	if (
 		invalidateRequired(
-			stringUtils.getLocalizableLabel(creationLanguageId, objectView.name)
+			stringUtils.getLocalizableLabel({
+				fallbackLanguageId: creationLanguageId,
+				labels: objectView.name,
+			})
 		)
 	) {
 		error = constantsUtils.REQUIRED_MSG;
@@ -54,10 +57,10 @@ export default function BasicInfoScreen() {
 						handleChangeName(value);
 					}}
 					required
-					value={stringUtils.getLocalizableLabel(
-						creationLanguageId,
-						objectView.name
-					)}
+					value={stringUtils.getLocalizableLabel({
+						fallbackLanguageId: creationLanguageId,
+						labels: objectView.name,
+					})}
 				/>
 			</ClayForm.Group>
 

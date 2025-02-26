@@ -76,11 +76,10 @@ export function ModalEditObjectFolder({
 				message: sub(
 					Liferay.Language.get('x-was-saved-successfully'),
 					`<strong>${Liferay.Util.escapeHTML(
-						stringUtils.getLocalizableLabel(
-							defaultLanguageId,
-							objectFolder.label,
-							objectFolder.name
-						)
+						stringUtils.getLocalizableLabel({
+							fallbackLabel: objectFolder.name,
+							labels: objectFolder.label,
+						})
 					)}</strong>`
 				),
 				type: 'success',

@@ -9,7 +9,6 @@ import ClayModal, {ClayModalProvider, useModal} from '@clayui/modal';
 import {stringUtils} from '@liferay/object-js-components-web';
 import React from 'react';
 
-import {defaultLanguageId} from '../../utils/constants';
 import {deleteObjectField} from './deleteObjectFieldUtil';
 
 interface ModalDeleteObjectFieldProps {
@@ -68,11 +67,10 @@ export function ModalDeleteObjectField({
 									onClick={() => {
 										deleteObjectField(
 											objectField.id,
-											stringUtils.getLocalizableLabel(
-												defaultLanguageId,
-												objectField.label,
-												objectField.name
-											)
+											stringUtils.getLocalizableLabel({
+												fallbackLabel: objectField.name,
+												labels: objectField.label,
+											})
 										);
 
 										open

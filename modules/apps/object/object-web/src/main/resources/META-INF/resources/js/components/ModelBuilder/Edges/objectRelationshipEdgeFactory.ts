@@ -87,11 +87,11 @@ export function objectRelationshipEdgeFactory({
 					defaultLanguageId: objectDefinition.defaultLanguageId,
 					edge: objectRelationship.edge,
 					id: objectRelationship.id,
-					label: stringUtils.getLocalizableLabel(
-						objectDefinition.defaultLanguageId,
-						objectRelationship.label,
-						objectRelationship.name
-					),
+					label: stringUtils.getLocalizableLabel({
+						fallbackLabel: objectRelationship.name,
+						fallbackLanguageId: objectDefinition.defaultLanguageId,
+						labels: objectRelationship.label,
+					}),
 					markerEndId: `${manyMarkerId}#${objectRelationship.id}`,
 					markerStartId:
 						objectRelationship.type === 'manyToMany'

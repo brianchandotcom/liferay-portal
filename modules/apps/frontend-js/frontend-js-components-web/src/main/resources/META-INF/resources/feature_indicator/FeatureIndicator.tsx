@@ -6,7 +6,7 @@
 import ClayBadge from '@clayui/badge';
 import ClayButton from '@clayui/button';
 import ClayIcon from '@clayui/icon';
-import ClayPopover, {ALIGN_POSITIONS} from '@clayui/popover';
+import ClayPopover from '@clayui/popover';
 import {ClayTooltipProvider} from '@clayui/tooltip';
 import React, {useState} from 'react';
 
@@ -14,6 +14,7 @@ import useId from '../hooks/useId';
 import LearnMessage, {
 	LearnResourcesContext,
 } from '../learn_message/LearnMessage';
+import {ALIGN_POSITIONS} from '../types';
 
 export type Type = 'beta' | 'deprecated';
 

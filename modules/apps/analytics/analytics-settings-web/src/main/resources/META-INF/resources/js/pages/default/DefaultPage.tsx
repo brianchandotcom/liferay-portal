@@ -77,6 +77,7 @@ const DefaultPage: React.FC<React.HTMLAttributes<HTMLElement>> = () => {
 			<ClayLayout.Row>
 				<ClayLayout.Col size={3}>
 					<ClayVerticalNav
+						aria-label=""
 						items={PAGES.map(({key, title: label}) => {
 							return {
 								active: activePage === key,

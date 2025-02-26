@@ -140,7 +140,7 @@ public class ObjectEntryVersionLocalServiceTest {
 	}
 
 	private ObjectEntryVersion _createObjectEntryVersion(
-		JSONObject jsonObject, int version) {
+		JSONObject propertiesJSONObject, int version) {
 
 		ObjectEntryVersion objectEntryVersion =
 			_objectEntryVersionLocalService.createObjectEntryVersion(
@@ -152,7 +152,7 @@ public class ObjectEntryVersionLocalServiceTest {
 			).put(
 				"keywords", JSONUtil.putAll()
 			).put(
-				"properties", jsonObject
+				"properties", propertiesJSONObject
 			).put(
 				"taxonomyCategoryBriefs", JSONUtil.putAll()
 			).toString());

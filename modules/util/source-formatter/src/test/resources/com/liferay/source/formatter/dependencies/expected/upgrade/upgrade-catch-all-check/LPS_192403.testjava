@@ -15,4 +15,5 @@ public class LPS_192403 {
 	public void method() {
 		new ArrayList<>(LanguageUtil.getAvailableLocales());
 	}
+
 }

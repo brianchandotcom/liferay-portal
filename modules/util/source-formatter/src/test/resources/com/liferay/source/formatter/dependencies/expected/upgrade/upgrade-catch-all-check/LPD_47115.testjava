@@ -26,8 +26,7 @@ public class LPD_47115 {
 	}
 
 	@Reference
-	private SiteNavigationMenuItemLocalService
-		_siteNavigationMenuItemLocalService;
+	private SiteNavigationMenuItemLocalService _siteNavigationMenuItemLocalService;
 
 	@Reference
 	private SiteNavigationMenuItemService _siteNavigationMenuItemService;

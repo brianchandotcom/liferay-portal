@@ -1172,6 +1172,165 @@ test(
 	}
 );
 
+test(
+	'Test quick action buttons function correctly',
+	{tag: '@LPS-153220'},
+	async ({fdsSamplePage, page}) => {
+		const firstItemActionsCell =
+			fdsSamplePage.table.itemActionsCells.first();
+
+		const thirdItemActionsCell =
+			fdsSamplePage.table.itemActionsCells.nth(2);
+
+		const firstItemActionButton = firstItemActionsCell.getByRole('button', {
+			exact: true,
+			name: 'Actions',
+		});
+
+		const thirdItemActionButton = thirdItemActionsCell.getByRole('button', {
+			exact: true,
+			name: 'Actions',
+		});
+
+		const quickActionPencilIcon = page
+			.getByRole('link', {name: 'Sample Edit'})
+			.nth(0);
+
+		const firstTableHeadCell = page.locator('.cell-select');
+
+		await test.step('Assert that clicking quick action is equivalent to clicking the ellipsis dropdown menu', async () => {
+			await firstItemActionButton.hover();
+
+			await quickActionPencilIcon.click();
+
+			const pageURL = page.url();
+
+			await expect(pageURL).toContain('#test-pencil');
+
+			await firstItemActionButton.click();
+
+			const pencilIconDropdown = page.getByRole('menuitem', {
+				name: 'Sample Edit',
+			});
+
+			await pencilIconDropdown.click();
+
+			await expect(page.url()).toEqual(pageURL);
+		});
+
+		await test.step('Assert that hover over mouse off of the table body quick action menu is not visible', async () => {
+			await firstItemActionButton.hover();
+
+			await expect(quickActionPencilIcon).toBeVisible();
+
+			await firstTableHeadCell.hover();
+
+			await expect(quickActionPencilIcon).not.toBeVisible();
+		});
+
+		await test.step('When hovering over the first line item and the quick action menu is displayed on the 1st line', async () => {
+			const firstCell = page.locator('.cell-select-item').first();
+
+			await firstCell.hover();
+
+			await expect(quickActionPencilIcon).toBeVisible();
+		});
+
+		await test.step('When clicking on the ellipsis and hovering over another row, multiple quick action menus are displayed', async () => {
+			await thirdItemActionButton.hover();
+
+			await expect(quickActionPencilIcon).toBeVisible();
+
+			await thirdItemActionButton.hover();
+
+			await thirdItemActionButton.click();
+
+			const firstCell = page.locator('.cell-select-item').first();
+
+			await firstCell.hover();
+
+			const pen = page
+				.locator('tr')
+				.filter({hasText: '32686Sample1Test'})
+				.getByLabel('Sample Edit');
+
+			await expect(pen).toBeVisible();
+		});
+
+		await test.step('Assert quick action can be displayed on only one active row', async () => {
+			await firstTableHeadCell.hover();
+
+			await firstTableHeadCell.click();
+
+			await firstItemActionButton.hover();
+
+			await expect(quickActionPencilIcon).toBeVisible();
+
+			await thirdItemActionButton.hover();
+
+			await thirdItemActionButton.click();
+
+			await expect(quickActionPencilIcon).not.toBeVisible();
+		});
+
+		await test.step('Assert that quick action icons list should be limited to three actions', async () => {
+			await firstTableHeadCell.hover();
+
+			await firstTableHeadCell.click();
+
+			await firstItemActionButton.hover();
+
+			await firstItemActionButton.click();
+
+			const sampleViewButton = page
+				.getByRole('cell', {name: 'Actions'})
+				.getByLabel('Sample View');
+
+			const sampleEditButton = page
+				.getByRole('cell', {name: 'Actions'})
+				.getByLabel('Sample Edit');
+
+			const sampleDelete = page
+				.getByRole('cell', {name: 'Actions'})
+				.getByLabel('Sample Delete');
+
+			await expect(sampleViewButton).toBeVisible();
+
+			await expect(sampleEditButton).toBeVisible();
+
+			await expect(sampleDelete).toBeVisible();
+		});
+
+		await test.step('Assert that test-pencil is appended to browser URL after clicking', async () => {
+			await firstTableHeadCell.hover();
+
+			await firstTableHeadCell.click();
+
+			await firstItemActionButton.hover();
+
+			await quickActionPencilIcon.click();
+
+			const pageURL = page.url();
+
+			await expect(pageURL).toContain('#test-pencil');
+		});
+
+		await test.step('Assert the quick action is not visible when the row checkbox is checked', async () => {
+			const checkbox = page
+				.getByRole('row', {name: '32686 Sample1 Test'})
+				.getByLabel('', {exact: true});
+
+			await checkbox.click();
+
+			await firstTableHeadCell.hover();
+
+			await firstTableHeadCell.click();
+
+			await expect(quickActionPencilIcon).not.toBeVisible();
+		});
+	}
+);
+
 const accountSettingsTest = mergeTests(test, accountSettingsPagesTest);
 
 accountSettingsTest(

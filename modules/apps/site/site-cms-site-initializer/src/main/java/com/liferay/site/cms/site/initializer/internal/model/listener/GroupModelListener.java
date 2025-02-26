@@ -6,7 +6,7 @@
 package com.liferay.site.cms.site.initializer.internal.model.listener;
 
 import com.liferay.object.constants.ObjectEntryFolderConstants;
-import com.liferay.object.entry.util.ObjectEntryFolderThreadLocal;
+import com.liferay.object.entry.folder.util.ObjectEntryFolderThreadLocal;
 import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.exception.ModelListenerException;

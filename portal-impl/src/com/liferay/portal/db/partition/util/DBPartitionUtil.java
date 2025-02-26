@@ -798,13 +798,14 @@ public class DBPartitionUtil {
 
 		DBInspector dbInspector = new DBInspector(connection);
 
-		String targetPartitionName = _getExtractedPartitionName(companyId);
+		String extractedPartitionName = _getExtractedPartitionName(companyId);
 
 		try (SafeCloseable safeCloseable = CompanyThreadLocal.lock(companyId);
 			AutoCloseable autoCloseable = _disableAutoCommit(connection)) {
 
 			_copySchema(
-				connection, getPartitionName(companyId), targetPartitionName);
+				connection, getPartitionName(companyId),
+				extractedPartitionName);
 
 			DatabaseMetaData databaseMetaData = connection.getMetaData();
 
@@ -833,7 +834,7 @@ public class DBPartitionUtil {
 				try (Statement statement = connection.createStatement()) {
 					statement.executeUpdate(
 						_dbPartitionDB.getDropPartitionSQL(
-							targetPartitionName));
+							extractedPartitionName));
 				}
 				catch (SQLException sqlException) {
 					throw new PortalException(
@@ -852,23 +853,24 @@ public class DBPartitionUtil {
 			boolean deleteSourceData)
 		throws Exception {
 
-		String partitionName = _getExtractedPartitionName(companyId);
+		String extractedPartitionName = _getExtractedPartitionName(companyId);
 
 		statement.executeUpdate(
-			_dbPartitionDB.getDropViewSQL(partitionName, tableName));
+			_dbPartitionDB.getDropViewSQL(extractedPartitionName, tableName));
 
 		statement.executeUpdate(
 			_dbPartitionDB.getCreateTableSQL(
-				connection, _defaultPartitionName, partitionName, tableName));
+				connection, _defaultPartitionName, extractedPartitionName,
+				tableName));
 
 		if (dbInspector.hasColumn(tableName, "companyId")) {
 			_moveCompanyData(
-				companyId, _defaultPartitionName, partitionName, tableName,
-				statement, deleteSourceData);
+				companyId, _defaultPartitionName, extractedPartitionName,
+				tableName, statement, deleteSourceData);
 		}
 		else if (_isCopyableQuartzTable(tableName)) {
 			_moveData(
-				_defaultPartitionName, partitionName, tableName,
+				_defaultPartitionName, extractedPartitionName, tableName,
 				_getColumnNames(statement.getConnection(), tableName),
 				statement, _getQuartzWhereClauseSQL(companyId, tableName),
 				deleteSourceData);
@@ -876,7 +878,7 @@ public class DBPartitionUtil {
 		else {
 			statement.executeUpdate(
 				_getCopyDataSQL(
-					_defaultPartitionName, partitionName, tableName,
+					_defaultPartitionName, extractedPartitionName, tableName,
 					_getColumnNames(statement.getConnection(), tableName),
 					StringPool.BLANK));
 		}

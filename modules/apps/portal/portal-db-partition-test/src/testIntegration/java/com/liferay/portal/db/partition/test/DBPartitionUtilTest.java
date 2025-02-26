@@ -325,13 +325,14 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 			for (long companyId : COMPANY_IDS) {
 				List<String> views = viewNames.get(companyId);
 
-				String schemaName = getExtractedPartitionName(companyId);
+				String extractedPartitionName = getExtractedPartitionName(
+					companyId);
 
 				Assert.assertEquals(
 					tablesCount.get(companyId) + views.size(),
-					_getTablesCount(schemaName));
+					_getTablesCount(extractedPartitionName));
 
-				Assert.assertEquals(0, _getViewsCount(schemaName));
+				Assert.assertEquals(0, _getViewsCount(extractedPartitionName));
 
 				Assert.assertEquals(
 					(int)tablesCount.get(companyId),
@@ -346,7 +347,8 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 							_getCount(
 								PortalInstancePool.getDefaultCompanyId(),
 								viewName),
-							_getCount(companyId, schemaName, viewName));
+							_getCount(
+								companyId, extractedPartitionName, viewName));
 					}
 					else if (StringUtil.equalsIgnoreCase(
 								viewName, "QUARTZ_JOB_DETAILS") ||
@@ -357,16 +359,18 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 
 						Assert.assertEquals(
 							viewName + " count", 1,
-							_getCount(companyId, schemaName, viewName));
+							_getCount(
+								companyId, extractedPartitionName, viewName));
 					}
 					else {
 						Assert.assertEquals(
 							viewName + " count", 0,
-							_getCount(companyId, schemaName, viewName));
+							_getCount(
+								companyId, extractedPartitionName, viewName));
 					}
 				}
 
-				Assert.assertEquals(1, _getJobsCount(schemaName));
+				Assert.assertEquals(1, _getJobsCount(extractedPartitionName));
 			}
 		}
 		finally {

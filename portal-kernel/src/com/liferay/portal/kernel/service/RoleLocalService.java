@@ -77,6 +77,11 @@ public interface RoleLocalService
 
 	public boolean addGroupRoles(long groupId, long[] roleIds);
 
+	public Role addIncompleteRole(
+			String externalReferenceCode, long companyId, long userId,
+			String className, long classPK, String name, int type)
+		throws Exception;
+
 	/**
 	 * Adds the role to the database. Also notifies the appropriate model listeners.
 	 *
@@ -1039,6 +1044,12 @@ public interface RoleLocalService
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public Role updateRole(Role role);
+
+	@Indexable(type = IndexableType.REINDEX)
+	public Role updateStatus(
+			long userId, long roleId, int status, ServiceContext serviceContext,
+			Map<String, Serializable> workflowContext)
+		throws PortalException;
 
 	public void validateName(String name) throws PortalException;
 

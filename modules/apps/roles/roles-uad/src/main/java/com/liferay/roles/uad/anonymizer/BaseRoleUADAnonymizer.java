@@ -43,6 +43,11 @@ public abstract class BaseRoleUADAnonymizer
 			autoAnonymizeAssetEntry(role, anonymousUser);
 		}
 
+		if (role.getStatusByUserId() == userId) {
+			role.setStatusByUserId(anonymousUser.getUserId());
+			role.setStatusByUserName(anonymousUser.getFullName());
+		}
+
 		roleLocalService.updateRole(role);
 	}
 

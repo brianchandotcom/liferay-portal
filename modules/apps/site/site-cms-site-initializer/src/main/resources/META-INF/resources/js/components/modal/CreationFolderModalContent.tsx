@@ -63,7 +63,13 @@ export default function CreationFolderModalContent({
 									{Liferay.Language.get('space')}
 								</label>
 
-								<Picker id="space" items={assetLibraries}>
+								<Picker
+									id="space"
+									items={assetLibraries}
+									placeholder={Liferay.Language.get(
+										'select-a-space'
+									)}
+								>
 									{({id, name}) => (
 										<Option key={id}>{name}</Option>
 									)}

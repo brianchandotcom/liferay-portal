@@ -119,6 +119,7 @@ else {
 
 					const {onChange, onRemoveFile} = registerLocalizedFileInput(
 						{
+							changeTextDirection: false,
 							defaultLanguageId,
 							initialValues,
 							inputName: input.name,

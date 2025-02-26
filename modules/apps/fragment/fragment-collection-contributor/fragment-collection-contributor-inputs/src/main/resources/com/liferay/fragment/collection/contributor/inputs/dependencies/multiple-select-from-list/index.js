@@ -49,6 +49,7 @@ else {
 
 				if (input.localizable) {
 					const {onChange} = registerLocalizedMultiSelect({
+						changeTextDirection: false,
 						defaultLanguageId,
 						initialValues: input.valueI18n,
 						inputElements: allInputs,

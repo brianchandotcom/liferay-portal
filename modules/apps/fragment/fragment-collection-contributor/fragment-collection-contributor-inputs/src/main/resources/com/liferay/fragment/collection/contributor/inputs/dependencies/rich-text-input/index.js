@@ -24,21 +24,30 @@ if (layoutMode !== 'edit') {
 
 		import('@liferay/fragment-impl').then(
 			({registerLocalizedInput, registerUnlocalizedInput}) => {
+				const defaultLanguageId = themeDisplay.getDefaultLanguageId();
+
 				if (input.localizable) {
 					const {onChange} = registerLocalizedInput({
-						defaultLanguageId: themeDisplay.getDefaultLanguageId(),
+						changeTextDirection: false,
+						defaultLanguageId,
 						initialValues: input.valueI18n,
 						inputName: input.name,
 						localizationInputsContainer: inputContainer,
 						namespace: fragmentNamespace,
-						onLocaleChange: ({value}) => {
+						onLocaleChange: ({languageId, value}) => {
 							editorPromise.then((editor) => {
+								editor.config.contentsLangDirection =
+									Liferay.Language.direction[languageId];
+
 								editor.setData(value);
 							});
 						},
 					});
 
 					editorPromise.then((editor) => {
+						editor.config.contentsLangDirection =
+							Liferay.Language.direction[defaultLanguageId];
+
 						editor.on('change', () => {
 							const value = editor.getData();
 
@@ -48,7 +57,7 @@ if (layoutMode !== 'edit') {
 				}
 				else {
 					registerUnlocalizedInput({
-						defaultLanguageId: themeDisplay.getDefaultLanguageId(),
+						defaultLanguageId,
 						onLocaleChange: (languageId) => {
 							editorPromise.then((editor) => {
 								const editorWrapper = document.getElementById(
@@ -63,10 +72,7 @@ if (layoutMode !== 'edit') {
 									input.attributes.unlocalizedFieldsState ===
 									'read-only';
 
-								if (
-									languageId ===
-									themeDisplay.getDefaultLanguageId()
-								) {
+								if (languageId === defaultLanguageId) {
 									editor.setReadOnly(false);
 
 									if (isReadOnly) {

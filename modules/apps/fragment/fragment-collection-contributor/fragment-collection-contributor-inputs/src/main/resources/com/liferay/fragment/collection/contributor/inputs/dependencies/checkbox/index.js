@@ -17,6 +17,7 @@ if (inputElement) {
 				({registerLocalizedInput, registerUnlocalizedInput}) => {
 					if (input.localizable) {
 						const {onChange} = registerLocalizedInput({
+							changeTextDirection: false,
 							defaultLanguageId,
 							initialValues: input.valueI18n,
 							inputElement,

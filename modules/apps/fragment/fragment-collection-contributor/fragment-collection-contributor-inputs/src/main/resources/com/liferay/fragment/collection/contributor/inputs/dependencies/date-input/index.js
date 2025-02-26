@@ -12,11 +12,13 @@ if (inputElement) {
 		inputElement.setAttribute('disabled', true);
 	}
 	else if (Liferay.FeatureFlags['LPD-37927']) {
+		const defaultLanguageId = themeDisplay.getDefaultLanguageId();
+
 		import('@liferay/fragment-impl').then(
 			({registerLocalizedInput, registerUnlocalizedInput}) => {
 				if (input.localizable) {
 					const {onChange} = registerLocalizedInput({
-						defaultLanguageId: themeDisplay.getDefaultLanguageId(),
+						defaultLanguageId,
 						initialValues: input.valueI18n,
 						inputElement,
 						inputName: input.name,
@@ -30,7 +32,7 @@ if (inputElement) {
 				}
 				else {
 					registerUnlocalizedInput({
-						defaultLanguageId: themeDisplay.getDefaultLanguageId(),
+						defaultLanguageId,
 						inputElement,
 						readOnlyInputLabel: document.getElementById(
 							`${fragmentNamespace}-date-read-only`

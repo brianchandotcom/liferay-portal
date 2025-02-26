@@ -80,10 +80,10 @@ else {
 	}
 
 	if (Liferay.FeatureFlags['LPD-37927']) {
+		const defaultLanguageId = themeDisplay.getDefaultLanguageId();
+
 		import('@liferay/fragment-impl').then(
 			({registerLocalizedInput, registerUnlocalizedInput}) => {
-				const defaultLanguageId = themeDisplay.getDefaultLanguageId();
-
 				if (input.localizable) {
 					const optionValues = Object.fromEntries(
 						Object.values(input.valueI18n).map((value) => [

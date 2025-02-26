@@ -1107,12 +1107,6 @@ export class PageEditorPage {
 			trigger: this.page.locator('.modal-footer').getByText('Save'),
 		});
 
-		await waitForAlert(
-			this.page,
-			'Success:Your form has been successfully loaded.',
-			{autoClose: false}
-		);
-
 		const addLocalizationSelectDialog = this.page.getByRole('dialog', {
 			name: 'Add Localization Select',
 		});
@@ -1129,6 +1123,12 @@ export class PageEditorPage {
 					.click();
 			}
 		}
+
+		await waitForAlert(
+			this.page,
+			'Success:Your form has been successfully loaded.',
+			{autoClose: true}
+		);
 	}
 
 	async mapEditableLink({

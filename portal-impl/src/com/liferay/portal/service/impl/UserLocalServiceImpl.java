@@ -2305,6 +2305,10 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 */
 	@Override
 	public User fetchUserByPortraitId(long portraitId) {
+		if (portraitId <= 0) {
+			return null;
+		}
+
 		List<User> users = userPersistence.findByPortraitId(portraitId);
 
 		if (users.isEmpty()) {

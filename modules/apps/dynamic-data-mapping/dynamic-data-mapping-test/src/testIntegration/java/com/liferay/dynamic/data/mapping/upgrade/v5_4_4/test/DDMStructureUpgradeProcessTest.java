@@ -12,12 +12,10 @@ import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormRule;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
-import com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalServiceUtil;
+import com.liferay.dynamic.data.mapping.service.DDMStructureVersionLocalService;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.dynamic.data.mapping.util.DDMFormSerializeUtil;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.test.log.LogCapture;
@@ -28,7 +26,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.test.util.UpgradeTestUtil;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -51,32 +48,25 @@ public class DDMStructureUpgradeProcessTest {
 
 	@Test
 	public void testUpgrade() throws Exception {
-		DDMForm ddmForm1 = DDMFormTestUtil.createDDMForm("textField");
-
-		ddmForm1.setDDMFormRules(
-			Collections.singletonList(
-				new DDMFormRule(Arrays.asList("Action"), "Condition")));
-
-		DDMStructure ddmStructure1 = _createDDMStructure(ddmForm1);
+		DDMStructure ddmStructure = _createDDMStructure();
 
 		DDMStructureVersion ddmStructureVersion =
-			ddmStructure1.getLatestStructureVersion();
+			ddmStructure.getLatestStructureVersion();
+
+		DDMForm ddmForm = ddmStructureVersion.getDDMForm();
+
+		ddmForm.addDDMFormRule(
+			new DDMFormRule(
+				Collections.singletonList("setVisible(\"textField\", false)"),
+				"()"));
 
 		ddmStructureVersion.setDefinition(
-			DDMFormSerializeUtil.serialize(ddmForm1, _jsonDDMFormSerializer));
+			DDMFormSerializeUtil.serialize(ddmForm, _jsonDDMFormSerializer));
 
-		DDMStructureVersionLocalServiceUtil.updateDDMStructureVersion(
+		_ddmStructureVersionLocalService.updateDDMStructureVersion(
 			ddmStructureVersion);
 
-		DDMForm ddmForm2 = DDMFormTestUtil.createDDMForm("textField2");
-
-		ddmForm2.setDDMFormRules(
-			Collections.singletonList(
-				new DDMFormRule(
-					Arrays.asList("setVisible(\"textField2\", false)"),
-					"\"TRUE\"")));
-
-		_createDDMStructure(ddmForm2);
+		_createDDMStructure();
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				_CLASS_NAME, LoggerTestUtil.WARN)) {
@@ -93,31 +83,33 @@ public class DDMStructureUpgradeProcessTest {
 			LogEntry logEntry = logEntries.get(0);
 
 			Assert.assertEquals(
-				StringBundler.concat(
-					"Unable to normalize form rule conditions for DDM ",
-					"Structure with ID ", ddmStructure1.getStructureId()),
+				"Unable to normalize form rules for structure ID " +
+					ddmStructure.getStructureId(),
 				logEntry.getMessage());
 		}
 	}
 
-	private DDMStructure _createDDMStructure(DDMForm ddmForm) throws Exception {
-		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
+	private DDMStructure _createDDMStructure() throws Exception {
+		DDMForm ddmForm = DDMFormTestUtil.createDDMForm("textField");
+
+		ddmForm.addDDMFormRule(
+			new DDMFormRule(
+				Collections.singletonList("setVisible(\"textField\", false)"),
+				"\"TRUE\""));
+
+		return DDMStructureTestUtil.addStructure(
 			DDMFormInstance.class.getName(), ddmForm);
-
-		ddmStructure.setDDMForm(ddmForm);
-
-		return ddmStructure;
 	}
 
 	private static final String _CLASS_NAME =
 		"com.liferay.dynamic.data.mapping.internal.upgrade.v5_4_4." +
 			"DDMStructureUpgradeProcess";
 
+	@Inject
+	private DDMStructureVersionLocalService _ddmStructureVersionLocalService;
+
 	@Inject(filter = "ddm.form.serializer.type=json")
 	private DDMFormSerializer _jsonDDMFormSerializer;
-
-	@Inject
-	private MultiVMPool _multiVMPool;
 
 	@Inject(
 		filter = "component.name=com.liferay.dynamic.data.mapping.internal.upgrade.registry.DDMServiceUpgradeStepRegistrator"

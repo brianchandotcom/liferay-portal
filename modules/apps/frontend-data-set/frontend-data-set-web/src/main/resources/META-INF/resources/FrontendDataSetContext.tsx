@@ -38,7 +38,13 @@ export interface IFrontendDataSetContext {
 	nestedItemsReferenceKey?: string;
 	onActionDropdownItemClick: Function;
 	onBulkActionItemClick: Function;
-	onItemsChange: Function;
+	onItemsChange: ({
+		itemKey,
+		items,
+	}: {
+		itemKey?: string;
+		items: Array<any>;
+	}) => void;
 	onSearch: ({query}: {query: string}) => void;
 	onSelect: Function;
 	openModal: Function;

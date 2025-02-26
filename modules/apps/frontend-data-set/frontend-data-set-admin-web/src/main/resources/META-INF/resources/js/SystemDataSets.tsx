@@ -318,7 +318,7 @@ const SystemDataSets = ({
 		onItemsChange,
 	}: {
 		itemData: IDataSet;
-		onItemsChange: Function;
+		onItemsChange: ({items}: {items: Array<IDataSet>}) => void;
 	}) => {
 		setToogleDisabled(true);
 
@@ -340,7 +340,7 @@ const SystemDataSets = ({
 		const systemDataSet: IDataSet = await response.json();
 
 		if (systemDataSet?.id) {
-			onItemsChange({itemsChanged: [systemDataSet]});
+			onItemsChange({items: [systemDataSet]});
 
 			openDefaultSuccessToast();
 		}
@@ -384,7 +384,7 @@ const SystemDataSets = ({
 		onItemsChange,
 	}: {
 		itemData: IDataSet;
-		onItemsChange: Function;
+		onItemsChange: ({items}: {items: Array<IDataSet>}) => void;
 	}) {
 		if (itemData.actions.update) {
 			return Toggle({

@@ -767,7 +767,7 @@ const FrontendDataSet = ({
 		});
 	}
 
-	function onItemsChange({itemKey = 'id', itemsChanged}) {
+	function onItemsChange({itemKey = 'id', items: itemsChanged}) {
 		const updatedItems = new Map(
 			[...items, ...itemsChanged].map((item) => [item[itemKey], item])
 		);

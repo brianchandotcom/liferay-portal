@@ -48,6 +48,9 @@ export type TRole = {
 	externalReferenceCode?: string;
 	id?: number;
 	name: string;
+	name_i18n?: {
+		[key: string]: string;
+	};
 	rolePermissions?: Array<TPermission>;
 	roleType?: number | string;
 };

@@ -10,11 +10,15 @@ import {ApplicationsMenuPage} from '../product-navigation-applications-menu/Appl
 
 export class RolesPage {
 	readonly accountRolesLink: Locator;
+	readonly applicationsMenuButton: Locator;
 	readonly applicationsMenuPage: ApplicationsMenuPage;
 	readonly deleteButton: Locator;
 	readonly optionsButton: Locator;
+	readonly organizationRolesLink: Locator;
 	readonly page: Page;
+	readonly roleCell: (value: string, exact?: boolean) => Locator;
 	readonly rolesTable: DataTablePage;
+	readonly siteRolesLink: Locator;
 	readonly userLink: Locator;
 
 	constructor(page: Page) {
@@ -22,10 +26,24 @@ export class RolesPage {
 			exact: true,
 			name: 'Account Roles',
 		});
+		this.applicationsMenuButton = page.getByLabel(
+			'Open Applications MenuCtrl+'
+		);
 		this.applicationsMenuPage = new ApplicationsMenuPage(page);
-		this.deleteButton = page.getByRole('menuitem', {name: 'Delete'});
+		this.deleteButton = page
+			.getByRole('menuitem', {name: 'Delete'})
+			.or(page.getByRole('link', {name: 'Delete'}));
 		this.optionsButton = page.getByLabel('Options', {exact: true});
+		this.organizationRolesLink = page.getByRole('link', {
+			exact: true,
+			name: 'Organization Roles',
+		});
 		this.page = page;
+		this.roleCell = (value, exact = true) =>
+			this.page.getByRole('cell', {
+				exact,
+				name: value,
+			});
 		this.rolesTable = new DataTablePage(
 			page,
 			page
@@ -34,6 +52,10 @@ export class RolesPage {
 				)
 				.first()
 		);
+		this.siteRolesLink = page.getByRole('link', {
+			exact: true,
+			name: 'Site Roles',
+		});
 		this.userLink = page.getByRole('link', {exact: true, name: 'User'});
 	}
 

@@ -85,6 +85,7 @@ public class RelatedModelFDSActionProvider implements FDSActionProvider {
 			}
 		).add(
 			dropdownItem -> {
+				dropdownItem.putData("id", "view");
 				dropdownItem.setHref(
 					_getViewURL(relatedModel.getId(), httpServletRequest));
 				dropdownItem.setIcon("view");

@@ -33,8 +33,10 @@ public class RelatedModelsTableFDSView extends BaseTableFDSView {
 
 		return fdsTableSchemaBuilder.add(
 			"id", "id",
-			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"actionLink")
+			fdsTableSchemaField -> {
+				fdsTableSchemaField.setActionId("view");
+				fdsTableSchemaField.setContentRenderer("actionLink");
+			}
 		).add(
 			"label", "label"
 		).build();

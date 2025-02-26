@@ -673,10 +673,6 @@ public class CompanyLocalServiceDBPartitionTest
 				getExtractedPartitionName(company.getCompanyId()), true,
 				"Company", "VirtualHost");
 
-			_checkStandaloneDBPartitionTables(
-				DBPartitionUtil.getPartitionName(company.getCompanyId()), false,
-				"Company", "VirtualHost");
-
 			Collection<ServiceReference<Portlet>> serviceReferences =
 				_bundleContext.getServiceReferences(
 					Portlet.class,

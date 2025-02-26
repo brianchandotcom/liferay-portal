@@ -7,7 +7,6 @@ package com.liferay.object.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.model.BaseModel;
-import com.liferay.portal.kernel.model.ContainerModel;
 import com.liferay.portal.kernel.model.MVCCModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedAuditedModel;
@@ -29,8 +28,8 @@ import org.osgi.annotation.versioning.ProviderType;
  */
 @ProviderType
 public interface ObjectEntryVersionModel
-	extends BaseModel<ObjectEntryVersion>, ContainerModel, MVCCModel,
-			ShardedModel, StagedAuditedModel {
+	extends BaseModel<ObjectEntryVersion>, MVCCModel, ShardedModel,
+			StagedAuditedModel {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -252,46 +251,6 @@ public interface ObjectEntryVersionModel
 	 * @param status the status of this object entry version
 	 */
 	public void setStatus(int status);
-
-	/**
-	 * Returns the container model ID of this object entry version.
-	 *
-	 * @return the container model ID of this object entry version
-	 */
-	@Override
-	public long getContainerModelId();
-
-	/**
-	 * Sets the container model ID of this object entry version.
-	 *
-	 * @param containerModelId the container model ID of this object entry version
-	 */
-	@Override
-	public void setContainerModelId(long containerModelId);
-
-	/**
-	 * Returns the container name of this object entry version.
-	 *
-	 * @return the container name of this object entry version
-	 */
-	@Override
-	public String getContainerModelName();
-
-	/**
-	 * Returns the parent container model ID of this object entry version.
-	 *
-	 * @return the parent container model ID of this object entry version
-	 */
-	@Override
-	public long getParentContainerModelId();
-
-	/**
-	 * Sets the parent container model ID of this object entry version.
-	 *
-	 * @param parentContainerModelId the parent container model ID of this object entry version
-	 */
-	@Override
-	public void setParentContainerModelId(long parentContainerModelId);
 
 	@Override
 	public ObjectEntryVersion cloneWithOriginalValues();

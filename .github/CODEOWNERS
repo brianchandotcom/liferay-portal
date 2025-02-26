@@ -326,7 +326,6 @@ modules/apps/questions/    @liferay-content-management
 modules/apps/ratings/    @liferay-content-management
 modules/apps/reading-time/    @liferay-content-management
 modules/apps/redirect/    @liferay-site-management
-modules/apps/release-feature-flag/    @liferay-platform-experience
 modules/apps/repository/    @liferay-content-management
 modules/apps/roles/    @liferay-commerce
 modules/apps/rss/    @liferay-page-management

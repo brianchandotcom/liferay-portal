@@ -587,30 +587,6 @@ public class ObjectEntryVersionModelImpl
 	}
 
 	@Override
-	public long getContainerModelId() {
-		return getObjectEntryVersionId();
-	}
-
-	@Override
-	public void setContainerModelId(long containerModelId) {
-		_objectEntryVersionId = containerModelId;
-	}
-
-	@Override
-	public String getContainerModelName() {
-		return String.valueOf(getContainerModelId());
-	}
-
-	@Override
-	public long getParentContainerModelId() {
-		return 0;
-	}
-
-	@Override
-	public void setParentContainerModelId(long parentContainerModelId) {
-	}
-
-	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(
 			PortalUtil.getClassNameId(ObjectEntryVersion.class.getName()));

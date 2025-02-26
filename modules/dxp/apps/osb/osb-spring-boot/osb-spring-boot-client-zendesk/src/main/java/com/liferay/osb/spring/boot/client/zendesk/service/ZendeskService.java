@@ -95,7 +95,7 @@ public class ZendeskService {
 				new JSONObject(
 				).put(
 					"request",
-					JSONObject().put(
+					new JSONObject().put(
 						"comment",
 						new JSONObject(
 						).put(

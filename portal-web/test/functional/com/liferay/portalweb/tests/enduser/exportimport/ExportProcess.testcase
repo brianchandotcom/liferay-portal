@@ -113,7 +113,9 @@ definition {
 
 			Navigator.gotoNavItem(navItem = "Scheduled Jobs");
 
-			Click.clickAtNotVisible(locator1 = "Blueprints#PAGINATION_NEXT_LINK");
+			while ((IsElementNotPresent(key_name = "DeleteObsoleteBackgroundTasksSchedulerJobConfiguration", locator1 = "JobScheduler#RUN_NOW_BUTTON")) && (maxIterations = "10")) {
+				Click.clickAtNotVisible(locator1 = "Blueprints#PAGINATION_NEXT_LINK");
+			}
 
 			Click.clickAtNotVisible(
 				key_name = "DeleteObsoleteBackgroundTasksSchedulerJobConfiguration",

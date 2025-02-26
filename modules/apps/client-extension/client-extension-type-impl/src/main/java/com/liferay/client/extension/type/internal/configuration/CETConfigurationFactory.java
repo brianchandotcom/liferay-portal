@@ -138,6 +138,21 @@ public class CETConfigurationFactory {
 
 					_cetManager.deleteCET(_cet);
 
+					if (!Objects.equals(
+							_cet.getType(),
+							ClientExtensionEntryConstants.TYPE_THEME_CSS)) {
+
+						return;
+					}
+
+					ThemeCSSCET themeCSSCET = (ThemeCSSCET)_cet;
+
+					if (!Objects.equals(
+							themeCSSCET.getScope(), "controlPanel")) {
+
+						return;
+					}
+
 					if (_log.isInfoEnabled()) {
 						_log.info(
 							StringBundler.concat(

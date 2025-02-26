@@ -1794,7 +1794,7 @@ public class BundleSiteInitializerTest {
 			_group.getGroupId(), "dialect-button");
 
 		Assert.assertNotNull(fragmentEntry);
-		Assert.assertEquals("dialect-button", fragmentEntry.getName());
+		Assert.assertEquals("Dialect Button", fragmentEntry.getName());
 	}
 
 	private void _assertJournalArticles1() throws Exception {

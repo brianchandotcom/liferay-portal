@@ -21,6 +21,7 @@ import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizer
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONSerializer;
@@ -31,10 +32,13 @@ import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
+import com.liferay.portal.util.PropsValues;
 
 import java.net.URLDecoder;
 
@@ -74,6 +78,8 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 	@Before
 	public void setUp() {
+		super.setUp();
+
 		_bundleContext = SystemBundleUtil.getBundleContext();
 
 		ThemeDisplay themeDisplay = Mockito.mock(ThemeDisplay.class);
@@ -661,6 +667,109 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 	}
 
 	@Test
+	public void testSerializePagination() throws Exception {
+
+		// Default pagination
+
+		_mockSerializePagination(FDS_NAMES[0], Integer.MIN_VALUE, null);
+
+		JSONAssert.assertEquals(
+			defaultPagination,
+			_customFDSSerializer.serializePagination(
+				FDS_NAMES[0], httpServletRequest
+			).toString(),
+			JSONCompareMode.STRICT);
+
+		_resetFDSSerializer();
+
+		// Different pagination
+
+		_mockSerializePagination(
+			FDS_NAMES[0], DEFAULTS_ITEMS_PER_PAGE[0],
+			LISTS_OF_ITEMS_PER_PAGE[0]);
+
+		_mockSerializePagination(
+			FDS_NAMES[1], DEFAULTS_ITEMS_PER_PAGE[1],
+			LISTS_OF_ITEMS_PER_PAGE[1]);
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"deltas",
+				() -> JSONUtil.toJSONArray(
+					ListUtil.fromArray(LISTS_OF_ITEMS_PER_PAGE[0]),
+					itemsPerPage -> JSONUtil.put("label", itemsPerPage))
+			).put(
+				"initialDelta", DEFAULTS_ITEMS_PER_PAGE[0]
+			).toString(),
+			_customFDSSerializer.serializePagination(
+				FDS_NAMES[0], httpServletRequest
+			).toString(),
+			JSONCompareMode.STRICT);
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"deltas",
+				() -> JSONUtil.toJSONArray(
+					ListUtil.fromArray(LISTS_OF_ITEMS_PER_PAGE[1]),
+					itemsPerPage -> JSONUtil.put("label", itemsPerPage))
+			).put(
+				"initialDelta", DEFAULTS_ITEMS_PER_PAGE[1]
+			).toString(),
+			_customFDSSerializer.serializePagination(
+				FDS_NAMES[1], httpServletRequest
+			).toString(),
+			JSONCompareMode.STRICT);
+
+		_resetFDSSerializer();
+
+		// Shared pagination
+
+		_mockSerializePagination(
+			FDS_NAMES[0], DEFAULTS_ITEMS_PER_PAGE[0],
+			LISTS_OF_ITEMS_PER_PAGE[0]);
+		_mockSerializePagination(
+			FDS_NAMES[1], DEFAULTS_ITEMS_PER_PAGE[0],
+			LISTS_OF_ITEMS_PER_PAGE[0]);
+
+		JSONAssert.assertEquals(
+			_customFDSSerializer.serializePagination(
+				FDS_NAMES[0], httpServletRequest
+			).toString(),
+			_customFDSSerializer.serializePagination(
+				FDS_NAMES[1], httpServletRequest
+			).toString(),
+			JSONCompareMode.STRICT);
+
+		_resetFDSSerializer();
+
+		// Wrong pagination
+
+		_mockSerializePagination(FDS_NAMES[0], 0, LISTS_OF_ITEMS_PER_PAGE[2]);
+		_mockSerializePagination(FDS_NAMES[1], -1, null);
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"deltas",
+				() -> JSONUtil.toJSONArray(
+					ListUtil.fromArray(LISTS_OF_ITEMS_PER_PAGE[3]),
+					itemsPerPage -> JSONUtil.put("label", itemsPerPage))
+			).put(
+				"initialDelta", PropsValues.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA
+			).toString(),
+			_customFDSSerializer.serializePagination(
+				FDS_NAMES[0], httpServletRequest
+			).toString(),
+			JSONCompareMode.STRICT);
+
+		JSONAssert.assertEquals(
+			defaultPagination,
+			_customFDSSerializer.serializePagination(
+				FDS_NAMES[1], httpServletRequest
+			).toString(),
+			JSONCompareMode.STRICT);
+	}
+
+	@Test
 	public void testSerializeSorts() throws Exception {
 
 		// Different sorts
@@ -1226,6 +1335,42 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		Mockito.when(
 			_customFDSSerializer.serializeItemsActions(
+				fdsName, httpServletRequest)
+		).thenCallRealMethod();
+	}
+
+	private void _mockSerializePagination(
+		String fdsName, int defaultItemsPerPage, int[] listOfItemsPerPage) {
+
+		Mockito.when(
+			_customFDSSerializer.getDataSetObjectEntryProperties(
+				fdsName, httpServletRequest)
+		).thenReturn(
+			HashMapBuilder.<String, Object>put(
+				"defaultItemsPerPage",
+				() -> {
+					if (defaultItemsPerPage > 0) {
+						return defaultItemsPerPage;
+					}
+
+					return null;
+				}
+			).put(
+				"listOfItemsPerPage",
+				() -> {
+					if (ArrayUtil.isEmpty(listOfItemsPerPage)) {
+						return null;
+					}
+
+					return ListUtil.toString(
+						ListUtil.fromArray(listOfItemsPerPage), (String)null,
+						StringPool.COMMA_AND_SPACE);
+				}
+			).build()
+		);
+
+		Mockito.when(
+			_customFDSSerializer.serializePagination(
 				fdsName, httpServletRequest)
 		).thenCallRealMethod();
 	}

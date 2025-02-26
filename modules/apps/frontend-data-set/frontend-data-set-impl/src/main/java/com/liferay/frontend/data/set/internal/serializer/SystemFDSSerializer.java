@@ -31,6 +31,8 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -153,6 +155,50 @@ public class SystemFDSSerializer
 		}
 
 		return fdsItemsActions.getFDSActionDropdownItems(httpServletRequest);
+	}
+
+	@Override
+	public JSONObject serializePagination(
+		String fdsName, HttpServletRequest httpServletRequest) {
+
+		SystemFDSEntry systemFDSEntry =
+			systemFDSEntryRegistry.getSystemFDSEntry(fdsName);
+
+		if (systemFDSEntry == null) {
+			return null;
+		}
+
+		return JSONUtil.put(
+			"deltas",
+			() -> {
+				int[] listOfItemsPerPage =
+					systemFDSEntry.getListOfItemsPerPage();
+
+				if (ArrayUtil.isEmpty(listOfItemsPerPage)) {
+					listOfItemsPerPage =
+						_defaultSystemFDSEntry.getListOfItemsPerPage();
+				}
+
+				return JSONUtil.toJSONArray(
+					ListUtil.fromArray(listOfItemsPerPage),
+					itemsPerPage -> {
+						if (itemsPerPage > 0) {
+							return JSONUtil.put("label", itemsPerPage);
+						}
+
+						return null;
+					});
+			}
+		).put(
+			"initialDelta",
+			() -> {
+				if (systemFDSEntry.getDefaultItemsPerPage() > 0) {
+					return systemFDSEntry.getDefaultItemsPerPage();
+				}
+
+				return _defaultSystemFDSEntry.getDefaultItemsPerPage();
+			}
+		);
 	}
 
 	@Override
@@ -314,5 +360,53 @@ public class SystemFDSSerializer
 			jsonArray.put(jsonObject);
 		}
 	}
+
+	private static final SystemFDSEntry _defaultSystemFDSEntry =
+		new SystemFDSEntry() {
+
+			@Override
+			public String getAdditionalAPIURLParameters() {
+				return "";
+			}
+
+			public int getDefaultItemsPerPage() {
+				return SystemFDSEntry.super.getDefaultItemsPerPage();
+			}
+
+			@Override
+			public String getDescription() {
+				return "";
+			}
+
+			public int[] getListOfItemsPerPage() {
+				return SystemFDSEntry.super.getListOfItemsPerPage();
+			}
+
+			@Override
+			public String getName() {
+				return "";
+			}
+
+			@Override
+			public String getRESTApplication() {
+				return "";
+			}
+
+			@Override
+			public String getRESTEndpoint() {
+				return "";
+			}
+
+			@Override
+			public String getRESTSchema() {
+				return "";
+			}
+
+			@Override
+			public String getTitle() {
+				return "";
+			}
+
+		};
 
 }

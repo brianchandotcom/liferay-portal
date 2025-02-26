@@ -64,6 +64,7 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
+import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -98,7 +99,9 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
+		super.setUp();
+
 		_bundleContext = SystemBundleUtil.getBundleContext();
 
 		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
@@ -879,6 +882,135 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 	}
 
 	@Test
+	public void testSerializePagination() throws Exception {
+
+		// Default pagination
+
+		_registerServices(_registerSystemFDSEntry(FDS_NAMES[0]));
+
+		JSONAssert.assertEquals(
+			defaultPagination,
+			_systemFDSSerializer.serializePagination(
+				FDS_NAMES[0], httpServletRequest
+			).toString(),
+			JSONCompareMode.STRICT);
+
+		_unregisterServices();
+
+		// Different pagination
+
+		_registerServices(
+			_registerSystemFDSEntry(
+				SystemFDSEntryFactory.create(
+					FDS_NAMES[0]
+				).withPagination(
+					DEFAULTS_ITEMS_PER_PAGE[0], LISTS_OF_ITEMS_PER_PAGE[0]
+				)),
+			_registerSystemFDSEntry(
+				SystemFDSEntryFactory.create(
+					FDS_NAMES[1]
+				).withPagination(
+					DEFAULTS_ITEMS_PER_PAGE[1], LISTS_OF_ITEMS_PER_PAGE[1]
+				)));
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"deltas",
+				() -> JSONUtil.toJSONArray(
+					ListUtil.fromArray(LISTS_OF_ITEMS_PER_PAGE[0]),
+					itemsPerPage -> JSONUtil.put("label", itemsPerPage))
+			).put(
+				"initialDelta", DEFAULTS_ITEMS_PER_PAGE[0]
+			).toString(),
+			_systemFDSSerializer.serializePagination(
+				FDS_NAMES[0], httpServletRequest
+			).toString(),
+			JSONCompareMode.STRICT);
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"deltas",
+				() -> JSONUtil.toJSONArray(
+					ListUtil.fromArray(LISTS_OF_ITEMS_PER_PAGE[1]),
+					itemsPerPage -> JSONUtil.put("label", itemsPerPage))
+			).put(
+				"initialDelta", DEFAULTS_ITEMS_PER_PAGE[1]
+			).toString(),
+			_systemFDSSerializer.serializePagination(
+				FDS_NAMES[1], httpServletRequest
+			).toString(),
+			JSONCompareMode.STRICT);
+
+		_unregisterServices();
+
+		// Shared pagination
+
+		_registerServices(
+			_registerSystemFDSEntry(
+				SystemFDSEntryFactory.create(
+					FDS_NAMES[0]
+				).withPagination(
+					DEFAULTS_ITEMS_PER_PAGE[0], LISTS_OF_ITEMS_PER_PAGE[0]
+				)),
+			_registerSystemFDSEntry(
+				SystemFDSEntryFactory.create(
+					FDS_NAMES[1]
+				).withPagination(
+					DEFAULTS_ITEMS_PER_PAGE[0], LISTS_OF_ITEMS_PER_PAGE[0]
+				)));
+
+		JSONAssert.assertEquals(
+			_systemFDSSerializer.serializePagination(
+				FDS_NAMES[0], httpServletRequest
+			).toString(),
+			_systemFDSSerializer.serializePagination(
+				FDS_NAMES[1], httpServletRequest
+			).toString(),
+			JSONCompareMode.STRICT);
+
+		_unregisterServices();
+
+		// Wrong pagination
+
+		_registerServices(
+			_registerSystemFDSEntry(
+				SystemFDSEntryFactory.create(
+					FDS_NAMES[0]
+				).withPagination(
+					0, LISTS_OF_ITEMS_PER_PAGE[2]
+				)),
+			_registerSystemFDSEntry(
+				SystemFDSEntryFactory.create(
+					FDS_NAMES[1]
+				).withPagination(
+					-1, null
+				)));
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				"deltas",
+				() -> JSONUtil.toJSONArray(
+					ListUtil.fromArray(LISTS_OF_ITEMS_PER_PAGE[3]),
+					itemsPerPage -> JSONUtil.put("label", itemsPerPage))
+			).put(
+				"initialDelta", PropsValues.SEARCH_CONTAINER_PAGE_DEFAULT_DELTA
+			).toString(),
+			_systemFDSSerializer.serializePagination(
+				FDS_NAMES[0], httpServletRequest
+			).toString(),
+			JSONCompareMode.STRICT);
+
+		JSONAssert.assertEquals(
+			defaultPagination,
+			_systemFDSSerializer.serializePagination(
+				FDS_NAMES[1], httpServletRequest
+			).toString(),
+			JSONCompareMode.STRICT);
+
+		_unregisterServices();
+	}
+
+	@Test
 	public void testSerializePropsTransformer() throws Exception {
 
 		// Different props transformer
@@ -1635,9 +1767,25 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 						return _additionalURLParameters;
 					}
 
+					public int getDefaultItemsPerPage() {
+						if (_defaultItemsPerPage > 0) {
+							return _defaultItemsPerPage;
+						}
+
+						return SystemFDSEntry.super.getDefaultItemsPerPage();
+					}
+
 					@Override
 					public String getDescription() {
 						return "";
+					}
+
+					public int[] getListOfItemsPerPage() {
+						if (_listOfItemsPerPage != null) {
+							return _listOfItemsPerPage;
+						}
+
+						return SystemFDSEntry.super.getListOfItemsPerPage();
 					}
 
 					@Override
@@ -1687,6 +1835,15 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 			return this;
 		}
 
+		public SystemFDSEntryWrapper withPagination(
+			int defaultItemsPerPage, int[] listOfItemsPerPage) {
+
+			_defaultItemsPerPage = defaultItemsPerPage;
+			_listOfItemsPerPage = listOfItemsPerPage;
+
+			return this;
+		}
+
 		public SystemFDSEntryWrapper withPropsTransformer(
 			String propsTransformer) {
 
@@ -1696,7 +1853,9 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 		}
 
 		private String _additionalURLParameters;
+		private int _defaultItemsPerPage = -1;
 		private final String _fdsName;
+		private int[] _listOfItemsPerPage;
 		private String _propsTransformer;
 
 	}

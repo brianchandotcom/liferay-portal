@@ -51,7 +51,7 @@ buildCreoleParser {
 	into "src/main/java/com/liferay/wiki/engine/creole/internal/parser/parser/Creole10Parser.java"
 }
 
-compileJava {
+configure([compileJava, jarSources]) {
 	dependsOn buildCreoleLexer
 	dependsOn buildCreoleParser
 }
@@ -72,11 +72,6 @@ dependencies {
 	compileOnly project(":core:petra:petra-sql-dsl-api")
 	compileOnly project(":core:petra:petra-string")
 	testImplementation project(":apps:static:portal-configuration:portal-configuration-persistence-api")
-}
-
-jarSources {
-	dependsOn buildCreoleLexer
-	dependsOn buildCreoleParser
 }
 
 liferayOSGi {

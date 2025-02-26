@@ -142,26 +142,6 @@ public class ObjectEntryVersionWrapper
 	}
 
 	/**
-	 * Returns the container model ID of this object entry version.
-	 *
-	 * @return the container model ID of this object entry version
-	 */
-	@Override
-	public long getContainerModelId() {
-		return model.getContainerModelId();
-	}
-
-	/**
-	 * Returns the container name of this object entry version.
-	 *
-	 * @return the container name of this object entry version
-	 */
-	@Override
-	public String getContainerModelName() {
-		return model.getContainerModelName();
-	}
-
-	/**
 	 * Returns the content of this object entry version.
 	 *
 	 * @return the content of this object entry version
@@ -219,16 +199,6 @@ public class ObjectEntryVersionWrapper
 	@Override
 	public long getObjectEntryVersionId() {
 		return model.getObjectEntryVersionId();
-	}
-
-	/**
-	 * Returns the parent container model ID of this object entry version.
-	 *
-	 * @return the parent container model ID of this object entry version
-	 */
-	@Override
-	public long getParentContainerModelId() {
-		return model.getParentContainerModelId();
 	}
 
 	/**
@@ -317,16 +287,6 @@ public class ObjectEntryVersionWrapper
 	}
 
 	/**
-	 * Sets the container model ID of this object entry version.
-	 *
-	 * @param containerModelId the container model ID of this object entry version
-	 */
-	@Override
-	public void setContainerModelId(long containerModelId) {
-		model.setContainerModelId(containerModelId);
-	}
-
-	/**
 	 * Sets the content of this object entry version.
 	 *
 	 * @param content the content of this object entry version
@@ -384,16 +344,6 @@ public class ObjectEntryVersionWrapper
 	@Override
 	public void setObjectEntryVersionId(long objectEntryVersionId) {
 		model.setObjectEntryVersionId(objectEntryVersionId);
-	}
-
-	/**
-	 * Sets the parent container model ID of this object entry version.
-	 *
-	 * @param parentContainerModelId the parent container model ID of this object entry version
-	 */
-	@Override
-	public void setParentContainerModelId(long parentContainerModelId) {
-		model.setParentContainerModelId(parentContainerModelId);
 	}
 
 	/**

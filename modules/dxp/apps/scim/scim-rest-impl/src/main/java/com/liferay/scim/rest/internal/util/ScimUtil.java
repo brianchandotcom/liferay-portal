@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
@@ -101,7 +102,11 @@ public class ScimUtil {
 
 		ScimUser scimUser = new ScimUser();
 
-		scimUser.setActive(_calculateActive(user));
+		SimpleAttribute simpleAttribute = (SimpleAttribute)user.getAttribute(
+			"active");
+
+		scimUser.setActive(GetterUtil.getBoolean(simpleAttribute.getValue()));
+
 		scimUser.setAutoScreenName(
 			PrefsPropsUtil.getBoolean(
 				companyId, PropsKeys.USERS_SCREEN_NAME_ALWAYS_AUTOGENERATE));
@@ -220,22 +225,6 @@ public class ScimUtil {
 		user.setUserName(scimUser.getScreenName());
 
 		return user;
-	}
-
-	private static boolean _calculateActive(User user) {
-		try {
-			return user.getActive();
-		}
-		catch (ClassCastException classCastException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(classCastException);
-			}
-
-			SimpleAttribute attribute = (SimpleAttribute)user.getAttribute(
-				"active");
-
-			return Boolean.parseBoolean((String)attribute.getValue());
-		}
 	}
 
 	private static AttributeSchema _createAttributeSchema() {

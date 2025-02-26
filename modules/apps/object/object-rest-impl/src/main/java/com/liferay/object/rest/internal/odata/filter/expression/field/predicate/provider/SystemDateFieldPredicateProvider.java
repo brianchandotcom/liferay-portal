@@ -10,17 +10,22 @@ import com.liferay.object.odata.filter.expression.field.predicate.provider.Field
 import com.liferay.petra.sql.dsl.Column;
 import com.liferay.petra.sql.dsl.expression.Expression;
 import com.liferay.petra.sql.dsl.expression.Predicate;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.odata.filter.expression.BinaryExpression;
 import com.liferay.portal.odata.filter.expression.ExpressionVisitException;
 
 import java.text.DateFormat;
+import java.text.Format;
 import java.text.ParseException;
 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Function;
 
 import org.osgi.service.component.annotations.Component;
@@ -48,6 +53,8 @@ public class SystemDateFieldPredicateProvider
 		Expression<Object> expression =
 			(Expression<Object>)objectDefinitionColumnSupplier.apply(
 				String.valueOf(left));
+
+		right = _formatDateForSpecificDBType(right);
 
 		if (right == null) {
 			if (operation == BinaryExpression.Operation.EQ) {
@@ -132,6 +139,26 @@ public class SystemDateFieldPredicateProvider
 		throw new UnsupportedOperationException(
 			"Unsupported method getStartsWithPredicate for " +
 				"dateCreated/dateModified fields");
+	}
+
+	private Object _formatDateForSpecificDBType(Object date) {
+		if (Objects.equals(DBManagerUtil.getDBType(), DBType.DB2) ||
+			Objects.equals(DBManagerUtil.getDBType(), DBType.HYPERSONIC) ||
+			Objects.equals(DBManagerUtil.getDBType(), DBType.ORACLE)) {
+
+			String pattern = "yyyy-MM-dd HH:mm:ss.SSS";
+
+			if (Objects.equals(DBManagerUtil.getDBType(), DBType.ORACLE)) {
+				pattern = "dd-MMM-yyyy hh:mm:ss.SSS a";
+			}
+
+			Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(
+				pattern);
+
+			return format.format(date);
+		}
+
+		return date;
 	}
 
 	private Predicate _getDateTimePredicate(

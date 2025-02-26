@@ -1,7 +1,6 @@
 {
 	"dependencies": {
-		"frontend-js-components-web": "*",
-		"frontend-js-web": "*"
+		"frontend-js-components-web": "*"
 	},
 	"main": "js/index.ts",
 	"name": "@liferay/configuration-admin-web",

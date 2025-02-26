@@ -13,6 +13,7 @@ import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.fragment.util.configuration.FragmentEntryConfigurationParser;
 import com.liferay.frontend.data.set.constants.FDSEntityFieldTypes;
+import com.liferay.frontend.data.set.renderer.FDSRenderer;
 import com.liferay.frontend.data.set.url.FDSAPIURLResolver;
 import com.liferay.frontend.data.set.url.FDSAPIURLResolverRegistry;
 import com.liferay.list.type.model.ListTypeDefinition;
@@ -196,10 +197,24 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 				return;
 			}
 
-			printWriter.write(
-				_buildFragmentHTML(
-					dataSetObjectDefinition, dataSetObjectEntry,
-					fragmentRendererContext, httpServletRequest));
+			if (FeatureFlagManagerUtil.isEnabled("LPD-37531")) {
+				_fdsRenderer.render(
+					HashMapBuilder.<String, Object>put(
+						"namespace",
+						fragmentRendererContext.getFragmentElementId()
+					).put(
+						"style", "fluid"
+					).build(),
+					fragmentRendererContext.getFragmentElementId(),
+					externalReferenceCode, httpServletRequest,
+					httpServletResponse, true, null, printWriter);
+			}
+			else {
+				printWriter.write(
+					_buildFragmentHTML(
+						dataSetObjectDefinition, dataSetObjectEntry,
+						fragmentRendererContext, httpServletRequest));
+			}
 		}
 		catch (Exception exception) {
 			_log.error("Unable to render frontend data set view", exception);
@@ -1147,6 +1162,9 @@ public class FDSAdminFragmentRenderer implements FragmentRenderer {
 
 	@Reference
 	private FDSAPIURLResolverRegistry _fdsAPIURLResolverRegistry;
+
+	@Reference
+	private FDSRenderer _fdsRenderer;
 
 	@Reference
 	private FragmentEntryConfigurationParser _fragmentEntryConfigurationParser;

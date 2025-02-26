@@ -91,19 +91,19 @@ public class ObjectEntryDTOConverterUtil {
 				false, null, dtoConverterRegistry, null, user.getLocale(), null,
 				user);
 
-		Object object = dtoConverter.toDTO(
+		Object dto = dtoConverter.toDTO(
 			defaultDTOConverterContext, objectEntry);
 
-		JSONObject jsonObject = jsonFactory.createJSONObject(object.toString());
+		JSONObject dtoJSONObject = jsonFactory.createJSONObject(dto.toString());
 
-		jsonObject.remove("actions");
-		jsonObject.remove("creator");
-		jsonObject.remove("dateCreated");
-		jsonObject.remove("dateModified");
-		jsonObject.remove("id");
-		jsonObject.remove("status");
+		dtoJSONObject.remove("actions");
+		dtoJSONObject.remove("creator");
+		dtoJSONObject.remove("dateCreated");
+		dtoJSONObject.remove("dateModified");
+		dtoJSONObject.remove("id");
+		dtoJSONObject.remove("status");
 
-		return jsonObject.toString();
+		return dtoJSONObject.toString();
 	}
 
 	public static Map<String, Object> toValues(

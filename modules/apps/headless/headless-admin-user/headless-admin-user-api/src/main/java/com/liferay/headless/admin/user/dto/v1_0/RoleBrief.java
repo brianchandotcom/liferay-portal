@@ -89,7 +89,7 @@ public class RoleBrief implements Serializable {
 	}
 
 	@GraphQLField(description = "The role's external reference code.")
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected String externalReferenceCode;
 
 	@JsonIgnore
@@ -133,6 +133,45 @@ public class RoleBrief implements Serializable {
 
 	@JsonIgnore
 	private Supplier<Long> _idSupplier;
+
+	@io.swagger.v3.oas.annotations.media.Schema(description = "The role's key.")
+	public String getKey() {
+		if (_keySupplier != null) {
+			key = _keySupplier.get();
+
+			_keySupplier = null;
+		}
+
+		return key;
+	}
+
+	public void setKey(String key) {
+		this.key = key;
+
+		_keySupplier = null;
+	}
+
+	@JsonIgnore
+	public void setKey(UnsafeSupplier<String, Exception> keyUnsafeSupplier) {
+		_keySupplier = () -> {
+			try {
+				return keyUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(description = "The role's key.")
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String key;
+
+	@JsonIgnore
+	private Supplier<String> _keySupplier;
 
 	@io.swagger.v3.oas.annotations.media.Schema(
 		description = "The role's name."
@@ -255,7 +294,7 @@ public class RoleBrief implements Serializable {
 	}
 
 	@GraphQLField(description = "The role's type.")
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected Integer roleType;
 
 	@JsonIgnore
@@ -314,6 +353,22 @@ public class RoleBrief implements Serializable {
 			sb.append("\"id\": ");
 
 			sb.append(id);
+		}
+
+		String key = getKey();
+
+		if (key != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"key\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(key));
+
+			sb.append("\"");
 		}
 
 		String name = getName();

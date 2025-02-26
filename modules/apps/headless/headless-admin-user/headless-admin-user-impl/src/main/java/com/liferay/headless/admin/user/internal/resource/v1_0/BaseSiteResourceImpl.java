@@ -7,6 +7,7 @@ package com.liferay.headless.admin.user.internal.resource.v1_0;
 
 import com.liferay.headless.admin.user.dto.v1_0.Site;
 import com.liferay.headless.admin.user.resource.v1_0.SiteResource;
+import com.liferay.lazy.referencing.kernel.LazyReferencingThreadLocal;
 import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
@@ -166,8 +167,15 @@ public abstract class BaseSiteResourceImpl
 			Collection<Site> sites, Map<String, Serializable> parameters)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		try {
+			LazyReferencingThreadLocal.setLazyReferencingEnabled(true);
+
+			throw new UnsupportedOperationException(
+				"This method needs to be implemented");
+		}
+		finally {
+			LazyReferencingThreadLocal.setLazyReferencingEnabled(false);
+		}
 	}
 
 	@Override

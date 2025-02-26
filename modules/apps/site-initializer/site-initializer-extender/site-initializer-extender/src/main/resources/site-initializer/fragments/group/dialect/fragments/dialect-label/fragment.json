@@ -4,6 +4,6 @@
 	"htmlPath": "index.html",
 	"icon": "tag",
 	"jsPath": "index.js",
-	"name": "dialect-label",
+	"name": "Dialect Label",
 	"type": "component"
 }

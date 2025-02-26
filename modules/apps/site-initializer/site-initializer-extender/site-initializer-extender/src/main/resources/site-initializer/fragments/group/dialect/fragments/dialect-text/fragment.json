@@ -4,6 +4,6 @@
 	"htmlPath": "index.html",
 	"icon": "text-editor",
 	"jsPath": "index.js",
-	"name": "dialect-text",
+	"name": "Dialect Text",
 	"type": "component"
 }

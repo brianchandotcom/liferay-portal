@@ -332,13 +332,6 @@ public class PasswordPolicyLocalServiceUtil {
 	}
 
 	public static PasswordPolicy getPasswordPolicy(
-			long companyId, boolean defaultPolicy)
-		throws PortalException {
-
-		return getService().getPasswordPolicy(companyId, defaultPolicy);
-	}
-
-	public static PasswordPolicy getPasswordPolicy(
 			long companyId, long[] organizationIds)
 		throws PortalException {
 

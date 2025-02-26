@@ -313,14 +313,6 @@ public class PasswordPolicyPersistenceTest {
 	}
 
 	@Test
-	public void testCountByC_DP() throws Exception {
-		_persistence.countByC_DP(
-			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean());
-
-		_persistence.countByC_DP(0L, RandomTestUtil.randomBoolean());
-	}
-
-	@Test
 	public void testCountByC_N() throws Exception {
 		_persistence.countByC_N(RandomTestUtil.nextLong(), "");
 
@@ -634,17 +626,6 @@ public class PasswordPolicyPersistenceTest {
 	}
 
 	private void _assertOriginalValues(PasswordPolicy passwordPolicy) {
-		Assert.assertEquals(
-			Long.valueOf(passwordPolicy.getCompanyId()),
-			ReflectionTestUtil.<Long>invoke(
-				passwordPolicy, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "companyId"));
-		Assert.assertEquals(
-			Boolean.valueOf(passwordPolicy.getDefaultPolicy()),
-			ReflectionTestUtil.<Boolean>invoke(
-				passwordPolicy, "getColumnOriginalValue",
-				new Class<?>[] {String.class}, "defaultPolicy"));
-
 		Assert.assertEquals(
 			Long.valueOf(passwordPolicy.getCompanyId()),
 			ReflectionTestUtil.<Long>invoke(

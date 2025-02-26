@@ -192,7 +192,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 
 		// TODO LPD-45048
 
-		return 1;
+		return 0;
 	}
 
 	private byte[] _getBytes(String fileName, InputStream inputStream)

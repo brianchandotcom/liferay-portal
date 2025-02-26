@@ -441,11 +441,6 @@
 			}
 		}
 
-		&::before {
-			right: 0;
-			top: 8rem;
-		}
-
 		h3 {
 			font-size: 1.3rem;
 			margin-top: 1rem;
@@ -457,7 +452,7 @@
 			right: 0px;
 		}
 	}
-	
+
 	.container {
 		.lesson-layout-container > div:nth-child(1) {
 			margin-right: auto !important;
@@ -469,7 +464,7 @@
 		align-self: center;
 		width: 95%;
 	}
-	
+
 	.side-nav {
 		 min-width: 100% !important;
 	}

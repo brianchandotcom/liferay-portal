@@ -784,13 +784,11 @@ public class FragmentEntryLinkLocalServiceImpl
 			modified = true;
 		}
 
-		if (!Objects.equals(
-				fragmentEntryLink.getHtml(), fragmentEntry.getHtml())) {
+		String html = _replaceResources(
+			fragmentEntry.getFragmentEntryId(), fragmentEntry.getHtml());
 
-			fragmentEntryLink.setHtml(
-				_replaceResources(
-					fragmentEntry.getFragmentEntryId(),
-					fragmentEntry.getHtml()));
+		if (!Objects.equals(fragmentEntryLink.getHtml(), html)) {
+			fragmentEntryLink.setHtml(html);
 
 			String defaultEditableValues = String.valueOf(
 				_fragmentEntryProcessorRegistry.

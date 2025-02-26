@@ -60,7 +60,7 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 
 	@Override
 	public void deleteAssetLibraryBySite(Long siteId) throws Exception {
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-32649")) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
 			throw new UnsupportedOperationException();
 		}
 
@@ -74,7 +74,7 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 			Long assetLibraryId, Long toSiteId)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-32649")) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
 			throw new UnsupportedOperationException();
 		}
 
@@ -126,7 +126,7 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 			String keywords, Pagination pagination, Sort[] sorts)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-32649")) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
 			throw new UnsupportedOperationException();
 		}
 
@@ -168,7 +168,7 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 
 	@Override
 	public AssetLibrary getAssetLibraryBySite(Long siteId) throws Exception {
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-32649")) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
 			throw new UnsupportedOperationException();
 		}
 
@@ -188,7 +188,7 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 			Long siteId, AssetLibrary assetLibrary)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-32649")) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
 			throw new UnsupportedOperationException();
 		}
 
@@ -249,7 +249,7 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 	public AssetLibrary postAssetLibrary(AssetLibrary assetLibrary)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-32649")) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
 			throw new UnsupportedOperationException();
 		}
 
@@ -270,7 +270,7 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 			Long assetLibraryId, Long toSiteId)
 		throws Exception {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-32649")) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-17564")) {
 			throw new UnsupportedOperationException();
 		}
 

@@ -7,13 +7,14 @@ import ClayEmptyState from '@clayui/empty-state';
 import {SearchForm} from '@liferay/layout-js-components-web';
 import React, {useMemo, useState} from 'react';
 
-import {useStructureFields} from '../../../structure_builder/contexts/StateContext';
 import {getImage} from '../../../structure_builder/utils/getImage';
+import {useSelector} from '../../contexts/StateContext';
+import selectStructureFields from '../../selectors/selectStructureFields';
 import AddFieldDropdown from './AddFieldDropdown';
 import FieldsTree from './FieldsTree';
 
 export default function StructureFields() {
-	const fields = useStructureFields();
+	const fields = useSelector(selectStructureFields);
 
 	const [search, setSearch] = useState('');
 

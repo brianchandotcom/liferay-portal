@@ -9,10 +9,11 @@ import React from 'react';
 
 import {
 	Field,
+	useSelector,
 	useStateDispatch,
-	useStructureField,
-	useStructureLabel,
 } from '../contexts/StateContext';
+import selectStructureField from '../selectors/selectStructureField';
+import selectStructureLabel from '../selectors/selectStructureLabel';
 
 export default function StructureFieldSettings({
 	fieldName,
@@ -20,8 +21,8 @@ export default function StructureFieldSettings({
 	fieldName: Field['name'];
 }) {
 	const dispatch = useStateDispatch();
-	const structureLabel = useStructureLabel();
-	const field = useStructureField(fieldName);
+	const structureLabel = useSelector(selectStructureLabel);
+	const field = useSelector(selectStructureField(fieldName));
 
 	return (
 		<ClayLayout.ContainerFluid view>

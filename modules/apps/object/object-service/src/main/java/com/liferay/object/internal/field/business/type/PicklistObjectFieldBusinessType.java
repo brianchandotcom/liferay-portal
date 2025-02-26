@@ -129,6 +129,8 @@ public class PicklistObjectFieldBusinessType
 		throws PortalException {
 
 		return HashMapBuilder.<String, Object>put(
+			"listTypeDefinitionId", objectField.getListTypeDefinitionId()
+		).put(
 			"options",
 			_getDDMFormFieldOptions(objectField, objectFieldRenderingContext)
 		).put(

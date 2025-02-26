@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
 
@@ -78,7 +79,9 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 		{"classNameId", Types.BIGINT}, {"classPK", Types.BIGINT},
 		{"name", Types.VARCHAR}, {"title", Types.VARCHAR},
 		{"description", Types.CLOB}, {"type_", Types.INTEGER},
-		{"subtype", Types.VARCHAR}
+		{"subtype", Types.VARCHAR}, {"status", Types.INTEGER},
+		{"statusByUserId", Types.BIGINT}, {"statusByUserName", Types.VARCHAR},
+		{"statusDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -102,10 +105,14 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 		TABLE_COLUMNS_MAP.put("description", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("type_", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("subtype", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("statusByUserId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("statusByUserName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table Role_ (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,roleId LONG not null,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,name VARCHAR(75) null,title STRING null,description TEXT null,type_ INTEGER,subtype VARCHAR(75) null,primary key (roleId, ctCollectionId))";
+		"create table Role_ (mvccVersion LONG default 0 not null,ctCollectionId LONG default 0 not null,uuid_ VARCHAR(75) null,externalReferenceCode VARCHAR(75) null,roleId LONG not null,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,name VARCHAR(75) null,title STRING null,description TEXT null,type_ INTEGER,subtype VARCHAR(75) null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,primary key (roleId, ctCollectionId))";
 
 	public static final String TABLE_SQL_DROP = "drop table Role_";
 
@@ -332,6 +339,12 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 			attributeGetterFunctions.put("description", Role::getDescription);
 			attributeGetterFunctions.put("type", Role::getType);
 			attributeGetterFunctions.put("subtype", Role::getSubtype);
+			attributeGetterFunctions.put("status", Role::getStatus);
+			attributeGetterFunctions.put(
+				"statusByUserId", Role::getStatusByUserId);
+			attributeGetterFunctions.put(
+				"statusByUserName", Role::getStatusByUserName);
+			attributeGetterFunctions.put("statusDate", Role::getStatusDate);
 
 			_attributeGetterFunctions = Collections.unmodifiableMap(
 				attributeGetterFunctions);
@@ -384,6 +397,16 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 				"type", (BiConsumer<Role, Integer>)Role::setType);
 			attributeSetterBiConsumers.put(
 				"subtype", (BiConsumer<Role, String>)Role::setSubtype);
+			attributeSetterBiConsumers.put(
+				"status", (BiConsumer<Role, Integer>)Role::setStatus);
+			attributeSetterBiConsumers.put(
+				"statusByUserId",
+				(BiConsumer<Role, Long>)Role::setStatusByUserId);
+			attributeSetterBiConsumers.put(
+				"statusByUserName",
+				(BiConsumer<Role, String>)Role::setStatusByUserName);
+			attributeSetterBiConsumers.put(
+				"statusDate", (BiConsumer<Role, Date>)Role::setStatusDate);
 
 			_attributeSetterBiConsumers = Collections.unmodifiableMap(
 				(Map)attributeSetterBiConsumers);
@@ -979,10 +1002,171 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 		return getColumnOriginalValue("subtype");
 	}
 
+	@JSON
+	@Override
+	public int getStatus() {
+		return _status;
+	}
+
+	@Override
+	public void setStatus(int status) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_status = status;
+	}
+
+	@JSON
+	@Override
+	public long getStatusByUserId() {
+		return _statusByUserId;
+	}
+
+	@Override
+	public void setStatusByUserId(long statusByUserId) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_statusByUserId = statusByUserId;
+	}
+
+	@Override
+	public String getStatusByUserUuid() {
+		try {
+			User user = UserLocalServiceUtil.getUserById(getStatusByUserId());
+
+			return user.getUuid();
+		}
+		catch (PortalException portalException) {
+			return "";
+		}
+	}
+
+	@Override
+	public void setStatusByUserUuid(String statusByUserUuid) {
+	}
+
+	@JSON
+	@Override
+	public String getStatusByUserName() {
+		if (_statusByUserName == null) {
+			return "";
+		}
+		else {
+			return _statusByUserName;
+		}
+	}
+
+	@Override
+	public void setStatusByUserName(String statusByUserName) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_statusByUserName = statusByUserName;
+	}
+
+	@JSON
+	@Override
+	public Date getStatusDate() {
+		return _statusDate;
+	}
+
+	@Override
+	public void setStatusDate(Date statusDate) {
+		if (_columnOriginalValues == Collections.EMPTY_MAP) {
+			_setColumnOriginalValues();
+		}
+
+		_statusDate = statusDate;
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(
 			PortalUtil.getClassNameId(Role.class.getName()), getClassNameId());
+	}
+
+	@Override
+	public boolean isApproved() {
+		if (getStatus() == WorkflowConstants.STATUS_APPROVED) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isDenied() {
+		if (getStatus() == WorkflowConstants.STATUS_DENIED) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isDraft() {
+		if (getStatus() == WorkflowConstants.STATUS_DRAFT) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isExpired() {
+		if (getStatus() == WorkflowConstants.STATUS_EXPIRED) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isInactive() {
+		if (getStatus() == WorkflowConstants.STATUS_INACTIVE) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isIncomplete() {
+		if (getStatus() == WorkflowConstants.STATUS_INCOMPLETE) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isPending() {
+		if (getStatus() == WorkflowConstants.STATUS_PENDING) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isScheduled() {
+		if (getStatus() == WorkflowConstants.STATUS_SCHEDULED) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	public long getColumnBitmask() {
@@ -1146,6 +1330,10 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 		roleImpl.setDescription(getDescription());
 		roleImpl.setType(getType());
 		roleImpl.setSubtype(getSubtype());
+		roleImpl.setStatus(getStatus());
+		roleImpl.setStatusByUserId(getStatusByUserId());
+		roleImpl.setStatusByUserName(getStatusByUserName());
+		roleImpl.setStatusDate(getStatusDate());
 
 		roleImpl.resetOriginalValues();
 
@@ -1179,6 +1367,12 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 			this.<String>getColumnOriginalValue("description"));
 		roleImpl.setType(this.<Integer>getColumnOriginalValue("type_"));
 		roleImpl.setSubtype(this.<String>getColumnOriginalValue("subtype"));
+		roleImpl.setStatus(this.<Integer>getColumnOriginalValue("status"));
+		roleImpl.setStatusByUserId(
+			this.<Long>getColumnOriginalValue("statusByUserId"));
+		roleImpl.setStatusByUserName(
+			this.<String>getColumnOriginalValue("statusByUserName"));
+		roleImpl.setStatusDate(this.<Date>getColumnOriginalValue("statusDate"));
 
 		return roleImpl;
 	}
@@ -1346,6 +1540,27 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 			roleCacheModel.subtype = null;
 		}
 
+		roleCacheModel.status = getStatus();
+
+		roleCacheModel.statusByUserId = getStatusByUserId();
+
+		roleCacheModel.statusByUserName = getStatusByUserName();
+
+		String statusByUserName = roleCacheModel.statusByUserName;
+
+		if ((statusByUserName != null) && (statusByUserName.length() == 0)) {
+			roleCacheModel.statusByUserName = null;
+		}
+
+		Date statusDate = getStatusDate();
+
+		if (statusDate != null) {
+			roleCacheModel.statusDate = statusDate.getTime();
+		}
+		else {
+			roleCacheModel.statusDate = Long.MIN_VALUE;
+		}
+
 		return roleCacheModel;
 	}
 
@@ -1426,6 +1641,10 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 	private String _descriptionCurrentLanguageId;
 	private int _type;
 	private String _subtype;
+	private int _status;
+	private long _statusByUserId;
+	private String _statusByUserName;
+	private Date _statusDate;
 
 	public <T> T getColumnValue(String columnName) {
 		columnName = _attributeNames.getOrDefault(columnName, columnName);
@@ -1475,6 +1694,10 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 		_columnOriginalValues.put("description", _description);
 		_columnOriginalValues.put("type_", _type);
 		_columnOriginalValues.put("subtype", _subtype);
+		_columnOriginalValues.put("status", _status);
+		_columnOriginalValues.put("statusByUserId", _statusByUserId);
+		_columnOriginalValues.put("statusByUserName", _statusByUserName);
+		_columnOriginalValues.put("statusDate", _statusDate);
 	}
 
 	private static final Map<String, String> _attributeNames;
@@ -1533,6 +1756,14 @@ public class RoleModelImpl extends BaseModelImpl<Role> implements RoleModel {
 		columnBitmasks.put("type_", 32768L);
 
 		columnBitmasks.put("subtype", 65536L);
+
+		columnBitmasks.put("status", 131072L);
+
+		columnBitmasks.put("statusByUserId", 262144L);
+
+		columnBitmasks.put("statusByUserName", 524288L);
+
+		columnBitmasks.put("statusDate", 1048576L);
 
 		_columnBitmasks = Collections.unmodifiableMap(columnBitmasks);
 	}

@@ -21,6 +21,8 @@ public class ZendeskTicket {
 	public static final String STATUS_CLOSED = "closed";
 
 	public ZendeskTicket(JSONObject jsonObject, String zendeskURL) {
+		_zendeskURL = zendeskURL;
+
 		Map<Long, String> customFields = new HashMap<>();
 
 		JSONArray customFieldsJSONArray = jsonObject.getJSONArray(
@@ -57,8 +59,6 @@ public class ZendeskTicket {
 
 		_zendeskOrganizationId = jsonObject.getLong("organization_id");
 		_zendeskTicketId = jsonObject.getLong("id");
-
-		_zendeskURL = zendeskURL;
 	}
 
 	public Map<Long, String> getCustomFields() {

@@ -12,10 +12,14 @@ export class PersonalDataErasurePage {
 	readonly actionsButton: Locator;
 	readonly allSelectedButton: Locator;
 	readonly anonymizeButton: Locator;
+	readonly anonymizeLink: Locator;
 	readonly anonymizeMenuItem: Locator;
 	readonly applicationsMenuPage: ApplicationsMenuPage;
+	readonly blogsRadioButton: Locator;
 	readonly deleteMenuItem: Locator;
 	readonly documentsAndMediaRadioButton: Locator;
+	readonly infoPanelButton: Locator;
+	readonly infoPanelEllipsisButton: (name: string) => Locator;
 	readonly journalArticleCheckBox: (
 		articleId: string,
 		articleUrlTitle: string,
@@ -50,13 +54,29 @@ export class PersonalDataErasurePage {
 			.getByRole('button');
 		this.applicationsMenuPage = new ApplicationsMenuPage(page);
 		this.anonymizeButton = page.getByRole('button', {name: 'Anonymize'});
+		this.anonymizeLink = page.getByRole('link', {
+			exact: true,
+			name: 'Anonymize',
+		});
 		this.anonymizeMenuItem = page.getByRole('menuitem', {
 			name: 'Anonymize',
 		});
+		this.blogsRadioButton = page.locator(
+			'input[type="radio"][value="com.liferay.blogs.uad"]'
+		);
 		this.deleteMenuItem = page.getByRole('menuitem', {name: 'Delete'});
 		this.documentsAndMediaRadioButton = page.locator(
 			'input[type="radio"][value="com.liferay.document.library.uad"]'
 		);
+		this.infoPanelButton = page.getByRole('button', {
+			name: 'Toggle Info Panel',
+		});
+		this.infoPanelEllipsisButton = (name: string) =>
+			page
+				.locator('.sidebar-header')
+				.filter({hasText: name})
+				.locator('.component-action svg.lexicon-icon-ellipsis-v')
+				.first();
 		this.journalArticleCheckBox = (
 			articleId: string,
 			articleUrlTitle: string,

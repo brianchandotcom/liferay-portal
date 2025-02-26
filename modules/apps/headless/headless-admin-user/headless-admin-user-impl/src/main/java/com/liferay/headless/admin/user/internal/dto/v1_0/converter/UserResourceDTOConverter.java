@@ -456,6 +456,7 @@ public class UserResourceDTOConverter
 						accountRole -> _toRoleBrief(
 							accountRole, dtoConverterContext),
 						RoleBrief.class));
+				setType(accountEntry::getType);
 			}
 		};
 	}

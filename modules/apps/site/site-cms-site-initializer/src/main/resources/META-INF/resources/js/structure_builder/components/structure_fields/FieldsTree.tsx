@@ -12,13 +12,10 @@ import React, {useMemo} from 'react';
 
 import {
 	FIELD_TYPE_ICON,
+	Field,
 	FieldType,
 } from '../../../structure_builder/utils/field';
-import {
-	Field,
-	useSelector,
-	useStateDispatch,
-} from '../../contexts/StateContext';
+import {useSelector, useStateDispatch} from '../../contexts/StateContext';
 import selectStructureLabel from '../../selectors/selectStructureLabel';
 
 type TreeItem = {

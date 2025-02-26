@@ -7,7 +7,6 @@
 
 import {v4 as uuidv4} from 'uuid';
 
-import {Field} from '../contexts/StateContext';
 import normalizeName from './normalizeName';
 
 // Constants
@@ -69,6 +68,13 @@ export const FIELD_TYPE_BUSINESS_TYPE = {
 } as const;
 
 // Types
+
+export type Field = {
+	erc: string;
+	label: string;
+	name: string;
+	type: FieldType;
+};
 
 export type FieldType = (typeof FIELD_TYPES)[number];
 

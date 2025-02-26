@@ -13,20 +13,13 @@ import React, {
 } from 'react';
 
 import {ObjectField} from '../types/ObjectDefinition';
-import {FieldType} from '../utils/field';
+import {Field} from '../utils/field';
 import findAvailableFieldName from '../utils/findAvailableFieldName';
 import updateFields from '../utils/updateFields';
 
 const DEFAULT_STRUCTURE_LABEL = Liferay.Language.get('untitled-structure');
 
 type Status = 'new' | 'draft' | 'published';
-
-export type Field = {
-	erc: string;
-	label: string;
-	name: string;
-	type: FieldType;
-};
 
 export type State = {
 	error: string | null;

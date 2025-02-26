@@ -7,9 +7,10 @@ import ClayBreadcrumb from '@clayui/breadcrumb';
 import ClayLayout from '@clayui/layout';
 import React from 'react';
 
-import {Field, useSelector, useStateDispatch} from '../contexts/StateContext';
+import {useSelector, useStateDispatch} from '../contexts/StateContext';
 import selectStructureField from '../selectors/selectStructureField';
 import selectStructureLabel from '../selectors/selectStructureLabel';
+import {Field} from '../utils/field';
 
 export default function StructureFieldSettings({
 	fieldName,

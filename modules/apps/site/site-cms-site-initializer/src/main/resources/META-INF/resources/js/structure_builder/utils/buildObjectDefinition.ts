@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Field, State} from '../contexts/StateContext';
+import {State} from '../contexts/StateContext';
 import {ObjectDefinition} from '../types/ObjectDefinition';
-import {FIELD_TYPE_BUSINESS_TYPE} from './field';
+import {FIELD_TYPE_BUSINESS_TYPE, Field} from './field';
 
 export default function buildObjectDefinition({
 	fields = [],

@@ -7,13 +7,11 @@ import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
 import React from 'react';
 
-import {
-	Field,
-	useStateDispatch,
-} from '../../../structure_builder/contexts/StateContext';
+import {useStateDispatch} from '../../../structure_builder/contexts/StateContext';
 import {
 	FIELD_TYPES,
 	FIELD_TYPE_LABEL,
+	Field,
 	getDefaultField,
 } from '../../../structure_builder/utils/field';
 

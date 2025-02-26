@@ -12,6 +12,7 @@ import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -181,12 +182,12 @@ public class BuildDatabaseUtil {
 			return;
 		}
 
-		List<String> distNodesList = _getOrderedDistNodes(distNodes);
+		List<String> distNodesList = new ArrayList<>(
+			Arrays.asList(distNodes.split(",")));
 
 		while (!distNodesList.isEmpty()) {
 			try {
-				String distNode = JenkinsResultsParserUtil.getRandomString(
-					distNodesList);
+				String distNode = _getRandomDistNode(distNodesList);
 
 				distNodesList.remove(distNode);
 
@@ -288,6 +289,13 @@ public class BuildDatabaseUtil {
 
 					continue;
 				}
+
+				System.out.println(
+					JenkinsResultsParserUtil.combine(
+						"Downloaded ",
+						JenkinsResultsParserUtil.getCanonicalPath(
+							buildDatabaseFile),
+						" from ", distNode));
 
 				break;
 			}
@@ -403,29 +411,35 @@ public class BuildDatabaseUtil {
 		return jenkinsMaster.getNetworkName();
 	}
 
-	private static List<String> _getOrderedDistNodes(String distNodes) {
+	private static String _getRandomDistNode(List<String> distNodes) {
+		if (distNodes.isEmpty()) {
+			return null;
+		}
+
 		String currentNetworkName = _getCurrentNetworkName();
 
 		List<String> currentNetworkDistNodes = new ArrayList<>();
-		List<String> otherNetworkDistNodes = new ArrayList<>();
+		List<String> externalNetworkDistNodes = new ArrayList<>();
 
-		for (String distNode : distNodes.split(",")) {
+		for (String distNode : distNodes) {
 			if (JenkinsResultsParserUtil.isJenkinsSlaveInNetwork(
 					distNode, currentNetworkName)) {
 
 				currentNetworkDistNodes.add(distNode);
+
+				continue;
 			}
-			else {
-				otherNetworkDistNodes.add(distNode);
-			}
+
+			externalNetworkDistNodes.add(distNode);
 		}
 
-		List<String> orderedDistNodes = new ArrayList<>(
-			currentNetworkDistNodes);
+		if (!currentNetworkDistNodes.isEmpty()) {
+			return JenkinsResultsParserUtil.getRandomString(
+				currentNetworkDistNodes);
+		}
 
-		orderedDistNodes.addAll(otherNetworkDistNodes);
-
-		return orderedDistNodes;
+		return JenkinsResultsParserUtil.getRandomString(
+			externalNetworkDistNodes);
 	}
 
 	private static boolean _isValidBuildDatabaseFile(File buildDatabaseFile) {

@@ -581,6 +581,13 @@ public class PortalUpgradeProcessRegistryImpl
 			UpgradeProcessFactory.alterColumnType(
 				"SystemEvent", "classExternalReferenceCode",
 				"VARCHAR(1000) null"));
+
+		upgradeVersionTreeMap.put(
+			new Version(31, 16, 0),
+			UpgradeProcessFactory.addColumns(
+				"Role_", "status INTEGER", "statusByUserId LONG",
+				"statusByUserName VARCHAR(75)", "statusDate DATE"),
+			UpgradeProcessFactory.runSQL("update Role_ set status = 0"));
 	}
 
 }

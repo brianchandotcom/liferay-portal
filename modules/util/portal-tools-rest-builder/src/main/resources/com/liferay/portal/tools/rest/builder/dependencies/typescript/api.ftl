@@ -86,18 +86,18 @@ export class ${classname} {
 		this.interceptors.push(interceptor);
 	}
 
-	<#list operations?sort_by("nickname") as singleOperation>
+	<#list operationsData?sort_by("nickname") as operationData>
 		/**
-		 * ${singleOperation.notes!}
-		 <#if singleOperation.allParams??>
-			 <#list singleOperation.allParams as param>
+		 * ${operationData.notes!}
+		 <#if operationData.allParams??>
+			 <#list operationData.allParams as param>
 				 * @param ${param.name} ${param.description!}
 			 </#list>
 		 </#if>
 		 */
-		public async ${singleOperation.nickname}(
-			<#if singleOperation.allParams??>
-				<#list singleOperation.allParams as param>
+		public async ${operationData.nickname}(
+			<#if operationData.allParams??>
+				<#list operationData.allParams as param>
 					${param.name}${param.required?then('', '?')}: ${param.dataType},
 				</#list>
 			</#if>
@@ -105,16 +105,16 @@ export class ${classname} {
 				headers: {[name: string]: string};
 			} = {headers: {}}
 		): Promise<{
-			<#if singleOperation.returnType??>
-				body: ${singleOperation.returnType};
+			<#if operationData.returnType??>
+				body: ${operationData.returnType};
 			<#else>
 				body?: any;
 			</#if>
 			response: http.IncomingMessage;
 		}> {
-			const localVarPath = this.basePath + '${singleOperation.path}'
-				<#if singleOperation.pathParams??>
-					<#list singleOperation.pathParams as pathParam>
+			const localVarPath = this.basePath + '${operationData.path}'
+				<#if operationData.pathParams??>
+					<#list operationData.pathParams as pathParam>
 						.replace(
 							'{' + '${pathParam.name}' + '}',
 							encodeURIComponent(String(${pathParam.name}))
@@ -123,8 +123,8 @@ export class ${classname} {
 				</#if>;
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-			<#if singleOperation.produces?? && singleOperation.produces?has_content>
-				const produces = [<#list singleOperation.produces as mediaType>'${mediaType}'<#sep>, </#list>];
+			<#if operationData.produces?? && operationData.produces?has_content>
+				const produces = [<#list operationData.produces as mediaType>'${mediaType}'<#sep>, </#list>];
 				if (produces.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
@@ -133,17 +133,17 @@ export class ${classname} {
 			</#if>
 			const localVarFormParams: any = {};
 
-			<#if singleOperation.allParams??>
-				<#list singleOperation.allParams as param>
+			<#if operationData.allParams??>
+				<#list operationData.allParams as param>
 					<#if param.required>
 						if (${param.name} === null || ${param.name} === undefined) {
-							throw new Error('Required parameter ${param.name} was null or undefined when calling ${singleOperation.nickname}.');
+							throw new Error('Required parameter ${param.name} was null or undefined when calling ${operationData.nickname}.');
 						}
 					</#if>
 				</#list>
 			</#if>
-			<#if singleOperation.queryParams??>
-				<#list singleOperation.queryParams as queryParam>
+			<#if operationData.queryParams??>
+				<#list operationData.queryParams as queryParam>
 					if (${queryParam.name} !== undefined) {
 						localVarQueryParameters['${queryParam.name}'] = ObjectSerializer.serialize(${queryParam.name}, "${queryParam.dataType}");
 					}
@@ -155,12 +155,12 @@ export class ${classname} {
 			const localVarUseFormData = false;
 
 			const localVarRequestOptions: localVarRequest.Options = {
-				<#if singleOperation.bodyParam??>
-					body: ObjectSerializer.serialize(${singleOperation.bodyParam.name}, "${singleOperation.bodyParam.dataType}"),
+				<#if operationData.bodyParam??>
+					body: ObjectSerializer.serialize(${operationData.bodyParam.name}, "${operationData.bodyParam.dataType}"),
 				</#if>
 				headers: localVarHeaderParams,
 				json: true,
-				method: '${singleOperation.httpMethod}',
+				method: '${operationData.httpMethod}',
 				qs: localVarQueryParameters,
 				uri: localVarPath,
 				useQuerystring: this._useQuerystring
@@ -182,7 +182,7 @@ export class ${classname} {
 						localVarRequestOptions.form = localVarFormParams;
 					}
 				}
-				return new Promise<{ <#if singleOperation.returnType??> body: ${singleOperation.returnType};<#else> body?: any;</#if> response: http.IncomingMessage;}>((resolve, reject) => {
+				return new Promise<{ <#if operationData.returnType??> body: ${operationData.returnType};<#else> body?: any;</#if> response: http.IncomingMessage;}>((resolve, reject) => {
 					localVarRequest(localVarRequestOptions, (error, response, body) => {
 						if (error) {
 							reject(error);

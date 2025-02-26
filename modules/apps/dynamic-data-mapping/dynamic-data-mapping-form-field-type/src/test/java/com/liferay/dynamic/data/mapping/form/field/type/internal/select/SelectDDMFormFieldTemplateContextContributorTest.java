@@ -225,15 +225,25 @@ public class SelectDDMFormFieldTemplateContextContributorTest
 
 		Assert.assertEquals(
 			Arrays.asList(
-				HashMapBuilder.put(
+				HashMapBuilder.<String, Object>put(
 					"label", "List Type Entry 1"
+				).put(
+					"labelMap",
+					HashMapBuilder.put(
+						LocaleUtil.US, "List Type Entry 1"
+					).build()
 				).put(
 					"reference", "ListTypeEntry1"
 				).put(
 					"value", "Option1"
 				).build(),
-				HashMapBuilder.put(
+				HashMapBuilder.<String, Object>put(
 					"label", "List Type Entry 2"
+				).put(
+					"labelMap",
+					HashMapBuilder.put(
+						LocaleUtil.US, "List Type Entry 2"
+					).build()
 				).put(
 					"reference", "ListTypeEntry2"
 				).put(
@@ -245,17 +255,48 @@ public class SelectDDMFormFieldTemplateContextContributorTest
 
 	@Test
 	public void testGetOptions() {
+		Map<Locale, String> labelMap1 = HashMapBuilder.put(
+			LocaleUtil.SPAIN, RandomTestUtil.randomString()
+		).put(
+			LocaleUtil.US, RandomTestUtil.randomString()
+		).build();
+
+		long listTypeDefinitionId = RandomTestUtil.randomLong();
+
+		_mockListTypeEntry("value 1", listTypeDefinitionId, labelMap1);
+
+		Map<Locale, String> labelMap2 = HashMapBuilder.put(
+			LocaleUtil.SPAIN, RandomTestUtil.randomString()
+		).put(
+			LocaleUtil.US, RandomTestUtil.randomString()
+		).build();
+
+		_mockListTypeEntry("value 2", listTypeDefinitionId, labelMap2);
+
+		Map<Locale, String> labelMap3 = HashMapBuilder.put(
+			LocaleUtil.SPAIN, RandomTestUtil.randomString()
+		).put(
+			LocaleUtil.US, RandomTestUtil.randomString()
+		).build();
+
+		_mockListTypeEntry("value 3", listTypeDefinitionId, labelMap3);
+
 		List<Object> expectedOptions = new ArrayList<>();
 
 		expectedOptions.add(
 			DDMFormFieldOptionsTestUtil.createOption(
-				"Label 1", "Reference 1", "value 1"));
+				"Label 1", labelMap1, "Reference 1", "value 1"));
 		expectedOptions.add(
 			DDMFormFieldOptionsTestUtil.createOption(
-				"Label 2", "Reference 2", "value 2"));
+				"Label 2", labelMap2, "Reference 2", "value 2"));
 		expectedOptions.add(
 			DDMFormFieldOptionsTestUtil.createOption(
-				"Label 3", "Reference 3", "value 3"));
+				"Label 3", labelMap3, "Reference 3", "value 3"));
+
+		DDMFormField ddmFormField = new DDMFormField(
+			"field", DDMFormFieldTypeConstants.SELECT);
+
+		ddmFormField.setProperty("listTypeDefinitionId", listTypeDefinitionId);
 
 		DDMFormFieldOptions ddmFormFieldOptions =
 			DDMFormFieldOptionsTestUtil.createDDMFormFieldOptions();
@@ -263,8 +304,7 @@ public class SelectDDMFormFieldTemplateContextContributorTest
 		Assert.assertEquals(
 			expectedOptions,
 			_getActualOptions(
-				new DDMFormField("field", "select"), ddmFormFieldOptions,
-				LocaleUtil.US));
+				ddmFormField, ddmFormFieldOptions, LocaleUtil.US));
 	}
 
 	@Test
@@ -273,13 +313,13 @@ public class SelectDDMFormFieldTemplateContextContributorTest
 
 		expectedOptions.add(
 			DDMFormFieldOptionsTestUtil.createOption(
-				"Label 1", "Reference 1", "value 1"));
+				"Label 1", null, "Reference 1", "value 1"));
 		expectedOptions.add(
 			DDMFormFieldOptionsTestUtil.createOption(
-				"Label 2", "Reference 2", "value 2"));
+				"Label 2", null, "Reference 2", "value 2"));
 		expectedOptions.add(
 			DDMFormFieldOptionsTestUtil.createOption(
-				"Label 3", "Reference 3", "value 3"));
+				"Label 3", null, "Reference 3", "value 3"));
 
 		DDMFormField ddmFormField = new DDMFormField("field", "select");
 
@@ -504,7 +544,7 @@ public class SelectDDMFormFieldTemplateContextContributorTest
 		return selectDDMFormFieldTemplateContextContributor;
 	}
 
-	private List<Map<String, String>> _getActualOptions(
+	private List<Map<String, Object>> _getActualOptions(
 		DDMFormField ddmFormField, DDMFormFieldOptions ddmFormFieldOptions,
 		Locale locale) {
 
@@ -530,6 +570,25 @@ public class SelectDDMFormFieldTemplateContextContributorTest
 		);
 
 		return listTypeEntry;
+	}
+
+	private void _mockListTypeEntry(
+		String key, Long listTypeDefinitionId, Map<Locale, String> nameMap) {
+
+		ListTypeEntry listTypeEntry = Mockito.mock(ListTypeEntry.class);
+
+		Mockito.when(
+			listTypeEntry.getNameMap()
+		).thenReturn(
+			nameMap
+		);
+
+		Mockito.when(
+			_listTypeEntryLocalService.fetchListTypeEntry(
+				Mockito.eq(listTypeDefinitionId), Mockito.eq(key))
+		).thenReturn(
+			listTypeEntry
+		);
 	}
 
 	private void _setUpDDMFormFieldOptionsFactory(

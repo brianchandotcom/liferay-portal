@@ -9,6 +9,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -27,6 +28,17 @@ public class DDMFormFieldOptionsTestUtil {
 		ddmFormFieldOptions.addOptionReference("value 3", "Reference 3");
 
 		return ddmFormFieldOptions;
+	}
+
+	public static Map<String, Object> createOption(
+		String label, Map<Locale, String> labelMap, String reference,
+		String value) {
+
+		return HashMapBuilder.<String, Object>put(
+			"labelMap", labelMap
+		).putAll(
+			createOption(label, reference, value)
+		).build();
 	}
 
 	public static Map<String, String> createOption(

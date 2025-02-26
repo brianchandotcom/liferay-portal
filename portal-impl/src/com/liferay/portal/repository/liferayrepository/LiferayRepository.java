@@ -24,7 +24,6 @@ import com.liferay.document.library.kernel.service.DLFolderService;
 import com.liferay.dynamic.data.mapping.kernel.DDMFormValues;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.repository.Repository;
@@ -1036,47 +1035,42 @@ public class LiferayRepository
 		int restrictionType = ParamUtil.getInteger(
 			serviceContext, "restrictionType");
 
-		if (FeatureFlagManagerUtil.isEnabled(
-				serviceContext.getCompanyId(), "LPD-42452")) {
+		DLFolder dlFolder = dlFolderService.getFolder(toFolderId(folderId));
 
-			DLFolder dlFolder = dlFolderService.getFolder(toFolderId(folderId));
+		ModelResourcePermission<DLFolder> modelResourcePermission =
+			ModelResourcePermissionRegistryUtil.
+				<DLFolder>getModelResourcePermission(DLFolder.class.getName());
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
 
-			ModelResourcePermission<DLFolder> modelResourcePermission =
-				ModelResourcePermissionRegistryUtil.
-					<DLFolder>getModelResourcePermission(
-						DLFolder.class.getName());
-			PermissionChecker permissionChecker =
-				PermissionThreadLocal.getPermissionChecker();
+		if (!ModelResourcePermissionUtil.contains(
+				modelResourcePermission, permissionChecker,
+				serviceContext.getScopeGroupId(), folderId,
+				ActionKeys.ADVANCED_UPDATE)) {
 
-			if (!ModelResourcePermissionUtil.contains(
-					modelResourcePermission, permissionChecker,
-					serviceContext.getScopeGroupId(), folderId,
-					ActionKeys.ADVANCED_UPDATE)) {
+			defaultFileEntryTypeId = dlFolder.getDefaultFileEntryTypeId();
 
-				defaultFileEntryTypeId = dlFolder.getDefaultFileEntryTypeId();
+			fileEntryTypeIds = ListUtil.toList(
+				dlFileEntryTypeLocalService.getFolderFileEntryTypes(
+					new long[] {dlFolder.getGroupId()}, folderId, true),
+				DLFileEntryType.FILE_ENTRY_TYPE_ID_ACCESSOR);
 
-				fileEntryTypeIds = ListUtil.toList(
-					dlFileEntryTypeLocalService.getFolderFileEntryTypes(
-						new long[] {dlFolder.getGroupId()}, folderId, true),
-					DLFileEntryType.FILE_ENTRY_TYPE_ID_ACCESSOR);
+			restrictionType = dlFolder.getRestrictionType();
 
-				restrictionType = dlFolder.getRestrictionType();
-
-				serviceContext.setAttribute(
-					"updateWorkflowDefinitionLinks", Boolean.FALSE);
-			}
-
-			if (!ModelResourcePermissionUtil.contains(
-					modelResourcePermission, permissionChecker,
-					serviceContext.getScopeGroupId(), folderId,
-					ActionKeys.UPDATE)) {
-
-				name = dlFolder.getName();
-				description = dlFolder.getDescription();
-			}
+			serviceContext.setAttribute(
+				"updateWorkflowDefinitionLinks", Boolean.FALSE);
 		}
 
-		DLFolder dlFolder = dlFolderService.updateFolder(
+		if (!ModelResourcePermissionUtil.contains(
+				modelResourcePermission, permissionChecker,
+				serviceContext.getScopeGroupId(), folderId,
+				ActionKeys.UPDATE)) {
+
+			name = dlFolder.getName();
+			description = dlFolder.getDescription();
+		}
+
+		dlFolder = dlFolderService.updateFolder(
 			toFolderId(folderId), name, description, defaultFileEntryTypeId,
 			fileEntryTypeIds, restrictionType, serviceContext);
 

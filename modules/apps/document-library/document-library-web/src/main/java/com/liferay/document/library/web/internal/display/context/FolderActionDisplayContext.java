@@ -28,7 +28,6 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.ResultRow;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -957,12 +956,10 @@ public class FolderActionDisplayContext {
 			return false;
 		}
 
-		if ((FeatureFlagManagerUtil.isEnabled(
-				_themeDisplay.getCompanyId(), "LPD-42452") &&
-			 DLFolderPermission.contains(
-				 _dlRequestHelper.getPermissionChecker(),
-				 _dlRequestHelper.getScopeGroupId(), _getFolderId(),
-				 ActionKeys.ADVANCED_UPDATE)) ||
+		if (DLFolderPermission.contains(
+				_dlRequestHelper.getPermissionChecker(),
+				_dlRequestHelper.getScopeGroupId(), _getFolderId(),
+				ActionKeys.ADVANCED_UPDATE) ||
 			DLFolderPermission.contains(
 				_dlRequestHelper.getPermissionChecker(),
 				_dlRequestHelper.getScopeGroupId(), _getFolderId(),

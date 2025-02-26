@@ -48,7 +48,7 @@ public class DDMStructureUpgradeProcessTest {
 
 	@Test
 	public void testUpgrade() throws Exception {
-		DDMStructure ddmStructure = _createDDMStructure();
+		DDMStructure ddmStructure = _addDDMStructure();
 
 		DDMStructureVersion ddmStructureVersion =
 			ddmStructure.getLatestStructureVersion();

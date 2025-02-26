@@ -55,13 +55,41 @@ public class VirtualHostLocalServiceImpl
 
 	@Override
 	public VirtualHost fetchCompanyDefaultVirtualHost(long companyId) {
-		for (VirtualHost virtualHost : getVirtualHosts(companyId, 0)) {
+		List<VirtualHost> virtualHosts = getVirtualHosts(companyId, 0);
+
+		if (virtualHosts.isEmpty()) {
+			return null;
+		}
+
+		if (virtualHosts.size() == 1) {
+			VirtualHost virtualHost = virtualHosts.get(0);
+
 			if (virtualHost.isDefaultVirtualHost()) {
 				return virtualHost;
 			}
+
+			return null;
 		}
 
-		return null;
+		List<VirtualHost> defaultVirtualHosts = new ArrayList<>();
+
+		for (VirtualHost virtualHost : virtualHosts) {
+			if (virtualHost.isDefaultVirtualHost()) {
+				defaultVirtualHosts.add(virtualHost);
+			}
+		}
+
+		if (defaultVirtualHosts.isEmpty()) {
+			return null;
+		}
+
+		if (defaultVirtualHosts.size() > 1) {
+			_log.error(
+				"Company " + companyId +
+					" has more than one default virtual host");
+		}
+
+		return defaultVirtualHosts.get(defaultVirtualHosts.size() - 1);
 	}
 
 	@Override

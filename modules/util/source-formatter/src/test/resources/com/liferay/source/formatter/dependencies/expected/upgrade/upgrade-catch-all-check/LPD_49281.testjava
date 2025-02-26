@@ -45,7 +45,8 @@ public class LPD_49281 {
 	}
 
 	@Reference
-	private CPAttachmentFileEntryLocalService _cpAttachmentFileEntryLocalService;
+	private CPAttachmentFileEntryLocalService
+		_cpAttachmentFileEntryLocalService;
 
 	@Reference
 	private CPAttachmentFileEntryService _cpAttachmentFileEntryService;

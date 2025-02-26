@@ -28,7 +28,8 @@ public class LPD_7996 {
 	}
 
 	@Reference
-	private AssetDisplayPageFriendlyURLProvider _assetDisplayPageFriendlyURLProvider;
+	private AssetDisplayPageFriendlyURLProvider
+		_assetDisplayPageFriendlyURLProvider;
 
 }
 

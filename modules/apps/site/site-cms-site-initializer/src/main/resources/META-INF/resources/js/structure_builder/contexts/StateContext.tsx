@@ -189,9 +189,4 @@ function useStateDispatch() {
 	return useContext(StateContext).dispatch;
 }
 
-export {
-	StateContext,
-	StateContextProvider,
-	useSelector,
-	useStateDispatch,
-};
+export {StateContext, StateContextProvider, useSelector, useStateDispatch};

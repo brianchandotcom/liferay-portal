@@ -9,10 +9,7 @@ import ClayLabel from '@clayui/label';
 import ClayLayout from '@clayui/layout';
 import React from 'react';
 
-import {
-	useSelector,
-	useStateDispatch,
-} from '../contexts/StateContext';
+import {useSelector, useStateDispatch} from '../contexts/StateContext';
 import selectSelectedItem from '../selectors/selectSelectedItem';
 import selectStructureError from '../selectors/selectStructureError';
 import selectStructureLabel from '../selectors/selectStructureLabel';

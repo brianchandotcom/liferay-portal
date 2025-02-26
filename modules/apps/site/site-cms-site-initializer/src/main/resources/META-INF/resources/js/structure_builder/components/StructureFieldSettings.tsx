@@ -7,11 +7,7 @@ import ClayBreadcrumb from '@clayui/breadcrumb';
 import ClayLayout from '@clayui/layout';
 import React from 'react';
 
-import {
-	Field,
-	useSelector,
-	useStateDispatch,
-} from '../contexts/StateContext';
+import {Field, useSelector, useStateDispatch} from '../contexts/StateContext';
 import selectStructureField from '../selectors/selectStructureField';
 import selectStructureLabel from '../selectors/selectStructureLabel';
 

@@ -2317,7 +2317,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		if (users.size() > 1) {
 			_log.error(
-				"Multiple users are using same portrait ID " + portraitId);
+				"Portrait ID " + portraitId + " is used by more than one user");
 		}
 
 		return users.get(users.size() - 1);

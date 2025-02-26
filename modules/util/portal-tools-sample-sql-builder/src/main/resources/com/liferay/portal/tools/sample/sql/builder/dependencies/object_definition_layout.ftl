@@ -5,13 +5,15 @@
 		name = objectDefinitionModel.getName()
 
 		contentLayoutModels = dataFactory.newContentPageLayoutModels(groupId, name)
+
+		segmentsExperienceModel = dataFactory.newSegmentsExperienceModel(contentLayoutModels)
 	/>
 
-	${dataFactory.toInsertSQL(dataFactory.newSegmentsExperienceModel(contentLayoutModels))}
+	${dataFactory.toInsertSQL(segmentsExperienceModel)}
 
 	<#list contentLayoutModels as contentLayoutModel>
 		<#assign
-			fragmentEntryLinkModels = dataFactory.newObjectFieldsFragmentEntryLinkModels(contentLayoutModel, objectFieldModels)
+			fragmentEntryLinkModels = dataFactory.newObjectFieldsFragmentEntryLinkModels(contentLayoutModel, objectFieldModels, segmentsExperienceModel.getSegmentsExperienceId())
 
 			layoutPageTemplateStructureModel = dataFactory.newLayoutPageTemplateStructureModel(contentLayoutModel)
 		/>

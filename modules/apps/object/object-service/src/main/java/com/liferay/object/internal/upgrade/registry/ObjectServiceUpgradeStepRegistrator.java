@@ -16,6 +16,7 @@ import com.liferay.object.internal.upgrade.v10_1_1.ObjectRelationshipStaleUserId
 import com.liferay.object.internal.upgrade.v10_4_0.util.ObjectEntryFolderTable;
 import com.liferay.object.internal.upgrade.v10_5_0.ObjectEntryDefaultLanguageIdUpgradeProcess;
 import com.liferay.object.internal.upgrade.v10_8_0.util.ObjectDefinitionSettingTable;
+import com.liferay.object.internal.upgrade.v10_8_1.ObjectDefinitionStaleClassNameUpgradeProcess;
 import com.liferay.object.internal.upgrade.v1_2_0.util.ObjectViewColumnTable;
 import com.liferay.object.internal.upgrade.v1_2_0.util.ObjectViewTable;
 import com.liferay.object.internal.upgrade.v2_1_0.ObjectFieldBusinessTypeUpgradeProcess;
@@ -549,6 +550,10 @@ public class ObjectServiceUpgradeStepRegistrator
 
 		registry.register(
 			"10.7.0", "10.8.0", ObjectDefinitionSettingTable.create());
+
+		registry.register(
+			"10.8.0", "10.8.1",
+			new ObjectDefinitionStaleClassNameUpgradeProcess());
 	}
 
 	@Reference

@@ -81,9 +81,7 @@ public class BatchEngineImportTaskItemReaderUtil {
 				field.setAccessible(true);
 
 				ObjectMapper objectMapper = _getObjectMapper(
-					batchEngineImportTask,
-					entry,
-					field);
+					batchEngineImportTask, entry, field);
 
 				field.set(
 					item,
@@ -234,17 +232,16 @@ public class BatchEngineImportTaskItemReaderUtil {
 	}
 
 	private static ObjectMapper _getObjectMapper(
-		BatchEngineImportTask batchEngineImportTask,
-		Map.Entry<String, Object> entry,
-			Field field
-
-			)
+			BatchEngineImportTask batchEngineImportTask,
+			Map.Entry<String, Object> entry, Field field)
 		throws IllegalAccessException, InstantiationException {
 
 		if (StringUtil.equals(
-			batchEngineImportTask.getParameterValue(
-				"importCreatorStrategy"),
-			"KEEP_CREATOR") && StringUtil.equals(field.getName(), "creator")) {
+				batchEngineImportTask.getParameterValue(
+					"importCreatorStrategy"),
+				"KEEP_CREATOR") &&
+			StringUtil.equals(field.getName(), "creator")) {
+
 			return new ObjectMapper() {
 				{
 					addMixIn(field.getType(), CreatorMixin.class);
@@ -256,7 +253,9 @@ public class BatchEngineImportTaskItemReaderUtil {
 			JsonDeserialize.class);
 
 		if (ArrayUtil.isEmpty(jsonDeserializes)) {
-			if (Objects.equals(batchEngineImportTask.getContentType(), BatchEngineTaskContentType.CSV.getFileExtension()) &&
+			if (Objects.equals(
+					batchEngineImportTask.getContentType(),
+					BatchEngineTaskContentType.CSV.getFileExtension()) &&
 				_isCSVMapColumn(field.getType(), entry.getValue())) {
 
 				return _csvMapObjectMapper;

@@ -394,26 +394,11 @@ public class DBPartitionUtil {
 			return dataSource;
 		}
 
-		DB db = DBManagerUtil.getDB(
-			DBManagerUtil.getDBType(DialectDetector.getDialect(dataSource)),
+		_initializeDBPartitionDB(
+			DBManagerUtil.getDB(
+				DBManagerUtil.getDBType(DialectDetector.getDialect(dataSource)),
+				dataSource),
 			dataSource);
-
-		if (!db.isSupportsDBPartition()) {
-			throw new Error(
-				"Database partitioning is not supported for " + db.getDBType());
-		}
-
-		if (db.getDBType() == DBType.MYSQL) {
-			_dbPartitionDB = new DBPartitionMySQLDB();
-		}
-		else if (db.getDBType() == DBType.POSTGRESQL) {
-			_dbPartitionDB = new DBPartitionPostgreSQLDB();
-		}
-
-		try (Connection connection = dataSource.getConnection()) {
-			_defaultPartitionName = _dbPartitionDB.getDefaultPartitionName(
-				connection);
-		}
 
 		return new DataSourceWrapper(dataSource) {
 
@@ -907,8 +892,7 @@ public class DBPartitionUtil {
 		catch (Exception exception) {
 			try (Statement statement = connection.createStatement()) {
 				statement.executeUpdate(
-					_dbPartitionDB.getDropPartitionSQL(
-						extractedPartitionName));
+					_dbPartitionDB.getDropPartitionSQL(extractedPartitionName));
 			}
 			catch (SQLException sqlException) {
 				throw new PortalException(
@@ -1279,6 +1263,27 @@ public class DBPartitionUtil {
 		}
 
 		return " where trigger_name like '%@" + companyId + "'";
+	}
+
+	private static void _initializeDBPartitionDB(DB db, DataSource dataSource)
+		throws SQLException {
+
+		if (!db.isSupportsDBPartition()) {
+			throw new Error(
+				"Database partitioning is not supported for " + db.getDBType());
+		}
+
+		if (db.getDBType() == DBType.MYSQL) {
+			_dbPartitionDB = new DBPartitionMySQLDB();
+		}
+		else if (db.getDBType() == DBType.POSTGRESQL) {
+			_dbPartitionDB = new DBPartitionPostgreSQLDB();
+		}
+
+		try (Connection connection = dataSource.getConnection()) {
+			_defaultPartitionName = _dbPartitionDB.getDefaultPartitionName(
+				connection);
+		}
 	}
 
 	private static void _insertDBPartition(long companyId)

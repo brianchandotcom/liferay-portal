@@ -14,7 +14,10 @@ import {useSelector, useStateDispatch} from '../contexts/StateContext';
 import selectSelectedItem from '../selectors/selectSelectedItem';
 import selectStructureError from '../selectors/selectStructureError';
 import selectStructureLabel from '../selectors/selectStructureLabel';
+import selectStructureName from '../selectors/selectStructureName';
+import ERCInput from './ERCInput';
 import StructureFieldSettings from './StructureFieldSettings';
+import TextInput from './TextInput';
 
 export function StructureSettings() {
 	const dispatch = useStateDispatch();
@@ -86,7 +89,23 @@ export default function () {
 }
 
 function GeneralTab() {
-	return <div>General</div>;
+	const dispatch = useStateDispatch();
+	const name = useSelector(selectStructureName);
+
+	return (
+		<div>
+			<TextInput
+				label={Liferay.Language.get('structure-name')}
+				onValueChange={(value) =>
+					dispatch({name: value, type: 'update-structure'})
+				}
+				required
+				value={name}
+			/>
+
+			<ERCInput onValueChange={() => {}} value="" />
+		</div>
+	);
 }
 
 function ValidationsTab() {

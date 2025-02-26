@@ -171,17 +171,6 @@ public class CompanyServiceImpl extends CompanyServiceBaseImpl {
 	}
 
 	/**
-	 * Returns the company with the mail domian.
-	 *
-	 * @param  mx the company's mail domain
-	 * @return Returns the company with the mail domain
-	 */
-	@Override
-	public Company getCompanyByMx(String mx) throws PortalException {
-		return companyLocalService.getCompanyByMx(mx);
-	}
-
-	/**
 	 * Returns the company with the virtual host name.
 	 *
 	 * @param  virtualHost the company's virtual host name

@@ -14,23 +14,49 @@ export function firstLetterUppercase(str: string): string {
 }
 
 /**
- * Get the label according to the locale
+ * Retrieves the label from a LocalizedValue<string> based on various language ID sources.
+ *
+ * If the language configured by the user in Account Settings takes precedence over the
+ * instance's default, there is no need to pass values returned by
+ * Liferay.ThemeDisplay.getLanguageId() or Liferay.ThemeDisplay.getDefaultLanguageId(),
+ * as they are automatically considered.
+ *
+ * The order of precedence for resolving a label is as follows:
+ *
+ * 1. The `preferredLanguageId` optional argument;
+ * 2. The language configured by the user in Account Settings;
+ * 3. The language configured as the default in Instance Settings;
+ * 4. The `fallbackLanguageId` optional argument;
+ * 5. The actual label string passed as the `fallbackLabel` optional argument;
+ * 6. The `en_US` language ID;
+ * 7. An empty string.
+ *
+ * @param {string} fallbackLabel A literal string to be used as the actual label.
+ * @param {Locale} fallbackLanguageId A language ID to be used as a last resort.
+ * @param {LocalizedValue<string> | undefined} labels The localized labels object.
+ * @param {Locale} preferredLanguageId The first language ID that the function will attempt to use.
  */
-
-export function getLocalizableLabel(
-	creationLanguageId: Liferay.Language.Locale,
-	labels: LocalizedValue<string> | undefined,
-	fallback?: string
-) {
+export function getLocalizableLabel({
+	fallbackLabel,
+	fallbackLanguageId,
+	labels,
+	preferredLanguageId,
+}: {
+	fallbackLabel?: string;
+	fallbackLanguageId?: Liferay.Language.Locale;
+	labels: LocalizedValue<string> | undefined;
+	preferredLanguageId?: Liferay.Language.Locale;
+}): string {
 	if (!labels) {
-		return fallback ?? '';
+		return fallbackLabel ?? '';
 	}
 
 	return (
-		labels[userLanguageId] ??
-		labels[defaultLanguageId] ??
-		labels[creationLanguageId] ??
-		fallback ??
+		(preferredLanguageId && labels[preferredLanguageId]) ??
+		(userLanguageId && labels[userLanguageId]) ??
+		(defaultLanguageId && labels[defaultLanguageId]) ??
+		(fallbackLanguageId && labels[fallbackLanguageId]) ??
+		fallbackLabel ??
 		labels['en_US'] ??
 		''
 	);

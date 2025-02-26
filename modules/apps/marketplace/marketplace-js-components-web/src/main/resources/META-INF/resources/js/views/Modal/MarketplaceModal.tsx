@@ -4,7 +4,7 @@
  */
 
 import ClayModal from '@clayui/modal';
-import {Observer} from '@clayui/modal/lib/types';
+import {Observer, Size} from '@clayui/modal/lib/types';
 import React, {ReactNode} from 'react';
 
 import {MarketplaceView, useMarketplaceContext} from '../../MarketplaceContext';
@@ -13,12 +13,16 @@ type MarketplaceModalViewProps = {
 	children: ReactNode;
 	observer: Observer;
 	open: boolean;
+	size?: Size;
+	title?: string;
 };
 
 function MarketplaceModalView({
 	children,
 	observer,
 	open,
+	size,
+	title,
 }: MarketplaceModalViewProps) {
 	const {view} = useMarketplaceContext();
 
@@ -31,10 +35,13 @@ function MarketplaceModalView({
 			center
 			className="marketplace-modal"
 			observer={observer}
-			size={view === MarketplaceView.PURCHASE ? 'lg' : 'full-screen'}
+			size={
+				size ||
+				(view === MarketplaceView.PURCHASE ? 'lg' : 'full-screen')
+			}
 		>
 			<ClayModal.Header>
-				{Liferay.Language.get('add-from-marketplace')}
+				{title || Liferay.Language.get('add-from-marketplace')}
 			</ClayModal.Header>
 
 			<ClayModal.Body className="m-0 p-0">{children}</ClayModal.Body>

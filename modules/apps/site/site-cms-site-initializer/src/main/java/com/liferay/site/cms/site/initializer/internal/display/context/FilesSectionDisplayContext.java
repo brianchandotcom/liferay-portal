@@ -5,12 +5,16 @@
 
 package com.liferay.site.cms.site.initializer.internal.display.context;
 
+import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.site.cms.site.initializer.internal.configuration.CMSSiteInitializerConfiguration;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,6 +29,15 @@ public class FilesSectionDisplayContext extends BaseSectionDisplayContext {
 		HttpServletRequest httpServletRequest) {
 
 		super(cmsSiteInitializerConfiguration, httpServletRequest);
+	}
+
+	@Override
+	public List<DropdownItem> getBulkActionDropdownItems() {
+		return ListUtil.fromArray(
+			new FDSActionDropdownItem(
+				"#", "document", "sampleBulkAction",
+				LanguageUtil.get(httpServletRequest, "label"), null, null,
+				null));
 	}
 
 	@Override

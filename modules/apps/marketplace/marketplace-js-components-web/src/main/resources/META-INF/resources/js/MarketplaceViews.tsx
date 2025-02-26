@@ -17,8 +17,6 @@ import {
 	useMarketplaceContext,
 } from './index';
 
-import './style/index.scss';
-
 export default function MarketplaceViews() {
 	const [cloudUserProject, setCloudUserProject] =
 		useState<CloudUserProject>();

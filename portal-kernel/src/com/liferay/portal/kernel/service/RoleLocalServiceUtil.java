@@ -52,6 +52,16 @@ public class RoleLocalServiceUtil {
 		return getService().addGroupRoles(groupId, roleIds);
 	}
 
+	public static Role addIncompleteRole(
+			String externalReferenceCode, long companyId, long userId,
+			String className, long classPK, String name, int type)
+		throws Exception {
+
+		return getService().addIncompleteRole(
+			externalReferenceCode, companyId, userId, className, classPK, name,
+			type);
+	}
+
 	/**
 	 * Adds the role to the database. Also notifies the appropriate model listeners.
 	 *
@@ -1230,6 +1240,15 @@ public class RoleLocalServiceUtil {
 	 */
 	public static Role updateRole(Role role) {
 		return getService().updateRole(role);
+	}
+
+	public static Role updateStatus(
+			long userId, long roleId, int status, ServiceContext serviceContext,
+			Map<String, Serializable> workflowContext)
+		throws PortalException {
+
+		return getService().updateStatus(
+			userId, roleId, status, serviceContext, workflowContext);
 	}
 
 	public static void validateName(String name) throws PortalException {

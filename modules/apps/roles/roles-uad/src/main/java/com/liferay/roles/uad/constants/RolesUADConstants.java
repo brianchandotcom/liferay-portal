@@ -11,6 +11,8 @@ package com.liferay.roles.uad.constants;
  */
 public class RolesUADConstants {
 
-	public static final String[] USER_ID_FIELD_NAMES_ROLE = {"userId"};
+	public static final String[] USER_ID_FIELD_NAMES_ROLE = {
+		"userId", "statusByUserId"
+	};
 
 }

@@ -147,6 +147,14 @@ public class RolePersistenceTest {
 
 		newRole.setSubtype(RandomTestUtil.randomString());
 
+		newRole.setStatus(RandomTestUtil.nextInt());
+
+		newRole.setStatusByUserId(RandomTestUtil.nextLong());
+
+		newRole.setStatusByUserName(RandomTestUtil.randomString());
+
+		newRole.setStatusDate(RandomTestUtil.nextDate());
+
 		_roles.add(_persistence.update(newRole));
 
 		Role existingRole = _persistence.findByPrimaryKey(
@@ -180,6 +188,14 @@ public class RolePersistenceTest {
 			existingRole.getDescription(), newRole.getDescription());
 		Assert.assertEquals(existingRole.getType(), newRole.getType());
 		Assert.assertEquals(existingRole.getSubtype(), newRole.getSubtype());
+		Assert.assertEquals(existingRole.getStatus(), newRole.getStatus());
+		Assert.assertEquals(
+			existingRole.getStatusByUserId(), newRole.getStatusByUserId());
+		Assert.assertEquals(
+			existingRole.getStatusByUserName(), newRole.getStatusByUserName());
+		Assert.assertEquals(
+			Time.getShortTimestamp(existingRole.getStatusDate()),
+			Time.getShortTimestamp(newRole.getStatusDate()));
 	}
 
 	@Test(expected = DuplicateRoleExternalReferenceCodeException.class)
@@ -354,7 +370,9 @@ public class RolePersistenceTest {
 			"externalReferenceCode", true, "roleId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "classNameId", true, "classPK", true, "name",
-			true, "title", true, "type", true, "subtype", true);
+			true, "title", true, "type", true, "subtype", true, "status", true,
+			"statusByUserId", true, "statusByUserName", true, "statusDate",
+			true);
 	}
 
 	@Test
@@ -700,6 +718,14 @@ public class RolePersistenceTest {
 		role.setType(RandomTestUtil.nextInt());
 
 		role.setSubtype(RandomTestUtil.randomString());
+
+		role.setStatus(RandomTestUtil.nextInt());
+
+		role.setStatusByUserId(RandomTestUtil.nextLong());
+
+		role.setStatusByUserName(RandomTestUtil.randomString());
+
+		role.setStatusDate(RandomTestUtil.nextDate());
 
 		_roles.add(_persistence.update(role));
 

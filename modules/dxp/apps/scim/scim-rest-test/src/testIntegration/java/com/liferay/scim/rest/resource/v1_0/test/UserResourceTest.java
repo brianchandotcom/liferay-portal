@@ -225,56 +225,64 @@ public class UserResourceTest extends BaseUserResourceTestCase {
 	@Test
 	@TestInfo("LPD-48895")
 	public void testPatchV2User() throws Exception {
-		User user1 = testDeleteV2User_addUser();
+		User user = testDeleteV2User_addUser();
 
-		String newTitle = StringUtil.toLowerCase(RandomTestUtil.randomString());
+		PatchOp patchOp = new PatchOp();
 
-		Operation operation = new Operation();
+		String title = StringUtil.toLowerCase(RandomTestUtil.randomString());
 
-		operation.setOp("replace");
-		operation.setPath("title");
-		operation.setValue(newTitle);
-
-		PatchOp patchOperation = new PatchOp();
-
-		patchOperation.setOperations(new Operation[] {operation});
-		patchOperation.setSchemas(
+		patchOp.setOperations(
+			new Operation[] {
+				new Operation() {
+					{
+						setOp("replace");
+						setPath("title");
+						setValue(title);
+					}
+				}
+			});
+		patchOp.setSchemas(
 			new String[] {"\"urn:ietf:params:scim:api:messages:2.0:PatchOp\""});
 
-		HttpInvoker.HttpResponse httpResponse1 =
-			userResource.patchV2UserHttpResponse(user1.getId(), patchOperation);
+		HttpInvoker.HttpResponse httpResponse =
+			userResource.patchV2UserHttpResponse(user.getId(), patchOp);
 
-		assertHttpResponseStatusCode(200, httpResponse1);
+		assertHttpResponseStatusCode(200, httpResponse);
 
-		User patchedUser1 = User.toDTO(httpResponse1.getContent());
+		User patchUser = User.toDTO(httpResponse.getContent());
 
-		assertValid(patchedUser1);
+		assertValid(patchUser);
 
-		Assert.assertEquals(patchedUser1.getTitle(), newTitle);
+		Assert.assertEquals(patchUser.getTitle(), title);
 
-		operation.setOp("replace");
-		operation.setPath("active");
-		operation.setValue(false);
+		patchOp.setOperations(
+			new Operation[] {
+				new Operation() {
+					{
+						setOp("replace");
+						setPath("active");
+						setValue(false);
+					}
+				}
+			});
 
-		patchOperation.setOperations(new Operation[] {operation});
+		httpResponse = userResource.patchV2UserHttpResponse(
+			user.getId(), patchOp);
 
-		HttpInvoker.HttpResponse httpResponse2 =
-			userResource.patchV2UserHttpResponse(user1.getId(), patchOperation);
+		assertHttpResponseStatusCode(200, httpResponse);
 
-		assertHttpResponseStatusCode(200, httpResponse2);
+		patchUser = User.toDTO(httpResponse.getContent());
 
-		User patchedUser2 = User.toDTO(httpResponse2.getContent());
+		assertValid(patchUser);
 
-		assertValid(patchedUser2);
-
-		Assert.assertEquals(patchedUser2.getActive(), false);
+		Assert.assertEquals(patchUser.getActive(), false);
 
 		ConfigurationTestUtil.deleteConfiguration(_pid);
 
 		assertHttpResponseStatusCode(
 			404,
 			userResource.patchV2UserHttpResponse(
-				randomUser().getId(), patchOperation));
+				randomUser().getId(), patchOp));
 	}
 
 	@Override

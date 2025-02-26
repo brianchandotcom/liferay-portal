@@ -71,12 +71,10 @@ public class UserResourceImpl extends BaseUserResourceImpl {
 	}
 
 	@Override
-	public Response patchV2User(String id, PatchOp operations)
-		throws Exception {
-
+	public Response patchV2User(String id, PatchOp patchOp) throws Exception {
 		return _buildResponse(
 			_userResourceManager.updateWithPATCH(
-				id, operations.toString(), _userManager, null, null));
+				id, patchOp.toString(), _userManager, null, null));
 	}
 
 	@Override

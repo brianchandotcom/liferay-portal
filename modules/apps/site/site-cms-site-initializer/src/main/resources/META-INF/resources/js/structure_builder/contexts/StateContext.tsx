@@ -179,68 +179,19 @@ export default function StateContextProvider({
 	);
 }
 
-function useSelectedItem() {
+function useSelector<T>(selector: (state: State) => T) {
 	const {state} = useContext(StateContext);
 
-	return state.selectedItem;
+	return selector(state);
 }
 
 function useStateDispatch() {
 	return useContext(StateContext).dispatch;
 }
 
-function useStructureError() {
-	const {state} = useContext(StateContext);
-
-	return state.error;
-}
-
-function useStructureField(name: Field['name']) {
-	const {state} = useContext(StateContext);
-
-	return state.fields.get(name);
-}
-
-function useStructureFields() {
-	const {state} = useContext(StateContext);
-
-	return Array.from(state.fields.values());
-}
-
-function useStructureId() {
-	const {state} = useContext(StateContext);
-
-	return state.id;
-}
-
-function useStructureLabel() {
-	const {state} = useContext(StateContext);
-
-	return state.label;
-}
-
-function useStructureName() {
-	const {state} = useContext(StateContext);
-
-	return state.name;
-}
-
-function useStructureStatus() {
-	const {state} = useContext(StateContext);
-
-	return state.status;
-}
-
 export {
 	StateContext,
 	StateContextProvider,
-	useSelectedItem,
+	useSelector,
 	useStateDispatch,
-	useStructureError,
-	useStructureField,
-	useStructureFields,
-	useStructureId,
-	useStructureLabel,
-	useStructureName,
-	useStructureStatus,
 };

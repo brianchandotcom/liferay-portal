@@ -1067,6 +1067,10 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 	@Override
 	public Layout fetchDraftLayout(long plid) {
+		if (plid <= 0) {
+			return null;
+		}
+
 		List<Layout> layouts = layoutPersistence.findByC_C(
 			_classNameLocalService.getClassNameId(Layout.class), plid);
 
@@ -1127,6 +1131,10 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	@Override
 	public Layout fetchLayoutByIconImageId(
 		boolean privateLayout, long iconImageId) {
+
+		if (iconImageId <= 0) {
+			return null;
+		}
 
 		List<Layout> layouts = layoutPersistence.findByP_I(
 			privateLayout, iconImageId);

@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 
+import com.liferay.batch.engine.BatchEngineTaskContentType;
 import com.liferay.batch.engine.action.ItemReaderPostAction;
 import com.liferay.batch.engine.model.BatchEngineImportTask;
 import com.liferay.petra.string.StringPool;
@@ -53,16 +54,6 @@ public class BatchEngineImportTaskItemReaderUtil {
 		Map<String, Serializable> extendedProperties = new HashMap<>();
 		T item = itemClass.newInstance();
 
-		boolean keepCreatorInfo = false;
-
-		if (StringUtil.equals(
-				batchEngineImportTask.getParameterValue(
-					"importCreatorStrategy"),
-				"KEEP_CREATOR")) {
-
-			keepCreatorInfo = true;
-		}
-
 		Set<String> batchRestrictFields = _getBatchRestrictFields(
 			batchEngineImportTask);
 
@@ -90,7 +81,9 @@ public class BatchEngineImportTaskItemReaderUtil {
 				field.setAccessible(true);
 
 				ObjectMapper objectMapper = _getObjectMapper(
-					field, keepCreatorInfo, batchEngineImportTask, entry);
+					batchEngineImportTask,
+					entry,
+					field);
 
 				field.set(
 					item,
@@ -241,17 +234,20 @@ public class BatchEngineImportTaskItemReaderUtil {
 	}
 
 	private static ObjectMapper _getObjectMapper(
-			Field field, boolean keepCreatorInfo,
-			BatchEngineImportTask batchEngineImportTask,
-			Map.Entry<String, Object> entry)
+		BatchEngineImportTask batchEngineImportTask,
+		Map.Entry<String, Object> entry,
+			Field field
+
+			)
 		throws IllegalAccessException, InstantiationException {
 
-		if (keepCreatorInfo && StringUtil.equals(field.getName(), "creator")) {
+		if (StringUtil.equals(
+			batchEngineImportTask.getParameterValue(
+				"importCreatorStrategy"),
+			"KEEP_CREATOR") && StringUtil.equals(field.getName(), "creator")) {
 			return new ObjectMapper() {
 				{
 					addMixIn(field.getType(), CreatorMixin.class);
-
-					registerModule(new SimpleModule());
 				}
 			};
 		}
@@ -260,10 +256,10 @@ public class BatchEngineImportTaskItemReaderUtil {
 			JsonDeserialize.class);
 
 		if (ArrayUtil.isEmpty(jsonDeserializes)) {
-			if (Objects.equals(batchEngineImportTask.getContentType(), "CSV") &&
+			if (Objects.equals(batchEngineImportTask.getContentType(), BatchEngineTaskContentType.CSV.getFileExtension()) &&
 				_isCSVMapColumn(field.getType(), entry.getValue())) {
 
-				return _csvObjectMapper;
+				return _csvMapObjectMapper;
 			}
 
 			return _objectMapper;
@@ -307,7 +303,7 @@ public class BatchEngineImportTaskItemReaderUtil {
 		return true;
 	}
 
-	private static final ObjectMapper _csvObjectMapper = new ObjectMapper() {
+	private static final ObjectMapper _csvMapObjectMapper = new ObjectMapper() {
 		{
 			SimpleModule simpleModule = new SimpleModule();
 

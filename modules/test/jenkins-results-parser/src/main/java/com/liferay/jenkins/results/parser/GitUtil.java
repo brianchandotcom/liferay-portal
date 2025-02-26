@@ -10,7 +10,9 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeoutException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -149,51 +151,70 @@ public class GitUtil {
 	public static RemoteGitRef getRemoteGitRef(
 		String remoteGitBranchName, File workingDirectory, String remoteURL) {
 
-		List<RemoteGitRef> remoteGitRefs = null;
+		String key = JenkinsResultsParserUtil.combine(
+			remoteURL, "#", remoteGitBranchName);
 
-		if (remoteURL.contains(_HOSTNAME_GITHUB_CACHE_PROXY)) {
-			List<String> usedGitHubDevNodeHostnames = new ArrayList<>(3);
+		synchronized (_gitHubRemoteGitRefs) {
+			if (remoteURL.contains(_HOSTNAME_GITHUB)) {
+				RemoteGitRef gitHubRemoteGitRef = _gitHubRemoteGitRefs.get(key);
 
-			while ((usedGitHubDevNodeHostnames.size() < 3) &&
-				   ((remoteGitRefs == null) || remoteGitRefs.isEmpty())) {
-
-				String gitHubDevNodeHostname =
-					JenkinsResultsParserUtil.getRandomGitHubDevNodeHostname(
-						usedGitHubDevNodeHostnames);
-
-				String gitHubDevNodeRemoteURL = remoteURL.replace(
-					_HOSTNAME_GITHUB_CACHE_PROXY, gitHubDevNodeHostname);
-
-				if (gitHubDevNodeHostname.startsWith("slave-")) {
-					gitHubDevNodeRemoteURL = toSlaveGitHubDevNodeRemoteURL(
-						remoteURL, gitHubDevNodeHostname.substring(6));
+				if (gitHubRemoteGitRef != null) {
+					return gitHubRemoteGitRef;
 				}
-
-				try {
-					remoteGitRefs = getRemoteGitRefs(
-						remoteGitBranchName, workingDirectory,
-						gitHubDevNodeRemoteURL);
-				}
-				catch (Exception exception) {
-					exception.printStackTrace();
-				}
-
-				usedGitHubDevNodeHostnames.add(gitHubDevNodeHostname);
 			}
-		}
-		else {
-			remoteGitRefs = getRemoteGitRefs(
-				remoteGitBranchName, workingDirectory, remoteURL);
-		}
 
-		if ((remoteGitRefs == null) || remoteGitRefs.isEmpty()) {
-			throw new RuntimeException(
-				JenkinsResultsParserUtil.combine(
-					"Unable to find remote Git ref ", remoteGitBranchName,
-					" on remote URL ", remoteURL));
-		}
+			List<RemoteGitRef> remoteGitRefs = null;
 
-		return remoteGitRefs.get(0);
+			if (remoteURL.contains(_HOSTNAME_GITHUB_CACHE_PROXY)) {
+				List<String> usedGitHubDevNodeHostnames = new ArrayList<>(3);
+
+				while ((usedGitHubDevNodeHostnames.size() < 3) &&
+					   ((remoteGitRefs == null) || remoteGitRefs.isEmpty())) {
+
+					String gitHubDevNodeHostname =
+						JenkinsResultsParserUtil.getRandomGitHubDevNodeHostname(
+							usedGitHubDevNodeHostnames);
+
+					String gitHubDevNodeRemoteURL = remoteURL.replace(
+						_HOSTNAME_GITHUB_CACHE_PROXY, gitHubDevNodeHostname);
+
+					if (gitHubDevNodeHostname.startsWith("slave-")) {
+						gitHubDevNodeRemoteURL = toSlaveGitHubDevNodeRemoteURL(
+							remoteURL, gitHubDevNodeHostname.substring(6));
+					}
+
+					try {
+						remoteGitRefs = getRemoteGitRefs(
+							remoteGitBranchName, workingDirectory,
+							gitHubDevNodeRemoteURL);
+					}
+					catch (Exception exception) {
+						exception.printStackTrace();
+					}
+
+					usedGitHubDevNodeHostnames.add(gitHubDevNodeHostname);
+				}
+			}
+			else {
+				remoteGitRefs = getRemoteGitRefs(
+					remoteGitBranchName, workingDirectory, remoteURL);
+			}
+
+			if ((remoteGitRefs == null) || remoteGitRefs.isEmpty()) {
+				throw new RuntimeException(
+					JenkinsResultsParserUtil.combine(
+						"Unable to find remote Git ref ", remoteGitBranchName,
+						" on remote URL ", remoteURL));
+			}
+
+			RemoteGitRef remoteGitRef = remoteGitRefs.get(0);
+
+			if (remoteURL.contains(_HOSTNAME_GITHUB)) {
+				_gitHubRemoteGitRefs.put(key, remoteGitRef);
+			}
+
+			return remoteGitRef;
+		}
 	}
 
 	public static List<RemoteGitRef> getRemoteGitRefs(
@@ -573,6 +594,8 @@ public class GitUtil {
 		return defaultBranchName;
 	}
 
+	private static final String _HOSTNAME_GITHUB = "github.com";
+
 	private static final String _HOSTNAME_GITHUB_CACHE_PROXY =
 		"github-dev.liferay.com";
 
@@ -582,5 +605,7 @@ public class GitUtil {
 		JenkinsResultsParserUtil.combine(
 			"https://github.com/(?<username>[^/]+)/",
 			"(?<gitRepositoryName>[^/]+)/tree/(?<refName>.+)"));
+	private static final Map<String, RemoteGitRef> _gitHubRemoteGitRefs =
+		new HashMap<>();
 
 }

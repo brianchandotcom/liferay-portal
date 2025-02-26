@@ -9,11 +9,13 @@ import {useId} from 'frontend-js-components-web';
 import React, {useState} from 'react';
 
 export default function TextInput({
+	className,
 	label,
 	onValueChange,
 	required = false,
 	value: initialValue,
 }: {
+	className?: string;
 	label: string;
 	onValueChange: (value: string) => void;
 	required?: boolean;
@@ -24,7 +26,7 @@ export default function TextInput({
 	const [value, setValue] = useState(initialValue);
 
 	return (
-		<ClayForm.Group>
+		<ClayForm.Group className={className}>
 			<label htmlFor={id}>
 				{label}
 

@@ -834,8 +834,26 @@ public class DBPartitionUtil {
 	}
 
 	private static void _extractCompany(long companyId) throws PortalException {
-		Connection connection = CurrentConnectionUtil.getConnection(
-			InfrastructureUtil.getDataSource());
+		DataSource dataSource = InfrastructureUtil.getDataSource();
+
+		Connection connection = CurrentConnectionUtil.getConnection(dataSource);
+
+		if (_dbPartitionDB == null) {
+			DB db = DBManagerUtil.getDB();
+
+			try {
+				_initializeDBPartitionDB(db, dataSource);
+			}
+			catch (Throwable throwable) {
+				if (throwable instanceof Error) {
+					throw new PortalException(
+						"Extraction of companies is not supported for " +
+							db.getDBType());
+				}
+
+				throw new PortalException(throwable);
+			}
+		}
 
 		String extractedPartitionName = _getExtractedPartitionName(companyId);
 

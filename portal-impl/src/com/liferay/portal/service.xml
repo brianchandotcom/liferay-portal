@@ -1360,10 +1360,6 @@
 		<finder name="CompanyId" return-type="Collection">
 			<finder-column name="companyId" />
 		</finder>
-		<finder name="C_DP" return-type="PasswordPolicy">
-			<finder-column name="companyId" />
-			<finder-column name="defaultPolicy" />
-		</finder>
 		<finder name="C_N" return-type="PasswordPolicy" unique="true">
 			<finder-column name="companyId" />
 			<finder-column name="name" />

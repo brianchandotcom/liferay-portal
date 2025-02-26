@@ -20,6 +20,7 @@ import com.liferay.account.validator.AccountEntryEmailAddressValidator;
 import com.liferay.account.validator.AccountEntryEmailAddressValidatorFactory;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
+import com.liferay.lazy.referencing.kernel.LazyReferencingThreadLocal;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
@@ -226,19 +227,60 @@ public class AccountEntryLocalServiceImpl
 
 		// Workflow
 
-		if (_isWorkflowEnabled(accountEntry.getCompanyId())) {
+		if (!LazyReferencingThreadLocal.isIncompleteModel() &&
+			_isWorkflowEnabled(accountEntry.getCompanyId())) {
+
 			_checkStatus(accountEntry.getStatus(), status);
 
 			accountEntry = _startWorkflowInstance(
 				userId, accountEntry, workflowServiceContext);
 		}
 		else {
+			if (LazyReferencingThreadLocal.isIncompleteModel()) {
+				status = WorkflowConstants.STATUS_INCOMPLETE;
+			}
+
 			accountEntry = updateStatus(
 				userId, accountEntryId, status, workflowServiceContext,
 				Collections.emptyMap());
 		}
 
 		return accountEntry;
+	}
+
+	@Override
+	public AccountEntry addIncompleteAccountEntry(
+			String externalReferenceCode, long companyId, long userId,
+			String name, String type)
+		throws Exception {
+
+		if (!LazyReferencingThreadLocal.isLazyReferencingEnabled()) {
+			throw new UnsupportedOperationException();
+		}
+
+		AccountEntry accountEntry =
+			accountEntryLocalService.fetchAccountEntryByExternalReferenceCode(
+				externalReferenceCode, companyId);
+
+		if (accountEntry != null) {
+			return accountEntry;
+		}
+
+		try {
+			LazyReferencingThreadLocal.setIncompleteModel(true);
+
+			accountEntry = accountEntryLocalService.addAccountEntry(
+				userId, AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT,
+				GetterUtil.get(name, externalReferenceCode), StringPool.BLANK,
+				null, StringPool.BLANK, null, StringPool.BLANK, type,
+				WorkflowConstants.STATUS_INCOMPLETE, null);
+
+			return accountEntryLocalService.updateExternalReferenceCode(
+				accountEntry.getAccountEntryId(), externalReferenceCode);
+		}
+		finally {
+			LazyReferencingThreadLocal.setIncompleteModel(false);
+		}
 	}
 
 	@Override
@@ -665,6 +707,10 @@ public class AccountEntryLocalServiceImpl
 
 			workflowServiceContext = (ServiceContext)serviceContext.clone();
 			workflowUserId = serviceContext.getUserId();
+		}
+
+		if (status == WorkflowConstants.STATUS_INCOMPLETE) {
+			status = WorkflowConstants.STATUS_APPROVED;
 		}
 
 		if (_isWorkflowEnabled(accountEntry.getCompanyId())) {

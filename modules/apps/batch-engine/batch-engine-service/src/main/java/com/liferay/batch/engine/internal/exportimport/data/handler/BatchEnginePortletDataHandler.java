@@ -89,6 +89,11 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 	}
 
 	@Override
+	public boolean isModelCountSupported() {
+		return false;
+	}
+
+	@Override
 	protected String doExportData(
 			PortletDataContext portletDataContext, String portletId,
 			PortletPreferences portletPreferences)

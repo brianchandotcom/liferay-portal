@@ -187,7 +187,7 @@ public class CPDefinitionModelDocumentContributor
 
 			document.addKeyword(
 				CPField.EXTERNAL_REFERENCE_CODE,
-				cProduct.getExternalReferenceCode());
+				cProduct.getExternalReferenceCode(), true);
 
 			document.addKeyword(
 				CPField.GTINS,

@@ -31,14 +31,11 @@ import com.liferay.petra.sql.dsl.spi.expression.DefaultPredicate;
 import com.liferay.petra.sql.dsl.spi.expression.Operand;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.dao.db.DBManagerUtil;
-import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
-import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -66,7 +63,6 @@ import com.liferay.portal.odata.filter.expression.UnaryExpression;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -229,40 +225,18 @@ public class PredicateExpressionVisitorImpl
 
 			return GetterUtil.getBoolean(literalExpression.getText());
 		}
-		else if ((Objects.equals(
+		else if (Objects.equals(
 					LiteralExpression.Type.DATE, literalExpression.getType()) ||
-				  Objects.equals(
-					  LiteralExpression.Type.DATE_TIME,
-					  literalExpression.getType())) &&
-				 (Objects.equals(DBManagerUtil.getDBType(), DBType.DB2) ||
-				  Objects.equals(
-					  DBManagerUtil.getDBType(), DBType.HYPERSONIC) ||
-				  Objects.equals(DBManagerUtil.getDBType(), DBType.ORACLE) ||
-				  Objects.equals(
-					  DBManagerUtil.getDBType(), DBType.POSTGRESQL))) {
+				 Objects.equals(
+					 LiteralExpression.Type.DATE_TIME,
+					 literalExpression.getType())) {
 
-			Date date = GetterUtil.getDate(
+			return GetterUtil.getDate(
 				literalExpression.getText(),
 				DateFormatFactoryUtil.getSimpleDateFormat(
 					ObjectFieldUtil.getDateTimePattern(
 						literalExpression.getText()),
 					LocaleUtil.ROOT));
-
-			if (Objects.equals(DBManagerUtil.getDBType(), DBType.POSTGRESQL)) {
-				return date;
-			}
-
-			String pattern = "yyyy-MM-dd HH:mm:ss.SSS";
-
-			if (Objects.equals(DBManagerUtil.getDBType(), DBType.ORACLE)) {
-				pattern = "dd-MMM-yyyy hh:mm:ss.SSS a";
-			}
-
-			return FastDateFormatFactoryUtil.getSimpleDateFormat(
-				pattern, LocaleUtil.ROOT
-			).format(
-				date
-			);
 		}
 		else if (Objects.equals(
 					LiteralExpression.Type.DOUBLE,

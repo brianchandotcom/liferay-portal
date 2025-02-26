@@ -2241,6 +2241,7 @@ com.liferay.project.templates.extensions.ProjectTemplatesConstants=com.liferay.p
 com.liferay.sharepoint.soap.repository.connector.operation.SharepointConstants=com.liferay.sharepoint.soap.repository.connector.operation.constants.SharepointConstants
 com.liferay.site.memberships.web.internal.constants.SiteMembershipsPortletKeys=com.liferay.site.memberships.constants.SiteMembershipsPortletKeys
 com.liferay.site.util.GroupURLProvider=com.liferay.site.provider.GroupURLProvider
+com.liferay.site.util.Sitemap=com.liferay.site.manager.SitemapManager
 com.liferay.staging.internal.model.adapter.builder.StagedAssetLinkModelAdapterBuilder=com.liferay.asset.link.internal.model.adapter.builder.StagedAssetLinkModelAdapterBuilder
 com.liferay.subscription.model.SubscriptionConstants=com.liferay.subscription.constants.SubscriptionConstants
 com.liferay.trash.kernel.model.TrashEntry=com.liferay.trash.model.TrashEntry

@@ -12,7 +12,6 @@ import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.dynamic.data.mapping.util.DDMFormFieldTemplateContextContributorUtil;
-import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.object.dynamic.data.mapping.form.field.type.constants.ObjectDDMFormFieldTypeConstants;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -73,26 +72,10 @@ public class MultiSelectPicklistDDMFormFieldTemplateContextContributor
 							}
 						).put(
 							"labelMap",
-							() -> {
-								long listTypeDefinitionId = GetterUtil.getLong(
-									ddmFormField.getProperty(
-										"listTypeDefinitionId"));
-
-								if (listTypeDefinitionId == 0) {
-									return null;
-								}
-
-								ListTypeEntry listTypeEntry =
-									_listTypeEntryLocalService.
-										fetchListTypeEntry(
-											listTypeDefinitionId, optionValue);
-
-								if (listTypeEntry == null) {
-									return null;
-								}
-
-								return listTypeEntry.getNameMap();
-							}
+							DDMFormFieldTemplateContextContributorUtil.
+								getListTypeEntryNameMap(
+									ddmFormField, optionValue,
+									_listTypeEntryLocalService)
 						).put(
 							"reference",
 							ddmFormFieldOptions.getOptionReference(optionValue)

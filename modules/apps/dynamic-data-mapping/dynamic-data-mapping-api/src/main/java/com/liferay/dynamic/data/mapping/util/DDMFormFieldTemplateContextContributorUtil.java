@@ -5,11 +5,15 @@
 
 package com.liferay.dynamic.data.mapping.util;
 
+import com.liferay.dynamic.data.mapping.model.DDMFormField;
+import com.liferay.list.type.model.ListTypeEntry;
+import com.liferay.list.type.service.ListTypeEntryLocalService;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -21,6 +25,28 @@ import java.util.Map;
  * @author Pedro Leite
  */
 public class DDMFormFieldTemplateContextContributorUtil {
+
+	public static Map<Locale, String> getListTypeEntryNameMap(
+		DDMFormField ddmFormField, String key,
+		ListTypeEntryLocalService listTypeEntryLocalService) {
+
+		long listTypeDefinitionId = GetterUtil.getLong(
+			ddmFormField.getProperty("listTypeDefinitionId"));
+
+		if (listTypeDefinitionId == 0) {
+			return null;
+		}
+
+		ListTypeEntry listTypeEntry =
+			listTypeEntryLocalService.fetchListTypeEntry(
+				listTypeDefinitionId, key);
+
+		if (listTypeEntry == null) {
+			return null;
+		}
+
+		return listTypeEntry.getNameMap();
+	}
 
 	public static Map<String, Object> getLocaleMap(Locale defaultLocale) {
 		JSONObject localeJSONObject = _getLocaleJSONObject(defaultLocale);

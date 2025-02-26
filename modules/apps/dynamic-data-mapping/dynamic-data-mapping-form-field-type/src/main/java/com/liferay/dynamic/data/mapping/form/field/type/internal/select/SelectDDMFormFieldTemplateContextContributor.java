@@ -280,24 +280,10 @@ public class SelectDDMFormFieldTemplateContextContributor
 					}
 				).put(
 					"labelMap",
-					() -> {
-						long listTypeDefinitionId = GetterUtil.getLong(
-							ddmFormField.getProperty("listTypeDefinitionId"));
-
-						if (listTypeDefinitionId == 0) {
-							return null;
-						}
-
-						ListTypeEntry listTypeEntry =
-							_listTypeEntryLocalService.fetchListTypeEntry(
-								listTypeDefinitionId, optionValue);
-
-						if (listTypeEntry == null) {
-							return null;
-						}
-
-						return listTypeEntry.getNameMap();
-					}
+					DDMFormFieldTemplateContextContributorUtil.
+						getListTypeEntryNameMap(
+							ddmFormField, optionValue,
+							_listTypeEntryLocalService)
 				).put(
 					"reference",
 					ddmFormFieldOptions.getOptionReference(optionValue)

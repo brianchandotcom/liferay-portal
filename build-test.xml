@@ -8899,7 +8899,7 @@ war.path=${app.server.portal.dir}/</echo>
 						sed -i "/^CREATE RULE delete_$table/,/);$/d" "$FILE_UPGRADED"
 					done < ${selenium.output.dir.name}/tables_to_remove.txt
 
-					diff -y -B -W250 ${selenium.output.dir.name}/upgraded-@{upgraded.db.schema}.sql ${selenium.output.dir.name}/fresh-@{fresh.db.schema}.sql | expand | grep -E -C40 '^.{123} [|><]( |$)' || true
+					diff -y -B -W250 ${selenium.output.dir.name}/upgraded-@{upgraded.db.schema}.sql ${selenium.output.dir.name}/fresh-@{fresh.db.schema}.sql | expand | grep -E -C5 '^.{123} [|><]( |$)' || true
 				]]>
 			</echo>
 

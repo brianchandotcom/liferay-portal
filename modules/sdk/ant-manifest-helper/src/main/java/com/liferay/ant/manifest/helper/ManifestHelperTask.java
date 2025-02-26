@@ -152,7 +152,7 @@ public class ManifestHelperTask extends Task {
 			return sb.toString();
 		}
 		catch (Exception exception) {
-			return StringPool.BLANK;
+			throw new RuntimeException(exception);
 		}
 	}
 

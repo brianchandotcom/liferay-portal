@@ -5,6 +5,7 @@
 
 import {ObjectField} from '@liferay/object-admin-rest-client-js';
 import {FrameLocator, Locator, Page, expect} from '@playwright/test';
+import path from 'path';
 
 import {PORTLET_URLS} from '../../../utils/portletUrls';
 
@@ -179,6 +180,20 @@ export class ViewObjectEntriesPage {
 			)
 			.first()
 			.click();
+	}
+
+	async selectFileFromUserComputer(dirName: string, fileName: string) {
+		const fileChooserPromise = this.page.waitForEvent('filechooser');
+
+		await this.selectFileButton.click();
+
+		const fileChooser = await fileChooserPromise;
+
+		await fileChooser.setFiles(
+			path.join(dirName, 'dependencies', fileName)
+		);
+
+		await this.page.getByText(fileName).waitFor({state: 'visible'});
 	}
 
 	async goto(

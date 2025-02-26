@@ -69,12 +69,28 @@ export const FIELD_TYPE_BUSINESS_TYPE = {
 
 // Types
 
-export type Field = {
+type BaseField = {
 	erc: string;
 	label: string;
 	name: string;
-	type: FieldType;
 };
+
+export type Field =
+	| (BaseField & {
+			settings: {timeStorage: 'convertToUTC'};
+			type: 'datetime';
+	  })
+	| (BaseField & {
+			settings: {
+				acceptedFileExtensions: string;
+				fileSource: 'userComputer';
+				maximumFileSize: number;
+			};
+			type: 'upload';
+	  })
+	| (BaseField & {
+			type: Exclude<FieldType, 'datetime'>;
+	  });
 
 export type FieldType = (typeof FIELD_TYPES)[number];
 
@@ -83,11 +99,33 @@ export type FieldBusinessType =
 
 // Functions
 
-export function getDefaultField(type: Field['type']) {
-	return {
+export function getDefaultField(type: FieldType): Field {
+	const base = {
 		erc: uuidv4(),
 		label: FIELD_TYPE_LABEL[type],
 		name: normalizeName(type),
-		type,
 	};
+
+	if (type === 'datetime') {
+		return {
+			...base,
+			settings: {
+				timeStorage: 'convertToUTC',
+			},
+			type: 'datetime',
+		};
+	}
+	else if (type === 'upload') {
+		return {
+			...base,
+			settings: {
+				acceptedFileExtensions: 'jpeg, jpg, pdf, png',
+				fileSource: 'userComputer',
+				maximumFileSize: 100,
+			},
+			type: 'upload',
+		};
+	}
+
+	return {...base, type};
 }

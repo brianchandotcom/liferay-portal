@@ -4,7 +4,7 @@
  */
 
 import {State} from '../contexts/StateContext';
-import {ObjectDefinition} from '../types/ObjectDefinition';
+import {ObjectDefinition, ObjectField} from '../types/ObjectDefinition';
 import {FIELD_TYPE_BUSINESS_TYPE, Field} from './field';
 
 export default function buildObjectDefinition({
@@ -16,22 +16,13 @@ export default function buildObjectDefinition({
 	fields?: Field[];
 	id?: State['id'];
 	label: State['label'];
-	name?: string;
+	name?: State['name'];
 }): ObjectDefinition {
 	const objectDefinition: ObjectDefinition = {
 		label: {
 			en_US: label,
 		},
-		objectFields: fields.map((field) => ({
-			businessType: FIELD_TYPE_BUSINESS_TYPE[field.type],
-			externalReferenceCode: field.erc,
-			label: {
-				en_US: field.label,
-			},
-			localized: false,
-			name: field.name,
-			required: false,
-		})),
+		objectFields: buildFields(fields),
 		pluralLabel: {
 			en_US: label,
 		},
@@ -47,4 +38,27 @@ export default function buildObjectDefinition({
 	}
 
 	return objectDefinition;
+}
+
+function buildFields(fields: Field[]) {
+	return fields.map((field) => {
+		const objectField: ObjectField = {
+			businessType: FIELD_TYPE_BUSINESS_TYPE[field.type],
+			externalReferenceCode: field.erc,
+			label: {
+				en_US: field.label,
+			},
+			localized: false,
+			name: field.name,
+			required: false,
+		};
+
+		if ('settings' in field) {
+			objectField.objectFieldSettings = Object.entries(
+				field.settings
+			).map(([name, value]) => ({name, value}));
+		}
+
+		return objectField;
+	});
 }

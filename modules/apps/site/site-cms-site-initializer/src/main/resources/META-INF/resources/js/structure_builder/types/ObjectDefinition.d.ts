@@ -13,6 +13,7 @@ export type ObjectField = {
 	};
 	localized: boolean;
 	name: string;
+	objectFieldSettings?: {name: string; value: string | number}[];
 	required: boolean;
 };
 

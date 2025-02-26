@@ -45,6 +45,7 @@ import com.liferay.headless.delivery.client.dto.v1_0.StructuredContent;
 import com.liferay.headless.delivery.client.dto.v1_0.StructuredContentLink;
 import com.liferay.headless.delivery.client.pagination.Page;
 import com.liferay.headless.delivery.client.pagination.Pagination;
+import com.liferay.headless.delivery.client.permission.Permission;
 import com.liferay.headless.delivery.client.problem.Problem;
 import com.liferay.headless.delivery.client.resource.v1_0.StructuredContentResource;
 import com.liferay.journal.constants.JournalArticleConstants;
@@ -60,10 +61,8 @@ import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -108,7 +107,6 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -1096,10 +1094,12 @@ public class StructuredContentResourceTest
 		).build();
 	}
 
-	private JSONArray _createBatchBody(long structureId) throws JSONException {
+	private JSONArray _createBatchBody(long structureId) throws Exception {
 		StructuredContent structuredContent = new StructuredContent();
 
-		structuredContent.setAvailableLanguages(new String[]{"en-US", "es-ES"});
+		structuredContent.setAvailableLanguages(
+			new String[] {"en-US", "es-ES"});
+
 		ContentField contentField = new ContentField() {
 			{
 				contentFieldValue = new ContentFieldValue() {
@@ -1108,19 +1108,23 @@ public class StructuredContentResourceTest
 					}
 				};
 
-				Map<String, ContentFieldValue> i18nMap = new HashMap<>();
-				i18nMap.put("en_US", new ContentFieldValue() {
-					{
-						data = "1";
-					}
-				});
-				i18nMap.put("es-ES", new ContentFieldValue() {
-					{
-						data = "1 Hindi";
-					}
-				});
+				contentFieldValue_i18n =
+					HashMapBuilder.<String, ContentFieldValue>put(
+						"en_US",
+						new ContentFieldValue() {
+							{
+								data = "1";
+							}
+						}
+					).put(
+						"es-ES",
+						new ContentFieldValue() {
+							{
+								data = "1 Hindi";
+							}
+						}
+					).build();
 
-				contentFieldValue_i18n = i18nMap;
 				dataType = "string";
 				inputControl = "text";
 				label = "Text";
@@ -1130,34 +1134,38 @@ public class StructuredContentResourceTest
 			}
 		};
 
-		structuredContent.setContentFields(new ContentField[]{contentField});
+		structuredContent.setContentFields(new ContentField[] {contentField});
+
 		structuredContent.setContentStructureId(structureId);
 
-		com.liferay.headless.delivery.client.permission.Permission permission =
-			new com.liferay.headless.delivery.client.permission.Permission() {
-				{
-					actionIds = new String[]{"VIEW"};
-					roleName = "Guest";
-				}
-			};
+		Permission permission = new Permission() {
+			{
+				actionIds = new String[] {"VIEW"};
+				roleName = "Guest";
+			}
+		};
 
-		structuredContent.setPermissions(
-			new com.liferay.headless.delivery.client.permission.Permission[]{permission});
+		structuredContent.setPermissions(new Permission[] {permission});
 
 		structuredContent.setPriority(0.0);
 		structuredContent.setStructuredContentFolderId(0L);
 		structuredContent.setTaxonomyCategoryIds(new Long[0]);
 		structuredContent.setTitle("Section - 2");
 
-		Map<String, String> titleI18n = new HashMap<>();
-		titleI18n.put("en_US", "Section - 2");
-		titleI18n.put("es-ES", "Section - 2 Hindi");
-		structuredContent.setTitle_i18n(titleI18n);
+		structuredContent.setTitle_i18n(
+			HashMapBuilder.put(
+				"en_US", "Section - 2"
+			).put(
+				"es-ES", "Section - 2 Hindi"
+			).build());
 
-		String structuredContentJson = structuredContent.toString();
-		JSONObject structuredContentJSONObject = JSONFactoryUtil.createJSONObject(structuredContentJson);
+		String structuredContentJSON = structuredContent.toString();
+
+		JSONObject structuredContentJSONObject =
+			JSONFactoryUtil.createJSONObject(structuredContentJSON);
 
 		JSONArray batchPayloadJSONArray = JSONFactoryUtil.createJSONArray();
+
 		return batchPayloadJSONArray.put(structuredContentJSONObject);
 	}
 

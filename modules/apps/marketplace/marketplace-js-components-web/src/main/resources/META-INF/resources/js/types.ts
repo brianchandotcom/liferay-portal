@@ -244,6 +244,7 @@ export type Price = {
 };
 
 export type Product = {
+	catalogId: number;
 	catalogName: string;
 	categories: Category[];
 	createDate: string;

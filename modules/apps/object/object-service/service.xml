@@ -351,7 +351,7 @@
 
 		<!-- PK fields -->
 
-		<column container-model="true" name="objectEntryVersionId" primary="true" type="long" />
+		<column name="objectEntryVersionId" primary="true" type="long" />
 
 		<!-- Audit fields -->
 

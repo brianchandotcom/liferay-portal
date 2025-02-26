@@ -29,7 +29,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Roberto Díaz
  */
-@FeatureFlags("LPD-32649")
+@FeatureFlags("LPD-17564")
 @RunWith(Arquillian.class)
 public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 

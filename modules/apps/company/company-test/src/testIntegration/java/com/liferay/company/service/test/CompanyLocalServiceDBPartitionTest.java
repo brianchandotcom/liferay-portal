@@ -337,7 +337,7 @@ public class CompanyLocalServiceDBPartitionTest
 						_getCompanyIdsBySQL(), company.getCompanyId()));
 
 				_checkStandaloneDBPartitionTables(
-					getPartitionName(company.getCompanyId()), true, "Company",
+					getPartitionName(company.getCompanyId()), "Company",
 					"VirtualHost");
 			}
 		}
@@ -397,7 +397,7 @@ public class CompanyLocalServiceDBPartitionTest
 						_getCompanyIdsBySQL(), company.getCompanyId()));
 
 				_checkStandaloneDBPartitionTables(
-					getPartitionName(company.getCompanyId()), true, "Company",
+					getPartitionName(company.getCompanyId()), "Company",
 					"VirtualHost");
 			}
 		}
@@ -670,8 +670,8 @@ public class CompanyLocalServiceDBPartitionTest
 				exists(getExtractedPartitionName(company.getCompanyId())));
 
 			_checkStandaloneDBPartitionTables(
-				getExtractedPartitionName(company.getCompanyId()), true,
-				"Company", "VirtualHost");
+				getExtractedPartitionName(company.getCompanyId()), "Company",
+				"VirtualHost");
 
 			Collection<ServiceReference<Portlet>> serviceReferences =
 				_bundleContext.getServiceReferences(
@@ -1006,8 +1006,7 @@ public class CompanyLocalServiceDBPartitionTest
 	}
 
 	private void _checkStandaloneDBPartitionTables(
-			String partitionName, boolean tablesExist,
-			String... expectedTableNames)
+			String partitionName, String... expectedTableNames)
 		throws Exception {
 
 		List<String> tableNames = new ArrayList<>();
@@ -1026,8 +1025,7 @@ public class CompanyLocalServiceDBPartitionTest
 		}
 
 		for (String expectedTableName : expectedTableNames) {
-			Assert.assertEquals(
-				tablesExist,
+			Assert.assertTrue(
 				tableNames.contains(StringUtil.toUpperCase(expectedTableName)));
 		}
 	}

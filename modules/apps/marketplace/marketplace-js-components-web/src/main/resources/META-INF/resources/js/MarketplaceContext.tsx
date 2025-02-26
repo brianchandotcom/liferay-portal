@@ -17,6 +17,8 @@ import {MarketplaceRest} from './core/MarketplaceRest';
 import {useMarketplaceConfiguration} from './hooks/useMarketplaceConfiguration';
 import {APIResponse, MarketplaceConfiguration, Product} from './types';
 
+import './style/index.scss';
+
 export enum MarketplaceView {
 	PRODUCTS,
 	PURCHASE,
@@ -118,7 +120,7 @@ export function MarketplaceContextProvider({
 	const authorized = marketplaceConfiguration.authorized;
 
 	useEffect(() => {
-		if (!authorized) {
+		if (!authorized || !modal.open) {
 			return;
 		}
 
@@ -150,6 +152,7 @@ export function MarketplaceContextProvider({
 	}, [
 		authorized,
 		marketplaceRest,
+		modal.open,
 		productSearchParams.page,
 		productSearchParams.pageSize,
 		productSearchParams.search,

@@ -60,7 +60,7 @@ public class CompanyModelListenerTest {
 	}
 
 	@Test
-	public void testOnBeforeDelete() throws Exception {
+	public void testOnBeforeRemove() throws Exception {
 		NotificationQueueEntry notificationQueueEntry = null;
 		NotificationRecipient notificationRecipient = null;
 		NotificationRecipientSetting notificationRecipientSetting = null;
@@ -103,7 +103,19 @@ public class CompanyModelListenerTest {
 				_companyId, notificationRecipient.getCompanyId());
 		}
 
+		Assert.assertNotNull(
+			_notificationTemplateLocalService.
+				fetchNotificationTemplateByExternalReferenceCode(
+					"L_COMMERCE_ORDER_TEMPLATE",
+					TestPropsValues.getCompanyId()));
+
 		_companyLocalService.deleteCompany(_companyId);
+
+		Assert.assertNotNull(
+			_notificationTemplateLocalService.
+				fetchNotificationTemplateByExternalReferenceCode(
+					"L_COMMERCE_ORDER_TEMPLATE",
+					TestPropsValues.getCompanyId()));
 
 		Assert.assertNull(
 			_notificationQueueEntryLocalService.fetchNotificationQueueEntry(
@@ -119,23 +131,6 @@ public class CompanyModelListenerTest {
 		Assert.assertNull(
 			_notificationTemplateLocalService.fetchNotificationTemplate(
 				notificationTemplate.getNotificationTemplateId()));
-	}
-
-	@Test
-	public void testOnBeforeRemove() throws Exception {
-		Assert.assertNotNull(
-			_notificationTemplateLocalService.
-				fetchNotificationTemplateByExternalReferenceCode(
-					"L_COMMERCE_ORDER_TEMPLATE",
-					TestPropsValues.getCompanyId()));
-
-		_companyLocalService.deleteCompany(_companyId);
-
-		Assert.assertNotNull(
-			_notificationTemplateLocalService.
-				fetchNotificationTemplateByExternalReferenceCode(
-					"L_COMMERCE_ORDER_TEMPLATE",
-					TestPropsValues.getCompanyId()));
 	}
 
 	private long _companyId;

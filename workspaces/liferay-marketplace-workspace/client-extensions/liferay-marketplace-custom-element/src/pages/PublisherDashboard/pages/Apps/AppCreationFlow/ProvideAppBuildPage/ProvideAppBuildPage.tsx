@@ -324,8 +324,6 @@ export function ProvideAppBuildPage({
 				},
 				virtualSettingId,
 			});
-
-			return;
 		}
 	};
 

@@ -12,7 +12,6 @@ import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -179,8 +178,7 @@ public class BuildDatabaseUtil {
 			return;
 		}
 
-		List<String> distNodesList = new ArrayList<>(
-			Arrays.asList(distNodes.split(",")));
+		List<String> distNodesList = _getOrderedDistNodes(distNodes);
 
 		while (!distNodesList.isEmpty()) {
 			try {
@@ -267,7 +265,10 @@ public class BuildDatabaseUtil {
 
 				if (!buildDatabaseFile.exists()) {
 					System.out.println(
-						"Failed to get build-database.json from " + distNode);
+						JenkinsResultsParserUtil.combine(
+							"Unable to get ",
+							BuildDatabase.FILE_NAME_BUILD_DATABASE, " from ",
+							distNode, ", retrying... "));
 
 					continue;
 				}
@@ -384,6 +385,31 @@ public class BuildDatabaseUtil {
 		JenkinsMaster jenkinsMaster = JenkinsMaster.getInstance(masterHostname);
 
 		return jenkinsMaster.getNetworkName();
+	}
+
+	private static List<String> _getOrderedDistNodes(String distNodes) {
+		String currentNetworkName = _getCurrentNetworkName();
+
+		List<String> currentNetworkDistNodes = new ArrayList<>();
+		List<String> otherNetworkDistNodes = new ArrayList<>();
+
+		for (String distNode : distNodes.split(",")) {
+			if (JenkinsResultsParserUtil.isJenkinsSlaveInNetwork(
+					distNode, currentNetworkName)) {
+
+				currentNetworkDistNodes.add(distNode);
+			}
+			else {
+				otherNetworkDistNodes.add(distNode);
+			}
+		}
+
+		List<String> orderedDistNodes = new ArrayList<>(
+			currentNetworkDistNodes);
+
+		orderedDistNodes.addAll(otherNetworkDistNodes);
+
+		return orderedDistNodes;
 	}
 
 	private static final Map<File, BuildDatabase> _buildDatabases =

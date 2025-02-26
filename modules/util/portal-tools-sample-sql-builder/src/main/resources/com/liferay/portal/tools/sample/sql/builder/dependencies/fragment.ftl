@@ -14,7 +14,7 @@
 		_journalDDMTemplateModel = defaultJournalDDMTemplateModel
 	/>
 
-	<#if dataFactory.maxFragmentHeadingsCount == 0>
+	<#if dataFactory.maxFragmentEntryLinkCount == 0>
 		<#assign fragmentCollectionModel = dataFactory.newFragmentCollectionModel(groupId) />
 
 		${dataFactory.toInsertSQL(fragmentCollectionModel)}
@@ -34,7 +34,7 @@
 		</#list>
 	</#if>
 
-	<#if dataFactory.maxFragmentHeadingsCount != 0>
+	<#if dataFactory.maxFragmentEntryLinkCount != 0>
 		<#list dataFactory.getSequence(dataFactory.maxContentLayoutCount) as contentLayoutCount>
 			<#assign
 				contentLayoutModels = dataFactory.newContentPageLayoutModels(groupId, groupId + "_web_content_" + contentLayoutCount)

@@ -124,8 +124,8 @@ public interface BenchmarksPropsKeys {
 	public static final String MAX_DL_FOLDER_DEPTH =
 		"sample.sql.max.dl.folder.depth";
 
-	public static final String MAX_FRAGMENT_HEADINGS_COUNT =
-		"sample.sql.max.fragment.headings.count";
+	public static final String MAX_FRAGMENT_ENTRY_LINK_COUNT =
+		"sample.sql.max.fragment.entry.link.count";
 
 	public static final String MAX_GROUP_COUNT = "sample.sql.max.group.count";
 

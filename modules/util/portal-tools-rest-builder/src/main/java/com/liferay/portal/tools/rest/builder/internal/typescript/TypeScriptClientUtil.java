@@ -57,7 +57,6 @@ public class TypeScriptClientUtil {
 
 		File baseClientDir = new File(
 			StringUtil.removeLast(configDir.getPath(), "-impl") + "-client-js");
-
 		List<File> files = new ArrayList<>();
 
 		_createBuildGradleFile(baseClientDir, files);
@@ -217,7 +216,7 @@ public class TypeScriptClientUtil {
 
 		List<Map<String, Object>> apiContexts = new ArrayList<>();
 
-		ArrayList<Map.Entry<String, Map<String, Object>>> entriesList =
+		List<Map.Entry<String, Map<String, Object>>> entriesList =
 			new ArrayList<>(entries);
 
 		entriesList.sort(Map.Entry.comparingByKey());

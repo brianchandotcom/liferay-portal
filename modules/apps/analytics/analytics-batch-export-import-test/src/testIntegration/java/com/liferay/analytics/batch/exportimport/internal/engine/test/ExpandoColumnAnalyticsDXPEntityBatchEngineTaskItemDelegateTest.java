@@ -7,7 +7,6 @@ package com.liferay.analytics.batch.exportimport.internal.engine.test;
 
 import com.liferay.analytics.dxp.entity.rest.dto.v1_0.DXPEntity;
 import com.liferay.analytics.settings.configuration.AnalyticsConfiguration;
-import com.liferay.analytics.settings.rest.manager.AnalyticsSettingsManager;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.batch.engine.BatchEngineTaskItemDelegate;
 import com.liferay.batch.engine.pagination.Page;
@@ -18,14 +17,10 @@ import com.liferay.expando.kernel.model.ExpandoTableConstants;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
@@ -60,13 +55,6 @@ public class ExpandoColumnAnalyticsDXPEntityBatchEngineTaskItemDelegateTest {
 		UserTestUtil.setUser(TestPropsValues.getUser());
 
 		_companyId = TestPropsValues.getCompanyId();
-
-		_user = UserTestUtil.addCompanyAdminUser(
-			CompanyLocalServiceUtil.getCompany(_companyId));
-
-		_group = GroupTestUtil.addGroup(
-			_companyId, _user.getUserId(),
-			GroupConstants.DEFAULT_PARENT_GROUP_ID);
 
 		_expandoTable = _expandoTableLocalService.addTable(
 			_companyId, PortalUtil.getClassNameId(User.class),
@@ -119,15 +107,11 @@ public class ExpandoColumnAnalyticsDXPEntityBatchEngineTaskItemDelegateTest {
 			Page<DXPEntity> resultPage = _batchEngineTaskItemDelegate.read(
 				null, Pagination.of(1, 7), null, Collections.emptyMap(), null);
 
-			Collection<DXPEntity> dxpEntitiesPage = resultPage.getItems();
+			Collection<DXPEntity> dxpEntities = resultPage.getItems();
 
-			Assert.assertEquals(
-				dxpEntitiesPage.toString(), 3, dxpEntitiesPage.size());
+			Assert.assertEquals(dxpEntities.toString(), 3, dxpEntities.size());
 		}
 	}
-
-	@Inject
-	private AnalyticsSettingsManager _analyticsSettingsManager;
 
 	@Inject(
 		filter = "component.name=com.liferay.analytics.batch.exportimport.internal.engine.ExpandoColumnAnalyticsDXPEntityBatchEngineTaskItemDelegate"
@@ -143,10 +127,5 @@ public class ExpandoColumnAnalyticsDXPEntityBatchEngineTaskItemDelegateTest {
 
 	@Inject
 	private ExpandoTableLocalService _expandoTableLocalService;
-
-	@DeleteAfterTestRun
-	private Group _group;
-
-	private User _user;
 
 }

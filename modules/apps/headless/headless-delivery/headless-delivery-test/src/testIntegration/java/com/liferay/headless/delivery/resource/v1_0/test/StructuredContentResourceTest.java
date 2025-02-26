@@ -60,6 +60,7 @@ import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -107,6 +108,7 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -1094,67 +1096,68 @@ public class StructuredContentResourceTest
 		).build();
 	}
 
-	private JSONArray _createBatchBody(long structureId) {
-		JSONObject structuredContentJSONObject = JSONUtil.put(
-			"availableLanguages", JSONUtil.putAll("en-US", "es-ES")
-		).put(
-			"contentFields",
-			JSONFactoryUtil.createJSONArray(
-			).put(
-				JSONUtil.put(
-					"contentFieldValue", JSONUtil.put("data", "1")
-				).put(
-					"contentFieldValue_i18n",
-					JSONUtil.put(
-						"en_US", JSONUtil.put("data", "1")
-					).put(
-						"es-ES", JSONUtil.put("data", "1 Hindi")
-					)
-				).put(
-					"dataType", "string"
-				).put(
-					"inputControl", "text"
-				).put(
-					"label", "Text"
-				).put(
-					"name", "MyText"
-				).put(
-					"nestedContentFields", JSONFactoryUtil.createJSONArray()
-				).put(
-					"repeatable", false
-				)
-			)
-		).put(
-			"contentStructureId", structureId
-		).put(
-			"permissions",
-			JSONFactoryUtil.createJSONArray(
-			).put(
-				JSONUtil.put(
-					"actionIds", JSONUtil.put("VIEW")
-				).put(
-					"roleName", "Guest"
-				)
-			)
-		).put(
-			"priority", 0
-		).put(
-			"structuredContentFolderId", 0
-		).put(
-			"taxonomyCategoryIds", JSONFactoryUtil.createJSONArray()
-		).put(
-			"title", "Section - 2"
-		).put(
-			"title_i18n",
-			JSONUtil.put(
-				"en_US", "Section - 2"
-			).put(
-				"es-ES", "Section - 2 Hindi"
-			)
-		);
+	private JSONArray _createBatchBody(long structureId) throws JSONException {
+		StructuredContent structuredContent = new StructuredContent();
+
+		structuredContent.setAvailableLanguages(new String[]{"en-US", "es-ES"});
+		ContentField contentField = new ContentField() {
+			{
+				contentFieldValue = new ContentFieldValue() {
+					{
+						data = "1";
+					}
+				};
+
+				Map<String, ContentFieldValue> i18nMap = new HashMap<>();
+				i18nMap.put("en_US", new ContentFieldValue() {
+					{
+						data = "1";
+					}
+				});
+				i18nMap.put("es-ES", new ContentFieldValue() {
+					{
+						data = "1 Hindi";
+					}
+				});
+
+				contentFieldValue_i18n = i18nMap;
+				dataType = "string";
+				inputControl = "text";
+				label = "Text";
+				name = "MyText";
+				nestedContentFields = new ContentField[0];
+				repeatable = false;
+			}
+		};
+
+		structuredContent.setContentFields(new ContentField[]{contentField});
+		structuredContent.setContentStructureId(structureId);
+
+		com.liferay.headless.delivery.client.permission.Permission permission =
+			new com.liferay.headless.delivery.client.permission.Permission() {
+				{
+					actionIds = new String[]{"VIEW"};
+					roleName = "Guest";
+				}
+			};
+
+		structuredContent.setPermissions(
+			new com.liferay.headless.delivery.client.permission.Permission[]{permission});
+
+		structuredContent.setPriority(0.0);
+		structuredContent.setStructuredContentFolderId(0L);
+		structuredContent.setTaxonomyCategoryIds(new Long[0]);
+		structuredContent.setTitle("Section - 2");
+
+		Map<String, String> titleI18n = new HashMap<>();
+		titleI18n.put("en_US", "Section - 2");
+		titleI18n.put("es-ES", "Section - 2 Hindi");
+		structuredContent.setTitle_i18n(titleI18n);
+
+		String structuredContentJson = structuredContent.toString();
+		JSONObject structuredContentJSONObject = JSONFactoryUtil.createJSONObject(structuredContentJson);
 
 		JSONArray batchPayloadJSONArray = JSONFactoryUtil.createJSONArray();
-
 		return batchPayloadJSONArray.put(structuredContentJSONObject);
 	}
 

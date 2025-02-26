@@ -1,9 +1,0 @@
-{
-	"contentSubtype": {
-		"subtypeKey": "LEARN-COURSE"
-	},
-	"contentType": {
-		"className": "com.liferay.journal.model.JournalArticle"
-	},
-	"name": "Learn Course Introduction"
-}

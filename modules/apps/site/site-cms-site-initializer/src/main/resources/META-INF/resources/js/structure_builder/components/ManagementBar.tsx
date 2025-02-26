@@ -10,10 +10,7 @@ import {API} from '@liferay/object-js-components-web';
 import {ManagementToolbar, openToast} from 'frontend-js-components-web';
 import React from 'react';
 
-import {
-	useSelector,
-	useStateDispatch,
-} from '../contexts/StateContext';
+import {useSelector, useStateDispatch} from '../contexts/StateContext';
 import selectStructureFields from '../selectors/selectStructureFields';
 import selectStructureId from '../selectors/selectStructureId';
 import selectStructureLabel from '../selectors/selectStructureLabel';
@@ -75,6 +72,7 @@ function SaveButton() {
 			{
 				fields,
 				label,
+				name: structureName,
 			}
 		);
 

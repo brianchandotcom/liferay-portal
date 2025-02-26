@@ -5,13 +5,12 @@
 
 import {Field, State} from '../contexts/StateContext';
 import buildObjectDefinition from '../utils/buildObjectDefinition';
-import normalizeName from '../utils/normalizeName';
 import ApiHelper from './ApiHelper';
 
 async function createStructure({
 	fields,
 	label,
-	name = normalizeName(label),
+	name,
 }: {
 	fields: Field[];
 	label: State['label'];

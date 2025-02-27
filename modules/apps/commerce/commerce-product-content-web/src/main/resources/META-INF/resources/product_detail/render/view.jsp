@@ -233,7 +233,7 @@ List<CPOptionCategory> cpOptionCategories = cpContentHelper.getCPOptionCategorie
 String description = cpCatalogEntry.getDescription();
 
 boolean directReplacement = cpContentHelper.isDirectReplacement(cpSku);
-boolean hasCPDefinitionSpecificationOptionValues = cpContentHelper.hasCPDefinitionSpecificationOptionValues(cpDefinitionId);
+boolean hasCPDefinitionSpecificationOptionValues = !cpDefinitionSpecificationOptionValues.isEmpty();
 boolean hasCPMedia = !cpMedias.isEmpty();
 boolean hasDescription = !Validator.isBlank(description);
 

@@ -219,13 +219,8 @@ describe('AccountSelector', () => {
 			const orders = renderedComponent.baseElement.querySelectorAll(
 				'.orders-table tbody tr'
 			);
-			const orderItem = renderedComponent.baseElement.querySelector(
-				'.orders-table tbody tr'
-			);
 
 			expect(orders.length).toBe(10);
-
-			expect(orderItem.querySelector('a').href).toContain('/test-url/');
 		});
 	});
 

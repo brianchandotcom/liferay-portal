@@ -191,7 +191,7 @@ public class CommerceChannelRelLocalServiceTest {
 			_user.getCompanyId(), "US");
 
 		int commerceChannelCountriesCount =
-			_commerceChannelRelLocalService.getCommerceChannelCountriesCount(
+			_commerceChannelRelLocalService.getCountryCommerceChannelRelsCount(
 				_commerceChannel1.getCommerceChannelId(), StringPool.BLANK);
 
 		CommerceChannelRel commerceChannelRel =
@@ -204,7 +204,7 @@ public class CommerceChannelRelLocalServiceTest {
 			_commerceChannel1.getCommerceChannelId(), _serviceContext);
 
 		Assert.assertEquals(
-			_commerceChannelRelLocalService.getCommerceChannelCountriesCount(
+			_commerceChannelRelLocalService.getCountryCommerceChannelRelsCount(
 				_commerceChannel1.getCommerceChannelId(), StringPool.BLANK),
 			commerceChannelCountriesCount + 2);
 
@@ -212,7 +212,7 @@ public class CommerceChannelRelLocalServiceTest {
 			commerceChannelRel.getCommerceChannelRelId());
 
 		Assert.assertEquals(
-			_commerceChannelRelLocalService.getCommerceChannelCountriesCount(
+			_commerceChannelRelLocalService.getCountryCommerceChannelRelsCount(
 				_commerceChannel1.getCommerceChannelId(), StringPool.BLANK),
 			commerceChannelCountriesCount + 1);
 	}

@@ -1450,12 +1450,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 					).groupLocalService(
 						_groupLocalService
 					).httpServletRequest(
-						new MockHttpServletRequest() {
-							@Override
-							public StringBuffer getRequestURL() {
-								return new StringBuffer(StringBundler.concat("http://localhost:8080/o/", RandomTestUtil.randomString(), "/v1.0/", RandomTestUtil.randomString()));
-							}
-						}
+						testVulcanCRUDItemDelegate_getHttpServletRequest()
 					).httpServletResponse(
 						new MockHttpServletResponse()
 					).resourceActionLocalService(
@@ -1475,6 +1470,15 @@ public abstract class Base${schemaName}ResourceTestCase {
 					Object item = vulcanCRUDItemDelegate.getItem(post${schemaName}.getId());
 
 					assertEquals(get${schemaName}, ${schemaName}SerDes.toDTO(item.toString()));
+				}
+
+				protected HttpServletRequest testVulcanCRUDItemDelegate_getHttpServletRequest() {
+					return new MockHttpServletRequest() {
+						@Override
+						public StringBuffer getRequestURL() {
+							return new StringBuffer(StringBundler.concat("http://localhost:8080/o/v1.0/", RandomTestUtil.randomString(), "/", RandomTestUtil.randomString()));
+						}
+					};
 				}
 
 				protected UriInfo testVulcanCRUDItemDelegate_getUriInfo() {

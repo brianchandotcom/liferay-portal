@@ -22,6 +22,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -40,31 +41,50 @@ public class MFATimeBasedOTPCheckerDisplayContextTest {
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
+	@BeforeClass
+	public static void setUpClass() throws PortalException {
+		_setupMockCompany();
+		_setupMockDisplays();
+		_setupMockUser();
+
+		_setupMockHttpServletRequest();
+	}
+
 	@Test
 	public void testGetContext() throws PortalException {
-		Company mockCompany = Mockito.mock(Company.class);
-		HttpServletRequest mockHttpServletRequest =
-			new MockHttpServletRequest();
-		PortletDisplay mockPortletDisplay = Mockito.mock(PortletDisplay.class);
-		ThemeDisplay mockThemeDisplay = Mockito.mock(ThemeDisplay.class);
+		MFATimeBasedOTPCheckerDisplayContext displayContext =
+			new MFATimeBasedOTPCheckerDisplayContext(_mockHttpServletRequest);
 
-		User mockUser = Mockito.mock(User.class);
+		Map<String, Object> context = displayContext.getContext();
 
-		PortalUtil portalUtil = new PortalUtil();
+		Assert.assertEquals(
+			_mfaTimeBasedOTPSharedSecret, context.get("secret"));
+		Assert.assertEquals(
+			MFATimeBasedOTPUtil.MFA_TIMEBASED_OTP_DIGITS,
+			context.get("digits"));
+		Assert.assertEquals(
+			MFATimeBasedOTPUtil.MFA_TIMEBASED_OTP_COUNTER,
+			context.get("counter"));
+		Assert.assertEquals(_mockCompany.getName(), context.get("issuer"));
+		Assert.assertEquals(
+			_mockUser.getEmailAddress(), context.get("account"));
+		Assert.assertEquals("SHA1", context.get("algorithm"));
+		Assert.assertEquals("test-namespaceqrcode", context.get("containerId"));
+	}
 
-		portalUtil.setPortal(Mockito.mock(Portal.class));
+	private static void _setupMockCompany() {
+		_mockCompany = Mockito.mock(Company.class);
 
 		Mockito.when(
-			mockCompany.getName()
+			_mockCompany.getName()
 		).thenReturn(
 			"Liferay DXP"
 		);
+	}
 
-		Mockito.when(
-			PortalUtil.getSelectedUser(Mockito.any(HttpServletRequest.class))
-		).thenReturn(
-			mockUser
-		);
+	private static void _setupMockDisplays() {
+		PortletDisplay mockPortletDisplay = Mockito.mock(PortletDisplay.class);
+		_mockThemeDisplay = Mockito.mock(ThemeDisplay.class);
 
 		Mockito.when(
 			mockPortletDisplay.getNamespace()
@@ -73,53 +93,60 @@ public class MFATimeBasedOTPCheckerDisplayContextTest {
 		);
 
 		Mockito.when(
-			mockThemeDisplay.getPortletDisplay()
+			_mockThemeDisplay.getPortletDisplay()
 		).thenReturn(
 			mockPortletDisplay
 		);
+	}
+
+	private static void _setupMockHttpServletRequest() {
+		_mockHttpServletRequest = new MockHttpServletRequest();
+
+		_mfaTimeBasedOTPSharedSecret = MFATimeBasedOTPUtil.generateSharedSecret(
+			20);
+
+		_mockHttpServletRequest.setAttribute(
+			MFATimeBasedOTPWebKeys.MFA_TIME_BASED_OTP_ALGORITHM, "SHA1");
+		_mockHttpServletRequest.setAttribute(
+			MFATimeBasedOTPWebKeys.MFA_TIME_BASED_OTP_COMPANY_NAME,
+			_mockCompany.getName());
+		_mockHttpServletRequest.setAttribute(
+			MFATimeBasedOTPWebKeys.MFA_TIME_BASED_OTP_DIGITS,
+			MFATimeBasedOTPUtil.MFA_TIMEBASED_OTP_DIGITS);
+		_mockHttpServletRequest.setAttribute(
+			MFATimeBasedOTPWebKeys.MFA_TIME_BASED_OTP_SHARED_SECRET,
+			_mfaTimeBasedOTPSharedSecret);
+		_mockHttpServletRequest.setAttribute(
+			MFATimeBasedOTPWebKeys.MFA_TIME_BASED_OTP_TIME_COUNTER,
+			MFATimeBasedOTPUtil.MFA_TIMEBASED_OTP_COUNTER);
+		_mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, _mockThemeDisplay);
+	}
+
+	private static void _setupMockUser() throws PortalException {
+		_mockUser = Mockito.mock(User.class);
+
+		PortalUtil portalUtil = new PortalUtil();
+
+		portalUtil.setPortal(Mockito.mock(Portal.class));
 
 		Mockito.when(
-			mockUser.getEmailAddress()
+			PortalUtil.getSelectedUser(Mockito.any(HttpServletRequest.class))
+		).thenReturn(
+			_mockUser
+		);
+
+		Mockito.when(
+			_mockUser.getEmailAddress()
 		).thenReturn(
 			"test@liferay.com"
 		);
-
-		String mfaTimeBasedOTPSharedSecret =
-			MFATimeBasedOTPUtil.generateSharedSecret(20);
-
-		mockHttpServletRequest.setAttribute(
-			MFATimeBasedOTPWebKeys.MFA_TIME_BASED_OTP_ALGORITHM, "SHA1");
-		mockHttpServletRequest.setAttribute(
-			MFATimeBasedOTPWebKeys.MFA_TIME_BASED_OTP_COMPANY_NAME,
-			mockCompany.getName());
-		mockHttpServletRequest.setAttribute(
-			MFATimeBasedOTPWebKeys.MFA_TIME_BASED_OTP_DIGITS,
-			MFATimeBasedOTPUtil.MFA_TIMEBASED_OTP_DIGITS);
-		mockHttpServletRequest.setAttribute(
-			MFATimeBasedOTPWebKeys.MFA_TIME_BASED_OTP_SHARED_SECRET,
-			mfaTimeBasedOTPSharedSecret);
-		mockHttpServletRequest.setAttribute(
-			MFATimeBasedOTPWebKeys.MFA_TIME_BASED_OTP_TIME_COUNTER,
-			MFATimeBasedOTPUtil.MFA_TIMEBASED_OTP_COUNTER);
-		mockHttpServletRequest.setAttribute(
-			WebKeys.THEME_DISPLAY, mockThemeDisplay);
-
-		MFATimeBasedOTPCheckerDisplayContext displayContext =
-			new MFATimeBasedOTPCheckerDisplayContext(mockHttpServletRequest);
-
-		Map<String, Object> context = displayContext.getContext();
-
-		Assert.assertEquals(mfaTimeBasedOTPSharedSecret, context.get("secret"));
-		Assert.assertEquals(
-			MFATimeBasedOTPUtil.MFA_TIMEBASED_OTP_DIGITS,
-			context.get("digits"));
-		Assert.assertEquals(
-			MFATimeBasedOTPUtil.MFA_TIMEBASED_OTP_COUNTER,
-			context.get("counter"));
-		Assert.assertEquals(mockCompany.getName(), context.get("issuer"));
-		Assert.assertEquals(mockUser.getEmailAddress(), context.get("account"));
-		Assert.assertEquals("SHA1", context.get("algorithm"));
-		Assert.assertEquals("test-namespaceqrcode", context.get("containerId"));
 	}
+
+	private static String _mfaTimeBasedOTPSharedSecret;
+	private static Company _mockCompany;
+	private static HttpServletRequest _mockHttpServletRequest;
+	private static ThemeDisplay _mockThemeDisplay;
+	private static User _mockUser;
 
 }

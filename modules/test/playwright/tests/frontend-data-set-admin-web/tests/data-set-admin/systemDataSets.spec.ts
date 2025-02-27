@@ -171,9 +171,7 @@ test(
 				})
 			).toBeVisible();
 
-			await expect(
-				systemDataSetsPage.activeToggle.first()
-			).toBeVisible();
+			await expect(systemDataSetsPage.activeToggle.first()).toBeVisible();
 		});
 
 		await test.step('Can deactivate the system data set', async () => {
@@ -191,9 +189,7 @@ test(
 
 			await waitForAlert(page);
 
-			await expect(
-				systemDataSetsPage.activeToggle.first()
-			).toBeVisible();
+			await expect(systemDataSetsPage.activeToggle.first()).toBeVisible();
 		});
 
 		await test.step('Check the creation modal labels the data set as created and is disabled', async () => {

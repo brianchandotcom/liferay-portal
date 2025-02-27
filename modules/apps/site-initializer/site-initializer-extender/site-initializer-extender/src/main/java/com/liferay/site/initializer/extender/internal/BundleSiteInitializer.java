@@ -5364,7 +5364,7 @@ public class BundleSiteInitializer implements SiteInitializer {
 			addSegmentsExperiencesR,
 			_dependsOn(addOrUpdateLayoutsContentR, addOrUpdateSegmentsEntriesR)
 		).put(
-			addSiteConfigurationR, _dependsOn()
+			addSiteConfigurationR, _dependsOn(addOrUpdateRolesR)
 		).put(
 			addSiteSettingsR, _dependsOn()
 		).put(

@@ -263,7 +263,16 @@ else {
 
 						removeButton.classList.add('d-none');
 
-						onRemoveFile();
+						const translationInput = getOrCreateTranslationInput(
+							`${input.name}-file-upload`,
+							input.name,
+							currentLanguageId,
+							inputElement.parentNode,
+							fragmentNamespace
+						);
+
+						translationInput.value = '';
+						translationInput.dataset.fileName = '';
 					});
 				}
 				else {

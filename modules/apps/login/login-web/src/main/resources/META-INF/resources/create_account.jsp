@@ -89,6 +89,15 @@ renderResponse.setTitle(LanguageUtil.get(request, "create-account"));
 		<liferay-ui:message arguments="<%= HtmlUtil.escape(upe.regex) %>" key="that-password-does-not-comply-with-the-regular-expression" translateArguments="<%= false %>" />
 	</liferay-ui:error>
 
+	<liferay-ui:error exception="<%= UserPasswordException.MustHaveMoreAlphanumeric.class %>">
+
+		<%
+			UserPasswordException.MustHaveMoreAlphanumeric upe = (UserPasswordException.MustHaveMoreAlphanumeric)errorException;
+		%>
+
+		<liferay-ui:message arguments="<%= String.valueOf(upe.minAlphanumeric) %>" key="that-password-must-contain-at-least-x-alphanumeric-characters" translateArguments="<%= false %>" />
+	</liferay-ui:error>
+
 	<liferay-ui:error exception="<%= UserPasswordException.MustHaveMoreLowercase.class %>">
 
 		<%

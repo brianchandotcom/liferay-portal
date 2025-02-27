@@ -4830,6 +4830,85 @@ public class Mutation {
 						Long.valueOf(assetLibraryId), callbackURL, object));
 	}
 
+	@GraphQLField(
+		description = "Deletes the object entry folder and returns a 204 if the operation succeeds."
+	)
+	public boolean deleteObjectEntryFolder(
+			@GraphQLName("objectEntryFolderId") Long objectEntryFolderId)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_objectEntryFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			objectEntryFolderResource ->
+				objectEntryFolderResource.deleteObjectEntryFolder(
+					objectEntryFolderId));
+
+		return true;
+	}
+
+	@GraphQLField
+	public Response deleteObjectEntryFolderBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_objectEntryFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			objectEntryFolderResource ->
+				objectEntryFolderResource.deleteObjectEntryFolderBatch(
+					callbackURL, object));
+	}
+
+	@GraphQLField(
+		description = "Updates only the fields received in the request body, leaving any other fields untouched."
+	)
+	public ObjectEntryFolder patchObjectEntryFolder(
+			@GraphQLName("objectEntryFolderId") Long objectEntryFolderId,
+			@GraphQLName("objectEntryFolder") ObjectEntryFolder
+				objectEntryFolder)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_objectEntryFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			objectEntryFolderResource ->
+				objectEntryFolderResource.patchObjectEntryFolder(
+					objectEntryFolderId, objectEntryFolder));
+	}
+
+	@GraphQLField(
+		description = "Replaces the object entry folder with the information sent in the request body. Any missing fields are deleted, unless they are required."
+	)
+	public ObjectEntryFolder updateObjectEntryFolder(
+			@GraphQLName("objectEntryFolderId") Long objectEntryFolderId,
+			@GraphQLName("objectEntryFolder") ObjectEntryFolder
+				objectEntryFolder)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_objectEntryFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			objectEntryFolderResource ->
+				objectEntryFolderResource.putObjectEntryFolder(
+					objectEntryFolderId, objectEntryFolder));
+	}
+
+	@GraphQLField
+	public Response updateObjectEntryFolderBatch(
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("object") Object object)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_objectEntryFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			objectEntryFolderResource ->
+				objectEntryFolderResource.putObjectEntryFolderBatch(
+					callbackURL, object));
+	}
+
 	@GraphQLField
 	public Response createSiteSitePagesPageExportBatch(
 			@GraphQLName("siteKey") @NotEmpty String siteKey,

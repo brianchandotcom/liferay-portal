@@ -49,6 +49,27 @@ public class ObjectEntryFolder implements Cloneable, Serializable {
 
 	protected Map<String, Map<String, String>> actions;
 
+	public Long getAssetLibraryId() {
+		return assetLibraryId;
+	}
+
+	public void setAssetLibraryId(Long assetLibraryId) {
+		this.assetLibraryId = assetLibraryId;
+	}
+
+	public void setAssetLibraryId(
+		UnsafeSupplier<Long, Exception> assetLibraryIdUnsafeSupplier) {
+
+		try {
+			assetLibraryId = assetLibraryIdUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Long assetLibraryId;
+
 	public String getAssetLibraryKey() {
 		return assetLibraryKey;
 	}

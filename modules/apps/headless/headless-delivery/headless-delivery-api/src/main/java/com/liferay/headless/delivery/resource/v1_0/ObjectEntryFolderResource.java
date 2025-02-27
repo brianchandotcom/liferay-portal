@@ -69,6 +69,27 @@ public interface ObjectEntryFolderResource {
 			Long assetLibraryId, String callbackURL, Object object)
 		throws Exception;
 
+	public void deleteObjectEntryFolder(Long objectEntryFolderId)
+		throws Exception;
+
+	public Response deleteObjectEntryFolderBatch(
+			String callbackURL, Object object)
+		throws Exception;
+
+	public ObjectEntryFolder getObjectEntryFolder(Long objectEntryFolderId)
+		throws Exception;
+
+	public ObjectEntryFolder patchObjectEntryFolder(
+			Long objectEntryFolderId, ObjectEntryFolder objectEntryFolder)
+		throws Exception;
+
+	public ObjectEntryFolder putObjectEntryFolder(
+			Long objectEntryFolderId, ObjectEntryFolder objectEntryFolder)
+		throws Exception;
+
+	public Response putObjectEntryFolderBatch(String callbackURL, Object object)
+		throws Exception;
+
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {
 	}

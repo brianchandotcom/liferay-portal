@@ -35,6 +35,7 @@ import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineExportTaskResource;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
+import com.liferay.portal.vulcan.crud.VulcanCRUDItemDelegate;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -69,7 +70,8 @@ import javax.ws.rs.core.UriInfo;
 @javax.ws.rs.Path("/v1.0")
 public abstract class BaseObjectEntryFolderResourceImpl
 	implements EntityModelResource, ObjectEntryFolderResource,
-			   VulcanBatchEngineTaskItemDelegate<ObjectEntryFolder> {
+			   VulcanBatchEngineTaskItemDelegate<ObjectEntryFolder>,
+			   VulcanCRUDItemDelegate<ObjectEntryFolder> {
 
 	/**
 	 * Invoke this method with the command line:
@@ -247,7 +249,7 @@ public abstract class BaseObjectEntryFolderResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/asset-libraries/{assetLibraryId}/object-entry-folders' -d $'{"externalReferenceCode": ___, "label": ___, "label_i18n": ___, "name": ___, "parentObjectEntryFolderId": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-delivery/v1.0/asset-libraries/{assetLibraryId}/object-entry-folders' -d $'{"assetLibraryId": ___, "externalReferenceCode": ___, "label": ___, "label_i18n": ___, "name": ___, "parentObjectEntryFolderId": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Parameters(
 		value = {
@@ -334,6 +336,291 @@ public abstract class BaseObjectEntryFolderResourceImpl
 		).build();
 	}
 
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-delivery/v1.0/object-entry-folders/{objectEntryFolderId}'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Deletes the object entry folder and returns a 204 if the operation succeeds."
+	)
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "objectEntryFolderId"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectEntryFolder")
+		}
+	)
+	@javax.ws.rs.DELETE
+	@javax.ws.rs.Path("/object-entry-folders/{objectEntryFolderId}")
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public void deleteObjectEntryFolder(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("objectEntryFolderId")
+			Long objectEntryFolderId)
+		throws Exception {
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'DELETE' 'http://localhost:8080/o/headless-delivery/v1.0/object-entry-folders/batch'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "callbackURL"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectEntryFolder")
+		}
+	)
+	@javax.ws.rs.Consumes("application/json")
+	@javax.ws.rs.DELETE
+	@javax.ws.rs.Path("/object-entry-folders/batch")
+	@javax.ws.rs.Produces("application/json")
+	@Override
+	public Response deleteObjectEntryFolderBatch(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("callbackURL")
+			String callbackURL,
+			Object object)
+		throws Exception {
+
+		vulcanBatchEngineImportTaskResource.setContextAcceptLanguage(
+			contextAcceptLanguage);
+		vulcanBatchEngineImportTaskResource.setContextCompany(contextCompany);
+		vulcanBatchEngineImportTaskResource.setContextHttpServletRequest(
+			contextHttpServletRequest);
+		vulcanBatchEngineImportTaskResource.setContextUriInfo(contextUriInfo);
+		vulcanBatchEngineImportTaskResource.setContextUser(contextUser);
+
+		Response.ResponseBuilder responseBuilder = Response.accepted();
+
+		return responseBuilder.entity(
+			vulcanBatchEngineImportTaskResource.deleteImportTask(
+				ObjectEntryFolder.class.getName(), callbackURL, object)
+		).build();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'GET' 'http://localhost:8080/o/headless-delivery/v1.0/object-entry-folders/{objectEntryFolderId}'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Retrieves the object entry folder."
+	)
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "objectEntryFolderId"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "fields"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "nestedFields"
+			),
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "restrictFields"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectEntryFolder")
+		}
+	)
+	@javax.ws.rs.GET
+	@javax.ws.rs.Path("/object-entry-folders/{objectEntryFolderId}")
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public ObjectEntryFolder getObjectEntryFolder(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("objectEntryFolderId")
+			Long objectEntryFolderId)
+		throws Exception {
+
+		return new ObjectEntryFolder();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-delivery/v1.0/object-entry-folders/{objectEntryFolderId}' -d $'{"assetLibraryId": ___, "externalReferenceCode": ___, "label": ___, "label_i18n": ___, "name": ___, "parentObjectEntryFolderId": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Updates only the fields received in the request body, leaving any other fields untouched."
+	)
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "objectEntryFolderId"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectEntryFolder")
+		}
+	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
+	@javax.ws.rs.PATCH
+	@javax.ws.rs.Path("/object-entry-folders/{objectEntryFolderId}")
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@Override
+	public ObjectEntryFolder patchObjectEntryFolder(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("objectEntryFolderId")
+			Long objectEntryFolderId,
+			ObjectEntryFolder objectEntryFolder)
+		throws Exception {
+
+		ObjectEntryFolder existingObjectEntryFolder = getObjectEntryFolder(
+			objectEntryFolderId);
+
+		if (objectEntryFolder.getAssetLibraryId() != null) {
+			existingObjectEntryFolder.setAssetLibraryId(
+				objectEntryFolder.getAssetLibraryId());
+		}
+
+		if (objectEntryFolder.getExternalReferenceCode() != null) {
+			existingObjectEntryFolder.setExternalReferenceCode(
+				objectEntryFolder.getExternalReferenceCode());
+		}
+
+		if (objectEntryFolder.getLabel() != null) {
+			existingObjectEntryFolder.setLabel(objectEntryFolder.getLabel());
+		}
+
+		if (objectEntryFolder.getLabel_i18n() != null) {
+			existingObjectEntryFolder.setLabel_i18n(
+				objectEntryFolder.getLabel_i18n());
+		}
+
+		if (objectEntryFolder.getName() != null) {
+			existingObjectEntryFolder.setName(objectEntryFolder.getName());
+		}
+
+		if (objectEntryFolder.getParentObjectEntryFolderId() != null) {
+			existingObjectEntryFolder.setParentObjectEntryFolderId(
+				objectEntryFolder.getParentObjectEntryFolderId());
+		}
+
+		if (objectEntryFolder.getViewableBy() != null) {
+			existingObjectEntryFolder.setViewableBy(
+				objectEntryFolder.getViewableBy());
+		}
+
+		preparePatch(objectEntryFolder, existingObjectEntryFolder);
+
+		return putObjectEntryFolder(
+			objectEntryFolderId, existingObjectEntryFolder);
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-delivery/v1.0/object-entry-folders/{objectEntryFolderId}' -d $'{"assetLibraryId": ___, "externalReferenceCode": ___, "label": ___, "label_i18n": ___, "name": ___, "parentObjectEntryFolderId": ___, "viewableBy": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Operation(
+		description = "Replaces the object entry folder with the information sent in the request body. Any missing fields are deleted, unless they are required."
+	)
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.PATH,
+				name = "objectEntryFolderId"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectEntryFolder")
+		}
+	)
+	@javax.ws.rs.Consumes({"application/json", "application/xml"})
+	@javax.ws.rs.Path("/object-entry-folders/{objectEntryFolderId}")
+	@javax.ws.rs.Produces({"application/json", "application/xml"})
+	@javax.ws.rs.PUT
+	@Override
+	public ObjectEntryFolder putObjectEntryFolder(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.validation.constraints.NotNull
+			@javax.ws.rs.PathParam("objectEntryFolderId")
+			Long objectEntryFolderId,
+			ObjectEntryFolder objectEntryFolder)
+		throws Exception {
+
+		return new ObjectEntryFolder();
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-delivery/v1.0/object-entry-folders/batch'  -u 'test@liferay.com:test'
+	 */
+	@io.swagger.v3.oas.annotations.Parameters(
+		value = {
+			@io.swagger.v3.oas.annotations.Parameter(
+				in = io.swagger.v3.oas.annotations.enums.ParameterIn.QUERY,
+				name = "callbackURL"
+			)
+		}
+	)
+	@io.swagger.v3.oas.annotations.tags.Tags(
+		value = {
+			@io.swagger.v3.oas.annotations.tags.Tag(name = "ObjectEntryFolder")
+		}
+	)
+	@javax.ws.rs.Consumes("application/json")
+	@javax.ws.rs.Path("/object-entry-folders/batch")
+	@javax.ws.rs.Produces("application/json")
+	@javax.ws.rs.PUT
+	@Override
+	public Response putObjectEntryFolderBatch(
+			@io.swagger.v3.oas.annotations.Parameter(hidden = true)
+			@javax.ws.rs.QueryParam("callbackURL")
+			String callbackURL,
+			Object object)
+		throws Exception {
+
+		vulcanBatchEngineImportTaskResource.setContextAcceptLanguage(
+			contextAcceptLanguage);
+		vulcanBatchEngineImportTaskResource.setContextCompany(contextCompany);
+		vulcanBatchEngineImportTaskResource.setContextHttpServletRequest(
+			contextHttpServletRequest);
+		vulcanBatchEngineImportTaskResource.setContextUriInfo(contextUriInfo);
+		vulcanBatchEngineImportTaskResource.setContextUser(contextUser);
+
+		Response.ResponseBuilder responseBuilder = Response.accepted();
+
+		return responseBuilder.entity(
+			vulcanBatchEngineImportTaskResource.putImportTask(
+				ObjectEntryFolder.class.getName(), callbackURL, object)
+		).build();
+	}
+
 	@Override
 	@SuppressWarnings("PMD.UnusedLocalVariable")
 	public void create(
@@ -387,8 +674,26 @@ public abstract class BaseObjectEntryFolderResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		UnsafeFunction<ObjectEntryFolder, ObjectEntryFolder, Exception>
+			objectEntryFolderUnsafeFunction = objectEntryFolder -> {
+				deleteObjectEntryFolder(objectEntryFolder.getId());
+
+				return objectEntryFolder;
+			};
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				objectEntryFolders, objectEntryFolderUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				objectEntryFolders, objectEntryFolderUnsafeFunction::apply);
+		}
+		else {
+			for (ObjectEntryFolder objectEntryFolder : objectEntryFolders) {
+				objectEntryFolderUnsafeFunction.apply(objectEntryFolder);
+			}
+		}
 	}
 
 	public Set<String> getAvailableCreateStrategies() {
@@ -396,7 +701,7 @@ public abstract class BaseObjectEntryFolderResourceImpl
 	}
 
 	public Set<String> getAvailableUpdateStrategies() {
-		return SetUtil.fromArray();
+		return SetUtil.fromArray("PARTIAL_UPDATE", "UPDATE");
 	}
 
 	@Override
@@ -468,8 +773,51 @@ public abstract class BaseObjectEntryFolderResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		throw new UnsupportedOperationException(
-			"This method needs to be implemented");
+		UnsafeFunction<ObjectEntryFolder, ObjectEntryFolder, Exception>
+			objectEntryFolderUnsafeFunction = null;
+
+		String updateStrategy = (String)parameters.getOrDefault(
+			"updateStrategy", "UPDATE");
+
+		if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
+			objectEntryFolderUnsafeFunction =
+				objectEntryFolder -> patchObjectEntryFolder(
+					objectEntryFolder.getId() != null ?
+						objectEntryFolder.getId() :
+							_parseLong(
+								(String)parameters.get("objectEntryFolderId")),
+					objectEntryFolder);
+		}
+
+		if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
+			objectEntryFolderUnsafeFunction =
+				objectEntryFolder -> putObjectEntryFolder(
+					objectEntryFolder.getId() != null ?
+						objectEntryFolder.getId() :
+							_parseLong(
+								(String)parameters.get("objectEntryFolderId")),
+					objectEntryFolder);
+		}
+
+		if (objectEntryFolderUnsafeFunction == null) {
+			throw new NotSupportedException(
+				"Update strategy \"" + updateStrategy +
+					"\" is not supported for ObjectEntryFolder");
+		}
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				objectEntryFolders, objectEntryFolderUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				objectEntryFolders, objectEntryFolderUnsafeFunction::apply);
+		}
+		else {
+			for (ObjectEntryFolder objectEntryFolder : objectEntryFolders) {
+				objectEntryFolderUnsafeFunction.apply(objectEntryFolder);
+			}
+		}
 	}
 
 	private Boolean _parseBoolean(String value) {
@@ -478,6 +826,19 @@ public abstract class BaseObjectEntryFolderResourceImpl
 		}
 
 		return null;
+	}
+
+	private Long _parseLong(String value) {
+		if (value != null) {
+			return Long.parseLong(value);
+		}
+
+		return null;
+	}
+
+	@Override
+	public ObjectEntryFolder getItem(Long id) throws Exception {
+		return getObjectEntryFolder(id);
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {
@@ -686,6 +1047,11 @@ public abstract class BaseObjectEntryFolderResourceImpl
 
 		return addAction(
 			actionName, siteId, methodName, null, permissionName, siteId);
+	}
+
+	protected void preparePatch(
+		ObjectEntryFolder objectEntryFolder,
+		ObjectEntryFolder existingObjectEntryFolder) {
 	}
 
 	protected <T, R, E extends Throwable> List<R> transform(

@@ -1481,6 +1481,31 @@ public class ServletDataImpl implements ServletData {
 							ObjectEntryFolderResourceImpl.class,
 							"postAssetLibraryObjectEntryFolderBatch"));
 					put(
+						"mutation#deleteObjectEntryFolder",
+						new ObjectValuePair<>(
+							ObjectEntryFolderResourceImpl.class,
+							"deleteObjectEntryFolder"));
+					put(
+						"mutation#deleteObjectEntryFolderBatch",
+						new ObjectValuePair<>(
+							ObjectEntryFolderResourceImpl.class,
+							"deleteObjectEntryFolderBatch"));
+					put(
+						"mutation#patchObjectEntryFolder",
+						new ObjectValuePair<>(
+							ObjectEntryFolderResourceImpl.class,
+							"patchObjectEntryFolder"));
+					put(
+						"mutation#updateObjectEntryFolder",
+						new ObjectValuePair<>(
+							ObjectEntryFolderResourceImpl.class,
+							"putObjectEntryFolder"));
+					put(
+						"mutation#updateObjectEntryFolderBatch",
+						new ObjectValuePair<>(
+							ObjectEntryFolderResourceImpl.class,
+							"putObjectEntryFolderBatch"));
+					put(
 						"mutation#createSiteSitePagesPageExportBatch",
 						new ObjectValuePair<>(
 							SitePageResourceImpl.class,
@@ -2508,6 +2533,11 @@ public class ServletDataImpl implements ServletData {
 							ObjectEntryFolderResourceImpl.class,
 							"getAssetLibraryObjectEntryFoldersPage"));
 					put(
+						"query#objectEntryFolder",
+						new ObjectValuePair<>(
+							ObjectEntryFolderResourceImpl.class,
+							"getObjectEntryFolder"));
+					put(
 						"query#sitePages",
 						new ObjectValuePair<>(
 							SitePageResourceImpl.class,
@@ -3008,6 +3038,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							NavigationMenuResourceImpl.class,
 							"getNavigationMenu"));
+					put(
+						"query#ObjectEntryFolder.parentObjectEntryFolder",
+						new ObjectValuePair<>(
+							ObjectEntryFolderResourceImpl.class,
+							"getObjectEntryFolder"));
 					put(
 						"query#StructuredContentFolder.parentStructuredContentFolder",
 						new ObjectValuePair<>(

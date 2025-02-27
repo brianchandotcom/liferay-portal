@@ -113,6 +113,51 @@ public class ObjectEntryFolder implements Serializable {
 	private Supplier<Map<String, Map<String, String>>> _actionsSupplier;
 
 	@Schema(
+		description = "The ID of the asset library to which this object entry folder is scoped."
+	)
+	public Long getAssetLibraryId() {
+		if (_assetLibraryIdSupplier != null) {
+			assetLibraryId = _assetLibraryIdSupplier.get();
+
+			_assetLibraryIdSupplier = null;
+		}
+
+		return assetLibraryId;
+	}
+
+	public void setAssetLibraryId(Long assetLibraryId) {
+		this.assetLibraryId = assetLibraryId;
+
+		_assetLibraryIdSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setAssetLibraryId(
+		UnsafeSupplier<Long, Exception> assetLibraryIdUnsafeSupplier) {
+
+		_assetLibraryIdSupplier = () -> {
+			try {
+				return assetLibraryIdUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(
+		description = "The ID of the asset library to which this object entry folder is scoped."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Long assetLibraryId;
+
+	@JsonIgnore
+	private Supplier<Long> _assetLibraryIdSupplier;
+
+	@Schema(
 		description = "The key of the asset library to which the object entry folder is scoped."
 	)
 	public String getAssetLibraryKey() {
@@ -727,6 +772,18 @@ public class ObjectEntryFolder implements Serializable {
 			sb.append("\"actions\": ");
 
 			sb.append(_toJSON(actions));
+		}
+
+		Long assetLibraryId = getAssetLibraryId();
+
+		if (assetLibraryId != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"assetLibraryId\": ");
+
+			sb.append(assetLibraryId);
 		}
 
 		String assetLibraryKey = getAssetLibraryKey();

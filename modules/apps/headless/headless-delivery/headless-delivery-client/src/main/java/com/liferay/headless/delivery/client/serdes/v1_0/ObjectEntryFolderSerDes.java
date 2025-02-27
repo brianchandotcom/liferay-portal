@@ -62,6 +62,16 @@ public class ObjectEntryFolderSerDes {
 			sb.append(_toJSON(objectEntryFolder.getActions()));
 		}
 
+		if (objectEntryFolder.getAssetLibraryId() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"assetLibraryId\": ");
+
+			sb.append(objectEntryFolder.getAssetLibraryId());
+		}
+
 		if (objectEntryFolder.getAssetLibraryKey() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -255,6 +265,15 @@ public class ObjectEntryFolderSerDes {
 			map.put("actions", String.valueOf(objectEntryFolder.getActions()));
 		}
 
+		if (objectEntryFolder.getAssetLibraryId() == null) {
+			map.put("assetLibraryId", null);
+		}
+		else {
+			map.put(
+				"assetLibraryId",
+				String.valueOf(objectEntryFolder.getAssetLibraryId()));
+		}
+
 		if (objectEntryFolder.getAssetLibraryKey() == null) {
 			map.put("assetLibraryKey", null);
 		}
@@ -389,6 +408,9 @@ public class ObjectEntryFolderSerDes {
 			if (Objects.equals(jsonParserFieldName, "actions")) {
 				return true;
 			}
+			else if (Objects.equals(jsonParserFieldName, "assetLibraryId")) {
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "assetLibraryKey")) {
 				return false;
 			}
@@ -449,6 +471,12 @@ public class ObjectEntryFolderSerDes {
 				if (jsonParserFieldValue != null) {
 					objectEntryFolder.setActions(
 						(Map<String, Map<String, String>>)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "assetLibraryId")) {
+				if (jsonParserFieldValue != null) {
+					objectEntryFolder.setAssetLibraryId(
+						Long.valueOf((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "assetLibraryKey")) {

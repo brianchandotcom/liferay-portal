@@ -3289,6 +3289,24 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {objectEntryFolder(objectEntryFolderId: ___){actions, assetLibraryId, assetLibraryKey, creator, dateCreated, dateModified, externalReferenceCode, id, label, label_i18n, name, numberOfObjectEntries, numberOfObjectEntryFolders, parentObjectEntryFolderId, viewableBy}}"}' -u 'test@liferay.com:test'
+	 */
+	@GraphQLField(description = "Retrieves the object entry folder.")
+	public ObjectEntryFolder objectEntryFolder(
+			@GraphQLName("objectEntryFolderId") Long objectEntryFolderId)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_objectEntryFolderResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			objectEntryFolderResource ->
+				objectEntryFolderResource.getObjectEntryFolder(
+					objectEntryFolderId));
+	}
+
+	/**
+	 * Invoke this method with the command line:
+	 *
 	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {sitePages(aggregation: ___, filter: ___, page: ___, pageSize: ___, search: ___, siteKey: ___, sorts: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(description = "Retrieves the public pages of the site")
@@ -7080,6 +7098,33 @@ public class Query {
 		}
 
 		private NavigationMenuItem _navigationMenuItem;
+
+	}
+
+	@GraphQLTypeExtension(ObjectEntryFolder.class)
+	public class ParentObjectEntryFolderObjectEntryFolderIdTypeExtension {
+
+		public ParentObjectEntryFolderObjectEntryFolderIdTypeExtension(
+			ObjectEntryFolder objectEntryFolder) {
+
+			_objectEntryFolder = objectEntryFolder;
+		}
+
+		@GraphQLField(description = "Retrieves the object entry folder.")
+		public ObjectEntryFolder parentObjectEntryFolder() throws Exception {
+			if (_objectEntryFolder.getParentObjectEntryFolderId() == null) {
+				return null;
+			}
+
+			return _applyComponentServiceObjects(
+				_objectEntryFolderResourceComponentServiceObjects,
+				Query.this::_populateResourceContext,
+				objectEntryFolderResource ->
+					objectEntryFolderResource.getObjectEntryFolder(
+						_objectEntryFolder.getParentObjectEntryFolderId()));
+		}
+
+		private ObjectEntryFolder _objectEntryFolder;
 
 	}
 

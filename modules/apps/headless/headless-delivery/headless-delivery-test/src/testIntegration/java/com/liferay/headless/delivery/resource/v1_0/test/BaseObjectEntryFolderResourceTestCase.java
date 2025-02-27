@@ -26,6 +26,7 @@ import com.liferay.petra.function.UnsafeTriConsumer;
 import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -262,6 +263,12 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 			page,
 			testGetAssetLibraryObjectEntryFoldersPage_getExpectedActions(
 				assetLibraryId));
+
+		objectEntryFolderResource.deleteObjectEntryFolder(
+			objectEntryFolder1.getId());
+
+		objectEntryFolderResource.deleteObjectEntryFolder(
+			objectEntryFolder2.getId());
 	}
 
 	protected Map<String, Map<String, String>>
@@ -692,6 +699,306 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 			objectEntryFolder);
 	}
 
+	@Test
+	public void testDeleteObjectEntryFolder() throws Exception {
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		ObjectEntryFolder objectEntryFolder =
+			testDeleteObjectEntryFolder_addObjectEntryFolder();
+
+		assertHttpResponseStatusCode(
+			204,
+			objectEntryFolderResource.deleteObjectEntryFolderHttpResponse(
+				objectEntryFolder.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			objectEntryFolderResource.getObjectEntryFolderHttpResponse(
+				objectEntryFolder.getId()));
+
+		assertHttpResponseStatusCode(
+			404,
+			objectEntryFolderResource.getObjectEntryFolderHttpResponse(0L));
+	}
+
+	protected ObjectEntryFolder
+			testDeleteObjectEntryFolder_addObjectEntryFolder()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLDeleteObjectEntryFolder() throws Exception {
+
+		// No namespace
+
+		ObjectEntryFolder objectEntryFolder1 =
+			testGraphQLDeleteObjectEntryFolder_addObjectEntryFolder();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteObjectEntryFolder",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"objectEntryFolderId",
+									objectEntryFolder1.getId());
+							}
+						})),
+				"JSONObject/data", "Object/deleteObjectEntryFolder"));
+
+		JSONArray errorsJSONArray1 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"objectEntryFolder",
+					new HashMap<String, Object>() {
+						{
+							put(
+								"objectEntryFolderId",
+								objectEntryFolder1.getId());
+						}
+					},
+					new GraphQLField("id"))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray1.length() > 0);
+
+		// Using the namespace headlessDelivery_v1_0
+
+		ObjectEntryFolder objectEntryFolder2 =
+			testGraphQLDeleteObjectEntryFolder_addObjectEntryFolder();
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessDelivery_v1_0",
+						new GraphQLField(
+							"deleteObjectEntryFolder",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"objectEntryFolderId",
+										objectEntryFolder2.getId());
+								}
+							}))),
+				"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+				"Object/deleteObjectEntryFolder"));
+
+		JSONArray errorsJSONArray2 = JSONUtil.getValueAsJSONArray(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessDelivery_v1_0",
+					new GraphQLField(
+						"objectEntryFolder",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"objectEntryFolderId",
+									objectEntryFolder2.getId());
+							}
+						},
+						new GraphQLField("id")))),
+			"JSONArray/errors");
+
+		Assert.assertTrue(errorsJSONArray2.length() > 0);
+	}
+
+	protected ObjectEntryFolder
+			testGraphQLDeleteObjectEntryFolder_addObjectEntryFolder()
+		throws Exception {
+
+		return testGraphQLObjectEntryFolder_addObjectEntryFolder();
+	}
+
+	@Test
+	public void testGetObjectEntryFolder() throws Exception {
+		ObjectEntryFolder postObjectEntryFolder =
+			testGetObjectEntryFolder_addObjectEntryFolder();
+
+		ObjectEntryFolder getObjectEntryFolder =
+			objectEntryFolderResource.getObjectEntryFolder(
+				postObjectEntryFolder.getId());
+
+		assertEquals(postObjectEntryFolder, getObjectEntryFolder);
+		assertValid(getObjectEntryFolder);
+	}
+
+	protected ObjectEntryFolder testGetObjectEntryFolder_addObjectEntryFolder()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testGraphQLGetObjectEntryFolder() throws Exception {
+		ObjectEntryFolder objectEntryFolder =
+			testGraphQLGetObjectEntryFolder_addObjectEntryFolder();
+
+		// No namespace
+
+		Assert.assertTrue(
+			equals(
+				objectEntryFolder,
+				ObjectEntryFolderSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"objectEntryFolder",
+								new HashMap<String, Object>() {
+									{
+										put(
+											"objectEntryFolderId",
+											objectEntryFolder.getId());
+									}
+								},
+								getGraphQLFields())),
+						"JSONObject/data", "Object/objectEntryFolder"))));
+
+		// Using the namespace headlessDelivery_v1_0
+
+		Assert.assertTrue(
+			equals(
+				objectEntryFolder,
+				ObjectEntryFolderSerDes.toDTO(
+					JSONUtil.getValueAsString(
+						invokeGraphQLQuery(
+							new GraphQLField(
+								"headlessDelivery_v1_0",
+								new GraphQLField(
+									"objectEntryFolder",
+									new HashMap<String, Object>() {
+										{
+											put(
+												"objectEntryFolderId",
+												objectEntryFolder.getId());
+										}
+									},
+									getGraphQLFields()))),
+						"JSONObject/data", "JSONObject/headlessDelivery_v1_0",
+						"Object/objectEntryFolder"))));
+	}
+
+	@Test
+	public void testGraphQLGetObjectEntryFolderNotFound() throws Exception {
+		Long irrelevantObjectEntryFolderId = RandomTestUtil.randomLong();
+
+		// No namespace
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"objectEntryFolder",
+						new HashMap<String, Object>() {
+							{
+								put(
+									"objectEntryFolderId",
+									irrelevantObjectEntryFolderId);
+							}
+						},
+						getGraphQLFields())),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+
+		// Using the namespace headlessDelivery_v1_0
+
+		Assert.assertEquals(
+			"Not Found",
+			JSONUtil.getValueAsString(
+				invokeGraphQLQuery(
+					new GraphQLField(
+						"headlessDelivery_v1_0",
+						new GraphQLField(
+							"objectEntryFolder",
+							new HashMap<String, Object>() {
+								{
+									put(
+										"objectEntryFolderId",
+										irrelevantObjectEntryFolderId);
+								}
+							},
+							getGraphQLFields()))),
+				"JSONArray/errors", "Object/0", "JSONObject/extensions",
+				"Object/code"));
+	}
+
+	protected ObjectEntryFolder
+			testGraphQLGetObjectEntryFolder_addObjectEntryFolder()
+		throws Exception {
+
+		return testGraphQLObjectEntryFolder_addObjectEntryFolder();
+	}
+
+	@Test
+	public void testPatchObjectEntryFolder() throws Exception {
+		ObjectEntryFolder postObjectEntryFolder =
+			testPatchObjectEntryFolder_addObjectEntryFolder();
+
+		ObjectEntryFolder randomPatchObjectEntryFolder =
+			randomPatchObjectEntryFolder();
+
+		@SuppressWarnings("PMD.UnusedLocalVariable")
+		ObjectEntryFolder patchObjectEntryFolder =
+			objectEntryFolderResource.patchObjectEntryFolder(
+				postObjectEntryFolder.getId(), randomPatchObjectEntryFolder);
+
+		ObjectEntryFolder expectedPatchObjectEntryFolder =
+			postObjectEntryFolder.clone();
+
+		BeanTestUtil.copyProperties(
+			randomPatchObjectEntryFolder, expectedPatchObjectEntryFolder);
+
+		ObjectEntryFolder getObjectEntryFolder =
+			objectEntryFolderResource.getObjectEntryFolder(
+				patchObjectEntryFolder.getId());
+
+		assertEquals(expectedPatchObjectEntryFolder, getObjectEntryFolder);
+		assertValid(getObjectEntryFolder);
+	}
+
+	protected ObjectEntryFolder
+			testPatchObjectEntryFolder_addObjectEntryFolder()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPutObjectEntryFolder() throws Exception {
+		ObjectEntryFolder postObjectEntryFolder =
+			testPutObjectEntryFolder_addObjectEntryFolder();
+
+		ObjectEntryFolder randomObjectEntryFolder = randomObjectEntryFolder();
+
+		ObjectEntryFolder putObjectEntryFolder =
+			objectEntryFolderResource.putObjectEntryFolder(
+				postObjectEntryFolder.getId(), randomObjectEntryFolder);
+
+		assertEquals(randomObjectEntryFolder, putObjectEntryFolder);
+		assertValid(putObjectEntryFolder);
+
+		ObjectEntryFolder getObjectEntryFolder =
+			objectEntryFolderResource.getObjectEntryFolder(
+				putObjectEntryFolder.getId());
+
+		assertEquals(randomObjectEntryFolder, getObjectEntryFolder);
+		assertValid(getObjectEntryFolder);
+	}
+
+	protected ObjectEntryFolder testPutObjectEntryFolder_addObjectEntryFolder()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
 
@@ -800,6 +1107,14 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 
 			if (Objects.equals("actions", additionalAssertFieldName)) {
 				if (objectEntryFolder.getActions() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("assetLibraryId", additionalAssertFieldName)) {
+				if (objectEntryFolder.getAssetLibraryId() == null) {
 					valid = false;
 				}
 
@@ -1019,6 +1334,17 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 				if (!equals(
 						(Map)objectEntryFolder1.getActions(),
 						(Map)objectEntryFolder2.getActions())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("assetLibraryId", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						objectEntryFolder1.getAssetLibraryId(),
+						objectEntryFolder2.getAssetLibraryId())) {
 
 					return false;
 				}
@@ -1275,6 +1601,11 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 		sb.append(" ");
 
 		if (entityFieldName.equals("actions")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
+		if (entityFieldName.equals("assetLibraryId")) {
 			throw new IllegalArgumentException(
 				"Invalid entity field " + entityFieldName);
 		}
@@ -1612,6 +1943,7 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 	protected ObjectEntryFolder randomObjectEntryFolder() throws Exception {
 		return new ObjectEntryFolder() {
 			{
+				assetLibraryId = RandomTestUtil.randomLong();
 				assetLibraryKey = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				dateCreated = RandomTestUtil.nextDate();

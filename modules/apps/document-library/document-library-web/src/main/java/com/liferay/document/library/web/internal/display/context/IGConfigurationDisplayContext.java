@@ -8,10 +8,8 @@ package com.liferay.document.library.web.internal.display.context;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
-import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.web.internal.display.context.helper.DLPortletInstanceSettingsHelper;
 import com.liferay.document.library.web.internal.display.context.helper.IGRequestHelper;
-import com.liferay.document.library.web.internal.settings.DLPortletInstanceSettings;
 import com.liferay.document.library.web.internal.util.DLFolderUtil;
 import com.liferay.document.library.web.internal.util.FolderItemSelectorURLProvider;
 import com.liferay.item.selector.ItemSelector;
@@ -35,7 +33,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.trash.TrashHelper;
 
 import java.util.List;
-import java.util.Objects;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
@@ -48,12 +45,10 @@ import javax.servlet.http.HttpServletRequest;
 public class IGConfigurationDisplayContext {
 
 	public IGConfigurationDisplayContext(
-		DLAppLocalService dlAppLocalService, ItemSelector itemSelector,
-		HttpServletRequest httpServletRequest,
+		ItemSelector itemSelector, HttpServletRequest httpServletRequest,
 		PortletPreferencesLocalService portletPreferencesLocalService,
 		TrashHelper trashHelper) {
 
-		_dlAppLocalService = dlAppLocalService;
 		_itemSelector = itemSelector;
 		_httpServletRequest = httpServletRequest;
 		_portletPreferencesLocalService = portletPreferencesLocalService;
@@ -109,10 +104,6 @@ public class IGConfigurationDisplayContext {
 	public String getRootFolderName() throws PortalException {
 		_initFolder();
 
-		if (Objects.equals(_folderName, StringPool.BLANK)) {
-			_folderName = _getFolderName();
-		}
-
 		return _folderName;
 	}
 
@@ -147,41 +138,6 @@ public class IGConfigurationDisplayContext {
 		return _dlPortletInstanceSettingsHelper.isShowActions();
 	}
 
-	private Folder _getFolder() {
-		try {
-			return _dlAppLocalService.getFolder(_folderId);
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-
-			_folderNotFound = true;
-
-			return null;
-		}
-	}
-
-	private String _getFolderName() {
-		if ((_folderId == null) ||
-			(_folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
-
-			return LanguageUtil.get(_httpServletRequest, "home");
-		}
-
-		Folder folder = _getFolder();
-
-		if (folder == null) {
-			return StringPool.BLANK;
-		}
-
-		if (_folderInTrash) {
-			return _trashHelper.getOriginalTitle(_folder.getName());
-		}
-
-		return folder.getName();
-	}
-
 	private PortletPreferences _getPortletPreferences() {
 		if (_portletPreferences != null) {
 			return _portletPreferences;
@@ -212,25 +168,31 @@ public class IGConfigurationDisplayContext {
 		_folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 		_folderInTrash = false;
 		_folderName = StringPool.BLANK;
+
 		_folderNotFound = false;
 
-		DLPortletInstanceSettings dlPortletInstanceSettings =
-			_igRequestHelper.getDLPortletInstanceSettings();
+		try {
+			_folder = _dlPortletInstanceSettingsHelper.getRootFolder();
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
 
-		_folderId = dlPortletInstanceSettings.getRootFolderId();
+			_folderNotFound = true;
 
-		if (_folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			return;
 		}
 
-		Folder folder = _getFolder();
+		if (_folder == null) {
+			_folderName = LanguageUtil.get(_httpServletRequest, "home");
 
-		if (folder == null) {
 			return;
 		}
 
-		_folder = folder;
-		_folderName = folder.getName();
+		_folderId = _folder.getFolderId();
+
+		_folderName = _folder.getName();
 
 		if (_folder.isRepositoryCapabilityProvided(TrashCapability.class)) {
 			TrashCapability trashCapability = _folder.getRepositoryCapability(
@@ -262,23 +224,14 @@ public class IGConfigurationDisplayContext {
 			return;
 		}
 
-		DLPortletInstanceSettings dlPortletInstanceSettings =
-			_igRequestHelper.getDLPortletInstanceSettings();
-
 		_selectedRepositoryId =
-			dlPortletInstanceSettings.getSelectedRepositoryId();
+			_dlPortletInstanceSettingsHelper.getSelectedRepositoryId();
 
 		if (_selectedRepositoryId != 0) {
 			return;
 		}
 
 		_initFolder();
-
-		if ((_folder == null) && (_folderId != null) &&
-			(_folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
-
-			_folder = _getFolder();
-		}
 
 		if (_folder != null) {
 			_selectedRepositoryId = _folder.getRepositoryId();
@@ -293,7 +246,6 @@ public class IGConfigurationDisplayContext {
 	private static final Log _log = LogFactoryUtil.getLog(
 		IGConfigurationDisplayContext.class);
 
-	private final DLAppLocalService _dlAppLocalService;
 	private final DLPortletInstanceSettingsHelper
 		_dlPortletInstanceSettingsHelper;
 	private Folder _folder;

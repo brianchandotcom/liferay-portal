@@ -6,7 +6,6 @@
 package com.liferay.document.library.web.internal.portlet.action;
 
 import com.liferay.document.library.constants.DLPortletKeys;
-import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.web.internal.display.context.IGConfigurationDisplayContext;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
@@ -45,14 +44,11 @@ public class IGDisplayConfigurationAction
 		httpServletRequest.setAttribute(
 			IGConfigurationDisplayContext.class.getName(),
 			new IGConfigurationDisplayContext(
-				_dlAppLocalService, _itemSelector, httpServletRequest,
+				_itemSelector, httpServletRequest,
 				_portletPreferencesLocalService, _trashHelper));
 
 		super.include(portletConfig, httpServletRequest, httpServletResponse);
 	}
-
-	@Reference
-	private DLAppLocalService _dlAppLocalService;
 
 	@Reference
 	private ItemSelector _itemSelector;

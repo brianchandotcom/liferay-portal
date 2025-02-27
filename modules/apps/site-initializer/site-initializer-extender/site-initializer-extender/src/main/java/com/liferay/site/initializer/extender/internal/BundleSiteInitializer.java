@@ -4525,22 +4525,28 @@ public class BundleSiteInitializer implements SiteInitializer {
 
 		_groupLocalService.updateGroup(group);
 
-		List<Long> roleIds = new ArrayList<>();
-
 		JSONArray accessToControlMenuRoleNamesJSONArray =
 			jsonObject.getJSONArray("accessToControlMenuRoleNames");
 
-		if (accessToControlMenuRoleNamesJSONArray != null) {
-			for (int i = 0; i < accessToControlMenuRoleNamesJSONArray.length();
-				 i++) {
+		if (accessToControlMenuRoleNamesJSONArray == null) {
+			_menuAccessConfigurationManager.updateMenuAccessConfiguration(
+				serviceContext.getScopeGroupId(), new String[0],
+				jsonObject.getBoolean("showControlMenuByRole"));
 
-				Role role = _roleLocalService.fetchRole(
-					serviceContext.getCompanyId(),
-					accessToControlMenuRoleNamesJSONArray.getString(i));
+			return;
+		}
 
-				if (role != null) {
-					roleIds.add(role.getRoleId());
-				}
+		List<Long> roleIds = new ArrayList<>();
+
+		for (int i = 0; i < accessToControlMenuRoleNamesJSONArray.length();
+			 i++) {
+
+			Role role = _roleLocalService.fetchRole(
+				serviceContext.getCompanyId(),
+				accessToControlMenuRoleNamesJSONArray.getString(i));
+
+			if (role != null) {
+				roleIds.add(role.getRoleId());
 			}
 		}
 

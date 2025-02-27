@@ -9,10 +9,14 @@ import com.liferay.petra.concurrent.DCLSingleton;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.UserEmailAddressException;
 import com.liferay.portal.kernel.exception.UserScreenNameException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -27,12 +31,15 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.scim.rest.dto.v1_0.Operation;
+import com.liferay.scim.rest.dto.v1_0.PatchOp;
 import com.liferay.scim.rest.internal.model.ScimUser;
 
 import java.io.File;
 
 import java.text.DateFormat;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
@@ -225,6 +232,107 @@ public class ScimUtil {
 		user.setUserName(scimUser.getScreenName());
 
 		return user;
+	}
+
+	public static String transformOperationGroup(PatchOp patchOp)
+		throws JSONException {
+
+		JSONArray operationsJSONArray = JSONFactoryUtil.createJSONArray();
+
+		for (Operation operation : patchOp.getOperations()) {
+			JSONObject jsonObject = JSONUtil.put(
+				SCIMConstants.OperationalConstants.OP, operation.getOp());
+
+			if (SCIMConstants.OperationalConstants.ADD.equalsIgnoreCase(
+					operation.getOp())) {
+
+				if (SCIMConstants.GroupSchemaConstants.MEMBERS.equalsIgnoreCase(
+						operation.getPath())) {
+
+					if (operation.getValue() instanceof ArrayList) {
+						JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
+							(ArrayList)operation.getValue());
+
+						JSONObject valueJSONObject = jsonArray.getJSONObject(0);
+
+						if (!valueJSONObject.has(
+								SCIMConstants.GroupSchemaConstants.DISPLAY)) {
+
+							valueJSONObject.put(
+								SCIMConstants.GroupSchemaConstants.DISPLAY,
+								StringPool.BLANK);
+						}
+
+						jsonObject.put(
+							SCIMConstants.OperationalConstants.VALUE,
+							JSONUtil.put(
+								SCIMConstants.GroupSchemaConstants.MEMBERS,
+								jsonArray));
+					}
+					else {
+						jsonObject.put(
+							SCIMConstants.OperationalConstants.VALUE,
+							JSONUtil.put(
+								SCIMConstants.GroupSchemaConstants.MEMBERS,
+								operation.getValue()));
+					}
+				}
+			}
+			else if (SCIMConstants.OperationalConstants.REMOVE.equalsIgnoreCase(
+						operation.getOp())) {
+
+				if (operation.getValue() instanceof ArrayList) {
+					JSONArray valueJSONArray = JSONFactoryUtil.createJSONArray(
+						(ArrayList)operation.getValue());
+
+					JSONObject valueJSONObject = valueJSONArray.getJSONObject(
+						0);
+
+					String sb = StringBundler.concat(
+						operation.getPath(), StringPool.OPEN_BRACKET,
+						SCIMConstants.OperationalConstants.VALUE, " eq \"",
+						valueJSONObject.get(
+							SCIMConstants.OperationalConstants.VALUE),
+						"\"]");
+
+					jsonObject.put(SCIMConstants.OperationalConstants.PATH, sb);
+				}
+				else {
+					jsonObject.put(
+						SCIMConstants.OperationalConstants.PATH,
+						operation.getPath()
+					).put(
+						SCIMConstants.OperationalConstants.VALUE,
+						operation.getValue()
+					);
+				}
+			}
+			else {
+				if (operation.getValue() instanceof ArrayList) {
+					jsonObject.put(
+						SCIMConstants.OperationalConstants.VALUE,
+						JSONFactoryUtil.createJSONArray(
+							(ArrayList)operation.getValue()));
+				}
+				else {
+					jsonObject.put(
+						SCIMConstants.OperationalConstants.VALUE,
+						operation.getValue());
+				}
+
+				jsonObject.put(
+					SCIMConstants.OperationalConstants.PATH,
+					operation.getPath());
+			}
+
+			operationsJSONArray.put(jsonObject);
+		}
+
+		return JSONUtil.put(
+			SCIMConstants.CommonSchemaConstants.SCHEMAS, patchOp.getSchemas()
+		).put(
+			SCIMConstants.OperationalConstants.OPERATIONS, operationsJSONArray
+		).toString();
 	}
 
 	private static AttributeSchema _createAttributeSchema() {

@@ -102,16 +102,38 @@ else {
 		const inputElement = fileInput;
 
 		import('@liferay/fragment-impl').then(
-			({registerLocalizedFileInput, registerUnlocalizedInput}) => {
+			({
+				getOrCreateTranslationInput,
+				registerLocalizedFileInput,
+				registerUnlocalizedInput,
+			}) => {
 				if (input.localizable) {
-					const initialValues = Object.fromEntries(
-						Object.keys(input.valueI18n).map((key) => [
+
+					// Set initial values
+
+					const initialValues = Object.keys(input.valueI18n).map(
+						(key) => [
 							key,
 							{
 								fileEntryId: input.valueI18n[key],
 								name: input.attributes.fileNameI18n[key] || '',
 							},
-						])
+						]
+					);
+
+					Object.entries(initialValues).forEach(
+						([languageId, value]) => {
+							const input = getOrCreateTranslationInput(
+								inputElement?.id,
+								inputElement.name,
+								languageId,
+								inputElement.parentNode,
+								fragmentNamespace
+							);
+
+							input.value = value.fileEntryId;
+							input.dataset.fileName = value.name;
+						}
 					);
 
 					const isFromDocumentLibrary =
@@ -121,7 +143,6 @@ else {
 						{
 							changeTextDirection: false,
 							defaultLanguageId,
-							initialValues,
 							inputName: input.name,
 							isFromDocumentLibrary,
 							localizationInputsContainer:

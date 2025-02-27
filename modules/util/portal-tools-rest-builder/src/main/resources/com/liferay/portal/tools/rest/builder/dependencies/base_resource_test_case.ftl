@@ -1467,7 +1467,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 					).scopeChecker(
 						_scopeChecker
 					).uriInfo(
-						testVulcanCRUDItemDelegate_getUriInfo(post${schemaName}.getId())
+						testVulcanCRUDItemDelegate_getUriInfo()
 					).user(
 						testVulcanCRUDItemDelegate_getUser()
 					).build();
@@ -1477,7 +1477,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 					assertEquals(get${schemaName}, ${schemaName}SerDes.toDTO(item.toString()));
 				}
 
-				protected UriInfo testVulcanCRUDItemDelegate_getUriInfo(Long id) {
+				protected UriInfo testVulcanCRUDItemDelegate_getUriInfo() {
 					String applicationPath = "v1.0/" + RandomTestUtil.randomString();
 
 					return new UriInfo() {

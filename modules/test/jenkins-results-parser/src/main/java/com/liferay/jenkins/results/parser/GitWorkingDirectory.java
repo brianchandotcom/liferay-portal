@@ -1767,13 +1767,11 @@ public class GitWorkingDirectory {
 	public RemoteGitBranch getRemoteGitBranch(
 		String remoteGitBranchName, String remoteURL, boolean required) {
 
-		List<RemoteGitBranch> remoteGitBranches = getRemoteGitBranches(
-			remoteGitBranchName, remoteURL);
+		RemoteGitBranch remoteGitBranch = GitUtil.getRemoteGitBranch(
+			remoteGitBranchName, getWorkingDirectory(), remoteURL);
 
-		for (RemoteGitBranch remoteGitBranch : remoteGitBranches) {
-			if (remoteGitBranchName.equals(remoteGitBranch.getName())) {
-				return remoteGitBranch;
-			}
+		if (remoteGitBranch != null) {
+			return remoteGitBranch;
 		}
 
 		if (required) {
@@ -1915,13 +1913,11 @@ public class GitWorkingDirectory {
 	public RemoteGitRef getRemoteGitRef(
 		String remoteGitRefName, String remoteURL, boolean required) {
 
-		List<RemoteGitRef> remoteGitRefs = GitUtil.getRemoteGitRefs(
+		RemoteGitRef remoteGitRef = GitUtil.getRemoteGitRef(
 			remoteGitRefName, getWorkingDirectory(), remoteURL);
 
-		for (RemoteGitRef remoteGitRef : remoteGitRefs) {
-			if (remoteGitRefName.equals(remoteGitRef.getName())) {
-				return remoteGitRef;
-			}
+		if (remoteGitRef != null) {
+			return remoteGitRef;
 		}
 
 		if (required) {

@@ -19,6 +19,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -55,9 +56,11 @@ import java.time.OffsetDateTime;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -855,10 +858,14 @@ public class TestrayManagerImpl implements TestrayManager {
 			long userId)
 		throws Exception {
 
+		Map<String, Set<String>> map = new HashMap<>();
+
 		NodeList testCaseNodeList = element.getElementsByTagName("testcase");
 
 		for (int i = 0; i < testCaseNodeList.getLength(); i++) {
 			Node testcaseNode = testCaseNodeList.item(i);
+
+			JSONArray jsonArray = _addTestrayAttachments(testcaseNode);
 
 			Map<String, Serializable> testrayCasePropertiesMap =
 				_getTestrayCaseProperties((Element)testcaseNode);
@@ -867,6 +874,12 @@ public class TestrayManagerImpl implements TestrayManager {
 				companyId, serviceContext, testcaseNode, testrayBuildDate,
 				testrayBuildId, testrayCache, testrayCasePropertiesMap,
 				testrayProjectId, testrayRunId, userId);
+
+			map.put(
+				GetterUtil.getString(
+					testrayCasePropertiesMap.get("testray.testcase.name")),
+				_getPlaywrightReports(
+					jsonArray, map, testrayCasePropertiesMap));
 		}
 	}
 
@@ -997,6 +1010,37 @@ public class TestrayManagerImpl implements TestrayManager {
 		}
 
 		return 0;
+	}
+
+	private Set<String> _getPlaywrightReports(
+		JSONArray jsonArray, Map<String, Set<String>> map,
+		Map<String, Serializable> testrayCasePropertiesMap) {
+
+		List<String> list = new ArrayList<>();
+
+		for (int j = 0; j < jsonArray.length(); j++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(j);
+
+			if (!StringUtil.startsWith(
+					jsonObject.getString("name"), "Playwright Report")) {
+
+				continue;
+			}
+
+			list.add(jsonObject.getString("url"));
+		}
+
+		Set<String> set = map.get(
+			GetterUtil.getString(
+				testrayCasePropertiesMap.get("testray.testcase.name")));
+
+		if (set == null) {
+			set = new HashSet<>();
+		}
+
+		set.addAll(list);
+
+		return set;
 	}
 
 	private Map<String, String> _getPropertiesMap(Element element) {

@@ -3,9 +3,14 @@
 		"pageElements": [
 			{
 				"definition": {
-					"fragment": {"key": "lms-init", "siteKey": "Liferay Learn"},
-					"fragmentConfig": {},
-					"fragmentFields": [],
+					"fragment": {
+						"key": "lms-init",
+						"siteKey": "Liferay Learn"
+					},
+					"fragmentConfig": {
+					},
+					"fragmentFields": [
+					],
 					"indexed": true
 				},
 				"type": "Fragment"
@@ -19,15 +24,21 @@
 					"fragmentConfig": {
 						"loadingTextKey": "loading-knowledge-label"
 					},
-					"fragmentFields": [],
+					"fragmentFields": [
+					],
 					"indexed": true
 				},
 				"type": "Fragment"
 			},
 			{
 				"definition": {
-					"cssClasses": ["learning-path-steps-page"],
-					"fragmentStyle": {"marginTop": "2rem", "width": "100%"},
+					"cssClasses": [
+						"learning-path-steps-page"
+					],
+					"fragmentStyle": {
+						"marginTop": "2rem",
+						"width": "100%"
+					},
 					"fragmentViewports": [
 						{
 							"fragmentViewportStyle": {
@@ -39,7 +50,8 @@
 						}
 					],
 					"indexed": true,
-					"layout": {},
+					"layout": {
+					},
 					"name": "Main"
 				},
 				"id": "4358742c-bea2-c2e4-26b4-0f310c31bcc1",
@@ -54,7 +66,8 @@
 								"paddingRight": "4"
 							},
 							"widgetInstance": {
-								"widgetConfig": {},
+								"widgetConfig": {
+								},
 								"widgetName": "com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet_84997331558403_LXC_liferay_lms_learning_path_steps"
 							}
 						},
@@ -68,12 +81,14 @@
 	},
 	"settings": {
 		"colorSchemeName": "01",
-		"masterPage": {"key": "liferay-learn"},
+		"masterPage": {
+			"key": "liferay-learn"
+		},
 		"themeName": "Dialect",
 		"themeSettings": {
-			"lfr-theme:regular:show-header-search": "false",
-			"lfr-theme:regular:show-header": "false",
 			"lfr-theme:regular:show-footer": "false",
+			"lfr-theme:regular:show-header": "false",
+			"lfr-theme:regular:show-header-search": "false",
 			"lfr-theme:regular:wrap-widget-page-content": "false"
 		}
 	},

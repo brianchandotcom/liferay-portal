@@ -4,7 +4,9 @@
 		"pageElements": [
 			{
 				"definition": {
-					"cssClasses": ["breadcrumb-container"],
+					"cssClasses": [
+						"breadcrumb-container"
+					],
 					"fragmentStyle": {
 						"paddingBottom": "4",
 						"paddingLeft": "4",
@@ -38,7 +40,8 @@
 								{
 									"id": "element-text",
 									"value": {
-										"fragmentLink": {},
+										"fragmentLink": {
+										},
 										"text": {
 											"mapping": {
 												"fieldKey": "ddmTemplate__ddmTemplate_34407743",
@@ -57,17 +60,19 @@
 					},
 					{
 						"definition": {
-							"cssClasses": ["submit-button"],
+							"cssClasses": [
+								"submit-button"
+							],
 							"fragment": {
 								"key": "dialect-button",
 								"siteKey": "Guest"
 							},
 							"fragmentConfig": {
-								"uppercase": false,
-								"style": "primary",
+								"buttonSize": "",
 								"inverted": true,
+								"style": "primary",
 								"type": "solid",
-								"buttonSize": ""
+								"uppercase": false
 							},
 							"fragmentFields": [
 								{
@@ -138,7 +143,8 @@
 								{
 									"id": "element-text",
 									"value": {
-										"fragmentLink": {},
+										"fragmentLink": {
+										},
 										"text": {
 											"mapping": {
 												"fieldKey": "ObjectField_title",
@@ -150,7 +156,9 @@
 									}
 								}
 							],
-							"fragmentStyle": {"marginBottom": "3"},
+							"fragmentStyle": {
+								"marginBottom": "3"
+							},
 							"indexed": true
 						},
 						"id": "72ceee61-61f7-84af-6a3c-cd95b8692181",
@@ -163,21 +171,22 @@
 								"siteKey": "Guest"
 							},
 							"fragmentConfig": {
+								"align": "flex-start",
+								"autoPlay": false,
 								"hideControls": false,
-								"videoWidth": "",
-								"useMappableUrl": true,
 								"loop": false,
 								"mute": true,
-								"autoPlay": false,
-								"align": "flex-start",
 								"url": "",
-								"videoHeight": ""
+								"useMappableUrl": true,
+								"videoHeight": "",
+								"videoWidth": ""
 							},
 							"fragmentFields": [
 								{
 									"id": "mappableUrl",
 									"value": {
-										"fragmentLink": {},
+										"fragmentLink": {
+										},
 										"text": {
 											"mapping": {
 												"fieldKey": "ObjectField_url",
@@ -208,7 +217,8 @@
 								{
 									"id": "element-text",
 									"value": {
-										"fragmentLink": {},
+										"fragmentLink": {
+										},
 										"text": {
 											"mapping": {
 												"fieldKey": "ObjectField_description",
@@ -220,7 +230,9 @@
 									}
 								}
 							],
-							"fragmentStyle": {"marginTop": "3"},
+							"fragmentStyle": {
+								"marginTop": "3"
+							},
 							"indexed": true
 						},
 						"id": "7c99e4c7-6b38-4eff-cefb-b5d698f91bf5",
@@ -234,12 +246,14 @@
 	},
 	"settings": {
 		"colorSchemeName": "01",
-		"masterPage": {"key": "liferay-learn"},
+		"masterPage": {
+			"key": "liferay-learn"
+		},
 		"themeName": "Dialect",
 		"themeSettings": {
-			"lfr-theme:regular:show-header-search": "false",
-			"lfr-theme:regular:show-header": "false",
 			"lfr-theme:regular:show-footer": "false",
+			"lfr-theme:regular:show-header": "false",
+			"lfr-theme:regular:show-header-search": "false",
 			"lfr-theme:regular:wrap-widget-page-content": "false"
 		}
 	},

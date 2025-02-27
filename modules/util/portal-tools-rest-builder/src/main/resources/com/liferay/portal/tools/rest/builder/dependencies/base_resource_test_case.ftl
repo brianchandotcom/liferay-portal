@@ -1453,7 +1453,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 						new MockHttpServletRequest() {
 							@Override
 							public StringBuffer getRequestURL() {
-								return new StringBuffer("http://localhost:8080/o");
+								return new StringBuffer(StringBundler.concat("http://localhost:8080/o/", RandomTestUtil.randomString(), "/v1.0/", RandomTestUtil.randomString()));
 							}
 						}
 					).httpServletResponse(
@@ -1478,13 +1478,14 @@ public abstract class Base${schemaName}ResourceTestCase {
 				}
 
 				protected UriInfo testVulcanCRUDItemDelegate_getUriInfo() {
-					String applicationPath = "v1.0/" + RandomTestUtil.randomString();
+					String applicationPath = RandomTestUtil.randomString() + "/";
+					String resourcePath = RandomTestUtil.randomString();
 
 					return new UriInfo() {
 
 						@Override
 						public String getPath() {
-							return applicationPath;
+							return resourcePath;
 						}
 
 						@Override
@@ -1504,7 +1505,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 						@Override
 						public URI getRequestUri() {
-							return URI.create(StringBundler.concat("http://localhost:8080/o/", applicationPath, "/", RandomTestUtil.randomString()));
+							return URI.create("http://localhost:8080/o/" + applicationPath + resourcePath);
 						}
 
 						@Override
@@ -1524,7 +1525,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 						@Override
 						public URI getBaseUri() {
-							return URI.create(StringBundler.concat("http://localhost:8080/o/", applicationPath));
+							return URI.create("http://localhost:8080/o/" + applicationPath);
 						}
 
 						@Override

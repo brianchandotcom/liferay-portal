@@ -72,7 +72,9 @@ export const FIELD_TYPE_BUSINESS_TYPE: Record<FieldType, string> = {
 type BaseField = {
 	erc: string;
 	label: string;
+	localized: boolean;
 	name: string;
+	required: boolean;
 };
 
 export type Field =
@@ -103,7 +105,10 @@ export function getDefaultField(type: FieldType): Field {
 	const base = {
 		erc: uuidv4(),
 		label: FIELD_TYPE_LABEL[type],
+		localized: false,
 		name: normalizeName(type),
+		required: false,
+		settings: {},
 	};
 
 	if (type === 'datetime') {

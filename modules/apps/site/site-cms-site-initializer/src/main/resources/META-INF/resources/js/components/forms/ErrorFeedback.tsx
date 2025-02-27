@@ -7,15 +7,13 @@ import ClayForm from '@clayui/form';
 import React from 'react';
 
 const ErrorFeedback = ({message: message}: {message: string}) => (
-	<ClayForm.FeedbackGroup>
-		<ClayForm.FeedbackItem className="font-weight-normal">
-			<ClayForm.FeedbackIndicator symbol="info-circle" />
+	<ClayForm.FeedbackItem className="font-weight-normal">
+		<ClayForm.FeedbackIndicator symbol="info-circle" />
 
-			<strong>{Liferay.Language.get('error')}: </strong>
+		<strong>{Liferay.Language.get('error')}: </strong>
 
-			{message}
-		</ClayForm.FeedbackItem>
-	</ClayForm.FeedbackGroup>
+		{message}
+	</ClayForm.FeedbackItem>
 );
 
 export default ErrorFeedback;

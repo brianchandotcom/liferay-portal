@@ -30,11 +30,12 @@ const Field = ({
 	required?: boolean;
 	type?: 'textarea' | 'input';
 }) => {
-	const inputId = id ?? name;
+	const fieldId = id ?? name;
+	const feedbackId = `feedback-${fieldId}`;
 
 	return (
 		<ClayForm.Group className={errorMessage ? 'has-error' : ''}>
-			<label className={disabled ? 'disabled' : ''} htmlFor={inputId}>
+			<label className={disabled ? 'disabled' : ''} htmlFor={fieldId}>
 				{label}
 
 				{required && <RequiredMark />}
@@ -42,18 +43,23 @@ const Field = ({
 
 			<ClayInput
 				{...restProps}
+				aria-describedby={(errorMessage || helpMessage) ?? feedbackId}
 				className="form-control"
 				component={type === 'textarea' ? 'textarea' : 'input'}
 				disabled={disabled}
-				id={inputId}
+				id={fieldId}
 				name={name}
 				type={type}
 			/>
 
-			{errorMessage ? (
-				<ErrorFeedback message={errorMessage} />
-			) : (
-				helpMessage && <HelpFeedback feedback={helpMessage} />
+			{(errorMessage || helpMessage) && (
+				<ClayForm.FeedbackGroup id={feedbackId}>
+					{errorMessage ? (
+						<ErrorFeedback message={errorMessage} />
+					) : (
+						helpMessage && <HelpFeedback feedback={helpMessage} />
+					)}
+				</ClayForm.FeedbackGroup>
 			)}
 		</ClayForm.Group>
 	);

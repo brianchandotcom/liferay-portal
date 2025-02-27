@@ -685,6 +685,11 @@ public class DDMServiceUpgradeStepRegistrator
 					"' where emailAddress like '",
 					DDMFormConstants.DDM_FORM_DEFAULT_USER_SCREEN_NAME,
 					"@%'")));
+
+		registry.register(
+			"7.0.1", "7.0.2",
+			UpgradeProcessFactory.dropColumns(
+				"DDMFormInstance", "expirationDate"));
 	}
 
 	@Activate

@@ -14,6 +14,7 @@ import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.exportimport.test.util.internal.exportimport.staged.model.repository.DummyStagedModelRepository;
 import com.liferay.exportimport.test.util.model.Dummy;
 import com.liferay.exportimport.test.util.model.DummyFolder;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.xml.Element;
 
 import java.util.List;
@@ -42,6 +43,14 @@ public class DummyFolderStagedModelDataHandler
 
 	public void setEnabled(boolean enabled) {
 		_enabled = enabled;
+	}
+
+	public SafeCloseable setEnabledWithSafeCloseable(boolean enabled) {
+		boolean previousEnabled = _enabled;
+
+		setEnabled(enabled);
+
+		return () -> setEnabled(previousEnabled);
 	}
 
 	@Override

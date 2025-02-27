@@ -62,6 +62,7 @@ test(
 	async ({page, passwordPoliciesAdminConfigPage}) => {
 		const passwordPolicy: TPasswordPolicy = {
 			checkSyntaxToggle: true,
+			minAlphanumeric: 1,
 			minLowerCase: 1,
 		};
 		await passwordPoliciesAdminConfigPage.goTo();
@@ -87,7 +88,7 @@ test(
 
 		await page.getByLabel('Last Name').fill(getRandomString());
 
-		const password = 'ABC123';
+		let password = 'ABC123';
 
 		await page
 			.getByLabel('Password Required', {exact: true})
@@ -100,6 +101,35 @@ test(
 		await expect(
 			page.getByText(
 				'Close Error: That password must contain at least 1 lowercase characters. User'
+			)
+		).toBeVisible();
+
+		await page.reload();
+
+		await page.getByLabel('Screen Name').fill(getRandomString());
+
+		await page
+			.getByLabel('Email Address')
+			.fill(getRandomString() + '@liferay.com');
+
+		await page.getByLabel('First Name').fill(getRandomString());
+
+		await page.getByLabel('Last Name').fill(getRandomString());
+
+
+		password = '@@@@@@';
+
+		await page
+			.getByLabel('Password Required', {exact: true})
+			.fill(password);
+
+		await page.getByLabel('Reenter Password Required').fill(password);
+
+		await page.getByRole('button', {name: 'Save'}).click();
+
+		await expect(
+			page.getByText(
+				'Close Error: That password must contain at least 1 alphanumeric characters. User'
 			)
 		).toBeVisible();
 	}

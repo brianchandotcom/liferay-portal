@@ -355,4 +355,8 @@ test('can see corresponding elements at site level', async ({
 	await expect(
 		exportImportPage.page.getByRole('group', {name: 'Pages'})
 	).toBeVisible();
+
+	await expect(
+		exportImportPage.page.getByLabel('Delete Application Data')
+	).toBeVisible();
 });

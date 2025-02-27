@@ -294,6 +294,10 @@ test('can see corresponding elements at instance level', async ({
 	await expect(
 		companyExportImportPage.page.getByText('Comments, Ratings')
 	).not.toBeVisible();
+
+	await expect(
+		companyExportImportPage.page.getByLabel('Delete Application Data')
+	).not.toBeVisible();
 });
 
 test('Can/not view Import menu item in Application menu depending on permissions', async ({

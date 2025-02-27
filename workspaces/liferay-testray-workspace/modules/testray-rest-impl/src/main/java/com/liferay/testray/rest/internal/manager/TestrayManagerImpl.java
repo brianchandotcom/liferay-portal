@@ -57,11 +57,9 @@ import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -463,13 +461,14 @@ public class TestrayManagerImpl implements TestrayManager {
 				testrayBuildId, testrayCache,
 				propertiesMap.get("testray.run.id"), userId);
 
-			Map<String, Set<String>> map = _addTestrayCases(
+			JSONObject jsonObject = _addTestrayCases(
 				companyId, element, serviceContext,
 				propertiesMap.get("testray.build.date"), testrayBuildId,
 				testrayCache, testrayProjectId, testrayRunId, userId);
 
 			_patchObjectEntry(
-				Collections.singletonMap("playwrightReports", map.toString()),
+				Collections.singletonMap(
+					"playwrightReports", jsonObject.toString()),
 				testrayBuildId, userId);
 		}
 		catch (Exception exception) {
@@ -710,51 +709,6 @@ public class TestrayManagerImpl implements TestrayManager {
 		testrayCache.incrementTestrayCaseResultAmount();
 	}
 
-	private JSONArray _getTestrayAttachmentsJSONArray(Node testcaseNode)
-		throws Exception {
-
-		JSONArray jsonArray = _jsonFactory.createJSONArray();
-
-		Element testcaseElement = (Element)testcaseNode;
-
-		NodeList attachmentsNodeList = testcaseElement.getElementsByTagName(
-			"attachments");
-
-		for (int i = 0; i < attachmentsNodeList.getLength(); i++) {
-			Node attachmentsNode = attachmentsNodeList.item(i);
-
-			if (attachmentsNode.getNodeType() != Node.ELEMENT_NODE) {
-				continue;
-			}
-
-			Element attachmentsElement = (Element)attachmentsNode;
-
-			NodeList fileNodeList = attachmentsElement.getElementsByTagName(
-				"file");
-
-			for (int j = 0; j < fileNodeList.getLength(); j++) {
-				Node fileNode = fileNodeList.item(j);
-
-				if (fileNode.getNodeType() != Node.ELEMENT_NODE) {
-					continue;
-				}
-
-				Element fileElement = (Element)fileNode;
-
-				jsonArray.put(
-					JSONUtil.put(
-						"name", fileElement.getAttribute("name")
-					).put(
-						"url", fileElement.getAttribute("url")
-					).put(
-						"value", fileElement.getAttribute("value")
-					));
-			}
-		}
-
-		return jsonArray;
-	}
-
 	private void _addTestrayCase(
 			long companyId, ServiceContext serviceContext, Node testcaseNode,
 			JSONArray testrayAttachmentsJSONArray, String testrayBuildDate,
@@ -848,22 +802,28 @@ public class TestrayManagerImpl implements TestrayManager {
 			testrayTeamId, userId);
 	}
 
-	private Map<String, Set<String>> _addTestrayCases(
+	private JSONObject _addTestrayCases(
 			long companyId, Element element, ServiceContext serviceContext,
 			String testrayBuildDate, long testrayBuildId,
 			TestrayCache testrayCache, long testrayProjectId, long testrayRunId,
 			long userId)
 		throws Exception {
 
-		Map<String, Set<String>> map = new HashMap<>();
+		JSONObject playwrightReportsJSONObject = _jsonFactory.createJSONObject(
+			GetterUtil.getString(
+				_objectEntryLocalService.getValues(
+					testrayBuildId
+				).get(
+					"playwrightReports"
+				)));
 
 		NodeList testCaseNodeList = element.getElementsByTagName("testcase");
 
 		for (int i = 0; i < testCaseNodeList.getLength(); i++) {
 			Node testcaseNode = testCaseNodeList.item(i);
 
-			JSONArray testrayAttachmentsJSONArray = _getTestrayAttachmentsJSONArray(
-				testcaseNode);
+			JSONArray testrayAttachmentsJSONArray =
+				_getTestrayAttachmentsJSONArray(testcaseNode);
 
 			Map<String, Serializable> testrayCasePropertiesMap =
 				_getTestrayCaseProperties((Element)testcaseNode);
@@ -874,15 +834,24 @@ public class TestrayManagerImpl implements TestrayManager {
 				testrayCache, testrayCasePropertiesMap, testrayProjectId,
 				testrayRunId, userId);
 
-			map.put(
-				GetterUtil.getString(
-					testrayCasePropertiesMap.get("testray.testcase.name")),
-				_getPlaywrightReports(
-					testrayAttachmentsJSONArray, map,
-					testrayCasePropertiesMap));
+			for (int j = 0; j < testrayAttachmentsJSONArray.length(); j++) {
+				JSONObject jsonObject =
+					testrayAttachmentsJSONArray.getJSONObject(j);
+
+				if (!StringUtil.startsWith(
+						jsonObject.getString("name"), "Playwright Report")) {
+
+					continue;
+				}
+
+				playwrightReportsJSONObject.put(
+					jsonObject.getString("url"),
+					GetterUtil.getString(
+						testrayCasePropertiesMap.get("testray.testcase.name")));
+			}
 		}
 
-		return map;
+		return playwrightReportsJSONObject;
 	}
 
 	private void _addTestrayFactor(
@@ -1014,37 +983,6 @@ public class TestrayManagerImpl implements TestrayManager {
 		return 0;
 	}
 
-	private Set<String> _getPlaywrightReports(
-		JSONArray jsonArray, Map<String, Set<String>> map,
-		Map<String, Serializable> testrayCasePropertiesMap) {
-
-		List<String> list = new ArrayList<>();
-
-		for (int j = 0; j < jsonArray.length(); j++) {
-			JSONObject jsonObject = jsonArray.getJSONObject(j);
-
-			if (!StringUtil.startsWith(
-					jsonObject.getString("name"), "Playwright Report")) {
-
-				continue;
-			}
-
-			list.add(jsonObject.getString("url"));
-		}
-
-		Set<String> set = map.get(
-			GetterUtil.getString(
-				testrayCasePropertiesMap.get("testray.testcase.name")));
-
-		if (set == null) {
-			set = new HashSet<>();
-		}
-
-		set.addAll(list);
-
-		return set;
-	}
-
 	private Map<String, String> _getPropertiesMap(Element element) {
 		Map<String, String> map = new HashMap<>();
 
@@ -1071,6 +1009,51 @@ public class TestrayManagerImpl implements TestrayManager {
 		}
 
 		return map;
+	}
+
+	private JSONArray _getTestrayAttachmentsJSONArray(Node testcaseNode)
+		throws Exception {
+
+		JSONArray jsonArray = _jsonFactory.createJSONArray();
+
+		Element testcaseElement = (Element)testcaseNode;
+
+		NodeList attachmentsNodeList = testcaseElement.getElementsByTagName(
+			"attachments");
+
+		for (int i = 0; i < attachmentsNodeList.getLength(); i++) {
+			Node attachmentsNode = attachmentsNodeList.item(i);
+
+			if (attachmentsNode.getNodeType() != Node.ELEMENT_NODE) {
+				continue;
+			}
+
+			Element attachmentsElement = (Element)attachmentsNode;
+
+			NodeList fileNodeList = attachmentsElement.getElementsByTagName(
+				"file");
+
+			for (int j = 0; j < fileNodeList.getLength(); j++) {
+				Node fileNode = fileNodeList.item(j);
+
+				if (fileNode.getNodeType() != Node.ELEMENT_NODE) {
+					continue;
+				}
+
+				Element fileElement = (Element)fileNode;
+
+				jsonArray.put(
+					JSONUtil.put(
+						"name", fileElement.getAttribute("name")
+					).put(
+						"url", fileElement.getAttribute("url")
+					).put(
+						"value", fileElement.getAttribute("value")
+					));
+			}
+		}
+
+		return jsonArray;
 	}
 
 	private String _getTestrayBuildDescription(

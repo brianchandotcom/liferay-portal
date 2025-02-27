@@ -8,7 +8,7 @@ import {getOrCreateTranslationInput} from './getOrCreateTranslationInput';
 type Args = {
 	changeTextDirection: boolean;
 	defaultLanguageId: Liferay.Language.Locale;
-	initialValues: Record<string, any>;
+	initialValues?: Record<string, any>;
 	inputElement?: HTMLInputElement;
 	inputName: string;
 	localizationInputsContainer: HTMLElement;
@@ -34,6 +34,9 @@ export function registerLocalizedInput({
 	onLocaleChange,
 	optionValues,
 }: Args) {
+
+	// Create hidden inputs for initial values if any
+
 	if (initialValues) {
 		Object.entries(initialValues).forEach(([languageId, value]) => {
 			const input = getOrCreateTranslationInput(

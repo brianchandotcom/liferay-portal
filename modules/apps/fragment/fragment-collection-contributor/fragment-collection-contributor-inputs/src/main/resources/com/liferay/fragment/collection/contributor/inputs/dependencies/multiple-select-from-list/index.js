@@ -41,15 +41,45 @@ else if (layoutMode === 'edit') {
 else {
 	if (Liferay.FeatureFlags['LPD-37927']) {
 		import('@liferay/fragment-impl').then(
-			({registerLocalizedMultiSelect, registerUnlocalizedInput}) => {
+			({
+				getOrCreateTranslationInput,
+				registerLocalizedInput,
+				registerUnlocalizedInput,
+			}) => {
 				const defaultLanguageId = themeDisplay.getDefaultLanguageId();
 
 				if (input.localizable) {
-					const {onChange} = registerLocalizedMultiSelect({
-						changeTextDirection: false,
+
+					// Set initial values
+
+					allInputs.forEach((inputElement, index) => {
+						Object.entries(input.valueI18n).forEach(
+							([languageId, value]) => {
+								const input = getOrCreateTranslationInput(
+									inputElement.id,
+									inputElement.name,
+									languageId,
+									inputElement.parentNode,
+									fragmentNamespace
+								);
+
+								if (index !== 0) {
+									input.setAttribute(
+										'data-multiselect',
+										'true'
+									);
+								}
+
+								input.value = value.includes(inputElement.value)
+									? inputElement.value
+									: '';
+							}
+						);
+					});
+
+					const {onChange} = registerLocalizedInput({
 						defaultLanguageId,
-						initialValues: input.valueI18n,
-						inputElements: allInputs,
+						inputElement: allInputs,
 						namespace: fragmentNamespace,
 					});
 

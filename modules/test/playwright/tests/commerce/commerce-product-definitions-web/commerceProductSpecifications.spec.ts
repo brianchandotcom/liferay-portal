@@ -25,9 +25,9 @@ test(
 	{tag: '@LPD-46276'},
 	async ({
 		apiHelpers,
+		commerceAdminProductDetailsPage,
 		commerceAdminProductPage,
 		page,
-		productDetailsPage,
 	}) => {
 		const catalog =
 			await apiHelpers.headlessCommerceAdminCatalog.postCatalog({
@@ -58,28 +58,94 @@ test(
 		await commerceAdminProductPage.gotoProduct(product.name['en_US']);
 
 		await expect(
-			await productDetailsPage.checkSpecificationProduct(
-				specification.title.en_US
-			)
+			await page.getByText(specification.title.en_US)
 		).toBeVisible();
 
-		await productDetailsPage.ellipsisProductSpecification.click();
-		await productDetailsPage.dropdownProductSpecification('Edit').click();
+		await commerceAdminProductDetailsPage.ellipsisProductSpecification.click();
+		await (
+			await commerceAdminProductDetailsPage.dropdownProductSpecification(
+				'Edit'
+			)
+		).click();
 
 		const randomSpecificationValue = getRandomString();
 
-		await productDetailsPage.editFrameSpecificationProductValue.fill(
+		await commerceAdminProductDetailsPage.editFrameSpecificationProductValue.fill(
 			randomSpecificationValue
 		);
 
-		await productDetailsPage.saveButtonEditFrame.click();
+		await commerceAdminProductDetailsPage.editFrameSaveButton.click();
 
 		await waitForAlert(
-			productDetailsPage.ellipsisFrameProductSpecification
+			commerceAdminProductDetailsPage.ellipsisFrameProductSpecification
 		);
 
-		await productDetailsPage.closeEditFrame.click();
+		await commerceAdminProductDetailsPage.closeEditFrame.click();
 
 		await expect(page.getByText(randomSpecificationValue)).toBeVisible();
+	}
+);
+
+test(
+	'Product specification visibility is correctly saved',
+	{tag: '@LPD-48103'},
+	async ({
+		apiHelpers,
+		commerceAdminProductDetailsPage,
+		commerceAdminProductPage,
+	}) => {
+		const picklist =
+			await apiHelpers.listTypeAdmin.postRandomListTypeDefinition();
+
+		try {
+			const specification =
+				await apiHelpers.headlessCommerceAdminCatalog.postSpecification(
+					true,
+					0,
+					getRandomString(),
+					null,
+					false,
+					[picklist.id]
+				);
+
+			await apiHelpers.listTypeAdmin.postListTypeEntry(
+				picklist.externalReferenceCode,
+				'item1'
+			);
+
+			const catalog =
+				await apiHelpers.headlessCommerceAdminCatalog.postCatalog();
+
+			const product =
+				await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+					catalogId: catalog.id,
+				});
+
+			await commerceAdminProductPage.gotoProduct(product.name['en_US']);
+
+			await commerceAdminProductDetailsPage.addOrEditProductSpecification(
+				'Add an Existing Specification',
+				specification.title.en_US,
+				'item1'
+			);
+			await commerceAdminProductDetailsPage.editOrDeleteProductSpecification(
+				'Edit',
+				'item1'
+			);
+			await commerceAdminProductDetailsPage.visibleToggle.check();
+			await commerceAdminProductDetailsPage.editFrameSaveButton.click();
+
+			await expect(
+				commerceAdminProductDetailsPage.editSuccessMessage
+			).toBeVisible();
+			await expect(
+				commerceAdminProductDetailsPage.visibleToggle
+			).toBeChecked();
+		}
+		finally {
+			await apiHelpers.listTypeAdmin.deleteListTypeDefinition(
+				picklist.id
+			);
+		}
 	}
 );

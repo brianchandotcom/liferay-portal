@@ -10,6 +10,7 @@ import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTe
 import {commercePagesTest} from '../../../fixtures/commercePagesTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {loginTest} from '../../../fixtures/loginTest';
+import getRandomString from '../../../utils/getRandomString';
 import {waitForAlert} from '../../../utils/waitForAlert';
 
 export const test = mergeTests(
@@ -19,6 +20,71 @@ export const test = mergeTests(
 	dataApiHelpersTest,
 	loginTest()
 );
+
+test(
+	'Unable to delete specification picklist items',
+	{tag: '@LPD-46948'},
+	async ({
+		apiHelpers,
+		applicationsMenuPage,
+		commerceSpecificationsPage,
+		page,
+	}) => {
+		const specification =
+			await apiHelpers.headlessCommerceAdminCatalog.postSpecification();
+
+		const picklist =
+			await apiHelpers.listTypeAdmin.postRandomListTypeDefinition();
+
+		const listTypeEntry = await apiHelpers.listTypeAdmin.postListTypeEntry(
+			picklist.externalReferenceCode,
+			'item1'
+		);
+
+		await apiHelpers.headlessCommerceAdminCatalog.patchSpecification(
+			specification.id,
+			[picklist.id]
+		);
+
+		await applicationsMenuPage.goToCommerceSpecifications();
+
+		await commerceSpecificationsPage
+			.specificationNameLink(specification.title.en_US)
+			.click();
+
+		await expect(
+			page
+				.getByRole('cell', {name: picklist.externalReferenceCode})
+				.nth(1)
+		).toBeVisible();
+
+		await commerceSpecificationsPage.specificationPicklistActionButton.click();
+		await commerceSpecificationsPage
+			.specificationPicklistDropdownMenu('Edit')
+			.click();
+
+		await expect(
+			page.frameLocator('iframe').locator('tbody')
+		).toContainText(listTypeEntry.externalReferenceCode);
+
+		await commerceSpecificationsPage.specificationPicklistItemsActionButton.click();
+		await commerceSpecificationsPage
+			.specificationPicklistDropdownMenuItems('Delete')
+			.click();
+
+		await expect(page.getByLabel('Delete Item')).toBeVisible();
+
+		await commerceSpecificationsPage
+			.deleteModalButtonAction('Delete')
+			.click();
+
+		await waitForAlert(
+			page,
+			'Success:The picklist item was deleted successfully.'
+		);
+	}
+);
+
 test(
 	'Key is not automatically generated when writing new Specifications label',
 	{tag: '@LPD-28891'},
@@ -103,58 +169,34 @@ test(
 	}
 );
 
-test('LPD-46948 Unable to delete specification picklist items', async ({
-	apiHelpers,
-	applicationsMenuPage,
-	commerceSpecificationsPage,
-	page,
-}) => {
-	const specification =
-		await apiHelpers.headlessCommerceAdminCatalog.postSpecification();
-
-	const picklist =
-		await apiHelpers.listTypeAdmin.postRandomListTypeDefinition();
-
-	const listTypeEntry = await apiHelpers.listTypeAdmin.postListTypeEntry(
-		picklist.externalReferenceCode,
-		'item1'
-	);
-
-	await apiHelpers.headlessCommerceAdminCatalog.patchSpecification(
-		specification.id,
-		[picklist.id]
-	);
-
-	await applicationsMenuPage.goToCommerceSpecifications();
-
-	await commerceSpecificationsPage
-		.specificationNameLink(specification.title.en_US)
-		.click();
-
-	await expect(
-		page.getByRole('cell', {name: picklist.externalReferenceCode}).nth(1)
-	).toBeVisible();
-
-	await commerceSpecificationsPage.specificationPicklistActionButton.click();
-	await commerceSpecificationsPage
-		.specificationPicklistDropdownMenu('Edit')
-		.click();
-
-	await expect(page.frameLocator('iframe').locator('tbody')).toContainText(
-		listTypeEntry.externalReferenceCode
-	);
-
-	await commerceSpecificationsPage.specificationPicklistItemsActionButton.click();
-	await commerceSpecificationsPage
-		.specificationPicklistDropdownMenuItems('Delete')
-		.click();
-
-	await expect(page.getByLabel('Delete Item')).toBeVisible();
-
-	await commerceSpecificationsPage.deleteModalButtonAction('Delete').click();
-
-	await waitForAlert(
+test(
+	'Specification visibility is correctly saved',
+	{tag: '@LPD-48103'},
+	async ({
+		apiHelpers,
+		applicationsMenuPage,
+		commerceSpecificationsPage,
 		page,
-		'Success:The picklist item was deleted successfully.'
-	);
-});
+	}) => {
+		const specification =
+			await apiHelpers.headlessCommerceAdminCatalog.postSpecification(
+				true,
+				0,
+				getRandomString(),
+				null,
+				false
+			);
+
+		await applicationsMenuPage.goToCommerceSpecifications();
+
+		await commerceSpecificationsPage
+			.specificationNameLink(specification.title.en_US)
+			.click();
+		await commerceSpecificationsPage.visibleToggle.check();
+		await commerceSpecificationsPage.saveButton.click();
+
+		await waitForAlert(page);
+
+		await expect(commerceSpecificationsPage.visibleToggle).toBeChecked();
+	}
+);

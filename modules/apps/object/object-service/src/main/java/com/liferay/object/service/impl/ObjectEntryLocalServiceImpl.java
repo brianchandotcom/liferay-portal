@@ -313,6 +313,7 @@ public class ObjectEntryLocalServiceImpl
 		int workflowAction = serviceContext.getWorkflowAction();
 
 		_validateWorkflowAction(
+			objectDefinition.getCompanyId(),
 			objectDefinition.isEnableObjectEntryDraft(), null, workflowAction);
 
 		User user = _userLocalService.getUser(userId);
@@ -1640,6 +1641,7 @@ public class ObjectEntryLocalServiceImpl
 		int workflowAction = serviceContext.getWorkflowAction();
 
 		_validateWorkflowAction(
+			objectDefinition.getCompanyId(),
 			objectDefinition.isEnableObjectEntryDraft(),
 			objectEntry.getStatus(), workflowAction);
 
@@ -1667,6 +1669,12 @@ public class ObjectEntryLocalServiceImpl
 		objectEntry.setModifiedDate(serviceContext.getModifiedDate(null));
 
 		_setRootObjectEntryId(objectDefinition, objectEntry, values);
+
+		if (workflowAction == WorkflowConstants.ACTION_SAVE_DRAFT) {
+			objectEntry.setStatus(WorkflowConstants.STATUS_DRAFT);
+			objectEntry.setStatusByUserId(user.getUserId());
+			objectEntry.setStatusDate(serviceContext.getModifiedDate(null));
+		}
 
 		objectEntry.setTransientValues(transientValues);
 
@@ -1708,7 +1716,7 @@ public class ObjectEntryLocalServiceImpl
 			objectEntry, originalObjectEntry, serviceContext.getLanguageId(),
 			user);
 
-		if (objectEntry.isPending()) {
+		if (objectEntry.isPending() || originalObjectEntry.isDraft()) {
 			_updateLatestObjectEntryVersion(objectEntry);
 
 			return objectEntry;
@@ -5877,14 +5885,17 @@ public class ObjectEntryLocalServiceImpl
 	}
 
 	private void _validateWorkflowAction(
-			boolean enableObjectEntryDraft, Integer status,
+			long companyId, boolean enableObjectEntryDraft, Integer status,
 			Integer workflowAction)
 		throws PortalException {
 
-		if ((!enableObjectEntryDraft ||
-			 ((status != null) &&
-			  (status != WorkflowConstants.STATUS_DRAFT))) &&
-			(workflowAction == WorkflowConstants.ACTION_SAVE_DRAFT)) {
+		if (workflowAction != WorkflowConstants.ACTION_SAVE_DRAFT) {
+			return;
+		}
+
+		if (!enableObjectEntryDraft ||
+			((status != null) && (status != WorkflowConstants.STATUS_DRAFT) &&
+			 !FeatureFlagManagerUtil.isEnabled(companyId, "LPD-17564"))) {
 
 			throw new ObjectEntryStatusException("Draft status is not allowed");
 		}

@@ -25,7 +25,7 @@ export const FIELD_TYPES = [
 	'upload',
 ] as const;
 
-export const FIELD_TYPE_LABEL = {
+export const FIELD_TYPE_LABEL: Record<FieldType, string> = {
 	'boolean': Liferay.Language.get('boolean'),
 	'date': Liferay.Language.get('date'),
 	'datetime': Liferay.Language.get('date-and-time'),
@@ -39,7 +39,7 @@ export const FIELD_TYPE_LABEL = {
 	'upload': Liferay.Language.get('upload'),
 } as const;
 
-export const FIELD_TYPE_ICON = {
+export const FIELD_TYPE_ICON: Record<FieldType, string> = {
 	'boolean': 'check-square',
 	'date': 'calendar',
 	'datetime': 'date-time',
@@ -53,7 +53,7 @@ export const FIELD_TYPE_ICON = {
 	'upload': 'upload',
 } as const;
 
-export const FIELD_TYPE_BUSINESS_TYPE = {
+export const FIELD_TYPE_BUSINESS_TYPE: Record<FieldType, string> = {
 	'boolean': 'Boolean',
 	'date': 'Date',
 	'datetime': 'DateTime',

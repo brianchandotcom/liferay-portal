@@ -9,9 +9,8 @@ const bannerElement = document.querySelectorAll('.cp-information-banner');
 const bannerFragment = fragmentElement.querySelector('.cp-information-banner');
 const closeButton = fragmentElement.querySelector('.close');
 
-const configurationDate = configuration.expirationDate;
 const currentDate = new Date();
-const {0: month, 1: day, 2: year} = configurationDate.split('/');
+const {0: month, 1: day, 2: year} = configuration.displayEndDate.split('/');
 const expirationDate = new Date(year, month - 1, day);
 const isExpired = expirationDate < currentDate;
 

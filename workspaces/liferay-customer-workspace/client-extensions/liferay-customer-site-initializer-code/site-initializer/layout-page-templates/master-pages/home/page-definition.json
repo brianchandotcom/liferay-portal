@@ -517,8 +517,9 @@
 								"siteKey": "[$GROUP_KEY$]"
 							},
 							"fragmentConfig": {
-								"dismissible": true,
-								"expirationDate": "06/26/2024"
+								"content": "This is a banner with a <a href='/test'>link</a>",
+								"displayEndDate": "01/01/2024",
+								"displayStartDate": "12/31/2024"
 							},
 							"fragmentFields": [
 							],

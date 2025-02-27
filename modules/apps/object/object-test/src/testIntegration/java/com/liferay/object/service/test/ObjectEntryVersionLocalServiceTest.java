@@ -96,7 +96,7 @@ public class ObjectEntryVersionLocalServiceTest {
 				_createObjectEntryVersion(
 					JSONUtil.put(
 						"textObjectFieldName", "textObjectFieldValue1"),
-					1, WorkflowConstants.STATUS_APPROVED)),
+					WorkflowConstants.STATUS_APPROVED, 1)),
 			_objectEntryVersionLocalService.getObjectEntryVersions(
 				objectEntry.getObjectEntryId()));
 
@@ -114,11 +114,11 @@ public class ObjectEntryVersionLocalServiceTest {
 				_createObjectEntryVersion(
 					JSONUtil.put(
 						"textObjectFieldName", "textObjectFieldValue1"),
-					1, WorkflowConstants.STATUS_APPROVED),
+					WorkflowConstants.STATUS_APPROVED, 1),
 				_createObjectEntryVersion(
 					JSONUtil.put(
 						"textObjectFieldName", "textObjectFieldValue2"),
-					2, WorkflowConstants.STATUS_APPROVED)),
+					WorkflowConstants.STATUS_APPROVED, 2)),
 			_objectEntryVersionLocalService.getObjectEntryVersions(
 				objectEntry.getObjectEntryId()));
 	}
@@ -151,7 +151,7 @@ public class ObjectEntryVersionLocalServiceTest {
 				_createObjectEntryVersion(
 					JSONUtil.put(
 						"textObjectFieldName", "textObjectFieldValue1"),
-					1, WorkflowConstants.STATUS_PENDING)),
+					WorkflowConstants.STATUS_PENDING, 1)),
 			_objectEntryVersionLocalService.getObjectEntryVersions(
 				objectEntry.getObjectEntryId()));
 
@@ -172,7 +172,7 @@ public class ObjectEntryVersionLocalServiceTest {
 				_createObjectEntryVersion(
 					JSONUtil.put(
 						"textObjectFieldName", "textObjectFieldValue2"),
-					1, WorkflowConstants.STATUS_PENDING)),
+					WorkflowConstants.STATUS_PENDING, 1)),
 			_objectEntryVersionLocalService.getObjectEntryVersions(
 				objectEntry.getObjectEntryId()));
 
@@ -203,7 +203,7 @@ public class ObjectEntryVersionLocalServiceTest {
 				_createObjectEntryVersion(
 					JSONUtil.put(
 						"textObjectFieldName", "textObjectFieldValue2"),
-					1, WorkflowConstants.STATUS_APPROVED)),
+					WorkflowConstants.STATUS_APPROVED, 1)),
 			_objectEntryVersionLocalService.getObjectEntryVersions(
 				objectEntry.getObjectEntryId()));
 
@@ -227,11 +227,11 @@ public class ObjectEntryVersionLocalServiceTest {
 				_createObjectEntryVersion(
 					JSONUtil.put(
 						"textObjectFieldName", "textObjectFieldValue2"),
-					1, WorkflowConstants.STATUS_APPROVED),
+					WorkflowConstants.STATUS_APPROVED, 1),
 				_createObjectEntryVersion(
 					JSONUtil.put(
 						"textObjectFieldName", "textObjectFieldValue3"),
-					2, WorkflowConstants.STATUS_PENDING)),
+					WorkflowConstants.STATUS_PENDING, 2)),
 			_objectEntryVersionLocalService.getObjectEntryVersions(
 				objectEntry.getObjectEntryId()));
 
@@ -270,7 +270,7 @@ public class ObjectEntryVersionLocalServiceTest {
 	}
 
 	private ObjectEntryVersion _createObjectEntryVersion(
-		JSONObject propertiesJSONObject, int version, int status) {
+		JSONObject propertiesJSONObject, int status, int version) {
 
 		ObjectEntryVersion objectEntryVersion =
 			_objectEntryVersionLocalService.createObjectEntryVersion(

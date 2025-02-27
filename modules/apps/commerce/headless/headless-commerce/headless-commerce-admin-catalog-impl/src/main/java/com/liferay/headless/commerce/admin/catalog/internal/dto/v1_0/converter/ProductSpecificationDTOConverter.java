@@ -91,6 +91,7 @@ public class ProductSpecificationDTOConverter
 				setValue(
 					() -> LanguageUtils.getLanguageIdMap(
 						cpDefinitionSpecificationOptionValue.getValueMap()));
+				setVisible(cpDefinitionSpecificationOptionValue::isVisible);
 			}
 		};
 	}

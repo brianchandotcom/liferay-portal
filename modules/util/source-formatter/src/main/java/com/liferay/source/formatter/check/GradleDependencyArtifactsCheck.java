@@ -100,14 +100,18 @@ public class GradleDependencyArtifactsCheck extends BaseFileCheck {
 				String[] artifactParts = StringUtil.split(
 					parts[1], StringPool.COLON);
 
-				if ((artifactParts.length != 3) ||
-					!ListUtil.exists(
+				if (artifactParts.length != 3) {
+					continue;
+				}
+
+				String dependencyGroupAndName =
+					artifactParts[0] + ":" + artifactParts[1];
+
+				if (!ListUtil.exists(
 						enforceVersionArtifacts,
 						enforceVersionArtifact ->
 							enforceVersionArtifact.startsWith(
-								StringBundler.concat(
-									artifactParts[0], ":", artifactParts[1],
-									":")))) {
+								dependencyGroupAndName + ":"))) {
 
 					continue;
 				}
@@ -115,8 +119,8 @@ public class GradleDependencyArtifactsCheck extends BaseFileCheck {
 				addMessage(
 					fileName,
 					StringBundler.concat(
-						"The version of \"", artifactParts[0], ":",
-						artifactParts[1], "\" does not match the version in \"",
+						"The version of \"", dependencyGroupAndName,
+						"\" does not match the version in \"",
 						_ENFORCE_VERSION_ARTIFACTS_KEY,
 						"\" property in source-formatter.properties"),
 					lineNumber);

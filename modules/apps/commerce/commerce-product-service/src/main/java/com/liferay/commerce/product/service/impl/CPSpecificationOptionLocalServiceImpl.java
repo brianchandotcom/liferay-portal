@@ -48,6 +48,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -79,7 +80,7 @@ public class CPSpecificationOptionLocalServiceImpl
 			String externalReferenceCode, long userId, long cpOptionCategoryId,
 			long[] listTypeDefinitionIds, Map<Locale, String> titleMap,
 			Map<Locale, String> descriptionMap, boolean facetable, String key,
-			double priority, ServiceContext serviceContext)
+			double priority, boolean visible, ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = _userLocalService.getUser(userId);
@@ -105,6 +106,7 @@ public class CPSpecificationOptionLocalServiceImpl
 		cpSpecificationOption.setFacetable(facetable);
 		cpSpecificationOption.setKey(key);
 		cpSpecificationOption.setPriority(priority);
+		cpSpecificationOption.setVisible(visible);
 		cpSpecificationOption.setExpandoBridgeAttributes(serviceContext);
 
 		cpSpecificationOption = cpSpecificationOptionPersistence.update(
@@ -209,12 +211,12 @@ public class CPSpecificationOptionLocalServiceImpl
 	@Override
 	public BaseModelSearchResult<CPSpecificationOption>
 			searchCPSpecificationOptions(
-				long companyId, Boolean facetable, String keywords, int start,
-				int end, Sort sort)
+				long companyId, Boolean facetable, Boolean visible,
+				String keywords, int start, int end, Sort sort)
 		throws PortalException {
 
 		SearchContext searchContext = _buildSearchContext(
-			companyId, facetable, keywords, start, end, sort);
+			companyId, facetable, visible, keywords, start, end, sort);
 
 		return _searchCPSpecificationOptions(searchContext);
 	}
@@ -239,7 +241,7 @@ public class CPSpecificationOptionLocalServiceImpl
 			String externalReferenceCode, long cpSpecificationOptionId,
 			long cpOptionCategoryId, long[] listTypeDefinitionIds,
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-			boolean facetable, String key, double priority,
+			boolean facetable, String key, double priority, boolean visible,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -261,6 +263,7 @@ public class CPSpecificationOptionLocalServiceImpl
 		cpSpecificationOption.setFacetable(facetable);
 		cpSpecificationOption.setKey(key);
 		cpSpecificationOption.setPriority(priority);
+		cpSpecificationOption.setVisible(visible);
 		cpSpecificationOption.setExpandoBridgeAttributes(serviceContext);
 
 		cpSpecificationOption = cpSpecificationOptionPersistence.update(
@@ -290,8 +293,8 @@ public class CPSpecificationOptionLocalServiceImpl
 	}
 
 	private SearchContext _buildSearchContext(
-		long companyId, Boolean facetable, String keywords, int start, int end,
-		Sort sort) {
+		long companyId, Boolean facetable, Boolean visible, String keywords,
+		int start, int end, Sort sort) {
 
 		SearchContext searchContext = new SearchContext();
 
@@ -309,6 +312,8 @@ public class CPSpecificationOptionLocalServiceImpl
 				CPField.FACETABLE, () -> facetable
 			).put(
 				CPField.KEY, keywords
+			).put(
+				CPField.VISIBLE, () -> visible
 			).put(
 				Field.CONTENT, keywords
 			).put(
@@ -460,9 +465,9 @@ public class CPSpecificationOptionLocalServiceImpl
 
 		Locale locale = LocaleUtil.getSiteDefault();
 
-		String title = titleMap.get(locale);
+		if (MapUtil.isEmpty(titleMap) ||
+			Validator.isNull(titleMap.get(locale))) {
 
-		if (Validator.isNull(title)) {
 			throw new CPSpecificationOptionTitleException();
 		}
 

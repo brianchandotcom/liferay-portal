@@ -14,7 +14,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.UserEmailAddressException;
 import com.liferay.portal.kernel.exception.UserScreenNameException;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -234,98 +233,28 @@ public class ScimUtil {
 		return user;
 	}
 
-	public static String transformOperationGroup(PatchOp patchOp)
-		throws JSONException {
-
+	public static String transformGroupPatchOp(PatchOp patchOp) {
 		JSONArray operationsJSONArray = JSONFactoryUtil.createJSONArray();
 
 		for (Operation operation : patchOp.getOperations()) {
-			JSONObject jsonObject = JSONUtil.put(
+			JSONObject operationJSONObject = JSONUtil.put(
 				SCIMConstants.OperationalConstants.OP, operation.getOp());
 
 			if (SCIMConstants.OperationalConstants.ADD.equalsIgnoreCase(
 					operation.getOp())) {
 
-				if (SCIMConstants.GroupSchemaConstants.MEMBERS.equalsIgnoreCase(
-						operation.getPath())) {
-
-					if (operation.getValue() instanceof ArrayList) {
-						JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
-							(ArrayList)operation.getValue());
-
-						JSONObject valueJSONObject = jsonArray.getJSONObject(0);
-
-						if (!valueJSONObject.has(
-								SCIMConstants.GroupSchemaConstants.DISPLAY)) {
-
-							valueJSONObject.put(
-								SCIMConstants.GroupSchemaConstants.DISPLAY,
-								StringPool.BLANK);
-						}
-
-						jsonObject.put(
-							SCIMConstants.OperationalConstants.VALUE,
-							JSONUtil.put(
-								SCIMConstants.GroupSchemaConstants.MEMBERS,
-								jsonArray));
-					}
-					else {
-						jsonObject.put(
-							SCIMConstants.OperationalConstants.VALUE,
-							JSONUtil.put(
-								SCIMConstants.GroupSchemaConstants.MEMBERS,
-								operation.getValue()));
-					}
-				}
+				_transformAddOperation(operation, operationJSONObject);
 			}
 			else if (SCIMConstants.OperationalConstants.REMOVE.equalsIgnoreCase(
 						operation.getOp())) {
 
-				if (operation.getValue() instanceof ArrayList) {
-					JSONArray valueJSONArray = JSONFactoryUtil.createJSONArray(
-						(ArrayList)operation.getValue());
-
-					JSONObject valueJSONObject = valueJSONArray.getJSONObject(
-						0);
-
-					String sb = StringBundler.concat(
-						operation.getPath(), StringPool.OPEN_BRACKET,
-						SCIMConstants.OperationalConstants.VALUE, " eq \"",
-						valueJSONObject.get(
-							SCIMConstants.OperationalConstants.VALUE),
-						"\"]");
-
-					jsonObject.put(SCIMConstants.OperationalConstants.PATH, sb);
-				}
-				else {
-					jsonObject.put(
-						SCIMConstants.OperationalConstants.PATH,
-						operation.getPath()
-					).put(
-						SCIMConstants.OperationalConstants.VALUE,
-						operation.getValue()
-					);
-				}
+				_transformRemoveOperation(operation, operationJSONObject);
 			}
 			else {
-				if (operation.getValue() instanceof ArrayList) {
-					jsonObject.put(
-						SCIMConstants.OperationalConstants.VALUE,
-						JSONFactoryUtil.createJSONArray(
-							(ArrayList)operation.getValue()));
-				}
-				else {
-					jsonObject.put(
-						SCIMConstants.OperationalConstants.VALUE,
-						operation.getValue());
-				}
-
-				jsonObject.put(
-					SCIMConstants.OperationalConstants.PATH,
-					operation.getPath());
+				_transformUpdateOperation(operation, operationJSONObject);
 			}
 
-			operationsJSONArray.put(jsonObject);
+			operationsJSONArray.put(operationJSONObject);
 		}
 
 		return JSONUtil.put(
@@ -563,6 +492,90 @@ public class ScimUtil {
 			}
 
 			return true;
+		}
+	}
+
+	private static void _transformAddOperation(
+		Operation operation, JSONObject operationJSONObject) {
+
+		if (!SCIMConstants.GroupSchemaConstants.MEMBERS.equalsIgnoreCase(
+				operation.getPath())) {
+
+			return;
+		}
+
+		Object value = operation.getValue();
+
+		if (!(value instanceof ArrayList)) {
+			operationJSONObject.put(
+				SCIMConstants.OperationalConstants.VALUE,
+				JSONUtil.put(
+					SCIMConstants.GroupSchemaConstants.MEMBERS, value));
+
+			return;
+		}
+
+		JSONArray valueJSONArray = JSONFactoryUtil.createJSONArray(
+			(ArrayList)value);
+
+		JSONObject valueJSONObject = valueJSONArray.getJSONObject(0);
+
+		if (!valueJSONObject.has(SCIMConstants.GroupSchemaConstants.DISPLAY)) {
+			valueJSONObject.put(
+				SCIMConstants.GroupSchemaConstants.DISPLAY, StringPool.BLANK);
+		}
+
+		operationJSONObject.put(
+			SCIMConstants.OperationalConstants.VALUE,
+			JSONUtil.put(
+				SCIMConstants.GroupSchemaConstants.MEMBERS, valueJSONArray));
+	}
+
+	private static void _transformRemoveOperation(
+		Operation operation, JSONObject operationJSONObject) {
+
+		Object value = operation.getValue();
+
+		if (!(value instanceof ArrayList)) {
+			operationJSONObject.put(
+				SCIMConstants.OperationalConstants.PATH, operation.getPath()
+			).put(
+				SCIMConstants.OperationalConstants.VALUE, value
+			);
+
+			return;
+		}
+
+		JSONArray valueJSONArray = JSONFactoryUtil.createJSONArray(
+			(ArrayList)value);
+
+		JSONObject valueJSONObject = valueJSONArray.getJSONObject(0);
+
+		operationJSONObject.put(
+			SCIMConstants.OperationalConstants.PATH,
+			StringBundler.concat(
+				operation.getPath(), StringPool.OPEN_BRACKET,
+				SCIMConstants.OperationalConstants.VALUE, " eq \"",
+				valueJSONObject.get(SCIMConstants.OperationalConstants.VALUE),
+				StringPool.QUOTE, StringPool.CLOSE_BRACKET));
+	}
+
+	private static void _transformUpdateOperation(
+		Operation operation, JSONObject operationJSONObject) {
+
+		operationJSONObject.put(
+			SCIMConstants.OperationalConstants.PATH, operation.getPath());
+
+		Object value = operation.getValue();
+
+		if (value instanceof ArrayList) {
+			operationJSONObject.put(
+				SCIMConstants.OperationalConstants.VALUE,
+				JSONFactoryUtil.createJSONArray((ArrayList)value));
+		}
+		else {
+			operationJSONObject.put(
+				SCIMConstants.OperationalConstants.VALUE, value);
 		}
 	}
 

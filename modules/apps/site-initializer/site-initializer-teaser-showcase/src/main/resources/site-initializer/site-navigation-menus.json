@@ -1,6 +1,6 @@
 [
 	{
-		"externalReferenceCode": "FOOTER-PRODUCTS-MENU",
+		"externalReferenceCode": "FOOTER-PRODUCTS",
 		"menuItems": [
 			{
 				"name_i18n": {
@@ -35,7 +35,7 @@
 		"type": "node"
 	},
 	{
-		"externalReferenceCode": "FOOTER-ABOUT-US-MENU",
+		"externalReferenceCode": "FOOTER-ABOUT-US",
 		"menuItems": [
 			{
 				"friendlyURL": "/careers",
@@ -52,7 +52,7 @@
 		"type": "node"
 	},
 	{
-		"externalReferenceCode": "FOOTER-GET-IN-TOUCH-MENU",
+		"externalReferenceCode": "FOOTER-GET-IN-TOUCH",
 		"menuItems": [
 			{
 				"friendlyURL": "/contact-us",
@@ -85,7 +85,7 @@
 		"type": "node"
 	},
 	{
-		"externalReferenceCode": "FOOTER-RESOURCES-MENU",
+		"externalReferenceCode": "FOOTER-RESOURCES",
 		"menuItems": [
 			{
 				"friendlyURL": "/blog",
@@ -102,7 +102,7 @@
 		"type": "node"
 	},
 	{
-		"externalReferenceCode": "HEADER-PAGE-MENU",
+		"externalReferenceCode": "HEADER-PAGE",
 		"menuItems": [
 			{
 				"friendlyURL": "/about-us",

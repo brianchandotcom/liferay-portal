@@ -16,7 +16,7 @@
 		"name_i18n": {
 			"en-US": "Distributor Segment"
 		},
-		"segmentsEntryKey": "DISTRIBUTOR-SEGMENT",
+		"segmentsEntryKey": "DISTRIBUTOR",
 		"type": "com.liferay.portal.kernel.model.User"
 	}
 ]

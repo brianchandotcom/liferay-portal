@@ -4,19 +4,20 @@
  */
 
 export function getOrCreateTranslationInput(
+	inputId: string,
 	inputName: string,
 	languageId: string,
 	localizationInputsContainer: HTMLElement,
 	namespace: string
 ) {
-	const inputId = `${namespace}${inputName}_${languageId}`;
+	const id = `${namespace}${inputId}_${languageId}`;
 
-	let translationInput = document.getElementById(inputId) as HTMLInputElement;
+	let translationInput = document.getElementById(id) as HTMLInputElement;
 
 	if (!translationInput) {
 		translationInput = document.createElement('input');
 		translationInput.type = 'hidden';
-		translationInput.id = inputId;
+		translationInput.id = id;
 		translationInput.name = `${inputName}_${languageId}`;
 		localizationInputsContainer.appendChild(translationInput);
 	}

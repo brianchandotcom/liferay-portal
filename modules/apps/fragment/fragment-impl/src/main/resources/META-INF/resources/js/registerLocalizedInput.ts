@@ -37,6 +37,7 @@ export function registerLocalizedInput({
 	if (initialValues) {
 		Object.entries(initialValues).forEach(([languageId, value]) => {
 			const input = getOrCreateTranslationInput(
+				inputElement?.id || inputName,
 				inputName,
 				languageId,
 				localizationInputsContainer,
@@ -73,6 +74,7 @@ export function registerLocalizedInput({
 			}
 
 			const translationInput = getOrCreateTranslationInput(
+				inputElement?.id || inputName,
 				inputName,
 				languageId,
 				localizationInputsContainer,
@@ -98,6 +100,7 @@ export function registerLocalizedInput({
 			}
 			else {
 				const defaultLanguageInput = getOrCreateTranslationInput(
+					inputElement?.id || inputName,
 					inputName,
 					defaultLanguageId,
 					localizationInputsContainer,
@@ -127,6 +130,7 @@ export function registerLocalizedInput({
 	return {
 		onChange: (value: string, label?: string) => {
 			const translationInput = getOrCreateTranslationInput(
+				inputElement?.id || inputName,
 				inputName,
 				currentLanguageId,
 				localizationInputsContainer,

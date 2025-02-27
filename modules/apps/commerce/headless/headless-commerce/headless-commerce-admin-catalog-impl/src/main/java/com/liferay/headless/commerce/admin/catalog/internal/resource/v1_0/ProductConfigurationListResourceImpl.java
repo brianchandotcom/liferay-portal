@@ -16,7 +16,6 @@ import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductConfigur
 import com.liferay.headless.commerce.core.util.DateConfig;
 import com.liferay.headless.commerce.core.util.ServiceContextHelper;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -101,9 +100,7 @@ public class ProductConfigurationListResourceImpl
 			CPConfigurationList.class.getName(), search, pagination,
 			queryConfig -> queryConfig.setSelectedFieldNames(
 				Field.ENTRY_CLASS_PK),
-			object -> {
-				SearchContext searchContext = (SearchContext)object;
-
+			searchContext -> {
 				searchContext.setCompanyId(contextCompany.getCompanyId());
 
 				if (GetterUtil.getLong(catalogId) > 0) {

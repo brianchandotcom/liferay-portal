@@ -27,7 +27,6 @@ import com.liferay.headless.commerce.admin.catalog.internal.util.v1_0.ProductCon
 import com.liferay.headless.commerce.admin.catalog.resource.v1_0.ProductConfigurationResource;
 import com.liferay.portal.kernel.change.tracking.CTAware;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -174,9 +173,7 @@ public class ProductConfigurationResourceImpl
 			null, booleanQuery -> booleanQuery.getPreBooleanFilter(), filter,
 			CPConfigurationEntry.class.getName(), search, pagination,
 			queryConfig -> queryConfig.setSelectedFieldNames(Field.CLASS_PK),
-			object -> {
-				SearchContext searchContext = (SearchContext)object;
-
+			searchContext -> {
 				searchContext.setAttribute(
 					CPField.CP_CONFIGURATION_LIST_ID,
 					cpConfigurationList.getCPConfigurationListId());

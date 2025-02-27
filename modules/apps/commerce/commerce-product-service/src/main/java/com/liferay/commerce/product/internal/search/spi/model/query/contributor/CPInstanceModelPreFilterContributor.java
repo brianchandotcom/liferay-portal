@@ -117,10 +117,10 @@ public class CPInstanceModelPreFilterContributor
 	private void _filterByPurchasable(
 		BooleanFilter booleanFilter, SearchContext searchContext) {
 
-		boolean published = GetterUtil.getBoolean(
+		boolean purchasable = GetterUtil.getBoolean(
 			searchContext.getAttribute(CPField.PURCHASABLE));
 
-		if (published) {
+		if (purchasable) {
 			booleanFilter.addRequiredTerm(CPField.PURCHASABLE, true);
 		}
 	}

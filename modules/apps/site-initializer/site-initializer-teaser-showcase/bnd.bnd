@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Site Initializer Teaser Showcase
 Bundle-SymbolicName: com.liferay.site.initializer.teaser.showcase
-Bundle-Version: 1.0.5
+Bundle-Version: 1.0.6
 Liferay-Site-Initializer-Name: Teaser Showcase
 Provide-Capability: liferay.site.initializer
 Web-ContextPath: /site-initializer-teaser-showcase

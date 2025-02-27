@@ -54,7 +54,7 @@ function onRemoveFile() {
 	removeButton.removeEventListener('click', onRemoveFile);
 }
 
-function onSelectFile(event, onChange) {
+function onSelectFile(event, onChange, setTranslationInputValue) {
 	event.preventDefault();
 
 	Liferay.Util.openSelectionModal({
@@ -62,7 +62,13 @@ function onSelectFile(event, onChange) {
 			const {fileEntryId, title} = JSON.parse(selectedItem.value);
 
 			if (onChange) {
-				onChange(fileEntryId, title);
+				onChange({
+					handleChange: () =>
+						setTranslationInputValue({
+							fileName: title,
+							value: fileEntryId,
+						}),
+				});
 			}
 
 			fileInput.value = fileEntryId;
@@ -123,6 +129,8 @@ else {
 		const defaultLanguageId = themeDisplay.getDefaultLanguageId();
 		const inputElement = fileInput;
 
+		let currentLanguageId = defaultLanguageId;
+
 		import('@liferay/fragment-impl').then(
 			({
 				getOrCreateTranslationInput,
@@ -164,10 +172,9 @@ else {
 					const {onChange} = registerLocalizedInput({
 						changeTextDirection: false,
 						defaultLanguageId,
-						inputName: input.name,
-						localizationInputsContainer: inputElement.parentNode,
-						namespace: fragmentNamespace,
 						onLocaleChange: ({languageId}) => {
+							currentLanguageId = languageId;
+
 							const translationInput = getTranslationInput(
 								fragmentNamespace,
 								languageId,
@@ -190,14 +197,59 @@ else {
 						},
 					});
 
-					if (isFromDocumentLibrary) {
-						selectButton.addEventListener('click', (event) =>
-							onSelectFile(event, onChange)
+					const setTranslationInputValue = ({fileName, value}) => {
+						const type =
+							isFromDocumentLibrary === false ? 'file' : 'hidden';
+
+						const translationInput = getOrCreateTranslationInput(
+							`${input.name}-file-upload`,
+							input.name,
+							currentLanguageId,
+							inputElement.parentNode,
+							fragmentNamespace,
+							type
 						);
+
+						if (isFromDocumentLibrary) {
+							translationInput.value = value;
+							translationInput.dataset.fileName = fileName;
+						}
+						else {
+							const files = value;
+
+							if (files?.length) {
+								const dataTransfer = new DataTransfer();
+
+								if (files?.length) {
+									[...files].forEach((file) => {
+										dataTransfer.items.add(file);
+									});
+								}
+
+								translationInput.files = dataTransfer.files;
+								translationInput.dataset.fileName =
+									dataTransfer.files[0].name;
+							}
+						}
+					};
+
+					if (isFromDocumentLibrary) {
+						selectButton.addEventListener('click', (event) => {
+							onSelectFile(
+								event,
+								onChange,
+								setTranslationInputValue
+							);
+						});
 					}
 					else {
 						inputElement.addEventListener('change', (event) => {
-							onChange(event.target.files);
+							onChange({
+								handleChange: () =>
+									setTranslationInputValue({
+										value: event.target.files,
+									}),
+							});
 						});
 
 						selectButton.addEventListener(

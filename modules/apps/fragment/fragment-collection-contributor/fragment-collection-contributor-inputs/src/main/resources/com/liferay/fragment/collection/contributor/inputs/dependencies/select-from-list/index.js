@@ -190,10 +190,10 @@ function handleResultListClick(event, onChange) {
 		setSelectedOption(selectedOptionElement);
 
 		if (onChange) {
-			onChange(
-				selectedOptionElement.dataset.optionValue,
-				selectedOptionElement.dataset.optionLabel
-			);
+			onChange({
+				label: selectedOptionElement.dataset.optionLabel,
+				value: selectedOptionElement.dataset.optionValue,
+			});
 		}
 	}
 }

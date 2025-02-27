@@ -53,7 +53,7 @@ else {
 					});
 
 					numericInput.addEventListener('change', (event) => {
-						onChange(event.target.value);
+						onChange({value: event.target.value});
 					});
 				}
 				else {

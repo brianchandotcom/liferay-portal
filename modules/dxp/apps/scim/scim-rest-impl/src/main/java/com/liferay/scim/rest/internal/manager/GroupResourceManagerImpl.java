@@ -50,6 +50,26 @@ public class GroupResourceManagerImpl extends GroupResourceManager {
 	}
 
 	@Override
+	public SCIMResponse updateWithPATCH(
+		String existingId, String scimObjectString, UserManager userManager,
+		String attributes, String excludeAttributes) {
+
+		try {
+			return super.updateWithPATCH(
+				existingId, scimObjectString, userManager, attributes,
+				excludeAttributes);
+		}
+		catch (Exception exception) {
+			if (exception instanceof ConflictException) {
+				return AbstractResourceManager.encodeSCIMException(
+					(ConflictException)exception);
+			}
+
+			throw exception;
+		}
+	}
+
+	@Override
 	public SCIMResponse updateWithPUT(
 		String existingId, String scimObjectString, UserManager userManager,
 		String attributes, String excludeAttributes) {

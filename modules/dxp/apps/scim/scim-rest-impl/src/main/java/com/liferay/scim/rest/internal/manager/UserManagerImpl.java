@@ -439,6 +439,13 @@ public class UserManagerImpl implements UserManager {
 	}
 
 	@Override
+	public void updateGroup(Group oldGroup, Group newGroup)
+		throws CharonException {
+
+		_addOrUpdateGroup(newGroup);
+	}
+
+	@Override
 	public Group updateGroup(
 			Group oldGroup, Group newGroup,
 			Map<String, Boolean> requiredAttributes)

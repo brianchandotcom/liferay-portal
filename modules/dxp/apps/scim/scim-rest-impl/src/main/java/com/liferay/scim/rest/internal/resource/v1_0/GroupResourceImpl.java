@@ -20,8 +20,10 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.Searcher;
 import com.liferay.scim.rest.dto.v1_0.Group;
+import com.liferay.scim.rest.dto.v1_0.PatchOp;
 import com.liferay.scim.rest.internal.manager.GroupResourceManagerImpl;
 import com.liferay.scim.rest.internal.manager.UserManagerImpl;
+import com.liferay.scim.rest.internal.util.ScimUtil;
 import com.liferay.scim.rest.resource.v1_0.GroupResource;
 
 import java.util.Map;
@@ -67,6 +69,16 @@ public class GroupResourceImpl extends BaseGroupResourceImpl {
 				_userManager,
 				ParamUtil.getString(contextHttpServletRequest, "filter", null),
 				startIndex, count, null, null, null, null, null));
+	}
+
+	@Override
+	public Response patchV2Group(String id, PatchOp operations)
+		throws Exception {
+
+		return _buildResponse(
+			_groupResourceManager.updateWithPATCH(
+				id, ScimUtil.transformOperationGroup(operations),
+				_userManager));
 	}
 
 	@Override

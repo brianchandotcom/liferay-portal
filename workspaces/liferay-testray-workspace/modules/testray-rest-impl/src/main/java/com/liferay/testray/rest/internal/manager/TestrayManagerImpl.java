@@ -602,8 +602,8 @@ public class TestrayManagerImpl implements TestrayManager {
 
 	private void _addOrUpdateTestrayCaseResult(
 			ServiceContext serviceContext, Node testcaseNode,
-			String testrayBuildDate, long testrayBuildId,
-			TestrayCache testrayCache, long testrayCaseId,
+			JSONArray testrayAttachmentsJSONArray, String testrayBuildDate,
+			long testrayBuildId, TestrayCache testrayCache, long testrayCaseId,
 			Map<String, Serializable> testrayCasePropertiesMap,
 			long testrayComponentId, long testrayRunId, long testrayTeamId,
 			long userId)
@@ -622,7 +622,7 @@ public class TestrayManagerImpl implements TestrayManager {
 
 		Map<String, Serializable> properties =
 			HashMapBuilder.<String, Serializable>put(
-				"attachments", _addTestrayAttachments(testcaseNode)
+				"attachments", testrayAttachmentsJSONArray
 			).put(
 				"closedDate", Timestamp.valueOf(testrayBuildDate)
 			).put(
@@ -710,7 +710,7 @@ public class TestrayManagerImpl implements TestrayManager {
 		testrayCache.incrementTestrayCaseResultAmount();
 	}
 
-	private JSONArray _addTestrayAttachments(Node testcaseNode)
+	private JSONArray _getTestrayAttachmentsJSONArray(Node testcaseNode)
 		throws Exception {
 
 		JSONArray jsonArray = _jsonFactory.createJSONArray();
@@ -757,8 +757,8 @@ public class TestrayManagerImpl implements TestrayManager {
 
 	private void _addTestrayCase(
 			long companyId, ServiceContext serviceContext, Node testcaseNode,
-			String testrayBuildDate, long testrayBuildId,
-			TestrayCache testrayCache,
+			JSONArray testrayAttachmentsJSONArray, String testrayBuildDate,
+			long testrayBuildId, TestrayCache testrayCache,
 			Map<String, Serializable> testrayCasePropertiesMap,
 			long testrayProjectId, long testrayRunId, long userId)
 		throws Exception {
@@ -842,9 +842,10 @@ public class TestrayManagerImpl implements TestrayManager {
 		}
 
 		_addOrUpdateTestrayCaseResult(
-			serviceContext, testcaseNode, testrayBuildDate, testrayBuildId,
-			testrayCache, testrayCaseId, testrayCasePropertiesMap,
-			testrayComponentId, testrayRunId, testrayTeamId, userId);
+			serviceContext, testcaseNode, testrayAttachmentsJSONArray,
+			testrayBuildDate, testrayBuildId, testrayCache, testrayCaseId,
+			testrayCasePropertiesMap, testrayComponentId, testrayRunId,
+			testrayTeamId, userId);
 	}
 
 	private Map<String, Set<String>> _addTestrayCases(
@@ -861,21 +862,24 @@ public class TestrayManagerImpl implements TestrayManager {
 		for (int i = 0; i < testCaseNodeList.getLength(); i++) {
 			Node testcaseNode = testCaseNodeList.item(i);
 
-			JSONArray jsonArray = _addTestrayAttachments(testcaseNode);
+			JSONArray testrayAttachmentsJSONArray = _getTestrayAttachmentsJSONArray(
+				testcaseNode);
 
 			Map<String, Serializable> testrayCasePropertiesMap =
 				_getTestrayCaseProperties((Element)testcaseNode);
 
 			_addTestrayCase(
-				companyId, serviceContext, testcaseNode, testrayBuildDate,
-				testrayBuildId, testrayCache, testrayCasePropertiesMap,
-				testrayProjectId, testrayRunId, userId);
+				companyId, serviceContext, testcaseNode,
+				testrayAttachmentsJSONArray, testrayBuildDate, testrayBuildId,
+				testrayCache, testrayCasePropertiesMap, testrayProjectId,
+				testrayRunId, userId);
 
 			map.put(
 				GetterUtil.getString(
 					testrayCasePropertiesMap.get("testray.testcase.name")),
 				_getPlaywrightReports(
-					jsonArray, map, testrayCasePropertiesMap));
+					testrayAttachmentsJSONArray, map,
+					testrayCasePropertiesMap));
 		}
 
 		return map;

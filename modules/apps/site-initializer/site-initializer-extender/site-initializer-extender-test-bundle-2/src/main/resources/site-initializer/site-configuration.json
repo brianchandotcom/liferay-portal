@@ -1,3 +1,6 @@
 {
-	"showControlMenuByRole": "false"
+	"manualMembership": "true",
+	"membershipRestriction": "0",
+	"showControlMenuByRole": "false",
+	"typeSite": "1"
 }

@@ -686,6 +686,11 @@ public class DDMServiceUpgradeStepRegistrator
 						DDM_FORM_DEFAULT_USER_EXTERNAL_REFERENCE_CODE,
 					"' where emailAddress like '",
 					"ddm_form_default_user_screen_name@%'")));
+
+		registry.register(
+			"7.0.2", "7.0.3",
+			UpgradeProcessFactory.dropColumns(
+				"DDMFormInstance", "expirationDate"));
 	}
 
 	@Activate

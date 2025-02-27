@@ -81,8 +81,8 @@ public class DeleteSegmentsExperienceMVCActionCommandTest {
 	}
 
 	@Test
-	@TestInfo("LPS-187444")
-	public void testGetPortletSetup() throws Exception {
+	@TestInfo({"LPD-50133", "LPS-187444"})
+	public void testProcessAction() throws Exception {
 		Layout layout = LayoutTestUtil.addTypeContentLayout(_group);
 
 		Layout draftLayout = layout.fetchDraftLayout();

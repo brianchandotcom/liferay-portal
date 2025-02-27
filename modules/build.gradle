@@ -99,11 +99,15 @@ if (Boolean.getBoolean("build.jakarta.transformer.enabled")) {
 		}
 	}
 
-	URLClassLoader urlClassLoader = new URLClassLoader(
-		configurations.jakartaTransformer.collect { it.toURI() }.collect{ it.toURL() }.toArray(new URL[0]),
-		null as java.lang.ClassLoader);
+	BaseJakartaTransformerTransformAction.classLoader = new URLClassLoader(
+		configurations.jakartaTransformer.collect {
+			File file ->
 
-	BaseJakartaTransformerTransformAction.classLoader = urlClassLoader
+			URI uri = file.toURI()
+
+			return uri.toURL()
+		} as URL[],
+		null as java.lang.ClassLoader)
 	BaseJakartaTransformerTransformAction.logger = project.logger
 	BaseJakartaTransformerTransformAction.propertiesFile = project.file("liferay-jakarta-versions.properties")
 }

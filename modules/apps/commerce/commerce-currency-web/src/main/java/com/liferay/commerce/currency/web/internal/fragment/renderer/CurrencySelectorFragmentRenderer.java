@@ -52,7 +52,12 @@ public class CurrencySelectorFragmentRenderer implements FragmentRenderer {
 
 	@Override
 	public String getCollectionKey() {
-		return "commerce-currency";
+		return "commerce-order";
+	}
+
+	@Override
+	public String getIcon() {
+		return "catalog";
 	}
 
 	@Override
@@ -67,26 +72,29 @@ public class CurrencySelectorFragmentRenderer implements FragmentRenderer {
 
 	@Override
 	public void render(
-			FragmentRendererContext fragmentRendererContext,
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws IOException {
+		FragmentRendererContext fragmentRendererContext,
+		HttpServletRequest httpServletRequest,
+		HttpServletResponse httpServletResponse) {
 
-		try {
-			CommerceContext commerceContext =
-				(CommerceContext)httpServletRequest.getAttribute(
-					CommerceWebKeys.COMMERCE_CONTEXT);
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-34908")) {
+			return;
+		}
 
-			if (commerceContext == null) {
-				if (_isEditMode(httpServletRequest)) {
-					_printPortletMessageInfo(
-						httpServletRequest, httpServletResponse,
-						"the-currency-selector-component-will-be-shown-here");
-				}
+		CommerceContext commerceContext =
+			(CommerceContext)httpServletRequest.getAttribute(
+				CommerceWebKeys.COMMERCE_CONTEXT);
 
-				return;
+		if (commerceContext == null) {
+			if (_isEditMode(httpServletRequest)) {
+				_printPortletMessageInfo(
+					httpServletRequest, httpServletResponse,
+					"the-currency-selector-component-will-be-shown-here");
 			}
 
+			return;
+		}
+
+		try {
 			RequestDispatcher requestDispatcher =
 				_servletContext.getRequestDispatcher(
 					"/fragment/renderer/currency_selector/page.jsp");
@@ -124,6 +132,8 @@ public class CurrencySelectorFragmentRenderer implements FragmentRenderer {
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
 		catch (Exception exception) {
+			_log.error(exception);
+
 			throw new RuntimeException(exception);
 		}
 	}

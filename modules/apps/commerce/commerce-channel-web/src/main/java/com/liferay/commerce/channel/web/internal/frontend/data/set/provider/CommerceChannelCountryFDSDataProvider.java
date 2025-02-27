@@ -47,7 +47,7 @@ public class CommerceChannelCountryFDSDataProvider
 			httpServletRequest, "commerceChannelId");
 
 		return TransformUtil.transform(
-			_commerceChannelRelService.getCommerceChannelCountries(
+			_commerceChannelRelService.getCountryCommerceChannelRels(
 				commerceChannelId, fdsKeywords.getKeywords(),
 				fdsPagination.getStartPosition(),
 				fdsPagination.getEndPosition()),
@@ -79,7 +79,7 @@ public class CommerceChannelCountryFDSDataProvider
 		long commerceChannelId = ParamUtil.getLong(
 			httpServletRequest, "commerceChannelId");
 
-		return _commerceChannelRelService.getCommerceChannelCountriesCount(
+		return _commerceChannelRelService.getCountryCommerceChannelRelsCount(
 			commerceChannelId, fdsKeywords.getKeywords());
 	}
 

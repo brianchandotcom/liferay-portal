@@ -146,7 +146,7 @@ public class CommerceChannelCountryDisplayContext {
 		throws PortalException {
 
 		return TransformUtil.transformToLongArray(
-			_commerceChannelRelService.getCommerceChannelCountries(
+			_commerceChannelRelService.getCountryCommerceChannelRels(
 				commerceChannelId, StringPool.BLANK, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS),
 			CommerceChannelRelModel::getClassPK);

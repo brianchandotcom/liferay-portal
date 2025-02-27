@@ -7,6 +7,10 @@
 
 <%@ include file="/deletions/init.jsp" %>
 
+<%
+StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHelper();
+%>
+
 <c:if test="<%= cmd.equals(Constants.EXPORT) || cmd.equals(Constants.IMPORT) || cmd.equals(Constants.PUBLISH) %>">
 	<div aria-labelledby="<portlet:namespace />deletions" class="options-group" role="group">
 		<clay:sheet-section>
@@ -14,7 +18,7 @@
 				<liferay-ui:message key="deletions" />
 			</span>
 
-			<c:if test="<%= !cmd.equals(Constants.EXPORT) %>">
+			<c:if test="<%= !cmd.equals(Constants.EXPORT) && !stagingGroupHelper.isCompanyGroup(group) %>">
 				<liferay-staging:checkbox
 					checked="<%= MapUtil.getBoolean(parameterMap, PortletDataHandlerKeys.DELETE_PORTLET_DATA, false) %>"
 					disabled="<%= disableInputs %>"

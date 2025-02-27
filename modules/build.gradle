@@ -18,6 +18,7 @@ import java.util.concurrent.ConcurrentSkipListSet
 import org.apache.tools.ant.DirectoryScanner
 import org.apache.tools.ant.filters.ReplaceTokens
 
+import org.gradle.api.artifacts.transform.CacheableTransform;
 import org.gradle.api.artifacts.transform.InputArtifact;
 import org.gradle.api.artifacts.transform.TransformAction;
 import org.gradle.api.artifacts.transform.TransformOutputs;
@@ -929,6 +930,7 @@ gradle.taskGraph.whenReady {
 	}
 }
 
+@CacheableTransform
 protected abstract class BaseJakartaTransformerTransformAction implements TransformAction<TransformParameters.None> {
 
 	public static final String ARTIFACT_TYPE = "jakarta-transformed-jar";

@@ -80,6 +80,10 @@ export function Conditions({
 		);
 	}, [creationLanguageId, customObjectFields]);
 
+	const hasLocalizedField = useMemo(() => {
+		return customObjectFields.some((field) => field.localized);
+	}, [customObjectFields]);
+
 	return (
 		<>
 			{disabledGroovyValidation && (

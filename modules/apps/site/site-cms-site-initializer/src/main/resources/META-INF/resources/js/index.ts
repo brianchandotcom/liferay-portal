@@ -5,5 +5,5 @@
 
 export {default as ContentsFDSPropsTransformer} from './FDSPropsTransformer/ContentsFDSPropsTransformer';
 export {default as FilesFDSPropsTransformer} from './FDSPropsTransformer/FilesFDSPropsTransformer';
-export {default as SpacesWidget} from './spaces/SpacesWidget';
+export {default as SpacesNavigation} from './spaces_navigation/SpacesNavigation';
 export {default as StructureBuilder} from './structure_builder/components/StructureBuilder';

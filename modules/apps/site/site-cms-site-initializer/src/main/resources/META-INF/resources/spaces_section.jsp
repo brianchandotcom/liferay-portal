@@ -6,6 +6,6 @@
 	<span aria-hidden="true" class="loading-animation"></span>
 
 	<react:component
-		module="{SpacesWidget} from site-cms-site-initializer"
+		module="{SpacesNavigation} from site-cms-site-initializer"
 	/>
 </div>

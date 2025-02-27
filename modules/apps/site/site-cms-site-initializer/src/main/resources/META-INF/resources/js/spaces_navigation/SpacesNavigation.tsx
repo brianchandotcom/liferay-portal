@@ -7,7 +7,7 @@ import {ClayButtonWithIcon} from '@clayui/button';
 import ClayPanel from '@clayui/panel';
 import React from 'react';
 
-const SpacesWidget: React.FC = () => {
+const SpacesNavigation: React.FC = () => {
 	const onAddButtonClick = (event: any) => {
 		event.preventDefault();
 		event.stopPropagation();
@@ -40,4 +40,4 @@ const SpacesWidget: React.FC = () => {
 	);
 };
 
-export default SpacesWidget;
+export default SpacesNavigation;

@@ -1494,6 +1494,10 @@
 		</check>
 	</source-processor>
 	<source-processor name="PropertiesSourceProcessor">
+		<check name="GradleDependencyArtifactsCheck">
+			<category name="Bug Prevention" />
+			<description name="Checks that value `default` is not used for attribute `version`." />
+		</check>
 		<check name="PropertiesArchivedModulesCheck">
 			<category name="Bug Prevention" />
 			<description name="Finds `test.batch.class.names.includes` property value pointing to archived modules in `test.properties`." />

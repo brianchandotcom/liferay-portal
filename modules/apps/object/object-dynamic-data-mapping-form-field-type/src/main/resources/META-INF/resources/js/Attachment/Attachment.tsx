@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {useConfig} from 'data-engine-js-components-web';
 import {ReactFieldBase as FieldBase} from 'dynamic-data-mapping-form-field-type';
 import {
 	FieldChangeEventHandler,
@@ -12,7 +13,8 @@ import {
 	AvailableLocale,
 	EditingLocale,
 } from 'dynamic-data-mapping-form-field-type/src/main/resources/META-INF/resources/util/localizable/LocalesDropdown';
-import React, {useState} from 'react';
+import {fetch} from 'frontend-js-web';
+import React, {useCallback, useEffect, useState} from 'react';
 
 import AttachmentBase, {
 	AttachmentBaseProps,
@@ -25,6 +27,7 @@ export interface AttachmentProps
 	availableLocales: AvailableLocale[];
 	contentURL?: string;
 	defaultLocale: EditingLocale;
+	deleteURL?: string;
 	fieldName: string;
 	fileEntryProperties: AttachmentFile | LocalizedValue<AttachmentFile>;
 	localizedObjectField: boolean;
@@ -34,6 +37,7 @@ export interface AttachmentProps
 
 export default function Attachment({
 	contentURL,
+	deleteURL,
 	fileEntryProperties,
 	localizedObjectField,
 	onChange,
@@ -45,6 +49,8 @@ export default function Attachment({
 }: AttachmentProps) {
 	const isLocalizedObjectField: boolean =
 		Liferay.FeatureFlags['LPD-32050'] && !!localizedObjectField;
+
+	const {portletNamespace} = useConfig();
 
 	const getAttachment = () => {
 		if (Liferay.FeatureFlags['LPD-32050']) {
@@ -61,17 +67,69 @@ export default function Attachment({
 		getAttachment() as AttachmentFile | null
 	);
 	const [error, setError] = useState({});
+	const [submitButtonClicked, setSubmitButtonClicked] = useState(false);
+
+	const deleteFileEntry = useCallback(async () => {
+		if (!attachment || !deleteURL) {
+			return;
+		}
+
+		const {fileEntryId} = attachment;
+
+		if (!fileEntryId) {
+			return;
+		}
+
+		const formData = new FormData();
+
+		formData.append(`${portletNamespace}fileEntryId`, fileEntryId);
+
+		await fetch(deleteURL, {
+			body: formData,
+			method: 'POST',
+		});
+	}, [attachment, deleteURL, portletNamespace]);
+
+	useEffect(() => {
+		window.onbeforeunload = function () {
+			if (!submitButtonClicked) {
+				deleteFileEntry();
+			}
+		};
+
+		return () => {
+			window.onbeforeunload = null;
+		};
+	}, [deleteFileEntry, submitButtonClicked]);
+
+	useEffect(() => {
+		Liferay.on(
+			'submitButtonClicked',
+
+			() => {
+				setSubmitButtonClicked(true);
+			}
+		);
+
+		return () => {
+			Liferay.detach('submitButtonClicked');
+		};
+	}, []);
 
 	const handleAttachmentChange = (
 		attachmentValue: AttachmentFile,
 		fileId: string
 	) => {
+		deleteFileEntry();
+
 		setAttachment(attachmentValue);
 
 		onChange({target: {value: fileId}});
 	};
 
 	const handleDelete = () => {
+		deleteFileEntry();
+
 		setAttachment(null);
 
 		onChange({target: {value: ''}}); // TODO: fix backend to support null

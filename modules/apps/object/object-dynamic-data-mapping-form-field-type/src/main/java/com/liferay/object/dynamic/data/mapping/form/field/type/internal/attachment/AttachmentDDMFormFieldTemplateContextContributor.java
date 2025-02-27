@@ -17,6 +17,7 @@ import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.criteria.FileEntryItemSelectorReturnType;
 import com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion;
 import com.liferay.object.configuration.ObjectConfiguration;
+import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.dynamic.data.mapping.form.field.type.constants.ObjectDDMFormFieldTypeConstants;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -73,6 +74,28 @@ public class AttachmentDDMFormFieldTemplateContextContributor
 		Map<String, Object> parameters = HashMapBuilder.<String, Object>put(
 			"acceptedFileExtensions",
 			ddmFormField.getProperty("acceptedFileExtensions")
+		).put(
+			"deleteURL",
+			() -> {
+				if (!Objects.equals(
+						ddmFormField.getProperty("fileSource"),
+						ObjectFieldSettingConstants.VALUE_USER_COMPUTER)) {
+
+					return null;
+				}
+
+				RequestBackedPortletURLFactory requestBackedPortletURLFactory =
+					RequestBackedPortletURLFactoryUtil.create(
+						ddmFormFieldRenderingContext.getHttpServletRequest());
+
+				return PortletURLBuilder.create(
+					requestBackedPortletURLFactory.createActionURL(
+						GetterUtil.getString(
+							ddmFormField.getProperty("portletId")))
+				).setActionName(
+					"/object_entries/delete_attachment"
+				).buildString();
+			}
 		).put(
 			"fileSource", ddmFormField.getProperty("fileSource")
 		).put(

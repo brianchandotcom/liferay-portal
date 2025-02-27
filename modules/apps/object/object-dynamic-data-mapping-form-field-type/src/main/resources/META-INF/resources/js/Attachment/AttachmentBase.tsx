@@ -21,6 +21,7 @@ import {LocalizedValue} from 'dynamic-data-mapping-form-field-type/src/main/reso
 
 export type AttachmentFile = {
 	contentURL: string;
+	fileEntryId: string;
 	title: string;
 };
 
@@ -90,6 +91,7 @@ export default function AttachmentBase({
 			onAttachmentChange(
 				{
 					contentURL: selectedItemValue.url,
+					fileEntryId: selectedItemValue.fileEntryId,
 					title: selectedItemValue.title,
 				},
 				selectedItemValue.fileEntryId
@@ -133,7 +135,11 @@ export default function AttachmentBase({
 				}
 				else {
 					onAttachmentChange(
-						{contentURL: file.contentURL, title: file.title},
+						{
+							contentURL: file.contentURL,
+							fileEntryId: file.fileEntryId,
+							title: file.title,
+						},
 						file.fileEntryId
 					);
 				}

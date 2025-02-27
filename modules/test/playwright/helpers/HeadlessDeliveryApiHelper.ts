@@ -108,6 +108,12 @@ export class HeadlessDeliveryApiHelper {
 		);
 	}
 
+	async getDocument(documentId: string) {
+		return this.apiHelpers.get(
+			`${this.apiHelpers.baseUrl}${this.basePath}/documents/${documentId}`
+		);
+	}
+
 	async getSiteDocumentsPage(siteId: string, sort: string = 'id') {
 		return this.apiHelpers.get(
 			`${this.apiHelpers.baseUrl}${this.basePath}/sites/${siteId}/documents?sort=${sort}`

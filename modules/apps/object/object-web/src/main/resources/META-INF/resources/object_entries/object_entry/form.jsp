@@ -252,6 +252,8 @@ portletDisplay.setURLBack(backURL);
 							method: externalReferenceCode ? 'PATCH' : 'POST',
 						})
 							.then((response) => {
+								Liferay.fire('submitButtonClicked');
+
 								if (response.status === 401) {
 									window.location.reload();
 								}

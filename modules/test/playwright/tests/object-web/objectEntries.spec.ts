@@ -1455,6 +1455,126 @@ test.describe('Manage object entries through View Object Entries', () => {
 			'Entry A'
 		);
 	});
+
+	test('Verify that temporary files are deleted from the database if the object creation is not completed', async ({
+		apiHelpers,
+		page,
+		viewObjectEntriesPage,
+	}) => {
+
+		// Create object definition with attachment object field
+
+		const objectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFields: [mockedObjectFields.attachmentFieldUserComputer],
+				objectFolderExternalReferenceCode: 'default',
+				status: {code: 0},
+			});
+
+		apiHelpers.data.push({
+			id: objectDefinition.id,
+			type: 'objectDefinition',
+		});
+
+		await viewObjectEntriesPage.goto(objectDefinition.className);
+
+		await viewObjectEntriesPage.clickAddObjectEntry(objectDefinition.name);
+
+		// Upload first file from user computer
+
+		await viewObjectEntriesPage.selectFileFromUserComputer(
+			__dirname,
+			'sampleFile.txt'
+		);
+
+		const fileEntryId1 = await page.getAttribute(
+			'input[data-field-name^="testAttachment"]',
+			'value'
+		);
+
+		expect(
+			await apiHelpers.headlessDelivery.getDocument(fileEntryId1)
+		).toEqual(
+			expect.objectContaining({
+				id: Number(fileEntryId1),
+			})
+		);
+
+		// Verify that the first file is removed after the second file is uploaded
+
+		await viewObjectEntriesPage.selectFileFromUserComputer(
+			__dirname,
+			'astronaut.png'
+		);
+
+		expect(
+			await apiHelpers.headlessDelivery.getDocument(fileEntryId1)
+		).toEqual({status: 'NOT_FOUND'});
+
+		const fileEntryId2 = await page.getAttribute(
+			'input[data-field-name^="testAttachment"]',
+			'value'
+		);
+
+		expect(
+			await apiHelpers.headlessDelivery.getDocument(fileEntryId2)
+		).toEqual(
+			expect.objectContaining({
+				id: Number(fileEntryId2),
+			})
+		);
+
+		// Verify that the delete button removes the second file
+
+		await viewObjectEntriesPage.deleteFileButton.click();
+
+		expect(
+			await apiHelpers.headlessDelivery.getDocument(fileEntryId2)
+		).toEqual({status: 'NOT_FOUND'});
+
+		// Verify that the file is removed after page reload
+
+		await viewObjectEntriesPage.selectFileFromUserComputer(
+			__dirname,
+			'sampleFile.txt'
+		);
+
+		const fileEntryId3 = await page.getAttribute(
+			'input[data-field-name^="testAttachment"]',
+			'value'
+		);
+
+		await page.reload();
+
+		expect(
+			await apiHelpers.headlessDelivery.getDocument(fileEntryId3)
+		).toEqual({status: 'NOT_FOUND'});
+
+		// Verify that the file is saved successfully when clicking submit
+
+		await viewObjectEntriesPage.selectFileFromUserComputer(
+			__dirname,
+			'astronaut.png'
+		);
+
+		await viewObjectEntriesPage.saveObjectEntryButton.click();
+
+		await expect(viewObjectEntriesPage.successMessage).toBeVisible();
+		await expect(
+			viewObjectEntriesPage.page.getByText('astronaut.png')
+		).toBeVisible();
+
+		await viewObjectEntriesPage.selectFileFromUserComputer(
+			__dirname,
+			'sampleFile.txt'
+		);
+
+		await page.reload();
+
+		await expect(
+			viewObjectEntriesPage.page.getByText('astronaut.png')
+		).toBeVisible();
+	});
 });
 
 test.describe('Manage object entries through Workflow', () => {

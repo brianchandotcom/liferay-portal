@@ -14,6 +14,7 @@ import com.liferay.object.admin.rest.resource.v1_0.ObjectFieldResource;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.field.builder.LongTextObjectFieldBuilder;
+import com.liferay.object.field.builder.MultiselectPicklistObjectFieldBuilder;
 import com.liferay.object.field.builder.PicklistObjectFieldBuilder;
 import com.liferay.object.field.builder.RichTextObjectFieldBuilder;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
@@ -30,6 +31,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
@@ -204,6 +206,101 @@ public class ObjectDefinitionGraphQLTest {
 	public void tearDown() throws PortalException {
 		ObjectEntryLocalServiceUtil.deleteObjectEntry(_childObjectEntry);
 		ObjectEntryLocalServiceUtil.deleteObjectEntry(_parentObjectEntry);
+	}
+
+	@Test
+	@TestInfo("LPD-49283")
+	public void testAddAndGetObjectEntryWithMultiselectPicklistField()
+		throws Exception {
+
+		ListTypeDefinition listTypeDefinition =
+			ListTypeDefinitionLocalServiceUtil.addListTypeDefinition(
+				null, TestPropsValues.getUserId(),
+				LocalizedMapUtil.getLocalizedMap(StringUtil.randomId()), false,
+				Collections.emptyList());
+
+		String listFieldValueKey1 = StringUtil.randomId();
+		String listFieldValueKey2 = StringUtil.randomId();
+		String listFieldValueKey3 = StringUtil.randomId();
+
+		_addListTypeEntry(listTypeDefinition, listFieldValueKey1);
+		_addListTypeEntry(listTypeDefinition, listFieldValueKey2);
+		_addListTypeEntry(listTypeDefinition, listFieldValueKey3);
+
+		String picklistFieldName = StringUtil.randomId();
+		String multiselectPicklistFieldName = StringUtil.randomId();
+
+		ObjectDefinition objectDefinition =
+			ObjectDefinitionTestUtil.publishObjectDefinition(
+				true, ObjectDefinitionTestUtil.getRandomName(),
+				Arrays.asList(
+					new PicklistObjectFieldBuilder(
+					).userId(
+						TestPropsValues.getUserId()
+					).listTypeDefinitionId(
+						listTypeDefinition.getListTypeDefinitionId()
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).indexedAsKeyword(
+						true
+					).name(
+						picklistFieldName
+					).required(
+						true
+					).build(),
+					new MultiselectPicklistObjectFieldBuilder(
+					).userId(
+						TestPropsValues.getUserId()
+					).listTypeDefinitionId(
+						listTypeDefinition.getListTypeDefinitionId()
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).indexedAsKeyword(
+						true
+					).name(
+						multiselectPicklistFieldName
+					).required(
+						true
+					).build()),
+				ObjectDefinitionConstants.SCOPE_COMPANY,
+				TestPropsValues.getUserId());
+
+		JSONAssert.assertEquals(
+			JSONUtil.put(
+				multiselectPicklistFieldName,
+				JSONUtil.putAll(
+					JSONUtil.put("key", listFieldValueKey2),
+					JSONUtil.put("key", listFieldValueKey3))
+			).put(
+				picklistFieldName, JSONUtil.put("key", listFieldValueKey1)
+			).toString(),
+			JSONUtil.getValueAsString(
+				_invoke(
+					new GraphQLField(
+						"mutation",
+						new GraphQLField(
+							"c",
+							new GraphQLField(
+								"create" + objectDefinition.getShortName(),
+								HashMapBuilder.<String, Object>put(
+									objectDefinition.getShortName(),
+									StringBundler.concat(
+										"{", picklistFieldName, ": {key: \"",
+										listFieldValueKey1, "\"}, ",
+										multiselectPicklistFieldName,
+										": [{key: \"", listFieldValueKey2,
+										"\"}, {key: \"", listFieldValueKey3,
+										"\"}]}")
+								).build(),
+								new GraphQLField(picklistFieldName + " {key}"),
+								new GraphQLField(
+									multiselectPicklistFieldName +
+										" {key}"))))),
+				"JSONObject/data", "JSONObject/c",
+				"JSONObject/create" + objectDefinition.getShortName()),
+			JSONCompareMode.STRICT);
 	}
 
 	@Test

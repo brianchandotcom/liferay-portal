@@ -3,18 +3,15 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {ObjectDefinitionApi} from '@liferay/object-admin-rest-client-js';
 import {expect, mergeTests} from '@playwright/test';
 
-import {apiHelpersTest} from '../../fixtures/apiHelpersTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {getRandomInt} from '../../utils/getRandomInt';
 import {cmsPagesTest} from './fixtures/cmsPagesTest';
 
-const test = mergeTests(apiHelpersTest, cmsPagesTest, loginTest());
+const test = mergeTests(cmsPagesTest, loginTest());
 
 test('Structures can be saved and published', async ({
-	apiHelpers,
 	page,
 	structureBuilderPage,
 }) => {
@@ -29,18 +26,9 @@ test('Structures can be saved and published', async ({
 
 	await structureBuilderPage.changeStructureLabel(label);
 
-	// Save structure and capture object definition id
+	// Save structure
 
-	const [response] = await Promise.all([
-		page.waitForResponse(
-			(response) =>
-				response.url().includes('object-definitions') &&
-				response.status() === 200
-		),
-		await structureBuilderPage.saveStructure(),
-	]);
-
-	const {id} = await response.json();
+	const {id} = await structureBuilderPage.saveStructure();
 
 	await expect(page.locator('.alert-danger')).not.toBeVisible();
 
@@ -66,11 +54,5 @@ test('Structures can be saved and published', async ({
 
 	// Delete structure
 
-	const APIClient = await apiHelpers.buildRestClient(ObjectDefinitionApi);
-
-	const {
-		response: {statusCode},
-	} = await APIClient.deleteObjectDefinition(id);
-
-	expect(statusCode).toBe(204);
+	await structureBuilderPage.deleteStructure(id);
 });

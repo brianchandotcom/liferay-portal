@@ -89,6 +89,18 @@ export class StructureBuilderPage {
 		}
 	}
 
+	async deleteStructure(id: number) {
+		const apiHelpers = new ApiHelpers(this.page);
+
+		const APIClient = await apiHelpers.buildRestClient(ObjectDefinitionApi);
+
+		const {
+			response: {statusCode},
+		} = await APIClient.deleteObjectDefinition(id);
+
+		expect(statusCode).toBe(204);
+	}
+
 	async publishStructure() {
 		await this.publishButton.click();
 
@@ -98,8 +110,23 @@ export class StructureBuilderPage {
 	}
 
 	async saveStructure() {
-		await this.saveButton.click();
+		const save = async () => {
+			await this.saveButton.click();
 
-		await waitForAlert(this.page, 'successfully', {timeout: 1000});
+			await waitForAlert(this.page, 'successfully', {timeout: 1000});
+		};
+
+		const [response] = await Promise.all([
+			this.page.waitForResponse(
+				(response) =>
+					response.url().includes('object-definitions') &&
+					response.status() === 200
+			),
+			await save(),
+		]);
+
+		const {id} = await response.json();
+
+		return {id};
 	}
 }

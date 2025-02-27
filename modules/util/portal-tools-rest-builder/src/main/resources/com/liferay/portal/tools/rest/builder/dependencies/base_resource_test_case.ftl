@@ -1478,14 +1478,13 @@ public abstract class Base${schemaName}ResourceTestCase {
 				}
 
 				protected UriInfo testVulcanCRUDItemDelegate_getUriInfo(Long id) {
-
-					String applicationName = "v1.0/" + RandomTestUtil.randomString();
+					String applicationPath = "v1.0/" + RandomTestUtil.randomString();
 
 					return new UriInfo() {
 
 						@Override
 						public String getPath() {
-							return applicationName;
+							return applicationPath;
 						}
 
 						@Override
@@ -1506,7 +1505,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 						@Override
 						public URI getRequestUri() {
 							return UriBuilder.fromPath(StringBundler.concat(
-								"http://localhost:8080/o/", applicationName,
+								"http://localhost:8080/o/", applicationPath,
 								 "/", RandomTestUtil.randomString()
 							)).build();
 						}
@@ -1529,7 +1528,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 						@Override
 						public URI getBaseUri() {
 							return UriBuilder.fromPath(StringBundler.concat(
-								"http://localhost:8080/o/", applicationName)).build();
+								"http://localhost:8080/o/", applicationPath)).build();
 						}
 
 						@Override

@@ -4,7 +4,8 @@
 			{
 				"definition": {
 					"indexed": true,
-					"layout": {},
+					"layout": {
+					},
 					"name": "Home Page"
 				},
 				"pageElements": [
@@ -31,7 +32,8 @@
 							{
 								"definition": {
 									"indexed": true,
-									"layout": {},
+									"layout": {
+									},
 									"name": "Banner Content"
 								},
 								"pageElements": [
@@ -51,11 +53,13 @@
 												},
 												{
 													"id": "portraitMobile",
-													"rowViewportDefinition": {}
+													"rowViewportDefinition": {
+													}
 												},
 												{
 													"id": "tablet",
-													"rowViewportDefinition": {}
+													"rowViewportDefinition": {
+													}
 												}
 											],
 											"verticalAlignment": "middle"
@@ -71,11 +75,13 @@
 															"id": "landscapeMobile"
 														},
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "portraitMobile"
 														},
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "tablet"
 														}
 													],
@@ -109,7 +115,8 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "Welcome Back! Elevate Your Inventory with Premium Eyewear"
@@ -127,12 +134,14 @@
 																	"fragment": {
 																		"key": "BASIC_COMPONENT-paragraph"
 																	},
-																	"fragmentConfig": {},
+																	"fragmentConfig": {
+																	},
 																	"fragmentFields": [
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "Discover premium craftsmanship, innovative lenses, and designs that help your brand stand out."
@@ -156,15 +165,16 @@
 																		"key": "BASIC_COMPONENT-button"
 																	},
 																	"fragmentConfig": {
+																		"buttonSize": "nm",
 																		"buttonType": "primary",
-																		"type": "link",
-																		"buttonSize": "nm"
+																		"type": "link"
 																	},
 																	"fragmentFields": [
 																		{
 																			"id": "link",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "Start Your Journey"
@@ -193,11 +203,13 @@
 															"id": "landscapeMobile"
 														},
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "portraitMobile"
 														},
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "tablet"
 														}
 													],
@@ -227,7 +239,8 @@
 																				}
 																			}
 																		},
-																		"fragmentLink": {}
+																		"fragmentLink": {
+																		}
 																	}
 																}
 															],
@@ -272,8 +285,10 @@
 										"key": "banner",
 										"siteKey": "Clarity Public Enterprise Website"
 									},
-									"fragmentConfig": {},
-									"fragmentFields": [],
+									"fragmentConfig": {
+									},
+									"fragmentFields": [
+									],
 									"fragmentStyle": {
 										"borderRadius": "25px",
 										"overflow": "hidden"
@@ -282,12 +297,14 @@
 								},
 								"pageElements": [
 									{
-										"definition": {},
+										"definition": {
+										},
 										"pageElements": [
 											{
 												"definition": {
 													"fragmentStyle": {
-														"backgroundFragmentImage": {},
+														"backgroundFragmentImage": {
+														},
 														"paddingBottom": "4",
 														"paddingLeft": "4",
 														"paddingRight": "4",
@@ -319,11 +336,13 @@
 																},
 																{
 																	"id": "portraitMobile",
-																	"rowViewportDefinition": {}
+																	"rowViewportDefinition": {
+																	}
 																},
 																{
 																	"id": "tablet",
-																	"rowViewportDefinition": {}
+																	"rowViewportDefinition": {
+																	}
 																}
 															],
 															"verticalAlignment": "middle"
@@ -339,11 +358,13 @@
 																			"id": "landscapeMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "portraitMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "tablet"
 																		}
 																	],
@@ -356,7 +377,8 @@
 																				"maxWidth": "80%"
 																			},
 																			"indexed": true,
-																			"layout": {},
+																			"layout": {
+																			},
 																			"name": "Content Text and Action"
 																		},
 																		"pageElements": [
@@ -372,7 +394,8 @@
 																						{
 																							"id": "element-text",
 																							"value": {
-																								"fragmentLink": {},
+																								"fragmentLink": {
+																								},
 																								"text": {
 																									"value_i18n": {
 																										"en_US": "See Further with Clarity Vision Solutions"
@@ -393,12 +416,14 @@
 																					"fragment": {
 																						"key": "BASIC_COMPONENT-paragraph"
 																					},
-																					"fragmentConfig": {},
+																					"fragmentConfig": {
+																					},
 																					"fragmentFields": [
 																						{
 																							"id": "element-text",
 																							"value": {
-																								"fragmentLink": {},
+																								"fragmentLink": {
+																								},
 																								"text": {
 																									"value_i18n": {
 																										"en_US": "Take advantage of exclusive offers on the latest products to deliver exceptional value for your business and your customers."
@@ -427,18 +452,19 @@
 																				"siteKey": "Clarity Public Enterprise Website"
 																			},
 																			"fragmentConfig": {
-																				"uppercase": false,
+																				"buttonSize": "",
 																				"iconName": "",
+																				"inverted": true,
 																				"style": "primary",
 																				"type": "solid",
-																				"inverted": true,
-																				"buttonSize": ""
+																				"uppercase": false
 																			},
 																			"fragmentFields": [
 																				{
 																					"id": "link",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "Learn More"
@@ -449,7 +475,8 @@
 																				{
 																					"id": "text",
 																					"value": {
-																						"fragmentLink": {}
+																						"fragmentLink": {
+																						}
 																					}
 																				}
 																			],
@@ -470,11 +497,13 @@
 																			"id": "landscapeMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "portraitMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "tablet"
 																		}
 																	],
@@ -488,7 +517,8 @@
 																				"overflow": "hidden"
 																			},
 																			"indexed": true,
-																			"layout": {},
+																			"layout": {
+																			},
 																			"name": "Content Image"
 																		},
 																		"pageElements": [
@@ -515,7 +545,8 @@
 																										}
 																									}
 																								},
-																								"fragmentLink": {}
+																								"fragmentLink": {
+																								}
 																							}
 																						}
 																					],
@@ -589,7 +620,8 @@
 												{
 													"id": "element-text",
 													"value": {
-														"fragmentLink": {},
+														"fragmentLink": {
+														},
 														"text": {
 															"value_i18n": {
 																"en_US": "See the difference!"
@@ -610,12 +642,14 @@
 											"fragment": {
 												"key": "BASIC_COMPONENT-paragraph"
 											},
-											"fragmentConfig": {},
+											"fragmentConfig": {
+											},
 											"fragmentFields": [
 												{
 													"id": "element-text",
 													"value": {
-														"fragmentLink": {},
+														"fragmentLink": {
+														},
 														"text": {
 															"value_i18n": {
 																"en_US": "Our goal is to be your trusted partner in eye care, offering unparalleled support and collaboration to acheieve your vision. Elevate your brand with premium eyeglass frames and lenses."
@@ -653,11 +687,13 @@
 												},
 												{
 													"id": "portraitMobile",
-													"rowViewportDefinition": {}
+													"rowViewportDefinition": {
+													}
 												},
 												{
 													"id": "tablet",
-													"rowViewportDefinition": {}
+													"rowViewportDefinition": {
+													}
 												}
 											],
 											"verticalAlignment": "top"
@@ -673,11 +709,13 @@
 															"id": "landscapeMobile"
 														},
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "portraitMobile"
 														},
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "tablet"
 														}
 													],
@@ -687,7 +725,8 @@
 													{
 														"definition": {
 															"indexed": true,
-															"layout": {},
+															"layout": {
+															},
 															"name": "Card Container"
 														},
 														"pageElements": [
@@ -700,15 +739,16 @@
 																	"fragmentConfig": {
 																		"bottomLeft": true,
 																		"bottomRight": true,
-																		"topLeft": true,
 																		"circleSize": "false",
+																		"topLeft": true,
 																		"topRight": true
 																	},
 																	"fragmentFields": [
 																		{
 																			"id": "valueCardTitle",
 																			"value": {
-																				"fragmentLink": {}
+																				"fragmentLink": {
+																				}
 																			}
 																		}
 																	],
@@ -716,7 +756,8 @@
 																},
 																"pageElements": [
 																	{
-																		"definition": {},
+																		"definition": {
+																		},
 																		"pageElements": [
 																			{
 																				"definition": {
@@ -728,7 +769,8 @@
 																						"iconName": "react",
 																						"iconSize": "2.5rem"
 																					},
-																					"fragmentFields": [],
+																					"fragmentFields": [
+																					],
 																					"indexed": true
 																				},
 																				"type": "Fragment"
@@ -745,7 +787,8 @@
 																						{
 																							"id": "element-text",
 																							"value": {
-																								"fragmentLink": {},
+																								"fragmentLink": {
+																								},
 																								"text": {
 																									"value_i18n": {
 																										"en_US": "Innovation"
@@ -784,11 +827,13 @@
 															"id": "landscapeMobile"
 														},
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "portraitMobile"
 														},
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "tablet"
 														}
 													],
@@ -798,7 +843,8 @@
 													{
 														"definition": {
 															"indexed": true,
-															"layout": {},
+															"layout": {
+															},
 															"name": "Card Container"
 														},
 														"pageElements": [
@@ -811,15 +857,16 @@
 																	"fragmentConfig": {
 																		"bottomLeft": true,
 																		"bottomRight": true,
-																		"topLeft": true,
 																		"circleSize": "false",
+																		"topLeft": true,
 																		"topRight": true
 																	},
 																	"fragmentFields": [
 																		{
 																			"id": "valueCardTitle",
 																			"value": {
-																				"fragmentLink": {}
+																				"fragmentLink": {
+																				}
 																			}
 																		}
 																	],
@@ -827,7 +874,8 @@
 																},
 																"pageElements": [
 																	{
-																		"definition": {},
+																		"definition": {
+																		},
 																		"pageElements": [
 																			{
 																				"definition": {
@@ -839,7 +887,8 @@
 																						"iconName": "globe",
 																						"iconSize": "2.5rem"
 																					},
-																					"fragmentFields": [],
+																					"fragmentFields": [
+																					],
 																					"indexed": true
 																				},
 																				"type": "Fragment"
@@ -856,7 +905,8 @@
 																						{
 																							"id": "element-text",
 																							"value": {
-																								"fragmentLink": {},
+																								"fragmentLink": {
+																								},
 																								"text": {
 																									"value_i18n": {
 																										"en_US": "Sustainability"
@@ -895,11 +945,13 @@
 															"id": "landscapeMobile"
 														},
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "portraitMobile"
 														},
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "tablet"
 														}
 													],
@@ -909,7 +961,8 @@
 													{
 														"definition": {
 															"indexed": true,
-															"layout": {},
+															"layout": {
+															},
 															"name": "Card Container"
 														},
 														"pageElements": [
@@ -922,15 +975,16 @@
 																	"fragmentConfig": {
 																		"bottomLeft": true,
 																		"bottomRight": true,
-																		"topLeft": true,
 																		"circleSize": "false",
+																		"topLeft": true,
 																		"topRight": true
 																	},
 																	"fragmentFields": [
 																		{
 																			"id": "valueCardTitle",
 																			"value": {
-																				"fragmentLink": {}
+																				"fragmentLink": {
+																				}
 																			}
 																		}
 																	],
@@ -938,7 +992,8 @@
 																},
 																"pageElements": [
 																	{
-																		"definition": {},
+																		"definition": {
+																		},
 																		"pageElements": [
 																			{
 																				"definition": {
@@ -950,7 +1005,8 @@
 																						"iconName": "star",
 																						"iconSize": "2.5rem"
 																					},
-																					"fragmentFields": [],
+																					"fragmentFields": [
+																					],
 																					"indexed": true
 																				},
 																				"type": "Fragment"
@@ -967,7 +1023,8 @@
 																						{
 																							"id": "element-text",
 																							"value": {
-																								"fragmentLink": {},
+																								"fragmentLink": {
+																								},
 																								"text": {
 																									"value_i18n": {
 																										"en_US": "Excellence"
@@ -1006,11 +1063,13 @@
 															"id": "landscapeMobile"
 														},
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "portraitMobile"
 														},
 														{
-															"columnViewportDefinition": {},
+															"columnViewportDefinition": {
+															},
 															"id": "tablet"
 														}
 													],
@@ -1020,7 +1079,8 @@
 													{
 														"definition": {
 															"indexed": true,
-															"layout": {},
+															"layout": {
+															},
 															"name": "Card Container"
 														},
 														"pageElements": [
@@ -1033,15 +1093,16 @@
 																	"fragmentConfig": {
 																		"bottomLeft": true,
 																		"bottomRight": true,
-																		"topLeft": true,
 																		"circleSize": "false",
+																		"topLeft": true,
 																		"topRight": true
 																	},
 																	"fragmentFields": [
 																		{
 																			"id": "valueCardTitle",
 																			"value": {
-																				"fragmentLink": {}
+																				"fragmentLink": {
+																				}
 																			}
 																		}
 																	],
@@ -1049,7 +1110,8 @@
 																},
 																"pageElements": [
 																	{
-																		"definition": {},
+																		"definition": {
+																		},
 																		"pageElements": [
 																			{
 																				"definition": {
@@ -1061,7 +1123,8 @@
 																						"iconName": "pencil",
 																						"iconSize": "2.5rem"
 																					},
-																					"fragmentFields": [],
+																					"fragmentFields": [
+																					],
 																					"indexed": true
 																				},
 																				"type": "Fragment"
@@ -1078,7 +1141,8 @@
 																						{
 																							"id": "element-text",
 																							"value": {
-																								"fragmentLink": {},
+																								"fragmentLink": {
+																								},
 																								"text": {
 																									"value_i18n": {
 																										"en_US": "Design"
@@ -1119,7 +1183,8 @@
 					{
 						"definition": {
 							"fragmentStyle": {
-								"backgroundFragmentImage": {},
+								"backgroundFragmentImage": {
+								},
 								"minHeight": "450px"
 							},
 							"indexed": true,
@@ -1147,11 +1212,13 @@
 										},
 										{
 											"id": "portraitMobile",
-											"rowViewportDefinition": {}
+											"rowViewportDefinition": {
+											}
 										},
 										{
 											"id": "tablet",
-											"rowViewportDefinition": {}
+											"rowViewportDefinition": {
+											}
 										}
 									],
 									"verticalAlignment": "middle"
@@ -1167,11 +1234,13 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "tablet"
 												}
 											],
@@ -1197,7 +1266,8 @@
 																		}
 																	}
 																},
-																"fragmentLink": {}
+																"fragmentLink": {
+																}
 															}
 														}
 													],
@@ -1218,11 +1288,13 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "tablet"
 												}
 											],
@@ -1255,7 +1327,8 @@
 																{
 																	"id": "element-text",
 																	"value": {
-																		"fragmentLink": {},
+																		"fragmentLink": {
+																		},
 																		"text": {
 																			"value_i18n": {
 																				"en_US": "Thank you for being a distributor today"
@@ -1273,12 +1346,14 @@
 															"fragment": {
 																"key": "BASIC_COMPONENT-paragraph"
 															},
-															"fragmentConfig": {},
+															"fragmentConfig": {
+															},
 															"fragmentFields": [
 																{
 																	"id": "element-text",
 																	"value": {
-																		"fragmentLink": {},
+																		"fragmentLink": {
+																		},
 																		"text": {
 																			"value_i18n": {
 																				"en_US": "Clarity is an eyeglass and contact lens manufacturer that sells directly to consumer brands. We redefine Clarity through precision-crafted eyewear. Explore our curated selection of stylish frames, expertly desgined to enhance your vision and style."
@@ -1301,9 +1376,9 @@
 																"key": "BASIC_COMPONENT-button"
 															},
 															"fragmentConfig": {
+																"buttonSize": "nm",
 																"buttonType": "primary",
-																"type": "link",
-																"buttonSize": "nm"
+																"type": "link"
 															},
 															"fragmentFields": [
 																{
@@ -1370,7 +1445,8 @@
 										{
 											"id": "element-text",
 											"value": {
-												"fragmentLink": {},
+												"fragmentLink": {
+												},
 												"text": {
 													"value_i18n": {
 														"en_US": "Helpful articles from our team!"
@@ -1438,7 +1514,8 @@
 								"pageElements": [
 									{
 										"definition": {
-											"collectionItemConfig": {}
+											"collectionItemConfig": {
+											}
 										},
 										"pageElements": [
 											{
@@ -1447,7 +1524,8 @@
 														"key": "card",
 														"siteKey": "Clarity Public Enterprise Website"
 													},
-													"fragmentConfig": {},
+													"fragmentConfig": {
+													},
 													"fragmentFields": [
 														{
 															"id": "card-image",
@@ -1462,13 +1540,15 @@
 																		}
 																	}
 																},
-																"fragmentLink": {}
+																"fragmentLink": {
+																}
 															}
 														},
 														{
 															"id": "summary",
 															"value": {
-																"fragmentLink": {},
+																"fragmentLink": {
+																},
 																"text": {
 																	"mapping": {
 																		"fieldKey": "DDMStructure_headline",
@@ -1482,7 +1562,8 @@
 														{
 															"id": "card-title",
 															"value": {
-																"fragmentLink": {},
+																"fragmentLink": {
+																},
 																"text": {
 																	"mapping": {
 																		"fieldKey": "JournalArticle_title",
@@ -1513,7 +1594,8 @@
 														{
 															"id": "category",
 															"value": {
-																"fragmentLink": {},
+																"fragmentLink": {
+																},
 																"text": {
 																	"mapping": {
 																		"fieldKey": "AssetCategory_categories",
@@ -1544,10 +1626,10 @@
 		],
 		"type": "Root"
 	},
-	"version": 1.1,
 	"settings": {
 		"masterPage": {
 			"key": "primary"
 		}
-	}
+	},
+	"version": 1.1
 }

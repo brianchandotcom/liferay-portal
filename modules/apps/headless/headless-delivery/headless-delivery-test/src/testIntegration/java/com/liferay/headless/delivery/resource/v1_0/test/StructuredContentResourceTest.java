@@ -650,8 +650,9 @@ public class StructuredContentResourceTest
 				getMarkedAsDefault());
 	}
 
+	@Override
 	@Test
-	public void testPostStructuredContentWithBatch() throws Exception {
+	public void testPostSiteStructuredContentBatch() throws Exception {
 		Locale locale = LocaleUtil.getDefault();
 
 		StructuredContent randomStructuredContent1 = _randomStructuredContent(

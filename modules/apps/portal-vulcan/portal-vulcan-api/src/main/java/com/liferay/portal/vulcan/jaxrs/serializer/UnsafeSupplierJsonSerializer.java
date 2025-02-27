@@ -26,6 +26,12 @@ public class UnsafeSupplierJsonSerializer
 		try {
 			Object value = unsafeSupplier.get();
 
+			if (value == null) {
+				jsonGenerator.writeNull();
+
+				return;
+			}
+
 			JsonSerializer<Object> jsonSerializer =
 				serializerProvider.findValueSerializer(value.getClass(), null);
 

@@ -5,12 +5,13 @@
 
 import ClayButton from '@clayui/button';
 import {Option, Picker} from '@clayui/core';
-import Form, {ClayInput} from '@clayui/form';
+import Form from '@clayui/form';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayModal from '@clayui/modal';
 import React, {useEffect, useState} from 'react';
 
 import {getAssetsLibrariesByCompany} from '../../api/api';
+import Field from '../forms/Field';
 
 export default function CreationFolderModalContent({
 	assetLibraryId,
@@ -47,13 +48,11 @@ export default function CreationFolderModalContent({
 					</div>
 				) : (
 					<>
-						<Form.Group>
-							<label htmlFor="folderName">
-								{Liferay.Language.get('name')}
-							</label>
-
-							<ClayInput id="folderName" type="text" />
-						</Form.Group>
+						<Field
+							label={Liferay.Language.get('name')}
+							name="folderName"
+							required
+						/>
 
 						{assetLibraries.length === 1 ? (
 							<input type="hidden" value={assetLibraries[0].id} />

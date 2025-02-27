@@ -13,6 +13,7 @@ import com.liferay.object.internal.uad.util.ObjectEntryUADUtil;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -85,13 +86,11 @@ public class ObjectEntryUADAnonymizer
 
 	@Override
 	public void delete(ObjectEntry objectEntry) throws PortalException {
-		try {
-			ObjectEntryThreadLocal.setDisassociateRelatedModels(true);
+		try (SafeCloseable safeCloseable =
+				ObjectEntryThreadLocal.
+					setDisassociateRelatedModelsWithSafeCloseable(true)) {
 
 			_objectEntryLocalService.deleteObjectEntry(objectEntry);
-		}
-		finally {
-			ObjectEntryThreadLocal.setDisassociateRelatedModels(false);
 		}
 	}
 

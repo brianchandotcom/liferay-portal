@@ -44,12 +44,6 @@ public class ObjectEntryThreadLocal {
 		return validatedObjectEntryIds.contains(objectEntryId);
 	}
 
-	public static void setDisassociateRelatedModels(
-		boolean disassociateRelatedModels) {
-
-		_disassociateRelatedModels.set(disassociateRelatedModels);
-	}
-
 	public static SafeCloseable setDisassociateRelatedModelsWithSafeCloseable(
 		boolean disassociateRelatedModels) {
 

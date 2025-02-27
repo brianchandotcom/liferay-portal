@@ -7,8 +7,10 @@
 					"fragment": {
 						"key": "com.liferay.knowledge.base.web.internal.fragment.renderer.KBArticleNavigationFragmentRenderer"
 					},
-					"fragmentConfig": {},
-					"fragmentFields": [],
+					"fragmentConfig": {
+					},
+					"fragmentFields": [
+					],
 					"indexed": true
 				},
 				"id": "050ef39c-623f-4559-59ad-23c7f5b1fd7e",
@@ -16,9 +18,13 @@
 			},
 			{
 				"definition": {
-					"cssClasses": ["learn-education"],
+					"cssClasses": [
+						"learn-education"
+					],
 					"customCSS": ".[$FRAGMENT_CLASS$] {\n   \n}",
-					"fragmentStyle": {"paddingTop": "4"},
+					"fragmentStyle": {
+						"paddingTop": "4"
+					},
 					"fragmentViewports": [
 						{
 							"fragmentViewportStyle": {
@@ -44,8 +50,11 @@
 								"key": "lms-course-top-banner",
 								"siteKey": "Liferay Learn"
 							},
-							"fragmentConfig": {"assetType": "quiz"},
-							"fragmentFields": [],
+							"fragmentConfig": {
+								"assetType": "quiz"
+							},
+							"fragmentFields": [
+							],
 							"indexed": true
 						},
 						"type": "Fragment"
@@ -57,8 +66,10 @@
 								"key": "lms-quiz-display-page-layout",
 								"siteKey": "Liferay Learn"
 							},
-							"fragmentConfig": {},
-							"fragmentFields": [],
+							"fragmentConfig": {
+							},
+							"fragmentFields": [
+							],
 							"fragmentStyle": {
 								"borderColor": "#282934",
 								"fontFamily": "fontFamilySansSerif",
@@ -72,20 +83,24 @@
 						},
 						"pageElements": [
 							{
-								"definition": {},
+								"definition": {
+								},
 								"pageElements": [
 									{
 										"definition": {
-											"cssClasses": ["learn-quiz-view"],
+											"cssClasses": [
+												"learn-quiz-view"
+											],
 											"fragment": {
 												"key": "lms-quiz-view",
 												"siteKey": "Liferay Learn"
 											},
 											"fragmentConfig": {
-												"educationPageUrl": "/education",
-												"badgePageUrl": "/user-dashboard"
+												"badgePageUrl": "/user-dashboard",
+												"educationPageUrl": "/education"
 											},
-											"fragmentFields": [],
+											"fragmentFields": [
+											],
 											"indexed": true
 										},
 										"type": "Fragment"
@@ -104,12 +119,14 @@
 	},
 	"settings": {
 		"colorSchemeName": "01",
-		"masterPage": {"key": "liferay-learn"},
+		"masterPage": {
+			"key": "liferay-learn"
+		},
 		"themeName": "Dialect",
 		"themeSettings": {
-			"lfr-theme:regular:show-header-search": "false",
-			"lfr-theme:regular:show-header": "false",
 			"lfr-theme:regular:show-footer": "false",
+			"lfr-theme:regular:show-header": "false",
+			"lfr-theme:regular:show-header-search": "false",
 			"lfr-theme:regular:wrap-widget-page-content": "false"
 		}
 	},

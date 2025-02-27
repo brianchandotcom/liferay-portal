@@ -2,7 +2,7 @@
 	"contentSubtype": {
 		"subtypeKey": "P2S3_CERTIFICATION"
 	},
-    "contentType": {
+	"contentType": {
 		"className": "com.liferay.object.model.ObjectDefinition#[$OBJECT_DEFINITION_ID:P2S3Certification$]"
 	},
 	"name": "Certifications Details"

@@ -16,7 +16,10 @@
 						"width": "100%"
 					},
 					"indexed": true,
-					"layout": {"paddingBottom": 2, "paddingTop": 2},
+					"layout": {
+						"paddingBottom": 2,
+						"paddingTop": 2
+					},
 					"name": "Header Container"
 				},
 				"id": "2b511e7c-d7cd-6426-5b18-bf5f3c090f1b",
@@ -102,7 +105,8 @@
 																		}
 																	}
 																},
-																"fragmentLink": {}
+																"fragmentLink": {
+																}
 															}
 														}
 													],
@@ -128,7 +132,8 @@
 														{
 															"id": "element-text",
 															"value": {
-																"fragmentLink": {},
+																"fragmentLink": {
+																},
 																"text": {
 																	"value_i18n": {
 																		"en_US": "Certification"
@@ -151,7 +156,9 @@
 									},
 									{
 										"definition": {
-											"cssClasses": ["title-banner"],
+											"cssClasses": [
+												"title-banner"
+											],
 											"fragment": {
 												"key": "dialect-text",
 												"siteKey": "Liferay Learn"
@@ -164,7 +171,8 @@
 												{
 													"id": "element-text",
 													"value": {
-														"fragmentLink": {},
+														"fragmentLink": {
+														},
 														"text": {
 															"mapping": {
 																"fieldKey": "ObjectField_title",
@@ -188,7 +196,9 @@
 									},
 									{
 										"definition": {
-											"cssClasses": ["course-info-tag"],
+											"cssClasses": [
+												"course-info-tag"
+											],
 											"fragmentStyle": {
 												"backgroundColor": "#E6EBF5",
 												"borderRadius": "4px",
@@ -225,7 +235,8 @@
 														{
 															"id": "element-text",
 															"value": {
-																"fragmentLink": {},
+																"fragmentLink": {
+																},
 																"text": {
 																	"mapping": {
 																		"fieldKey": "ObjectField_persona",
@@ -254,7 +265,9 @@
 									"fragment": {
 										"key": "BASIC_COMPONENT-image"
 									},
-									"fragmentConfig": {"imageSize": "w-0"},
+									"fragmentConfig": {
+										"imageSize": "w-0"
+									},
 									"fragmentFields": [
 										{
 											"id": "image-square",
@@ -271,7 +284,8 @@
 														}
 													}
 												},
-												"fragmentLink": {}
+												"fragmentLink": {
+												}
 											}
 										}
 									],
@@ -288,9 +302,12 @@
 			},
 			{
 				"definition": {
-					"fragmentStyle": {"width": "100%"},
+					"fragmentStyle": {
+						"width": "100%"
+					},
 					"indexed": true,
-					"layout": {}
+					"layout": {
+					}
 				},
 				"id": "27f40d9f-5a8f-ffab-ab85-968e937ba444",
 				"pageElements": [
@@ -302,7 +319,8 @@
 								"maxWidth": " var(--container-max-xl);"
 							},
 							"widgetInstance": {
-								"widgetConfig": {},
+								"widgetConfig": {
+								},
 								"widgetName": "com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet_84997331558403_LXC_liferay_lms_certifications_details"
 							}
 						},
@@ -316,12 +334,14 @@
 	},
 	"settings": {
 		"colorSchemeName": "01",
-		"masterPage": {"key": "liferay-learn"},
+		"masterPage": {
+			"key": "liferay-learn"
+		},
 		"themeName": "Dialect",
 		"themeSettings": {
-			"lfr-theme:regular:show-header-search": "false",
-			"lfr-theme:regular:show-header": "false",
 			"lfr-theme:regular:show-footer": "false",
+			"lfr-theme:regular:show-header": "false",
+			"lfr-theme:regular:show-header-search": "false",
 			"lfr-theme:regular:wrap-widget-page-content": "false"
 		}
 	},

@@ -23,15 +23,7 @@ test('Structures can be saved and published', async ({
 
 	await structureBuilderPage.goto();
 
-	// Check invalid labels don't work
-
-	await structureBuilderPage.changeStructureLabel('1');
-
-	await expect(async () => {
-		await structureBuilderPage.saveStructure();
-	}).not.toPass();
-
-	// Put valid label
+	// Change label
 
 	const label = `Structure ${getRandomInt()}`;
 

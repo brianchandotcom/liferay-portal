@@ -48,7 +48,7 @@ export class StructureBuilderPage {
 
 		await clickAndExpectToBeVisible({
 			autoClick: true,
-			target: this.page.getByRole('menuitem', {name: type}),
+			target: this.page.getByRole('menuitem', {exact: true, name: type}),
 			trigger,
 		});
 	}

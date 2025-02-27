@@ -48,9 +48,7 @@ function buildFields(fields: Field[]) {
 		const objectField: ObjectField = {
 			businessType: FIELD_TYPE_BUSINESS_TYPE[field.type],
 			externalReferenceCode: field.erc,
-			label: {
-				en_US: field.label,
-			},
+			label: field.label,
 			localized: field.localized,
 			name: field.name,
 			required: field.required,

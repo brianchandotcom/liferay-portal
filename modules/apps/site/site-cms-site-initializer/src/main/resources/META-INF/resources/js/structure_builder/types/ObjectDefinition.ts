@@ -8,9 +8,7 @@ import {FieldBusinessType} from '../utils/field';
 export type ObjectField = {
 	businessType: FieldBusinessType;
 	externalReferenceCode: string;
-	label: {
-		en_US: string;
-	};
+	label: Liferay.Language.LocalizedValue<string>;
 	localized: boolean;
 	name: string;
 	objectFieldSettings?: {name: string; value: string | number}[];

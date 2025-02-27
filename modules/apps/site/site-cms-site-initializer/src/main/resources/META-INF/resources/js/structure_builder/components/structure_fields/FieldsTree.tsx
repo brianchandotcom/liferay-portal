@@ -37,7 +37,9 @@ export default function FieldsTree({fields}: {fields: Field[]}) {
 				children: fields.map((field) => ({
 					icon: FIELD_TYPE_ICON[field.type],
 					id: field.name,
-					label: field.label,
+					label: field.label[
+						Liferay.ThemeDisplay.getDefaultLanguageId()
+					]!,
 					type: field.type,
 				})),
 				icon: 'edit-layout',

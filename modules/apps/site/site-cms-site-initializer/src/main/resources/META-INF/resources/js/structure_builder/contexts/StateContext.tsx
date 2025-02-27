@@ -68,6 +68,7 @@ type SetLabelAction = {label: string; type: 'set-label'};
 
 type UpdateFieldAction = {
 	erc?: string;
+	label?: Liferay.Language.LocalizedValue<string>;
 	localized?: boolean;
 	name: string;
 	required?: boolean;
@@ -141,7 +142,7 @@ function reducer(state: State, action: Action) {
 		case 'publish-structure':
 			return {...state, error: null, status: 'published' as Status};
 		case 'update-field': {
-			const {erc, localized, name, required} = action;
+			const {erc, label, localized, name, required} = action;
 
 			const nextFields = new Map(state.fields);
 
@@ -151,6 +152,7 @@ function reducer(state: State, action: Action) {
 				nextFields.set(name, {
 					...field,
 					erc: erc ?? field.erc,
+					label: label ?? field.label,
 					localized: localized ?? field.localized,
 					required: required ?? field.required,
 				});

@@ -1132,9 +1132,9 @@ describe('App', function () {
 			.cancel();
 	});
 
-	it('navigates when clicking on routed links', () => {
+	it('navigates when clicking on routed links', async () => {
 		this.app = new App();
-		this.app.addRoutes(new Route('/path', Screen));
+		this.app.addRoutes(new Route('/pathote', Screen));
 
 		jest.spyOn(this.app, 'updateHistory_').mockImplementation(() => {});
 		jest.spyOn(
@@ -1146,23 +1146,27 @@ describe('App', function () {
 			'syncScrollPositionSyncThenAsync_'
 		).mockImplementation(() => {});
 
-		userEvent.click(enterDocumentLinkElement('/path'));
-		expect(this.app.pendingNavigate).toBeTruthy();
+		const link = enterDocumentLinkElement('/path');
+
+		await userEvent.click(link);
+
+		expect(this.app.navigationStrategy).toBe('immediate');
+
 		exitDocumentLinkElement();
 	});
 
-	it('does not navigate when clicking on target blank links', () => {
+	it('does not navigate when clicking on target blank links', async () => {
 		this.app = new App();
 		this.app.addRoutes(new Route('/path', Screen));
 		const link = enterDocumentLinkElement('/path');
 		link.setAttribute('target', '_blank');
 		link.addEventListener('click', (event) => event.preventDefault());
-		userEvent.click(link);
+		await userEvent.click(link);
 		exitDocumentLinkElement();
 		expect(this.app.pendingNavigate).toBeNull();
 	});
 
-	it('passes original event object to "beforeNavigate" when a link is clicked', () => {
+	it('passes original event object to "beforeNavigate" when a link is clicked', async () => {
 		this.app = new App();
 		this.app.addRoutes(new Route('/path', Screen));
 
@@ -1180,57 +1184,57 @@ describe('App', function () {
 			expect(data.event).toBeTruthy();
 			expect(data.event.type).toBe('click');
 		});
-		userEvent.click(enterDocumentLinkElement('/path'));
+		await userEvent.click(enterDocumentLinkElement('/path'));
 		exitDocumentLinkElement();
 
 		expect(window.location.pathname).not.toBe('/path');
 	});
 
-	it('prevents navigation on both senna and the browser via beforeNavigate', () => {
+	it('prevents navigation on both senna and the browser via beforeNavigate', async () => {
 		this.app = new App();
 		this.app.addRoutes(new Route('/preventedPath', Screen));
 		this.app.on('beforeNavigate', (data, event) => {
 			data.event.preventDefault();
 			event.preventDefault();
 		});
-		userEvent.click(enterDocumentLinkElement('/preventedPath'));
+		await userEvent.click(enterDocumentLinkElement('/preventedPath'));
 		exitDocumentLinkElement();
 
 		expect(window.location.pathname).not.toBe('/preventedPath');
 	});
 
-	it('does not navigate when clicking on external links', () => {
+	it('does not navigate when clicking on external links', async () => {
 		const link = enterDocumentLinkElement('http://sennajs.com');
 		this.app = new App();
 		this.app.setAllowPreventNavigate(false);
 		link.addEventListener('click', preventDefault);
-		userEvent.click(link);
+		await userEvent.click(link);
 		expect(this.app.pendingNavigate).toBeFalsy();
 		exitDocumentLinkElement();
 	});
 
-	it('does not navigate when clicking on links outside basepath', () => {
+	it('does not navigate when clicking on links outside basepath', async () => {
 		const link = enterDocumentLinkElement('/path');
 		this.app = new App();
 		this.app.setAllowPreventNavigate(false);
 		this.app.setBasePath('/base');
 		link.addEventListener('click', preventDefault);
-		userEvent.click(link);
+		await userEvent.click(link);
 		expect(this.app.pendingNavigate).toBeFalsy();
 		exitDocumentLinkElement();
 	});
 
-	it('does not navigate when clicking on unrouted links', () => {
+	it('does not navigate when clicking on unrouted links', async () => {
 		const link = enterDocumentLinkElement('/path');
 		this.app = new App();
 		this.app.setAllowPreventNavigate(false);
 		link.addEventListener('click', preventDefault);
-		userEvent.click(link);
+		await userEvent.click(link);
 		expect(this.app.pendingNavigate).toBeFalsy();
 		exitDocumentLinkElement();
 	});
 
-	it('does not navigate when clicking on links with invalid mouse button or modifier keys pressed', () => {
+	it('does not navigate when clicking on links with invalid mouse button or modifier keys pressed', async () => {
 		const link = enterDocumentLinkElement('/path');
 		this.app = new App();
 		this.app.setAllowPreventNavigate(false);
@@ -1238,18 +1242,18 @@ describe('App', function () {
 
 		link.addEventListener('click', preventDefault);
 
-		userEvent.click(link, {altKey: false});
-		userEvent.click(link, {ctrlKey: false});
-		userEvent.click(link, {metaKey: false});
-		userEvent.click(link, {shiftKey: false});
-		userEvent.click(link, {button: 1});
-		userEvent.click(link, {button: 2});
+		await userEvent.click(link, {altKey: false});
+		await userEvent.click(link, {ctrlKey: false});
+		await userEvent.click(link, {metaKey: false});
+		await userEvent.click(link, {shiftKey: false});
+		await userEvent.click(link, {button: 1});
+		await userEvent.click(link, {button: 2});
 
 		expect(this.app.pendingNavigate).toBeFalsy();
 		exitDocumentLinkElement();
 	});
 
-	it('does not navigate when navigate fails synchronously', () => {
+	it('does not navigate when navigate fails synchronously', async () => {
 		const link = enterDocumentLinkElement('/path');
 		this.app = new App();
 		this.app.setAllowPreventNavigate(false);
@@ -1258,7 +1262,7 @@ describe('App', function () {
 			throw new Error();
 		};
 		link.addEventListener('click', preventDefault);
-		userEvent.click(link);
+		await userEvent.click(link);
 		expect(this.app.pendingNavigate).toBeFalsy();
 		exitDocumentLinkElement();
 	});
@@ -1368,7 +1372,7 @@ describe('App', function () {
 		fireEvent(window, new PopStateEvent('popstate'));
 	});
 
-	it('does not navigate on clicking links when onbeforeunload returns truthy value', () => {
+	it('does not navigate on clicking links when onbeforeunload returns truthy value', async () => {
 		const beforeunload = jest.fn();
 		window.onbeforeunload = beforeunload;
 		this.app = new App();
@@ -1385,7 +1389,7 @@ describe('App', function () {
 
 		this.app.addRoutes(new Route('/path', Screen));
 		const link = enterDocumentLinkElement('/path');
-		userEvent.click(link);
+		await await userEvent.click(link);
 		exitDocumentLinkElement();
 		expect(beforeunload).toHaveBeenCalled();
 	});

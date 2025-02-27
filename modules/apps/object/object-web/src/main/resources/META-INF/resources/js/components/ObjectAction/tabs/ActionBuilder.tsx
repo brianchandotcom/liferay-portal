@@ -32,6 +32,7 @@ interface ActionBuilderProps {
 	objectDefinitionExternalReferenceCode: string;
 	objectDefinitionId: number;
 	objectDefinitionsRelationshipsURL: string;
+	objectFields: ObjectField[];
 	scriptManagementConfigurationPortletURL: string;
 	setValues: (values: Partial<ObjectAction>) => void;
 	systemObject: boolean;
@@ -64,6 +65,7 @@ export default function ActionBuilder({
 	objectDefinitionExternalReferenceCode,
 	objectDefinitionId,
 	objectDefinitionsRelationshipsURL,
+	objectFields,
 	scriptManagementConfigurationPortletURL,
 	setValues,
 	systemObject,
@@ -129,6 +131,10 @@ export default function ActionBuilder({
 			[warning]: false,
 		}));
 	};
+
+	const hasLocalizedField = useMemo(() => {
+		return objectFields.some((field) => field.localized);
+	}, [objectFields]);
 
 	useEffect(() => {
 		const predefinedValues = values.parameters?.predefinedValues;
@@ -227,6 +233,19 @@ export default function ActionBuilder({
 					>
 						{Liferay.Language.get('click-here-for-documentation')}
 					</a>
+				</ClayAlert>
+			)}
+
+			{Liferay.FeatureFlags['LPD-32050'] && hasLocalizedField && (
+				<ClayAlert
+					className="lfr-objects__side-panel-content-container"
+					displayType="info"
+					onClose={() => setInfoAlert(false)}
+					title={`${Liferay.Language.get('info')}:`}
+				>
+					{Liferay.Language.get(
+						'this-object-includes-translatable-fields.-actions-always-use-the-object-entrys-default-language'
+					)}
 				</ClayAlert>
 			)}
 

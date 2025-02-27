@@ -2,6 +2,7 @@
 
 Check | Category | Description
 ----- | -------- | -----------
+[GradleDependencyArtifactsCheck](check/gradle_dependency_artifacts_check.markdown#gradledependencyartifactscheck) | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Performs several checks on dependencies artifacts. |
 PropertiesArchivedModulesCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Finds `test.batch.class.names.includes` property value pointing to archived modules in `test.properties`. |
 PropertiesBuildIncludeDirsCheck | [Bug Prevention](bug_prevention_checks.markdown#bug-prevention-checks) | Verifies property value of `build.include.dirs` in `build.properties`. |
 PropertiesCommentsCheck | [Styling](styling_checks.markdown#styling-checks) | Validates comments in `.properties` files. |

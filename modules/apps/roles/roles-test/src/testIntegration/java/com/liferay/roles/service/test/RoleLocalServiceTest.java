@@ -7,6 +7,7 @@ package com.liferay.roles.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.test.util.LayoutTestUtil;
+import com.liferay.lazy.referencing.kernel.LazyReferencingThreadLocal;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -107,6 +108,32 @@ public class RoleLocalServiceTest {
 	public static void tearDownClass() {
 		_resourcePermissionLocalService.deleteResourcePermission(
 			_resourcePermission);
+	}
+
+	@Test
+	public void testAddIncompleteRole() throws Exception {
+		LazyReferencingThreadLocal.setLazyReferencingEnabled(true);
+
+		try {
+			_role = _roleLocalService.addIncompleteRole(
+				RandomTestUtil.randomString(), TestPropsValues.getCompanyId(),
+				TestPropsValues.getUserId(), Role.class.getName(), 0,
+				RandomTestUtil.randomString(), RoleConstants.TYPE_REGULAR);
+
+			Assert.assertEquals(
+				WorkflowConstants.STATUS_INCOMPLETE, _role.getStatus());
+		}
+		finally {
+			LazyReferencingThreadLocal.setLazyReferencingEnabled(false);
+		}
+	}
+
+	@Test(expected = UnsupportedOperationException.class)
+	public void testAddIncompleteRoleWithoutLazyReferencing() throws Exception {
+		_role = _roleLocalService.addIncompleteRole(
+			RandomTestUtil.randomString(), TestPropsValues.getCompanyId(),
+			TestPropsValues.getUserId(), Role.class.getName(), 0,
+			RandomTestUtil.randomString(), RoleConstants.TYPE_REGULAR);
 	}
 
 	@Test
@@ -708,6 +735,31 @@ public class RoleLocalServiceTest {
 		}
 		finally {
 			System.setOut(printStream);
+		}
+	}
+
+	@Test
+	public void testUpdateRoleWithStatusIncomplete() throws Exception {
+		LazyReferencingThreadLocal.setLazyReferencingEnabled(true);
+
+		try {
+			_role = _roleLocalService.addIncompleteRole(
+				RandomTestUtil.randomString(), TestPropsValues.getCompanyId(),
+				TestPropsValues.getUserId(), Role.class.getName(), 0,
+				RandomTestUtil.randomString(), RoleConstants.TYPE_REGULAR);
+
+			Assert.assertEquals(
+				WorkflowConstants.STATUS_INCOMPLETE, _role.getStatus());
+
+			_role = _roleLocalService.updateRole(
+				_role.getRoleId(), _role.getName(), _role.getTitleMap(),
+				_role.getDescriptionMap(), _role.getSubtype(), null);
+
+			Assert.assertEquals(
+				WorkflowConstants.STATUS_APPROVED, _role.getStatus());
+		}
+		finally {
+			LazyReferencingThreadLocal.setLazyReferencingEnabled(false);
 		}
 	}
 

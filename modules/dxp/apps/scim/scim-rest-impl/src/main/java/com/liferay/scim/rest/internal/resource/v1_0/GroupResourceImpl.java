@@ -77,8 +77,7 @@ public class GroupResourceImpl extends BaseGroupResourceImpl {
 
 		return _buildResponse(
 			_groupResourceManager.updateWithPATCH(
-				id, ScimUtil.transformOperationGroup(operations),
-				_userManager));
+				id, ScimUtil.transformGroupPatchOp(operations), _userManager));
 	}
 
 	@Override

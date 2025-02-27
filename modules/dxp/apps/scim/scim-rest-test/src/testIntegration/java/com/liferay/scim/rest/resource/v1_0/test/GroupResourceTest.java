@@ -203,11 +203,11 @@ public class GroupResourceTest extends BaseGroupResourceTestCase {
 	@Override
 	@Test
 	public void testPatchV2Group() throws Exception {
-		Group postGroup1 = randomGroup();
+		Group postGroup = randomGroup();
 
 		User user1 = _addUser();
 
-		postGroup1.setMembers(
+		postGroup.setMembers(
 			new MultiValuedAttribute[] {
 				new MultiValuedAttribute() {
 					{
@@ -220,14 +220,11 @@ public class GroupResourceTest extends BaseGroupResourceTestCase {
 				}
 			});
 
-		groupResource.postV2Group(postGroup1);
+		groupResource.postV2Group(postGroup);
 
-		UserGroup userGroup1 =
+		UserGroup userGroup =
 			_userGroupLocalService.getUserGroupByExternalReferenceCode(
-				postGroup1.getExternalId(), TestPropsValues.getCompanyId());
-
-		assertEquals(
-			postGroup1, _getGroup(String.valueOf(userGroup1.getUserGroupId())));
+				postGroup.getExternalId(), TestPropsValues.getCompanyId());
 
 		PatchOp patchOp = new PatchOp();
 
@@ -247,20 +244,9 @@ public class GroupResourceTest extends BaseGroupResourceTestCase {
 		patchOp.setSchemas(
 			new String[] {"\"urn:ietf:params:scim:api:messages:2.0:PatchOp\""});
 
-		HttpInvoker.HttpResponse httpResponse =
-			groupResource.patchV2GroupHttpResponse(
-				_getGroup(
-					String.valueOf(userGroup1.getUserGroupId())
-				).getId(),
-				patchOp);
+		Group patchGroup = _patchGroup(patchOp, userGroup.getUserGroupId());
 
-		assertHttpResponseStatusCode(204, httpResponse);
-
-		Assert.assertEquals(
-			displayName,
-			_getGroup(
-				String.valueOf(userGroup1.getUserGroupId())
-			).getDisplayName());
+		Assert.assertEquals(displayName, patchGroup.getDisplayName());
 
 		User user2 = _addUser();
 
@@ -279,20 +265,9 @@ public class GroupResourceTest extends BaseGroupResourceTestCase {
 				}
 			});
 
-		httpResponse = groupResource.patchV2GroupHttpResponse(
-			_getGroup(
-				String.valueOf(userGroup1.getUserGroupId())
-			).getId(),
-			patchOp);
+		patchGroup = _patchGroup(patchOp, userGroup.getUserGroupId());
 
-		assertHttpResponseStatusCode(204, httpResponse);
-
-		Assert.assertEquals(
-			2,
-			_getGroup(
-				String.valueOf(userGroup1.getUserGroupId())
-			).getMembers(
-			).length);
+		Assert.assertEquals(2, ArrayUtil.getLength(patchGroup.getMembers()));
 
 		patchOp.setOperations(
 			new Operation[] {
@@ -309,20 +284,9 @@ public class GroupResourceTest extends BaseGroupResourceTestCase {
 				}
 			});
 
-		httpResponse = groupResource.patchV2GroupHttpResponse(
-			_getGroup(
-				String.valueOf(userGroup1.getUserGroupId())
-			).getId(),
-			patchOp);
+		patchGroup = _patchGroup(patchOp, userGroup.getUserGroupId());
 
-		assertHttpResponseStatusCode(204, httpResponse);
-
-		Assert.assertEquals(
-			1,
-			_getGroup(
-				String.valueOf(userGroup1.getUserGroupId())
-			).getMembers(
-			).length);
+		Assert.assertEquals(1, ArrayUtil.getLength(patchGroup.getMembers()));
 
 		patchOp.setOperations(
 			new Operation[] {
@@ -335,18 +299,9 @@ public class GroupResourceTest extends BaseGroupResourceTestCase {
 				}
 			});
 
-		httpResponse = groupResource.patchV2GroupHttpResponse(
-			_getGroup(
-				String.valueOf(userGroup1.getUserGroupId())
-			).getId(),
-			patchOp);
+		patchGroup = _patchGroup(patchOp, userGroup.getUserGroupId());
 
-		assertHttpResponseStatusCode(204, httpResponse);
-
-		Assert.assertNull(
-			_getGroup(
-				String.valueOf(userGroup1.getUserGroupId())
-			).getMembers());
+		Assert.assertNull(patchGroup.getMembers());
 
 		ConfigurationTestUtil.deleteConfiguration(_pid);
 
@@ -627,6 +582,18 @@ public class GroupResourceTest extends BaseGroupResourceTestCase {
 		Object groupObject = groupResource.getV2GroupById(userId);
 
 		return Group.toDTO(groupObject.toString());
+	}
+
+	private Group _patchGroup(PatchOp patchOp, long userGroupId)
+		throws Exception {
+
+		HttpInvoker.HttpResponse httpResponse =
+			groupResource.patchV2GroupHttpResponse(
+				String.valueOf(userGroupId), patchOp);
+
+		assertHttpResponseStatusCode(204, httpResponse);
+
+		return _getGroup(String.valueOf(userGroupId));
 	}
 
 	private static String _pid;

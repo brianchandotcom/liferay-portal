@@ -3580,9 +3580,9 @@ public class BundleSiteInitializer implements SiteInitializer {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						StringBundler.concat(
-							"No resource action found with resourceName ",
+							"No resource action found with name ",
 							jsonObject.getString("resourceName"),
-							" with the actionIds: ",
+							" and action IDs ",
 							ArrayUtil.toString(actionIds, "")));
 				}
 

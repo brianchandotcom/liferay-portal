@@ -53,7 +53,7 @@ ext {
 	]
 }
 
-abstract class JakartaTransformerTransformAction implements TransformAction<TransformParameters.None> {
+abstract class BaseJakartaTransformerTransformAction implements TransformAction<TransformParameters.None> {
 
 	public static final String ARTIFACT_TYPE = "jakarta-transformed-jar";
 
@@ -148,9 +148,9 @@ if (Boolean.getBoolean("build.jakarta.transformer.enabled")) {
 		configurations.jakartaTransformer.collect { it.toURI() }.collect{ it.toURL() }.toArray(new URL[0]),
 		null as java.lang.ClassLoader);
 
-	JakartaTransformerTransformAction.classLoader = urlClassLoader
-	JakartaTransformerTransformAction.logger = project.logger
-	JakartaTransformerTransformAction.propertiesFile = project.file("liferay-jakarta-versions.properties")
+	BaseJakartaTransformerTransformAction.classLoader = urlClassLoader
+	BaseJakartaTransformerTransformAction.logger = project.logger
+	BaseJakartaTransformerTransformAction.propertiesFile = project.file("liferay-jakarta-versions.properties")
 }
 
 if (FileUtil.exists(rootProject, "private/yarn.lock")) {
@@ -874,7 +874,7 @@ gradle.beforeProject {
 					compileJspClasspath
 					compileJspClasspathTransform {
 						attributes {
-							attribute(ArtifactTypeDefinition.ARTIFACT_TYPE_ATTRIBUTE, JakartaTransformerTransformAction.ARTIFACT_TYPE)
+							attribute(ArtifactTypeDefinition.ARTIFACT_TYPE_ATTRIBUTE, BaseJakartaTransformerTransformAction.ARTIFACT_TYPE)
 						}
 					}
 					jspCClasspath
@@ -905,9 +905,9 @@ gradle.beforeProject {
 
 			pluginManager.withPlugin("java") {
 				dependencies {
-					registerTransform(JakartaTransformerTransformAction) {
+					registerTransform(BaseJakartaTransformerTransformAction) {
 						from.attribute(ArtifactTypeDefinition.ARTIFACT_TYPE_ATTRIBUTE, ArtifactTypeDefinition.JAR_TYPE)
-						to.attribute(ArtifactTypeDefinition.ARTIFACT_TYPE_ATTRIBUTE, JakartaTransformerTransformAction.ARTIFACT_TYPE)
+						to.attribute(ArtifactTypeDefinition.ARTIFACT_TYPE_ATTRIBUTE, BaseJakartaTransformerTransformAction.ARTIFACT_TYPE)
 					}
 				}
 
@@ -915,7 +915,7 @@ gradle.beforeProject {
 					SourceSet sourceSet ->
 
 					configurations[sourceSet.compileClasspathConfigurationName].attributes {
-						attribute(ArtifactTypeDefinition.ARTIFACT_TYPE_ATTRIBUTE, JakartaTransformerTransformAction.ARTIFACT_TYPE)
+						attribute(ArtifactTypeDefinition.ARTIFACT_TYPE_ATTRIBUTE, BaseJakartaTransformerTransformAction.ARTIFACT_TYPE)
 					}
 				}
 			}

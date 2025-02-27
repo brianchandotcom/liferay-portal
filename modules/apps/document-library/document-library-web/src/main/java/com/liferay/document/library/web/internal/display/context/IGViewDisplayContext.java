@@ -13,6 +13,7 @@ import com.liferay.document.library.kernel.model.DLFileShortcutConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
+import com.liferay.document.library.web.internal.display.context.helper.DLPortletInstanceSettingsHelper;
 import com.liferay.document.library.web.internal.display.context.helper.IGRequestHelper;
 import com.liferay.document.library.web.internal.settings.DLPortletInstanceSettings;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
@@ -52,6 +53,9 @@ public class IGViewDisplayContext {
 		_igRequestHelper = igRequestHelper;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
+
+		_dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(
+			igRequestHelper);
 
 		_httpServletRequest = igRequestHelper.getRequest();
 
@@ -213,15 +217,10 @@ public class IGViewDisplayContext {
 			return _repositoryId;
 		}
 
-		DLPortletInstanceSettings dlPortletInstanceSettings =
-			_getDLPortletInstanceSettings();
+		_repositoryId =
+			_dlPortletInstanceSettingsHelper.getSelectedRepositoryId();
 
-		_repositoryId = dlPortletInstanceSettings.getSelectedRepositoryId();
-
-		if ((_folder != null) &&
-			(dlPortletInstanceSettings.getSelectedRepositoryId() !=
-				_folder.getRepositoryId())) {
-
+		if ((_folder != null) && (_repositoryId != _folder.getRepositoryId())) {
 			_repositoryId = _folder.getRepositoryId();
 		}
 		else if (_repositoryId == 0) {
@@ -236,26 +235,21 @@ public class IGViewDisplayContext {
 			return _rootFolderId;
 		}
 
-		DLPortletInstanceSettings dlPortletInstanceSettings =
-			_getDLPortletInstanceSettings();
+		_rootFolderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 
-		_rootFolderId = dlPortletInstanceSettings.getRootFolderId();
+		try {
+			Folder rootFolder =
+				_dlPortletInstanceSettingsHelper.getRootFolder();
 
-		if (_rootFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			try {
-				Folder rootFolder = DLAppLocalServiceUtil.getFolder(
-					_rootFolderId);
+			if ((rootFolder != null) &&
+				(rootFolder.getGroupId() == _themeDisplay.getScopeGroupId())) {
 
-				if (rootFolder.getGroupId() !=
-						_themeDisplay.getScopeGroupId()) {
-
-					_rootFolderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
-				}
+				_rootFolderId = rootFolder.getFolderId();
 			}
-			catch (Exception exception) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(exception);
-				}
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
 			}
 		}
 
@@ -358,9 +352,7 @@ public class IGViewDisplayContext {
 			WebKeys.DOCUMENT_LIBRARY_FOLDER);
 
 		_folderId = BeanParamUtil.getLong(
-			(Folder)_httpServletRequest.getAttribute(
-				WebKeys.DOCUMENT_LIBRARY_FOLDER),
-			_httpServletRequest, "folderId", getRootFolderId());
+			_folder, _httpServletRequest, "folderId", getRootFolderId());
 
 		_defaultFolderView = false;
 
@@ -391,6 +383,8 @@ public class IGViewDisplayContext {
 	private String _assetTagName;
 	private Boolean _defaultFolderView;
 	private DLPortletInstanceSettings _dlPortletInstanceSettings;
+	private final DLPortletInstanceSettingsHelper
+		_dlPortletInstanceSettingsHelper;
 	private Folder _folder;
 	private long _folderId;
 	private Integer _folderImagesCount;

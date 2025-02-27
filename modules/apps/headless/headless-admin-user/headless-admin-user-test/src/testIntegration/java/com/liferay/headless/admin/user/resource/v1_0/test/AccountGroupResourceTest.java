@@ -7,6 +7,7 @@ package com.liferay.headless.admin.user.resource.v1_0.test;
 
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
+import com.liferay.account.model.AccountGroupRel;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.account.service.AccountGroupLocalService;
 import com.liferay.account.service.AccountGroupRelLocalService;
@@ -17,35 +18,46 @@ import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.expando.kernel.model.ExpandoTable;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
+import com.liferay.headless.admin.user.client.dto.v1_0.AccountBrief;
 import com.liferay.headless.admin.user.client.dto.v1_0.AccountGroup;
 import com.liferay.headless.admin.user.client.dto.v1_0.Creator;
 import com.liferay.headless.admin.user.client.dto.v1_0.CustomField;
 import com.liferay.headless.admin.user.client.dto.v1_0.CustomValue;
 import com.liferay.headless.admin.user.client.pagination.Page;
 import com.liferay.headless.admin.user.client.pagination.Pagination;
+import com.liferay.headless.admin.user.client.permission.Permission;
 import com.liferay.headless.admin.user.client.problem.Problem;
 import com.liferay.headless.admin.user.client.resource.v1_0.AccountGroupResource;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.role.RoleConstants;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.service.ResourceActionLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.DataGuard;
+import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.vulcan.permission.PermissionUtil;
 
 import java.text.DateFormat;
 
@@ -109,6 +121,14 @@ public class AccountGroupResourceTest extends BaseAccountGroupResourceTestCase {
 		super.testPatchAccountGroupByExternalReferenceCode();
 
 		_testPatchAccountGroupByExternalReferenceCodeWithoutName();
+	}
+
+	@Override
+	@Test
+	public void testPostAccountGroup() throws Exception {
+		super.testPostAccountGroup();
+
+		_testPostAccountGroupBatch();
 	}
 
 	@Override
@@ -559,6 +579,183 @@ public class AccountGroupResourceTest extends BaseAccountGroupResourceTestCase {
 		assertValid(getAccountGroup);
 	}
 
+	private void _testPostAccountGroupBatch() throws Exception {
+		AccountGroup randomAccountGroup = randomAccountGroup();
+
+		AccountEntry serviceBuilderAccountEntry1 =
+			_accountEntryLocalService.addAccountEntry(
+				TestPropsValues.getUserId(),
+				AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT,
+				RandomTestUtil.randomString(), null, new String[0], null, null,
+				null, AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS,
+				WorkflowConstants.STATUS_APPROVED, null);
+
+		AccountBrief accountBrief1 = new AccountBrief() {
+			{
+				externalReferenceCode =
+					serviceBuilderAccountEntry1.getExternalReferenceCode();
+				name = serviceBuilderAccountEntry1.getName();
+				type = serviceBuilderAccountEntry1.getType();
+			}
+		};
+		AccountBrief accountBrief2 = new AccountBrief() {
+			{
+				externalReferenceCode = RandomTestUtil.randomString();
+				name = RandomTestUtil.randomString();
+				type = AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS;
+			}
+		};
+
+		randomAccountGroup.setAccountBriefs(
+			new AccountBrief[] {accountBrief1, accountBrief2});
+
+		Role serviceBuilderRole1 = RoleTestUtil.addRole(
+			RoleConstants.TYPE_REGULAR);
+
+		Permission permission1 = new Permission() {
+			{
+				actionIds = new String[] {ActionKeys.VIEW};
+				roleExternalReferenceCode =
+					serviceBuilderRole1.getExternalReferenceCode();
+				roleName = serviceBuilderRole1.getName();
+				roleType = RoleConstants.getTypeLabel(
+					serviceBuilderRole1.getType());
+			}
+		};
+		Permission permission2 = new Permission() {
+			{
+				actionIds = new String[] {ActionKeys.UPDATE};
+				roleExternalReferenceCode = RandomTestUtil.randomString();
+				roleName = RandomTestUtil.randomString();
+				roleType = RoleConstants.getTypeLabel(
+					RoleConstants.TYPE_REGULAR);
+			}
+		};
+
+		randomAccountGroup.setPermissions(
+			new Permission[] {permission1, permission2});
+
+		_waitForFinish(
+			"COMPLETED", true,
+			HTTPTestUtil.invokeToJSONObject(
+				JSONUtil.put(
+					"items",
+					JSONUtil.put(
+						_jsonFactory.createJSONObject(
+							randomAccountGroup.toString()))
+				).toString(),
+				"headless-admin-user/v1.0/account-groups/batch",
+				Http.Method.POST));
+
+		com.liferay.account.model.AccountGroup serviceBuilderAccountGroup =
+			_accountGroupLocalService.fetchAccountGroupByExternalReferenceCode(
+				randomAccountGroup.getExternalReferenceCode(),
+				TestPropsValues.getCompanyId());
+
+		Assert.assertNotNull(serviceBuilderAccountGroup);
+
+		AccountEntry serviceBuilderAccountEntry2 =
+			_accountEntryLocalService.fetchAccountEntryByExternalReferenceCode(
+				accountBrief1.getExternalReferenceCode(),
+				TestPropsValues.getCompanyId());
+
+		Assert.assertNotNull(serviceBuilderAccountEntry2);
+		Assert.assertEquals(
+			serviceBuilderAccountEntry1.getAccountEntryId(),
+			serviceBuilderAccountEntry2.getAccountEntryId());
+
+		List<AccountGroupRel> serviceBuilderAccountGroupRels =
+			_accountGroupRelLocalService.getAccountGroupRels(
+				serviceBuilderAccountGroup.getAccountGroupId(),
+				AccountEntry.class.getName());
+
+		Assert.assertTrue(
+			ListUtil.exists(
+				serviceBuilderAccountGroupRels,
+				serviceBuilderAccountGroupRel ->
+					serviceBuilderAccountGroupRel.getClassPK() ==
+						serviceBuilderAccountEntry2.getAccountEntryId()));
+
+		AccountEntry serviceBuilderAccountEntry3 =
+			_accountEntryLocalService.fetchAccountEntryByExternalReferenceCode(
+				accountBrief2.getExternalReferenceCode(),
+				TestPropsValues.getCompanyId());
+
+		Assert.assertNotNull(serviceBuilderAccountEntry3);
+		Assert.assertEquals(
+			accountBrief2.getName(), serviceBuilderAccountEntry3.getName());
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_INCOMPLETE,
+			serviceBuilderAccountEntry3.getStatus());
+		Assert.assertEquals(
+			accountBrief2.getType(), serviceBuilderAccountEntry3.getType());
+		Assert.assertTrue(
+			ListUtil.exists(
+				serviceBuilderAccountGroupRels,
+				serviceBuilderAccountGroupRel ->
+					serviceBuilderAccountGroupRel.getClassPK() ==
+						serviceBuilderAccountEntry3.getAccountEntryId()));
+
+		Role serviceBuilderRole2 =
+			_roleLocalService.fetchRoleByExternalReferenceCode(
+				permission1.getRoleExternalReferenceCode(),
+				TestPropsValues.getCompanyId());
+
+		Assert.assertNotNull(serviceBuilderRole2);
+		Assert.assertEquals(
+			serviceBuilderRole1.getRoleId(), serviceBuilderRole2.getRoleId());
+
+		List<com.liferay.portal.vulcan.permission.Permission> permissions =
+			ListUtil.fromCollection(
+				PermissionUtil.getPermissions(
+					TestPropsValues.getCompanyId(),
+					_resourceActionLocalService.getResourceActions(
+						com.liferay.account.model.AccountGroup.class.getName()),
+					serviceBuilderAccountGroup.getAccountGroupId(),
+					com.liferay.account.model.AccountGroup.class.getName(),
+					null));
+
+		Assert.assertTrue(
+			ListUtil.exists(
+				permissions,
+				permission -> {
+					String[] actionIds = permission.getActionIds();
+
+					return (actionIds.length == 1) &&
+						   Objects.equals(ActionKeys.VIEW, actionIds[0]) &&
+						   Objects.equals(
+							   serviceBuilderRole2.getExternalReferenceCode(),
+							   permission.getRoleExternalReferenceCode());
+				}));
+
+		Role serviceBuilderRole3 =
+			_roleLocalService.fetchRoleByExternalReferenceCode(
+				permission2.getRoleExternalReferenceCode(),
+				TestPropsValues.getCompanyId());
+
+		Assert.assertNotNull(serviceBuilderRole3);
+		Assert.assertEquals(
+			permission2.getRoleName(), serviceBuilderRole3.getName());
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_INCOMPLETE,
+			serviceBuilderRole3.getStatus());
+		Assert.assertEquals(
+			RoleConstants.getLabelType(permission2.getRoleType()),
+			serviceBuilderRole3.getType());
+		Assert.assertTrue(
+			ListUtil.exists(
+				permissions,
+				permission -> {
+					String[] actionIds = permission.getActionIds();
+
+					return (actionIds.length == 1) &&
+						   Objects.equals(ActionKeys.UPDATE, actionIds[0]) &&
+						   Objects.equals(
+							   serviceBuilderRole3.getExternalReferenceCode(),
+							   permission.getRoleExternalReferenceCode());
+				}));
+	}
+
 	private void _testPutAccountGroupByExternalReferenceWithoutName()
 		throws Exception {
 
@@ -604,6 +801,33 @@ public class AccountGroupResourceTest extends BaseAccountGroupResourceTestCase {
 		}
 	}
 
+	private JSONObject _waitForFinish(
+			String expectedExecuteStatus, boolean importTask,
+			JSONObject jsonObject)
+		throws Exception {
+
+		String endpoint = StringBundler.concat(
+			"headless-batch-engine/v1.0/",
+			importTask ? "import-task" : "export-task",
+			"/by-external-reference-code/");
+
+		while (true) {
+			jsonObject = HTTPTestUtil.invokeToJSONObject(
+				null, endpoint + jsonObject.getString("externalReferenceCode"),
+				Http.Method.GET);
+
+			String executeStatus = jsonObject.getString("executeStatus");
+
+			if (StringUtil.equals(executeStatus, "COMPLETED") ||
+				StringUtil.equals(executeStatus, "FAILED")) {
+
+				Assert.assertEquals(expectedExecuteStatus, executeStatus);
+
+				return jsonObject;
+			}
+		}
+	}
+
 	private AccountEntry _accountEntry;
 
 	@Inject
@@ -625,7 +849,16 @@ public class AccountGroupResourceTest extends BaseAccountGroupResourceTestCase {
 	private ExpandoTableLocalService _expandoTableLocalService;
 
 	@Inject
+	private JSONFactory _jsonFactory;
+
+	@Inject
+	private ResourceActionLocalService _resourceActionLocalService;
+
+	@Inject
 	private ResourcePermissionLocalService _resourcePermissionLocalService;
+
+	@Inject
+	private RoleLocalService _roleLocalService;
 
 	private ServiceContext _serviceContext;
 

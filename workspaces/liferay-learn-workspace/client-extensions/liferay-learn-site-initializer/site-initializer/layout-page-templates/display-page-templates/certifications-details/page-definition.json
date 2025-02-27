@@ -118,7 +118,7 @@
 												"definition": {
 													"fragment": {
 														"key": "dialect-text",
-														"siteKey": "Guest"
+														"siteKey": "Liferay Learn"
 													},
 													"fragmentConfig": {
 														"textType": "h5",
@@ -154,7 +154,7 @@
 											"cssClasses": ["title-banner"],
 											"fragment": {
 												"key": "dialect-text",
-												"siteKey": "Guest"
+												"siteKey": "Liferay Learn"
 											},
 											"fragmentConfig": {
 												"textType": "h1",
@@ -215,7 +215,7 @@
 													],
 													"fragment": {
 														"key": "dialect-text",
-														"siteKey": "Guest"
+														"siteKey": "Liferay Learn"
 													},
 													"fragmentConfig": {
 														"textType": "text-paragraph-sm",
@@ -296,7 +296,6 @@
 				"pageElements": [
 					{
 						"definition": {
-							"customCSS": ".[$FRAGMENT_CLASS$] {\n}",
 							"fragmentStyle": {
 								"marginLeft": "auto",
 								"marginRight": "auto",
@@ -304,10 +303,9 @@
 							},
 							"widgetInstance": {
 								"widgetConfig": {},
-								"widgetName": "com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet_57868206215768_LXC_liferay_lms_certifications_details"
+								"widgetName": "com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet_84997331558403_LXC_liferay_lms_certifications_details"
 							}
 						},
-						"id": "0600fadb-4b14-00d5-fd3c-6fcda81357a4",
 						"type": "Widget"
 					}
 				],

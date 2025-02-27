@@ -40,24 +40,22 @@
 				"pageElements": [
 					{
 						"definition": {
-							"customCSS": ".course-top-banner {\n\n}",
 							"fragment": {
-								"key": "lesson-top-banner",
-								"siteKey": "Guest"
+								"key": "lms-course-top-banner",
+								"siteKey": "Liferay Learn"
 							},
 							"fragmentConfig": {"assetType": "quiz"},
 							"fragmentFields": [],
 							"indexed": true
 						},
-						"id": "966dc998-9928-0efa-183c-fc51c58f7308",
 						"type": "Fragment"
 					},
 					{
 						"definition": {
 							"customCSS": ".[$FRAGMENT_CLASS$] {\n  \n}",
 							"fragment": {
-								"key": "lms-lesson-display-page-layout-(copy)",
-								"siteKey": "Guest"
+								"key": "lms-quiz-display-page-layout",
+								"siteKey": "Liferay Learn"
 							},
 							"fragmentConfig": {},
 							"fragmentFields": [],
@@ -72,18 +70,16 @@
 							},
 							"indexed": true
 						},
-						"id": "63cc39b6-ee6c-872d-c631-081eb3c76f46",
 						"pageElements": [
 							{
 								"definition": {},
-								"id": "c429731b-6c56-5234-7f64-35ca9d2fcc95",
 								"pageElements": [
 									{
 										"definition": {
 											"cssClasses": ["learn-quiz-view"],
 											"fragment": {
-												"key": "lms-quiz-display-page-layout-(copy)",
-												"siteKey": "Guest"
+												"key": "lms-quiz-view",
+												"siteKey": "Liferay Learn"
 											},
 											"fragmentConfig": {
 												"educationPageUrl": "/education",
@@ -92,7 +88,6 @@
 											"fragmentFields": [],
 											"indexed": true
 										},
-										"id": "6a23d3de-4ca3-92be-4b2a-4bedaa1a1ccf",
 										"type": "Fragment"
 									}
 								],

@@ -28,14 +28,13 @@
 					{
 						"definition": {
 							"fragment": {
-								"key": "lesson-top-banner",
-								"siteKey": "Guest"
+								"key": "lms-course-top-banner",
+								"siteKey": "Liferay Learn"
 							},
 							"fragmentConfig": {"assetType": "lesson"},
 							"fragmentFields": [],
 							"indexed": true
 						},
-						"id": "a2322ce8-df8a-e7ee-0a91-9a6f7c59a8e8",
 						"type": "Fragment"
 					},
 					{
@@ -43,7 +42,7 @@
 							"customCSS": ".[$FRAGMENT_CLASS$] {\n \n}\n\n\n    ",
 							"fragment": {
 								"key": "lms-lesson-display-page-layout",
-								"siteKey": "Guest"
+								"siteKey": "Liferay Learn"
 							},
 							"fragmentConfig": {},
 							"fragmentFields": [],
@@ -96,10 +95,9 @@
 											],
 											"widgetInstance": {
 												"widgetConfig": {},
-												"widgetName": "com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet_57868206215768_LXC_liferay_lms_lesson_navigation"
+												"widgetName": "com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet_84997331558403_LXC_liferay_lms_lesson_navigation"
 											}
 										},
-										"id": "f6c126c5-1fc7-1a01-0522-b693a763f4d2",
 										"type": "Widget"
 									},
 									{
@@ -123,12 +121,18 @@
 													"customCSS": ".[$FRAGMENT_CLASS$] {\nz-index: 100;\n}",
 													"fragment": {
 														"key": "sign-in-banner",
-														"siteKey": "Guest"
+														"siteKey": "Liferay Learn"
 													},
 													"fragmentConfig": {},
 													"fragmentFields": [
 														{
 															"id": "image-editable-product-facebook",
+															"value": {
+																"fragmentLink": {}
+															}
+														},
+														{
+															"id": "text1",
 															"value": {
 																"fragmentLink": {}
 															}
@@ -157,29 +161,16 @@
 			{
 				"definition": {
 					"fragment": {
-						"key": "progress-tracker",
-						"siteKey": "57868206215768"
+						"key": "lms-page-loading",
+						"siteKey": "Liferay Learn"
 					},
-					"fragmentConfig": {"progress": 100, "assetType": "lesson"},
+					"fragmentConfig": {
+						"loadingTextKey": "loading-knowledge-label"
+					},
 					"fragmentFields": [],
 					"fragmentStyle": {"hidden": true},
 					"indexed": true
 				},
-				"id": "98c926ae-871a-1875-53cf-c33cd747cd5e",
-				"type": "Fragment"
-			},
-			{
-				"definition": {
-					"fragment": {
-						"key": "page-loading-indicator",
-						"siteKey": "Guest"
-					},
-					"fragmentConfig": {"loadingTextKey": ""},
-					"fragmentFields": [],
-					"fragmentStyle": {"hidden": true},
-					"indexed": true
-				},
-				"id": "1441e6ae-cd38-bde8-41fc-afc8b408f50f",
 				"type": "Fragment"
 			}
 		],

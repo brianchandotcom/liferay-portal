@@ -1,28 +1,27 @@
 {
 	"pageElement": {
-		"id": "885ebf5c-fdff-7df9-4306-a613edad3f45",
 		"pageElements": [
 			{
 				"definition": {
-					"fragment": {"key": "import-lms", "siteKey": "Guest"},
+					"fragment": {"key": "lms-init", "siteKey": "Liferay Learn"},
 					"fragmentConfig": {},
 					"fragmentFields": [],
 					"indexed": true
 				},
-				"id": "b3f02493-bd12-0416-94be-773f45025c9d",
 				"type": "Fragment"
 			},
 			{
 				"definition": {
 					"fragment": {
-						"key": "page-loading-indicator",
-						"siteKey": "Guest"
+						"key": "lms-page-loading",
+						"siteKey": "Liferay Learn"
 					},
-					"fragmentConfig": {"loadingTextKey": ""},
+					"fragmentConfig": {
+						"loadingTextKey": "loading-knowledge-label"
+					},
 					"fragmentFields": [],
 					"indexed": true
 				},
-				"id": "68be5f66-b89b-f624-4cdf-ce57872c1508",
 				"type": "Fragment"
 			},
 			{
@@ -56,10 +55,9 @@
 							},
 							"widgetInstance": {
 								"widgetConfig": {},
-								"widgetName": "com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet_57868206215768_LXC_liferay_lms_learning_path_steps"
+								"widgetName": "com_liferay_client_extension_web_internal_portlet_ClientExtensionEntryPortlet_84997331558403_LXC_liferay_lms_learning_path_steps"
 							}
 						},
-						"id": "bb71c2eb-b99e-492e-8117-692d294af529",
 						"type": "Widget"
 					}
 				],

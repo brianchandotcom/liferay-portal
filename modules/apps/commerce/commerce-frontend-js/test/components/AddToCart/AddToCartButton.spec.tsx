@@ -273,7 +273,7 @@ describe('Add to Cart Button', () => {
 					skuId: 123,
 				},
 			],
-			currencyCode: '',
+			currencyCode: 'USD',
 		});
 		expect(getCartFn).not.toHaveBeenCalled();
 	});

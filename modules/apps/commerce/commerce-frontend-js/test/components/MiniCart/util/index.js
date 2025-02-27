@@ -62,36 +62,33 @@ describe('MiniCart tests_utilities', () => {
 	});
 
 	describe('regenerateOrderDetailURL', () => {
+		const VALID_BASE_ORDER_DETAIL_PORTLET_URL = `http://localhost:3333/group/name/?p_p_id=${DEFAULT_ORDER_DETAILS_PORTLET_ID}`;
 		const VALID_BASE_ORDER_DETAIL_URL = 'http://localhost:3333/group/name/';
 		const VALID_ORDER_UUID = '00000-00000-22222-213jd-qwerty';
 
 		const errorMessage = (argName) =>
 			`Cannot generate a new Order Detail URL. Invalid "${argName}"`;
 
-		it('returns a new valid Order Detail URL string', () => {
+		it('returns a new valid Order Detail Portlet URL string', () => {
 			expect(
 				regenerateOrderDetailURL(
-					VALID_BASE_ORDER_DETAIL_URL,
-					false,
+					VALID_BASE_ORDER_DETAIL_PORTLET_URL,
 					12345,
 					VALID_ORDER_UUID
 				)
-			).toEqual(VALID_BASE_ORDER_DETAIL_URL + 12345);
+			).toEqual(
+				`${VALID_BASE_ORDER_DETAIL_PORTLET_URL}&_${DEFAULT_ORDER_DETAILS_PORTLET_ID}_${ORDER_UUID_PARAMETER}=${VALID_ORDER_UUID}`
+			);
 		});
 
 		it('returns a new valid Order Detail URL string', () => {
 			expect(
 				regenerateOrderDetailURL(
 					VALID_BASE_ORDER_DETAIL_URL,
-					true,
 					12345,
 					VALID_ORDER_UUID
 				)
-			).toEqual(
-				VALID_BASE_ORDER_DETAIL_URL +
-					`?_${DEFAULT_ORDER_DETAILS_PORTLET_ID}_${ORDER_UUID_PARAMETER}=` +
-					VALID_ORDER_UUID
-			);
+			).toEqual(VALID_BASE_ORDER_DETAIL_URL + 12345);
 		});
 
 		it('throws if the "orderId" string argument is empty or null', () => {
@@ -99,7 +96,6 @@ describe('MiniCart tests_utilities', () => {
 				expect(
 					regenerateOrderDetailURL(
 						VALID_BASE_ORDER_DETAIL_URL,
-						false,
 						'',
 						VALID_ORDER_UUID
 					)
@@ -107,7 +103,6 @@ describe('MiniCart tests_utilities', () => {
 				expect(
 					regenerateOrderDetailURL(
 						VALID_BASE_ORDER_DETAIL_URL,
-						false,
 						null,
 						VALID_ORDER_UUID
 					)
@@ -122,16 +117,15 @@ describe('MiniCart tests_utilities', () => {
 			try {
 				expect(
 					regenerateOrderDetailURL(
-						VALID_BASE_ORDER_DETAIL_URL,
-						true,
+						VALID_BASE_ORDER_DETAIL_PORTLET_URL,
 						12345,
 						''
 					)
 				).toThrow();
+
 				expect(
 					regenerateOrderDetailURL(
-						VALID_BASE_ORDER_DETAIL_URL,
-						true,
+						VALID_BASE_ORDER_DETAIL_PORTLET_URL,
 						12345,
 						null
 					)
@@ -145,48 +139,23 @@ describe('MiniCart tests_utilities', () => {
 		it('throws if the "baseOrderDetailURL" string argument is empty or null', () => {
 			try {
 				expect(
-					regenerateOrderDetailURL('', false, 12345, VALID_ORDER_UUID)
+					regenerateOrderDetailURL('', 12345, VALID_ORDER_UUID)
 				).toThrow();
+
 				expect(
-					regenerateOrderDetailURL(
-						null,
-						false,
-						12345,
-						VALID_ORDER_UUID
-					)
+					regenerateOrderDetailURL(null, 12345, VALID_ORDER_UUID)
 				).toThrow();
+
 				expect(
-					regenerateOrderDetailURL('', true, 12345, VALID_ORDER_UUID)
+					regenerateOrderDetailURL('', 12345, VALID_ORDER_UUID)
 				).toThrow();
+
 				expect(
-					regenerateOrderDetailURL(
-						null,
-						true,
-						12345,
-						VALID_ORDER_UUID
-					)
+					regenerateOrderDetailURL(null, 12345, VALID_ORDER_UUID)
 				).toThrow();
 			}
 			catch (error) {
 				expect(error.message).toEqual(errorMessage`baseOrderDetailURL`);
-			}
-		});
-
-		it('throws if the "baseOrderDetailURL" string argument is a malformed URL', () => {
-			const MALFORMED_ORDER_DETAIL_URL = 'malformed';
-
-			try {
-				expect(
-					regenerateOrderDetailURL(
-						MALFORMED_ORDER_DETAIL_URL,
-						true,
-						12345,
-						VALID_ORDER_UUID
-					)
-				).toThrow(TypeError);
-			}
-			catch (error) {
-				expect(error.message.includes('Invalid URL')).toBe(true);
 			}
 		});
 	});

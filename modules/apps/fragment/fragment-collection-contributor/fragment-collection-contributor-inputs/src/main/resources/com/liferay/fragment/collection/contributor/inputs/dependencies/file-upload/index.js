@@ -81,6 +81,28 @@ const onSelectFromUserComputer = () => {
 	fileInput.click();
 };
 
+function getTranslationInput(namespace, languageId, inputName) {
+	const inputId = `${namespace}${inputName}-file-upload_${languageId}`;
+
+	return document.getElementById(inputId);
+}
+
+const setFileName = (input) => {
+	if (!input) {
+		fileName.innerText = '';
+	}
+	else {
+		fileName.innerText = input.dataset.fileName || '';
+	}
+
+	if (fileName.innerText) {
+		removeButton.classList.remove('d-none');
+	}
+	else {
+		removeButton.classList.add('d-none');
+	}
+};
+
 if (layoutMode === 'edit') {
 	selectButton.classList.add('disabled');
 }
@@ -104,7 +126,7 @@ else {
 		import('@liferay/fragment-impl').then(
 			({
 				getOrCreateTranslationInput,
-				registerLocalizedFileInput,
+				registerLocalizedInput,
 				registerUnlocalizedInput,
 			}) => {
 				if (input.localizable) {
@@ -139,33 +161,34 @@ else {
 					const isFromDocumentLibrary =
 						input.attributes.selectFromDocumentLibrary;
 
-					const {onChange, onRemoveFile} = registerLocalizedFileInput(
-						{
-							changeTextDirection: false,
-							defaultLanguageId,
-							inputName: input.name,
-							isFromDocumentLibrary,
-							localizationInputsContainer:
-								inputElement.parentNode,
-							namespace: fragmentNamespace,
-							onLocaleChange: (input) => {
-								if (!input) {
-									fileName.innerText = '';
-								}
-								else {
-									fileName.innerText =
-										input.dataset.fileName || '';
-								}
+					const {onChange} = registerLocalizedInput({
+						changeTextDirection: false,
+						defaultLanguageId,
+						inputName: input.name,
+						localizationInputsContainer: inputElement.parentNode,
+						namespace: fragmentNamespace,
+						onLocaleChange: ({languageId}) => {
+							const translationInput = getTranslationInput(
+								fragmentNamespace,
+								languageId,
+								input.name
+							);
 
-								if (fileName.innerText) {
-									removeButton.classList.remove('d-none');
-								}
-								else {
-									removeButton.classList.add('d-none');
-								}
-							},
-						}
-					);
+							if (translationInput) {
+								setFileName(translationInput);
+							}
+							else {
+								const defaultTranslationInput =
+									getTranslationInput(
+										fragmentNamespace,
+										defaultLanguageId,
+										input.name
+									);
+
+								setFileName(defaultTranslationInput);
+							}
+						},
+					});
 
 					if (isFromDocumentLibrary) {
 						selectButton.addEventListener('click', (event) =>

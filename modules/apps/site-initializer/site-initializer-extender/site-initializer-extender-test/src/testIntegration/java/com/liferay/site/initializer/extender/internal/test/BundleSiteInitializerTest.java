@@ -3799,13 +3799,13 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals(GroupConstants.TYPE_SITE_OPEN, _group.getType());
 		Assert.assertTrue(_group.isManualMembership());
 
-		Assert.assertTrue(
-			_menuAccessConfigurationManager.isShowControlMenuByRole(
-				_group.getGroupId()));
 		Assert.assertEquals(
 			2,
 			_menuAccessConfigurationManager.getAccessToControlMenuRoleIds(
 				_group.getGroupId()).length);
+		Assert.assertTrue(
+			_menuAccessConfigurationManager.isShowControlMenuByRole(
+				_group.getGroupId()));
 	}
 
 	private void _assertSiteConfiguration2() throws Exception {
@@ -3815,13 +3815,13 @@ public class BundleSiteInitializerTest {
 		Assert.assertEquals(GroupConstants.TYPE_SITE_OPEN, _group.getType());
 		Assert.assertTrue(_group.isManualMembership());
 
-		Assert.assertFalse(
-			_menuAccessConfigurationManager.isShowControlMenuByRole(
-				_group.getGroupId()));
 		Assert.assertEquals(
 			0,
 			_menuAccessConfigurationManager.getAccessToControlMenuRoleIds(
 				_group.getGroupId()).length);
+		Assert.assertFalse(
+			_menuAccessConfigurationManager.isShowControlMenuByRole(
+				_group.getGroupId()));
 	}
 
 	private void _assertSiteNavigationMenu1() {

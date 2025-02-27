@@ -197,9 +197,9 @@ public abstract class BaseDSEnvelopeResourceTestCase {
 			testGetSiteDSEnvelopesPage_getIrrelevantSiteId();
 
 		Page<DSEnvelope> page = dsEnvelopeResource.getSiteDSEnvelopesPage(
-			siteId, RandomTestUtil.randomString(),
+			siteId, RandomTestUtil.randomString(), null,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), Pagination.of(1, 10));
+			Pagination.of(1, 10));
 
 		long totalCount = page.getTotalCount();
 

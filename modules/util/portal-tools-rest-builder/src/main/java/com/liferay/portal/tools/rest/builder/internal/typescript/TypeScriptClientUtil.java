@@ -351,6 +351,7 @@ public class TypeScriptClientUtil {
 		ConfigYAML configYAML, OpenAPIYAML openAPIYAML, Operation operation,
 		String path) {
 
+		Set<Map<String, String>> imports = new HashSet<>();
 		Map<ResponseCode, Response> responses = operation.getResponses();
 
 		Map<String, Object> operationDataMap =
@@ -394,9 +395,48 @@ public class TypeScriptClientUtil {
 
 					return new ArrayList<>(produces);
 				}
-			).build();
+			).put(
+				"returnType",
+				() -> {
+					if (responses == null) {
+						return null;
+					}
 
-		Set<Map<String, String>> imports = new HashSet<>();
+					for (Map.Entry<ResponseCode, Response> entry :
+							responses.entrySet()) {
+
+						ResponseCode responseCode = entry.getKey();
+
+						if (!Objects.equals(responseCode.getHttpCode(), 200)) {
+							continue;
+						}
+
+						Response response = entry.getValue();
+
+						Map<String, Content> contentMap = response.getContent();
+
+						if ((contentMap == null) || contentMap.isEmpty()) {
+							continue;
+						}
+
+						Collection<Content> contents = contentMap.values();
+
+						Iterator<Content> iterator = contents.iterator();
+
+						Content content = iterator.next();
+
+						if ((content == null) ||
+							(content.getSchema() == null)) {
+
+							continue;
+						}
+
+						return _getTypeScriptType(content.getSchema(), imports);
+					}
+
+					return null;
+				}
+			).build();
 
 		Collection<Map<String, Object>> operationParams =
 			_getAllOperationParams(operation, operationDataMap, imports);
@@ -404,41 +444,6 @@ public class TypeScriptClientUtil {
 		if (!operationParams.isEmpty()) {
 			operationDataMap.put("allParams", operationParams);
 		}
-
-		String returnType = null;
-
-		if (responses != null) {
-			for (Map.Entry<ResponseCode, Response> entry :
-					responses.entrySet()) {
-
-				ResponseCode responseCode = entry.getKey();
-
-				if (Objects.equals(responseCode.getHttpCode(), 200)) {
-					Response response = entry.getValue();
-
-					Map<String, Content> contentMap = response.getContent();
-
-					if ((contentMap != null) && !contentMap.isEmpty()) {
-						Collection<Content> contents = contentMap.values();
-
-						Iterator<Content> iterator = contents.iterator();
-
-						Content firstContent = iterator.next();
-
-						if ((firstContent != null) &&
-							(firstContent.getSchema() != null)) {
-
-							returnType = _getTypeScriptType(
-								firstContent.getSchema(), imports);
-						}
-					}
-
-					break;
-				}
-			}
-		}
-
-		operationDataMap.put("returnType", returnType);
 
 		if (!imports.isEmpty()) {
 			operationDataMap.put("imports", new ArrayList<>(imports));

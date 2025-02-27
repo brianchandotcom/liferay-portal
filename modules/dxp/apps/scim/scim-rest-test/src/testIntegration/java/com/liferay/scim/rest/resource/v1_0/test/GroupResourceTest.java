@@ -10,7 +10,9 @@ import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserGroupLocalService;
@@ -30,6 +32,8 @@ import com.liferay.scim.rest.client.dto.v1_0.Group;
 import com.liferay.scim.rest.client.dto.v1_0.Meta;
 import com.liferay.scim.rest.client.dto.v1_0.MultiValuedAttribute;
 import com.liferay.scim.rest.client.dto.v1_0.Name;
+import com.liferay.scim.rest.client.dto.v1_0.Operation;
+import com.liferay.scim.rest.client.dto.v1_0.PatchOp;
 import com.liferay.scim.rest.client.dto.v1_0.User;
 import com.liferay.scim.rest.client.http.HttpInvoker;
 import com.liferay.scim.rest.client.resource.v1_0.UserResource;
@@ -194,6 +198,162 @@ public class GroupResourceTest extends BaseGroupResourceTestCase {
 
 		assertHttpResponseStatusCode(
 			404, groupResource.getV2GroupsHttpResponse(5, 0, null));
+	}
+
+	@Override
+	@Test
+	public void testPatchV2Group() throws Exception {
+		Group postGroup1 = randomGroup();
+
+		User user1 = _addUser();
+
+		postGroup1.setMembers(
+			new MultiValuedAttribute[] {
+				new MultiValuedAttribute() {
+					{
+						Meta meta = user1.getMeta();
+
+						$ref = meta.getLocation();
+
+						value = user1.getId();
+					}
+				}
+			});
+
+		groupResource.postV2Group(postGroup1);
+
+		UserGroup userGroup1 =
+			_userGroupLocalService.getUserGroupByExternalReferenceCode(
+				postGroup1.getExternalId(), TestPropsValues.getCompanyId());
+
+		assertEquals(
+			postGroup1, _getGroup(String.valueOf(userGroup1.getUserGroupId())));
+
+		PatchOp patchOp = new PatchOp();
+
+		String displayName = StringUtil.toLowerCase(
+			RandomTestUtil.randomString());
+
+		patchOp.setOperations(
+			new Operation[] {
+				new Operation() {
+					{
+						setOp("replace");
+						setPath("displayName");
+						setValue(displayName);
+					}
+				}
+			});
+		patchOp.setSchemas(
+			new String[] {"\"urn:ietf:params:scim:api:messages:2.0:PatchOp\""});
+
+		HttpInvoker.HttpResponse httpResponse =
+			groupResource.patchV2GroupHttpResponse(
+				_getGroup(
+					String.valueOf(userGroup1.getUserGroupId())
+				).getId(),
+				patchOp);
+
+		assertHttpResponseStatusCode(204, httpResponse);
+
+		Assert.assertEquals(
+			displayName,
+			_getGroup(
+				String.valueOf(userGroup1.getUserGroupId())
+			).getDisplayName());
+
+		User user2 = _addUser();
+
+		patchOp.setOperations(
+			new Operation[] {
+				new Operation() {
+					{
+						setOp("Add");
+						setPath("members");
+						setValue(
+							JSONFactoryUtil.createJSONArray(
+							).put(
+								JSONUtil.put("value", user2.getId())
+							));
+					}
+				}
+			});
+
+		httpResponse = groupResource.patchV2GroupHttpResponse(
+			_getGroup(
+				String.valueOf(userGroup1.getUserGroupId())
+			).getId(),
+			patchOp);
+
+		assertHttpResponseStatusCode(204, httpResponse);
+
+		Assert.assertEquals(
+			2,
+			_getGroup(
+				String.valueOf(userGroup1.getUserGroupId())
+			).getMembers(
+			).length);
+
+		patchOp.setOperations(
+			new Operation[] {
+				new Operation() {
+					{
+						setOp("Remove");
+						setPath("members");
+						setValue(
+							JSONFactoryUtil.createJSONArray(
+							).put(
+								JSONUtil.put("value", user2.getId())
+							));
+					}
+				}
+			});
+
+		httpResponse = groupResource.patchV2GroupHttpResponse(
+			_getGroup(
+				String.valueOf(userGroup1.getUserGroupId())
+			).getId(),
+			patchOp);
+
+		assertHttpResponseStatusCode(204, httpResponse);
+
+		Assert.assertEquals(
+			1,
+			_getGroup(
+				String.valueOf(userGroup1.getUserGroupId())
+			).getMembers(
+			).length);
+
+		patchOp.setOperations(
+			new Operation[] {
+				new Operation() {
+					{
+						setOp("Remove");
+						setPath("members");
+						setValue(JSONUtil.put("value", user2.getId()));
+					}
+				}
+			});
+
+		httpResponse = groupResource.patchV2GroupHttpResponse(
+			_getGroup(
+				String.valueOf(userGroup1.getUserGroupId())
+			).getId(),
+			patchOp);
+
+		assertHttpResponseStatusCode(204, httpResponse);
+
+		Assert.assertNull(
+			_getGroup(
+				String.valueOf(userGroup1.getUserGroupId())
+			).getMembers());
+
+		ConfigurationTestUtil.deleteConfiguration(_pid);
+
+		assertHttpResponseStatusCode(
+			404,
+			groupResource.patchV2GroupHttpResponse(
+				randomGroup().getId(), patchOp));
 	}
 
 	@Override

@@ -238,7 +238,7 @@ public class TypeScriptClientUtil {
 		Map<String, Map<String, Object>> apiContexts = new HashMap<>();
 
 		for (Map.Entry<String, List<Map<String, Object>>> entry :
-			operationsDataByTag.entrySet()) {
+				operationsDataByTag.entrySet()) {
 
 			Map<String, Object> apiContext = HashMapBuilder.<String, Object>put(
 				"classname", entry.getKey() + "Api"
@@ -351,41 +351,50 @@ public class TypeScriptClientUtil {
 		ConfigYAML configYAML, OpenAPIYAML openAPIYAML, Operation operation,
 		String path) {
 
-		Map<String, Object> operationDataMap = HashMapBuilder.<String, Object>put(
-			"httpMethod",
-			StringUtil.toUpperCase(OpenAPIParserUtil.getHTTPMethod(operation))
-		).put(
-			"nickname", operation.getOperationId()
-		).put(
-			"notes", operation.getDescription()
-		).put(
-			"path",
-			StringBundler.concat(
-				configYAML.getApplication(
-				).getBaseURI(),
-				"/",
-				openAPIYAML.getInfo(
-				).getVersion(),
-				path)
-		).build();
-
 		Map<ResponseCode, Response> responses = operation.getResponses();
 
-		if (responses != null) {
-			Set<String> produces = new LinkedHashSet<>();
+		Map<String, Object> operationDataMap =
+			HashMapBuilder.<String, Object>put(
+				"httpMethod",
+				StringUtil.toUpperCase(
+					OpenAPIParserUtil.getHTTPMethod(operation))
+			).put(
+				"nickname", operation.getOperationId()
+			).put(
+				"notes", operation.getDescription()
+			).put(
+				"path",
+				StringBundler.concat(
+					configYAML.getApplication(
+					).getBaseURI(),
+					"/",
+					openAPIYAML.getInfo(
+					).getVersion(),
+					path)
+			).put(
+				"produces",
+				() -> {
+					if (responses == null) {
+						return null;
+					}
 
-			for (Response response : responses.values()) {
-				Map<String, Content> content = response.getContent();
+					Set<String> produces = new LinkedHashSet<>();
 
-				if (content != null) {
-					produces.addAll(content.keySet());
+					for (Response response : responses.values()) {
+						Map<String, Content> content = response.getContent();
+
+						if (content != null) {
+							produces.addAll(content.keySet());
+						}
+					}
+
+					if (produces.isEmpty()) {
+						return null;
+					}
+
+					return new ArrayList<>(produces);
 				}
-			}
-
-			if (!produces.isEmpty()) {
-				operationDataMap.put("produces", new ArrayList<>(produces));
-			}
-		}
+			).build();
 
 		Set<Map<String, String>> imports = new HashSet<>();
 

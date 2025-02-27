@@ -752,6 +752,13 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 	}
 
 	@Test
+	public void testPostAssetLibraryStructuredContentFolderBatch()
+		throws Exception {
+
+		Assert.assertTrue(true);
+	}
+
+	@Test
 	public void testDeleteAssetLibraryStructuredContentFolderByExternalReferenceCode()
 		throws Exception {
 
@@ -1737,6 +1744,11 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 
 		Assert.assertTrue(
 			equals(randomStructuredContentFolder, structuredContentFolder));
+	}
+
+	@Test
+	public void testPostSiteStructuredContentFolderBatch() throws Exception {
+		Assert.assertTrue(true);
 	}
 
 	@Test
@@ -3036,6 +3048,11 @@ public abstract class BaseStructuredContentFolderResourceTestCase {
 
 		return structuredContentFolderResource.postSiteStructuredContentFolder(
 			testGroup.getGroupId(), randomStructuredContentFolder());
+	}
+
+	@Test
+	public void testPutStructuredContentFolderBatch() throws Exception {
+		Assert.assertTrue(true);
 	}
 
 	@Test

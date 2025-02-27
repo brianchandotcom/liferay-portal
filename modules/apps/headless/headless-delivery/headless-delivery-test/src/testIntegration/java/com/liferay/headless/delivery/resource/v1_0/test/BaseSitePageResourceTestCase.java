@@ -665,6 +665,11 @@ public abstract class BaseSitePageResourceTestCase {
 	}
 
 	@Test
+	public void testPostSiteSitePageBatch() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	@Test
 	public void testGetSiteSitePage() throws Exception {
 		SitePage postSitePage = testGetSiteSitePage_addSitePage();
 

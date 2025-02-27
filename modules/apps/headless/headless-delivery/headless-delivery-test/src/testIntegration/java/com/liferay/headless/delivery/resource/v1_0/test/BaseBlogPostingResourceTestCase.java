@@ -470,6 +470,11 @@ public abstract class BaseBlogPostingResourceTestCase {
 	}
 
 	@Test
+	public void testPutBlogPostingBatch() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	@Test
 	public void testDeleteBlogPostingMyRating() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		BlogPosting blogPosting =
@@ -1079,6 +1084,11 @@ public abstract class BaseBlogPostingResourceTestCase {
 			randomBlogPosting);
 
 		Assert.assertTrue(equals(randomBlogPosting, blogPosting));
+	}
+
+	@Test
+	public void testPostSiteBlogPostingBatch() throws Exception {
+		Assert.assertTrue(true);
 	}
 
 	@Test

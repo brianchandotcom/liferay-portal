@@ -8,7 +8,7 @@ import {Field} from '../../../../src/main/resources/META-INF/resources/js/struct
 
 const DATE_TIME_FIELD: Field = {
 	erc: 'datetime-field',
-	label: 'Date and Time Field',
+	label: {en_US: 'Date and Time Field'},
 	localized: true,
 	name: 'datetimeField',
 	required: false,
@@ -20,7 +20,7 @@ const DATE_TIME_FIELD: Field = {
 
 const TEXT_FIELD: Field = {
 	erc: 'text-field',
-	label: 'Text Field',
+	label: {en_US: 'Text Field'},
 	localized: false,
 	name: 'textField',
 	required: true,

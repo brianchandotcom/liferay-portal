@@ -828,6 +828,11 @@ public abstract class BaseWikiPageAttachmentResourceTestCase {
 			wikiPageAttachment, multipartFiles);
 	}
 
+	@Test
+	public void testPostWikiPageWikiPageAttachmentBatch() throws Exception {
+		Assert.assertTrue(true);
+	}
+
 	protected WikiPageAttachment
 			testGraphQLWikiPageAttachment_addWikiPageAttachment()
 		throws Exception {

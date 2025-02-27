@@ -673,6 +673,11 @@ public abstract class BaseDocumentResourceTestCase {
 	}
 
 	@Test
+	public void testPostAssetLibraryDocumentBatch() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	@Test
 	public void testDeleteAssetLibraryDocumentByExternalReferenceCode()
 		throws Exception {
 
@@ -1663,6 +1668,11 @@ public abstract class BaseDocumentResourceTestCase {
 	}
 
 	@Test
+	public void testPostDocumentFolderDocumentBatch() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	@Test
 	public void testDeleteDocument() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Document document = testDeleteDocument_addDocument();
@@ -1918,6 +1928,11 @@ public abstract class BaseDocumentResourceTestCase {
 	protected Document testPutDocument_addDocument() throws Exception {
 		return documentResource.postSiteDocument(
 			testGroup.getGroupId(), randomDocument(), getMultipartFiles());
+	}
+
+	@Test
+	public void testPutDocumentBatch() throws Exception {
+		Assert.assertTrue(true);
 	}
 
 	@Test
@@ -2486,6 +2501,11 @@ public abstract class BaseDocumentResourceTestCase {
 
 		return documentResource.postSiteDocument(
 			testGetSiteDocumentsPage_getSiteId(), document, multipartFiles);
+	}
+
+	@Test
+	public void testPostSiteDocumentBatch() throws Exception {
+		Assert.assertTrue(true);
 	}
 
 	@Test

@@ -266,6 +266,7 @@ public class CustomFDSSerializer
 					"status", properties.get("confirmationMessageType"));
 				fdsActionDropdownItem.putData(
 					"successMessage", properties.get("successMessage"));
+				fdsActionDropdownItem.putData("title", properties.get("title"));
 
 				return fdsActionDropdownItem;
 			});

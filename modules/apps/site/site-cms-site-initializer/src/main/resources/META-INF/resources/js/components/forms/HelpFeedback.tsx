@@ -7,11 +7,9 @@ import ClayForm from '@clayui/form';
 import React from 'react';
 
 const HelpFeedback = ({feedback}: {feedback: string}) => (
-	<ClayForm.FeedbackGroup>
-		<ClayForm.FeedbackItem className="font-weight-normal text-secondary">
-			{feedback}
-		</ClayForm.FeedbackItem>
-	</ClayForm.FeedbackGroup>
+	<ClayForm.FeedbackItem className="font-weight-normal text-secondary">
+		{feedback}
+	</ClayForm.FeedbackItem>
 );
 
 export default HelpFeedback;

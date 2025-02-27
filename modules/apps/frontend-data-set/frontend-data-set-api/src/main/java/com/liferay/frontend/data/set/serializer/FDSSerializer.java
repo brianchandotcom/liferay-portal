@@ -20,9 +20,16 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface FDSSerializer {
 
+	public static final String[] FDS_TYPES = {
+		FDSSerializer.TYPE_CUSTOM, FDSSerializer.TYPE_SYSTEM
+	};
+
 	public static final String TYPE_CUSTOM = "custom";
 
 	public static final String TYPE_SYSTEM = "system";
+
+	public boolean isAvailable(
+		String fdsName, HttpServletRequest httpServletRequest);
 
 	public String serializeAPIURL(
 		String fdsName, HttpServletRequest httpServletRequest);

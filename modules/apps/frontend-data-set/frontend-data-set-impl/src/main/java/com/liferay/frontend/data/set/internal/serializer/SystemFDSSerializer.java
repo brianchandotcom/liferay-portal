@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Collections;
 import java.util.List;
@@ -54,6 +55,20 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class SystemFDSSerializer
 	extends BaseFDSSerializer implements FDSSerializer {
+
+	@Override
+	public boolean isAvailable(
+		String fdsName, HttpServletRequest httpServletRequest) {
+
+		if (Validator.isNotNull(
+				systemFDSEntryRegistry.getSystemFDSEntry(fdsName)) ||
+			Validator.isNotNull(fdsViewRegistry.getFDSViews(fdsName))) {
+
+			return true;
+		}
+
+		return false;
+	}
 
 	@Override
 	public String serializeAPIURL(

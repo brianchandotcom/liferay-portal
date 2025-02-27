@@ -83,6 +83,15 @@ public class CustomFDSSerializer
 	extends BaseFDSSerializer implements FDSSerializer {
 
 	@Override
+	public boolean isAvailable(
+		String fdsName, HttpServletRequest httpServletRequest) {
+
+		return !getDataSetObjectEntryProperties(
+			fdsName, httpServletRequest
+		).isEmpty();
+	}
+
+	@Override
 	public String serializeAPIURL(
 		String fdsName, HttpServletRequest httpServletRequest) {
 

@@ -166,6 +166,7 @@ create table CPDSpecificationOptionValue (
 	key_ VARCHAR(75) null,
 	priority DOUBLE,
 	value STRING null,
+	visible BOOLEAN,
 	lastPublishDate DATE null,
 	primary key (CPDSpecificationOptionValueId, ctCollectionId)
 );
@@ -535,6 +536,7 @@ create table CPSpecificationOption (
 	facetable BOOLEAN,
 	key_ VARCHAR(75) null,
 	priority DOUBLE,
+	visible BOOLEAN,
 	lastPublishDate DATE null,
 	primary key (CPSpecificationOptionId, ctCollectionId)
 );

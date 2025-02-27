@@ -5335,6 +5335,7 @@ public class CPSpecificationOptionPersistenceImpl
 		ctMergeColumnNames.add("facetable");
 		ctMergeColumnNames.add("key_");
 		ctMergeColumnNames.add("priority");
+		ctMergeColumnNames.add("visible");
 		ctMergeColumnNames.add("lastPublishDate");
 
 		_ctColumnNamesMap.put(

@@ -75,7 +75,7 @@ public class CPDefinitionSpecificationOptionValueCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(39);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -111,6 +111,8 @@ public class CPDefinitionSpecificationOptionValueCacheModel
 		sb.append(priority);
 		sb.append(", value=");
 		sb.append(value);
+		sb.append(", visible=");
+		sb.append(visible);
 		sb.append(", lastPublishDate=");
 		sb.append(lastPublishDate);
 		sb.append("}");
@@ -197,6 +199,8 @@ public class CPDefinitionSpecificationOptionValueCacheModel
 			cpDefinitionSpecificationOptionValueImpl.setValue(value);
 		}
 
+		cpDefinitionSpecificationOptionValueImpl.setVisible(visible);
+
 		if (lastPublishDate == Long.MIN_VALUE) {
 			cpDefinitionSpecificationOptionValueImpl.setLastPublishDate(null);
 		}
@@ -238,6 +242,8 @@ public class CPDefinitionSpecificationOptionValueCacheModel
 
 		priority = objectInput.readDouble();
 		value = objectInput.readUTF();
+
+		visible = objectInput.readBoolean();
 		lastPublishDate = objectInput.readLong();
 	}
 
@@ -301,6 +307,7 @@ public class CPDefinitionSpecificationOptionValueCacheModel
 			objectOutput.writeUTF(value);
 		}
 
+		objectOutput.writeBoolean(visible);
 		objectOutput.writeLong(lastPublishDate);
 	}
 
@@ -321,6 +328,7 @@ public class CPDefinitionSpecificationOptionValueCacheModel
 	public String key;
 	public double priority;
 	public String value;
+	public boolean visible;
 	public long lastPublishDate;
 
 }

@@ -426,6 +426,27 @@ public interface CPDefinitionSpecificationOptionValueModel
 	public void setValueMap(Map<Locale, String> valueMap, Locale defaultLocale);
 
 	/**
+	 * Returns the visible of this cp definition specification option value.
+	 *
+	 * @return the visible of this cp definition specification option value
+	 */
+	public boolean getVisible();
+
+	/**
+	 * Returns <code>true</code> if this cp definition specification option value is visible.
+	 *
+	 * @return <code>true</code> if this cp definition specification option value is visible; <code>false</code> otherwise
+	 */
+	public boolean isVisible();
+
+	/**
+	 * Sets whether this cp definition specification option value is visible.
+	 *
+	 * @param visible the visible of this cp definition specification option value
+	 */
+	public void setVisible(boolean visible);
+
+	/**
 	 * Returns the last publish date of this cp definition specification option value.
 	 *
 	 * @return the last publish date of this cp definition specification option value

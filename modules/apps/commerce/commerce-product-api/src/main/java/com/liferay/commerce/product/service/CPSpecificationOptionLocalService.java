@@ -87,7 +87,7 @@ public interface CPSpecificationOptionLocalService
 			String externalReferenceCode, long userId, long cpOptionCategoryId,
 			long[] listTypeDefinitionIds, Map<Locale, String> titleMap,
 			Map<Locale, String> descriptionMap, boolean facetable, String key,
-			double priority, ServiceContext serviceContext)
+			double priority, boolean visible, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -332,8 +332,8 @@ public interface CPSpecificationOptionLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<CPSpecificationOption>
 			searchCPSpecificationOptions(
-				long companyId, Boolean facetable, String keywords, int start,
-				int end, Sort sort)
+				long companyId, Boolean facetable, Boolean visible,
+				String keywords, int start, int end, Sort sort)
 		throws PortalException;
 
 	public CPSpecificationOption updateCPOptionCategoryId(
@@ -359,7 +359,7 @@ public interface CPSpecificationOptionLocalService
 			String externalReferenceCode, long cpSpecificationOptionId,
 			long cpOptionCategoryId, long[] listTypeDefinitionIds,
 			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
-			boolean facetable, String key, double priority,
+			boolean facetable, String key, double priority, boolean visible,
 			ServiceContext serviceContext)
 		throws PortalException;
 

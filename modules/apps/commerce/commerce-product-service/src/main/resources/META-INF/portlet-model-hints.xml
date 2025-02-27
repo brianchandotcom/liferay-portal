@@ -414,6 +414,7 @@
 		<field localized="true" name="value" type="String">
 			<hint-collection name="TEXTAREA" />
 		</field>
+		<field name="visible" type="boolean" />
 		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.commerce.product.model.CPDisplayLayout">
@@ -691,6 +692,7 @@
 			<validator name="required" />
 		</field>
 		<field name="priority" type="double" />
+		<field name="visible" type="boolean" />
 		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.commerce.product.model.CPSpecificationOptionListTypeDefinitionRel">

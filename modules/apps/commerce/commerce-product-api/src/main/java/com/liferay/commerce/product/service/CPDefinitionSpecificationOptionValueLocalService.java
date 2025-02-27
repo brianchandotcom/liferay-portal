@@ -86,7 +86,7 @@ public interface CPDefinitionSpecificationOptionValueLocalService
 			addCPDefinitionSpecificationOptionValue(
 				String externalReferenceCode, long cpDefinitionId,
 				long cpSpecificationOptionId, long cpOptionCategoryId,
-				double priority, Map<Locale, String> valueMap,
+				double priority, Map<Locale, String> valueMap, boolean visible,
 				ServiceContext serviceContext)
 		throws PortalException;
 
@@ -331,19 +331,19 @@ public interface CPDefinitionSpecificationOptionValueLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPDefinitionSpecificationOptionValue>
 		getCPDefinitionSpecificationOptionValues(
-			long cpSpecificationOptionId, int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CPDefinitionSpecificationOptionValue>
-		getCPDefinitionSpecificationOptionValues(
-			long cpDefinitionId, int start, int end,
+			long cpDefinitionId, Boolean visible, int start, int end,
 			OrderByComparator<CPDefinitionSpecificationOptionValue>
 				orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPDefinitionSpecificationOptionValue>
 		getCPDefinitionSpecificationOptionValues(
-			long cpDefinitionId, long cpOptionCategoryId);
+			long cpSpecificationOptionId, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPDefinitionSpecificationOptionValue>
+		getCPDefinitionSpecificationOptionValues(
+			long cpDefinitionId, long cpOptionCategoryId, Boolean visible);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CPDefinitionSpecificationOptionValue>
@@ -389,7 +389,7 @@ public interface CPDefinitionSpecificationOptionValueLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCPDefinitionSpecificationOptionValuesCount(
-		long cpDefinitionId);
+		long cpDefinitionId, Boolean visible);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCPSpecificationOptionDefinitionValuesCount(
@@ -438,7 +438,8 @@ public interface CPDefinitionSpecificationOptionValueLocalService
 				String externalReferenceCode,
 				long cpDefinitionSpecificationOptionValueId,
 				long cpOptionCategoryId, String key, double priority,
-				Map<Locale, String> valueMap, ServiceContext serviceContext)
+				Map<Locale, String> valueMap, boolean visible,
+				ServiceContext serviceContext)
 		throws PortalException;
 
 	public CPDefinitionSpecificationOptionValue updateCPOptionCategoryId(

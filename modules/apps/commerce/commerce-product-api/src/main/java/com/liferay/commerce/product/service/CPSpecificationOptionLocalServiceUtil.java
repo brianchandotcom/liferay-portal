@@ -59,14 +59,14 @@ public class CPSpecificationOptionLocalServiceUtil {
 			long[] listTypeDefinitionIds,
 			Map<java.util.Locale, String> titleMap,
 			Map<java.util.Locale, String> descriptionMap, boolean facetable,
-			String key, double priority,
+			String key, double priority, boolean visible,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addCPSpecificationOption(
 			externalReferenceCode, userId, cpOptionCategoryId,
 			listTypeDefinitionIds, titleMap, descriptionMap, facetable, key,
-			priority, serviceContext);
+			priority, visible, serviceContext);
 	}
 
 	/**
@@ -379,12 +379,13 @@ public class CPSpecificationOptionLocalServiceUtil {
 
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult
 		<CPSpecificationOption> searchCPSpecificationOptions(
-				long companyId, Boolean facetable, String keywords, int start,
-				int end, com.liferay.portal.kernel.search.Sort sort)
+				long companyId, Boolean facetable, Boolean visible,
+				String keywords, int start, int end,
+				com.liferay.portal.kernel.search.Sort sort)
 			throws PortalException {
 
 		return getService().searchCPSpecificationOptions(
-			companyId, facetable, keywords, start, end, sort);
+			companyId, facetable, visible, keywords, start, end, sort);
 	}
 
 	public static CPSpecificationOption updateCPOptionCategoryId(
@@ -416,14 +417,14 @@ public class CPSpecificationOptionLocalServiceUtil {
 			long cpOptionCategoryId, long[] listTypeDefinitionIds,
 			Map<java.util.Locale, String> titleMap,
 			Map<java.util.Locale, String> descriptionMap, boolean facetable,
-			String key, double priority,
+			String key, double priority, boolean visible,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().updateCPSpecificationOption(
 			externalReferenceCode, cpSpecificationOptionId, cpOptionCategoryId,
 			listTypeDefinitionIds, titleMap, descriptionMap, facetable, key,
-			priority, serviceContext);
+			priority, visible, serviceContext);
 	}
 
 	public static CPSpecificationOptionLocalService getService() {

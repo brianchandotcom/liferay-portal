@@ -35,13 +35,14 @@ public class CPSpecificationOptionServiceWrapper
 			long[] listTypeDefinitionIds,
 			java.util.Map<java.util.Locale, String> titleMap,
 			java.util.Map<java.util.Locale, String> descriptionMap,
-			boolean facetable, String key, double priority,
+			boolean facetable, String key, double priority, boolean visible,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpSpecificationOptionService.addCPSpecificationOption(
 			externalReferenceCode, cpOptionCategoryId, listTypeDefinitionIds,
-			titleMap, descriptionMap, facetable, key, priority, serviceContext);
+			titleMap, descriptionMap, facetable, key, priority, visible,
+			serviceContext);
 	}
 
 	@Override
@@ -103,12 +104,13 @@ public class CPSpecificationOptionServiceWrapper
 	@Override
 	public com.liferay.portal.kernel.search.BaseModelSearchResult
 		<CPSpecificationOption> searchCPSpecificationOptions(
-				long companyId, Boolean facetable, String keywords, int start,
-				int end, com.liferay.portal.kernel.search.Sort sort)
+				long companyId, Boolean facetable, Boolean visible,
+				String keywords, int start, int end,
+				com.liferay.portal.kernel.search.Sort sort)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpSpecificationOptionService.searchCPSpecificationOptions(
-			companyId, facetable, keywords, start, end, sort);
+			companyId, facetable, visible, keywords, start, end, sort);
 	}
 
 	@Override
@@ -117,14 +119,14 @@ public class CPSpecificationOptionServiceWrapper
 			long cpOptionCategoryId, long[] listTypeDefinitionIds,
 			java.util.Map<java.util.Locale, String> titleMap,
 			java.util.Map<java.util.Locale, String> descriptionMap,
-			boolean facetable, String key, double priority,
+			boolean facetable, String key, double priority, boolean visible,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _cpSpecificationOptionService.updateCPSpecificationOption(
 			externalReferenceCode, cpSpecificationOptionId, cpOptionCategoryId,
 			listTypeDefinitionIds, titleMap, descriptionMap, facetable, key,
-			priority, serviceContext);
+			priority, visible, serviceContext);
 	}
 
 	@Override

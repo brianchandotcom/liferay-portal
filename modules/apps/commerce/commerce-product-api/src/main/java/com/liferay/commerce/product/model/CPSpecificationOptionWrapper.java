@@ -54,6 +54,7 @@ public class CPSpecificationOptionWrapper
 		attributes.put("facetable", isFacetable());
 		attributes.put("key", getKey());
 		attributes.put("priority", getPriority());
+		attributes.put("visible", isVisible());
 		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
@@ -157,6 +158,12 @@ public class CPSpecificationOptionWrapper
 
 		if (priority != null) {
 			setPriority(priority);
+		}
+
+		Boolean visible = (Boolean)attributes.get("visible");
+
+		if (visible != null) {
+			setVisible(visible);
 		}
 
 		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
@@ -526,6 +533,16 @@ public class CPSpecificationOptionWrapper
 	}
 
 	/**
+	 * Returns the visible of this cp specification option.
+	 *
+	 * @return the visible of this cp specification option
+	 */
+	@Override
+	public boolean getVisible() {
+		return model.getVisible();
+	}
+
+	/**
 	 * Returns <code>true</code> if this cp specification option is facetable.
 	 *
 	 * @return <code>true</code> if this cp specification option is facetable; <code>false</code> otherwise
@@ -533,6 +550,16 @@ public class CPSpecificationOptionWrapper
 	@Override
 	public boolean isFacetable() {
 		return model.isFacetable();
+	}
+
+	/**
+	 * Returns <code>true</code> if this cp specification option is visible.
+	 *
+	 * @return <code>true</code> if this cp specification option is visible; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isVisible() {
+		return model.isVisible();
 	}
 
 	@Override
@@ -854,6 +881,16 @@ public class CPSpecificationOptionWrapper
 	@Override
 	public void setUuid(String uuid) {
 		model.setUuid(uuid);
+	}
+
+	/**
+	 * Sets whether this cp specification option is visible.
+	 *
+	 * @param visible the visible of this cp specification option
+	 */
+	@Override
+	public void setVisible(boolean visible) {
+		model.setVisible(visible);
 	}
 
 	@Override

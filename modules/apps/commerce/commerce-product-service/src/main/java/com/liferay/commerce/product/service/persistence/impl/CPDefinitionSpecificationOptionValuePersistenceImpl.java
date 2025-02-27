@@ -6698,6 +6698,7 @@ public class CPDefinitionSpecificationOptionValuePersistenceImpl
 		ctMergeColumnNames.add("key_");
 		ctMergeColumnNames.add("priority");
 		ctMergeColumnNames.add("value");
+		ctMergeColumnNames.add("visible");
 		ctMergeColumnNames.add("lastPublishDate");
 
 		_ctColumnNamesMap.put(

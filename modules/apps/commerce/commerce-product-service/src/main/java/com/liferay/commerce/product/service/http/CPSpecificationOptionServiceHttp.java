@@ -47,7 +47,7 @@ public class CPSpecificationOptionServiceHttp {
 				long cpOptionCategoryId, long[] listTypeDefinitionIds,
 				java.util.Map<java.util.Locale, String> titleMap,
 				java.util.Map<java.util.Locale, String> descriptionMap,
-				boolean facetable, String key, double priority,
+				boolean facetable, String key, double priority, boolean visible,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -60,7 +60,7 @@ public class CPSpecificationOptionServiceHttp {
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, externalReferenceCode, cpOptionCategoryId,
 				listTypeDefinitionIds, titleMap, descriptionMap, facetable, key,
-				priority, serviceContext);
+				priority, visible, serviceContext);
 
 			Object returnObj = null;
 
@@ -305,7 +305,8 @@ public class CPSpecificationOptionServiceHttp {
 		<com.liferay.commerce.product.model.CPSpecificationOption>
 				searchCPSpecificationOptions(
 					HttpPrincipal httpPrincipal, long companyId,
-					Boolean facetable, String keywords, int start, int end,
+					Boolean facetable, Boolean visible, String keywords,
+					int start, int end,
 					com.liferay.portal.kernel.search.Sort sort)
 			throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -316,7 +317,8 @@ public class CPSpecificationOptionServiceHttp {
 				_searchCPSpecificationOptionsParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, companyId, facetable, keywords, start, end, sort);
+				methodKey, companyId, facetable, visible, keywords, start, end,
+				sort);
 
 			Object returnObj = null;
 
@@ -355,7 +357,7 @@ public class CPSpecificationOptionServiceHttp {
 				long[] listTypeDefinitionIds,
 				java.util.Map<java.util.Locale, String> titleMap,
 				java.util.Map<java.util.Locale, String> descriptionMap,
-				boolean facetable, String key, double priority,
+				boolean facetable, String key, double priority, boolean visible,
 				com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
@@ -368,7 +370,8 @@ public class CPSpecificationOptionServiceHttp {
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, externalReferenceCode, cpSpecificationOptionId,
 				cpOptionCategoryId, listTypeDefinitionIds, titleMap,
-				descriptionMap, facetable, key, priority, serviceContext);
+				descriptionMap, facetable, key, priority, visible,
+				serviceContext);
 
 			Object returnObj = null;
 
@@ -406,6 +409,7 @@ public class CPSpecificationOptionServiceHttp {
 		new Class[] {
 			String.class, long.class, long[].class, java.util.Map.class,
 			java.util.Map.class, boolean.class, String.class, double.class,
+			boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[]
@@ -421,14 +425,14 @@ public class CPSpecificationOptionServiceHttp {
 		new Class[] {long.class, String.class};
 	private static final Class<?>[]
 		_searchCPSpecificationOptionsParameterTypes6 = new Class[] {
-			long.class, Boolean.class, String.class, int.class, int.class,
-			com.liferay.portal.kernel.search.Sort.class
+			long.class, Boolean.class, Boolean.class, String.class, int.class,
+			int.class, com.liferay.portal.kernel.search.Sort.class
 		};
 	private static final Class<?>[]
 		_updateCPSpecificationOptionParameterTypes7 = new Class[] {
 			String.class, long.class, long.class, long[].class,
 			java.util.Map.class, java.util.Map.class, boolean.class,
-			String.class, double.class,
+			String.class, double.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 

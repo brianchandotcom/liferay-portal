@@ -8,7 +8,8 @@ import ClayForm, {ClayToggle} from '@clayui/form';
 import ClayLabel from '@clayui/label';
 import ClayLayout from '@clayui/layout';
 import ClayTabs from '@clayui/tabs';
-import React from 'react';
+import {InputLocalized} from 'frontend-js-components-web';
+import React, {useState} from 'react';
 
 import {useSelector, useStateDispatch} from '../contexts/StateContext';
 import selectStructureField from '../selectors/selectStructureField';
@@ -41,7 +42,9 @@ export default function StructureFieldSettings({
 						},
 					},
 					{
-						label: field!.label,
+						label: field!.label[
+							Liferay.ThemeDisplay.getDefaultLanguageId()
+						]!,
 					},
 				]}
 			/>
@@ -74,6 +77,10 @@ export default function StructureFieldSettings({
 function GeneralTab({field}: {field: Field}) {
 	const dispatch = useStateDispatch();
 
+	const [label, setLabel] = useState<Liferay.Language.LocalizedValue<string>>(
+		field.label
+	);
+
 	return (
 		<>
 			<div className="pb-2">
@@ -92,11 +99,20 @@ function GeneralTab({field}: {field: Field}) {
 					value={field.name}
 				/>
 
-				<TextInput
-					className="mb-0"
+				<InputLocalized
 					label={Liferay.Language.get('label')}
-					onValueChange={() => {}}
-					value={field.name}
+					onBlur={() => {
+						dispatch({
+							label,
+							name: field.name,
+							type: 'update-field',
+						});
+					}}
+					onChange={(label) => setLabel(label)}
+					required
+					translations={
+						label as Liferay.Language.LocalizedValue<string>
+					}
 				/>
 			</div>
 

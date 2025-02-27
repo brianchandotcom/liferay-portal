@@ -278,7 +278,7 @@
 		</check>
 		<check name="GradleDependencyArtifactsCheck">
 			<category name="Bug Prevention" />
-			<description name="Checks that value `default` is not used for attribute `version`." />
+			<description name="Performs several checks on dependencies artifacts." />
 		</check>
 		<check name="GradleDependencyConfigurationCheck">
 			<category name="Bug Prevention" />
@@ -1496,7 +1496,7 @@
 	<source-processor name="PropertiesSourceProcessor">
 		<check name="GradleDependencyArtifactsCheck">
 			<category name="Bug Prevention" />
-			<description name="Checks that value `default` is not used for attribute `version`." />
+			<description name="Performs several checks on dependencies artifacts." />
 		</check>
 		<check name="PropertiesArchivedModulesCheck">
 			<category name="Bug Prevention" />

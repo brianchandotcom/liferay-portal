@@ -12,12 +12,69 @@ import getPageDefinition from '../../layout-content-page-editor-web/utils/getPag
 import getWidgetDefinition from '../../layout-content-page-editor-web/utils/getWidgetDefinition';
 
 export class JSComponentsSamplePage {
+	readonly adminLocalizedInputContainer: Locator;
+	readonly adminEnglishLocalizedInputContainer: Locator;
+	readonly localizedInput: Locator;
 	readonly page: Page;
 	readonly tablist: Locator;
+	readonly translationManagerEnglishTriggerButton: Locator;
+	readonly translationManagerTriggerButton: Locator;
+	readonly translationManageButton: Locator;
+	readonly translationManagerDialog: Locator;
+	readonly translationManagerCatalanChoice: Locator;
+	readonly translationManagerCancelButton: Locator;
+	readonly translationManagerDoneButton: Locator;
+	readonly translationManagerAddButton: Locator;
+	readonly translationManagerSearchInput: Locator;
+	readonly translationManagerGermanChoice: Locator;
+	readonly translationManagerCatalanRow: Locator;
+	readonly translationManagerFrenchRow: Locator;
 
 	constructor(page: Page) {
 		this.page = page;
 		this.tablist = page.getByRole('tablist');
+		this.adminLocalizedInputContainer = page
+			.locator('.input-localized.input-localized-input')
+			.first();
+		this.adminEnglishLocalizedInputContainer = page
+			.getByText('Admin English (United States)')
+			.first()
+			.locator('.input-localized.input-localized-input')
+			.first();
+		this.localizedInput =
+			this.adminLocalizedInputContainer.getByRole('textbox');
+		this.translationManagerTriggerButton =
+			this.adminLocalizedInputContainer.getByRole('button');
+		this.translationManagerEnglishTriggerButton =
+			this.adminEnglishLocalizedInputContainer.getByRole('button');
+		this.translationManageButton = page.getByRole('button', {
+			name: 'Manage Translations',
+		});
+		this.translationManagerDialog = page.getByRole('dialog', {
+			name: 'Manage Translations',
+		});
+		this.translationManagerCatalanChoice = page.getByRole('menuitem', {
+			name: 'Not translated into Catalan.',
+		});
+		this.translationManagerCancelButton =
+			this.translationManagerDialog.getByRole('button', {name: 'Cancel'});
+		this.translationManagerDoneButton =
+			this.translationManagerDialog.getByRole('button', {name: 'Done'});
+		this.translationManagerAddButton = page.getByLabel('Add', {
+			exact: true,
+		});
+		this.translationManagerSearchInput = page.getByPlaceholder('Search');
+		this.translationManagerGermanChoice = page.getByRole('menuitem', {
+			name: 'Not translated into German.',
+		});
+		this.translationManagerCatalanRow =
+			this.translationManagerDialog.getByRole('row', {
+				name: 'Catalan (Spain)',
+			});
+		this.translationManagerFrenchRow =
+			this.translationManagerDialog.getByRole('row', {
+				name: 'French (France)',
+			});
 	}
 
 	async selectTab(tabName: string, target) {

@@ -81,7 +81,6 @@ public class ObjectEntryVersionLocalServiceTest {
 
 	@Test
 	public void testAddObjectEntryVersion() throws Exception {
-
 		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
 			0, _objectDefinition.getObjectDefinitionId(),
 			HashMapBuilder.<String, Serializable>put(

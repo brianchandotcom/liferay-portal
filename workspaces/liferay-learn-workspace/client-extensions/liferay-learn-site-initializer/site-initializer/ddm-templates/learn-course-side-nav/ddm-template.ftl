@@ -6,6 +6,26 @@
 	modulesJSONArray = navigationJSONObject.getJSONArray("modules")
 />
 
+<style>
+	.learn-course-side-nav-button {
+		left: 16.7rem;
+		position: absolute;
+		top: 1.6rem;
+		width: 10%;
+	}
+
+	.learn-course-side-nav-item {
+		display: flex;
+		justify-content: space-between;
+		padding-bottom: 0;
+		padding-top: 0;
+	}
+
+	.learn-course-side-nav-link {
+		display: contents !important;
+	}
+</style>
+
 <div class="learn-course-side-nav">
 	<div class="learn-course-nav-content">
 		<#if modulesJSONArray.length() gt 0>
@@ -32,11 +52,10 @@
 						</#list>
 						<div class="panel-group">
 							<div class="panel panel-secondary">
-								<a href="${modulesJSONObject.url}" style="display: contents !important;">
+								<a class="learn-course-side-nav-link" href="${modulesJSONObject.url}">
 									<div
-										class="liferay-nav-item ${(moduleLessonIsSelected)?then("highlightedNavItem", "")} ${(navigationJSONObject.getJSONObject("self").url == modulesJSONObject.url)?then("selected", "")}"
+										class="learn-course-side-nav-item liferay-nav-item ${(moduleLessonIsSelected)?then("highlightedNavItem", "")} ${(navigationJSONObject.getJSONObject("self").url == modulesJSONObject.url)?then("selected", "")}"
 										href="${modulesJSONObject.url}"
-										style="display: flex; justify-content: space-between; padding-top: 0; padding-bottom: 0;"
 									>
 										<div class="nav-item-number-title panel-header panel-header-link">
 											<div>
@@ -51,11 +70,10 @@
 								<button
 									aria-controls= "collapsePanel${i}"
 									aria-expanded="false"
-									class="btn btn-unstyled collapse-icon collapse-icon-middle collapsed"
+									class="btn btn-unstyled collapse-icon collapse-icon-middle collapsed learn-course-side-nav-button"
 									data-target= "#collapsePanel${i}"
 									data-toggle="liferay-collapse"
 									onclick="togglePanel(this)"
-									style="left: 16.7rem; position: absolute; top: 1.6rem; width: 10%;"
 								>
 									<span class="panel-title">
 										<li class="learn-course-nav-item">

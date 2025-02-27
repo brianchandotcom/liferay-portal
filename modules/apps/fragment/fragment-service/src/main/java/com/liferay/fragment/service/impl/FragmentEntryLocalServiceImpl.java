@@ -1010,6 +1010,7 @@ public class FragmentEntryLocalServiceImpl
 				draftFragmentEntry.getCompanyId());
 
 		if (fragmentServiceConfiguration.propagateChanges() &&
+			!ExportImportThreadLocal.isLayoutImportInProcess() &&
 			!ExportImportThreadLocal.isStagingInProcess()) {
 
 			_propagateChanges(

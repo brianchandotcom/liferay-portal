@@ -1713,10 +1713,10 @@
     ckeditor5 "43.3.1"
     lodash-es "4.17.21"
 
-"@clayui/alert@3.129.0":
-  version "3.129.0"
-  resolved "https://registry.yarnpkg.com/@clayui/alert/-/alert-3.129.0.tgz#fbbcca7d15a66ec71ba7333d9b698c49bc432665"
-  integrity sha512-mIKgOUBN0lE9JUiWS6QgR0JWefTWMPurhlkkmbry/FnKqvQHVonelRznTX75XGwu5RjiezQQNunGkUkrvKy1tQ==
+"@clayui/alert@3.129.1":
+  version "3.129.1"
+  resolved "https://registry.yarnpkg.com/@clayui/alert/-/alert-3.129.1.tgz#2c4553b87a3758eb76433d70cdee88d0b51fde9f"
+  integrity sha512-qz4kmrZMlJwqYGovelKpj+Ecr3jlDmIbzn1/Y7sqiJYsTGzt6t1nhYkDqy7/aD2hJRRbO0mtsySKreZFXCD0gg==
   dependencies:
     "@clayui/icon" "^3.128.0"
     "@clayui/layout" "^3.128.0"

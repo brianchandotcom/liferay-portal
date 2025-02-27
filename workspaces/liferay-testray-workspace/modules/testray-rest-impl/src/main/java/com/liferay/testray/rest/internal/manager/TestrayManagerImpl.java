@@ -555,16 +555,7 @@ public class TestrayManagerImpl implements TestrayManager {
 			map.put("caseResult" + key, facetValue.getNumberOfOccurrences());
 		}
 
-		ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
-			testrayBuildId);
-
-		Map<String, Serializable> values = objectEntry.getValues();
-
-		values.putAll(map);
-
-		return _objectEntryLocalService.updateObjectEntry(
-			userId, objectEntry.getObjectEntryId(), values,
-			new ServiceContext());
+		return _patchObjectEntry(map, testrayBuildId, userId);
 	}
 
 	private void _addDefaultFactors(
@@ -1132,16 +1123,9 @@ public class TestrayManagerImpl implements TestrayManager {
 			testrayCache, userId);
 
 		if (testrayBuildId != 0) {
-			ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
-				testrayBuildId);
-
-			Map<String, Serializable> values = objectEntry.getValues();
-
-			values.put("importStatus", "INPROGRESS");
-
-			_objectEntryLocalService.updateObjectEntry(
-				userId, objectEntry.getObjectEntryId(), values,
-				new ServiceContext());
+			_patchObjectEntry(
+				Collections.singletonMap("importStatus", "INPROGRESS"),
+				testrayBuildId, userId);
 
 			return testrayBuildId;
 		}

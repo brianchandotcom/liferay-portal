@@ -26,6 +26,7 @@ import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.model.ExpandoColumnConstants;
 import com.liferay.expando.kernel.model.ExpandoTableConstants;
 import com.liferay.expando.test.util.ExpandoTestUtil;
+import com.liferay.lazy.referencing.kernel.LazyReferencingThreadLocal;
 import com.liferay.object.constants.ObjectValidationRuleConstants;
 import com.liferay.object.exception.ObjectValidationRuleEngineException;
 import com.liferay.object.model.ObjectDefinition;
@@ -448,6 +449,63 @@ public class AccountEntryLocalServiceTest {
 
 		_assertStatus(accountEntry, WorkflowConstants.STATUS_PENDING, user);
 		Assert.assertTrue(_hasWorkflowInstance(accountEntry));
+	}
+
+	@Test
+	public void testAddIncompleteAccountEntry() throws Exception {
+		LazyReferencingThreadLocal.setLazyReferencingEnabled(true);
+
+		try {
+			AccountEntry accountEntry =
+				_accountEntryLocalService.addIncompleteAccountEntry(
+					RandomTestUtil.randomString(),
+					TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+					RandomTestUtil.randomString(),
+					AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS);
+
+			_assertStatus(
+				accountEntry, WorkflowConstants.STATUS_INCOMPLETE,
+				TestPropsValues.getUser());
+		}
+		finally {
+			LazyReferencingThreadLocal.setLazyReferencingEnabled(false);
+		}
+	}
+
+	@Test(expected = UnsupportedOperationException.class)
+	public void testAddIncompleteAccountEntryWithoutLazyReferencing()
+		throws Exception {
+
+		_accountEntryLocalService.addIncompleteAccountEntry(
+			RandomTestUtil.randomString(), TestPropsValues.getCompanyId(),
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+			AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS);
+	}
+
+	@Test
+	public void testAddIncompleteAccountEntryWithWorkflowEnabled()
+		throws Exception {
+
+		LazyReferencingThreadLocal.setLazyReferencingEnabled(true);
+
+		try {
+			_enableWorkflow();
+
+			AccountEntry accountEntry =
+				_accountEntryLocalService.addIncompleteAccountEntry(
+					RandomTestUtil.randomString(),
+					TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+					RandomTestUtil.randomString(),
+					AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS);
+
+			_assertStatus(
+				accountEntry, WorkflowConstants.STATUS_INCOMPLETE,
+				TestPropsValues.getUser());
+			Assert.assertFalse(_hasWorkflowInstance(accountEntry));
+		}
+		finally {
+			LazyReferencingThreadLocal.setLazyReferencingEnabled(false);
+		}
 	}
 
 	@Test
@@ -1142,6 +1200,75 @@ public class AccountEntryLocalServiceTest {
 			"customFieldValue",
 			GetterUtil.getString(
 				expandoBridge.getAttribute("customFieldName")));
+	}
+
+	@Test
+	public void testUpdateAccountEntryWithStatusIncomplete() throws Exception {
+		LazyReferencingThreadLocal.setLazyReferencingEnabled(true);
+
+		try {
+			AccountEntry accountEntry =
+				_accountEntryLocalService.addIncompleteAccountEntry(
+					RandomTestUtil.randomString(),
+					TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+					RandomTestUtil.randomString(),
+					AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS);
+
+			_assertStatus(
+				accountEntry, WorkflowConstants.STATUS_INCOMPLETE,
+				TestPropsValues.getUser());
+
+			accountEntry = _accountEntryLocalService.updateAccountEntry(
+				accountEntry.getAccountEntryId(),
+				accountEntry.getParentAccountEntryId(), accountEntry.getName(),
+				accountEntry.getDescription(), false, null,
+				accountEntry.getEmailAddress(), null,
+				accountEntry.getTaxIdNumber(), accountEntry.getStatus(), null);
+
+			_assertStatus(
+				accountEntry, WorkflowConstants.STATUS_APPROVED,
+				TestPropsValues.getUser());
+		}
+		finally {
+			LazyReferencingThreadLocal.setLazyReferencingEnabled(false);
+		}
+	}
+
+	@Test
+	public void testUpdateAccountEntryWithStatusIncompleteWorkflowEnabled()
+		throws Exception {
+
+		LazyReferencingThreadLocal.setLazyReferencingEnabled(true);
+
+		try {
+			_enableWorkflow();
+
+			AccountEntry accountEntry =
+				_accountEntryLocalService.addIncompleteAccountEntry(
+					RandomTestUtil.randomString(),
+					TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+					RandomTestUtil.randomString(),
+					AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS);
+
+			_assertStatus(
+				accountEntry, WorkflowConstants.STATUS_INCOMPLETE,
+				TestPropsValues.getUser());
+
+			accountEntry = _accountEntryLocalService.updateAccountEntry(
+				accountEntry.getAccountEntryId(),
+				accountEntry.getParentAccountEntryId(), accountEntry.getName(),
+				accountEntry.getDescription(), false, null,
+				accountEntry.getEmailAddress(), null,
+				accountEntry.getTaxIdNumber(), accountEntry.getStatus(), null);
+
+			_assertStatus(
+				accountEntry, WorkflowConstants.STATUS_PENDING,
+				TestPropsValues.getUser());
+			Assert.assertTrue(_hasWorkflowInstance(accountEntry));
+		}
+		finally {
+			LazyReferencingThreadLocal.setLazyReferencingEnabled(false);
+		}
 	}
 
 	@Test

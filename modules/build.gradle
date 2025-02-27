@@ -938,6 +938,7 @@ protected abstract class BaseJakartaTransformerTransformAction implements Transf
 
 	public static final String ARTIFACT_TYPE = "jakarta-transformed-jar";
 
+	protected static FileCollection excludesFileCollection;
 	protected static Logger logger;
 	protected static ClassLoader classLoader;
 	protected static File propertiesFile;
@@ -949,6 +950,14 @@ protected abstract class BaseJakartaTransformerTransformAction implements Transf
 	@Override
 	public void transform(TransformOutputs outputs) {
 		File inputJarFile = inputArtifact.get().asFile
+
+		if (excludesFileCollection.contains(inputJarFile)) {
+			outputs.file(inputJarFile)
+
+			logger.info("Jakarta: SKIPPING excluded artifact: ${inputJarFile}");
+
+			return
+		}
 
 		String fileName = inputJarFile.name
 

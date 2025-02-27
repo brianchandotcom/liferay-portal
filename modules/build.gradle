@@ -53,7 +53,7 @@ ext {
 	]
 }
 
-abstract class BaseJakartaTransformerTransformAction implements TransformAction<TransformParameters.None> {
+protected abstract class BaseJakartaTransformerTransformAction implements TransformAction<TransformParameters.None> {
 
 	public static final String ARTIFACT_TYPE = "jakarta-transformed-jar";
 

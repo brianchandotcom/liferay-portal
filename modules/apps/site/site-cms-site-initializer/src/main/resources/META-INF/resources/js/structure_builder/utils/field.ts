@@ -3,10 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-// @ts-ignore
-
-import {v4 as uuidv4} from 'uuid';
-
+import getRandomId from './getRandomId';
 import normalizeName from './normalizeName';
 
 // Constants
@@ -103,7 +100,7 @@ export type FieldBusinessType =
 
 export function getDefaultField(type: FieldType): Field {
 	const base = {
-		erc: uuidv4(),
+		erc: getRandomId(),
 		label: FIELD_TYPE_LABEL[type],
 		localized: false,
 		name: normalizeName(type),

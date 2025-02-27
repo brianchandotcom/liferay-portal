@@ -1,0 +1,296 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"fragment": {
+						"key": "interest",
+						"siteKey": "[$GROUP_KEY$]"
+					},
+					"fragmentConfig": {},
+					"fragmentFields": [],
+					"indexed": true
+				},
+				"type": "Fragment"
+			},
+			{
+				"definition": {
+					"fragmentStyle": {
+						"backgroundFragmentImage": {}
+					},
+					"indexed": true,
+					"layout": {},
+					"name": "Products Page"
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"fragmentStyle": {
+								"backgroundFragmentImage": {
+									"title": {
+										"value": "products_banner"
+									},
+									"url": {
+										"value": "[$DOCUMENT_URL:/site-initializer/documents/group/Marketing Assets/products_banner.jpg$]"
+									}
+								},
+								"height": "460px",
+								"paddingLeft": "7",
+								"paddingRight": "7"
+							},
+							"indexed": true,
+							"layout": {
+								"align": "Center",
+								"contentDisplay": "FlexRow",
+								"flexWrap": "Wrap",
+								"paddingLeft": 8,
+								"paddingRight": 8
+							},
+							"name": "Banner"
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragmentStyle": {
+										"width": "100%"
+									},
+									"gutters": true,
+									"indexed": true,
+									"modulesPerRow": 2,
+									"numberOfColumns": 2,
+									"reverseOrder": false,
+									"rowViewports": [
+										{
+											"id": "landscapeMobile",
+											"rowViewportDefinition": {
+												"modulesPerRow": 1
+											}
+										},
+										{
+											"id": "portraitMobile",
+											"rowViewportDefinition": {}
+										},
+										{
+											"id": "tablet",
+											"rowViewportDefinition": {}
+										}
+									],
+									"verticalAlignment": "middle"
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"columnViewports": [
+												{
+													"columnViewportDefinition": {
+														"size": 12
+													},
+													"id": "landscapeMobile"
+												},
+												{
+													"columnViewportDefinition": {},
+													"id": "portraitMobile"
+												},
+												{
+													"columnViewportDefinition": {},
+													"id": "tablet"
+												}
+											],
+											"size": 6
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "BASIC_COMPONENT-heading"
+													},
+													"fragmentConfig": {
+														"headingLevel": "h1"
+													},
+													"fragmentFields": [
+														{
+															"id": "element-text",
+															"value": {
+																"fragmentLink": {},
+																"text": {
+																	"value_i18n": {
+																		"en_US": "Elevate Your Eyewear Business with Premium Quality"
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"marginBottom": "5"
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragment": {
+														"key": "BASIC_COMPONENT-paragraph"
+													},
+													"fragmentConfig": {},
+													"fragmentFields": [
+														{
+															"id": "element-text",
+															"value": {
+																"fragmentLink": {},
+																"text": {
+																	"value_i18n": {
+																		"en_US": "Elevate your brand with a curaed selection of glasses, sunglasses, conact and lenses"
+																	}
+																}
+															}
+														}
+													],
+													"indexed": true
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragment": {
+														"key": "dialect-dialect-button",
+														"siteKey": "[$GROUP_KEY$]"
+													},
+													"fragmentConfig": {
+														"uppercase": false,
+														"iconName": "share",
+														"style": "primary",
+														"type": "solid",
+														"inverted": false,
+														"buttonSize": ""
+													},
+													"fragmentFields": [
+														{
+															"id": "link",
+															"value": {
+																"fragmentLink": {
+																	"value": {
+																		"href": {
+																			"mapping": {
+																				"itemReference": {
+																					"className": "com.liferay.portal.kernel.model.Layout",
+																					"fields": [
+																						{
+																							"fieldName": "friendlyURL",
+																							"fieldValue": "/product-list"
+																						},
+																						{
+																							"fieldName": "privatePage",
+																							"fieldValue": "false"
+																						}
+																					]
+																				}
+																			}
+																		}
+																	}
+																},
+																"text": {
+																	"value_i18n": {
+																		"en_US": "Explore Product List"
+																	}
+																}
+															}
+														},
+														{
+															"id": "text",
+															"value": {
+																"fragmentLink": {}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"paddingTop": "4"
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											}
+										],
+										"type": "Column"
+									},
+									{
+										"definition": {
+											"columnViewports": [
+												{
+													"columnViewportDefinition": {
+														"size": 12
+													},
+													"id": "landscapeMobile"
+												},
+												{
+													"columnViewportDefinition": {},
+													"id": "portraitMobile"
+												},
+												{
+													"columnViewportDefinition": {},
+													"id": "tablet"
+												}
+											],
+											"size": 6
+										},
+										"type": "Column"
+									}
+								],
+								"type": "Row"
+							}
+						],
+						"type": "Section"
+					},
+					{
+						"definition": {
+							"fragmentStyle": {
+								"marginBottom": "5",
+								"paddingBottom": "5",
+								"paddingLeft": "5",
+								"paddingRight": "3",
+								"paddingTop": "5"
+							},
+							"indexed": true,
+							"layout": {
+								"marginBottom": 4,
+								"paddingBottom": 4,
+								"paddingLeft": 4,
+								"paddingRight": 1,
+								"paddingTop": 4
+							},
+							"name": "Commerce Categories"
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"widgetInstance": {
+										"widgetConfig": {
+											"displayStyle": "ddmTemplate_Category Cards",
+											"rootAssetCategoryId": "",
+											"useCategoryFromRequest": "false",
+											"displayStyleGroupKey": "[$GROUP_KEY$]",
+											"useRootCategory": "false",
+											"assetVocabularyId": "[$TAXONOMY_VOCABULARY_ID:Products$]",
+											"displayStyleGroupId": "[$GROUP_ID$]"
+										},
+										"widgetName": "com_liferay_commerce_product_asset_categories_navigation_web_internal_portlet_CPAssetCategoriesNavigationPortlet"
+									}
+								},
+								"type": "Widget"
+							}
+						],
+						"type": "Section"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"version": 1.1,
+	"settings": {
+		"masterPage": {
+			"key": "primary"
+		}
+	}
+}

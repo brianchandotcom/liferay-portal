@@ -1,0 +1,325 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"indexed": true,
+					"layout": {},
+					"name": "Contact Us Page"
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"fragment": {
+								"key": "banner",
+								"siteKey": "[$GROUP_KEY$]"
+							},
+							"fragmentConfig": {},
+							"fragmentFields": [],
+							"indexed": true
+						},
+						"pageElements": [
+							{
+								"definition": {},
+								"pageElements": [
+									{
+										"definition": {
+											"fragmentStyle": {
+												"backgroundFragmentImage": {}
+											},
+											"indexed": true,
+											"layout": {},
+											"name": "Background Overlay"
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragmentStyle": {
+														"paddingTop": "9",
+														"paddingBottom": "9",
+														"textAlign": "center"
+													},
+													"indexed": true,
+													"layout": {
+														"paddingBottom": "9",
+														"paddingTop": "9"
+													},
+													"name": "Header Content"
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "BASIC_COMPONENT-heading"
+															},
+															"fragmentConfig": {
+																"headingLevel": "h1"
+															},
+															"fragmentFields": [
+																{
+																	"id": "element-text",
+																	"value": {
+																		"fragmentLink": {},
+																		"text": {
+																			"value_i18n": {
+																				"en_US": "We would love to hear from you"
+																			}
+																		}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"marginBottom": "2",
+																"textColor": "bodyBgColor"
+															},
+															"indexed": true
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"fragment": {
+																"key": "BASIC_COMPONENT-paragraph"
+															},
+															"fragmentConfig": {},
+															"fragmentFields": [
+																{
+																	"id": "element-text",
+																	"value": {
+																		"fragmentLink": {},
+																		"text": {
+																			"value_i18n": {
+																				"en_US": "If you would like to contact us, please email us at info@clarityvisionsolutions.com and let us know how we can help you."
+																			}
+																		}
+																	}
+																}
+															],
+															"fragmentStyle": {
+																"textAlign": "center",
+																"textColor": "bodyBgColor"
+															},
+															"indexed": true
+														},
+														"type": "Fragment"
+													}
+												],
+												"type": "Section"
+											}
+										],
+										"type": "Section"
+									}
+								],
+								"type": "FragmentDropZone"
+							}
+						],
+						"type": "Fragment"
+					},
+					{
+						"definition": {
+							"fragmentStyle": {
+								"marginBottom": "8",
+								"marginTop": "8",
+								"paddingBottom": "5",
+								"paddingLeft": "5",
+								"paddingRight": "3",
+								"paddingTop": "5"
+							},
+							"indexed": true,
+							"layout": {
+								"marginBottom": "8",
+								"marginTop": "8",
+								"paddingBottom": 4,
+								"paddingLeft": 4,
+								"paddingRight": 1,
+								"paddingTop": 4
+							},
+							"name": "Contact Details"
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragmentStyle": {
+										"textAlign": "center"
+									},
+									"gutters": true,
+									"indexed": true,
+									"modulesPerRow": 3,
+									"numberOfColumns": 3,
+									"reverseOrder": false,
+									"rowViewports": [
+										{
+											"id": "landscapeMobile",
+											"rowViewportDefinition": {
+												"modulesPerRow": 1
+											}
+										},
+										{
+											"id": "portraitMobile",
+											"rowViewportDefinition": {}
+										},
+										{
+											"id": "tablet",
+											"rowViewportDefinition": {}
+										}
+									],
+									"verticalAlignment": "top"
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"columnViewports": [
+												{
+													"columnViewportDefinition": {
+														"size": 12
+													},
+													"id": "landscapeMobile"
+												},
+												{
+													"columnViewportDefinition": {},
+													"id": "portraitMobile"
+												},
+												{
+													"columnViewportDefinition": {},
+													"id": "tablet"
+												}
+											],
+											"size": 4
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "BASIC_COMPONENT-html"
+													},
+													"fragmentConfig": {},
+													"fragmentFields": [
+														{
+															"id": "element-html",
+															"value": {
+																"html": {
+																	"value_i18n": {
+																		"en_US": "\n<h5>Store</h5>\n\n<div>3931 N Ashland Ave</div>\n<div>Chicago, Illinois</div>\n<div>60613</div>"
+																	}
+																}
+															}
+														}
+													],
+													"indexed": true
+												},
+												"type": "Fragment"
+											}
+										],
+										"type": "Column"
+									},
+									{
+										"definition": {
+											"columnViewports": [
+												{
+													"columnViewportDefinition": {
+														"size": 12
+													},
+													"id": "landscapeMobile"
+												},
+												{
+													"columnViewportDefinition": {},
+													"id": "portraitMobile"
+												},
+												{
+													"columnViewportDefinition": {},
+													"id": "tablet"
+												}
+											],
+											"size": 4
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "BASIC_COMPONENT-html"
+													},
+													"fragmentConfig": {},
+													"fragmentFields": [
+														{
+															"id": "element-html",
+															"value": {
+																"html": {
+																	"value_i18n": {
+																		"en_US": "\n<h5>Opening Hours</h5>\n\n<div>Mon - Fri: 9am - 5pm</div>\n<div>Sat - Sun: Closed</div>\n<div>Bank Holidays: Closed</div>"
+																	}
+																}
+															}
+														}
+													],
+													"indexed": true
+												},
+												"type": "Fragment"
+											}
+										],
+										"type": "Column"
+									},
+									{
+										"definition": {
+											"columnViewports": [
+												{
+													"columnViewportDefinition": {
+														"size": 12
+													},
+													"id": "landscapeMobile"
+												},
+												{
+													"columnViewportDefinition": {},
+													"id": "portraitMobile"
+												},
+												{
+													"columnViewportDefinition": {},
+													"id": "tablet"
+												}
+											],
+											"size": 4
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "BASIC_COMPONENT-html"
+													},
+													"fragmentConfig": {},
+													"fragmentFields": [
+														{
+															"id": "element-html",
+															"value": {
+																"html": {
+																	"value_i18n": {
+																		"en_US": "\n<div>\n  <svg class=\"lexicon-icon lexicon-icon-social-facebook\" role=\"presentation\" viewBox=\"0 0 512 512\">\n    <use xlink:href=\"http://localhost:8080/o/classic-theme/images/clay/icons.svg#social-facebook\"></use>\n  </svg>\n  <span class=\"pl-3\">Facebook</span>\n</div>\n\n<div>\n  <svg class=\"lexicon-icon lexicon-icon-twitter\" role=\"presentation\" viewBox=\"0 0 512 512\">\n    <use xlink:href=\"http://localhost:8080/o/classic-theme/images/clay/icons.svg#twitter\"></use>\n  </svg>\n  <span class=\"pl-3\">X / Twitter</span>\n</div>\n\n<div>\n  <svg class=\"lexicon-icon lexicon-icon-phone\" role=\"presentation\" viewBox=\"0 0 512 512\">\n    <use xlink:href=\"http://localhost:8080/o/classic-theme/images/clay/icons.svg#phone\"></use>\n  </svg>\n  <span class=\"pl-3\">+1 312 555 5555</span>\n</div>\n"
+																	}
+																}
+															}
+														}
+													],
+													"indexed": true
+												},
+												"type": "Fragment"
+											}
+										],
+										"type": "Column"
+									}
+								],
+								"type": "Row"
+							}
+						],
+						"type": "Section"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"version": 1.1,
+	"settings": {
+		"masterPage": {
+			"key": "primary"
+		}
+	}
+}

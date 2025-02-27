@@ -1,0 +1,306 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"fragment": {
+						"key": "remove-interest",
+						"siteKey": "[$GROUP_KEY$]"
+					},
+					"fragmentConfig": {},
+					"fragmentFields": [],
+					"indexed": true
+				},
+				"type": "Fragment"
+			},
+			{
+				"definition": {
+					"indexed": true,
+					"layout": {},
+					"name": "Product Lists Page"
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"fragmentStyle": {
+								"backgroundFragmentImage": {
+									"title": {
+										"value": "products_banner"
+									},
+									"url": {
+										"value": "[$DOCUMENT_URL:/site-initializer/documents/group/Marketing Assets/products_banner.jpg$]"
+									}
+								},
+								"marginBottom": "5"
+							},
+							"indexed": true,
+							"layout": {
+								"marginBottom": 4
+							},
+							"name": "Banner"
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragmentStyle": {
+										"backgroundFragmentImage": {
+											"title": {
+												"value": "glasses-in-front-of-leaf-small"
+											},
+											"url": {
+												"value": "[$DOCUMENT_URL:/site-initializer/documents/group/Marketing Assets/glasses_in_front_of_leaf_small.png$]"
+											}
+										}
+									},
+									"widgetInstance": {
+										"widgetConfig": {
+											"displayStyle": "ddmTemplate_Product Category Banner",
+											"displayStyleGroupKey": "[$GROUP_KEY$]",
+											"useAssetCategory": "false",
+											"assetCategoryId": "0",
+											"displayStyleGroupId": "[$GROUP_ID$]"
+										},
+										"widgetName": "com_liferay_commerce_product_content_web_internal_portlet_CPCategoryContentPortlet"
+									}
+								},
+								"type": "Widget"
+							}
+						],
+						"type": "Section"
+					},
+					{
+						"definition": {
+							"fragmentStyle": {
+								"marginBottom": "5",
+								"marginLeft": "7",
+								"marginRight": "7",
+								"marginTop": "5"
+							},
+							"indexed": true,
+							"layout": {
+								"marginBottom": 4,
+								"marginLeft": 8,
+								"marginRight": 8,
+								"marginTop": 4
+							},
+							"name": "Search Results"
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"gutters": true,
+									"indexed": true,
+									"modulesPerRow": 2,
+									"numberOfColumns": 2,
+									"reverseOrder": false,
+									"rowViewports": [
+										{
+											"id": "landscapeMobile",
+											"rowViewportDefinition": {
+												"modulesPerRow": 1
+											}
+										},
+										{
+											"id": "portraitMobile",
+											"rowViewportDefinition": {}
+										},
+										{
+											"id": "tablet",
+											"rowViewportDefinition": {}
+										}
+									],
+									"verticalAlignment": "top"
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"columnViewports": [
+												{
+													"columnViewportDefinition": {
+														"size": 12
+													},
+													"id": "landscapeMobile"
+												},
+												{
+													"columnViewportDefinition": {},
+													"id": "portraitMobile"
+												},
+												{
+													"columnViewportDefinition": {},
+													"id": "tablet"
+												}
+											],
+											"size": 4
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"widgetInstance": {
+														"widgetConfig": {
+															"federatedSearchKey": "",
+															"suggestionsContributorConfigurations": "{\"contributorName\":\"basic\",\"displayGroupName\":\"suggestions\",\"size\":5}",
+															"showStagedResults": "false",
+															"searchScope": "everything",
+															"suggestionsEnabled": "true",
+															"destination": "",
+															"invisible": "false",
+															"displayStyleGroupId": "[$GROUP_ID$]",
+															"suggestionsDisplayThreshold": "2",
+															"displayStyle": "default",
+															"scopeParameterName": "scope",
+															"keywordsParameterName": "q",
+															"useAdvancedSearchSyntax": "false"
+														},
+														"widgetName": "com_liferay_portal_search_web_search_bar_portlet_SearchBarPortlet"
+													}
+												},
+												"type": "Widget"
+											},
+											{
+												"definition": {
+													"fragmentStyle": {
+														"backgroundColor": "#F8F8F8"
+													},
+													"widgetInstance": {
+														"widgetConfig": {
+															"displayStyleGroupId": "[$GROUP_ID$]"
+														},
+														"widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
+													}
+												},
+												"type": "Widget"
+											},
+											{
+												"definition": {
+													"widgetInstance": {
+														"widgetConfig": {
+															"displayStyleGroupId": "[$GROUP_ID$]"
+														},
+														"widgetName": "com_liferay_commerce_product_content_search_web_internal_portlet_CPSpecificationOptionFacetsPortlet"
+													}
+												},
+												"type": "Widget"
+											},
+											{
+												"definition": {
+													"widgetInstance": {
+														"widgetConfig": {
+															"displayStyle": "default",
+															"maxTerms": "10",
+															"displayStyleGroupKey": "[$GROUP_KEY$]",
+															"maxOptions": "10",
+															"frequencyThreshold": "1",
+															"frequenciesVisible": "true",
+															"displayStyleGroupId": "[$GROUP_ID$]"
+														},
+														"widgetName": "com_liferay_commerce_product_content_search_web_internal_portlet_CPOptionFacetsPortlet"
+													}
+												},
+												"type": "Widget"
+											}
+										],
+										"type": "Column"
+									},
+									{
+										"definition": {
+											"columnViewports": [
+												{
+													"columnViewportDefinition": {
+														"size": 12
+													},
+													"id": "landscapeMobile"
+												},
+												{
+													"columnViewportDefinition": {},
+													"id": "portraitMobile"
+												},
+												{
+													"columnViewportDefinition": {},
+													"id": "tablet"
+												}
+											],
+											"size": 8
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"widgetInstance": {
+														"widgetConfig": {
+															"displayStyleGroupId": "[$GROUP_ID$]"
+														},
+														"widgetName": "com_liferay_commerce_product_content_search_web_internal_portlet_CPSortPortlet"
+													}
+												},
+												"type": "Widget"
+											},
+											{
+												"definition": {
+													"widgetInstance": {
+														"widgetConfig": {
+															"cpContentListRendererKey": "list-default",
+															"selectionStyle": "adt",
+															"displayStyle": "ddmTemplate_Product Search Results",
+															"virtual--cpTypeListEntryRendererKey": "list-entry-default",
+															"grouped--cpTypeListEntryRendererKey": "list-entry-default",
+															"displayStyleGroupKey": "[$GROUP_KEY$]",
+															"paginationDelta": "9",
+															"paginate": "true",
+															"displayStyleGroupId": "[$GROUP_ID$]",
+															"simple--cpTypeListEntryRendererKey": "list-entry-default",
+															"diagram--cpTypeListEntryRendererKey": "list-entry-diagram"
+														},
+														"widgetName": "com_liferay_commerce_product_content_search_web_internal_portlet_CPSearchResultsPortlet"
+													}
+												},
+												"type": "Widget"
+											}
+										],
+										"type": "Column"
+									}
+								],
+								"type": "Row"
+							}
+						],
+						"type": "Section"
+					},
+					{
+						"definition": {
+							"indexed": true,
+							"layout": {},
+							"name": "Search Options"
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragmentStyle": {
+										"hidden": true
+									},
+									"widgetInstance": {
+										"widgetConfig": {
+											"federatedSearchKey": "",
+											"allowEmptySearches": "true",
+											"basicFacetSelection": "false",
+											"retainFacetSelections": "true",
+											"displayStyleGroupId": "[$GROUP_ID$]"
+										},
+										"widgetName": "com_liferay_portal_search_web_search_options_portlet_SearchOptionsPortlet"
+									}
+								},
+								"type": "Widget"
+							}
+						],
+						"type": "Section"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"version": 1.1,
+	"settings": {
+		"masterPage": {
+			"key": "primary"
+		}
+	}
+}

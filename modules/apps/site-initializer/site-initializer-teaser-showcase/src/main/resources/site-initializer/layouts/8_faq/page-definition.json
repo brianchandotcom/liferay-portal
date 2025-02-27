@@ -1,0 +1,967 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"indexed": true,
+					"layout": {
+						"widthType": "Fixed"
+					},
+					"name": "FAQ Page"
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"fragmentStyle": {
+								"paddingRight": "5"
+							},
+							"indexed": true,
+							"layout": {
+								"paddingRight": 4
+							},
+							"name": "FAQ Content"
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"gutters": true,
+									"indexed": true,
+									"modulesPerRow": 2,
+									"numberOfColumns": 2,
+									"reverseOrder": false,
+									"rowViewports": [
+										{
+											"id": "landscapeMobile",
+											"rowViewportDefinition": {
+												"modulesPerRow": 1
+											}
+										},
+										{
+											"id": "portraitMobile",
+											"rowViewportDefinition": {}
+										},
+										{
+											"id": "tablet",
+											"rowViewportDefinition": {}
+										}
+									],
+									"verticalAlignment": "top"
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"columnViewports": [
+												{
+													"columnViewportDefinition": {
+														"size": 12
+													},
+													"id": "landscapeMobile"
+												},
+												{
+													"columnViewportDefinition": {},
+													"id": "portraitMobile"
+												},
+												{
+													"columnViewportDefinition": {},
+													"id": "tablet"
+												}
+											],
+											"size": 6
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "BASIC_COMPONENT-image"
+													},
+													"fragmentConfig": {
+														"imageSize": "w-100"
+													},
+													"fragmentFields": [
+														{
+															"id": "image-square",
+															"value": {
+																"fragmentImage": {
+																	"description": {
+																		"value_i18n": {
+																			"en_US": ""
+																		}
+																	},
+																	"url": {
+																		"value_i18n": {
+																			"en_US": "[$DOCUMENT_URL:/site-initializer/documents/group/Marketing Assets/glasses_vertical_banner_with_text_lg.png$]"
+																		}
+																	}
+																},
+																"fragmentLink": {}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"backgroundFragmentImage": {}
+													},
+													"indexed": true
+												},
+												"type": "Fragment"
+											}
+										],
+										"type": "Column"
+									},
+									{
+										"definition": {
+											"columnViewports": [
+												{
+													"columnViewportDefinition": {
+														"size": 12
+													},
+													"id": "landscapeMobile"
+												},
+												{
+													"columnViewportDefinition": {},
+													"id": "portraitMobile"
+												},
+												{
+													"columnViewportDefinition": {},
+													"id": "tablet"
+												}
+											],
+											"size": 6
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"fragment": {
+														"key": "heading-1",
+														"siteKey": "[$GROUP_KEY$]"
+													},
+													"fragmentConfig": {
+														"headingSize": "1"
+													},
+													"fragmentFields": [
+														{
+															"id": "page-title-fragment-right",
+															"value": {
+																"fragmentLink": {},
+																"text": {
+																	"value_i18n": {
+																		"en_US": "FAQs"
+																	}
+																}
+															}
+														},
+														{
+															"id": "page-title-fragment-left",
+															"value": {
+																"fragmentLink": {},
+																"text": {
+																	"value_i18n": {
+																		"en_US": "General FAQs&nbsp;"
+																	}
+																}
+															}
+														}
+													],
+													"fragmentStyle": {
+														"marginTop": "3"
+													},
+													"indexed": true,
+													"name": "Page Title"
+												},
+												"type": "Fragment"
+											},
+											{
+												"definition": {
+													"fragmentStyle": {
+														"marginTop": "5"
+													},
+													"indexed": true,
+													"layout": {
+														"marginTop": 4,
+														"widthType": "Fixed"
+													},
+													"name": "FAQ Section"
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "section-heading",
+																"siteKey": "[$GROUP_KEY$]"
+															},
+															"fragmentConfig": {},
+															"fragmentFields": [
+																{
+																	"id": "section-heading-fragment",
+																	"value": {
+																		"fragmentLink": {},
+																		"text": {
+																			"value_i18n": {
+																				"en_US": "Retail Partners"
+																			}
+																		}
+																	}
+																}
+															],
+															"indexed": true
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"collectionConfig": {
+																"collectionReference": {
+																	"className": "com.liferay.asset.list.model.AssetListEntry",
+																	"classPK": "[$ASSET_LIST_ENTRY_ID:RETAIL-PARTNERS-FAQ$]"
+																},
+																"collectionType": "Collection"
+															},
+															"collectionViewports": [
+																{
+																	"collectionViewportDefinition": {
+																		"numberOfColumns": 1
+																	},
+																	"id": "landscapeMobile"
+																},
+																{
+																	"collectionViewportDefinition": {
+																		"numberOfColumns": 1
+																	},
+																	"id": "portraitMobile"
+																},
+																{
+																	"collectionViewportDefinition": {
+																		"numberOfColumns": 1
+																	},
+																	"id": "tablet"
+																}
+															],
+															"displayAllItems": true,
+															"displayAllPages": false,
+															"emptyCollectionConfig": {
+																"displayMessage": false
+															},
+															"listItemStyle": "",
+															"listStyle": "",
+															"numberOfColumns": 1,
+															"numberOfItems": 5,
+															"numberOfItemsPerPage": 20,
+															"numberOfPages": 5,
+															"paginationType": "None",
+															"showAllItems": false,
+															"templateKey": ""
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"collectionItemConfig": {}
+																},
+																"pageElements": [
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "faq-fragment",
+																				"siteKey": "[$GROUP_KEY$]"
+																			},
+																			"fragmentConfig": {},
+																			"fragmentFields": [
+																				{
+																					"id": "answer-text",
+																					"value": {
+																						"fragmentLink": {},
+																						"text": {
+																							"mapping": {
+																								"fieldKey": "DDMStructure_answer",
+																								"itemReference": {
+																									"contextSource": "CollectionItem"
+																								}
+																							}
+																						}
+																					}
+																				},
+																				{
+																					"id": "main-text",
+																					"value": {
+																						"fragmentLink": {},
+																						"text": {
+																							"mapping": {
+																								"fieldKey": "JournalArticle_title",
+																								"itemReference": {
+																									"contextSource": "CollectionItem"
+																								}
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	}
+																],
+																"type": "CollectionItem"
+															}
+														],
+														"type": "Collection"
+													}
+												],
+												"type": "Section"
+											},
+											{
+												"definition": {
+													"fragmentStyle": {
+														"marginTop": "4"
+													},
+													"indexed": true,
+													"layout": {
+														"marginTop": 2,
+														"widthType": "Fixed"
+													},
+													"name": "FAQ Section"
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "section-heading",
+																"siteKey": "[$GROUP_KEY$]"
+															},
+															"fragmentConfig": {},
+															"fragmentFields": [
+																{
+																	"id": "section-heading-fragment",
+																	"value": {
+																		"fragmentLink": {},
+																		"text": {
+																			"value_i18n": {
+																				"en_US": "Products &amp; services"
+																			}
+																		}
+																	}
+																}
+															],
+															"indexed": true
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"collectionConfig": {
+																"collectionReference": {
+																	"className": "com.liferay.asset.list.model.AssetListEntry",
+																	"classPK": "[$ASSET_LIST_ENTRY_ID:PRODUCTS-AND-SERVICES-FAQ$]"
+																},
+																"collectionType": "Collection"
+															},
+															"collectionViewports": [
+																{
+																	"collectionViewportDefinition": {
+																		"numberOfColumns": 1
+																	},
+																	"id": "landscapeMobile"
+																},
+																{
+																	"collectionViewportDefinition": {
+																		"numberOfColumns": 1
+																	},
+																	"id": "portraitMobile"
+																},
+																{
+																	"collectionViewportDefinition": {
+																		"numberOfColumns": 1
+																	},
+																	"id": "tablet"
+																}
+															],
+															"displayAllItems": true,
+															"displayAllPages": false,
+															"emptyCollectionConfig": {
+																"displayMessage": false
+															},
+															"listItemStyle": "",
+															"listStyle": "",
+															"numberOfColumns": 1,
+															"numberOfItems": 3,
+															"numberOfItemsPerPage": 20,
+															"numberOfPages": 5,
+															"paginationType": "None",
+															"showAllItems": false,
+															"templateKey": ""
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"collectionItemConfig": {}
+																},
+																"pageElements": [
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "faq-fragment",
+																				"siteKey": "[$GROUP_KEY$]"
+																			},
+																			"fragmentConfig": {},
+																			"fragmentFields": [
+																				{
+																					"id": "answer-text",
+																					"value": {
+																						"fragmentLink": {},
+																						"text": {
+																							"mapping": {
+																								"fieldKey": "DDMStructure_answer",
+																								"itemReference": {
+																									"contextSource": "CollectionItem"
+																								}
+																							}
+																						}
+																					}
+																				},
+																				{
+																					"id": "main-text",
+																					"value": {
+																						"fragmentLink": {},
+																						"text": {
+																							"mapping": {
+																								"fieldKey": "JournalArticle_title",
+																								"itemReference": {
+																									"contextSource": "CollectionItem"
+																								}
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	}
+																],
+																"type": "CollectionItem"
+															}
+														],
+														"type": "Collection"
+													}
+												],
+												"type": "Section"
+											},
+											{
+												"definition": {
+													"fragmentStyle": {
+														"marginTop": "4"
+													},
+													"indexed": true,
+													"layout": {
+														"marginTop": 2,
+														"widthType": "Fixed"
+													},
+													"name": "FAQ Section"
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "section-heading",
+																"siteKey": "[$GROUP_KEY$]"
+															},
+															"fragmentConfig": {},
+															"fragmentFields": [
+																{
+																	"id": "section-heading-fragment",
+																	"value": {
+																		"fragmentLink": {},
+																		"text": {
+																			"value_i18n": {
+																				"en_US": "Pricing &amp; Ordering"
+																			}
+																		}
+																	}
+																}
+															],
+															"indexed": true
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"collectionConfig": {
+																"collectionReference": {
+																	"className": "com.liferay.asset.list.model.AssetListEntry",
+																	"classPK": "[$ASSET_LIST_ENTRY_ID:PRICING-AND-ORDERING-FAQ$]"
+																},
+																"collectionType": "Collection"
+															},
+															"collectionViewports": [
+																{
+																	"collectionViewportDefinition": {
+																		"numberOfColumns": 1
+																	},
+																	"id": "landscapeMobile"
+																},
+																{
+																	"collectionViewportDefinition": {
+																		"numberOfColumns": 1
+																	},
+																	"id": "portraitMobile"
+																},
+																{
+																	"collectionViewportDefinition": {
+																		"numberOfColumns": 1
+																	},
+																	"id": "tablet"
+																}
+															],
+															"displayAllItems": true,
+															"displayAllPages": false,
+															"emptyCollectionConfig": {
+																"displayMessage": false
+															},
+															"listItemStyle": "",
+															"listStyle": "",
+															"numberOfColumns": 1,
+															"numberOfItems": 2,
+															"numberOfItemsPerPage": 20,
+															"numberOfPages": 5,
+															"paginationType": "None",
+															"showAllItems": false,
+															"templateKey": ""
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"collectionItemConfig": {}
+																},
+																"pageElements": [
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "faq-fragment",
+																				"siteKey": "[$GROUP_KEY$]"
+																			},
+																			"fragmentConfig": {},
+																			"fragmentFields": [
+																				{
+																					"id": "answer-text",
+																					"value": {
+																						"fragmentLink": {},
+																						"text": {
+																							"mapping": {
+																								"fieldKey": "DDMStructure_answer",
+																								"itemReference": {
+																									"contextSource": "CollectionItem"
+																								}
+																							}
+																						}
+																					}
+																				},
+																				{
+																					"id": "main-text",
+																					"value": {
+																						"fragmentLink": {},
+																						"text": {
+																							"mapping": {
+																								"fieldKey": "JournalArticle_title",
+																								"itemReference": {
+																									"contextSource": "CollectionItem"
+																								}
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	}
+																],
+																"type": "CollectionItem"
+															}
+														],
+														"type": "Collection"
+													}
+												],
+												"type": "Section"
+											},
+											{
+												"definition": {
+													"fragmentStyle": {
+														"marginTop": "4"
+													},
+													"indexed": true,
+													"layout": {
+														"marginTop": 2,
+														"widthType": "Fixed"
+													},
+													"name": "FAQ Section"
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "section-heading",
+																"siteKey": "[$GROUP_KEY$]"
+															},
+															"fragmentConfig": {},
+															"fragmentFields": [
+																{
+																	"id": "section-heading-fragment",
+																	"value": {
+																		"fragmentLink": {},
+																		"text": {
+																			"value_i18n": {
+																				"en_US": "Return and exchange"
+																			}
+																		}
+																	}
+																}
+															],
+															"indexed": true
+														},
+														"type": "Fragment"
+													},
+													{
+														"definition": {
+															"collectionConfig": {
+																"collectionReference": {
+																	"className": "com.liferay.asset.list.model.AssetListEntry",
+																	"classPK": "[$ASSET_LIST_ENTRY_ID:RETURNS-AND-EXCHANGES-FAQ$]"
+																},
+																"collectionType": "Collection"
+															},
+															"collectionViewports": [
+																{
+																	"collectionViewportDefinition": {
+																		"numberOfColumns": 1
+																	},
+																	"id": "landscapeMobile"
+																},
+																{
+																	"collectionViewportDefinition": {
+																		"numberOfColumns": 1
+																	},
+																	"id": "portraitMobile"
+																},
+																{
+																	"collectionViewportDefinition": {
+																		"numberOfColumns": 1
+																	},
+																	"id": "tablet"
+																}
+															],
+															"displayAllItems": true,
+															"displayAllPages": false,
+															"emptyCollectionConfig": {
+																"displayMessage": false
+															},
+															"listItemStyle": "",
+															"listStyle": "",
+															"numberOfColumns": 1,
+															"numberOfItems": 3,
+															"numberOfItemsPerPage": 20,
+															"numberOfPages": 5,
+															"paginationType": "None",
+															"showAllItems": false,
+															"templateKey": ""
+														},
+														"pageElements": [
+															{
+																"definition": {
+																	"collectionItemConfig": {}
+																},
+																"pageElements": [
+																	{
+																		"definition": {
+																			"fragment": {
+																				"key": "faq-fragment",
+																				"siteKey": "[$GROUP_KEY$]"
+																			},
+																			"fragmentConfig": {},
+																			"fragmentFields": [
+																				{
+																					"id": "answer-text",
+																					"value": {
+																						"fragmentLink": {},
+																						"text": {
+																							"mapping": {
+																								"fieldKey": "DDMStructure_answer",
+																								"itemReference": {
+																									"contextSource": "CollectionItem"
+																								}
+																							}
+																						}
+																					}
+																				},
+																				{
+																					"id": "main-text",
+																					"value": {
+																						"fragmentLink": {},
+																						"text": {
+																							"mapping": {
+																								"fieldKey": "JournalArticle_title",
+																								"itemReference": {
+																									"contextSource": "CollectionItem"
+																								}
+																							}
+																						}
+																					}
+																				}
+																			],
+																			"indexed": true
+																		},
+																		"type": "Fragment"
+																	}
+																],
+																"type": "CollectionItem"
+															}
+														],
+														"type": "Collection"
+													}
+												],
+												"type": "Section"
+											}
+										],
+										"type": "Column"
+									}
+								],
+								"type": "Row"
+							}
+						],
+						"type": "Section"
+					},
+					{
+						"definition": {
+							"fragmentStyle": {
+								"paddingBottom": "5",
+								"paddingLeft": "5",
+								"paddingRight": "5",
+								"paddingTop": "5"
+							},
+							"indexed": true,
+							"layout": {
+								"paddingBottom": 4,
+								"paddingLeft": 4,
+								"paddingRight": 4,
+								"paddingTop": 4,
+								"widthType": "Fixed"
+							},
+							"name": "Promoted Articles"
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"fragmentStyle": {
+										"marginBottom": "4"
+									},
+									"indexed": true,
+									"layout": {
+										"marginBottom": 2
+									},
+									"name": "Section Title"
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"fragment": {
+												"key": "BASIC_COMPONENT-heading"
+											},
+											"fragmentConfig": {
+												"headingLevel": "h1"
+											},
+											"fragmentFields": [
+												{
+													"id": "element-text",
+													"value": {
+														"fragmentLink": {},
+														"text": {
+															"value_i18n": {
+																"en_US": "Helpful articles from our team!"
+															}
+														}
+													}
+												}
+											],
+											"fragmentStyle": {
+												"textAlign": "center"
+											},
+											"indexed": true
+										},
+										"type": "Fragment"
+									}
+								],
+								"type": "Section"
+							},
+							{
+								"definition": {
+									"fragmentStyle": {
+										"paddingBottom": "4",
+										"paddingTop": "3"
+									},
+									"indexed": true,
+									"layout": {
+										"paddingBottom": 2,
+										"paddingTop": 1
+									},
+									"name": "Article Cards"
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"collectionConfig": {
+												"collectionReference": {
+													"className": "com.liferay.asset.list.model.AssetListEntry",
+													"classPK": "[$ASSET_LIST_ENTRY_ID:HELPFUL-ARTICLES-DYNAMIC$]"
+												},
+												"collectionType": "Collection"
+											},
+											"collectionViewports": [
+												{
+													"collectionViewportDefinition": {
+														"numberOfColumns": 1
+													},
+													"id": "landscapeMobile"
+												},
+												{
+													"collectionViewportDefinition": {
+														"numberOfColumns": 1
+													},
+													"id": "portraitMobile"
+												},
+												{
+													"collectionViewportDefinition": {
+														"numberOfColumns": 1
+													},
+													"id": "tablet"
+												}
+											],
+											"displayAllItems": false,
+											"displayAllPages": false,
+											"emptyCollectionConfig": {
+												"displayMessage": false
+											},
+											"listItemStyle": "",
+											"listStyle": "",
+											"numberOfColumns": 3,
+											"numberOfItems": 3,
+											"numberOfItemsPerPage": 3,
+											"numberOfPages": 5,
+											"paginationType": "Numeric",
+											"showAllItems": false,
+											"templateKey": ""
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"collectionItemConfig": {}
+												},
+												"pageElements": [
+													{
+														"definition": {
+															"fragment": {
+																"key": "card",
+																"siteKey": "[$GROUP_KEY$]"
+															},
+															"fragmentConfig": {},
+															"fragmentFields": [
+																{
+																	"id": "card-image",
+																	"value": {
+																		"fragmentImage": {
+																			"url": {
+																				"mapping": {
+																					"fieldKey": "DDMStructure_image",
+																					"itemReference": {
+																						"contextSource": "CollectionItem"
+																					}
+																				}
+																			}
+																		},
+																		"fragmentLink": {}
+																	}
+																},
+																{
+																	"id": "summary",
+																	"value": {
+																		"fragmentLink": {},
+																		"text": {
+																			"mapping": {
+																				"fieldKey": "DDMStructure_headline",
+																				"itemReference": {
+																					"contextSource": "CollectionItem"
+																				}
+																			}
+																		}
+																	}
+																},
+																{
+																	"id": "card-title",
+																	"value": {
+																		"fragmentLink": {},
+																		"text": {
+																			"mapping": {
+																				"fieldKey": "JournalArticle_title",
+																				"itemReference": {
+																					"contextSource": "CollectionItem"
+																				}
+																			}
+																		}
+																	}
+																},
+																{
+																	"id": "card-link",
+																	"value": {
+																		"fragmentLink": {
+																			"value": {
+																				"href": {
+																					"mapping": {
+																						"fieldKey": "displayPageURL",
+																						"itemReference": {
+																							"contextSource": "CollectionItem"
+																						}
+																					}
+																				}
+																			}
+																		}
+																	}
+																},
+																{
+																	"id": "category",
+																	"value": {
+																		"fragmentLink": {},
+																		"text": {
+																			"mapping": {
+																				"fieldKey": "AssetCategory_categories",
+																				"itemReference": {
+																					"contextSource": "CollectionItem"
+																				}
+																			}
+																		}
+																	}
+																}
+															],
+															"indexed": true
+														},
+														"type": "Fragment"
+													}
+												],
+												"type": "CollectionItem"
+											}
+										],
+										"type": "Collection"
+									}
+								],
+								"type": "Section"
+							}
+						],
+						"type": "Section"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"version": 1.1,
+	"settings": {
+		"masterPage": {
+			"key": "primary"
+		}
+	}
+}

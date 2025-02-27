@@ -1,0 +1,64 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"collectionConfig": {
+						"collectionReference": {
+							"className": "com.liferay.object.internal.info.collection.provider.ObjectEntrySingleFormVariationInfoCollectionProvider_C_[$OBJECT_DEFINITION_ID:86375a21-1dd8-85a6-9494-09adfa4f0c9f$]"
+						},
+						"collectionType": "CollectionProvider"
+					},
+					"collectionViewports": [
+						{
+							"collectionViewportDefinition": {
+								"numberOfColumns": 1
+							},
+							"id": "landscapeMobile"
+						},
+						{
+							"collectionViewportDefinition": {
+								"numberOfColumns": 1
+							},
+							"id": "portraitMobile"
+						},
+						{
+							"collectionViewportDefinition": {
+								"numberOfColumns": 1
+							},
+							"id": "tablet"
+						}
+					],
+					"displayAllItems": false,
+					"displayAllPages": true,
+					"listItemStyle": "",
+					"listStyle": "com.liferay.asset.info.internal.list.renderer.BulletedAssetEntryBasicInfoListRenderer",
+					"numberOfColumns": 1,
+					"numberOfItems": 5,
+					"numberOfItemsPerPage": 20,
+					"numberOfPages": 5,
+					"paginationType": "Numeric",
+					"showAllItems": false,
+					"templateKey": ""
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"collectionItemConfig": {}
+						},
+						"id": "06a93105-a578-a054-3755-e1e8cc59e0c1",
+						"type": "CollectionItem"
+					}
+				],
+				"type": "Collection"
+			}
+		],
+		"type": "Root"
+	},
+	"version": 1.1,
+	"settings": {
+		"masterPage": {
+			"key": "primary"
+		}
+	}
+}

@@ -1,0 +1,34 @@
+{
+  "pageElement": {
+    "pageElements": [
+      {
+        "definition": {
+          "fragmentStyle": {
+            "marginLeft": "9",
+            "marginRight": "9",
+            "maxWidth": "900px",
+            "minWidth": "400px"
+          },
+          "indexed": true,
+          "layout": { "widthType": "Fixed" },
+          "name": "Product Details Page"
+        },
+        "pageElements": [
+          {
+            "definition": {
+              "widgetInstance": {
+                "widgetConfig": { "displayStyleGroupId": "[$GROUP_ID$]" },
+                "widgetName": "com_liferay_commerce_product_content_web_internal_portlet_CPPublisherPortlet"
+              }
+            },
+            "type": "Widget"
+          }
+        ],
+        "type": "Section"
+      }
+    ],
+    "type": "Root"
+  },
+  "version": 1.1,
+  "settings": { "masterPage": { "key": "primary-master-page" } }
+}

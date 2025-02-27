@@ -1,0 +1,243 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"indexed": true,
+					"layout": {},
+					"name": "Search Page"
+				},
+				"pageElements": [
+					{
+						"definition": {
+							"fragmentStyle": {
+								"paddingBottom": "3",
+								"paddingLeft": "5",
+								"paddingRight": "5",
+								"paddingTop": "5"
+							},
+							"indexed": true,
+							"layout": {
+								"paddingBottom": 1,
+								"paddingLeft": 4,
+								"paddingRight": 4,
+								"paddingTop": 4
+							},
+							"name": "Search Content"
+						},
+						"pageElements": [
+							{
+								"definition": {
+									"gutters": true,
+									"indexed": true,
+									"modulesPerRow": 2,
+									"numberOfColumns": 2,
+									"reverseOrder": false,
+									"rowViewports": [
+										{
+											"id": "landscapeMobile",
+											"rowViewportDefinition": {
+												"modulesPerRow": 1
+											}
+										},
+										{
+											"id": "portraitMobile",
+											"rowViewportDefinition": {}
+										},
+										{
+											"id": "tablet",
+											"rowViewportDefinition": {}
+										}
+									],
+									"verticalAlignment": "top"
+								},
+								"pageElements": [
+									{
+										"definition": {
+											"columnViewports": [
+												{
+													"columnViewportDefinition": {
+														"size": 12
+													},
+													"id": "landscapeMobile"
+												},
+												{
+													"columnViewportDefinition": {},
+													"id": "portraitMobile"
+												},
+												{
+													"columnViewportDefinition": {},
+													"id": "tablet"
+												}
+											],
+											"size": 4
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"widgetInstance": {
+														"widgetConfig": {
+															"federatedSearchKey": "",
+															"suggestionsContributorConfigurations": "{\"contributorName\":\"basic\",\"displayGroupName\":\"suggestions\",\"size\":5}",
+															"showStagedResults": "false",
+															"searchScope": "everything",
+															"suggestionsEnabled": "true",
+															"destination": "",
+															"invisible": "false",
+															"displayStyleGroupId": "[$GROUP_ID$]",
+															"suggestionsDisplayThreshold": "2",
+															"displayStyle": "default",
+															"scopeParameterName": "scope",
+															"keywordsParameterName": "q",
+															"useAdvancedSearchSyntax": "false"
+														},
+														"widgetName": "com_liferay_portal_search_web_search_bar_portlet_SearchBarPortlet"
+													}
+												},
+												"type": "Widget"
+											},
+											{
+												"definition": {
+													"widgetInstance": {
+														"widgetConfig": {
+															"displayStyle": "default",
+															"assetTypes": "com.liferay.blogs.model.BlogsEntry,com.liferay.commerce.product.model.CPDefinition,com.liferay.journal.model.JournalArticle",
+															"frequencyThreshold": "1",
+															"frequenciesVisible": "true",
+															"parameterName": "type",
+															"displayStyleGroupId": "[$GROUP_ID$]",
+															"order": "count:desc"
+														},
+														"widgetName": "com_liferay_portal_search_web_type_facet_portlet_TypeFacetPortlet"
+													}
+												},
+												"type": "Widget"
+											}
+										],
+										"type": "Column"
+									},
+									{
+										"definition": {
+											"columnViewports": [
+												{
+													"columnViewportDefinition": {
+														"size": 12
+													},
+													"id": "landscapeMobile"
+												},
+												{
+													"columnViewportDefinition": {},
+													"id": "portraitMobile"
+												},
+												{
+													"columnViewportDefinition": {},
+													"id": "tablet"
+												}
+											],
+											"size": 8
+										},
+										"pageElements": [
+											{
+												"definition": {
+													"widgetInstance": {
+														"widgetConfig": {
+															"fieldsToDisplay": "",
+															"federatedSearchKey": "",
+															"displayStyleGroupKey": "16796623585306",
+															"displayInDocumentForm": "false",
+															"showEmptyResultMessage": "true",
+															"showPagination": "true",
+															"paginationDeltaParameterName": "delta",
+															"displayStyleGroupId": "[$GROUP_ID$]",
+															"highlightEnabled": "false",
+															"viewInContext": "true",
+															"displayStyle": "ddmTemplate_SEARCH-RESULTS-COMPACT-FTL",
+															"paginationDelta": "10",
+															"paginationStartParameterName": "start"
+														},
+														"widgetName": "com_liferay_portal_search_web_search_results_portlet_SearchResultsPortlet"
+													}
+												},
+												"type": "Widget"
+											}
+										],
+										"type": "Column"
+									}
+								],
+								"type": "Row"
+							}
+						],
+						"type": "Section"
+					},
+					{
+						"definition": {
+							"fragmentStyle": {
+								"hidden": true
+							},
+							"widgetInstance": {
+								"widgetConfig": {
+									"federatedSearchKey": "",
+									"allowEmptySearches": "true",
+									"basicFacetSelection": "false",
+									"retainFacetSelections": "true",
+									"displayStyleGroupId": "[$GROUP_ID$]"
+								},
+								"widgetName": "com_liferay_portal_search_web_search_options_portlet_SearchOptionsPortlet"
+							}
+						},
+						"type": "Widget"
+					},
+					{
+						"definition": {
+							"fragmentStyle": {
+								"hidden": true
+							},
+							"widgetInstance": {
+								"widgetConfig": {
+									"federatedSearchKey": "",
+									"sxpBlueprintExternalReferenceCode": "",
+									"displayStyleGroupId": "[$GROUP_ID$]"
+								},
+								"widgetName": "com_liferay_search_experiences_web_internal_blueprint_options_portlet_SXPBlueprintOptionsPortlet",
+								"widgetPermissions": [
+									{
+										"actionKeys": [
+											"VIEW"
+										],
+										"roleKey": "Guest"
+									},
+									{
+										"actionKeys": [
+											"PERMISSIONS",
+											"PREFERENCES",
+											"CONFIGURATION",
+											"ACCESS_IN_CONTROL_PANEL",
+											"VIEW",
+											"ADD_TO_PAGE"
+										],
+										"roleKey": "Owner"
+									},
+									{
+										"actionKeys": [
+											"VIEW"
+										],
+										"roleKey": "Site Member"
+									}
+								]
+							}
+						},
+						"type": "Widget"
+					}
+				],
+				"type": "Section"
+			}
+		],
+		"type": "Root"
+	},
+	"version": 1.1,
+	"settings": {
+		"masterPage": {
+			"key": "primary"
+		}
+	}
+}

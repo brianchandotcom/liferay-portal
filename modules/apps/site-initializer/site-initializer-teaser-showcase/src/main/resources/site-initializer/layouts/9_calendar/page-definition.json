@@ -1,0 +1,24 @@
+{
+	"pageElement": {
+		"pageElements": [
+			{
+				"definition": {
+					"widgetInstance": {
+						"widgetConfig": {
+							"displayStyleGroupId": "[$GROUP_ID$]"
+						},
+						"widgetName": "com_liferay_calendar_web_portlet_CalendarPortlet"
+					}
+				},
+				"type": "Widget"
+			}
+		],
+		"type": "Root"
+	},
+	"version": 1.1,
+	"settings": {
+		"masterPage": {
+			"key": "primary"
+		}
+	}
+}

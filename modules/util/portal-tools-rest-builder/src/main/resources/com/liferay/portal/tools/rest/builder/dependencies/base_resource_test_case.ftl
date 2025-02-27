@@ -38,8 +38,10 @@ import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 
 <#assign
 	generatePermissionsJavaMethodSignatures = []
+	javaDataType = freeMarkerTool.getJavaDataType(configYAML, openAPIYAML, schemaName)!""
 	javaMethodSignatures = freeMarkerTool.getResourceTestCaseJavaMethodSignatures(configYAML, openAPIYAML, schemaName)
 
+	generateBatch = freeMarkerTool.generateBatch(configYAML, javaDataType, javaMethodSignatures, schemaName)
 	generateCRUD = freeMarkerTool.generateCRUD(configYAML, javaMethodSignatures, schemaName)
 	generateDepotEntry = freeMarkerTool.containsJavaMethodSignature(javaMethodSignatures, "AssetLibrary")
 />
@@ -299,6 +301,12 @@ public abstract class Base${schemaName}ResourceTestCase {
 			arguments = freeMarkerTool.getResourceTestCaseArguments(javaMethodSignature.javaMethodParameters)
 			parameters = freeMarkerTool.getResourceTestCaseParameters(configYAML, javaMethodSignature.javaMethodParameters, javaMethodSignature.operation, allSchemas, false)
 		/>
+
+		<#if freeMarkerTool.isDeleteByIdMethod(javaMethodSignature, schemaName)>
+			<#assign deleteByIdJavaMethodSignature = javaMethodSignature />
+		<#elseif freeMarkerTool.isDeleteByERCMethod(javaMethodSignature, schemaName)>
+			<#assign deleteByERCJavaMethodSignature = javaMethodSignature />
+		</#if>
 
 		<#if stringUtil.endsWith(javaMethodSignature.methodName, schemaName + "Batch") || stringUtil.endsWith(javaMethodSignature.methodName, schemaNames + "PageExportBatch")>
 			<#continue>
@@ -2732,6 +2740,77 @@ public abstract class Base${schemaName}ResourceTestCase {
 			}
 		</#if>
 	</#list>
+
+	<#if generateBatch>
+		<#if freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "delete" + schemaName + "Batch") && freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "get" + schemaName)>
+			<#assign
+				deleteBatchJavaMethodSignature = freeMarkerTool.getJavaMethodSignature(javaMethodSignatures, "delete" + schemaName + "Batch")
+				getJavaMethodSignature = freeMarkerTool.getJavaMethodSignature(javaMethodSignatures, "get" + schemaName)
+			/>
+			@Test
+			public void test${deleteBatchJavaMethodSignature.methodName?cap_first}() throws Exception {
+				<#if deleteByIdJavaMethodSignature??>
+					${schemaName} ${schemaVarName}_toDeleteById = test${deleteBatchJavaMethodSignature.methodName?cap_first}_add${schemaName}();
+
+					<#if properties?keys?seq_contains("id")>
+						assertHttpResponseStatusCode(204, ${schemaVarName}Resource.${deleteBatchJavaMethodSignature.methodName}HttpResponse(null,Collections.singletonList(Collections.singletonMap("id", ${schemaVarName}_toDeleteById.getId()))));
+
+						assertHttpResponseStatusCode(404,${schemaVarName}Resource.${getJavaMethodSignature.methodName}HttpResponse(${schemaVarName}_toDeleteById.getId()));
+					<#else>
+						assertHttpResponseStatusCode(204, ${schemaVarName}Resource.${deleteBatchJavaMethodSignature.methodName}HttpResponse(null,Collections.singletonList(Collections.singletonMap("id", ${schemaVarName}_toDeleteById.get${schemaName}Id()))));
+
+						assertHttpResponseStatusCode(404,${schemaVarName}Resource.${getJavaMethodSignature.methodName}HttpResponse(${schemaVarName}_toDeleteById.get${schemaName}Id()));
+					</#if>
+				</#if>
+
+				<#if deleteByERCJavaMethodSignature??>
+					${schemaName} ${schemaVarName}_toDeleteByERC = test${deleteBatchJavaMethodSignature.methodName?cap_first}_add${schemaName}();
+
+					<#if properties?keys?seq_contains("id")>
+						assertHttpResponseStatusCode(204, ${schemaVarName}Resource.${deleteBatchJavaMethodSignature.methodName}HttpResponse(null,Collections.singletonList(Collections.singletonMap("id", ${schemaVarName}_toDeleteByERC.getExternalReferenceCode()))));
+
+						assertHttpResponseStatusCode(404,${schemaVarName}Resource.${getJavaMethodSignature.methodName}HttpResponse(${schemaVarName}_toDeleteById.getId()));
+					<#else>
+						assertHttpResponseStatusCode(204, ${schemaVarName}Resource.${deleteBatchJavaMethodSignature.methodName}HttpResponse(null,Collections.singletonList(Collections.singletonMap("id", ${schemaVarName}_toDeleteByERC.getExternalReferenceCode()))));
+
+						assertHttpResponseStatusCode(404,${schemaVarName}Resource.${getJavaMethodSignature.methodName}HttpResponse(${schemaVarName}_toDeleteById.get${schemaName}Id()));
+					</#if>
+				</#if>
+			}
+
+			<#if properties?keys?seq_contains("id")>
+				protected ${schemaName} test${deleteBatchJavaMethodSignature.methodName?cap_first}_add${schemaName}() throws Exception {
+					<#if deleteBatchJavaMethodSignature.methodName?contains("AssetLibrary") && freeMarkerTool.hasPostSchemaJavaMethodSignature(javaMethodSignatures, "assetLibraryId", schemaName)>
+						<#assign postSchemaJavaMethodSignature = freeMarkerTool.getPostSchemaJavaMethodSignature(javaMethodSignatures, "assetLibraryId", schemaName) />
+
+						return ${schemaVarName}Resource.${postSchemaJavaMethodSignature.methodName}(testDepotEntry.getDepotEntryId(), random${schemaName}()
+
+						<#if freeMarkerTool.hasRequestBodyMediaType(postSchemaJavaMethodSignature, "multipart/form-data")>
+							<#assign generateGetMultipartFilesMethod = true />
+
+							, getMultipartFiles()
+						</#if>
+
+						);
+					<#elseif freeMarkerTool.hasPostSchemaJavaMethodSignature(javaMethodSignatures, "siteId", schemaName)>
+						<#assign postSchemaJavaMethodSignature = freeMarkerTool.getPostSchemaJavaMethodSignature(javaMethodSignatures, "siteId", schemaName) />
+
+						return ${schemaVarName}Resource.${postSchemaJavaMethodSignature.methodName}(testGroup.getGroupId(), random${schemaName}()
+
+						<#if freeMarkerTool.hasRequestBodyMediaType(postSchemaJavaMethodSignature, "multipart/form-data")>
+							<#assign generateGetMultipartFilesMethod = true />
+
+							, getMultipartFiles()
+						</#if>
+
+						);
+					<#else>
+						throw new UnsupportedOperationException("This method needs to be implemented");
+					</#if>
+				}
+			</#if>
+		</#if>
+	</#if>
 
 	<#if generateSearchTestRule>
 		@Rule

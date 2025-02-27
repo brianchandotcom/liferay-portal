@@ -72,6 +72,8 @@ export default function StructureFieldSettings({
 }
 
 function GeneralTab({field}: {field: Field}) {
+	const dispatch = useStateDispatch();
+
 	return (
 		<>
 			<div className="pb-2">
@@ -86,6 +88,7 @@ function GeneralTab({field}: {field: Field}) {
 				<TextInput
 					label={Liferay.Language.get('field-name')}
 					onValueChange={() => {}}
+					required
 					value={field.name}
 				/>
 
@@ -101,22 +104,43 @@ function GeneralTab({field}: {field: Field}) {
 				<ClayForm.Group className="mb-3">
 					<ClayToggle
 						label={Liferay.Language.get('mandatory')}
-						onToggle={() => {}}
-						toggled={false}
+						onToggle={(value) => {
+							dispatch({
+								name: field.name,
+								required: value,
+								type: 'update-field',
+							});
+						}}
+						toggled={field.required}
 					/>
 				</ClayForm.Group>
 
 				<ClayForm.Group className="mb-0">
 					<ClayToggle
 						label={Liferay.Language.get('localizable')}
-						onToggle={() => {}}
-						toggled={false}
+						onToggle={(value) => {
+							dispatch({
+								localized: value,
+								name: field.name,
+								type: 'update-field',
+							});
+						}}
+						toggled={field.localized}
 					/>
 				</ClayForm.Group>
 			</div>
 
 			<div className="mt-4">
-				<ERCInput onValueChange={() => {}} value="" />
+				<ERCInput
+					onValueChange={(value) => {
+						dispatch({
+							erc: value,
+							name: field.name,
+							type: 'update-field',
+						});
+					}}
+					value={field.erc}
+				/>
 			</div>
 		</>
 	);

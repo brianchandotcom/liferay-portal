@@ -51,9 +51,9 @@ function buildFields(fields: Field[]) {
 			label: {
 				en_US: field.label,
 			},
-			localized: false,
+			localized: field.localized,
 			name: field.name,
-			required: false,
+			required: field.required,
 		};
 
 		if ('settings' in field) {

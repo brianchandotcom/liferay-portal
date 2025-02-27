@@ -66,6 +66,14 @@ type SetErrorAction = {error: string | null; type: 'set-error'};
 
 type SetLabelAction = {label: string; type: 'set-label'};
 
+type UpdateFieldAction = {
+	erc?: string;
+	localized?: boolean;
+	name: string;
+	required?: boolean;
+	type: 'update-field';
+};
+
 type UpdateStructureAction = {
 	erc?: string;
 	name?: string;
@@ -81,6 +89,7 @@ export type Action =
 	| SelectItemAction
 	| SetErrorAction
 	| SetLabelAction
+	| UpdateFieldAction
 	| UpdateStructureAction;
 
 function reducer(state: State, action: Action) {
@@ -131,6 +140,24 @@ function reducer(state: State, action: Action) {
 		}
 		case 'publish-structure':
 			return {...state, error: null, status: 'published' as Status};
+		case 'update-field': {
+			const {erc, localized, name, required} = action;
+
+			const nextFields = new Map(state.fields);
+
+			const field = nextFields.get(name);
+
+			if (field) {
+				nextFields.set(name, {
+					...field,
+					erc: erc ?? field.erc,
+					localized: localized ?? field.localized,
+					required: required ?? field.required,
+				});
+			}
+
+			return {...state, fields: nextFields};
+		}
 		case 'update-structure': {
 			let nextErc = state.erc;
 			let nextFields = state.fields;

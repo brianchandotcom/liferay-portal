@@ -9,6 +9,8 @@ import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.document.library.web.internal.display.context.helper.DLPortletInstanceSettingsHelper;
+import com.liferay.document.library.web.internal.display.context.helper.DLRequestHelper;
 import com.liferay.document.library.web.internal.settings.DLPortletInstanceSettings;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -18,6 +20,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletRequest;
@@ -58,41 +61,24 @@ public class DLPortletToolbarContributorUtil {
 			_log.error(portalException);
 		}
 
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		long rootFolderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
-
 		try {
-			DLPortletInstanceSettings dlPortletInstanceSettings =
-				DLPortletInstanceSettings.getInstance(
-					themeDisplay.getLayout(), portletDisplay.getId());
+			DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper =
+				new DLPortletInstanceSettingsHelper(
+					new DLRequestHelper(
+						PortalUtil.getHttpServletRequest(portletRequest)));
 
-			rootFolderId = dlPortletInstanceSettings.getRootFolderId();
+			return dlPortletInstanceSettingsHelper.getRootFolder();
+		}
+		catch (NoSuchFolderException | PrincipalException exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
 		}
 		catch (PortalException portalException) {
 			_log.error(portalException);
 		}
 
-		if (rootFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-			try {
-				folder = dlAppLocalService.getFolder(rootFolderId);
-			}
-			catch (NoSuchFolderException | PrincipalException exception) {
-
-				// LPS-52675
-
-				if (_log.isDebugEnabled()) {
-					_log.debug(exception);
-				}
-
-				folder = null;
-			}
-			catch (PortalException portalException) {
-				_log.error(portalException);
-			}
-		}
-
-		return folder;
+		return null;
 	}
 
 	public static Boolean isShowActionsEnabled(ThemeDisplay themeDisplay) {

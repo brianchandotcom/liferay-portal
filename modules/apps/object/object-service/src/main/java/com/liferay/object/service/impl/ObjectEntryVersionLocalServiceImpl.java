@@ -45,7 +45,7 @@ public class ObjectEntryVersionLocalServiceImpl
 
 		objectEntryVersion.setVersion(++count);
 
-		return _updateObjectEntryVersion(objectEntryVersion, objectEntry);
+		return _updateObjectEntryVersion(objectEntry, objectEntryVersion);
 	}
 
 	@Override
@@ -67,11 +67,11 @@ public class ObjectEntryVersionLocalServiceImpl
 			return null;
 		}
 
-		return _updateObjectEntryVersion(objectEntryVersion, objectEntry);
+		return _updateObjectEntryVersion(objectEntry, objectEntryVersion);
 	}
 
 	private ObjectEntryVersion _updateObjectEntryVersion(
-			ObjectEntryVersion objectEntryVersion, ObjectEntry objectEntry)
+			ObjectEntry objectEntry, ObjectEntryVersion objectEntryVersion)
 		throws PortalException {
 
 		User user = _userLocalService.getUser(objectEntry.getUserId());

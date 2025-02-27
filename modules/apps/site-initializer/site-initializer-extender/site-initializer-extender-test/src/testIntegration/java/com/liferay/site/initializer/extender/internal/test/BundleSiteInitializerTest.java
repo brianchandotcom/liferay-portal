@@ -120,6 +120,7 @@ import com.liferay.object.admin.rest.dto.v1_0.ObjectRelationship;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectRelationshipResource;
 import com.liferay.object.constants.ObjectActionExecutorConstants;
 import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.constants.ObjectPortletKeys;
 import com.liferay.object.model.ObjectAction;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
@@ -3221,6 +3222,21 @@ public class BundleSiteInitializerTest {
 		Assert.assertFalse(
 			pageDefinitionString.contains(
 				"[$OBJECT_DEFINITION_CLASS_NAME:TestObjectDefinition3$]"));
+		Assert.assertFalse(
+			pageDefinitionString.contains(
+				"[$OBJECT_DEFINITION_PORTLET_ID:TestObjectDefinition3$]"));
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				_group.getCompanyId(), "C_TestObjectDefinition3");
+
+		Assert.assertTrue(
+			pageDefinitionString.contains(
+				StringBundler.concat(
+					ObjectPortletKeys.OBJECT_DEFINITIONS, StringPool.UNDERLINE,
+					StringUtil.split(
+						objectDefinition.getClassName(), StringPool.POUND)
+						[1])));
 
 		layout = _layoutLocalService.getLayoutByFriendlyURL(
 			_group.getGroupId(), false, "/test-url-layout");
@@ -3357,6 +3373,21 @@ public class BundleSiteInitializerTest {
 		Assert.assertFalse(
 			pageDefinitionString.contains(
 				"[$OBJECT_DEFINITION_CLASS_NAME:TestObjectDefinition3$]"));
+		Assert.assertFalse(
+			pageDefinitionString.contains(
+				"[$OBJECT_DEFINITION_PORTLET_ID:TestObjectDefinition3$]"));
+
+		ObjectDefinition objectDefinition =
+			_objectDefinitionLocalService.fetchObjectDefinition(
+				_group.getCompanyId(), "C_TestObjectDefinition3");
+
+		Assert.assertTrue(
+			pageDefinitionString.contains(
+				StringBundler.concat(
+					ObjectPortletKeys.OBJECT_DEFINITIONS, StringPool.UNDERLINE,
+					StringUtil.split(
+						objectDefinition.getClassName(), StringPool.POUND)
+						[1])));
 
 		layout = _layoutLocalService.getLayoutByFriendlyURL(
 			_group.getGroupId(), false, "/test-url-layout");

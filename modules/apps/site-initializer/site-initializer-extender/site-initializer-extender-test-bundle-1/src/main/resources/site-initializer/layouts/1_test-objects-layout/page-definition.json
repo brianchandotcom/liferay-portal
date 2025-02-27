@@ -113,6 +113,16 @@
 					"indexed": true
 				},
 				"type": "Fragment"
+			},
+			{
+				"definition": {
+					"widgetInstance": {
+						"widgetConfig": {
+						},
+						"widgetName": "[$OBJECT_DEFINITION_PORTLET_ID:TestObjectDefinition3$]"
+					}
+				},
+				"type": "Widget"
 			}
 		],
 		"type": "Root"

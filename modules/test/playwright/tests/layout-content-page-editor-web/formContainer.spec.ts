@@ -2103,11 +2103,13 @@ test.describe('Form Localization', () => {
 
 			await page.getByLabel('Legal Things').check();
 
+			const spanishOption = page.getByRole('option', {
+				name: 'Spanish (Spain) Language',
+			});
+
 			await clickAndExpectToBeVisible({
 				autoClick: true,
-				target: page.getByRole('option', {
-					name: 'Spanish (Spain) Language',
-				}),
+				target: spanishOption,
 				trigger: page.getByLabel(
 					'Select a language, current language:'
 				),
@@ -2121,11 +2123,7 @@ test.describe('Form Localization', () => {
 				.getByLabel('Select a language, current language:')
 				.click();
 
-			expect(
-				page.getByRole('option', {
-					name: 'Spanish (Spain) Language',
-				})
-			).toContainText(/Translated/);
+			await expect(spanishOption).toContainText('Language: Translated');
 
 			await page.keyboard.press('Escape');
 
@@ -2256,11 +2254,13 @@ test.describe('Form Localization', () => {
 				trigger: page.getByPlaceholder('Choose an Option'),
 			});
 
+			const spanishOption = page.getByRole('option', {
+				name: 'Spanish (Spain) Language',
+			});
+
 			await clickAndExpectToBeVisible({
 				autoClick: true,
-				target: page.getByRole('option', {
-					name: 'Spanish (Spain) Language',
-				}),
+				target: spanishOption,
 				trigger: page.getByLabel(
 					'Select a language, current language:'
 				),
@@ -2280,11 +2280,7 @@ test.describe('Form Localization', () => {
 				.getByLabel('Select a language, current language:')
 				.click();
 
-			expect(
-				page.getByRole('option', {
-					name: 'Spanish (Spain) Language',
-				})
-			).toContainText(/Translated/);
+			await expect(spanishOption).toContainText('Language: Translated');
 
 			await page.keyboard.press('Escape');
 
@@ -2412,11 +2408,13 @@ test.describe('Form Localization', () => {
 			await page.getByRole('checkbox', {name: 'Spain'}).check();
 			await page.getByRole('checkbox', {name: 'Italy'}).check();
 
+			const spanishOption = page.getByRole('option', {
+				name: 'Spanish (Spain) Language',
+			});
+
 			await clickAndExpectToBeVisible({
 				autoClick: true,
-				target: page.getByRole('option', {
-					name: 'Spanish (Spain) Language',
-				}),
+				target: spanishOption,
 				trigger: translationTrigger,
 			});
 
@@ -2426,11 +2424,7 @@ test.describe('Form Localization', () => {
 
 			await translationTrigger.click();
 
-			expect(
-				page.getByRole('option', {
-					name: 'Spanish (Spain) Language',
-				})
-			).toContainText(/Translated/);
+			await expect(spanishOption).toContainText('Language: Translated');
 
 			await page.keyboard.press('Escape');
 

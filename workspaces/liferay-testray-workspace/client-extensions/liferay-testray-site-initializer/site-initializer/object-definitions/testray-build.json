@@ -153,6 +153,17 @@
 			"name": "archived",
 			"required": false,
 			"type": "Boolean"
+		},
+		{
+			"DBType": "Clob",
+			"indexed": false,
+			"indexedAsKeyword": false,
+			"label": {
+				"en_US": "Playwright Reports"
+			},
+			"name": "playwrightReports",
+			"required": false,
+			"type": "Clob"
 		}
 	],
 	"objectFolderExternalReferenceCode": "TESTRAY",

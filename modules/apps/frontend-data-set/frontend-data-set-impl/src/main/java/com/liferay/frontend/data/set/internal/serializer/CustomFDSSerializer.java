@@ -173,8 +173,9 @@ public class CustomFDSSerializer
 		List<DropdownItem> dropdownItems = TransformUtil.transform(
 			getSortedRelatedObjectEntries(
 				fdsName, httpServletRequest,
-				(ObjectEntry objectEntry) -> Objects.equals(
-					_getType(objectEntry), "creation"),
+				(ObjectEntry objectEntry) ->
+					Objects.equals(_getType(objectEntry), "creation") &&
+					_isActive(objectEntry),
 				"creationActionsOrder", "dataSetToDataSetActions"),
 			objectEntry -> {
 				Map<String, Object> properties = objectEntry.getProperties();
@@ -236,8 +237,9 @@ public class CustomFDSSerializer
 		return TransformUtil.transform(
 			getSortedRelatedObjectEntries(
 				fdsName, httpServletRequest,
-				(ObjectEntry objectEntry) -> Objects.equals(
-					_getType(objectEntry), "item"),
+				(ObjectEntry objectEntry) ->
+					Objects.equals(_getType(objectEntry), "item") &&
+					_isActive(objectEntry),
 				"itemActionsOrder", "dataSetToDataSetActions"),
 			objectEntry -> {
 				Map<String, Object> properties = objectEntry.getProperties();
@@ -334,7 +336,8 @@ public class CustomFDSSerializer
 
 		return TransformUtil.transform(
 			getSortedRelatedObjectEntries(
-				fdsName, httpServletRequest, (Predicate<ObjectEntry>)null,
+				fdsName, httpServletRequest,
+				(ObjectEntry objectEntry) -> _isActive(objectEntry),
 				"sortsOrder", "dataSetToDataSetSorts"),
 			objectEntry -> {
 				Map<String, Object> properties = objectEntry.getProperties();
@@ -667,6 +670,12 @@ public class CustomFDSSerializer
 		return GetterUtil.getString(properties.get("type"));
 	}
 
+	private Boolean _isActive(ObjectEntry objectEntry) {
+		Map<String, Object> properties = objectEntry.getProperties();
+
+		return (Boolean)properties.get("active");
+	}
+
 	private JSONObject _serializeFilter(
 			HttpServletRequest httpServletRequest, ObjectEntry objectEntry)
 		throws Exception {
@@ -780,8 +789,9 @@ public class CustomFDSSerializer
 
 		return JSONUtil.toJSONArray(
 			getSortedRelatedObjectEntries(
-				fdsName, httpServletRequest, (Predicate)null, "filtersOrder",
-				"dataSetToDataSetClientExtensionFilters",
+				fdsName, httpServletRequest,
+				(ObjectEntry objectEntry) -> _isActive(objectEntry),
+				"filtersOrder", "dataSetToDataSetClientExtensionFilters",
 				"dataSetToDataSetDateFilters",
 				"dataSetToDataSetSelectionFilters"),
 			(ObjectEntry objectEntry) -> _serializeFilter(

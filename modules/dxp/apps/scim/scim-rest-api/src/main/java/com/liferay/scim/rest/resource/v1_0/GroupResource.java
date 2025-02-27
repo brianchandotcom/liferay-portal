@@ -16,6 +16,7 @@ import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.scim.rest.dto.v1_0.Group;
+import com.liferay.scim.rest.dto.v1_0.PatchOp;
 import com.liferay.scim.rest.dto.v1_0.QueryAttributes;
 import com.liferay.scim.rest.dto.v1_0.User;
 
@@ -57,6 +58,8 @@ public interface GroupResource {
 	public Response deleteV2Group(String id) throws Exception;
 
 	public Object getV2GroupById(String id) throws Exception;
+
+	public Response patchV2Group(String id, PatchOp patchOp) throws Exception;
 
 	public Response putV2Group(String id, Group group) throws Exception;
 

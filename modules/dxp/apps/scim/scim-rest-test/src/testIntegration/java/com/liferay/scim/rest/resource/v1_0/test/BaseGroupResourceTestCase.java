@@ -216,6 +216,11 @@ public abstract class BaseGroupResourceTestCase {
 	}
 
 	@Test
+	public void testPatchV2Group() throws Exception {
+		Assert.assertTrue(false);
+	}
+
+	@Test
 	public void testPutV2Group() throws Exception {
 		Assert.assertTrue(false);
 	}

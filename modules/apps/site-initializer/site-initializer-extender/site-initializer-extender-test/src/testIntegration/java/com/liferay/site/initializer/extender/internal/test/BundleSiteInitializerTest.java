@@ -1152,7 +1152,7 @@ public class BundleSiteInitializerTest {
 			cpDefinitionValuesCount,
 			_cpDefinitionSpecificationOptionValueLocalService.
 				getCPDefinitionSpecificationOptionValuesCount(
-					cpDefinition.getCPDefinitionId()));
+					cpDefinition.getCPDefinitionId(), null));
 	}
 
 	private void _assertCPInstanceProperties() throws Exception {

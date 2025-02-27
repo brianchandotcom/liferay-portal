@@ -188,6 +188,7 @@ public class SpecificationResourceImpl extends BaseSpecificationResourceImpl {
 					GetterUtil.getBoolean(specification.getFacetable()),
 					GetterUtil.getString(specification.getKey()),
 					GetterUtil.getDouble(specification.getPriority()),
+					GetterUtil.getBoolean(specification.getVisible(), true),
 					_serviceContextHelper.getServiceContext());
 
 			return _toSpecification(
@@ -206,6 +207,8 @@ public class SpecificationResourceImpl extends BaseSpecificationResourceImpl {
 			GetterUtil.getBoolean(specification.getFacetable()),
 			GetterUtil.getString(specification.getKey()),
 			GetterUtil.getDouble(specification.getPriority()),
+			GetterUtil.getBoolean(
+				specification.getVisible(), cpSpecificationOption.isVisible()),
 			_serviceContextHelper.getServiceContext());
 
 		return _toSpecification(
@@ -312,7 +315,7 @@ public class SpecificationResourceImpl extends BaseSpecificationResourceImpl {
 				LanguageUtils.getLocalizedMap(specification.getDescription()),
 				GetterUtil.getBoolean(specification.getFacetable()),
 				specificationKey,
-				GetterUtil.getDouble(specification.getPriority()),
+				GetterUtil.getDouble(specification.getPriority()), true,
 				_serviceContextHelper.getServiceContext());
 
 		return _toSpecification(
@@ -400,6 +403,8 @@ public class SpecificationResourceImpl extends BaseSpecificationResourceImpl {
 			GetterUtil.getDouble(
 				specification.getPriority(),
 				cpSpecificationOption.getPriority()),
+			GetterUtil.getBoolean(
+				specification.getVisible(), cpSpecificationOption.isVisible()),
 			_serviceContextHelper.getServiceContext());
 	}
 

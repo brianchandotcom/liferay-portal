@@ -86,14 +86,14 @@ public class ProductSpecificationResourceImpl
 			cpDefinitionSpecificationOptionValues =
 				_cpDefinitionSpecificationOptionValueLocalService.
 					getCPDefinitionSpecificationOptionValues(
-						cpDefinition.getCPDefinitionId(),
+						cpDefinition.getCPDefinitionId(), true,
 						pagination.getStartPosition(),
 						pagination.getEndPosition(), null);
 
 		int totalCount =
 			_cpDefinitionSpecificationOptionValueLocalService.
 				getCPDefinitionSpecificationOptionValuesCount(
-					cpDefinition.getCPDefinitionId());
+					cpDefinition.getCPDefinitionId(), true);
 
 		return Page.of(
 			_toProductSpecifications(cpDefinitionSpecificationOptionValues),

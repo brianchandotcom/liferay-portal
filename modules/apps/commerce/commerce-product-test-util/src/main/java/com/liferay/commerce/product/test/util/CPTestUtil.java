@@ -765,7 +765,7 @@ public class CPTestUtil {
 			RandomTestUtil.randomString(), serviceContext.getUserId(), 0, null,
 			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap(), facetable,
-			RandomTestUtil.randomString(), RandomTestUtil.randomDouble(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomDouble(), true,
 			serviceContext);
 	}
 

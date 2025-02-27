@@ -80,7 +80,8 @@ public class
 			_cpDefinitionSpecificationOptionValueLocalService.
 				getCPDefinitionSpecificationOptionValues(
 					cpDefinition.getCPDefinitionId(),
-					CPOptionCategoryConstants.DEFAULT_CP_OPTION_CATEGORY_ID));
+					CPOptionCategoryConstants.DEFAULT_CP_OPTION_CATEGORY_ID,
+					true));
 
 		List<CPOptionCategory> cpOptionCategories =
 			_cpOptionCategoryLocalService.getCPOptionCategories(
@@ -92,7 +93,7 @@ public class
 				_cpDefinitionSpecificationOptionValueLocalService.
 					getCPDefinitionSpecificationOptionValues(
 						cpDefinition.getCPDefinitionId(),
-						cpOptionCategory.getCPOptionCategoryId()));
+						cpOptionCategory.getCPOptionCategoryId(), true));
 		}
 
 		return cpDefinitionSpecificationOptionValues;

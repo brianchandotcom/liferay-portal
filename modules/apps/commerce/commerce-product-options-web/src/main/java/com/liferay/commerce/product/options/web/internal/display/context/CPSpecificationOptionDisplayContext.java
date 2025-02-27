@@ -196,7 +196,7 @@ public class CPSpecificationOptionDisplayContext
 
 		searchContainer.setResultsAndTotal(
 			_cpSpecificationOptionService.searchCPSpecificationOptions(
-				cpRequestHelper.getCompanyId(), facetable, getKeywords(),
+				cpRequestHelper.getCompanyId(), facetable, null, getKeywords(),
 				searchContainer.getStart(), searchContainer.getEnd(),
 				CPOptionsPortletUtil.getCPSpecificationOptionSort(
 					getOrderByCol(), getOrderByType())));

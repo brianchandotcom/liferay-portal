@@ -541,7 +541,7 @@ public class CPDefinitionLocalServiceTest {
 						cpSpecificationOption.getCPSpecificationOptionId(),
 						cpSpecificationOption.getCPOptionCategoryId(),
 						RandomTestUtil.randomDouble(),
-						RandomTestUtil.randomLocaleStringMap(),
+						RandomTestUtil.randomLocaleStringMap(), true,
 						ServiceContextTestUtil.getServiceContext(
 							_commerceCatalog.getGroupId()));
 
@@ -552,10 +552,13 @@ public class CPDefinitionLocalServiceTest {
 
 		CPDefinitionSpecificationOptionValue
 			cpDefinitionSpecificationOptionValue2 =
-				cpDefinition2.getCPDefinitionSpecificationOptionValues(
-				).get(
-					0
-				);
+				_cpDefinitionSpecificationOptionValueLocalService.
+					getCPDefinitionSpecificationOptionValues(
+						cpDefinition2.getCPDefinitionId(), null,
+						QueryUtil.ALL_POS, QueryUtil.ALL_POS, null
+					).get(
+						0
+					);
 
 		Assert.assertNotEquals(
 			cpDefinitionSpecificationOptionValue1.getExternalReferenceCode(),

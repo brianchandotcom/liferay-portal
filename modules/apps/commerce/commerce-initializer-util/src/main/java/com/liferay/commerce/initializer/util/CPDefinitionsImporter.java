@@ -841,7 +841,11 @@ public class CPDefinitionsImporter {
 			addCPDefinitionSpecificationOptionValue(
 				StringPool.BLANK, cpDefinitionId,
 				cpSpecificationOption.getCPSpecificationOptionId(),
-				cpOptionCategoryId, priority, valueMap, serviceContext);
+				cpOptionCategoryId, priority, valueMap,
+				GetterUtil.getBoolean(
+					jsonObject.get("visible"),
+					cpSpecificationOption.isVisible()),
+				serviceContext);
 	}
 
 	private CPInstance _importCPInstance(

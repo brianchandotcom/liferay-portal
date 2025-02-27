@@ -66,7 +66,7 @@ public class CPSpecificationOptionLocalServiceTest {
 	}
 
 	@Test
-	public void testAddSpecficationOption() throws Exception {
+	public void testAddSpecificationOption() throws Exception {
 		frutillaRule.scenario(
 			"Add Specification option"
 		).given(
@@ -120,7 +120,7 @@ public class CPSpecificationOptionLocalServiceTest {
 				RandomTestUtil.randomLocaleStringMap(),
 				RandomTestUtil.randomLocaleStringMap(),
 				RandomTestUtil.randomBoolean(), RandomTestUtil.randomString(),
-				RandomTestUtil.randomDouble(), _serviceContext);
+				RandomTestUtil.randomDouble(), true, _serviceContext);
 
 		List<ListTypeDefinition> listTypeDefinitions =
 			cpSpecificationOption.getListTypeDefinitions();
@@ -130,7 +130,7 @@ public class CPSpecificationOptionLocalServiceTest {
 	}
 
 	@Test(expected = NoSuchCPSpecificationOptionException.class)
-	public void testGetSpecficationOption() throws Exception {
+	public void testGetSpecificationOption() throws Exception {
 		frutillaRule.scenario(
 			"Get Specification option"
 		).given(
@@ -157,7 +157,7 @@ public class CPSpecificationOptionLocalServiceTest {
 			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomLocaleStringMap(),
 			RandomTestUtil.randomBoolean(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomDouble(), serviceContext);
+			RandomTestUtil.randomDouble(), true, serviceContext);
 	}
 
 	private static User _user;

@@ -36,6 +36,8 @@ List<CPOptionCategory> cpOptionCategories = cpSpecificationOptionDisplayContext.
 
 		<aui:input checked="<%= (cpSpecificationOption == null) ? false : cpSpecificationOption.isFacetable() %>" inlineLabel="right" label="use-in-faceted-navigation" labelCssClass="simple-toggle-switch" name="facetable" type="toggle-switch" />
 
+		<aui:input checked="<%= (cpSpecificationOption == null) ? true : cpSpecificationOption.isVisible() %>" inlineLabel="right" label="visible" labelCssClass="simple-toggle-switch" name="visible" type="toggle-switch" />
+
 		<aui:select label="default-specification-group" name="CPOptionCategoryId" showEmptyOption="<%= true %>">
 
 			<%

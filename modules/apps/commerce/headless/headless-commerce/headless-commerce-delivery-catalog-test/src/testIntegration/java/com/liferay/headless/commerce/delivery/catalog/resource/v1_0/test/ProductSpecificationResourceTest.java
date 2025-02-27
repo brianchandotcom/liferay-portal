@@ -71,7 +71,7 @@ public class ProductSpecificationResourceTest
 				RandomTestUtil.randomLocaleStringMap(),
 				RandomTestUtil.randomLocaleStringMap(), true,
 				RandomTestUtil.randomString(), RandomTestUtil.randomDouble(),
-				_serviceContext);
+				true, _serviceContext);
 	}
 
 	@Override
@@ -168,7 +168,7 @@ public class ProductSpecificationResourceTest
 						productSpecification.getSpecificationId(),
 						productSpecification.getOptionCategoryId(),
 						productSpecification.getPriority(),
-						RandomTestUtil.randomLocaleStringMap(),
+						RandomTestUtil.randomLocaleStringMap(), true,
 						_serviceContext);
 
 		_cpDefinitionSpecificationOptionValues.add(

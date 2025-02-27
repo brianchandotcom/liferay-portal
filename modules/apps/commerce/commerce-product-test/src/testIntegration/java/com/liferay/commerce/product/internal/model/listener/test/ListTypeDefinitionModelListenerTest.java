@@ -100,7 +100,7 @@ public class ListTypeDefinitionModelListenerTest {
 			RandomTestUtil.randomLocaleStringMap(), true,
 			CPDefinitionSpecificationOptionValueTableReferenceDefinitionTest.
 				class.getSimpleName(),
-			RandomTestUtil.randomDouble(), _serviceContext);
+			RandomTestUtil.randomDouble(), true, _serviceContext);
 
 		_listTypeDefinitionLocalService.deleteListTypeDefinition(
 			_listTypeDefinition.getListTypeDefinitionId());

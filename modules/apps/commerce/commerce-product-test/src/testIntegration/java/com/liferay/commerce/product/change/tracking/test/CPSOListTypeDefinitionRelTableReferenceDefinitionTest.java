@@ -71,7 +71,7 @@ public class CPSOListTypeDefinitionRelTableReferenceDefinitionTest
 				RandomTestUtil.randomBoolean(),
 				CPSpecificationOptionTableReferenceDefinitionTest.class.
 					getSimpleName(),
-				RandomTestUtil.randomDouble(),
+				RandomTestUtil.randomDouble(), true,
 				ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 
 		_listTypeDefinition =

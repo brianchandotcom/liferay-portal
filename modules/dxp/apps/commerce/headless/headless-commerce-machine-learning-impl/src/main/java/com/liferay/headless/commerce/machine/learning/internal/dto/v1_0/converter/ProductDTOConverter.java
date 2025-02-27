@@ -17,6 +17,7 @@ import com.liferay.commerce.product.model.CProduct;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
+import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueLocalService;
 import com.liferay.commerce.product.service.CommerceChannelRelLocalService;
 import com.liferay.commerce.product.type.CPType;
 import com.liferay.commerce.product.type.CPTypeRegistry;
@@ -135,7 +136,10 @@ public class ProductDTOConverter
 						ProductOption.class));
 				setProductSpecifications(
 					() -> TransformUtil.transformToArray(
-						cpDefinition.getCPDefinitionSpecificationOptionValues(),
+						_cpDefinitionSpecificationOptionValueLocalService.
+							getCPDefinitionSpecificationOptionValues(
+								cpDefinition.getCPDefinitionId(), true,
+								QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
 						cpDefinitionSpecificationOptionValue ->
 							_productSpecificationDTOConverter.toDTO(
 								cpDefinitionSpecificationOptionValue),
@@ -178,6 +182,10 @@ public class ProductDTOConverter
 
 	@Reference
 	private CPDefinitionLocalService _cpDefinitionLocalService;
+
+	@Reference
+	private CPDefinitionSpecificationOptionValueLocalService
+		_cpDefinitionSpecificationOptionValueLocalService;
 
 	@Reference
 	private CPTypeRegistry _cpTypeRegistry;

@@ -336,7 +336,10 @@ public class CPCompareContentHelperImpl implements CPCompareContentHelper {
 
 		for (CPDefinitionSpecificationOptionValue
 				cpDefinitionSpecificationOptionValue :
-					cpDefinition.getCPDefinitionSpecificationOptionValues()) {
+					_cpDefinitionSpecificationOptionValueLocalService.
+						getCPDefinitionSpecificationOptionValues(
+							cpDefinition.getCPDefinitionId(), true,
+							QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 
 			CPSpecificationOption cpSpecificationOption =
 				cpDefinitionSpecificationOptionValue.getCPSpecificationOption();

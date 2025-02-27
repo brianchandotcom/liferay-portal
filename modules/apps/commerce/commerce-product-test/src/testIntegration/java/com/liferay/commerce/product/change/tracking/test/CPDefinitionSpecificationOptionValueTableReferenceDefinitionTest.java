@@ -83,7 +83,7 @@ public class CPDefinitionSpecificationOptionValueTableReferenceDefinitionTest
 				RandomTestUtil.randomLocaleStringMap(), true,
 				CPDefinitionSpecificationOptionValueTableReferenceDefinitionTest.class.
 					getSimpleName(),
-				RandomTestUtil.randomDouble(), _serviceContext);
+				RandomTestUtil.randomDouble(), true, _serviceContext);
 	}
 
 	@Override
@@ -94,7 +94,7 @@ public class CPDefinitionSpecificationOptionValueTableReferenceDefinitionTest
 				_cpSpecificationOption.getCPSpecificationOptionId(),
 				_cpOptionCategory.getCPOptionCategoryId(),
 				RandomTestUtil.randomDouble(),
-				RandomTestUtil.randomLocaleStringMap(), _serviceContext);
+				RandomTestUtil.randomLocaleStringMap(), true, _serviceContext);
 	}
 
 	@Inject

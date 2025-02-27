@@ -153,6 +153,8 @@ public class CPSpecificationOptionPersistenceTest {
 
 		newCPSpecificationOption.setPriority(RandomTestUtil.nextDouble());
 
+		newCPSpecificationOption.setVisible(RandomTestUtil.randomBoolean());
+
 		newCPSpecificationOption.setLastPublishDate(RandomTestUtil.nextDate());
 
 		_cpSpecificationOptions.add(
@@ -212,6 +214,9 @@ public class CPSpecificationOptionPersistenceTest {
 		AssertUtils.assertEquals(
 			existingCPSpecificationOption.getPriority(),
 			newCPSpecificationOption.getPriority());
+		Assert.assertEquals(
+			existingCPSpecificationOption.isVisible(),
+			newCPSpecificationOption.isVisible());
 		Assert.assertEquals(
 			Time.getShortTimestamp(
 				existingCPSpecificationOption.getLastPublishDate()),
@@ -328,8 +333,8 @@ public class CPSpecificationOptionPersistenceTest {
 			"CPSpecificationOptionId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "modifiedDate", true,
 			"CPOptionCategoryId", true, "title", true, "description", true,
-			"facetable", true, "key", true, "priority", true, "lastPublishDate",
-			true);
+			"facetable", true, "key", true, "priority", true, "visible", true,
+			"lastPublishDate", true);
 	}
 
 	@Test
@@ -685,6 +690,8 @@ public class CPSpecificationOptionPersistenceTest {
 		cpSpecificationOption.setKey(RandomTestUtil.randomString());
 
 		cpSpecificationOption.setPriority(RandomTestUtil.nextDouble());
+
+		cpSpecificationOption.setVisible(RandomTestUtil.randomBoolean());
 
 		cpSpecificationOption.setLastPublishDate(RandomTestUtil.nextDate());
 

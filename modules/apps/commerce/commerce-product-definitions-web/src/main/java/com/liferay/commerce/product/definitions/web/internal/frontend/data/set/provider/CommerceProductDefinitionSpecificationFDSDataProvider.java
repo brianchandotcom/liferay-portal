@@ -59,7 +59,7 @@ public class CommerceProductDefinitionSpecificationFDSDataProvider
 		return TransformUtil.transform(
 			_cpDefinitionSpecificationOptionValueService.
 				getCPDefinitionSpecificationOptionValues(
-					cpDefinitionId, fdsPagination.getStartPosition(),
+					cpDefinitionId, null, fdsPagination.getStartPosition(),
 					fdsPagination.getEndPosition(), null),
 			cpDefinitionSpecificationOptionValue -> {
 				CPSpecificationOption cpSpecificationOption =
@@ -86,7 +86,7 @@ public class CommerceProductDefinitionSpecificationFDSDataProvider
 			httpServletRequest, "cpDefinitionId");
 
 		return _cpDefinitionSpecificationOptionValueService.
-			getCPDefinitionSpecificationOptionValuesCount(cpDefinitionId);
+			getCPDefinitionSpecificationOptionValuesCount(cpDefinitionId, null);
 	}
 
 	private String _getCPOptionCategoryTitle(

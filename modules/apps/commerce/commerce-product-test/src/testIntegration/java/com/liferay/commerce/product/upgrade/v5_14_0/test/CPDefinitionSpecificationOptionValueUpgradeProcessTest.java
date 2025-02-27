@@ -81,7 +81,7 @@ public class CPDefinitionSpecificationOptionValueUpgradeProcessTest {
 				RandomTestUtil.randomLocaleStringMap(),
 				RandomTestUtil.randomLocaleStringMap(), true,
 				CPDefinition.class.getName(), RandomTestUtil.randomDouble(),
-				serviceContext);
+				true, serviceContext);
 
 		CPDefinitionSpecificationOptionValue
 			cpDefinitionSpecificationOptionValue1 =
@@ -92,7 +92,8 @@ public class CPDefinitionSpecificationOptionValueUpgradeProcessTest {
 						cpSpecificationOption.getCPSpecificationOptionId(),
 						cpOptionCategory.getCPOptionCategoryId(),
 						RandomTestUtil.randomDouble(),
-						RandomTestUtil.randomLocaleStringMap(), serviceContext);
+						RandomTestUtil.randomLocaleStringMap(), true,
+						serviceContext);
 
 		cpDefinitionSpecificationOptionValue1.setKey(
 			RandomTestUtil.randomString());
@@ -110,7 +111,8 @@ public class CPDefinitionSpecificationOptionValueUpgradeProcessTest {
 						cpSpecificationOption.getCPSpecificationOptionId(),
 						cpOptionCategory.getCPOptionCategoryId(),
 						RandomTestUtil.randomDouble(),
-						RandomTestUtil.randomLocaleStringMap(), serviceContext);
+						RandomTestUtil.randomLocaleStringMap(), true,
+						serviceContext);
 
 		cpDefinitionSpecificationOptionValue2.setKey(
 			RandomTestUtil.randomString());

@@ -62,7 +62,7 @@ public class ListTypeDefinitionResourceTest
 				RandomTestUtil.randomLocaleStringMap(),
 				RandomTestUtil.randomLocaleStringMap(), true,
 				RandomTestUtil.randomString(), RandomTestUtil.randomDouble(),
-				serviceContext);
+				true, serviceContext);
 	}
 
 	@Override

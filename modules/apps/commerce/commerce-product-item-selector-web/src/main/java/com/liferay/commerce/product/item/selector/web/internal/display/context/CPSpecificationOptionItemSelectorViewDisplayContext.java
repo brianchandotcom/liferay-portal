@@ -53,7 +53,7 @@ public class CPSpecificationOptionItemSelectorViewDisplayContext
 		searchContainer.setOrderByType(getOrderByType());
 		searchContainer.setResultsAndTotal(
 			_cpSpecificationOptionService.searchCPSpecificationOptions(
-				cpRequestHelper.getCompanyId(), null, getKeywords(),
+				cpRequestHelper.getCompanyId(), null, null, getKeywords(),
 				searchContainer.getStart(), searchContainer.getEnd(),
 				CPItemSelectorViewUtil.getCPSpecificationOptionSort(
 					getOrderByCol(), getOrderByType())));

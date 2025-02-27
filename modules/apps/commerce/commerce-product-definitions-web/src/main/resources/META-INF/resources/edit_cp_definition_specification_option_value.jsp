@@ -85,6 +85,8 @@ Map<String, List<SelectOption>> selectOptionsMap = cpDefinitionSpecificationOpti
 				<aui:validator name="number" />
 			</aui:input>
 
+			<aui:input checked="<%= (cpDefinitionSpecificationOptionValue == null) ? cpSpecificationOption.isVisible() : cpDefinitionSpecificationOptionValue.isVisible() %>" inlineLabel="right" label="visible" labelCssClass="simple-toggle-switch" name="visible" type="toggle-switch" />
+
 			<c:if test="<%= cpDefinitionSpecificationOptionValueDisplayContext.hasCustomAttributesAvailable() %>">
 				<liferay-expando:custom-attribute-list
 					className="<%= CPDefinitionSpecificationOptionValue.class.getName() %>"

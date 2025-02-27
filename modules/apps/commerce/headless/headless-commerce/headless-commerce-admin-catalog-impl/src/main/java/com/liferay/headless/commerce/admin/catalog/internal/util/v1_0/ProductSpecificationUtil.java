@@ -49,20 +49,24 @@ public class ProductSpecificationUtil {
 						serviceContext.getCompanyId());
 		}
 
+		cpSpecificationOption = _getCPSpecificationOption(
+			cpOptionCategoryService, cpSpecificationOption,
+			cpSpecificationOptionService, productSpecification, serviceContext);
+
 		return cpDefinitionSpecificationOptionValueService.
 			addCPDefinitionSpecificationOptionValue(
 				GetterUtil.getString(
 					productSpecification.getExternalReferenceCode()),
 				cpDefinitionId,
-				_getCPSpecificationOptionId(
-					cpOptionCategoryService, cpSpecificationOption,
-					cpSpecificationOptionService, productSpecification,
-					serviceContext),
+				cpSpecificationOption.getCPSpecificationOptionId(),
 				_getCPOptionCategoryId(
 					cpOptionCategoryService, cpSpecificationOption,
 					productSpecification, serviceContext),
 				GetterUtil.get(productSpecification.getPriority(), 0D),
 				LanguageUtils.getLocalizedMap(productSpecification.getValue()),
+				GetterUtil.getBoolean(
+					productSpecification.getVisible(),
+					cpSpecificationOption.isVisible()),
 				serviceContext);
 	}
 
@@ -102,6 +106,9 @@ public class ProductSpecificationUtil {
 					productSpecification.getPriority(),
 					cpDefinitionSpecificationOptionValue.getPriority()),
 				LanguageUtils.getLocalizedMap(productSpecification.getValue()),
+				GetterUtil.get(
+					productSpecification.getVisible(),
+					cpDefinitionSpecificationOptionValue.isVisible()),
 				serviceContext);
 	}
 
@@ -131,14 +138,14 @@ public class ProductSpecificationUtil {
 			return cpOptionCategory.getCPOptionCategoryId();
 		}
 
-		if (cpSpecificationOption != null) {
-			return cpSpecificationOption.getCPOptionCategoryId();
+		if (cpSpecificationOption == null) {
+			return 0;
 		}
 
-		return 0;
+		return cpSpecificationOption.getCPOptionCategoryId();
 	}
 
-	private static long _getCPSpecificationOptionId(
+	private static CPSpecificationOption _getCPSpecificationOption(
 			CPOptionCategoryService cpOptionCategoryService,
 			CPSpecificationOption cpSpecificationOption,
 			CPSpecificationOptionService cpSpecificationOptionService,
@@ -163,10 +170,12 @@ public class ProductSpecificationUtil {
 					false, productSpecification.getSpecificationKey(),
 					GetterUtil.getDouble(
 						productSpecification.getSpecificationPriority()),
+					GetterUtil.getBoolean(
+						productSpecification.getVisible(), true),
 					serviceContext);
 		}
 
-		return cpSpecificationOption.getCPSpecificationOptionId();
+		return cpSpecificationOption;
 	}
 
 }

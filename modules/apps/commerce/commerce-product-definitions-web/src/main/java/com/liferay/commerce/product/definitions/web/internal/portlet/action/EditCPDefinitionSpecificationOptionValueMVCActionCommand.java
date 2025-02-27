@@ -140,7 +140,7 @@ public class EditCPDefinitionSpecificationOptionValueMVCActionCommand
 				addCPDefinitionSpecificationOptionValue(
 					StringPool.BLANK, cpDefinitionId, cpSpecificationOptionId,
 					cpSpecificationOption.getCPOptionCategoryId(), i, null,
-					serviceContext);
+					cpSpecificationOption.isVisible(), serviceContext);
 		}
 	}
 
@@ -237,6 +237,7 @@ public class EditCPDefinitionSpecificationOptionValueMVCActionCommand
 		double priority = ParamUtil.getDouble(actionRequest, "priority");
 		Map<Locale, String> valueMap = _getValueMap(
 			actionRequest, cpDefinitionSpecificationOptionValueId);
+		boolean visible = ParamUtil.getBoolean(actionRequest, "visible");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			CPDefinitionSpecificationOptionValue.class.getName(),
@@ -252,7 +253,7 @@ public class EditCPDefinitionSpecificationOptionValueMVCActionCommand
 			updateCPDefinitionSpecificationOptionValue(
 				cpDefinitionSpecificationOptionValue.getExternalReferenceCode(),
 				cpDefinitionSpecificationOptionValueId, cpOptionCategoryId, key,
-				priority, valueMap, serviceContext);
+				priority, valueMap, visible, serviceContext);
 	}
 
 	@Reference

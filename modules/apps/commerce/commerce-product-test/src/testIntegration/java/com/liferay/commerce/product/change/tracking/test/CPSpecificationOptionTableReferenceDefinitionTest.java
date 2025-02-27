@@ -65,7 +65,7 @@ public class CPSpecificationOptionTableReferenceDefinitionTest
 				RandomTestUtil.randomBoolean(),
 				CPSpecificationOptionTableReferenceDefinitionTest.class.
 					getSimpleName(),
-				RandomTestUtil.randomDouble(),
+				RandomTestUtil.randomDouble(), true,
 				ServiceContextTestUtil.getServiceContext(group.getGroupId()));
 
 		return _cpSpecificationOption;

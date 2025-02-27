@@ -162,7 +162,7 @@ public class CPContentHelperImpl implements CPContentHelper {
 
 		return _cpDefinitionSpecificationOptionValueLocalService.
 			getCPDefinitionSpecificationOptionValues(
-				cpDefinitionId, cpOptionCategoryId);
+				cpDefinitionId, cpOptionCategoryId, true);
 	}
 
 	@Override
@@ -346,7 +346,7 @@ public class CPContentHelperImpl implements CPContentHelper {
 		return _cpDefinitionSpecificationOptionValueLocalService.
 			getCPDefinitionSpecificationOptionValues(
 				cpDefinitionId,
-				CPOptionCategoryConstants.DEFAULT_CP_OPTION_CATEGORY_ID);
+				CPOptionCategoryConstants.DEFAULT_CP_OPTION_CATEGORY_ID, true);
 	}
 
 	@Override

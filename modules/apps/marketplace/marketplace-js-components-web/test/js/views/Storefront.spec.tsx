@@ -86,7 +86,7 @@ describe('MarketplaceStorefront', () => {
 		expect(queryByText(product.catalogName)).toBeInTheDocument();
 		expect(queryByText(product.description)).toBeInTheDocument();
 		expect(queryByText(product.name)).toBeInTheDocument();
-		expect(queryByText(`${product.productType} App`)).toBeInTheDocument();
+		expect(queryByText('cloud App')).toBeInTheDocument();
 
 		fireEvent.click(backToListButton);
 

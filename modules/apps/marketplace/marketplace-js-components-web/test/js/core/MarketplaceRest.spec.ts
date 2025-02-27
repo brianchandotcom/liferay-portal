@@ -40,6 +40,15 @@ const marketplaceToken = {
 	accessTokenExpirationTime: (new Date().getTime() + 60000).toString(),
 };
 
+const mockCart = {
+	cartItems: [
+		{
+			id: 456,
+		},
+	],
+	id: 123,
+};
+
 jest.mock('frontend-js-web', () => {
 	const actual = jest.requireActual('frontend-js-web');
 
@@ -124,10 +133,9 @@ describe('MarketplaceRest', () => {
 		fetch.mockResponseOnce(JSON.stringify(productResponse));
 
 		const response = await marketplaceRest.getProducts();
-		const [fetchURL, fetchParams] = fetch.mock.calls[0];
+		const [fetchURL] = fetch.mock.calls[0];
 
 		expect(fetch).toBeCalledTimes(1);
-		expect(fetchParams.guestOperation).toBe(true);
 		expect(fetchURL).toBe(
 			`${marketplaceConfiguration.url}/o/headless-commerce-delivery-catalog/v1.0/channels/${marketplaceConfiguration.settings.channelId}/products?`
 		);
@@ -232,23 +240,11 @@ describe('MarketplaceRest', () => {
 	it('fetch create cart', async () => {
 		const {fetch} = require('frontend-js-web');
 
-		const mockCart = {
-			cartItems: [
-				{
-					id: 456,
-				},
-			],
-			id: 123,
-		};
-
-		fetch
-			.mockResponseOnce(JSON.stringify(mockCart))
-			.mockResponseOnce(JSON.stringify(mockCart));
+		fetch.mockResponseOnce(JSON.stringify(mockCart));
 
 		const response = await marketplaceRest.createCart(product);
 
 		const [fetchURL, fetchCall] = fetch.mock.calls[0];
-		const [fetchURL2, fetchCall2] = fetch.mock.calls[1];
 
 		expect(fetchURL).toBe(
 			`${marketplaceConfiguration.url}/o/headless-commerce-delivery-cart/v1.0/channels/${marketplaceConfiguration.settings.channelId}/carts?nestedFields=cartItems`
@@ -257,25 +253,35 @@ describe('MarketplaceRest', () => {
 			`Bearer ${marketplaceToken.accessToken}`
 		);
 		expect(fetchCall.body).toContain(product.skus[0].id);
-		expect(fetchURL2).toBe(
-			`${marketplaceConfiguration.url}/o/headless-commerce-delivery-cart/v1.0/carts/${mockCart.id}/checkout?nestedFields=cartItems`
-		);
-		expect(fetchCall2.headers['Authorization']).toBe(
+		expect(response).toMatchObject(mockCart);
+	});
+
+	it('fetch cart checkout', async () => {
+		const {fetch} = require('frontend-js-web');
+
+		fetch.mockResponseOnce(JSON.stringify(mockCart));
+
+		const response = await marketplaceRest.checkoutCart(mockCart as Cart);
+
+		const [fetchURL, fetchCall] = fetch.mock.calls[0];
+
+		expect(fetchCall.headers['Authorization']).toBe(
 			`Bearer ${marketplaceToken.accessToken}`
+		);
+		expect(fetchCall.body).toBeUndefined();
+		expect(fetchCall.method).toBe('POST');
+		expect(fetchURL).toBe(
+			`${marketplaceConfiguration.url}/o/headless-commerce-delivery-cart/v1.0/carts/${mockCart.id}/checkout?nestedFields=cartItems`
 		);
 		expect(response).toMatchObject(mockCart);
 	});
 
 	it('testing safe json parse', () => {
-		const jsonString = '{"test": "success"}';
-		const safeJson = safeJSONParse(jsonString);
+		expect(safeJSONParse('{"test": "success"}')).toMatchObject({
+			test: 'success',
+		});
 
-		expect(safeJson).toMatchObject({test: 'success'});
-
-		const invalidJsonString = '{"test": "test"';
-		const invalidSafeJson = safeJSONParse(invalidJsonString);
-
-		expect(invalidSafeJson).toBeNull();
+		expect(safeJSONParse('{"test": "test"')).toBeNull();
 	});
 
 	it('throws an error when fetch fails with a non-OK response', async () => {

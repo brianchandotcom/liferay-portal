@@ -90,7 +90,7 @@ export class MarketplaceRest {
 		);
 
 		const cart = await this.fetchMarketplace<Cart>(
-			`/o/headless-commerce-delivery-cart/v1.0/channels/${channelId}/carts?nestedFields=cartItems,placedOrderItems`,
+			`/o/headless-commerce-delivery-cart/v1.0/channels/${channelId}/carts?nestedFields=cartItems`,
 			{
 				body: JSON.stringify({
 					accountId: account.id,
@@ -145,7 +145,7 @@ export class MarketplaceRest {
 
 	public async checkoutCart(cart: Cart) {
 		return this.fetchMarketplace<Cart>(
-			`/o/headless-commerce-delivery-cart/v1.0/carts/${cart.id}/checkout?nestedFields=cartItems,placedOrderItems`,
+			`/o/headless-commerce-delivery-cart/v1.0/carts/${cart.id}/checkout?nestedFields=cartItems`,
 			{
 				method: 'POST',
 			}

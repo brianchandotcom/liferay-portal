@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {cleanup, render} from '@testing-library/react';
+import {cleanup, fireEvent, render} from '@testing-library/react';
 import mockFetch from 'jest-fetch-mock';
 import React from 'react';
 import {act} from 'react-dom/test-utils';
@@ -45,9 +45,9 @@ jest.mock(
 	})
 );
 
-const baseResourceURL = 'localhost:8080/marketplace.liferay.com';
+const baseResourceURL = 'http://localhost:8080';
 
-const Children: React.FC<any> = () => {
+const MarketplaceContextView: React.FC<any> = () => {
 	const context = useMarketplaceContext();
 
 	return (
@@ -71,6 +71,10 @@ const Children: React.FC<any> = () => {
 
 			<button onClick={() => context.setView(MarketplaceView.PURCHASE)}>
 				Change View
+			</button>
+
+			<button onClick={() => context.modal.onOpenChange(true)}>
+				Open Modal
 			</button>
 		</div>
 	);
@@ -103,24 +107,6 @@ describe('MarketplaceContext', () => {
 	const marketplaceConfiguration =
 		useMarketplaceConfiguration('baseResourceURL');
 
-	it('testing Marketplace Context Provider with custom filter', async () => {
-		const {queryByText} = render(
-			<MarketplaceContextProvider
-				baseResourceURL={baseResourceURL}
-				settings={{
-					productFilter: 'all',
-					productFilterCustom: 'custom filter',
-				}}
-			>
-				<Children />
-			</MarketplaceContextProvider>
-		);
-
-		await act(async () => jest.runAllTimers());
-
-		expect(queryByText('custom filter')).toBeTruthy;
-	});
-
 	it('testing Marketplace Context Provider with fragments filter', async () => {
 		const {
 			MarketplaceRest,
@@ -144,7 +130,7 @@ describe('MarketplaceContext', () => {
 					productFilterCustom: '',
 				}}
 			>
-				<Children />
+				<MarketplaceContextView />
 			</MarketplaceContextProvider>
 		);
 
@@ -177,7 +163,7 @@ describe('MarketplaceContext', () => {
 					productFilterCustom: '',
 				}}
 			>
-				<Children />
+				<MarketplaceContextView />
 			</MarketplaceContextProvider>
 		);
 
@@ -207,7 +193,7 @@ describe('MarketplaceContext', () => {
 					productFilterCustom: '',
 				}}
 			>
-				<Children />
+				<MarketplaceContextView />
 			</MarketplaceContextProvider>
 		);
 		await act(async () => jest.runAllTimers());
@@ -234,7 +220,7 @@ describe('MarketplaceContext', () => {
 			.spyOn(console, 'error')
 			.mockImplementation(() => {});
 
-		render(
+		const {queryByText} = render(
 			<MarketplaceContextProvider
 				baseResourceURL={baseResourceURL}
 				settings={{
@@ -242,11 +228,17 @@ describe('MarketplaceContext', () => {
 					productFilterCustom: 'custom filter',
 				}}
 			>
-				<Children />
+				<MarketplaceContextView />
 			</MarketplaceContextProvider>
 		);
 
 		await act(async () => jest.runAllTimers());
+
+		const openModalButton = queryByText('Open Modal');
+
+		await act(() => {
+			fireEvent.click(openModalButton as HTMLButtonElement);
+		});
 
 		expect(consoleErrorMock).toHaveBeenCalled();
 
@@ -266,7 +258,7 @@ describe('MarketplaceContext', () => {
 					productFilterCustom: 'custom filter',
 				}}
 			>
-				<Children />
+				<MarketplaceContextView />
 			</MarketplaceContextProvider>
 		);
 		await act(async () => jest.runAllTimers());

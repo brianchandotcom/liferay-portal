@@ -12,6 +12,7 @@ import productSpecifications from './productSpecifications';
 import skus from './skus';
 
 const product: Product = {
+	catalogId: 100,
 	catalogName: 'Liferay Labs',
 	categories,
 	createDate: '2025-01-01',
@@ -42,7 +43,7 @@ const product: Product = {
 	},
 	productId: 0,
 	productSpecifications,
-	productType: 'cloud',
+	productType: 'virtual',
 	shortDescription: 'this is a short description of the app',
 	skus,
 	slug: '',

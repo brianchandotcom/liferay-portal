@@ -159,4 +159,6 @@ public class CPField {
 
 	public static final String UNSPSC = "unspsc";
 
+	public static final String VISIBLE = "visible";
+
 }

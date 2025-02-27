@@ -581,6 +581,10 @@ public class PortalUpgradeProcessRegistryImpl
 			UpgradeProcessFactory.alterColumnType(
 				"SystemEvent", "classExternalReferenceCode",
 				"VARCHAR(1000) null"));
+
+		upgradeVersionTreeMap.put(
+			new Version(31, 15, 3),
+			UpgradeProcessFactory.dropColumns("Contact_", "accountId"));
 	}
 
 }

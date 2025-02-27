@@ -26,6 +26,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 import org.osgi.service.component.annotations.Component;
@@ -54,8 +55,6 @@ public class SystemDateFieldPredicateProvider
 			(Expression<Object>)objectDefinitionColumnSupplier.apply(
 				String.valueOf(left));
 
-		right = _formatDateForSpecificDBType(right);
-
 		if (right == null) {
 			if (operation == BinaryExpression.Operation.EQ) {
 				return expression.isNull();
@@ -65,24 +64,14 @@ public class SystemDateFieldPredicateProvider
 			}
 		}
 
-		if (right instanceof Date) {
-			return _getDateTimePredicate(
-				(Date)right, expression, Function.identity(), operation);
-		}
-
-		String valueString = (String)right;
-
-		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
-			ObjectFieldUtil.getDateTimePattern(valueString));
+		right = _toDBSpecificFormat(right);
 
 		try {
-			return _getDateTimePredicate(
-				dateFormat.parse(valueString), expression, dateFormat::format,
-				operation);
+			return _getDateTimePredicate(right, expression, operation);
 		}
 		catch (ParseException parseException) {
 			throw new ExpressionVisitException(
-				"Unable to parse date " + valueString, parseException);
+				"Unable to parse date " + right, parseException);
 		}
 	}
 
@@ -141,7 +130,80 @@ public class SystemDateFieldPredicateProvider
 				"dateCreated/dateModified fields");
 	}
 
-	private Object _formatDateForSpecificDBType(Object date) {
+	private Predicate _getDateTimePredicate(
+			Object date, Expression<Object> expression,
+			BinaryExpression.Operation operation)
+		throws ParseException {
+
+		if (operation == BinaryExpression.Operation.EQ) {
+			Object truncatedDate = _truncateMilliseconds(date);
+
+			return expression.gte(
+				truncatedDate
+			).and(
+				expression.lt(_incrementSecond(truncatedDate))
+			).withParentheses();
+		}
+		else if (operation == BinaryExpression.Operation.GE) {
+			return expression.gte(_truncateMilliseconds(date));
+		}
+		else if (operation == BinaryExpression.Operation.GT) {
+			return expression.gte(
+				_incrementSecond(_truncateMilliseconds(date)));
+		}
+		else if (operation == BinaryExpression.Operation.LE) {
+			return expression.lt(_incrementSecond(_truncateMilliseconds(date)));
+		}
+		else if (operation == BinaryExpression.Operation.LT) {
+			return expression.lt(_truncateMilliseconds(date));
+		}
+		else if (operation == BinaryExpression.Operation.NE) {
+			Object truncatedDate = _truncateMilliseconds(date);
+
+			return expression.lt(
+				truncatedDate
+			).or(
+				expression.gte(_incrementSecond(truncatedDate))
+			).withParentheses();
+		}
+
+		return null;
+	}
+
+	private Object _incrementSecond(Object date) throws ParseException {
+		return _processDate(date, calendar -> calendar.add(Calendar.SECOND, 1));
+	}
+
+	private Object _processDate(
+			Object date, Consumer<Calendar> calendarOperation)
+		throws ParseException {
+
+		Date dateObj;
+		Function<Object, Object> resultTransformer;
+
+		if (date instanceof String) {
+			String dateString = (String)date;
+
+			DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+				ObjectFieldUtil.getDateTimePattern(dateString));
+
+			dateObj = dateFormat.parse(dateString);
+
+			resultTransformer = dateFormat::format;
+		}
+		else {
+			dateObj = (Date)date;
+			resultTransformer = Function.identity();
+		}
+
+		Calendar calendar = CalendarFactoryUtil.getCalendar(dateObj.getTime());
+
+		calendarOperation.accept(calendar);
+
+		return resultTransformer.apply(calendar.getTime());
+	}
+
+	private Object _toDBSpecificFormat(Object date) {
 		if (Objects.equals(DBManagerUtil.getDBType(), DBType.DB2) ||
 			Objects.equals(DBManagerUtil.getDBType(), DBType.HYPERSONIC) ||
 			Objects.equals(DBManagerUtil.getDBType(), DBType.ORACLE)) {
@@ -161,61 +223,9 @@ public class SystemDateFieldPredicateProvider
 		return date;
 	}
 
-	private Predicate _getDateTimePredicate(
-		Date date, Expression<Object> expression,
-		Function<Object, Object> function,
-		BinaryExpression.Operation operation) {
-
-		if (operation == BinaryExpression.Operation.EQ) {
-			Date truncatedDate = _truncateMilliseconds(date);
-
-			return expression.gte(
-				function.apply(truncatedDate)
-			).and(
-				expression.lt(function.apply(_incrementSecond(truncatedDate)))
-			).withParentheses();
-		}
-		else if (operation == BinaryExpression.Operation.GE) {
-			return expression.gte(function.apply(_truncateMilliseconds(date)));
-		}
-		else if (operation == BinaryExpression.Operation.GT) {
-			return expression.gte(
-				function.apply(_incrementSecond(_truncateMilliseconds(date))));
-		}
-		else if (operation == BinaryExpression.Operation.LE) {
-			return expression.lt(
-				function.apply(_incrementSecond(_truncateMilliseconds(date))));
-		}
-		else if (operation == BinaryExpression.Operation.LT) {
-			return expression.lt(function.apply(_truncateMilliseconds(date)));
-		}
-		else if (operation == BinaryExpression.Operation.NE) {
-			Date truncatedDate = _truncateMilliseconds(date);
-
-			return expression.lt(
-				function.apply(truncatedDate)
-			).or(
-				expression.gte(function.apply(_incrementSecond(truncatedDate)))
-			).withParentheses();
-		}
-
-		return null;
-	}
-
-	private Date _incrementSecond(Date date) {
-		Calendar calendar = CalendarFactoryUtil.getCalendar(date.getTime());
-
-		calendar.add(Calendar.SECOND, 1);
-
-		return calendar.getTime();
-	}
-
-	private Date _truncateMilliseconds(Date date) {
-		Calendar calendar = CalendarFactoryUtil.getCalendar(date.getTime());
-
-		calendar.set(Calendar.MILLISECOND, 0);
-
-		return calendar.getTime();
+	private Object _truncateMilliseconds(Object date) throws ParseException {
+		return _processDate(
+			date, calendar -> calendar.set(Calendar.MILLISECOND, 0));
 	}
 
 }

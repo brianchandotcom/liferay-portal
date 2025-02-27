@@ -15,6 +15,7 @@ import React, {
 import {ObjectField} from '../types/ObjectDefinition';
 import {Field} from '../utils/field';
 import findAvailableFieldName from '../utils/findAvailableFieldName';
+import getRandomId from '../utils/getRandomId';
 import updateFields from '../utils/updateFields';
 
 const DEFAULT_STRUCTURE_LABEL = Liferay.Language.get('untitled-structure');
@@ -22,6 +23,7 @@ const DEFAULT_STRUCTURE_LABEL = Liferay.Language.get('untitled-structure');
 type Status = 'new' | 'draft' | 'published';
 
 export type State = {
+	erc: string;
 	error: string | null;
 	fields: Map<string, Field>;
 	id: number | null;
@@ -32,6 +34,7 @@ export type State = {
 };
 
 const INITIAL_STATE: State = {
+	erc: getRandomId(),
 	error: null,
 	fields: new Map(),
 	id: null,
@@ -64,6 +67,7 @@ type SetErrorAction = {error: string | null; type: 'set-error'};
 type SetLabelAction = {label: string; type: 'set-label'};
 
 type UpdateStructureAction = {
+	erc?: string;
 	name?: string;
 	objectFields?: ObjectField[];
 	type: 'update-structure';
@@ -128,8 +132,13 @@ function reducer(state: State, action: Action) {
 		case 'publish-structure':
 			return {...state, error: null, status: 'published' as Status};
 		case 'update-structure': {
+			let nextErc = state.erc;
 			let nextFields = state.fields;
 			let nextName = state.name;
+
+			if (action.erc) {
+				nextErc = action.erc;
+			}
 
 			if (action.objectFields) {
 				nextFields = updateFields(state.fields, action.objectFields);
@@ -141,6 +150,7 @@ function reducer(state: State, action: Action) {
 
 			return {
 				...state,
+				erc: nextErc,
 				error: null,
 				fields: nextFields,
 				name: nextName,

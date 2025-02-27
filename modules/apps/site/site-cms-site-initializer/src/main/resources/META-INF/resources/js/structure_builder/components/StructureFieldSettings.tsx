@@ -123,5 +123,15 @@ function GeneralTab({field}: {field: Field}) {
 }
 
 function SearchTab() {
-	return <div>Search</div>;
+	return (
+		<>
+			<ClayForm.Group>
+				<ClayToggle
+					label={Liferay.Language.get('searchable')}
+					onToggle={() => {}}
+					toggled={false}
+				/>
+			</ClayForm.Group>
+		</>
+	);
 }

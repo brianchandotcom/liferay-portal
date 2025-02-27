@@ -12,6 +12,7 @@ import React from 'react';
 
 import {useSelector, useStateDispatch} from '../contexts/StateContext';
 import selectSelectedItem from '../selectors/selectSelectedItem';
+import selectStructureERC from '../selectors/selectStructureERC';
 import selectStructureError from '../selectors/selectStructureError';
 import selectStructureLabel from '../selectors/selectStructureLabel';
 import selectStructureName from '../selectors/selectStructureName';
@@ -25,7 +26,7 @@ export function StructureSettings() {
 	const label = useSelector(selectStructureLabel);
 
 	return (
-		<ClayLayout.ContainerFluid view>
+		<ClayLayout.ContainerFluid size="md" view>
 			{error ? (
 				<ClayAlert
 					displayType="danger"
@@ -91,6 +92,7 @@ export default function () {
 function GeneralTab() {
 	const dispatch = useStateDispatch();
 	const name = useSelector(selectStructureName);
+	const erc = useSelector(selectStructureERC);
 
 	return (
 		<div>
@@ -103,7 +105,12 @@ function GeneralTab() {
 				value={name}
 			/>
 
-			<ERCInput onValueChange={() => {}} value="" />
+			<ERCInput
+				onValueChange={(value) =>
+					dispatch({erc: value, type: 'update-structure'})
+				}
+				value={erc}
+			/>
 		</div>
 	);
 }

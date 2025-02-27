@@ -11,6 +11,7 @@ import {ManagementToolbar, openToast} from 'frontend-js-components-web';
 import React from 'react';
 
 import {useSelector, useStateDispatch} from '../contexts/StateContext';
+import selectStructureERC from '../selectors/selectStructureERC';
 import selectStructureFields from '../selectors/selectStructureFields';
 import selectStructureId from '../selectors/selectStructureId';
 import selectStructureLabel from '../selectors/selectStructureLabel';
@@ -66,10 +67,12 @@ function SaveButton() {
 	const status = useSelector(selectStructureStatus);
 	const structureId = useSelector(selectStructureId);
 	const structureName = useSelector(selectStructureName);
+	const structureERC = useSelector(selectStructureERC);
 
 	const create = async () => {
 		const {id, name, objectFields} = await StructureService.createStructure(
 			{
+				erc: structureERC,
 				fields,
 				label,
 				name: structureName,
@@ -89,6 +92,7 @@ function SaveButton() {
 
 	const update = async () => {
 		const {objectFields} = await StructureService.updateStructure({
+			erc: structureERC,
 			fields,
 			id: structureId,
 			label,

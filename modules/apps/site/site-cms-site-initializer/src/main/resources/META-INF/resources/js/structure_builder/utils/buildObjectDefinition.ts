@@ -8,17 +8,20 @@ import {ObjectDefinition, ObjectField} from '../types/ObjectDefinition';
 import {FIELD_TYPE_BUSINESS_TYPE, Field} from './field';
 
 export default function buildObjectDefinition({
+	erc,
 	fields = [],
 	id,
 	label,
 	name,
 }: {
+	erc: string;
 	fields?: Field[];
 	id?: State['id'];
 	label: State['label'];
 	name?: State['name'];
 }): ObjectDefinition {
 	const objectDefinition: ObjectDefinition = {
+		externalReferenceCode: erc,
 		label: {
 			en_US: label,
 		},

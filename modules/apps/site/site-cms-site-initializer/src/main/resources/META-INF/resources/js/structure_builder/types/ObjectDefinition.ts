@@ -18,6 +18,7 @@ export type ObjectField = {
 };
 
 export type ObjectDefinition = {
+	externalReferenceCode: string;
 	id?: number;
 	label: {
 		en_US: string;

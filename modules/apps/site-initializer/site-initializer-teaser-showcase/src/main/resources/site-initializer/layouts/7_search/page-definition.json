@@ -4,7 +4,8 @@
 			{
 				"definition": {
 					"indexed": true,
-					"layout": {},
+					"layout": {
+					},
 					"name": "Search Page"
 				},
 				"pageElements": [
@@ -42,11 +43,13 @@
 										},
 										{
 											"id": "portraitMobile",
-											"rowViewportDefinition": {}
+											"rowViewportDefinition": {
+											}
 										},
 										{
 											"id": "tablet",
-											"rowViewportDefinition": {}
+											"rowViewportDefinition": {
+											}
 										}
 									],
 									"verticalAlignment": "top"
@@ -62,11 +65,13 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "tablet"
 												}
 											],
@@ -77,18 +82,18 @@
 												"definition": {
 													"widgetInstance": {
 														"widgetConfig": {
-															"federatedSearchKey": "",
-															"suggestionsContributorConfigurations": "{\"contributorName\":\"basic\",\"displayGroupName\":\"suggestions\",\"size\":5}",
-															"showStagedResults": "false",
-															"searchScope": "everything",
-															"suggestionsEnabled": "true",
 															"destination": "",
-															"invisible": "false",
-															"displayStyleGroupId": "[$GROUP_ID$]",
-															"suggestionsDisplayThreshold": "2",
 															"displayStyle": "default",
-															"scopeParameterName": "scope",
+															"displayStyleGroupId": "[$GROUP_ID$]",
+															"federatedSearchKey": "",
+															"invisible": "false",
 															"keywordsParameterName": "q",
+															"scopeParameterName": "scope",
+															"searchScope": "everything",
+															"showStagedResults": "false",
+															"suggestionsContributorConfigurations": "{\"contributorName\": \"basic\", \"displayGroupName\": \"suggestions\", \"size\": 5}",
+															"suggestionsDisplayThreshold": "2",
+															"suggestionsEnabled": "true",
 															"useAdvancedSearchSyntax": "false"
 														},
 														"widgetName": "com_liferay_portal_search_web_search_bar_portlet_SearchBarPortlet"
@@ -100,13 +105,13 @@
 												"definition": {
 													"widgetInstance": {
 														"widgetConfig": {
-															"displayStyle": "default",
 															"assetTypes": "com.liferay.blogs.model.BlogsEntry,com.liferay.commerce.product.model.CPDefinition,com.liferay.journal.model.JournalArticle",
-															"frequencyThreshold": "1",
-															"frequenciesVisible": "true",
-															"parameterName": "type",
+															"displayStyle": "default",
 															"displayStyleGroupId": "[$GROUP_ID$]",
-															"order": "count:desc"
+															"frequenciesVisible": "true",
+															"frequencyThreshold": "1",
+															"order": "count:desc",
+															"parameterName": "type"
 														},
 														"widgetName": "com_liferay_portal_search_web_type_facet_portlet_TypeFacetPortlet"
 													}
@@ -126,11 +131,13 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "tablet"
 												}
 											],
@@ -141,19 +148,19 @@
 												"definition": {
 													"widgetInstance": {
 														"widgetConfig": {
-															"fieldsToDisplay": "",
-															"federatedSearchKey": "",
-															"displayStyleGroupKey": "16796623585306",
 															"displayInDocumentForm": "false",
+															"displayStyle": "ddmTemplate_SEARCH-RESULTS-COMPACT-FTL",
+															"displayStyleGroupId": "[$GROUP_ID$]",
+															"displayStyleGroupKey": "16796623585306",
+															"federatedSearchKey": "",
+															"fieldsToDisplay": "",
+															"highlightEnabled": "false",
+															"paginationDelta": "10",
+															"paginationDeltaParameterName": "delta",
+															"paginationStartParameterName": "start",
 															"showEmptyResultMessage": "true",
 															"showPagination": "true",
-															"paginationDeltaParameterName": "delta",
-															"displayStyleGroupId": "[$GROUP_ID$]",
-															"highlightEnabled": "false",
-															"viewInContext": "true",
-															"displayStyle": "ddmTemplate_SEARCH-RESULTS-COMPACT-FTL",
-															"paginationDelta": "10",
-															"paginationStartParameterName": "start"
+															"viewInContext": "true"
 														},
 														"widgetName": "com_liferay_portal_search_web_search_results_portlet_SearchResultsPortlet"
 													}
@@ -176,11 +183,11 @@
 							},
 							"widgetInstance": {
 								"widgetConfig": {
-									"federatedSearchKey": "",
 									"allowEmptySearches": "true",
 									"basicFacetSelection": "false",
-									"retainFacetSelections": "true",
-									"displayStyleGroupId": "[$GROUP_ID$]"
+									"displayStyleGroupId": "[$GROUP_ID$]",
+									"federatedSearchKey": "",
+									"retainFacetSelections": "true"
 								},
 								"widgetName": "com_liferay_portal_search_web_search_options_portlet_SearchOptionsPortlet"
 							}
@@ -194,9 +201,9 @@
 							},
 							"widgetInstance": {
 								"widgetConfig": {
+									"displayStyleGroupId": "[$GROUP_ID$]",
 									"federatedSearchKey": "",
-									"sxpBlueprintExternalReferenceCode": "",
-									"displayStyleGroupId": "[$GROUP_ID$]"
+									"sxpBlueprintExternalReferenceCode": ""
 								},
 								"widgetName": "com_liferay_search_experiences_web_internal_blueprint_options_portlet_SXPBlueprintOptionsPortlet",
 								"widgetPermissions": [
@@ -234,10 +241,10 @@
 		],
 		"type": "Root"
 	},
-	"version": 1.1,
 	"settings": {
 		"masterPage": {
 			"key": "primary"
 		}
-	}
+	},
+	"version": 1.1
 }

@@ -4,7 +4,8 @@
 			{
 				"definition": {
 					"indexed": true,
-					"layout": {},
+					"layout": {
+					},
 					"name": "About Us Page"
 				},
 				"pageElements": [
@@ -62,11 +63,13 @@
 										},
 										{
 											"id": "portraitMobile",
-											"rowViewportDefinition": {}
+											"rowViewportDefinition": {
+											}
 										},
 										{
 											"id": "tablet",
-											"rowViewportDefinition": {}
+											"rowViewportDefinition": {
+											}
 										}
 									],
 									"verticalAlignment": "middle"
@@ -82,11 +85,13 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "tablet"
 												}
 											],
@@ -98,7 +103,8 @@
 													"fragment": {
 														"key": "BASIC_COMPONENT-html"
 													},
-													"fragmentConfig": {},
+													"fragmentConfig": {
+													},
 													"fragmentFields": [
 														{
 															"id": "element-html",
@@ -128,11 +134,13 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "tablet"
 												}
 											],
@@ -180,11 +188,13 @@
 										},
 										{
 											"id": "portraitMobile",
-											"rowViewportDefinition": {}
+											"rowViewportDefinition": {
+											}
 										},
 										{
 											"id": "tablet",
-											"rowViewportDefinition": {}
+											"rowViewportDefinition": {
+											}
 										}
 									],
 									"verticalAlignment": "top"
@@ -200,11 +210,13 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "tablet"
 												}
 											],
@@ -224,7 +236,8 @@
 														{
 															"id": "page-title-fragment-right",
 															"value": {
-																"fragmentLink": {},
+																"fragmentLink": {
+																},
 																"text": {
 																	"value_i18n": {
 																		"en_US": "Story"
@@ -235,7 +248,8 @@
 														{
 															"id": "page-title-fragment-left",
 															"value": {
-																"fragmentLink": {},
+																"fragmentLink": {
+																},
 																"text": {
 																	"value_i18n": {
 																		"en_US": "Our Story"
@@ -256,7 +270,8 @@
 													"fragment": {
 														"key": "BASIC_COMPONENT-html"
 													},
-													"fragmentConfig": {},
+													"fragmentConfig": {
+													},
 													"fragmentFields": [
 														{
 															"id": "element-html",
@@ -293,11 +308,13 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "tablet"
 												}
 											],
@@ -317,7 +334,8 @@
 														{
 															"id": "page-title-fragment-right",
 															"value": {
-																"fragmentLink": {},
+																"fragmentLink": {
+																},
 																"text": {
 																	"value_i18n": {
 																		"en_US": "Values"
@@ -328,7 +346,8 @@
 														{
 															"id": "page-title-fragment-left",
 															"value": {
-																"fragmentLink": {},
+																"fragmentLink": {
+																},
 																"text": {
 																	"value_i18n": {
 																		"en_US": "Our Values"
@@ -349,7 +368,8 @@
 													"fragment": {
 														"key": "BASIC_COMPONENT-html"
 													},
-													"fragmentConfig": {},
+													"fragmentConfig": {
+													},
 													"fragmentFields": [
 														{
 															"id": "element-html",
@@ -416,11 +436,13 @@
 										},
 										{
 											"id": "portraitMobile",
-											"rowViewportDefinition": {}
+											"rowViewportDefinition": {
+											}
 										},
 										{
 											"id": "tablet",
-											"rowViewportDefinition": {}
+											"rowViewportDefinition": {
+											}
 										}
 									],
 									"verticalAlignment": "top"
@@ -436,11 +458,13 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "tablet"
 												}
 											],
@@ -456,16 +480,18 @@
 													"fragmentConfig": {
 														"bottomLeft": true,
 														"bottomRight": true,
-														"topLeft": true,
 														"circleSize": "false",
+														"topLeft": true,
 														"topRight": true
 													},
-													"fragmentFields": [],
+													"fragmentFields": [
+													],
 													"indexed": true
 												},
 												"pageElements": [
 													{
-														"definition": {},
+														"definition": {
+														},
 														"pageElements": [
 															{
 																"definition": {
@@ -479,7 +505,8 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "Reliability"
@@ -500,12 +527,14 @@
 																	"fragment": {
 																		"key": "BASIC_COMPONENT-paragraph"
 																	},
-																	"fragmentConfig": {},
+																	"fragmentConfig": {
+																	},
 																	"fragmentFields": [
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "Customer first, make Clairy worthy of customer trust"
@@ -540,11 +569,13 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "tablet"
 												}
 											],
@@ -560,16 +591,18 @@
 													"fragmentConfig": {
 														"bottomLeft": true,
 														"bottomRight": true,
-														"topLeft": true,
 														"circleSize": "false",
+														"topLeft": true,
 														"topRight": true
 													},
-													"fragmentFields": [],
+													"fragmentFields": [
+													],
 													"indexed": true
 												},
 												"pageElements": [
 													{
-														"definition": {},
+														"definition": {
+														},
 														"pageElements": [
 															{
 																"definition": {
@@ -583,7 +616,8 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "Specialty"
@@ -604,12 +638,14 @@
 																	"fragment": {
 																		"key": "BASIC_COMPONENT-paragraph"
 																	},
-																	"fragmentConfig": {},
+																	"fragmentConfig": {
+																	},
 																	"fragmentFields": [
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "Self-improvement, provide better products to customers."
@@ -644,11 +680,13 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "tablet"
 												}
 											],
@@ -664,16 +702,18 @@
 													"fragmentConfig": {
 														"bottomLeft": true,
 														"bottomRight": true,
-														"topLeft": true,
 														"circleSize": "false",
+														"topLeft": true,
 														"topRight": true
 													},
-													"fragmentFields": [],
+													"fragmentFields": [
+													],
 													"indexed": true
 												},
 												"pageElements": [
 													{
-														"definition": {},
+														"definition": {
+														},
 														"pageElements": [
 															{
 																"definition": {
@@ -687,7 +727,8 @@
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "Potentiality"
@@ -708,12 +749,14 @@
 																	"fragment": {
 																		"key": "BASIC_COMPONENT-paragraph"
 																	},
-																	"fragmentConfig": {},
+																	"fragmentConfig": {
+																	},
 																	"fragmentFields": [
 																		{
 																			"id": "element-text",
 																			"value": {
-																				"fragmentLink": {},
+																				"fragmentLink": {
+																				},
 																				"text": {
 																					"value_i18n": {
 																						"en_US": "All-round development, provide customers with more choices"
@@ -776,7 +819,8 @@
 										{
 											"id": "page-title-fragment-right",
 											"value": {
-												"fragmentLink": {},
+												"fragmentLink": {
+												},
 												"text": {
 													"value_i18n": {
 														"en_US": "dership"
@@ -787,7 +831,8 @@
 										{
 											"id": "page-title-fragment-left",
 											"value": {
-												"fragmentLink": {},
+												"fragmentLink": {
+												},
 												"text": {
 													"value_i18n": {
 														"en_US": "Leadership"
@@ -850,7 +895,8 @@
 								"pageElements": [
 									{
 										"definition": {
-											"collectionItemConfig": {}
+											"collectionItemConfig": {
+											}
 										},
 										"pageElements": [
 											{
@@ -886,7 +932,8 @@
 																				}
 																			}
 																		},
-																		"fragmentLink": {}
+																		"fragmentLink": {
+																		}
 																	}
 																}
 															],
@@ -912,7 +959,8 @@
 														{
 															"id": "element-text",
 															"value": {
-																"fragmentLink": {},
+																"fragmentLink": {
+																},
 																"text": {
 																	"mapping": {
 																		"fieldKey": "DDMStructure_name",
@@ -933,12 +981,14 @@
 													"fragment": {
 														"key": "BASIC_COMPONENT-paragraph"
 													},
-													"fragmentConfig": {},
+													"fragmentConfig": {
+													},
 													"fragmentFields": [
 														{
 															"id": "element-text",
 															"value": {
-																"fragmentLink": {},
+																"fragmentLink": {
+																},
 																"text": {
 																	"mapping": {
 																		"fieldKey": "DDMStructure_title",
@@ -988,7 +1038,8 @@
 										"overflow": "hidden"
 									},
 									"indexed": true,
-									"layout": {}
+									"layout": {
+									}
 								},
 								"pageElements": [
 									{
@@ -997,14 +1048,17 @@
 												"key": "banner",
 												"siteKey": "[$GROUP_KEY$]"
 											},
-											"fragmentConfig": {},
-											"fragmentFields": [],
+											"fragmentConfig": {
+											},
+											"fragmentFields": [
+											],
 											"indexed": true,
 											"name": "Gradient Container"
 										},
 										"pageElements": [
 											{
-												"definition": {},
+												"definition": {
+												},
 												"pageElements": [
 													{
 														"definition": {
@@ -1022,11 +1076,13 @@
 																},
 																{
 																	"id": "portraitMobile",
-																	"rowViewportDefinition": {}
+																	"rowViewportDefinition": {
+																	}
 																},
 																{
 																	"id": "tablet",
-																	"rowViewportDefinition": {}
+																	"rowViewportDefinition": {
+																	}
 																}
 															],
 															"verticalAlignment": "middle"
@@ -1042,11 +1098,13 @@
 																			"id": "landscapeMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "portraitMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "tablet"
 																		}
 																	],
@@ -1058,7 +1116,8 @@
 																			"fragment": {
 																				"key": "BASIC_COMPONENT-html"
 																			},
-																			"fragmentConfig": {},
+																			"fragmentConfig": {
+																			},
 																			"fragmentFields": [
 																				{
 																					"id": "element-html",
@@ -1087,15 +1146,16 @@
 																				"key": "BASIC_COMPONENT-button"
 																			},
 																			"fragmentConfig": {
+																				"buttonSize": "nm",
 																				"buttonType": "primary",
-																				"type": "link",
-																				"buttonSize": "nm"
+																				"type": "link"
 																			},
 																			"fragmentFields": [
 																				{
 																					"id": "link",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "Learn More About Our Impact"
@@ -1125,11 +1185,13 @@
 																			"id": "landscapeMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "portraitMobile"
 																		},
 																		{
-																			"columnViewportDefinition": {},
+																			"columnViewportDefinition": {
+																			},
 																			"id": "tablet"
 																		}
 																	],
@@ -1174,7 +1236,8 @@
 																										}
 																									}
 																								},
-																								"fragmentLink": {}
+																								"fragmentLink": {
+																								}
 																							}
 																						}
 																					],
@@ -1213,10 +1276,10 @@
 		],
 		"type": "Root"
 	},
-	"version": 1.1,
 	"settings": {
 		"masterPage": {
 			"key": "primary"
 		}
-	}
+	},
+	"version": 1.1
 }

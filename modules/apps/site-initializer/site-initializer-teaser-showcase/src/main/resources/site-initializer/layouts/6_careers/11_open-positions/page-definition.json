@@ -4,7 +4,8 @@
 			{
 				"definition": {
 					"indexed": true,
-					"layout": {},
+					"layout": {
+					},
 					"name": "Open Positions Page"
 				},
 				"pageElements": [
@@ -34,7 +35,8 @@
 										{
 											"id": "element-text",
 											"value": {
-												"fragmentLink": {},
+												"fragmentLink": {
+												},
 												"text": {
 													"value_i18n": {
 														"en_US": "Join the Team!"
@@ -101,11 +103,13 @@
 										},
 										{
 											"id": "portraitMobile",
-											"rowViewportDefinition": {}
+											"rowViewportDefinition": {
+											}
 										},
 										{
 											"id": "tablet",
-											"rowViewportDefinition": {}
+											"rowViewportDefinition": {
+											}
 										}
 									],
 									"verticalAlignment": "top"
@@ -121,11 +125,13 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "tablet"
 												}
 											],
@@ -136,22 +142,22 @@
 												"definition": {
 													"widgetInstance": {
 														"widgetConfig": {
-															"federatedSearchKey": "",
-															"displayStyleGroupKey": "[$GROUP_KEY$]",
-															"occur": "filter",
-															"invisible": "true",
-															"parameterName": "",
-															"displayStyleGroupId": "[$GROUP_ID$]",
-															"filterField": "ddmStructureKey",
+															"boost": "",
+															"customHeading": "",
+															"disabled": "false",
 															"displayStyle": "default",
-															"immutable": "true",
+															"displayStyleGroupId": "[$GROUP_ID$]",
+															"displayStyleGroupKey": "[$GROUP_KEY$]",
+															"federatedSearchKey": "",
+															"filterField": "ddmStructureKey",
 															"filterQueryType": "match",
 															"filterValue": "JOB LISTING",
+															"immutable": "true",
+															"invisible": "true",
+															"occur": "filter",
+															"parameterName": "",
 															"parentQueryName": "",
-															"queryName": "",
-															"disabled": "false",
-															"customHeading": "",
-															"boost": ""
+															"queryName": ""
 														},
 														"widgetName": "com_liferay_portal_search_web_internal_custom_filter_portlet_CustomFilterPortlet"
 													}
@@ -162,15 +168,15 @@
 												"definition": {
 													"widgetInstance": {
 														"widgetConfig": {
-															"vocabularyIds": "[$TAXONOMY_VOCABULARY_ID:Regions$]",
 															"displayStyle": "ddmTemplate_SEARCH CATEGORY",
-															"maxTerms": "10",
+															"displayStyleGroupId": "[$GROUP_ID$]",
 															"displayStyleGroupKey": "[$GROUP_KEY$]",
-															"frequencyThreshold": "1",
 															"frequenciesVisible": "true",
+															"frequencyThreshold": "1",
+															"maxTerms": "10",
+															"order": "count:desc",
 															"parameterName": "category-region",
-															"displayStyleGroupId": "[$GROUP_ID$]",
-															"order": "count:desc"
+															"vocabularyIds": "[$TAXONOMY_VOCABULARY_ID:Regions$]"
 														},
 														"widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
 													}
@@ -181,15 +187,15 @@
 												"definition": {
 													"widgetInstance": {
 														"widgetConfig": {
-															"vocabularyIds": "[$TAXONOMY_VOCABULARY_ID:Locations$]",
 															"displayStyle": "ddmTemplate_Search Category",
-															"maxTerms": "10",
+															"displayStyleGroupId": "[$GROUP_ID$]",
 															"displayStyleGroupKey": "[$GROUP_KEY$]",
-															"frequencyThreshold": "1",
 															"frequenciesVisible": "true",
+															"frequencyThreshold": "1",
+															"maxTerms": "10",
+															"order": "count:desc",
 															"parameterName": "category-location",
-															"displayStyleGroupId": "[$GROUP_ID$]",
-															"order": "count:desc"
+															"vocabularyIds": "[$TAXONOMY_VOCABULARY_ID:Locations$]"
 														},
 														"widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
 													}
@@ -200,15 +206,15 @@
 												"definition": {
 													"widgetInstance": {
 														"widgetConfig": {
-															"vocabularyIds": "[$TAXONOMY_VOCABULARY_ID:Job Positions$]",
 															"displayStyle": "ddmTemplate_Search Category",
-															"maxTerms": "10",
-															"displayStyleGroupKey": "[$GROUP_KEY$]",
-															"frequencyThreshold": "1",
-															"frequenciesVisible": "true",
-															"parameterName": "category-position",
 															"displayStyleGroupId": "[$GROUP_ID$]",
-															"order": "count:desc"
+															"displayStyleGroupKey": "[$GROUP_KEY$]",
+															"frequenciesVisible": "true",
+															"frequencyThreshold": "1",
+															"maxTerms": "10",
+															"order": "count:desc",
+															"parameterName": "category-position",
+															"vocabularyIds": "[$TAXONOMY_VOCABULARY_ID:Job Positions$]"
 														},
 														"widgetName": "com_liferay_portal_search_web_category_facet_portlet_CategoryFacetPortlet"
 													}
@@ -228,11 +234,13 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "tablet"
 												}
 											],
@@ -260,11 +268,11 @@
 								"definition": {
 									"widgetInstance": {
 										"widgetConfig": {
-											"federatedSearchKey": "",
 											"allowEmptySearches": "true",
 											"basicFacetSelection": "false",
-											"retainFacetSelections": "false",
-											"displayStyleGroupId": "[$GROUP_ID$]"
+											"displayStyleGroupId": "[$GROUP_ID$]",
+											"federatedSearchKey": "",
+											"retainFacetSelections": "false"
 										},
 										"widgetName": "com_liferay_portal_search_web_search_options_portlet_SearchOptionsPortlet"
 									}
@@ -280,10 +288,10 @@
 		],
 		"type": "Root"
 	},
-	"version": 1.1,
 	"settings": {
 		"masterPage": {
 			"key": "primary"
 		}
-	}
+	},
+	"version": 1.1
 }

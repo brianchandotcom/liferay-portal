@@ -7,8 +7,10 @@
 						"key": "interest",
 						"siteKey": "[$GROUP_KEY$]"
 					},
-					"fragmentConfig": {},
-					"fragmentFields": [],
+					"fragmentConfig": {
+					},
+					"fragmentFields": [
+					],
 					"indexed": true
 				},
 				"type": "Fragment"
@@ -16,10 +18,12 @@
 			{
 				"definition": {
 					"fragmentStyle": {
-						"backgroundFragmentImage": {}
+						"backgroundFragmentImage": {
+						}
 					},
 					"indexed": true,
-					"layout": {},
+					"layout": {
+					},
 					"name": "Products Page"
 				},
 				"pageElements": [
@@ -68,11 +72,13 @@
 										},
 										{
 											"id": "portraitMobile",
-											"rowViewportDefinition": {}
+											"rowViewportDefinition": {
+											}
 										},
 										{
 											"id": "tablet",
-											"rowViewportDefinition": {}
+											"rowViewportDefinition": {
+											}
 										}
 									],
 									"verticalAlignment": "middle"
@@ -88,11 +94,13 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "tablet"
 												}
 											],
@@ -111,7 +119,8 @@
 														{
 															"id": "element-text",
 															"value": {
-																"fragmentLink": {},
+																"fragmentLink": {
+																},
 																"text": {
 																	"value_i18n": {
 																		"en_US": "Elevate Your Eyewear Business with Premium Quality"
@@ -132,12 +141,14 @@
 													"fragment": {
 														"key": "BASIC_COMPONENT-paragraph"
 													},
-													"fragmentConfig": {},
+													"fragmentConfig": {
+													},
 													"fragmentFields": [
 														{
 															"id": "element-text",
 															"value": {
-																"fragmentLink": {},
+																"fragmentLink": {
+																},
 																"text": {
 																	"value_i18n": {
 																		"en_US": "Elevate your brand with a curaed selection of glasses, sunglasses, conact and lenses"
@@ -157,12 +168,12 @@
 														"siteKey": "[$GROUP_KEY$]"
 													},
 													"fragmentConfig": {
-														"uppercase": false,
+														"buttonSize": "",
 														"iconName": "share",
+														"inverted": false,
 														"style": "primary",
 														"type": "solid",
-														"inverted": false,
-														"buttonSize": ""
+														"uppercase": false
 													},
 													"fragmentFields": [
 														{
@@ -199,7 +210,8 @@
 														{
 															"id": "text",
 															"value": {
-																"fragmentLink": {}
+																"fragmentLink": {
+																}
 															}
 														}
 													],
@@ -223,11 +235,13 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "tablet"
 												}
 											],
@@ -265,13 +279,13 @@
 								"definition": {
 									"widgetInstance": {
 										"widgetConfig": {
+											"assetVocabularyId": "[$TAXONOMY_VOCABULARY_ID:Products$]",
 											"displayStyle": "ddmTemplate_Category Cards",
+											"displayStyleGroupId": "[$GROUP_ID$]",
+											"displayStyleGroupKey": "[$GROUP_KEY$]",
 											"rootAssetCategoryId": "",
 											"useCategoryFromRequest": "false",
-											"displayStyleGroupKey": "[$GROUP_KEY$]",
-											"useRootCategory": "false",
-											"assetVocabularyId": "[$TAXONOMY_VOCABULARY_ID:Products$]",
-											"displayStyleGroupId": "[$GROUP_ID$]"
+											"useRootCategory": "false"
 										},
 										"widgetName": "com_liferay_commerce_product_asset_categories_navigation_web_internal_portlet_CPAssetCategoriesNavigationPortlet"
 									}
@@ -287,10 +301,10 @@
 		],
 		"type": "Root"
 	},
-	"version": 1.1,
 	"settings": {
 		"masterPage": {
 			"key": "primary"
 		}
-	}
+	},
+	"version": 1.1
 }

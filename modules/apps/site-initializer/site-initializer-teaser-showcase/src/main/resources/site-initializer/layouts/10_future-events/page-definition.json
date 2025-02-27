@@ -44,7 +44,8 @@
 				"pageElements": [
 					{
 						"definition": {
-							"collectionItemConfig": {}
+							"collectionItemConfig": {
+							}
 						},
 						"id": "06a93105-a578-a054-3755-e1e8cc59e0c1",
 						"type": "CollectionItem"
@@ -55,10 +56,10 @@
 		],
 		"type": "Root"
 	},
-	"version": 1.1,
 	"settings": {
 		"masterPage": {
 			"key": "primary"
 		}
-	}
+	},
+	"version": 1.1
 }

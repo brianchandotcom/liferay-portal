@@ -4,7 +4,8 @@
 			{
 				"definition": {
 					"indexed": true,
-					"layout": {},
+					"layout": {
+					},
 					"name": "Contact Us Page"
 				},
 				"pageElements": [
@@ -14,29 +15,34 @@
 								"key": "banner",
 								"siteKey": "[$GROUP_KEY$]"
 							},
-							"fragmentConfig": {},
-							"fragmentFields": [],
+							"fragmentConfig": {
+							},
+							"fragmentFields": [
+							],
 							"indexed": true
 						},
 						"pageElements": [
 							{
-								"definition": {},
+								"definition": {
+								},
 								"pageElements": [
 									{
 										"definition": {
 											"fragmentStyle": {
-												"backgroundFragmentImage": {}
+												"backgroundFragmentImage": {
+												}
 											},
 											"indexed": true,
-											"layout": {},
+											"layout": {
+											},
 											"name": "Background Overlay"
 										},
 										"pageElements": [
 											{
 												"definition": {
 													"fragmentStyle": {
-														"paddingTop": "9",
 														"paddingBottom": "9",
+														"paddingTop": "9",
 														"textAlign": "center"
 													},
 													"indexed": true,
@@ -59,7 +65,8 @@
 																{
 																	"id": "element-text",
 																	"value": {
-																		"fragmentLink": {},
+																		"fragmentLink": {
+																		},
 																		"text": {
 																			"value_i18n": {
 																				"en_US": "We would love to hear from you"
@@ -81,12 +88,14 @@
 															"fragment": {
 																"key": "BASIC_COMPONENT-paragraph"
 															},
-															"fragmentConfig": {},
+															"fragmentConfig": {
+															},
 															"fragmentFields": [
 																{
 																	"id": "element-text",
 																	"value": {
-																		"fragmentLink": {},
+																		"fragmentLink": {
+																		},
 																		"text": {
 																			"value_i18n": {
 																				"en_US": "If you would like to contact us, please email us at info@clarityvisionsolutions.com and let us know how we can help you."
@@ -156,11 +165,13 @@
 										},
 										{
 											"id": "portraitMobile",
-											"rowViewportDefinition": {}
+											"rowViewportDefinition": {
+											}
 										},
 										{
 											"id": "tablet",
-											"rowViewportDefinition": {}
+											"rowViewportDefinition": {
+											}
 										}
 									],
 									"verticalAlignment": "top"
@@ -176,11 +187,13 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "tablet"
 												}
 											],
@@ -192,7 +205,8 @@
 													"fragment": {
 														"key": "BASIC_COMPONENT-html"
 													},
-													"fragmentConfig": {},
+													"fragmentConfig": {
+													},
 													"fragmentFields": [
 														{
 															"id": "element-html",
@@ -222,11 +236,13 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "tablet"
 												}
 											],
@@ -238,7 +254,8 @@
 													"fragment": {
 														"key": "BASIC_COMPONENT-html"
 													},
-													"fragmentConfig": {},
+													"fragmentConfig": {
+													},
 													"fragmentFields": [
 														{
 															"id": "element-html",
@@ -268,11 +285,13 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "tablet"
 												}
 											],
@@ -284,7 +303,8 @@
 													"fragment": {
 														"key": "BASIC_COMPONENT-html"
 													},
-													"fragmentConfig": {},
+													"fragmentConfig": {
+													},
 													"fragmentFields": [
 														{
 															"id": "element-html",
@@ -316,10 +336,10 @@
 		],
 		"type": "Root"
 	},
-	"version": 1.1,
 	"settings": {
 		"masterPage": {
 			"key": "primary"
 		}
-	}
+	},
+	"version": 1.1
 }

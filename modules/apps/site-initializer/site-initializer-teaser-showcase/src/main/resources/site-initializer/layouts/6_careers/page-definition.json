@@ -7,8 +7,10 @@
 						"key": "remove-interest",
 						"siteKey": "[$GROUP_KEY$]"
 					},
-					"fragmentConfig": {},
-					"fragmentFields": [],
+					"fragmentConfig": {
+					},
+					"fragmentFields": [
+					],
 					"indexed": true
 				},
 				"type": "Fragment"
@@ -16,7 +18,8 @@
 			{
 				"definition": {
 					"indexed": true,
-					"layout": {},
+					"layout": {
+					},
 					"name": "Careers Page"
 				},
 				"pageElements": [
@@ -96,7 +99,8 @@
 												{
 													"id": "element-text",
 													"value": {
-														"fragmentLink": {},
+														"fragmentLink": {
+														},
 														"text": {
 															"value_i18n": {
 																"en_US": "Join the Clarity Team"
@@ -127,9 +131,9 @@
 												"key": "BASIC_COMPONENT-button"
 											},
 											"fragmentConfig": {
+												"buttonSize": "nm",
 												"buttonType": "primary",
-												"type": "link",
-												"buttonSize": "nm"
+												"type": "link"
 											},
 											"fragmentFields": [
 												{
@@ -216,11 +220,13 @@
 										},
 										{
 											"id": "portraitMobile",
-											"rowViewportDefinition": {}
+											"rowViewportDefinition": {
+											}
 										},
 										{
 											"id": "tablet",
-											"rowViewportDefinition": {}
+											"rowViewportDefinition": {
+											}
 										}
 									],
 									"verticalAlignment": "top"
@@ -236,11 +242,13 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "tablet"
 												}
 											],
@@ -260,7 +268,8 @@
 														{
 															"id": "page-title-fragment-right",
 															"value": {
-																"fragmentLink": {},
+																"fragmentLink": {
+																},
 																"text": {
 																	"value_i18n": {
 																		"en_US": "Story"
@@ -271,7 +280,8 @@
 														{
 															"id": "page-title-fragment-left",
 															"value": {
-																"fragmentLink": {},
+																"fragmentLink": {
+																},
 																"text": {
 																	"value_i18n": {
 																		"en_US": "Our Story"
@@ -292,7 +302,8 @@
 													"fragment": {
 														"key": "BASIC_COMPONENT-html"
 													},
-													"fragmentConfig": {},
+													"fragmentConfig": {
+													},
 													"fragmentFields": [
 														{
 															"id": "element-html",
@@ -329,11 +340,13 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "tablet"
 												}
 											],
@@ -353,7 +366,8 @@
 														{
 															"id": "page-title-fragment-right",
 															"value": {
-																"fragmentLink": {},
+																"fragmentLink": {
+																},
 																"text": {
 																	"value_i18n": {
 																		"en_US": "Values"
@@ -364,7 +378,8 @@
 														{
 															"id": "page-title-fragment-left",
 															"value": {
-																"fragmentLink": {},
+																"fragmentLink": {
+																},
 																"text": {
 																	"value_i18n": {
 																		"en_US": "Our Values"
@@ -385,7 +400,8 @@
 													"fragment": {
 														"key": "BASIC_COMPONENT-html"
 													},
-													"fragmentConfig": {},
+													"fragmentConfig": {
+													},
 													"fragmentFields": [
 														{
 															"id": "element-html",
@@ -453,11 +469,13 @@
 										},
 										{
 											"id": "portraitMobile",
-											"rowViewportDefinition": {}
+											"rowViewportDefinition": {
+											}
 										},
 										{
 											"id": "tablet",
-											"rowViewportDefinition": {}
+											"rowViewportDefinition": {
+											}
 										}
 									],
 									"verticalAlignment": "top"
@@ -473,11 +491,13 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "tablet"
 												}
 											],
@@ -487,7 +507,8 @@
 											{
 												"definition": {
 													"indexed": true,
-													"layout": {},
+													"layout": {
+													},
 													"name": "Card Container"
 												},
 												"pageElements": [
@@ -500,15 +521,16 @@
 															"fragmentConfig": {
 																"bottomLeft": false,
 																"bottomRight": false,
-																"topLeft": false,
 																"circleSize": "",
+																"topLeft": false,
 																"topRight": false
 															},
 															"fragmentFields": [
 																{
 																	"id": "valueCardTitle",
 																	"value": {
-																		"fragmentLink": {}
+																		"fragmentLink": {
+																		}
 																	}
 																}
 															],
@@ -516,7 +538,8 @@
 														},
 														"pageElements": [
 															{
-																"definition": {},
+																"definition": {
+																},
 																"pageElements": [
 																	{
 																		"definition": {
@@ -530,7 +553,8 @@
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "Reliability"
@@ -552,12 +576,14 @@
 																			"fragment": {
 																				"key": "BASIC_COMPONENT-paragraph"
 																			},
-																			"fragmentConfig": {},
+																			"fragmentConfig": {
+																			},
 																			"fragmentFields": [
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "Customer first, make Clarity worthy of customer trust."
@@ -595,11 +621,13 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "tablet"
 												}
 											],
@@ -609,7 +637,8 @@
 											{
 												"definition": {
 													"indexed": true,
-													"layout": {},
+													"layout": {
+													},
 													"name": "Card Container"
 												},
 												"pageElements": [
@@ -622,15 +651,16 @@
 															"fragmentConfig": {
 																"bottomLeft": false,
 																"bottomRight": false,
-																"topLeft": false,
 																"circleSize": "",
+																"topLeft": false,
 																"topRight": false
 															},
 															"fragmentFields": [
 																{
 																	"id": "valueCardTitle",
 																	"value": {
-																		"fragmentLink": {}
+																		"fragmentLink": {
+																		}
 																	}
 																}
 															],
@@ -638,7 +668,8 @@
 														},
 														"pageElements": [
 															{
-																"definition": {},
+																"definition": {
+																},
 																"pageElements": [
 																	{
 																		"definition": {
@@ -652,7 +683,8 @@
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "Specialty"
@@ -674,12 +706,14 @@
 																			"fragment": {
 																				"key": "BASIC_COMPONENT-paragraph"
 																			},
-																			"fragmentConfig": {},
+																			"fragmentConfig": {
+																			},
 																			"fragmentFields": [
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "Self-improvement, provide better products to customer."
@@ -717,11 +751,13 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "tablet"
 												}
 											],
@@ -731,7 +767,8 @@
 											{
 												"definition": {
 													"indexed": true,
-													"layout": {},
+													"layout": {
+													},
 													"name": "Card Container"
 												},
 												"pageElements": [
@@ -744,15 +781,16 @@
 															"fragmentConfig": {
 																"bottomLeft": false,
 																"bottomRight": false,
-																"topLeft": false,
 																"circleSize": "",
+																"topLeft": false,
 																"topRight": false
 															},
 															"fragmentFields": [
 																{
 																	"id": "valueCardTitle",
 																	"value": {
-																		"fragmentLink": {}
+																		"fragmentLink": {
+																		}
 																	}
 																}
 															],
@@ -760,7 +798,8 @@
 														},
 														"pageElements": [
 															{
-																"definition": {},
+																"definition": {
+																},
 																"pageElements": [
 																	{
 																		"definition": {
@@ -774,7 +813,8 @@
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "Potentiality"
@@ -796,12 +836,14 @@
 																			"fragment": {
 																				"key": "BASIC_COMPONENT-paragraph"
 																			},
-																			"fragmentConfig": {},
+																			"fragmentConfig": {
+																			},
 																			"fragmentFields": [
 																				{
 																					"id": "element-text",
 																					"value": {
-																						"fragmentLink": {},
+																						"fragmentLink": {
+																						},
 																						"text": {
 																							"value_i18n": {
 																								"en_US": "All-round development, provide customers with more choices"
@@ -841,10 +883,10 @@
 		],
 		"type": "Root"
 	},
-	"version": 1.1,
 	"settings": {
 		"masterPage": {
 			"key": "primary"
 		}
-	}
+	},
+	"version": 1.1
 }

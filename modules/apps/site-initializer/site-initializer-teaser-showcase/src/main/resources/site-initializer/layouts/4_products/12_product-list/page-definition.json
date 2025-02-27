@@ -7,8 +7,10 @@
 						"key": "remove-interest",
 						"siteKey": "[$GROUP_KEY$]"
 					},
-					"fragmentConfig": {},
-					"fragmentFields": [],
+					"fragmentConfig": {
+					},
+					"fragmentFields": [
+					],
 					"indexed": true
 				},
 				"type": "Fragment"
@@ -16,7 +18,8 @@
 			{
 				"definition": {
 					"indexed": true,
-					"layout": {},
+					"layout": {
+					},
 					"name": "Product Lists Page"
 				},
 				"pageElements": [
@@ -54,11 +57,11 @@
 									},
 									"widgetInstance": {
 										"widgetConfig": {
-											"displayStyle": "ddmTemplate_Product Category Banner",
-											"displayStyleGroupKey": "[$GROUP_KEY$]",
-											"useAssetCategory": "false",
 											"assetCategoryId": "0",
-											"displayStyleGroupId": "[$GROUP_ID$]"
+											"displayStyle": "ddmTemplate_Product Category Banner",
+											"displayStyleGroupId": "[$GROUP_ID$]",
+											"displayStyleGroupKey": "[$GROUP_KEY$]",
+											"useAssetCategory": "false"
 										},
 										"widgetName": "com_liferay_commerce_product_content_web_internal_portlet_CPCategoryContentPortlet"
 									}
@@ -102,11 +105,13 @@
 										},
 										{
 											"id": "portraitMobile",
-											"rowViewportDefinition": {}
+											"rowViewportDefinition": {
+											}
 										},
 										{
 											"id": "tablet",
-											"rowViewportDefinition": {}
+											"rowViewportDefinition": {
+											}
 										}
 									],
 									"verticalAlignment": "top"
@@ -122,11 +127,13 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "tablet"
 												}
 											],
@@ -137,18 +144,18 @@
 												"definition": {
 													"widgetInstance": {
 														"widgetConfig": {
-															"federatedSearchKey": "",
-															"suggestionsContributorConfigurations": "{\"contributorName\":\"basic\",\"displayGroupName\":\"suggestions\",\"size\":5}",
-															"showStagedResults": "false",
-															"searchScope": "everything",
-															"suggestionsEnabled": "true",
 															"destination": "",
-															"invisible": "false",
-															"displayStyleGroupId": "[$GROUP_ID$]",
-															"suggestionsDisplayThreshold": "2",
 															"displayStyle": "default",
-															"scopeParameterName": "scope",
+															"displayStyleGroupId": "[$GROUP_ID$]",
+															"federatedSearchKey": "",
+															"invisible": "false",
 															"keywordsParameterName": "q",
+															"scopeParameterName": "scope",
+															"searchScope": "everything",
+															"showStagedResults": "false",
+															"suggestionsContributorConfigurations": "{\"contributorName\": \"basic\", \"displayGroupName\": \"suggestions\", \"size\": 5}",
+															"suggestionsDisplayThreshold": "2",
+															"suggestionsEnabled": "true",
 															"useAdvancedSearchSyntax": "false"
 														},
 														"widgetName": "com_liferay_portal_search_web_search_bar_portlet_SearchBarPortlet"
@@ -186,12 +193,12 @@
 													"widgetInstance": {
 														"widgetConfig": {
 															"displayStyle": "default",
-															"maxTerms": "10",
+															"displayStyleGroupId": "[$GROUP_ID$]",
 															"displayStyleGroupKey": "[$GROUP_KEY$]",
-															"maxOptions": "10",
-															"frequencyThreshold": "1",
 															"frequenciesVisible": "true",
-															"displayStyleGroupId": "[$GROUP_ID$]"
+															"frequencyThreshold": "1",
+															"maxOptions": "10",
+															"maxTerms": "10"
 														},
 														"widgetName": "com_liferay_commerce_product_content_search_web_internal_portlet_CPOptionFacetsPortlet"
 													}
@@ -211,11 +218,13 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {},
+													"columnViewportDefinition": {
+													},
 													"id": "tablet"
 												}
 											],
@@ -238,16 +247,16 @@
 													"widgetInstance": {
 														"widgetConfig": {
 															"cpContentListRendererKey": "list-default",
-															"selectionStyle": "adt",
+															"diagram--cpTypeListEntryRendererKey": "list-entry-diagram",
 															"displayStyle": "ddmTemplate_Product Search Results",
-															"virtual--cpTypeListEntryRendererKey": "list-entry-default",
-															"grouped--cpTypeListEntryRendererKey": "list-entry-default",
-															"displayStyleGroupKey": "[$GROUP_KEY$]",
-															"paginationDelta": "9",
-															"paginate": "true",
 															"displayStyleGroupId": "[$GROUP_ID$]",
+															"displayStyleGroupKey": "[$GROUP_KEY$]",
+															"grouped--cpTypeListEntryRendererKey": "list-entry-default",
+															"paginate": "true",
+															"paginationDelta": "9",
+															"selectionStyle": "adt",
 															"simple--cpTypeListEntryRendererKey": "list-entry-default",
-															"diagram--cpTypeListEntryRendererKey": "list-entry-diagram"
+															"virtual--cpTypeListEntryRendererKey": "list-entry-default"
 														},
 														"widgetName": "com_liferay_commerce_product_content_search_web_internal_portlet_CPSearchResultsPortlet"
 													}
@@ -266,7 +275,8 @@
 					{
 						"definition": {
 							"indexed": true,
-							"layout": {},
+							"layout": {
+							},
 							"name": "Search Options"
 						},
 						"pageElements": [
@@ -277,11 +287,11 @@
 									},
 									"widgetInstance": {
 										"widgetConfig": {
-											"federatedSearchKey": "",
 											"allowEmptySearches": "true",
 											"basicFacetSelection": "false",
-											"retainFacetSelections": "true",
-											"displayStyleGroupId": "[$GROUP_ID$]"
+											"displayStyleGroupId": "[$GROUP_ID$]",
+											"federatedSearchKey": "",
+											"retainFacetSelections": "true"
 										},
 										"widgetName": "com_liferay_portal_search_web_search_options_portlet_SearchOptionsPortlet"
 									}
@@ -297,10 +307,10 @@
 		],
 		"type": "Root"
 	},
-	"version": 1.1,
 	"settings": {
 		"masterPage": {
 			"key": "primary"
 		}
-	}
+	},
+	"version": 1.1
 }

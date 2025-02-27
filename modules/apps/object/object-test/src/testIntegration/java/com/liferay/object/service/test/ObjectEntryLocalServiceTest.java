@@ -3998,8 +3998,7 @@ public class ObjectEntryLocalServiceTest {
 				ObjectDefinitionConstants.SCOPE_DEPOT);
 
 		AssertUtils.assertFailure(
-			NoSuchObjectDefinitionException.class,
-			"This object definition does not exist",
+			NoSuchObjectDefinitionException.class, null,
 			() -> _objectEntryLocalService.addObjectEntry(
 				TestPropsValues.getUserId(), depotEntry1.getGroupId(),
 				depotObjectDefinition.getObjectDefinitionId(), null,
@@ -4026,8 +4025,7 @@ public class ObjectEntryLocalServiceTest {
 			ServiceContextTestUtil.getServiceContext());
 
 		AssertUtils.assertFailure(
-			NoSuchObjectDefinitionException.class,
-			"This object definition does not exist",
+			NoSuchObjectDefinitionException.class, null,
 			() -> _objectEntryLocalService.addObjectEntry(
 				TestPropsValues.getUserId(), depotEntry2.getGroupId(),
 				depotObjectDefinition.getObjectDefinitionId(), null,

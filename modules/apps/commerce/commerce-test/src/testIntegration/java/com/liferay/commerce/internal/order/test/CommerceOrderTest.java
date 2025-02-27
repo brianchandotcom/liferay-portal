@@ -23,6 +23,7 @@ import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
 import com.liferay.commerce.exception.CommerceOrderAccountLimitException;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.order.CommerceOrderThreadLocal;
 import com.liferay.commerce.order.engine.CommerceOrderEngine;
 import com.liferay.commerce.product.constants.CommerceChannelConstants;
 import com.liferay.commerce.product.model.CommerceChannel;
@@ -985,6 +986,64 @@ public class CommerceOrderTest {
 
 		_commerceOrderLocalService.deleteCommerceOrders(commerceChannelGroupId);
 		_accountEntryLocalService.deleteAccountEntry(accountEntry);
+	}
+
+	@Test
+	public void testSkipValidateAccountOrdersLimit() throws Exception {
+		Settings settings = FallbackKeysSettingsUtil.getSettings(
+			new GroupServiceSettingsLocator(
+				_commerceChannel.getGroupId(),
+				CommerceConstants.SERVICE_NAME_COMMERCE_ORDER_FIELDS));
+
+		ModifiableSettings modifiableSettings =
+			settings.getModifiableSettings();
+
+		modifiableSettings.setValue("accountCartMaxAllowed", "1");
+
+		modifiableSettings.store();
+
+		AccountEntry accountEntry =
+			CommerceAccountTestUtil.addBusinessAccountEntry(
+				_user.getUserId(), "Test Business Account", null, null,
+				new long[] {_user.getUserId()}, null, _serviceContext);
+
+		long commerceChannelGroupId = _commerceChannel.getGroupId();
+
+		_commerceOrderLocalService.addCommerceOrder(
+			_user.getUserId(), commerceChannelGroupId,
+			accountEntry.getAccountEntryId(), _commerceCurrency.getCode(), 0);
+
+		try {
+			_commerceOrderLocalService.addCommerceOrder(
+				_user.getUserId(), commerceChannelGroupId,
+				accountEntry.getAccountEntryId(), _commerceCurrency.getCode(),
+				0);
+		}
+		catch (CommerceOrderAccountLimitException
+					commerceOrderAccountLimitException) {
+
+			Assert.assertNotNull(commerceOrderAccountLimitException);
+		}
+
+		Assert.assertEquals(
+			1,
+			_commerceOrderService.getPendingCommerceOrdersCount(
+				commerceChannelGroupId, accountEntry.getAccountEntryId(),
+				StringPool.BLANK));
+
+		CommerceOrderThreadLocal.setSkipValidateAccountOrdersLimit(true);
+
+		_commerceOrderLocalService.addCommerceOrder(
+			_user.getUserId(), commerceChannelGroupId,
+			accountEntry.getAccountEntryId(), _commerceCurrency.getCode(), 0);
+
+		Assert.assertEquals(
+			2,
+			_commerceOrderService.getPendingCommerceOrdersCount(
+				commerceChannelGroupId, accountEntry.getAccountEntryId(),
+				StringPool.BLANK));
+
+		_accountEntries.add(accountEntry);
 	}
 
 	@Test

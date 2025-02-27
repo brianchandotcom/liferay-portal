@@ -603,6 +603,47 @@ public class ProductSpecification implements Serializable {
 	@JsonIgnore
 	private Supplier<Map<String, String>> _valueSupplier;
 
+	@io.swagger.v3.oas.annotations.media.Schema(example = "true")
+	public Boolean getVisible() {
+		if (_visibleSupplier != null) {
+			visible = _visibleSupplier.get();
+
+			_visibleSupplier = null;
+		}
+
+		return visible;
+	}
+
+	public void setVisible(Boolean visible) {
+		this.visible = visible;
+
+		_visibleSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setVisible(
+		UnsafeSupplier<Boolean, Exception> visibleUnsafeSupplier) {
+
+		_visibleSupplier = () -> {
+			try {
+				return visibleUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected Boolean visible;
+
+	@JsonIgnore
+	private Supplier<Boolean> _visibleSupplier;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -807,6 +848,18 @@ public class ProductSpecification implements Serializable {
 			sb.append("\"value\": ");
 
 			sb.append(_toJSON(value));
+		}
+
+		Boolean visible = getVisible();
+
+		if (visible != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"visible\": ");
+
+			sb.append(visible);
 		}
 
 		sb.append("}");

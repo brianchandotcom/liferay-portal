@@ -1540,6 +1540,14 @@ public abstract class BaseSpecificationResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("visible", additionalAssertFieldName)) {
+				if (specification.getVisible() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			throw new IllegalArgumentException(
 				"Invalid additional assert field name " +
 					additionalAssertFieldName);
@@ -1766,6 +1774,17 @@ public abstract class BaseSpecificationResourceTestCase {
 				if (!equals(
 						(Map)specification1.getTitle(),
 						(Map)specification2.getTitle())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("visible", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						specification1.getVisible(),
+						specification2.getVisible())) {
 
 					return false;
 				}
@@ -2013,6 +2032,11 @@ public abstract class BaseSpecificationResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("visible")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		throw new IllegalArgumentException(
 			"Invalid entity field " + entityFieldName);
 	}
@@ -2065,6 +2089,7 @@ public abstract class BaseSpecificationResourceTestCase {
 				key = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				listTypeDefinitionId = RandomTestUtil.randomLong();
 				priority = RandomTestUtil.randomDouble();
+				visible = RandomTestUtil.randomBoolean();
 			}
 		};
 	}

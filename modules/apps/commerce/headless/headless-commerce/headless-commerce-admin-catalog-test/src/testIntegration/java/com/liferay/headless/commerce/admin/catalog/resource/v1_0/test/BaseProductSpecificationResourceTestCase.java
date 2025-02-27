@@ -1577,6 +1577,14 @@ public abstract class BaseProductSpecificationResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("visible", additionalAssertFieldName)) {
+				if (productSpecification.getVisible() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			throw new IllegalArgumentException(
 				"Invalid additional assert field name " +
 					additionalAssertFieldName);
@@ -1848,6 +1856,17 @@ public abstract class BaseProductSpecificationResourceTestCase {
 				if (!equals(
 						(Map)productSpecification1.getValue(),
 						(Map)productSpecification2.getValue())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("visible", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						productSpecification1.getVisible(),
+						productSpecification2.getVisible())) {
 
 					return false;
 				}
@@ -2239,6 +2258,11 @@ public abstract class BaseProductSpecificationResourceTestCase {
 				"Invalid entity field " + entityFieldName);
 		}
 
+		if (entityFieldName.equals("visible")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
+		}
+
 		throw new IllegalArgumentException(
 			"Invalid entity field " + entityFieldName);
 	}
@@ -2301,6 +2325,7 @@ public abstract class BaseProductSpecificationResourceTestCase {
 				specificationKey = StringUtil.toLowerCase(
 					RandomTestUtil.randomString());
 				specificationPriority = RandomTestUtil.randomDouble();
+				visible = RandomTestUtil.randomBoolean();
 			}
 		};
 	}

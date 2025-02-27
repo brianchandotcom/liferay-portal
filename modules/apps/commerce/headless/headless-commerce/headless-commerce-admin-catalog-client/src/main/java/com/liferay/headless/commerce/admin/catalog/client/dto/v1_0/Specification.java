@@ -234,6 +234,27 @@ public class Specification implements Cloneable, Serializable {
 
 	protected Map<String, String> title;
 
+	public Boolean getVisible() {
+		return visible;
+	}
+
+	public void setVisible(Boolean visible) {
+		this.visible = visible;
+	}
+
+	public void setVisible(
+		UnsafeSupplier<Boolean, Exception> visibleUnsafeSupplier) {
+
+		try {
+			visible = visibleUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Boolean visible;
+
 	@Override
 	public Specification clone() throws CloneNotSupportedException {
 		return (Specification)super.clone();

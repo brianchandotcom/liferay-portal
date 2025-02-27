@@ -5,19 +5,26 @@
 
 package com.liferay.layout.internal.upgrade.v1_4_4;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.feature.flag.constants.FeatureFlagConstants;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.PortalPreferencesLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.PortalPreferencesWrapper;
-import com.liferay.release.feature.flag.ReleaseFeatureFlag;
-import com.liferay.release.feature.flag.ReleaseFeatureFlagManager;
-import com.liferay.release.feature.flag.ReleaseFeatureFlagManagerUtil;
+
+import java.sql.ResultSet;
+import java.sql.Statement;
+
+import java.util.Dictionary;
+import java.util.Objects;
+
+import org.osgi.framework.Constants;
+import org.osgi.service.cm.Configuration;
+import org.osgi.service.cm.ConfigurationAdmin;
 
 /**
  * @author Lourdes Fernández Besada
@@ -26,60 +33,92 @@ public class LayoutPrivateLayoutsUpgradeProcess extends UpgradeProcess {
 
 	public LayoutPrivateLayoutsUpgradeProcess(
 		CompanyLocalService companyLocalService,
-		PortalPreferencesLocalService portalPreferencesLocalService,
-		ReleaseFeatureFlagManager releaseFeatureFlagManager) {
+		ConfigurationAdmin configurationAdmin,
+		PortalPreferencesLocalService portalPreferencesLocalService) {
 
 		_companyLocalService = companyLocalService;
+		_configurationAdmin = configurationAdmin;
 		_portalPreferencesLocalService = portalPreferencesLocalService;
-		_releaseFeatureFlagManager = releaseFeatureFlagManager;
 	}
 
 	@Override
 	protected void doUpgrade() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			String value;
-
-			if (ReleaseFeatureFlagManagerUtil.isEnabled(
-					ReleaseFeatureFlag.DISABLE_PRIVATE_LAYOUTS)) {
-
-				value = Boolean.FALSE.toString();
-			}
-			else {
-				value = Boolean.TRUE.toString();
-			}
+			String value = _getValue();
 
 			_companyLocalService.forEachCompanyId(
 				companyId -> {
-					try {
-						PortalPreferencesWrapper portalPreferencesWrapper =
-							(PortalPreferencesWrapper)
-								_portalPreferencesLocalService.getPreferences(
-									companyId,
-									PortletKeys.PREFS_OWNER_TYPE_COMPANY);
+					PortalPreferencesWrapper portalPreferencesWrapper =
+						(PortalPreferencesWrapper)
+							_portalPreferencesLocalService.getPreferences(
+								companyId,
+								PortletKeys.PREFS_OWNER_TYPE_COMPANY);
 
-						PortalPreferences portalPreferences =
-							portalPreferencesWrapper.getPortalPreferencesImpl();
+					PortalPreferences portalPreferences =
+						portalPreferencesWrapper.getPortalPreferencesImpl();
 
-						portalPreferences.setValue(
-							FeatureFlagConstants.PREFERENCE_NAMESPACE,
-							"LPD-38869", value);
+					portalPreferences.setValue(
+						FeatureFlagConstants.PREFERENCE_NAMESPACE, "LPD-38869",
+						value);
 
-						_portalPreferencesLocalService.updatePreferences(
-							companyId, PortletKeys.PREFS_OWNER_TYPE_COMPANY,
-							portalPreferences);
-					}
-					catch (Exception exception) {
-						_log.error(exception);
-					}
+					_portalPreferencesLocalService.updatePreferences(
+						companyId, PortletKeys.PREFS_OWNER_TYPE_COMPANY,
+						portalPreferences);
 				});
 		}
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		LayoutPrivateLayoutsUpgradeProcess.class);
+	private String _getReleaseInfo() throws Exception {
+		try (Statement statement = connection.createStatement();
+			ResultSet resultSet = statement.executeQuery(
+				"select schemaVersion from Release_ where servletContextName " +
+					"= 'com.liferay.release.feature.flag.web'")) {
+
+			if (resultSet.next()) {
+				return resultSet.getString("schemaVersion");
+			}
+		}
+
+		return null;
+	}
+
+	private String _getValue() throws Exception {
+		Configuration[] configurations = _configurationAdmin.listConfigurations(
+			StringBundler.concat(
+				"(", Constants.SERVICE_PID,
+				"=com.liferay.release.feature.flag.web.internal.configuration.",
+				"ReleaseFeatureFlagConfiguration)"));
+
+		if (configurations == null) {
+			if (Validator.isNull(_getReleaseInfo())) {
+				return Boolean.TRUE.toString();
+			}
+
+			return Boolean.FALSE.toString();
+		}
+
+		Configuration configuration = configurations[0];
+
+		Dictionary<String, Object> dictionary = configuration.getProperties();
+
+		String[] disabledReleaseFeatureFlags = (String[])dictionary.get(
+			"disabledReleaseFeatureFlags");
+
+		if ((disabledReleaseFeatureFlags.length != 0) &&
+			Objects.equals(
+				disabledReleaseFeatureFlags[0], _DISABLE_PRIVATE_LAYOUTS)) {
+
+			return Boolean.FALSE.toString();
+		}
+
+		return Boolean.TRUE.toString();
+	}
+
+	private static final String _DISABLE_PRIVATE_LAYOUTS =
+		"DISABLE_PRIVATE_LAYOUTS";
 
 	private final CompanyLocalService _companyLocalService;
+	private final ConfigurationAdmin _configurationAdmin;
 	private final PortalPreferencesLocalService _portalPreferencesLocalService;
-	private final ReleaseFeatureFlagManager _releaseFeatureFlagManager;
 
 }

@@ -692,6 +692,11 @@ public abstract class BaseObjectEntryFolderResourceTestCase {
 			objectEntryFolder);
 	}
 
+	@Test
+	public void testPostAssetLibraryObjectEntryFolderBatch() throws Exception {
+		Assert.assertTrue(true);
+	}
+
 	@Rule
 	public SearchTestRule searchTestRule = new SearchTestRule();
 

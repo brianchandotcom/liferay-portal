@@ -711,6 +711,11 @@ public abstract class BaseStructuredContentResourceTestCase {
 	}
 
 	@Test
+	public void testPostAssetLibraryStructuredContentBatch() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	@Test
 	public void testDeleteAssetLibraryStructuredContentByExternalReferenceCode()
 		throws Exception {
 
@@ -2129,6 +2134,11 @@ public abstract class BaseStructuredContentResourceTestCase {
 	}
 
 	@Test
+	public void testPostSiteStructuredContentBatch() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	@Test
 	public void testDeleteSiteStructuredContentByExternalReferenceCode()
 		throws Exception {
 
@@ -3342,6 +3352,13 @@ public abstract class BaseStructuredContentResourceTestCase {
 	}
 
 	@Test
+	public void testPostStructuredContentFolderStructuredContentBatch()
+		throws Exception {
+
+		Assert.assertTrue(true);
+	}
+
+	@Test
 	public void testDeleteStructuredContent() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		StructuredContent structuredContent =
@@ -3639,6 +3656,11 @@ public abstract class BaseStructuredContentResourceTestCase {
 
 		return structuredContentResource.postSiteStructuredContent(
 			testGroup.getGroupId(), randomStructuredContent());
+	}
+
+	@Test
+	public void testPutStructuredContentBatch() throws Exception {
+		Assert.assertTrue(true);
 	}
 
 	@Test

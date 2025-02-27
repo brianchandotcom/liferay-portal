@@ -888,6 +888,11 @@ public abstract class BaseWikiPageResourceTestCase {
 	}
 
 	@Test
+	public void testPostWikiNodeWikiPageBatch() throws Exception {
+		Assert.assertTrue(true);
+	}
+
+	@Test
 	public void testGetWikiPageWikiPagesPage() throws Exception {
 		Long parentWikiPageId =
 			testGetWikiPageWikiPagesPage_getParentWikiPageId();
@@ -1208,6 +1213,11 @@ public abstract class BaseWikiPageResourceTestCase {
 	protected WikiPage testPutWikiPage_addWikiPage() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Test
+	public void testPutWikiPageBatch() throws Exception {
+		Assert.assertTrue(true);
 	}
 
 	@Test

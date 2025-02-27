@@ -591,6 +591,13 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 	}
 
 	@Test
+	public void testPostMessageBoardMessageMessageBoardAttachmentBatch()
+		throws Exception {
+
+		Assert.assertTrue(true);
+	}
+
+	@Test
 	public void testGetMessageBoardThreadMessageBoardAttachmentsPage()
 		throws Exception {
 
@@ -738,6 +745,13 @@ public abstract class BaseMessageBoardAttachmentResourceTestCase {
 			postMessageBoardThreadMessageBoardAttachment(
 				testGetMessageBoardThreadMessageBoardAttachmentsPage_getMessageBoardThreadId(),
 				messageBoardAttachment, multipartFiles);
+	}
+
+	@Test
+	public void testPostMessageBoardThreadMessageBoardAttachmentBatch()
+		throws Exception {
+
+		Assert.assertTrue(true);
 	}
 
 	@Test

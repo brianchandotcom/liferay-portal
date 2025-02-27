@@ -1,0 +1,6 @@
+{
+	"defaultTemplate": false,
+	"externalReferenceCode": "LFR-404-ERROR",
+	"name": "404",
+	"type": "ErrorCode404"
+}

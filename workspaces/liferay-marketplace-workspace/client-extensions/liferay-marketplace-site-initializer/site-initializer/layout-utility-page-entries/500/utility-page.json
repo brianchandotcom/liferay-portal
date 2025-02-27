@@ -1,0 +1,6 @@
+{
+	"defaultTemplate": false,
+	"externalReferenceCode": "LFR-500-ERROR",
+	"name": "500",
+	"type": "ErrorCode500"
+}

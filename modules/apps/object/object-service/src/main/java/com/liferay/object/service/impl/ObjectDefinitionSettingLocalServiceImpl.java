@@ -54,6 +54,15 @@ public class ObjectDefinitionSettingLocalServiceImpl
 	}
 
 	@Override
+	public ObjectDefinitionSetting getObjectDefinitionSetting(
+			long objectDefinitionId, String name)
+		throws PortalException {
+
+		return objectDefinitionSettingPersistence.findByODI_N(
+			objectDefinitionId, name);
+	}
+
+	@Override
 	public List<ObjectDefinitionSetting> getObjectDefinitionSettings(
 		long objectDefinitionId) {
 

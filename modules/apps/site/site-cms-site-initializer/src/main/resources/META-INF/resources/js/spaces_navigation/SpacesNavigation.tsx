@@ -5,9 +5,22 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayPanel from '@clayui/panel';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
+
+import {getAssetsLibrariesByCompany} from '../api/api';
+import SpaceSticker from '../components/SpaceSticker';
 
 const SpacesNavigation: React.FC = () => {
+	const [assetLibraries, setAssetsLibraries] = useState<
+		{id: string; name: string}[]
+	>([]);
+
+	useEffect(() => {
+		getAssetsLibrariesByCompany().then((result: any) => {
+			setAssetsLibraries(result);
+		});
+	}, []);
+
 	const onAddButtonClick = (event: any) => {
 		event.preventDefault();
 		event.stopPropagation();
@@ -35,7 +48,15 @@ const SpacesNavigation: React.FC = () => {
 			}
 			showCollapseIcon
 		>
-			<ClayPanel.Body>Here goes the spaces list</ClayPanel.Body>
+			<ClayPanel.Body className="py-0">
+				<ul className="list-unstyled">
+					{assetLibraries.map((space) => (
+						<li className="mb-2" key={space.id}>
+							<SpaceSticker color={space.id} name={space.name} />
+						</li>
+					))}
+				</ul>
+			</ClayPanel.Body>
 		</ClayPanel>
 	);
 };

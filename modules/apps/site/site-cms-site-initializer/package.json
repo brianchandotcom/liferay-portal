@@ -17,6 +17,7 @@
 		"@clayui/panel": "3.128.0",
 		"@clayui/tabs": "3.129.0",
 		"@clayui/toolbar": "3.128.0",
+		"@clayui/sticker": "^3.128.0",
 		"@liferay/frontend-data-set-web": "*",
 		"@liferay/frontend-js-react-web": "*",
 		"@liferay/layout-js-components-web": "*",

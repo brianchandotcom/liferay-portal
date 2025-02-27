@@ -8,6 +8,8 @@ package com.liferay.source.formatter.check;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
+import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -65,7 +67,61 @@ public class GradleDependencyArtifactsCheck extends BaseFileCheck {
 			}
 		}
 
+		if (absolutePath.endsWith("/dependencies.properties")) {
+			_checkVersionInDependenciesPropertiesFile(
+				fileName, content, enforceVersionArtifacts);
+		}
+
 		return content;
+	}
+
+	private void _checkVersionInDependenciesPropertiesFile(
+			String fileName, String content,
+			List<String> enforceVersionArtifacts)
+		throws IOException {
+
+		try (UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(new UnsyncStringReader(content))) {
+
+			String line = null;
+			int lineNumber = 0;
+
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				lineNumber++;
+
+				String[] parts = StringUtil.split(line, StringPool.EQUAL);
+
+				if ((parts.length != 2) ||
+					enforceVersionArtifacts.contains(parts[1])) {
+
+					continue;
+				}
+
+				String[] artifactParts = StringUtil.split(
+					parts[1], StringPool.COLON);
+
+				if ((artifactParts.length != 3) ||
+					!ListUtil.exists(
+						enforceVersionArtifacts,
+						enforceVersionArtifact ->
+							enforceVersionArtifact.startsWith(
+								StringBundler.concat(
+									artifactParts[0], ":", artifactParts[1],
+									":")))) {
+
+					continue;
+				}
+
+				addMessage(
+					fileName,
+					StringBundler.concat(
+						"The version of \"", artifactParts[0], ":",
+						artifactParts[1], "\" does not match the version in \"",
+						_ENFORCE_VERSION_ARTIFACTS_KEY,
+						"\" property in source-formatter.properties"),
+					lineNumber);
+			}
+		}
 	}
 
 	private String _enforceDependencyVersions(

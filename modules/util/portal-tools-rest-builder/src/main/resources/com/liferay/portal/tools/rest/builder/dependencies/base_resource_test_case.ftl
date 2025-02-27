@@ -1504,10 +1504,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 						@Override
 						public URI getRequestUri() {
-							return UriBuilder.fromPath(StringBundler.concat(
-								"http://localhost:8080/o/", applicationPath,
-								 "/", RandomTestUtil.randomString()
-							)).build();
+							return URI.create(StringBundler.concat("http://localhost:8080/o/", applicationPath, "/", RandomTestUtil.randomString()));
 						}
 
 						@Override
@@ -1527,8 +1524,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 						@Override
 						public URI getBaseUri() {
-							return UriBuilder.fromPath(StringBundler.concat(
-								"http://localhost:8080/o/", applicationPath)).build();
+							return URI.create(StringBundler.concat("http://localhost:8080/o/", applicationPath));
 						}
 
 						@Override

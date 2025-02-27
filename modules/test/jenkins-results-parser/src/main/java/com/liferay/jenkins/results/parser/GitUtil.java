@@ -159,6 +159,11 @@ public class GitUtil {
 				RemoteGitRef gitHubRemoteGitRef = _gitHubRemoteGitRefs.get(key);
 
 				if (gitHubRemoteGitRef != null) {
+					System.out.println(
+						JenkinsResultsParserUtil.combine(
+							"Using cached Git ref from ", remoteURL, " for ",
+							remoteGitBranchName));
+
 					return gitHubRemoteGitRef;
 				}
 			}

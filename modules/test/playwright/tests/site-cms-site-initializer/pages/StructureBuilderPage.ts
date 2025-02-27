@@ -3,13 +3,29 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {ObjectDefinitionApi} from '@liferay/object-admin-rest-client-js';
 import {Locator, Page, expect} from '@playwright/test';
 
+import {ApiHelpers} from '../../../helpers/ApiHelpers';
 import {clickAndExpectToBeVisible} from '../../../utils/clickAndExpectToBeVisible';
 import {PORTLET_URLS} from '../../../utils/portletUrls';
 import {waitForAlert} from '../../../utils/waitForAlert';
 
-type FieldType = 'Text';
+export const FIELD_TYPES = [
+	'Text',
+	'Long Text',
+	'Rich Text',
+	'Integer',
+	'Decimal',
+	'Single Select',
+	'Multiselect',
+	'Date',
+	'Date and Time',
+	'Boolean',
+	'Upload',
+] as const;
+
+type FieldType = (typeof FIELD_TYPES)[number];
 
 export class StructureBuilderPage {
 	readonly page: Page;

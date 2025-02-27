@@ -8,6 +8,7 @@ import {expect, mergeTests} from '@playwright/test';
 import {loginTest} from '../../fixtures/loginTest';
 import {getRandomInt} from '../../utils/getRandomInt';
 import {cmsPagesTest} from './fixtures/cmsPagesTest';
+import {FIELD_TYPES} from './pages/StructureBuilderPage';
 
 const test = mergeTests(cmsPagesTest, loginTest());
 
@@ -51,6 +52,38 @@ test('Structures can be saved and published', async ({
 
 	await structureBuilderPage.saveStructure();
 	await structureBuilderPage.publishStructure();
+
+	// Delete structure
+
+	await structureBuilderPage.deleteStructure(id);
+});
+
+test('Structures can be saved with all type of fields', async ({
+	structureBuilderPage,
+}) => {
+
+	// Go to the Structure Builder
+
+	await structureBuilderPage.goto();
+
+	// Change label
+
+	const label = `Structure ${getRandomInt()}`;
+
+	await structureBuilderPage.changeStructureLabel(label);
+
+	// Add a field of each type
+
+	for (const type of FIELD_TYPES) {
+		await structureBuilderPage.addField(type);
+	}
+
+	// Save and publish the structure
+
+	const {id} = await structureBuilderPage.saveStructure();
+	await structureBuilderPage.publishStructure();
+
+	// Delete the structure
 
 	// Delete structure
 

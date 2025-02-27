@@ -51,20 +51,14 @@ export class CommerceAdminCurrenciesPage {
 			.getByTestId('management-toolbar')
 			.getByRole('button', {name: 'Filter'});
 		this.firstRowCurrencyCellName = (currencyName) =>
-			page
-				.locator('.dnd-tbody .dnd-tr')
-				.first()
-				.locator('.cell-name')
-				.filter({hasText: currencyName});
+			page.locator('tbody tr').first().filter({hasText: currencyName});
 		this.lastRowCurrencyCellName = (currencyName) =>
-			page
-				.locator('.dnd-tbody .dnd-tr')
-				.last()
-				.locator('.cell-name')
-				.filter({hasText: currencyName});
+			page.locator('tbody tr').last().filter({hasText: currencyName});
 		this.noResultsFoundText = page.getByText('No Results Found');
 		this.primaryMenuItem = page.getByRole('menuitem', {name: 'Primary'});
-		this.priorityButton = page.getByRole('button', {name: 'Priority'});
+		this.priorityButton = page
+			.getByRole('columnheader', {name: 'Priority'})
+			.getByRole('button');
 		this.resetFilterButton = page.getByRole('button', {
 			name: 'Reset Filters',
 		});

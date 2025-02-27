@@ -30,13 +30,13 @@ test('COMMERCE-5839 As a system admin i want to be able to create / update and d
 	commerceAdminCurrencyDetailsPage,
 	page,
 }) => {
-	test.setTimeout(180000);
 	await page.goto('/');
 	await commerceAdminCurrenciesPage.goto();
 
 	const currencyName = 'TC' + getRandomInt();
 
 	await commerceAdminCurrenciesPage.addCurrencyAddButton.click();
+
 	await commerceAdminCurrencyDetailsPage.nameInput.fill(currencyName);
 	await commerceAdminCurrencyDetailsPage.codeInput.fill(currencyName);
 	await commerceAdminCurrencyDetailsPage.saveButton.click();
@@ -48,9 +48,11 @@ test('COMMERCE-5839 As a system admin i want to be able to create / update and d
 	).toBeVisible();
 
 	await commerceAdminCurrenciesPage.currencyNameLink(currencyName).click();
+
 	await commerceAdminCurrencyDetailsPage.symbol.fill('&&&');
 	await commerceAdminCurrencyDetailsPage.priority.fill('99');
 	await commerceAdminCurrencyDetailsPage.saveButton.click();
+
 	await commerceAdminCurrenciesPage.currencyNameLink(currencyName).click();
 
 	await expect(commerceAdminCurrencyDetailsPage.codeInput).not.toBeEditable();
@@ -58,6 +60,7 @@ test('COMMERCE-5839 As a system admin i want to be able to create / update and d
 	await expect(commerceAdminCurrencyDetailsPage.priority).toHaveValue('99.0');
 
 	await commerceAdminCurrencyDetailsPage.cancelButton.click();
+
 	await commerceAdminCurrenciesPage.priorityButton.click();
 
 	await expect(
@@ -143,6 +146,7 @@ test('COMMERCE-5839 As a system admin i want to be able to create / update and d
 	await commerceAdminCurrenciesPage.actionsButton.click();
 
 	let dialogMessage = '';
+
 	page.on('dialog', (dialog) => {
 		dialogMessage = dialog.message();
 		dialog.accept();
@@ -150,7 +154,7 @@ test('COMMERCE-5839 As a system admin i want to be able to create / update and d
 
 	await commerceAdminCurrenciesPage.deleteMenuItem.click();
 
-	await expect(dialogMessage).toEqual(
+	expect(dialogMessage).toEqual(
 		'Are you sure you want to delete this entry?'
 	);
 

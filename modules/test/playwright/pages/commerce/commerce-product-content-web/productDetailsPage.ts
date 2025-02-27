@@ -55,6 +55,7 @@ export class ProductDetailsPage {
 	readonly optionSelector: (optionName: string) => Promise<Locator>;
 	readonly page: Page;
 	readonly pageTitle: Locator;
+	readonly paginationText: (text: string) => Locator;
 	readonly pinAddToCartButton: Locator;
 	readonly priceContainer: Locator;
 	readonly priceField: (
@@ -66,6 +67,10 @@ export class ProductDetailsPage {
 		promoPrice: string,
 		container?: Locator | Page
 	) => Promise<Locator>;
+	readonly replacementsSearchBar: Locator;
+	readonly replacementsSearchButton: Locator;
+	readonly replacementsTab: Locator;
+	readonly replacementsTableCell: (cellValue: string) => Locator;
 	readonly saveButtonEditFrame: Locator;
 	readonly selectOption: (
 		optionLabel: string,
@@ -178,6 +183,7 @@ export class ProductDetailsPage {
 			return page.getByLabel(optionName);
 		};
 		this.page = page;
+		this.paginationText = (text: string) => page.getByText(text);
 		this.pinAddToCartButton = page
 			.locator("[class='diagram-tooltip']")
 			.getByRole('button');
@@ -194,6 +200,15 @@ export class ProductDetailsPage {
 		) => {
 			return container.getByText(promoPrice);
 		};
+		this.replacementsSearchBar = page
+			.getByTestId('management-toolbar')
+			.getByPlaceholder('Search');
+		this.replacementsSearchButton = page.getByRole('button', {
+			name: 'Search',
+		});
+		this.replacementsTab = page.getByRole('tab', {name: 'Replacements'});
+		this.replacementsTableCell = (cellValue: string) =>
+			page.getByRole('cell', {name: cellValue});
 		this.saveButtonEditFrame =
 			this.ellipsisFrameProductSpecification.getByRole('button', {
 				name: 'Save',

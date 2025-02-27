@@ -179,12 +179,14 @@ type TRelatedProduct = {
 
 type TSku = {
 	cost: number;
+	discontinued?: boolean;
 	gtin?: string;
 	id?: number;
 	manufacturerPartNumber?: string;
 	price: number;
 	published: boolean;
 	purchasable: boolean;
+	replacementSkuId?: number;
 	sku: string;
 };
 
@@ -368,6 +370,14 @@ export class HeadlessCommerceAdminCatalogApiHelper {
 		return this.apiHelpers.get(
 			`${this.apiHelpers.baseUrl}${this.basePath}/products/${productId}/product-virtual-settings`
 		);
+	}
+
+	async getSkuByName(name: string) {
+		const skus = await this.apiHelpers.get(
+			`${this.apiHelpers.baseUrl}${this.basePath}/skus?search=${name}`
+		);
+
+		return skus.items[0];
 	}
 
 	async getSpecification(specificationId: string) {

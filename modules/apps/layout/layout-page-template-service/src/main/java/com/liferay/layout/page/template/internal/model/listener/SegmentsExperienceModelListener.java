@@ -16,8 +16,6 @@ import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.segments.model.SegmentsExperience;
 
-import java.util.List;
-
 import javax.portlet.PortletPreferences;
 
 import org.osgi.service.component.annotations.Component;
@@ -39,19 +37,17 @@ public class SegmentsExperienceModelListener
 				deleteLayoutPageTemplateStructureRelsBySegmentsExperienceId(
 					segmentsExperience.getSegmentsExperienceId());
 
-			List<FragmentEntryLink> fragmentEntryLinks =
-				_fragmentEntryLinkLocalService.
-					getFragmentEntryLinksBySegmentsExperienceId(
-						segmentsExperience.getGroupId(),
-						segmentsExperience.getSegmentsExperienceId(),
-						segmentsExperience.getPlid());
+			for (FragmentEntryLink fragmentEntryLink :
+					_fragmentEntryLinkLocalService.
+						getFragmentEntryLinksBySegmentsExperienceId(
+							segmentsExperience.getGroupId(),
+							segmentsExperience.getSegmentsExperienceId(),
+							segmentsExperience.getPlid())) {
 
-			for (FragmentEntryLink fragmentEntryLink : fragmentEntryLinks) {
-				List<String> portletIds =
-					_portletRegistry.getFragmentEntryLinkPortletIds(
-						fragmentEntryLink);
+				for (String portletId :
+						_portletRegistry.getFragmentEntryLinkPortletIds(
+							fragmentEntryLink)) {
 
-				for (String portletId : portletIds) {
 					PortletPreferences jxPortletPreferences =
 						_portletPreferencesLocalService.fetchPreferences(
 							fragmentEntryLink.getCompanyId(),

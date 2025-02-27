@@ -36,19 +36,10 @@ public class DeleteSegmentsExperienceMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		_deleteSegmentsExperience(actionRequest);
+		_segmentsExperienceService.deleteSegmentsExperience(
+			ParamUtil.getLong(actionRequest, "segmentsExperienceId"));
 
 		return _jsonFactory.createJSONObject();
-	}
-
-	private void _deleteSegmentsExperience(ActionRequest actionRequest)
-		throws Exception {
-
-		long segmentsExperienceId = ParamUtil.getLong(
-			actionRequest, "segmentsExperienceId");
-
-		_segmentsExperienceService.deleteSegmentsExperience(
-			segmentsExperienceId);
 	}
 
 	@Reference

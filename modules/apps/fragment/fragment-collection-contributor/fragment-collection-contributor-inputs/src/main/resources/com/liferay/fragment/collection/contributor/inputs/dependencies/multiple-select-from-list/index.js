@@ -48,6 +48,8 @@ else {
 			}) => {
 				const defaultLanguageId = themeDisplay.getDefaultLanguageId();
 
+				let currentLanguageId = defaultLanguageId;
+
 				if (input.localizable) {
 
 					// Set initial values
@@ -80,8 +82,9 @@ else {
 					const {onChange} = registerLocalizedInput({
 						changeTextDirection: false,
 						defaultLanguageId,
-						namespace: fragmentNamespace,
 						onLocaleChange: ({languageId}) => {
+							currentLanguageId = languageId;
+
 							allInputs.forEach((input, index) => {
 								const translationInput =
 									getOrCreateTranslationInput(
@@ -130,8 +133,25 @@ else {
 						},
 					});
 
-					fieldSet.addEventListener('change', (event) => {
-						onChange(event);
+					fieldSet.addEventListener('change', () => {
+						onChange({
+							handleChange: () => {
+								allInputs.forEach((input) => {
+									const translationInput =
+										getOrCreateTranslationInput(
+											input.id,
+											input.name,
+											currentLanguageId,
+											input.parentNode,
+											fragmentNamespace
+										);
+
+									translationInput.value = input.checked
+										? input.value
+										: '';
+								});
+							},
+						});
 					});
 				}
 				else {

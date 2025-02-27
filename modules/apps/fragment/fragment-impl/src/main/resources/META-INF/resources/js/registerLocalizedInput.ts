@@ -137,19 +137,31 @@ export function registerLocalizedInput({
 	);
 
 	return {
-		onChange: (value: string, label?: string) => {
-			const translationInput = getOrCreateTranslationInput(
-				inputElement?.id || inputName,
-				inputName,
-				currentLanguageId,
-				localizationInputsContainer,
-				namespace
-			);
+		onChange: ({
+			handleChange,
+			label,
+			value = null,
+		}: {
+			handleChange?: () => void;
+			label?: string;
+			value?: string | null;
+		}) => {
+			handleChange?.();
 
-			translationInput.value = value;
+			if (value !== null) {
+				const translationInput = getOrCreateTranslationInput(
+					inputElement?.id || inputName,
+					inputName,
+					currentLanguageId,
+					localizationInputsContainer,
+					namespace
+				);
 
-			if (label) {
-				translationInput.dataset.label = label;
+				translationInput.value = value;
+
+				if (label) {
+					translationInput.dataset.label = label;
+				}
 			}
 
 			Liferay.fire('localizationSelect:updateTranslationStatus', {

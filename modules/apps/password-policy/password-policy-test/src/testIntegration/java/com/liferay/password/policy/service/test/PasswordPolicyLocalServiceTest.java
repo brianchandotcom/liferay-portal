@@ -138,8 +138,8 @@ public class PasswordPolicyLocalServiceTest {
 				_updateLDAPAuthConfigurationWithSafeCloseable(true)) {
 
 			Assert.assertNotNull(
-				_passwordPolicyLocalService.getPasswordPolicy(
-					TestPropsValues.getCompanyId(), true));
+				_passwordPolicyLocalService.getDefaultPasswordPolicy(
+					TestPropsValues.getCompanyId()));
 		}
 	}
 

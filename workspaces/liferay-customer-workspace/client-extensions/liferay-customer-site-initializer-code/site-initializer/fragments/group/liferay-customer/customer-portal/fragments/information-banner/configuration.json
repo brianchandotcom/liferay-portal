@@ -3,6 +3,40 @@
 		{
 			"fields": [
 				{
+					"defaultValue": "info",
+					"description": "Type of alert",
+					"label": "Alert Type",
+					"name": "alertType",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "Info",
+								"value": "alert-info"
+							},
+							{
+								"label": "Success",
+								"value": "alert-success"
+							},
+							{
+								"label": "Warning",
+								"value": "alert-warning"
+							},
+							{
+								"label": "Danger",
+								"value": "alert-danger"
+							}
+						]
+					}
+				},
+				{
+					"description": "Banner content",
+					"label": "Content",
+					"localizable": true,
+					"name": "content",
+					"type": "text"
+				},
+				{
 					"defaultValue": true,
 					"description": "Is the banner dismissible?",
 					"label": "Dismissible",
@@ -11,9 +45,42 @@
 				},
 				{
 					"description": "Date format: MM/DD/YYYY",
-					"label": "Expiration Date",
-					"name": "expirationDate",
+					"label": "Display Start Date",
+					"name": "displayStartDate",
 					"type": "text"
+				},
+				{
+					"description": "Date format: MM/DD/YYYY",
+					"label": "Display End Date",
+					"name": "displayEndDate",
+					"type": "text"
+				},
+				{
+					"defaultValue": "none",
+					"description": "Icon",
+					"label": "Icon",
+					"name": "icon",
+					"type": "select",
+					"typeOptions": {
+						"validValues": [
+							{
+								"label": "None",
+								"value": "none"
+							},
+							{
+								"label": "Warning",
+								"value": "warning"
+							},
+							{
+								"label": "Exclamation",
+								"value": "exclamation-circle"
+							},
+							{
+								"label": "Bell",
+								"value": "bell-on"
+							}
+						]
+					}
 				}
 			]
 		}

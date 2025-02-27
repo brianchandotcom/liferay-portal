@@ -7,6 +7,7 @@ package com.liferay.headless.commerce.delivery.catalog.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CProduct;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.test.util.CPTestUtil;
@@ -214,6 +215,13 @@ public class ProductResourceTest extends BaseProductResourceTestCase {
 				shortDescription = product.getShortDescription();
 				slug = cpDefinition2.getURL(
 					LocaleUtil.toLanguageId(siteDefaultLocale));
+
+				setExternalReferenceCode(
+					() -> {
+						CProduct cProduct = cpDefinition2.getCProduct();
+
+						return cProduct.getExternalReferenceCode();
+					});
 			}
 		};
 	}
@@ -246,6 +254,13 @@ public class ProductResourceTest extends BaseProductResourceTestCase {
 				modifiedDate = cpDefinition2.getModifiedDate();
 				productId = cpDefinition2.getCProductId();
 				productType = cpDefinition2.getProductTypeName();
+
+				setExternalReferenceCode(
+					() -> {
+						CProduct cProduct = cpDefinition2.getCProduct();
+
+						return cProduct.getExternalReferenceCode();
+					});
 			}
 		};
 	}

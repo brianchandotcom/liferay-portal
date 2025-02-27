@@ -106,30 +106,6 @@ public class CommerceChannelRelServiceImpl
 	}
 
 	@Override
-	public List<CommerceChannelRel> getCommerceChannelCountries(
-			long commerceChannelId, String name, int start, int end)
-		throws PortalException {
-
-		_commerceChannelModelResourcePermission.check(
-			getPermissionChecker(), commerceChannelId, ActionKeys.VIEW);
-
-		return commerceChannelRelLocalService.getCommerceChannelCountries(
-			commerceChannelId, name, start, end);
-	}
-
-	@Override
-	public int getCommerceChannelCountriesCount(
-			long commerceChannelId, String name)
-		throws PortalException {
-
-		_commerceChannelModelResourcePermission.check(
-			getPermissionChecker(), commerceChannelId, ActionKeys.VIEW);
-
-		return commerceChannelRelLocalService.getCommerceChannelCountriesCount(
-			commerceChannelId, name);
-	}
-
-	@Override
 	public CommerceChannelRel getCommerceChannelRel(long commerceChannelRelId)
 		throws PortalException {
 
@@ -228,6 +204,30 @@ public class CommerceChannelRelServiceImpl
 		return commerceChannelRelLocalService.
 			getCommerceCurrencyCommerceChannelRelsCount(
 				commerceChannelId, name);
+	}
+
+	@Override
+	public List<CommerceChannelRel> getCountryCommerceChannelRels(
+			long commerceChannelId, String name, int start, int end)
+		throws PortalException {
+
+		_commerceChannelModelResourcePermission.check(
+			getPermissionChecker(), commerceChannelId, ActionKeys.VIEW);
+
+		return commerceChannelRelLocalService.getCountryCommerceChannelRels(
+			commerceChannelId, name, start, end);
+	}
+
+	@Override
+	public int getCountryCommerceChannelRelsCount(
+			long commerceChannelId, String name)
+		throws PortalException {
+
+		_commerceChannelModelResourcePermission.check(
+			getPermissionChecker(), commerceChannelId, ActionKeys.VIEW);
+
+		return commerceChannelRelLocalService.
+			getCountryCommerceChannelRelsCount(commerceChannelId, name);
 	}
 
 	@Reference(

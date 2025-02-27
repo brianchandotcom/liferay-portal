@@ -120,18 +120,34 @@ public class JSONMessageBodyWriterTest {
 
 		Assert.assertTrue(_property1UnsafeSupplierComputed);
 		Assert.assertFalse(_property2UnsafeSupplierComputed);
+		Assert.assertFalse(_property3UnsafeSupplierComputed);
 
 		_property1UnsafeSupplierComputed = false;
 		_property2UnsafeSupplierComputed = false;
+		_property3UnsafeSupplierComputed = false;
+
+		HTTPTestUtil.invokeToJSONObject(
+			null, "test-vulcan/test-class?fields=property3UnsafeSupplier",
+			Http.Method.GET);
+
+		Assert.assertFalse(_property1UnsafeSupplierComputed);
+		Assert.assertFalse(_property2UnsafeSupplierComputed);
+		Assert.assertTrue(_property3UnsafeSupplierComputed);
+
+		_property1UnsafeSupplierComputed = false;
+		_property2UnsafeSupplierComputed = false;
+		_property3UnsafeSupplierComputed = false;
 
 		HTTPTestUtil.invokeToJSONObject(
 			null, "test-vulcan/test-class?fields=testClass", Http.Method.GET);
 
 		Assert.assertTrue(_property1UnsafeSupplierComputed);
 		Assert.assertTrue(_property2UnsafeSupplierComputed);
+		Assert.assertTrue(_property3UnsafeSupplierComputed);
 
 		_property1UnsafeSupplierComputed = false;
 		_property2UnsafeSupplierComputed = false;
+		_property3UnsafeSupplierComputed = false;
 
 		HTTPTestUtil.invokeToJSONObject(
 			null,
@@ -140,9 +156,11 @@ public class JSONMessageBodyWriterTest {
 
 		Assert.assertTrue(_property1UnsafeSupplierComputed);
 		Assert.assertTrue(_property2UnsafeSupplierComputed);
+		Assert.assertTrue(_property3UnsafeSupplierComputed);
 
 		_property1UnsafeSupplierComputed = false;
 		_property2UnsafeSupplierComputed = false;
+		_property3UnsafeSupplierComputed = false;
 
 		HTTPTestUtil.invokeToJSONObject(
 			null,
@@ -152,15 +170,18 @@ public class JSONMessageBodyWriterTest {
 
 		Assert.assertFalse(_property1UnsafeSupplierComputed);
 		Assert.assertTrue(_property2UnsafeSupplierComputed);
+		Assert.assertTrue(_property3UnsafeSupplierComputed);
 
 		_property1UnsafeSupplierComputed = false;
 		_property2UnsafeSupplierComputed = false;
+		_property3UnsafeSupplierComputed = false;
 
 		HTTPTestUtil.invokeToJSONObject(
 			null, "test-vulcan/test-class", Http.Method.GET);
 
 		Assert.assertTrue(_property1UnsafeSupplierComputed);
 		Assert.assertTrue(_property2UnsafeSupplierComputed);
+		Assert.assertTrue(_property3UnsafeSupplierComputed);
 	}
 
 	public class TestApplication extends Application {
@@ -202,6 +223,13 @@ public class JSONMessageBodyWriterTest {
 					return RandomTestUtil.randomString();
 				};
 
+			public UnsafeSupplier<String, Exception> property3UnsafeSupplier =
+				() -> {
+					_property3UnsafeSupplierComputed = true;
+
+					return null;
+				};
+
 			public final String string;
 			public final TestClass testClass;
 
@@ -216,6 +244,7 @@ public class JSONMessageBodyWriterTest {
 
 	private boolean _property1UnsafeSupplierComputed;
 	private boolean _property2UnsafeSupplierComputed;
+	private boolean _property3UnsafeSupplierComputed;
 	private ServiceRegistration<Application> _serviceRegistration;
 
 }

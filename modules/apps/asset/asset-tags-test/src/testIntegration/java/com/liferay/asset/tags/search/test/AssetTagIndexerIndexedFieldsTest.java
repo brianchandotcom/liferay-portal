@@ -7,6 +7,8 @@ package com.liferay.asset.tags.search.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetTag;
+import com.liferay.asset.kernel.model.AssetTagGroupRel;
+import com.liferay.asset.kernel.service.AssetTagGroupRelLocalService;
 import com.liferay.asset.kernel.service.AssetTagLocalService;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Group;
@@ -20,8 +22,10 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.document.DocumentBuilderFactory;
 import com.liferay.portal.search.filter.ComplexQueryPart;
@@ -41,6 +45,7 @@ import com.liferay.users.admin.test.util.search.GroupBlueprint;
 import com.liferay.users.admin.test.util.search.GroupSearchFixture;
 import com.liferay.users.admin.test.util.search.UserSearchFixture;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -104,6 +109,13 @@ public class AssetTagIndexerIndexedFieldsTest {
 			isNumberSortableImplementedAsDoubleForSearchEngine());
 
 		AssetTag assetTag = _assetTagFixture.createAssetTag();
+
+		Group group1 = GroupTestUtil.addGroup();
+		Group group2 = GroupTestUtil.addGroup();
+
+		_assetTagGroupRelLocalService.setAssetTagGroupRels(
+			assetTag.getTagId(),
+			new long[] {group1.getGroupId(), group2.getGroupId()});
 
 		String searchTerm = String.valueOf(assetTag.getPrimaryKey());
 
@@ -204,6 +216,18 @@ public class AssetTagIndexerIndexedFieldsTest {
 		).put(
 			"groupExternalReferenceCode", _group.getExternalReferenceCode()
 		).put(
+			"groupIds",
+			() -> {
+				List<Long> groupIds = ListUtil.toList(
+					_assetTagGroupRelLocalService.getAssetTagGroupRelsByTagId(
+						assetTag.getTagId()),
+					AssetTagGroupRel::getGroupId);
+
+				Collections.sort(groupIds);
+
+				return String.valueOf(groupIds);
+			}
+		).put(
 			"name_String_sortable", StringUtil.toLowerCase(assetTag.getName())
 		).put(
 			"scopeGroupExternalReferenceCode", _group.getExternalReferenceCode()
@@ -249,6 +273,9 @@ public class AssetTagIndexerIndexedFieldsTest {
 	}
 
 	private AssetTagFixture _assetTagFixture;
+
+	@Inject
+	private AssetTagGroupRelLocalService _assetTagGroupRelLocalService;
 
 	@DeleteAfterTestRun
 	private List<AssetTag> _assetTags;

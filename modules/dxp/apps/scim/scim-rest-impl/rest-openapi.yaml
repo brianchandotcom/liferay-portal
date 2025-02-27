@@ -506,8 +506,7 @@ paths:
             responses:
                 204:
                     description:
-                        In response to a successful DELETE, the server SHALL return a successful HTTP status code 204
-                        (No Content).
+                        The Group was successfully updated.
             tags: ["Group"]
         put:
             description:

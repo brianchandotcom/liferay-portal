@@ -53,51 +53,6 @@ ext {
 	]
 }
 
-protected abstract class BaseJakartaTransformerTransformAction implements TransformAction<TransformParameters.None> {
-
-	public static final String ARTIFACT_TYPE = "jakarta-transformed-jar";
-
-	protected static Logger logger;
-	protected static ClassLoader classLoader;
-	protected static File propertiesFile;
-
-	@org.gradle.api.tasks.Classpath
-	@InputArtifact
-	abstract Provider<FileSystemLocation> getInputArtifact();
-
-	@Override
-	public void transform(TransformOutputs outputs) {
-		File inputJarFile = inputArtifact.get().asFile
-
-		String fileName = inputJarFile.name
-
-		if (fileName.contains('.')) {
-			fileName = fileName.replaceFirst(/(\.[^.]+)$/, '-JAKARTA-SNAPSHOT$1')
-		}
-
-		File outputJarFile = outputs.file(fileName)
-
-		Class<?> jakartaTransformerCLIClass = Class.forName("org.eclipse.transformer.cli.JakartaTransformerCLI", true, classLoader);
-
-		Constructor<?> jakartaTransformerCLIClassConstructor = jakartaTransformerCLIClass.getConstructor(PrintStream.class, PrintStream.class, String[].class);
-		Method runMethod = jakartaTransformerCLIClass.getMethod("run");
-
-		PrintStream errorPrintStream = new PrintStream(new ByteArrayOutputStream());
-		PrintStream standardPrintStream = new PrintStream(new ByteArrayOutputStream());
-
-		Object resultCode = runMethod.invoke(
-			jakartaTransformerCLIClassConstructor.newInstance(
-				standardPrintStream, errorPrintStream, ["--quiet", "--versions", propertiesFile.absolutePath, inputJarFile.absolutePath, outputJarFile.absolutePath ] as String[]));
-
-		if (!Objects.equals(resultCode.toString(), "Success")) {
-			throw new GradleException("Jakarta: ERROR ${resultCode}\n${errorPrintStream}")
-		}
-
-		logger.info("Jakarta:  {} -> {}", inputJarFile, outputJarFile);
-	}
-
-}
-
 task portalYarnCheckFormat
 task portalYarnFormat
 task portalYarnFormatCurrentBranch
@@ -968,6 +923,51 @@ gradle.taskGraph.whenReady {
 			}
 		}
 	}
+}
+
+protected abstract class BaseJakartaTransformerTransformAction implements TransformAction<TransformParameters.None> {
+
+	public static final String ARTIFACT_TYPE = "jakarta-transformed-jar";
+
+	protected static Logger logger;
+	protected static ClassLoader classLoader;
+	protected static File propertiesFile;
+
+	@org.gradle.api.tasks.Classpath
+	@InputArtifact
+	abstract Provider<FileSystemLocation> getInputArtifact();
+
+	@Override
+	public void transform(TransformOutputs outputs) {
+		File inputJarFile = inputArtifact.get().asFile
+
+		String fileName = inputJarFile.name
+
+		if (fileName.contains('.')) {
+			fileName = fileName.replaceFirst(/(\.[^.]+)$/, '-JAKARTA-SNAPSHOT$1')
+		}
+
+		File outputJarFile = outputs.file(fileName)
+
+		Class<?> jakartaTransformerCLIClass = Class.forName("org.eclipse.transformer.cli.JakartaTransformerCLI", true, classLoader);
+
+		Constructor<?> jakartaTransformerCLIClassConstructor = jakartaTransformerCLIClass.getConstructor(PrintStream.class, PrintStream.class, String[].class);
+		Method runMethod = jakartaTransformerCLIClass.getMethod("run");
+
+		PrintStream errorPrintStream = new PrintStream(new ByteArrayOutputStream());
+		PrintStream standardPrintStream = new PrintStream(new ByteArrayOutputStream());
+
+		Object resultCode = runMethod.invoke(
+			jakartaTransformerCLIClassConstructor.newInstance(
+				standardPrintStream, errorPrintStream, ["--quiet", "--versions", propertiesFile.absolutePath, inputJarFile.absolutePath, outputJarFile.absolutePath ] as String[]));
+
+		if (!Objects.equals(resultCode.toString(), "Success")) {
+			throw new GradleException("Jakarta: ERROR ${resultCode}\n${errorPrintStream}")
+		}
+
+		logger.info("Jakarta:  {} -> {}", inputJarFile, outputJarFile);
+	}
+
 }
 
 private boolean _containsProject(

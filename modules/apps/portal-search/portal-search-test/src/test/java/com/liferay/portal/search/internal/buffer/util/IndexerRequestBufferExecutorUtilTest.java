@@ -38,12 +38,6 @@ public class IndexerRequestBufferExecutorUtilTest {
 	@Before
 	public void setUp() {
 		Mockito.when(
-			_indexerRequestBuffer.size()
-		).thenReturn(
-			1
-		);
-
-		Mockito.when(
 			_indexerRequestBuffer.getIndexerRequests()
 		).thenReturn(
 			new ArrayList<IndexerRequest>() {
@@ -51,6 +45,12 @@ public class IndexerRequestBufferExecutorUtilTest {
 					add(_indexerRequest);
 				}
 			}
+		);
+
+		Mockito.when(
+			_indexerRequestBuffer.size()
+		).thenReturn(
+			1
 		);
 	}
 
@@ -92,8 +92,8 @@ public class IndexerRequestBufferExecutorUtilTest {
 		CTCollectionThreadLocal.setCTCollectionIdWithSafeCloseable(
 			_EXPECTED_CT_COLLECTION_ID);
 
-		final long[] actualCompanyId = {0};
-		final long[] actualCTCollectionId = {0};
+		long[] actualCompanyId = {0};
+		long[] actualCTCollectionId = {0};
 
 		Mockito.doAnswer(
 			invocation -> {

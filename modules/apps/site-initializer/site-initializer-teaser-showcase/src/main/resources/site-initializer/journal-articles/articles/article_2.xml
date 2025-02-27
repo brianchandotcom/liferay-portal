@@ -4,7 +4,7 @@
 	<dynamic-element field-reference="image" index-type="text" instance-id="JABHa2VJ" name="image" type="image">
 		<dynamic-content language-id="en_US">
 			<![CDATA[
-				[$DOCUMENT_JSON:/site-initializer/documents/group/Marketing Assets/sunglasses_on_shelves.png$
+				[$DOCUMENT_JSON:/site-initializer/documents/group/Marketing Assets/sunglasses_on_shelves.png$]
 			]]>
 		</dynamic-content>
 	</dynamic-element>

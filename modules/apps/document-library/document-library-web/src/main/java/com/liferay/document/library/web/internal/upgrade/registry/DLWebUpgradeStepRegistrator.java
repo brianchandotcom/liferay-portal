@@ -49,6 +49,13 @@ public class DLWebUpgradeStepRegistrator implements UpgradeStepRegistrator {
 				UpgradePortletPreferences(
 					_dlAppLocalService, _groupLocalService,
 					_repositoryLocalService));
+
+		registry.register(
+			"1.1.0", "1.2.0",
+			new com.liferay.document.library.web.internal.upgrade.v1_2_0.
+				UpgradePortletPreferences(
+					_dlAppLocalService, _groupLocalService,
+					_repositoryLocalService));
 	}
 
 	@Reference

@@ -7,10 +7,19 @@ package com.liferay.document.library.web.internal.display.context.helper;
 
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
+import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.service.DLFolderLocalServiceUtil;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.document.library.web.internal.settings.DLPortletInstanceSettings;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Repository;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.ClassNameLocalServiceUtil;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -20,7 +29,9 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.view.count.ViewCountManagerUtil;
+import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
@@ -105,6 +116,79 @@ public class DLPortletInstanceSettingsHelper {
 		}
 
 		return entryColumns;
+	}
+
+	public Folder getRootFolder() throws PortalException {
+		DLPortletInstanceSettings dlPortletInstanceSettings =
+			_dlRequestHelper.getDLPortletInstanceSettings();
+
+		String rootFolderExternalReferenceCode =
+			dlPortletInstanceSettings.getRootFolderExternalReferenceCode();
+
+		if (Validator.isBlank(rootFolderExternalReferenceCode)) {
+			return null;
+		}
+
+		ThemeDisplay themeDisplay = _dlRequestHelper.getThemeDisplay();
+
+		Group selectedGroup =
+			GroupLocalServiceUtil.getGroupByExternalReferenceCode(
+				dlPortletInstanceSettings.
+					getSelectedGroupExternalReferenceCode(),
+				themeDisplay.getCompanyId());
+
+		return new LiferayFolder(
+			DLFolderLocalServiceUtil.getDLFolderByExternalReferenceCode(
+				rootFolderExternalReferenceCode, selectedGroup.getGroupId()));
+	}
+
+	public long getRootFolderId() throws PortalException {
+		Folder rootFolder = getRootFolder();
+
+		if (rootFolder == null) {
+			return DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+		}
+
+		return rootFolder.getFolderId();
+	}
+
+	public long getSelectedRepositoryId() {
+		DLPortletInstanceSettings dlPortletInstanceSettings =
+			_dlRequestHelper.getDLPortletInstanceSettings();
+
+		String selectedGroupExternalReferenceCode =
+			dlPortletInstanceSettings.getSelectedGroupExternalReferenceCode();
+
+		if (Validator.isBlank(selectedGroupExternalReferenceCode)) {
+			return 0;
+		}
+
+		try {
+			ThemeDisplay themeDisplay = _dlRequestHelper.getThemeDisplay();
+
+			Group selectedGroup =
+				GroupLocalServiceUtil.getGroupByExternalReferenceCode(
+					selectedGroupExternalReferenceCode,
+					themeDisplay.getCompanyId());
+
+			String selectedRepositoryExternalReferenceCode =
+				dlPortletInstanceSettings.
+					getSelectedRepositoryExternalReferenceCode();
+
+			if (Validator.isBlank(selectedRepositoryExternalReferenceCode)) {
+				return selectedGroup.getGroupId();
+			}
+
+			Repository selectedRepository =
+				RepositoryLocalServiceUtil.getRepositoryByExternalReferenceCode(
+					selectedRepositoryExternalReferenceCode,
+					selectedGroup.getGroupId());
+
+			return selectedRepository.getRepositoryId();
+		}
+		catch (PortalException portalException) {
+			throw new SystemException(portalException);
+		}
 	}
 
 	public boolean isShowActions() {

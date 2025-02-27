@@ -55,6 +55,7 @@ import java.sql.Timestamp;
 import java.time.OffsetDateTime;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -462,10 +463,14 @@ public class TestrayManagerImpl implements TestrayManager {
 				testrayBuildId, testrayCache,
 				propertiesMap.get("testray.run.id"), userId);
 
-			_addTestrayCases(
+			Map<String, Set<String>> map = _addTestrayCases(
 				companyId, element, serviceContext,
 				propertiesMap.get("testray.build.date"), testrayBuildId,
 				testrayCache, testrayProjectId, testrayRunId, userId);
+
+			_patchObjectEntry(
+				Collections.singletonMap("playwrightReports", map.toString()),
+				testrayBuildId, userId);
 		}
 		catch (Exception exception) {
 			_log.error(exception);
@@ -851,7 +856,7 @@ public class TestrayManagerImpl implements TestrayManager {
 			testrayComponentId, testrayRunId, testrayTeamId, userId);
 	}
 
-	private void _addTestrayCases(
+	private Map<String, Set<String>> _addTestrayCases(
 			long companyId, Element element, ServiceContext serviceContext,
 			String testrayBuildDate, long testrayBuildId,
 			TestrayCache testrayCache, long testrayProjectId, long testrayRunId,
@@ -881,6 +886,8 @@ public class TestrayManagerImpl implements TestrayManager {
 				_getPlaywrightReports(
 					jsonArray, map, testrayCasePropertiesMap));
 		}
+
+		return map;
 	}
 
 	private void _addTestrayFactor(
@@ -1816,6 +1823,22 @@ public class TestrayManagerImpl implements TestrayManager {
 						values.get("r_projectToTeams_c_projectIds"))),
 				GetterUtil.getLong(values.get("c_teamId")));
 		}
+	}
+
+	private ObjectEntry _patchObjectEntry(
+			Map<String, Serializable> map, long objectEntryId, long userId)
+		throws Exception {
+
+		ObjectEntry objectEntry = _objectEntryLocalService.getObjectEntry(
+			objectEntryId);
+
+		Map<String, Serializable> values = objectEntry.getValues();
+
+		values.putAll(map);
+
+		return _objectEntryLocalService.updateObjectEntry(
+			userId, objectEntry.getObjectEntryId(), values,
+			new ServiceContext());
 	}
 
 	private ObjectEntry _updateObjectEntry(

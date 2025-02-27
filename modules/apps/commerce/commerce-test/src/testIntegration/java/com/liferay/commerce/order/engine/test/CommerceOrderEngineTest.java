@@ -108,6 +108,9 @@ public class CommerceOrderEngineTest {
 
 		_user = UserTestUtil.addUser(_company);
 
+		_serviceContext = ServiceContextTestUtil.getServiceContext(
+			_group.getGroupId());
+
 		_accountEntry = CommerceAccountTestUtil.addBusinessAccountEntry(
 			_user.getUserId(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString() + "@liferay.com",
@@ -116,9 +119,6 @@ public class CommerceOrderEngineTest {
 
 		_commerceCurrency = CommerceCurrencyTestUtil.addCommerceCurrency(
 			_group.getCompanyId());
-
-		_serviceContext = ServiceContextTestUtil.getServiceContext(
-			_group.getGroupId());
 
 		_commerceChannel = CommerceChannelLocalServiceUtil.addCommerceChannel(
 			null, AccountConstants.ACCOUNT_ENTRY_ID_DEFAULT,

@@ -13,7 +13,7 @@
 		"@clayui/link": "3.111.0",
 		"@clayui/loading-indicator": "3.111.0",
 		"@clayui/modal": "3.122.0",
-		"@clayui/tabs": "3.128.0",
+		"@clayui/tabs": "3.119.0",
 		"@liferay/frontend-js-react-web": "*",
 		"@liferay/layout-js-components-web": "*",
 		"@liferay/object-js-components-web": "*",

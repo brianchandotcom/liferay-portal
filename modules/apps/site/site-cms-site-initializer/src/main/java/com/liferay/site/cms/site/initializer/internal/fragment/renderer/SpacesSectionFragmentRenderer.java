@@ -18,11 +18,11 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.servlet.PageContextFactoryUtil;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import java.util.Locale;
 import java.util.Objects;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -78,10 +78,25 @@ public class SpacesSectionFragmentRenderer implements FragmentRenderer {
 		throws IOException {
 
 		try {
-			RequestDispatcher requestDispatcher =
-				_servletContext.getRequestDispatcher("/spaces_section.jsp");
+			PrintWriter printWriter = httpServletResponse.getWriter();
 
-			requestDispatcher.include(httpServletRequest, httpServletResponse);
+			printWriter.write("<div><span aria-hidden=\"true\" class=\"");
+			printWriter.write("loading-animation\"></span>");
+
+			ComponentTag componentTag = new ComponentTag();
+
+			componentTag.setModule(
+				"{SpacesNavigation} from site-cms-site-initializer");
+			componentTag.setPageContext(
+				PageContextFactoryUtil.create(
+					httpServletRequest, httpServletResponse));
+			componentTag.setServletContext(_servletContext);
+
+			componentTag.doStartTag();
+
+			componentTag.doEndTag();
+
+			printWriter.write("</div>");
 		}
 		catch (Exception exception) {
 			throw new RuntimeException(exception);

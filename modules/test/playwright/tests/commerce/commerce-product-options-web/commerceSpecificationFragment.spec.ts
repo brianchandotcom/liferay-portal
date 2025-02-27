@@ -10,6 +10,7 @@ import {applicationsMenuPageTest} from '../../../fixtures/applicationsMenuPageTe
 import {commercePagesTest} from '../../../fixtures/commercePagesTest';
 import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {displayPageTemplatesPagesTest} from '../../../fixtures/displayPageTemplatesPagesTest';
+import {isolatedSiteTest} from '../../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import {pageEditorPagesTest} from '../../../fixtures/pageEditorPagesTest';
 import getRandomString from '../../../utils/getRandomString';
@@ -20,93 +21,136 @@ export const test = mergeTests(
 	commercePagesTest,
 	dataApiHelpersTest,
 	displayPageTemplatesPagesTest,
+	isolatedSiteTest,
 	pageEditorPagesTest,
 	loginTest()
 );
 
-test('LPD-13652 Product specification fragment only shows correct specifications', async ({
-	apiHelpers,
-	commerceLayoutsPage,
-	displayPageTemplatesPage,
-	page,
-	pageEditorPage,
-}) => {
-	const site = await apiHelpers.headlessSite.createSite({
-		name: getRandomString(),
-	});
+test(
+	'Product specification fragment only shows correct specifications',
+	{tag: '@LPD-13652'},
+	async ({
+		apiHelpers,
+		commerceLayoutsPage,
+		displayPageTemplatesPage,
+		page,
+		pageEditorPage,
+		site,
+	}) => {
+		await apiHelpers.headlessCommerceAdminChannel.postChannel({
+			name: 'Specification Fragment Channel',
+			siteGroupId: site.id,
+		});
 
-	apiHelpers.data.push({id: site.id, type: 'site'});
+		const catalog =
+			await apiHelpers.headlessCommerceAdminCatalog.postCatalog({
+				name: 'Specification Fragment Catalog',
+			});
 
-	await apiHelpers.headlessCommerceAdminChannel.postChannel({
-		name: 'Specification Fragment Channel',
-		siteGroupId: site.id,
-	});
+		const specification =
+			await apiHelpers.headlessCommerceAdminCatalog.postSpecification(
+				true,
+				0,
+				'Test Specification'
+			);
 
-	const catalog = await apiHelpers.headlessCommerceAdminCatalog.postCatalog({
-		name: 'Specification Fragment Catalog',
-	});
+		const product1 =
+			await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+				catalogId: catalog.id,
+				name: {en_US: 'Product1'},
+				productSpecifications: [
+					{
+						specificationKey: specification.key,
+						value: {
+							en_US: 'Product1',
+						},
+					},
+				],
+			});
+		await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+			catalogId: catalog.id,
+			name: {en_US: 'Product2'},
+			productSpecifications: [
+				{
+					specificationKey: specification.key,
+					value: {
+						en_US: 'Product2',
+					},
+				},
+				{
+					label: {
+						en_US: 'Product2 hidden label',
+					},
+					specificationKey: 'hidden-spec',
+					value: {
+						en_US: 'Product2 hidden',
+					},
+				},
+			],
+		});
+		await apiHelpers.headlessCommerceAdminCatalog.postProduct({
+			catalogId: catalog.id,
+			name: {en_US: 'Product3'},
+			productSpecifications: [
+				{
+					label: {
+						en_US: 'Product2 hidden label',
+					},
+					specificationKey: 'invisible-spec',
+					value: {
+						en_US: 'Product3 invisible',
+					},
+					visible: false,
+				},
+			],
+		});
 
-	const specification =
-		await apiHelpers.headlessCommerceAdminCatalog.postSpecification(
-			true,
-			0,
-			'Test Specification'
+		await displayPageTemplatesPage.goto(site.friendlyUrlPath);
+
+		const displayPageTemplateName = getRandomString();
+
+		await displayPageTemplatesPage.createTemplate({
+			contentType: 'Product',
+			name: displayPageTemplateName,
+		});
+		await displayPageTemplatesPage.editTemplate(displayPageTemplateName);
+
+		await pageEditorPage.addFragment('Product', 'Price');
+		await pageEditorPage.addFragment('Product', 'Product Specification');
+
+		await pageEditorPage.waitForChangesSaved();
+
+		await page
+			.getByText(
+				'The Product Specification component will be shown here.'
+			)
+			.click();
+		await page
+			.getByLabel('Key', {exact: true})
+			.fill(product1.productSpecifications[0].key);
+
+		await commerceLayoutsPage.selectDisplayPageTemplatePreviewItem(
+			'Product1'
 		);
 
-	const product1 = await apiHelpers.headlessCommerceAdminCatalog.postProduct({
-		catalogId: catalog.id,
-		name: {en_US: 'Product1'},
-		productSpecifications: [
-			{
-				specificationKey: specification.key,
-				value: {
-					en_US: 'Product1',
-				},
-			},
-		],
-	});
+		await expect(
+			page.getByText('Test Specification Product1')
+		).toBeVisible();
 
-	await apiHelpers.headlessCommerceAdminCatalog.postProduct({
-		catalogId: catalog.id,
-		name: {en_US: 'Product2'},
-		productSpecifications: [
-			{
-				specificationKey: specification.key,
-				value: {
-					en_US: 'Product2',
-				},
-			},
-		],
-	});
+		await commerceLayoutsPage.showLabelInput.uncheck();
+		await commerceLayoutsPage.selectDisplayPageTemplatePreviewItem(
+			'Product2'
+		);
 
-	await displayPageTemplatesPage.goto(site.friendlyUrlPath);
+		await expect(page.getByText('Test Specification')).toBeHidden();
 
-	const displayPageTemplateName = getRandomString();
+		await page.getByLabel('Key', {exact: true}).fill('hidden-spec');
 
-	await displayPageTemplatesPage.createTemplate({
-		contentType: 'Product',
-		name: displayPageTemplateName,
-	});
-	await displayPageTemplatesPage.editTemplate(displayPageTemplateName);
+		await expect(page.getByText('Test Specification')).toBeHidden();
 
-	await pageEditorPage.addFragment('Product', 'Price');
-	await pageEditorPage.addFragment('Product', 'Product Specification');
-
-	await pageEditorPage.waitForChangesSaved();
-
-	await page
-		.getByText('The Product Specification component will be shown here.')
-		.click();
-	await page
-		.getByLabel('Key', {exact: true})
-		.fill(product1.productSpecifications[0].key);
-
-	await commerceLayoutsPage.selectDisplayPageTemplatePreviewItem('Product1');
-
-	await expect(page.getByText('Test Specification Product1')).toBeVisible();
-
-	await commerceLayoutsPage.showLabelInput.uncheck();
-	await commerceLayoutsPage.selectDisplayPageTemplatePreviewItem('Product2');
-
-	await expect(page.getByText('Test Specification')).toBeHidden();
-});
+		await commerceLayoutsPage.selectDisplayPageTemplatePreviewItem(
+			'Product3',
+			false
+		);
+	}
+);

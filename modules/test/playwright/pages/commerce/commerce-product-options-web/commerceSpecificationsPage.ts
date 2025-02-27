@@ -27,6 +27,7 @@ export class CommerceSpecificationsPage {
 	) => Locator;
 	readonly specificationPicklistDropdownMenu: (action: string) => Locator;
 	readonly successMessage: Locator;
+	readonly visibleToggle: Locator;
 
 	constructor(page: Page) {
 		this.page = page;
@@ -77,6 +78,7 @@ export class CommerceSpecificationsPage {
 		this.successMessage = page.getByText(
 			'Success:Your request completed successfully.'
 		);
+		this.visibleToggle = page.getByLabel('Visible', {exact: true});
 	}
 
 	async waitForKey(specificationName) {

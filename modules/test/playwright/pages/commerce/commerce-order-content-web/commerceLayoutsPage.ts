@@ -540,13 +540,22 @@ export class CommerceLayoutsPage {
 		}
 	}
 
-	async selectDisplayPageTemplatePreviewItem(itemName: string) {
+	async selectDisplayPageTemplatePreviewItem(
+		itemName: string,
+		visible: boolean = true
+	) {
 		await this.previewItemSelectorButton.click();
 		await this.selectOtherItemDropdownItem.click();
 
 		const itemButton = await this.page
 			.frameLocator('iframe[title="Select"]')
 			.getByRole('button', {name: itemName});
+
+		if (!visible) {
+			await expect(itemButton).toHaveCount(0);
+
+			return;
+		}
 
 		await expect(itemButton).toBeVisible();
 

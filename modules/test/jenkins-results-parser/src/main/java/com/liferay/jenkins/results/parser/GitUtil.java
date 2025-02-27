@@ -103,10 +103,22 @@ public class GitUtil {
 	public static RemoteGitBranch getRemoteGitBranch(
 		String remoteGitBranchName, File workingDirectory, String remoteURL) {
 
+		return getRemoteGitBranch(
+			remoteGitBranchName, workingDirectory, remoteURL, true);
+	}
+
+	public static RemoteGitBranch getRemoteGitBranch(
+		String remoteGitBranchName, File workingDirectory, String remoteURL,
+		boolean required) {
+
 		RemoteGitRef remoteGitRef = getRemoteGitRef(
-			remoteGitBranchName, workingDirectory, remoteURL);
+			remoteGitBranchName, workingDirectory, remoteURL, required);
 
 		if (!(remoteGitRef instanceof RemoteGitBranch)) {
+			if (!required) {
+				return null;
+			}
+
 			throw new RuntimeException(
 				JenkinsResultsParserUtil.combine(
 					"Unable to find remote Git branch ", remoteGitBranchName,
@@ -134,6 +146,12 @@ public class GitUtil {
 	}
 
 	public static RemoteGitRef getRemoteGitRef(String gitHubURL) {
+		return getRemoteGitRef(gitHubURL, true);
+	}
+
+	public static RemoteGitRef getRemoteGitRef(
+		String gitHubURL, boolean required) {
+
 		Matcher matcher = _gitHubRefURLPattern.matcher(gitHubURL);
 
 		if (!matcher.find()) {
@@ -145,11 +163,20 @@ public class GitUtil {
 			matcher.group("gitRepositoryName"), ".git");
 
 		return getRemoteGitRef(
-			matcher.group("refName"), new File("."), remoteGitRepositoryURL);
+			matcher.group("refName"), new File("."), remoteGitRepositoryURL,
+			required);
 	}
 
 	public static RemoteGitRef getRemoteGitRef(
 		String remoteGitBranchName, File workingDirectory, String remoteURL) {
+
+		return getRemoteGitRef(
+			remoteGitBranchName, workingDirectory, remoteURL, true);
+	}
+
+	public static RemoteGitRef getRemoteGitRef(
+		String remoteGitBranchName, File workingDirectory, String remoteURL,
+		boolean required) {
 
 		String key = JenkinsResultsParserUtil.combine(
 			remoteURL, "#", remoteGitBranchName);
@@ -206,6 +233,10 @@ public class GitUtil {
 			}
 
 			if ((remoteGitRefs == null) || remoteGitRefs.isEmpty()) {
+				if (!required) {
+					return null;
+				}
+
 				throw new RuntimeException(
 					JenkinsResultsParserUtil.combine(
 						"Unable to find remote Git ref ", remoteGitBranchName,

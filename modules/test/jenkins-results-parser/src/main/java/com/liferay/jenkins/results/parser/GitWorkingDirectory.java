@@ -1768,7 +1768,7 @@ public class GitWorkingDirectory {
 		String remoteGitBranchName, String remoteURL, boolean required) {
 
 		RemoteGitBranch remoteGitBranch = GitUtil.getRemoteGitBranch(
-			remoteGitBranchName, getWorkingDirectory(), remoteURL);
+			remoteGitBranchName, getWorkingDirectory(), remoteURL, required);
 
 		if (remoteGitBranch != null) {
 			return remoteGitBranch;
@@ -1914,7 +1914,7 @@ public class GitWorkingDirectory {
 		String remoteGitRefName, String remoteURL, boolean required) {
 
 		RemoteGitRef remoteGitRef = GitUtil.getRemoteGitRef(
-			remoteGitRefName, getWorkingDirectory(), remoteURL);
+			remoteGitRefName, getWorkingDirectory(), remoteURL, required);
 
 		if (remoteGitRef != null) {
 			return remoteGitRef;

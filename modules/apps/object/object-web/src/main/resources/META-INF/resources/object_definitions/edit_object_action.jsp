@@ -35,6 +35,8 @@ ObjectAction objectAction = objectDefinitionsActionsDisplayContext.getObjectActi
 		).put(
 			"objectDefinitionsRelationshipsURL", objectDefinitionsActionsDisplayContext.getObjectDefinitionsRelationshipsURL()
 		).put(
+			"objectFields", objectDefinitionsActionsDisplayContext.getObjectFields()
+		).put(
 			"readOnly", !objectDefinitionsActionsDisplayContext.hasUpdateObjectDefinitionPermission()
 		).put(
 			"scriptManagementConfigurationPortletURL", objectDefinitionsActionsDisplayContext.getScriptManagementConfigurationPortletURL()

@@ -40,6 +40,7 @@ interface ObjectActionContainerProps {
 	objectDefinitionExternalReferenceCode: string;
 	objectDefinitionId: number;
 	objectDefinitionsRelationshipsURL: string;
+	objectFields: ObjectField[];
 	readOnly?: boolean;
 	requestParams: {
 		method: 'POST' | 'PUT';
@@ -77,6 +78,7 @@ export function ObjectActionContainer({
 	objectDefinitionExternalReferenceCode,
 	objectDefinitionId,
 	objectDefinitionsRelationshipsURL,
+	objectFields,
 	readOnly,
 	requestParams: {method, url},
 	scriptManagementConfigurationPortletURL,
@@ -236,6 +238,7 @@ export function ObjectActionContainer({
 						objectDefinitionsRelationshipsURL={
 							objectDefinitionsRelationshipsURL
 						}
+						objectFields={objectFields}
 						scriptManagementConfigurationPortletURL={
 							scriptManagementConfigurationPortletURL
 						}

@@ -17,6 +17,7 @@ interface AddObjectActionProps {
 	objectDefinitionExternalReferenceCode: string;
 	objectDefinitionId: number;
 	objectDefinitionsRelationshipsURL: string;
+	objectFields: ObjectField[];
 	scriptManagementConfigurationPortletURL: string;
 	systemObject: boolean;
 	validateExpressionURL: string;
@@ -31,6 +32,7 @@ export default function AddObjectAction({
 	objectDefinitionExternalReferenceCode,
 	objectDefinitionId,
 	objectDefinitionsRelationshipsURL,
+	objectFields,
 	scriptManagementConfigurationPortletURL,
 	systemObject,
 	validateExpressionURL,
@@ -51,6 +53,7 @@ export default function AddObjectAction({
 			objectDefinitionsRelationshipsURL={
 				objectDefinitionsRelationshipsURL
 			}
+			objectFields={objectFields}
 			requestParams={{
 				method: 'POST',
 				url: apiURL,

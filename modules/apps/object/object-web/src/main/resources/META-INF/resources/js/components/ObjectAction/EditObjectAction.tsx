@@ -18,6 +18,7 @@ interface EditObjectActionProps {
 	objectDefinitionExternalReferenceCode: string;
 	objectDefinitionId: number;
 	objectDefinitionsRelationshipsURL: string;
+	objectFields: ObjectField[];
 	readOnly?: boolean;
 	scriptManagementConfigurationPortletURL: string;
 	systemObject: boolean;
@@ -34,6 +35,7 @@ export default function EditObjectAction({
 	objectDefinitionExternalReferenceCode,
 	objectDefinitionId,
 	objectDefinitionsRelationshipsURL,
+	objectFields,
 	readOnly,
 	scriptManagementConfigurationPortletURL,
 	systemObject,
@@ -57,6 +59,7 @@ export default function EditObjectAction({
 			objectDefinitionsRelationshipsURL={
 				objectDefinitionsRelationshipsURL
 			}
+			objectFields={objectFields}
 			readOnly={readOnly || values.system}
 			requestParams={{
 				method: 'PUT',

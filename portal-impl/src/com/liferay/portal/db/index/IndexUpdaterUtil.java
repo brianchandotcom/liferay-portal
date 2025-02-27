@@ -71,7 +71,9 @@ public class IndexUpdaterUtil {
 				public Void addingBundle(
 					Bundle bundle, BundleEvent bundleEvent) {
 
-					if (BundleUtil.isLiferayServiceBundle(bundle)) {
+					if (BundleUtil.isLiferayServiceBundle(bundle) ||
+						BundleUtil.isRequireSchemaVersion(bundle)) {
+
 						try {
 							if (!_processedServletContextNames.contains(
 									bundle.getSymbolicName()) &&

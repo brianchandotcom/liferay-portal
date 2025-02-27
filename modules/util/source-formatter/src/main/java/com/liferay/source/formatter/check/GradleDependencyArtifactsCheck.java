@@ -67,15 +67,17 @@ public class GradleDependencyArtifactsCheck extends BaseFileCheck {
 			}
 		}
 
-		if (absolutePath.endsWith("/dependencies.properties")) {
-			_checkVersionInDependenciesPropertiesFile(
+		if (absolutePath.endsWith("/lib/development/dependencies.properties") ||
+			absolutePath.endsWith("/lib/portal/dependencies.properties")) {
+
+			_checkDependenciesPropertiesFile(
 				fileName, content, enforceVersionArtifacts);
 		}
 
 		return content;
 	}
 
-	private void _checkVersionInDependenciesPropertiesFile(
+	private void _checkDependenciesPropertiesFile(
 			String fileName, String content,
 			List<String> enforceVersionArtifacts)
 		throws IOException {

@@ -2785,6 +2785,12 @@ public class CommerceOrderLocalServiceImpl
 			long commerceChannelGroupId, long commerceAccountId)
 		throws PortalException {
 
+		if (CommerceOrderThreadLocal.isSkipValidateAccountOrdersLimit()) {
+			CommerceOrderThreadLocal.setSkipValidateAccountOrdersLimit(false);
+
+			return;
+		}
+
 		Group group = _groupLocalService.getGroup(commerceChannelGroupId);
 
 		int pendingCommerceOrdersCount =

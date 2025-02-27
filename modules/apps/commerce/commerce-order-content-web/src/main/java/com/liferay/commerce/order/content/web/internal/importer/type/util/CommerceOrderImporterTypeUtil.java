@@ -11,6 +11,7 @@ import com.liferay.commerce.context.CommerceContextFactory;
 import com.liferay.commerce.exception.CommerceOrderValidatorException;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
+import com.liferay.commerce.order.CommerceOrderThreadLocal;
 import com.liferay.commerce.order.importer.item.CommerceOrderImporterItem;
 import com.liferay.commerce.order.importer.item.CommerceOrderImporterItemImpl;
 import com.liferay.commerce.price.CommerceOrderPriceCalculation;
@@ -51,6 +52,8 @@ public class CommerceOrderImporterTypeUtil {
 			CommerceOrderService commerceOrderService,
 			UserLocalService userLocalService)
 		throws Exception {
+
+		CommerceOrderThreadLocal.setSkipValidateAccountOrdersLimit(true);
 
 		CommerceOrder tempCommerceOrder = commerceOrderService.addCommerceOrder(
 			commerceOrder.getGroupId(), commerceOrder.getCommerceAccountId(),

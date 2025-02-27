@@ -7,10 +7,12 @@
 
 <%@ include file="/fragment/renderer/product_specification/init.jsp" %>
 
-<div class="<%= namespace %>product-specification" id="<%= uuid %>">
-	<c:if test="<%= showLabel && !Validator.isBlank(label) %>">
-		<<%= labelElementType %> class="node-label"><%= HtmlUtil.escape(label) %></<%= labelElementType %>>
-	</c:if>
+<c:if test="<%= visible %>">
+	<div class="<%= namespace %>product-specification" id="<%= uuid %>">
+		<c:if test="<%= showLabel && !Validator.isBlank(label) %>">
+			<<%= labelElementType %> class="node-label"><%= HtmlUtil.escape(label) %></<%= labelElementType %>>
+		</c:if>
 
-	<<%= valueElementType %> class="node-value"><%= HtmlUtil.escape(value) %></<%= valueElementType %>>
-</div>
+		<<%= valueElementType %> class="node-value"><%= HtmlUtil.escape(value) %></<%= valueElementType %>>
+	</div>
+</c:if>

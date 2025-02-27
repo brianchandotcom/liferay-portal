@@ -16,11 +16,14 @@ import {documentLibraryPagesTest} from '../../fixtures/documentLibraryPages.fixt
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
+import {objectPagesTest} from '../../fixtures/objectPagesTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {pageTemplatesPagesTest} from '../../fixtures/pageTemplatesPagesTest';
 import {wikiPagesTest} from '../../fixtures/wikiPagesTest';
+import {deleteObjectEntries} from '../../utils/deleteObjectEntries';
 import {getRandomInt} from '../../utils/getRandomInt';
 import performLogin, {performLogout, userData} from '../../utils/performLogin';
+import {waitForAlert} from '../../utils/waitForAlert';
 import {readFileFromZip} from '../../utils/zip';
 import {companyExportImportPageTest} from './fixtures/companyExportImportPagesTest';
 import {exportImportPagesTest} from './fixtures/exportImportPagesTest';
@@ -42,6 +45,7 @@ export const test = mergeTests(
 	pageEditorPagesTest,
 	pageTemplatesPagesTest,
 	stagingPageTest,
+	objectPagesTest,
 	wikiPagesTest
 );
 
@@ -488,3 +492,286 @@ test('Can/not view Import menu item in Application menu depending on permissions
 		companyExportImportPage.exportImportPage.newImportButton
 	).toBeHidden();
 });
+
+test(
+	'can import custom object entries with original creator, and creator user does exist in the current environment',
+	{
+		tag: '@LPD-43217',
+	},
+	async ({
+		apiHelpers,
+		applicationsMenuPage,
+		companyExportImportPage,
+		page,
+		site,
+		viewObjectDefinitionsPage,
+	}) => {
+		const newObjectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFolderExternalReferenceCode: 'default',
+				status: {code: 0},
+			});
+
+		const user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+		userData[user.alternateName] = {
+			name: user.givenName,
+			password: 'test',
+			surname: user.familyName,
+		};
+
+		let roles = await apiHelpers.headlessAdminUser.getRoles('Power User');
+
+		await apiHelpers.headlessAdminUser.postRoleUserAccountAssociation(
+			roles.items[0].id,
+			Number(user.id)
+		);
+
+		roles = await apiHelpers.headlessAdminUser.getRoles('Administrator');
+
+		await apiHelpers.headlessAdminUser.postRoleUserAccountAssociation(
+			roles.items[0].id,
+			Number(user.id)
+		);
+
+		await performLogout(page);
+
+		await performLogin(page, user.alternateName);
+
+		await applicationsMenuPage.goToObjects();
+		await viewObjectDefinitionsPage.clickEditObjectDefinitionLink(
+			newObjectDefinition.name
+		);
+		await page.getByLabel('Panel Link', {exact: true}).click();
+		await page.getByRole('option', {name: 'Object'}).click();
+		await page.getByRole('button', {name: 'Save'}).click();
+		await applicationsMenuPage.goToObjectDefinition(
+			newObjectDefinition.name
+		);
+		await page.getByText('Add ' + newObjectDefinition.name).click();
+		await page.getByLabel('textField').fill('testText');
+		await page.getByRole('button', {name: 'Save'}).click();
+		await waitForAlert(
+			page,
+			'Success:Your request completed successfully.'
+		);
+
+		const exportFilePath = await companyExportImportPage.export(
+			newObjectDefinition.name + ' 1 Items'
+		);
+
+		await deleteObjectEntries({
+			apiHelpers,
+			entityName: newObjectDefinition.name,
+			scopeKey: site.key,
+		});
+
+		await performLogout(page);
+
+		await performLogin(page, 'test');
+
+		await companyExportImportPage.import(exportFilePath);
+
+		await applicationsMenuPage.goToObjectDefinition(
+			newObjectDefinition.name
+		);
+		await expect(
+			page.getByRole('cell', {
+				name: user.givenName + ' ' + user.familyName,
+			})
+		).toBeVisible();
+
+		const objectDefinitionAPIClient =
+			await apiHelpers.buildRestClient(ObjectDefinitionApi);
+
+		await objectDefinitionAPIClient.deleteObjectDefinition(
+			newObjectDefinition.id
+		);
+	}
+);
+
+test(
+	'can import custom object entries with original creator, but creator user does not exist in the current environment',
+	{
+		tag: '@LPD-43217',
+	},
+	async ({
+		apiHelpers,
+		applicationsMenuPage,
+		companyExportImportPage,
+		page,
+		site,
+		viewObjectDefinitionsPage,
+	}) => {
+		const newObjectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFolderExternalReferenceCode: 'default',
+				status: {code: 0},
+			});
+
+		const user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+		userData[user.alternateName] = {
+			name: user.givenName,
+			password: 'test',
+			surname: user.familyName,
+		};
+
+		let roles = await apiHelpers.headlessAdminUser.getRoles('Power User');
+
+		await apiHelpers.headlessAdminUser.postRoleUserAccountAssociation(
+			roles.items[0].id,
+			Number(user.id)
+		);
+
+		roles = await apiHelpers.headlessAdminUser.getRoles('Administrator');
+
+		await apiHelpers.headlessAdminUser.postRoleUserAccountAssociation(
+			roles.items[0].id,
+			Number(user.id)
+		);
+
+		await performLogout(page);
+
+		await performLogin(page, user.alternateName);
+
+		await applicationsMenuPage.goToObjects();
+		await viewObjectDefinitionsPage.clickEditObjectDefinitionLink(
+			newObjectDefinition.name
+		);
+		await page.getByLabel('Panel Link', {exact: true}).click();
+		await page.getByRole('option', {name: 'Object'}).click();
+		await page.getByRole('button', {name: 'Save'}).click();
+		await applicationsMenuPage.goToObjectDefinition(
+			newObjectDefinition.name
+		);
+		await page.getByText('Add ' + newObjectDefinition.name).click();
+		await page.getByLabel('textField').fill('testText');
+		await page.getByRole('button', {name: 'Save'}).click();
+		await waitForAlert(
+			page,
+			'Success:Your request completed successfully.'
+		);
+
+		const exportFilePath = await companyExportImportPage.export(
+			newObjectDefinition.name + ' 1 Items'
+		);
+
+		await deleteObjectEntries({
+			apiHelpers,
+			entityName: newObjectDefinition.name,
+			scopeKey: site.key,
+		});
+
+		await performLogout(page);
+		await performLogin(page, 'test');
+		await apiHelpers.headlessAdminUser.deleteUserAccount(Number(user.id));
+
+		await companyExportImportPage.import(exportFilePath);
+
+		await applicationsMenuPage.goToObjectDefinition(
+			newObjectDefinition.name
+		);
+		await expect(page.getByRole('cell', {name: 'Test Test'})).toBeVisible();
+
+		const objectDefinitionAPIClient =
+			await apiHelpers.buildRestClient(ObjectDefinitionApi);
+
+		await objectDefinitionAPIClient.deleteObjectDefinition(
+			newObjectDefinition.id
+		);
+	}
+);
+
+test(
+	'can import custom object entries with current user as creator',
+	{
+		tag: '@LPD-43217',
+	},
+	async ({
+		apiHelpers,
+		applicationsMenuPage,
+		companyExportImportPage,
+		page,
+		site,
+		viewObjectDefinitionsPage,
+	}) => {
+		const newObjectDefinition =
+			await apiHelpers.objectAdmin.postRandomObjectDefinition({
+				objectFolderExternalReferenceCode: 'default',
+				status: {code: 0},
+			});
+
+		const user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+		userData[user.alternateName] = {
+			name: user.givenName,
+			password: 'test',
+			surname: user.familyName,
+		};
+
+		let roles = await apiHelpers.headlessAdminUser.getRoles('Power User');
+
+		await apiHelpers.headlessAdminUser.postRoleUserAccountAssociation(
+			roles.items[0].id,
+			Number(user.id)
+		);
+
+		roles = await apiHelpers.headlessAdminUser.getRoles('Administrator');
+
+		await apiHelpers.headlessAdminUser.postRoleUserAccountAssociation(
+			roles.items[0].id,
+			Number(user.id)
+		);
+
+		await performLogout(page);
+
+		await performLogin(page, user.alternateName);
+
+		await applicationsMenuPage.goToObjects();
+		await viewObjectDefinitionsPage.clickEditObjectDefinitionLink(
+			newObjectDefinition.name
+		);
+		await page.getByLabel('Panel Link', {exact: true}).click();
+		await page.getByRole('option', {name: 'Object'}).click();
+		await page.getByRole('button', {name: 'Save'}).click();
+		await applicationsMenuPage.goToObjectDefinition(
+			newObjectDefinition.name
+		);
+		await page.getByText('Add ' + newObjectDefinition.name).click();
+		await page.getByLabel('textField').fill('testText');
+		await page.getByRole('button', {name: 'Save'}).click();
+		await waitForAlert(
+			page,
+			'Success:Your request completed successfully.'
+		);
+
+		const exportFilePath = await companyExportImportPage.export(
+			newObjectDefinition.name + ' 1 Items'
+		);
+
+		await deleteObjectEntries({
+			apiHelpers,
+			entityName: newObjectDefinition.name,
+			scopeKey: site.key,
+		});
+
+		await performLogout(page);
+
+		await performLogin(page, 'test');
+
+		await companyExportImportPage.import(exportFilePath, false, true);
+
+		await applicationsMenuPage.goToObjectDefinition(
+			newObjectDefinition.name
+		);
+		await expect(page.getByRole('cell', {name: 'Test Test'})).toBeVisible();
+
+		const objectDefinitionAPIClient =
+			await apiHelpers.buildRestClient(ObjectDefinitionApi);
+
+		await objectDefinitionAPIClient.deleteObjectDefinition(
+			newObjectDefinition.id
+		);
+	}
+);

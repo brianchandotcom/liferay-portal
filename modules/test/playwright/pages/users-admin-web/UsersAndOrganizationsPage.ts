@@ -51,7 +51,6 @@ export class UsersAndOrganizationsPage {
 	readonly assignUsersCheckbox: (userName: string) => Promise<Locator>;
 	readonly assignUsersDoneButton: Locator;
 	readonly clearButton: Locator;
-	readonly createNewUserButton: Locator;
 	readonly deactivateButton: Locator;
 	readonly deactivateUserMenuItem: Locator;
 	readonly deleteButton: Locator;
@@ -166,7 +165,6 @@ export class UsersAndOrganizationsPage {
 			name: 'Assign Users',
 		});
 		this.clearButton = page.getByRole('button', {name: 'Clear'});
-		this.createNewUserButton = page.getByRole('link', {name: 'Add User'});
 		this.deactivateButton = page.getByRole('button', {name: 'Deactivate'});
 		this.deactivateUserMenuItem = page.getByRole('menuitem', {
 			name: 'Deactivate',

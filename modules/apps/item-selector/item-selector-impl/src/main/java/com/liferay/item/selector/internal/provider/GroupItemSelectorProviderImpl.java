@@ -59,6 +59,8 @@ public class GroupItemSelectorProviderImpl
 
 		LinkedHashMap<String, Object> groupParams =
 			LinkedHashMapBuilder.<String, Object>put(
+				"actionId", ActionKeys.VIEW
+			).put(
 				"active", Boolean.TRUE
 			).put(
 				"site", Boolean.TRUE

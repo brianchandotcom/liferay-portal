@@ -1,19 +1,21 @@
+#set ($after_74 = (${liferayVersion.startsWith("20")} || ${liferayVersion.startsWith("7.4")}))
+
 {
 	"dependencies": {
-		"react": "16.8.6",
-		"react-dom": "16.8.6"
+		"react": "18.2.0",
+		"react-dom": "18.2.0"
 	},
 	"devDependencies": {
-		"@babel/cli": "^7.0.0",
-		"@babel/core": "^7.0.0",
-		"@babel/preset-env": "^7.0.0",
-		"@babel/preset-react": "^7.0.0",
-		"liferay-npm-bundler": "2.30.0"
+		"esbuild": "^0.20.2"
 	},
-	"main": "lib/index.es.js",
+	"main": "js/index.js",
 	"name": "${artifactId}",
 	"scripts": {
-		"build": "babel --source-maps -d#if (${buildType} != "gradle") target/classes/META-INF/resources#else build/resources/main/META-INF/resources#end src/main/resources/META-INF/resources && liferay-npm-bundler"
+		#if ($after_74)
+		"build": "esbuild ./src/main/resources/META-INF/resources/js/index.js --bundle --outfile#if (${buildType} != "gradle")=./target/classes/META-INF/resources/js/index.js#else=./build/resources/main/META-INF/resources/js/index.js#end --loader:.js=jsx --format=esm --external:react --external:react-dom"
+		#else
+		"build": "esbuild ./src/main/resources/META-INF/resources/js/index.js --bundle --outfile#if (${buildType} != "gradle")=./target/classes/META-INF/resources/js/index.js#else=./build/resources/main/META-INF/resources/js/index.js#end --loader:.js=jsx --format=esm"
+		#end
 	},
 	"version": "${packageJsonVersion}"
 }

@@ -156,9 +156,6 @@ public interface CPContentHelper {
 
 	public boolean hasCPDefinitionOptionRels(long cpDefinitionId);
 
-	public boolean hasCPDefinitionSpecificationOptionValues(long cpDefinitionId)
-		throws PortalException;
-
 	public boolean hasMultipleCPSkus(CPCatalogEntry cpCatalogEntry)
 		throws Exception;
 

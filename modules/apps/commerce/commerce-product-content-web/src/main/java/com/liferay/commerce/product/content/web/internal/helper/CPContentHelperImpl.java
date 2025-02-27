@@ -631,20 +631,6 @@ public class CPContentHelperImpl implements CPContentHelper {
 	}
 
 	@Override
-	public boolean hasCPDefinitionSpecificationOptionValues(long cpDefinitionId)
-		throws PortalException {
-
-		List<CPDefinitionSpecificationOptionValue>
-			cpDefinitionSpecificationOptionValues =
-				_cpDefinitionSpecificationOptionValueLocalService.
-					getCPDefinitionSpecificationOptionValues(
-						cpDefinitionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-						null);
-
-		return !cpDefinitionSpecificationOptionValues.isEmpty();
-	}
-
-	@Override
 	public boolean hasMultipleCPSkus(CPCatalogEntry cpCatalogEntry) {
 		List<CPInstance> cpDefinitionInstances =
 			_cpInstanceLocalService.getCPDefinitionInstances(

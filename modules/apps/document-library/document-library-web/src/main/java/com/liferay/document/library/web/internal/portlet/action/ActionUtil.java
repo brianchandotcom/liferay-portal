@@ -12,6 +12,8 @@ import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.processor.RawMetadataProcessorUtil;
 import com.liferay.document.library.kernel.service.DLAppServiceUtil;
 import com.liferay.document.library.service.DLFileVersionPreviewLocalServiceUtil;
+import com.liferay.document.library.web.internal.display.context.helper.DLPortletInstanceSettingsHelper;
+import com.liferay.document.library.web.internal.display.context.helper.DLRequestHelper;
 import com.liferay.document.library.web.internal.security.permission.resource.DLPermission;
 import com.liferay.document.library.web.internal.util.DLFolderUtil;
 import com.liferay.petra.lang.SafeCloseable;
@@ -20,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Repository;
-import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
 import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -29,10 +30,8 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.RepositoryServiceUtil;
-import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -41,7 +40,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 
 import javax.servlet.http.HttpServletRequest;
@@ -213,20 +211,16 @@ public class ActionUtil {
 			httpServletRequest, "ignoreRootFolder");
 
 		if ((folderId <= 0) && !ignoreRootFolder) {
-			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-			String portletId = portletDisplay.getId();
-
 			try (SafeCloseable safeCloseable =
 					CTCollectionThreadLocal.
 						setProductionModeWithSafeCloseable()) {
 
-				PortletPreferences portletPreferences =
-					PortletPreferencesFactoryUtil.getPortletPreferences(
-						httpServletRequest, portletId);
+				DLPortletInstanceSettingsHelper
+					dlPortletInstanceSettingsHelper =
+						new DLPortletInstanceSettingsHelper(
+							new DLRequestHelper(httpServletRequest));
 
-				folderId = GetterUtil.getLong(
-					portletPreferences.getValue("rootFolderId", null));
+				folderId = dlPortletInstanceSettingsHelper.getRootFolderId();
 			}
 		}
 

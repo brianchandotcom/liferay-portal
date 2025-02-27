@@ -148,6 +148,16 @@ public class ProductSpecificationFragmentRenderer implements FragmentRenderer {
 
 				label = cpSpecificationOption.getTitle(
 					themeDisplay.getLanguageId());
+
+				httpServletRequest.setAttribute(
+					"liferay-commerce:product-specification:visible",
+					cpDefinitionSpecificationOptionValue.isVisible() &&
+					cpSpecificationOption.isVisible());
+			}
+			else {
+				httpServletRequest.setAttribute(
+					"liferay-commerce:product-specification:visible",
+					Boolean.FALSE);
 			}
 
 			httpServletRequest.setAttribute(

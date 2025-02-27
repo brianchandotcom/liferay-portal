@@ -23,6 +23,7 @@ String namespace = (String)request.getAttribute("liferay-commerce:product-specif
 boolean showLabel = (boolean)request.getAttribute("liferay-commerce:product-specification:showLabel");
 String value = (String)request.getAttribute("liferay-commerce:product-specification:value");
 String valueElementType = (String)request.getAttribute("liferay-commerce:product-specification:valueElementType");
+boolean visible = (boolean)request.getAttribute("liferay-commerce:product-specification:visible");
 
 String uuid = String.valueOf(UUID.randomUUID());
 %>

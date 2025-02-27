@@ -337,8 +337,7 @@ public class GroupResourceTest extends BaseGroupResourceTestCase {
 			_userGroupLocalService.getUserGroupByExternalReferenceCode(
 				postGroup1.getExternalId(), TestPropsValues.getCompanyId());
 
-		assertEquals(
-			postGroup1, _getGroup(String.valueOf(userGroup1.getUserGroupId())));
+		assertEquals(postGroup1, _getGroup(userGroup1.getUserGroupId()));
 
 		// Provision an existing group with no SCIM client ID set
 
@@ -578,8 +577,9 @@ public class GroupResourceTest extends BaseGroupResourceTestCase {
 		}
 	}
 
-	private Group _getGroup(String userId) throws Exception {
-		Object groupObject = groupResource.getV2GroupById(userId);
+	private Group _getGroup(long userGroupId) throws Exception {
+		Object groupObject = groupResource.getV2GroupById(
+			String.valueOf(userGroupId));
 
 		return Group.toDTO(groupObject.toString());
 	}
@@ -593,7 +593,7 @@ public class GroupResourceTest extends BaseGroupResourceTestCase {
 
 		assertHttpResponseStatusCode(204, httpResponse);
 
-		return _getGroup(String.valueOf(userGroupId));
+		return _getGroup(userGroupId);
 	}
 
 	private static String _pid;

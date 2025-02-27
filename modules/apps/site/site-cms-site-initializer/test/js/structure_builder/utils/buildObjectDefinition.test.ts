@@ -9,7 +9,9 @@ import {Field} from '../../../../src/main/resources/META-INF/resources/js/struct
 const DATE_TIME_FIELD: Field = {
 	erc: 'datetime-field',
 	label: 'Date and Time Field',
+	localized: true,
 	name: 'datetimeField',
+	required: false,
 	settings: {
 		timeStorage: 'convertToUTC',
 	},
@@ -19,13 +21,16 @@ const DATE_TIME_FIELD: Field = {
 const TEXT_FIELD: Field = {
 	erc: 'text-field',
 	label: 'Text Field',
+	localized: false,
 	name: 'textField',
+	required: true,
 	type: 'text',
 };
 
 describe('buildObjectDefinition', () => {
 	it('Builds objectDefinition with a field without settings', () => {
 		const result = buildObjectDefinition({
+			erc: 'structureERC',
 			fields: [TEXT_FIELD],
 			id: 1,
 			label: 'Structure',
@@ -33,6 +38,7 @@ describe('buildObjectDefinition', () => {
 		});
 
 		expect(result).toEqual({
+			externalReferenceCode: 'structureERC',
 			id: 1,
 			label: {en_US: 'Structure'},
 			name: 'myStructure',
@@ -43,7 +49,7 @@ describe('buildObjectDefinition', () => {
 					label: {en_US: 'Text Field'},
 					localized: false,
 					name: 'textField',
-					required: false,
+					required: true,
 				},
 			],
 			pluralLabel: {en_US: 'Structure'},
@@ -53,6 +59,7 @@ describe('buildObjectDefinition', () => {
 
 	it('Builds objectDefinition with a field with settings', () => {
 		const result = buildObjectDefinition({
+			erc: 'structureERC',
 			fields: [DATE_TIME_FIELD],
 			id: 1,
 			label: 'Structure',
@@ -60,6 +67,7 @@ describe('buildObjectDefinition', () => {
 		});
 
 		expect(result).toEqual({
+			externalReferenceCode: 'structureERC',
 			id: 1,
 			label: {en_US: 'Structure'},
 			name: 'myStructure',
@@ -68,7 +76,7 @@ describe('buildObjectDefinition', () => {
 					businessType: 'DateTime',
 					externalReferenceCode: 'datetime-field',
 					label: {en_US: 'Date and Time Field'},
-					localized: false,
+					localized: true,
 					name: 'datetimeField',
 					objectFieldSettings: [
 						{name: 'timeStorage', value: 'convertToUTC'},

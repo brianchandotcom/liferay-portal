@@ -4545,9 +4545,17 @@ public class BundleSiteInitializer implements SiteInitializer {
 				serviceContext.getCompanyId(),
 				accessToControlMenuRoleNamesJSONArray.getString(i));
 
-			if (role != null) {
-				roleIds.add(role.getRoleId());
+			if (role == null) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"No role found with name " +
+							accessToControlMenuRoleNamesJSONArray.getString(i));
+				}
+
+				continue;
 			}
+
+			roleIds.add(role.getRoleId());
 		}
 
 		_menuAccessConfigurationManager.updateMenuAccessConfiguration(

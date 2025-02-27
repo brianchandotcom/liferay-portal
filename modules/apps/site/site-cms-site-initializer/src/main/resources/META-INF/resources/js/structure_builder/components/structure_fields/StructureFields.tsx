@@ -20,7 +20,9 @@ export default function StructureFields() {
 
 	const filteredFields = useMemo(() => {
 		return fields.filter((field) =>
-			field.label.toLowerCase().includes(search.toLowerCase())
+			field.label[
+				Liferay.ThemeDisplay.getDefaultLanguageId()
+			]!.toLowerCase().includes(search.toLowerCase())
 		);
 	}, [fields, search]);
 

@@ -68,7 +68,7 @@ export const FIELD_TYPE_BUSINESS_TYPE: Record<FieldType, string> = {
 
 type BaseField = {
 	erc: string;
-	label: string;
+	label: Liferay.Language.LocalizedValue<string>;
 	localized: boolean;
 	name: string;
 	required: boolean;
@@ -101,7 +101,10 @@ export type FieldBusinessType =
 export function getDefaultField(type: FieldType): Field {
 	const base = {
 		erc: getRandomId(),
-		label: FIELD_TYPE_LABEL[type],
+		label: {
+			[Liferay.ThemeDisplay.getDefaultLanguageId()]:
+				FIELD_TYPE_LABEL[type],
+		},
 		localized: false,
 		name: normalizeName(type),
 		required: false,

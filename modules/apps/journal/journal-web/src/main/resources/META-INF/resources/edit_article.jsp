@@ -15,6 +15,54 @@ JournalEditArticleDisplayContext journalEditArticleDisplayContext = (JournalEdit
 journalEditArticleDisplayContext.setViewAttributes();
 %>
 
+<c:if test='<%= MultiSessionMessages.contains(renderRequest, "articleSavedAsDraft") %>'>
+	<c:if test="<%= article != null %>">
+		<liferay-util:buffer
+			var="alertMessage"
+		>
+			<liferay-util:buffer
+				var="articleLink"
+			>
+				<clay:link
+					cssClass="alert-link"
+					href='<%=
+						PortletURLBuilder.createRenderURL(
+							liferayPortletResponse
+						).setMVCRenderCommandName(
+							"/journal/edit_article"
+						).setRedirect(
+							currentURL
+						).setParameter(
+							"articleId", article.getArticleId()
+						).setParameter(
+							"backURLTitle", portletDisplay.getPortletDisplayName()
+						).setParameter(
+							"folderId", article.getFolderId()
+						).setParameter(
+							"groupId", article.getGroupId()
+						).setParameter(
+							"version", article.getVersion()
+						).buildString()
+					%>'
+					label="<%= article.getTitle(locale) %>"
+					translated="<%= false %>"
+				/>
+			</liferay-util:buffer>
+
+			<liferay-ui:message arguments="<%= articleLink %>" key="x-was-successfully-saved-as-draft" />
+		</liferay-util:buffer>
+
+		<liferay-frontend:component
+			context='<%=
+				HashMapBuilder.<String, Object>put(
+					"alertMessage", alertMessage
+				).build()
+			%>'
+			module="{SuccessMessageWithLink} from journal-web"
+		/>
+	</c:if>
+</c:if>
+
 <aui:model-context bean="<%= article %>" model="<%= JournalArticle.class %>" />
 
 <portlet:actionURL var="editArticleActionURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">

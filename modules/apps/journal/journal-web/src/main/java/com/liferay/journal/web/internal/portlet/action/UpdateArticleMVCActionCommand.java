@@ -235,6 +235,10 @@ public class UpdateArticleMVCActionCommand extends BaseMVCActionCommand {
 				}
 			}
 		}
+		else {
+			MultiSessionMessages.add(
+				actionRequest, "articleSavedAsDraft", article.getId());
+		}
 
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			actionRequest);

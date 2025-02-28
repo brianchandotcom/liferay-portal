@@ -12,11 +12,19 @@ import com.liferay.depot.service.DepotEntryLocalService;
 import com.liferay.headless.asset.library.client.dto.v1_0.AssetLibrary;
 import com.liferay.headless.asset.library.client.problem.Problem;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.UserGroup;
+import com.liferay.portal.kernel.service.UserGroupLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.UserGroupTestUtil;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
+
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -25,7 +33,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Roberto Díaz
  */
-@FeatureFlags("LPD-32649")
+@FeatureFlags({"LPD-17564", "LPD-32649"})
 @RunWith(Arquillian.class)
 public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 
@@ -70,6 +78,60 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 
 	@Override
 	@Test
+	public void testDeleteAssetLibraryUserAccountUser() throws Exception {
+		AssetLibrary assetLibrary = _addAssetLibrary();
+
+		Integer initialUsersCount = assetLibrary.getUsersCount();
+
+		User user1 = UserTestUtil.addUser();
+		User user2 = UserTestUtil.addUser();
+
+		assetLibraryResource.postAssetLibraryUserAccountUser(
+			assetLibrary.getId(), user1.getUserId());
+		assetLibraryResource.postAssetLibraryUserAccountUser(
+			assetLibrary.getId(), user2.getUserId());
+
+		assetLibrary = assetLibraryResource.deleteAssetLibraryUserAccountUser(
+			assetLibrary.getId(), user1.getUserId());
+
+		Assert.assertEquals(
+			(Integer)(initialUsersCount + 1), assetLibrary.getUsersCount());
+
+		List<User> groupUsers = _userLocalService.getGroupUsers(
+			assetLibrary.getSiteId());
+
+		Assert.assertFalse(groupUsers.contains(user1));
+		Assert.assertTrue(groupUsers.contains(user2));
+	}
+
+	@Override
+	@Test
+	public void testDeleteAssetLibraryUserGroup() throws Exception {
+		AssetLibrary assetLibrary = _addAssetLibrary();
+
+		UserGroup userGroup1 = UserGroupTestUtil.addUserGroup();
+		UserGroup userGroup2 = UserGroupTestUtil.addUserGroup();
+
+		assetLibraryResource.postAssetLibraryUserGroup(
+			assetLibrary.getId(), userGroup1.getUserGroupId());
+		assetLibraryResource.postAssetLibraryUserGroup(
+			assetLibrary.getId(), userGroup2.getUserGroupId());
+
+		assetLibrary = assetLibraryResource.deleteAssetLibraryUserGroup(
+			assetLibrary.getId(), userGroup1.getUserGroupId());
+
+		List<UserGroup> groupUserGroups =
+			_userGroupLocalService.getGroupUserGroups(assetLibrary.getSiteId());
+
+		Assert.assertEquals(
+			groupUserGroups.toString(), 1, groupUserGroups.size());
+
+		Assert.assertFalse(groupUserGroups.contains(userGroup1));
+		Assert.assertTrue(groupUserGroups.contains(userGroup2));
+	}
+
+	@Override
+	@Test
 	public void testPatchAssetLibraryBySite() throws Exception {
 		AssetLibrary postAssetLibrary =
 			testPatchAssetLibraryBySite_addAssetLibrary();
@@ -100,6 +162,55 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 				randomAssetLibrary());
 
 		_assertLinkedSites(assetLibrary);
+	}
+
+	@Override
+	@Test
+	public void testPostAssetLibraryUserAccountUser() throws Exception {
+		AssetLibrary assetLibrary = _addAssetLibrary();
+
+		Integer initialUsersCount = assetLibrary.getUsersCount();
+
+		User user1 = UserTestUtil.addUser();
+		User user2 = UserTestUtil.addUser();
+
+		assetLibraryResource.postAssetLibraryUserAccountUser(
+			assetLibrary.getId(), user1.getUserId());
+
+		assetLibrary = assetLibraryResource.postAssetLibraryUserAccountUser(
+			assetLibrary.getId(), user2.getUserId());
+
+		Assert.assertEquals(
+			(Integer)(initialUsersCount + 2), assetLibrary.getUsersCount());
+
+		List<User> groupUsers = _userLocalService.getGroupUsers(
+			assetLibrary.getSiteId());
+
+		Assert.assertTrue(groupUsers.contains(user1));
+		Assert.assertTrue(groupUsers.contains(user2));
+	}
+
+	@Override
+	@Test
+	public void testPostAssetLibraryUserGroup() throws Exception {
+		AssetLibrary assetLibrary = _addAssetLibrary();
+
+		UserGroup userGroup1 = UserGroupTestUtil.addUserGroup();
+		UserGroup userGroup2 = UserGroupTestUtil.addUserGroup();
+
+		assetLibraryResource.postAssetLibraryUserGroup(
+			assetLibrary.getId(), userGroup1.getUserGroupId());
+
+		assetLibrary = assetLibraryResource.postAssetLibraryUserGroup(
+			assetLibrary.getId(), userGroup2.getUserGroupId());
+
+		List<UserGroup> groupUserGroups =
+			_userGroupLocalService.getGroupUserGroups(assetLibrary.getSiteId());
+
+		Assert.assertEquals(
+			groupUserGroups.toString(), 2, groupUserGroups.size());
+		Assert.assertTrue(groupUserGroups.contains(userGroup1));
+		Assert.assertTrue(groupUserGroups.contains(userGroup2));
 	}
 
 	@Override
@@ -240,5 +351,11 @@ public class AssetLibraryResourceTest extends BaseAssetLibraryResourceTestCase {
 
 	@Inject
 	private DepotEntryLocalService _depotEntryLocalService;
+
+	@Inject
+	private UserGroupLocalService _userGroupLocalService;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

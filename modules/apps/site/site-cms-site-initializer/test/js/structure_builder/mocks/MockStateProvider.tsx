@@ -12,11 +12,14 @@ import {
 } from '../../../../src/main/resources/META-INF/resources/js/structure_builder/contexts/StateContext';
 
 const DEFAULT_STATE: State = {
+	erc: '',
 	error: null,
 	fields: new Map(),
 	id: null,
 	label: 'untitled-structure',
 	name: 'UntitledStructure',
+	publishedFields: new Set(),
+	selectedItem: {type: 'structure'},
 	status: 'new',
 };
 

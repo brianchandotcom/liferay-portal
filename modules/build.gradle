@@ -39,6 +39,9 @@ buildscript {
 apply plugin: "com.liferay.yarn.defaults.plugin"
 
 ext {
+	buildJakartaTransformerEnabled = GradleUtil.getProperty(rootProject, "build.jakarta.transformer.enabled", false) as Boolean
+	buildJakartaTransformerIncludeDirs = GradleUtil.getProperty(rootProject, "build.jakarta.transformer.include.dirs", "").split(",") as List<String>
+
 	projectTemplateTokens = [
 		"biz.aQute.bnd.version": "6.4.0",
 		"com.liferay.ant.bnd.version": "3.2.12",
@@ -85,7 +88,7 @@ if (Boolean.getBoolean("build.bnd.print.enabled")) {
 	bndPrintJarFiles = new ConcurrentSkipListSet<File>()
 }
 
-if (Boolean.getBoolean("build.jakarta.transformer.enabled")) {
+if (buildJakartaTransformerEnabled) {
 	configurations {
 		jakartaTransformer
 	}
@@ -828,7 +831,7 @@ gradle.beforeProject {
 			}
 		}
 
-		if (Boolean.getBoolean("build.jakarta.transformer.enabled") && (javaVersion.compareTo(JavaVersion.VERSION_17) >= 0) && _containsProject(project, System.getProperty("build.jakarta.transformer.include.dirs"), rootDir.parentFile)) {
+		if (buildJakartaTransformerEnabled && (javaVersion.compareTo(JavaVersion.VERSION_17) >= 0) && _containsProject(project, buildJakartaTransformerIncludeDirs, rootDir.parentFile)) {
 			pluginManager.withPlugin("com.liferay.jasper.jspc") {
 				configurations {
 					compileJspClasspath
@@ -975,9 +978,9 @@ protected abstract class BaseJakartaTransformerTransformAction implements Transf
 }
 
 private boolean _containsProject(
-	Project project, String dirNames, File portalRootDir) {
+	Project project, List<String> dirNames, File portalRootDir) {
 
-	if (Validator.isNull(dirNames) || (portalRootDir == null)) {
+	if (dirNames.isEmpty() || (portalRootDir == null)) {
 		return false
 	}
 
@@ -989,7 +992,7 @@ private boolean _containsProject(
 
 	Path projectPath = projectDir.toPath()
 
-	for (String dirName : dirNames.split(",")) {
+	for (String dirName : dirNames) {
 		if (projectPath.startsWith(portalModulesPath.resolve(dirName))) {
 			return true
 		}

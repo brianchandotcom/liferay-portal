@@ -104,6 +104,46 @@ public class CloudBucketUtil {
 		return null;
 	}
 
+	public static String listGCPFiles(String path)
+		throws IOException, TimeoutException {
+
+		List<String> commands = new ArrayList<>();
+
+		commands.add(_getGCPAuthenticationCommand(path, path));
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("gcloud storage ls ");
+		sb.append(path);
+
+		commands.add(sb.toString());
+
+		Process process = JenkinsResultsParserUtil.executeBashCommands(
+			true, commands.toArray(new String[0]));
+
+		return JenkinsResultsParserUtil.readInputStream(
+			process.getInputStream());
+	}
+
+	public static String listS3Files(String path)
+		throws IOException, TimeoutException {
+
+		List<String> commands = new ArrayList<>();
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("aws s3 ls ");
+		sb.append(path);
+
+		commands.add(sb.toString());
+
+		Process process = JenkinsResultsParserUtil.executeBashCommands(
+			true, commands.toArray(new String[0]));
+
+		return JenkinsResultsParserUtil.readInputStream(
+			process.getInputStream());
+	}
+
 	public static void syncGCPFiles(String destination, String source)
 		throws IOException {
 

@@ -21,21 +21,21 @@ import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.ProductConfig
 import com.liferay.headless.commerce.admin.catalog.client.pagination.Page;
 import com.liferay.headless.commerce.admin.catalog.client.pagination.Pagination;
 import com.liferay.headless.commerce.core.util.DateConfig;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.test.rule.Inject;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -81,23 +81,6 @@ public class ProductConfigurationListAccountGroupResourceTest
 				dateConfig.getMinute(), 0, 0, 0, 0, 0, true);
 	}
 
-	@After
-	@Override
-	public void tearDown() throws Exception {
-		super.tearDown();
-
-		for (Long accountGroupId : _accountGroupIds) {
-			_accountGroupLocalService.deleteAccountGroup(accountGroupId);
-		}
-
-		for (Long productConfigurationListAccountGroupId :
-				_productConfigurationListAccountGroupIds) {
-
-			_cpConfigurationListRelLocalService.deleteCPConfigurationListRel(
-				productConfigurationListAccountGroupId);
-		}
-	}
-
 	@Override
 	@Test
 	public void testDeleteProductConfigurationListAccountGroup()
@@ -124,12 +107,57 @@ public class ProductConfigurationListAccountGroupResourceTest
 		Assert.assertEquals(0, page.getTotalCount());
 	}
 
-	@Ignore
+	@Override
 	@Test
 	public void testGraphQLDeleteProductConfigurationListAccountGroup()
 		throws Exception {
 
-		super.testGraphQLDeleteProductConfigurationListAccountGroup();
+		// Namespace headlessCommerceAdminCatalog_v1_0
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"headlessCommerceAdminCatalog_v1_0",
+						new GraphQLField(
+							"deleteProductConfigurationListAccountGroup",
+							HashMapBuilder.<String, Object>put(
+								"productConfigurationListAccountGroupId",
+								() -> {
+									ProductConfigurationListAccountGroup
+										productConfigurationListAccountGroup =
+											_addProductConfigurationListAccountGroup(
+												randomProductConfigurationListAccountGroup());
+
+									return productConfigurationListAccountGroup.
+										getProductConfigurationListAccountGroupId();
+								}
+							).build()))),
+				"JSONObject/data",
+				"JSONObject/headlessCommerceAdminCatalog_v1_0",
+				"Object/deleteProductConfigurationListAccountGroup"));
+
+		// No namespace
+
+		Assert.assertTrue(
+			JSONUtil.getValueAsBoolean(
+				invokeGraphQLMutation(
+					new GraphQLField(
+						"deleteProductConfigurationListAccountGroup",
+						HashMapBuilder.<String, Object>put(
+							"productConfigurationListAccountGroupId",
+							() -> {
+								ProductConfigurationListAccountGroup
+									productConfigurationListAccountGroup =
+										_addProductConfigurationListAccountGroup(
+											randomProductConfigurationListAccountGroup());
+
+								return productConfigurationListAccountGroup.
+									getProductConfigurationListAccountGroupId();
+							}
+						).build())),
+				"JSONObject/data",
+				"Object/deleteProductConfigurationListAccountGroup"));
 	}
 
 	@Override
@@ -229,19 +257,8 @@ public class ProductConfigurationListAccountGroupResourceTest
 					productConfigurationListAccountGroup)
 		throws Exception {
 
-		ProductConfigurationListAccountGroup
-			postProductConfigurationListAccountGroup =
-				productConfigurationListAccountGroupResource.
-					postProductConfigurationListIdProductConfigurationListAccountGroup(
-						productConfigurationListAccountGroup.
-							getProductConfigurationListId(),
-						productConfigurationListAccountGroup);
-
-		_productConfigurationListAccountGroupIds.add(
-			postProductConfigurationListAccountGroup.
-				getProductConfigurationListAccountGroupId());
-
-		return postProductConfigurationListAccountGroup;
+		return _addProductConfigurationListAccountGroup(
+			productConfigurationListAccountGroup);
 	}
 
 	@Override
@@ -251,11 +268,22 @@ public class ProductConfigurationListAccountGroupResourceTest
 					productConfigurationListAccountGroup)
 		throws Exception {
 
+		return _addProductConfigurationListAccountGroup(
+			productConfigurationListAccountGroup);
+	}
+
+	private ProductConfigurationListAccountGroup
+			_addProductConfigurationListAccountGroup(
+				ProductConfigurationListAccountGroup
+					productConfigurationListAccountGroup)
+		throws Exception {
+
 		ProductConfigurationListAccountGroup
 			postProductConfigurationListAccountGroup =
 				productConfigurationListAccountGroupResource.
 					postProductConfigurationListIdProductConfigurationListAccountGroup(
-						_cpConfigurationList.getCPConfigurationListId(),
+						productConfigurationListAccountGroup.
+							getProductConfigurationListId(),
 						productConfigurationListAccountGroup);
 
 		_productConfigurationListAccountGroupIds.add(

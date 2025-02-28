@@ -13,6 +13,7 @@
 		"@liferay/frontend-js-codemirror-web": "*",
 		"@liferay/frontend-js-react-web": "*",
 		"@liferay/layout-js-components-web": "*",
+		"@liferay/marketplace-js-components-web": "*",
 		"classnames": "2.3.1",
 		"frontend-js-components-web": "*",
 		"frontend-js-web": "*",

@@ -6,6 +6,7 @@
 package com.liferay.multi.factor.authentication.timebased.otp.web.internal.display.context;
 
 import com.liferay.multi.factor.authentication.timebased.otp.web.internal.constants.MFATimeBasedOTPWebKeys;
+import com.liferay.petra.string.StringPool;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
@@ -73,7 +74,7 @@ public class MFATimeBasedOTPCheckerDisplayContext {
 						_httpServletRequest.getAttribute(
 							MFATimeBasedOTPWebKeys.
 								MFA_TIME_BASED_OTP_COMPANY_NAME))),
-				"\\x20", " ")
+				"\\x20", StringPool.SPACE)
 		).put(
 			"secret",
 			HtmlUtil.escapeJS(

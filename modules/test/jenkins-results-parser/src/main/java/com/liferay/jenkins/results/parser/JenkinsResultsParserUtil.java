@@ -3686,11 +3686,14 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static boolean isDouble(String string) {
-		if ((string != null) && string.matches("\\d*\\.?\\d+")) {
-			return true;
+		try {
+			Double.parseDouble(string);
+		}
+		catch (Exception exception) {
+			return false;
 		}
 
-		return false;
+		return true;
 	}
 
 	public static boolean isFileExcluded(

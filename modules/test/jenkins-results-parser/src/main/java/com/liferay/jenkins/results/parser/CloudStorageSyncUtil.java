@@ -69,8 +69,8 @@ public class CloudStorageSyncUtil {
 	public static String getSignedURL(int duration, String file, String url)
 		throws IOException, TimeoutException {
 
-		if (JenkinsResultsParserUtil.isNullOrEmpty(url) ||
-			JenkinsResultsParserUtil.isNullOrEmpty(file)) {
+		if (JenkinsResultsParserUtil.isNullOrEmpty(file) ||
+			JenkinsResultsParserUtil.isNullOrEmpty(url)) {
 
 			return null;
 		}

@@ -3,8 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-// import {DisplayType} from '@clayui/alert';
-
+import {DisplayType} from '@clayui/alert';
 import {Body, Cell, Head, Row, Table, Text} from '@clayui/core';
 import {ClayToggle} from '@clayui/form';
 import ClayLabel from '@clayui/label';
@@ -60,10 +59,7 @@ const header: {
 const statusMap: {
 	[key in JobStatus]: {
 		label: string;
-		value: any;
-
-		// value: DisplayType;
-
+		value: DisplayType;
 	};
 } = {
 	[JobStatus.Disabled]: {

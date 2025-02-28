@@ -36,6 +36,8 @@ import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestHelper;
 import com.liferay.dynamic.data.mapping.test.util.DDMTemplateTestUtil;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverter;
+import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
+import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.headless.delivery.client.dto.v1_0.ContentDocument;
 import com.liferay.headless.delivery.client.dto.v1_0.ContentField;
 import com.liferay.headless.delivery.client.dto.v1_0.ContentFieldValue;
@@ -78,7 +80,6 @@ import com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.template.TemplateConstants;
-import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -88,7 +89,6 @@ import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -627,52 +627,38 @@ public class StructuredContentResourceTest
 		StructuredContent randomStructuredContent1 = _randomStructuredContent(
 			locale);
 
-		String batchEndpoint =
-			"headless-delivery/v1.0/sites/" + testGroup.getGroupId() +
-				"/structured-contents/batch";
+		User testCompanyAdminUser = UserTestUtil.getAdminUser(
+			testCompany.getCompanyId());
 
-		JSONObject batchJobJSONObject = HTTPTestUtil.invokeToJSONObject(
-			_createBatchBody(
-				randomStructuredContent1.getContentStructureId()
-			).toString(),
-			batchEndpoint, Http.Method.POST);
+		ImportTaskResource importTaskResource = ImportTaskResource.builder(
+		).authentication(
+			testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
 
-		String externalReferenceCode = batchJobJSONObject.getString(
-			"externalReferenceCode");
+		ImportTask importTask = importTaskResource.postImportTask(
+			StructuredContent.class.getName(), null, null, "UPSERT", null, null,
+			null, null,
+			_createBatchBody(randomStructuredContent1.getContentStructureId()));
 
-		Assert.assertNotNull(
-			"Batch job externalReferenceCode must be provided",
-			externalReferenceCode);
+		while (true) {
+			importTask = importTaskResource.getImportTask(importTask.getId());
 
-		String statusEndpoint =
-			"headless-batch-engine/v1.0/import-task" +
-				"/by-external-reference-code/" + externalReferenceCode;
+			if (StringUtil.equals(
+					importTask.getExecuteStatusAsString(), "COMPLETED") ||
+				StringUtil.equals(
+					importTask.getExecuteStatusAsString(), "FAILED")) {
 
-		JSONObject batchStatusJSONObject = null;
-		int maxRetries = 20;
-		int retry = 0;
-
-		while (retry < maxRetries) {
-			batchStatusJSONObject = HTTPTestUtil.invokeToJSONObject(
-				null, statusEndpoint, Http.Method.GET);
-
-			String executeStatus = batchStatusJSONObject.getString(
-				"executeStatus");
-
-			if (StringUtil.equals(executeStatus, "COMPLETED") ||
-				StringUtil.equals(executeStatus, "FAILED")) {
-
-				Assert.assertEquals("COMPLETED", executeStatus);
+				Assert.assertEquals(
+					"COMPLETED", importTask.getExecuteStatusAsString());
 
 				break;
 			}
-
-			Thread.sleep(1000);
-			retry++;
 		}
-
-		Assert.assertNotNull(
-			"Batch job status JSON must not be null", batchStatusJSONObject);
 	}
 
 	@Override

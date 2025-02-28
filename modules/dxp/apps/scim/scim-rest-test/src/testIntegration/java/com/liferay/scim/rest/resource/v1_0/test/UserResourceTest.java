@@ -364,6 +364,13 @@ public class UserResourceTest extends BaseUserResourceTestCase {
 		assertHttpResponseStatusCode(
 			409, userResource.postV2UserHttpResponse(postUser3));
 
+		User postUser4 = randomUser();
+
+		postUser4.setActive((Boolean)null);
+
+		assertHttpResponseStatusCode(
+			200, userResource.postV2UserHttpResponse(postUser3));
+
 		ConfigurationTestUtil.deleteConfiguration(_pid);
 
 		assertHttpResponseStatusCode(

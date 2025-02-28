@@ -128,6 +128,7 @@ if (buildJakartaTransformerEnabled) {
 			return uri.toURL()
 		} as URL[],
 		null as java.lang.ClassLoader)
+	BaseJakartaTransformerTransformAction.excludesFileCollection = configurations.jakartaTransformerExcludes
 	BaseJakartaTransformerTransformAction.logger = project.logger
 	BaseJakartaTransformerTransformAction.propertiesFile = project.file("liferay-jakarta-versions.properties")
 }

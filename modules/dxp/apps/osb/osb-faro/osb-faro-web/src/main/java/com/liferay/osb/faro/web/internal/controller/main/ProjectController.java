@@ -620,27 +620,52 @@ public class ProjectController extends BaseFaroController {
 	}
 
 	@GET
-	@Path("/{groupId}/usage/reset/preview")
+	@Path("/usage/reset/preview")
 	@RolesAllowed(RoleConstants.SITE_ADMINISTRATOR)
-	public FaroSubscriptionDisplay previewResetProjectUsageDisplays(
-			@PathParam("groupId") Long groupId)
+	public List<FaroSubscriptionDisplay> previewResetProjectUsageDisplays(
+			@QueryParam("groupId") Long groupId)
 		throws Exception {
 
-		return _resetProjectUsageDisplays(groupId);
+		List<FaroProject> faroProjects = new ArrayList<>();
+
+		if (Validator.isNotNull(groupId)) {
+			faroProjects.add(
+				_faroProjectLocalService.fetchFaroProjectByGroupId(groupId));
+		}
+		else {
+			faroProjects = _faroProjectLocalService.getFaroProjects(
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		}
+
+		return TransformUtil.transform(
+			faroProjects,
+			faroProject -> _resetProjectUsageDisplays(
+				faroProject.getGroupId()));
 	}
 
 	@DELETE
-	@Path("/{groupId}/usage/reset")
+	@Path("/usage/reset")
 	@RolesAllowed(RoleConstants.SITE_ADMINISTRATOR)
-	public void resetProjectUsageDisplays(@PathParam("groupId") Long groupId)
+	public void resetProjectUsageDisplays(@QueryParam("groupId") Long groupId)
 		throws Exception {
 
-		FaroProject faroProject =
-			_faroProjectLocalService.fetchFaroProjectByGroupId(groupId);
+		List<FaroProject> faroProjects = new ArrayList<>();
 
-		_faroProjectLocalService.updateSubscription(
-			faroProject.getFaroProjectId(),
-			JSONUtil.writeValueAsString(_resetProjectUsageDisplays(groupId)));
+		if (Validator.isNotNull(groupId)) {
+			faroProjects.add(
+				_faroProjectLocalService.fetchFaroProjectByGroupId(groupId));
+		}
+		else {
+			faroProjects = _faroProjectLocalService.getFaroProjects(
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		}
+
+		for (FaroProject faroProject : faroProjects) {
+			_faroProjectLocalService.updateSubscription(
+				faroProject.getFaroProjectId(),
+				JSONUtil.writeValueAsString(
+					_resetProjectUsageDisplays(faroProject.getGroupId())));
+		}
 	}
 
 	@Path("/{groupId}/send-created-workspace-email")

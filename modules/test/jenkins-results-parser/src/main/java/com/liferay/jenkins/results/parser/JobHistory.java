@@ -101,8 +101,8 @@ public class JobHistory {
 					CloudStorageSyncUtil.GCP_BUCKET_PATH_TESTRAY_RESULTS)) {
 
 				CloudStorageSyncUtil.copyGCPFile(
-					ciHistoryURL,
-					JenkinsResultsParserUtil.getCanonicalPath(tempGzipFile));
+					JenkinsResultsParserUtil.getCanonicalPath(tempGzipFile),
+					ciHistoryURL);
 			}
 			else {
 				JenkinsResultsParserUtil.toFile(

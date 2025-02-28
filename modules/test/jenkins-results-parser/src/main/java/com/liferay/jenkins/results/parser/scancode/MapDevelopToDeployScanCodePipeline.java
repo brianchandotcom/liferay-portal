@@ -113,7 +113,7 @@ public class MapDevelopToDeployScanCodePipeline extends BaseScanCodePipeline {
 				"google.application.crendential.file[jenkins]");
 
 			return CloudStorageSyncUtil.getSignedURL(
-				tomcatURL, credentialsFile, 15);
+				15, credentialsFile, tomcatURL);
 		}
 		catch (Exception exception) {
 			exception.printStackTrace();

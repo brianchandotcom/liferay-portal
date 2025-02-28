@@ -32,12 +32,12 @@ public class CloudStorageSyncUtil {
 	public static final String GCP_BUCKET_PATH_TESTRAY_RESULTS =
 		"gs://testray-results";
 
-	public static void copyGCPFile(String source, String destination)
+	public static void copyGCPFile(String destination, String source)
 		throws IOException {
 
 		List<String> commands = new ArrayList<>();
 
-		commands.add(_getGCPAuthenticationCommand(source, destination));
+		commands.add(_getGCPAuthenticationCommand(destination, source));
 
 		StringBuilder sb = new StringBuilder();
 
@@ -51,7 +51,7 @@ public class CloudStorageSyncUtil {
 		_executeCommands(commands.toArray(new String[0]));
 	}
 
-	public static void copyS3File(String source, String destination) {
+	public static void copyS3File(String destination, String source) {
 		List<String> commands = new ArrayList<>();
 
 		StringBuilder sb = new StringBuilder();
@@ -66,7 +66,7 @@ public class CloudStorageSyncUtil {
 		_executeCommands(commands.toArray(new String[0]));
 	}
 
-	public static String getSignedURL(String url, String file, int duration)
+	public static String getSignedURL(int duration, String file, String url)
 		throws IOException, TimeoutException {
 
 		if (JenkinsResultsParserUtil.isNullOrEmpty(url) ||
@@ -104,12 +104,12 @@ public class CloudStorageSyncUtil {
 		return null;
 	}
 
-	public static void syncGCPFiles(String source, String destination)
+	public static void syncGCPFiles(String destination, String source)
 		throws IOException {
 
 		List<String> commands = new ArrayList<>();
 
-		commands.add(_getGCPAuthenticationCommand(source, destination));
+		commands.add(_getGCPAuthenticationCommand(destination, source));
 
 		StringBuilder sb = new StringBuilder();
 
@@ -123,7 +123,7 @@ public class CloudStorageSyncUtil {
 		_executeCommands(commands.toArray(new String[0]));
 	}
 
-	public static void syncS3Files(String source, String destination) {
+	public static void syncS3Files(String destination, String source) {
 		List<String> commands = new ArrayList<>();
 
 		StringBuilder sb = new StringBuilder();
@@ -163,7 +163,7 @@ public class CloudStorageSyncUtil {
 	}
 
 	private static String _getGCPAuthenticationCommand(
-			String source, String destination)
+			String destination, String source)
 		throws IOException {
 
 		StringBuilder sb = new StringBuilder();

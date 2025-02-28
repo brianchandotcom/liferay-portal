@@ -98,7 +98,7 @@ public class ModalConfigurationEditModePortletConfigurationIcon
 							httpServletRequest, "settingsScope", settingsScope);
 
 						if (Validator.isNotNull(settingsScope)) {
-							return "settingsScope";
+							return settingsScope;
 						}
 					}
 

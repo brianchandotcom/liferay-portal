@@ -971,7 +971,7 @@ protected abstract class BaseJakartaTransformerTransformAction implements Transf
 		if (excludesFileCollection.contains(inputJarFile)) {
 			outputs.file(inputJarFile)
 
-			logger.info("Jakarta: SKIPPING excluded artifact: ${inputJarFile}");
+			logger.lifecycle("Jakarta: SKIPPING excluded artifact: ${inputJarFile}")
 
 			return
 		}
@@ -998,7 +998,7 @@ protected abstract class BaseJakartaTransformerTransformAction implements Transf
 			throw new GradleException("Jakarta: ERROR ${resultCode}\n${errorPrintStream}")
 		}
 
-		logger.info("Jakarta: TRANSFORMING artifact: {} -> {}", inputJarFile, outputJarFile);
+		logger.lifecycle("Jakarta: TRANSFORMING artifact: {} -> {}", inputJarFile, outputJarFile)
 	}
 
 }

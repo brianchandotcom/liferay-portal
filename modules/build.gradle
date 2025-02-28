@@ -39,7 +39,7 @@ buildscript {
 apply plugin: "com.liferay.yarn.defaults.plugin"
 
 ext {
-	buildJakartaTransformerEnabled = GradleUtil.getProperty(rootProject, "build.jakarta.transformer.enabled", false) as Boolean
+	buildJakartaTransformerEnabled = GradleUtil.getProperty(rootProject, "build.jakarta.transformer.enabled", false)
 	buildJakartaTransformerExcludedDependencies = _toList(rootProject.findProperty("build.jakarta.transformer.excluded.dependencies"))
 	buildJakartaTransformerIncludeDirs = _toList(rootProject.findProperty("build.jakarta.transformer.include.dirs"))
 

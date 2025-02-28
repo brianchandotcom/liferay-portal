@@ -7,16 +7,16 @@
 
 <%@ include file="/deletions/init.jsp" %>
 
-<%
-StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHelper();
-%>
-
 <c:if test="<%= cmd.equals(Constants.EXPORT) || cmd.equals(Constants.IMPORT) || cmd.equals(Constants.PUBLISH) %>">
 	<div aria-labelledby="<portlet:namespace />deletions" class="options-group" role="group">
 		<clay:sheet-section>
 			<span class="sheet-subtitle" id="<portlet:namespace />deletions">
 				<liferay-ui:message key="deletions" />
 			</span>
+
+			<%
+			StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHelper();
+			%>
 
 			<c:if test="<%= !cmd.equals(Constants.EXPORT) && !stagingGroupHelper.isCompanyGroup(group) %>">
 				<liferay-staging:checkbox

@@ -6,6 +6,7 @@
 package com.liferay.fragment.web.internal.portlet.action;
 
 import com.liferay.fragment.constants.FragmentPortletKeys;
+import com.liferay.fragment.web.internal.display.context.GroupFragmentEntryLinkDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 
 import javax.portlet.RenderRequest;
@@ -29,6 +30,11 @@ public class ViewGroupFragmentEntryUsagesMVCRenderCommand
 	@Override
 	public String render(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
+
+		renderRequest.setAttribute(
+			GroupFragmentEntryLinkDisplayContext.class.getName(),
+			new GroupFragmentEntryLinkDisplayContext(
+				renderRequest, renderResponse));
 
 		return "/view_group_fragment_entry_usages.jsp";
 	}

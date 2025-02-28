@@ -8,7 +8,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-GroupFragmentEntryLinkDisplayContext groupFragmentEntryLinkDisplayContext = new GroupFragmentEntryLinkDisplayContext(renderRequest, renderResponse);
+GroupFragmentEntryLinkDisplayContext groupFragmentEntryLinkDisplayContext = (GroupFragmentEntryLinkDisplayContext)request.getAttribute(GroupFragmentEntryLinkDisplayContext.class.getName());
 
 FragmentEntry fragmentEntry = groupFragmentEntryLinkDisplayContext.getFragmentEntry();
 

@@ -17,13 +17,20 @@ import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.CountryTable;
+import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CountryLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -73,7 +80,14 @@ public class CommerceChannelRelLocalServiceImpl
 		commerceChannelRel.setClassPK(classPK);
 		commerceChannelRel.setCommerceChannelId(commerceChannelId);
 
-		return commerceChannelRelPersistence.update(commerceChannelRel);
+		commerceChannelRel = commerceChannelRelPersistence.update(
+			commerceChannelRel);
+
+		_reindexCommerceChannelRels(
+			commerceChannelRel.getClassNameId(),
+			commerceChannelRel.getClassPK());
+
+		return commerceChannelRel;
 	}
 
 	@Override
@@ -85,6 +99,34 @@ public class CommerceChannelRelLocalServiceImpl
 			classPKs,
 			classPK -> addCommerceChannelRel(
 				className, classPK, commerceChannelId, serviceContext));
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
+	public CommerceChannelRel deleteCommerceChannelRel(
+		CommerceChannelRel commerceChannelRel) {
+
+		commerceChannelRelPersistence.remove(commerceChannelRel);
+
+		_reindexCommerceChannelRels(
+			commerceChannelRel.getClassNameId(),
+			commerceChannelRel.getClassPK());
+
+		return commerceChannelRel;
+	}
+
+	@Override
+	public CommerceChannelRel deleteCommerceChannelRel(
+			long commerceChannelRelId)
+		throws PortalException {
+
+		CommerceChannelRel commerceChannelRel =
+			commerceChannelRelPersistence.findByPrimaryKey(
+				commerceChannelRelId);
+
+		return commerceChannelRelLocalService.deleteCommerceChannelRel(
+			commerceChannelRel);
 	}
 
 	@Override
@@ -302,6 +344,23 @@ public class CommerceChannelRelLocalServiceImpl
 					}
 				)
 			));
+	}
+
+	private void _reindexCommerceChannelRels(long classNameId, long classPK) {
+		try {
+			if (classNameId == _classNameLocalService.getClassNameId(
+					CommerceCurrency.class)) {
+
+				Indexer<CommerceCurrency> indexer =
+					IndexerRegistryUtil.nullSafeGetIndexer(
+						CommerceCurrency.class);
+
+				indexer.reindex(CommerceCurrency.class.getName(), classPK);
+			}
+		}
+		catch (PortalException portalException) {
+			throw new SystemException(portalException);
+		}
 	}
 
 	@Reference

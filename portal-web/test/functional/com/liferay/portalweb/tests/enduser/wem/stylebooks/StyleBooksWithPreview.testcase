@@ -816,7 +816,7 @@ definition {
 		task ("Deactivate the Default fragment sets") {
 			AppManager.openAppManagerAdmin();
 
-			for (var collectionName : list "Basic Component,Cookie Banner,Dialect,Featured Content,Footers,Inputs,Navigation Bars") {
+			for (var collectionName : list "Basic Component,Cookie Banner,Featured Content,Footers,Inputs,Navigation Bars") {
 				Search.searchCP(searchTerm = "Fragment Collection Contributor");
 
 				AppManager.deactivateApp(appName = "Liferay Fragment Collection Contributor ${collectionName}");

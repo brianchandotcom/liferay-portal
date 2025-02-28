@@ -436,6 +436,10 @@ public interface FragmentEntryLinkLocalService
 		long fragmentEntryId, boolean deleted);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getFragmentEntryLinksCountByFragmentEntryId(
+		long groupId, long fragmentEntryId, boolean deleted);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getFragmentEntryLinksCountByPlid(long groupId, long plid);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

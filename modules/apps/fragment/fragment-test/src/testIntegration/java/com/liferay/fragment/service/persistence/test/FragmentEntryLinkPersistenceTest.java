@@ -425,6 +425,15 @@ public class FragmentEntryLinkPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_F_D() throws Exception {
+		_persistence.countByG_F_D(
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.randomBoolean());
+
+		_persistence.countByG_F_D(0L, 0L, RandomTestUtil.randomBoolean());
+	}
+
+	@Test
 	public void testCountByG_S_P() throws Exception {
 		_persistence.countByG_S_P(
 			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),

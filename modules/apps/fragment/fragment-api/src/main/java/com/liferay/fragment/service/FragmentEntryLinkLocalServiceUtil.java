@@ -575,6 +575,13 @@ public class FragmentEntryLinkLocalServiceUtil {
 			fragmentEntryId, deleted);
 	}
 
+	public static int getFragmentEntryLinksCountByFragmentEntryId(
+		long groupId, long fragmentEntryId, boolean deleted) {
+
+		return getService().getFragmentEntryLinksCountByFragmentEntryId(
+			groupId, fragmentEntryId, deleted);
+	}
+
 	public static int getFragmentEntryLinksCountByPlid(
 		long groupId, long plid) {
 

@@ -130,7 +130,7 @@ else {
 
 					<liferay-ui:search-container-column-text
 						name="country"
-						property="address.country.name"
+						value="<%= UsersAdminUtil.ORGANIZATION_COUNTRY_NAME_ACCESSOR.get(organization) %>"
 					/>
 
 					<liferay-ui:search-container-column-text>

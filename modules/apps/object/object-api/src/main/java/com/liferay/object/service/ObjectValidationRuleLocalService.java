@@ -6,6 +6,7 @@
 package com.liferay.object.service;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectValidationRule;
 import com.liferay.object.model.ObjectValidationRuleSetting;
@@ -357,6 +358,12 @@ public interface ObjectValidationRuleLocalService
 	public void validate(
 			BaseModel<?> baseModel, long objectDefinitionId,
 			JSONObject payloadJSONObject, long userId)
+		throws PortalException;
+
+	@Transactional(readOnly = true)
+	public void validate(
+			ObjectEntry objectEntry, List<String> objectValidationRulesERC,
+			long userId)
 		throws PortalException;
 
 }

@@ -44,6 +44,7 @@ public class MFATimeBasedOTPCheckerDisplayContextTest {
 	@Before
 	public void setUp() throws PortalException {
 		_setUpCompany();
+		_setUpPortalUtil();
 		_setUpThemeDisplay();
 		_setUpUser();
 
@@ -104,6 +105,20 @@ public class MFATimeBasedOTPCheckerDisplayContextTest {
 		_httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, _themeDisplay);
 	}
 
+	private void _setUpPortalUtil() throws PortalException {
+		PortalUtil portalUtil = new PortalUtil();
+
+		Portal portal = Mockito.mock(Portal.class);
+
+		Mockito.when(
+			portal.getSelectedUser(Mockito.any(HttpServletRequest.class))
+		).thenReturn(
+			_user
+		);
+
+		portalUtil.setPortal(portal);
+	}
+
 	private void _setUpThemeDisplay() {
 		_themeDisplay = Mockito.mock(ThemeDisplay.class);
 
@@ -124,16 +139,6 @@ public class MFATimeBasedOTPCheckerDisplayContextTest {
 
 	private void _setUpUser() throws PortalException {
 		_user = Mockito.mock(User.class);
-
-		PortalUtil portalUtil = new PortalUtil();
-
-		portalUtil.setPortal(Mockito.mock(Portal.class));
-
-		Mockito.when(
-			PortalUtil.getSelectedUser(Mockito.any(HttpServletRequest.class))
-		).thenReturn(
-			_user
-		);
 
 		Mockito.when(
 			_user.getEmailAddress()

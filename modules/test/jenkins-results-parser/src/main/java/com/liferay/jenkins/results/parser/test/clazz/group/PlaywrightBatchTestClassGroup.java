@@ -173,27 +173,39 @@ public class PlaywrightBatchTestClassGroup extends BatchTestClassGroup {
 			totalDuration += testClass.getAverageDuration();
 		}
 
-		if (totalDuration != 0L) {
-			JobProperty jobProperty = getJobProperty(
-				"test.batch.target.axis.duration");
-
-			String jobPropertyValue = jobProperty.getValue();
-
-			if (JenkinsResultsParserUtil.isInteger(jobPropertyValue)) {
-				recordJobProperty(jobProperty);
-
-				long testBatchTargetAxisDuration = Long.parseLong(
-					jobPropertyValue);
-
-				long axisCount =
-					Math.floorDiv(totalDuration, testBatchTargetAxisDuration) +
-						1;
-
-				return Math.toIntExact(axisCount);
-			}
+		if (totalDuration == 0L) {
+			return getAxisCount();
 		}
 
-		return getAxisCount();
+		JobProperty targetAxisDurationJobProperty = getJobProperty(
+			"test.batch.target.axis.duration");
+
+		String targetAxisDurationString =
+			targetAxisDurationJobProperty.getValue();
+
+		if (!JenkinsResultsParserUtil.isInteger(targetAxisDurationString)) {
+			return getAxisCount();
+		}
+
+		recordJobProperty(targetAxisDurationJobProperty);
+
+		long targetAxisDuration = Long.parseLong(targetAxisDurationString);
+
+		JobProperty performanceModifierJobProperty = getJobProperty(
+			"test.batch.performance.modifier");
+
+		String performanceModifier = performanceModifierJobProperty.getValue();
+
+		if (JenkinsResultsParserUtil.isDouble(performanceModifier)) {
+			targetAxisDuration = Math.round(
+				targetAxisDuration * Double.parseDouble(performanceModifier));
+
+			recordJobProperty(performanceModifierJobProperty);
+		}
+
+		long axisCount = Math.floorDiv(totalDuration, targetAxisDuration) + 1;
+
+		return Math.toIntExact(axisCount);
 	}
 
 	protected File getPlaywrightBaseDir() {

@@ -10,7 +10,6 @@ import {captchaConfigPageTest} from '../../fixtures/captchaConfigPageTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {passwordPoliciesAdminPageTest} from '../../fixtures/passwordPoliciesAdminConfigPageTest';
 import {TPasswordPolicy} from '../../helpers/PasswordPolicyApiHelper';
-import {liferayConfig} from '../../liferay.config';
 import {PasswordPoliciesAdminPage} from '../../pages/password-policies-admin-web/PasswordPoliciesAdminPage';
 import getRandomString from '../../utils/getRandomString';
 import performLoginViaApi from '../../utils/performLogin';
@@ -25,7 +24,7 @@ export const test = mergeTests(
 test.beforeEach(
 	'Disable create account CAPTCHA',
 	async ({captchaConfigPage, page}) => {
-		await page.goto(liferayConfig.environment.baseUrl);
+		await page.goto('/');
 
 		if (await page.getByRole('button', {name: 'Sign In'}).isVisible()) {
 			await performLoginViaApi(page, 'test');
@@ -40,7 +39,7 @@ test.beforeEach(
 test.afterEach(
 	'Reset CAPTCHA configuration',
 	async ({captchaConfigPage, page, passwordPoliciesAdminConfigPage}) => {
-		await page.goto(liferayConfig.environment.baseUrl);
+		await page.goto('/');
 
 		if (await page.getByRole('button', {name: 'Sign In'}).isVisible()) {
 			await performLoginViaApi(page, 'test');
@@ -50,7 +49,7 @@ test.afterEach(
 
 		await captchaConfigPage.resetCaptchaConfiguration();
 
-		await page.goto(liferayConfig.environment.baseUrl);
+		await page.goto('/');
 
 		await passwordPoliciesAdminConfigPage.goTo();
 		await passwordPoliciesAdminConfigPage.resetDefaultPasswordPolicy();
@@ -209,7 +208,7 @@ async function testPasswordPolicySyntaxCheck(
 
 	const page = await browser.newPage();
 
-	await page.goto(liferayConfig.environment.baseUrl);
+	await page.goto('/');
 
 	await page.getByRole('button', {name: 'Sign In'}).click();
 

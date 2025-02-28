@@ -30,7 +30,9 @@ renderResponse.setTitle(LanguageUtil.get(request, "review-changes"));
 		/>
 	</div>
 
-	<clay:container-fluid>
+	<clay:container-fluid
+		fullWidth="<%= true %>"
+	>
 		<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-20131") %>'>
 			<div>
 				<react:component

@@ -22,6 +22,7 @@ if (publicationsConfigurationDisplayContext.isPublicationsEnabled()) {
 
 <clay:container-fluid
 	cssClass="container-form-lg"
+	fullWidth="<%= true %>"
 >
 	<aui:form action="<%= publicationsConfigurationDisplayContext.getActionURL() %>" method="post" name="fm">
 		<aui:input name="navigation" type="hidden" value="<%= publicationsConfigurationDisplayContext.getNavigation() %>" />

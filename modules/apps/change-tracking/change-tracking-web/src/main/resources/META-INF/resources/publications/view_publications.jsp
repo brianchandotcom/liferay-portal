@@ -17,7 +17,9 @@
 	/>
 </div>
 
-<clay:container-fluid>
+<clay:container-fluid
+	fullWidth="<%= true %>"
+>
 	<frontend-data-set:headless-display
 		apiURL="<%= publicationsDisplayContext.getAPIURL() %>"
 		creationMenu="<%= publicationsDisplayContext.getCreationMenu() %>"

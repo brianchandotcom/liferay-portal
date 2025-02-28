@@ -21,6 +21,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "discard-changes"));
 
 <clay:container-fluid
 	cssClass="publications-related-entries-container"
+	fullWidth="<%= true %>"
 >
 	<div class="sheet">
 		<clay:sheet-section>

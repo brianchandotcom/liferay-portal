@@ -22,6 +22,7 @@ portletDisplay.setURLBack(viewConflictsDisplayContext.getRedirect());
 
 <clay:container-fluid
 	cssClass="container-form-lg publications-conflicts-container"
+	fullWidth="<%= true %>"
 >
 	<react:component
 		module="{ChangeTrackingConflictsView} from change-tracking-web"

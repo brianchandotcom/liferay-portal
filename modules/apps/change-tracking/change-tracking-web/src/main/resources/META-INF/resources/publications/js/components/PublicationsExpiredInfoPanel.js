@@ -36,7 +36,7 @@ export default function PublicationsExpiredInfoPanel() {
 
 	return (
 		expired && (
-			<ClayLayout.ContainerFluid style={{marginTop: '1em'}}>
+			<ClayLayout.ContainerFluid size={false} style={{marginTop: '1em'}}>
 				<ClayAlert
 					displayType="info"
 					onClose={() => {

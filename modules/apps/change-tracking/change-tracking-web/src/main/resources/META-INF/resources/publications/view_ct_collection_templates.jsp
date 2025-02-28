@@ -24,7 +24,9 @@ portletDisplay.setShowBackIcon(true);
 	managementToolbarDisplayContext="<%= new ViewTemplatesManagementToolbarDisplayContext(request, liferayPortletRequest, liferayPortletResponse, searchContainer, viewTemplatesDisplayContext) %>"
 />
 
-<clay:container-fluid>
+<clay:container-fluid
+	fullWidth="<%= true %>"
+>
 	<liferay-ui:search-container
 		cssClass="publications-templates-table"
 		searchContainer="<%= searchContainer %>"

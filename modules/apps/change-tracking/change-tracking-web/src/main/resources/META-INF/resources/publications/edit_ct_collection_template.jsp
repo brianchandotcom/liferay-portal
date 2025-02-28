@@ -45,6 +45,7 @@ portletDisplay.setShowBackIcon(true);
 
 <clay:container-fluid
 	cssClass="container-form-lg edit-publication-template-container"
+	fullWidth="<%= true %>"
 >
 	<liferay-portlet:actionURL name="/change_tracking/edit_ct_collection_template" var="actionURL">
 		<liferay-portlet:param name="redirect" value="<%= redirect %>" />

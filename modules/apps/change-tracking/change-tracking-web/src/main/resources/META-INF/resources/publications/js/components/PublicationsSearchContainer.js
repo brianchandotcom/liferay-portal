@@ -560,13 +560,7 @@ const PublicationsSearchContainer = ({
 			}
 
 			return (
-				<div
-					className={
-						containerView
-							? 'container-fluid container-fluid-max-xl'
-							: ''
-					}
-				>
+				<div className={containerView ? 'container-fluid' : ''}>
 					<div className={containerView ? 'container-view' : ''}>
 						<div className={className}>
 							<ClayEmptyState
@@ -600,13 +594,7 @@ const PublicationsSearchContainer = ({
 			);
 
 			return (
-				<div
-					className={
-						containerView
-							? 'container-fluid container-fluid-max-xl'
-							: ''
-					}
-				>
+				<div className={containerView ? 'container-fluid' : ''}>
 					<div className={containerView ? 'container-view' : ''}>
 						<ClayList
 							className={
@@ -629,13 +617,7 @@ const PublicationsSearchContainer = ({
 			);
 
 			return (
-				<div
-					className={
-						containerView
-							? 'container-fluid container-fluid-max-xl'
-							: ''
-					}
-				>
+				<div className={containerView ? 'container-fluid' : ''}>
 					<div className={containerView ? 'container-view' : ''}>
 						<ClayTable
 							className={

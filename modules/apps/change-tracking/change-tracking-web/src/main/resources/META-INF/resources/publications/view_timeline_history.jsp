@@ -12,6 +12,7 @@ ViewTimelineHistoryDisplayContext viewTimelineHistoryDisplayContext = (ViewTimel
 %>
 
 <clay:container-fluid
+	fullWidth="<%= true %>"
 	id="publication-timeline-history-table"
 >
 	<frontend-data-set:headless-display

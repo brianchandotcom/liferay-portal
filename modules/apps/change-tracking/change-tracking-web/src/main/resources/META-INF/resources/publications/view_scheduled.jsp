@@ -15,7 +15,9 @@ ViewScheduledDisplayContext viewScheduledDisplayContext = (ViewScheduledDisplayC
 	navigationItems="<%= viewScheduledDisplayContext.getViewNavigationItems() %>"
 />
 
-<clay:container-fluid>
+<clay:container-fluid
+	fullWidth="<%= true %>"
+>
 	<frontend-data-set:headless-display
 		apiURL="<%= viewScheduledDisplayContext.getAPIURL() %>"
 		fdsActionDropdownItems="<%= viewScheduledDisplayContext.getFDSActionDropdownItems() %>"

@@ -26,6 +26,7 @@ else {
 
 <clay:container-fluid
 	cssClass="container-form-lg"
+	fullWidth="<%= true %>"
 >
 	<clay:sheet>
 		<aui:form action="<%= actionURL %>" cssClass="lfr-export-dialog" method="post" name="editCTRemoteFm">

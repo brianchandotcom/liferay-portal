@@ -15,7 +15,9 @@ ViewHistoryDisplayContext viewHistoryDisplayContext = (ViewHistoryDisplayContext
 	navigationItems="<%= viewHistoryDisplayContext.getViewNavigationItems() %>"
 />
 
-<clay:container-fluid>
+<clay:container-fluid
+	fullWidth="<%= true %>"
+>
 	<frontend-data-set:headless-display
 		additionalProps='<%=
 			HashMapBuilder.<String, Object>put(

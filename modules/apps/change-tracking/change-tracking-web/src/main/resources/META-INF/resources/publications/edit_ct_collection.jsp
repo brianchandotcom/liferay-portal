@@ -52,6 +52,7 @@ portletDisplay.setURLBack(redirect);
 
 <clay:container-fluid
 	cssClass="container-form-lg edit-publication-container"
+	fullWidth="<%= true %>"
 >
 	<liferay-portlet:actionURL name="<%= actionName %>" var="actionURL">
 		<liferay-portlet:param name="mvcRenderCommandName" value="/change_tracking/view_publications" />

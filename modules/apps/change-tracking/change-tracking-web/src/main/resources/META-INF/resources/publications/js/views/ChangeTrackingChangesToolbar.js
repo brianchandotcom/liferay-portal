@@ -170,7 +170,7 @@ export default function ChangeTrackingChangesToolbar({
 	const renderPublicationsToolbar = () => {
 		return (
 			<ClayToolbar className="publications-tbar" light>
-				<div className="container-fluid container-fluid-max-xl">
+				<div className="container-fluid">
 					<ClayToolbar.Nav>
 						<ClayToolbar.Item className="text-left" expand>
 							<ClayToolbar.Section>
@@ -277,7 +277,7 @@ export default function ChangeTrackingChangesToolbar({
 				</div>
 			</div>
 
-			<ClayLayout.ContainerFluid style={{marginTop: '1em'}}>
+			<ClayLayout.ContainerFluid size={false} style={{marginTop: '1em'}}>
 				{renderExpiredBanner()}
 			</ClayLayout.ContainerFluid>
 		</>

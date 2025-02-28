@@ -379,7 +379,7 @@ export default function ChangeTrackingChangeView({
 
 	const renderMainContent = () => {
 		return (
-			<div className="container-fluid container-fluid-max-xl">
+			<div className="container-fluid">
 				<div className="publications-changes-content row">
 					<div className="col-md-12">
 						{initialNode.modelClassNameId ? (

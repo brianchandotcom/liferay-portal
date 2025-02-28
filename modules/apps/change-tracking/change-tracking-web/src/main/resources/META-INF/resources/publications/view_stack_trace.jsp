@@ -9,6 +9,7 @@
 
 <clay:container-fluid
 	cssClass="container-view"
+	fullWidth="<%= true %>"
 >
 	<div class="sheet">
 		<h2 class="sheet-title">

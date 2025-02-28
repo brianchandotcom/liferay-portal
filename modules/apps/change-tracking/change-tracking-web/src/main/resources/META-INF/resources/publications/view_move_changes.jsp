@@ -20,6 +20,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "move-changes"));
 
 <clay:container-fluid
 	cssClass="publications-related-entries-container"
+	fullWidth="<%= true %>"
 >
 	<div class="sheet">
 		<clay:sheet-section>

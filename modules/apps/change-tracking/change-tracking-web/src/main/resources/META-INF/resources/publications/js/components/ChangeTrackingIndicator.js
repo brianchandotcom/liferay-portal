@@ -524,7 +524,7 @@ export default function ChangeTrackingIndicator({
 				style={{maxWidth: contextChangeButtons ? '711px' : '421px'}}
 				trigger={renderTrigger}
 			>
-				<ClayLayout.ContainerFluid>
+				<ClayLayout.ContainerFluid size={false}>
 					<ClayLayout.Row style={{paddingBottom: '20px'}}>
 						<ClayLayout.Col>
 							<span>{warningBody}</span>

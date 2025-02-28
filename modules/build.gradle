@@ -40,6 +40,7 @@ apply plugin: "com.liferay.yarn.defaults.plugin"
 
 ext {
 	buildJakartaTransformerEnabled = GradleUtil.getProperty(rootProject, "build.jakarta.transformer.enabled", false) as Boolean
+	buildJakartaTransformerExcludedDependencies = GradleUtil.getProperty(rootProject, "build.jakarta.transformer.excluded.dependencies", "").split(",") as List<String>
 	buildJakartaTransformerIncludeDirs = GradleUtil.getProperty(rootProject, "build.jakarta.transformer.include.dirs", "").split(",") as List<String>
 
 	projectTemplateTokens = [
@@ -91,10 +92,25 @@ if (Boolean.getBoolean("build.bnd.print.enabled")) {
 if (buildJakartaTransformerEnabled) {
 	configurations {
 		jakartaTransformer
+		jakartaTransformerExcludes
 	}
 
 	dependencies {
 		jakartaTransformer group: "org.eclipse.transformer", name: "org.eclipse.transformer.cli", version: "1.0.0"
+	}
+
+	buildJakartaTransformerExcludedDependencies.each {
+		Object dependencyNotation ->
+
+		dependencies {
+			if (dependencyNotation.startsWith(":")) {
+				dependencyNotation = project(dependencyNotation)
+			}
+
+			jakartaTransformerExcludes(dependencyNotation) {
+				transitive = false
+			}
+		}
 	}
 
 	repositories {

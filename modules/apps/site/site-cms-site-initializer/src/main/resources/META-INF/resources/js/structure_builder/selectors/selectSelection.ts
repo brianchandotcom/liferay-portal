@@ -5,6 +5,6 @@
 
 import {State} from '../contexts/StateContext';
 
-export default function selectSelectedItem(state: State) {
-	return state.selectedItem;
+export default function selectSelection(state: State) {
+	return state.selection;
 }

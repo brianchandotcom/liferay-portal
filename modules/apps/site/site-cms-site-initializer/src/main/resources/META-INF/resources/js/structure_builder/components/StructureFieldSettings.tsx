@@ -38,8 +38,8 @@ export default function StructureFieldSettings({
 						label: structureLabel,
 						onClick: () => {
 							dispatch({
-								item: {type: 'structure'},
-								type: 'select-item',
+								selection: [],
+								type: 'set-selection',
 							});
 						},
 					},

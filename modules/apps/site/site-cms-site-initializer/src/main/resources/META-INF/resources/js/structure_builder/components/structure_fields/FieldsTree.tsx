@@ -50,13 +50,18 @@ export default function FieldsTree({fields}: {fields: Field[]}) {
 	}, [fields, structureLabel]);
 
 	const onItemClick = (item: TreeItem) => {
-		dispatch({
-			item:
-				item.id === 'root'
-					? {type: 'structure'}
-					: {name: item.id, type: 'field'},
-			type: 'select-item',
-		});
+		if (item.id === 'root') {
+			dispatch({
+				selection: [],
+				type: 'set-selection',
+			});
+		}
+		else {
+			dispatch({
+				selection: [item.id],
+				type: 'set-selection',
+			});
+		}
 	};
 
 	const deleteField = (fieldName: string) =>

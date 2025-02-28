@@ -28,7 +28,7 @@ export type State = {
 	label: string;
 	name: string;
 	publishedFields: Set<Field['name']>;
-	selectedItem: {type: 'structure'} | {name: string; type: 'field'};
+	selection: Field['name'][];
 	status: Status;
 };
 
@@ -40,7 +40,7 @@ const INITIAL_STATE: State = {
 	label: DEFAULT_STRUCTURE_LABEL,
 	name: objectDefinitionUtils.normalizeName(DEFAULT_STRUCTURE_LABEL),
 	publishedFields: new Set(),
-	selectedItem: {type: 'structure'},
+	selection: [],
 	status: 'new',
 };
 
@@ -60,14 +60,14 @@ type SaveStructureAction = {
 	type: 'save-structure';
 };
 
-type SelectItemAction = {
-	item: {type: 'structure'} | {name: string; type: 'field'};
-	type: 'select-item';
-};
-
 type SetErrorAction = {error: string | null; type: 'set-error'};
 
 type SetLabelAction = {label: string; type: 'set-label'};
+
+type SetSelection = {
+	selection: State['selection'];
+	type: 'set-selection';
+};
 
 type UpdateFieldAction = {
 	erc?: string;
@@ -90,10 +90,10 @@ export type Action =
 	| CreateStructureAction
 	| DeleteFieldAction
 	| PublishStructureAction
-	| SelectItemAction
 	| SaveStructureAction
 	| SetErrorAction
 	| SetLabelAction
+	| SetSelection
 	| UpdateFieldAction
 	| UpdateStructureAction;
 
@@ -128,13 +128,10 @@ function reducer(state: State, action: Action): State {
 
 			let nextState = {...state, fields: nextFields};
 
-			if (
-				'name' in state.selectedItem &&
-				state.selectedItem.name === fieldName
-			) {
+			if (state.selection.includes(fieldName)) {
 				nextState = {
 					...nextState,
-					selectedItem: INITIAL_STATE.selectedItem,
+					selection: INITIAL_STATE.selection,
 				};
 			}
 
@@ -179,7 +176,7 @@ function reducer(state: State, action: Action): State {
 			return {
 				...state,
 				fields: nextFields,
-				selectedItem: {name: nextField.name, type: 'field'},
+				selection: [nextField.name],
 			};
 		}
 		case 'update-structure': {
@@ -216,10 +213,10 @@ function reducer(state: State, action: Action): State {
 				publishedFields: nextPublishedFields,
 			};
 		}
-		case 'select-item': {
-			const {item} = action;
+		case 'set-selection': {
+			const {selection} = action;
 
-			return {...state, selectedItem: item};
+			return {...state, selection};
 		}
 		case 'set-error':
 			return {...state, error: action.error};

@@ -11,7 +11,7 @@ import ClayTabs from '@clayui/tabs';
 import React from 'react';
 
 import {useSelector, useStateDispatch} from '../contexts/StateContext';
-import selectSelectedItem from '../selectors/selectSelectedItem';
+import selectSelection from '../selectors/selectSelection';
 import selectStructureERC from '../selectors/selectStructureERC';
 import selectStructureError from '../selectors/selectStructureError';
 import selectStructureLabel from '../selectors/selectStructureLabel';
@@ -80,18 +80,15 @@ export function StructureSettings() {
 }
 
 export default function () {
-	const selectedItem = useSelector(selectSelectedItem);
+	const selection = useSelector(selectSelection);
 
-	if (selectedItem.type === 'structure') {
+	if (!selection.length) {
 		return <StructureSettings />;
 	}
 
-	return (
-		<StructureFieldSettings
-			fieldName={selectedItem.name}
-			key={selectedItem.name}
-		/>
-	);
+	const name = selection[selection.length - 1];
+
+	return <StructureFieldSettings fieldName={name} key={name} />;
 }
 
 function GeneralTab() {

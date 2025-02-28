@@ -203,6 +203,11 @@ public class CommerceInventoryServiceUpgradeStepRegistrator
 					_resourceActionLocalService,
 					_resourcePermissionLocalService));
 
+		registry.register(
+			"2.11.2", "2.11.3",
+			UpgradeProcessFactory.dropColumns(
+				"CIWarehouseGroupRel", "mvccVersion"));
+
 		if (_log.isInfoEnabled()) {
 			_log.info("Commerce inventory upgrade step registrator finished");
 		}

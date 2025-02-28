@@ -70,6 +70,22 @@ public interface AssetLibraryResource {
 			Long assetLibraryId, Long toSiteId)
 		throws Exception;
 
+	public AssetLibrary deleteAssetLibraryUserAccountUser(
+			Long assetLibraryId, Long userId)
+		throws Exception;
+
+	public AssetLibrary postAssetLibraryUserAccountUser(
+			Long assetLibraryId, Long userId)
+		throws Exception;
+
+	public AssetLibrary deleteAssetLibraryUserGroup(
+			Long assetLibraryId, Long userGroupId)
+		throws Exception;
+
+	public AssetLibrary postAssetLibraryUserGroup(
+			Long assetLibraryId, Long userGroupId)
+		throws Exception;
+
 	public default void setContextAcceptLanguage(
 		AcceptLanguage contextAcceptLanguage) {
 	}

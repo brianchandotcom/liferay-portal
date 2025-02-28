@@ -226,6 +226,16 @@ public class AssetLibrarySerDes {
 			sb.append(assetLibrary.getSiteId());
 		}
 
+		if (assetLibrary.getUsersCount() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"usersCount\": ");
+
+			sb.append(assetLibrary.getUsersCount());
+		}
+
 		sb.append("}");
 
 		return sb.toString();
@@ -348,6 +358,13 @@ public class AssetLibrarySerDes {
 			map.put("siteId", String.valueOf(assetLibrary.getSiteId()));
 		}
 
+		if (assetLibrary.getUsersCount() == null) {
+			map.put("usersCount", null);
+		}
+		else {
+			map.put("usersCount", String.valueOf(assetLibrary.getUsersCount()));
+		}
+
 		return map;
 	}
 
@@ -405,6 +422,9 @@ public class AssetLibrarySerDes {
 				return true;
 			}
 			else if (Objects.equals(jsonParserFieldName, "siteId")) {
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "usersCount")) {
 				return false;
 			}
 
@@ -489,6 +509,12 @@ public class AssetLibrarySerDes {
 				if (jsonParserFieldValue != null) {
 					assetLibrary.setSiteId(
 						Long.valueOf((String)jsonParserFieldValue));
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "usersCount")) {
+				if (jsonParserFieldValue != null) {
+					assetLibrary.setUsersCount(
+						Integer.valueOf((String)jsonParserFieldValue));
 				}
 			}
 		}

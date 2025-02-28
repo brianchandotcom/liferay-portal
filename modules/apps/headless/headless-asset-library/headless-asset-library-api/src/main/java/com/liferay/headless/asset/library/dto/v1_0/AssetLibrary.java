@@ -561,6 +561,47 @@ public class AssetLibrary implements Serializable {
 	@JsonIgnore
 	private Supplier<Long> _siteIdSupplier;
 
+	@Schema(description = "The asset library's users count.")
+	public Integer getUsersCount() {
+		if (_usersCountSupplier != null) {
+			usersCount = _usersCountSupplier.get();
+
+			_usersCountSupplier = null;
+		}
+
+		return usersCount;
+	}
+
+	public void setUsersCount(Integer usersCount) {
+		this.usersCount = usersCount;
+
+		_usersCountSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setUsersCount(
+		UnsafeSupplier<Integer, Exception> usersCountUnsafeSupplier) {
+
+		_usersCountSupplier = () -> {
+			try {
+				return usersCountUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(description = "The asset library's users count.")
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Integer usersCount;
+
+	@JsonIgnore
+	private Supplier<Integer> _usersCountSupplier;
+
 	@Override
 	public boolean equals(Object object) {
 		if (this == object) {
@@ -782,6 +823,18 @@ public class AssetLibrary implements Serializable {
 			sb.append("\"siteId\": ");
 
 			sb.append(siteId);
+		}
+
+		Integer usersCount = getUsersCount();
+
+		if (usersCount != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"usersCount\": ");
+
+			sb.append(usersCount);
 		}
 
 		sb.append("}");

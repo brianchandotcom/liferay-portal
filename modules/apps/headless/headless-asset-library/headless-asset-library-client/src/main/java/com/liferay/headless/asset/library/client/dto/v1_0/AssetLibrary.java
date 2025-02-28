@@ -282,6 +282,27 @@ public class AssetLibrary implements Cloneable, Serializable {
 
 	protected Long siteId;
 
+	public Integer getUsersCount() {
+		return usersCount;
+	}
+
+	public void setUsersCount(Integer usersCount) {
+		this.usersCount = usersCount;
+	}
+
+	public void setUsersCount(
+		UnsafeSupplier<Integer, Exception> usersCountUnsafeSupplier) {
+
+		try {
+			usersCount = usersCountUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Integer usersCount;
+
 	@Override
 	public AssetLibrary clone() throws CloneNotSupportedException {
 		return (AssetLibrary)super.clone();

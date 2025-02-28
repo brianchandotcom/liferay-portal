@@ -998,7 +998,7 @@ protected abstract class BaseJakartaTransformerTransformAction implements Transf
 			throw new GradleException("Jakarta: ERROR ${resultCode}\n${errorPrintStream}")
 		}
 
-		logger.info("Jakarta:  {} -> {}", inputJarFile, outputJarFile);
+		logger.info("Jakarta: TRANSFORMING artifact: {} -> {}", inputJarFile, outputJarFile);
 	}
 
 }

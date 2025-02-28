@@ -4,14 +4,12 @@
  */
 
 import ClayButton from '@clayui/button';
-import {Option, Picker} from '@clayui/core';
-import Form from '@clayui/form';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayModal from '@clayui/modal';
 import React, {useEffect, useState} from 'react';
 
 import {getAssetsLibrariesByCompany} from '../../api/api';
-import Field from '../forms/Field';
+import {FieldPicker, FieldText} from '../forms/';
 
 export default function CreationFolderModalContent({
 	assetLibraryId,
@@ -41,6 +39,7 @@ export default function CreationFolderModalContent({
 			<ClayModal.Header>
 				{Liferay.Language.get('new-folder')}
 			</ClayModal.Header>
+
 			<ClayModal.Body>
 				{loading ? (
 					<div className="loader-container">
@@ -48,7 +47,7 @@ export default function CreationFolderModalContent({
 					</div>
 				) : (
 					<>
-						<Field
+						<FieldText
 							label={Liferay.Language.get('name')}
 							name="folderName"
 							required
@@ -57,27 +56,23 @@ export default function CreationFolderModalContent({
 						{assetLibraries.length === 1 ? (
 							<input type="hidden" value={assetLibraries[0].id} />
 						) : (
-							<Form.Group>
-								<label htmlFor="space">
-									{Liferay.Language.get('space')}
-								</label>
-
-								<Picker
-									id="space"
-									items={assetLibraries}
-									placeholder={Liferay.Language.get(
-										'select-a-space'
-									)}
-								>
-									{({id, name}) => (
-										<Option key={id}>{name}</Option>
-									)}
-								</Picker>
-							</Form.Group>
+							<FieldPicker
+								items={assetLibraries.map(({id, name}) => ({
+									label: name,
+									value: id,
+								}))}
+								label={Liferay.Language.get('space')}
+								name="folderName"
+								placeholder={Liferay.Language.get(
+									'select-a-space'
+								)}
+								required
+							/>
 						)}
 					</>
 				)}
 			</ClayModal.Body>
+
 			<ClayModal.Footer
 				last={
 					<ClayButton.Group spaced>

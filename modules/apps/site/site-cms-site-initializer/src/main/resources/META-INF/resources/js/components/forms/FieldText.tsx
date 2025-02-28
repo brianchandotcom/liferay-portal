@@ -3,17 +3,15 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import ClayForm, {ClayInput} from '@clayui/form';
+import {ClayInput} from '@clayui/form';
 import React from 'react';
 
-import ErrorFeedback from './ErrorFeedback';
-import HelpFeedback from './HelpFeedback';
-import RequiredMark from './RequiredMark';
+import FieldWrapper from './FieldWrapper';
 
-const Field = ({
+const FieldText = ({
 	disabled,
 	errorMessage,
-	helpMessage = '',
+	helpMessage,
 	id,
 	label,
 	name,
@@ -29,40 +27,31 @@ const Field = ({
 	name: string;
 	required?: boolean;
 	type?: 'textarea' | 'input';
-}) => {
+} & React.ComponentProps<typeof ClayInput>) => {
 	const fieldId = id ?? name;
 	const feedbackId = `feedback-${fieldId}`;
 
 	return (
-		<ClayForm.Group className={errorMessage ? 'has-error' : ''}>
-			<label className={disabled ? 'disabled' : ''} htmlFor={fieldId}>
-				{label}
-
-				{required && <RequiredMark />}
-			</label>
-
+		<FieldWrapper
+			disabled={disabled}
+			errorMessage={errorMessage}
+			feedbackId={feedbackId}
+			fieldId={fieldId}
+			helpMessage={helpMessage}
+			label={label}
+			required={required}
+		>
 			<ClayInput
 				{...restProps}
 				aria-describedby={(errorMessage || helpMessage) ?? feedbackId}
-				className="form-control"
 				component={type === 'textarea' ? 'textarea' : 'input'}
 				disabled={disabled}
 				id={fieldId}
 				name={name}
 				type={type}
 			/>
-
-			{(errorMessage || helpMessage) && (
-				<ClayForm.FeedbackGroup id={feedbackId}>
-					{errorMessage ? (
-						<ErrorFeedback message={errorMessage} />
-					) : (
-						helpMessage && <HelpFeedback feedback={helpMessage} />
-					)}
-				</ClayForm.FeedbackGroup>
-			)}
-		</ClayForm.Group>
+		</FieldWrapper>
 	);
 };
 
-export default Field;
+export default FieldText;

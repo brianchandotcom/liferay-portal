@@ -523,6 +523,14 @@ public class FragmentEntryLinkLocalServiceImpl
 	}
 
 	@Override
+	public int getFragmentEntryLinksCountByFragmentEntryId(
+		long groupId, long fragmentEntryId, boolean deleted) {
+
+		return fragmentEntryLinkPersistence.countByG_F_D(
+			groupId, fragmentEntryId, deleted);
+	}
+
+	@Override
 	public int getFragmentEntryLinksCountByPlid(long groupId, long plid) {
 		return fragmentEntryLinkPersistence.countByG_P(groupId, plid);
 	}

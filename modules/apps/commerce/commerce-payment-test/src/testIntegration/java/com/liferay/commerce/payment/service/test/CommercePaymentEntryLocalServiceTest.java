@@ -23,7 +23,6 @@ import com.liferay.commerce.product.test.util.CPTestUtil;
 import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
@@ -34,6 +33,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
@@ -44,7 +44,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -54,6 +53,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Crescenzo Rega
  */
+@FeatureFlags("LPD-10562")
 @RunWith(Arquillian.class)
 public class CommercePaymentEntryLocalServiceTest {
 
@@ -66,8 +66,6 @@ public class CommercePaymentEntryLocalServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
-		Assume.assumeTrue(FeatureFlagManagerUtil.isEnabled("LPD-10562"));
-
 		_group = GroupTestUtil.addGroup();
 
 		_commerceCurrency = CommerceCurrencyTestUtil.addCommerceCurrency(
@@ -101,6 +99,9 @@ public class CommercePaymentEntryLocalServiceTest {
 		CommerceTestUtil.addCommerceOrderItem(
 			_commerceOrder.getCommerceOrderId(), _cpInstance.getCPInstanceId(),
 			BigDecimal.ONE);
+
+		_commerceOrder = _commerceOrderLocalService.getCommerceOrder(
+			_commerceOrder.getCommerceOrderId());
 
 		_commerceOrder.setOrderStatus(
 			CommerceOrderConstants.ORDER_STATUS_COMPLETED);

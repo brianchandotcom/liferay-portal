@@ -11,18 +11,22 @@ import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.headless.commerce.admin.catalog.client.dto.v1_0.Currency;
 import com.liferay.headless.commerce.admin.catalog.client.pagination.Page;
 import com.liferay.headless.commerce.admin.catalog.client.pagination.Pagination;
+import com.liferay.headless.commerce.admin.catalog.client.serdes.v1_0.CurrencySerDes;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 
 import java.math.BigDecimal;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -59,10 +63,78 @@ public class CurrencyResourceTest extends BaseCurrencyResourceTestCase {
 		currencyResource.deleteCurrency(currency2.getId());
 	}
 
-	@Ignore
 	@Override
 	@Test
 	public void testGraphQLGetCurrenciesPage() throws Exception {
+		GraphQLField graphQLField = new GraphQLField(
+			"currencies",
+			HashMapBuilder.<String, Object>put(
+				"page", 1
+			).put(
+				"pageSize",
+				() -> {
+					int commerceCurrenciesCount =
+						_commerceCurrencyLocalService.
+							getCommerceCurrenciesCount(
+								TestPropsValues.getCompanyId());
+
+					return commerceCurrenciesCount + 10;
+				}
+			).build(),
+			new GraphQLField("items", getGraphQLFields()),
+			new GraphQLField("page"), new GraphQLField("totalCount"));
+
+		// No namespace
+
+		JSONObject currenciesJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/currencies");
+
+		long totalCount = currenciesJSONObject.getLong("totalCount");
+
+		Currency currency1 = testGraphQLGetCurrenciesPage_addCurrency();
+		Currency currency2 = testGraphQLGetCurrenciesPage_addCurrency();
+
+		currenciesJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(graphQLField), "JSONObject/data",
+			"JSONObject/currencies");
+
+		Assert.assertEquals(
+			totalCount + 2, currenciesJSONObject.getLong("totalCount"));
+
+		assertContains(
+			currency1,
+			Arrays.asList(
+				CurrencySerDes.toDTOs(
+					currenciesJSONObject.getString("items"))));
+		assertContains(
+			currency2,
+			Arrays.asList(
+				CurrencySerDes.toDTOs(
+					currenciesJSONObject.getString("items"))));
+
+		// Using the namespace headlessCommerceAdminCatalog_v1_0
+
+		currenciesJSONObject = JSONUtil.getValueAsJSONObject(
+			invokeGraphQLQuery(
+				new GraphQLField(
+					"headlessCommerceAdminCatalog_v1_0", graphQLField)),
+			"JSONObject/data", "JSONObject/headlessCommerceAdminCatalog_v1_0",
+			"JSONObject/currencies");
+
+		Assert.assertEquals(
+			totalCount + 2, currenciesJSONObject.getLong("totalCount"));
+
+		assertContains(
+			currency1,
+			Arrays.asList(
+				CurrencySerDes.toDTOs(
+					currenciesJSONObject.getString("items"))));
+		assertContains(
+			currency2,
+			Arrays.asList(
+				CurrencySerDes.toDTOs(
+					currenciesJSONObject.getString("items"))));
 	}
 
 	@Override
@@ -79,7 +151,7 @@ public class CurrencyResourceTest extends BaseCurrencyResourceTestCase {
 	protected Currency randomCurrency() throws Exception {
 		return new Currency() {
 			{
-				active = RandomTestUtil.randomBoolean();
+				active = Boolean.TRUE;
 				code = StringUtil.toLowerCase(RandomTestUtil.randomString());
 				formatPattern = LanguageUtils.getLanguageIdMap(
 					RandomTestUtil.randomLocaleStringMap());

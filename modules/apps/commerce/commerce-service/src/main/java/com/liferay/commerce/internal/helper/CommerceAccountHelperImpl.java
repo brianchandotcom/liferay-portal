@@ -361,6 +361,14 @@ public class CommerceAccountHelperImpl implements CommerceAccountHelper {
 		}
 
 		if (accountEntry != null) {
+			if (accountEntry.isGuestAccount()) {
+				setCurrentCommerceAccount(
+					httpServletRequest, commerceChannelGroupId,
+					AccountConstants.ACCOUNT_ENTRY_ID_GUEST);
+
+				return accountEntry;
+			}
+
 			CommerceChannelAccountEntryRel commerceChannelAccountEntryRel =
 				_commerceChannelAccountEntryRelLocalService.
 					fetchCommerceChannelAccountEntryRel(

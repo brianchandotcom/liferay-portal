@@ -22,7 +22,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.junit.Assert;
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -41,8 +41,8 @@ public class MFATimeBasedOTPCheckerDisplayContextTest {
 	public static final LiferayUnitTestRule liferayUnitTestRule =
 		LiferayUnitTestRule.INSTANCE;
 
-	@BeforeClass
-	public static void setUpClass() throws PortalException {
+	@Before
+	public void setUp() throws PortalException {
 		_setUpCompany();
 		_setUpThemeDisplay();
 		_setUpUser();
@@ -71,7 +71,7 @@ public class MFATimeBasedOTPCheckerDisplayContextTest {
 		Assert.assertEquals("test-namespaceqrcode", context.get("containerId"));
 	}
 
-	private static void _setUpCompany() {
+	private void _setUpCompany() {
 		_company = Mockito.mock(Company.class);
 
 		Mockito.when(
@@ -81,7 +81,7 @@ public class MFATimeBasedOTPCheckerDisplayContextTest {
 		);
 	}
 
-	private static void _setUpHttpServletRequest() {
+	private void _setUpHttpServletRequest() {
 		_httpServletRequest = new MockHttpServletRequest();
 
 		_mfaTimeBasedOTPSharedSecret = MFATimeBasedOTPUtil.generateSharedSecret(
@@ -104,7 +104,7 @@ public class MFATimeBasedOTPCheckerDisplayContextTest {
 		_httpServletRequest.setAttribute(WebKeys.THEME_DISPLAY, _themeDisplay);
 	}
 
-	private static void _setUpThemeDisplay() {
+	private void _setUpThemeDisplay() {
 		_themeDisplay = Mockito.mock(ThemeDisplay.class);
 
 		PortletDisplay portletDisplay = Mockito.mock(PortletDisplay.class);
@@ -122,7 +122,7 @@ public class MFATimeBasedOTPCheckerDisplayContextTest {
 		);
 	}
 
-	private static void _setUpUser() throws PortalException {
+	private void _setUpUser() throws PortalException {
 		_user = Mockito.mock(User.class);
 
 		PortalUtil portalUtil = new PortalUtil();
@@ -142,10 +142,10 @@ public class MFATimeBasedOTPCheckerDisplayContextTest {
 		);
 	}
 
-	private static Company _company;
-	private static HttpServletRequest _httpServletRequest;
-	private static String _mfaTimeBasedOTPSharedSecret;
-	private static ThemeDisplay _themeDisplay;
-	private static User _user;
+	private Company _company;
+	private HttpServletRequest _httpServletRequest;
+	private String _mfaTimeBasedOTPSharedSecret;
+	private ThemeDisplay _themeDisplay;
+	private User _user;
 
 }

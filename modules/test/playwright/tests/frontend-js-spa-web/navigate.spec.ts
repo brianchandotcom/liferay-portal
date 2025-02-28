@@ -34,7 +34,7 @@ test(
 			title: 'LPD-49303-firstLayout',
 		});
 
-		const secondLayout = await apiHelpers.jsonWebServicesLayout.addLayout({
+		await apiHelpers.jsonWebServicesLayout.addLayout({
 			groupId: site.id,
 			options: {
 				type: 'portlet',

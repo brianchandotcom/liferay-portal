@@ -70,14 +70,12 @@ function SaveButton() {
 	const structureERC = useSelector(selectStructureERC);
 
 	const create = async () => {
-		const {id, name, objectFields} = await StructureService.createStructure(
-			{
-				erc: structureERC,
-				fields,
-				label,
-				name: structureName,
-			}
-		);
+		const {id, name} = await StructureService.createStructure({
+			erc: structureERC,
+			fields,
+			label,
+			name: structureName,
+		});
 
 		openToast({
 			message: Liferay.Util.sub(
@@ -87,11 +85,11 @@ function SaveButton() {
 			type: 'success',
 		});
 
-		dispatch({id, name, objectFields, type: 'create-structure'});
+		dispatch({id, name, type: 'create-structure'});
 	};
 
 	const update = async () => {
-		const {objectFields} = await StructureService.updateStructure({
+		await StructureService.updateStructure({
 			erc: structureERC,
 			fields,
 			id: structureId,
@@ -107,7 +105,7 @@ function SaveButton() {
 			type: 'success',
 		});
 
-		dispatch({objectFields, type: 'update-structure'});
+		dispatch({type: 'update-structure'});
 	};
 
 	const onSave = async () => {

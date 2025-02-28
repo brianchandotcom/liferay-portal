@@ -12,11 +12,9 @@ import React, {
 	useReducer,
 } from 'react';
 
-import {ObjectField} from '../types/ObjectDefinition';
 import {Field} from '../utils/field';
 import findAvailableFieldName from '../utils/findAvailableFieldName';
 import getRandomId from '../utils/getRandomId';
-import updateFields from '../utils/updateFields';
 
 const DEFAULT_STRUCTURE_LABEL = Liferay.Language.get('untitled-structure');
 
@@ -49,7 +47,6 @@ type AddFieldAction = {field: Field; type: 'add-field'};
 type CreateStructureAction = {
 	id: number;
 	name: string;
-	objectFields: ObjectField[];
 	type: 'create-structure';
 };
 
@@ -78,7 +75,6 @@ type UpdateFieldAction = {
 type UpdateStructureAction = {
 	erc?: string;
 	name?: string;
-	objectFields?: ObjectField[];
 	type: 'update-structure';
 };
 
@@ -107,12 +103,9 @@ function reducer(state: State, action: Action) {
 			return {...state, fields: nextFields};
 		}
 		case 'create-structure': {
-			const fields = updateFields(state.fields, action.objectFields);
-
 			return {
 				...state,
 				error: null,
-				fields,
 				id: action.id,
 				name: action.name,
 				status: 'draft' as Status,
@@ -162,15 +155,10 @@ function reducer(state: State, action: Action) {
 		}
 		case 'update-structure': {
 			let nextErc = state.erc;
-			let nextFields = state.fields;
 			let nextName = state.name;
 
 			if (action.erc) {
 				nextErc = action.erc;
-			}
-
-			if (action.objectFields) {
-				nextFields = updateFields(state.fields, action.objectFields);
 			}
 
 			if (action.name) {
@@ -181,7 +169,6 @@ function reducer(state: State, action: Action) {
 				...state,
 				erc: nextErc,
 				error: null,
-				fields: nextFields,
 				name: nextName,
 			};
 		}

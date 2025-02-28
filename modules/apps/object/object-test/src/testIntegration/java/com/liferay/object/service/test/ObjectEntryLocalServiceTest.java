@@ -169,7 +169,7 @@ import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -4246,7 +4246,7 @@ public class ObjectEntryLocalServiceTest {
 			).localized(
 				true
 			).name(
-				"textLocalized"
+				"a" + RandomTestUtil.randomString()
 			).objectDefinitionId(
 				_objectDefinition.getObjectDefinitionId()
 			).build());
@@ -4255,8 +4255,11 @@ public class ObjectEntryLocalServiceTest {
 			_objectDefinition.getObjectDefinitionId(),
 			objectField.getObjectFieldId());
 
-		String value1 = "en_US " + RandomTestUtil.randomString();
-		String value2 = "pt_BR " + RandomTestUtil.randomString();
+		Map<String, String> localizedValues = HashMapBuilder.put(
+			"en_US", RandomTestUtil.randomString()
+		).put(
+			"pt_BR", RandomTestUtil.randomString()
+		).build();
 
 		objectEntry = _addObjectEntry(
 			HashMapBuilder.<String, Serializable>put(
@@ -4264,25 +4267,16 @@ public class ObjectEntryLocalServiceTest {
 			).put(
 				"listTypeEntryKeyRequired", "listTypeEntryKey1"
 			).put(
-				"textLocalized_i18n",
-				HashMapBuilder.put(
-					"en_US", value1
-				).put(
-					"pt_BR", value2
-				).build()
+				objectField.getI18nObjectFieldName(),
+				(Serializable)localizedValues
 			).build());
 
 		assetEntry = _assetEntryLocalService.fetchEntry(
 			_objectDefinition.getClassName(), objectEntry.getObjectEntryId());
 
 		Assert.assertEquals(
-			LocalizationUtil.getXml(
-				HashMapBuilder.put(
-					"en_US", value1
-				).put(
-					"pt_BR", value2
-				).build(),
-				objectField.getDefaultLanguageId(), "title"),
+			_localization.getXml(
+				localizedValues, objectEntry.getDefaultLanguageId(), "title"),
 			assetEntry.getTitle());
 	}
 
@@ -6022,6 +6016,9 @@ public class ObjectEntryLocalServiceTest {
 
 	@Inject
 	private ListTypeDefinitionLocalService _listTypeDefinitionLocalService;
+
+	@Inject
+	private Localization _localization;
 
 	@Inject
 	private ObjectActionLocalService _objectActionLocalService;

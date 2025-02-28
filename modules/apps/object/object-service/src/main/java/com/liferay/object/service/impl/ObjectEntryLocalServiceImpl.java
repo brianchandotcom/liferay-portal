@@ -88,7 +88,6 @@ import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.search.StrictObjectReindexThreadLocal;
 import com.liferay.object.service.ObjectFieldLocalService;
-import com.liferay.object.service.ObjectFieldLocalServiceUtil;
 import com.liferay.object.service.ObjectFieldSettingLocalService;
 import com.liferay.object.service.ObjectRelationshipLocalService;
 import com.liferay.object.service.ObjectStateFlowLocalService;
@@ -4876,15 +4875,19 @@ public class ObjectEntryLocalServiceImpl
 			assetTagNames = null;
 		}
 
-		ObjectField objectField = ObjectFieldLocalServiceUtil.fetchObjectField(
-			objectDefinition.getTitleObjectFieldId());
-
+		String mimeType = ContentTypes.TEXT_PLAIN;
 		String title = StringPool.BLANK;
 
-		if ((objectField != null) && objectField.isLocalized()) {
+		Map<Locale, String> titleMap = objectEntry.getTitleMap();
+
+		if (MapUtil.isNotEmpty(titleMap)) {
 			title = _localization.getXml(
-				LocalizedMapUtil.getLanguageIdMap(objectEntry.getTitleMap()),
-				objectField.getDefaultLanguageId(), "title");
+				LocalizedMapUtil.getLanguageIdMap(titleMap),
+				objectEntry.getDefaultLanguageId(), "title");
+
+			if (Validator.isXml(title)) {
+				mimeType = ContentTypes.TEXT_HTML;
+			}
 		}
 		else {
 			try {
@@ -4897,20 +4900,14 @@ public class ObjectEntryLocalServiceImpl
 			}
 		}
 
-		String contentTypes = ContentTypes.TEXT_PLAIN;
-
-		if (Validator.isXml(title)) {
-			contentTypes = ContentTypes.TEXT_HTML;
-		}
-
 		AssetEntry assetEntry = _assetEntryLocalService.updateEntry(
 			userId, objectEntry.getNonzeroGroupId(),
 			objectEntry.getCreateDate(), objectEntry.getModifiedDate(),
 			objectDefinition.getClassName(), objectEntry.getObjectEntryId(),
 			objectEntry.getUuid(), 0, assetCategoryIds, assetTagNames, true,
-			objectEntry.isApproved(), null, null, null, null, contentTypes,
-			title, String.valueOf(objectEntry.getObjectEntryId()), null, null,
-			null, 0, 0, priority, serviceContext);
+			objectEntry.isApproved(), null, null, null, null, mimeType, title,
+			String.valueOf(objectEntry.getObjectEntryId()), null, null, null, 0,
+			0, priority, serviceContext);
 
 		if (assetLinkEntryIds != null) {
 			_assetLinkLocalService.updateLinks(

@@ -12,9 +12,9 @@ import com.liferay.object.field.builder.TextObjectFieldBuilder;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
-import com.liferay.object.service.ObjectDefinitionLocalServiceUtil;
-import com.liferay.object.service.ObjectEntryLocalServiceUtil;
-import com.liferay.object.service.ObjectFieldLocalServiceUtil;
+import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectEntryLocalService;
+import com.liferay.object.service.ObjectFieldLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.HashMapBuilder;
-import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
@@ -34,6 +34,7 @@ import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 import java.io.Serializable;
 
 import java.util.Collections;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -45,7 +46,7 @@ import org.junit.runner.RunWith;
  * @author Yuri Monteiro
  */
 @RunWith(Arquillian.class)
-public class ObjectAssetTitleUpgradeProcessTest {
+public class ObjectEntryAssetEntryTitleUpgradeProcessTest {
 
 	@ClassRule
 	@Rule
@@ -64,40 +65,39 @@ public class ObjectAssetTitleUpgradeProcessTest {
 					).labelMap(
 						LocalizedMapUtil.getLocalizedMap(
 							RandomTestUtil.randomString())
-					).name(
-						textObjectFieldName
 					).localized(
 						true
+					).name(
+						textObjectFieldName
 					).build()));
 
-		ObjectField objectField = ObjectFieldLocalServiceUtil.fetchObjectField(
+		ObjectField objectField = _objectFieldLocalService.fetchObjectField(
 			objectDefinition.getObjectDefinitionId(), textObjectFieldName);
 
-		ObjectDefinitionLocalServiceUtil.updateTitleObjectFieldId(
-			objectDefinition.getObjectDefinitionId(),
-			objectField.getObjectFieldId());
+		objectDefinition =
+			_objectDefinitionLocalService.updateTitleObjectFieldId(
+				objectDefinition.getObjectDefinitionId(),
+				objectField.getObjectFieldId());
 
-		String value1 = "en_US " + RandomTestUtil.randomString();
-		String value2 = "pt_BR " + RandomTestUtil.randomString();
+		Map<String, String> localizedValues = HashMapBuilder.put(
+			"en_US", RandomTestUtil.randomString()
+		).put(
+			"pt_BR", RandomTestUtil.randomString()
+		).build();
 
-		ObjectEntry objectEntry = ObjectEntryLocalServiceUtil.addObjectEntry(
+		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
-			objectDefinition.getObjectDefinitionId(),
-			objectDefinition.getDefaultLanguageId(),
+			objectDefinition.getObjectDefinitionId(), "en_US",
 			HashMapBuilder.<String, Serializable>put(
-				textObjectFieldName + "_i18n",
-				HashMapBuilder.put(
-					"en_US", value1
-				).put(
-					"pt_BR", value2
-				).build()
+				objectField.getI18nObjectFieldName(),
+				(Serializable)localizedValues
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
 
 		AssetEntry assetEntry = _assetEntryLocalService.fetchEntry(
 			objectDefinition.getClassName(), objectEntry.getObjectEntryId());
 
-		assetEntry.setTitle("Test Title");
+		assetEntry.setTitle(RandomTestUtil.randomString());
 
 		_assetEntryLocalService.updateAssetEntry(assetEntry);
 
@@ -116,25 +116,34 @@ public class ObjectAssetTitleUpgradeProcessTest {
 			objectDefinition.getClassName(), objectEntry.getObjectEntryId());
 
 		Assert.assertEquals(
-			LocalizationUtil.getXml(
-				HashMapBuilder.put(
-					"en_US", value1
-				).put(
-					"pt_BR", value2
-				).build(),
-				objectDefinition.getDefaultLanguageId(), "title"),
+			_localization.getXml(
+				localizedValues, objectEntry.getDefaultLanguageId(), "title"),
 			assetEntry.getTitle());
+
+		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition);
 	}
 
 	private static final String _CLASS_NAME =
 		"com.liferay.object.internal.upgrade.v10_8_1." +
-			"ObjectAssetTitleUpgradeProcess";
+			"ObjectEntryAssetEntryTitleUpgradeProcess";
 
 	@Inject
 	private AssetEntryLocalService _assetEntryLocalService;
 
 	@Inject
+	private Localization _localization;
+
+	@Inject
 	private MultiVMPool _multiVMPool;
+
+	@Inject
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Inject
+	private ObjectEntryLocalService _objectEntryLocalService;
+
+	@Inject
+	private ObjectFieldLocalService _objectFieldLocalService;
 
 	@Inject(
 		filter = "component.name=com.liferay.object.internal.upgrade.registry.ObjectServiceUpgradeStepRegistrator"

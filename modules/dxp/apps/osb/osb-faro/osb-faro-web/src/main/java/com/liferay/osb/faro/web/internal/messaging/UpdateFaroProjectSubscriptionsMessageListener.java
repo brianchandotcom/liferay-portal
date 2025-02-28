@@ -19,6 +19,8 @@ import com.liferay.osb.faro.web.internal.messaging.destination.creator.Destinati
 import com.liferay.osb.faro.web.internal.model.display.main.FaroSubscriptionDisplay;
 import com.liferay.osb.faro.web.internal.util.JSONUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
@@ -146,6 +148,14 @@ public class UpdateFaroProjectSubscriptionsMessageListener
 						FaroProjectConstants.STATE_READY);
 				}
 
+				JSONObject jsonObject = _jsonFactory.createJSONObject(
+					faroProject.getSubscription());
+
+				faroSubscriptionDisplay.setIndividualsCounts(
+					jsonObject.getString("individualsCounts"));
+				faroSubscriptionDisplay.setPageViewsCounts(
+					jsonObject.getString("pageViewsCounts"));
+
 				faroSubscriptionDisplay.setCounts(
 					faroProject, _cerebroEngineClient, _contactsEngineClient);
 
@@ -196,6 +206,9 @@ public class UpdateFaroProjectSubscriptionsMessageListener
 
 	@Reference
 	private FaroProjectLocalService _faroProjectLocalService;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference(
 		policy = ReferencePolicy.DYNAMIC,

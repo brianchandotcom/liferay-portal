@@ -105,7 +105,7 @@ function SaveButton() {
 			type: 'success',
 		});
 
-		dispatch({type: 'update-structure'});
+		dispatch({type: 'save-structure'});
 	};
 
 	const onSave = async () => {

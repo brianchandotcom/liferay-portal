@@ -27,6 +27,7 @@ export type State = {
 	id: number | null;
 	label: string;
 	name: string;
+	publishedFields: Set<Field['name']>;
 	selectedItem: {type: 'structure'} | {name: string; type: 'field'};
 	status: Status;
 };
@@ -38,6 +39,7 @@ const INITIAL_STATE: State = {
 	id: null,
 	label: DEFAULT_STRUCTURE_LABEL,
 	name: objectDefinitionUtils.normalizeName(DEFAULT_STRUCTURE_LABEL),
+	publishedFields: new Set(),
 	selectedItem: {type: 'structure'},
 	status: 'new',
 };
@@ -53,6 +55,10 @@ type CreateStructureAction = {
 type DeleteFieldAction = {fieldName: Field['name']; type: 'delete-field'};
 
 type PublishStructureAction = {type: 'publish-structure'};
+
+type SaveStructureAction = {
+	type: 'save-structure';
+};
 
 type SelectItemAction = {
 	item: {type: 'structure'} | {name: string; type: 'field'};
@@ -84,6 +90,7 @@ export type Action =
 	| DeleteFieldAction
 	| PublishStructureAction
 	| SelectItemAction
+	| SaveStructureAction
 	| SetErrorAction
 	| SetLabelAction
 	| UpdateFieldAction
@@ -132,8 +139,16 @@ function reducer(state: State, action: Action) {
 
 			return nextState;
 		}
-		case 'publish-structure':
-			return {...state, error: null, status: 'published' as Status};
+		case 'publish-structure': {
+			return {
+				...state,
+				error: null,
+				publishedFields: new Set(
+					Array.from(state.fields.values()).map((field) => field.name)
+				),
+				status: 'published' as Status,
+			};
+		}
 		case 'update-field': {
 			const {erc, label, localized, name, required} = action;
 
@@ -170,6 +185,21 @@ function reducer(state: State, action: Action) {
 				erc: nextErc,
 				error: null,
 				name: nextName,
+			};
+		}
+		case 'save-structure': {
+			let nextPublishedFields = state.publishedFields;
+
+			if (state.status === 'published') {
+				nextPublishedFields = new Set(
+					Array.from(state.fields.values()).map((field) => field.name)
+				);
+			}
+
+			return {
+				...state,
+				error: null,
+				publishedFields: nextPublishedFields,
 			};
 		}
 		case 'select-item': {

@@ -31,6 +31,21 @@ export class JSONWebServicesUserApiHelper {
 		);
 	}
 
+	async agreeToTermsOfUse(userId: string) {
+		const urlSearchParams = new URLSearchParams();
+
+		urlSearchParams.append('userId', userId);
+
+		return this.apiHelpers.post(
+			`${liferayConfig.environment.baseUrl}${this.basePath}/update-agreed-to-terms-of-use/user-id/${userId}/agreed-to-terms-of-use/true`,
+			{
+				data: urlSearchParams.toString(),
+				failOnStatusCode: true,
+				headers: await this.apiHelpers.getJSONWebServicesHeaders(),
+			}
+		);
+	}
+
 	async assignUsersToSite(groupId: string, userId: string): Promise<void> {
 		const urlSearchParams = new URLSearchParams();
 
@@ -55,6 +70,21 @@ export class JSONWebServicesUserApiHelper {
 
 		return this.apiHelpers.post(
 			`${liferayConfig.environment.baseUrl}${this.basePath}/add-role-users/role-id/${roleId}/user-ids/${userIds}`,
+			{
+				data: urlSearchParams.toString(),
+				failOnStatusCode: true,
+				headers: await this.apiHelpers.getJSONWebServicesHeaders(),
+			}
+		);
+	}
+
+	async answerReminderQuery(userId: string) {
+		const urlSearchParams = new URLSearchParams();
+
+		urlSearchParams.append('userId', userId);
+
+		return this.apiHelpers.post(
+			`${liferayConfig.environment.baseUrl}${this.basePath}/update-reminder-query/user-id/${userId}/question/what-is-your-father%27s-middle-name/answer/test`,
 			{
 				data: urlSearchParams.toString(),
 				failOnStatusCode: true,

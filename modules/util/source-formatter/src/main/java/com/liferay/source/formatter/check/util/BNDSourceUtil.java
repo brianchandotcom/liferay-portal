@@ -256,7 +256,7 @@ public class BNDSourceUtil {
 	private static final String[] _BND_BND_DEFINITION_KEYS = {
 		"-jsp", "-liferay-aggregate-resource-bundles", "-metatype",
 		"-metatype-inherit", "-sass", "Bundle-ActivationPolicy",
-		"Can-Redefine-Classes", "Can-Retransform-Classes", "CPE-Identifier",
+		"Can-Redefine-Classes", "Can-Retransform-Classes", "CPE-Name",
 		"Eclipse-PlatformFilter", "Implementation-Version", "JPM-Command",
 		"Liferay-Client-Extension-Batch", "Liferay-Configuration-Path",
 		"Liferay-Enterprise-App", "Liferay-Icons-Pack-Name",

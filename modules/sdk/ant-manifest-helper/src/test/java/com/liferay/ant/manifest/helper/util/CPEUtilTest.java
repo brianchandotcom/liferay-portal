@@ -27,7 +27,7 @@ import org.mockito.Mockito;
  * @author Drew Brokke
  */
 @RunWith(Parameterized.class)
-public class CpeIdUtilTest extends CpeIdUtil {
+public class CPEUtilTest extends CPEUtil {
 
 	@Parameterized.Parameters(name = "{1}, {2}, {3}, {4}")
 	public static Iterable<Object[]> data() {
@@ -50,7 +50,7 @@ public class CpeIdUtilTest extends CpeIdUtil {
 			});
 	}
 
-	public CpeIdUtilTest(
+	public CPEUtilTest(
 		String expectedValue, String product, String version,
 		String versionDisplayName, String versionFileSuffix) {
 
@@ -98,9 +98,9 @@ public class CpeIdUtilTest extends CpeIdUtil {
 	}
 
 	@Test
-	public void testGetCpeId() {
+	public void testGetName() {
 		Assert.assertEquals(
-			_expectedValue, getCpeId(_manifestHelperTask.getProject()));
+			_expectedValue, getName(_manifestHelperTask.getProject()));
 	}
 
 	private final String _expectedValue;

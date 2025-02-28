@@ -537,19 +537,14 @@ public class ScimUtil {
 	}
 
 	private static boolean _isActive(User user) {
-		try {
-			return user.getActive();
-		}
-		catch (ClassCastException classCastException) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(classCastException);
-			}
+		SimpleAttribute simpleAttribute = (SimpleAttribute)user.getAttribute(
+			"active");
 
-			SimpleAttribute simpleAttribute =
-				(SimpleAttribute)user.getAttribute("active");
-
+		if (simpleAttribute != null) {
 			return GetterUtil.getBoolean(simpleAttribute.getValue());
 		}
+
+		return user.getActive();
 	}
 
 	private static boolean _isMale(User user) {

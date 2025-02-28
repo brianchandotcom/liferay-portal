@@ -40,8 +40,8 @@ apply plugin: "com.liferay.yarn.defaults.plugin"
 
 ext {
 	buildJakartaTransformerEnabled = GradleUtil.getProperty(rootProject, "build.jakarta.transformer.enabled", false) as Boolean
-	buildJakartaTransformerExcludedDependencies = GradleUtil.getProperty(rootProject, "build.jakarta.transformer.excluded.dependencies", "").split(",") as List<String>
-	buildJakartaTransformerIncludeDirs = GradleUtil.getProperty(rootProject, "build.jakarta.transformer.include.dirs", "").split(",") as List<String>
+	buildJakartaTransformerExcludedDependencies = _toList(rootProject.findProperty("build.jakarta.transformer.excluded.dependencies"))
+	buildJakartaTransformerIncludeDirs = _toList(rootProject.findProperty("build.jakarta.transformer.include.dirs"))
 
 	projectTemplateTokens = [
 		"biz.aQute.bnd.version": "6.4.0",
@@ -1069,6 +1069,14 @@ private boolean _hasTestClasses(Task task, String testClassesDirName) {
 	}
 
 	return true
+}
+
+private List<String> _toList(String s) {
+	if (Validator.isNull(s)) {
+		return [] as List<String>
+	}
+
+	return s.split(",") as List<String>
 }
 
 private void _updateGradleSourcePaths(String gradleVersion, EclipseModel eclipseModel) {

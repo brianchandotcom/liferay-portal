@@ -8,7 +8,6 @@ import {
 	ObjectField,
 } from '@liferay/object-admin-rest-client-js';
 import {expect, mergeTests} from '@playwright/test';
-import path from 'path';
 
 import {applicationsMenuPageTest} from '../../fixtures/applicationsMenuPageTest';
 import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
@@ -22,7 +21,7 @@ import {pageTemplatesPagesTest} from '../../fixtures/pageTemplatesPagesTest';
 import {wikiPagesTest} from '../../fixtures/wikiPagesTest';
 import {getRandomInt} from '../../utils/getRandomInt';
 import performLogin, {performLogout, userData} from '../../utils/performLogin';
-import {readFileFromZip, zipFolder} from '../../utils/zip';
+import {readFileFromZip} from '../../utils/zip';
 import {companyExportImportPageTest} from './fixtures/companyExportImportPagesTest';
 import {exportImportPagesTest} from './fixtures/exportImportPagesTest';
 import {stagingPageTest} from './fixtures/stagingPageTest';
@@ -127,16 +126,61 @@ test('can only import custom object entries when their definitions are already i
 	apiHelpers,
 	companyExportImportPage,
 }) => {
+	const objectActionApiClient =
+		await apiHelpers.buildRestClient(ObjectDefinitionApi);
+
+	const objectDefinitionRequestBody = {
+		active: true,
+		className: 'com.liferay.object.model.ObjectDefinition#test_definition',
+		externalReferenceCode: 'test-definition',
+		label: {
+			en_US: 'Test',
+		},
+		name: 'Test',
+		objectFields: [
+			{
+				DBType: ObjectField.DBTypeEnum.String,
+				businessType: ObjectField.BusinessTypeEnum.Text,
+				indexed: true,
+				indexedAsKeyword: true,
+				label: {
+					en_US: 'textField',
+				},
+				name: 'textField',
+				required: true,
+			},
+		],
+		pluralLabel: {
+			en_US: 'Tests',
+		},
+		portlet: true,
+		scope: 'company',
+		status: {
+			code: 0,
+		},
+	};
+
+	let {body: objectDefinition} =
+		await objectActionApiClient.postObjectDefinition(
+			objectDefinitionRequestBody
+		);
+
+	const objectEntry = await apiHelpers.objectEntry.postObjectEntry(
+		{externalReferenceCode: 'testERC', textField: 'test'},
+		'c/tests'
+	);
+
+	const exportFilePath =
+		await companyExportImportPage.export('Tests 1 Items');
+
+	objectActionApiClient.deleteObjectDefinition(objectDefinition.id);
+
 	await companyExportImportPage.applicationsMenuPage.goToImport();
 	await companyExportImportPage.exportImportPage.newImportButton.click();
 
-	const compressedFile = await zipFolder(
-		path.join(__dirname, 'dependencies', 'test.object.portlet.lar')
-	);
-
 	await companyExportImportPage.page
 		.locator('input[type="file"]')
-		.setInputFiles(compressedFile);
+		.setInputFiles(exportFilePath);
 
 	expect(
 		companyExportImportPage.page.getByText(
@@ -144,56 +188,25 @@ test('can only import custom object entries when their definitions are already i
 		)
 	).toBeVisible();
 
-	const objectActionApiClient =
-		await apiHelpers.buildRestClient(ObjectDefinitionApi);
-
-	const {body: objectDefinition} =
-		await objectActionApiClient.postObjectDefinition({
-			active: true,
-			className:
-				'com.liferay.object.model.ObjectDefinition#test_definition',
-			externalReferenceCode: 'test-definition',
-			label: {
-				en_US: 'Test',
-			},
-			name: 'Test',
-			objectFields: [
-				{
-					DBType: ObjectField.DBTypeEnum.String,
-					businessType: ObjectField.BusinessTypeEnum.Text,
-					indexed: true,
-					indexedAsKeyword: true,
-					label: {
-						en_US: 'textField',
-					},
-					name: 'textField',
-					required: true,
-				},
-			],
-			pluralLabel: {
-				en_US: 'Tests',
-			},
-			portlet: true,
-			scope: 'company',
-			status: {
-				code: 0,
-			},
-		});
+	({body: objectDefinition} =
+		await objectActionApiClient.postObjectDefinition(
+			objectDefinitionRequestBody
+		));
 
 	apiHelpers.data.push({id: objectDefinition.id, type: 'objectDefinition'});
 
 	await companyExportImportPage.page.reload();
 
-	await companyExportImportPage.import(compressedFile);
+	await companyExportImportPage.import(exportFilePath);
 
 	expect(
 		await apiHelpers.get(
-			`${apiHelpers.baseUrl}c/tests/by-external-reference-code/test1`
+			`${apiHelpers.baseUrl}c/tests/by-external-reference-code/${objectEntry.externalReferenceCode}`
 		)
 	).toEqual(
 		expect.objectContaining({
-			externalReferenceCode: 'test1',
-			textField: 'test1',
+			externalReferenceCode: objectEntry.externalReferenceCode,
+			textField: objectEntry.textField,
 		})
 	);
 });

@@ -17,8 +17,6 @@ import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.aop.AopService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONUtil;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
@@ -34,10 +32,8 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.service.ClassNameLocalService;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.SystemEventLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -154,18 +150,6 @@ public class AccountGroupLocalServiceImpl
 			ResourceConstants.SCOPE_INDIVIDUAL,
 			accountGroup.getAccountGroupId());
 
-		Group group = _groupLocalService.getCompanyGroup(
-			accountGroup.getCompanyId());
-
-		_systemEventLocalService.addSystemEvent(
-			accountGroup.getUserId(), group.getGroupId(),
-			accountGroup.getExternalReferenceCode(),
-			accountGroup.getModelClassName(), accountGroup.getPrimaryKey(),
-			accountGroup.getUuid(), null, SystemEventConstants.TYPE_DELETE,
-			JSONUtil.put(
-				"name", accountGroup.getName()
-			).toString());
-
 		return accountGroup;
 	}
 
@@ -174,7 +158,7 @@ public class AccountGroupLocalServiceImpl
 	public AccountGroup deleteAccountGroup(long accountGroupId)
 		throws PortalException {
 
-		return deleteAccountGroup(
+		return accountGroupLocalService.deleteAccountGroup(
 			accountGroupLocalService.getAccountGroup(accountGroupId));
 	}
 
@@ -460,13 +444,7 @@ public class AccountGroupLocalServiceImpl
 	private ClassNameLocalService _classNameLocalService;
 
 	@Reference
-	private GroupLocalService _groupLocalService;
-
-	@Reference
 	private ResourceLocalService _resourceLocalService;
-
-	@Reference
-	private SystemEventLocalService _systemEventLocalService;
 
 	@Reference
 	private UserLocalService _userLocalService;

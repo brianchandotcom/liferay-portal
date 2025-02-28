@@ -145,6 +145,24 @@ baseTest(
 );
 
 baseTest(
+	'Check success message on save as draft',
+	{
+		tag: '@LPD-50230',
+	},
+	async ({journalEditArticlePage, page, site}) => {
+		await journalEditArticlePage.goto({siteUrl: site.friendlyUrlPath});
+
+		const title = getRandomString();
+		await journalEditArticlePage.saveAsDraftWithPermissions(title);
+
+		await waitForAlert(
+			page,
+			`Success:${title} was successfully saved as a draft.`
+		);
+	}
+);
+
+baseTest(
 	'Select web content display template with the Preview feature',
 	{
 		tag: '@LPD-31427',

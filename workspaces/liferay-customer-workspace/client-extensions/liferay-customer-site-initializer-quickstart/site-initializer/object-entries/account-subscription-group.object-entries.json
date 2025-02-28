@@ -2,174 +2,93 @@
 	"object-entries": [
 		{
 			"accountKey": "ERC-001",
-			"externalReferenceCode": "ERC-001_liferay-paas",
+			"externalReferenceCode": "ERC-001_liferay-saas",
 			"hasActivation": true,
 			"menuOrder": 1,
-			"name": "Liferay PaaS",
+			"name": "Liferay SaaS",
 			"r_accountEntryToAccountSubscriptionGroup_accountEntryERC": "ERC-001",
 			"tabOrder": 2
 		},
 		{
 			"accountKey": "ERC-002",
-			"externalReferenceCode": "ERC-002_liferay-self-hosted",
+			"externalReferenceCode": "ERC-002_liferay-saas",
 			"hasActivation": true,
 			"menuOrder": 1,
-			"name": "Liferay Self-Hosted",
+			"name": "Liferay SaaS",
 			"r_accountEntryToAccountSubscriptionGroup_accountEntryERC": "ERC-002",
 			"tabOrder": 2
 		},
 		{
 			"accountKey": "ERC-003",
-			"externalReferenceCode": "ERC-003_analytics-cloud",
+			"externalReferenceCode": "ERC-003_liferay-paas",
 			"hasActivation": true,
 			"menuOrder": 1,
-			"name": "Analytics Cloud",
+			"name": "Liferay PaaS",
 			"r_accountEntryToAccountSubscriptionGroup_accountEntryERC": "ERC-003",
 			"tabOrder": 2
 		},
 		{
 			"accountKey": "ERC-004",
-			"externalReferenceCode": "ERC-004_commerce",
-			"hasActivation": true,
-			"menuOrder": 2,
-			"name": "Commerce",
-			"r_accountEntryToAccountSubscriptionGroup_accountEntryERC": "ERC-004",
-			"tabOrder": 3
-		},
-		{
-			"accountKey": "ERC-004",
-			"externalReferenceCode": "ERC-004_liferay-paas",
+			"externalReferenceCode": "ERC-004_liferay-self-hosted",
 			"hasActivation": true,
 			"menuOrder": 1,
-			"name": "Liferay PaaS",
+			"name": "Liferay Self-Hosted",
 			"r_accountEntryToAccountSubscriptionGroup_accountEntryERC": "ERC-004",
 			"tabOrder": 2
-		},
-		{
-			"accountKey": "ERC-004",
-			"externalReferenceCode": "ERC-004_enterprise-search",
-			"hasActivation": true,
-			"menuOrder": 3,
-			"name": "Enterprise Search",
-			"r_accountEntryToAccountSubscriptionGroup_accountEntryERC": "ERC-004",
-			"tabOrder": 4
 		},
 		{
 			"accountKey": "ERC-005",
-			"externalReferenceCode": "ERC-005_enterprise-search",
+			"externalReferenceCode": "ERC-005_commerce",
 			"hasActivation": true,
-			"menuOrder": 1,
-			"name": "Enterprise Search",
+			"menuOrder": 2,
+			"name": "Commerce",
 			"r_accountEntryToAccountSubscriptionGroup_accountEntryERC": "ERC-005",
-			"tabOrder": 2
+			"tabOrder": 3
 		},
 		{
 			"accountKey": "ERC-006",
-			"externalReferenceCode": "ERC-006_portal",
+			"externalReferenceCode": "ERC-006_analytics-cloud",
 			"hasActivation": true,
 			"menuOrder": 1,
-			"name": "Portal",
+			"name": "Analytics Cloud",
 			"r_accountEntryToAccountSubscriptionGroup_accountEntryERC": "ERC-006",
 			"tabOrder": 2
 		},
 		{
-			"accountKey": "ERC-008",
-			"externalReferenceCode": "ERC-008_liferay-paas",
-			"hasActivation": true,
-			"menuOrder": 1,
-			"name": "Liferay PaaS",
-			"r_accountEntryToAccountSubscriptionGroup_accountEntryERC": "ERC-008",
-			"tabOrder": 2
-		},
-		{
-			"accountKey": "ERC-008",
-			"externalReferenceCode": "ERC-008_liferay-self-hosted",
-			"hasActivation": true,
-			"menuOrder": 2,
-			"name": "Liferay Self-Hosted",
-			"r_accountEntryToAccountSubscriptionGroup_accountEntryERC": "ERC-008",
-			"tabOrder": 3
-		},
-		{
-			"accountKey": "ERC-008",
-			"externalReferenceCode": "ERC-008_analytics-cloud",
+			"accountKey": "ERC-007",
+			"externalReferenceCode": "ERC-007_enterprise-search",
 			"hasActivation": true,
 			"menuOrder": 3,
-			"name": "Analytics Cloud",
-			"r_accountEntryToAccountSubscriptionGroup_accountEntryERC": "ERC-008",
-			"tabOrder": 4
-		},
-		{
-			"accountKey": "ERC-008",
-			"externalReferenceCode": "ERC-008_commerce",
-			"hasActivation": true,
-			"menuOrder": 4,
-			"name": "Commerce",
-			"r_accountEntryToAccountSubscriptionGroup_accountEntryERC": "ERC-008",
-			"tabOrder": 5
-		},
-		{
-			"accountKey": "ERC-008",
-			"externalReferenceCode": "ERC-008_enterprise-search",
-			"hasActivation": true,
-			"menuOrder": 5,
 			"name": "Enterprise Search",
-			"r_accountEntryToAccountSubscriptionGroup_accountEntryERC": "ERC-008",
-			"tabOrder": 6
+			"r_accountEntryToAccountSubscriptionGroup_accountEntryERC": "ERC-007",
+			"tabOrder": 4
 		},
 		{
 			"accountKey": "ERC-008",
 			"externalReferenceCode": "ERC-008_portal",
 			"hasActivation": true,
-			"menuOrder": 6,
+			"menuOrder": 1,
 			"name": "Portal",
 			"r_accountEntryToAccountSubscriptionGroup_accountEntryERC": "ERC-008",
-			"tabOrder": 7
-		},
-		{
-			"accountKey": "ERC-008",
-			"externalReferenceCode": "ERC-008_partnership",
-			"hasActivation": true,
-			"menuOrder": 7,
-			"name": "Partnership",
-			"r_accountEntryToAccountSubscriptionGroup_accountEntryERC": "ERC-008",
-			"tabOrder": 8
-		},
-		{
-			"accountKey": "ERC-009",
-			"externalReferenceCode": "ERC-009_liferay-self-hosted",
-			"hasActivation": true,
-			"menuOrder": 1,
-			"name": "Liferay Self-Hosted",
-			"r_accountEntryToAccountSubscriptionGroup_accountEntryERC": "ERC-009",
 			"tabOrder": 2
 		},
 		{
 			"accountKey": "ERC-009",
-			"externalReferenceCode": "ERC-009_commerce",
+			"externalReferenceCode": "ERC-009_other",
 			"hasActivation": true,
-			"menuOrder": 5,
-			"name": "Commerce",
+			"menuOrder": 1,
+			"name": "Other",
 			"r_accountEntryToAccountSubscriptionGroup_accountEntryERC": "ERC-009",
-			"tabOrder": 6
+			"tabOrder": 2
 		},
 		{
 			"accountKey": "ERC-010",
-			"externalReferenceCode": "ERC-010_liferay-self-hosted",
+			"externalReferenceCode": "ERC-010_partnership",
 			"hasActivation": true,
-			"menuOrder": 3,
-			"name": "Liferay Self-Hosted",
+			"menuOrder": 7,
+			"name": "Partnership",
 			"r_accountEntryToAccountSubscriptionGroup_accountEntryERC": "ERC-010",
-			"tabOrder": 4
-		},
-		{
-			"accountKey": "ERC-010",
-			"externalReferenceCode": "ERC-010_commerce",
-			"hasActivation": true,
-			"menuOrder": 5,
-			"name": "Commerce",
-			"r_accountEntryToAccountSubscriptionGroup_accountEntryERC": "ERC-010",
-			"tabOrder": 6
+			"tabOrder": 8
 		},
 		{
 			"accountKey": "ERC-011",
@@ -181,38 +100,11 @@
 			"tabOrder": 4
 		},
 		{
-			"accountKey": "ERC-011",
-			"externalReferenceCode": "ERC-011_commerce",
-			"hasActivation": true,
-			"menuOrder": 5,
-			"name": "Commerce",
-			"r_accountEntryToAccountSubscriptionGroup_accountEntryERC": "ERC-011",
-			"tabOrder": 6
-		},
-		{
 			"accountKey": "ERC-012",
 			"externalReferenceCode": "ERC-012_liferay-self-hosted",
 			"hasActivation": true,
 			"menuOrder": 3,
 			"name": "Liferay Self-Hosted",
-			"r_accountEntryToAccountSubscriptionGroup_accountEntryERC": "ERC-012",
-			"tabOrder": 4
-		},
-		{
-			"accountKey": "ERC-012",
-			"externalReferenceCode": "ERC-012_commerce",
-			"hasActivation": true,
-			"menuOrder": 5,
-			"name": "Commerce",
-			"r_accountEntryToAccountSubscriptionGroup_accountEntryERC": "ERC-012",
-			"tabOrder": 6
-		},
-		{
-			"accountKey": "ERC-012",
-			"externalReferenceCode": "ERC-012_portal",
-			"hasActivation": true,
-			"menuOrder": 7,
-			"name": "Portal",
 			"r_accountEntryToAccountSubscriptionGroup_accountEntryERC": "ERC-012",
 			"tabOrder": 4
 		},
@@ -226,15 +118,6 @@
 			"tabOrder": 4
 		},
 		{
-			"accountKey": "ERC-013",
-			"externalReferenceCode": "ERC-013_commerce",
-			"hasActivation": true,
-			"menuOrder": 5,
-			"name": "Commerce",
-			"r_accountEntryToAccountSubscriptionGroup_accountEntryERC": "ERC-013",
-			"tabOrder": 6
-		},
-		{
 			"accountKey": "ERC-014",
 			"externalReferenceCode": "ERC-014_liferay-self-hosted",
 			"hasActivation": true,
@@ -245,12 +128,30 @@
 		},
 		{
 			"accountKey": "ERC-015",
-			"externalReferenceCode": "ERC-015_liferay-saas",
+			"externalReferenceCode": "ERC-015_liferay-self-hosted",
 			"hasActivation": true,
 			"menuOrder": 1,
-			"name": "Liferay SaaS",
+			"name": "Liferay Self-Hosted",
 			"r_accountEntryToAccountSubscriptionGroup_accountEntryERC": "ERC-015",
-			"tabOrder": 2
+			"tabOrder": 1
+		},
+		{
+			"accountKey": "ERC-016",
+			"externalReferenceCode": "ERC-016_liferay-self-hosted",
+			"hasActivation": true,
+			"menuOrder": 1,
+			"name": "Liferay Self-Hosted",
+			"r_accountEntryToAccountSubscriptionGroup_accountEntryERC": "ERC-016",
+			"tabOrder": 1
+		},
+		{
+			"accountKey": "ERC-017",
+			"externalReferenceCode": "ERC-017_liferay-self-hosted",
+			"hasActivation": true,
+			"menuOrder": 1,
+			"name": "Liferay Self-Hosted",
+			"r_accountEntryToAccountSubscriptionGroup_accountEntryERC": "ERC-017",
+			"tabOrder": 1
 		}
 	],
 	"objectDefinitionName": "AccountSubscriptionGroup"

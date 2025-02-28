@@ -36,7 +36,7 @@ export default function CreationFolderModalContent({
 		}
 	}, [assetLibraryId]);
 
-	const {errors, handleChange, handleSubmit, setFieldValue, values} =
+	const {errors, handleChange, handleSubmit, setFieldValue, touched, values} =
 		useFormik({
 			initialValues: {
 				assetLibraryId:
@@ -72,7 +72,11 @@ export default function CreationFolderModalContent({
 				) : (
 					<>
 						<FieldText
-							errorMessage={errors.folderName}
+							errorMessage={
+								touched.folderName
+									? errors.folderName
+									: undefined
+							}
 							label={Liferay.Language.get('name')}
 							name="folderName"
 							onChange={handleChange}
@@ -82,7 +86,11 @@ export default function CreationFolderModalContent({
 
 						{assetLibraries.length > 1 && (
 							<FieldPicker
-								errorMessage={errors.assetLibraryId}
+								errorMessage={
+									touched.assetLibraryId
+										? errors.assetLibraryId
+										: undefined
+								}
 								helpMessage={Liferay.Language.get(
 									'choose-the-space-for-the-new-folder'
 								)}
@@ -93,11 +101,7 @@ export default function CreationFolderModalContent({
 								label={Liferay.Language.get('space')}
 								name="folderName"
 								onSelectionChange={(value: string) => {
-									setFieldValue(
-										'assetLibraryId',
-										value,
-										true
-									);
+									setFieldValue('assetLibraryId', value);
 								}}
 								placeholder={Liferay.Language.get(
 									'select-a-space'

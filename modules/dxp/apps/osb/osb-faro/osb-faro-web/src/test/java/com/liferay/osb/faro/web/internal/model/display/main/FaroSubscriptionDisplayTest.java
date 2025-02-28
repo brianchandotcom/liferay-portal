@@ -68,7 +68,10 @@ public class FaroSubscriptionDisplayTest {
 
 	@Test
 	public void testSetUsageCounts1() throws Exception {
-		LocalDate localDate = LocalDate.now();
+		LocalDate localDate = LocalDate.now(
+		).withDayOfMonth(
+			10
+		);
 
 		LocalDateTime localDateTime1 = LocalDateTime.of(
 			localDate.minusYears(1), LocalTime.MIN);
@@ -135,7 +138,10 @@ public class FaroSubscriptionDisplayTest {
 
 	@Test
 	public void testSetUsageCounts2() throws Exception {
-		LocalDate localDate = LocalDate.now();
+		LocalDate localDate = LocalDate.now(
+		).withDayOfMonth(
+			10
+		);
 
 		LocalDateTime localDateTime1 = LocalDateTime.of(
 			localDate.minusYears(1), LocalTime.MIN);
@@ -230,7 +236,10 @@ public class FaroSubscriptionDisplayTest {
 
 	@Test
 	public void testSetUsageCounts3() throws Exception {
-		LocalDate localDate = LocalDate.now();
+		LocalDate localDate = LocalDate.now(
+		).withDayOfMonth(
+			10
+		);
 
 		LocalDateTime localDateTime1 = LocalDateTime.of(
 			localDate.minusYears(1), LocalTime.MIN);
@@ -341,7 +350,10 @@ public class FaroSubscriptionDisplayTest {
 
 	@Test
 	public void testSetUsageCounts4() throws Exception {
-		LocalDate localDate = LocalDate.now();
+		LocalDate localDate = LocalDate.now(
+		).withDayOfMonth(
+			10
+		);
 
 		LocalDateTime localDateTime1 = LocalDateTime.of(
 			localDate.minusYears(1), LocalTime.MIN);
@@ -470,7 +482,10 @@ public class FaroSubscriptionDisplayTest {
 
 	@Test
 	public void testSetUsageCounts5() throws Exception {
-		LocalDate localDate = LocalDate.now();
+		LocalDate localDate = LocalDate.now(
+		).withDayOfMonth(
+			10
+		);
 
 		LocalDateTime localDateTime1 = LocalDateTime.of(
 			localDate.minusYears(1), LocalTime.MIN);
@@ -567,7 +582,10 @@ public class FaroSubscriptionDisplayTest {
 
 	@Test
 	public void testSetUsageCounts6() throws Exception {
-		LocalDate localDate = LocalDate.now();
+		LocalDate localDate = LocalDate.now(
+		).withDayOfMonth(
+			10
+		);
 
 		LocalDateTime localDateTime1 = LocalDateTime.of(
 			localDate.minusYears(1), LocalTime.MIN);
@@ -708,7 +726,10 @@ public class FaroSubscriptionDisplayTest {
 
 	@Test
 	public void testSetUsageCounts7() throws Exception {
-		LocalDate localDate = LocalDate.now();
+		LocalDate localDate = LocalDate.now(
+		).withDayOfMonth(
+			10
+		);
 
 		LocalDateTime localDateTime1 = LocalDateTime.of(
 			localDate.minusYears(1), LocalTime.MIN);

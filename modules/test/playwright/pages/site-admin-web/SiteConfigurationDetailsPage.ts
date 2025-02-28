@@ -5,6 +5,8 @@
 
 import {Locator, Page} from '@playwright/test';
 
+import {MembershipTypes} from './types/membershipTypes';
+
 export class SiteConfigurationDetailsPage {
 	readonly page: Page;
 
@@ -18,5 +20,11 @@ export class SiteConfigurationDetailsPage {
 			'Allow Manual Membership Management'
 		);
 		this.saveButton = page.getByRole('button', {name: 'Save'});
+	}
+
+	async selectMembership(membershipType: MembershipTypes) {
+		await this.page
+			.getByLabel('Membership Type')
+			.selectOption(membershipType);
 	}
 }

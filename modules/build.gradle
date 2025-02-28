@@ -963,9 +963,7 @@ protected abstract class BaseJakartaTransformerTransformAction implements Transf
 		PrintStream errorPrintStream = new PrintStream(new ByteArrayOutputStream());
 		PrintStream standardPrintStream = new PrintStream(new ByteArrayOutputStream());
 
-		Object resultCode = runMethod.invoke(
-			jakartaTransformerCLIClassConstructor.newInstance(
-				standardPrintStream, errorPrintStream, ["--quiet", "--versions", propertiesFile.absolutePath, inputJarFile.absolutePath, outputJarFile.absolutePath ] as String[]));
+		Object resultCode = runMethod.invoke(jakartaTransformerCLIClassConstructor.newInstance(standardPrintStream, errorPrintStream, ["--quiet", "--versions", propertiesFile.absolutePath, inputJarFile.absolutePath, outputJarFile.absolutePath ] as String[]));
 
 		if (!Objects.equals(resultCode.toString(), "Success")) {
 			throw new GradleException("Jakarta: ERROR ${resultCode}\n${errorPrintStream}")

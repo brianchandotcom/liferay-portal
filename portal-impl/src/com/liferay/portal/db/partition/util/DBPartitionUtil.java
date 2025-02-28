@@ -903,6 +903,16 @@ public class DBPartitionUtil {
 						_extractTable(
 							companyId, connection, tableName, statement,
 							dbInspector, false);
+
+						if (StringUtil.equalsIgnoreCase(
+								tableName, "DLFileEntryType")) {
+
+							_moveData(
+								_defaultPartitionName, extractedPartitionName,
+								tableName,
+								_getColumnNames(connection, tableName),
+								statement, _DLFILEENTRYTYPE_WHERECLAUSE, false);
+						}
 					}
 				}
 			}
@@ -1657,6 +1667,9 @@ public class DBPartitionUtil {
 	private static final boolean _DATABASE_PARTITION_THREAD_POOL_ENABLED =
 		GetterUtil.getBoolean(
 			PropsUtil.get("database.partition.thread.pool.enabled"), true);
+
+	private static final String _DLFILEENTRYTYPE_WHERECLAUSE =
+		" where companyId = 0";
 
 	private static final String _QUARTZ_TABLE_NAME_PREFIX = GetterUtil.get(
 		PropsUtil.get("persisted.scheduler.org.quartz.jobStore.tablePrefix"),

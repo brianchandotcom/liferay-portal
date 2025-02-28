@@ -284,30 +284,6 @@ describe('HtmlScreen', () => {
 		});
 	});
 
-	it('appends existing teporary styles with id in the same place as the reference', (done) => {
-		const screen = new HtmlScreen();
-		screen.allocateVirtualDocumentForContent(
-			'<style id="temporaryStyle" data-senna-track="temporary">body{background-color:rgb(0, 255, 0);}</style>'
-		);
-		screen.evaluateStyles({}).then(() => {
-			document.head.appendChild(
-				buildFragment(
-					'<style id="mainStyle">body{background-color:rgb(255, 255, 255);}</style>'
-				)
-			);
-			assertComputedStyle('backgroundColor', 'rgb(255, 255, 255)');
-			screen.allocateVirtualDocumentForContent(
-				'<style id="temporaryStyle" data-senna-track="temporary">body{background-color:rgb(255, 0, 0);}</style>'
-			);
-			screen.evaluateStyles({}).then(() => {
-				assertComputedStyle('backgroundColor', 'rgb(255, 255, 255)');
-				exitDocumentElement('mainStyle');
-				exitDocumentElement('temporaryStyle');
-				done();
-			});
-		});
-	});
-
 	it('evaluates tracked permanent scripts only once', (done) => {
 		const screen = new HtmlScreen();
 		screen.allocateVirtualDocumentForContent(

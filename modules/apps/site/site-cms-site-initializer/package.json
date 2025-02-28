@@ -23,6 +23,7 @@
 		"@liferay/layout-js-components-web": "*",
 		"@liferay/object-js-components-web": "*",
 		"classnames": "2.3.1",
+		"formik": "2.1.4",
 		"frontend-js-components-web": "*",
 		"frontend-js-web": "*",
 		"react": "18.2.0",

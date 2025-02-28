@@ -6,13 +6,15 @@
 import ClayButton from '@clayui/button';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import ClayModal from '@clayui/modal';
+import {useFormik} from 'formik';
 import React, {useEffect, useState} from 'react';
 
 import {getAssetsLibrariesByCompany} from '../../api/api';
 import {FieldPicker, FieldText} from '../forms/';
+import {required, validate} from '../forms/validations';
 
 export default function CreationFolderModalContent({
-	assetLibraryId,
+	assetLibraryId = '',
 	closeModal,
 }: {
 	assetLibraryId?: string;
@@ -34,8 +36,27 @@ export default function CreationFolderModalContent({
 		}
 	}, [assetLibraryId]);
 
+	const {errors, handleChange, handleSubmit, setFieldValue, values} =
+		useFormik({
+			initialValues: {
+				assetLibraryId,
+				folderName: '',
+			},
+			onSubmit: (values) => {
+				alert(JSON.stringify(values, null, 4));
+			},
+			validate: (values) =>
+				validate(
+					{
+						assetLibraryId: [required],
+						folderName: [required],
+					},
+					values
+				),
+		});
+
 	return (
-		<>
+		<form onSubmit={handleSubmit}>
 			<ClayModal.Header>
 				{Liferay.Language.get('new-folder')}
 			</ClayModal.Header>
@@ -48,15 +69,19 @@ export default function CreationFolderModalContent({
 				) : (
 					<>
 						<FieldText
+							errorMessage={errors.folderName}
 							label={Liferay.Language.get('name')}
 							name="folderName"
+							onChange={handleChange}
 							required
+							value={values.folderName}
 						/>
 
 						{assetLibraries.length === 1 ? (
 							<input type="hidden" value={assetLibraries[0].id} />
 						) : (
 							<FieldPicker
+								errorMessage={errors.assetLibraryId}
 								helpMessage={Liferay.Language.get(
 									'choose-the-space-for-the-new-folder'
 								)}
@@ -66,10 +91,18 @@ export default function CreationFolderModalContent({
 								}))}
 								label={Liferay.Language.get('space')}
 								name="folderName"
+								onSelectionChange={(value: string) => {
+									setFieldValue(
+										'assetLibraryId',
+										value,
+										true
+									);
+								}}
 								placeholder={Liferay.Language.get(
 									'select-a-space'
 								)}
 								required
+								selectedKey={values.assetLibraryId}
 							/>
 						)}
 					</>
@@ -87,12 +120,12 @@ export default function CreationFolderModalContent({
 							{Liferay.Language.get('cancel')}
 						</ClayButton>
 
-						<ClayButton displayType="primary" type="button">
+						<ClayButton displayType="primary" type="submit">
 							{Liferay.Language.get('save')}
 						</ClayButton>
 					</ClayButton.Group>
 				}
 			/>
-		</>
+		</form>
 	);
 }

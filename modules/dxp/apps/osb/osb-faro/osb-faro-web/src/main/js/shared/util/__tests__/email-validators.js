@@ -8,11 +8,11 @@ import {
 describe('email-validators', () => {
 	describe('validateEmailDomain', () => {
 		it.each`
-			domain                 | isValid
-			${'liferay.com'}       | ${true}
-			${'test@liferay.com'}  | ${false}
-			${'111.222.333.444'}   | ${false}
-			${'[123.123.123.123]'} | ${false}
+			domain                  | isValid
+			${'liferay.com'}        | ${true}
+			${'test@liferay.com'}   | ${false}
+			${'111.222.333.444'}    | ${false}
+			${'[123.123.123.123]'}  | ${false}
 			${'<test@liferay.com>'} | ${false}
 			${'{test}@liferay.com'} | ${false}
 			${'{test@liferay.com}'} | ${false}

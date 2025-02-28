@@ -748,18 +748,33 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 			return 0;
 		}
 
-		JobProperty jobProperty = getJobProperty(
+		JobProperty targetAxisDurationJobProperty = getJobProperty(
 			"test.batch.target.axis.duration");
 
-		String jobPropertyValue = jobProperty.getValue();
+		String targetAxisDurationString =
+			targetAxisDurationJobProperty.getValue();
 
-		if ((jobPropertyValue == null) || !jobPropertyValue.matches("\\d+")) {
+		if (!JenkinsResultsParserUtil.isInteger(targetAxisDurationString)) {
 			return 0;
 		}
 
-		recordJobProperty(jobProperty);
+		recordJobProperty(targetAxisDurationJobProperty);
 
-		return Long.parseLong(jobPropertyValue);
+		long targetAxisDuration = Long.parseLong(targetAxisDurationString);
+
+		JobProperty performanceModifierJobProperty = getJobProperty(
+			"test.batch.performance.modifier");
+
+		String performanceModifier = performanceModifierJobProperty.getValue();
+
+		if (JenkinsResultsParserUtil.isDouble(performanceModifier)) {
+			targetAxisDuration = Math.round(
+				targetAxisDuration * Double.parseDouble(performanceModifier));
+
+			recordJobProperty(performanceModifierJobProperty);
+		}
+
+		return targetAxisDuration;
 	}
 
 	protected String getTestSuiteName() {

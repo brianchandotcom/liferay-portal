@@ -1,8 +1,8 @@
 {
 	"assetCategoryERCs": [
-		"IT_CATEGORY",
-		"NORTH_CATEGORY",
-		"REMOTE_CATEGORY"
+		"IT",
+		"NORTH-AMERICA",
+		"REMOTE"
 	],
 	"ddmStructureKey": "Job Listing",
 	"folder": "Job Listings",

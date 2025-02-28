@@ -1,8 +1,8 @@
 {
 	"assetCategoryERCs": [
-		"CUSTOMER_SERVICE_CATEGORY",
-		"EU_CATEGORY",
-		"IRELAND_CATEGORY"
+		"CUSTOMER-SERVICE",
+		"EUROPE",
+		"IRELAND-DUBLIN"
 	],
 	"ddmStructureKey": "Job Listing",
 	"folder": "Job Listings",

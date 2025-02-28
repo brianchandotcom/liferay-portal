@@ -19,7 +19,7 @@
 				},
 				{
 					"key": "queryValues0",
-					"value": "[#TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/group/faq.vocabulary/retail-partners.category.json#]"
+					"value": "[#TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/group/faq/retail-partners.json#]"
 				}
 			]
 		}
@@ -44,7 +44,7 @@
 				},
 				{
 					"key": "queryValues0",
-					"value": "[#TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/group/faq.vocabulary/products-and-services.category.json#]"
+					"value": "[#TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/group/faq/products-and-services.json#]"
 				}
 			]
 		}
@@ -69,7 +69,7 @@
 				},
 				{
 					"key": "queryValues0",
-					"value": "[#TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/group/faq.vocabulary/pricing-and-ordering.category.json#]"
+					"value": "[#TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/group/faq/pricing-and-ordering.json#]"
 				}
 			]
 		}
@@ -94,7 +94,7 @@
 				},
 				{
 					"key": "queryValues0",
-					"value": "[#TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/group/faq.vocabulary/returns-and-exchanges.category.json#]"
+					"value": "[#TAXONOMY_CATEGORY_ID:/site-initializer/taxonomy-vocabularies/group/faq/returns-and-exchanges.json#]"
 				}
 			]
 		}

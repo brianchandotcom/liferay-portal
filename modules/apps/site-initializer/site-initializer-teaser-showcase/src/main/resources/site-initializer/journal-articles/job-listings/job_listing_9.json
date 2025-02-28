@@ -1,8 +1,8 @@
 {
 	"assetCategoryERCs": [
-		"BRAZIL_SAO_CATEGORY",
-		"LATIN_CATEGORY",
-		"SUPPLY_CHAIN_CATEGORY"
+		"BRAZIL-SAO-PAULO",
+		"LATIN-AMERICA",
+		"SUPPLY-CHAIN-AND-LOGISTICS"
 	],
 	"ddmStructureKey": "Job Listing",
 	"folder": "Job Listings",

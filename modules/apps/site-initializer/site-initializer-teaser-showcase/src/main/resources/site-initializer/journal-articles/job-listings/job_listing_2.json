@@ -1,8 +1,8 @@
 {
 	"assetCategoryERCs": [
-		"EU_CATEGORY",
-		"ITALY_CATEGORY",
-		"QUALITY_CONTROL_INSEPCTORS_CATEGORY"
+		"EUROPE",
+		"ITALY-VIMERCATE",
+		"QUALITY-CONTROL-INSEPCTORS"
 	],
 	"ddmStructureKey": "Job Listing",
 	"folder": "Job Listings",

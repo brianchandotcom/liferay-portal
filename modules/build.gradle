@@ -25,6 +25,7 @@ import org.gradle.api.artifacts.transform.TransformOutputs;
 import org.gradle.api.artifacts.transform.TransformParameters;
 import org.gradle.api.attributes.LibraryElements
 import org.gradle.api.execution.TaskExecutionGraph
+import org.gradle.api.tasks.CompileClasspath
 import org.gradle.plugins.ide.api.XmlFileContentMerger
 import org.gradle.plugins.ide.eclipse.model.Classpath
 import org.gradle.plugins.ide.eclipse.model.ClasspathEntry
@@ -128,7 +129,6 @@ if (buildJakartaTransformerEnabled) {
 			return uri.toURL()
 		} as URL[],
 		null as java.lang.ClassLoader)
-	BaseJakartaTransformerTransformAction.excludesFileCollection = configurations.jakartaTransformerExcludes
 	BaseJakartaTransformerTransformAction.logger = project.logger
 	BaseJakartaTransformerTransformAction.propertiesFile = project.file("liferay-jakarta-versions.properties")
 }
@@ -888,6 +888,10 @@ gradle.beforeProject {
 					registerTransform(BaseJakartaTransformerTransformAction) {
 						from.attribute(ArtifactTypeDefinition.ARTIFACT_TYPE_ATTRIBUTE, ArtifactTypeDefinition.JAR_TYPE)
 						to.attribute(ArtifactTypeDefinition.ARTIFACT_TYPE_ATTRIBUTE, BaseJakartaTransformerTransformAction.ARTIFACT_TYPE)
+
+						parameters {
+							excludesFileCollection = rootProject.configurations.jakartaTransformerExcludes
+						}
 					}
 				}
 
@@ -951,11 +955,18 @@ gradle.taskGraph.whenReady {
 }
 
 @CacheableTransform
-protected abstract class BaseJakartaTransformerTransformAction implements TransformAction<TransformParameters.None> {
+protected abstract class BaseJakartaTransformerTransformAction implements TransformAction<Parameters> {
+
+	interface Parameters extends TransformParameters {
+
+		@CompileClasspath
+		@InputFiles
+		ConfigurableFileCollection getExcludesFileCollection()
+
+	}
 
 	public static final String ARTIFACT_TYPE = "jakarta-transformed-jar";
 
-	protected static FileCollection excludesFileCollection;
 	protected static Logger logger;
 	protected static ClassLoader classLoader;
 	protected static File propertiesFile;
@@ -968,7 +979,7 @@ protected abstract class BaseJakartaTransformerTransformAction implements Transf
 	public void transform(TransformOutputs outputs) {
 		File inputJarFile = inputArtifact.get().asFile
 
-		if (excludesFileCollection.contains(inputJarFile)) {
+		if (parameters.excludesFileCollection.contains(inputJarFile)) {
 			outputs.file(inputJarFile)
 
 			logger.lifecycle("Jakarta: SKIPPING excluded artifact: ${inputJarFile}")

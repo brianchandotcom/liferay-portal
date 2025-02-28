@@ -131,12 +131,12 @@ public class SystemDateFieldPredicateProvider
 	}
 
 	private Predicate _getDateTimePredicate(
-			Object date, Expression<Object> expression,
+			Object right, Expression<Object> expression,
 			BinaryExpression.Operation operation)
 		throws ParseException {
 
 		if (operation == BinaryExpression.Operation.EQ) {
-			Object truncatedDate = _truncateMilliseconds(date);
+			Object truncatedDate = _truncateMilliseconds(right);
 
 			return expression.gte(
 				truncatedDate
@@ -145,20 +145,21 @@ public class SystemDateFieldPredicateProvider
 			).withParentheses();
 		}
 		else if (operation == BinaryExpression.Operation.GE) {
-			return expression.gte(_truncateMilliseconds(date));
+			return expression.gte(_truncateMilliseconds(right));
 		}
 		else if (operation == BinaryExpression.Operation.GT) {
 			return expression.gte(
-				_incrementSecond(_truncateMilliseconds(date)));
+				_incrementSecond(_truncateMilliseconds(right)));
 		}
 		else if (operation == BinaryExpression.Operation.LE) {
-			return expression.lt(_incrementSecond(_truncateMilliseconds(date)));
+			return expression.lt(
+				_incrementSecond(_truncateMilliseconds(right)));
 		}
 		else if (operation == BinaryExpression.Operation.LT) {
-			return expression.lt(_truncateMilliseconds(date));
+			return expression.lt(_truncateMilliseconds(right));
 		}
 		else if (operation == BinaryExpression.Operation.NE) {
-			Object truncatedDate = _truncateMilliseconds(date);
+			Object truncatedDate = _truncateMilliseconds(right);
 
 			return expression.lt(
 				truncatedDate
@@ -175,35 +176,35 @@ public class SystemDateFieldPredicateProvider
 	}
 
 	private Object _processDate(
-			Object date, Consumer<Calendar> calendarOperation)
+			Object right, Consumer<Calendar> calendarOperation)
 		throws ParseException {
 
-		Date dateObj;
-		Function<Object, Object> resultTransformer;
+		Date date;
+		Function<Object, Object> dateFormatter;
 
-		if (date instanceof String) {
-			String dateString = (String)date;
+		if (right instanceof String) {
+			String dateString = (String)right;
 
 			DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
 				ObjectFieldUtil.getDateTimePattern(dateString));
 
-			dateObj = dateFormat.parse(dateString);
+			date = dateFormat.parse(dateString);
 
-			resultTransformer = dateFormat::format;
+			dateFormatter = dateFormat::format;
 		}
 		else {
-			dateObj = (Date)date;
-			resultTransformer = Function.identity();
+			date = (Date)right;
+			dateFormatter = Function.identity();
 		}
 
-		Calendar calendar = CalendarFactoryUtil.getCalendar(dateObj.getTime());
+		Calendar calendar = CalendarFactoryUtil.getCalendar(date.getTime());
 
 		calendarOperation.accept(calendar);
 
-		return resultTransformer.apply(calendar.getTime());
+		return dateFormatter.apply(calendar.getTime());
 	}
 
-	private Object _toDBSpecificFormat(Object date) {
+	private Object _toDBSpecificFormat(Object right) {
 		if (Objects.equals(DBManagerUtil.getDBType(), DBType.DB2) ||
 			Objects.equals(DBManagerUtil.getDBType(), DBType.HYPERSONIC) ||
 			Objects.equals(DBManagerUtil.getDBType(), DBType.ORACLE)) {
@@ -217,15 +218,15 @@ public class SystemDateFieldPredicateProvider
 			Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(
 				pattern);
 
-			return format.format(date);
+			return format.format(right);
 		}
 
-		return date;
+		return right;
 	}
 
-	private Object _truncateMilliseconds(Object date) throws ParseException {
+	private Object _truncateMilliseconds(Object right) throws ParseException {
 		return _processDate(
-			date, calendar -> calendar.set(Calendar.MILLISECOND, 0));
+			right, calendar -> calendar.set(Calendar.MILLISECOND, 0));
 	}
 
 }

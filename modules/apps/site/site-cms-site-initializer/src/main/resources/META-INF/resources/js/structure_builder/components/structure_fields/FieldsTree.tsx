@@ -43,14 +43,14 @@ export default function FieldsTree({fields}: {fields: Field[]}) {
 					type: field.type,
 				})),
 				icon: 'edit-layout',
-				id: 'root',
+				id: '',
 				label: structureLabel,
 			},
 		];
 	}, [fields, structureLabel]);
 
 	const onItemClick = (item: TreeItem) => {
-		if (item.id === 'root') {
+		if (!item.id) {
 			dispatch({
 				selection: [],
 				type: 'set-selection',
@@ -73,7 +73,7 @@ export default function FieldsTree({fields}: {fields: Field[]}) {
 	return (
 		<ClayTreeView
 			className="structure-builder__fields-tree"
-			defaultExpandedKeys={new Set(['root'])}
+			defaultExpandedKeys={new Set([''])}
 			items={items}
 			nestedKey="children"
 			showExpanderOnHover={false}

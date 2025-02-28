@@ -303,11 +303,19 @@ export function ProvideAppBuildPage({
 				JSON.stringify({attachment, version})
 			);
 
-			await createProductVirtualEntry({
-				body: formData,
-				callback: (progress) => {
-					buildAppPackages[version] = buildAppPackages[version].map(
-						(file) =>
+			const appPackagesByVersion = buildAppPackages[version];
+
+			for (const appPackage of appPackagesByVersion) {
+				if (appPackage.uploaded) {
+					continue;
+				}
+
+				await createProductVirtualEntry({
+					body: formData,
+					callback: (progress) => {
+						buildAppPackages[version] = buildAppPackages[
+							version
+						].map((file) =>
 							file.id === id
 								? {
 										...file,
@@ -315,15 +323,15 @@ export function ProvideAppBuildPage({
 										uploaded: progress === 100,
 									}
 								: file
-					);
-
-					dispatch({
-						payload: buildAppPackages,
-						type: TYPES.UPDATE_BUILD_PACKAGE_FILES,
-					});
-				},
-				virtualSettingId,
-			});
+						);
+						dispatch({
+							payload: buildAppPackages,
+							type: TYPES.UPDATE_BUILD_PACKAGE_FILES,
+						});
+					},
+					virtualSettingId,
+				});
+			}
 		}
 	};
 

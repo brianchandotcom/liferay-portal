@@ -97,7 +97,7 @@ export type Action =
 	| UpdateFieldAction
 	| UpdateStructureAction;
 
-function reducer(state: State, action: Action) {
+function reducer(state: State, action: Action): State {
 	switch (action.type) {
 		case 'add-field': {
 			const {field} = action;

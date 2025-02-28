@@ -10,7 +10,7 @@ import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {pagesAdminPagesTest} from '../../fixtures/pagesAdminPagesTest';
-import {pagesPagesTest} from './../layout-admin-web/fixtures/pagesPagesTest';
+import {pagesPagesTest} from '../layout-admin-web/fixtures/pagesPagesTest';
 
 const test = mergeTests(
 	apiHelpersTest,

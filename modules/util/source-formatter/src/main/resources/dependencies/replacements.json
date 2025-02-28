@@ -3727,6 +3727,17 @@
 		"to": "_sitemapManager.addURLElement"
 	},
 	{
+		"classNames": [
+			"AccountEntryLocalService",
+			"AccountEntryLocalServiceUtil",
+			"AccountEntryService",
+			"AccountEntryServiceUtil"
+		],
+		"from": "fetchByExternalReferenceCode(long paramName, String paramName)",
+		"issueKey": "LPD-50175",
+		"to": "fetchAccountEntryByExternalReferenceCode(param#1#, param#0#)"
+	},
+	{
 		"from": "CookieKeys.COMMERCE_CONTINUE_AS_GUEST",
 		"issueKey": "LPS-159679",
 		"newImports": [

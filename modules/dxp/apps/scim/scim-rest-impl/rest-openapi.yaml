@@ -1,5 +1,72 @@
 components:
     schemas:
+        Attribute:
+            description:
+                Each SCIM resource (Users, Groups, etc.) includes the following common attributes.
+            properties:
+                canonicalValues:
+                    description:
+                        A collection of suggested canonical values that MAY be used (e.g., "work" and "home").
+                    items:
+                        type: string
+                    type: array
+                caseExact:
+                    description:
+                        A Boolean value that specifies whether or not a string attribute is case sensitive
+                    type: boolean
+                description:
+                    description:
+                        The attribute's human-readable description.  When
+                        applicable, service providers MUST specify the description
+                    type: string
+                multiValued:
+                    description:
+                        A Boolean value indicating the attribute's plurality.
+                    type: boolean
+                mutability:
+                    description:
+                        A single keyword indicating the circumstances under which the value of the attribute can be
+                        (re)defined.
+                    enum: [readOnly, readWrite, immutable, writeOnly]
+                    type: string
+                name:
+                    description:
+                        The attribute's name.
+                    type: string
+                referenceTypes:
+                    description:
+                        A multi-valued array of JSON strings that indicate the SCIM resource types that may be
+                        referenced
+                    items:
+                        type: string
+                    type: array
+                required:
+                    description:
+                        TA Boolean value that specifies whether or not the attribute is required.
+                    type: boolean
+                returned:
+                    description:
+                        A single keyword that indicates when an attribute and associated values are returned in response
+                        to a GET request or in response to a PUT, POST, or PATCH request.
+                    enum: [always, never, default, request]
+                    type: string
+                subattribute:
+                    oneOf:
+                        - $ref: "#/components/schemas/Attribute"
+                    type: object
+                type:
+                    description:
+                        The attribute's data type.  Valid values are "string", "boolean", "decimal", "integer",
+                        "dateTime", "reference", and "complex".
+                    enum: [string, boolean, decimal, integer, dateTime, reference, complex]
+                    type: string
+                uniqueness:
+                    description:
+                        A single keyword value that specifies how the service provider enforces uniqueness of attribute
+                        values.
+                    enum: [none, server, global]
+                    type: string
+            type: object
         BaseScim:
             description:
                 Each SCIM resource (Users, Groups, etc.) includes the following common attributes.
@@ -172,6 +239,7 @@ components:
                         A multi-valued list of complex objects containing the requested resources.
                     oneOf:
                         - $ref: "#/components/schemas/Group"
+                        - $ref: "#/components/schemas/SchemaDefinition"
                         - $ref: "#/components/schemas/User"
                     type: object
                 itemsPerPage:
@@ -186,6 +254,39 @@ components:
                     description:
                         The total number of results returned by the list or query operation.
                     type: integer
+            type: object
+        SchemaDefinition:
+            description:
+                Each SCIM resource (Users, Groups, etc.) includes the following common attributes.
+            properties:
+                attributes:
+                    description:
+                        A complex type that defines service provider attributes and their qualities.
+                    items:
+                        $ref: "#/components/schemas/Attribute"
+                    type: array
+                description:
+                    description:
+                        The schema's human-readable description.
+                    type: string
+                id:
+                    description:
+                        The unique URI of the schema.
+                    readOnly: true
+                    type: string
+                meta:
+                    $ref: "#/components/schemas/Meta"
+                name:
+                    description:
+                        The schema's human-readable name.
+                    type: string
+                schemas:
+                    description:
+                        "A list of strings that MUST contain the value 'urn:ietf:params:scim:schemas:core:2.0:Schema'."
+                    example: ["urn:ietf:params:scim:schemas:core:2.0:Schema"]
+                    items:
+                        type: string
+                    type: array
             type: object
         User:
             allOf:
@@ -543,6 +644,23 @@ paths:
                     description:
                         The Group was successfully updated.
             tags: ["Group"]
+    /v2/Schemas:
+        get:
+            description:
+                Lists schemas.
+            operationId: getV2Schemas
+            responses:
+                200:
+                    content:
+                        application/scim+json:
+                            schema:
+                                oneOf:
+                                    - format: binary
+                                      type: string
+                                    - $ref: "#/components/schemas/QueryResponse"
+                    description:
+                        The list of Schemas.
+            tags: ["Schema"]
     /v2/Users:
         get:
             description:

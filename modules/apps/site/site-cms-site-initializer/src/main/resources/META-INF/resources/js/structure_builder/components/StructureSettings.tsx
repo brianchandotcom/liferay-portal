@@ -86,7 +86,12 @@ export default function () {
 		return <StructureSettings />;
 	}
 
-	return <StructureFieldSettings fieldName={selectedItem.name} />;
+	return (
+		<StructureFieldSettings
+			fieldName={selectedItem.name}
+			key={selectedItem.name}
+		/>
+	);
 }
 
 function GeneralTab() {

@@ -142,8 +142,11 @@ function SaveButton() {
 
 function PublishButton() {
 	const dispatch = useStateDispatch();
+	const erc = useSelector(selectStructureERC);
+	const fields = useSelector(selectStructureFields);
 	const id = useSelector(selectStructureId);
 	const label = useSelector(selectStructureLabel);
+	const name = useSelector(selectStructureName);
 	const status = useSelector(selectStructureStatus);
 
 	if (status === 'published') {
@@ -152,6 +155,14 @@ function PublishButton() {
 
 	const onPublish = async () => {
 		try {
+			await StructureService.updateStructure({
+				erc,
+				fields,
+				id,
+				label,
+				name,
+			});
+
 			await StructureService.publishStructure({id});
 
 			openToast({

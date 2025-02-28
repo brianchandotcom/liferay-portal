@@ -14,9 +14,9 @@ import org.apache.tools.ant.Project;
  * @author Istvan Sajtos
  * @author Drew Brokke
  */
-public class CpeIdUtil {
+public class CPEUtil {
 
-	public static String getCpeId(Project project) {
+	public static String getName(Project project) {
 		try {
 			String patchVersion = "*";
 			String product = "portal";

@@ -5,7 +5,7 @@
 
 package com.liferay.ant.manifest.helper;
 
-import com.liferay.ant.manifest.helper.util.CpeIdUtil;
+import com.liferay.ant.manifest.helper.util.CPEUtil;
 import com.liferay.ant.manifest.helper.util.Validator;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.OSDetector;
@@ -64,7 +64,7 @@ public class ManifestHelperTask extends Task {
 
 		project.setProperty("build.revision", getBuildRevision());
 		project.setProperty("build.time", getDateString(new Date()));
-		project.setProperty("cpe.identifier", CpeIdUtil.getCpeId(project));
+		project.setProperty("cpe.name", CPEUtil.getName(project));
 		project.setProperty(
 			"release.info.build.date",
 			String.valueOf(ReleaseInfo.getBuildDate()));

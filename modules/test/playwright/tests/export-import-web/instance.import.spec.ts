@@ -195,8 +195,6 @@ test('can only import custom object entries when their definitions are already i
 
 	apiHelpers.data.push({id: objectDefinition.id, type: 'objectDefinition'});
 
-	await companyExportImportPage.page.reload();
-
 	await companyExportImportPage.import(exportFilePath);
 
 	expect(

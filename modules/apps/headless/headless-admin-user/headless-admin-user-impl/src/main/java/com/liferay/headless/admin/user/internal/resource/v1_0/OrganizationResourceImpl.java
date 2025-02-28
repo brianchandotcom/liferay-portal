@@ -229,9 +229,12 @@ public class OrganizationResourceImpl extends BaseOrganizationResourceImpl {
 			Long accountId, String organizationId)
 		throws Exception {
 
+		AccountEntry accountEntry = _accountEntryService.getAccountEntry(
+			accountId);
+
 		AccountEntryOrganizationRel accountEntryOrganizationRel =
 			_accountEntryOrganizationRelService.getAccountEntryOrganizationRel(
-				accountId, Long.valueOf(organizationId));
+				accountEntry.getAccountEntryId(), Long.valueOf(organizationId));
 
 		return _toOrganization(
 			String.valueOf(accountEntryOrganizationRel.getOrganizationId()));

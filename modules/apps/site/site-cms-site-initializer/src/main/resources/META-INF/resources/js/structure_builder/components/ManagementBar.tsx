@@ -20,6 +20,9 @@ import selectStructureStatus from '../selectors/selectStructureStatus';
 import StructureService from '../services/StructureService';
 
 export default function ManagementBar() {
+	const label = useSelector(selectStructureLabel);
+	const status = useSelector(selectStructureStatus);
+
 	return (
 		<ManagementToolbar.Container className="border">
 			<ManagementToolbar.ItemList className="c-gap-3" expand>
@@ -35,7 +38,9 @@ export default function ManagementBar() {
 
 				<ManagementToolbar.Item className="nav-item-expand">
 					<h2 className="font-weight-semi-bold m-0 text-5">
-						{Liferay.Language.get('new-structure')}
+						{status === 'published'
+							? label
+							: Liferay.Language.get('new-structure')}
 					</h2>
 				</ManagementToolbar.Item>
 

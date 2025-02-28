@@ -1135,6 +1135,15 @@ public abstract class BaseBuild implements Build {
 
 		String consoleText = getConsoleText();
 
+		if (JenkinsResultsParserUtil.isNullOrEmpty(consoleText)) {
+			System.out.println(
+				"Console text for " + getBuildName() + " is null or empty");
+
+			_stopWatchRecordsGroup = null;
+
+			return new StopWatchRecordsGroup();
+		}
+
 		for (String line : consoleText.split("\n")) {
 			Matcher matcher = stopWatchStartTimestampPattern.matcher(line);
 
@@ -1144,6 +1153,12 @@ public abstract class BaseBuild implements Build {
 				try {
 					timestamp = stopWatchTimestampSimpleDateFormat.parse(
 						matcher.group("timestamp"));
+				}
+				catch (NumberFormatException numberFormatException) {
+					System.out.println(
+						"Unable to parse " + matcher.group("timestamp"));
+
+					continue;
 				}
 				catch (ParseException parseException) {
 					throw new RuntimeException(

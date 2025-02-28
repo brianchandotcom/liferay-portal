@@ -108,11 +108,7 @@ public class ScimUtil {
 
 		ScimUser scimUser = new ScimUser();
 
-		SimpleAttribute simpleAttribute = (SimpleAttribute)user.getAttribute(
-			"active");
-
-		scimUser.setActive(GetterUtil.getBoolean(simpleAttribute.getValue()));
-
+		scimUser.setActive(_isActive(user));
 		scimUser.setAutoScreenName(
 			PrefsPropsUtil.getBoolean(
 				companyId, PropsKeys.USERS_SCREEN_NAME_ALWAYS_AUTOGENERATE));
@@ -538,6 +534,22 @@ public class ScimUtil {
 			multiValuedComplexTypes.get(0);
 
 		return multiValuedComplexType.getValue();
+	}
+
+	private static boolean _isActive(User user) {
+		try {
+			return user.getActive();
+		}
+		catch (ClassCastException classCastException) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(classCastException);
+			}
+
+			SimpleAttribute simpleAttribute =
+				(SimpleAttribute)user.getAttribute("active");
+
+			return GetterUtil.getBoolean(simpleAttribute.getValue());
+		}
 	}
 
 	private static boolean _isMale(User user) {

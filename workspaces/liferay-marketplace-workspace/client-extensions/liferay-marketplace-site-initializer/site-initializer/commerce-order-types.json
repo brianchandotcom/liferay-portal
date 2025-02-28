@@ -2,7 +2,7 @@
 	{
 		"active": true,
 		"description": {
-			"en_US": "Designates that the order is an Add-On"
+			"en_US": "Designates that the order is an add-on"
 		},
 		"displayOrder": 0,
 		"externalReferenceCode": "ADDONS",
@@ -14,12 +14,24 @@
 	{
 		"active": true,
 		"description": {
-			"en_US": "Designates that the order contains a free or paid Cloud app."
+			"en_US": "Designates that the order contains a free or paid cloud app."
 		},
 		"displayOrder": 0,
 		"externalReferenceCode": "CLOUDAPP",
 		"name": {
 			"en_US": "Cloud App"
+		},
+		"neverExpire": true
+	},
+	{
+		"active": true,
+		"description": {
+			"en_US": "Designates that the order contains a free or paid client extension."
+		},
+		"displayOrder": 1,
+		"externalReferenceCode": "CLIENT_EXTENSION",
+		"name": {
+			"en_US": "Client Extension"
 		},
 		"neverExpire": true
 	},
@@ -38,9 +50,21 @@
 	{
 		"active": true,
 		"description": {
-			"en_US": "Designates that the order contains an LXC 60-day project order."
+			"en_US": "Designates that the order contains a free or paid fragment."
 		},
 		"displayOrder": 2,
+		"externalReferenceCode": "FRAGMENT",
+		"name": {
+			"en_US": "Fragment"
+		},
+		"neverExpire": true
+	},
+	{
+		"active": true,
+		"description": {
+			"en_US": "Designates that the order contains an LXC 60-day project order."
+		},
+		"displayOrder": 3,
 		"externalReferenceCode": "PROJECT60",
 		"name": {
 			"en_US": "Project - 60 days"
@@ -52,7 +76,7 @@
 		"description": {
 			"en_US": "Designates that the order contains a 7-day solution trial."
 		},
-		"displayOrder": 3,
+		"displayOrder": 4,
 		"externalReferenceCode": "SOLUTIONS7",
 		"name": {
 			"en_US": "Solutions - 7 day trial"
@@ -64,7 +88,7 @@
 		"description": {
 			"en_US": "Designates that the order contains a 30-day solution trial."
 		},
-		"displayOrder": 4,
+		"displayOrder": 5,
 		"externalReferenceCode": "SOLUTIONS30",
 		"name": {
 			"en_US": "Solutions - 30 day trial"
@@ -76,7 +100,7 @@
 		"description": {
 			"en_US": "Designates that the order contains a 30-day cloud app trial."
 		},
-		"displayOrder": 5,
+		"displayOrder": 6,
 		"externalReferenceCode": "CLOUDAPP30",
 		"name": {
 			"en_US": "Cloud App - 30 day trial"
@@ -88,7 +112,7 @@
 		"description": {
 			"en_US": "Designates that the order contains a 30-day DXP app trial."
 		},
-		"displayOrder": 6,
+		"displayOrder": 7,
 		"externalReferenceCode": "DXPAPP30",
 		"name": {
 			"en_US": "DXP App - 30 day trial"

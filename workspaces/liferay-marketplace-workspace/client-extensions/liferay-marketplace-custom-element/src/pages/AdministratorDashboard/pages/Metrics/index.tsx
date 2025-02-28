@@ -45,8 +45,10 @@ const Metrics = () => {
 			HeadlessCommerceAdminOrderImpl.getOrders(
 				new URLSearchParams({
 					filter: SearchBuilder.in('orderTypeExternalReferenceCode', [
+						ORDER_TYPES.CLIENT_EXTENSION,
 						ORDER_TYPES.CLOUDAPP,
 						ORDER_TYPES.DXPAPP,
+						ORDER_TYPES.FRAGMENT,
 					]),
 					nestedFields: 'account,orderItems',
 					pageSize: '30',

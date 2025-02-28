@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {ProductTypeLabels} from '../../enums/ProductType';
 import {Liferay} from '../../liferay/liferay';
 
 export function formatDate(date: string) {
@@ -26,18 +27,11 @@ export function getProductTypeFromSpecifications(
 ) {
 	let productType = 'no type';
 
-	specifications.forEach((specification: ProductSpecification) => {
+	for (const specification of specifications) {
 		if (specification.specificationKey === 'type') {
 			productType = specification.value.en_US;
 
-			if (productType === 'cloud') {
-				productType = 'Cloud';
-			}
-			else if (productType === 'dxp') {
-				productType = 'DXP';
-			}
+			return ProductTypeLabels[productType] ?? productType;
 		}
-	});
-
-	return productType;
+	}
 }

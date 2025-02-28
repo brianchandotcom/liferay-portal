@@ -8,7 +8,7 @@ import classNames from 'classnames';
 
 import purchasedAppIcon from '../../../assets/icons/purchased_app_icon.svg';
 import OrderStatus from '../../../components/OrderStatus';
-import {OrderType} from '../../../enums/OrderType';
+import {ORDER_TYPES} from '../../../enums/Order';
 
 enum OrderAppTypeEnum {
 	DXPAPP = 'DXP APP',
@@ -21,11 +21,11 @@ type OrderDetailsStatusDescriptionProps = {
 };
 
 const getOrderDetailsType = (orderTypeExternalReferenceCode: string) => {
-	if (orderTypeExternalReferenceCode === OrderType.DXP) {
+	if (orderTypeExternalReferenceCode === ORDER_TYPES.DXPAPP) {
 		return OrderAppTypeEnum.DXPAPP;
 	}
 
-	if (orderTypeExternalReferenceCode === OrderType.CLOUD) {
+	if (orderTypeExternalReferenceCode === ORDER_TYPES.CLOUDAPP) {
 		return OrderAppTypeEnum.CLOUDAPP;
 	}
 };

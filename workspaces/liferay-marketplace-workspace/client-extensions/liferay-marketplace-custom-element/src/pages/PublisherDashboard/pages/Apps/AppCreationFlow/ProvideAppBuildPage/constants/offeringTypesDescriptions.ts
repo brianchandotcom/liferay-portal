@@ -7,6 +7,13 @@ import {ProductType} from '../../../../../../../enums/ProductType';
 import i18n from '../../../../../../../i18n';
 
 export const offeringTypesDescription = {
+	[ProductType.CLIENT_EXTENSION]: [
+		{
+			description: 'placeholder',
+			disabled: true,
+			label: i18n.translate('liferay-self-hosted'),
+		},
+	],
 	[ProductType.CLOUD]: [
 		{
 			description: i18n.translate(
@@ -49,7 +56,7 @@ export const offeringTypesDescription = {
 			label: i18n.translate('liferay-saas'),
 		},
 	],
-	[ProductType.FRAGMENTS]: [
+	[ProductType.FRAGMENT]: [
 		{
 			description: i18n.translate(
 				'the-dxp-app-is-module-based-and-is-compatible-with-7-4-builds-of-liferay-dxp'

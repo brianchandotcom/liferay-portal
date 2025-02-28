@@ -14,8 +14,10 @@ import {
 
 import Navbar, {NavbarProps} from '../../../../../components/Navbar';
 import {PageRenderer} from '../../../../../components/Page';
-import {ORDER_WORKFLOW_STATUS_CODE} from '../../../../../enums/Order';
-import {OrderType} from '../../../../../enums/OrderType';
+import {
+	ORDER_TYPES,
+	ORDER_WORKFLOW_STATUS_CODE,
+} from '../../../../../enums/Order';
 import useGetProductByOrderId from '../../../../../hooks/useGetProductByOrderId';
 import i18n from '../../../../../i18n';
 import getProductPriceModel from '../../../../GetApp/utils/getProductPriceModel';
@@ -113,7 +115,7 @@ const AppOutlet = () => {
 
 				if (
 					placedOrder.orderTypeExternalReferenceCode ===
-					OrderType.CLOUD
+					ORDER_TYPES.CLOUDAPP
 				) {
 					const isDownloadableCloud =
 						product?.productSpecifications.some((specification) => {
@@ -144,7 +146,8 @@ const AppOutlet = () => {
 				}
 
 				if (
-					placedOrder.orderTypeExternalReferenceCode === OrderType.DXP
+					placedOrder.orderTypeExternalReferenceCode ===
+					ORDER_TYPES.DXPAPP
 				) {
 					return [
 						...tabs,

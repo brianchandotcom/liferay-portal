@@ -3,12 +3,20 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {ProductType} from '../../../enums/ProductType';
+
+const productTypeERC = {
+	[ProductType.CLIENT_EXTENSION]: 'CLIENT_EXTENSION',
+	[ProductType.CLOUD]: 'CLOUDAPP',
+	[ProductType.DXP]: 'DXPAPP',
+	[ProductType.FRAGMENT]: 'FRAGMENT',
+} as const;
+
 export function getProductOrderTypes(productSpecificationValue: any) {
+	const productSpecification = productSpecificationValue.toLowerCase();
+
 	return {
 		externalReferenceCode:
-			productSpecificationValue.toLowerCase() === 'cloud'
-				? 'CLOUDAPP'
-				: 'DXPAPP',
-		name: {},
+			productTypeERC[productSpecification as ProductType] || 'NOTYPE',
 	} as OrderType;
 }

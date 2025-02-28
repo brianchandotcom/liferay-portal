@@ -10,6 +10,7 @@ import {useState} from 'react';
 import {DashboardPage} from '../../../../components/DashBoardPage/DashboardPage';
 import {DashboardEmptyTable} from '../../../../components/DashboardTable/DashboardEmptyTable';
 import Page from '../../../../components/Page';
+import {ORDER_TYPES} from '../../../../enums/Order';
 import {Liferay} from '../../../../liferay/liferay';
 import {getSiteURL} from '../../../../utils/site';
 import {useCustomerDashboardOutletContext} from '../../CustomerDashboardOutlet';
@@ -27,7 +28,12 @@ const Apps = () => {
 	} = usePurchasedOrders({
 		accountId: selectedAccount?.id as number,
 		channelId: Number(Liferay.CommerceContext.commerceChannelId),
-		orderTypeExternalReferenceCodes: ['CLOUDAPP', 'DXPAPP'],
+		orderTypeExternalReferenceCodes: [
+			ORDER_TYPES.CLIENT_EXTENSION,
+			ORDER_TYPES.CLOUDAPP,
+			ORDER_TYPES.DXPAPP,
+			ORDER_TYPES.FRAGMENT,
+		],
 		page,
 		pageSize: 10,
 	});

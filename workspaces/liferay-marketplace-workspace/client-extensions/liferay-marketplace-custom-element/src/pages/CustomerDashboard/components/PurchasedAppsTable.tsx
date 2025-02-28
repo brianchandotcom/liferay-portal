@@ -14,8 +14,7 @@ import OrderStatus, {
 } from '../../../components/OrderStatus';
 import Table from '../../../components/Table/Table';
 import {Analytics} from '../../../core/Analytics';
-import {ORDER_TYPES} from '../../../enums/Order';
-import {OrderType} from '../../../enums/OrderType';
+import {ORDER_TYPES, ORDER_TYPES_LABELS} from '../../../enums/Order';
 import {PRODUCT_IMAGE_FALLBACK_CATEGORIES} from '../../../enums/Product';
 import i18n from '../../../i18n';
 import {getProductImageFallback} from '../../../utils/productUtils';
@@ -91,10 +90,11 @@ const AppsTable: React.FC<AppsTableProps> = ({items}) => {
 				},
 				{
 					key: 'orderTypeExternalReferenceCode',
-					render: (orderTypeExternalReferenceCode) =>
-						orderTypeExternalReferenceCode === OrderType.DXP
-							? 'DXP'
-							: 'Cloud',
+					render: (orderTypeExternalReferenceCode) => {
+						return ORDER_TYPES_LABELS[
+							orderTypeExternalReferenceCode
+						];
+					},
 					title: i18n.translate('app-type'),
 				},
 				{
@@ -165,7 +165,7 @@ const AppsTable: React.FC<AppsTableProps> = ({items}) => {
 
 									<ClayDropDown.ItemList>
 										{orderTypeExternalReferenceCode ===
-											OrderType.DXP &&
+											ORDER_TYPES.DXPAPP &&
 											!isFreeApp && (
 												<>
 													<ClayTooltipProvider>
@@ -224,7 +224,7 @@ const AppsTable: React.FC<AppsTableProps> = ({items}) => {
 										)}
 
 										{orderTypeExternalReferenceCode ===
-											OrderType.DXP && (
+											ORDER_TYPES.DXPAPP && (
 											<ClayTooltipProvider>
 												<ClayDropDown.Item
 													data-tooltip-align="left"

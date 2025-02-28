@@ -20,7 +20,6 @@ import {Statuses as OrderStatuses} from '../../../../../../components/OrderStatu
 import StatusCell from '../../../../../../components/Table/StatusCell';
 import Table from '../../../../../../components/Table/Table';
 import {useMarketplaceContext} from '../../../../../../context/MarketplaceContext';
-import {OrderType} from '../../../../../../enums/OrderType';
 import useGetProductByOrderId from '../../../../../../hooks/useGetProductByOrderId';
 import i18n from '../../../../../../i18n';
 import provisioningOAuth2 from '../../../../../../services/oauth/Provisioning';
@@ -33,6 +32,7 @@ import TitleSubtitleHeader from '../../../../components/TitleSubtitleHeader';
 import useLicenseActions from './useLicensesActions';
 
 import './Licenses.scss';
+import {ORDER_TYPES} from '../../../../../../enums/Order';
 
 type OutletContext = ReturnType<typeof useGetProductByOrderId>;
 
@@ -61,7 +61,7 @@ const Licenses = () => {
 	const product = outletContext?.product;
 
 	const keyType =
-		placedOrder?.orderTypeExternalReferenceCode === OrderType.DXP
+		placedOrder?.orderTypeExternalReferenceCode === ORDER_TYPES.DXPAPP
 			? 'On-Premise'
 			: 'Cloud';
 

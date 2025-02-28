@@ -568,7 +568,7 @@ export function ProvideAppBuildPage({
 							<RadioCard
 								description={i18n.translate(
 									appType.value === ProductType.CLOUD ||
-										ProductType.FRAGMENTS
+										appType.value === ProductType.FRAGMENT
 										? 'use-any-local-zip-files-to-upload-max-file-size-is-500-mb'
 										: 'please-be-sure-to-specify-liferay-compatibility-through-the-appropriate-properties-or-xml-files-in-your-plugin'
 								)}
@@ -586,7 +586,7 @@ export function ProvideAppBuildPage({
 								}
 								title={
 									appType.value === ProductType.CLOUD ||
-									ProductType.FRAGMENTS
+									appType.value === ProductType.FRAGMENT
 										? i18n.translate('via-zip-upload')
 										: i18n.translate(
 												'via-liferay-plugin-packages'
@@ -652,20 +652,20 @@ export function ProvideAppBuildPage({
 					<Section
 						description={i18n.translate(
 							appType.value === ProductType.CLOUD ||
-								ProductType.FRAGMENTS
+								appType.value === ProductType.FRAGMENT
 								? 'select-a-local-file-to-upload'
 								: 'if-the-app-is-compatible-with-different-updates-of-74-please-upload-multiple-packages-for-each-update-or-update-compatibility-range'
 						)}
 						label={i18n.translate(
 							appType.value === ProductType.CLOUD ||
-								ProductType.FRAGMENTS
+								appType.value === ProductType.FRAGMENT
 								? 'upload-zip-files'
 								: 'upload-liferay-plugin-packages'
 						)}
 						required
 						tooltip={i18n.translate(
 							appType.value === ProductType.CLOUD ||
-								ProductType.FRAGMENTS
+								appType.value === ProductType.FRAGMENT
 								? 'you-can-upload-one-or-many-zip-files-max-total-size-is-500-mb'
 								: 'only-jar-war-files-are-allowed-max-file-size-is-500mb'
 						)}

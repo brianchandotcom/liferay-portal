@@ -302,6 +302,11 @@
 			<finder-column name="fragmentEntryId" />
 			<finder-column name="plid" />
 		</finder>
+		<finder name="G_F_D" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="fragmentEntryId" />
+			<finder-column name="deleted" />
+		</finder>
 		<finder name="G_S_P" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column arrayable-operator="OR" name="segmentsExperienceId" />

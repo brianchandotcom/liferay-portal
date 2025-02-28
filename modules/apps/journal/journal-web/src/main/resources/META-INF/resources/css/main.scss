@@ -300,7 +300,8 @@ $productMenuWidth: 320px;
 
 #portlet_com_liferay_journal_web_portlet_JournalPortlet {
 	.component-tbar,
-	.management-bar {
+	.management-bar,
+	.lfr-data-engine__navigation-bar {
 		.container-fluid,
 		.container-fluid.container-fluid-max-xl {
 			max-width: 1920px;

@@ -117,6 +117,7 @@ else {
 />
 
 <clay:navigation-bar
+	cssClass="lfr-data-engine__navigation-bar"
 	inverted="<%= true %>"
 	navigationItems='<%= journalDisplayContext.getNavigationItems("web-content") %>'
 />

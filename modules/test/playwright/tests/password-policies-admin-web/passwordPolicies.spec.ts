@@ -11,8 +11,9 @@ import {loginTest} from '../../fixtures/loginTest';
 import {passwordPoliciesAdminPageTest} from '../../fixtures/passwordPoliciesAdminConfigPageTest';
 import {TPasswordPolicy} from '../../helpers/PasswordPolicyApiHelper';
 import {liferayConfig} from '../../liferay.config';
+import {PasswordPoliciesAdminPage} from '../../pages/password-policies-admin-web/PasswordPoliciesAdminPage';
 import getRandomString from '../../utils/getRandomString';
-import {performLoginViaApi, performLogout} from '../../utils/performLogin';
+import performLoginViaApi from '../../utils/performLogin';
 
 export const test = mergeTests(
 	applicationsMenuPageTest,
@@ -57,80 +58,81 @@ test.afterEach(
 );
 
 test(
-	'Edit default password policy with syntax checking and 1 lowercase and check that it shows an error for Minimum Lower Case error',
-	{tag: '@LPD-48268'},
-	async ({page, passwordPoliciesAdminConfigPage}) => {
+	'Edit default password policy with syntax checking and 1 alphanumeric and check that it shows an error for Minimum Alpha Numeric error',
+	{tag: '@LPD-50094'},
+	async ({browser, passwordPoliciesAdminConfigPage}) => {
 		const passwordPolicy: TPasswordPolicy = {
 			checkSyntaxToggle: true,
 			minAlphanumeric: 1,
-			minLowerCase: 1,
+			minLowerCase: 0,
+			minNumbers: 0,
+			minUpperCase: 0,
 		};
-		await passwordPoliciesAdminConfigPage.goTo();
-		await passwordPoliciesAdminConfigPage.editDefaultPasswordPolicy(
-			passwordPolicy
+
+		await testPasswordPolicySyntaxCheck(
+			browser,
+			'That password must contain at least 1 alphanumeric character',
+			passwordPoliciesAdminConfigPage,
+			passwordPolicy,
+			'@@@@@@'
 		);
-
-		await performLogout(page);
-
-		await page.goto(liferayConfig.environment.baseUrl);
-
-		await page.getByRole('button', {name: 'Sign In'}).click();
-
-		await page.getByText('Create Account').click();
-
-		await page.getByLabel('Screen Name').fill(getRandomString());
-
-		await page
-			.getByLabel('Email Address')
-			.fill(getRandomString() + '@liferay.com');
-
-		await page.getByLabel('First Name').fill(getRandomString());
-
-		await page.getByLabel('Last Name').fill(getRandomString());
-
-		let password = 'ABC123';
-
-		await page
-			.getByLabel('Password Required', {exact: true})
-			.fill(password);
-
-		await page.getByLabel('Reenter Password Required').fill(password);
-
-		await page.getByRole('button', {name: 'Save'}).click();
-
-		await expect(
-			page.getByText(
-				'Close Error: That password must contain at least 1 lowercase characters. User'
-			)
-		).toBeVisible();
-
-		await page.reload();
-
-		await page.getByLabel('Screen Name').fill(getRandomString());
-
-		await page
-			.getByLabel('Email Address')
-			.fill(getRandomString() + '@liferay.com');
-
-		await page.getByLabel('First Name').fill(getRandomString());
-
-		await page.getByLabel('Last Name').fill(getRandomString());
-
-
-		password = '@@@@@@';
-
-		await page
-			.getByLabel('Password Required', {exact: true})
-			.fill(password);
-
-		await page.getByLabel('Reenter Password Required').fill(password);
-
-		await page.getByRole('button', {name: 'Save'}).click();
-
-		await expect(
-			page.getByText(
-				'Close Error: That password must contain at least 1 alphanumeric characters. User'
-			)
-		).toBeVisible();
 	}
 );
+
+test(
+	'Edit default password policy with syntax checking and 1 lowercase and check that it shows an error for Minimum Lower Case error',
+	{tag: '@LPD-48268'},
+	async ({browser, passwordPoliciesAdminConfigPage}) => {
+		const passwordPolicy: TPasswordPolicy = {
+			checkSyntaxToggle: true,
+			minLowerCase: 1,
+		};
+
+		await testPasswordPolicySyntaxCheck(
+			browser,
+			'That password must contain at least 1 lowercase character',
+			passwordPoliciesAdminConfigPage,
+			passwordPolicy,
+			'ABC123'
+		);
+	}
+);
+
+async function testPasswordPolicySyntaxCheck(
+	browser,
+	expectedMessage: String,
+	passwordPoliciesAdminConfigPage: PasswordPoliciesAdminPage,
+	passwordPolicy: TPasswordPolicy,
+	password: String
+) {
+	await passwordPoliciesAdminConfigPage.goTo();
+	await passwordPoliciesAdminConfigPage.editDefaultPasswordPolicy(
+		passwordPolicy
+	);
+
+	const page = await browser.newPage();
+
+	await page.goto(liferayConfig.environment.baseUrl);
+
+	await page.getByRole('button', {name: 'Sign In'}).click();
+
+	await page.getByText('Create Account').click();
+
+	await page.getByLabel('Screen Name').fill(getRandomString());
+
+	await page
+		.getByLabel('Email Address')
+		.fill(getRandomString() + '@liferay.com');
+
+	await page.getByLabel('First Name').fill(getRandomString());
+
+	await page.getByLabel('Last Name').fill(getRandomString());
+
+	await page.getByLabel('Password Required', {exact: true}).fill(password);
+
+	await page.getByLabel('Reenter Password Required').fill(password);
+
+	await page.getByRole('button', {name: 'Save'}).click();
+
+	await expect(page.getByText(expectedMessage)).toBeVisible();
+}

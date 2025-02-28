@@ -27,4 +27,9 @@ public class JavaParserTest extends BaseSourceProcessorTestCase {
 		test("JavaModifierStrictfp.testjava");
 	}
 
+	@Test
+	public void testJavaPatternMatchingForInstanceof() throws Exception {
+		test("JavaPatternMatchingForInstanceof.testjava");
+	}
+
 }

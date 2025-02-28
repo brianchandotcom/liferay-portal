@@ -9,6 +9,7 @@ import {TPasswordPolicy} from '../../helpers/PasswordPolicyApiHelper';
 import {ApplicationsMenuPage} from '../product-navigation-applications-menu/ApplicationsMenuPage';
 
 export class PasswordPoliciesAdminPage {
+	readonly allowDictionaryWordsToggle: Locator;
 	readonly applicationsMenuPage: ApplicationsMenuPage;
 	readonly changeableToggle: Locator;
 	readonly checkSyntaxToggle: Locator;
@@ -31,6 +32,10 @@ export class PasswordPoliciesAdminPage {
 	readonly successMessage: Locator;
 
 	constructor(page: Page) {
+		this.allowDictionaryWordsToggle = page.getByLabel(
+			"Allow Dictionary Words If this is checked, common dictionary words are allowed as the user's passwords.",
+			{exact: true}
+		);
 		this.applicationsMenuPage = new ApplicationsMenuPage(page);
 		this.changeableToggle = page.getByLabel(
 			'Changeable If this is checked, the user can change their password.',
@@ -107,6 +112,12 @@ export class PasswordPoliciesAdminPage {
 			);
 		}
 
+		if (passwordPolicy.allowDictionaryWordsToggle !== undefined) {
+			await this.allowDictionaryWordsToggle.setChecked(
+				passwordPolicy.allowDictionaryWordsToggle
+			);
+		}
+
 		if (passwordPolicy.minAlphanumeric) {
 			await this.minAlphanumeric.fill(
 				String(passwordPolicy.minAlphanumeric)
@@ -123,6 +134,10 @@ export class PasswordPoliciesAdminPage {
 
 		if (passwordPolicy.minNumbers) {
 			await this.minNumbers.fill(String(passwordPolicy.minNumbers));
+		}
+
+		if (passwordPolicy.minSymbols) {
+			await this.minSymbols.fill(String(passwordPolicy.minSymbols));
 		}
 
 		if (passwordPolicy.minUpperCase) {
@@ -148,6 +163,12 @@ export class PasswordPoliciesAdminPage {
 			);
 		}
 
+		if (passwordPolicy.allowDictionaryWordsToggle !== undefined) {
+			await this.allowDictionaryWordsToggle.setChecked(
+				passwordPolicy.allowDictionaryWordsToggle
+			);
+		}
+
 		if (passwordPolicy.minAlphanumeric) {
 			await this.minAlphanumeric.fill(
 				String(passwordPolicy.minAlphanumeric)
@@ -164,6 +185,10 @@ export class PasswordPoliciesAdminPage {
 
 		if (passwordPolicy.minNumbers) {
 			await this.minNumbers.fill(String(passwordPolicy.minNumbers));
+		}
+
+		if (passwordPolicy.minSymbols) {
+			await this.minSymbols.fill(String(passwordPolicy.minSymbols));
 		}
 
 		if (passwordPolicy.minUpperCase) {
@@ -186,6 +211,7 @@ export class PasswordPoliciesAdminPage {
 		await this.page
 			.getByRole('button', {name: 'Password Syntax Checking'})
 			.click();
+		await this.allowDictionaryWordsToggle.check();
 		await this.minLength.fill(String(6));
 		await this.minLowerCase.fill(String(0));
 		await this.minNumbers.fill(String(1));

@@ -4,6 +4,7 @@
  */
 
 export type TPasswordPolicy = {
+	allowDictionaryWordsToggle?: boolean;
 	changeableToggle?: boolean;
 	checkSyntaxToggle?: boolean;
 	description?: string;
@@ -14,6 +15,7 @@ export type TPasswordPolicy = {
 	minLength?: number;
 	minLowerCase?: number;
 	minNumbers?: number;
+	minSymbols?: number;
 	minUpperCase?: number;
 	name?: string;
 	regex?: string;

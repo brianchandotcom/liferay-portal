@@ -58,6 +58,27 @@ test.afterEach(
 );
 
 test(
+	'Edit default password policy with syntax checking and restrict dictionary words and check that it shows a Dictionary Words error',
+	{tag: '@LPD-50094'},
+	async ({browser, passwordPoliciesAdminConfigPage}) => {
+		const passwordPolicy: TPasswordPolicy = {
+			allowDictionaryWordsToggle: false,
+			checkSyntaxToggle: true,
+			minNumbers: 0,
+			minUpperCase: 0,
+		};
+
+		await testPasswordPolicySyntaxCheck(
+			browser,
+			'That password uses common dictionary words',
+			passwordPoliciesAdminConfigPage,
+			passwordPolicy,
+			'aardvark'
+		);
+	}
+);
+
+test(
 	'Edit default password policy with syntax checking and 1 alphanumeric and check that it shows an error for Minimum Alpha Numeric error',
 	{tag: '@LPD-50094'},
 	async ({browser, passwordPoliciesAdminConfigPage}) => {
@@ -132,6 +153,25 @@ test(
 			passwordPoliciesAdminConfigPage,
 			passwordPolicy,
 			'ABCdef'
+		);
+	}
+);
+
+test(
+	'Edit default password policy with syntax checking and 1 symbol and check that it shows an error for Minimum Symbols',
+	{tag: '@LPD-50094'},
+	async ({browser, passwordPoliciesAdminConfigPage}) => {
+		const passwordPolicy: TPasswordPolicy = {
+			checkSyntaxToggle: true,
+			minSymbols: 1,
+		};
+
+		await testPasswordPolicySyntaxCheck(
+			browser,
+			'That password must contain at least 1 symbol',
+			passwordPoliciesAdminConfigPage,
+			passwordPolicy,
+			'abCD123'
 		);
 	}
 );

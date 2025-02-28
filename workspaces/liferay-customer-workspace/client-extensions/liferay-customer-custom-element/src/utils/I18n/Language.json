@@ -638,6 +638,7 @@
 	"virtual-cluster": "Virtual Cluster",
 	"virtual-cluster-x-nodes": "Virtual Cluster ({0} nodes)",
 	"visit-our-help-center": "visit our Help Center",
+	"visit-the-new-project-usage-page-to-see-your-project-consumption-for-liferay-saas-for-more-information-please-feel-free-to-visit-this-page": "Visit the new {0}Project Usage page{1} to see your project consumption for Liferay SaaS. For more information, please feel free to visit this {2}page{3}.",
 	"was-deleted-successfully": "was deleted successfully.",
 	"we-have-logged-you-out-of-the-customer-portal-due-to-inactivity-to-continue-please-sign-in-again": "We have logged you out of the Customer Portal due to inactivity. To continue, please sign in again.",
 	"we-ll-need-a-few-details-to-finish-building-your-analytics-cloud-workspace": "We'll need a few details to finish building your Analytics Cloud workspace.",

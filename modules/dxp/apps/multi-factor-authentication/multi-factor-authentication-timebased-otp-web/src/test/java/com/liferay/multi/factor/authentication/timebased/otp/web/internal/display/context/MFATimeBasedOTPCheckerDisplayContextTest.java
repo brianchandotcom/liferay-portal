@@ -53,10 +53,12 @@ public class MFATimeBasedOTPCheckerDisplayContextTest {
 
 	@Test
 	public void testGetContext() throws PortalException {
-		MFATimeBasedOTPCheckerDisplayContext displayContext =
-			new MFATimeBasedOTPCheckerDisplayContext(_httpServletRequest);
+		MFATimeBasedOTPCheckerDisplayContext
+			mfaTimeBasedOTPCheckerDisplayContext =
+				new MFATimeBasedOTPCheckerDisplayContext(_httpServletRequest);
 
-		Map<String, Object> context = displayContext.getContext();
+		Map<String, Object> context =
+			mfaTimeBasedOTPCheckerDisplayContext.getContext();
 
 		Assert.assertEquals(
 			MFATimeBasedOTPUtil.MFA_TIMEBASED_OTP_COUNTER,

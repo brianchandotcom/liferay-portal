@@ -48,10 +48,15 @@ test('Structures can be saved and published', async ({
 
 	await structureBuilderPage.deleteField({label: 'Text', nth: 1});
 
-	// Save it again and publish it
+	// Publish it
 
-	await structureBuilderPage.saveStructure();
 	await structureBuilderPage.publishStructure();
+
+	// Check name changes in management bar
+
+	await expect(
+		page.locator('.management-bar').getByText(label)
+	).toBeVisible();
 
 	// Delete structure
 

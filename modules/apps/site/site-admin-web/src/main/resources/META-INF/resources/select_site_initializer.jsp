@@ -19,6 +19,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 
 <clay:container-fluid
 	cssClass="container-view"
+	fullWidth="<%= true %>"
 >
 	<clay:row>
 		<clay:col

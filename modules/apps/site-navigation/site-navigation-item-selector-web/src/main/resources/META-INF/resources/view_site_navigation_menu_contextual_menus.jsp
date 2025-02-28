@@ -17,6 +17,7 @@ SiteNavigationMenuContextualMenusItemSelectorViewDisplayContext siteNavigationMe
 
 <clay:container-fluid
 	cssClass="contextual-menu-selector p-4 text-3"
+	fullWidth="<%= true %>"
 	id='<%= liferayPortletResponse.getNamespace() + "contextualMenuSelector" %>'
 >
 	<clay:alert

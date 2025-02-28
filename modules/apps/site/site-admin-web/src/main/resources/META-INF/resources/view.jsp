@@ -54,6 +54,7 @@ SiteAdminManagementToolbarDisplayContext siteAdminManagementToolbarDisplayContex
 
 	<clay:container-fluid
 		cssClass="sidenav-content"
+		fullWidth="<%= true %>"
 	>
 		<portlet:actionURL name="/site_admin/delete_groups" var="deleteGroupsURL" />
 

@@ -73,7 +73,7 @@ const SelectSiteNavigationMenuItem = ({itemSelectorSaveEvent, nodes}) => {
 	};
 
 	return (
-		<ClayLayout.ContainerFluid className="p-4">
+		<ClayLayout.ContainerFluid className="p-4" size={false}>
 			<ClayForm.Group>
 				<ClayInput.Group>
 					<ClayInput.GroupItem prepend>

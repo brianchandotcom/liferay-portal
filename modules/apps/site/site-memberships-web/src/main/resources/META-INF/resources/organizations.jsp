@@ -25,7 +25,7 @@ OrganizationsDisplayContext organizationsDisplayContext = new OrganizationsDispl
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 </portlet:actionURL>
 
-<aui:form action="<%= deleteGroupOrganizationsURL %>" cssClass="container-fluid container-fluid-max-xl" method="post" name="fm">
+<aui:form action="<%= deleteGroupOrganizationsURL %>" cssClass="container-fluid" method="post" name="fm">
 	<aui:input name="tabs1" type="hidden" value="organizations" />
 	<aui:input name="groupId" type="hidden" value="<%= String.valueOf(siteMembershipsDisplayContext.getGroupId()) %>" />
 

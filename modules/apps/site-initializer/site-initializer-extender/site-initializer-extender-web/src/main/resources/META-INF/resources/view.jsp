@@ -7,7 +7,9 @@
 
 <%@ include file="/init.jsp" %>
 
-<clay:container-fluid>
+<clay:container-fluid
+	fullWidth="<%= true %>"
+>
 	<clay:sheet
 		cssClass="custom-sheet"
 	>

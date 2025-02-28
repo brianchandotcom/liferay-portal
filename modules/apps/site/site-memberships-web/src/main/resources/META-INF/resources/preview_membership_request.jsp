@@ -31,7 +31,9 @@ portletDisplay.setURLBackTitle("membership-requests");
 renderResponse.setTitle(userName);
 %>
 
-<clay:container-fluid>
+<clay:container-fluid
+	fullWidth="<%= true %>"
+>
 	<div class="sheet">
 		<div class="panel-group panel-group-flush">
 			<aui:fieldset>

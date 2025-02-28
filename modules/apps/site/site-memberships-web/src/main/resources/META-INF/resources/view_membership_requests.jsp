@@ -30,7 +30,9 @@ renderResponse.setTitle(LanguageUtil.get(request, "membership-requests"));
 
 <liferay-ui:success key="membershipReplySent" message="your-reply-will-be-sent-to-the-user-by-email" />
 
-<clay:container-fluid>
+<clay:container-fluid
+	fullWidth="<%= true %>"
+>
 	<liferay-ui:search-container
 		searchContainer="<%= viewMembershipRequestsDisplayContext.getSiteMembershipSearchContainer() %>"
 	>

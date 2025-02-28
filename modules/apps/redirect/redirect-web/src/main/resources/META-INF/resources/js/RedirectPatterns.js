@@ -217,7 +217,7 @@ const RedirectPattern = ({
 	return (
 		<form
 			action={actionUrl}
-			className="container-fluid container-fluid-max-xl mt-4"
+			className="container-fluid mt-4"
 			method="post"
 			name={`${portletNamespace}fm`}
 		>

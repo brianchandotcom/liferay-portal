@@ -11,7 +11,7 @@
 SelectSiteNavigationMenuDisplayContext selectSiteNavigationMenuDisplayContext = (SelectSiteNavigationMenuDisplayContext)request.getAttribute(SiteNavigationItemSelectorWebKeys.SELECT_SITE_NAVIGATION_ITEM_SELECTOR_DISPLAY_CONTEXT);
 %>
 
-<div class="container-fluid container-fluid-max-xl p-4" id="<portlet:namespace />siteNavigationMenuLevelSelector">
+<div class="container-fluid p-4" id="<portlet:namespace />siteNavigationMenuLevelSelector">
 	<clay:alert
 		displayType="info"
 		message="select-the-page-level-of-the-navigation-menu-to-be-displayed"

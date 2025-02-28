@@ -33,7 +33,7 @@ Team team = usersDisplayContext.getTeam();
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 </portlet:actionURL>
 
-<aui:form action="<%= deleteGroupUsersURL %>" cssClass="container-fluid container-fluid-max-xl portlet-site-memberships-users" method="post" name="fm">
+<aui:form action="<%= deleteGroupUsersURL %>" cssClass="container-fluid portlet-site-memberships-users" method="post" name="fm">
 	<aui:input name="tabs1" type="hidden" value="users" />
 	<aui:input name="navigation" type="hidden" value="<%= usersDisplayContext.getNavigation() %>" />
 	<aui:input name="addUserIds" type="hidden" />

@@ -133,6 +133,7 @@ if (publicVirtualHostnames.isEmpty()) {
 
 			<clay:container-fluid
 				cssClass="lfr-form-row"
+				fullWidth="<%= true %>"
 			>
 				<clay:row>
 					<aui:input inlineField="<%= true %>" label="virtual-host" maxlength="200" name="publicVirtualHostname[]" placeholder="virtual-host" type="text" value="<%= virtualHostname %>" wrapperCssClass="col-sm-6" />
@@ -186,6 +187,7 @@ if (publicVirtualHostnames.isEmpty()) {
 
 				<clay:container-fluid
 					cssClass="lfr-form-row"
+					fullWidth="<%= true %>"
 				>
 					<clay:row>
 						<aui:input inlineField="<%= true %>" label="staging-pages" maxlength="200" name="stagingPublicVirtualHostname[]" placeholder="virtual-host" type="text" value="<%= virtualHostname %>" wrapperCssClass="col-sm-6" />

@@ -51,6 +51,21 @@ public class CloudStorageSyncUtil {
 		_executeCommands(commands.toArray(new String[0]));
 	}
 
+	public static void copyS3File(String source, String destination) {
+		List<String> commands = new ArrayList<>();
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("aws s3 cp ");
+		sb.append(source);
+		sb.append(" ");
+		sb.append(destination);
+
+		commands.add(sb.toString());
+
+		_executeCommands(commands.toArray(new String[0]));
+	}
+
 	public static String getSignedURL(String url, String file, int duration)
 		throws IOException, TimeoutException {
 
@@ -99,6 +114,21 @@ public class CloudStorageSyncUtil {
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("gcloud storage rsync --recursive ");
+		sb.append(source);
+		sb.append(" ");
+		sb.append(destination);
+
+		commands.add(sb.toString());
+
+		_executeCommands(commands.toArray(new String[0]));
+	}
+
+	public static void syncS3Files(String source, String destination) {
+		List<String> commands = new ArrayList<>();
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append("aws s3 sync ");
 		sb.append(source);
 		sb.append(" ");
 		sb.append(destination);

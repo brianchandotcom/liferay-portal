@@ -210,6 +210,15 @@ public class ObjectEntryServiceUtil {
 			objectEntryId, values, serviceContext);
 	}
 
+	public static void validateObjectEntry(
+			long groupId, ObjectEntry objectEntry,
+			List<String> objectValidationRulesERC)
+		throws PortalException {
+
+		getService().validateObjectEntry(
+			groupId, objectEntry, objectValidationRulesERC);
+	}
+
 	public static ObjectEntryService getService() {
 		return _serviceSnapshot.get();
 	}

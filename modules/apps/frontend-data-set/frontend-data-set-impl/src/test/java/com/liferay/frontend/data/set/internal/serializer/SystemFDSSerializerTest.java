@@ -904,13 +904,15 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 				SystemFDSEntryFactory.create(
 					FDS_NAMES[0]
 				).withPagination(
-					DEFAULT_ITEMS_PER_PAGE_ARRAY[0], LIST_OF_ITEMS_PER_PAGE_ARRAY[0]
+					DEFAULT_ITEMS_PER_PAGE_ARRAY[0],
+					LIST_OF_ITEMS_PER_PAGE_ARRAY[0]
 				)),
 			_registerSystemFDSEntry(
 				SystemFDSEntryFactory.create(
 					FDS_NAMES[1]
 				).withPagination(
-					DEFAULT_ITEMS_PER_PAGE_ARRAY[1], LIST_OF_ITEMS_PER_PAGE_ARRAY[1]
+					DEFAULT_ITEMS_PER_PAGE_ARRAY[1],
+					LIST_OF_ITEMS_PER_PAGE_ARRAY[1]
 				)));
 
 		JSONAssert.assertEquals(
@@ -950,13 +952,15 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 				SystemFDSEntryFactory.create(
 					FDS_NAMES[0]
 				).withPagination(
-					DEFAULT_ITEMS_PER_PAGE_ARRAY[0], LIST_OF_ITEMS_PER_PAGE_ARRAY[0]
+					DEFAULT_ITEMS_PER_PAGE_ARRAY[0],
+					LIST_OF_ITEMS_PER_PAGE_ARRAY[0]
 				)),
 			_registerSystemFDSEntry(
 				SystemFDSEntryFactory.create(
 					FDS_NAMES[1]
 				).withPagination(
-					DEFAULT_ITEMS_PER_PAGE_ARRAY[0], LIST_OF_ITEMS_PER_PAGE_ARRAY[0]
+					DEFAULT_ITEMS_PER_PAGE_ARRAY[0],
+					LIST_OF_ITEMS_PER_PAGE_ARRAY[0]
 				)));
 
 		JSONAssert.assertEquals(

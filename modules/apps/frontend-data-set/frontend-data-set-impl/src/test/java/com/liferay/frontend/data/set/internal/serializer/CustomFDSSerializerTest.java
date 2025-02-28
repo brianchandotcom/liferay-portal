@@ -744,7 +744,8 @@ public class CustomFDSSerializerTest extends BaseFDSSerializerTestCase {
 
 		// Wrong pagination
 
-		_mockSerializePagination(FDS_NAMES[0], 0, LIST_OF_ITEMS_PER_PAGE_ARRAY[2]);
+		_mockSerializePagination(
+			FDS_NAMES[0], 0, LIST_OF_ITEMS_PER_PAGE_ARRAY[2]);
 		_mockSerializePagination(FDS_NAMES[1], -1, null);
 
 		JSONAssert.assertEquals(

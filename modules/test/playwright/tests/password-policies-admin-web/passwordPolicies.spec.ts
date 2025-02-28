@@ -80,6 +80,25 @@ test(
 );
 
 test(
+	'Edit default password policy with syntax checking and 10 length and check that it shows an error for Minimum Length',
+	{tag: '@LPD-50094'},
+	async ({browser, passwordPoliciesAdminConfigPage}) => {
+		const passwordPolicy: TPasswordPolicy = {
+			checkSyntaxToggle: true,
+			minLength: 10,
+		};
+
+		await testPasswordPolicySyntaxCheck(
+			browser,
+			'That password is too short',
+			passwordPoliciesAdminConfigPage,
+			passwordPolicy,
+			'ABcd12#$'
+		);
+	}
+);
+
+test(
 	'Edit default password policy with syntax checking and 1 lowercase and check that it shows an error for Minimum Lower Case error',
 	{tag: '@LPD-48268'},
 	async ({browser, passwordPoliciesAdminConfigPage}) => {
@@ -94,6 +113,44 @@ test(
 			passwordPoliciesAdminConfigPage,
 			passwordPolicy,
 			'ABC123'
+		);
+	}
+);
+
+test(
+	'Edit default password policy with syntax checking and 1 number and check that it shows an error for Minimum Numbers error',
+	{tag: '@LPD-50094'},
+	async ({browser, passwordPoliciesAdminConfigPage}) => {
+		const passwordPolicy: TPasswordPolicy = {
+			checkSyntaxToggle: true,
+			minNumbers: 1,
+		};
+
+		await testPasswordPolicySyntaxCheck(
+			browser,
+			'That password must contain at least 1 number',
+			passwordPoliciesAdminConfigPage,
+			passwordPolicy,
+			'ABCdef'
+		);
+	}
+);
+
+test(
+	'Edit default password policy with syntax checking and 1 uppercase and check that it shows an error for Minimum Upper Case',
+	{tag: '@LPD-50094'},
+	async ({browser, passwordPoliciesAdminConfigPage}) => {
+		const passwordPolicy: TPasswordPolicy = {
+			checkSyntaxToggle: true,
+			minUpperCase: 1,
+		};
+
+		await testPasswordPolicySyntaxCheck(
+			browser,
+			'That password must contain at least 1 uppercase character',
+			passwordPoliciesAdminConfigPage,
+			passwordPolicy,
+			'abc123'
 		);
 	}
 );

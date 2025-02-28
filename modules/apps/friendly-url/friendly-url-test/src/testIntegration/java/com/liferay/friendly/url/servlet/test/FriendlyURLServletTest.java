@@ -193,7 +193,7 @@ public class FriendlyURLServletTest {
 
 		String oldFriendlyURL = layout.getFriendlyURL();
 
-		String oldPath = getPath(stagingGroup, layout);
+		String oldPath = getPath(_group, layout);
 
 		List<String> portletIds = new ArrayList<>();
 
@@ -273,7 +273,7 @@ public class FriendlyURLServletTest {
 		String oldFriendlyURL = layout.getFriendlyURL(LocaleUtil.BRAZIL);
 
 		String oldPath = getLocalizedPath(
-			stagingGroup, layout, LocaleUtil.BRAZIL);
+			_group, layout, LocaleUtil.BRAZIL);
 
 		List<String> portletIds = new ArrayList<>();
 

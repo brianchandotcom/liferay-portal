@@ -1,6 +1,6 @@
 <svg fill="none" height="36" viewBox="0 0 36 36" width="36" xmlns="http://www.w3.org/2000/svg">
 	<g id="Clip path group">
-		<mask height="36" id="mask0_569_3848" maskUnits="userSpaceOnUse" style="mask-type:luminance" width="36" x="0" y="0">
+		<mask class="mask-type-luminance" height="36" id="mask0_569_3848" maskUnits="userSpaceOnUse" width="36" x="0" y="0">
 			<g id="clip0_515_5111">
 				<path d="M36 0H0V36H36V0Z" fill="white" id="Vector" />
 			</g>

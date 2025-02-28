@@ -548,6 +548,7 @@
 	"virtual-cluster": "Cluster virtual",
 	"virtual-cluster-x-nodes": "Cluster virtual ({0} nós)",
 	"visit-our-help-center": "visite nosso Centro de Ajuda",
+	"visit-the-new-project-usage-page-to-see-your-project-consumption-for-liferay-saas-for-more-information-please-feel-free-to-visit-this-page": "Visite a nova {0}página de Uso do Projeto{1} para ver o consumo do seu projeto no Liferay SaaS. Para mais informações, sinta-se à vontade para acessar esta {2}página{3}.",
 	"we-have-logged-you-out-of-the-customer-portal-due-to-inactivity-to-continue-please-sign-in-again": "We have logged you out of the Customer Portal due to inactivity. To continue, please sign in again.",
 	"we-ll-need-a-few-details-to-finish-building-your-analytics-cloud-workspace": "Precisaremos de alguns detalhes para concluir a criação dos locais de trabalho do Analytics Cloud.",
 	"we-ll-need-a-few-details-to-finish-building-your-dxp-environments": "Precisaremos de alguns detalhes para concluir a construção de seus ambientes DXP.",

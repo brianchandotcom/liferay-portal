@@ -548,6 +548,7 @@
 	"virtual-cluster": "仮想クラスター",
 	"virtual-cluster-x-nodes": "仮想クラスター ({0} ノード)",
 	"visit-our-help-center": "ヘルプセンター",
+	"visit-the-new-project-usage-page-to-see-your-project-consumption-for-liferay-saas-for-more-information-please-feel-free-to-visit-this-page": "Liferay SaaSの{0}プロジェクト使用量を確認するには、新しいプロジェクトの使用状況{1}ページをご参照ください。詳しくはこちらの{2}ページ{3}をご覧ください。",
 	"we-have-logged-you-out-of-the-customer-portal-due-to-inactivity-to-continue-please-sign-in-again": "We have logged you out of the Customer Portal due to inactivity. To continue, please sign in again.",
 	"we-ll-need-a-few-details-to-finish-building-your-analytics-cloud-workspace": "Analytics Cloud ワークスペースの構築を完了するには、いくつかの詳細情報が必要です。",
 	"we-ll-need-a-few-details-to-finish-building-your-dxp-environments": "DXP 環境の構築を完了するには、いくつかの詳細情報が必要です。",

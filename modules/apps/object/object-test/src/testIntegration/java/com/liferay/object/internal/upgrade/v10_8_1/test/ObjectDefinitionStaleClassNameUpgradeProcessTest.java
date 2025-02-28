@@ -41,17 +41,20 @@ public class ObjectDefinitionStaleClassNameUpgradeProcessTest {
 	public void testUpgrade() throws Exception {
 		ObjectDefinition objectDefinition1 =
 			ObjectDefinitionTestUtil.addCustomObjectDefinition();
-		ObjectDefinition objectDefinition2 =
-			ObjectDefinitionTestUtil.addCustomObjectDefinition();
 
 		ClassName className1 = _classNameLocalService.getClassName(
 			objectDefinition1.getClassName());
-		ClassName className2 = _classNameLocalService.getClassName(
-			objectDefinition2.getClassName());
 
 		Assert.assertNotNull(
 			_classNameLocalService.fetchByClassNameId(
 				className1.getClassNameId()));
+
+		ObjectDefinition objectDefinition2 =
+			ObjectDefinitionTestUtil.addCustomObjectDefinition();
+
+		ClassName className2 = _classNameLocalService.getClassName(
+			objectDefinition2.getClassName());
+
 		Assert.assertNotNull(
 			_classNameLocalService.fetchByClassNameId(
 				className2.getClassNameId()));

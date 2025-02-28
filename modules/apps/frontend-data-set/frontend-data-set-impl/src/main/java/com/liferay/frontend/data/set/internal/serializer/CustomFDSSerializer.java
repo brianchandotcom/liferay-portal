@@ -326,7 +326,7 @@ public class CustomFDSSerializer
 	public String serializePropsTransformer(
 		String fdsName, HttpServletRequest httpServletRequest) {
 
-		// Custom data sets don't support propsTransformer at this moment
+		// TODO
 
 		return null;
 	}

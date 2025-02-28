@@ -147,6 +147,30 @@ function reducer(state: State, action: Action): State {
 				status: 'published' as Status,
 			};
 		}
+		case 'save-structure': {
+			let nextPublishedFields = state.publishedFields;
+
+			if (state.status === 'published') {
+				nextPublishedFields = new Set(
+					Array.from(state.fields.values()).map((field) => field.name)
+				);
+			}
+
+			return {
+				...state,
+				error: null,
+				publishedFields: nextPublishedFields,
+			};
+		}
+		case 'set-error':
+			return {...state, error: action.error};
+		case 'set-label':
+			return {...state, label: action.label};
+		case 'set-selection': {
+			const {selection} = action;
+
+			return {...state, selection};
+		}
 		case 'update-field': {
 			const {erc, label, localized, name, newName, required} = action;
 
@@ -198,30 +222,6 @@ function reducer(state: State, action: Action): State {
 				name: nextName,
 			};
 		}
-		case 'save-structure': {
-			let nextPublishedFields = state.publishedFields;
-
-			if (state.status === 'published') {
-				nextPublishedFields = new Set(
-					Array.from(state.fields.values()).map((field) => field.name)
-				);
-			}
-
-			return {
-				...state,
-				error: null,
-				publishedFields: nextPublishedFields,
-			};
-		}
-		case 'set-selection': {
-			const {selection} = action;
-
-			return {...state, selection};
-		}
-		case 'set-error':
-			return {...state, error: action.error};
-		case 'set-label':
-			return {...state, label: action.label};
 		default:
 			return state;
 	}

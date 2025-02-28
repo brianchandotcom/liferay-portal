@@ -10,12 +10,14 @@ import React, {useState} from 'react';
 
 export default function TextInput({
 	className,
+	disabled = false,
 	label,
 	onValueChange,
 	required = false,
 	value: initialValue,
 }: {
 	className?: string;
+	disabled?: boolean;
 	label: string;
 	onValueChange: (value: string) => void;
 	required?: boolean;
@@ -41,6 +43,7 @@ export default function TextInput({
 			</label>
 
 			<ClayInput
+				disabled={disabled}
 				id={id}
 				onBlur={() => onValueChange(value)}
 				onChange={(event) => setValue(event.target.value)}

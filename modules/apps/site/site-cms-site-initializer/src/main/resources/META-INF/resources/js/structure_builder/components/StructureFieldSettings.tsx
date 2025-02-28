@@ -12,8 +12,10 @@ import {InputLocalized} from 'frontend-js-components-web';
 import React, {useState} from 'react';
 
 import {useSelector, useStateDispatch} from '../contexts/StateContext';
+import selectPublishedFields from '../selectors/selectPublishedFields';
 import selectStructureField from '../selectors/selectStructureField';
 import selectStructureLabel from '../selectors/selectStructureLabel';
+import selectStructureStatus from '../selectors/selectStructureStatus';
 import {Field} from '../utils/field';
 import ERCInput from './ERCInput';
 import TextInput from './TextInput';
@@ -77,6 +79,12 @@ export default function StructureFieldSettings({
 function GeneralTab({field}: {field: Field}) {
 	const dispatch = useStateDispatch();
 
+	const status = useSelector(selectStructureStatus);
+	const publishedFields = useSelector(selectPublishedFields);
+
+	const isPublished =
+		status === 'published' && publishedFields.has(field.name);
+
 	const [label, setLabel] = useState<Liferay.Language.LocalizedValue<string>>(
 		field.label
 	);
@@ -93,6 +101,7 @@ function GeneralTab({field}: {field: Field}) {
 
 			<div className="mt-4 pb-2">
 				<TextInput
+					disabled={isPublished}
 					label={Liferay.Language.get('field-name')}
 					onValueChange={() => {}}
 					required
@@ -119,6 +128,7 @@ function GeneralTab({field}: {field: Field}) {
 			<div className="mt-4 pb-2">
 				<ClayForm.Group className="mb-3">
 					<ClayToggle
+						disabled={isPublished}
 						label={Liferay.Language.get('mandatory')}
 						onToggle={(value) => {
 							dispatch({
@@ -133,6 +143,7 @@ function GeneralTab({field}: {field: Field}) {
 
 				<ClayForm.Group className="mb-0">
 					<ClayToggle
+						disabled={isPublished}
 						label={Liferay.Language.get('localizable')}
 						onToggle={(value) => {
 							dispatch({

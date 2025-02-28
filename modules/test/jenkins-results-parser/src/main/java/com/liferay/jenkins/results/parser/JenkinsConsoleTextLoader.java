@@ -58,6 +58,10 @@ public class JenkinsConsoleTextLoader {
 		String consoleText = JenkinsResultsParserUtil.getCachedText(
 			consoleLogFileKey);
 
+		if (JenkinsResultsParserUtil.isNullOrEmpty(consoleText)) {
+			return "";
+		}
+
 		if (truncated) {
 			consoleText = consoleText + "\n[TRUNCATED]";
 		}

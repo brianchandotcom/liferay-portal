@@ -228,7 +228,7 @@ function BulkActions({
 				<nav className="management-bar management-bar-primary navbar navbar-expand-md pb-2 pt-2 subnav-tbar">
 					<div
 						className={classNames(
-							'container-fluid container-fluid-max-xl py-1',
+							'container-fluid py-1',
 							!fluid && 'px-0'
 						)}
 					>

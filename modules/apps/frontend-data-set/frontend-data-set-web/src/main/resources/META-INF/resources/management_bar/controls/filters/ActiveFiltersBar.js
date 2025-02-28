@@ -30,7 +30,7 @@ function ActiveFiltersBar({disabled}) {
 
 	return activeFilters.length ? (
 		<div className="management-bar management-bar-light navbar navbar-expand-md">
-			<div className="container-fluid container-fluid-max-xl">
+			<div className="container-fluid">
 				<nav className="mb-0 py-3 subnav-tbar subnav-tbar-light subnav-tbar-primary w-100">
 					<ul className="tbar-nav">
 						<li className="p-0 tbar-item tbar-item-expand">

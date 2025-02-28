@@ -83,7 +83,6 @@ import java.util.Objects;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -326,32 +325,6 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 		super.testGetOrganizationsPage();
 
 		_testGetOrganizationsPageWithFilter();
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testGraphQLGetAccountByExternalReferenceCodeOrganization()
-		throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testGraphQLGetAccountByExternalReferenceCodeOrganizationNotFound()
-		throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testGraphQLGetAccountOrganization() throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testGraphQLGetAccountOrganizationNotFound() throws Exception {
 	}
 
 	@Override
@@ -723,6 +696,43 @@ public class OrganizationResourceTest extends BaseOrganizationResourceTestCase {
 		throws Exception {
 
 		return _addOrganization(organization, "0");
+	}
+
+	@Override
+	protected Organization
+			testGraphQLGetAccountByExternalReferenceCodeOrganization_addOrganization()
+		throws Exception {
+
+		return testGraphQLGetAccountOrganization_addOrganization();
+	}
+
+	@Override
+	protected String
+			testGraphQLGetAccountByExternalReferenceCodeOrganization_getExternalReferenceCode(
+				Organization organization)
+		throws Exception {
+
+		return _accountEntry.getExternalReferenceCode();
+	}
+
+	@Override
+	protected Organization testGraphQLGetAccountOrganization_addOrganization()
+		throws Exception {
+
+		Organization organization = testGraphQLOrganization_addOrganization();
+
+		_accountEntryOrganizationRelLocalService.addAccountEntryOrganizationRel(
+			_accountEntry.getAccountEntryId(),
+			GetterUtil.getLong(organization.getId()));
+
+		return organization;
+	}
+
+	@Override
+	protected Long testGraphQLGetAccountOrganization_getAccountId()
+		throws Exception {
+
+		return _accountEntry.getAccountEntryId();
 	}
 
 	@Override

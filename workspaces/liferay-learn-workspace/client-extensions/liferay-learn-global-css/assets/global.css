@@ -1541,6 +1541,10 @@ pre[class*='language-'] {
 	mask-type: alpha;
 }
 
+.mask-type-luminance {
+	mask-type: luminance;
+}
+
 .page-tabs {
 	@media (max-width: 576px) {
 		.navbar-nav .nav-item {

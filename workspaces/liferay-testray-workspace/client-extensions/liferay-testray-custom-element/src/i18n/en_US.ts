@@ -293,6 +293,7 @@ export default {
 	'password-may-contain-letters-and-numbers':
 		'Password may contain letters and numbers.',
 	'passwords-do-not-match': 'Passwords do not match.',
+	'playwright-reports': 'Playwright Reports',
 	'please-select-at-least-two-subtasks-to-merge':
 		'Please select at least two subtasks to merge.',
 	'please-select-one-or-more-roles': 'Please, select one or more roles.',

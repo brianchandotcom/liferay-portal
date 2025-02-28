@@ -9,8 +9,8 @@ affinity: {}
 # See: https://kubernetes.io/docs/concepts/workloads/autoscaling/
 autoscaling:
   enabled: false
-  minReplicas: 1
   maxReplicas: 100
+  minReplicas: 1
   targetCPUUtilizationPercentage: 80
   # targetMemoryUtilizationPercentage: 80
 
@@ -19,18 +19,28 @@ configmap:
   annotations: {}
     # helm.sh/resource-policy: keep
 
-  # By setting this to true all the default configmap entries files will not be
-  # emitted and only those defined in 'configmap.data' will be used.
-  overrideDefaults: false
-
   # Data to add to the configmap
   data:
     portal-custom.properties: |
       # include-and-override=portal-developer.properties
 
+  # By setting this to true all the default configmap entries files will not be
+  # emitted and only those defined in 'configmap.data' will be used.
+  overrideDefaults: false
+
 # Add custom labels to all chart resources
 customLabels:
   origin: liferay-cloud
+
+dependencies:
+- name: database
+  portalBundleDenyList: []
+  portalComponentDenyList: []
+  portalProperties: ""
+  # external - use an externally provided impl
+  # deployment - use the deployment template
+  # statefulset - use the statefulset template
+  source: external
 
 # Use this to pass environment variables directly to the DXP container.
 # See: https://kubernetes.io/docs/tasks/inject-data-application/define-environment-variable-container/
@@ -62,6 +72,14 @@ image:
   pullSecrets: []
   repository: liferay/dxp
   tag: latest
+
+# This block is for setting up the ingress for more information can be found here: https://kubernetes.io/docs/concepts/services-networking/ingress/
+ingress:
+  annotations: {}
+  className: ""
+  enabled: false
+  rules: []
+  tls: []
 
 initContainers:
 - containerTemplate: |
@@ -112,19 +130,11 @@ initContainers:
       imagePullPolicy: IfNotPresent
       name: liferay-wait-on-services
 
-# This block is for setting up the ingress for more information can be found here: https://kubernetes.io/docs/concepts/services-networking/ingress/
-ingress:
-  annotations: {}
-  className: ""
-  enabled: false
-  rules: []
-  tls: []
-
 livenessProbe:
+  failureThreshold: 2
   httpGet:
     path: /c/portal/robots
     port: http
-  failureThreshold: 2
   initialDelaySeconds: 10
   periodSeconds: 5
 
@@ -183,23 +193,27 @@ portalProperties: |
   web.server.protocol=http
 
 ports:
-- name: http
-  containerPort: 8080
+- containerPort: 8080
+  name: http
   protocol: TCP
-- name: debug
-  containerPort: 8000
+- containerPort: 8000
+  name: debug
   protocol: TCP
-- name: cluster
-  containerPort: 7800
+- containerPort: 7800
+  name: cluster
   protocol: TCP
 
 readinessProbe:
+  failureThreshold: 2
   httpGet:
     path: /c/portal/robots
     port: http
-  failureThreshold: 2
   initialDelaySeconds: 10
   periodSeconds: 5
+
+# Set the number of dxp replicas (0 or more)
+# See: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
+replicaCount: 1
 
 # This is for setting the resource requests and limits of the pods.
 # See: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
@@ -210,17 +224,6 @@ securityContext:
     drop:
     - ALL
   readOnlyRootFilesystem: true
-
-# This is for setting up a service more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/
-service:
-  annotations: {}
-  ports:
-  - name: http
-    port: 8080
-    protocol: TCP
-    targetPort: http
-  # This sets the service type more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
-  type: ClusterIP
 
 # This section builds out the service account more information can be found here: https://kubernetes.io/docs/concepts/security/service-accounts/
 serviceAccount:
@@ -234,11 +237,22 @@ serviceAccount:
   # If not set and create is true, a name is generated using the fullname template
   name: ""
 
+# This is for setting up a service more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/
+service:
+  annotations: {}
+  ports:
+  - name: http
+    port: 8080
+    protocol: TCP
+    targetPort: http
+  # This sets the service type more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
+  type: ClusterIP
+
 startupProbe:
+  failureThreshold: 30
   httpGet:
     path: /c/portal/robots
     port: http
-  failureThreshold: 30
   initialDelaySeconds: 20
   periodSeconds: 5
 
@@ -246,19 +260,59 @@ startupProbe:
 # See: https://kubernetes.io/docs/concepts/scheduling-eviction/taint-and-toleration/
 tolerations: []
 
-# Set the number of dxp replicas (0 or more)
-# See: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
-replicaCount: 1
-
 updateStrategy:
   type: RollingUpdate
 
-# Additional volumes on the main dxp container
-volumes:
-- configMap:
-    name: liferay
-    optional: true
+# Additional volumeMounts on the main dxp container
+volumeMounts:
+- mountPath: /opt/liferay/data
+  name: liferay-pvc
+  subPath: liferay/data
+- mountPath: /opt/liferay/deploy
+  name: liferay-pvc
+  subPath: liferay/deploy
+- mountPath: /opt/liferay/liferay.pid
+  name: liferay-pvc
+  subPath: liferay/liferay.pid
+- mountPath: /opt/liferay/logs
+  name: liferay-pvc
+  subPath: liferay/logs
+- mountPath: /opt/liferay/osgi/configs
+  name: liferay-pvc
+  subPath: osgi/configs
+- mountPath: /opt/liferay/osgi/modules
+  name: liferay-pvc
+  subPath: osgi/modules
+- mountPath: /opt/liferay/osgi/configs/com.liferay.portal.k8s.agent.configuration.PortalK8sAgentConfiguration.config
   name: liferay-file-resources
+  readOnly: true
+  subPath: com.liferay.portal.k8s.agent.configuration.PortalK8sAgentConfiguration.config
+- mountPath: /opt/liferay/osgi/state
+  name: liferay-pvc
+  subPath: osgi/state
+- mountPath: /opt/liferay/portal-ext.properties
+  name: liferay-file-resources
+  readOnly: true
+  subPath: portal-ext.properties
+- mountPath: /opt/liferay/portal-custom.properties
+  name: liferay-file-resources
+  readOnly: true
+  subPath: portal-custom.properties
+- mountPath: /opt/liferay/tomcat/logs
+  name: liferay-pvc
+  subPath: tomcat/logs
+- mountPath: /opt/liferay/tomcat/temp
+  name: liferay-pvc
+  subPath: tomcat/temp
+- mountPath: /opt/liferay/tomcat/work
+  name: liferay-pvc
+  subPath: tomcat/work
+- mountPath: /opt/liferay/reports
+  name: liferay-pvc
+  subPath: liferay/reports
+- mountPath: /opt/liferay/routes
+  name: liferay-pvc
+  subPath: liferay/routes
 
 volumeClaimTemplates:
 - metadata:
@@ -270,101 +324,10 @@ volumeClaimTemplates:
       requests:
         storage: 1Gi
 
-# Additional volumeMounts on the main dxp container
-volumeMounts:
-# Mounts for liferay working directories allowing the
-# container's root file system to remain readonly.
-- mountPath: /opt/liferay/data
-  name: liferay-pvc
-  subPath: liferay/data
-- mountPath: /opt/liferay/deploy
-  name: liferay-pvc
-  subPath: liferay/deploy
-- mountPath: /opt/liferay/logs
-  name: liferay-pvc
-  subPath: liferay/logs
-- mountPath: /opt/liferay/tomcat/temp
-  name: liferay-pvc
-  subPath: tomcat/temp
-- mountPath: /opt/liferay/tomcat/logs
-  name: liferay-pvc
-  subPath: tomcat/logs
-- mountPath: /opt/liferay/tomcat/work
-  name: liferay-pvc
-  subPath: tomcat/work
-- mountPath: /opt/liferay/osgi/configs
-  name: liferay-pvc
-  subPath: osgi/configs
-- mountPath: /opt/liferay/osgi/modules
-  name: liferay-pvc
-  subPath: osgi/modules
-- mountPath: /opt/liferay/osgi/state
-  name: liferay-pvc
-  subPath: osgi/state
-- mountPath: /opt/liferay/reports
-  name: liferay-pvc
-  subPath: liferay/reports
-- mountPath: /opt/liferay/routes
-  name: liferay-pvc
-  subPath: liferay/routes
-- mountPath: /opt/liferay/liferay.pid
-  name: liferay-pvc
-  subPath: liferay/liferay.pid
-
-# Mounted configuration files
-- mountPath: /opt/liferay/osgi/configs/com.liferay.portal.k8s.agent.configuration.PortalK8sAgentConfiguration.config
+# Additional volumes on the main dxp container
+volumes:
+- configMap:
+    name: liferay
+    optional: true
   name: liferay-file-resources
-  readOnly: true
-  subPath: com.liferay.portal.k8s.agent.configuration.PortalK8sAgentConfiguration.config
-- mountPath: /opt/liferay/portal-ext.properties
-  name: liferay-file-resources
-  readOnly: true
-  subPath: portal-ext.properties
-- mountPath: /opt/liferay/portal-custom.properties
-  name: liferay-file-resources
-  readOnly: true
-  subPath: portal-custom.properties
 
-####
-#### Setup dependencies
-####
-
-dependencies:
-#
-# Database
-#
-- name: database
-
-  # The type of dependency. The options are:
-  # external - use an externally provided impl
-  # deployment - use the deployment template
-  # statefulset - use the statefulset template
-  source: external
-
-  portalProperties: ""
-  portalBundleDenyList: []
-  portalComponentDenyList: []
-
-- name: objectstorage
-
-  # The type of dependency. The options are:
-  # external - use an externally provided impl
-  # deployment - use the deployment template
-  # statefulset - use the statefulset template
-  source: external
-
-  portalProperties: ""
-  portalBundleDenyList: []
-  portalComponentDenyList: []
-
-- name: search
-
-  # The type of dependency. The options are:
-  # external - use an externally provided impl
-  # deployment - use the deployment template
-  # statefulset - use the statefulset template
-  source: external
-
-  portalProperties: ""
-  portalBundleDenyList: []
-  portalComponentDenyList: []

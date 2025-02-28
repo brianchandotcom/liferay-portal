@@ -43,7 +43,7 @@ public class FDSRendererImpl implements FDSRenderer {
 		HttpServletResponse httpServletResponse, boolean inline,
 		String propsTransformer, Writer writer) {
 
-		FDSSerializer fdsSerializer = _getFirstAvailableFDSSerializer(
+		FDSSerializer fdsSerializer = _getFDSSerializer(
 			fdsName, httpServletRequest);
 
 		Map<String, Object> props = new HashMap<>();
@@ -129,12 +129,11 @@ public class FDSRendererImpl implements FDSRenderer {
 			"frontend.data.set.serializer.type");
 	}
 
-	private FDSSerializer _getFirstAvailableFDSSerializer(
+	private FDSSerializer _getFDSSerializer(
 		String fdsName, HttpServletRequest httpServletRequest) {
 
-		for (String dataSetType : FDSSerializer.FDS_TYPES) {
-			FDSSerializer fdsSerializer = _serviceTrackerMap.getService(
-				dataSetType);
+		for (String type : FDSSerializer.FDS_TYPES) {
+			FDSSerializer fdsSerializer = _serviceTrackerMap.getService(type);
 
 			if ((fdsSerializer != null) &&
 				fdsSerializer.isAvailable(fdsName, httpServletRequest)) {

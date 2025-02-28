@@ -8,6 +8,29 @@ import ClayModal, {useModal} from '@clayui/modal';
 import {sub} from 'frontend-js-web';
 import React, {useState} from 'react';
 
+export function InstallFragmentModalBody() {
+	return (
+		<>
+			<ClayLoadingIndicator
+				className="mb-4 mt-2"
+				displayType="primary"
+				shape="squares"
+				size="md"
+			/>
+
+			<div className="ml-4 mr-4 text-center text-secondary">
+				{Liferay.Language.get(
+					'the-installation-process-is-ongoing-and-may-take-some-time'
+				)}
+
+				{Liferay.Language.get(
+					'closing-the-window-will-not-cancel-the-process'
+				)}
+			</div>
+		</>
+	);
+}
+
 export default function InstallFragmentModal({
 	name,
 	onCloseModal = () => {},
@@ -32,22 +55,7 @@ export default function InstallFragmentModal({
 				</ClayModal.Header>
 
 				<ClayModal.Body>
-					<ClayLoadingIndicator
-						className="mb-4 mt-2"
-						displayType="primary"
-						shape="squares"
-						size="md"
-					/>
-
-					<div className="ml-4 mr-4 text-center text-secondary">
-						{Liferay.Language.get(
-							'the-installation-process-is-ongoing-and-may-take-some-time'
-						)}
-
-						{Liferay.Language.get(
-							'closing-the-window-will-not-cancel-the-process'
-						)}
-					</div>
+					<InstallFragmentModalBody />
 				</ClayModal.Body>
 			</ClayModal>
 		)

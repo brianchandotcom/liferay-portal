@@ -128,6 +128,30 @@ export class MarketplaceRest {
 		);
 	}
 
+	static getBaseResourceURL() {
+		return `/group/guest/~/control_panel/manage?p_p_id=${Liferay.PortletKeys.INSTANCE_SETTINGS}`;
+	}
+
+	private static async getMarketplaceConfiguration() {
+		const configuration = await getBaseFetch<{
+			authorized: boolean;
+			data: MarketplaceConfiguration;
+		}>(
+			createResourceURL(this.getBaseResourceURL(), {
+				p_p_resource_id: '/marketplace_settings/get_configuration',
+			}).toString()
+		);
+
+		return configuration.data;
+	}
+
+	public static async getMarketplaceRestWithConfiguration() {
+		return new MarketplaceRest(
+			this.getBaseResourceURL(),
+			await this.getMarketplaceConfiguration()
+		);
+	}
+
 	public async fetchMarketplace<T>(url: string, options?: FetchOptions) {
 		const headers = {
 			'Authorization': '',
@@ -164,30 +188,6 @@ export class MarketplaceRest {
 				'Content-Type': 'application/json',
 			},
 		});
-	}
-
-	public static getBaseResourceURL() {
-		return `/group/guest/~/control_panel/manage?p_p_id=${Liferay.PortletKeys.INSTANCE_SETTINGS}`;
-	}
-
-	private static async getMarketplaceConfiguration() {
-		const configuration = await getBaseFetch<{
-			authorized: boolean;
-			data: MarketplaceConfiguration;
-		}>(
-			createResourceURL(this.getBaseResourceURL(), {
-				p_p_resource_id: '/marketplace_settings/get_configuration',
-			}).toString()
-		);
-
-		return configuration.data;
-	}
-
-	public static async getMarketplaceRestWithConfiguration() {
-		return new MarketplaceRest(
-			this.getBaseResourceURL(),
-			await this.getMarketplaceConfiguration()
-		);
 	}
 
 	public async getMarketplaceToken() {

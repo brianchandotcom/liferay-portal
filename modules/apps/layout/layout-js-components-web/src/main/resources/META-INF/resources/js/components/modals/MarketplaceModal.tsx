@@ -8,9 +8,10 @@ import {
 	Marketplace,
 	MarketplaceContextProvider,
 	MarketplaceRest,
-	MarketplaceViews,
 } from '@liferay/marketplace-js-components-web';
 import React, {ReactElement} from 'react';
+
+import MarketplaceViews from './MarketplaceViews';
 
 interface Props {
 	trigger?: ReactElement;

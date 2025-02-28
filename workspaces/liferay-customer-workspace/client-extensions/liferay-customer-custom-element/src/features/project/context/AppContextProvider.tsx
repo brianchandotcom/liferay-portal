@@ -9,6 +9,7 @@ import {Liferay} from '~/services/liferay';
 import {
 	getAccountByExternalReferenceCode,
 	getAccountSubscriptionGroups,
+	getAccountSubscriptions,
 	getKoroneikiAccounts,
 	getStructuredContentFolders,
 	getUserAccount,
@@ -19,6 +20,7 @@ import {isValidPage} from '~/utils/page.validation';
 import routerPath from '~/utils/routerPath';
 import {
 	IAccountBrief,
+	IAccountSubscription,
 	IAccountSubscriptionGroup,
 	IProject,
 	IUserAccount,
@@ -34,6 +36,7 @@ const AppContext = createContext<[IState, React.Dispatch<IAction>]>([
 		quickLinks: undefined,
 		structuredContents: undefined,
 		subscriptionGroups: undefined,
+		subscriptions: undefined,
 		userAccount: undefined,
 		userProjectAccess: undefined,
 	},
@@ -51,6 +54,7 @@ const AppContextProvider = ({children}: {children: React.ReactNode}) => {
 			quickLinks: undefined,
 			structuredContents: undefined,
 			subscriptionGroups: undefined,
+			subscriptions: undefined,
 			userAccount: undefined,
 			userProjectAccess: undefined,
 		}
@@ -196,6 +200,30 @@ const AppContextProvider = ({children}: {children: React.ReactNode}) => {
 			}
 		};
 
+		const getSubscriptions = async (accountKey: string) => {
+			const {data: dataSubscriptions} = await client.query<{
+				c: {
+					accountSubscriptions: {
+						items: IAccountSubscription[];
+					};
+				};
+			}>({
+				query: getAccountSubscriptions,
+				variables: {
+					filter: `accountKey eq '${accountKey}'`,
+				},
+			});
+
+			if (dataSubscriptions) {
+				const items = dataSubscriptions?.c?.accountSubscriptions?.items;
+
+				dispatch({
+					payload: items as unknown as IAccountSubscription[],
+					type: actionTypes.UPDATE_SUBSCRIPTIONS as keyof typeof actionTypes,
+				});
+			}
+		};
+
 		const getSubscriptionGroups = async (accountKey: string) => {
 			const {data: dataSubscriptionGroups} = await client.query<{
 				c: {
@@ -290,6 +318,9 @@ const AppContextProvider = ({children}: {children: React.ReactNode}) => {
 							getProject(
 								projectExternalReferenceCode,
 								accountBrief
+							);
+							getSubscriptions(
+								accountBrief.externalReferenceCode
 							);
 							getSubscriptionGroups(projectExternalReferenceCode);
 						}

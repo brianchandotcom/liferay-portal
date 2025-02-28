@@ -17,6 +17,10 @@ export interface IAccountRole {
 	raysourceName?: string;
 }
 
+export interface IAccountSubscription {
+	name?: string;
+}
+
 export interface IAccountSubscriptionGroup {
 	accountSubscriptionGroupId?: number;
 	activationStatus: string;

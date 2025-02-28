@@ -44,11 +44,11 @@ public class MFATimeBasedOTPCheckerDisplayContextTest {
 	@Before
 	public void setUp() throws PortalException {
 		_setUpCompany();
-		_setUpPortalUtil();
 		_setUpThemeDisplay();
 		_setUpUser();
 
 		_setUpHttpServletRequest();
+		_setUpPortalUtil();
 	}
 
 	@Test
@@ -59,14 +59,14 @@ public class MFATimeBasedOTPCheckerDisplayContextTest {
 		Map<String, Object> context = displayContext.getContext();
 
 		Assert.assertEquals(
-			_mfaTimeBasedOTPSharedSecret, context.get("secret"));
+			MFATimeBasedOTPUtil.MFA_TIMEBASED_OTP_COUNTER,
+			context.get("counter"));
 		Assert.assertEquals(
 			MFATimeBasedOTPUtil.MFA_TIMEBASED_OTP_DIGITS,
 			context.get("digits"));
-		Assert.assertEquals(
-			MFATimeBasedOTPUtil.MFA_TIMEBASED_OTP_COUNTER,
-			context.get("counter"));
 		Assert.assertEquals(_company.getName(), context.get("issuer"));
+		Assert.assertEquals(
+			_mfaTimeBasedOTPSharedSecret, context.get("secret"));
 		Assert.assertEquals(_user.getEmailAddress(), context.get("account"));
 		Assert.assertEquals("SHA1", context.get("algorithm"));
 		Assert.assertEquals("test-namespaceqrcode", context.get("containerId"));

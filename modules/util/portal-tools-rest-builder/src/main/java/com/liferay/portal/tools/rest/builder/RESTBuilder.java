@@ -1250,6 +1250,10 @@ public class RESTBuilder {
 	}
 
 	private void _deleteDir(Path dirPath) throws Exception {
+		if (Files.notExists(dirPath)) {
+			return;
+		}
+
 		Files.walkFileTree(
 			dirPath,
 			new SimpleFileVisitor<Path>() {

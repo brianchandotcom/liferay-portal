@@ -286,6 +286,7 @@ public class Dom4JUtil {
 	public static Document parse(String xml) throws DocumentException {
 		if (xml != null) {
 			xml = xml.trim();
+			xml = xml.replaceAll("&#27;", "");
 		}
 
 		try {

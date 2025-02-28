@@ -5,6 +5,8 @@
 
 import {FrameLocator, Locator, Page} from '@playwright/test';
 
+import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
+import {waitForAlert} from '../../utils/waitForAlert';
 import {UIElementsPage} from '../uielements/UIElementsPage';
 
 export class SitesPage {
@@ -15,7 +17,9 @@ export class SitesPage {
 	readonly addSiteIFrame: FrameLocator;
 	readonly customSiteTemplatesItem: Locator;
 	readonly defaultPagesAsPrivateCheck: Locator;
+	readonly deleteButton: Locator;
 	readonly nameBox: Locator;
+	readonly selectAllItemsCheckbox: Locator;
 	readonly uiElementsPage: UIElementsPage;
 
 	constructor(page: Page) {
@@ -35,9 +39,13 @@ export class SitesPage {
 			.getByLabel(
 				'Create default pages as private (available only to members). If unchecked, they will be public (available to anyone).'
 			);
+		this.deleteButton = page.getByRole('button', {name: 'Delete'});
 		this.nameBox = page
 			.frameLocator('iframe[title="Add Site"]')
 			.getByLabel('Name Required');
+		this.selectAllItemsCheckbox = page.getByLabel(
+			'Select All Items on the Page'
+		);
 		this.uiElementsPage = new UIElementsPage(page);
 	}
 
@@ -76,5 +84,31 @@ export class SitesPage {
 			.getAttribute('value');
 
 		return siteId as string;
+	}
+
+	async deleteAllSites() {
+		const sitesCount = await this.page
+			.getByRole('table')
+			.locator('tr[id*=_sites_]')
+			.count();
+
+		if (sitesCount === 2) {
+			return;
+		}
+
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.deleteButton,
+			trigger: this.selectAllItemsCheckbox,
+		});
+
+		await this.page
+			.getByRole('alert')
+			.getByRole('button', {
+				name: 'Delete',
+			})
+			.click();
+
+		await waitForAlert(this.page);
 	}
 }

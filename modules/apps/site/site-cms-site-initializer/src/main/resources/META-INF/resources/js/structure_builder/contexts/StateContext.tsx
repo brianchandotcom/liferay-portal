@@ -74,6 +74,7 @@ type UpdateFieldAction = {
 	label?: Liferay.Language.LocalizedValue<string>;
 	localized?: boolean;
 	name: string;
+	newName?: string;
 	required?: boolean;
 	type: 'update-field';
 };
@@ -150,23 +151,36 @@ function reducer(state: State, action: Action) {
 			};
 		}
 		case 'update-field': {
-			const {erc, label, localized, name, required} = action;
+			const {erc, label, localized, name, newName, required} = action;
 
 			const nextFields = new Map(state.fields);
 
 			const field = nextFields.get(name);
 
-			if (field) {
-				nextFields.set(name, {
-					...field,
-					erc: erc ?? field.erc,
-					label: label ?? field.label,
-					localized: localized ?? field.localized,
-					required: required ?? field.required,
-				});
+			if (!field) {
+				return state;
 			}
 
-			return {...state, fields: nextFields};
+			const nextField = {
+				...field,
+				erc: erc ?? field.erc,
+				label: label ?? field.label,
+				localized: localized ?? field.localized,
+				name: newName ?? field.name,
+				required: required ?? field.required,
+			};
+
+			if (newName) {
+				nextFields.delete(name);
+			}
+
+			nextFields.set(nextField.name, nextField);
+
+			return {
+				...state,
+				fields: nextFields,
+				selectedItem: {name: nextField.name, type: 'field'},
+			};
 		}
 		case 'update-structure': {
 			let nextErc = state.erc;

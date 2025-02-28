@@ -103,7 +103,13 @@ function GeneralTab({field}: {field: Field}) {
 				<TextInput
 					disabled={isPublished}
 					label={Liferay.Language.get('field-name')}
-					onValueChange={() => {}}
+					onValueChange={(value) => {
+						dispatch({
+							name: field.name,
+							newName: value,
+							type: 'update-field',
+						});
+					}}
 					required
 					value={field.name}
 				/>

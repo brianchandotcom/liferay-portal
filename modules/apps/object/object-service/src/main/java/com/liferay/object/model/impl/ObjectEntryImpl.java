@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -108,43 +109,43 @@ public class ObjectEntryImpl extends ObjectEntryBaseImpl {
 
 	@Override
 	public Map<Locale, String> getTitleMap() throws PortalException {
-		Map<Locale, String> titleMap = new HashMap<>();
-
 		ObjectDefinition objectDefinition =
 			ObjectDefinitionLocalServiceUtil.getObjectDefinition(
 				getObjectDefinitionId());
 
-		if ((objectDefinition != null) &&
-			(objectDefinition.getTitleObjectFieldId() > 0)) {
+		if ((objectDefinition == null) ||
+			(objectDefinition.getTitleObjectFieldId() == 0)) {
 
-			ObjectField objectField =
-				ObjectFieldLocalServiceUtil.fetchObjectField(
-					objectDefinition.getTitleObjectFieldId());
+			return Collections.emptyMap();
+		}
 
-			if (objectField == null) {
-				return titleMap;
-			}
+		ObjectField objectField = ObjectFieldLocalServiceUtil.fetchObjectField(
+			objectDefinition.getTitleObjectFieldId());
 
-			Map<String, Serializable> values = getValues();
+		if ((objectField == null) || !objectField.isLocalized()) {
+			return Collections.emptyMap();
+		}
 
-			Map<String, Serializable> localizedValues =
-				(Map<String, Serializable>)values.get(
-					objectField.getI18nObjectFieldName());
+		Map<String, Serializable> values = getValues();
 
-			if (MapUtil.isEmpty(localizedValues)) {
-				return titleMap;
-			}
+		Map<String, Serializable> localizedValues =
+			(Map<String, Serializable>)values.get(
+				objectField.getI18nObjectFieldName());
 
-			for (Map.Entry<String, Serializable> entry :
-					localizedValues.entrySet()) {
+		if (MapUtil.isEmpty(localizedValues)) {
+			return Collections.emptyMap();
+		}
 
-				titleMap.put(
-					LocaleUtil.fromLanguageId(entry.getKey()),
-					String.valueOf(
-						ObjectEntryValuesUtil.getValue(
-							entry.getKey(), objectField,
-							new HashMap<>(values))));
-			}
+		Map<Locale, String> titleMap = new HashMap<>();
+
+		for (Map.Entry<String, Serializable> entry :
+				localizedValues.entrySet()) {
+
+			titleMap.put(
+				LocaleUtil.fromLanguageId(entry.getKey()),
+				String.valueOf(
+					ObjectEntryValuesUtil.getValue(
+						entry.getKey(), objectField, new HashMap<>(values))));
 		}
 
 		return titleMap;

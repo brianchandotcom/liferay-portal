@@ -57,6 +57,9 @@ export default function CreationFolderModalContent({
 							<input type="hidden" value={assetLibraries[0].id} />
 						) : (
 							<FieldPicker
+								helpMessage={Liferay.Language.get(
+									'choose-the-space-for-the-new-folder'
+								)}
 								items={assetLibraries.map(({id, name}) => ({
 									label: name,
 									value: id,

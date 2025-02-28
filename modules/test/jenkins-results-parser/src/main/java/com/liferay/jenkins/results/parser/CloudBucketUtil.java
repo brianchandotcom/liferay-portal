@@ -18,7 +18,7 @@ import java.util.regex.Pattern;
 /**
  * @author Kenji Heigel
  */
-public class CloudStorageSyncUtil {
+public class CloudBucketUtil {
 
 	public static final String GCP_BUCKET_PATH_JENKINS_CI_DATA =
 		"gs://jenkins-ci-data";

@@ -5,7 +5,7 @@
 
 package com.liferay.jenkins.results.parser.scancode;
 
-import com.liferay.jenkins.results.parser.CloudStorageSyncUtil;
+import com.liferay.jenkins.results.parser.CloudBucketUtil;
 import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 
 import java.io.IOException;
@@ -112,8 +112,7 @@ public class MapDevelopToDeployScanCodePipeline extends BaseScanCodePipeline {
 			String credentialsFile = JenkinsResultsParserUtil.getBuildProperty(
 				"google.application.crendential.file[jenkins]");
 
-			return CloudStorageSyncUtil.getSignedURL(
-				15, credentialsFile, tomcatURL);
+			return CloudBucketUtil.getSignedURL(15, credentialsFile, tomcatURL);
 		}
 		catch (Exception exception) {
 			exception.printStackTrace();

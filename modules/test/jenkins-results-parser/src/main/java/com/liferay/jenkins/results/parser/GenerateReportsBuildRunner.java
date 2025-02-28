@@ -132,7 +132,7 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 			null, filePath);
 
 		try {
-			CloudStorageSyncUtil.syncGCPFiles(
+			CloudBucketUtil.syncGCPFiles(
 				_getGCPBucketBasePath() + "/reports",
 				_ARCHIVE_BASE_DIR_PATH + "/reports");
 		}
@@ -395,7 +395,7 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 				_getBuildProperty("ci.system.status.report.job.name"),
 				_getBuildProperty("ci.system.status.report.test.suite.name"));
 
-			CloudStorageSyncUtil.copyGCPFile(
+			CloudBucketUtil.copyGCPFile(
 				JenkinsResultsParserUtil.combine(
 					_getGCPBucketBasePath(), "/data/",
 					_getReportDirName(reportName), "/testray-data.js"),
@@ -407,7 +407,7 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 		File testrayDataJSFile = new File(testrayDataJSFilePath);
 
 		if (!testrayDataJSFile.exists()) {
-			CloudStorageSyncUtil.copyGCPFile(
+			CloudBucketUtil.copyGCPFile(
 				filePath + "/js/testray-data.js",
 				JenkinsResultsParserUtil.combine(
 					_getGCPBucketBasePath(), "/data/",
@@ -471,7 +471,7 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 		}
 
 		try {
-			CloudStorageSyncUtil.syncGCPFiles(
+			CloudBucketUtil.syncGCPFiles(
 				_ARCHIVE_BASE_DIR_PATH + "/reports",
 				_getGCPBucketBasePath() + "/reports");
 		}
@@ -603,10 +603,10 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 		String masterNetworkName = System.getenv("MASTER_NETWORK_NAME");
 
 		if (!masterNetworkName.equals("gcp-network")) {
-			return CloudStorageSyncUtil.GCP_BUCKET_PATH_JENKINS_CI_DATA;
+			return CloudBucketUtil.GCP_BUCKET_PATH_JENKINS_CI_DATA;
 		}
 
-		return CloudStorageSyncUtil.GCP_BUCKET_PATH_JENKINS_CI_DATA + "/aws";
+		return CloudBucketUtil.GCP_BUCKET_PATH_JENKINS_CI_DATA + "/aws";
 	}
 
 	private String _getReportDirName(String reportName) {

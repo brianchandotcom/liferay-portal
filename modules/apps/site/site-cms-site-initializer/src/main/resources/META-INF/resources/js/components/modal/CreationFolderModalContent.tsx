@@ -22,7 +22,7 @@ export default function CreationFolderModalContent({
 }) {
 	const [assetLibraries, setAssetsLibraries] = useState<
 		{id: string; name: string}[]
-	>(assetLibraryId ? [{id: assetLibraryId, name: ''}] : []);
+	>([]);
 	const [loading, setLoading] = useState(false);
 
 	useEffect(() => {
@@ -39,7 +39,10 @@ export default function CreationFolderModalContent({
 	const {errors, handleChange, handleSubmit, setFieldValue, values} =
 		useFormik({
 			initialValues: {
-				assetLibraryId,
+				assetLibraryId:
+					assetLibraryId || assetLibraries.length === 1
+						? assetLibraries[0].id
+						: '',
 				folderName: '',
 			},
 			onSubmit: (values) => {
@@ -77,9 +80,7 @@ export default function CreationFolderModalContent({
 							value={values.folderName}
 						/>
 
-						{assetLibraries.length === 1 ? (
-							<input type="hidden" value={assetLibraries[0].id} />
-						) : (
+						{assetLibraries.length > 1 && (
 							<FieldPicker
 								errorMessage={errors.assetLibraryId}
 								helpMessage={Liferay.Language.get(

@@ -8,7 +8,7 @@ import {TreeView as ClayTreeView} from '@clayui/core';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
-import React, {useMemo} from 'react';
+import React, {Key, useMemo} from 'react';
 
 import {
 	FIELD_TYPE_ICON,
@@ -49,8 +49,10 @@ export default function FieldsTree({fields}: {fields: Field[]}) {
 		];
 	}, [fields, structureLabel]);
 
-	const onItemClick = (item: TreeItem) => {
-		if (!item.id) {
+	const onSelect = (keys: Set<Key>) => {
+		const [id] = Array.from(keys);
+
+		if (!id) {
 			dispatch({
 				selection: [],
 				type: 'set-selection',
@@ -58,7 +60,7 @@ export default function FieldsTree({fields}: {fields: Field[]}) {
 		}
 		else {
 			dispatch({
-				selection: [item.id],
+				selection: [id as Field['name']],
 				type: 'set-selection',
 			});
 		}
@@ -76,11 +78,12 @@ export default function FieldsTree({fields}: {fields: Field[]}) {
 			defaultExpandedKeys={new Set([''])}
 			items={items}
 			nestedKey="children"
+			onSelectionChange={onSelect}
 			showExpanderOnHover={false}
 		>
 			{(item) => (
 				<ClayTreeView.Item>
-					<ClayTreeView.ItemStack onClick={() => onItemClick(item)}>
+					<ClayTreeView.ItemStack>
 						<ClayIcon symbol={item.icon} />
 
 						<span className="ml-1">{item.label}</span>
@@ -114,7 +117,6 @@ export default function FieldsTree({fields}: {fields: Field[]}) {
 										}
 									/>
 								}
-								onClick={() => onItemClick(item)}
 							>
 								<ClayIcon
 									className={classNames({

@@ -878,6 +878,44 @@ public class ObjectEntryServiceHttp {
 		}
 	}
 
+	public static void validateObjectEntry(
+			HttpPrincipal httpPrincipal, long groupId,
+			com.liferay.object.model.ObjectEntry objectEntry,
+			java.util.List<String> objectValidationRulesERC)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		try {
+			MethodKey methodKey = new MethodKey(
+				ObjectEntryServiceUtil.class, "validateObjectEntry",
+				_validateObjectEntryParameterTypes20);
+
+			MethodHandler methodHandler = new MethodHandler(
+				methodKey, groupId, objectEntry, objectValidationRulesERC);
+
+			try {
+				TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception exception) {
+				if (exception instanceof
+						com.liferay.portal.kernel.exception.PortalException) {
+
+					throw (com.liferay.portal.kernel.exception.PortalException)
+						exception;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(
+					exception);
+			}
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException
+					systemException) {
+
+			_log.error(systemException, systemException);
+
+			throw systemException;
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(
 		ObjectEntryServiceHttp.class);
 
@@ -952,6 +990,11 @@ public class ObjectEntryServiceHttp {
 		new Class[] {
 			long.class, java.util.Map.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
+		};
+	private static final Class<?>[] _validateObjectEntryParameterTypes20 =
+		new Class[] {
+			long.class, com.liferay.object.model.ObjectEntry.class,
+			java.util.List.class
 		};
 
 }

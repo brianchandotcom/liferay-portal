@@ -3685,6 +3685,14 @@ public class JenkinsResultsParserUtil {
 		return _ciNode;
 	}
 
+	public static boolean isDouble(String string) {
+		if ((string != null) && string.matches("\\d*\\.?\\d+")) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public static boolean isFileExcluded(
 		List<PathMatcher> excludesPathMatchers, File file) {
 

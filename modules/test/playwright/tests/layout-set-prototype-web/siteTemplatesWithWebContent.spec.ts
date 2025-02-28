@@ -119,8 +119,9 @@ testWithPrivatePages(
 
 		await applicationsMenuPage.goToSites();
 
-		const site1Id = await sitesPage.createSiteFromTemplate({
+		const site1Id = await sitesPage.createSite({
 			defaultPagesAsPrivate: true,
+			isCustom: true,
 			siteName: getRandomString(),
 			templateName: siteTemplateName,
 		});
@@ -128,8 +129,9 @@ testWithPrivatePages(
 		apiHelpers.data.push({id: site1Id, type: 'site'});
 
 		await applicationsMenuPage.goToSites();
-		const site2Id = await sitesPage.createSiteFromTemplate({
+		const site2Id = await sitesPage.createSite({
 			defaultPagesAsPrivate: true,
+			isCustom: true,
 			siteName: getRandomString(),
 			templateName: siteTemplateName,
 		});

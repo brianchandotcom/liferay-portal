@@ -77,7 +77,8 @@ test(
 
 		const siteName: string = 'Site-' + getRandomString();
 
-		const siteId = await sitesPage.createSiteFromTemplate({
+		const siteId = await sitesPage.createSite({
+			isCustom: true,
 			siteName,
 			templateName: siteTemplateName,
 		});

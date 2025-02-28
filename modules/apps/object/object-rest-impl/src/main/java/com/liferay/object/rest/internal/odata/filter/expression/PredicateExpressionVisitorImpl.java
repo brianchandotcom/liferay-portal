@@ -235,8 +235,7 @@ public class PredicateExpressionVisitorImpl
 				literalExpression.getText(),
 				DateFormatFactoryUtil.getSimpleDateFormat(
 					ObjectFieldUtil.getDateTimePattern(
-						literalExpression.getText()),
-					LocaleUtil.ROOT));
+						literalExpression.getText())));
 		}
 		else if (Objects.equals(
 					LiteralExpression.Type.DOUBLE,

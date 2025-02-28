@@ -4,10 +4,13 @@
  */
 
 import ClayChart from '@clayui/charts';
+import ClayIcon from '@clayui/icon';
+import ClayPanel from '@clayui/panel';
 import classNames from 'classnames';
-import {useEffect, useRef, useState} from 'react';
+import {useEffect, useMemo, useRef, useState} from 'react';
 import Loading from '~/components/Loading';
 import {useCaseResultsChart} from '~/hooks/useCaseResultsChart';
+import {safeJSONParse} from '~/util';
 
 import JiraLink from '../../../../components/JiraLink';
 import Container from '../../../../components/Layout/Container';
@@ -32,6 +35,11 @@ const BuildOverview: React.FC<BuildOverviewProps> = ({testrayBuild}) => {
 	});
 
 	const issues = useIssuesFound({buildId: testrayBuild.id});
+
+	const playwrightReports = useMemo(
+		() => safeJSONParse(testrayBuild.playwrightReports, []) as Object,
+		[testrayBuild.playwrightReports]
+	);
 
 	const ref = useRef<any>();
 
@@ -92,6 +100,49 @@ const BuildOverview: React.FC<BuildOverviewProps> = ({testrayBuild}) => {
 						},
 					]}
 				/>
+
+				<>
+					<ClayPanel
+						collapsable
+						defaultExpanded
+						displayTitle={
+							<div className="tr-small-heading">
+								{i18n.translate('playwright-reports')}
+							</div>
+						}
+						displayType="default"
+						showCollapseIcon
+					>
+						<ClayPanel.Body>
+							<div className="d-flex flex-wrap mb-1">
+								{Object.entries(playwrightReports)
+									.sort(([_url1, name1], [_url2, name2]) =>
+										name1.localeCompare(name2)
+									)
+									.map(([url, name], index) => (
+										<a
+											className="case-results-attachments-box mr-2 mt-2"
+											href={url}
+											key={index}
+											rel="noopener noreferrer"
+											target="_blank"
+										>
+											{name.substring(
+												0,
+												name.lastIndexOf('/')
+											)}
+
+											<ClayIcon
+												className="ml-1"
+												fontSize={12}
+												symbol="shortcut"
+											/>
+										</a>
+									))}
+							</div>
+						</ClayPanel.Body>
+					</ClayPanel>
+				</>
 
 				<div className="d-flex mt-4">
 					<dl>

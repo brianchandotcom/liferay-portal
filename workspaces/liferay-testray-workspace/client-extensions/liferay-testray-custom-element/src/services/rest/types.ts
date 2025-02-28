@@ -124,6 +124,7 @@ export type TestrayBuild = {
 	id: number;
 	importStatus: PickList;
 	name: string;
+	playwrightReports: string;
 	productVersion?: TestrayProductVersion;
 	project?: TestrayProject;
 	promoted: boolean;

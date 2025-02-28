@@ -175,18 +175,11 @@ test('can only import custom object entries when their definitions are already i
 
 	objectActionApiClient.deleteObjectDefinition(objectDefinition.id);
 
-	await companyExportImportPage.applicationsMenuPage.goToImport();
-	await companyExportImportPage.exportImportPage.newImportButton.click();
-
-	await companyExportImportPage.page
-		.locator('input[type="file"]')
-		.setInputFiles(exportFilePath);
-
-	expect(
-		companyExportImportPage.page.getByText(
-			'The Data Handler for the "Tests" portlet is missing from the system.'
-		)
-	).toBeVisible();
+	await companyExportImportPage.import(
+		exportFilePath,
+		false,
+		'The Data Handler for the "Tests" portlet is missing from the system.'
+	);
 
 	({body: objectDefinition} =
 		await objectActionApiClient.postObjectDefinition(

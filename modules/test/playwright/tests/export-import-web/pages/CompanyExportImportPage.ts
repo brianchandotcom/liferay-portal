@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Locator, Page} from '@playwright/test';
+import {Locator, Page, expect} from '@playwright/test';
 import path from 'path';
 
 import {ApplicationsMenuPage} from '../../../pages/product-navigation-applications-menu/ApplicationsMenuPage';
@@ -116,13 +116,22 @@ export class CompanyExportImportPage {
 
 	async import(
 		filePath: string,
-		includePermissions: boolean = false
+		includePermissions: boolean = false,
+		expectedErrorMessage?: string
 	): Promise<void> {
 		await this.applicationsMenuPage.goToImport();
 
 		await this.exportImportPage.newImportButton.click();
 
 		await this.page.locator('input[type="file"]').setInputFiles(filePath);
+
+		if (expectedErrorMessage !== null) {
+			await expect(
+				this.page.getByText(expectedErrorMessage)
+			).toBeVisible();
+
+			return;
+		}
 
 		await this.exportImportPage.continueButton.click();
 

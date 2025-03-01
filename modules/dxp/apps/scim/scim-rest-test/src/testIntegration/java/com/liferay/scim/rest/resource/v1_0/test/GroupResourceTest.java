@@ -269,6 +269,8 @@ public class GroupResourceTest extends BaseGroupResourceTestCase {
 
 		Assert.assertEquals(2, ArrayUtil.getLength(patchGroup.getMembers()));
 
+		User user3 = _addUser();
+
 		patchOp.setOperations(
 			new Operation[] {
 				new Operation() {
@@ -281,12 +283,23 @@ public class GroupResourceTest extends BaseGroupResourceTestCase {
 								JSONUtil.put("value", user1.getId())
 							));
 					}
+				},
+				new Operation() {
+					{
+						setOp("Add");
+						setPath("members");
+						setValue(
+							JSONFactoryUtil.createJSONArray(
+							).put(
+								JSONUtil.put("value", user3.getId())
+							));
+					}
 				}
 			});
 
 		patchGroup = _patchGroup(patchOp, userGroup.getUserGroupId());
 
-		Assert.assertEquals(1, ArrayUtil.getLength(patchGroup.getMembers()));
+		Assert.assertEquals(2, ArrayUtil.getLength(patchGroup.getMembers()));
 
 		patchOp.setOperations(
 			new Operation[] {
@@ -295,6 +308,12 @@ public class GroupResourceTest extends BaseGroupResourceTestCase {
 						setOp("Remove");
 						setPath("members");
 						setValue(JSONUtil.put("value", user2.getId()));
+					}
+				},
+				new Operation() {
+					{
+						setOp("Remove");
+						setPath("members[value eq \"" + user3.getId() + "\"]");
 					}
 				}
 			});

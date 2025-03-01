@@ -1144,7 +1144,7 @@ public class FreeMarkerTool {
 		if (StringUtil.equals(javaMethodParameter.getParameterName(), "id") ||
 			StringUtil.equals(
 				javaMethodParameter.getParameterName(),
-				StringUtil.lowerCaseFirstLetter(schemaName) + "Id")) {
+				TextFormatter.format(schemaName, TextFormatter.I) + "Id")) {
 
 			return true;
 		}

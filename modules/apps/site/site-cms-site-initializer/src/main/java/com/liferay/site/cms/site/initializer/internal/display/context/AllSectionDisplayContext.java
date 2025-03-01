@@ -5,13 +5,22 @@
 
 package com.liferay.site.cms.site.initializer.internal.display.context;
 
+import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.site.cms.site.initializer.internal.configuration.CMSSiteInitializerConfiguration;
 
+import java.util.List;
 import java.util.Map;
+
+import javax.portlet.ActionRequest;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -80,6 +89,56 @@ public class AllSectionDisplayContext extends BaseSectionDisplayContext {
 		).put(
 			"title", LanguageUtil.get(httpServletRequest, "no-assets-yet")
 		).build();
+	}
+
+	@Override
+	public List<FDSActionDropdownItem> getFDSActionDropdownItems()
+		throws Exception {
+
+		return ListUtil.fromArray(
+			new FDSActionDropdownItem(
+				_getPermissionsURL(), "password-policies", "permissions",
+				LanguageUtil.get(httpServletRequest, "permissions"), "get",
+				"permissions", "modal-permissions"),
+			new FDSActionDropdownItem(
+				LanguageUtil.get(
+					httpServletRequest,
+					"are-you-sure-you-want-to-delete-this-entry"),
+				null, "trash", "delete",
+				LanguageUtil.get(httpServletRequest, "delete"), "delete",
+				"delete", "headless"));
+	}
+
+	@Override
+	public String[] getObjectDefinitionFolderExternalReferenceCodes() {
+		return ArrayUtil.append(
+			cmsSiteInitializerConfiguration.
+				contentsObjectDefinitionFolderExternalReferenceCodes(),
+			cmsSiteInitializerConfiguration.
+				filesObjectDefinitionFolderExternalReferenceCodes());
+	}
+
+	private String _getPermissionsURL() throws Exception {
+		return PortletURLBuilder.create(
+			PortalUtil.getControlPanelPortletURL(
+				httpServletRequest,
+				"com_liferay_portlet_configuration_web_portlet_" +
+				"PortletConfigurationPortlet",
+				ActionRequest.RENDER_PHASE)
+		).setMVCPath(
+			"/edit_permissions.jsp"
+		).setRedirect(
+			""
+		).setParameter(
+			"modelResource", "{entryClassName}"
+		)/*.setParameter(
+			"modelResourceDescription","MIssing the definitionLabel"
+			//objectDefinition.getLabel(_cmsRequestHelper.getLocale())
+		)*/.setParameter(
+			"resourcePrimKey", "{embedded.id}"
+		).setWindowState(
+			LiferayWindowState.POP_UP
+		).buildString();
 	}
 
 }

@@ -284,6 +284,14 @@ public class ScimUtil {
 
 				Object value = operation.getValue();
 
+				if (value == null) {
+					operationJSONObject.put(
+						SCIMConstants.OperationalConstants.PATH,
+						operation.getPath());
+
+					continue;
+				}
+
 				if (value instanceof ArrayList) {
 					JSONArray valueJSONArray = JSONFactoryUtil.createJSONArray(
 						(ArrayList)value);
@@ -291,31 +299,20 @@ public class ScimUtil {
 					JSONObject valueJSONObject = valueJSONArray.getJSONObject(
 						0);
 
-					operationJSONObject.put(
-						SCIMConstants.OperationalConstants.PATH,
-						StringBundler.concat(
-							operation.getPath(), StringPool.OPEN_BRACKET,
-							SCIMConstants.OperationalConstants.VALUE, " eq \"",
-							valueJSONObject.get(
-								SCIMConstants.OperationalConstants.VALUE),
-							StringPool.QUOTE, StringPool.CLOSE_BRACKET));
+					value = valueJSONObject.get(
+						SCIMConstants.OperationalConstants.VALUE);
 				}
 				else if (value instanceof Map) {
-					operationJSONObject.put(
-						SCIMConstants.OperationalConstants.PATH,
-						StringBundler.concat(
-							operation.getPath(), StringPool.OPEN_BRACKET,
-							SCIMConstants.OperationalConstants.VALUE, " eq \"",
-							MapUtil.getString(
-								(Map)value,
-								SCIMConstants.OperationalConstants.VALUE),
-							StringPool.QUOTE, StringPool.CLOSE_BRACKET));
+					value = MapUtil.getString(
+						(Map)value, SCIMConstants.OperationalConstants.VALUE);
 				}
-				else {
-					operationJSONObject.put(
-						SCIMConstants.OperationalConstants.PATH,
-						operation.getPath());
-				}
+
+				operationJSONObject.put(
+					SCIMConstants.OperationalConstants.PATH,
+					StringBundler.concat(
+						operation.getPath(), StringPool.OPEN_BRACKET,
+						SCIMConstants.OperationalConstants.VALUE, " eq \"",
+						value, StringPool.QUOTE, StringPool.CLOSE_BRACKET));
 			}
 			else {
 				operationJSONObject.put(

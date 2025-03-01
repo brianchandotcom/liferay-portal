@@ -119,11 +119,14 @@ public class AllSectionDisplayContext extends BaseSectionDisplayContext {
 	}
 
 	private String _getPermissionsURL() throws Exception {
+
+		// TODO "modelResourceDescription"
+
 		return PortletURLBuilder.create(
 			PortalUtil.getControlPanelPortletURL(
 				httpServletRequest,
 				"com_liferay_portlet_configuration_web_portlet_" +
-				"PortletConfigurationPortlet",
+					"PortletConfigurationPortlet",
 				ActionRequest.RENDER_PHASE)
 		).setMVCPath(
 			"/edit_permissions.jsp"
@@ -131,10 +134,7 @@ public class AllSectionDisplayContext extends BaseSectionDisplayContext {
 			""
 		).setParameter(
 			"modelResource", "{entryClassName}"
-		)/*.setParameter(
-			"modelResourceDescription","MIssing the definitionLabel"
-			//objectDefinition.getLabel(_cmsRequestHelper.getLocale())
-		)*/.setParameter(
+		).setParameter(
 			"resourcePrimKey", "{embedded.id}"
 		).setWindowState(
 			LiferayWindowState.POP_UP

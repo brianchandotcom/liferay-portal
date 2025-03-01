@@ -7,15 +7,19 @@ import {useFormState} from 'data-engine-js-components-web';
 import React, {useMemo} from 'react';
 
 import FieldBase from '../FieldBase/ReactFieldBase.es';
-import {normalizeOptions, normalizeValue} from '../util/options';
+import SelectLocalizedObjectField, {
+	SelectLocalizedObjectFieldProps,
+} from '../localizedObjectFields/SelectLocalizedObjectField';
+import {normalizeValue} from '../util/options';
 import MultipleSelection, {MultipleSelectionProps} from './MultipleSelect';
 import SingleSelectBase from './SingleSelectBase';
+import {useNormalizedOptionsMemo} from './hooks';
 import {SelectMainProps} from './select.d';
 import {toArray} from './selectOperations';
 
 import type {Locale} from '../types';
 
-const Main = ({
+const Select = ({
 	defaultLanguageId,
 	fixedOptions = [],
 	label,
@@ -40,20 +44,14 @@ const Main = ({
 	const valueArray = toArray(value as string | string[]);
 	const {viewMode} = useFormState();
 
-	const normalizedOptions = useMemo(
-		() =>
-			normalizeOptions({
-				editingLanguageId,
-				fixedOptions,
-				multiple,
-				options,
-				showEmptyOption,
-				valueArray,
-			}),
-
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[fixedOptions, multiple, options, showEmptyOption, valueArray]
-	);
+	const normalizedOptions = useNormalizedOptionsMemo({
+		editingLanguageId,
+		fixedOptions,
+		multiple,
+		options,
+		showEmptyOption,
+		valueArray,
+	});
 
 	const multipleSelectValues = useMemo(
 		() =>
@@ -132,8 +130,28 @@ const Main = ({
 					label={label}
 					multiple={multiple}
 					name={name}
-					onChange={onChange}
-					onSelectionChange={onSelectionChange}
+					onSelectionChange={(itemKey: React.Key) => {
+						let newItemKey: React.Key | null = itemKey;
+
+						if ((itemKey as string)?.includes('$.')) {
+							newItemKey = '.';
+						}
+
+						const field = normalizedOptions.find(
+							({value}) => value === newItemKey
+						);
+
+						if (field && field.value === 'chooseAnOption') {
+							onChange({}, []);
+						}
+						else {
+							onChange({}, [field ? field.value : itemKey]);
+						}
+
+						if (onSelectionChange) {
+							onSelectionChange(itemKey);
+						}
+					}}
 					options={normalizedOptions}
 					placeholder={placeholder}
 					predefinedValue={newPredefinedValue}
@@ -157,6 +175,19 @@ const Main = ({
 				}
 			/>
 		</FieldBase>
+	);
+};
+
+const Main = (props: SelectMainProps | SelectLocalizedObjectFieldProps) => {
+	const isLocalizedObjectField: boolean =
+		Liferay.FeatureFlags['LPD-32050'] && !!props.localizedObjectField;
+
+	return !isLocalizedObjectField ? (
+		<Select {...(props as SelectMainProps)} />
+	) : (
+		<SelectLocalizedObjectField
+			{...(props as SelectLocalizedObjectFieldProps)}
+		/>
 	);
 };
 

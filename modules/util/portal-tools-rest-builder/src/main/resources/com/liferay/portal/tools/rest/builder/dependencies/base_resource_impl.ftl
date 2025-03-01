@@ -145,9 +145,9 @@ public abstract class Base${schemaName}ResourceImpl
 			parentSchemaName = javaMethodSignature.parentSchemaName!
 		/>
 
-		<#if freeMarkerTool.isDeleteByIdMethod(javaMethodSignature, schemaName)>
+		<#if stringUtil.equals(javaMethodSignature.methodName, "delete" + schemaName) && (properties?keys?seq_contains("id") || properties?keys?seq_contains(schemaVarName + "Id"))>
 			<#assign deleteByIdJavaMethodSignature = javaMethodSignature />
-		<#elseif freeMarkerTool.isDeleteByERCMethod(javaMethodSignature, schemaName)>
+		<#elseif (stringUtil.equals(javaMethodSignature.methodName, "deleteByExternalReferenceCode") || stringUtil.equals(javaMethodSignature.methodName, "delete" + schemaName + "ByExternalReferenceCode")) && properties?keys?seq_contains("externalReferenceCode")>
 			<#assign deleteByERCJavaMethodSignature = javaMethodSignature />
 		<#elseif stringUtil.equals(javaMethodSignature.methodName, "get" + schemaName)>
 			<#assign getByIdJavaMethodSignature = javaMethodSignature />
@@ -1011,6 +1011,7 @@ public abstract class Base${schemaName}ResourceImpl
 							return ${schemaVarName};
 						}
 					</#if>
+
 					throw new UnsupportedOperationException("Unable to delete ${schemaVarName}. No valid identifier provided.");
 				};
 

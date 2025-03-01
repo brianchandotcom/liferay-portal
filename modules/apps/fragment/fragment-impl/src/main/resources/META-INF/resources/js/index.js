@@ -5,6 +5,5 @@
 
 export {LocalizationSelect} from './LocalizationSelect';
 export {getOrCreateTranslationInput} from './getOrCreateTranslationInput';
-export {registerLocalizedFileInput} from './registerLocalizedFileInput';
 export {registerLocalizedInput} from './registerLocalizedInput';
 export {registerUnlocalizedInput} from './registerUnlocalizedInput';

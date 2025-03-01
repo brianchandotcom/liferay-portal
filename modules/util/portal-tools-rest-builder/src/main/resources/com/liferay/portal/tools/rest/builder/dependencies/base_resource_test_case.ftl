@@ -219,7 +219,14 @@ public abstract class Base${schemaName}ResourceTestCase {
 		GroupTestUtil.deleteGroup(testGroup);
 	}
 
-	<#assign properties = freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, schema, allSchemas) />
+	<#assign
+		properties = freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, schema, allSchemas)
+		getIdMethodName = "getId"
+	/>
+
+	<#if !properties?keys?seq_contains("id")>
+		<#assign getIdMethodName = "get${schemaName}Id" />
+    </#if>
 
 	<#if javaDataTypeMap?keys?seq_contains(schemaName)>
 		@Test
@@ -302,14 +309,35 @@ public abstract class Base${schemaName}ResourceTestCase {
 			parameters = freeMarkerTool.getResourceTestCaseParameters(configYAML, javaMethodSignature.javaMethodParameters, javaMethodSignature.operation, allSchemas, false)
 		/>
 
-		<#if freeMarkerTool.isDeleteByIdMethod(javaMethodSignature, schemaName)>
-			<#assign deleteByIdJavaMethodSignature = javaMethodSignature />
-		<#elseif freeMarkerTool.isDeleteByERCMethod(javaMethodSignature, schemaName)>
-			<#assign deleteByERCJavaMethodSignature = javaMethodSignature />
-		</#if>
-
 		<#if stringUtil.endsWith(javaMethodSignature.methodName, schemaName + "Batch") || stringUtil.endsWith(javaMethodSignature.methodName, schemaNames + "PageExportBatch")>
-			<#continue>
+			<#if generateBatch && stringUtil.equals(javaMethodSignature.methodName, "delete" + schemaName + "Batch") && freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "get" + schemaName)>
+				<#assign getJavaMethodSignature = freeMarkerTool.getJavaMethodSignature(javaMethodSignatures, "get" + schemaName) />
+				@Test
+				public void test${javaMethodSignature.methodName?cap_first}() throws Exception {
+					<#if freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "delete" + schemaName) && (properties?keys?seq_contains("id") || properties?keys?seq_contains(schemaVarName + "Id"))>
+						${schemaName} ${schemaVarName}_toDeleteById = test${javaMethodSignature.methodName?cap_first}_add${schemaName}();
+						assertHttpResponseStatusCode(204, ${schemaVarName}Resource.${javaMethodSignature.methodName}HttpResponse(null,Collections.singletonList(Collections.singletonMap("id", ${schemaVarName}_toDeleteById.${getIdMethodName}()))));
+						assertHttpResponseStatusCode(404,${schemaVarName}Resource.${getJavaMethodSignature.methodName}HttpResponse(${schemaVarName}_toDeleteById.${getIdMethodName}()));
+					</#if>
+
+					<#if (freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "deleteByExternalReferenceCode") || freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "delete" + schemaName + "ByExternalReferenceCode")) && properties?keys?seq_contains("externalReferenceCode")>
+						${schemaName} ${schemaVarName}_toDeleteByERC = test${javaMethodSignature.methodName?cap_first}_add${schemaName}();
+							assertHttpResponseStatusCode(204, ${schemaVarName}Resource.${javaMethodSignature.methodName}HttpResponse(null,Collections.singletonList(Collections.singletonMap("id", ${schemaVarName}_toDeleteByERC.getExternalReferenceCode()))));
+							assertHttpResponseStatusCode(404,${schemaVarName}Resource.${getJavaMethodSignature.methodName}HttpResponse(${schemaVarName}_toDeleteById.${getIdMethodName}()));
+					</#if>
+				}
+
+				protected ${schemaName} test${javaMethodSignature.methodName?cap_first}_add${schemaName}() throws Exception {
+					<#if properties?keys?seq_contains("id") && freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "delete" + schemaName)>
+						return testDelete${schemaName}_add${schemaName}();
+					<#else>
+						throw new UnsupportedOperationException("This method needs to be implemented");
+					</#if>
+				}
+				<#continue>
+			<#else>
+				<#continue>
+			</#if>
 		</#if>
 
 		<#if freeMarkerTool.hasHTTPMethod(javaMethodSignature, "delete")>
@@ -2740,77 +2768,6 @@ public abstract class Base${schemaName}ResourceTestCase {
 			}
 		</#if>
 	</#list>
-
-	<#if generateBatch>
-		<#if freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "delete" + schemaName + "Batch") && freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "get" + schemaName)>
-			<#assign
-				deleteBatchJavaMethodSignature = freeMarkerTool.getJavaMethodSignature(javaMethodSignatures, "delete" + schemaName + "Batch")
-				getJavaMethodSignature = freeMarkerTool.getJavaMethodSignature(javaMethodSignatures, "get" + schemaName)
-			/>
-			@Test
-			public void test${deleteBatchJavaMethodSignature.methodName?cap_first}() throws Exception {
-				<#if deleteByIdJavaMethodSignature??>
-					${schemaName} ${schemaVarName}_toDeleteById = test${deleteBatchJavaMethodSignature.methodName?cap_first}_add${schemaName}();
-
-					<#if properties?keys?seq_contains("id")>
-						assertHttpResponseStatusCode(204, ${schemaVarName}Resource.${deleteBatchJavaMethodSignature.methodName}HttpResponse(null,Collections.singletonList(Collections.singletonMap("id", ${schemaVarName}_toDeleteById.getId()))));
-
-						assertHttpResponseStatusCode(404,${schemaVarName}Resource.${getJavaMethodSignature.methodName}HttpResponse(${schemaVarName}_toDeleteById.getId()));
-					<#else>
-						assertHttpResponseStatusCode(204, ${schemaVarName}Resource.${deleteBatchJavaMethodSignature.methodName}HttpResponse(null,Collections.singletonList(Collections.singletonMap("id", ${schemaVarName}_toDeleteById.get${schemaName}Id()))));
-
-						assertHttpResponseStatusCode(404,${schemaVarName}Resource.${getJavaMethodSignature.methodName}HttpResponse(${schemaVarName}_toDeleteById.get${schemaName}Id()));
-					</#if>
-				</#if>
-
-				<#if deleteByERCJavaMethodSignature??>
-					${schemaName} ${schemaVarName}_toDeleteByERC = test${deleteBatchJavaMethodSignature.methodName?cap_first}_add${schemaName}();
-
-					<#if properties?keys?seq_contains("id")>
-						assertHttpResponseStatusCode(204, ${schemaVarName}Resource.${deleteBatchJavaMethodSignature.methodName}HttpResponse(null,Collections.singletonList(Collections.singletonMap("id", ${schemaVarName}_toDeleteByERC.getExternalReferenceCode()))));
-
-						assertHttpResponseStatusCode(404,${schemaVarName}Resource.${getJavaMethodSignature.methodName}HttpResponse(${schemaVarName}_toDeleteById.getId()));
-					<#else>
-						assertHttpResponseStatusCode(204, ${schemaVarName}Resource.${deleteBatchJavaMethodSignature.methodName}HttpResponse(null,Collections.singletonList(Collections.singletonMap("id", ${schemaVarName}_toDeleteByERC.getExternalReferenceCode()))));
-
-						assertHttpResponseStatusCode(404,${schemaVarName}Resource.${getJavaMethodSignature.methodName}HttpResponse(${schemaVarName}_toDeleteById.get${schemaName}Id()));
-					</#if>
-				</#if>
-			}
-
-			<#if properties?keys?seq_contains("id")>
-				protected ${schemaName} test${deleteBatchJavaMethodSignature.methodName?cap_first}_add${schemaName}() throws Exception {
-					<#if deleteBatchJavaMethodSignature.methodName?contains("AssetLibrary") && freeMarkerTool.hasPostSchemaJavaMethodSignature(javaMethodSignatures, "assetLibraryId", schemaName)>
-						<#assign postSchemaJavaMethodSignature = freeMarkerTool.getPostSchemaJavaMethodSignature(javaMethodSignatures, "assetLibraryId", schemaName) />
-
-						return ${schemaVarName}Resource.${postSchemaJavaMethodSignature.methodName}(testDepotEntry.getDepotEntryId(), random${schemaName}()
-
-						<#if freeMarkerTool.hasRequestBodyMediaType(postSchemaJavaMethodSignature, "multipart/form-data")>
-							<#assign generateGetMultipartFilesMethod = true />
-
-							, getMultipartFiles()
-						</#if>
-
-						);
-					<#elseif freeMarkerTool.hasPostSchemaJavaMethodSignature(javaMethodSignatures, "siteId", schemaName)>
-						<#assign postSchemaJavaMethodSignature = freeMarkerTool.getPostSchemaJavaMethodSignature(javaMethodSignatures, "siteId", schemaName) />
-
-						return ${schemaVarName}Resource.${postSchemaJavaMethodSignature.methodName}(testGroup.getGroupId(), random${schemaName}()
-
-						<#if freeMarkerTool.hasRequestBodyMediaType(postSchemaJavaMethodSignature, "multipart/form-data")>
-							<#assign generateGetMultipartFilesMethod = true />
-
-							, getMultipartFiles()
-						</#if>
-
-						);
-					<#else>
-						throw new UnsupportedOperationException("This method needs to be implemented");
-					</#if>
-				}
-			</#if>
-		</#if>
-	</#if>
 
 	<#if generateSearchTestRule>
 		@Rule

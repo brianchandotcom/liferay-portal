@@ -21,7 +21,7 @@ export class JSONWebServicesUserApiHelper {
 		urlSearchParams.append('groupId', groupId);
 		urlSearchParams.append('userIds', JSON.stringify(userIds));
 
-		this.apiHelpers.post(
+		return this.apiHelpers.post(
 			`${liferayConfig.environment.baseUrl}${this.basePath}/add-group-users`,
 			{
 				data: urlSearchParams.toString(),

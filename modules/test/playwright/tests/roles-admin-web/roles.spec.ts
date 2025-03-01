@@ -11,6 +11,7 @@ import {loginTest} from '../../fixtures/loginTest';
 import {rolesPagesTest} from '../../fixtures/rolesPagesTest';
 import {usersAndOrganizationsPagesTest} from '../../fixtures/usersAndOrganizationsPagesTest';
 import {TRole} from '../../helpers/HeadlessAdminUserApiHelper';
+import {RolesPage} from '../../pages/roles-admin-web/RolesPage';
 import getRandomString from '../../utils/getRandomString';
 import {setItemsPerPage} from '../../utils/pagination';
 import {
@@ -28,10 +29,29 @@ export const test = mergeTests(
 	usersAndOrganizationsPagesTest
 );
 
+test.beforeAll(async ({browser}) => {
+	const page = await browser.newPage();
+	const rolesPage = new RolesPage(page);
+
+	await performLoginViaApi(page, 'test');
+
+	await rolesPage.goto();
+
+	await expect(async () => {
+		await rolesPage.rolesTable.changeView('Table');
+
+		await expect(rolesPage.rolesTable.cell('Title')).toBeVisible({
+			timeout: 300,
+		});
+	}).toPass();
+
+	await page.close();
+});
+
 test(
 	'Can add roles with same title but different key',
 	{tag: ['@LPD-50065']},
-	async ({apiHelpers, page, rolePage, rolesPage}) => {
+	async ({apiHelpers, rolePage, rolesPage}) => {
 		const key1 = getRandomString();
 		const key2 = getRandomString();
 		const title = getRandomString();
@@ -48,8 +68,6 @@ test(
 		await rolePage.addRole(apiHelpers, {name: key2, title});
 		await rolePage.backButton.click();
 
-		await rolesPage.rolesTable.changeView('Table');
-		await page.waitForLoadState('networkidle');
 		await rolesPage.rolesTable.search(key1);
 
 		await expect(rolesPage.rolesTable.cell(title)).toHaveCount(1);
@@ -109,8 +127,6 @@ test(
 
 		await rolesPage.goto();
 
-		await rolesPage.rolesTable.changeView('Table');
-		await page.waitForLoadState('networkidle');
 		await rolesPage.rolesTable.search(role.name);
 
 		await expect(rolesPage.rolesTable.cell(role.name)).toBeVisible();
@@ -193,7 +209,7 @@ test(
 test(
 	'Can search a role',
 	{tag: ['@LPD-50065']},
-	async ({apiHelpers, page, rolesPage}) => {
+	async ({apiHelpers, rolesPage}) => {
 		const role1 = await apiHelpers.headlessAdminUser.postRole({
 			name: `A${getRandomString()}`,
 			name_i18n: {'en-US': `A${getRandomString()}`},
@@ -207,12 +223,6 @@ test(
 		});
 
 		await rolesPage.goto();
-
-		await rolesPage.rolesTable.changeView('Table');
-
-		await expect(rolesPage.rolesTable.cell('Title')).toBeVisible();
-
-		await page.reload();
 
 		await expect(async () => {
 			await rolesPage.rolesTable.search(getRandomString());
@@ -290,12 +300,6 @@ test(
 
 		await expect(rolesPage.rolesTable.searchInput).toBeEditable();
 
-		await rolesPage.rolesTable.changeView('Table');
-
-		await expect(rolesPage.rolesTable.cell('Title')).toBeVisible();
-
-		await page.reload();
-
 		await expect(async () => {
 			await setItemsPerPage(page, 4);
 
@@ -325,11 +329,10 @@ test(
 test(
 	'Roles can be viewed in table view',
 	{tag: ['@LPD-50065']},
-	async ({page, rolesPage}) => {
+	async ({rolesPage}) => {
 		await rolesPage.goto();
 
 		await rolesPage.rolesTable.changeView('Table');
-		await page.waitForLoadState('networkidle');
 
 		await expect(rolesPage.rolesTable.cell('Title')).toBeVisible();
 		await expect(rolesPage.rolesTable.cell('Description')).toBeVisible();
@@ -352,8 +355,6 @@ test(
 
 		await rolesPage.goto();
 
-		await rolesPage.rolesTable.changeView('Table');
-		await page.waitForLoadState('networkidle');
 		await rolesPage.rolesTable.search(role.name);
 
 		await expect(rolesPage.rolesTable.cell(role.name)).toBeVisible();
@@ -388,9 +389,6 @@ test(
 		});
 
 		await rolesPage.goto();
-
-		await rolesPage.rolesTable.changeView('Table');
-		await page.waitForLoadState('networkidle');
 
 		await expect(rolesPage.rolesTable.cell(role.name)).toHaveCount(0);
 
@@ -429,9 +427,6 @@ test(
 
 		await rolesPage.goto();
 
-		await rolesPage.rolesTable.changeView('Table');
-		await page.waitForLoadState('networkidle');
-
 		await expect(rolesPage.rolesTable.cell(role.name)).toHaveCount(0);
 
 		await rolesPage.siteRolesLink.click();
@@ -459,7 +454,7 @@ test(
 test(
 	'User can be assigned to a regular role',
 	{tag: ['@LPD-50065', '@LPS-109572']},
-	async ({apiHelpers, page, roleAssigneesPage, rolePage, rolesPage}) => {
+	async ({apiHelpers, roleAssigneesPage, rolePage, rolesPage}) => {
 		const role = await apiHelpers.headlessAdminUser.postRole({
 			name: getRandomString(),
 			roleType: 'regular',
@@ -474,8 +469,6 @@ test(
 
 		await rolesPage.goto();
 
-		await rolesPage.rolesTable.changeView('Table');
-		await page.waitForLoadState('networkidle');
 		await rolesPage.rolesTable.search(role.name);
 		await (await rolesPage.rolesTable.cellLink(role.name)).click();
 		await rolePage.assigneesLink.click();
@@ -533,8 +526,6 @@ test(
 
 		await rolesPage.goto();
 
-		await rolesPage.rolesTable.changeView('Table');
-		await page.waitForLoadState('networkidle');
 		await rolesPage.rolesTable.search(role.name);
 		await (await rolesPage.rolesTable.cellLink(role.name)).click();
 		await rolePage.assigneesLink.click();
@@ -565,8 +556,6 @@ test(
 
 		await rolesPage.goto();
 
-		await rolesPage.rolesTable.changeView('Table');
-		await page.waitForLoadState('networkidle');
 		await rolesPage.rolesTable.search(role.name);
 		await (await rolesPage.rolesTable.cellLink(role.name)).click();
 		await rolePage.assigneesLink.click();
@@ -647,8 +636,6 @@ test(
 
 		await rolesPage.goto();
 
-		await rolesPage.rolesTable.changeView('Table');
-		await page.waitForLoadState('networkidle');
 		await rolesPage.rolesTable.search(role.name);
 		await (await rolesPage.rolesTable.cellLink(role.name)).click();
 		await rolePage.assigneesLink.click();
@@ -688,8 +675,6 @@ test(
 
 		await rolesPage.goto();
 
-		await rolesPage.rolesTable.changeView('Table');
-		await page.waitForLoadState('networkidle');
 		await rolesPage.rolesTable.search(role.name);
 		await (await rolesPage.rolesTable.cellLink(role.name)).click();
 		await rolePage.assigneesLink.click();
@@ -775,8 +760,6 @@ test(
 
 		await rolesPage.goto();
 
-		await rolesPage.rolesTable.changeView('Table');
-		await page.waitForLoadState('networkidle');
 		await rolesPage.rolesTable.search(role.name);
 		await (await rolesPage.rolesTable.cellLink(role.name)).click();
 		await rolePage.assigneesLink.click();
@@ -820,8 +803,6 @@ test(
 
 		await rolesPage.goto();
 
-		await rolesPage.rolesTable.changeView('Table');
-		await page.waitForLoadState('networkidle');
 		await rolesPage.rolesTable.search(role.name);
 		await (await rolesPage.rolesTable.cellLink(role.name)).click();
 		await rolePage.assigneesLink.click();
@@ -887,12 +868,12 @@ test(
 					criteria: {
 						user: {
 							conjunction: 'and',
-							filterString: `(emailAddress eq 'liferay.com')`,
+							filterString: `(emailAddress eq 'test@liferay.com')`,
 							typeValue: 'model',
 						},
 					},
 					filterString: {
-						model: `(emailAddress eq 'liferay.com')`,
+						model: `(emailAddress eq 'test@liferay.com')`,
 					},
 				},
 				groupId: globalSite.groupId,
@@ -901,8 +882,6 @@ test(
 
 		await rolesPage.goto();
 
-		await rolesPage.rolesTable.changeView('Table');
-		await page.waitForLoadState('networkidle');
 		await rolesPage.rolesTable.search(role.name);
 		await (await rolesPage.rolesTable.cellLink(role.name)).click();
 		await rolePage.assigneesLink.click();
@@ -929,6 +908,9 @@ test(
 				segmentsEntry.nameCurrentValue
 			)
 		).toBeVisible();
+		await expect(
+			roleSegmentSelectorPage.segmentsTable.newButton
+		).toBeVisible();
 
 		await roleSegmentSelectorPage.assignSegments([
 			segmentsEntry.nameCurrentValue,
@@ -942,8 +924,6 @@ test(
 
 		await rolesPage.goto();
 
-		await rolesPage.rolesTable.changeView('Table');
-		await page.waitForLoadState('networkidle');
 		await rolesPage.rolesTable.search(role.name);
 		await (await rolesPage.rolesTable.cellLink(role.name)).click();
 		await rolePage.assigneesLink.click();
@@ -1025,8 +1005,6 @@ test(
 
 		await rolesPage.goto();
 
-		await rolesPage.rolesTable.changeView('Table');
-		await page.waitForLoadState('networkidle');
 		await rolesPage.rolesTable.search(role.name);
 		await (await rolesPage.rolesTable.cellLink(role.name)).click();
 		await rolePage.assigneesLink.click();
@@ -1064,8 +1042,6 @@ test(
 
 		await rolesPage.goto();
 
-		await rolesPage.rolesTable.changeView('Table');
-		await page.waitForLoadState('networkidle');
 		await rolesPage.rolesTable.search(role.name);
 		await (await rolesPage.rolesTable.cellLink(role.name)).click();
 		await rolePage.assigneesLink.click();
@@ -1097,11 +1073,9 @@ test(
 test(
 	'Segments assignee tab is not available for Administrator role',
 	{tag: ['@LPD-50065', '@LPS-202614']},
-	async ({page, roleAssigneesPage, rolePage, rolesPage}) => {
+	async ({roleAssigneesPage, rolePage, rolesPage}) => {
 		await rolesPage.goto();
 
-		await rolesPage.rolesTable.changeView('Table');
-		await page.waitForLoadState('networkidle');
 		await rolesPage.rolesTable.search('Administrator');
 		await (await rolesPage.rolesTable.cellLink('Administrator')).click();
 		await rolePage.assigneesLink.click();
@@ -1112,5 +1086,409 @@ test(
 		await expect(roleAssigneesPage.sitesLink).toBeVisible();
 		await expect(roleAssigneesPage.userGroupsLink).toBeVisible();
 		await expect(roleAssigneesPage.usersLink).toBeVisible();
+	}
+);
+
+test(
+	'Can add / remove the site scope of a role permission',
+	{tag: ['@LPD-50065', '@LPS-116055']},
+	async ({
+		apiHelpers,
+		page,
+		roleDefinePermissionsPage,
+		rolePage,
+		rolesPage,
+	}) => {
+		const role = await apiHelpers.headlessAdminUser.postRole({
+			name: getRandomString(),
+			roleType: 'regular',
+		});
+
+		await rolesPage.goto();
+
+		await expect(async () => {
+			await rolesPage.rolesTable.search(role.name);
+
+			await expect(rolesPage.rolesTable.cell(role.name)).toBeVisible();
+		}).toPass();
+
+		await (await rolesPage.rolesTable.cellLink(role.name)).click();
+
+		await rolePage.definePermissionsLink.click();
+
+		const menuItemName = 'Documents and Media';
+		const permissionName =
+			'Access in Site and Asset Library Administration';
+		const siteName = 'Liferay DXP';
+
+		await roleDefinePermissionsPage.searchInput.click();
+		await roleDefinePermissionsPage.searchInput.fill(menuItemName);
+
+		await expect(
+			roleDefinePermissionsPage.menuItem(menuItemName)
+		).toBeVisible();
+
+		await roleDefinePermissionsPage.menuItem(menuItemName).click();
+		await page.waitForLoadState('domcontentloaded');
+
+		await expect(
+			roleDefinePermissionsPage.permissionScopeLabel(permissionName)
+		).toBeVisible();
+
+		await roleDefinePermissionsPage
+			.permissionScopeChangeButton(permissionName)
+			.click();
+
+		await expect(async () => {
+			await roleDefinePermissionsPage
+				.siteSelectorSiteCard(siteName)
+				.click();
+
+			await expect(
+				roleDefinePermissionsPage.permissionScopeSiteLabel(
+					permissionName,
+					siteName
+				)
+			).toBeVisible({timeout: 3000});
+		}).toPass();
+
+		await roleDefinePermissionsPage
+			.permissionCheckbox(permissionName)
+			.check();
+		await roleDefinePermissionsPage.saveButton.click();
+
+		await waitForAlert(page, 'Success:The role permissions were updated.');
+
+		await expect(
+			roleDefinePermissionsPage.summaryPermissionCell(permissionName)
+		).toBeVisible();
+		await expect(
+			roleDefinePermissionsPage.summaryPermissionScopeCell(
+				permissionName,
+				siteName
+			)
+		).toBeVisible();
+
+		await page.reload();
+
+		await expect(
+			roleDefinePermissionsPage.summaryPermissionCell(permissionName)
+		).toBeVisible();
+		await expect(
+			roleDefinePermissionsPage.summaryPermissionScopeCell(
+				permissionName,
+				siteName
+			)
+		).toBeVisible();
+		await expect(
+			roleDefinePermissionsPage.summaryPermissionScopeCell(
+				permissionName,
+				'All Sites and Asset Libraries'
+			)
+		).toHaveCount(0);
+
+		await roleDefinePermissionsPage.searchInput.click();
+		await roleDefinePermissionsPage.searchInput.fill(menuItemName);
+
+		await expect(
+			roleDefinePermissionsPage.menuItem(menuItemName)
+		).toBeVisible();
+
+		await roleDefinePermissionsPage.menuItem(menuItemName).click();
+		await page.waitForLoadState('domcontentloaded');
+
+		await expect(
+			roleDefinePermissionsPage.permissionScopeLabel(permissionName)
+		).toHaveCount(0);
+		await expect(
+			roleDefinePermissionsPage.permissionScopes(permissionName)
+		).toContainText(siteName);
+
+		await roleDefinePermissionsPage
+			.permissionScopeRemoveButton(permissionName)
+			.click();
+
+		await expect(
+			roleDefinePermissionsPage.permissionScopeLabel(permissionName)
+		).toBeVisible();
+		await expect(
+			roleDefinePermissionsPage.permissionScopes(permissionName)
+		).toHaveCount(0);
+
+		await roleDefinePermissionsPage.saveButton.click();
+
+		await waitForAlert(page, 'Success:The role permissions were updated.');
+
+		await expect(
+			roleDefinePermissionsPage.summaryPermissionCell(permissionName)
+		).toBeVisible();
+		await expect(
+			roleDefinePermissionsPage.summaryPermissionScopeCell(
+				permissionName,
+				siteName
+			)
+		).toHaveCount(0);
+		await expect(
+			roleDefinePermissionsPage.summaryPermissionScopeCell(
+				permissionName,
+				'All Sites and Asset Libraries'
+			)
+		).toBeVisible();
+	}
+);
+
+test(
+	'All subdirectories in Define Permissions should display',
+	{tag: ['@LPD-50065', '@LPS-97321']},
+	async ({roleDefinePermissionsPage, rolePage, rolesPage}) => {
+		await rolesPage.goto();
+
+		await expect(async () => {
+			await rolesPage.rolesTable.search('User');
+
+			await expect(rolesPage.rolesTable.cell('User')).toBeVisible();
+		}).toPass();
+
+		await (await rolesPage.rolesTable.cellLink('User')).click();
+
+		await rolePage.definePermissionsLink.click();
+
+		const menuItems = {
+			'Applications Menu': ['Communication', 'Content', 'Workflow'],
+			'Control Panel': [
+				'Accounts',
+				'Configuration',
+				'General Permissions',
+				'Marketplace',
+				'Security',
+				'Sites',
+				'System',
+				'Users',
+			],
+			'Site and Asset Library Administration': [
+				'Applications',
+				'Categorization',
+				'Configuration',
+				'Content & Data',
+				'People',
+				'Publishing',
+				'Recycle Bin',
+				'Site Builder',
+			],
+			'User': [
+				'Account Settings',
+				'My Organizations',
+				'My Submissions',
+				'My Workflow Tasks',
+				'Notifications',
+			],
+		};
+
+		for (const menuItem of Object.keys(menuItems)) {
+			const subMenuItems = menuItems[menuItem];
+
+			if (
+				['Site and Asset Library Administration', 'User'].includes(
+					menuItem
+				)
+			) {
+				await roleDefinePermissionsPage
+					.menuItem(menuItem, true)
+					.click();
+			}
+
+			for (const subMenuItem of subMenuItems) {
+				await expect(
+					roleDefinePermissionsPage.subMenuItem(menuItem, subMenuItem)
+				).toBeVisible();
+			}
+		}
+	}
+);
+
+test(
+	'Select All checkbox is visible in Define Permissions',
+	{tag: ['@LPD-50065', '@LPS-132482']},
+	async ({page, roleDefinePermissionsPage, rolePage, rolesPage}) => {
+		await rolesPage.goto();
+
+		await expect(async () => {
+			await rolesPage.rolesTable.search('User');
+
+			await expect(rolesPage.rolesTable.cell('User')).toBeVisible();
+		}).toPass();
+
+		await (await rolesPage.rolesTable.cellLink('User')).click();
+
+		await rolePage.definePermissionsLink.click();
+
+		const menuItemName = 'Users and Organizations';
+
+		await roleDefinePermissionsPage.searchInput.click();
+		await roleDefinePermissionsPage.searchInput.fill(menuItemName);
+
+		await expect(
+			roleDefinePermissionsPage.menuItem(menuItemName)
+		).toBeVisible();
+
+		await roleDefinePermissionsPage.menuItem(menuItemName).click();
+		await page.waitForLoadState('domcontentloaded');
+		await roleDefinePermissionsPage
+			.selectAllCheckbox('Application Permissions')
+			.click();
+
+		await expect(
+			roleDefinePermissionsPage.permissionCheckbox(
+				'Access in Control Panel'
+			)
+		).toBeChecked();
+	}
+);
+
+test(
+	'Organization Role table is empty and select button does not display if user is not a member of an organization',
+	{tag: ['@LPD-50065']},
+	async ({apiHelpers, editUserPage, page, usersAndOrganizationsPage}) => {
+		const user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+		await usersAndOrganizationsPage.goToUsers();
+
+		await (
+			await usersAndOrganizationsPage.usersTableRowLink(
+				user.alternateName
+			)
+		).click();
+		await editUserPage.rolesLink.click();
+
+		await expect(editUserPage.selectOrganizationRolesButton).toHaveCount(0);
+
+		const organization =
+			await apiHelpers.headlessAdminUser.postOrganization();
+
+		await apiHelpers.headlessAdminUser.assignUserToOrganizationByEmailAddress(
+			organization.id,
+			user.emailAddress
+		);
+
+		await page.reload();
+
+		await expect(editUserPage.selectOrganizationRolesButton).toBeVisible();
+	}
+);
+
+test(
+	'Site Role table is empty and select button does not display if user is not a member of a site',
+	{tag: ['@LPD-50065']},
+	async ({
+		apiHelpers,
+		editUserPage,
+		page,
+		site,
+		usersAndOrganizationsPage,
+	}) => {
+		const user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+		await usersAndOrganizationsPage.goToUsers();
+
+		await (
+			await usersAndOrganizationsPage.usersTableRowLink(
+				user.alternateName
+			)
+		).click();
+		await editUserPage.rolesLink.click();
+
+		await expect(editUserPage.selectSiteRolesButton).toHaveCount(0);
+
+		await apiHelpers.jsonWebServicesUser.addGroupUsers(site.id, [user.id]);
+
+		await page.reload();
+
+		await expect(editUserPage.selectSiteRolesButton).toBeVisible();
+	}
+);
+
+test(
+	'Deactivated user is not counted in Site Roles',
+	{tag: ['@LPD-50065', '@LPS-141903']},
+	async ({
+		apiHelpers,
+		page,
+		rolesPage,
+		site,
+		siteMembershipsPage,
+		usersAndOrganizationsPage,
+	}) => {
+		page.on('dialog', (dialog) => dialog.accept());
+
+		const roleName = 'Site Content Reviewer';
+
+		const user1 = await apiHelpers.headlessAdminUser.postUserAccount();
+		const user2 = await apiHelpers.headlessAdminUser.postUserAccount();
+
+		await apiHelpers.jsonWebServicesUser.addGroupUsers(site.id, [
+			user1.id,
+			user2.id,
+		]);
+
+		const role = await apiHelpers.headlessAdminUser.getRoleByName(roleName);
+
+		await apiHelpers.headlessAdminUser.assignUserToSite(
+			role.id,
+			site.id,
+			user1.id
+		);
+		await apiHelpers.headlessAdminUser.assignUserToSite(
+			role.id,
+			site.id,
+			user2.id
+		);
+
+		await rolesPage.goto();
+
+		await rolesPage.siteRolesLink.click();
+
+		await expect(rolesPage.rolesTable.cell(roleName)).toBeVisible();
+		await expect(
+			await rolesPage.numberAssigneesCell(roleName, '2')
+		).toBeVisible();
+
+		await siteMembershipsPage.goto(site.friendlyUrlPath);
+
+		await expect(async () => {
+			await siteMembershipsPage.usersTable.changeView('Table');
+
+			await expect(
+				siteMembershipsPage.usersTable.cell(user1.name)
+			).toBeVisible();
+			await expect(
+				siteMembershipsPage.usersTable.cell(user2.name)
+			).toBeVisible();
+		}).toPass();
+
+		await usersAndOrganizationsPage.goToUsers();
+
+		await usersAndOrganizationsPage.deActivateUsers([user2.name]);
+
+		await rolesPage.goto();
+
+		await rolesPage.siteRolesLink.click();
+
+		await expect(rolesPage.rolesTable.cell(roleName)).toBeVisible();
+		await expect(
+			await rolesPage.numberAssigneesCell(roleName, '1')
+		).toBeVisible();
+
+		await siteMembershipsPage.goto(site.friendlyUrlPath);
+
+		await expect(async () => {
+			await siteMembershipsPage.usersTable.changeView('Table');
+
+			await expect(
+				siteMembershipsPage.usersTable.cell(user1.name)
+			).toBeVisible();
+			await expect(
+				siteMembershipsPage.usersTable.cell(user2.name)
+			).toHaveCount(0);
+		}).toPass();
 	}
 );

@@ -17,6 +17,7 @@ export class SiteMembershipsPage {
 	readonly userGroupSelectButton: (userGroupName: string) => Promise<Locator>;
 	readonly userGroupSelectDoneButton: Locator;
 	readonly userGroupsTable: DataTablePage;
+	readonly usersTable: DataTablePage;
 
 	constructor(page: Page) {
 		this.assignUserGroupIFrame = page.frameLocator(
@@ -45,6 +46,12 @@ export class SiteMembershipsPage {
 			page,
 			page.locator(
 				'#_com_liferay_site_memberships_web_portlet_SiteMembershipsPortlet_userGroups'
+			)
+		);
+		this.usersTable = new DataTablePage(
+			page,
+			page.locator(
+				'#_com_liferay_site_memberships_web_portlet_SiteMembershipsPortlet_users'
 			)
 		);
 	}

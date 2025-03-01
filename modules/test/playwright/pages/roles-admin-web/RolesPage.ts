@@ -13,6 +13,10 @@ export class RolesPage {
 	readonly applicationsMenuButton: Locator;
 	readonly applicationsMenuPage: ApplicationsMenuPage;
 	readonly deleteButton: Locator;
+	readonly numberAssigneesCell: (
+		roleName: string,
+		value: string
+	) => Promise<Locator>;
 	readonly optionsButton: Locator;
 	readonly organizationRolesLink: Locator;
 	readonly page: Page;
@@ -33,6 +37,11 @@ export class RolesPage {
 		this.deleteButton = page
 			.getByRole('menuitem', {name: 'Delete'})
 			.or(page.getByRole('link', {name: 'Delete'}));
+		this.numberAssigneesCell = async (roleName, value) =>
+			(await this.rolesTable.row(1, roleName, true)).row.getByRole(
+				'cell',
+				{exact: true, name: value}
+			);
 		this.optionsButton = page.getByLabel('Options', {exact: true});
 		this.organizationRolesLink = page.getByRole('link', {
 			exact: true,

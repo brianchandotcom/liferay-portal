@@ -22,9 +22,4 @@ public class CategorizationSectionDisplayContext
 		super(cmsSiteInitializerConfiguration, httpServletRequest);
 	}
 
-	@Override
-	public String[] getEntryClassNames() {
-		return cmsSiteInitializerConfiguration.categorizationClassNames();
-	}
-
 }

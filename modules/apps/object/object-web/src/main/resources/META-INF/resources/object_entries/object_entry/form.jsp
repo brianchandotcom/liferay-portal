@@ -117,7 +117,11 @@ portletDisplay.setURLBack(backURL);
 				}
 
 				let value = field.value;
-				if (field.type === 'select' && !field.multiple) {
+				if (
+					field.type === 'select' &&
+					!field.multiple &&
+					!field.localizedObjectField
+				) {
 					value = {key: value.length ? field.value[0] : ''};
 				}
 

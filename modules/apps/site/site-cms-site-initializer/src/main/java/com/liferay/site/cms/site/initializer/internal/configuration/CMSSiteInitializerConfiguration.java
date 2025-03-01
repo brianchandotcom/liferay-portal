@@ -27,15 +27,17 @@ public interface CMSSiteInitializerConfiguration {
 	public String[] categorizationClassNames();
 
 	@Meta.AD(
-		deflt = "com.liferay.blogs.model.BlogsEntry|com.liferay.bookmarks.model.BookmarksEntry|com.liferay.bookmarks.model.BookmarksFolder|com.liferay.document.library.kernel.model.DLFileShortcut|com.liferay.document.library.kernel.model.DLFolder|com.liferay.dynamic.data.mapping.model.DDMFormInstance|com.liferay.journal.model.JournalArticle|com.liferay.journal.model.JournalFolder|com.liferay.knowledge.base.model.KBArticle|com.liferay.knowledge.base.model.KBFolder|com.liferay.message.boards.model.MBCategory|com.liferay.message.boards.model.MBThread|com.liferay.object.model.ObjectEntryFolder",
-		name = "contents-class-names", required = false
+		deflt = "L_CMS_CONTENT_STRUCTURES",
+		name = "contents-object-definition-folder-external-reference-codes",
+		required = false
 	)
-	public String[] contentsClassNames();
+	public String[] contentsObjectDefinitionFolderExternalReferenceCodes();
 
 	@Meta.AD(
-		deflt = "com.liferay.document.library.kernel.model.DLFileEntry",
-		name = "files-class-names", required = false
+		deflt = "L_CMS_FILE_TYPES",
+		name = "files-object-definition-folder-external-reference-codes",
+		required = false
 	)
-	public String[] filesClassNames();
+	public String[] filesObjectDefinitionFolderExternalReferenceCodes();
 
 }

@@ -11,17 +11,18 @@ import React, {useEffect, useState} from 'react';
 import {getTooltipTitle} from '../util/tooltip';
 import {SelectMainProps} from './select';
 
-interface SelectProps extends Omit<SelectMainProps, 'selectedKey' | 'value'> {
+interface SingleSelectBaseProps
+	extends Omit<SelectMainProps, 'onChange' | 'selectedKey' | 'value'> {
 	selectedKey?: string;
-	viewMode: unknown;
+	viewMode?: unknown;
 }
 
 export default function SingleSelectBase({
+	className,
 	errorMessage,
 	id,
 	label,
 	name,
-	onChange,
 	onSelectionChange,
 	options,
 	placeholder,
@@ -32,7 +33,7 @@ export default function SingleSelectBase({
 	showEmptyOption,
 	tip,
 	viewMode,
-}: SelectProps) {
+}: SingleSelectBaseProps) {
 	const {activeTabTitle} = useFormState();
 	const [loading, setLoading] = useState<boolean>();
 	const [selectedLabel, setSelectedLabel] = useState('');
@@ -42,7 +43,7 @@ export default function SingleSelectBase({
 		newSelectedKey = 'chooseAnOption';
 	}
 
-	if (typeof selectedKey !== 'string' && selectedKey?.[0] === '') {
+	if (Array.isArray(selectedKey) && selectedKey?.[0] === '') {
 		newSelectedKey = undefined;
 	}
 
@@ -114,6 +115,7 @@ export default function SingleSelectBase({
 				placeholder: Liferay.Language.get('choose-an-option'),
 				value: selectedLabel,
 			})}
+			{...(className && {className})}
 		>
 			{!loading && (
 				<Picker
@@ -121,28 +123,7 @@ export default function SingleSelectBase({
 					data-testid={id}
 					disabled={readOnly}
 					items={[{items: options, label}]}
-					onSelectionChange={(itemKey: React.Key) => {
-						let newItemKey: React.Key | null = itemKey;
-
-						if ((itemKey as string)?.includes('$.')) {
-							newItemKey = '.';
-						}
-
-						const field = options.find(
-							({value}) => value === newItemKey
-						);
-
-						if (field.value === 'chooseAnOption') {
-							onChange({}, []);
-						}
-						else {
-							onChange({}, [field.value]);
-						}
-
-						if (onSelectionChange) {
-							onSelectionChange(itemKey);
-						}
-					}}
+					onSelectionChange={onSelectionChange}
 					placeholder={placeholder}
 					selectedKey={selectedItem ?? 'chooseAnOption'}
 				>

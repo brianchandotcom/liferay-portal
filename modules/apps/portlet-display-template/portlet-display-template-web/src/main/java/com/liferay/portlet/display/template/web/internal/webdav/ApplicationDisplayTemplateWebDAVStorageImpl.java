@@ -5,9 +5,9 @@
 
 package com.liferay.portlet.display.template.web.internal.webdav;
 
-import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
 import com.liferay.dynamic.data.mapping.webdav.DDMWebDAV;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.webdav.Resource;
@@ -89,20 +89,11 @@ public class ApplicationDisplayTemplateWebDAVStorageImpl
 	private List<Resource> _getTemplates(WebDAVRequest webDAVRequest)
 		throws Exception {
 
-		List<Resource> resources = new ArrayList<>();
-
-		List<DDMTemplate> ddmTemplates =
+		return TransformUtil.transform(
 			_ddmTemplateLocalService.getTemplatesByClassPK(
-				webDAVRequest.getGroupId(), 0);
-
-		for (DDMTemplate ddmTemplate : ddmTemplates) {
-			Resource resource = _ddmWebDAV.toResource(
-				webDAVRequest, ddmTemplate, getRootPath(), true);
-
-			resources.add(resource);
-		}
-
-		return resources;
+				webDAVRequest.getGroupId(), 0),
+			ddmTemplate -> _ddmWebDAV.toResource(
+				webDAVRequest, ddmTemplate, getRootPath(), true));
 	}
 
 	@Reference

@@ -278,7 +278,7 @@ public class GroupResourceTest extends BaseGroupResourceTestCase {
 						setValue(
 							JSONFactoryUtil.createJSONArray(
 							).put(
-								JSONUtil.put("value", user2.getId())
+								JSONUtil.put("value", user1.getId())
 							));
 					}
 				}

@@ -57,6 +57,7 @@ export function normalizeOptions({
 		active?: boolean;
 		checked?: boolean;
 		label: string | undefined;
+		labelMap?: LocalizedValue<string>;
 		separator?: true;
 		type?: 'checkbox' | 'item';
 		value: string | null;

@@ -995,19 +995,33 @@ public abstract class Base${schemaName}ResourceImpl
 			<#if deleteByIdJavaMethodSignature?? || deleteByERCJavaMethodSignature??>
 				UnsafeFunction<${javaDataType}, ${javaDataType}, Exception> ${schemaVarName}UnsafeFunction = ${schemaVarName} -> {
 					<#if deleteByIdJavaMethodSignature??>
-							<#if properties?keys?seq_contains("id")>
-								if(${schemaVarName}.getId() != null) {
-									${deleteByIdJavaMethodSignature.methodName}(${schemaVarName}.getId());
-							<#else>
-								if(${schemaVarName}.get${schemaName}Id() != null) {
-									${deleteByIdJavaMethodSignature.methodName}(${schemaVarName}.get${schemaName}Id());
-							</#if>
-							return ${schemaVarName};
+								<#if properties?keys?seq_contains("id")>
+									if(${schemaVarName}.getId() != null) {
+										try {
+											${deleteByIdJavaMethodSignature.methodName}(${schemaVarName}.getId());
+								<#else>
+									if(${schemaVarName}.get${schemaName}Id() != null) {
+										try {
+											${deleteByIdJavaMethodSignature.methodName}(${schemaVarName}.get${schemaName}Id());
+								</#if>
+
+								return ${schemaVarName};
+							} catch (Exception exception) {
+								<#if deleteByERCJavaMethodSignature??>
+									if(${schemaVarName}.getExternalReferenceCode() != null) {
+										${deleteByERCJavaMethodSignature.methodName}(${schemaVarName}.getExternalReferenceCode());
+
+										return ${schemaVarName};
+									}
+								<#else>
+								</#if>
+							}
 						}
 					</#if>
 					<#if deleteByERCJavaMethodSignature??>
 						<#if deleteByIdJavaMethodSignature??>else </#if>if(${schemaVarName}.getExternalReferenceCode() != null) {
 							${deleteByERCJavaMethodSignature.methodName}(${schemaVarName}.getExternalReferenceCode());
+
 							return ${schemaVarName};
 						}
 					</#if>

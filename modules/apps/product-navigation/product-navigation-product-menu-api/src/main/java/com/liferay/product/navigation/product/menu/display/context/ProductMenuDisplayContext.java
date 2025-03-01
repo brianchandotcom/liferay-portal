@@ -13,6 +13,7 @@ import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.application.list.display.context.logic.PanelCategoryHelper;
 import com.liferay.application.list.util.PanelCategoryRegistryUtil;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -30,7 +31,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.applications.menu.configuration.ApplicationsMenuInstanceConfiguration;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -194,18 +194,18 @@ public class ProductMenuDisplayContext {
 	private List<PanelCategory> _filterPanelCategories(
 		List<PanelCategory> panelCategories) {
 
-		List<PanelCategory> filteredPanelCategories = new ArrayList<>();
+		return TransformUtil.transform(
+			panelCategories,
+			panelCategory -> {
+				List<PanelApp> panelApps = _panelCategoryHelper.getAllPanelApps(
+					panelCategory.getKey());
 
-		for (PanelCategory panelCategory : panelCategories) {
-			List<PanelApp> panelApps = _panelCategoryHelper.getAllPanelApps(
-				panelCategory.getKey());
+				if (!panelApps.isEmpty()) {
+					return panelCategory;
+				}
 
-			if (!panelApps.isEmpty()) {
-				filteredPanelCategories.add(panelCategory);
-			}
-		}
-
-		return filteredPanelCategories;
+				return null;
+			});
 	}
 
 	private boolean _hasAdministrationPortletPermission() throws Exception {

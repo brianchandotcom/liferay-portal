@@ -12,6 +12,7 @@ package ${configYAML.apiPackagePath}.resource.${escapedVersion}.test;
 	import ${configYAML.apiPackagePath}.client.serdes.${escapedVersion}.${schemaName}SerDes;
 </#list>
 
+import com.liferay.batch.engine.service.BatchEngineImportTaskLocalService;
 import ${configYAML.apiPackagePath}.client.http.HttpInvoker;
 import ${configYAML.apiPackagePath}.client.pagination.Page;
 import ${configYAML.apiPackagePath}.client.pagination.Pagination;
@@ -85,6 +86,7 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
@@ -221,12 +223,12 @@ public abstract class Base${schemaName}ResourceTestCase {
 
 	<#assign
 		properties = freeMarkerTool.getDTOProperties(configYAML, openAPIYAML, schema, allSchemas)
-		getIdMethodName = "getId"
+		idParameterName = "id"
 	/>
 
 	<#if !properties?keys?seq_contains("id")>
-		<#assign getIdMethodName = "get${schemaName}Id" />
-    </#if>
+		<#assign idParameterName = "${schemaVarName}Id" />
+	</#if>
 
 	<#if javaDataTypeMap?keys?seq_contains(schemaName)>
 		@Test
@@ -310,20 +312,52 @@ public abstract class Base${schemaName}ResourceTestCase {
 		/>
 
 		<#if stringUtil.endsWith(javaMethodSignature.methodName, schemaName + "Batch") || stringUtil.endsWith(javaMethodSignature.methodName, schemaNames + "PageExportBatch")>
-			<#if generateBatch && stringUtil.equals(javaMethodSignature.methodName, "delete" + schemaName + "Batch") && freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "get" + schemaName)>
+			<#assign
+				hasDeleteByIdJavaMethodSignature = freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "delete" + schemaName) && (properties?keys?seq_contains("id") || properties?keys?seq_contains(schemaVarName + "Id"))
+				hasDeleteByERCJavaMethodSignature = (freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "deleteByExternalReferenceCode") || freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "delete" + schemaName + "ByExternalReferenceCode")) && properties?keys?seq_contains("externalReferenceCode")
+			/>
+			<#if generateBatch && stringUtil.equals(javaMethodSignature.methodName, "delete" + schemaName + "Batch") && freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "get" + schemaName) && (hasDeleteByIdJavaMethodSignature || hasDeleteByERCJavaMethodSignature)>
 				<#assign getJavaMethodSignature = freeMarkerTool.getJavaMethodSignature(javaMethodSignatures, "get" + schemaName) />
 				@Test
 				public void test${javaMethodSignature.methodName?cap_first}() throws Exception {
-					<#if freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "delete" + schemaName) && (properties?keys?seq_contains("id") || properties?keys?seq_contains(schemaVarName + "Id"))>
-						${schemaName} ${schemaVarName}_toDeleteById = test${javaMethodSignature.methodName?cap_first}_add${schemaName}();
-						assertHttpResponseStatusCode(204, ${schemaVarName}Resource.${javaMethodSignature.methodName}HttpResponse(null,Collections.singletonList(Collections.singletonMap("id", ${schemaVarName}_toDeleteById.${getIdMethodName}()))));
-						assertHttpResponseStatusCode(404,${schemaVarName}Resource.${getJavaMethodSignature.methodName}HttpResponse(${schemaVarName}_toDeleteById.${getIdMethodName}()));
+
+					<#if hasDeleteByIdJavaMethodSignature>
+						${schemaName} ${schemaVarName}1 = test${javaMethodSignature.methodName?cap_first}_add${schemaName}();
+
+						<#if hasDeleteByERCJavaMethodSignature>
+							test${javaMethodSignature.methodName?cap_first}_delete${schemaName}("COMPLETED", null, ${schemaVarName}1.get${idParameterName?cap_first}());
+						<#else>
+							test${javaMethodSignature.methodName?cap_first}_delete${schemaName}("COMPLETED", ${schemaVarName}1.get${idParameterName?cap_first}());
+						</#if>
+
+						assertHttpResponseStatusCode(404, ${schemaVarName}Resource.${getJavaMethodSignature.methodName}HttpResponse(${schemaVarName}1.get${idParameterName?cap_first}()));
 					</#if>
 
-					<#if (freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "deleteByExternalReferenceCode") || freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "delete" + schemaName + "ByExternalReferenceCode")) && properties?keys?seq_contains("externalReferenceCode")>
-						${schemaName} ${schemaVarName}_toDeleteByERC = test${javaMethodSignature.methodName?cap_first}_add${schemaName}();
-							assertHttpResponseStatusCode(204, ${schemaVarName}Resource.${javaMethodSignature.methodName}HttpResponse(null,Collections.singletonList(Collections.singletonMap("id", ${schemaVarName}_toDeleteByERC.getExternalReferenceCode()))));
-							assertHttpResponseStatusCode(404,${schemaVarName}Resource.${getJavaMethodSignature.methodName}HttpResponse(${schemaVarName}_toDeleteById.${getIdMethodName}()));
+					<#if hasDeleteByERCJavaMethodSignature>
+						${schemaName} ${schemaVarName}2 = test${javaMethodSignature.methodName?cap_first}_add${schemaName}();
+
+						<#if hasDeleteByIdJavaMethodSignature>
+							test${javaMethodSignature.methodName?cap_first}_delete${schemaName}("COMPLETED", ${schemaVarName}2.getExternalReferenceCode(), null);
+						<#else>
+							test${javaMethodSignature.methodName?cap_first}_delete${schemaName}("COMPLETED", ${schemaVarName}2.getExternalReferenceCode());
+						</#if>
+
+						assertHttpResponseStatusCode(404, ${schemaVarName}Resource.${getJavaMethodSignature.methodName}HttpResponse(${schemaVarName}2.get${idParameterName?cap_first}()));
+					</#if>
+
+					<#if hasDeleteByIdJavaMethodSignature && hasDeleteByERCJavaMethodSignature>
+						${schemaVarName}1 = test${javaMethodSignature.methodName?cap_first}_add${schemaName}();
+						${schemaVarName}2 = test${javaMethodSignature.methodName?cap_first}_add${schemaName}();
+
+						test${javaMethodSignature.methodName?cap_first}_delete${schemaName}("COMPLETED", ${schemaVarName}2.getExternalReferenceCode(), ${schemaVarName}1.get${idParameterName?cap_first}());
+
+						assertHttpResponseStatusCode(404, ${schemaVarName}Resource.${getJavaMethodSignature.methodName}HttpResponse(${schemaVarName}1.get${idParameterName?cap_first}()));
+
+						assertHttpResponseStatusCode(200, ${schemaVarName}Resource.${getJavaMethodSignature.methodName}HttpResponse(${schemaVarName}2.get${idParameterName?cap_first}()));
+
+						test${javaMethodSignature.methodName?cap_first}_delete${schemaName}("COMPLETED", ${schemaVarName}2.getExternalReferenceCode(), ${schemaVarName}1.get${idParameterName?cap_first}());
+
+						assertHttpResponseStatusCode(404, ${schemaVarName}Resource.${getJavaMethodSignature.methodName}HttpResponse(${schemaVarName}2.get${idParameterName?cap_first}()));
 					</#if>
 				}
 
@@ -333,6 +367,24 @@ public abstract class Base${schemaName}ResourceTestCase {
 					<#else>
 						throw new UnsupportedOperationException("This method needs to be implemented");
 					</#if>
+				}
+
+				protected void test${javaMethodSignature.methodName?cap_first}_delete${schemaName}(
+					String expectedExecuteStatus<#if hasDeleteByERCJavaMethodSignature>, ${properties["externalReferenceCode"]} ${schemaVarName}ERC</#if><#if hasDeleteByIdJavaMethodSignature>, ${properties[idParameterName]} ${schemaVarName}Id</#if>)
+					throws Exception {
+						Map<String, Object> map = HashMapBuilder<#if hasDeleteByIdJavaMethodSignature>.<String, Object>put("id", ${schemaVarName}Id)</#if><#if hasDeleteByERCJavaMethodSignature>.<String, Object>put("externalReferenceCode", ${schemaVarName}ERC)</#if>.build();
+						HttpInvoker.HttpResponse response = ${schemaVarName}Resource.${javaMethodSignature.methodName}HttpResponse(null, JSONFactoryUtil.createJSONArray(Collections.singletonList(map)));
+
+						Assert.assertEquals(202, response.getStatusCode());
+
+						while (true) {
+							String executeStatus = _batchEngineImportTaskLocalService.getBatchEngineImportTask(JSONFactoryUtil.createJSONObject(response.getContent()).getLong("id")).getExecuteStatus();
+
+							if (StringUtil.equals(executeStatus, "COMPLETED") || StringUtil.equals(executeStatus, "FAILED")) {
+								Assert.assertEquals(expectedExecuteStatus, executeStatus);
+								break;
+							}
+						}
 				}
 				<#continue>
 			<#else>
@@ -3931,6 +3983,11 @@ public abstract class Base${schemaName}ResourceTestCase {
 	@Inject
 	private ${configYAML.apiPackagePath}.resource.${escapedVersion}.${schemaName}Resource _${schemaVarName}Resource;
 
+	<#if generateBatch>
+		@Inject
+		private BatchEngineImportTaskLocalService _batchEngineImportTaskLocalService;
+	</#if>
+
 	<#if generateCRUD>
 		@Inject
 		private GroupLocalService _groupLocalService;
@@ -3953,7 +4010,6 @@ public abstract class Base${schemaName}ResourceTestCase {
 		@Inject
 		private VulcanCRUDItemDelegateBuilderRegistry _vulcanCRUDItemDelegateBuilderRegistry;
 	</#if>
-
 }
 
 <#macro getDefaultParameter

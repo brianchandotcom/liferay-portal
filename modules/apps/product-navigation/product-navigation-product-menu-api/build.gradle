@@ -6,5 +6,6 @@ dependencies {
 	compileOnly project(":apps:layout:layout-admin-api")
 	compileOnly project(":apps:portal-configuration:portal-configuration-module-configuration-api")
 	compileOnly project(":apps:product-navigation:product-navigation-applications-menu-api")
+	compileOnly project(":core:petra:petra-function")
 	compileOnly project(":core:petra:petra-string")
 }

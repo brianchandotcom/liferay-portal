@@ -236,6 +236,8 @@ public class ScimUtil {
 			JSONObject operationJSONObject = JSONUtil.put(
 				SCIMConstants.OperationalConstants.OP, operation.getOp());
 
+			operationsJSONArray.put(operationJSONObject);
+
 			if (SCIMConstants.OperationalConstants.ADD.equalsIgnoreCase(
 					operation.getOp())) {
 
@@ -322,8 +324,6 @@ public class ScimUtil {
 						SCIMConstants.OperationalConstants.VALUE, value);
 				}
 			}
-
-			operationsJSONArray.put(operationJSONObject);
 		}
 
 		return JSONUtil.put(

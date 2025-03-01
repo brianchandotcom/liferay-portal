@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
@@ -44,6 +45,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import org.wso2.charon3.core.attributes.Attribute;
 import org.wso2.charon3.core.attributes.ComplexAttribute;
@@ -282,30 +284,38 @@ public class ScimUtil {
 
 				Object value = operation.getValue();
 
-				if (!(value instanceof ArrayList)) {
+				if (value instanceof ArrayList) {
+					JSONArray valueJSONArray = JSONFactoryUtil.createJSONArray(
+						(ArrayList)value);
+
+					JSONObject valueJSONObject = valueJSONArray.getJSONObject(
+						0);
+
 					operationJSONObject.put(
 						SCIMConstants.OperationalConstants.PATH,
-						operation.getPath()
-					).put(
-						SCIMConstants.OperationalConstants.VALUE, value
-					);
-
-					continue;
+						StringBundler.concat(
+							operation.getPath(), StringPool.OPEN_BRACKET,
+							SCIMConstants.OperationalConstants.VALUE, " eq \"",
+							valueJSONObject.get(
+								SCIMConstants.OperationalConstants.VALUE),
+							StringPool.QUOTE, StringPool.CLOSE_BRACKET));
 				}
-
-				JSONArray valueJSONArray = JSONFactoryUtil.createJSONArray(
-					(ArrayList)value);
-
-				JSONObject valueJSONObject = valueJSONArray.getJSONObject(0);
-
-				operationJSONObject.put(
-					SCIMConstants.OperationalConstants.PATH,
-					StringBundler.concat(
-						operation.getPath(), StringPool.OPEN_BRACKET,
-						SCIMConstants.OperationalConstants.VALUE, " eq \"",
-						valueJSONObject.get(
-							SCIMConstants.OperationalConstants.VALUE),
-						StringPool.QUOTE, StringPool.CLOSE_BRACKET));
+				else if (value instanceof Map) {
+					operationJSONObject.put(
+						SCIMConstants.OperationalConstants.PATH,
+						StringBundler.concat(
+							operation.getPath(), StringPool.OPEN_BRACKET,
+							SCIMConstants.OperationalConstants.VALUE, " eq \"",
+							MapUtil.getString(
+								(Map)value,
+								SCIMConstants.OperationalConstants.VALUE),
+							StringPool.QUOTE, StringPool.CLOSE_BRACKET));
+				}
+				else {
+					operationJSONObject.put(
+						SCIMConstants.OperationalConstants.PATH,
+						operation.getPath());
+				}
 			}
 			else {
 				operationJSONObject.put(

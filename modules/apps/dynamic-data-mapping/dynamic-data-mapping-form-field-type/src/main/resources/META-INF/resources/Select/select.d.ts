@@ -15,7 +15,7 @@ interface Item {
 	value: string;
 }
 
-interface Option<T> {
+export interface Option<T> {
 	label: LocalizedValue<string>;
 	value: T;
 }
@@ -50,6 +50,7 @@ interface MultipleSelectBaseProps<TValue> {
 }
 
 interface SelectMainProps extends MultipleSelectBaseProps<string | string[]> {
+	className?: string;
 	defaultSearch?: boolean;
 	editingLanguageId?: Locale;
 	fixedOptions?: Option<string>[];

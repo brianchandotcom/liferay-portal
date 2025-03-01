@@ -31,6 +31,10 @@ public class SearchResultEntityModel implements EntityModel {
 			new CollectionEntityField(
 				new StringEntityField(
 					"keywords", locale -> "assetTagNames.lowercase")),
+			new CollectionEntityField(
+				new StringEntityField(
+					"objectDefinitionFolder",
+					locale -> "objectDefinitionFolder")),
 			new DateTimeEntityField(
 				"dateCreated",
 				locale -> Field.getSortableFieldName(Field.CREATE_DATE),

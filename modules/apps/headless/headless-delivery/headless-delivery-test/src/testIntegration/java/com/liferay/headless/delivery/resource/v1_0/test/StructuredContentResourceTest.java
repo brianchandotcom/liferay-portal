@@ -45,6 +45,7 @@ import com.liferay.headless.delivery.client.dto.v1_0.Geo;
 import com.liferay.headless.delivery.client.dto.v1_0.RelatedContent;
 import com.liferay.headless.delivery.client.dto.v1_0.StructuredContent;
 import com.liferay.headless.delivery.client.dto.v1_0.StructuredContentLink;
+import com.liferay.headless.delivery.client.http.HttpInvoker;
 import com.liferay.headless.delivery.client.pagination.Page;
 import com.liferay.headless.delivery.client.pagination.Pagination;
 import com.liferay.headless.delivery.client.permission.Permission;
@@ -627,6 +628,20 @@ public class StructuredContentResourceTest
 		StructuredContent randomStructuredContent1 = _randomStructuredContent(
 			locale);
 
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray().put(randomStructuredContent1.toString());
+
+		HttpInvoker.HttpResponse httpResponse = structuredContentResource.postSiteStructuredContentBatchHttpResponse(
+			testGroup.getGroupId(),
+			null,
+			jsonArray);
+
+		assertHttpResponseStatusCode(
+			204,
+			structuredContentResource.postSiteStructuredContentBatchHttpResponse(
+				testGroup.getGroupId(),
+				null,
+				jsonArray));
+
 		User testCompanyAdminUser = UserTestUtil.getAdminUser(
 			testCompany.getCompanyId());
 
@@ -640,16 +655,15 @@ public class StructuredContentResourceTest
 			LocaleUtil.getDefault()
 		).build();
 
-		ImportTask importTask = importTaskResource.postImportTask(
-			StructuredContent.class.getName(), null, null, "UPSERT", null, null,
-			null, null,
-			_createBatchBody(randomStructuredContent1.getContentStructureId()));
+		JSONFactoryUtil.createJSONObject(httpResponse.getContent()).getString("id");
+
+		ImportTask importTask = importTaskResource.getImportTask((long)1);
 
 		while (true) {
 			importTask = importTaskResource.getImportTask(importTask.getId());
 
 			if (StringUtil.equals(
-					importTask.getExecuteStatusAsString(), "COMPLETED") ||
+				importTask.getExecuteStatusAsString(), "COMPLETED") ||
 				StringUtil.equals(
 					importTask.getExecuteStatusAsString(), "FAILED")) {
 

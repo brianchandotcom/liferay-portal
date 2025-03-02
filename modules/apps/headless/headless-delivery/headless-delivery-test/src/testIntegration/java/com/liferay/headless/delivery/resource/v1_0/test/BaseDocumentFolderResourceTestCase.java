@@ -693,11 +693,6 @@ public abstract class BaseDocumentFolderResourceTestCase {
 	}
 
 	@Test
-	public void testPostAssetLibraryDocumentFolderBatch() throws Exception {
-		Assert.assertTrue(true);
-	}
-
-	@Test
 	public void testGetAssetLibraryDocumentFolderPermissionsPage()
 		throws Exception {
 
@@ -1255,11 +1250,6 @@ public abstract class BaseDocumentFolderResourceTestCase {
 
 		return documentFolderResource.postSiteDocumentFolder(
 			testGroup.getGroupId(), randomDocumentFolder());
-	}
-
-	@Test
-	public void testPutDocumentFolderBatch() throws Exception {
-		Assert.assertTrue(true);
 	}
 
 	@Test
@@ -2430,11 +2420,6 @@ public abstract class BaseDocumentFolderResourceTestCase {
 			testGraphQLDocumentFolder_addDocumentFolder(randomDocumentFolder);
 
 		Assert.assertTrue(equals(randomDocumentFolder, documentFolder));
-	}
-
-	@Test
-	public void testPostSiteDocumentFolderBatch() throws Exception {
-		Assert.assertTrue(true);
 	}
 
 	@Test

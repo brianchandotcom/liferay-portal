@@ -496,11 +496,6 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 	}
 
 	@Test
-	public void testPutKnowledgeBaseFolderBatch() throws Exception {
-		Assert.assertTrue(true);
-	}
-
-	@Test
 	public void testGetKnowledgeBaseFolderPermissionsPage() throws Exception {
 		KnowledgeBaseFolder postKnowledgeBaseFolder =
 			testGetKnowledgeBaseFolderPermissionsPage_addKnowledgeBaseFolder();
@@ -1135,11 +1130,6 @@ public abstract class BaseKnowledgeBaseFolderResourceTestCase {
 
 		Assert.assertTrue(
 			equals(randomKnowledgeBaseFolder, knowledgeBaseFolder));
-	}
-
-	@Test
-	public void testPostSiteKnowledgeBaseFolderBatch() throws Exception {
-		Assert.assertTrue(true);
 	}
 
 	@Test

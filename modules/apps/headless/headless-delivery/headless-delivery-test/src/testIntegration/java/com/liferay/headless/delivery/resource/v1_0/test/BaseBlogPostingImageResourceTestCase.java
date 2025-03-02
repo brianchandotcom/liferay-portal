@@ -991,11 +991,6 @@ public abstract class BaseBlogPostingImageResourceTestCase {
 	}
 
 	@Test
-	public void testPostSiteBlogPostingImageBatch() throws Exception {
-		Assert.assertTrue(true);
-	}
-
-	@Test
 	public void testDeleteSiteBlogPostingImageByExternalReferenceCode()
 		throws Exception {
 

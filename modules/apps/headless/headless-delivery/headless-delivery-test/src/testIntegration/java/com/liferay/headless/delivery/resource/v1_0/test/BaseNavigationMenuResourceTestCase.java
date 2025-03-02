@@ -446,11 +446,6 @@ public abstract class BaseNavigationMenuResourceTestCase {
 	}
 
 	@Test
-	public void testPutNavigationMenuBatch() throws Exception {
-		Assert.assertTrue(true);
-	}
-
-	@Test
 	public void testGetNavigationMenuPermissionsPage() throws Exception {
 		NavigationMenu postNavigationMenu =
 			testGetNavigationMenuPermissionsPage_addNavigationMenu();
@@ -808,11 +803,6 @@ public abstract class BaseNavigationMenuResourceTestCase {
 			testGraphQLNavigationMenu_addNavigationMenu(randomNavigationMenu);
 
 		Assert.assertTrue(equals(randomNavigationMenu, navigationMenu));
-	}
-
-	@Test
-	public void testPostSiteNavigationMenuBatch() throws Exception {
-		Assert.assertTrue(true);
 	}
 
 	@Test

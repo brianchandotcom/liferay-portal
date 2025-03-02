@@ -504,11 +504,6 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 	}
 
 	@Test
-	public void testPutMessageBoardMessageBatch() throws Exception {
-		Assert.assertTrue(true);
-	}
-
-	@Test
 	public void testPutMessageBoardMessageMarkAsAnswer() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		MessageBoardMessage messageBoardMessage =
@@ -1762,13 +1757,6 @@ public abstract class BaseMessageBoardMessageResourceTestCase {
 			postMessageBoardThreadMessageBoardMessage(
 				testGetMessageBoardThreadMessageBoardMessagesPage_getMessageBoardThreadId(),
 				messageBoardMessage);
-	}
-
-	@Test
-	public void testPostMessageBoardThreadMessageBoardMessageBatch()
-		throws Exception {
-
-		Assert.assertTrue(true);
 	}
 
 	@Test

@@ -497,11 +497,6 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 	}
 
 	@Test
-	public void testPutMessageBoardSectionBatch() throws Exception {
-		Assert.assertTrue(true);
-	}
-
-	@Test
 	public void testGetMessageBoardSectionPermissionsPage() throws Exception {
 		MessageBoardSection postMessageBoardSection =
 			testGetMessageBoardSectionPermissionsPage_addMessageBoardSection();
@@ -1899,11 +1894,6 @@ public abstract class BaseMessageBoardSectionResourceTestCase {
 
 		Assert.assertTrue(
 			equals(randomMessageBoardSection, messageBoardSection));
-	}
-
-	@Test
-	public void testPostSiteMessageBoardSectionBatch() throws Exception {
-		Assert.assertTrue(true);
 	}
 
 	@Test

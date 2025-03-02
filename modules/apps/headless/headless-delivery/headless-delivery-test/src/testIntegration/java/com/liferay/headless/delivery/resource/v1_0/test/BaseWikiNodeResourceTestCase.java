@@ -671,11 +671,6 @@ public abstract class BaseWikiNodeResourceTestCase {
 	}
 
 	@Test
-	public void testPostSiteWikiNodeBatch() throws Exception {
-		Assert.assertTrue(true);
-	}
-
-	@Test
 	public void testDeleteSiteWikiNodeByExternalReferenceCode()
 		throws Exception {
 
@@ -1235,11 +1230,6 @@ public abstract class BaseWikiNodeResourceTestCase {
 	protected WikiNode testPutWikiNode_addWikiNode() throws Exception {
 		return wikiNodeResource.postSiteWikiNode(
 			testGroup.getGroupId(), randomWikiNode());
-	}
-
-	@Test
-	public void testPutWikiNodeBatch() throws Exception {
-		Assert.assertTrue(true);
 	}
 
 	@Test

@@ -763,13 +763,6 @@ public abstract class BaseDocumentDataDefinitionTypeResourceTestCase {
 	}
 
 	@Test
-	public void testPostAssetLibraryDocumentDataDefinitionTypeBatch()
-		throws Exception {
-
-		Assert.assertTrue(true);
-	}
-
-	@Test
 	public void testDeleteDocumentDataDefinitionType() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		DocumentDataDefinitionType documentDataDefinitionType =
@@ -1647,11 +1640,6 @@ public abstract class BaseDocumentDataDefinitionTypeResourceTestCase {
 		Assert.assertTrue(
 			equals(
 				randomDocumentDataDefinitionType, documentDataDefinitionType));
-	}
-
-	@Test
-	public void testPostSiteDocumentDataDefinitionTypeBatch() throws Exception {
-		Assert.assertTrue(true);
 	}
 
 	@Rule

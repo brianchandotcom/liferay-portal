@@ -6,6 +6,7 @@
 package com.liferay.rss.internal.export;
 
 import com.liferay.normalizer.Normalizer;
+import com.liferay.petra.function.transform.TransformUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -25,7 +26,6 @@ import com.rometools.rome.feed.synd.SyndLinkImpl;
 import com.rometools.rome.io.FeedException;
 import com.rometools.rome.io.SyndFeedOutput;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.jdom2.IllegalDataException;
@@ -123,21 +123,18 @@ public class RSSExporterImpl implements RSSExporter {
 			return null;
 		}
 
-		List<com.rometools.rome.feed.synd.SyndEnclosure> realSyndEnclosures =
-			new ArrayList<>();
+		return TransformUtil.transform(
+			syndEnclosures,
+			syndEnclosure -> {
+				com.rometools.rome.feed.synd.SyndEnclosure realSyndEnclosure =
+					new SyndEnclosureImpl();
 
-		for (SyndEnclosure syndEnclosure : syndEnclosures) {
-			com.rometools.rome.feed.synd.SyndEnclosure realSyndEnclosure =
-				new SyndEnclosureImpl();
+				realSyndEnclosure.setLength(syndEnclosure.getLength());
+				realSyndEnclosure.setType(syndEnclosure.getType());
+				realSyndEnclosure.setUrl(syndEnclosure.getUrl());
 
-			realSyndEnclosure.setLength(syndEnclosure.getLength());
-			realSyndEnclosure.setType(syndEnclosure.getType());
-			realSyndEnclosure.setUrl(syndEnclosure.getUrl());
-
-			realSyndEnclosures.add(realSyndEnclosure);
-		}
-
-		return realSyndEnclosures;
+				return realSyndEnclosure;
+			});
 	}
 
 	private List<com.rometools.rome.feed.synd.SyndEntry> _toRealSyndEntries(
@@ -147,29 +144,26 @@ public class RSSExporterImpl implements RSSExporter {
 			return null;
 		}
 
-		List<com.rometools.rome.feed.synd.SyndEntry> realSyndEntries =
-			new ArrayList<>();
+		return TransformUtil.transform(
+			syndEntries,
+			syndEntry -> {
+				com.rometools.rome.feed.synd.SyndEntry realSyndEntry =
+					new SyndEntryImpl();
 
-		for (SyndEntry syndEntry : syndEntries) {
-			com.rometools.rome.feed.synd.SyndEntry realSyndEntry =
-				new SyndEntryImpl();
+				realSyndEntry.setAuthor(syndEntry.getAuthor());
+				realSyndEntry.setDescription(
+					_toRealSyncContent(syndEntry.getDescription()));
+				realSyndEntry.setEnclosures(
+					_toRealSyndEnclosures(syndEntry.getEnclosures()));
+				realSyndEntry.setLink(syndEntry.getLink());
+				realSyndEntry.setLinks(_toRealSyndLinks(syndEntry.getLinks()));
+				realSyndEntry.setPublishedDate(syndEntry.getPublishedDate());
+				realSyndEntry.setTitle(syndEntry.getTitle());
+				realSyndEntry.setUpdatedDate(syndEntry.getUpdatedDate());
+				realSyndEntry.setUri(syndEntry.getUri());
 
-			realSyndEntry.setAuthor(syndEntry.getAuthor());
-			realSyndEntry.setDescription(
-				_toRealSyncContent(syndEntry.getDescription()));
-			realSyndEntry.setEnclosures(
-				_toRealSyndEnclosures(syndEntry.getEnclosures()));
-			realSyndEntry.setLink(syndEntry.getLink());
-			realSyndEntry.setLinks(_toRealSyndLinks(syndEntry.getLinks()));
-			realSyndEntry.setPublishedDate(syndEntry.getPublishedDate());
-			realSyndEntry.setTitle(syndEntry.getTitle());
-			realSyndEntry.setUpdatedDate(syndEntry.getUpdatedDate());
-			realSyndEntry.setUri(syndEntry.getUri());
-
-			realSyndEntries.add(realSyndEntry);
-		}
-
-		return realSyndEntries;
+				return realSyndEntry;
+			});
 	}
 
 	private com.rometools.rome.feed.synd.SyndFeed _toRealSyndFeed(
@@ -195,22 +189,19 @@ public class RSSExporterImpl implements RSSExporter {
 			return null;
 		}
 
-		List<com.rometools.rome.feed.synd.SyndLink> realSyndLinks =
-			new ArrayList<>();
+		return TransformUtil.transform(
+			syndLinks,
+			syndLink -> {
+				com.rometools.rome.feed.synd.SyndLink realSyndLink =
+					new SyndLinkImpl();
 
-		for (SyndLink syndLink : syndLinks) {
-			com.rometools.rome.feed.synd.SyndLink realSyndLink =
-				new SyndLinkImpl();
+				realSyndLink.setHref(syndLink.getHref());
+				realSyndLink.setLength(syndLink.getLength());
+				realSyndLink.setRel(syndLink.getRel());
+				realSyndLink.setType(syndLink.getType());
 
-			realSyndLink.setHref(syndLink.getHref());
-			realSyndLink.setLength(syndLink.getLength());
-			realSyndLink.setRel(syndLink.getRel());
-			realSyndLink.setType(syndLink.getType());
-
-			realSyndLinks.add(realSyndLink);
-		}
-
-		return realSyndLinks;
+				return realSyndLink;
+			});
 	}
 
 	private static final String _REGEXP_STRIP = "[\\d\\w]";

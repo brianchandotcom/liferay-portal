@@ -48,7 +48,6 @@ import com.liferay.headless.delivery.client.dto.v1_0.StructuredContentLink;
 import com.liferay.headless.delivery.client.http.HttpInvoker;
 import com.liferay.headless.delivery.client.pagination.Page;
 import com.liferay.headless.delivery.client.pagination.Pagination;
-import com.liferay.headless.delivery.client.permission.Permission;
 import com.liferay.headless.delivery.client.problem.Problem;
 import com.liferay.headless.delivery.client.resource.v1_0.StructuredContentResource;
 import com.liferay.journal.constants.JournalArticleConstants;
@@ -63,7 +62,6 @@ import com.liferay.layout.page.template.test.util.DisplayPageTemplateTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.Language;
@@ -658,16 +656,17 @@ public class StructuredContentResourceTest
 		StructuredContent randomStructuredContent1 = _randomStructuredContent(
 			locale);
 
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray().put(JSONFactoryUtil.createJSONObject(randomStructuredContent1.toString()));
+		HttpInvoker.HttpResponse batchHttpResponse =
+			structuredContentResource.
+				postSiteStructuredContentBatchHttpResponse(
+					testGroup.getGroupId(), null,
+					JSONFactoryUtil.createJSONArray(
+					).put(
+						JSONFactoryUtil.createJSONObject(
+							randomStructuredContent1.toString())
+					));
 
-		HttpInvoker.HttpResponse batchHttpResponse = structuredContentResource.postSiteStructuredContentBatchHttpResponse(
-			testGroup.getGroupId(),
-			null,
-			jsonArray);
-
-		assertHttpResponseStatusCode(
-			202,
-			batchHttpResponse);
+		assertHttpResponseStatusCode(202, batchHttpResponse);
 
 		User testCompanyAdminUser = UserTestUtil.getAdminUser(
 			testCompany.getCompanyId());
@@ -682,20 +681,28 @@ public class StructuredContentResourceTest
 			LocaleUtil.getDefault()
 		).build();
 
-		ImportTask importTask = importTaskResource.getImportTask(GetterUtil.getLong(JSONFactoryUtil.createJSONObject(batchHttpResponse.getContent()).getString("id")));
+		ImportTask importTask = importTaskResource.getImportTask(
+			GetterUtil.getLong(
+				JSONFactoryUtil.createJSONObject(
+					batchHttpResponse.getContent()
+				).getString(
+					"id"
+				)));
 
 		while (true) {
 			importTask = importTaskResource.getImportTask(importTask.getId());
 
 			if (StringUtil.equals(
-				importTask.getExecuteStatusAsString(), "COMPLETED") ||
+					importTask.getExecuteStatusAsString(), "COMPLETED") ||
 				StringUtil.equals(
 					importTask.getExecuteStatusAsString(), "FAILED")) {
 
 				Assert.assertEquals(
 					"COMPLETED", importTask.getExecuteStatusAsString());
-				Assert.assertEquals(1L, (long) importTask.getProcessedItemsCount());
-				Assert.assertEquals(1L, (long) importTask.getTotalItemsCount());
+				Assert.assertEquals(
+					1L, (long)importTask.getProcessedItemsCount());
+				Assert.assertEquals(1L, (long)importTask.getTotalItemsCount());
+
 				break;
 			}
 		}
@@ -1088,81 +1095,6 @@ public class StructuredContentResourceTest
 		).header(
 			"X-Accept-All-Languages", "true"
 		).build();
-	}
-
-	private JSONArray _createBatchBody(long structureId) throws Exception {
-		StructuredContent structuredContent = new StructuredContent();
-
-		structuredContent.setAvailableLanguages(
-			new String[] {"en-US", "es-ES"});
-
-		ContentField contentField = new ContentField() {
-			{
-				contentFieldValue = new ContentFieldValue() {
-					{
-						data = "1";
-					}
-				};
-
-				contentFieldValue_i18n =
-					HashMapBuilder.<String, ContentFieldValue>put(
-						"en_US",
-						new ContentFieldValue() {
-							{
-								data = "1";
-							}
-						}
-					).put(
-						"es-ES",
-						new ContentFieldValue() {
-							{
-								data = "1 Hindi";
-							}
-						}
-					).build();
-
-				dataType = "string";
-				inputControl = "text";
-				label = "Text";
-				name = "MyText";
-				nestedContentFields = new ContentField[0];
-				repeatable = false;
-			}
-		};
-
-		structuredContent.setContentFields(new ContentField[] {contentField});
-
-		structuredContent.setContentStructureId(structureId);
-
-		Permission permission = new Permission() {
-			{
-				actionIds = new String[] {"VIEW"};
-				roleName = "Guest";
-			}
-		};
-
-		structuredContent.setPermissions(new Permission[] {permission});
-
-		structuredContent.setPriority(0.0);
-		structuredContent.setStructuredContentFolderId(0L);
-		structuredContent.setTaxonomyCategoryIds(new Long[0]);
-		structuredContent.setTitle("Section - 2");
-
-		structuredContent.setTitle_i18n(
-			HashMapBuilder.put(
-				"en_US", "Section - 2"
-			).put(
-				"es-ES", "Section - 2 Hindi"
-			).build());
-
-		String structuredContentJSON = structuredContent.toString();
-
-		JSONObject structuredContentJSONObject =
-			JSONFactoryUtil.createJSONObject(structuredContentJSON);
-
-		JSONArray batchPayloadJSONArray = JSONFactoryUtil.createJSONArray();
-
-		return batchPayloadJSONArray.put(structuredContentJSONObject);
 	}
 
 	private DDMFormField _createDDMFormField(

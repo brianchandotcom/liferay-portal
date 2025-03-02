@@ -271,14 +271,11 @@ public abstract class Base${schemaName}ResourceTestCase {
 			parameters = freeMarkerTool.getResourceTestCaseParameters(configYAML, javaMethodSignature.javaMethodParameters, javaMethodSignature.operation, allSchemas, false)
 		/>
 
-		<#if stringUtil.endsWith(javaMethodSignature.methodName, schemaNames + "PageExportBatch")>
+		<#if stringUtil.endsWith(javaMethodSignature.methodName, schemaName + "Batch") || stringUtil.endsWith(javaMethodSignature.methodName, schemaNames + "PageExportBatch")>
 			<#continue>
 		</#if>
 
 		<#if freeMarkerTool.hasHTTPMethod(javaMethodSignature, "delete")>
-			<#if stringUtil.endsWith(javaMethodSignature.methodName, schemaName + "Batch") >
-				<#continue>
-			</#if>
 			<#assign
 				addGetterMethod = false
 				defaultImplementationGetterMethod = false
@@ -1996,11 +1993,6 @@ public abstract class Base${schemaName}ResourceTestCase {
 				<#else>
 					throw new UnsupportedOperationException("This method needs to be implemented");
 				</#if>
-			}
-        <#elseif stringUtil.endsWith(javaMethodSignature.methodName, schemaName + "Batch") && !freeMarkerTool.isReturnTypeRelatedSchema(javaMethodSignature, relatedSchemaNames)>
-			@Test
-			public void test${javaMethodSignature.methodName?cap_first}() throws Exception {
-				Assert.assertTrue(true);
 			}
 		<#elseif !freeMarkerTool.isReturnTypeRelatedSchema(javaMethodSignature, relatedSchemaNames)>
 			@Test

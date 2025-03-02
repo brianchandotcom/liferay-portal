@@ -7,6 +7,7 @@
 	<source-check>
 		<suppress checks="BNDSchemaVersionCheck" files="portal-scheduler-quartz/bnd\.bnd" />
 		<suppress checks="JavaUpgradeIndexCheck" files="portal-scheduler-quartz/src/main/java/com/liferay/portal/scheduler/quartz/internal/upgrade/v1_0_3/QuartzDBPartitionUpgradeProcess\.java" />
+		<suppress checks="JavaUpgradeIndexCheck" files="portal-scheduler-quartz/src/main/java/com/liferay/portal/scheduler/quartz/internal/upgrade/v1_0_5/QuartzTriggersUpgradeProcess\.java" />
 		<suppress checks="JavaUpgradeVersionCheck" files="portal-scheduler-quartz/src/main/java/com/liferay/portal/scheduler/quartz/internal/upgrade/registry/QuartzServiceUpgradeStepRegistrator\.java" />
 	</source-check>
 </suppressions>

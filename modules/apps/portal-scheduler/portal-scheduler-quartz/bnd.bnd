@@ -15,4 +15,4 @@ Import-Package:\
 	!javax.transaction.*,\
 	\
 	*
-Liferay-Require-SchemaVersion: 1.0.4
+Liferay-Require-SchemaVersion: 1.0.5

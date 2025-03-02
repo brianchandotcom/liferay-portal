@@ -390,7 +390,14 @@ test('LPD-44526 Can activate and deactivate an account', async ({
 
 	await accountsPage.goto();
 
-	await (await accountsPage.accountsTable.rowActions(account.name)).click();
+	await expect(async () => {
+		await (
+			await accountsPage.accountsTable.rowActions(account.name)
+		).click();
+
+		await expect(accountsPage.deactivateButton).toBeVisible({timeout: 300});
+	}).toPass();
+
 	await accountsPage.deactivateButton.click();
 
 	await waitForAlert(page);
@@ -533,7 +540,14 @@ test('LPD-45897 Can delete an inactive account', async ({
 
 	await accountsPage.goto();
 
-	await (await accountsPage.accountsTable.rowActions(account.name)).click();
+	await expect(async () => {
+		await (
+			await accountsPage.accountsTable.rowActions(account.name)
+		).click();
+
+		await expect(accountsPage.deactivateButton).toBeVisible({timeout: 300});
+	}).toPass();
+
 	await accountsPage.deactivateButton.click();
 
 	await waitForAlert(page);
@@ -1052,7 +1066,14 @@ test('LPS-101221 An inactive account can be updated', async ({
 
 	await accountsPage.goto();
 
-	await (await accountsPage.accountsTable.rowActions(account.name)).click();
+	await expect(async () => {
+		await (
+			await accountsPage.accountsTable.rowActions(account.name)
+		).click();
+
+		await expect(accountsPage.deactivateButton).toBeVisible({timeout: 300});
+	}).toPass();
+
 	await accountsPage.deactivateButton.click();
 
 	await waitForAlert(page);
@@ -1134,7 +1155,14 @@ test('LPS-101221 Can search an account', async ({
 
 	await accountsPage.goto();
 
-	await (await accountsPage.accountsTable.rowActions(account1.name)).click();
+	await expect(async () => {
+		await (
+			await accountsPage.accountsTable.rowActions(account1.name)
+		).click();
+
+		await expect(accountsPage.deactivateButton).toBeVisible({timeout: 300});
+	}).toPass();
+
 	await accountsPage.deactivateButton.click();
 
 	await waitForAlert(page);

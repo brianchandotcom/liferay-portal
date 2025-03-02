@@ -276,7 +276,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 		</#if>
 
 		<#if freeMarkerTool.hasHTTPMethod(javaMethodSignature, "delete")>
-			<#if stringUtil.endsWith(javaMethodSignature.methodName, schemaName + "Batch")>
+			<#if stringUtil.endsWith(javaMethodSignature.methodName, schemaName + "Batch") >
 				<#continue>
 			</#if>
 			<#assign
@@ -1997,7 +1997,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 					throw new UnsupportedOperationException("This method needs to be implemented");
 				</#if>
 			}
-		<#elseif stringUtil.endsWith(javaMethodSignature.methodName, schemaName + "Batch") && !freeMarkerTool.isReturnTypeRelatedSchema(javaMethodSignature, relatedSchemaNames)>
+        <#elseif stringUtil.endsWith(javaMethodSignature.methodName, schemaName + "Batch") && !freeMarkerTool.isReturnTypeRelatedSchema(javaMethodSignature, relatedSchemaNames)>
 			@Test
 			public void test${javaMethodSignature.methodName?cap_first}() throws Exception {
 				Assert.assertTrue(true);

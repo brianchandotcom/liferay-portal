@@ -9,6 +9,7 @@ dependencies {
 	testIntegrationImplementation group: "javax.validation", name: "validation-api", version: "2.0.1.Final"
 	testIntegrationImplementation group: "javax.ws.rs", name: "javax.ws.rs-api", version: "2.1"
 	testIntegrationImplementation group: "junit", name: "junit", version: "4.13.1"
+	testIntegrationImplementation project(":apps:batch-engine:batch-engine-api")
 	testIntegrationImplementation project(":apps:commerce:headless:headless-commerce:headless-commerce-admin-site-setting-api")
 	testIntegrationImplementation project(":apps:commerce:headless:headless-commerce:headless-commerce-admin-site-setting-client")
 	testIntegrationImplementation project(":apps:oauth2-provider:oauth2-provider-scope-api")

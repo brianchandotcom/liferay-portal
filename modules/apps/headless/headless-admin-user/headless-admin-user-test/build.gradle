@@ -9,6 +9,7 @@ dependencies {
 	testIntegrationImplementation project(":apps:account:account-api")
 	testIntegrationImplementation project(":apps:asset:asset-entry-rel-api")
 	testIntegrationImplementation project(":apps:asset:asset-test-util")
+	testIntegrationImplementation project(":apps:batch-engine:batch-engine-api")
 	testIntegrationImplementation project(":apps:captcha:captcha-api")
 	testIntegrationImplementation project(":apps:depot:depot-api")
 	testIntegrationImplementation project(":apps:document-library:document-library-api")

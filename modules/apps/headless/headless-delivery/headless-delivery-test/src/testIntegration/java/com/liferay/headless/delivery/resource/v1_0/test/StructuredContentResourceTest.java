@@ -628,19 +628,16 @@ public class StructuredContentResourceTest
 		StructuredContent randomStructuredContent1 = _randomStructuredContent(
 			locale);
 
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray().put(randomStructuredContent1.toString());
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray().put(JSONFactoryUtil.createJSONObject(randomStructuredContent1.toString()));
 
-		HttpInvoker.HttpResponse httpResponse = structuredContentResource.postSiteStructuredContentBatchHttpResponse(
+		HttpInvoker.HttpResponse batchHttpResponse = structuredContentResource.postSiteStructuredContentBatchHttpResponse(
 			testGroup.getGroupId(),
 			null,
 			jsonArray);
 
 		assertHttpResponseStatusCode(
-			204,
-			structuredContentResource.postSiteStructuredContentBatchHttpResponse(
-				testGroup.getGroupId(),
-				null,
-				jsonArray));
+			202,
+			batchHttpResponse);
 
 		User testCompanyAdminUser = UserTestUtil.getAdminUser(
 			testCompany.getCompanyId());
@@ -655,9 +652,7 @@ public class StructuredContentResourceTest
 			LocaleUtil.getDefault()
 		).build();
 
-		JSONFactoryUtil.createJSONObject(httpResponse.getContent()).getString("id");
-
-		ImportTask importTask = importTaskResource.getImportTask((long)1);
+		ImportTask importTask = importTaskResource.getImportTask(GetterUtil.getLong(JSONFactoryUtil.createJSONObject(batchHttpResponse.getContent()).getString("id")));
 
 		while (true) {
 			importTask = importTaskResource.getImportTask(importTask.getId());
@@ -669,7 +664,8 @@ public class StructuredContentResourceTest
 
 				Assert.assertEquals(
 					"COMPLETED", importTask.getExecuteStatusAsString());
-
+				Assert.assertEquals(1L, (long) importTask.getProcessedItemsCount());
+				Assert.assertEquals(1L, (long) importTask.getTotalItemsCount());
 				break;
 			}
 		}

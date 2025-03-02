@@ -510,11 +510,6 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 	}
 
 	@Test
-	public void testPutKnowledgeBaseArticleBatch() throws Exception {
-		Assert.assertTrue(true);
-	}
-
-	@Test
 	public void testDeleteKnowledgeBaseArticleMyRating() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		KnowledgeBaseArticle knowledgeBaseArticle =
@@ -1728,13 +1723,6 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 	}
 
 	@Test
-	public void testPostKnowledgeBaseFolderKnowledgeBaseArticleBatch()
-		throws Exception {
-
-		Assert.assertTrue(true);
-	}
-
-	@Test
 	public void testGetSiteKnowledgeBaseArticlesPage() throws Exception {
 		Long siteId = testGetSiteKnowledgeBaseArticlesPage_getSiteId();
 		Long irrelevantSiteId =
@@ -2322,11 +2310,6 @@ public abstract class BaseKnowledgeBaseArticleResourceTestCase {
 
 		Assert.assertTrue(
 			equals(randomKnowledgeBaseArticle, knowledgeBaseArticle));
-	}
-
-	@Test
-	public void testPostSiteKnowledgeBaseArticleBatch() throws Exception {
-		Assert.assertTrue(true);
 	}
 
 	@Test

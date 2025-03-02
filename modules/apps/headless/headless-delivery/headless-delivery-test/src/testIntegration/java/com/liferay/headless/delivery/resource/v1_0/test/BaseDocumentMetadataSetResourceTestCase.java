@@ -450,13 +450,6 @@ public abstract class BaseDocumentMetadataSetResourceTestCase {
 	}
 
 	@Test
-	public void testPostAssetLibraryDocumentMetadataSetBatch()
-		throws Exception {
-
-		Assert.assertTrue(true);
-	}
-
-	@Test
 	public void testDeleteAssetLibraryDocumentMetadataSetByExternalReferenceCode()
 		throws Exception {
 
@@ -1312,11 +1305,6 @@ public abstract class BaseDocumentMetadataSetResourceTestCase {
 
 		Assert.assertTrue(
 			equals(randomDocumentMetadataSet, documentMetadataSet));
-	}
-
-	@Test
-	public void testPostSiteDocumentMetadataSetBatch() throws Exception {
-		Assert.assertTrue(true);
 	}
 
 	@Test

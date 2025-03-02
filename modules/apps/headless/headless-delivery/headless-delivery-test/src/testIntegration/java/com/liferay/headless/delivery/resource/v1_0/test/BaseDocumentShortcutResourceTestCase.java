@@ -429,11 +429,6 @@ public abstract class BaseDocumentShortcutResourceTestCase {
 	}
 
 	@Test
-	public void testPostAssetLibraryDocumentShortcutBatch() throws Exception {
-		Assert.assertTrue(true);
-	}
-
-	@Test
 	public void testDeleteDocumentShortcut() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		DocumentShortcut documentShortcut =
@@ -728,11 +723,6 @@ public abstract class BaseDocumentShortcutResourceTestCase {
 
 		return documentShortcutResource.postSiteDocumentShortcut(
 			testGroup.getGroupId(), randomDocumentShortcut());
-	}
-
-	@Test
-	public void testPutDocumentShortcutBatch() throws Exception {
-		Assert.assertTrue(true);
 	}
 
 	@Test
@@ -1037,11 +1027,6 @@ public abstract class BaseDocumentShortcutResourceTestCase {
 				randomDocumentShortcut);
 
 		Assert.assertTrue(equals(randomDocumentShortcut, documentShortcut));
-	}
-
-	@Test
-	public void testPostSiteDocumentShortcutBatch() throws Exception {
-		Assert.assertTrue(true);
 	}
 
 	@Test

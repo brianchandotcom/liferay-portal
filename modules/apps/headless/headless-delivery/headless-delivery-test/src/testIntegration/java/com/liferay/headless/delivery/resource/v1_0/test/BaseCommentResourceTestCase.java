@@ -608,11 +608,6 @@ public abstract class BaseCommentResourceTestCase {
 	}
 
 	@Test
-	public void testPostBlogPostingCommentBatch() throws Exception {
-		Assert.assertTrue(true);
-	}
-
-	@Test
 	public void testDeleteComment() throws Exception {
 		@SuppressWarnings("PMD.UnusedLocalVariable")
 		Comment comment = testDeleteComment_addComment();
@@ -830,11 +825,6 @@ public abstract class BaseCommentResourceTestCase {
 	protected Comment testPutComment_addComment() throws Exception {
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
-	}
-
-	@Test
-	public void testPutCommentBatch() throws Exception {
-		Assert.assertTrue(true);
 	}
 
 	@Test
@@ -1640,11 +1630,6 @@ public abstract class BaseCommentResourceTestCase {
 
 		return commentResource.postDocumentComment(
 			testGetDocumentCommentsPage_getDocumentId(), comment);
-	}
-
-	@Test
-	public void testPostDocumentCommentBatch() throws Exception {
-		Assert.assertTrue(true);
 	}
 
 	@Test
@@ -3508,11 +3493,6 @@ public abstract class BaseCommentResourceTestCase {
 		return commentResource.postStructuredContentComment(
 			testGetStructuredContentCommentsPage_getStructuredContentId(),
 			comment);
-	}
-
-	@Test
-	public void testPostStructuredContentCommentBatch() throws Exception {
-		Assert.assertTrue(true);
 	}
 
 	@Rule

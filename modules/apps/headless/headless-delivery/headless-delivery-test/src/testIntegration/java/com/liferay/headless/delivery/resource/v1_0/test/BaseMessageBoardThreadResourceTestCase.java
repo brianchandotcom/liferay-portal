@@ -731,13 +731,6 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 	}
 
 	@Test
-	public void testPostMessageBoardSectionMessageBoardThreadBatch()
-		throws Exception {
-
-		Assert.assertTrue(true);
-	}
-
-	@Test
 	public void testGetMessageBoardThreadsRankedPage() throws Exception {
 		Page<MessageBoardThread> page =
 			messageBoardThreadResource.getMessageBoardThreadsRankedPage(
@@ -1356,11 +1349,6 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 
 		return messageBoardThreadResource.postSiteMessageBoardThread(
 			testGroup.getGroupId(), randomMessageBoardThread());
-	}
-
-	@Test
-	public void testPutMessageBoardThreadBatch() throws Exception {
-		Assert.assertTrue(true);
 	}
 
 	@Test
@@ -2095,11 +2083,6 @@ public abstract class BaseMessageBoardThreadResourceTestCase {
 				randomMessageBoardThread);
 
 		Assert.assertTrue(equals(randomMessageBoardThread, messageBoardThread));
-	}
-
-	@Test
-	public void testPostSiteMessageBoardThreadBatch() throws Exception {
-		Assert.assertTrue(true);
 	}
 
 	@Test

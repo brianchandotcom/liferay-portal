@@ -622,6 +622,37 @@ public class StructuredContentResourceTest
 
 	@Override
 	@Test
+	public void testPostStructuredContentFolderStructuredContent()
+		throws Exception {
+
+		super.testPostStructuredContentFolderStructuredContent();
+
+		DisplayPageTemplateTestUtil.addDisplayPageTemplate(
+			testGroup.getGroupId(),
+			_portal.getClassNameId(JournalArticle.class.getName()),
+			_localizedDDMStructure.getStructureId(), true,
+			WorkflowConstants.STATUS_APPROVED);
+
+		Locale locale = LocaleUtil.getDefault();
+
+		StructuredContent randomStructuredContent = _randomStructuredContent(
+			locale);
+
+		StructuredContentResource structuredContentResource =
+			_buildStructureContentResource(locale);
+
+		StructuredContent postStructuredContent =
+			structuredContentResource.
+				postStructuredContentFolderStructuredContent(
+					_journalFolder.getFolderId(), randomStructuredContent);
+
+		Assert.assertTrue(
+			postStructuredContent.getRenderedContents()[0].
+				getMarkedAsDefault());
+	}
+
+	@Override
+	@Test
 	public void testPostSiteStructuredContentBatch() throws Exception {
 		Locale locale = LocaleUtil.getDefault();
 
@@ -669,37 +700,6 @@ public class StructuredContentResourceTest
 				break;
 			}
 		}
-	}
-
-	@Override
-	@Test
-	public void testPostStructuredContentFolderStructuredContent()
-		throws Exception {
-
-		super.testPostStructuredContentFolderStructuredContent();
-
-		DisplayPageTemplateTestUtil.addDisplayPageTemplate(
-			testGroup.getGroupId(),
-			_portal.getClassNameId(JournalArticle.class.getName()),
-			_localizedDDMStructure.getStructureId(), true,
-			WorkflowConstants.STATUS_APPROVED);
-
-		Locale locale = LocaleUtil.getDefault();
-
-		StructuredContent randomStructuredContent = _randomStructuredContent(
-			locale);
-
-		StructuredContentResource structuredContentResource =
-			_buildStructureContentResource(locale);
-
-		StructuredContent postStructuredContent =
-			structuredContentResource.
-				postStructuredContentFolderStructuredContent(
-					_journalFolder.getFolderId(), randomStructuredContent);
-
-		Assert.assertTrue(
-			postStructuredContent.getRenderedContents()[0].
-				getMarkedAsDefault());
 	}
 
 	@Override

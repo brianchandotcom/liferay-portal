@@ -5,7 +5,6 @@
 
 package com.liferay.portal.tools.rest.builder.internal.typescript;
 
-import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.HashMapBuilder;
@@ -297,9 +296,7 @@ public class TypeScriptClientUtil {
 					propertySchemas.forEach(
 						(name, propertySchema) -> properties.add(
 							HashMapBuilder.<String, Object>put(
-								"name",
-								StringUtil.replace(
-									name, '-', CharPool.UNDERLINE)
+								"name", StringUtil.replace(name, '-', '_')
 							).put(
 								"type", _getDataType(propertySchema, imports)
 							).build()));
@@ -315,8 +312,7 @@ public class TypeScriptClientUtil {
 			propertySchemas.forEach(
 				(name, propertySchema) -> properties.add(
 					HashMapBuilder.<String, Object>put(
-						"name",
-						StringUtil.replace(name, '-', CharPool.UNDERLINE)
+						"name", StringUtil.replace(name, '-', '_')
 					).put(
 						"type", _getDataType(propertySchema, imports)
 					).build()));
@@ -625,51 +621,55 @@ public class TypeScriptClientUtil {
 
 		RequestBody requestBody = operation.getRequestBody();
 
-		if (requestBody != null) {
-			Map<String, Content> content = requestBody.getContent();
-
-			if ((content != null) && !content.isEmpty()) {
-				Collection<Content> contents = content.values();
-
-				Iterator<Content> iterator = contents.iterator();
-
-				Content firstBodyContent = iterator.next();
-
-				if (firstBodyContent != null) {
-					Schema schema = firstBodyContent.getSchema();
-
-					if (schema != null) {
-						String dataType = _getDataType(schema, imports);
-
-						// TODO: Retrieve 'required' property inside requestBody
-
-						parameterDatas.add(
-							HashMapBuilder.<String, Object>put(
-								"dataType", dataType
-							).put(
-								"name",
-								() -> {
-									String replaceString = dataType;
-
-									if (Validator.isNull(
-											schema.getReference())) {
-
-										replaceString = "body";
-									}
-
-									return StringUtil.replace(
-										replaceString, '-',
-										StringPool.UNDERLINE);
-								}
-							).put(
-								"required", false
-							).put(
-								"type", "body"
-							).build());
-					}
-				}
-			}
+		if (requestBody == null) {
+			return parameterDatas;
 		}
+
+		Map<String, Content> content = requestBody.getContent();
+
+		if ((content == null) || content.isEmpty()) {
+			return parameterDatas;
+		}
+
+		Collection<Content> contents = content.values();
+
+		Iterator<Content> iterator = contents.iterator();
+
+		Content firstBodyContent = iterator.next();
+
+		if (firstBodyContent == null) {
+			return parameterDatas;
+		}
+
+		Schema schema = firstBodyContent.getSchema();
+
+		if (schema == null) {
+			return parameterDatas;
+		}
+
+		// TODO Retrieve "required" property inside requestBody
+
+		String dataType = _getDataType(schema, imports);
+
+		parameterDatas.add(
+			HashMapBuilder.<String, Object>put(
+				"dataType", dataType
+			).put(
+				"name",
+				() -> {
+					String replaceString = dataType;
+
+					if (Validator.isNull(schema.getReference())) {
+						replaceString = "body";
+					}
+
+					return StringUtil.replace(replaceString, '-', '_');
+				}
+			).put(
+				"required", false
+			).put(
+				"type", "body"
+			).build());
 
 		return parameterDatas;
 	}

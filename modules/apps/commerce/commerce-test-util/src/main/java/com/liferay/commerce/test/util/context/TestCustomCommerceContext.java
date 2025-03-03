@@ -11,6 +11,7 @@ import com.liferay.commerce.context.BaseCommerceContext;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
+import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.product.discovery.CPConfigurationListDiscovery;
 import com.liferay.commerce.product.service.CommerceCatalogLocalService;
 import com.liferay.commerce.product.service.CommerceChannelAccountEntryRelLocalService;
@@ -53,6 +54,18 @@ public class TestCustomCommerceContext extends BaseCommerceContext {
 
 	@Override
 	public CommerceCurrency getCommerceCurrency() throws PortalException {
+		CommerceOrder commerceOrder = getCommerceOrder();
+
+		if (commerceOrder != null) {
+			return commerceOrder.getCommerceCurrency();
+		}
+
+		if (!Validator.isBlank(_currencyCode)) {
+			_commerceCurrency =
+				_commerceCurrencyLocalService.fetchCommerceCurrency(
+					_companyId, _currencyCode);
+		}
+
 		if (_commerceCurrency != null) {
 			return _commerceCurrency;
 		}

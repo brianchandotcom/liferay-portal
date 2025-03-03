@@ -168,6 +168,12 @@ public class BaseCommerceContextHttp implements CommerceContext {
 			return _commerceCurrency;
 		}
 
+		CommerceOrder commerceOrder = getCommerceOrder();
+
+		if (commerceOrder != null) {
+			return commerceOrder.getCommerceCurrency();
+		}
+
 		String commerceCurrencyCode = CookiesManagerUtil.getCookieValue(
 			CommerceCurrency.class.getName() + StringPool.POUND +
 				getCommerceChannelGroupId(),

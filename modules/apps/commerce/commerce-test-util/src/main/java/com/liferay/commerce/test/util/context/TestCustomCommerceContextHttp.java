@@ -10,6 +10,7 @@ import com.liferay.commerce.context.BaseCommerceContextHttp;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.currency.test.util.CommerceCurrencyTestUtil;
+import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.CommerceOrderHttpHelper;
 import com.liferay.commerce.product.discovery.CPConfigurationListDiscovery;
 import com.liferay.commerce.product.service.CommerceCatalogLocalService;
@@ -58,6 +59,28 @@ public class TestCustomCommerceContextHttp extends BaseCommerceContextHttp {
 	public CommerceCurrency getCommerceCurrency() throws PortalException {
 		if (_commerceCurrency != null) {
 			return _commerceCurrency;
+		}
+
+		CommerceOrder commerceOrder = getCommerceOrder();
+
+		if (commerceOrder != null) {
+			return commerceOrder.getCommerceCurrency();
+		}
+
+		String commerceCurrencyCode = CookiesManagerUtil.getCookieValue(
+			CommerceCurrency.class.getName() + StringPool.POUND +
+				getCommerceChannelGroupId(),
+			_httpServletRequest);
+
+		if (!Validator.isBlank(commerceCurrencyCode)) {
+			_commerceCurrency =
+				_commerceCurrencyLocalService.fetchCommerceCurrency(
+					_portal.getCompanyId(_httpServletRequest),
+					commerceCurrencyCode);
+
+			if ((_commerceCurrency != null) && _commerceCurrency.isActive()) {
+				return _commerceCurrency;
+			}
 		}
 
 		long companyId = _portal.getCompanyId(_httpServletRequest);

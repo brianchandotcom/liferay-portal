@@ -454,8 +454,7 @@ public class TypeScriptClientUtil {
 
 	private static void _createFile(
 			Map<String, Object> context, ConfigYAML configYAML,
-			File copyrightFile, List<File> files, String templateName,
-			String path)
+			File copyrightFile, List<File> files, String name, String path)
 		throws Exception {
 
 		File file = new File(path);
@@ -478,8 +477,7 @@ public class TypeScriptClientUtil {
 		FileUtil.write(
 			file,
 			FreeMarkerUtil.processTemplate(
-				copyrightFile, FileUtil.getCopyrightYear(file), templateName,
-				context));
+				copyrightFile, FileUtil.getCopyrightYear(file), name, context));
 	}
 
 	private static void _createNodeScriptsConfigFile(

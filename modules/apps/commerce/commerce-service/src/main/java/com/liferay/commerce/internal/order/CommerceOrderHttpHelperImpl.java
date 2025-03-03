@@ -459,15 +459,11 @@ public class CommerceOrderHttpHelperImpl implements CommerceOrderHttpHelper {
 
 		HttpSession httpSession = originalHttpServletRequest.getSession();
 
-		CommerceOrder commerceOrder = null;
+		CommerceOrder commerceOrder = (CommerceOrder)httpSession.getAttribute(
+			CommerceCheckoutWebKeys.COMMERCE_ORDER_ON_ACCOUNT_SELECTION);
 
-		if (FeatureFlagManagerUtil.isEnabled("LPD-35678")) {
-			commerceOrder = (CommerceOrder)httpSession.getAttribute(
-				CommerceCheckoutWebKeys.COMMERCE_ORDER_ON_ACCOUNT_SELECTION);
-
-			if (commerceOrder != null) {
-				return commerceOrder;
-			}
+		if (commerceOrder != null) {
+			return commerceOrder;
 		}
 
 		AccountEntry accountEntry = commerceContext.getAccountEntry();

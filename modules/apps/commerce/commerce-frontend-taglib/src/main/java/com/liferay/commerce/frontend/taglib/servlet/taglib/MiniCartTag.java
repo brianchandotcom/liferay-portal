@@ -25,7 +25,6 @@ import com.liferay.friendly.url.provider.FriendlyURLSeparatorProvider;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -407,9 +406,7 @@ public class MiniCartTag extends IncludeTag {
 			AccountEntry accountEntry, long commerceChannelGroupId)
 		throws PortalException {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-35678") ||
-			!accountEntry.isGuestAccount()) {
-
+		if (!accountEntry.isGuestAccount()) {
 			return false;
 		}
 

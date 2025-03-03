@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.events.Action;
 import com.liferay.portal.kernel.events.LifecycleAction;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Role;
@@ -70,40 +69,7 @@ public class LoginPostAction extends Action {
 		try {
 			_addDefaultAccountRoles(httpServletRequest);
 
-			if (FeatureFlagManagerUtil.isEnabled("LPD-35678")) {
-				_run(httpServletRequest, httpServletResponse);
-			}
-			else {
-				Cookie[] cookies = httpServletRequest.getCookies();
-
-				if (cookies == null) {
-					return;
-				}
-
-				for (Cookie cookie : cookies) {
-					String cookieName = cookie.getName();
-
-					if (cookieName.startsWith(
-							_COOKIE_NAME_PREFIX_COMMERCE_ORDER)) {
-
-						HttpServletRequest originalHttpServletRequest =
-							_portal.getOriginalServletRequest(
-								httpServletRequest);
-
-						HttpSession httpSession =
-							originalHttpServletRequest.getSession();
-
-						httpSession.setAttribute(cookieName, cookie.getValue());
-
-						_updateGuestCommerceOrder(
-							cookie.getValue(),
-							Long.valueOf(
-								StringUtil.extractLast(
-									cookieName, StringPool.POUND)),
-							httpServletRequest);
-					}
-				}
-			}
+			_run(httpServletRequest, httpServletResponse);
 		}
 		catch (Exception exception) {
 			if (_log.isDebugEnabled()) {
@@ -446,52 +412,6 @@ public class LoginPostAction extends Action {
 				accountEntry, commerceOrder.getGroupId(), commerceOrder,
 				httpServletRequest, user.getUserId());
 		}
-	}
-
-	private void _updateGuestCommerceOrder(
-			String commerceOrderUuid, long commerceChannelGroupId,
-			HttpServletRequest httpServletRequest)
-		throws Exception {
-
-		CommerceOrder commerceOrder;
-
-		try {
-			commerceOrder =
-				_commerceOrderLocalService.getCommerceOrderByUuidAndGroupId(
-					commerceOrderUuid, commerceChannelGroupId);
-		}
-		catch (Exception exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-
-			return;
-		}
-
-		if (commerceOrder.getCommerceAccountId() !=
-				AccountConstants.ACCOUNT_ENTRY_ID_GUEST) {
-
-			return;
-		}
-
-		User user = _portal.getUser(httpServletRequest);
-
-		List<AccountEntry> userAccountEntries =
-			_accountEntryLocalService.getUserAccountEntries(
-				user.getUserId(), null, null,
-				new String[] {AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON},
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		if (userAccountEntries.isEmpty()) {
-			userAccountEntries.add(
-				_createAccountEntry(
-					user.getFullName(),
-					AccountConstants.ACCOUNT_ENTRY_TYPE_PERSON, user));
-		}
-
-		_associateAccountEntryToCommerceOrder(
-			userAccountEntries.get(0), commerceChannelGroupId, commerceOrder,
-			httpServletRequest, user.getUserId());
 	}
 
 	private static final String _COOKIE_NAME_PREFIX_ACCOUNT_ENTRY =

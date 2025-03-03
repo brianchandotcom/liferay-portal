@@ -301,10 +301,6 @@ public class AccountSelectorTag extends IncludeTag {
 	private String _getCheckoutURL(HttpServletRequest httpServletRequest)
 		throws PortalException {
 
-		if (!FeatureFlagManagerUtil.isEnabled("LPD-35678")) {
-			return StringPool.BLANK;
-		}
-
 		HttpServletRequest originalHttpServletRequest =
 			PortalUtil.getOriginalServletRequest(httpServletRequest);
 

@@ -15,14 +15,10 @@ import {
 	FIELD_TYPE_ICON,
 	Field,
 	FieldType,
-} from '../../../structure_builder/utils/field';
-import {
-	State,
-	useSelector,
-	useStateDispatch,
-} from '../../contexts/StateContext';
-import selectSelection from '../../selectors/selectSelection';
-import selectStructureLabel from '../../selectors/selectStructureLabel';
+} from '../../structure_builder/utils/field';
+import {State, useSelector, useStateDispatch} from '../contexts/StateContext';
+import selectSelection from '../selectors/selectSelection';
+import selectStructureLabel from '../selectors/selectStructureLabel';
 
 const ROOT_ID = '';
 

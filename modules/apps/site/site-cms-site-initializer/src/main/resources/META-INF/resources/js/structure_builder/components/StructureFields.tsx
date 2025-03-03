@@ -7,9 +7,9 @@ import ClayEmptyState from '@clayui/empty-state';
 import {SearchForm} from '@liferay/layout-js-components-web';
 import React, {useMemo, useState} from 'react';
 
-import {getImage} from '../../../structure_builder/utils/getImage';
-import {useSelector} from '../../contexts/StateContext';
-import selectStructureFields from '../../selectors/selectStructureFields';
+import {getImage} from '../../structure_builder/utils/getImage';
+import {useSelector} from '../contexts/StateContext';
+import selectStructureFields from '../selectors/selectStructureFields';
 import AddFieldDropdown from './AddFieldDropdown';
 import FieldsTree from './FieldsTree';
 

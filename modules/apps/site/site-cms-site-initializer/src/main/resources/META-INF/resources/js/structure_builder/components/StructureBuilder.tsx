@@ -10,8 +10,8 @@ import React from 'react';
 import {Config, initializeConfig} from '../config';
 import StateContextProvider from '../contexts/StateContext';
 import ManagementBar from './ManagementBar';
+import StructureFields from './StructureFields';
 import StructureSettings from './StructureSettings';
-import StructureFields from './structure_fields/StructureFields';
 
 export default function StructureBuilder({config}: {config: Config}) {
 	initializeConfig(config);

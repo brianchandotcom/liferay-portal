@@ -7,12 +7,6 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-String mfaTimeBasedOTPSharedSecret = GetterUtil.getString(request.getAttribute(MFATimeBasedOTPWebKeys.MFA_TIME_BASED_OTP_SHARED_SECRET));
-
-MFATimeBasedOTPCheckerDisplayContext mfaTimeBasedOTPCheckerDisplayContext = (MFATimeBasedOTPCheckerDisplayContext)request.getAttribute(MFATimeBasedOTPWebKeys.MFA_TIME_BASED_OTP_CHECKER_DISPLAY_CONTEXT);
-%>
-
 <div class="sheet-section">
 	<div class="alert alert-info">
 		<liferay-ui:message key="user-account-setup-description" />
@@ -20,7 +14,7 @@ MFATimeBasedOTPCheckerDisplayContext mfaTimeBasedOTPCheckerDisplayContext = (MFA
 
 	<aui:input label="mfa-timebased-otp" name="mfaTimeBasedOTP" showRequiredLabel="yes" />
 
-	<aui:input label="shared-secret" name="sharedSecret" readOnly="<%= true %>" type="text" value="<%= mfaTimeBasedOTPSharedSecret %>" />
+	<aui:input label="shared-secret" name="sharedSecret" readOnly="<%= true %>" type="text" value="<%= GetterUtil.getString(request.getAttribute(MFATimeBasedOTPWebKeys.MFA_TIME_BASED_OTP_SHARED_SECRET)) %>" />
 
 	<div class="qrcode-setup" id="<portlet:namespace />qrcode"></div>
 </div>
@@ -28,6 +22,10 @@ MFATimeBasedOTPCheckerDisplayContext mfaTimeBasedOTPCheckerDisplayContext = (MFA
 <div class="sheet-footer">
 	<aui:button type="submit" value="submit" />
 </div>
+
+<%
+MFATimeBasedOTPCheckerDisplayContext mfaTimeBasedOTPCheckerDisplayContext = (MFATimeBasedOTPCheckerDisplayContext)request.getAttribute(MFATimeBasedOTPWebKeys.MFA_TIME_BASED_OTP_CHECKER_DISPLAY_CONTEXT);
+%>
 
 <liferay-frontend:component
 	context="<%= mfaTimeBasedOTPCheckerDisplayContext.getContext() %>"

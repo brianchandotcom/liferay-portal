@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {config} from '../config';
 import {State} from '../contexts/StateContext';
 import {ObjectDefinition, ObjectField} from '../types/ObjectDefinition';
 import {FIELD_TYPE_BUSINESS_TYPE, Field} from './field';
@@ -38,6 +39,11 @@ export default function buildObjectDefinition({
 
 	if (name) {
 		objectDefinition.name = name;
+	}
+
+	if (config.objectFolderExternalReferenceCode) {
+		objectDefinition.objectFolderExternalReferenceCode =
+			config.objectFolderExternalReferenceCode;
 	}
 
 	return objectDefinition;

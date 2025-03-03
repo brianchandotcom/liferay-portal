@@ -7,6 +7,7 @@ package com.liferay.company.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.link.model.adapter.StagedAssetLink;
+import com.liferay.company.service.test.util.CompanyLocalServiceTestUtil;
 import com.liferay.counter.kernel.service.CounterLocalService;
 import com.liferay.counter.kernel.service.persistence.CounterFinder;
 import com.liferay.counter.model.CounterRegister;
@@ -27,9 +28,13 @@ import com.liferay.layout.set.model.adapter.StagedLayoutSet;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.db.partition.db.DBPartitionDB;
 import com.liferay.portal.db.partition.util.DBPartitionUtil;
 import com.liferay.portal.events.StartupHelperUtil;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
+import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.db.partition.DBPartition;
 import com.liferay.portal.kernel.exception.CompanyMxException;
@@ -79,6 +84,7 @@ import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.randomizerbumpers.NumericStringRandomizerBumper;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DataGuard;
+import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.PropsValuesTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -87,14 +93,17 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
 import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnicodePropertiesBuilder;
@@ -109,17 +118,31 @@ import com.liferay.sites.kernel.util.Sites;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.ResultSet;
+
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.TimeZone;
 import java.util.concurrent.CopyOnWriteArrayList;
+
+import javax.portlet.Portlet;
+
+import javax.sql.DataSource;
+
+import org.apache.felix.cm.PersistenceManager;
 
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -128,7 +151,10 @@ import org.junit.runner.RunWith;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
+import org.osgi.service.cm.Configuration;
+import org.osgi.service.cm.ConfigurationAdmin;
 
 /**
  * @author Mika Koivisto
@@ -144,6 +170,26 @@ public class CompanyLocalServiceTest {
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		Bundle bundle = FrameworkUtil.getBundle(
+			CompanyLocalServiceDBPartitionTest.class);
+
+		_bundleContext = bundle.getBundleContext();
+
+		_connection = DataAccess.getConnection();
+
+		_db = DBManagerUtil.getDB();
+
+		ReflectionTestUtil.invoke(
+			DBPartitionUtil.class, "_initializeDBPartitionDB",
+			new Class<?>[] {DB.class, DataSource.class}, _db,
+			InfrastructureUtil.getDataSource());
+
+		_dbPartitionDB = ReflectionTestUtil.getFieldValue(
+			DBPartitionUtil.class, "_dbPartitionDB");
+	}
 
 	public void resetBackgroundTaskThreadLocal() throws Exception {
 		Class<?> backgroundTaskThreadLocalClass =
@@ -895,17 +941,52 @@ public class CompanyLocalServiceTest {
 	}
 
 	@Test
-	public void testExtractCompany() {
-		Assume.assumeFalse(DBPartition.isPartitionEnabled());
+	public void testExtractCompany() throws Exception {
+		Company company = CompanyTestUtil.addCompany();
 
 		try {
-			_companyLocalService.extractCompany(1L);
+			Configuration configuration =
+				CompanyLocalServiceTestUtil.createFactoryConfiguration(
+					_configurationAdmin, company.getCompanyId());
 
-			Assert.fail();
-		}
-		catch (Exception exception) {
+			String pid = configuration.getPid();
+
+			_companyLocalService.extractCompany(company.getCompanyId());
+
 			Assert.assertTrue(
-				exception instanceof UnsupportedOperationException);
+				ArrayUtil.contains(
+					CompanyLocalServiceTestUtil.getCompanyIdsBySQL(),
+					company.getCompanyId()));
+			Assert.assertTrue(
+				_dbPartitionDB.existsPartition(
+					_connection,
+					CompanyLocalServiceTestUtil.getExtractedPartitionName(
+						company.getCompanyId())));
+
+			CompanyLocalServiceTestUtil.checkStandaloneDBPartitionTables(
+				_connection, _dbPartitionDB,
+				CompanyLocalServiceTestUtil.getExtractedPartitionName(
+					company.getCompanyId()),
+				"Company", "VirtualHost");
+
+			Collection<ServiceReference<Portlet>> serviceReferences =
+				_bundleContext.getServiceReferences(
+					Portlet.class,
+					"(com.liferay.portlet.company=" + company.getCompanyId() +
+						")");
+
+			Assert.assertFalse(serviceReferences.isEmpty());
+
+			CompanyLocalServiceTestUtil.assertConfiguration(
+				_configurationAdmin, _persistenceManager, pid, true);
+		}
+		finally {
+			_db.runSQL(
+				_dbPartitionDB.getDropPartitionSQL(
+					CompanyLocalServiceTestUtil.getExtractedPartitionName(
+						company.getCompanyId())));
+
+			_companyLocalService.deleteCompany(company);
 		}
 	}
 
@@ -919,6 +1000,60 @@ public class CompanyLocalServiceTest {
 		}
 		catch (Exception exception) {
 			Assert.assertTrue(exception instanceof RequiredCompanyException);
+		}
+	}
+
+	@Test
+	public void testExtractCompanyWhenDBPartitionUtilFails() throws Exception {
+		Company company = CompanyTestUtil.addCompany();
+
+		int tablesCount = _getTablesCount(company.getCompanyId());
+		int viewsCount = _getViewsCount(company.getCompanyId());
+
+		try (AutoCloseable autoCloseable =
+				ReflectionTestUtil.setFieldValueWithAutoCloseable(
+					DBPartitionUtil.class, "_dbPartitionDB",
+					ProxyUtil.newProxyInstance(
+						DBPartitionDB.class.getClassLoader(),
+						new Class<?>[] {DBPartitionDB.class},
+						(proxy, method, args) -> {
+							if (Objects.equals(
+									method.getName(), "getCreateTableSQL") &&
+								StringUtil.equalsIgnoreCase(
+									(String)args[3], "VirtualHost")) {
+
+								throw new Exception();
+							}
+
+							return method.invoke(_dbPartitionDB, args);
+						}))) {
+
+			_companyLocalService.extractCompany(company.getCompanyId());
+
+			Assert.fail();
+		}
+		catch (Exception exception) {
+			Assert.assertTrue(
+				ArrayUtil.contains(
+					CompanyLocalServiceTestUtil.getCompanyIdsBySQL(),
+					company.getCompanyId()));
+			Assert.assertEquals(
+				tablesCount, _getTablesCount(company.getCompanyId()));
+			Assert.assertEquals(
+				viewsCount, _getViewsCount(company.getCompanyId()));
+			Assert.assertFalse(
+				_dbPartitionDB.existsPartition(
+					_connection,
+					CompanyLocalServiceTestUtil.getExtractedPartitionName(
+						company.getCompanyId())));
+		}
+		finally {
+			_db.runSQL(
+				_dbPartitionDB.getDropPartitionSQL(
+					CompanyLocalServiceTestUtil.getExtractedPartitionName(
+						company.getCompanyId())));
+
+			_companyLocalService.deleteCompany(company);
 		}
 	}
 
@@ -1377,6 +1512,41 @@ public class CompanyLocalServiceTest {
 		}
 	}
 
+	private List<String> _getObjectNames(String objectType, long companyId)
+		throws Exception {
+
+		List<String> objectNames = new ArrayList<>();
+
+		DatabaseMetaData databaseMetaData = _connection.getMetaData();
+
+		String partitionName = CompanyLocalServiceTestUtil.getPartitionName(
+			companyId);
+
+		try (ResultSet resultSet = databaseMetaData.getTables(
+				_dbPartitionDB.getCatalog(_connection, partitionName),
+				_dbPartitionDB.getSchema(_connection, partitionName), null,
+				new String[] {objectType})) {
+
+			while (resultSet.next()) {
+				objectNames.add(resultSet.getString("TABLE_NAME"));
+			}
+		}
+
+		return objectNames;
+	}
+
+	private int _getTablesCount(long companyId) throws Exception {
+		List<String> tableNames = _getObjectNames("TABLE", companyId);
+
+		return tableNames.size();
+	}
+
+	private int _getViewsCount(long companyId) throws Exception {
+		List<String> viewNames = _getObjectNames("VIEW", companyId);
+
+		return viewNames.size();
+	}
+
 	private List<String> _registerModelListeners() {
 		List<String> list = new CopyOnWriteArrayList<>();
 
@@ -1419,6 +1589,10 @@ public class CompanyLocalServiceTest {
 	private static final Log _log = LogFactoryUtil.getLog(
 		CompanyLocalServiceTest.class);
 
+	private static BundleContext _bundleContext;
+	private static Connection _connection;
+	private static DB _db;
+	private static DBPartitionDB _dbPartitionDB;
 	private static final TransactionConfig _transactionConfig;
 
 	static {
@@ -1436,6 +1610,9 @@ public class CompanyLocalServiceTest {
 
 	@Inject
 	private CompanyLocalService _companyLocalService;
+
+	@Inject
+	private ConfigurationAdmin _configurationAdmin;
 
 	@Inject
 	private CounterLocalService _counterLocalService;
@@ -1469,6 +1646,9 @@ public class CompanyLocalServiceTest {
 
 	@Inject
 	private PasswordPolicyLocalService _passwordPolicyLocalService;
+
+	@Inject
+	private PersistenceManager _persistenceManager;
 
 	@Inject
 	private Portal _portal;

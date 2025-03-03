@@ -38,7 +38,7 @@ boolean ldapImportEnabled = ldapImportConfiguration.importEnabled();
 		<aui:option label="user" value="<%= LDAPSettingsConstants.IMPORT_METHOD_USER %>" />
 	</aui:select>
 
-	<aui:input label="import-lock-expiration-time" name='<%= "ldap--" + LDAPConstants.IMPORT_LOCK_EXPIRATION_TIME + "--" %>' type="text" value="<%= ldapImportConfiguration.importLockExpirationTime() %>" />
+	<aui:input label="lock-expiration-time" name='<%= "ldap--" + LDAPConstants.IMPORT_LOCK_EXPIRATION_TIME + "--" %>' type="text" value="<%= ldapImportConfiguration.importLockExpirationTime() %>" />
 
 	<aui:select label="import-user-sync-strategy" name='<%= "ldap--" + LDAPConstants.IMPORT_USER_SYNC_STRATEGY + "--" %>' value="<%= ldapImportConfiguration.importUserSyncStrategy() %>">
 		<aui:option label="auth-type" value="<%= LDAPSettingsConstants.IMPORT_USER_SYNC_STRATEGY_AUTH_TYPE %>" />

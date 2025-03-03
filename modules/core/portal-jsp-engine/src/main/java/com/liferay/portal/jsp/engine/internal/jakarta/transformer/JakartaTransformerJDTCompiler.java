@@ -8,7 +8,10 @@ package com.liferay.portal.jsp.engine.internal.jakarta.transformer;
 import com.liferay.petra.io.StreamUtil;
 import com.liferay.petra.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.petra.reflect.ReflectionUtil;
+import com.liferay.petra.string.StringPool;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,6 +21,9 @@ import java.lang.invoke.MethodHandles;
 
 import java.net.URL;
 import java.net.URLClassLoader;
+
+import java.nio.file.Files;
+import java.nio.file.StandardOpenOption;
 
 import java.util.Map;
 import java.util.function.BiFunction;
@@ -77,9 +83,35 @@ public class JakartaTransformerJDTCompiler extends JDTCompiler {
 		super.generateClass(smaps);
 	}
 
+	@Override
+	protected Map<String, SmapStratum> generateJava() throws Exception {
+		Map<String, SmapStratum> smapStratums = super.generateJava();
+
+		if (_textReplacerBiFunction == null) {
+			return smapStratums;
+		}
+
+		File javaFile = new File(ctxt.getServletJavaFileName());
+
+		String content = StreamUtil.toString(new FileInputStream(javaFile));
+
+		String newContent = _textReplacerBiFunction.apply(
+			"PortalJspCJava#" + javaFile, content);
+
+		if (!newContent.equals(content)) {
+			Files.write(
+				javaFile.toPath(), newContent.getBytes(StringPool.UTF8),
+				StandardOpenOption.TRUNCATE_EXISTING, StandardOpenOption.WRITE);
+		}
+
+		return smapStratums;
+	}
+
 	private static final BiFunction<String, byte[], byte[]>
 		_classRemapperBiFunction;
 	private static final MethodHandle _jspLoaderMethodHandle;
+	private static final BiFunction<String, String, String>
+		_textReplacerBiFunction;
 
 	static {
 		ClassLoader classLoader = ClassLoader.getSystemClassLoader();
@@ -103,6 +135,26 @@ public class JakartaTransformerJDTCompiler extends JDTCompiler {
 		}
 
 		_classRemapperBiFunction = (BiFunction<String, byte[], byte[]>)instance;
+
+		instance = null;
+
+		try {
+			Class<?> clazz = classLoader.loadClass(
+				"com.liferay.portal.tools.jakarta.ee.transformer.function." +
+					"TextReplacerBiFunction");
+
+			instance = clazz.newInstance();
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			if (!(reflectiveOperationException instanceof
+					ClassNotFoundException)) {
+
+				throw new ExceptionInInitializerError(
+					reflectiveOperationException);
+			}
+		}
+
+		_textReplacerBiFunction = (BiFunction<String, String, String>)instance;
 
 		try {
 			MethodHandles.Lookup lookup = ReflectionUtil.getImplLookup();

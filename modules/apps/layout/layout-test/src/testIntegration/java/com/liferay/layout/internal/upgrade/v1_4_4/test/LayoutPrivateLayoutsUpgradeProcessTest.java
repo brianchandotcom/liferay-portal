@@ -9,31 +9,23 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.feature.flag.constants.FeatureFlagConstants;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.service.PortalPreferencesLocalService;
+import com.liferay.portal.kernel.service.ReleaseLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.version.Version;
-import com.liferay.portal.model.impl.ReleaseImpl;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.test.util.UpgradeTestUtil;
 import com.liferay.portlet.PortalPreferencesWrapper;
-
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -66,10 +58,14 @@ public class LayoutPrivateLayoutsUpgradeProcessTest {
 			StringBundler.concat(
 				StringPool.OPEN_PARENTHESIS, Constants.SERVICE_PID,
 				StringPool.EQUAL, _PID, StringPool.CLOSE_PARENTHESIS));
-		Release release = _getReleaseInfo();
+		Release originalRelease = _releaseLocalService.fetchRelease(
+			_SCHEMA_NAME);
+		Release release = null;
 
 		try {
-			_removeReleaseInfo();
+			if (originalRelease != null) {
+				_releaseLocalService.deleteRelease(originalRelease);
+			}
 
 			if (configurations != null) {
 				ConfigurationTestUtil.deleteConfiguration(configurations[0]);
@@ -79,7 +75,7 @@ public class LayoutPrivateLayoutsUpgradeProcessTest {
 
 			_assertFeatureFlagValue(Boolean.TRUE.toString());
 
-			_insertReleaseInfo(_newRelease());
+			release = _releaseLocalService.addRelease(_SCHEMA_NAME, "1.0.0");
 
 			_runUpgrade();
 
@@ -97,10 +93,12 @@ public class LayoutPrivateLayoutsUpgradeProcessTest {
 			_assertFeatureFlagValue(Boolean.FALSE.toString());
 		}
 		finally {
-			_removeReleaseInfo();
-
 			if (release != null) {
-				_insertReleaseInfo(release);
+				_releaseLocalService.deleteRelease(release);
+			}
+
+			if (originalRelease != null) {
+				_releaseLocalService.addRelease(originalRelease);
 			}
 
 			_updateFeatureFlagValue(originalFeatureFlagValue);
@@ -132,104 +130,6 @@ public class LayoutPrivateLayoutsUpgradeProcessTest {
 			value,
 			portalPreferences.getValue(
 				FeatureFlagConstants.PREFERENCE_NAMESPACE, "LPD-38869", null));
-	}
-
-	private Release _getReleaseInfo() throws Exception {
-		try (Connection connection = DataAccess.getConnection();
-			Statement statement = connection.createStatement();
-			ResultSet resultSet = statement.executeQuery(
-				"select * from Release_ where servletContextName = 'com." +
-					"liferay.release.feature.flag.web'")) {
-
-			if (!resultSet.next()) {
-				return null;
-			}
-
-			Release release = new ReleaseImpl();
-
-			release.setMvccVersion(resultSet.getLong("mvccVersion"));
-			release.setReleaseId(resultSet.getLong("releaseId"));
-			release.setCreateDate(resultSet.getDate("createDate"));
-			release.setModifiedDate(resultSet.getDate("modifiedDate"));
-			release.setServletContextName(
-				resultSet.getString("servletContextName"));
-			release.setSchemaVersion(resultSet.getString("schemaVersion"));
-			release.setBuildNumber(resultSet.getInt("buildNumber"));
-			release.setBuildDate(resultSet.getDate("buildDate"));
-			release.setVerified(resultSet.getBoolean("verified"));
-			release.setState(resultSet.getInt("state_"));
-			release.setTestString(resultSet.getString("testString"));
-
-			return release;
-		}
-	}
-
-	private void _insertReleaseInfo(Release release) throws Exception {
-		try (Connection connection = DataAccess.getConnection();
-			PreparedStatement preparedStatement = connection.prepareStatement(
-				StringBundler.concat(
-					"insert into Release_(mvccVersion, releaseId, createDate, ",
-					"modifiedDate, servletContextName, schemaVersion, ",
-					"buildNumber, buildDate, verified, state_, testString) ",
-					"values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"))) {
-
-			preparedStatement.setLong(1, release.getMvccVersion());
-			preparedStatement.setLong(2, release.getReleaseId());
-
-			java.util.Date createDate = release.getCreateDate();
-
-			preparedStatement.setDate(3, new Date(createDate.getTime()));
-
-			java.util.Date modifiedDate = release.getModifiedDate();
-
-			preparedStatement.setDate(4, new Date(modifiedDate.getTime()));
-
-			preparedStatement.setString(5, release.getServletContextName());
-			preparedStatement.setString(6, release.getSchemaVersion());
-			preparedStatement.setInt(7, release.getBuildNumber());
-
-			java.util.Date buildDate = release.getBuildDate();
-
-			Date date = null;
-
-			if (buildDate != null) {
-				date = new Date(buildDate.getTime());
-			}
-
-			preparedStatement.setDate(8, date);
-
-			preparedStatement.setBoolean(9, release.isVerified());
-			preparedStatement.setInt(10, release.getState());
-			preparedStatement.setString(11, release.getTestString());
-
-			preparedStatement.executeUpdate();
-		}
-	}
-
-	private Release _newRelease() {
-		Release release = new ReleaseImpl();
-
-		release.setMvccVersion(RandomTestUtil.randomLong());
-		release.setReleaseId(RandomTestUtil.randomLong());
-		release.setCreateDate(RandomTestUtil.nextDate());
-		release.setModifiedDate(RandomTestUtil.nextDate());
-		release.setServletContextName("com.liferay.release.feature.flag.web");
-		release.setSchemaVersion("1.0.0");
-		release.setBuildNumber(RandomTestUtil.randomInt());
-		release.setVerified(false);
-		release.setState(0);
-
-		return release;
-	}
-
-	private void _removeReleaseInfo() throws Exception {
-		try (Connection connection = DataAccess.getConnection();
-			PreparedStatement preparedStatement = connection.prepareStatement(
-				"delete from Release_ where servletContextName = 'com." +
-					"liferay.release.feature.flag.web'")) {
-
-			preparedStatement.execute();
-		}
 	}
 
 	private void _runUpgrade() throws Exception {
@@ -275,6 +175,9 @@ public class LayoutPrivateLayoutsUpgradeProcessTest {
 		"com.liferay.release.feature.flag.web.internal.configuration." +
 			"ReleaseFeatureFlagConfiguration";
 
+	private static final String _SCHEMA_NAME =
+		"com.liferay.release.feature.flag.web";
+
 	@Inject
 	private static ConfigurationAdmin _configurationAdmin;
 
@@ -285,5 +188,8 @@ public class LayoutPrivateLayoutsUpgradeProcessTest {
 
 	@Inject
 	private PortalPreferencesLocalService _portalPreferencesLocalService;
+
+	@Inject
+	private ReleaseLocalService _releaseLocalService;
 
 }

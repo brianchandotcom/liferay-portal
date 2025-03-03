@@ -16,6 +16,8 @@ import com.liferay.portal.odata.filter.ExpressionConvert;
 import com.liferay.portal.odata.filter.FilterParserProvider;
 import com.liferay.portal.odata.sort.SortParserProvider;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
 
 import java.util.Collections;
 import java.util.List;
@@ -42,6 +44,10 @@ import org.osgi.annotation.versioning.ProviderType;
 @Generated("")
 @ProviderType
 public interface AssetLibraryResource {
+
+	public Page<AssetLibrary> getAssetLibrariesPage(
+			String keywords, Pagination pagination, Sort[] sorts)
+		throws Exception;
 
 	public AssetLibrary postAssetLibrary(AssetLibrary assetLibrary)
 		throws Exception;

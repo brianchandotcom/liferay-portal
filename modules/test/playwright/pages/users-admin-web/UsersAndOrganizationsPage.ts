@@ -508,6 +508,21 @@ export class UsersAndOrganizationsPage {
 		await waitForAlert(this.page);
 	}
 
+	async filterUsers(option: string) {
+		await Promise.all([
+			clickAndExpectToBeVisible({
+				autoClick: true,
+				target: this.tableFilterMenuItem(option),
+				trigger: this.tableFilterMenu,
+			}),
+			this.page.waitForResponse(
+				(resp) =>
+					resp.status() === 200 &&
+					resp.url().includes('navigation=' + option)
+			),
+		]);
+	}
+
 	async goto(forceReload?: boolean) {
 		await this.applicationsMenuPage.goToUsersAndOrganizations(forceReload);
 	}
@@ -592,21 +607,6 @@ export class UsersAndOrganizationsPage {
 				(resp) =>
 					resp.status() === 200 &&
 					resp.url().includes('screenNavigationCategoryKey=users')
-			),
-		]);
-	}
-
-	async filterUsers(option: string) {
-		await Promise.all([
-			clickAndExpectToBeVisible({
-				autoClick: true,
-				target: this.tableFilterMenuItem(option),
-				trigger: this.tableFilterMenu,
-			}),
-			this.page.waitForResponse(
-				(resp) =>
-					resp.status() === 200 &&
-					resp.url().includes('navigation=' + option)
 			),
 		]);
 	}

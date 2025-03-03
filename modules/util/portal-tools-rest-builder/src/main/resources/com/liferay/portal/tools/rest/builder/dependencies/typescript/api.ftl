@@ -9,8 +9,8 @@ import {
 	VoidAuth,
 } from '../model/models';
 <#if imports??>
-	<#list imports?sort_by("classname") as import>
-		import {${import.classname}} from '../model/${import.classname?uncap_first}';
+	<#list imports?sort as import>
+		import {${import}} from '../model/${import?uncap_first}';
 	</#list>
 </#if>
 
@@ -89,16 +89,16 @@ export class ${classname} {
 	<#list operationsData?sort_by("nickname") as operationData>
 		/**
 		 * ${operationData.notes!}
-		 <#if operationData.allParams??>
-			 <#list operationData.allParams as param>
-				 * @param ${param.name} ${param.description!}
+		 <#if operationData.parameters??>
+			 <#list operationData.parameters as parameter>
+				 * @param ${parameter.name} ${parameter.description!}
 			 </#list>
 		 </#if>
 		 */
 		public async ${operationData.nickname}(
-			<#if operationData.allParams??>
-				<#list operationData.allParams as param>
-					${param.name}${param.required?then('', '?')}: ${param.dataType},
+			<#if operationData.parameters??>
+				<#list operationData.parameters as parameter>
+					${parameter.name}${parameter.required?then('', '?')}: ${parameter.dataType},
 				</#list>
 			</#if>
 			options: {
@@ -113,14 +113,14 @@ export class ${classname} {
 			response: http.IncomingMessage;
 		}> {
 			const localVarPath = this.basePath + '${operationData.path}'
-				<#if operationData.pathParams??>
-					<#list operationData.pathParams as pathParam>
+				<#list operationData.parameters as parameter>
+					<#if stringUtil.equals(parameter.type, "path")>
 						.replace(
-							'{' + '${pathParam.name}' + '}',
-							encodeURIComponent(String(${pathParam.name}))
+							'{' + '${parameter.name}' + '}',
+							encodeURIComponent(String(${parameter.name}))
 						)
-					</#list>
-				</#if>;
+					</#if>
+				</#list>;
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
 			<#if operationData.produces?? && operationData.produces?has_content>
@@ -133,31 +133,32 @@ export class ${classname} {
 			</#if>
 			const localVarFormParams: any = {};
 
-			<#if operationData.allParams??>
-				<#list operationData.allParams as param>
-					<#if param.required>
-						if (${param.name} === null || ${param.name} === undefined) {
-							throw new Error('Required parameter ${param.name} was null or undefined when calling ${operationData.nickname}.');
+			<#if operationData.parameters??>
+				<#list operationData.parameters as parameter>
+					<#if parameter.required>
+						if (${parameter.name} === null || ${parameter.name} === undefined) {
+							throw new Error('Required parameter ${parameter.name} was null or undefined when calling ${operationData.nickname}.');
 						}
 					</#if>
 				</#list>
 			</#if>
-			<#if operationData.queryParams??>
-				<#list operationData.queryParams as queryParam>
-					if (${queryParam.name} !== undefined) {
-						localVarQueryParameters['${queryParam.name}'] = ObjectSerializer.serialize(${queryParam.name}, "${queryParam.dataType}");
+			<#list operationData.parameters as parameter>
+				<#if stringUtil.equals(parameter.type, "query")>
+					if (${parameter.name} !== undefined) {
+						localVarQueryParameters['${parameter.name}'] = ObjectSerializer.serialize(${parameter.name}, "${parameter.dataType}");
 					}
-				</#list>
-			</#if>
-
+				</#if>
+			</#list>
 			(<any>Object).assign(localVarHeaderParams, options.headers);
 
 			const localVarUseFormData = false;
 
 			const localVarRequestOptions: localVarRequest.Options = {
-				<#if operationData.bodyParam??>
-					body: ObjectSerializer.serialize(${operationData.bodyParam.name}, "${operationData.bodyParam.dataType}"),
-				</#if>
+				<#list operationData.parameters as parameter>
+					<#if stringUtil.equals(parameter.type, "body")>
+						body: ObjectSerializer.serialize(${parameter.name}, "${parameter.dataType}"),
+					</#if>
+				</#list>
 				headers: localVarHeaderParams,
 				json: true,
 				method: '${operationData.httpMethod}',

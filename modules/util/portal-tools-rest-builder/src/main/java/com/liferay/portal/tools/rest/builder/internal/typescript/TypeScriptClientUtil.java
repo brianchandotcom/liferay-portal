@@ -10,6 +10,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.StringUtil_IW;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.FreeMarkerTool;
 import com.liferay.portal.tools.rest.builder.internal.freemarker.tool.java.JavaMethodSignature;
@@ -219,6 +220,8 @@ public class TypeScriptClientUtil {
 		Map<String, List<Map<String, Object>>> tagOperationsData =
 			new HashMap<>();
 
+		Map<String, Set<String>> tagImports = new HashMap<>();
+
 		for (Map.Entry<String, PathItem> entry : pathItems.entrySet()) {
 			for (Operation operation :
 					OpenAPIParserUtil.getOperations(entry.getValue())) {
@@ -229,9 +232,13 @@ public class TypeScriptClientUtil {
 					tagOperationsData.computeIfAbsent(
 						tags.get(0), k -> new ArrayList<>());
 
+				Set<String> imports = tagImports.computeIfAbsent(
+					tags.get(0), k -> new HashSet<>());
+
 				operationsData.add(
-					_buildOperationDataMap(
-						configYAML, openAPIYAML, operation, entry.getKey()));
+					_buildOperationData(
+						configYAML, imports, openAPIYAML, operation,
+						entry.getKey()));
 			}
 		}
 
@@ -246,28 +253,7 @@ public class TypeScriptClientUtil {
 					"classname", entry.getKey() + "Api"
 				).put(
 					"imports",
-					() -> {
-						Set<Map<String, String>> allImports =
-							new LinkedHashSet<>();
-
-						for (Map<String, Object> operationData :
-								entry.getValue()) {
-
-							if (operationData.containsKey("imports")) {
-								Collection<Map<String, String>> imports =
-									(Collection<Map<String, String>>)
-										operationData.remove("imports");
-
-								allImports.addAll(imports);
-							}
-						}
-
-						if (!allImports.isEmpty()) {
-							return allImports;
-						}
-
-						return null;
-					}
+					tagImports.getOrDefault(entry.getKey(), new HashSet<>())
 				).put(
 					"operationsData", entry.getValue()
 				).build());
@@ -279,7 +265,7 @@ public class TypeScriptClientUtil {
 	private static Map<String, Object> _buildModelContext(
 		String modelName, Schema schema) {
 
-		Set<Map<String, String>> imports = new HashSet<>();
+		Set<String> imports = new HashSet<>();
 		String parentClass = null;
 		List<Map<String, Object>> schemaProperties = new ArrayList<>();
 
@@ -294,7 +280,7 @@ public class TypeScriptClientUtil {
 				parentClass = parentSchemaReference.substring(
 					parentSchemaReference.lastIndexOf('/') + 1);
 
-				imports.add(Collections.singletonMap("classname", parentClass));
+				imports.add(parentClass);
 
 				for (Schema additionalSchema : schema.getAllOfSchemas()) {
 					if (additionalSchema.getPropertySchemas() != null) {
@@ -366,109 +352,93 @@ public class TypeScriptClientUtil {
 		).build();
 	}
 
-	private static Map<String, Object> _buildOperationDataMap(
-		ConfigYAML configYAML, OpenAPIYAML openAPIYAML, Operation operation,
-		String path) {
+	private static Map<String, Object> _buildOperationData(
+		ConfigYAML configYAML, Set<String> imports, OpenAPIYAML openAPIYAML,
+		Operation operation, String path) {
 
-		Set<Map<String, String>> imports = new HashSet<>();
 		Map<ResponseCode, Response> responses = operation.getResponses();
 
-		Map<String, Object> operationDataMap =
-			HashMapBuilder.<String, Object>put(
-				"httpMethod",
-				StringUtil.toUpperCase(
-					OpenAPIParserUtil.getHTTPMethod(operation))
-			).put(
-				"nickname", operation.getOperationId()
-			).put(
-				"notes", operation.getDescription()
-			).put(
-				"path",
-				StringBundler.concat(
-					configYAML.getApplication(
-					).getBaseURI(),
-					"/",
-					openAPIYAML.getInfo(
-					).getVersion(),
-					path)
-			).put(
-				"produces",
-				() -> {
-					if (responses == null) {
-						return null;
-					}
-
-					Set<String> produces = new LinkedHashSet<>();
-
-					for (Response response : responses.values()) {
-						Map<String, Content> content = response.getContent();
-
-						if (content != null) {
-							produces.addAll(content.keySet());
-						}
-					}
-
-					if (produces.isEmpty()) {
-						return null;
-					}
-
-					return new ArrayList<>(produces);
-				}
-			).put(
-				"returnType",
-				() -> {
-					if (responses == null) {
-						return null;
-					}
-
-					for (Map.Entry<ResponseCode, Response> entry :
-							responses.entrySet()) {
-
-						ResponseCode responseCode = entry.getKey();
-
-						if (!Objects.equals(responseCode.getHttpCode(), 200)) {
-							continue;
-						}
-
-						Response response = entry.getValue();
-
-						Map<String, Content> contentMap = response.getContent();
-
-						if ((contentMap == null) || contentMap.isEmpty()) {
-							continue;
-						}
-
-						Collection<Content> contents = contentMap.values();
-
-						Iterator<Content> iterator = contents.iterator();
-
-						Content content = iterator.next();
-
-						if ((content == null) ||
-							(content.getSchema() == null)) {
-
-							continue;
-						}
-
-						return _getTypeScriptType(content.getSchema(), imports);
-					}
-
+		return HashMapBuilder.<String, Object>put(
+			"httpMethod",
+			StringUtil.toUpperCase(OpenAPIParserUtil.getHTTPMethod(operation))
+		).put(
+			"nickname", operation.getOperationId()
+		).put(
+			"notes", operation.getDescription()
+		).put(
+			"parameters", _getParametersData(operation, imports)
+		).put(
+			"path",
+			StringBundler.concat(
+				configYAML.getApplication(
+				).getBaseURI(),
+				"/",
+				openAPIYAML.getInfo(
+				).getVersion(),
+				path)
+		).put(
+			"produces",
+			() -> {
+				if (responses == null) {
 					return null;
 				}
-			).build();
 
-		Collection<Map<String, Object>> allParams = _getAllOperationParams(
-			operation, operationDataMap, imports);
+				Set<String> produces = new LinkedHashSet<>();
 
-		if (!allParams.isEmpty()) {
-			operationDataMap.put("allParams", allParams);
-		}
+				for (Response response : responses.values()) {
+					Map<String, Content> content = response.getContent();
 
-		if (!imports.isEmpty()) {
-			operationDataMap.put("imports", new ArrayList<>(imports));
-		}
+					if (content != null) {
+						produces.addAll(content.keySet());
+					}
+				}
 
-		return operationDataMap;
+				if (produces.isEmpty()) {
+					return null;
+				}
+
+				return new ArrayList<>(produces);
+			}
+		).put(
+			"returnType",
+			() -> {
+				if (responses == null) {
+					return null;
+				}
+
+				for (Map.Entry<ResponseCode, Response> entry :
+						responses.entrySet()) {
+
+					ResponseCode responseCode = entry.getKey();
+
+					if (!Objects.equals(responseCode.getHttpCode(), 200)) {
+						continue;
+					}
+
+					Response response = entry.getValue();
+
+					Map<String, Content> contentsMap = response.getContent();
+
+					if ((contentsMap == null) || contentsMap.isEmpty()) {
+						continue;
+					}
+
+					Collection<Content> contents = contentsMap.values();
+
+					Iterator<Content> iterator = contents.iterator();
+
+					Content content = iterator.next();
+
+					if ((content == null) || (content.getSchema() == null)) {
+						continue;
+					}
+
+					return _getTypeScriptType(content.getSchema(), imports);
+				}
+
+				return null;
+			}
+		).build();
 	}
 
 	private static void _createBuildGradleFile(
@@ -497,6 +467,8 @@ public class TypeScriptClientUtil {
 				context
 			).put(
 				"configYAML", configYAML
+			).put(
+				"stringUtil", StringUtil_IW.getInstance()
 			).build();
 		}
 		else {
@@ -540,17 +512,14 @@ public class TypeScriptClientUtil {
 				).build()));
 	}
 
-	private static Collection<Map<String, Object>> _getAllOperationParams(
-		Operation operation, Map<String, Object> operationDataMap,
-		Set<Map<String, String>> imports) {
+	private static Collection<Map<String, Object>> _getParametersData(
+		Operation operation, Set<String> imports) {
 
-		List<Map<String, Object>> allParametersData = new ArrayList<>();
-		Map<String, List<Map<String, Object>>> typeParametersData =
-			new HashMap<>();
+		List<Map<String, Object>> parametersData = new ArrayList<>();
 
 		if (operation.getParameters() != null) {
 			for (Parameter parameter : operation.getParameters()) {
-				Map<String, Object> parameterData =
+				parametersData.add(
 					HashMapBuilder.<String, Object>put(
 						"dataType",
 						_getTypeScriptType(parameter.getSchema(), imports)
@@ -562,15 +531,9 @@ public class TypeScriptClientUtil {
 						"required",
 						Validator.isNotNull(parameter.isRequired()) &&
 						parameter.isRequired()
-					).build();
-
-				allParametersData.add(parameterData);
-
-				List<Map<String, Object>> parametersData =
-					typeParametersData.computeIfAbsent(
-						parameter.getIn() + "Params", k -> new ArrayList<>());
-
-				parametersData.add(parameterData);
+					).put(
+						"type", parameter.getIn()
+					).build());
 			}
 		}
 
@@ -599,7 +562,7 @@ public class TypeScriptClientUtil {
 
 						// TODO: Retrieve 'required' property inside requestBody
 
-						Map<String, Object> bodyParam =
+						parametersData.add(
 							HashMapBuilder.<String, Object>put(
 								"dataType", _getTypeScriptType(schema, imports)
 							).put(
@@ -608,27 +571,19 @@ public class TypeScriptClientUtil {
 									typeScriptType, '-', StringPool.UNDERLINE)
 							).put(
 								"required", false
-							).build();
-
-						allParametersData.add(bodyParam);
-						operationDataMap.put("bodyParam", bodyParam);
+							).put(
+								"type", "body"
+							).build());
 					}
 				}
 			}
 		}
 
-		typeParametersData.forEach(
-			(key, value) -> {
-				if (!value.isEmpty()) {
-					operationDataMap.put(key, value);
-				}
-			});
-
-		return allParametersData;
+		return parametersData;
 	}
 
 	private static String _getTypeScriptType(
-		Schema schema, Set<Map<String, String>> imports) {
+		Schema schema, Set<String> imports) {
 
 		if (schema == null) {
 			return "any";
@@ -641,7 +596,7 @@ public class TypeScriptClientUtil {
 				schemaReference.lastIndexOf('/') + 1);
 
 			if (imports != null) {
-				imports.add(Collections.singletonMap("classname", typeName));
+				imports.add(typeName);
 			}
 
 			return typeName;
@@ -682,8 +637,7 @@ public class TypeScriptClientUtil {
 		}
 		else if (schemaType.equals("permission")) {
 			if (imports != null) {
-				imports.add(
-					Collections.singletonMap("classname", "Permission"));
+				imports.add("Permission");
 			}
 
 			return "Permission";

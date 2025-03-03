@@ -11,6 +11,7 @@ import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {productMenuPageTest} from '../../fixtures/productMenuPageTest';
+import {uiElementsPageTest} from '../../fixtures/uiElementsTest';
 import {getRandomInt} from '../../utils/getRandomInt';
 import performLogin, {performLogout, userData} from '../../utils/performLogin';
 import {getTempDir} from '../../utils/temp';
@@ -26,7 +27,8 @@ export const test = mergeTests(
 		'LPD-35914': {enabled: true, system: true},
 	}),
 	loginTest(),
-	productMenuPageTest
+	productMenuPageTest,
+	uiElementsPageTest
 );
 
 test('cannot export site scoped custom object entries at instance level', async ({
@@ -300,6 +302,7 @@ test('can export custom object entries at instance level with permissions', asyn
 test('can see corresponding elements at instance level', async ({
 	apiHelpers,
 	companyExportImportPage,
+	uiElementsPage,
 }) => {
 	const objectActionApiClient =
 		await apiHelpers.buildRestClient(ObjectDefinitionApi);
@@ -338,12 +341,7 @@ test('can see corresponding elements at instance level', async ({
 	await apiHelpers.objectEntry.postObjectEntry({name: 'test'}, 'c/tests');
 
 	await companyExportImportPage.applicationsMenuPage.goToExport();
-
-	await companyExportImportPage.page
-		.getByTestId('creationMenuNewButton')
-		.nth(1)
-		.click();
-
+	await uiElementsPage.clickNewButton();
 	await expect(
 		companyExportImportPage.page.getByText('Comments, Ratings')
 	).not.toBeVisible();
@@ -362,6 +360,22 @@ test('can see corresponding elements at instance level', async ({
 		companyExportImportPage.page.getByRole('link', {name: 'Refresh Counts'})
 	).not.toBeVisible();
 });
+
+test(
+	'can see the Deletions label at the instance level',
+	{tag: ['@LPD-37317']},
+	async ({companyExportImportPage, uiElementsPage}) => {
+		await companyExportImportPage.applicationsMenuPage.goToExport();
+		await uiElementsPage.clickNewButton();
+
+		const deletionsLabelText =
+			await companyExportImportPage.deletionsLabel.textContent();
+
+		expect(deletionsLabelText?.replace(/\s+/g, ' ').trim()).toBe(
+			'Export Individual Deletions: If this is checked, the delete operations performed will be exported in the LAR file.'
+		);
+	}
+);
 
 test('Can/not view Export menu item in Application menu depending on permissions', async ({
 	apiHelpers,

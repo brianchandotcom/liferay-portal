@@ -13,6 +13,7 @@ import {ExportImportPage} from './ExportImportPage';
 export class CompanyExportImportPage {
 	readonly page: Page;
 	readonly applicationsMenuPage: ApplicationsMenuPage;
+	readonly deletionsLabel: Locator;
 	readonly exportImportPage: ExportImportPage;
 	readonly rangeDateRangeEndDate: Locator;
 	readonly rangeDateRangeEndTime: Locator;
@@ -25,6 +26,9 @@ export class CompanyExportImportPage {
 	constructor(page: Page) {
 		this.page = page;
 		this.applicationsMenuPage = new ApplicationsMenuPage(page);
+		this.deletionsLabel = page
+			.getByLabel('Deletions', {exact: true})
+			.locator('label');
 		this.exportImportPage = new ExportImportPage(page);
 		this.rangeDateRangeEndDate = page.locator(
 			'[id="_com_liferay_exportimport_web_portlet_CompanyExportPortlet_endDate"]'

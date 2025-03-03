@@ -10,6 +10,7 @@ import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {productMenuPageTest} from '../../fixtures/productMenuPageTest';
+import {uiElementsPageTest} from '../../fixtures/uiElementsTest';
 import getRandomString from '../../utils/getRandomString';
 import {getTempDir} from '../../utils/temp';
 import {exportImportPagesTest} from './fixtures/exportImportPagesTest';
@@ -22,7 +23,8 @@ export const test = mergeTests(
 		'LPD-35914': {enabled: false, system: true},
 	}),
 	loginTest(),
-	productMenuPageTest
+	productMenuPageTest,
+	uiElementsPageTest
 );
 
 export const testWithStagingInInstanceFF = mergeTests(
@@ -109,3 +111,21 @@ test('can see corresponding elements at site level', async ({
 		productMenuPage.page.getByRole('link', {name: 'Refresh Counts'})
 	).toBeVisible();
 });
+
+test(
+	'can see the Deletions label at the site level',
+	{tag: ['@LPD-37317']},
+	async ({exportImportPage, productMenuPage, uiElementsPage}) => {
+		await productMenuPage.openProductMenuIfClosed();
+		await productMenuPage.goToPublishingExport();
+
+		uiElementsPage.clickNewButton();
+
+		const deletionsLabelText =
+			await exportImportPage.deletionsLabel.textContent();
+
+		expect(deletionsLabelText?.replace(/\s+/g, ' ').trim()).toBe(
+			'Export Individual Deletions: If this is checked, the delete operations performed will be exported in the LAR file.'
+		);
+	}
+);

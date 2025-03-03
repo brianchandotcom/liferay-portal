@@ -10,6 +10,7 @@ import {getTempDir} from '../../../utils/temp';
 
 export class ExportImportPage {
 	readonly continueButton: Locator;
+	readonly deletionsLabel: Locator;
 	readonly downloadButton: Locator;
 	readonly exportButton: Locator;
 	readonly exportPermissionsButton: Locator;
@@ -24,6 +25,9 @@ export class ExportImportPage {
 
 	constructor(page: Page) {
 		this.continueButton = page.getByRole('button', {name: 'Continue'});
+		this.deletionsLabel = page
+			.getByLabel('Deletions', {exact: true})
+			.locator('label');
 		this.downloadButton = page.getByRole('button', {name: 'Download'});
 		this.exportButton = page.getByRole('button', {name: 'Export'});
 		this.exportPermissionsButton = page.getByLabel('Export Permissions');

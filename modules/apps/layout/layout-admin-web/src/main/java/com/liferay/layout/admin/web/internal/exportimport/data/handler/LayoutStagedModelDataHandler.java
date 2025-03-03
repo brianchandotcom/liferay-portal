@@ -599,6 +599,15 @@ public class LayoutStagedModelDataHandler
 					!Objects.equals(
 						existingLayout.getType(), layout.getType())) {
 
+					_log.warn(
+						StringBundler.concat(
+							"The layout with friendly URL ", friendlyURL,
+							" and type ", layout.getType(),
+							" has the same friendly URL as an existing layout ",
+							"of type ", existingLayout.getType(),
+							". It will be imported as a new layout modifying ",
+							"its URL to ensure uniqueness."));
+
 					existingLayout = null;
 				}
 			}

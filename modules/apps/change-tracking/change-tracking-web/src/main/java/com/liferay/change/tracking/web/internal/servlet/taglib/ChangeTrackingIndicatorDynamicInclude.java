@@ -654,7 +654,9 @@ public class ChangeTrackingIndicatorDynamicInclude extends BaseDynamicInclude {
 				getConflictInfoURL.setResourceID(
 					"/change_tracking/get_conflict_info");
 
-				if (FeatureFlagManagerUtil.isEnabled("LPD-20556")) {
+				if (FeatureFlagManagerUtil.isEnabled(
+						themeDisplay.getCompanyId(), "LPD-20556")) {
+
 					data.put(
 						"getConflictInfoURL", getConflictInfoURL.toString());
 				}

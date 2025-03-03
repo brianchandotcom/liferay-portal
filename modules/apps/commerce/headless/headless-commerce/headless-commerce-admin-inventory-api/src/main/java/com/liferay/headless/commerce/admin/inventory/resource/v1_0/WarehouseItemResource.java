@@ -49,7 +49,7 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface WarehouseItemResource {
 
-	public Response deleteWarehouseItemByExternalReferenceCode(
+	public void deleteWarehouseItemByExternalReferenceCode(
 			String externalReferenceCode)
 		throws Exception;
 
@@ -65,11 +65,15 @@ public interface WarehouseItemResource {
 			String externalReferenceCode, WarehouseItem warehouseItem)
 		throws Exception;
 
+	public WarehouseItem putWarehouseItemByExternalReferenceCode(
+			String externalReferenceCode, WarehouseItem warehouseItem)
+		throws Exception;
+
 	public Page<WarehouseItem> getWarehouseItemsUpdatedPage(
 			Date end, Date start, Pagination pagination)
 		throws Exception;
 
-	public Response deleteWarehouseItem(Long id) throws Exception;
+	public void deleteWarehouseItem(Long id) throws Exception;
 
 	public Response deleteWarehouseItemBatch(String callbackURL, Object object)
 		throws Exception;

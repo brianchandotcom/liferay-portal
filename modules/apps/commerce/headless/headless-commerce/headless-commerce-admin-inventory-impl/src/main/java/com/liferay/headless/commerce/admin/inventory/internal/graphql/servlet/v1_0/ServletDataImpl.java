@@ -299,6 +299,11 @@ public class ServletDataImpl implements ServletData {
 							WarehouseItemResourceImpl.class,
 							"postWarehouseItemByExternalReferenceCode"));
 					put(
+						"mutation#updateWarehouseItemByExternalReferenceCode",
+						new ObjectValuePair<>(
+							WarehouseItemResourceImpl.class,
+							"putWarehouseItemByExternalReferenceCode"));
+					put(
 						"mutation#deleteWarehouseItem",
 						new ObjectValuePair<>(
 							WarehouseItemResourceImpl.class,

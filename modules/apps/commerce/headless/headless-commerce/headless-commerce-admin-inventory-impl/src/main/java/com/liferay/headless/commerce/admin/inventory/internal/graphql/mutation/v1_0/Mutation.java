@@ -589,17 +589,19 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public Response deleteWarehouseItemByExternalReferenceCode(
+	public boolean deleteWarehouseItemByExternalReferenceCode(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode)
 		throws Exception {
 
-		return _applyComponentServiceObjects(
+		_applyVoidComponentServiceObjects(
 			_warehouseItemResourceComponentServiceObjects,
 			this::_populateResourceContext,
 			warehouseItemResource ->
 				warehouseItemResource.
 					deleteWarehouseItemByExternalReferenceCode(
 						externalReferenceCode));
+
+		return true;
 	}
 
 	@GraphQLField
@@ -631,14 +633,30 @@ public class Mutation {
 	}
 
 	@GraphQLField
-	public Response deleteWarehouseItem(@GraphQLName("id") Long id)
+	public WarehouseItem updateWarehouseItemByExternalReferenceCode(
+			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("warehouseItem") WarehouseItem warehouseItem)
 		throws Exception {
 
 		return _applyComponentServiceObjects(
 			_warehouseItemResourceComponentServiceObjects,
 			this::_populateResourceContext,
+			warehouseItemResource ->
+				warehouseItemResource.putWarehouseItemByExternalReferenceCode(
+					externalReferenceCode, warehouseItem));
+	}
+
+	@GraphQLField
+	public boolean deleteWarehouseItem(@GraphQLName("id") Long id)
+		throws Exception {
+
+		_applyVoidComponentServiceObjects(
+			_warehouseItemResourceComponentServiceObjects,
+			this::_populateResourceContext,
 			warehouseItemResource -> warehouseItemResource.deleteWarehouseItem(
 				id));
+
+		return true;
 	}
 
 	@GraphQLField

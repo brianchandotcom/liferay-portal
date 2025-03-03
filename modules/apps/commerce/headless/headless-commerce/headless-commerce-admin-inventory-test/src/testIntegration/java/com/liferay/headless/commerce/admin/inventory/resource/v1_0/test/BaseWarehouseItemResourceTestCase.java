@@ -388,6 +388,64 @@ public abstract class BaseWarehouseItemResourceTestCase {
 	}
 
 	@Test
+	public void testPutWarehouseItemByExternalReferenceCode() throws Exception {
+		WarehouseItem postWarehouseItem =
+			testPutWarehouseItemByExternalReferenceCode_addWarehouseItem();
+
+		WarehouseItem randomWarehouseItem = randomWarehouseItem();
+
+		WarehouseItem putWarehouseItem =
+			warehouseItemResource.putWarehouseItemByExternalReferenceCode(
+				postWarehouseItem.getExternalReferenceCode(),
+				randomWarehouseItem);
+
+		assertEquals(randomWarehouseItem, putWarehouseItem);
+		assertValid(putWarehouseItem);
+
+		WarehouseItem getWarehouseItem =
+			warehouseItemResource.getWarehouseItemByExternalReferenceCode(
+				putWarehouseItem.getExternalReferenceCode());
+
+		assertEquals(randomWarehouseItem, getWarehouseItem);
+		assertValid(getWarehouseItem);
+
+		WarehouseItem newWarehouseItem =
+			testPutWarehouseItemByExternalReferenceCode_createWarehouseItem();
+
+		putWarehouseItem =
+			warehouseItemResource.putWarehouseItemByExternalReferenceCode(
+				newWarehouseItem.getExternalReferenceCode(), newWarehouseItem);
+
+		assertEquals(newWarehouseItem, putWarehouseItem);
+		assertValid(putWarehouseItem);
+
+		getWarehouseItem =
+			warehouseItemResource.getWarehouseItemByExternalReferenceCode(
+				putWarehouseItem.getExternalReferenceCode());
+
+		assertEquals(newWarehouseItem, getWarehouseItem);
+
+		Assert.assertEquals(
+			newWarehouseItem.getExternalReferenceCode(),
+			putWarehouseItem.getExternalReferenceCode());
+	}
+
+	protected WarehouseItem
+			testPutWarehouseItemByExternalReferenceCode_createWarehouseItem()
+		throws Exception {
+
+		return randomWarehouseItem();
+	}
+
+	protected WarehouseItem
+			testPutWarehouseItemByExternalReferenceCode_addWarehouseItem()
+		throws Exception {
+
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
+	}
+
+	@Test
 	public void testGetWarehouseItemsUpdatedPage() throws Exception {
 		Page<WarehouseItem> page =
 			warehouseItemResource.getWarehouseItemsUpdatedPage(

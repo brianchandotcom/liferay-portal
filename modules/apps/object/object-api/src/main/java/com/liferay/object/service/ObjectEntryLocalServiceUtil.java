@@ -39,13 +39,14 @@ public class ObjectEntryLocalServiceUtil {
 	 */
 	public static ObjectEntry addObjectEntry(
 			long userId, long groupId, long objectDefinitionId,
-			String defaultLanguageId, Map<String, Serializable> values,
+			long objectEntryFolderId, String defaultLanguageId,
+			Map<String, Serializable> values,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addObjectEntry(
-			userId, groupId, objectDefinitionId, defaultLanguageId, values,
-			serviceContext);
+			userId, groupId, objectDefinitionId, objectEntryFolderId,
+			defaultLanguageId, values, serviceContext);
 	}
 
 	/**
@@ -64,11 +65,13 @@ public class ObjectEntryLocalServiceUtil {
 
 	public static ObjectEntry addObjectEntry(
 			String externalReferenceCode, long userId,
-			com.liferay.object.model.ObjectDefinition objectDefinition)
+			com.liferay.object.model.ObjectDefinition objectDefinition,
+			long objectEntryFolderId)
 		throws PortalException {
 
 		return getService().addObjectEntry(
-			externalReferenceCode, userId, objectDefinition);
+			externalReferenceCode, userId, objectDefinition,
+			objectEntryFolderId);
 	}
 
 	public static void addOrUpdateExtensionDynamicObjectDefinitionTableValues(
@@ -84,13 +87,14 @@ public class ObjectEntryLocalServiceUtil {
 
 	public static ObjectEntry addOrUpdateObjectEntry(
 			String externalReferenceCode, long userId, long groupId,
-			long objectDefinitionId, Map<String, Serializable> values,
+			long objectDefinitionId, long objectEntryFolderId,
+			Map<String, Serializable> values,
 			com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws PortalException {
 
 		return getService().addOrUpdateObjectEntry(
-			externalReferenceCode, userId, groupId, objectDefinitionId, values,
-			serviceContext);
+			externalReferenceCode, userId, groupId, objectDefinitionId,
+			objectEntryFolderId, values, serviceContext);
 	}
 
 	/**

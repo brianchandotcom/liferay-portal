@@ -66,8 +66,8 @@ public interface ObjectEntryLocalService
 	 */
 	public ObjectEntry addObjectEntry(
 			long userId, long groupId, long objectDefinitionId,
-			String defaultLanguageId, Map<String, Serializable> values,
-			ServiceContext serviceContext)
+			long objectEntryFolderId, String defaultLanguageId,
+			Map<String, Serializable> values, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -85,7 +85,7 @@ public interface ObjectEntryLocalService
 
 	public ObjectEntry addObjectEntry(
 			String externalReferenceCode, long userId,
-			ObjectDefinition objectDefinition)
+			ObjectDefinition objectDefinition, long objectEntryFolderId)
 		throws PortalException;
 
 	public void addOrUpdateExtensionDynamicObjectDefinitionTableValues(
@@ -95,8 +95,8 @@ public interface ObjectEntryLocalService
 
 	public ObjectEntry addOrUpdateObjectEntry(
 			String externalReferenceCode, long userId, long groupId,
-			long objectDefinitionId, Map<String, Serializable> values,
-			ServiceContext serviceContext)
+			long objectDefinitionId, long objectEntryFolderId,
+			Map<String, Serializable> values, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**

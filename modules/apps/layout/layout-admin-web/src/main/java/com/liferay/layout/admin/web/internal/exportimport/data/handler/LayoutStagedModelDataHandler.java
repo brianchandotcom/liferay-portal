@@ -481,6 +481,9 @@ public class LayoutStagedModelDataHandler
 		Map<Long, Layout> layouts =
 			(Map<Long, Layout>)portletDataContext.getNewPrimaryKeysMap(
 				Layout.class + ".layout");
+		Map<Long, Long> layoutPlids =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				Layout.class);
 
 		Layout existingLayout = null;
 
@@ -543,10 +546,6 @@ public class LayoutStagedModelDataHandler
 				uuid, groupId, privateLayout);
 
 			if (existingLayout != null) {
-				Map<Long, Long> layoutPlids =
-					(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-						Layout.class);
-
 				layoutPlids.put(layout.getPlid(), existingLayout.getPlid());
 			}
 
@@ -594,6 +593,17 @@ public class LayoutStagedModelDataHandler
 			if (existingLayout == null) {
 				existingLayout = _layoutLocalService.fetchLayoutByFriendlyURL(
 					groupId, privateLayout, friendlyURL);
+			}
+
+			if ((existingLayout == null) && (layout.getClassPK() > 0) &&
+				layoutPlids.containsKey(layout.getClassPK())) {
+
+				Layout curLayout = _layoutLocalService.fetchLayout(
+					layoutPlids.get(layout.getClassPK()));
+
+				if (curLayout != null) {
+					existingLayout = curLayout.fetchDraftLayout();
+				}
 			}
 
 			if (existingLayout == null) {
@@ -670,10 +680,6 @@ public class LayoutStagedModelDataHandler
 		else {
 			importedLayout = existingLayout;
 		}
-
-		Map<Long, Long> layoutPlids =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				Layout.class);
 
 		layoutPlids.put(layout.getPlid(), importedLayout.getPlid());
 

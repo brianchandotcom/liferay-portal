@@ -485,6 +485,65 @@ public class LayoutStagedModelDataHandlerTest
 	}
 
 	@Test
+	@TestInfo("LPD-50336")
+	public void testExportImportLayoutWithSameFriendlyURLAndDifferentTypes()
+		throws Exception {
+
+		initExport();
+
+		Layout stagingLayout = LayoutTestUtil.addTypeContentLayout(
+			stagingGroup);
+
+		ContentLayoutTestUtil.publishLayout(
+			stagingLayout.fetchDraftLayout(), stagingLayout);
+
+		Layout liveLayout = LayoutTestUtil.addTypePortletLayout(liveGroup);
+
+		liveLayout = _layoutLocalService.updateFriendlyURL(
+			TestPropsValues.getUserId(), liveLayout.getPlid(),
+			stagingLayout.getFriendlyURL(), liveLayout.getDefaultLanguageId());
+
+		Assert.assertEquals(
+			stagingLayout.getFriendlyURL(), liveLayout.getFriendlyURL());
+		Assert.assertNotEquals(stagingLayout.getName(), liveLayout.getName());
+
+		StagedModelDataHandlerUtil.exportStagedModel(
+			portletDataContext, stagingLayout);
+
+		initImport();
+
+		ExportImportLifecycleManagerUtil.fireExportImportLifecycleEvent(
+			ExportImportLifecycleConstants.EVENT_LAYOUT_IMPORT_STARTED,
+			ExportImportLifecycleConstants.
+				PROCESS_FLAG_LAYOUT_IMPORT_IN_PROCESS,
+			portletDataContext.getExportImportProcessId(),
+			PortletDataContextFactoryUtil.clonePortletDataContext(
+				portletDataContext));
+
+		StagedModelDataHandlerUtil.importStagedModel(
+			portletDataContext, readExportedStagedModel(stagingLayout));
+
+		ExportImportLifecycleManagerUtil.fireExportImportLifecycleEvent(
+			ExportImportLifecycleConstants.EVENT_LAYOUT_IMPORT_SUCCEEDED,
+			ExportImportLifecycleConstants.
+				PROCESS_FLAG_LAYOUT_IMPORT_IN_PROCESS,
+			portletDataContext.getExportImportProcessId(),
+			PortletDataContextFactoryUtil.clonePortletDataContext(
+				portletDataContext));
+
+		Layout importedLayout = _layoutLocalService.fetchLayout(
+			stagingLayout.getUuid(), liveGroup.getGroupId(),
+			stagingLayout.isPrivateLayout());
+
+		Assert.assertEquals(
+			stagingLayout.getFriendlyURL() + "1",
+			importedLayout.getFriendlyURL());
+		Assert.assertNotEquals(
+			liveLayout.getFriendlyURL(), importedLayout.getFriendlyURL());
+		Assert.assertEquals(stagingLayout.getName(), importedLayout.getName());
+	}
+
+	@Test
 	@TestInfo({"LPS-98030", "LPS-125564", "LPS-198068"})
 	public void testExportImportWithFileEntryContentReference()
 		throws Exception {

@@ -21,12 +21,17 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.version.Version;
+import com.liferay.portal.test.log.LogCapture;
+import com.liferay.portal.test.log.LogEntry;
+import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.test.util.UpgradeTestUtil;
 import com.liferay.portlet.PortalPreferencesWrapper;
+
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -141,12 +146,40 @@ public class LayoutPrivateLayoutsUpgradeProcessTest {
 	}
 
 	private void _runUpgrade() throws Exception {
-		UpgradeProcess[] upgradeSteps = UpgradeTestUtil.getUpgradeSteps(
-			_upgradeStepRegistrator, new Version(1, 4, 4));
+		PortalPreferencesWrapper portalPreferencesWrapper =
+			(PortalPreferencesWrapper)
+				_portalPreferencesLocalService.getPreferences(
+					TestPropsValues.getCompanyId(),
+					PortletKeys.PREFS_OWNER_TYPE_COMPANY);
 
-		UpgradeProcess upgradeProcess = upgradeSteps[0];
+		PortalPreferences portalPreferences =
+			portalPreferencesWrapper.getPortalPreferencesImpl();
 
-		upgradeProcess.upgrade();
+		portalPreferences.setValue(
+			FeatureFlagConstants.PREFERENCE_NAMESPACE, "LPD-38869", null);
+
+		_portalPreferencesLocalService.updatePreferences(
+			TestPropsValues.getCompanyId(),
+			PortletKeys.PREFS_OWNER_TYPE_COMPANY, portalPreferences);
+
+		_assertFeatureFlagValue(null);
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.layout.internal.upgrade.v1_4_4." +
+					"LayoutPrivateLayoutsUpgradeProcess",
+				LoggerTestUtil.ERROR)) {
+
+			UpgradeProcess[] upgradeSteps = UpgradeTestUtil.getUpgradeSteps(
+				_upgradeStepRegistrator, new Version(1, 4, 4));
+
+			UpgradeProcess upgradeProcess = upgradeSteps[0];
+
+			upgradeProcess.upgrade();
+
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			Assert.assertTrue(logEntries.toString(), logEntries.isEmpty());
+		}
 	}
 
 	private String _updateFeatureFlagValue(String value) throws Exception {

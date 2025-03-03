@@ -6,6 +6,7 @@
 package com.liferay.segments.internal.upgrade.v3_2_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.change.tracking.test.util.BaseCTUpgradeProcessTestCase;
 import com.liferay.fragment.model.FragmentEntryLink;
 import com.liferay.fragment.service.FragmentEntryLinkLocalService;
 import com.liferay.layout.page.template.model.LayoutPageTemplateStructure;
@@ -20,11 +21,14 @@ import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.change.tracking.CTModel;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
+import com.liferay.portal.kernel.service.change.tracking.CTService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.test.rule.Inject;
@@ -50,7 +54,8 @@ import org.junit.runner.RunWith;
  * @author Eudaldo Alonso
  */
 @RunWith(Arquillian.class)
-public class SegmentsExperienceUpgradeProcessTest {
+public class SegmentsExperienceUpgradeProcessTest
+	extends BaseCTUpgradeProcessTestCase {
 
 	@ClassRule
 	@Rule
@@ -104,7 +109,7 @@ public class SegmentsExperienceUpgradeProcessTest {
 		_assertLayoutPageTemplateStructureRels(_publishedLayout.getPlid());
 		_assertSegmentsExperiences(0, Collections.emptyList());
 
-		_runUpgrade();
+		runUpgrade();
 
 		segmentsExperiences =
 			_segmentsExperienceLocalService.getSegmentsExperiences(
@@ -114,6 +119,37 @@ public class SegmentsExperienceUpgradeProcessTest {
 
 		_assertLayoutPageTemplateStructureRels(_draftLayout.getPlid());
 		_assertSegmentsExperiences(2, segmentsExperiences);
+	}
+
+	@Override
+	protected CTModel<?> addCTModel() throws Exception {
+		return SegmentsTestUtil.addSegmentsExperience(
+			_group.getGroupId(), 0, _draftLayout.getPlid());
+	}
+
+	@Override
+	protected CTService<?> getCTService() {
+		return _segmentsExperienceLocalService;
+	}
+
+	@Override
+	protected void runUpgrade() throws Exception {
+		UpgradeProcess upgradeProcess = UpgradeTestUtil.getUpgradeStep(
+			_upgradeStepRegistrator, _CLASS_NAME);
+
+		upgradeProcess.upgrade();
+
+		_multiVMPool.clear();
+	}
+
+	@Override
+	protected CTModel<?> updateCTModel(CTModel<?> ctModel) throws Exception {
+		SegmentsExperience segmentsExperience = (SegmentsExperience)ctModel;
+
+		segmentsExperience.setName(RandomTestUtil.randomString());
+
+		return _segmentsExperienceLocalService.updateSegmentsExperience(
+			segmentsExperience);
 	}
 
 	private void _assertFragmentEntryLinks(
@@ -205,15 +241,6 @@ public class SegmentsExperienceUpgradeProcessTest {
 				draftSegmentsExperience.getSegmentsExperienceKey(), plid);
 
 		return publishedSegmentsExperience.getSegmentsExperienceId();
-	}
-
-	private void _runUpgrade() throws Exception {
-		UpgradeProcess upgradeProcess = UpgradeTestUtil.getUpgradeStep(
-			_upgradeStepRegistrator, _CLASS_NAME);
-
-		upgradeProcess.upgrade();
-
-		_multiVMPool.clear();
 	}
 
 	private void _updateFragmentEntryLinks() {

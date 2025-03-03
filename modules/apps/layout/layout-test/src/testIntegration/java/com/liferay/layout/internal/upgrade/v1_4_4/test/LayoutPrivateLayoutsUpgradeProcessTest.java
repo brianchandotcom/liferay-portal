@@ -9,9 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
-import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
-import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.feature.flag.constants.FeatureFlagConstants;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
@@ -62,9 +60,6 @@ public class LayoutPrivateLayoutsUpgradeProcessTest {
 
 	@Test
 	public void testUpgrade() throws Exception {
-		_entityCache.clearCache();
-		_multiVMPool.clear();
-
 		String originalFeatureFlagValue = _updateFeatureFlagValue(
 			Boolean.FALSE.toString());
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
@@ -245,9 +240,6 @@ public class LayoutPrivateLayoutsUpgradeProcessTest {
 		UpgradeProcess upgradeProcess = upgradeSteps[0];
 
 		upgradeProcess.upgrade();
-
-		_entityCache.clearCache();
-		_multiVMPool.clear();
 	}
 
 	private String _updateFeatureFlagValue(String value) throws Exception {
@@ -291,12 +283,6 @@ public class LayoutPrivateLayoutsUpgradeProcessTest {
 		filter = "(&(component.name=com.liferay.layout.internal.upgrade.registry.LayoutServiceUpgradeStepRegistrator))"
 	)
 	private static UpgradeStepRegistrator _upgradeStepRegistrator;
-
-	@Inject
-	private EntityCache _entityCache;
-
-	@Inject
-	private MultiVMPool _multiVMPool;
 
 	@Inject
 	private PortalPreferencesLocalService _portalPreferencesLocalService;

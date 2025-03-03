@@ -166,7 +166,7 @@ public class FriendlyURLServletTest {
 	}
 
 	@Test
-	public void testCanAccessOldFriendlyURLAfterPublishingWithStaging()
+	public void testCanAccessOldFriendlyURLAfterPublishLayouts()
 		throws Exception {
 
 		StagingLocalServiceUtil.enableLocalStaging(
@@ -223,7 +223,7 @@ public class FriendlyURLServletTest {
 	}
 
 	@Test
-	public void testCanAccessOldLocalizedFriendlyURLAfterPublishingWithStaging()
+	public void testCanAccessOldLocalizedFriendlyURLAfterPublishLayouts()
 		throws Exception {
 
 		StagingLocalServiceUtil.enableLocalStaging(
@@ -243,7 +243,7 @@ public class FriendlyURLServletTest {
 				LocaleUtil.BRAZIL, "/teste"
 			).build());
 
-		String oldPath = getLocalizedPath(_group, layout, LocaleUtil.BRAZIL);
+		String oldPath = _getLocalizedPath(_group, layout, LocaleUtil.BRAZIL);
 
 		Map<String, String[]> parameters =
 			ExportImportConfigurationParameterMapFactoryUtil.
@@ -284,7 +284,7 @@ public class FriendlyURLServletTest {
 
 		Assert.assertEquals(
 			"/pt" + PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING +
-				getLocalizedPath(_group, layout, LocaleUtil.BRAZIL),
+				_getLocalizedPath(_group, layout, LocaleUtil.BRAZIL),
 			mockHttpServletResponse.getRedirectedUrl());
 	}
 
@@ -895,12 +895,6 @@ public class FriendlyURLServletTest {
 		return i18nLanguageId;
 	}
 
-	protected String getLocalizedPath(
-		Group group, Layout layout, Locale locale) {
-
-		return group.getFriendlyURL() + layout.getFriendlyURL(locale);
-	}
-
 	protected String getPath(Group group, Layout layout) {
 		return group.getFriendlyURL() + layout.getFriendlyURL();
 	}
@@ -962,6 +956,12 @@ public class FriendlyURLServletTest {
 		testGetRedirect(
 			httpServletRequest, new MockHttpServletResponse(), path,
 			expectedRedirect);
+	}
+
+	private String _getLocalizedPath(
+		Group group, Layout layout, Locale locale) {
+
+		return group.getFriendlyURL() + layout.getFriendlyURL(locale);
 	}
 
 	private void _testGetRedirectForAlternativeSite(

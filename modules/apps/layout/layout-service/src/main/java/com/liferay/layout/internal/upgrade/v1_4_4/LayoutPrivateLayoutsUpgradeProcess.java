@@ -13,11 +13,11 @@ import com.liferay.portal.kernel.service.PortalPreferencesLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortletKeys;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.version.Version;
 import com.liferay.portlet.PortalPreferencesWrapper;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
 
 import java.util.Dictionary;
 import java.util.Objects;
@@ -68,20 +68,6 @@ public class LayoutPrivateLayoutsUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
-	private String _getReleaseInfo() throws Exception {
-		try (Statement statement = connection.createStatement();
-			ResultSet resultSet = statement.executeQuery(
-				"select schemaVersion from Release_ where servletContextName " +
-					"= 'com.liferay.release.feature.flag.web'")) {
-
-			if (resultSet.next()) {
-				return resultSet.getString("schemaVersion");
-			}
-		}
-
-		return null;
-	}
-
 	private String _getValue() throws Exception {
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
 			StringBundler.concat(
@@ -90,7 +76,7 @@ public class LayoutPrivateLayoutsUpgradeProcess extends UpgradeProcess {
 				"ReleaseFeatureFlagConfiguration)"));
 
 		if (configurations == null) {
-			if (Validator.isNull(_getReleaseInfo())) {
+			if (!_hasReleaseSchemaVersion()) {
 				return Boolean.TRUE.toString();
 			}
 
@@ -114,8 +100,32 @@ public class LayoutPrivateLayoutsUpgradeProcess extends UpgradeProcess {
 		return Boolean.TRUE.toString();
 	}
 
+	private boolean _hasReleaseSchemaVersion() throws Exception {
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				"select schemaVersion from Release_ where servletContextName " +
+					"= 'com.liferay.release.feature.flag.web'")) {
+
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				if (!resultSet.next()) {
+					return false;
+				}
+
+				Version version = Version.parseVersion(
+					resultSet.getString("schemaVersion"));
+
+				if (_VERSION.compareTo(version) <= 0) {
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
 	private static final String _DISABLE_PRIVATE_LAYOUTS =
 		"DISABLE_PRIVATE_LAYOUTS";
+
+	private static final Version _VERSION = Version.parseVersion("1.0.0");
 
 	private final CompanyLocalService _companyLocalService;
 	private final ConfigurationAdmin _configurationAdmin;

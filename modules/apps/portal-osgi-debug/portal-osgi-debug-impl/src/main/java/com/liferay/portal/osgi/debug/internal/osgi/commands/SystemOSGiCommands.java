@@ -303,7 +303,9 @@ public class SystemOSGiCommands implements OSGiCommands {
 			while (enumeration.hasMoreElements()) {
 				URL url = enumeration.nextElement();
 
-				if (!spiTypesSet.isEmpty()) {
+				if (spiTypesSet.isEmpty()) {
+					urls.add(url);
+
 					continue;
 				}
 

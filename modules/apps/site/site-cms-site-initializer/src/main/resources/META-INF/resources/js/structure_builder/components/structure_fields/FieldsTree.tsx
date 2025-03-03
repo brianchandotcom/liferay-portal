@@ -7,16 +7,24 @@ import {ClayButtonWithIcon} from '@clayui/button';
 import {TreeView as ClayTreeView} from '@clayui/core';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayIcon from '@clayui/icon';
+import {useEventListener} from '@liferay/frontend-js-react-web';
 import classNames from 'classnames';
-import React, {Key, useMemo} from 'react';
+import React, {useMemo, useState} from 'react';
 
 import {
 	FIELD_TYPE_ICON,
 	Field,
 	FieldType,
 } from '../../../structure_builder/utils/field';
-import {useSelector, useStateDispatch} from '../../contexts/StateContext';
+import {
+	State,
+	useSelector,
+	useStateDispatch,
+} from '../../contexts/StateContext';
+import selectSelection from '../../selectors/selectSelection';
 import selectStructureLabel from '../../selectors/selectStructureLabel';
+
+const ROOT_ID = '';
 
 type TreeItem = {
 	children?: TreeItem[];
@@ -29,7 +37,11 @@ type TreeItem = {
 
 export default function FieldsTree({fields}: {fields: Field[]}) {
 	const dispatch = useStateDispatch();
+
+	const selection = useSelector(selectSelection);
 	const structureLabel = useSelector(selectStructureLabel);
+
+	const mode = useSelectionMode(selection);
 
 	const items: TreeItem[] = useMemo(() => {
 		return [
@@ -43,27 +55,47 @@ export default function FieldsTree({fields}: {fields: Field[]}) {
 					type: field.type,
 				})),
 				icon: 'edit-layout',
-				id: '',
+				id: ROOT_ID,
 				label: structureLabel,
 			},
 		];
 	}, [fields, structureLabel]);
 
-	const onSelect = (keys: Set<Key>) => {
-		const [id] = Array.from(keys);
+	const onSelect = (item: TreeItem) => {
+		let nextSelection: State['selection'] = selection;
 
-		if (!id) {
-			dispatch({
-				selection: [],
-				type: 'set-selection',
-			});
+		// Item is root
+
+		if (!item.id) {
+			nextSelection = [];
 		}
-		else {
-			dispatch({
-				selection: [id as Field['name']],
-				type: 'set-selection',
-			});
+
+		// Selecting with selection
+
+		else if (mode === 'single') {
+			nextSelection = [item.id];
 		}
+
+		// Selecting with multiple selection
+
+		else if (mode === 'multiple' && !selection.includes(item.id)) {
+			nextSelection = [...selection, item.id];
+		}
+
+		// Deselecting with multiple selection
+
+		else if (
+			mode === 'multiple' &&
+			selection.includes(item.id) &&
+			selection.length > 1
+		) {
+			nextSelection = selection.filter((id) => id !== item.id);
+		}
+
+		dispatch({
+			selection: nextSelection,
+			type: 'set-selection',
+		});
 	};
 
 	const deleteField = (fieldName: string) =>
@@ -75,22 +107,24 @@ export default function FieldsTree({fields}: {fields: Field[]}) {
 	return (
 		<ClayTreeView
 			className="structure-builder__fields-tree"
-			defaultExpandedKeys={new Set([''])}
+			defaultExpandedKeys={new Set([ROOT_ID])}
 			items={items}
 			nestedKey="children"
-			onSelectionChange={onSelect}
+			onSelect={onSelect}
+			selectedKeys={new Set(selection.length ? selection : [ROOT_ID])}
+			selectionMode={mode}
 			showExpanderOnHover={false}
 		>
-			{(item) => (
+			{(item, selectedKeys) => (
 				<ClayTreeView.Item>
-					<ClayTreeView.ItemStack>
+					<ClayTreeView.ItemStack active={selectedKeys.has(item.id)}>
 						<ClayIcon symbol={item.icon} />
 
 						<span className="ml-1">{item.label}</span>
 					</ClayTreeView.ItemStack>
 
 					<ClayTreeView.Group items={item.children}>
-						{(item) => (
+						{(item, selectedKeys) => (
 							<ClayTreeView.Item
 								actions={
 									<ClayDropDownWithItems
@@ -110,6 +144,7 @@ export default function FieldsTree({fields}: {fields: Field[]}) {
 													'field-options'
 												)}
 												borderless
+												disabled={selection.length > 1}
 												displayType="unstyled"
 												size="sm"
 												symbol="ellipsis-v"
@@ -117,6 +152,7 @@ export default function FieldsTree({fields}: {fields: Field[]}) {
 										}
 									/>
 								}
+								active={selectedKeys.has(item.id)}
 							>
 								<ClayIcon
 									className={classNames({
@@ -134,4 +170,46 @@ export default function FieldsTree({fields}: {fields: Field[]}) {
 			)}
 		</ClayTreeView>
 	);
+}
+
+function useSelectionMode(selection: State['selection']) {
+	const [multiple, setMultiple] = useState(false);
+
+	useEventListener(
+		'keydown',
+		(event) => {
+			const {key} = event as KeyboardEvent;
+
+			if (key === 'Control' || key === 'Meta') {
+				setMultiple(true);
+			}
+		},
+		false,
+
+		// @ts-ignore
+
+		window
+	);
+
+	useEventListener(
+		'keyup',
+		(event) => {
+			const {key} = event as KeyboardEvent;
+
+			if (key === 'Control' || key === 'Meta') {
+				setMultiple(false);
+			}
+		},
+		false,
+
+		// @ts-ignore
+
+		window
+	);
+
+	if (!selection.length) {
+		return 'single';
+	}
+
+	return multiple ? 'multiple' : 'single';
 }

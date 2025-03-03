@@ -810,15 +810,9 @@ public class VariableNameCheck extends BaseCheck {
 
 		List<String> names = getNames(firstChildDetailAST, false);
 
-		if (names.size() != 2) {
-			return;
-		}
-
-		String methodCallClassName = names.get(0);
-		String methodCallMethodName = names.get(1);
-
-		if (!StringUtil.equals(className, methodCallClassName) ||
-			!StringUtil.equals(methodName, methodCallMethodName)) {
+		if ((names.size() != 2) ||
+			!StringUtil.equals(className, names.get(0)) ||
+			!StringUtil.equals(methodName, names.get(1))) {
 
 			return;
 		}

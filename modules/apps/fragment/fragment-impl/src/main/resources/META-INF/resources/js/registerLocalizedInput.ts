@@ -18,7 +18,7 @@ type Args = {
 		value,
 	}: {
 		languageId: string;
-		value: string;
+		value?: string;
 	}) => void;
 	optionValues: Record<string, string>;
 };
@@ -74,6 +74,12 @@ export function registerLocalizedInput({
 					'dir',
 					Liferay.Language.direction[languageId]!
 				);
+			}
+
+			if (!initialValues && !inputElement) {
+				onLocaleChange?.({languageId});
+
+				return;
 			}
 
 			const translationInput = getOrCreateTranslationInput(

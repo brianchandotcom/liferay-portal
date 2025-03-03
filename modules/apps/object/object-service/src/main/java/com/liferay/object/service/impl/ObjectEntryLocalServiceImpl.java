@@ -48,6 +48,7 @@ import com.liferay.object.exception.DuplicateObjectEntryExternalReferenceCodeExc
 import com.liferay.object.exception.NoSuchObjectDefinitionException;
 import com.liferay.object.exception.ObjectDefinitionScopeException;
 import com.liferay.object.exception.ObjectEntryDefaultLanguageIdException;
+import com.liferay.object.exception.ObjectEntryFolderScopeException;
 import com.liferay.object.exception.ObjectEntryStatusException;
 import com.liferay.object.exception.ObjectEntryValuesException;
 import com.liferay.object.exception.ObjectRelationshipDeletionTypeException;
@@ -66,6 +67,7 @@ import com.liferay.object.internal.filter.parser.ObjectFilterParser;
 import com.liferay.object.internal.sort.SortDSLQueryVisitor;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
+import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.model.ObjectEntryTable;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectFieldSetting;
@@ -94,6 +96,7 @@ import com.liferay.object.service.ObjectStateFlowLocalService;
 import com.liferay.object.service.ObjectStateLocalService;
 import com.liferay.object.service.base.ObjectEntryLocalServiceBaseImpl;
 import com.liferay.object.service.persistence.ObjectDefinitionPersistence;
+import com.liferay.object.service.persistence.ObjectEntryFolderPersistence;
 import com.liferay.object.service.persistence.ObjectFieldPersistence;
 import com.liferay.object.service.persistence.ObjectFieldSettingPersistence;
 import com.liferay.object.service.persistence.ObjectRelationshipPersistence;
@@ -285,8 +288,8 @@ public class ObjectEntryLocalServiceImpl
 	@Override
 	public ObjectEntry addObjectEntry(
 			long userId, long groupId, long objectDefinitionId,
-			String defaultLanguageId, Map<String, Serializable> values,
-			ServiceContext serviceContext)
+			long objectEntryFolderId, String defaultLanguageId,
+			Map<String, Serializable> values, ServiceContext serviceContext)
 		throws PortalException {
 
 		serviceContext.setStrictAdd(true);
@@ -309,6 +312,8 @@ public class ObjectEntryLocalServiceImpl
 			objectDefinition.isEnableObjectEntryDraft(), null, workflowAction);
 
 		User user = _userLocalService.getUser(userId);
+
+		_validateObjectEntryFolderId(groupId, objectEntryFolderId);
 
 		_fillDefaultValue(objectDefinitionId, values);
 
@@ -343,8 +348,7 @@ public class ObjectEntryLocalServiceImpl
 		objectEntry.setUserName(user.getFullName());
 		objectEntry.setCreateDate(new Date());
 		objectEntry.setObjectDefinitionId(objectDefinitionId);
-		objectEntry.setObjectEntryFolderId(
-			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT);
+		objectEntry.setObjectEntryFolderId(objectEntryFolderId);
 		objectEntry.setDefaultLanguageId(defaultLanguageId);
 		objectEntry.setTreePath(objectEntry.buildTreePath());
 
@@ -432,7 +436,7 @@ public class ObjectEntryLocalServiceImpl
 	@Override
 	public ObjectEntry addObjectEntry(
 			String externalReferenceCode, long userId,
-			ObjectDefinition objectDefinition)
+			ObjectDefinition objectDefinition, long objectEntryFolderId)
 		throws PortalException {
 
 		ObjectEntry objectEntry = objectEntryPersistence.create(
@@ -448,8 +452,7 @@ public class ObjectEntryLocalServiceImpl
 
 		objectEntry.setObjectDefinitionId(
 			objectDefinition.getObjectDefinitionId());
-		objectEntry.setObjectEntryFolderId(
-			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT);
+		objectEntry.setObjectEntryFolderId(objectEntryFolderId);
 		objectEntry.setTreePath(objectEntry.buildTreePath());
 		objectEntry.setStatus(WorkflowConstants.STATUS_DRAFT);
 		objectEntry.setStatusDate(new Date());
@@ -477,8 +480,8 @@ public class ObjectEntryLocalServiceImpl
 	@Override
 	public ObjectEntry addOrUpdateObjectEntry(
 			String externalReferenceCode, long userId, long groupId,
-			long objectDefinitionId, Map<String, Serializable> values,
-			ServiceContext serviceContext)
+			long objectDefinitionId, long objectEntryFolderId,
+			Map<String, Serializable> values, ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = _userLocalService.getUser(userId);
@@ -505,7 +508,8 @@ public class ObjectEntryLocalServiceImpl
 		}
 
 		objectEntry = addObjectEntry(
-			userId, groupId, objectDefinitionId, null, values, serviceContext);
+			userId, groupId, objectDefinitionId, objectEntryFolderId, null,
+			values, serviceContext);
 
 		if (Validator.isNotNull(externalReferenceCode)) {
 			objectEntry.setExternalReferenceCode(externalReferenceCode);
@@ -5298,6 +5302,29 @@ public class ObjectEntryLocalServiceImpl
 		}
 	}
 
+	private void _validateObjectEntryFolderId(
+			long groupId, long objectEntryFolderId)
+		throws PortalException {
+
+		if (objectEntryFolderId ==
+				ObjectEntryFolderConstants.
+					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT) {
+
+			return;
+		}
+
+		ObjectEntryFolder objectEntryFolder =
+			_objectEntryFolderPersistence.findByPrimaryKey(objectEntryFolderId);
+
+		if (objectEntryFolder.getGroupId() != groupId) {
+			throw new ObjectEntryFolderScopeException(
+				StringBundler.concat(
+					"Group ID ", groupId,
+					" does not match parent folder group ID ",
+					objectEntryFolder.getGroupId()));
+		}
+	}
+
 	private void _validateObjectStateTransition(
 			ObjectEntry existingObjectEntry, long listTypeDefinitionId,
 			ObjectField objectField, long userId, Serializable value)
@@ -5900,6 +5927,9 @@ public class ObjectEntryLocalServiceImpl
 
 	@Reference
 	private ObjectDefinitionPersistence _objectDefinitionPersistence;
+
+	@Reference
+	private ObjectEntryFolderPersistence _objectEntryFolderPersistence;
 
 	@Reference
 	private ObjectFieldBusinessTypeRegistry _objectFieldBusinessTypeRegistry;

@@ -109,8 +109,9 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 
 	@Override
 	public ObjectEntry addObjectEntry(
-			long groupId, long objectDefinitionId, String defaultLanguageId,
-			Map<String, Serializable> values, ServiceContext serviceContext)
+			long groupId, long objectDefinitionId, long objectEntryFolderId,
+			String defaultLanguageId, Map<String, Serializable> values,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		if (!ObjectEntryThreadLocal.isSkipObjectEntryResourcePermission()) {
@@ -121,14 +122,15 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 		_validateSubmissionLimit(objectDefinitionId, getUser());
 
 		return objectEntryLocalService.addObjectEntry(
-			getUserId(), groupId, objectDefinitionId, defaultLanguageId, values,
-			serviceContext);
+			getUserId(), groupId, objectDefinitionId, objectEntryFolderId,
+			defaultLanguageId, values, serviceContext);
 	}
 
 	@Override
 	public ObjectEntry addOrUpdateObjectEntry(
 			String externalReferenceCode, long groupId, long objectDefinitionId,
-			Map<String, Serializable> values, ServiceContext serviceContext)
+			long objectEntryFolderId, Map<String, Serializable> values,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		ObjectEntry objectEntry = objectEntryPersistence.fetchByERC_C_ODI(
@@ -147,7 +149,7 @@ public class ObjectEntryServiceImpl extends ObjectEntryServiceBaseImpl {
 
 		return objectEntryLocalService.addOrUpdateObjectEntry(
 			externalReferenceCode, getUserId(), groupId, objectDefinitionId,
-			values, serviceContext);
+			objectEntryFolderId, values, serviceContext);
 	}
 
 	@Override

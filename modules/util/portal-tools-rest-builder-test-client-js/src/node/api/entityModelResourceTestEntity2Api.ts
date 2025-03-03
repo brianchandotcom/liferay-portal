@@ -108,18 +108,17 @@ export class EntityModelResourceTestEntity2Api {
 				;
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-				const produces = ['application/json', 'application/xml'];
-				if (produces.indexOf('application/json') >= 0) {
+				const responseContentTypes = ['application/json', 'application/xml'];
+				if (responseContentTypes.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
-					localVarHeaderParams.Accept = produces.join(',');
+					localVarHeaderParams.Accept = responseContentTypes.join(',');
 				}
 			const localVarFormParams: any = {};
 
 						if (entityModelResourceTestEntity2Id === null || entityModelResourceTestEntity2Id === undefined) {
 							throw new Error('Required parameter entityModelResourceTestEntity2Id was null or undefined when calling getEntityModelResourceTestEntities2EntityModelResourceTestEntity2.');
 						}
-
 			(<any>Object).assign(localVarHeaderParams, options.headers);
 
 			const localVarUseFormData = false;

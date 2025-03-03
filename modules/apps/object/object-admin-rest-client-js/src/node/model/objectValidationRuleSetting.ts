@@ -21,14 +21,14 @@
 		type: string;
 	}> = [
 		{
-			baseName: 'name',
-			name: 'name',
-			type: 'string',
+			baseName: "name",
+			name: "name",
+			type: "string",
 		},
 		{
-			baseName: 'value',
-			name: 'value',
-			type: 'object',
+			baseName: "value",
+			name: "value",
+			type: "object",
 		},
 		];
 

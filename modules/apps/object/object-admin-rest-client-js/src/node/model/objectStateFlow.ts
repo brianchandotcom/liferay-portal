@@ -22,14 +22,14 @@
 		type: string;
 	}> = [
 		{
-			baseName: 'id',
-			name: 'id',
-			type: 'number',
+			baseName: "id",
+			name: "id",
+			type: "number",
 		},
 		{
-			baseName: 'objectStates',
-			name: 'objectStates',
-			type: 'Array<ObjectState>',
+			baseName: "objectStates",
+			name: "objectStates",
+			type: "Array<ObjectState>",
 		},
 		];
 

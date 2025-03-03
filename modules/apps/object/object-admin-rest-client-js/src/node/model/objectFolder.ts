@@ -28,44 +28,44 @@
 		type: string;
 	}> = [
 		{
-			baseName: 'actions',
-			name: 'actions',
-			type: '{ [key: string]: { [key: string]: string; }; }',
+			baseName: "actions",
+			name: "actions",
+			type: "{ [key: string]: { [key: string]: string; }; }",
 		},
 		{
-			baseName: 'dateCreated',
-			name: 'dateCreated',
-			type: 'Date',
+			baseName: "dateCreated",
+			name: "dateCreated",
+			type: "Date",
 		},
 		{
-			baseName: 'dateModified',
-			name: 'dateModified',
-			type: 'Date',
+			baseName: "dateModified",
+			name: "dateModified",
+			type: "Date",
 		},
 		{
-			baseName: 'externalReferenceCode',
-			name: 'externalReferenceCode',
-			type: 'string',
+			baseName: "externalReferenceCode",
+			name: "externalReferenceCode",
+			type: "string",
 		},
 		{
-			baseName: 'id',
-			name: 'id',
-			type: 'number',
+			baseName: "id",
+			name: "id",
+			type: "number",
 		},
 		{
-			baseName: 'label',
-			name: 'label',
-			type: '{ [key: string]: string; }',
+			baseName: "label",
+			name: "label",
+			type: "{ [key: string]: string; }",
 		},
 		{
-			baseName: 'name',
-			name: 'name',
-			type: 'string',
+			baseName: "name",
+			name: "name",
+			type: "string",
 		},
 		{
-			baseName: 'objectFolderItems',
-			name: 'objectFolderItems',
-			type: 'Array<ObjectFolderItem>',
+			baseName: "objectFolderItems",
+			name: "objectFolderItems",
+			type: "Array<ObjectFolderItem>",
 		},
 		];
 

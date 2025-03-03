@@ -24,14 +24,14 @@
 		type: string;
 	}> = [
 		{
-			baseName: 'name',
-			name: 'name',
-			type: 'string',
+			baseName: "name",
+			name: "name",
+			type: "string",
 		},
 		{
-			baseName: 'values',
-			name: 'values',
-			type: 'Array<Array<string>>',
+			baseName: "values",
+			name: "values",
+			type: "Array<Array<string>>",
 		},
 		];
 

@@ -27,39 +27,39 @@
 		type: string;
 	}> = [
 		{
-			baseName: 'dateCreated',
-			name: 'dateCreated',
-			type: 'Date',
+			baseName: "dateCreated",
+			name: "dateCreated",
+			type: "Date",
 		},
 		{
-			baseName: 'dateModified',
-			name: 'dateModified',
-			type: 'Date',
+			baseName: "dateModified",
+			name: "dateModified",
+			type: "Date",
 		},
 		{
-			baseName: 'description',
-			name: 'description',
-			type: 'string',
+			baseName: "description",
+			name: "description",
+			type: "string",
 		},
 		{
-			baseName: 'externalReferenceCode',
-			name: 'externalReferenceCode',
-			type: 'string',
+			baseName: "externalReferenceCode",
+			name: "externalReferenceCode",
+			type: "string",
 		},
 		{
-			baseName: 'id',
-			name: 'id',
-			type: 'number',
+			baseName: "id",
+			name: "id",
+			type: "number",
 		},
 		{
-			baseName: 'permissions',
-			name: 'permissions',
-			type: 'Array<Permission>',
+			baseName: "permissions",
+			name: "permissions",
+			type: "Array<Permission>",
 		},
 		{
-			baseName: 'siteId',
-			name: 'siteId',
-			type: 'number',
+			baseName: "siteId",
+			name: "siteId",
+			type: "number",
 		},
 		];
 

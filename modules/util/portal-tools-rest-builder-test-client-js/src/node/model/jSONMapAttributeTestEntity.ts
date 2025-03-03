@@ -26,24 +26,24 @@
 		type: string;
 	}> = [
 		{
-			baseName: 'description',
-			name: 'description',
-			type: 'string',
+			baseName: "description",
+			name: "description",
+			type: "string",
 		},
 		{
-			baseName: 'name',
-			name: 'name',
-			type: 'string',
+			baseName: "name",
+			name: "name",
+			type: "string",
 		},
 		{
-			baseName: 'properties1',
-			name: 'properties1',
-			type: '{ [key: string]: object; }',
+			baseName: "properties1",
+			name: "properties1",
+			type: "{ [key: string]: object; }",
 		},
 		{
-			baseName: 'properties2',
-			name: 'properties2',
-			type: '{ [key: string]: object; }',
+			baseName: "properties2",
+			name: "properties2",
+			type: "{ [key: string]: object; }",
 		},
 		];
 

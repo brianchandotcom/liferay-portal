@@ -31,44 +31,44 @@
 		type: string;
 	}> = [
 		{
-			baseName: 'actions',
-			name: 'actions',
-			type: '{ [key: string]: { [key: string]: string; }; }',
+			baseName: "actions",
+			name: "actions",
+			type: "{ [key: string]: { [key: string]: string; }; }",
 		},
 		{
-			baseName: 'ctCollectionId',
-			name: 'ctCollectionId',
-			type: 'number',
+			baseName: "ctCollectionId",
+			name: "ctCollectionId",
+			type: "number",
 		},
 		{
-			baseName: 'datePublished',
-			name: 'datePublished',
-			type: 'Date',
+			baseName: "datePublished",
+			name: "datePublished",
+			type: "Date",
 		},
 		{
-			baseName: 'description',
-			name: 'description',
-			type: 'string',
+			baseName: "description",
+			name: "description",
+			type: "string",
 		},
 		{
-			baseName: 'id',
-			name: 'id',
-			type: 'number',
+			baseName: "id",
+			name: "id",
+			type: "number",
 		},
 		{
-			baseName: 'name',
-			name: 'name',
-			type: 'string',
+			baseName: "name",
+			name: "name",
+			type: "string",
 		},
 		{
-			baseName: 'ownerName',
-			name: 'ownerName',
-			type: 'string',
+			baseName: "ownerName",
+			name: "ownerName",
+			type: "string",
 		},
 		{
-			baseName: 'status',
-			name: 'status',
-			type: 'Status',
+			baseName: "status",
+			name: "status",
+			type: "Status",
 		},
 		];
 

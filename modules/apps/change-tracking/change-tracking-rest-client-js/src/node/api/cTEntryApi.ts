@@ -118,14 +118,14 @@ export class CTEntryApi {
 							'{' + 'ctCollectionId' + '}',
 							encodeURIComponent(String(ctCollectionId))
 						)
-				;
+																												;
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-				const produces = ['application/json', 'application/xml'];
-				if (produces.indexOf('application/json') >= 0) {
+				const responseContentTypes = ['application/json', 'application/xml'];
+				if (responseContentTypes.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
-					localVarHeaderParams.Accept = produces.join(',');
+					localVarHeaderParams.Accept = responseContentTypes.join(',');
 				}
 			const localVarFormParams: any = {};
 
@@ -150,7 +150,6 @@ export class CTEntryApi {
 					if (sort !== undefined) {
 						localVarQueryParameters['sort'] = ObjectSerializer.serialize(sort, "string");
 					}
-
 			(<any>Object).assign(localVarHeaderParams, options.headers);
 
 			const localVarUseFormData = false;
@@ -230,22 +229,22 @@ export class CTEntryApi {
 							'{' + 'ctCollectionId' + '}',
 							encodeURIComponent(String(ctCollectionId))
 						)
-						.replace(
+										.replace(
 							'{' + 'modelClassNameId' + '}',
 							encodeURIComponent(String(modelClassNameId))
 						)
-						.replace(
+										.replace(
 							'{' + 'modelClassPK' + '}',
 							encodeURIComponent(String(modelClassPK))
 						)
 				;
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-				const produces = ['application/json', 'application/xml'];
-				if (produces.indexOf('application/json') >= 0) {
+				const responseContentTypes = ['application/json', 'application/xml'];
+				if (responseContentTypes.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
-					localVarHeaderParams.Accept = produces.join(',');
+					localVarHeaderParams.Accept = responseContentTypes.join(',');
 				}
 			const localVarFormParams: any = {};
 
@@ -258,7 +257,6 @@ export class CTEntryApi {
 						if (modelClassPK === null || modelClassPK === undefined) {
 							throw new Error('Required parameter modelClassPK was null or undefined when calling getCtCollectionCTEntryByModelClassNameByModelClassPkModelClassPK.');
 						}
-
 			(<any>Object).assign(localVarHeaderParams, options.headers);
 
 			const localVarUseFormData = false;
@@ -344,14 +342,14 @@ export class CTEntryApi {
 			response: http.IncomingMessage;
 		}> {
 			const localVarPath = this.basePath + '/change-tracking-rest/v1.0/ct-entries/history'
-;
+																																;
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-				const produces = ['application/json', 'application/xml'];
-				if (produces.indexOf('application/json') >= 0) {
+				const responseContentTypes = ['application/json', 'application/xml'];
+				if (responseContentTypes.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
-					localVarHeaderParams.Accept = produces.join(',');
+					localVarHeaderParams.Accept = responseContentTypes.join(',');
 				}
 			const localVarFormParams: any = {};
 
@@ -382,7 +380,6 @@ export class CTEntryApi {
 					if (sort !== undefined) {
 						localVarQueryParameters['sort'] = ObjectSerializer.serialize(sort, "string");
 					}
-
 			(<any>Object).assign(localVarHeaderParams, options.headers);
 
 			const localVarUseFormData = false;
@@ -461,18 +458,17 @@ export class CTEntryApi {
 				;
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-				const produces = ['application/json', 'application/xml'];
-				if (produces.indexOf('application/json') >= 0) {
+				const responseContentTypes = ['application/json', 'application/xml'];
+				if (responseContentTypes.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
-					localVarHeaderParams.Accept = produces.join(',');
+					localVarHeaderParams.Accept = responseContentTypes.join(',');
 				}
 			const localVarFormParams: any = {};
 
 						if (ctEntryId === null || ctEntryId === undefined) {
 							throw new Error('Required parameter ctEntryId was null or undefined when calling getCTEntry.');
 						}
-
 			(<any>Object).assign(localVarHeaderParams, options.headers);
 
 			const localVarUseFormData = false;

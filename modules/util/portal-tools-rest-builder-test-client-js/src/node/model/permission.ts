@@ -22,19 +22,19 @@
 		type: string;
 	}> = [
 		{
-			baseName: 'actionIds',
-			name: 'actionIds',
-			type: 'Array<string>',
+			baseName: "actionIds",
+			name: "actionIds",
+			type: "Array<string>",
 		},
 		{
-			baseName: 'roleName',
-			name: 'roleName',
-			type: 'string',
+			baseName: "roleName",
+			name: "roleName",
+			type: "string",
 		},
 		{
-			baseName: 'xml',
-			name: 'xml',
-			type: 'object',
+			baseName: "xml",
+			name: "xml",
+			type: "object",
 		},
 		];
 

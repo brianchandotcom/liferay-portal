@@ -23,24 +23,24 @@
 		type: string;
 	}> = [
 		{
-			baseName: 'id',
-			name: 'id',
-			type: 'number',
+			baseName: "id",
+			name: "id",
+			type: "number",
 		},
 		{
-			baseName: 'name',
-			name: 'name',
-			type: 'string',
+			baseName: "name",
+			name: "name",
+			type: "string",
 		},
 		{
-			baseName: 'objectDefinitionId',
-			name: 'objectDefinitionId',
-			type: 'number',
+			baseName: "objectDefinitionId",
+			name: "objectDefinitionId",
+			type: "number",
 		},
 		{
-			baseName: 'value',
-			name: 'value',
-			type: 'object',
+			baseName: "value",
+			name: "value",
+			type: "object",
 		},
 		];
 

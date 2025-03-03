@@ -109,18 +109,17 @@ export class CTProcessApi {
 				;
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-				const produces = ['application/json', 'application/xml'];
-				if (produces.indexOf('application/json') >= 0) {
+				const responseContentTypes = ['application/json', 'application/xml'];
+				if (responseContentTypes.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
-					localVarHeaderParams.Accept = produces.join(',');
+					localVarHeaderParams.Accept = responseContentTypes.join(',');
 				}
 			const localVarFormParams: any = {};
 
 						if (ctProcessId === null || ctProcessId === undefined) {
 							throw new Error('Required parameter ctProcessId was null or undefined when calling deleteCTProcess.');
 						}
-
 			(<any>Object).assign(localVarHeaderParams, options.headers);
 
 			const localVarUseFormData = false;
@@ -199,18 +198,17 @@ export class CTProcessApi {
 				;
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-				const produces = ['application/json', 'application/xml'];
-				if (produces.indexOf('application/json') >= 0) {
+				const responseContentTypes = ['application/json', 'application/xml'];
+				if (responseContentTypes.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
-					localVarHeaderParams.Accept = produces.join(',');
+					localVarHeaderParams.Accept = responseContentTypes.join(',');
 				}
 			const localVarFormParams: any = {};
 
 						if (ctProcessId === null || ctProcessId === undefined) {
 							throw new Error('Required parameter ctProcessId was null or undefined when calling getCTProcess.');
 						}
-
 			(<any>Object).assign(localVarHeaderParams, options.headers);
 
 			const localVarUseFormData = false;
@@ -292,14 +290,14 @@ export class CTProcessApi {
 			response: http.IncomingMessage;
 		}> {
 			const localVarPath = this.basePath + '/change-tracking-rest/v1.0/ct-processes'
-;
+																								;
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-				const produces = ['application/json', 'application/xml'];
-				if (produces.indexOf('application/json') >= 0) {
+				const responseContentTypes = ['application/json', 'application/xml'];
+				if (responseContentTypes.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
-					localVarHeaderParams.Accept = produces.join(',');
+					localVarHeaderParams.Accept = responseContentTypes.join(',');
 				}
 			const localVarFormParams: any = {};
 
@@ -321,7 +319,6 @@ export class CTProcessApi {
 					if (status !== undefined) {
 						localVarQueryParameters['status'] = ObjectSerializer.serialize(status, "Array<number>");
 					}
-
 			(<any>Object).assign(localVarHeaderParams, options.headers);
 
 			const localVarUseFormData = false;
@@ -401,14 +398,14 @@ export class CTProcessApi {
 							'{' + 'ctProcessId' + '}',
 							encodeURIComponent(String(ctProcessId))
 						)
-				;
+												;
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-				const produces = ['application/json', 'application/xml'];
-				if (produces.indexOf('application/json') >= 0) {
+				const responseContentTypes = ['application/json', 'application/xml'];
+				if (responseContentTypes.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
-					localVarHeaderParams.Accept = produces.join(',');
+					localVarHeaderParams.Accept = responseContentTypes.join(',');
 				}
 			const localVarFormParams: any = {};
 
@@ -421,7 +418,6 @@ export class CTProcessApi {
 					if (name !== undefined) {
 						localVarQueryParameters['name'] = ObjectSerializer.serialize(name, "string");
 					}
-
 			(<any>Object).assign(localVarHeaderParams, options.headers);
 
 			const localVarUseFormData = false;

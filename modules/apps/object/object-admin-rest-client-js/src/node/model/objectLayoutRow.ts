@@ -23,19 +23,19 @@
 		type: string;
 	}> = [
 		{
-			baseName: 'id',
-			name: 'id',
-			type: 'number',
+			baseName: "id",
+			name: "id",
+			type: "number",
 		},
 		{
-			baseName: 'objectLayoutColumns',
-			name: 'objectLayoutColumns',
-			type: 'Array<ObjectLayoutColumn>',
+			baseName: "objectLayoutColumns",
+			name: "objectLayoutColumns",
+			type: "Array<ObjectLayoutColumn>",
 		},
 		{
-			baseName: 'priority',
-			name: 'priority',
-			type: 'number',
+			baseName: "priority",
+			name: "priority",
+			type: "number",
 		},
 		];
 

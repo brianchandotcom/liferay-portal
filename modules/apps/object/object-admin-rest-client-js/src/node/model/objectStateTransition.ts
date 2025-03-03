@@ -20,9 +20,9 @@
 		type: string;
 	}> = [
 		{
-			baseName: 'key',
-			name: 'key',
-			type: 'string',
+			baseName: "key",
+			name: "key",
+			type: "string",
 		},
 		];
 

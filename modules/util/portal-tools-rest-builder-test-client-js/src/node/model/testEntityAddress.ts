@@ -29,39 +29,39 @@
 		type: string;
 	}> = [
 		{
-			baseName: 'dateCreated',
-			name: 'dateCreated',
-			type: 'Date',
+			baseName: "dateCreated",
+			name: "dateCreated",
+			type: "Date",
 		},
 		{
-			baseName: 'dateModified',
-			name: 'dateModified',
-			type: 'Date',
+			baseName: "dateModified",
+			name: "dateModified",
+			type: "Date",
 		},
 		{
-			baseName: 'description',
-			name: 'description',
-			type: 'string',
+			baseName: "description",
+			name: "description",
+			type: "string",
 		},
 		{
-			baseName: 'documentId',
-			name: 'documentId',
-			type: 'number',
+			baseName: "documentId",
+			name: "documentId",
+			type: "number",
 		},
 		{
-			baseName: 'id',
-			name: 'id',
-			type: 'number',
+			baseName: "id",
+			name: "id",
+			type: "number",
 		},
 		{
-			baseName: 'jsonProperty',
-			name: 'jsonProperty',
-			type: 'string',
+			baseName: "jsonProperty",
+			name: "jsonProperty",
+			type: "string",
 		},
 		{
-			baseName: 'name',
-			name: 'name',
-			type: 'string',
+			baseName: "name",
+			name: "name",
+			type: "string",
 		},
 		];
 

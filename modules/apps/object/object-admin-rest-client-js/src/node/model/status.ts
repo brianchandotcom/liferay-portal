@@ -22,19 +22,19 @@
 		type: string;
 	}> = [
 		{
-			baseName: 'code',
-			name: 'code',
-			type: 'number',
+			baseName: "code",
+			name: "code",
+			type: "number",
 		},
 		{
-			baseName: 'label',
-			name: 'label',
-			type: 'string',
+			baseName: "label",
+			name: "label",
+			type: "string",
 		},
 		{
-			baseName: 'label_i18n',
-			name: 'label_i18n',
-			type: 'string',
+			baseName: "label_i18n",
+			name: "label_i18n",
+			type: "string",
 		},
 		];
 

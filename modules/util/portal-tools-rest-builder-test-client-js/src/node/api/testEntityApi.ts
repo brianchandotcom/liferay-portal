@@ -103,14 +103,13 @@ export class TestEntityApi {
 ;
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-				const produces = ['application/json', 'application/xml'];
-				if (produces.indexOf('application/json') >= 0) {
+				const responseContentTypes = ['application/json', 'application/xml'];
+				if (responseContentTypes.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
-					localVarHeaderParams.Accept = produces.join(',');
+					localVarHeaderParams.Accept = responseContentTypes.join(',');
 				}
 			const localVarFormParams: any = {};
-
 
 			(<any>Object).assign(localVarHeaderParams, options.headers);
 
@@ -190,18 +189,17 @@ export class TestEntityApi {
 				;
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-				const produces = ['application/json', 'application/xml'];
-				if (produces.indexOf('application/json') >= 0) {
+				const responseContentTypes = ['application/json', 'application/xml'];
+				if (responseContentTypes.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
-					localVarHeaderParams.Accept = produces.join(',');
+					localVarHeaderParams.Accept = responseContentTypes.join(',');
 				}
 			const localVarFormParams: any = {};
 
 						if (testEntityId === null || testEntityId === undefined) {
 							throw new Error('Required parameter testEntityId was null or undefined when calling getTestEntity.');
 						}
-
 			(<any>Object).assign(localVarHeaderParams, options.headers);
 
 			const localVarUseFormData = false;
@@ -274,14 +272,13 @@ export class TestEntityApi {
 ;
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-				const produces = ['text/plain'];
-				if (produces.indexOf('application/json') >= 0) {
+				const responseContentTypes = ['text/plain'];
+				if (responseContentTypes.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
-					localVarHeaderParams.Accept = produces.join(',');
+					localVarHeaderParams.Accept = responseContentTypes.join(',');
 				}
 			const localVarFormParams: any = {};
-
 
 			(<any>Object).assign(localVarHeaderParams, options.headers);
 
@@ -362,14 +359,14 @@ export class TestEntityApi {
 							'{' + 'testEntityId' + '}',
 							encodeURIComponent(String(testEntityId))
 						)
-				;
+												;
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-				const produces = ['application/json', 'application/xml'];
-				if (produces.indexOf('application/json') >= 0) {
+				const responseContentTypes = ['application/json', 'application/xml'];
+				if (responseContentTypes.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
-					localVarHeaderParams.Accept = produces.join(',');
+					localVarHeaderParams.Accept = responseContentTypes.join(',');
 				}
 			const localVarFormParams: any = {};
 
@@ -379,13 +376,12 @@ export class TestEntityApi {
 					if (optionalParameter !== undefined) {
 						localVarQueryParameters['optionalParameter'] = ObjectSerializer.serialize(optionalParameter, "number");
 					}
-
 			(<any>Object).assign(localVarHeaderParams, options.headers);
 
 			const localVarUseFormData = false;
 
 			const localVarRequestOptions: localVarRequest.Options = {
-					body: ObjectSerializer.serialize(TestEntity, "TestEntity"),
+						body: ObjectSerializer.serialize(TestEntity, "TestEntity"),
 				headers: localVarHeaderParams,
 				json: true,
 				method: 'PATCH',
@@ -452,18 +448,17 @@ export class TestEntityApi {
 			response: http.IncomingMessage;
 		}> {
 			const localVarPath = this.basePath + '/test/v1.0/reserved-word'
-;
+				;
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
 			const localVarFormParams: any = {};
-
 
 			(<any>Object).assign(localVarHeaderParams, options.headers);
 
 			const localVarUseFormData = false;
 
 			const localVarRequestOptions: localVarRequest.Options = {
-					body: ObjectSerializer.serialize(body, "boolean"),
+						body: ObjectSerializer.serialize(body, "boolean"),
 				headers: localVarHeaderParams,
 				json: true,
 				method: 'POST',
@@ -530,24 +525,23 @@ export class TestEntityApi {
 			response: http.IncomingMessage;
 		}> {
 			const localVarPath = this.basePath + '/test/v1.0/test-entities'
-;
+				;
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-				const produces = ['application/json', 'application/xml'];
-				if (produces.indexOf('application/json') >= 0) {
+				const responseContentTypes = ['application/json', 'application/xml'];
+				if (responseContentTypes.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
-					localVarHeaderParams.Accept = produces.join(',');
+					localVarHeaderParams.Accept = responseContentTypes.join(',');
 				}
 			const localVarFormParams: any = {};
-
 
 			(<any>Object).assign(localVarHeaderParams, options.headers);
 
 			const localVarUseFormData = false;
 
 			const localVarRequestOptions: localVarRequest.Options = {
-					body: ObjectSerializer.serialize(TestEntity, "TestEntity"),
+						body: ObjectSerializer.serialize(TestEntity, "TestEntity"),
 				headers: localVarHeaderParams,
 				json: true,
 				method: 'POST',
@@ -622,14 +616,14 @@ export class TestEntityApi {
 							'{' + 'testEntityId' + '}',
 							encodeURIComponent(String(testEntityId))
 						)
-				;
+												;
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-				const produces = ['application/json', 'application/xml'];
-				if (produces.indexOf('application/json') >= 0) {
+				const responseContentTypes = ['application/json', 'application/xml'];
+				if (responseContentTypes.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
-					localVarHeaderParams.Accept = produces.join(',');
+					localVarHeaderParams.Accept = responseContentTypes.join(',');
 				}
 			const localVarFormParams: any = {};
 
@@ -639,13 +633,12 @@ export class TestEntityApi {
 					if (optionalParameter !== undefined) {
 						localVarQueryParameters['optionalParameter'] = ObjectSerializer.serialize(optionalParameter, "number");
 					}
-
 			(<any>Object).assign(localVarHeaderParams, options.headers);
 
 			const localVarUseFormData = false;
 
 			const localVarRequestOptions: localVarRequest.Options = {
-					body: ObjectSerializer.serialize(TestEntity, "TestEntity"),
+						body: ObjectSerializer.serialize(TestEntity, "TestEntity"),
 				headers: localVarHeaderParams,
 				json: true,
 				method: 'PUT',

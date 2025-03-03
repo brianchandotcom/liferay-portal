@@ -22,14 +22,14 @@
 		type: string;
 	}> = [
 		{
-			baseName: 'facetCriteria',
-			name: 'facetCriteria',
-			type: 'string',
+			baseName: "facetCriteria",
+			name: "facetCriteria",
+			type: "string",
 		},
 		{
-			baseName: 'facetValues',
-			name: 'facetValues',
-			type: 'Array<FacetValue>',
+			baseName: "facetValues",
+			name: "facetValues",
+			type: "Array<FacetValue>",
 		},
 		];
 

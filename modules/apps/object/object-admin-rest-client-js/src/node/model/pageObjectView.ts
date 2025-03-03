@@ -28,39 +28,39 @@
 		type: string;
 	}> = [
 		{
-			baseName: 'actions',
-			name: 'actions',
-			type: '{ [key: string]: { [key: string]: string; }; }',
+			baseName: "actions",
+			name: "actions",
+			type: "{ [key: string]: { [key: string]: string; }; }",
 		},
 		{
-			baseName: 'facets',
-			name: 'facets',
-			type: 'Array<Facet>',
+			baseName: "facets",
+			name: "facets",
+			type: "Array<Facet>",
 		},
 		{
-			baseName: 'items',
-			name: 'items',
-			type: 'Array<ObjectView>',
+			baseName: "items",
+			name: "items",
+			type: "Array<ObjectView>",
 		},
 		{
-			baseName: 'lastPage',
-			name: 'lastPage',
-			type: 'number',
+			baseName: "lastPage",
+			name: "lastPage",
+			type: "number",
 		},
 		{
-			baseName: 'page',
-			name: 'page',
-			type: 'number',
+			baseName: "page",
+			name: "page",
+			type: "number",
 		},
 		{
-			baseName: 'pageSize',
-			name: 'pageSize',
-			type: 'number',
+			baseName: "pageSize",
+			name: "pageSize",
+			type: "number",
 		},
 		{
-			baseName: 'totalCount',
-			name: 'totalCount',
-			type: 'number',
+			baseName: "totalCount",
+			name: "totalCount",
+			type: "number",
 		},
 		];
 

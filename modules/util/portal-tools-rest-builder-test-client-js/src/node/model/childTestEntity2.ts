@@ -21,9 +21,9 @@
 		type: string;
 	}> = [
 		{
-			baseName: 'property2',
-			name: 'property2',
-			type: 'string',
+			baseName: "property2",
+			name: "property2",
+			type: "string",
 		},
 		];
 

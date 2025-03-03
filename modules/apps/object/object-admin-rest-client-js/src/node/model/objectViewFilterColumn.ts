@@ -24,29 +24,29 @@
 		type: string;
 	}> = [
 		{
-			baseName: 'filterType',
-			name: 'filterType',
-			type: ''excludes' | 'includes'',
+			baseName: "filterType",
+			name: "filterType",
+			type: "'excludes' | 'includes'",
 		},
 		{
-			baseName: 'id',
-			name: 'id',
-			type: 'number',
+			baseName: "id",
+			name: "id",
+			type: "number",
 		},
 		{
-			baseName: 'json',
-			name: 'json',
-			type: 'string',
+			baseName: "json",
+			name: "json",
+			type: "string",
 		},
 		{
-			baseName: 'objectFieldName',
-			name: 'objectFieldName',
-			type: 'string',
+			baseName: "objectFieldName",
+			name: "objectFieldName",
+			type: "string",
 		},
 		{
-			baseName: 'valueSummary',
-			name: 'valueSummary',
-			type: 'string',
+			baseName: "valueSummary",
+			name: "valueSummary",
+			type: "string",
 		},
 		];
 

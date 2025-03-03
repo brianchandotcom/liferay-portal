@@ -21,14 +21,14 @@
 		type: string;
 	}> = [
 		{
-			baseName: 'numberOfOccurrences',
-			name: 'numberOfOccurrences',
-			type: 'number',
+			baseName: "numberOfOccurrences",
+			name: "numberOfOccurrences",
+			type: "number",
 		},
 		{
-			baseName: 'term',
-			name: 'term',
-			type: 'string',
+			baseName: "term",
+			name: "term",
+			type: "string",
 		},
 		];
 

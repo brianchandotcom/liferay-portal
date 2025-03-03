@@ -109,18 +109,17 @@ export class ObjectActionApi {
 				;
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-				const produces = ['application/json', 'application/xml'];
-				if (produces.indexOf('application/json') >= 0) {
+				const responseContentTypes = ['application/json', 'application/xml'];
+				if (responseContentTypes.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
-					localVarHeaderParams.Accept = produces.join(',');
+					localVarHeaderParams.Accept = responseContentTypes.join(',');
 				}
 			const localVarFormParams: any = {};
 
 						if (objectActionId === null || objectActionId === undefined) {
 							throw new Error('Required parameter objectActionId was null or undefined when calling deleteObjectAction.');
 						}
-
 			(<any>Object).assign(localVarHeaderParams, options.headers);
 
 			const localVarUseFormData = false;
@@ -199,18 +198,17 @@ export class ObjectActionApi {
 				;
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-				const produces = ['application/json', 'application/xml'];
-				if (produces.indexOf('application/json') >= 0) {
+				const responseContentTypes = ['application/json', 'application/xml'];
+				if (responseContentTypes.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
-					localVarHeaderParams.Accept = produces.join(',');
+					localVarHeaderParams.Accept = responseContentTypes.join(',');
 				}
 			const localVarFormParams: any = {};
 
 						if (objectActionId === null || objectActionId === undefined) {
 							throw new Error('Required parameter objectActionId was null or undefined when calling getObjectAction.');
 						}
-
 			(<any>Object).assign(localVarHeaderParams, options.headers);
 
 			const localVarUseFormData = false;
@@ -294,14 +292,14 @@ export class ObjectActionApi {
 							'{' + 'externalReferenceCode' + '}',
 							encodeURIComponent(String(externalReferenceCode))
 						)
-				;
+																				;
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-				const produces = ['application/json', 'application/xml'];
-				if (produces.indexOf('application/json') >= 0) {
+				const responseContentTypes = ['application/json', 'application/xml'];
+				if (responseContentTypes.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
-					localVarHeaderParams.Accept = produces.join(',');
+					localVarHeaderParams.Accept = responseContentTypes.join(',');
 				}
 			const localVarFormParams: any = {};
 
@@ -320,7 +318,6 @@ export class ObjectActionApi {
 					if (sort !== undefined) {
 						localVarQueryParameters['sort'] = ObjectSerializer.serialize(sort, "string");
 					}
-
 			(<any>Object).assign(localVarHeaderParams, options.headers);
 
 			const localVarUseFormData = false;
@@ -404,14 +401,14 @@ export class ObjectActionApi {
 							'{' + 'objectDefinitionId' + '}',
 							encodeURIComponent(String(objectDefinitionId))
 						)
-				;
+																				;
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-				const produces = ['application/json', 'application/xml'];
-				if (produces.indexOf('application/json') >= 0) {
+				const responseContentTypes = ['application/json', 'application/xml'];
+				if (responseContentTypes.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
-					localVarHeaderParams.Accept = produces.join(',');
+					localVarHeaderParams.Accept = responseContentTypes.join(',');
 				}
 			const localVarFormParams: any = {};
 
@@ -430,7 +427,6 @@ export class ObjectActionApi {
 					if (sort !== undefined) {
 						localVarQueryParameters['sort'] = ObjectSerializer.serialize(sort, "string");
 					}
-
 			(<any>Object).assign(localVarHeaderParams, options.headers);
 
 			const localVarUseFormData = false;
@@ -508,27 +504,26 @@ export class ObjectActionApi {
 							'{' + 'objectActionId' + '}',
 							encodeURIComponent(String(objectActionId))
 						)
-				;
+								;
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-				const produces = ['application/json', 'application/xml'];
-				if (produces.indexOf('application/json') >= 0) {
+				const responseContentTypes = ['application/json', 'application/xml'];
+				if (responseContentTypes.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
-					localVarHeaderParams.Accept = produces.join(',');
+					localVarHeaderParams.Accept = responseContentTypes.join(',');
 				}
 			const localVarFormParams: any = {};
 
 						if (objectActionId === null || objectActionId === undefined) {
 							throw new Error('Required parameter objectActionId was null or undefined when calling patchObjectAction.');
 						}
-
 			(<any>Object).assign(localVarHeaderParams, options.headers);
 
 			const localVarUseFormData = false;
 
 			const localVarRequestOptions: localVarRequest.Options = {
-					body: ObjectSerializer.serialize(ObjectAction, "ObjectAction"),
+						body: ObjectSerializer.serialize(ObjectAction, "ObjectAction"),
 				headers: localVarHeaderParams,
 				json: true,
 				method: 'PATCH',
@@ -601,27 +596,26 @@ export class ObjectActionApi {
 							'{' + 'externalReferenceCode' + '}',
 							encodeURIComponent(String(externalReferenceCode))
 						)
-				;
+								;
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-				const produces = ['application/json', 'application/xml'];
-				if (produces.indexOf('application/json') >= 0) {
+				const responseContentTypes = ['application/json', 'application/xml'];
+				if (responseContentTypes.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
-					localVarHeaderParams.Accept = produces.join(',');
+					localVarHeaderParams.Accept = responseContentTypes.join(',');
 				}
 			const localVarFormParams: any = {};
 
 						if (externalReferenceCode === null || externalReferenceCode === undefined) {
 							throw new Error('Required parameter externalReferenceCode was null or undefined when calling postObjectDefinitionByExternalReferenceCodeObjectAction.');
 						}
-
 			(<any>Object).assign(localVarHeaderParams, options.headers);
 
 			const localVarUseFormData = false;
 
 			const localVarRequestOptions: localVarRequest.Options = {
-					body: ObjectSerializer.serialize(ObjectAction, "ObjectAction"),
+						body: ObjectSerializer.serialize(ObjectAction, "ObjectAction"),
 				headers: localVarHeaderParams,
 				json: true,
 				method: 'POST',
@@ -694,27 +688,26 @@ export class ObjectActionApi {
 							'{' + 'objectDefinitionId' + '}',
 							encodeURIComponent(String(objectDefinitionId))
 						)
-				;
+								;
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-				const produces = ['application/json', 'application/xml'];
-				if (produces.indexOf('application/json') >= 0) {
+				const responseContentTypes = ['application/json', 'application/xml'];
+				if (responseContentTypes.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
-					localVarHeaderParams.Accept = produces.join(',');
+					localVarHeaderParams.Accept = responseContentTypes.join(',');
 				}
 			const localVarFormParams: any = {};
 
 						if (objectDefinitionId === null || objectDefinitionId === undefined) {
 							throw new Error('Required parameter objectDefinitionId was null or undefined when calling postObjectDefinitionObjectAction.');
 						}
-
 			(<any>Object).assign(localVarHeaderParams, options.headers);
 
 			const localVarUseFormData = false;
 
 			const localVarRequestOptions: localVarRequest.Options = {
-					body: ObjectSerializer.serialize(ObjectAction, "ObjectAction"),
+						body: ObjectSerializer.serialize(ObjectAction, "ObjectAction"),
 				headers: localVarHeaderParams,
 				json: true,
 				method: 'POST',
@@ -787,27 +780,26 @@ export class ObjectActionApi {
 							'{' + 'objectActionId' + '}',
 							encodeURIComponent(String(objectActionId))
 						)
-				;
+								;
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-				const produces = ['application/json', 'application/xml'];
-				if (produces.indexOf('application/json') >= 0) {
+				const responseContentTypes = ['application/json', 'application/xml'];
+				if (responseContentTypes.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
-					localVarHeaderParams.Accept = produces.join(',');
+					localVarHeaderParams.Accept = responseContentTypes.join(',');
 				}
 			const localVarFormParams: any = {};
 
 						if (objectActionId === null || objectActionId === undefined) {
 							throw new Error('Required parameter objectActionId was null or undefined when calling putObjectAction.');
 						}
-
 			(<any>Object).assign(localVarHeaderParams, options.headers);
 
 			const localVarUseFormData = false;
 
 			const localVarRequestOptions: localVarRequest.Options = {
-					body: ObjectSerializer.serialize(ObjectAction, "ObjectAction"),
+						body: ObjectSerializer.serialize(ObjectAction, "ObjectAction"),
 				headers: localVarHeaderParams,
 				json: true,
 				method: 'PUT',

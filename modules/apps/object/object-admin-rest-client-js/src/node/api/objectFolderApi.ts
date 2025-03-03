@@ -109,18 +109,17 @@ export class ObjectFolderApi {
 				;
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-				const produces = ['application/json', 'application/xml'];
-				if (produces.indexOf('application/json') >= 0) {
+				const responseContentTypes = ['application/json', 'application/xml'];
+				if (responseContentTypes.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
-					localVarHeaderParams.Accept = produces.join(',');
+					localVarHeaderParams.Accept = responseContentTypes.join(',');
 				}
 			const localVarFormParams: any = {};
 
 						if (objectFolderId === null || objectFolderId === undefined) {
 							throw new Error('Required parameter objectFolderId was null or undefined when calling deleteObjectFolder.');
 						}
-
 			(<any>Object).assign(localVarHeaderParams, options.headers);
 
 			const localVarUseFormData = false;
@@ -199,18 +198,17 @@ export class ObjectFolderApi {
 				;
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-				const produces = ['application/json', 'application/xml'];
-				if (produces.indexOf('application/json') >= 0) {
+				const responseContentTypes = ['application/json', 'application/xml'];
+				if (responseContentTypes.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
-					localVarHeaderParams.Accept = produces.join(',');
+					localVarHeaderParams.Accept = responseContentTypes.join(',');
 				}
 			const localVarFormParams: any = {};
 
 						if (objectFolderId === null || objectFolderId === undefined) {
 							throw new Error('Required parameter objectFolderId was null or undefined when calling getObjectFolder.');
 						}
-
 			(<any>Object).assign(localVarHeaderParams, options.headers);
 
 			const localVarUseFormData = false;
@@ -289,18 +287,17 @@ export class ObjectFolderApi {
 				;
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-				const produces = ['application/json', 'application/xml'];
-				if (produces.indexOf('application/json') >= 0) {
+				const responseContentTypes = ['application/json', 'application/xml'];
+				if (responseContentTypes.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
-					localVarHeaderParams.Accept = produces.join(',');
+					localVarHeaderParams.Accept = responseContentTypes.join(',');
 				}
 			const localVarFormParams: any = {};
 
 						if (externalReferenceCode === null || externalReferenceCode === undefined) {
 							throw new Error('Required parameter externalReferenceCode was null or undefined when calling getObjectFolderByExternalReferenceCode.');
 						}
-
 			(<any>Object).assign(localVarHeaderParams, options.headers);
 
 			const localVarUseFormData = false;
@@ -378,14 +375,14 @@ export class ObjectFolderApi {
 			response: http.IncomingMessage;
 		}> {
 			const localVarPath = this.basePath + '/object-admin/v1.0/object-folders'
-;
+																;
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-				const produces = ['application/json', 'application/xml'];
-				if (produces.indexOf('application/json') >= 0) {
+				const responseContentTypes = ['application/json', 'application/xml'];
+				if (responseContentTypes.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
-					localVarHeaderParams.Accept = produces.join(',');
+					localVarHeaderParams.Accept = responseContentTypes.join(',');
 				}
 			const localVarFormParams: any = {};
 
@@ -398,7 +395,6 @@ export class ObjectFolderApi {
 					if (search !== undefined) {
 						localVarQueryParameters['search'] = ObjectSerializer.serialize(search, "string");
 					}
-
 			(<any>Object).assign(localVarHeaderParams, options.headers);
 
 			const localVarUseFormData = false;
@@ -476,27 +472,26 @@ export class ObjectFolderApi {
 							'{' + 'objectFolderId' + '}',
 							encodeURIComponent(String(objectFolderId))
 						)
-				;
+								;
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-				const produces = ['application/json', 'application/xml'];
-				if (produces.indexOf('application/json') >= 0) {
+				const responseContentTypes = ['application/json', 'application/xml'];
+				if (responseContentTypes.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
-					localVarHeaderParams.Accept = produces.join(',');
+					localVarHeaderParams.Accept = responseContentTypes.join(',');
 				}
 			const localVarFormParams: any = {};
 
 						if (objectFolderId === null || objectFolderId === undefined) {
 							throw new Error('Required parameter objectFolderId was null or undefined when calling patchObjectFolder.');
 						}
-
 			(<any>Object).assign(localVarHeaderParams, options.headers);
 
 			const localVarUseFormData = false;
 
 			const localVarRequestOptions: localVarRequest.Options = {
-					body: ObjectSerializer.serialize(ObjectFolder, "ObjectFolder"),
+						body: ObjectSerializer.serialize(ObjectFolder, "ObjectFolder"),
 				headers: localVarHeaderParams,
 				json: true,
 				method: 'PATCH',
@@ -563,24 +558,23 @@ export class ObjectFolderApi {
 			response: http.IncomingMessage;
 		}> {
 			const localVarPath = this.basePath + '/object-admin/v1.0/object-folders'
-;
+				;
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-				const produces = ['application/json', 'application/xml'];
-				if (produces.indexOf('application/json') >= 0) {
+				const responseContentTypes = ['application/json', 'application/xml'];
+				if (responseContentTypes.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
-					localVarHeaderParams.Accept = produces.join(',');
+					localVarHeaderParams.Accept = responseContentTypes.join(',');
 				}
 			const localVarFormParams: any = {};
-
 
 			(<any>Object).assign(localVarHeaderParams, options.headers);
 
 			const localVarUseFormData = false;
 
 			const localVarRequestOptions: localVarRequest.Options = {
-					body: ObjectSerializer.serialize(ObjectFolder, "ObjectFolder"),
+						body: ObjectSerializer.serialize(ObjectFolder, "ObjectFolder"),
 				headers: localVarHeaderParams,
 				json: true,
 				method: 'POST',
@@ -653,27 +647,26 @@ export class ObjectFolderApi {
 							'{' + 'objectFolderId' + '}',
 							encodeURIComponent(String(objectFolderId))
 						)
-				;
+								;
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-				const produces = ['application/json', 'application/xml'];
-				if (produces.indexOf('application/json') >= 0) {
+				const responseContentTypes = ['application/json', 'application/xml'];
+				if (responseContentTypes.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
-					localVarHeaderParams.Accept = produces.join(',');
+					localVarHeaderParams.Accept = responseContentTypes.join(',');
 				}
 			const localVarFormParams: any = {};
 
 						if (objectFolderId === null || objectFolderId === undefined) {
 							throw new Error('Required parameter objectFolderId was null or undefined when calling putObjectFolder.');
 						}
-
 			(<any>Object).assign(localVarHeaderParams, options.headers);
 
 			const localVarUseFormData = false;
 
 			const localVarRequestOptions: localVarRequest.Options = {
-					body: ObjectSerializer.serialize(ObjectFolder, "ObjectFolder"),
+						body: ObjectSerializer.serialize(ObjectFolder, "ObjectFolder"),
 				headers: localVarHeaderParams,
 				json: true,
 				method: 'PUT',
@@ -746,27 +739,26 @@ export class ObjectFolderApi {
 							'{' + 'externalReferenceCode' + '}',
 							encodeURIComponent(String(externalReferenceCode))
 						)
-				;
+								;
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-				const produces = ['application/json', 'application/xml'];
-				if (produces.indexOf('application/json') >= 0) {
+				const responseContentTypes = ['application/json', 'application/xml'];
+				if (responseContentTypes.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
-					localVarHeaderParams.Accept = produces.join(',');
+					localVarHeaderParams.Accept = responseContentTypes.join(',');
 				}
 			const localVarFormParams: any = {};
 
 						if (externalReferenceCode === null || externalReferenceCode === undefined) {
 							throw new Error('Required parameter externalReferenceCode was null or undefined when calling putObjectFolderByExternalReferenceCode.');
 						}
-
 			(<any>Object).assign(localVarHeaderParams, options.headers);
 
 			const localVarUseFormData = false;
 
 			const localVarRequestOptions: localVarRequest.Options = {
-					body: ObjectSerializer.serialize(ObjectFolder, "ObjectFolder"),
+						body: ObjectSerializer.serialize(ObjectFolder, "ObjectFolder"),
 				headers: localVarHeaderParams,
 				json: true,
 				method: 'PUT',

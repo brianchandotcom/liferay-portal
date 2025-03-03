@@ -103,14 +103,13 @@ export class CompanyTestEntityApi {
 ;
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-				const produces = ['application/json', 'application/xml'];
-				if (produces.indexOf('application/json') >= 0) {
+				const responseContentTypes = ['application/json', 'application/xml'];
+				if (responseContentTypes.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
-					localVarHeaderParams.Accept = produces.join(',');
+					localVarHeaderParams.Accept = responseContentTypes.join(',');
 				}
 			const localVarFormParams: any = {};
-
 
 			(<any>Object).assign(localVarHeaderParams, options.headers);
 
@@ -190,18 +189,17 @@ export class CompanyTestEntityApi {
 				;
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-				const produces = ['application/json', 'application/xml'];
-				if (produces.indexOf('application/json') >= 0) {
+				const responseContentTypes = ['application/json', 'application/xml'];
+				if (responseContentTypes.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
-					localVarHeaderParams.Accept = produces.join(',');
+					localVarHeaderParams.Accept = responseContentTypes.join(',');
 				}
 			const localVarFormParams: any = {};
 
 						if (companyTestEntityId === null || companyTestEntityId === undefined) {
 							throw new Error('Required parameter companyTestEntityId was null or undefined when calling getCompanyTestEntity.');
 						}
-
 			(<any>Object).assign(localVarHeaderParams, options.headers);
 
 			const localVarUseFormData = false;
@@ -280,18 +278,17 @@ export class CompanyTestEntityApi {
 				;
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-				const produces = ['application/json', 'application/xml'];
-				if (produces.indexOf('application/json') >= 0) {
+				const responseContentTypes = ['application/json', 'application/xml'];
+				if (responseContentTypes.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
-					localVarHeaderParams.Accept = produces.join(',');
+					localVarHeaderParams.Accept = responseContentTypes.join(',');
 				}
 			const localVarFormParams: any = {};
 
 						if (externalReferenceCode === null || externalReferenceCode === undefined) {
 							throw new Error('Required parameter externalReferenceCode was null or undefined when calling getCompanyTestEntityByExternalReferenceCode.');
 						}
-
 			(<any>Object).assign(localVarHeaderParams, options.headers);
 
 			const localVarUseFormData = false;
@@ -369,14 +366,14 @@ export class CompanyTestEntityApi {
 							'{' + 'companyTestEntityId' + '}',
 							encodeURIComponent(String(companyTestEntityId))
 						)
-				;
+								;
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-				const produces = ['application/json', 'application/xml'];
-				if (produces.indexOf('application/json') >= 0) {
+				const responseContentTypes = ['application/json', 'application/xml'];
+				if (responseContentTypes.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
-					localVarHeaderParams.Accept = produces.join(',');
+					localVarHeaderParams.Accept = responseContentTypes.join(',');
 				}
 			const localVarFormParams: any = {};
 
@@ -386,7 +383,6 @@ export class CompanyTestEntityApi {
 					if (roleNames !== undefined) {
 						localVarQueryParameters['roleNames'] = ObjectSerializer.serialize(roleNames, "string");
 					}
-
 			(<any>Object).assign(localVarHeaderParams, options.headers);
 
 			const localVarUseFormData = false;
@@ -458,24 +454,23 @@ export class CompanyTestEntityApi {
 			response: http.IncomingMessage;
 		}> {
 			const localVarPath = this.basePath + '/test/v1.0/company-test-entities'
-;
+				;
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-				const produces = ['application/json', 'application/xml'];
-				if (produces.indexOf('application/json') >= 0) {
+				const responseContentTypes = ['application/json', 'application/xml'];
+				if (responseContentTypes.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
-					localVarHeaderParams.Accept = produces.join(',');
+					localVarHeaderParams.Accept = responseContentTypes.join(',');
 				}
 			const localVarFormParams: any = {};
-
 
 			(<any>Object).assign(localVarHeaderParams, options.headers);
 
 			const localVarUseFormData = false;
 
 			const localVarRequestOptions: localVarRequest.Options = {
-					body: ObjectSerializer.serialize(CompanyTestEntity, "CompanyTestEntity"),
+						body: ObjectSerializer.serialize(CompanyTestEntity, "CompanyTestEntity"),
 				headers: localVarHeaderParams,
 				json: true,
 				method: 'POST',
@@ -548,27 +543,26 @@ export class CompanyTestEntityApi {
 							'{' + 'companyTestEntityId' + '}',
 							encodeURIComponent(String(companyTestEntityId))
 						)
-				;
+								;
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-				const produces = ['application/json', 'application/xml'];
-				if (produces.indexOf('application/json') >= 0) {
+				const responseContentTypes = ['application/json', 'application/xml'];
+				if (responseContentTypes.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
-					localVarHeaderParams.Accept = produces.join(',');
+					localVarHeaderParams.Accept = responseContentTypes.join(',');
 				}
 			const localVarFormParams: any = {};
 
 						if (companyTestEntityId === null || companyTestEntityId === undefined) {
 							throw new Error('Required parameter companyTestEntityId was null or undefined when calling putCompanyTestEntity.');
 						}
-
 			(<any>Object).assign(localVarHeaderParams, options.headers);
 
 			const localVarUseFormData = false;
 
 			const localVarRequestOptions: localVarRequest.Options = {
-					body: ObjectSerializer.serialize(CompanyTestEntity, "CompanyTestEntity"),
+						body: ObjectSerializer.serialize(CompanyTestEntity, "CompanyTestEntity"),
 				headers: localVarHeaderParams,
 				json: true,
 				method: 'PUT',
@@ -641,27 +635,26 @@ export class CompanyTestEntityApi {
 							'{' + 'externalReferenceCode' + '}',
 							encodeURIComponent(String(externalReferenceCode))
 						)
-				;
+								;
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-				const produces = ['application/json', 'application/xml'];
-				if (produces.indexOf('application/json') >= 0) {
+				const responseContentTypes = ['application/json', 'application/xml'];
+				if (responseContentTypes.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
-					localVarHeaderParams.Accept = produces.join(',');
+					localVarHeaderParams.Accept = responseContentTypes.join(',');
 				}
 			const localVarFormParams: any = {};
 
 						if (externalReferenceCode === null || externalReferenceCode === undefined) {
 							throw new Error('Required parameter externalReferenceCode was null or undefined when calling putCompanyTestEntityByExternalReferenceCode.');
 						}
-
 			(<any>Object).assign(localVarHeaderParams, options.headers);
 
 			const localVarUseFormData = false;
 
 			const localVarRequestOptions: localVarRequest.Options = {
-					body: ObjectSerializer.serialize(CompanyTestEntity, "CompanyTestEntity"),
+						body: ObjectSerializer.serialize(CompanyTestEntity, "CompanyTestEntity"),
 				headers: localVarHeaderParams,
 				json: true,
 				method: 'PUT',
@@ -735,18 +728,17 @@ export class CompanyTestEntityApi {
 				;
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-				const produces = ['application/json', 'application/xml'];
-				if (produces.indexOf('application/json') >= 0) {
+				const responseContentTypes = ['application/json', 'application/xml'];
+				if (responseContentTypes.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
-					localVarHeaderParams.Accept = produces.join(',');
+					localVarHeaderParams.Accept = responseContentTypes.join(',');
 				}
 			const localVarFormParams: any = {};
 
 						if (companyTestEntityId === null || companyTestEntityId === undefined) {
 							throw new Error('Required parameter companyTestEntityId was null or undefined when calling putCompanyTestEntityPermissionsPage.');
 						}
-
 			(<any>Object).assign(localVarHeaderParams, options.headers);
 
 			const localVarUseFormData = false;

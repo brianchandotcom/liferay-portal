@@ -109,18 +109,17 @@ export class SiteTestEntityApi {
 				;
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-				const produces = ['application/json', 'application/xml'];
-				if (produces.indexOf('application/json') >= 0) {
+				const responseContentTypes = ['application/json', 'application/xml'];
+				if (responseContentTypes.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
-					localVarHeaderParams.Accept = produces.join(',');
+					localVarHeaderParams.Accept = responseContentTypes.join(',');
 				}
 			const localVarFormParams: any = {};
 
 						if (siteId === null || siteId === undefined) {
 							throw new Error('Required parameter siteId was null or undefined when calling getSiteSiteTestEntitiesPage.');
 						}
-
 			(<any>Object).assign(localVarHeaderParams, options.headers);
 
 			const localVarUseFormData = false;
@@ -198,18 +197,18 @@ export class SiteTestEntityApi {
 							'{' + 'externalReferenceCode' + '}',
 							encodeURIComponent(String(externalReferenceCode))
 						)
-						.replace(
+										.replace(
 							'{' + 'siteId' + '}',
 							encodeURIComponent(String(siteId))
 						)
 				;
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-				const produces = ['application/json', 'application/xml'];
-				if (produces.indexOf('application/json') >= 0) {
+				const responseContentTypes = ['application/json', 'application/xml'];
+				if (responseContentTypes.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
-					localVarHeaderParams.Accept = produces.join(',');
+					localVarHeaderParams.Accept = responseContentTypes.join(',');
 				}
 			const localVarFormParams: any = {};
 
@@ -219,7 +218,6 @@ export class SiteTestEntityApi {
 						if (siteId === null || siteId === undefined) {
 							throw new Error('Required parameter siteId was null or undefined when calling getSiteSiteTestEntityByExternalReferenceCode.');
 						}
-
 			(<any>Object).assign(localVarHeaderParams, options.headers);
 
 			const localVarUseFormData = false;
@@ -298,18 +296,17 @@ export class SiteTestEntityApi {
 				;
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-				const produces = ['application/json', 'application/xml'];
-				if (produces.indexOf('application/json') >= 0) {
+				const responseContentTypes = ['application/json', 'application/xml'];
+				if (responseContentTypes.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
-					localVarHeaderParams.Accept = produces.join(',');
+					localVarHeaderParams.Accept = responseContentTypes.join(',');
 				}
 			const localVarFormParams: any = {};
 
 						if (siteTestEntityId === null || siteTestEntityId === undefined) {
 							throw new Error('Required parameter siteTestEntityId was null or undefined when calling getSiteTestEntity.');
 						}
-
 			(<any>Object).assign(localVarHeaderParams, options.headers);
 
 			const localVarUseFormData = false;
@@ -387,14 +384,14 @@ export class SiteTestEntityApi {
 							'{' + 'siteTestEntityId' + '}',
 							encodeURIComponent(String(siteTestEntityId))
 						)
-				;
+								;
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-				const produces = ['application/json', 'application/xml'];
-				if (produces.indexOf('application/json') >= 0) {
+				const responseContentTypes = ['application/json', 'application/xml'];
+				if (responseContentTypes.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
-					localVarHeaderParams.Accept = produces.join(',');
+					localVarHeaderParams.Accept = responseContentTypes.join(',');
 				}
 			const localVarFormParams: any = {};
 
@@ -404,7 +401,6 @@ export class SiteTestEntityApi {
 					if (roleNames !== undefined) {
 						localVarQueryParameters['roleNames'] = ObjectSerializer.serialize(roleNames, "string");
 					}
-
 			(<any>Object).assign(localVarHeaderParams, options.headers);
 
 			const localVarUseFormData = false;
@@ -482,27 +478,26 @@ export class SiteTestEntityApi {
 							'{' + 'siteId' + '}',
 							encodeURIComponent(String(siteId))
 						)
-				;
+								;
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-				const produces = ['application/json', 'application/xml'];
-				if (produces.indexOf('application/json') >= 0) {
+				const responseContentTypes = ['application/json', 'application/xml'];
+				if (responseContentTypes.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
-					localVarHeaderParams.Accept = produces.join(',');
+					localVarHeaderParams.Accept = responseContentTypes.join(',');
 				}
 			const localVarFormParams: any = {};
 
 						if (siteId === null || siteId === undefined) {
 							throw new Error('Required parameter siteId was null or undefined when calling postSiteSiteTestEntity.');
 						}
-
 			(<any>Object).assign(localVarHeaderParams, options.headers);
 
 			const localVarUseFormData = false;
 
 			const localVarRequestOptions: localVarRequest.Options = {
-					body: ObjectSerializer.serialize(SiteTestEntity, "SiteTestEntity"),
+						body: ObjectSerializer.serialize(SiteTestEntity, "SiteTestEntity"),
 				headers: localVarHeaderParams,
 				json: true,
 				method: 'POST',
@@ -577,18 +572,18 @@ export class SiteTestEntityApi {
 							'{' + 'externalReferenceCode' + '}',
 							encodeURIComponent(String(externalReferenceCode))
 						)
-						.replace(
+										.replace(
 							'{' + 'siteId' + '}',
 							encodeURIComponent(String(siteId))
 						)
-				;
+								;
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-				const produces = ['application/json', 'application/xml'];
-				if (produces.indexOf('application/json') >= 0) {
+				const responseContentTypes = ['application/json', 'application/xml'];
+				if (responseContentTypes.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
-					localVarHeaderParams.Accept = produces.join(',');
+					localVarHeaderParams.Accept = responseContentTypes.join(',');
 				}
 			const localVarFormParams: any = {};
 
@@ -598,13 +593,12 @@ export class SiteTestEntityApi {
 						if (siteId === null || siteId === undefined) {
 							throw new Error('Required parameter siteId was null or undefined when calling putSiteSiteTestEntityByExternalReferenceCode.');
 						}
-
 			(<any>Object).assign(localVarHeaderParams, options.headers);
 
 			const localVarUseFormData = false;
 
 			const localVarRequestOptions: localVarRequest.Options = {
-					body: ObjectSerializer.serialize(SiteTestEntity, "SiteTestEntity"),
+						body: ObjectSerializer.serialize(SiteTestEntity, "SiteTestEntity"),
 				headers: localVarHeaderParams,
 				json: true,
 				method: 'PUT',
@@ -677,27 +671,26 @@ export class SiteTestEntityApi {
 							'{' + 'siteTestEntityId' + '}',
 							encodeURIComponent(String(siteTestEntityId))
 						)
-				;
+								;
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-				const produces = ['application/json', 'application/xml'];
-				if (produces.indexOf('application/json') >= 0) {
+				const responseContentTypes = ['application/json', 'application/xml'];
+				if (responseContentTypes.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
-					localVarHeaderParams.Accept = produces.join(',');
+					localVarHeaderParams.Accept = responseContentTypes.join(',');
 				}
 			const localVarFormParams: any = {};
 
 						if (siteTestEntityId === null || siteTestEntityId === undefined) {
 							throw new Error('Required parameter siteTestEntityId was null or undefined when calling putSiteTestEntity.');
 						}
-
 			(<any>Object).assign(localVarHeaderParams, options.headers);
 
 			const localVarUseFormData = false;
 
 			const localVarRequestOptions: localVarRequest.Options = {
-					body: ObjectSerializer.serialize(SiteTestEntity, "SiteTestEntity"),
+						body: ObjectSerializer.serialize(SiteTestEntity, "SiteTestEntity"),
 				headers: localVarHeaderParams,
 				json: true,
 				method: 'PUT',
@@ -771,18 +764,17 @@ export class SiteTestEntityApi {
 				;
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-				const produces = ['application/json', 'application/xml'];
-				if (produces.indexOf('application/json') >= 0) {
+				const responseContentTypes = ['application/json', 'application/xml'];
+				if (responseContentTypes.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
-					localVarHeaderParams.Accept = produces.join(',');
+					localVarHeaderParams.Accept = responseContentTypes.join(',');
 				}
 			const localVarFormParams: any = {};
 
 						if (siteTestEntityId === null || siteTestEntityId === undefined) {
 							throw new Error('Required parameter siteTestEntityId was null or undefined when calling putSiteTestEntityPermissionsPage.');
 						}
-
 			(<any>Object).assign(localVarHeaderParams, options.headers);
 
 			const localVarUseFormData = false;

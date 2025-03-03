@@ -26,34 +26,34 @@
 		type: string;
 	}> = [
 		{
-			baseName: 'id',
-			name: 'id',
-			type: 'number',
+			baseName: "id",
+			name: "id",
+			type: "number",
 		},
 		{
-			baseName: 'name',
-			name: 'name',
-			type: '{ [key: string]: string; }',
+			baseName: "name",
+			name: "name",
+			type: "{ [key: string]: string; }",
 		},
 		{
-			baseName: 'objectLayoutBoxes',
-			name: 'objectLayoutBoxes',
-			type: 'Array<ObjectLayoutBox>',
+			baseName: "objectLayoutBoxes",
+			name: "objectLayoutBoxes",
+			type: "Array<ObjectLayoutBox>",
 		},
 		{
-			baseName: 'objectRelationshipExternalReferenceCode',
-			name: 'objectRelationshipExternalReferenceCode',
-			type: 'string',
+			baseName: "objectRelationshipExternalReferenceCode",
+			name: "objectRelationshipExternalReferenceCode",
+			type: "string",
 		},
 		{
-			baseName: 'objectRelationshipId',
-			name: 'objectRelationshipId',
-			type: 'number',
+			baseName: "objectRelationshipId",
+			name: "objectRelationshipId",
+			type: "number",
 		},
 		{
-			baseName: 'priority',
-			name: 'priority',
-			type: 'number',
+			baseName: "priority",
+			name: "priority",
+			type: "number",
 		},
 		];
 

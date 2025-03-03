@@ -26,34 +26,34 @@
 		type: string;
 	}> = [
 		{
-			baseName: 'collapsable',
-			name: 'collapsable',
-			type: 'boolean',
+			baseName: "collapsable",
+			name: "collapsable",
+			type: "boolean",
 		},
 		{
-			baseName: 'id',
-			name: 'id',
-			type: 'number',
+			baseName: "id",
+			name: "id",
+			type: "number",
 		},
 		{
-			baseName: 'name',
-			name: 'name',
-			type: '{ [key: string]: string; }',
+			baseName: "name",
+			name: "name",
+			type: "{ [key: string]: string; }",
 		},
 		{
-			baseName: 'objectLayoutRows',
-			name: 'objectLayoutRows',
-			type: 'Array<ObjectLayoutRow>',
+			baseName: "objectLayoutRows",
+			name: "objectLayoutRows",
+			type: "Array<ObjectLayoutRow>",
 		},
 		{
-			baseName: 'priority',
-			name: 'priority',
-			type: 'number',
+			baseName: "priority",
+			name: "priority",
+			type: "number",
 		},
 		{
-			baseName: 'type',
-			name: 'type',
-			type: ''categorization' | 'regular'',
+			baseName: "type",
+			name: "type",
+			type: "'categorization' | 'regular'",
 		},
 		];
 

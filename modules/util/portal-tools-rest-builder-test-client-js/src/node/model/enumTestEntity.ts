@@ -20,9 +20,9 @@
 		type: string;
 	}> = [
 		{
-			baseName: 'testEnum',
-			name: 'testEnum',
-			type: ''-1em' | '-0.95em' | '1em' | '0.95em'',
+			baseName: "testEnum",
+			name: "testEnum",
+			type: "'-1em' | '-0.95em' | '1em' | '0.95em'",
 		},
 		];
 

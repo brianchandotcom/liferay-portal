@@ -25,29 +25,29 @@
 		type: string;
 	}> = [
 		{
-			baseName: 'linkedObjectDefinition',
-			name: 'linkedObjectDefinition',
-			type: 'boolean',
+			baseName: "linkedObjectDefinition",
+			name: "linkedObjectDefinition",
+			type: "boolean",
 		},
 		{
-			baseName: 'objectDefinition',
-			name: 'objectDefinition',
-			type: 'ObjectDefinition',
+			baseName: "objectDefinition",
+			name: "objectDefinition",
+			type: "ObjectDefinition",
 		},
 		{
-			baseName: 'objectDefinitionExternalReferenceCode',
-			name: 'objectDefinitionExternalReferenceCode',
-			type: 'string',
+			baseName: "objectDefinitionExternalReferenceCode",
+			name: "objectDefinitionExternalReferenceCode",
+			type: "string",
 		},
 		{
-			baseName: 'positionX',
-			name: 'positionX',
-			type: 'number',
+			baseName: "positionX",
+			name: "positionX",
+			type: "number",
 		},
 		{
-			baseName: 'positionY',
-			name: 'positionY',
-			type: 'number',
+			baseName: "positionY",
+			name: "positionY",
+			type: "number",
 		},
 		];
 

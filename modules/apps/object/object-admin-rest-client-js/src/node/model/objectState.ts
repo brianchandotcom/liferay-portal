@@ -23,19 +23,19 @@
 		type: string;
 	}> = [
 		{
-			baseName: 'id',
-			name: 'id',
-			type: 'number',
+			baseName: "id",
+			name: "id",
+			type: "number",
 		},
 		{
-			baseName: 'key',
-			name: 'key',
-			type: 'string',
+			baseName: "key",
+			name: "key",
+			type: "string",
 		},
 		{
-			baseName: 'objectStateTransitions',
-			name: 'objectStateTransitions',
-			type: 'Array<ObjectStateTransition>',
+			baseName: "objectStateTransitions",
+			name: "objectStateTransitions",
+			type: "Array<ObjectStateTransition>",
 		},
 		];
 

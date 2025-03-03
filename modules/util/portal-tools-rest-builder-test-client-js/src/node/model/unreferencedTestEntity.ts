@@ -22,19 +22,19 @@
 		type: string;
 	}> = [
 		{
-			baseName: 'description',
-			name: 'description',
-			type: 'string',
+			baseName: "description",
+			name: "description",
+			type: "string",
 		},
 		{
-			baseName: 'id',
-			name: 'id',
-			type: 'number',
+			baseName: "id",
+			name: "id",
+			type: "number",
 		},
 		{
-			baseName: 'property_with_hyphens',
-			name: 'property_with_hyphens',
-			type: 'string',
+			baseName: "property_with_hyphens",
+			name: "property_with_hyphens",
+			type: "string",
 		},
 		];
 

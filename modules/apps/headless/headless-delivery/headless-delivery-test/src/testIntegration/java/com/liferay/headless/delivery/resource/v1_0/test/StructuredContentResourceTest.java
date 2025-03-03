@@ -651,12 +651,10 @@ public class StructuredContentResourceTest
 
 	@Test
 	public void testPostStructuredContentWithBatch() throws Exception {
-		Locale locale = LocaleUtil.getDefault();
-
 		StructuredContent randomStructuredContent1 = _randomStructuredContent(
-			locale);
+			LocaleUtil.getDefault());
 
-		HttpInvoker.HttpResponse batchHttpResponse =
+		HttpInvoker.HttpResponse httpResponse =
 			structuredContentResource.
 				postSiteStructuredContentBatchHttpResponse(
 					testGroup.getGroupId(), null,
@@ -666,7 +664,7 @@ public class StructuredContentResourceTest
 							randomStructuredContent1.toString())
 					));
 
-		assertHttpResponseStatusCode(202, batchHttpResponse);
+		assertHttpResponseStatusCode(202, httpResponse);
 
 		User testCompanyAdminUser = UserTestUtil.getAdminUser(
 			testCompany.getCompanyId());
@@ -681,16 +679,15 @@ public class StructuredContentResourceTest
 			LocaleUtil.getDefault()
 		).build();
 
-		ImportTask importTask = importTaskResource.getImportTask(
-			GetterUtil.getLong(
-				JSONFactoryUtil.createJSONObject(
-					batchHttpResponse.getContent()
-				).getString(
-					"id"
-				)));
+		long importTaskId = JSONFactoryUtil.createJSONObject(
+			httpResponse.getContent()
+		).getLong(
+			"id"
+		);
 
 		while (true) {
-			importTask = importTaskResource.getImportTask(importTask.getId());
+			ImportTask importTask = importTaskResource.getImportTask(
+				importTaskId);
 
 			if (StringUtil.equals(
 					importTask.getExecuteStatusAsString(), "COMPLETED") ||

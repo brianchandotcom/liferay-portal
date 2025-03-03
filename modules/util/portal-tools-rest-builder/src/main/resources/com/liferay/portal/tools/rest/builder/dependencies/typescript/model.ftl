@@ -1,7 +1,7 @@
 <#if imports??>
-	<#list imports?sort_by("classname") as import>
-		<#if import.classname?lower_case != modelName?lower_case>
-			import {${import.classname}} from './${import.classname?uncap_first}';
+	<#list imports?sort as import>
+		<#if import?lower_case != modelName?lower_case>
+			import {${import}} from './${import?uncap_first}';
 		</#if>
 	</#list>
 </#if>
@@ -37,9 +37,9 @@
 	}> = [
 	<#list properties as property>
 		{
-			baseName: '${property.name}',
-			name: '${property.name}',
-			type: '${property.type}',
+			baseName: "${property.name}",
+			name: "${property.name}",
+			type: "${property.type}",
 		},
 	</#list>
 		];

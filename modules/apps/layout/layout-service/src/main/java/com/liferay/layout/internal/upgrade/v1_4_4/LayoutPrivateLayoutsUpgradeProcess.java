@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.PortalPreferencesLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.version.Version;
@@ -82,7 +83,7 @@ public class LayoutPrivateLayoutsUpgradeProcess extends UpgradeProcess {
 				"=com.liferay.release.feature.flag.web.internal.configuration.",
 				"ReleaseFeatureFlagConfiguration)"));
 
-		if (configurations == null) {
+		if (ArrayUtil.isEmpty(configurations)) {
 			if (!_hasReleaseSchemaVersion()) {
 				return Boolean.TRUE.toString();
 			}
@@ -97,7 +98,7 @@ public class LayoutPrivateLayoutsUpgradeProcess extends UpgradeProcess {
 		String[] disabledReleaseFeatureFlags = (String[])dictionary.get(
 			"disabledReleaseFeatureFlags");
 
-		if ((disabledReleaseFeatureFlags.length != 0) &&
+		if (ArrayUtil.isNotEmpty(disabledReleaseFeatureFlags) &&
 			Objects.equals(
 				disabledReleaseFeatureFlags[0], _DISABLE_PRIVATE_LAYOUTS)) {
 

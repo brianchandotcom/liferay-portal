@@ -432,7 +432,11 @@ paths:
                       type: string
                   style: simple
             responses:
-                "401":
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+                401:
                     content:
                         application/json:
                             schema:
@@ -442,10 +446,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         "Authentication information is missing or invalid"
-                204:
-                    content:
-                        application/json: {}
-                        application/xml: {}
             security:
                 - BasicAuth: []
                 - BearerAuth: []
@@ -469,7 +469,7 @@ paths:
                       type: string
                   style: simple
             responses:
-                "200":
+                200:
                     content:
                         application/json:
                             schema:
@@ -479,10 +479,10 @@ paths:
                                 $ref: "#/components/schemas/ReplenishmentItem"
                     description:
                         "Successful operation"
-                "400":
+                400:
                     description:
                         "Invalid input"
-                "401":
+                401:
                     content:
                         application/json:
                             schema:
@@ -492,7 +492,7 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         "Authentication information is missing or invalid"
-                "404":
+                404:
                     content:
                         application/json:
                             schema:
@@ -502,7 +502,7 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         "The specified resource was not found"
-                "500":
+                500:
                     content:
                         application/json:
                             schema:
@@ -544,7 +544,7 @@ paths:
                             $ref: "#/components/schemas/ReplenishmentItem"
                 required: true
             responses:
-                "200":
+                200:
                     content:
                         application/json:
                             schema:
@@ -554,10 +554,10 @@ paths:
                                 $ref: "#/components/schemas/ReplenishmentItem"
                     description:
                         "Successful operation"
-                "400":
+                400:
                     description:
                         "Invalid input"
-                "401":
+                401:
                     content:
                         application/json:
                             schema:
@@ -567,7 +567,7 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         "Authentication information is missing or invalid"
-                "404":
+                404:
                     content:
                         application/json:
                             schema:
@@ -577,7 +577,7 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         "The specified resource was not found"
-                "500":
+                500:
                     content:
                         application/json:
                             schema:
@@ -619,7 +619,7 @@ paths:
                             $ref: "#/components/schemas/ReplenishmentItem"
                 required: true
             responses:
-                "200":
+                200:
                     content:
                         application/json:
                             schema:
@@ -629,10 +629,10 @@ paths:
                                 $ref: "#/components/schemas/ReplenishmentItem"
                     description:
                         "Successful operation"
-                "400":
+                400:
                     description:
                         "Invalid input"
-                "401":
+                401:
                     content:
                         application/json:
                             schema:
@@ -642,7 +642,7 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         "Authentication information is missing or invalid"
-                "404":
+                404:
                     content:
                         application/json:
                             schema:
@@ -652,7 +652,7 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         "The specified resource was not found"
-                "500":
+                500:
                     content:
                         application/json:
                             schema:
@@ -686,7 +686,11 @@ paths:
                       minimum: 0
                       type: integer
             responses:
-                "401":
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+                401:
                     content:
                         application/json:
                             schema:
@@ -696,10 +700,6 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         "Authentication information is missing or invalid"
-                204:
-                    content:
-                        application/json: {}
-                        application/xml: {}
             security:
                 - BasicAuth: []
                 - BearerAuth: []
@@ -722,7 +722,7 @@ paths:
                       minimum: 0
                       type: integer
             responses:
-                "200":
+                200:
                     content:
                         application/json:
                             schema:
@@ -732,10 +732,10 @@ paths:
                                 $ref: "#/components/schemas/ReplenishmentItem"
                     description:
                         "Successful operation"
-                "400":
+                400:
                     description:
                         "Invalid input"
-                "401":
+                401:
                     content:
                         application/json:
                             schema:
@@ -745,7 +745,7 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         "Authentication information is missing or invalid"
-                "404":
+                404:
                     content:
                         application/json:
                             schema:
@@ -755,7 +755,7 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         "The specified resource was not found"
-                "500":
+                500:
                     content:
                         application/json:
                             schema:
@@ -796,7 +796,7 @@ paths:
                             $ref: "#/components/schemas/ReplenishmentItem"
                 required: true
             responses:
-                "200":
+                200:
                     content:
                         application/json:
                             schema:
@@ -806,10 +806,10 @@ paths:
                                 $ref: "#/components/schemas/ReplenishmentItem"
                     description:
                         "Successful operation"
-                "400":
+                400:
                     description:
                         "Invalid input"
-                "401":
+                401:
                     content:
                         application/json:
                             schema:
@@ -819,7 +819,7 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         "Authentication information is missing or invalid"
-                "404":
+                404:
                     content:
                         application/json:
                             schema:
@@ -829,7 +829,7 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         "The specified resource was not found"
-                "500":
+                500:
                     content:
                         application/json:
                             schema:
@@ -868,7 +868,7 @@ paths:
                   schema:
                       type: integer
             responses:
-                "200":
+                200:
                     content:
                         application/json:
                             schema:
@@ -882,10 +882,10 @@ paths:
                                 type: array
                     description:
                         "Successful operation"
-                "400":
+                400:
                     description:
                         "Invalid input"
-                "401":
+                401:
                     content:
                         application/json:
                             schema:
@@ -895,7 +895,7 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         "Authentication information is missing or invalid"
-                "404":
+                404:
                     content:
                         application/json:
                             schema:
@@ -905,7 +905,7 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         "The specified resource was not found"
-                "500":
+                500:
                     content:
                         application/json:
                             schema:
@@ -1345,10 +1345,11 @@ paths:
                       type: string
                   style: simple
             responses:
-                "204":
-                    description:
-                        "No content"
-                "401":
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+                401:
                     content:
                         application/json:
                             schema:
@@ -1381,7 +1382,7 @@ paths:
                       type: string
                   style: simple
             responses:
-                "200":
+                200:
                     content:
                         application/json:
                             schema:
@@ -1391,10 +1392,10 @@ paths:
                                 $ref: "#/components/schemas/WarehouseItem"
                     description:
                         "Successful operation"
-                "400":
+                400:
                     description:
                         "Invalid input"
-                "401":
+                401:
                     content:
                         application/json:
                             schema:
@@ -1404,7 +1405,7 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         "Authentication information is missing or invalid"
-                "404":
+                404:
                     content:
                         application/json:
                             schema:
@@ -1414,7 +1415,7 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         "The specified resource was not found"
-                "500":
+                500:
                     content:
                         application/json:
                             schema:
@@ -1456,16 +1457,16 @@ paths:
                             $ref: "#/components/schemas/WarehouseItem"
                 required: true
             responses:
-                "202":
+                202:
                     description:
                         Async
-                "204":
+                204:
                     description:
                         Updated
-                "400":
+                400:
                     description:
                         "Invalid input"
-                "401":
+                401:
                     content:
                         application/json:
                             schema:
@@ -1475,7 +1476,7 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         "Authentication information is missing or invalid"
-                "404":
+                404:
                     content:
                         application/json:
                             schema:
@@ -1485,7 +1486,7 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         "The specified resource was not found"
-                "500":
+                500:
                     content:
                         application/json:
                             schema:
@@ -1527,7 +1528,7 @@ paths:
                             $ref: "#/components/schemas/WarehouseItem"
                 required: true
             responses:
-                "201":
+                201:
                     content:
                         application/json:
                             schema:
@@ -1537,16 +1538,16 @@ paths:
                                 $ref: "#/components/schemas/WarehouseItem"
                     description:
                         Created
-                "202":
+                202:
                     description:
                         "Accepted - Async"
-                "204":
+                204:
                     description:
                         Updated
-                "400":
+                400:
                     description:
                         "Invalid input"
-                "401":
+                401:
                     content:
                         application/json:
                             schema:
@@ -1556,7 +1557,7 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         "Authentication information is missing or invalid"
-                "404":
+                404:
                     content:
                         application/json:
                             schema:
@@ -1566,7 +1567,7 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         "The specified resource was not found"
-                "500":
+                500:
                     content:
                         application/json:
                             schema:
@@ -1582,6 +1583,87 @@ paths:
                 - OAuth2:
                       - CommerceOpenApiAdmin.write
             summary: "Creates a Warehouse Item by external reference code."
+            tags:
+                - WarehouseItem
+        put:
+            operationId: putWarehouseItemByExternalReferenceCode
+            parameters:
+                - in: path
+                  explode: false
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      description:
+                          "The resource external reference code"
+                      example: AB-34098-789-N
+                      minLength: 1
+                      type: string
+                  style: simple
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/WarehouseItem"
+                    application/xml:
+                        schema:
+                            $ref: "#/components/schemas/WarehouseItem"
+                required: true
+            responses:
+                201:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/WarehouseItem"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/WarehouseItem"
+                    description:
+                        Created
+                202:
+                    description:
+                        "Accepted - Async"
+                204:
+                    description:
+                        Updated
+                400:
+                    description:
+                        "Invalid input"
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        "Authentication information is missing or invalid"
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        "The specified resource was not found"
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        "Unexpected error"
+            security:
+                - BasicAuth: []
+                - BearerAuth: []
+                - OAuth2:
+                      - CommerceOpenApiAdmin.write
+            summary: "Creates or updates a Warehouse Item by external reference code."
             tags:
                 - WarehouseItem
     "/warehouseItems/updated":
@@ -1623,7 +1705,7 @@ paths:
                       type: string
                   style: form
             responses:
-                "200":
+                200:
                     content:
                         application/json:
                             schema:
@@ -1637,11 +1719,11 @@ paths:
                                 type: array
                     description:
                         "Successful operation"
-                "400":
+                400:
                     description:
                         "Invalid input. Happens if the search parameters are not passed\nor if the end date is prior to
                         start date"
-                "401":
+                401:
                     content:
                         application/json:
                             schema:
@@ -1651,7 +1733,7 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         "Authentication information is missing or invalid"
-                "404":
+                404:
                     content:
                         application/json:
                             schema:
@@ -1661,7 +1743,7 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         "The specified resource was not found"
-                "500":
+                500:
                     content:
                         application/json:
                             schema:
@@ -1694,10 +1776,11 @@ paths:
                       minimum: 0
                       type: integer
             responses:
-                "204":
-                    description:
-                        "No content"
-                "401":
+                204:
+                    content:
+                        application/json: {}
+                        application/xml: {}
+                401:
                     content:
                         application/json:
                             schema:
@@ -1729,7 +1812,7 @@ paths:
                       minimum: 0
                       type: integer
             responses:
-                "200":
+                200:
                     content:
                         application/json:
                             schema:
@@ -1739,10 +1822,10 @@ paths:
                                 $ref: "#/components/schemas/WarehouseItem"
                     description:
                         "Successful operation"
-                "400":
+                400:
                     description:
                         "Invalid input"
-                "401":
+                401:
                     content:
                         application/json:
                             schema:
@@ -1752,7 +1835,7 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         "Authentication information is missing or invalid"
-                "404":
+                404:
                     content:
                         application/json:
                             schema:
@@ -1762,7 +1845,7 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         "The specified resource was not found"
-                "500":
+                500:
                     content:
                         application/json:
                             schema:
@@ -1803,16 +1886,16 @@ paths:
                             $ref: "#/components/schemas/WarehouseItem"
                 required: true
             responses:
-                "202":
+                202:
                     description:
                         Async
-                "204":
+                204:
                     description:
                         Updated
-                "400":
+                400:
                     description:
                         "Invalid input"
-                "401":
+                401:
                     content:
                         application/json:
                             schema:
@@ -1822,7 +1905,7 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         "Authentication information is missing or invalid"
-                "404":
+                404:
                     content:
                         application/json:
                             schema:
@@ -1832,7 +1915,7 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         "The specified resource was not found"
-                "500":
+                500:
                     content:
                         application/json:
                             schema:
@@ -1880,7 +1963,7 @@ paths:
                   schema:
                       type: string
             responses:
-                "200":
+                200:
                     content:
                         application/json:
                             schema:
@@ -1894,10 +1977,10 @@ paths:
                                 type: array
                     description:
                         "Successful operation"
-                "400":
+                400:
                     description:
                         "Invalid input"
-                "401":
+                401:
                     content:
                         application/json:
                             schema:
@@ -1907,7 +1990,7 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         "Authentication information is missing or invalid"
-                "404":
+                404:
                     content:
                         application/json:
                             schema:
@@ -1917,7 +2000,7 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         "The specified resource was not found"
-                "500":
+                500:
                     content:
                         application/json:
                             schema:
@@ -1947,7 +2030,7 @@ paths:
                             $ref: "#/components/schemas/Warehouse"
                 required: true
             responses:
-                "201":
+                201:
                     content:
                         application/json:
                             schema:
@@ -1957,16 +2040,16 @@ paths:
                                 $ref: "#/components/schemas/Warehouse"
                     description:
                         Created
-                "202":
+                202:
                     description:
                         "Accepted - Async"
-                "204":
+                204:
                     description:
                         Updated
-                "400":
+                400:
                     description:
                         "Invalid input"
-                "401":
+                401:
                     content:
                         application/json:
                             schema:
@@ -1976,7 +2059,7 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         "Authentication information is missing or invalid"
-                "404":
+                404:
                     content:
                         application/json:
                             schema:
@@ -1986,7 +2069,7 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         "The specified resource was not found"
-                "500":
+                500:
                     content:
                         application/json:
                             schema:
@@ -2018,11 +2101,11 @@ paths:
                       minLength: 1
                       type: string
             responses:
-                "204":
+                204:
                     content:
                         application/json: {}
                         application/xml: {}
-                "401":
+                401:
                     content:
                         application/json:
                             schema:
@@ -2053,7 +2136,7 @@ paths:
                       minLength: 1
                       type: string
             responses:
-                "200":
+                200:
                     content:
                         application/json:
                             schema:
@@ -2063,10 +2146,10 @@ paths:
                                 $ref: "#/components/schemas/Warehouse"
                     description:
                         "Successful operation"
-                "400":
+                400:
                     description:
                         "Invalid input"
-                "401":
+                401:
                     content:
                         application/json:
                             schema:
@@ -2076,7 +2159,7 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         "Authentication information is missing or invalid"
-                "404":
+                404:
                     content:
                         application/json:
                             schema:
@@ -2086,7 +2169,7 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         "The specified resource was not found"
-                "500":
+                500:
                     content:
                         application/json:
                             schema:
@@ -2126,16 +2209,16 @@ paths:
                             $ref: "#/components/schemas/Warehouse"
                 required: true
             responses:
-                "202":
+                202:
                     description:
                         Async
-                "204":
+                204:
                     description:
                         Updated
-                "400":
+                400:
                     description:
                         "Invalid input"
-                "401":
+                401:
                     content:
                         application/json:
                             schema:
@@ -2145,7 +2228,7 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         "Authentication information is missing or invalid"
-                "404":
+                404:
                     content:
                         application/json:
                             schema:
@@ -2155,7 +2238,7 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         "The specified resource was not found"
-                "500":
+                500:
                     content:
                         application/json:
                             schema:
@@ -2195,7 +2278,7 @@ paths:
                             $ref: "#/components/schemas/Warehouse"
                 required: true
             responses:
-                "201":
+                201:
                     content:
                         application/json:
                             schema:
@@ -2205,16 +2288,16 @@ paths:
                                 $ref: "#/components/schemas/Warehouse"
                     description:
                         Created
-                "202":
+                202:
                     description:
                         "Accepted - Async"
-                "204":
+                204:
                     description:
                         Updated
-                "400":
+                400:
                     description:
                         "Invalid input"
-                "401":
+                401:
                     content:
                         application/json:
                             schema:
@@ -2224,7 +2307,7 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         "Authentication information is missing or invalid"
-                "404":
+                404:
                     content:
                         application/json:
                             schema:
@@ -2234,7 +2317,7 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         "The specified resource was not found"
-                "500":
+                500:
                     content:
                         application/json:
                             schema:
@@ -2920,7 +3003,7 @@ paths:
                   schema:
                       type: integer
             responses:
-                "200":
+                200:
                     content:
                         application/json:
                             schema:
@@ -2934,10 +3017,10 @@ paths:
                                 type: array
                     description:
                         "Successful operation"
-                "400":
+                400:
                     description:
                         "Invalid input"
-                "401":
+                401:
                     content:
                         application/json:
                             schema:
@@ -2947,7 +3030,7 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         "Authentication information is missing or invalid"
-                "404":
+                404:
                     content:
                         application/json:
                             schema:
@@ -2957,7 +3040,7 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         "The specified resource was not found"
-                "500":
+                500:
                     content:
                         application/json:
                             schema:
@@ -2997,7 +3080,7 @@ paths:
                             $ref: "#/components/schemas/WarehouseItem"
                 required: true
             responses:
-                "201":
+                201:
                     content:
                         application/json:
                             schema:
@@ -3007,16 +3090,16 @@ paths:
                                 $ref: "#/components/schemas/WarehouseItem"
                     description:
                         Created
-                "202":
+                202:
                     description:
                         Async
-                "204":
+                204:
                     description:
                         Updated
-                "400":
+                400:
                     description:
                         "Invalid input"
-                "401":
+                401:
                     content:
                         application/json:
                             schema:
@@ -3026,7 +3109,7 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         "Authentication information is missing or invalid"
-                "404":
+                404:
                     content:
                         application/json:
                             schema:
@@ -3036,7 +3119,7 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         "The specified resource was not found"
-                "500":
+                500:
                     content:
                         application/json:
                             schema:
@@ -3069,11 +3152,11 @@ paths:
                       minimum: 0
                       type: integer
             responses:
-                "204":
+                204:
                     content:
                         application/json: {}
                         application/xml: {}
-                "401":
+                401:
                     content:
                         application/json:
                             schema:
@@ -3105,7 +3188,7 @@ paths:
                       minimum: 0
                       type: integer
             responses:
-                "200":
+                200:
                     content:
                         application/json:
                             schema:
@@ -3115,10 +3198,10 @@ paths:
                                 $ref: "#/components/schemas/Warehouse"
                     description:
                         "Successful operation"
-                "400":
+                400:
                     description:
                         "Invalid input"
-                "401":
+                401:
                     content:
                         application/json:
                             schema:
@@ -3128,7 +3211,7 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         "Authentication information is missing or invalid"
-                "404":
+                404:
                     content:
                         application/json:
                             schema:
@@ -3138,7 +3221,7 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         "The specified resource was not found"
-                "500":
+                500:
                     content:
                         application/json:
                             schema:
@@ -3179,16 +3262,16 @@ paths:
                             $ref: "#/components/schemas/Warehouse"
                 required: true
             responses:
-                "202":
+                202:
                     description:
                         Async
-                "204":
+                204:
                     description:
                         Updated
-                "400":
+                400:
                     description:
                         "Invalid input"
-                "401":
+                401:
                     content:
                         application/json:
                             schema:
@@ -3198,7 +3281,7 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         "Authentication information is missing or invalid"
-                "404":
+                404:
                     content:
                         application/json:
                             schema:
@@ -3208,7 +3291,7 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         "The specified resource was not found"
-                "500":
+                500:
                     content:
                         application/json:
                             schema:
@@ -3947,7 +4030,7 @@ paths:
                   schema:
                       type: integer
             responses:
-                "200":
+                200:
                     content:
                         application/json:
                             schema:
@@ -3961,10 +4044,10 @@ paths:
                                 type: array
                     description:
                         "Successful operation"
-                "400":
+                400:
                     description:
                         "Invalid input"
-                "401":
+                401:
                     content:
                         application/json:
                             schema:
@@ -3974,7 +4057,7 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         "Authentication information is missing or invalid"
-                "404":
+                404:
                     content:
                         application/json:
                             schema:
@@ -3984,7 +4067,7 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         "The specified resource was not found"
-                "500":
+                500:
                     content:
                         application/json:
                             schema:
@@ -4025,7 +4108,7 @@ paths:
                             $ref: "#/components/schemas/WarehouseItem"
                 required: true
             responses:
-                "201":
+                201:
                     content:
                         application/json:
                             schema:
@@ -4035,16 +4118,16 @@ paths:
                                 $ref: "#/components/schemas/WarehouseItem"
                     description:
                         Created
-                "202":
+                202:
                     description:
                         Async
-                "204":
+                204:
                     description:
                         Updated
-                "400":
+                400:
                     description:
                         "Invalid input"
-                "401":
+                401:
                     content:
                         application/json:
                             schema:
@@ -4054,7 +4137,7 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         "Authentication information is missing or invalid"
-                "404":
+                404:
                     content:
                         application/json:
                             schema:
@@ -4064,7 +4147,7 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         "The specified resource was not found"
-                "500":
+                500:
                     content:
                         application/json:
                             schema:
@@ -4107,7 +4190,7 @@ paths:
                   schema:
                       type: integer
             responses:
-                "200":
+                200:
                     content:
                         application/json:
                             schema:
@@ -4121,10 +4204,10 @@ paths:
                                 type: array
                     description:
                         "Successful operation"
-                "400":
+                400:
                     description:
                         "Invalid input"
-                "401":
+                401:
                     content:
                         application/json:
                             schema:
@@ -4134,7 +4217,7 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         "Authentication information is missing or invalid"
-                "404":
+                404:
                     content:
                         application/json:
                             schema:
@@ -4144,7 +4227,7 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         "The specified resource was not found"
-                "500":
+                500:
                     content:
                         application/json:
                             schema:
@@ -4191,7 +4274,7 @@ paths:
                             $ref: "#/components/schemas/ReplenishmentItem"
                 required: true
             responses:
-                "201":
+                201:
                     content:
                         application/json:
                             schema:
@@ -4201,16 +4284,16 @@ paths:
                                 $ref: "#/components/schemas/ReplenishmentItem"
                     description:
                         Created
-                "202":
+                202:
                     description:
                         "Accepted - Async"
-                "204":
+                204:
                     description:
                         Updated
-                "400":
+                400:
                     description:
                         "Invalid input"
-                "401":
+                401:
                     content:
                         application/json:
                             schema:
@@ -4220,7 +4303,7 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         "Authentication information is missing or invalid"
-                "404":
+                404:
                     content:
                         application/json:
                             schema:
@@ -4230,7 +4313,7 @@ paths:
                                 $ref: "#/components/schemas/Error"
                     description:
                         "The specified resource was not found"
-                "500":
+                500:
                     content:
                         application/json:
                             schema:

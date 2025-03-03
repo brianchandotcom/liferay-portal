@@ -556,15 +556,19 @@ test(
 			'Success:Your request completed successfully.'
 		);
 
+		await applicationsMenuPage.goToObjectDefinition(
+			newObjectDefinition.name
+		);
+
+		const objectEntryId = await page.locator('table tr:first-child td:first-child').innerText();
+
 		const exportFilePath = await companyExportImportPage.export(
 			newObjectDefinition.name + ' 1 Items'
 		);
 
-		await deleteObjectEntries({
-			apiHelpers,
-			entityName: newObjectDefinition.name,
-			scopeKey: site.key,
-		});
+		const applicationName = 'c/' + newObjectDefinition.name.toLowerCase() + 's';
+
+		await apiHelpers.delete(`${apiHelpers.baseUrl}${applicationName}/${objectEntryId}`);
 
 		await performLogout(page);
 
@@ -653,15 +657,19 @@ test(
 			'Success:Your request completed successfully.'
 		);
 
+		await applicationsMenuPage.goToObjectDefinition(
+			newObjectDefinition.name
+		);
+
+		const objectEntryId = await page.locator('table tr:first-child td:first-child').innerText();
+
 		const exportFilePath = await companyExportImportPage.export(
 			newObjectDefinition.name + ' 1 Items'
 		);
 
-		await deleteObjectEntries({
-			apiHelpers,
-			entityName: newObjectDefinition.name,
-			scopeKey: site.key,
-		});
+		const applicationName = 'c/' + newObjectDefinition.name.toLowerCase() + 's';
+
+		await apiHelpers.delete(`${apiHelpers.baseUrl}${applicationName}/${objectEntryId}`);
 
 		await performLogout(page);
 		await performLogin(page, 'test');
@@ -746,15 +754,19 @@ test(
 			'Success:Your request completed successfully.'
 		);
 
+		await applicationsMenuPage.goToObjectDefinition(
+			newObjectDefinition.name
+		);
+
+		const objectEntryId = await page.locator('table tr:first-child td:first-child').innerText();
+
 		const exportFilePath = await companyExportImportPage.export(
 			newObjectDefinition.name + ' 1 Items'
 		);
 
-		await deleteObjectEntries({
-			apiHelpers,
-			entityName: newObjectDefinition.name,
-			scopeKey: site.key,
-		});
+		const applicationName = 'c/' + newObjectDefinition.name.toLowerCase() + 's';
+
+		await apiHelpers.delete(`${apiHelpers.baseUrl}${applicationName}/${objectEntryId}`);
 
 		await performLogout(page);
 

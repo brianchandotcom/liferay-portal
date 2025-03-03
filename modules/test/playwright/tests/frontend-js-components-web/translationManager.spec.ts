@@ -242,8 +242,8 @@ test.describe('Translation Manager', () => {
 				translationManagerAddButton,
 				translationManagerDialog,
 				translationManagerDoneButton,
-				translationManagerGermanChoice,
 				translationManagerEnglishTriggerButton,
+				translationManagerGermanChoice,
 			} = jsComponentsSamplePage;
 
 			await test.step('Click on a translation', async () => {

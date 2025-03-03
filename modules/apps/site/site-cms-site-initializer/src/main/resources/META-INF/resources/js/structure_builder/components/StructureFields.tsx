@@ -13,7 +13,19 @@ import selectStructureFields from '../selectors/selectStructureFields';
 import AddFieldDropdown from './AddFieldDropdown';
 import FieldsTree from './FieldsTree';
 
-export default function StructureFields() {
+export default function () {
+	return (
+		<div className="border p-4 structure-builder__structure-fields">
+			<h3 className="font-weight-semi-bold text-4">
+				{Liferay.Language.get('structure-fields')}
+			</h3>
+
+			<StructureFields />
+		</div>
+	);
+}
+
+function StructureFields() {
 	const fields = useSelector(selectStructureFields);
 
 	const [search, setSearch] = useState('');
@@ -26,31 +38,16 @@ export default function StructureFields() {
 		);
 	}, [fields, search]);
 
+	if (!fields.length) {
+		return <EmptyState />;
+	}
+
 	return (
-		<div className="border p-4 structure-builder__structure-fields">
-			<h3 className="font-weight-semi-bold text-4">
-				{Liferay.Language.get('structure-fields')}
-			</h3>
+		<>
+			<Toolbar setSearch={setSearch} />
 
-			{fields.length ? (
-				<>
-					<div className="align-items-center c-gap-2 d-flex">
-						<SearchForm
-							className="flex-grow-1 my-3"
-							label={Liferay.Language.get('search-fields')}
-							onChange={setSearch}
-							variant="white"
-						/>
-
-						<AddFieldDropdown triggerType="icon" />
-					</div>
-
-					<FieldsTree fields={filteredFields} />
-				</>
-			) : (
-				<EmptyState />
-			)}
-		</div>
+			<FieldsTree fields={filteredFields} />
+		</>
 	);
 }
 
@@ -67,5 +64,24 @@ function EmptyState() {
 		>
 			<AddFieldDropdown />
 		</ClayEmptyState>
+	);
+}
+
+function Toolbar({
+	setSearch,
+}: {
+	setSearch: React.Dispatch<React.SetStateAction<string>>;
+}) {
+	return (
+		<div className="align-items-center c-gap-2 d-flex">
+			<SearchForm
+				className="flex-grow-1 my-3"
+				label={Liferay.Language.get('search-fields')}
+				onChange={setSearch}
+				variant="white"
+			/>
+
+			<AddFieldDropdown triggerType="icon" />
+		</div>
 	);
 }

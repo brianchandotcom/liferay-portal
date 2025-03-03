@@ -33,8 +33,8 @@ const SideMenu = () => {
 
 	const {data: myUserAccountData} =
 		useMyUserAccountByAccountExternalReferenceCode(
-			koroneikiAccountLoading,
-			koroneikiAccount?.accountKey
+			koroneikiAccount?.accountKey,
+			koroneikiAccountLoading
 		);
 	const loggedUserAccount = myUserAccountData?.myUserAccount;
 

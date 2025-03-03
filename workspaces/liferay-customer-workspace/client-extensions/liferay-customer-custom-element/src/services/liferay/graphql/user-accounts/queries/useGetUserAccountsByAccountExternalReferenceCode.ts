@@ -74,7 +74,7 @@ export function useGetUserAccountsByAccountExternalReferenceCode(
 			externalReferenceCode,
 			filter: options.filter || '',
 			page: options.page || 1,
-			pageSize: options.pageSize | 9999,
+			pageSize: options.pageSize || 9999,
 		},
 	});
 }

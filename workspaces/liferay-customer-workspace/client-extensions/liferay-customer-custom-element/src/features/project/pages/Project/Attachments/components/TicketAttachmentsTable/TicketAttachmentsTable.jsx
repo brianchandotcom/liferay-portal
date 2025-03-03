@@ -31,8 +31,8 @@ const TicketAttachmentsTable = ({
 		data: myUserAccountData,
 		loading,
 	} = useMyUserAccountByAccountExternalReferenceCode(
-		koroneikiAccountLoading,
-		koroneikiAccount?.accountKey
+		koroneikiAccount?.accountKey,
+		koroneikiAccountLoading
 	);
 	const loggedUserAccount = myUserAccountData?.myUserAccount;
 

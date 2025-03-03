@@ -42,10 +42,9 @@ export const userAccountsTypePolicy = {
 			},
 			isLiferayStaff: {
 				read(_: unknown, {readField}: {readField: Function}): boolean {
-					return !!(readField('organizationBriefs') as any[]).some(
-						(organizationBrief: any) =>
-							readField('name', organizationBrief) ===
-							'Liferay Staff'
+					return !!(readField('roleBriefs') as any[]).some(
+						(roleBrief: any) =>
+							readField('name', roleBrief) === 'Liferay Staff'
 					);
 				},
 			},
@@ -53,6 +52,14 @@ export const userAccountsTypePolicy = {
 				read(_: unknown, {readField}: {readField: Function}): boolean {
 					return (
 						readField('id') === +Liferay.ThemeDisplay.getUserId()
+					);
+				},
+			},
+			isPartner: {
+				read(_: unknown, {readField}: {readField: Function}): boolean {
+					return !!(readField('roleBriefs') as any[]).some(
+						(roleBrief: any) =>
+							readField('name', roleBrief) === 'Partner'
 					);
 				},
 			},

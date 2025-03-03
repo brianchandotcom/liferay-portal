@@ -122,6 +122,16 @@ public class ObjectDefinitionSerDes {
 			sb.append("\"");
 		}
 
+		if (objectDefinition.getCreator() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"creator\": ");
+
+			sb.append(objectDefinition.getCreator());
+		}
+
 		if (objectDefinition.getDateCreated() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -699,6 +709,13 @@ public class ObjectDefinitionSerDes {
 				"className", String.valueOf(objectDefinition.getClassName()));
 		}
 
+		if (objectDefinition.getCreator() == null) {
+			map.put("creator", null);
+		}
+		else {
+			map.put("creator", String.valueOf(objectDefinition.getCreator()));
+		}
+
 		if (objectDefinition.getDateCreated() == null) {
 			map.put("dateCreated", null);
 		}
@@ -1043,6 +1060,9 @@ public class ObjectDefinitionSerDes {
 			else if (Objects.equals(jsonParserFieldName, "className")) {
 				return false;
 			}
+			else if (Objects.equals(jsonParserFieldName, "creator")) {
+				return false;
+			}
 			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {
 				return false;
 			}
@@ -1213,6 +1233,12 @@ public class ObjectDefinitionSerDes {
 			else if (Objects.equals(jsonParserFieldName, "className")) {
 				if (jsonParserFieldValue != null) {
 					objectDefinition.setClassName((String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "creator")) {
+				if (jsonParserFieldValue != null) {
+					objectDefinition.setCreator(
+						CreatorSerDes.toDTO((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "dateCreated")) {

@@ -1,6 +1,6 @@
 /**
  * Object
- * A Java client JAR is available for use with the group ID \'com.liferay\', artifact ID \'com.liferay.object.admin.rest.client\', and version \'1.0.75\'.
+ * A Java client JAR is available for use with the group ID \'com.liferay\', artifact ID \'com.liferay.object.admin.rest.client\', and version \'1.0.76\'.
  *
  * The version of the OpenAPI document: v1.0
  * 
@@ -26,6 +26,7 @@ export class ObjectDefinition {
     'actions'?: { [key: string]: { [key: string]: string; }; };
     'active'?: boolean;
     'className'?: string;
+    'creator'?: object;
     'dateCreated'?: string;
     'dateModified'?: string;
     'defaultLanguageId'?: string;
@@ -89,6 +90,11 @@ export class ObjectDefinition {
             "name": "className",
             "baseName": "className",
             "type": "string"
+        },
+        {
+            "name": "creator",
+            "baseName": "creator",
+            "type": "object"
         },
         {
             "name": "dateCreated",

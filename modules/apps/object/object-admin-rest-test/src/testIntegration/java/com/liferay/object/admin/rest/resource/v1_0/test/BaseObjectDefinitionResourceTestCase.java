@@ -1356,6 +1356,14 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("creator", additionalAssertFieldName)) {
+				if (objectDefinition.getCreator() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals(
 					"defaultLanguageId", additionalAssertFieldName)) {
 
@@ -1828,6 +1836,17 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 				if (!Objects.deepEquals(
 						objectDefinition1.getClassName(),
 						objectDefinition2.getClassName())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("creator", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						objectDefinition1.getCreator(),
+						objectDefinition2.getCreator())) {
 
 					return false;
 				}
@@ -2471,6 +2490,11 @@ public abstract class BaseObjectDefinitionResourceTestCase {
 			}
 
 			return sb.toString();
+		}
+
+		if (entityFieldName.equals("creator")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("dateCreated")) {

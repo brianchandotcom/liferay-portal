@@ -19,6 +19,10 @@ $structureFieldsWidth: 448px;
 				padding-bottom: 50%;
 			}
 		}
+
+		& .management-bar {
+			min-height: 3rem;
+		}
 	}
 
 	&__fields-tree {

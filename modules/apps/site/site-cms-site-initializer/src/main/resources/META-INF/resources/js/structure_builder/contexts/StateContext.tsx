@@ -54,6 +54,8 @@ type CreateStructureAction = {
 
 type DeleteFieldAction = {fieldName: Field['name']; type: 'delete-field'};
 
+type DeleteSelectionAction = {type: 'delete-selection'};
+
 type PublishStructureAction = {type: 'publish-structure'};
 
 type SaveStructureAction = {
@@ -89,6 +91,7 @@ export type Action =
 	| AddFieldAction
 	| CreateStructureAction
 	| DeleteFieldAction
+	| DeleteSelectionAction
 	| PublishStructureAction
 	| SaveStructureAction
 	| SetErrorAction
@@ -136,6 +139,19 @@ function reducer(state: State, action: Action): State {
 			}
 
 			return nextState;
+		}
+		case 'delete-selection': {
+			const nextFields = new Map(state.fields);
+
+			for (const fieldName of state.selection) {
+				nextFields.delete(fieldName);
+			}
+
+			return {
+				...state,
+				fields: nextFields,
+				selection: INITIAL_STATE.selection,
+			};
 		}
 		case 'publish-structure': {
 			return {

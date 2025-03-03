@@ -60,6 +60,9 @@ public class MFATimeBasedOTPCheckerDisplayContextTest {
 		Map<String, Object> context =
 			mfaTimeBasedOTPCheckerDisplayContext.getContext();
 
+		Assert.assertEquals(_user.getEmailAddress(), context.get("account"));
+		Assert.assertEquals("SHA1", context.get("algorithm"));
+		Assert.assertEquals("test-namespaceqrcode", context.get("containerId"));
 		Assert.assertEquals(
 			MFATimeBasedOTPUtil.MFA_TIMEBASED_OTP_COUNTER,
 			context.get("counter"));
@@ -69,9 +72,6 @@ public class MFATimeBasedOTPCheckerDisplayContextTest {
 		Assert.assertEquals(_company.getName(), context.get("issuer"));
 		Assert.assertEquals(
 			_mfaTimeBasedOTPSharedSecret, context.get("secret"));
-		Assert.assertEquals(_user.getEmailAddress(), context.get("account"));
-		Assert.assertEquals("SHA1", context.get("algorithm"));
-		Assert.assertEquals("test-namespaceqrcode", context.get("containerId"));
 	}
 
 	private void _setUpCompany() {

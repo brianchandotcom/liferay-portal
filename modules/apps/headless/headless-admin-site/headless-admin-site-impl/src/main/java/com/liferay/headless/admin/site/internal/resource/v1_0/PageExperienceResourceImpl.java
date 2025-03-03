@@ -248,13 +248,6 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 				groupId, layout.getPlid(),
 				segmentsExperience.getSegmentsExperienceId(), data);
 
-		Layout draftLayout = layout.fetchDraftLayout();
-
-		_layoutPageTemplateStructureLocalService.
-			updateLayoutPageTemplateStructureData(
-				groupId, draftLayout.getPlid(),
-				segmentsExperience.getSegmentsExperienceId(), data);
-
 		return _toPageExperience(segmentsExperience);
 	}
 

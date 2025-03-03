@@ -32,6 +32,9 @@ if (inputElement) {
 					registerUnlocalizedInput({
 						defaultLanguageId: themeDisplay.getDefaultLanguageId(),
 						inputElement,
+						readOnlyInputLabel: document.getElementById(
+							`${fragmentNamespace}-date-time-read-only`
+						),
 						unlocalizedFieldsState:
 							input.attributes.unlocalizedFieldsState,
 						unlocalizedMessageContainer: document.getElementById(

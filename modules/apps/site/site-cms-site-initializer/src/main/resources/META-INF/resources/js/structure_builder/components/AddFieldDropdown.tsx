@@ -7,13 +7,13 @@ import ClayButton, {ClayButtonWithIcon} from '@clayui/button';
 import {ClayDropDownWithItems} from '@clayui/drop-down';
 import React from 'react';
 
-import {useStateDispatch} from '../../../structure_builder/contexts/StateContext';
+import {useStateDispatch} from '../../structure_builder/contexts/StateContext';
 import {
 	FIELD_TYPES,
 	FIELD_TYPE_LABEL,
 	Field,
 	getDefaultField,
-} from '../../../structure_builder/utils/field';
+} from '../../structure_builder/utils/field';
 
 export default function AddFieldDropdown({
 	triggerType = 'text',

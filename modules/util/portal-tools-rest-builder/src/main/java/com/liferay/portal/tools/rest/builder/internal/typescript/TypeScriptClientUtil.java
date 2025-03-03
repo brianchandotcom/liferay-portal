@@ -85,7 +85,7 @@ public class TypeScriptClientUtil {
 			null, configYAML, copyrightFile, files, "typescript/api_global",
 			baseClientDir.getPath() + "/src/node/api.ts");
 		_createFile(
-			Collections.singletonMap("apisContext", tagAPIContexts.values()),
+			Collections.singletonMap("apiContexts", tagAPIContexts.values()),
 			configYAML, copyrightFile, files, "typescript/apis",
 			baseClientDir.getPath() + "/src/node/api/apis.ts");
 

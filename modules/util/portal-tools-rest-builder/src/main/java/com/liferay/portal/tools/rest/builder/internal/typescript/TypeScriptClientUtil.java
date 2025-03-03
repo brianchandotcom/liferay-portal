@@ -518,12 +518,12 @@ public class TypeScriptClientUtil {
 		if (schema.getReference() != null) {
 			String schemaReference = schema.getReference();
 
-			String typeName = schemaReference.substring(
+			String dataType = schemaReference.substring(
 				schemaReference.lastIndexOf('/') + 1);
 
-			imports.add(typeName);
+			imports.add(dataType);
 
-			return typeName;
+			return dataType;
 		}
 
 		String type = schema.getType();

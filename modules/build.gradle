@@ -957,11 +957,11 @@ gradle.taskGraph.whenReady {
 @CacheableTransform
 protected abstract class BaseJakartaTransformerTransformAction implements TransformAction<Parameters> {
 
-	interface Parameters extends TransformParameters {
+	public interface Parameters extends TransformParameters {
 
 		@CompileClasspath
 		@InputFiles
-		ConfigurableFileCollection getExcludesFileCollection()
+		public ConfigurableFileCollection getExcludesFileCollection()
 
 	}
 
@@ -973,7 +973,7 @@ protected abstract class BaseJakartaTransformerTransformAction implements Transf
 
 	@org.gradle.api.tasks.Classpath
 	@InputArtifact
-	abstract Provider<FileSystemLocation> getInputArtifact()
+	public abstract Provider<FileSystemLocation> getInputArtifact()
 
 	@Override
 	public void transform(TransformOutputs outputs) {

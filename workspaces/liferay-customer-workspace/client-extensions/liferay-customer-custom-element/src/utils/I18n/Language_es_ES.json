@@ -513,6 +513,8 @@
 	"the-workspace-url-must-not-have-spaces": "La URL del espacio de trabajo no debe contener espacios.",
 	"the-workspace-url-should-start-with-/": "La URL del espacio de trabajo debe empezar con «/».",
 	"there-was-an-unexpected-error-while-attempting-to-deactivate-keys-please-try-again-in-a-few-moments": "Se produjo un error inesperado al intentar desactivar los códigos. Vuelve a intentarlo más tarde",
+	"this-data-is-refreshed-daily": "Estos datos se actualizan diariamente.",
+	"this-data-is-refreshed-monthly": "Estos datos se actualizan mensualmente.",
 	"this-field-exceeded-x-characters": "Este campo tiene de más {0} caracteres.",
 	"this-field-is-required": "Este campo es obligatorio.",
 	"this-key-does-not-expire": "Este código no expira",

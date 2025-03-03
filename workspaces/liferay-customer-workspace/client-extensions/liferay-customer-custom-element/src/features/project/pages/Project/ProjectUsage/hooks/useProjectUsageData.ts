@@ -153,9 +153,12 @@ const useProjectUsageData = () => {
 									.CLIENT_EXTENSIONS_CAPACITY_RAM
 							],
 							dataSizeUnits: 'GB',
-							infoText: i18n.translate(
-								'amount-of-ram-allocated-across-all-extension-environments'
-							),
+							infoText:
+								i18n.translate(
+									'amount-of-ram-allocated-across-all-extension-environments'
+								) +
+								' ' +
+								i18n.translate('this-data-is-refreshed-daily'),
 							maxCountText: i18n.translate('total-ram'),
 							title: i18n.translate('extension-capacity-ram'),
 						},
@@ -164,9 +167,12 @@ const useProjectUsageData = () => {
 								SiteAndUserDataEnum
 									.CLIENT_EXTENSIONS_CAPACITY_CPU
 							],
-							infoText: i18n.translate(
-								'amount-of-virtual-cpus-allocated-across-all-extension-environments'
-							),
+							infoText:
+								i18n.translate(
+									'amount-of-virtual-cpus-allocated-across-all-extension-environments'
+								) +
+								' ' +
+								i18n.translate('this-data-is-refreshed-daily'),
 							maxCountText: i18n.translate('total-vcpu'),
 							title: i18n.translate('extension-capacity-vcpu'),
 						},
@@ -176,9 +182,12 @@ const useProjectUsageData = () => {
 									.STORAGE_CAPACITY_DOCUMENT_LIBRARY
 							],
 							dataSizeUnits: 'GB',
-							infoText: i18n.translate(
-								'amount-of-storage-space-available-for-your-projects'
-							),
+							infoText:
+								i18n.translate(
+									'amount-of-storage-space-available-for-your-projects'
+								) +
+								' ' +
+								i18n.translate('this-data-is-refreshed-daily'),
 							maxCountText: i18n.translate('total-storage'),
 							title: i18n.translate('storage-capacity'),
 						},
@@ -186,9 +195,14 @@ const useProjectUsageData = () => {
 					siteAndUsers: [
 						{
 							...response[SiteAndUserDataEnum.SITES],
-							infoText: i18n.translate(
-								'total-number-of-unique-liferay-dxp-sites-each-comprising-a-set-of-pages-and-their-related-content'
-							),
+							infoText:
+								i18n.translate(
+									'total-number-of-unique-liferay-dxp-sites-each-comprising-a-set-of-pages-and-their-related-content'
+								) +
+								' ' +
+								i18n.translate(
+									'this-data-is-refreshed-monthly'
+								),
 							title: i18n.translate('number-of-sites'),
 						},
 						{
@@ -196,18 +210,24 @@ const useProjectUsageData = () => {
 								SiteAndUserDataEnum
 									.MONTHLY_ACTIVE_LOGGED_IN_USERS
 							],
-							infoText: i18n.translate(
-								'total-unique-authenticated-users-who-visited-sites-on-this-account-at-least-once-per-month'
-							),
+							infoText:
+								i18n.translate(
+									'total-unique-authenticated-users-who-visited-sites-on-this-account-at-least-once-per-month'
+								) +
+								' ' +
+								i18n.translate('this-data-is-refreshed-daily'),
 							title: i18n.translate('authenticated-logins-malus'),
 						},
 						{
 							...response[
 								SiteAndUserDataEnum.ANONYMOUS_PAGE_VIEWS
 							],
-							infoText: i18n.translate(
-								'total-count-of-anonymous-page-views-on-all-customer-sites'
-							),
+							infoText:
+								i18n.translate(
+									'total-count-of-anonymous-page-views-on-all-customer-sites'
+								) +
+								' ' +
+								i18n.translate('this-data-is-refreshed-daily'),
 							title: i18n.translate('anonymous-page-views-apv'),
 						},
 					],

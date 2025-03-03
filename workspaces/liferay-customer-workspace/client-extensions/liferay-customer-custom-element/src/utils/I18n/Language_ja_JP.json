@@ -513,6 +513,8 @@
 	"the-workspace-url-must-not-have-spaces": "ワークスペースの URL にはスペースを含めないでください。",
 	"the-workspace-url-should-start-with-/": "ワークスペースの URL は '/' から始まる必要があります。",
 	"there-was-an-unexpected-error-while-attempting-to-deactivate-keys-please-try-again-in-a-few-moments": "キーを無効化しようとした際に予期しないエラーが発生しました。しばらくしてからもう一度試してください。",
+	"this-data-is-refreshed-daily": "このデータは毎日更新されます。",
+	"this-data-is-refreshed-monthly": "このデータは毎月更新されます。",
 	"this-field-exceeded-x-characters": "このフィールドは {0} 文字を超えています。",
 	"this-field-is-required": "このフィールドは必須です。",
 	"this-key-does-not-expire": "このキーは期限切れになりません",

@@ -597,6 +597,8 @@
 	"there-is-at-least-one-activation-key-for-which-this-team-member-is-the-only-one-subscribed-to-be-notified-before-the-activation-key-expires-are-you-sure-you-want-to-remove-this-team-member-and-their-notifications": "There is at least one activation key for which this team member is the only one subscribed to be notified before the activation key expires. Are you sure you want to remove this team member and their notifications?",
 	"there-was-an-unexpected-error-while-attempting-to-deactivate-keys-please-try-again-in-a-few-moments": "There was an unexpected error while attempting to deactivate keys. Please try again in a few moments",
 	"this-article": "this article.",
+	"this-data-is-refreshed-daily": "This data is refreshed daily.",
+	"this-data-is-refreshed-monthly": "This data is refreshed monthly.",
 	"this-field-exceeded-x-characters": "This field exceeded {0} characters.",
 	"this-field-is-required": "This field is required.",
 	"this-key-does-not-expire": "This key does not expire",

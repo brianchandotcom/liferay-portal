@@ -58,6 +58,9 @@ else {
 					registerUnlocalizedInput({
 						defaultLanguageId: themeDisplay.getDefaultLanguageId(),
 						inputElement: numericInput,
+						readOnlyInputLabel: document.getElementById(
+							`${fragmentNamespace}-numeric-read-only`
+						),
 						unlocalizedFieldsState:
 							input.attributes.unlocalizedFieldsState,
 						unlocalizedMessageContainer: document.getElementById(

@@ -5,6 +5,7 @@
 
 package com.liferay.object.rest.internal.util;
 
+import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.exception.NoSuchObjectEntryException;
 import com.liferay.object.field.business.type.ObjectFieldBusinessType;
 import com.liferay.object.field.business.type.ObjectFieldBusinessTypeRegistry;
@@ -55,7 +56,9 @@ public class ObjectEntryValuesUtil {
 			ObjectEntry objectEntry = objectEntryLocalService.addObjectEntry(
 				externalReferenceCode, userId,
 				objectDefinitionLocalService.getObjectDefinition(
-					noSuchObjectEntryException.getObjectDefinitionId()));
+					noSuchObjectEntryException.getObjectDefinitionId()),
+				ObjectEntryFolderConstants.
+					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT);
 
 			return objectEntry.getObjectEntryId();
 		}

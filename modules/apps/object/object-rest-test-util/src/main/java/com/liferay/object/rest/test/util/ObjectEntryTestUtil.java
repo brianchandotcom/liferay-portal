@@ -6,6 +6,7 @@
 package com.liferay.object.rest.test.util;
 
 import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectEntryLocalServiceUtil;
@@ -38,8 +39,9 @@ public class ObjectEntryTestUtil {
 
 		return ObjectEntryLocalServiceUtil.addObjectEntry(
 			TestPropsValues.getUserId(), groupId,
-			objectDefinition.getObjectDefinitionId(), null, values,
-			serviceContext);
+			objectDefinition.getObjectDefinitionId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			null, values, serviceContext);
 	}
 
 	public static ObjectEntry addObjectEntry(

@@ -9,6 +9,7 @@ import com.liferay.frontend.data.set.sample.web.internal.constants.FDSSamplePort
 import com.liferay.frontend.data.set.sample.web.internal.constants.FDSSampleWebKeys;
 import com.liferay.frontend.data.set.sample.web.internal.display.context.FDSSampleDisplayContext;
 import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
@@ -157,6 +158,8 @@ public class FDSSamplePortlet extends MVCPortlet {
 		for (int i = 1; i <= 100; i++) {
 			_objectEntryLocalService.addObjectEntry(
 				user.getUserId(), 0, objectDefinition.getObjectDefinitionId(),
+				ObjectEntryFolderConstants.
+					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
 				null,
 				HashMapBuilder.<String, Serializable>put(
 					"color", colors[i % 4]

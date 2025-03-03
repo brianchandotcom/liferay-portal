@@ -16,6 +16,7 @@ import com.liferay.frontend.data.set.admin.web.internal.constants.FDSAdminPortle
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.ObjectEntryManagerRegistry;
@@ -79,6 +80,7 @@ public class ImportSystemDataSetMVCResourceCommand
 
 		ObjectEntry objectEntry = _objectEntryService.addOrUpdateObjectEntry(
 			fdsName, 0, dataSetObjectDefinition.getObjectDefinitionId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
 			HashMapBuilder.<String, Serializable>put(
 				"additionalAPIURLParameters",
 				systemFDSEntry.getAdditionalAPIURLParameters()
@@ -198,8 +200,10 @@ public class ImportSystemDataSetMVCResourceCommand
 				}
 
 				_objectEntryService.addObjectEntry(
-					0, objectDefinitionId, null, objectEntryValues,
-					new ServiceContext());
+					0, objectDefinitionId,
+					ObjectEntryFolderConstants.
+						PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+					null, objectEntryValues, new ServiceContext());
 			}
 		}
 		else if (fdsEntryItemImportPolicy ==
@@ -222,6 +226,8 @@ public class ImportSystemDataSetMVCResourceCommand
 
 				_objectEntryService.addOrUpdateObjectEntry(
 					String.valueOf(id), 0, objectDefinitionId,
+					ObjectEntryFolderConstants.
+						PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
 					HashMapBuilder.<String, Serializable>put(
 						"icon",
 						() -> _getOptionalValue(dropdownItem.get("icon"))
@@ -242,7 +248,10 @@ public class ImportSystemDataSetMVCResourceCommand
 		}
 		else {
 			_objectEntryService.addObjectEntry(
-				0, objectDefinitionId, null,
+				0, objectDefinitionId,
+				ObjectEntryFolderConstants.
+					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+				null,
 				HashMapBuilder.<String, Serializable>put(
 					"r_dataSetToDataSetActions_l_dataSetId", dataSetId
 				).put(
@@ -274,7 +283,10 @@ public class ImportSystemDataSetMVCResourceCommand
 					(Map<String, Object>)fdsActionDropdownItem.get("data");
 
 				_objectEntryService.addObjectEntry(
-					0, objectDefinitionId, null,
+					0, objectDefinitionId,
+					ObjectEntryFolderConstants.
+						PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+					null,
 					HashMapBuilder.<String, Serializable>put(
 						"confirmationMessage_i18n",
 						() -> _getLocalizeableValue(
@@ -352,6 +364,8 @@ public class ImportSystemDataSetMVCResourceCommand
 
 				_objectEntryService.addOrUpdateObjectEntry(
 					String.valueOf(id), 0, objectDefinitionId,
+					ObjectEntryFolderConstants.
+						PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
 					HashMapBuilder.<String, Serializable>put(
 						"icon",
 						() -> _getOptionalValue(
@@ -374,7 +388,10 @@ public class ImportSystemDataSetMVCResourceCommand
 		}
 		else {
 			_objectEntryService.addObjectEntry(
-				0, objectDefinitionId, null,
+				0, objectDefinitionId,
+				ObjectEntryFolderConstants.
+					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+				null,
 				HashMapBuilder.<String, Serializable>put(
 					"r_dataSetToDataSetActions_l_dataSetId", dataSetId
 				).put(

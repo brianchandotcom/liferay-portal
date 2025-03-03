@@ -8,6 +8,7 @@ package com.liferay.site.cms.site.initializer.internal.struts;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionService;
@@ -98,6 +99,7 @@ public class AddStructuredContentItemStrutsAction implements StrutsAction {
 
 		ObjectEntry objectEntry = _objectEntryService.addObjectEntry(
 			themeDisplay.getScopeGroupId(), objectDefinitionId,
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
 			LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()),
 			Collections.emptyMap(), serviceContext);
 

@@ -7,6 +7,7 @@ package com.liferay.headless.builder.internal.object.deployer;
 
 import com.liferay.headless.builder.internal.object.related.models.DeleteOnDisassociateObjectRelatedModelsProvider;
 import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.deployer.ObjectDefinitionDeployer;
 import com.liferay.object.model.ObjectDefinition;
@@ -146,8 +147,10 @@ public class APIPropertyObjectDefinitionDeployerImpl
 			_objectEntryLocalService.addOrUpdateObjectEntry(
 				(String)values.get("externalReferenceCode"),
 				objectDefinition.getUserId(), GroupThreadLocal.getGroupId(),
-				objectDefinition.getObjectDefinitionId(), values,
-				new ServiceContext());
+				objectDefinition.getObjectDefinitionId(),
+				ObjectEntryFolderConstants.
+					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+				values, new ServiceContext());
 		}
 	}
 

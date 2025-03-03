@@ -12,6 +12,7 @@ import com.liferay.list.type.service.ListTypeEntryLocalServiceUtil;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectField;
 import com.liferay.object.admin.rest.resource.v1_0.ObjectFieldResource;
 import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.field.builder.LongTextObjectFieldBuilder;
 import com.liferay.object.field.builder.PicklistObjectFieldBuilder;
@@ -178,7 +179,9 @@ public class ObjectDefinitionGraphQLTest {
 
 		_parentObjectEntry = ObjectEntryLocalServiceUtil.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
-			_parentObjectDefinition.getObjectDefinitionId(), null,
+			_parentObjectDefinition.getObjectDefinitionId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			null,
 			HashMapBuilder.<String, Serializable>put(
 				_LIST_FIELD_NAME, _LIST_FIELD_VALUE_KEY
 			).put(
@@ -188,7 +191,9 @@ public class ObjectDefinitionGraphQLTest {
 
 		_childObjectEntry = ObjectEntryLocalServiceUtil.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
-			childObjectDefinition.getObjectDefinitionId(), null,
+			childObjectDefinition.getObjectDefinitionId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			null,
 			HashMapBuilder.<String, Serializable>put(
 				StringBundler.concat(
 					"r_", _RELATIONSHIP_NAME, "_",
@@ -502,7 +507,9 @@ public class ObjectDefinitionGraphQLTest {
 
 		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
-			_parentObjectDefinition.getObjectDefinitionId(), null,
+			_parentObjectDefinition.getObjectDefinitionId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			null,
 			HashMapBuilder.<String, Serializable>put(
 				_LIST_FIELD_NAME, _LIST_FIELD_VALUE_KEY
 			).put(

@@ -5,6 +5,7 @@
 
 package com.liferay.object.test.util;
 
+import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectField;
@@ -165,7 +166,9 @@ public class TreeTestUtil {
 			Arrays.asList("A", "AA", "AB", "AAA", "AAB"));
 
 		ObjectEntry rootObjectEntry = objectEntryLocalService.addObjectEntry(
-			TestPropsValues.getUserId(), 0, rootNode.getPrimaryKey(), null,
+			TestPropsValues.getUserId(), 0, rootNode.getPrimaryKey(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			null,
 			HashMapBuilder.<String, Serializable>put(
 				"externalReferenceCode",
 				externalReferenceCodes.poll() + externalReferenceCodeSuffix
@@ -180,7 +183,10 @@ public class TreeTestUtil {
 			Node node = iterator.next();
 
 			ObjectEntry objectEntry = objectEntryLocalService.addObjectEntry(
-				TestPropsValues.getUserId(), 0, node.getPrimaryKey(), null,
+				TestPropsValues.getUserId(), 0, node.getPrimaryKey(),
+				ObjectEntryFolderConstants.
+					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+				null,
 				HashMapBuilder.<String, Serializable>put(
 					"externalReferenceCode",
 					externalReferenceCodes.poll() + externalReferenceCodeSuffix

@@ -6,6 +6,7 @@
 package com.liferay.frontend.data.set.admin.web.internal.portlet.action;
 
 import com.liferay.frontend.data.set.admin.web.internal.constants.FDSAdminPortletKeys;
+import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.rest.dto.v1_0.ObjectEntry;
 import com.liferay.object.rest.manager.v1_0.DefaultObjectEntryManager;
@@ -118,6 +119,7 @@ public class SaveDataSetSortMVCResourceCommand
 
 		_objectEntryService.addOrUpdateObjectEntry(
 			externalReferenceCode, 0, objectDefinition.getObjectDefinitionId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
 			HashMapBuilder.<String, Serializable>put(
 				"default", useAsDefaultSorting
 			).put(

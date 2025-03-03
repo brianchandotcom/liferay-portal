@@ -8,6 +8,7 @@ package com.liferay.object.web.internal.object.entries.frontend.data.set.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.frontend.data.set.provider.FDSActionProvider;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.constants.ObjectPortletKeys;
 import com.liferay.object.entries.frontend.data.set.data.model.RelatedModel;
 import com.liferay.object.model.ObjectDefinition;
@@ -69,8 +70,10 @@ public class RelatedModelFDSActionProviderTest {
 
 		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
-			objectDefinition.getObjectDefinitionId(), null,
-			Collections.emptyMap(), ServiceContextTestUtil.getServiceContext());
+			objectDefinition.getObjectDefinitionId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			null, Collections.emptyMap(),
+			ServiceContextTestUtil.getServiceContext());
 
 		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 

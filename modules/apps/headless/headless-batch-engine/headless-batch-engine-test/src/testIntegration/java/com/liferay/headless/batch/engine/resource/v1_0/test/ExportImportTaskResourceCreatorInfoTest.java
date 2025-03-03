@@ -12,6 +12,7 @@ import com.liferay.headless.batch.engine.client.http.HttpInvoker;
 import com.liferay.headless.batch.engine.client.serdes.v1_0.ExportTaskSerDes;
 import com.liferay.headless.batch.engine.client.serdes.v1_0.ImportTaskSerDes;
 import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectDefinition;
@@ -248,6 +249,7 @@ public class ExportImportTaskResourceCreatorInfoTest {
 
 		return _objectEntryLocalService.addObjectEntry(
 			user.getUserId(), 0L, objectDefinition.getObjectDefinitionId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
 			null,
 			HashMapBuilder.<String, Serializable>put(
 				objectFieldName, objectFieldValue
@@ -262,6 +264,7 @@ public class ExportImportTaskResourceCreatorInfoTest {
 
 		return _objectEntryLocalService.addObjectEntry(
 			user.getUserId(), 0L, objectDefinition.getObjectDefinitionId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
 			null,
 			HashMapBuilder.<String, Serializable>put(
 				objectFieldName, objectFieldValue

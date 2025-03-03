@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
+import com.liferay.segments.exception.NoSuchExperienceException;
 import com.liferay.segments.model.SegmentsEntry;
 import com.liferay.segments.model.SegmentsExperience;
 import com.liferay.segments.service.SegmentsEntryLocalService;
@@ -56,11 +57,27 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
+		long groupId = GroupUtil.getGroupId(
+			false, contextCompany.getCompanyId(), siteExternalReferenceCode);
+
+		SegmentsExperience segmentsExperience =
+			_segmentsExperienceService.
+				fetchSegmentsExperienceByExternalReferenceCode(
+					pageExperienceExternalReferenceCode, groupId);
+
+		if (segmentsExperience == null) {
+			throw new NoSuchExperienceException();
+		}
+
+		Layout layout = _layoutLocalService.fetchLayout(
+			segmentsExperience.getPlid());
+
+		if (!layout.isDraftLayout()) {
+			throw new UnsupportedOperationException();
+		}
+
 		_segmentsExperienceService.deleteSegmentsExperience(
-			pageExperienceExternalReferenceCode,
-			GroupUtil.getGroupId(
-				false, contextCompany.getCompanyId(),
-				siteExternalReferenceCode));
+			pageExperienceExternalReferenceCode, groupId);
 	}
 
 	@Override
@@ -123,11 +140,18 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 			throw new UnsupportedOperationException();
 		}
 
-		return _addPageExperience(
-			GroupUtil.getGroupId(
-				false, contextCompany.getCompanyId(),
-				siteExternalReferenceCode),
-			pageExperience);
+		long groupId = GroupUtil.getGroupId(
+			false, contextCompany.getCompanyId(), siteExternalReferenceCode);
+
+		Layout layout = _layoutLocalService.fetchLayoutByExternalReferenceCode(
+			pageExperience.getPageSpecificationExternalReferenceCode(),
+			groupId);
+
+		if (!layout.isDraftLayout()) {
+			throw new UnsupportedOperationException();
+		}
+
+		return _addPageExperience(groupId, pageExperience);
 	}
 
 	@Override
@@ -143,6 +167,14 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 
 		long groupId = GroupUtil.getGroupId(
 			false, contextCompany.getCompanyId(), siteExternalReferenceCode);
+
+		Layout layout = _layoutLocalService.fetchLayoutByExternalReferenceCode(
+			pageExperience.getPageSpecificationExternalReferenceCode(),
+			groupId);
+
+		if (!layout.isDraftLayout()) {
+			throw new UnsupportedOperationException();
+		}
 
 		SegmentsExperience segmentsExperience =
 			_segmentsExperienceService.
@@ -180,7 +212,8 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 		throws Exception {
 
 		Layout layout = _layoutLocalService.fetchLayoutByExternalReferenceCode(
-			pageExperience.getPageSpecificationExternalReferenceCode(), groupId);
+			pageExperience.getPageSpecificationExternalReferenceCode(),
+			groupId);
 
 		if ((layout == null) ||
 			!Objects.equals(layout.getType(), LayoutConstants.TYPE_CONTENT)) {

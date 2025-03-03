@@ -78,9 +78,56 @@ else {
 					});
 
 					const {onChange} = registerLocalizedInput({
+						changeTextDirection: false,
 						defaultLanguageId,
-						inputElement: allInputs,
 						namespace: fragmentNamespace,
+						onLocaleChange: ({languageId}) => {
+							allInputs.forEach((input, index) => {
+								const translationInput =
+									getOrCreateTranslationInput(
+										input.id,
+										input.name,
+										languageId,
+										input.parentNode,
+										fragmentNamespace
+									);
+
+								if (translationInput) {
+									if (index !== 0) {
+										translationInput.setAttribute(
+											'data-multiselect',
+											'true'
+										);
+									}
+
+									if (
+										translationInput.getAttribute(
+											'value'
+										) !== null
+									) {
+										input.checked = Boolean(
+											translationInput.value
+										);
+									}
+								}
+								else {
+									const defaultLanguageInput =
+										getOrCreateTranslationInput(
+											input.id,
+											input.name,
+											defaultLanguageId,
+											input.parentNode,
+											fragmentNamespace
+										);
+
+									if (defaultLanguageInput) {
+										input.checked = Boolean(
+											defaultLanguageInput.value
+										);
+									}
+								}
+							});
+						},
 					});
 
 					fieldSet.addEventListener('change', (event) => {

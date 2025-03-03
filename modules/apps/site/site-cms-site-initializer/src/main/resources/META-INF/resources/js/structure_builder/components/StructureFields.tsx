@@ -3,12 +3,17 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {ClayButtonWithIcon} from '@clayui/button';
+import {ClayDropDownWithItems} from '@clayui/drop-down';
 import ClayEmptyState from '@clayui/empty-state';
 import {SearchForm} from '@liferay/layout-js-components-web';
+import {ManagementToolbar} from 'frontend-js-components-web';
+import {sub} from 'frontend-js-web';
 import React, {useMemo, useState} from 'react';
 
 import {getImage} from '../../structure_builder/utils/getImage';
-import {useSelector} from '../contexts/StateContext';
+import {useSelector, useStateDispatch} from '../contexts/StateContext';
+import selectSelection from '../selectors/selectSelection';
 import selectStructureFields from '../selectors/selectStructureFields';
 import AddFieldDropdown from './AddFieldDropdown';
 import FieldsTree from './FieldsTree';
@@ -72,16 +77,50 @@ function Toolbar({
 }: {
 	setSearch: React.Dispatch<React.SetStateAction<string>>;
 }) {
-	return (
-		<div className="align-items-center c-gap-2 d-flex px-4">
-			<SearchForm
-				className="flex-grow-1 my-3"
-				label={Liferay.Language.get('search-fields')}
-				onChange={setSearch}
-				variant="white"
-			/>
+	const dispatch = useStateDispatch();
+	const selection = useSelector(selectSelection);
 
-			<AddFieldDropdown triggerType="icon" />
-		</div>
+	if (selection.length <= 1) {
+		return (
+			<div className="align-items-center c-gap-2 d-flex px-4">
+				<SearchForm
+					className="flex-grow-1 my-3"
+					label={Liferay.Language.get('search-fields')}
+					onChange={setSearch}
+					variant="white"
+				/>
+
+				<AddFieldDropdown triggerType="icon" />
+			</div>
+		);
+	}
+
+	return (
+		<ManagementToolbar.Container
+			active
+			className="mb-1"
+			onClick={(event) => event.stopPropagation()}
+		>
+			{sub(Liferay.Language.get('x-items-selected'), selection.length)}
+
+			<ClayDropDownWithItems
+				items={[
+					{
+						label: Liferay.Language.get('delete'),
+						onClick: () => dispatch({type: 'delete-selection'}),
+						symbolLeft: 'trash',
+					},
+				]}
+				trigger={
+					<ClayButtonWithIcon
+						aria-label={Liferay.Language.get('selection-options')}
+						borderless
+						displayType="unstyled"
+						size="sm"
+						symbol="ellipsis-v"
+					/>
+				}
+			/>
+		</ManagementToolbar.Container>
 	);
 }

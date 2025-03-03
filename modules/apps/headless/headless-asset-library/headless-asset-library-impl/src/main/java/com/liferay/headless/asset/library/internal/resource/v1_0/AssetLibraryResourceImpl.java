@@ -13,22 +13,31 @@ import com.liferay.depot.service.DepotAppCustomizationLocalService;
 import com.liferay.depot.service.DepotEntryGroupRelService;
 import com.liferay.depot.service.DepotEntryService;
 import com.liferay.headless.asset.library.dto.v1_0.AssetLibrary;
+import com.liferay.headless.asset.library.internal.util.comparator.AssetLibraryOrderByComparator;
 import com.liferay.headless.asset.library.resource.v1_0.AssetLibraryResource;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.UserGroupService;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.LinkedHashMapBuilder;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DTOConverterRegistry;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
+import com.liferay.portal.vulcan.pagination.Page;
+import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.util.LocalizedMapUtil;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -110,6 +119,46 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 			assetLibraryId, new long[] {userGroupId});
 
 		return getAssetLibrary(assetLibraryId);
+	}
+
+	@Override
+	public Page<AssetLibrary> getAssetLibrariesPage(
+			String keywords, Pagination pagination, Sort[] sorts)
+		throws Exception {
+
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-32649")) {
+			throw new UnsupportedOperationException();
+		}
+
+		OrderByComparator<Group> assetLibraryOrderByComparator = null;
+
+		if (sorts != null) {
+			assetLibraryOrderByComparator = new AssetLibraryOrderByComparator<>(
+				contextAcceptLanguage.getPreferredLocale(), sorts);
+		}
+
+		return Page.of(
+			transform(
+				_groupService.search(
+					contextCompany.getCompanyId(),
+					new long[] {
+						_portal.getClassNameId(DepotEntry.class.getName())
+					},
+					keywords, _getParams(), pagination.getStartPosition(),
+					pagination.getEndPosition(), assetLibraryOrderByComparator),
+				group -> _assetLibraryDTOConverter.toDTO(
+					new DefaultDTOConverterContext(
+						contextAcceptLanguage.isAcceptAllLanguages(),
+						new HashMap<>(), _dtoConverterRegistry,
+						group.getGroupId(),
+						contextAcceptLanguage.getPreferredLocale(),
+						contextUriInfo, contextUser),
+					_depotEntryService.getGroupDepotEntry(group.getGroupId()))),
+			pagination,
+			_groupService.searchCount(
+				contextCompany.getCompanyId(),
+				new long[] {_portal.getClassNameId(DepotEntry.class.getName())},
+				keywords, _getParams()));
 	}
 
 	@Override
@@ -263,6 +312,16 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 		return getAssetLibrary(assetLibraryId);
 	}
 
+	private LinkedHashMap<String, Object> _getParams() {
+		return LinkedHashMapBuilder.<String, Object>put(
+			"actionId", ActionKeys.VIEW
+		).put(
+			"active", Boolean.TRUE
+		).put(
+			"site", Boolean.FALSE
+		).build();
+	}
+
 	private ServiceContext _getServiceContext() throws Exception {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DepotEntry.class.getName(), contextHttpServletRequest);
@@ -331,6 +390,12 @@ public class AssetLibraryResourceImpl extends BaseAssetLibraryResourceImpl {
 
 	@Reference
 	private DTOConverterRegistry _dtoConverterRegistry;
+
+	@Reference
+	private GroupService _groupService;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private UserGroupService _userGroupService;

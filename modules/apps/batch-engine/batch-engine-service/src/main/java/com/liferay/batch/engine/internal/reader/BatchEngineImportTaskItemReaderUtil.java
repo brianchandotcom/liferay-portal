@@ -285,16 +285,14 @@ public class BatchEngineImportTaskItemReaderUtil {
 			return false;
 		}
 
-		String mapString = value.toString();
+		String string = value.toString();
 
-		if ((mapString == null) || mapString.isEmpty()) {
+		if ((string == null) || string.isEmpty()) {
 			return false;
 		}
 
-		String[] entries = mapString.split(StringPool.RETURN_NEW_LINE);
-
-		for (String entry : entries) {
-			if (!entry.contains(StringPool.COLON)) {
+		for (String line : string.split(StringPool.RETURN_NEW_LINE)) {
+			if (!line.contains(StringPool.COLON)) {
 				return false;
 			}
 		}

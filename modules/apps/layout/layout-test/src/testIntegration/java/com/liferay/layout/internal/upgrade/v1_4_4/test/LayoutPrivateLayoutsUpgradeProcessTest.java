@@ -115,7 +115,7 @@ public class LayoutPrivateLayoutsUpgradeProcessTest {
 
 			_runUpgrade();
 
-			_assertFeatureFlagValue(Boolean.FALSE.toString());
+			_assertFeatureFlagValue(Boolean.TRUE.toString());
 		}
 		finally {
 			if (configuration != null) {

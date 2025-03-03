@@ -333,6 +333,102 @@ public class LayoutStagedModelDataHandlerTest
 	}
 
 	@Test
+	@TestInfo("LPD-50217")
+	public void testExportImportContentLayoutWithSameFriendlyURL()
+		throws Exception {
+
+		Layout liveLayout = LayoutTestUtil.addTypeContentLayout(liveGroup);
+
+		Layout liveDraftLayout = liveLayout.fetchDraftLayout();
+
+		ContentLayoutTestUtil.publishLayout(liveDraftLayout, liveLayout);
+
+		initExport();
+
+		Layout stagingLayout = LayoutTestUtil.addTypeContentLayout(
+			stagingGroup);
+
+		Layout stagingDraftLayout = stagingLayout.fetchDraftLayout();
+
+		Assert.assertNotEquals(
+			stagingDraftLayout.getFriendlyURL(),
+			liveDraftLayout.getFriendlyURL());
+		Assert.assertNotEquals(
+			stagingDraftLayout.getUuid(), liveDraftLayout.getUuid());
+
+		ContentLayoutTestUtil.publishLayout(stagingDraftLayout, stagingLayout);
+
+		stagingLayout = _layoutLocalService.updateFriendlyURL(
+			TestPropsValues.getUserId(), stagingLayout.getPlid(),
+			liveLayout.getFriendlyURL(), stagingLayout.getDefaultLanguageId());
+
+		Assert.assertEquals(
+			stagingLayout.getFriendlyURL(), liveLayout.getFriendlyURL());
+		Assert.assertNotEquals(stagingLayout.getName(), liveLayout.getName());
+		Assert.assertNotEquals(stagingLayout.getUuid(), liveLayout.getUuid());
+
+		StagedModelDataHandlerUtil.exportStagedModel(
+			portletDataContext, stagingLayout);
+
+		initImport();
+
+		ExportImportLifecycleManagerUtil.fireExportImportLifecycleEvent(
+			ExportImportLifecycleConstants.EVENT_LAYOUT_IMPORT_STARTED,
+			ExportImportLifecycleConstants.
+				PROCESS_FLAG_LAYOUT_IMPORT_IN_PROCESS,
+			portletDataContext.getExportImportProcessId(),
+			PortletDataContextFactoryUtil.clonePortletDataContext(
+				portletDataContext));
+
+		StagedModelDataHandlerUtil.importStagedModel(
+			portletDataContext, readExportedStagedModel(stagingLayout));
+
+		ExportImportLifecycleManagerUtil.fireExportImportLifecycleEvent(
+			ExportImportLifecycleConstants.EVENT_LAYOUT_IMPORT_SUCCEEDED,
+			ExportImportLifecycleConstants.
+				PROCESS_FLAG_LAYOUT_IMPORT_IN_PROCESS,
+			portletDataContext.getExportImportProcessId(),
+			PortletDataContextFactoryUtil.clonePortletDataContext(
+				portletDataContext));
+
+		Assert.assertNull(
+			_layoutLocalService.fetchLayout(
+				stagingDraftLayout.getUuid(), liveGroup.getGroupId(),
+				stagingDraftLayout.isPrivateLayout()));
+		Assert.assertNull(
+			_layoutLocalService.fetchLayout(
+				stagingLayout.getUuid(), liveGroup.getGroupId(),
+				stagingLayout.isPrivateLayout()));
+
+		liveLayout = _layoutLocalService.getLayout(liveLayout.getPlid());
+
+		Assert.assertEquals(
+			stagingLayout.getFriendlyURL(), liveLayout.getFriendlyURL());
+		Assert.assertEquals(stagingLayout.getName(), liveLayout.getName());
+
+		Layout importedLiveDraftLayout = null;
+
+		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
+				"com.liferay.portal.service.impl.LayoutLocalServiceImpl",
+				LoggerTestUtil.ERROR)) {
+
+			importedLiveDraftLayout = liveLayout.fetchDraftLayout();
+
+			List<LogEntry> logEntries = logCapture.getLogEntries();
+
+			Assert.assertTrue(logEntries.toString(), logEntries.isEmpty());
+		}
+
+		Assert.assertEquals(
+			stagingDraftLayout.getFriendlyURL(),
+			importedLiveDraftLayout.getFriendlyURL());
+		Assert.assertEquals(
+			liveDraftLayout.getPlid(), importedLiveDraftLayout.getPlid());
+		Assert.assertEquals(
+			liveDraftLayout.getUuid(), importedLiveDraftLayout.getUuid());
+	}
+
+	@Test
 	@TestInfo("LPD-32929")
 	public void testExportImportContentReference() throws Exception {
 		Locale locale = _portal.getSiteDefaultLocale(stagingGroup);

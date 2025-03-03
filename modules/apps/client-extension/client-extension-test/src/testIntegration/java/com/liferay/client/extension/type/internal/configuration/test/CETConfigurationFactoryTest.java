@@ -130,13 +130,11 @@ public class CETConfigurationFactoryTest {
 	public void testAddControlPanelThemeCSSClientExtensionEntryRel()
 		throws Exception {
 
+		Layout layout = _getControlPanelLayout(_virtualInstanceCompanyId);
 		String pid1 = ConfigurationTestUtil.createFactoryConfiguration(
 			_PID,
 			_getThemeCSSCETConfigurationProperties(_virtualInstanceCompanyId));
-
 		String pid2 = null;
-
-		Layout layout = _getControlPanelLayout(_virtualInstanceCompanyId);
 
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				"com.liferay.client.extension.type.internal.configuration." +

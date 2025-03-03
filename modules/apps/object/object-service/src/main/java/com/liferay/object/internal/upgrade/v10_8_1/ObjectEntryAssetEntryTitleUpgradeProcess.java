@@ -143,16 +143,12 @@ public class ObjectEntryAssetEntryTitleUpgradeProcess extends UpgradeProcess {
 		}
 
 		public void putTitle(Locale locale, String title) {
-			if (_titleMap == null) {
-				_titleMap = new HashMap<>();
-			}
-
 			_titleMap.put(locale, title);
 		}
 
 		private final String _className;
 		private final String _defaultLanguageId;
-		private Map<Locale, String> _titleMap;
+		private Map<Locale, String> _titleMap = new HashMap<>();
 
 	}
 

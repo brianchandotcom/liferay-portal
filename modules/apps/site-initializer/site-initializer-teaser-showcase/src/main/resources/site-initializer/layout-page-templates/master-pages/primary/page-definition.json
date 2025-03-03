@@ -4,8 +4,7 @@
 			{
 				"definition": {
 					"indexed": true,
-					"layout": {
-					},
+					"layout": {},
 					"name": "Page Header"
 				},
 				"pageElements": [
@@ -47,13 +46,11 @@
 										},
 										{
 											"id": "portraitMobile",
-											"rowViewportDefinition": {
-											}
+											"rowViewportDefinition": {}
 										},
 										{
 											"id": "tablet",
-											"rowViewportDefinition": {
-											}
+											"rowViewportDefinition": {}
 										}
 									],
 									"verticalAlignment": "middle"
@@ -69,13 +66,11 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {
-													},
+													"columnViewportDefinition": {},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {
-													},
+													"columnViewportDefinition": {},
 													"id": "tablet"
 												}
 											],
@@ -164,13 +159,11 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {
-													},
+													"columnViewportDefinition": {},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {
-													},
+													"columnViewportDefinition": {},
 													"id": "tablet"
 												}
 											],
@@ -226,13 +219,11 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {
-													},
+													"columnViewportDefinition": {},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {
-													},
+													"columnViewportDefinition": {},
 													"id": "tablet"
 												}
 											],
@@ -307,8 +298,7 @@
 																"iconSize": "1rem",
 																"loginPage": "/web/[$GROUP_KEY$]/sign-in"
 															},
-															"fragmentFields": [
-															],
+															"fragmentFields": [],
 															"indexed": true
 														},
 														"type": "Fragment"
@@ -333,8 +323,7 @@
 					"fragment": {
 						"key": "BASIC_COMPONENT-html"
 					},
-					"fragmentConfig": {
-					},
+					"fragmentConfig": {},
 					"fragmentFields": [
 						{
 							"id": "element-html",
@@ -357,8 +346,7 @@
 			{
 				"definition": {
 					"indexed": true,
-					"layout": {
-					},
+					"layout": {},
 					"name": "Page Body"
 				},
 				"pageElements": [
@@ -540,13 +528,11 @@
 										},
 										{
 											"id": "portraitMobile",
-											"rowViewportDefinition": {
-											}
+											"rowViewportDefinition": {}
 										},
 										{
 											"id": "tablet",
-											"rowViewportDefinition": {
-											}
+											"rowViewportDefinition": {}
 										}
 									],
 									"verticalAlignment": "top"
@@ -562,13 +548,11 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {
-													},
+													"columnViewportDefinition": {},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {
-													},
+													"columnViewportDefinition": {},
 													"id": "tablet"
 												}
 											],
@@ -606,8 +590,7 @@
 																{
 																	"id": "element-text",
 																	"value": {
-																		"fragmentLink": {
-																		},
+																		"fragmentLink": {},
 																		"text": {
 																			"value_i18n": {
 																				"en_US": "Products"
@@ -626,24 +609,28 @@
 																"custom-navigation"
 															],
 															"indexed": true,
-															"layout": {
-															}
+															"layout": {}
 														},
 														"pageElements": [
 															{
 																"definition": {
-																	"customCSS": ".custom-navigation .[$FRAGMENT_CLASS$]{\n    font-size: 0.875rem;\n\t  margin-top: 25px;\n    font-weight: 600;\n}\n\n.custom-navigation .[$FRAGMENT_CLASS$] .tree-node{\n\tmargin-bottom:20px !important;\n}\n\n\n.custom-navigation .[$FRAGMENT_CLASS$] .panel-title {\n\tdisplay: none;\n}\n\n.custom-navigation .[$FRAGMENT_CLASS$] .panel-body,.custom-navigation .[$FRAGMENT_CLASS$] .tree-node,.custom-navigation .[$FRAGMENT_CLASS$] .portlet-content{\n\tpadding: 0;\n}\n\n.custom-navigation .[$FRAGMENT_CLASS$] .tree-node{\n  margin-bottom: 15px;\n}\n",
+																	"cssClasses": [
+																		"clarity-horizontal-nav"
+																	],
 																	"widgetInstance": {
 																		"widgetConfig": {
-																			"assetVocabularyId": "[$TAXONOMY_VOCABULARY_ID:Products$]",
-																			"displayStyle": "default",
+																			"displayDepth": "0",
+																			"displayStyle": "ddmTemplate_NAV-PILLS-STACKED-FTL",
 																			"displayStyleGroupId": "[$GROUP_ID$]",
-																			"displayStyleGroupKey": "Liferay Teaser Demo",
-																			"rootAssetCategoryId": "",
-																			"useCategoryFromRequest": "false",
-																			"useRootCategory": "false"
+																			"expandedLevels": "auto",
+																			"rootMenuItemLevel": "0",
+																			"rootMenuItemType": "absolute",
+																			"siteNavigationMenuExternalReferenceCode": "FOOTER-PRODUCTS",
+																			"siteNavigationMenuName": "Footer Products",
+																			"siteNavigationMenuType": "-1"
 																		},
-																		"widgetName": "com_liferay_commerce_product_asset_categories_navigation_web_internal_portlet_CPAssetCategoriesNavigationPortlet"
+																		"widgetInstanceId": "footer1",
+																		"widgetName": "com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet"
 																	}
 																},
 																"type": "Widget"
@@ -667,13 +654,11 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {
-													},
+													"columnViewportDefinition": {},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {
-													},
+													"columnViewportDefinition": {},
 													"id": "tablet"
 												}
 											],
@@ -712,8 +697,7 @@
 																{
 																	"id": "element-text",
 																	"value": {
-																		"fragmentLink": {
-																		},
+																		"fragmentLink": {},
 																		"text": {
 																			"value_i18n": {
 																				"en_US": "About Us"
@@ -765,13 +749,11 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {
-													},
+													"columnViewportDefinition": {},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {
-													},
+													"columnViewportDefinition": {},
 													"id": "tablet"
 												}
 											],
@@ -810,8 +792,7 @@
 																{
 																	"id": "element-text",
 																	"value": {
-																		"fragmentLink": {
-																		},
+																		"fragmentLink": {},
 																		"text": {
 																			"value_i18n": {
 																				"en_US": "Resources"
@@ -863,13 +844,11 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {
-													},
+													"columnViewportDefinition": {},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {
-													},
+													"columnViewportDefinition": {},
 													"id": "tablet"
 												}
 											],
@@ -907,8 +886,7 @@
 																{
 																	"id": "element-text",
 																	"value": {
-																		"fragmentLink": {
-																		},
+																		"fragmentLink": {},
 																		"text": {
 																			"value_i18n": {
 																				"en_US": "Get In Touch"
@@ -987,13 +965,11 @@
 										},
 										{
 											"id": "portraitMobile",
-											"rowViewportDefinition": {
-											}
+											"rowViewportDefinition": {}
 										},
 										{
 											"id": "tablet",
-											"rowViewportDefinition": {
-											}
+											"rowViewportDefinition": {}
 										}
 									],
 									"verticalAlignment": "middle"
@@ -1009,13 +985,11 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {
-													},
+													"columnViewportDefinition": {},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {
-													},
+													"columnViewportDefinition": {},
 													"id": "tablet"
 												}
 											],
@@ -1038,8 +1012,7 @@
 															"fragment": {
 																"key": "BASIC_COMPONENT-html"
 															},
-															"fragmentConfig": {
-															},
+															"fragmentConfig": {},
 															"fragmentFields": [
 																{
 																	"id": "element-html",
@@ -1072,13 +1045,11 @@
 													"id": "landscapeMobile"
 												},
 												{
-													"columnViewportDefinition": {
-													},
+													"columnViewportDefinition": {},
 													"id": "portraitMobile"
 												},
 												{
-													"columnViewportDefinition": {
-													},
+													"columnViewportDefinition": {},
 													"id": "tablet"
 												}
 											],
@@ -1138,7 +1109,7 @@
 	},
 	"settings": {
 		"colorSchemeName": "01",
-		"themeName": "Classic",
+		"themeName": "Dialect",
 		"themeSettings": {
 			"lfr-theme:regular:show-footer": "false",
 			"lfr-theme:regular:show-header": "false",

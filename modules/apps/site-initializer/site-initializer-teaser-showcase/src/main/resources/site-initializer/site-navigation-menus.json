@@ -7,28 +7,28 @@
 					"en_US": "Contacts"
 				},
 				"type": "url",
-				"url": "/web/clarity/g/contacts"
+				"url": "/web/[$GROUP_KEY$]/g/contacts"
 			},
 			{
 				"name_i18n": {
 					"en_US": "Eyeglasses"
 				},
 				"type": "url",
-				"url": "/web/clarity/g/eyeglasses"
+				"url": "/web/[$GROUP_KEY$]/g/eyeglasses"
 			},
 			{
 				"name_i18n": {
 					"en_US": "Lenses"
 				},
 				"type": "url",
-				"url": "/web/clarity/g/lenses"
+				"url": "/web/[$GROUP_KEY$]/g/lenses"
 			},
 			{
 				"name_i18n": {
 					"en_US": "Sunglasses"
 				},
 				"type": "url",
-				"url": "/web/clarity/g/sunglasses"
+				"url": "/web/[$GROUP_KEY$]/g/sunglasses"
 			}
 		],
 		"name": "Footer Products Menu",
@@ -64,7 +64,7 @@
 		"type": "node"
 	},
 	{
-		"externalReferenceCode": "FOOTER_LEGAL_MENU",
+		"externalReferenceCode": "FOOTER-LEGAL",
 		"menuItems": [
 			{
 				"name_i18n": {
@@ -81,7 +81,7 @@
 				"url": "/o/headless-delivery/v1.0/structured-contents/62651"
 			}
 		],
-		"name": "Footer Legal Menu",
+		"name": "Footer Legal",
 		"type": "node"
 	},
 	{

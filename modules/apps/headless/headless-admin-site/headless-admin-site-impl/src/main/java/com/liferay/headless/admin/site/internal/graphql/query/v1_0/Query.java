@@ -785,7 +785,7 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {siteByExternalReferenceCodePageExperience(pageExperienceExternalReferenceCode: ___, siteExternalReferenceCode: ___){externalReferenceCode, key, name_i18n, pageElements, pageRules, priority, segmentExternalReferenceCode, sitePageExternalReferenceCode}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {siteByExternalReferenceCodePageExperience(pageExperienceExternalReferenceCode: ___, siteExternalReferenceCode: ___){externalReferenceCode, key, name_i18n, pageElements, pageRules, pageSpecificationExternalReferenceCode, priority, segmentExternalReferenceCode}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(
 		description = "Retrieves an experience of a specific page specification of a site page within a site."

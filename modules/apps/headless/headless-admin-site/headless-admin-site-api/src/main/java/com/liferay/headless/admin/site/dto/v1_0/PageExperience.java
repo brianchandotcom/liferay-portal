@@ -264,6 +264,55 @@ public class PageExperience implements Serializable {
 	@JsonIgnore
 	private Supplier<PageRule[]> _pageRulesSupplier;
 
+	@Schema(description = "The page specification's external reference code.")
+	public String getPageSpecificationExternalReferenceCode() {
+		if (_pageSpecificationExternalReferenceCodeSupplier != null) {
+			pageSpecificationExternalReferenceCode =
+				_pageSpecificationExternalReferenceCodeSupplier.get();
+
+			_pageSpecificationExternalReferenceCodeSupplier = null;
+		}
+
+		return pageSpecificationExternalReferenceCode;
+	}
+
+	public void setPageSpecificationExternalReferenceCode(
+		String pageSpecificationExternalReferenceCode) {
+
+		this.pageSpecificationExternalReferenceCode =
+			pageSpecificationExternalReferenceCode;
+
+		_pageSpecificationExternalReferenceCodeSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setPageSpecificationExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			pageSpecificationExternalReferenceCodeUnsafeSupplier) {
+
+		_pageSpecificationExternalReferenceCodeSupplier = () -> {
+			try {
+				return pageSpecificationExternalReferenceCodeUnsafeSupplier.
+					get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField(
+		description = "The page specification's external reference code."
+	)
+	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
+	protected String pageSpecificationExternalReferenceCode;
+
+	@JsonIgnore
+	private Supplier<String> _pageSpecificationExternalReferenceCodeSupplier;
+
 	@Schema(
 		description = "the experience's priority. It must be a unique value within the page specification. The default experience will always be assigned priority 0. A priority higher than 0 will result in an experience being active and a priority lower than 0 will result in an experience being inactive."
 	)
@@ -353,51 +402,6 @@ public class PageExperience implements Serializable {
 
 	@JsonIgnore
 	private Supplier<String> _segmentExternalReferenceCodeSupplier;
-
-	@Schema(description = "The segment's external reference code.")
-	public String getSitePageExternalReferenceCode() {
-		if (_sitePageExternalReferenceCodeSupplier != null) {
-			sitePageExternalReferenceCode =
-				_sitePageExternalReferenceCodeSupplier.get();
-
-			_sitePageExternalReferenceCodeSupplier = null;
-		}
-
-		return sitePageExternalReferenceCode;
-	}
-
-	public void setSitePageExternalReferenceCode(
-		String sitePageExternalReferenceCode) {
-
-		this.sitePageExternalReferenceCode = sitePageExternalReferenceCode;
-
-		_sitePageExternalReferenceCodeSupplier = null;
-	}
-
-	@JsonIgnore
-	public void setSitePageExternalReferenceCode(
-		UnsafeSupplier<String, Exception>
-			sitePageExternalReferenceCodeUnsafeSupplier) {
-
-		_sitePageExternalReferenceCodeSupplier = () -> {
-			try {
-				return sitePageExternalReferenceCodeUnsafeSupplier.get();
-			}
-			catch (RuntimeException runtimeException) {
-				throw runtimeException;
-			}
-			catch (Exception exception) {
-				throw new RuntimeException(exception);
-			}
-		};
-	}
-
-	@GraphQLField(description = "The segment's external reference code.")
-	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
-	protected String sitePageExternalReferenceCode;
-
-	@JsonIgnore
-	private Supplier<String> _sitePageExternalReferenceCodeSupplier;
 
 	@Override
 	public boolean equals(Object object) {
@@ -514,6 +518,23 @@ public class PageExperience implements Serializable {
 			sb.append("]");
 		}
 
+		String pageSpecificationExternalReferenceCode =
+			getPageSpecificationExternalReferenceCode();
+
+		if (pageSpecificationExternalReferenceCode != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"pageSpecificationExternalReferenceCode\": ");
+
+			sb.append("\"");
+
+			sb.append(_escape(pageSpecificationExternalReferenceCode));
+
+			sb.append("\"");
+		}
+
 		Integer priority = getPriority();
 
 		if (priority != null) {
@@ -538,23 +559,6 @@ public class PageExperience implements Serializable {
 			sb.append("\"");
 
 			sb.append(_escape(segmentExternalReferenceCode));
-
-			sb.append("\"");
-		}
-
-		String sitePageExternalReferenceCode =
-			getSitePageExternalReferenceCode();
-
-		if (sitePageExternalReferenceCode != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"sitePageExternalReferenceCode\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(sitePageExternalReferenceCode));
 
 			sb.append("\"");
 		}

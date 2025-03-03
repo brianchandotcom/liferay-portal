@@ -182,7 +182,7 @@ public abstract class BasePageExperienceResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/page-experiences/{pageExperienceExternalReferenceCode}' -d $'{"externalReferenceCode": ___, "key": ___, "name_i18n": ___, "pageElements": ___, "pageRules": ___, "priority": ___, "segmentExternalReferenceCode": ___, "sitePageExternalReferenceCode": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/page-experiences/{pageExperienceExternalReferenceCode}' -d $'{"externalReferenceCode": ___, "key": ___, "name_i18n": ___, "pageElements": ___, "pageRules": ___, "pageSpecificationExternalReferenceCode": ___, "priority": ___, "segmentExternalReferenceCode": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Updates an experience of a specific page specification of a site page within a site. Updates only the fields received in the request body, leaving any other fields untouched."
@@ -252,6 +252,13 @@ public abstract class BasePageExperienceResourceImpl
 			existingPageExperience.setName_i18n(pageExperience.getName_i18n());
 		}
 
+		if (pageExperience.getPageSpecificationExternalReferenceCode() !=
+				null) {
+
+			existingPageExperience.setPageSpecificationExternalReferenceCode(
+				pageExperience.getPageSpecificationExternalReferenceCode());
+		}
+
 		if (pageExperience.getPriority() != null) {
 			existingPageExperience.setPriority(pageExperience.getPriority());
 		}
@@ -259,11 +266,6 @@ public abstract class BasePageExperienceResourceImpl
 		if (pageExperience.getSegmentExternalReferenceCode() != null) {
 			existingPageExperience.setSegmentExternalReferenceCode(
 				pageExperience.getSegmentExternalReferenceCode());
-		}
-
-		if (pageExperience.getSitePageExternalReferenceCode() != null) {
-			existingPageExperience.setSitePageExternalReferenceCode(
-				pageExperience.getSitePageExternalReferenceCode());
 		}
 
 		preparePatch(pageExperience, existingPageExperience);
@@ -276,7 +278,7 @@ public abstract class BasePageExperienceResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/page-experiences/{pageExperienceExternalReferenceCode}' -d $'{"externalReferenceCode": ___, "key": ___, "name_i18n": ___, "pageElements": ___, "pageRules": ___, "priority": ___, "segmentExternalReferenceCode": ___, "sitePageExternalReferenceCode": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/page-experiences/{pageExperienceExternalReferenceCode}' -d $'{"externalReferenceCode": ___, "key": ___, "name_i18n": ___, "pageElements": ___, "pageRules": ___, "pageSpecificationExternalReferenceCode": ___, "priority": ___, "segmentExternalReferenceCode": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Updates an experience of a specific page specification of a site page within a site."
@@ -393,7 +395,7 @@ public abstract class BasePageExperienceResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/page-specifications/{pageSpecificationExternalReferenceCode}/page-experiences' -d $'{"externalReferenceCode": ___, "key": ___, "name_i18n": ___, "pageElements": ___, "pageRules": ___, "priority": ___, "segmentExternalReferenceCode": ___, "sitePageExternalReferenceCode": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-site/v1.0/sites/{siteExternalReferenceCode}/page-specifications/{pageSpecificationExternalReferenceCode}/page-experiences' -d $'{"externalReferenceCode": ___, "key": ___, "name_i18n": ___, "pageElements": ___, "pageRules": ___, "pageSpecificationExternalReferenceCode": ___, "priority": ___, "segmentExternalReferenceCode": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Adds a new experience to a page specification of a site page."

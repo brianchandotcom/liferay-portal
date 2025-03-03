@@ -7,10 +7,6 @@
 
 <%@ include file="/content/init.jsp" %>
 
-<%
-StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHelper();
-%>
-
 <c:if test="<%= !dataSiteLevelPortlets.isEmpty() %>">
 	<aui:fieldset cssClass="options-group" markupView="lexicon">
 		<clay:sheet-section>
@@ -80,6 +76,10 @@ StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHe
 														value="<%= ExportImportDateUtil.RANGE_LAST %>"
 													/>
 												</div>
+
+												<%
+												StagingGroupHelper stagingGroupHelper = StagingGroupHelperUtil.getStagingGroupHelper();
+												%>
 
 												<c:if test="<%= !stagingGroupHelper.isCompanyGroup(group) %>">
 													<div class="range-options c-p-4 <%= disableInputs ? "hide" : StringPool.BLANK %>">

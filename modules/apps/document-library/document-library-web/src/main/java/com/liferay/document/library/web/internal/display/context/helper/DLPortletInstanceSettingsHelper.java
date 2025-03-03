@@ -8,7 +8,7 @@ package com.liferay.document.library.web.internal.display.context.helper;
 import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
-import com.liferay.document.library.kernel.service.DLFolderLocalServiceUtil;
+import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.document.library.web.internal.settings.DLPortletInstanceSettings;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.view.count.ViewCountManagerUtil;
-import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
@@ -137,9 +136,8 @@ public class DLPortletInstanceSettingsHelper {
 					getSelectedGroupExternalReferenceCode(),
 				themeDisplay.getCompanyId());
 
-		return new LiferayFolder(
-			DLFolderLocalServiceUtil.getDLFolderByExternalReferenceCode(
-				rootFolderExternalReferenceCode, selectedGroup.getGroupId()));
+		return DLAppLocalServiceUtil.getFolderByExternalReferenceCode(
+			rootFolderExternalReferenceCode, selectedGroup.getGroupId());
 	}
 
 	public long getRootFolderId() throws PortalException {

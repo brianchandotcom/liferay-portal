@@ -33,7 +33,7 @@ boolean ldapImportEnabled = ldapImportConfiguration.importEnabled();
 
 	<aui:input label="import-interval" name='<%= "ldap--" + LDAPConstants.IMPORT_INTERVAL + "--" %>' type="text" value="<%= ldapImportConfiguration.importInterval() %>" />
 
-	<aui:select label="select-import-method" name='<%= "ldap--" + LDAPConstants.IMPORT_METHOD + "--" %>' value="<%= ldapImportConfiguration.importMethod() %>">
+	<aui:select label="import-method" name='<%= "ldap--" + LDAPConstants.IMPORT_METHOD + "--" %>' value="<%= ldapImportConfiguration.importMethod() %>">
 		<aui:option label="group" value="<%= LDAPSettingsConstants.IMPORT_METHOD_GROUP %>" />
 		<aui:option label="user" value="<%= LDAPSettingsConstants.IMPORT_METHOD_USER %>" />
 	</aui:select>

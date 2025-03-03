@@ -9,6 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.template.engine.TemplateContextHelper;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -73,6 +74,63 @@ public class TemplateContextHelperTest {
 
 		Assert.assertEquals(
 			" nonce=\"TEST_NONCE\"", contextObjects.get("nonceAttribute"));
+	}
+
+	@Test
+	public void testURLtoByteArray() throws Exception {
+		TemplateContextHelper templateContextHelper =
+			new TemplateContextHelper();
+
+		Map<String, Object> helperUtilities =
+			templateContextHelper.getHelperUtilities(false);
+
+		Http http = (Http)helperUtilities.get("httpUtil");
+
+		Http.Options options = new Http.Options();
+
+		options.setLocation("http://www.google.com");
+
+		http.URLtoByteArray(options);
+
+		Assert.assertFalse(options.isFollowRedirects());
+	}
+
+	@Test
+	public void testURLtoInputStream() throws Exception {
+		TemplateContextHelper templateContextHelper =
+			new TemplateContextHelper();
+
+		Map<String, Object> helperUtilities =
+			templateContextHelper.getHelperUtilities(false);
+
+		Http http = (Http)helperUtilities.get("httpUtil");
+
+		Http.Options options = new Http.Options();
+
+		options.setLocation("http://www.google.com");
+
+		http.URLtoInputStream(options);
+
+		Assert.assertFalse(options.isFollowRedirects());
+	}
+
+	@Test
+	public void testURLtoString() throws Exception {
+		TemplateContextHelper templateContextHelper =
+			new TemplateContextHelper();
+
+		Map<String, Object> helperUtilities =
+			templateContextHelper.getHelperUtilities(false);
+
+		Http http = (Http)helperUtilities.get("httpUtil");
+
+		Http.Options options = new Http.Options();
+
+		options.setLocation("http://www.google.com");
+
+		http.URLtoString(options);
+
+		Assert.assertFalse(options.isFollowRedirects());
 	}
 
 }

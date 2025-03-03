@@ -53,8 +53,6 @@ public class LayoutPrivateLayoutsUpgradeProcessTest {
 
 	@Test
 	public void testUpgrade() throws Exception {
-		String originalFeatureFlagValue = _updateFeatureFlagValue(
-			Boolean.FALSE.toString());
 		Configuration[] originalConfigurations =
 			_configurationAdmin.listConfigurations(
 				StringBundler.concat(
@@ -64,15 +62,17 @@ public class LayoutPrivateLayoutsUpgradeProcessTest {
 			_SCHEMA_NAME);
 		Release release = null;
 		Configuration configuration = null;
+		String originalFeatureFlagValue = _updateFeatureFlagValue(
+			Boolean.FALSE.toString());
 
 		try {
-			if (originalRelease != null) {
-				_releaseLocalService.deleteRelease(originalRelease);
-			}
-
 			if (ArrayUtil.isNotEmpty(originalConfigurations)) {
 				ConfigurationTestUtil.deleteConfiguration(
 					originalConfigurations[0]);
+			}
+
+			if (originalRelease != null) {
+				_releaseLocalService.deleteRelease(originalRelease);
 			}
 
 			_runUpgrade();
@@ -100,6 +100,18 @@ public class LayoutPrivateLayoutsUpgradeProcessTest {
 			_assertFeatureFlagValue(Boolean.FALSE.toString());
 		}
 		finally {
+			if (configuration != null) {
+				ConfigurationTestUtil.deleteConfiguration(configuration);
+			}
+
+			if (ArrayUtil.isNotEmpty(originalConfigurations)) {
+				Configuration originalConfiguration = originalConfigurations[0];
+
+				ConfigurationTestUtil.saveConfiguration(
+					originalConfiguration,
+					originalConfiguration.getProperties());
+			}
+
 			if (release != null) {
 				_releaseLocalService.deleteRelease(release);
 			}
@@ -109,20 +121,6 @@ public class LayoutPrivateLayoutsUpgradeProcessTest {
 			}
 
 			_updateFeatureFlagValue(originalFeatureFlagValue);
-
-			if (configuration != null) {
-				ConfigurationTestUtil.deleteConfiguration(configuration);
-			}
-
-			ConfigurationTestUtil.deleteConfiguration(_PID);
-
-			if (ArrayUtil.isNotEmpty(originalConfigurations)) {
-				Configuration originalConfiguration = originalConfigurations[0];
-
-				ConfigurationTestUtil.saveConfiguration(
-					originalConfiguration,
-					originalConfiguration.getProperties());
-			}
 		}
 	}
 

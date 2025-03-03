@@ -356,4 +356,16 @@ test('can see corresponding elements at site level', async ({
 	await expect(
 		exportImportPage.page.getByLabel('Delete Application Data')
 	).toBeVisible();
+
+	await expect(
+		exportImportPage.page.getByText(
+			'Mirror: All data and content inside the imported LAR is created as new the first time while maintaining a reference to the source. Subsequent imports from the same source update the entries instead of creating new entries.'
+		)
+	).toBeVisible();
+
+	await expect(
+		exportImportPage.page.getByText('Mirror with overwriting:')
+	).toBeVisible();
+
+	await expect(exportImportPage.page.getByText('Copy as New:')).toBeVisible();
 });

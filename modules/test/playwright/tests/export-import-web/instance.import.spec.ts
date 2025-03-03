@@ -381,6 +381,20 @@ test('can see corresponding elements at instance level', async ({
 	await expect(
 		companyExportImportPage.page.getByLabel('Delete Application Data')
 	).not.toBeVisible();
+
+	await expect(
+		companyExportImportPage.page.getByText(
+			'Mirror: All data and content inside the imported LAR is created as new the first time while maintaining a reference to the source. Subsequent imports from the same source update the entries instead of creating new entries.'
+		)
+	).toBeVisible();
+
+	await expect(
+		companyExportImportPage.page.getByText('Mirror with overwriting:')
+	).not.toBeVisible();
+
+	await expect(
+		companyExportImportPage.page.getByText('Copy as New:')
+	).not.toBeVisible();
 });
 
 test('Can/not view Import menu item in Application menu depending on permissions', async ({

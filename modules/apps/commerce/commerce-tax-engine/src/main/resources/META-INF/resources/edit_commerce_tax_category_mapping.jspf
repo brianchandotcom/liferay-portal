@@ -1,0 +1,45 @@
+<%--
+/**
+ * SPDX-FileCopyrightText: (c) 2025 Liferay, Inc. https://liferay.com
+ * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
+ */
+--%>
+
+<%
+long commerceTaxMethodId = commerceTaxCategoryMappingsDisplayContext.getCommerceTaxMethodId();
+
+long commerceTaxCategoryMappingId = 0;
+
+if (commerceTaxCategoryMapping != null) {
+	commerceTaxCategoryMappingId = commerceTaxCategoryMapping.getCommerceTaxCategoryMappingId();
+}
+%>
+
+<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (commerceTaxCategoryMapping == null) ? Constants.ADD : Constants.UPDATE %>" />
+<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+<aui:input name="commerceTaxCategoryMappingId" type="hidden" value="<%= commerceTaxCategoryMappingId %>" />
+<aui:input name="commerceTaxMethodId" type="hidden" value="<%= commerceTaxMethodId %>" />
+
+<div class="row">
+	<div class="col-md-6">
+		<aui:select disabled="<%= commerceTaxCategoryMapping != null %>" label="tax-category" name="CPTaxCategoryId" value="<%= (commerceTaxCategoryMapping == null) ? null : commerceTaxCategoryMapping.getCPTaxCategoryId() %>">
+
+			<%
+			List<CPTaxCategory> cpTaxCategories = commerceTaxCategoryMappingsDisplayContext.getAvailableCPTaxCategories();
+
+			for (CPTaxCategory cpTaxCategory : cpTaxCategories) {
+			%>
+
+				<aui:option label="<%= HtmlUtil.escape(cpTaxCategory.getName(languageId)) %>" value="<%= cpTaxCategory.getCPTaxCategoryId() %>" />
+
+			<%
+			}
+			%>
+
+		</aui:select>
+	</div>
+
+	<div class="col-md-6">
+		<aui:input label="mapping" name="externalReferenceCode" required="<%= true %>" />
+	</div>
+</div>

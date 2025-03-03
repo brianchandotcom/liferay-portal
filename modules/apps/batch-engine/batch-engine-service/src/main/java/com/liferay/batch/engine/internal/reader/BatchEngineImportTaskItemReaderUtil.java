@@ -80,13 +80,13 @@ public class BatchEngineImportTaskItemReaderUtil {
 			if (field != null) {
 				field.setAccessible(true);
 
+				Object value = entry.getValue();
+
 				ObjectMapper objectMapper = _getObjectMapper(
-					batchEngineImportTask, entry, field);
+					batchEngineImportTask, field, value);
 
 				field.set(
-					item,
-					objectMapper.convertValue(
-						entry.getValue(), field.getType()));
+					item, objectMapper.convertValue(value, field.getType()));
 
 				continue;
 			}
@@ -232,8 +232,8 @@ public class BatchEngineImportTaskItemReaderUtil {
 	}
 
 	private static ObjectMapper _getObjectMapper(
-			BatchEngineImportTask batchEngineImportTask,
-			Map.Entry<String, Object> entry, Field field)
+			BatchEngineImportTask batchEngineImportTask, Field field,
+			Object value)
 		throws IllegalAccessException, InstantiationException {
 
 		if (StringUtil.equals(
@@ -256,7 +256,7 @@ public class BatchEngineImportTaskItemReaderUtil {
 			if (Objects.equals(
 					batchEngineImportTask.getContentType(),
 					BatchEngineTaskContentType.CSV.getFileExtension()) &&
-				_isCSVMapColumn(field.getType(), entry.getValue())) {
+				_isCSVMapColumn(field.getType(), value)) {
 
 				return _csvMapObjectMapper;
 			}

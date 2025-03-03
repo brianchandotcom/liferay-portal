@@ -531,9 +531,7 @@ public class TypeScriptClientUtil {
 		if (type.equals("array")) {
 			Items items = schema.getItems();
 
-			String nestedType = _getDataType(items.toSchema(), imports);
-
-			return "Array<" + nestedType + ">";
+			return "Array<" + _getDataType(items.toSchema(), imports) + ">";
 		}
 		else if (type.equals("boolean")) {
 			return "boolean";
@@ -545,23 +543,23 @@ public class TypeScriptClientUtil {
 			Schema additionalPropertySchema =
 				schema.getAdditionalPropertySchema();
 
-			if (additionalPropertySchema != null) {
-				if (additionalPropertySchema.getAdditionalPropertySchema() !=
-						null) {
-
-					String dataType = _getDataType(
-						additionalPropertySchema.getAdditionalPropertySchema(),
-						imports);
-
-					return "{ [key: string]: { [key: string]: " + dataType +
-						"; }; }";
-				}
-
-				return "{ [key: string]: " +
-					_getDataType(additionalPropertySchema, imports) + "; }";
+			if (additionalPropertySchema == null) {
+				return "object";
 			}
 
-			return "object";
+			if (additionalPropertySchema.getAdditionalPropertySchema() !=
+					null) {
+
+				String dataType = _getDataType(
+					additionalPropertySchema.getAdditionalPropertySchema(),
+					imports);
+
+				return "{ [key: string]: { [key: string]: " + dataType +
+					"; }; }";
+			}
+
+			return "{ [key: string]: " +
+				_getDataType(additionalPropertySchema, imports) + "; }";
 		}
 		else if (type.equals("permission")) {
 			imports.add("Permission");

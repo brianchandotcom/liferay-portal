@@ -130,6 +130,32 @@ public class PageExperience implements Cloneable, Serializable {
 
 	protected PageRule[] pageRules;
 
+	public String getPageSpecificationExternalReferenceCode() {
+		return pageSpecificationExternalReferenceCode;
+	}
+
+	public void setPageSpecificationExternalReferenceCode(
+		String pageSpecificationExternalReferenceCode) {
+
+		this.pageSpecificationExternalReferenceCode =
+			pageSpecificationExternalReferenceCode;
+	}
+
+	public void setPageSpecificationExternalReferenceCode(
+		UnsafeSupplier<String, Exception>
+			pageSpecificationExternalReferenceCodeUnsafeSupplier) {
+
+		try {
+			pageSpecificationExternalReferenceCode =
+				pageSpecificationExternalReferenceCodeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String pageSpecificationExternalReferenceCode;
+
 	public Integer getPriority() {
 		return priority;
 	}
@@ -175,31 +201,6 @@ public class PageExperience implements Cloneable, Serializable {
 	}
 
 	protected String segmentExternalReferenceCode;
-
-	public String getSitePageExternalReferenceCode() {
-		return sitePageExternalReferenceCode;
-	}
-
-	public void setSitePageExternalReferenceCode(
-		String sitePageExternalReferenceCode) {
-
-		this.sitePageExternalReferenceCode = sitePageExternalReferenceCode;
-	}
-
-	public void setSitePageExternalReferenceCode(
-		UnsafeSupplier<String, Exception>
-			sitePageExternalReferenceCodeUnsafeSupplier) {
-
-		try {
-			sitePageExternalReferenceCode =
-				sitePageExternalReferenceCodeUnsafeSupplier.get();
-		}
-		catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	protected String sitePageExternalReferenceCode;
 
 	@Override
 	public PageExperience clone() throws CloneNotSupportedException {

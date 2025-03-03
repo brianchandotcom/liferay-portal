@@ -575,12 +575,14 @@ public class OpenAPIParserUtil {
 				for (int i = 0; i < parameters.size(); i++) {
 					Parameter parameter = parameters.get(i);
 
-					if (Validator.isNotNull(parameter.getReference())) {
-						String key = getReferenceName(parameter.getReference());
+					if (Validator.isNull(parameter.getReference())) {
+						continue;
+					}
 
-						if (parameterMap.containsKey(key)) {
-							parameters.set(i, parameterMap.get(key));
-						}
+					String key = getReferenceName(parameter.getReference());
+
+					if (parameterMap.containsKey(key)) {
+						parameters.set(i, parameterMap.get(key));
 					}
 				}
 			}

@@ -313,8 +313,8 @@ test('can see corresponding elements at instance level', async ({
 			name: 'Test',
 			objectFields: [
 				{
-					DBType: ObjectField.DBTypeEnum.String,
-					businessType: ObjectField.BusinessTypeEnum.Text,
+					DBType: 'String',
+					businessType: 'Text',
 					indexed: true,
 					indexedAsKeyword: true,
 					label: {

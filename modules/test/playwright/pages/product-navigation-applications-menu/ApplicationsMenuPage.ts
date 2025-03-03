@@ -578,8 +578,8 @@ export class ApplicationsMenuPage {
 		await this.resultRankingsItem.click();
 	}
 
-	async goToRoles() {
-		await this.goto();
+	async goToRoles(checkTabVisibility = true) {
+		await this.goto(checkTabVisibility);
 		await this.controlPanelButton.click();
 		await this.rolesItem.click();
 	}

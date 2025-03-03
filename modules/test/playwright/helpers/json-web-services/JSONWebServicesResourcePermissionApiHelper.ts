@@ -72,4 +72,31 @@ export class JSONWebServicesResourcePermissionApiHelper {
 			}
 		);
 	}
+
+	async setIndividualResourcePermissions(
+		actionIds: Array<string>,
+		companyId: string,
+		groupId: string,
+		name: string,
+		primKey: string,
+		roleId: string
+	) {
+		const urlSearchParams = new URLSearchParams();
+
+		urlSearchParams.append('groupId', groupId);
+		urlSearchParams.append('companyId', companyId);
+		urlSearchParams.append('name', name);
+		urlSearchParams.append('primKey', primKey);
+		urlSearchParams.append('roleId', roleId);
+		urlSearchParams.append('actionIds', JSON.stringify(actionIds));
+
+		await this.apiHelpers.post(
+			`${liferayConfig.environment.baseUrl}${this.basePath}/set-individual-resource-permissions`,
+			{
+				data: urlSearchParams.toString(),
+				failOnStatusCode: true,
+				headers: await this.apiHelpers.getJSONWebServicesHeaders(),
+			}
+		);
+	}
 }

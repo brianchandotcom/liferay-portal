@@ -584,6 +584,18 @@ export class UsersAndOrganizationsPage {
 		]);
 	}
 
+	async goToUsersWithLimitedAccess() {
+		await this.applicationsMenuPage.goToUsersAndOrganizationsWithLimitedAccess();
+		await Promise.all([
+			this.usersLink.click(),
+			this.page.waitForResponse(
+				(resp) =>
+					resp.status() === 200 &&
+					resp.url().includes('screenNavigationCategoryKey=users')
+			),
+		]);
+	}
+
 	async filterUsers(option: string) {
 		await Promise.all([
 			clickAndExpectToBeVisible({

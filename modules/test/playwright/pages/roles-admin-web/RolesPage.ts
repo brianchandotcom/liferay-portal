@@ -68,8 +68,8 @@ export class RolesPage {
 		this.userLink = page.getByRole('link', {exact: true, name: 'User'});
 	}
 
-	async goto() {
-		await this.applicationsMenuPage.goToRoles();
+	async goto(checkTabVisibility = true) {
+		await this.applicationsMenuPage.goToRoles(checkTabVisibility);
 	}
 
 	async selectRole(roleName: string) {

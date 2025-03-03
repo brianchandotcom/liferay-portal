@@ -1699,6 +1699,11 @@ components:
                     items:
                         $ref: "#/components/schemas/PageRule"
                     type: array
+                pageSpecificationExternalReferenceCode:
+                    # @review
+                    description:
+                        The page specification's external reference code.
+                    type: string
                 priority:
                     # @review
                     description:
@@ -1707,11 +1712,6 @@ components:
                         experience being active and a priority lower than 0 will result in an experience being inactive.
                     type: integer
                 segmentExternalReferenceCode:
-                    # @review
-                    description:
-                        The segment's external reference code.
-                    type: string
-                sitePageExternalReferenceCode:
                     # @review
                     description:
                         The segment's external reference code.

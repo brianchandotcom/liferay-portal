@@ -31,6 +31,10 @@ public class UserGroupModelDocumentContributor
 		document.addText(Field.NAME, userGroup.getName());
 		document.addKeyword(Field.USER_GROUP_ID, userGroup.getUserGroupId());
 		document.addKeyword(
+			"groupIds",
+			_userGroupLocalService.getGroupPrimaryKeys(
+				userGroup.getUserGroupId()));
+		document.addKeyword(
 			"userIds",
 			_userGroupLocalService.getUserPrimaryKeys(
 				userGroup.getUserGroupId()));

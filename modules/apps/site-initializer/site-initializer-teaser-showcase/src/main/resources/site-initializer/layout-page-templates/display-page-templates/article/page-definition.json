@@ -166,9 +166,9 @@
 	"settings": {
 		"colorSchemeName": "01",
 		"masterPage": {
-			"key": "primary-master-page"
+			"key": "primary"
 		},
-		"themeName": "Classic",
+		"themeName": "Dialect",
 		"themeSettings": {
 			"lfr-theme:regular:show-footer": "false",
 			"lfr-theme:regular:show-header": "false",

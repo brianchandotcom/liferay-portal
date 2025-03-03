@@ -76,9 +76,11 @@ export class CommerceAdminChannelsPage {
 		this.commerceSiteType = page.getByLabel('Commerce Site Type');
 		this.healthCheckAction = (actionName: string) =>
 			page
-				.locator('.fds tr')
-				.filter({has: page.getByText(actionName, {exact: true})})
-				.locator('.item-actions .btn');
+				.locator('tr')
+				.filter({
+					has: page.locator('td.cell-name', {hasText: actionName}),
+				})
+				.locator('td.cell-item-actions .btn');
 		this.headerActions = page.locator('.header-actions');
 		this.headerActionsSaveButton = this.headerActions.getByText('Save');
 		this.ordersTabToggle = (toggleName) => page.getByLabel(toggleName);

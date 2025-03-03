@@ -2336,7 +2336,9 @@ test('LPD-32243 Order Returns Data Set fragment', async ({
 			`/web/${site.name}/order/${order.id}`
 	);
 
-	await expect(page.getByRole('button', {name: 'Return ID'})).toBeVisible();
+	await expect(
+		page.getByRole('columnheader', {name: 'Return ID'}).getByRole('button')
+	).toBeVisible();
 	await expect(page.getByText(commerceReturn.id)).toBeVisible();
 });
 

@@ -87,6 +87,29 @@ public class LayoutPrivateLayoutsUpgradeProcessTest {
 
 			release = _releaseLocalService.addRelease(_SCHEMA_NAME, "1.0.0");
 
+			// Old Version (Upgraded, Default): Installation from an old
+			// version, upgraded through an intermediate version with the
+			// release feature flag upgrade process, but configuration
+			// remains default, thus private pages are enabled.
+
+			_runUpgrade(
+				Boolean.TRUE.toString(),
+				HashMapDictionaryBuilder.<String, Object>put(
+					"disabledReleaseFeatureFlags",
+					new String[] {_DISABLE_PRIVATE_LAYOUTS}
+				).build());
+
+			// Old Version (Upgraded, Modified): Installation from an old
+			// version, upgraded through an intermediate version with the
+			// release feature flag upgrade process,
+			// and configuration modified to disable private pages.
+
+			_runUpgrade(
+				Boolean.FALSE.toString(),
+				HashMapDictionaryBuilder.<String, Object>put(
+					"disabledReleaseFeatureFlags", new String[0]
+				).build());
+
 			// Intermediate Version: Installation from an intermediate version
 			// where the release feature flag upgrade process occurred,
 			// but no configuration was added, and it was not manually enabled,

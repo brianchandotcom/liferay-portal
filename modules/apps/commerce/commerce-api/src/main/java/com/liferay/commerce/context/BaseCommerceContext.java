@@ -164,6 +164,12 @@ public class BaseCommerceContext implements CommerceContext {
 			return _commerceCurrency;
 		}
 
+		CommerceOrder commerceOrder = getCommerceOrder();
+
+		if (commerceOrder != null) {
+			return commerceOrder.getCommerceCurrency();
+		}
+
 		if (!Validator.isBlank(_currencyCode)) {
 			CommerceCurrency commerceCurrency =
 				_commerceCurrencyLocalService.fetchCommerceCurrency(

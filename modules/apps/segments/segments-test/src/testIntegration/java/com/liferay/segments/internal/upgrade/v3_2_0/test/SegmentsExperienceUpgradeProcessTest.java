@@ -128,6 +128,11 @@ public class SegmentsExperienceUpgradeProcessTest
 	}
 
 	@Override
+	protected void deleteCTModel(long primaryKey) throws Exception {
+		_segmentsExperienceLocalService.deleteSegmentsExperience(primaryKey);
+	}
+
+	@Override
 	protected CTService<?> getCTService() {
 		return _segmentsExperienceLocalService;
 	}

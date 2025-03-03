@@ -379,21 +379,21 @@ public class TypeScriptClientUtil {
 					return null;
 				}
 
-				Set<String> produces = new LinkedHashSet<>();
+				Set<String> responseContentTypes = new LinkedHashSet<>();
 
 				for (Response response : responses.values()) {
 					Map<String, Content> content = response.getContent();
 
 					if (content != null) {
-						produces.addAll(content.keySet());
+						responseContentTypes.addAll(content.keySet());
 					}
 				}
 
-				if (produces.isEmpty()) {
+				if (responseContentTypes.isEmpty()) {
 					return null;
 				}
 
-				return produces;
+				return responseContentTypes;
 			}
 		).put(
 			"returnDataType",

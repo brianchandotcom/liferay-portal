@@ -102,7 +102,7 @@ export default function FieldsTree({fields}: {fields: Field[]}) {
 
 	return (
 		<ClayTreeView
-			className="structure-builder__fields-tree"
+			className="px-4 structure-builder__fields-tree"
 			defaultExpandedKeys={new Set([ROOT_ID])}
 			items={items}
 			nestedKey="children"

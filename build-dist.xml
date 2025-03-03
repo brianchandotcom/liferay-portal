@@ -656,7 +656,7 @@ java -jar ${app.server.weblogic.dir}/${app.server.weblogic.jar.name} -ignoreSysP
 		<if>
 			<and>
 				<equals arg1="${app.server.type}" arg2="tomcat" />
-				<matches pattern="10\.\d+\.\d+" string="${app.server.version}" />
+				<matches pattern="10\.\d+\.\d+" string="${app.server.tomcat.version}" />
 			</and>
 			<then>
 				<var name="transformer.agent" value="-javaagent:${CATALINA_HOME}/../tools/portal-tools-jakarta-ee-transformer/com.liferay.portal.tools.jakarta.ee.transformer.jar" />
@@ -680,7 +680,7 @@ CATALINA_OPTS="${transformer.agent} -Djakarta.ee.transformer.bundle.header.repla
 		<if>
 			<and>
 				<equals arg1="${app.server.type}" arg2="jboss" />
-				<matches pattern="8\.\d+\.\d+" string="${app.server.version}" />
+				<matches pattern="8\.\d+\.\d+" string="${app.server.jboss.version}" />
 			</and>
 			<then>
 				<var name="transformer.agent" value="-javaagent:${JBOSS_HOME}/../tools/portal-tools-jakarta-ee-transformer/com.liferay.portal.tools.jakarta.ee.transformer.jar" />
@@ -704,7 +704,7 @@ JAVA_OPTS="${transformer.agent} -Djakarta.ee.transformer.bundle.header.replacer.
 		<if>
 			<and>
 				<equals arg1="${app.server.type}" arg2="wildfly" />
-				<matches pattern="30\.\d+\.\d+" string="${app.server.version}" />
+				<matches pattern="30\.\d+\.\d+" string="${app.server.wildfly.version}" />
 			</and>
 			<then>
 				<var name="transformer.agent" value="-javaagent:${JBOSS_HOME}/../tools/portal-tools-jakarta-ee-transformer/com.liferay.portal.tools.jakarta.ee.transformer.jar" />

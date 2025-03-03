@@ -7,6 +7,8 @@ package com.liferay.layout.internal.upgrade.v1_4_4;
 
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.feature.flag.constants.FeatureFlagConstants;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.PortalPreferencesLocalService;
@@ -48,22 +50,27 @@ public class LayoutPrivateLayoutsUpgradeProcess extends UpgradeProcess {
 
 			_companyLocalService.forEachCompanyId(
 				companyId -> {
-					PortalPreferencesWrapper portalPreferencesWrapper =
-						(PortalPreferencesWrapper)
-							_portalPreferencesLocalService.getPreferences(
-								companyId,
-								PortletKeys.PREFS_OWNER_TYPE_COMPANY);
+					try {
+						PortalPreferencesWrapper portalPreferencesWrapper =
+							(PortalPreferencesWrapper)
+								_portalPreferencesLocalService.getPreferences(
+									companyId,
+									PortletKeys.PREFS_OWNER_TYPE_COMPANY);
 
-					PortalPreferences portalPreferences =
-						portalPreferencesWrapper.getPortalPreferencesImpl();
+						PortalPreferences portalPreferences =
+							portalPreferencesWrapper.getPortalPreferencesImpl();
 
-					portalPreferences.setValue(
-						FeatureFlagConstants.PREFERENCE_NAMESPACE, "LPD-38869",
-						value);
+						portalPreferences.setValue(
+							FeatureFlagConstants.PREFERENCE_NAMESPACE,
+							"LPD-38869", value);
 
-					_portalPreferencesLocalService.updatePreferences(
-						companyId, PortletKeys.PREFS_OWNER_TYPE_COMPANY,
-						portalPreferences);
+						_portalPreferencesLocalService.updatePreferences(
+							companyId, PortletKeys.PREFS_OWNER_TYPE_COMPANY,
+							portalPreferences);
+					}
+					catch (Exception exception) {
+						_log.error(exception);
+					}
 				});
 		}
 	}
@@ -126,6 +133,9 @@ public class LayoutPrivateLayoutsUpgradeProcess extends UpgradeProcess {
 		"DISABLE_PRIVATE_LAYOUTS";
 
 	private static final Version _VERSION = Version.parseVersion("1.0.0");
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		LayoutPrivateLayoutsUpgradeProcess.class);
 
 	private final CompanyLocalService _companyLocalService;
 	private final ConfigurationAdmin _configurationAdmin;

@@ -47,17 +47,13 @@ import org.osgi.service.component.annotations.ServiceScope;
 public class WarehouseItemResourceImpl extends BaseWarehouseItemResourceImpl {
 
 	@Override
-	public Response deleteWarehouseItem(Long id) throws Exception {
+	public void deleteWarehouseItem(Long id) throws Exception {
 		_commerceInventoryWarehouseItemService.
 			deleteCommerceInventoryWarehouseItem(id);
-
-		Response.ResponseBuilder responseBuilder = Response.ok();
-
-		return responseBuilder.build();
 	}
 
 	@Override
-	public Response deleteWarehouseItemByExternalReferenceCode(
+	public void deleteWarehouseItemByExternalReferenceCode(
 			String externalReferenceCode)
 		throws Exception {
 
@@ -76,10 +72,6 @@ public class WarehouseItemResourceImpl extends BaseWarehouseItemResourceImpl {
 			deleteCommerceInventoryWarehouseItem(
 				commerceInventoryWarehouseItem.
 					getCommerceInventoryWarehouseItemId());
-
-		Response.ResponseBuilder responseBuilder = Response.noContent();
-
-		return responseBuilder.build();
 	}
 
 	@Override
@@ -176,7 +168,7 @@ public class WarehouseItemResourceImpl extends BaseWarehouseItemResourceImpl {
 		}
 
 		if ((start == null) && (end == null)) {
-			start = new Date();
+			end = new Date();
 		}
 
 		if (start == null) {
@@ -367,6 +359,42 @@ public class WarehouseItemResourceImpl extends BaseWarehouseItemResourceImpl {
 						warehouseItem.getQuantity(), BigDecimal.ZERO),
 					warehouseItem.getSku(),
 					warehouseItem.getUnitOfMeasureKey());
+
+		return _warehouseItemDTOConverter.toDTO(
+			new DefaultDTOConverterContext(
+				commerceInventoryWarehouseItem.
+					getCommerceInventoryWarehouseItemId(),
+				contextAcceptLanguage.getPreferredLocale()));
+	}
+
+	@Override
+	public WarehouseItem putWarehouseItemByExternalReferenceCode(
+			String externalReferenceCode, WarehouseItem warehouseItem)
+		throws Exception {
+
+		CommerceInventoryWarehouse commerceInventoryWarehouse =
+			_commerceInventoryWarehouseService.
+				fetchCommerceInventoryWarehouseByExternalReferenceCode(
+					GetterUtil.getString(
+						warehouseItem.getWarehouseExternalReferenceCode()),
+					contextCompany.getCompanyId());
+
+		if (commerceInventoryWarehouse == null) {
+			throw new NoSuchInventoryWarehouseException(
+				"Unable to find warehouse with external reference code " +
+					warehouseItem.getWarehouseExternalReferenceCode());
+		}
+
+		CommerceInventoryWarehouseItem commerceInventoryWarehouseItem =
+			_commerceInventoryWarehouseItemService.
+				addOrUpdateCommerceInventoryWarehouseItem(
+					externalReferenceCode, contextCompany.getCompanyId(),
+					commerceInventoryWarehouse.
+						getCommerceInventoryWarehouseId(),
+					BigDecimalUtil.get(
+						warehouseItem.getQuantity(), BigDecimal.ONE),
+					GetterUtil.getString(warehouseItem.getSku()),
+					GetterUtil.getString(warehouseItem.getUnitOfMeasureKey()));
 
 		return _warehouseItemDTOConverter.toDTO(
 			new DefaultDTOConverterContext(

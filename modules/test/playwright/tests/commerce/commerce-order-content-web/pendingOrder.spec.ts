@@ -279,6 +279,7 @@ test('LPD-4174 Sales agent can receive email notifications for new orders placed
 
 	await applicationsMenuPage.goToSite(site.name);
 
+	await commerceMiniCartPage.miniCartButton.waitFor();
 	await commerceMiniCartPage.miniCartButton.click();
 	await commerceMiniCartPage.searchProductsInput.fill('MIN55861');
 	await commerceMiniCartPage.quickAddToCartSku('MIN55861').click();
@@ -640,6 +641,7 @@ test('LPD-26906 As a buyer, I can edit product options from the pending orders p
 		`${liferayConfig.environment.baseUrl}/web${site.friendlyUrlPath}/catalog`
 	);
 
+	await commerceMiniCartPage.miniCartButton.waitFor();
 	await commerceMiniCartPage.miniCartButton.click();
 	await commerceMiniCartPage.searchProductsInput.fill('BLACK');
 	await commerceMiniCartPage.quickAddToCartSku('BLACK').click();
@@ -815,7 +817,9 @@ test('LPD-3259 As a buyer with approval workflow, when I click review order in m
 
 	await page.goto(`/web/${site.name}`);
 
+	await commerceMiniCartPage.miniCartButton.waitFor();
 	await commerceMiniCartPage.miniCartButton.click();
+	await commerceMiniCartPage.reviewOrderButton.waitFor();
 	await commerceMiniCartPage.reviewOrderButton.click();
 
 	await expect(pendingOrdersPage.orderItemsTable).toBeVisible();
@@ -983,7 +987,9 @@ test('LPD-3440 As a order manager with buyer approval workflow, I can approve or
 
 	await page.goto(`/web/${site.name}`);
 
+	await commerceMiniCartPage.miniCartButton.waitFor();
 	await commerceMiniCartPage.miniCartButton.click();
+	await commerceMiniCartPage.reviewOrderButton.waitFor();
 	await commerceMiniCartPage.reviewOrderButton.click();
 	await commerceMiniCartPage.submitButton.click();
 

@@ -40,9 +40,7 @@ export class ExportImportPage {
 		this.page = page;
 		this.productMenuPage = new ProductMenuPage(page);
 		this.title = page.getByPlaceholder('Enter the name of the process');
-		this.useCurrentUserAsAuthorCheckbox = page.getByLabel(
-			'Use the Current User as Author: Assign the current user as the author of all'
-		);
+		this.useCurrentUserAsAuthorCheckbox = page.getByText('Use the Current User as Author: Assign the current user as the author of all');
 	}
 
 	async createNewExportProcess(title: string) {

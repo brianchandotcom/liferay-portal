@@ -41,10 +41,7 @@ else if (layoutMode === 'edit') {
 else {
 	if (Liferay.FeatureFlags['LPD-37927']) {
 		import('@liferay/fragment-impl').then(
-			({
-				registerLocalizedMultiSelect,
-				registerUnlocalizedMultiSelect,
-			}) => {
+			({registerLocalizedMultiSelect, registerUnlocalizedInput}) => {
 				const defaultLanguageId = themeDisplay.getDefaultLanguageId();
 
 				if (input.localizable) {
@@ -64,32 +61,44 @@ else {
 					const unlocalizedFieldsState =
 						input.attributes.unlocalizedFieldsState;
 
-					registerUnlocalizedMultiSelect({
+					registerUnlocalizedInput({
 						defaultLanguageId,
-						inputElements: allInputs,
-
 						onLocaleChange: (languageId) => {
-							if (
-								defaultLanguageId !== languageId &&
-								unlocalizedFieldsState === 'read-only'
-							) {
-								allInputs.forEach((input) => {
-									input.addEventListener(
-										'click',
-										preventClick
-									);
-								});
-							}
-							else {
-								allInputs.forEach((input) => {
-									input.removeEventListener(
-										'click',
-										preventClick
-									);
-								});
-							}
-						},
+							const editingDefaultLanguage =
+								defaultLanguageId === languageId;
+							const isReadOnlyFieldState =
+								unlocalizedFieldsState === 'read-only';
 
+							allInputs.forEach((inputElement) => {
+								if (editingDefaultLanguage) {
+									inputElement?.removeAttribute(
+										isReadOnlyFieldState
+											? 'readonly'
+											: 'disabled'
+									);
+								}
+								else {
+									inputElement?.setAttribute(
+										isReadOnlyFieldState
+											? 'readonly'
+											: 'disabled',
+										''
+									);
+								}
+
+								inputElement.addEventListener(
+									'click',
+									(event) => {
+										if (
+											!editingDefaultLanguage &&
+											isReadOnlyFieldState
+										) {
+											event.preventDefault();
+										}
+									}
+								);
+							});
+						},
 						readOnlyInputLabel: document.getElementById(
 							`${fragmentNamespace}-multiselect-list-read-only`
 						),

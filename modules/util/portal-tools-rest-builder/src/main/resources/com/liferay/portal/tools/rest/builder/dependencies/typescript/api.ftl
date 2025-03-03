@@ -86,16 +86,16 @@ export class ${classname} {
 		this.interceptors.push(interceptor);
 	}
 
-	<#list operationsData?sort_by("nickname") as operationData>
+	<#list operationsData?sort_by("operationId") as operationData>
 		/**
-		 * ${operationData.notes!}
+		 * ${operationData.description!}
 		 <#if operationData.parameters??>
 			 <#list operationData.parameters as parameter>
 				 * @param ${parameter.name} ${parameter.description!}
 			 </#list>
 		 </#if>
 		 */
-		public async ${operationData.nickname}(
+		public async ${operationData.operationId}(
 			<#if operationData.parameters??>
 				<#list operationData.parameters as parameter>
 					${parameter.name}${parameter.required?then('', '?')}: ${parameter.dataType},
@@ -105,8 +105,8 @@ export class ${classname} {
 				headers: {[name: string]: string};
 			} = {headers: {}}
 		): Promise<{
-			<#if operationData.returnType??>
-				body: ${operationData.returnType};
+			<#if operationData.returnDataType??>
+				body: ${operationData.returnDataType};
 			<#else>
 				body?: any;
 			</#if>
@@ -123,12 +123,12 @@ export class ${classname} {
 				</#list>;
 			const localVarQueryParameters: any = {};
 			const localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-			<#if operationData.produces?? && operationData.produces?has_content>
-				const produces = [<#list operationData.produces as mediaType>'${mediaType}'<#sep>, </#list>];
-				if (produces.indexOf('application/json') >= 0) {
+			<#if operationData.responseContentTypes?? && operationData.responseContentTypes?has_content>
+				const responseContentTypes = [<#list operationData.responseContentTypes as responseContentType>'${responseContentType}'<#sep>, </#list>];
+				if (responseContentTypes.indexOf('application/json') >= 0) {
 					localVarHeaderParams.Accept = 'application/json';
 				} else {
-					localVarHeaderParams.Accept = produces.join(',');
+					localVarHeaderParams.Accept = responseContentTypes.join(',');
 				}
 			</#if>
 			const localVarFormParams: any = {};
@@ -137,7 +137,7 @@ export class ${classname} {
 				<#list operationData.parameters as parameter>
 					<#if parameter.required>
 						if (${parameter.name} === null || ${parameter.name} === undefined) {
-							throw new Error('Required parameter ${parameter.name} was null or undefined when calling ${operationData.nickname}.');
+							throw new Error('Required parameter ${parameter.name} was null or undefined when calling ${operationData.operationId}.');
 						}
 					</#if>
 				</#list>
@@ -183,7 +183,7 @@ export class ${classname} {
 						localVarRequestOptions.form = localVarFormParams;
 					}
 				}
-				return new Promise<{ <#if operationData.returnType??> body: ${operationData.returnType};<#else> body?: any;</#if> response: http.IncomingMessage;}>((resolve, reject) => {
+				return new Promise<{ <#if operationData.returnDataType??> body: ${operationData.returnDataType};<#else> body?: any;</#if> response: http.IncomingMessage;}>((resolve, reject) => {
 					localVarRequest(localVarRequestOptions, (error, response, body) => {
 						if (error) {
 							reject(error);

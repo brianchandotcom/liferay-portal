@@ -23,7 +23,7 @@
 		</#list>
 	}
 <#else>
-	export class ${modelName} <#if parent??>extends ${parent} </#if>{
+	export class ${modelName} <#if parentClass??>extends ${parentClass} </#if>{
 		<#list properties as property>
 			'${property.name}'?: ${property.type};
 		</#list>
@@ -45,7 +45,7 @@
 		];
 
 		static getAttributeTypeMap() {
-			<#if parent??>
+			<#if parentClass??>
 				return super.getAttributeTypeMap().concat(${modelName}.attributeTypeMap);
 			<#else>
 				return ${modelName}.attributeTypeMap;

@@ -91,10 +91,10 @@ public class TypeScriptClientUtil {
 
 		Components components = openAPIYAML.getComponents();
 
-		Map<String, Schema> schemaMap = components.getSchemas();
+		Map<String, Schema> schemas = components.getSchemas();
 
-		if (schemaMap != null) {
-			for (Map.Entry<String, Schema> entry : schemaMap.entrySet()) {
+		if (schemas != null) {
+			for (Map.Entry<String, Schema> entry : schemas.entrySet()) {
 				_createFile(
 					_buildModelContext(entry.getKey(), entry.getValue()),
 					configYAML, copyrightFile, files, "typescript/model",
@@ -106,7 +106,7 @@ public class TypeScriptClientUtil {
 		}
 
 		_createFile(
-			Collections.singletonMap("schemaMap", schemaMap), configYAML,
+			Collections.singletonMap("schemaMap", schemas), configYAML,
 			copyrightFile, files, "typescript/models",
 			baseClientDir.getPath() + "/src/node/model/models.ts");
 
@@ -216,18 +216,18 @@ public class TypeScriptClientUtil {
 
 		Map<String, PathItem> pathItems = openAPIYAML.getPathItems();
 
-		Map<String, List<Map<String, Object>>> operationsDataByTag =
+		Map<String, List<Map<String, Object>>> tagOperationsData =
 			new HashMap<>();
 
 		for (Map.Entry<String, PathItem> entry : pathItems.entrySet()) {
 			for (Operation operation :
 					OpenAPIParserUtil.getOperations(entry.getValue())) {
 
-				List<String> operationTags = operation.getTags();
+				List<String> tags = operation.getTags();
 
 				List<Map<String, Object>> operationsData =
-					operationsDataByTag.computeIfAbsent(
-						operationTags.get(0), k -> new ArrayList<>());
+					tagOperationsData.computeIfAbsent(
+						tags.get(0), k -> new ArrayList<>());
 
 				operationsData.add(
 					_buildOperationDataMap(
@@ -238,31 +238,39 @@ public class TypeScriptClientUtil {
 		Map<String, Map<String, Object>> apiContexts = new HashMap<>();
 
 		for (Map.Entry<String, List<Map<String, Object>>> entry :
-				operationsDataByTag.entrySet()) {
+				tagOperationsData.entrySet()) {
 
-			Map<String, Object> apiContext = HashMapBuilder.<String, Object>put(
-				"classname", entry.getKey() + "Api"
-			).put(
-				"operationsData", entry.getValue()
-			).build();
+			apiContexts.put(
+				entry.getKey(),
+				HashMapBuilder.<String, Object>put(
+					"classname", entry.getKey() + "Api"
+				).put(
+					"imports",
+					() -> {
+						Set<Map<String, String>> allImports =
+							new LinkedHashSet<>();
 
-			Set<Map<String, String>> allImports = new LinkedHashSet<>();
+						for (Map<String, Object> operationData :
+								entry.getValue()) {
 
-			for (Map<String, Object> operationData : entry.getValue()) {
-				if (operationData.containsKey("imports")) {
-					Collection<Map<String, String>> imports =
-						(Collection<Map<String, String>>)operationData.remove(
-							"imports");
+							if (operationData.containsKey("imports")) {
+								Collection<Map<String, String>> imports =
+									(Collection<Map<String, String>>)
+										operationData.remove("imports");
 
-					allImports.addAll(imports);
-				}
-			}
+								allImports.addAll(imports);
+							}
+						}
 
-			if (!allImports.isEmpty()) {
-				apiContext.put("imports", allImports);
-			}
+						if (!allImports.isEmpty()) {
+							return allImports;
+						}
 
-			apiContexts.put(entry.getKey(), apiContext);
+						return null;
+					}
+				).put(
+					"operationsData", entry.getValue()
+				).build());
 		}
 
 		return apiContexts;
@@ -271,24 +279,8 @@ public class TypeScriptClientUtil {
 	private static Map<String, Object> _buildModelContext(
 		String modelName, Schema schema) {
 
-		Map<String, Object> modelContext = HashMapBuilder.<String, Object>put(
-			"description", schema.getDescription()
-		).put(
-			"modelName", modelName
-		).build();
-
-		if (schema.getDiscriminator() != null) {
-			Discriminator discriminator = schema.getDiscriminator();
-
-			String discriminatorPropName = discriminator.getPropertyName();
-
-			if (Validator.isNotNull(discriminatorPropName)) {
-				modelContext.put("discriminator", discriminatorPropName);
-			}
-		}
-
 		Set<Map<String, String>> imports = new HashSet<>();
-
+		String parentClass = null;
 		List<Map<String, Object>> schemaProperties = new ArrayList<>();
 
 		if (schema.getAllOfSchemas() != null) {
@@ -299,10 +291,9 @@ public class TypeScriptClientUtil {
 			if (parentSchema.getReference() != null) {
 				String parentSchemaReference = parentSchema.getReference();
 
-				String parentClass = parentSchemaReference.substring(
+				parentClass = parentSchemaReference.substring(
 					parentSchemaReference.lastIndexOf('/') + 1);
 
-				modelContext.put("parent", parentClass);
 				imports.add(Collections.singletonMap("classname", parentClass));
 
 				for (Schema additionalSchema : schema.getAllOfSchemas()) {
@@ -338,13 +329,41 @@ public class TypeScriptClientUtil {
 					).build()));
 		}
 
-		modelContext.put("properties", schemaProperties);
+		return HashMapBuilder.<String, Object>put(
+			"description", schema.getDescription()
+		).put(
+			"discriminator",
+			() -> {
+				if (schema.getDiscriminator() == null) {
+					return null;
+				}
 
-		if (!imports.isEmpty()) {
-			modelContext.put("imports", new ArrayList<>(imports));
-		}
+				Discriminator discriminator = schema.getDiscriminator();
 
-		return modelContext;
+				String discriminatorPropName = discriminator.getPropertyName();
+
+				if (Validator.isNull(discriminatorPropName)) {
+					return null;
+				}
+
+				return discriminatorPropName;
+			}
+		).put(
+			"imports",
+			() -> {
+				if (imports.isEmpty()) {
+					return null;
+				}
+
+				return new ArrayList<>(imports);
+			}
+		).put(
+			"modelName", modelName
+		).put(
+			"parent", parentClass
+		).put(
+			"properties", schemaProperties
+		).build();
 	}
 
 	private static Map<String, Object> _buildOperationDataMap(
@@ -438,11 +457,11 @@ public class TypeScriptClientUtil {
 				}
 			).build();
 
-		Collection<Map<String, Object>> operationParams =
-			_getAllOperationParams(operation, operationDataMap, imports);
+		Collection<Map<String, Object>> allParams = _getAllOperationParams(
+			operation, operationDataMap, imports);
 
-		if (!operationParams.isEmpty()) {
-			operationDataMap.put("allParams", operationParams);
+		if (!allParams.isEmpty()) {
+			operationDataMap.put("allParams", allParams);
 		}
 
 		if (!imports.isEmpty()) {
@@ -522,15 +541,16 @@ public class TypeScriptClientUtil {
 	}
 
 	private static Collection<Map<String, Object>> _getAllOperationParams(
-		Operation operation, Map<String, Object> operationMap,
+		Operation operation, Map<String, Object> operationDataMap,
 		Set<Map<String, String>> imports) {
 
-		List<Map<String, Object>> allParams = new ArrayList<>();
-		Map<String, List<Map<String, Object>>> paramsByType = new HashMap<>();
+		List<Map<String, Object>> allParametersData = new ArrayList<>();
+		Map<String, List<Map<String, Object>>> typeParametersData =
+			new HashMap<>();
 
 		if (operation.getParameters() != null) {
 			for (Parameter parameter : operation.getParameters()) {
-				Map<String, Object> paramMap =
+				Map<String, Object> parameterData =
 					HashMapBuilder.<String, Object>put(
 						"dataType",
 						_getTypeScriptType(parameter.getSchema(), imports)
@@ -544,22 +564,23 @@ public class TypeScriptClientUtil {
 						parameter.isRequired()
 					).build();
 
-				allParams.add(paramMap);
+				allParametersData.add(parameterData);
 
-				List<Map<String, Object>> maps = paramsByType.computeIfAbsent(
-					parameter.getIn() + "Params", k -> new ArrayList<>());
+				List<Map<String, Object>> parametersData =
+					typeParametersData.computeIfAbsent(
+						parameter.getIn() + "Params", k -> new ArrayList<>());
 
-				maps.add(paramMap);
+				parametersData.add(parameterData);
 			}
 		}
 
 		RequestBody requestBody = operation.getRequestBody();
 
 		if (requestBody != null) {
-			Map<String, Content> contentMap = requestBody.getContent();
+			Map<String, Content> content = requestBody.getContent();
 
-			if ((contentMap != null) && !contentMap.isEmpty()) {
-				Collection<Content> contents = contentMap.values();
+			if ((content != null) && !content.isEmpty()) {
+				Collection<Content> contents = content.values();
 
 				Iterator<Content> iterator = contents.iterator();
 
@@ -589,21 +610,21 @@ public class TypeScriptClientUtil {
 								"required", false
 							).build();
 
-						allParams.add(bodyParam);
-						operationMap.put("bodyParam", bodyParam);
+						allParametersData.add(bodyParam);
+						operationDataMap.put("bodyParam", bodyParam);
 					}
 				}
 			}
 		}
 
-		paramsByType.forEach(
+		typeParametersData.forEach(
 			(key, value) -> {
 				if (!value.isEmpty()) {
-					operationMap.put(key, value);
+					operationDataMap.put(key, value);
 				}
 			});
 
-		return allParams;
+		return allParametersData;
 	}
 
 	private static String _getTypeScriptType(

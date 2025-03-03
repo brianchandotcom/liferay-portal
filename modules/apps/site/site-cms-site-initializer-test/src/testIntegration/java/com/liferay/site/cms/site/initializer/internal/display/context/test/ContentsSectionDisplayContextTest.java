@@ -8,6 +8,10 @@ package com.liferay.site.cms.site.initializer.internal.display.context.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
+import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectFolderLocalService;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
@@ -58,6 +62,25 @@ public class ContentsSectionDisplayContextTest {
 	}
 
 	@Test
+	public void testGetAPIURL() throws Exception {
+		String apiURL = _getAPIURL();
+
+		Assert.assertNotNull(apiURL);
+
+		Assert.assertTrue(apiURL.contains("emptySearch=true"));
+
+		StringBundler sb = new StringBundler(3);
+
+		sb.append("filter=objectDefinitionFolder in ('");
+		sb.append(
+			StringUtil.merge(
+				_getObjectDefinitionFolderExternalReferenceCodes(), "','"));
+		sb.append("')");
+
+		Assert.assertTrue(apiURL.contains(sb.toString()));
+	}
+
+	@Test
 	public void testGetFDSActionDropdownItems() throws Exception {
 		List<FDSActionDropdownItem> fdsActionDropdownItems =
 			_getFDSActionDropdownItems();
@@ -86,10 +109,15 @@ public class ContentsSectionDisplayContextTest {
 		Assert.assertEquals("item", fdsActionDropdownItem.get("type"));
 	}
 
-	private List<FDSActionDropdownItem> _getFDSActionDropdownItems()
-		throws Exception {
+	private String _getAPIURL() throws Exception {
+		return ReflectionTestUtil.invoke(
+			_getContentsSectionDisplayContext(_getMockHttpServletRequest()),
+			"getAPIURL", new Class<?>[0]);
+	}
 
-		HttpServletRequest httpServletRequest = _getMockHttpServletRequest();
+	private Object _getContentsSectionDisplayContext(
+			HttpServletRequest httpServletRequest)
+		throws Exception {
 
 		_fragmentRenderer.render(
 			null, httpServletRequest, new MockHttpServletResponse());
@@ -100,9 +128,15 @@ public class ContentsSectionDisplayContextTest {
 
 		Assert.assertNotNull(contentsSectionDisplayContext);
 
+		return contentsSectionDisplayContext;
+	}
+
+	private List<FDSActionDropdownItem> _getFDSActionDropdownItems()
+		throws Exception {
+
 		return ReflectionTestUtil.invoke(
-			contentsSectionDisplayContext, "getFDSActionDropdownItems",
-			new Class<?>[0]);
+			_getContentsSectionDisplayContext(_getMockHttpServletRequest()),
+			"getFDSActionDropdownItems", new Class<?>[0]);
 	}
 
 	private HttpServletRequest _getMockHttpServletRequest() throws Exception {
@@ -112,6 +146,14 @@ public class ContentsSectionDisplayContextTest {
 			WebKeys.THEME_DISPLAY, _getThemeDisplay(httpServletRequest));
 
 		return httpServletRequest;
+	}
+
+	private String[] _getObjectDefinitionFolderExternalReferenceCodes()
+		throws Exception {
+
+		return ReflectionTestUtil.invoke(
+			_getContentsSectionDisplayContext(_getMockHttpServletRequest()),
+			"getObjectDefinitionFolderExternalReferenceCodes", new Class<?>[0]);
 	}
 
 	private ThemeDisplay _getThemeDisplay(HttpServletRequest httpServletRequest)
@@ -143,5 +185,11 @@ public class ContentsSectionDisplayContextTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	@Inject
+	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Inject
+	private ObjectFolderLocalService _objectFolderLocalService;
 
 }

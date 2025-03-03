@@ -237,7 +237,7 @@ public class ObjectDefinitionGraphQLTest {
 
 		ObjectDefinition objectDefinition =
 			ObjectDefinitionTestUtil.publishObjectDefinition(
-				true, ObjectDefinitionTestUtil.getRandomName(),
+				false, ObjectDefinitionTestUtil.getRandomName(),
 				Arrays.asList(
 					new PicklistObjectFieldBuilder(
 					).userId(

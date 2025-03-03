@@ -900,3 +900,178 @@ test(
 		).toBeVisible();
 	}
 );
+
+test(
+	'Impersonating Administrator and Owner',
+	{tag: '@50219'},
+	async ({apiHelpers, context, page, usersAndOrganizationsPage}) => {
+		const userAccount1 =
+			await apiHelpers.headlessAdminUser.postUserAccount();
+
+		userData[userAccount1.alternateName] = {
+			name: userAccount1.givenName,
+			password: 'test',
+			surname: userAccount1.familyName,
+		};
+
+		const userAccount2 =
+			await apiHelpers.headlessAdminUser.postUserAccount();
+
+		const userAccount3 =
+			await apiHelpers.headlessAdminUser.postUserAccount();
+
+		userData[userAccount3.alternateName] = {
+			name: userAccount3.givenName,
+			password: 'test',
+			surname: userAccount3.familyName,
+		};
+
+		const companyId = await page.evaluate(() => {
+			return Liferay.ThemeDisplay.getCompanyId();
+		});
+
+		const role = await apiHelpers.headlessAdminUser.postRole({
+			name: getRandomString(),
+			rolePermissions: [
+				{
+					actionIds: ['VIEW_CONTROL_PANEL'],
+					primaryKey: companyId,
+					resourceName: '90',
+					scope: 1,
+				},
+				{
+					actionIds: ['VIEW'],
+					primaryKey: companyId,
+					resourceName: 'com.liferay.portal.kernel.model.User',
+					scope: 1,
+				},
+				{
+					actionIds: ['ACCESS_IN_CONTROL_PANEL', 'VIEW'],
+					primaryKey: companyId,
+					resourceName:
+						'com_liferay_users_admin_web_portlet_UsersAdminPortlet',
+					scope: 1,
+				},
+			],
+			roleType: 'regular',
+		});
+
+		await apiHelpers.headlessAdminUser.postRoleByExternalReferenceCodeUserAccountAssociation(
+			role.externalReferenceCode,
+			userAccount1.id
+		);
+
+		const role2 = await apiHelpers.headlessAdminUser.postRole({
+			name: getRandomString(),
+			rolePermissions: [
+				{
+					actionIds: ['IMPERSONATE'],
+					primaryKey: companyId,
+					resourceName: 'com.liferay.portal.kernel.model.User',
+					scope: 1,
+				},
+			],
+			roleType: 'regular',
+		});
+
+		const administratorRole =
+			await apiHelpers.headlessAdminUser.getRoleByName('Administrator');
+
+		await apiHelpers.headlessAdminUser.postRoleByExternalReferenceCodeUserAccountAssociation(
+			administratorRole.externalReferenceCode,
+			userAccount3.id
+		);
+
+		await performLogout(page);
+		await performLoginViaApi(page, userAccount1.alternateName);
+
+		await usersAndOrganizationsPage.goToUsersWithLimitedAccess();
+
+		await expect(
+			await usersAndOrganizationsPage.usersTableRowActions(
+				userAccount2.alternateName
+			)
+		).not.toBeVisible();
+		await expect(
+			await usersAndOrganizationsPage.usersTableRowActions(
+				userAccount3.alternateName
+			)
+		).not.toBeVisible();
+
+		await performLogout(page);
+		await performLoginViaApi(page, 'test');
+
+		await apiHelpers.headlessAdminUser.postRoleByExternalReferenceCodeUserAccountAssociation(
+			role2.externalReferenceCode,
+			userAccount1.id
+		);
+
+		await performLogout(page);
+		await performLoginViaApi(page, userAccount1.alternateName);
+
+		await usersAndOrganizationsPage.goToUsersWithLimitedAccess();
+
+		await expect(
+			await usersAndOrganizationsPage.usersTableRowActions(
+				userAccount2.alternateName
+			)
+		).toBeVisible();
+		await expect(
+			await usersAndOrganizationsPage.usersTableRowActions(
+				userAccount3.alternateName
+			)
+		).not.toBeVisible();
+
+		const pagePromise = context.waitForEvent('page');
+
+		await (
+			await usersAndOrganizationsPage.usersTableRowActions(
+				userAccount2.alternateName
+			)
+		).click();
+		await usersAndOrganizationsPage.impersonateUserMenuItem.click();
+
+		const newPage = await pagePromise;
+
+		await expect(newPage.getByTitle('User Profile Menu')).toBeVisible();
+
+		await newPage.close();
+
+		await performLogout(page);
+		await performLoginViaApi(page, userAccount3.alternateName);
+
+		await usersAndOrganizationsPage.goToUsers();
+
+		await (
+			await usersAndOrganizationsPage.usersTableRowActions('test')
+		).click();
+
+		await expect(
+			usersAndOrganizationsPage.impersonateUserMenuItem
+		).toBeVisible();
+
+		await usersAndOrganizationsPage.usersSearchBar.click();
+
+		await (
+			await usersAndOrganizationsPage.usersTableRowActions(
+				userAccount1.alternateName
+			)
+		).click();
+
+		await expect(
+			usersAndOrganizationsPage.impersonateUserMenuItem
+		).toBeVisible();
+
+		await usersAndOrganizationsPage.usersSearchBar.click();
+
+		await (
+			await usersAndOrganizationsPage.usersTableRowActions(
+				userAccount2.alternateName
+			)
+		).click();
+
+		await expect(
+			usersAndOrganizationsPage.impersonateUserMenuItem
+		).toBeVisible();
+	}
+);

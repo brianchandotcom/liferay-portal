@@ -108,7 +108,7 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 				_segmentsExperienceService.getSegmentsExperiences(
 					layout.getGroupId(), layout.getPlid(), true,
 					QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
-				segmentsExperience -> _toPageExperience(segmentsExperience)));
+				this::_toPageExperience));
 	}
 
 	@Override

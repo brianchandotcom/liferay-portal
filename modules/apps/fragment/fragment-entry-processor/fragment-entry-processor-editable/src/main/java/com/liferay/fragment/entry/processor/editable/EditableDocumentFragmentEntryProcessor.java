@@ -203,7 +203,8 @@ public class EditableDocumentFragmentEntryProcessor
 				element.removeAttr("view-tag-name");
 			}
 
-			if (FeatureFlagManagerUtil.isEnabled("LPD-39437") &&
+			if (FeatureFlagManagerUtil.isEnabled(
+					fragmentEntryLink.getCompanyId(), "LPD-39437") &&
 				fragmentEntryProcessorContext.isViewMode()) {
 
 				AnalyticsAttributesUtil.addAnalyticsAttributes(

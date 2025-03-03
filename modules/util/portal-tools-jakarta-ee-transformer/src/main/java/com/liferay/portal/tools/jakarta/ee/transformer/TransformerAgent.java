@@ -78,13 +78,14 @@ public class TransformerAgent {
 
 	/**
 	 * Postpone these subpackages to avoid major lib upgrade at early stage.
-	 * "annotation", batch", "decorator", "ejb", "enterprise", "faces",
+	 * "annotation", "batch", "decorator", "ejb", "enterprise", "faces",
 	 * "inject", interceptor", "jms", "json", "jws", "persistence", "resource",
 	 * "security.auth.message", "security.enterprise", "security.jacc",
 	 * "transaction", "validation", "ws.rs", "xml.bind", "xml.ws", "xml.soap"
 	 */
 	private static final Set<String> _subpackageNames = new HashSet<>(
-		Arrays.asList("activation", "el", "mail", "servlet", "websocket"));
+		Arrays.asList(
+			"activation", "el", "mail", "portlet", "servlet", "websocket"));
 
 	static {
 		_subpackageNames.forEach(

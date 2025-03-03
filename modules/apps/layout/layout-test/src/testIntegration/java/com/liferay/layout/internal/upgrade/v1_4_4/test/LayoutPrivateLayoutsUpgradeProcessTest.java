@@ -64,9 +64,8 @@ public class LayoutPrivateLayoutsUpgradeProcessTest {
 			Boolean.FALSE.toString());
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
 			StringBundler.concat(
-				"(", Constants.SERVICE_PID,
-				"=com.liferay.release.feature.flag.web.internal.configuration.",
-				"ReleaseFeatureFlagConfiguration)"));
+				StringPool.OPEN_PARENTHESIS, Constants.SERVICE_PID,
+				StringPool.EQUAL, _PID, StringPool.CLOSE_PARENTHESIS));
 		Release release = _getReleaseInfo();
 
 		try {

@@ -31,6 +31,7 @@ import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
 import com.liferay.portal.upgrade.test.util.UpgradeTestUtil;
 import com.liferay.portlet.PortalPreferencesWrapper;
 
+import java.util.Dictionary;
 import java.util.List;
 
 import org.junit.Assert;
@@ -66,14 +67,10 @@ public class LayoutPrivateLayoutsUpgradeProcessTest {
 		Release originalRelease = _releaseLocalService.fetchRelease(
 			_SCHEMA_NAME);
 		Release release = null;
-		Configuration configuration = null;
 		String originalFeatureFlagValue = _updateFeatureFlagValue(
 			Boolean.FALSE.toString());
 
 		try {
-			// Old Version (No intermediate Upgrade): Installation from an old
-			// version, missing the release feature flag upgrade process.
-
 			if (ArrayUtil.isNotEmpty(originalConfigurations)) {
 				ConfigurationTestUtil.deleteConfiguration(
 					originalConfigurations[0]);
@@ -83,45 +80,33 @@ public class LayoutPrivateLayoutsUpgradeProcessTest {
 				_releaseLocalService.deleteRelease(originalRelease);
 			}
 
-			_runUpgrade();
+			// Old Version (No intermediate Upgrade): Installation from an old
+			// version, missing the release feature flag upgrade process.
 
-			_assertFeatureFlagValue(Boolean.TRUE.toString());
+			_runUpgrade(Boolean.TRUE.toString(), null);
+
+			release = _releaseLocalService.addRelease(_SCHEMA_NAME, "1.0.0");
 
 			// Intermediate Version: Installation from an intermediate version
 			// where the release feature flag upgrade process occurred,
 			// but no configuration was added, and it was not manually enabled,
 			// thus private pages are disabled.
 
-			release = _releaseLocalService.addRelease(_SCHEMA_NAME, "1.0.0");
-
-			_runUpgrade();
-
-			_assertFeatureFlagValue(Boolean.FALSE.toString());
+			_runUpgrade(Boolean.FALSE.toString(), null);
 
 			// Intermediate Version (Enabled): Installation from an intermediate
 			// version where the release feature flag upgrade process occurred,
 			// but no configuration was added, and it was manually enabled,
 			// thus private pages are enabled.
 
-			configuration = _configurationAdmin.getConfiguration(
-				_PID, StringPool.QUESTION);
-
-			ConfigurationTestUtil.saveConfiguration(
-				configuration,
+			_runUpgrade(
+				Boolean.TRUE.toString(),
 				HashMapDictionaryBuilder.<String, Object>put(
 					"disabledReleaseFeatureFlags",
 					new String[] {_DISABLE_PRIVATE_LAYOUTS}
 				).build());
-
-			_runUpgrade();
-
-			_assertFeatureFlagValue(Boolean.TRUE.toString());
 		}
 		finally {
-			if (configuration != null) {
-				ConfigurationTestUtil.deleteConfiguration(configuration);
-			}
-
 			if (ArrayUtil.isNotEmpty(originalConfigurations)) {
 				Configuration originalConfiguration = originalConfigurations[0];
 
@@ -192,6 +177,32 @@ public class LayoutPrivateLayoutsUpgradeProcessTest {
 			List<LogEntry> logEntries = logCapture.getLogEntries();
 
 			Assert.assertTrue(logEntries.toString(), logEntries.isEmpty());
+		}
+	}
+
+	private void _runUpgrade(
+			String expectedValue, Dictionary<String, Object> properties)
+		throws Exception {
+
+		Configuration configuration = null;
+
+		try {
+			if (properties != null) {
+				configuration = _configurationAdmin.getConfiguration(
+					_PID, StringPool.QUESTION);
+
+				ConfigurationTestUtil.saveConfiguration(
+					configuration, properties);
+			}
+
+			_runUpgrade();
+
+			_assertFeatureFlagValue(expectedValue);
+		}
+		finally {
+			if (configuration != null) {
+				ConfigurationTestUtil.deleteConfiguration(configuration);
+			}
 		}
 	}
 

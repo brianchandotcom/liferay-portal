@@ -7,7 +7,9 @@
 
 import ClayButton from '@clayui/button';
 import {
+	Cart,
 	Marketplace,
+	MarketplaceRest,
 	MarketplaceView,
 	Product,
 	useMarketplaceContext,
@@ -17,6 +19,69 @@ import React from 'react';
 
 import {InstallFragmentModalBody} from './InstallFragmentModal';
 
+async function fetchFragmentBlob(marketplaceRest: MarketplaceRest, url: URL) {
+	const response = await marketplaceRest.fetchMarketplace<Response>(
+		url.pathname,
+		{
+			earlyReturn: true,
+		}
+	);
+
+	return response.blob();
+}
+
+async function getVirtualEntryBlob(
+	cart: Cart,
+	marketplaceRest: MarketplaceRest
+) {
+	const placedOrder = await marketplaceRest.getPlacedOrder(
+		cart.id,
+		new URLSearchParams({
+			nestedFields: 'placedOrderItems',
+		})
+	);
+
+	if (!placedOrder.placedOrderItems.length) {
+		return;
+	}
+
+	const [virtualItem] = placedOrder.placedOrderItems?.[0]?.virtualItems ?? [];
+
+	if (!virtualItem) {
+		return;
+	}
+
+	return fetchFragmentBlob(marketplaceRest, new URL(virtualItem.url));
+}
+
+function getProductAttachmentBlob(
+	marketplaceRest: MarketplaceRest,
+	product: Product
+) {
+	return fetchFragmentBlob(
+		marketplaceRest,
+		new URL(product.attachments[0].src)
+	);
+}
+
+async function uploadFragment(blob: Blob, name: string) {
+	const formData = new FormData();
+
+	formData.append(
+		'file',
+		blob,
+		`${name.replace(' ', '-').toLowerCase()}.zip`
+	);
+
+	// Within the blob upload the .zip to the fragments endpoint
+	// This is an example of import.
+
+	await fetch('/o/headless-delivery/upload', {
+		body: formData,
+		method: 'POST',
+	});
+}
+
 export default function MarketplaceViews() {
 	const {marketplaceRest, product, setProduct, setView, view} =
 		useMarketplaceContext();
@@ -25,52 +90,30 @@ export default function MarketplaceViews() {
 		setView(MarketplaceView.PURCHASE);
 
 		try {
-			let cart = await marketplaceRest.createCart(product as Product, {
+			const cart = await marketplaceRest.createCart(product as Product, {
 				orderTypeExternalReferenceCode: 'FRAGMENT',
 			});
 
-			cart = await marketplaceRest.checkoutCart(cart);
+			await marketplaceRest.checkoutCart(cart);
 
-			const placedOrder = await marketplaceRest.getPlacedOrder(
-				cart.id,
-				new URLSearchParams({
-					nestedFields: 'placedOrderItems',
-				})
+			// This is an example of a virtual Entry
+			// Currently there is an issue to retrieve the virtual item
+			// from the cart due this bug: https://liferay.atlassian.net/browse/LPD-50173
+			// getVirtualEntryBlob would be the ideal solution for this case.
+
+			// const blob = await getVirtualEntryBlob(cart, marketplaceRest);
+
+			// This is an example of a product attachment
+			// We will (for now) save the fragment zip inside the product attachment
+			// in order to not block the whole development of this feature
+
+			const blob = await getProductAttachmentBlob(
+				marketplaceRest,
+				product
 			);
 
-			if (placedOrder.placedOrderItems.length) {
-				const [virtualItem] =
-					placedOrder.placedOrderItems?.[0]?.virtualItems ?? [];
-
-				if (!virtualItem) {
-					return;
-				}
-
-				const virtualItemResponse =
-					await marketplaceRest.fetchMarketplace<Response>(
-						virtualItem.url,
-						{
-							earlyReturn: true,
-						}
-					);
-
-				const blob = await virtualItemResponse.blob();
-
-				const formData = new FormData();
-
-				formData.append(
-					'file',
-					blob,
-					`${product.name.replace(' ', '-').toLowerCase()}.zip`
-				);
-
-				// Within the virtual item upload the .zip to the fragments endpoint
-				// This is an example of import.
-
-				await fetch('/o/headless-delivery/upload', {
-					body: formData,
-					method: 'POST',
-				});
+			if (blob) {
+				await uploadFragment(blob, product.name);
 			}
 
 			Liferay.Util.openToast({

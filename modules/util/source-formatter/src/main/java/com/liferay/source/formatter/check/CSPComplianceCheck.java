@@ -39,6 +39,24 @@ public class CSPComplianceCheck extends BaseTagAttributesCheck {
 		return content;
 	}
 
+	protected String getEndingTag(String s, int fromIndex) {
+		int x = fromIndex;
+
+		while (true) {
+			x = s.indexOf(">", x + 1);
+
+			if (x == -1) {
+				return null;
+			}
+
+			String part = s.substring(fromIndex, x + 1);
+
+			if (getLevel(part, "</", ">") == 0) {
+				return part;
+			}
+		}
+	}
+
 	private void _checkIllegalAttributes(
 		String fileName, String absolutePath, String content,
 		String lowerCaseContent) {
@@ -128,6 +146,13 @@ public class CSPComplianceCheck extends BaseTagAttributesCheck {
 		String fileName, String absolutePath, String content,
 		String lowerCaseContent) {
 
+		if (!fileName.endsWith(".ftl") && !fileName.endsWith(".jsp") &&
+			!fileName.endsWith(".jspf") && !fileName.endsWith(".jspx") &&
+			!fileName.endsWith(".vm")) {
+
+			return;
+		}
+
 		List<String> illegalTagNamesData = getAttributeValues(
 			_ILLEGAL_TAG_NAMES_DATA_KEY, absolutePath);
 
@@ -145,39 +170,59 @@ public class CSPComplianceCheck extends BaseTagAttributesCheck {
 
 			int x = -1;
 
-			boolean insideScriplet = false;
+			if ((fileName.endsWith(".ftl") || fileName.endsWith(".vm")) &&
+				_illegalTagAuiReplacements.contains(tagName)) {
+
+				while (true) {
+					x = lowerCaseContent.indexOf("<" + tagName, x + 1);
+
+					if (x == -1) {
+						break;
+					}
+
+					String tagString = getTag(content, x);
+
+					if (Validator.isNull(tagString) ||
+						((requiredAttribute != null) &&
+						 !tagString.contains(requiredAttribute))) {
+
+						continue;
+					}
+
+					int lineNumber = getLineNumber(content, x);
+
+					if (fileName.endsWith(".ftl")) {
+						_checkMissingAttribute(
+							fileName, tagName, "${nonceAttribute}", tagString,
+							lineNumber);
+					}
+
+					if (fileName.endsWith(".vm")) {
+						_checkMissingAttribute(
+							fileName, tagName, "$nonceAttribute", tagString,
+							lineNumber);
+					}
+				}
+			}
 
 			while (true) {
-				int lastIndex = x;
-
-				x = lowerCaseContent.indexOf("<" + tagName, x + 1);
+				x = lowerCaseContent.indexOf("</" + tagName, x + 1);
 
 				if (x == -1) {
 					break;
 				}
 
-				String tagString = getTag(content, x);
-
-				if (Validator.isNull(tagString) ||
-					((requiredAttribute != null) &&
-					 !tagString.contains(requiredAttribute))) {
-
+				if (Validator.isNull(getEndingTag(content, x))) {
 					continue;
 				}
 
 				int lineNumber = getLineNumber(content, x);
 
-				if (fileName.endsWith(".jsp") || fileName.endsWith(".jspf") ||
-					fileName.endsWith(".jspx")) {
+				if (_illegalTagAuiReplacements.contains(tagName)) {
+					if (fileName.endsWith(".jsp") ||
+						fileName.endsWith(".jspf") ||
+						fileName.endsWith(".jspx")) {
 
-					insideScriplet = _isInsideScriplet(
-						content.substring(lastIndex + 1, x), insideScriplet);
-
-					if (insideScriplet) {
-						continue;
-					}
-
-					if (_illegalTagAuiReplacements.contains(tagName)) {
 						addMessage(
 							fileName,
 							StringBundler.concat(
@@ -185,29 +230,15 @@ public class CSPComplianceCheck extends BaseTagAttributesCheck {
 								tagName, ">, see LPD-18227"),
 							lineNumber);
 					}
-					else {
-						addMessage(
-							fileName,
-							StringBundler.concat(
-								"Remove usage of <", tagName,
-								"> tag, see LPD-47204"),
-							lineNumber);
-					}
-				}
-				else if (fileName.endsWith(".ftl") &&
-						 _illegalTagAuiReplacements.contains(tagName)) {
 
-					_checkMissingAttribute(
-						fileName, tagName, "${nonceAttribute}", tagString,
-						lineNumber);
+					continue;
 				}
-				else if (fileName.endsWith(".vm") &&
-						 _illegalTagAuiReplacements.contains(tagName)) {
 
-					_checkMissingAttribute(
-						fileName, tagName, "$nonceAttribute", tagString,
-						lineNumber);
-				}
+				addMessage(
+					fileName,
+					StringBundler.concat(
+						"Remove usage of </", tagName, "> tag, see LPD-47204"),
+					lineNumber);
 			}
 		}
 	}
@@ -241,21 +272,6 @@ public class CSPComplianceCheck extends BaseTagAttributesCheck {
 		}
 
 		return -1;
-	}
-
-	private boolean _isInsideScriplet(String content, boolean currentState) {
-		int lastClosedIndex = content.lastIndexOf("%>");
-		int lastOpenIndex = content.lastIndexOf("<%");
-
-		if (lastOpenIndex > lastClosedIndex) {
-			return true;
-		}
-
-		if (lastClosedIndex > lastOpenIndex) {
-			return false;
-		}
-
-		return currentState;
 	}
 
 	private static final String _IGNORED_FTL_TAG_PREFIXES_KEY =

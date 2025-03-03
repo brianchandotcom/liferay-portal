@@ -20,7 +20,6 @@ import {objectPagesTest} from '../../fixtures/objectPagesTest';
 import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {pageTemplatesPagesTest} from '../../fixtures/pageTemplatesPagesTest';
 import {wikiPagesTest} from '../../fixtures/wikiPagesTest';
-import {deleteObjectEntries} from '../../utils/deleteObjectEntries';
 import {getRandomInt} from '../../utils/getRandomInt';
 import performLogin, {performLogout, userData} from '../../utils/performLogin';
 import {waitForAlert} from '../../utils/waitForAlert';
@@ -503,7 +502,6 @@ test(
 		applicationsMenuPage,
 		companyExportImportPage,
 		page,
-		site,
 		viewObjectDefinitionsPage,
 	}) => {
 		const newObjectDefinition =
@@ -560,15 +558,20 @@ test(
 			newObjectDefinition.name
 		);
 
-		const objectEntryId = await page.locator('table tr:first-child td:first-child').innerText();
+		const objectEntryId = await page
+			.locator('table tr:first-child td:first-child')
+			.innerText();
 
 		const exportFilePath = await companyExportImportPage.export(
 			newObjectDefinition.name + ' 1 Items'
 		);
 
-		const applicationName = 'c/' + newObjectDefinition.name.toLowerCase() + 's';
+		const applicationName =
+			'c/' + newObjectDefinition.name.toLowerCase() + 's';
 
-		await apiHelpers.delete(`${apiHelpers.baseUrl}${applicationName}/${objectEntryId}`);
+		await apiHelpers.delete(
+			`${apiHelpers.baseUrl}${applicationName}/${objectEntryId}`
+		);
 
 		await performLogout(page);
 
@@ -604,7 +607,6 @@ test(
 		applicationsMenuPage,
 		companyExportImportPage,
 		page,
-		site,
 		viewObjectDefinitionsPage,
 	}) => {
 		const newObjectDefinition =
@@ -661,15 +663,20 @@ test(
 			newObjectDefinition.name
 		);
 
-		const objectEntryId = await page.locator('table tr:first-child td:first-child').innerText();
+		const objectEntryId = await page
+			.locator('table tr:first-child td:first-child')
+			.innerText();
 
 		const exportFilePath = await companyExportImportPage.export(
 			newObjectDefinition.name + ' 1 Items'
 		);
 
-		const applicationName = 'c/' + newObjectDefinition.name.toLowerCase() + 's';
+		const applicationName =
+			'c/' + newObjectDefinition.name.toLowerCase() + 's';
 
-		await apiHelpers.delete(`${apiHelpers.baseUrl}${applicationName}/${objectEntryId}`);
+		await apiHelpers.delete(
+			`${apiHelpers.baseUrl}${applicationName}/${objectEntryId}`
+		);
 
 		await performLogout(page);
 		await performLogin(page, 'test');
@@ -701,7 +708,6 @@ test(
 		applicationsMenuPage,
 		companyExportImportPage,
 		page,
-		site,
 		viewObjectDefinitionsPage,
 	}) => {
 		const newObjectDefinition =
@@ -758,15 +764,20 @@ test(
 			newObjectDefinition.name
 		);
 
-		const objectEntryId = await page.locator('table tr:first-child td:first-child').innerText();
+		const objectEntryId = await page
+			.locator('table tr:first-child td:first-child')
+			.innerText();
 
 		const exportFilePath = await companyExportImportPage.export(
 			newObjectDefinition.name + ' 1 Items'
 		);
 
-		const applicationName = 'c/' + newObjectDefinition.name.toLowerCase() + 's';
+		const applicationName =
+			'c/' + newObjectDefinition.name.toLowerCase() + 's';
 
-		await apiHelpers.delete(`${apiHelpers.baseUrl}${applicationName}/${objectEntryId}`);
+		await apiHelpers.delete(
+			`${apiHelpers.baseUrl}${applicationName}/${objectEntryId}`
+		);
 
 		await performLogout(page);
 

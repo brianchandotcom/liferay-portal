@@ -2641,9 +2641,8 @@ test.describe('Form Localization', () => {
 					name: 'Attachment',
 					objectFields: [
 						{
-							DBType: ObjectField.DBTypeEnum.Long,
-							businessType:
-								ObjectField.BusinessTypeEnum.Attachment,
+							DBType: "Long",
+							businessType: "Attachment",
 							defaultValue: 'null',
 							externalReferenceCode: 'filesFromComputerERC',
 							label: {
@@ -2672,9 +2671,8 @@ test.describe('Form Localization', () => {
 							required: false,
 						},
 						{
-							DBType: ObjectField.DBTypeEnum.Long,
-							businessType:
-								ObjectField.BusinessTypeEnum.Attachment,
+							DBType: "Long",
+							businessType: "Attachment",
 							defaultValue: 'null',
 							externalReferenceCode: 'filesFromLibraryERC',
 							label: {
@@ -2899,9 +2897,8 @@ test.describe('Form Localization', () => {
 					name: 'Attachment',
 					objectFields: [
 						{
-							DBType: ObjectField.DBTypeEnum.Long,
-							businessType:
-								ObjectField.BusinessTypeEnum.Attachment,
+							DBType: "Long",
+							businessType: "Attachment",
 							defaultValue: 'null',
 							externalReferenceCode: 'filesFromComputerERC',
 							label: {
@@ -2930,9 +2927,8 @@ test.describe('Form Localization', () => {
 							required: false,
 						},
 						{
-							DBType: ObjectField.DBTypeEnum.Long,
-							businessType:
-								ObjectField.BusinessTypeEnum.Attachment,
+							DBType: "Long",
+							businessType: "Attachment",
 							defaultValue: 'null',
 							externalReferenceCode: 'filesFromLibraryERC',
 							label: {
@@ -3140,9 +3136,8 @@ test.describe('Form Localization', () => {
 					name: 'Attachment',
 					objectFields: [
 						{
-							DBType: ObjectField.DBTypeEnum.Long,
-							businessType:
-								ObjectField.BusinessTypeEnum.Attachment,
+							DBType: "Long",
+							businessType: "Attachment",
 							defaultValue: 'null',
 							externalReferenceCode: 'filesFromComputerERC',
 							label: {
@@ -3171,9 +3166,8 @@ test.describe('Form Localization', () => {
 							required: false,
 						},
 						{
-							DBType: ObjectField.DBTypeEnum.Long,
-							businessType:
-								ObjectField.BusinessTypeEnum.Attachment,
+							DBType: "Long",
+							businessType: "Attachment",
 							defaultValue: 'null',
 							externalReferenceCode: 'filesFromLibraryERC',
 							label: {
@@ -3499,9 +3493,8 @@ test.describe('Form Localization', () => {
 							required: false,
 						},
 						{
-							DBType: ObjectField.DBTypeEnum.Long,
-							businessType:
-								ObjectField.BusinessTypeEnum.Attachment,
+							DBType: "Long",
+							businessType: "Attachment",
 							defaultValue: 'null',
 							externalReferenceCode: 'filesFromLibraryERC',
 							label: {

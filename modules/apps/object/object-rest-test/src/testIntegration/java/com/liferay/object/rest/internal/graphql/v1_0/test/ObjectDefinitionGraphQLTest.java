@@ -350,28 +350,13 @@ public class ObjectDefinitionGraphQLTest {
 		_addListTypeEntry(listTypeDefinition, listFieldValueKey2);
 		_addListTypeEntry(listTypeDefinition, listFieldValueKey3);
 
-		String picklistFieldName = StringUtil.randomId();
 		String multiselectPicklistFieldName = StringUtil.randomId();
+		String picklistFieldName = StringUtil.randomId();
 
 		ObjectDefinition objectDefinition =
 			ObjectDefinitionTestUtil.publishObjectDefinition(
 				false, ObjectDefinitionTestUtil.getRandomName(),
 				Arrays.asList(
-					new PicklistObjectFieldBuilder(
-					).userId(
-						TestPropsValues.getUserId()
-					).listTypeDefinitionId(
-						listTypeDefinition.getListTypeDefinitionId()
-					).labelMap(
-						LocalizedMapUtil.getLocalizedMap(
-							RandomTestUtil.randomString())
-					).indexedAsKeyword(
-						true
-					).name(
-						picklistFieldName
-					).required(
-						true
-					).build(),
 					new MultiselectPicklistObjectFieldBuilder(
 					).userId(
 						TestPropsValues.getUserId()
@@ -386,6 +371,21 @@ public class ObjectDefinitionGraphQLTest {
 						multiselectPicklistFieldName
 					).required(
 						true
+					).build(),
+					new PicklistObjectFieldBuilder(
+					).userId(
+						TestPropsValues.getUserId()
+					).listTypeDefinitionId(
+						listTypeDefinition.getListTypeDefinitionId()
+					).labelMap(
+						LocalizedMapUtil.getLocalizedMap(
+							RandomTestUtil.randomString())
+					).indexedAsKeyword(
+						true
+					).name(
+						picklistFieldName
+					).required(
+						true
 					).build()),
 				ObjectDefinitionConstants.SCOPE_COMPANY,
 				TestPropsValues.getUserId());
@@ -394,10 +394,10 @@ public class ObjectDefinitionGraphQLTest {
 			JSONUtil.put(
 				multiselectPicklistFieldName,
 				JSONUtil.putAll(
-					JSONUtil.put("key", listFieldValueKey2),
-					JSONUtil.put("key", listFieldValueKey3))
+					JSONUtil.put("key", listFieldValueKey1),
+					JSONUtil.put("key", listFieldValueKey2))
 			).put(
-				picklistFieldName, JSONUtil.put("key", listFieldValueKey1)
+				picklistFieldName, JSONUtil.put("key", listFieldValueKey3)
 			).toString(),
 			JSONUtil.getValueAsString(
 				_invoke(
@@ -410,17 +410,17 @@ public class ObjectDefinitionGraphQLTest {
 								HashMapBuilder.<String, Object>put(
 									objectDefinition.getShortName(),
 									StringBundler.concat(
-										"{", picklistFieldName, ": {key: \"",
-										listFieldValueKey1, "\"}, ",
-										multiselectPicklistFieldName,
-										": [{key: \"", listFieldValueKey2,
-										"\"}, {key: \"", listFieldValueKey3,
-										"\"}]}")
+										"{", multiselectPicklistFieldName,
+										": [{key: \"", listFieldValueKey1,
+										"\"}, {key: \"", listFieldValueKey2,
+										"\"}], ", picklistFieldName,
+										": {key: \"", listFieldValueKey3,
+										"\"}}")
 								).build(),
-								new GraphQLField(picklistFieldName + " {key}"),
 								new GraphQLField(
-									multiselectPicklistFieldName +
-										" {key}"))))),
+									multiselectPicklistFieldName + " {key}"),
+								new GraphQLField(
+									picklistFieldName + " {key}"))))),
 				"JSONObject/data", "JSONObject/c",
 				"JSONObject/create" + objectDefinition.getShortName()),
 			JSONCompareMode.STRICT);

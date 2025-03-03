@@ -118,6 +118,7 @@ import {config as siteCmsSiteInitializerConfig} from './tests/site-cms-site-init
 import {config as siteNavigationAdminWebConfig} from './tests/site-navigation-admin-web/config';
 import {config as siteNavigationBreadcrumbWebConfig} from './tests/site-navigation-breadcrumb-web/config';
 import {config as siteNavigationLanguageWebConfig} from './tests/site-navigation-language-web/config';
+import {config as siteNavigationMenuWebConfig} from './tests/site-navigation-menu-web/config';
 import {config as stableConfig} from './tests/stable/config';
 import {config as stagingConfig} from './tests/staging-configuration-web/config';
 import {config as stylebookWebConfig} from './tests/style-book-web/config';
@@ -248,6 +249,7 @@ export default defineConfig({
 		siteNavigationAdminWebConfig,
 		siteNavigationBreadcrumbWebConfig,
 		siteNavigationLanguageWebConfig,
+		siteNavigationMenuWebConfig,
 		stableConfig,
 		stagingConfig,
 		stylebookWebConfig,

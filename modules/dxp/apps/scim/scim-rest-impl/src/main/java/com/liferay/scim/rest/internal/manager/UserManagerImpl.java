@@ -55,6 +55,7 @@ import com.liferay.scim.rest.internal.model.ScimUser;
 import com.liferay.scim.rest.internal.util.ScimUtil;
 import com.liferay.scim.rest.util.ScimClientUtil;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
@@ -64,6 +65,7 @@ import java.util.Objects;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 
+import org.wso2.charon3.core.attributes.Attribute;
 import org.wso2.charon3.core.exceptions.AbstractCharonException;
 import org.wso2.charon3.core.exceptions.BadRequestException;
 import org.wso2.charon3.core.exceptions.CharonException;
@@ -191,6 +193,25 @@ public class UserManagerImpl implements UserManager {
 				"Unable to delete user with user ID " + userId,
 				portalException);
 		}
+	}
+
+	@Override
+	public List<Attribute> getCoreSchema()
+		throws BadRequestException, CharonException, NotImplementedException {
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		_getScimClientOAuth2ApplicationConfiguration(
+			serviceContext.getCompanyId());
+
+		// Exceptions are handled in the library and are prepared the responses.
+		// This class is the connection point between the library that
+		// implements SCIM and the Liferay logic. This is why a method
+		// needs to be overwritten to check if the SCIM configuration has been
+		// created in Liferay but nothing else is required.
+
+		return new ArrayList<>();
 	}
 
 	@Override

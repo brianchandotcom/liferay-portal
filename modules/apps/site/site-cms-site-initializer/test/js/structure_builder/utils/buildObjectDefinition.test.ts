@@ -53,7 +53,7 @@ describe('buildObjectDefinition', () => {
 				},
 			],
 			pluralLabel: {en_US: 'Structure'},
-			scope: 'company',
+			scope: 'site',
 		});
 	});
 
@@ -85,7 +85,7 @@ describe('buildObjectDefinition', () => {
 				},
 			],
 			pluralLabel: {en_US: 'Structure'},
-			scope: 'company',
+			scope: 'site',
 		});
 	});
 });

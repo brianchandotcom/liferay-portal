@@ -30,7 +30,7 @@ export default function buildObjectDefinition({
 		pluralLabel: {
 			en_US: label,
 		},
-		scope: 'company',
+		scope: 'site',
 	};
 
 	if (id) {

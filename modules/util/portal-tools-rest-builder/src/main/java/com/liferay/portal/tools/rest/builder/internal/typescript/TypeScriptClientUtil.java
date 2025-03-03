@@ -217,12 +217,13 @@ public class TypeScriptClientUtil {
 	private static Map<String, Map<String, Object>> _buildAPIContexts(
 		ConfigYAML configYAML, OpenAPIYAML openAPIYAML) {
 
-		Map<String, PathItem> pathItems = openAPIYAML.getPathItems();
+		Map<String, Map<String, Object>> apiContexts = new HashMap<>();
 
+		Map<String, Set<String>> importsMap = new HashMap<>();
 		Map<String, List<Map<String, Object>>> operationDatasMap =
 			new HashMap<>();
 
-		Map<String, Set<String>> importsMap = new HashMap<>();
+		Map<String, PathItem> pathItems = openAPIYAML.getPathItems();
 
 		for (Map.Entry<String, PathItem> entry : pathItems.entrySet()) {
 			for (Operation operation :
@@ -232,21 +233,21 @@ public class TypeScriptClientUtil {
 
 				List<Map<String, Object>> operationDatas =
 					operationDatasMap.computeIfAbsent(
-						tags.get(0), k -> new ArrayList<>());
+						tags.get(0), tag -> new ArrayList<>());
 
 				operationDatas.add(
 					_buildOperationData(
 						configYAML,
 						importsMap.computeIfAbsent(
-							tags.get(0), k -> new HashSet<>()),
+							tags.get(0), tag -> new HashSet<>()),
 						openAPIYAML, operation, entry.getKey()));
 			}
 		}
 
-		Map<String, Map<String, Object>> apiContexts = new HashMap<>();
-
 		for (Map.Entry<String, List<Map<String, Object>>> entry :
 				operationDatasMap.entrySet()) {
+
+			// TODO Rename "classname" to "className"
 
 			apiContexts.put(
 				entry.getKey(),

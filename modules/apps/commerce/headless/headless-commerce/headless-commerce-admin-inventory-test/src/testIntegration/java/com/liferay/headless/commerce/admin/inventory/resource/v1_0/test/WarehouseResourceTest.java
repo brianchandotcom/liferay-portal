@@ -6,18 +6,22 @@
 package com.liferay.headless.commerce.admin.inventory.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.commerce.inventory.model.CommerceInventoryWarehouse;
+import com.liferay.commerce.inventory.service.CommerceInventoryWarehouseLocalService;
 import com.liferay.headless.commerce.admin.inventory.client.dto.v1_0.Warehouse;
 import com.liferay.headless.commerce.admin.inventory.client.pagination.Page;
 import com.liferay.headless.commerce.admin.inventory.client.pagination.Pagination;
 import com.liferay.headless.commerce.core.util.LanguageUtils;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.test.rule.Inject;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.junit.After;
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -27,13 +31,32 @@ import org.junit.runner.RunWith;
 @RunWith(Arquillian.class)
 public class WarehouseResourceTest extends BaseWarehouseResourceTestCase {
 
+	@After
+	@Override
+	public void tearDown() throws Exception {
+		super.tearDown();
+
+		for (Long warehouseId : _warehouseIds) {
+			CommerceInventoryWarehouse commerceInventoryWarehouse =
+				_commerceInventoryWarehouseLocalService.
+					fetchCommerceInventoryWarehouse(warehouseId);
+
+			if (commerceInventoryWarehouse == null) {
+				continue;
+			}
+
+			_commerceInventoryWarehouseLocalService.
+				deleteCommerceInventoryWarehouse(commerceInventoryWarehouse);
+		}
+	}
+
 	@Override
 	@Test
 	public void testGetWarehousesPage() throws Exception {
 		super.testGetWarehousesPage();
 
-		Warehouse warehouse1 = _addWarehouse();
-		Warehouse warehouse2 = _addWarehouse();
+		Warehouse warehouse1 = _addWarehouse(randomWarehouse());
+		Warehouse warehouse2 = _addWarehouse(randomWarehouse());
 
 		Page<Warehouse> page = warehouseResource.getWarehousesPage(
 			warehouse1.getName(
@@ -49,60 +72,10 @@ public class WarehouseResourceTest extends BaseWarehouseResourceTestCase {
 		Assert.assertEquals(1, page.getTotalCount());
 	}
 
-	@Ignore
-	@Override
-	@Test
-	public void testGetWarehousesPageWithFilterStringEquals() throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testGetWarehousesPageWithSortDouble() throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testGetWarehousesPageWithSortString() throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testGraphQLGetWarehouseByExternalReferenceCode()
-		throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testGraphQLGetWarehouseByExternalReferenceCodeNotFound()
-		throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testGraphQLGetWarehouseId() throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testGraphQLGetWarehouseIdNotFound() throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testGraphQLGetWarehousesPage() throws Exception {
-	}
-
 	@Override
 	@Test
 	public void testPatchWarehouseByExternalReferenceCode() throws Exception {
-		Warehouse postWarehouse = _addWarehouse();
+		Warehouse postWarehouse = _addWarehouse(randomWarehouse());
 
 		postWarehouse.setName(
 			Collections.singletonMap(
@@ -121,7 +94,7 @@ public class WarehouseResourceTest extends BaseWarehouseResourceTestCase {
 	@Override
 	@Test
 	public void testPatchWarehouseId() throws Exception {
-		Warehouse postWarehouse = _addWarehouse();
+		Warehouse postWarehouse = _addWarehouse(randomWarehouse());
 
 		postWarehouse.setName(
 			Collections.singletonMap("en_US", "testPatchWarehouseId"));
@@ -173,24 +146,24 @@ public class WarehouseResourceTest extends BaseWarehouseResourceTestCase {
 			testDeleteWarehouseByExternalReferenceCode_addWarehouse()
 		throws Exception {
 
-		return _addWarehouse();
+		return _addWarehouse(randomWarehouse());
 	}
 
 	@Override
 	protected Warehouse testDeleteWarehouseId_addWarehouse() throws Exception {
-		return _addWarehouse();
+		return _addWarehouse(randomWarehouse());
 	}
 
 	@Override
 	protected Warehouse testGetWarehouseByExternalReferenceCode_addWarehouse()
 		throws Exception {
 
-		return _addWarehouse();
+		return _addWarehouse(randomWarehouse());
 	}
 
 	@Override
 	protected Warehouse testGetWarehouseId_addWarehouse() throws Exception {
-		return _addWarehouse();
+		return _addWarehouse(randomWarehouse());
 	}
 
 	@Override
@@ -202,7 +175,7 @@ public class WarehouseResourceTest extends BaseWarehouseResourceTestCase {
 
 	@Override
 	protected Warehouse testGraphQLWarehouse_addWarehouse() throws Exception {
-		return _addWarehouse();
+		return _addWarehouse(randomWarehouse());
 	}
 
 	@Override
@@ -219,12 +192,18 @@ public class WarehouseResourceTest extends BaseWarehouseResourceTestCase {
 		return _addWarehouse(randomWarehouse());
 	}
 
-	private Warehouse _addWarehouse() throws Exception {
-		return _addWarehouse(randomWarehouse());
+	private Warehouse _addWarehouse(Warehouse warehouse) throws Exception {
+		Warehouse postWarehouse = warehouseResource.postWarehouse(warehouse);
+
+		_warehouseIds.add(postWarehouse.getId());
+
+		return postWarehouse;
 	}
 
-	private Warehouse _addWarehouse(Warehouse warehouse) throws Exception {
-		return warehouseResource.postWarehouse(warehouse);
-	}
+	@Inject
+	private CommerceInventoryWarehouseLocalService
+		_commerceInventoryWarehouseLocalService;
+
+	private final List<Long> _warehouseIds = new ArrayList<>();
 
 }

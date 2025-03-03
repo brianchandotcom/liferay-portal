@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.service.ReleaseLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.version.Version;
@@ -54,21 +55,24 @@ public class LayoutPrivateLayoutsUpgradeProcessTest {
 	public void testUpgrade() throws Exception {
 		String originalFeatureFlagValue = _updateFeatureFlagValue(
 			Boolean.FALSE.toString());
-		Configuration[] configurations = _configurationAdmin.listConfigurations(
-			StringBundler.concat(
-				StringPool.OPEN_PARENTHESIS, Constants.SERVICE_PID,
-				StringPool.EQUAL, _PID, StringPool.CLOSE_PARENTHESIS));
+		Configuration[] originalConfigurations =
+			_configurationAdmin.listConfigurations(
+				StringBundler.concat(
+					StringPool.OPEN_PARENTHESIS, Constants.SERVICE_PID,
+					StringPool.EQUAL, _PID, StringPool.CLOSE_PARENTHESIS));
 		Release originalRelease = _releaseLocalService.fetchRelease(
 			_SCHEMA_NAME);
 		Release release = null;
+		Configuration configuration = null;
 
 		try {
 			if (originalRelease != null) {
 				_releaseLocalService.deleteRelease(originalRelease);
 			}
 
-			if (configurations != null) {
-				ConfigurationTestUtil.deleteConfiguration(configurations[0]);
+			if (ArrayUtil.isNotEmpty(originalConfigurations)) {
+				ConfigurationTestUtil.deleteConfiguration(
+					originalConfigurations[0]);
 			}
 
 			_runUpgrade();
@@ -81,8 +85,11 @@ public class LayoutPrivateLayoutsUpgradeProcessTest {
 
 			_assertFeatureFlagValue(Boolean.FALSE.toString());
 
+			configuration = _configurationAdmin.getConfiguration(
+				_PID, StringPool.QUESTION);
+
 			ConfigurationTestUtil.saveConfiguration(
-				_configurationAdmin.getConfiguration(_PID, StringPool.QUESTION),
+				configuration,
 				HashMapDictionaryBuilder.<String, Object>put(
 					"disabledReleaseFeatureFlags",
 					new String[] {_DISABLE_PRIVATE_LAYOUTS}
@@ -103,15 +110,18 @@ public class LayoutPrivateLayoutsUpgradeProcessTest {
 
 			_updateFeatureFlagValue(originalFeatureFlagValue);
 
+			if (configuration != null) {
+				ConfigurationTestUtil.deleteConfiguration(configuration);
+			}
+
 			ConfigurationTestUtil.deleteConfiguration(_PID);
 
-			if (configurations != null) {
-				Configuration configuration = configurations[0];
+			if (ArrayUtil.isNotEmpty(originalConfigurations)) {
+				Configuration originalConfiguration = originalConfigurations[0];
 
 				ConfigurationTestUtil.saveConfiguration(
-					_configurationAdmin.getConfiguration(
-						_PID, StringPool.QUESTION),
-					configuration.getProperties());
+					originalConfiguration,
+					originalConfiguration.getProperties());
 			}
 		}
 	}

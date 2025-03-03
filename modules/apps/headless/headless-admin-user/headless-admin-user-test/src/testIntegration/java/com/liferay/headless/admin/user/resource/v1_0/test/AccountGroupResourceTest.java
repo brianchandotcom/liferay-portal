@@ -56,7 +56,6 @@ import java.util.Objects;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -94,38 +93,6 @@ public class AccountGroupResourceTest extends BaseAccountGroupResourceTestCase {
 		_testGetAccountGroupsPageWithFilter();
 	}
 
-	@Ignore
-	@Override
-	@Test
-	public void testGraphQLGetAccountGroup() throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testGraphQLGetAccountGroupByExternalReferenceCode()
-		throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testGraphQLGetAccountGroupByExternalReferenceCodeNotFound()
-		throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testGraphQLGetAccountGroupNotFound() throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
-	public void testGraphQLGetAccountGroupsPage() throws Exception {
-	}
-
 	@Override
 	@Test
 	public void testPatchAccountGroup() throws Exception {
@@ -144,11 +111,26 @@ public class AccountGroupResourceTest extends BaseAccountGroupResourceTestCase {
 		_testPatchAccountGroupByExternalReferenceCodeWithoutName();
 	}
 
-	@Ignore
 	@Override
 	@Test
 	public void testPostAccountGroupByExternalReferenceCodeAccountByExternalReferenceCode()
 		throws Exception {
+
+		AccountGroup accountGroup = _postAccountGroup(randomAccountGroup());
+
+		assertHttpResponseStatusCode(
+			204,
+			accountGroupResource.
+				postAccountGroupByExternalReferenceCodeAccountByExternalReferenceCodeHttpResponse(
+					_accountEntry.getExternalReferenceCode(),
+					accountGroup.getExternalReferenceCode()));
+
+		assertHttpResponseStatusCode(
+			404,
+			accountGroupResource.
+				postAccountGroupByExternalReferenceCodeAccountByExternalReferenceCodeHttpResponse(
+					RandomTestUtil.randomString(),
+					accountGroup.getExternalReferenceCode()));
 	}
 
 	@Override

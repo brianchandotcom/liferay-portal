@@ -71,6 +71,9 @@ public class LayoutPrivateLayoutsUpgradeProcessTest {
 			Boolean.FALSE.toString());
 
 		try {
+			// Old Version (No intermediate Upgrade): Installation from an old
+			// version, missing the release feature flag upgrade process.
+
 			if (ArrayUtil.isNotEmpty(originalConfigurations)) {
 				ConfigurationTestUtil.deleteConfiguration(
 					originalConfigurations[0]);
@@ -84,11 +87,21 @@ public class LayoutPrivateLayoutsUpgradeProcessTest {
 
 			_assertFeatureFlagValue(Boolean.TRUE.toString());
 
+			// Intermediate Version: Installation from an intermediate version
+			// where the release feature flag upgrade process occurred,
+			// but no configuration was added, and it was not manually enabled,
+			// thus private pages are disabled.
+
 			release = _releaseLocalService.addRelease(_SCHEMA_NAME, "1.0.0");
 
 			_runUpgrade();
 
 			_assertFeatureFlagValue(Boolean.FALSE.toString());
+
+			// Intermediate Version (Enabled): Installation from an intermediate
+			// version where the release feature flag upgrade process occurred,
+			// but no configuration was added, and it was manually enabled,
+			// thus private pages are enabled.
 
 			configuration = _configurationAdmin.getConfiguration(
 				_PID, StringPool.QUESTION);

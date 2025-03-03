@@ -38,9 +38,11 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
@@ -455,8 +457,9 @@ public class ObjectFolderResourceImpl extends BaseObjectFolderResourceImpl {
 							_objectValidationRuleDTOConverter,
 							_objectValidationRuleLocalService,
 							_objectViewDTOConverter, _objectViewLocalService,
-							serviceBuilderObjectDefinition,
-							_systemObjectDefinitionManagerRegistry);
+							_portal, serviceBuilderObjectDefinition,
+							_systemObjectDefinitionManagerRegistry,
+							_userLocalService);
 					});
 				setObjectDefinitionExternalReferenceCode(
 					serviceBuilderObjectDefinition::getExternalReferenceCode);
@@ -532,7 +535,13 @@ public class ObjectFolderResourceImpl extends BaseObjectFolderResourceImpl {
 	private ObjectViewLocalService _objectViewLocalService;
 
 	@Reference
+	private Portal _portal;
+
+	@Reference
 	private SystemObjectDefinitionManagerRegistry
 		_systemObjectDefinitionManagerRegistry;
+
+	@Reference
+	private UserLocalService _userLocalService;
 
 }

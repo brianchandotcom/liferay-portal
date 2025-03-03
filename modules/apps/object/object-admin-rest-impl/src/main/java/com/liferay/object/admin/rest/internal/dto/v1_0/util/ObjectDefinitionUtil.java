@@ -5,6 +5,7 @@
 
 package com.liferay.object.admin.rest.internal.dto.v1_0.util;
 
+import com.liferay.headless.delivery.dto.v1_0.util.CreatorUtil;
 import com.liferay.notification.service.NotificationTemplateLocalService;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectAction;
 import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
@@ -35,8 +36,10 @@ import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.GroupLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.language.LanguageResources;
@@ -70,11 +73,12 @@ public class ObjectDefinitionUtil {
 		ObjectValidationRuleLocalService objectValidationRuleLocalService,
 		DTOConverter<com.liferay.object.model.ObjectView, ObjectView>
 			objectViewDTOConverter,
-		ObjectViewLocalService objectViewLocalService,
+		ObjectViewLocalService objectViewLocalService, Portal portal,
 		com.liferay.object.model.ObjectDefinition
 			serviceBuilderObjectDefinition,
 		SystemObjectDefinitionManagerRegistry
-			systemObjectDefinitionManagerRegistry) {
+			systemObjectDefinitionManagerRegistry,
+		UserLocalService userLocalService) {
 
 		if (serviceBuilderObjectDefinition == null) {
 			return null;
@@ -124,6 +128,11 @@ public class ObjectDefinitionUtil {
 					});
 				setActive(serviceBuilderObjectDefinition::isActive);
 				setClassName(serviceBuilderObjectDefinition::getClassName);
+				setCreator(
+					() -> CreatorUtil.toCreator(
+						null, portal,
+						userLocalService.fetchUser(
+							serviceBuilderObjectDefinition.getUserId())));
 				setDateCreated(serviceBuilderObjectDefinition::getCreateDate);
 				setDateModified(
 					serviceBuilderObjectDefinition::getModifiedDate);

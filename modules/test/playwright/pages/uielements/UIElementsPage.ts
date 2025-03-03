@@ -18,22 +18,22 @@ export class UIElementsPage {
 	readonly setupUpdatedAlert: Locator;
 
 	constructor(page: Page) {
-		this.newButton = page.getByRole('button', {name: 'New'});
 		this.addButton = page.getByRole('button', {name: 'Add'});
 		this.alertMessage = page.locator('div.content >> div.alert-info');
-		this.saveButton = page.getByRole('button', {name: 'Save'});
+		this.anySuccessAlert = page.locator('.alert-success');
+		this.closeClickable = page.getByLabel('close', {exact: true});
+		this.newButton = page.getByTestId('creationMenuNewButton').nth(1);
 		this.pageCreatedAlert = page.getByText(
 			'Success:The page was created successfully.'
 		);
 		this.pageUpdatedAlert = page.getByText(
 			'Success:The page was updated successfully.'
 		);
+		this.publishButton = page.getByLabel('Publish', {exact: true});
+		this.saveButton = page.getByRole('button', {name: 'Save'});
 		this.setupUpdatedAlert = page.getByText(
 			'Success:You have successfully updated the setup.'
 		);
-		this.anySuccessAlert = page.locator('.alert-success');
-		this.closeClickable = page.getByLabel('close', {exact: true});
-		this.publishButton = page.getByLabel('Publish', {exact: true});
 	}
 
 	async clickNewButton() {

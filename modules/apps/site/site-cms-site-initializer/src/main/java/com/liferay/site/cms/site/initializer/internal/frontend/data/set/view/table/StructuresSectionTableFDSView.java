@@ -47,6 +47,8 @@ public class StructuresSectionTableFDSView extends BaseTableFDSView {
 		).add(
 			"scope", "space"
 		).add(
+			"creator.name", "author"
+		).add(
 			"dateModified", "modified",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
 				"dateTime"

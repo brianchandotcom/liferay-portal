@@ -63,6 +63,8 @@ public class PageExperienceDTOConverter
 						true, segmentsExperience.getNameMap()));
 				setPageElements(
 					() -> _getPageElements(layoutPageTemplateStructureRel));
+				setPageSpecificationExternalReferenceCode(
+					layout::getExternalReferenceCode);
 				setPriority(segmentsExperience::getPriority);
 				setSegmentExternalReferenceCode(
 					() -> {
@@ -76,8 +78,6 @@ public class PageExperienceDTOConverter
 
 						return segmentsEntry.getSegmentsEntryKey();
 					});
-				setSitePageExternalReferenceCode(
-					layout::getExternalReferenceCode);
 			}
 		};
 	}

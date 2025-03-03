@@ -200,7 +200,7 @@ public class PageExperienceResourceTest
 		pageExperience.setSegmentExternalReferenceCode(
 			segmentsEntry.getSegmentsEntryKey());
 
-		pageExperience.setSitePageExternalReferenceCode(
+		pageExperience.setPageSpecificationExternalReferenceCode(
 			_draftLayout.getExternalReferenceCode());
 
 		return pageExperience;
@@ -253,7 +253,7 @@ public class PageExperienceResourceTest
 		return pageExperienceResource.
 			postSiteSiteByExternalReferenceCodePageSpecificationPageExperience(
 				testGroup.getExternalReferenceCode(),
-				pageExperience.getSitePageExternalReferenceCode(),
+				pageExperience.getPageSpecificationExternalReferenceCode(),
 				pageExperience);
 	}
 

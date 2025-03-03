@@ -180,7 +180,7 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 		throws Exception {
 
 		Layout layout = _layoutLocalService.fetchLayoutByExternalReferenceCode(
-			pageExperience.getSitePageExternalReferenceCode(), groupId);
+			pageExperience.getPageSpecificationExternalReferenceCode(), groupId);
 
 		if ((layout == null) ||
 			!Objects.equals(layout.getType(), LayoutConstants.TYPE_CONTENT)) {

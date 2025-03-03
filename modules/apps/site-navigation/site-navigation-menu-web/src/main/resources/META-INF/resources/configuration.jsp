@@ -129,14 +129,27 @@ SiteNavigationMenuConfigurationDisplayContext siteNavigationMenuConfigurationDis
 									<%
 									String rootMenuItemName = siteNavigationMenuDisplayContext.getSiteNavigationMenuName();
 
-									SiteNavigationMenuItem siteNavigationMenuItem = SiteNavigationMenuItemLocalServiceUtil.fetchSiteNavigationMenuItem(GetterUtil.getLong(siteNavigationMenuDisplayContext.getRootMenuItemId()));
+									if (siteNavigationMenuDisplayContext.isSiteNavigationMenuSelected()) {
+										SiteNavigationMenuItem siteNavigationMenuItem = SiteNavigationMenuItemLocalServiceUtil.fetchSiteNavigationMenuItem(GetterUtil.getLong(siteNavigationMenuDisplayContext.getRootMenuItemId()));
 
-									if (siteNavigationMenuItem != null) {
-										SiteNavigationMenuItemTypeRegistry siteNavigationMenuItemTypeRegistry = (SiteNavigationMenuItemTypeRegistry)request.getAttribute(SiteNavigationMenuWebKeys.SITE_NAVIGATION_MENU_ITEM_TYPE_REGISTRY);
+										if (siteNavigationMenuItem != null) {
+											SiteNavigationMenuItemTypeRegistry siteNavigationMenuItemTypeRegistry = (SiteNavigationMenuItemTypeRegistry)request.getAttribute(SiteNavigationMenuWebKeys.SITE_NAVIGATION_MENU_ITEM_TYPE_REGISTRY);
 
-										SiteNavigationMenuItemType siteNavigationMenuItemType = siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemType(siteNavigationMenuItem.getType());
+											SiteNavigationMenuItemType siteNavigationMenuItemType = siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemType(siteNavigationMenuItem.getType());
 
-										rootMenuItemName = siteNavigationMenuItemType.getTitle(siteNavigationMenuItem, locale);
+											rootMenuItemName = siteNavigationMenuItemType.getTitle(siteNavigationMenuItem, locale);
+										}
+									}
+									else {
+										Layout rootLayout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(siteNavigationMenuDisplayContext.getRootMenuItemId(), themeDisplay.getScopeGroupId(), false);
+
+										if (rootLayout == null) {
+											rootLayout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(siteNavigationMenuDisplayContext.getRootMenuItemId(), themeDisplay.getScopeGroupId(), true);
+										}
+
+										if (rootLayout != null) {
+											rootMenuItemName = rootLayout.getName(locale);
+										}
 									}
 									%>
 

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -202,18 +203,38 @@ public class SiteNavigationMenuDisplayContext {
 			return StringPool.BLANK;
 		}
 
-		SiteNavigationMenuItem siteNavigationMenuItem =
-			SiteNavigationMenuItemLocalServiceUtil.
-				fetchSiteNavigationMenuItemByExternalReferenceCode(
-					rootMenuItemExternalReferenceCode,
-					_getSiteNavigationMenuGroupId());
+		if (isSiteNavigationMenuSelected()) {
+			SiteNavigationMenuItem siteNavigationMenuItem =
+				SiteNavigationMenuItemLocalServiceUtil.
+					fetchSiteNavigationMenuItemByExternalReferenceCode(
+						rootMenuItemExternalReferenceCode,
+						_getSiteNavigationMenuGroupId());
 
-		if (siteNavigationMenuItem == null) {
-			return StringPool.BLANK;
+			if (siteNavigationMenuItem == null) {
+				return StringPool.BLANK;
+			}
+
+			_rootMenuItemId = String.valueOf(
+				siteNavigationMenuItem.getSiteNavigationMenuItemId());
 		}
+		else {
+			Layout rootLayout =
+				LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+					rootMenuItemExternalReferenceCode,
+					_themeDisplay.getScopeGroupId(), false);
 
-		_rootMenuItemId = String.valueOf(
-			siteNavigationMenuItem.getSiteNavigationMenuItemId());
+			if (rootLayout == null) {
+				rootLayout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+					rootMenuItemExternalReferenceCode,
+					_themeDisplay.getScopeGroupId(), true);
+			}
+
+			if (rootLayout == null) {
+				return StringPool.BLANK;
+			}
+
+			_rootMenuItemId = rootMenuItemExternalReferenceCode;
+		}
 
 		return _rootMenuItemId;
 	}

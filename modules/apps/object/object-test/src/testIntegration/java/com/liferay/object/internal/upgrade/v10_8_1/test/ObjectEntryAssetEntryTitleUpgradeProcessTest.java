@@ -8,6 +8,7 @@ package com.liferay.object.internal.upgrade.v10_8_1.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
+import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
@@ -87,7 +88,9 @@ public class ObjectEntryAssetEntryTitleUpgradeProcessTest {
 
 		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
-			objectDefinition.getObjectDefinitionId(), "en_US",
+			objectDefinition.getObjectDefinitionId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			"en_US",
 			HashMapBuilder.<String, Serializable>put(
 				objectField.getI18nObjectFieldName(),
 				(Serializable)localizedValues

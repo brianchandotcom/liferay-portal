@@ -7,6 +7,7 @@ package com.liferay.object.internal.upgrade.v10_5_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
@@ -110,7 +111,10 @@ public class ObjectEntryDefaultLanguageIdUpgradeProcessTest {
 		ObjectEntry companyObjectEntry =
 			_objectEntryLocalService.addObjectEntry(
 				companyAdminUser.getUserId(), 0,
-				companyObjectDefinition.getObjectDefinitionId(), null,
+				companyObjectDefinition.getObjectDefinitionId(),
+				ObjectEntryFolderConstants.
+					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+				null,
 				Collections.singletonMap(
 					"textObjectField", RandomTestUtil.randomString()),
 				ServiceContextTestUtil.getServiceContext());
@@ -145,7 +149,9 @@ public class ObjectEntryDefaultLanguageIdUpgradeProcessTest {
 
 		ObjectEntry siteObjectEntry = _objectEntryLocalService.addObjectEntry(
 			companyAdminUser.getUserId(), _group.getGroupId(),
-			siteObjectDefinition.getObjectDefinitionId(), null,
+			siteObjectDefinition.getObjectDefinitionId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			null,
 			Collections.singletonMap(
 				"textObjectField", RandomTestUtil.randomString()),
 			ServiceContextTestUtil.getServiceContext());

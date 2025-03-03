@@ -7,6 +7,7 @@ package com.liferay.object.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.field.builder.AttachmentObjectFieldBuilder;
 import com.liferay.object.field.builder.ObjectFieldBuilder;
@@ -579,8 +580,9 @@ public class ObjectEntryLocalServiceSearchObjectEntriesTest {
 
 		return _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
-			_objectDefinition.getObjectDefinitionId(), null, values,
-			ServiceContextTestUtil.getServiceContext());
+			_objectDefinition.getObjectDefinitionId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			null, values, ServiceContextTestUtil.getServiceContext());
 	}
 
 	private void _assertKeywords(String keywords, int count) throws Exception {

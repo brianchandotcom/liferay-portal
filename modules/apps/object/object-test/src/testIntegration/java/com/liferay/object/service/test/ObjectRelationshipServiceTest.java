@@ -7,6 +7,7 @@ package com.liferay.object.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.field.util.ObjectFieldUtil;
@@ -292,12 +293,16 @@ public class ObjectRelationshipServiceTest {
 
 		ObjectEntry objectEntry1 = _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
-			objectDefinition1.getObjectDefinitionId(), null,
-			Collections.emptyMap(), ServiceContextTestUtil.getServiceContext());
+			objectDefinition1.getObjectDefinitionId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			null, Collections.emptyMap(),
+			ServiceContextTestUtil.getServiceContext());
 		ObjectEntry objectEntry2 = _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
-			objectDefinition2.getObjectDefinitionId(), null,
-			Collections.emptyMap(), ServiceContextTestUtil.getServiceContext());
+			objectDefinition2.getObjectDefinitionId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			null, Collections.emptyMap(),
+			ServiceContextTestUtil.getServiceContext());
 
 		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 		User user = UserTestUtil.addUser();

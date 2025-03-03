@@ -78,6 +78,7 @@ import com.liferay.layout.util.structure.LayoutStructure;
 import com.liferay.layout.util.structure.LayoutStructureItem;
 import com.liferay.layout.util.structure.LayoutStructureRule;
 import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
 import com.liferay.object.field.util.ObjectFieldUtil;
@@ -867,7 +868,9 @@ public class RenderLayoutStructureTagTest {
 
 		_objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), _group.getGroupId(),
-			objectDefinition.getObjectDefinitionId(), null,
+			objectDefinition.getObjectDefinitionId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			null,
 			HashMapBuilder.<String, Serializable>put(
 				"myLocalizedText", myLocalizedTextENValue
 			).put(

@@ -13,6 +13,7 @@ import com.liferay.object.constants.ObjectActionExecutorConstants;
 import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
@@ -2162,8 +2163,9 @@ public class ObjectRelationshipLocalServiceTest {
 
 		return _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
-			objectDefinition.getObjectDefinitionId(), null, values,
-			ServiceContextTestUtil.getServiceContext());
+			objectDefinition.getObjectDefinitionId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			null, values, ServiceContextTestUtil.getServiceContext());
 	}
 
 	private ObjectRelationship _addObjectRelationshipSystemObjectDefinition()

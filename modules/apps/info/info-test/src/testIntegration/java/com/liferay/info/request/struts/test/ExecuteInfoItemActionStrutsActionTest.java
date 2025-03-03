@@ -10,6 +10,7 @@ import com.liferay.layout.constants.LayoutTypeSettingsConstants;
 import com.liferay.object.constants.ObjectActionExecutorConstants;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
 import com.liferay.object.field.util.ObjectFieldUtil;
 import com.liferay.object.model.ObjectAction;
@@ -99,7 +100,9 @@ public class ExecuteInfoItemActionStrutsActionTest {
 
 		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
 			_user.getUserId(), _group.getGroupId(),
-			objectDefinition.getObjectDefinitionId(), null,
+			objectDefinition.getObjectDefinitionId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			null,
 			HashMapBuilder.<String, Serializable>put(
 				"text", RandomTestUtil.randomString()
 			).build(),

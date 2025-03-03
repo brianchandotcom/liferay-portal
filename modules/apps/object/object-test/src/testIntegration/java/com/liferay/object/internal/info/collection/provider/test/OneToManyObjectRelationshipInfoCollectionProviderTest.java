@@ -12,6 +12,7 @@ import com.liferay.info.item.InfoItemServiceRegistry;
 import com.liferay.info.pagination.InfoPage;
 import com.liferay.info.pagination.Pagination;
 import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
 import com.liferay.object.field.builder.TextObjectFieldBuilder;
 import com.liferay.object.model.ObjectDefinition;
@@ -103,7 +104,9 @@ public class OneToManyObjectRelationshipInfoCollectionProviderTest {
 
 		ObjectEntry parentObjectEntry = _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), _group.getGroupId(),
-			_parentObjectDefinition.getObjectDefinitionId(), null,
+			_parentObjectDefinition.getObjectDefinitionId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			null,
 			HashMapBuilder.<String, Serializable>put(
 				"parentTextObjectFieldName", RandomTestUtil.randomString()
 			).build(),
@@ -151,7 +154,9 @@ public class OneToManyObjectRelationshipInfoCollectionProviderTest {
 
 		return _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), group.getGroupId(),
-			objectDefinition.getObjectDefinitionId(), null,
+			objectDefinition.getObjectDefinitionId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			null,
 			HashMapBuilder.<String, Serializable>put(
 				"childTextObjectFieldName", RandomTestUtil.randomString()
 			).put(

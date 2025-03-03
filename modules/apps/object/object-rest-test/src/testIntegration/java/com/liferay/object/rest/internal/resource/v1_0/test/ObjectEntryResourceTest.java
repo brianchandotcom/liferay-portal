@@ -36,6 +36,7 @@ import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectDefinitionSettingConstants;
+import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectFieldValidationConstants;
@@ -4929,6 +4930,8 @@ public class ObjectEntryResourceTest {
 		ObjectEntry serviceBuilderObjectEntry =
 			_objectEntryLocalService.addObjectEntry(
 				user.getUserId(), 0, objectDefinition.getObjectDefinitionId(),
+				ObjectEntryFolderConstants.
+					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
 				null,
 				HashMapBuilder.<String, Serializable>put(
 					"testField", true
@@ -6571,7 +6574,10 @@ public class ObjectEntryResourceTest {
 			ObjectEntry serviceBuilderObjectEntry =
 				_objectEntryLocalService.addObjectEntry(
 					TestPropsValues.getUserId(), 0,
-					objectDefinition.getObjectDefinitionId(), null,
+					objectDefinition.getObjectDefinitionId(),
+					ObjectEntryFolderConstants.
+						PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+					null,
 					HashMapBuilder.<String, Serializable>put(
 						"authorOfGospel", true
 					).put(

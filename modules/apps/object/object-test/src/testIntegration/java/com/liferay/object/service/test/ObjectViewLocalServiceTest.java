@@ -10,6 +10,7 @@ import com.liferay.list.type.entry.util.ListTypeEntryUtil;
 import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
 import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectViewFilterColumnConstants;
 import com.liferay.object.exception.DefaultObjectViewException;
@@ -706,8 +707,10 @@ public class ObjectViewLocalServiceTest {
 
 		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
-			objectDefinition.getObjectDefinitionId(), null,
-			Collections.emptyMap(), ServiceContextTestUtil.getServiceContext());
+			objectDefinition.getObjectDefinitionId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			null, Collections.emptyMap(),
+			ServiceContextTestUtil.getServiceContext());
 
 		_objectViewLocalService.addObjectView(
 			TestPropsValues.getUserId(),

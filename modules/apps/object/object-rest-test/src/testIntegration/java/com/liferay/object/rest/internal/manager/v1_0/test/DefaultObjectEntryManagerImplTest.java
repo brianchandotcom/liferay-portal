@@ -33,6 +33,7 @@ import com.liferay.object.constants.ObjectActionExecutorConstants;
 import com.liferay.object.constants.ObjectActionKeys;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectFieldValidationConstants;
 import com.liferay.object.constants.ObjectFilterConstants;
@@ -3937,7 +3938,9 @@ public class DefaultObjectEntryManagerImplTest
 	public void testGetObjectEntryDocument() throws Exception {
 		_objectEntryLocalService.addObjectEntry(
 			adminUser.getUserId(), 0,
-			_objectDefinition1.getObjectDefinitionId(), null,
+			_objectDefinition1.getObjectDefinitionId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			null,
 			HashMapBuilder.<String, Serializable>put(
 				"textObjectFieldName", StringUtil.randomId()
 			).put(
@@ -4710,7 +4713,9 @@ public class DefaultObjectEntryManagerImplTest
 
 		_objectEntryLocalService.addObjectEntry(
 			adminUser.getUserId(), 0,
-			_objectDefinition3.getObjectDefinitionId(), null,
+			_objectDefinition3.getObjectDefinitionId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			null,
 			HashMapBuilder.<String, Serializable>put(
 				"r_oneToManyRelationshipName1_accountEntryId",
 				accountEntry1.getAccountEntryId()
@@ -4725,7 +4730,9 @@ public class DefaultObjectEntryManagerImplTest
 
 		_objectEntryLocalService.addObjectEntry(
 			adminUser.getUserId(), 0,
-			_objectDefinition3.getObjectDefinitionId(), null,
+			_objectDefinition3.getObjectDefinitionId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			null,
 			HashMapBuilder.<String, Serializable>put(
 				"r_oneToManyRelationshipName1_accountEntryId",
 				accountEntry2.getAccountEntryId()

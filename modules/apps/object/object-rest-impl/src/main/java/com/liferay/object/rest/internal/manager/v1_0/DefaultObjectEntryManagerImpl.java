@@ -10,6 +10,7 @@ import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.object.action.engine.ObjectActionEngine;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
@@ -164,6 +165,8 @@ public class DefaultObjectEntryManagerImpl
 			_objectEntryService.addObjectEntry(
 				getGroupId(objectDefinition, scopeKey),
 				objectDefinition.getObjectDefinitionId(),
+				ObjectEntryFolderConstants.
+					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
 				objectEntry.getDefaultLanguageId(),
 				_toObjectValues(
 					dtoConverterContext.getLocale(), objectDefinition,
@@ -800,6 +803,8 @@ public class DefaultObjectEntryManagerImpl
 			_objectEntryService.addOrUpdateObjectEntry(
 				externalReferenceCode, getGroupId(objectDefinition, scopeKey),
 				objectDefinition.getObjectDefinitionId(),
+				ObjectEntryFolderConstants.
+					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
 				_toObjectValues(
 					dtoConverterContext.getLocale(), objectDefinition,
 					objectEntry, scopeKey, serviceContext),

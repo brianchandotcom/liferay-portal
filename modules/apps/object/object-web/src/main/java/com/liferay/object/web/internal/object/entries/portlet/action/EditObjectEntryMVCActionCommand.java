@@ -5,6 +5,7 @@
 
 package com.liferay.object.web.internal.object.entries.portlet.action;
 
+import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.exception.ObjectDefinitionScopeException;
 import com.liferay.object.exception.ObjectEntryValuesException;
 import com.liferay.object.model.ObjectDefinition;
@@ -110,8 +111,10 @@ public class EditObjectEntryMVCActionCommand extends BaseMVCActionCommand {
 			if (objectEntryId == 0) {
 				_objectEntryService.addObjectEntry(
 					_getGroupId(actionRequest, objectDefinition),
-					objectDefinition.getObjectDefinitionId(), null,
-					_getValues(actionRequest),
+					objectDefinition.getObjectDefinitionId(),
+					ObjectEntryFolderConstants.
+						PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+					null, _getValues(actionRequest),
 					ServiceContextFactory.getInstance(
 						objectDefinition.getClassName(), actionRequest));
 			}

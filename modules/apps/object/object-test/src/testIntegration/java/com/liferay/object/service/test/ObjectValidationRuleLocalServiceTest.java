@@ -7,6 +7,7 @@ package com.liferay.object.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.constants.ObjectValidationRuleConstants;
 import com.liferay.object.constants.ObjectValidationRuleSettingConstants;
 import com.liferay.object.exception.NoSuchObjectValidationRuleException;
@@ -377,7 +378,9 @@ public class ObjectValidationRuleLocalServiceTest {
 
 		_objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
-			_objectDefinition.getObjectDefinitionId(), null,
+			_objectDefinition.getObjectDefinitionId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			null,
 			HashMapBuilder.<String, Serializable>put(
 				"textObjectField", RandomTestUtil.randomString()
 			).build(),
@@ -482,7 +485,10 @@ public class ObjectValidationRuleLocalServiceTest {
 
 			_objectEntryLocalService.addObjectEntry(
 				TestPropsValues.getUserId(), 0,
-				_objectDefinition.getObjectDefinitionId(), null,
+				_objectDefinition.getObjectDefinitionId(),
+				ObjectEntryFolderConstants.
+					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+				null,
 				HashMapBuilder.<String, Serializable>put(
 					"textObjectField", RandomTestUtil.randomString()
 				).build(),
@@ -738,6 +744,8 @@ public class ObjectValidationRuleLocalServiceTest {
 		try {
 			_objectEntryLocalService.addObjectEntry(
 				user.getUserId(), 0, _objectDefinition.getObjectDefinitionId(),
+				ObjectEntryFolderConstants.
+					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
 				null,
 				HashMapBuilder.<String, Serializable>put(
 					"textObjectField", RandomTestUtil.randomString()

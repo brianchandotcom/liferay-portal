@@ -37,6 +37,7 @@ import com.liferay.object.constants.ObjectActionExecutorConstants;
 import com.liferay.object.constants.ObjectActionTriggerConstants;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectDefinitionSettingConstants;
+import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
 import com.liferay.object.constants.ObjectFieldSettingConstants;
 import com.liferay.object.constants.ObjectRelationshipConstants;
@@ -2049,7 +2050,9 @@ public class ObjectEntryLocalServiceTest {
 
 		_objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
-			objectDefinition.getObjectDefinitionId(), null,
+			objectDefinition.getObjectDefinitionId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			null,
 			HashMapBuilder.<String, Serializable>put(
 				"multiselectPicklistObjectField",
 				_getMultiselectPicklistObjectFieldValue(prefixKey, 10)
@@ -2070,7 +2073,10 @@ public class ObjectEntryLocalServiceTest {
 				"\"multiselectPicklistObjectField\""),
 			() -> _objectEntryLocalService.addObjectEntry(
 				TestPropsValues.getUserId(), 0,
-				objectDefinition.getObjectDefinitionId(), null,
+				objectDefinition.getObjectDefinitionId(),
+				ObjectEntryFolderConstants.
+					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+				null,
 				HashMapBuilder.<String, Serializable>put(
 					"multiselectPicklistObjectField",
 					_getMultiselectPicklistObjectFieldValue(prefixKey, 100)
@@ -2511,8 +2517,9 @@ public class ObjectEntryLocalServiceTest {
 
 		_objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
-			_objectDefinition.getObjectDefinitionId(), null, values,
-			serviceContext);
+			_objectDefinition.getObjectDefinitionId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			null, values, serviceContext);
 
 		_assertCount(8);
 	}
@@ -2945,6 +2952,7 @@ public class ObjectEntryLocalServiceTest {
 		_objectEntryLocalService.addOrUpdateObjectEntry(
 			"AA1", TestPropsValues.getUserId(), 0,
 			objectDefinitionAA.getObjectDefinitionId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
 			HashMapBuilder.<String, Serializable>put(
 				() -> {
 					Node node = objectDefinitionTree.getNode(
@@ -4039,8 +4047,10 @@ public class ObjectEntryLocalServiceTest {
 			NoSuchObjectDefinitionException.class, null,
 			() -> _objectEntryLocalService.addObjectEntry(
 				TestPropsValues.getUserId(), depotEntry1.getGroupId(),
-				depotObjectDefinition.getObjectDefinitionId(), null,
-				Collections.emptyMap(),
+				depotObjectDefinition.getObjectDefinitionId(),
+				ObjectEntryFolderConstants.
+					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+				null, Collections.emptyMap(),
 				ServiceContextTestUtil.getServiceContext()));
 
 		ObjectDefinitionSetting objectDefinitionSetting =
@@ -4052,8 +4062,10 @@ public class ObjectEntryLocalServiceTest {
 
 		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), depotEntry1.getGroupId(),
-			depotObjectDefinition.getObjectDefinitionId(), null,
-			Collections.emptyMap(), ServiceContextTestUtil.getServiceContext());
+			depotObjectDefinition.getObjectDefinitionId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			null, Collections.emptyMap(),
+			ServiceContextTestUtil.getServiceContext());
 
 		Assert.assertEquals(depotEntry1.getGroupId(), objectEntry.getGroupId());
 
@@ -4066,8 +4078,10 @@ public class ObjectEntryLocalServiceTest {
 			NoSuchObjectDefinitionException.class, null,
 			() -> _objectEntryLocalService.addObjectEntry(
 				TestPropsValues.getUserId(), depotEntry2.getGroupId(),
-				depotObjectDefinition.getObjectDefinitionId(), null,
-				Collections.emptyMap(),
+				depotObjectDefinition.getObjectDefinitionId(),
+				ObjectEntryFolderConstants.
+					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+				null, Collections.emptyMap(),
 				ServiceContextTestUtil.getServiceContext()));
 
 		objectDefinitionSetting.setValue(
@@ -4080,8 +4094,10 @@ public class ObjectEntryLocalServiceTest {
 
 		objectEntry = _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), depotEntry2.getGroupId(),
-			depotObjectDefinition.getObjectDefinitionId(), null,
-			Collections.emptyMap(), ServiceContextTestUtil.getServiceContext());
+			depotObjectDefinition.getObjectDefinitionId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			null, Collections.emptyMap(),
+			ServiceContextTestUtil.getServiceContext());
 
 		Assert.assertEquals(depotEntry2.getGroupId(), objectEntry.getGroupId());
 
@@ -4948,8 +4964,9 @@ public class ObjectEntryLocalServiceTest {
 		throws Exception {
 
 		return _objectEntryLocalService.addObjectEntry(
-			TestPropsValues.getUserId(), groupId, objectDefinitionId, null,
-			values, ServiceContextTestUtil.getServiceContext());
+			TestPropsValues.getUserId(), groupId, objectDefinitionId,
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			null, values, ServiceContextTestUtil.getServiceContext());
 	}
 
 	private ObjectEntry _addObjectEntry(Map<String, Serializable> values)
@@ -5017,8 +5034,9 @@ public class ObjectEntryLocalServiceTest {
 
 		return _objectEntryLocalService.addOrUpdateObjectEntry(
 			externalReferenceCode, TestPropsValues.getUserId(), groupId,
-			_objectDefinition.getObjectDefinitionId(), values,
-			ServiceContextTestUtil.getServiceContext());
+			_objectDefinition.getObjectDefinitionId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			values, ServiceContextTestUtil.getServiceContext());
 	}
 
 	private void _addSystemObjectField(ObjectField objectField)
@@ -5388,8 +5406,9 @@ public class ObjectEntryLocalServiceTest {
 
 		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
-			_objectDefinition.getObjectDefinitionId(), null, values1,
-			serviceContext);
+			_objectDefinition.getObjectDefinitionId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			null, values1, serviceContext);
 
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_DRAFT, objectEntry.getStatus());
@@ -5432,8 +5451,9 @@ public class ObjectEntryLocalServiceTest {
 
 		objectEntry = _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), 0,
-			_objectDefinition.getObjectDefinitionId(), null, values2,
-			serviceContext);
+			_objectDefinition.getObjectDefinitionId(),
+			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			null, values2, serviceContext);
 
 		_objectDefinition.setEnableObjectEntryDraft(false);
 
@@ -5750,15 +5770,19 @@ public class ObjectEntryLocalServiceTest {
 					"\""),
 				() -> _objectEntryLocalService.addObjectEntry(
 					TestPropsValues.getUserId(), groupId,
-					objectDefinition.getObjectDefinitionId(), null,
-					Collections.<String, Serializable>emptyMap(),
+					objectDefinition.getObjectDefinitionId(),
+					ObjectEntryFolderConstants.
+						PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+					null, Collections.<String, Serializable>emptyMap(),
 					ServiceContextTestUtil.getServiceContext()));
 		}
 		else {
 			_objectEntryLocalService.addObjectEntry(
 				TestPropsValues.getUserId(), groupId,
-				objectDefinition.getObjectDefinitionId(), null,
-				Collections.<String, Serializable>emptyMap(),
+				objectDefinition.getObjectDefinitionId(),
+				ObjectEntryFolderConstants.
+					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+				null, Collections.<String, Serializable>emptyMap(),
 				ServiceContextTestUtil.getServiceContext());
 
 			Assert.assertEquals(

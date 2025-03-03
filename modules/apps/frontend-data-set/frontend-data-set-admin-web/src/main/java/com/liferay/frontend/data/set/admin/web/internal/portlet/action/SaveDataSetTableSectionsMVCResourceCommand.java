@@ -6,6 +6,7 @@
 package com.liferay.frontend.data.set.admin.web.internal.portlet.action;
 
 import com.liferay.frontend.data.set.admin.web.internal.constants.FDSAdminPortletKeys;
+import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
@@ -70,7 +71,10 @@ public class SaveDataSetTableSectionsMVCResourceCommand
 				creationDataJSONArray.getJSONObject(i);
 
 			ObjectEntry objectEntry = _objectEntryService.addObjectEntry(
-				0, objectDefinition.getObjectDefinitionId(), null,
+				0, objectDefinition.getObjectDefinitionId(),
+				ObjectEntryFolderConstants.
+					PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+				null,
 				HashMapBuilder.<String, Serializable>put(
 					"fieldName",
 					String.valueOf(creationDataJSONObject.get("name"))

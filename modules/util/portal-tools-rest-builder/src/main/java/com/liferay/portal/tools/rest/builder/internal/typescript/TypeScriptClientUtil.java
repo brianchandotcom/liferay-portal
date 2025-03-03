@@ -656,7 +656,7 @@ public class TypeScriptClientUtil {
 				"dataType", dataType
 			).put(
 				"name",
-				() -> StringUtil.replace(
+				StringUtil.replace(
 					Validator.isNull(schema.getReference()) ? "body" : dataType,
 					'-', '_')
 			).put(

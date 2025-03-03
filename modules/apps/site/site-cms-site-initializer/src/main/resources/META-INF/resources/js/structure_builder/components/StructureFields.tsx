@@ -15,8 +15,8 @@ import FieldsTree from './FieldsTree';
 
 export default function () {
 	return (
-		<div className="border p-4 structure-builder__structure-fields">
-			<h3 className="font-weight-semi-bold text-4">
+		<div className="border structure-builder__structure-fields">
+			<h3 className="font-weight-semi-bold pt-4 px-4 text-4">
 				{Liferay.Language.get('structure-fields')}
 			</h3>
 
@@ -54,7 +54,7 @@ function StructureFields() {
 function EmptyState() {
 	return (
 		<ClayEmptyState
-			className="structure-builder__structure-fields-empty-state"
+			className="px-4 structure-builder__structure-fields-empty-state"
 			description={Liferay.Language.get(
 				'add-new-fields-to-start-building-your-structure'
 			)}
@@ -73,7 +73,7 @@ function Toolbar({
 	setSearch: React.Dispatch<React.SetStateAction<string>>;
 }) {
 	return (
-		<div className="align-items-center c-gap-2 d-flex">
+		<div className="align-items-center c-gap-2 d-flex px-4">
 			<SearchForm
 				className="flex-grow-1 my-3"
 				label={Liferay.Language.get('search-fields')}

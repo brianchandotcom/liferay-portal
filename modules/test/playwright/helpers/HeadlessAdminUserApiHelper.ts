@@ -33,8 +33,23 @@ type TOrganization = {
 	externalReferenceCode?: string;
 	id?: string;
 	name?: string;
+	organizationContactInformation?: TOrganizationContactInformation;
 	parentOrganization?: TOrganization;
 	services?: TServices[];
+};
+
+export type TOrganizationContactInformation = {
+	postalAddresses: TPostalAddresses[];
+};
+
+export type TPostalAddresses = {
+	addressCountry: string;
+	addressLocality: string;
+	addressType: string;
+	externalReferenceCode?: string;
+	id?: string;
+	postalCode: string;
+	streetAddressLine1: string;
 };
 
 export type TPermission = {

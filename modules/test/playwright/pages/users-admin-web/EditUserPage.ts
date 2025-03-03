@@ -50,6 +50,7 @@ export class EditUserPage {
 	readonly selectOrganizationButton: Locator;
 	readonly selectOrganizationRolesButton: Locator;
 	readonly selectOrganizationRolesFrame: FrameLocator;
+	readonly selectOrganizationRolesFrameCell: (name: string) => Locator;
 	readonly selectOrganizationRolesTable: Locator;
 	readonly selectOrganizationRolesTableRow: (
 		colPosition: number,
@@ -213,6 +214,8 @@ export class EditUserPage {
 		this.selectOrganizationRolesFrame = page.frameLocator(
 			'iframe[title="Select Organization Role"]'
 		);
+		this.selectOrganizationRolesFrameCell = (name) =>
+			this.selectOrganizationRolesFrame.getByRole('cell', {name});
 		this.selectOrganizationRolesTable =
 			this.selectOrganizationRolesFrame.locator(
 				'#_com_liferay_roles_admin_web_portlet_RolesAdminPortlet_organizationsSearchContainer'

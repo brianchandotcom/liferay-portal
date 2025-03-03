@@ -101,10 +101,10 @@ public class LayoutPrivateLayoutsUpgradeProcess extends UpgradeProcess {
 			Objects.equals(
 				disabledReleaseFeatureFlags[0], _DISABLE_PRIVATE_LAYOUTS)) {
 
-			return Boolean.FALSE.toString();
+			return Boolean.TRUE.toString();
 		}
 
-		return Boolean.TRUE.toString();
+		return Boolean.FALSE.toString();
 	}
 
 	private boolean _hasReleaseSchemaVersion() throws Exception {

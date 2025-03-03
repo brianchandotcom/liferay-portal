@@ -12,6 +12,17 @@ export type APIResponse<T = any> = {
 	totalCount: number;
 };
 
+type Attachment = {
+	customFields: CustomField[];
+	galleryEnabled: boolean;
+	id: number;
+	priority: number;
+	src: string;
+	tags?: string[];
+	title: string;
+	type: number;
+};
+
 type BillingAddress = {
 	city?: string;
 	country?: string;
@@ -244,6 +255,7 @@ export type Price = {
 };
 
 export type Product = {
+	attachments: Attachment[];
 	catalogId: number;
 	catalogName: string;
 	categories: Category[];

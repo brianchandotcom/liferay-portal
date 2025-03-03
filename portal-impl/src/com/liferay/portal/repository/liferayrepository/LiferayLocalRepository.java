@@ -484,6 +484,16 @@ public class LiferayLocalRepository
 	}
 
 	@Override
+	public FileShortcut getFileShortcutByExternalReferenceCode(
+			String externalReferenceCode)
+		throws PortalException {
+
+		return new LiferayFileShortcut(
+			dlFileShortcutLocalService.getDLFileShortcutByExternalReferenceCode(
+				externalReferenceCode, getGroupId()));
+	}
+
+	@Override
 	public FileVersion getFileVersion(long fileVersionId)
 		throws PortalException {
 
@@ -509,6 +519,15 @@ public class LiferayLocalRepository
 			getGroupId(), toFolderId(parentFolderId), name);
 
 		return new LiferayFolder(dlFolder);
+	}
+
+	@Override
+	public Folder getFolderByExternalReferenceCode(String externalReferenceCode)
+		throws PortalException {
+
+		return new LiferayFolder(
+			dlFolderLocalService.getDLFolderByExternalReferenceCode(
+				externalReferenceCode, getGroupId()));
 	}
 
 	@Override

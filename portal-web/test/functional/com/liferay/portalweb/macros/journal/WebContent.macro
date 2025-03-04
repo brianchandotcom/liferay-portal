@@ -1444,7 +1444,7 @@ definition {
 				value1 = "Draft");
 		}
 		else {
-			WebContent.publishWithPermissions();
+			WebContent.publishExistingWCArticleWithPermissions();
 		}
 	}
 

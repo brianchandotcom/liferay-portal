@@ -1132,20 +1132,6 @@ definition {
 
 		WebContent.publishWithPermissions();
 
-		AssertClick(
-			buttonName = "Publish With Permissions",
-			locator1 = "WCEditWebContent#PUBLISH_WITH_PERMISSIONS_BUTTON",
-			value1 = "Publish With Permissions");
-
-		WaitForElementPresent(
-			locator1 = "Modal#SELECT_WITH_LABEL",
-			selectLabel = "Viewable by");
-
-		AssertClick(
-			buttonName = "Publish",
-			locator1 = "Modal#PRIMARY_BUTTON",
-			value1 = "Publish");
-
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
 		for (var index : list "1,2,3") {
@@ -1182,12 +1168,7 @@ definition {
 				webContentGrid = "true");
 		}
 
-		WebContent.publishWithPermissions();
-
-		AssertClick(
-			buttonName = "Publish",
-			locator1 = "WCEditWebContent#PUBLISH_BUTTON",
-			value1 = "Publish");
+		WebContent.publishExistingWCArticleWithPermissions();
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Web Content Title");
 
@@ -1750,7 +1731,7 @@ definition {
 			webContentTextFieldLabel = "文本",
 			webContentTitle = "测试标题");
 
-		WebContent.publishWithPermissions();
+		WebContent.publishExistingWCArticleWithPermissions();
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "WC Title Edited");
 

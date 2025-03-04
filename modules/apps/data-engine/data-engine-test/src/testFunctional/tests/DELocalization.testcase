@@ -3582,7 +3582,7 @@ definition {
 			webContentImageFieldLabel = "图片",
 			webContentTitle = "测试");
 
-		WebContent.publishWithPermissions();
+		WebContent.publishExistingWCArticleWithPermissions();
 
 		WebContentNavigator.gotoEditCP(webContentTitle = "Test");
 

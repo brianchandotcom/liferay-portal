@@ -6,7 +6,7 @@
 import {config} from '../config';
 import {State} from '../contexts/StateContext';
 import {ObjectDefinition, ObjectField} from '../types/ObjectDefinition';
-import {FIELD_TYPE_BUSINESS_TYPE, Field} from './field';
+import {FIELD_TYPE_BUSINESS_TYPE, FIELD_TYPE_DB_TYPE, Field} from './field';
 
 export default function buildObjectDefinition({
 	erc,
@@ -49,6 +49,7 @@ export default function buildObjectDefinition({
 function buildFields(fields: Field[]) {
 	return fields.map((field) => {
 		const objectField: ObjectField = {
+			DBType: FIELD_TYPE_DB_TYPE[field.type],
 			businessType: FIELD_TYPE_BUSINESS_TYPE[field.type],
 			externalReferenceCode: field.erc,
 			indexed: field.indexableConfig.indexed,

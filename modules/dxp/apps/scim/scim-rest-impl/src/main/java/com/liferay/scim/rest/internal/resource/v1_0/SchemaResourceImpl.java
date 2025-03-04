@@ -46,6 +46,16 @@ import org.wso2.charon3.core.protocol.endpoints.SchemaResourceManager;
 public class SchemaResourceImpl extends BaseSchemaResourceImpl {
 
 	@Override
+	public Object getV2SchemaById(String id) throws Exception {
+		return _buildResponse(
+			_schemaResourceManager.get(
+				id, _userManager,
+				(String)contextHttpServletRequest.getAttribute(
+					WebKeys.CURRENT_COMPLETE_URL),
+				null));
+	}
+
+	@Override
 	public Object getV2Schemas() throws Exception {
 		return _buildResponse(
 			_schemaResourceManager.get(

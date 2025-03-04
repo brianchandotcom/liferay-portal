@@ -111,6 +111,11 @@ public abstract class BaseSchemaResourceTestCase {
 		Assert.assertTrue(false);
 	}
 
+	@Test
+	public void testGetV2SchemaById() throws Exception {
+		Assert.assertTrue(false);
+	}
+
 	protected void assertContains(Object schema, List<Object> schemas) {
 		boolean contains = false;
 

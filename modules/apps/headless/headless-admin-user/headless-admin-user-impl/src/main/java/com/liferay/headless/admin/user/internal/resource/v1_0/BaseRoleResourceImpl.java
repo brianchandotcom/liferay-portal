@@ -7,7 +7,6 @@ package com.liferay.headless.admin.user.internal.resource.v1_0;
 
 import com.liferay.headless.admin.user.dto.v1_0.Role;
 import com.liferay.headless.admin.user.resource.v1_0.RoleResource;
-import com.liferay.lazy.referencing.kernel.LazyReferencingThreadLocal;
 import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
@@ -1266,73 +1265,62 @@ public abstract class BaseRoleResourceImpl
 			Collection<Role> roles, Map<String, Serializable> parameters)
 		throws Exception {
 
-		try {
-			LazyReferencingThreadLocal.setLazyReferencingEnabled(true);
+		UnsafeFunction<Role, Role, Exception> roleUnsafeFunction = null;
 
-			UnsafeFunction<Role, Role, Exception> roleUnsafeFunction = null;
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
 
-			String createStrategy = (String)parameters.getOrDefault(
-				"createStrategy", "INSERT");
+		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
+			roleUnsafeFunction = role -> postRole(role);
+		}
 
-			if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
-				roleUnsafeFunction = role -> postRole(role);
+		if (StringUtil.equalsIgnoreCase(createStrategy, "UPSERT")) {
+			String updateStrategy = (String)parameters.getOrDefault(
+				"updateStrategy", "UPDATE");
+
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
+				roleUnsafeFunction = role -> putRoleByExternalReferenceCode(
+					role.getExternalReferenceCode(), role);
 			}
 
-			if (StringUtil.equalsIgnoreCase(createStrategy, "UPSERT")) {
-				String updateStrategy = (String)parameters.getOrDefault(
-					"updateStrategy", "UPDATE");
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
+				roleUnsafeFunction = role -> {
+					Role persistedRole = null;
 
-				if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-					roleUnsafeFunction = role -> putRoleByExternalReferenceCode(
-						role.getExternalReferenceCode(), role);
-				}
+					try {
+						Role getRole = getRoleByExternalReferenceCode(
+							role.getExternalReferenceCode());
 
-				if (StringUtil.equalsIgnoreCase(
-						updateStrategy, "PARTIAL_UPDATE")) {
+						persistedRole = patchRole(
+							getRole.getId() != null ? getRole.getId() :
+								_parseLong((String)parameters.get("roleId")),
+							role);
+					}
+					catch (NoSuchModelException noSuchModelException) {
+						persistedRole = postRole(role);
+					}
 
-					roleUnsafeFunction = role -> {
-						Role persistedRole = null;
-
-						try {
-							Role getRole = getRoleByExternalReferenceCode(
-								role.getExternalReferenceCode());
-
-							persistedRole = patchRole(
-								getRole.getId() != null ? getRole.getId() :
-									_parseLong(
-										(String)parameters.get("roleId")),
-								role);
-						}
-						catch (NoSuchModelException noSuchModelException) {
-							persistedRole = postRole(role);
-						}
-
-						return persistedRole;
-					};
-				}
-			}
-
-			if (roleUnsafeFunction == null) {
-				throw new NotSupportedException(
-					"Create strategy \"" + createStrategy +
-						"\" is not supported for Role");
-			}
-
-			if (contextBatchUnsafeBiConsumer != null) {
-				contextBatchUnsafeBiConsumer.accept(roles, roleUnsafeFunction);
-			}
-			else if (contextBatchUnsafeConsumer != null) {
-				contextBatchUnsafeConsumer.accept(
-					roles, roleUnsafeFunction::apply);
-			}
-			else {
-				for (Role role : roles) {
-					roleUnsafeFunction.apply(role);
-				}
+					return persistedRole;
+				};
 			}
 		}
-		finally {
-			LazyReferencingThreadLocal.setLazyReferencingEnabled(false);
+
+		if (roleUnsafeFunction == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" is not supported for Role");
+		}
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(roles, roleUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(roles, roleUnsafeFunction::apply);
+		}
+		else {
+			for (Role role : roles) {
+				roleUnsafeFunction.apply(role);
+			}
 		}
 	}
 

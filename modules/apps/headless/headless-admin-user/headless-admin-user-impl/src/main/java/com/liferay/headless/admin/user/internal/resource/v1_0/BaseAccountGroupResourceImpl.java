@@ -7,7 +7,6 @@ package com.liferay.headless.admin.user.internal.resource.v1_0;
 
 import com.liferay.headless.admin.user.dto.v1_0.AccountGroup;
 import com.liferay.headless.admin.user.resource.v1_0.AccountGroupResource;
-import com.liferay.lazy.referencing.kernel.LazyReferencingThreadLocal;
 import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
@@ -916,82 +915,71 @@ public abstract class BaseAccountGroupResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		try {
-			LazyReferencingThreadLocal.setLazyReferencingEnabled(true);
+		UnsafeFunction<AccountGroup, AccountGroup, Exception>
+			accountGroupUnsafeFunction = null;
 
-			UnsafeFunction<AccountGroup, AccountGroup, Exception>
-				accountGroupUnsafeFunction = null;
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
 
-			String createStrategy = (String)parameters.getOrDefault(
-				"createStrategy", "INSERT");
+		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
+			accountGroupUnsafeFunction = accountGroup -> postAccountGroup(
+				accountGroup);
+		}
 
-			if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
-				accountGroupUnsafeFunction = accountGroup -> postAccountGroup(
-					accountGroup);
+		if (StringUtil.equalsIgnoreCase(createStrategy, "UPSERT")) {
+			String updateStrategy = (String)parameters.getOrDefault(
+				"updateStrategy", "UPDATE");
+
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
+				accountGroupUnsafeFunction =
+					accountGroup -> putAccountGroupByExternalReferenceCode(
+						accountGroup.getExternalReferenceCode(), accountGroup);
 			}
 
-			if (StringUtil.equalsIgnoreCase(createStrategy, "UPSERT")) {
-				String updateStrategy = (String)parameters.getOrDefault(
-					"updateStrategy", "UPDATE");
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
+				accountGroupUnsafeFunction = accountGroup -> {
+					AccountGroup persistedAccountGroup = null;
 
-				if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-					accountGroupUnsafeFunction =
-						accountGroup -> putAccountGroupByExternalReferenceCode(
-							accountGroup.getExternalReferenceCode(),
+					try {
+						AccountGroup getAccountGroup =
+							getAccountGroupByExternalReferenceCode(
+								accountGroup.getExternalReferenceCode());
+
+						persistedAccountGroup = patchAccountGroup(
+							getAccountGroup.getId() != null ?
+								getAccountGroup.getId() :
+									_parseLong(
+										(String)parameters.get(
+											"accountGroupId")),
 							accountGroup);
-				}
+					}
+					catch (NoSuchModelException noSuchModelException) {
+						persistedAccountGroup = postAccountGroup(accountGroup);
+					}
 
-				if (StringUtil.equalsIgnoreCase(
-						updateStrategy, "PARTIAL_UPDATE")) {
-
-					accountGroupUnsafeFunction = accountGroup -> {
-						AccountGroup persistedAccountGroup = null;
-
-						try {
-							AccountGroup getAccountGroup =
-								getAccountGroupByExternalReferenceCode(
-									accountGroup.getExternalReferenceCode());
-
-							persistedAccountGroup = patchAccountGroup(
-								getAccountGroup.getId() != null ?
-									getAccountGroup.getId() :
-										_parseLong(
-											(String)parameters.get(
-												"accountGroupId")),
-								accountGroup);
-						}
-						catch (NoSuchModelException noSuchModelException) {
-							persistedAccountGroup = postAccountGroup(
-								accountGroup);
-						}
-
-						return persistedAccountGroup;
-					};
-				}
-			}
-
-			if (accountGroupUnsafeFunction == null) {
-				throw new NotSupportedException(
-					"Create strategy \"" + createStrategy +
-						"\" is not supported for AccountGroup");
-			}
-
-			if (contextBatchUnsafeBiConsumer != null) {
-				contextBatchUnsafeBiConsumer.accept(
-					accountGroups, accountGroupUnsafeFunction);
-			}
-			else if (contextBatchUnsafeConsumer != null) {
-				contextBatchUnsafeConsumer.accept(
-					accountGroups, accountGroupUnsafeFunction::apply);
-			}
-			else {
-				for (AccountGroup accountGroup : accountGroups) {
-					accountGroupUnsafeFunction.apply(accountGroup);
-				}
+					return persistedAccountGroup;
+				};
 			}
 		}
-		finally {
-			LazyReferencingThreadLocal.setLazyReferencingEnabled(false);
+
+		if (accountGroupUnsafeFunction == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" is not supported for AccountGroup");
+		}
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				accountGroups, accountGroupUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				accountGroups, accountGroupUnsafeFunction::apply);
+		}
+		else {
+			for (AccountGroup accountGroup : accountGroups) {
+				accountGroupUnsafeFunction.apply(accountGroup);
+			}
 		}
 	}
 

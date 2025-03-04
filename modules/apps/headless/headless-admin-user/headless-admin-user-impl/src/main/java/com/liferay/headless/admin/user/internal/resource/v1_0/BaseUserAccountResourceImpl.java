@@ -7,7 +7,6 @@ package com.liferay.headless.admin.user.internal.resource.v1_0;
 
 import com.liferay.headless.admin.user.dto.v1_0.UserAccount;
 import com.liferay.headless.admin.user.resource.v1_0.UserAccountResource;
-import com.liferay.lazy.referencing.kernel.LazyReferencingThreadLocal;
 import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
@@ -2480,97 +2479,85 @@ public abstract class BaseUserAccountResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		try {
-			LazyReferencingThreadLocal.setLazyReferencingEnabled(true);
+		UnsafeFunction<UserAccount, UserAccount, Exception>
+			userAccountUnsafeFunction = null;
 
-			UnsafeFunction<UserAccount, UserAccount, Exception>
-				userAccountUnsafeFunction = null;
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
 
-			String createStrategy = (String)parameters.getOrDefault(
-				"createStrategy", "INSERT");
+		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
+			userAccountUnsafeFunction = userAccount -> postUserAccount(
+				userAccount);
 
-			if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
-				userAccountUnsafeFunction = userAccount -> postUserAccount(
-					userAccount);
-
-				if (parameters.containsKey("accountId")) {
-					userAccountUnsafeFunction =
-						userAccount -> postAccountUserAccount(
-							_parseLong((String)parameters.get("accountId")),
-							userAccount);
-				}
-			}
-
-			if (StringUtil.equalsIgnoreCase(createStrategy, "UPSERT")) {
-				String updateStrategy = (String)parameters.getOrDefault(
-					"updateStrategy", "UPDATE");
-
-				if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-					userAccountUnsafeFunction =
-						userAccount -> putUserAccountByExternalReferenceCode(
-							userAccount.getExternalReferenceCode(),
-							userAccount);
-				}
-
-				if (StringUtil.equalsIgnoreCase(
-						updateStrategy, "PARTIAL_UPDATE")) {
-
-					userAccountUnsafeFunction = userAccount -> {
-						UserAccount persistedUserAccount = null;
-
-						try {
-							UserAccount getUserAccount =
-								getUserAccountByExternalReferenceCode(
-									userAccount.getExternalReferenceCode());
-
-							persistedUserAccount = patchUserAccount(
-								getUserAccount.getId() != null ?
-									getUserAccount.getId() :
-										_parseLong(
-											(String)parameters.get(
-												"userAccountId")),
-								userAccount);
-						}
-						catch (NoSuchModelException noSuchModelException) {
-							if (parameters.containsKey("accountId")) {
-								persistedUserAccount = postAccountUserAccount(
-									_parseLong(
-										(String)parameters.get("accountId")),
-									userAccount);
-							}
-							else {
-								persistedUserAccount = postUserAccount(
-									userAccount);
-							}
-						}
-
-						return persistedUserAccount;
-					};
-				}
-			}
-
-			if (userAccountUnsafeFunction == null) {
-				throw new NotSupportedException(
-					"Create strategy \"" + createStrategy +
-						"\" is not supported for UserAccount");
-			}
-
-			if (contextBatchUnsafeBiConsumer != null) {
-				contextBatchUnsafeBiConsumer.accept(
-					userAccounts, userAccountUnsafeFunction);
-			}
-			else if (contextBatchUnsafeConsumer != null) {
-				contextBatchUnsafeConsumer.accept(
-					userAccounts, userAccountUnsafeFunction::apply);
-			}
-			else {
-				for (UserAccount userAccount : userAccounts) {
-					userAccountUnsafeFunction.apply(userAccount);
-				}
+			if (parameters.containsKey("accountId")) {
+				userAccountUnsafeFunction =
+					userAccount -> postAccountUserAccount(
+						_parseLong((String)parameters.get("accountId")),
+						userAccount);
 			}
 		}
-		finally {
-			LazyReferencingThreadLocal.setLazyReferencingEnabled(false);
+
+		if (StringUtil.equalsIgnoreCase(createStrategy, "UPSERT")) {
+			String updateStrategy = (String)parameters.getOrDefault(
+				"updateStrategy", "UPDATE");
+
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
+				userAccountUnsafeFunction =
+					userAccount -> putUserAccountByExternalReferenceCode(
+						userAccount.getExternalReferenceCode(), userAccount);
+			}
+
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
+				userAccountUnsafeFunction = userAccount -> {
+					UserAccount persistedUserAccount = null;
+
+					try {
+						UserAccount getUserAccount =
+							getUserAccountByExternalReferenceCode(
+								userAccount.getExternalReferenceCode());
+
+						persistedUserAccount = patchUserAccount(
+							getUserAccount.getId() != null ?
+								getUserAccount.getId() :
+									_parseLong(
+										(String)parameters.get(
+											"userAccountId")),
+							userAccount);
+					}
+					catch (NoSuchModelException noSuchModelException) {
+						if (parameters.containsKey("accountId")) {
+							persistedUserAccount = postAccountUserAccount(
+								_parseLong((String)parameters.get("accountId")),
+								userAccount);
+						}
+						else {
+							persistedUserAccount = postUserAccount(userAccount);
+						}
+					}
+
+					return persistedUserAccount;
+				};
+			}
+		}
+
+		if (userAccountUnsafeFunction == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" is not supported for UserAccount");
+		}
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				userAccounts, userAccountUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				userAccounts, userAccountUnsafeFunction::apply);
+		}
+		else {
+			for (UserAccount userAccount : userAccounts) {
+				userAccountUnsafeFunction.apply(userAccount);
+			}
 		}
 	}
 

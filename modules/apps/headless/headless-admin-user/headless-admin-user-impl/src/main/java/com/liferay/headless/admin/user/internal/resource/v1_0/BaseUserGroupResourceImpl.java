@@ -7,7 +7,6 @@ package com.liferay.headless.admin.user.internal.resource.v1_0;
 
 import com.liferay.headless.admin.user.dto.v1_0.UserGroup;
 import com.liferay.headless.admin.user.resource.v1_0.UserGroupResource;
-import com.liferay.lazy.referencing.kernel.LazyReferencingThreadLocal;
 import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
@@ -808,79 +807,69 @@ public abstract class BaseUserGroupResourceImpl
 			Map<String, Serializable> parameters)
 		throws Exception {
 
-		try {
-			LazyReferencingThreadLocal.setLazyReferencingEnabled(true);
+		UnsafeFunction<UserGroup, UserGroup, Exception>
+			userGroupUnsafeFunction = null;
 
-			UnsafeFunction<UserGroup, UserGroup, Exception>
-				userGroupUnsafeFunction = null;
+		String createStrategy = (String)parameters.getOrDefault(
+			"createStrategy", "INSERT");
 
-			String createStrategy = (String)parameters.getOrDefault(
-				"createStrategy", "INSERT");
+		if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
+			userGroupUnsafeFunction = userGroup -> postUserGroup(userGroup);
+		}
 
-			if (StringUtil.equalsIgnoreCase(createStrategy, "INSERT")) {
-				userGroupUnsafeFunction = userGroup -> postUserGroup(userGroup);
+		if (StringUtil.equalsIgnoreCase(createStrategy, "UPSERT")) {
+			String updateStrategy = (String)parameters.getOrDefault(
+				"updateStrategy", "UPDATE");
+
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
+				userGroupUnsafeFunction =
+					userGroup -> putUserGroupByExternalReferenceCode(
+						userGroup.getExternalReferenceCode(), userGroup);
 			}
 
-			if (StringUtil.equalsIgnoreCase(createStrategy, "UPSERT")) {
-				String updateStrategy = (String)parameters.getOrDefault(
-					"updateStrategy", "UPDATE");
+			if (StringUtil.equalsIgnoreCase(updateStrategy, "PARTIAL_UPDATE")) {
+				userGroupUnsafeFunction = userGroup -> {
+					UserGroup persistedUserGroup = null;
 
-				if (StringUtil.equalsIgnoreCase(updateStrategy, "UPDATE")) {
-					userGroupUnsafeFunction =
-						userGroup -> putUserGroupByExternalReferenceCode(
-							userGroup.getExternalReferenceCode(), userGroup);
-				}
+					try {
+						UserGroup getUserGroup =
+							getUserGroupByExternalReferenceCode(
+								userGroup.getExternalReferenceCode());
 
-				if (StringUtil.equalsIgnoreCase(
-						updateStrategy, "PARTIAL_UPDATE")) {
+						persistedUserGroup = patchUserGroup(
+							getUserGroup.getId() != null ?
+								getUserGroup.getId() :
+									_parseLong(
+										(String)parameters.get("userGroupId")),
+							userGroup);
+					}
+					catch (NoSuchModelException noSuchModelException) {
+						persistedUserGroup = postUserGroup(userGroup);
+					}
 
-					userGroupUnsafeFunction = userGroup -> {
-						UserGroup persistedUserGroup = null;
-
-						try {
-							UserGroup getUserGroup =
-								getUserGroupByExternalReferenceCode(
-									userGroup.getExternalReferenceCode());
-
-							persistedUserGroup = patchUserGroup(
-								getUserGroup.getId() != null ?
-									getUserGroup.getId() :
-										_parseLong(
-											(String)parameters.get(
-												"userGroupId")),
-								userGroup);
-						}
-						catch (NoSuchModelException noSuchModelException) {
-							persistedUserGroup = postUserGroup(userGroup);
-						}
-
-						return persistedUserGroup;
-					};
-				}
-			}
-
-			if (userGroupUnsafeFunction == null) {
-				throw new NotSupportedException(
-					"Create strategy \"" + createStrategy +
-						"\" is not supported for UserGroup");
-			}
-
-			if (contextBatchUnsafeBiConsumer != null) {
-				contextBatchUnsafeBiConsumer.accept(
-					userGroups, userGroupUnsafeFunction);
-			}
-			else if (contextBatchUnsafeConsumer != null) {
-				contextBatchUnsafeConsumer.accept(
-					userGroups, userGroupUnsafeFunction::apply);
-			}
-			else {
-				for (UserGroup userGroup : userGroups) {
-					userGroupUnsafeFunction.apply(userGroup);
-				}
+					return persistedUserGroup;
+				};
 			}
 		}
-		finally {
-			LazyReferencingThreadLocal.setLazyReferencingEnabled(false);
+
+		if (userGroupUnsafeFunction == null) {
+			throw new NotSupportedException(
+				"Create strategy \"" + createStrategy +
+					"\" is not supported for UserGroup");
+		}
+
+		if (contextBatchUnsafeBiConsumer != null) {
+			contextBatchUnsafeBiConsumer.accept(
+				userGroups, userGroupUnsafeFunction);
+		}
+		else if (contextBatchUnsafeConsumer != null) {
+			contextBatchUnsafeConsumer.accept(
+				userGroups, userGroupUnsafeFunction::apply);
+		}
+		else {
+			for (UserGroup userGroup : userGroups) {
+				userGroupUnsafeFunction.apply(userGroup);
+			}
 		}
 	}
 

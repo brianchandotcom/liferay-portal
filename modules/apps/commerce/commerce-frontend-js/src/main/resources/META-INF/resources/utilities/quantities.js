@@ -73,7 +73,7 @@ export function getProductMaxQuantity(
 
 	const maxDifference = maxQuantity % multipleQuantity;
 
-	if (!maxDifference) {
+	if (!maxDifference || maxQuantity < multipleQuantity) {
 		return maxQuantity.toFixed(precision);
 	}
 

@@ -50,11 +50,19 @@ function buildFields(fields: Field[]) {
 		const objectField: ObjectField = {
 			businessType: FIELD_TYPE_BUSINESS_TYPE[field.type],
 			externalReferenceCode: field.erc,
+			indexed: field.indexableConfig.indexed,
 			label: field.label,
 			localized: field.localized,
 			name: field.name,
 			required: field.required,
 		};
+
+		if (field.indexableConfig.indexed) {
+			objectField.indexedAsKeyword =
+				field.indexableConfig.indexedAsKeyword;
+			objectField.indexedLanguageId =
+				field.indexableConfig.indexedLanguageId ?? '';
+		}
 
 		if ('settings' in field) {
 			objectField.objectFieldSettings = Object.entries(

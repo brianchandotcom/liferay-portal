@@ -652,16 +652,15 @@ public class StructuredContentResourceTest
 
 	@Test
 	public void testPostStructuredContentWithBatch() throws Exception {
-		StructuredContent randomStructuredContent1 = _randomStructuredContent(
-			LocaleUtil.getDefault());
-
 		HttpInvoker.HttpResponse httpResponse =
 			structuredContentResource.
 				postSiteStructuredContentBatchHttpResponse(
 					testGroup.getGroupId(), null,
 					JSONUtil.putAll(
 						JSONFactoryUtil.createJSONObject(
-							randomStructuredContent1.toString())));
+							String.valueOf(
+								_randomStructuredContent(
+									LocaleUtil.getDefault())))));
 
 		assertHttpResponseStatusCode(202, httpResponse);
 

@@ -519,21 +519,21 @@ public class TypeScriptClientUtil {
 			return dataType;
 		}
 
-		String dataType = schema.getType();
+		String type = schema.getType();
 
-		if (dataType.equals("array")) {
+		if (type.equals("array")) {
 			Items items = schema.getItems();
 
 			return "Array<" + _getDataType(items.toSchema(), importClasses) +
 				">";
 		}
-		else if (dataType.equals("boolean")) {
+		else if (type.equals("boolean")) {
 			return "boolean";
 		}
-		else if (dataType.equals("integer") || dataType.equals("number")) {
+		else if (type.equals("integer") || type.equals("number")) {
 			return "number";
 		}
-		else if (dataType.equals("object")) {
+		else if (type.equals("object")) {
 			Schema additionalPropertySchema =
 				schema.getAdditionalPropertySchema();
 
@@ -554,12 +554,12 @@ public class TypeScriptClientUtil {
 			return "{[key: string]: " +
 				_getDataType(additionalPropertySchema, importClasses) + ";}";
 		}
-		else if (dataType.equals("permission")) {
+		else if (type.equals("permission")) {
 			importClasses.add("Permission");
 
 			return "Permission";
 		}
-		else if (dataType.equals("string")) {
+		else if (type.equals("string")) {
 			List<String> values = schema.getEnumValues();
 
 			if (ListUtil.isNotNull(values)) {

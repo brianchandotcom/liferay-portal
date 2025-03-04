@@ -129,7 +129,10 @@ export class WebContentDisplayPage {
 		await this.webContentDisplayContent.click();
 
 		await this.page
-			.locator('[id*="JournalContentPortlet"]')
+			.locator('#wrapper')
+			.getByText('Web Content Display')
+			.last()
+			.locator('..')
 			.getByRole('button', {name: 'Options'})
 			.click();
 		await this.configurationOption.click();

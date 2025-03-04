@@ -1771,7 +1771,7 @@ public class JournalEditArticleDisplayContext {
 	}
 
 	private boolean _isShowPublishModal() throws PortalException {
-		if (_article == null) {
+		if ((_article == null) || (_article.getId() == 0)) {
 			return true;
 		}
 

@@ -246,14 +246,12 @@ public class TypeScriptClientUtil {
 		for (Map.Entry<String, List<Map<String, Object>>> entry :
 				operationDatasMap.entrySet()) {
 
-			// TODO Rename "classname" to "className"
-
 			apiContexts.put(
 				entry.getKey(),
 				HashMapBuilder.<String, Object>put(
-					"classname", entry.getKey() + "Api"
+					"className", entry.getKey() + "Api"
 				).put(
-					"imports",
+					"importClasses",
 					importsMap.getOrDefault(entry.getKey(), new HashSet<>())
 				).put(
 					"operationsData", entry.getValue()
@@ -266,7 +264,7 @@ public class TypeScriptClientUtil {
 	private static Map<String, Object> _buildModelContext(
 		String modelName, Schema schema) {
 
-		Set<String> imports = new HashSet<>();
+		Set<String> importClasses = new HashSet<>();
 		String parentClass = null;
 		List<Map<String, Object>> properties = new ArrayList<>();
 
@@ -281,15 +279,13 @@ public class TypeScriptClientUtil {
 				parentClass = parentSchemaReference.substring(
 					parentSchemaReference.lastIndexOf('/') + 1);
 
-				imports.add(parentClass);
+				importClasses.add(parentClass);
 
 				for (Schema curSchema : schema.getAllOfSchemas()) {
 					if (curSchema.getPropertySchemas() == null) {
 						continue;
 					}
-
-					// TODO Rename "type" to "dataType"
-
+					
 					Map<String, Schema> propertySchemas =
 						curSchema.getPropertySchemas();
 
@@ -298,14 +294,12 @@ public class TypeScriptClientUtil {
 							HashMapBuilder.<String, Object>put(
 								"name", StringUtil.replace(name, '-', '_')
 							).put(
-								"type", _getDataType(propertySchema, imports)
+								"dataType", _getDataType(propertySchema, importClasses)
 							).build()));
 				}
 			}
 		}
-
-		// TODO Rename "imports" to "importClasses"
-
+		
 		Map<String, Schema> propertySchemas = schema.getPropertySchemas();
 
 		if (propertySchemas != null) {
@@ -314,7 +308,7 @@ public class TypeScriptClientUtil {
 					HashMapBuilder.<String, Object>put(
 						"name", StringUtil.replace(name, '-', '_')
 					).put(
-						"type", _getDataType(propertySchema, imports)
+						"dataType", _getDataType(propertySchema, importClasses)
 					).build()));
 		}
 
@@ -338,7 +332,7 @@ public class TypeScriptClientUtil {
 				return propertyName;
 			}
 		).put(
-			"imports", imports
+			"importClasses", importClasses
 		).put(
 			"modelName", modelName
 		).put(
@@ -349,7 +343,7 @@ public class TypeScriptClientUtil {
 	}
 
 	private static Map<String, Object> _buildOperationData(
-		ConfigYAML configYAML, Set<String> imports, OpenAPIYAML openAPIYAML,
+		ConfigYAML configYAML, Set<String> importClasses, OpenAPIYAML openAPIYAML,
 		Operation operation, String path) {
 
 		Map<ResponseCode, Response> responses = operation.getResponses();
@@ -362,7 +356,7 @@ public class TypeScriptClientUtil {
 		).put(
 			"operationId", operation.getOperationId()
 		).put(
-			"parameters", _getParameterDatas(operation, imports)
+			"parameters", _getParameterDatas(operation, importClasses)
 		).put(
 			"path",
 			() -> {
@@ -429,7 +423,7 @@ public class TypeScriptClientUtil {
 						continue;
 					}
 
-					return _getDataType(content.getSchema(), imports);
+					return _getDataType(content.getSchema(), importClasses);
 				}
 
 				return null;
@@ -506,7 +500,7 @@ public class TypeScriptClientUtil {
 				).build()));
 	}
 
-	private static String _getDataType(Schema schema, Set<String> imports) {
+	private static String _getDataType(Schema schema, Set<String> importClasses) {
 		if (schema == null) {
 			return "any";
 		}
@@ -517,25 +511,25 @@ public class TypeScriptClientUtil {
 			String dataType = schemaReference.substring(
 				schemaReference.lastIndexOf('/') + 1);
 
-			imports.add(dataType);
+			importClasses.add(dataType);
 
 			return dataType;
 		}
 
-		String type = schema.getType();
+		String dataType = schema.getType();
 
-		if (type.equals("array")) {
+		if (dataType.equals("array")) {
 			Items items = schema.getItems();
 
-			return "Array<" + _getDataType(items.toSchema(), imports) + ">";
+			return "Array<" + _getDataType(items.toSchema(), importClasses) + ">";
 		}
-		else if (type.equals("boolean")) {
+		else if (dataType.equals("boolean")) {
 			return "boolean";
 		}
-		else if (type.equals("integer") || type.equals("number")) {
+		else if (dataType.equals("integer") || dataType.equals("number")) {
 			return "number";
 		}
-		else if (type.equals("object")) {
+		else if (dataType.equals("object")) {
 			Schema additionalPropertySchema =
 				schema.getAdditionalPropertySchema();
 
@@ -548,20 +542,20 @@ public class TypeScriptClientUtil {
 
 				String dataType = _getDataType(
 					additionalPropertySchema.getAdditionalPropertySchema(),
-					imports);
+					importClasses);
 
 				return "{[key: string]: {[key: string]: " + dataType + ";};}";
 			}
 
 			return "{[key: string]: " +
-				_getDataType(additionalPropertySchema, imports) + ";}";
+				_getDataType(additionalPropertySchema, importClasses) + ";}";
 		}
-		else if (type.equals("permission")) {
-			imports.add("Permission");
+		else if (dataType.equals("permission")) {
+			importClasses.add("Permission");
 
 			return "Permission";
 		}
-		else if (type.equals("string")) {
+		else if (dataType.equals("string")) {
 			List<String> values = schema.getEnumValues();
 
 			if (ListUtil.isNotNull(values)) {
@@ -596,7 +590,7 @@ public class TypeScriptClientUtil {
 	}
 
 	private static List<Map<String, Object>> _getParameterDatas(
-		Operation operation, Set<String> imports) {
+		Operation operation, Set<String> importClasses) {
 
 		List<Map<String, Object>> parameterDatas = new ArrayList<>();
 
@@ -604,7 +598,7 @@ public class TypeScriptClientUtil {
 			for (Parameter parameter : operation.getParameters()) {
 				parameterDatas.add(
 					HashMapBuilder.<String, Object>put(
-						"dataType", _getDataType(parameter.getSchema(), imports)
+						"dataType", _getDataType(parameter.getSchema(), importClasses)
 					).put(
 						"name",
 						StringUtil.replace(
@@ -649,7 +643,7 @@ public class TypeScriptClientUtil {
 
 		// TODO Retrieve "required" property inside requestBody
 
-		String dataType = _getDataType(schema, imports);
+		String dataType = _getDataType(schema, importClasses);
 
 		parameterDatas.add(
 			HashMapBuilder.<String, Object>put(

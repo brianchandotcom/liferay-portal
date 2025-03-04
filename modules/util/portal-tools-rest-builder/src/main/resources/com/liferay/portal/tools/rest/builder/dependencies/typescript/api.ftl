@@ -8,8 +8,8 @@ import {
 	ObjectSerializer,
 	VoidAuth,
 } from '../model/models';
-<#if imports??>
-	<#list imports?sort as import>
+<#if importClasses??>
+	<#list importClasses?sort as import>
 		import {${import}} from '../model/${import?uncap_first}';
 	</#list>
 </#if>
@@ -22,9 +22,9 @@ const defaultBasePath = 'http://localhost';
  * @generated
  */
 
-export enum ${classname}ApiKeys {}
+export enum ${className}ApiKeys {}
 
-export class ${classname} {
+export class ${className} {
 	protected _basePath = defaultBasePath;
 	protected _defaultHeaders: any = {};
 	protected _useQuerystring: boolean = false;
@@ -77,8 +77,8 @@ export class ${classname} {
 		this.authentications.default = auth;
 	}
 
-	public setApiKey(key: ${classname}ApiKeys, value: string) {
-		(this.authentications as any)[${classname}ApiKeys[key]].apiKey =
+	public setApiKey(key: ${className}ApiKeys, value: string) {
+		(this.authentications as any)[${className}ApiKeys[key]].apiKey =
 			value;
 	}
 

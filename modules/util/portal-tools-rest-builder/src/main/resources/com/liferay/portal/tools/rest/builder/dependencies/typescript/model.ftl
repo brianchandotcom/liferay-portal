@@ -1,5 +1,5 @@
-<#if imports??>
-	<#list imports?sort as import>
+<#if importClasses??>
+	<#list importClasses?sort as import>
 		<#if import?lower_case != modelName?lower_case>
 			import {${import}} from './${import?uncap_first}';
 		</#if>
@@ -25,7 +25,7 @@
 <#else>
 	export class ${modelName} <#if parentClass??>extends ${parentClass} </#if>{
 		<#list properties as property>
-			'${property.name}'?: ${property.type};
+			'${property.name}'?: ${property.dataType};
 		</#list>
 
 		static 'discriminator': string | undefined = <#if discriminator??>"${discriminator}"<#else>undefined</#if>;
@@ -39,7 +39,7 @@
 		{
 			baseName: "${property.name}",
 			name: "${property.name}",
-			type: "${property.type}",
+			type: "${property.dataType}",
 		},
 	</#list>
 		];

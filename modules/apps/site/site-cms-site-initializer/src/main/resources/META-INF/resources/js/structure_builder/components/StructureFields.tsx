@@ -64,6 +64,7 @@ function EmptyState() {
 				'add-new-fields-to-start-building-your-structure'
 			)}
 			imgSrc={getImage('structure_fields_empty_state.svg')}
+			imgSrcReducedMotion={getImage('structure_fields_empty_state.svg')}
 			small
 			title={Liferay.Language.get('no-fields-yet')}
 		>

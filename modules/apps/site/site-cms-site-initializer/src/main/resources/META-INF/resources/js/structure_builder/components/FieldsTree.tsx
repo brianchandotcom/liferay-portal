@@ -113,7 +113,11 @@ export default function FieldsTree({fields}: {fields: Field[]}) {
 		>
 			{(item, selectedKeys) => (
 				<ClayTreeView.Item>
-					<ClayTreeView.ItemStack active={selectedKeys.has(item.id)}>
+					<ClayTreeView.ItemStack
+						className={classNames({
+							active: selectedKeys.has(item.id),
+						})}
+					>
 						<ClayIcon symbol={item.icon} />
 
 						<span className="ml-1">{item.label}</span>
@@ -148,7 +152,9 @@ export default function FieldsTree({fields}: {fields: Field[]}) {
 										}
 									/>
 								}
-								active={selectedKeys.has(item.id)}
+								className={classNames({
+									active: selectedKeys.has(item.id),
+								})}
 							>
 								<ClayIcon
 									className={classNames({

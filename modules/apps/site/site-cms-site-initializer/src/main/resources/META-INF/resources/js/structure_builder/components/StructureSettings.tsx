@@ -142,6 +142,7 @@ function MultiselectionState() {
 			className="justify-content-center structure-builder__empty-state"
 			description=""
 			imgSrc={getImage('multiselection_state.svg')}
+			imgSrcReducedMotion={getImage('multiselection_state.svg')}
 			small
 			title={Liferay.Language.get('multiple-items-selected')}
 		/>

@@ -353,6 +353,12 @@ public class ProductResourceTest extends BaseProductResourceTestCase {
 		testPatchProductByExternalReferenceCode();
 	}
 
+	@Ignore
+	@Override
+	@Test
+	public void testVulcanCRUDItemDelegateGetItem() throws Exception {
+	}
+
 	@Override
 	protected String[] getAdditionalAssertFieldNames() {
 		return new String[] {

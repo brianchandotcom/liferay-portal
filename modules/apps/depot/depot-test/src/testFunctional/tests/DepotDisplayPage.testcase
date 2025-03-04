@@ -609,7 +609,7 @@ definition {
 			webContentText = "Asset Library Text",
 			webContentTitle = "Web Content Title");
 
-		PortletEntry.publish();
+		WebContent.publishWithPermissions();
 
 		DisplayPageTemplate.selectDisplayPageTemplateForAsset(
 			assetType = "Web Content",
@@ -991,7 +991,7 @@ definition {
 			webContentText = "WC WebContent Content",
 			webContentTitle = "WC Webcontent Title");
 
-		PortletEntry.publish();
+		WebContent.publishWithPermissions();
 
 		Navigator.gotoSitePage(
 			pageName = "Test Page Name",

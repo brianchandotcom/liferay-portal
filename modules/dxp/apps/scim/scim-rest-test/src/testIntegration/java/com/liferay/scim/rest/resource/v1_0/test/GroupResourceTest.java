@@ -194,6 +194,13 @@ public class GroupResourceTest extends BaseGroupResourceTestCase {
 				"displayName eq +\"" + RandomTestUtil.randomString() + "\""),
 			0, 0);
 
+		assertHttpResponseStatusCode(
+			400,
+			groupResource.getV2GroupsHttpResponse(
+				5, 0,
+				RandomTestUtil.randomString() + " eq +\"" +
+					RandomTestUtil.randomString() + "\""));
+
 		ConfigurationTestUtil.deleteConfiguration(_pid);
 
 		assertHttpResponseStatusCode(

@@ -39,19 +39,10 @@ public class PortalCacheManagerConfiguration {
 	public PortalCacheConfiguration getPortalCacheConfiguration(
 		String portalCacheName) {
 
-		PortalCacheConfiguration portalCacheConfiguration =
-			_portalCacheConfigurations.get(portalCacheName);
-
-		if (portalCacheConfiguration == null) {
-			portalCacheConfiguration =
-				_defaultPortalCacheConfiguration.newPortalCacheConfiguration(
-					portalCacheName);
-
-			_portalCacheConfigurations.put(
-				portalCacheName, portalCacheConfiguration);
-		}
-
-		return portalCacheConfiguration;
+		return _portalCacheConfigurations.computeIfAbsent(
+			portalCacheName,
+			key -> _defaultPortalCacheConfiguration.newPortalCacheConfiguration(
+				key));
 	}
 
 	public Set<String> getPortalCacheNames() {

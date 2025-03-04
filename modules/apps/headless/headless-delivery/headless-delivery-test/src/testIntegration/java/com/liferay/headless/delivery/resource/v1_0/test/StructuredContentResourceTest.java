@@ -45,7 +45,6 @@ import com.liferay.headless.delivery.client.dto.v1_0.Geo;
 import com.liferay.headless.delivery.client.dto.v1_0.RelatedContent;
 import com.liferay.headless.delivery.client.dto.v1_0.StructuredContent;
 import com.liferay.headless.delivery.client.dto.v1_0.StructuredContentLink;
-import com.liferay.headless.delivery.client.http.HttpInvoker;
 import com.liferay.headless.delivery.client.pagination.Page;
 import com.liferay.headless.delivery.client.pagination.Pagination;
 import com.liferay.headless.delivery.client.problem.Problem;
@@ -654,7 +653,7 @@ public class StructuredContentResourceTest
 		StructuredContent randomStructuredContent1 = _randomStructuredContent(
 			LocaleUtil.getDefault());
 
-		HttpInvoker.HttpResponse httpResponse =
+		ImportTask importTask = ImportTask.toDTO(
 			structuredContentResource.
 				postSiteStructuredContentBatchHttpResponse(
 					testGroup.getGroupId(), null,
@@ -662,9 +661,8 @@ public class StructuredContentResourceTest
 					).put(
 						JSONFactoryUtil.createJSONObject(
 							randomStructuredContent1.toString())
-					));
-
-		assertHttpResponseStatusCode(202, httpResponse);
+					)
+				).getContent());
 
 		User testCompanyAdminUser = UserTestUtil.getAdminUser(
 			testCompany.getCompanyId());
@@ -679,15 +677,8 @@ public class StructuredContentResourceTest
 			LocaleUtil.getDefault()
 		).build();
 
-		long importTaskId = JSONFactoryUtil.createJSONObject(
-			httpResponse.getContent()
-		).getLong(
-			"id"
-		);
-
 		while (true) {
-			ImportTask importTask = importTaskResource.getImportTask(
-				importTaskId);
+			importTask = importTaskResource.getImportTask(importTask.getId());
 
 			if (StringUtil.equals(
 					importTask.getExecuteStatusAsString(), "COMPLETED") ||

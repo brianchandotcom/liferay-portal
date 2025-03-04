@@ -220,6 +220,10 @@ public class DLEditFolderDisplayContext {
 	public boolean hasAdvancedUpdateDLFolderPermission()
 		throws PortalException {
 
+		if (getFolder() == null) {
+			return true;
+		}
+
 		if (!FeatureFlagManagerUtil.isEnabled(
 				_themeDisplay.getCompanyId(), "LPD-42452")) {
 
@@ -239,6 +243,10 @@ public class DLEditFolderDisplayContext {
 	}
 
 	public boolean hasUpdateDLFolderPermission() throws PortalException {
+		if (getFolder() == null) {
+			return true;
+		}
+
 		if (_updateDLFolderPermission != null) {
 			return _updateDLFolderPermission;
 		}

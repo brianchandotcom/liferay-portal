@@ -1177,6 +1177,10 @@ public class JournalDisplayContext {
 	public boolean hasAdvancedUpdateDLFolderPermission()
 		throws PortalException {
 
+		if (getFolder() == null) {
+			return true;
+		}
+
 		if (!FeatureFlagManagerUtil.isEnabled(
 				_themeDisplay.getCompanyId(), "LPD-42452")) {
 
@@ -1242,6 +1246,10 @@ public class JournalDisplayContext {
 	}
 
 	public boolean hasUpdateDLFolderPermission() throws PortalException {
+		if (getFolder() == null) {
+			return true;
+		}
+
 		if (_updateJournalFolderPermission != null) {
 			return _updateJournalFolderPermission;
 		}

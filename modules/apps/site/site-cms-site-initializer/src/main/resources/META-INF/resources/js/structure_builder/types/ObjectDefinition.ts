@@ -19,6 +19,7 @@ export type ObjectField = {
 };
 
 export type ObjectDefinition = {
+	enableObjectEntryDraft: boolean;
 	externalReferenceCode: string;
 	id?: number;
 	label: Liferay.Language.LocalizedValue<string>;

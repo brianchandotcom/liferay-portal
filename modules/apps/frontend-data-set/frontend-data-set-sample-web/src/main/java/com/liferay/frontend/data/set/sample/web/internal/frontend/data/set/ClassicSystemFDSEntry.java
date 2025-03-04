@@ -21,7 +21,7 @@ public class ClassicSystemFDSEntry implements SystemFDSEntry {
 
 	@Override
 	public String getAdditionalAPIURLParameters() {
-		return "";
+		return "groupId={siteId}";
 	}
 
 	@Override
@@ -36,17 +36,19 @@ public class ClassicSystemFDSEntry implements SystemFDSEntry {
 
 	@Override
 	public String getRESTApplication() {
-		return "/c/fdssamples";
+		return "/frontend-data-set-taglib/app/data-set/com_liferay_frontend_" +
+			"data_set_sample_web_internal_portlet_FDSSamplePortlet-classic/";
 	}
 
 	@Override
 	public String getRESTEndpoint() {
-		return "/";
+		return "/com_liferay_frontend_data_set_sample_web_internal_portlet_" +
+			"FDSSamplePortlet-classic";
 	}
 
 	@Override
 	public String getRESTSchema() {
-		return "FDSSample";
+		return FDSSampleFDSNames.CLASSIC;
 	}
 
 	@Override

@@ -7,6 +7,7 @@ package com.liferay.commerce.pricing.web.internal.display.context;
 
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.model.CommerceMoney;
+import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.price.list.model.CommercePriceEntry;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.model.CommerceTierPriceEntry;
@@ -18,6 +19,7 @@ import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.product.service.CommerceCatalogService;
 import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -37,6 +39,7 @@ public class CommerceTierCommercePriceEntryDisplayContext
 	public CommerceTierCommercePriceEntryDisplayContext(
 		CommerceCatalogService commerceCatalogService,
 		CommercePriceEntryService commercePriceEntryService,
+		CommercePriceFormatter commercePriceFormatter,
 		ModelResourcePermission<CommercePriceList>
 			commercePriceListModelResourcePermission,
 		CommercePriceListService commercePriceListService,
@@ -49,6 +52,7 @@ public class CommerceTierCommercePriceEntryDisplayContext
 			commercePriceListService, httpServletRequest);
 
 		_commercePriceEntryService = commercePriceEntryService;
+		_commercePriceFormatter = commercePriceFormatter;
 		_commerceTierPriceEntryService = commerceTierPriceEntryService;
 		_cpInstanceLocalService = cpInstanceLocalService;
 	}
@@ -188,6 +192,70 @@ public class CommerceTierCommercePriceEntryDisplayContext
 		return contextTitle;
 	}
 
+	public String getDiscountLevel1() throws PortalException {
+		CommerceTierPriceEntry commerceTierPriceEntry =
+			getCommerceTierPriceEntry();
+
+		if (commerceTierPriceEntry == null) {
+			return StringPool.BLANK;
+		}
+
+		return _commercePriceFormatter.format(
+			commerceTierPriceEntry.getDiscountLevel1(),
+			cpRequestHelper.getLocale());
+	}
+
+	public String getDiscountLevel2() throws PortalException {
+		CommerceTierPriceEntry commerceTierPriceEntry =
+			getCommerceTierPriceEntry();
+
+		if (commerceTierPriceEntry == null) {
+			return StringPool.BLANK;
+		}
+
+		return _commercePriceFormatter.format(
+			commerceTierPriceEntry.getDiscountLevel2(),
+			cpRequestHelper.getLocale());
+	}
+
+	public String getDiscountLevel3() throws PortalException {
+		CommerceTierPriceEntry commerceTierPriceEntry =
+			getCommerceTierPriceEntry();
+
+		if (commerceTierPriceEntry == null) {
+			return StringPool.BLANK;
+		}
+
+		return _commercePriceFormatter.format(
+			commerceTierPriceEntry.getDiscountLevel3(),
+			cpRequestHelper.getLocale());
+	}
+
+	public String getDiscountLevel4() throws PortalException {
+		CommerceTierPriceEntry commerceTierPriceEntry =
+			getCommerceTierPriceEntry();
+
+		if (commerceTierPriceEntry == null) {
+			return StringPool.BLANK;
+		}
+
+		return _commercePriceFormatter.format(
+			commerceTierPriceEntry.getDiscountLevel4(),
+			cpRequestHelper.getLocale());
+	}
+
+	public String getPrice() throws PortalException {
+		CommerceTierPriceEntry commerceTierPriceEntry =
+			getCommerceTierPriceEntry();
+
+		if (commerceTierPriceEntry == null) {
+			return StringPool.BLANK;
+		}
+
+		return _commercePriceFormatter.format(
+			commerceTierPriceEntry.getPrice(), cpRequestHelper.getLocale());
+	}
+
 	public boolean hasCustomAttributes() throws Exception {
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
@@ -199,6 +267,7 @@ public class CommerceTierCommercePriceEntryDisplayContext
 	}
 
 	private final CommercePriceEntryService _commercePriceEntryService;
+	private final CommercePriceFormatter _commercePriceFormatter;
 	private CommerceTierPriceEntry _commerceTierPriceEntry;
 	private final CommerceTierPriceEntryService _commerceTierPriceEntryService;
 	private final CPInstanceLocalService _cpInstanceLocalService;

@@ -9,6 +9,7 @@ import com.liferay.commerce.price.list.constants.CommercePriceListConstants;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.CommercePriceListService;
 import com.liferay.commerce.pricing.constants.CommercePricingPortletKeys;
+import com.liferay.commerce.product.display.context.helper.CPRequestHelper;
 import com.liferay.commerce.product.model.CommerceCatalog;
 import com.liferay.commerce.product.service.CommerceCatalogService;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
@@ -44,6 +45,8 @@ public abstract class BaseCommercePriceListDisplayContext
 		this.commercePriceListModelResourcePermission =
 			commercePriceListModelResourcePermission;
 		this.commercePriceListService = commercePriceListService;
+
+		cpRequestHelper = new CPRequestHelper(httpServletRequest);
 	}
 
 	public long getCommerceCatalogId() throws PortalException {
@@ -152,5 +155,6 @@ public abstract class BaseCommercePriceListDisplayContext
 	protected final ModelResourcePermission<CommercePriceList>
 		commercePriceListModelResourcePermission;
 	protected CommercePriceListService commercePriceListService;
+	protected final CPRequestHelper cpRequestHelper;
 
 }

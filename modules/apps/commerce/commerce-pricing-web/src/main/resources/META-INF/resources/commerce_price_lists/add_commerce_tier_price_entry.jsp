@@ -15,7 +15,6 @@ long commercePriceEntryId = commerceTierPriceEntryDisplayContext.getCommercePric
 long commercePriceListId = commerceTierPriceEntryDisplayContext.getCommercePriceListId();
 CommerceTierPriceEntry commerceTierPriceEntry = commerceTierPriceEntryDisplayContext.getCommerceTierPriceEntry();
 
-BigDecimal price = BigDecimal.ZERO;
 boolean neverExpire = true;
 %>
 

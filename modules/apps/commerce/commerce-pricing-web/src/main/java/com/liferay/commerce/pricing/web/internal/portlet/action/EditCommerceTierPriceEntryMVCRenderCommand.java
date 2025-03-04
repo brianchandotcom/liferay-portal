@@ -5,6 +5,7 @@
 
 package com.liferay.commerce.pricing.web.internal.portlet.action;
 
+import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.CommercePriceEntryService;
 import com.liferay.commerce.price.list.service.CommercePriceListService;
@@ -48,6 +49,7 @@ public class EditCommerceTierPriceEntryMVCRenderCommand
 			commerceTierPriceEntryDisplayContext =
 				new CommerceTierCommercePriceEntryDisplayContext(
 					_commerceCatalogService, _commercePriceEntryService,
+					_commercePriceFormatter,
 					_commercePriceListModelResourcePermission,
 					_commercePriceListService, _commerceTierPriceEntryService,
 					_cpInstanceLocalService,
@@ -65,6 +67,9 @@ public class EditCommerceTierPriceEntryMVCRenderCommand
 
 	@Reference
 	private CommercePriceEntryService _commercePriceEntryService;
+
+	@Reference
+	private CommercePriceFormatter _commercePriceFormatter;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.commerce.price.list.model.CommercePriceList)"

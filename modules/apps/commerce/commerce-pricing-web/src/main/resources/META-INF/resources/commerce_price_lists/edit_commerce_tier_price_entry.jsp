@@ -16,11 +16,9 @@ long commercePriceEntryId = commerceTierPriceEntryDisplayContext.getCommercePric
 long commercePriceListId = commerceTierPriceEntryDisplayContext.getCommercePriceListId();
 long commerceTierPriceEntryId = commerceTierPriceEntryDisplayContext.getCommerceTierPriceEntryId();
 
-BigDecimal price = BigDecimal.ZERO;
 BigDecimal promoPrice = BigDecimal.ZERO;
 
 if (commerceTierPriceEntry != null) {
-	price = commerceTierPriceEntry.getPrice();
 	promoPrice = commerceTierPriceEntry.getPromoPrice();
 }
 

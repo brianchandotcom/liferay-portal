@@ -5,6 +5,7 @@
 
 package com.liferay.commerce.pricing.web.internal.frontend.taglib.servlet.taglib;
 
+import com.liferay.commerce.currency.util.CommercePriceFormatter;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.CommercePriceEntryLocalService;
 import com.liferay.commerce.price.list.service.CommercePriceEntryService;
@@ -80,7 +81,7 @@ public class CommercePriceListEntriesScreenNavigationEntry
 			CommercePriceEntryDisplayContext commercePriceEntryDisplayContext =
 				new CommercePriceEntryDisplayContext(
 					_commerceCatalogService, _commercePriceEntryLocalService,
-					_commercePriceEntryService,
+					_commercePriceEntryService, _commercePriceFormatter,
 					_commercePriceListModelResourcePermission,
 					_commercePriceListService, _cpInstanceLocalService,
 					_cpInstanceUnitOfMeasureLocalService, httpServletRequest);
@@ -109,6 +110,9 @@ public class CommercePriceListEntriesScreenNavigationEntry
 
 	@Reference
 	private CommercePriceEntryService _commercePriceEntryService;
+
+	@Reference
+	private CommercePriceFormatter _commercePriceFormatter;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.commerce.price.list.model.CommercePriceList)"

@@ -22,6 +22,7 @@ export default function buildObjectDefinition({
 	name?: State['name'];
 }): ObjectDefinition {
 	const objectDefinition: ObjectDefinition = {
+		enableObjectEntryDraft: true,
 		externalReferenceCode: erc,
 		label,
 		objectFields: buildFields(fields),

@@ -5,13 +5,20 @@
 
 package com.liferay.frontend.data.set.internal.renderer;
 
+import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
+import com.liferay.frontend.data.set.model.FDSSortItem;
 import com.liferay.frontend.data.set.renderer.FDSRenderer;
 import com.liferay.frontend.data.set.serializer.FDSSerializer;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.template.react.renderer.ComponentDescriptor;
@@ -20,6 +27,7 @@ import com.liferay.portal.template.react.renderer.ReactRenderer;
 import java.io.Writer;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -63,34 +71,107 @@ public class FDSRendererImpl implements FDSRenderer {
 			props.putAll(
 				HashMapBuilder.<String, Object>put(
 					"apiURL",
-					fdsSerializer.serializeAPIURL(fdsName, httpServletRequest)
+					() -> {
+						String apiURL = fdsSerializer.serializeAPIURL(
+							fdsName, httpServletRequest);
+
+						if (Validator.isNull(apiURL)) {
+							return null;
+						}
+
+						return apiURL;
+					}
 				).put(
 					"bulkActions",
-					fdsSerializer.serializeBulkActions(
-						fdsName, httpServletRequest)
+					() -> {
+						List<FDSActionDropdownItem> bulkActions =
+							fdsSerializer.serializeBulkActions(
+								fdsName, httpServletRequest);
+
+						if (ListUtil.isEmpty(bulkActions)) {
+							return null;
+						}
+
+						return bulkActions;
+					}
 				).put(
 					"creationMenu",
-					fdsSerializer.serializeCreationMenu(
-						fdsName, httpServletRequest)
+					() -> {
+						CreationMenu creationMenu =
+							fdsSerializer.serializeCreationMenu(
+								fdsName, httpServletRequest);
+
+						if ((creationMenu == null) || creationMenu.isEmpty()) {
+							return null;
+						}
+
+						return creationMenu;
+					}
 				).put(
 					"currentURL", _portal.getCurrentURL(httpServletRequest)
 				).put(
 					"filters",
-					fdsSerializer.serializeFilters(fdsName, httpServletRequest)
+					() -> {
+						JSONArray filtersJSONArray =
+							fdsSerializer.serializeFilters(
+								fdsName, httpServletRequest);
+
+						if (JSONUtil.isEmpty(filtersJSONArray)) {
+							return null;
+						}
+
+						return filtersJSONArray;
+					}
 				).put(
 					"itemsActions",
-					fdsSerializer.serializeItemsActions(
-						fdsName, httpServletRequest)
+					() -> {
+						List<FDSActionDropdownItem> itemsActions =
+							fdsSerializer.serializeItemsActions(
+								fdsName, httpServletRequest);
+
+						if (ListUtil.isEmpty(itemsActions)) {
+							return null;
+						}
+
+						return itemsActions;
+					}
 				).put(
 					"pagination",
-					fdsSerializer.serializePagination(
-						fdsName, httpServletRequest)
+					() -> {
+						JSONObject paginationJSONObject =
+							fdsSerializer.serializePagination(
+								fdsName, httpServletRequest);
+
+						if (JSONUtil.isEmpty(paginationJSONObject)) {
+							return null;
+						}
+
+						return paginationJSONObject;
+					}
 				).put(
 					"sorts",
-					fdsSerializer.serializeSorts(fdsName, httpServletRequest)
+					() -> {
+						List<FDSSortItem> sorts = fdsSerializer.serializeSorts(
+							fdsName, httpServletRequest);
+
+						if (ListUtil.isEmpty(sorts)) {
+							return null;
+						}
+
+						return sorts;
+					}
 				).put(
 					"views",
-					fdsSerializer.serializeViews(fdsName, httpServletRequest)
+					() -> {
+						JSONArray viewsJSONArray = fdsSerializer.serializeViews(
+							fdsName, httpServletRequest);
+
+						if (JSONUtil.isEmpty(viewsJSONArray)) {
+							return null;
+						}
+
+						return viewsJSONArray;
+					}
 				).build());
 
 			String tempPropsTransformer =

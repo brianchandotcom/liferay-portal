@@ -20,7 +20,6 @@ type Args = {
 		languageId: string;
 		value?: string;
 	}) => void;
-	optionValues: Record<string, string>;
 };
 
 export function registerLocalizedInput({
@@ -32,7 +31,6 @@ export function registerLocalizedInput({
 	localizationInputsContainer,
 	namespace,
 	onLocaleChange,
-	optionValues,
 }: Args) {
 
 	// Create hidden inputs for initial values if any
@@ -48,10 +46,6 @@ export function registerLocalizedInput({
 			);
 
 			input.value = value;
-
-			if (optionValues) {
-				input.dataset.label = optionValues[value];
-			}
 		});
 	}
 
@@ -100,9 +94,6 @@ export function registerLocalizedInput({
 				if (inputElement.type === 'checkbox') {
 					inputElement.checked = translationInput.value === 'true';
 				}
-				else if (inputElement.getAttribute('role') === 'combobox') {
-					inputElement.value = translationInput.dataset.label || '';
-				}
 				else {
 					inputElement.value = translationInput.value;
 				}
@@ -125,13 +116,7 @@ export function registerLocalizedInput({
 					return;
 				}
 
-				if (inputElement.getAttribute('role') === 'combobox') {
-					inputElement.value =
-						defaultLanguageInput.dataset.label || '';
-				}
-				else {
-					inputElement.value = defaultLanguageInput.value;
-				}
+				inputElement.value = defaultLanguageInput.value;
 			}
 		}
 	);
@@ -139,11 +124,9 @@ export function registerLocalizedInput({
 	return {
 		onChange: ({
 			handleChange,
-			label,
 			value = null,
 		}: {
 			handleChange?: () => void;
-			label?: string;
 			value?: string | null;
 		}) => {
 			handleChange?.();
@@ -158,10 +141,6 @@ export function registerLocalizedInput({
 				);
 
 				translationInput.value = value;
-
-				if (label) {
-					translationInput.dataset.label = label;
-				}
 			}
 
 			Liferay.fire('localizationSelect:updateTranslationStatus', {

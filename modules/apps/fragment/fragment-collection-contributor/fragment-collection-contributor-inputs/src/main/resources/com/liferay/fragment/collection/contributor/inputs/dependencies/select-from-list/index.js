@@ -83,29 +83,83 @@ else {
 		const defaultLanguageId = themeDisplay.getDefaultLanguageId();
 
 		import('@liferay/fragment-impl').then(
-			({registerLocalizedInput, registerUnlocalizedInput}) => {
+			({
+				getOrCreateTranslationInput,
+				registerLocalizedInput,
+				registerUnlocalizedInput,
+			}) => {
+				let currentLanguageId = defaultLanguageId;
+
 				if (input.localizable) {
-					const optionValues = Object.fromEntries(
-						Object.values(input.valueI18n).map((value) => [
-							value,
-							input.attributes.options.find(
+					Object.entries(input.valueI18n).forEach(
+						([languageId, value]) => {
+							const input = getOrCreateTranslationInput(
+								uiInputElement.id,
+								input.name,
+								languageId,
+								uiInputElement.parentNode,
+								fragmentNamespace
+							);
+
+							// Set data-label with the option label for each translation input
+
+							input.dataset.label = input.attributes.options.find(
 								(option) => option.value === value
-							).label,
-						])
+							).label;
+						}
 					);
 
 					const {onChange} = registerLocalizedInput({
 						defaultLanguageId,
 						initialValues: input.valueI18n,
 						inputElement: uiInputElement,
-						inputName: input.name,
-						localizationInputsContainer: uiInputElement.parentNode,
-						namespace: fragmentNamespace,
-						optionValues,
+						onLocaleChange: ({languageId}) => {
+							currentLanguageId = languageId;
+
+							const translationInput =
+								getOrCreateTranslationInput(
+									uiInputElement.id,
+									input.name,
+									languageId,
+									uiInputElement.parentNode,
+									fragmentNamespace
+								);
+
+							if (
+								translationInput.getAttribute('value') !== null
+							) {
+								uiInputElement.checked =
+									translationInput.value === 'true';
+							}
+							else {
+								const defaultLanguageInput =
+									getOrCreateTranslationInput(
+										uiInputElement.id,
+										input.name,
+										defaultLanguageId,
+										uiInputElement.parentNode,
+										fragmentNamespace
+									);
+								uiInputElement.value =
+									defaultLanguageInput.dataset.label || '';
+							}
+						},
 					});
 
 					optionListElement.addEventListener('click', (event) => {
-						handleResultListClick(event, onChange);
+						const translationInput = getOrCreateTranslationInput(
+							uiInputElement.id,
+							input.name,
+							currentLanguageId,
+							uiInputElement.parentNode,
+							fragmentNamespace
+						);
+
+						handleResultListClick(
+							event,
+							onChange,
+							translationInput
+						);
 					});
 				}
 				else {
@@ -175,7 +229,7 @@ const optionList = (input.attributes.options || []).map((option) => ({
 	value: option.value,
 }));
 
-function handleResultListClick(event, onChange) {
+function handleResultListClick(event, onChange, translationInput) {
 	let selectedOptionElement = null;
 
 	if (event.target.matches('.dropdown-item')) {
@@ -191,8 +245,12 @@ function handleResultListClick(event, onChange) {
 
 		if (onChange) {
 			onChange({
-				label: selectedOptionElement.dataset.optionLabel,
-				value: selectedOptionElement.dataset.optionValue,
+				handleChange: () => {
+					translationInput.value =
+						selectedOptionElement.dataset.optionValue;
+					translationInput.dataset.label =
+						selectedOptionElement.dataset.optionLabel;
+				},
 			});
 		}
 	}

@@ -227,7 +227,7 @@ public abstract class BaseEhcachePortalCacheManager<K extends Serializable, V>
 			configurationObjectValuePair =
 				_ehcachePortalCacheManagerConfigurator.
 					getConfigurationObjectValuePair(
-						configurationURL, classLoader);
+						configurationURL, classLoader, true);
 
 		_reconfigEhcache(configurationObjectValuePair.getKey());
 

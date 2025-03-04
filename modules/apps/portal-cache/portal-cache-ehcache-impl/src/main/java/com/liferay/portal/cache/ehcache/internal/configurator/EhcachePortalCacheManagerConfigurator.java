@@ -52,6 +52,16 @@ public class EhcachePortalCacheManagerConfigurator {
 			getConfigurationObjectValuePair(
 				URL configurationURL, ClassLoader classLoader) {
 
+		return getConfigurationObjectValuePair(
+			configurationURL, classLoader, false);
+	}
+
+	public ObjectValuePair
+		<Configuration, EhcachePortalCacheManagerConfiguration>
+			getConfigurationObjectValuePair(
+				URL configurationURL, ClassLoader classLoader,
+				boolean reconfigure) {
+
 		if (configurationURL == null) {
 			throw new NullPointerException("Configuration path is null");
 		}
@@ -63,7 +73,8 @@ public class EhcachePortalCacheManagerConfigurator {
 			ehcachePortalCacheManagerConfiguration = _parseConfiguration(
 				xmlConfiguration);
 
-		_populateCacheReplicator(ehcachePortalCacheManagerConfiguration);
+		_populateCacheReplicator(
+			ehcachePortalCacheManagerConfiguration, reconfigure);
 
 		return new ObjectValuePair<>(
 			_replaceExpiryPolicy(xmlConfiguration),
@@ -176,14 +187,20 @@ public class EhcachePortalCacheManagerConfigurator {
 	}
 
 	private void _populateCacheReplicator(
-		PortalCacheManagerConfiguration portalCacheManagerConfiguration) {
+		PortalCacheManagerConfiguration portalCacheManagerConfiguration,
+		boolean reconfigure) {
 
 		if (_replicatorProperties == null) {
 			return;
 		}
 
 		Set<String> portalCacheNames = new HashSet<>(
-			_replicatorProperties.stringPropertyNames());
+			portalCacheManagerConfiguration.getPortalCacheNames());
+
+		if (!reconfigure) {
+			portalCacheNames.addAll(
+				_replicatorProperties.stringPropertyNames());
+		}
 
 		portalCacheNames.addAll(
 			portalCacheManagerConfiguration.getPortalCacheNames());
@@ -197,10 +214,12 @@ public class EhcachePortalCacheManagerConfigurator {
 					_defaultReplicatorPropertiesString));
 		}
 
-		_populateCacheReplicator(
-			portalCacheManagerConfiguration.
-				getDefaultPortalCacheConfiguration(),
-			_defaultReplicatorPropertiesString);
+		if (!reconfigure) {
+			_populateCacheReplicator(
+				portalCacheManagerConfiguration.
+					getDefaultPortalCacheConfiguration(),
+				_defaultReplicatorPropertiesString);
+		}
 	}
 
 	@SuppressWarnings("unchecked")

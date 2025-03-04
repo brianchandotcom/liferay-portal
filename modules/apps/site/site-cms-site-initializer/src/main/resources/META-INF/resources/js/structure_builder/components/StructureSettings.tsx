@@ -4,6 +4,7 @@
  */
 
 import ClayAlert from '@clayui/alert';
+import ClayEmptyState from '@clayui/empty-state';
 import ClayForm from '@clayui/form';
 import ClayLabel from '@clayui/label';
 import ClayLayout from '@clayui/layout';
@@ -17,11 +18,27 @@ import selectStructureERC from '../selectors/selectStructureERC';
 import selectStructureError from '../selectors/selectStructureError';
 import selectStructureLabel from '../selectors/selectStructureLabel';
 import selectStructureName from '../selectors/selectStructureName';
+import {getImage} from '../utils/getImage';
 import ERCInput from './ERCInput';
 import StructureFieldSettings from './StructureFieldSettings';
 import TextInput from './TextInput';
 
-export function StructureSettings() {
+export default function () {
+	const selection = useSelector(selectSelection);
+
+	if (!selection.length) {
+		return <StructureSettings />;
+	}
+	else if (selection.length > 1) {
+		return <MultiselectionState />;
+	}
+
+	const [fieldName] = selection;
+
+	return <StructureFieldSettings fieldName={fieldName} key={fieldName} />;
+}
+
+function StructureSettings() {
 	const dispatch = useStateDispatch();
 	const error = useSelector(selectStructureError);
 	const structureLabel = useSelector(selectStructureLabel);
@@ -89,18 +106,6 @@ export function StructureSettings() {
 	);
 }
 
-export default function () {
-	const selection = useSelector(selectSelection);
-
-	if (!selection.length) {
-		return <StructureSettings />;
-	}
-
-	const name = selection[selection.length - 1];
-
-	return <StructureFieldSettings fieldName={name} key={name} />;
-}
-
 function GeneralTab() {
 	const dispatch = useStateDispatch();
 	const name = useSelector(selectStructureName);
@@ -129,4 +134,16 @@ function GeneralTab() {
 
 function ValidationsTab() {
 	return <div></div>;
+}
+
+function MultiselectionState() {
+	return (
+		<ClayEmptyState
+			className="justify-content-center structure-builder__empty-state"
+			description=""
+			imgSrc={getImage('multiselection_state.svg')}
+			small
+			title={Liferay.Language.get('multiple-items-selected')}
+		/>
+	);
 }

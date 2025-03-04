@@ -15,12 +15,13 @@ import selectStructureERC from '../selectors/selectStructureERC';
 import selectStructureFields from '../selectors/selectStructureFields';
 import selectStructureId from '../selectors/selectStructureId';
 import selectStructureLabel from '../selectors/selectStructureLabel';
+import selectStructureLocalizedLabel from '../selectors/selectStructureLocalizedLabel';
 import selectStructureName from '../selectors/selectStructureName';
 import selectStructureStatus from '../selectors/selectStructureStatus';
 import StructureService from '../services/StructureService';
 
 export default function ManagementBar() {
-	const label = useSelector(selectStructureLabel);
+	const label = useSelector(selectStructureLocalizedLabel);
 	const status = useSelector(selectStructureStatus);
 
 	return (
@@ -69,6 +70,7 @@ function SaveButton() {
 	const dispatch = useStateDispatch();
 	const fields = useSelector(selectStructureFields);
 	const label = useSelector(selectStructureLabel);
+	const localizedLabel = useSelector(selectStructureLocalizedLabel);
 	const status = useSelector(selectStructureStatus);
 	const structureId = useSelector(selectStructureId);
 	const structureName = useSelector(selectStructureName);
@@ -85,7 +87,7 @@ function SaveButton() {
 		openToast({
 			message: Liferay.Util.sub(
 				Liferay.Language.get('x-was-created-successfully'),
-				label
+				localizedLabel
 			),
 			type: 'success',
 		});
@@ -105,7 +107,7 @@ function SaveButton() {
 		openToast({
 			message: Liferay.Util.sub(
 				Liferay.Language.get('x-was-updated-successfully'),
-				label
+				localizedLabel
 			),
 			type: 'success',
 		});
@@ -146,6 +148,7 @@ function PublishButton() {
 	const fields = useSelector(selectStructureFields);
 	const id = useSelector(selectStructureId);
 	const label = useSelector(selectStructureLabel);
+	const localizedLabel = useSelector(selectStructureLocalizedLabel);
 	const name = useSelector(selectStructureName);
 	const status = useSelector(selectStructureStatus);
 
@@ -168,7 +171,7 @@ function PublishButton() {
 			openToast({
 				message: Liferay.Util.sub(
 					Liferay.Language.get('x-was-published-successfully'),
-					label
+					localizedLabel
 				),
 				type: 'success',
 			});

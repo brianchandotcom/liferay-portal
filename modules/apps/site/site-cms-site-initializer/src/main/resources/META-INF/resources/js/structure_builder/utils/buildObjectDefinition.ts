@@ -23,13 +23,9 @@ export default function buildObjectDefinition({
 }): ObjectDefinition {
 	const objectDefinition: ObjectDefinition = {
 		externalReferenceCode: erc,
-		label: {
-			en_US: label,
-		},
+		label,
 		objectFields: buildFields(fields),
-		pluralLabel: {
-			en_US: label,
-		},
+		pluralLabel: label,
 		scope: 'site',
 	};
 

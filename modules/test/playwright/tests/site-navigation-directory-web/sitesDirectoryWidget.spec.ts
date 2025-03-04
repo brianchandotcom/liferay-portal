@@ -58,3 +58,40 @@ test('Ensure Sites Directory widget can display child site', async ({
 
 	await apiHelpers.headlessSite.deleteSite(childSite.id);
 });
+
+test('Ensure Sites Directory widget can display parent site', async ({
+	apiHelpers,
+	page,
+	site,
+	widgetPagePage,
+}) => {
+	const childSite = await apiHelpers.headlessSite.createSite({
+		name: getRandomString(),
+		parentSiteKey: site.name,
+	});
+
+	const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+		groupId: childSite.id,
+		title: getRandomString(),
+	});
+
+	await page.goto(`/web${childSite.friendlyUrlPath}${layout.friendlyURL}`);
+
+	await widgetPagePage.addPortlet('Sites Directory');
+
+	await widgetPagePage.clickOnAction('Sites Directory', 'Configuration');
+
+	const configurationIFrame = page.frameLocator(
+		'iframe[title*="Sites Directory"]'
+	);
+
+	await configurationIFrame.getByLabel('Sites').selectOption('Parent Level');
+
+	await widgetPagePage.saveAndClose('Sites Directory');
+
+	await expect(page.locator('[id$="groupsSearchContainer_1"]')).toHaveText(
+		site.name
+	);
+
+	await apiHelpers.headlessSite.deleteSite(childSite.id);
+});

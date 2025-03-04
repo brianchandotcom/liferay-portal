@@ -95,3 +95,52 @@ test('Ensure Sites Directory widget can display parent site', async ({
 
 	await apiHelpers.headlessSite.deleteSite(childSite.id);
 });
+
+test('Ensure Sites Directory widget can display sibling site', async ({
+	apiHelpers,
+	page,
+	site,
+	widgetPagePage,
+}) => {
+	const childSite1 = await apiHelpers.headlessSite.createSite({
+		name: getRandomString(),
+		parentSiteKey: site.name,
+	});
+
+	const childSite2 = await apiHelpers.headlessSite.createSite({
+		name: getRandomString(),
+		parentSiteKey: site.name,
+	});
+
+	const layout = await apiHelpers.jsonWebServicesLayout.addLayout({
+		groupId: childSite1.id,
+		title: getRandomString(),
+	});
+
+	await page.goto(`/web${childSite1.friendlyUrlPath}${layout.friendlyURL}`);
+
+	await widgetPagePage.addPortlet('Sites Directory');
+
+	await widgetPagePage.clickOnAction('Sites Directory', 'Configuration');
+
+	const configurationIFrame = page.frameLocator(
+		'iframe[title*="Sites Directory"]'
+	);
+
+	await configurationIFrame.getByLabel('Sites').selectOption('Siblings');
+
+	await widgetPagePage.saveAndClose('Sites Directory');
+
+	const breadcrumbEntries = await page
+		.locator('[id*="groupsSearchContainer_"]')
+		.allInnerTexts();
+
+	await expect(breadcrumbEntries.length).toBe(2);
+
+	await expect(breadcrumbEntries).toEqual(
+		expect.arrayContaining([childSite1.name, childSite2.name])
+	);
+
+	await apiHelpers.headlessSite.deleteSite(childSite1.id);
+	await apiHelpers.headlessSite.deleteSite(childSite2.id);
+});

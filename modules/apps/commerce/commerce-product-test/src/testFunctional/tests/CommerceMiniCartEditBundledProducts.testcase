@@ -257,6 +257,10 @@ definition {
 
 			Button.click(button = "View");
 
+			Click(
+				key_cellContent = "Bundled Product",
+				locator1 = "CommerceEntry#BUNDLE_PRODUCT_EXPAND_BUTTON");
+
 			CommerceOrders.viewOrdersDetails(
 				productListPrice = "20.00",
 				productName = "ABS Sensor",

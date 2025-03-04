@@ -288,7 +288,7 @@ definition {
 			CommerceNavigator.gotoOrderEntryViaAdmin(status = "Pending");
 
 			Click(
-				key_cellContent = "ABS Sensor",
+				key_cellContent = "Bundled Product",
 				locator1 = "CommerceEntry#BUNDLE_PRODUCT_EXPAND_BUTTON");
 
 			CommerceOrders.viewOrdersDetails(
@@ -500,7 +500,7 @@ definition {
 			var productOptions = '''Blue,option-checkbox-key,2023-10-23,10,Text Content,value1,value2,value2''';
 
 			Click(
-				key_cellContent = "ABS Sensor",
+				key_cellContent = "Bundled Product",
 				locator1 = "CommerceEntry#BUNDLE_PRODUCT_EXPAND_BUTTON");
 
 			CommerceOrders.viewOrdersDetails(

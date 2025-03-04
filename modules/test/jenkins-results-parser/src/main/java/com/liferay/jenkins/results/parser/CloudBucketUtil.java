@@ -111,8 +111,8 @@ public class CloudBucketUtil {
 	}
 
 	private static String _escapeParentheses(String s) {
-		s = s.replace(")", "\\)");
 		s = s.replace("(", "\\(");
+		s = s.replace(")", "\\)");
 
 		return s;
 	}

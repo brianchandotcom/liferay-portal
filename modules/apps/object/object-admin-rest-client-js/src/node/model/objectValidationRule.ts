@@ -11,16 +11,16 @@
  */
 
 	export class ObjectValidationRule {
-			'actions'?: { [key: string]: { [key: string]: string; }; };
+			'actions'?: {[key: string]: {[key: string]: string;};};
 			'active'?: boolean;
 			'dateCreated'?: Date;
 			'dateModified'?: Date;
 			'engine'?: string;
 			'engineLabel'?: string;
-			'errorLabel'?: { [key: string]: string; };
+			'errorLabel'?: {[key: string]: string;};
 			'externalReferenceCode'?: string;
 			'id'?: number;
-			'name'?: { [key: string]: string; };
+			'name'?: {[key: string]: string;};
 			'objectDefinitionExternalReferenceCode'?: string;
 			'objectDefinitionId'?: number;
 			'objectValidationRuleSettings'?: Array<ObjectValidationRuleSetting>;
@@ -38,7 +38,7 @@
 		{
 			baseName: "actions",
 			name: "actions",
-			type: "{ [key: string]: { [key: string]: string; }; }",
+			type: "{[key: string]: {[key: string]: string;};}",
 		},
 		{
 			baseName: "active",
@@ -68,7 +68,7 @@
 		{
 			baseName: "errorLabel",
 			name: "errorLabel",
-			type: "{ [key: string]: string; }",
+			type: "{[key: string]: string;}",
 		},
 		{
 			baseName: "externalReferenceCode",
@@ -83,7 +83,7 @@
 		{
 			baseName: "name",
 			name: "name",
-			type: "{ [key: string]: string; }",
+			type: "{[key: string]: string;}",
 		},
 		{
 			baseName: "objectDefinitionExternalReferenceCode",

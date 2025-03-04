@@ -15,8 +15,8 @@
 	export class JSONMapAttributeTestEntity {
 			'description'?: string;
 			'name'?: string;
-			'properties1'?: { [key: string]: object; };
-			'properties2'?: { [key: string]: object; };
+			'properties1'?: {[key: string]: object;};
+			'properties2'?: {[key: string]: object;};
 
 		static 'discriminator': string | undefined = undefined;
 
@@ -38,12 +38,12 @@
 		{
 			baseName: "properties1",
 			name: "properties1",
-			type: "{ [key: string]: object; }",
+			type: "{[key: string]: object;}",
 		},
 		{
 			baseName: "properties2",
 			name: "properties2",
-			type: "{ [key: string]: object; }",
+			type: "{[key: string]: object;}",
 		},
 		];
 

@@ -11,12 +11,12 @@
  */
 
 	export class ObjectRelationship {
-			'actions'?: { [key: string]: { [key: string]: string; }; };
+			'actions'?: {[key: string]: {[key: string]: string;};};
 			'deletionType'?: 'cascade' | 'disassociate' | 'prevent';
 			'edge'?: boolean;
 			'externalReferenceCode'?: string;
 			'id'?: number;
-			'label'?: { [key: string]: string; };
+			'label'?: {[key: string]: string;};
 			'name'?: string;
 			'objectDefinitionExternalReferenceCode1'?: string;
 			'objectDefinitionExternalReferenceCode2'?: string;
@@ -43,7 +43,7 @@
 		{
 			baseName: "actions",
 			name: "actions",
-			type: "{ [key: string]: { [key: string]: string; }; }",
+			type: "{[key: string]: {[key: string]: string;};}",
 		},
 		{
 			baseName: "deletionType",
@@ -68,7 +68,7 @@
 		{
 			baseName: "label",
 			name: "label",
-			type: "{ [key: string]: string; }",
+			type: "{[key: string]: string;}",
 		},
 		{
 			baseName: "name",

@@ -11,20 +11,20 @@
  */
 
 	export class ObjectAction {
-			'actions'?: { [key: string]: { [key: string]: string; }; };
+			'actions'?: {[key: string]: {[key: string]: string;};};
 			'active'?: boolean;
 			'conditionExpression'?: string;
 			'dateCreated'?: Date;
 			'dateModified'?: Date;
 			'description'?: string;
-			'errorMessage'?: { [key: string]: string; };
+			'errorMessage'?: {[key: string]: string;};
 			'externalReferenceCode'?: string;
 			'id'?: number;
-			'label'?: { [key: string]: string; };
+			'label'?: {[key: string]: string;};
 			'name'?: string;
 			'objectActionExecutorKey'?: string;
 			'objectActionTriggerKey'?: string;
-			'parameters'?: { [key: string]: any; };
+			'parameters'?: {[key: string]: any;};
 			'status'?: Status;
 			'system'?: boolean;
 
@@ -38,7 +38,7 @@
 		{
 			baseName: "actions",
 			name: "actions",
-			type: "{ [key: string]: { [key: string]: string; }; }",
+			type: "{[key: string]: {[key: string]: string;};}",
 		},
 		{
 			baseName: "active",
@@ -68,7 +68,7 @@
 		{
 			baseName: "errorMessage",
 			name: "errorMessage",
-			type: "{ [key: string]: string; }",
+			type: "{[key: string]: string;}",
 		},
 		{
 			baseName: "externalReferenceCode",
@@ -83,7 +83,7 @@
 		{
 			baseName: "label",
 			name: "label",
-			type: "{ [key: string]: string; }",
+			type: "{[key: string]: string;}",
 		},
 		{
 			baseName: "name",
@@ -103,7 +103,7 @@
 		{
 			baseName: "parameters",
 			name: "parameters",
-			type: "{ [key: string]: any; }",
+			type: "{[key: string]: any;}",
 		},
 		{
 			baseName: "status",

@@ -12,7 +12,7 @@
 
 	export class ObjectLayoutTab {
 			'id'?: number;
-			'name'?: { [key: string]: string; };
+			'name'?: {[key: string]: string;};
 			'objectLayoutBoxes'?: Array<ObjectLayoutBox>;
 			'objectRelationshipExternalReferenceCode'?: string;
 			'objectRelationshipId'?: number;
@@ -33,7 +33,7 @@
 		{
 			baseName: "name",
 			name: "name",
-			type: "{ [key: string]: string; }",
+			type: "{[key: string]: string;}",
 		},
 		{
 			baseName: "objectLayoutBoxes",

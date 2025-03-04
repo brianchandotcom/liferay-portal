@@ -13,12 +13,12 @@
  */
 
 	export class ObjectView {
-			'actions'?: { [key: string]: { [key: string]: string; }; };
+			'actions'?: {[key: string]: {[key: string]: string;};};
 			'dateCreated'?: Date;
 			'dateModified'?: Date;
 			'defaultObjectView'?: boolean;
 			'id'?: number;
-			'name'?: { [key: string]: string; };
+			'name'?: {[key: string]: string;};
 			'objectDefinitionExternalReferenceCode'?: string;
 			'objectDefinitionId'?: number;
 			'objectViewColumns'?: Array<ObjectViewColumn>;
@@ -35,7 +35,7 @@
 		{
 			baseName: "actions",
 			name: "actions",
-			type: "{ [key: string]: { [key: string]: string; }; }",
+			type: "{[key: string]: {[key: string]: string;};}",
 		},
 		{
 			baseName: "dateCreated",
@@ -60,7 +60,7 @@
 		{
 			baseName: "name",
 			name: "name",
-			type: "{ [key: string]: string; }",
+			type: "{[key: string]: string;}",
 		},
 		{
 			baseName: "objectDefinitionExternalReferenceCode",

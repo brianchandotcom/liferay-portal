@@ -12,7 +12,7 @@
 
 	export class ObjectField {
 			'DBType'?: 'BigDecimal' | 'Boolean' | 'Clob' | 'Date' | 'DateTime' | 'Double' | 'Integer' | 'Long' | 'String';
-			'actions'?: { [key: string]: { [key: string]: string; }; };
+			'actions'?: {[key: string]: {[key: string]: string;};};
 			'businessType'?: 'Aggregation' | 'Attachment' | 'AutoIncrement' | 'Boolean' | 'Date' | 'DateTime' | 'Decimal' | 'Encrypted' | 'Formula' | 'Integer' | 'LongInteger' | 'LongText' | 'MultiselectPicklist' | 'Picklist' | 'PrecisionDecimal' | 'Relationship' | 'RichText' | 'Text';
 			'defaultValue'?: string;
 			'externalReferenceCode'?: string;
@@ -20,7 +20,7 @@
 			'indexed'?: boolean;
 			'indexedAsKeyword'?: boolean;
 			'indexedLanguageId'?: string;
-			'label'?: { [key: string]: string; };
+			'label'?: {[key: string]: string;};
 			'listTypeDefinitionExternalReferenceCode'?: string;
 			'listTypeDefinitionId'?: number;
 			'localized'?: boolean;
@@ -52,7 +52,7 @@
 		{
 			baseName: "actions",
 			name: "actions",
-			type: "{ [key: string]: { [key: string]: string; }; }",
+			type: "{[key: string]: {[key: string]: string;};}",
 		},
 		{
 			baseName: "businessType",
@@ -92,7 +92,7 @@
 		{
 			baseName: "label",
 			name: "label",
-			type: "{ [key: string]: string; }",
+			type: "{[key: string]: string;}",
 		},
 		{
 			baseName: "listTypeDefinitionExternalReferenceCode",

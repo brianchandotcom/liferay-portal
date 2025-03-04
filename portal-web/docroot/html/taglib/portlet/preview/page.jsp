@@ -30,7 +30,7 @@ if (Validator.isNull(width)) {
 	</c:if>
 
 	<div class="preview" id="<%= randomNamespace %>">
-		<div>
+		<div id="<%= randomNamespace %>previewContainer">
 			<liferay-portlet:runtime
 				persistSettings="<%= false %>"
 				portletName="<%= portletResource %>"
@@ -44,6 +44,13 @@ if (Validator.isNull(width)) {
 	var randomElement = document.getElementById('<%= randomNamespace %>');
 
 	if (randomElement) {
+		var previewContainer = document.getElementById('<%= randomNamespace %>previewContainer');
+
+		if (previewContainer) {
+			previewContainer.style.margin = '3px';
+			previewContainer.style.width = <%= previewWidth %> ? parseInt('<%= HtmlUtil.escape(previewWidth) %>', 10) + 20 + 'px' : '100%';
+		}
+
 		var children = randomElement.getElementsByTagName('*');
 
 		var emptyFnFalse = function () {
@@ -54,8 +61,6 @@ if (Validator.isNull(width)) {
 			var item = children[i];
 
 			item.style.cursor = 'default';
-			item.style.margin = '3px';
-			item.style.width = <%= previewWidth %> ? parseInt('<%= HtmlUtil.escape(previewWidth) %>', 10) + 20 + 'px' : '100%';
 
 			item.onclick = emptyFnFalse;
 			item.onmouseover = emptyFnFalse;

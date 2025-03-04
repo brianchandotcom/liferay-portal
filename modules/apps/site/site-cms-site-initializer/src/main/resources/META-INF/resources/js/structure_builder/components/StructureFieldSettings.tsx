@@ -5,12 +5,13 @@
 
 import ClayAlert from '@clayui/alert';
 import ClayBreadcrumb from '@clayui/breadcrumb';
-import ClayForm, {ClayToggle} from '@clayui/form';
+import {Option, Picker} from '@clayui/core';
+import ClayForm, {ClayRadio, ClayRadioGroup, ClayToggle} from '@clayui/form';
 import ClayLabel from '@clayui/label';
 import ClayLayout from '@clayui/layout';
 import ClayTabs from '@clayui/tabs';
 import {InputLocalized} from 'frontend-js-components-web';
-import React, {useState} from 'react';
+import React, {useMemo, useState} from 'react';
 
 import {useSelector, useStateDispatch} from '../contexts/StateContext';
 import selectPublishedFields from '../selectors/selectPublishedFields';
@@ -81,7 +82,7 @@ export default function StructureFieldSettings({
 					</ClayTabs.TabPane>
 
 					<ClayTabs.TabPane>
-						<SearchTab />
+						<SearchTab field={field!} />
 					</ClayTabs.TabPane>
 				</ClayTabs.Panels>
 			</ClayTabs>
@@ -192,16 +193,109 @@ function GeneralTab({field}: {field: Field}) {
 	);
 }
 
-function SearchTab() {
+function SearchTab({field}: {field: Field}) {
+	const dispatch = useStateDispatch();
+
+	const languageLabels = useMemo(
+		() =>
+			Object.entries(Liferay.Language.available).map(([key, value]) => {
+				return {label: value, value: key};
+			}),
+		[]
+	);
+
 	return (
 		<>
 			<ClayForm.Group>
 				<ClayToggle
 					label={Liferay.Language.get('searchable')}
-					onToggle={() => {}}
-					toggled={false}
+					onToggle={(value) => {
+						dispatch({
+							indexableConfig: {
+								indexed: value,
+								indexedAsKeyword: false,
+								indexedLanguageId:
+									Liferay.ThemeDisplay.getDefaultLanguageId(),
+							},
+							name: field.name,
+							type: 'update-field',
+						});
+					}}
+					toggled={field.indexableConfig.indexed}
 				/>
 			</ClayForm.Group>
+
+			{field.indexableConfig.indexed ? (
+				<>
+					<p className="text-secondary">
+						{Liferay.Language.get(
+							'specify-whether-to-index-the-field-for-search'
+						)}
+					</p>
+					<ClayForm.Group>
+						<ClayRadioGroup
+							defaultValue={
+								field.indexableConfig.indexedAsKeyword
+									? 'keyword'
+									: 'text'
+							}
+							inline
+							onChange={(value: React.ReactText) => {
+								dispatch({
+									indexableConfig: {
+										indexed: true,
+										indexedAsKeyword: value === 'keyword',
+										indexedLanguageId:
+											value === 'keyword'
+												? undefined
+												: Liferay.ThemeDisplay.getDefaultLanguageId(),
+									},
+									name: field.name,
+									type: 'update-field',
+								});
+							}}
+						>
+							<ClayRadio
+								label={Liferay.Language.get('keyword')}
+								value="keyword"
+							/>
+
+							<ClayRadio
+								label={Liferay.Language.get('text')}
+								value="text"
+							/>
+						</ClayRadioGroup>
+					</ClayForm.Group>
+
+					{!field.indexableConfig.indexedAsKeyword ? (
+						<Picker
+							defaultSelectedKey={Liferay.ThemeDisplay.getDefaultLanguageId()}
+							items={languageLabels}
+							onSelectionChange={(
+								indexedLanguageId: React.Key
+							) => {
+								dispatch({
+									indexableConfig: {
+										indexed: true,
+										indexedAsKeyword: false,
+										indexedLanguageId:
+											indexedLanguageId as Liferay.Language.Locale,
+									},
+									name: field.name,
+									type: 'update-field',
+								});
+							}}
+							selectedKey={
+								field.indexableConfig.indexedLanguageId
+							}
+						>
+							{(item) => (
+								<Option key={item.value}>{item.label}</Option>
+							)}
+						</Picker>
+					) : null}
+				</>
+			) : null}
 		</>
 	);
 }

@@ -68,6 +68,15 @@ export const FIELD_TYPE_BUSINESS_TYPE: Record<FieldType, string> = {
 
 type BaseField = {
 	erc: string;
+	indexableConfig:
+		| {
+				indexed: false;
+		  }
+		| {
+				indexed: true;
+				indexedAsKeyword: boolean;
+				indexedLanguageId?: Liferay.Language.Locale;
+		  };
 	label: Liferay.Language.LocalizedValue<string>;
 	localized: boolean;
 	name: string;
@@ -88,7 +97,7 @@ export type Field =
 			type: 'upload';
 	  })
 	| (BaseField & {
-			type: Exclude<FieldType, 'datetime'>;
+			type: Exclude<FieldType, ['datetime', 'upload']>;
 	  });
 
 export type FieldType = (typeof FIELD_TYPES)[number];
@@ -101,6 +110,11 @@ export type FieldBusinessType =
 export function getDefaultField(type: FieldType): Field {
 	const base = {
 		erc: getRandomId(),
+		indexableConfig: {
+			indexed: true,
+			indexedAsKeyword: false,
+			indexedLanguageId: Liferay.ThemeDisplay.getDefaultLanguageId(),
+		},
 		label: {
 			[Liferay.ThemeDisplay.getDefaultLanguageId()]:
 				FIELD_TYPE_LABEL[type],

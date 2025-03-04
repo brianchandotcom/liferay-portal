@@ -125,7 +125,7 @@ export class CompanyExportImportPage {
 
 		await this.page.locator('input[type="file"]').setInputFiles(filePath);
 
-		if (expectedErrorMessage !== null) {
+		if (expectedErrorMessage) {
 			await expect(
 				this.page.getByText(expectedErrorMessage)
 			).toBeVisible();

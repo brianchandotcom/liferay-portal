@@ -651,16 +651,15 @@ public class StructuredContentResourceTest
 
 	@Test
 	public void testPostStructuredContentWithBatch() throws Exception {
-		StructuredContent randomStructuredContent1 = _randomStructuredContent(
-			LocaleUtil.getDefault());
-
 		ImportTask importTask = ImportTask.toDTO(
 			structuredContentResource.
 				postSiteStructuredContentBatchHttpResponse(
 					testGroup.getGroupId(), null,
 					JSONUtil.putAll(
 						JSONFactoryUtil.createJSONObject(
-							randomStructuredContent1.toString()))
+							String.valueOf(
+								_randomStructuredContent(
+									LocaleUtil.getDefault()))))
 				).getContent());
 
 		User testCompanyAdminUser = UserTestUtil.getAdminUser(

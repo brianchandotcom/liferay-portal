@@ -99,7 +99,7 @@ function Toolbar({
 	return (
 		<ManagementToolbar.Container
 			active
-			className="mb-1"
+			className="mb-2 mt-3"
 			onClick={(event) => event.stopPropagation()}
 		>
 			{sub(Liferay.Language.get('x-items-selected'), selection.length)}

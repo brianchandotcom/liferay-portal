@@ -1,8 +1,8 @@
-<div class="forms-checkbox">
+<div class="forms-checkbox" data-localizable="${input.localizable?string('true', 'false')}">
 	<div class="align-items-center custom-checkbox custom-control d-flex [#if input.errorMessage?has_content]has-error[/#if]">
 		<input aria-describedby="${fragmentEntryLinkNamespace}-checkbox-help-text" aria-labelledby="${fragmentEntryLinkNamespace}-checkbox-label [#if input.errorMessage?has_content]${fragmentEntryLinkNamespace}-checkbox-error-message[/#if]" class="custom-control-input" [#if input.attributes.disabled?? && input.attributes.disabled]disabled[/#if] id="${fragmentEntryLinkNamespace}-checkbox" name="${input.name}" [#if input.readOnly]readonly[/#if] ${input.required?then('required', '')} type="checkbox" [#if input.value?? && input.value == 'true']checked[/#if] />
 
-		<label class="custom-control-label" data-localizable="${input.localizable?string('true', 'false')}" for="${fragmentEntryLinkNamespace}-checkbox" id="${fragmentEntryLinkNamespace}-checkbox-label">
+		<label class="custom-control-label" for="${fragmentEntryLinkNamespace}-checkbox" id="${fragmentEntryLinkNamespace}-checkbox-label">
 			<span class="[#if !input.showLabel || !input.label?has_content]sr-only [/#if]custom-control-label-text">
 				${htmlUtil.escape(input.label)}
 

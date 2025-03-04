@@ -36,12 +36,12 @@ export function LocalizationSelect({
 			const totalTranslatedInputs = new Set([
 				...Array.from(
 					document.querySelectorAll(
-						`[type="file"][name$="_${languageId}"]`
+						`[data-localizable="true"] [type="file"][name$="_${languageId}"]`
 					)
 				),
 				...Array.from(
 					document.querySelectorAll(
-						`[type="hidden"][name$="_${languageId}"]`
+						`[data-localizable="true"] [type="hidden"][name$="_${languageId}"]`
 					)
 				)
 					.filter((input) => input.getAttribute('value') !== null)

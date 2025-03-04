@@ -1,6 +1,6 @@
-<div class="textarea">
+<div class="textarea" data-localizable="${input.localizable?string('true', 'false')}">
 	<div class="form-group [#if  input.errorMessage?has_content]has-error[/#if] mb-0" id="${fragmentEntryLinkNamespace}-form-group">
-		<label class="[#if !input.showLabel || !input.label?has_content]sr-only[/#if]" data-localizable="${input.localizable?string('true', 'false')}" for="${fragmentEntryLinkNamespace}-textarea" id="${fragmentEntryLinkNamespace}-textarea-label">
+		<label class="[#if !input.showLabel || !input.label?has_content]sr-only[/#if]" for="${fragmentEntryLinkNamespace}-textarea" id="${fragmentEntryLinkNamespace}-textarea-label">
 			${htmlUtil.escape(input.label)}
 
 			<span id="${fragmentEntryLinkNamespace}-textarea-readonly" class="[#if !input.readOnly]d-none[/#if]">(${languageUtil.get(locale, "read-only")})</span>

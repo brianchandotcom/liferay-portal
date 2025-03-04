@@ -131,8 +131,6 @@ testFlagsEnabled(
 			type: 'webContent',
 		});
 
-		await webContentDisplayPage.addWebContentWithDisplay(webContentName);
-
 		await apiHelpers.jsonWebServicesStaging.enableLocalStaging({
 			groupId: site.id,
 		});

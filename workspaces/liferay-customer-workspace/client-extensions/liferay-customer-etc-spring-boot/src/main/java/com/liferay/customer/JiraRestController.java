@@ -147,7 +147,7 @@ public class JiraRestController extends BaseRestController {
 		}
 	}
 
-	private JSONObject _getMyUserAccountJSONObject(Jwt jwt) {
+	private JSONObject _getMyUserAccountJSONObject(Jwt jwt) throws Exception {
 		try {
 			return new JSONObject(
 				get(
@@ -158,12 +158,12 @@ public class JiraRestController extends BaseRestController {
 			if (_log.isWarnEnabled()) {
 				_log.warn("Unable to get user account", exception);
 			}
-		}
 
-		return null;
+			throw new PrincipalException();
+		}
 	}
 
-	private List<String> _getUserRoleNames(Jwt jwt) {
+	private List<String> _getUserRoleNames(Jwt jwt) throws Exception {
 		List<String> rolesNames = new ArrayList<>();
 
 		JSONObject userJSONObject = _getMyUserAccountJSONObject(jwt);
@@ -183,7 +183,7 @@ public class JiraRestController extends BaseRestController {
 		return rolesNames;
 	}
 
-	private boolean _hasAdministrator(Jwt jwt) {
+	private boolean _hasAdministrator(Jwt jwt) throws Exception {
 		List<String> userRoleNames = _getUserRoleNames(jwt);
 
 		if (userRoleNames.contains(RoleConstants.NAME_ADMINISTRATOR)) {
@@ -193,7 +193,7 @@ public class JiraRestController extends BaseRestController {
 		return false;
 	}
 
-	private boolean _hasEarlyPublishAccess(Jwt jwt) {
+	private boolean _hasEarlyPublishAccess(Jwt jwt) throws Exception {
 		List<String> userRoleNames = _getUserRoleNames(jwt);
 
 		if (userRoleNames.contains(RoleConstants.NAME_ADMINISTRATOR) ||
@@ -206,7 +206,9 @@ public class JiraRestController extends BaseRestController {
 		return false;
 	}
 
-	private boolean _hasIssuePermission(Jwt jwt, JSONObject issueJSONObject) {
+	private boolean _hasIssuePermission(Jwt jwt, JSONObject issueJSONObject)
+		throws Exception {
+
 		JSONObject fieldsJSONObject = issueJSONObject.getJSONObject("fields");
 
 		String publishingStatus = fieldsJSONObject.optString(
@@ -225,7 +227,8 @@ public class JiraRestController extends BaseRestController {
 	}
 
 	private LocalDateTime _parseLocalDateTime(
-		Jwt jwt, JSONObject issueJSONObject) {
+			Jwt jwt, JSONObject issueJSONObject)
+		throws Exception {
 
 		JSONObject fieldsJSONObject = issueJSONObject.getJSONObject("fields");
 

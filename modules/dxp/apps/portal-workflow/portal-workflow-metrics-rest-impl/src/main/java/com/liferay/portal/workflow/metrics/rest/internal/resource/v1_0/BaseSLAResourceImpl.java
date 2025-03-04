@@ -32,6 +32,7 @@ import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineExportTaskResource;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
+import com.liferay.portal.vulcan.crud.VulcanCRUDItemDelegate;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -68,7 +69,8 @@ import javax.ws.rs.core.UriInfo;
 @javax.ws.rs.Path("/v1.0")
 public abstract class BaseSLAResourceImpl
 	implements EntityModelResource, SLAResource,
-			   VulcanBatchEngineTaskItemDelegate<SLA> {
+			   VulcanBatchEngineTaskItemDelegate<SLA>,
+			   VulcanCRUDItemDelegate<SLA> {
 
 	/**
 	 * Invoke this method with the command line:
@@ -656,6 +658,11 @@ public abstract class BaseSLAResourceImpl
 		}
 
 		return null;
+	}
+
+	@Override
+	public SLA getItem(Long id) throws Exception {
+		return getSLA(id);
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

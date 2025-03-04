@@ -118,8 +118,9 @@ public class AMImageRequestHandlerTest {
 
 		_resourcePermissionLocalService.removeResourcePermission(
 			_group.getCompanyId(), DLFileEntry.class.getName(),
-			ResourceConstants.SCOPE_INDIVIDUAL, String.valueOf(fileEntry),
-			guestRole.getRoleId(), ActionKeys.VIEW);
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			String.valueOf(fileEntry.getFileEntryId()), guestRole.getRoleId(),
+			ActionKeys.VIEW);
 
 		return fileEntry;
 	}

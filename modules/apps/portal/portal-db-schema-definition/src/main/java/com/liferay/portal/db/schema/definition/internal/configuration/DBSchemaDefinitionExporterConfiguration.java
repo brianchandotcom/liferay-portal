@@ -12,7 +12,9 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Mariano Álvaro Sáiz
  */
-@ExtendedObjectClassDefinition(category = "upgrades")
+@ExtendedObjectClassDefinition(
+	category = "upgrades", featureFlagKey = "LPD-23840"
+)
 @Meta.OCD(
 	id = "com.liferay.portal.db.schema.definition.internal.configuration.DBSchemaDefinitionExporterConfiguration",
 	localization = "content/Language",

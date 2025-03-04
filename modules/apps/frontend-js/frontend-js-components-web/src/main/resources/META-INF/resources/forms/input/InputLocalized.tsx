@@ -59,6 +59,7 @@ export function translationsNormalizer(
 }
 
 export default function InputLocalized({
+	className,
 	disabled,
 	error,
 	helpMessage,
@@ -115,7 +116,7 @@ export default function InputLocalized({
 		>
 			<ClayLocalizedInput
 				{...otherProps}
-				className={classNames({
+				className={classNames(className, {
 					'input-localized--rtl':
 						Liferay.Language.direction[selectedLocaleItem.label] ===
 						'rtl',

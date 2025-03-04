@@ -661,6 +661,32 @@ paths:
                     description:
                         The list of Schemas.
             tags: ["Schema"]
+    /v2/Schemas/{id}:
+        get:
+            operationId: getV2SchemaById
+            parameters:
+                - in: path
+                  description:
+                      The schema's unique identifier.
+                  name: id
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/scim+json:
+                            schema:
+                                oneOf:
+                                    - format: binary
+                                      type: string
+                                    - $ref: "#/components/schemas/SchemaDefinition"
+                    description:
+                        The requested schema.
+                404:
+                    description:
+                        Schema not found.
+            tags: ["Schema"]
     /v2/Users:
         get:
             description:

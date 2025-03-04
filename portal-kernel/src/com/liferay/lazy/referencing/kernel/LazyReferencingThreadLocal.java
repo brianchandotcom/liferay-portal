@@ -6,11 +6,20 @@
 package com.liferay.lazy.referencing.kernel;
 
 import com.liferay.petra.lang.CentralizedThreadLocal;
+import com.liferay.petra.lang.SafeCloseable;
 
 /**
  * @author Stefano Motta
  */
 public class LazyReferencingThreadLocal {
+
+	public static SafeCloseable enableIncompleteModelWithSelfCloseable() {
+		return _incompleteModel.setWithSafeCloseable(true);
+	}
+
+	public static SafeCloseable enableLazyReferencingWithSelfCloseable() {
+		return _lazyReferencingEnabled.setWithSafeCloseable(true);
+	}
 
 	public static boolean isIncompleteModel() {
 		return _incompleteModel.get();
@@ -20,22 +29,12 @@ public class LazyReferencingThreadLocal {
 		return _lazyReferencingEnabled.get();
 	}
 
-	public static void setIncompleteModel(boolean incompleteModel) {
-		_incompleteModel.set(incompleteModel);
-	}
-
-	public static void setLazyReferencingEnabled(
-		boolean lazyReferencingEnabled) {
-
-		_lazyReferencingEnabled.set(lazyReferencingEnabled);
-	}
-
-	private static final ThreadLocal<Boolean> _incompleteModel =
+	private static final CentralizedThreadLocal<Boolean> _incompleteModel =
 		new CentralizedThreadLocal<>(
 			LazyReferencingThreadLocal.class + "._incompleteModel",
 			() -> Boolean.FALSE);
-	private static final ThreadLocal<Boolean> _lazyReferencingEnabled =
-		new CentralizedThreadLocal<>(
+	private static final CentralizedThreadLocal<Boolean>
+		_lazyReferencingEnabled = new CentralizedThreadLocal<>(
 			LazyReferencingThreadLocal.class + "._lazyReferencingEnabled",
 			() -> Boolean.FALSE);
 

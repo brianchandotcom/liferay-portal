@@ -22,6 +22,7 @@ import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.lazy.referencing.kernel.LazyReferencingThreadLocal;
 import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.Table;
@@ -266,8 +267,9 @@ public class AccountEntryLocalServiceImpl
 			return accountEntry;
 		}
 
-		try {
-			LazyReferencingThreadLocal.setIncompleteModel(true);
+		try (SafeCloseable safeCloseable =
+				LazyReferencingThreadLocal.
+					enableIncompleteModelWithSelfCloseable()) {
 
 			accountEntry = accountEntryLocalService.addAccountEntry(
 				userId, AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT,
@@ -277,9 +279,6 @@ public class AccountEntryLocalServiceImpl
 
 			return accountEntryLocalService.updateExternalReferenceCode(
 				accountEntry.getAccountEntryId(), externalReferenceCode);
-		}
-		finally {
-			LazyReferencingThreadLocal.setIncompleteModel(false);
 		}
 	}
 

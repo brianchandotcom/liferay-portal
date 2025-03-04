@@ -67,6 +67,48 @@ public class Creator implements Cloneable, Serializable {
 
 	protected String contentType;
 
+	public String getEmailAddress() {
+		return emailAddress;
+	}
+
+	public void setEmailAddress(String emailAddress) {
+		this.emailAddress = emailAddress;
+	}
+
+	public void setEmailAddress(
+		UnsafeSupplier<String, Exception> emailAddressUnsafeSupplier) {
+
+		try {
+			emailAddress = emailAddressUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String emailAddress;
+
+	public String getExternalReferenceCode() {
+		return externalReferenceCode;
+	}
+
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		this.externalReferenceCode = externalReferenceCode;
+	}
+
+	public void setExternalReferenceCode(
+		UnsafeSupplier<String, Exception> externalReferenceCodeUnsafeSupplier) {
+
+		try {
+			externalReferenceCode = externalReferenceCodeUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String externalReferenceCode;
+
 	public String getFamilyName() {
 		return familyName;
 	}
@@ -188,6 +230,27 @@ public class Creator implements Cloneable, Serializable {
 	}
 
 	protected String profileURL;
+
+	public String getScreenName() {
+		return screenName;
+	}
+
+	public void setScreenName(String screenName) {
+		this.screenName = screenName;
+	}
+
+	public void setScreenName(
+		UnsafeSupplier<String, Exception> screenNameUnsafeSupplier) {
+
+		try {
+			screenName = screenNameUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected String screenName;
 
 	@Override
 	public Creator clone() throws CloneNotSupportedException {

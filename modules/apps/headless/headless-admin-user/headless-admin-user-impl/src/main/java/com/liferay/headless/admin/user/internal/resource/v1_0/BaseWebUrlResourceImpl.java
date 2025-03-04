@@ -7,7 +7,6 @@ package com.liferay.headless.admin.user.internal.resource.v1_0;
 
 import com.liferay.headless.admin.user.dto.v1_0.WebUrl;
 import com.liferay.headless.admin.user.resource.v1_0.WebUrlResource;
-import com.liferay.lazy.referencing.kernel.LazyReferencingThreadLocal;
 import com.liferay.petra.function.UnsafeBiConsumer;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
@@ -734,15 +733,8 @@ public abstract class BaseWebUrlResourceImpl
 			Collection<WebUrl> webUrls, Map<String, Serializable> parameters)
 		throws Exception {
 
-		try {
-			LazyReferencingThreadLocal.setLazyReferencingEnabled(true);
-
-			throw new UnsupportedOperationException(
-				"This method needs to be implemented");
-		}
-		finally {
-			LazyReferencingThreadLocal.setLazyReferencingEnabled(false);
-		}
+		throw new UnsupportedOperationException(
+			"This method needs to be implemented");
 	}
 
 	@Override

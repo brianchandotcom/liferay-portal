@@ -651,50 +651,6 @@ public class StructuredContentResourceTest
 				getMarkedAsDefault());
 	}
 
-	public void _testPostStructuredContentWithBatch() throws Exception {
-		ImportTask importTask = ImportTask.toDTO(
-			structuredContentResource.
-				postSiteStructuredContentBatchHttpResponse(
-					testGroup.getGroupId(), null,
-					JSONUtil.putAll(
-						JSONFactoryUtil.createJSONObject(
-							String.valueOf(
-								_randomStructuredContent(
-									LocaleUtil.getDefault()))))
-				).getContent());
-
-		User testCompanyAdminUser = UserTestUtil.getAdminUser(
-			testCompany.getCompanyId());
-
-		ImportTaskResource importTaskResource = ImportTaskResource.builder(
-		).authentication(
-			testCompanyAdminUser.getEmailAddress(),
-			PropsValues.DEFAULT_ADMIN_PASSWORD
-		).endpoint(
-			testCompany.getVirtualHostname(), 8080, "http"
-		).locale(
-			LocaleUtil.getDefault()
-		).build();
-
-		while (true) {
-			importTask = importTaskResource.getImportTask(importTask.getId());
-
-			if (StringUtil.equals(
-					importTask.getExecuteStatusAsString(), "COMPLETED") ||
-				StringUtil.equals(
-					importTask.getExecuteStatusAsString(), "FAILED")) {
-
-				Assert.assertEquals(
-					"COMPLETED", importTask.getExecuteStatusAsString());
-				Assert.assertEquals(
-					1L, (long)importTask.getProcessedItemsCount());
-				Assert.assertEquals(1L, (long)importTask.getTotalItemsCount());
-
-				break;
-			}
-		}
-	}
-
 	@Override
 	@Test
 	public void testPutAssetLibraryStructuredContentByExternalReferenceCode()
@@ -2453,6 +2409,50 @@ public class StructuredContentResourceTest
 			externalReferenceCode,
 			postStructuredContent.getExternalReferenceCode());
 		assertValid(postStructuredContent);
+	}
+
+	private void _testPostStructuredContentWithBatch() throws Exception {
+		ImportTask importTask = ImportTask.toDTO(
+			structuredContentResource.
+				postSiteStructuredContentBatchHttpResponse(
+					testGroup.getGroupId(), null,
+					JSONUtil.putAll(
+						JSONFactoryUtil.createJSONObject(
+							String.valueOf(
+								_randomStructuredContent(
+									LocaleUtil.getDefault()))))
+				).getContent());
+
+		User testCompanyAdminUser = UserTestUtil.getAdminUser(
+			testCompany.getCompanyId());
+
+		ImportTaskResource importTaskResource = ImportTaskResource.builder(
+		).authentication(
+			testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+
+		while (true) {
+			importTask = importTaskResource.getImportTask(importTask.getId());
+
+			if (StringUtil.equals(
+					importTask.getExecuteStatusAsString(), "COMPLETED") ||
+				StringUtil.equals(
+					importTask.getExecuteStatusAsString(), "FAILED")) {
+
+				Assert.assertEquals(
+					"COMPLETED", importTask.getExecuteStatusAsString());
+				Assert.assertEquals(
+					1L, (long)importTask.getProcessedItemsCount());
+				Assert.assertEquals(1L, (long)importTask.getTotalItemsCount());
+
+				break;
+			}
+		}
 	}
 
 	private static final String[] _COMPLETE_STRUCTURED_CONTENT_OPTIONS = {

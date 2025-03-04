@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ASSET_SELECTION_BASIC</td>
+	<td>//input[contains(@id,'basicInputText')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ASSET_SELECTION_DYNAMIC</td>
 	<td>//input[contains(@id,'selectionStyleDynamic')]</td>
 	<td></td>

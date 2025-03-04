@@ -96,11 +96,17 @@ definition {
 				pageName = "Staging Test Page",
 				siteName = "Remote Site");
 
-			AssetPublisherPortlet.configureDynamicAssetSelectionPG(portletName = "Asset Publisher");
+			AssetPublisherPortlet.gotoSelectCollection(portletName = "Asset Publisher");
 
-			Refresh();
+			Navigator.gotoNavTab(navTab = "Asset Selection");
 
-			Alert.viewInfoMessageSpecific(infoMessage = "There are no results.");
+			Click(locator1 = "APConfiguration#ASSET_SELECTION_BASIC");
+
+			IFrame.selectModalFrame();
+
+			AssertTextEquals.assertPartialText(
+				locator1 = "Message#EMPTY_INFO",
+				value1 = "There are no collections.");
 		}
 	}
 

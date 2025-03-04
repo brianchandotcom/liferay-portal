@@ -17,42 +17,35 @@ import org.apache.tools.ant.Project;
 public class CPEUtil {
 
 	public static String getName(Project project) {
-		try {
-			String patchVersion = "*";
-			String product = "portal";
-			String version =
-				ReleaseInfo.getVersion() +
-					project.getProperty("release.info.version.file.suffix");
+		String patchVersion = "*";
+		String product = "portal";
+		String version =
+			ReleaseInfo.getVersion() +
+				project.getProperty("release.info.version.file.suffix");
 
-			if (ReleaseInfo.isDXP()) {
-				String versionDisplayName = ReleaseInfo.getVersionDisplayName();
+		if (ReleaseInfo.isDXP()) {
+			String versionDisplayName = ReleaseInfo.getVersionDisplayName();
 
-				int periodLastIndex = versionDisplayName.lastIndexOf(
-					StringPool.PERIOD);
+			int periodLastIndex = versionDisplayName.lastIndexOf(
+				StringPool.PERIOD);
 
-				patchVersion = versionDisplayName.substring(
-					periodLastIndex + 1);
+			patchVersion = versionDisplayName.substring(periodLastIndex + 1);
 
-				if (patchVersion.endsWith(" LTS")) {
-					patchVersion = patchVersion.substring(
-						0, patchVersion.indexOf(" LTS"));
-				}
-
-				product = "dxp";
-
-				String qVersion = versionDisplayName.substring(
-					0, periodLastIndex);
-
-				version = qVersion.toLowerCase();
+			if (patchVersion.endsWith(" LTS")) {
+				patchVersion = patchVersion.substring(
+					0, patchVersion.indexOf(" LTS"));
 			}
 
-			return String.format(
-				"cpe:2.3:a:liferay:%s:%s:%s:*:*:*:*:*:*", product, version,
-				patchVersion);
+			product = "dxp";
+
+			String qVersion = versionDisplayName.substring(0, periodLastIndex);
+
+			version = qVersion.toLowerCase();
 		}
-		catch (Exception exception) {
-			throw new RuntimeException(exception);
-		}
+
+		return String.format(
+			"cpe:2.3:a:liferay:%s:%s:%s:*:*:*:*:*:*", product, version,
+			patchVersion);
 	}
 
 }

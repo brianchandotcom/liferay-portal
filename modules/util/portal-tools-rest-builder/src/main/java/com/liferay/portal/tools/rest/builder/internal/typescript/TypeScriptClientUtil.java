@@ -96,7 +96,12 @@ public class TypeScriptClientUtil {
 		Map<String, Schema> schemas = components.getSchemas();
 
 		if (schemas != null) {
+			Set<String> processedRelatedSchemaModels = new HashSet<>();
+
 			for (Map.Entry<String, Schema> entry : schemas.entrySet()) {
+				_createRelatedSchemaModels(
+					baseClientDir, configYAML, copyrightFile, files, "",
+					processedRelatedSchemaModels, entry.getValue());
 				_createFile(
 					_buildModelContext(entry.getKey(), entry.getValue()),
 					configYAML, copyrightFile, files, "typescript/model",
@@ -501,6 +506,101 @@ public class TypeScriptClientUtil {
 				).build()));
 	}
 
+	private static void _createRelatedSchemaModels(
+			File baseClientDir, ConfigYAML configYAML, File copyrightFile,
+			List<File> files, String parentYAMLPath,
+			Set<String> processedReferences, Schema schema)
+		throws Exception {
+
+		Map<String, Schema> propertySchemas = schema.getPropertySchemas();
+
+		if (propertySchemas == null) {
+			return;
+		}
+
+		for (Schema propertySchema : propertySchemas.values()) {
+			List<String> references = new ArrayList<>();
+
+			String propertySchemaReference = propertySchema.getReference();
+
+			if (propertySchemaReference != null) {
+				references.add(propertySchemaReference);
+			}
+
+			Items items = propertySchema.getItems();
+
+			if (items != null) {
+				String propertySchemaItemsReference = items.toSchema(
+				).getReference();
+
+				if (propertySchemaItemsReference != null) {
+					references.add(propertySchemaItemsReference);
+				}
+			}
+
+			for (String reference : references) {
+				boolean localReference = reference.startsWith("#");
+
+				if ((localReference && Validator.isNull(parentYAMLPath)) ||
+					!processedReferences.add(reference)) {
+
+					continue;
+				}
+
+				File referencedYamlFile;
+
+				if (localReference) {
+					referencedYamlFile = new File(parentYAMLPath);
+				}
+				else {
+					String parentYamlDirPath = parentYAMLPath.substring(
+						0, parentYAMLPath.lastIndexOf("/") + 1);
+
+					referencedYamlFile = new File(
+						parentYamlDirPath + reference.split("#")[0]);
+				}
+
+				files.add(referencedYamlFile);
+
+				OpenAPIYAML referencedOpenAPIYAML =
+					OpenAPIParserUtil.loadOpenAPIYAML(
+						FileUtil.read(referencedYamlFile));
+
+				String referencedSchemaName;
+
+				if (localReference) {
+					referencedSchemaName = reference.substring(
+						reference.lastIndexOf("/") + 1);
+				}
+				else {
+					String splitReference = reference.split("#")[1];
+
+					referencedSchemaName = splitReference.substring(
+						splitReference.lastIndexOf("/") + 1);
+				}
+
+				Schema referencedSchema = referencedOpenAPIYAML.getComponents(
+				).getSchemas(
+				).get(
+					referencedSchemaName
+				);
+
+				_createFile(
+					_buildModelContext(referencedSchemaName, referencedSchema),
+					configYAML, copyrightFile, files, "typescript/model",
+					StringBundler.concat(
+						baseClientDir.getPath(), "/src/node/model/",
+						StringUtil.lowerCaseFirstLetter(referencedSchemaName),
+						".ts"));
+
+				_createRelatedSchemaModels(
+					baseClientDir, configYAML, copyrightFile, files,
+					referencedYamlFile.getAbsolutePath(), processedReferences,
+					referencedSchema);
+			}
+		}
+	}
+
 	private static String _getDataType(
 		Set<String> importClasses, Schema schema) {
 
@@ -509,10 +609,17 @@ public class TypeScriptClientUtil {
 		}
 
 		if (schema.getReference() != null) {
+			String dataType;
 			String schemaReference = schema.getReference();
 
-			String dataType = schemaReference.substring(
-				schemaReference.lastIndexOf('/') + 1);
+			if (schemaReference.startsWith("#")) {
+				dataType = schemaReference.substring(
+					schemaReference.lastIndexOf('/') + 1);
+			}
+			else {
+				dataType = schemaReference.substring(
+					schemaReference.lastIndexOf('#') + 1);
+			}
 
 			importClasses.add(dataType);
 

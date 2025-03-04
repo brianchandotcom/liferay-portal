@@ -33,6 +33,7 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.service.ObjectDefinitionLocalService;
 import com.liferay.object.service.ObjectValidationRuleLocalService;
 import com.liferay.object.validation.rule.ObjectValidationRuleResult;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.CompanyConfigurationTemporarySwapper;
@@ -453,9 +454,10 @@ public class AccountEntryLocalServiceTest {
 
 	@Test
 	public void testAddIncompleteAccountEntry() throws Exception {
-		LazyReferencingThreadLocal.setLazyReferencingEnabled(true);
+		try (SafeCloseable safeCloseable =
+				LazyReferencingThreadLocal.
+					enableLazyReferencingWithSelfCloseable()) {
 
-		try {
 			AccountEntry accountEntry =
 				_accountEntryLocalService.addIncompleteAccountEntry(
 					RandomTestUtil.randomString(),
@@ -466,9 +468,6 @@ public class AccountEntryLocalServiceTest {
 			_assertStatus(
 				accountEntry, WorkflowConstants.STATUS_INCOMPLETE,
 				TestPropsValues.getUser());
-		}
-		finally {
-			LazyReferencingThreadLocal.setLazyReferencingEnabled(false);
 		}
 	}
 
@@ -486,9 +485,10 @@ public class AccountEntryLocalServiceTest {
 	public void testAddIncompleteAccountEntryWithWorkflowEnabled()
 		throws Exception {
 
-		LazyReferencingThreadLocal.setLazyReferencingEnabled(true);
+		try (SafeCloseable safeCloseable =
+				LazyReferencingThreadLocal.
+					enableLazyReferencingWithSelfCloseable()) {
 
-		try {
 			_enableWorkflow();
 
 			AccountEntry accountEntry =
@@ -502,9 +502,6 @@ public class AccountEntryLocalServiceTest {
 				accountEntry, WorkflowConstants.STATUS_INCOMPLETE,
 				TestPropsValues.getUser());
 			Assert.assertFalse(_hasWorkflowInstance(accountEntry));
-		}
-		finally {
-			LazyReferencingThreadLocal.setLazyReferencingEnabled(false);
 		}
 	}
 
@@ -1204,9 +1201,10 @@ public class AccountEntryLocalServiceTest {
 
 	@Test
 	public void testUpdateAccountEntryWithStatusIncomplete() throws Exception {
-		LazyReferencingThreadLocal.setLazyReferencingEnabled(true);
+		try (SafeCloseable safeCloseable =
+				LazyReferencingThreadLocal.
+					enableLazyReferencingWithSelfCloseable()) {
 
-		try {
 			AccountEntry accountEntry =
 				_accountEntryLocalService.addIncompleteAccountEntry(
 					RandomTestUtil.randomString(),
@@ -1229,18 +1227,16 @@ public class AccountEntryLocalServiceTest {
 				accountEntry, WorkflowConstants.STATUS_APPROVED,
 				TestPropsValues.getUser());
 		}
-		finally {
-			LazyReferencingThreadLocal.setLazyReferencingEnabled(false);
-		}
 	}
 
 	@Test
 	public void testUpdateAccountEntryWithStatusIncompleteWorkflowEnabled()
 		throws Exception {
 
-		LazyReferencingThreadLocal.setLazyReferencingEnabled(true);
+		try (SafeCloseable safeCloseable =
+				LazyReferencingThreadLocal.
+					enableLazyReferencingWithSelfCloseable()) {
 
-		try {
 			_enableWorkflow();
 
 			AccountEntry accountEntry =
@@ -1265,9 +1261,6 @@ public class AccountEntryLocalServiceTest {
 				accountEntry, WorkflowConstants.STATUS_PENDING,
 				TestPropsValues.getUser());
 			Assert.assertTrue(_hasWorkflowInstance(accountEntry));
-		}
-		finally {
-			LazyReferencingThreadLocal.setLazyReferencingEnabled(false);
 		}
 	}
 

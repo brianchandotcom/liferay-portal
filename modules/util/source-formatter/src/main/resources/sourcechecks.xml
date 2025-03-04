@@ -175,6 +175,20 @@
 			<property name="allowLeadingSpaces" value="true" />
 		</check>
 	</source-processor>
+	<source-processor name="CSPSourceProcessor">
+		<check name="CSPIllegalTagsCheck">
+			<category name="Bug Prevention" />
+			<description name="Finds cases of incorrect use of certain tags." />
+		</check>
+		<check name="CSPTagIllegalAttributesCheck">
+			<category name="Bug Prevention" />
+			<description name="Finds cases of incorrect use of tag attributes." />
+		</check>
+		<check name="CSPTagMissingAttributesCheck">
+			<category name="Bug Prevention" />
+			<description name="Checks for missing tag attributes." />
+		</check>
+	</source-processor>
 	<source-processor name="CSSSourceProcessor">
 		<check name="CSSCommentsCheck">
 			<category name="Styling" />
@@ -217,10 +231,6 @@
 		</check>
 	</source-processor>
 	<source-processor name="FTLSourceProcessor">
-		<check name="CSPComplianceCheck">
-			<category name="Bug Prevention" />
-			<description name="Checks code to prevent common CSP related pitfalls." />
-		</check>
 		<check name="FTLEmptyLinesCheck">
 			<category name="Styling" />
 			<description name="Finds missing and unnecessary empty lines." />
@@ -1086,10 +1096,6 @@
 		<check name="ArrayCheck">
 			<category name="Performance" />
 			<description name="Checks if performance can be improved by using different methods that can be used by collections." />
-		</check>
-		<check name="CSPComplianceCheck">
-			<category name="Bug Prevention" />
-			<description name="Checks code to prevent common CSP related pitfalls." />
 		</check>
 		<check name="EmptyCollectionCheck">
 			<category name="Styling" />

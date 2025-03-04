@@ -10,10 +10,36 @@ package com.liferay.customer.constants;
  */
 public class RoleConstants {
 
+	public static final String NAME_ACCOUNT_ADMINISTRATOR =
+		"Account Administrator";
+
 	public static final String NAME_ADMINISTRATOR = "Administrator";
 
 	public static final String NAME_LIFERAY_STAFF = "Liferay Staff";
 
 	public static final String NAME_PARTNER = "Partner";
+
+	public static final String NAME_PARTNER_MANAGER = "Partner Manager";
+
+	public static final String NAME_PARTNER_MARKETING_USER =
+		"Partner Marketing User";
+
+	public static final String NAME_PARTNER_MEMBER = "Partner Member";
+
+	public static final String NAME_PARTNER_SALES_USER = "Partner Sales User";
+
+	public static final String NAME_PARTNER_TECHNICAL_USER =
+		"Partner Technical User";
+
+	public static final String NAME_REQUESTER = "Requester";
+
+	public static final String[] PARTNER_ACCOUNT_ROLES = {
+		NAME_PARTNER_MANAGER, NAME_PARTNER_MARKETING_USER, NAME_PARTNER_MEMBER,
+		NAME_PARTNER_SALES_USER, NAME_PARTNER_TECHNICAL_USER
+	};
+
+	public static final String[] SUPPORT_ACCOUNT_TICKET_ROLES = {
+		NAME_ACCOUNT_ADMINISTRATOR, NAME_REQUESTER
+	};
 
 }

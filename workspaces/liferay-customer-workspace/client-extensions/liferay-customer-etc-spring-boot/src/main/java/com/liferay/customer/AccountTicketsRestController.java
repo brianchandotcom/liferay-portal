@@ -7,6 +7,7 @@ package com.liferay.customer;
 
 import com.liferay.client.extension.util.spring.boot3.BaseRestController;
 import com.liferay.customer.constants.ExternalLinkConstants;
+import com.liferay.customer.permission.BusinessEventPermission;
 import com.liferay.customer.service.KoroneikiService;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ExternalLink;
 import com.liferay.osb.spring.boot.client.zendesk.model.ZendeskTicket;
@@ -27,6 +28,8 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -43,11 +46,14 @@ public class AccountTicketsRestController extends BaseRestController {
 		path = "/accounts/{externalReferenceCode}/tickets/{ticketId}"
 	)
 	public ResponseEntity<String> getZendeskTicket(
+			@AuthenticationPrincipal Jwt jwt,
 			@PathVariable("externalReferenceCode") String externalReferenceCode,
 			@PathVariable("ticketId") long ticketId)
 		throws Exception {
 
 		try {
+			_businessEventPermission.check(jwt, externalReferenceCode);
+
 			long zendeskOrganizationId = _fetchZendeskOrganizationId(
 				externalReferenceCode);
 			ZendeskTicket zendeskTicket = _zendeskService.getZendeskTicket(
@@ -76,10 +82,13 @@ public class AccountTicketsRestController extends BaseRestController {
 		path = "/accounts/{externalReferenceCode}/tickets"
 	)
 	public ResponseEntity<String> getZendeskTickets(
+			@AuthenticationPrincipal Jwt jwt,
 			@PathVariable("externalReferenceCode") String externalReferenceCode)
 		throws Exception {
 
 		try {
+			_businessEventPermission.check(jwt, externalReferenceCode);
+
 			ZendeskTicketQuery zendeskTicketQuery = new ZendeskTicketQuery();
 
 			zendeskTicketQuery.addCriterion(
@@ -137,6 +146,9 @@ public class AccountTicketsRestController extends BaseRestController {
 
 	private static final Log _log = LogFactory.getLog(
 		AccountTicketsRestController.class);
+
+	@Autowired
+	private BusinessEventPermission _businessEventPermission;
 
 	@Autowired
 	private KoroneikiService _koroneikiService;

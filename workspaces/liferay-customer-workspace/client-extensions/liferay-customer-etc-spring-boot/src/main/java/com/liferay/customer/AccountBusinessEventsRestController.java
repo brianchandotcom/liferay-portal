@@ -7,6 +7,7 @@ package com.liferay.customer;
 
 import com.liferay.client.extension.util.spring.boot3.BaseRestController;
 import com.liferay.customer.constants.ExternalLinkConstants;
+import com.liferay.customer.permission.BusinessEventPermission;
 import com.liferay.customer.service.KoroneikiService;
 import com.liferay.osb.koroneiki.phloem.rest.client.dto.v1_0.ExternalLink;
 import com.liferay.osb.spring.boot.client.zendesk.model.ZendeskTicket;
@@ -35,6 +36,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -52,11 +55,14 @@ public class AccountBusinessEventsRestController extends BaseRestController {
 		path = "/accounts/{externalReferenceCode}/business-events"
 	)
 	public ResponseEntity<String> post(
+			@AuthenticationPrincipal Jwt jwt,
 			@PathVariable("externalReferenceCode") String externalReferenceCode,
 			@RequestBody String json)
 		throws Exception {
 
 		try {
+			_businessEventPermission.check(jwt, externalReferenceCode);
+
 			JSONObject jsonObject = new JSONObject(json);
 
 			JSONArray jsonArray = jsonObject.getJSONArray("businessEvents");
@@ -202,6 +208,9 @@ public class AccountBusinessEventsRestController extends BaseRestController {
 
 	private static final Log _log = LogFactory.getLog(
 		AccountBusinessEventsRestController.class);
+
+	@Autowired
+	private BusinessEventPermission _businessEventPermission;
 
 	@Autowired
 	private KoroneikiService _koroneikiService;

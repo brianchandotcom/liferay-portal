@@ -616,6 +616,8 @@ public class StructuredContentResourceTest
 		Assert.assertEquals(
 			Double.valueOf(0.0), postStructuredContent3.getPriority());
 		assertValid(postStructuredContent3);
+
+		_testPostStructuredContentWithBatch();
 	}
 
 	@Override
@@ -649,8 +651,7 @@ public class StructuredContentResourceTest
 				getMarkedAsDefault());
 	}
 
-	@Test
-	public void testPostStructuredContentWithBatch() throws Exception {
+	public void _testPostStructuredContentWithBatch() throws Exception {
 		ImportTask importTask = ImportTask.toDTO(
 			structuredContentResource.
 				postSiteStructuredContentBatchHttpResponse(

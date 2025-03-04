@@ -8,6 +8,7 @@ package com.liferay.roles.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.lazy.referencing.kernel.LazyReferencingThreadLocal;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -112,9 +113,10 @@ public class RoleLocalServiceTest {
 
 	@Test
 	public void testAddIncompleteRole() throws Exception {
-		LazyReferencingThreadLocal.setLazyReferencingEnabled(true);
+		try (SafeCloseable safeCloseable =
+				LazyReferencingThreadLocal.
+					enableLazyReferencingWithSelfCloseable()) {
 
-		try {
 			_role = _roleLocalService.addIncompleteRole(
 				RandomTestUtil.randomString(), TestPropsValues.getCompanyId(),
 				TestPropsValues.getUserId(), Role.class.getName(), 0,
@@ -122,9 +124,6 @@ public class RoleLocalServiceTest {
 
 			Assert.assertEquals(
 				WorkflowConstants.STATUS_INCOMPLETE, _role.getStatus());
-		}
-		finally {
-			LazyReferencingThreadLocal.setLazyReferencingEnabled(false);
 		}
 	}
 
@@ -740,9 +739,10 @@ public class RoleLocalServiceTest {
 
 	@Test
 	public void testUpdateRoleWithStatusIncomplete() throws Exception {
-		LazyReferencingThreadLocal.setLazyReferencingEnabled(true);
+		try (SafeCloseable safeCloseable =
+				LazyReferencingThreadLocal.
+					enableLazyReferencingWithSelfCloseable()) {
 
-		try {
 			_role = _roleLocalService.addIncompleteRole(
 				RandomTestUtil.randomString(), TestPropsValues.getCompanyId(),
 				TestPropsValues.getUserId(), Role.class.getName(), 0,
@@ -757,9 +757,6 @@ public class RoleLocalServiceTest {
 
 			Assert.assertEquals(
 				WorkflowConstants.STATUS_APPROVED, _role.getStatus());
-		}
-		finally {
-			LazyReferencingThreadLocal.setLazyReferencingEnabled(false);
 		}
 	}
 

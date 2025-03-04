@@ -9,6 +9,7 @@ import com.liferay.admin.kernel.util.PortalMyAccountApplicationType;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.lazy.referencing.kernel.LazyReferencingThreadLocal;
+import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
@@ -154,15 +155,13 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 			name = externalReferenceCode;
 		}
 
-		try {
-			LazyReferencingThreadLocal.setIncompleteModel(true);
+		try (SafeCloseable safeCloseable =
+				LazyReferencingThreadLocal.
+					enableIncompleteModelWithSelfCloseable()) {
 
 			return roleLocalService.addRole(
 				externalReferenceCode, userId, className, classPK, name, null,
 				null, type, StringPool.BLANK, new ServiceContext());
-		}
-		finally {
-			LazyReferencingThreadLocal.setIncompleteModel(false);
 		}
 	}
 

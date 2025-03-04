@@ -293,7 +293,7 @@ public class TypeScriptClientUtil {
 						(name, propertySchema) -> properties.add(
 							HashMapBuilder.<String, Object>put(
 								"dataType",
-								_getDataType(propertySchema, importClasses)
+								_getDataType(importClasses, propertySchema)
 							).put(
 								"name", StringUtil.replace(name, '-', '_')
 							).build()));
@@ -307,7 +307,7 @@ public class TypeScriptClientUtil {
 			propertySchemas.forEach(
 				(name, propertySchema) -> properties.add(
 					HashMapBuilder.<String, Object>put(
-						"dataType", _getDataType(propertySchema, importClasses)
+						"dataType", _getDataType(importClasses, propertySchema)
 					).put(
 						"name", StringUtil.replace(name, '-', '_')
 					).build()));
@@ -424,7 +424,7 @@ public class TypeScriptClientUtil {
 						continue;
 					}
 
-					return _getDataType(content.getSchema(), importClasses);
+					return _getDataType(importClasses, content.getSchema());
 				}
 
 				return null;
@@ -502,7 +502,7 @@ public class TypeScriptClientUtil {
 	}
 
 	private static String _getDataType(
-		Schema schema, Set<String> importClasses) {
+		Set<String> importClasses, Schema schema) {
 
 		if (schema == null) {
 			return "any";
@@ -524,7 +524,7 @@ public class TypeScriptClientUtil {
 		if (type.equals("array")) {
 			Items items = schema.getItems();
 
-			return "Array<" + _getDataType(items.toSchema(), importClasses) +
+			return "Array<" + _getDataType(importClasses, items.toSchema()) +
 				">";
 		}
 		else if (type.equals("boolean")) {
@@ -545,14 +545,14 @@ public class TypeScriptClientUtil {
 					null) {
 
 				String dataType = _getDataType(
-					additionalPropertySchema.getAdditionalPropertySchema(),
-					importClasses);
+					importClasses,
+					additionalPropertySchema.getAdditionalPropertySchema());
 
 				return "{[key: string]: {[key: string]: " + dataType + ";};}";
 			}
 
 			return "{[key: string]: " +
-				_getDataType(additionalPropertySchema, importClasses) + ";}";
+				_getDataType(importClasses, additionalPropertySchema) + ";}";
 		}
 		else if (type.equals("permission")) {
 			importClasses.add("Permission");
@@ -603,7 +603,7 @@ public class TypeScriptClientUtil {
 				parameterDatas.add(
 					HashMapBuilder.<String, Object>put(
 						"dataType",
-						_getDataType(parameter.getSchema(), importClasses)
+						_getDataType(importClasses, parameter.getSchema())
 					).put(
 						"name",
 						StringUtil.replace(
@@ -648,7 +648,7 @@ public class TypeScriptClientUtil {
 
 		// TODO Retrieve "required" property inside requestBody
 
-		String dataType = _getDataType(schema, importClasses);
+		String dataType = _getDataType(importClasses, schema);
 
 		parameterDatas.add(
 			HashMapBuilder.<String, Object>put(

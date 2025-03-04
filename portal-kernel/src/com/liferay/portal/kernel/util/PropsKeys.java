@@ -124,6 +124,9 @@ public interface PropsKeys {
 	public static final String ANALYTICS_CLOUD_CLIENT_JS_VERSION =
 		"analytics.cloud.client.js.version";
 
+	public static final String ANALYTICS_CLOUD_DOMAIN_ALLOWED =
+		"analytics.cloud.domain.allowed";
+
 	public static final String ANALYTICS_CLOUD_MOCK_ENABLED =
 		"analytics.cloud.mock.enabled";
 

@@ -14,6 +14,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.URLUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.scim.rest.internal.util.ScimUtil;
 
 import java.io.IOException;
 
@@ -45,12 +47,26 @@ public class SchemaResourceManagerImpl extends SchemaResourceManager {
 		String id, UserManager userManager, String attributes,
 		String excludeAttributes) {
 
+		String responseString = null;
+
 		try {
 			if (userManager != null) {
 				userManager.getCoreSchema();
 
+				if (Validator.isNull(id)) {
+					responseString = _getSchemas(attributes);
+				}
+				else {
+					responseString = _getSchema(attributes, id);
+				}
+
+				if (Validator.isNull(responseString)) {
+					throw new NotFoundException(
+						"No schema found with schema ID " + id);
+				}
+
 				return new SCIMResponse(
-					ResponseCodeConstants.CODE_OK, _getSchemas(attributes),
+					ResponseCodeConstants.CODE_OK, responseString,
 					_getResponseHeaders());
 			}
 
@@ -107,6 +123,35 @@ public class SchemaResourceManagerImpl extends SchemaResourceManager {
 		).build();
 	}
 
+	private String _getSchema(String attribute, String id)
+		throws AbstractCharonException {
+
+		try {
+			Map<String, String> schemaIdJsonFileNameStringMap =
+				ScimUtil.getMapSchemaIdJsonFileName();
+
+			if (Validator.isNotNull(schemaIdJsonFileNameStringMap.get(id))) {
+				JSONObject schemajsonObject = _createSchema(
+					attribute, schemaIdJsonFileNameStringMap.get(id));
+
+				if (schemajsonObject != null) {
+					return schemajsonObject.toString();
+				}
+			}
+
+			throw new NotFoundException("No schema found with schema ID " + id);
+		}
+		catch (IOException | JSONException exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+
+			String error = "Error getting the schemas.";
+
+			throw new InternalErrorException(error);
+		}
+	}
+
 	private String _getSchemas(String attribute)
 		throws AbstractCharonException {
 
@@ -114,21 +159,28 @@ public class SchemaResourceManagerImpl extends SchemaResourceManager {
 			JSONArray schemasJSONArray = JSONFactoryUtil.createJSONArray(
 				"[\"urn:ietf:params:scim:api:messages:2.0:ListResponse\"]");
 
+			Map<String, String> schemaIdJsonFileNameStringMap =
+				ScimUtil.getMapSchemaIdJsonFileName();
+
 			JSONObject rootJSONObject = JSONFactoryUtil.createJSONObject(
 				HashMapBuilder.put(
 					"itemsPerPage", 3
 				).put(
 					"startIndex", 1
 				).put(
-					"totalResults", 3
+					"totalResults", schemaIdJsonFileNameStringMap.size()
 				).build());
 
 			rootJSONObject.put("schemas", schemasJSONArray);
 
-			JSONArray resourcesJSONArray = JSONUtil.putAll(
-				_createSchema(attribute, "user-schema.json"),
-				_createSchema(attribute, "user-extension-schema.json"),
-				_createSchema(attribute, "group-schema.json"));
+			JSONArray resourcesJSONArray = JSONFactoryUtil.createJSONArray();
+
+			for (Map.Entry<String, String> entry :
+					schemaIdJsonFileNameStringMap.entrySet()) {
+
+				resourcesJSONArray.put(
+					_createSchema(attribute, entry.getValue()));
+			}
 
 			rootJSONObject.put("Resources", resourcesJSONArray);
 

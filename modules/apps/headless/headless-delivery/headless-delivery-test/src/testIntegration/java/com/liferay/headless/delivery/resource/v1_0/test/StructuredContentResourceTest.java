@@ -63,6 +63,7 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
@@ -657,11 +658,9 @@ public class StructuredContentResourceTest
 			structuredContentResource.
 				postSiteStructuredContentBatchHttpResponse(
 					testGroup.getGroupId(), null,
-					JSONFactoryUtil.createJSONArray(
-					).put(
+					JSONUtil.putAll(
 						JSONFactoryUtil.createJSONObject(
-							randomStructuredContent1.toString())
-					)
+							randomStructuredContent1.toString()))
 				).getContent());
 
 		User testCompanyAdminUser = UserTestUtil.getAdminUser(

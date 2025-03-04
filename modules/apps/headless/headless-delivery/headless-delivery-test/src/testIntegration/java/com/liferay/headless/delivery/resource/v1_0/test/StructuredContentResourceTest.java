@@ -617,6 +617,8 @@ public class StructuredContentResourceTest
 		Assert.assertEquals(
 			Double.valueOf(0.0), postStructuredContent3.getPriority());
 		assertValid(postStructuredContent3);
+
+		_testPostSiteStructuredContentBatch();
 	}
 
 	@Override
@@ -648,59 +650,6 @@ public class StructuredContentResourceTest
 		Assert.assertTrue(
 			postStructuredContent.getRenderedContents()[0].
 				getMarkedAsDefault());
-	}
-
-	@Test
-	public void testPostStructuredContentWithBatch() throws Exception {
-		HttpInvoker.HttpResponse httpResponse =
-			structuredContentResource.
-				postSiteStructuredContentBatchHttpResponse(
-					testGroup.getGroupId(), null,
-					JSONUtil.putAll(
-						JSONFactoryUtil.createJSONObject(
-							String.valueOf(
-								_randomStructuredContent(
-									LocaleUtil.getDefault())))));
-
-		assertHttpResponseStatusCode(202, httpResponse);
-
-		User testCompanyAdminUser = UserTestUtil.getAdminUser(
-			testCompany.getCompanyId());
-
-		ImportTaskResource importTaskResource = ImportTaskResource.builder(
-		).authentication(
-			testCompanyAdminUser.getEmailAddress(),
-			PropsValues.DEFAULT_ADMIN_PASSWORD
-		).endpoint(
-			testCompany.getVirtualHostname(), 8080, "http"
-		).locale(
-			LocaleUtil.getDefault()
-		).build();
-
-		long importTaskId = JSONFactoryUtil.createJSONObject(
-			httpResponse.getContent()
-		).getLong(
-			"id"
-		);
-
-		while (true) {
-			ImportTask importTask = importTaskResource.getImportTask(
-				importTaskId);
-
-			if (StringUtil.equals(
-					importTask.getExecuteStatusAsString(), "COMPLETED") ||
-				StringUtil.equals(
-					importTask.getExecuteStatusAsString(), "FAILED")) {
-
-				Assert.assertEquals(
-					"COMPLETED", importTask.getExecuteStatusAsString());
-				Assert.assertEquals(
-					1L, (long)importTask.getProcessedItemsCount());
-				Assert.assertEquals(1L, (long)importTask.getTotalItemsCount());
-
-				break;
-			}
-		}
 	}
 
 	@Override
@@ -2461,6 +2410,58 @@ public class StructuredContentResourceTest
 			externalReferenceCode,
 			postStructuredContent.getExternalReferenceCode());
 		assertValid(postStructuredContent);
+	}
+
+	private void _testPostSiteStructuredContentBatch() throws Exception {
+		HttpInvoker.HttpResponse httpResponse =
+			structuredContentResource.
+				postSiteStructuredContentBatchHttpResponse(
+					testGroup.getGroupId(), null,
+					JSONUtil.putAll(
+						JSONFactoryUtil.createJSONObject(
+							String.valueOf(
+								_randomStructuredContent(
+									LocaleUtil.getDefault())))));
+
+		assertHttpResponseStatusCode(202, httpResponse);
+
+		User testCompanyAdminUser = UserTestUtil.getAdminUser(
+			testCompany.getCompanyId());
+
+		ImportTaskResource importTaskResource = ImportTaskResource.builder(
+		).authentication(
+			testCompanyAdminUser.getEmailAddress(),
+			PropsValues.DEFAULT_ADMIN_PASSWORD
+		).endpoint(
+			testCompany.getVirtualHostname(), 8080, "http"
+		).locale(
+			LocaleUtil.getDefault()
+		).build();
+
+		long importTaskId = JSONFactoryUtil.createJSONObject(
+			httpResponse.getContent()
+		).getLong(
+			"id"
+		);
+
+		while (true) {
+			ImportTask importTask = importTaskResource.getImportTask(
+				importTaskId);
+
+			if (StringUtil.equals(
+					importTask.getExecuteStatusAsString(), "COMPLETED") ||
+				StringUtil.equals(
+					importTask.getExecuteStatusAsString(), "FAILED")) {
+
+				Assert.assertEquals(
+					"COMPLETED", importTask.getExecuteStatusAsString());
+				Assert.assertEquals(
+					1L, (long)importTask.getProcessedItemsCount());
+				Assert.assertEquals(1L, (long)importTask.getTotalItemsCount());
+
+				break;
+			}
+		}
 	}
 
 	private static final String[] _COMPLETE_STRUCTURED_CONTENT_OPTIONS = {

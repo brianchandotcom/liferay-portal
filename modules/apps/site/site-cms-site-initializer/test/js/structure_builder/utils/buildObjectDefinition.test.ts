@@ -33,7 +33,7 @@ describe('buildObjectDefinition', () => {
 			erc: 'structureERC',
 			fields: [TEXT_FIELD],
 			id: 1,
-			label: 'Structure',
+			label: {en_US: 'Structure'},
 			name: 'myStructure',
 		});
 
@@ -62,7 +62,7 @@ describe('buildObjectDefinition', () => {
 			erc: 'structureERC',
 			fields: [DATE_TIME_FIELD],
 			id: 1,
-			label: 'Structure',
+			label: {en_US: 'Structure'},
 			name: 'myStructure',
 		});
 

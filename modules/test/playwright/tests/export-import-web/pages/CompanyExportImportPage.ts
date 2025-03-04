@@ -121,7 +121,7 @@ export class CompanyExportImportPage {
 	async import(
 		filePath: string,
 		includePermissions: boolean = false,
-		expectedErrorMessage?: string
+		expectedErrorMessage?: string,
 		useCurrentUser: boolean = false
 	): Promise<void> {
 		await this.applicationsMenuPage.goToImport();

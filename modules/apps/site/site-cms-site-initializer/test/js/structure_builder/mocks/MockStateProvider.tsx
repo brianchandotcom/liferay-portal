@@ -19,7 +19,7 @@ const DEFAULT_STATE: State = {
 	label: 'untitled-structure',
 	name: 'UntitledStructure',
 	publishedFields: new Set(),
-	selectedItem: {type: 'structure'},
+	selection: [],
 	status: 'new',
 };
 

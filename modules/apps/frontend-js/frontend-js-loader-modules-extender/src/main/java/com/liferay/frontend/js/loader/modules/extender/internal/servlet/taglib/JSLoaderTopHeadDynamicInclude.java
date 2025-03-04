@@ -72,8 +72,7 @@ public class JSLoaderTopHeadDynamicInclude extends BaseDynamicInclude {
 				httpServletRequest));
 		printWriter.write(" data-senna-track=\"temporary\" type=\"");
 		printWriter.write(ContentTypes.TEXT_JAVASCRIPT);
-		printWriter.write("\">window.__CONFIG__= {basePath: '',");
-		printWriter.write("combine: ");
+		printWriter.write("\">window.__CONFIG__= {basePath: '', combine: ");
 		printWriter.write(Boolean.toString(themeDisplay.isThemeJsFastLoad()));
 		printWriter.write(", defaultURLParams: ");
 		printWriter.write(_getDefaultURLParams(themeDisplay));

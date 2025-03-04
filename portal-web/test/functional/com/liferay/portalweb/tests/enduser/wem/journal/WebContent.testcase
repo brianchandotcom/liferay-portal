@@ -2339,7 +2339,7 @@ definition {
 		}
 
 		task ("When publish the web content with one duplicated friendly URL") {
-			Button.clickPublish();
+			WebContent.publishExistingWCArticleWithPermissions();
 		}
 
 		task ("Then there's warning message in pop up") {
@@ -2573,7 +2573,7 @@ definition {
 		}
 
 		task ("When publish the web content with three duplicated friendly URLs") {
-			Button.clickPublish();
+			WebContent.publishExistingWCArticleWithPermissions();
 		}
 
 		task ("Then there's warning message in pop up") {
@@ -2621,7 +2621,7 @@ definition {
 
 			WebContent.editFriendlyURL(webContentFriendlyURL = "wc-es");
 
-			Button.clickPublish();
+			WebContent.publishExistingWCArticleWithPermissions();
 		}
 
 		task ("Then there's warning message in pop up") {

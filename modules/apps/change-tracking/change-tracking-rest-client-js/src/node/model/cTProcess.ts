@@ -14,7 +14,7 @@
 	* Represents publications that have been published.
 	*/
 	export class CTProcess {
-			'actions'?: { [key: string]: { [key: string]: string; }; };
+			'actions'?: {[key: string]: {[key: string]: string;};};
 			'ctCollectionId'?: number;
 			'datePublished'?: Date;
 			'description'?: string;
@@ -33,7 +33,7 @@
 		{
 			baseName: "actions",
 			name: "actions",
-			type: "{ [key: string]: { [key: string]: string; }; }",
+			type: "{[key: string]: {[key: string]: string;};}",
 		},
 		{
 			baseName: "ctCollectionId",

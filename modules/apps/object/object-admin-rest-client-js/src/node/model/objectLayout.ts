@@ -11,12 +11,12 @@
  */
 
 	export class ObjectLayout {
-			'actions'?: { [key: string]: { [key: string]: string; }; };
+			'actions'?: {[key: string]: {[key: string]: string;};};
 			'dateCreated'?: Date;
 			'dateModified'?: Date;
 			'defaultObjectLayout'?: boolean;
 			'id'?: number;
-			'name'?: { [key: string]: string; };
+			'name'?: {[key: string]: string;};
 			'objectDefinitionExternalReferenceCode'?: string;
 			'objectDefinitionId'?: number;
 			'objectLayoutTabs'?: Array<ObjectLayoutTab>;
@@ -31,7 +31,7 @@
 		{
 			baseName: "actions",
 			name: "actions",
-			type: "{ [key: string]: { [key: string]: string; }; }",
+			type: "{[key: string]: {[key: string]: string;};}",
 		},
 		{
 			baseName: "dateCreated",
@@ -56,7 +56,7 @@
 		{
 			baseName: "name",
 			name: "name",
-			type: "{ [key: string]: string; }",
+			type: "{[key: string]: string;}",
 		},
 		{
 			baseName: "objectDefinitionExternalReferenceCode",

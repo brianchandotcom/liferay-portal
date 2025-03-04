@@ -13,7 +13,7 @@
 	export class ObjectLayoutBox {
 			'collapsable'?: boolean;
 			'id'?: number;
-			'name'?: { [key: string]: string; };
+			'name'?: {[key: string]: string;};
 			'objectLayoutRows'?: Array<ObjectLayoutRow>;
 			'priority'?: number;
 			'type'?: 'categorization' | 'regular';
@@ -38,7 +38,7 @@
 		{
 			baseName: "name",
 			name: "name",
-			type: "{ [key: string]: string; }",
+			type: "{[key: string]: string;}",
 		},
 		{
 			baseName: "objectLayoutRows",

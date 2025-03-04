@@ -20,7 +20,7 @@
 	export class ObjectDefinition {
 			'accountEntryRestricted'?: boolean;
 			'accountEntryRestrictedObjectFieldName'?: string;
-			'actions'?: { [key: string]: { [key: string]: string; }; };
+			'actions'?: {[key: string]: {[key: string]: string;};};
 			'active'?: boolean;
 			'className'?: string;
 			'dateCreated'?: Date;
@@ -35,7 +35,7 @@
 			'enableObjectEntryHistory'?: boolean;
 			'externalReferenceCode'?: string;
 			'id'?: number;
-			'label'?: { [key: string]: string; };
+			'label'?: {[key: string]: string;};
 			'modifiable'?: boolean;
 			'name'?: string;
 			'objectActions'?: Array<ObjectAction>;
@@ -49,7 +49,7 @@
 			'panelAppOrder'?: string;
 			'panelCategoryKey'?: string;
 			'parameterRequired'?: boolean;
-			'pluralLabel'?: { [key: string]: string; };
+			'pluralLabel'?: {[key: string]: string;};
 			'portlet'?: boolean;
 			'restContextPath'?: string;
 			'rootObjectDefinitionExternalReferenceCode'?: string;
@@ -79,7 +79,7 @@
 		{
 			baseName: "actions",
 			name: "actions",
-			type: "{ [key: string]: { [key: string]: string; }; }",
+			type: "{[key: string]: {[key: string]: string;};}",
 		},
 		{
 			baseName: "active",
@@ -154,7 +154,7 @@
 		{
 			baseName: "label",
 			name: "label",
-			type: "{ [key: string]: string; }",
+			type: "{[key: string]: string;}",
 		},
 		{
 			baseName: "modifiable",
@@ -224,7 +224,7 @@
 		{
 			baseName: "pluralLabel",
 			name: "pluralLabel",
-			type: "{ [key: string]: string; }",
+			type: "{[key: string]: string;}",
 		},
 		{
 			baseName: "portlet",

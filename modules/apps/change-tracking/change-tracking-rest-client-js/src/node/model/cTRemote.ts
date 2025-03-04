@@ -13,7 +13,7 @@
 	* Another server to create and publish publications.
 	*/
 	export class CTRemote {
-			'actions'?: { [key: string]: { [key: string]: string; }; };
+			'actions'?: {[key: string]: {[key: string]: string;};};
 			'clientId'?: string;
 			'clientSecret'?: string;
 			'dateCreated'?: Date;
@@ -34,7 +34,7 @@
 		{
 			baseName: "actions",
 			name: "actions",
-			type: "{ [key: string]: { [key: string]: string; }; }",
+			type: "{[key: string]: {[key: string]: string;};}",
 		},
 		{
 			baseName: "clientId",

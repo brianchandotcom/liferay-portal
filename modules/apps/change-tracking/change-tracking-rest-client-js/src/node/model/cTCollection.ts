@@ -14,7 +14,7 @@
 	* Represents a set of changes tracked for a publication.
 	*/
 	export class CTCollection {
-			'actions'?: { [key: string]: { [key: string]: string; }; };
+			'actions'?: {[key: string]: {[key: string]: string;};};
 			'dateCreated'?: Date;
 			'dateModified'?: Date;
 			'dateScheduled'?: Date;
@@ -36,7 +36,7 @@
 		{
 			baseName: "actions",
 			name: "actions",
-			type: "{ [key: string]: { [key: string]: string; }; }",
+			type: "{[key: string]: {[key: string]: string;};}",
 		},
 		{
 			baseName: "dateCreated",

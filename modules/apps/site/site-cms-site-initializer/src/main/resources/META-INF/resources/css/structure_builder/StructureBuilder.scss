@@ -7,18 +7,29 @@ $structureFieldsWidth: 448px;
 		height: calc(100vh - (var(--control-menu-container-height)));
 	}
 
+	&__empty-state {
+		.aspect-ratio-item {
+			position: relative;
+		}
+
+		.c-empty-state-aspect-ratio {
+			padding: 0;
+		}
+
+		.c-empty-state-image {
+			margin: 0;
+			max-width: 190px;
+		}
+
+		.c-empty-state-title {
+			margin-top: 1.5rem;
+		}
+	}
+
 	&__structure-fields {
 		background-color: $cadmin-light-l1;
 		border-radius: 8px;
 		width: $structureFieldsWidth;
-
-		&-empty-state.c-empty-state-sm .c-empty-state-image {
-			max-width: 190px;
-
-			.c-empty-state-aspect-ratio {
-				padding-bottom: 50%;
-			}
-		}
 
 		& .management-bar {
 			min-height: 3rem;

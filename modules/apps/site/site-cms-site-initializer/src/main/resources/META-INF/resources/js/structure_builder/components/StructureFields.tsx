@@ -59,7 +59,7 @@ function StructureFields() {
 function EmptyState() {
 	return (
 		<ClayEmptyState
-			className="px-4 structure-builder__structure-fields-empty-state"
+			className="px-4 structure-builder__empty-state"
 			description={Liferay.Language.get(
 				'add-new-fields-to-start-building-your-structure'
 			)}

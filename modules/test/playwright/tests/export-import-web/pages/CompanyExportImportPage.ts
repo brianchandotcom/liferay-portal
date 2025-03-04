@@ -144,11 +144,15 @@ export class CompanyExportImportPage {
 			await this.exportImportPage.importPermissionsButton.click();
 		}
 
-		await this.page
-			.getByRole('button', {name: 'Authorship of the Content'})
-			.click();
-
 		if (useCurrentUser) {
+			if (
+				!this.exportImportPage.useCurrentUserAsAuthorCheckbox.isVisible()
+			) {
+				await this.page
+					.getByRole('button', {name: 'Authorship of the Content'})
+					.click();
+			}
+
 			await this.exportImportPage.useCurrentUserAsAuthorCheckbox.check();
 		}
 

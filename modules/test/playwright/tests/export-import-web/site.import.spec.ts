@@ -19,6 +19,7 @@ import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {pageTemplatesPagesTest} from '../../fixtures/pageTemplatesPagesTest';
 import {productMenuPageTest} from '../../fixtures/productMenuPageTest';
 import {wikiPagesTest} from '../../fixtures/wikiPagesTest';
+import {expandSection} from '../../utils/expandSection';
 import getRandomString from '../../utils/getRandomString';
 import {getTempDir} from '../../utils/temp';
 import {companyExportImportPageTest} from './fixtures/companyExportImportPagesTest';
@@ -356,6 +357,10 @@ test('can see corresponding elements at site level', async ({
 	await expect(
 		exportImportPage.page.getByLabel('Delete Application Data')
 	).toBeVisible();
+
+	await expandSection(
+		exportImportPage.page.getByRole('button', {name: 'Update Data'})
+	);
 
 	await expect(
 		exportImportPage.page.getByText(

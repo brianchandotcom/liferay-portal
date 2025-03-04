@@ -469,6 +469,14 @@ public class ImportTaskResourceImpl extends BaseImportTaskResourceImpl {
 			parameters.put("updateStrategy", updateStrategy);
 		}
 
+		if (parameters.containsKey("batchExternalReferenceCode")) {
+			parameters.put(
+				"externalReferenceCode",
+				parameters.get("batchExternalReferenceCode"));
+
+			parameters.remove("batchExternalReferenceCode");
+		}
+
 		BatchEngineImportTask batchEngineImportTask =
 			_batchEngineImportTaskService.addBatchEngineImportTask(
 				externalReferenceCode, contextCompany.getCompanyId(),

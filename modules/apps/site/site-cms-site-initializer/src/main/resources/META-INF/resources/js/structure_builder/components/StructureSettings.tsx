@@ -4,11 +4,12 @@
  */
 
 import ClayAlert from '@clayui/alert';
-import ClayForm, {ClayInput} from '@clayui/form';
+import ClayForm from '@clayui/form';
 import ClayLabel from '@clayui/label';
 import ClayLayout from '@clayui/layout';
 import ClayTabs from '@clayui/tabs';
-import React from 'react';
+import {InputLocalized} from 'frontend-js-components-web';
+import React, {useState} from 'react';
 
 import {useSelector, useStateDispatch} from '../contexts/StateContext';
 import selectSelection from '../selectors/selectSelection';
@@ -23,7 +24,10 @@ import TextInput from './TextInput';
 export function StructureSettings() {
 	const dispatch = useStateDispatch();
 	const error = useSelector(selectStructureError);
-	const label = useSelector(selectStructureLabel);
+	const structureLabel = useSelector(selectStructureLabel);
+
+	const [label, setLabel] =
+		useState<Liferay.Language.LocalizedValue<string>>(structureLabel);
 
 	return (
 		<ClayLayout.ContainerFluid size="md" view>
@@ -42,15 +46,21 @@ export function StructureSettings() {
 			</ClayLabel>
 
 			<ClayForm.Group>
-				<ClayInput
+				<InputLocalized
 					aria-label={Liferay.Language.get('structure-label')}
 					className="form-control-inline structure-builder__title-input"
-					onChange={(event) =>
-						dispatch({label: event.target.value, type: 'set-label'})
+					label=""
+					onBlur={() => {
+						dispatch({
+							label,
+							type: 'set-label',
+						});
+					}}
+					onChange={(label) => setLabel(label)}
+					required
+					translations={
+						label as Liferay.Language.LocalizedValue<string>
 					}
-					sizing="lg"
-					type="text"
-					value={label}
 				/>
 			</ClayForm.Group>
 

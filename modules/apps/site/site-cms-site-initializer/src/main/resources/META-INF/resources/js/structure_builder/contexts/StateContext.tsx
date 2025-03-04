@@ -25,7 +25,7 @@ export type State = {
 	error: string | null;
 	fields: Map<string, Field>;
 	id: number | null;
-	label: string;
+	label: Liferay.Language.LocalizedValue<string>;
 	name: string;
 	publishedFields: Set<Field['name']>;
 	selection: Field['name'][];
@@ -37,7 +37,9 @@ const INITIAL_STATE: State = {
 	error: null,
 	fields: new Map(),
 	id: null,
-	label: DEFAULT_STRUCTURE_LABEL,
+	label: {
+		[Liferay.ThemeDisplay.getDefaultLanguageId()]: DEFAULT_STRUCTURE_LABEL,
+	},
 	name: objectDefinitionUtils.normalizeName(DEFAULT_STRUCTURE_LABEL),
 	publishedFields: new Set(),
 	selection: [],
@@ -64,7 +66,10 @@ type SaveStructureAction = {
 
 type SetErrorAction = {error: string | null; type: 'set-error'};
 
-type SetLabelAction = {label: string; type: 'set-label'};
+type SetLabelAction = {
+	label: Liferay.Language.LocalizedValue<string>;
+	type: 'set-label';
+};
 
 type SetSelection = {
 	selection: State['selection'];

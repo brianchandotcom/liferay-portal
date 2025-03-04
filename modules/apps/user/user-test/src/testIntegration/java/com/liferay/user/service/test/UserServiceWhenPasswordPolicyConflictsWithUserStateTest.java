@@ -9,6 +9,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.PasswordPolicy;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.PasswordPolicyLocalService;
+import com.liferay.portal.kernel.service.PasswordPolicyLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -46,8 +47,12 @@ public class UserServiceWhenPasswordPolicyConflictsWithUserStateTest {
 
 		serviceContext.setUserId(TestPropsValues.getUserId());
 
-		_defaultPasswordPolicy = PasswordPolicyTestUtil.addPasswordPolicy(
-			serviceContext, true);
+		_defaultPasswordPolicy =
+			PasswordPolicyLocalServiceUtil.getDefaultPasswordPolicy(
+				TestPropsValues.getCompanyId());
+
+		_originalChangeable = _defaultPasswordPolicy.isChangeable();
+		_originalChangeRequired = _defaultPasswordPolicy.isChangeRequired();
 
 		_defaultPasswordPolicy.setChangeable(true);
 		_defaultPasswordPolicy.setChangeRequired(true);
@@ -68,7 +73,8 @@ public class UserServiceWhenPasswordPolicyConflictsWithUserStateTest {
 
 	@After
 	public void tearDown() {
-		_defaultPasswordPolicy.setDefaultPolicy(false);
+		_defaultPasswordPolicy.setChangeable(_originalChangeable);
+		_defaultPasswordPolicy.setChangeRequired(_originalChangeRequired);
 
 		_defaultPasswordPolicy =
 			_passwordPolicyLocalService.updatePasswordPolicy(
@@ -118,8 +124,9 @@ public class UserServiceWhenPasswordPolicyConflictsWithUserStateTest {
 		Assert.assertTrue(_user.isPasswordReset());
 	}
 
-	@DeleteAfterTestRun
 	private PasswordPolicy _defaultPasswordPolicy;
+	private boolean _originalChangeable;
+	private boolean _originalChangeRequired;
 
 	@Inject
 	private PasswordPolicyLocalService _passwordPolicyLocalService;

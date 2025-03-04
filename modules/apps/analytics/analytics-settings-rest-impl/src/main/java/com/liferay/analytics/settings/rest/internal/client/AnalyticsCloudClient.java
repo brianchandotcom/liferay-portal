@@ -38,6 +38,10 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
+import com.liferay.portal.kernel.util.InetAddressUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.net.HttpURLConnection;
@@ -105,6 +109,8 @@ public class AnalyticsCloudClient {
 		throws Exception {
 
 		JSONObject connectionTokenJSONObject = _decodeToken(connectionToken);
+
+		_validateConnectionTokenURL(connectionTokenJSONObject.getString("url"));
 
 		Http.Options options = new Http.Options();
 
@@ -509,6 +515,24 @@ public class AnalyticsCloudClient {
 				analyticsConfiguration.liferayAnalyticsProjectId()));
 
 		return options;
+	}
+
+	private void _validateConnectionTokenURL(String url) throws Exception {
+		String analyticsCloudDomainAllowed = PropsUtil.get(
+			PropsKeys.ANALYTICS_CLOUD_DOMAIN_ALLOWED);
+
+		if (StringUtil.equals(analyticsCloudDomainAllowed, StringPool.STAR)) {
+			return;
+		}
+
+		String domain = HttpComponentsUtil.getDomain(url);
+
+		if (InetAddressUtil.isLocalInetAddress(
+				InetAddressUtil.getInetAddressByName(domain)) ||
+			!StringUtil.endsWith(domain, analyticsCloudDomainAllowed)) {
+
+			throw new DataSourceConnectionException("Invalid token URL host");
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

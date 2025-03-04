@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -60,11 +61,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 
 import org.wso2.charon3.core.exceptions.AbstractCharonException;
+import org.wso2.charon3.core.exceptions.BadRequestException;
 import org.wso2.charon3.core.exceptions.CharonException;
 import org.wso2.charon3.core.exceptions.ConflictException;
 import org.wso2.charon3.core.exceptions.NotFoundException;
@@ -250,9 +253,12 @@ public class UserManagerImpl implements UserManager {
 
 	@Override
 	public GroupsGetResponse listGroupsWithGET(
-		Node node, Integer startIndex, Integer count, String sortBy,
-		String sortOrder, String domainName,
-		Map<String, Boolean> requiredAttributes) {
+			Node node, Integer startIndex, Integer count, String sortBy,
+			String sortOrder, String domainName,
+			Map<String, Boolean> requiredAttributes)
+		throws BadRequestException {
+
+		_checkFilterableAttribute(node, false);
 
 		if (startIndex != null) {
 			startIndex--;
@@ -341,9 +347,12 @@ public class UserManagerImpl implements UserManager {
 
 	@Override
 	public UsersGetResponse listUsersWithGET(
-		Node node, Integer startIndex, Integer count, String sortBy,
-		String sortOrder, String domainName,
-		Map<String, Boolean> requiredAttributes) {
+			Node node, Integer startIndex, Integer count, String sortBy,
+			String sortOrder, String domainName,
+			Map<String, Boolean> requiredAttributes)
+		throws BadRequestException {
+
+		_checkFilterableAttribute(node, true);
 
 		if (startIndex != null) {
 			startIndex--;
@@ -664,6 +673,41 @@ public class UserManagerImpl implements UserManager {
 					oAuth2ApplicationName()));
 
 		return portalUser;
+	}
+
+	private void _checkFilterableAttribute(Node node, boolean user)
+		throws BadRequestException {
+
+		if (node != null) {
+			ExpressionNode expressionNode = (ExpressionNode)node;
+			boolean filterable = false;
+
+			if (user) {
+				for (String userField : _filterableUserFieldNames) {
+					if (StringUtil.contains(
+							expressionNode.getAttributeValue(), userField,
+							StringPool.COLON)) {
+
+						filterable = true;
+					}
+				}
+			}
+			else {
+				for (String groupField : _filterableGroupFieldNames) {
+					if (StringUtil.contains(
+							expressionNode.getAttributeValue(), groupField,
+							StringPool.COLON)) {
+
+						filterable = true;
+					}
+				}
+			}
+
+			if (!filterable) {
+				throw new BadRequestException(
+					"Invalid filterable Attribute", "invalidValue");
+			}
+		}
 	}
 
 	private com.liferay.portal.kernel.model.User _fetchPortalUser(
@@ -1037,6 +1081,11 @@ public class UserManagerImpl implements UserManager {
 	private static final Log _log = LogFactoryUtil.getLog(
 		UserManagerImpl.class);
 
+	private static final Set<String> _filterableGroupFieldNames =
+		Collections.unmodifiableSet(SetUtil.fromArray("displayName"));
+	private static final Set<String> _filterableUserFieldNames =
+		Collections.unmodifiableSet(
+			SetUtil.fromArray("externalId", "userName"));
 	private static final TransactionConfig _transactionConfig =
 		TransactionConfig.Factory.create(
 			Propagation.REQUIRED, new Class<?>[] {Exception.class});

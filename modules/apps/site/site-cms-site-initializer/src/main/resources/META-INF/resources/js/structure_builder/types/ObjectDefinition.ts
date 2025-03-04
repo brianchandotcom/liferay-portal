@@ -6,6 +6,7 @@
 import {FieldBusinessType} from '../utils/field';
 
 export type ObjectField = {
+	DBType: string;
 	businessType: FieldBusinessType;
 	externalReferenceCode: string;
 	indexed: boolean;

@@ -173,11 +173,25 @@ public class SiteNavigationMenuDisplayContextTest {
 		_setUpSiteNavigationMenuItemLocalServiceUtil(
 			_group.getGroupId(), rootMenuItemId);
 
+		long siteNavigationMenuId = RandomTestUtil.randomLong();
+
+		_setUpSiteNavigationMenuLocalServiceUtil(
+			_group.getGroupId(), siteNavigationMenuId);
+
 		String rootMenuItemExternalReferenceCode =
 			RandomTestUtil.randomString();
 
 		_setUpSiteNavigationMenuPortletInstanceConfigurationRootMenuItem(
 			rootMenuItemExternalReferenceCode, null);
+
+		String siteNavigationMenuExternalReferenceCode =
+			RandomTestUtil.randomString();
+
+		_setUpSiteNavigationMenuPortletInstanceConfigurationSiteNavigationMenu(
+			siteNavigationMenuExternalReferenceCode, null);
+
+		_setUpSiteNavigationMenuPortletInstanceConfigurationSiteNavigationMenuType(
+			-1);
 
 		SiteNavigationMenuDisplayContext siteNavigationMenuDisplayContext =
 			new SiteNavigationMenuDisplayContext(_httpServletRequest);
@@ -205,12 +219,27 @@ public class SiteNavigationMenuDisplayContextTest {
 		_setUpSiteNavigationMenuItemLocalServiceUtil(
 			group.getGroupId(), rootMenuItemId);
 
+		long siteNavigationMenuId = RandomTestUtil.randomLong();
+
+		_setUpSiteNavigationMenuLocalServiceUtil(
+			_group.getGroupId(), siteNavigationMenuId);
+
 		String rootMenuItemExternalReferenceCode =
 			RandomTestUtil.randomString();
 
 		_setUpSiteNavigationMenuPortletInstanceConfigurationRootMenuItem(
 			rootMenuItemExternalReferenceCode,
 			group.getExternalReferenceCode());
+
+		String siteNavigationMenuExternalReferenceCode =
+			RandomTestUtil.randomString();
+
+		_setUpSiteNavigationMenuPortletInstanceConfigurationSiteNavigationMenu(
+			siteNavigationMenuExternalReferenceCode,
+			group.getExternalReferenceCode());
+
+		_setUpSiteNavigationMenuPortletInstanceConfigurationSiteNavigationMenuType(
+			-1);
 
 		SiteNavigationMenuDisplayContext siteNavigationMenuDisplayContext =
 			new SiteNavigationMenuDisplayContext(_httpServletRequest);

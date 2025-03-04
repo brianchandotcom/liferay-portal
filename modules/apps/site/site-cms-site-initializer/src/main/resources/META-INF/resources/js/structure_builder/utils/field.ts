@@ -64,6 +64,20 @@ export const FIELD_TYPE_BUSINESS_TYPE: Record<FieldType, string> = {
 	'upload': 'Attachment',
 } as const;
 
+export const FIELD_TYPE_DB_TYPE: Record<FieldType, string> = {
+	'boolean': 'Boolean',
+	'date': 'Date',
+	'datetime': 'DateTime',
+	'decimal': 'BigDecimal',
+	'integer': 'Integer',
+	'long-text': 'Clob',
+	'multiselect': 'String',
+	'rich-text': 'Clob',
+	'single-select': 'String',
+	'text': 'String',
+	'upload': 'Long',
+} as const;
+
 // Types
 
 type BaseField = {

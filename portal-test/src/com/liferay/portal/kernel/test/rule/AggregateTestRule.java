@@ -34,6 +34,8 @@ public class AggregateTestRule implements TestRule {
 
 		_testRules = testRules;
 
+		_disabledRules = new HashSet<>();
+
 		if (sort) {
 			Arrays.sort(_testRules, _testRuleComparator);
 		}
@@ -46,10 +48,22 @@ public class AggregateTestRule implements TestRule {
 	@Override
 	public Statement apply(Statement statement, Description description) {
 		for (int i = _testRules.length - 1; i >= 0; i--) {
-			statement = _testRules[i].apply(statement, description);
+			TestRule testRule = _testRules[i];
+
+			if (!_disabledRules.contains(testRule)) {
+				statement = testRule.apply(statement, description);
+			}
 		}
 
 		return statement;
+	}
+
+	public void disableRule(Class<? extends TestRule> ruleClass) {
+		for (TestRule testRule : _testRules) {
+			if (ruleClass.isInstance(testRule)) {
+				_disabledRules.add(testRule);
+			}
+		}
 	}
 
 	private static final String[] _ORDERED_RULE_CLASS_NAMES = {
@@ -103,6 +117,7 @@ public class AggregateTestRule implements TestRule {
 
 		};
 
+	private final Set<TestRule> _disabledRules;
 	private final TestRule[] _testRules;
 
 }

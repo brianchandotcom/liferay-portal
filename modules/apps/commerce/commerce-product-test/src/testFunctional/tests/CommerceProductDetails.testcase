@@ -983,9 +983,7 @@ definition {
 		}
 
 		task ("And navigates to Brake Fluid details page") {
-			CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Name Ascending");
-
-			CommerceNavigator.gotoProductDetails(productName = ${productName1});
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/brake-fluid");
 		}
 
 		task ("And inputs invalid quantities for Brake Fluid(e.g. 5, 11, 12)") {
@@ -1023,7 +1021,7 @@ definition {
 
 					FrontStore.viewQuantitySelectorPopoverListItem(
 						conditionNotSatisfied = ${maximumConditionNotSatisfied},
-						quantity = 10,
+						quantity = 8,
 						quantityConfiguration = "max");
 
 					FrontStore.viewQuantitySelectorPopoverListItem(
@@ -1055,7 +1053,7 @@ definition {
 
 					FrontStore.viewQuantitySelectorPopoverListItem(
 						conditionNotSatisfied = "false",
-						quantity = 10,
+						quantity = 8,
 						quantityConfiguration = "max");
 
 					FrontStore.viewQuantitySelectorPopoverListItem(
@@ -1067,11 +1065,7 @@ definition {
 		}
 
 		task ("When the buyer navigates to Hoses details page") {
-			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
-
-			CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Name Ascending");
-
-			CommerceNavigator.gotoProductDetails(productName = ${productName2});
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/hoses");
 		}
 
 		task ("And inputs invalid quantities for Hoses(e.g. 3, 5, 6, 7)") {
@@ -1172,9 +1166,7 @@ definition {
 		}
 
 		task ("And navigates to Brake Fluid details page") {
-			CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Name Ascending");
-
-			CommerceNavigator.gotoProductDetails(productName = ${productName1});
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/brake-fluid");
 		}
 
 		task ("And inputs invalid quantities for Brake Fluid(e.g. 3, 4, 7)") {
@@ -1212,7 +1204,7 @@ definition {
 
 					FrontStore.viewQuantitySelectorPopoverListItem(
 						conditionNotSatisfied = ${minimumConditionNotSatisfied},
-						quantity = 5,
+						quantity = 6,
 						quantityConfiguration = "min");
 
 					FrontStore.viewQuantitySelectorPopoverListItem(
@@ -1244,7 +1236,7 @@ definition {
 
 					FrontStore.viewQuantitySelectorPopoverListItem(
 						conditionNotSatisfied = "false",
-						quantity = 5,
+						quantity = 6,
 						quantityConfiguration = "min");
 
 					FrontStore.viewQuantitySelectorPopoverListItem(
@@ -1256,11 +1248,7 @@ definition {
 		}
 
 		task ("When the buyer navigates to Hoses details page") {
-			CommerceNavigator.gotoMiniumSidebarItem(menuItem = "Catalog");
-
-			CommerceAcceleratorsInitializer.changeProductsSorting(sortingType = "Name Ascending");
-
-			CommerceNavigator.gotoProductDetails(productName = ${productName2});
+			Navigator.openWithAppendToBaseURL(urlAppend = "web/minium/p/hoses");
 		}
 
 		task ("And inputs invalid quantities for Hoses(e.g. 2, 3, 5)") {
@@ -1282,16 +1270,16 @@ definition {
 
 					AssertElementPresent(locator1 = "CommerceAccelerators#ADD_TO_CART_BUTTON_PRODUCT_DETAILS_PAGE_INVALID");
 
-					if (${quantity} == 2) {
-						var minimumConditionNotSatisfied = "true";
+					if (${quantity} == 5) {
+						var minimumConditionNotSatisfied = "false";
 					}
 					else {
-						var minimumConditionNotSatisfied = "false";
+						var minimumConditionNotSatisfied = "true";
 					}
 
 					FrontStore.viewQuantitySelectorPopoverListItem(
 						conditionNotSatisfied = ${minimumConditionNotSatisfied},
-						quantity = 3,
+						quantity = 4,
 						quantityConfiguration = "min");
 
 					FrontStore.viewQuantitySelectorPopoverListItem(
@@ -1323,7 +1311,7 @@ definition {
 
 					FrontStore.viewQuantitySelectorPopoverListItem(
 						conditionNotSatisfied = "false",
-						quantity = 3,
+						quantity = 4,
 						quantityConfiguration = "min");
 
 					FrontStore.viewQuantitySelectorPopoverListItem(

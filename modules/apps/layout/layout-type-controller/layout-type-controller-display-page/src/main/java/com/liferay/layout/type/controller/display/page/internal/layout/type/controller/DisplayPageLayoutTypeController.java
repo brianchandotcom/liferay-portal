@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.servlet.TransferHeadersHelperUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -91,7 +92,7 @@ public class DisplayPageLayoutTypeController
 				0, friendlyURL.lastIndexOf(StringPool.QUESTION));
 		}
 
-		return friendlyURL;
+		return HtmlUtil.escape(friendlyURL);
 	}
 
 	@Override

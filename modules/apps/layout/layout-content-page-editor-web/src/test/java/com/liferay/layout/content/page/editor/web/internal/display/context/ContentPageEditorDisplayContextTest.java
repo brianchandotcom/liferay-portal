@@ -107,11 +107,11 @@ public class ContentPageEditorDisplayContextTest {
 
 		ContentPageEditorDisplayContext contentPageEditorDisplayContext =
 			new ContentPageEditorDisplayContext(
-				null, null, null, null, null, null,
-				frontendTokenDefinitionRegistry, mockHttpServletRequest, null,
+				null, null, null, null, null, frontendTokenDefinitionRegistry,
+				mockHttpServletRequest, null, null, null, null, null, null,
 				null, null, null, null, null, null, null, null, null, null,
-				null, null, null, null, null, null, null, null, null, null,
-				staging, null, styleBookEntryLocalService, null, null);
+				null, null, null, null, null, staging, null,
+				styleBookEntryLocalService, null);
 
 		List<Map<String, Object>> result = ReflectionTestUtil.invoke(
 			contentPageEditorDisplayContext, "_getStyleBooks", new Class<?>[0]);

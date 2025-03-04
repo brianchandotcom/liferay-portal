@@ -657,6 +657,9 @@ test('LPD-26906 As a buyer, I can edit product options from the pending orders p
 	await expect(page.getByText('$ 4.00').nth(1)).toBeVisible();
 	await expect(page.getByText('$ 72.00').nth(1)).toBeVisible();
 	await expect(page.getByText('$ 10.00').nth(1)).toBeVisible();
+
+	await pendingOrdersPage.orderItemExpandButton(productBundleName).click();
+
 	await expect(page.getByText('$ 10.00').nth(3)).toBeVisible();
 
 	await (
@@ -687,9 +690,14 @@ test('LPD-26906 As a buyer, I can edit product options from the pending orders p
 
 	await expect(pendingOrdersPage.editMenuItem).toHaveCount(0);
 
+	await page.locator('body').click();
+
 	await expect(page.getByText('$ 4.00').nth(1)).toBeVisible();
 	await expect(page.getByText('$ 72.00').nth(1)).toBeVisible();
 	await expect(page.getByText('$ 20.00').nth(1)).toBeVisible();
+
+	await pendingOrdersPage.orderItemExpandButton(productBundleName).click();
+
 	await expect(page.getByText('$ 20.00').nth(3)).toBeVisible();
 
 	await commerceMiniCartPage.miniCartButton.click();

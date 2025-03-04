@@ -1307,9 +1307,9 @@ public class SystemFDSSerializerTest extends BaseFDSSerializerTestCase {
 					JSONUtil.put(
 						"description", DESCRIPTIONS[0]
 					).put(
-						"href", LINK
-					).put(
 						"image", IMAGES[0]
+					).put(
+						"link", LINK
 					).put(
 						"sticker", STICKERS[0]
 					).put(

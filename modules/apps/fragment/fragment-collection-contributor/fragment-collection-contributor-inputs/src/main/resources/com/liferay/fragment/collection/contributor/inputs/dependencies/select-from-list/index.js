@@ -110,8 +110,8 @@ else {
 					);
 
 					const {onChange} = registerLocalizedInput({
+						customLocaleChangeHandler: true,
 						defaultLanguageId,
-						initialValues: input.valueI18n,
 						inputElement: uiInputElement,
 						onLocaleChange: ({languageId}) => {
 							currentLanguageId = languageId;

@@ -74,6 +74,7 @@ else {
 
 					const {onChange} = registerLocalizedInput({
 						changeTextDirection: false,
+						customLocaleChangeHandler: true,
 						defaultLanguageId,
 						onLocaleChange: ({languageId}) => {
 							currentLanguageId = languageId;
@@ -146,6 +147,7 @@ else {
 
 					registerUnlocalizedInput({
 						changeTextDirection: false,
+						customLocaleChangeHandler: true,
 						defaultLanguageId,
 						onLocaleChange: (languageId) => {
 							const editingDefaultLanguage =

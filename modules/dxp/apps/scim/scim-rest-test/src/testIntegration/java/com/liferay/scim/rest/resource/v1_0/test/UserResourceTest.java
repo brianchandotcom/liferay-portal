@@ -215,6 +215,13 @@ public class UserResourceTest extends BaseUserResourceTestCase {
 				5, 0, "userName eq \"" + user1.getUserName() + "\""),
 			1, 1, user1);
 
+		assertHttpResponseStatusCode(
+			400,
+			userResource.getV2UsersHttpResponse(
+				5, 0,
+				RandomTestUtil.randomString() + "eq \"" +
+					RandomTestUtil.randomString() + "\""));
+
 		ConfigurationTestUtil.deleteConfiguration(_pid);
 
 		assertHttpResponseStatusCode(

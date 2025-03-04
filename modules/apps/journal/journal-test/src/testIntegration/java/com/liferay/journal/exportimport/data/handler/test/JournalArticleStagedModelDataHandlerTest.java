@@ -57,6 +57,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.model.User;
@@ -68,6 +69,9 @@ import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.CompanyTestUtil;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -755,6 +759,49 @@ public class JournalArticleStagedModelDataHandlerTest
 	}
 
 	@Test
+	public void testImportBetweenInstances() throws Exception {
+		_company = CompanyTestUtil.addCompany();
+
+		User user = UserTestUtil.addCompanyAdminUser(_company);
+
+		Group liveGroup = GroupTestUtil.addGroup(
+			_company.getCompanyId(), user.getUserId(),
+			GroupConstants.DEFAULT_PARENT_GROUP_ID);
+
+		initExport();
+
+		JournalArticle journalArticle = JournalTestUtil.addArticle(
+			stagingGroup.getGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+		StagedModelDataHandlerUtil.exportStagedModel(
+			portletDataContext, journalArticle);
+
+		initImport(stagingGroup, liveGroup);
+
+		StagedModel exportedStagedModel = readExportedStagedModel(
+			journalArticle);
+
+		Assert.assertNotNull(exportedStagedModel);
+
+		ExportImportThreadLocal.setPortletImportInProcess(true);
+
+		try {
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, exportedStagedModel);
+		}
+		finally {
+			ExportImportThreadLocal.setPortletImportInProcess(false);
+		}
+
+		JournalArticle importJournalArticle =
+			JournalArticleLocalServiceUtil.fetchJournalArticleByUuidAndGroupId(
+				journalArticle.getUuid(), liveGroup.getGroupId());
+
+		Assert.assertNotNull(importJournalArticle);
+	}
+
+	@Test
 	public void testPreloadedArticlesWithDifferentResourceUUID()
 		throws Exception {
 
@@ -1305,6 +1352,9 @@ public class JournalArticleStagedModelDataHandlerTest
 
 	@Inject
 	private AssetEntryLocalService _assetEntryLocalService;
+
+	@DeleteAfterTestRun
+	private Company _company;
 
 	@Inject
 	private DDMStructureLocalService _ddmStructureLocalService;

@@ -122,6 +122,7 @@ public class FieldResourceTest extends BaseFieldResourceTestCase {
 
 		assertEqualsIgnoringOrder(
 			ListUtil.fromArray(
+				_toField(null, "defaultLanguageId", false, "string", null),
 				_toField(null, "externalReferenceCode", false, "string", null),
 				_toField(null, "friendlyUrlPath", false, "string", null),
 				_toField(null, "friendlyUrlPath_i18n", false, "object", null),

@@ -33,6 +33,7 @@ import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
 import com.liferay.portal.vulcan.batch.engine.VulcanBatchEngineTaskItemDelegate;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineExportTaskResource;
 import com.liferay.portal.vulcan.batch.engine.resource.VulcanBatchEngineImportTaskResource;
+import com.liferay.portal.vulcan.crud.VulcanCRUDItemDelegate;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
 import com.liferay.portal.vulcan.resource.EntityModelResource;
@@ -65,7 +66,8 @@ import javax.ws.rs.core.UriInfo;
 @javax.ws.rs.Path("/v1.0")
 public abstract class BaseCTEntryResourceImpl
 	implements CTEntryResource, EntityModelResource,
-			   VulcanBatchEngineTaskItemDelegate<CTEntry> {
+			   VulcanBatchEngineTaskItemDelegate<CTEntry>,
+			   VulcanCRUDItemDelegate<CTEntry> {
 
 	/**
 	 * Invoke this method with the command line:
@@ -368,6 +370,11 @@ public abstract class BaseCTEntryResourceImpl
 
 		throw new UnsupportedOperationException(
 			"This method needs to be implemented");
+	}
+
+	@Override
+	public CTEntry getItem(Long id) throws Exception {
+		return getCTEntry(id);
 	}
 
 	public void setContextAcceptLanguage(AcceptLanguage contextAcceptLanguage) {

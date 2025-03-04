@@ -12,6 +12,7 @@ import com.liferay.batch.engine.pagination.Pagination;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.blogs.service.BlogsEntryService;
+import com.liferay.lazy.referencing.kernel.LazyReferencingThreadLocal;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
@@ -64,6 +65,7 @@ import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -165,6 +167,18 @@ public class BaseBatchEngineTaskExecutorTest {
 		extends BaseBatchEngineTaskItemDelegate<BlogPosting> {
 
 		@Override
+		public void create(
+				Collection<BlogPosting> items,
+				Map<String, Serializable> parameters)
+			throws Exception {
+
+			Assert.assertTrue(
+				LazyReferencingThreadLocal.isLazyReferencingEnabled());
+
+			super.create(items, parameters);
+		}
+
+		@Override
 		public BlogPosting createItem(
 				BlogPosting blogPosting,
 				Map<String, Serializable> queryParameters)
@@ -184,6 +198,18 @@ public class BaseBatchEngineTaskExecutorTest {
 				_createServiceContext(blogPosting.getSiteId()));
 
 			return null;
+		}
+
+		@Override
+		public void delete(
+				Collection<BlogPosting> items,
+				Map<String, Serializable> parameters)
+			throws Exception {
+
+			Assert.assertTrue(
+				LazyReferencingThreadLocal.isLazyReferencingEnabled());
+
+			super.delete(items, parameters);
 		}
 
 		@Override
@@ -209,6 +235,9 @@ public class BaseBatchEngineTaskExecutorTest {
 				Map<String, Serializable> parameters, String search)
 			throws Exception {
 
+			Assert.assertFalse(
+				LazyReferencingThreadLocal.isLazyReferencingEnabled());
+
 			long siteId = GetterUtil.getLong(parameters.get("siteId"));
 
 			return _search(
@@ -231,9 +260,24 @@ public class BaseBatchEngineTaskExecutorTest {
 		}
 
 		@Override
+		public void update(
+				Collection<BlogPosting> items,
+				Map<String, Serializable> parameters)
+			throws Exception {
+
+			Assert.assertTrue(
+				LazyReferencingThreadLocal.isLazyReferencingEnabled());
+
+			super.update(items, parameters);
+		}
+
+		@Override
 		public void updateItem(
 				BlogPosting blogPosting, Map<String, Serializable> parameters)
 			throws Exception {
+
+			Assert.assertTrue(
+				LazyReferencingThreadLocal.isLazyReferencingEnabled());
 
 			LocalDateTime localDateTime = _toLocalDateTime(
 				blogPosting.getDatePublished());

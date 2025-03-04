@@ -5,6 +5,7 @@
 
 type Args = {
 	changeTextDirection?: boolean;
+	customLocaleChangeHandler?: boolean;
 	defaultLanguageId: Liferay.Language.Locale;
 	inputElement?: HTMLInputElement;
 	onLocaleChange?: (languageId: string) => void;
@@ -15,6 +16,7 @@ type Args = {
 
 export function registerUnlocalizedInput({
 	changeTextDirection = true,
+	customLocaleChangeHandler = false,
 	defaultLanguageId,
 	inputElement,
 	onLocaleChange,
@@ -43,21 +45,7 @@ export function registerUnlocalizedInput({
 				);
 			}
 
-			// Change state of the input to disabled/readonly for non default language
-
 			const isReadOnlyFieldState = unlocalizedFieldsState === 'read-only';
-
-			if (editingDefaultLanguage) {
-				inputElement?.removeAttribute(
-					isReadOnlyFieldState ? 'readonly' : 'disabled'
-				);
-			}
-			else {
-				inputElement?.setAttribute(
-					isReadOnlyFieldState ? 'readonly' : 'disabled',
-					''
-				);
-			}
 
 			if (isReadOnlyFieldState) {
 
@@ -78,6 +66,24 @@ export function registerUnlocalizedInput({
 						inputElement?.removeAttribute('disabled');
 					},
 					true
+				);
+			}
+
+			if (customLocaleChangeHandler) {
+				return;
+			}
+
+			// Change state of the input to disabled/readonly for non default language
+
+			if (editingDefaultLanguage) {
+				inputElement?.removeAttribute(
+					isReadOnlyFieldState ? 'readonly' : 'disabled'
+				);
+			}
+			else {
+				inputElement?.setAttribute(
+					isReadOnlyFieldState ? 'readonly' : 'disabled',
+					''
 				);
 			}
 		}

@@ -7,6 +7,7 @@ import {getOrCreateTranslationInput} from './getOrCreateTranslationInput';
 
 type Args = {
 	changeTextDirection: boolean;
+	customLocaleChangeHandler: boolean;
 	defaultLanguageId: Liferay.Language.Locale;
 	initialValues?: Record<string, any>;
 	inputElement?: HTMLInputElement;
@@ -24,6 +25,7 @@ type Args = {
 
 export function registerLocalizedInput({
 	changeTextDirection = true,
+	customLocaleChangeHandler = false,
 	defaultLanguageId,
 	initialValues,
 	inputElement,
@@ -70,7 +72,7 @@ export function registerLocalizedInput({
 				);
 			}
 
-			if (!initialValues && !inputElement) {
+			if (customLocaleChangeHandler) {
 				onLocaleChange?.({languageId});
 
 				return;

@@ -7564,6 +7564,18 @@ test.describe('Edit mode form errors', () => {
 				'Error:Fragments cannot be placed inside an unmapped form container.',
 				{type: 'danger'}
 			);
+
+			// Publish the page and check the localization selector is visible
+
+			await pageEditorPage.publishPage();
+
+			await page.goto(
+				`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
+			);
+
+			await expect(
+				page.getByLabel('Select a language, current language:')
+			).toBeVisible();
 		}
 	);
 

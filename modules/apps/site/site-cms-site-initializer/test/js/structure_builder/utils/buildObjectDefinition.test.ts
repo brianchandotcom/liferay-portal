@@ -8,6 +8,7 @@ import {Field} from '../../../../src/main/resources/META-INF/resources/js/struct
 
 const DATE_TIME_FIELD: Field = {
 	erc: 'datetime-field',
+	indexableConfig: {indexed: false},
 	label: {en_US: 'Date and Time Field'},
 	localized: true,
 	name: 'datetimeField',
@@ -20,6 +21,7 @@ const DATE_TIME_FIELD: Field = {
 
 const TEXT_FIELD: Field = {
 	erc: 'text-field',
+	indexableConfig: {indexed: true, indexedAsKeyword: true},
 	label: {en_US: 'Text Field'},
 	localized: false,
 	name: 'textField',
@@ -38,6 +40,7 @@ describe('buildObjectDefinition', () => {
 		});
 
 		expect(result).toEqual({
+			enableObjectEntryDraft: true,
 			externalReferenceCode: 'structureERC',
 			id: 1,
 			label: {en_US: 'Structure'},
@@ -46,6 +49,9 @@ describe('buildObjectDefinition', () => {
 				{
 					businessType: 'Text',
 					externalReferenceCode: 'text-field',
+					indexed: true,
+					indexedAsKeyword: true,
+					indexedLanguageId: '',
 					label: {en_US: 'Text Field'},
 					localized: false,
 					name: 'textField',
@@ -67,6 +73,7 @@ describe('buildObjectDefinition', () => {
 		});
 
 		expect(result).toEqual({
+			enableObjectEntryDraft: true,
 			externalReferenceCode: 'structureERC',
 			id: 1,
 			label: {en_US: 'Structure'},
@@ -75,6 +82,7 @@ describe('buildObjectDefinition', () => {
 				{
 					businessType: 'DateTime',
 					externalReferenceCode: 'datetime-field',
+					indexed: false,
 					label: {en_US: 'Date and Time Field'},
 					localized: true,
 					name: 'datetimeField',

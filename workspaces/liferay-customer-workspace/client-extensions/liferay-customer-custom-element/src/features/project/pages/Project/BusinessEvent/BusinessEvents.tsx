@@ -18,21 +18,10 @@ import {useCustomerPortal} from '~/features/project/context';
 import {getFormattedDate} from '~/features/project/utils/getFormattedDate';
 import {getBusinessEvents} from '~/services/liferay/api';
 import {getFormattedTime} from '~/utils/getFormattedTime';
+import {IBusinessEvent} from '~/utils/types';
 
 import useHasAllEventsPermissions from './hooks/useHasAllEventsPermissions';
 import {INITIAL_FILTER} from './utils/constants/initialFilter';
-
-export interface IBusinessEventTicket {
-	associatedTickets: string;
-	currentLiferayVersion: Record<string, string>;
-	description: string;
-	eventStatus: Record<string, string>;
-	eventType: Record<string, string>;
-	id: number;
-	name: string;
-	newLiferayVersion: Record<string, string>;
-	targetGoLiveDateTime: string;
-}
 
 export interface IState {
 	availableFilters?: IFilterOption[];
@@ -76,23 +65,18 @@ const BusinessEvents = () => {
 		searchTerm: '',
 		selectedFilters: [],
 	});
-	const [businessEventsTickets, setBusinessEventsTickets] = useState<
-		IBusinessEventTicket[]
-	>([]);
 
-	const [businessEventsTickets, setBusinessEventsTickets] = useState<
-		IBusinessEventTicket[]
-	>([]);
+	const [businessEvents, setBusinessEvents] = useState<IBusinessEvent[]>([]);
 
 	const hasAllEventsPermissions = useHasAllEventsPermissions();
 
 	const navigate = useNavigate();
 
 	const handleEditEvent = useCallback(
-		(eventTicketId: number) => {
-			if (eventTicketId) {
+		(businessEventId: number | undefined) => {
+			if (businessEventId) {
 				navigate(
-					`/${project?.accountKey}/business-events/${eventTicketId}`
+					`/${project?.accountKey}/business-events/${businessEventId}`
 				);
 			}
 		},
@@ -164,7 +148,7 @@ const BusinessEvents = () => {
 				const businessEventsResponse =
 					await getBusinessEvents(filterQuery);
 
-				setBusinessEventsTickets(businessEventsResponse.items);
+				setBusinessEvents(businessEventsResponse.items);
 			}
 			catch (error) {
 				console.error('Error', error);
@@ -175,14 +159,14 @@ const BusinessEvents = () => {
 	}, [filterQuery]);
 
 	const rows = useMemo(() => {
-		if (businessEventsTickets?.length > 0) {
-			return businessEventsTickets.map((eventTicket) => {
+		if (businessEvents?.length > 0) {
+			return businessEvents.map((businessEvent) => {
 				const userOptions = [
 					{
 						customOptionStyle: 'pr-5',
 						label: i18n.translate('view-details'),
 						onClick: () => {
-							handleEditEvent(eventTicket?.id);
+							handleEditEvent(businessEvent.id);
 						},
 					},
 				];
@@ -193,7 +177,7 @@ const BusinessEvents = () => {
 							customOptionStyle: 'pr-5',
 							label: i18n.translate('edit-event'),
 							onClick: () => {
-								handleEditEvent(eventTicket?.id);
+								handleEditEvent(businessEvent.id);
 							},
 						},
 						{
@@ -233,31 +217,31 @@ const BusinessEvents = () => {
 					),
 					associatedTickets: (
 						<div className="text-neutral-10">
-							{eventTicket?.associatedTickets}
+							{businessEvent?.associatedTickets}
 						</div>
 					),
 					details: (
 						<div className="text-neutral-10">
-							{eventTicket?.description}
+							{businessEvent?.description}
 						</div>
 					),
 					eventName: (
 						<div>
 							<div className="font-weight-semi-bold text-neutral-10">
-								{eventTicket?.name}
+								{businessEvent?.name}
 							</div>
 
 							<div className="be-subtitle text-neutral-7">
-								{eventTicket?.eventType?.name}
+								{businessEvent?.eventType?.name}
 							</div>
 						</div>
 					),
 					status: (
 						<div className="align-items-center d-flex">
 							<div
-								className={`align-items-center font-weight-semi-bold be-status be-status-${eventTicket?.eventStatus?.name.toLowerCase()} px-2 py-1`}
+								className={`align-items-center font-weight-semi-bold be-status be-status-${businessEvent?.eventStatus?.key} px-2 py-1`}
 							>
-								{eventTicket?.eventStatus?.name}
+								{businessEvent?.eventStatus?.name}
 							</div>
 						</div>
 					),
@@ -265,14 +249,14 @@ const BusinessEvents = () => {
 						<div>
 							<div className="text-neutral-10">
 								{getFormattedDate(
-									eventTicket?.targetGoLiveDateTime,
+									businessEvent?.targetGoLiveDateTime,
 									'day2DMonthSYearN'
 								)}
 							</div>
 
 							<div className="be-subtitle text-neutral-7">
 								{getFormattedTime(
-									eventTicket?.targetGoLiveDateTime
+									businessEvent?.targetGoLiveDateTime
 								)}
 							</div>
 						</div>
@@ -282,7 +266,7 @@ const BusinessEvents = () => {
 		}
 
 		return [];
-	}, [businessEventsTickets, hasAllEventsPermissions, handleEditEvent]);
+	}, [businessEvents, hasAllEventsPermissions, handleEditEvent]);
 
 	return (
 		<div className="py-4">
@@ -304,7 +288,7 @@ const BusinessEvents = () => {
 					hasCreatePermissions={hasAllEventsPermissions}
 					onFilterChange={handleFilterChange}
 					onSearchChange={handleSearchChange}
-					searchResultsCount={businessEventsTickets.length}
+					searchResultsCount={businessEvents.length}
 					searchTerm={filters.searchTerm || ''}
 					selectedFilters={filters.selectedFilters || []}
 				/>

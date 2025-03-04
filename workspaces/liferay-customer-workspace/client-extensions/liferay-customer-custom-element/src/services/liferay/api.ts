@@ -55,17 +55,6 @@ const getBusinessEvents = async (filters: string) => {
 	});
 };
 
-const getBusinessEventsById = async (id: string | number) => {
-	return fetcher(`${HEADLESS_BASE_URL}${`c/businessevents/${id}`}`, {
-		headers: {
-			'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
-			'Content-Type': 'application/json',
-			'x-csrf-token': Liferay.authToken,
-		},
-		method: 'GET',
-	});
-};
-
 const getHighPriorityContacts = async (filter: string) => {
 
 	// eslint-disable-next-line @liferay/portal/no-global-fetch
@@ -97,10 +86,26 @@ const getTicketAttachments = async (filter: string) => {
 	);
 };
 
+const updateBusinessEventItem = async (
+	id: string | number,
+	fieldsToPatch: any
+) => {
+	return fetcher(`${HEADLESS_BASE_URL}c/businessevents/${id}`, {
+		body: JSON.stringify(fieldsToPatch),
+		headers: {
+			'Accept-Language': Liferay.ThemeDisplay.getBCP47LanguageId(),
+			'Content-Type': 'application/json',
+			'x-csrf-token': Liferay.authToken,
+		},
+		method: 'PATCH',
+	});
+};
+
 export {
 	getBusinessEvents,
 	getBusinessEventById,
 	getHighPriorityContacts,
 	getTicketAttachments,
 	fetchHeadless,
+	updateBusinessEventItem,
 };

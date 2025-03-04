@@ -6,12 +6,9 @@
 import {useMemo} from 'react';
 import {hasAdminUserAccount} from '~/features/project/containers/ActivationKeysTable/utils/hasAdminUserAccount';
 import useCurrentKoroneikiAccount from '~/hooks/useCurrentKoroneikiAccount';
+import {IOrganizationBrief} from '~/utils/types';
 
 import useMyUserAccountByAccountExternalReferenceCode from '../../TeamMembers/components/TeamMembersTable/hooks/useMyUserAccountByAccountExternalReferenceCode';
-
-interface IOrganizationBrief {
-	name: string;
-}
 
 export default function useHasAllEventsPermissions() {
 	const {data, loading} = useCurrentKoroneikiAccount();
@@ -22,6 +19,7 @@ export default function useHasAllEventsPermissions() {
 			koroneikiAccount?.accountKey,
 			loading
 		);
+
 	const loggedUserAccount = myUserAccountData?.myUserAccount;
 
 	const isAdminUserAccount = hasAdminUserAccount(myUserAccountData);

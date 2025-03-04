@@ -30,14 +30,21 @@ export interface IAccountSubscriptionGroup {
 export interface IBusinessEvent {
 	associatedTickets?: any;
 	currentLiferayVersion?: string;
+	description?: string;
 	details?: string;
-	eventStatus?: string;
-	eventType?: string;
+	eventStatus?: {
+		key: string;
+		name: string;
+	};
+	eventType?: {
+		key: string;
+		name: string;
+	};
 	id?: number;
 	name?: string;
 	newLiferayVersion?: string;
 	targetGoLiveDate?: string;
-	targetGoLiveDateTime?: Date | string;
+	targetGoLiveDateTime?: string;
 	targetGoLiveTime?: string;
 }
 

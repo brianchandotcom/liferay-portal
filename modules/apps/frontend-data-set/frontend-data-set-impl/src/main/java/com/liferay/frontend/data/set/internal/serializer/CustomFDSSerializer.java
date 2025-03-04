@@ -88,10 +88,20 @@ public class CustomFDSSerializer
 	public boolean isAvailable(
 		String fdsName, HttpServletRequest httpServletRequest) {
 
-		Map<String, Object> properties = getDataSetObjectEntryProperties(
-			fdsName, httpServletRequest);
+		ObjectEntry objectEntry = _getObjectEntry(
+			fdsName, _getObjectDefinition(httpServletRequest));
 
-		return !properties.isEmpty();
+		if (objectEntry == null) {
+			return false;
+		}
+
+		Map<String, Object> properties = objectEntry.getProperties();
+
+		if (properties.isEmpty()) {
+			return false;
+		}
+
+		return _isActive(objectEntry);
 	}
 
 	@Override

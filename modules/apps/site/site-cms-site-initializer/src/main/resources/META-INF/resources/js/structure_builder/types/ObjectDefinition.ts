@@ -18,14 +18,10 @@ export type ObjectField = {
 export type ObjectDefinition = {
 	externalReferenceCode: string;
 	id?: number;
-	label: {
-		en_US: string;
-	};
+	label: Liferay.Language.LocalizedValue<string>;
 	name?: string;
 	objectFields?: ObjectField[];
 	objectFolderExternalReferenceCode?: string;
-	pluralLabel: {
-		en_US: string;
-	};
+	pluralLabel: Liferay.Language.LocalizedValue<string>;
 	scope: 'company' | 'site';
 };

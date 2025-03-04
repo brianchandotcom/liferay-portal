@@ -18,7 +18,7 @@ import {
 } from '../../structure_builder/utils/field';
 import {State, useSelector, useStateDispatch} from '../contexts/StateContext';
 import selectSelection from '../selectors/selectSelection';
-import selectStructureLabel from '../selectors/selectStructureLabel';
+import selectStructureLocalizedLabel from '../selectors/selectStructureLocalizedLabel';
 
 const ROOT_ID = '';
 
@@ -35,7 +35,7 @@ export default function FieldsTree({fields}: {fields: Field[]}) {
 	const dispatch = useStateDispatch();
 
 	const selection = useSelector(selectSelection);
-	const structureLabel = useSelector(selectStructureLabel);
+	const structureLabel = useSelector(selectStructureLocalizedLabel);
 
 	const mode = useSelectionMode(selection);
 

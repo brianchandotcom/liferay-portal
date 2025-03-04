@@ -14,7 +14,7 @@ import React, {useState} from 'react';
 import {useSelector, useStateDispatch} from '../contexts/StateContext';
 import selectPublishedFields from '../selectors/selectPublishedFields';
 import selectStructureField from '../selectors/selectStructureField';
-import selectStructureLabel from '../selectors/selectStructureLabel';
+import selectStructureLocalizedLabel from '../selectors/selectStructureLocalizedLabel';
 import selectStructureStatus from '../selectors/selectStructureStatus';
 import {Field} from '../utils/field';
 import ERCInput from './ERCInput';
@@ -26,7 +26,7 @@ export default function StructureFieldSettings({
 	fieldName: Field['name'];
 }) {
 	const dispatch = useStateDispatch();
-	const structureLabel = useSelector(selectStructureLabel);
+	const structureLabel = useSelector(selectStructureLocalizedLabel);
 	const field = useSelector(selectStructureField(fieldName));
 
 	return (

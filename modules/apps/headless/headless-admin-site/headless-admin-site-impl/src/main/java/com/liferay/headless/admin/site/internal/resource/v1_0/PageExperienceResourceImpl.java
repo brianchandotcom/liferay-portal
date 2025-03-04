@@ -5,7 +5,24 @@
 
 package com.liferay.headless.admin.site.internal.resource.v1_0;
 
+import com.liferay.fragment.contributor.FragmentCollectionContributorRegistry;
+import com.liferay.fragment.service.FragmentEntryLinkLocalService;
+import com.liferay.fragment.service.FragmentEntryLocalService;
+import com.liferay.headless.admin.site.dto.v1_0.PageElement;
 import com.liferay.headless.admin.site.dto.v1_0.PageExperience;
+import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.CollectionItemLayoutStructureItemImporter;
+import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.CollectionLayoutStructureItemImporter;
+import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.ColumnLayoutStructureItemImporter;
+import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.ContainerLayoutStructureItemImporter;
+import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.DropZoneLayoutStructureItemImporter;
+import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.FormLayoutStructureItemImporter;
+import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.FormStepContainerLayoutStructureItemImporter;
+import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.FormStepItemLayoutStructureItemImporter;
+import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.FragmentDropZoneLayoutStructureItemImporter;
+import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.FragmentLayoutStructureItemImporter;
+import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.LayoutStructureItemImporter;
+import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.RowLayoutStructureItemImporter;
+import com.liferay.headless.admin.site.internal.resource.v1_0.layout.structure.item.importer.context.LayoutStructureItemImporterContext;
 import com.liferay.headless.admin.site.internal.resource.v1_0.util.GroupUtil;
 import com.liferay.headless.admin.site.resource.v1_0.PageExperienceResource;
 import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
@@ -32,8 +49,11 @@ import com.liferay.segments.service.SegmentsEntryLocalService;
 import com.liferay.segments.service.SegmentsExperienceService;
 
 import java.util.Collections;
+import java.util.EnumMap;
 import java.util.Objects;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -207,6 +227,62 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 				).build()));
 	}
 
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_layoutStructureItemImporters.put(
+			PageElement.Type.COLLECTION,
+			new CollectionLayoutStructureItemImporter());
+		_layoutStructureItemImporters.put(
+			PageElement.Type.COLLECTION_ITEM,
+			new CollectionItemLayoutStructureItemImporter());
+		_layoutStructureItemImporters.put(
+			PageElement.Type.COLUMN, new ColumnLayoutStructureItemImporter());
+		_layoutStructureItemImporters.put(
+			PageElement.Type.CONTAINER,
+			new ContainerLayoutStructureItemImporter());
+		_layoutStructureItemImporters.put(
+			PageElement.Type.DROP_ZONE,
+			new DropZoneLayoutStructureItemImporter());
+		_layoutStructureItemImporters.put(
+			PageElement.Type.FORM, new FormLayoutStructureItemImporter());
+		_layoutStructureItemImporters.put(
+			PageElement.Type.FORM_STEP,
+			new FormStepItemLayoutStructureItemImporter());
+		_layoutStructureItemImporters.put(
+			PageElement.Type.FORM_STEP_CONTAINER,
+			new FormStepContainerLayoutStructureItemImporter());
+		_layoutStructureItemImporters.put(
+			PageElement.Type.FRAGMENT_DROP_ZONE,
+			new FragmentDropZoneLayoutStructureItemImporter());
+		_layoutStructureItemImporters.put(
+			PageElement.Type.FRAGMENT,
+			new FragmentLayoutStructureItemImporter(
+				_fragmentCollectionContributorRegistry,
+				_fragmentEntryLinkLocalService, _fragmentEntryLocalService));
+		_layoutStructureItemImporters.put(
+			PageElement.Type.ROW, new RowLayoutStructureItemImporter());
+	}
+
+	private void _addLayoutStructureItem(
+			LayoutStructure layoutStructure,
+			LayoutStructureItemImporterContext
+				layoutStructureItemImporterContext,
+			PageElement pageElement)
+		throws Exception {
+
+		LayoutStructureItemImporter layoutStructureItemImporter =
+			_layoutStructureItemImporters.get(pageElement.getType());
+
+		layoutStructureItemImporter.addLayoutStructureItem(
+			layoutStructure, layoutStructureItemImporterContext, pageElement);
+
+		for (PageElement childPageElement : pageElement.getPageElements()) {
+			_addLayoutStructureItem(
+				layoutStructure, layoutStructureItemImporterContext,
+				childPageElement);
+		}
+	}
+
 	private PageExperience _addPageExperience(
 			long groupId, PageExperience pageExperience)
 		throws Exception {
@@ -240,6 +316,21 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 		LayoutStructure layoutStructure = new LayoutStructure();
 
 		layoutStructure.addRootLayoutStructureItem();
+
+		for (PageElement pageElement : pageExperience.getPageElements()) {
+			_addLayoutStructureItem(
+				layoutStructure,
+				new LayoutStructureItemImporterContext(
+					groupId, layout,
+					segmentsExperience.getSegmentsExperienceId(),
+					contextUser.getUserId()),
+				pageElement);
+		}
+
+		_layoutPageTemplateStructureLocalService.
+			updateLayoutPageTemplateStructureData(
+				layout.getGroupId(), layout.getPlid(),
+				layoutStructure.toString());
 
 		String data = layoutStructure.toString();
 
@@ -295,6 +386,16 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 	}
 
 	@Reference
+	private FragmentCollectionContributorRegistry
+		_fragmentCollectionContributorRegistry;
+
+	@Reference
+	private FragmentEntryLinkLocalService _fragmentEntryLinkLocalService;
+
+	@Reference
+	private FragmentEntryLocalService _fragmentEntryLocalService;
+
+	@Reference
 	private LayoutLocalService _layoutLocalService;
 
 	@Reference
@@ -304,6 +405,9 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 	@Reference
 	private LayoutPageTemplateStructureRelLocalService
 		_layoutPageTemplateStructureRelLocalService;
+
+	private final EnumMap<PageElement.Type, LayoutStructureItemImporter>
+		_layoutStructureItemImporters = new EnumMap<>(PageElement.Type.class);
 
 	@Reference(
 		target = "(component.name=com.liferay.headless.admin.site.internal.dto.v1_0.converter.PageExperienceDTOConverter)"

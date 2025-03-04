@@ -20,6 +20,7 @@ export class PendingOrdersPage extends CommerceDNDTablePage {
 	readonly layoutsPage: CommerceLayoutsPage;
 	readonly orderItemActionsButton: Locator;
 	readonly orderItemActionsButtonEdit: Locator;
+	readonly orderItemExpandButton: (productName: string) => Locator;
 	readonly orderItemsTable: Locator;
 	readonly orderItemsTableRow: (
 		colPosition: number,
@@ -60,6 +61,8 @@ export class PendingOrdersPage extends CommerceDNDTablePage {
 		this.orderItemActionsButtonEdit = page.getByRole('menuitem', {
 			name: 'Edit',
 		});
+		this.orderItemExpandButton = (productName) =>
+			page.getByRole('gridcell', {name: productName}).getByRole('button');
 		this.orderItemsTable = page.locator(
 			'#portlet_com_liferay_commerce_order_content_web_internal_portlet_CommerceOpenOrderContentPortlet .fds table'
 		);

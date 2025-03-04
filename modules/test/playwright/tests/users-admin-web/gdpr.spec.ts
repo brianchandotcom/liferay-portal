@@ -1162,3 +1162,102 @@ testAdmin(
 		await expect(page.getByText(anonymousUserName)).toHaveCount(1);
 	}
 );
+
+testAdmin(
+	'Applications without entries are visible but disabled in new data export',
+	{tag: '@LPD-50594'},
+	async ({
+		apiHelpers,
+		exportUserDataPage,
+		page,
+		usersAndOrganizationsPage,
+	}) => {
+		test.setTimeout(120000);
+
+		page.on('dialog', (dialog) => {
+			dialog.accept();
+		});
+
+		const userAccount =
+			await apiHelpers.headlessAdminUser.postUserAccount();
+
+		userData[userAccount.alternateName] = {
+			name: userAccount.givenName,
+			password: 'test',
+			surname: userAccount.familyName,
+		};
+
+		const site = await apiHelpers.headlessSite.createSite({
+			name: 'Site' + getRandomInt(),
+		});
+
+		apiHelpers.data.push({id: site.id, type: 'site'});
+
+		const role =
+			await apiHelpers.headlessAdminUser.getRoleByName('Administrator');
+
+		await apiHelpers.headlessAdminUser.postRoleByExternalReferenceCodeUserAccountAssociation(
+			role.externalReferenceCode,
+			userAccount.id
+		);
+
+		await performLogout(page);
+		await performLoginViaApi(page, userAccount.alternateName);
+
+		await apiHelpers.headlessDelivery.postBlog(site.id, {
+			headline: getRandomString(),
+		});
+
+		const contentStructureId =
+			await getBasicWebContentStructureId(apiHelpers);
+
+		await apiHelpers.jsonWebServicesJournal.addWebContent({
+			ddmStructureId: contentStructureId,
+			groupId: site.id,
+		});
+
+		await apiHelpers.jsonWebServicesMBApiHelper.addMessage({
+			groupId: site.id,
+		});
+
+		await performLogout(page);
+		await performLoginViaApi(page, 'test');
+
+		await usersAndOrganizationsPage.goToUsers(false);
+
+		await (
+			await usersAndOrganizationsPage.usersTableRowActions(
+				userAccount.alternateName
+			)
+		).click();
+		await usersAndOrganizationsPage.exportPersonalDataItem.click();
+		await exportUserDataPage.addExportProcessesButton.click();
+
+		await expect(exportUserDataPage.blogsCheckbox).toBeEnabled();
+		await expect(exportUserDataPage.webContentCheckbox).toBeEnabled();
+		await expect(exportUserDataPage.messageBoardsCheckbox).toBeEnabled();
+		await expect(exportUserDataPage.announcementsCheckbox).toBeDisabled();
+		await expect(exportUserDataPage.contactsCenterCheckbox).toBeDisabled();
+		await expect(
+			exportUserDataPage.documentsAndMediaCheckbox
+		).toBeDisabled();
+		await expect(exportUserDataPage.formsCheckbox).toBeDisabled();
+		await expect(exportUserDataPage.wikiCheckbox).toBeDisabled();
+
+		await exportUserDataPage.blogsCheckbox.check();
+		await exportUserDataPage.webContentCheckbox.check();
+		await exportUserDataPage.messageBoardsCheckbox.check();
+		await exportUserDataPage.exportButton.click();
+
+		await expect(exportUserDataPage.blogsStatus).toBeVisible();
+		await expect(exportUserDataPage.webContentStatus).toBeVisible();
+		await expect(exportUserDataPage.messageBoardsStatus).toBeVisible();
+		await expect(exportUserDataPage.announcementsStatus).not.toBeVisible();
+		await expect(exportUserDataPage.contactsCenterStatus).not.toBeVisible();
+		await expect(
+			exportUserDataPage.documentsAndMediaStatus
+		).not.toBeVisible();
+		await expect(exportUserDataPage.formsStatus).not.toBeVisible();
+		await expect(exportUserDataPage.wikiStatus).not.toBeVisible();
+	}
+);

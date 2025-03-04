@@ -17,6 +17,8 @@ export class ExportUserDataPage {
 	readonly documentsAndMediaCheckbox: Locator;
 	readonly documentsAndMediaStatus: Locator;
 	readonly exportButton: Locator;
+	readonly formsCheckbox: Locator;
+	readonly formsStatus: Locator;
 	readonly messageBoardsCheckbox: Locator;
 	readonly messageBoardsStatus: Locator;
 	readonly page: Page;
@@ -48,6 +50,8 @@ export class ExportUserDataPage {
 			exact: true,
 			name: 'Export',
 		});
+		this.formsCheckbox = page.getByLabel('Forms');
+		this.formsStatus = page.getByText('Forms Successful');
 		this.messageBoardsCheckbox = page.getByLabel('Message Boards');
 		this.messageBoardsStatus = page.getByText('Message Boards Successful');
 		this.page = page;

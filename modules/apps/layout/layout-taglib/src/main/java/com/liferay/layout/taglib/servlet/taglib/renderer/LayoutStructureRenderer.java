@@ -1229,7 +1229,8 @@ public class LayoutStructureRenderer {
 					defaultFragmentRendererContext, _httpServletRequest,
 					httpServletResponse);
 
-				if (Objects.equals(
+				if ((infoForm != null) &&
+					Objects.equals(
 						fragmentEntryLink.getType(),
 						FragmentConstants.TYPE_INPUT)) {
 

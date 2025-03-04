@@ -77,6 +77,10 @@ public class CommercePriceFormatterImpl implements CommercePriceFormatter {
 	public String format(BigDecimal price, Locale locale)
 		throws PortalException {
 
+		if (price == null) {
+			return StringPool.BLANK;
+		}
+
 		DecimalFormat decimalFormat = _getDecimalFormat(null, locale);
 
 		return decimalFormat.format(price);

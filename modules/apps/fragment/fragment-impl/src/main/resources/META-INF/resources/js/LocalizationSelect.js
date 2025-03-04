@@ -21,7 +21,7 @@ export function LocalizationSelect({
 	const [selectedLocaleId, setSelectedLocaleId] = useState(defaultLanguageId);
 	const [translations, setTranslations] = useState({});
 
-	const localizableInputs = useMemo(
+	const localizableInputsTotal = useMemo(
 		() => document.querySelectorAll('[data-localizable="true"]').length,
 		[]
 	);
@@ -33,7 +33,7 @@ export function LocalizationSelect({
 
 	useEffect(() => {
 		const updateTranslationStatus = ({languageId}) => {
-			const translatedInputs = [
+			const totalTranslatedInputs = new Set([
 				...Array.from(
 					document.querySelectorAll(
 						`[type="file"][name$="_${languageId}"]`
@@ -43,12 +43,10 @@ export function LocalizationSelect({
 					document.querySelectorAll(
 						`[type="hidden"][name$="_${languageId}"]`
 					)
-				).filter(
-					(input) =>
-						input.getAttribute('value') !== null &&
-						!input.getAttribute('data-multiselect')
-				),
-			].length;
+				)
+					.filter((input) => input.getAttribute('value') !== null)
+					.map((input) => input.name),
+			]).size;
 
 			const label = locales.find(
 				(locale) => locale.id === languageId
@@ -56,10 +54,10 @@ export function LocalizationSelect({
 
 			setTranslations((previousState) => ({
 				...previousState,
-				...(translatedInputs && {
+				...(totalTranslatedInputs && {
 					[label]: {
-						total: localizableInputs,
-						translated: translatedInputs,
+						total: localizableInputsTotal,
+						translated: totalTranslatedInputs,
 					},
 				}),
 			}));
@@ -74,7 +72,7 @@ export function LocalizationSelect({
 		return () => {
 			Liferay.detach(EVENT_TRANSLATION_STATUS);
 		};
-	}, [defaultLanguageId, locales, localizableInputs]);
+	}, [defaultLanguageId, locales, localizableInputsTotal]);
 
 	useEffect(() => {
 		const onLocaleChanged = ({languageId}) => {

@@ -54,7 +54,7 @@ else {
 
 					// Set initial values
 
-					allInputs.forEach((inputElement, index) => {
+					allInputs.forEach((inputElement) => {
 						Object.entries(input.valueI18n).forEach(
 							([languageId, value]) => {
 								const input = getOrCreateTranslationInput(
@@ -64,13 +64,6 @@ else {
 									inputElement.parentNode,
 									fragmentNamespace
 								);
-
-								if (index !== 0) {
-									input.setAttribute(
-										'data-multiselect',
-										'true'
-									);
-								}
 
 								input.value = value.includes(inputElement.value)
 									? inputElement.value
@@ -85,7 +78,7 @@ else {
 						onLocaleChange: ({languageId}) => {
 							currentLanguageId = languageId;
 
-							allInputs.forEach((input, index) => {
+							allInputs.forEach((input) => {
 								const translationInput =
 									getOrCreateTranslationInput(
 										input.id,
@@ -96,13 +89,6 @@ else {
 									);
 
 								if (translationInput) {
-									if (index !== 0) {
-										translationInput.setAttribute(
-											'data-multiselect',
-											'true'
-										);
-									}
-
 									if (
 										translationInput.getAttribute(
 											'value'

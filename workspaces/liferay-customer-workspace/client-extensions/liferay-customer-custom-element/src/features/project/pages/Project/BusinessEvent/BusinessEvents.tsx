@@ -217,6 +217,9 @@ const BusinessEvents = () => {
 										)}
 										borderless
 										className="text-neutral-5"
+										onPointerEnterCapture={undefined}
+										onPointerLeaveCapture={undefined}
+										placeholder={undefined}
 										symbol="ellipsis-v"
 									/>
 								}

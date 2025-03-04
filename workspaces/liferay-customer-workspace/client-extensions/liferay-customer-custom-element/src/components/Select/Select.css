@@ -16,6 +16,6 @@ select.form-control:focus,
 	height: 24px !important;
 	pointer-events: none;
 	position: absolute;
-	right: 12px;
-	width: 24px !important;
+	right: var(--spacer-3);
+	width: var(--font-size-base);
 }

@@ -4,42 +4,60 @@
  */
 
 import {Badge} from '..';
+import ClayDatePicker from '@clayui/date-picker';
 import ClayForm from '@clayui/form';
 import ClayIcon from '@clayui/icon';
 import classNames from 'classnames';
 import {useField} from 'formik';
-import {required, validate} from '~/utils/validations.form';
+import {
+	required as requiredVaidation,
+	validate,
+} from '~/utils/validations.form';
 
 import './DatePicker.css';
 
-import ClayDatePicker from '@clayui/date-picker';
-
 interface IProps {
 	badgeClassName?: string;
+	className?: string;
+	dateFormat?: string;
 	groupStyle?: string;
 	helper?: string;
-	label: string;
+	id?: string;
+	label?: string;
 	name: string;
+	onBlur?: () => void;
+	onChange?: (date: string) => void;
+	placeholder?: string;
 	required?: boolean;
-	validations?: Function[];
+	validations?: ((value: any) => string | undefined)[];
 }
 
 const DatePicker: React.FC<IProps> = ({
 	badgeClassName,
+	className,
+	id,
+	name,
+	dateFormat = 'MM/dd/yyyy',
 	groupStyle,
 	helper,
 	label,
+	onBlur,
+	onChange,
+	placeholder,
+	required,
 	validations = [],
-	...props
 }) => {
-	if (props.required) {
+	if (required) {
 		validations = validations
-			? [...validations, (value: string) => required(value)]
-			: [(value: string) => required(value)];
+			? [...validations, (value: string) => requiredVaidation(value)]
+			: [(value: string) => requiredVaidation(value)];
 	}
 
-	const [field, meta] = useField({
-		...props,
+	const [field, meta, helpers] = useField({
+		className,
+		id,
+		name,
+		required,
 		validate: (value) => validate(validations, value),
 	});
 
@@ -51,6 +69,22 @@ const DatePicker: React.FC<IProps> = ({
 		return;
 	};
 
+	const handleBlur = () => {
+		helpers.setTouched(true);
+
+		if (onBlur) {
+			onBlur();
+		}
+	};
+
+	const handleChange = (value: string) => {
+		helpers.setValue(value);
+
+		if (onChange) {
+			onChange(value);
+		}
+	};
+
 	return (
 		<ClayForm.Group
 			className={classNames('w-100', getStyleStatus(), groupStyle)}
@@ -58,16 +92,21 @@ const DatePicker: React.FC<IProps> = ({
 			<label>
 				{label}
 
-				{props.required && (
+				{required && (
 					<span className="inline-item-after reference-mark text-warning">
 						<ClayIcon symbol="asterisk" />
 					</span>
 				)}
-
-				<ClayDatePicker {...field} {...props} />
+				<ClayDatePicker
+					dateFormat={dateFormat}
+					onBlur={handleBlur}
+					onChange={handleChange}
+					placeholder={placeholder}
+					value={field.value}
+				/>
 			</label>
 
-			{meta.touched && meta.error && props.required && (
+			{meta.touched && meta.error && required && (
 				<Badge badgeClassName={badgeClassName}>
 					<span className="pl-1">{meta.error}</span>
 				</Badge>

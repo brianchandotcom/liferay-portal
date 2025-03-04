@@ -29,14 +29,16 @@ export interface IAccountSubscriptionGroup {
 
 export interface IBusinessEvent {
 	associatedTickets?: any;
-	currentLiferayVersion?: {name: string};
+	currentLiferayVersion?: string;
 	details?: string;
-	eventStatus?: {name: string};
-	eventType?: {name: string};
+	eventStatus?: string;
+	eventType?: string;
 	id?: number;
 	name?: string;
-	newLiferayVersion?: {name: string};
+	newLiferayVersion?: string;
+	targetGoLiveDate?: string;
 	targetGoLiveDateTime?: Date | string;
+	targetGoLiveTime?: string;
 }
 
 export interface IKoroneikiAccount {

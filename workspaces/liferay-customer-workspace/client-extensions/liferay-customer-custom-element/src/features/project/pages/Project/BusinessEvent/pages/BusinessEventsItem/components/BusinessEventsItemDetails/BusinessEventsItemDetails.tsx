@@ -15,38 +15,38 @@ interface IProps {
 const BusinessEventsItemDetails = ({businessEvent}: IProps) => {
 	return (
 		<div className="event-detail-container">
-			{businessEvent?.eventType?.name && (
+			{businessEvent?.eventType && (
 				<div className="event-detail-item mb-4">
 					<div className="event-detail-title mb-1 text-neutral-8">
 						{i18n.translate('event-type')}
 					</div>
 
 					<div className="d-inline-block event-detail-value font-weight-semi-bold rounded text-neutral-9">
-						{businessEvent?.eventType.name}
+						{businessEvent?.eventType}
 					</div>
 				</div>
 			)}
 
-			{businessEvent?.currentLiferayVersion?.name && (
+			{businessEvent?.currentLiferayVersion && (
 				<div className="event-detail-item mb-4">
 					<div className="event-detail-title mb-1 text-neutral-8">
 						{i18n.translate('current-version')}
 					</div>
 
 					<div className="d-inline-block event-detail-value font-weight-semi-bold rounded text-neutral-9">
-						{businessEvent?.currentLiferayVersion.name}
+						{businessEvent?.currentLiferayVersion}
 					</div>
 				</div>
 			)}
 
-			{businessEvent?.newLiferayVersion?.name && (
+			{businessEvent?.newLiferayVersion && (
 				<div className="event-detail-item mb-4">
 					<div className="event-detail-title mb-1 text-neutral-8">
 						{i18n.translate('new-version')}
 					</div>
 
 					<div className="d-inline-block event-detail-value font-weight-semi-bold rounded text-neutral-9">
-						{businessEvent?.newLiferayVersion.name}
+						{businessEvent?.newLiferayVersion}
 					</div>
 				</div>
 			)}

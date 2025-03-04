@@ -138,9 +138,9 @@ const BusinessEventsItem = () => {
 
 			<div>
 				<div
-					className={`align-items-center font-weight-semi-bold be-status be-status-${businessEvent?.eventStatus?.name.toLowerCase()} mb-1 d-inline px-2 py-1`}
+					className={`align-items-center font-weight-semi-bold be-status be-status-${businessEvent?.eventStatus?.toLowerCase()} mb-1 d-inline px-2 py-1`}
 				>
-					{businessEvent?.eventStatus?.name}
+					{businessEvent?.eventStatus}
 				</div>
 
 				<div className="d-flex justify-content-between mb-4 mt-2">

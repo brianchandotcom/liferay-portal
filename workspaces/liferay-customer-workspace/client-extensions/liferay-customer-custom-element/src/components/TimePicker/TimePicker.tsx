@@ -3,44 +3,60 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {Badge} from '..';
 import ClayForm from '@clayui/form';
 import ClayIcon from '@clayui/icon';
+import ClayTimePicker from '@clayui/time-picker';
+import {Input as TimeInput} from '@clayui/time-picker/lib';
 import classNames from 'classnames';
 import {useField} from 'formik';
-import {required, validate} from '~/utils/validations.form';
+import {
+	required as requiredVaidation,
+	validate,
+} from '~/utils/validations.form';
 
 import './TimePicker.css';
-
-import ClayTimePicker from '@clayui/time-picker';
+import Badge from '../Badge';
 
 interface IProps {
 	badgeClassName?: string;
+	className?: string;
 	groupStyle?: string;
 	helper?: string;
-	label: string;
+	id?: string;
+	label?: string;
 	name: string;
+	onBlur?: () => void;
+	onChange?: (date: TimeInput) => void;
 	required?: boolean;
-	validations?: Function[];
+	validations?: ((value: any) => string | undefined)[];
 }
 
 const TimePicker: React.FC<IProps> = ({
 	badgeClassName,
+	className,
 	groupStyle,
 	helper,
+	id,
 	label,
+	name,
+	onBlur,
+	onChange,
+	required,
 	validations = [],
-	...props
 }) => {
-	if (props.required) {
+	if (required) {
 		validations = validations
-			? [...validations, (value: string) => required(value)]
-			: [(value: string) => required(value)];
+			? [...validations, (value: string) => requiredVaidation(value)]
+			: [(value: string) => requiredVaidation(value)];
 	}
 
-	const [field, meta] = useField({
-		...props,
-		validate: (value) => validate(validations, value),
+	const [field, meta, helpers] = useField<TimeInput>({
+		className,
+		id,
+		name,
+		required,
+		validate: (value) =>
+			validate(validations, `${value?.hours}:${value?.minutes}`),
 	});
 
 	const getStyleStatus = () => {
@@ -51,6 +67,26 @@ const TimePicker: React.FC<IProps> = ({
 		return;
 	};
 
+	const handleBlur = () => {
+		helpers.setTouched(true);
+
+		if (onBlur) {
+			onBlur();
+		}
+	};
+
+	const handleChange = (value: TimeInput) => {
+		helpers.setValue(value);
+
+		if (onChange) {
+			onChange(value);
+		}
+	};
+	const defaultValue: TimeInput = {
+		hours: '--',
+		minutes: '--',
+	};
+
 	return (
 		<ClayForm.Group
 			className={classNames('w-100', getStyleStatus(), groupStyle)}
@@ -58,16 +94,21 @@ const TimePicker: React.FC<IProps> = ({
 			<label className="date-picker">
 				{label}
 
-				{props.required && (
+				{required && (
 					<span className="inline-item-after reference-mark text-warning">
 						<ClayIcon symbol="asterisk" />
 					</span>
 				)}
 
-				<ClayTimePicker {...field} {...props} />
+				<ClayTimePicker
+					onBlur={handleBlur}
+					onChange={handleChange}
+					use12Hours={false}
+					value={field.value || defaultValue}
+				/>
 			</label>
 
-			{meta.touched && meta.error && props.required && (
+			{meta.touched && meta.error && required && (
 				<Badge badgeClassName={badgeClassName}>
 					<span className="pl-1">{meta.error}</span>
 				</Badge>

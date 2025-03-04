@@ -56,7 +56,7 @@ export function LocalizationSelect({
 
 			setTranslations((previousState) => ({
 				...previousState,
-				...((defaultLanguageId === languageId || translatedInputs) && {
+				...(translatedInputs && {
 					[label]: {
 						total: localizableInputs,
 						translated: translatedInputs,

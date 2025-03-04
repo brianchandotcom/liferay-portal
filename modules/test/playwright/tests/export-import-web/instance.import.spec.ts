@@ -41,10 +41,10 @@ export const test = mergeTests(
 	}),
 	isolatedSiteTest,
 	loginTest(),
+	objectPagesTest,
 	pageEditorPagesTest,
 	pageTemplatesPagesTest,
 	stagingPageTest,
-	objectPagesTest,
 	wikiPagesTest
 );
 
@@ -783,7 +783,7 @@ test(
 
 		await performLogin(page, 'test');
 
-		await companyExportImportPage.import(exportFilePath, false, true);
+		await companyExportImportPage.import(exportFilePath, false, null, true);
 
 		await applicationsMenuPage.goToObjectDefinition(
 			newObjectDefinition.name

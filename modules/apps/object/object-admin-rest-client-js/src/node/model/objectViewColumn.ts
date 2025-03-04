@@ -11,7 +11,7 @@
 
 	export class ObjectViewColumn {
 			'id'?: number;
-			'label'?: { [key: string]: string; };
+			'label'?: {[key: string]: string;};
 			'objectFieldName'?: string;
 			'priority'?: number;
 
@@ -30,7 +30,7 @@
 		{
 			baseName: "label",
 			name: "label",
-			type: "{ [key: string]: string; }",
+			type: "{[key: string]: string;}",
 		},
 		{
 			baseName: "objectFieldName",

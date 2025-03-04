@@ -12,7 +12,7 @@
  */
 
 	export class PageObjectDefinition {
-			'actions'?: { [key: string]: { [key: string]: string; }; };
+			'actions'?: {[key: string]: {[key: string]: string;};};
 			'facets'?: Array<Facet>;
 			'items'?: Array<ObjectDefinition>;
 			'lastPage'?: number;
@@ -30,7 +30,7 @@
 		{
 			baseName: "actions",
 			name: "actions",
-			type: "{ [key: string]: { [key: string]: string; }; }",
+			type: "{[key: string]: {[key: string]: string;};}",
 		},
 		{
 			baseName: "facets",

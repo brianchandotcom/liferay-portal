@@ -11,7 +11,7 @@
  */
 
 	export class CTEntry {
-			'actions'?: { [key: string]: { [key: string]: string; }; };
+			'actions'?: {[key: string]: {[key: string]: string;};};
 			'changeType'?: string;
 			'ctCollectionId'?: number;
 			'ctCollectionName'?: string;
@@ -43,7 +43,7 @@
 		{
 			baseName: "actions",
 			name: "actions",
-			type: "{ [key: string]: { [key: string]: string; }; }",
+			type: "{[key: string]: {[key: string]: string;};}",
 		},
 		{
 			baseName: "changeType",

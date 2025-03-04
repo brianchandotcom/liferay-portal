@@ -11,12 +11,12 @@
  */
 
 	export class ObjectFolder {
-			'actions'?: { [key: string]: { [key: string]: string; }; };
+			'actions'?: {[key: string]: {[key: string]: string;};};
 			'dateCreated'?: Date;
 			'dateModified'?: Date;
 			'externalReferenceCode'?: string;
 			'id'?: number;
-			'label'?: { [key: string]: string; };
+			'label'?: {[key: string]: string;};
 			'name'?: string;
 			'objectFolderItems'?: Array<ObjectFolderItem>;
 
@@ -30,7 +30,7 @@
 		{
 			baseName: "actions",
 			name: "actions",
-			type: "{ [key: string]: { [key: string]: string; }; }",
+			type: "{[key: string]: {[key: string]: string;};}",
 		},
 		{
 			baseName: "dateCreated",
@@ -55,7 +55,7 @@
 		{
 			baseName: "label",
 			name: "label",
-			type: "{ [key: string]: string; }",
+			type: "{[key: string]: string;}",
 		},
 		{
 			baseName: "name",

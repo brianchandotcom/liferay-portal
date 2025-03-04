@@ -4,8 +4,6 @@
 		padding-top: $pageToolbarHeight + 40px;
 
 		.layout-section-main-shift {
-			margin-left: auto;
-			margin-right: calc(50% - #{$layoutSectionMainMaxWidth} / 2);
 			max-width: $layoutSectionMainMaxWidth;
 			transition: margin-right ease 0.2s;
 		}

@@ -71,16 +71,30 @@ export class StructureBuilderPage {
 		});
 	}
 
-	async changeStructureLabel(label: string) {
-		await this.labelInput.fill(label);
+	async changeFieldSettings({name}: {name?: string}) {
+		if (name) {
+			await this.page.getByLabel('Field Name').fill(name);
 
-		await this.page.getByRole('tab', {name: 'General'}).click();
+			await this.page.getByRole('tab', {name: 'General'}).click();
+		}
 	}
 
-	async changeStructureName(name: string) {
-		await this.nameInput.fill(name);
+	async changeStructureSettings({
+		label,
+		name,
+	}: {
+		label?: string;
+		name?: string;
+	}) {
+		if (label) {
+			await this.labelInput.fill(label);
+			await this.page.getByRole('tab', {name: 'General'}).click();
+		}
 
-		await this.page.getByRole('tab', {name: 'General'}).click();
+		if (name) {
+			await this.nameInput.fill(name);
+			await this.page.getByRole('tab', {name: 'General'}).click();
+		}
 	}
 
 	async deleteField({label, nth = 0}: {label: string; nth?: number}) {
@@ -142,7 +156,8 @@ export class StructureBuilderPage {
 			this.page.waitForResponse(
 				(response) =>
 					response.url().includes('object-definitions') &&
-					response.status() === 200
+					response.status() === 200,
+				{timeout: 5000}
 			),
 			await save(),
 		]);
@@ -150,5 +165,15 @@ export class StructureBuilderPage {
 		const {id} = await response.json();
 
 		return {id};
+	}
+
+	async selectField({label, nth}: {label: string; nth?: number}) {
+		await clickAndExpectToBeVisible({
+			target: this.page.locator('.breadcrumb-link', {hasText: label}),
+			trigger: this.page
+				.locator('.treeview-item')
+				.getByLabel(label, {exact: true})
+				.nth(nth),
+		});
 	}
 }

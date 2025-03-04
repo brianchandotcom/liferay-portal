@@ -26,8 +26,10 @@ test(
 
 		const label = `Structure${getRandomInt()}`;
 
-		await structureBuilderPage.changeStructureLabel(label);
-		await structureBuilderPage.changeStructureName(label);
+		await structureBuilderPage.changeStructureSettings({
+			label,
+			name: label,
+		});
 
 		// Save structure
 
@@ -60,6 +62,12 @@ test(
 			page.locator('.management-bar').getByText(label)
 		).toBeVisible();
 
+		// Check another field with same name can not be added
+
+		await structureBuilderPage.addField('Text');
+		await structureBuilderPage.selectField({label: 'Text', nth: 1});
+		await structureBuilderPage.changeFieldSettings({name: 'text'});
+
 		// Delete structure
 
 		await structureBuilderPage.deleteStructure(id);
@@ -79,8 +87,10 @@ test(
 
 		const label = `Structure${getRandomInt()}`;
 
-		await structureBuilderPage.changeStructureLabel(label);
-		await structureBuilderPage.changeStructureName(label);
+		await structureBuilderPage.changeStructureSettings({
+			label,
+			name: label,
+		});
 
 		// Add a field of each type
 
@@ -91,6 +101,7 @@ test(
 		// Save and publish the structure
 
 		const {id} = await structureBuilderPage.saveStructure();
+
 		await structureBuilderPage.publishStructure();
 
 		// Delete structure
@@ -112,8 +123,10 @@ test(
 
 		const label = `Structure${getRandomInt()}`;
 
-		await structureBuilderPage.changeStructureLabel(label);
-		await structureBuilderPage.changeStructureName(label);
+		await structureBuilderPage.changeStructureSettings({
+			label,
+			name: label,
+		});
 
 		// Add four fields
 

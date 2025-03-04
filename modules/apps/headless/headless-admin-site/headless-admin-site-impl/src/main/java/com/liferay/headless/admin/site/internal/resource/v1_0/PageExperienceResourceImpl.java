@@ -263,6 +263,16 @@ public class PageExperienceResourceImpl extends BasePageExperienceResourceImpl {
 			PageElement.Type.ROW, new RowLayoutStructureItemImporter());
 	}
 
+	@Override
+	protected void preparePatch(
+		PageExperience pageExperience, PageExperience existingPageExperience) {
+
+		if (pageExperience.getPageElements() != null) {
+			existingPageExperience.setPageElements(
+				pageExperience::getPageElements);
+		}
+	}
+
 	private void _addLayoutStructureItem(
 			LayoutStructure layoutStructure,
 			LayoutStructureItemImporterContext

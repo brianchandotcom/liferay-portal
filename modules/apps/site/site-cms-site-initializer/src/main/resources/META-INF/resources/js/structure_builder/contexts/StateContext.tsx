@@ -78,6 +78,7 @@ type SetSelection = {
 
 type UpdateFieldAction = {
 	erc?: string;
+	indexableConfig?: Field['indexableConfig'];
 	label?: Liferay.Language.LocalizedValue<string>;
 	localized?: boolean;
 	name: string;
@@ -193,7 +194,15 @@ function reducer(state: State, action: Action): State {
 			return {...state, selection};
 		}
 		case 'update-field': {
-			const {erc, label, localized, name, newName, required} = action;
+			const {
+				erc,
+				indexableConfig,
+				label,
+				localized,
+				name,
+				newName,
+				required,
+			} = action;
 
 			const nextFields = new Map(state.fields);
 
@@ -206,6 +215,7 @@ function reducer(state: State, action: Action): State {
 			const nextField = {
 				...field,
 				erc: erc ?? field.erc,
+				indexableConfig: indexableConfig ?? field.indexableConfig,
 				label: label ?? field.label,
 				localized: localized ?? field.localized,
 				name: newName ?? field.name,

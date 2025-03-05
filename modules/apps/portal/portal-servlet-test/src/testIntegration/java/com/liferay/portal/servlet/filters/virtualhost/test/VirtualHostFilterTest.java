@@ -137,20 +137,30 @@ public class VirtualHostFilterTest {
 
 			_mockHttpServletRequest.setRequestURI(StringPool.SLASH);
 
-			_virtualHostFilter.init(_mockFilterConfig);
-
-			ReflectionTestUtil.invoke(
-				_virtualHostFilter, "processFilter",
-				new Class<?>[] {
-					HttpServletRequest.class, HttpServletResponse.class,
-					FilterChain.class
-				},
-				_mockHttpServletRequest, _mockHttpServletResponse,
-				_mockFilterChain);
+			Assert.assertNotEquals(
+				StringPool.SLASH,
+				_getForwardedURL(
+					_mockHttpServletRequest, _mockHttpServletResponse,
+					_mockFilterChain));
 		}
+	}
 
-		Assert.assertNotEquals(
-			StringPool.SLASH, _mockHttpServletResponse.getForwardedUrl());
+	private String _getForwardedURL(
+		MockHttpServletRequest mockHttpServletRequest,
+		MockHttpServletResponse mockHttpServletResponse,
+		MockFilterChain filterChain) {
+
+		_virtualHostFilter.init(_mockFilterConfig);
+
+		ReflectionTestUtil.invoke(
+			_virtualHostFilter, "processFilter",
+			new Class<?>[] {
+				HttpServletRequest.class, HttpServletResponse.class,
+				FilterChain.class
+			},
+			mockHttpServletRequest, mockHttpServletResponse, filterChain);
+
+		return mockHttpServletResponse.getForwardedUrl();
 	}
 
 	private String _getLastPath(

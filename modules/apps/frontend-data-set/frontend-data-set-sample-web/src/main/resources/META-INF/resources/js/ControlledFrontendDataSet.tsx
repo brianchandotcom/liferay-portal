@@ -7,7 +7,19 @@ import ClayButton from '@clayui/button';
 import {FrontendDataSet} from '@liferay/frontend-data-set-web';
 import React, {useState} from 'react';
 
-const ControlledFrontendDataSet = ({items, ...otherProps}) => {
+interface IUser {
+	emailAddress: string;
+	firstName: string;
+	id: string;
+	lastName: string;
+}
+
+const ControlledFrontendDataSet = ({
+	items,
+	...otherProps
+}: {
+	items: IUser[];
+}) => {
 	const [users, setUsers] = useState(items);
 
 	return (
@@ -33,7 +45,8 @@ const ControlledFrontendDataSet = ({items, ...otherProps}) => {
 			>
 				{Liferay.Language.get('add-user')}
 			</ClayButton>
-			<FrontendDataSet items={users} {...otherProps} />
+
+			<FrontendDataSet id="" items={users} views={[]} {...otherProps} />
 		</>
 	);
 };

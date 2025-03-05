@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {ClayLabel} from '@clayui/label';
 import {ModalStatus} from 'frontend-js-components-web';
 
 import {TRenderer} from './FrontendDataSetContext';
@@ -73,6 +74,12 @@ type TDelta = {
 	href?: string;
 	label: number;
 };
+
+export type DisplayType = Array<
+	React.ComponentProps<typeof ClayLabel.displayType> & {
+		value: string;
+	}
+>;
 
 export interface IInlineEditingSettings {
 	alwaysOn: boolean;
@@ -156,9 +163,30 @@ export interface ITableSchema {
 	fields: Array<IField>;
 }
 
+export interface ICardLabelBase {
+	value: string;
+}
+
+export interface ICardLabelWithDisplayType extends ICardLabelBase {
+	displayKey?: never;
+	displayMapping?: never;
+	displayType: DisplayType;
+}
+
+export interface ICardLabelWithDisplayMapping extends ICardLabelBase {
+	displayKey: string;
+	displayMapping: Record<string, DisplayType>;
+	displayType?: never;
+}
+
+export type ICardLabelSchema =
+	| ICardLabelWithDisplayType
+	| ICardLabelWithDisplayMapping;
+
 export interface ICardSchema {
 	description: string;
 	image?: string;
+	labels?: ICardLabelSchema[];
 	link?: string;
 	sticker?: string;
 	symbol: string;

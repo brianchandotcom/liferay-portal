@@ -30,6 +30,7 @@ type TDocument = {
 };
 
 type TDocumentFolder = {
+	description?: string;
 	externalReferenceCode?: string;
 	id?: number;
 	name?: string;
@@ -348,6 +349,7 @@ export class HeadlessDeliveryApiHelper {
 		documentFolder?: TDocumentFolder
 	) {
 		documentFolder = {
+			description: getRandomString(),
 			externalReferenceCode: getRandomString(),
 			name: getRandomString(),
 			viewableBy: 'Anyone',

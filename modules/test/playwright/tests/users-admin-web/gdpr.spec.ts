@@ -1261,3 +1261,118 @@ testAdmin(
 		await expect(exportUserDataPage.wikiStatus).not.toBeVisible();
 	}
 );
+
+testAdmin(
+	'Documents and Media entries display details in info panel during personal data deletion',
+	{tag: '@LPD-50608'},
+	async ({
+		apiHelpers,
+		page,
+		personalDataErasurePage,
+		usersAndOrganizationsPage,
+	}) => {
+		test.setTimeout(120000);
+
+		page.on('dialog', (dialog) => {
+			dialog.accept();
+		});
+
+		const userAccount =
+			await apiHelpers.headlessAdminUser.postUserAccount();
+
+		userData[userAccount.alternateName] = {
+			name: userAccount.givenName,
+			password: 'test',
+			surname: userAccount.familyName,
+		};
+
+		const role =
+			await apiHelpers.headlessAdminUser.getRoleByName('Administrator');
+
+		await apiHelpers.headlessAdminUser.postRoleByExternalReferenceCodeUserAccountAssociation(
+			role.externalReferenceCode,
+			userAccount.id
+		);
+
+		await performLogout(page);
+		await performLoginViaApi(page, userAccount.alternateName);
+
+		const site = await apiHelpers.headlessSite.createSite({
+			name: 'Site' + getRandomInt(),
+		});
+
+		apiHelpers.data.push({id: site.id, type: 'site'});
+
+		const folder = await apiHelpers.headlessDelivery.postDocumentFolder(
+			site.id
+		);
+
+		const document = await apiHelpers.headlessDelivery.postDocument(
+			site.id,
+			createReadStream(
+				path.join(__dirname, '/dependencies/attachment.txt')
+			),
+			{
+				description: getRandomString(),
+				fileName: 'attachment.txt',
+				title: getRandomString(),
+			}
+		);
+
+		await performLogout(page);
+		await performLoginViaApi(page, 'test');
+
+		await usersAndOrganizationsPage.goToUsers(false);
+
+		await (
+			await usersAndOrganizationsPage.usersTableRowActions(
+				userAccount.alternateName
+			)
+		).click();
+		await usersAndOrganizationsPage.deletePersonalDataMenuItem.click();
+
+		await expect(
+			personalDataErasurePage.selectAllItemsOnPageCheckbox
+		).toBeVisible();
+
+		await personalDataErasurePage.documentsAndMediaRadioButton.check();
+
+		await expect(personalDataErasurePage.dlFileEntryText).toBeVisible();
+		await expect(personalDataErasurePage.dlFolderText).toBeVisible();
+
+		await (
+			await personalDataErasurePage.userAssociatedDataTableRowCheckBox(
+				folder.name
+			)
+		).check();
+		await personalDataErasurePage.infoPanelButton.click();
+
+		await expect(personalDataErasurePage.infoPanelSidebar).toContainText(
+			folder.name
+		);
+		await expect(personalDataErasurePage.infoPanelSidebar).toContainText(
+			folder.description
+		);
+
+		await (
+			await personalDataErasurePage.userAssociatedDataTableRowCheckBox(
+				folder.name
+			)
+		).uncheck();
+		await (
+			await personalDataErasurePage.userAssociatedDataTableRowCheckBox(
+				document.fileName
+			)
+		).check();
+
+		await expect(personalDataErasurePage.infoPanelSidebar).toContainText(
+			document.title
+		);
+		await expect(personalDataErasurePage.infoPanelSidebar).toContainText(
+			document.description
+		);
+		await expect(personalDataErasurePage.infoPanelSidebar).toContainText(
+			'txt'
+		);
+	}
+);

@@ -17,9 +17,12 @@ export class PersonalDataErasurePage {
 	readonly applicationsMenuPage: ApplicationsMenuPage;
 	readonly blogsRadioButton: Locator;
 	readonly deleteMenuItem: Locator;
+	readonly dlFileEntryText: Locator;
+	readonly dlFolderText: Locator;
 	readonly documentsAndMediaRadioButton: Locator;
 	readonly infoPanelButton: Locator;
 	readonly infoPanelEllipsisButton: (name: string) => Locator;
+	readonly infoPanelSidebar: Locator;
 	readonly journalArticleCheckBox: (
 		articleId: string,
 		articleUrlTitle: string,
@@ -65,6 +68,8 @@ export class PersonalDataErasurePage {
 			'input[type="radio"][value="com.liferay.blogs.uad"]'
 		);
 		this.deleteMenuItem = page.getByRole('menuitem', {name: 'Delete'});
+		this.dlFileEntryText = page.getByText('DLFILEENTRY');
+		this.dlFolderText = page.getByText('DLFOLDER');
 		this.documentsAndMediaRadioButton = page.locator(
 			'input[type="radio"][value="com.liferay.document.library.uad"]'
 		);
@@ -77,6 +82,9 @@ export class PersonalDataErasurePage {
 				.filter({hasText: name})
 				.locator('.component-action svg.lexicon-icon-ellipsis-v')
 				.first();
+		this.infoPanelSidebar = page.locator(
+			'#_com_liferay_user_associated_data_web_portlet_UserAssociatedData_sidebarPanel'
+		);
 		this.journalArticleCheckBox = (
 			articleId: string,
 			articleUrlTitle: string,

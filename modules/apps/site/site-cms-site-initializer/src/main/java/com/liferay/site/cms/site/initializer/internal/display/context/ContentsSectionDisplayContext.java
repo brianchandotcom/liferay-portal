@@ -18,11 +18,9 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.site.cms.site.initializer.internal.configuration.CMSSiteInitializerConfiguration;
 
@@ -49,9 +47,6 @@ public class ContentsSectionDisplayContext extends BaseSectionDisplayContext {
 		_language = language;
 		_objectDefinitionService = objectDefinitionService;
 		_objectFolderLocalService = objectFolderLocalService;
-
-		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
 	}
 
 	@Override
@@ -80,11 +75,11 @@ public class ContentsSectionDisplayContext extends BaseSectionDisplayContext {
 					_objectFolderLocalService.
 						fetchObjectFolderByExternalReferenceCode(
 							"L_CMS_CONTENT_STRUCTURES",
-							_themeDisplay.getCompanyId());
+							themeDisplay.getCompanyId());
 
 				for (ObjectDefinition objectDefinition :
 						_objectDefinitionService.getObjectDefinitions(
-							_themeDisplay.getCompanyId(),
+							themeDisplay.getCompanyId(),
 							new long[] {objectFolder.getObjectFolderId()}, true,
 							true, ObjectDefinitionConstants.SCOPE_SITE,
 							WorkflowConstants.STATUS_APPROVED,
@@ -97,7 +92,7 @@ public class ContentsSectionDisplayContext extends BaseSectionDisplayContext {
 							dropdownItem.setIcon("forms");
 							dropdownItem.setLabel(
 								objectDefinition.getLabel(
-									_themeDisplay.getLocale()));
+									themeDisplay.getLocale()));
 						});
 				}
 			}
@@ -130,7 +125,7 @@ public class ContentsSectionDisplayContext extends BaseSectionDisplayContext {
 				).setMVCPath(
 					"/edit_permissions.jsp"
 				).setRedirect(
-					_themeDisplay.getURLCurrent()
+					themeDisplay.getURLCurrent()
 				).setParameter(
 					"modelResource", "{entryClassName}"
 				).setParameter(
@@ -154,10 +149,10 @@ public class ContentsSectionDisplayContext extends BaseSectionDisplayContext {
 	private String _getAddStructuredContentItemURL() {
 		StringBundler sb = new StringBundler(5);
 
-		sb.append(_themeDisplay.getPortalURL());
-		sb.append(_themeDisplay.getPathMain());
+		sb.append(themeDisplay.getPortalURL());
+		sb.append(themeDisplay.getPathMain());
 		sb.append("/cms/add_structured_content_item?groupId=");
-		sb.append(_themeDisplay.getScopeGroupId());
+		sb.append(themeDisplay.getScopeGroupId());
 		sb.append("&objectDefinitionId=");
 
 		return sb.toString();
@@ -166,6 +161,5 @@ public class ContentsSectionDisplayContext extends BaseSectionDisplayContext {
 	private final Language _language;
 	private final ObjectDefinitionService _objectDefinitionService;
 	private final ObjectFolderLocalService _objectFolderLocalService;
-	private final ThemeDisplay _themeDisplay;
 
 }

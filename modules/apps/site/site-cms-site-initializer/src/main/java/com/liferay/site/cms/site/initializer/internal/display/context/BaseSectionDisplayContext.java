@@ -10,6 +10,8 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.cms.site.initializer.internal.configuration.CMSSiteInitializerConfiguration;
 
 import java.util.ArrayList;
@@ -30,6 +32,9 @@ public abstract class BaseSectionDisplayContext {
 
 		this.cmsSiteInitializerConfiguration = cmsSiteInitializerConfiguration;
 		this.httpServletRequest = httpServletRequest;
+
+		themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
 	public String getAPIURL() {
@@ -74,5 +79,6 @@ public abstract class BaseSectionDisplayContext {
 	protected final CMSSiteInitializerConfiguration
 		cmsSiteInitializerConfiguration;
 	protected final HttpServletRequest httpServletRequest;
+	protected final ThemeDisplay themeDisplay;
 
 }

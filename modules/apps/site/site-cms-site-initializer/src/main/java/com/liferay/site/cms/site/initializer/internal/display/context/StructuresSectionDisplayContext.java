@@ -13,10 +13,8 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.cms.site.initializer.internal.configuration.CMSSiteInitializerConfiguration;
 
 import javax.servlet.http.HttpServletRequest;
@@ -58,10 +56,6 @@ public class StructuresSectionDisplayContext extends BaseSectionDisplayContext {
 	}
 
 	private String _getHref(String objectFolderExternalReferenceCode) {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		try {
 			return HttpComponentsUtil.addParameters(
 				PortalUtil.getLayoutFullURL(

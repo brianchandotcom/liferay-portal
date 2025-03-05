@@ -99,6 +99,7 @@ function SecondSectionComponent({field}: {field: Field}) {
 								settings: {
 									...textField.settings,
 									maxLength: parseInt(value, 10),
+									showCounter: true,
 								},
 								type: 'update-field',
 							});

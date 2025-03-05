@@ -84,6 +84,7 @@ public class VirtualHostFilterTest {
 	@After
 	public void tearDown() {
 		_portalUtil.setPortal(_portal);
+		_virtualHostFilter.destroy();
 	}
 
 	@Test

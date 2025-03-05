@@ -14,6 +14,16 @@ type GetFieldComponents = {
 export default function getFieldComponents(
 	fieldType: FieldType
 ): GetFieldComponents {
+	if (fieldType === 'text') {
+		const {FirstSectionComponent, SecondSectionComponent} =
+			getTextFieldComponents();
+
+		return {
+			FirstSectionComponent: FirstSectionComponent ?? (() => null),
+			SecondSectionComponent: SecondSectionComponent ?? (() => null),
+		};
+	}
+
 	return {
 		FirstSectionComponent: () => null,
 		SecondSectionComponent: () => null,

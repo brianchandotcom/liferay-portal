@@ -3659,6 +3659,12 @@ public class JenkinsResultsParserUtil {
 			return _ciNode;
 		}
 
+		if (!isNullOrEmpty(System.getenv("JENKINS_HOME"))) {
+			_ciNode = true;
+
+			return _ciNode;
+		}
+
 		String hostName = getHostName("");
 
 		try {

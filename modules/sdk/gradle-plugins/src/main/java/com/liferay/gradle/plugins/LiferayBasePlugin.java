@@ -225,6 +225,9 @@ public class LiferayBasePlugin implements Plugin<Project> {
 						project, PORTAL_CONFIGURATION_NAME, "javax.activation",
 						"activation", "1.1");
 					GradleUtil.addDependency(
+						project, PORTAL_CONFIGURATION_NAME, "javax.portlet",
+						"portlet-api", "3.0.1");
+					GradleUtil.addDependency(
 						project, PORTAL_CONFIGURATION_NAME, "javax.servlet",
 						"javax.servlet-api", "3.0.1");
 					GradleUtil.addDependency(

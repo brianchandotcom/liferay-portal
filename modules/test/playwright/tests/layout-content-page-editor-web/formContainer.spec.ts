@@ -3522,8 +3522,8 @@ test.describe('Form Localization', () => {
 							required: false,
 						},
 						{
-							DBType: ObjectField.DBTypeEnum.Integer,
-							businessType: ObjectField.BusinessTypeEnum.Integer,
+							DBType: 'Integer',
+							businessType: 'Integer',
 							externalReferenceCode: 'idealTemperatureERC',
 							indexed: true,
 							indexedAsKeyword: false,
@@ -3536,7 +3536,7 @@ test.describe('Form Localization', () => {
 							required: false,
 						},
 						{
-							DBType: ObjectField.DBTypeEnum.DateTime,
+							DBType: 'DateTime',
 							externalReferenceCode: 'lastWateringERC',
 							indexed: true,
 							indexedAsKeyword: false,
@@ -3553,7 +3553,7 @@ test.describe('Form Localization', () => {
 							],
 						},
 						{
-							DBType: ObjectField.DBTypeEnum.Date,
+							DBType: 'Date',
 							externalReferenceCode: 'plantingDateERC',
 							indexed: true,
 							indexedAsKeyword: false,

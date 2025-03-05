@@ -221,19 +221,19 @@ public class CSPComplianceCheck extends BaseTagAttributesCheck {
 				int lineNumber = getLineNumber(content, x);
 
 				if (_illegalTagAuiReplacements.contains(tagName)) {
-					if (fileName.endsWith(".jsp") ||
-						fileName.endsWith(".jspf") ||
-						fileName.endsWith(".jspx")) {
+					if (!fileName.endsWith(".jsp") &&
+						!fileName.endsWith(".jspf") &&
+						!fileName.endsWith(".jspx")) {
 
-						addMessage(
-							fileName,
-							StringBundler.concat(
-								"Use <aui:", tagName, "> tag instead of <",
-								tagName, ">, see LPD-18227"),
-							lineNumber);
+						continue;
 					}
 
-					continue;
+					addMessage(
+						fileName,
+						StringBundler.concat(
+							"Use <aui:", tagName, "> tag instead of <", tagName,
+							">, see LPD-18227"),
+						lineNumber);
 				}
 
 				addMessage(

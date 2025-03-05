@@ -163,15 +163,15 @@ public class ContentPageEditorDisplayContextTest {
 		StyleBookEntry styleBookEntry = Mockito.mock(StyleBookEntry.class);
 
 		Mockito.when(
-			styleBookEntry.getThemeId()
-		).thenReturn(
-			themeId
-		);
-
-		Mockito.when(
 			styleBookEntry.getName()
 		).thenReturn(
 			name
+		);
+
+		Mockito.when(
+			styleBookEntry.getThemeId()
+		).thenReturn(
+			themeId
 		);
 
 		return styleBookEntry;

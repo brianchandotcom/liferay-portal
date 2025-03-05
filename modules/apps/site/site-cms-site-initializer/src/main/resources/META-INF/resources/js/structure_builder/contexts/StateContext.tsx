@@ -84,6 +84,7 @@ type UpdateFieldAction = {
 	name: string;
 	newName?: string;
 	required?: boolean;
+	settings?: Field['settings'];
 	type: 'update-field';
 };
 
@@ -202,6 +203,7 @@ function reducer(state: State, action: Action): State {
 				name,
 				newName,
 				required,
+				settings,
 			} = action;
 
 			const nextFields = new Map(state.fields);
@@ -220,6 +222,7 @@ function reducer(state: State, action: Action): State {
 				localized: localized ?? field.localized,
 				name: newName ?? field.name,
 				required: required ?? field.required,
+				settings: settings ?? field.settings,
 			};
 
 			if (newName) {

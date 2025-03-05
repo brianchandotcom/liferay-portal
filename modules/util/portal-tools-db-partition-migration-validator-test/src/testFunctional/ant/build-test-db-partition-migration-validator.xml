@@ -29,6 +29,7 @@
 	</macrodef>
 
 	<macrodef name="run-script-extraction">
+		<attribute default="" name="database.company.id" />
 		<attribute default="lportal" name="database.schema.name" />
 		<attribute default="" name="database.type" />
 
@@ -39,6 +40,8 @@
 					<exec dir="${liferay.home}/tools/portal-tools-db-partition-migration-validator" executable="/bin/bash" failonerror="false" output="db-partition-migration-validator.log">
 						<arg value="${liferay.home}/tools/portal-tools-db-partition-migration-validator/db_partition_migration_validator.sh" />
 						<arg value="export" />
+						<arg value="--company-id" />
+						<arg value="${database.company.id}" />
 						<arg value="--jdbc-url" />
 						<arg value="${database.mysql.url}" />
 						<arg value="--password" />
@@ -59,6 +62,8 @@
 							<exec dir="${liferay.home}/tools/portal-tools-db-partition-migration-validator" executable="/bin/bash" failonerror="false" output="db-partition-migration-validator.log">
 								<arg value="${liferay.home}/tools/portal-tools-db-partition-migration-validator/db_partition_migration_validator.sh" />
 								<arg value="export" />
+								<arg value="--company-id" />
+								<arg value="${database.company.id}" />
 								<arg value="--jdbc-url" />
 								<arg value="jdbc:postgresql://${database.postgresql.host}/${database.schema.name}" />
 								<arg value="--password" />
@@ -71,6 +76,8 @@
 							<exec dir="${liferay.home}/tools/portal-tools-db-partition-migration-validator" executable="/bin/bash" failonerror="false" output="db-partition-migration-validator.log">
 								<arg value="${liferay.home}/tools/portal-tools-db-partition-migration-validator/db_partition_migration_validator.sh" />
 								<arg value="export" />
+								<arg value="--company-id" />
+								<arg value="${database.company.id}" />
 								<arg value="--jdbc-url" />
 								<arg value="${database.postgresql.url}" />
 								<arg value="--password" />
@@ -134,10 +141,10 @@
 			<then>
 				<modify-script-exit-code />
 
-				<run-script-extraction database.schema.name="${database.schema.name}" database.type="${database.type}" />
+				<run-script-extraction database.company.id="${database.company.id}" database.schema.name="${database.schema.name}" database.type="${database.type}" />
 			</then>
 			<else>
-				<run-script-extraction database.schema.name="${database.schema.name}" database.type="${database.type}" />
+				<run-script-extraction database.company.id="${database.company.id}" database.schema.name="${database.schema.name}" database.type="${database.type}" />
 			</else>
 		</if>
 

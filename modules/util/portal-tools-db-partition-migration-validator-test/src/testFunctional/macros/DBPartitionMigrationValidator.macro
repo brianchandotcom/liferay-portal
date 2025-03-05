@@ -16,10 +16,10 @@ definition {
 	}
 
 	@summary = "Runs the db partition migration validator tool for extraction"
-	macro executeExtraction(databaseSchemaName = null, ignoreErrors = null) {
+	macro executeExtraction(databaseCompanyId = null, databaseSchemaName = null, ignoreErrors = null) {
 		var databaseType = PropsUtil.get("database.type");
 
-		AntCommands.runCommand("modules/util/portal-tools-db-partition-migration-validator-test/src/testFunctional/ant/build-test-db-partition-migration-validator.xml", "execute-db-partition-migration-validator-tool-extraction -Ddatabase.schema.name=${databaseSchemaName} -Ddatabase.type=${databaseType} -Dignore.migration.errors=${ignoreErrors}");
+		AntCommands.runCommand("modules/util/portal-tools-db-partition-migration-validator-test/src/testFunctional/ant/build-test-db-partition-migration-validator.xml", "execute-db-partition-migration-validator-tool-extraction -Ddatabase.company.id=${databaseCompanyId} -Ddatabase.schema.name=${databaseSchemaName} -Ddatabase.type=${databaseType} -Dignore.migration.errors=${ignoreErrors}");
 	}
 
 	@summary = "Runs the db partition migration validator tool for validation"

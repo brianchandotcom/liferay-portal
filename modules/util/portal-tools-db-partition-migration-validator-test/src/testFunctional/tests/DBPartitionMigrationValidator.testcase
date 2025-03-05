@@ -40,7 +40,9 @@ definition {
 		task ("When run the migration tool to export the partition, the tool should run successfully") {
 			var sourceSchemaName = StringUtil.concat("lpartition_", ${newCompanyId});
 
-			DBPartitionMigrationValidator.executeExtraction(databaseSchemaName = ${sourceSchemaName});
+			DBPartitionMigrationValidator.executeExtraction(
+				databaseCompanyId = ${newCompanyId},
+				databaseSchemaName = ${sourceSchemaName});
 
 			var sourceFilePath = DBPartitionMigrationValidator.getGeneratedFile();
 
@@ -48,7 +50,11 @@ definition {
 		}
 
 		task ("When run the migration tool to export the target database, then the tool should run successfully") {
-			DBPartitionMigrationValidator.executeExtraction(databaseSchemaName = "lportal");
+			var defaultCompanyId = JSONCompany.getCompanyId();
+
+			DBPartitionMigrationValidator.executeExtraction(
+				databaseCompanyId = ${defaultCompanyId},
+				databaseSchemaName = "lportal");
 
 			var targetFilePath = DBPartitionMigrationValidator.getGeneratedFile();
 
@@ -97,7 +103,9 @@ definition {
 		task ("When run the migration tool to export the source database, then the tool should run successfully") {
 			var sourceSchemaName = StringUtil.concat("lpartition_", ${newCompanyId});
 
-			DBPartitionMigrationValidator.executeExtraction(databaseSchemaName = ${sourceSchemaName});
+			DBPartitionMigrationValidator.executeExtraction(
+				databaseCompanyId = ${newCompanyId},
+				databaseSchemaName = ${sourceSchemaName});
 
 			var sourceFilePath = DBPartitionMigrationValidator.getGeneratedFile();
 
@@ -105,7 +113,11 @@ definition {
 		}
 
 		task ("When run the migration tool to export the target database, then the tool should run successfully") {
-			DBPartitionMigrationValidator.executeExtraction(databaseSchemaName = "lportal_target");
+			var defaultCompanyId = JSONCompany.getCompanyId();
+
+			DBPartitionMigrationValidator.executeExtraction(
+				databaseCompanyId = ${defaultCompanyId},
+				databaseSchemaName = "lportal_target");
 
 			var targetFilePath = DBPartitionMigrationValidator.getGeneratedFile();
 
@@ -121,7 +133,40 @@ definition {
 	}
 
 	@priority = 5
-	test ValidateWrongExportWhenNonPartitionedSourceDBHaveMultipleInstancesAdded {
+	test ValidateSuccessfulExportWhenNonPartitionedSourceDBHaveMultipleInstancesAdded {
+		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
+		property database.partition.enabled = "false";
+		property portal.acceptance = "true";
+		property test.liferay.virtual.instance = "false";
+		property test.run.type = "single";
+
+		task ("The database is set and we add a new virtual instance without database partitioning enabled") {
+			HeadlessPortalInstanceAPI.addPortalInstance(
+				domain = "www.able.com",
+				portalInstanceId = "www.able.com",
+				virtualHost = "www.able.com");
+
+			var defaultCompanyId = JSONCompany.getCompanyId();
+			var newCompanyId = JSONCompany.getCompanyId(portalInstanceName = "www.able.com");
+		}
+
+		task ("Extraction of non default company from multi company database without database partitioning enabled is successful") {
+			DBPartitionMigrationValidator.executeExtraction(
+				databaseCompanyId = ${newCompanyId},
+				databaseSchemaName = "lportal",
+				ignoreErrors = "true");
+		}
+
+		task ("Extraction of default company from multi company database without database partitioning enabled is successful") {
+			DBPartitionMigrationValidator.executeExtraction(
+				databaseCompanyId = ${defaultCompanyId},
+				databaseSchemaName = "lportal",
+				ignoreErrors = "true");
+		}
+	}
+
+	@priority = 5
+	test ValidateWrongExportWhenCompanyIdNotExists {
 		property custom.properties = "virtual.hosts.valid.hosts=localhost,127.0.0.1,www.able.com";
 		property database.partition.enabled = "false";
 		property portal.acceptance = "true";
@@ -135,14 +180,17 @@ definition {
 				virtualHost = "www.able.com");
 		}
 
-		task ("When the database is set from non partitioned environment with multiple companies defined") {
+		task ("Extraction of non existent company ID will produce error") {
+			var randomCompanyId = MathUtil.randomNumber(1000000);
+
 			DBPartitionMigrationValidator.executeExtraction(
+				databaseCompanyId = ${randomCompanyId},
 				databaseSchemaName = "lportal",
 				ignoreErrors = "true");
 		}
 
-		task ("Then the tool stops immediately with a console message as: Database schema has to have a single company or database partitioning must be enabled") {
-			DBPartitionMigrationValidator.validateOutput(outputMessage = "UnsupportedOperationException: Database schema has to have a single company or database partitioning must be enabled");
+		task ("Then the tool stops immediately with a console message as: CompanyId <companyId> does not exist in the database") {
+			DBPartitionMigrationValidator.validateOutput(outputMessage = "CompanyId ${randomCompanyId} does not exist in the database");
 		}
 	}
 

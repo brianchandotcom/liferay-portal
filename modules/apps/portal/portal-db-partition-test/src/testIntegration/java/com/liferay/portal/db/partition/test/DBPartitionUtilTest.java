@@ -9,7 +9,6 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.db.partition.test.util.BaseDBPartitionTestCase;
 import com.liferay.portal.db.partition.util.DBPartitionUtil;
 import com.liferay.portal.kernel.dao.jdbc.CurrentConnection;
@@ -28,6 +27,7 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 
 import java.sql.Connection;
@@ -327,6 +327,81 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 	}
 
 	@Test
+	@TestInfo("LPD-46407")
+	public void testExtractCompany() throws Exception {
+		long companyId = PortalInstancePool.getDefaultCompanyId();
+
+		String sourcePartitionName = getPartitionName(companyId);
+
+		try {
+			List<String> tableNames = _getObjectNames(
+				"TABLE", sourcePartitionName);
+
+			List<String> viewNames = _getObjectNames(
+				"VIEW", sourcePartitionName);
+
+			Assert.assertEquals("Views count", 0, viewNames.size());
+
+			Assert.assertEquals(
+				_JOBS_COUNT, _getJobsCount(defaultPartitionName));
+
+			extractCompany(new long[] {companyId});
+
+			String extractedPartitionName = getExtractedPartitionName(
+				companyId);
+
+			Assert.assertEquals(
+				tableNames.size(), _getTablesCount(extractedPartitionName));
+
+			Assert.assertEquals(
+				tableNames.size(), _getTablesCount(sourcePartitionName));
+
+			Assert.assertEquals(0, _getViewsCount(extractedPartitionName));
+
+			Assert.assertEquals(0, _getViewsCount(sourcePartitionName));
+
+			for (String tableName : tableNames) {
+				if (isCopyableQuartzTable(tableName)) {
+					Assert.assertEquals(
+						tableName + " count",
+						_getQuartzTableCount(companyId, tableName),
+						_getCount(
+							companyId, extractedPartitionName, tableName));
+				}
+				else if ((!dbInspector.isControlTable(tableName) &&
+						  !StringUtil.equalsIgnoreCase(
+							  tableName, "Configuration_")) ||
+						 (dbInspector.isControlTable(tableName) &&
+						  !StringUtil.startsWith(
+							  StringUtil.toLowerCase(tableName), "quartz"))) {
+
+					Assert.assertEquals(
+						tableName + " count",
+						_getCount(companyId, sourcePartitionName, tableName),
+						_getCount(
+							companyId, extractedPartitionName, tableName));
+
+					if (StringUtil.equalsIgnoreCase(
+							tableName, "DLFileEntryType")) {
+
+						Assert.assertEquals(
+							tableName + " count", 1,
+							_getCount(0, extractedPartitionName, tableName));
+					}
+				}
+			}
+
+			Assert.assertEquals(
+				_JOBS_COUNT, _getJobsCount(extractedPartitionName));
+		}
+		finally {
+			db.runSQL(
+				dbPartitionDB.getDropPartitionSQL(
+					getExtractedPartitionName(companyId)));
+		}
+	}
+
+	@Test
 	@TestInfo("LPS-199893")
 	public void testExtractDBPartition() throws Exception {
 		addDBPartitions();
@@ -611,6 +686,32 @@ public class DBPartitionUtilTest extends BaseDBPartitionTestCase {
 		}
 
 		return objectNames;
+	}
+
+	private int _getQuartzTableCount(long companyId, String tableName)
+		throws Exception {
+
+		String whereClause = StringPool.BLANK;
+
+		if (StringUtil.endsWith(tableName, "JOB_DETAILS")) {
+			whereClause = " where job_name like '%@" + companyId + "'";
+		}
+		else {
+			whereClause = " where trigger_name like '%@" + companyId + "'";
+		}
+
+		try (PreparedStatement preparedStatement = connection.prepareStatement(
+				StringBundler.concat(
+					"select count(1) from ", getPartitionName(companyId),
+					StringPool.PERIOD, tableName, whereClause));
+			ResultSet resultSet = preparedStatement.executeQuery()) {
+
+			if (resultSet.next()) {
+				return resultSet.getInt(1);
+			}
+		}
+
+		throw new Exception("Table does not exist");
 	}
 
 	private int _getTablesCount(String partitionName) throws Exception {

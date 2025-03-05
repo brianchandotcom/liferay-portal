@@ -13,59 +13,70 @@
 	}
 
 	.product-category {
+		font-size: 1rem;
+	}
+
+	.product-spec {
 		font-size: 0.8rem;
 	}
 
-	.suggested {
-		background-color: #2e5aac !important;
-		color: #ffffff !important;
+	.product-specs {
+		min-height: 3rem;
 	}
 </style>
 
 <div class="product-card-tiles">
-	<#if entries?has_content>
-		<#list entries as curCPCatalogEntry>
-			<#assign
-				accountEntryId = renderRequest.getAttribute("COMMERCE_CONTEXT").getAccount().getAccountEntryId()
-				productId = curCPCatalogEntry.getCProductId()
-				friendlyURL = cpContentHelper.getFriendlyURL(curCPCatalogEntry, themeDisplay)
-				isSuggested = false
-				productName = curCPCatalogEntry.getName()
-				suggestedClass = ""
-
-				productDetail = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels/${chanelId}/products/${productId}?accountId=${accountEntryId}&nestedFields=productSpecifications")
-				productSpecifications = productDetail.productSpecifications
-				tags = productDetail.tags
-			/>
-
-			<#if cpContentHelper.getDefaultCPSku(curCPCatalogEntry)?has_content>
-				<#assign sku = cpContentHelper.getDefaultCPSku(curCPCatalogEntry).getSku() />
-			<#else>
-				<#assign sku = "" />
-			</#if>
-
-			<#if tags?seq_contains("suggested")>
+	<div class="row">
+		<#if entries?has_content>
+			<#list entries as curCPCatalogEntry>
 				<#assign
-					isSuggested = true
-					suggestedClass = "suggested"
+					commerceContext = renderRequest.getAttribute("COMMERCE_CONTEXT")
+
+					accountEntryId = commerceContext.getAccountEntry().getAccountEntryId()
+					channelId = commerceContext.getCommerceChannelId()
+					productId = curCPCatalogEntry.getCProductId()
+					friendlyURL = cpContentHelper.getFriendlyURL(curCPCatalogEntry, themeDisplay)
+					productName = curCPCatalogEntry.getName()
+
+					defaultImageURL = cpContentHelper.getDefaultImageFileURL(accountEntryId, curCPCatalogEntry.getCPDefinitionId())
+					productDetail = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels/${channelId}/products/${productId}?accountId=${accountEntryId}&nestedFields=productSpecifications,categories")
+					
+					productCategories = productDetail.categories
+					productSpecifications = productDetail.productSpecifications
 				/>
-			</#if>
 
-			<a href="${friendlyURL}">
-				<div class="card d-flex flex-column product-card shadow-none mb-4 mx-3">
-					<img class="card-img-top rounded mb-3" src="${defaultImageURL}" alt="${productName}" />
+				<a class="col-4" href="${friendlyURL}">
+					<div class="card product-card shadow-sm">
+						<img class="card-img-top" src="${defaultImageURL}" alt="${productName}" />
 
-					<h5 class="card-title mb-1">${productName}</h5>
+						<div class="px-3 py-2">
+							<h5 class="card-title text-truncate">${productName}</h5>
 
-					<p>Product</p>
+							<#if productCategories?has_content>
+								<#assign categoryCount = 0 />
+								
+								<#list productCategories as category>
+									<#if categoryCount gt 0 >
+										|
+									</#if>
 
-					<#list productSpecifications as spec>
-						<#if spec??>
-							<div>${spec}</div>
-						</#if>
-					</#list>
-				</div>
-			</a>
-		</#list>
-	</#if>
+									<span class="product-category mb-1">${category.name}</span>
+									
+									<#assign categoryCount++ /> 
+								</#list>
+							</#if>
+
+							<div class="product-specs d-flex justify-content-start mt-3">
+								<#list productSpecifications as spec>
+									<#if spec??>
+										<p class="product-spec text-uppercase mr-3 mb-0">${spec.value}</p>
+									</#if>
+								</#list>
+							</div>
+						</div>
+					</div>
+				</a>
+			</#list>
+		</#if>
+	</div>
 </div>

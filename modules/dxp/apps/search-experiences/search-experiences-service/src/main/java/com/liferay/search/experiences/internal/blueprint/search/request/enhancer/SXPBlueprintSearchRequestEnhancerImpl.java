@@ -16,6 +16,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.aggregation.Aggregations;
 import com.liferay.portal.search.collapse.CollapseBuilderFactory;
@@ -52,11 +53,14 @@ import com.liferay.search.experiences.internal.blueprint.search.request.body.con
 import com.liferay.search.experiences.internal.blueprint.search.request.body.contributor.SortSXPSearchRequestBodyContributor;
 import com.liferay.search.experiences.internal.blueprint.search.request.body.contributor.SuggestSXPSearchRequestBodyContributor;
 import com.liferay.search.experiences.internal.blueprint.sort.SortConverter;
+import com.liferay.search.experiences.rest.dto.v1_0.Clause;
 import com.liferay.search.experiences.rest.dto.v1_0.Configuration;
 import com.liferay.search.experiences.rest.dto.v1_0.ElementDefinition;
 import com.liferay.search.experiences.rest.dto.v1_0.ElementInstance;
 import com.liferay.search.experiences.rest.dto.v1_0.Field;
 import com.liferay.search.experiences.rest.dto.v1_0.FieldSet;
+import com.liferay.search.experiences.rest.dto.v1_0.QueryConfiguration;
+import com.liferay.search.experiences.rest.dto.v1_0.QueryEntry;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPBlueprint;
 import com.liferay.search.experiences.rest.dto.v1_0.SXPElement;
 import com.liferay.search.experiences.rest.dto.v1_0.TypeOptions;
@@ -141,6 +145,8 @@ public class SXPBlueprintSearchRequestEnhancerImpl
 			return;
 		}
 
+		_decodeQueries(configuration);
+
 		for (SXPSearchRequestBodyContributor sxpSearchRequestBodyContributor :
 				_sxpSearchRequestBodyContributors) {
 
@@ -150,6 +156,36 @@ public class SXPBlueprintSearchRequestEnhancerImpl
 			}
 			catch (Exception exception) {
 				exceptionListener.exceptionThrown(exception);
+			}
+		}
+	}
+
+	private void _decodeQueries(Configuration configuration) {
+		QueryConfiguration queryConfiguration =
+			configuration.getQueryConfiguration();
+
+		if ((queryConfiguration != null) &&
+			(queryConfiguration.getQueryEntries() != null)) {
+
+			for (QueryEntry queryEntry : queryConfiguration.getQueryEntries()) {
+				Clause[] clauses = queryEntry.getClauses();
+
+				if (clauses != null) {
+					for (Clause clause : clauses) {
+						String query = StringUtil.replace(
+							String.valueOf(clause.getQuery()),
+							new String[] {
+								"&#34;", "&#36;", "&#91;", "&#92;", "&#93;",
+								"&#8725;"
+							},
+							new String[] {"\\\"", "$", "[", "\\\\", "]", "/"});
+
+						clause.setQuery(
+							() -> _jsonFactory.createJSONObject(query));
+					}
+
+					queryEntry.setClauses(() -> clauses);
+				}
 			}
 		}
 	}

@@ -61,12 +61,12 @@ public class CommerceContextFactoryImpl implements CommerceContextFactory {
 
 		return new BaseCommerceContext(
 			companyId, commerceChannelGroupId, orderId, commerceAccountId,
-			_accountEntryLocalService, _accountGroupLocalService,
+			currencyCode, _accountEntryLocalService, _accountGroupLocalService,
 			_commerceCatalogLocalService,
 			_commerceChannelAccountEntryRelLocalService,
 			_commerceChannelLocalService, _commerceCurrencyLocalService,
 			_commerceOrderService, _configurationProvider,
-			_cpConfigurationListDiscovery, currencyCode);
+			_cpConfigurationListDiscovery);
 	}
 
 	@Reference

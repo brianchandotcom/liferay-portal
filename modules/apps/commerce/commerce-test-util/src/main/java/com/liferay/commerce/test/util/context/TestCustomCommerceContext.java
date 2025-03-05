@@ -42,12 +42,12 @@ public class TestCustomCommerceContext extends BaseCommerceContext {
 
 		super(
 			companyId, commerceChannelGroupId, orderId, commerceAccountId,
-			accountEntryLocalService, accountGroupLocalService,
+			currencyCode, accountEntryLocalService, accountGroupLocalService,
 			commerceCatalogLocalService,
 			commerceChannelAccountEntryRelLocalService,
 			commerceChannelLocalService, commerceCurrencyLocalService,
 			commerceOrderService, configurationProvider,
-			cpConfigurationListDiscovery, currencyCode);
+			cpConfigurationListDiscovery);
 
 		_companyId = companyId;
 		_currencyCode = currencyCode;

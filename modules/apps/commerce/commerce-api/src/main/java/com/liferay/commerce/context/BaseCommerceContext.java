@@ -51,7 +51,7 @@ public class BaseCommerceContext implements CommerceContext {
 
 	public BaseCommerceContext(
 		long companyId, long commerceChannelGroupId, long orderId,
-		long commerceAccountId,
+		long commerceAccountId, String currencyCode,
 		AccountEntryLocalService accountEntryLocalService,
 		AccountGroupLocalService accountGroupLocalService,
 		CommerceCatalogLocalService commerceCatalogLocalService,
@@ -61,13 +61,13 @@ public class BaseCommerceContext implements CommerceContext {
 		CommerceCurrencyLocalService commerceCurrencyLocalService,
 		CommerceOrderService commerceOrderService,
 		ConfigurationProvider configurationProvider,
-		CPConfigurationListDiscovery cpConfigurationListDiscovery,
-		String currencyCode) {
+		CPConfigurationListDiscovery cpConfigurationListDiscovery) {
 
 		_companyId = companyId;
 		_commerceChannelGroupId = commerceChannelGroupId;
 		_orderId = orderId;
 		_commerceAccountId = commerceAccountId;
+		_currencyCode = currencyCode;
 		_accountEntryLocalService = accountEntryLocalService;
 		_accountGroupLocalService = accountGroupLocalService;
 		_commerceCatalogLocalService = commerceCatalogLocalService;
@@ -77,7 +77,6 @@ public class BaseCommerceContext implements CommerceContext {
 		_commerceCurrencyLocalService = commerceCurrencyLocalService;
 		_commerceOrderService = commerceOrderService;
 		_cpConfigurationListDiscovery = cpConfigurationListDiscovery;
-		_currencyCode = currencyCode;
 
 		try {
 			if (getCommerceChannelGroupId() > 0) {

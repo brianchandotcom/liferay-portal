@@ -24,17 +24,17 @@ const SAMPLES = [
 	{
 		erc: 'LXC:liferay-sample-global-js-1',
 		name: 'Liferay Sample Global JS 1',
-		url: '/o/liferay-sample-global-js-1/global.d4caf6cbfdcfd38c0ed9.js',
+		url: '/o/liferay-sample-global-js-1/global.4d17c43dda6583afad57bbbc8acdd5cb0dee05d4.js',
 	},
 	{
 		erc: 'LXC:liferay-sample-global-js-2',
 		name: 'Liferay Sample Global JS 2',
-		url: '/o/liferay-sample-global-js-2/global.a0ff2e4a08889609cd1e.js',
+		url: '/o/liferay-sample-global-js-2/global.8c92c7c882ec7d19ed12a7e49871f927b591fc71.js',
 	},
 	{
 		erc: 'LXC:liferay-sample-global-js-3',
 		name: 'Liferay Sample Global JS 3',
-		url: '/o/liferay-sample-global-js-3/global.8c51c23d2fbc94a8abfa.js',
+		url: '/o/liferay-sample-global-js-3/global.703fd93d4aae1d37d59a61a3f9d42ee8bf507cf5.js',
 	},
 ];
 

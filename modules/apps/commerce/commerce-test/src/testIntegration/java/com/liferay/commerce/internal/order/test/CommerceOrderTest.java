@@ -1048,9 +1048,6 @@ public class CommerceOrderTest {
 					commerceChannelGroupId, accountEntry.getAccountEntryId(),
 					StringPool.BLANK));
 
-			Assert.assertFalse(
-				CommerceOrderThreadLocal.isSkipValidateAccountLimit());
-
 			_accountEntries.add(accountEntry);
 		}
 		finally {

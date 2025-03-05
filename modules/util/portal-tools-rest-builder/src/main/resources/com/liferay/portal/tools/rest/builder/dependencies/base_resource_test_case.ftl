@@ -302,6 +302,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 		enumSchemas = freeMarkerTool.getDTOEnumSchemas(configYAML, openAPIYAML, schema)
 		generateGetMultipartFilesMethod = false
 		generateSearchTestRule = false
+		injectBatchEngineImportTaskLocalService = false
 		randomDataTypes = ["Boolean", "Double", "Integer", "Long", "String"]
 	/>
 
@@ -317,7 +318,10 @@ public abstract class Base${schemaName}ResourceTestCase {
 				hasDeleteByERCJavaMethodSignature = (freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "deleteByExternalReferenceCode") || freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "delete" + schemaName + "ByExternalReferenceCode")) && properties?keys?seq_contains("externalReferenceCode")
 			/>
 			<#if generateBatch && stringUtil.equals(javaMethodSignature.methodName, "delete" + schemaName + "Batch") && freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "get" + schemaName) && (hasDeleteByIdJavaMethodSignature || hasDeleteByERCJavaMethodSignature)>
-				<#assign getJavaMethodSignature = freeMarkerTool.getJavaMethodSignature(javaMethodSignatures, "get" + schemaName) />
+				<#assign
+					getJavaMethodSignature = freeMarkerTool.getJavaMethodSignature(javaMethodSignatures, "get" + schemaName)
+					injectBatchEngineImportTaskLocalService = true
+				/>
 				@Test
 				public void test${javaMethodSignature.methodName?cap_first}() throws Exception {
 
@@ -3983,7 +3987,7 @@ public abstract class Base${schemaName}ResourceTestCase {
 	@Inject
 	private ${configYAML.apiPackagePath}.resource.${escapedVersion}.${schemaName}Resource _${schemaVarName}Resource;
 
-	<#if generateBatch>
+	<#if injectBatchEngineImportTaskLocalService>
 		@Inject
 		private BatchEngineImportTaskLocalService _batchEngineImportTaskLocalService;
 	</#if>

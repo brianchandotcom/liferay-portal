@@ -131,10 +131,12 @@ export function formatActionUrl(url, item, queryParams = {}) {
 		)
 	);
 
-	if (Object.keys(queryParams).length) {
+	const queryParamsIterable = Object.entries(queryParams);
+
+	if (queryParamsIterable.length) {
 		replacedUrl = new URL(replacedUrl);
 
-		Object.entries(queryParams).forEach(([key, value]) => {
+		queryParamsIterable.forEach(([key, value]) => {
 			replacedUrl.searchParams.set(key, value);
 		});
 

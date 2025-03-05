@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {openModal} from 'frontend-js-web';
+import {openModal} from 'frontend-js-components-web';
 
 import {createCommerceCart as createCartAndRedirect} from '../createCommerceCart';
 
@@ -16,14 +16,14 @@ export function confirmCurrencyChange({
 	return new Promise((proceed) => {
 		openModal({
 			bodyHTML: `
-			<div>
-				<p>
-					${Liferay.Language.get(
-						'changing-your-currency-will-automatically-create-a-new-order-with-the-selected-currency.-your-current-order-will-be-saved-and-accessible.-are-you-sure-you-want-to-proceed'
-					)}
-				</p>
-			</div>
-		`,
+				<div>
+					<p>
+						${Liferay.Language.get(
+							'changing-your-currency-will-automatically-create-a-new-order-with-the-selected-currency.-your-current-order-will-be-saved-and-accessible.-are-you-sure-you-want-to-proceed'
+						)}
+					</p>
+				</div>
+			`,
 			buttons: [
 				{
 					displayType: 'secondary',

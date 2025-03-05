@@ -6,6 +6,7 @@
 import {createPortletURL, openToast} from 'frontend-js-components-web';
 
 import ServiceProvider from '../ServiceProvider/index';
+import {resetCommerceCurrency} from '../components/currency_selector/util';
 import {
 	DEFAULT_ORDER_DETAILS_PORTLET_ID,
 	ORDER_ID_PARAMETER,
@@ -20,11 +21,10 @@ export function createCommerceCart({
 	currencyCode,
 	commerceChannelId,
 	onCancel = () => {},
-	onCreate = () => {
-	},
-									   orderDetailURL,
-									   orderTypes = [],
-								   }) {
+	onCreate = () => {},
+	orderDetailURL,
+	orderTypes = [],
+}) {
 	const onBeforeCreate =
 		orderTypes.length > 1 ? selectOrderType : () => Promise.resolve(null);
 
@@ -38,14 +38,16 @@ export function createCommerceCart({
 		)
 		.then(({id: cartId = null}) => {
 			if (cartId) {
+				resetCommerceCurrency();
+
 				onCreate();
 
 				const redirectURL = orderDetailURL.includes(
 					DEFAULT_ORDER_DETAILS_PORTLET_ID
 				)
 					? createPortletURL(orderDetailURL, {
-						[ORDER_ID_PARAMETER]: cartId,
-					})
+							[ORDER_ID_PARAMETER]: cartId,
+						})
 					: `${orderDetailURL}${cartId}`;
 
 				return liferayNavigate(redirectURL);

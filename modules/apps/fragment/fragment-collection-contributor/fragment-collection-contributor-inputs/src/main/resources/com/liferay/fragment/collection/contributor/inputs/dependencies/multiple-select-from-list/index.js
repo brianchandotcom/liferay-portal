@@ -121,24 +121,22 @@ else {
 					});
 
 					fieldSet.addEventListener('change', () => {
-						onChange({
-							handleChange: () => {
-								allInputs.forEach((input) => {
-									const translationInput =
-										getOrCreateTranslationInput(
-											input.id,
-											input.name,
-											currentLanguageId,
-											input.parentNode,
-											fragmentNamespace
-										);
+						allInputs.forEach((input) => {
+							const translationInput =
+								getOrCreateTranslationInput(
+									input.id,
+									input.name,
+									currentLanguageId,
+									input.parentNode,
+									fragmentNamespace
+								);
 
-									translationInput.value = input.checked
-										? input.value
-										: '';
-								});
-							},
+							translationInput.value = input.checked
+								? input.value
+								: '';
 						});
+
+						onChange();
 					});
 				}
 				else {

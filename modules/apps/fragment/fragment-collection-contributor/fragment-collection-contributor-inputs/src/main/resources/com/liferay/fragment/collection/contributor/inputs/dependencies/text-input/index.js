@@ -91,7 +91,7 @@ function main() {
 						});
 
 						inputElement.addEventListener('change', (event) => {
-							onChange({value: event.target.value});
+							onChange(event.target.value);
 						});
 					}
 					else {

@@ -124,15 +124,7 @@ export function registerLocalizedInput({
 	);
 
 	return {
-		onChange: ({
-			handleChange,
-			value = null,
-		}: {
-			handleChange?: () => void;
-			value?: string | null;
-		}) => {
-			handleChange?.();
-
+		onChange: (value = null) => {
 			if (value !== null) {
 				const translationInput = getOrCreateTranslationInput(
 					inputElement?.id || inputName,

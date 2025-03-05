@@ -244,14 +244,11 @@ function handleResultListClick(event, onChange, translationInput) {
 		setSelectedOption(selectedOptionElement);
 
 		if (onChange) {
-			onChange({
-				handleChange: () => {
-					translationInput.value =
-						selectedOptionElement.dataset.optionValue;
-					translationInput.dataset.label =
-						selectedOptionElement.dataset.optionLabel;
-				},
-			});
+			translationInput.value = selectedOptionElement.dataset.optionValue;
+			translationInput.dataset.label =
+				selectedOptionElement.dataset.optionLabel;
+
+			onChange();
 		}
 	}
 }

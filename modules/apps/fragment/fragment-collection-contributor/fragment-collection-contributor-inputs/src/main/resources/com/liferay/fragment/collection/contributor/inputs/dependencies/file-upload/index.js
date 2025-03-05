@@ -62,13 +62,12 @@ function onSelectFile(event, onChange, setTranslationInputValue) {
 			const {fileEntryId, title} = JSON.parse(selectedItem.value);
 
 			if (onChange) {
-				onChange({
-					handleChange: () =>
-						setTranslationInputValue({
-							fileName: title,
-							value: fileEntryId,
-						}),
+				setTranslationInputValue({
+					fileName: title,
+					value: fileEntryId,
 				});
+
+				onChange();
 			}
 
 			fileInput.value = fileEntryId;
@@ -245,12 +244,11 @@ else {
 					}
 					else {
 						inputElement.addEventListener('change', (event) => {
-							onChange({
-								handleChange: () =>
-									setTranslationInputValue({
-										value: event.target.files,
-									}),
+							setTranslationInputValue({
+								value: event.target.files,
 							});
+
+							onChange();
 						});
 
 						selectButton.addEventListener(

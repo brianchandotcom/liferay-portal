@@ -339,7 +339,7 @@ public abstract class BaseWishListItemResourceTestCase {
 		WishListItem postWishListItem = testGetWishListItem_addWishListItem();
 
 		WishListItem getWishListItem = wishListItemResource.getWishListItem(
-			postWishListItem.getId(), null);
+			postWishListItem.getId(), null, null);
 
 		VulcanCRUDItemDelegate vulcanCRUDItemDelegate =
 			_vulcanCRUDItemDelegateBuilderRegistry.builder(

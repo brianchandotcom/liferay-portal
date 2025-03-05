@@ -275,9 +275,9 @@ public class CommerceCheckoutStepTest {
 		mockLiferayPortletActionRequest.setAttribute(
 			CommerceWebKeys.COMMERCE_CONTEXT,
 			_commerceContextFactory.create(
-				_serviceContext.getCompanyId(), _group.getGroupId(),
-				_serviceContext.getUserId(), commerceOrder.getCommerceOrderId(),
-				commerceOrder.getCommerceAccountId()));
+				commerceOrder.getCommerceAccountId(), _group.getGroupId(), null,
+				commerceOrder.getCommerceOrderId(),
+				_serviceContext.getCompanyId()));
 		mockLiferayPortletActionRequest.setAttribute(
 			WebKeys.THEME_DISPLAY, _getThemeDisplay());
 		mockLiferayPortletActionRequest.setParameter(

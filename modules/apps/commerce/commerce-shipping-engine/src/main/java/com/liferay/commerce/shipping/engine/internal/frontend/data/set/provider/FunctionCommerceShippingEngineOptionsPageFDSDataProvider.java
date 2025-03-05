@@ -77,8 +77,7 @@ public class FunctionCommerceShippingEngineOptionsPageFDSDataProvider
 			httpServletRequest, "commerceChannelId");
 
 		CommerceContext commerceContext = _commerceContextFactory.create(
-			themeDisplay.getCompanyId(), commerceChannelId,
-			themeDisplay.getUserId(), 0, 0);
+			0, commerceChannelId, null, 0, themeDisplay.getCompanyId());
 
 		return commerceShippingEngine.getCommerceShippingOptions(
 			commerceContext, null, themeDisplay.getLocale());

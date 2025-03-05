@@ -107,11 +107,11 @@ public class CommerceSearchResource {
 			List<SearchItemModel> searchItemModels = new ArrayList<>();
 
 			CommerceContext commerceContext = _commerceContextFactory.create(
-				themeDisplay.getCompanyId(),
+				0,
 				_commerceChannelLocalService.
 					getCommerceChannelGroupIdBySiteGroupId(
 						themeDisplay.getScopeGroupId()),
-				themeDisplay.getUserId(), 0, 0);
+				null, 0, themeDisplay.getCompanyId());
 
 			searchItemModels.addAll(
 				_searchProducts(

@@ -329,8 +329,8 @@ public class SkuResourceImpl extends BaseSkuResourceImpl {
 			}
 
 			return _commerceContextFactory.create(
-				contextCompany.getCompanyId(), commerceChannel.getGroupId(),
-				contextUser.getUserId(), 0, accountId, currencyCode);
+				accountId, commerceChannel.getGroupId(), currencyCode, 0,
+				contextCompany.getCompanyId());
 		}
 
 		long[] commerceAccountIds =
@@ -346,8 +346,8 @@ public class SkuResourceImpl extends BaseSkuResourceImpl {
 		}
 
 		return _commerceContextFactory.create(
-			contextCompany.getCompanyId(), commerceChannel.getGroupId(),
-			contextUser.getUserId(), 0, commerceAccountIds[0], currencyCode);
+			commerceAccountIds[0], commerceChannel.getGroupId(), currencyCode,
+			0, contextCompany.getCompanyId());
 	}
 
 	private BigDecimal _getDefaultQuantity(

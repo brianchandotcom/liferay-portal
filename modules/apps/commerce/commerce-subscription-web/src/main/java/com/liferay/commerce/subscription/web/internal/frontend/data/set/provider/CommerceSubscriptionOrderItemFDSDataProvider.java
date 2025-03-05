@@ -83,9 +83,8 @@ public class CommerceSubscriptionOrderItemFDSDataProvider
 				commerceSubscriptionEntry.getCommerceOrderItemId());
 
 		CommerceContext commerceContext = _commerceContextFactory.create(
-			_portal.getCompanyId(httpServletRequest),
-			commerceSubscriptionEntry.getGroupId(),
-			_portal.getUserId(httpServletRequest), 0, 0);
+			0, commerceSubscriptionEntry.getGroupId(), null, 0,
+			_portal.getCompanyId(httpServletRequest));
 
 		BigDecimal quantity = commerceOrderItem.getQuantity();
 

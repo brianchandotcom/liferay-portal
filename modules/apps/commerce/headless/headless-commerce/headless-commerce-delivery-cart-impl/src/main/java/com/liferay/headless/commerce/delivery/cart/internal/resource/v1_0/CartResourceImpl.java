@@ -382,9 +382,10 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 			_commerceOrderService.applyCouponCode(
 				commerceOrder.getCommerceOrderId(), couponCode.getCode(),
 				_commerceContextFactory.create(
-					contextCompany.getCompanyId(), commerceOrder.getGroupId(),
-					contextUser.getUserId(), commerceOrder.getCommerceOrderId(),
-					commerceOrder.getCommerceAccountId())));
+					commerceOrder.getCommerceAccountId(),
+					commerceOrder.getGroupId(), null,
+					commerceOrder.getCommerceOrderId(),
+					contextCompany.getCompanyId())));
 	}
 
 	@Override
@@ -408,9 +409,10 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 			_commerceOrderService.applyCouponCode(
 				cartId, couponCode.getCode(),
 				_commerceContextFactory.create(
-					contextCompany.getCompanyId(), commerceOrder.getGroupId(),
-					contextUser.getUserId(), commerceOrder.getCommerceOrderId(),
-					commerceOrder.getCommerceAccountId())));
+					commerceOrder.getCommerceAccountId(),
+					commerceOrder.getGroupId(), null,
+					commerceOrder.getCommerceOrderId(),
+					contextCompany.getCompanyId())));
 	}
 
 	@Override
@@ -1236,9 +1238,9 @@ public class CartResourceImpl extends BaseCartResourceImpl {
 		}
 
 		CommerceContext commerceContext = _commerceContextFactory.create(
-			contextCompany.getCompanyId(), commerceOrder.getGroupId(),
-			contextUser.getUserId(), commerceOrder.getCommerceOrderId(),
-			commerceOrder.getCommerceAccountId(), cart.getCurrencyCode());
+			commerceOrder.getCommerceAccountId(), commerceOrder.getGroupId(),
+			cart.getCurrencyCode(), commerceOrder.getCommerceOrderId(),
+			contextCompany.getCompanyId());
 
 		_commerceOrderEngine.updateCommerceOrder(
 			commerceOrder.getExternalReferenceCode(),

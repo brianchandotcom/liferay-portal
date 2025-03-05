@@ -315,8 +315,8 @@ public class CPInstanceHelperTest {
 
 		CommerceContextThreadLocal.set(
 			_commerceContextFactory.create(
-				_company.getCompanyId(), _commerceChannel.getGroupId(),
-				_user.getUserId(), 0, accountEntry.getAccountEntryId()));
+				accountEntry.getAccountEntryId(), _commerceChannel.getGroupId(),
+				null, 0, _company.getCompanyId()));
 
 		CommercePriceListTestUtil.addCommercePriceList(
 			_commerceCatalog.getGroupId(), true,

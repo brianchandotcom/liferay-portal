@@ -46,27 +46,17 @@ public class CommerceContextFactoryImpl implements CommerceContextFactory {
 
 	@Override
 	public CommerceContext create(
-		long companyId, long commerceChannelGroupId, long userId, long orderId,
-		long commerceAccountId) {
-
-		return create(
-			companyId, commerceChannelGroupId, userId, orderId,
-			commerceAccountId, null);
-	}
-
-	@Override
-	public CommerceContext create(
-		long companyId, long commerceChannelGroupId, long userId, long orderId,
-		long commerceAccountId, String currencyCode) {
+		long commerceAccountId, long commerceChannelGroupId,
+		String commerceCurrencyCode, long commerceOrderId, long companyId) {
 
 		return new BaseCommerceContext(
-			companyId, commerceChannelGroupId, orderId, commerceAccountId,
 			_accountEntryLocalService, _accountGroupLocalService,
-			_commerceCatalogLocalService,
-			_commerceChannelAccountEntryRelLocalService,
-			_commerceChannelLocalService, _commerceCurrencyLocalService,
-			_commerceOrderService, _configurationProvider,
-			_cpConfigurationListDiscovery, currencyCode);
+			commerceAccountId, _commerceCatalogLocalService,
+			_commerceChannelAccountEntryRelLocalService, commerceChannelGroupId,
+			_commerceChannelLocalService, commerceCurrencyCode,
+			_commerceCurrencyLocalService, commerceOrderId,
+			_commerceOrderService, companyId, _configurationProvider,
+			_cpConfigurationListDiscovery);
 	}
 
 	@Reference

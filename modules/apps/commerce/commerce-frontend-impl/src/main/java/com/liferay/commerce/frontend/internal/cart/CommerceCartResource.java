@@ -104,10 +104,10 @@ public class CommerceCartResource {
 					commerceOrder.getGroupId());
 
 			CommerceContext commerceContext = _commerceContextFactory.create(
-				commerceOrder.getCompanyId(), commerceChannel.getGroupId(),
-				_portal.getUserId(httpServletRequest),
+				commerceOrder.getCommerceAccountId(),
+				commerceChannel.getGroupId(), null,
 				commerceOrder.getCommerceOrderId(),
-				commerceOrder.getCommerceAccountId());
+				commerceOrder.getCompanyId());
 
 			_commerceOrderService.applyCouponCode(
 				commerceOrder.getCommerceOrderId(), couponCode,
@@ -143,10 +143,10 @@ public class CommerceCartResource {
 					commerceOrder.getGroupId());
 
 			CommerceContext commerceContext = _commerceContextFactory.create(
-				commerceOrder.getCompanyId(), commerceChannel.getGroupId(),
-				_portal.getUserId(httpServletRequest),
+				commerceOrder.getCommerceAccountId(),
+				commerceChannel.getGroupId(), null,
 				commerceOrder.getCommerceOrderId(),
-				commerceOrder.getCommerceAccountId());
+				commerceOrder.getCompanyId());
 
 			_commerceOrderService.applyCouponCode(
 				commerceOrder.getCommerceOrderId(), null, commerceContext);
@@ -181,11 +181,10 @@ public class CommerceCartResource {
 
 		try {
 			CommerceContext commerceContext = _commerceContextFactory.create(
-				_portal.getCompanyId(httpServletRequest),
+				commerceAccountId,
 				_commerceChannelLocalService.
 					getCommerceChannelGroupIdBySiteGroupId(groupId),
-				_portal.getUserId(httpServletRequest), orderId,
-				commerceAccountId);
+				null, orderId, _portal.getCompanyId(httpServletRequest));
 
 			httpServletRequest.setAttribute(
 				CommerceWebKeys.COMMERCE_CONTEXT, commerceContext);
@@ -205,10 +204,9 @@ public class CommerceCartResource {
 			}
 
 			commerceContext = _commerceContextFactory.create(
-				_portal.getCompanyId(httpServletRequest),
-				commerceOrder.getGroupId(),
-				_portal.getUserId(httpServletRequest),
-				commerceOrder.getCommerceOrderId(), commerceAccountId);
+				commerceAccountId, commerceOrder.getGroupId(), null,
+				commerceOrder.getCommerceOrderId(),
+				_portal.getCompanyId(httpServletRequest));
 
 			httpServletRequest.setAttribute(
 				CommerceWebKeys.COMMERCE_CONTEXT, commerceContext);

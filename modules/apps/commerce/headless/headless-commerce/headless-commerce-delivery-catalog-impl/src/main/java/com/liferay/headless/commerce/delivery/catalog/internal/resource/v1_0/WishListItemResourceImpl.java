@@ -70,9 +70,9 @@ public class WishListItemResourceImpl extends BaseWishListItemResourceImpl {
 		}
 
 		CommerceContext commerceContext = _commerceContextFactory.create(
-			commerceChannel.getCompanyId(), commerceChannel.getGroupId(),
-			commerceChannel.getUserId(), 0,
-			_getCommerceAccountId(accountId, commerceChannel), currencyCode);
+			_getCommerceAccountId(accountId, commerceChannel),
+			commerceChannel.getGroupId(), currencyCode, 0,
+			commerceChannel.getCompanyId());
 
 		return _toWishListItem(commerceWishListItem, commerceContext);
 	}
@@ -96,9 +96,9 @@ public class WishListItemResourceImpl extends BaseWishListItemResourceImpl {
 		}
 
 		CommerceContext commerceContext = _commerceContextFactory.create(
-			commerceChannel.getCompanyId(), commerceChannel.getGroupId(),
-			commerceChannel.getUserId(), 0,
-			_getCommerceAccountId(accountId, commerceChannel), currecyCode);
+			_getCommerceAccountId(accountId, commerceChannel),
+			commerceChannel.getGroupId(), currecyCode, 0,
+			commerceChannel.getCompanyId());
 
 		return Page.of(
 			transform(
@@ -146,9 +146,9 @@ public class WishListItemResourceImpl extends BaseWishListItemResourceImpl {
 		return _toWishListItem(
 			commerceWishListItem,
 			_commerceContextFactory.create(
-				commerceChannel.getCompanyId(), commerceChannel.getGroupId(),
-				commerceChannel.getUserId(), 0,
-				_getCommerceAccountId(accountId, commerceChannel)));
+				_getCommerceAccountId(accountId, commerceChannel),
+				commerceChannel.getGroupId(), null, 0,
+				commerceChannel.getCompanyId()));
 	}
 
 	private Long _getCommerceAccountId(

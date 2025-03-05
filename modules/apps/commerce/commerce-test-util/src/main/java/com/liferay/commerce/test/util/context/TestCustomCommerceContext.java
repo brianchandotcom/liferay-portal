@@ -27,31 +27,31 @@ import com.liferay.portal.kernel.util.Validator;
 public class TestCustomCommerceContext extends BaseCommerceContext {
 
 	public TestCustomCommerceContext(
-		long companyId, long commerceChannelGroupId, long orderId,
-		long commerceAccountId, String currencyCode,
 		AccountEntryLocalService accountEntryLocalService,
 		AccountGroupLocalService accountGroupLocalService,
+		long commerceAccountId,
 		CommerceCatalogLocalService commerceCatalogLocalService,
 		CommerceChannelAccountEntryRelLocalService
 			commerceChannelAccountEntryRelLocalService,
+		long commerceChannelGroupId,
 		CommerceChannelLocalService commerceChannelLocalService,
+		String commerceCurrencyCode,
 		CommerceCurrencyLocalService commerceCurrencyLocalService,
-		CommerceOrderService commerceOrderService,
-		ConfigurationProvider configurationProvider,
+		long commerceOrderId, CommerceOrderService commerceOrderService,
+		long companyId, ConfigurationProvider configurationProvider,
 		CPConfigurationListDiscovery cpConfigurationListDiscovery) {
 
 		super(
-			companyId, commerceChannelGroupId, orderId, commerceAccountId,
 			accountEntryLocalService, accountGroupLocalService,
-			commerceCatalogLocalService,
-			commerceChannelAccountEntryRelLocalService,
-			commerceChannelLocalService, commerceCurrencyLocalService,
-			commerceOrderService, configurationProvider,
-			cpConfigurationListDiscovery, currencyCode);
+			commerceAccountId, commerceCatalogLocalService,
+			commerceChannelAccountEntryRelLocalService, commerceChannelGroupId,
+			commerceChannelLocalService, commerceCurrencyCode,
+			commerceCurrencyLocalService, commerceOrderId, commerceOrderService,
+			companyId, configurationProvider, cpConfigurationListDiscovery);
 
-		_companyId = companyId;
-		_currencyCode = currencyCode;
+		_commerceCurrencyCode = commerceCurrencyCode;
 		_commerceCurrencyLocalService = commerceCurrencyLocalService;
+		_companyId = companyId;
 	}
 
 	@Override
@@ -62,10 +62,10 @@ public class TestCustomCommerceContext extends BaseCommerceContext {
 			return commerceOrder.getCommerceCurrency();
 		}
 
-		if (!Validator.isBlank(_currencyCode)) {
+		if (!Validator.isBlank(_commerceCurrencyCode)) {
 			_commerceCurrency =
 				_commerceCurrencyLocalService.fetchCommerceCurrency(
-					_companyId, _currencyCode);
+					_companyId, _commerceCurrencyCode);
 		}
 
 		if (_commerceCurrency != null) {
@@ -84,8 +84,8 @@ public class TestCustomCommerceContext extends BaseCommerceContext {
 	}
 
 	private CommerceCurrency _commerceCurrency;
+	private final String _commerceCurrencyCode;
 	private final CommerceCurrencyLocalService _commerceCurrencyLocalService;
 	private final long _companyId;
-	private final String _currencyCode;
 
 }

@@ -230,10 +230,10 @@ public class CartTransitionResourceImpl extends BaseCartTransitionResourceImpl {
 		for (CommerceShippingOption commerceShippingOption :
 				commerceShippingEngine.getCommerceShippingOptions(
 					_commerceContextFactory.create(
-						contextCompany.getCompanyId(),
-						commerceChannel.getGroupId(), contextUser.getUserId(),
+						commerceOrder.getCommerceAccountId(),
+						commerceChannel.getGroupId(), null,
 						commerceOrder.getCommerceOrderId(),
-						commerceOrder.getCommerceAccountId()),
+						contextCompany.getCompanyId()),
 					commerceOrder,
 					contextAcceptLanguage.getPreferredLocale())) {
 

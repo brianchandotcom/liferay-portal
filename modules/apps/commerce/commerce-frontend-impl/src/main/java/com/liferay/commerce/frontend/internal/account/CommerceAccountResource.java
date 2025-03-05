@@ -137,10 +137,10 @@ public class CommerceAccountResource {
 
 		try {
 			CommerceContext commerceContext = _commerceContextFactory.create(
-				_portal.getCompanyId(httpServletRequest),
+				0,
 				_commerceChannelLocalService.
 					getCommerceChannelGroupIdBySiteGroupId(groupId),
-				_portal.getUserId(httpServletRequest), 0, 0);
+				null, 0, _portal.getCompanyId(httpServletRequest));
 
 			accountList = getAccountList(
 				themeDisplay.getUserId(),

@@ -202,9 +202,8 @@ public class CommerceOrderImporter {
 		// Create CommerceContext
 
 		CommerceContext commerceContext = _commerceContextFactory.create(
-			serviceContext.getCompanyId(), commerceOrder.getGroupId(),
-			serviceContext.getUserId(), commerceOrder.getCommerceOrderId(),
-			accountEntry.getAccountEntryId());
+			accountEntry.getAccountEntryId(), commerceOrder.getGroupId(), null,
+			commerceOrder.getCommerceOrderId(), serviceContext.getCompanyId());
 
 		// Create CommerceOrderItem
 

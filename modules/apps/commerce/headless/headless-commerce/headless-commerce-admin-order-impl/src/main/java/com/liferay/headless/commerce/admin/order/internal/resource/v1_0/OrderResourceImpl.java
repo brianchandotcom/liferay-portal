@@ -381,9 +381,9 @@ public class OrderResourceImpl extends BaseOrderResourceImpl {
 				order.getTaxAmount(), order.getTotal(),
 				order.getTotalWithTaxAmount(),
 				_commerceContextFactory.create(
-					contextCompany.getCompanyId(), commerceChannel.getGroupId(),
-					contextUser.getUserId(), 0,
-					accountEntry.getAccountEntryId()),
+					accountEntry.getAccountEntryId(),
+					commerceChannel.getGroupId(), null, 0,
+					contextCompany.getCompanyId()),
 				serviceContext);
 
 		// Order date
@@ -654,10 +654,10 @@ public class OrderResourceImpl extends BaseOrderResourceImpl {
 						_commerceOrderModelResourcePermission, orderItem,
 						commerceOrder,
 						_commerceContextFactory.create(
-							contextCompany.getCompanyId(),
-							commerceOrder.getGroupId(), contextUser.getUserId(),
+							commerceOrder.getCommerceAccountId(),
+							commerceOrder.getGroupId(), null,
 							commerceOrder.getCommerceOrderId(),
-							commerceOrder.getCommerceAccountId()),
+							contextCompany.getCompanyId()),
 						_serviceContextHelper.getServiceContext(
 							commerceOrder.getGroupId()));
 
@@ -784,11 +784,10 @@ public class OrderResourceImpl extends BaseOrderResourceImpl {
 				order.getTotalWithTaxAmount(),
 				commerceOrder.getTotalWithTaxAmount()),
 			_commerceContextFactory.create(
-				contextCompany.getCompanyId(), commerceOrder.getGroupId(),
-				contextUser.getUserId(), 0,
 				GetterUtil.getLong(
-					order.getAccountId(),
-					commerceOrder.getCommerceAccountId())),
+					order.getAccountId(), commerceOrder.getCommerceAccountId()),
+				commerceOrder.getGroupId(), null, 0,
+				contextCompany.getCompanyId()),
 			false);
 
 		_commerceOrderService.updateCommerceOrderPrices(

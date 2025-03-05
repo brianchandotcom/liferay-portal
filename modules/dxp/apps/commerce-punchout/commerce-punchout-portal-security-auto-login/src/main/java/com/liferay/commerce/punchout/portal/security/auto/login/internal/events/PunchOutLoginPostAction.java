@@ -138,8 +138,8 @@ public class PunchOutLoginPostAction extends Action {
 		}
 
 		CommerceContext commerceContext = _commerceContextFactory.create(
-			companyId, commerceChannelGroupId, punchOutUserId,
-			commerceOrder.getCommerceOrderId(), commerceAccountId);
+			commerceAccountId, commerceChannelGroupId, null,
+			commerceOrder.getCommerceOrderId(), companyId);
 
 		httpServletRequest.setAttribute(
 			CommerceWebKeys.COMMERCE_CONTEXT, commerceContext);

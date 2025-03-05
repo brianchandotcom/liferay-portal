@@ -5,6 +5,7 @@
 
 package com.liferay.site.internal.configuration.manager;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -15,6 +16,10 @@ import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.site.configuration.MenuAccessConfiguration;
 import com.liferay.site.configuration.manager.MenuAccessConfigurationManager;
 
+import java.util.Dictionary;
+
+import org.osgi.service.cm.Configuration;
+import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -57,26 +62,33 @@ public class MenuAccessConfigurationManagerImpl
 
 	@Override
 	public void deleteRoleAccessToControlMenu(Role role) throws Exception {
-		for (Group group :
-				_groupLocalService.getGroups(
-					role.getCompanyId(), GroupConstants.ANY_PARENT_GROUP_ID,
-					true)) {
+		String filterString = StringBundler.concat(
+			"(&(service.factoryPid=", MenuAccessConfiguration.class.getName(),
+			".scoped))");
 
-			MenuAccessConfiguration menuAccessConfiguration =
-				_configurationProvider.getGroupConfiguration(
-					MenuAccessConfiguration.class, group.getGroupId());
+		Configuration[] configurations = _configurationAdmin.listConfigurations(
+			filterString);
 
-			String roleId = String.valueOf(role.getRoleId());
-			String[] accessToControlMenuRoleIds =
-				menuAccessConfiguration.accessToControlMenuRoleIds();
+		if (configurations == null) {
+			return;
+		}
+
+		String roleId = String.valueOf(role.getRoleId());
+
+		for (Configuration configuration : configurations) {
+			Dictionary<String, Object> properties =
+				configuration.getProperties();
+
+			String[] accessToControlMenuRoleIds = (String[])properties.get(
+				"accessToControlMenuRoleIds");
 
 			if (ArrayUtil.contains(accessToControlMenuRoleIds, roleId)) {
 				accessToControlMenuRoleIds = ArrayUtil.remove(
 					accessToControlMenuRoleIds, roleId);
 
 				updateMenuAccessConfiguration(
-					group.getGroupId(), accessToControlMenuRoleIds,
-					menuAccessConfiguration.showControlMenuByRole());
+					(long)properties.get("groupId"), accessToControlMenuRoleIds,
+					(boolean)properties.get("showControlMenuByRole"));
 			}
 		}
 	}
@@ -115,6 +127,9 @@ public class MenuAccessConfigurationManagerImpl
 				"showControlMenuByRole", showControlMenuByRole
 			).build());
 	}
+
+	@Reference
+	private ConfigurationAdmin _configurationAdmin;
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

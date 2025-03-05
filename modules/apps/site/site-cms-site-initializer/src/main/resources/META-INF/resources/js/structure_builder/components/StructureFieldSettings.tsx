@@ -22,7 +22,7 @@ import selectStructureStatus from '../selectors/selectStructureStatus';
 import {Field} from '../utils/field';
 import {isFieldTextSearchable} from '../utils/isFieldTextSearchable';
 import ERCInput from './ERCInput';
-import TextInput from './TextInput';
+import Input from './Input';
 
 export default function StructureFieldSettings({
 	fieldName,
@@ -115,7 +115,7 @@ function GeneralTab({field}: {field: Field}) {
 			</div>
 
 			<div className="mt-4 pb-2">
-				<TextInput
+				<Input
 					disabled={isPublished}
 					label={Liferay.Language.get('field-name')}
 					onValueChange={(value) => {

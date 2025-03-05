@@ -20,8 +20,8 @@ import selectStructureLabel from '../selectors/selectStructureLabel';
 import selectStructureName from '../selectors/selectStructureName';
 import {getImage} from '../utils/getImage';
 import ERCInput from './ERCInput';
+import Input from './Input';
 import StructureFieldSettings from './StructureFieldSettings';
-import TextInput from './TextInput';
 
 export default function () {
 	const selection = useSelector(selectSelection);
@@ -113,7 +113,7 @@ function GeneralTab() {
 
 	return (
 		<div>
-			<TextInput
+			<Input
 				label={Liferay.Language.get('structure-name')}
 				onValueChange={(value) =>
 					dispatch({name: value, type: 'update-structure'})

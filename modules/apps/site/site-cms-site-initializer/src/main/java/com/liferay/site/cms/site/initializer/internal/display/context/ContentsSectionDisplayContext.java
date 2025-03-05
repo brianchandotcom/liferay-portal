@@ -8,6 +8,11 @@ package com.liferay.site.cms.site.initializer.internal.display.context;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
+import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.service.ObjectDefinitionService;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
@@ -20,6 +25,7 @@ import com.liferay.site.cms.site.initializer.internal.configuration.CMSSiteIniti
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.portlet.ActionRequest;
 
@@ -32,11 +38,13 @@ public class ContentsSectionDisplayContext extends BaseSectionDisplayContext {
 
 	public ContentsSectionDisplayContext(
 		CMSSiteInitializerConfiguration cmsSiteInitializerConfiguration,
-		HttpServletRequest httpServletRequest, Language language) {
+		HttpServletRequest httpServletRequest, Language language,
+		ObjectDefinitionService objectDefinitionService) {
 
 		super(cmsSiteInitializerConfiguration, httpServletRequest);
 
 		_language = language;
+		_objectDefinitionService = objectDefinitionService;
 
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -44,32 +52,62 @@ public class ContentsSectionDisplayContext extends BaseSectionDisplayContext {
 
 	@Override
 	public CreationMenu getCreationMenu() {
-		return CreationMenuBuilder.addPrimaryDropdownItem(
-			dropdownItem -> {
-				dropdownItem.setIcon("forms");
-				dropdownItem.setLabel(
-					_language.get(httpServletRequest, "basic-content"));
+		CreationMenuBuilder.CreationMenuWrapper creationMenuWrapper =
+			CreationMenuBuilder.addPrimaryDropdownItem(
+				dropdownItem -> {
+					dropdownItem.setIcon("forms");
+					dropdownItem.setLabel(
+						_language.get(httpServletRequest, "basic-content"));
+				}
+			).addPrimaryDropdownItem(
+				dropdownItem -> {
+					dropdownItem.setIcon("blogs");
+					dropdownItem.setLabel(
+						_language.get(httpServletRequest, "blog"));
+				}
+			).addPrimaryDropdownItem(
+				dropdownItem -> {
+					dropdownItem.setIcon("wiki");
+					dropdownItem.setLabel(
+						_language.get(httpServletRequest, "knowledge-base"));
+				}
+			);
+
+		String url = _getAddStructuredContentItemURL();
+
+		for (ObjectDefinition objectDefinition :
+				_objectDefinitionService.getObjectDefinitions(
+					_themeDisplay.getCompanyId(), QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS)) {
+
+			if (objectDefinition.isSystem() ||
+				!Objects.equals(
+					objectDefinition.getScope(),
+					ObjectDefinitionConstants.SCOPE_SITE) ||
+				!objectDefinition.isEnableObjectEntryDraft()) {
+
+				continue;
 			}
-		).addPrimaryDropdownItem(
-			dropdownItem -> {
-				dropdownItem.setIcon("blogs");
-				dropdownItem.setLabel(
-					_language.get(httpServletRequest, "blog"));
-			}
-		).addPrimaryDropdownItem(
-			dropdownItem -> {
-				dropdownItem.setIcon("wiki");
-				dropdownItem.setLabel(
-					_language.get(httpServletRequest, "knowledge-base"));
-			}
-		).addPrimaryDropdownItem(
+
+			creationMenuWrapper.addPrimaryDropdownItem(
+				dropdownItem -> {
+					dropdownItem.setHref(
+						url + objectDefinition.getObjectDefinitionId());
+					dropdownItem.setIcon("forms");
+					dropdownItem.setLabel(
+						objectDefinition.getLabel(_themeDisplay.getLocale()));
+				});
+		}
+
+		creationMenuWrapper.addPrimaryDropdownItem(
 			dropdownItem -> {
 				dropdownItem.putData("action", "createFolder");
 				dropdownItem.setIcon("folder");
 				dropdownItem.setLabel(
 					_language.get(httpServletRequest, "folder"));
-			}
-		).build();
+			});
+
+		return creationMenuWrapper.build();
 	}
 
 	@Override
@@ -119,7 +157,20 @@ public class ContentsSectionDisplayContext extends BaseSectionDisplayContext {
 			contentsObjectDefinitionFolderExternalReferenceCodes();
 	}
 
+	private String _getAddStructuredContentItemURL() {
+		StringBundler sb = new StringBundler(5);
+
+		sb.append(_themeDisplay.getPortalURL());
+		sb.append(_themeDisplay.getPathMain());
+		sb.append("/cms/add_structured_content_item?groupId=");
+		sb.append(_themeDisplay.getScopeGroupId());
+		sb.append("&objectDefinitionId=");
+
+		return sb.toString();
+	}
+
 	private final Language _language;
+	private final ObjectDefinitionService _objectDefinitionService;
 	private final ThemeDisplay _themeDisplay;
 
 }

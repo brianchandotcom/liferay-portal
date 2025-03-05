@@ -145,6 +145,29 @@ public class VirtualHostFilterTest {
 		}
 	}
 
+	@Test
+	public void testProcessFilterForwardedURLForLanguageIdWithoutTrailingSlash() {
+		_mockHttpServletRequest.setRequestURI("/en-US/");
+
+		String expectedForwardedURL = _getForwardedURL(
+			_mockHttpServletRequest, _mockHttpServletResponse,
+			_mockFilterChain);
+
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.VIRTUAL_HOST_LAYOUT_SET, _layoutSet);
+
+		mockHttpServletRequest.setRequestURI("/en-US");
+
+		Assert.assertEquals(
+			expectedForwardedURL,
+			_getForwardedURL(
+				mockHttpServletRequest, new MockHttpServletResponse(),
+				new MockFilterChain()));
+	}
+
 	private String _getForwardedURL(
 		MockHttpServletRequest mockHttpServletRequest,
 		MockHttpServletResponse mockHttpServletResponse,

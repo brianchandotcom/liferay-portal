@@ -113,6 +113,7 @@ public class CSPTagIllegalAttributesCheck extends BaseTagAttributesCheck {
 			char c = content.charAt(x);
 
 			if ((c == CharPool.LESS_THAN) &&
+				(content.charAt(x + 1) != CharPool.EQUAL) &&
 				(content.charAt(x + 1) != CharPool.PERCENT) &&
 				!isJavaSource(content, x, true)) {
 

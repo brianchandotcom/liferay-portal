@@ -11,6 +11,7 @@
 FDSSampleDisplayContext fdsSampleDisplayContext = (FDSSampleDisplayContext)request.getAttribute(FDSSampleWebKeys.FDS_SAMPLE_DISPLAY_CONTEXT);
 %>
 
+<p>Headless display tag with just mandatory tag attributes</p>
 <frontend-data-set:headless-display
 	apiURL="<%= fdsSampleDisplayContext.getAPIURL() %>"
 	id="<%= FDSSampleFDSNames.MINIMUM %>"

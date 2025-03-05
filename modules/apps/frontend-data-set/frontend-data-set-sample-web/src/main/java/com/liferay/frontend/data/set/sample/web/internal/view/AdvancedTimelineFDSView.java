@@ -16,10 +16,10 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	enabled = false,
-	property = "frontend.data.set.name=" + FDSSampleFDSNames.CUSTOMIZED,
+	property = "frontend.data.set.name=" + FDSSampleFDSNames.ADVANCED,
 	service = FDSView.class
 )
-public class CustomizedTimelineFDSView extends BaseTimelineFDSView {
+public class AdvancedTimelineFDSView extends BaseTimelineFDSView {
 
 	@Override
 	public String getDate() {

@@ -19,10 +19,10 @@ import org.osgi.service.component.annotations.Component;
  * @author Javier de Arcos
  */
 @Component(
-	property = "frontend.data.set.name=" + FDSSampleFDSNames.CUSTOMIZED,
+	property = "frontend.data.set.name=" + FDSSampleFDSNames.ADVANCED,
 	service = FDSFilter.class
 )
-public class CustomizedDateRangeFDSFilter extends BaseDateRangeFDSFilter {
+public class AdvancedDateRangeFDSFilter extends BaseDateRangeFDSFilter {
 
 	@Override
 	public String getEntityFieldType() {

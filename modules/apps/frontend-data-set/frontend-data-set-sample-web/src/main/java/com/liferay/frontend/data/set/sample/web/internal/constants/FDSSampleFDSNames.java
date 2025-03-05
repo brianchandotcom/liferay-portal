@@ -10,6 +10,9 @@ package com.liferay.frontend.data.set.sample.web.internal.constants;
  */
 public class FDSSampleFDSNames {
 
+	public static final String ADVANCED =
+		FDSSamplePortletKeys.FDS_SAMPLE + "-advanced";
+
 	public static final String CLASSIC =
 		FDSSamplePortletKeys.FDS_SAMPLE + "-classic";
 
@@ -18,9 +21,6 @@ public class FDSSampleFDSNames {
 
 	public static final String CUSTOM_INTERNAL_VIEW =
 		FDSSamplePortletKeys.FDS_SAMPLE + "-customInternalView";
-
-	public static final String CUSTOMIZED =
-		FDSSamplePortletKeys.FDS_SAMPLE + "-customized";
 
 	public static final String EMPTY =
 		FDSSamplePortletKeys.FDS_SAMPLE + "-empty";

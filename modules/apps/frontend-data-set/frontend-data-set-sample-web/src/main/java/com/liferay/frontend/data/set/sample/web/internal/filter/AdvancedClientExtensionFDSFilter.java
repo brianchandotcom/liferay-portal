@@ -28,10 +28,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Iván Zaera Avellón
  */
 @Component(
-	property = "frontend.data.set.name=" + FDSSampleFDSNames.CUSTOMIZED,
+	property = "frontend.data.set.name=" + FDSSampleFDSNames.ADVANCED,
 	service = FDSFilter.class
 )
-public class CustomizedClientExtensionFDSFilter
+public class AdvancedClientExtensionFDSFilter
 	extends BaseClientExtensionFDSFilter {
 
 	@Override
@@ -102,7 +102,7 @@ public class CustomizedClientExtensionFDSFilter
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		CustomizedClientExtensionFDSFilter.class);
+		AdvancedClientExtensionFDSFilter.class);
 
 	@Reference
 	private CETManager _cetManager;

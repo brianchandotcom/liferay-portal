@@ -23,10 +23,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marko Cikos
  */
 @Component(
-	property = "frontend.data.set.name=" + FDSSampleFDSNames.CUSTOMIZED,
+	property = "frontend.data.set.name=" + FDSSampleFDSNames.ADVANCED,
 	service = FDSItemsActions.class
 )
-public class CustomizedFDSItemsActions implements FDSItemsActions {
+public class AdvancedFDSItemsActions implements FDSItemsActions {
 
 	@Override
 	public List<FDSActionDropdownItem> getFDSActionDropdownItems(

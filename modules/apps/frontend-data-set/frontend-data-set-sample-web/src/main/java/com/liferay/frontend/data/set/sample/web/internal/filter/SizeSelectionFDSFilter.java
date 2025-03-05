@@ -20,7 +20,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Marko Cikos
  */
 @Component(
-	property = "frontend.data.set.name=" + FDSSampleFDSNames.CUSTOMIZED,
+	property = "frontend.data.set.name=" + FDSSampleFDSNames.ADVANCED,
 	service = FDSFilter.class
 )
 public class SizeSelectionFDSFilter extends BaseSelectionFDSFilter {

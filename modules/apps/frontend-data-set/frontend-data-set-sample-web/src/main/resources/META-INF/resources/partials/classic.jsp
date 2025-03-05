@@ -7,6 +7,7 @@
 
 <%@ include file="/init.jsp" %>
 
+<p>Usage of classic display tag, with bulk/items actions, custom views, selection and propsTransformer </p>
 <frontend-data-set:classic-display
 	dataProviderKey="<%= FDSSampleFDSNames.CLASSIC %>"
 	id="<%= FDSSampleFDSNames.CLASSIC %>"

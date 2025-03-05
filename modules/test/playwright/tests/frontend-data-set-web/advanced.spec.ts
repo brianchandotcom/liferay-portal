@@ -34,7 +34,7 @@ test.beforeEach(async ({fdsSamplePage, page, site}) => {
 
 	fdsSamplePageURL = url;
 
-	await fdsSamplePage.selectTab('Customized');
+	await fdsSamplePage.selectTab('Advanced');
 
 	await expect(
 		page.getByText('This is a description for sample 1.')
@@ -739,7 +739,7 @@ accountSettingsTest(
 
 			await page.goto(fdsSamplePageURL);
 
-			await fdsSamplePage.selectTab('Customized');
+			await fdsSamplePage.selectTab('Advanced');
 
 			await expect(
 				page.getByText('Jan 1, 2020, 12:00:00 AM')
@@ -753,7 +753,7 @@ accountSettingsTest(
 
 			await page.goto(fdsSamplePageURL);
 
-			await fdsSamplePage.selectTab('Customized');
+			await fdsSamplePage.selectTab('Advanced');
 
 			await expect(
 				page.getByText('Jan 1, 2020, 1:00:00 AM')

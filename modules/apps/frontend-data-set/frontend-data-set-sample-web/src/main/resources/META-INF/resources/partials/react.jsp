@@ -11,17 +11,21 @@
 ReactFDSDisplayContext reactFDSDisplayContext = new ReactFDSDisplayContext(request);
 %>
 
-<react:component
-	module="{SampleReactFrontendDataSet} from frontend-data-set-sample-web"
-	props='<%=
-		HashMapBuilder.<String, Object>put(
-			"apiURL", reactFDSDisplayContext.getAPIURL()
-		).put(
-			"id", FDSSampleFDSNames.REACT
-		).put(
-			"style", "fluid"
-		).put(
-			"views", reactFDSDisplayContext.getViews()
-		).build()
-	%>'
-/>
+<p>React component tag configured with a simple set of properties</p>
+
+<div>
+	<react:component
+		module="{SampleReactFrontendDataSet} from frontend-data-set-sample-web"
+		props='<%=
+			HashMapBuilder.<String, Object>put(
+				"apiURL", reactFDSDisplayContext.getAPIURL()
+			).put(
+				"id", FDSSampleFDSNames.REACT
+			).put(
+				"style", "fluid"
+			).put(
+				"views", reactFDSDisplayContext.getViews()
+			).build()
+		%>'
+	/>
+</div>

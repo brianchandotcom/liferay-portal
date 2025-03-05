@@ -11,6 +11,7 @@
 FDSSampleDisplayContext fdsSampleDisplayContext = (FDSSampleDisplayContext)request.getAttribute(FDSSampleWebKeys.FDS_SAMPLE_DISPLAY_CONTEXT);
 %>
 
+<p>Headless display tag configured with a custom internal view via propsTransformer</p>
 <frontend-data-set:headless-display
 	apiURL="<%= fdsSampleDisplayContext.getAPIURL() %>"
 	id="<%= FDSSampleFDSNames.CUSTOM_INTERNAL_VIEW %>"

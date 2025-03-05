@@ -14,10 +14,10 @@ import org.osgi.service.component.annotations.Component;
  * @author Marko Cikos
  */
 @Component(
-	property = "frontend.data.set.name=" + FDSSampleFDSNames.CUSTOMIZED,
+	property = "frontend.data.set.name=" + FDSSampleFDSNames.ADVANCED,
 	service = SystemFDSEntry.class
 )
-public class CustomizedSystemFDSEntry implements SystemFDSEntry {
+public class AdvancedSystemFDSEntry implements SystemFDSEntry {
 
 	@Override
 	public String getAdditionalAPIURLParameters() {
@@ -26,12 +26,12 @@ public class CustomizedSystemFDSEntry implements SystemFDSEntry {
 
 	@Override
 	public String getDescription() {
-		return "This is the \"Customized\" sample of a frontend data set.";
+		return "This is the \"Advanced\" sample of a frontend data set.";
 	}
 
 	@Override
 	public String getName() {
-		return FDSSampleFDSNames.CUSTOMIZED;
+		return FDSSampleFDSNames.ADVANCED;
 	}
 
 	@Override
@@ -56,7 +56,7 @@ public class CustomizedSystemFDSEntry implements SystemFDSEntry {
 
 	@Override
 	public String getTitle() {
-		return "Customized Sample";
+		return "Advanced Sample";
 	}
 
 }

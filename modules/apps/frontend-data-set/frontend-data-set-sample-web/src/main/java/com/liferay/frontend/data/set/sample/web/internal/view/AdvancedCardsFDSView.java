@@ -7,7 +7,7 @@ package com.liferay.frontend.data.set.sample.web.internal.view;
 
 import com.liferay.frontend.data.set.sample.web.internal.constants.FDSSampleFDSNames;
 import com.liferay.frontend.data.set.view.FDSView;
-import com.liferay.frontend.data.set.view.list.BaseListFDSView;
+import com.liferay.frontend.data.set.view.cards.BaseCardsFDSView;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -15,10 +15,10 @@ import org.osgi.service.component.annotations.Component;
  * @author Javier de Arcos
  */
 @Component(
-	property = "frontend.data.set.name=" + FDSSampleFDSNames.CUSTOMIZED,
+	property = "frontend.data.set.name=" + FDSSampleFDSNames.ADVANCED,
 	service = FDSView.class
 )
-public class CustomizedListFDSView extends BaseListFDSView {
+public class AdvancedCardsFDSView extends BaseCardsFDSView {
 
 	@Override
 	public String getDescription() {

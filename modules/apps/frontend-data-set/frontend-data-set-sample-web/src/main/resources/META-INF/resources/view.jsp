@@ -8,7 +8,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String navigation = ParamUtil.getString(request, "navigation", "customized");
+String navigation = ParamUtil.getString(request, "navigation", "advanced");
 %>
 
 <clay:navigation-bar
@@ -17,9 +17,9 @@ String navigation = ParamUtil.getString(request, "navigation", "customized");
 			{
 				add(
 					navigationItem -> {
-						navigationItem.setActive(navigation.equals("customized"));
+						navigationItem.setActive(navigation.equals("advanced"));
 						navigationItem.setHref(renderResponse.createRenderURL());
-						navigationItem.setLabel("Customized");
+						navigationItem.setLabel("Advanced");
 					});
 				add(
 					navigationItem -> {
@@ -83,7 +83,7 @@ String navigation = ParamUtil.getString(request, "navigation", "customized");
 			<liferay-util:include page="/partials/react.jsp" servletContext="<%= application %>" />
 		</c:when>
 		<c:otherwise>
-			<liferay-util:include page="/partials/customized.jsp" servletContext="<%= application %>" />
+			<liferay-util:include page="/partials/advanced.jsp" servletContext="<%= application %>" />
 		</c:otherwise>
 	</c:choose>
 </clay:container-fluid>

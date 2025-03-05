@@ -11,6 +11,7 @@
 FDSSampleDisplayContext fdsSampleDisplayContext = (FDSSampleDisplayContext)request.getAttribute(FDSSampleWebKeys.FDS_SAMPLE_DISPLAY_CONTEXT);
 %>
 
+<p>Advanced usage of headless display tag, including bulk/items actions, custom views, selection and propsTransformer </p>
 <frontend-data-set:headless-display
 	additionalProps='<%=
 		HashMapBuilder.<String, Object>put(
@@ -22,9 +23,9 @@ FDSSampleDisplayContext fdsSampleDisplayContext = (FDSSampleDisplayContext)reque
 	customViewsEnabled="<%= true %>"
 	fdsActionDropdownItems="<%= fdsSampleDisplayContext.getFDSActionDropdownItems() %>"
 	formId="fm"
-	id="<%= FDSSampleFDSNames.CUSTOMIZED %>"
+	id="<%= FDSSampleFDSNames.ADVANCED %>"
 	itemsPerPage="<%= 10 %>"
-	propsTransformer="{CustomizedPropsTransformer} from frontend-data-set-sample-web"
+	propsTransformer="{AdvancedPropsTransformer} from frontend-data-set-sample-web"
 	selectedItemsKey="id"
 	selectionType="multiple"
 	style="fluid"

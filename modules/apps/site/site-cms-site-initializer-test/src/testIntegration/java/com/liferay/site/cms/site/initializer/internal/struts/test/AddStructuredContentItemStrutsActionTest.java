@@ -7,7 +7,7 @@ package com.liferay.site.cms.site.initializer.internal.struts.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
-import com.liferay.layout.page.template.test.util.DisplayPageTemplateTestUtil;
+import com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService;
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.object.constants.ObjectDefinitionConstants;
@@ -35,8 +35,6 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.FeatureFlags;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -93,7 +91,7 @@ public class AddStructuredContentItemStrutsActionTest {
 	}
 
 	@Test
-	@TestInfo("LPD-50664")
+	@TestInfo({"LPD-50664", "LPD-50665"})
 	public void testExecute() throws Exception {
 		List<ObjectEntry> objectEntries =
 			_objectEntryLocalService.getObjectEntries(
@@ -102,59 +100,18 @@ public class AddStructuredContentItemStrutsActionTest {
 
 		Assert.assertTrue(objectEntries.isEmpty());
 
-		HttpServletRequest httpServletRequest = _getMockHttpServletRequest();
-		MockHttpServletResponse mockHttpServletResponse =
-			new MockHttpServletResponse();
-
-		_addStructuredContentItemStrutsAction.execute(
-			httpServletRequest, mockHttpServletResponse);
-
-		objectEntries = _objectEntryLocalService.getObjectEntries(
-			_group.getGroupId(), _objectDefinition.getObjectDefinitionId(),
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		Assert.assertTrue(objectEntries.isEmpty());
-
-		Assert.assertTrue(
-			Validator.isNull(mockHttpServletResponse.getRedirectedUrl()));
-
 		long classNameId = _portal.getClassNameId(
 			_objectDefinition.getClassName());
 
-		LayoutPageTemplateEntry layoutPageTemplateEntry =
-			DisplayPageTemplateTestUtil.addDisplayPageTemplate(
-				_group.getGroupId(), classNameId, 0, true,
-				WorkflowConstants.STATUS_APPROVED);
+		HttpServletRequest httpServletRequest = _getMockHttpServletRequest();
 
-		mockHttpServletResponse = new MockHttpServletResponse();
-
-		_addStructuredContentItemStrutsAction.execute(
-			httpServletRequest, mockHttpServletResponse);
-
-		objectEntries = _objectEntryLocalService.getObjectEntries(
-			_group.getGroupId(), _objectDefinition.getObjectDefinitionId(),
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		Assert.assertEquals(objectEntries.toString(), 1, objectEntries.size());
-
-		ObjectEntry objectEntry = objectEntries.get(0);
-
-		Assert.assertTrue(objectEntry.isDraft());
-
-		String urlSeparator =
-			FriendlyURLResolverConstants.URL_SEPARATOR_CUSTOM_ASSET;
-		Layout layout = _layoutLocalService.getLayout(
-			layoutPageTemplateEntry.getPlid());
-
-		Assert.assertEquals(
-			StringBundler.concat(
-				PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING,
-				_group.getFriendlyURL(),
-				urlSeparator.substring(0, urlSeparator.length() - 1),
-				layout.getFriendlyURL(_portal.getSiteDefaultLocale(_group)),
-				StringPool.SLASH, classNameId, StringPool.SLASH,
-				objectEntry.getObjectEntryId()),
-			mockHttpServletResponse.getRedirectedUrl());
+		_testExecute(classNameId, 1, null, httpServletRequest);
+		_testExecute(
+			classNameId, 2,
+			_layoutPageTemplateEntryLocalService.
+				fetchDefaultLayoutPageTemplateEntry(
+					_group.getGroupId(), classNameId, 0),
+			httpServletRequest);
 	}
 
 	private HttpServletRequest _getMockHttpServletRequest() throws Exception {
@@ -174,6 +131,61 @@ public class AddStructuredContentItemStrutsActionTest {
 		return mockHttpServletRequest;
 	}
 
+	private void _testExecute(
+			long classNameId, int count,
+			LayoutPageTemplateEntry expectedLayoutPageTemplateEntry,
+			HttpServletRequest httpServletRequest)
+		throws Exception {
+
+		MockHttpServletResponse mockHttpServletResponse =
+			new MockHttpServletResponse();
+
+		_addStructuredContentItemStrutsAction.execute(
+			httpServletRequest, mockHttpServletResponse);
+
+		String urlSeparator =
+			FriendlyURLResolverConstants.URL_SEPARATOR_CUSTOM_ASSET;
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			_layoutPageTemplateEntryLocalService.
+				fetchDefaultLayoutPageTemplateEntry(
+					_group.getGroupId(), classNameId, 0);
+
+		if (expectedLayoutPageTemplateEntry != null) {
+			Assert.assertEquals(
+				expectedLayoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
+		}
+		else {
+			Assert.assertNotNull(layoutPageTemplateEntry);
+		}
+
+		Layout layout = _layoutLocalService.getLayout(
+			layoutPageTemplateEntry.getPlid());
+
+		List<ObjectEntry> objectEntries =
+			_objectEntryLocalService.getObjectEntries(
+				_group.getGroupId(), _objectDefinition.getObjectDefinitionId(),
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		Assert.assertEquals(
+			objectEntries.toString(), count, objectEntries.size());
+
+		ObjectEntry objectEntry = objectEntries.get(objectEntries.size() - 1);
+
+		Assert.assertTrue(objectEntry.isDraft());
+
+		Assert.assertEquals(
+			StringBundler.concat(
+				PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING,
+				_group.getFriendlyURL(),
+				urlSeparator.substring(0, urlSeparator.length() - 1),
+				layout.getFriendlyURL(_portal.getSiteDefaultLocale(_group)),
+				StringPool.SLASH, classNameId, StringPool.SLASH,
+				objectEntry.getObjectEntryId()),
+			mockHttpServletResponse.getRedirectedUrl());
+	}
+
 	@Inject(filter = "path=/cms/add_structured_content_item")
 	private StrutsAction _addStructuredContentItemStrutsAction;
 
@@ -187,6 +199,10 @@ public class AddStructuredContentItemStrutsActionTest {
 
 	@Inject
 	private LayoutLocalService _layoutLocalService;
+
+	@Inject
+	private LayoutPageTemplateEntryLocalService
+		_layoutPageTemplateEntryLocalService;
 
 	@DeleteAfterTestRun
 	private ObjectDefinition _objectDefinition;

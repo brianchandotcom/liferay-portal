@@ -6,7 +6,7 @@
 import ClayButton from '@clayui/button';
 import {ClayInput} from '@clayui/form';
 import classNames from 'classnames';
-import {openSelectionModal} from 'frontend-js-web';
+import {openSelectionModal} from 'frontend-js-components-web';
 import propTypes from 'prop-types';
 import React from 'react';
 

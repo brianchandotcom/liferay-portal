@@ -11,13 +11,11 @@ import ClayLocalizedInput from '@clayui/localized-input';
 import classNames from 'classnames';
 import {FieldArray, withFormik} from 'formik';
 import {
-	debounce,
-	fetch,
-	navigate,
 	openConfirmModal,
 	openModal,
 	openToast,
-} from 'frontend-js-web';
+} from 'frontend-js-components-web';
+import {debounce, fetch, navigate} from 'frontend-js-web';
 import PropTypes from 'prop-types';
 import React, {useState} from 'react';
 

@@ -7,7 +7,6 @@ package com.liferay.source.formatter.check;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -45,10 +44,6 @@ public class CSPTagIllegalAttributesCheck extends BaseTagAttributesCheck {
 				_IGNORED_JSP_TAG_PREFIXES_KEY, absolutePath);
 			liferayUiCSPTagClose = "</liferay-ui:csp>";
 			liferayUiCSPTagOpen = "<liferay-ui:csp>";
-		}
-
-		if (ListUtil.isEmpty(ignoredTagPrefixes)) {
-			return content;
 		}
 
 		String lowerCaseContent = StringUtil.toLowerCase(content);

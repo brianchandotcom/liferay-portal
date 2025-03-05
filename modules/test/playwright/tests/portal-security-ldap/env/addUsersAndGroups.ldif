@@ -1,0 +1,46 @@
+# Define People
+dn: ou=People,dc=example,dc=com
+objectClass: organizationalUnit
+ou: People
+
+# User ldapuser1
+dn: uid=ldapuser1,ou=People,dc=example,dc=com
+cn: ldapuser1
+givenName: first
+sn: last
+mail: ldapuser1@liferay.com
+uid: ldapuser1
+objectClass: top
+objectClass: inetOrgPerson
+userPassword: test
+
+# User ldapuser2
+dn: uid=ldapuser2,ou=People,dc=example,dc=com
+cn: ldapuser2
+givenName: first
+sn: last
+mail: ldapuser2@liferay.com
+uid: ldapuser2
+objectClass: top
+objectClass: inetOrgPerson
+userPassword: test
+
+# Define Groups
+dn: ou=Groups,dc=example,dc=com
+objectClass: organizationalUnit
+ou: Groups
+
+# Group ldapgroup1
+dn: cn=ldapgroup1,ou=Groups,dc=example,dc=com
+cn: ldapgroup1
+uniqueMember: uid=ldapuser1,ou=People,dc=example,dc=com
+objectClass: groupOfUniqueNames
+objectClass: top
+
+# Group ldapgroup2
+dn: cn=ldapgroup2,ou=Groups,dc=example,dc=com
+cn: ldapgroup2
+uniqueMember: uid=ldapuser1,ou=People,dc=example,dc=com
+uniqueMember: uid=ldapuser2,ou=People,dc=example,dc=com
+objectClass: groupOfUniqueNames
+objectClass: top

@@ -1,0 +1,4 @@
+cn=ldapgroup1,ou=Groups,dc=example,dc=com
+cn=ldapgroup2,ou=Groups,dc=example,dc=com
+uid=ldapuser1,ou=People,dc=example,dc=com
+uid=ldapuser2,ou=People,dc=example,dc=com

@@ -8,6 +8,7 @@ package com.liferay.search.experiences.internal.blueprint.parameter.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
@@ -22,6 +23,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchResponse;
@@ -76,6 +78,8 @@ public class SXPParameterDataCreatorTest {
 		_serviceContext = ServiceContextTestUtil.getServiceContext(
 			_group, _user.getUserId());
 
+		Class<?> clazz = getClass();
+
 		_sxpBlueprint = _sxpBlueprintLocalService.addSXPBlueprint(
 			null, _user.getUserId(),
 			JSONUtil.put(
@@ -84,10 +88,17 @@ public class SXPParameterDataCreatorTest {
 					"searchableAssetTypes",
 					JSONUtil.put("com.liferay.journal.model.JournalArticle"))
 			).put(
-				"queryConfiguration", JSONUtil.put("applyIndexerClauses", true)
+				"queryConfiguration", JSONUtil.put("applyIndexerClauses", false)
 			).toString(),
 			Collections.singletonMap(LocaleUtil.US, StringPool.BLANK),
-			StringPool.BLANK, StringPool.BLANK,
+			StringUtil.replace(
+				StringUtil.read(
+					clazz,
+					StringBundler.concat(
+						"dependencies/", clazz.getSimpleName(), ".json")),
+				"[$SCOPE_GROUP_EXTERNAL_REFERENCE_CODE$]",
+				_group.getExternalReferenceCode()),
+			StringPool.BLANK,
 			Collections.singletonMap(
 				LocaleUtil.US, RandomTestUtil.randomString()),
 			_serviceContext);
@@ -100,14 +111,14 @@ public class SXPParameterDataCreatorTest {
 			Collections.singletonMap(LocaleUtil.US, "break"), StringPool.BLANK,
 			false, true);
 
-		_assertSearch("[break]", "/\\$[] break");
+		_assertSearch("[break]", "/\\$$[] break");
 	}
 
 	@Test
 	public void testPhraseSearch() throws Exception {
 		_addJournalArticle(
 			_group.getGroupId(), 0,
-			Collections.singletonMap(LocaleUtil.US, "phrase"), StringPool.BLANK,
+			Collections.singletonMap(LocaleUtil.US, "34"), StringPool.BLANK,
 			false, true);
 
 		_addJournalArticle(

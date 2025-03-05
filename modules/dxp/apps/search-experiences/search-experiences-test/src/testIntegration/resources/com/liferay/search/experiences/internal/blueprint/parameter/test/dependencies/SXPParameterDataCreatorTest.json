@@ -1,0 +1,52 @@
+[
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"applyIndexerClauses": false,
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "must",
+								"query": {
+									"match": {
+										"localized_title_${context.language_id}": {
+											"boost": 2,
+											"operator": "or",
+											"query": "${keywords}"
+										}
+									}
+								}
+							}
+						],
+						"enabled": true
+					}
+				]
+			}
+		}
+	},
+	{
+		"configurationEntry": {
+			"queryConfiguration": {
+				"queryEntries": [
+					{
+						"clauses": [
+							{
+								"context": "query",
+								"occur": "filter",
+								"query": {
+									"terms": {
+										"scopeGroupExternalReferenceCode": [
+											"[$SCOPE_GROUP_EXTERNAL_REFERENCE_CODE$]"
+										]
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		}
+	}
+]

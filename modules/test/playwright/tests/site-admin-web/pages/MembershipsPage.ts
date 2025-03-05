@@ -94,6 +94,24 @@ export class MembershipsPage {
 		await this.productMenuPage.goToMemberships();
 	}
 
+	async removeSiteMembershipFromUser(userName: String) {
+		await clickAndExpectToBeVisible({
+			autoClick: true,
+			target: this.page.getByRole('menuitem', {
+				exact: true,
+				name: 'Remove Membership',
+			}),
+			timeout: 500,
+			trigger: this.page
+				.locator(
+					'[id="_com_liferay_site_memberships_web_portlet_SiteMembershipsPortlet_users_' +
+						userName +
+						'"]'
+				)
+				.getByLabel('More actions'),
+		});
+	}
+
 	async removeSiteAdministratorRole() {
 		this.page.once('dialog', (dialog) => {
 			dialog.accept();

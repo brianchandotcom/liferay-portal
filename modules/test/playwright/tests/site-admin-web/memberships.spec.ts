@@ -214,3 +214,34 @@ test(
 		);
 	}
 );
+
+test(
+	'Able to remove membership after assigning role to user',
+	{
+		tag: '@LPD-50734',
+	},
+	async ({apiHelpers, membershipsPage, page}) => {
+		const user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+		const siteId = await page.evaluate(() => {
+			return String(Liferay.ThemeDisplay.getSiteGroupId());
+		});
+
+		const siteRole =
+			await apiHelpers.headlessAdminUser.getRoleByName('Site Member');
+
+		await apiHelpers.headlessAdminUser.assignUserToSite(
+			siteRole.id,
+			siteId,
+			user.id
+		);
+
+		await membershipsPage.goto();
+		await membershipsPage.assignAllRolesToUser(user.alternateName);
+		await membershipsPage.removeSiteMembershipFromUser(user.alternateName);
+
+		await expect(page.getByText(user.name)).not.toBeVisible();
+
+		await apiHelpers.headlessAdminUser.deleteUserAccount(Number(user.id));
+	}
+);

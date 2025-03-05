@@ -7,7 +7,6 @@ package com.liferay.site.cms.site.initializer.internal.display.context;
 
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectDefinition;
@@ -61,62 +60,45 @@ public class ContentsSectionDisplayContext extends BaseSectionDisplayContext {
 
 	@Override
 	public CreationMenu getCreationMenu() {
-		CreationMenuBuilder.CreationMenuWrapper creationMenuWrapper =
-			CreationMenuBuilder.addPrimaryDropdownItem(
-				dropdownItem -> {
-					dropdownItem.setIcon("forms");
-					dropdownItem.setLabel(
-						_language.get(httpServletRequest, "basic-content"));
-				}
-			).addPrimaryDropdownItem(
-				dropdownItem -> {
-					dropdownItem.setIcon("blogs");
-					dropdownItem.setLabel(
-						_language.get(httpServletRequest, "blog"));
-				}
-			).addPrimaryDropdownItem(
-				dropdownItem -> {
-					dropdownItem.setIcon("wiki");
-					dropdownItem.setLabel(
-						_language.get(httpServletRequest, "knowledge-base"));
-				}
-			);
-
 		String url = _getAddStructuredContentItemURL();
 
-		for (ObjectDefinition objectDefinition :
-				_objectDefinitionService.getObjectDefinitions(
-					_themeDisplay.getCompanyId(), QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS)) {
+		return new CreationMenu() {
+			{
+				addPrimaryDropdownItem(
+					dropdownItem -> {
+						dropdownItem.putData("action", "createFolder");
+						dropdownItem.setIcon("folder");
+						dropdownItem.setLabel(
+							_language.get(httpServletRequest, "folder"));
+					});
 
-			if (!objectDefinition.isApproved() || objectDefinition.isSystem() ||
-				!Objects.equals(
-					objectDefinition.getScope(),
-					ObjectDefinitionConstants.SCOPE_SITE) ||
-				!objectDefinition.isEnableObjectEntryDraft()) {
+				for (ObjectDefinition objectDefinition :
+						_objectDefinitionService.getObjectDefinitions(
+							_themeDisplay.getCompanyId(), QueryUtil.ALL_POS,
+							QueryUtil.ALL_POS)) {
 
-				continue;
+					if (!objectDefinition.isApproved() ||
+						objectDefinition.isSystem() ||
+						!Objects.equals(
+							objectDefinition.getScope(),
+							ObjectDefinitionConstants.SCOPE_SITE) ||
+						!objectDefinition.isEnableObjectEntryDraft()) {
+
+						continue;
+					}
+
+					addPrimaryDropdownItem(
+						dropdownItem -> {
+							dropdownItem.setHref(
+								url + objectDefinition.getObjectDefinitionId());
+							dropdownItem.setIcon("forms");
+							dropdownItem.setLabel(
+								objectDefinition.getLabel(
+									_themeDisplay.getLocale()));
+						});
+				}
 			}
-
-			creationMenuWrapper.addPrimaryDropdownItem(
-				dropdownItem -> {
-					dropdownItem.setHref(
-						url + objectDefinition.getObjectDefinitionId());
-					dropdownItem.setIcon("forms");
-					dropdownItem.setLabel(
-						objectDefinition.getLabel(_themeDisplay.getLocale()));
-				});
-		}
-
-		creationMenuWrapper.addPrimaryDropdownItem(
-			dropdownItem -> {
-				dropdownItem.putData("action", "createFolder");
-				dropdownItem.setIcon("folder");
-				dropdownItem.setLabel(
-					_language.get(httpServletRequest, "folder"));
-			});
-
-		return creationMenuWrapper.build();
+		};
 	}
 
 	@Override

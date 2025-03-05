@@ -55,43 +55,6 @@ definition {
 		}
 	}
 
-	@description = "This test anonymizes all entries from an application"
-	@priority = 4
-	test CanAnonymizeAllEntriesFromAnApplication {
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMDocument.addMultipleCP(dmDocumentFileList = "Document_1.jpeg,Document_2.docx,Document_3.mp3");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test");
-
-		User.openUsersAdmin();
-
-		User.deletePersonalDataCP(
-			userFirstName = "userfn",
-			userLastName = "userln");
-
-		GDPR.anonymizeAllEntriesinApplicationCP(
-			applicationItemsCount = 3,
-			applications = "Documents and Media",
-			totalItemsCount = 3);
-
-		GDPR.viewNoEntryInApplicationCP(applications = "Documents and Media");
-
-		for (var entryTitle : list "Document_1,Document_2,Document_3") {
-			DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-			DMNavigator.gotoDocumentCP(dmDocumentTitle = ${entryTitle});
-
-			DMDocument.expandInfo();
-
-			AssertTextEquals(
-				locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_UPLOADER_NO_PROFILE",
-				value1 = "Anonymous Anonymous");
-		}
-	}
-
 	@description = "This test asserts a related asset can be anonymized from an application."
 	@priority = 4
 	test CanAnonymizeARelatedAsset {

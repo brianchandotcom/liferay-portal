@@ -100,6 +100,7 @@ type BaseField = {
 export type TextField = BaseField & {
 	settings: {
 		maxLength?: number;
+		showCounter?: boolean;
 		uniqueValues?: boolean;
 	};
 	type: 'text';

@@ -192,55 +192,67 @@ public class ObjectDefinitionModelImpl
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long EXTERNALREFERENCECODE_COLUMN_BITMASK = 16L;
+	public static final long ENABLEOBJECTENTRYDRAFT_COLUMN_BITMASK = 16L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long MODIFIABLE_COLUMN_BITMASK = 32L;
+	public static final long EXTERNALREFERENCECODE_COLUMN_BITMASK = 32L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long NAME_COLUMN_BITMASK = 64L;
+	public static final long MODIFIABLE_COLUMN_BITMASK = 64L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long OBJECTFOLDERID_COLUMN_BITMASK = 128L;
+	public static final long NAME_COLUMN_BITMASK = 128L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long ROOTOBJECTDEFINITIONID_COLUMN_BITMASK = 256L;
+	public static final long OBJECTFOLDERID_COLUMN_BITMASK = 256L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long STATUS_COLUMN_BITMASK = 512L;
+	public static final long ROOTOBJECTDEFINITIONID_COLUMN_BITMASK = 512L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long SYSTEM_COLUMN_BITMASK = 1024L;
+	public static final long SCOPE_COLUMN_BITMASK = 1024L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long USERID_COLUMN_BITMASK = 2048L;
+	public static final long STATUS_COLUMN_BITMASK = 2048L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
 	 */
 	@Deprecated
-	public static final long UUID_COLUMN_BITMASK = 4096L;
+	public static final long SYSTEM_COLUMN_BITMASK = 4096L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long USERID_COLUMN_BITMASK = 8192L;
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link #getColumnBitmask(String)}
+	 */
+	@Deprecated
+	public static final long UUID_COLUMN_BITMASK = 16384L;
 
 	/**
 	 * @deprecated As of Athanasius (7.3.x), with no direct replacement
@@ -1159,6 +1171,16 @@ public class ObjectDefinitionModelImpl
 		_enableObjectEntryDraft = enableObjectEntryDraft;
 	}
 
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public boolean getOriginalEnableObjectEntryDraft() {
+		return GetterUtil.getBoolean(
+			this.<Boolean>getColumnOriginalValue("enableObjectEntryDraft"));
+	}
+
 	@JSON
 	@Override
 	public boolean getEnableObjectEntryHistory() {
@@ -1580,6 +1602,15 @@ public class ObjectDefinitionModelImpl
 		}
 
 		_scope = scope;
+	}
+
+	/**
+	 * @deprecated As of Athanasius (7.3.x), replaced by {@link
+	 *             #getColumnOriginalValue(String)}
+	 */
+	@Deprecated
+	public String getOriginalScope() {
+		return getColumnOriginalValue("scope");
 	}
 
 	@JSON

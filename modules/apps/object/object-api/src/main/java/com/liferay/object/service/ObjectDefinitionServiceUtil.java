@@ -123,6 +123,16 @@ public class ObjectDefinitionServiceUtil {
 		return getService().getObjectDefinitions(companyId, start, end);
 	}
 
+	public static List<ObjectDefinition> getObjectDefinitions(
+		long companyId, long[] objectFolderIds, boolean active,
+		boolean enableObjectEntryDraft, String scope, int status, int start,
+		int end) {
+
+		return getService().getObjectDefinitions(
+			companyId, objectFolderIds, active, enableObjectEntryDraft, scope,
+			status, start, end);
+	}
+
 	public static int getObjectDefinitionsCount() throws PortalException {
 		return getService().getObjectDefinitionsCount();
 	}

@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -13016,6 +13017,1995 @@ public class ObjectDefinitionPersistenceImpl
 	private static final String _FINDER_COLUMN_C_A_S_S_STATUS_2 =
 		"objectDefinition.status = ?";
 
+	private FinderPath _finderPathWithPaginationFindByC_O_A_E_S_S;
+	private FinderPath _finderPathWithoutPaginationFindByC_O_A_E_S_S;
+	private FinderPath _finderPathCountByC_O_A_E_S_S;
+	private FinderPath _finderPathWithPaginationCountByC_O_A_E_S_S;
+
+	/**
+	 * Returns all the object definitions where companyId = &#63; and objectFolderId = &#63; and active = &#63; and enableObjectEntryDraft = &#63; and scope = &#63; and status = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param objectFolderId the object folder ID
+	 * @param active the active
+	 * @param enableObjectEntryDraft the enable object entry draft
+	 * @param scope the scope
+	 * @param status the status
+	 * @return the matching object definitions
+	 */
+	@Override
+	public List<ObjectDefinition> findByC_O_A_E_S_S(
+		long companyId, long objectFolderId, boolean active,
+		boolean enableObjectEntryDraft, String scope, int status) {
+
+		return findByC_O_A_E_S_S(
+			companyId, objectFolderId, active, enableObjectEntryDraft, scope,
+			status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the object definitions where companyId = &#63; and objectFolderId = &#63; and active = &#63; and enableObjectEntryDraft = &#63; and scope = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectDefinitionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param objectFolderId the object folder ID
+	 * @param active the active
+	 * @param enableObjectEntryDraft the enable object entry draft
+	 * @param scope the scope
+	 * @param status the status
+	 * @param start the lower bound of the range of object definitions
+	 * @param end the upper bound of the range of object definitions (not inclusive)
+	 * @return the range of matching object definitions
+	 */
+	@Override
+	public List<ObjectDefinition> findByC_O_A_E_S_S(
+		long companyId, long objectFolderId, boolean active,
+		boolean enableObjectEntryDraft, String scope, int status, int start,
+		int end) {
+
+		return findByC_O_A_E_S_S(
+			companyId, objectFolderId, active, enableObjectEntryDraft, scope,
+			status, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the object definitions where companyId = &#63; and objectFolderId = &#63; and active = &#63; and enableObjectEntryDraft = &#63; and scope = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectDefinitionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param objectFolderId the object folder ID
+	 * @param active the active
+	 * @param enableObjectEntryDraft the enable object entry draft
+	 * @param scope the scope
+	 * @param status the status
+	 * @param start the lower bound of the range of object definitions
+	 * @param end the upper bound of the range of object definitions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching object definitions
+	 */
+	@Override
+	public List<ObjectDefinition> findByC_O_A_E_S_S(
+		long companyId, long objectFolderId, boolean active,
+		boolean enableObjectEntryDraft, String scope, int status, int start,
+		int end, OrderByComparator<ObjectDefinition> orderByComparator) {
+
+		return findByC_O_A_E_S_S(
+			companyId, objectFolderId, active, enableObjectEntryDraft, scope,
+			status, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the object definitions where companyId = &#63; and objectFolderId = &#63; and active = &#63; and enableObjectEntryDraft = &#63; and scope = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectDefinitionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param objectFolderId the object folder ID
+	 * @param active the active
+	 * @param enableObjectEntryDraft the enable object entry draft
+	 * @param scope the scope
+	 * @param status the status
+	 * @param start the lower bound of the range of object definitions
+	 * @param end the upper bound of the range of object definitions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching object definitions
+	 */
+	@Override
+	public List<ObjectDefinition> findByC_O_A_E_S_S(
+		long companyId, long objectFolderId, boolean active,
+		boolean enableObjectEntryDraft, String scope, int status, int start,
+		int end, OrderByComparator<ObjectDefinition> orderByComparator,
+		boolean useFinderCache) {
+
+		scope = Objects.toString(scope, "");
+
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByC_O_A_E_S_S;
+				finderArgs = new Object[] {
+					companyId, objectFolderId, active, enableObjectEntryDraft,
+					scope, status
+				};
+			}
+		}
+		else if (useFinderCache) {
+			finderPath = _finderPathWithPaginationFindByC_O_A_E_S_S;
+			finderArgs = new Object[] {
+				companyId, objectFolderId, active, enableObjectEntryDraft,
+				scope, status, start, end, orderByComparator
+			};
+		}
+
+		List<ObjectDefinition> list = null;
+
+		if (useFinderCache) {
+			list = (List<ObjectDefinition>)finderCache.getResult(
+				finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (ObjectDefinition objectDefinition : list) {
+					if ((companyId != objectDefinition.getCompanyId()) ||
+						(objectFolderId !=
+							objectDefinition.getObjectFolderId()) ||
+						(active != objectDefinition.isActive()) ||
+						(enableObjectEntryDraft !=
+							objectDefinition.isEnableObjectEntryDraft()) ||
+						!scope.equals(objectDefinition.getScope()) ||
+						(status != objectDefinition.getStatus())) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler sb = null;
+
+			if (orderByComparator != null) {
+				sb = new StringBundler(
+					8 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				sb = new StringBundler(8);
+			}
+
+			sb.append(_SQL_SELECT_OBJECTDEFINITION_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_O_A_E_S_S_COMPANYID_2);
+
+			sb.append(_FINDER_COLUMN_C_O_A_E_S_S_OBJECTFOLDERID_2);
+
+			sb.append(_FINDER_COLUMN_C_O_A_E_S_S_ACTIVE_2);
+
+			sb.append(_FINDER_COLUMN_C_O_A_E_S_S_ENABLEOBJECTENTRYDRAFT_2);
+
+			boolean bindScope = false;
+
+			if (scope.isEmpty()) {
+				sb.append(_FINDER_COLUMN_C_O_A_E_S_S_SCOPE_3);
+			}
+			else {
+				bindScope = true;
+
+				sb.append(_FINDER_COLUMN_C_O_A_E_S_S_SCOPE_2);
+			}
+
+			sb.append(_FINDER_COLUMN_C_O_A_E_S_S_STATUS_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else {
+				sb.append(ObjectDefinitionModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(companyId);
+
+				queryPos.add(objectFolderId);
+
+				queryPos.add(active);
+
+				queryPos.add(enableObjectEntryDraft);
+
+				if (bindScope) {
+					queryPos.add(scope);
+				}
+
+				queryPos.add(status);
+
+				list = (List<ObjectDefinition>)QueryUtil.list(
+					query, getDialect(), start, end);
+
+				cacheResult(list);
+
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first object definition in the ordered set where companyId = &#63; and objectFolderId = &#63; and active = &#63; and enableObjectEntryDraft = &#63; and scope = &#63; and status = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param objectFolderId the object folder ID
+	 * @param active the active
+	 * @param enableObjectEntryDraft the enable object entry draft
+	 * @param scope the scope
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching object definition
+	 * @throws NoSuchObjectDefinitionException if a matching object definition could not be found
+	 */
+	@Override
+	public ObjectDefinition findByC_O_A_E_S_S_First(
+			long companyId, long objectFolderId, boolean active,
+			boolean enableObjectEntryDraft, String scope, int status,
+			OrderByComparator<ObjectDefinition> orderByComparator)
+		throws NoSuchObjectDefinitionException {
+
+		ObjectDefinition objectDefinition = fetchByC_O_A_E_S_S_First(
+			companyId, objectFolderId, active, enableObjectEntryDraft, scope,
+			status, orderByComparator);
+
+		if (objectDefinition != null) {
+			return objectDefinition;
+		}
+
+		StringBundler sb = new StringBundler(14);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("companyId=");
+		sb.append(companyId);
+
+		sb.append(", objectFolderId=");
+		sb.append(objectFolderId);
+
+		sb.append(", active=");
+		sb.append(active);
+
+		sb.append(", enableObjectEntryDraft=");
+		sb.append(enableObjectEntryDraft);
+
+		sb.append(", scope=");
+		sb.append(scope);
+
+		sb.append(", status=");
+		sb.append(status);
+
+		sb.append("}");
+
+		throw new NoSuchObjectDefinitionException(sb.toString());
+	}
+
+	/**
+	 * Returns the first object definition in the ordered set where companyId = &#63; and objectFolderId = &#63; and active = &#63; and enableObjectEntryDraft = &#63; and scope = &#63; and status = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param objectFolderId the object folder ID
+	 * @param active the active
+	 * @param enableObjectEntryDraft the enable object entry draft
+	 * @param scope the scope
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching object definition, or <code>null</code> if a matching object definition could not be found
+	 */
+	@Override
+	public ObjectDefinition fetchByC_O_A_E_S_S_First(
+		long companyId, long objectFolderId, boolean active,
+		boolean enableObjectEntryDraft, String scope, int status,
+		OrderByComparator<ObjectDefinition> orderByComparator) {
+
+		List<ObjectDefinition> list = findByC_O_A_E_S_S(
+			companyId, objectFolderId, active, enableObjectEntryDraft, scope,
+			status, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last object definition in the ordered set where companyId = &#63; and objectFolderId = &#63; and active = &#63; and enableObjectEntryDraft = &#63; and scope = &#63; and status = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param objectFolderId the object folder ID
+	 * @param active the active
+	 * @param enableObjectEntryDraft the enable object entry draft
+	 * @param scope the scope
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching object definition
+	 * @throws NoSuchObjectDefinitionException if a matching object definition could not be found
+	 */
+	@Override
+	public ObjectDefinition findByC_O_A_E_S_S_Last(
+			long companyId, long objectFolderId, boolean active,
+			boolean enableObjectEntryDraft, String scope, int status,
+			OrderByComparator<ObjectDefinition> orderByComparator)
+		throws NoSuchObjectDefinitionException {
+
+		ObjectDefinition objectDefinition = fetchByC_O_A_E_S_S_Last(
+			companyId, objectFolderId, active, enableObjectEntryDraft, scope,
+			status, orderByComparator);
+
+		if (objectDefinition != null) {
+			return objectDefinition;
+		}
+
+		StringBundler sb = new StringBundler(14);
+
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		sb.append("companyId=");
+		sb.append(companyId);
+
+		sb.append(", objectFolderId=");
+		sb.append(objectFolderId);
+
+		sb.append(", active=");
+		sb.append(active);
+
+		sb.append(", enableObjectEntryDraft=");
+		sb.append(enableObjectEntryDraft);
+
+		sb.append(", scope=");
+		sb.append(scope);
+
+		sb.append(", status=");
+		sb.append(status);
+
+		sb.append("}");
+
+		throw new NoSuchObjectDefinitionException(sb.toString());
+	}
+
+	/**
+	 * Returns the last object definition in the ordered set where companyId = &#63; and objectFolderId = &#63; and active = &#63; and enableObjectEntryDraft = &#63; and scope = &#63; and status = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param objectFolderId the object folder ID
+	 * @param active the active
+	 * @param enableObjectEntryDraft the enable object entry draft
+	 * @param scope the scope
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching object definition, or <code>null</code> if a matching object definition could not be found
+	 */
+	@Override
+	public ObjectDefinition fetchByC_O_A_E_S_S_Last(
+		long companyId, long objectFolderId, boolean active,
+		boolean enableObjectEntryDraft, String scope, int status,
+		OrderByComparator<ObjectDefinition> orderByComparator) {
+
+		int count = countByC_O_A_E_S_S(
+			companyId, objectFolderId, active, enableObjectEntryDraft, scope,
+			status);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<ObjectDefinition> list = findByC_O_A_E_S_S(
+			companyId, objectFolderId, active, enableObjectEntryDraft, scope,
+			status, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the object definitions before and after the current object definition in the ordered set where companyId = &#63; and objectFolderId = &#63; and active = &#63; and enableObjectEntryDraft = &#63; and scope = &#63; and status = &#63;.
+	 *
+	 * @param objectDefinitionId the primary key of the current object definition
+	 * @param companyId the company ID
+	 * @param objectFolderId the object folder ID
+	 * @param active the active
+	 * @param enableObjectEntryDraft the enable object entry draft
+	 * @param scope the scope
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next object definition
+	 * @throws NoSuchObjectDefinitionException if a object definition with the primary key could not be found
+	 */
+	@Override
+	public ObjectDefinition[] findByC_O_A_E_S_S_PrevAndNext(
+			long objectDefinitionId, long companyId, long objectFolderId,
+			boolean active, boolean enableObjectEntryDraft, String scope,
+			int status, OrderByComparator<ObjectDefinition> orderByComparator)
+		throws NoSuchObjectDefinitionException {
+
+		scope = Objects.toString(scope, "");
+
+		ObjectDefinition objectDefinition = findByPrimaryKey(
+			objectDefinitionId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			ObjectDefinition[] array = new ObjectDefinitionImpl[3];
+
+			array[0] = getByC_O_A_E_S_S_PrevAndNext(
+				session, objectDefinition, companyId, objectFolderId, active,
+				enableObjectEntryDraft, scope, status, orderByComparator, true);
+
+			array[1] = objectDefinition;
+
+			array[2] = getByC_O_A_E_S_S_PrevAndNext(
+				session, objectDefinition, companyId, objectFolderId, active,
+				enableObjectEntryDraft, scope, status, orderByComparator,
+				false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected ObjectDefinition getByC_O_A_E_S_S_PrevAndNext(
+		Session session, ObjectDefinition objectDefinition, long companyId,
+		long objectFolderId, boolean active, boolean enableObjectEntryDraft,
+		String scope, int status,
+		OrderByComparator<ObjectDefinition> orderByComparator,
+		boolean previous) {
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				9 + (orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			sb = new StringBundler(8);
+		}
+
+		sb.append(_SQL_SELECT_OBJECTDEFINITION_WHERE);
+
+		sb.append(_FINDER_COLUMN_C_O_A_E_S_S_COMPANYID_2);
+
+		sb.append(_FINDER_COLUMN_C_O_A_E_S_S_OBJECTFOLDERID_2);
+
+		sb.append(_FINDER_COLUMN_C_O_A_E_S_S_ACTIVE_2);
+
+		sb.append(_FINDER_COLUMN_C_O_A_E_S_S_ENABLEOBJECTENTRYDRAFT_2);
+
+		boolean bindScope = false;
+
+		if (scope.isEmpty()) {
+			sb.append(_FINDER_COLUMN_C_O_A_E_S_S_SCOPE_3);
+		}
+		else {
+			bindScope = true;
+
+			sb.append(_FINDER_COLUMN_C_O_A_E_S_S_SCOPE_2);
+		}
+
+		sb.append(_FINDER_COLUMN_C_O_A_E_S_S_STATUS_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				sb.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			sb.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC);
+					}
+					else {
+						sb.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			sb.append(ObjectDefinitionModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = sb.toString();
+
+		Query query = session.createQuery(sql);
+
+		query.setFirstResult(0);
+		query.setMaxResults(2);
+
+		QueryPos queryPos = QueryPos.getInstance(query);
+
+		queryPos.add(companyId);
+
+		queryPos.add(objectFolderId);
+
+		queryPos.add(active);
+
+		queryPos.add(enableObjectEntryDraft);
+
+		if (bindScope) {
+			queryPos.add(scope);
+		}
+
+		queryPos.add(status);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						objectDefinition)) {
+
+				queryPos.add(orderByConditionValue);
+			}
+		}
+
+		List<ObjectDefinition> list = query.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Returns all the object definitions that the user has permission to view where companyId = &#63; and objectFolderId = &#63; and active = &#63; and enableObjectEntryDraft = &#63; and scope = &#63; and status = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param objectFolderId the object folder ID
+	 * @param active the active
+	 * @param enableObjectEntryDraft the enable object entry draft
+	 * @param scope the scope
+	 * @param status the status
+	 * @return the matching object definitions that the user has permission to view
+	 */
+	@Override
+	public List<ObjectDefinition> filterFindByC_O_A_E_S_S(
+		long companyId, long objectFolderId, boolean active,
+		boolean enableObjectEntryDraft, String scope, int status) {
+
+		return filterFindByC_O_A_E_S_S(
+			companyId, objectFolderId, active, enableObjectEntryDraft, scope,
+			status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the object definitions that the user has permission to view where companyId = &#63; and objectFolderId = &#63; and active = &#63; and enableObjectEntryDraft = &#63; and scope = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectDefinitionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param objectFolderId the object folder ID
+	 * @param active the active
+	 * @param enableObjectEntryDraft the enable object entry draft
+	 * @param scope the scope
+	 * @param status the status
+	 * @param start the lower bound of the range of object definitions
+	 * @param end the upper bound of the range of object definitions (not inclusive)
+	 * @return the range of matching object definitions that the user has permission to view
+	 */
+	@Override
+	public List<ObjectDefinition> filterFindByC_O_A_E_S_S(
+		long companyId, long objectFolderId, boolean active,
+		boolean enableObjectEntryDraft, String scope, int status, int start,
+		int end) {
+
+		return filterFindByC_O_A_E_S_S(
+			companyId, objectFolderId, active, enableObjectEntryDraft, scope,
+			status, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the object definitions that the user has permissions to view where companyId = &#63; and objectFolderId = &#63; and active = &#63; and enableObjectEntryDraft = &#63; and scope = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectDefinitionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param objectFolderId the object folder ID
+	 * @param active the active
+	 * @param enableObjectEntryDraft the enable object entry draft
+	 * @param scope the scope
+	 * @param status the status
+	 * @param start the lower bound of the range of object definitions
+	 * @param end the upper bound of the range of object definitions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching object definitions that the user has permission to view
+	 */
+	@Override
+	public List<ObjectDefinition> filterFindByC_O_A_E_S_S(
+		long companyId, long objectFolderId, boolean active,
+		boolean enableObjectEntryDraft, String scope, int status, int start,
+		int end, OrderByComparator<ObjectDefinition> orderByComparator) {
+
+		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+			return findByC_O_A_E_S_S(
+				companyId, objectFolderId, active, enableObjectEntryDraft,
+				scope, status, start, end, orderByComparator);
+		}
+
+		scope = Objects.toString(scope, "");
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				8 + (orderByComparator.getOrderByFields().length * 2));
+		}
+		else {
+			sb = new StringBundler(9);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			sb.append(_FILTER_SQL_SELECT_OBJECTDEFINITION_WHERE);
+		}
+		else {
+			sb.append(
+				_FILTER_SQL_SELECT_OBJECTDEFINITION_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		sb.append(_FINDER_COLUMN_C_O_A_E_S_S_COMPANYID_2);
+
+		sb.append(_FINDER_COLUMN_C_O_A_E_S_S_OBJECTFOLDERID_2);
+
+		sb.append(_FINDER_COLUMN_C_O_A_E_S_S_ACTIVE_2_SQL);
+
+		sb.append(_FINDER_COLUMN_C_O_A_E_S_S_ENABLEOBJECTENTRYDRAFT_2);
+
+		boolean bindScope = false;
+
+		if (scope.isEmpty()) {
+			sb.append(_FINDER_COLUMN_C_O_A_E_S_S_SCOPE_3);
+		}
+		else {
+			bindScope = true;
+
+			sb.append(_FINDER_COLUMN_C_O_A_E_S_S_SCOPE_2);
+		}
+
+		sb.append(_FINDER_COLUMN_C_O_A_E_S_S_STATUS_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			sb.append(
+				_FILTER_SQL_SELECT_OBJECTDEFINITION_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+			}
+			else {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				sb.append(
+					ObjectDefinitionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+			}
+			else {
+				sb.append(ObjectDefinitionModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			sb.toString(), ObjectDefinition.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				sqlQuery.addEntity(
+					_FILTER_ENTITY_ALIAS, ObjectDefinitionImpl.class);
+			}
+			else {
+				sqlQuery.addEntity(
+					_FILTER_ENTITY_TABLE, ObjectDefinitionImpl.class);
+			}
+
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
+
+			queryPos.add(companyId);
+
+			queryPos.add(objectFolderId);
+
+			queryPos.add(active);
+
+			queryPos.add(enableObjectEntryDraft);
+
+			if (bindScope) {
+				queryPos.add(scope);
+			}
+
+			queryPos.add(status);
+
+			return (List<ObjectDefinition>)QueryUtil.list(
+				sqlQuery, getDialect(), start, end);
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the object definitions before and after the current object definition in the ordered set of object definitions that the user has permission to view where companyId = &#63; and objectFolderId = &#63; and active = &#63; and enableObjectEntryDraft = &#63; and scope = &#63; and status = &#63;.
+	 *
+	 * @param objectDefinitionId the primary key of the current object definition
+	 * @param companyId the company ID
+	 * @param objectFolderId the object folder ID
+	 * @param active the active
+	 * @param enableObjectEntryDraft the enable object entry draft
+	 * @param scope the scope
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next object definition
+	 * @throws NoSuchObjectDefinitionException if a object definition with the primary key could not be found
+	 */
+	@Override
+	public ObjectDefinition[] filterFindByC_O_A_E_S_S_PrevAndNext(
+			long objectDefinitionId, long companyId, long objectFolderId,
+			boolean active, boolean enableObjectEntryDraft, String scope,
+			int status, OrderByComparator<ObjectDefinition> orderByComparator)
+		throws NoSuchObjectDefinitionException {
+
+		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+			return findByC_O_A_E_S_S_PrevAndNext(
+				objectDefinitionId, companyId, objectFolderId, active,
+				enableObjectEntryDraft, scope, status, orderByComparator);
+		}
+
+		scope = Objects.toString(scope, "");
+
+		ObjectDefinition objectDefinition = findByPrimaryKey(
+			objectDefinitionId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			ObjectDefinition[] array = new ObjectDefinitionImpl[3];
+
+			array[0] = filterGetByC_O_A_E_S_S_PrevAndNext(
+				session, objectDefinition, companyId, objectFolderId, active,
+				enableObjectEntryDraft, scope, status, orderByComparator, true);
+
+			array[1] = objectDefinition;
+
+			array[2] = filterGetByC_O_A_E_S_S_PrevAndNext(
+				session, objectDefinition, companyId, objectFolderId, active,
+				enableObjectEntryDraft, scope, status, orderByComparator,
+				false);
+
+			return array;
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected ObjectDefinition filterGetByC_O_A_E_S_S_PrevAndNext(
+		Session session, ObjectDefinition objectDefinition, long companyId,
+		long objectFolderId, boolean active, boolean enableObjectEntryDraft,
+		String scope, int status,
+		OrderByComparator<ObjectDefinition> orderByComparator,
+		boolean previous) {
+
+		StringBundler sb = null;
+
+		if (orderByComparator != null) {
+			sb = new StringBundler(
+				10 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+						(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			sb = new StringBundler(9);
+		}
+
+		if (getDB().isSupportsInlineDistinct()) {
+			sb.append(_FILTER_SQL_SELECT_OBJECTDEFINITION_WHERE);
+		}
+		else {
+			sb.append(
+				_FILTER_SQL_SELECT_OBJECTDEFINITION_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		sb.append(_FINDER_COLUMN_C_O_A_E_S_S_COMPANYID_2);
+
+		sb.append(_FINDER_COLUMN_C_O_A_E_S_S_OBJECTFOLDERID_2);
+
+		sb.append(_FINDER_COLUMN_C_O_A_E_S_S_ACTIVE_2_SQL);
+
+		sb.append(_FINDER_COLUMN_C_O_A_E_S_S_ENABLEOBJECTENTRYDRAFT_2);
+
+		boolean bindScope = false;
+
+		if (scope.isEmpty()) {
+			sb.append(_FINDER_COLUMN_C_O_A_E_S_S_SCOPE_3);
+		}
+		else {
+			bindScope = true;
+
+			sb.append(_FINDER_COLUMN_C_O_A_E_S_S_SCOPE_2);
+		}
+
+		sb.append(_FINDER_COLUMN_C_O_A_E_S_S_STATUS_2);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			sb.append(
+				_FILTER_SQL_SELECT_OBJECTDEFINITION_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				sb.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					sb.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_ALIAS, orderByConditionFields[i],
+							true));
+				}
+				else {
+					sb.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_TABLE, orderByConditionFields[i],
+							true));
+				}
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(WHERE_GREATER_THAN);
+					}
+					else {
+						sb.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			sb.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				if (getDB().isSupportsInlineDistinct()) {
+					sb.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_ALIAS, orderByFields[i], true));
+				}
+				else {
+					sb.append(
+						getColumnName(
+							_ORDER_BY_ENTITY_TABLE, orderByFields[i], true));
+				}
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						sb.append(ORDER_BY_ASC);
+					}
+					else {
+						sb.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				sb.append(
+					ObjectDefinitionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+			}
+			else {
+				sb.append(ObjectDefinitionModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			sb.toString(), ObjectDefinition.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
+
+		SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
+
+		sqlQuery.setFirstResult(0);
+		sqlQuery.setMaxResults(2);
+
+		if (getDB().isSupportsInlineDistinct()) {
+			sqlQuery.addEntity(
+				_FILTER_ENTITY_ALIAS, ObjectDefinitionImpl.class);
+		}
+		else {
+			sqlQuery.addEntity(
+				_FILTER_ENTITY_TABLE, ObjectDefinitionImpl.class);
+		}
+
+		QueryPos queryPos = QueryPos.getInstance(sqlQuery);
+
+		queryPos.add(companyId);
+
+		queryPos.add(objectFolderId);
+
+		queryPos.add(active);
+
+		queryPos.add(enableObjectEntryDraft);
+
+		if (bindScope) {
+			queryPos.add(scope);
+		}
+
+		queryPos.add(status);
+
+		if (orderByComparator != null) {
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						objectDefinition)) {
+
+				queryPos.add(orderByConditionValue);
+			}
+		}
+
+		List<ObjectDefinition> list = sqlQuery.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Returns all the object definitions that the user has permission to view where companyId = &#63; and objectFolderId = any &#63; and active = &#63; and enableObjectEntryDraft = &#63; and scope = &#63; and status = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param objectFolderIds the object folder IDs
+	 * @param active the active
+	 * @param enableObjectEntryDraft the enable object entry draft
+	 * @param scope the scope
+	 * @param status the status
+	 * @return the matching object definitions that the user has permission to view
+	 */
+	@Override
+	public List<ObjectDefinition> filterFindByC_O_A_E_S_S(
+		long companyId, long[] objectFolderIds, boolean active,
+		boolean enableObjectEntryDraft, String scope, int status) {
+
+		return filterFindByC_O_A_E_S_S(
+			companyId, objectFolderIds, active, enableObjectEntryDraft, scope,
+			status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the object definitions that the user has permission to view where companyId = &#63; and objectFolderId = any &#63; and active = &#63; and enableObjectEntryDraft = &#63; and scope = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectDefinitionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param objectFolderIds the object folder IDs
+	 * @param active the active
+	 * @param enableObjectEntryDraft the enable object entry draft
+	 * @param scope the scope
+	 * @param status the status
+	 * @param start the lower bound of the range of object definitions
+	 * @param end the upper bound of the range of object definitions (not inclusive)
+	 * @return the range of matching object definitions that the user has permission to view
+	 */
+	@Override
+	public List<ObjectDefinition> filterFindByC_O_A_E_S_S(
+		long companyId, long[] objectFolderIds, boolean active,
+		boolean enableObjectEntryDraft, String scope, int status, int start,
+		int end) {
+
+		return filterFindByC_O_A_E_S_S(
+			companyId, objectFolderIds, active, enableObjectEntryDraft, scope,
+			status, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the object definitions that the user has permission to view where companyId = &#63; and objectFolderId = any &#63; and active = &#63; and enableObjectEntryDraft = &#63; and scope = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectDefinitionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param objectFolderIds the object folder IDs
+	 * @param active the active
+	 * @param enableObjectEntryDraft the enable object entry draft
+	 * @param scope the scope
+	 * @param status the status
+	 * @param start the lower bound of the range of object definitions
+	 * @param end the upper bound of the range of object definitions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching object definitions that the user has permission to view
+	 */
+	@Override
+	public List<ObjectDefinition> filterFindByC_O_A_E_S_S(
+		long companyId, long[] objectFolderIds, boolean active,
+		boolean enableObjectEntryDraft, String scope, int status, int start,
+		int end, OrderByComparator<ObjectDefinition> orderByComparator) {
+
+		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+			return findByC_O_A_E_S_S(
+				companyId, objectFolderIds, active, enableObjectEntryDraft,
+				scope, status, start, end, orderByComparator);
+		}
+
+		if (objectFolderIds == null) {
+			objectFolderIds = new long[0];
+		}
+		else if (objectFolderIds.length > 1) {
+			objectFolderIds = ArrayUtil.sortedUnique(objectFolderIds);
+		}
+
+		scope = Objects.toString(scope, "");
+
+		StringBundler sb = new StringBundler();
+
+		if (getDB().isSupportsInlineDistinct()) {
+			sb.append(_FILTER_SQL_SELECT_OBJECTDEFINITION_WHERE);
+		}
+		else {
+			sb.append(
+				_FILTER_SQL_SELECT_OBJECTDEFINITION_NO_INLINE_DISTINCT_WHERE_1);
+		}
+
+		sb.append(_FINDER_COLUMN_C_O_A_E_S_S_COMPANYID_2);
+
+		if (objectFolderIds.length > 0) {
+			sb.append("(");
+
+			sb.append(_FINDER_COLUMN_C_O_A_E_S_S_OBJECTFOLDERID_7);
+
+			sb.append(StringUtil.merge(objectFolderIds));
+
+			sb.append(")");
+
+			sb.append(")");
+
+			sb.append(WHERE_AND);
+		}
+
+		sb.append(_FINDER_COLUMN_C_O_A_E_S_S_ACTIVE_2_SQL);
+
+		sb.append(_FINDER_COLUMN_C_O_A_E_S_S_ENABLEOBJECTENTRYDRAFT_2);
+
+		boolean bindScope = false;
+
+		if (scope.isEmpty()) {
+			sb.append(_FINDER_COLUMN_C_O_A_E_S_S_SCOPE_3);
+		}
+		else {
+			bindScope = true;
+
+			sb.append(_FINDER_COLUMN_C_O_A_E_S_S_SCOPE_2);
+		}
+
+		sb.append(_FINDER_COLUMN_C_O_A_E_S_S_STATUS_2);
+
+		sb.setStringAt(
+			removeConjunction(sb.stringAt(sb.index() - 1)), sb.index() - 1);
+
+		if (!getDB().isSupportsInlineDistinct()) {
+			sb.append(
+				_FILTER_SQL_SELECT_OBJECTDEFINITION_NO_INLINE_DISTINCT_WHERE_2);
+		}
+
+		if (orderByComparator != null) {
+			if (getDB().isSupportsInlineDistinct()) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator, true);
+			}
+			else {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_TABLE, orderByComparator, true);
+			}
+		}
+		else {
+			if (getDB().isSupportsInlineDistinct()) {
+				sb.append(
+					ObjectDefinitionModelImpl.ORDER_BY_SQL_INLINE_DISTINCT);
+			}
+			else {
+				sb.append(ObjectDefinitionModelImpl.ORDER_BY_SQL);
+			}
+		}
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			sb.toString(), ObjectDefinition.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
+
+			if (getDB().isSupportsInlineDistinct()) {
+				sqlQuery.addEntity(
+					_FILTER_ENTITY_ALIAS, ObjectDefinitionImpl.class);
+			}
+			else {
+				sqlQuery.addEntity(
+					_FILTER_ENTITY_TABLE, ObjectDefinitionImpl.class);
+			}
+
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
+
+			queryPos.add(companyId);
+
+			queryPos.add(active);
+
+			queryPos.add(enableObjectEntryDraft);
+
+			if (bindScope) {
+				queryPos.add(scope);
+			}
+
+			queryPos.add(status);
+
+			return (List<ObjectDefinition>)QueryUtil.list(
+				sqlQuery, getDialect(), start, end);
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns all the object definitions where companyId = &#63; and objectFolderId = any &#63; and active = &#63; and enableObjectEntryDraft = &#63; and scope = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectDefinitionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param objectFolderIds the object folder IDs
+	 * @param active the active
+	 * @param enableObjectEntryDraft the enable object entry draft
+	 * @param scope the scope
+	 * @param status the status
+	 * @return the matching object definitions
+	 */
+	@Override
+	public List<ObjectDefinition> findByC_O_A_E_S_S(
+		long companyId, long[] objectFolderIds, boolean active,
+		boolean enableObjectEntryDraft, String scope, int status) {
+
+		return findByC_O_A_E_S_S(
+			companyId, objectFolderIds, active, enableObjectEntryDraft, scope,
+			status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the object definitions where companyId = &#63; and objectFolderId = any &#63; and active = &#63; and enableObjectEntryDraft = &#63; and scope = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectDefinitionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param objectFolderIds the object folder IDs
+	 * @param active the active
+	 * @param enableObjectEntryDraft the enable object entry draft
+	 * @param scope the scope
+	 * @param status the status
+	 * @param start the lower bound of the range of object definitions
+	 * @param end the upper bound of the range of object definitions (not inclusive)
+	 * @return the range of matching object definitions
+	 */
+	@Override
+	public List<ObjectDefinition> findByC_O_A_E_S_S(
+		long companyId, long[] objectFolderIds, boolean active,
+		boolean enableObjectEntryDraft, String scope, int status, int start,
+		int end) {
+
+		return findByC_O_A_E_S_S(
+			companyId, objectFolderIds, active, enableObjectEntryDraft, scope,
+			status, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the object definitions where companyId = &#63; and objectFolderId = any &#63; and active = &#63; and enableObjectEntryDraft = &#63; and scope = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectDefinitionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param objectFolderIds the object folder IDs
+	 * @param active the active
+	 * @param enableObjectEntryDraft the enable object entry draft
+	 * @param scope the scope
+	 * @param status the status
+	 * @param start the lower bound of the range of object definitions
+	 * @param end the upper bound of the range of object definitions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching object definitions
+	 */
+	@Override
+	public List<ObjectDefinition> findByC_O_A_E_S_S(
+		long companyId, long[] objectFolderIds, boolean active,
+		boolean enableObjectEntryDraft, String scope, int status, int start,
+		int end, OrderByComparator<ObjectDefinition> orderByComparator) {
+
+		return findByC_O_A_E_S_S(
+			companyId, objectFolderIds, active, enableObjectEntryDraft, scope,
+			status, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the object definitions where companyId = &#63; and objectFolderId = &#63; and active = &#63; and enableObjectEntryDraft = &#63; and scope = &#63; and status = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ObjectDefinitionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param objectFolderIds the object folder IDs
+	 * @param active the active
+	 * @param enableObjectEntryDraft the enable object entry draft
+	 * @param scope the scope
+	 * @param status the status
+	 * @param start the lower bound of the range of object definitions
+	 * @param end the upper bound of the range of object definitions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching object definitions
+	 */
+	@Override
+	public List<ObjectDefinition> findByC_O_A_E_S_S(
+		long companyId, long[] objectFolderIds, boolean active,
+		boolean enableObjectEntryDraft, String scope, int status, int start,
+		int end, OrderByComparator<ObjectDefinition> orderByComparator,
+		boolean useFinderCache) {
+
+		if (objectFolderIds == null) {
+			objectFolderIds = new long[0];
+		}
+		else if (objectFolderIds.length > 1) {
+			objectFolderIds = ArrayUtil.sortedUnique(objectFolderIds);
+		}
+
+		scope = Objects.toString(scope, "");
+
+		if (objectFolderIds.length == 1) {
+			return findByC_O_A_E_S_S(
+				companyId, objectFolderIds[0], active, enableObjectEntryDraft,
+				scope, status, start, end, orderByComparator);
+		}
+
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			if (useFinderCache) {
+				finderArgs = new Object[] {
+					companyId, StringUtil.merge(objectFolderIds), active,
+					enableObjectEntryDraft, scope, status
+				};
+			}
+		}
+		else if (useFinderCache) {
+			finderArgs = new Object[] {
+				companyId, StringUtil.merge(objectFolderIds), active,
+				enableObjectEntryDraft, scope, status, start, end,
+				orderByComparator
+			};
+		}
+
+		List<ObjectDefinition> list = null;
+
+		if (useFinderCache) {
+			list = (List<ObjectDefinition>)finderCache.getResult(
+				_finderPathWithPaginationFindByC_O_A_E_S_S, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (ObjectDefinition objectDefinition : list) {
+					if ((companyId != objectDefinition.getCompanyId()) ||
+						!ArrayUtil.contains(
+							objectFolderIds,
+							objectDefinition.getObjectFolderId()) ||
+						(active != objectDefinition.isActive()) ||
+						(enableObjectEntryDraft !=
+							objectDefinition.isEnableObjectEntryDraft()) ||
+						!scope.equals(objectDefinition.getScope()) ||
+						(status != objectDefinition.getStatus())) {
+
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler sb = new StringBundler();
+
+			sb.append(_SQL_SELECT_OBJECTDEFINITION_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_O_A_E_S_S_COMPANYID_2);
+
+			if (objectFolderIds.length > 0) {
+				sb.append("(");
+
+				sb.append(_FINDER_COLUMN_C_O_A_E_S_S_OBJECTFOLDERID_7);
+
+				sb.append(StringUtil.merge(objectFolderIds));
+
+				sb.append(")");
+
+				sb.append(")");
+
+				sb.append(WHERE_AND);
+			}
+
+			sb.append(_FINDER_COLUMN_C_O_A_E_S_S_ACTIVE_2);
+
+			sb.append(_FINDER_COLUMN_C_O_A_E_S_S_ENABLEOBJECTENTRYDRAFT_2);
+
+			boolean bindScope = false;
+
+			if (scope.isEmpty()) {
+				sb.append(_FINDER_COLUMN_C_O_A_E_S_S_SCOPE_3);
+			}
+			else {
+				bindScope = true;
+
+				sb.append(_FINDER_COLUMN_C_O_A_E_S_S_SCOPE_2);
+			}
+
+			sb.append(_FINDER_COLUMN_C_O_A_E_S_S_STATUS_2);
+
+			sb.setStringAt(
+				removeConjunction(sb.stringAt(sb.index() - 1)), sb.index() - 1);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else {
+				sb.append(ObjectDefinitionModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(companyId);
+
+				queryPos.add(active);
+
+				queryPos.add(enableObjectEntryDraft);
+
+				if (bindScope) {
+					queryPos.add(scope);
+				}
+
+				queryPos.add(status);
+
+				list = (List<ObjectDefinition>)QueryUtil.list(
+					query, getDialect(), start, end);
+
+				cacheResult(list);
+
+				if (useFinderCache) {
+					finderCache.putResult(
+						_finderPathWithPaginationFindByC_O_A_E_S_S, finderArgs,
+						list);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Removes all the object definitions where companyId = &#63; and objectFolderId = &#63; and active = &#63; and enableObjectEntryDraft = &#63; and scope = &#63; and status = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param objectFolderId the object folder ID
+	 * @param active the active
+	 * @param enableObjectEntryDraft the enable object entry draft
+	 * @param scope the scope
+	 * @param status the status
+	 */
+	@Override
+	public void removeByC_O_A_E_S_S(
+		long companyId, long objectFolderId, boolean active,
+		boolean enableObjectEntryDraft, String scope, int status) {
+
+		for (ObjectDefinition objectDefinition :
+				findByC_O_A_E_S_S(
+					companyId, objectFolderId, active, enableObjectEntryDraft,
+					scope, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					null)) {
+
+			remove(objectDefinition);
+		}
+	}
+
+	/**
+	 * Returns the number of object definitions where companyId = &#63; and objectFolderId = &#63; and active = &#63; and enableObjectEntryDraft = &#63; and scope = &#63; and status = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param objectFolderId the object folder ID
+	 * @param active the active
+	 * @param enableObjectEntryDraft the enable object entry draft
+	 * @param scope the scope
+	 * @param status the status
+	 * @return the number of matching object definitions
+	 */
+	@Override
+	public int countByC_O_A_E_S_S(
+		long companyId, long objectFolderId, boolean active,
+		boolean enableObjectEntryDraft, String scope, int status) {
+
+		scope = Objects.toString(scope, "");
+
+		FinderPath finderPath = _finderPathCountByC_O_A_E_S_S;
+
+		Object[] finderArgs = new Object[] {
+			companyId, objectFolderId, active, enableObjectEntryDraft, scope,
+			status
+		};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler(7);
+
+			sb.append(_SQL_COUNT_OBJECTDEFINITION_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_O_A_E_S_S_COMPANYID_2);
+
+			sb.append(_FINDER_COLUMN_C_O_A_E_S_S_OBJECTFOLDERID_2);
+
+			sb.append(_FINDER_COLUMN_C_O_A_E_S_S_ACTIVE_2);
+
+			sb.append(_FINDER_COLUMN_C_O_A_E_S_S_ENABLEOBJECTENTRYDRAFT_2);
+
+			boolean bindScope = false;
+
+			if (scope.isEmpty()) {
+				sb.append(_FINDER_COLUMN_C_O_A_E_S_S_SCOPE_3);
+			}
+			else {
+				bindScope = true;
+
+				sb.append(_FINDER_COLUMN_C_O_A_E_S_S_SCOPE_2);
+			}
+
+			sb.append(_FINDER_COLUMN_C_O_A_E_S_S_STATUS_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(companyId);
+
+				queryPos.add(objectFolderId);
+
+				queryPos.add(active);
+
+				queryPos.add(enableObjectEntryDraft);
+
+				if (bindScope) {
+					queryPos.add(scope);
+				}
+
+				queryPos.add(status);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	/**
+	 * Returns the number of object definitions where companyId = &#63; and objectFolderId = any &#63; and active = &#63; and enableObjectEntryDraft = &#63; and scope = &#63; and status = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param objectFolderIds the object folder IDs
+	 * @param active the active
+	 * @param enableObjectEntryDraft the enable object entry draft
+	 * @param scope the scope
+	 * @param status the status
+	 * @return the number of matching object definitions
+	 */
+	@Override
+	public int countByC_O_A_E_S_S(
+		long companyId, long[] objectFolderIds, boolean active,
+		boolean enableObjectEntryDraft, String scope, int status) {
+
+		if (objectFolderIds == null) {
+			objectFolderIds = new long[0];
+		}
+		else if (objectFolderIds.length > 1) {
+			objectFolderIds = ArrayUtil.sortedUnique(objectFolderIds);
+		}
+
+		scope = Objects.toString(scope, "");
+
+		Object[] finderArgs = new Object[] {
+			companyId, StringUtil.merge(objectFolderIds), active,
+			enableObjectEntryDraft, scope, status
+		};
+
+		Long count = (Long)finderCache.getResult(
+			_finderPathWithPaginationCountByC_O_A_E_S_S, finderArgs, this);
+
+		if (count == null) {
+			StringBundler sb = new StringBundler();
+
+			sb.append(_SQL_COUNT_OBJECTDEFINITION_WHERE);
+
+			sb.append(_FINDER_COLUMN_C_O_A_E_S_S_COMPANYID_2);
+
+			if (objectFolderIds.length > 0) {
+				sb.append("(");
+
+				sb.append(_FINDER_COLUMN_C_O_A_E_S_S_OBJECTFOLDERID_7);
+
+				sb.append(StringUtil.merge(objectFolderIds));
+
+				sb.append(")");
+
+				sb.append(")");
+
+				sb.append(WHERE_AND);
+			}
+
+			sb.append(_FINDER_COLUMN_C_O_A_E_S_S_ACTIVE_2);
+
+			sb.append(_FINDER_COLUMN_C_O_A_E_S_S_ENABLEOBJECTENTRYDRAFT_2);
+
+			boolean bindScope = false;
+
+			if (scope.isEmpty()) {
+				sb.append(_FINDER_COLUMN_C_O_A_E_S_S_SCOPE_3);
+			}
+			else {
+				bindScope = true;
+
+				sb.append(_FINDER_COLUMN_C_O_A_E_S_S_SCOPE_2);
+			}
+
+			sb.append(_FINDER_COLUMN_C_O_A_E_S_S_STATUS_2);
+
+			sb.setStringAt(
+				removeConjunction(sb.stringAt(sb.index() - 1)), sb.index() - 1);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				queryPos.add(companyId);
+
+				queryPos.add(active);
+
+				queryPos.add(enableObjectEntryDraft);
+
+				if (bindScope) {
+					queryPos.add(scope);
+				}
+
+				queryPos.add(status);
+
+				count = (Long)query.uniqueResult();
+
+				finderCache.putResult(
+					_finderPathWithPaginationCountByC_O_A_E_S_S, finderArgs,
+					count);
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	/**
+	 * Returns the number of object definitions that the user has permission to view where companyId = &#63; and objectFolderId = &#63; and active = &#63; and enableObjectEntryDraft = &#63; and scope = &#63; and status = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param objectFolderId the object folder ID
+	 * @param active the active
+	 * @param enableObjectEntryDraft the enable object entry draft
+	 * @param scope the scope
+	 * @param status the status
+	 * @return the number of matching object definitions that the user has permission to view
+	 */
+	@Override
+	public int filterCountByC_O_A_E_S_S(
+		long companyId, long objectFolderId, boolean active,
+		boolean enableObjectEntryDraft, String scope, int status) {
+
+		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+			return countByC_O_A_E_S_S(
+				companyId, objectFolderId, active, enableObjectEntryDraft,
+				scope, status);
+		}
+
+		scope = Objects.toString(scope, "");
+
+		StringBundler sb = new StringBundler(7);
+
+		sb.append(_FILTER_SQL_COUNT_OBJECTDEFINITION_WHERE);
+
+		sb.append(_FINDER_COLUMN_C_O_A_E_S_S_COMPANYID_2);
+
+		sb.append(_FINDER_COLUMN_C_O_A_E_S_S_OBJECTFOLDERID_2);
+
+		sb.append(_FINDER_COLUMN_C_O_A_E_S_S_ACTIVE_2_SQL);
+
+		sb.append(_FINDER_COLUMN_C_O_A_E_S_S_ENABLEOBJECTENTRYDRAFT_2);
+
+		boolean bindScope = false;
+
+		if (scope.isEmpty()) {
+			sb.append(_FINDER_COLUMN_C_O_A_E_S_S_SCOPE_3);
+		}
+		else {
+			bindScope = true;
+
+			sb.append(_FINDER_COLUMN_C_O_A_E_S_S_SCOPE_2);
+		}
+
+		sb.append(_FINDER_COLUMN_C_O_A_E_S_S_STATUS_2);
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			sb.toString(), ObjectDefinition.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
+
+			sqlQuery.addScalar(
+				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
+
+			queryPos.add(companyId);
+
+			queryPos.add(objectFolderId);
+
+			queryPos.add(active);
+
+			queryPos.add(enableObjectEntryDraft);
+
+			if (bindScope) {
+				queryPos.add(scope);
+			}
+
+			queryPos.add(status);
+
+			Long count = (Long)sqlQuery.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	/**
+	 * Returns the number of object definitions that the user has permission to view where companyId = &#63; and objectFolderId = any &#63; and active = &#63; and enableObjectEntryDraft = &#63; and scope = &#63; and status = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param objectFolderIds the object folder IDs
+	 * @param active the active
+	 * @param enableObjectEntryDraft the enable object entry draft
+	 * @param scope the scope
+	 * @param status the status
+	 * @return the number of matching object definitions that the user has permission to view
+	 */
+	@Override
+	public int filterCountByC_O_A_E_S_S(
+		long companyId, long[] objectFolderIds, boolean active,
+		boolean enableObjectEntryDraft, String scope, int status) {
+
+		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
+			return countByC_O_A_E_S_S(
+				companyId, objectFolderIds, active, enableObjectEntryDraft,
+				scope, status);
+		}
+
+		if (objectFolderIds == null) {
+			objectFolderIds = new long[0];
+		}
+		else if (objectFolderIds.length > 1) {
+			objectFolderIds = ArrayUtil.sortedUnique(objectFolderIds);
+		}
+
+		scope = Objects.toString(scope, "");
+
+		StringBundler sb = new StringBundler();
+
+		sb.append(_FILTER_SQL_COUNT_OBJECTDEFINITION_WHERE);
+
+		sb.append(_FINDER_COLUMN_C_O_A_E_S_S_COMPANYID_2);
+
+		if (objectFolderIds.length > 0) {
+			sb.append("(");
+
+			sb.append(_FINDER_COLUMN_C_O_A_E_S_S_OBJECTFOLDERID_7);
+
+			sb.append(StringUtil.merge(objectFolderIds));
+
+			sb.append(")");
+
+			sb.append(")");
+
+			sb.append(WHERE_AND);
+		}
+
+		sb.append(_FINDER_COLUMN_C_O_A_E_S_S_ACTIVE_2_SQL);
+
+		sb.append(_FINDER_COLUMN_C_O_A_E_S_S_ENABLEOBJECTENTRYDRAFT_2);
+
+		boolean bindScope = false;
+
+		if (scope.isEmpty()) {
+			sb.append(_FINDER_COLUMN_C_O_A_E_S_S_SCOPE_3);
+		}
+		else {
+			bindScope = true;
+
+			sb.append(_FINDER_COLUMN_C_O_A_E_S_S_SCOPE_2);
+		}
+
+		sb.append(_FINDER_COLUMN_C_O_A_E_S_S_STATUS_2);
+
+		sb.setStringAt(
+			removeConjunction(sb.stringAt(sb.index() - 1)), sb.index() - 1);
+
+		String sql = InlineSQLHelperUtil.replacePermissionCheck(
+			sb.toString(), ObjectDefinition.class.getName(),
+			_FILTER_ENTITY_TABLE_FILTER_PK_COLUMN);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			SQLQuery sqlQuery = session.createSynchronizedSQLQuery(sql);
+
+			sqlQuery.addScalar(
+				COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
+
+			QueryPos queryPos = QueryPos.getInstance(sqlQuery);
+
+			queryPos.add(companyId);
+
+			queryPos.add(active);
+
+			queryPos.add(enableObjectEntryDraft);
+
+			if (bindScope) {
+				queryPos.add(scope);
+			}
+
+			queryPos.add(status);
+
+			Long count = (Long)sqlQuery.uniqueResult();
+
+			return count.intValue();
+		}
+		catch (Exception exception) {
+			throw processException(exception);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	private static final String _FINDER_COLUMN_C_O_A_E_S_S_COMPANYID_2 =
+		"objectDefinition.companyId = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_O_A_E_S_S_OBJECTFOLDERID_2 =
+		"objectDefinition.objectFolderId = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_O_A_E_S_S_OBJECTFOLDERID_7 =
+		"objectDefinition.objectFolderId IN (";
+
+	private static final String _FINDER_COLUMN_C_O_A_E_S_S_ACTIVE_2 =
+		"objectDefinition.active = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_O_A_E_S_S_ACTIVE_2_SQL =
+		"objectDefinition.active_ = ? AND ";
+
+	private static final String
+		_FINDER_COLUMN_C_O_A_E_S_S_ENABLEOBJECTENTRYDRAFT_2 =
+			"objectDefinition.enableObjectEntryDraft = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_O_A_E_S_S_SCOPE_2 =
+		"objectDefinition.scope = ? AND ";
+
+	private static final String _FINDER_COLUMN_C_O_A_E_S_S_SCOPE_3 =
+		"(objectDefinition.scope IS NULL OR objectDefinition.scope = '') AND ";
+
+	private static final String _FINDER_COLUMN_C_O_A_E_S_S_STATUS_2 =
+		"objectDefinition.status = ?";
+
 	private FinderPath _finderPathFetchByERC_C;
 
 	/**
@@ -14187,6 +16177,60 @@ public class ObjectDefinitionPersistenceImpl
 				Boolean.class.getName(), Integer.class.getName()
 			},
 			new String[] {"companyId", "active_", "system_", "status"}, false);
+
+		_finderPathWithPaginationFindByC_O_A_E_S_S = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_O_A_E_S_S",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Boolean.class.getName(), Boolean.class.getName(),
+				String.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			},
+			new String[] {
+				"companyId", "objectFolderId", "active_",
+				"enableObjectEntryDraft", "scope", "status"
+			},
+			true);
+
+		_finderPathWithoutPaginationFindByC_O_A_E_S_S = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_O_A_E_S_S",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Boolean.class.getName(), Boolean.class.getName(),
+				String.class.getName(), Integer.class.getName()
+			},
+			new String[] {
+				"companyId", "objectFolderId", "active_",
+				"enableObjectEntryDraft", "scope", "status"
+			},
+			true);
+
+		_finderPathCountByC_O_A_E_S_S = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_O_A_E_S_S",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Boolean.class.getName(), Boolean.class.getName(),
+				String.class.getName(), Integer.class.getName()
+			},
+			new String[] {
+				"companyId", "objectFolderId", "active_",
+				"enableObjectEntryDraft", "scope", "status"
+			},
+			false);
+
+		_finderPathWithPaginationCountByC_O_A_E_S_S = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_O_A_E_S_S",
+			new String[] {
+				Long.class.getName(), Long.class.getName(),
+				Boolean.class.getName(), Boolean.class.getName(),
+				String.class.getName(), Integer.class.getName()
+			},
+			new String[] {
+				"companyId", "objectFolderId", "active_",
+				"enableObjectEntryDraft", "scope", "status"
+			},
+			false);
 
 		_finderPathFetchByERC_C = new FinderPath(
 			FINDER_CLASS_NAME_ENTITY, "fetchByERC_C",

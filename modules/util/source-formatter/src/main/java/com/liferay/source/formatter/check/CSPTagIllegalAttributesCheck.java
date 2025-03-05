@@ -28,8 +28,6 @@ public class CSPTagIllegalAttributesCheck extends BaseTagAttributesCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		String lowerCaseContent = StringUtil.toLowerCase(content);
-
 		List<String> ignoredTagPrefixes = new ArrayList<>();
 		String liferayUiCSPTagClose = StringPool.BLANK;
 		String liferayUiCSPTagOpen = StringPool.BLANK;
@@ -52,6 +50,8 @@ public class CSPTagIllegalAttributesCheck extends BaseTagAttributesCheck {
 		if (ListUtil.isEmpty(ignoredTagPrefixes)) {
 			return content;
 		}
+
+		String lowerCaseContent = StringUtil.toLowerCase(content);
 
 		List<String> illegalAttributeNames = getAttributeValues(
 			_ILLEGAL_ATTRIBUTE_NAMES_KEY, absolutePath);

@@ -26,8 +26,6 @@ public class CSPIllegalTagsCheck extends BaseTagAttributesCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		String lowerCaseContent = StringUtil.toLowerCase(content);
-
 		List<String> illegalTagNames = new ArrayList<>();
 		List<String> replacedTagNames = new ArrayList<>();
 
@@ -43,6 +41,8 @@ public class CSPIllegalTagsCheck extends BaseTagAttributesCheck {
 			illegalTagNames = getAttributeValues(
 				_FTL_AND_VM_ILLEGAL_TAG_NAMES_KEY, absolutePath);
 		}
+
+		String lowerCaseContent = StringUtil.toLowerCase(content);
 
 		_checkIllegalTags(
 			fileName, content, lowerCaseContent, illegalTagNames,

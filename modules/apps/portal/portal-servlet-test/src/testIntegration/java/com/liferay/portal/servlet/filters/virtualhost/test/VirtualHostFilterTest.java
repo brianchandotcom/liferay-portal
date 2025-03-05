@@ -130,7 +130,7 @@ public class VirtualHostFilterTest {
 	}
 
 	@Test
-	public void testProcessFilter4() {
+	public void testProcessFilterForwardedURL() {
 		try (SafeCloseable safeCloseable =
 				PropsValuesTestUtil.swapWithSafeCloseable(
 					"COMPANY_DEFAULT_HOME_URL", StringPool.SLASH)) {

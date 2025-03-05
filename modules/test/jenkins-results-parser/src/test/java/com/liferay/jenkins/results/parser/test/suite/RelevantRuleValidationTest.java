@@ -7,6 +7,7 @@ package com.liferay.jenkins.results.parser.test.suite;
 
 import java.io.IOException;
 
+import org.json.JSONObject;
 import org.junit.Test;
 
 /**
@@ -19,7 +20,19 @@ public class RelevantRuleValidationTest {
 		String repositoryName = "liferay-portal";
 		String upstreamBranchName = "master";
 
-		RelevantRuleValidation.validate(repositoryName, upstreamBranchName);
+		JSONObject jsonObject = new JSONObject();
+
+		jsonObject.put("job_name", "test-portal-acceptance-pullrequest(");
+
+		jsonObject.put("build_profile", "DXP");
+
+		jsonObject.put("test_suite_name", "relevant");
+
+		jsonObject.put("git_repository_dir", "liferay-portal");
+
+		jsonObject.put("upstream_branch_name", "master");
+
+		RelevantRuleValidation.validate(repositoryName, upstreamBranchName, jsonObject);
 	}
 
 }

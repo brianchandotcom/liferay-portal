@@ -5,6 +5,7 @@
 
 import {
 	ObjectDefinitionApi,
+	ObjectField,
 	ObjectFieldApi,
 	ObjectValidationRuleApi,
 } from '@liferay/object-admin-rest-client-js';
@@ -3516,8 +3517,8 @@ test.describe('Form Localization', () => {
 							required: false,
 						},
 						{
-							DBType: ObjectField.DBTypeEnum.Integer,
-							businessType: ObjectField.BusinessTypeEnum.Integer,
+							DBType: 'Integer',
+							businessType: 'Integer',
 							externalReferenceCode: 'idealTemperatureERC',
 							indexed: true,
 							indexedAsKeyword: false,
@@ -3530,7 +3531,7 @@ test.describe('Form Localization', () => {
 							required: false,
 						},
 						{
-							DBType: ObjectField.DBTypeEnum.DateTime,
+							DBType: 'DateTime',
 							externalReferenceCode: 'lastWateringERC',
 							indexed: true,
 							indexedAsKeyword: false,
@@ -3547,7 +3548,7 @@ test.describe('Form Localization', () => {
 							],
 						},
 						{
-							DBType: ObjectField.DBTypeEnum.Date,
+							DBType: 'Date',
 							externalReferenceCode: 'plantingDateERC',
 							indexed: true,
 							indexedAsKeyword: false,
@@ -4189,10 +4190,10 @@ test.describe('Form Localization', () => {
 				);
 			}
 
-			const objectFields = [
+			const objectFields: ObjectField[] = [
 				{
-					DBType: ObjectField.DBTypeEnum.Clob,
-					businessType: ObjectField.BusinessTypeEnum.RichText,
+					DBType: 'Clob',
+					businessType: 'RichText',
 					externalReferenceCode: 'richTextERC',
 					indexed: true,
 					indexedAsKeyword: false,
@@ -4204,8 +4205,8 @@ test.describe('Form Localization', () => {
 					required: false,
 				},
 				{
-					DBType: ObjectField.DBTypeEnum.Clob,
-					businessType: ObjectField.BusinessTypeEnum.LongText,
+					DBType: 'Clob',
+					businessType: 'LongText',
 					externalReferenceCode: 'longTextERC',
 					indexed: true,
 					indexedAsKeyword: false,
@@ -4217,8 +4218,8 @@ test.describe('Form Localization', () => {
 					required: false,
 				},
 				{
-					DBType: ObjectField.DBTypeEnum.String,
-					businessType: ObjectField.BusinessTypeEnum.Text,
+					DBType: 'String',
+					businessType: 'Text',
 					externalReferenceCode: 'text',
 					indexed: true,
 					indexedAsKeyword: false,
@@ -4230,7 +4231,7 @@ test.describe('Form Localization', () => {
 					required: false,
 				},
 				{
-					DBType: ObjectField.DBTypeEnum.Integer,
+					DBType: 'Integer',
 					externalReferenceCode: 'numeric-erc',
 					indexed: true,
 					indexedAsKeyword: false,
@@ -4241,7 +4242,7 @@ test.describe('Form Localization', () => {
 					name: 'numeric',
 				},
 				{
-					DBType: ObjectField.DBTypeEnum.DateTime,
+					DBType: 'DateTime',
 					externalReferenceCode: 'date-time-erc',
 					indexed: true,
 					indexedAsKeyword: false,
@@ -4257,7 +4258,7 @@ test.describe('Form Localization', () => {
 					],
 				},
 				{
-					DBType: ObjectField.DBTypeEnum.Date,
+					DBType: 'Date',
 					externalReferenceCode: 'date-erc',
 					indexed: true,
 					indexedAsKeyword: false,
@@ -4267,8 +4268,8 @@ test.describe('Form Localization', () => {
 					name: 'date',
 				},
 				{
-					DBType: ObjectField.DBTypeEnum.String,
-					businessType: ObjectField.BusinessTypeEnum.Picklist,
+					DBType: 'String',
+					businessType: 'Picklist',
 					externalReferenceCode: 'selectERC',
 					indexed: true,
 					indexedAsKeyword: false,

@@ -1,7 +1,13 @@
 assemble:
-    - from: build/static
+    - from: assets/index.js
+      hashify: index.js
+      into: static
+    - from: assets/style.css
+      hashify: style.css
       into: static
 liferay-sample-custom-element-1:
+    cssURLs:
+        - style.*.css
     friendlyURLMapping: vanilla-counter
     htmlElementName: vanilla-counter
     instanceable: false

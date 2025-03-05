@@ -18,7 +18,7 @@ function hideEl(elementId) {
 	const element = document.getElementById(elementId);
 
 	if (element) {
-		element.style.display = 'none';
+		element.classList.add('hide');
 	}
 }
 
@@ -395,7 +395,7 @@ export default function Comments({
 		const element = document.getElementById(elementId);
 
 		if (element) {
-			element.style.display = '';
+			element.classList.remove('hide');
 		}
 	};
 

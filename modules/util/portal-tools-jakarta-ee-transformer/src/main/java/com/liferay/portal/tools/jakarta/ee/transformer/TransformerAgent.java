@@ -74,7 +74,7 @@ public class TransformerAgent {
 	}
 
 	private static final Set<String> _fixupSubpackageNames = new HashSet<>(
-		Arrays.asList("annotation.processing"));
+		Arrays.asList("annotation.processing", "portlet.faces"));
 
 	/**
 	 * Postpone these subpackages to avoid major lib upgrade at early stage.

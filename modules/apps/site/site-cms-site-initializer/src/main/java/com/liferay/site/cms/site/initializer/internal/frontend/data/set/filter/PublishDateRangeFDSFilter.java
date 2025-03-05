@@ -30,7 +30,7 @@ public class PublishDateRangeFDSFilter extends BaseDateRangeFDSFilter {
 
 	@Override
 	public String getEntityFieldType() {
-		return FDSEntityFieldTypes.DATE;
+		return FDSEntityFieldTypes.DATE_TIME;
 	}
 
 	@Override

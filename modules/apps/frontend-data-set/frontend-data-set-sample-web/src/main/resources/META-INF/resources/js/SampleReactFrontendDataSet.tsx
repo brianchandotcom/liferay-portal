@@ -7,6 +7,39 @@ import {FrontendDataSet} from '@liferay/frontend-data-set-web';
 import React from 'react';
 
 const SampleReactFrontendDataSet = (props: any) => {
+	const cardsViewWithLabels = {
+		_key: 'cards',
+		contentRenderer: 'cards',
+		default: false,
+		label: 'Cards',
+		name: 'cards',
+		schema: {
+			description: 'description',
+			href: '',
+			image: '',
+			labels: [
+				{
+					displayType: 'info',
+					value: 'color',
+				},
+				{
+					displayKey: 'status.label',
+					displayMapping: {
+						approved: 'success',
+						expired: 'danger',
+					},
+					value: 'status.label_i18n',
+				},
+			],
+			sticker: '',
+			symbol: '',
+			title: 'title',
+		},
+		thumbnail: 'cards2',
+	};
+
+	props.views.push(cardsViewWithLabels);
+
 	return <FrontendDataSet {...props} />;
 };
 

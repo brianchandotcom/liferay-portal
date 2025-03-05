@@ -179,6 +179,14 @@
 			<finder-column name="system" />
 			<finder-column name="status" />
 		</finder>
+		<finder name="C_O_A_E_S_S" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column arrayable-operator="OR" name="objectFolderId" />
+			<finder-column name="active" />
+			<finder-column name="enableObjectEntryDraft" />
+			<finder-column name="scope" />
+			<finder-column name="status" />
+		</finder>
 	</entity>
 	<entity local-service="true" name="ObjectDefinitionSetting" remote-service="false" uuid="true">
 

@@ -150,7 +150,8 @@ public class SortTranslator {
 	private String _getSortFieldName(Sort sort) {
 		String sortFieldName = sort.getFieldName();
 
-		if (Objects.equals(sortFieldName, "_id") ||
+		if (Objects.equals(sortFieldName, Field.ENTRY_CLASS_NAME) ||
+			Objects.equals(sortFieldName, "_id") ||
 			Objects.equals(sortFieldName, "_index") ||
 			Objects.equals(sortFieldName, _SCORE_FIELD_NAME) ||
 			StringUtil.endsWith(sortFieldName, "_sortable.keyword") ||

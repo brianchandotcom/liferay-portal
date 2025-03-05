@@ -153,10 +153,10 @@ public class SystemDateFieldPredicateProvider
 		return _processDate(calendar -> calendar.add(Calendar.SECOND, 1), date);
 	}
 
-	private Date _processDate(Consumer<Calendar> calendarOperation, Date date) {
+	private Date _processDate(Consumer<Calendar> consumer, Date date) {
 		Calendar calendar = CalendarFactoryUtil.getCalendar(date.getTime());
 
-		calendarOperation.accept(calendar);
+		consumer.accept(calendar);
 
 		return calendar.getTime();
 	}

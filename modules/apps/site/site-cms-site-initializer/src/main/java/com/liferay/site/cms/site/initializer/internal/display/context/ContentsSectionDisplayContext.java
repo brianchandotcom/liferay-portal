@@ -89,7 +89,7 @@ public class ContentsSectionDisplayContext extends BaseSectionDisplayContext {
 					_themeDisplay.getCompanyId(), QueryUtil.ALL_POS,
 					QueryUtil.ALL_POS)) {
 
-			if (objectDefinition.isSystem() ||
+			if (!objectDefinition.isApproved() || objectDefinition.isSystem() ||
 				!Objects.equals(
 					objectDefinition.getScope(),
 					ObjectDefinitionConstants.SCOPE_SITE) ||

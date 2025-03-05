@@ -15,13 +15,13 @@
 		).put(
 			"fieldHelpMessage", fieldHelpMessage
 		).put(
-			"fieldValue", HtmlUtil.escape(fieldValue)
+			"fieldValue", fieldValue
 		).put(
 			"hasPermission", hasPermission
 		).put(
 			"isOpenOrder", open
 		).put(
-			"label", HtmlUtil.escape(label)
+			"label", label
 		).put(
 			"namespace", namespace
 		).put(

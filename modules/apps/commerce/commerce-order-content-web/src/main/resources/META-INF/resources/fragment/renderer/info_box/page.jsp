@@ -19,7 +19,7 @@
 		).put(
 			"field", field
 		).put(
-			"fieldValue", HtmlUtil.escape(fieldValue)
+			"fieldValue", fieldValue
 		).put(
 			"fieldValueType", fieldValueType
 		).put(
@@ -27,7 +27,7 @@
 		).put(
 			"isOpen", open
 		).put(
-			"label", HtmlUtil.escape(label)
+			"label", label
 		).put(
 			"namespace", namespace
 		).put(

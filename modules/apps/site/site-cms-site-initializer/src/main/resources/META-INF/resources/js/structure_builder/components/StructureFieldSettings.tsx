@@ -20,6 +20,7 @@ import selectStructureField from '../selectors/selectStructureField';
 import selectStructureLocalizedLabel from '../selectors/selectStructureLocalizedLabel';
 import selectStructureStatus from '../selectors/selectStructureStatus';
 import {Field} from '../utils/field';
+import getFieldComponents from '../utils/getFieldComponents';
 import {isFieldTextSearchable} from '../utils/isFieldTextSearchable';
 import ERCInput from './ERCInput';
 import Input from './Input';
@@ -104,6 +105,10 @@ function GeneralTab({field}: {field: Field}) {
 		field.label
 	);
 
+	const {FirstSectionComponent, SecondSectionComponent} = getFieldComponents(
+		field.type
+	);
+
 	return (
 		<>
 			<div className="pb-2">
@@ -144,6 +149,8 @@ function GeneralTab({field}: {field: Field}) {
 						label as Liferay.Language.LocalizedValue<string>
 					}
 				/>
+
+				<FirstSectionComponent field={field} />
 			</div>
 
 			<div className="mt-4 pb-2">
@@ -162,7 +169,7 @@ function GeneralTab({field}: {field: Field}) {
 					/>
 				</ClayForm.Group>
 
-				<ClayForm.Group className="mb-0">
+				<ClayForm.Group className="mb-3">
 					<ClayToggle
 						disabled={isPublished}
 						label={Liferay.Language.get('localizable')}
@@ -176,6 +183,8 @@ function GeneralTab({field}: {field: Field}) {
 						toggled={field.localized}
 					/>
 				</ClayForm.Group>
+
+				<SecondSectionComponent field={field} />
 			</div>
 
 			<div className="mt-4">

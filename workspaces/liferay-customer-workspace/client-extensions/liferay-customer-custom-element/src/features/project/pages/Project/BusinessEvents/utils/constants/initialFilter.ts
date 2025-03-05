@@ -7,11 +7,47 @@ import {IFilterOption} from '~/components/Filter/Filter';
 
 export const INITIAL_FILTER: IFilterOption[] = [
 	{
-		name: 'Event Status',
-		value: ['Open', 'Cancelled', 'Completed', 'Overdue'],
+		key: 'eventStatus',
+		name: 'event-status',
+		values: [
+			{
+				key: 'open',
+				name: 'Open',
+			},
+			{
+				key: 'canceled',
+				name: 'Canceled',
+			},
+			{
+				key: 'completed',
+				name: 'Completed',
+			},
+			{
+				key: 'overdue',
+				name: 'Overdue',
+			},
+		],
 	},
 	{
-		name: 'Event Type',
-		value: ['Golive', 'Upgrade', 'Migration', 'OtherEvent'],
+		key: 'eventType',
+		name: 'event-type',
+		values: [
+			{
+				key: 'goLive',
+				name: 'Go-Live',
+			},
+			{
+				key: 'upgrade',
+				name: 'Upgrade',
+			},
+			{
+				key: 'migration',
+				name: 'Migration',
+			},
+			{
+				key: 'otherEvent',
+				name: 'Other Event',
+			},
+		],
 	},
 ];

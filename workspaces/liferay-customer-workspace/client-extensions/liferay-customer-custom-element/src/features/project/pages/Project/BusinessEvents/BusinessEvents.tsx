@@ -83,64 +83,51 @@ const BusinessEvents = () => {
 		[navigate, project?.accountKey]
 	);
 
-	const generateFilterQuery = (filters: IState) => {
-		const queryParams = Object.entries(filters)
-			.map(([key, {value}]) => {
-				if (Array.isArray(value) && !!value.length) {
-					return `(${value
-						.map((item) => `${key} eq '${item}'`)
-						.join(' or ')})`;
-				}
+	const generateFilterQuery = useCallback((filters: IState) => {
+		const queryParams: string[] = [];
 
-				return '';
-			})
-			.filter(Boolean);
+		if (filters.selectedFilters && !!filters.selectedFilters.length) {
+			filters.selectedFilters.forEach((filter) => {
+				if (filter.values && !!filter.values.length) {
+					const filterQuery = `(${filter.values
+						.map(
+							(value: {key: string; name: string}) =>
+								`${filter.key} eq '${value.key}'`
+						)
+						.join(' or ')})`;
+					queryParams.push(filterQuery);
+				}
+			});
+		}
 
 		if (filters.searchTerm?.trim()) {
 			queryParams.push(`(contains(name, '${filters.searchTerm}'))`);
 		}
 
 		return queryParams.length ? `filter=${queryParams.join(' and ')}` : '';
-	};
+	}, []);
 
-	const filterQuery = generateFilterQuery(filters);
+	const filterQuery = useMemo(
+		() => generateFilterQuery(filters),
+		[filters, generateFilterQuery]
+	);
 
-	const handleFilterChange = (newFilterOptions: IFilterOption[]) => {
-		setFilters((prevFilters) => {
-			let updatedFilters: IFilterOption[] = prevFilters.selectedFilters
-				? [...prevFilters.selectedFilters]
-				: [];
-
-			if (newFilterOptions && !!newFilterOptions.length) {
-				newFilterOptions.forEach((newOption) => {
-					updatedFilters = updatedFilters.filter(
-						(filter) => filter.name !== newOption.name
-					);
-					updatedFilters.push(newOption);
-				});
-			}
-			else {
-				updatedFilters = updatedFilters.filter(
-					(filter) =>
-						filter.name !==
-						(prevFilters.selectedFilters?.length &&
-							prevFilters.selectedFilters[0].name)
-				);
-			}
-
-			return {
+	const handleFilterChange = useCallback(
+		(newFilterOptions: IFilterOption[]) => {
+			setFilters((prevFilters) => ({
 				...prevFilters,
-				selectedFilters: updatedFilters,
-			};
-		});
-	};
+				selectedFilters: newFilterOptions,
+			}));
+		},
+		[]
+	);
 
-	const handleSearchChange = (searchTerm: string) => {
+	const handleSearchChange = useCallback((searchTerm: string) => {
 		setFilters((prevFilters) => ({
 			...prevFilters,
 			searchTerm,
 		}));
-	};
+	}, []);
 
 	useEffect(() => {
 		const fetchBusinessEvents = async () => {

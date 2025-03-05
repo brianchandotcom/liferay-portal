@@ -11,8 +11,12 @@ import FilterDropdown from './components/FilterDropdown';
 import FilterContent from './components/FilterDropdown/components/FilterContent';
 
 export interface IFilterOption {
+	key: string;
 	name: string;
-	value: string[];
+	values: {
+		key: string;
+		name: string;
+	}[];
 }
 
 export interface IProps {

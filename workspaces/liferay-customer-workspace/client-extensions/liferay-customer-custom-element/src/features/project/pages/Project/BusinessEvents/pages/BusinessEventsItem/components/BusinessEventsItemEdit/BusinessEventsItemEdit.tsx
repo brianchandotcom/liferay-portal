@@ -52,83 +52,23 @@ const BusinessEventsItemEditForm = ({
 		setHasImpactingEvents(value);
 	};
 
-	const formatLiferayVersion = useCallback((version: string) => {
-		if (version.startsWith('liferayPortal')) {
-			const versionNumber = version.replace('liferayPortal', '');
-
-			return `Liferay Portal ${versionNumber[0]}.${versionNumber[1]}`;
-		}
-
-		if (version.startsWith('liferayDXP')) {
-			const versionNumber = version.replace('liferayDxp', '');
-
-			return `Liferay DXP ${versionNumber[0]}.${versionNumber[1]}`;
-		}
-
-		return version;
-	}, []);
-
-	const formatEventType = useCallback((eventType: string) => {
-		if (eventType === 'golive') {
-			return 'Go-Live';
-		}
-
-		if (eventType === 'otherevent') {
-			return 'Other Event';
-		}
-
-		return eventType.charAt(0).toUpperCase() + eventType.slice(1);
-	}, []);
-
-	const formatDateAndTime = (
-		date: string,
-		timeZone: string,
-		time: string
-	) => {
-		const [month, day, year] = date.split('/');
-		const formattedDate = new Date(`${year}-${month}-${day}T00:00:00`);
-
-		const [hours, minutes] = time.split(':');
-		formattedDate.setHours(parseInt(hours, 10));
-		formattedDate.setMinutes(parseInt(minutes, 10));
-
-		const offset = parseInt(
-			timeZone.replace('GMT', '').replace(':', ''),
-			10
-		);
-		formattedDate.setHours(formattedDate.getHours() + offset);
-
-		const formattedTimestamp = formattedDate.toISOString();
-
-		return formattedTimestamp;
-	};
-
 	const handleSubmit = useCallback(
 		async (values: any) => {
-			const formattedEventTime = formatDateAndTime(
-				values.businessEvent.targetGoLiveDate,
-				values.businessEvent.timeZone,
-				values.businessEvent.targetGoLiveTime
-			);
-
 			const fieldsToPatch = {
 				currentLiferayVersion: {
-					key: values.businessEvent.currentLiferayVersion,
-					name: formatLiferayVersion(
-						values.businessEvent.currentLiferayVersion
-					),
+					key: values.businessEvent.currentLiferayVersion.key,
+					name: values.businessEvent.currentLiferayVersion.name,
 				},
 				eventType: {
-					key: values.businessEvent.eventType,
-					name: formatEventType(values.businessEvent.eventType),
+					key: values.businessEvent.eventType.key,
+					name: values.businessEvent.eventType.name,
 				},
 				newLiferayVersion: {
-					key: values.businessEvent.newLiferayVersion,
-					name: formatLiferayVersion(
-						values.businessEvent.newLiferayVersion
-					),
+					key: values.businessEvent.newLiferayVersion.key,
+					name: values.businessEvent.newLiferayVersion.name,
 				},
-				targetGoLiveDateTime: formattedEventTime,
+				targetGoLiveDateTime: values.businessEvent.targetGoLiveDateTime,
+				timeZone: values.businessEvent.timeZone,
 			};
 
 			setSubmitTriggered(true);
@@ -137,12 +77,7 @@ const BusinessEventsItemEditForm = ({
 				await updateBusinessEventItem(businessEvent.id, fieldsToPatch);
 			}
 		},
-		[
-			businessEvent.id,
-			formatEventType,
-			formatLiferayVersion,
-			setSubmitTriggered,
-		]
+		[businessEvent.id, setSubmitTriggered]
 	);
 
 	useEffect(() => {

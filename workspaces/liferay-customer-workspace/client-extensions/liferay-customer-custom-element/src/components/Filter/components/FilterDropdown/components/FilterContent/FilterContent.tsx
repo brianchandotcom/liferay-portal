@@ -21,29 +21,35 @@ const FilterContent: React.FC<IProps> = ({
 	selectedFilters,
 }) => {
 	const [localSelectedValues, setLocalSelectedValues] = React.useState<
-		string[]
+		{
+			key: string;
+			name: string;
+		}[]
 	>(
 		selectedFilters.find(
-			(selectedFilter) => selectedFilter.name === filter.name
-		)?.value || []
+			(selectedFilter) => selectedFilter.key === filter.key
+		)?.values || []
 	);
 
 	useEffect(() => {
 		setLocalSelectedValues(
 			selectedFilters.find(
-				(selectedFilter) => selectedFilter.name === filter.name
-			)?.value || []
+				(selectedFilter) => selectedFilter.key === filter.key
+			)?.values || []
 		);
-	}, [selectedFilters, filter.name]);
+	}, [selectedFilters, filter.key]);
 
-	const handleCheckboxChange = (value: string, checked: boolean) => {
+	const handleCheckboxChange = (
+		value: {key: string; name: string},
+		checked: boolean
+	) => {
 		let updatedValues = [...localSelectedValues];
 
 		if (checked) {
 			updatedValues.push(value);
 		}
 		else {
-			updatedValues = updatedValues.filter((v) => v !== value);
+			updatedValues = updatedValues.filter((v) => v.key !== value.key);
 		}
 
 		setLocalSelectedValues(updatedValues);
@@ -51,25 +57,35 @@ const FilterContent: React.FC<IProps> = ({
 
 	const handleClick = () => {
 		const updatedFilter: IFilterOption = {
+			key: filter.key,
 			name: filter.name,
-			value: localSelectedValues,
+			values: localSelectedValues,
 		};
 
 		onChange(
-			selectedFilters
-				.filter((selectedFilter) => selectedFilter.name !== filter.name)
-				.concat(localSelectedValues.length ? updatedFilter : [])
+			localSelectedValues.length
+				? selectedFilters
+						.filter(
+							(selectedFilter) =>
+								selectedFilter.key !== filter.key
+						)
+						.concat(updatedFilter)
+				: selectedFilters.filter(
+						(selectedFilter) => selectedFilter.key !== filter.key
+					)
 		);
 	};
 
 	return (
 		<div className="w-100">
 			<div className="filter-content pt-2 px-3">
-				{filter.value.map((value) => (
+				{filter.values.map((value) => (
 					<ClayCheckbox
-						checked={localSelectedValues.includes(value)}
-						key={`${filter.name}-${value}`}
-						label={i18n.translate(value)}
+						checked={localSelectedValues.some(
+							(item) => item.key === value.key
+						)}
+						key={`${filter.key}-${value.key}`}
+						label={i18n.translate(value.name)}
 						onChange={(event) =>
 							handleCheckboxChange(value, event.target.checked)
 						}

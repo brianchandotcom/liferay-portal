@@ -23,14 +23,14 @@ const FilterResults = ({
 	selectedFilters,
 }: IProps) => {
 	const hasFilterValue = (selectedFilters: IFilterOption[]) => {
-		return selectedFilters.some((option) => !!option.value.length);
+		return selectedFilters.some((option) => !!option.values.length);
 	};
 
-	const handleClearFilter = (filterName: string) => {
+	const handleClearFilter = (filterKey: string) => {
 		onChange(
 			selectedFilters.map((option) => {
-				if (option.name === filterName) {
-					return {...option, value: []};
+				if (option.key === filterKey) {
+					return {...option, values: []};
 				}
 
 				return option;
@@ -62,14 +62,16 @@ const FilterResults = ({
 			<div className="bd-highlight d-flex">
 				<div className="bd-highlight col d-flex flex-wrap pl-0 pt-2 w-100">
 					{selectedFilters.map((option) => {
-						if (option.value.length) {
+						if (option.values.length) {
 							return (
 								<BadgeButton
 									filterName={i18n.translate(option.name)}
-									filterValue={option.value.join(', ')}
-									key={option.name}
+									filterValue={option.values
+										.map((value) => value.name)
+										.join(', ')}
+									key={option.key}
 									onClick={() =>
-										handleClearFilter(option.name)
+										handleClearFilter(option.key)
 									}
 								/>
 							);

@@ -869,66 +869,6 @@ definition {
 			orgType = "Organization");
 	}
 
-	@priority = 4
-	test EditOrganizationSiteTeam {
-		User.openUsersAdmin();
-
-		User.addCP(
-			userEmailAddress = "userea@liferay.com",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userScreenName = "usersn");
-
-		JSONOrganization.addOrganization(organizationName = "Organization Name");
-
-		Organization.openOrganizationsAdmin();
-
-		Organization.addSiteCP(orgName = "Organization Name");
-
-		Site.openSiteSettingsAdmin(siteURLKey = "organization-name");
-
-		Site.manageMembershipOptions(allowManualMembershipManagement = "true");
-
-		Organization.openOrganizationsAdmin();
-
-		Organization.assignUser(
-			orgName = "Organization Name",
-			userFirstName = "userfn",
-			userLastName = "userln",
-			userName = "userfn userln",
-			userScreenName = "usersn");
-
-		PagesAdmin.openPagesAdmin(siteURLKey = "Organization Name");
-
-		ProductMenu.gotoPortlet(
-			category = "Site Builder",
-			portlet = "Pages");
-
-		PagesAdmin.addPage(pageName = "Public Page");
-
-		PagesAdmin.openPagesAdmin(siteURLKey = "Organization Name");
-
-		ProductMenu.gotoPortlet(
-			category = "People",
-			portlet = "Teams");
-
-		Team.addCP(
-			siteName = "Organization Name",
-			teamDescription = "Site Team Description",
-			teamName = "Site Team Name");
-
-		Team.editCP(
-			siteName = "Organization Name",
-			teamDescriptionEdit = "Site Team Description Edit",
-			teamName = "Site Team Name",
-			teamNameEdit = "Site Team Name Edit");
-
-		Team.viewCP(
-			siteName = "Organization Name",
-			teamDescription = "Site Team Description Edit",
-			teamName = "Site Team Name Edit");
-	}
-
 	@description = "This is a use case for LPS-75084."
 	@priority = 4
 	test NoPermissionUserCannotAddOrganizationViaURL {

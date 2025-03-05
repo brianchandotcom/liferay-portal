@@ -156,14 +156,14 @@ if (portletTitleBasedNavigation) {
 			document.getElementById('<portlet:namespace />addExplanationPost')
 				.checked
 		) {
-			document.getElementById(
-				'<portlet:namespace />explanationPost'
-			).style.display = '';
+			document
+				.getElementById('<portlet:namespace />explanationPost')
+				.classList.remove('hide');
 		}
 		else {
-			document.getElementById(
-				'<portlet:namespace />explanationPost'
-			).style.display = 'none';
+			document
+				.getElementById('<portlet:namespace />explanationPost')
+				.classList.add('hide');
 		}
 	}
 </aui:script>

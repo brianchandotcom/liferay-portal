@@ -974,6 +974,10 @@ definition {
 			fragmentName = "Paragraph",
 			targetFragmentName = "Heading");
 
+		PageEditorMapping.gotoEditableFieldMapping(
+			fragmentName = "Paragraph",
+			id = "element-text");
+
 		Select(
 			key_fieldLabel = "Field",
 			locator1 = "Select#GENERIC_SELECT_FIELD",
@@ -991,7 +995,7 @@ definition {
 			webContentText = "WC WebContent Content",
 			webContentTitle = "WC Webcontent Title");
 
-		PortletEntry.publish();
+		WebContent.publishWithPermissions();
 
 		Navigator.gotoSitePage(
 			pageName = "Test Page Name",

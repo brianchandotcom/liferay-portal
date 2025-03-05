@@ -73,4 +73,52 @@ public class PasswordModifiedFilterTest {
 		);
 	}
 
+	@Test
+	public void testProcessFilterWithPortalProxyPath() throws Exception {
+		PortalUtil portalUtil = new PortalUtil();
+
+		portalUtil.setPortal(
+			new PortalImpl() {
+
+				@Override
+				public String getPathContext() {
+					return "/proxy/test";
+				}
+
+				@Override
+				public String getPathProxy() {
+					return "/proxy";
+				}
+
+			});
+
+		PasswordModifiedFilter passwordModifiedFilter =
+			new PasswordModifiedFilter();
+
+		FilterChain filterChain = Mockito.mock(FilterChain.class);
+
+		passwordModifiedFilter.processFilter(
+			new HttpServletRequestWrapper(
+				ProxyFactory.newDummyInstance(HttpServletRequest.class)) {
+
+				@Override
+				public String getContextPath() {
+					return "/c/bad/context/path";
+				}
+
+				@Override
+				public String getRequestURI() {
+					return "/test/path";
+				}
+
+			},
+			null, filterChain);
+
+		Mockito.verify(
+			filterChain
+		).doFilter(
+			Mockito.any(), Mockito.any()
+		);
+	}
+
 }

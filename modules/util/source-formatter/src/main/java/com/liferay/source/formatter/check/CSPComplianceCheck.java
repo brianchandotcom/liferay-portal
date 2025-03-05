@@ -205,6 +205,8 @@ public class CSPComplianceCheck extends BaseTagAttributesCheck {
 				}
 			}
 
+			x = -1;
+
 			while (true) {
 				x = lowerCaseContent.indexOf("</" + tagName, x + 1);
 

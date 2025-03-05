@@ -14,10 +14,10 @@ import org.osgi.service.component.annotations.Component;
  * @author Marko Cikos
  */
 @Component(
-	property = "frontend.data.set.name=" + FDSSampleFDSNames.REACT,
+	property = "frontend.data.set.name=" + FDSSampleFDSNames.CUSTOM_INTERNAL_VIEW,
 	service = SystemFDSEntry.class
 )
-public class ReactSystemFDSEntry implements SystemFDSEntry {
+public class CustomInternalViewSystemFDSEntry implements SystemFDSEntry {
 
 	@Override
 	public String getAdditionalAPIURLParameters() {
@@ -26,12 +26,19 @@ public class ReactSystemFDSEntry implements SystemFDSEntry {
 
 	@Override
 	public String getDescription() {
-		return "This is the \"React\" sample of a frontend data set.";
+		return "This is the \"Custom internal view\" sample of a frontend " +
+			"data set.";
 	}
 
 	@Override
 	public String getName() {
-		return FDSSampleFDSNames.REACT;
+		return FDSSampleFDSNames.CUSTOM_INTERNAL_VIEW;
+	}
+
+	@Override
+	public String getPropsTransformer() {
+		return "{CustomInternalViewPropsTransformer} from frontend-data-set-" +
+			"sample-web";
 	}
 
 	@Override
@@ -51,12 +58,12 @@ public class ReactSystemFDSEntry implements SystemFDSEntry {
 
 	@Override
 	public String getSymbol() {
-		return "react";
+		return "rotate";
 	}
 
 	@Override
 	public String getTitle() {
-		return "React Sample";
+		return "Custom Internal View Sample";
 	}
 
 }

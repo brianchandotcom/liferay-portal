@@ -15,6 +15,5 @@ FDSSampleDisplayContext fdsSampleDisplayContext = (FDSSampleDisplayContext)reque
 <frontend-data-set:headless-display
 	apiURL="<%= fdsSampleDisplayContext.getAPIURL() %>"
 	id="<%= FDSSampleFDSNames.CUSTOM_INTERNAL_VIEW %>"
-	propsTransformer="{CustomInternalViewPropsTransformer} from frontend-data-set-sample-web"
 	style="fluid"
 />

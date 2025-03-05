@@ -5,10 +5,10 @@
 
 import ClayLoadingIndicator from '@clayui/loading-indicator';
 import {useEffect, useMemo, useState} from 'react';
-import {HashRouter, Outlet, Route, Routes} from 'react-router-dom';
+import {HashRouter, Route, Routes} from 'react-router-dom';
 import {useAppPropertiesContext} from '~/contexts/AppPropertiesContext';
 import getKebabCase from '~/utils/getKebabCase';
-import BusinessEventForm from '~/features/project/containers/BusinessEventForm';
+import BusinessEventAdd from '~/features/project/pages/Project/BusinessEvents/pages/BusinessEventsAdd';
 import DeactivateKeysTable from '~/features/project/containers/DeactivateKeysTable';
 import GenerateNewKey from '~/features/project/containers/GenerateNewKey';
 import {useCustomerPortal} from '~/features/project/context';
@@ -32,8 +32,8 @@ import ProductOutlet from './Outlets/ProductOutlet';
 import ProjectUsage from '../ProjectUsage';
 import useCurrentKoroneikiAccount from '~/hooks/useCurrentKoroneikiAccount';
 import useMyUserAccountByAccountExternalReferenceCode from '~/features/project/pages/Project/TeamMembers/components/TeamMembersTable/hooks/useMyUserAccountByAccountExternalReferenceCode';
-import BusinessEvents from '../BusinessEvent';
-import BusinessEventsItem from '../BusinessEvent/pages/BusinessEventsItem/BusinessEventsItem';
+import BusinessEvents from '../BusinessEvents';
+import BusinessEventsItem from '../BusinessEvents/pages/BusinessEventsItem/BusinessEventsItem';
 
 const ProjectRoutes = () => {
 	const [hasComplimentaryKey, setHasComplimentaryKey] = useState(false);
@@ -271,7 +271,7 @@ const ProjectRoutes = () => {
 					{featureFlags.includes('LRSD-5119') && (
 						<Route path="business-events">
 							<Route element={<BusinessEvents />} index />
-							<Route element={<BusinessEventForm />} path="new"/>
+							<Route element={<BusinessEventAdd />} path="new"/>
 							<Route element={<BusinessEventsItem />} path=":id"/>
 						</Route>
 					)}

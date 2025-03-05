@@ -19,12 +19,12 @@ import i18n from '~/utils/I18n';
 import getInitialEvent from '~/utils/getInitialEvent';
 import {IBusinessEvent} from '~/utils/types';
 
-import Layout from '../../../../components/FormLayout';
-import useHasAllEventsPermissions from '../../pages/Project/BusinessEvent/hooks/useHasAllEventsPermissions';
-import {PRODUCT_TYPES} from '../../utils/constants';
-import useGetBusinessEventTypesList from './hooks/useGetBusinessEventTypesList';
-import useGetGMTTimeZonesList from './hooks/useGetGMTTimeZonesList';
-import useGetVersionOfLiferaySoftwareList from './hooks/useGetVersionOfLiferaySoftwareList';
+import Layout from '../../../../../../../components/FormLayout';
+import {PRODUCT_TYPES} from '../../../../../utils/constants';
+import useGetBusinessEventTypesList from '../../hooks/useGetBusinessEventTypesList';
+import useGetGMTTimeZonesList from '../../hooks/useGetGMTTimeZonesList';
+import useGetVersionOfLiferaySoftwareList from '../../hooks/useGetVersionOfLiferaySoftwareList';
+import useHasAllEventsPermissions from '../../hooks/useHasAllEventsPermissions';
 
 interface IProps {
 	businessEvent: IBusinessEvent;
@@ -38,7 +38,7 @@ interface IProps {
 	values: any;
 }
 
-const BusinessEventPage: React.FC<IProps> = ({
+const BusinessEventsAddPage: React.FC<IProps> = ({
 	businessEvent,
 	errors,
 	setFieldValue,
@@ -153,14 +153,16 @@ const BusinessEventPage: React.FC<IProps> = ({
 	);
 
 	const isDescriptionRequired = useMemo(
-		() => isSaasOnly || businessEvent.eventType === 'otherEvent',
+		() => isSaasOnly || businessEvent.eventType?.name === 'otherEvent',
 		[isSaasOnly, businessEvent.eventType]
 	);
 
 	const isNewLiferayVersionRequired = useMemo(
 		() =>
 			!isSaasOnly &&
-			['migration', 'upgrade'].includes(businessEvent.eventType || ''),
+			['migration', 'upgrade'].includes(
+				businessEvent.eventType?.name || ''
+			),
 		[isSaasOnly, businessEvent.eventType]
 	);
 
@@ -414,7 +416,7 @@ const BusinessEventPage: React.FC<IProps> = ({
 	);
 };
 
-const BusinessEventForm: React.FC = () => {
+const BusinessEventsAdd: React.FC = () => {
 	return (
 		<Formik
 			initialValues={{businessEvent: getInitialEvent()}}
@@ -422,8 +424,11 @@ const BusinessEventForm: React.FC = () => {
 			validateOnChange
 		>
 			{(formikProps) => (
-				<BusinessEventPage
-					businessEvent={formikProps.values.businessEvent}
+				<BusinessEventsAddPage
+					businessEvent={
+						formikProps.values
+							.businessEvent as unknown as IBusinessEvent
+					}
 					errors={formikProps.errors}
 					setFieldValue={formikProps.setFieldValue}
 					touched={formikProps.touched}
@@ -434,4 +439,4 @@ const BusinessEventForm: React.FC = () => {
 	);
 };
 
-export default BusinessEventForm;
+export default BusinessEventsAdd;

@@ -48,30 +48,7 @@ test.beforeEach(
 );
 
 test(
-	'Assert the localization dropdown is rendered alongside the localized input',
-	{tag: '@LPD-47235'},
-	async ({translationManagerPage}) => {
-		await test.step('Assert the localized input is rendered', async () => {
-			expect(
-				translationManagerPage.adminLocalizedInputContainer
-			).toBeVisible();
-		});
-
-		await test.step('Assert the localization dropdown is rendered', async () => {
-			const {catalanChoice, triggerButton} = translationManagerPage;
-
-			expect(triggerButton).toBeVisible();
-
-			await clickAndExpectToBeVisible({
-				target: catalanChoice,
-				trigger: triggerButton,
-			});
-		});
-	}
-);
-
-test(
-	'Assert the click on a translation updates the localized input',
+	'Assert dropdown localization functionality',
 	{tag: '@LPD-47235'},
 	async ({page, translationManagerPage}) => {
 		const {
@@ -81,15 +58,16 @@ test(
 			triggerButton,
 		} = translationManagerPage;
 
-		const randomString = getRandomString();
-
-		await test.step('Fill the localized input with a translation', async () => {
+		await test.step('Assert dropdown UI is rendered correctly', async () => {
 			await expect(adminLocalizedInputContainer).toBeVisible();
-
-			await localizedInput.fill(randomString);
+			await expect(triggerButton).toBeVisible();
 		});
 
-		await test.step('Click on a translation', async () => {
+		const randomString = getRandomString();
+
+		await test.step('Assert translation updates content', async () => {
+			await localizedInput.fill(randomString);
+
 			await clickAndExpectToBeVisible({
 				target: catalanChoice,
 				trigger: triggerButton,
@@ -98,62 +76,29 @@ test(
 			await catalanChoice.click();
 
 			const translationText = page.locator(`text=${randomString}`);
-
 			await expect(translationText).toBeVisible();
 			await expect(localizedInput).not.toContainText(randomString);
 		});
-	}
-);
 
-test(
-	'Assert the click on a translation changes the translation manager trigger text',
-	{tag: '@LPD-47235'},
-	async ({translationManagerPage}) => {
-		await test.step('Click on a translation', async () => {
-			const {catalanChoice, triggerButton} = translationManagerPage;
-
-			await clickAndExpectToBeVisible({
-				target: catalanChoice,
-				trigger: triggerButton,
-			});
-
-			await catalanChoice.click();
-
+		await test.step('Assert trigger text changes', async () => {
 			await expect(triggerButton).toHaveText('ca-ES');
 		});
 	}
 );
 
 test(
-	'Assert translation manager button exists for Admin users',
-	{tag: '@LPD-47235'},
-	async ({translationManagerPage}) => {
-		await test.step('Click on a translation', async () => {
-			const {englishTriggerButton, manageButton} = translationManagerPage;
-
-			await clickAndExpectToBeVisible({
-				target: manageButton,
-				trigger: englishTriggerButton,
-			});
-		});
-	}
-);
-
-test(
-	'Assert the translation manager is opened when Manage Translations is clicked',
+	'Assert translation manager dialog navigation',
 	{tag: '@LPD-47235'},
 	async ({translationManagerPage}) => {
 		const {dialog, englishTriggerButton, manageButton} =
 			translationManagerPage;
 
-		await test.step('Click on a translation', async () => {
+		await test.step('Assert manage button exists and opens dialog', async () => {
 			await clickAndExpectToBeVisible({
 				target: manageButton,
 				trigger: englishTriggerButton,
 			});
-		});
 
-		await test.step('Assert the translation manager is opened', async () => {
 			await clickAndExpectToBeVisible({
 				target: dialog,
 				trigger: manageButton,

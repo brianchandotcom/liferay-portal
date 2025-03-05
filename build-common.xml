@@ -82,11 +82,7 @@
 		<pathelement path="${classpath.full}" />
 		<fileset
 			dir="${project.dir}/lib/development"
-			includes="osgi-annotation-versioning.jar,osgi-core.jar,tomcat-jsp-api.jar,mail.jar,tomcat-servlet-api.jar"
-		/>
-		<fileset
-			dir="${project.dir}/lib/portal"
-			includes="portlet.jar"
+			includes="osgi-annotation-versioning.jar,osgi-core.jar,portlet.jar,tomcat-jsp-api.jar,mail.jar,tomcat-servlet-api.jar"
 		/>
 		<path refid="lib.pre.classpath" />
 		<path refid="web-lib.classpath" />

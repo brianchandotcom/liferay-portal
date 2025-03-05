@@ -95,6 +95,7 @@
 	<classpathentry kind="lib" path="lib/development/osgi-service-component.jar"/>
 	<classpathentry kind="lib" path="lib/development/osgi-service-log.jar"/>
 	<classpathentry kind="lib" path="lib/development/p6spy.jar"/>
+	<classpathentry kind="lib" path="lib/development/portlet.jar"/>
 	<classpathentry kind="lib" path="lib/development/portletmvc4spring-test.jar"/>
 	<classpathentry kind="lib" path="lib/development/postgresql.jar"/>
 	<classpathentry kind="lib" path="lib/development/qdox.jar"/>
@@ -145,7 +146,6 @@
 	<classpathentry kind="lib" path="lib/portal/log4j-api.jar"/>
 	<classpathentry kind="lib" path="lib/portal/log4j-core.jar"/>
 	<classpathentry kind="lib" path="lib/portal/persistence.jar"/>
-	<classpathentry kind="lib" path="lib/portal/portlet.jar"/>
 	<classpathentry kind="lib" path="lib/portal/slf4j-api.jar"/>
 	<classpathentry kind="lib" path="lib/portal/soap-api.jar"/>
 	<classpathentry kind="lib" path="lib/portal/spring-aop.jar"/>

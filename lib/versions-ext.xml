@@ -651,6 +651,18 @@
 				</licenses>
 			</library>
 			<library>
+				<file-name>lib/development/portlet.jar</file-name>
+				<version>3.0.1</version>
+				<project-name>JSR 362 Portlet Specification 3.0</project-name>
+				<project-url>https://jcp.org/en/jsr/detail?id=362</project-url>
+				<licenses>
+					<license>
+						<license-name>Apache License 2.0</license-name>
+						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
+					</license>
+				</licenses>
+			</library>
+			<library>
 				<file-name>lib/development/portletmvc4spring-test.jar</file-name>
 				<version>5.2.1</version>
 				<project-name>PortletMVC4Spring</project-name>
@@ -1319,18 +1331,6 @@
 					<license>
 						<license-name>Common Development and Distribution License 1.0</license-name>
 						<license-url>https://opensource.org/licenses/CDDL-1.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
-				<file-name>lib/portal/portlet.jar</file-name>
-				<version>3.0.1</version>
-				<project-name>JSR 362 Portlet Specification 3.0</project-name>
-				<project-url>https://jcp.org/en/jsr/detail?id=362</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
 					</license>
 				</licenses>
 			</library>

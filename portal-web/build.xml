@@ -19,6 +19,7 @@
 		<pathelement location="${project.dir}/lib/development/jstl-api.jar" />
 		<pathelement location="${project.dir}/lib/development/jstl-impl.jar" />
 		<pathelement location="${project.dir}/lib/development/mail.jar" />
+		<pathelement location="${project.dir}/lib/development/portlet.jar" />
 		<pathelement location="${project.dir}/lib/development/velocity.jar" />
 		<pathelement location="${project.dir}/lib/portal/commons-lang.jar" />
 		<pathelement location="${project.dir}/lib/portal/commons-logging.jar" />
@@ -27,7 +28,6 @@
 		<pathelement location="${project.dir}/lib/portal/log4j-api.jar" />
 		<pathelement location="${project.dir}/lib/portal/log4j-core.jar" />
 		<pathelement location="${project.dir}/lib/portal/openid4java.jar" />
-		<pathelement location="${project.dir}/lib/portal/portlet.jar" />
 	</path>
 
 	<target depends="build-common-web.clean,clean-tlds" name="clean">

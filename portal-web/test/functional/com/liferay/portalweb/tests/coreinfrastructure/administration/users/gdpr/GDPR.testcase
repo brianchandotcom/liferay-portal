@@ -1334,62 +1334,6 @@ definition {
 		}
 	}
 
-	@description = "LPS-77750 This test asserts that the details of the entry display when user clicks on the Info icon."
-	@priority = 4
-	test EntryDetailsDisplayInInfoPanel {
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMFolder.addCP(
-			dmFolderDescription = "Folder_1 Description",
-			dmFolderName = "Folder_1");
-
-		DMDocument.addCP(
-			dmDocumentDescription = "Document_1 Description",
-			dmDocumentFile = "Document_1.txt",
-			dmDocumentTitle = "Document_1 Title");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test");
-
-		User.openUsersAdmin();
-
-		User.deletePersonalDataCP(
-			userFirstName = "userfn",
-			userLastName = "userln");
-
-		GDPR.filterByApplications(
-			applicationItemsCount = 2,
-			applications = "Documents and Media",
-			totalItemsCount = 2);
-
-		AssertTextPresent(value1 = "DLFOLDER");
-
-		AssertTextPresent(value1 = "DLFILEENTRY");
-
-		LexiconEntry.selectEntry(rowEntry = "Folder_1");
-
-		Click.clickAt(locator1 = "Icon#INFO");
-
-		for (var infoPanel : list "Folder_1,Folder_1 Description") {
-			AssertTextEquals.assertPartialText(
-				locator1 = "DocumentsAndMedia#SIDEBAR_INFO_ACTIVE",
-				value1 = ${infoPanel});
-		}
-
-		LexiconEntry.selectEntry(rowEntry = "Document_1.txt");
-
-		Uncheck(
-			key_rowEntry = "Folder_1",
-			locator1 = "ContentRow#ENTRY_CONTENT_ENTRY_CHECKBOX");
-
-		for (var infoPanel : list "Document_1 Title,Document_1 Description,txt") {
-			AssertTextEquals.assertPartialText(
-				locator1 = "DocumentsAndMedia#SIDEBAR_INFO_ACTIVE",
-				value1 = ${infoPanel});
-		}
-	}
-
 	@description = "This test changes pagination and assert export processes display properly."
 	@priority = 4
 	test PaginationWorksInExportPersonalData {

@@ -9,6 +9,8 @@ import {DataTablePage} from '../account-admin-web/DataTablePage';
 import {ProductMenuPage} from '../product-navigation-control-menu-web/ProductMenuPage';
 
 export class TeamsPage {
+	readonly descriptionInput: Locator;
+	readonly editButton: Locator;
 	readonly editLink: Locator;
 	readonly nameInput: Locator;
 	readonly newTeamButton: Locator;
@@ -18,6 +20,8 @@ export class TeamsPage {
 	readonly teamsTable: DataTablePage;
 
 	constructor(page: Page) {
+		this.descriptionInput = page.getByPlaceholder('Description');
+		this.editButton = page.getByRole('link', {name: 'Edit'});
 		this.editLink = page.getByRole('link', {name: 'Edit'});
 		this.nameInput = page.getByPlaceholder('Name');
 		this.newTeamButton = page.getByRole('link', {name: 'Add Team'});

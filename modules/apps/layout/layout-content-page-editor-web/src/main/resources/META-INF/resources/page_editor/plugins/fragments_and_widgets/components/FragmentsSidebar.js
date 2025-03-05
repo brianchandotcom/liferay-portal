@@ -130,6 +130,7 @@ const normalizeFragmentEntry = (fragmentEntry) => ({
 export default function FragmentsSidebar() {
 	const fragments = useSelector((state) => state.fragments);
 	const widgets = useSelector((state) => state.widgets);
+	const permissions = useSelector((state) => state.permissions);
 
 	const loadWidgets = useLoadWidgets();
 
@@ -288,7 +289,8 @@ export default function FragmentsSidebar() {
 						}
 					/>
 
-					{Liferay.FeatureFlags['LPD-34938'] && (
+					{Liferay.FeatureFlags['LPD-34938'] &&
+					permissions.VIEW_MARKETPLACE ? (
 						<MarketplaceButton
 							body={Liferay.Language.get(
 								'we-are-excited-to-share-that-marketplace-is-now-part-of-page-builder'
@@ -301,7 +303,7 @@ export default function FragmentsSidebar() {
 							}
 							portletNamespace={config.portletNamespace}
 						/>
-					)}
+					) : null}
 				</div>
 
 				{searchValue ? (

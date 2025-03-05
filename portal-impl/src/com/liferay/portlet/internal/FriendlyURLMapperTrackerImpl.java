@@ -28,6 +28,7 @@ import com.liferay.portlet.RouterImpl;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.BiFunction;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -156,6 +157,33 @@ public class FriendlyURLMapperTrackerImpl implements FriendlyURLMapperTracker {
 	private static final Log _log = LogFactoryUtil.getLog(
 		FriendlyURLMapperTrackerImpl.class);
 
+	private static final BiFunction<String, String, String>
+		_textReplacerBiFunction;
+
+	static {
+		ClassLoader classLoader = ClassLoader.getSystemClassLoader();
+
+		Object instance = null;
+
+		try {
+			Class<?> clazz = classLoader.loadClass(
+				"com.liferay.portal.tools.jakarta.ee.transformer.function." +
+					"TextReplacerBiFunction");
+
+			instance = clazz.newInstance();
+		}
+		catch (ReflectiveOperationException reflectiveOperationException) {
+			if (!(reflectiveOperationException instanceof
+					ClassNotFoundException)) {
+
+				throw new ExceptionInInitializerError(
+					reflectiveOperationException);
+			}
+		}
+
+		_textReplacerBiFunction = (BiFunction<String, String, String>)instance;
+	}
+
 	private final BundleContext _bundleContext =
 		SystemBundleUtil.getBundleContext();
 	private final Portlet _portlet;
@@ -196,6 +224,11 @@ public class FriendlyURLMapperTrackerImpl implements FriendlyURLMapperTracker {
 					Class<?> clazz = friendlyURLMapper.getClass();
 
 					xml = getContent(clazz.getClassLoader(), friendlyURLRoutes);
+
+					if (_textReplacerBiFunction != null) {
+						xml = _textReplacerBiFunction.apply(
+							clazz.getName() + "#" + friendlyURLRoutes, xml);
+					}
 				}
 
 				friendlyURLMapper.setRouter(newFriendlyURLRouter(xml));

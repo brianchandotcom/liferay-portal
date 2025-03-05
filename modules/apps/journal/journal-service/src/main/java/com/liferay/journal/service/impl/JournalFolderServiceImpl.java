@@ -567,6 +567,13 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 				_journalFolderModelResourcePermission, permissionChecker,
 				groupId, folderId, ActionKeys.UPDATE)) {
 
+			if (folderId == JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+				return journalFolderLocalService.updateFolder(
+					getUserId(), groupId, folderId, parentFolderId, name,
+					description, ddmStructureIds, restrictionType,
+					mergeWithParentFolder, serviceContext);
+			}
+
 			JournalFolder folder = getFolder(folderId);
 
 			if (!ModelResourcePermissionUtil.contains(

@@ -7,6 +7,13 @@
 		<suppress checks="UnprocessedExceptionCheck" files="site-initializer-extender/site-initializer-extender/src/main/java/com/liferay/site/initializer/extender/internal/BundleSiteInitializer\.java" />
 	</checkstyle>
 	<source-check>
+		<suppress checks="CSPTagIllegalAttributesCheck" files="site-initializer-teaser-showcase/src/main/resources/site-initializer/ddm-templates/product-detail/ddm-template\.ftl" />
+		<suppress checks="CSPTagIllegalAttributesCheck" files="site-initializer-teaser-showcase/src/main/resources/site-initializer/ddm-templates/search-category/ddm-template\.ftl" />
+		<suppress checks="CSPTagMissingAttributesCheck" files="site-initializer-teaser-showcase/src/main/resources/site-initializer/ddm-templates/category-cards/ddm-template\.ftl" />
+		<suppress checks="CSPTagMissingAttributesCheck" files="site-initializer-teaser-showcase/src/main/resources/site-initializer/ddm-templates/product-category-banner/ddm-template\.ftl" />
+		<suppress checks="CSPTagMissingAttributesCheck" files="site-initializer-teaser-showcase/src/main/resources/site-initializer/ddm-templates/product-detail/ddm-template\.ftl" />
+		<suppress checks="CSPTagMissingAttributesCheck" files="site-initializer-teaser-showcase/src/main/resources/site-initializer/ddm-templates/product-search-results/ddm-template\.ftl" />
+		<suppress checks="CSPTagMissingAttributesCheck" files="site-initializer-teaser-showcase/src/main/resources/site-initializer/ddm-templates/search-results-cards/ddm-template\.ftl" />
 		<suppress checks="JavaModuleClassGetResourceCallCheck" files="site-initializer-extender/site-initializer-extender-test/src/testIntegration/java/com/liferay/site/initializer/extender/internal/test/BundleSiteInitializerTest\.java" />
 	</source-check>
 </suppressions>

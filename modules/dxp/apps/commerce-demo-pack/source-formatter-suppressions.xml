@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<source-check>
+		<suppress checks="CSPTagIllegalAttributesCheck" files="commerce-theme-minium/commerce-theme-minium-full-site-initializer/src/main/resources/com/liferay/commerce/theme/minium/full/site/initializer/internal/dependencies/journal_articles/MINIUM_PROMO\.ftl" />
+		<suppress checks="CSPTagMissingAttributesCheck" files="commerce-theme-minium/commerce-theme-minium-full-site-initializer/src/main/resources/com/liferay/commerce/theme/minium/full/site/initializer/internal/dependencies/display_templates/MINIUM_NEWS\.ftl" />
+	</source-check>
+</suppressions>

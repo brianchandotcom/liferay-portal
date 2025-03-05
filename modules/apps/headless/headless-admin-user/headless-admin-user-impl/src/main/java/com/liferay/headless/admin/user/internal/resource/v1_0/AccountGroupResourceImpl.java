@@ -6,7 +6,6 @@
 package com.liferay.headless.admin.user.internal.resource.v1_0;
 
 import com.liferay.account.constants.AccountActionKeys;
-import com.liferay.account.exception.DuplicateAccountGroupExternalReferenceCodeException;
 import com.liferay.account.exception.NoSuchGroupException;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountGroupRel;
@@ -234,17 +233,6 @@ public class AccountGroupResourceImpl extends BaseAccountGroupResourceImpl {
 	@Override
 	public AccountGroup postAccountGroup(AccountGroup accountGroup)
 		throws Exception {
-
-		if (Validator.isNotNull(accountGroup.getExternalReferenceCode())) {
-			com.liferay.account.model.AccountGroup serviceBuilderAccountGroup =
-				_accountGroupService.fetchAccountGroupByExternalReferenceCode(
-					accountGroup.getExternalReferenceCode(),
-					contextCompany.getCompanyId());
-
-			if (serviceBuilderAccountGroup != null) {
-				throw new DuplicateAccountGroupExternalReferenceCodeException();
-			}
-		}
 
 		com.liferay.account.model.AccountGroup serviceBuilderAccountGroup =
 			_accountGroupService.addAccountGroup(

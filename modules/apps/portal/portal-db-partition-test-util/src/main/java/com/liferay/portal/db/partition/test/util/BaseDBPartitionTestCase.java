@@ -190,6 +190,21 @@ public abstract class BaseDBPartitionTestCase {
 		db.runSQL("drop table if exists " + tableName + " cascade");
 	}
 
+	protected static void extractCompany(long[] companyIds) throws Exception {
+		_executeOnDBPartitions(
+			companyIds,
+			companyId -> {
+				try (SafeCloseable safeCloseable =
+						CompanyThreadLocal.setCompanyIdWithSafeCloseable(
+							companyId)) {
+
+					return ReflectionTestUtil.invoke(
+						DBPartitionUtil.class, "_extractCompany",
+						new Class<?>[] {long.class}, companyId);
+				}
+			});
+	}
+
 	protected static void extractDBPartitions() throws Exception {
 		extractDBPartitions(COMPANY_IDS);
 	}

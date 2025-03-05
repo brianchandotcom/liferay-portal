@@ -22,7 +22,6 @@ public class RoleBriefUtil {
 			{
 				setExternalReferenceCode(role::getExternalReferenceCode);
 				setId(role::getRoleId);
-				setKey(role::getName);
 				setName(
 					() -> {
 						if (dtoConverterContext == null) {

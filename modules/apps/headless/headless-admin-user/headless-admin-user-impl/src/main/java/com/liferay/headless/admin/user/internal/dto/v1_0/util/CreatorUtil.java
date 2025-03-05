@@ -26,8 +26,6 @@ public class CreatorUtil {
 			{
 				setAdditionalName(user::getMiddleName);
 				setContentType(() -> "UserAccount");
-				setEmailAddress(user::getEmailAddress);
-				setExternalReferenceCode(user::getExternalReferenceCode);
 				setFamilyName(user::getLastName);
 				setGivenName(user::getFirstName);
 				setId(user::getUserId);
@@ -59,7 +57,6 @@ public class CreatorUtil {
 
 						return group.getDisplayURL(themeDisplay);
 					});
-				setScreenName(user::getScreenName);
 			}
 		};
 	}

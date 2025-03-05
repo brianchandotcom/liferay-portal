@@ -46,16 +46,12 @@ public abstract class BaseRoleUADExporter
 
 	@Override
 	protected String toXmlString(Role role) {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portal.kernel.model.Role");
 		sb.append("</model-name>");
 
-		sb.append(
-			"<column><column-name>statusByUserName</column-name><column-value><![CDATA[");
-		sb.append(role.getStatusByUserName());
-		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userName</column-name><column-value><![CDATA[");
 		sb.append(role.getUserName());

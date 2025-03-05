@@ -66,8 +66,8 @@ public class JournalUserNotificationTest extends BaseUserNotificationTestCase {
 		_journalArticleLocalService.checkArticles(group.getCompanyId());
 
 		_assertJournalArticleNotifications(
-			expiredArticle,
-			UserNotificationDefinition.NOTIFICATION_TYPE_EXPIRED_ENTRY);
+			expiredArticle, 2,
+			UserNotificationDefinition.NOTIFICATION_TYPE_EXPIRED_ENTRY, 1);
 	}
 
 	@Test
@@ -85,8 +85,8 @@ public class JournalUserNotificationTest extends BaseUserNotificationTestCase {
 			ServiceContextTestUtil.getServiceContext());
 
 		_assertJournalArticleNotifications(
-			expiredArticle,
-			UserNotificationDefinition.NOTIFICATION_TYPE_EXPIRED_ENTRY);
+			expiredArticle, 1,
+			UserNotificationDefinition.NOTIFICATION_TYPE_EXPIRED_ENTRY, 1);
 	}
 
 	@Test
@@ -102,11 +102,13 @@ public class JournalUserNotificationTest extends BaseUserNotificationTestCase {
 		journalArticle = _journalArticleLocalService.updateJournalArticle(
 			journalArticle);
 
+		subscribeToContainer();
+
 		_journalArticleLocalService.checkArticles(group.getCompanyId());
 
 		_assertJournalArticleNotifications(
-			journalArticle,
-			UserNotificationDefinition.NOTIFICATION_TYPE_REVIEW_ENTRY);
+			journalArticle, 2,
+			UserNotificationDefinition.NOTIFICATION_TYPE_REVIEW_ENTRY, 2);
 	}
 
 	@Override
@@ -141,24 +143,27 @@ public class JournalUserNotificationTest extends BaseUserNotificationTestCase {
 	}
 
 	private void _assertJournalArticleNotifications(
-			JournalArticle expiredArticle, int notificationType)
+			JournalArticle article, int emailNotificationCount,
+			int notificationType, int userNotificationCount)
 		throws Exception {
 
-		Assert.assertEquals(1, MailServiceTestUtil.getInboxSize());
+		Assert.assertEquals(
+			emailNotificationCount, MailServiceTestUtil.getInboxSize());
 
 		List<JSONObject> userNotificationEventsJSONObjects =
 			getUserNotificationEventsJSONObjects(user.getUserId());
 
 		Assert.assertEquals(
-			userNotificationEventsJSONObjects.toString(), 1,
+			userNotificationEventsJSONObjects.toString(), userNotificationCount,
 			userNotificationEventsJSONObjects.size());
 
-		JSONObject jsonObject = userNotificationEventsJSONObjects.get(0);
+		for (int i = 0; i < userNotificationCount; i++) {
+			JSONObject jsonObject = userNotificationEventsJSONObjects.get(i);
 
-		Assert.assertEquals(
-			expiredArticle.getId(), jsonObject.getLong("classPK"));
-		Assert.assertEquals(
-			notificationType, jsonObject.getInt("notificationType"));
+			Assert.assertEquals(article.getId(), jsonObject.getLong("classPK"));
+			Assert.assertEquals(
+				notificationType, jsonObject.getInt("notificationType"));
+		}
 	}
 
 	private JournalFolder _folder;

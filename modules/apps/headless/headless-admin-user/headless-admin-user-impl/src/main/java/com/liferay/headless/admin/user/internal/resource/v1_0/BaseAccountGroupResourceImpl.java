@@ -205,7 +205,7 @@ public abstract class BaseAccountGroupResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-user/v1.0/account-groups' -d $'{"accountBriefs": ___, "creator": ___, "customFields": ___, "description": ___, "externalReferenceCode": ___, "name": ___, "permissions": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'POST' 'http://localhost:8080/o/headless-admin-user/v1.0/account-groups' -d $'{"accountBriefs": ___, "customFields": ___, "description": ___, "externalReferenceCode": ___, "name": ___, "permissions": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Creates a new account group"
@@ -420,7 +420,7 @@ public abstract class BaseAccountGroupResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-admin-user/v1.0/account-groups/by-external-reference-code/{externalReferenceCode}' -d $'{"accountBriefs": ___, "creator": ___, "customFields": ___, "description": ___, "externalReferenceCode": ___, "name": ___, "permissions": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-admin-user/v1.0/account-groups/by-external-reference-code/{externalReferenceCode}' -d $'{"accountBriefs": ___, "customFields": ___, "description": ___, "externalReferenceCode": ___, "name": ___, "permissions": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Updates the account with information sent in the request body. Only the provided fields are updated."
@@ -482,7 +482,7 @@ public abstract class BaseAccountGroupResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/headless-admin-user/v1.0/account-groups/by-external-reference-code/{externalReferenceCode}' -d $'{"accountBriefs": ___, "creator": ___, "customFields": ___, "description": ___, "externalReferenceCode": ___, "name": ___, "permissions": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-admin-user/v1.0/account-groups/by-external-reference-code/{externalReferenceCode}' -d $'{"accountBriefs": ___, "customFields": ___, "description": ___, "externalReferenceCode": ___, "name": ___, "permissions": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Replaces the account group with information sent in the request body. Any missing fields are deleted unless they are required."
@@ -624,7 +624,7 @@ public abstract class BaseAccountGroupResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-admin-user/v1.0/account-groups/{accountGroupId}' -d $'{"accountBriefs": ___, "creator": ___, "customFields": ___, "description": ___, "externalReferenceCode": ___, "name": ___, "permissions": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PATCH' 'http://localhost:8080/o/headless-admin-user/v1.0/account-groups/{accountGroupId}' -d $'{"accountBriefs": ___, "customFields": ___, "description": ___, "externalReferenceCode": ___, "name": ___, "permissions": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Updates the account group with information sent in the request body. Only the provided fields are updated."
@@ -682,7 +682,7 @@ public abstract class BaseAccountGroupResourceImpl
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -X 'PUT' 'http://localhost:8080/o/headless-admin-user/v1.0/account-groups/{accountGroupId}' -d $'{"accountBriefs": ___, "creator": ___, "customFields": ___, "description": ___, "externalReferenceCode": ___, "name": ___, "permissions": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
+	 * curl -X 'PUT' 'http://localhost:8080/o/headless-admin-user/v1.0/account-groups/{accountGroupId}' -d $'{"accountBriefs": ___, "customFields": ___, "description": ___, "externalReferenceCode": ___, "name": ___, "permissions": ___}' --header 'Content-Type: application/json' -u 'test@liferay.com:test'
 	 */
 	@io.swagger.v3.oas.annotations.Operation(
 		description = "Replaces the account group with information sent in the request body. Any missing fields are deleted unless they are required."

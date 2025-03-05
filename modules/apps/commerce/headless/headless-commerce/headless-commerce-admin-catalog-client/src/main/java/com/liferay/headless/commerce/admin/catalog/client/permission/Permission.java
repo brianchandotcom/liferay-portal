@@ -29,32 +29,16 @@ public class Permission {
 		return actionIds;
 	}
 
-	public String getRoleExternalReferenceCode() {
-		return roleExternalReferenceCode;
-	}
-
 	public String getRoleName() {
 		return roleName;
-	}
-
-	public String getRoleType() {
-		return roleType;
 	}
 
 	public void setActionIds(Object[] actionIds) {
 		this.actionIds = actionIds;
 	}
 
-	public void setRoleExternalReferenceCode(String roleExternalReferenceCode) {
-		this.roleExternalReferenceCode = roleExternalReferenceCode;
-	}
-
 	public void setRoleName(String roleName) {
 		this.roleName = roleName;
-	}
-
-	public void setRoleType(String roleType) {
-		this.roleType = roleType;
 	}
 
 	@Override
@@ -79,16 +63,6 @@ public class Permission {
 			sb.append("]");
 		}
 
-		if (roleExternalReferenceCode != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"roleExternalReferenceCode\": \"");
-			sb.append(roleExternalReferenceCode);
-			sb.append("\"");
-		}
-
 		if (roleName != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -99,25 +73,13 @@ public class Permission {
 			sb.append("\"");
 		}
 
-		if (roleType != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"roleType\": \"");
-			sb.append(roleType);
-			sb.append("\"");
-		}
-
 		sb.append("}");
 
 		return sb.toString();
 	}
 
 	protected Object[] actionIds;
-	protected String roleExternalReferenceCode;
 	protected String roleName;
-	protected String roleType;
 
 	private static class PermissionJSONParser<T>
 		extends BaseJSONParser<Permission> {
@@ -137,15 +99,7 @@ public class Permission {
 			if (Objects.equals(jsonParserFieldName, "actionIds")) {
 				return false;
 			}
-			else if (Objects.equals(
-						jsonParserFieldName, "roleExternalReferenceCode")) {
-
-				return false;
-			}
 			else if (Objects.equals(jsonParserFieldName, "roleName")) {
-				return false;
-			}
-			else if (Objects.equals(jsonParserFieldName, "roleType")) {
 				return false;
 			}
 			else {
@@ -164,22 +118,9 @@ public class Permission {
 					permission.setActionIds((Object[])jsonParserFieldValue);
 				}
 			}
-			else if (Objects.equals(
-						jsonParserFieldName, "roleExternalReferenceCode")) {
-
-				if (jsonParserFieldValue != null) {
-					permission.setRoleExternalReferenceCode(
-						(String)jsonParserFieldValue);
-				}
-			}
 			else if (Objects.equals(jsonParserFieldName, "roleName")) {
 				if (jsonParserFieldValue != null) {
 					permission.setRoleName((String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "roleType")) {
-				if (jsonParserFieldValue != null) {
-					permission.setRoleType((String)jsonParserFieldValue);
 				}
 			}
 			else {

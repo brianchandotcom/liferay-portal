@@ -8,8 +8,6 @@ package com.liferay.portal.service.impl;
 import com.liferay.admin.kernel.util.PortalMyAccountApplicationType;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
-import com.liferay.lazy.referencing.kernel.LazyReferencingThreadLocal;
-import com.liferay.petra.lang.SafeCloseable;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
 import com.liferay.petra.sql.dsl.DSLQueryFactoryUtil;
 import com.liferay.petra.sql.dsl.expression.Predicate;
@@ -108,13 +106,10 @@ import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.usersadmin.util.UsersAdminUtil;
 
-import java.io.Serializable;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -133,37 +128,6 @@ import java.util.Set;
  * @author Marcellus Tavares
  */
 public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
-
-	@Override
-	public Role addIncompleteRole(
-			String externalReferenceCode, long companyId, long userId,
-			String className, long classPK, String name, int type)
-		throws Exception {
-
-		if (!LazyReferencingThreadLocal.isLazyReferencingEnabled()) {
-			throw new UnsupportedOperationException();
-		}
-
-		Role role = roleLocalService.fetchRoleByExternalReferenceCode(
-			externalReferenceCode, companyId);
-
-		if (role != null) {
-			return role;
-		}
-
-		if (roleLocalService.fetchRole(companyId, name) != null) {
-			name = externalReferenceCode;
-		}
-
-		try (SafeCloseable safeCloseable =
-				LazyReferencingThreadLocal.
-					enableIncompleteModelWithSelfCloseable()) {
-
-			return roleLocalService.addRole(
-				externalReferenceCode, userId, className, classPK, name, null,
-				null, type, StringPool.BLANK, new ServiceContext());
-		}
-	}
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
@@ -208,24 +172,6 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 		role.setDescriptionMap(descriptionMap);
 		role.setType(type);
 		role.setSubtype(subtype);
-
-		if (LazyReferencingThreadLocal.isIncompleteModel()) {
-			role.setStatus(WorkflowConstants.STATUS_INCOMPLETE);
-		}
-		else {
-			role.setStatus(WorkflowConstants.STATUS_APPROVED);
-		}
-
-		role.setStatusByUserId(user.getUserId());
-		role.setStatusByUserName(user.getFullName());
-
-		if (serviceContext != null) {
-			role.setStatusDate(serviceContext.getModifiedDate(new Date()));
-		}
-		else {
-			role.setStatusDate(new Date());
-		}
-
 		role.setExpandoBridgeAttributes(serviceContext);
 
 		role = rolePersistence.update(role);
@@ -1972,50 +1918,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 		role.setSubtype(subtype);
 		role.setExpandoBridgeAttributes(serviceContext);
 
-		role = rolePersistence.update(role);
-
-		if (role.getStatus() == WorkflowConstants.STATUS_INCOMPLETE) {
-			long userId = role.getUserId();
-
-			if (serviceContext != null) {
-				userId = serviceContext.getUserId();
-			}
-
-			role = updateStatus(
-				userId, role.getRoleId(), WorkflowConstants.STATUS_APPROVED,
-				serviceContext, Collections.emptyMap());
-		}
-
-		return role;
-	}
-
-	@Indexable(type = IndexableType.REINDEX)
-	@Override
-	public Role updateStatus(
-			long userId, long roleId, int status, ServiceContext serviceContext,
-			Map<String, Serializable> workflowContext)
-		throws PortalException {
-
-		Role role = getRole(roleId);
-
-		if (role.getStatus() == status) {
-			return role;
-		}
-
-		role.setStatus(status);
-
-		User user = _userLocalService.getUser(userId);
-
-		role.setStatusByUserId(user.getUserId());
-		role.setStatusByUserName(user.getFullName());
-
-		if (serviceContext == null) {
-			serviceContext = new ServiceContext();
-		}
-
-		role.setStatusDate(serviceContext.getModifiedDate(new Date()));
-
-		return updateRole(role);
+		return rolePersistence.update(role);
 	}
 
 	@Override

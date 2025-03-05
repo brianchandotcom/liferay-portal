@@ -585,13 +585,6 @@ public class PortalUpgradeProcessRegistryImpl
 		upgradeVersionTreeMap.put(
 			new Version(31, 15, 3),
 			UpgradeProcessFactory.dropColumns("Contact_", "accountId"));
-
-		upgradeVersionTreeMap.put(
-			new Version(31, 16, 0),
-			UpgradeProcessFactory.addColumns(
-				"Role_", "status INTEGER", "statusByUserId LONG",
-				"statusByUserName VARCHAR(75)", "statusDate DATE"),
-			UpgradeProcessFactory.runSQL("update Role_ set status = 0"));
 	}
 
 }

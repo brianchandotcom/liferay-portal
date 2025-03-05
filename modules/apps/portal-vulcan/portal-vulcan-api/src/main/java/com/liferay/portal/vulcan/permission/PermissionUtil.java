@@ -175,10 +175,7 @@ public class PermissionUtil {
 				new Permission() {
 					{
 						actionIds = actionsIdsSet.toArray(new String[0]);
-						roleExternalReferenceCode =
-							role.getExternalReferenceCode();
 						roleName = role.getName();
-						roleType = role.getTypeLabel();
 					}
 				});
 		}
@@ -250,9 +247,7 @@ public class PermissionUtil {
 		return new Permission() {
 			{
 				actionIds = actionsIdsSet.toArray(new String[0]);
-				roleExternalReferenceCode = role.getExternalReferenceCode();
 				roleName = role.getName();
-				roleType = role.getTypeLabel();
 			}
 		};
 	}

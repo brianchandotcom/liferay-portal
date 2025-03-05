@@ -67,7 +67,7 @@ public class RoleCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(43);
+		StringBundler sb = new StringBundler(35);
 
 		sb.append("{mvccVersion=");
 		sb.append(mvccVersion);
@@ -103,14 +103,6 @@ public class RoleCacheModel
 		sb.append(type);
 		sb.append(", subtype=");
 		sb.append(subtype);
-		sb.append(", status=");
-		sb.append(status);
-		sb.append(", statusByUserId=");
-		sb.append(statusByUserId);
-		sb.append(", statusByUserName=");
-		sb.append(statusByUserName);
-		sb.append(", statusDate=");
-		sb.append(statusDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -195,23 +187,6 @@ public class RoleCacheModel
 			roleImpl.setSubtype(subtype);
 		}
 
-		roleImpl.setStatus(status);
-		roleImpl.setStatusByUserId(statusByUserId);
-
-		if (statusByUserName == null) {
-			roleImpl.setStatusByUserName("");
-		}
-		else {
-			roleImpl.setStatusByUserName(statusByUserName);
-		}
-
-		if (statusDate == Long.MIN_VALUE) {
-			roleImpl.setStatusDate(null);
-		}
-		else {
-			roleImpl.setStatusDate(new Date(statusDate));
-		}
-
 		roleImpl.resetOriginalValues();
 
 		return roleImpl;
@@ -245,12 +220,6 @@ public class RoleCacheModel
 
 		type = objectInput.readInt();
 		subtype = objectInput.readUTF();
-
-		status = objectInput.readInt();
-
-		statusByUserId = objectInput.readLong();
-		statusByUserName = objectInput.readUTF();
-		statusDate = objectInput.readLong();
 	}
 
 	@Override
@@ -322,19 +291,6 @@ public class RoleCacheModel
 		else {
 			objectOutput.writeUTF(subtype);
 		}
-
-		objectOutput.writeInt(status);
-
-		objectOutput.writeLong(statusByUserId);
-
-		if (statusByUserName == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(statusByUserName);
-		}
-
-		objectOutput.writeLong(statusDate);
 	}
 
 	public long mvccVersion;
@@ -354,9 +310,5 @@ public class RoleCacheModel
 	public String description;
 	public int type;
 	public String subtype;
-	public int status;
-	public long statusByUserId;
-	public String statusByUserName;
-	public long statusDate;
 
 }

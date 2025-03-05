@@ -1624,3 +1624,87 @@ testAdmin(
 		);
 	}
 );
+
+testAdmin(
+	'Can anonymize entry from application',
+	{tag: '@LPD-50693'},
+	async ({
+		apiHelpers,
+		page,
+		personalDataErasurePage,
+		userAssociatedDataDocumentLibraryPage,
+		usersAndOrganizationsPage,
+	}) => {
+		page.on('dialog', (dialog) => {
+			dialog.accept().catch(() => {});
+		});
+
+		const userAccount =
+			await apiHelpers.headlessAdminUser.postUserAccount();
+
+		userData[userAccount.alternateName] = {
+			name: userAccount.givenName,
+			password: 'test',
+			surname: userAccount.familyName,
+		};
+
+		const role =
+			await apiHelpers.headlessAdminUser.getRoleByName('Administrator');
+
+		await apiHelpers.headlessAdminUser.postRoleByExternalReferenceCodeUserAccountAssociation(
+			role.externalReferenceCode,
+			userAccount.id
+		);
+
+		await performLogout(page);
+		await performLoginViaApi(page, userAccount.alternateName);
+
+		const site = await apiHelpers.headlessSite.createSite({
+			name: getRandomString(),
+		});
+
+		apiHelpers.data.push({id: site.id, type: 'site'});
+
+		const attachment = await apiHelpers.headlessDelivery.postDocument(
+			site.id,
+			createReadStream(
+				path.join(__dirname, '/dependencies/attachment.txt')
+			)
+		);
+
+		await performLogout(page);
+		await performLoginViaApi(page, 'test');
+
+		await usersAndOrganizationsPage.goToUsers(false);
+		await (
+			await usersAndOrganizationsPage.usersTableRowActions(
+				userAccount.alternateName
+			)
+		).click();
+		await usersAndOrganizationsPage.deletePersonalDataMenuItem.click();
+
+		await expect(
+			personalDataErasurePage.selectAllItemsOnPageCheckbox
+		).toBeVisible();
+
+		await personalDataErasurePage.documentsAndMediaRadioButton.check();
+		await (
+			await personalDataErasurePage.userAssociatedDataTableRowCheckBox(
+				attachment.fileName
+			)
+		).check();
+		await personalDataErasurePage.actionsButton.click();
+		await personalDataErasurePage.anonymizeMenuItem.click();
+
+		await waitForAlert(page);
+
+		await page.goto(`/group/${site.name}${PORTLET_URLS.documentLibrary}`);
+
+		await expect(page.getByText(anonymousUserName)).toHaveCount(1);
+
+		await userAssociatedDataDocumentLibraryPage.checkDocumentCreator(
+			attachment,
+			anonymousUserName
+		);
+	}
+);

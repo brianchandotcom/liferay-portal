@@ -65,8 +65,6 @@ public class ContentsSectionDisplayContextTest {
 	public void testGetAPIURL() throws Exception {
 		String apiURL = _getAPIURL();
 
-		Assert.assertNotNull(apiURL);
-
 		Assert.assertTrue(apiURL.contains("emptySearch=true"));
 
 		StringBundler sb = new StringBundler(3);

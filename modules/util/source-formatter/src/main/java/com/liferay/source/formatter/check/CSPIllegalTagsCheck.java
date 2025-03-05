@@ -44,17 +44,6 @@ public class CSPIllegalTagsCheck extends BaseTagAttributesCheck {
 
 		String lowerCaseContent = StringUtil.toLowerCase(content);
 
-		_checkIllegalTags(
-			fileName, content, lowerCaseContent, illegalTagNames,
-			replacedTagNames);
-
-		return content;
-	}
-
-	private void _checkIllegalTags(
-		String fileName, String content, String lowerCaseContent,
-		List<String> illegalTagNames, List<String> replacedTagNames) {
-
 		for (String illegalTagName : illegalTagNames) {
 			int x = -1;
 
@@ -94,6 +83,8 @@ public class CSPIllegalTagsCheck extends BaseTagAttributesCheck {
 				}
 			}
 		}
+
+		return content;
 	}
 
 	private static final String _FTL_AND_VM_ILLEGAL_TAG_NAMES_KEY =

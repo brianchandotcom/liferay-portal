@@ -3,10 +3,6 @@
 $structureFieldsWidth: 448px;
 
 .structure-builder {
-	&__wrapper {
-		height: calc(100vh - (var(--control-menu-container-height)));
-	}
-
 	&__empty-state {
 		.aspect-ratio-item {
 			position: relative;
@@ -26,16 +22,6 @@ $structureFieldsWidth: 448px;
 		}
 	}
 
-	&__structure-fields {
-		background-color: $cadmin-light-l1;
-		border-radius: 8px;
-		width: $structureFieldsWidth;
-
-		& .management-bar {
-			min-height: 3rem;
-		}
-	}
-
 	&__fields-tree {
 		&-node {
 			&--field-icon {
@@ -48,7 +34,21 @@ $structureFieldsWidth: 448px;
 		}
 	}
 
+	&__structure-fields {
+		background-color: $cadmin-light-l1;
+		border-radius: 8px;
+		width: $structureFieldsWidth;
+
+		& .management-bar {
+			min-height: 3rem;
+		}
+	}
+
 	&__title-input {
 		font-size: 28px;
+	}
+
+	&__wrapper {
+		height: calc(100vh - (var(--control-menu-container-height)));
 	}
 }

@@ -7,6 +7,7 @@ import {config} from '../config';
 import {State} from '../contexts/StateContext';
 import {ObjectDefinition, ObjectField} from '../types/ObjectDefinition';
 import {FIELD_TYPE_BUSINESS_TYPE, FIELD_TYPE_DB_TYPE, Field} from './field';
+import {isFieldTextSearchable} from './isFieldTextSearchable';
 
 export default function buildObjectDefinition({
 	erc,
@@ -62,8 +63,11 @@ function buildFields(fields: Field[]) {
 		if (field.indexableConfig.indexed) {
 			objectField.indexedAsKeyword =
 				field.indexableConfig.indexedAsKeyword;
-			objectField.indexedLanguageId =
-				field.indexableConfig.indexedLanguageId ?? '';
+
+			if (isFieldTextSearchable(field)) {
+				objectField.indexedLanguageId =
+					field.indexableConfig.indexedLanguageId ?? '';
+			}
 		}
 
 		if ('settings' in field) {

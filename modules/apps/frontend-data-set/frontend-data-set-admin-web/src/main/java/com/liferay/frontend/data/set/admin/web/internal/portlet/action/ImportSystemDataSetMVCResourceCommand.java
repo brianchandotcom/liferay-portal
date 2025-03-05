@@ -95,6 +95,8 @@ public class ImportSystemDataSetMVCResourceCommand
 				StringUtil.merge(
 					systemFDSEntry.getListOfItemsPerPage(), StringPool.COMMA)
 			).put(
+				"propsTransformer", systemFDSEntry.getPropsTransformer()
+			).put(
 				"restApplication", systemFDSEntry.getRESTApplication()
 			).put(
 				"restEndpoint", systemFDSEntry.getRESTEndpoint()

@@ -176,6 +176,21 @@
 				{
 					"DBType": "String",
 					"businessType": "Text",
+					"externalReferenceCode": "PROPS_TRANSFORMER",
+					"indexed": true,
+					"indexedAsKeyword": false,
+					"label": {
+						"en_US": "Props Transformer"
+					},
+					"name": "propsTransformer",
+					"required": false,
+					"state": false,
+					"system": true,
+					"type": "String"
+				},
+				{
+					"DBType": "String",
+					"businessType": "Text",
 					"externalReferenceCode": "REST_APPLICATION",
 					"indexed": true,
 					"indexedAsKeyword": false,

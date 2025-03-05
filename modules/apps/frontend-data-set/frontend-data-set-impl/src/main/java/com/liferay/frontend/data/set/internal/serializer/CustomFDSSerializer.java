@@ -336,9 +336,10 @@ public class CustomFDSSerializer
 	public String serializePropsTransformer(
 		String fdsName, HttpServletRequest httpServletRequest) {
 
-		// TODO
+		Map<String, Object> properties = getDataSetObjectEntryProperties(
+			fdsName, httpServletRequest);
 
-		return null;
+		return String.valueOf(properties.get("propsTransformer"));
 	}
 
 	@Override

@@ -114,7 +114,13 @@
 
 			.orders-table {
 				a {
+					color: var(--black);
+					cursor: pointer;
 					text-decoration: none;
+
+					&:hover {
+						text-decoration: underline;
+					}
 				}
 
 				tr {

@@ -10,7 +10,7 @@ import React, {useCallback, useEffect, useMemo, useState} from 'react';
 
 import ServiceProvider from '../../ServiceProvider';
 import {CURRENT_ORDER_UPDATED} from '../../utilities/eventsDefinitions';
-import {confirmCurrencyChange} from '../../utilities/modals/confirmCurrencyChange';
+import {confirmCurrencyChange as confirmChangeAndRedirect} from '../../utilities/modals/confirmCurrencyChange';
 import {retrieveCommerceCurrency, storeCommerceCurrency} from './util';
 
 function CurrencySelector({
@@ -45,7 +45,7 @@ function CurrencySelector({
 		if (hasCurrencyChanged && activeOrderId) {
 			const {accountId} = Liferay.CommerceContext.account;
 
-			confirmCurrencyChange({
+			confirmChangeAndRedirect({
 				accountId,
 				commerceChannelId,
 				currencyCode: selectedCurrency.code,
@@ -55,7 +55,6 @@ function CurrencySelector({
 							({code}) => code === currentCommerceCurrencyCode
 						)
 					),
-				onCreate: () => storeCommerceCurrency(selectedCurrency.code),
 				orderDetailURL: commerceOrderDetailBaseURL,
 				orderTypes: commerceOrderTypes,
 			});

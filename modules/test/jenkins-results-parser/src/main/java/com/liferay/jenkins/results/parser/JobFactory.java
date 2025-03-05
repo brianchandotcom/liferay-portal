@@ -289,7 +289,6 @@ public class JobFactory {
 		}
 
 		if (jsonObject == null) {
-
 			BuildDatabase buildDatabase = BuildDatabaseUtil.getBuildDatabase();
 
 			if (buildDatabase.hasJob(key)) {

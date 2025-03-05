@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.json.JSONObject;
+
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -35,15 +36,17 @@ public class RelevantTestSuiteTest extends BaseRelevantRuleTestCase {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		_jsonObject.put("job_name", "test-portal-acceptance-pullrequest(");
-
-		_jsonObject.put("build_profile", "DXP");
-
-		_jsonObject.put("test_suite_name", "relevant");
-
-		_jsonObject.put("git_repository_dir", "liferay-portal");
-
-		_jsonObject.put("upstream_branch_name", "master");
+		_jsonObject.put(
+			"build_profile", "DXP"
+		).put(
+			"git_repository_dir", "liferay-portal"
+		).put(
+			"job_name", "test-portal-acceptance-pullrequest("
+		).put(
+			"test_suite_name", "relevant"
+		).put(
+			"upstream_branch_name", "master"
+		);
 	}
 
 	@Test
@@ -176,6 +179,6 @@ public class RelevantTestSuiteTest extends BaseRelevantRuleTestCase {
 		}
 	}
 
-	private static JSONObject _jsonObject = new JSONObject();
+	private static final JSONObject _jsonObject = new JSONObject();
 
 }

@@ -17,6 +17,7 @@ import java.io.File;
 import java.util.List;
 
 import org.json.JSONObject;
+
 import org.junit.After;
 
 /**
@@ -44,12 +45,13 @@ public abstract class BaseRelevantRuleTestCase {
 	}
 
 	protected PortalAcceptancePullRequestJob
-	getPortalAcceptancePullRequestJob() {
+		getPortalAcceptancePullRequestJob() {
+
 		return getPortalAcceptancePullRequestJob(null);
 	}
 
-	protected PortalAcceptancePullRequestJob
-		getPortalAcceptancePullRequestJob(JSONObject jsonObject) {
+	protected PortalAcceptancePullRequestJob getPortalAcceptancePullRequestJob(
+		JSONObject jsonObject) {
 
 		if (_portalAcceptancePullRequestJob != null) {
 			return _portalAcceptancePullRequestJob;
@@ -103,7 +105,7 @@ public abstract class BaseRelevantRuleTestCase {
 		return getPortalDir(file);
 	}
 
-	protected RelevantRuleEngine getRelevantRuleEngine(){
+	protected RelevantRuleEngine getRelevantRuleEngine() {
 		return getRelevantRuleEngine(null);
 	}
 

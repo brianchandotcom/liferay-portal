@@ -97,7 +97,16 @@ type BaseField = {
 	required: boolean;
 };
 
+export type TextField = BaseField & {
+	settings: {
+		maxLength?: number;
+		uniqueValues?: boolean;
+	};
+	type: 'text';
+};
+
 export type Field =
+	| TextField
 	| (BaseField & {
 			settings: {timeStorage: 'convertToUTC'};
 			type: 'datetime';
@@ -111,7 +120,8 @@ export type Field =
 			type: 'upload';
 	  })
 	| (BaseField & {
-			type: Exclude<FieldType, ['datetime', 'upload']>;
+			settings: {};
+			type: Exclude<FieldType, ['datetime', 'text', 'upload']>;
 	  });
 
 export type FieldType = (typeof FIELD_TYPES)[number];

@@ -16,6 +16,7 @@ import java.io.File;
 
 import java.util.List;
 
+import org.json.JSONObject;
 import org.junit.After;
 
 /**
@@ -43,7 +44,12 @@ public abstract class BaseRelevantRuleTestCase {
 	}
 
 	protected PortalAcceptancePullRequestJob
-		getPortalAcceptancePullRequestJob() {
+	getPortalAcceptancePullRequestJob() {
+		return getPortalAcceptancePullRequestJob(null);
+	}
+
+	protected PortalAcceptancePullRequestJob
+		getPortalAcceptancePullRequestJob(JSONObject jsonObject) {
 
 		if (_portalAcceptancePullRequestJob != null) {
 			return _portalAcceptancePullRequestJob;
@@ -60,7 +66,7 @@ public abstract class BaseRelevantRuleTestCase {
 		_portalAcceptancePullRequestJob =
 			(PortalAcceptancePullRequestJob)JobFactory.newJob(
 				Job.BuildProfile.DXP,
-				"test-portal-acceptance-pullrequest(master)", null,
+				"test-portal-acceptance-pullrequest(master)", jsonObject,
 				portalGitWorkingDirectory, upstreamBranchName, null,
 				repositoryName, "relevant", upstreamBranchName);
 
@@ -97,9 +103,13 @@ public abstract class BaseRelevantRuleTestCase {
 		return getPortalDir(file);
 	}
 
-	protected RelevantRuleEngine getRelevantRuleEngine() {
+	protected RelevantRuleEngine getRelevantRuleEngine(){
+		return getRelevantRuleEngine(null);
+	}
+
+	protected RelevantRuleEngine getRelevantRuleEngine(JSONObject jsonObject) {
 		RelevantRuleEngine relevantRuleEngine = RelevantRuleEngine.getInstance(
-			getPortalAcceptancePullRequestJob());
+			getPortalAcceptancePullRequestJob(jsonObject));
 
 		relevantRuleEngine.setBaseDir(getBaseDir());
 

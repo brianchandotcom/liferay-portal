@@ -14,6 +14,7 @@ import com.liferay.jenkins.results.parser.PortalGitWorkingDirectory;
 import com.liferay.jenkins.results.parser.test.batch.DefaultTestBatch;
 import com.liferay.jenkins.results.parser.test.batch.TestBatch;
 import com.liferay.jenkins.results.parser.test.batch.TestSelector;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
@@ -99,6 +100,12 @@ public class RelevantRuleValidation {
 
 	public static void validate(
 			String repositoryName, String upstreamBranchName)
+			throws IOException {
+		validate(repositoryName, upstreamBranchName, null);
+	}
+
+	public static void validate(
+			String repositoryName, String upstreamBranchName, JSONObject jsonObject)
 		throws IOException {
 
 		Properties properties = JenkinsResultsParserUtil.getBuildProperties();
@@ -114,7 +121,7 @@ public class RelevantRuleValidation {
 		PortalAcceptancePullRequestJob portalAcceptancePullRequestJob =
 			(PortalAcceptancePullRequestJob)JobFactory.newJob(
 				Job.BuildProfile.DXP,
-				"test-portal-acceptance-pullrequest(master)", null,
+				"test-portal-acceptance-pullrequest(master)", jsonObject,
 				portalGitWorkingDirectory, upstreamBranchName, null,
 				repositoryName, "relevant", upstreamBranchName);
 

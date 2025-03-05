@@ -47,6 +47,7 @@ describe('buildObjectDefinition', () => {
 			name: 'myStructure',
 			objectFields: [
 				{
+					DBType: 'String',
 					businessType: 'Text',
 					externalReferenceCode: 'text-field',
 					indexed: true,
@@ -80,6 +81,7 @@ describe('buildObjectDefinition', () => {
 			name: 'myStructure',
 			objectFields: [
 				{
+					DBType: 'DateTime',
 					businessType: 'DateTime',
 					externalReferenceCode: 'datetime-field',
 					indexed: false,

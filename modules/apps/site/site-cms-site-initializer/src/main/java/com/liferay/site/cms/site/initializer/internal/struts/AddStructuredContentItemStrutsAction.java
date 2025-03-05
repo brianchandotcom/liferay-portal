@@ -69,7 +69,6 @@ public class AddStructuredContentItemStrutsAction implements StrutsAction {
 		}
 
 		long groupId = ParamUtil.getLong(httpServletRequest, "groupId");
-
 		long classNameId = _portal.getClassNameId(
 			objectDefinition.getClassName());
 
@@ -81,11 +80,10 @@ public class AddStructuredContentItemStrutsAction implements StrutsAction {
 			return null;
 		}
 
+		Group group = _groupLocalService.getGroup(groupId);
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
-
-		Group group = _groupLocalService.getGroup(groupId);
 
 		String groupFriendlyURL = _portal.getGroupFriendlyURL(
 			group.getPublicLayoutSet(), themeDisplay, false, false);

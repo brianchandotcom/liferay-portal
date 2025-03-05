@@ -16,6 +16,7 @@
 				<action-key>ADD_FOLDER</action-key>
 				<action-key>ADD_STRUCTURE</action-key>
 				<action-key>ADD_TEMPLATE</action-key>
+				<action-key>ADVANCED_UPDATE</action-key>
 				<action-key>SUBSCRIBE</action-key>
 				<action-key>UPDATE</action-key>
 				<action-key>VIEW</action-key>

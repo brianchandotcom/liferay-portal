@@ -20,6 +20,7 @@ import selectStructureField from '../selectors/selectStructureField';
 import selectStructureLocalizedLabel from '../selectors/selectStructureLocalizedLabel';
 import selectStructureStatus from '../selectors/selectStructureStatus';
 import {Field} from '../utils/field';
+import {isFieldTextSearchable} from '../utils/isFieldTextSearchable';
 import ERCInput from './ERCInput';
 import TextInput from './TextInput';
 
@@ -225,7 +226,7 @@ function SearchTab({field}: {field: Field}) {
 				/>
 			</ClayForm.Group>
 
-			{field.indexableConfig.indexed ? (
+			{field.indexableConfig.indexed && isFieldTextSearchable(field) ? (
 				<>
 					<p className="text-secondary">
 						{Liferay.Language.get(

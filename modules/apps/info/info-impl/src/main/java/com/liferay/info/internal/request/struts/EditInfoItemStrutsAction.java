@@ -52,10 +52,8 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -72,6 +70,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.staging.StagingGroupHelper;
 
 import java.text.SimpleDateFormat;
 
@@ -154,9 +153,10 @@ public class EditInfoItemStrutsAction implements StrutsAction {
 
 			long groupId = ParamUtil.getLong(httpServletRequest, "groupId");
 
-			Group group = _groupLocalService.fetchGroup(groupId);
+			if ((groupId == 0) ||
+				_stagingGroupHelper.isLocalStagingGroup(groupId) ||
+				_stagingGroupHelper.isRemoteStagingGroup(groupId)) {
 
-			if ((group == null) || !group.isSite()) {
 				throw new InfoFormInvalidGroupException();
 			}
 
@@ -712,9 +712,6 @@ public class EditInfoItemStrutsAction implements StrutsAction {
 	private FragmentEntryLocalService _fragmentEntryLocalService;
 
 	@Reference
-	private GroupLocalService _groupLocalService;
-
-	@Reference
 	private InfoItemServiceRegistry _infoItemServiceRegistry;
 
 	private volatile InfoRequestFieldValuesProviderHelper
@@ -731,5 +728,8 @@ public class EditInfoItemStrutsAction implements StrutsAction {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private StagingGroupHelper _stagingGroupHelper;
 
 }

@@ -5505,37 +5505,6 @@ public class ObjectEntryResourceTest {
 
 		_testGetObjectEntriesFilteredBySystemDate("dateCreated");
 		_testGetObjectEntriesFilteredBySystemDate("dateModified");
-	}
-
-	@Test
-	public void testGetObjectEntriesFilteredBySystemDateAndInstanceDefaultLocaleSpain()
-		throws Exception {
-
-		_objectEntry1 = ObjectEntryTestUtil.addObjectEntry(
-			_objectDefinition1, _OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_1);
-
-		_objectEntry1.setCreateDate(
-			_dateTimeDateFormat.parse("2023-09-20T10:00:00.150Z"));
-
-		_objectEntry1 = _objectEntryLocalService.updateObjectEntry(
-			_objectEntry1);
-
-		_objectEntry2 = ObjectEntryTestUtil.addObjectEntry(
-			_objectDefinition1, _OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_2);
-
-		_objectEntry2.setCreateDate(
-			_dateTimeDateFormat.parse("2023-09-20T10:05:00.450Z"));
-
-		_objectEntry2 = _objectEntryLocalService.updateObjectEntry(
-			_objectEntry2);
-
-		_objectEntry3 = ObjectEntryTestUtil.addObjectEntry(
-			_objectDefinition1, _OBJECT_FIELD_NAME_1, _OBJECT_FIELD_VALUE_3);
-
-		_objectEntry3.setCreateDate(null);
-
-		_objectEntry3 = _objectEntryLocalService.updateObjectEntry(
-			_objectEntry3);
 
 		Locale locale = LocaleUtil.getDefault();
 
@@ -5545,6 +5514,7 @@ public class ObjectEntryResourceTest {
 				LocaleUtil.SPAIN.getVariant());
 
 			_testGetObjectEntriesFilteredBySystemDate("dateCreated");
+			_testGetObjectEntriesFilteredBySystemDate("dateModified");
 		}
 		finally {
 			LocaleUtil.setDefault(

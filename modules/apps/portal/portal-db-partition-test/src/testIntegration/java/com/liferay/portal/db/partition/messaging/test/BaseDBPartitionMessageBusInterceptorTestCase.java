@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.AssumeTestRule;
+import com.liferay.portal.kernel.test.rule.CompanyProviderClassTestRule;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -64,10 +65,19 @@ public abstract class BaseDBPartitionMessageBusInterceptorTestCase {
 
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new AssumeTestRule("assume"), new LiferayIntegrationTestRule(),
+	public static final AggregateTestRule aggregateTestRule;
+
+	static {
+		LiferayIntegrationTestRule liferayIntegrationTestRule =
+			new LiferayIntegrationTestRule();
+
+		liferayIntegrationTestRule.disableRule(
+			CompanyProviderClassTestRule.class);
+
+		aggregateTestRule = new AggregateTestRule(
+			new AssumeTestRule("assume"), liferayIntegrationTestRule,
 			PermissionCheckerMethodTestRule.INSTANCE);
+	}
 
 	public static void assume() {
 		BaseDBPartitionTestCase.assume();
@@ -96,9 +106,6 @@ public abstract class BaseDBPartitionMessageBusInterceptorTestCase {
 				"_excludedMessageBusDestinationNames");
 		_originalExcludedSchedulerJobNames = ReflectionTestUtil.getFieldValue(
 			_dbPartitionMessageBusInterceptor, "_excludedSchedulerJobNames");
-
-		_safeCloseable = CompanyThreadLocal.setCompanyIdWithSafeCloseable(
-			CompanyConstants.SYSTEM);
 	}
 
 	@After
@@ -110,8 +117,6 @@ public abstract class BaseDBPartitionMessageBusInterceptorTestCase {
 		ReflectionTestUtil.setFieldValue(
 			_dbPartitionMessageBusInterceptor, "_excludedSchedulerJobNames",
 			_originalExcludedSchedulerJobNames);
-
-		_safeCloseable.close();
 	}
 
 	@Test
@@ -322,7 +327,6 @@ public abstract class BaseDBPartitionMessageBusInterceptorTestCase {
 	private static MessageBus _messageBus;
 
 	private static String _originalName;
-	private static SafeCloseable _safeCloseable;
 	private static final List<ServiceRegistration<?>> _serviceRegistrations =
 		new ArrayList<>();
 	private static TestDBPartitionMessageListener

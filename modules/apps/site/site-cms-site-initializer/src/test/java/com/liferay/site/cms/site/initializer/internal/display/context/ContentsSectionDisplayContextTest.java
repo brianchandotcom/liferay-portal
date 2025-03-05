@@ -92,12 +92,13 @@ public class ContentsSectionDisplayContextTest {
 			).build());
 
 		ObjectDefinition objectDefinition = _getObjectDefinition(
-			true, "site", false);
+			true, true, "site", false);
 
 		List<ObjectDefinition> objectDefinitions = ListUtil.fromArray(
-			_getObjectDefinition(true, "company", false),
-			_getObjectDefinition(false, "site", false), objectDefinition,
-			_getObjectDefinition(true, "site", true));
+			_getObjectDefinition(false, true, "site", false),
+			_getObjectDefinition(true, false, "site", false),
+			_getObjectDefinition(true, true, "company", false),
+			objectDefinition, _getObjectDefinition(true, true, "site", true));
 
 		Mockito.when(
 			_objectDefinitionService.getObjectDefinitions(
@@ -154,7 +155,8 @@ public class ContentsSectionDisplayContextTest {
 	}
 
 	private ObjectDefinition _getObjectDefinition(
-		boolean enableObjectEntryDraft, String scope, boolean system) {
+		boolean approved, boolean enableObjectEntryDraft, String scope,
+		boolean system) {
 
 		ObjectDefinition objectDefinition = Mockito.mock(
 			ObjectDefinition.class);
@@ -169,6 +171,12 @@ public class ContentsSectionDisplayContextTest {
 			objectDefinition.getObjectDefinitionId()
 		).thenReturn(
 			RandomTestUtil.randomLong()
+		);
+
+		Mockito.when(
+			objectDefinition.isApproved()
+		).thenReturn(
+			approved
 		);
 
 		Mockito.when(

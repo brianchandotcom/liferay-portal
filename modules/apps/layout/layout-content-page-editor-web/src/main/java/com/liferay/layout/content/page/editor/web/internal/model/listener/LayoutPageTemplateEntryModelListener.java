@@ -19,6 +19,7 @@ import com.liferay.info.item.provider.InfoItemFormVariationsProvider;
 import com.liferay.info.permission.provider.InfoPermissionProvider;
 import com.liferay.info.search.InfoSearchClassMapperRegistry;
 import com.liferay.layout.content.page.editor.web.internal.manager.FormItemManager;
+import com.liferay.layout.manager.FormManager;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateEntryTypeConstants;
 import com.liferay.layout.page.template.exception.RequiredLayoutPageTemplateEntryException;
 import com.liferay.layout.page.template.info.item.capability.EditPageInfoItemCapability;
@@ -211,7 +212,7 @@ public class LayoutPageTemplateEntryModelListener
 
 			List<FragmentEntryLink> addedFragmentEntryLinks = new ArrayList<>();
 
-			_formItemManager.addFragmentEntryLinksLayoutStructureItems(
+			_formManager.addFragmentEntryLinksLayoutStructureItems(
 				addedFragmentEntryLinks, _jsonFactory.createJSONObject(),
 				formStyledLayoutStructureItem, true, layout, layoutStructure,
 				LocaleUtil.getMostRelevantLocale(), segmentsExperienceId,
@@ -430,6 +431,9 @@ public class LayoutPageTemplateEntryModelListener
 
 	@Reference
 	private FormItemManager _formItemManager;
+
+	@Reference
+	private FormManager _formManager;
 
 	@Reference
 	private FragmentEntryLinkListenerRegistry

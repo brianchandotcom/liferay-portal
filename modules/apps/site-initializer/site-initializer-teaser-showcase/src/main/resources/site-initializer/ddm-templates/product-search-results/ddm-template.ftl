@@ -21,7 +21,7 @@
 	}
 
 	.product-specs {
-		min-height: 3rem;
+		min-height: 1.5rem;
 	}
 </style>
 
@@ -66,7 +66,7 @@
 								</#list>
 							</#if>
 
-							<div class="product-specs d-flex justify-content-start mt-3">
+							<div class="align-items-end product-specs d-flex justify-content-start mt-3">
 								<#list productSpecifications as spec>
 									<#if spec??>
 										<p class="product-spec text-uppercase mr-3 mb-0">${spec.value}</p>

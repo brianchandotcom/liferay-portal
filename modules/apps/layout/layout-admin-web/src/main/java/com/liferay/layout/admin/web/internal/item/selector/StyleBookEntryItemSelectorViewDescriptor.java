@@ -131,8 +131,6 @@ public class StyleBookEntryItemSelectorViewDescriptor
 			StyleBookEntryLocalServiceUtil.create();
 
 		styleFromThemeStyleBookEntry.setStyleBookEntryId(0);
-		styleFromThemeStyleBookEntry.setName(
-			LanguageUtil.get(_httpServletRequest, "styles-from-theme"));
 
 		StyleBookEntry defaultStyleBookEntry =
 			StyleBookEntryLocalServiceUtil.fetchDefaultStyleBookEntry(
@@ -141,6 +139,9 @@ public class StyleBookEntryItemSelectorViewDescriptor
 		if (defaultStyleBookEntry == null) {
 			styleFromThemeStyleBookEntry.setDefaultStyleBookEntry(true);
 		}
+
+		styleFromThemeStyleBookEntry.setName(
+			LanguageUtil.get(_httpServletRequest, "styles-from-theme"));
 
 		List<StyleBookEntry> styleBookEntries = ListUtil.fromArray(
 			styleFromThemeStyleBookEntry);

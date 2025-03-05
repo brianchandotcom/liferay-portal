@@ -186,6 +186,10 @@ public class VirtualHostFilter extends BasePortalFilter {
 
 		if (i18nLanguageId != null) {
 			friendlyURL = friendlyURL.substring(i18nLanguageId.length());
+
+			if (friendlyURL.length() == 0) {
+				friendlyURL = StringPool.SLASH;
+			}
 		}
 
 		int widgetServletMappingPos = 0;

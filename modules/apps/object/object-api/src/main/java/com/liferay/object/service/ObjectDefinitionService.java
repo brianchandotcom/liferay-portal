@@ -98,6 +98,12 @@ public interface ObjectDefinitionService extends BaseService {
 		long companyId, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<ObjectDefinition> getObjectDefinitions(
+		long companyId, long[] objectFolderIds, boolean active,
+		boolean enableObjectEntryDraft, String scope, int status, int start,
+		int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getObjectDefinitionsCount() throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

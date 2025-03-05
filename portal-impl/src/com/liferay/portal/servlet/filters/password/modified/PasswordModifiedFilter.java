@@ -53,19 +53,18 @@ public class PasswordModifiedFilter extends BasePortalFilter {
 
 		String contextPath = PortalUtil.getPathContext();
 
-		String proxyPath = PortalUtil.getPathProxy();
+		if (Validator.isNotNull(contextPath)) {
+			String proxyPath = PortalUtil.getPathProxy();
 
-		if (Validator.isNotNull(contextPath) &&
-			Validator.isNotNull(proxyPath) &&
-			contextPath.startsWith(proxyPath)) {
+			if (Validator.isNotNull(proxyPath) &&
+				contextPath.startsWith(proxyPath)) {
 
-			contextPath = contextPath.substring(proxyPath.length());
-		}
+				contextPath = contextPath.substring(proxyPath.length());
+			}
 
-		if (Validator.isNotNull(contextPath) &&
-			!contextPath.equals(StringPool.SLASH)) {
-
-			requestURI = requestURI.substring(contextPath.length());
+			if (!contextPath.equals(StringPool.SLASH)) {
+				requestURI = requestURI.substring(contextPath.length());
+			}
 		}
 
 		return HttpComponentsUtil.removePathParameters(requestURI);

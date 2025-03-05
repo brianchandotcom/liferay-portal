@@ -137,6 +137,8 @@ public class PortalWebShieldedContainerInitializer
 				"/health_check/data_source");
 		}
 
+		JakartaEETransformerJSFilter.register(servletContext);
+
 		DocumentBuilderFactory documentBuilderFactory =
 			DocumentBuilderFactory.newInstance();
 

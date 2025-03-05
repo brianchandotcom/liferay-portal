@@ -44,6 +44,24 @@
 									"indexed": true
 								},
 								"type": "Fragment"
+							},
+							{
+								"definition": {
+									"fragment": {
+										"key": "com.liferay.site.cms.site.initializer.internal.fragment.renderer.SpacesSectionFragmentRenderer"
+									},
+									"fragmentConfig": {
+										"displayStyle": "stacked",
+										"hoveredItemColor": "",
+										"selectedItemColor": "",
+										"source": "",
+										"sublevels": "-1"
+									},
+									"fragmentFields": [
+									],
+									"indexed": true
+								},
+								"type": "Fragment"
 							}
 						],
 						"type": "FragmentDropZone"

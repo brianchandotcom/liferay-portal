@@ -739,6 +739,10 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 	}
 
 	protected long getTargetAxisDuration() {
+		if (ignoreTargetAxisDuration()) {
+			return 0;
+		}
+
 		GitWorkingDirectory gitWorkingDirectory =
 			getPortalGitWorkingDirectory();
 
@@ -791,6 +795,21 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 		}
 
 		return false;
+	}
+
+	protected boolean ignoreTargetAxisDuration() {
+		JobProperty jobProperty = getJobProperty(
+			"test.batch.ignore.target.axis.duration");
+
+		String jobPropertyValue = jobProperty.getValue();
+
+		if (JenkinsResultsParserUtil.isNullOrEmpty(jobPropertyValue)) {
+			return false;
+		}
+
+		recordJobProperty(jobProperty);
+
+		return Boolean.valueOf(jobPropertyValue);
 	}
 
 	protected boolean isRootCauseAnalysis() {

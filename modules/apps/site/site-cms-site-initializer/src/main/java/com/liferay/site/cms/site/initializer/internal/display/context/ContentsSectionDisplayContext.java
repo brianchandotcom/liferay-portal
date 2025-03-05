@@ -10,7 +10,9 @@ import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectFolder;
 import com.liferay.object.service.ObjectDefinitionService;
+import com.liferay.object.service.ObjectFolderLocalService;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.language.Language;
@@ -21,11 +23,11 @@ import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.site.cms.site.initializer.internal.configuration.CMSSiteInitializerConfiguration;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import javax.portlet.ActionRequest;
 
@@ -39,12 +41,14 @@ public class ContentsSectionDisplayContext extends BaseSectionDisplayContext {
 	public ContentsSectionDisplayContext(
 		CMSSiteInitializerConfiguration cmsSiteInitializerConfiguration,
 		HttpServletRequest httpServletRequest, Language language,
-		ObjectDefinitionService objectDefinitionService) {
+		ObjectDefinitionService objectDefinitionService,
+		ObjectFolderLocalService objectFolderLocalService) {
 
 		super(cmsSiteInitializerConfiguration, httpServletRequest);
 
 		_language = language;
 		_objectDefinitionService = objectDefinitionService;
+		_objectFolderLocalService = objectFolderLocalService;
 
 		_themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -72,20 +76,19 @@ public class ContentsSectionDisplayContext extends BaseSectionDisplayContext {
 							_language.get(httpServletRequest, "folder"));
 					});
 
+				ObjectFolder objectFolder =
+					_objectFolderLocalService.
+						fetchObjectFolderByExternalReferenceCode(
+							"L_CMS_CONTENT_STRUCTURES",
+							_themeDisplay.getCompanyId());
+
 				for (ObjectDefinition objectDefinition :
 						_objectDefinitionService.getObjectDefinitions(
-							_themeDisplay.getCompanyId(), QueryUtil.ALL_POS,
-							QueryUtil.ALL_POS)) {
-
-					if (!objectDefinition.isApproved() ||
-						objectDefinition.isSystem() ||
-						!Objects.equals(
-							objectDefinition.getScope(),
-							ObjectDefinitionConstants.SCOPE_SITE) ||
-						!objectDefinition.isEnableObjectEntryDraft()) {
-
-						continue;
-					}
+							_themeDisplay.getCompanyId(),
+							new long[] {objectFolder.getObjectFolderId()}, true,
+							true, ObjectDefinitionConstants.SCOPE_SITE,
+							WorkflowConstants.STATUS_APPROVED,
+							QueryUtil.ALL_POS, QueryUtil.ALL_POS)) {
 
 					addPrimaryDropdownItem(
 						dropdownItem -> {
@@ -162,6 +165,7 @@ public class ContentsSectionDisplayContext extends BaseSectionDisplayContext {
 
 	private final Language _language;
 	private final ObjectDefinitionService _objectDefinitionService;
+	private final ObjectFolderLocalService _objectFolderLocalService;
 	private final ThemeDisplay _themeDisplay;
 
 }

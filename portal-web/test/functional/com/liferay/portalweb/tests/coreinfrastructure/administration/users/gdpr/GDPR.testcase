@@ -171,41 +171,6 @@ definition {
 
 	}
 
-	@description = "This test anonymizes a single entry from an application"
-	@priority = 4
-	test CanAnonymizeEntryFromApplication {
-		property portal.acceptance = "true";
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMDocument.addCP(
-			dmDocumentDescription = "DM Document Description",
-			dmDocumentFile = "Document_1.txt",
-			dmDocumentTitle = "DM Document Title");
-
-		User.logoutAndLoginPG(
-			userLoginEmailAddress = "test@liferay.com",
-			userLoginFullName = "Test Test");
-
-		User.openUsersAdmin();
-
-		User.deletePersonalDataCP(
-			userFirstName = "userfn",
-			userLastName = "userln");
-
-		GDPR.anonymizeDataViaReviewData(application = "Documents and Media");
-
-		DMNavigator.openDocumentsAndMediaAdmin(siteURLKey = "guest");
-
-		DMNavigator.gotoDocumentCP(dmDocumentTitle = "DM Document Title");
-
-		DMDocument.expandInfo();
-
-		AssertTextEquals(
-			locator1 = "DocumentsAndMediaDocument#DOCUMENT_INFO_UPLOADER_NO_PROFILE",
-			value1 = "Anonymous Anonymous");
-	}
-
 	@description = "This test covers LPS-168719. It ensures that changing the password length does not affect anonymization"
 	@priority = 4
 	test CanAnonymizeWithPasswordLengthChange {

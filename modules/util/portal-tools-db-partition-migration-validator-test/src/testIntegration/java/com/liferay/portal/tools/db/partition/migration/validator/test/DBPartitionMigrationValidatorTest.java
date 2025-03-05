@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.tools.db.partition.migration.validator.DBPartitionMigrationValidator;
@@ -79,6 +80,7 @@ public class DBPartitionMigrationValidatorTest extends BaseDBPartitionTestCase {
 	}
 
 	@Test
+	@TestInfo("LPD-6742")
 	public void testValidateFailure() throws Exception {
 		String sourceFileName = _testExport(_company.getCompanyId());
 		String targetFileName = _testExport(
@@ -121,6 +123,7 @@ public class DBPartitionMigrationValidatorTest extends BaseDBPartitionTestCase {
 	}
 
 	@Test
+	@TestInfo("LPD-6742")
 	public void testValidateSuccess() throws Exception {
 		String sourceFileName = _testExport(_company.getCompanyId());
 

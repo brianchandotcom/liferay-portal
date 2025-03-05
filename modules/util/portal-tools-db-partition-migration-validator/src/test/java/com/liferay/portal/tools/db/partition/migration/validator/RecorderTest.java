@@ -5,6 +5,8 @@
 
 package com.liferay.portal.tools.db.partition.migration.validator;
 
+import com.liferay.portal.kernel.test.TestInfo;
+
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
@@ -32,6 +34,7 @@ public class RecorderTest {
 	}
 
 	@Test
+	@TestInfo("LPD-6742")
 	public void testPrintingMessages() {
 		Recorder recorder = new Recorder();
 
@@ -52,6 +55,7 @@ public class RecorderTest {
 	}
 
 	@Test
+	@TestInfo("LPD-6742")
 	public void testRegisterError() {
 		Recorder recorder = new Recorder();
 
@@ -67,6 +71,7 @@ public class RecorderTest {
 	}
 
 	@Test
+	@TestInfo("LPD-6742")
 	public void testRegisterErrors() {
 		Recorder recorder = new Recorder();
 
@@ -89,6 +94,7 @@ public class RecorderTest {
 	}
 
 	@Test
+	@TestInfo("LPD-6742")
 	public void testRegisterWarning() {
 		Recorder recorder = new Recorder();
 
@@ -104,6 +110,7 @@ public class RecorderTest {
 	}
 
 	@Test
+	@TestInfo("LPD-6742")
 	public void testRegisterWarnings() {
 		Recorder recorder = new Recorder();
 

@@ -6,6 +6,7 @@
 package com.liferay.portal.tools.db.partition.migration.validator.util;
 
 import com.liferay.petra.function.UnsafeRunnable;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.version.Version;
 import com.liferay.portal.tools.db.partition.migration.validator.Company;
@@ -46,6 +47,7 @@ public class ValidatorUtilTest {
 	}
 
 	@Test
+	@TestInfo("LPD-6742")
 	public void testValidateCompany() throws Exception {
 		Company company = new Company(
 			RandomTestUtil.randomLong(), RandomTestUtil.randomString(),
@@ -88,6 +90,7 @@ public class ValidatorUtilTest {
 	}
 
 	@Test
+	@TestInfo("LPD-6742")
 	public void testValidatePartitionedTables() throws Exception {
 		_testValidatePartitionedTables(
 			new ArrayList<>(
@@ -125,6 +128,7 @@ public class ValidatorUtilTest {
 	}
 
 	@Test
+	@TestInfo("LPD-6742")
 	public void testValidateReleaseMissingSourceModules() {
 		List<Release> targetReleases = new ArrayList<>();
 
@@ -146,6 +150,7 @@ public class ValidatorUtilTest {
 	}
 
 	@Test
+	@TestInfo("LPD-6742")
 	public void testValidateReleaseMissingTargetModules() throws Exception {
 		_testValidateReleaseMissingTargetModule(
 			"module1",
@@ -164,6 +169,7 @@ public class ValidatorUtilTest {
 	}
 
 	@Test
+	@TestInfo("LPD-6742")
 	public void testValidateReleaseState() throws Exception {
 		List<String> failedServletContextNames = Arrays.asList(
 			"module1", "module2");
@@ -189,6 +195,7 @@ public class ValidatorUtilTest {
 	}
 
 	@Test
+	@TestInfo("LPD-6742")
 	public void testValidateReleaseUnverifiedModules() throws Exception {
 		_testValidateReleaseUnverifiedModule(
 			"module2.service", true,
@@ -207,6 +214,7 @@ public class ValidatorUtilTest {
 	}
 
 	@Test
+	@TestInfo("LPD-6742")
 	public void testValidateReleaseVersionModule() throws Exception {
 		_testValidateReleaseVersionModule(
 			"1.0.0", "module2.service",

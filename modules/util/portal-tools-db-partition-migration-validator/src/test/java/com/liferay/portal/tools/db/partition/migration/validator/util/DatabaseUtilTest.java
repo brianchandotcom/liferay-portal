@@ -42,6 +42,7 @@ public class DatabaseUtilTest extends BaseTestCase {
 	}
 
 	@Test
+	@TestInfo("LPD-6742")
 	public void testExportLiferayDatabaseWithDefaultCompany() throws Exception {
 		LiferayDatabase liferayDatabase = DatabaseUtil.exportLiferayDatabase(
 			connection, _COMPANY_ID);
@@ -50,6 +51,7 @@ public class DatabaseUtilTest extends BaseTestCase {
 	}
 
 	@Test
+	@TestInfo("LPD-6742")
 	public void testExportLiferayDatabaseWithMultipleCompanies()
 		throws Exception {
 
@@ -62,6 +64,7 @@ public class DatabaseUtilTest extends BaseTestCase {
 	}
 
 	@Test
+	@TestInfo("LPD-6742")
 	public void testExportLiferayDatabaseWithNondefaultCompany()
 		throws Exception {
 
@@ -100,6 +103,7 @@ public class DatabaseUtilTest extends BaseTestCase {
 	}
 
 	@Test
+	@TestInfo("LPD-16309")
 	public void testReplaceSchemaName() {
 
 		// Default JDBC URL

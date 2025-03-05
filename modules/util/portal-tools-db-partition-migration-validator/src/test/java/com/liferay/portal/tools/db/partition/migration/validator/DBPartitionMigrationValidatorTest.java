@@ -66,12 +66,14 @@ public class DBPartitionMigrationValidatorTest extends BaseTestCase {
 	}
 
 	@Test
+	@TestInfo("LPD-6742")
 	public void testExportDefaultDatabase() throws Exception {
 		_testExport(
 			Collections.singletonList(RandomTestUtil.randomLong()), true, true);
 	}
 
 	@Test
+	@TestInfo("LPD-6742")
 	public void testExportDefaultDatabaseWithMultipleCompanies()
 		throws Exception {
 
@@ -82,6 +84,7 @@ public class DBPartitionMigrationValidatorTest extends BaseTestCase {
 	}
 
 	@Test
+	@TestInfo("LPD-6742")
 	public void testExportNondefaultDatabase() throws Exception {
 		_testExport(
 			Collections.singletonList(RandomTestUtil.randomLong()), false,
@@ -89,6 +92,7 @@ public class DBPartitionMigrationValidatorTest extends BaseTestCase {
 	}
 
 	@Test
+	@TestInfo("LPD-6742")
 	public void testExportNondefaultDatabaseWithMultipleCompanies()
 		throws Exception {
 
@@ -118,6 +122,7 @@ public class DBPartitionMigrationValidatorTest extends BaseTestCase {
 	}
 
 	@Test
+	@TestInfo("LPD-6742")
 	public void testValidateFailure() throws Exception {
 		String[] messages = {
 			"[ERROR] Company ID 3007447931789165977 already exists in the " +
@@ -171,6 +176,7 @@ public class DBPartitionMigrationValidatorTest extends BaseTestCase {
 	}
 
 	@Test
+	@TestInfo("LPD-6742")
 	public void testValidateSuccess() throws Exception {
 		_testValidate(
 			"source-success.json", "target-success.json",
@@ -185,6 +191,7 @@ public class DBPartitionMigrationValidatorTest extends BaseTestCase {
 	}
 
 	@Test
+	@TestInfo("LPD-6742")
 	public void testValidateTargetNondefaultPartition() throws Exception {
 		_testValidate(
 			"source-success.json", "target-nondefault.json",

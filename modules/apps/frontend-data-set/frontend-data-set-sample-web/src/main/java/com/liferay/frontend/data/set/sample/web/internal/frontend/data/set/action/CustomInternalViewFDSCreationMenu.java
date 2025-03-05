@@ -22,10 +22,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marko Cikos
  */
 @Component(
-	property = "frontend.data.set.name=" + FDSSampleFDSNames.REACT,
+	property = "frontend.data.set.name=" + FDSSampleFDSNames.CUSTOM_INTERNAL_VIEW,
 	service = FDSCreationMenu.class
 )
-public class ReactFDSCreationMenu implements FDSCreationMenu {
+public class CustomInternalViewFDSCreationMenu implements FDSCreationMenu {
 
 	@Override
 	public CreationMenu getCreationMenu(HttpServletRequest httpServletRequest) {

@@ -44,7 +44,7 @@ public class BundleHeaderReplacerBiFunction
 				!Objects.equals(key.toString(), "Bundle-ClassPath")) {
 
 				String newValue = TransformerAgent.replace(
-					TransformerAgent.replacementDotMap, (String)value);
+					TransformerAgent.replacementDashDotMap, (String)value);
 
 				if (Objects.equals(key.toString(), "Import-Package")) {
 					newValue = _fixDuplication(newValue);

@@ -57,7 +57,7 @@ public class ClassRemapperBiFunction
 						String name = (String)value;
 
 						String newName = TransformerAgent.replace(
-							TransformerAgent.replacementDotMap, name);
+							TransformerAgent.replacementDashDotMap, name);
 
 						if (!Objects.equals(name, newName)) {
 							messages.add(name.concat(" -> " + newName));

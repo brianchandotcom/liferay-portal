@@ -26,11 +26,11 @@ import java.util.Set;
  */
 public class TransformerAgent {
 
-	public static final Map<String, String> replacementDotMap =
+	public static final Map<String, String> replacementDashDotMap =
 		new LinkedHashMap<>();
 	public static final Map<String, String> replacementSlashMap =
 		new LinkedHashMap<>();
-	public static final Map<String, String> reverseReplacementDotMap =
+	public static final Map<String, String> reverseReplacementDashDotMap =
 		new HashMap<>();
 
 	public static void premain(
@@ -93,11 +93,17 @@ public class TransformerAgent {
 				String javaxPackage = "javax." + subpackageName;
 				String jakartaPackage = "jakarta." + subpackageName;
 
-				replacementDotMap.put(javaxPackage, jakartaPackage);
+				replacementDashDotMap.put(
+					javaxPackage.replace('.', '-'),
+					jakartaPackage.replace('.', '-'));
+				replacementDashDotMap.put(javaxPackage, jakartaPackage);
 				replacementSlashMap.put(
 					javaxPackage.replace('.', '/'),
 					jakartaPackage.replace('.', '/'));
-				reverseReplacementDotMap.put(jakartaPackage, javaxPackage);
+				reverseReplacementDashDotMap.put(
+					jakartaPackage.replace('.', '-'),
+					javaxPackage.replace('.', '-'));
+				reverseReplacementDashDotMap.put(jakartaPackage, javaxPackage);
 			});
 
 		// Order matters, fixups need to be put into replacement map later
@@ -107,7 +113,11 @@ public class TransformerAgent {
 				String fixupJavaxPackage = "javax." + fixupSubpackageName;
 				String fixupJakartaPackage = "jakarta." + fixupSubpackageName;
 
-				replacementDotMap.put(fixupJakartaPackage, fixupJavaxPackage);
+				replacementDashDotMap.put(
+					fixupJakartaPackage.replace('.', '-'),
+					fixupJavaxPackage.replace('.', '-'));
+				replacementDashDotMap.put(
+					fixupJakartaPackage, fixupJavaxPackage);
 				replacementSlashMap.put(
 					fixupJakartaPackage.replace('.', '/'),
 					fixupJavaxPackage.replace('.', '/'));

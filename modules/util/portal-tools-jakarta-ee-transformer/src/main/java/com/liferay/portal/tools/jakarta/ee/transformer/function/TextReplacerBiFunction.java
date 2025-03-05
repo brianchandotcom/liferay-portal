@@ -18,7 +18,7 @@ public class TextReplacerBiFunction
 	@Override
 	public String apply(String invoker, String text) {
 		String newText = TransformerAgent.replace(
-			TransformerAgent.replacementDotMap, text);
+			TransformerAgent.replacementDashDotMap, text);
 
 		if (!_JAKARTA_EE_TRANSFORMER_TEXT_REPLACER_LOGGING_DISABLED &&
 			!newText.equals(text)) {

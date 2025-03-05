@@ -575,6 +575,7 @@ public class EvaluateLayoutStructureRulesStrutsActionTest {
 	@Inject
 	private LayoutStructureProvider _layoutStructureProvider;
 
+	@DeleteAfterTestRun
 	private ObjectDefinition _objectDefinition;
 
 	@Inject

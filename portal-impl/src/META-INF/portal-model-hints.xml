@@ -1435,10 +1435,6 @@
 		</field>
 		<field name="type" type="int" />
 		<field name="subtype" type="String" />
-		<field name="status" type="int" />
-		<field name="statusByUserId" type="long" />
-		<field name="statusByUserName" type="String" />
-		<field name="statusDate" type="Date" />
 	</model>
 	<model name="com.liferay.portal.kernel.model.ServiceComponent">
 		<field name="mvccVersion" type="long" />

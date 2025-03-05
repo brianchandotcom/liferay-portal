@@ -72,34 +72,6 @@ public class CreatorSerDes {
 			sb.append("\"");
 		}
 
-		if (creator.getEmailAddress() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"emailAddress\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(creator.getEmailAddress()));
-
-			sb.append("\"");
-		}
-
-		if (creator.getExternalReferenceCode() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"externalReferenceCode\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(creator.getExternalReferenceCode()));
-
-			sb.append("\"");
-		}
-
 		if (creator.getFamilyName() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -180,20 +152,6 @@ public class CreatorSerDes {
 			sb.append("\"");
 		}
 
-		if (creator.getScreenName() != null) {
-			if (sb.length() > 1) {
-				sb.append(", ");
-			}
-
-			sb.append("\"screenName\": ");
-
-			sb.append("\"");
-
-			sb.append(_escape(creator.getScreenName()));
-
-			sb.append("\"");
-		}
-
 		sb.append("}");
 
 		return sb.toString();
@@ -225,22 +183,6 @@ public class CreatorSerDes {
 		}
 		else {
 			map.put("contentType", String.valueOf(creator.getContentType()));
-		}
-
-		if (creator.getEmailAddress() == null) {
-			map.put("emailAddress", null);
-		}
-		else {
-			map.put("emailAddress", String.valueOf(creator.getEmailAddress()));
-		}
-
-		if (creator.getExternalReferenceCode() == null) {
-			map.put("externalReferenceCode", null);
-		}
-		else {
-			map.put(
-				"externalReferenceCode",
-				String.valueOf(creator.getExternalReferenceCode()));
 		}
 
 		if (creator.getFamilyName() == null) {
@@ -285,13 +227,6 @@ public class CreatorSerDes {
 			map.put("profileURL", String.valueOf(creator.getProfileURL()));
 		}
 
-		if (creator.getScreenName() == null) {
-			map.put("screenName", null);
-		}
-		else {
-			map.put("screenName", String.valueOf(creator.getScreenName()));
-		}
-
 		return map;
 	}
 
@@ -315,14 +250,6 @@ public class CreatorSerDes {
 			else if (Objects.equals(jsonParserFieldName, "contentType")) {
 				return false;
 			}
-			else if (Objects.equals(jsonParserFieldName, "emailAddress")) {
-				return false;
-			}
-			else if (Objects.equals(
-						jsonParserFieldName, "externalReferenceCode")) {
-
-				return false;
-			}
 			else if (Objects.equals(jsonParserFieldName, "familyName")) {
 				return false;
 			}
@@ -339,9 +266,6 @@ public class CreatorSerDes {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "profileURL")) {
-				return false;
-			}
-			else if (Objects.equals(jsonParserFieldName, "screenName")) {
 				return false;
 			}
 
@@ -361,19 +285,6 @@ public class CreatorSerDes {
 			else if (Objects.equals(jsonParserFieldName, "contentType")) {
 				if (jsonParserFieldValue != null) {
 					creator.setContentType((String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "emailAddress")) {
-				if (jsonParserFieldValue != null) {
-					creator.setEmailAddress((String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(
-						jsonParserFieldName, "externalReferenceCode")) {
-
-				if (jsonParserFieldValue != null) {
-					creator.setExternalReferenceCode(
-						(String)jsonParserFieldValue);
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "familyName")) {
@@ -404,11 +315,6 @@ public class CreatorSerDes {
 			else if (Objects.equals(jsonParserFieldName, "profileURL")) {
 				if (jsonParserFieldValue != null) {
 					creator.setProfileURL((String)jsonParserFieldValue);
-				}
-			}
-			else if (Objects.equals(jsonParserFieldName, "screenName")) {
-				if (jsonParserFieldValue != null) {
-					creator.setScreenName((String)jsonParserFieldValue);
 				}
 			}
 		}

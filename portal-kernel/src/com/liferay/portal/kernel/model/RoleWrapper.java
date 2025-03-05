@@ -51,10 +51,6 @@ public class RoleWrapper
 		attributes.put("description", getDescription());
 		attributes.put("type", getType());
 		attributes.put("subtype", getSubtype());
-		attributes.put("status", getStatus());
-		attributes.put("statusByUserId", getStatusByUserId());
-		attributes.put("statusByUserName", getStatusByUserName());
-		attributes.put("statusDate", getStatusDate());
 
 		return attributes;
 	}
@@ -162,30 +158,6 @@ public class RoleWrapper
 
 		if (subtype != null) {
 			setSubtype(subtype);
-		}
-
-		Integer status = (Integer)attributes.get("status");
-
-		if (status != null) {
-			setStatus(status);
-		}
-
-		Long statusByUserId = (Long)attributes.get("statusByUserId");
-
-		if (statusByUserId != null) {
-			setStatusByUserId(statusByUserId);
-		}
-
-		String statusByUserName = (String)attributes.get("statusByUserName");
-
-		if (statusByUserName != null) {
-			setStatusByUserName(statusByUserName);
-		}
-
-		Date statusDate = (Date)attributes.get("statusDate");
-
-		if (statusDate != null) {
-			setStatusDate(statusDate);
 		}
 	}
 
@@ -413,56 +385,6 @@ public class RoleWrapper
 	}
 
 	/**
-	 * Returns the status of this role.
-	 *
-	 * @return the status of this role
-	 */
-	@Override
-	public int getStatus() {
-		return model.getStatus();
-	}
-
-	/**
-	 * Returns the status by user ID of this role.
-	 *
-	 * @return the status by user ID of this role
-	 */
-	@Override
-	public long getStatusByUserId() {
-		return model.getStatusByUserId();
-	}
-
-	/**
-	 * Returns the status by user name of this role.
-	 *
-	 * @return the status by user name of this role
-	 */
-	@Override
-	public String getStatusByUserName() {
-		return model.getStatusByUserName();
-	}
-
-	/**
-	 * Returns the status by user uuid of this role.
-	 *
-	 * @return the status by user uuid of this role
-	 */
-	@Override
-	public String getStatusByUserUuid() {
-		return model.getStatusByUserUuid();
-	}
-
-	/**
-	 * Returns the status date of this role.
-	 *
-	 * @return the status date of this role
-	 */
-	@Override
-	public Date getStatusDate() {
-		return model.getStatusDate();
-	}
-
-	/**
 	 * Returns the subtype of this role.
 	 *
 	 * @return the subtype of this role
@@ -601,86 +523,6 @@ public class RoleWrapper
 	@Override
 	public String getUuid() {
 		return model.getUuid();
-	}
-
-	/**
-	 * Returns <code>true</code> if this role is approved.
-	 *
-	 * @return <code>true</code> if this role is approved; <code>false</code> otherwise
-	 */
-	@Override
-	public boolean isApproved() {
-		return model.isApproved();
-	}
-
-	/**
-	 * Returns <code>true</code> if this role is denied.
-	 *
-	 * @return <code>true</code> if this role is denied; <code>false</code> otherwise
-	 */
-	@Override
-	public boolean isDenied() {
-		return model.isDenied();
-	}
-
-	/**
-	 * Returns <code>true</code> if this role is a draft.
-	 *
-	 * @return <code>true</code> if this role is a draft; <code>false</code> otherwise
-	 */
-	@Override
-	public boolean isDraft() {
-		return model.isDraft();
-	}
-
-	/**
-	 * Returns <code>true</code> if this role is expired.
-	 *
-	 * @return <code>true</code> if this role is expired; <code>false</code> otherwise
-	 */
-	@Override
-	public boolean isExpired() {
-		return model.isExpired();
-	}
-
-	/**
-	 * Returns <code>true</code> if this role is inactive.
-	 *
-	 * @return <code>true</code> if this role is inactive; <code>false</code> otherwise
-	 */
-	@Override
-	public boolean isInactive() {
-		return model.isInactive();
-	}
-
-	/**
-	 * Returns <code>true</code> if this role is incomplete.
-	 *
-	 * @return <code>true</code> if this role is incomplete; <code>false</code> otherwise
-	 */
-	@Override
-	public boolean isIncomplete() {
-		return model.isIncomplete();
-	}
-
-	/**
-	 * Returns <code>true</code> if this role is pending.
-	 *
-	 * @return <code>true</code> if this role is pending; <code>false</code> otherwise
-	 */
-	@Override
-	public boolean isPending() {
-		return model.isPending();
-	}
-
-	/**
-	 * Returns <code>true</code> if this role is scheduled.
-	 *
-	 * @return <code>true</code> if this role is scheduled; <code>false</code> otherwise
-	 */
-	@Override
-	public boolean isScheduled() {
-		return model.isScheduled();
 	}
 
 	@Override
@@ -893,56 +735,6 @@ public class RoleWrapper
 	@Override
 	public void setRoleId(long roleId) {
 		model.setRoleId(roleId);
-	}
-
-	/**
-	 * Sets the status of this role.
-	 *
-	 * @param status the status of this role
-	 */
-	@Override
-	public void setStatus(int status) {
-		model.setStatus(status);
-	}
-
-	/**
-	 * Sets the status by user ID of this role.
-	 *
-	 * @param statusByUserId the status by user ID of this role
-	 */
-	@Override
-	public void setStatusByUserId(long statusByUserId) {
-		model.setStatusByUserId(statusByUserId);
-	}
-
-	/**
-	 * Sets the status by user name of this role.
-	 *
-	 * @param statusByUserName the status by user name of this role
-	 */
-	@Override
-	public void setStatusByUserName(String statusByUserName) {
-		model.setStatusByUserName(statusByUserName);
-	}
-
-	/**
-	 * Sets the status by user uuid of this role.
-	 *
-	 * @param statusByUserUuid the status by user uuid of this role
-	 */
-	@Override
-	public void setStatusByUserUuid(String statusByUserUuid) {
-		model.setStatusByUserUuid(statusByUserUuid);
-	}
-
-	/**
-	 * Sets the status date of this role.
-	 *
-	 * @param statusDate the status date of this role
-	 */
-	@Override
-	public void setStatusDate(Date statusDate) {
-		model.setStatusDate(statusDate);
 	}
 
 	/**

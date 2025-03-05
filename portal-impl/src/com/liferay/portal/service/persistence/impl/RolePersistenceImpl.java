@@ -11576,10 +11576,6 @@ public class RolePersistenceImpl
 		ctMergeColumnNames.add("description");
 		ctMergeColumnNames.add("type_");
 		ctMergeColumnNames.add("subtype");
-		ctMergeColumnNames.add("status");
-		ctMergeColumnNames.add("statusByUserId");
-		ctMergeColumnNames.add("statusByUserName");
-		ctMergeColumnNames.add("statusDate");
 		ctMergeColumnNames.add("groups_");
 		ctMergeColumnNames.add("users");
 

@@ -95,13 +95,11 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 
 		_taxonomyVocabularyResource.setContextCompany(testCompany);
 
-		com.liferay.portal.kernel.model.User testCompanyAdminUser =
-			UserTestUtil.getAdminUser(testCompany.getCompanyId());
+		_user = UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
 		taxonomyVocabularyResource = TaxonomyVocabularyResource.builder(
 		).authentication(
-			testCompanyAdminUser.getEmailAddress(),
-			PropsValues.DEFAULT_ADMIN_PASSWORD
+			_user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(
 			testCompany.getVirtualHostname(), 8080, "http"
 		).locale(
@@ -937,6 +935,7 @@ public abstract class BaseTaxonomyVocabularyResourceTestCase {
 		LogFactoryUtil.getLog(BaseTaxonomyVocabularyResourceTestCase.class);
 
 	private static DateFormat _dateFormat;
+	private static com.liferay.portal.kernel.model.User _user;
 
 	@Inject
 	private com.liferay.bulk.rest.resource.v1_0.TaxonomyVocabularyResource

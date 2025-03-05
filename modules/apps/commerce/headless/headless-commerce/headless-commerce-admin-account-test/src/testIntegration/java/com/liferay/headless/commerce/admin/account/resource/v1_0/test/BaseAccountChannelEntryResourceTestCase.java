@@ -98,13 +98,11 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 
 		_accountChannelEntryResource.setContextCompany(testCompany);
 
-		com.liferay.portal.kernel.model.User testCompanyAdminUser =
-			UserTestUtil.getAdminUser(testCompany.getCompanyId());
+		_user = UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
 		accountChannelEntryResource = AccountChannelEntryResource.builder(
 		).authentication(
-			testCompanyAdminUser.getEmailAddress(),
-			PropsValues.DEFAULT_ADMIN_PASSWORD
+			_user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(
 			testCompany.getVirtualHostname(), 8080, "http"
 		).locale(
@@ -7074,6 +7072,7 @@ public abstract class BaseAccountChannelEntryResourceTestCase {
 		LogFactoryUtil.getLog(BaseAccountChannelEntryResourceTestCase.class);
 
 	private static DateFormat _dateFormat;
+	private static com.liferay.portal.kernel.model.User _user;
 
 	@Inject
 	private com.liferay.headless.commerce.admin.account.resource.v1_0.

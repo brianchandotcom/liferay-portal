@@ -100,13 +100,11 @@ public abstract class BaseProductResourceTestCase {
 
 		_productResource.setContextCompany(testCompany);
 
-		com.liferay.portal.kernel.model.User testCompanyAdminUser =
-			UserTestUtil.getAdminUser(testCompany.getCompanyId());
+		_user = UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
 		productResource = ProductResource.builder(
 		).authentication(
-			testCompanyAdminUser.getEmailAddress(),
-			PropsValues.DEFAULT_ADMIN_PASSWORD
+			_user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(
 			testCompany.getVirtualHostname(), 8080, "http"
 		).locale(
@@ -2653,6 +2651,7 @@ public abstract class BaseProductResourceTestCase {
 		LogFactoryUtil.getLog(BaseProductResourceTestCase.class);
 
 	private static DateFormat _dateFormat;
+	private static com.liferay.portal.kernel.model.User _user;
 
 	@Inject
 	private

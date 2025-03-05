@@ -97,13 +97,11 @@ public abstract class BaseTransitionResourceTestCase {
 
 		_transitionResource.setContextCompany(testCompany);
 
-		com.liferay.portal.kernel.model.User testCompanyAdminUser =
-			UserTestUtil.getAdminUser(testCompany.getCompanyId());
+		_user = UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
 		transitionResource = TransitionResource.builder(
 		).authentication(
-			testCompanyAdminUser.getEmailAddress(),
-			PropsValues.DEFAULT_ADMIN_PASSWORD
+			_user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(
 			testCompany.getVirtualHostname(), 8080, "http"
 		).locale(
@@ -1358,6 +1356,7 @@ public abstract class BaseTransitionResourceTestCase {
 		LogFactoryUtil.getLog(BaseTransitionResourceTestCase.class);
 
 	private static DateFormat _dateFormat;
+	private static com.liferay.portal.kernel.model.User _user;
 
 	@Inject
 	private com.liferay.headless.admin.workflow.resource.v1_0.TransitionResource

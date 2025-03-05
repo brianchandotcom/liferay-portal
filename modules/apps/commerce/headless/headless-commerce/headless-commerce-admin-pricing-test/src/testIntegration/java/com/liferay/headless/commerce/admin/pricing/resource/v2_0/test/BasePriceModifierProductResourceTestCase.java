@@ -100,13 +100,11 @@ public abstract class BasePriceModifierProductResourceTestCase {
 
 		_priceModifierProductResource.setContextCompany(testCompany);
 
-		com.liferay.portal.kernel.model.User testCompanyAdminUser =
-			UserTestUtil.getAdminUser(testCompany.getCompanyId());
+		_user = UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
 		priceModifierProductResource = PriceModifierProductResource.builder(
 		).authentication(
-			testCompanyAdminUser.getEmailAddress(),
-			PropsValues.DEFAULT_ADMIN_PASSWORD
+			_user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(
 			testCompany.getVirtualHostname(), 8080, "http"
 		).locale(
@@ -1812,6 +1810,7 @@ public abstract class BasePriceModifierProductResourceTestCase {
 		LogFactoryUtil.getLog(BasePriceModifierProductResourceTestCase.class);
 
 	private static DateFormat _dateFormat;
+	private static com.liferay.portal.kernel.model.User _user;
 
 	@Inject
 	private com.liferay.headless.commerce.admin.pricing.resource.v2_0.

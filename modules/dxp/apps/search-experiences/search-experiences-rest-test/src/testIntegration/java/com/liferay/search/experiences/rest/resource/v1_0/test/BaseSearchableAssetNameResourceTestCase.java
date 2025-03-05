@@ -96,13 +96,11 @@ public abstract class BaseSearchableAssetNameResourceTestCase {
 
 		_searchableAssetNameResource.setContextCompany(testCompany);
 
-		com.liferay.portal.kernel.model.User testCompanyAdminUser =
-			UserTestUtil.getAdminUser(testCompany.getCompanyId());
+		_user = UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
 		searchableAssetNameResource = SearchableAssetNameResource.builder(
 		).authentication(
-			testCompanyAdminUser.getEmailAddress(),
-			PropsValues.DEFAULT_ADMIN_PASSWORD
+			_user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(
 			testCompany.getVirtualHostname(), 8080, "http"
 		).locale(
@@ -877,6 +875,7 @@ public abstract class BaseSearchableAssetNameResourceTestCase {
 		LogFactoryUtil.getLog(BaseSearchableAssetNameResourceTestCase.class);
 
 	private static DateFormat _dateFormat;
+	private static com.liferay.portal.kernel.model.User _user;
 
 	@Inject
 	private com.liferay.search.experiences.rest.resource.v1_0.

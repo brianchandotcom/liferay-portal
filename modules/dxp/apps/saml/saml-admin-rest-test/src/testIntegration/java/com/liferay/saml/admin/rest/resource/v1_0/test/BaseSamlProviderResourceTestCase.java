@@ -95,13 +95,11 @@ public abstract class BaseSamlProviderResourceTestCase {
 
 		_samlProviderResource.setContextCompany(testCompany);
 
-		com.liferay.portal.kernel.model.User testCompanyAdminUser =
-			UserTestUtil.getAdminUser(testCompany.getCompanyId());
+		_user = UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
 		samlProviderResource = SamlProviderResource.builder(
 		).authentication(
-			testCompanyAdminUser.getEmailAddress(),
-			PropsValues.DEFAULT_ADMIN_PASSWORD
+			_user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(
 			testCompany.getVirtualHostname(), 8080, "http"
 		).locale(
@@ -1060,6 +1058,7 @@ public abstract class BaseSamlProviderResourceTestCase {
 		LogFactoryUtil.getLog(BaseSamlProviderResourceTestCase.class);
 
 	private static DateFormat _dateFormat;
+	private static com.liferay.portal.kernel.model.User _user;
 
 	@Inject
 	private com.liferay.saml.admin.rest.resource.v1_0.SamlProviderResource

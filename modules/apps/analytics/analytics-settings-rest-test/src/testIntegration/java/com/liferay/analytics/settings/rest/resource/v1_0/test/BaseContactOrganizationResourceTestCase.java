@@ -100,13 +100,11 @@ public abstract class BaseContactOrganizationResourceTestCase {
 
 		_contactOrganizationResource.setContextCompany(testCompany);
 
-		com.liferay.portal.kernel.model.User testCompanyAdminUser =
-			UserTestUtil.getAdminUser(testCompany.getCompanyId());
+		_user = UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
 		contactOrganizationResource = ContactOrganizationResource.builder(
 		).authentication(
-			testCompanyAdminUser.getEmailAddress(),
-			PropsValues.DEFAULT_ADMIN_PASSWORD
+			_user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(
 			testCompany.getVirtualHostname(), 8080, "http"
 		).locale(
@@ -1269,6 +1267,7 @@ public abstract class BaseContactOrganizationResourceTestCase {
 		LogFactoryUtil.getLog(BaseContactOrganizationResourceTestCase.class);
 
 	private static DateFormat _dateFormat;
+	private static com.liferay.portal.kernel.model.User _user;
 
 	@Inject
 	private com.liferay.analytics.settings.rest.resource.v1_0.

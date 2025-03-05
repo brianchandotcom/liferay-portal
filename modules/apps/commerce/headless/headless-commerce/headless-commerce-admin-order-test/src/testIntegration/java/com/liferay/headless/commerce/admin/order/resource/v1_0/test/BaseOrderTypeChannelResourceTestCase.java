@@ -99,13 +99,11 @@ public abstract class BaseOrderTypeChannelResourceTestCase {
 
 		_orderTypeChannelResource.setContextCompany(testCompany);
 
-		com.liferay.portal.kernel.model.User testCompanyAdminUser =
-			UserTestUtil.getAdminUser(testCompany.getCompanyId());
+		_user = UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
 		orderTypeChannelResource = OrderTypeChannelResource.builder(
 		).authentication(
-			testCompanyAdminUser.getEmailAddress(),
-			PropsValues.DEFAULT_ADMIN_PASSWORD
+			_user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(
 			testCompany.getVirtualHostname(), 8080, "http"
 		).locale(
@@ -1640,6 +1638,7 @@ public abstract class BaseOrderTypeChannelResourceTestCase {
 		LogFactoryUtil.getLog(BaseOrderTypeChannelResourceTestCase.class);
 
 	private static DateFormat _dateFormat;
+	private static com.liferay.portal.kernel.model.User _user;
 
 	@Inject
 	private com.liferay.headless.commerce.admin.order.resource.v1_0.

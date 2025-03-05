@@ -97,13 +97,11 @@ public abstract class BaseTermOrderTypeResourceTestCase {
 
 		_termOrderTypeResource.setContextCompany(testCompany);
 
-		com.liferay.portal.kernel.model.User testCompanyAdminUser =
-			UserTestUtil.getAdminUser(testCompany.getCompanyId());
+		_user = UserTestUtil.getAdminUser(testCompany.getCompanyId());
 
 		termOrderTypeResource = TermOrderTypeResource.builder(
 		).authentication(
-			testCompanyAdminUser.getEmailAddress(),
-			PropsValues.DEFAULT_ADMIN_PASSWORD
+			_user.getEmailAddress(), PropsValues.DEFAULT_ADMIN_PASSWORD
 		).endpoint(
 			testCompany.getVirtualHostname(), 8080, "http"
 		).locale(
@@ -1443,6 +1441,7 @@ public abstract class BaseTermOrderTypeResourceTestCase {
 		LogFactoryUtil.getLog(BaseTermOrderTypeResourceTestCase.class);
 
 	private static DateFormat _dateFormat;
+	private static com.liferay.portal.kernel.model.User _user;
 
 	@Inject
 	private com.liferay.headless.commerce.admin.order.resource.v1_0.

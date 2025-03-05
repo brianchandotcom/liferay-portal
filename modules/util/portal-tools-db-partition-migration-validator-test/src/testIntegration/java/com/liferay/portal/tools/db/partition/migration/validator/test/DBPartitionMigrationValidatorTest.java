@@ -162,7 +162,7 @@ public class DBPartitionMigrationValidatorTest extends BaseDBPartitionTestCase {
 			return ReflectionTestUtil.invoke(
 				DBPartitionMigrationValidator.class, "_write",
 				new Class<?>[] {LiferayDatabase.class, String.class},
-				DatabaseUtil.exportLiferayDatabase(connection),
+				DatabaseUtil.exportLiferayDatabase(connection, companyId),
 				_outputDirectory.getAbsolutePath());
 		}
 	}

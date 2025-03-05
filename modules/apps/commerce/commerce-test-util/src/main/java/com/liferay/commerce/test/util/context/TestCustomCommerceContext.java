@@ -27,31 +27,31 @@ import com.liferay.portal.kernel.util.Validator;
 public class TestCustomCommerceContext extends BaseCommerceContext {
 
 	public TestCustomCommerceContext(
-		long companyId, long commerceChannelGroupId, long orderId,
-		long commerceAccountId, String currencyCode,
 		AccountEntryLocalService accountEntryLocalService,
 		AccountGroupLocalService accountGroupLocalService,
+		long commerceAccountId,
 		CommerceCatalogLocalService commerceCatalogLocalService,
 		CommerceChannelAccountEntryRelLocalService
 			commerceChannelAccountEntryRelLocalService,
+		long commerceChannelGroupId,
 		CommerceChannelLocalService commerceChannelLocalService,
 		CommerceCurrencyLocalService commerceCurrencyLocalService,
-		CommerceOrderService commerceOrderService,
+		CommerceOrderService commerceOrderService, long companyId,
 		ConfigurationProvider configurationProvider,
-		CPConfigurationListDiscovery cpConfigurationListDiscovery) {
+		CPConfigurationListDiscovery cpConfigurationListDiscovery,
+		String currencyCode, long orderId) {
 
 		super(
-			companyId, commerceChannelGroupId, orderId, commerceAccountId,
 			accountEntryLocalService, accountGroupLocalService,
-			commerceCatalogLocalService,
-			commerceChannelAccountEntryRelLocalService,
+			commerceAccountId, commerceCatalogLocalService,
+			commerceChannelAccountEntryRelLocalService, commerceChannelGroupId,
 			commerceChannelLocalService, commerceCurrencyLocalService,
-			commerceOrderService, configurationProvider,
-			cpConfigurationListDiscovery, currencyCode);
+			commerceOrderService, companyId, configurationProvider,
+			cpConfigurationListDiscovery, currencyCode, orderId);
 
+		_commerceCurrencyLocalService = commerceCurrencyLocalService;
 		_companyId = companyId;
 		_currencyCode = currencyCode;
-		_commerceCurrencyLocalService = commerceCurrencyLocalService;
 	}
 
 	@Override

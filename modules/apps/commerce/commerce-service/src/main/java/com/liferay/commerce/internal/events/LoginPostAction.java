@@ -140,10 +140,9 @@ public class LoginPostAction extends Action {
 
 		if (userCommerceOrder != null) {
 			CommerceContext commerceContext = _commerceContextFactory.create(
-				_portal.getCompanyId(httpServletRequest),
-				commerceChannelGroupId, userId,
-				userCommerceOrder.getCommerceOrderId(),
-				accountEntry.getAccountEntryId());
+				accountEntry.getAccountEntryId(), commerceChannelGroupId,
+				_portal.getCompanyId(httpServletRequest), null,
+				userCommerceOrder.getCommerceOrderId());
 
 			PermissionThreadLocal.setPermissionChecker(
 				PermissionCheckerFactoryUtil.create(

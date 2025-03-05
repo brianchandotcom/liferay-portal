@@ -202,8 +202,8 @@ public class ProductOptionValueResourceImpl
 		return Page.of(
 			_toProductOptionValues(
 				_commerceContextFactory.create(
-					contextCompany.getCompanyId(), commerceChannel.getGroupId(),
-					contextUser.getUserId(), 0, accountId, currencyCode),
+					accountId, commerceChannel.getGroupId(),
+					contextCompany.getCompanyId(), currencyCode, 0),
 				_cpDefinitionOptionValueRelLocalService.
 					getCPDefinitionOptionValueRels(
 						productOptionId, pagination.getStartPosition(),

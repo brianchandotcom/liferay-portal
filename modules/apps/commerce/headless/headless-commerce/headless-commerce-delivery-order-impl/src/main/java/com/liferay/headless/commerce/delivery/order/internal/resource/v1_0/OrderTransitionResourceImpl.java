@@ -116,10 +116,10 @@ public class OrderTransitionResourceImpl
 				_commerceOrderService.reorderCommerceOrder(
 					commerceOrder.getCommerceOrderId(),
 					_commerceContextFactory.create(
-						contextCompany.getCompanyId(),
-						commerceOrder.getGroupId(), contextUser.getUserId(),
-						commerceOrder.getCommerceOrderId(),
-						commerceOrder.getCommerceAccountId()));
+						commerceOrder.getCommerceAccountId(),
+						commerceOrder.getGroupId(),
+						contextCompany.getCompanyId(), null,
+						commerceOrder.getCommerceOrderId()));
 
 			return _toOrderTransition(
 				commerceOrder.getCommerceOrderId(), comment,

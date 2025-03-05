@@ -112,9 +112,9 @@ public class ShippingMethodResourceImpl extends BaseShippingMethodResourceImpl {
 		throws PortalException {
 
 		CommerceContext commerceContext = _commerceContextFactory.create(
-			contextCompany.getCompanyId(), commerceChannel.getGroupId(),
-			contextUser.getUserId(), commerceOrder.getCommerceOrderId(),
-			commerceOrder.getCommerceAccountId());
+			commerceOrder.getCommerceAccountId(), commerceChannel.getGroupId(),
+			contextCompany.getCompanyId(), null,
+			commerceOrder.getCommerceOrderId());
 
 		CommerceShippingEngine commerceShippingEngine =
 			_commerceShippingEngineRegistry.getCommerceShippingEngine(

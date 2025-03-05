@@ -398,9 +398,9 @@ public class CommerceOrderEngineImpl implements CommerceOrderEngine {
 		long commerceOrderId = commerceOrder.getCommerceOrderId();
 
 		CommerceContext commerceContext = _commerceContextFactory.create(
-			commerceOrder.getCompanyId(), commerceOrder.getGroupId(), userId,
-			commerceOrderId, commerceOrder.getCommerceAccountId(),
-			commerceOrder.getCommerceCurrencyCode());
+			commerceOrder.getCommerceAccountId(), commerceOrder.getGroupId(),
+			commerceOrder.getCompanyId(),
+			commerceOrder.getCommerceCurrencyCode(), commerceOrderId);
 
 		TransactionCommitCallbackUtil.registerCallback(
 			() -> {

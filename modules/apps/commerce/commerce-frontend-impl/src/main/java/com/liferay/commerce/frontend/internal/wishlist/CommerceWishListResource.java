@@ -28,10 +28,8 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Portal;
 
 import javax.servlet.http.HttpServletRequest;
@@ -67,20 +65,11 @@ public class CommerceWishListResource {
 		WishListItemUpdated wishListItemUpdated = new WishListItemUpdated();
 
 		try {
-			long userId = _portal.getUserId(httpServletRequest);
-
-			if (userId == 0) {
-				User user = _userLocalService.getGuestUser(
-					_portal.getCompanyId(httpServletRequest));
-
-				userId = user.getUserId();
-			}
-
 			CommerceContext commerceContext = _commerceContextFactory.create(
-				_portal.getCompanyId(httpServletRequest),
+				commerceAccountId,
 				_commerceChannelLocalService.
 					getCommerceChannelGroupIdBySiteGroupId(groupId),
-				userId, 0, commerceAccountId);
+				_portal.getCompanyId(httpServletRequest), null, 0);
 
 			CommerceContextThreadLocal.set(commerceContext);
 
@@ -205,8 +194,5 @@ public class CommerceWishListResource {
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private UserLocalService _userLocalService;
 
 }

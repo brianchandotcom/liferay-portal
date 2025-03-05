@@ -71,9 +71,8 @@ public class ReplacementCPInstanceFDSDataProvider
 		}
 
 		CommerceContext commerceContext = _commerceContextFactory.create(
-			_portal.getCompanyId(httpServletRequest), commerceChannelGroupId,
-			_portal.getUserId(httpServletRequest), commerceOrderId,
-			commerceAccountId);
+			commerceAccountId, commerceChannelGroupId,
+			_portal.getCompanyId(httpServletRequest), null, commerceOrderId);
 
 		Locale locale = _portal.getLocale(httpServletRequest);
 

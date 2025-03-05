@@ -146,10 +146,10 @@ public class TermResourceImpl extends BaseTermResourceImpl {
 		for (CommerceShippingOption commerceShippingOption :
 				commerceShippingEngine.getCommerceShippingOptions(
 					_commerceContextFactory.create(
-						contextCompany.getCompanyId(),
-						commerceChannel.getGroupId(), contextUser.getUserId(),
-						commerceOrder.getCommerceOrderId(),
-						commerceOrder.getCommerceAccountId()),
+						commerceOrder.getCommerceAccountId(),
+						commerceChannel.getGroupId(),
+						contextCompany.getCompanyId(), null,
+						commerceOrder.getCommerceOrderId()),
 					commerceOrder,
 					contextAcceptLanguage.getPreferredLocale())) {
 

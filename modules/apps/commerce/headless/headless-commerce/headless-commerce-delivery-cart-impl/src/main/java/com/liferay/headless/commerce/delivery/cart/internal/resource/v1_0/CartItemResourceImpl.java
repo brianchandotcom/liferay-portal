@@ -80,9 +80,9 @@ public class CartItemResourceImpl extends BaseCartItemResourceImpl {
 		CommerceOrder commerceOrder = commerceOrderItem.getCommerceOrder();
 
 		CommerceContext commerceContext = _commerceContextFactory.create(
-			contextCompany.getCompanyId(), commerceOrder.getGroupId(),
-			contextUser.getUserId(), commerceOrder.getCommerceOrderId(),
-			commerceOrder.getCommerceAccountId());
+			commerceOrder.getCommerceAccountId(), commerceOrder.getGroupId(),
+			contextCompany.getCompanyId(), null,
+			commerceOrder.getCommerceOrderId());
 
 		_commerceOrderItemService.deleteCommerceOrderItem(
 			cartItemId, commerceContext);
@@ -280,9 +280,9 @@ public class CartItemResourceImpl extends BaseCartItemResourceImpl {
 		commerceOrderItem = _commerceOrderItemService.updateCommerceOrderItem(
 			commerceOrderItem.getCommerceOrderItemId(), cartItem.getQuantity(),
 			_commerceContextFactory.create(
-				contextCompany.getCompanyId(), commerceOrder.getGroupId(),
-				contextUser.getUserId(), commerceOrder.getCommerceOrderId(),
-				commerceOrder.getCommerceAccountId()),
+				commerceOrder.getCommerceAccountId(),
+				commerceOrder.getGroupId(), contextCompany.getCompanyId(), null,
+				commerceOrder.getCommerceOrderId()),
 			_serviceContextHelper.getServiceContext(
 				commerceOrder.getGroupId()));
 
@@ -453,9 +453,9 @@ public class CartItemResourceImpl extends BaseCartItemResourceImpl {
 				GetterUtil.getLong(cartItem.getReplacedSkuId()),
 				BigDecimal.ZERO, skuUnitOfMeasureKey,
 				_commerceContextFactory.create(
-					contextCompany.getCompanyId(), commerceOrder.getGroupId(),
-					contextUser.getUserId(), commerceOrder.getCommerceOrderId(),
-					commerceOrder.getCommerceAccountId()),
+					commerceOrder.getCommerceAccountId(),
+					commerceOrder.getGroupId(), contextCompany.getCompanyId(),
+					null, commerceOrder.getCommerceOrderId()),
 				_serviceContextHelper.getServiceContext(
 					commerceOrder.getGroupId()));
 		}
@@ -467,11 +467,11 @@ public class CartItemResourceImpl extends BaseCartItemResourceImpl {
 					BigDecimalUtil.get(cartItem.getQuantity(), BigDecimal.ONE),
 					replacedSkuId, BigDecimal.ZERO, skuUnitOfMeasureKey,
 					_commerceContextFactory.create(
-						contextCompany.getCompanyId(),
-						commerceOrder.getGroupId(), contextUser.getUserId(),
-						commerceOrder.getCommerceOrderId(),
 						commerceOrder.getCommerceAccountId(),
-						commerceOrder.getCommerceCurrencyCode()),
+						commerceOrder.getGroupId(),
+						contextCompany.getCompanyId(),
+						commerceOrder.getCommerceCurrencyCode(),
+						commerceOrder.getCommerceOrderId()),
 					_serviceContextHelper.getServiceContext(
 						commerceOrder.getGroupId()));
 		}

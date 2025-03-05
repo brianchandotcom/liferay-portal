@@ -93,8 +93,8 @@ public class PinResourceImpl extends BasePinResourceImpl {
 			commerceChannel.getGroupId(), cpDefinition.getCPDefinitionId());
 
 		CommerceContext commerceContext = _commerceContextFactory.create(
-			contextCompany.getCompanyId(), commerceChannel.getGroupId(),
-			contextUser.getUserId(), 0, accountId);
+			accountId, commerceChannel.getGroupId(),
+			contextCompany.getCompanyId(), null, 0);
 
 		return Page.of(
 			_toPins(

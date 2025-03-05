@@ -50,34 +50,34 @@ import java.util.Map;
 public class BaseCommerceContext implements CommerceContext {
 
 	public BaseCommerceContext(
-		long companyId, long commerceChannelGroupId, long orderId,
-		long commerceAccountId,
 		AccountEntryLocalService accountEntryLocalService,
 		AccountGroupLocalService accountGroupLocalService,
+		long commerceAccountId,
 		CommerceCatalogLocalService commerceCatalogLocalService,
 		CommerceChannelAccountEntryRelLocalService
 			commerceChannelAccountEntryRelLocalService,
+		long commerceChannelGroupId,
 		CommerceChannelLocalService commerceChannelLocalService,
 		CommerceCurrencyLocalService commerceCurrencyLocalService,
-		CommerceOrderService commerceOrderService,
+		CommerceOrderService commerceOrderService, long companyId,
 		ConfigurationProvider configurationProvider,
 		CPConfigurationListDiscovery cpConfigurationListDiscovery,
-		String currencyCode) {
+		String currencyCode, long orderId) {
 
-		_companyId = companyId;
-		_commerceChannelGroupId = commerceChannelGroupId;
-		_orderId = orderId;
-		_commerceAccountId = commerceAccountId;
 		_accountEntryLocalService = accountEntryLocalService;
 		_accountGroupLocalService = accountGroupLocalService;
+		_commerceAccountId = commerceAccountId;
 		_commerceCatalogLocalService = commerceCatalogLocalService;
 		_commerceChannelAccountEntryRelLocalService =
 			commerceChannelAccountEntryRelLocalService;
+		_commerceChannelGroupId = commerceChannelGroupId;
 		_commerceChannelLocalService = commerceChannelLocalService;
 		_commerceCurrencyLocalService = commerceCurrencyLocalService;
 		_commerceOrderService = commerceOrderService;
+		_companyId = companyId;
 		_cpConfigurationListDiscovery = cpConfigurationListDiscovery;
 		_currencyCode = currencyCode;
+		_orderId = orderId;
 
 		try {
 			if (getCommerceChannelGroupId() > 0) {

@@ -113,8 +113,8 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 			commerceChannel.getGroupId(), cpDefinition.getCPDefinitionId());
 
 		CommerceContext commerceContext = _commerceContextFactory.create(
-			contextCompany.getCompanyId(), commerceChannel.getGroupId(),
-			contextUser.getUserId(), 0, commerceAccountId);
+			commerceAccountId, commerceChannel.getGroupId(),
+			contextCompany.getCompanyId(), null, 0);
 
 		if (FeatureFlagManagerUtil.isEnabled("LPD-10889") &&
 			!cpDefinition.isVisible(
@@ -161,8 +161,8 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 
 		return _toProduct(
 			_commerceContextFactory.create(
-				contextCompany.getCompanyId(), commerceChannel.getGroupId(),
-				contextUser.getUserId(), 0, commerceAccountId),
+				commerceAccountId, commerceChannel.getGroupId(),
+				contextCompany.getCompanyId(), null, 0),
 			cpDefinition);
 	}
 
@@ -190,8 +190,8 @@ public class ProductResourceImpl extends BaseProductResourceImpl {
 		SearchContext searchContext = new SearchContext();
 
 		CommerceContext commerceContext = _commerceContextFactory.create(
-			contextCompany.getCompanyId(), commerceChannel.getGroupId(),
-			contextUser.getUserId(), 0, commerceAccountId);
+			commerceAccountId, commerceChannel.getGroupId(),
+			contextCompany.getCompanyId(), null, 0);
 
 		if (FeatureFlagManagerUtil.isEnabled("LPD-10889")) {
 			searchContext.setAttribute(

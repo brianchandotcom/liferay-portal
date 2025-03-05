@@ -72,11 +72,10 @@ public class CommerceOrderImporterTypeUtil {
 				tempCommerceOrder);
 
 			CommerceContext commerceContext = commerceContextFactory.create(
-				tempCommerceOrder.getCompanyId(),
+				tempCommerceOrder.getCommerceAccountId(),
 				tempCommerceOrder.getGroupId(),
-				PrincipalThreadLocal.getUserId(),
-				tempCommerceOrder.getCommerceOrderId(),
-				tempCommerceOrder.getCommerceAccountId());
+				tempCommerceOrder.getCompanyId(), null,
+				tempCommerceOrder.getCommerceOrderId());
 
 			ServiceContext serviceContext = _getServiceContext(
 				userLocalService);

@@ -379,9 +379,9 @@ public class PunchOutSessionResourceImpl
 				commerceOrder.getCommerceOrderId(), -1, -1);
 
 		CommerceContext commerceContext = _commerceContextFactory.create(
-			contextCompany.getCompanyId(), commerceOrder.getGroupId(),
-			contextUser.getUserId(), commerceOrder.getCommerceOrderId(),
-			commerceOrder.getCommerceAccountId());
+			commerceOrder.getCommerceAccountId(), commerceOrder.getGroupId(),
+			contextCompany.getCompanyId(), null,
+			commerceOrder.getCommerceOrderId());
 
 		for (CartItem cartItem : cartItems) {
 			if (!commerceOrderItems.isEmpty()) {

@@ -6,26 +6,34 @@
 import getTextFieldComponents from '../components/TextFieldComponents';
 import {Field, FieldType} from './field';
 
-type GetFieldComponents = {
+type FieldComponents = {
 	FirstSectionComponent: React.FC<{field: Field}>;
 	SecondSectionComponent: React.FC<{field: Field}>;
 };
 
+const GETTERS: Record<FieldType, () => Partial<FieldComponents>> = {
+	'boolean': () => ({}),
+	'date': () => ({}),
+	'datetime': () => ({}),
+	'decimal': () => ({}),
+	'integer': () => ({}),
+	'long-text': () => ({}),
+	'multiselect': () => ({}),
+	'rich-text': () => ({}),
+	'single-select': () => ({}),
+	'text': getTextFieldComponents,
+	'upload': () => ({}),
+};
+
 export default function getFieldComponents(
 	fieldType: FieldType
-): GetFieldComponents {
-	if (fieldType === 'text') {
-		const {FirstSectionComponent, SecondSectionComponent} =
-			getTextFieldComponents();
+): FieldComponents {
+	const getter = GETTERS[fieldType];
 
-		return {
-			FirstSectionComponent: FirstSectionComponent ?? (() => null),
-			SecondSectionComponent: SecondSectionComponent ?? (() => null),
-		};
-	}
+	const {FirstSectionComponent, SecondSectionComponent} = getter?.() ?? {};
 
 	return {
-		FirstSectionComponent: () => null,
-		SecondSectionComponent: () => null,
+		FirstSectionComponent: FirstSectionComponent ?? (() => null),
+		SecondSectionComponent: SecondSectionComponent ?? (() => null),
 	};
 }

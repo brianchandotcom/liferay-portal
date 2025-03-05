@@ -18,6 +18,7 @@ export class FDSSamplePage {
 	readonly customViewsSaveModal: Locator;
 	readonly customViewsSelectorButton: Locator;
 	readonly itemActionButton: Locator;
+	readonly managementToolbar: Locator;
 	readonly page: Page;
 	readonly sidePanel: Locator;
 	readonly sidePanelFrame: FrameLocator;
@@ -43,6 +44,7 @@ export class FDSSamplePage {
 		this.customViewsSelectorButton = page.getByLabel('Views', {
 			exact: true,
 		});
+		this.managementToolbar = page.getByTestId('management-toolbar');
 		this.page = page;
 		this.sidePanel = page.locator('.fds-side-panel');
 		this.sidePanelFrame = this.sidePanel.frameLocator('iframe');

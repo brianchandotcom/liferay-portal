@@ -146,6 +146,8 @@ public class DBPartitionMigrationValidator {
 	private static Options _getExportOptions() {
 		Options options = new Options();
 
+		options.addRequiredOption(
+			null, "company-id", true, "Set the company ID.");
 		options.addOption(
 			null, "output-dir", true, "Set the output directory.");
 		options.addRequiredOption(null, "jdbc-url", true, "Set the JDBC URL.");

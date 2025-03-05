@@ -54,6 +54,10 @@ public class CSPIllegalTagsCheck extends BaseTagAttributesCheck {
 					break;
 				}
 
+				if (isJavaSource(content, x)) {
+					continue;
+				}
+
 				String tagString = getTag(content, x);
 
 				if (Validator.isNull(tagString) ||

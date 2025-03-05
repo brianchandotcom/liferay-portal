@@ -27,6 +27,7 @@ import com.liferay.source.formatter.parser.JavaClass;
 import com.liferay.source.formatter.parser.JavaClassParser;
 import com.liferay.source.formatter.parser.JavaTerm;
 import com.liferay.source.formatter.parser.JavaVariable;
+import com.liferay.source.formatter.processor.CSPSourceProcessor;
 import com.liferay.source.formatter.processor.JSPSourceProcessor;
 import com.liferay.source.formatter.processor.JavaSourceProcessor;
 import com.liferay.source.formatter.processor.SourceProcessor;
@@ -96,7 +97,9 @@ public abstract class BaseSourceCheck implements SourceCheck {
 			return true;
 		}
 
-		if (_sourceProcessor instanceof JSPSourceProcessor) {
+		if (_sourceProcessor instanceof CSPSourceProcessor ||
+			_sourceProcessor instanceof JSPSourceProcessor) {
+
 			return JSPSourceUtil.isJavaSource(content, pos);
 		}
 
@@ -111,7 +114,9 @@ public abstract class BaseSourceCheck implements SourceCheck {
 			return true;
 		}
 
-		if (_sourceProcessor instanceof JSPSourceProcessor) {
+		if (_sourceProcessor instanceof CSPSourceProcessor ||
+			_sourceProcessor instanceof JSPSourceProcessor) {
+
 			return JSPSourceUtil.isJavaSource(content, pos, checkInsideTags);
 		}
 

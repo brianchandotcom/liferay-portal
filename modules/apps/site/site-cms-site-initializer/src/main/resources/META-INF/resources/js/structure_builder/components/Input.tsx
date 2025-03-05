@@ -8,9 +8,11 @@ import ClayIcon from '@clayui/icon';
 import {useId} from 'frontend-js-components-web';
 import React, {useState} from 'react';
 
-export default function TextInput({
+export default function Input({
 	className,
 	disabled = false,
+	helpMessage,
+	inputProps,
 	label,
 	onValueChange,
 	required = false,
@@ -18,13 +20,15 @@ export default function TextInput({
 }: {
 	className?: string;
 	disabled?: boolean;
+	helpMessage?: string;
+	inputProps?: React.InputHTMLAttributes<HTMLInputElement>;
 	label: string;
 	onValueChange: (value: string) => void;
 	required?: boolean;
 	value: string;
 }) {
 	const id = useId();
-
+	const helpMessageId = useId();
 	const [value, setValue] = useState(initialValue);
 
 	return (
@@ -43,13 +47,24 @@ export default function TextInput({
 			</label>
 
 			<ClayInput
+				aria-describedby={helpMessageId}
 				disabled={disabled}
 				id={id}
 				onBlur={() => onValueChange(value)}
 				onChange={(event) => setValue(event.target.value)}
 				type="text"
 				value={value}
+				{...inputProps}
 			/>
+
+			{helpMessage ? (
+				<p
+					className="m-0 mt-1 text-3 text-secondary"
+					id={helpMessageId}
+				>
+					{helpMessage}
+				</p>
+			) : null}
 		</ClayForm.Group>
 	);
 }

@@ -14,6 +14,7 @@ import com.liferay.headless.commerce.delivery.order.internal.resource.v1_0.Place
 import com.liferay.headless.commerce.delivery.order.internal.resource.v1_0.PlacedOrderItemResourceImpl;
 import com.liferay.headless.commerce.delivery.order.internal.resource.v1_0.PlacedOrderItemShipmentResourceImpl;
 import com.liferay.headless.commerce.delivery.order.internal.resource.v1_0.PlacedOrderResourceImpl;
+import com.liferay.headless.commerce.delivery.order.internal.resource.v1_0.ShipmentResourceImpl;
 import com.liferay.headless.commerce.delivery.order.internal.resource.v1_0.TermResourceImpl;
 import com.liferay.headless.commerce.delivery.order.resource.v1_0.AttachmentResource;
 import com.liferay.headless.commerce.delivery.order.resource.v1_0.OrderTransitionResource;
@@ -22,6 +23,7 @@ import com.liferay.headless.commerce.delivery.order.resource.v1_0.PlacedOrderCom
 import com.liferay.headless.commerce.delivery.order.resource.v1_0.PlacedOrderItemResource;
 import com.liferay.headless.commerce.delivery.order.resource.v1_0.PlacedOrderItemShipmentResource;
 import com.liferay.headless.commerce.delivery.order.resource.v1_0.PlacedOrderResource;
+import com.liferay.headless.commerce.delivery.order.resource.v1_0.ShipmentResource;
 import com.liferay.headless.commerce.delivery.order.resource.v1_0.TermResource;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.vulcan.graphql.servlet.ServletData;
@@ -60,6 +62,8 @@ public class ServletDataImpl implements ServletData {
 			_placedOrderItemResourceComponentServiceObjects);
 		Mutation.setPlacedOrderItemShipmentResourceComponentServiceObjects(
 			_placedOrderItemShipmentResourceComponentServiceObjects);
+		Mutation.setShipmentResourceComponentServiceObjects(
+			_shipmentResourceComponentServiceObjects);
 
 		Query.setAttachmentResourceComponentServiceObjects(
 			_attachmentResourceComponentServiceObjects);
@@ -75,6 +79,8 @@ public class ServletDataImpl implements ServletData {
 			_placedOrderItemResourceComponentServiceObjects);
 		Query.setPlacedOrderItemShipmentResourceComponentServiceObjects(
 			_placedOrderItemShipmentResourceComponentServiceObjects);
+		Query.setShipmentResourceComponentServiceObjects(
+			_shipmentResourceComponentServiceObjects);
 		Query.setTermResourceComponentServiceObjects(
 			_termResourceComponentServiceObjects);
 	}
@@ -177,6 +183,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							PlacedOrderItemShipmentResourceImpl.class,
 							"postPlacedOrderItemPlacedOrderItemShipmentsPageExportBatch"));
+					put(
+						"mutation#createPlacedOrderShipmentsPageExportBatch",
+						new ObjectValuePair<>(
+							ShipmentResourceImpl.class,
+							"postPlacedOrderShipmentsPageExportBatch"));
 
 					put(
 						"query#placedOrderByExternalReferenceCodeAttachments",
@@ -303,6 +314,16 @@ public class ServletDataImpl implements ServletData {
 							PlacedOrderItemShipmentResourceImpl.class,
 							"getPlacedOrderItemPlacedOrderItemShipmentsPage"));
 					put(
+						"query#placedOrderByExternalReferenceCodeShipments",
+						new ObjectValuePair<>(
+							ShipmentResourceImpl.class,
+							"getPlacedOrderByExternalReferenceCodeShipmentsPage"));
+					put(
+						"query#placedOrderShipments",
+						new ObjectValuePair<>(
+							ShipmentResourceImpl.class,
+							"getPlacedOrderShipmentsPage"));
+					put(
 						"query#placedOrderByExternalReferenceCodeDeliveryTerm",
 						new ObjectValuePair<>(
 							TermResourceImpl.class,
@@ -412,6 +433,11 @@ public class ServletDataImpl implements ServletData {
 						new ObjectValuePair<>(
 							PlacedOrderAddressResourceImpl.class,
 							"getPlacedOrderByExternalReferenceCodePlacedOrderShippingAddress"));
+					put(
+						"query#PlacedOrder.byExternalReferenceCodeShipments",
+						new ObjectValuePair<>(
+							ShipmentResourceImpl.class,
+							"getPlacedOrderByExternalReferenceCodeShipmentsPage"));
 				}
 			};
 
@@ -438,6 +464,10 @@ public class ServletDataImpl implements ServletData {
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<PlacedOrderItemShipmentResource>
 		_placedOrderItemShipmentResourceComponentServiceObjects;
+
+	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
+	private ComponentServiceObjects<ShipmentResource>
+		_shipmentResourceComponentServiceObjects;
 
 	@Reference(scope = ReferenceScope.PROTOTYPE_REQUIRED)
 	private ComponentServiceObjects<PlacedOrderAddressResource>

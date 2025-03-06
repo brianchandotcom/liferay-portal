@@ -15,9 +15,11 @@ import com.liferay.headless.commerce.delivery.order.resource.v1_0.PlacedOrderCom
 import com.liferay.headless.commerce.delivery.order.resource.v1_0.PlacedOrderItemResource;
 import com.liferay.headless.commerce.delivery.order.resource.v1_0.PlacedOrderItemShipmentResource;
 import com.liferay.headless.commerce.delivery.order.resource.v1_0.PlacedOrderResource;
+import com.liferay.headless.commerce.delivery.order.resource.v1_0.ShipmentResource;
 import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.vulcan.accept.language.AcceptLanguage;
@@ -92,6 +94,14 @@ public class Mutation {
 
 		_placedOrderItemShipmentResourceComponentServiceObjects =
 			placedOrderItemShipmentResourceComponentServiceObjects;
+	}
+
+	public static void setShipmentResourceComponentServiceObjects(
+		ComponentServiceObjects<ShipmentResource>
+			shipmentResourceComponentServiceObjects) {
+
+		_shipmentResourceComponentServiceObjects =
+			shipmentResourceComponentServiceObjects;
 	}
 
 	@GraphQLField
@@ -311,6 +321,28 @@ public class Mutation {
 						fieldNames));
 	}
 
+	@GraphQLField
+	public Response createPlacedOrderShipmentsPageExportBatch(
+			@GraphQLName("placedOrderId") Long placedOrderId,
+			@GraphQLName("search") String search,
+			@GraphQLName("filter") String filterString,
+			@GraphQLName("sort") String sortsString,
+			@GraphQLName("callbackURL") String callbackURL,
+			@GraphQLName("contentType") String contentType,
+			@GraphQLName("fieldNames") String fieldNames)
+		throws Exception {
+
+		return _applyComponentServiceObjects(
+			_shipmentResourceComponentServiceObjects,
+			this::_populateResourceContext,
+			shipmentResource ->
+				shipmentResource.postPlacedOrderShipmentsPageExportBatch(
+					placedOrderId, search,
+					_filterBiFunction.apply(shipmentResource, filterString),
+					_sortsBiFunction.apply(shipmentResource, sortsString),
+					callbackURL, contentType, fieldNames));
+	}
+
 	private <T, R, E1 extends Throwable, E2 extends Throwable> R
 			_applyComponentServiceObjects(
 				ComponentServiceObjects<T> componentServiceObjects,
@@ -478,6 +510,25 @@ public class Mutation {
 			_vulcanBatchEngineImportTaskResource);
 	}
 
+	private void _populateResourceContext(ShipmentResource shipmentResource)
+		throws Exception {
+
+		shipmentResource.setContextAcceptLanguage(_acceptLanguage);
+		shipmentResource.setContextCompany(_company);
+		shipmentResource.setContextHttpServletRequest(_httpServletRequest);
+		shipmentResource.setContextHttpServletResponse(_httpServletResponse);
+		shipmentResource.setContextUriInfo(_uriInfo);
+		shipmentResource.setContextUser(_user);
+		shipmentResource.setGroupLocalService(_groupLocalService);
+		shipmentResource.setRoleLocalService(_roleLocalService);
+
+		shipmentResource.setVulcanBatchEngineExportTaskResource(
+			_vulcanBatchEngineExportTaskResource);
+
+		shipmentResource.setVulcanBatchEngineImportTaskResource(
+			_vulcanBatchEngineImportTaskResource);
+	}
+
 	private static ComponentServiceObjects<AttachmentResource>
 		_attachmentResourceComponentServiceObjects;
 	private static ComponentServiceObjects<OrderTransitionResource>
@@ -490,9 +541,12 @@ public class Mutation {
 		_placedOrderItemResourceComponentServiceObjects;
 	private static ComponentServiceObjects<PlacedOrderItemShipmentResource>
 		_placedOrderItemShipmentResourceComponentServiceObjects;
+	private static ComponentServiceObjects<ShipmentResource>
+		_shipmentResourceComponentServiceObjects;
 
 	private AcceptLanguage _acceptLanguage;
 	private com.liferay.portal.kernel.model.Company _company;
+	private BiFunction<Object, String, Filter> _filterBiFunction;
 	private GroupLocalService _groupLocalService;
 	private HttpServletRequest _httpServletRequest;
 	private HttpServletResponse _httpServletResponse;

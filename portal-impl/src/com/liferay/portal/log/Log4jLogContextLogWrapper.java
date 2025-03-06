@@ -14,6 +14,7 @@ import com.liferay.portal.kernel.log.LogWrapper;
 import com.liferay.portal.kernel.module.util.SystemBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.logging.log4j.ThreadContext;
@@ -204,16 +205,20 @@ public class Log4jLogContextLogWrapper extends LogWrapper {
 	}
 
 	private void _cleanThreadContext() {
-		ThreadContext.clearMap();
+		for (String key : _getContext().keySet()) {
+			ThreadContext.remove(key);
+		}
 	}
 
-	private void _populateThreadContext() {
+	private Map<String, String> _getContext() {
+		Map<String, String> contextMap = new HashMap<>();
+
 		ServiceTrackerList<LogContext> serviceTrackerList =
 			_serviceTrackerListDCLSingleton.getSingleton(
 				Log4jLogContextLogWrapper::_createServiceTrackerList);
 
 		if (serviceTrackerList == null) {
-			return;
+			return contextMap;
 		}
 
 		for (LogContext logContext : serviceTrackerList) {
@@ -228,8 +233,18 @@ public class Log4jLogContextLogWrapper extends LogWrapper {
 					key = logContextName + "." + key;
 				}
 
-				ThreadContext.put(key, entry.getValue());
+				contextMap.put(key, entry.getValue());
 			}
+		}
+
+		return contextMap;
+	}
+
+	private void _populateThreadContext() {
+		for (Map.Entry<String, String> contextEntry :
+				_getContext().entrySet()) {
+
+			ThreadContext.put(contextEntry.getKey(), contextEntry.getValue());
 		}
 	}
 

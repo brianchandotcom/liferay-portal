@@ -123,10 +123,17 @@ export class WebContentDisplayPage {
 		await this.configurationOption.click();
 	}
 
-	async addWebContentWithDisplay(pageType?: string, webContentName?: string) {
+	async addWebContentWithDisplay(
+		options: {pageType?: 'content' | 'widget'; webContentName?: string} = {
+			pageType: 'content',
+			webContentName: '',
+		}
+	) {
 		await this.webContentDisplay.waitFor({state: 'visible'});
 		await this.webContentDisplayContent.hover();
 		await this.webContentDisplayContent.click();
+
+		const {pageType, webContentName} = options;
 
 		if (pageType === 'widget') {
 			await this.page

@@ -2688,9 +2688,11 @@ public class GitWorkingDirectory {
 			String upstreamGitBranchSHA = upstreamRemoteGitBranch.getSHA();
 
 			if (!localSHAExists(upstreamGitBranchSHA)) {
+				GitRemote upstreamGitRemote = getUpstreamGitRemote();
+
 				commands.add(
 					JenkinsResultsParserUtil.combine(
-						"git fetch -f upstream ",
+						"git fetch -f ", upstreamGitRemote.getRemoteURL(), " ",
 						upstreamRemoteGitBranch.getName(), ":",
 						tempBranchName));
 			}

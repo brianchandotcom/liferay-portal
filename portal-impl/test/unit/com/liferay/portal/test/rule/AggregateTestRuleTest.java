@@ -32,7 +32,7 @@ public class AggregateTestRuleTest {
 		AggregateTestRule aggregateTestRule = new AggregateTestRule(
 			testRule1, testRule2);
 
-		aggregateTestRule.disableRule(TestRule1.class);
+		aggregateTestRule.disableTestRule(TestRule1.class);
 
 		Statement statement = aggregateTestRule.apply(
 			new Statement() {

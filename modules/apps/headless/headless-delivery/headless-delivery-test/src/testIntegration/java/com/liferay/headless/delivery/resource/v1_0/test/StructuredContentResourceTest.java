@@ -36,8 +36,6 @@ import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestHelper;
 import com.liferay.dynamic.data.mapping.test.util.DDMTemplateTestUtil;
 import com.liferay.dynamic.data.mapping.util.DDMFormValuesToFieldsConverter;
-import com.liferay.headless.batch.engine.client.dto.v1_0.ImportTask;
-import com.liferay.headless.batch.engine.client.resource.v1_0.ImportTaskResource;
 import com.liferay.headless.delivery.client.dto.v1_0.ContentDocument;
 import com.liferay.headless.delivery.client.dto.v1_0.ContentField;
 import com.liferay.headless.delivery.client.dto.v1_0.ContentFieldValue;
@@ -45,7 +43,6 @@ import com.liferay.headless.delivery.client.dto.v1_0.Geo;
 import com.liferay.headless.delivery.client.dto.v1_0.RelatedContent;
 import com.liferay.headless.delivery.client.dto.v1_0.StructuredContent;
 import com.liferay.headless.delivery.client.dto.v1_0.StructuredContentLink;
-import com.liferay.headless.delivery.client.http.HttpInvoker;
 import com.liferay.headless.delivery.client.pagination.Page;
 import com.liferay.headless.delivery.client.pagination.Pagination;
 import com.liferay.headless.delivery.client.problem.Problem;
@@ -80,6 +77,7 @@ import com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.template.TemplateConstants;
+import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
@@ -89,6 +87,7 @@ import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -2413,53 +2412,46 @@ public class StructuredContentResourceTest
 	}
 
 	private void _testPostSiteStructuredContentBatch() throws Exception {
-		HttpInvoker.HttpResponse httpResponse =
-			structuredContentResource.
-				postSiteStructuredContentBatchHttpResponse(
-					testGroup.getGroupId(), null,
-					JSONUtil.putAll(
-						JSONFactoryUtil.createJSONObject(
-							String.valueOf(
-								_randomStructuredContent(
-									LocaleUtil.getDefault())))));
+		JSONObject jsonObject = _waitForFinish(
+			"COMPLETED", true,
+			JSONFactoryUtil.createJSONObject(
+				structuredContentResource.
+					postSiteStructuredContentBatchHttpResponse(
+						testGroup.getGroupId(), null,
+						JSONUtil.putAll(
+							JSONFactoryUtil.createJSONObject(
+								String.valueOf(
+									_randomStructuredContent(
+										LocaleUtil.getDefault()))))
+					).getContent()));
 
-		assertHttpResponseStatusCode(202, httpResponse);
+		Assert.assertEquals(1, jsonObject.getLong("processedItemsCount"));
+		Assert.assertEquals(1, jsonObject.getLong("totalItemsCount"));
+	}
 
-		User testCompanyAdminUser = UserTestUtil.getAdminUser(
-			testCompany.getCompanyId());
+	private JSONObject _waitForFinish(
+			String expectedExecuteStatus, boolean importTask,
+			JSONObject jsonObject)
+		throws Exception {
 
-		ImportTaskResource importTaskResource = ImportTaskResource.builder(
-		).authentication(
-			testCompanyAdminUser.getEmailAddress(),
-			PropsValues.DEFAULT_ADMIN_PASSWORD
-		).endpoint(
-			testCompany.getVirtualHostname(), 8080, "http"
-		).locale(
-			LocaleUtil.getDefault()
-		).build();
-
-		long importTaskId = JSONFactoryUtil.createJSONObject(
-			httpResponse.getContent()
-		).getLong(
-			"id"
-		);
+		String endpoint = StringBundler.concat(
+			"headless-batch-engine/v1.0/",
+			importTask ? "import-task" : "export-task",
+			"/by-external-reference-code/");
 
 		while (true) {
-			ImportTask importTask = importTaskResource.getImportTask(
-				importTaskId);
+			jsonObject = HTTPTestUtil.invokeToJSONObject(
+				null, endpoint + jsonObject.getString("externalReferenceCode"),
+				Http.Method.GET);
 
-			if (StringUtil.equals(
-					importTask.getExecuteStatusAsString(), "COMPLETED") ||
-				StringUtil.equals(
-					importTask.getExecuteStatusAsString(), "FAILED")) {
+			String executeStatus = jsonObject.getString("executeStatus");
 
-				Assert.assertEquals(
-					"COMPLETED", importTask.getExecuteStatusAsString());
-				Assert.assertEquals(
-					1L, (long)importTask.getProcessedItemsCount());
-				Assert.assertEquals(1L, (long)importTask.getTotalItemsCount());
+			if (StringUtil.equals(executeStatus, "COMPLETED") ||
+				StringUtil.equals(executeStatus, "FAILED")) {
 
-				break;
+				Assert.assertEquals(expectedExecuteStatus, executeStatus);
+
+				return jsonObject;
 			}
 		}
 	}

@@ -28,7 +28,8 @@ public class JenkinsSlave implements JenkinsNode<JenkinsSlave> {
 
 		update(
 			JenkinsAPIUtil.getAPIJSONObject(
-				getComputerURL(), "displayName,idle,offline,offlineCauseReason"));
+				getComputerURL(),
+				"displayName,idle,offline,offlineCauseReason"));
 	}
 
 	public JenkinsSlave(String hostname) {

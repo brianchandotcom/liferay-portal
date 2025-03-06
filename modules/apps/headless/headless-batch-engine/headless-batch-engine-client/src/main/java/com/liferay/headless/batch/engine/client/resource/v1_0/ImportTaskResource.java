@@ -84,21 +84,24 @@ public interface ImportTaskResource {
 		throws Exception;
 
 	public ImportTask postImportTask(
-			String className, String batchRestrictFields, String callbackURL,
+			String className, String batchExternalReferenceCode,
+			String batchRestrictFields, String callbackURL,
 			String createStrategy, String externalReferenceCode,
 			String fieldNameMapping, String importStrategy,
 			String taskItemDelegateName, Object object)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse postImportTaskHttpResponse(
-			String className, String batchRestrictFields, String callbackURL,
+			String className, String batchExternalReferenceCode,
+			String batchRestrictFields, String callbackURL,
 			String createStrategy, String externalReferenceCode,
 			String fieldNameMapping, String importStrategy,
 			String taskItemDelegateName, Object object)
 		throws Exception;
 
 	public ImportTask postFormDataImportTask(
-			String className, String batchRestrictFields, String callbackURL,
+			String className, String batchExternalReferenceCode,
+			String batchRestrictFields, String callbackURL,
 			String createStrategy, String externalReferenceCode,
 			String fieldNameMapping, String importStrategy,
 			String taskItemDelegateName, ImportTask importTask,
@@ -106,7 +109,8 @@ public interface ImportTaskResource {
 		throws Exception;
 
 	public HttpInvoker.HttpResponse postFormDataImportTaskHttpResponse(
-			String className, String batchRestrictFields, String callbackURL,
+			String className, String batchExternalReferenceCode,
+			String batchRestrictFields, String callbackURL,
 			String createStrategy, String externalReferenceCode,
 			String fieldNameMapping, String importStrategy,
 			String taskItemDelegateName, ImportTask importTask,
@@ -849,17 +853,17 @@ public interface ImportTaskResource {
 		}
 
 		public ImportTask postImportTask(
-				String className, String batchRestrictFields,
-				String callbackURL, String createStrategy,
-				String externalReferenceCode, String fieldNameMapping,
-				String importStrategy, String taskItemDelegateName,
-				Object object)
+				String className, String batchExternalReferenceCode,
+				String batchRestrictFields, String callbackURL,
+				String createStrategy, String externalReferenceCode,
+				String fieldNameMapping, String importStrategy,
+				String taskItemDelegateName, Object object)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse = postImportTaskHttpResponse(
-				className, batchRestrictFields, callbackURL, createStrategy,
-				externalReferenceCode, fieldNameMapping, importStrategy,
-				taskItemDelegateName, object);
+				className, batchExternalReferenceCode, batchRestrictFields,
+				callbackURL, createStrategy, externalReferenceCode,
+				fieldNameMapping, importStrategy, taskItemDelegateName, object);
 
 			String content = httpResponse.getContent();
 
@@ -921,11 +925,11 @@ public interface ImportTaskResource {
 		}
 
 		public HttpInvoker.HttpResponse postImportTaskHttpResponse(
-				String className, String batchRestrictFields,
-				String callbackURL, String createStrategy,
-				String externalReferenceCode, String fieldNameMapping,
-				String importStrategy, String taskItemDelegateName,
-				Object object)
+				String className, String batchExternalReferenceCode,
+				String batchRestrictFields, String callbackURL,
+				String createStrategy, String externalReferenceCode,
+				String fieldNameMapping, String importStrategy,
+				String taskItemDelegateName, Object object)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -950,6 +954,12 @@ public interface ImportTaskResource {
 			}
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+			if (batchExternalReferenceCode != null) {
+				httpInvoker.parameter(
+					"batchExternalReferenceCode",
+					String.valueOf(batchExternalReferenceCode));
+			}
 
 			if (batchRestrictFields != null) {
 				httpInvoker.parameter(
@@ -1004,18 +1014,20 @@ public interface ImportTaskResource {
 		}
 
 		public ImportTask postFormDataImportTask(
-				String className, String batchRestrictFields,
-				String callbackURL, String createStrategy,
-				String externalReferenceCode, String fieldNameMapping,
-				String importStrategy, String taskItemDelegateName,
-				ImportTask importTask, Map<String, File> multipartFiles)
+				String className, String batchExternalReferenceCode,
+				String batchRestrictFields, String callbackURL,
+				String createStrategy, String externalReferenceCode,
+				String fieldNameMapping, String importStrategy,
+				String taskItemDelegateName, ImportTask importTask,
+				Map<String, File> multipartFiles)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse =
 				postFormDataImportTaskHttpResponse(
-					className, batchRestrictFields, callbackURL, createStrategy,
-					externalReferenceCode, fieldNameMapping, importStrategy,
-					taskItemDelegateName, importTask, multipartFiles);
+					className, batchExternalReferenceCode, batchRestrictFields,
+					callbackURL, createStrategy, externalReferenceCode,
+					fieldNameMapping, importStrategy, taskItemDelegateName,
+					importTask, multipartFiles);
 
 			String content = httpResponse.getContent();
 
@@ -1077,11 +1089,12 @@ public interface ImportTaskResource {
 		}
 
 		public HttpInvoker.HttpResponse postFormDataImportTaskHttpResponse(
-				String className, String batchRestrictFields,
-				String callbackURL, String createStrategy,
-				String externalReferenceCode, String fieldNameMapping,
-				String importStrategy, String taskItemDelegateName,
-				ImportTask importTask, Map<String, File> multipartFiles)
+				String className, String batchExternalReferenceCode,
+				String batchRestrictFields, String callbackURL,
+				String createStrategy, String externalReferenceCode,
+				String fieldNameMapping, String importStrategy,
+				String taskItemDelegateName, ImportTask importTask,
+				Map<String, File> multipartFiles)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -1112,6 +1125,12 @@ public interface ImportTaskResource {
 			}
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.POST);
+
+			if (batchExternalReferenceCode != null) {
+				httpInvoker.parameter(
+					"batchExternalReferenceCode",
+					String.valueOf(batchExternalReferenceCode));
+			}
 
 			if (batchRestrictFields != null) {
 				httpInvoker.parameter(

@@ -1500,7 +1500,6 @@ export default function ChangeTrackingRenderView({
 					<div className="autofit-row">
 						<div className="autofit-col">
 							<ClayNavigationBar
-								fluidSize={false}
 								spritemap={spritemap}
 								triggerLabel={Liferay.Language.get('display')}
 							>

@@ -30,34 +30,30 @@ renderResponse.setTitle(LanguageUtil.get(request, "review-changes"));
 		/>
 	</div>
 
-	<clay:container-fluid
-		fullWidth="<%= true %>"
-	>
-		<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-20131") %>'>
-			<div>
-				<react:component
-					module="{ChangeTrackingOverview} from change-tracking-web"
-					props="<%= viewChangesDisplayContext.getItemsOverview() %>"
-				/>
-			</div>
-		</c:if>
-
-		<clay:navigation-bar
-			navigationItems="<%= viewChangesDisplayContext.getViewNavigationItems() %>"
-		/>
-
-		<aui:form action="<%= viewChangesDisplayContext.getBackURL() %>" method="post" name="fm">
-			<frontend-data-set:headless-display
-				apiURL="<%= viewChangesDisplayContext.getAPIURL() %>"
-				bulkActionDropdownItems="<%= viewChangesDisplayContext.getBulkActionDropdownItems() %>"
-				fdsActionDropdownItems="<%= viewChangesDisplayContext.getFDSActionDropdownItems() %>"
-				fdsFilters="<%= viewChangesDisplayContext.getFDSFilters() %>"
-				fdsSortItemList="<%= viewChangesDisplayContext.getFDSSortItemList() %>"
-				formName="fm"
-				id="<%= PublicationsFDSNames.PUBLICATIONS_CHANGES %>"
-				selectedItemsKey="id"
-				selectionType="multiple"
+	<c:if test='<%= FeatureFlagManagerUtil.isEnabled("LPD-20131") %>'>
+		<div>
+			<react:component
+				module="{ChangeTrackingOverview} from change-tracking-web"
+				props="<%= viewChangesDisplayContext.getItemsOverview() %>"
 			/>
-		</aui:form>
-	</clay:container-fluid>
+		</div>
+	</c:if>
+
+	<clay:navigation-bar
+		navigationItems="<%= viewChangesDisplayContext.getViewNavigationItems() %>"
+	/>
+
+	<aui:form action="<%= viewChangesDisplayContext.getBackURL() %>" method="post" name="fm">
+		<frontend-data-set:headless-display
+			apiURL="<%= viewChangesDisplayContext.getAPIURL() %>"
+			bulkActionDropdownItems="<%= viewChangesDisplayContext.getBulkActionDropdownItems() %>"
+			fdsActionDropdownItems="<%= viewChangesDisplayContext.getFDSActionDropdownItems() %>"
+			fdsFilters="<%= viewChangesDisplayContext.getFDSFilters() %>"
+			fdsSortItemList="<%= viewChangesDisplayContext.getFDSSortItemList() %>"
+			formName="fm"
+			id="<%= PublicationsFDSNames.PUBLICATIONS_CHANGES %>"
+			selectedItemsKey="id"
+			selectionType="multiple"
+		/>
+	</aui:form>
 </div>

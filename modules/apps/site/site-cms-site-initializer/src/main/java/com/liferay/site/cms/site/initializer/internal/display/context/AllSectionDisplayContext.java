@@ -7,7 +7,12 @@ package com.liferay.site.cms.site.initializer.internal.display.context;
 
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
+import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectFolder;
+import com.liferay.object.service.ObjectDefinitionService;
+import com.liferay.object.service.ObjectFolderLocalService;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.url.builder.PortletURLBuilder;
@@ -15,6 +20,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.site.cms.site.initializer.internal.configuration.CMSSiteInitializerConfiguration;
 
 import java.util.List;
@@ -31,51 +37,55 @@ public class AllSectionDisplayContext extends BaseSectionDisplayContext {
 
 	public AllSectionDisplayContext(
 		CMSSiteInitializerConfiguration cmsSiteInitializerConfiguration,
-		HttpServletRequest httpServletRequest) {
+		HttpServletRequest httpServletRequest,
+		ObjectDefinitionService objectDefinitionService,
+		ObjectFolderLocalService objectFolderLocalService) {
 
 		super(cmsSiteInitializerConfiguration, httpServletRequest);
+
+		_objectDefinitionService = objectDefinitionService;
+		_objectFolderLocalService = objectFolderLocalService;
 	}
 
 	@Override
 	public CreationMenu getCreationMenu() {
-		return CreationMenuBuilder.addPrimaryDropdownItem(
-			dropdownItem -> {
-				dropdownItem.setIcon("forms");
-				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "basic-content"));
+		return new CreationMenu() {
+			{
+				ObjectFolder contentStructuresObjectFolder =
+					_objectFolderLocalService.
+						fetchObjectFolderByExternalReferenceCode(
+							"L_CMS_CONTENT_STRUCTURES",
+							themeDisplay.getCompanyId());
+				ObjectFolder fileTypesObjectFolder =
+					_objectFolderLocalService.
+						fetchObjectFolderByExternalReferenceCode(
+							"L_CMS_FILE_TYPES", themeDisplay.getCompanyId());
+
+				for (ObjectDefinition objectDefinition :
+						_objectDefinitionService.getObjectDefinitions(
+							themeDisplay.getCompanyId(),
+							new long[] {
+								contentStructuresObjectFolder.
+									getObjectFolderId(),
+								fileTypesObjectFolder.getObjectFolderId()
+							},
+							true, true, ObjectDefinitionConstants.SCOPE_SITE,
+							WorkflowConstants.STATUS_APPROVED,
+							QueryUtil.ALL_POS, QueryUtil.ALL_POS)) {
+
+					addPrimaryDropdownItem(
+						dropdownItem -> {
+							dropdownItem.setHref(
+								getAddStructuredContentItemURL(
+									objectDefinition.getObjectDefinitionId()));
+							dropdownItem.setIcon("forms");
+							dropdownItem.setLabel(
+								objectDefinition.getLabel(
+									themeDisplay.getLocale()));
+						});
+				}
 			}
-		).addPrimaryDropdownItem(
-			dropdownItem -> {
-				dropdownItem.setIcon("upload");
-				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "single-file"));
-			}
-		).addPrimaryDropdownItem(
-			dropdownItem -> {
-				dropdownItem.setIcon("upload-multiple");
-				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "multiple-files"));
-			}
-		).addPrimaryDropdownItem(
-			dropdownItem -> {
-				dropdownItem.setIcon("blogs");
-				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "blog"));
-			}
-		).addPrimaryDropdownItem(
-			dropdownItem -> {
-				dropdownItem.setIcon("wiki");
-				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "knowledge-base"));
-			}
-		).addPrimaryDropdownItem(
-			dropdownItem -> {
-				dropdownItem.setIcon("video");
-				dropdownItem.setLabel(
-					LanguageUtil.get(
-						httpServletRequest, "external-video-shortcut"));
-			}
-		).build();
+		};
 	}
 
 	@Override
@@ -140,5 +150,8 @@ public class AllSectionDisplayContext extends BaseSectionDisplayContext {
 			LiferayWindowState.POP_UP
 		).buildString();
 	}
+
+	private final ObjectDefinitionService _objectDefinitionService;
+	private final ObjectFolderLocalService _objectFolderLocalService;
 
 }

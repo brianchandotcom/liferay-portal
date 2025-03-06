@@ -7,11 +7,18 @@ package com.liferay.site.cms.site.initializer.internal.display.context;
 
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.object.constants.ObjectDefinitionConstants;
+import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectFolder;
+import com.liferay.object.service.ObjectDefinitionService;
+import com.liferay.object.service.ObjectFolderLocalService;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.site.cms.site.initializer.internal.configuration.CMSSiteInitializerConfiguration;
 
 import java.util.List;
@@ -26,9 +33,15 @@ public class FilesSectionDisplayContext extends BaseSectionDisplayContext {
 
 	public FilesSectionDisplayContext(
 		CMSSiteInitializerConfiguration cmsSiteInitializerConfiguration,
-		HttpServletRequest httpServletRequest) {
+		HttpServletRequest httpServletRequest, Language language,
+		ObjectDefinitionService objectDefinitionService,
+		ObjectFolderLocalService objectFolderLocalService) {
 
 		super(cmsSiteInitializerConfiguration, httpServletRequest);
+
+		_language = language;
+		_objectDefinitionService = objectDefinitionService;
+		_objectFolderLocalService = objectFolderLocalService;
 	}
 
 	@Override
@@ -42,32 +55,42 @@ public class FilesSectionDisplayContext extends BaseSectionDisplayContext {
 
 	@Override
 	public CreationMenu getCreationMenu() {
-		return CreationMenuBuilder.addPrimaryDropdownItem(
-			dropdownItem -> {
-				dropdownItem.setIcon("forms");
-				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "basic-content"));
+		return new CreationMenu() {
+			{
+				addPrimaryDropdownItem(
+					dropdownItem -> {
+						dropdownItem.putData("action", "createFolder");
+						dropdownItem.setIcon("folder");
+						dropdownItem.setLabel(
+							_language.get(httpServletRequest, "folder"));
+					});
+
+				ObjectFolder objectFolder =
+					_objectFolderLocalService.
+						fetchObjectFolderByExternalReferenceCode(
+							"L_CMS_FILE_TYPES", themeDisplay.getCompanyId());
+
+				for (ObjectDefinition objectDefinition :
+						_objectDefinitionService.getObjectDefinitions(
+							themeDisplay.getCompanyId(),
+							new long[] {objectFolder.getObjectFolderId()}, true,
+							true, ObjectDefinitionConstants.SCOPE_SITE,
+							WorkflowConstants.STATUS_APPROVED,
+							QueryUtil.ALL_POS, QueryUtil.ALL_POS)) {
+
+					addPrimaryDropdownItem(
+						dropdownItem -> {
+							dropdownItem.setHref(
+								getAddStructuredContentItemURL(
+									objectDefinition.getObjectDefinitionId()));
+							dropdownItem.setIcon("forms");
+							dropdownItem.setLabel(
+								objectDefinition.getLabel(
+									themeDisplay.getLocale()));
+						});
+				}
 			}
-		).addPrimaryDropdownItem(
-			dropdownItem -> {
-				dropdownItem.setIcon("blogs");
-				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "blog"));
-			}
-		).addPrimaryDropdownItem(
-			dropdownItem -> {
-				dropdownItem.setIcon("wiki");
-				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "knowledge-base"));
-			}
-		).addPrimaryDropdownItem(
-			dropdownItem -> {
-				dropdownItem.putData("action", "createFolder");
-				dropdownItem.setIcon("folder");
-				dropdownItem.setLabel(
-					LanguageUtil.get(httpServletRequest, "folder"));
-			}
-		).build();
+		};
 	}
 
 	@Override
@@ -88,5 +111,9 @@ public class FilesSectionDisplayContext extends BaseSectionDisplayContext {
 		return cmsSiteInitializerConfiguration.
 			filesObjectDefinitionFolderExternalReferenceCodes();
 	}
+
+	private final Language _language;
+	private final ObjectDefinitionService _objectDefinitionService;
+	private final ObjectFolderLocalService _objectFolderLocalService;
 
 }

@@ -65,19 +65,15 @@ public abstract class BaseDBPartitionMessageBusInterceptorTestCase {
 
 	@ClassRule
 	@Rule
-	public static final AggregateTestRule aggregateTestRule;
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new AssumeTestRule("assume"), new LiferayIntegrationTestRule(),
+			PermissionCheckerMethodTestRule.INSTANCE) {
 
-	static {
-		LiferayIntegrationTestRule liferayIntegrationTestRule =
-			new LiferayIntegrationTestRule();
-
-		liferayIntegrationTestRule.disableRule(
-			CompanyProviderClassTestRule.class);
-
-		aggregateTestRule = new AggregateTestRule(
-			new AssumeTestRule("assume"), liferayIntegrationTestRule,
-			PermissionCheckerMethodTestRule.INSTANCE);
-	}
+			{
+				disableRule(CompanyProviderClassTestRule.class);
+			}
+		};
 
 	public static void assume() {
 		BaseDBPartitionTestCase.assume();

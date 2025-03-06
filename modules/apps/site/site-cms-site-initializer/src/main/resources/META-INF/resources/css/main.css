@@ -1,3 +1,8 @@
 .cms-section .c-empty-state-title {
 	margin-top: 0;
 }
+
+.cms-section .sticker-small-square {
+	height: 1rem;
+	width: 1rem;
+}

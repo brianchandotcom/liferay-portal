@@ -2,31 +2,31 @@
 	"attributes": [
 		{
 			"caseExact": false,
-			"description": "Numeric or alphanumeric identifier assigned to a person, typically based  on order of hire or association with an organization.",
+			"description": "User's birthday",
 			"multiValued": false,
 			"mutability": "readWrite",
 			"name": "birthday",
 			"required": false,
 			"returned": "default",
-			"type": "string",
+			"type": "dateTime",
 			"uniqueness": "none"
 		},
 		{
 			"caseExact": false,
-			"description": "Numeric or alphanumeric identifier assigned to a person, typically based  on order of hire or association with an organization.",
-			"multiValued": "boolean",
+			"description": "User's gender",
+			"multiValued": false,
 			"mutability": "readWrite",
 			"name": "male",
 			"required": false,
 			"returned": "default",
-			"type": "string",
+			"type": "boolean",
 			"uniqueness": "none"
 		}
 	],
 	"description": "User Schema Extension",
 	"id": "urn:ietf:params:scim:schemas:extension:liferay:2.0:User",
 	"meta": {
-		"location": "/v2/Schemas/urn:ietf:params:scim:schemas:extension:liferay:2.0:User",
+		"location": "/urn:ietf:params:scim:schemas:extension:liferay:2.0:User",
 		"resourceType": "Schema"
 	},
 	"name": "UserSchemaExtension",

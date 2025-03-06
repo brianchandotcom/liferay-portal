@@ -78,6 +78,7 @@ import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -145,6 +146,7 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		SearchLocalizationHelper searchLocalizationHelper,
 		SharingModelResourcePermissionConfigurator
 			sharingModelResourcePermissionConfigurator,
+		WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService,
 		ModelPreFilterContributor workflowStatusModelPreFilterContributor,
 		UserGroupRoleLocalService userGroupRoleLocalService) {
 
@@ -178,6 +180,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		_searchLocalizationHelper = searchLocalizationHelper;
 		_sharingModelResourcePermissionConfigurator =
 			sharingModelResourcePermissionConfigurator;
+		_workflowDefinitionLinkLocalService =
+			workflowDefinitionLinkLocalService;
 		_workflowStatusModelPreFilterContributor =
 			workflowStatusModelPreFilterContributor;
 		_userGroupRoleLocalService = userGroupRoleLocalService;
@@ -400,7 +404,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 			_bundleContext.registerService(
 				WorkflowHandler.class,
 				new ObjectEntryWorkflowHandler(
-					objectDefinition, _objectEntryLocalService),
+					objectDefinition, _objectEntryLocalService,
+					_workflowDefinitionLinkLocalService),
 				HashMapDictionaryBuilder.<String, Object>put(
 					"model.class.name", objectDefinition.getClassName()
 				).build()),
@@ -632,6 +637,8 @@ public class ObjectDefinitionDeployerImpl implements ObjectDefinitionDeployer {
 		_sharingModelResourcePermissionConfigurator;
 	private final UserGroupRoleLocalService _userGroupRoleLocalService;
 	private final UserLocalService _userLocalService;
+	private final WorkflowDefinitionLinkLocalService
+		_workflowDefinitionLinkLocalService;
 	private final ModelPreFilterContributor
 		_workflowStatusModelPreFilterContributor;
 

@@ -1,0 +1,215 @@
+{
+	"enableComments": false,
+	"objectFolderExternalReferenceCode": "MY-EXPERIENCES",
+	"enableCategorization": true,
+	"enableLocalization": false,
+	"accountEntryRestricted": false,
+	"externalReferenceCode": "USER-EXPERIENCE",
+	"objectFields": [
+		{
+			"indexed": false,
+			"localized": false,
+			"objectFieldSettings": [],
+			"readOnly": "true",
+			"DBType": "String",
+			"label": {
+				"en_US": "Author"
+			},
+			"type": "String",
+			"required": false,
+			"indexedAsKeyword": false,
+			"system": true,
+			"indexedLanguageId": "",
+			"unique": false,
+			"name": "creator",
+			"state": false,
+			"businessType": "Text",
+			"readOnlyConditionExpression": ""
+		},
+		{
+			"indexed": false,
+			"localized": false,
+			"objectFieldSettings": [],
+			"readOnly": "true",
+			"DBType": "Date",
+			"label": {
+				"en_US": "Create Date"
+			},
+			"type": "Date",
+			"required": false,
+			"indexedAsKeyword": false,
+			"system": true,
+			"indexedLanguageId": "",
+			"unique": false,
+			"name": "createDate",
+			"state": false,
+			"businessType": "Date",
+			"readOnlyConditionExpression": ""
+		},
+		{
+			"indexed": false,
+			"localized": false,
+			"objectFieldSettings": [],
+			"readOnly": "false",
+			"DBType": "String",
+			"label": {
+				"en_US": "External Reference Code"
+			},
+			"type": "String",
+			"required": false,
+			"indexedAsKeyword": false,
+			"system": true,
+			"indexedLanguageId": "",
+			"unique": false,
+			"name": "externalReferenceCode",
+			"state": false,
+			"businessType": "Text",
+			"readOnlyConditionExpression": ""
+		},
+		{
+			"indexed": true,
+			"localized": false,
+			"objectFieldSettings": [],
+			"readOnly": "true",
+			"DBType": "Long",
+			"label": {
+				"en_US": "ID"
+			},
+			"type": "Long",
+			"required": false,
+			"indexedAsKeyword": true,
+			"system": true,
+			"indexedLanguageId": "",
+			"unique": false,
+			"name": "id",
+			"state": false,
+			"businessType": "LongInteger",
+			"readOnlyConditionExpression": ""
+		},
+		{
+			"indexed": false,
+			"localized": false,
+			"objectFieldSettings": [],
+			"readOnly": "true",
+			"DBType": "Date",
+			"label": {
+				"en_US": "Modified Date"
+			},
+			"type": "Date",
+			"required": false,
+			"indexedAsKeyword": false,
+			"system": true,
+			"indexedLanguageId": "",
+			"unique": false,
+			"name": "modifiedDate",
+			"state": false,
+			"businessType": "Date",
+			"readOnlyConditionExpression": ""
+		},
+		{
+			"indexed": false,
+			"localized": false,
+			"objectFieldSettings": [],
+			"readOnly": "true",
+			"DBType": "Integer",
+			"label": {
+				"en_US": "Status"
+			},
+			"type": "Integer",
+			"required": false,
+			"indexedAsKeyword": false,
+			"system": true,
+			"indexedLanguageId": "",
+			"unique": false,
+			"name": "status",
+			"state": false,
+			"businessType": "Text",
+			"readOnlyConditionExpression": ""
+		},
+		{
+			"indexed": true,
+			"localized": false,
+			"objectFieldSettings": [],
+			"readOnly": "false",
+			"DBType": "Clob",
+			"label": {
+				"en_US": "Answer from Clarity"
+			},
+			"type": "Clob",
+			"required": false,
+			"indexedAsKeyword": false,
+			"system": false,
+			"indexedLanguageId": "en_US",
+			"unique": false,
+			"name": "answerFromClarity",
+			"state": false,
+			"businessType": "RichText",
+			"readOnlyConditionExpression": ""
+		},
+		{
+			"indexed": true,
+			"localized": false,
+			"objectFieldSettings": [],
+			"readOnly": "false",
+			"DBType": "Date",
+			"label": {
+				"en_US": "Date"
+			},
+			"type": "Date",
+			"required": false,
+			"indexedAsKeyword": false,
+			"system": false,
+			"indexedLanguageId": "",
+			"unique": false,
+			"name": "date",
+			"state": false,
+			"businessType": "Date",
+			"readOnlyConditionExpression": ""
+		},
+		{
+			"indexed": true,
+			"localized": false,
+			"objectFieldSettings": [
+				{
+					"name": "showCounter",
+					"value": false
+				}
+			],
+			"readOnly": "false",
+			"DBType": "Clob",
+			"label": {
+				"en_US": "Comment"
+			},
+			"type": "Clob",
+			"required": true,
+			"indexedAsKeyword": false,
+			"system": false,
+			"indexedLanguageId": "en_US",
+			"unique": false,
+			"name": "comment",
+			"state": false,
+			"businessType": "LongText",
+			"readOnlyConditionExpression": ""
+		}
+	],
+	"restContextPath": "/o/c/userexperiences",
+	"scope": "company",
+	"portlet": true,
+	"modifiable": true,
+	"parameterRequired": false,
+	"enableObjectEntryHistory": false,
+	"titleObjectFieldName": "id",
+	"objectValidationRules": [],
+	"active": true,
+	"defaultLanguageId": "en_US",
+	"enableIndexSearch": true,
+	"label": {
+		"en_US": "User Experience"
+	},
+	"panelCategoryKey": "control_panel.object",
+	"pluralLabel": {
+		"en_US": "User Experiences"
+	},
+	"system": false,
+	"name": "UserExperience"
+}

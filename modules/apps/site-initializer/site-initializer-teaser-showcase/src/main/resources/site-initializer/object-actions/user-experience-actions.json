@@ -1,0 +1,46 @@
+{
+	"object-actions": [
+		{
+			"conditionExpression": "",
+			"objectActionExecutorKey": "update-object-entry",
+			"errorMessage": {},
+			"active": true,
+			"description": "",
+			"label": {
+				"en_US": "Update User and Date"
+			},
+			"system": false,
+			"objectActionTriggerKey": "onAfterAdd",
+			"name": "updateUserAndDate",
+			"parameters": {
+				"objectDefinitionExternalReferenceCode": "USER-EXPERIENCE",
+				"predefinedValues": [
+					{
+						"name": "r_userExperienceRelationship_userId",
+						"inputAsValue": false,
+						"label": {
+							"en_US": "User Experience"
+						},
+						"businessType": "Relationship",
+						"value": "currentUserId"
+					},
+					{
+						"name": "date",
+						"inputAsValue": false,
+						"label": {
+							"en_US": "Date"
+						},
+						"businessType": "Date",
+						"value": "currentDate"
+					}
+				]
+			},
+			"status": {
+				"label_i18n": "Success",
+				"code": 1,
+				"label": "success"
+			}
+		}
+	],
+	"objectDefinitionId": "[$OBJECT_DEFINITION_ID:UserExperience$]"
+}

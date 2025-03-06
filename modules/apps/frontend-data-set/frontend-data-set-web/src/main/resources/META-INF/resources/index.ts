@@ -74,13 +74,14 @@ type TDelta = {
 	label: number;
 };
 
-export type TDisplayType =
-	| 'danger'
-	| 'info'
-	| 'secondary'
-	| 'success'
-	| 'unstyled'
-	| 'warning';
+export enum DisplayType {
+	DANGER = 'danger',
+	INFO = 'info',
+	SECONDARY = 'secondary',
+	SUCCESS = 'success',
+	UNSTYLED = 'unstyled',
+	WARNING = 'warning',
+}
 
 export interface IInlineEditingSettings {
 	alwaysOn: boolean;
@@ -171,12 +172,12 @@ export interface ICardLabelBase {
 export interface ICardLabelWithDisplayType extends ICardLabelBase {
 	displayKey?: never;
 	displayMapping?: never;
-	displayType: TDisplayType;
+	displayType: DisplayType;
 }
 
 export interface ICardLabelWithDisplayMapping extends ICardLabelBase {
 	displayKey: string;
-	displayMapping: Record<string, TDisplayType>;
+	displayMapping: Record<string, DisplayType>;
 	displayType?: never;
 }
 

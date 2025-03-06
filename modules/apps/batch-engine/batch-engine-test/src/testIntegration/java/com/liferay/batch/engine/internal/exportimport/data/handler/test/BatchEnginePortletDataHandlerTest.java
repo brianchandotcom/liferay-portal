@@ -73,7 +73,8 @@ public class BatchEnginePortletDataHandlerTest {
 				ObjectFieldUtil.createObjectField(
 					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT,
 					ObjectFieldConstants.DB_TYPE_LONG, true, false, null,
-					RandomTestUtil.randomString(), "attachment",
+					RandomTestUtil.randomString(),
+					_OBJECT_FIELD_NAME_ATTACHMENT,
 					Arrays.asList(
 						new ObjectFieldSettingBuilder(
 						).name(
@@ -98,7 +99,7 @@ public class BatchEnginePortletDataHandlerTest {
 				ObjectFieldUtil.createObjectField(
 					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
 					ObjectFieldConstants.DB_TYPE_STRING, true, true, null,
-					RandomTestUtil.randomString(), _OBJECT_FIELD_NAME,
+					RandomTestUtil.randomString(), _OBJECT_FIELD_NAME_TEXT,
 					Arrays.asList(
 						new ObjectFieldSettingBuilder(
 						).name(
@@ -156,7 +157,7 @@ public class BatchEnginePortletDataHandlerTest {
 	public void testExportImportCompanyGroupWithError() throws Exception {
 		String objectFieldValue = (String)_objectEntry2.getValues(
 		).get(
-			_OBJECT_FIELD_NAME
+			_OBJECT_FIELD_NAME_TEXT
 		);
 
 		_objectEntryLocalService.deleteObjectEntry(_objectEntry1);
@@ -209,7 +210,7 @@ public class BatchEnginePortletDataHandlerTest {
 			TestPropsValues.getUserId(), 0L,
 			_objectDefinition.getObjectDefinitionId(), null,
 			HashMapBuilder.put(
-				_OBJECT_FIELD_NAME, objectFieldValue
+				_OBJECT_FIELD_NAME_TEXT, objectFieldValue
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
 	}
@@ -247,8 +248,11 @@ public class BatchEnginePortletDataHandlerTest {
 			_larFile);
 	}
 
-	private static final String _OBJECT_FIELD_NAME =
-		"a" + RandomTestUtil.randomString();
+	private static final String _OBJECT_FIELD_NAME_ATTACHMENT =
+		"x" + RandomTestUtil.randomString();
+
+	private static final String _OBJECT_FIELD_NAME_TEXT =
+		"x" + RandomTestUtil.randomString();
 
 	private long _companyGroupId;
 

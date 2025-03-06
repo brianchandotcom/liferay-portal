@@ -24,7 +24,7 @@ public class FragmentEntryLinkUpgradeProcess extends UpgradeProcess {
 	@Override
 	protected void doUpgrade() throws Exception {
 		_upgradeRendererKey();
-		_upgratePlid();
+		_upgradePlid();
 	}
 
 	private void _upgradeRendererKey() throws Exception {
@@ -59,7 +59,7 @@ public class FragmentEntryLinkUpgradeProcess extends UpgradeProcess {
 		}
 	}
 
-	private void _upgratePlid() throws Exception {
+	private void _upgradePlid() throws Exception {
 		alterTableAddColumn("FragmentEntryLink", "plid", "LONG");
 
 		runSQL(

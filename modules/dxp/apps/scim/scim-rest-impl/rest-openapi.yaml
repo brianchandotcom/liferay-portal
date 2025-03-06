@@ -386,6 +386,10 @@ paths:
                   schema:
                       type: integer
                 - in: query
+                  name: excludedAttributes
+                  schema:
+                      type: string
+                - in: query
                   name: filter
                   schema:
                       type: string
@@ -473,6 +477,10 @@ paths:
                 - in: path
                   name: id
                   required: true
+                  schema:
+                      type: string
+                - in: query
+                  name: excludedAttributes
                   schema:
                       type: string
             responses:

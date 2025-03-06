@@ -469,91 +469,16 @@ public abstract class Base${schemaName}ResourceTestCase {
 							/>
 						</#if>
 					</#list>
-
 					));
 
 					<#if freeMarkerTool.hasJavaMethodSignature(javaMethodSignatures, "get" + javaMethodSignature.methodName?remove_beginning("delete"))>
-						assertHttpResponseStatusCode(404, ${schemaVarName}Resource.get${javaMethodSignature.methodName?remove_beginning("delete")}HttpResponse(
-
 						<#assign
 							getJavaMethodSignature = freeMarkerTool.getJavaMethodSignature(javaMethodSignatures, "get" + javaMethodSignature.methodName?remove_beginning("delete"))
 						/>
 
-						<#list getJavaMethodSignature.javaMethodParameters as javaMethodParameter>
-							<#if freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Id")>
-								${schemaVarName}.getId()
-							<#elseif freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && properties?keys?seq_contains(javaMethodParameter.parameterName)>
-								<#if freeMarkerTool.isParameterNameSchemaRelated(javaMethodParameter.parameterName, javaMethodSignature.path, schemaName)>
-									${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}()
-								<#else>
-									<#assign
-										addGetterMethod = true
-										defaultImplementationGetterMethod = true
-									/>
-								</#if>
-							<#else>
-								<#assign
-									addGetterMethod = true
-									defaultImplementationGetterMethod = false
-								/>
-							</#if>
+						assertHttpResponseStatusCode(404, <@getSchemaHttpResponse javaMethodSignature = javaMethodSignature getJavaMethodSignature = getJavaMethodSignature />);
 
-							<#if addGetterMethod>
-								<#if defaultImplementationGetterMethod>
-									test${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}(${schemaVarName})
-								<#else>
-									test${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}()
-								</#if>
-
-								<#assign
-									addGetterMethod = false
-									getterJavaMethodParametersMap = getterJavaMethodParametersMap + {javaMethodParameter.parameterName: javaMethodParameter}
-								/>
-							</#if>
-
-							<#sep>, </#sep>
-						</#list>
-
-						));
-
-						assertHttpResponseStatusCode(404, ${schemaVarName}Resource.get${javaMethodSignature.methodName?remove_beginning("delete")}HttpResponse(
-
-						<#list getJavaMethodSignature.javaMethodParameters as javaMethodParameter>
-							<#if freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && stringUtil.equals(javaMethodParameter.parameterName, schemaVarName + "Id")>
-								<@getDefaultParameter javaMethodParameter = javaMethodParameter />
-							<#elseif freeMarkerTool.isPathParameter(javaMethodParameter, javaMethodSignature.operation) && properties?keys?seq_contains(javaMethodParameter.parameterName)>
-								<#if freeMarkerTool.isParameterNameSchemaRelated(javaMethodParameter.parameterName, javaMethodSignature.path, schemaName)>
-									${schemaVarName}.get${javaMethodParameter.parameterName?cap_first}()
-								<#else>
-									<#assign
-										addGetterMethod = true
-										defaultImplementationGetterMethod = true
-									/>
-								</#if>
-							<#else>
-								<#assign
-									addGetterMethod = true
-									defaultImplementationGetterMethod = false
-								/>
-							</#if>
-
-							<#if addGetterMethod>
-								<#if defaultImplementationGetterMethod>
-									test${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}(${schemaVarName})
-								<#else>
-									test${javaMethodSignature.methodName?cap_first}_get${javaMethodParameter.parameterName?cap_first}()
-								</#if>
-
-								<#assign
-									addGetterMethod = false
-									getterJavaMethodParametersMap = getterJavaMethodParametersMap + {javaMethodParameter.parameterName: javaMethodParameter}
-								/>
-							</#if>
-
-							<#sep>, </#sep>
-						</#list>
-
-						));
+						assertHttpResponseStatusCode(404, <@getSchemaHttpResponse javaMethodSignature = javaMethodSignature getJavaMethodSignature = getJavaMethodSignature defaultParameter = true />);
 					</#if>
 				<#else>
 					Assert.assertTrue(false);

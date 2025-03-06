@@ -2,11 +2,33 @@
 	"attributes": [
 		{
 			"caseExact": false,
+			"description": "A String that is an identifier for the resource as defined by the provisioning client.",
+			"multiValued": false,
+			"mutability": "readWrite",
+			"name": "externalId",
+			"required": false,
+			"returned": "default",
+			"type": "string",
+			"uniqueness": "none"
+		},
+		{
+			"caseExact": true,
+			"description": "A unique identifier for a SCIM resource as defined by the service provider.",
+			"multiValued": false,
+			"mutability": "readOnly",
+			"name": "id",
+			"required": false,
+			"returned": "default",
+			"type": "string",
+			"uniqueness": "server"
+		},
+		{
+			"caseExact": false,
 			"description": "A human-readable name for the Group. REQUIRED.",
 			"multiValued": false,
 			"mutability": "readWrite",
 			"name": "displayName",
-			"required": false,
+			"required": true,
 			"returned": "default",
 			"type": "string",
 			"uniqueness": "none"
@@ -58,6 +80,28 @@
 					"required": false,
 					"returned": "default",
 					"type": "string",
+					"uniqueness": "none"
+				},
+				{
+					"caseExact": false,
+					"description": "A human-readable name, primarily used for display purposes and having a mutability of immutable.",
+					"multiValued": false,
+					"mutability": "immutable",
+					"name": "display",
+					"required": false,
+					"returned": "default",
+					"type": "string",
+					"uniqueness": "none"
+				},
+				{
+					"caseExact": false,
+					"description": "Boolean value indicating the 'primary' or preferred attribute value for this attribute, e.g., the preferred mailing address or the primary email address.",
+					"multiValued": false,
+					"mutability": "immutable",
+					"name": "primary",
+					"required": false,
+					"returned": "default",
+					"type": "boolean",
 					"uniqueness": "none"
 				}
 			],

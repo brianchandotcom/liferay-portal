@@ -11,6 +11,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.petra.function.UnsafeSupplier;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.util.HTTPTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
@@ -113,6 +114,7 @@ public class JSONMessageBodyWriterTest {
 	}
 
 	@Test
+	@TestInfo("LPD-50142")
 	public void testUnsafeSupplierFieldsJSONObject() throws Exception {
 		HTTPTestUtil.invokeToJSONObject(
 			null, "test-vulcan/test-class?fields=property1UnsafeSupplier",

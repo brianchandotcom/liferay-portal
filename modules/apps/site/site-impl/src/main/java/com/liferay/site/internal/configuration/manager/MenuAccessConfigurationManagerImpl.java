@@ -63,8 +63,8 @@ public class MenuAccessConfigurationManagerImpl
 	@Override
 	public void deleteRoleAccessToControlMenu(Role role) throws Exception {
 		String filterString = StringBundler.concat(
-			"(&(service.factoryPid=", MenuAccessConfiguration.class.getName(),
-			".scoped))");
+			"(service.factoryPid=", MenuAccessConfiguration.class.getName(),
+			".scoped)");
 
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
 			filterString);

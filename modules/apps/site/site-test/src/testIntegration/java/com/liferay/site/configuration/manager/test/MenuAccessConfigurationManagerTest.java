@@ -73,7 +73,9 @@ public class MenuAccessConfigurationManagerTest {
 	public void testAddAccessRoleToControlMenu() throws Exception {
 		Role role = RoleTestUtil.addRole(RoleConstants.TYPE_REGULAR);
 
-		_menuAccessConfigurationManager.addAccessRoleToControlMenu(role);
+		_menuAccessConfigurationManager.updateMenuAccessConfiguration(
+			_group.getGroupId(),
+			new String[] {String.valueOf(role.getRoleId())}, true);
 
 		_assertMenuAccessConfiguration(
 			new String[] {String.valueOf(role.getRoleId())});

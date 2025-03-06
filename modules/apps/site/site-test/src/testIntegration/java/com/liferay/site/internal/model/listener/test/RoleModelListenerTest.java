@@ -114,7 +114,9 @@ public class RoleModelListenerTest {
 			StringUtil.randomString(), null, null, RoleConstants.TYPE_REGULAR,
 			null, _serviceContext);
 
-		_menuAccessConfigurationManager.addAccessRoleToControlMenu(role);
+		_menuAccessConfigurationManager.updateMenuAccessConfiguration(
+			_group.getGroupId(),
+			new String[] {String.valueOf(role.getRoleId())}, true);
 
 		_assertConfiguration(new String[] {String.valueOf(role.getRoleId())});
 

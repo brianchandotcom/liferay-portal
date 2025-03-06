@@ -5,13 +5,21 @@
 
 import {expect, mergeTests} from '@playwright/test';
 
+import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
 import {getRandomInt} from '../../utils/getRandomInt';
+import getRandomString from '../../utils/getRandomString';
 import {cmsPagesTest} from './fixtures/cmsPagesTest';
 import {FIELD_TYPES} from './pages/StructureBuilderPage';
 
-const test = mergeTests(cmsPagesTest, loginTest());
+const test = mergeTests(
+	cmsPagesTest,
+	featureFlagsTest({
+		'LPD-32050': {enabled: true},
+	}),
+	loginTest()
+);
 
 test(
 	'Structures can be saved and published',
@@ -171,6 +179,90 @@ test(
 		// Check tree node count is 2 (Root and remaining field)
 
 		await expect(page.locator('.treeview-link')).toHaveCount(2);
+
+		// Delete structure
+
+		await structureBuilderPage.deleteStructure(id);
+	}
+);
+
+test(
+	'Can configure a text field',
+	{tag: '@LPD-49168'},
+	async ({page, structureBuilderPage}) => {
+
+		// Go to the Structure Builder
+
+		await structureBuilderPage.goto();
+
+		// Change label,name and erc
+
+		const label = `Structure${getRandomInt()}`;
+		const erc = getRandomString();
+
+		await structureBuilderPage.changeStructureSettings({
+			erc,
+			label,
+			name: label,
+		});
+
+		// Add a text field
+
+		await structureBuilderPage.addField('Text');
+
+		await structureBuilderPage.selectField({label: 'Text'});
+
+		// Configure the field
+
+		await structureBuilderPage.changeFieldSettings({
+			erc,
+			label: 'Text Edited',
+			localizable: true,
+			name: 'textEdited',
+		});
+
+		await page.getByLabel('Accept Unique Values Only').click();
+
+		await page.getByLabel('Limit Characters').click();
+
+		const maximumNumberOfCharactersInput = page.getByLabel(
+			'Maximum Number of Characters'
+		);
+		maximumNumberOfCharactersInput.fill('10');
+
+		await maximumNumberOfCharactersInput.blur();
+
+		// Save and publish the structure
+
+		const {id} = await structureBuilderPage.saveStructure();
+
+		await expect(page.locator('.alert-danger')).not.toBeVisible();
+
+		const {objectFields} = await structureBuilderPage.publishStructure();
+
+		// Check the text field is created with the correct settings
+
+		const textObjectField = objectFields.find(
+			(objectField) => objectField.name === 'textEdited'
+		);
+
+		expect(textObjectField).toBeDefined();
+
+		expect(textObjectField.label).toStrictEqual({en_US: 'Text Edited'});
+		expect(textObjectField.localized).toBe(true);
+		expect(textObjectField.name).toBe('textEdited');
+		expect(textObjectField.objectFieldSettings[0]).toStrictEqual({
+			name: 'uniqueValues',
+			value: true,
+		});
+		expect(textObjectField.objectFieldSettings[1]).toStrictEqual({
+			name: 'maxLength',
+			value: 10,
+		});
+		expect(textObjectField.objectFieldSettings[2]).toStrictEqual({
+			name: 'showCounter',
+			value: true,
+		});
 
 		// Delete structure
 

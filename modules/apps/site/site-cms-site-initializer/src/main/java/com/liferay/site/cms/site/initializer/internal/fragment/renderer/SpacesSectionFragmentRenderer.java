@@ -8,20 +8,13 @@ package com.liferay.site.cms.site.initializer.internal.fragment.renderer;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.frontend.taglib.react.servlet.taglib.ComponentTag;
-import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.language.Language;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
-import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.servlet.PageContextFactoryUtil;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 
 import java.util.Locale;
-import java.util.Objects;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -34,7 +27,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jürgen Kappler
  */
 @Component(service = FragmentRenderer.class)
-public class SpacesSectionFragmentRenderer implements FragmentRenderer {
+public class SpacesSectionFragmentRenderer extends BaseSectionFragmentRenderer {
 
 	@Override
 	public String getCollectionKey() {
@@ -44,30 +37,6 @@ public class SpacesSectionFragmentRenderer implements FragmentRenderer {
 	@Override
 	public String getLabel(Locale locale) {
 		return _language.get(locale, "Spaces");
-	}
-
-	@Override
-	public boolean isSelectable(HttpServletRequest httpServletRequest) {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-		if (!FeatureFlagManagerUtil.isEnabled(
-				themeDisplay.getCompanyId(), "LPD-17564")) {
-
-			return false;
-		}
-
-		Group group = _groupLocalService.fetchGroup(
-			themeDisplay.getScopeGroupId());
-
-		if ((group == null) ||
-			!Objects.equals(group.getGroupKey(), GroupConstants.CMS)) {
-
-			return false;
-		}
-
-		return true;
 	}
 
 	@Override
@@ -102,9 +71,6 @@ public class SpacesSectionFragmentRenderer implements FragmentRenderer {
 			throw new RuntimeException(exception);
 		}
 	}
-
-	@Reference
-	private GroupLocalService _groupLocalService;
 
 	@Reference
 	private Language _language;

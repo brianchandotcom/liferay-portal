@@ -510,6 +510,11 @@ test(
 				status: {code: 0},
 			});
 
+		apiHelpers.data.push({
+			id: newObjectDefinition.id,
+			type: 'objectDefinition',
+		});
+
 		const user = await apiHelpers.headlessAdminUser.postUserAccount();
 
 		userData[user.alternateName] = {
@@ -553,6 +558,8 @@ test(
 			page,
 			'Success:Your request completed successfully.'
 		);
+
+		await page.waitForTimeout(2000);
 
 		await applicationsMenuPage.goToObjectDefinition(
 			newObjectDefinition.name
@@ -587,13 +594,6 @@ test(
 				name: user.givenName + ' ' + user.familyName,
 			})
 		).toBeVisible();
-
-		const objectDefinitionAPIClient =
-			await apiHelpers.buildRestClient(ObjectDefinitionApi);
-
-		await objectDefinitionAPIClient.deleteObjectDefinition(
-			newObjectDefinition.id
-		);
 	}
 );
 
@@ -614,6 +614,11 @@ test(
 				objectFolderExternalReferenceCode: 'default',
 				status: {code: 0},
 			});
+
+		apiHelpers.data.push({
+			id: newObjectDefinition.id,
+			type: 'objectDefinition',
+		});
 
 		const user = await apiHelpers.headlessAdminUser.postUserAccount();
 
@@ -658,6 +663,8 @@ test(
 			page,
 			'Success:Your request completed successfully.'
 		);
+
+		await page.waitForTimeout(2000);
 
 		await applicationsMenuPage.goToObjectDefinition(
 			newObjectDefinition.name
@@ -688,13 +695,6 @@ test(
 			newObjectDefinition.name
 		);
 		await expect(page.getByRole('cell', {name: 'Test Test'})).toBeVisible();
-
-		const objectDefinitionAPIClient =
-			await apiHelpers.buildRestClient(ObjectDefinitionApi);
-
-		await objectDefinitionAPIClient.deleteObjectDefinition(
-			newObjectDefinition.id
-		);
 	}
 );
 
@@ -715,6 +715,11 @@ test(
 				objectFolderExternalReferenceCode: 'default',
 				status: {code: 0},
 			});
+
+		apiHelpers.data.push({
+			id: newObjectDefinition.id,
+			type: 'objectDefinition',
+		});
 
 		const user = await apiHelpers.headlessAdminUser.postUserAccount();
 
@@ -760,6 +765,8 @@ test(
 			'Success:Your request completed successfully.'
 		);
 
+		await page.waitForTimeout(2000);
+
 		await applicationsMenuPage.goToObjectDefinition(
 			newObjectDefinition.name
 		);
@@ -789,12 +796,5 @@ test(
 			newObjectDefinition.name
 		);
 		await expect(page.getByRole('cell', {name: 'Test Test'})).toBeVisible();
-
-		const objectDefinitionAPIClient =
-			await apiHelpers.buildRestClient(ObjectDefinitionApi);
-
-		await objectDefinitionAPIClient.deleteObjectDefinition(
-			newObjectDefinition.id
-		);
 	}
 );

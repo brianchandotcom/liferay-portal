@@ -13,7 +13,6 @@ import com.liferay.object.model.ObjectDefinition;
 import com.liferay.object.model.ObjectFolder;
 import com.liferay.object.service.ObjectDefinitionService;
 import com.liferay.object.service.ObjectFolderLocalService;
-import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -59,8 +58,6 @@ public class ContentsSectionDisplayContext extends BaseSectionDisplayContext {
 
 	@Override
 	public CreationMenu getCreationMenu() {
-		String url = _getAddStructuredContentItemURL();
-
 		return new CreationMenu() {
 			{
 				addPrimaryDropdownItem(
@@ -88,7 +85,8 @@ public class ContentsSectionDisplayContext extends BaseSectionDisplayContext {
 					addPrimaryDropdownItem(
 						dropdownItem -> {
 							dropdownItem.setHref(
-								url + objectDefinition.getObjectDefinitionId());
+								getAddStructuredContentItemURL(
+									objectDefinition.getObjectDefinitionId()));
 							dropdownItem.setIcon("forms");
 							dropdownItem.setLabel(
 								objectDefinition.getLabel(
@@ -144,18 +142,6 @@ public class ContentsSectionDisplayContext extends BaseSectionDisplayContext {
 	public String[] getObjectDefinitionFolderExternalReferenceCodes() {
 		return cmsSiteInitializerConfiguration.
 			contentsObjectDefinitionFolderExternalReferenceCodes();
-	}
-
-	private String _getAddStructuredContentItemURL() {
-		StringBundler sb = new StringBundler(5);
-
-		sb.append(themeDisplay.getPortalURL());
-		sb.append(themeDisplay.getPathMain());
-		sb.append("/cms/add_structured_content_item?groupId=");
-		sb.append(themeDisplay.getScopeGroupId());
-		sb.append("&objectDefinitionId=");
-
-		return sb.toString();
 	}
 
 	private final Language _language;

@@ -55,20 +55,25 @@ public class GroupResourceImpl extends BaseGroupResourceImpl {
 	}
 
 	@Override
-	public Object getV2GroupById(String id) throws Exception {
+	public Object getV2GroupById(String id, String excludedAttributes)
+		throws Exception {
+
 		return _buildResponse(
-			_groupResourceManager.get(id, _userManager, null, null));
+			_groupResourceManager.get(
+				id, _userManager, null, excludedAttributes));
 	}
 
 	@Override
-	public Object getV2Groups(Integer count, Integer startIndex, Filter filter)
+	public Object getV2Groups(
+			Integer count, String excludedAttributes, Integer startIndex,
+			Filter filter)
 		throws Exception {
 
 		return _buildResponse(
 			_groupResourceManager.listWithGET(
 				_userManager,
 				ParamUtil.getString(contextHttpServletRequest, "filter", null),
-				startIndex, count, null, null, null, null, null));
+				startIndex, count, null, null, null, null, excludedAttributes));
 	}
 
 	@Override

@@ -73,9 +73,10 @@ export class StructureBuilderPage {
 
 	async changeFieldSettings({name}: {name?: string}) {
 		if (name) {
-			await this.page.getByLabel('Field Name').fill(name);
+			const fieldNameInput = this.page.getByLabel('Field Name');
 
-			await this.page.getByRole('tab', {name: 'General'}).click();
+			await fieldNameInput.fill(name);
+			await fieldNameInput.blur();
 		}
 	}
 
@@ -89,18 +90,19 @@ export class StructureBuilderPage {
 		name?: string;
 	}) {
 		if (erc) {
-			await this.page.getByLabel('ERC').fill(erc);
-			await this.page.getByRole('tab', {name: 'General'}).click();
+			const ercInput = this.page.getByLabel('ERC');
+			await ercInput.fill(erc);
+			await ercInput.blur();
 		}
 
 		if (label) {
 			await this.labelInput.fill(label);
-			await this.page.getByRole('tab', {name: 'General'}).click();
+			await this.labelInput.blur();
 		}
 
 		if (name) {
 			await this.nameInput.fill(name);
-			await this.page.getByRole('tab', {name: 'General'}).click();
+			await this.nameInput.blur();
 		}
 	}
 
@@ -174,7 +176,7 @@ export class StructureBuilderPage {
 		return {id};
 	}
 
-	async selectField({label, nth}: {label: string; nth?: number}) {
+	async selectField({label, nth = 0}: {label: string; nth?: number}) {
 		await clickAndExpectToBeVisible({
 			target: this.page.locator('.breadcrumb-link', {hasText: label}),
 			trigger: this.page

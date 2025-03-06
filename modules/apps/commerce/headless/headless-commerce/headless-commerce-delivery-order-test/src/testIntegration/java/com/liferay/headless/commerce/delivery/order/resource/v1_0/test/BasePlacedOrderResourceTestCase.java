@@ -2445,6 +2445,14 @@ public abstract class BasePlacedOrderResourceTestCase {
 				continue;
 			}
 
+			if (Objects.equals("shipments", additionalAssertFieldName)) {
+				if (placedOrder.getShipments() == null) {
+					valid = false;
+				}
+
+				continue;
+			}
+
 			if (Objects.equals("shippingMethod", additionalAssertFieldName)) {
 				if (placedOrder.getShippingMethod() == null) {
 					valid = false;
@@ -3021,6 +3029,17 @@ public abstract class BasePlacedOrderResourceTestCase {
 				if (!Objects.deepEquals(
 						placedOrder1.getPurchaseOrderNumber(),
 						placedOrder2.getPurchaseOrderNumber())) {
+
+					return false;
+				}
+
+				continue;
+			}
+
+			if (Objects.equals("shipments", additionalAssertFieldName)) {
+				if (!Objects.deepEquals(
+						placedOrder1.getShipments(),
+						placedOrder2.getShipments())) {
 
 					return false;
 				}
@@ -4077,6 +4096,11 @@ public abstract class BasePlacedOrderResourceTestCase {
 			}
 
 			return sb.toString();
+		}
+
+		if (entityFieldName.equals("shipments")) {
+			throw new IllegalArgumentException(
+				"Invalid entity field " + entityFieldName);
 		}
 
 		if (entityFieldName.equals("shippingMethod")) {

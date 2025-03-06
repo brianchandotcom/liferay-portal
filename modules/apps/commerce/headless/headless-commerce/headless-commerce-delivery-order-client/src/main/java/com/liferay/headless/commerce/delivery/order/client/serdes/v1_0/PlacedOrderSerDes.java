@@ -517,6 +517,16 @@ public class PlacedOrderSerDes {
 			sb.append("\"");
 		}
 
+		if (placedOrder.getShipments() != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"shipments\": ");
+
+			sb.append(String.valueOf(placedOrder.getShipments()));
+		}
+
 		if (placedOrder.getShippingMethod() != null) {
 			if (sb.length() > 1) {
 				sb.append(", ");
@@ -926,6 +936,13 @@ public class PlacedOrderSerDes {
 				String.valueOf(placedOrder.getPurchaseOrderNumber()));
 		}
 
+		if (placedOrder.getShipments() == null) {
+			map.put("shipments", null);
+		}
+		else {
+			map.put("shipments", String.valueOf(placedOrder.getShipments()));
+		}
+
 		if (placedOrder.getShippingMethod() == null) {
 			map.put("shippingMethod", null);
 		}
@@ -1132,6 +1149,9 @@ public class PlacedOrderSerDes {
 			else if (Objects.equals(
 						jsonParserFieldName, "purchaseOrderNumber")) {
 
+				return false;
+			}
+			else if (Objects.equals(jsonParserFieldName, "shipments")) {
 				return false;
 			}
 			else if (Objects.equals(jsonParserFieldName, "shippingMethod")) {
@@ -1421,6 +1441,12 @@ public class PlacedOrderSerDes {
 				if (jsonParserFieldValue != null) {
 					placedOrder.setPurchaseOrderNumber(
 						(String)jsonParserFieldValue);
+				}
+			}
+			else if (Objects.equals(jsonParserFieldName, "shipments")) {
+				if (jsonParserFieldValue != null) {
+					placedOrder.setShipments(
+						ShipmentSerDes.toDTO((String)jsonParserFieldValue));
 				}
 			}
 			else if (Objects.equals(jsonParserFieldName, "shippingMethod")) {

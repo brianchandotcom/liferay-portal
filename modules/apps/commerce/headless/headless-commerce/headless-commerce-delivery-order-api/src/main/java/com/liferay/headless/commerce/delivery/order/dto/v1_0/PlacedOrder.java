@@ -1477,6 +1477,48 @@ public class PlacedOrder implements Serializable {
 	private Supplier<String> _purchaseOrderNumberSupplier;
 
 	@Schema
+	@Valid
+	public Shipment getShipments() {
+		if (_shipmentsSupplier != null) {
+			shipments = _shipmentsSupplier.get();
+
+			_shipmentsSupplier = null;
+		}
+
+		return shipments;
+	}
+
+	public void setShipments(Shipment shipments) {
+		this.shipments = shipments;
+
+		_shipmentsSupplier = null;
+	}
+
+	@JsonIgnore
+	public void setShipments(
+		UnsafeSupplier<Shipment, Exception> shipmentsUnsafeSupplier) {
+
+		_shipmentsSupplier = () -> {
+			try {
+				return shipmentsUnsafeSupplier.get();
+			}
+			catch (RuntimeException runtimeException) {
+				throw runtimeException;
+			}
+			catch (Exception exception) {
+				throw new RuntimeException(exception);
+			}
+		};
+	}
+
+	@GraphQLField
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	protected Shipment shipments;
+
+	@JsonIgnore
+	private Supplier<Shipment> _shipmentsSupplier;
+
+	@Schema
 	public String getShippingMethod() {
 		if (_shippingMethodSupplier != null) {
 			shippingMethod = _shippingMethodSupplier.get();
@@ -2362,6 +2404,18 @@ public class PlacedOrder implements Serializable {
 			sb.append(_escape(purchaseOrderNumber));
 
 			sb.append("\"");
+		}
+
+		Shipment shipments = getShipments();
+
+		if (shipments != null) {
+			if (sb.length() > 1) {
+				sb.append(", ");
+			}
+
+			sb.append("\"shipments\": ");
+
+			sb.append(String.valueOf(shipments));
 		}
 
 		String shippingMethod = getShippingMethod();

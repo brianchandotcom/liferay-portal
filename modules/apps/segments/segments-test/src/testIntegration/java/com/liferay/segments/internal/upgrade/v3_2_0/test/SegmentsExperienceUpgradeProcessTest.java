@@ -16,11 +16,11 @@ import com.liferay.layout.page.template.service.LayoutPageTemplateStructureRelLo
 import com.liferay.layout.test.util.ContentLayoutTestUtil;
 import com.liferay.layout.test.util.LayoutTestUtil;
 import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBInspector;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
+import com.liferay.portal.kernel.dao.db.DBType;
 import com.liferay.portal.kernel.dao.db.IndexMetadata;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.model.Group;
@@ -358,11 +358,19 @@ public class SegmentsExperienceUpgradeProcessTest
 			indexMetadataList.addAll(
 				_db.dropIndexes(connection, tableName, columnName));
 
-			_db.runSQLTemplate(
-				StringBundler.concat(
-					"alter table ", tableName, " rename column ", columnName,
-					" to ", newColumnName, StringPool.SEMICOLON),
-				true);
+			// Special alter for reserved words like SYSTEM in MySQL
+
+			if (DBManagerUtil.getDBType() == DBType.MYSQL) {
+				_db.runSQLTemplate(
+					StringBundler.concat(
+						"alter table ", tableName, " change `", columnName,
+						"` ", columnName, " LONG"),
+					true);
+
+				return indexMetadataList;
+			}
+
+			_db.alterColumnName(connection, tableName, columnName, columnName);
 
 			return indexMetadataList;
 		}

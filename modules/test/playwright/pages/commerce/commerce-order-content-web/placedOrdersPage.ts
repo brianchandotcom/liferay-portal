@@ -18,6 +18,9 @@ export class PlacedOrdersPage extends CommerceDNDTablePage {
 	readonly layoutsPage: CommerceLayoutsPage;
 	readonly optionsButton: Locator;
 	readonly orderAccountName: (accountName: string) => Locator;
+	readonly orderCell: (orderId: string) => Locator;
+	readonly orderColumn: (rowIndex: number, rowColumn: number) => Locator;
+	readonly orderDateSortButton: Locator;
 	readonly orderItemActionsButton: Locator;
 	readonly orderItemActionsButtonEdit: Locator;
 	readonly page: Page;
@@ -65,6 +68,12 @@ export class PlacedOrdersPage extends CommerceDNDTablePage {
 			.getByLabel('Options');
 		this.orderAccountName = (accountName: string) =>
 			page.getByText(accountName);
+		this.orderCell = (orderId) => page.getByRole('cell', {name: orderId});
+		this.orderColumn = (rowIndex, colIndex) =>
+			page.getByRole('row').nth(rowIndex).locator('td').nth(colIndex);
+		this.orderDateSortButton = page
+			.getByRole('columnheader', {name: 'Order Date'})
+			.getByRole('button');
 		this.orderItemActionsButton = page.getByRole('button', {
 			name: 'Actions',
 		});

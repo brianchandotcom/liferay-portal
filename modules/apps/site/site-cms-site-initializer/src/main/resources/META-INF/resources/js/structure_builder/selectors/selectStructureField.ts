@@ -3,11 +3,10 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {State} from '../contexts/StateContext';
-import {Field} from '../utils/field';
+import {State, Uuid} from '../contexts/StateContext';
 
-export default function selectStructureField(name: Field['name']) {
+export default function selectStructureField(uuid: Uuid) {
 	return (state: State) => {
-		return state.fields.get(name);
+		return state.fields.get(uuid);
 	};
 }

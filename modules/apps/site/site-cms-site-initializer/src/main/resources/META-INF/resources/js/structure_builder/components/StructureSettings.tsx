@@ -18,6 +18,7 @@ import selectStructureERC from '../selectors/selectStructureERC';
 import selectStructureError from '../selectors/selectStructureError';
 import selectStructureLabel from '../selectors/selectStructureLabel';
 import selectStructureName from '../selectors/selectStructureName';
+import selectStructureUuid from '../selectors/selectStructureUuid';
 import {getImage} from '../utils/getImage';
 import ERCInput from './ERCInput';
 import Input from './Input';
@@ -25,17 +26,19 @@ import StructureFieldSettings from './StructureFieldSettings';
 
 export default function () {
 	const selection = useSelector(selectSelection);
+	const structureUuid = useSelector(selectStructureUuid);
 
-	if (!selection.length) {
-		return <StructureSettings />;
-	}
-	else if (selection.length > 1) {
+	if (selection.length > 1) {
 		return <MultiselectionState />;
 	}
 
-	const [fieldName] = selection;
+	const [uuid] = selection;
 
-	return <StructureFieldSettings fieldName={fieldName} key={fieldName} />;
+	if (!uuid || uuid === structureUuid) {
+		return <StructureSettings />;
+	}
+
+	return <StructureFieldSettings key={uuid} uuid={uuid} />;
 }
 
 function StructureSettings() {

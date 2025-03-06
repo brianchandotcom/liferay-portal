@@ -16,16 +16,20 @@ import {
 	Field,
 	FieldType,
 } from '../../structure_builder/utils/field';
-import {State, useSelector, useStateDispatch} from '../contexts/StateContext';
+import {
+	State,
+	Uuid,
+	useSelector,
+	useStateDispatch,
+} from '../contexts/StateContext';
 import selectSelection from '../selectors/selectSelection';
 import selectStructureLocalizedLabel from '../selectors/selectStructureLocalizedLabel';
-
-const ROOT_ID = '';
+import selectStructureUuid from '../selectors/selectStructureUuid';
 
 type TreeItem = {
 	children?: TreeItem[];
 	icon: string;
-	id: string;
+	id: Uuid;
 	label: string;
 	name?: string;
 	type?: FieldType;
@@ -36,34 +40,35 @@ export default function FieldsTree({fields}: {fields: Field[]}) {
 
 	const selection = useSelector(selectSelection);
 	const structureLabel = useSelector(selectStructureLocalizedLabel);
+	const structureUuid = useSelector(selectStructureUuid);
 
-	const mode = useSelectionMode(selection);
+	const mode = useSelectionMode();
 
 	const items: TreeItem[] = useMemo(() => {
 		return [
 			{
 				children: fields.map((field) => ({
 					icon: FIELD_TYPE_ICON[field.type],
-					id: field.name,
+					id: field.uuid,
 					label: field.label[
 						Liferay.ThemeDisplay.getDefaultLanguageId()
 					]!,
 					type: field.type,
 				})),
 				icon: 'edit-layout',
-				id: ROOT_ID,
+				id: structureUuid,
 				label: structureLabel,
 			},
 		];
-	}, [fields, structureLabel]);
+	}, [fields, structureLabel, structureUuid]);
 
 	const onSelect = (item: TreeItem) => {
 		let nextSelection: State['selection'] = selection;
 
 		// Item is root
 
-		if (!item.id) {
-			nextSelection = [];
+		if (item.id === structureUuid) {
+			nextSelection = [structureUuid];
 		}
 
 		// Selecting with selection
@@ -75,7 +80,10 @@ export default function FieldsTree({fields}: {fields: Field[]}) {
 		// Selecting with multiple selection
 
 		else if (mode === 'multiple' && !selection.includes(item.id)) {
-			nextSelection = [...selection, item.id];
+			nextSelection = [
+				...selection.filter((uuid) => uuid !== structureUuid),
+				item.id,
+			];
 		}
 
 		// Deselecting with multiple selection
@@ -94,20 +102,20 @@ export default function FieldsTree({fields}: {fields: Field[]}) {
 		});
 	};
 
-	const deleteField = (fieldName: string) =>
+	const deleteField = (uuid: Uuid) =>
 		dispatch({
-			fieldName,
 			type: 'delete-field',
+			uuid,
 		});
 
 	return (
 		<ClayTreeView
 			className="px-4 structure-builder__fields-tree"
-			defaultExpandedKeys={new Set([ROOT_ID])}
+			defaultExpandedKeys={new Set([structureUuid])}
 			items={items}
 			nestedKey="children"
 			onSelect={onSelect}
-			selectedKeys={new Set(selection.length ? selection : [ROOT_ID])}
+			selectedKeys={new Set(selection)}
 			selectionMode={mode}
 			showExpanderOnHover={false}
 		>
@@ -174,7 +182,7 @@ export default function FieldsTree({fields}: {fields: Field[]}) {
 	);
 }
 
-function useSelectionMode(selection: State['selection']) {
+function useSelectionMode() {
 	const [multiple, setMultiple] = useState(false);
 
 	useEventListener(
@@ -208,10 +216,6 @@ function useSelectionMode(selection: State['selection']) {
 
 		window
 	);
-
-	if (!selection.length) {
-		return 'single';
-	}
 
 	return multiple ? 'multiple' : 'single';
 }

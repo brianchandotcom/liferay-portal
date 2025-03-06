@@ -30,13 +30,13 @@ export default function MaxLengthInput({field}: {field: Field}) {
 
 						if (!value) {
 							dispatch({
-								name: field.name,
 								settings: {
 									...maxLengthSettingsField.settings,
 									maxLength: undefined,
 									showCounter: undefined,
 								},
 								type: 'update-field',
+								uuid: field.uuid,
 							});
 						}
 					}}
@@ -63,13 +63,13 @@ export default function MaxLengthInput({field}: {field: Field}) {
 						)}
 						onValueChange={(value) => {
 							dispatch({
-								name: field.name,
 								settings: {
 									...maxLengthSettingsField.settings,
 									maxLength: parseInt(value, 10),
 									showCounter: true,
 								},
 								type: 'update-field',
+								uuid: field.uuid,
 							});
 						}}
 						required

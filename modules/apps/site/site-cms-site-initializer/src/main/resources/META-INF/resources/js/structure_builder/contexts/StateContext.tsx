@@ -16,21 +16,25 @@ import React, {
 import {Field} from '../utils/field';
 import findAvailableFieldName from '../utils/findAvailableFieldName';
 import getRandomId from '../utils/getRandomId';
+import getUuid from '../utils/getUuid';
 
 const DEFAULT_STRUCTURE_LABEL = Liferay.Language.get('untitled-structure');
 
 type Status = 'new' | 'draft' | 'published';
 
+export type Uuid = string & {__brand: 'Uuid'};
+
 export type State = {
 	erc: string;
 	error: string | null;
-	fields: Map<string, Field>;
+	fields: Map<Uuid, Field>;
 	id: number | null;
 	label: Liferay.Language.LocalizedValue<string>;
 	name: string;
 	publishedFields: Set<Field['name']>;
-	selection: Field['name'][];
+	selection: Uuid[];
 	status: Status;
+	uuid: Uuid;
 };
 
 const INITIAL_STATE: State = {
@@ -45,6 +49,7 @@ const INITIAL_STATE: State = {
 	publishedFields: new Set(),
 	selection: [],
 	status: 'new',
+	uuid: getUuid(),
 };
 
 type AddFieldAction = {field: Field; type: 'add-field'};
@@ -55,7 +60,7 @@ type CreateStructureAction = {
 	type: 'create-structure';
 };
 
-type DeleteFieldAction = {fieldName: Field['name']; type: 'delete-field'};
+type DeleteFieldAction = {type: 'delete-field'; uuid: Uuid};
 
 type DeleteSelectionAction = {type: 'delete-selection'};
 
@@ -82,11 +87,12 @@ type UpdateFieldAction = {
 	indexableConfig?: Field['indexableConfig'];
 	label?: Liferay.Language.LocalizedValue<string>;
 	localized?: boolean;
-	name: string;
+	name?: string;
 	newName?: string;
 	required?: boolean;
 	settings?: Field['settings'];
 	type: 'update-field';
+	uuid: Uuid;
 };
 
 type UpdateStructureAction = {
@@ -117,7 +123,7 @@ function reducer(state: State, action: Action): State {
 
 			const nextFields = new Map(state.fields);
 
-			nextFields.set(name, {...field, name});
+			nextFields.set(field.uuid, {...field, name});
 
 			return {...state, fields: nextFields};
 		}
@@ -131,15 +137,15 @@ function reducer(state: State, action: Action): State {
 			};
 		}
 		case 'delete-field': {
-			const {fieldName} = action;
+			const {uuid} = action;
 
 			const nextFields = new Map(state.fields);
 
-			nextFields.delete(fieldName);
+			nextFields.delete(uuid);
 
 			let nextState = {...state, fields: nextFields};
 
-			if (state.selection.includes(fieldName)) {
+			if (state.selection.includes(uuid)) {
 				nextState = {
 					...nextState,
 					selection: INITIAL_STATE.selection,
@@ -202,14 +208,14 @@ function reducer(state: State, action: Action): State {
 				label,
 				localized,
 				name,
-				newName,
 				required,
 				settings,
+				uuid,
 			} = action;
 
-			const nextFields = new Map(state.fields);
+			const nextFields: State['fields'] = new Map(state.fields);
 
-			const field = nextFields.get(name);
+			const field = nextFields.get(uuid);
 
 			if (!field) {
 				return state;
@@ -221,21 +227,17 @@ function reducer(state: State, action: Action): State {
 				indexableConfig: indexableConfig ?? field.indexableConfig,
 				label: label ?? field.label,
 				localized: localized ?? field.localized,
-				name: newName ?? field.name,
+				name: name ?? field.name,
 				required: required ?? field.required,
 				settings: settings ?? field.settings,
 			};
 
-			if (newName) {
-				nextFields.delete(name);
-			}
-
-			nextFields.set(nextField.name, nextField);
+			nextFields.set(nextField.uuid, nextField);
 
 			return {
 				...state,
 				fields: nextFields,
-				selection: [nextField.name],
+				selection: [nextField.uuid],
 			};
 		}
 		case 'update-structure': {

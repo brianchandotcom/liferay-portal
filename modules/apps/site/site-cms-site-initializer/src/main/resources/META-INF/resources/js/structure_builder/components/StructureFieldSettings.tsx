@@ -13,26 +13,21 @@ import ClayTabs from '@clayui/tabs';
 import {InputLocalized, useId} from 'frontend-js-components-web';
 import React, {useMemo, useState} from 'react';
 
-import {useSelector, useStateDispatch} from '../contexts/StateContext';
+import {Uuid, useSelector, useStateDispatch} from '../contexts/StateContext';
 import selectPublishedFields from '../selectors/selectPublishedFields';
 import selectStructureError from '../selectors/selectStructureError';
 import selectStructureField from '../selectors/selectStructureField';
 import selectStructureLocalizedLabel from '../selectors/selectStructureLocalizedLabel';
-import selectStructureStatus from '../selectors/selectStructureStatus';
 import {FIELD_TYPE_LABEL, Field} from '../utils/field';
 import getFieldComponents from '../utils/getFieldComponents';
 import {isFieldTextSearchable} from '../utils/isFieldTextSearchable';
 import ERCInput from './ERCInput';
 import Input from './Input';
 
-export default function StructureFieldSettings({
-	fieldName,
-}: {
-	fieldName: Field['name'];
-}) {
+export default function StructureFieldSettings({uuid}: {uuid: Uuid}) {
 	const dispatch = useStateDispatch();
 	const error = useSelector(selectStructureError);
-	const field = useSelector(selectStructureField(fieldName));
+	const field = useSelector(selectStructureField(uuid));
 	const structureLabel = useSelector(selectStructureLocalizedLabel);
 
 	return (
@@ -96,11 +91,9 @@ export default function StructureFieldSettings({
 function GeneralTab({field}: {field: Field}) {
 	const dispatch = useStateDispatch();
 
-	const status = useSelector(selectStructureStatus);
 	const publishedFields = useSelector(selectPublishedFields);
 
-	const isPublished =
-		status === 'published' && publishedFields.has(field.name);
+	const isPublished = publishedFields.has(field.uuid);
 
 	const [label, setLabel] = useState<Liferay.Language.LocalizedValue<string>>(
 		field.label
@@ -130,9 +123,9 @@ function GeneralTab({field}: {field: Field}) {
 					label={Liferay.Language.get('field-name')}
 					onValueChange={(value) => {
 						dispatch({
-							name: field.name,
-							newName: value,
+							name: value,
 							type: 'update-field',
+							uuid: field.uuid,
 						});
 					}}
 					required
@@ -145,8 +138,8 @@ function GeneralTab({field}: {field: Field}) {
 					onBlur={() => {
 						dispatch({
 							label,
-							name: field.name,
 							type: 'update-field',
+							uuid: field.uuid,
 						});
 					}}
 					onChange={(label) => setLabel(label)}
@@ -167,9 +160,9 @@ function GeneralTab({field}: {field: Field}) {
 						label={Liferay.Language.get('mandatory')}
 						onToggle={(value) => {
 							dispatch({
-								name: field.name,
 								required: value,
 								type: 'update-field',
+								uuid: field.uuid,
 							});
 						}}
 						toggled={field.required}
@@ -183,8 +176,8 @@ function GeneralTab({field}: {field: Field}) {
 						onToggle={(value) => {
 							dispatch({
 								localized: value,
-								name: field.name,
 								type: 'update-field',
+								uuid: field.uuid,
 							});
 						}}
 						toggled={field.localized}
@@ -199,8 +192,8 @@ function GeneralTab({field}: {field: Field}) {
 					onValueChange={(value) => {
 						dispatch({
 							erc: value,
-							name: field.name,
 							type: 'update-field',
+							uuid: field.uuid,
 						});
 					}}
 					value={field.erc}
@@ -234,8 +227,8 @@ function SearchTab({field}: {field: Field}) {
 								indexedLanguageId:
 									Liferay.ThemeDisplay.getDefaultLanguageId(),
 							},
-							name: field.name,
 							type: 'update-field',
+							uuid: field.uuid,
 						});
 					}}
 					toggled={field.indexableConfig.indexed}
@@ -267,8 +260,8 @@ function SearchTab({field}: {field: Field}) {
 												? undefined
 												: Liferay.ThemeDisplay.getDefaultLanguageId(),
 									},
-									name: field.name,
 									type: 'update-field',
+									uuid: field.uuid,
 								});
 							}}
 						>
@@ -299,8 +292,8 @@ function SearchTab({field}: {field: Field}) {
 										indexedLanguageId:
 											indexedLanguageId as Liferay.Language.Locale,
 									},
-									name: field.name,
 									type: 'update-field',
+									uuid: field.uuid,
 								});
 							}}
 							selectedKey={

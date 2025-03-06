@@ -3,7 +3,9 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
+import {Uuid} from '../contexts/StateContext';
 import getRandomId from './getRandomId';
+import getUuid from './getUuid';
 import normalizeName from './normalizeName';
 
 // Constants
@@ -109,6 +111,7 @@ type BaseField = {
 	localized: boolean;
 	name: string;
 	required: boolean;
+	uuid: Uuid;
 };
 
 export type UniqueValuesSettingsField = {
@@ -190,6 +193,7 @@ export function getDefaultField(type: FieldType): Field {
 		name: normalizeName(type),
 		required: false,
 		settings: {},
+		uuid: getUuid(),
 	};
 
 	if (type === 'datetime') {

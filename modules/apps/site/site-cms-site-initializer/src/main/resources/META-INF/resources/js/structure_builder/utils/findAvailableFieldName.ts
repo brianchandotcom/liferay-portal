@@ -9,13 +9,16 @@ export default function findAvailableFieldName(
 	fields: State['fields'],
 	name: string
 ) {
-	if (!fields.get(name)) {
+	const exists = (name: string) =>
+		[...fields.values()].some((item) => item.name === name);
+
+	if (!exists(name)) {
 		return name;
 	}
 
 	let i = 1;
 
-	while (fields.get(`${name}${i}`)) {
+	while (exists(`${name}${i}`)) {
 		i++;
 	}
 

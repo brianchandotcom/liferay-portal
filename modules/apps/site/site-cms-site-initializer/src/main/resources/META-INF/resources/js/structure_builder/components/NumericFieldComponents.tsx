@@ -8,7 +8,6 @@ import React from 'react';
 
 import {useSelector, useStateDispatch} from '../contexts/StateContext';
 import selectPublishedFields from '../selectors/selectPublishedFields';
-import selectStructureStatus from '../selectors/selectStructureStatus';
 import {Field, NumericField} from '../utils/field';
 
 export default function getNumericFieldComponents(): {
@@ -24,11 +23,9 @@ function SecondSectionComponent({field}: {field: Field}) {
 	const numericField = field as NumericField;
 
 	const dispatch = useStateDispatch();
-	const status = useSelector(selectStructureStatus);
 	const publishedFields = useSelector(selectPublishedFields);
 
-	const isPublished =
-		status === 'published' && publishedFields.has(field.name);
+	const isPublished = publishedFields.has(field.uuid);
 
 	return (
 		<ClayForm.Group className="mb-3">
@@ -37,12 +34,12 @@ function SecondSectionComponent({field}: {field: Field}) {
 				label={Liferay.Language.get('accept-unique-values-only')}
 				onToggle={(value) => {
 					dispatch({
-						name: field.name,
 						settings: {
 							...numericField.settings,
 							uniqueValues: value,
 						},
 						type: 'update-field',
+						uuid: field.uuid,
 					});
 				}}
 				toggled={numericField.settings.uniqueValues}

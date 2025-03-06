@@ -12,7 +12,6 @@ import React from 'react';
 
 import {useSelector, useStateDispatch} from '../contexts/StateContext';
 import selectPublishedFields from '../selectors/selectPublishedFields';
-import selectStructureStatus from '../selectors/selectStructureStatus';
 import {Field, UploadField} from '../utils/field';
 import Input from './Input';
 
@@ -42,11 +41,9 @@ function FirstSectionComponent({field}: {field: Field}) {
 	const uploadField = field as UploadField;
 
 	const dispatch = useStateDispatch();
-	const status = useSelector(selectStructureStatus);
 	const publishedFields = useSelector(selectPublishedFields);
 
-	const isPublished =
-		status === 'published' && publishedFields.has(field.name);
+	const isPublished = publishedFields.has(field.uuid);
 
 	const id = useId();
 
@@ -71,7 +68,6 @@ function FirstSectionComponent({field}: {field: Field}) {
 					items={FILE_SOURCE_OPTIONS}
 					onSelectionChange={(fileSource: React.Key) => {
 						dispatch({
-							name: field.name,
 							settings: {
 								acceptedFileExtensions:
 									uploadField.settings.acceptedFileExtensions,
@@ -80,6 +76,7 @@ function FirstSectionComponent({field}: {field: Field}) {
 									uploadField.settings.maximumFileSize,
 							},
 							type: 'update-field',
+							uuid: field.uuid,
 						});
 					}}
 					selectedKey={uploadField.settings.fileSource}
@@ -97,7 +94,6 @@ function FirstSectionComponent({field}: {field: Field}) {
 						)}
 						onToggle={(value) => {
 							dispatch({
-								name: field.name,
 								settings: {
 									...uploadField.settings,
 									showFilesInDocumentsAndMedia: value,
@@ -105,6 +101,7 @@ function FirstSectionComponent({field}: {field: Field}) {
 										'/' + Liferay.Language.get('new'),
 								},
 								type: 'update-field',
+								uuid: field.uuid,
 							});
 						}}
 						toggled={
@@ -126,12 +123,12 @@ function FirstSectionComponent({field}: {field: Field}) {
 					label={Liferay.Language.get('storage-folder')}
 					onValueChange={(value) => {
 						dispatch({
-							name: field.name,
 							settings: {
 								...uploadField.settings,
 								storageDLFolderPath: value,
 							},
 							type: 'update-field',
+							uuid: field.uuid,
 						});
 					}}
 					value={uploadField.settings.storageDLFolderPath!}
@@ -142,12 +139,12 @@ function FirstSectionComponent({field}: {field: Field}) {
 				label={Liferay.Language.get('accepted-file-extensions')}
 				onValueChange={(value) => {
 					dispatch({
-						name: field.name,
 						settings: {
 							...uploadField.settings,
 							acceptedFileExtensions: value,
 						},
 						type: 'update-field',
+						uuid: field.uuid,
 					});
 				}}
 				value={uploadField.settings.acceptedFileExtensions}
@@ -157,12 +154,12 @@ function FirstSectionComponent({field}: {field: Field}) {
 				label={Liferay.Language.get('maximum-file-size')}
 				onValueChange={(value) => {
 					dispatch({
-						name: field.name,
 						settings: {
 							...uploadField.settings,
 							maximumFileSize: parseInt(value, 10),
 						},
 						type: 'update-field',
+						uuid: field.uuid,
 					});
 				}}
 				value={String(uploadField.settings.maximumFileSize)}

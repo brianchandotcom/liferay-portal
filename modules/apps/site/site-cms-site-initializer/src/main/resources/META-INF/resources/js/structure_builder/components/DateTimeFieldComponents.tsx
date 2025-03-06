@@ -11,7 +11,6 @@ import React from 'react';
 
 import {useSelector, useStateDispatch} from '../contexts/StateContext';
 import selectPublishedFields from '../selectors/selectPublishedFields';
-import selectStructureStatus from '../selectors/selectStructureStatus';
 import {DateTimeField, Field} from '../utils/field';
 
 const TIME_STORAGE_OPTIONS = [
@@ -38,11 +37,9 @@ function FirstSectionComponent({field}: {field: Field}) {
 	const dateTimeField = field as DateTimeField;
 
 	const dispatch = useStateDispatch();
-	const status = useSelector(selectStructureStatus);
 	const publishedFields = useSelector(selectPublishedFields);
 
-	const isPublished =
-		status === 'published' && publishedFields.has(field.name);
+	const isPublished = publishedFields.has(field.uuid);
 
 	const id = useId();
 
@@ -75,11 +72,11 @@ function FirstSectionComponent({field}: {field: Field}) {
 				items={TIME_STORAGE_OPTIONS}
 				onSelectionChange={(timeStorage: React.Key) => {
 					dispatch({
-						name: field.name,
 						settings: {
 							timeStorage,
 						},
 						type: 'update-field',
+						uuid: field.uuid,
 					});
 				}}
 				selectedKey={dateTimeField.settings.timeStorage}

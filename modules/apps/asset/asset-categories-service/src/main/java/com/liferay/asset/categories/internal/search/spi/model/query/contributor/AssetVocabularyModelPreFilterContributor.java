@@ -40,6 +40,19 @@ public class AssetVocabularyModelPreFilterContributor
 				visibilityTypesTermsFilter, BooleanClauseOccur.MUST);
 		}
 
+		long[] classNameIds = (long[])searchContext.getAttribute(
+			"classNameIds");
+
+		if (ArrayUtil.isNotEmpty(classNameIds)) {
+			TermsFilter classNameIdsTermsFilter = new TermsFilter(
+				"classNameIds");
+
+			classNameIdsTermsFilter.addValues(
+				ArrayUtil.toStringArray(classNameIds));
+
+			booleanFilter.add(classNameIdsTermsFilter, BooleanClauseOccur.MUST);
+		}
+
 		long[] groupIds = (long[])searchContext.getAttribute("groupIds");
 
 		if (ArrayUtil.isNotEmpty(groupIds)) {

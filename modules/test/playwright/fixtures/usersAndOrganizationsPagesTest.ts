@@ -26,6 +26,7 @@ import {UserPersonalSitePage} from '../pages/users-admin-web/UserPersonalSitePag
 import {UsersAndOrganizationsPage} from '../pages/users-admin-web/UsersAndOrganizationsPage';
 import {DocumentLibraryPage} from '../pages/users-admin-web/document-library-web/DocumentLibraryPage';
 import {SiteMembershipsPage} from '../pages/users-admin-web/site-admin-web/SiteMembershipsPage';
+import {TagsEditPage} from '../tests/asset-tags-admin-web/pages/TagsEditPage';
 import {NotificationsPage} from '../tests/notifications-web/pages/NotificationsPage';
 
 const usersAndOrganizationsPagesTest = test.extend<{
@@ -41,6 +42,7 @@ const usersAndOrganizationsPagesTest = test.extend<{
 	siteConfigurationDetailsPage: SiteConfigurationDetailsPage;
 	siteMembershipsPage: SiteMembershipsPage;
 	siteSettingsPage: SiteSettingsPage;
+	tagsEditPage: TagsEditPage;
 	teamsPage: TeamsPage;
 	userAssociatedDataBlogPage: UserAssociatedDataBlogPage;
 	userAssociatedDataDocumentLibraryPage: UserAssociatedDataDocumentLibraryPage;
@@ -87,6 +89,9 @@ const usersAndOrganizationsPagesTest = test.extend<{
 	},
 	siteSettingsPage: async ({page}, use) => {
 		await use(new SiteSettingsPage(page));
+	},
+	tagsEditPage: async ({page}, use) => {
+		await use(new TagsEditPage(page));
 	},
 	teamsPage: async ({page}, use) => {
 		await use(new TeamsPage(page));

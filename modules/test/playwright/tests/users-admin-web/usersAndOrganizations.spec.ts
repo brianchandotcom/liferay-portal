@@ -1153,3 +1153,61 @@ test(
 		).not.toBeVisible();
 	}
 );
+
+test(
+	'Only global tag can be associated to user',
+	{tag: ['@LPD-50770', '@LPS-111656']},
+	async ({
+		apiHelpers,
+		editUserPage,
+		page,
+		tagsEditPage,
+		usersAndOrganizationsPage,
+	}) => {
+		const tags = [
+			{name: getRandomString(), siteUrl: '/global'},
+			{name: getRandomString(), siteUrl: '/global'},
+			{name: getRandomString(), siteUrl: '/guest'},
+		];
+
+		for (const {name, siteUrl} of tags) {
+			await tagsEditPage.add(name, siteUrl);
+		}
+
+		const userAccount =
+			await apiHelpers.headlessAdminUser.postUserAccount();
+
+		await usersAndOrganizationsPage.goToUsers();
+		await (
+			await usersAndOrganizationsPage.usersTableRowLink(
+				userAccount.alternateName
+			)
+		).click();
+
+		await editUserPage.selectTagsButton.click();
+		await editUserPage.selectTag([tags[0].name, tags[1].name]);
+
+		await expect(editUserPage.tagInput(tags[0].name)).toBeVisible();
+		await expect(editUserPage.tagInput(tags[1].name)).toBeVisible();
+		await expect(editUserPage.tagInput(tags[2].name)).toHaveCount(0);
+
+		await editUserPage.saveButton.click();
+
+		await waitForAlert(page);
+
+		await editUserPage.membershipsLink.click();
+		await editUserPage.saveButton.click();
+
+		await waitForAlert(page);
+
+		await usersAndOrganizationsPage.goToUsers();
+		await (
+			await usersAndOrganizationsPage.usersTableRowLink(
+				userAccount.alternateName
+			)
+		).click();
+
+		await expect(editUserPage.tagInput(tags[0].name)).toBeVisible();
+		await expect(editUserPage.tagInput(tags[1].name)).toBeVisible();
+	}
+);

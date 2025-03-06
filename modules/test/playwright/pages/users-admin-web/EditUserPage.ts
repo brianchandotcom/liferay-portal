@@ -14,6 +14,7 @@ export class EditUserPage {
 	readonly cancelButton: Locator;
 	readonly confirmButton: Locator;
 	readonly customField: (fieldName: string) => Promise<Locator>;
+	readonly doneButton: Locator;
 	readonly emailAddressError: Locator;
 	readonly emailAddressInput: Locator;
 	readonly firstNameInput: Locator;
@@ -86,7 +87,11 @@ export class EditUserPage {
 		strictEqual?: boolean
 	) => Promise<{column: Locator; row: Locator}>;
 	readonly selectSitesTableRowButton: (siteName: string) => Promise<Locator>;
+	readonly selectTagsButton: Locator;
 	readonly selectUserLanguage: Locator;
+	readonly tagCheckbox: (tagName: string) => Locator;
+	readonly tagInput: (name: string) => Locator;
+	readonly tagsFrame: FrameLocator;
 	readonly userIDInput: Locator;
 	readonly webDAVPasswordLabel: Locator;
 	readonly yourPasswordInput: Locator;
@@ -118,6 +123,7 @@ export class EditUserPage {
 
 			throw new Error(`Cannot locate Custom Field ${fieldName}`);
 		};
+		this.doneButton = page.getByRole('button', {name: 'Done'});
 		this.emailAddressError = page
 			.locator(
 				'#_com_liferay_account_admin_web_internal_portlet_AccountEntriesAdminPortlet_emailAddressHelper'
@@ -328,7 +334,13 @@ export class EditUserPage {
 
 			throw new Error(`Cannot locate user row with siteName ${siteName}`);
 		};
+		this.selectTagsButton = page
+			.getByLabel('Select Tags')
+			.and(page.getByRole('button'));
 		this.selectUserLanguage = page.getByLabel('Language');
+		this.tagCheckbox = (tagName) => this.tagsFrame.getByLabel(tagName);
+		this.tagInput = (name) => page.getByRole('row', {name});
+		this.tagsFrame = page.frameLocator(`iframe[title="Tags"]`);
 		this.userIDInput = page.getByLabel('User ID');
 		this.webDAVPasswordLabel = page.locator(
 			'#_com_liferay_users_admin_web_portlet_UsersAdminPortlet_webDAVPassword'
@@ -340,5 +352,13 @@ export class EditUserPage {
 		);
 		this.yourPasswordInput =
 			this.passwordConfirmationFrame.getByLabel('Your Password');
+	}
+
+	async selectTag(tagNames: Array<string>) {
+		for (const tagName of tagNames) {
+			await this.tagCheckbox(tagName).check();
+		}
+
+		await this.doneButton.click();
 	}
 }

@@ -168,6 +168,7 @@ definition {
 	@priority = 5
 	@refactordone
 	test ViewDMArchive701015 {
+		property custom.properties = "passwords.encryption.algorithm.legacy=PBKDF2WithHmacSHA1/160/128000";
 		property data.archive.type = "data-archive-documents-and-media";
 		property portal.version = "7.0.10.15";
 

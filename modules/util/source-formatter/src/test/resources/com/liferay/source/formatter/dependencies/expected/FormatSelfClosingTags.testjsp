@@ -44,11 +44,6 @@
 		<command />
 		<command />
 
-		<embed src="/i/helloworld1.swf" />
-		<embed src="/i/helloworld2.swf" />
-		<embed src="/i/helloworld3.swf" />
-		<embed src="/i/helloworld4.swf" />
-
 		<hr />
 		<hr />
 		<hr />
@@ -80,12 +75,6 @@
 		<link href="<%= blogsEntryURL.toString() %>" rel="prev" />
 		<link href="<%= blogsEntryURL.toString() %>" rel="prev" />
 		<link href="<%= blogsEntryURL.toString() %>" rel="prev" /><div></div><link href="" />
-
-		<object classid="clsid:F08DF954-8592-11D1-B16A-00C0F0283628" height="50" id="Slider1" width="100">
-			<param name="BorderStyle" value="1" />
-			<param name="MousePointer" value="0" />
-			<param name="Enabled" value="1" />
-		</object>
 
 		<video autoplay="" class="background-video-1">
 			<source src="https://www.liferay.com/documents/10182/13225/homepage+video+banner+%28webm%29/695f8e49-b5ec-45aa-b27c-e294463fd2f6" type="video/webm" />

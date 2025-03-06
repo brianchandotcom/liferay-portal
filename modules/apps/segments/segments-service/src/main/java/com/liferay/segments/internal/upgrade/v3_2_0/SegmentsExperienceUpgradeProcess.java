@@ -28,6 +28,12 @@ public class SegmentsExperienceUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		String fragmentEntryLinkColumnName = "plid";
+
+		if (!hasColumn("FragmentEntryLink", "plid")) {
+			fragmentEntryLinkColumnName = "classPK";
+		}
+
 		String layoutPageTemplateStructureColumnName = "plid";
 
 		if (!hasColumn("LayoutPageTemplateStructure", "plid")) {
@@ -51,9 +57,11 @@ public class SegmentsExperienceUpgradeProcess extends UpgradeProcess {
 			 PreparedStatement preparedStatement3 =
 				 AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					 connection,
-					 	"update FragmentEntryLink set segmentsExperienceId = " +
-							"? where ctCollectionId = ? and " +
-						"segmentsExperienceId = ? and plid = ?");
+					 StringBundler.concat(
+						 "update FragmentEntryLink set segmentsExperienceId = ",
+						 "? where ctCollectionId = ? and segmentsExperienceId ",
+						 "= ? and ",
+						 fragmentEntryLinkColumnName, " = ?"));
 			 PreparedStatement preparedStatement4 =
 				 AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					 connection,

@@ -133,7 +133,7 @@ testFlagsEnabled(
 
 		await webContentDisplayPage.addWebContentWithDisplay(
 			webContentName,
-			'widget',
+			'widget'
 		);
 
 		await apiHelpers.jsonWebServicesStaging.enableLocalStaging({

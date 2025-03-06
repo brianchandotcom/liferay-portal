@@ -30,35 +30,93 @@ test.beforeEach(async ({ckeditorSamplePage, site}) => {
 });
 
 test(
-	'Assert editor is rendered and EditorConfigContributor is applied',
+	'Assert editor is rendered with features based on configuration',
 	{tag: '@LPD-11235'},
 	async ({page}) => {
-		expect(page.getByText('Lorem ipsum dolor sit amet')).toBeVisible();
+		await test.step('Check initial UI', async () => {
+			await expect(
+				page.getByText('Lorem ipsum dolor sit amet')
+			).toBeVisible();
 
-		expect(
-			page.locator(
-				'p[data-placeholder="This placeholder is set from EditorConfigContributor."]'
-			)
-		).toBeAttached();
-	}
-);
+			await expect(
+				page.locator(
+					'p[data-placeholder="This placeholder is set from EditorConfigContributor."]'
+				)
+			).toBeAttached();
 
-test(
-	'Assert editor is rendered with the default plugins configuration',
-	{tag: '@LPD-11235'},
-	async ({page}) => {
-		const editorToolbar = page.getByLabel('Editor toolbar');
-		const expectedButtons = ['Undo', 'Redo', 'Bold', 'Italic', 'Underline'];
+			const editorToolbar = page.getByLabel('Editor toolbar');
 
-		await editorToolbar.waitFor({state: 'attached'});
+			await expect(editorToolbar).toBeVisible();
 
-		await expect(editorToolbar).toBeVisible();
+			const expectedButtons = [
+				'Undo',
+				'Redo',
+				'Styles',
+				'Normal',
+				'Bold',
+				'Italic',
+				'Underline',
+				'Strikethrough',
+				'Font Color',
+				'Font Background Color',
+				'Remove Format',
+				'Numbered List',
+				'Bulleted List',
+				'Increase indent',
+				'Decrease indent',
+				'Block quote',
+				'Link',
+				'Insert table',
+				'Image',
+				'Horizontal line',
+				'Text alignment',
+				'Source',
+			];
 
-		const availableButtons = await editorToolbar
-			.getByRole('button')
-			.locator('.ck-button__label')
-			.allInnerTexts();
+			const availableButtons = await editorToolbar
+				.getByRole('button')
+				.locator('.ck-button__label')
+				.allInnerTexts();
 
-		expect(availableButtons).toEqual(expectedButtons);
+			expect(availableButtons).toEqual(expectedButtons);
+		});
+
+		await test.step('Select an image from document library', async () => {
+			await page.getByRole('button', {name: 'Image'}).click();
+
+			const itemSelectorFrame = page.frameLocator(
+				'iframe[title="Select Item"]'
+			);
+
+			// Attached droppable area is an indicator that loading in iframe is done.
+
+			const droppableArea = itemSelectorFrame.getByText(
+				'Drag & Drop Your Images'
+			);
+
+			await expect(droppableArea).toBeAttached();
+
+			await itemSelectorFrame
+				.getByRole('link', {name: 'Sites and Libraries'})
+				.click();
+
+			await itemSelectorFrame.getByLabel('Liferay DXP').click();
+
+			await expect(droppableArea).toBeAttached();
+
+			await itemSelectorFrame
+				.getByRole('link', {name: 'Provided by Liferay'})
+				.click();
+
+			await itemSelectorFrame
+				.locator('.image-card[data-title="moon.png"]')
+				.click();
+
+			await expect(
+				page.locator(
+					'.ck-editor__editable img[src="/documents/d/guest/moon-png"]'
+				)
+			).toBeVisible();
+		});
 	}
 );

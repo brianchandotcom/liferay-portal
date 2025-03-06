@@ -52,7 +52,7 @@ const SpacesNavigation: React.FC = () => {
 				<ul className="list-unstyled">
 					{assetLibraries.map((space) => (
 						<li className="mb-2" key={space.id}>
-							<SpaceSticker color={space.id} name={space.name} />
+							<SpaceSticker name={space.name} />
 						</li>
 					))}
 				</ul>

@@ -6,19 +6,50 @@
 import ClaySticker from '@clayui/sticker';
 import React from 'react';
 
+type ValidDisplayType =
+	| 'outline-0'
+	| 'outline-1'
+	| 'outline-2'
+	| 'outline-3'
+	| 'outline-4'
+	| 'outline-5'
+	| 'outline-6'
+	| 'outline-7'
+	| 'outline-8'
+	| 'outline-9';
+
+function getRandomDisplayType(): ValidDisplayType {
+	const validDisplayTypes: ValidDisplayType[] = [
+		'outline-0',
+		'outline-1',
+		'outline-2',
+		'outline-3',
+		'outline-4',
+		'outline-5',
+		'outline-6',
+		'outline-7',
+		'outline-8',
+		'outline-9',
+	];
+
+	const randomIndex = Math.floor(Math.random() * validDisplayTypes.length);
+
+	return validDisplayTypes[randomIndex];
+}
 interface SpaceStickerProps {
-	color?: string;
 	name: string;
 }
 
-export default function SpaceSticker({color, name}: SpaceStickerProps) {
+export default function SpaceSticker({name}: SpaceStickerProps) {
+	const displayType = getRandomDisplayType();
+
 	return (
 		<>
-			<ClaySticker displayType="outline-2">{name.charAt(0)}</ClaySticker>
+			<ClaySticker displayType={displayType}>
+				{name.charAt(0).toUpperCase()}
+			</ClaySticker>
 
-			<span className="ml-2">
-				{name} {color}
-			</span>
+			<span className="ml-2">{name}</span>
 		</>
 	);
 }

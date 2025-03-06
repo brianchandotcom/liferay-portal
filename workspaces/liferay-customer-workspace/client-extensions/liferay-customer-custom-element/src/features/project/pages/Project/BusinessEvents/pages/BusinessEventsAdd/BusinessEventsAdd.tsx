@@ -67,7 +67,7 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 		setVersionOfLiferaySoftwareOptions,
 	] = useState<{disabled?: boolean; label: string; value: string}[]>([]);
 
-	const businessEventTypesList = useGetBusinessEventTypesList();
+	const {businessEventTypesList} = useGetBusinessEventTypesList();
 
 	const emptyOption = useMemo(
 		() => ({
@@ -78,7 +78,7 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 		[]
 	);
 
-	const gmtTimeZonesList = useGetGMTTimeZonesList();
+	const {gmtTimeZonesList} = useGetGMTTimeZonesList();
 
 	const navigate = useNavigate();
 
@@ -143,7 +143,7 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 		}
 	};
 
-	const hasAllEventsPermissions = useHasAllEventsPermissions();
+	const {hasAllEventsPermissions} = useHasAllEventsPermissions();
 
 	const isSaasOnly = useMemo(
 		() =>
@@ -166,7 +166,7 @@ const BusinessEventsAddPage: React.FC<IProps> = ({
 		[isSaasOnly, businessEvent.eventType]
 	);
 
-	const versionOfLiferaySoftwareList = useGetVersionOfLiferaySoftwareList();
+	const {versionOfLiferaySoftwareList} = useGetVersionOfLiferaySoftwareList();
 
 	useEffect(() => {
 		const hasTouched = !!Object.keys(touched).length;

@@ -15,8 +15,8 @@ import {IFilterOption} from '~/components/Filter/Filter';
 import Table, {IRow} from '~/components/Table';
 import TableHeader from '~/components/Table/TableHeader';
 import {useCustomerPortal} from '~/features/project/context';
-import {getFormattedDate} from '~/features/project/utils/getFormattedDate';
 import {getBusinessEvents} from '~/services/liferay/api';
+import {getFormattedDate} from '~/utils/getFormattedDate';
 import {getFormattedTime} from '~/utils/getFormattedTime';
 import {IBusinessEvent} from '~/utils/types';
 
@@ -68,20 +68,9 @@ const BusinessEvents = () => {
 
 	const [businessEvents, setBusinessEvents] = useState<IBusinessEvent[]>([]);
 
-	const hasAllEventsPermissions = useHasAllEventsPermissions();
+	const {hasAllEventsPermissions} = useHasAllEventsPermissions();
 
 	const navigate = useNavigate();
-
-	const handleEditEvent = useCallback(
-		(businessEventId: number | undefined) => {
-			if (businessEventId) {
-				navigate(
-					`/${project?.accountKey}/business-events/${businessEventId}`
-				);
-			}
-		},
-		[navigate, project?.accountKey]
-	);
 
 	const generateFilterQuery = useCallback((filters: IState) => {
 		const queryParams: string[] = [];
@@ -153,7 +142,9 @@ const BusinessEvents = () => {
 						customOptionStyle: 'pr-5',
 						label: i18n.translate('view-details'),
 						onClick: () => {
-							handleEditEvent(businessEvent.id);
+							navigate(
+								`/${project?.accountKey}/business-events/${businessEvent.id}`
+							);
 						},
 					},
 				];
@@ -164,7 +155,9 @@ const BusinessEvents = () => {
 							customOptionStyle: 'pr-5',
 							label: i18n.translate('edit-event'),
 							onClick: () => {
-								handleEditEvent(businessEvent.id);
+								navigate(
+									`/${project?.accountKey}/business-events/${businessEvent.id}/edit`
+								);
 							},
 						},
 						{
@@ -237,13 +230,15 @@ const BusinessEvents = () => {
 							<div className="text-neutral-10">
 								{getFormattedDate(
 									businessEvent?.targetGoLiveDateTime,
-									'day2DMonthSYearN'
+									'day2DMonthSYearN',
+									'GMT'
 								)}
 							</div>
 
 							<div className="be-subtitle text-neutral-7">
 								{getFormattedTime(
-									businessEvent?.targetGoLiveDateTime
+									businessEvent?.targetGoLiveDateTime,
+									'GMT'
 								)}
 							</div>
 						</div>
@@ -253,7 +248,12 @@ const BusinessEvents = () => {
 		}
 
 		return [];
-	}, [businessEvents, hasAllEventsPermissions, handleEditEvent]);
+	}, [
+		businessEvents,
+		hasAllEventsPermissions,
+		navigate,
+		project?.accountKey,
+	]);
 
 	return (
 		<div className="py-4">

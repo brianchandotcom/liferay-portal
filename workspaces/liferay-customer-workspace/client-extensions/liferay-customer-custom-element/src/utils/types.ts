@@ -28,8 +28,14 @@ export interface IAccountSubscriptionGroup {
 }
 
 export interface IBusinessEvent {
+	actualGoLiveDate?: string;
+	actualGoLiveDateTime?: string;
+	actualGoLiveTime?: string;
 	associatedTickets?: any;
-	currentLiferayVersion?: string;
+	currentLiferayVersion?: {
+		key: string;
+		name: string;
+	};
 	description?: string;
 	details?: string;
 	eventStatus?: {
@@ -42,10 +48,14 @@ export interface IBusinessEvent {
 	};
 	id?: number;
 	name?: string;
-	newLiferayVersion?: string;
+	newLiferayVersion?: {
+		key: string;
+		name: string;
+	};
 	targetGoLiveDate?: string;
 	targetGoLiveDateTime?: string;
 	targetGoLiveTime?: string;
+	timeZone?: string;
 }
 
 export interface IKoroneikiAccount {

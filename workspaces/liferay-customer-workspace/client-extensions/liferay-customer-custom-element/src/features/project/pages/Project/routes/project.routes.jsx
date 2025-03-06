@@ -33,7 +33,9 @@ import ProjectUsage from '../ProjectUsage';
 import useCurrentKoroneikiAccount from '~/hooks/useCurrentKoroneikiAccount';
 import useMyUserAccountByAccountExternalReferenceCode from '~/features/project/pages/Project/TeamMembers/components/TeamMembersTable/hooks/useMyUserAccountByAccountExternalReferenceCode';
 import BusinessEvents from '../BusinessEvents';
-import BusinessEventsItem from '../BusinessEvents/pages/BusinessEventsItem/BusinessEventsItem';
+import BusinessEventsItemActivityHistory from '../BusinessEvents/pages/BusinessEventsItem/BusinessEventsItemActivityHistory';
+import BusinessEventsItemDetails from '../BusinessEvents/pages/BusinessEventsItem/BusinessEventsItemDetails';
+import BusinessEventsItemEdit from '../BusinessEvents/pages/BusinessEventsItem/BusinessEventsItemEdit';
 
 const ProjectRoutes = () => {
 	const [hasComplimentaryKey, setHasComplimentaryKey] = useState(false);
@@ -272,7 +274,11 @@ const ProjectRoutes = () => {
 						<Route path="business-events">
 							<Route element={<BusinessEvents />} index />
 							<Route element={<BusinessEventAdd />} path="new"/>
-							<Route element={<BusinessEventsItem />} path=":id"/>
+							<Route path=":id">
+								<Route element={<BusinessEventsItemDetails />} index />
+								<Route element={<BusinessEventsItemEdit />} path="edit"/>
+								<Route element={<BusinessEventsItemActivityHistory />} path="activity-history"/>
+							</Route>
 						</Route>
 					)}
 

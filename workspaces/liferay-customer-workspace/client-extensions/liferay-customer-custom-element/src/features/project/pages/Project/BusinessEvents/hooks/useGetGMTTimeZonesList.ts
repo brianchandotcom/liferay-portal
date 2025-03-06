@@ -11,7 +11,7 @@ import {useGetListTypeDefinitions} from '~/services/liferay/graphql/list-type-de
 const listTypeGMTTimeZones = LIST_TYPES.gmtTimeZones;
 
 export default function useGetGMTTimeZonesList() {
-	const {data} = useGetListTypeDefinitions({
+	const {data, loading} = useGetListTypeDefinitions({
 		filter: SearchBuilder.eq('name', listTypeGMTTimeZones),
 	});
 
@@ -26,5 +26,5 @@ export default function useGetGMTTimeZonesList() {
 		[data?.listTypeDefinitions?.items]
 	);
 
-	return gmtTimeZonesList;
+	return {gmtTimeZonesList, loading};
 }

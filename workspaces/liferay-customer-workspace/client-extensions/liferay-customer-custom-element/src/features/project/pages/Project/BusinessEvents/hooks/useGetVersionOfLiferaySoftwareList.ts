@@ -11,7 +11,7 @@ import {useGetListTypeDefinitions} from '~/services/liferay/graphql/list-type-de
 const listTypeVersionOfLiferaySoftware = LIST_TYPES.versionOfLiferaySoftware;
 
 export default function useGetVersionOfLiferaySoftwareList() {
-	const {data} = useGetListTypeDefinitions({
+	const {data, loading} = useGetListTypeDefinitions({
 		filter: SearchBuilder.eq('name', listTypeVersionOfLiferaySoftware),
 	});
 
@@ -26,5 +26,5 @@ export default function useGetVersionOfLiferaySoftwareList() {
 		[data?.listTypeDefinitions?.items]
 	);
 
-	return versionOfLiferaySoftwareList;
+	return {loading, versionOfLiferaySoftwareList};
 }

@@ -35,10 +35,12 @@ export default function useHasAllEventsPermissions() {
 		[loggedUserAccount?.organizationBriefs]
 	);
 
-	return (
-		isAdminUserAccount ||
-		hasProjectAdminOrRequesterRole ||
-		isLiferayStaff ||
-		hasFLSOrganizationAssociated
-	);
+	return {
+		hasAllEventsPermissions:
+			isAdminUserAccount ||
+			hasProjectAdminOrRequesterRole ||
+			isLiferayStaff ||
+			hasFLSOrganizationAssociated,
+		loading,
+	};
 }

@@ -11,7 +11,7 @@ import {useGetListTypeDefinitions} from '~/services/liferay/graphql/list-type-de
 const listTypeBusinessEventTypes = LIST_TYPES.businessEventTypes;
 
 export default function useGetBusinessEventTypesList() {
-	const {data} = useGetListTypeDefinitions({
+	const {data, loading} = useGetListTypeDefinitions({
 		filter: SearchBuilder.eq('name', listTypeBusinessEventTypes),
 	});
 
@@ -28,5 +28,5 @@ export default function useGetBusinessEventTypesList() {
 		[data?.listTypeDefinitions?.items]
 	);
 
-	return businessEventTypesList;
+	return {businessEventTypesList, loading};
 }

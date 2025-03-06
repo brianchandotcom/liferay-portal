@@ -785,6 +785,32 @@ export const updateAccountSubscriptionGroups = gql`
 	}
 `;
 
+export const updateBusinessEvent = gql`
+	mutation updateBusinessEvent(
+		$businessEvent: InputC_BusinessEvent!
+		$businessEventId: Long!
+	) {
+		updateBusinessEvent(
+			businessEventId: $businessEventId
+			input: $businessEvent
+		)
+			@rest(
+				method: "PUT"
+				type: "C_BusinessEvent"
+				path: "/c/businessevents/{args.businessEventId}"
+			) {
+			actualGoLiveDateTime
+			currentLiferayVersion
+			description
+			eventType
+			feedback
+			name
+			newLiferayVersion
+			targetGoLiveDateTime
+		}
+	}
+`;
+
 export const updateDXPCloudEnvironment = gql`
 	mutation updateDXPCloudProjectId(
 		$dxpCloudEnvironmentId: Long!

@@ -8,7 +8,8 @@ import {FORMAT_DATE_TYPES} from '~/utils/constants';
 
 export function getFormattedDate(
 	date: string | undefined,
-	formatType: keyof typeof FORMAT_DATE_TYPES
+	formatType: keyof typeof FORMAT_DATE_TYPES,
+	timeZone?: string
 ): string {
 	if (!date) {
 		return '';
@@ -23,6 +24,10 @@ export function getFormattedDate(
 
 		const options: Intl.DateTimeFormatOptions =
 			FORMAT_DATE_TYPES[formatType];
+
+		if (timeZone) {
+			options.timeZone = timeZone;
+		}
 
 		return parsedDate.toLocaleDateString(
 			Liferay.ThemeDisplay.getBCP47LanguageId(),

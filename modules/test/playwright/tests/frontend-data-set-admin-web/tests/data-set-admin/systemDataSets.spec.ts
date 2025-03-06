@@ -51,15 +51,19 @@ test(
 
 		const creationModal = systemDataSetsPage.creationModal;
 
+		const advancedSampleListItem = creationModal.listItems.filter({
+			hasText: 'Advanced Sample',
+		});
+
 		const classicSampleListItem = creationModal.listItems.filter({
 			hasText: 'Classic Sample',
 		});
-		const customizedSampleListItem = creationModal.listItems.filter({
-			hasText: 'Customized Sample',
-		});
-		const reactSampleListItem = creationModal.listItems.filter({
-			hasText: 'React Sample',
-		});
+
+		const customInternalViewSampleListItem = creationModal.listItems.filter(
+			{
+				hasText: 'Custom Internal View Sample',
+			}
+		);
 
 		await test.step('Open creation modal and assert modal content', async () => {
 			await systemDataSetsPage.createButton.click();
@@ -72,8 +76,9 @@ test(
 
 			await expect(creationModal.searchInput).toBeVisible();
 
+			await expect(advancedSampleListItem).toBeVisible();
 			await expect(classicSampleListItem).toBeVisible();
-			await expect(customizedSampleListItem).toBeVisible();
+			await expect(customInternalViewSampleListItem).toBeVisible();
 		});
 
 		await test.step('Assert the items are listed in alphabetical order', async () => {
@@ -82,9 +87,9 @@ test(
 					'.data-set-content-wrapper .list-group-title'
 				)
 			).toHaveText([
+				'Advanced Sample',
 				'Classic Sample',
-				'Customized Sample',
-				'React Sample',
+				'Custom Internal View Sample',
 			]);
 		});
 
@@ -93,15 +98,17 @@ test(
 
 			await creationModal.searchInput.press('Enter');
 
+			await expect(advancedSampleListItem).not.toBeAttached();
 			await expect(classicSampleListItem).toBeVisible();
-			await expect(customizedSampleListItem).not.toBeAttached();
+			await expect(customInternalViewSampleListItem).not.toBeAttached();
 
 			await creationModal.searchInput.fill('aaa');
 
 			await creationModal.searchInput.press('Enter');
 
+			await expect(advancedSampleListItem).not.toBeAttached();
 			await expect(classicSampleListItem).not.toBeAttached();
-			await expect(customizedSampleListItem).not.toBeAttached();
+			await expect(customInternalViewSampleListItem).not.toBeAttached();
 
 			await expect(
 				creationModal.container.getByText('No Results Found')
@@ -111,19 +118,20 @@ test(
 
 			await creationModal.searchInput.press('Enter');
 
+			await expect(advancedSampleListItem).toBeVisible();
 			await expect(classicSampleListItem).toBeVisible();
-			await expect(customizedSampleListItem).toBeVisible();
+			await expect(customInternalViewSampleListItem).toBeVisible();
 		});
 
 		await test.step('Select and import system data sets', async () => {
-			await customizedSampleListItem.click();
+			await advancedSampleListItem.click();
 
-			await expect(customizedSampleListItem).toHaveClass(/selected/);
+			await expect(advancedSampleListItem).toHaveClass(/selected/);
 
 			dataSetERCs.push(
 
 				// eslint-disable-next-line @liferay/no-get-data-attribute
-				await customizedSampleListItem.getAttribute('data-erc')
+				await advancedSampleListItem.getAttribute('data-erc')
 			);
 
 			await creationModal.createButton.click();
@@ -148,14 +156,16 @@ test(
 
 			await systemDataSetsPage.createButton.click();
 
-			await reactSampleListItem.click();
+			await customInternalViewSampleListItem.click();
 
-			await expect(reactSampleListItem).toHaveClass(/selected/);
+			await expect(customInternalViewSampleListItem).toHaveClass(
+				/selected/
+			);
 
 			dataSetERCs.push(
 
 				// eslint-disable-next-line @liferay/no-get-data-attribute
-				await reactSampleListItem.getAttribute('data-erc')
+				await customInternalViewSampleListItem.getAttribute('data-erc')
 			);
 
 			await creationModal.createButton.click();
@@ -165,12 +175,12 @@ test(
 
 		const fdsRows = systemDataSetsPage.pageContainer.locator('.fds tr');
 
-		const customizedSampleRow = fdsRows.filter({
-			hasText: 'Customized Sample',
+		const advancedSampleRow = fdsRows.filter({
+			hasText: 'Advanced Sample',
 		});
 
 		await test.step('Check system data set is imported and are "Active" by default', async () => {
-			await expect(customizedSampleRow).toBeVisible();
+			await expect(advancedSampleRow).toBeVisible();
 
 			expect(
 				fdsRows.filter({
@@ -179,7 +189,7 @@ test(
 			).toBeVisible();
 			expect(
 				fdsRows.filter({
-					hasText: 'React Sample',
+					hasText: 'Custom Internal View Sample',
 				})
 			).toBeVisible();
 
@@ -207,14 +217,14 @@ test(
 		await test.step('Check the creation modal labels the data set as created and is disabled', async () => {
 			await systemDataSetsPage.createButton.click();
 
-			await expect(customizedSampleListItem).toContainText('Created');
-			await expect(customizedSampleListItem).toHaveClass(/disabled/);
+			await expect(advancedSampleListItem).toContainText('Created');
+			await expect(advancedSampleListItem).toHaveClass(/disabled/);
 
 			await creationModal.cancelButton.click();
 		});
 
 		await test.step('Item actions are imported with "detached" import policy', async () => {
-			await actionsPage.open({dataSetLabel: 'Customized Sample'});
+			await actionsPage.open({dataSetLabel: 'Advanced Sample'});
 
 			const itemActionRow = actionsPage.itemActionsTable
 				.locator('tr')
@@ -322,7 +332,9 @@ test(
 		});
 
 		await test.step('Item actions are imported with "group proxy" import policy', async () => {
-			await actionsPage.open({dataSetLabel: 'React Sample'});
+			await actionsPage.open({
+				dataSetLabel: 'Custom Internal View Sample',
+			});
 
 			const itemActionRows = actionsPage.itemActionsTable
 				.locator('tr')
@@ -361,7 +373,7 @@ test(
 		});
 
 		await test.step('Delete an imported system data set', async () => {
-			await customizedSampleRow.locator('.dropdown-toggle').click();
+			await advancedSampleRow.locator('.dropdown-toggle').click();
 
 			await systemDataSetsPage.page
 				.locator('.dropdown-menu.show')
@@ -374,14 +386,14 @@ test(
 
 			await waitForAlert(systemDataSetsPage.page);
 
-			await expect(customizedSampleRow).not.toBeAttached();
+			await expect(advancedSampleRow).not.toBeAttached();
 		});
 
 		await test.step('Check that deleted data set is again available for import ', async () => {
 			await systemDataSetsPage.createButton.click();
 
-			await expect(customizedSampleListItem).not.toContainText('Created');
-			await expect(customizedSampleListItem).not.toHaveClass(/disabled/);
+			await expect(advancedSampleListItem).not.toContainText('Created');
+			await expect(advancedSampleListItem).not.toHaveClass(/disabled/);
 
 			await creationModal.cancelButton.click();
 		});

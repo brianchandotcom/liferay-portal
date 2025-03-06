@@ -10,7 +10,7 @@ import ClayForm, {ClayRadio, ClayRadioGroup, ClayToggle} from '@clayui/form';
 import ClayLabel from '@clayui/label';
 import ClayLayout from '@clayui/layout';
 import ClayTabs from '@clayui/tabs';
-import {InputLocalized} from 'frontend-js-components-web';
+import {InputLocalized, useId} from 'frontend-js-components-web';
 import React, {useMemo, useState} from 'react';
 
 import {useSelector, useStateDispatch} from '../contexts/StateContext';
@@ -109,6 +109,8 @@ function GeneralTab({field}: {field: Field}) {
 		field.type
 	);
 
+	const labelInputId = useId();
+
 	return (
 		<>
 			<div className="pb-2">
@@ -135,6 +137,7 @@ function GeneralTab({field}: {field: Field}) {
 				/>
 
 				<InputLocalized
+					id={labelInputId}
 					label={Liferay.Language.get('label')}
 					onBlur={() => {
 						dispatch({

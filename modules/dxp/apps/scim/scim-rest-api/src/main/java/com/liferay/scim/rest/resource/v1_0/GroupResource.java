@@ -47,7 +47,9 @@ import org.osgi.annotation.versioning.ProviderType;
 @ProviderType
 public interface GroupResource {
 
-	public Object getV2Groups(Integer count, Integer startIndex, Filter filter)
+	public Object getV2Groups(
+			Integer count, String excludedAttributes, Integer startIndex,
+			Filter filter)
 		throws Exception;
 
 	public Response postV2Group(Group group) throws Exception;
@@ -57,7 +59,8 @@ public interface GroupResource {
 
 	public Response deleteV2Group(String id) throws Exception;
 
-	public Object getV2GroupById(String id) throws Exception;
+	public Object getV2GroupById(String id, String excludedAttributes)
+		throws Exception;
 
 	public Response patchV2Group(String id, PatchOp patchOp) throws Exception;
 

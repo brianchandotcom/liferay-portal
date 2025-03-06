@@ -34,11 +34,13 @@ public interface GroupResource {
 	}
 
 	public Object getV2Groups(
-			Integer count, Integer startIndex, String filterString)
+			Integer count, String excludedAttributes, Integer startIndex,
+			String filterString)
 		throws Exception;
 
 	public HttpInvoker.HttpResponse getV2GroupsHttpResponse(
-			Integer count, Integer startIndex, String filterString)
+			Integer count, String excludedAttributes, Integer startIndex,
+			String filterString)
 		throws Exception;
 
 	public void postV2Group(Group group) throws Exception;
@@ -58,9 +60,11 @@ public interface GroupResource {
 	public HttpInvoker.HttpResponse deleteV2GroupHttpResponse(String id)
 		throws Exception;
 
-	public Object getV2GroupById(String id) throws Exception;
+	public Object getV2GroupById(String id, String excludedAttributes)
+		throws Exception;
 
-	public HttpInvoker.HttpResponse getV2GroupByIdHttpResponse(String id)
+	public HttpInvoker.HttpResponse getV2GroupByIdHttpResponse(
+			String id, String excludedAttributes)
 		throws Exception;
 
 	public void patchV2Group(String id, PatchOp patchOp) throws Exception;
@@ -184,11 +188,12 @@ public interface GroupResource {
 	public static class GroupResourceImpl implements GroupResource {
 
 		public Object getV2Groups(
-				Integer count, Integer startIndex, String filterString)
+				Integer count, String excludedAttributes, Integer startIndex,
+				String filterString)
 			throws Exception {
 
 			HttpInvoker.HttpResponse httpResponse = getV2GroupsHttpResponse(
-				count, startIndex, filterString);
+				count, excludedAttributes, startIndex, filterString);
 
 			String content = httpResponse.getContent();
 
@@ -250,7 +255,8 @@ public interface GroupResource {
 		}
 
 		public HttpInvoker.HttpResponse getV2GroupsHttpResponse(
-				Integer count, Integer startIndex, String filterString)
+				Integer count, String excludedAttributes, Integer startIndex,
+				String filterString)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -276,6 +282,11 @@ public interface GroupResource {
 
 			if (count != null) {
 				httpInvoker.parameter("count", String.valueOf(count));
+			}
+
+			if (excludedAttributes != null) {
+				httpInvoker.parameter(
+					"excludedAttributes", String.valueOf(excludedAttributes));
 			}
 
 			if (startIndex != null) {
@@ -576,9 +587,11 @@ public interface GroupResource {
 			return httpInvoker.invoke();
 		}
 
-		public Object getV2GroupById(String id) throws Exception {
+		public Object getV2GroupById(String id, String excludedAttributes)
+			throws Exception {
+
 			HttpInvoker.HttpResponse httpResponse = getV2GroupByIdHttpResponse(
-				id);
+				id, excludedAttributes);
 
 			String content = httpResponse.getContent();
 
@@ -639,7 +652,8 @@ public interface GroupResource {
 			}
 		}
 
-		public HttpInvoker.HttpResponse getV2GroupByIdHttpResponse(String id)
+		public HttpInvoker.HttpResponse getV2GroupByIdHttpResponse(
+				String id, String excludedAttributes)
 			throws Exception {
 
 			HttpInvoker httpInvoker = HttpInvoker.newHttpInvoker();
@@ -662,6 +676,11 @@ public interface GroupResource {
 			}
 
 			httpInvoker.httpMethod(HttpInvoker.HttpMethod.GET);
+
+			if (excludedAttributes != null) {
+				httpInvoker.parameter(
+					"excludedAttributes", String.valueOf(excludedAttributes));
+			}
 
 			httpInvoker.path(
 				_builder._scheme + "://" + _builder._host + ":" +

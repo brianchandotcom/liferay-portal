@@ -25,7 +25,7 @@ public class AggregateTestRuleTest {
 		LiferayUnitTestRule.INSTANCE;
 
 	@Test
-	public void testDisableRule() throws Throwable {
+	public void testDisableTestRule() throws Throwable {
 		TestRule1 testRule1 = new TestRule1();
 		TestRule2 testRule2 = new TestRule2();
 

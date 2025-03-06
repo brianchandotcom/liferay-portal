@@ -19,6 +19,7 @@ StructuresSectionDisplayContext structuresSectionDisplayContext = (StructuresSec
 	formName="fm"
 	id="<%= CMSSiteInitializerFDSNames.STRUCTURES_SECTION %>"
 	itemsPerPage="<%= 10 %>"
+	propsTransformer="{StructuresFDSPropsTransformer} from site-cms-site-initializer"
 	selectedItemsKey="id"
 	selectionType="multiple"
 	style="fluid"

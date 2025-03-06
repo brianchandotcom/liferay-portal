@@ -34,7 +34,7 @@ public class StructuresSectionTableFDSView extends BaseTableFDSView {
 		return fdsTableSchemaBuilder.add(
 			"name", "name",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"name"
+				"nameTableCellRenderer"
 			).setSortable(
 				true
 			)
@@ -43,11 +43,17 @@ public class StructuresSectionTableFDSView extends BaseTableFDSView {
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
 				"boolean")
 		).add(
-			"objectFolderExternalReferenceCode", "type"
+			"objectFolderExternalReferenceCode", "type",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"typeTableCellRenderer")
 		).add(
-			"scope", "space"
+			"scope", "space",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"spaceTableCellRenderer")
 		).add(
-			"creator.name", "author"
+			"creator.name", "author",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"authorTableCellRenderer")
 		).add(
 			"dateModified", "modified",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
@@ -56,7 +62,9 @@ public class StructuresSectionTableFDSView extends BaseTableFDSView {
 				true
 			)
 		).add(
-			"status", "status"
+			"status", "status",
+			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
+				"status")
 		).build();
 	}
 

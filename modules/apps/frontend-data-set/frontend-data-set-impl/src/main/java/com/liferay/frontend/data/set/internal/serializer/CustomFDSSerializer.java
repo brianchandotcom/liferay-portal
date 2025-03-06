@@ -17,7 +17,6 @@ import com.liferay.frontend.data.set.model.FDSSortItemBuilder;
 import com.liferay.frontend.data.set.serializer.FDSSerializer;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
-import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItemBuilder;
 import com.liferay.list.type.model.ListTypeDefinition;
 import com.liferay.list.type.model.ListTypeEntry;
 import com.liferay.list.type.service.ListTypeDefinitionLocalService;
@@ -191,25 +190,23 @@ public class CustomFDSSerializer
 			objectEntry -> {
 				Map<String, Object> properties = objectEntry.getProperties();
 
-				return DropdownItemBuilder.putData(
+				FDSActionDropdownItem fdsActionDropdownItem =
+					new FDSActionDropdownItem(
+						String.valueOf(properties.get("url")),
+						String.valueOf(properties.get("icon")),
+						objectEntry.getExternalReferenceCode(),
+						String.valueOf(properties.get("label")), null,
+						String.valueOf(properties.get("permissionKey")),
+						String.valueOf(properties.get("target")));
+
+				fdsActionDropdownItem.putData(
 					"disableHeader",
-					String.valueOf(Validator.isNull(properties.get("title")))
-				).putData(
-					"permissionKey",
-					String.valueOf(properties.get("permissionKey"))
-				).putData(
-					"size", String.valueOf(properties.get("modalSize"))
-				).putData(
-					"title", String.valueOf(properties.get("title"))
-				).setHref(
-					properties.get("url")
-				).setIcon(
-					String.valueOf(properties.get("icon"))
-				).setLabel(
-					String.valueOf(properties.get("label"))
-				).setTarget(
-					String.valueOf(properties.get("target"))
-				).build();
+					(boolean)Validator.isNull(properties.get("title")));
+				fdsActionDropdownItem.putData(
+					"size", properties.get("modalSize"));
+				fdsActionDropdownItem.putData("title", properties.get("title"));
+
+				return fdsActionDropdownItem;
 			});
 
 		for (DropdownItem dropdownItem : dropdownItems) {

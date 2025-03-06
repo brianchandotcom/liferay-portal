@@ -15,6 +15,7 @@ import {pageManagementSiteTest} from '../../fixtures/pageManagementSiteTest';
 import {pageViewModePagesTest} from '../../fixtures/pageViewModePagesTest';
 import {clickAndExpectToBeHidden} from '../../utils/clickAndExpectToBeHidden';
 import {clickAndExpectToBeVisible} from '../../utils/clickAndExpectToBeVisible';
+import {getContentSetElementContent} from '../../utils/getContentSetElementContent';
 import getRandomString from '../../utils/getRandomString';
 import {ANIMALS_COLLECTION_NAME} from '../setup/page-management-site/constants/animals';
 import getCollectionDefinition from './utils/getCollectionDefinition';
@@ -65,6 +66,11 @@ test(
 			pageManagementSite.friendlyUrlPath
 		);
 
+		const {items: collectionElements} =
+			await apiHelpers.headlessDelivery.getContentSetElements(
+				animalsClassPK
+			);
+
 		const animalsCollection = getCollectionDefinition({
 			classPK: animalsClassPK,
 			id: getRandomString(),
@@ -100,17 +106,19 @@ test(
 
 		const count = await firstCollection.locator('.list-group-item').count();
 
-		// Expect second collection to display only Animal 01 and Animal 02 contents that times
+		// Expect second collection to display only Animals element contents that times
 
 		const secondCollection = pageEditorPage.getFragment(secondCollectionId);
 
-		await expect(secondCollection.locator('li')).toHaveCount(count * 2);
-		await expect(secondCollection.getByText('Animal 01')).toHaveCount(
-			count
+		await expect(secondCollection.locator('li')).toHaveCount(
+			count * collectionElements.length
 		);
-		await expect(secondCollection.getByText('Animal 02')).toHaveCount(
-			count
-		);
+
+		for (const element of collectionElements) {
+			await expect(secondCollection.getByText(element.title)).toHaveCount(
+				count
+			);
+		}
 
 		await apiHelpers.jsonWebServicesLayout.deleteLayout(layout.id);
 	}
@@ -454,6 +462,9 @@ test('Checks Content Flags, Content Ratings and Content Display are compatible w
 		pageManagementSite.friendlyUrlPath
 	);
 
+	const {items: collectionElements} =
+		await apiHelpers.headlessDelivery.getContentSetElements(animalsClassPK);
+
 	const collectionDefinition = getCollectionDefinition({
 		classPK: animalsClassPK,
 		id: getRandomString(),
@@ -497,13 +508,19 @@ test('Checks Content Flags, Content Ratings and Content Display are compatible w
 
 	await expect(
 		page.locator('.page-editor').getByText('Content', {exact: true})
-	).toHaveCount(3);
-	await expect(page.getByText('Animal 01 content')).toBeVisible();
-	await expect(page.getByText('Animal 02 content')).toBeVisible();
+	).toHaveCount(collectionElements.length);
+
+	for (const element of collectionElements) {
+		const content = getContentSetElementContent(element);
+
+		await expect(page.getByText(content)).toBeVisible();
+	}
 
 	// Check that the Content Display shows Default Template by default
 
-	await page.getByText('Animal 01 content').click();
+	const content = getContentSetElementContent(collectionElements[0]);
+
+	await page.getByText(content).click();
 
 	await expect(page.getByLabel('Template', {exact: true})).toHaveValue(
 		'Default Template'
@@ -521,8 +538,12 @@ test('Checks Content Flags, Content Ratings and Content Display are compatible w
 
 	// Check that the Content Ratings and Content Flags are shown for every item
 
-	await expect(page.getByLabel('Vote', {exact: true})).toHaveCount(3);
-	await expect(page.locator('button', {hasText: 'Report'})).toHaveCount(3);
+	await expect(page.getByLabel('Vote', {exact: true})).toHaveCount(
+		collectionElements.length
+	);
+	await expect(page.locator('button', {hasText: 'Report'})).toHaveCount(
+		collectionElements.length
+	);
 });
 
 test('Modifies inline text on all collection items', async ({
@@ -539,6 +560,9 @@ test('Modifies inline text on all collection items', async ({
 		ANIMALS_COLLECTION_NAME,
 		pageManagementSite.friendlyUrlPath
 	);
+
+	const {totalCount: collectionElementsCount} =
+		await apiHelpers.headlessDelivery.getContentSetElements(animalsClassPK);
 
 	const headingId = getRandomString();
 
@@ -575,7 +599,7 @@ test('Modifies inline text on all collection items', async ({
 
 	await expect(
 		page.locator('.page-editor').getByText('New Content')
-	).toHaveCount(3);
+	).toHaveCount(collectionElementsCount);
 });
 
 test(
@@ -762,7 +786,7 @@ test('Checks that fragment ids used within a display collection are not repeated
 			fragmentIds.push(fragment.getAttribute('id'));
 		}
 
-		expect(Array.from(new Set(fragmentIds))).toHaveLength(6);
+		expect(Array.from(new Set(fragmentIds))).toHaveLength(fragments.length);
 	};
 
 	const animalsClassPK = await collectionsPage.getCollectionClassPK(
@@ -1004,7 +1028,22 @@ test(
 	{
 		tag: '@LPS-114727',
 	},
-	async ({apiHelpers, page, pageEditorPage, pageManagementSite}) => {
+	async ({
+		apiHelpers,
+		collectionsPage,
+		page,
+		pageEditorPage,
+		pageManagementSite,
+	}) => {
+		const animalsClassPK = await collectionsPage.getCollectionClassPK(
+			ANIMALS_COLLECTION_NAME,
+			pageManagementSite.friendlyUrlPath
+		);
+
+		const {items: collectionElements} =
+			await apiHelpers.headlessDelivery.getContentSetElements(
+				animalsClassPK
+			);
 
 		// Create a page with a collection display and go to edit mode
 
@@ -1029,13 +1068,9 @@ test(
 
 		await pageEditorPage.goto(layout, pageManagementSite.friendlyUrlPath);
 
-		await expect(
-			page.getByText('Animal 01 - Dogs and Cats categories')
-		).toBeVisible();
-
-		await expect(
-			page.getByText('Animal 02 - Dogs category')
-		).toBeAttached();
+		for (const element of collectionElements) {
+			await expect(page.getByText(element.title)).toBeVisible();
+		}
 
 		// Assert items in view mode
 
@@ -1043,13 +1078,9 @@ test(
 			`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
 		);
 
-		await expect(
-			page.getByText('Animal 01 - Dogs and Cats categories')
-		).toBeVisible();
-
-		await expect(
-			page.getByText('Animal 02 - Dogs category')
-		).toBeAttached();
+		for (const element of collectionElements) {
+			await expect(page.getByText(element.title)).toBeVisible();
+		}
 	}
 );
 

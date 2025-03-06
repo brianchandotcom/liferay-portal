@@ -39,6 +39,18 @@ public class RelevantTestSuite {
 			portalAcceptancePullRequestJob);
 	}
 
+	public Boolean checkTestBatchPattern(
+		List<String> validTestBatchPatterns, String testBatchName) {
+
+		for (String validTestBatchPattern : validTestBatchPatterns) {
+			if (testBatchName.matches(validTestBatchPattern)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	public List<TestBatch> getTestBatches(boolean validateAllRules) {
 		File baseTestPropertiesFile = new File(
 			_relevantRuleEngine.getBaseDir(), "test.properties");
@@ -73,7 +85,7 @@ public class RelevantTestSuite {
 			throw new RuntimeException(ioException);
 		}
 
-		List<String> validTestBatchNames = Arrays.asList(
+		List<String> validTestBatchPatterns = Arrays.asList(
 			testBatchNamesPropertyValue.split(","));
 
 		List<TestBatch> testBatches = new ArrayList<>();
@@ -93,8 +105,9 @@ public class RelevantTestSuite {
 					continue;
 				}
 
-				if (!validTestBatchNames.isEmpty() &&
-					validTestBatchNames.contains(testBatch.getName())) {
+				if (!validTestBatchPatterns.isEmpty() &&
+					checkTestBatchPattern(
+						validTestBatchPatterns, testBatch.getName())) {
 
 					testBatches.add(testBatch);
 				}

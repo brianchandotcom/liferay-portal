@@ -57,7 +57,7 @@ const SpacesNavigation: React.FC = () => {
 				<ul className="list-unstyled">
 					{assetLibraries.slice(0, MAX_NUMBER_SPACES).map((space) => (
 						<li className="mb-2" key={space.id}>
-							<SpaceSticker color={space.id} name={space.name} />
+							<SpaceSticker name={space.name} />
 						</li>
 					))}
 

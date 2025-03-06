@@ -761,6 +761,27 @@ public class PlacedOrder implements Cloneable, Serializable {
 
 	protected String purchaseOrderNumber;
 
+	public Shipment getShipments() {
+		return shipments;
+	}
+
+	public void setShipments(Shipment shipments) {
+		this.shipments = shipments;
+	}
+
+	public void setShipments(
+		UnsafeSupplier<Shipment, Exception> shipmentsUnsafeSupplier) {
+
+		try {
+			shipments = shipmentsUnsafeSupplier.get();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	protected Shipment shipments;
+
 	public String getShippingMethod() {
 		return shippingMethod;
 	}

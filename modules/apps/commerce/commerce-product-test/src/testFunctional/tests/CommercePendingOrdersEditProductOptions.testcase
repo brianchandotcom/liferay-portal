@@ -199,6 +199,10 @@ definition {
 				productSku = "WHITE",
 				productTotalPrice = "$ 50.00");
 
+			Click(
+				key_cellContent = "Bundled Product",
+				locator1 = "CommerceEntry#BUNDLE_PRODUCT_EXPAND_BUTTON");
+
 			CommerceOrders.viewOrdersEntry(
 				productListPrice = "30.00",
 				productName = "Brake Rotors",

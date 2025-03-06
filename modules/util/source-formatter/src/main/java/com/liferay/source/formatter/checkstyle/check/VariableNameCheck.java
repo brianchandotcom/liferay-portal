@@ -756,14 +756,15 @@ public class VariableNameCheck extends BaseCheck {
 				if (methodName.equals("stream")) {
 					firstChildDetailAST = firstChildDetailAST.getFirstChild();
 
-					if (firstChildDetailAST.getType() == TokenTypes.DOT) {
-						firstChildDetailAST =
-							firstChildDetailAST.getFirstChild();
-
-						_checkTypo(
-							detailAST, variableName,
-							firstChildDetailAST.getText() + "Stream", false);
+					if (firstChildDetailAST.getType() != TokenTypes.DOT) {
+						continue;
 					}
+
+					firstChildDetailAST = firstChildDetailAST.getFirstChild();
+
+					_checkTypo(
+						detailAST, variableName,
+						firstChildDetailAST.getText() + "Stream", false);
 				}
 			}
 			else if ((firstChildDetailAST.getType() == TokenTypes.IDENT) &&
@@ -787,11 +788,12 @@ public class VariableNameCheck extends BaseCheck {
 
 				String methodName = getMethodName(nextSiblingDetailAST);
 
-				if (methodName.matches("get[A-Z].*")) {
-					_checkTypo(
-						detailAST, variableName, methodName.substring(3),
-						false);
+				if (!methodName.matches("get[A-Z].*")) {
+					continue;
 				}
+
+				_checkTypo(
+					detailAST, variableName, methodName.substring(3), false);
 			}
 		}
 	}
@@ -1034,15 +1036,13 @@ public class VariableNameCheck extends BaseCheck {
 			return true;
 		}
 
-		if (childDetailAST.getType() == TokenTypes.IDENT) {
-			String name = childDetailAST.getText();
-
-			if (name.equals("Boolean")) {
-				return true;
-			}
+		if (childDetailAST.getType() != TokenTypes.IDENT) {
+			return false;
 		}
 
-		return false;
+		String name = childDetailAST.getText();
+
+		return name.equals("Boolean");
 	}
 
 	private static final String _ALLOWED_VARIABLE_NAMES_KEY =

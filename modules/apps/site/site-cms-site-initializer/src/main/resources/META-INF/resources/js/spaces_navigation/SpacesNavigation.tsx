@@ -10,6 +10,8 @@ import React, {useEffect, useState} from 'react';
 import {getAssetsLibrariesByCompany} from '../api/api';
 import SpaceSticker from '../components/SpaceSticker';
 
+const MAX_NUMBER_SPACES = 5;
+
 const SpacesNavigation: React.FC = () => {
 	const [assetLibraries, setAssetsLibraries] = useState<
 		{id: string; name: string}[]
@@ -50,7 +52,7 @@ const SpacesNavigation: React.FC = () => {
 		>
 			<ClayPanel.Body className="py-0">
 				<ul className="list-unstyled">
-					{assetLibraries.map((space) => (
+					{assetLibraries.slice(0, MAX_NUMBER_SPACES).map((space) => (
 						<li className="mb-2" key={space.id}>
 							<SpaceSticker color={space.id} name={space.name} />
 						</li>

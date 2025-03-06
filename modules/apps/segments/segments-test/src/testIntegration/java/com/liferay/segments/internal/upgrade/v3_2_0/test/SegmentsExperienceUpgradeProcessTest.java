@@ -98,27 +98,11 @@ public class SegmentsExperienceUpgradeProcessTest
 
 	@Test
 	public void testUpgrade() throws Exception {
-		_updateFragmentEntryLinks();
-		_updateLayoutPageTemplateStructureRels();
-
-		List<SegmentsExperience> segmentsExperiences =
-			_deleteSegmentsExperiences();
-
-		_assertFragmentEntryLinks(0, segmentsExperiences);
-
-		_assertLayoutPageTemplateStructureRels(_publishedLayout.getPlid());
-		_assertSegmentsExperiences(0, Collections.emptyList());
+		_deleteSegmentsExperiences();
 
 		runUpgrade();
 
-		segmentsExperiences =
-			_segmentsExperienceLocalService.getSegmentsExperiences(
-				_group.getGroupId(), _draftLayout.getPlid());
-
-		_assertFragmentEntryLinks(1, segmentsExperiences);
-
-		_assertLayoutPageTemplateStructureRels(_draftLayout.getPlid());
-		_assertSegmentsExperiences(2, segmentsExperiences);
+		_assertSegmentsExperiences();
 	}
 
 	@Override
@@ -194,6 +178,17 @@ public class SegmentsExperienceUpgradeProcessTest
 		}
 	}
 
+	private void _assertSegmentsExperiences() {
+		List<SegmentsExperience> segmentsExperiences =
+			_segmentsExperienceLocalService.getSegmentsExperiences(
+				_group.getGroupId(), _draftLayout.getPlid());
+
+		_assertFragmentEntryLinks(1, segmentsExperiences);
+
+		_assertLayoutPageTemplateStructureRels(_draftLayout.getPlid());
+		_assertSegmentsExperiences(2, segmentsExperiences);
+	}
+
 	private void _assertSegmentsExperiences(
 		int expectedCount, List<SegmentsExperience> segmentsExperiences) {
 
@@ -210,8 +205,9 @@ public class SegmentsExperienceUpgradeProcessTest
 		}
 	}
 
-	private List<SegmentsExperience> _deleteSegmentsExperiences()
-		throws Exception {
+	private void _deleteSegmentsExperiences() throws Exception {
+		_updateFragmentEntryLinks();
+		_updateLayoutPageTemplateStructureRels();
 
 		List<SegmentsExperience> segmentsExperiences =
 			_segmentsExperienceLocalService.getSegmentsExperiences(
@@ -230,7 +226,10 @@ public class SegmentsExperienceUpgradeProcessTest
 
 		_multiVMPool.clear();
 
-		return segmentsExperiences;
+		_assertFragmentEntryLinks(0, segmentsExperiences);
+
+		_assertLayoutPageTemplateStructureRels(_publishedLayout.getPlid());
+		_assertSegmentsExperiences(0, Collections.emptyList());
 	}
 
 	private long _getPublishedSegmentsExperienceId(

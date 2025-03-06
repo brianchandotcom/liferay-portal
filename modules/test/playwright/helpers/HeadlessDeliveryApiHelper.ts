@@ -108,6 +108,12 @@ export class HeadlessDeliveryApiHelper {
 		);
 	}
 
+	async getContentSetElements(assetListEntryId: number) {
+		return this.apiHelpers.get(
+			`${this.apiHelpers.baseUrl}${this.basePath}/content-sets/${assetListEntryId}/content-set-elements`
+		);
+	}
+
 	async getDocument(documentId: string) {
 		return this.apiHelpers.get(
 			`${this.apiHelpers.baseUrl}${this.basePath}/documents/${documentId}`

@@ -181,11 +181,25 @@ export class StructureBuilderPage {
 	}
 
 	async publishStructure() {
-		await this.publishButton.click();
+		const publish = async () => {
+			await this.publishButton.click();
 
-		await waitForAlert(this.page, 'published successfully', {
-			timeout: 1000,
-		});
+			await waitForAlert(this.page, 'published successfully', {
+				timeout: 1000,
+			});
+		};
+
+		const [response] = await Promise.all([
+			this.page.waitForResponse(
+				(response) =>
+					response.url().includes('object-definitions') &&
+					response.status() === 200,
+				{timeout: 5000}
+			),
+			await publish(),
+		]);
+
+		return await response.json();
 	}
 
 	async saveStructure() {
@@ -205,9 +219,7 @@ export class StructureBuilderPage {
 			await save(),
 		]);
 
-		const {id} = await response.json();
-
-		return {id};
+		return await response.json();
 	}
 
 	async selectField({label, nth = 0}: {label: string; nth?: number}) {

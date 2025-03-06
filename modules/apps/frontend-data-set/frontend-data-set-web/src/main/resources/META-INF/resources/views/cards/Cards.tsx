@@ -68,7 +68,7 @@ const Card = ({item, schema}: {item: any; schema: ICardSchema}) => {
 		displayType: DisplayType;
 		value: string;
 	}> => {
-		if (!schema.labels || !Array.isArray(schema.labels)) {
+		if (!schema.labels) {
 			return [];
 		}
 

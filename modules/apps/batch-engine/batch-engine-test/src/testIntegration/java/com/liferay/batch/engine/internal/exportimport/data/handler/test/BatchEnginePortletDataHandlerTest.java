@@ -71,18 +71,6 @@ public class BatchEnginePortletDataHandlerTest {
 			ObjectDefinitionTestUtil.getRandomName(),
 			Arrays.asList(
 				ObjectFieldUtil.createObjectField(
-					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
-					ObjectFieldConstants.DB_TYPE_STRING, true, true, null,
-					RandomTestUtil.randomString(), _OBJECT_FIELD_NAME,
-					Arrays.asList(
-						new ObjectFieldSettingBuilder(
-						).name(
-							ObjectFieldSettingConstants.NAME_UNIQUE_VALUES
-						).value(
-							Boolean.TRUE.toString()
-						).build()),
-					false),
-				ObjectFieldUtil.createObjectField(
 					ObjectFieldConstants.BUSINESS_TYPE_ATTACHMENT,
 					ObjectFieldConstants.DB_TYPE_LONG, true, false, null,
 					RandomTestUtil.randomString(), "attachment",
@@ -105,6 +93,18 @@ public class BatchEnginePortletDataHandlerTest {
 							ObjectFieldSettingConstants.NAME_MAX_FILE_SIZE
 						).value(
 							"100"
+						).build()),
+					false),
+				ObjectFieldUtil.createObjectField(
+					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+					ObjectFieldConstants.DB_TYPE_STRING, true, true, null,
+					RandomTestUtil.randomString(), _OBJECT_FIELD_NAME,
+					Arrays.asList(
+						new ObjectFieldSettingBuilder(
+						).name(
+							ObjectFieldSettingConstants.NAME_UNIQUE_VALUES
+						).value(
+							Boolean.TRUE.toString()
 						).build()),
 					false)),
 			ObjectDefinitionConstants.SCOPE_COMPANY);

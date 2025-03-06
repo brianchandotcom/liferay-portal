@@ -6,7 +6,10 @@
 import ClayButton from '@clayui/button';
 import ClayEmptyState from '@clayui/empty-state';
 import ClayLoadingIndicator from '@clayui/loading-indicator';
-import {MarketplaceModal} from '@liferay/layout-js-components-web';
+import {
+	MarketplaceModal,
+	SearchResultsMessage,
+} from '@liferay/layout-js-components-web';
 import {
 	APIResponse,
 	MarketplaceRest,
@@ -180,6 +183,10 @@ function SearchResults({
 
 			{loading ? (
 				<ClayLoadingIndicator className="mt-3" size="sm" />
+			) : null}
+
+			{!loading && results ? (
+				<SearchResultsMessage numberOfResults={results.items.length} />
 			) : null}
 		</>
 	);

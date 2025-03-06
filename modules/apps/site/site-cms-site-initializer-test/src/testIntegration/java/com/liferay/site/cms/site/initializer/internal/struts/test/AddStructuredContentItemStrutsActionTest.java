@@ -102,7 +102,6 @@ public class AddStructuredContentItemStrutsActionTest {
 
 		long classNameId = _portal.getClassNameId(
 			_objectDefinition.getClassName());
-
 		HttpServletRequest httpServletRequest = _getMockHttpServletRequest();
 
 		_testExecute(classNameId, 1, null, httpServletRequest);
@@ -125,7 +124,6 @@ public class AddStructuredContentItemStrutsActionTest {
 		mockHttpServletRequest.setParameter(
 			"objectDefinitionId",
 			String.valueOf(_objectDefinition.getObjectDefinitionId()));
-
 		mockHttpServletRequest.setRequestURI(_layout.getFriendlyURL());
 
 		return mockHttpServletRequest;

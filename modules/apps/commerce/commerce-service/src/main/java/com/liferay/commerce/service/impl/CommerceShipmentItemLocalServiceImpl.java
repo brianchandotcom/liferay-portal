@@ -34,6 +34,8 @@ import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
@@ -135,6 +137,8 @@ public class CommerceShipmentItemLocalServiceImpl
 		_commerceOrderItemLocalService.incrementShippedQuantity(
 			commerceShipmentItem.getCommerceOrderItemId(), quantity);
 
+		_reindexCommerceShipment(commerceShipmentItem.getCommerceShipmentId());
+
 		return commerceShipmentItem;
 	}
 
@@ -161,7 +165,12 @@ public class CommerceShipmentItemLocalServiceImpl
 		commerceShipmentItem.setCommerceShipmentId(commerceShipmentId);
 		commerceShipmentItem.setCommerceOrderItemId(commerceOrderItemId);
 
-		return commerceShipmentItemPersistence.update(commerceShipmentItem);
+		commerceShipmentItem = commerceShipmentItemPersistence.update(
+			commerceShipmentItem);
+
+		_reindexCommerceShipment(commerceShipmentItem.getCommerceShipmentId());
+
+		return commerceShipmentItem;
 	}
 
 	@Override
@@ -239,6 +248,8 @@ public class CommerceShipmentItemLocalServiceImpl
 		catch (PortalException portalException) {
 			_log.error(portalException);
 		}
+
+		_reindexCommerceShipment(commerceShipmentItem.getCommerceShipmentId());
 
 		return commerceShipmentItem;
 	}
@@ -400,6 +411,8 @@ public class CommerceShipmentItemLocalServiceImpl
 		_commerceOrderItemLocalService.incrementShippedQuantity(
 			commerceShipmentItem.getCommerceOrderItemId(), quantityDelta);
 
+		_reindexCommerceShipment(commerceShipmentItem.getCommerceShipmentId());
+
 		return commerceShipmentItem;
 	}
 
@@ -437,6 +450,15 @@ public class CommerceShipmentItemLocalServiceImpl
 			fetchCommerceInventoryWarehouseItem(
 				commerceShipmentItem.getCommerceInventoryWarehouseId(), sku,
 				unitOfMeasureKey);
+	}
+
+	private void _reindexCommerceShipment(long commerceShipmentId)
+		throws PortalException {
+
+		Indexer<CommerceShipment> indexer =
+			IndexerRegistryUtil.nullSafeGetIndexer(CommerceShipment.class);
+
+		indexer.reindex(CommerceShipment.class.getName(), commerceShipmentId);
 	}
 
 	private void _restoreStockQuantity(

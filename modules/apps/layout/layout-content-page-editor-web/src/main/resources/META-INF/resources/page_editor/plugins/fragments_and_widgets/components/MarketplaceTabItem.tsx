@@ -40,7 +40,6 @@ export default function MarketplaceTabItem({item}: {item: Product}) {
 			onClick={openItem}
 			onKeyDown={handleKeyDown}
 			role="button"
-			tabIndex={0}
 			title={sub(Liferay.Language.get('x-details'), item.name)}
 		>
 			<ClayCard.Body className="p-2">

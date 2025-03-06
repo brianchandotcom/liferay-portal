@@ -8,17 +8,28 @@ package com.liferay.site.cms.site.initializer.internal.fragment.renderer;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.frontend.taglib.react.servlet.taglib.ComponentTag;
+import com.liferay.object.admin.rest.dto.v1_0.ObjectAction;
+import com.liferay.object.admin.rest.dto.v1_0.ObjectDefinition;
+import com.liferay.object.admin.rest.resource.v1_0.ObjectDefinitionResource;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.servlet.PageContextFactoryUtil;
 
 import java.io.PrintWriter;
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -71,6 +82,11 @@ public class StructureBuilderFragmentRenderer
 						ParamUtil.getString(
 							httpServletRequest,
 							"objectFolderExternalReferenceCode"))
+				).put(
+					"state",
+					JSONUtil.put(
+						"objectDefinition",
+						_getObjectDefinitionJSONObject(httpServletRequest))
 				).build());
 
 			componentTag.setServletContext(_servletContext);
@@ -88,11 +104,73 @@ public class StructureBuilderFragmentRenderer
 		}
 	}
 
+	private JSONObject _getObjectDefinitionJSONObject(
+		HttpServletRequest httpServletRequest) {
+
+		long objectDefinitionId = ParamUtil.getLong(
+			httpServletRequest, "objectDefinitionId");
+
+		if (objectDefinitionId <= 0) {
+			return null;
+		}
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		ObjectDefinitionResource.Builder builder =
+			_objectDefinitionResourceFactory.create();
+
+		ObjectDefinitionResource objectDefinitionResource = builder.user(
+			themeDisplay.getUser()
+		).build();
+
+		try {
+			ObjectDefinition objectDefinition =
+				objectDefinitionResource.getObjectDefinition(
+					objectDefinitionId);
+
+			for (ObjectAction objectAction :
+					objectDefinition.getObjectActions()) {
+
+				Map<String, Object> parameters =
+					(Map<String, Object>)objectAction.getParameters();
+
+				Object object = parameters.get("predefinedValues");
+
+				if (object == null) {
+					continue;
+				}
+
+				parameters.put(
+					"predefinedValues",
+					ListUtil.toList(
+						(ArrayList<LinkedHashMap>)object,
+						_jsonFactory::createJSONObject));
+			}
+
+			return _jsonFactory.createJSONObject(objectDefinition.toString());
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+		}
+
+		return null;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		StructureBuilderFragmentRenderer.class);
 
 	@Reference
+	private JSONFactory _jsonFactory;
+
+	@Reference
 	private Language _language;
+
+	@Reference
+	private ObjectDefinitionResource.Factory _objectDefinitionResourceFactory;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.site.cms.site.initializer)"

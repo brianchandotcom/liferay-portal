@@ -722,8 +722,6 @@ public class VariableNameCheck extends BaseCheck {
 			return;
 		}
 
-		String absolutePath = getAbsolutePath();
-
 		List<DetailAST> assignDetailASTList = getAllChildTokens(
 			parentDetailAST, true, TokenTypes.ASSIGN);
 
@@ -733,8 +731,6 @@ public class VariableNameCheck extends BaseCheck {
 			if (firstChildDetailAST == null) {
 				continue;
 			}
-
-			String methodName = StringPool.BLANK;
 
 			if (equals(assignDetailAST.getParent(), detailAST)) {
 				if (firstChildDetailAST.getType() != TokenTypes.EXPR) {
@@ -747,13 +743,15 @@ public class VariableNameCheck extends BaseCheck {
 					continue;
 				}
 
+				String absolutePath = getAbsolutePath();
+
 				if (absolutePath.contains("/test/")) {
 					_checkVariableNameByMethodCall(
 						firstChildDetailAST, variableName, "ReflectionTestUtil",
 						"getAndSetFieldValue", detailAST);
 				}
 
-				methodName = getMethodName(firstChildDetailAST);
+				String methodName = getMethodName(firstChildDetailAST);
 
 				if (methodName.equals("stream")) {
 					firstChildDetailAST = firstChildDetailAST.getFirstChild();
@@ -778,6 +776,8 @@ public class VariableNameCheck extends BaseCheck {
 					continue;
 				}
 
+				String absolutePath = getAbsolutePath();
+
 				if (absolutePath.contains("/test/")) {
 					_checkVariableNameByMethodCall(
 						nextSiblingDetailAST, variableName,
@@ -785,7 +785,7 @@ public class VariableNameCheck extends BaseCheck {
 						firstChildDetailAST);
 				}
 
-				methodName = getMethodName(nextSiblingDetailAST);
+				String methodName = getMethodName(nextSiblingDetailAST);
 
 				if (methodName.matches("get[A-Z].*")) {
 					_checkTypo(

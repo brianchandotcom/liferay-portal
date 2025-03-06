@@ -12,8 +12,6 @@ import com.liferay.portal.kernel.model.Role;
  */
 public interface MenuAccessConfigurationManager {
 
-	public void addAccessRoleToControlMenu(Role role) throws Exception;
-
 	public void deleteRoleAccessToControlMenu(Role role) throws Exception;
 
 	public String[] getAccessToControlMenuRoleIds(long groupId)

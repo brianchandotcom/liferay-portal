@@ -3,14 +3,12 @@
 		"vue": "2.6.7"
 	},
 	"devDependencies": {
-		"babel-cli": "^6.26.0",
-		"babel-preset-env": "^1.7.0",
-		"liferay-npm-bundler": "2.30.0"
+		"esbuild": "^0.20.2"
 	},
-	"main": "lib/index.es.js",
+	"main": "js/index.js",
 	"name": "${artifactId}",
 	"scripts": {
-		"build": "babel --source-maps -d#if (${buildType} != "gradle") target/classes/META-INF/resources#else build/resources/main/META-INF/resources#end src/main/resources/META-INF/resources && liferay-npm-bundler"
+		"build": "esbuild ./src/main/resources/META-INF/resources/js/index.js --bundle --outfile#if (${buildType} != "gradle")=./target/classes/META-INF/resources/js/index.js#else=./build/resources/main/META-INF/resources/js/index.js#end --format=esm"
 	},
 	"version": "${packageJsonVersion}"
 }

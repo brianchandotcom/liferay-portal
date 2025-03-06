@@ -19,6 +19,10 @@
 	</ol>
 </div>
 
-<aui:script require="<%= mainRequire %>">
-	main.default('<portlet:namespace />');
+<aui:script>
+	import(
+		Liferay.ThemeDisplay.getPathContext() + '/o/${artifactId}/js/index.js'
+	).then(
+		(module) => module.default('<portlet:namespace />')
+	);
 </aui:script>

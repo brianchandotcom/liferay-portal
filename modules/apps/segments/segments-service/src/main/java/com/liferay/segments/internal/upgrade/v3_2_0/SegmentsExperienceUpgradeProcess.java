@@ -28,6 +28,12 @@ public class SegmentsExperienceUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
+		String layoutPageTemplateStructureColumnName = "plid";
+
+		if (!hasColumn("LayoutPageTemplateStructure", "plid")) {
+			layoutPageTemplateStructureColumnName = "classPK";
+		}
+
 		try (PreparedStatement preparedStatement1 = connection.prepareStatement(
 				"select * from SegmentsExperience");
 			PreparedStatement preparedStatement2 =
@@ -57,7 +63,8 @@ public class SegmentsExperienceUpgradeProcess extends UpgradeProcess {
 						 "and segmentsExperienceId = ? and ",
 						 "LayoutPageTemplateStructureId in (select ",
 						 "LayoutPageTemplateStructureId from ",
-						 "LayoutPageTemplateStructure where plid = ?)"));
+						 "LayoutPageTemplateStructure where ",
+						 layoutPageTemplateStructureColumnName, " = ?)"));
 
 			ResultSet resultSet = preparedStatement1.executeQuery()) {
 

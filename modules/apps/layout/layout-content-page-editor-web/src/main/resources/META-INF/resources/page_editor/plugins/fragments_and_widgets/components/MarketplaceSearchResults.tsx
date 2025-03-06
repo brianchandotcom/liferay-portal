@@ -18,6 +18,8 @@ import {
 } from '@liferay/marketplace-js-components-web';
 import React, {useEffect, useRef, useState} from 'react';
 
+import {LIST_ITEM_TYPES} from '../../../app/config/constants/listItemTypes';
+import {useKeyboardNavigation} from '../../../app/js-index';
 import MarketplaceTabItem from './MarketplaceTabItem';
 
 export default function MarketplaceSearchResults({
@@ -160,14 +162,18 @@ function SearchResults({
 	return (
 		<>
 			{!loading && results?.items.length ? (
-				<div className="px-3">
+				<ul
+					aria-label={Liferay.Language.get('marketplace-fragments')}
+					className="list-unstyled px-3"
+					role="menubar"
+				>
 					{results.items.map((item: Product) => (
-						<MarketplaceModal
+						<MarketplaceSearchResultsList
+							item={item}
 							key={item.id}
-							trigger={<MarketplaceTabItem item={item} />}
 						/>
 					))}
-				</div>
+				</ul>
 			) : null}
 
 			{!loading && !results?.items.length ? (
@@ -189,5 +195,22 @@ function SearchResults({
 				<SearchResultsMessage numberOfResults={results.items.length} />
 			) : null}
 		</>
+	);
+}
+
+function MarketplaceSearchResultsList({item}: {item: Product}) {
+	const {isTarget, setElement} = useKeyboardNavigation({
+		type: LIST_ITEM_TYPES.listItem,
+	});
+
+	return (
+		<li
+			className="card-interactive rounded"
+			ref={setElement}
+			role="menuitem"
+			tabIndex={isTarget ? 0 : -1}
+		>
+			<MarketplaceModal trigger={<MarketplaceTabItem item={item} />} />
+		</li>
 	);
 }

@@ -19,10 +19,7 @@ portletDisplay.setShowBackIcon(true);
 renderResponse.setTitle(LanguageUtil.get(request, "discard-changes"));
 %>
 
-<clay:container-fluid
-	cssClass="publications-related-entries-container"
-	fullWidth="<%= true %>"
->
+<div class="publications-related-entries-container">
 	<div class="sheet">
 		<clay:sheet-section>
 			<h2 class="sheet-title"><liferay-ui:message key="discarded-changes" /></h2>
@@ -45,4 +42,4 @@ renderResponse.setTitle(LanguageUtil.get(request, "discard-changes"));
 			<aui:button href="<%= backURL %>" type="cancel" />
 		</clay:sheet-footer>
 	</div>
-</clay:container-fluid>
+</div>

@@ -11,17 +11,12 @@
 ViewTimelineHistoryDisplayContext viewTimelineHistoryDisplayContext = (ViewTimelineHistoryDisplayContext)request.getAttribute(CTWebKeys.VIEW_TIMELINE_HISTORY_DISPLAY_CONTEXT);
 %>
 
-<clay:container-fluid
-	fullWidth="<%= true %>"
-	id="publication-timeline-history-table"
->
-	<frontend-data-set:headless-display
-		apiURL="<%= viewTimelineHistoryDisplayContext.getAPIURL() %>"
-		fdsActionDropdownItems="<%= viewTimelineHistoryDisplayContext.getFDSActionDropdownItems() %>"
-		fdsFilters="<%= viewTimelineHistoryDisplayContext.getFDSFilters() %>"
-		id="<%= PublicationsFDSNames.PUBLICATIONS_TIMELINE_HISTORY %>"
-		itemsPerPage="<%= 10 %>"
-		selectedItemsKey="id"
-		showPagination="<%= true %>"
-	/>
-</clay:container-fluid>
+<frontend-data-set:headless-display
+	apiURL="<%= viewTimelineHistoryDisplayContext.getAPIURL() %>"
+	fdsActionDropdownItems="<%= viewTimelineHistoryDisplayContext.getFDSActionDropdownItems() %>"
+	fdsFilters="<%= viewTimelineHistoryDisplayContext.getFDSFilters() %>"
+	id="<%= PublicationsFDSNames.PUBLICATIONS_TIMELINE_HISTORY %>"
+	itemsPerPage="<%= 10 %>"
+	selectedItemsKey="id"
+	showPagination="<%= true %>"
+/>

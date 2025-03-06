@@ -15,23 +15,19 @@ ViewHistoryDisplayContext viewHistoryDisplayContext = (ViewHistoryDisplayContext
 	navigationItems="<%= viewHistoryDisplayContext.getViewNavigationItems() %>"
 />
 
-<clay:container-fluid
-	fullWidth="<%= true %>"
->
-	<frontend-data-set:headless-display
-		additionalProps='<%=
-			HashMapBuilder.<String, Object>put(
-				"getPublicationStatusURL",
-				ResourceURLBuilder.createResourceURL(
-					renderResponse
-				).setResourceID(
-					"/change_tracking/get_publication_status"
-				).buildString()
-			).build()
-		%>'
-		apiURL="<%= viewHistoryDisplayContext.getAPIURL() %>"
-		fdsActionDropdownItems="<%= viewHistoryDisplayContext.getFDSActionDropdownItems() %>"
-		id="<%= PublicationsFDSNames.PUBLICATIONS_HISTORY %>"
-		propsTransformer="{PublicationHistoryPropsTransformer} from change-tracking-web"
-	/>
-</clay:container-fluid>
+<frontend-data-set:headless-display
+	additionalProps='<%=
+		HashMapBuilder.<String, Object>put(
+			"getPublicationStatusURL",
+			ResourceURLBuilder.createResourceURL(
+				renderResponse
+			).setResourceID(
+				"/change_tracking/get_publication_status"
+			).buildString()
+		).build()
+	%>'
+	apiURL="<%= viewHistoryDisplayContext.getAPIURL() %>"
+	fdsActionDropdownItems="<%= viewHistoryDisplayContext.getFDSActionDropdownItems() %>"
+	id="<%= PublicationsFDSNames.PUBLICATIONS_HISTORY %>"
+	propsTransformer="{PublicationHistoryPropsTransformer} from change-tracking-web"
+/>

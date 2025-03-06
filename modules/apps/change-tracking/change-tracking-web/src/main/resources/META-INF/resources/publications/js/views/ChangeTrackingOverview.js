@@ -65,6 +65,7 @@ export default function ChangeTrackingOverview({
 			}
 			displayType="secondary"
 			showCollapseIcon={true}
+			style={{marginTop: '1em'}}
 		>
 			<ClayPanel.Body>
 				<div className="small text-secondary">

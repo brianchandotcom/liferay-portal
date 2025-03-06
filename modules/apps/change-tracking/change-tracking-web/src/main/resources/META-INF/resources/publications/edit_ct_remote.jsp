@@ -24,10 +24,7 @@ else {
 	<liferay-portlet:param name="redirect" value="<%= redirect %>" />
 </liferay-portlet:actionURL>
 
-<clay:container-fluid
-	cssClass="container-form-lg"
-	fullWidth="<%= true %>"
->
+<div class="container-form-lg">
 	<clay:sheet>
 		<aui:form action="<%= actionURL %>" cssClass="lfr-export-dialog" method="post" name="editCTRemoteFm">
 			<aui:input name="ctRemoteId" type="hidden" value="<%= (ctRemote != null) ? ctRemote.getCtRemoteId() : 0 %>" />
@@ -64,4 +61,4 @@ else {
 			</aui:button-row>
 		</aui:form>
 	</clay:sheet>
-</clay:container-fluid>
+</div>

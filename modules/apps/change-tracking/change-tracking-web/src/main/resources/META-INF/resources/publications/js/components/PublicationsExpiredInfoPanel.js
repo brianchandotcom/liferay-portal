@@ -4,7 +4,6 @@
  */
 
 import ClayAlert from '@clayui/alert';
-import ClayLayout from '@clayui/layout';
 import React, {useEffect, useState} from 'react';
 
 import {WORKFLOW_STATUS_EXPIRED} from './WorkflowStatusLabel';
@@ -36,18 +35,17 @@ export default function PublicationsExpiredInfoPanel() {
 
 	return (
 		expired && (
-			<ClayLayout.ContainerFluid size={false} style={{marginTop: '1em'}}>
-				<ClayAlert
-					displayType="info"
-					onClose={() => {
-						setExpired(false);
-					}}
-				>
-					{Liferay.Language.get(
-						'there-is-one-or-more-out-of-date-publications.-you-have-an-option-to-reactivate-them-or-delete-them'
-					)}
-				</ClayAlert>
-			</ClayLayout.ContainerFluid>
+			<ClayAlert
+				displayType="info"
+				onClose={() => {
+					setExpired(false);
+				}}
+				style={{margin: '0px'}}
+			>
+				{Liferay.Language.get(
+					'there-is-one-or-more-out-of-date-publications.-you-have-an-option-to-reactivate-them-or-delete-them'
+				)}
+			</ClayAlert>
 		)
 	);
 }

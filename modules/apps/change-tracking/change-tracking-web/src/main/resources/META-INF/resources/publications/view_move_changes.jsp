@@ -18,10 +18,7 @@ portletDisplay.setURLBack(viewRelatedEntriesDisplayContext.getRedirectURL());
 renderResponse.setTitle(LanguageUtil.get(request, "move-changes"));
 %>
 
-<clay:container-fluid
-	cssClass="publications-related-entries-container"
-	fullWidth="<%= true %>"
->
+<div class="publications-related-entries-container">
 	<div class="sheet">
 		<clay:sheet-section>
 			<h2 class="sheet-title"><liferay-ui:message key="moved-changes" /></h2>
@@ -66,7 +63,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "move-changes"));
 			</clay:sheet-footer>
 		</aui:form>
 	</div>
-</clay:container-fluid>
+</div>
 
 <aui:script use="aui-base">
 	const toPublicationSelector = document.getElementById(

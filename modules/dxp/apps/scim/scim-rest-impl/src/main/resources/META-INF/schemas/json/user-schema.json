@@ -16,7 +16,7 @@
 			"multiValued": false,
 			"mutability": "readWrite",
 			"name": "name",
-			"required": false,
+			"required": true,
 			"returned": "default",
 			"subAttributes": [
 				{
@@ -36,7 +36,7 @@
 					"multiValued": false,
 					"mutability": "readWrite",
 					"name": "familyName",
-					"required": false,
+					"required": true,
 					"returned": "default",
 					"type": "string",
 					"uniqueness": "none"
@@ -47,7 +47,7 @@
 					"multiValued": false,
 					"mutability": "readWrite",
 					"name": "givenName",
-					"required": false,
+					"required": true,
 					"returned": "default",
 					"type": "string",
 					"uniqueness": "none"
@@ -205,7 +205,7 @@
 			"multiValued": true,
 			"mutability": "readWrite",
 			"name": "emails",
-			"required": false,
+			"required": true,
 			"returned": "default",
 			"subAttributes": [
 				{
@@ -214,7 +214,7 @@
 					"multiValued": false,
 					"mutability": "readWrite",
 					"name": "value",
-					"required": false,
+					"required": true,
 					"returned": "default",
 					"type": "string",
 					"uniqueness": "none"
@@ -241,7 +241,7 @@
 					"multiValued": false,
 					"mutability": "readWrite",
 					"name": "type",
-					"required": false,
+					"required": true,
 					"returned": "default",
 					"type": "string",
 					"uniqueness": "none"
@@ -707,6 +707,17 @@
 				}
 			],
 			"type": "complex"
+		},
+		{
+			"caseExact": false,
+			"description": "TThe components of the Liferay's User Schema Extension.",
+			"multiValued": false,
+			"mutability": "readWrite",
+			"name": "urn:ietf:params:scim:schemas:extension:liferay:2.0:User",
+			"required": false,
+			"returned": "default",
+			"type": "urn:ietf:params:scim:schemas:extension:liferay:2.0:User",
+			"uniqueness": "none"
 		},
 		{
 			"caseExact": false,

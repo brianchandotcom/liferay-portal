@@ -285,8 +285,11 @@ public class StyleBookEntryLocalServiceWrapper
 	}
 
 	@Override
-	public StyleBookEntry fetchDefaultStyleBookEntry(long groupId) {
-		return _styleBookEntryLocalService.fetchDefaultStyleBookEntry(groupId);
+	public StyleBookEntry fetchDefaultStyleBookEntry(
+		long groupId, String themeId) {
+
+		return _styleBookEntryLocalService.fetchDefaultStyleBookEntry(
+			groupId, themeId);
 	}
 
 	@Override

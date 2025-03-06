@@ -240,7 +240,8 @@ public interface StyleBookEntryLocalService
 		DynamicQuery dynamicQuery, Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public StyleBookEntry fetchDefaultStyleBookEntry(long groupId);
+	public StyleBookEntry fetchDefaultStyleBookEntry(
+		long groupId, String themeId);
 
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

@@ -259,8 +259,10 @@ public class StyleBookEntryLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static StyleBookEntry fetchDefaultStyleBookEntry(long groupId) {
-		return getService().fetchDefaultStyleBookEntry(groupId);
+	public static StyleBookEntry fetchDefaultStyleBookEntry(
+		long groupId, String themeId) {
+
+		return getService().fetchDefaultStyleBookEntry(groupId, themeId);
 	}
 
 	public static StyleBookEntry fetchDraft(long primaryKey) {

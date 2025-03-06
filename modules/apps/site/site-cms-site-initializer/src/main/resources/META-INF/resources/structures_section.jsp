@@ -11,16 +11,18 @@
 StructuresSectionDisplayContext structuresSectionDisplayContext = (StructuresSectionDisplayContext)request.getAttribute(StructuresSectionDisplayContext.class.getName());
 %>
 
-<frontend-data-set:headless-display
-	apiURL="<%= structuresSectionDisplayContext.getAPIURL() %>"
-	bulkActionDropdownItems="<%= structuresSectionDisplayContext.getBulkActionDropdownItems() %>"
-	creationMenu="<%= structuresSectionDisplayContext.getCreationMenu() %>"
-	fdsActionDropdownItems="<%= structuresSectionDisplayContext.getFDSActionDropdownItems() %>"
-	formName="fm"
-	id="<%= CMSSiteInitializerFDSNames.STRUCTURES_SECTION %>"
-	itemsPerPage="<%= 10 %>"
-	propsTransformer="{StructuresFDSPropsTransformer} from site-cms-site-initializer"
-	selectedItemsKey="id"
-	selectionType="multiple"
-	style="fluid"
-/>
+<div class="cms-section">
+	<frontend-data-set:headless-display
+		apiURL="<%= structuresSectionDisplayContext.getAPIURL() %>"
+		bulkActionDropdownItems="<%= structuresSectionDisplayContext.getBulkActionDropdownItems() %>"
+		creationMenu="<%= structuresSectionDisplayContext.getCreationMenu() %>"
+		fdsActionDropdownItems="<%= structuresSectionDisplayContext.getFDSActionDropdownItems() %>"
+		formName="fm"
+		id="<%= CMSSiteInitializerFDSNames.STRUCTURES_SECTION %>"
+		itemsPerPage="<%= 10 %>"
+		propsTransformer="{StructuresFDSPropsTransformer} from site-cms-site-initializer"
+		selectedItemsKey="id"
+		selectionType="multiple"
+		style="fluid"
+	/>
+</div>

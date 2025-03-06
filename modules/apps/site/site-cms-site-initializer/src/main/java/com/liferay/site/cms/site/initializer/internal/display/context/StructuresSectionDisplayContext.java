@@ -5,6 +5,7 @@
 
 package com.liferay.site.cms.site.initializer.internal.display.context;
 
+import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenuBuilder;
 import com.liferay.petra.string.StringPool;
@@ -16,6 +17,8 @@ import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.util.HttpComponentsUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.site.cms.site.initializer.internal.configuration.CMSSiteInitializerConfiguration;
+
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -53,6 +56,23 @@ public class StructuresSectionDisplayContext extends BaseSectionDisplayContext {
 					LanguageUtil.get(httpServletRequest, "file"));
 			}
 		).build();
+	}
+
+	@Override
+	public List<FDSActionDropdownItem> getFDSActionDropdownItems()
+		throws Exception {
+
+		return List.of(
+			new FDSActionDropdownItem(
+				HttpComponentsUtil.addParameters(
+					PortalUtil.getLayoutFullURL(
+						LayoutLocalServiceUtil.getLayoutByFriendlyURL(
+							themeDisplay.getScopeGroupId(), false,
+							"/structure-builder"),
+						themeDisplay),
+					"objectDefinitionId", "{id}"),
+				"pencil", "edit", LanguageUtil.get(httpServletRequest, "edit"),
+				"get", null, null));
 	}
 
 	private String _getHref(String objectFolderExternalReferenceCode) {

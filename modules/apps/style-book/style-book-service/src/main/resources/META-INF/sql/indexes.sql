@@ -1,9 +1,9 @@
 create unique index IX_EC8C186B on StyleBookEntry (ctCollectionId, headId);
 create index IX_B498953F on StyleBookEntry (externalReferenceCode[$COLUMN_LENGTH:75$]);
-create index IX_957FE3BD on StyleBookEntry (groupId, defaultStyleBookEntry);
+create index IX_9EDB3FD7 on StyleBookEntry (groupId, defaultStyleBookEntry, themeId[$COLUMN_LENGTH:255$]);
 create unique index IX_DD34F41F on StyleBookEntry (groupId, head, ctCollectionId, externalReferenceCode[$COLUMN_LENGTH:75$]);
 create unique index IX_1FCDFAB9 on StyleBookEntry (groupId, head, ctCollectionId, styleBookEntryKey[$COLUMN_LENGTH:75$]);
-create index IX_9EFBE469 on StyleBookEntry (groupId, head, defaultStyleBookEntry);
+create index IX_A23740AB on StyleBookEntry (groupId, head, defaultStyleBookEntry, themeId[$COLUMN_LENGTH:255$]);
 create index IX_9F9B48BF on StyleBookEntry (groupId, head, name[$COLUMN_LENGTH:75$]);
 create index IX_5223A5F4 on StyleBookEntry (groupId, head, themeId[$COLUMN_LENGTH:255$]);
 create unique index IX_63D3F12 on StyleBookEntry (groupId, head, uuid_[$COLUMN_LENGTH:75$], ctCollectionId);
@@ -12,12 +12,12 @@ create index IX_9A76A32B on StyleBookEntry (groupId, styleBookEntryKey[$COLUMN_L
 create index IX_516C4848 on StyleBookEntry (groupId, themeId[$COLUMN_LENGTH:255$]);
 create index IX_346515B6 on StyleBookEntry (uuid_[$COLUMN_LENGTH:75$]);
 
-create index IX_E9CC1685 on StyleBookEntryVersion (groupId, defaultStyleBookEntry);
+create index IX_9187AE0F on StyleBookEntryVersion (groupId, defaultStyleBookEntry, themeId[$COLUMN_LENGTH:255$]);
 create index IX_B5D7AB23 on StyleBookEntryVersion (groupId, name[$COLUMN_LENGTH:75$]);
 create index IX_8E1B79F3 on StyleBookEntryVersion (groupId, styleBookEntryKey[$COLUMN_LENGTH:75$]);
 create index IX_EF217910 on StyleBookEntryVersion (groupId, themeId[$COLUMN_LENGTH:255$]);
 create unique index IX_24879115 on StyleBookEntryVersion (groupId, version, ctCollectionId, styleBookEntryKey[$COLUMN_LENGTH:75$]);
-create index IX_D77F24C5 on StyleBookEntryVersion (groupId, version, defaultStyleBookEntry);
+create index IX_73C0A7CF on StyleBookEntryVersion (groupId, version, defaultStyleBookEntry, themeId[$COLUMN_LENGTH:255$]);
 create index IX_917554E3 on StyleBookEntryVersion (groupId, version, name[$COLUMN_LENGTH:75$]);
 create index IX_DF8E7750 on StyleBookEntryVersion (groupId, version, themeId[$COLUMN_LENGTH:255$]);
 create unique index IX_3EC07F6E on StyleBookEntryVersion (groupId, version, uuid_[$COLUMN_LENGTH:75$], ctCollectionId);

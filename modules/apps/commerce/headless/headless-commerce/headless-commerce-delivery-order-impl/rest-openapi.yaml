@@ -198,6 +198,9 @@ components:
                     type: string
                 purchaseOrderNumber:
                     type: string
+                shipments:
+                    $ref: "#/components/schemas/Shipment"
+                    readOnly: true
                 shippingMethod:
                     readOnly: true
                     type: string
@@ -600,6 +603,151 @@ components:
                     format: bigdecimal
                     readOnly: true
                     type: number
+            type: object
+        Shipment:
+            properties:
+                accountId:
+                    example: 30130
+                    format: int64
+                    minimum: 0
+                    readOnly: true
+                    type: integer
+                carrier:
+                    example: "FedEx"
+                    readOnly: true
+                    type: string
+                createDate:
+                    format: date
+                    readOnly: true
+                    type: string
+                expectedDate:
+                    format: date
+                    readOnly: true
+                    type: string
+                externalReferenceCode:
+                    readOnly: true
+                    type: string
+                id:
+                    example: 30130
+                    format: int64
+                    minimum: 0
+                    readOnly: true
+                    type: integer
+                modifiedDate:
+                    format: date
+                    readOnly: true
+                    type: string
+                orderExternalReferenceCode:
+                    example: "AB-34098-789-N"
+                    readOnly: true
+                    type: string
+                orderId:
+                    example: 30130
+                    format: int64
+                    minimum: 0
+                    readOnly: true
+                    type: integer
+                shippingAddress:
+                    $ref: "#/components/schemas/ShippingAddress"
+                    readOnly: true
+                shippingAddressId:
+                    example: 31130
+                    format: int64
+                    minimum: 0
+                    readOnly: true
+                    type: integer
+                shippingDate:
+                    format: date
+                    readOnly: true
+                    type: string
+                shippingMethodId:
+                    example: 30130
+                    format: int64
+                    minimum: 0
+                    readOnly: true
+                    type: integer
+                shippingOptionName:
+                    example: "Standard Delivery"
+                    readOnly: true
+                    type: string
+                status:
+                    $ref: "#/components/schemas/Status"
+                    readOnly: true
+                trackingNumber:
+                    example: "123AD-asd"
+                    readOnly: true
+                    type: string
+                trackingURL:
+                    example: "Standard Delivery"
+                    readOnly: true
+                    type: string
+                userName:
+                    example: "John"
+                    readOnly: true
+                    type: string
+            type: object
+        ShippingAddress:
+            properties:
+                city:
+                    example: Diamond Bar
+                    readOnly: true
+                    type: string
+                countryISOCode:
+                    example: US
+                    readOnly: true
+                    type: string
+                description:
+                    example: right stairs, first room on the left
+                    readOnly: true
+                    type: string
+                externalReferenceCode:
+                    example: "AB-34098-789-N"
+                    readOnly: true
+                    type: string
+                id:
+                    example: 31130
+                    format: int64
+                    minimum: 0
+                    readOnly: true
+                    type: integer
+                latitude:
+                    example: 33.9976884
+                    format: double
+                    readOnly: true
+                    type: number
+                longitude:
+                    example: -117.8144595
+                    format: double
+                    readOnly: true
+                    type: number
+                name:
+                    example: Alessio Antonio Rendina
+                    readOnly: true
+                    type: string
+                phoneNumber:
+                    example: (123) 456 7890
+                    readOnly: true
+                    type: string
+                regionISOCode:
+                    example: CA
+                    readOnly: true
+                    type: string
+                street1:
+                    example: 1400 Montefino Ave
+                    readOnly: true
+                    type: string
+                street2:
+                    example: 1st floor
+                    readOnly: true
+                    type: string
+                street3:
+                    example: suite 200
+                    readOnly: true
+                    type: string
+                zip:
+                    example: "91765"
+                    readOnly: true
+                    type: string
             type: object
         ShippingMethod:
             properties:
@@ -2130,6 +2278,90 @@ paths:
                     description:
                         Unexpected error
             tags: ["PlacedOrderAddress"]
+    /placed-orders/by-externalReferenceCode/{externalReferenceCode}/shipments:
+        get:
+            operationId: getPlacedOrderByExternalReferenceCodeShipmentsPage
+            parameters:
+                - in: path
+                  name: externalReferenceCode
+                  required: true
+                  schema:
+                      type: string
+                - in: query
+                  name: filter
+                  required: false
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
+                - in: query
+                  name: search
+                  required: false
+                  schema:
+                      type: string
+                - in: query
+                  name: sort
+                  required: false
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Shipment"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Shipment"
+                                type: array
+                    description:
+                        Successful operation
+                400:
+                    description:
+                        Invalid input
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            summary: Gets a list of Shipments related to an Order.
+            tags: ["Shipment"]
     /placed-orders/{placedOrderId}:
         get:
             description:
@@ -2956,5 +3188,92 @@ paths:
                     description:
                         Unexpected error
             tags: ["PlacedOrderAddress"]
+    /placed-orders/{placedOrderId}/shipments:
+        get:
+            description:
+                Retrieve placed order shipments.
+            operationId: getPlacedOrderShipmentsPage
+            parameters:
+                - in: path
+                  explode: false
+                  name: placedOrderId
+                  required: true
+                  schema:
+                      description:
+                          Placed Order Id
+                      format: int64
+                      type: integer
+                  style: simple
+                - in: query
+                  name: filter
+                  required: false
+                  schema:
+                      type: string
+                - in: query
+                  name: page
+                  required: false
+                  schema:
+                      type: integer
+                - in: query
+                  name: pageSize
+                  required: false
+                  schema:
+                      type: integer
+                - in: query
+                  name: search
+                  required: false
+                  schema:
+                      type: string
+                - in: query
+                  name: sort
+                  required: false
+                  schema:
+                      type: string
+            responses:
+                200:
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Shipment"
+                                type: array
+                        application/xml:
+                            schema:
+                                items:
+                                    $ref: "#/components/schemas/Shipment"
+                                type: array
+                    description:
+                        Return the shipments of the placed order
+                401:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Authentication information is missing or invalid
+                404:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        The specified resource was not found
+                500:
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                        application/xml:
+                            schema:
+                                $ref: "#/components/schemas/Error"
+                    description:
+                        Unexpected error
+            tags: ["Shipment"]
 servers:
     - url: /

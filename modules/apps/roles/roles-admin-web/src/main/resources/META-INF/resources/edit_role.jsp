@@ -68,7 +68,7 @@ renderResponse.setTitle((role == null) ? LanguageUtil.get(request, "new-role") :
 
 	<aui:model-context bean="<%= role %>" model="<%= Role.class %>" />
 
-	<div class="sheet">
+	<div class="mt-4 sheet">
 		<div class="panel-group panel-group-flush">
 			<aui:fieldset>
 				<c:choose>

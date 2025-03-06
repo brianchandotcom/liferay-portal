@@ -50,7 +50,7 @@ renderResponse.setTitle((userGroup == null) ? LanguageUtil.get(request, "new-use
 
 	<aui:model-context bean="<%= userGroup %>" model="<%= UserGroup.class %>" />
 
-	<div class="sheet">
+	<div class="mt-4 sheet">
 		<div class="panel-group panel-group-flush">
 			<aui:fieldset>
 				<aui:input disabled="<%= !hasUserGroupUpdatePermission %>" label='<%= (userGroup != null) ? "new-name" : "name" %>' name="name" />

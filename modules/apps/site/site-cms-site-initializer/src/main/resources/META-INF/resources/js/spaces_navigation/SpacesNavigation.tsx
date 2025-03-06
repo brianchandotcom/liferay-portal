@@ -32,7 +32,7 @@ const SpacesNavigation: React.FC = () => {
 		<ClayPanel
 			collapsable
 			displayTitle={
-				<ClayPanel.Title>
+				<ClayPanel.Title className="align-items-center d-flex font-weight-semi-bold justify-content-between text-2 text-uppercase">
 					<span>{Liferay.Language.get('spaces')}</span>
 
 					<span className="float-right mr-2">

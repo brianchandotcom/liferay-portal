@@ -35,6 +35,7 @@ interface InputLocalizedProps {
 			zh_Hans_CN: string;
 			zh_Hant_TW: string;
 		}>;
+	validate?: boolean;
 }
 
 interface LocaleItem {
@@ -61,7 +62,7 @@ export function translationsNormalizer(
 export default function InputLocalized({
 	className,
 	disabled,
-	error,
+	error: initialError,
 	helpMessage,
 	id,
 	label,
@@ -75,6 +76,7 @@ export default function InputLocalized({
 	selectedLocale,
 	tooltip,
 	translations,
+	validate = false,
 	...otherProps
 }: InputLocalizedProps) {
 	const availableLocales = useMemo(() => {
@@ -95,6 +97,8 @@ export default function InputLocalized({
 	);
 
 	const normalizedTranslations = translationsNormalizer(translations);
+
+	const [error, setError] = useState(initialError);
 
 	useEffect(() => {
 		setSelectedLocaleItem(
@@ -138,6 +142,18 @@ export default function InputLocalized({
 				}}
 				onTranslationsChange={(newTranslations) => {
 					onChange(newTranslations, selectedLocaleItem);
+
+					if (!validate || !required) {
+						return;
+					}
+
+					const value = newTranslations[selectedLocaleItem.label];
+
+					setError(
+						value
+							? initialError
+							: Liferay.Language.get('this-field-is-required')
+					);
 				}}
 				placeholder={placeholder}
 				resultFormatter={resultFormatter}

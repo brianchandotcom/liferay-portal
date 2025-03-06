@@ -258,7 +258,7 @@ public class UserManagerImpl implements UserManager {
 			Map<String, Boolean> requiredAttributes)
 		throws BadRequestException {
 
-		_checkFilterableAttribute(node, false);
+		_checkFilterableAttribute(node, _filterableGroupFieldNames);
 
 		if (startIndex != null) {
 			startIndex--;
@@ -352,7 +352,7 @@ public class UserManagerImpl implements UserManager {
 			Map<String, Boolean> requiredAttributes)
 		throws BadRequestException {
 
-		_checkFilterableAttribute(node, true);
+		_checkFilterableAttribute(node, _filterableUserFieldNames);
 
 		if (startIndex != null) {
 			startIndex--;
@@ -675,31 +675,20 @@ public class UserManagerImpl implements UserManager {
 		return portalUser;
 	}
 
-	private void _checkFilterableAttribute(Node node, boolean user)
+	private void _checkFilterableAttribute(
+			Node node, Set<String> filterableFieldNames)
 		throws BadRequestException {
 
 		if (node != null) {
 			ExpressionNode expressionNode = (ExpressionNode)node;
 			boolean filterable = false;
 
-			if (user) {
-				for (String userField : _filterableUserFieldNames) {
-					if (StringUtil.contains(
-							expressionNode.getAttributeValue(), userField,
-							StringPool.COLON)) {
+			for (String field : filterableFieldNames) {
+				if (StringUtil.contains(
+						expressionNode.getAttributeValue(), field,
+						StringPool.COLON)) {
 
-						filterable = true;
-					}
-				}
-			}
-			else {
-				for (String groupField : _filterableGroupFieldNames) {
-					if (StringUtil.contains(
-							expressionNode.getAttributeValue(), groupField,
-							StringPool.COLON)) {
-
-						filterable = true;
-					}
+					filterable = true;
 				}
 			}
 

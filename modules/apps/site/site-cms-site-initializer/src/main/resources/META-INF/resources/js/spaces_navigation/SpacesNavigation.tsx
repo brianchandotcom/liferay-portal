@@ -5,6 +5,7 @@
 
 import {ClayButtonWithIcon} from '@clayui/button';
 import ClayIcon from '@clayui/icon';
+import ClayLink from '@clayui/link';
 import ClayPanel from '@clayui/panel';
 import {sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
@@ -53,23 +54,27 @@ const SpacesNavigation: React.FC = () => {
 			}
 			showCollapseIcon
 		>
-			<ClayPanel.Body className="py-0">
-				<ul className="list-unstyled">
+			<ClayPanel.Body className="p-0">
+				<ul className="menubar-primary nav nav-stacked" role="menu">
 					{assetLibraries.slice(0, MAX_NUMBER_SPACES).map((space) => (
-						<li className="mb-2" key={space.id}>
-							<SpaceSticker name={space.name} />
+						<li className="nav-item" key={space.id}>
+							<ClayLink className="nav-link" href="#">
+								<SpaceSticker name={space.name} />
+							</ClayLink>
 						</li>
 					))}
 
-					<li>
-						<span className="mr-2 sticker">
-							<ClayIcon symbol="box-container" />
-						</span>
+					<li className="nav-item" role="none">
+						<ClayLink className="nav-link" href="/web/cms/all">
+							<span className="mr-2 sticker">
+								<ClayIcon symbol="box-container" />
+							</span>
 
-						{sub(
-							Liferay.Language.get('all-spaces-x'),
-							assetLibraries.length
-						)}
+							{sub(
+								Liferay.Language.get('all-spaces-x'),
+								assetLibraries.length
+							)}
+						</ClayLink>
 					</li>
 				</ul>
 			</ClayPanel.Body>

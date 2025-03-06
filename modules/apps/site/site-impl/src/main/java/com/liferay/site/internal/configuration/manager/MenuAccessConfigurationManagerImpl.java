@@ -86,9 +86,10 @@ public class MenuAccessConfigurationManagerImpl
 				accessToControlMenuRoleIds = ArrayUtil.remove(
 					accessToControlMenuRoleIds, roleId);
 
-				updateMenuAccessConfiguration(
-					(long)properties.get("groupId"), accessToControlMenuRoleIds,
-					(boolean)properties.get("showControlMenuByRole"));
+				properties.put(
+					"accessToControlMenuRoleIds", accessToControlMenuRoleIds);
+
+				configuration.update(properties);
 			}
 		}
 	}

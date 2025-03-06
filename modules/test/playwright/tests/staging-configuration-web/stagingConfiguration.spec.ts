@@ -131,10 +131,10 @@ testFlagsEnabled(
 			type: 'webContent',
 		});
 
-		await webContentDisplayPage.addWebContentWithDisplay(
+		await webContentDisplayPage.addWebContentWithDisplay({
+			pageType: 'widget',
 			webContentName,
-			'widget'
-		);
+		});
 
 		await apiHelpers.jsonWebServicesStaging.enableLocalStaging({
 			groupId: site.id,

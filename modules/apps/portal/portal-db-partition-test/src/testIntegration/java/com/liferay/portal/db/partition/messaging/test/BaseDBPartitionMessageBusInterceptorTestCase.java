@@ -71,7 +71,7 @@ public abstract class BaseDBPartitionMessageBusInterceptorTestCase {
 			PermissionCheckerMethodTestRule.INSTANCE) {
 
 			{
-				disableTestRule(CompanyProviderClassTestRule.class);
+				disableTestRule(CompanyProviderClassTestRule.INSTANCE);
 			}
 		};
 

@@ -26,13 +26,13 @@ public class AggregateTestRuleTest {
 
 	@Test
 	public void testDisableTestRule() throws Throwable {
-		TestRule1 testRule1 = new TestRule1();
-		TestRule2 testRule2 = new TestRule2();
+		TestRule testRule1 = new TestRule();
+		TestRule testRule2 = new TestRule();
 
 		AggregateTestRule aggregateTestRule = new AggregateTestRule(
 			testRule1, testRule2);
 
-		aggregateTestRule.disableTestRule(TestRule1.class);
+		aggregateTestRule.disableTestRule(testRule1);
 
 		Statement statement = aggregateTestRule.apply(
 			new Statement() {
@@ -46,32 +46,24 @@ public class AggregateTestRuleTest {
 
 		statement.evaluate();
 
-		Assert.assertFalse(_testRule1Applied);
-		Assert.assertTrue(_testRule2Applied);
+		Assert.assertFalse(testRule1.isApplied());
+		Assert.assertTrue(testRule2.isApplied());
 	}
 
-	private static boolean _testRule1Applied;
-	private static boolean _testRule2Applied;
-
-	private static class TestRule1 extends LiferayUnitTestRule {
+	private static class TestRule extends LiferayUnitTestRule {
 
 		@Override
 		public Statement apply(Statement statement, Description description) {
-			_testRule1Applied = true;
+			_applied = true;
 
 			return statement;
 		}
 
-	}
-
-	private static class TestRule2 extends LiferayUnitTestRule {
-
-		@Override
-		public Statement apply(Statement statement, Description description) {
-			_testRule2Applied = true;
-
-			return statement;
+		public boolean isApplied() {
+			return _applied;
 		}
+
+		private boolean _applied;
 
 	}
 

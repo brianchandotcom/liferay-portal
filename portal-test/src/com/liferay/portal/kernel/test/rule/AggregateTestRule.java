@@ -56,12 +56,8 @@ public class AggregateTestRule implements TestRule {
 		return statement;
 	}
 
-	public void disableTestRule(Class<? extends TestRule> testRuleClass) {
-		for (TestRule testRule : _testRules) {
-			if (testRuleClass.isInstance(testRule)) {
-				_disabledRules.add(testRule);
-			}
-		}
+	public void disableTestRule(TestRule testRule) {
+		_disabledRules.add(testRule);
 	}
 
 	private static final String[] _ORDERED_RULE_CLASS_NAMES = {

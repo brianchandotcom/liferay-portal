@@ -35,5 +35,6 @@ export interface SearchContainerElements {
 
 export interface SearchContainerNode extends Element {
 	checked?: boolean;
+	dataset?: DOMStringMap;
 	value: string;
 }

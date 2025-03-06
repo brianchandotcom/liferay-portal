@@ -37,6 +37,7 @@ export interface OpenSelectionModalSelectedDatum {
 
 export interface OpenSelectionModalSelectedItem {
 	checked?: boolean;
+	dataset?: DOMStringMap;
 	value?: string;
 	[prop: string]: boolean | string | undefined;
 }
@@ -88,6 +89,7 @@ export default function openSelectionModal<
 						// @ts-ignore
 
 						allSelectedNodes.map((node) => {
+							let dataset: DOMStringMap | undefined;
 							let item: OpenSelectionModalSelectedItem = {};
 
 							if (node.value) {
@@ -101,8 +103,15 @@ export default function openSelectionModal<
 							const row: HTMLElement | null =
 								node.closest('dd, tr, li');
 
-							if (row && Object.keys(row.dataset).length) {
-								item = {...item, ...row.dataset};
+							if (row) {
+								dataset = row.dataset;
+							}
+							else {
+								dataset = node.dataset;
+							}
+
+							if (dataset && Object.keys(dataset).length) {
+								item = {...item, ...dataset};
 							}
 
 							return item;

@@ -118,6 +118,7 @@ RoleItemSelectorViewDisplayContext roleItemSelectorViewDisplayContext = (RoleIte
 						id: data.id,
 						name: data.name,
 					});
+				}
 				});
 
 				Liferay.Util.getOpener().Liferay.fire(

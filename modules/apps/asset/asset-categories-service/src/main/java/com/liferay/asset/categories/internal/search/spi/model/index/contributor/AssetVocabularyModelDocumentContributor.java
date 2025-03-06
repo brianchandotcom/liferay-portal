@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.search.localization.SearchLocalizationHelper;
 import com.liferay.portal.search.spi.model.index.contributor.ModelDocumentContributor;
+import com.liferay.portlet.asset.util.AssetVocabularySettingsHelper;
 
 import java.util.Locale;
 
@@ -63,6 +64,15 @@ public class AssetVocabularyModelDocumentContributor
 				assetVocabulary.getDefaultLanguageId(),
 				assetVocabulary.getGroupId()),
 			true, true);
+		document.addKeyword(
+			"typeClassNameIds", _getAssetTypeClassNameIds(assetVocabulary));
+	}
+
+	private long[] _getAssetTypeClassNameIds(AssetVocabulary assetVocabulary) {
+		AssetVocabularySettingsHelper assetVocabularySettingsHelper =
+			new AssetVocabularySettingsHelper(assetVocabulary.getSettings());
+
+		return assetVocabularySettingsHelper.getClassNameIds();
 	}
 
 	private long[] _getGroupIds(long vocabularyId) {

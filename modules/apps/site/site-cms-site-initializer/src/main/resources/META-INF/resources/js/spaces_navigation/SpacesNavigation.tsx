@@ -4,7 +4,9 @@
  */
 
 import {ClayButtonWithIcon} from '@clayui/button';
+import ClayIcon from '@clayui/icon';
 import ClayPanel from '@clayui/panel';
+import {sub} from 'frontend-js-web';
 import React, {useEffect, useState} from 'react';
 
 import {getAssetsLibrariesByCompany} from '../api/api';
@@ -58,6 +60,17 @@ const SpacesNavigation: React.FC = () => {
 							<SpaceSticker color={space.id} name={space.name} />
 						</li>
 					))}
+
+					<li>
+						<span className="mr-2 sticker">
+							<ClayIcon symbol="box-container" />
+						</span>
+
+						{sub(
+							Liferay.Language.get('all-spaces-x'),
+							assetLibraries.length
+						)}
+					</li>
 				</ul>
 			</ClayPanel.Body>
 		</ClayPanel>

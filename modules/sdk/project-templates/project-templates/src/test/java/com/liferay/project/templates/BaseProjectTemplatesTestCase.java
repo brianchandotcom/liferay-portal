@@ -1330,7 +1330,7 @@ public interface BaseProjectTemplatesTestCase {
 		testContains(
 			gradleProjectDir, "package.json",
 			"build/resources/main/META-INF/resources",
-			"liferay-npm-bundler\": \"2.30.0", "\"main\": \"lib/index.es.js\"");
+			"esbuild\": \"^0.20.2", "\"main\": \"js/index.js\"");
 
 		testNotContains(
 			gradleProjectDir, "package.json",

@@ -165,25 +165,23 @@ export interface ITableSchema {
 	fields: Array<IField>;
 }
 
-export interface ICardLabelBase {
+export interface IBaseCardLabelSchema {
 	value: string;
 }
 
-export interface ICardLabelWithDisplayType extends ICardLabelBase {
-	displayKey?: never;
-	displayMapping?: never;
+export interface IStaticCardLabelSchema extends IBaseCardLabelSchema {
 	displayType: DisplayType;
+	displayTypeKey?: never;
+	displayTypeValues?: never;
 }
 
-export interface ICardLabelWithDisplayMapping extends ICardLabelBase {
-	displayKey: string;
-	displayMapping: Record<string, DisplayType>;
+export interface IDynamicCardLabelSchema extends IBaseCardLabelSchema {
 	displayType?: never;
+	displayTypeKey: string;
+	displayTypeValues: Record<string, DisplayType>;
 }
 
-export type ICardLabelSchema =
-	| ICardLabelWithDisplayType
-	| ICardLabelWithDisplayMapping;
+export type ICardLabelSchema = IStaticCardLabelSchema | IDynamicCardLabelSchema;
 
 export interface ICardSchema {
 	description: string;

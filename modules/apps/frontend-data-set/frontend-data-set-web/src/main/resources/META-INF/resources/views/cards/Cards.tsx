@@ -74,13 +74,16 @@ const Card = ({item, schema}: {item: any; schema: ICardSchema}) => {
 
 		return schema.labels
 			.map((label: ICardLabelSchema) => {
-				const {displayKey, displayMapping} = label;
+				const {displayTypeKey, displayTypeValues} = label;
 				let {displayType} = label;
 
-				if (!displayType && displayMapping && displayKey) {
-					const keyValue = getLocalizedValue(item, displayKey)?.value;
+				if (!displayType && displayTypeValues && displayTypeKey) {
+					const keyValue = getLocalizedValue(
+						item,
+						displayTypeKey
+					)?.value;
 
-					displayType = displayMapping[keyValue!];
+					displayType = displayTypeValues[keyValue!];
 				}
 
 				const value = getLocalizedValue(item, label.value)?.value || '';

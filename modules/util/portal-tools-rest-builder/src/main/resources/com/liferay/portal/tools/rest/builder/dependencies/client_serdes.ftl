@@ -473,30 +473,29 @@ public class ${schemaName}SerDes {
 		if (value instanceof Map) {
 			return _toJSON((Map)value);
 		}
-		if (value != null) {
-			Class<?> clazz = value.getClass();
 
-				if (clazz.isArray()) {
-					StringBuilder sb = new StringBuilder("[");
+		Class<?> clazz = value.getClass();
 
-					Object[] values = (Object[])value;
+		if (clazz.isArray()) {
+			StringBuilder sb = new StringBuilder("[");
 
-					for (int i = 0; i < values.length; i++) {
-						sb.append(_toJSON(values[i]));
+			Object[] values = (Object[])value;
 
-						if ((i + 1) < values.length) {
-							sb.append(", ");
-						}
-					}
+			for (int i = 0; i < values.length; i++) {
+				sb.append(_toJSON(values[i]));
 
-					sb.append("]");
-
-					return sb.toString();
+				if ((i + 1) < values.length) {
+					sb.append(", ");
 				}
+			}
 
-				if (value instanceof String) {
-					return "\"" + _escape(value) + "\"";
-				}
+			sb.append("]");
+
+			return sb.toString();
+		}
+
+		if (value instanceof String) {
+			return "\"" + _escape(value) + "\"";
 		}
 
 		return String.valueOf(value);

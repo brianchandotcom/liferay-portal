@@ -110,15 +110,20 @@ RoleItemSelectorViewDisplayContext roleItemSelectorViewDisplayContext = (RoleIte
 				var selectedData = [];
 
 				allSelectedElements.each(function () {
+					var dataset;
 					var row = this.ancestor('tr');
 
-					var data = row.getDOM().dataset;
+					if (row) {
+						dataset = row.getDOM().dataset;
+					}
+					else {
+						dataset = this.getDOM().dataset;
+					}
 
 					selectedData.push({
-						id: data.id,
-						name: data.name,
+						id: dataset.id,
+						name: dataset.name,
 					});
-				}
 				});
 
 				Liferay.Util.getOpener().Liferay.fire(

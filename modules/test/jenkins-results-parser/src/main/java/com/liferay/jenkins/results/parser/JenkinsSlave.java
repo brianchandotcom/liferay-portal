@@ -24,13 +24,11 @@ public class JenkinsSlave implements JenkinsNode<JenkinsSlave> {
 	public JenkinsSlave() {
 		_jenkinsMaster = JenkinsMaster.getInstance(
 			System.getenv("MASTER_HOSTNAME"));
-
 		_name = System.getenv("NODE_NAME");
 
-		JSONObject jenkinsSlaveJSONObject = JenkinsAPIUtil.getAPIJSONObject(
-			getComputerURL(), "displayName,idle,offline,offlineCauseReason");
-
-		update(jenkinsSlaveJSONObject);
+		update(
+			JenkinsAPIUtil.getAPIJSONObject(
+				getComputerURL(), "displayName,idle,offline,offlineCauseReason"));
 	}
 
 	public JenkinsSlave(String hostname) {

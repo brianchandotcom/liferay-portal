@@ -371,8 +371,6 @@ public class SetupWizardUtil {
 
 		String companyDefaultWebId = emailAddress.substring(index + 1);
 
-		PropsUtil.set(PropsKeys.COMPANY_DEFAULT_WEB_ID, companyDefaultWebId);
-
 		unicodeProperties.put(
 			PropsKeys.COMPANY_DEFAULT_WEB_ID, companyDefaultWebId);
 
@@ -466,6 +464,8 @@ public class SetupWizardUtil {
 		company.setMx(companyDefaultWebId);
 
 		company = CompanyLocalServiceUtil.updateCompany(company);
+
+		PropsUtil.set(PropsKeys.COMPANY_DEFAULT_WEB_ID, companyDefaultWebId);
 
 		PortalInstances.initCompany(company);
 

@@ -23,8 +23,8 @@ public class FragmentEntryLinkUpgradeProcess extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		_upgradeRendererKey();
 		_upgradePlid();
+		_upgradeRendererKey();
 	}
 
 	private void _upgradePlid() throws Exception {

@@ -58,11 +58,11 @@ public class RelevantTestSuite {
 		String testBatchNamesPropertyValue =
 			JenkinsResultsParserUtil.getProperty(
 				JenkinsResultsParserUtil.getProperties(baseTestPropertiesFile),
-				"test.batch.names[relevant]");
+				"relevant.batch.names.whitelist");
 
 		if (testBatchNamesPropertyValue == null) {
 			throw new RuntimeException(
-				"Please set test.batch.names[relevant] in " +
+				"Please set relevant.batch.names.whitelist in " +
 					baseTestPropertiesFile);
 		}
 
@@ -116,7 +116,7 @@ public class RelevantTestSuite {
 						JenkinsResultsParserUtil.combine(
 							testBatch.getName(),
 							" is not a valid test batch in relevant. Check ",
-							"the property \"test.batch.names[relevant]\" ",
+							"the property \"relevant.batch.names.whitelist\" ",
 							"in the base test.properties file and set the ",
 							"batch name.\n"));
 				}

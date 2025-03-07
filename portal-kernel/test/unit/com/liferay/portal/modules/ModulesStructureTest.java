@@ -204,19 +204,15 @@ public class ModulesStructureTest {
 							gitRepoSettingsGradleTemplate);
 					}
 					else {
-						Path gradlePropertiesPath = dirPath.resolve(
-							"gradle.properties");
-
 						if (!dirName.endsWith("playwright") &&
 							!dirName.endsWith("poshi-standalone")) {
+
+							Path gradlePropertiesPath = dirPath.resolve(
+								"gradle.properties");
 
 							Assert.assertFalse(
 								"Forbidden " + gradlePropertiesPath,
 								Files.deleteIfExists(gradlePropertiesPath));
-						}
-
-						if (!dirName.endsWith("playwright") &&
-							!dirName.endsWith("poshi-standalone")) {
 
 							Path settingsGradlePath = dirPath.resolve(
 								"settings.gradle");

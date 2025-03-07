@@ -122,6 +122,10 @@ public class TransformerAgent {
 					fixupJakartaPackage.replace('.', '/'),
 					fixupJavaxPackage.replace('.', '/'));
 			});
+
+		replacementDashDotMap.put(
+			"X-JAVAX-PORTLET-NAMESPACED-RESPONSE",
+			"X-JAKARTA-PORTLET-NAMESPACED-RESPONSE");
 	}
 
 }

@@ -66,11 +66,11 @@ declare module Liferay {
 
 	export function on(
 		events: string | string[],
-		callback?: (event?: LiferayEvent) => void
+		callback?: (event?: any) => void
 	): EventHandler;
 
 	export function once(
 		events: string | string[],
-		callback?: (event?: LiferayEvent) => void
+		callback?: (event?: any) => void
 	): EventHandler;
 }

@@ -499,11 +499,12 @@ public class Query {
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cartByExternalReferenceCodeItems(externalReferenceCode: ___, page: ___, pageSize: ___, skuId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cartByExternalReferenceCodeItems(externalReferenceCode: ___, page: ___, pageSize: ___, search: ___, skuId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(description = "Retrieve cart items of a Cart.")
 	public CartItemPage cartByExternalReferenceCodeItems(
 			@GraphQLName("externalReferenceCode") String externalReferenceCode,
+			@GraphQLName("search") String search,
 			@GraphQLName("skuId") Long skuId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
@@ -514,18 +515,19 @@ public class Query {
 			this::_populateResourceContext,
 			cartItemResource -> new CartItemPage(
 				cartItemResource.getCartByExternalReferenceCodeItemsPage(
-					externalReferenceCode, skuId,
+					externalReferenceCode, search, skuId,
 					Pagination.of(page, pageSize))));
 	}
 
 	/**
 	 * Invoke this method with the command line:
 	 *
-	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cartItems(cartId: ___, page: ___, pageSize: ___, skuId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
+	 * curl -H 'Content-Type: text/plain; charset=utf-8' -X 'POST' 'http://localhost:8080/o/graphql' -d $'{"query": "query {cartItems(cartId: ___, page: ___, pageSize: ___, search: ___, skuId: ___){items {__}, page, pageSize, totalCount}}"}' -u 'test@liferay.com:test'
 	 */
 	@GraphQLField(description = "Retrieve cart items of a Cart.")
 	public CartItemPage cartItems(
 			@GraphQLName("cartId") Long cartId,
+			@GraphQLName("search") String search,
 			@GraphQLName("skuId") Long skuId,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
@@ -536,7 +538,7 @@ public class Query {
 			this::_populateResourceContext,
 			cartItemResource -> new CartItemPage(
 				cartItemResource.getCartItemsPage(
-					cartId, skuId, Pagination.of(page, pageSize))));
+					cartId, search, skuId, Pagination.of(page, pageSize))));
 	}
 
 	/**
@@ -899,6 +901,7 @@ public class Query {
 
 		@GraphQLField(description = "Retrieve cart items of a Cart.")
 		public CartItemPage items(
+				@GraphQLName("search") String search,
 				@GraphQLName("skuId") Long skuId,
 				@GraphQLName("pageSize") int pageSize,
 				@GraphQLName("page") int page)
@@ -909,7 +912,8 @@ public class Query {
 				Query.this::_populateResourceContext,
 				cartItemResource -> new CartItemPage(
 					cartItemResource.getCartItemsPage(
-						_cart.getId(), skuId, Pagination.of(page, pageSize))));
+						_cart.getId(), search, skuId,
+						Pagination.of(page, pageSize))));
 		}
 
 		private Cart _cart;
@@ -1283,6 +1287,7 @@ public class Query {
 
 		@GraphQLField(description = "Retrieve cart items of a Cart.")
 		public CartItemPage byExternalReferenceCodeItems(
+				@GraphQLName("search") String search,
 				@GraphQLName("skuId") Long skuId,
 				@GraphQLName("pageSize") int pageSize,
 				@GraphQLName("page") int page)
@@ -1293,7 +1298,7 @@ public class Query {
 				Query.this::_populateResourceContext,
 				cartItemResource -> new CartItemPage(
 					cartItemResource.getCartByExternalReferenceCodeItemsPage(
-						_cart.getExternalReferenceCode(), skuId,
+						_cart.getExternalReferenceCode(), search, skuId,
 						Pagination.of(page, pageSize))));
 		}
 

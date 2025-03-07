@@ -18,7 +18,6 @@ import com.liferay.exportimport.kernel.lar.BasePortletDataHandler;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
-import com.liferay.exportimport.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.lar.UserIdStrategy;
@@ -63,8 +62,7 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 
 		_fileName = taskItemDelegateName + ".json";
 
-		setExportControls();
-		setImportControls();
+		setEmptyControlsAllowed(true);
 	}
 
 	@Override
@@ -87,9 +85,6 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 		return true;
 	}
 
-	@Override
-	public boolean isEmptyControlsAllowed() { return true; }
-	
 	@Override
 	public boolean isModelCountSupported() {
 		return false;

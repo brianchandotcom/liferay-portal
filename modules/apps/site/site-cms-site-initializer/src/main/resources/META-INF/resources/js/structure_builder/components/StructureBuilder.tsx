@@ -9,15 +9,23 @@ import React from 'react';
 
 import {Config, initializeConfig} from '../config';
 import StateContextProvider from '../contexts/StateContext';
+import {ObjectDefinition} from '../types/ObjectDefinition';
+import buildState from '../utils/buildState';
 import ManagementBar from './ManagementBar';
 import StructureFields from './StructureFields';
 import StructureSettings from './StructureSettings';
 
-export default function StructureBuilder({config}: {config: Config}) {
+export default function StructureBuilder({
+	config,
+	state,
+}: {
+	config: Config;
+	state: {objectDefinition: ObjectDefinition};
+}) {
 	initializeConfig(config);
 
 	return (
-		<StateContextProvider>
+		<StateContextProvider initialState={buildState(state.objectDefinition)}>
 			<div className="d-flex flex-column structure-builder__wrapper">
 				<ManagementBar />
 

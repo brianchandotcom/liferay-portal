@@ -540,7 +540,7 @@ public class MasterPage implements Serializable {
 	private Supplier<String> _nameSupplier;
 
 	@Schema(
-		description = "The master page's specifications. A master page may contain 0 or 1 page specifications in draft status and 0 or 1 page specifications in published status. This field is not returned by default. It can be requested via nestedFields."
+		description = "The master page's specifications. A master page will contain 1 page specifications for its draft layout and 1 page specifications for its published layout. This field is not returned by default. It can be requested via nestedFields."
 	)
 	@Valid
 	public PageSpecification[] getPageSpecifications() {
@@ -578,7 +578,7 @@ public class MasterPage implements Serializable {
 	}
 
 	@GraphQLField(
-		description = "The master page's specifications. A master page may contain 0 or 1 page specifications in draft status and 0 or 1 page specifications in published status. This field is not returned by default. It can be requested via nestedFields."
+		description = "The master page's specifications. A master page will contain 1 page specifications for its draft layout and 1 page specifications for its published layout. This field is not returned by default. It can be requested via nestedFields."
 	)
 	@JsonProperty(access = JsonProperty.Access.READ_WRITE)
 	protected PageSpecification[] pageSpecifications;

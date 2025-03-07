@@ -1,0 +1,7 @@
+assemble:
+    - from: assets
+      into: static
+liferay-courseclarity-theme-favicon-light:
+    name: Liferay Course Clarity Theme Favicon Light
+    type: themeFavicon
+    url: clarity-favicon-light.svg

@@ -1,0 +1,7 @@
+assemble:
+    - from: assets
+      into: static
+liferay-courseclarity-global-js:
+    name: Liferay Course Clarity Global JS
+    type: globalJS
+    url: global.*.js

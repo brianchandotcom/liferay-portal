@@ -85,6 +85,10 @@ public interface BuildDatabase {
 		List<String> distNodes, String distPath, String preDistCommand,
 		String postDistCommand, int threadCount);
 
+	public void uploadBuildDatabaseFileToCloudBucket();
+
+	public void uploadBuildDatabaseFileToCloudBucket(String path);
+
 	public void writeFilteredPropertiesToFile(
 		String destFilePath, Pattern pattern, String key);
 

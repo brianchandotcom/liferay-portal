@@ -386,6 +386,47 @@ public abstract class BaseBuildDatabase implements BuildDatabase {
 	}
 
 	@Override
+	public void uploadBuildDatabaseFileToCloudBucket() {
+		uploadBuildDatabaseFileToCloudBucket(
+			System.getenv("S3_BUCKET_DIST_PATH") + "/" +
+				FILE_NAME_BUILD_DATABASE);
+	}
+
+	@Override
+	public void uploadBuildDatabaseFileToCloudBucket(String path) {
+		if (!JenkinsResultsParserUtil.isCINode()) {
+			return;
+		}
+
+		synchronized (_buildDatabaseFile) {
+			File tempBuildDatabaseFile = new File(
+				JenkinsResultsParserUtil.combine(
+					System.getProperty("java.io.tmpdir"), "/",
+					String.valueOf(_buildDatabaseFile.hashCode()), "/",
+					_buildDatabaseFile.getName()));
+
+			try {
+				JenkinsResultsParserUtil.write(
+					_buildDatabaseFile, _jsonObject.toString());
+
+				JenkinsResultsParserUtil.copy(
+					_buildDatabaseFile, tempBuildDatabaseFile);
+
+				CloudBucketUtil.copyS3File(
+					tempBuildDatabaseFile.toString(), path);
+			}
+			catch (IOException ioException) {
+				throw new RuntimeException(ioException);
+			}
+			finally {
+				if (tempBuildDatabaseFile.exists()) {
+					JenkinsResultsParserUtil.delete(tempBuildDatabaseFile);
+				}
+			}
+		}
+	}
+
+	@Override
 	public void writeFilteredPropertiesToFile(
 		String destFilePath, Pattern pattern, String key) {
 

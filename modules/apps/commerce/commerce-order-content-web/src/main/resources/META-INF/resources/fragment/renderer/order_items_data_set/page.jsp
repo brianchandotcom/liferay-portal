@@ -13,6 +13,8 @@
 	bulkActionDropdownItems="<%= bulkActionDropdownItems %>"
 	fdsActionDropdownItems="<%= fdsActionDropdownItems %>"
 	id="<%= name %>"
+	nestedItemsKey="id"
+	nestedItemsReferenceKey='<%= name.equals(CommerceOrderFragmentFDSNames.PENDING_ORDER_ITEMS) ? "cartItems" : "placedOrderItems" %>'
 	propsTransformer="<%= propsTransformer %>"
 	selectedItemsKey="id"
 	selectionType="multiple"

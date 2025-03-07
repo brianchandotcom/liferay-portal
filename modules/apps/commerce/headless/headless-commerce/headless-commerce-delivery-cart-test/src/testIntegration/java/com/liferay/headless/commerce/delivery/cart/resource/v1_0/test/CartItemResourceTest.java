@@ -24,6 +24,8 @@ import com.liferay.commerce.test.util.CommerceInventoryTestUtil;
 import com.liferay.commerce.test.util.CommerceTestUtil;
 import com.liferay.headless.commerce.delivery.cart.client.dto.v1_0.CartItem;
 import com.liferay.headless.commerce.delivery.cart.client.dto.v1_0.Price;
+import com.liferay.headless.commerce.delivery.cart.client.pagination.Page;
+import com.liferay.headless.commerce.delivery.cart.client.pagination.Pagination;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -92,6 +94,14 @@ public class CartItemResourceTest extends BaseCartItemResourceTestCase {
 	public void testDeleteCartItem() throws Exception {
 	}
 
+	@Override
+	@Test
+	public void testGetCartByExternalReferenceCodeItemsPage() throws Exception {
+		super.testGetCartByExternalReferenceCodeItemsPage();
+
+		_testGetCartByExternalReferenceCodeItemsPage();
+	}
+
 	@Ignore
 	@Override
 	@Test
@@ -115,10 +125,12 @@ public class CartItemResourceTest extends BaseCartItemResourceTestCase {
 		_testGetCartItemPriceOnApplication();
 	}
 
-	@Ignore
 	@Override
 	@Test
-	public void testGetCartItemsPageWithPagination() throws Exception {
+	public void testGetCartItemsPage() throws Exception {
+		super.testGetCartItemsPage();
+
+		_testGetCartItemsPage();
 	}
 
 	@Ignore
@@ -354,6 +366,38 @@ public class CartItemResourceTest extends BaseCartItemResourceTestCase {
 		};
 	}
 
+	private void _testGetCartByExternalReferenceCodeItemsPage()
+		throws Exception {
+
+		CartItem postCartItem = cartItemResource.postCartItem(
+			_commerceOrder.getCommerceOrderId(), _randomCartItem(false));
+
+		cartItemResource.postCartItem(
+			_commerceOrder.getCommerceOrderId(), _randomCartItem(false));
+
+		Page<CartItem> cartItemsPage =
+			cartItemResource.getCartByExternalReferenceCodeItemsPage(
+				testGetCartByExternalReferenceCodeItemsPage_getExternalReferenceCode(),
+				RandomTestUtil.randomString(), null, Pagination.of(1, 10));
+
+		List<CartItem> cartItems = (List<CartItem>)cartItemsPage.getItems();
+
+		Assert.assertEquals(cartItems.toString(), 0, cartItems.size());
+
+		cartItemsPage =
+			cartItemResource.getCartByExternalReferenceCodeItemsPage(
+				testGetCartByExternalReferenceCodeItemsPage_getExternalReferenceCode(),
+				postCartItem.getSku(), null, Pagination.of(1, 10));
+
+		cartItems = (List<CartItem>)cartItemsPage.getItems();
+
+		Assert.assertEquals(cartItems.toString(), 1, cartItems.size());
+
+		CartItem cartItem = cartItems.get(0);
+
+		assertEquals(postCartItem, cartItem);
+	}
+
 	private void _testGetCartItemPriceOnApplication() throws Exception {
 		boolean priceOnApplication = RandomTestUtil.randomBoolean();
 
@@ -370,6 +414,34 @@ public class CartItemResourceTest extends BaseCartItemResourceTestCase {
 		Price price = getCartItem.getPrice();
 
 		Assert.assertEquals(priceOnApplication, price.getPriceOnApplication());
+	}
+
+	private void _testGetCartItemsPage() throws Exception {
+		CartItem postCartItem = cartItemResource.postCartItem(
+			_commerceOrder.getCommerceOrderId(), _randomCartItem(false));
+
+		cartItemResource.postCartItem(
+			_commerceOrder.getCommerceOrderId(), _randomCartItem(false));
+
+		Page<CartItem> cartItemsPage = cartItemResource.getCartItemsPage(
+			_commerceOrder.getCommerceOrderId(), RandomTestUtil.randomString(),
+			null, Pagination.of(1, 10));
+
+		List<CartItem> cartItems = (List<CartItem>)cartItemsPage.getItems();
+
+		Assert.assertEquals(cartItems.toString(), 0, cartItems.size());
+
+		cartItemsPage = cartItemResource.getCartItemsPage(
+			_commerceOrder.getCommerceOrderId(), postCartItem.getSku(), null,
+			Pagination.of(1, 10));
+
+		cartItems = (List<CartItem>)cartItemsPage.getItems();
+
+		Assert.assertEquals(cartItems.toString(), 1, cartItems.size());
+
+		CartItem cartItem = cartItems.get(0);
+
+		assertEquals(postCartItem, cartItem);
 	}
 
 	private void _updateCommercePriceEntry(

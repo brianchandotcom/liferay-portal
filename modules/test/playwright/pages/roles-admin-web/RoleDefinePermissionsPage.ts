@@ -17,10 +17,22 @@ export class RoleDefinePermissionsPage {
 	readonly menuItemByTestId: (id: string) => Locator;
 	readonly noRoleMessage: Locator;
 	readonly page: Page;
-	readonly permissionCheckbox: (permissionName: string) => Locator;
-	readonly permissionScopeChangeButton: (permissionName: string) => Locator;
-	readonly permissionScopeLabel: (permissionName: string) => Locator;
-	readonly permissionScopeRemoveButton: (permissionName: string) => Locator;
+	readonly permissionCheckbox: (
+		permissionName: string,
+		last?: boolean
+	) => Locator;
+	readonly permissionScopeChangeButton: (
+		permissionName: string,
+		last?: boolean
+	) => Locator;
+	readonly permissionScopeLabel: (
+		permissionName: string,
+		last?: boolean
+	) => Locator;
+	readonly permissionScopeRemoveButton: (
+		permissionName: string,
+		last?: boolean
+	) => Locator;
 	readonly permissionScopes: (permissionName: string) => Locator;
 	readonly permissionScopeSiteLabel: (
 		permissionName: string,
@@ -34,6 +46,7 @@ export class RoleDefinePermissionsPage {
 	readonly searchInput: Locator;
 	readonly selectAllCheckbox: (resourceName: string) => Locator;
 	readonly siteSelectorFrame: FrameLocator;
+	readonly siteSelectorMySitesLink: Locator;
 	readonly siteSelectorSiteCard: (siteName: string) => Locator;
 	readonly subMenuItem: (name: string, subMenuItemName: string) => Locator;
 	readonly summaryPermissionCell: (permissionName: string) => Locator;
@@ -62,33 +75,41 @@ export class RoleDefinePermissionsPage {
 			'This role does not have any permissions'
 		);
 		this.page = page;
-		this.permissionCheckbox = (permissionName: string) => {
+		this.permissionCheckbox = (permissionName, last = false) => {
+			if (last) {
+				return page
+					.getByLabel(permissionName)
+					.and(page.getByRole('checkbox'))
+					.last();
+			}
+
 			return page
 				.getByLabel(permissionName)
 				.and(page.getByRole('checkbox'));
 		};
-		this.permissionScopeChangeButton = (permissionName: string) =>
-			this.permissionCheckbox(permissionName)
+		this.permissionScopeChangeButton = (permissionName, last = false) =>
+			this.permissionCheckbox(permissionName, last)
 				.locator('../../..')
 				.getByRole('button', {name: 'Change'});
-		this.permissionScopeLabel = (permissionName: string) =>
-			this.permissionCheckbox(permissionName)
+		this.permissionScopeLabel = (permissionName, last = false) =>
+			this.permissionCheckbox(permissionName, last)
 				.locator('../../..')
 				.getByText('All Sites and Asset Libraries');
-		this.permissionScopeRemoveButton = (permissionName: string) =>
-			this.permissionCheckbox(permissionName)
+		this.permissionScopeRemoveButton = (permissionName, last = false) =>
+			this.permissionCheckbox(permissionName, last)
 				.locator('../../..')
 				.locator('.permission-scopes')
 				.getByRole('button');
-		this.permissionScopes = (permissionName: string) =>
-			this.permissionCheckbox(permissionName)
+		this.permissionScopes = (permissionName, last = false) =>
+			this.permissionCheckbox(permissionName, last)
 				.locator('../../..')
 				.locator('.permission-scopes .label');
 		this.permissionScopeSiteLabel = (
-			permissionName: string,
-			siteName: string
+			permissionName,
+			siteName,
+			last = false
 		) =>
-			this.permissionCheckbox(permissionName)
+			this.permissionCheckbox(permissionName, last)
 				.locator('../../..')
 				.getByText(siteName);
 		this.portletResourceLabel = page.getByTestId('portletResourceLabel');
@@ -113,6 +134,10 @@ export class RoleDefinePermissionsPage {
 				.and(page.getByRole('checkbox'));
 		this.siteSelectorFrame = page.frameLocator(
 			'iframe[title="Select Site"]'
+		);
+		this.siteSelectorMySitesLink = this.siteSelectorFrame.getByRole(
+			'link',
+			{name: 'My Sites'}
 		);
 		this.siteSelectorSiteCard = (siteName) =>
 			this.siteSelectorFrame.getByRole('link', {

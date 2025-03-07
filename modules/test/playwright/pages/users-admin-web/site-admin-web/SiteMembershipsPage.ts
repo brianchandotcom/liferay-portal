@@ -12,6 +12,7 @@ export class SiteMembershipsPage {
 	readonly assignUserGroupIFrame: FrameLocator;
 	readonly assignUserGroupTable: DataTablePage;
 	readonly newUserGroupButton: Locator;
+	readonly noUserGroupMessage: Locator;
 	readonly page: Page;
 	readonly userGroupsLink: Locator;
 	readonly userGroupSelectButton: (userGroupName: string) => Promise<Locator>;
@@ -30,6 +31,9 @@ export class SiteMembershipsPage {
 			)
 		);
 		this.newUserGroupButton = page.getByRole('button', {name: 'Add'});
+		this.noUserGroupMessage = page.getByText(
+			'No user group was found that is a member of this site'
+		);
 		this.page = page;
 		this.userGroupsLink = page.getByRole('link', {
 			name: 'User Groups',

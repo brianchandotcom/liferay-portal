@@ -1,7 +1,7 @@
 # Database Schema Importer Tool
 
 This tool imports database schemas between different databases in the same
-network. This tool is a Beta feature.
+network. This tool is in beta phase.
 
 ## Requirements
 

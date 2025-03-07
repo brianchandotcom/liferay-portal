@@ -11,7 +11,7 @@
 AllSectionDisplayContext allSectionDisplayContext = (AllSectionDisplayContext)request.getAttribute(AllSectionDisplayContext.class.getName());
 %>
 
-<div class="cms-section">
+<div class="cms-section custom-empty-state">
 	<frontend-data-set:headless-display
 		apiURL="<%= allSectionDisplayContext.getAPIURL() %>"
 		bulkActionDropdownItems="<%= allSectionDisplayContext.getBulkActionDropdownItems() %>"

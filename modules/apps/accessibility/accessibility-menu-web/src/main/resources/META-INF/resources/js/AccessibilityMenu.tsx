@@ -11,7 +11,7 @@ import {
 	accessibilityMenuAtom,
 } from '@liferay/accessibility-settings-state-web';
 import {checkCookieConsentForTypes} from '@liferay/cookies-banner-web';
-import {useLiferayState} from '@liferay/frontend-js-state-web';
+import {useLiferayState} from '@liferay/frontend-js-state-web/react';
 import {
 	COOKIE_TYPES,
 	checkConsent,

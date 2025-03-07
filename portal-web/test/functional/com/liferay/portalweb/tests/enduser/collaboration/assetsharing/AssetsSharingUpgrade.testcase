@@ -23,6 +23,7 @@ definition {
 	@priority = 5
 	@refactordone
 	test CanViewSharedAssetsArchive72101 {
+		property custom.properties = "passwords.encryption.algorithm.legacy=PBKDF2WithHmacSHA1/160/128000";
 		property data.archive.type = "data-archive-asset-sharing";
 		property portal.version = "7.2.10.1";
 

@@ -98,7 +98,6 @@ Checks are configured in the following files:
    - [Upgrade](src/main/resources/documentation/upgrade_checks.markdown#upgrade-checks)
 
 - ### By File Extensions:
-   - [](src/main/resources/documentation/csp_source_processor_checks.markdown#checks-for-)
    - [.action, .function, .jelly, .jrxml, .macro, .pom, .project, .properties, .svg, .testcase, .toggle, .tpl, .wsdl, .xml or .xsd](src/main/resources/documentation/xml_source_processor_checks.markdown#checks-for-action-function-jelly-jrxml-macro-pom-project-properties-svg-testcase-toggle-tpl-wsdl-xml-or-xsd)
    - [.bnd](src/main/resources/documentation/bnd_source_processor_checks.markdown#checks-for-bnd)
    - [.bnd, .ftl, .gradle, .java, .json, .jsp, .jspf, .scss or .vm](src/main/resources/documentation/upgrade_source_processor_checks.markdown#checks-for-bnd-ftl-gradle-java-json-jsp-jspf-scss-or-vm)
@@ -110,6 +109,7 @@ Checks are configured in the following files:
    - [.eslintignore, .prettierignore or .properties](src/main/resources/documentation/properties_source_processor_checks.markdown#checks-for-eslintignore-prettierignore-or-properties)
    - [.expect or .sh](src/main/resources/documentation/sh_source_processor_checks.markdown#checks-for-expect-or-sh)
    - [.ftl](src/main/resources/documentation/ftl_source_processor_checks.markdown#checks-for-ftl)
+   - [.ftl, .jsp, .jspf, .jspx or .vm](src/main/resources/documentation/csp_source_processor_checks.markdown#checks-for-ftl-jsp-jspf-jspx-or-vm)
    - [.function, .jar, .lar, .macro, .path, .testcase, .war or .zip](src/main/resources/documentation/poshi_source_processor_checks.markdown#checks-for-function-jar-lar-macro-path-testcase-war-or-zip)
    - [.gitrepo or ci-merge](src/main/resources/documentation/ci_merge_and_git_repo_source_processor_checks.markdown#checks-for-gitrepo-or-cimerge)
    - [.gradle](src/main/resources/documentation/gradle_source_processor_checks.markdown#checks-for-gradle)

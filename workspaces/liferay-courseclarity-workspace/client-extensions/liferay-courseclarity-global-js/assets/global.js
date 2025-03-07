@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	controlPanel.id = 'accessibility-control-panel';
 	controlPanel.style.position = 'fixed';
-	controlPanel.style.top = '20px'; 
+	controlPanel.style.top = '20px';
 	controlPanel.style.right = '20px';
 	controlPanel.style.backgroundColor = 'transparent';
 	controlPanel.style.border = 'none';
@@ -62,7 +62,8 @@ document.addEventListener('DOMContentLoaded', () => {
 	grayscaleToggle.style.width = '20px';
 	grayscaleToggle.style.height = '20px';
 	grayscaleToggle.style.borderRadius = '50%';
-	grayscaleToggle.style.background = 'linear-gradient(to right, black 50%, white 50%)';
+	grayscaleToggle.style.background =
+		'linear-gradient(to right, black 50%, white 50%)';
 	grayscaleToggle.style.cursor = 'pointer';
 	grayscaleToggle.style.border = '1px solid #ccc';
 	grayscaleToggle.addEventListener('click', (event) => {

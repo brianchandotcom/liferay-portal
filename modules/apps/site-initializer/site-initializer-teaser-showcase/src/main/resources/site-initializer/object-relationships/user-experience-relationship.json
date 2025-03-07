@@ -1,9 +1,9 @@
 {
 	"deletionType": "cascade",
 	"label": {
-		"en_US": "User to User Experience Relationship"
+		"en_US": "User to User Experience"
 	},
-	"name": "userExperienceRelationship",
+	"name": "userToUserExperience",
 	"objectDefinitionId1": "[$OBJECT_DEFINITION_ID:User$]",
 	"objectDefinitionId2": "[$OBJECT_DEFINITION_ID:UserExperience$]",
 	"objectDefinitionName2": "UserExperience",

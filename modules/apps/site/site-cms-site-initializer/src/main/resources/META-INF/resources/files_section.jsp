@@ -11,7 +11,7 @@
 FilesSectionDisplayContext filesSectionDisplayContext = (FilesSectionDisplayContext)request.getAttribute(FilesSectionDisplayContext.class.getName());
 %>
 
-<div class="cms-section">
+<div class="cms-section custom-empty-state">
 	<frontend-data-set:headless-display
 		apiURL="<%= filesSectionDisplayContext.getAPIURL() %>"
 		bulkActionDropdownItems="<%= filesSectionDisplayContext.getBulkActionDropdownItems() %>"

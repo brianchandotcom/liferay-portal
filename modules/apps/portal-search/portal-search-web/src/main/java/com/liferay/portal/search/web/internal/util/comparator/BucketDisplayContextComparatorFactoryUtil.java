@@ -8,10 +8,10 @@ package com.liferay.portal.search.web.internal.util.comparator;
 import com.liferay.portal.kernel.util.CollatorUtil;
 import com.liferay.portal.search.web.internal.facet.display.context.BucketDisplayContext;
 
-import java.text.Collator;
-
 import java.util.Comparator;
 import java.util.Locale;
+
+import se.sawano.java.text.AlphanumericComparator;
 
 /**
  * @author Bryan Engler
@@ -40,9 +40,10 @@ public class BucketDisplayContextComparatorFactoryUtil {
 	private static int _compareBucketText(
 		String bucketText1, String bucketText2, Locale locale) {
 
-		Collator collator = CollatorUtil.getInstance(locale);
+		AlphanumericComparator alphanumericComparator =
+			new AlphanumericComparator(CollatorUtil.getInstance(locale));
 
-		return collator.compare(bucketText1, bucketText2);
+		return alphanumericComparator.compare(bucketText1, bucketText2);
 	}
 
 	private static final Comparator<BucketDisplayContext>

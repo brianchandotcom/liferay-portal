@@ -190,7 +190,7 @@ public class CommerceChannelRelLocalServiceTest {
 		Country country2 = _countryLocalService.getCountryByA2(
 			_user.getCompanyId(), "US");
 
-		int commerceChannelCountriesCount =
+		int count =
 			_commerceChannelRelLocalService.getCountryCommerceChannelRelsCount(
 				_commerceChannel1.getCommerceChannelId(), StringPool.BLANK);
 
@@ -206,7 +206,7 @@ public class CommerceChannelRelLocalServiceTest {
 		Assert.assertEquals(
 			_commerceChannelRelLocalService.getCountryCommerceChannelRelsCount(
 				_commerceChannel1.getCommerceChannelId(), StringPool.BLANK),
-			commerceChannelCountriesCount + 2);
+			count + 2);
 
 		_commerceChannelRelLocalService.deleteCommerceChannelRel(
 			commerceChannelRel.getCommerceChannelRelId());
@@ -214,7 +214,7 @@ public class CommerceChannelRelLocalServiceTest {
 		Assert.assertEquals(
 			_commerceChannelRelLocalService.getCountryCommerceChannelRelsCount(
 				_commerceChannel1.getCommerceChannelId(), StringPool.BLANK),
-			commerceChannelCountriesCount + 1);
+			count + 1);
 	}
 
 	private static User _user;

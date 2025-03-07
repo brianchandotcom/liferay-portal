@@ -219,15 +219,15 @@ public class CommerceCurrencyItemSelectorView
 		public SearchContainer<CommerceCurrency> getSearchContainer()
 			throws PortalException {
 
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)_httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
 			SearchContainer<CommerceCurrency> entriesSearchContainer =
 				new SearchContainer<>(
 					(PortletRequest)_httpServletRequest.getAttribute(
 						JavaConstants.JAVAX_PORTLET_REQUEST),
 					_portletURL, null, "no-entries-were-found");
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)_httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
 			entriesSearchContainer.setResultsAndTotal(
 				() -> _commerceCurrencyService.getCommerceCurrencies(

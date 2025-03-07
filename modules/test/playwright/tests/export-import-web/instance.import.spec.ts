@@ -504,14 +504,14 @@ test(
 		page,
 		viewObjectDefinitionsPage,
 	}) => {
-		const newObjectDefinition =
+		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
 				objectFolderExternalReferenceCode: 'default',
 				status: {code: 0},
 			});
 
 		apiHelpers.data.push({
-			id: newObjectDefinition.id,
+			id: objectDefinition.id,
 			type: 'objectDefinition',
 		});
 
@@ -543,15 +543,15 @@ test(
 
 		await applicationsMenuPage.goToObjects();
 		await viewObjectDefinitionsPage.clickEditObjectDefinitionLink(
-			newObjectDefinition.name
+			objectDefinition.name
 		);
 		await page.getByLabel('Panel Link', {exact: true}).click();
 		await page.getByRole('option', {name: 'Object'}).click();
 		await page.getByRole('button', {name: 'Save'}).click();
 		await applicationsMenuPage.goToObjectDefinition(
-			newObjectDefinition.name
+			objectDefinition.name
 		);
-		await page.getByText('Add ' + newObjectDefinition.name).click();
+		await page.getByText('Add ' + objectDefinition.name).click();
 		await page.getByLabel('textField').fill('testText');
 		await page.getByRole('button', {name: 'Save'}).click();
 		await waitForAlert(
@@ -562,7 +562,7 @@ test(
 		await page.waitForTimeout(2000);
 
 		await applicationsMenuPage.goToObjectDefinition(
-			newObjectDefinition.name
+			objectDefinition.name
 		);
 
 		const objectEntryId = await page
@@ -570,11 +570,11 @@ test(
 			.innerText();
 
 		const exportFilePath = await companyExportImportPage.export(
-			newObjectDefinition.name + ' 1 Items'
+			objectDefinition.name + ' 1 Items'
 		);
 
 		const applicationName =
-			'c/' + newObjectDefinition.name.toLowerCase() + 's';
+			'c/' + objectDefinition.name.toLowerCase() + 's';
 
 		await apiHelpers.delete(
 			`${apiHelpers.baseUrl}${applicationName}/${objectEntryId}`
@@ -587,7 +587,7 @@ test(
 		await companyExportImportPage.import(exportFilePath);
 
 		await applicationsMenuPage.goToObjectDefinition(
-			newObjectDefinition.name
+			objectDefinition.name
 		);
 		await expect(
 			page.getByRole('cell', {
@@ -609,14 +609,14 @@ test(
 		page,
 		viewObjectDefinitionsPage,
 	}) => {
-		const newObjectDefinition =
+		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
 				objectFolderExternalReferenceCode: 'default',
 				status: {code: 0},
 			});
 
 		apiHelpers.data.push({
-			id: newObjectDefinition.id,
+			id: objectDefinition.id,
 			type: 'objectDefinition',
 		});
 
@@ -648,15 +648,15 @@ test(
 
 		await applicationsMenuPage.goToObjects();
 		await viewObjectDefinitionsPage.clickEditObjectDefinitionLink(
-			newObjectDefinition.name
+			objectDefinition.name
 		);
 		await page.getByLabel('Panel Link', {exact: true}).click();
 		await page.getByRole('option', {name: 'Object'}).click();
 		await page.getByRole('button', {name: 'Save'}).click();
 		await applicationsMenuPage.goToObjectDefinition(
-			newObjectDefinition.name
+			objectDefinition.name
 		);
-		await page.getByText('Add ' + newObjectDefinition.name).click();
+		await page.getByText('Add ' + objectDefinition.name).click();
 		await page.getByLabel('textField').fill('testText');
 		await page.getByRole('button', {name: 'Save'}).click();
 		await waitForAlert(
@@ -667,7 +667,7 @@ test(
 		await page.waitForTimeout(2000);
 
 		await applicationsMenuPage.goToObjectDefinition(
-			newObjectDefinition.name
+			objectDefinition.name
 		);
 
 		const objectEntryId = await page
@@ -675,11 +675,11 @@ test(
 			.innerText();
 
 		const exportFilePath = await companyExportImportPage.export(
-			newObjectDefinition.name + ' 1 Items'
+			objectDefinition.name + ' 1 Items'
 		);
 
 		const applicationName =
-			'c/' + newObjectDefinition.name.toLowerCase() + 's';
+			'c/' + objectDefinition.name.toLowerCase() + 's';
 
 		await apiHelpers.delete(
 			`${apiHelpers.baseUrl}${applicationName}/${objectEntryId}`
@@ -692,7 +692,7 @@ test(
 		await companyExportImportPage.import(exportFilePath);
 
 		await applicationsMenuPage.goToObjectDefinition(
-			newObjectDefinition.name
+			objectDefinition.name
 		);
 		await expect(page.getByRole('cell', {name: 'Test Test'})).toBeVisible();
 	}
@@ -710,14 +710,14 @@ test(
 		page,
 		viewObjectDefinitionsPage,
 	}) => {
-		const newObjectDefinition =
+		const objectDefinition =
 			await apiHelpers.objectAdmin.postRandomObjectDefinition({
 				objectFolderExternalReferenceCode: 'default',
 				status: {code: 0},
 			});
 
 		apiHelpers.data.push({
-			id: newObjectDefinition.id,
+			id: objectDefinition.id,
 			type: 'objectDefinition',
 		});
 
@@ -749,15 +749,15 @@ test(
 
 		await applicationsMenuPage.goToObjects();
 		await viewObjectDefinitionsPage.clickEditObjectDefinitionLink(
-			newObjectDefinition.name
+			objectDefinition.name
 		);
 		await page.getByLabel('Panel Link', {exact: true}).click();
 		await page.getByRole('option', {name: 'Object'}).click();
 		await page.getByRole('button', {name: 'Save'}).click();
 		await applicationsMenuPage.goToObjectDefinition(
-			newObjectDefinition.name
+			objectDefinition.name
 		);
-		await page.getByText('Add ' + newObjectDefinition.name).click();
+		await page.getByText('Add ' + objectDefinition.name).click();
 		await page.getByLabel('textField').fill('testText');
 		await page.getByRole('button', {name: 'Save'}).click();
 		await waitForAlert(
@@ -768,7 +768,7 @@ test(
 		await page.waitForTimeout(2000);
 
 		await applicationsMenuPage.goToObjectDefinition(
-			newObjectDefinition.name
+			objectDefinition.name
 		);
 
 		const objectEntryId = await page
@@ -776,11 +776,11 @@ test(
 			.innerText();
 
 		const exportFilePath = await companyExportImportPage.export(
-			newObjectDefinition.name + ' 1 Items'
+			objectDefinition.name + ' 1 Items'
 		);
 
 		const applicationName =
-			'c/' + newObjectDefinition.name.toLowerCase() + 's';
+			'c/' + objectDefinition.name.toLowerCase() + 's';
 
 		await apiHelpers.delete(
 			`${apiHelpers.baseUrl}${applicationName}/${objectEntryId}`
@@ -793,7 +793,7 @@ test(
 		await companyExportImportPage.import(exportFilePath, false, null, true);
 
 		await applicationsMenuPage.goToObjectDefinition(
-			newObjectDefinition.name
+			objectDefinition.name
 		);
 		await expect(page.getByRole('cell', {name: 'Test Test'})).toBeVisible();
 	}

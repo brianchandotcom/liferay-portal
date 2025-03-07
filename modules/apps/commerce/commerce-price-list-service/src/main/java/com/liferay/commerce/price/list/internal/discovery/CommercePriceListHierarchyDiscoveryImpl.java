@@ -6,6 +6,8 @@
 package com.liferay.commerce.price.list.internal.discovery;
 
 import com.liferay.account.service.AccountGroupLocalService;
+import com.liferay.commerce.currency.model.CommerceCurrency;
+import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.price.list.discovery.CommercePriceListDiscovery;
 import com.liferay.commerce.price.list.model.CommercePriceList;
 import com.liferay.commerce.price.list.service.CommercePriceListLocalService;
@@ -13,7 +15,12 @@ import com.liferay.commerce.pricing.constants.CommercePricingConstants;
 import com.liferay.commerce.product.constants.CommerceChannelAccountEntryRelConstants;
 import com.liferay.commerce.product.model.CommerceChannelAccountEntryRel;
 import com.liferay.commerce.product.service.CommerceChannelAccountEntryRelLocalService;
+import com.liferay.commerce.product.service.CommerceChannelRelLocalService;
+import com.liferay.petra.function.transform.TransformUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
+import com.liferay.portal.kernel.util.ArrayUtil;
 
 import java.util.List;
 
@@ -92,7 +99,13 @@ public class CommercePriceListHierarchyDiscoveryImpl
 			}
 
 			if (firstEligibleCommercePriceList == null) {
-				firstEligibleCommercePriceList = commercePriceLists.get(0);
+				CommercePriceList eligibleCommercePriceList =
+					_getEligibleCommercePriceList(
+						commerceChannelId, commercePriceLists);
+
+				if (eligibleCommercePriceList != null) {
+					firstEligibleCommercePriceList = eligibleCommercePriceList;
+				}
 			}
 		}
 
@@ -130,7 +143,13 @@ public class CommercePriceListHierarchyDiscoveryImpl
 			}
 
 			if (firstEligibleCommercePriceList == null) {
-				firstEligibleCommercePriceList = commercePriceLists.get(0);
+				CommercePriceList eligibleCommercePriceList =
+					_getEligibleCommercePriceList(
+						commerceChannelId, commercePriceLists);
+
+				if (eligibleCommercePriceList != null) {
+					firstEligibleCommercePriceList = eligibleCommercePriceList;
+				}
 			}
 		}
 
@@ -173,7 +192,13 @@ public class CommercePriceListHierarchyDiscoveryImpl
 			}
 
 			if (firstEligibleCommercePriceList == null) {
-				firstEligibleCommercePriceList = commercePriceLists.get(0);
+				CommercePriceList eligibleCommercePriceList =
+					_getEligibleCommercePriceList(
+						commerceChannelId, commercePriceLists);
+
+				if (eligibleCommercePriceList != null) {
+					firstEligibleCommercePriceList = eligibleCommercePriceList;
+				}
 			}
 		}
 
@@ -212,7 +237,13 @@ public class CommercePriceListHierarchyDiscoveryImpl
 			}
 
 			if (firstEligibleCommercePriceList == null) {
-				firstEligibleCommercePriceList = commercePriceLists.get(0);
+				CommercePriceList eligibleCommercePriceList =
+					_getEligibleCommercePriceList(
+						commerceChannelId, commercePriceLists);
+
+				if (eligibleCommercePriceList != null) {
+					firstEligibleCommercePriceList = eligibleCommercePriceList;
+				}
 			}
 		}
 
@@ -250,7 +281,13 @@ public class CommercePriceListHierarchyDiscoveryImpl
 			}
 
 			if (firstEligibleCommercePriceList == null) {
-				firstEligibleCommercePriceList = commercePriceLists.get(0);
+				CommercePriceList eligibleCommercePriceList =
+					_getEligibleCommercePriceList(
+						commerceChannelId, commercePriceLists);
+
+				if (eligibleCommercePriceList != null) {
+					firstEligibleCommercePriceList = eligibleCommercePriceList;
+				}
 			}
 		}
 
@@ -286,7 +323,13 @@ public class CommercePriceListHierarchyDiscoveryImpl
 			}
 
 			if (firstEligibleCommercePriceList == null) {
-				firstEligibleCommercePriceList = commercePriceLists.get(0);
+				CommercePriceList eligibleCommercePriceList =
+					_getEligibleCommercePriceList(
+						commerceChannelId, commercePriceLists);
+
+				if (eligibleCommercePriceList != null) {
+					firstEligibleCommercePriceList = eligibleCommercePriceList;
+				}
 			}
 		}
 
@@ -316,12 +359,58 @@ public class CommercePriceListHierarchyDiscoveryImpl
 		return null;
 	}
 
+	private CommercePriceList _getEligibleCommercePriceList(
+		long commerceChannelId, List<CommercePriceList> commercePriceLists) {
+
+		String[] currencyCodes = TransformUtil.transformToArray(
+			_commerceChannelRelLocalService.getCommerceChannelRels(
+				commerceChannelId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null),
+			commerceChannelRel -> {
+				if (commerceChannelRel.getClassNameId() !=
+						_classNameLocalService.getClassNameId(
+							CommerceCurrency.class.getName())) {
+
+					return null;
+				}
+
+				CommerceCurrency commerceCurrency =
+					_commerceCurrencyLocalService.fetchCommerceCurrency(
+						commerceChannelRel.getClassPK());
+
+				return commerceCurrency.getCode();
+			},
+			String.class);
+
+		for (CommercePriceList commercePriceList : commercePriceLists) {
+			if ((currencyCodes.length > 0) &&
+				!ArrayUtil.contains(
+					currencyCodes,
+					commercePriceList.getCommerceCurrencyCode())) {
+
+				continue;
+			}
+
+			return commercePriceList;
+		}
+
+		return null;
+	}
+
 	@Reference
 	private AccountGroupLocalService _accountGroupLocalService;
 
 	@Reference
+	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
 	private CommerceChannelAccountEntryRelLocalService
 		_commerceChannelAccountEntryRelLocalService;
+
+	@Reference
+	private CommerceChannelRelLocalService _commerceChannelRelLocalService;
+
+	@Reference
+	private CommerceCurrencyLocalService _commerceCurrencyLocalService;
 
 	@Reference
 	private CommercePriceListLocalService _commercePriceListLocalService;

@@ -6,6 +6,7 @@
 package com.liferay.commerce.price.list.service.impl;
 
 import com.liferay.commerce.currency.exception.NoSuchCurrencyException;
+import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.model.CommerceCurrencyTable;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.price.list.constants.CommercePriceListConstants;
@@ -33,6 +34,7 @@ import com.liferay.commerce.price.list.service.base.CommercePriceListLocalServic
 import com.liferay.commerce.price.list.service.persistence.CommercePriceEntryPersistence;
 import com.liferay.commerce.pricing.exception.CommerceUndefinedBasePriceListException;
 import com.liferay.commerce.pricing.service.CommercePriceModifierLocalService;
+import com.liferay.commerce.product.model.CommerceChannelRelTable;
 import com.liferay.commerce.product.service.CommerceChannelAccountEntryRelLocalService;
 import com.liferay.expando.kernel.service.ExpandoRowLocalService;
 import com.liferay.petra.sql.dsl.DSLFunctionFactoryUtil;
@@ -70,6 +72,7 @@ import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.ResourceLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -1606,6 +1609,28 @@ public class CommercePriceListLocalServiceImpl
 					CommercePriceListChannelRelId.isNull());
 		}
 
+		joinStep = joinStep.leftJoinOn(
+			CommerceChannelRelTable.INSTANCE,
+			CommerceChannelRelTable.INSTANCE.commerceChannelId.eq(
+				commerceChannelId
+			).and(
+				CommerceChannelRelTable.INSTANCE.classNameId.eq(
+					_classNameLocalService.getClassNameId(
+						CommerceCurrency.class.getName()))
+			));
+
+		joinStep = joinStep.leftJoinOn(
+			CommerceCurrencyTable.INSTANCE,
+			CommerceCurrencyTable.INSTANCE.commerceCurrencyId.eq(
+				CommerceChannelRelTable.INSTANCE.classPK));
+
+		predicate = predicate.and(
+			CommerceCurrencyTable.INSTANCE.code.eq(
+				CommercePriceListTable.INSTANCE.commerceCurrencyCode
+			).or(
+				CommerceChannelRelTable.INSTANCE.commerceChannelRelId.isNull()
+			).withParentheses());
+
 		if (!Validator.isBlank(currencyCode)) {
 			predicate = predicate.and(
 				CommercePriceListTable.INSTANCE.commerceCurrencyCode.eq(
@@ -1640,6 +1665,9 @@ public class CommercePriceListLocalServiceImpl
 		Long commerceOrderTypeId, String cpInstanceUuid, String currencyCode,
 		String type, String unitOfMeasureKey) {
 
+		CommerceCurrencyTable commerceChannelRelCommerceCurrencyTable =
+			CommerceCurrencyTable.INSTANCE.as("commerceChannelRelCurrency");
+
 		JoinStep joinStep = fromStep.from(
 			CommercePriceEntryTable.INSTANCE
 		).innerJoinON(
@@ -1663,6 +1691,19 @@ public class CommercePriceListLocalServiceImpl
 			CommercePriceListChannelRelTable.INSTANCE,
 			CommercePriceListChannelRelTable.INSTANCE.commercePriceListId.eq(
 				CommercePriceListTable.INSTANCE.commercePriceListId)
+		).leftJoinOn(
+			CommerceChannelRelTable.INSTANCE,
+			CommerceChannelRelTable.INSTANCE.commerceChannelId.eq(
+				commerceChannelId
+			).and(
+				CommerceChannelRelTable.INSTANCE.classNameId.eq(
+					_classNameLocalService.getClassNameId(
+						CommerceCurrency.class.getName()))
+			)
+		).leftJoinOn(
+			commerceChannelRelCommerceCurrencyTable,
+			commerceChannelRelCommerceCurrencyTable.commerceCurrencyId.eq(
+				CommerceChannelRelTable.INSTANCE.classPK)
 		).leftJoinOn(
 			CommercePriceListOrderTypeRelTable.INSTANCE,
 			CommercePriceListOrderTypeRelTable.INSTANCE.commercePriceListId.eq(
@@ -1705,6 +1746,12 @@ public class CommercePriceListLocalServiceImpl
 			).or(
 				CommercePriceListChannelRelTable.INSTANCE.
 					CommercePriceListChannelRelId.isNull()
+			).withParentheses()
+		).and(
+			commerceChannelRelCommerceCurrencyTable.code.eq(
+				CommercePriceListTable.INSTANCE.commerceCurrencyCode
+			).or(
+				CommerceChannelRelTable.INSTANCE.commerceChannelRelId.isNull()
 			).withParentheses()
 		).and(
 			CommercePriceListOrderTypeRelTable.INSTANCE.commerceOrderTypeId.eq(
@@ -1850,6 +1897,9 @@ public class CommercePriceListLocalServiceImpl
 
 	private static final CommercePriceList _dummyCommercePriceList =
 		ProxyFactory.newDummyInstance(CommercePriceList.class);
+
+	@Reference
+	private ClassNameLocalService _classNameLocalService;
 
 	@Reference
 	private CommerceChannelAccountEntryRelLocalService

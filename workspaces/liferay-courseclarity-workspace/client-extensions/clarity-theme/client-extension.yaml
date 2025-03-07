@@ -1,0 +1,29 @@
+assemble:
+    - from: build/buildTheme/img
+      into: static/img
+    - from: assets
+      into: static
+    - from: build/static
+      into: static
+clarity-global-js:
+    name: Clarity Global JS
+    type: globalJS
+    url: global.*.js
+clarity-theme:
+    clayURL: css/clay.css
+    mainURL: css/main.css
+    frontendTokenDefinitionJSON: src/frontend-token-definition.json
+    name: Clarity Theme CSS
+    type: themeCSS
+clarity-theme-favicon:
+    name: Clarity Theme Favicon
+    type: themeFavicon
+    url: clarity-favicon-primary.svg
+clarity-theme-favicon-dark:
+    name: Clarity Theme Favicon Dark
+    type: themeFavicon
+    url: clarity-favicon-dark.svg
+clarity-theme-favicon-light:
+    name: Clarity Theme Favicon Light
+    type: themeFavicon
+    url: clarity-favicon-light.svg

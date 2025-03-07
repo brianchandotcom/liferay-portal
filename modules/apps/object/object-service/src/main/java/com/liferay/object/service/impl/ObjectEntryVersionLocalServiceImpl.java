@@ -10,6 +10,7 @@ import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.model.ObjectEntryVersion;
 import com.liferay.object.service.base.ObjectEntryVersionLocalServiceBaseImpl;
 import com.liferay.portal.aop.AopService;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
@@ -32,7 +33,7 @@ public class ObjectEntryVersionLocalServiceImpl
 
 	@Override
 	public ObjectEntryVersion addObjectEntryVersion(ObjectEntry objectEntry)
-		throws Exception {
+		throws PortalException {
 
 		ObjectEntryVersion objectEntryVersion =
 			objectEntryVersionPersistence.create(
@@ -48,9 +49,15 @@ public class ObjectEntryVersionLocalServiceImpl
 		objectEntryVersion.setCreateDate(objectEntry.getCreateDate());
 		objectEntryVersion.setModifiedDate(objectEntry.getModifiedDate());
 		objectEntryVersion.setObjectEntryId(objectEntry.getObjectEntryId());
-		objectEntryVersion.setContent(
-			ObjectEntryDTOConverterUtil.toDTO(
-				_dtoConverterRegistry, _jsonFactory, objectEntry, user));
+
+		try {
+			objectEntryVersion.setContent(
+				ObjectEntryDTOConverterUtil.toDTO(
+					_dtoConverterRegistry, _jsonFactory, objectEntry, user));
+		}
+		catch (Exception exception) {
+			throw new PortalException(exception);
+		}
 
 		int count = objectEntryVersionPersistence.countByObjectEntryId(
 			objectEntry.getObjectEntryId());

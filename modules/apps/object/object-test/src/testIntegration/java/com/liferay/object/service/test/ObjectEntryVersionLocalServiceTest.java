@@ -80,7 +80,7 @@ public class ObjectEntryVersionLocalServiceTest {
 
 		Assert.assertEquals(1, objectEntry.getVersion());
 
-		_assertObjectEntryVersions(
+		_assertEquals(
 			Arrays.asList(
 				_createObjectEntryVersion(
 					JSONUtil.put(
@@ -98,7 +98,7 @@ public class ObjectEntryVersionLocalServiceTest {
 
 		Assert.assertEquals(2, objectEntry.getVersion());
 
-		_assertObjectEntryVersions(
+		_assertEquals(
 			Arrays.asList(
 				_createObjectEntryVersion(
 					JSONUtil.put(
@@ -112,7 +112,7 @@ public class ObjectEntryVersionLocalServiceTest {
 				objectEntry.getObjectEntryId()));
 	}
 
-	private void _assertObjectEntryVersions(
+	private void _assertEquals(
 		List<ObjectEntryVersion> expectedObjectEntryVersions,
 		List<ObjectEntryVersion> actualObjectEntryVersions) {
 

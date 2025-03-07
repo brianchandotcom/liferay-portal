@@ -2174,18 +2174,13 @@ public class ObjectEntryLocalServiceImpl
 			return objectEntry;
 		}
 
-		try {
-			ObjectEntryVersion objectEntryVersion =
-				_objectEntryVersionLocalService.addObjectEntryVersion(
-					objectEntry);
+		ObjectEntryVersion objectEntryVersion =
+			_objectEntryVersionLocalService.addObjectEntryVersion(
+				objectEntry);
 
-			objectEntry.setVersion(objectEntryVersion.getVersion());
+		objectEntry.setVersion(objectEntryVersion.getVersion());
 
-			return objectEntryPersistence.update(objectEntry);
-		}
-		catch (Exception exception) {
-			throw new PortalException(exception);
-		}
+		return objectEntryPersistence.update(objectEntry);
 	}
 
 	private void _addObjectRelationshipERCFieldValue(

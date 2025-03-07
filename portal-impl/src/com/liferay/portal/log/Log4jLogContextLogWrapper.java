@@ -211,20 +211,22 @@ public class Log4jLogContextLogWrapper extends LogWrapper {
 	}
 
 	private Map<String, String> _getContext() {
-		Map<String, String> contextMap = new HashMap<>();
+		Map<String, String> context = new HashMap<>();
 
 		ServiceTrackerList<LogContext> serviceTrackerList =
 			_serviceTrackerListDCLSingleton.getSingleton(
 				Log4jLogContextLogWrapper::_createServiceTrackerList);
 
 		if (serviceTrackerList == null) {
-			return contextMap;
+			return context;
 		}
 
 		for (LogContext logContext : serviceTrackerList) {
-			Map<String, String> context = logContext.getContext(_name);
+			for (Map.Entry<String, String> entry :
+					logContext.getContext(
+						_name
+					).entrySet()) {
 
-			for (Map.Entry<String, String> entry : context.entrySet()) {
 				String key = entry.getKey();
 
 				String logContextName = logContext.getName();
@@ -233,11 +235,11 @@ public class Log4jLogContextLogWrapper extends LogWrapper {
 					key = logContextName + "." + key;
 				}
 
-				contextMap.put(key, entry.getValue());
+				context.put(key, entry.getValue());
 			}
 		}
 
-		return contextMap;
+		return context;
 	}
 
 	private void _populateThreadContext() {

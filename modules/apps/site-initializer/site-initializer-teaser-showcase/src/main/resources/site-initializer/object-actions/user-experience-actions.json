@@ -16,7 +16,7 @@
 				"objectDefinitionExternalReferenceCode": "USER-EXPERIENCE",
 				"predefinedValues": [
 					{
-						"name": "r_userExperienceRelationship_userId",
+						"name": "r_userToUserExperience_userId",
 						"inputAsValue": false,
 						"label": {
 							"en_US": "User Experience"

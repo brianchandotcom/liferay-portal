@@ -6,7 +6,7 @@
 package com.liferay.commerce.channel.web.internal.frontend.data.set.provider;
 
 import com.liferay.commerce.channel.web.internal.constants.CommerceChannelFDSNames;
-import com.liferay.commerce.channel.web.internal.model.CommerceChannelCommerceCurrency;
+import com.liferay.commerce.channel.web.internal.model.ChannelCurrency;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyService;
 import com.liferay.commerce.product.service.CommerceChannelRelService;
@@ -35,10 +35,10 @@ import org.osgi.service.component.annotations.Reference;
 	service = FDSDataProvider.class
 )
 public class CommerceChannelCommerceCurrencyFDSDataProvider
-	implements FDSDataProvider<CommerceChannelCommerceCurrency> {
+	implements FDSDataProvider<ChannelCurrency> {
 
 	@Override
-	public List<CommerceChannelCommerceCurrency> getItems(
+	public List<ChannelCurrency> getItems(
 			FDSKeywords fdsKeywords, FDSPagination fdsPagination,
 			HttpServletRequest httpServletRequest, Sort sort)
 		throws PortalException {
@@ -64,7 +64,7 @@ public class CommerceChannelCommerceCurrencyFDSDataProvider
 					(ThemeDisplay)httpServletRequest.getAttribute(
 						WebKeys.THEME_DISPLAY);
 
-				return new CommerceChannelCommerceCurrency(
+				return new ChannelCurrency(
 					commerceChannelId,
 					commerceChannelRel.getCommerceChannelRelId(),
 					commerceCurrency.getCode(),

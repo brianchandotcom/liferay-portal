@@ -8,9 +8,9 @@ package com.liferay.commerce.channel.web.internal.model;
 /**
  * @author Fabio Monaco
  */
-public class CommerceChannelCommerceCurrency {
+public class ChannelCurrency {
 
-	public CommerceChannelCommerceCurrency(
+	public ChannelCurrency(
 		long commerceChannelId, long commerceChannelRelId,
 		String commerceCurrencyCode, long commerceCurrencyId,
 		String commerceCurrencyName, String commerceCurrencySymbol) {

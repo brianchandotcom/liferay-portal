@@ -258,7 +258,7 @@ public class UserManagerImpl implements UserManager {
 			Map<String, Boolean> requiredAttributes)
 		throws BadRequestException {
 
-		_checkFilterableAttribute(node, _filterableGroupFieldNames);
+		_validateFilterableAttributeName(node, _filterableGroupFieldNames);
 
 		if (startIndex != null) {
 			startIndex--;
@@ -352,7 +352,7 @@ public class UserManagerImpl implements UserManager {
 			Map<String, Boolean> requiredAttributes)
 		throws BadRequestException {
 
-		_checkFilterableAttribute(node, _filterableUserFieldNames);
+		_validateFilterableAttributeName(node, _filterableUserFieldNames);
 
 		if (startIndex != null) {
 			startIndex--;
@@ -673,30 +673,6 @@ public class UserManagerImpl implements UserManager {
 					oAuth2ApplicationName()));
 
 		return portalUser;
-	}
-
-	private void _checkFilterableAttribute(
-			Node node, Set<String> filterableFieldNames)
-		throws BadRequestException {
-
-		if (node != null) {
-			ExpressionNode expressionNode = (ExpressionNode)node;
-			boolean filterable = false;
-
-			for (String field : filterableFieldNames) {
-				if (StringUtil.contains(
-						expressionNode.getAttributeValue(), field,
-						StringPool.COLON)) {
-
-					filterable = true;
-				}
-			}
-
-			if (!filterable) {
-				throw new BadRequestException(
-					"Invalid filterable Attribute", "invalidValue");
-			}
-		}
 	}
 
 	private com.liferay.portal.kernel.model.User _fetchPortalUser(
@@ -1065,6 +1041,27 @@ public class UserManagerImpl implements UserManager {
 
 					return GetterUtil.getLong(userId);
 				}));
+	}
+
+	private void _validateFilterableAttributeName(
+			Node node, Set<String> filterableFieldNames)
+		throws BadRequestException {
+
+		if (node != null) {
+			ExpressionNode expressionNode = (ExpressionNode)node;
+
+			for (String field : filterableFieldNames) {
+				if (StringUtil.contains(
+						expressionNode.getAttributeValue(), field,
+						StringPool.COLON)) {
+
+					return;
+				}
+			}
+
+			throw new BadRequestException(
+				"Invalid filterable Attribute", "invalidValue");
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

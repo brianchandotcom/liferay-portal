@@ -8,7 +8,8 @@
 <%@ taglib uri="http://liferay.com/tld/frontend-data-set" prefix="frontend-data-set" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
-<%@ page import="com.liferay.frontend.data.set.model.FDSActionDropdownItem" %><%@
+<%@ page import="com.liferay.commerce.order.content.web.internal.constants.CommerceOrderFragmentFDSNames" %><%@
+page import="com.liferay.frontend.data.set.model.FDSActionDropdownItem" %><%@
 page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem" %>
 
 <%@ page import="java.util.List" %><%@

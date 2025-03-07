@@ -269,38 +269,38 @@ test.describe('Page content', () => {
 
 			await widgetPagePage.saveAndClose('Asset Publisher');
 
+			await page.goto(`/web${site.friendlyUrlPath}${layout.friendlyURL}`);
+
+			// Open simulation panel
+
+			await simulationMenuPage.openSimulationPanel();
+
+			// Assert default collection
+
+			await expect(
+				page.getByText('Showing content for the segment "Anyone".')
+			).toBeVisible({timeout: 5000});
+
+			const simulationPreviewIframe = page.frameLocator(
+				'iframe[title="Simulation Preview"]'
+			);
+
+			await expect(
+				simulationPreviewIframe.getByRole('link', {
+					name: documentName,
+				})
+			).toBeVisible({timeout: 1000});
+
+			await expect(
+				simulationPreviewIframe.getByRole('link', {
+					name: blogsEntryName,
+				})
+			).not.toBeVisible({timeout: 1000});
+
+			// Assert segmented collection
+
 			await expect(async () => {
-				await page.goto(
-					`/web${site.friendlyUrlPath}${layout.friendlyURL}`
-				);
-
-				// Open simulation panel
-
-				await simulationMenuPage.openSimulationPanel();
-
-				// Assert default collection
-
-				await expect(
-					page.getByText('Showing content for the segment "Anyone".')
-				).toBeVisible({timeout: 5000});
-
-				const simulationPreviewIframe = page.frameLocator(
-					'iframe[title="Simulation Preview"]'
-				);
-
-				await expect(
-					simulationPreviewIframe.getByRole('link', {
-						name: documentName,
-					})
-				).toBeVisible({timeout: 1000});
-
-				await expect(
-					simulationPreviewIframe.getByRole('link', {
-						name: blogsEntryName,
-					})
-				).not.toBeVisible({timeout: 1000});
-
-				// Assert segmented collection
+				await simulationMenuPage.changeCombobox('Segment', 'Anyone');
 
 				await simulationMenuPage.changeCombobox(
 					'Segment',
@@ -312,19 +312,19 @@ test.describe('Page content', () => {
 						`Showing content for the segment "${segmentsEntryName}".`
 					)
 				).toBeVisible({timeout: 5000});
-
-				await expect(
-					simulationPreviewIframe.getByRole('link', {
-						name: blogsEntryName,
-					})
-				).toBeVisible({timeout: 1000});
-
-				await expect(
-					simulationPreviewIframe.getByRole('link', {
-						name: documentName,
-					})
-				).not.toBeVisible({timeout: 1000});
 			}).toPass();
+
+			await expect(
+				simulationPreviewIframe.getByRole('link', {
+					name: blogsEntryName,
+				})
+			).toBeVisible({timeout: 1000});
+
+			await expect(
+				simulationPreviewIframe.getByRole('link', {
+					name: documentName,
+				})
+			).not.toBeVisible({timeout: 1000});
 		}
 	);
 

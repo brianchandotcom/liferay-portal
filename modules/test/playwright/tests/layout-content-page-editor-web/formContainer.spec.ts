@@ -8753,15 +8753,17 @@ async function chooseFileFromDocumentLibrary({
 	page: Page;
 	trigger: Locator;
 }) {
-	await trigger.click();
-
 	const iframe = page.frameLocator('iframe');
 
-	await expect(
-		iframe.getByText('Drag & Drop Your Files or Browse to Upload')
-	).toBeVisible();
+	await clickAndExpectToBeVisible({
+		target: iframe.getByText('Drag & Drop Your Files or Browse to Upload'),
+		timeout: 2000,
+		trigger,
+	});
 
-	await iframe.getByText(fileName).click();
-
-	await expect(iframe.getByText(fileName)).not.toBeVisible();
+	await clickAndExpectToBeHidden({
+		target: iframe.getByText(fileName),
+		timeout: 2000,
+		trigger: iframe.getByText(fileName),
+	});
 }

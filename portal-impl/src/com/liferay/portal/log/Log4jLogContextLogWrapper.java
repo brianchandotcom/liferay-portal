@@ -205,9 +205,7 @@ public class Log4jLogContextLogWrapper extends LogWrapper {
 	}
 
 	private void _cleanThreadContext() {
-		for (String key : _getContext().keySet()) {
-			ThreadContext.remove(key);
-		}
+		ThreadContext.removeAll(_getContext().keySet());
 	}
 
 	private Map<String, String> _getContext() {
@@ -243,11 +241,7 @@ public class Log4jLogContextLogWrapper extends LogWrapper {
 	}
 
 	private void _populateThreadContext() {
-		for (Map.Entry<String, String> contextEntry :
-				_getContext().entrySet()) {
-
-			ThreadContext.put(contextEntry.getKey(), contextEntry.getValue());
-		}
+		ThreadContext.putAll(_getContext());
 	}
 
 	private static final DCLSingleton<ServiceTrackerList<LogContext>>

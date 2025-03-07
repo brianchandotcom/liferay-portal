@@ -90,8 +90,7 @@ test('can export and import custom object entries at instance level', async ({
 		'c/tests'
 	);
 
-	const exportFilePath =
-		await companyExportImportPage.export('Tests 1 Items');
+	const exportFilePath = await companyExportImportPage.export('Tests');
 
 	const content = await readFileFromZip('C_Test.json', exportFilePath);
 
@@ -170,8 +169,7 @@ test('can only import custom object entries when their definitions are already i
 		'c/tests'
 	);
 
-	const exportFilePath =
-		await companyExportImportPage.export('Tests 1 Items');
+	const exportFilePath = await companyExportImportPage.export('Tests');
 
 	objectActionApiClient.deleteObjectDefinition(objectDefinition.id);
 
@@ -258,10 +256,7 @@ test('can import custom object entries at instance level with or without permiss
 
 	// Export with permissions
 
-	const exportFilePath = await companyExportImportPage.export(
-		'Tests 1 Items',
-		true
-	);
+	const exportFilePath = await companyExportImportPage.export('Tests', true);
 
 	// Import with permissions
 
@@ -374,9 +369,7 @@ test('can see corresponding elements at instance level', async ({
 		companyExportImportPage.page.getByText('Comments, Ratings')
 	).not.toBeVisible();
 
-	await expect(
-		companyExportImportPage.page.getByText('Tests')
-	).toBeVisible();
+	await expect(companyExportImportPage.page.getByText('Tests')).toBeVisible();
 
 	await expect(
 		companyExportImportPage.page.getByLabel('Delete Application Data')

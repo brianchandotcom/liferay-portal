@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.language.LanguageResources;
@@ -113,6 +114,19 @@ public class PlacedOrderItemDTOConverter
 				setOptions(commerceOrderItem::getJson);
 				setParentOrderItemId(
 					commerceOrderItem::getParentCommerceOrderItemId);
+				setPlacedOrderItems(
+					() -> {
+						PlacedOrderItem[] placedOrderItems =
+							(PlacedOrderItem[])
+								placedOrderItemDTOConverterContext.getAttribute(
+									"placedOrderItems");
+
+						if (ArrayUtil.isEmpty(placedOrderItems)) {
+							return null;
+						}
+
+						return placedOrderItems;
+					});
 				setPrice(() -> _getPrice(commerceOrderItem, locale));
 				setProductId(commerceOrderItem::getCProductId);
 				setProductURLs(

@@ -9772,6 +9772,13 @@ org.apache.catalina.tribes.level = FINE]]>
 		</Channel>
 	</Cluster>]]></replacevalue>
 		</replace>
+
+		<replace
+			file="${app.server.tomcat.dir}/conf/context.xml"
+		>
+			<replacetoken><![CDATA[    <Manager pathname="SESSIONS.ser" />]]></replacetoken>
+			<replacevalue><![CDATA[]]></replacevalue>
+		</replace>
 	</target>
 
 	<target name="cluster-session-replication-log">

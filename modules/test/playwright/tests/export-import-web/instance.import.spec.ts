@@ -523,7 +523,8 @@ test(
 			surname: user.familyName,
 		};
 
-		let roles = await apiHelpers.headlessAdminUser.getRoles('Administrator');
+		let roles =
+			await apiHelpers.headlessAdminUser.getRoles('Administrator');
 
 		await apiHelpers.headlessAdminUser.postRoleUserAccountAssociation(
 			roles.items[0].id,
@@ -548,9 +549,7 @@ test(
 		await page.getByLabel('Panel Link', {exact: true}).click();
 		await page.getByRole('option', {name: 'Object'}).click();
 		await page.getByRole('button', {name: 'Save'}).click();
-		await applicationsMenuPage.goToObjectDefinition(
-			objectDefinition.name
-		);
+		await applicationsMenuPage.goToObjectDefinition(objectDefinition.name);
 		await page.getByText('Add ' + objectDefinition.name).click();
 		await page.getByLabel('textField').fill('testText');
 		await page.getByRole('button', {name: 'Save'}).click();
@@ -561,9 +560,7 @@ test(
 
 		await page.waitForTimeout(2000);
 
-		await applicationsMenuPage.goToObjectDefinition(
-			objectDefinition.name
-		);
+		await applicationsMenuPage.goToObjectDefinition(objectDefinition.name);
 
 		const objectEntryId = await page
 			.locator('table tr:first-child td:first-child')
@@ -586,9 +583,7 @@ test(
 
 		await companyExportImportPage.import(exportFilePath);
 
-		await applicationsMenuPage.goToObjectDefinition(
-			objectDefinition.name
-		);
+		await applicationsMenuPage.goToObjectDefinition(objectDefinition.name);
 		await expect(
 			page.getByRole('cell', {
 				name: user.givenName + ' ' + user.familyName,
@@ -628,7 +623,8 @@ test(
 			surname: user.familyName,
 		};
 
-		let roles = await apiHelpers.headlessAdminUser.getRoles('Administrator');
+		let roles =
+			await apiHelpers.headlessAdminUser.getRoles('Administrator');
 
 		await apiHelpers.headlessAdminUser.postRoleUserAccountAssociation(
 			roles.items[0].id,
@@ -653,9 +649,7 @@ test(
 		await page.getByLabel('Panel Link', {exact: true}).click();
 		await page.getByRole('option', {name: 'Object'}).click();
 		await page.getByRole('button', {name: 'Save'}).click();
-		await applicationsMenuPage.goToObjectDefinition(
-			objectDefinition.name
-		);
+		await applicationsMenuPage.goToObjectDefinition(objectDefinition.name);
 		await page.getByText('Add ' + objectDefinition.name).click();
 		await page.getByLabel('textField').fill('testText');
 		await page.getByRole('button', {name: 'Save'}).click();
@@ -666,9 +660,7 @@ test(
 
 		await page.waitForTimeout(2000);
 
-		await applicationsMenuPage.goToObjectDefinition(
-			objectDefinition.name
-		);
+		await applicationsMenuPage.goToObjectDefinition(objectDefinition.name);
 
 		const objectEntryId = await page
 			.locator('table tr:first-child td:first-child')
@@ -691,9 +683,7 @@ test(
 
 		await companyExportImportPage.import(exportFilePath);
 
-		await applicationsMenuPage.goToObjectDefinition(
-			objectDefinition.name
-		);
+		await applicationsMenuPage.goToObjectDefinition(objectDefinition.name);
 		await expect(page.getByRole('cell', {name: 'Test Test'})).toBeVisible();
 	}
 );
@@ -729,7 +719,8 @@ test(
 			surname: user.familyName,
 		};
 
-		let roles = await apiHelpers.headlessAdminUser.getRoles('Administrator');
+		let roles =
+			await apiHelpers.headlessAdminUser.getRoles('Administrator');
 
 		await apiHelpers.headlessAdminUser.postRoleUserAccountAssociation(
 			roles.items[0].id,
@@ -754,9 +745,7 @@ test(
 		await page.getByLabel('Panel Link', {exact: true}).click();
 		await page.getByRole('option', {name: 'Object'}).click();
 		await page.getByRole('button', {name: 'Save'}).click();
-		await applicationsMenuPage.goToObjectDefinition(
-			objectDefinition.name
-		);
+		await applicationsMenuPage.goToObjectDefinition(objectDefinition.name);
 		await page.getByText('Add ' + objectDefinition.name).click();
 		await page.getByLabel('textField').fill('testText');
 		await page.getByRole('button', {name: 'Save'}).click();
@@ -767,9 +756,7 @@ test(
 
 		await page.waitForTimeout(2000);
 
-		await applicationsMenuPage.goToObjectDefinition(
-			objectDefinition.name
-		);
+		await applicationsMenuPage.goToObjectDefinition(objectDefinition.name);
 
 		const objectEntryId = await page
 			.locator('table tr:first-child td:first-child')
@@ -792,9 +779,7 @@ test(
 
 		await companyExportImportPage.import(exportFilePath, false, null, true);
 
-		await applicationsMenuPage.goToObjectDefinition(
-			objectDefinition.name
-		);
+		await applicationsMenuPage.goToObjectDefinition(objectDefinition.name);
 		await expect(page.getByRole('cell', {name: 'Test Test'})).toBeVisible();
 	}
 );

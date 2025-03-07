@@ -172,9 +172,9 @@ public class PortalLog4jTest {
 
 	@Test
 	public void testLogOutputWithLogContextAndExternalContext() {
-		String key1 = "test.key.1";
+		String key = "test.key";
 		String keyExternal = "test.key.external";
-		String value1 = "test.value.1";
+		String value = "test.value";
 		String valueExternal = "test.value.external";
 
 		String logContextName = "TestLogContext";
@@ -184,11 +184,11 @@ public class PortalLog4jTest {
 
 			_testLogOutputWithLogContext(
 				HashMapBuilder.put(
-					key1, value1
+					key, value
 				).build(),
 				StringBundler.concat(
 					StringPool.OPEN_CURLY_BRACE, logContextName,
-					StringPool.PERIOD, key1, StringPool.EQUAL, value1, ", ",
+					StringPool.PERIOD, key, StringPool.EQUAL, value, ", ",
 					keyExternal, StringPool.EQUAL, valueExternal,
 					StringPool.CLOSE_CURLY_BRACE),
 				logContextName);

@@ -26,6 +26,7 @@ const TEXT_FIELD: Field = {
 	localized: false,
 	name: 'textField',
 	required: true,
+	settings: {},
 	type: 'text',
 };
 
@@ -56,6 +57,7 @@ describe('buildObjectDefinition', () => {
 					label: {en_US: 'Text Field'},
 					localized: false,
 					name: 'textField',
+					objectFieldSettings: [],
 					required: true,
 				},
 			],

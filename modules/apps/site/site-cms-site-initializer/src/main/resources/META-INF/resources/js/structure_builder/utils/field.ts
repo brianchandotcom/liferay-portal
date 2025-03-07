@@ -78,6 +78,20 @@ export const FIELD_TYPE_DB_TYPE: Record<FieldType, string> = {
 	'upload': 'Long',
 } as const;
 
+export const DB_TYPE_FIELD_TYPE: Record<string, FieldType> = {
+	BigDecimal: 'decimal',
+	Boolean: 'boolean',
+	Clob: 'long-text',
+	Date: 'date',
+	DateTime: 'datetime',
+	Integer: 'integer',
+	Long: 'upload',
+	RichText: 'rich-text',
+	SingleSelect: 'single-select',
+	String: 'text',
+	Upload: 'upload',
+} as const;
+
 // Types
 
 type BaseField = {

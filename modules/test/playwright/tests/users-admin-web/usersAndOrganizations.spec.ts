@@ -199,9 +199,7 @@ test('LPD-30589 Add Organization Team', async ({
 
 	await waitForAlert(page);
 
-	await expect(
-		(await teamsPage.teamsTableRow(1, newTeamName, true)).row
-	).toBeVisible();
+	await expect(teamsPage.teamsTable.cell(newTeamName)).toBeVisible();
 });
 
 test('LPD-31669 Check whether admin user is redirected to organization page after user to org assignment', async ({

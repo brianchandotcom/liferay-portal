@@ -31,6 +31,22 @@ export class JSONWebServicesUserApiHelper {
 		);
 	}
 
+	async addTeamUsers(teamId: string, userIds: string[]) {
+		const urlSearchParams = new URLSearchParams();
+
+		urlSearchParams.append('teamId', teamId);
+		urlSearchParams.append('userIds', JSON.stringify(userIds));
+
+		return this.apiHelpers.post(
+			`${liferayConfig.environment.baseUrl}${this.basePath}/add-team-users`,
+			{
+				data: urlSearchParams.toString(),
+				failOnStatusCode: true,
+				headers: await this.apiHelpers.getJSONWebServicesHeaders(),
+			}
+		);
+	}
+
 	async agreeToTermsOfUse(userId: string) {
 		const urlSearchParams = new URLSearchParams();
 

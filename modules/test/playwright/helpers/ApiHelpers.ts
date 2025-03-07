@@ -66,6 +66,7 @@ import {JSONWebServicesResourcePermissionApiHelper} from './json-web-services/JS
 import {JSONWebServicesSegmentsEntryApiHelper} from './json-web-services/JSONWebServicesSegmentsEntryApiHelper';
 import {JSONWebServicesSiteNavigationMenuApiHelper} from './json-web-services/JSONWebServicesSiteNavigationMenuApiHelper';
 import {JSONWebServicesStagingApiHelper} from './json-web-services/JSONWebServicesStagingApiHelper';
+import {JSONWebServicesTeamApiHelper} from './json-web-services/JSONWebServicesTeamApiHelper';
 import {JSONWebServicesUserApiHelper} from './json-web-services/JSONWebServicesUserApiHelper';
 
 type ContentType = 'application/json' | 'application/x-www-form-urlencoded';
@@ -154,6 +155,7 @@ export class ApiHelpers {
 	readonly jsonWebServicesSegmentsEntry: JSONWebServicesSegmentsEntryApiHelper;
 	readonly jsonWebServicesSiteNavigationMenu: JSONWebServicesSiteNavigationMenuApiHelper;
 	readonly jsonWebServicesStaging: JSONWebServicesStagingApiHelper;
+	readonly jsonWebServicesTeam: JSONWebServicesTeamApiHelper;
 	readonly jsonWebServicesUser: JSONWebServicesUserApiHelper;
 	readonly listTypeAdmin: ListTypeAdminApiHelper;
 	readonly notification: NotificationApiHelper;
@@ -243,6 +245,7 @@ export class ApiHelpers {
 		this.jsonWebServicesSiteNavigationMenu =
 			new JSONWebServicesSiteNavigationMenuApiHelper(this);
 		this.jsonWebServicesStaging = new JSONWebServicesStagingApiHelper(this);
+		this.jsonWebServicesTeam = new JSONWebServicesTeamApiHelper(this);
 		this.jsonWebServicesUser = new JSONWebServicesUserApiHelper(this);
 		this.listTypeAdmin = new ListTypeAdminApiHelper(this);
 		this.notification = new NotificationApiHelper(this);

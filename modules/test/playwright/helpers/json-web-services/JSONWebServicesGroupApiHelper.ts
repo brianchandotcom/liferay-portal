@@ -19,6 +19,22 @@ export class JSONWebServicesGroupApiHelper {
 		this.basePath = '/api/jsonws/group';
 	}
 
+	async assignRoleToGroup(roleId: string, groupIds: Array<string>) {
+		const urlSearchParams = new URLSearchParams();
+
+		urlSearchParams.append('roleId', roleId);
+		urlSearchParams.append('groupIds', JSON.stringify(groupIds));
+
+		return this.apiHelpers.post(
+			`${liferayConfig.environment.baseUrl}${this.basePath}/add-role-groups`,
+			{
+				data: urlSearchParams.toString(),
+				failOnStatusCode: true,
+				headers: await this.apiHelpers.getJSONWebServicesHeaders(),
+			}
+		);
+	}
+
 	async getCompanyGroup(companyId: string): Promise<Group> {
 		const urlSearchParams = new URLSearchParams();
 

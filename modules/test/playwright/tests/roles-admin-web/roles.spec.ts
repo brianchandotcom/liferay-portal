@@ -6,6 +6,7 @@
 import {expect, mergeTests} from '@playwright/test';
 
 import {dataApiHelpersTest} from '../../fixtures/dataApiHelpersTest';
+import {featureFlagsTest} from '../../fixtures/featureFlagsTest';
 import {isolatedSiteTest} from '../../fixtures/isolatedSiteTest';
 import {loginTest} from '../../fixtures/loginTest';
 import {rolesPagesTest} from '../../fixtures/rolesPagesTest';
@@ -20,9 +21,13 @@ import {
 	userData,
 } from '../../utils/performLogin';
 import {waitForAlert} from '../../utils/waitForAlert';
+import {setupBookmark} from './utils/bookmarks';
 
 export const test = mergeTests(
 	dataApiHelpersTest,
+	featureFlagsTest({
+		'LPS-178052': {enabled: true},
+	}),
 	isolatedSiteTest,
 	loginTest(),
 	rolesPagesTest,
@@ -1490,5 +1495,394 @@ test(
 				siteMembershipsPage.usersTable.cell(user2.name)
 			).toHaveCount(0);
 		}).toPass();
+	}
+);
+
+test(
+	'Can add Site Administration permissions for specific site',
+	{tag: ['@LPD-50835', '@LPS-133818']},
+	async ({
+		apiHelpers,
+		page,
+		roleDefinePermissionsPage,
+		rolePage,
+		rolesPage,
+		site,
+	}) => {
+		const role = await apiHelpers.headlessAdminUser.postRole({
+			name: getRandomString(),
+			roleType: 'regular',
+		});
+
+		await rolesPage.goto();
+
+		const menuItemName = 'Documents and Media';
+		const permissionName =
+			'Access in Site and Asset Library Administration';
+
+		await (await rolesPage.rolesTable.cellLink(role.name)).click();
+		await rolePage.definePermissionsLink.click();
+		await roleDefinePermissionsPage.searchInput.click();
+		await roleDefinePermissionsPage.searchInput.fill(menuItemName);
+
+		await expect(
+			roleDefinePermissionsPage.menuItem(menuItemName)
+		).toBeVisible();
+
+		await roleDefinePermissionsPage.menuItem(menuItemName).click();
+		await page.waitForLoadState('domcontentloaded');
+
+		await expect(
+			roleDefinePermissionsPage.permissionScopeLabel(permissionName)
+		).toBeVisible();
+
+		await roleDefinePermissionsPage
+			.permissionScopeChangeButton(permissionName)
+			.click();
+
+		await expect(async () => {
+			await roleDefinePermissionsPage.siteSelectorMySitesLink.click();
+			await roleDefinePermissionsPage
+				.siteSelectorSiteCard(site.name)
+				.click();
+
+			await expect(
+				roleDefinePermissionsPage.permissionScopeSiteLabel(
+					permissionName,
+					site.name
+				)
+			).toBeVisible({timeout: 3000});
+		}).toPass();
+
+		await roleDefinePermissionsPage
+			.permissionCheckbox(permissionName)
+			.check();
+		await roleDefinePermissionsPage.saveButton.click();
+
+		await waitForAlert(page, 'Success:The role permissions were updated.');
+
+		await expect(
+			roleDefinePermissionsPage.summaryPermissionCell(
+				`Documents and Media: ${permissionName}`
+			)
+		).toBeVisible();
+		await expect(
+			roleDefinePermissionsPage.summaryPermissionScopeCell(
+				`Documents and Media: ${permissionName}`,
+				site.name
+			)
+		).toBeVisible();
+		await expect(
+			roleDefinePermissionsPage.summaryPermissionCell(
+				'Documents and Media > Documents: View'
+			)
+		).toBeVisible();
+		await expect(
+			roleDefinePermissionsPage.summaryPermissionScopeCell(
+				'Documents and Media > Documents: View',
+				site.name
+			)
+		).toBeVisible();
+
+		await expect(
+			roleDefinePermissionsPage.summaryPermissionCell(
+				'Site Settings > Site: View Site and Asset Library Administration Menu'
+			)
+		).toBeVisible();
+		await expect(
+			roleDefinePermissionsPage.summaryPermissionScopeCell(
+				'Site Settings > Site: View Site and Asset Library Administration Menu',
+				site.name
+			)
+		).toBeVisible();
+	}
+);
+
+test(
+	'Group scope permission check',
+	{tag: ['@LPD-50835']},
+	async ({
+		apiHelpers,
+		bookmarksPage,
+		page,
+		roleDefinePermissionsPage,
+		rolePage,
+		rolesPage,
+		site: site1,
+	}) => {
+		const role = await apiHelpers.headlessAdminUser.postRole({
+			name: getRandomString(),
+			roleType: 'regular',
+		});
+
+		await rolesPage.goto();
+
+		const menuItemName = 'Bookmarks';
+		const permissionName = 'View';
+
+		await (await rolesPage.rolesTable.cellLink(role.name)).click();
+		await rolePage.definePermissionsLink.click();
+		await roleDefinePermissionsPage.searchInput.click();
+		await roleDefinePermissionsPage.searchInput.fill(menuItemName);
+
+		await expect(
+			roleDefinePermissionsPage.menuItem(menuItemName)
+		).toBeVisible();
+
+		await roleDefinePermissionsPage.menuItem(menuItemName).click();
+		await page.waitForLoadState('domcontentloaded');
+
+		await expect(
+			roleDefinePermissionsPage.permissionScopeLabel(permissionName, true)
+		).toBeVisible();
+
+		await roleDefinePermissionsPage
+			.permissionScopeChangeButton(permissionName, true)
+			.click();
+
+		await expect(async () => {
+			await roleDefinePermissionsPage.siteSelectorMySitesLink.click();
+			await roleDefinePermissionsPage
+				.siteSelectorSiteCard(site1.name)
+				.click();
+
+			await expect(
+				roleDefinePermissionsPage.permissionScopeSiteLabel(
+					permissionName,
+					site1.name
+				)
+			).toBeVisible({timeout: 3000});
+		}).toPass();
+
+		await roleDefinePermissionsPage
+			.permissionCheckbox(permissionName, true)
+			.check();
+		await roleDefinePermissionsPage.saveButton.click();
+
+		await waitForAlert(page, 'Success:The role permissions were updated.');
+
+		const bookmarkName1 = getRandomString();
+
+		const {layout: layout1} = await setupBookmark(
+			apiHelpers,
+			bookmarkName1,
+			bookmarksPage,
+			page,
+			site1
+		);
+
+		const site2 = await apiHelpers.headlessSite.createSite({
+			name: getRandomString(),
+		});
+
+		apiHelpers.data.push({id: site2.id, type: 'site'});
+
+		const bookmarkName2 = getRandomString();
+
+		const {layout: layout2} = await setupBookmark(
+			apiHelpers,
+			bookmarkName2,
+			bookmarksPage,
+			page,
+			site2
+		);
+
+		const user = await apiHelpers.headlessAdminUser.postUserAccount();
+
+		userData[user.alternateName] = {
+			name: user.givenName,
+			password: 'test',
+			surname: user.familyName,
+		};
+
+		await apiHelpers.jsonWebServicesUser.assignUsersToSite(
+			site1.id,
+			user.id
+		);
+		await apiHelpers.jsonWebServicesUser.assignUsersToSite(
+			site2.id,
+			user.id
+		);
+
+		await performLogout(page);
+		await performLoginViaApi(page, user.alternateName);
+
+		await page.goto(`/web/${site1.name}/${layout1.friendlyUrlPath}`);
+
+		await expect(bookmarksPage.bookmarkItem(bookmarkName1)).toHaveCount(0);
+
+		await page.goto(`/web/${site2.name}/${layout2.friendlyUrlPath}`);
+
+		await expect(bookmarksPage.bookmarkItem(bookmarkName2)).toHaveCount(0);
+
+		await performLogout(page);
+		await performLoginViaApi(page, 'test');
+
+		await apiHelpers.headlessAdminUser.assignUserToRole(
+			role.externalReferenceCode,
+			user.id
+		);
+
+		await performLogout(page);
+		await performLoginViaApi(page, user.alternateName);
+
+		await page.goto(`/web/${site1.name}/${layout1.friendlyUrlPath}`);
+
+		await expect(bookmarksPage.bookmarkItem(bookmarkName1)).toBeVisible();
+
+		await page.goto(`/web/${site2.name}/${layout2.friendlyUrlPath}`);
+
+		await expect(bookmarksPage.bookmarkItem(bookmarkName2)).toHaveCount(0);
+	}
+);
+
+test(
+	'View Documents And Media Add Repository permission in site member role',
+	{tag: ['@LPD-50835']},
+	async ({
+		apiHelpers,
+		page,
+		roleDefinePermissionsPage,
+		rolePage,
+		rolesPage,
+	}) => {
+		const companyId = await page.evaluate(() => {
+			return Liferay.ThemeDisplay.getCompanyId();
+		});
+
+		const siteMemberRole = await apiHelpers.headlessAdminUser.getRoleByName(
+			'Site Member',
+			'rolePermissions'
+		);
+
+		try {
+			await apiHelpers.jsonWebServicesResourcePermissionApiHelper.addResourcePermission(
+				'ADD_REPOSITORY',
+				companyId,
+				'0',
+				'com.liferay.document.library',
+				'0',
+				String(siteMemberRole.id),
+				'3'
+			);
+
+			await rolesPage.goto();
+			await rolesPage.siteRolesLink.click();
+
+			await expect(
+				rolesPage.rolesTable.cell(siteMemberRole.name)
+			).toBeVisible();
+
+			await (
+				await rolesPage.rolesTable.cellLink(siteMemberRole.name)
+			).click();
+			await rolePage.definePermissionsLink.click();
+
+			const permissionName = 'Add Repository';
+
+			await expect(
+				roleDefinePermissionsPage.summaryPermissionCell(permissionName)
+			).toBeVisible();
+
+			await roleDefinePermissionsPage.changePermission(
+				'Documents and Media',
+				permissionName,
+				false
+			);
+
+			await expect(
+				roleDefinePermissionsPage.summaryPermissionCell(permissionName)
+			).toHaveCount(0);
+
+			await page.reload();
+
+			await expect(
+				roleDefinePermissionsPage.summaryPermissionCell(permissionName)
+			).toHaveCount(0);
+		}
+		finally {
+			await apiHelpers.jsonWebServicesResourcePermissionApiHelper.removeResourcePermission(
+				'ADD_REPOSITORY',
+				companyId,
+				'0',
+				'com.liferay.document.library',
+				'0',
+				String(siteMemberRole.id),
+				'3'
+			);
+		}
+	}
+);
+
+test(
+	'View automatic assigned permissions',
+	{tag: ['@LPD-50835']},
+	async ({apiHelpers, roleDefinePermissionsPage, rolePage, rolesPage}) => {
+		const role = await apiHelpers.headlessAdminUser.postRole({
+			name: getRandomString(),
+			roleType: 'regular',
+		});
+
+		await rolesPage.goto();
+
+		await rolesPage.rolesTable.search(role.name);
+
+		await expect(rolesPage.rolesTable.cell(role.name)).toBeVisible();
+		await (await rolesPage.rolesTable.cellLink(role.name)).click();
+		await rolePage.definePermissionsLink.click();
+
+		await roleDefinePermissionsPage.changePermission(
+			'Users and Organizations',
+			'Access in Control Panel',
+			true
+		);
+
+		await expect(
+			roleDefinePermissionsPage.summaryPermissionCell(
+				'Portal: View Control Panel Menu'
+			)
+		).toBeVisible();
+		await expect(
+			roleDefinePermissionsPage.summaryPermissionCell(
+				'Users and Organizations: Access in Control Panel'
+			)
+		).toBeVisible();
+
+		await roleDefinePermissionsPage.changePermission(
+			'Pages',
+			'Access in Site and Asset Library Administration',
+			true
+		);
+
+		await expect(
+			roleDefinePermissionsPage.summaryPermissionCell(
+				'Portal: View Control Panel Menu'
+			)
+		).toBeVisible();
+		await expect(
+			roleDefinePermissionsPage.summaryPermissionCell(
+				'Users and Organizations: Access in Control Panel'
+			)
+		).toBeVisible();
+		await expect(
+			roleDefinePermissionsPage.summaryPermissionCell(
+				'Asset Library Settings > Asset Library Entry: View Site and Asset Library Administration Menu'
+			)
+		).toBeVisible();
+		await expect(
+			roleDefinePermissionsPage.summaryPermissionCell(
+				'Pages: Access in Site and Asset Library Administration'
+			)
+		).toBeVisible();
+		await expect(
+			roleDefinePermissionsPage.summaryPermissionCell(
+				'Pages > Page SEO: View'
+			)
+		).toBeVisible();
+		await expect(
+			roleDefinePermissionsPage.summaryPermissionCell(
+				'Site Settings > Site: View Site and Asset Library Administration Menu'
+			)
+		).toBeVisible();
 	}
 );

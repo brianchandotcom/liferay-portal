@@ -5,43 +5,31 @@
 
 import {Locator, Page} from '@playwright/test';
 
+import {DataTablePage} from '../account-admin-web/DataTablePage';
 import {ProductMenuPage} from '../product-navigation-control-menu-web/ProductMenuPage';
-import {searchTableRowByValue} from './UsersAndOrganizationsPage';
 
 export class TeamsPage {
+	readonly editLink: Locator;
 	readonly nameInput: Locator;
 	readonly newTeamButton: Locator;
 	readonly page: Page;
 	readonly productMenuPage: ProductMenuPage;
 	readonly saveButton: Locator;
-	readonly teamsTable: Locator;
-	readonly teamsTableRow: (
-		colPosition: number,
-		value: string,
-		strictEqual?: boolean
-	) => Promise<{column: Locator; row: Locator}>;
+	readonly teamsTable: DataTablePage;
 
 	constructor(page: Page) {
+		this.editLink = page.getByRole('link', {name: 'Edit'});
 		this.nameInput = page.getByPlaceholder('Name');
 		this.newTeamButton = page.getByRole('link', {name: 'Add Team'});
 		this.page = page;
 		this.productMenuPage = new ProductMenuPage(page);
 		this.saveButton = page.getByRole('button', {name: 'Save'});
-		this.teamsTable = page.locator(
-			'#_com_liferay_site_teams_web_portlet_SiteTeamsPortlet_teamsSearchContainer'
+		this.teamsTable = new DataTablePage(
+			page,
+			page.locator(
+				'#_com_liferay_site_teams_web_portlet_SiteTeamsPortlet_teamsSearchContainer'
+			)
 		);
-		this.teamsTableRow = async (
-			colPosition: number,
-			value: string,
-			strictEqual: boolean
-		) => {
-			return await searchTableRowByValue(
-				this.teamsTable,
-				colPosition,
-				value,
-				strictEqual
-			);
-		};
 	}
 
 	async goTo(siteUrl?: string) {

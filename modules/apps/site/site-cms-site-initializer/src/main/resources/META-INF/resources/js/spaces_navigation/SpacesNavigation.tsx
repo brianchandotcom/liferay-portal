@@ -15,7 +15,11 @@ import SpaceSticker from '../components/SpaceSticker';
 
 const MAX_NUMBER_SPACES = 5;
 
-const SpacesNavigation: React.FC = () => {
+interface SpacesNavigationProps {
+	showAddButton: boolean;
+}
+
+const SpacesNavigation: React.FC<SpacesNavigationProps> = ({showAddButton}) => {
 	const [assetLibraries, setAssetsLibraries] = useState<
 		{id: string; name: string}[]
 	>([]);
@@ -39,17 +43,19 @@ const SpacesNavigation: React.FC = () => {
 				<ClayPanel.Title className="align-items-center d-flex font-weight-semi-bold justify-content-between text-2 text-uppercase">
 					<span>{Liferay.Language.get('spaces')}</span>
 
-					<span className="float-right mr-2">
-						<ClayButtonWithIcon
-							aria-label={Liferay.Language.get('add-space')}
-							displayType="secondary"
-							onClick={onAddButtonClick}
-							size="sm"
-							symbol="plus"
-							title={Liferay.Language.get('add-space')}
-							type="button"
-						/>
-					</span>
+					{showAddButton && (
+						<span className="float-right mr-2">
+							<ClayButtonWithIcon
+								aria-label={Liferay.Language.get('add-space')}
+								displayType="secondary"
+								onClick={onAddButtonClick}
+								size="sm"
+								symbol="plus"
+								title={Liferay.Language.get('add-space')}
+								type="button"
+							/>
+						</span>
+					)}
 				</ClayPanel.Title>
 			}
 			showCollapseIcon

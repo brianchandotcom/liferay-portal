@@ -5,10 +5,16 @@
 
 package com.liferay.site.cms.site.initializer.internal.fragment.renderer;
 
+import com.liferay.depot.constants.DepotActionKeys;
+import com.liferay.depot.constants.DepotConstants;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.fragment.renderer.FragmentRendererContext;
 import com.liferay.frontend.taglib.react.servlet.taglib.ComponentTag;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.servlet.PageContextFactoryUtil;
 
 import java.io.IOException;
@@ -22,6 +28,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Jürgen Kappler
@@ -59,6 +67,20 @@ public class SpacesSectionFragmentRenderer extends BaseSectionFragmentRenderer {
 			componentTag.setPageContext(
 				PageContextFactoryUtil.create(
 					httpServletRequest, httpServletResponse));
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			componentTag.setProps(
+				HashMapBuilder.<String, Object>put(
+					"showAddButton",
+					_portletResourcePermission.contains(
+						themeDisplay.getPermissionChecker(),
+						themeDisplay.getScopeGroupId(),
+						DepotActionKeys.ADD_DEPOT_ENTRY)
+				).build());
+
 			componentTag.setServletContext(_servletContext);
 
 			componentTag.doStartTag();
@@ -74,6 +96,13 @@ public class SpacesSectionFragmentRenderer extends BaseSectionFragmentRenderer {
 
 	@Reference
 	private Language _language;
+
+	@Reference(
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(resource.name=" + DepotConstants.RESOURCE_NAME + ")"
+	)
+	private volatile PortletResourcePermission _portletResourcePermission;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.site.cms.site.initializer)"

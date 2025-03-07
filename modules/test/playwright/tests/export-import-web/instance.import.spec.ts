@@ -523,14 +523,14 @@ test(
 			surname: user.familyName,
 		};
 
-		let roles = await apiHelpers.headlessAdminUser.getRoles('Power User');
+		let roles = await apiHelpers.headlessAdminUser.getRoles('Administrator');
 
 		await apiHelpers.headlessAdminUser.postRoleUserAccountAssociation(
 			roles.items[0].id,
 			Number(user.id)
 		);
 
-		roles = await apiHelpers.headlessAdminUser.getRoles('Administrator');
+		roles = await apiHelpers.headlessAdminUser.getRoles('Power User');
 
 		await apiHelpers.headlessAdminUser.postRoleUserAccountAssociation(
 			roles.items[0].id,
@@ -628,14 +628,14 @@ test(
 			surname: user.familyName,
 		};
 
-		let roles = await apiHelpers.headlessAdminUser.getRoles('Power User');
+		let roles = await apiHelpers.headlessAdminUser.getRoles('Administrator');
 
 		await apiHelpers.headlessAdminUser.postRoleUserAccountAssociation(
 			roles.items[0].id,
 			Number(user.id)
 		);
 
-		roles = await apiHelpers.headlessAdminUser.getRoles('Administrator');
+		roles = await apiHelpers.headlessAdminUser.getRoles('Power User');
 
 		await apiHelpers.headlessAdminUser.postRoleUserAccountAssociation(
 			roles.items[0].id,
@@ -729,14 +729,14 @@ test(
 			surname: user.familyName,
 		};
 
-		let roles = await apiHelpers.headlessAdminUser.getRoles('Power User');
+		let roles = await apiHelpers.headlessAdminUser.getRoles('Administrator');
 
 		await apiHelpers.headlessAdminUser.postRoleUserAccountAssociation(
 			roles.items[0].id,
 			Number(user.id)
 		);
 
-		roles = await apiHelpers.headlessAdminUser.getRoles('Administrator');
+		roles = await apiHelpers.headlessAdminUser.getRoles('Power User');
 
 		await apiHelpers.headlessAdminUser.postRoleUserAccountAssociation(
 			roles.items[0].id,

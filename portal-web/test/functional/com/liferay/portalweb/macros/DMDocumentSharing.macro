@@ -91,7 +91,7 @@ definition {
 			AssertElementPresent(locator1 = "Sharing#MANAGE_COLLABORATORS_EMPTY_STATE_MESSAGE");
 		}
 
-		Button.clickSave();
+		Button.click(button = "Save");
 
 		SelectFrame(value1 = "relative=top");
 

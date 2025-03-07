@@ -89,11 +89,6 @@ public interface AccountEntryLocalService
 			ServiceContext serviceContext)
 		throws PortalException;
 
-	public AccountEntry addIncompleteAccountEntry(
-			String externalReferenceCode, long companyId, long userId,
-			String name, String type)
-		throws Exception;
-
 	public AccountEntry addOrUpdateAccountEntry(
 			String externalReferenceCode, long userId,
 			long parentAccountEntryId, String name, String description,
@@ -340,6 +335,12 @@ public interface AccountEntryLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public AccountEntry getOrAddIncompleteAccountEntry(
+			String externalReferenceCode, long companyId, long userId,
+			String name, String type)
+		throws Exception;
 
 	/**
 	 * Returns the OSGi service identifier.

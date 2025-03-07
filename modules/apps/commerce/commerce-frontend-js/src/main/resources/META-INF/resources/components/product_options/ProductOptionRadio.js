@@ -6,7 +6,7 @@
 import ClayForm, {ClayRadio, ClayRadioGroup} from '@clayui/form';
 import ClayLabel from '@clayui/label';
 import {useIsMounted} from '@liferay/frontend-js-react-web';
-import {useLiferayState} from '@liferay/frontend-js-state-web';
+import {useLiferayState} from '@liferay/frontend-js-state-web/react';
 import React, {useCallback, useEffect, useState} from 'react';
 
 import ServiceProvider from '../../ServiceProvider/index';

@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<gpx creator="Test" version="1.1" xmlns="http://www.topografix.com/GPX/1/1">
+	<wpt lat="37.7749" lon="-122.4194">
+		<name>Test Point</name>
+	</wpt>
+</gpx>

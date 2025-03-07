@@ -15,6 +15,9 @@ import java.util.function.BiFunction;
 public class TextReplacerBiFunction
 	implements BiFunction<String, String, String> {
 
+	public static final BiFunction<String, String, String> INSTANCE =
+		new TextReplacerBiFunction();
+
 	@Override
 	public String apply(String invoker, String text) {
 		String newText = TransformerAgent.replace(

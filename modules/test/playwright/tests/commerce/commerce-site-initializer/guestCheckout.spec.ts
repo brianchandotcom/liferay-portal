@@ -12,6 +12,7 @@ import {dataApiHelpersTest} from '../../../fixtures/dataApiHelpersTest';
 import {featureFlagsTest} from '../../../fixtures/featureFlagsTest';
 import {loginTest} from '../../../fixtures/loginTest';
 import getRandomString from '../../../utils/getRandomString';
+import performLogin, {performLogout} from '../../../utils/performLogin';
 import {classicCommerceSetUp, guestCheckoutSetUp} from '../utils/commerce';
 
 export const test = mergeTests(
@@ -260,101 +261,134 @@ test('LPD-35678 Guest can checkout a new order on sign-up in B2B channel site', 
 }) => {
 	test.setTimeout(180000);
 
-	const {channel, site} = await classicCommerceSetUp(
-		apiHelpers,
-		`B2B_${getRandomString()}`
+	await page.goto(
+		'/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fedit_configuration&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_factoryPid=com.liferay.captcha.configuration.CaptchaConfiguration&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_pid=com.liferay.captcha.configuration.CaptchaConfiguration'
 	);
 
-	await guestCheckoutSetUp(
-		channel,
-		commerceAdminChannelDetailsPage,
-		commerceAdminChannelsPage,
-		page,
-		site
-	);
+	const captchaCheckbox = page
+		.locator('input[name*="$createAccountCaptchaEnabled$"]')
+		.first();
 
-	const addToCartButton = page
-		.locator('.cp-renderer', {hasText: 'U-Joint'})
-		.getByRole('button', {name: 'Add to Cart'});
+	await captchaCheckbox.click();
 
-	await addToCartButton.click();
+	await expect(captchaCheckbox).not.toBeChecked();
 
-	await commerceMiniCartPage.miniCartButton.click();
+	await page.getByTestId('submitConfiguration').click();
 
-	await commerceMiniCartPage.signInToCheckoutButton.click();
+	try {
+		const {channel, site} = await classicCommerceSetUp(
+			apiHelpers,
+			`B2B_${getRandomString()}`
+		);
 
-	const signInToCheckoutModal = page.locator('#guest-sign-in-modal');
+		await guestCheckoutSetUp(
+			channel,
+			commerceAdminChannelDetailsPage,
+			commerceAdminChannelsPage,
+			page,
+			site
+		);
 
-	await expect(signInToCheckoutModal).toBeVisible();
+		const addToCartButton = page
+			.locator('.cp-renderer', {hasText: 'U-Joint'})
+			.getByRole('button', {name: 'Add to Cart'});
 
-	const emailAddressInput = signInToCheckoutModal.locator(
-		'input[id*="LoginPortlet_login"]'
-	);
-	const passInput = signInToCheckoutModal.locator(
-		'input[id*="LoginPortlet_pass"]'
-	);
-	const signInButton = signInToCheckoutModal.getByRole('button', {
-		name: 'Sign In',
-	});
-	const signUpButton = signInToCheckoutModal.getByRole('button', {
-		name: 'Sign Up',
-	});
+		await addToCartButton.click();
 
-	await signUpButton.click();
+		await commerceMiniCartPage.miniCartButton.click();
 
-	const iframe = signInToCheckoutModal.frameLocator(
-		'.sign-up-modal-view iframe'
-	);
+		await commerceMiniCartPage.signInToCheckoutButton.click();
 
-	const userScreenNameInput = iframe.locator('input[id*="_screenName"]');
-	const userEmailAddressInput = iframe.locator('input[id*="_emailAddress"]');
-	const userFirstNameInput = iframe.locator('input[id*="_firstName"]');
-	const userLastNameInput = iframe.locator('input[id*="_lastName"]');
-	const userPass1Input = iframe.locator('input[id*="_password1"]');
-	const userPass2Input = iframe.locator('input[id*="_password2"]');
+		const signInToCheckoutModal = page.locator('#guest-sign-in-modal');
 
-	const accountNameInput = signInToCheckoutModal.locator(
-		'input[name="accountName"]'
-	);
+		await expect(signInToCheckoutModal).toBeVisible();
 
-	const ACCOUNT_NAME = getRandomString();
-	const EMAIL_ADDRESS = `${ACCOUNT_NAME}@liferay.com`;
+		const emailAddressInput = signInToCheckoutModal.locator(
+			'input[id*="LoginPortlet_login"]'
+		);
+		const passInput = signInToCheckoutModal.locator(
+			'input[id*="LoginPortlet_pass"]'
+		);
+		const signInButton = signInToCheckoutModal.getByRole('button', {
+			name: 'Sign In',
+		});
+		const signUpButton = signInToCheckoutModal.getByRole('button', {
+			name: 'Sign Up',
+		});
 
-	await userScreenNameInput.fill(ACCOUNT_NAME);
-	await userEmailAddressInput.fill(EMAIL_ADDRESS);
-	await userFirstNameInput.fill(ACCOUNT_NAME);
-	await userLastNameInput.fill(ACCOUNT_NAME);
-	await userPass1Input.fill(ACCOUNT_NAME);
-	await userPass2Input.fill(ACCOUNT_NAME);
-	await accountNameInput.fill(ACCOUNT_NAME);
+		await signUpButton.click();
 
-	await signInToCheckoutModal.getByRole('button', {name: 'Done'}).click();
+		const iframe = signInToCheckoutModal.frameLocator(
+			'.sign-up-modal-view iframe'
+		);
 
-	await expect(signInToCheckoutModal.getByRole('alert')).toBeVisible();
+		const userScreenNameInput = iframe.locator('input[id*="_screenName"]');
+		const userEmailAddressInput = iframe.locator(
+			'input[id*="_emailAddress"]'
+		);
+		const userFirstNameInput = iframe.locator('input[id*="_firstName"]');
+		const userLastNameInput = iframe.locator('input[id*="_lastName"]');
+		const userPass1Input = iframe.locator('input[id*="_password1"]');
+		const userPass2Input = iframe.locator('input[id*="_password2"]');
 
-	await emailAddressInput.fill(EMAIL_ADDRESS);
-	await passInput.fill(ACCOUNT_NAME);
+		const accountNameInput = signInToCheckoutModal.locator(
+			'input[name="accountName"]'
+		);
 
-	await signInButton.click();
+		const ACCOUNT_NAME = getRandomString();
+		const EMAIL_ADDRESS = `${ACCOUNT_NAME}@liferay.com`;
 
-	await expect(
-		page.locator('.btn-account-selector', {hasText: ACCOUNT_NAME})
-	).toBeVisible();
+		await userScreenNameInput.fill(ACCOUNT_NAME);
+		await userEmailAddressInput.fill(EMAIL_ADDRESS);
+		await userFirstNameInput.fill(ACCOUNT_NAME);
+		await userLastNameInput.fill(ACCOUNT_NAME);
+		await userPass1Input.fill(ACCOUNT_NAME);
+		await userPass2Input.fill(ACCOUNT_NAME);
+		await accountNameInput.fill(ACCOUNT_NAME);
 
-	await commerceMiniCartPage.miniCartButton.click();
+		await signInToCheckoutModal.getByRole('button', {name: 'Done'}).click();
 
-	await expect(commerceMiniCartPage.miniCartItem('U-Joint')).toBeVisible();
+		await expect(signInToCheckoutModal.getByRole('alert')).toBeVisible();
 
-	await commerceMiniCartPage.miniCartButtonClose.click();
+		await emailAddressInput.fill(EMAIL_ADDRESS);
+		await passInput.fill(ACCOUNT_NAME);
 
-	await checkoutPage.performCheckout({
-		shippingAddress: {
-			city: 'testCity',
-			countryLabel: 'United States',
-			name: `Guest to ${ACCOUNT_NAME}`,
-			regionLabel: 'Florida',
-			street: 'testStreet',
-			zip: '12345',
-		},
-	});
+		await signInButton.click();
+
+		await expect(
+			page.locator('.btn-account-selector', {hasText: ACCOUNT_NAME})
+		).toBeVisible();
+
+		await commerceMiniCartPage.miniCartButton.click();
+
+		await expect(
+			commerceMiniCartPage.miniCartItem('U-Joint')
+		).toBeVisible();
+
+		await commerceMiniCartPage.miniCartButtonClose.click();
+
+		await checkoutPage.performCheckout({
+			shippingAddress: {
+				city: 'testCity',
+				countryLabel: 'United States',
+				name: `Guest to ${ACCOUNT_NAME}`,
+				regionLabel: 'Florida',
+				street: 'testStreet',
+				zip: '12345',
+			},
+		});
+	}
+	finally {
+		await performLogout(page);
+
+		await performLogin(page, 'test');
+
+		await page.goto(
+			'/group/control_panel/manage?p_p_id=com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_mvcRenderCommandName=%2Fconfiguration_admin%2Fedit_configuration&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_factoryPid=com.liferay.captcha.configuration.CaptchaConfiguration&_com_liferay_configuration_admin_web_portlet_SystemSettingsPortlet_pid=com.liferay.captcha.configuration.CaptchaConfiguration'
+		);
+
+		await captchaCheckbox.click();
+
+		await expect(captchaCheckbox).toBeChecked();
+	}
 });

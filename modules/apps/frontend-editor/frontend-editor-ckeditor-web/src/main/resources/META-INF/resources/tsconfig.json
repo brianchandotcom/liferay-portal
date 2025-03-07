@@ -1,5 +1,5 @@
 {
-	"@generated": "13ebccb0e4b6cc595f214064abd4e364a3b995cc",
+	"@generated": "f1fe763720d1bed021db9028199688d903f155ea",
 	"@readonly": "** AUTO-GENERATED: DO NOT EDIT **",
 	"compilerOptions": {
 		"allowSyntheticDefaultImports": true,
@@ -14,6 +14,9 @@
 		"paths": {
 			"@liferay/cookies-banner-web": [
 				"../../../../../../../cookies/cookies-banner-web/src/main/resources/META-INF/resources/js/index.d.ts"
+			],
+			"frontend-js-components-web": [
+				"../../../../../../../frontend-js/frontend-js-components-web/src/main/resources/META-INF/resources/index.ts"
 			],
 			"frontend-js-web": [
 				"../../../../../../../frontend-js/frontend-js-web/src/main/resources/META-INF/resources/index.d.ts"
@@ -37,6 +40,9 @@
 	"references": [
 		{
 			"path": "../../../../../../../cookies/cookies-banner-web/src/main/resources/META-INF/resources/tsconfig.json"
+		},
+		{
+			"path": "../../../../../../../frontend-js/frontend-js-components-web/src/main/resources/META-INF/resources/tsconfig.json"
 		},
 		{
 			"path": "../../../../../../../frontend-js/frontend-js-web/src/main/resources/META-INF/resources/tsconfig.json"

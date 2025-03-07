@@ -3,10 +3,11 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-import {EditorConfig} from 'ckeditor5';
 import {sub} from 'frontend-js-web';
 
-const advancedClassicEditorConfig: EditorConfig = {
+import {ClassicEditorConfig} from '../utils/types';
+
+const advancedClassicEditorConfig: ClassicEditorConfig = {
 	alignment: {
 		options: ['left', 'center', 'right'],
 	},
@@ -40,9 +41,23 @@ const advancedClassicEditorConfig: EditorConfig = {
 	htmlSupport: {
 		allow: [
 			{
+				attributes: true,
 				classes: true,
 				name: /.*/,
+				styles: true,
 			},
+		],
+		allowEmpty: ['img'],
+	},
+	image: {
+		toolbar: [
+			'imageStyle:inline',
+			'imageStyle:alignBlockLeft',
+			'imageStyle:block',
+			'imageStyle:alignBlockRight',
+			'imageStyle:side',
+			'toggleImageCaption',
+			'imageTextAlternative',
 		],
 	},
 	style: {
@@ -110,7 +125,8 @@ const advancedClassicEditorConfig: EditorConfig = {
 		'|',
 		'link',
 		'insertTable',
-		'mediaEmbed',
+		'imageSelector',
+		'videoSelector',
 		'|',
 		'horizontalLine',
 		'|',

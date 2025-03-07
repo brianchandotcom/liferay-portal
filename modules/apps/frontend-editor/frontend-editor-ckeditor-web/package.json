@@ -6,6 +6,7 @@
 		"ckeditor4": "4.22.1",
 		"ckeditor4-react": "1.4.2",
 		"ckeditor5": "43.3.1",
+		"frontend-js-components-web": "*",
 		"frontend-js-web": "*",
 		"liferay-ckeditor": "4.21.0-liferay.11",
 		"prop-types": "15.7.2",

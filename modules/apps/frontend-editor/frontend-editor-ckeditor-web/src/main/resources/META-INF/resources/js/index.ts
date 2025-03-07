@@ -22,5 +22,8 @@ export {Editor} from './ckeditor4/Editor';
 export {InlineEditor} from './ckeditor4/InlineEditor';
 
 export {default as CKEditor5ClassicEditor} from './ckeditor5/ClassicEditor';
-export {default as advancedClassicEditorConfig} from './ckeditor5/presets/advancedClassicEditorConfig';
-export {default as basicClassicEditorConfig} from './ckeditor5/presets/basicClassicEditorConfig';
+
+export {
+	ClassicEditorConfig,
+	EClassicEditorConfigPreset,
+} from './ckeditor5/utils/types';

@@ -30,9 +30,8 @@ import com.liferay.headless.commerce.delivery.cart.internal.odata.entity.v1_0.Ca
 import com.liferay.headless.commerce.delivery.cart.resource.v1_0.CartItemResource;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.module.configuration.ConfigurationProvider;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -43,6 +42,7 @@ import com.liferay.portal.vulcan.fields.NestedField;
 import com.liferay.portal.vulcan.fields.NestedFieldId;
 import com.liferay.portal.vulcan.pagination.Page;
 import com.liferay.portal.vulcan.pagination.Pagination;
+import com.liferay.portal.vulcan.util.SearchUtil;
 
 import java.math.BigDecimal;
 
@@ -50,10 +50,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 
 import javax.ws.rs.core.MultivaluedMap;
 
@@ -109,7 +106,8 @@ public class CartItemResourceImpl extends BaseCartItemResourceImpl {
 
 	@Override
 	public Page<CartItem> getCartByExternalReferenceCodeItemsPage(
-			String externalReferenceCode, Long skuId, Pagination pagination)
+			String externalReferenceCode, String search, Long skuId,
+			Pagination pagination)
 		throws Exception {
 
 		CommerceOrder commerceOrder =
@@ -122,24 +120,27 @@ public class CartItemResourceImpl extends BaseCartItemResourceImpl {
 					externalReferenceCode);
 		}
 
-		return Page.of(
-			_filterCartItems(
-				transform(
-					_commerceOrderItemService.getCommerceOrderItems(
-						commerceOrder.getCommerceOrderId(), QueryUtil.ALL_POS,
-						QueryUtil.ALL_POS),
-					commerceOrderItem -> {
-						if ((skuId != null) &&
-							!Objects.equals(
-								commerceOrderItem.getCPInstanceId(), skuId)) {
+		if (!commerceOrder.isOpen()) {
+			throw new NoSuchOrderException();
+		}
 
-							return null;
-						}
+		return SearchUtil.search(
+			null, booleanQuery -> booleanQuery.getPreBooleanFilter(), null,
+			CommerceOrderItem.class.getName(), search, pagination,
+			queryConfig -> queryConfig.setSelectedFieldNames(
+				Field.ENTRY_CLASS_PK),
+			searchContext -> {
+				searchContext.setAttribute(
+					"commerceOrderId", commerceOrder.getCommerceOrderId());
+				searchContext.setAttribute("parentCommerceOrderItemId", 0L);
 
-						return _toCartItem(
-							commerceOrder.getCommerceAccountId(),
-							commerceOrderItem);
-					})));
+				searchContext.setCompanyId(contextCompany.getCompanyId());
+			},
+			null,
+			document -> _toCartItem(
+				commerceOrder.getCommerceAccountId(),
+				_commerceOrderItemService.getCommerceOrderItem(
+					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
 	}
 
 	@Override
@@ -175,33 +176,38 @@ public class CartItemResourceImpl extends BaseCartItemResourceImpl {
 	@NestedField(parentClass = Cart.class, value = "cartItems")
 	@Override
 	public Page<CartItem> getCartItemsPage(
-			@NestedFieldId("id") Long cartId, Long skuId, Pagination pagination)
+			@NestedFieldId("id") Long cartId, String search, Long skuId,
+			Pagination pagination)
 		throws Exception {
 
 		if (cartId == 0) {
 			return Page.of(Collections.emptyList());
 		}
 
-		return Page.of(
-			_filterCartItems(
-				transform(
-					_commerceOrderItemService.getCommerceOrderItems(
-						cartId, QueryUtil.ALL_POS, QueryUtil.ALL_POS),
-					commerceOrderItem -> {
-						if ((skuId != null) &&
-							!Objects.equals(
-								commerceOrderItem.getCPInstanceId(), skuId)) {
+		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
+			cartId);
 
-							return null;
-						}
+		if (!commerceOrder.isOpen()) {
+			throw new NoSuchOrderException();
+		}
 
-						CommerceOrder commerceOrder =
-							commerceOrderItem.getCommerceOrder();
+		return SearchUtil.search(
+			null, booleanQuery -> booleanQuery.getPreBooleanFilter(), null,
+			CommerceOrderItem.class.getName(), search, pagination,
+			queryConfig -> queryConfig.setSelectedFieldNames(
+				Field.ENTRY_CLASS_PK),
+			searchContext -> {
+				searchContext.setAttribute(
+					"commerceOrderId", commerceOrder.getCommerceOrderId());
+				searchContext.setAttribute("parentCommerceOrderItemId", 0L);
 
-						return _toCartItem(
-							commerceOrder.getCommerceAccountId(),
-							commerceOrderItem);
-					})));
+				searchContext.setCompanyId(contextCompany.getCompanyId());
+			},
+			null,
+			document -> _toCartItem(
+				commerceOrder.getCommerceAccountId(),
+				_commerceOrderItemService.getCommerceOrderItem(
+					GetterUtil.getLong(document.get(Field.ENTRY_CLASS_PK)))));
 	}
 
 	@Override
@@ -363,51 +369,40 @@ public class CartItemResourceImpl extends BaseCartItemResourceImpl {
 			commerceOrderItem.getCommerceOrderItemId(), cartItem);
 	}
 
-	private List<CartItem> _filterCartItems(List<CartItem> cartItems) {
-		Map<Long, CartItem> cartItemsMap = new HashMap<>();
+	private CartItem[] _getCartItems(
+			long commerceAccountId, CommerceOrderItem commerceOrderItem)
+		throws Exception {
 
-		for (CartItem cartItem : cartItems) {
-			cartItemsMap.put(cartItem.getId(), cartItem);
+		List<CartItem> cartItems = new ArrayList<>();
+
+		for (CommerceOrderItem commerceOrderItems :
+				commerceOrderItem.getChildCommerceOrderItems()) {
+
+			CartItem cartItem = _orderItemDTOConverter.toDTO(
+				new CartItemDTOConverterContext(
+					commerceAccountId,
+					commerceOrderItems.getCommerceOrderItemId(),
+					contextAcceptLanguage.getPreferredLocale()));
+
+			cartItems.add(cartItem);
 		}
 
-		for (CartItem cartItem : cartItems) {
-			Long parentCartItemId = cartItem.getParentCartItemId();
-
-			if (parentCartItemId == null) {
-				continue;
-			}
-
-			CartItem parentCartItem = cartItemsMap.get(parentCartItemId);
-
-			if (parentCartItem == null) {
-				continue;
-			}
-
-			CartItem[] parentCartItemCartItems = parentCartItem.getCartItems();
-
-			parentCartItem.setCartItems(
-				() -> {
-					if (parentCartItemCartItems == null) {
-						return new CartItem[] {cartItem};
-					}
-
-					return ArrayUtil.append(parentCartItemCartItems, cartItem);
-				});
-
-			cartItemsMap.remove(cartItem.getId());
-		}
-
-		return new ArrayList(cartItemsMap.values());
+		return cartItems.toArray(new CartItem[0]);
 	}
 
 	private CartItem _toCartItem(
 			long commerceAccountId, CommerceOrderItem commerceOrderItem)
 		throws Exception {
 
-		return _orderItemDTOConverter.toDTO(
+		CartItemDTOConverterContext cartItemDTOConverterContext =
 			new CartItemDTOConverterContext(
 				commerceAccountId, commerceOrderItem.getCommerceOrderItemId(),
-				contextAcceptLanguage.getPreferredLocale()));
+				contextAcceptLanguage.getPreferredLocale());
+
+		cartItemDTOConverterContext.setAttribute(
+			"cartItems", _getCartItems(commerceAccountId, commerceOrderItem));
+
+		return _orderItemDTOConverter.toDTO(cartItemDTOConverterContext);
 	}
 
 	private CommerceOrderItem _updateCartItem(

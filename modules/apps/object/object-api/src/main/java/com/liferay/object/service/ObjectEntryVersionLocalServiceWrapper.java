@@ -32,7 +32,7 @@ public class ObjectEntryVersionLocalServiceWrapper
 	@Override
 	public com.liferay.object.model.ObjectEntryVersion addObjectEntryVersion(
 			com.liferay.object.model.ObjectEntry objectEntry)
-		throws Exception {
+		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _objectEntryVersionLocalService.addObjectEntryVersion(
 			objectEntry);

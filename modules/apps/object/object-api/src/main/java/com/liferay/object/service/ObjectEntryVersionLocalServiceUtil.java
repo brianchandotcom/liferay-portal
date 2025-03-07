@@ -38,7 +38,7 @@ public class ObjectEntryVersionLocalServiceUtil {
 	 */
 	public static ObjectEntryVersion addObjectEntryVersion(
 			com.liferay.object.model.ObjectEntry objectEntry)
-		throws Exception {
+		throws PortalException {
 
 		return getService().addObjectEntryVersion(objectEntry);
 	}

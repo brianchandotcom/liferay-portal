@@ -159,12 +159,23 @@ function SearchResults({
 	loading: boolean | undefined;
 	results?: APIResponse<Product>;
 }) {
+	const listRef = useRef<HTMLUListElement | null>(null);
+
+	useEffect(() => {
+		if (listRef.current && results?.items.length) {
+			const firstListItem = listRef.current.firstChild as HTMLLIElement;
+
+			firstListItem?.focus();
+		}
+	}, [results, listRef]);
+
 	return (
 		<>
 			{!loading && results?.items.length ? (
 				<ul
 					aria-label={Liferay.Language.get('marketplace-fragments')}
 					className="list-unstyled px-3"
+					ref={listRef}
 					role="menubar"
 				>
 					{results.items.map((item: Product) => (

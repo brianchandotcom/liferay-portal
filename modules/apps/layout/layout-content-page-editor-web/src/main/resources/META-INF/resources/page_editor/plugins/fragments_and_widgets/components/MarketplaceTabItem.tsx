@@ -13,32 +13,32 @@ import {
 	useMarketplaceContext,
 } from '@liferay/marketplace-js-components-web';
 import {sub} from 'frontend-js-web';
-import React from 'react';
+import React, {useCallback, useImperativeHandle} from 'react';
 
-export default function MarketplaceTabItem({item}: {item: Product}) {
+export default function MarketplaceTabItem({
+	item,
+	onClickRef,
+}: {
+	item: Product;
+	onClickRef: React.RefObject<() => void | null>;
+}) {
 	const {
 		modal: {onOpenChange},
 		setProduct,
 		setView,
 	} = useMarketplaceContext();
 
-	const openItem = () => {
+	const handleClick = useCallback(() => {
 		setProduct(item);
 		setView(MarketplaceView.STOREFRONT);
 		onOpenChange(true);
-	};
+	}, [item, setProduct, setView, onOpenChange]);
 
-	const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-		if (event.key === 'Enter' || event.key === ' ') {
-			openItem();
-		}
-	};
+	useImperativeHandle(onClickRef, () => handleClick, [handleClick]);
 
 	return (
 		<ClayCard
 			className="card-interactive card-interactive-primary card-type-template mb-2 template-card-horizontal"
-			onClick={openItem}
-			onKeyDown={handleKeyDown}
 			role="button"
 			title={sub(Liferay.Language.get('x-details'), item.name)}
 		>

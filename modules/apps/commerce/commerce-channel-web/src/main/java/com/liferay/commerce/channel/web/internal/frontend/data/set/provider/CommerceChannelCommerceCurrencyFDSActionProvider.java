@@ -6,7 +6,7 @@
 package com.liferay.commerce.channel.web.internal.frontend.data.set.provider;
 
 import com.liferay.commerce.channel.web.internal.constants.CommerceChannelFDSNames;
-import com.liferay.commerce.channel.web.internal.model.CommerceChannelCommerceCurrency;
+import com.liferay.commerce.channel.web.internal.model.ChannelCurrency;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.model.CommerceChannel;
 import com.liferay.frontend.data.set.provider.FDSActionProvider;
@@ -47,19 +47,16 @@ public class CommerceChannelCommerceCurrencyFDSActionProvider
 			long groupId, HttpServletRequest httpServletRequest, Object model)
 		throws PortalException {
 
-		CommerceChannelCommerceCurrency commerceChannelCommerceCurrency =
-			(CommerceChannelCommerceCurrency)model;
+		ChannelCurrency channelCurrency = (ChannelCurrency)model;
 
 		return DropdownItemListBuilder.add(
 			() -> _commerceChannelModelResourcePermission.contains(
 				PermissionThreadLocal.getPermissionChecker(),
-				commerceChannelCommerceCurrency.getCommerceChannelId(),
-				ActionKeys.UPDATE),
+				channelCurrency.getCommerceChannelId(), ActionKeys.UPDATE),
 			dropdownItem -> {
 				dropdownItem.setHref(
 					_getCommerceChannelCommerceCurrencyDeleteURL(
-						commerceChannelCommerceCurrency.
-							getCommerceChannelRelId(),
+						channelCurrency.getCommerceChannelRelId(),
 						httpServletRequest));
 				dropdownItem.setIcon("trash");
 				dropdownItem.setLabel(

@@ -277,8 +277,8 @@ public class ExportTaskResourceTest {
 		JSONArray itemsJSONArray = jsonObject.getJSONArray("items");
 
 		ImportTask importTask = _importTaskResource.postImportTask(
-			classNamePartsMap.get("className"), null, null, "UPSERT", null,
-			null, null, classNamePartsMap.get("taskItemDelegateName"),
+			classNamePartsMap.get("className"), null, null, null, "UPSERT",
+			null, null, null, classNamePartsMap.get("taskItemDelegateName"),
 			itemsJSONArray);
 
 		externalReferenceCode = importTask.getExternalReferenceCode();

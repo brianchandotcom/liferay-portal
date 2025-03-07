@@ -19,12 +19,12 @@ import {pageEditorPagesTest} from '../../fixtures/pageEditorPagesTest';
 import {pageTemplatesPagesTest} from '../../fixtures/pageTemplatesPagesTest';
 import {productMenuPageTest} from '../../fixtures/productMenuPageTest';
 import {wikiPagesTest} from '../../fixtures/wikiPagesTest';
-import {expandSection} from '../../utils/expandSection';
 import getRandomString from '../../utils/getRandomString';
 import {getTempDir} from '../../utils/temp';
 import {companyExportImportPageTest} from './fixtures/companyExportImportPagesTest';
 import {exportImportPagesTest} from './fixtures/exportImportPagesTest';
 import {stagingPageTest} from './fixtures/stagingPageTest';
+import {reloadImportUntilFieldsetOpened} from './utils/reloadImportUntilFieldsetOpened';
 
 export const test = mergeTests(
 	companyExportImportPageTest,
@@ -358,9 +358,10 @@ test('can see corresponding elements at site level', async ({
 		exportImportPage.page.getByLabel('Delete Application Data')
 	).toBeVisible();
 
-	await expandSection(
-		exportImportPage.page.getByRole('button', {name: 'Update Data'})
-	);
+	await reloadImportUntilFieldsetOpened({
+		name: 'Update Data',
+		page: exportImportPage.page,
+	});
 
 	await expect(
 		exportImportPage.page.getByText(

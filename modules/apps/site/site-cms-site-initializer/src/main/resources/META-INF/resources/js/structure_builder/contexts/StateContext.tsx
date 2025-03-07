@@ -268,12 +268,14 @@ const StateContext = createContext<{dispatch: Dispatch<Action>; state: State}>({
 
 export default function StateContextProvider({
 	children,
+	initialState,
 }: {
 	children: ReactNode;
+	initialState: State | null;
 }) {
 	const [state, dispatch] = useReducer<React.Reducer<State, Action>>(
 		reducer,
-		INITIAL_STATE
+		initialState ?? INITIAL_STATE
 	);
 
 	return (

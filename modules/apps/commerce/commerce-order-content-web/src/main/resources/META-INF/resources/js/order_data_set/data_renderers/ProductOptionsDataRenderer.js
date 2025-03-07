@@ -6,53 +6,44 @@
 import {MiniCartUtils} from 'commerce-frontend-js';
 import React from 'react';
 
-const ProductOptionsDataRenderer = ({itemData: {options}}) => {
+const ProductOptionsDataRenderer = ({itemData: {options = '[]', skuId}}) => {
 	const productOptions = JSON.parse(options);
 
 	return (
-		<div className="child-items">
-			{productOptions.map((option, index) => {
-				const {skuId, skuOptionName, skuOptionValueNames, value} =
-					option;
+		<>
+			{productOptions.length ? (
+				<div className="item-options">
+					{productOptions.map(
+						(
+							{
+								skuId: optionSkuId,
+								skuOptionName,
+								skuOptionValueNames,
+								value,
+							},
+							index
+						) =>
+							!optionSkuId ||
+							(optionSkuId && optionSkuId !== skuId) ? (
+								<div
+									className="item-info-extra pt-2"
+									key={index}
+								>
+									<div className="h6 item-name">
+										{skuOptionName}
+									</div>
 
-				const childItem = [].find(
-					(childItem) => childItem.skuId === parseInt(skuId, 10)
-				);
-
-				const {name, quantity, skuUnitOfMeasure} = childItem || {};
-
-				return name ? (
-					<div className="item-info-extra pt-2" key={index}>
-						<div className="h6 item-name">{skuOptionName}</div>
-
-						<p className="item-sku">
-							<span>
-								<span>
-									{MiniCartUtils.parseValue(
-										skuOptionValueNames
-									) || MiniCartUtils.parseValue(value)}
-								</span>
-
-								<span className="pl-2">
-									{`(${quantity} \u00D7 ${name} ${
-										skuUnitOfMeasure?.key || ''
-									})`}
-								</span>
-							</span>
-						</p>
-					</div>
-				) : (
-					<div className="item-info-extra pt-2" key={index}>
-						<div className="h6 item-name">{skuOptionName}</div>
-
-						<p className="item-sku">
-							{MiniCartUtils.parseValue(skuOptionValueNames) ||
-								MiniCartUtils.parseValue(value)}
-						</p>
-					</div>
-				);
-			})}
-		</div>
+									<p className="item-sku">
+										{MiniCartUtils.parseValue(
+											skuOptionValueNames
+										) || MiniCartUtils.parseValue(value)}
+									</p>
+								</div>
+							) : null
+					)}
+				</div>
+			) : null}
+		</>
 	);
 };
 

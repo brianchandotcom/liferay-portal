@@ -16,6 +16,7 @@ import com.liferay.headless.commerce.admin.pricing.dto.v2_0.DiscountSku;
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.PriceEntry;
 import com.liferay.headless.commerce.admin.pricing.dto.v2_0.Sku;
 import com.liferay.headless.commerce.admin.pricing.resource.v2_0.SkuResource;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.vulcan.dto.converter.DTOConverter;
 import com.liferay.portal.vulcan.dto.converter.DefaultDTOConverterContext;
 import com.liferay.portal.vulcan.fields.NestedField;
@@ -60,10 +61,17 @@ public class SkuResourceImpl extends BaseSkuResourceImpl {
 			throw new NoSuchCPInstanceException();
 		}
 
-		return _skuDTOConverter.toDTO(
+		DefaultDTOConverterContext defaultDTOConverterContext =
 			new DefaultDTOConverterContext(
 				cpInstance.getCPInstanceId(),
-				contextAcceptLanguage.getPreferredLocale()));
+				contextAcceptLanguage.getPreferredLocale());
+
+		if (Validator.isNotNull(commercePriceEntry.getUnitOfMeasureKey())) {
+			defaultDTOConverterContext.setAttribute(
+				"unitOfMeasureKey", commercePriceEntry.getUnitOfMeasureKey());
+		}
+
+		return _skuDTOConverter.toDTO(defaultDTOConverterContext);
 	}
 
 	@Reference

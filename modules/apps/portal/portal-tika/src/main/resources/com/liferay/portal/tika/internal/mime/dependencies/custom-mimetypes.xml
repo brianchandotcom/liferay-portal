@@ -10,4 +10,7 @@
 	<mime-type type="text/calendar">
 		<glob pattern="*.ics" />
 	</mime-type>
+	<mime-type type="application/gpx+xml">
+		<glob pattern="*.gpx" />
+	</mime-type>
 </mime-info>

@@ -64,10 +64,6 @@ public class ShipmentResourceTest extends BaseShipmentResourceTestCase {
 
 		PrincipalThreadLocal.setName(_user.getUserId());
 
-		_serviceContext = ServiceContextTestUtil.getServiceContext(
-			testCompany.getCompanyId(), testGroup.getGroupId(),
-			_user.getUserId());
-
 		_commerceCurrency = CommerceCurrencyTestUtil.addCommerceCurrency(
 			testCompany.getCompanyId());
 
@@ -109,6 +105,10 @@ public class ShipmentResourceTest extends BaseShipmentResourceTestCase {
 
 		_commerceOrder = _commerceOrderLocalService.updateCommerceOrder(
 			_commerceOrder);
+
+		_serviceContext = ServiceContextTestUtil.getServiceContext(
+			testCompany.getCompanyId(), testGroup.getGroupId(),
+			_user.getUserId());
 	}
 
 	@Override

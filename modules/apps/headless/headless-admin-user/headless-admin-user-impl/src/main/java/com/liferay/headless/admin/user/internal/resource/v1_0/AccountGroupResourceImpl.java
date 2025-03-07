@@ -23,8 +23,8 @@ import com.liferay.headless.admin.user.internal.odata.entity.v1_0.AccountGroupEn
 import com.liferay.headless.admin.user.resource.v1_0.AccountGroupResource;
 import com.liferay.headless.common.spi.odata.entity.EntityFieldsUtil;
 import com.liferay.headless.common.spi.service.context.ServiceContextBuilder;
-import com.liferay.lazy.referencing.kernel.LazyReferencingThreadLocal;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
@@ -314,7 +314,7 @@ public class AccountGroupResourceImpl extends BaseAccountGroupResourceImpl {
 		}
 
 		AccountEntry accountEntry =
-			_accountEntryLocalService.addIncompleteAccountEntry(
+			_accountEntryLocalService.getOrAddIncompleteAccountEntry(
 				externalReferenceCode,
 				serviceBuilderAccountGroup.getCompanyId(),
 				contextUser.getUserId(), accountBrief.getName(), type);
@@ -468,7 +468,7 @@ public class AccountGroupResourceImpl extends BaseAccountGroupResourceImpl {
 			com.liferay.account.model.AccountGroup serviceBuilderAccountGroup)
 		throws Exception {
 
-		if (!LazyReferencingThreadLocal.isLazyReferencingEnabled()) {
+		if (!FeatureFlagManagerUtil.isEnabled("LPD-47858")) {
 			return serviceBuilderAccountGroup;
 		}
 

@@ -487,7 +487,11 @@ test.describe('Form Configuration', () => {
 				`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
 			);
 
-			await page.getByLabel('Lemon Weight', {exact: true}).fill('100');
+			const lemonWeightInput = page.getByRole('spinbutton', {
+				name: 'Lemon Weight',
+			});
+
+			await lemonWeightInput.fill('100');
 
 			await page.getByText('Submit', {exact: true}).click();
 
@@ -507,7 +511,7 @@ test.describe('Form Configuration', () => {
 				`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
 			);
 
-			await page.getByLabel('Lemon Weight', {exact: true}).fill('100');
+			await lemonWeightInput.fill('100');
 
 			await page.getByText('Submit', {exact: true}).click();
 
@@ -841,7 +845,7 @@ test.describe('Date Fragment', () => {
 
 			await expect(
 				dateInput.getByText('Expiration Date')
-			).not.toHaveClass('sr-only');
+			).not.toHaveClass(/sr-only/);
 
 			// Hide label
 
@@ -853,7 +857,7 @@ test.describe('Date Fragment', () => {
 			});
 
 			await expect(dateInput.getByText('Expiration Date')).toHaveClass(
-				'sr-only'
+				/sr-only/
 			);
 
 			// Show help text
@@ -4606,7 +4610,9 @@ test.describe('Numeric input field', () => {
 			`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
 		);
 
-		const lemonWeightInput = page.getByLabel('Lemon Weight', {exact: true});
+		const lemonWeightInput = page.getByRole('spinbutton', {
+			name: 'Lemon Weight',
+		});
 
 		await expect(lemonWeightInput).toHaveAttribute('type', 'number');
 		await expect(lemonWeightInput).toHaveAttribute('max');
@@ -4957,7 +4963,9 @@ test.describe('Submit button', () => {
 				`/web${pageManagementSite.friendlyUrlPath}${layout.friendlyUrlPath}`
 			);
 
-			await page.getByLabel('Lemon Weight', {exact: true}).fill('200');
+			await page
+				.getByRole('spinbutton', {name: 'Lemon Weight'})
+				.fill('200');
 
 			await page.getByText('Submit', {exact: true}).click();
 

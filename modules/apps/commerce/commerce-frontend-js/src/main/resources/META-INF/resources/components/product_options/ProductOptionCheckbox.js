@@ -4,7 +4,7 @@
  */
 
 import ClayForm, {ClayCheckbox} from '@clayui/form';
-import {useLiferayState} from '@liferay/frontend-js-state-web';
+import {useLiferayState} from '@liferay/frontend-js-state-web/react';
 import classnames from 'classnames';
 import React, {useEffect, useState} from 'react';
 

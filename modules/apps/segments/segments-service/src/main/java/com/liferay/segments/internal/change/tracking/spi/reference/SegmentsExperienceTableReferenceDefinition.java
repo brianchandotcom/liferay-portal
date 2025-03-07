@@ -67,18 +67,6 @@ public class SegmentsExperienceTableReferenceDefinition
 						LayoutTable.INSTANCE.plid)
 				)
 			)
-		).referenceInnerJoin(
-			fromStep -> fromStep.from(
-				LayoutTable.INSTANCE
-			).innerJoinON(
-				SegmentsExperienceTable.INSTANCE,
-				SegmentsExperienceTable.INSTANCE.groupId.eq(
-					LayoutTable.INSTANCE.groupId
-				).and(
-					SegmentsExperienceTable.INSTANCE.plid.eq(
-						LayoutTable.INSTANCE.classPK)
-				)
-			)
 		);
 	}
 

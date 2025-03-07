@@ -8,6 +8,7 @@ package com.liferay.layout.content.page.editor.web.internal.display.context;
 import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.frontend.token.definition.FrontendTokenDefinition;
 import com.liferay.frontend.token.definition.FrontendTokenDefinitionRegistry;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -44,7 +45,7 @@ public class ContentPageEditorDisplayContextTest {
 
 	@FeatureFlags("LPD-30204")
 	@Test
-	public void testGetStyleBooks() {
+	public void testGetStyleBooks() throws PortalException {
 		String themeId = RandomTestUtil.randomString();
 
 		FrontendTokenDefinition frontendTokenDefinition = Mockito.mock(

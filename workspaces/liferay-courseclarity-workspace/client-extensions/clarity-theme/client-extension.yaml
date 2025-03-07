@@ -11,8 +11,8 @@ clarity-global-js:
     url: global.*.js
 clarity-theme:
     clayURL: css/clay.css
-    mainURL: css/main.css
     frontendTokenDefinitionJSON: src/frontend-token-definition.json
+    mainURL: css/main.css
     name: Clarity Theme CSS
     type: themeCSS
 clarity-theme-favicon:

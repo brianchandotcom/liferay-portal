@@ -39,18 +39,6 @@ public class RelevantTestSuite {
 			portalAcceptancePullRequestJob);
 	}
 
-	public Boolean checkTestBatchPattern(
-		List<String> validTestBatchPatterns, String testBatchName) {
-
-		for (String validTestBatchPattern : validTestBatchPatterns) {
-			if (testBatchName.matches(validTestBatchPattern)) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
 	public List<TestBatch> getTestBatches(boolean validateAllRules) {
 		File baseTestPropertiesFile = new File(
 			_relevantRuleEngine.getBaseDir(), "test.properties");
@@ -106,7 +94,7 @@ public class RelevantTestSuite {
 				}
 
 				if (!validTestBatchPatterns.isEmpty() &&
-					checkTestBatchPattern(
+					isValidTestBatch(
 						validTestBatchPatterns, testBatch.getName())) {
 
 					testBatches.add(testBatch);
@@ -133,6 +121,18 @@ public class RelevantTestSuite {
 
 	public Set<JobProperty> getTestBatchNamesJobProperties() {
 		return _testBatchNamesJobProperties;
+	}
+
+	public Boolean isValidTestBatch(
+		List<String> validTestBatchPatterns, String testBatchName) {
+
+		for (String validTestBatchPattern : validTestBatchPatterns) {
+			if (testBatchName.matches(validTestBatchPattern)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	public void setModifiedFiles(List<File> modifiedFiles) {

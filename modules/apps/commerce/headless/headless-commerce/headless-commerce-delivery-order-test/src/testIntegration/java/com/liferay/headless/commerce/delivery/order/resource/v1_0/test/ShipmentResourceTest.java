@@ -67,18 +67,16 @@ public class ShipmentResourceTest extends BaseShipmentResourceTestCase {
 		_commerceCurrency = CommerceCurrencyTestUtil.addCommerceCurrency(
 			testCompany.getCompanyId());
 
+		_commerceCatalog = CommerceTestUtil.addCommerceCatalog(
+			testCompany.getCompanyId(), testGroup.getGroupId(),
+			_user.getUserId(), _commerceCurrency.getCode());
+
 		_commerceChannel = CommerceTestUtil.addCommerceChannel(
 			testGroup.getGroupId(), _commerceCurrency.getCode());
-
-		BigDecimal value = BigDecimal.valueOf(RandomTestUtil.nextDouble());
 
 		_commerceOrder = CommerceTestUtil.addB2CCommerceOrder(
 			_user.getUserId(), _commerceChannel.getGroupId(),
 			_commerceCurrency.getCommerceCurrencyId());
-
-		_commerceCatalog = CommerceTestUtil.addCommerceCatalog(
-			testCompany.getCompanyId(), testGroup.getGroupId(),
-			_user.getUserId(), _commerceCurrency.getCode());
 
 		CPDefinition cpDefinition = CPTestUtil.addCPDefinitionFromCatalog(
 			_commerceCatalog.getGroupId(), VirtualCPTypeConstants.NAME, true,
@@ -98,7 +96,7 @@ public class ShipmentResourceTest extends BaseShipmentResourceTestCase {
 			_commerceOrder.getCommerceOrderId());
 
 		_commerceOrder = CommerceTestUtil.addCommerceOrderShippingDetails(
-			_commerceOrder, value);
+			_commerceOrder, BigDecimal.valueOf(RandomTestUtil.nextDouble()));
 
 		_commerceOrder.setOrderStatus(
 			CommerceOrderConstants.ORDER_STATUS_PROCESSING);

@@ -73,7 +73,7 @@ public class RelevantTestSuite {
 			throw new RuntimeException(ioException);
 		}
 
-		List<String> validTestBatchPatterns = Arrays.asList(
+		List<String> validTestBatchRegexes = Arrays.asList(
 			testBatchNamesPropertyValue.split(","));
 
 		List<TestBatch> testBatches = new ArrayList<>();
@@ -93,9 +93,9 @@ public class RelevantTestSuite {
 					continue;
 				}
 
-				if (!validTestBatchPatterns.isEmpty() &&
+				if (!validTestBatchRegexes.isEmpty() &&
 					isValidTestBatch(
-						validTestBatchPatterns, testBatch.getName())) {
+						validTestBatchRegexes, testBatch.getName())) {
 
 					testBatches.add(testBatch);
 				}
@@ -124,10 +124,10 @@ public class RelevantTestSuite {
 	}
 
 	public Boolean isValidTestBatch(
-		List<String> validTestBatchPatterns, String testBatchName) {
+		List<String> validTestBatchRegexes, String testBatchName) {
 
-		for (String validTestBatchPattern : validTestBatchPatterns) {
-			if (testBatchName.matches(validTestBatchPattern)) {
+		for (String validTestBatchRegex : validTestBatchRegexes) {
+			if (testBatchName.matches(validTestBatchRegex)) {
 				return true;
 			}
 		}

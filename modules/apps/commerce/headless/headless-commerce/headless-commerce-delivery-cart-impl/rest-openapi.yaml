@@ -2405,6 +2405,11 @@ paths:
                   schema:
                       type: integer
                 - in: query
+                  name: search
+                  required: false
+                  schema:
+                      type: string
+                - in: query
                   name: skuId
                   required: false
                   schema:
@@ -3653,6 +3658,11 @@ paths:
                   required: false
                   schema:
                       type: integer
+                - in: query
+                  name: search
+                  required: false
+                  schema:
+                      type: string
                 - in: query
                   name: skuId
                   required: false

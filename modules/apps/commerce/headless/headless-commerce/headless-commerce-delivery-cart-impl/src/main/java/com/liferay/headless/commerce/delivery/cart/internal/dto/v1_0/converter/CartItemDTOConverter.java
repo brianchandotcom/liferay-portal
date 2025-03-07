@@ -32,6 +32,7 @@ import com.liferay.headless.commerce.delivery.cart.dto.v1_0.Price;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.Settings;
 import com.liferay.headless.commerce.delivery.cart.dto.v1_0.SkuUnitOfMeasure;
 import com.liferay.portal.kernel.language.Language;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.BigDecimalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.language.LanguageResources;
@@ -85,6 +86,19 @@ public class CartItemDTOConverter
 								cartItemDTOConverterContext.getAccountId(),
 								commerceOrderItem.getCompanyId(),
 								commerceOrderItem.getCPInstanceId()));
+				setCartItems(
+					() -> {
+						CartItem[] cartItems =
+							(CartItem[])
+								cartItemDTOConverterContext.getAttribute(
+									"cartItems");
+
+						if (ArrayUtil.isEmpty(cartItems)) {
+							return null;
+						}
+
+						return cartItems;
+					});
 				setCustomFields(
 					() -> {
 						ExpandoBridge expandoBridge =

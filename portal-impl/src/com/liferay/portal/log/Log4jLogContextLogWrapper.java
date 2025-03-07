@@ -34,164 +34,164 @@ public class Log4jLogContextLogWrapper extends LogWrapper {
 
 	@Override
 	public void debug(Object message) {
-		_populateThreadContext();
+		ThreadContext.putAll(_getContext());
 
 		super.debug(message);
 
-		_cleanThreadContext();
+		ThreadContext.removeAll(_getContext().keySet());
 	}
 
 	@Override
 	public void debug(Object message, Throwable throwable) {
-		_populateThreadContext();
+		ThreadContext.putAll(_getContext());
 
 		super.debug(message, throwable);
 
-		_cleanThreadContext();
+		ThreadContext.removeAll(_getContext().keySet());
 	}
 
 	@Override
 	public void debug(Throwable throwable) {
-		_populateThreadContext();
+		ThreadContext.putAll(_getContext());
 
 		super.debug(throwable);
 
-		_cleanThreadContext();
+		ThreadContext.removeAll(_getContext().keySet());
 	}
 
 	@Override
 	public void error(Object message) {
-		_populateThreadContext();
+		ThreadContext.putAll(_getContext());
 
 		super.error(message);
 
-		_cleanThreadContext();
+		ThreadContext.removeAll(_getContext().keySet());
 	}
 
 	@Override
 	public void error(Object message, Throwable throwable) {
-		_populateThreadContext();
+		ThreadContext.putAll(_getContext());
 
 		super.error(message, throwable);
 
-		_cleanThreadContext();
+		ThreadContext.removeAll(_getContext().keySet());
 	}
 
 	@Override
 	public void error(Throwable throwable) {
-		_populateThreadContext();
+		ThreadContext.putAll(_getContext());
 
 		super.error(throwable);
 
-		_cleanThreadContext();
+		ThreadContext.removeAll(_getContext().keySet());
 	}
 
 	@Override
 	public void fatal(Object message) {
-		_populateThreadContext();
+		ThreadContext.putAll(_getContext());
 
 		super.fatal(message);
 
-		_cleanThreadContext();
+		ThreadContext.removeAll(_getContext().keySet());
 	}
 
 	@Override
 	public void fatal(Object message, Throwable throwable) {
-		_populateThreadContext();
+		ThreadContext.putAll(_getContext());
 
 		super.fatal(message, throwable);
 
-		_cleanThreadContext();
+		ThreadContext.removeAll(_getContext().keySet());
 	}
 
 	@Override
 	public void fatal(Throwable throwable) {
-		_populateThreadContext();
+		ThreadContext.putAll(_getContext());
 
 		super.fatal(throwable);
 
-		_cleanThreadContext();
+		ThreadContext.removeAll(_getContext().keySet());
 	}
 
 	@Override
 	public void info(Object message) {
-		_populateThreadContext();
+		ThreadContext.putAll(_getContext());
 
 		super.info(message);
 
-		_cleanThreadContext();
+		ThreadContext.removeAll(_getContext().keySet());
 	}
 
 	@Override
 	public void info(Object message, Throwable throwable) {
-		_populateThreadContext();
+		ThreadContext.putAll(_getContext());
 
 		super.info(message, throwable);
 
-		_cleanThreadContext();
+		ThreadContext.removeAll(_getContext().keySet());
 	}
 
 	@Override
 	public void info(Throwable throwable) {
-		_populateThreadContext();
+		ThreadContext.putAll(_getContext());
 
 		super.info(throwable);
 
-		_cleanThreadContext();
+		ThreadContext.removeAll(_getContext().keySet());
 	}
 
 	@Override
 	public void trace(Object message) {
-		_populateThreadContext();
+		ThreadContext.putAll(_getContext());
 
 		super.trace(message);
 
-		_cleanThreadContext();
+		ThreadContext.removeAll(_getContext().keySet());
 	}
 
 	@Override
 	public void trace(Object message, Throwable throwable) {
-		_populateThreadContext();
+		ThreadContext.putAll(_getContext());
 
 		super.trace(message, throwable);
 
-		_cleanThreadContext();
+		ThreadContext.removeAll(_getContext().keySet());
 	}
 
 	@Override
 	public void trace(Throwable throwable) {
-		_populateThreadContext();
+		ThreadContext.putAll(_getContext());
 
 		super.trace(throwable);
 
-		_cleanThreadContext();
+		ThreadContext.removeAll(_getContext().keySet());
 	}
 
 	@Override
 	public void warn(Object message) {
-		_populateThreadContext();
+		ThreadContext.putAll(_getContext());
 
 		super.warn(message);
 
-		_cleanThreadContext();
+		ThreadContext.removeAll(_getContext().keySet());
 	}
 
 	@Override
 	public void warn(Object message, Throwable throwable) {
-		_populateThreadContext();
+		ThreadContext.putAll(_getContext());
 
 		super.warn(message, throwable);
 
-		_cleanThreadContext();
+		ThreadContext.removeAll(_getContext().keySet());
 	}
 
 	@Override
 	public void warn(Throwable throwable) {
-		_populateThreadContext();
+		ThreadContext.putAll(_getContext());
 
 		super.warn(throwable);
 
-		_cleanThreadContext();
+		ThreadContext.removeAll(_getContext().keySet());
 	}
 
 	private static ServiceTrackerList<LogContext> _createServiceTrackerList() {
@@ -202,10 +202,6 @@ public class Log4jLogContextLogWrapper extends LogWrapper {
 		catch (IllegalStateException illegalStateException) {
 			return null;
 		}
-	}
-
-	private void _cleanThreadContext() {
-		ThreadContext.removeAll(_getContext().keySet());
 	}
 
 	private Map<String, String> _getContext() {
@@ -238,10 +234,6 @@ public class Log4jLogContextLogWrapper extends LogWrapper {
 		}
 
 		return context;
-	}
-
-	private void _populateThreadContext() {
-		ThreadContext.putAll(_getContext());
 	}
 
 	private static final DCLSingleton<ServiceTrackerList<LogContext>>

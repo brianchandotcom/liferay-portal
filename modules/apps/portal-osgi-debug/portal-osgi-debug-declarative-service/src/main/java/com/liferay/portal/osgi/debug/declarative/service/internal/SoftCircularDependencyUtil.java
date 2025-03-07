@@ -142,6 +142,10 @@ public class SoftCircularDependencyUtil {
 
 						Bundle bundle = serviceReference.getBundle();
 
+						if (bundle == null) {
+							continue;
+						}
+
 						Class<?> clazz = service.getClass();
 
 						bundleContext.ungetService(serviceReference);

@@ -85,12 +85,17 @@ definition {
 	}
 
 	@summary = "Default summary"
-	macro gotoCheckoutViaMiniCart() {
+	macro gotoCheckoutViaMiniCart(asGuest = null) {
 		ScrollBy(value1 = "0, 1000");
 
 		CommerceNavigator.gotoMiniCart();
 
-		Button.click(button = "Submit");
+		if (${asGuest} == "true") {
+			Button.click(button = "Proceed as Guest");
+		}
+		else {
+			Button.click(button = "Submit");
+		}
 
 		WaitForPageLoad();
 	}

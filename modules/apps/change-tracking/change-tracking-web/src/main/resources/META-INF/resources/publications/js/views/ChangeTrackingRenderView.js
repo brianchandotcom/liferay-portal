@@ -830,7 +830,7 @@ export default function ChangeTrackingRenderView({
 						</div>
 					</>
 				),
-				onClick: () => navigate(moveChangesURL),
+				onClick: () => navigateUtil(moveChangesURL),
 				symbolLeft: 'move-folder',
 			});
 		}

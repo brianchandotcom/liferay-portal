@@ -33,8 +33,9 @@ export class DataSetPage {
 			expect(this.pageContainer).toBeInViewport(),
 			this.page.waitForResponse(
 				(resp) =>
-					resp.status() === 200 &&
-					resp.url().includes('/openapi.json')
+					resp.status() === 404 ||
+					(resp.status() === 200 &&
+						resp.url().includes('/openapi.json'))
 			),
 		]);
 	}

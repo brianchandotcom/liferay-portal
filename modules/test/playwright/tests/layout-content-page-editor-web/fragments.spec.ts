@@ -168,7 +168,7 @@ test.describe('Content Display Fragment', () => {
 		});
 
 		await expect(
-			page.locator('#page-editor').getByText('Hummingbird')
+			page.locator('#page-editor').getByText('Hummingbird', {exact: true})
 		).toBeVisible();
 
 		await pageEditorPage.publishPage();

@@ -23,6 +23,7 @@ import com.liferay.object.service.ObjectFolderLocalService;
 import com.liferay.object.service.ObjectRelationshipService;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.IndexStatusManagerThreadLocal;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -324,16 +325,26 @@ public class ObjectRelationshipResourceImpl
 			_objectFolderLocalService.getOrAddDefaultObjectFolder(
 				contextCompany.getCompanyId());
 
-		return _objectDefinitionLocalService.addObjectDefinition(
-			objectRelationship.getObjectDefinitionExternalReferenceCode2(),
-			contextUser.getUserId(), defaultObjectFolder.getObjectFolderId(),
-			GetterUtil.get(
-				objectRelationship.getObjectDefinitionModifiable2(), true),
-			GetterUtil.get(
-				objectRelationship.getObjectDefinitionScope2(),
-				ObjectDefinitionConstants.SCOPE_COMPANY),
-			GetterUtil.get(
-				objectRelationship.getObjectDefinitionSystem2(), false));
+		boolean indexReadOnly = IndexStatusManagerThreadLocal.isIndexReadOnly();
+
+		IndexStatusManagerThreadLocal.setIndexReadOnly(true);
+
+		try {
+			return _objectDefinitionLocalService.addObjectDefinition(
+				objectRelationship.getObjectDefinitionExternalReferenceCode2(),
+				contextUser.getUserId(),
+				defaultObjectFolder.getObjectFolderId(),
+				GetterUtil.get(
+					objectRelationship.getObjectDefinitionModifiable2(), true),
+				GetterUtil.get(
+					objectRelationship.getObjectDefinitionScope2(),
+					ObjectDefinitionConstants.SCOPE_COMPANY),
+				GetterUtil.get(
+					objectRelationship.getObjectDefinitionSystem2(), false));
+		}
+		finally {
+			IndexStatusManagerThreadLocal.setIndexReadOnly(indexReadOnly);
+		}
 	}
 
 	private ObjectRelationship _toObjectRelationship(

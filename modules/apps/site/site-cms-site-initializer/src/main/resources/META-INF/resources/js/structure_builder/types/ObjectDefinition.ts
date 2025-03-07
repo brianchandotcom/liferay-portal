@@ -17,6 +17,7 @@ export type ObjectField = {
 	name: string;
 	objectFieldSettings?: {name: string; value: string | number}[];
 	required: boolean;
+	system?: boolean;
 };
 
 export type ObjectDefinition = {
@@ -29,4 +30,7 @@ export type ObjectDefinition = {
 	objectFolderExternalReferenceCode?: string;
 	pluralLabel: Liferay.Language.LocalizedValue<string>;
 	scope: 'company' | 'site';
+	status?: {
+		label: string;
+	};
 };

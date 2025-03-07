@@ -81,7 +81,8 @@ public interface CartItemResource {
 		throws Exception;
 
 	public Page<CartItem> getCartByExternalReferenceCodeItemsPage(
-			String externalReferenceCode, Long skuId, Pagination pagination)
+			String externalReferenceCode, String search, Long skuId,
+			Pagination pagination)
 		throws Exception;
 
 	public CartItem postCartByExternalReferenceCodeItem(
@@ -89,7 +90,7 @@ public interface CartItemResource {
 		throws Exception;
 
 	public Page<CartItem> getCartItemsPage(
-			Long cartId, Long skuId, Pagination pagination)
+			Long cartId, String search, Long skuId, Pagination pagination)
 		throws Exception;
 
 	public CartItem postCartItem(Long cartId, CartItem cartItem)

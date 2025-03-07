@@ -143,13 +143,33 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 	}
 
 	public int getAvailableSlavesCount() {
-		return getIdleJenkinsSlavesCount() - _queueCount -
-			_getRecentBatchSizesTotal();
+		List<AWSCloud> awsClouds = getAWSClouds();
+
+		int totalQueueCount = _queueCount + _getRecentBatchSizesTotal();
+
+		if (!awsClouds.isEmpty()) {
+			AWSCloud awsCloud = awsClouds.get(0);
+
+			return awsCloud.getMaxSize() - getBusyJenkinsSlavesCount() -
+				totalQueueCount;
+		}
+
+		return getIdleJenkinsSlavesCount() - totalQueueCount;
 	}
 
 	public float getAverageQueueLength() {
-		return ((float)_queueCount + _getRecentBatchSizesTotal()) /
-			getOnlineJenkinsSlavesCount();
+		List<AWSCloud> awsClouds = getAWSClouds();
+
+		int totalQueueCount = _queueCount + _getRecentBatchSizesTotal();
+
+		if (!awsClouds.isEmpty()) {
+			AWSCloud awsCloud = awsClouds.get(0);
+
+			return ((float)totalQueueCount + getBusyJenkinsSlavesCount()) /
+				awsCloud.getMaxSize();
+		}
+
+		return (float)totalQueueCount / getOnlineJenkinsSlavesCount();
 	}
 
 	public List<AWSCloud> getAWSClouds() {
@@ -235,6 +255,18 @@ public class JenkinsMaster implements JenkinsNode<JenkinsMaster> {
 
 	public List<String> getBuildURLs() {
 		return new ArrayList<>(_buildURLs);
+	}
+
+	public int getBusyJenkinsSlavesCount() {
+		int busySlavesCount = 0;
+
+		for (JenkinsSlave jenkinsSlave : _jenkinsSlavesMap.values()) {
+			if (!jenkinsSlave.isIdle()) {
+				busySlavesCount++;
+			}
+		}
+
+		return busySlavesCount;
 	}
 
 	public List<DefaultBuild> getDefaultBuilds() {

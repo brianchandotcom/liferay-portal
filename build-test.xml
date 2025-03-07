@@ -8876,20 +8876,18 @@ war.path=${app.server.portal.dir}/</echo>
 				<![CDATA[
 					#!/bin/bash
 
-					# Input files
 					FILE_FRESH="${selenium.output.dir.name}/fresh-@{fresh.db.schema}.sql"
 					FILE_UPGRADED="${selenium.output.dir.name}/upgraded-@{upgraded.db.schema}.sql"
 
-					# Extract table names from CREATE TABLE statements
+					# Extract table names
 					grep -i "CREATE TABLE" "$FILE_FRESH" | awk '{print $3}' | tr -d '`' > ${selenium.output.dir.name}/tables_fresh.txt
 					grep -i "CREATE TABLE" "$FILE_UPGRADED" | awk '{print $3}' | tr -d '`' > ${selenium.output.dir.name}/tables_upgraded.txt
 
-					# Find tables that are in upgraded dump but not in fresh dump
+					# Find tables only present in the upgraded file
 					grep -Fxvf ${selenium.output.dir.name}/tables_fresh.txt ${selenium.output.dir.name}/tables_upgraded.txt > ${selenium.output.dir.name}/tables_to_remove.txt
 
-					# Remove SQL related code from tables that are only present in upgraded dump
+					# Remove SQL table statements only present in the upgraded file
 					while read -r table; do
-						# Remove the entire CREATE TABLE block for the table
 						sed -i "/^CREATE TABLE \`$table\`/,/ENDCREATE/d" "$FILE_UPGRADED"
 						sed -i "/^CREATE TABLE public.$table/,/^);/d" "$FILE_UPGRADED"
 						sed -i "/^CREATE INDEX.*$TABLE/d" "$FILE_UPGRADED"

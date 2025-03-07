@@ -39,10 +39,6 @@ public class StructuresSectionTableFDSView extends BaseTableFDSView {
 				true
 			)
 		).add(
-			"system", "system",
-			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
-				"boolean")
-		).add(
 			"objectFolderExternalReferenceCode", "type",
 			fdsTableSchemaField -> fdsTableSchemaField.setContentRenderer(
 				"typeTableCellRenderer")

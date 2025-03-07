@@ -88,6 +88,9 @@ public class BatchEnginePortletDataHandler extends BasePortletDataHandler {
 	}
 
 	@Override
+	public boolean isEmptyControlsAllowed() { return true; }
+	
+	@Override
 	public boolean isModelCountSupported() {
 		return false;
 	}

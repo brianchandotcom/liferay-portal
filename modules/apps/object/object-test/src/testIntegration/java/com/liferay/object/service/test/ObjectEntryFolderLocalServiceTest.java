@@ -349,20 +349,14 @@ public class ObjectEntryFolderLocalServiceTest {
 	private ObjectEntry _addObjectEntry(long objectEntryFolderId)
 		throws Exception {
 
-		ObjectEntry objectEntry = _objectEntryLocalService.addObjectEntry(
+		return _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), _group.getGroupId(),
-			_objectDefinition.getObjectDefinitionId(),
-			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
+			_objectDefinition.getObjectDefinitionId(), objectEntryFolderId,
 			null,
 			HashMapBuilder.<String, Serializable>put(
 				"fieldName", StringUtil.randomString()
 			).build(),
 			ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
-
-		objectEntry.setObjectEntryFolderId(objectEntryFolderId);
-		objectEntry.setTreePath(objectEntry.buildTreePath());
-
-		return _objectEntryLocalService.updateObjectEntry(objectEntry);
 	}
 
 	private ObjectEntryFolder _addObjectEntryFolder(

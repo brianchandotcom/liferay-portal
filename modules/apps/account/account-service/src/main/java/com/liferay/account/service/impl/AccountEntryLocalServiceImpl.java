@@ -10,6 +10,7 @@ import com.liferay.account.exception.AccountEntryDomainsException;
 import com.liferay.account.exception.AccountEntryEmailAddressException;
 import com.liferay.account.exception.AccountEntryNameException;
 import com.liferay.account.exception.AccountEntryTypeException;
+import com.liferay.account.exception.NoSuchEntryException;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountEntryOrganizationRelTable;
 import com.liferay.account.model.AccountEntryTable;
@@ -250,39 +251,6 @@ public class AccountEntryLocalServiceImpl
 	}
 
 	@Override
-	public AccountEntry addIncompleteAccountEntry(
-			String externalReferenceCode, long companyId, long userId,
-			String name, String type)
-		throws Exception {
-
-		if (!LazyReferencingThreadLocal.isLazyReferencingEnabled()) {
-			throw new UnsupportedOperationException();
-		}
-
-		AccountEntry accountEntry =
-			accountEntryLocalService.fetchAccountEntryByExternalReferenceCode(
-				externalReferenceCode, companyId);
-
-		if (accountEntry != null) {
-			return accountEntry;
-		}
-
-		try (SafeCloseable safeCloseable =
-				LazyReferencingThreadLocal.
-					enableIncompleteModelWithSelfCloseable()) {
-
-			accountEntry = accountEntryLocalService.addAccountEntry(
-				userId, AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT,
-				GetterUtil.get(name, externalReferenceCode), StringPool.BLANK,
-				null, StringPool.BLANK, null, StringPool.BLANK, type,
-				WorkflowConstants.STATUS_INCOMPLETE, null);
-
-			return accountEntryLocalService.updateExternalReferenceCode(
-				accountEntry.getAccountEntryId(), externalReferenceCode);
-		}
-	}
-
-	@Override
 	public AccountEntry addOrUpdateAccountEntry(
 			String externalReferenceCode, long userId,
 			long parentAccountEntryId, String name, String description,
@@ -514,6 +482,43 @@ public class AccountEntryLocalServiceImpl
 		accountEntryImpl.setStatus(WorkflowConstants.STATUS_APPROVED);
 
 		return accountEntryImpl;
+	}
+
+	@Override
+	public AccountEntry getOrAddIncompleteAccountEntry(
+			String externalReferenceCode, long companyId, long userId,
+			String name, String type)
+		throws Exception {
+
+		AccountEntry accountEntry =
+			accountEntryLocalService.fetchAccountEntryByExternalReferenceCode(
+				externalReferenceCode, companyId);
+
+		if (accountEntry != null) {
+			return accountEntry;
+		}
+
+		if (!LazyReferencingThreadLocal.isLazyReferencingEnabled()) {
+			throw new NoSuchEntryException(
+				StringBundler.concat(
+					"Unable to find account entry with external reference ",
+					"code ", externalReferenceCode, " and company ",
+					companyId));
+		}
+
+		try (SafeCloseable safeCloseable =
+				LazyReferencingThreadLocal.
+					enableIncompleteModelWithSelfCloseable()) {
+
+			accountEntry = accountEntryLocalService.addAccountEntry(
+				userId, AccountConstants.PARENT_ACCOUNT_ENTRY_ID_DEFAULT,
+				GetterUtil.get(name, externalReferenceCode), StringPool.BLANK,
+				null, StringPool.BLANK, null, StringPool.BLANK, type,
+				WorkflowConstants.STATUS_INCOMPLETE, null);
+
+			return accountEntryLocalService.updateExternalReferenceCode(
+				accountEntry.getAccountEntryId(), externalReferenceCode);
+		}
 	}
 
 	@Override

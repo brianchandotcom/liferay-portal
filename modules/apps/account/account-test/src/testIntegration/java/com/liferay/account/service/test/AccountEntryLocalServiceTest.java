@@ -9,6 +9,7 @@ import com.liferay.account.configuration.AccountEntryEmailDomainsConfiguration;
 import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.exception.AccountEntryDomainsException;
 import com.liferay.account.exception.AccountEntryNameException;
+import com.liferay.account.exception.NoSuchEntryException;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.model.AccountGroup;
 import com.liferay.account.retriever.AccountUserRetriever;
@@ -453,59 +454,6 @@ public class AccountEntryLocalServiceTest {
 	}
 
 	@Test
-	public void testAddIncompleteAccountEntry() throws Exception {
-		try (SafeCloseable safeCloseable =
-				LazyReferencingThreadLocal.
-					enableLazyReferencingWithSelfCloseable()) {
-
-			AccountEntry accountEntry =
-				_accountEntryLocalService.addIncompleteAccountEntry(
-					RandomTestUtil.randomString(),
-					TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-					RandomTestUtil.randomString(),
-					AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS);
-
-			_assertStatus(
-				accountEntry, WorkflowConstants.STATUS_INCOMPLETE,
-				TestPropsValues.getUser());
-		}
-	}
-
-	@Test(expected = UnsupportedOperationException.class)
-	public void testAddIncompleteAccountEntryWithoutLazyReferencing()
-		throws Exception {
-
-		_accountEntryLocalService.addIncompleteAccountEntry(
-			RandomTestUtil.randomString(), TestPropsValues.getCompanyId(),
-			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
-			AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS);
-	}
-
-	@Test
-	public void testAddIncompleteAccountEntryWithWorkflowEnabled()
-		throws Exception {
-
-		try (SafeCloseable safeCloseable =
-				LazyReferencingThreadLocal.
-					enableLazyReferencingWithSelfCloseable()) {
-
-			_enableWorkflow();
-
-			AccountEntry accountEntry =
-				_accountEntryLocalService.addIncompleteAccountEntry(
-					RandomTestUtil.randomString(),
-					TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
-					RandomTestUtil.randomString(),
-					AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS);
-
-			_assertStatus(
-				accountEntry, WorkflowConstants.STATUS_INCOMPLETE,
-				TestPropsValues.getUser());
-			Assert.assertFalse(_hasWorkflowInstance(accountEntry));
-		}
-	}
-
-	@Test
 	public void testDeactivateAccountEntries() throws Exception {
 		List<AccountEntry> accountEntries =
 			AccountEntryTestUtil.addAccountEntries(2);
@@ -633,6 +581,59 @@ public class AccountEntryLocalServiceTest {
 		Assert.assertNull(
 			_accountEntryLocalService.fetchAccountEntry(
 				AccountConstants.ACCOUNT_ENTRY_ID_GUEST));
+	}
+
+	@Test
+	public void testGetOrAddIncompleteAccountEntry() throws Exception {
+		try (SafeCloseable safeCloseable =
+				LazyReferencingThreadLocal.
+					enableLazyReferencingWithSelfCloseable()) {
+
+			AccountEntry accountEntry =
+				_accountEntryLocalService.getOrAddIncompleteAccountEntry(
+					RandomTestUtil.randomString(),
+					TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+					RandomTestUtil.randomString(),
+					AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS);
+
+			_assertStatus(
+				accountEntry, WorkflowConstants.STATUS_INCOMPLETE,
+				TestPropsValues.getUser());
+		}
+	}
+
+	@Test(expected = NoSuchEntryException.class)
+	public void testGetOrAddIncompleteAccountEntryWithoutLazyReferencing()
+		throws Exception {
+
+		_accountEntryLocalService.getOrAddIncompleteAccountEntry(
+			RandomTestUtil.randomString(), TestPropsValues.getCompanyId(),
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+			AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS);
+	}
+
+	@Test
+	public void testGetOrAddIncompleteAccountEntryWithWorkflowEnabled()
+		throws Exception {
+
+		try (SafeCloseable safeCloseable =
+				LazyReferencingThreadLocal.
+					enableLazyReferencingWithSelfCloseable()) {
+
+			_enableWorkflow();
+
+			AccountEntry accountEntry =
+				_accountEntryLocalService.getOrAddIncompleteAccountEntry(
+					RandomTestUtil.randomString(),
+					TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+					RandomTestUtil.randomString(),
+					AccountConstants.ACCOUNT_ENTRY_TYPE_BUSINESS);
+
+			_assertStatus(
+				accountEntry, WorkflowConstants.STATUS_INCOMPLETE,
+				TestPropsValues.getUser());
+			Assert.assertFalse(_hasWorkflowInstance(accountEntry));
+		}
 	}
 
 	@Test
@@ -1206,7 +1207,7 @@ public class AccountEntryLocalServiceTest {
 					enableLazyReferencingWithSelfCloseable()) {
 
 			AccountEntry accountEntry =
-				_accountEntryLocalService.addIncompleteAccountEntry(
+				_accountEntryLocalService.getOrAddIncompleteAccountEntry(
 					RandomTestUtil.randomString(),
 					TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
 					RandomTestUtil.randomString(),
@@ -1240,7 +1241,7 @@ public class AccountEntryLocalServiceTest {
 			_enableWorkflow();
 
 			AccountEntry accountEntry =
-				_accountEntryLocalService.addIncompleteAccountEntry(
+				_accountEntryLocalService.getOrAddIncompleteAccountEntry(
 					RandomTestUtil.randomString(),
 					TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
 					RandomTestUtil.randomString(),

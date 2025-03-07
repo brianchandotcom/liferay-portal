@@ -38,7 +38,7 @@
 
 					defaultImageURL = cpContentHelper.getDefaultImageFileURL(accountEntryId, curCPCatalogEntry.getCPDefinitionId())
 					productDetail = restClient.get("/headless-commerce-delivery-catalog/v1.0/channels/${channelId}/products/${productId}?accountId=${accountEntryId}&nestedFields=productSpecifications,categories")
-					
+
 					friendlyURL = cpContentHelper.getFriendlyURL(curCPCatalogEntry, themeDisplay)
 					productCategories = productDetail.categories
 					productName = curCPCatalogEntry.getName()
@@ -54,15 +54,15 @@
 
 							<#if productCategories?has_content>
 								<#assign categoryCount = 0 />
-								
+
 								<#list productCategories as category>
-									<#if categoryCount gt 0 >
+									<#if categoryCount gt 0>
 										|
 									</#if>
 
 									<span class="product-category mb-1">${category.name}</span>
-									
-									<#assign categoryCount++ /> 
+
+									<#assign categoryCount++ />
 								</#list>
 							</#if>
 

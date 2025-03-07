@@ -286,6 +286,8 @@ public interface PortletDataHandler {
 
 	public boolean isDisplayPortlet();
 
+	public boolean isEmptyControlsAllowed();
+
 	public default boolean isEnabled(long companyId) {
 		return true;
 	}

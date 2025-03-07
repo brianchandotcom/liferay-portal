@@ -460,6 +460,8 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 		return false;
 	}
 
+	public boolean isEmptyControlsAllowed() { return false; }
+
 	@Override
 	public boolean isModelCountSupported() {
 		return true;

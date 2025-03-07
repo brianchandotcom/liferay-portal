@@ -76,6 +76,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.portlet.PortletPreferences;
 
@@ -372,7 +373,7 @@ public class LayoutModelDocumentContributorTest {
 
 		String portletId = _addJournalContentPortletToDraftLayout();
 
-		HashMap<Locale, String> contentMap = HashMapBuilder.put(
+		Map<Locale, String> contentMap = HashMapBuilder.put(
 			LocaleUtil.SPAIN, RandomTestUtil.randomString()
 		).put(
 			LocaleUtil.US, RandomTestUtil.randomString()

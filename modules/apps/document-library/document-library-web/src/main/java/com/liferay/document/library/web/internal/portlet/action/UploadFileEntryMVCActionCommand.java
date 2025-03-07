@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.role.RoleConstants;
@@ -119,11 +120,12 @@ public class UploadFileEntryMVCActionCommand extends BaseMVCActionCommand {
 
 			long folderId = ParamUtil.getLong(uploadPortletRequest, "folderId");
 
+			Group group = _getScopeGroup(themeDisplay);
+
 			ModelResourcePermissionUtil.check(
 				_folderModelResourcePermission,
-				themeDisplay.getPermissionChecker(),
-				themeDisplay.getScopeGroupId(), folderId,
-				ActionKeys.ADD_DOCUMENT);
+				themeDisplay.getPermissionChecker(), group.getGroupId(),
+				folderId, ActionKeys.ADD_DOCUMENT);
 
 			String fileName = uploadPortletRequest.getFileName(
 				"imageSelectorFileName");
@@ -150,18 +152,20 @@ public class UploadFileEntryMVCActionCommand extends BaseMVCActionCommand {
 				ThemeDisplay themeDisplay)
 			throws PortalException {
 
+			Group group = _getScopeGroup(themeDisplay);
+
 			_dlValidator.validateFileSize(
-				themeDisplay.getScopeGroupId(), fileName,
+				group.getGroupId(), fileName,
 				uploadPortletRequest.getContentType(parameterName),
 				uploadPortletRequest.getSize(parameterName));
 
 			String uniqueFileName = _uniqueFileNameProvider.provide(
 				fileName,
 				curFileName -> _exists(
-					themeDisplay.getScopeGroupId(), folderId, curFileName));
+					group.getGroupId(), folderId, curFileName));
 
 			return _dlAppService.addFileEntry(
-				null, themeDisplay.getScopeGroupId(), folderId, uniqueFileName,
+				null, group.getGroupId(), folderId, uniqueFileName,
 				uploadPortletRequest.getContentType(parameterName),
 				uniqueFileName, uniqueFileName,
 				_getDescription(uploadPortletRequest), StringPool.BLANK,
@@ -244,6 +248,20 @@ public class UploadFileEntryMVCActionCommand extends BaseMVCActionCommand {
 			return fileEntry.getDescription();
 		}
 
+		private Group _getScopeGroup(ThemeDisplay themeDisplay)
+			throws PortalException {
+
+			Group group = themeDisplay.getScopeGroup();
+
+			if (group.isControlPanel()) {
+				Company company = themeDisplay.getCompany();
+
+				return company.getGroup();
+			}
+
+			return group;
+		}
+
 		private ServiceContext _getServiceContext(
 				UploadPortletRequest uploadPortletRequest)
 			throws PortalException {
@@ -281,7 +299,7 @@ public class UploadFileEntryMVCActionCommand extends BaseMVCActionCommand {
 					WebKeys.THEME_DISPLAY);
 
 			Layout layout = themeDisplay.getLayout();
-			Group group = themeDisplay.getScopeGroup();
+			Group group = _getScopeGroup(themeDisplay);
 
 			if (layout.isPublicLayout() ||
 				(layout.isTypeControlPanel() && !group.hasPrivateLayouts())) {

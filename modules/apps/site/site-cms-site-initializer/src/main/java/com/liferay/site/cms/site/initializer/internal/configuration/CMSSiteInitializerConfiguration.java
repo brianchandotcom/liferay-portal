@@ -21,12 +21,6 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface CMSSiteInitializerConfiguration {
 
 	@Meta.AD(
-		deflt = "com.liferay.asset.kernel.model.AssetVocabulary",
-		name = "categorization-class-names", required = false
-	)
-	public String[] categorizationClassNames();
-
-	@Meta.AD(
 		deflt = "L_CMS_CONTENT_STRUCTURES",
 		name = "contents-object-definition-folder-external-reference-codes",
 		required = false

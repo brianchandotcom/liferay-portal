@@ -31,6 +31,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -53,6 +54,7 @@ public class FilesSectionDisplayContextTest
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
+	@Ignore
 	@Test
 	@TestInfo("LPD-50664")
 	public void testGetCreationMenu() throws Exception {

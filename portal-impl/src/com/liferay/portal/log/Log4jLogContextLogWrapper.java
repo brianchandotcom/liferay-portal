@@ -252,9 +252,12 @@ public class Log4jLogContextLogWrapper extends LogWrapper {
 		}
 
 		for (LogContext logContext : serviceTrackerList) {
-			Map<String, String> logContextContext = logContext.getContext(_name);
+			Map<String, String> logContextContext = logContext.getContext(
+				_name);
 
-			for (Map.Entry<String, String> entry : logContextContext.entrySet()) {
+			for (Map.Entry<String, String> entry :
+					logContextContext.entrySet()) {
+
 				String key = entry.getKey();
 
 				String logContextName = logContext.getName();

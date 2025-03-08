@@ -118,14 +118,20 @@ public class BuildDatabaseUtil {
 			return;
 		}
 
-		String distNodes = System.getenv("DIST_NODES");
-		String distPath = System.getenv("DIST_PATH");
+		if (JenkinsResultsParserUtil.isCloudCINode()) {
+			_downloadBuildDatabaseFileFromS3Bucket(
+				buildDatabaseFile, System.getenv("S3_BUCKET_DIST_PATH"));
+		}
+		else {
+			String distNodes = System.getenv("DIST_NODES");
+			String distPath = System.getenv("DIST_PATH");
 
-		if (!JenkinsResultsParserUtil.isNullOrEmpty(distNodes) &&
-			!JenkinsResultsParserUtil.isNullOrEmpty(distPath)) {
+			if (!JenkinsResultsParserUtil.isNullOrEmpty(distNodes) &&
+				!JenkinsResultsParserUtil.isNullOrEmpty(distPath)) {
 
-			_downloadBuildDatabaseFileFromDistNodes(
-				buildDatabaseFile, distNodes, distPath);
+				_downloadBuildDatabaseFileFromDistNodes(
+					buildDatabaseFile, distNodes, distPath);
+			}
 		}
 
 		if (buildDatabaseFile.exists() || (build == null)) {
@@ -317,6 +323,49 @@ public class BuildDatabaseUtil {
 
 				JenkinsResultsParserUtil.sleep(3000);
 			}
+		}
+	}
+
+	private static void _downloadBuildDatabaseFileFromS3Bucket(
+		File buildDatabaseFile, String path) {
+
+		if (buildDatabaseFile.exists()) {
+			return;
+		}
+
+		File parentDir = buildDatabaseFile.getParentFile();
+
+		parentDir.mkdirs();
+
+		try {
+			CloudBucketUtil.copyS3File(
+				buildDatabaseFile.getCanonicalPath(),
+				path + "/" + BuildDatabase.FILE_NAME_BUILD_DATABASE);
+
+			if (!_isValidBuildDatabaseFile(buildDatabaseFile)) {
+				JenkinsResultsParserUtil.delete(buildDatabaseFile);
+
+				throw new RuntimeException(
+					JenkinsResultsParserUtil.combine(
+						"Invalid ",
+						JenkinsResultsParserUtil.getCanonicalPath(
+							buildDatabaseFile),
+						" from ", path));
+			}
+
+			System.out.println(
+				JenkinsResultsParserUtil.combine(
+					"Downloaded ",
+					JenkinsResultsParserUtil.getCanonicalPath(
+						buildDatabaseFile),
+					" from ", path));
+		}
+		catch (IOException | RuntimeException exception) {
+			throw new RuntimeException(
+				JenkinsResultsParserUtil.combine(
+					"Unable to get ", BuildDatabase.FILE_NAME_BUILD_DATABASE,
+					" file from ", path),
+				exception);
 		}
 	}
 

@@ -3705,6 +3705,23 @@ public class JenkinsResultsParserUtil {
 		return _ciNode;
 	}
 
+	public static boolean isCloudCINode() {
+		if (!isCINode()) {
+			return false;
+		}
+
+		String masterNetworkName = System.getenv("MASTER_NETWORK_NAME");
+
+		if (!isNullOrEmpty(masterNetworkName) &&
+			(masterNetworkName.equals("aws-network") ||
+			 masterNetworkName.equals("gcp-network"))) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	public static boolean isDouble(String string) {
 		try {
 			Double.parseDouble(string);

@@ -39,6 +39,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
 /**
  * @author Eudaldo Alonso
  */
+@FeatureFlags("LPD-17564")
 @RunWith(Arquillian.class)
 @Sync
 public class AllSectionDisplayContextTest
@@ -51,7 +52,6 @@ public class AllSectionDisplayContextTest
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerMethodTestRule.INSTANCE);
 
-	@FeatureFlags("LPD-17564")
 	@Test
 	@TestInfo("LPD-50664")
 	public void testGetCreationMenu() throws Exception {

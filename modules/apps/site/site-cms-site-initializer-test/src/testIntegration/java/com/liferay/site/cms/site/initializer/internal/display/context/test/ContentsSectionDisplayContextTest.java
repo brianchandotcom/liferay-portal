@@ -44,6 +44,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
 /**
  * @author Mikel Lorza
  */
+@FeatureFlags("LPD-17564")
 @RunWith(Arquillian.class)
 @Sync
 public class ContentsSectionDisplayContextTest
@@ -73,7 +74,6 @@ public class ContentsSectionDisplayContextTest
 		Assert.assertTrue(apiURL.contains(sb.toString()));
 	}
 
-	@FeatureFlags("LPD-17564")
 	@Test
 	@TestInfo("LPD-50664")
 	public void testGetCreationMenu() throws Exception {

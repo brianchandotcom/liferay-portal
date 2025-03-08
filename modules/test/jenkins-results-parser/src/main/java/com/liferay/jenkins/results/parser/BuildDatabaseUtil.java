@@ -119,8 +119,12 @@ public class BuildDatabaseUtil {
 		}
 
 		if (JenkinsResultsParserUtil.isCloudCINode()) {
-			_downloadBuildDatabaseFileFromS3Bucket(
-				buildDatabaseFile, System.getenv("S3_BUCKET_DIST_PATH"));
+			String s3BucketDistPath = System.getenv("S3_BUCKET_DIST_PATH");
+
+			if (!JenkinsResultsParserUtil.isNullOrEmpty(s3BucketDistPath)) {
+				_downloadBuildDatabaseFileFromS3Bucket(
+					buildDatabaseFile, System.getenv("S3_BUCKET_DIST_PATH"));
+			}
 		}
 		else {
 			String distNodes = System.getenv("DIST_NODES");

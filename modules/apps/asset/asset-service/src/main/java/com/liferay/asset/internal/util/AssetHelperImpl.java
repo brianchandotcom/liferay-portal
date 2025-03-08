@@ -730,6 +730,9 @@ public class AssetHelperImpl implements AssetHelper {
 							BooleanClauseOccur.SHOULD.getName())));
 			}
 		}
+
+		searchContext.setEnd(end);
+		searchContext.setStart(start);
 	}
 
 	private void _prepareSearchContext(

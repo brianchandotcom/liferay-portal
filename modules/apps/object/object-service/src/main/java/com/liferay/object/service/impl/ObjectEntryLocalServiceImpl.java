@@ -2175,8 +2175,7 @@ public class ObjectEntryLocalServiceImpl
 		}
 
 		ObjectEntryVersion objectEntryVersion =
-			_objectEntryVersionLocalService.addObjectEntryVersion(
-				objectEntry);
+			_objectEntryVersionLocalService.addObjectEntryVersion(objectEntry);
 
 		objectEntry.setVersion(objectEntryVersion.getVersion());
 

@@ -55,7 +55,11 @@ public class StructureBuilderDisplayContext {
 		).build();
 	}
 
-	private JSONObject _getObjectDefinitionJSONObject() {
+	private ObjectDefinition _getObjectDefinition() {
+		if (_objectDefinition != null) {
+			return _objectDefinition;
+		}
+
 		long objectDefinitionId = ParamUtil.getLong(
 			_httpServletRequest, "objectDefinitionId");
 
@@ -71,10 +75,26 @@ public class StructureBuilderDisplayContext {
 		).build();
 
 		try {
-			ObjectDefinition objectDefinition =
-				objectDefinitionResource.getObjectDefinition(
-					objectDefinitionId);
+			_objectDefinition = objectDefinitionResource.getObjectDefinition(
+				objectDefinitionId);
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+		}
 
+		return _objectDefinition;
+	}
+
+	private JSONObject _getObjectDefinitionJSONObject() {
+		ObjectDefinition objectDefinition = _getObjectDefinition();
+
+		if (objectDefinition == null) {
+			return null;
+		}
+
+		try {
 			for (ObjectAction objectAction :
 					objectDefinition.getObjectActions()) {
 
@@ -110,6 +130,7 @@ public class StructureBuilderDisplayContext {
 
 	private final HttpServletRequest _httpServletRequest;
 	private final JSONFactory _jsonFactory;
+	private ObjectDefinition _objectDefinition;
 	private final ObjectDefinitionResource.Factory
 		_objectDefinitionResourceFactory;
 	private final ThemeDisplay _themeDisplay;

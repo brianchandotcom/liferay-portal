@@ -26,8 +26,8 @@ public class CustomInternalViewSystemFDSEntry implements SystemFDSEntry {
 
 	@Override
 	public String getDescription() {
-		return "This is the \"Custom internal view\" sample of a frontend " +
-			"data set.";
+		return "This is the custom internal view sample of a frontend data " +
+			"set.";
 	}
 
 	@Override

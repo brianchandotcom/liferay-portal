@@ -77,51 +77,52 @@ public class AllSectionDisplayContextTest
 				"getCreationMenu", new Class<?>[0]),
 			expectedResultMap);
 
-		ObjectFolder contentStructuresObjectFolder =
+		ObjectFolder cmsContentStructuresObjectFolder =
 			objectFolderLocalService.fetchObjectFolderByExternalReferenceCode(
 				"L_CMS_CONTENT_STRUCTURES", TestPropsValues.getCompanyId());
 
-		ObjectDefinition contentStructuresObjectDefinition =
+		ObjectDefinition cmsContentStructuresObjectDefinition =
 			addCustomObjectDefinition(
-				contentStructuresObjectFolder.getObjectFolderId(), true, true,
-				ObjectDefinitionConstants.SCOPE_SITE,
+				cmsContentStructuresObjectFolder.getObjectFolderId(), true,
+				true, ObjectDefinitionConstants.SCOPE_SITE,
 				WorkflowConstants.STATUS_APPROVED);
 
-		ObjectFolder fileTypesObjectFolder =
+		ObjectFolder cmsFileTypesObjectFolder =
 			objectFolderLocalService.fetchObjectFolderByExternalReferenceCode(
 				"L_CMS_FILE_TYPES", TestPropsValues.getCompanyId());
 
-		ObjectDefinition fileTypesObjectDefinition = addCustomObjectDefinition(
-			fileTypesObjectFolder.getObjectFolderId(), true, true,
-			ObjectDefinitionConstants.SCOPE_SITE,
-			WorkflowConstants.STATUS_APPROVED);
+		ObjectDefinition cmsFileTypesObjectDefinition =
+			addCustomObjectDefinition(
+				cmsFileTypesObjectFolder.getObjectFolderId(), true, true,
+				ObjectDefinitionConstants.SCOPE_SITE,
+				WorkflowConstants.STATUS_APPROVED);
 
 		expectedResultMap.put(
-			fileTypesObjectDefinition.getLabel(LocaleUtil.US),
-			getHref(fileTypesObjectDefinition));
+			cmsFileTypesObjectDefinition.getLabel(LocaleUtil.US),
+			getHref(cmsFileTypesObjectDefinition));
 
 		expectedResultMap.put(
-			contentStructuresObjectDefinition.getLabel(LocaleUtil.US),
-			getHref(contentStructuresObjectDefinition));
+			cmsContentStructuresObjectDefinition.getLabel(LocaleUtil.US),
+			getHref(cmsContentStructuresObjectDefinition));
 
 		addCustomObjectDefinition(
 			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
 			false, true, ObjectDefinitionConstants.SCOPE_SITE,
 			WorkflowConstants.STATUS_APPROVED);
 		addCustomObjectDefinition(
-			contentStructuresObjectFolder.getObjectFolderId(), false, true,
+			cmsContentStructuresObjectFolder.getObjectFolderId(), false, true,
 			ObjectDefinitionConstants.SCOPE_SITE,
 			WorkflowConstants.STATUS_APPROVED);
 		addCustomObjectDefinition(
-			contentStructuresObjectFolder.getObjectFolderId(), true, false,
+			cmsContentStructuresObjectFolder.getObjectFolderId(), true, false,
 			ObjectDefinitionConstants.SCOPE_SITE,
 			WorkflowConstants.STATUS_APPROVED);
 		addCustomObjectDefinition(
-			contentStructuresObjectFolder.getObjectFolderId(), true, true,
+			cmsContentStructuresObjectFolder.getObjectFolderId(), true, true,
 			ObjectDefinitionConstants.SCOPE_COMPANY,
 			WorkflowConstants.STATUS_APPROVED);
 		addCustomObjectDefinition(
-			contentStructuresObjectFolder.getObjectFolderId(), true, true,
+			cmsContentStructuresObjectFolder.getObjectFolderId(), true, true,
 			ObjectDefinitionConstants.SCOPE_SITE,
 			WorkflowConstants.STATUS_DRAFT);
 

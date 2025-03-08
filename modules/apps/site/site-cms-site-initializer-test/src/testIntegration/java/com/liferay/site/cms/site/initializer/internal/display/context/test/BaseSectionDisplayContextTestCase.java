@@ -17,9 +17,11 @@ import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.CompanyLocalService;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -27,6 +29,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
+import com.liferay.site.initializer.SiteInitializer;
+import com.liferay.site.initializer.SiteInitializerRegistry;
 
 import java.util.Collections;
 import java.util.List;
@@ -47,6 +51,20 @@ public abstract class BaseSectionDisplayContextTestCase {
 	@Before
 	public void setUp() throws Exception {
 		group = GroupTestUtil.addGroup();
+
+		ServiceContextThreadLocal.pushServiceContext(
+			ServiceContextTestUtil.getServiceContext(group.getGroupId()));
+
+		try {
+			SiteInitializer siteInitializer =
+				_siteInitializerRegistry.getSiteInitializer(
+					"com.liferay.site.initializer.cms");
+
+			siteInitializer.initialize(group.getGroupId());
+		}
+		finally {
+			ServiceContextThreadLocal.popServiceContext();
+		}
 	}
 
 	protected ObjectDefinition addCustomObjectDefinition(
@@ -183,5 +201,8 @@ public abstract class BaseSectionDisplayContextTestCase {
 
 	@Inject
 	protected ObjectFolderLocalService objectFolderLocalService;
+
+	@Inject
+	private SiteInitializerRegistry _siteInitializerRegistry;
 
 }

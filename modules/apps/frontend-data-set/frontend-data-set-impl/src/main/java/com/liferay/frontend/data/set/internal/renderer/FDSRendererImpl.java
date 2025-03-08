@@ -84,15 +84,15 @@ public class FDSRendererImpl implements FDSRenderer {
 				).put(
 					"bulkActions",
 					() -> {
-						List<FDSActionDropdownItem> bulkActions =
+						List<FDSActionDropdownItem> fdsActionDropdownItems =
 							fdsSerializer.serializeBulkActions(
 								fdsName, httpServletRequest);
 
-						if (ListUtil.isEmpty(bulkActions)) {
+						if (ListUtil.isEmpty(fdsActionDropdownItems)) {
 							return null;
 						}
 
-						return bulkActions;
+						return fdsActionDropdownItems;
 					}
 				).put(
 					"creationMenu",
@@ -125,15 +125,15 @@ public class FDSRendererImpl implements FDSRenderer {
 				).put(
 					"itemsActions",
 					() -> {
-						List<FDSActionDropdownItem> itemsActions =
+						List<FDSActionDropdownItem> fdsActionDropdownItems =
 							fdsSerializer.serializeItemsActions(
 								fdsName, httpServletRequest);
 
-						if (ListUtil.isEmpty(itemsActions)) {
+						if (ListUtil.isEmpty(fdsActionDropdownItems)) {
 							return null;
 						}
 
-						return itemsActions;
+						return fdsActionDropdownItems;
 					}
 				).put(
 					"pagination",
@@ -151,14 +151,15 @@ public class FDSRendererImpl implements FDSRenderer {
 				).put(
 					"sorts",
 					() -> {
-						List<FDSSortItem> sorts = fdsSerializer.serializeSorts(
-							fdsName, httpServletRequest);
+						List<FDSSortItem> fdsSortItems =
+							fdsSerializer.serializeSorts(
+								fdsName, httpServletRequest);
 
-						if (ListUtil.isEmpty(sorts)) {
+						if (ListUtil.isEmpty(fdsSortItems)) {
 							return null;
 						}
 
-						return sorts;
+						return fdsSortItems;
 					}
 				).put(
 					"views",

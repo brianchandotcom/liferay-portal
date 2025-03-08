@@ -18,7 +18,8 @@
 			"active": true,
 			"conditionExpression": "",
 			"description": "",
-			"errorMessage": {},
+			"errorMessage": {
+			},
 			"label": {
 				"en_US": "Update User and Date"
 			},
@@ -68,7 +69,8 @@
 			},
 			"localized": false,
 			"name": "answerFromClarity",
-			"objectFieldSettings": [],
+			"objectFieldSettings": [
+			],
 			"readOnly": "false",
 			"readOnlyConditionExpression": "",
 			"required": false,
@@ -113,7 +115,8 @@
 			},
 			"localized": false,
 			"name": "date",
-			"objectFieldSettings": [],
+			"objectFieldSettings": [
+			],
 			"readOnly": "false",
 			"readOnlyConditionExpression": "",
 			"required": false,
@@ -124,7 +127,8 @@
 		}
 	],
 	"objectFolderExternalReferenceCode": "MY-EXPERIENCES",
-	"objectValidationRules": [],
+	"objectValidationRules": [
+	],
 	"panelCategoryKey": "control_panel.object",
 	"parameterRequired": false,
 	"pluralLabel": {

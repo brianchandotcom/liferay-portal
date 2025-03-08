@@ -3786,11 +3786,11 @@ public class ObjectDefinitionUtil {
 	 * @param status the status
 	 * @return the matching object definitions
 	 */
-	public static List<ObjectDefinition> findByC_O_A_E_S_S(
+	public static List<ObjectDefinition> findByC_OFI_A_E_S_S(
 		long companyId, long objectFolderId, boolean active,
 		boolean enableObjectEntryDraft, String scope, int status) {
 
-		return getPersistence().findByC_O_A_E_S_S(
+		return getPersistence().findByC_OFI_A_E_S_S(
 			companyId, objectFolderId, active, enableObjectEntryDraft, scope,
 			status);
 	}
@@ -3812,12 +3812,12 @@ public class ObjectDefinitionUtil {
 	 * @param end the upper bound of the range of object definitions (not inclusive)
 	 * @return the range of matching object definitions
 	 */
-	public static List<ObjectDefinition> findByC_O_A_E_S_S(
+	public static List<ObjectDefinition> findByC_OFI_A_E_S_S(
 		long companyId, long objectFolderId, boolean active,
 		boolean enableObjectEntryDraft, String scope, int status, int start,
 		int end) {
 
-		return getPersistence().findByC_O_A_E_S_S(
+		return getPersistence().findByC_OFI_A_E_S_S(
 			companyId, objectFolderId, active, enableObjectEntryDraft, scope,
 			status, start, end);
 	}
@@ -3840,12 +3840,12 @@ public class ObjectDefinitionUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching object definitions
 	 */
-	public static List<ObjectDefinition> findByC_O_A_E_S_S(
+	public static List<ObjectDefinition> findByC_OFI_A_E_S_S(
 		long companyId, long objectFolderId, boolean active,
 		boolean enableObjectEntryDraft, String scope, int status, int start,
 		int end, OrderByComparator<ObjectDefinition> orderByComparator) {
 
-		return getPersistence().findByC_O_A_E_S_S(
+		return getPersistence().findByC_OFI_A_E_S_S(
 			companyId, objectFolderId, active, enableObjectEntryDraft, scope,
 			status, start, end, orderByComparator);
 	}
@@ -3869,13 +3869,13 @@ public class ObjectDefinitionUtil {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching object definitions
 	 */
-	public static List<ObjectDefinition> findByC_O_A_E_S_S(
+	public static List<ObjectDefinition> findByC_OFI_A_E_S_S(
 		long companyId, long objectFolderId, boolean active,
 		boolean enableObjectEntryDraft, String scope, int status, int start,
 		int end, OrderByComparator<ObjectDefinition> orderByComparator,
 		boolean useFinderCache) {
 
-		return getPersistence().findByC_O_A_E_S_S(
+		return getPersistence().findByC_OFI_A_E_S_S(
 			companyId, objectFolderId, active, enableObjectEntryDraft, scope,
 			status, start, end, orderByComparator, useFinderCache);
 	}
@@ -3893,13 +3893,13 @@ public class ObjectDefinitionUtil {
 	 * @return the first matching object definition
 	 * @throws NoSuchObjectDefinitionException if a matching object definition could not be found
 	 */
-	public static ObjectDefinition findByC_O_A_E_S_S_First(
+	public static ObjectDefinition findByC_OFI_A_E_S_S_First(
 			long companyId, long objectFolderId, boolean active,
 			boolean enableObjectEntryDraft, String scope, int status,
 			OrderByComparator<ObjectDefinition> orderByComparator)
 		throws com.liferay.object.exception.NoSuchObjectDefinitionException {
 
-		return getPersistence().findByC_O_A_E_S_S_First(
+		return getPersistence().findByC_OFI_A_E_S_S_First(
 			companyId, objectFolderId, active, enableObjectEntryDraft, scope,
 			status, orderByComparator);
 	}
@@ -3916,12 +3916,12 @@ public class ObjectDefinitionUtil {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching object definition, or <code>null</code> if a matching object definition could not be found
 	 */
-	public static ObjectDefinition fetchByC_O_A_E_S_S_First(
+	public static ObjectDefinition fetchByC_OFI_A_E_S_S_First(
 		long companyId, long objectFolderId, boolean active,
 		boolean enableObjectEntryDraft, String scope, int status,
 		OrderByComparator<ObjectDefinition> orderByComparator) {
 
-		return getPersistence().fetchByC_O_A_E_S_S_First(
+		return getPersistence().fetchByC_OFI_A_E_S_S_First(
 			companyId, objectFolderId, active, enableObjectEntryDraft, scope,
 			status, orderByComparator);
 	}
@@ -3939,13 +3939,13 @@ public class ObjectDefinitionUtil {
 	 * @return the last matching object definition
 	 * @throws NoSuchObjectDefinitionException if a matching object definition could not be found
 	 */
-	public static ObjectDefinition findByC_O_A_E_S_S_Last(
+	public static ObjectDefinition findByC_OFI_A_E_S_S_Last(
 			long companyId, long objectFolderId, boolean active,
 			boolean enableObjectEntryDraft, String scope, int status,
 			OrderByComparator<ObjectDefinition> orderByComparator)
 		throws com.liferay.object.exception.NoSuchObjectDefinitionException {
 
-		return getPersistence().findByC_O_A_E_S_S_Last(
+		return getPersistence().findByC_OFI_A_E_S_S_Last(
 			companyId, objectFolderId, active, enableObjectEntryDraft, scope,
 			status, orderByComparator);
 	}
@@ -3962,12 +3962,12 @@ public class ObjectDefinitionUtil {
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching object definition, or <code>null</code> if a matching object definition could not be found
 	 */
-	public static ObjectDefinition fetchByC_O_A_E_S_S_Last(
+	public static ObjectDefinition fetchByC_OFI_A_E_S_S_Last(
 		long companyId, long objectFolderId, boolean active,
 		boolean enableObjectEntryDraft, String scope, int status,
 		OrderByComparator<ObjectDefinition> orderByComparator) {
 
-		return getPersistence().fetchByC_O_A_E_S_S_Last(
+		return getPersistence().fetchByC_OFI_A_E_S_S_Last(
 			companyId, objectFolderId, active, enableObjectEntryDraft, scope,
 			status, orderByComparator);
 	}
@@ -3986,13 +3986,13 @@ public class ObjectDefinitionUtil {
 	 * @return the previous, current, and next object definition
 	 * @throws NoSuchObjectDefinitionException if a object definition with the primary key could not be found
 	 */
-	public static ObjectDefinition[] findByC_O_A_E_S_S_PrevAndNext(
+	public static ObjectDefinition[] findByC_OFI_A_E_S_S_PrevAndNext(
 			long objectDefinitionId, long companyId, long objectFolderId,
 			boolean active, boolean enableObjectEntryDraft, String scope,
 			int status, OrderByComparator<ObjectDefinition> orderByComparator)
 		throws com.liferay.object.exception.NoSuchObjectDefinitionException {
 
-		return getPersistence().findByC_O_A_E_S_S_PrevAndNext(
+		return getPersistence().findByC_OFI_A_E_S_S_PrevAndNext(
 			objectDefinitionId, companyId, objectFolderId, active,
 			enableObjectEntryDraft, scope, status, orderByComparator);
 	}
@@ -4008,11 +4008,11 @@ public class ObjectDefinitionUtil {
 	 * @param status the status
 	 * @return the matching object definitions that the user has permission to view
 	 */
-	public static List<ObjectDefinition> filterFindByC_O_A_E_S_S(
+	public static List<ObjectDefinition> filterFindByC_OFI_A_E_S_S(
 		long companyId, long objectFolderId, boolean active,
 		boolean enableObjectEntryDraft, String scope, int status) {
 
-		return getPersistence().filterFindByC_O_A_E_S_S(
+		return getPersistence().filterFindByC_OFI_A_E_S_S(
 			companyId, objectFolderId, active, enableObjectEntryDraft, scope,
 			status);
 	}
@@ -4034,12 +4034,12 @@ public class ObjectDefinitionUtil {
 	 * @param end the upper bound of the range of object definitions (not inclusive)
 	 * @return the range of matching object definitions that the user has permission to view
 	 */
-	public static List<ObjectDefinition> filterFindByC_O_A_E_S_S(
+	public static List<ObjectDefinition> filterFindByC_OFI_A_E_S_S(
 		long companyId, long objectFolderId, boolean active,
 		boolean enableObjectEntryDraft, String scope, int status, int start,
 		int end) {
 
-		return getPersistence().filterFindByC_O_A_E_S_S(
+		return getPersistence().filterFindByC_OFI_A_E_S_S(
 			companyId, objectFolderId, active, enableObjectEntryDraft, scope,
 			status, start, end);
 	}
@@ -4062,12 +4062,12 @@ public class ObjectDefinitionUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching object definitions that the user has permission to view
 	 */
-	public static List<ObjectDefinition> filterFindByC_O_A_E_S_S(
+	public static List<ObjectDefinition> filterFindByC_OFI_A_E_S_S(
 		long companyId, long objectFolderId, boolean active,
 		boolean enableObjectEntryDraft, String scope, int status, int start,
 		int end, OrderByComparator<ObjectDefinition> orderByComparator) {
 
-		return getPersistence().filterFindByC_O_A_E_S_S(
+		return getPersistence().filterFindByC_OFI_A_E_S_S(
 			companyId, objectFolderId, active, enableObjectEntryDraft, scope,
 			status, start, end, orderByComparator);
 	}
@@ -4086,13 +4086,13 @@ public class ObjectDefinitionUtil {
 	 * @return the previous, current, and next object definition
 	 * @throws NoSuchObjectDefinitionException if a object definition with the primary key could not be found
 	 */
-	public static ObjectDefinition[] filterFindByC_O_A_E_S_S_PrevAndNext(
+	public static ObjectDefinition[] filterFindByC_OFI_A_E_S_S_PrevAndNext(
 			long objectDefinitionId, long companyId, long objectFolderId,
 			boolean active, boolean enableObjectEntryDraft, String scope,
 			int status, OrderByComparator<ObjectDefinition> orderByComparator)
 		throws com.liferay.object.exception.NoSuchObjectDefinitionException {
 
-		return getPersistence().filterFindByC_O_A_E_S_S_PrevAndNext(
+		return getPersistence().filterFindByC_OFI_A_E_S_S_PrevAndNext(
 			objectDefinitionId, companyId, objectFolderId, active,
 			enableObjectEntryDraft, scope, status, orderByComparator);
 	}
@@ -4108,11 +4108,11 @@ public class ObjectDefinitionUtil {
 	 * @param status the status
 	 * @return the matching object definitions that the user has permission to view
 	 */
-	public static List<ObjectDefinition> filterFindByC_O_A_E_S_S(
+	public static List<ObjectDefinition> filterFindByC_OFI_A_E_S_S(
 		long companyId, long[] objectFolderIds, boolean active,
 		boolean enableObjectEntryDraft, String scope, int status) {
 
-		return getPersistence().filterFindByC_O_A_E_S_S(
+		return getPersistence().filterFindByC_OFI_A_E_S_S(
 			companyId, objectFolderIds, active, enableObjectEntryDraft, scope,
 			status);
 	}
@@ -4134,12 +4134,12 @@ public class ObjectDefinitionUtil {
 	 * @param end the upper bound of the range of object definitions (not inclusive)
 	 * @return the range of matching object definitions that the user has permission to view
 	 */
-	public static List<ObjectDefinition> filterFindByC_O_A_E_S_S(
+	public static List<ObjectDefinition> filterFindByC_OFI_A_E_S_S(
 		long companyId, long[] objectFolderIds, boolean active,
 		boolean enableObjectEntryDraft, String scope, int status, int start,
 		int end) {
 
-		return getPersistence().filterFindByC_O_A_E_S_S(
+		return getPersistence().filterFindByC_OFI_A_E_S_S(
 			companyId, objectFolderIds, active, enableObjectEntryDraft, scope,
 			status, start, end);
 	}
@@ -4162,12 +4162,12 @@ public class ObjectDefinitionUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching object definitions that the user has permission to view
 	 */
-	public static List<ObjectDefinition> filterFindByC_O_A_E_S_S(
+	public static List<ObjectDefinition> filterFindByC_OFI_A_E_S_S(
 		long companyId, long[] objectFolderIds, boolean active,
 		boolean enableObjectEntryDraft, String scope, int status, int start,
 		int end, OrderByComparator<ObjectDefinition> orderByComparator) {
 
-		return getPersistence().filterFindByC_O_A_E_S_S(
+		return getPersistence().filterFindByC_OFI_A_E_S_S(
 			companyId, objectFolderIds, active, enableObjectEntryDraft, scope,
 			status, start, end, orderByComparator);
 	}
@@ -4187,11 +4187,11 @@ public class ObjectDefinitionUtil {
 	 * @param status the status
 	 * @return the matching object definitions
 	 */
-	public static List<ObjectDefinition> findByC_O_A_E_S_S(
+	public static List<ObjectDefinition> findByC_OFI_A_E_S_S(
 		long companyId, long[] objectFolderIds, boolean active,
 		boolean enableObjectEntryDraft, String scope, int status) {
 
-		return getPersistence().findByC_O_A_E_S_S(
+		return getPersistence().findByC_OFI_A_E_S_S(
 			companyId, objectFolderIds, active, enableObjectEntryDraft, scope,
 			status);
 	}
@@ -4213,12 +4213,12 @@ public class ObjectDefinitionUtil {
 	 * @param end the upper bound of the range of object definitions (not inclusive)
 	 * @return the range of matching object definitions
 	 */
-	public static List<ObjectDefinition> findByC_O_A_E_S_S(
+	public static List<ObjectDefinition> findByC_OFI_A_E_S_S(
 		long companyId, long[] objectFolderIds, boolean active,
 		boolean enableObjectEntryDraft, String scope, int status, int start,
 		int end) {
 
-		return getPersistence().findByC_O_A_E_S_S(
+		return getPersistence().findByC_OFI_A_E_S_S(
 			companyId, objectFolderIds, active, enableObjectEntryDraft, scope,
 			status, start, end);
 	}
@@ -4241,12 +4241,12 @@ public class ObjectDefinitionUtil {
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching object definitions
 	 */
-	public static List<ObjectDefinition> findByC_O_A_E_S_S(
+	public static List<ObjectDefinition> findByC_OFI_A_E_S_S(
 		long companyId, long[] objectFolderIds, boolean active,
 		boolean enableObjectEntryDraft, String scope, int status, int start,
 		int end, OrderByComparator<ObjectDefinition> orderByComparator) {
 
-		return getPersistence().findByC_O_A_E_S_S(
+		return getPersistence().findByC_OFI_A_E_S_S(
 			companyId, objectFolderIds, active, enableObjectEntryDraft, scope,
 			status, start, end, orderByComparator);
 	}
@@ -4270,13 +4270,13 @@ public class ObjectDefinitionUtil {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching object definitions
 	 */
-	public static List<ObjectDefinition> findByC_O_A_E_S_S(
+	public static List<ObjectDefinition> findByC_OFI_A_E_S_S(
 		long companyId, long[] objectFolderIds, boolean active,
 		boolean enableObjectEntryDraft, String scope, int status, int start,
 		int end, OrderByComparator<ObjectDefinition> orderByComparator,
 		boolean useFinderCache) {
 
-		return getPersistence().findByC_O_A_E_S_S(
+		return getPersistence().findByC_OFI_A_E_S_S(
 			companyId, objectFolderIds, active, enableObjectEntryDraft, scope,
 			status, start, end, orderByComparator, useFinderCache);
 	}
@@ -4291,11 +4291,11 @@ public class ObjectDefinitionUtil {
 	 * @param scope the scope
 	 * @param status the status
 	 */
-	public static void removeByC_O_A_E_S_S(
+	public static void removeByC_OFI_A_E_S_S(
 		long companyId, long objectFolderId, boolean active,
 		boolean enableObjectEntryDraft, String scope, int status) {
 
-		getPersistence().removeByC_O_A_E_S_S(
+		getPersistence().removeByC_OFI_A_E_S_S(
 			companyId, objectFolderId, active, enableObjectEntryDraft, scope,
 			status);
 	}
@@ -4311,11 +4311,11 @@ public class ObjectDefinitionUtil {
 	 * @param status the status
 	 * @return the number of matching object definitions
 	 */
-	public static int countByC_O_A_E_S_S(
+	public static int countByC_OFI_A_E_S_S(
 		long companyId, long objectFolderId, boolean active,
 		boolean enableObjectEntryDraft, String scope, int status) {
 
-		return getPersistence().countByC_O_A_E_S_S(
+		return getPersistence().countByC_OFI_A_E_S_S(
 			companyId, objectFolderId, active, enableObjectEntryDraft, scope,
 			status);
 	}
@@ -4331,11 +4331,11 @@ public class ObjectDefinitionUtil {
 	 * @param status the status
 	 * @return the number of matching object definitions
 	 */
-	public static int countByC_O_A_E_S_S(
+	public static int countByC_OFI_A_E_S_S(
 		long companyId, long[] objectFolderIds, boolean active,
 		boolean enableObjectEntryDraft, String scope, int status) {
 
-		return getPersistence().countByC_O_A_E_S_S(
+		return getPersistence().countByC_OFI_A_E_S_S(
 			companyId, objectFolderIds, active, enableObjectEntryDraft, scope,
 			status);
 	}
@@ -4351,11 +4351,11 @@ public class ObjectDefinitionUtil {
 	 * @param status the status
 	 * @return the number of matching object definitions that the user has permission to view
 	 */
-	public static int filterCountByC_O_A_E_S_S(
+	public static int filterCountByC_OFI_A_E_S_S(
 		long companyId, long objectFolderId, boolean active,
 		boolean enableObjectEntryDraft, String scope, int status) {
 
-		return getPersistence().filterCountByC_O_A_E_S_S(
+		return getPersistence().filterCountByC_OFI_A_E_S_S(
 			companyId, objectFolderId, active, enableObjectEntryDraft, scope,
 			status);
 	}
@@ -4371,11 +4371,11 @@ public class ObjectDefinitionUtil {
 	 * @param status the status
 	 * @return the number of matching object definitions that the user has permission to view
 	 */
-	public static int filterCountByC_O_A_E_S_S(
+	public static int filterCountByC_OFI_A_E_S_S(
 		long companyId, long[] objectFolderIds, boolean active,
 		boolean enableObjectEntryDraft, String scope, int status) {
 
-		return getPersistence().filterCountByC_O_A_E_S_S(
+		return getPersistence().filterCountByC_OFI_A_E_S_S(
 			companyId, objectFolderIds, active, enableObjectEntryDraft, scope,
 			status);
 	}

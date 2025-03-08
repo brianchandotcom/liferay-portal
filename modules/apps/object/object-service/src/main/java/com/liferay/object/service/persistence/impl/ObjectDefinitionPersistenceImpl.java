@@ -13017,10 +13017,10 @@ public class ObjectDefinitionPersistenceImpl
 	private static final String _FINDER_COLUMN_C_A_S_S_STATUS_2 =
 		"objectDefinition.status = ?";
 
-	private FinderPath _finderPathWithPaginationFindByC_O_A_E_S_S;
-	private FinderPath _finderPathWithoutPaginationFindByC_O_A_E_S_S;
-	private FinderPath _finderPathCountByC_O_A_E_S_S;
-	private FinderPath _finderPathWithPaginationCountByC_O_A_E_S_S;
+	private FinderPath _finderPathWithPaginationFindByC_OFI_A_E_S_S;
+	private FinderPath _finderPathWithoutPaginationFindByC_OFI_A_E_S_S;
+	private FinderPath _finderPathCountByC_OFI_A_E_S_S;
+	private FinderPath _finderPathWithPaginationCountByC_OFI_A_E_S_S;
 
 	/**
 	 * Returns all the object definitions where companyId = &#63; and objectFolderId = &#63; and active = &#63; and enableObjectEntryDraft = &#63; and scope = &#63; and status = &#63;.
@@ -13034,11 +13034,11 @@ public class ObjectDefinitionPersistenceImpl
 	 * @return the matching object definitions
 	 */
 	@Override
-	public List<ObjectDefinition> findByC_O_A_E_S_S(
+	public List<ObjectDefinition> findByC_OFI_A_E_S_S(
 		long companyId, long objectFolderId, boolean active,
 		boolean enableObjectEntryDraft, String scope, int status) {
 
-		return findByC_O_A_E_S_S(
+		return findByC_OFI_A_E_S_S(
 			companyId, objectFolderId, active, enableObjectEntryDraft, scope,
 			status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
@@ -13061,12 +13061,12 @@ public class ObjectDefinitionPersistenceImpl
 	 * @return the range of matching object definitions
 	 */
 	@Override
-	public List<ObjectDefinition> findByC_O_A_E_S_S(
+	public List<ObjectDefinition> findByC_OFI_A_E_S_S(
 		long companyId, long objectFolderId, boolean active,
 		boolean enableObjectEntryDraft, String scope, int status, int start,
 		int end) {
 
-		return findByC_O_A_E_S_S(
+		return findByC_OFI_A_E_S_S(
 			companyId, objectFolderId, active, enableObjectEntryDraft, scope,
 			status, start, end, null);
 	}
@@ -13090,12 +13090,12 @@ public class ObjectDefinitionPersistenceImpl
 	 * @return the ordered range of matching object definitions
 	 */
 	@Override
-	public List<ObjectDefinition> findByC_O_A_E_S_S(
+	public List<ObjectDefinition> findByC_OFI_A_E_S_S(
 		long companyId, long objectFolderId, boolean active,
 		boolean enableObjectEntryDraft, String scope, int status, int start,
 		int end, OrderByComparator<ObjectDefinition> orderByComparator) {
 
-		return findByC_O_A_E_S_S(
+		return findByC_OFI_A_E_S_S(
 			companyId, objectFolderId, active, enableObjectEntryDraft, scope,
 			status, start, end, orderByComparator, true);
 	}
@@ -13120,7 +13120,7 @@ public class ObjectDefinitionPersistenceImpl
 	 * @return the ordered range of matching object definitions
 	 */
 	@Override
-	public List<ObjectDefinition> findByC_O_A_E_S_S(
+	public List<ObjectDefinition> findByC_OFI_A_E_S_S(
 		long companyId, long objectFolderId, boolean active,
 		boolean enableObjectEntryDraft, String scope, int status, int start,
 		int end, OrderByComparator<ObjectDefinition> orderByComparator,
@@ -13135,7 +13135,7 @@ public class ObjectDefinitionPersistenceImpl
 			(orderByComparator == null)) {
 
 			if (useFinderCache) {
-				finderPath = _finderPathWithoutPaginationFindByC_O_A_E_S_S;
+				finderPath = _finderPathWithoutPaginationFindByC_OFI_A_E_S_S;
 				finderArgs = new Object[] {
 					companyId, objectFolderId, active, enableObjectEntryDraft,
 					scope, status
@@ -13143,7 +13143,7 @@ public class ObjectDefinitionPersistenceImpl
 			}
 		}
 		else if (useFinderCache) {
-			finderPath = _finderPathWithPaginationFindByC_O_A_E_S_S;
+			finderPath = _finderPathWithPaginationFindByC_OFI_A_E_S_S;
 			finderArgs = new Object[] {
 				companyId, objectFolderId, active, enableObjectEntryDraft,
 				scope, status, start, end, orderByComparator
@@ -13188,26 +13188,26 @@ public class ObjectDefinitionPersistenceImpl
 
 			sb.append(_SQL_SELECT_OBJECTDEFINITION_WHERE);
 
-			sb.append(_FINDER_COLUMN_C_O_A_E_S_S_COMPANYID_2);
+			sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_COMPANYID_2);
 
-			sb.append(_FINDER_COLUMN_C_O_A_E_S_S_OBJECTFOLDERID_2);
+			sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_OBJECTFOLDERID_2);
 
-			sb.append(_FINDER_COLUMN_C_O_A_E_S_S_ACTIVE_2);
+			sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_ACTIVE_2);
 
-			sb.append(_FINDER_COLUMN_C_O_A_E_S_S_ENABLEOBJECTENTRYDRAFT_2);
+			sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_ENABLEOBJECTENTRYDRAFT_2);
 
 			boolean bindScope = false;
 
 			if (scope.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_O_A_E_S_S_SCOPE_3);
+				sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_SCOPE_3);
 			}
 			else {
 				bindScope = true;
 
-				sb.append(_FINDER_COLUMN_C_O_A_E_S_S_SCOPE_2);
+				sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_SCOPE_2);
 			}
 
-			sb.append(_FINDER_COLUMN_C_O_A_E_S_S_STATUS_2);
+			sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_STATUS_2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(
@@ -13276,13 +13276,13 @@ public class ObjectDefinitionPersistenceImpl
 	 * @throws NoSuchObjectDefinitionException if a matching object definition could not be found
 	 */
 	@Override
-	public ObjectDefinition findByC_O_A_E_S_S_First(
+	public ObjectDefinition findByC_OFI_A_E_S_S_First(
 			long companyId, long objectFolderId, boolean active,
 			boolean enableObjectEntryDraft, String scope, int status,
 			OrderByComparator<ObjectDefinition> orderByComparator)
 		throws NoSuchObjectDefinitionException {
 
-		ObjectDefinition objectDefinition = fetchByC_O_A_E_S_S_First(
+		ObjectDefinition objectDefinition = fetchByC_OFI_A_E_S_S_First(
 			companyId, objectFolderId, active, enableObjectEntryDraft, scope,
 			status, orderByComparator);
 
@@ -13330,12 +13330,12 @@ public class ObjectDefinitionPersistenceImpl
 	 * @return the first matching object definition, or <code>null</code> if a matching object definition could not be found
 	 */
 	@Override
-	public ObjectDefinition fetchByC_O_A_E_S_S_First(
+	public ObjectDefinition fetchByC_OFI_A_E_S_S_First(
 		long companyId, long objectFolderId, boolean active,
 		boolean enableObjectEntryDraft, String scope, int status,
 		OrderByComparator<ObjectDefinition> orderByComparator) {
 
-		List<ObjectDefinition> list = findByC_O_A_E_S_S(
+		List<ObjectDefinition> list = findByC_OFI_A_E_S_S(
 			companyId, objectFolderId, active, enableObjectEntryDraft, scope,
 			status, 0, 1, orderByComparator);
 
@@ -13360,13 +13360,13 @@ public class ObjectDefinitionPersistenceImpl
 	 * @throws NoSuchObjectDefinitionException if a matching object definition could not be found
 	 */
 	@Override
-	public ObjectDefinition findByC_O_A_E_S_S_Last(
+	public ObjectDefinition findByC_OFI_A_E_S_S_Last(
 			long companyId, long objectFolderId, boolean active,
 			boolean enableObjectEntryDraft, String scope, int status,
 			OrderByComparator<ObjectDefinition> orderByComparator)
 		throws NoSuchObjectDefinitionException {
 
-		ObjectDefinition objectDefinition = fetchByC_O_A_E_S_S_Last(
+		ObjectDefinition objectDefinition = fetchByC_OFI_A_E_S_S_Last(
 			companyId, objectFolderId, active, enableObjectEntryDraft, scope,
 			status, orderByComparator);
 
@@ -13414,12 +13414,12 @@ public class ObjectDefinitionPersistenceImpl
 	 * @return the last matching object definition, or <code>null</code> if a matching object definition could not be found
 	 */
 	@Override
-	public ObjectDefinition fetchByC_O_A_E_S_S_Last(
+	public ObjectDefinition fetchByC_OFI_A_E_S_S_Last(
 		long companyId, long objectFolderId, boolean active,
 		boolean enableObjectEntryDraft, String scope, int status,
 		OrderByComparator<ObjectDefinition> orderByComparator) {
 
-		int count = countByC_O_A_E_S_S(
+		int count = countByC_OFI_A_E_S_S(
 			companyId, objectFolderId, active, enableObjectEntryDraft, scope,
 			status);
 
@@ -13427,7 +13427,7 @@ public class ObjectDefinitionPersistenceImpl
 			return null;
 		}
 
-		List<ObjectDefinition> list = findByC_O_A_E_S_S(
+		List<ObjectDefinition> list = findByC_OFI_A_E_S_S(
 			companyId, objectFolderId, active, enableObjectEntryDraft, scope,
 			status, count - 1, count, orderByComparator);
 
@@ -13453,7 +13453,7 @@ public class ObjectDefinitionPersistenceImpl
 	 * @throws NoSuchObjectDefinitionException if a object definition with the primary key could not be found
 	 */
 	@Override
-	public ObjectDefinition[] findByC_O_A_E_S_S_PrevAndNext(
+	public ObjectDefinition[] findByC_OFI_A_E_S_S_PrevAndNext(
 			long objectDefinitionId, long companyId, long objectFolderId,
 			boolean active, boolean enableObjectEntryDraft, String scope,
 			int status, OrderByComparator<ObjectDefinition> orderByComparator)
@@ -13471,13 +13471,13 @@ public class ObjectDefinitionPersistenceImpl
 
 			ObjectDefinition[] array = new ObjectDefinitionImpl[3];
 
-			array[0] = getByC_O_A_E_S_S_PrevAndNext(
+			array[0] = getByC_OFI_A_E_S_S_PrevAndNext(
 				session, objectDefinition, companyId, objectFolderId, active,
 				enableObjectEntryDraft, scope, status, orderByComparator, true);
 
 			array[1] = objectDefinition;
 
-			array[2] = getByC_O_A_E_S_S_PrevAndNext(
+			array[2] = getByC_OFI_A_E_S_S_PrevAndNext(
 				session, objectDefinition, companyId, objectFolderId, active,
 				enableObjectEntryDraft, scope, status, orderByComparator,
 				false);
@@ -13492,7 +13492,7 @@ public class ObjectDefinitionPersistenceImpl
 		}
 	}
 
-	protected ObjectDefinition getByC_O_A_E_S_S_PrevAndNext(
+	protected ObjectDefinition getByC_OFI_A_E_S_S_PrevAndNext(
 		Session session, ObjectDefinition objectDefinition, long companyId,
 		long objectFolderId, boolean active, boolean enableObjectEntryDraft,
 		String scope, int status,
@@ -13512,26 +13512,26 @@ public class ObjectDefinitionPersistenceImpl
 
 		sb.append(_SQL_SELECT_OBJECTDEFINITION_WHERE);
 
-		sb.append(_FINDER_COLUMN_C_O_A_E_S_S_COMPANYID_2);
+		sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_COMPANYID_2);
 
-		sb.append(_FINDER_COLUMN_C_O_A_E_S_S_OBJECTFOLDERID_2);
+		sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_OBJECTFOLDERID_2);
 
-		sb.append(_FINDER_COLUMN_C_O_A_E_S_S_ACTIVE_2);
+		sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_ACTIVE_2);
 
-		sb.append(_FINDER_COLUMN_C_O_A_E_S_S_ENABLEOBJECTENTRYDRAFT_2);
+		sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_ENABLEOBJECTENTRYDRAFT_2);
 
 		boolean bindScope = false;
 
 		if (scope.isEmpty()) {
-			sb.append(_FINDER_COLUMN_C_O_A_E_S_S_SCOPE_3);
+			sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_SCOPE_3);
 		}
 		else {
 			bindScope = true;
 
-			sb.append(_FINDER_COLUMN_C_O_A_E_S_S_SCOPE_2);
+			sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_SCOPE_2);
 		}
 
-		sb.append(_FINDER_COLUMN_C_O_A_E_S_S_STATUS_2);
+		sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_STATUS_2);
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields =
@@ -13647,11 +13647,11 @@ public class ObjectDefinitionPersistenceImpl
 	 * @return the matching object definitions that the user has permission to view
 	 */
 	@Override
-	public List<ObjectDefinition> filterFindByC_O_A_E_S_S(
+	public List<ObjectDefinition> filterFindByC_OFI_A_E_S_S(
 		long companyId, long objectFolderId, boolean active,
 		boolean enableObjectEntryDraft, String scope, int status) {
 
-		return filterFindByC_O_A_E_S_S(
+		return filterFindByC_OFI_A_E_S_S(
 			companyId, objectFolderId, active, enableObjectEntryDraft, scope,
 			status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
@@ -13674,12 +13674,12 @@ public class ObjectDefinitionPersistenceImpl
 	 * @return the range of matching object definitions that the user has permission to view
 	 */
 	@Override
-	public List<ObjectDefinition> filterFindByC_O_A_E_S_S(
+	public List<ObjectDefinition> filterFindByC_OFI_A_E_S_S(
 		long companyId, long objectFolderId, boolean active,
 		boolean enableObjectEntryDraft, String scope, int status, int start,
 		int end) {
 
-		return filterFindByC_O_A_E_S_S(
+		return filterFindByC_OFI_A_E_S_S(
 			companyId, objectFolderId, active, enableObjectEntryDraft, scope,
 			status, start, end, null);
 	}
@@ -13703,13 +13703,13 @@ public class ObjectDefinitionPersistenceImpl
 	 * @return the ordered range of matching object definitions that the user has permission to view
 	 */
 	@Override
-	public List<ObjectDefinition> filterFindByC_O_A_E_S_S(
+	public List<ObjectDefinition> filterFindByC_OFI_A_E_S_S(
 		long companyId, long objectFolderId, boolean active,
 		boolean enableObjectEntryDraft, String scope, int status, int start,
 		int end, OrderByComparator<ObjectDefinition> orderByComparator) {
 
 		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
-			return findByC_O_A_E_S_S(
+			return findByC_OFI_A_E_S_S(
 				companyId, objectFolderId, active, enableObjectEntryDraft,
 				scope, status, start, end, orderByComparator);
 		}
@@ -13734,26 +13734,26 @@ public class ObjectDefinitionPersistenceImpl
 				_FILTER_SQL_SELECT_OBJECTDEFINITION_NO_INLINE_DISTINCT_WHERE_1);
 		}
 
-		sb.append(_FINDER_COLUMN_C_O_A_E_S_S_COMPANYID_2);
+		sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_COMPANYID_2);
 
-		sb.append(_FINDER_COLUMN_C_O_A_E_S_S_OBJECTFOLDERID_2);
+		sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_OBJECTFOLDERID_2);
 
-		sb.append(_FINDER_COLUMN_C_O_A_E_S_S_ACTIVE_2_SQL);
+		sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_ACTIVE_2_SQL);
 
-		sb.append(_FINDER_COLUMN_C_O_A_E_S_S_ENABLEOBJECTENTRYDRAFT_2);
+		sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_ENABLEOBJECTENTRYDRAFT_2);
 
 		boolean bindScope = false;
 
 		if (scope.isEmpty()) {
-			sb.append(_FINDER_COLUMN_C_O_A_E_S_S_SCOPE_3);
+			sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_SCOPE_3);
 		}
 		else {
 			bindScope = true;
 
-			sb.append(_FINDER_COLUMN_C_O_A_E_S_S_SCOPE_2);
+			sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_SCOPE_2);
 		}
 
-		sb.append(_FINDER_COLUMN_C_O_A_E_S_S_STATUS_2);
+		sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_STATUS_2);
 
 		if (!getDB().isSupportsInlineDistinct()) {
 			sb.append(
@@ -13842,14 +13842,14 @@ public class ObjectDefinitionPersistenceImpl
 	 * @throws NoSuchObjectDefinitionException if a object definition with the primary key could not be found
 	 */
 	@Override
-	public ObjectDefinition[] filterFindByC_O_A_E_S_S_PrevAndNext(
+	public ObjectDefinition[] filterFindByC_OFI_A_E_S_S_PrevAndNext(
 			long objectDefinitionId, long companyId, long objectFolderId,
 			boolean active, boolean enableObjectEntryDraft, String scope,
 			int status, OrderByComparator<ObjectDefinition> orderByComparator)
 		throws NoSuchObjectDefinitionException {
 
 		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
-			return findByC_O_A_E_S_S_PrevAndNext(
+			return findByC_OFI_A_E_S_S_PrevAndNext(
 				objectDefinitionId, companyId, objectFolderId, active,
 				enableObjectEntryDraft, scope, status, orderByComparator);
 		}
@@ -13866,13 +13866,13 @@ public class ObjectDefinitionPersistenceImpl
 
 			ObjectDefinition[] array = new ObjectDefinitionImpl[3];
 
-			array[0] = filterGetByC_O_A_E_S_S_PrevAndNext(
+			array[0] = filterGetByC_OFI_A_E_S_S_PrevAndNext(
 				session, objectDefinition, companyId, objectFolderId, active,
 				enableObjectEntryDraft, scope, status, orderByComparator, true);
 
 			array[1] = objectDefinition;
 
-			array[2] = filterGetByC_O_A_E_S_S_PrevAndNext(
+			array[2] = filterGetByC_OFI_A_E_S_S_PrevAndNext(
 				session, objectDefinition, companyId, objectFolderId, active,
 				enableObjectEntryDraft, scope, status, orderByComparator,
 				false);
@@ -13887,7 +13887,7 @@ public class ObjectDefinitionPersistenceImpl
 		}
 	}
 
-	protected ObjectDefinition filterGetByC_O_A_E_S_S_PrevAndNext(
+	protected ObjectDefinition filterGetByC_OFI_A_E_S_S_PrevAndNext(
 		Session session, ObjectDefinition objectDefinition, long companyId,
 		long objectFolderId, boolean active, boolean enableObjectEntryDraft,
 		String scope, int status,
@@ -13914,26 +13914,26 @@ public class ObjectDefinitionPersistenceImpl
 				_FILTER_SQL_SELECT_OBJECTDEFINITION_NO_INLINE_DISTINCT_WHERE_1);
 		}
 
-		sb.append(_FINDER_COLUMN_C_O_A_E_S_S_COMPANYID_2);
+		sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_COMPANYID_2);
 
-		sb.append(_FINDER_COLUMN_C_O_A_E_S_S_OBJECTFOLDERID_2);
+		sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_OBJECTFOLDERID_2);
 
-		sb.append(_FINDER_COLUMN_C_O_A_E_S_S_ACTIVE_2_SQL);
+		sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_ACTIVE_2_SQL);
 
-		sb.append(_FINDER_COLUMN_C_O_A_E_S_S_ENABLEOBJECTENTRYDRAFT_2);
+		sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_ENABLEOBJECTENTRYDRAFT_2);
 
 		boolean bindScope = false;
 
 		if (scope.isEmpty()) {
-			sb.append(_FINDER_COLUMN_C_O_A_E_S_S_SCOPE_3);
+			sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_SCOPE_3);
 		}
 		else {
 			bindScope = true;
 
-			sb.append(_FINDER_COLUMN_C_O_A_E_S_S_SCOPE_2);
+			sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_SCOPE_2);
 		}
 
-		sb.append(_FINDER_COLUMN_C_O_A_E_S_S_STATUS_2);
+		sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_STATUS_2);
 
 		if (!getDB().isSupportsInlineDistinct()) {
 			sb.append(
@@ -14089,11 +14089,11 @@ public class ObjectDefinitionPersistenceImpl
 	 * @return the matching object definitions that the user has permission to view
 	 */
 	@Override
-	public List<ObjectDefinition> filterFindByC_O_A_E_S_S(
+	public List<ObjectDefinition> filterFindByC_OFI_A_E_S_S(
 		long companyId, long[] objectFolderIds, boolean active,
 		boolean enableObjectEntryDraft, String scope, int status) {
 
-		return filterFindByC_O_A_E_S_S(
+		return filterFindByC_OFI_A_E_S_S(
 			companyId, objectFolderIds, active, enableObjectEntryDraft, scope,
 			status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
@@ -14116,12 +14116,12 @@ public class ObjectDefinitionPersistenceImpl
 	 * @return the range of matching object definitions that the user has permission to view
 	 */
 	@Override
-	public List<ObjectDefinition> filterFindByC_O_A_E_S_S(
+	public List<ObjectDefinition> filterFindByC_OFI_A_E_S_S(
 		long companyId, long[] objectFolderIds, boolean active,
 		boolean enableObjectEntryDraft, String scope, int status, int start,
 		int end) {
 
-		return filterFindByC_O_A_E_S_S(
+		return filterFindByC_OFI_A_E_S_S(
 			companyId, objectFolderIds, active, enableObjectEntryDraft, scope,
 			status, start, end, null);
 	}
@@ -14145,13 +14145,13 @@ public class ObjectDefinitionPersistenceImpl
 	 * @return the ordered range of matching object definitions that the user has permission to view
 	 */
 	@Override
-	public List<ObjectDefinition> filterFindByC_O_A_E_S_S(
+	public List<ObjectDefinition> filterFindByC_OFI_A_E_S_S(
 		long companyId, long[] objectFolderIds, boolean active,
 		boolean enableObjectEntryDraft, String scope, int status, int start,
 		int end, OrderByComparator<ObjectDefinition> orderByComparator) {
 
 		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
-			return findByC_O_A_E_S_S(
+			return findByC_OFI_A_E_S_S(
 				companyId, objectFolderIds, active, enableObjectEntryDraft,
 				scope, status, start, end, orderByComparator);
 		}
@@ -14175,12 +14175,12 @@ public class ObjectDefinitionPersistenceImpl
 				_FILTER_SQL_SELECT_OBJECTDEFINITION_NO_INLINE_DISTINCT_WHERE_1);
 		}
 
-		sb.append(_FINDER_COLUMN_C_O_A_E_S_S_COMPANYID_2);
+		sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_COMPANYID_2);
 
 		if (objectFolderIds.length > 0) {
 			sb.append("(");
 
-			sb.append(_FINDER_COLUMN_C_O_A_E_S_S_OBJECTFOLDERID_7);
+			sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_OBJECTFOLDERID_7);
 
 			sb.append(StringUtil.merge(objectFolderIds));
 
@@ -14191,22 +14191,22 @@ public class ObjectDefinitionPersistenceImpl
 			sb.append(WHERE_AND);
 		}
 
-		sb.append(_FINDER_COLUMN_C_O_A_E_S_S_ACTIVE_2_SQL);
+		sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_ACTIVE_2_SQL);
 
-		sb.append(_FINDER_COLUMN_C_O_A_E_S_S_ENABLEOBJECTENTRYDRAFT_2);
+		sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_ENABLEOBJECTENTRYDRAFT_2);
 
 		boolean bindScope = false;
 
 		if (scope.isEmpty()) {
-			sb.append(_FINDER_COLUMN_C_O_A_E_S_S_SCOPE_3);
+			sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_SCOPE_3);
 		}
 		else {
 			bindScope = true;
 
-			sb.append(_FINDER_COLUMN_C_O_A_E_S_S_SCOPE_2);
+			sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_SCOPE_2);
 		}
 
-		sb.append(_FINDER_COLUMN_C_O_A_E_S_S_STATUS_2);
+		sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_STATUS_2);
 
 		sb.setStringAt(
 			removeConjunction(sb.stringAt(sb.index() - 1)), sb.index() - 1);
@@ -14297,11 +14297,11 @@ public class ObjectDefinitionPersistenceImpl
 	 * @return the matching object definitions
 	 */
 	@Override
-	public List<ObjectDefinition> findByC_O_A_E_S_S(
+	public List<ObjectDefinition> findByC_OFI_A_E_S_S(
 		long companyId, long[] objectFolderIds, boolean active,
 		boolean enableObjectEntryDraft, String scope, int status) {
 
-		return findByC_O_A_E_S_S(
+		return findByC_OFI_A_E_S_S(
 			companyId, objectFolderIds, active, enableObjectEntryDraft, scope,
 			status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
@@ -14324,12 +14324,12 @@ public class ObjectDefinitionPersistenceImpl
 	 * @return the range of matching object definitions
 	 */
 	@Override
-	public List<ObjectDefinition> findByC_O_A_E_S_S(
+	public List<ObjectDefinition> findByC_OFI_A_E_S_S(
 		long companyId, long[] objectFolderIds, boolean active,
 		boolean enableObjectEntryDraft, String scope, int status, int start,
 		int end) {
 
-		return findByC_O_A_E_S_S(
+		return findByC_OFI_A_E_S_S(
 			companyId, objectFolderIds, active, enableObjectEntryDraft, scope,
 			status, start, end, null);
 	}
@@ -14353,12 +14353,12 @@ public class ObjectDefinitionPersistenceImpl
 	 * @return the ordered range of matching object definitions
 	 */
 	@Override
-	public List<ObjectDefinition> findByC_O_A_E_S_S(
+	public List<ObjectDefinition> findByC_OFI_A_E_S_S(
 		long companyId, long[] objectFolderIds, boolean active,
 		boolean enableObjectEntryDraft, String scope, int status, int start,
 		int end, OrderByComparator<ObjectDefinition> orderByComparator) {
 
-		return findByC_O_A_E_S_S(
+		return findByC_OFI_A_E_S_S(
 			companyId, objectFolderIds, active, enableObjectEntryDraft, scope,
 			status, start, end, orderByComparator, true);
 	}
@@ -14383,7 +14383,7 @@ public class ObjectDefinitionPersistenceImpl
 	 * @return the ordered range of matching object definitions
 	 */
 	@Override
-	public List<ObjectDefinition> findByC_O_A_E_S_S(
+	public List<ObjectDefinition> findByC_OFI_A_E_S_S(
 		long companyId, long[] objectFolderIds, boolean active,
 		boolean enableObjectEntryDraft, String scope, int status, int start,
 		int end, OrderByComparator<ObjectDefinition> orderByComparator,
@@ -14399,7 +14399,7 @@ public class ObjectDefinitionPersistenceImpl
 		scope = Objects.toString(scope, "");
 
 		if (objectFolderIds.length == 1) {
-			return findByC_O_A_E_S_S(
+			return findByC_OFI_A_E_S_S(
 				companyId, objectFolderIds[0], active, enableObjectEntryDraft,
 				scope, status, start, end, orderByComparator);
 		}
@@ -14428,7 +14428,7 @@ public class ObjectDefinitionPersistenceImpl
 
 		if (useFinderCache) {
 			list = (List<ObjectDefinition>)finderCache.getResult(
-				_finderPathWithPaginationFindByC_O_A_E_S_S, finderArgs, this);
+				_finderPathWithPaginationFindByC_OFI_A_E_S_S, finderArgs, this);
 
 			if ((list != null) && !list.isEmpty()) {
 				for (ObjectDefinition objectDefinition : list) {
@@ -14455,12 +14455,12 @@ public class ObjectDefinitionPersistenceImpl
 
 			sb.append(_SQL_SELECT_OBJECTDEFINITION_WHERE);
 
-			sb.append(_FINDER_COLUMN_C_O_A_E_S_S_COMPANYID_2);
+			sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_COMPANYID_2);
 
 			if (objectFolderIds.length > 0) {
 				sb.append("(");
 
-				sb.append(_FINDER_COLUMN_C_O_A_E_S_S_OBJECTFOLDERID_7);
+				sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_OBJECTFOLDERID_7);
 
 				sb.append(StringUtil.merge(objectFolderIds));
 
@@ -14471,22 +14471,22 @@ public class ObjectDefinitionPersistenceImpl
 				sb.append(WHERE_AND);
 			}
 
-			sb.append(_FINDER_COLUMN_C_O_A_E_S_S_ACTIVE_2);
+			sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_ACTIVE_2);
 
-			sb.append(_FINDER_COLUMN_C_O_A_E_S_S_ENABLEOBJECTENTRYDRAFT_2);
+			sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_ENABLEOBJECTENTRYDRAFT_2);
 
 			boolean bindScope = false;
 
 			if (scope.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_O_A_E_S_S_SCOPE_3);
+				sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_SCOPE_3);
 			}
 			else {
 				bindScope = true;
 
-				sb.append(_FINDER_COLUMN_C_O_A_E_S_S_SCOPE_2);
+				sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_SCOPE_2);
 			}
 
-			sb.append(_FINDER_COLUMN_C_O_A_E_S_S_STATUS_2);
+			sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_STATUS_2);
 
 			sb.setStringAt(
 				removeConjunction(sb.stringAt(sb.index() - 1)), sb.index() - 1);
@@ -14529,8 +14529,8 @@ public class ObjectDefinitionPersistenceImpl
 
 				if (useFinderCache) {
 					finderCache.putResult(
-						_finderPathWithPaginationFindByC_O_A_E_S_S, finderArgs,
-						list);
+						_finderPathWithPaginationFindByC_OFI_A_E_S_S,
+						finderArgs, list);
 				}
 			}
 			catch (Exception exception) {
@@ -14555,12 +14555,12 @@ public class ObjectDefinitionPersistenceImpl
 	 * @param status the status
 	 */
 	@Override
-	public void removeByC_O_A_E_S_S(
+	public void removeByC_OFI_A_E_S_S(
 		long companyId, long objectFolderId, boolean active,
 		boolean enableObjectEntryDraft, String scope, int status) {
 
 		for (ObjectDefinition objectDefinition :
-				findByC_O_A_E_S_S(
+				findByC_OFI_A_E_S_S(
 					companyId, objectFolderId, active, enableObjectEntryDraft,
 					scope, status, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 					null)) {
@@ -14581,13 +14581,13 @@ public class ObjectDefinitionPersistenceImpl
 	 * @return the number of matching object definitions
 	 */
 	@Override
-	public int countByC_O_A_E_S_S(
+	public int countByC_OFI_A_E_S_S(
 		long companyId, long objectFolderId, boolean active,
 		boolean enableObjectEntryDraft, String scope, int status) {
 
 		scope = Objects.toString(scope, "");
 
-		FinderPath finderPath = _finderPathCountByC_O_A_E_S_S;
+		FinderPath finderPath = _finderPathCountByC_OFI_A_E_S_S;
 
 		Object[] finderArgs = new Object[] {
 			companyId, objectFolderId, active, enableObjectEntryDraft, scope,
@@ -14601,26 +14601,26 @@ public class ObjectDefinitionPersistenceImpl
 
 			sb.append(_SQL_COUNT_OBJECTDEFINITION_WHERE);
 
-			sb.append(_FINDER_COLUMN_C_O_A_E_S_S_COMPANYID_2);
+			sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_COMPANYID_2);
 
-			sb.append(_FINDER_COLUMN_C_O_A_E_S_S_OBJECTFOLDERID_2);
+			sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_OBJECTFOLDERID_2);
 
-			sb.append(_FINDER_COLUMN_C_O_A_E_S_S_ACTIVE_2);
+			sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_ACTIVE_2);
 
-			sb.append(_FINDER_COLUMN_C_O_A_E_S_S_ENABLEOBJECTENTRYDRAFT_2);
+			sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_ENABLEOBJECTENTRYDRAFT_2);
 
 			boolean bindScope = false;
 
 			if (scope.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_O_A_E_S_S_SCOPE_3);
+				sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_SCOPE_3);
 			}
 			else {
 				bindScope = true;
 
-				sb.append(_FINDER_COLUMN_C_O_A_E_S_S_SCOPE_2);
+				sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_SCOPE_2);
 			}
 
-			sb.append(_FINDER_COLUMN_C_O_A_E_S_S_STATUS_2);
+			sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_STATUS_2);
 
 			String sql = sb.toString();
 
@@ -14674,7 +14674,7 @@ public class ObjectDefinitionPersistenceImpl
 	 * @return the number of matching object definitions
 	 */
 	@Override
-	public int countByC_O_A_E_S_S(
+	public int countByC_OFI_A_E_S_S(
 		long companyId, long[] objectFolderIds, boolean active,
 		boolean enableObjectEntryDraft, String scope, int status) {
 
@@ -14693,19 +14693,19 @@ public class ObjectDefinitionPersistenceImpl
 		};
 
 		Long count = (Long)finderCache.getResult(
-			_finderPathWithPaginationCountByC_O_A_E_S_S, finderArgs, this);
+			_finderPathWithPaginationCountByC_OFI_A_E_S_S, finderArgs, this);
 
 		if (count == null) {
 			StringBundler sb = new StringBundler();
 
 			sb.append(_SQL_COUNT_OBJECTDEFINITION_WHERE);
 
-			sb.append(_FINDER_COLUMN_C_O_A_E_S_S_COMPANYID_2);
+			sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_COMPANYID_2);
 
 			if (objectFolderIds.length > 0) {
 				sb.append("(");
 
-				sb.append(_FINDER_COLUMN_C_O_A_E_S_S_OBJECTFOLDERID_7);
+				sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_OBJECTFOLDERID_7);
 
 				sb.append(StringUtil.merge(objectFolderIds));
 
@@ -14716,22 +14716,22 @@ public class ObjectDefinitionPersistenceImpl
 				sb.append(WHERE_AND);
 			}
 
-			sb.append(_FINDER_COLUMN_C_O_A_E_S_S_ACTIVE_2);
+			sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_ACTIVE_2);
 
-			sb.append(_FINDER_COLUMN_C_O_A_E_S_S_ENABLEOBJECTENTRYDRAFT_2);
+			sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_ENABLEOBJECTENTRYDRAFT_2);
 
 			boolean bindScope = false;
 
 			if (scope.isEmpty()) {
-				sb.append(_FINDER_COLUMN_C_O_A_E_S_S_SCOPE_3);
+				sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_SCOPE_3);
 			}
 			else {
 				bindScope = true;
 
-				sb.append(_FINDER_COLUMN_C_O_A_E_S_S_SCOPE_2);
+				sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_SCOPE_2);
 			}
 
-			sb.append(_FINDER_COLUMN_C_O_A_E_S_S_STATUS_2);
+			sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_STATUS_2);
 
 			sb.setStringAt(
 				removeConjunction(sb.stringAt(sb.index() - 1)), sb.index() - 1);
@@ -14762,7 +14762,7 @@ public class ObjectDefinitionPersistenceImpl
 				count = (Long)query.uniqueResult();
 
 				finderCache.putResult(
-					_finderPathWithPaginationCountByC_O_A_E_S_S, finderArgs,
+					_finderPathWithPaginationCountByC_OFI_A_E_S_S, finderArgs,
 					count);
 			}
 			catch (Exception exception) {
@@ -14788,12 +14788,12 @@ public class ObjectDefinitionPersistenceImpl
 	 * @return the number of matching object definitions that the user has permission to view
 	 */
 	@Override
-	public int filterCountByC_O_A_E_S_S(
+	public int filterCountByC_OFI_A_E_S_S(
 		long companyId, long objectFolderId, boolean active,
 		boolean enableObjectEntryDraft, String scope, int status) {
 
 		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
-			return countByC_O_A_E_S_S(
+			return countByC_OFI_A_E_S_S(
 				companyId, objectFolderId, active, enableObjectEntryDraft,
 				scope, status);
 		}
@@ -14804,26 +14804,26 @@ public class ObjectDefinitionPersistenceImpl
 
 		sb.append(_FILTER_SQL_COUNT_OBJECTDEFINITION_WHERE);
 
-		sb.append(_FINDER_COLUMN_C_O_A_E_S_S_COMPANYID_2);
+		sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_COMPANYID_2);
 
-		sb.append(_FINDER_COLUMN_C_O_A_E_S_S_OBJECTFOLDERID_2);
+		sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_OBJECTFOLDERID_2);
 
-		sb.append(_FINDER_COLUMN_C_O_A_E_S_S_ACTIVE_2_SQL);
+		sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_ACTIVE_2_SQL);
 
-		sb.append(_FINDER_COLUMN_C_O_A_E_S_S_ENABLEOBJECTENTRYDRAFT_2);
+		sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_ENABLEOBJECTENTRYDRAFT_2);
 
 		boolean bindScope = false;
 
 		if (scope.isEmpty()) {
-			sb.append(_FINDER_COLUMN_C_O_A_E_S_S_SCOPE_3);
+			sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_SCOPE_3);
 		}
 		else {
 			bindScope = true;
 
-			sb.append(_FINDER_COLUMN_C_O_A_E_S_S_SCOPE_2);
+			sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_SCOPE_2);
 		}
 
-		sb.append(_FINDER_COLUMN_C_O_A_E_S_S_STATUS_2);
+		sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_STATUS_2);
 
 		String sql = InlineSQLHelperUtil.replacePermissionCheck(
 			sb.toString(), ObjectDefinition.class.getName(),
@@ -14879,12 +14879,12 @@ public class ObjectDefinitionPersistenceImpl
 	 * @return the number of matching object definitions that the user has permission to view
 	 */
 	@Override
-	public int filterCountByC_O_A_E_S_S(
+	public int filterCountByC_OFI_A_E_S_S(
 		long companyId, long[] objectFolderIds, boolean active,
 		boolean enableObjectEntryDraft, String scope, int status) {
 
 		if (!InlineSQLHelperUtil.isEnabled(companyId, 0)) {
-			return countByC_O_A_E_S_S(
+			return countByC_OFI_A_E_S_S(
 				companyId, objectFolderIds, active, enableObjectEntryDraft,
 				scope, status);
 		}
@@ -14902,12 +14902,12 @@ public class ObjectDefinitionPersistenceImpl
 
 		sb.append(_FILTER_SQL_COUNT_OBJECTDEFINITION_WHERE);
 
-		sb.append(_FINDER_COLUMN_C_O_A_E_S_S_COMPANYID_2);
+		sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_COMPANYID_2);
 
 		if (objectFolderIds.length > 0) {
 			sb.append("(");
 
-			sb.append(_FINDER_COLUMN_C_O_A_E_S_S_OBJECTFOLDERID_7);
+			sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_OBJECTFOLDERID_7);
 
 			sb.append(StringUtil.merge(objectFolderIds));
 
@@ -14918,22 +14918,22 @@ public class ObjectDefinitionPersistenceImpl
 			sb.append(WHERE_AND);
 		}
 
-		sb.append(_FINDER_COLUMN_C_O_A_E_S_S_ACTIVE_2_SQL);
+		sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_ACTIVE_2_SQL);
 
-		sb.append(_FINDER_COLUMN_C_O_A_E_S_S_ENABLEOBJECTENTRYDRAFT_2);
+		sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_ENABLEOBJECTENTRYDRAFT_2);
 
 		boolean bindScope = false;
 
 		if (scope.isEmpty()) {
-			sb.append(_FINDER_COLUMN_C_O_A_E_S_S_SCOPE_3);
+			sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_SCOPE_3);
 		}
 		else {
 			bindScope = true;
 
-			sb.append(_FINDER_COLUMN_C_O_A_E_S_S_SCOPE_2);
+			sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_SCOPE_2);
 		}
 
-		sb.append(_FINDER_COLUMN_C_O_A_E_S_S_STATUS_2);
+		sb.append(_FINDER_COLUMN_C_OFI_A_E_S_S_STATUS_2);
 
 		sb.setStringAt(
 			removeConjunction(sb.stringAt(sb.index() - 1)), sb.index() - 1);
@@ -14978,32 +14978,32 @@ public class ObjectDefinitionPersistenceImpl
 		}
 	}
 
-	private static final String _FINDER_COLUMN_C_O_A_E_S_S_COMPANYID_2 =
+	private static final String _FINDER_COLUMN_C_OFI_A_E_S_S_COMPANYID_2 =
 		"objectDefinition.companyId = ? AND ";
 
-	private static final String _FINDER_COLUMN_C_O_A_E_S_S_OBJECTFOLDERID_2 =
+	private static final String _FINDER_COLUMN_C_OFI_A_E_S_S_OBJECTFOLDERID_2 =
 		"objectDefinition.objectFolderId = ? AND ";
 
-	private static final String _FINDER_COLUMN_C_O_A_E_S_S_OBJECTFOLDERID_7 =
+	private static final String _FINDER_COLUMN_C_OFI_A_E_S_S_OBJECTFOLDERID_7 =
 		"objectDefinition.objectFolderId IN (";
 
-	private static final String _FINDER_COLUMN_C_O_A_E_S_S_ACTIVE_2 =
+	private static final String _FINDER_COLUMN_C_OFI_A_E_S_S_ACTIVE_2 =
 		"objectDefinition.active = ? AND ";
 
-	private static final String _FINDER_COLUMN_C_O_A_E_S_S_ACTIVE_2_SQL =
+	private static final String _FINDER_COLUMN_C_OFI_A_E_S_S_ACTIVE_2_SQL =
 		"objectDefinition.active_ = ? AND ";
 
 	private static final String
-		_FINDER_COLUMN_C_O_A_E_S_S_ENABLEOBJECTENTRYDRAFT_2 =
+		_FINDER_COLUMN_C_OFI_A_E_S_S_ENABLEOBJECTENTRYDRAFT_2 =
 			"objectDefinition.enableObjectEntryDraft = ? AND ";
 
-	private static final String _FINDER_COLUMN_C_O_A_E_S_S_SCOPE_2 =
+	private static final String _FINDER_COLUMN_C_OFI_A_E_S_S_SCOPE_2 =
 		"objectDefinition.scope = ? AND ";
 
-	private static final String _FINDER_COLUMN_C_O_A_E_S_S_SCOPE_3 =
+	private static final String _FINDER_COLUMN_C_OFI_A_E_S_S_SCOPE_3 =
 		"(objectDefinition.scope IS NULL OR objectDefinition.scope = '') AND ";
 
-	private static final String _FINDER_COLUMN_C_O_A_E_S_S_STATUS_2 =
+	private static final String _FINDER_COLUMN_C_OFI_A_E_S_S_STATUS_2 =
 		"objectDefinition.status = ?";
 
 	private FinderPath _finderPathFetchByERC_C;
@@ -16178,8 +16178,8 @@ public class ObjectDefinitionPersistenceImpl
 			},
 			new String[] {"companyId", "active_", "system_", "status"}, false);
 
-		_finderPathWithPaginationFindByC_O_A_E_S_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_O_A_E_S_S",
+		_finderPathWithPaginationFindByC_OFI_A_E_S_S = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_OFI_A_E_S_S",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Boolean.class.getName(), Boolean.class.getName(),
@@ -16193,8 +16193,8 @@ public class ObjectDefinitionPersistenceImpl
 			},
 			true);
 
-		_finderPathWithoutPaginationFindByC_O_A_E_S_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_O_A_E_S_S",
+		_finderPathWithoutPaginationFindByC_OFI_A_E_S_S = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_OFI_A_E_S_S",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Boolean.class.getName(), Boolean.class.getName(),
@@ -16206,8 +16206,8 @@ public class ObjectDefinitionPersistenceImpl
 			},
 			true);
 
-		_finderPathCountByC_O_A_E_S_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_O_A_E_S_S",
+		_finderPathCountByC_OFI_A_E_S_S = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_OFI_A_E_S_S",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Boolean.class.getName(), Boolean.class.getName(),
@@ -16219,8 +16219,8 @@ public class ObjectDefinitionPersistenceImpl
 			},
 			false);
 
-		_finderPathWithPaginationCountByC_O_A_E_S_S = new FinderPath(
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_O_A_E_S_S",
+		_finderPathWithPaginationCountByC_OFI_A_E_S_S = new FinderPath(
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_OFI_A_E_S_S",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				Boolean.class.getName(), Boolean.class.getName(),

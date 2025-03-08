@@ -225,10 +225,10 @@ public class WorkflowDefinitionLinkLocalServiceUtil {
 	}
 
 	public static WorkflowDefinitionLink fetchDefaultWorkflowDefinitionLink(
-		long companyId, String className, long classPK, long typePK) {
+		long companyId, String className) {
 
 		return getService().fetchDefaultWorkflowDefinitionLink(
-			companyId, className, classPK, typePK);
+			companyId, className);
 	}
 
 	public static WorkflowDefinitionLink fetchWorkflowDefinitionLink(
@@ -289,14 +289,6 @@ public class WorkflowDefinitionLinkLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
-	public static WorkflowDefinitionLink getDefaultWorkflowDefinitionLink(
-			long companyId, String className, long classPK, long typePK)
-		throws PortalException {
-
-		return getService().getDefaultWorkflowDefinitionLink(
-			companyId, className, classPK, typePK);
-	}
-
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
 		getExportActionableDynamicQuery(
 			com.liferay.exportimport.kernel.lar.PortletDataContext
@@ -342,15 +334,6 @@ public class WorkflowDefinitionLinkLocalServiceUtil {
 		throws PortalException {
 
 		return getService().getWorkflowDefinitionLink(workflowDefinitionLinkId);
-	}
-
-	public static WorkflowDefinitionLink getWorkflowDefinitionLink(
-			long companyId, long groupId, String className, long classPK,
-			long typePK)
-		throws PortalException {
-
-		return getService().getWorkflowDefinitionLink(
-			companyId, groupId, className, classPK, typePK);
 	}
 
 	public static WorkflowDefinitionLink getWorkflowDefinitionLink(

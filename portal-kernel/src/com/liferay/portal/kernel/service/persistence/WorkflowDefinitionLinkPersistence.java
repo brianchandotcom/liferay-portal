@@ -1222,64 +1222,191 @@ public interface WorkflowDefinitionLinkPersistence
 		long groupId, long companyId, long classNameId, long classPK);
 
 	/**
-	 * Returns the workflow definition link where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and typePK = &#63; or throws a <code>NoSuchWorkflowDefinitionLinkException</code> if it could not be found.
+	 * Returns all the workflow definition links where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and typePK = &#63;.
 	 *
 	 * @param groupId the group ID
 	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
 	 * @param typePK the type pk
-	 * @return the matching workflow definition link
-	 * @throws NoSuchWorkflowDefinitionLinkException if a matching workflow definition link could not be found
+	 * @return the matching workflow definition links
 	 */
-	public WorkflowDefinitionLink findByG_C_C_C_T(
-			long groupId, long companyId, long classNameId, long classPK,
-			long typePK)
-		throws NoSuchWorkflowDefinitionLinkException;
-
-	/**
-	 * Returns the workflow definition link where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and typePK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param typePK the type pk
-	 * @return the matching workflow definition link, or <code>null</code> if a matching workflow definition link could not be found
-	 */
-	public WorkflowDefinitionLink fetchByG_C_C_C_T(
+	public java.util.List<WorkflowDefinitionLink> findByG_C_C_C_T(
 		long groupId, long companyId, long classNameId, long classPK,
 		long typePK);
 
 	/**
-	 * Returns the workflow definition link where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and typePK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns a range of all the workflow definition links where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and typePK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>WorkflowDefinitionLinkModelImpl</code>.
+	 * </p>
 	 *
 	 * @param groupId the group ID
 	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
 	 * @param typePK the type pk
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the matching workflow definition link, or <code>null</code> if a matching workflow definition link could not be found
+	 * @param start the lower bound of the range of workflow definition links
+	 * @param end the upper bound of the range of workflow definition links (not inclusive)
+	 * @return the range of matching workflow definition links
 	 */
-	public WorkflowDefinitionLink fetchByG_C_C_C_T(
+	public java.util.List<WorkflowDefinitionLink> findByG_C_C_C_T(
 		long groupId, long companyId, long classNameId, long classPK,
-		long typePK, boolean useFinderCache);
+		long typePK, int start, int end);
 
 	/**
-	 * Removes the workflow definition link where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and typePK = &#63; from the database.
+	 * Returns an ordered range of all the workflow definition links where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and typePK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>WorkflowDefinitionLinkModelImpl</code>.
+	 * </p>
 	 *
 	 * @param groupId the group ID
 	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
 	 * @param typePK the type pk
-	 * @return the workflow definition link that was removed
+	 * @param start the lower bound of the range of workflow definition links
+	 * @param end the upper bound of the range of workflow definition links (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching workflow definition links
 	 */
-	public WorkflowDefinitionLink removeByG_C_C_C_T(
+	public java.util.List<WorkflowDefinitionLink> findByG_C_C_C_T(
+		long groupId, long companyId, long classNameId, long classPK,
+		long typePK, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<WorkflowDefinitionLink>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the workflow definition links where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and typePK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>WorkflowDefinitionLinkModelImpl</code>.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param typePK the type pk
+	 * @param start the lower bound of the range of workflow definition links
+	 * @param end the upper bound of the range of workflow definition links (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching workflow definition links
+	 */
+	public java.util.List<WorkflowDefinitionLink> findByG_C_C_C_T(
+		long groupId, long companyId, long classNameId, long classPK,
+		long typePK, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<WorkflowDefinitionLink>
+			orderByComparator,
+		boolean useFinderCache);
+
+	/**
+	 * Returns the first workflow definition link in the ordered set where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and typePK = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param typePK the type pk
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching workflow definition link
+	 * @throws NoSuchWorkflowDefinitionLinkException if a matching workflow definition link could not be found
+	 */
+	public WorkflowDefinitionLink findByG_C_C_C_T_First(
 			long groupId, long companyId, long classNameId, long classPK,
-			long typePK)
+			long typePK,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<WorkflowDefinitionLink> orderByComparator)
 		throws NoSuchWorkflowDefinitionLinkException;
+
+	/**
+	 * Returns the first workflow definition link in the ordered set where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and typePK = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param typePK the type pk
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching workflow definition link, or <code>null</code> if a matching workflow definition link could not be found
+	 */
+	public WorkflowDefinitionLink fetchByG_C_C_C_T_First(
+		long groupId, long companyId, long classNameId, long classPK,
+		long typePK,
+		com.liferay.portal.kernel.util.OrderByComparator<WorkflowDefinitionLink>
+			orderByComparator);
+
+	/**
+	 * Returns the last workflow definition link in the ordered set where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and typePK = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param typePK the type pk
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching workflow definition link
+	 * @throws NoSuchWorkflowDefinitionLinkException if a matching workflow definition link could not be found
+	 */
+	public WorkflowDefinitionLink findByG_C_C_C_T_Last(
+			long groupId, long companyId, long classNameId, long classPK,
+			long typePK,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<WorkflowDefinitionLink> orderByComparator)
+		throws NoSuchWorkflowDefinitionLinkException;
+
+	/**
+	 * Returns the last workflow definition link in the ordered set where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and typePK = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param typePK the type pk
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching workflow definition link, or <code>null</code> if a matching workflow definition link could not be found
+	 */
+	public WorkflowDefinitionLink fetchByG_C_C_C_T_Last(
+		long groupId, long companyId, long classNameId, long classPK,
+		long typePK,
+		com.liferay.portal.kernel.util.OrderByComparator<WorkflowDefinitionLink>
+			orderByComparator);
+
+	/**
+	 * Returns the workflow definition links before and after the current workflow definition link in the ordered set where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and typePK = &#63;.
+	 *
+	 * @param workflowDefinitionLinkId the primary key of the current workflow definition link
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param typePK the type pk
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next workflow definition link
+	 * @throws NoSuchWorkflowDefinitionLinkException if a workflow definition link with the primary key could not be found
+	 */
+	public WorkflowDefinitionLink[] findByG_C_C_C_T_PrevAndNext(
+			long workflowDefinitionLinkId, long groupId, long companyId,
+			long classNameId, long classPK, long typePK,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<WorkflowDefinitionLink> orderByComparator)
+		throws NoSuchWorkflowDefinitionLinkException;
+
+	/**
+	 * Removes all the workflow definition links where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and typePK = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param typePK the type pk
+	 */
+	public void removeByG_C_C_C_T(
+		long groupId, long companyId, long classNameId, long classPK,
+		long typePK);
 
 	/**
 	 * Returns the number of workflow definition links where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and typePK = &#63;.

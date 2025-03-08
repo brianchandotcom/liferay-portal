@@ -43,9 +43,15 @@ import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.configuration.DefaultSearchResultPermissionFilterConfiguration;
 import com.liferay.portal.search.facet.nested.NestedFacet;
+import com.liferay.portal.search.hits.SearchHit;
+import com.liferay.portal.search.hits.SearchHits;
+import com.liferay.portal.search.hits.SearchHitsBuilder;
+import com.liferay.portal.search.hits.SearchHitsBuilderFactory;
 import com.liferay.portal.search.internal.facet.FacetImpl;
 import com.liferay.portal.search.internal.facet.NestedFacetImpl;
 import com.liferay.portal.search.internal.facet.SimpleFacetCollector;
+import com.liferay.portal.search.internal.hits.SearchHitsBuilderFactoryImpl;
+import com.liferay.portal.search.internal.searcher.SearchResponseImpl;
 import com.liferay.portal.search.legacy.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.util.PropsValues;
@@ -178,6 +184,34 @@ public class DefaultSearchResultPermissionFilter
 			(float)(System.currentTimeMillis() - hits.getStart()) /
 				Time.SECOND);
 		hits.setLength(hits.getLength() - excludeDocs.size());
+
+		SearchResponseImpl searchResponseImpl =
+			(SearchResponseImpl)searchContext.getAttribute("search.response");
+
+		SearchHits searchHits = searchResponseImpl.getSearchHits();
+
+		List<SearchHit> searchHitsList = searchHits.getSearchHits();
+
+		List<String> ids = new ArrayList<>();
+
+		ArrayUtil.isNotEmptyForEach(
+			excludeDocs.toArray(new Document[0]),
+			document -> ids.add(document.get("uid")));
+
+		searchHitsList.removeIf(searchHit -> ids.contains(searchHit.getId()));
+
+		SearchHitsBuilderFactory searchHitsBuilderFactory =
+			new SearchHitsBuilderFactoryImpl();
+
+		SearchHitsBuilder searchHitsBuilder =
+			searchHitsBuilderFactory.getSearchHitsBuilder();
+
+		searchHitsBuilder.addSearchHits(searchHitsList);
+		searchHitsBuilder.maxScore(searchHits.getMaxScore());
+		searchHitsBuilder.searchTime(searchHits.getSearchTime());
+		searchHitsBuilder.totalHits(hits.getLength());
+
+		searchResponseImpl.setSearchHits(searchHitsBuilder.build());
 
 		return excludeDocs.size();
 	}

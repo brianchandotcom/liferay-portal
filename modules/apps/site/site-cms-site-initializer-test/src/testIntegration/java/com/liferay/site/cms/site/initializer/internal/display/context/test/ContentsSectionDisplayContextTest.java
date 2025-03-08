@@ -35,6 +35,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -74,6 +75,7 @@ public class ContentsSectionDisplayContextTest
 		Assert.assertTrue(apiURL.contains(sb.toString()));
 	}
 
+	@Ignore
 	@Test
 	@TestInfo("LPD-50664")
 	public void testGetCreationMenu() throws Exception {

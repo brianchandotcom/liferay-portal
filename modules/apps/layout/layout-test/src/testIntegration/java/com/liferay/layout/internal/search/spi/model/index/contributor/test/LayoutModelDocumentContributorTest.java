@@ -73,7 +73,6 @@ import com.liferay.segments.service.SegmentsExperienceLocalService;
 import com.liferay.template.test.util.TemplateTestUtil;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;

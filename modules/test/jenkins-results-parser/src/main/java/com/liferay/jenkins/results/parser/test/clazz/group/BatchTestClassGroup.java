@@ -359,6 +359,23 @@ public abstract class BatchTestClassGroup extends BaseTestClassGroup {
 			return jobPropertyValue;
 		}
 
+		if (JenkinsResultsParserUtil.isCloudCINode()) {
+			try {
+				Properties buildProperties =
+					JenkinsResultsParserUtil.getBuildProperties();
+
+				if (buildProperties.containsKey(
+						"master.auto.scaling.group.name")) {
+
+					return buildProperties.getProperty(
+						"master.auto.scaling.group.name");
+				}
+			}
+			catch (IOException ioException) {
+				throw new RuntimeException(ioException);
+			}
+		}
+
 		return SLAVE_LABEL_DEFAULT;
 	}
 

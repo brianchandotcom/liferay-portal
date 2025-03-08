@@ -287,10 +287,7 @@ public class CISystemStatusReportUtil {
 				if (matcher.find()) {
 					int masterID = Integer.parseInt(matcher.group("masterID"));
 
-					String masterNetworkName = System.getenv(
-						"MASTER_NETWORK_NAME");
-
-					if (masterNetworkName.equals("gcp-network")) {
+					if (JenkinsResultsParserUtil.isCloudCINode()) {
 						if (masterID <= 40) {
 							continue;
 						}

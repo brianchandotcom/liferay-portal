@@ -600,13 +600,11 @@ public class GenerateReportsBuildRunner extends BaseBuildRunner<BuildData> {
 	}
 
 	private String _getGCPBucketBasePath() {
-		String masterNetworkName = System.getenv("MASTER_NETWORK_NAME");
-
-		if (!masterNetworkName.equals("gcp-network")) {
-			return CloudBucketUtil.GCP_BUCKET_PATH_JENKINS_CI_DATA;
+		if (JenkinsResultsParserUtil.isCloudCINode()) {
+			return CloudBucketUtil.GCP_BUCKET_PATH_JENKINS_CI_DATA + "/aws";
 		}
 
-		return CloudBucketUtil.GCP_BUCKET_PATH_JENKINS_CI_DATA + "/aws";
+		return CloudBucketUtil.GCP_BUCKET_PATH_JENKINS_CI_DATA;
 	}
 
 	private String _getReportDirName(String reportName) {

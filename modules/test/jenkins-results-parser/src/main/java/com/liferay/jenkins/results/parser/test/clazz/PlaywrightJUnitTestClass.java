@@ -113,7 +113,7 @@ public class PlaywrightJUnitTestClass extends JUnitTestClass {
 				testProperties, "test.batch.slave.label");
 
 			if (JenkinsResultsParserUtil.isNullOrEmpty(slaveLabel)) {
-				slaveLabel = _SLAVE_LABEL_DEFAULT;
+				slaveLabel = getSlaveLabel();
 			}
 
 			_slaveLabel = slaveLabel;
@@ -134,8 +134,6 @@ public class PlaywrightJUnitTestClass extends JUnitTestClass {
 	}
 
 	private static final String _MINIMUM_SLAVE_RAM_DEFAULT = "12";
-
-	private static final String _SLAVE_LABEL_DEFAULT = "!master";
 
 	private static final Pattern _testFilePathPattern = Pattern.compile(
 		".+/playwright/(setup|tests)/(?<specFilePath>.+)");

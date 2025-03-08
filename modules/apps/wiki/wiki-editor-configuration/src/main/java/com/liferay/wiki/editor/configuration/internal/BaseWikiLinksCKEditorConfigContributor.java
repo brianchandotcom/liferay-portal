@@ -16,9 +16,9 @@ import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.wiki.item.selector.WikiAttachmentItemSelectorCriterion;
+import com.liferay.wiki.item.selector.WikiPageItemSelectorCriterion;
 import com.liferay.wiki.item.selector.constants.WikiItemSelectorViewConstants;
-import com.liferay.wiki.item.selector.criterion.WikiAttachmentItemSelectorCriterion;
-import com.liferay.wiki.item.selector.criterion.WikiPageItemSelectorCriterion;
 
 import java.util.List;
 import java.util.Map;

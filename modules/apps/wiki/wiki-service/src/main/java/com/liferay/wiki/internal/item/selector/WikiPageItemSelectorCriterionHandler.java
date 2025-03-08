@@ -7,7 +7,7 @@ package com.liferay.wiki.internal.item.selector;
 
 import com.liferay.item.selector.BaseItemSelectorCriterionHandler;
 import com.liferay.item.selector.ItemSelectorCriterionHandler;
-import com.liferay.wiki.item.selector.criterion.WikiPageItemSelectorCriterion;
+import com.liferay.wiki.item.selector.WikiPageItemSelectorCriterion;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;

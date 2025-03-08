@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.wiki.configuration.WikiFileUploadConfiguration;
 import com.liferay.wiki.constants.WikiPortletKeys;
-import com.liferay.wiki.item.selector.criterion.WikiAttachmentItemSelectorCriterion;
+import com.liferay.wiki.item.selector.WikiAttachmentItemSelectorCriterion;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.wiki.web.internal.item.selector.view.WikiAttachmentItemSelectorView;

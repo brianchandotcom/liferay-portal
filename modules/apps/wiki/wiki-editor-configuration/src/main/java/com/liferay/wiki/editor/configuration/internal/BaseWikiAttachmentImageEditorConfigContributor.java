@@ -30,7 +30,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.wiki.configuration.WikiFileUploadConfiguration;
 import com.liferay.wiki.constants.WikiPortletKeys;
-import com.liferay.wiki.item.selector.criterion.WikiAttachmentItemSelectorCriterion;
+import com.liferay.wiki.item.selector.WikiAttachmentItemSelectorCriterion;
 
 import java.util.ArrayList;
 import java.util.List;

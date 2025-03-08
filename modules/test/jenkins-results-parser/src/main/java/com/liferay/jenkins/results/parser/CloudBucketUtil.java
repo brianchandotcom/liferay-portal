@@ -40,7 +40,8 @@ public class CloudBucketUtil {
 
 	public static void copyS3File(String destination, String source) {
 		_executeCommands(
-			_getFileTransferCommand("aws s3 cp", destination, source));
+			_getFileTransferCommand(
+				"aws s3 cp --no-progress", destination, source));
 	}
 
 	public static String getSignedURL(int duration, String file, String url)
@@ -107,7 +108,8 @@ public class CloudBucketUtil {
 
 	public static void syncS3Files(String destination, String source) {
 		_executeCommands(
-			_getFileTransferCommand("aws s3 sync", destination, source));
+			_getFileTransferCommand(
+				"aws s3 sync --no-progress", destination, source));
 	}
 
 	private static String _escapeParentheses(String s) {

@@ -3,17 +3,17 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.jenkins.results.parser.aws.cloud;
+package com.liferay.jenkins.results.parser.aws;
 
 import org.json.JSONObject;
 
 /**
  * @author Michael Hashimoto
  */
-public class AWSCloudExecutorScaler {
+public class AWSExecutorScaler {
 
-	public AWSCloud getAWSCloud() {
-		return _awsCloud;
+	public AWSFleetCloud getAWSFleetCloud() {
+		return _awsFleetCloud;
 	}
 
 	public String getClassName() {
@@ -33,12 +33,14 @@ public class AWSCloudExecutorScaler {
 		return String.valueOf(_jsonObject);
 	}
 
-	protected AWSCloudExecutorScaler(AWSCloud awsCloud, JSONObject jsonObject) {
-		_awsCloud = awsCloud;
+	protected AWSExecutorScaler(
+		AWSFleetCloud awsFleetCloud, JSONObject jsonObject) {
+
+		_awsFleetCloud = awsFleetCloud;
 		_jsonObject = jsonObject;
 	}
 
-	private final AWSCloud _awsCloud;
+	private final AWSFleetCloud _awsFleetCloud;
 	private final JSONObject _jsonObject;
 
 }

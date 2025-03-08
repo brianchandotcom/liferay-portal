@@ -69,4 +69,4 @@ Jenkins.instance.clouds.each { cloud ->
 	}
 }
 
-return cloudsJSONArray.toString(2);
+return cloudsJSONArray.toString();

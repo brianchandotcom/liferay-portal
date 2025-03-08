@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.jenkins.results.parser.aws.cloud;
+package com.liferay.jenkins.results.parser.aws;
 
 import com.liferay.jenkins.results.parser.JenkinsMaster;
 
@@ -12,14 +12,14 @@ import org.json.JSONObject;
 /**
  * @author Michael Hashimoto
  */
-public class AWSCloud {
+public class AWSFleetCloud {
 
-	public AWSCloudComputerConnector getAWSCloudConnector() {
-		return _awsCloudComputerConnector;
+	public AWSComputerConnector getAWSComputerConnector() {
+		return _awsComputerConnector;
 	}
 
-	public AWSCloudExecutorScaler getAWSCloudExecutorScaler() {
-		return _awsCloudExecutorScaler;
+	public AWSExecutorScaler getAWSExecutorScaler() {
+		return _awsExecutorScaler;
 	}
 
 	public int getCloudStatusIntervalSec() {
@@ -111,19 +111,20 @@ public class AWSCloud {
 		return String.valueOf(_jsonObject);
 	}
 
-	protected AWSCloud(JenkinsMaster jenkinsMaster, JSONObject jsonObject) {
+	protected AWSFleetCloud(
+		JenkinsMaster jenkinsMaster, JSONObject jsonObject) {
+
 		_jenkinsMaster = jenkinsMaster;
 		_jsonObject = jsonObject;
 
-		_awsCloudComputerConnector =
-			AWSCloudFactory.newAWSCloudComputerConnector(
-				this, jsonObject.getJSONObject("computerConnector"));
-		_awsCloudExecutorScaler = AWSCloudFactory.newAWSCloudExecutorScaler(
+		_awsComputerConnector = AWSFactory.newAWSComputerConnector(
+			this, jsonObject.getJSONObject("computerConnector"));
+		_awsExecutorScaler = AWSFactory.newAWSExecutorScaler(
 			this, jsonObject.getJSONObject("executorScaler"));
 	}
 
-	private final AWSCloudComputerConnector _awsCloudComputerConnector;
-	private final AWSCloudExecutorScaler _awsCloudExecutorScaler;
+	private final AWSComputerConnector _awsComputerConnector;
+	private final AWSExecutorScaler _awsExecutorScaler;
 	private final JenkinsMaster _jenkinsMaster;
 	private final JSONObject _jsonObject;
 

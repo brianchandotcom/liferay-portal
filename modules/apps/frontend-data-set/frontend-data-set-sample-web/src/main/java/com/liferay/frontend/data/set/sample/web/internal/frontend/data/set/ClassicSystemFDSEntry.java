@@ -37,7 +37,7 @@ public class ClassicSystemFDSEntry implements SystemFDSEntry {
 	@Override
 	public String getRESTApplication() {
 		return "/frontend-data-set-taglib/app/data-set/com_liferay_frontend_" +
-			"data_set_sample_web_internal_portlet_FDSSamplePortlet-classic/";
+			"data_set_sample_web_internal_portlet_FDSSamplePortlet-classic";
 	}
 
 	@Override

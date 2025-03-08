@@ -17,6 +17,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
@@ -47,8 +48,7 @@ public class StructureBuilderDisplayContext {
 			"config",
 			JSONUtil.put(
 				"objectFolderExternalReferenceCode",
-				ParamUtil.getString(
-					_httpServletRequest, "objectFolderExternalReferenceCode"))
+				_getObjectFolderExternalReferenceCode())
 		).put(
 			"state",
 			JSONUtil.put("objectDefinition", _getObjectDefinitionJSONObject())
@@ -125,6 +125,28 @@ public class StructureBuilderDisplayContext {
 		return null;
 	}
 
+	private String _getObjectFolderExternalReferenceCode() {
+		if (_objectFolderExternalReferenceCode != null) {
+			return _objectFolderExternalReferenceCode;
+		}
+
+		_objectFolderExternalReferenceCode = ParamUtil.getString(
+			_httpServletRequest, "objectFolderExternalReferenceCode");
+
+		if (Validator.isNotNull(_objectFolderExternalReferenceCode)) {
+			return _objectFolderExternalReferenceCode;
+		}
+
+		ObjectDefinition objectDefinition = _getObjectDefinition();
+
+		if (objectDefinition != null) {
+			_objectFolderExternalReferenceCode =
+				objectDefinition.getObjectFolderExternalReferenceCode();
+		}
+
+		return _objectFolderExternalReferenceCode;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		StructureBuilderDisplayContext.class);
 
@@ -133,6 +155,7 @@ public class StructureBuilderDisplayContext {
 	private ObjectDefinition _objectDefinition;
 	private final ObjectDefinitionResource.Factory
 		_objectDefinitionResourceFactory;
+	private String _objectFolderExternalReferenceCode;
 	private final ThemeDisplay _themeDisplay;
 
 }

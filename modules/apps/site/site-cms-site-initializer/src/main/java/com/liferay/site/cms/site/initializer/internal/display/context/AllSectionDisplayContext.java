@@ -51,12 +51,12 @@ public class AllSectionDisplayContext extends BaseSectionDisplayContext {
 	public CreationMenu getCreationMenu() {
 		return new CreationMenu() {
 			{
-				ObjectFolder contentStructuresObjectFolder =
+				ObjectFolder cmsContentStructuresObjectFolder =
 					_objectFolderLocalService.
 						fetchObjectFolderByExternalReferenceCode(
 							"L_CMS_CONTENT_STRUCTURES",
 							themeDisplay.getCompanyId());
-				ObjectFolder fileTypesObjectFolder =
+				ObjectFolder cmsFileTypesObjectFolder =
 					_objectFolderLocalService.
 						fetchObjectFolderByExternalReferenceCode(
 							"L_CMS_FILE_TYPES", themeDisplay.getCompanyId());
@@ -65,9 +65,9 @@ public class AllSectionDisplayContext extends BaseSectionDisplayContext {
 						_objectDefinitionService.getObjectDefinitions(
 							themeDisplay.getCompanyId(),
 							new long[] {
-								contentStructuresObjectFolder.
+								cmsContentStructuresObjectFolder.
 									getObjectFolderId(),
-								fileTypesObjectFolder.getObjectFolderId()
+								cmsFileTypesObjectFolder.getObjectFolderId()
 							},
 							true, true, ObjectDefinitionConstants.SCOPE_SITE,
 							WorkflowConstants.STATUS_APPROVED,

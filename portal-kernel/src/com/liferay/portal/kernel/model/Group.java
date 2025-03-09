@@ -156,6 +156,8 @@ public interface Group extends GroupModel, PersistedModel, TreeModel {
 
 	public boolean hasStagingGroup();
 
+	public boolean isCMS();
+
 	public boolean isCompany();
 
 	public boolean isCompanyStagingGroup();

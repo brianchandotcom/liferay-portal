@@ -918,6 +918,11 @@ public class GroupWrapper
 	}
 
 	@Override
+	public boolean isCMS() {
+		return model.isCMS();
+	}
+
+	@Override
 	public boolean isCompany() {
 		return model.isCompany();
 	}

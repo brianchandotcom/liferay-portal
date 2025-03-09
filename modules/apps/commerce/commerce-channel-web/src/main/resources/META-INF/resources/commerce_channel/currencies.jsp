@@ -11,6 +11,11 @@
 CommerceChannelCommerceCurrencyDisplayContext commerceChannelCommerceCurrenciesDisplayContext = (CommerceChannelCommerceCurrencyDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 %>
 
+<clay:alert
+	displayType="warning"
+	message="changing-the-currency-restrictions-will-affect-existing-open-orders"
+/>
+
 <portlet:actionURL name="/commerce_channels/edit_commerce_channel_commerce_currency" var="editCommerceChannelCommerceCurrencyActionURL" />
 
 <aui:form action="<%= editCommerceChannelCommerceCurrencyActionURL %>" cssClass="hide" name="addCommerceChannelCommerceCurrencyFm">

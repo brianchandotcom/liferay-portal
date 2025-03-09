@@ -37,7 +37,7 @@ public class BundleUtil {
 		return GetterUtil.getBoolean(headers.get("Liferay-Service"));
 	}
 
-	public static boolean isRequireSchemaVersion(Bundle bundle) {
+	public static boolean isRequireSchemaVersionBundle(Bundle bundle) {
 		Dictionary<String, String> headers = bundle.getHeaders(
 			StringPool.BLANK);
 

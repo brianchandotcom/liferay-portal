@@ -41,11 +41,8 @@ public class BundleUtil {
 		Dictionary<String, String> headers = bundle.getHeaders(
 			StringPool.BLANK);
 
-		if (headers.get("Liferay-Require-SchemaVersion") != null) {
-			return true;
-		}
-
-		return false;
+		return GetterUtil.getBoolean(
+			headers.get("Liferay-Require-SchemaVersion"));
 	}
 
 }

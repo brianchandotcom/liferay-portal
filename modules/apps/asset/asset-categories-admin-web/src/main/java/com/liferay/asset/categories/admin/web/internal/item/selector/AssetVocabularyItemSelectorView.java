@@ -6,7 +6,6 @@
 package com.liferay.asset.categories.admin.web.internal.item.selector;
 
 import com.liferay.asset.categories.admin.web.internal.display.context.AssetCategoriesDisplayContext;
-import com.liferay.asset.categories.admin.web.internal.item.selector.criterion.AssetVocabularyItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.ItemSelectorViewDescriptorRenderer;

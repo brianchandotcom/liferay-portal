@@ -9,7 +9,7 @@ import com.liferay.asset.categories.admin.web.constants.AssetCategoriesAdminPort
 import com.liferay.asset.categories.admin.web.internal.configuration.AssetCategoriesAdminWebConfiguration;
 import com.liferay.asset.categories.admin.web.internal.constants.AssetCategoriesAdminDisplayStyleKeys;
 import com.liferay.asset.categories.admin.web.internal.constants.AssetCategoriesAdminWebKeys;
-import com.liferay.asset.categories.admin.web.internal.item.selector.criterion.AssetVocabularyItemSelectorCriterion;
+import com.liferay.asset.categories.admin.web.internal.item.selector.AssetVocabularyItemSelectorCriterion;
 import com.liferay.asset.categories.admin.web.internal.util.AssetCategoryTreePathComparator;
 import com.liferay.asset.categories.configuration.AssetCategoriesCompanyConfiguration;
 import com.liferay.asset.entry.rel.service.AssetEntryAssetCategoryRelLocalServiceUtil;

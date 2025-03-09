@@ -5,7 +5,6 @@
 
 package com.liferay.asset.categories.admin.web.internal.item.selector;
 
-import com.liferay.asset.categories.admin.web.internal.item.selector.criterion.AssetVocabularyItemSelectorCriterion;
 import com.liferay.item.selector.BaseItemSelectorCriterionHandler;
 import com.liferay.item.selector.ItemSelectorCriterionHandler;
 

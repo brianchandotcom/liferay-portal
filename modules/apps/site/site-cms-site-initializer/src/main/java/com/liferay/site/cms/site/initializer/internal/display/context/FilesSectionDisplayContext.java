@@ -61,7 +61,7 @@ public class FilesSectionDisplayContext extends BaseSectionDisplayContext {
 				for (ObjectDefinition objectDefinition :
 						_objectDefinitionService.getCMSObjectDefinitions(
 							themeDisplay.getCompanyId(),
-							new String[] {"L_CMS_FILE_TYPES"})) {
+							getObjectDefinitionFolderExternalReferenceCodes())) {
 
 					addPrimaryDropdownItem(
 						dropdownItem -> {

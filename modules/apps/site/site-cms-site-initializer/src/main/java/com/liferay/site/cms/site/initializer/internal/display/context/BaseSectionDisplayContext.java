@@ -8,6 +8,8 @@ package com.liferay.site.cms.site.initializer.internal.display.context;
 import com.liferay.frontend.data.set.model.FDSActionDropdownItem;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.CreationMenu;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
+import com.liferay.info.constants.InfoDisplayWebKeys;
+import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -33,6 +35,13 @@ public abstract class BaseSectionDisplayContext {
 		this.cmsSiteInitializerConfiguration = cmsSiteInitializerConfiguration;
 		this.httpServletRequest = httpServletRequest;
 
+		Object object = (Object)httpServletRequest.getAttribute(
+			InfoDisplayWebKeys.INFO_ITEM);
+
+		if (object instanceof ObjectEntryFolder) {
+			objectEntryFolder = (ObjectEntryFolder)object;
+		}
+
 		themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
@@ -41,7 +50,14 @@ public abstract class BaseSectionDisplayContext {
 		String[] objectDefinitionFolderExternalReferenceCodes =
 			getObjectDefinitionFolderExternalReferenceCodes();
 
-		StringBundler sb = new StringBundler(4);
+		StringBundler sb = null;
+
+		if (objectEntryFolder == null) {
+			sb = new StringBundler(4);
+		}
+		else {
+			sb = new StringBundler(6);
+		}
 
 		sb.append("/o/search/v1.0/search?emptySearch=true&");
 		sb.append("filter=cms eq true or objectDefinitionFolder in ('");
@@ -49,7 +65,14 @@ public abstract class BaseSectionDisplayContext {
 		sb.append(
 			StringUtil.merge(
 				objectDefinitionFolderExternalReferenceCodes, "','"));
-		sb.append("')&nestedFields=embedded");
+		sb.append("')");
+
+		if (objectEntryFolder != null) {
+			sb.append(" and folderId eq");
+			sb.append(objectEntryFolder.getObjectEntryFolderId());
+		}
+
+		sb.append("&nestedFields=embedded");
 
 		return sb.toString();
 	}
@@ -92,6 +115,7 @@ public abstract class BaseSectionDisplayContext {
 	protected final CMSSiteInitializerConfiguration
 		cmsSiteInitializerConfiguration;
 	protected final HttpServletRequest httpServletRequest;
+	protected ObjectEntryFolder objectEntryFolder;
 	protected final ThemeDisplay themeDisplay;
 
 }

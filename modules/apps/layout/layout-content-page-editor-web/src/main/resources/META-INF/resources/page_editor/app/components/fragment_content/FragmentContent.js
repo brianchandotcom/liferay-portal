@@ -85,7 +85,7 @@ const FragmentContent = ({
 
 			return nextEditables;
 		},
-		[isMounted, fragmentEntryLinkId, item, computeEditables]
+		[isMounted, fragmentEntryLinkId, item.itemId, computeEditables]
 	);
 
 	const fragmentEntryLink = useSelectorCallback(

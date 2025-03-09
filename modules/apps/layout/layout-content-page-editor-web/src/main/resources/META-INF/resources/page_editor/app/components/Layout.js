@@ -46,7 +46,7 @@ const LAYOUT_DATA_ITEMS = {
 	[LAYOUT_DATA_ITEM_TYPES.row]: RowWithControls,
 };
 
-export default function Layout({mainItemId}) {
+const Layout = React.memo(({mainItemId}) => {
 	const layoutData = useSelector((state) => state.layoutData);
 	const layoutRef = useRef(null);
 	const selectItem = useSelectItem();
@@ -135,11 +135,15 @@ export default function Layout({mainItemId}) {
 			)}
 		</>
 	);
-}
+});
+
+Layout.displayName = 'Layout';
 
 Layout.propTypes = {
 	mainItemId: PropTypes.string.isRequired,
 };
+
+export default Layout;
 
 class LayoutDataItem extends React.Component {
 	static getDerivedStateFromError(error) {

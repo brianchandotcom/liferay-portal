@@ -10,51 +10,73 @@ const filterItemActions = (
 	itemData: any
 ): Array<IItemsActions> => {
 	return actions
-		? actions.reduce(
-				(actions: Array<IItemsActions>, action: IItemsActions) => {
-					if (action.data?.permissionKey) {
-						const itemDataActionKeys = Object.keys(
-							itemData.actions
-						);
+		? actions
+				.reduce(
+					(actions: Array<IItemsActions>, action: IItemsActions) => {
+						if (action.data?.permissionKey) {
+							const itemDataActionKeys = Object.keys(
+								itemData.actions
+							);
 
-						if (
-							itemData.actions &&
-							itemDataActionKeys.some(
-								(itemAction) =>
-									itemAction.toLowerCase() ===
-									action.data?.permissionKey?.toLowerCase()
-							)
-						) {
-							if (action.target === 'headless') {
-								const matchedPermissionKey =
-									itemDataActionKeys.filter(
-										(itemAction) =>
-											itemAction.toLowerCase() ===
-											action.data?.permissionKey?.toLowerCase()
-									);
+							if (
+								itemData.actions &&
+								itemDataActionKeys.some(
+									(itemAction) =>
+										itemAction.toLowerCase() ===
+										action.data?.permissionKey?.toLowerCase()
+								)
+							) {
+								if (action.target === 'headless') {
+									const matchedPermissionKey =
+										itemDataActionKeys.filter(
+											(itemAction) =>
+												itemAction.toLowerCase() ===
+												action.data?.permissionKey?.toLowerCase()
+										);
 
-								return [
-									...actions,
-									{
-										...action,
-										...itemData.actions[
-											matchedPermissionKey[0]
-										],
-									},
-								];
+									return [
+										...actions,
+										{
+											...action,
+											...itemData.actions[
+												matchedPermissionKey[0]
+											],
+										},
+									];
+								}
+								else {
+									return [...actions, action];
+								}
 							}
-							else {
+
+							return actions;
+						}
+
+						return [...actions, action];
+					},
+					[]
+				)
+				.reduce(
+					(actions: Array<IItemsActions>, action: IItemsActions) => {
+						if (action.data?.filters) {
+							let match = true;
+
+							for (const filter of action.data?.filters) {
+								if (itemData[filter.key] != filter.value) {
+									match = false;
+									break;
+								}
+							}
+
+							if (match) {
 								return [...actions, action];
 							}
 						}
 
-						return actions;
-					}
-
-					return [...actions, action];
-				},
-				[]
-			)
+						return [...actions, action];
+					},
+					[]
+				)
 		: [];
 };
 

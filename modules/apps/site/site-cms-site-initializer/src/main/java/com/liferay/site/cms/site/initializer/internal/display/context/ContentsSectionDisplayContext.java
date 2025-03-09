@@ -64,7 +64,7 @@ public class ContentsSectionDisplayContext extends BaseSectionDisplayContext {
 				for (ObjectDefinition objectDefinition :
 						_objectDefinitionService.getCMSObjectDefinitions(
 							themeDisplay.getCompanyId(),
-							new String[] {"L_CMS_CONTENT_STRUCTURES"})) {
+							getObjectDefinitionFolderExternalReferenceCodes())) {
 
 					addPrimaryDropdownItem(
 						dropdownItem -> {

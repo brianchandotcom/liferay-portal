@@ -47,9 +47,7 @@ public class AllSectionDisplayContext extends BaseSectionDisplayContext {
 				for (ObjectDefinition objectDefinition :
 						_objectDefinitionService.getCMSObjectDefinitions(
 							themeDisplay.getCompanyId(),
-							new String[] {
-								"L_CMS_CONTENT_STRUCTURES", "L_CMS_FILE_TYPES"
-							})) {
+							getObjectDefinitionFolderExternalReferenceCodes())) {
 
 					addPrimaryDropdownItem(
 						dropdownItem -> {
@@ -104,6 +102,11 @@ public class AllSectionDisplayContext extends BaseSectionDisplayContext {
 				contentsObjectDefinitionFolderExternalReferenceCodes(),
 			cmsSiteInitializerConfiguration.
 				filesObjectDefinitionFolderExternalReferenceCodes());
+	}
+
+	@Override
+	public boolean showFolders() {
+		return false;
 	}
 
 	private String _getPermissionsURL() throws Exception {

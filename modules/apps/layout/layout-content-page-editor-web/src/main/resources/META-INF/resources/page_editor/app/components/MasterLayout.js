@@ -15,7 +15,7 @@ import {
 } from '../../prop_types/index';
 import {LAYOUT_DATA_ITEM_TYPES} from '../config/constants/layoutDataItemTypes';
 import {useSelectItem} from '../contexts/ControlsContext';
-import {useSelector} from '../contexts/StoreContext';
+import {useSelector, useSelectorRef} from '../contexts/StoreContext';
 import Layout from './Layout';
 import FragmentContent from './fragment_content/FragmentContent';
 import {FormStep} from './layout_data_items/FormStep';
@@ -181,8 +181,10 @@ function Fragment({item, layoutData}) {
 		};
 	});
 
-	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
-	const masterLayoutData = useSelector(
+	const fragmentEntryLinksRef = useSelectorRef(
+		(state) => state.fragmentEntryLinks
+	);
+	const masterLayoutDataRef = useSelectorRef(
 		(state) => state.masterLayout?.masterLayoutData
 	);
 
@@ -196,9 +198,15 @@ function Fragment({item, layoutData}) {
 					const Component = () =>
 						mainItemId ? (
 							<MasterLayoutDataItem
-								fragmentEntryLinks={fragmentEntryLinks}
-								item={masterLayoutData.items[mainItemId]}
-								layoutData={masterLayoutData}
+								fragmentEntryLinks={
+									fragmentEntryLinksRef.current
+								}
+								item={
+									masterLayoutDataRef.current.items[
+										mainItemId
+									]
+								}
+								layoutData={masterLayoutDataRef.current}
 							/>
 						) : null;
 
@@ -210,7 +218,7 @@ function Fragment({item, layoutData}) {
 					};
 				}
 			),
-		[fragmentEntryLinks, masterLayoutData]
+		[fragmentEntryLinksRef, masterLayoutDataRef]
 	);
 
 	return (

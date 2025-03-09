@@ -44,7 +44,7 @@ const LAYOUT_DATA_ITEMS = {
 	[LAYOUT_DATA_ITEM_TYPES.row]: Row,
 };
 
-export default function MasterPage() {
+const MasterPage = React.memo(() => {
 	const fragmentEntryLinks = useSelector((state) => state.fragmentEntryLinks);
 	const masterLayoutData = useSelector(
 		(state) => state.masterLayout?.masterLayoutData
@@ -81,7 +81,11 @@ export default function MasterPage() {
 			/>
 		</div>
 	);
-}
+});
+
+MasterPage.displayName = 'MasterPage';
+
+export default MasterPage;
 
 function MasterLayoutDataItem({fragmentEntryLinks, item, layoutData}) {
 	const Component = LAYOUT_DATA_ITEMS[item.type];

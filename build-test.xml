@@ -8879,14 +8879,12 @@ war.path=${app.server.portal.dir}/</echo>
 					FILE_FRESH="${selenium.output.dir.name}/fresh-@{fresh.db.schema}.sql"
 					FILE_UPGRADED="${selenium.output.dir.name}/upgraded-@{upgraded.db.schema}.sql"
 
-					# Extract table names
-					grep -i "CREATE TABLE" "$FILE_FRESH" | awk '{print $3}' | tr -d '`' > ${selenium.output.dir.name}/tables_fresh.txt
-					grep -i "CREATE TABLE" "$FILE_UPGRADED" | awk '{print $3}' | tr -d '`' > ${selenium.output.dir.name}/tables_upgraded.txt
+					grep -i "CREATE TABLE" "$FILE_FRESH" | awk '{print $3}' | tr -d '`' > ${selenium.output.dir.name}/tables-fresh.txt
+					grep -i "CREATE TABLE" "$FILE_UPGRADED" | awk '{print $3}' | tr -d '`' > ${selenium.output.dir.name}/tables-upgraded.txt
 
-					# Find tables only present in the upgraded file
-					grep -Fxvf ${selenium.output.dir.name}/tables_fresh.txt ${selenium.output.dir.name}/tables_upgraded.txt > ${selenium.output.dir.name}/tables_to_remove.txt
+					grep -Fxvf ${selenium.output.dir.name}/tables-fresh.txt ${selenium.output.dir.name}/tables-upgraded.txt > ${selenium.output.dir.name}/tables-to-remove.txt
 
-					# Remove SQL table statements only present in the upgraded file
+					# Remove SQL statements for tables that are only present in the upgraded file
 					while read -r table; do
 						sed -i "/^CREATE TABLE \`$table\`/,/ENDCREATE/d" "$FILE_UPGRADED"
 						sed -i "/^CREATE TABLE public.$table/,/^);/d" "$FILE_UPGRADED"
@@ -8895,7 +8893,7 @@ war.path=${app.server.portal.dir}/</echo>
 						sed -i "/^ALTER TABLE ONLY public\.$table/,/^);/d" "$FILE_UPGRADED"
 						sed -i "/^CREATE RULE update_$table/,/);$/d" "$FILE_UPGRADED"
 						sed -i "/^CREATE RULE delete_$table/,/);$/d" "$FILE_UPGRADED"
-					done < ${selenium.output.dir.name}/tables_to_remove.txt
+					done < ${selenium.output.dir.name}/tables-to-remove.txt
 
 					diff -y -B -W250 ${selenium.output.dir.name}/upgraded-@{upgraded.db.schema}.sql ${selenium.output.dir.name}/fresh-@{fresh.db.schema}.sql | expand | grep -E -C5 '^.{123} [|><]( |$)' || true
 				]]>
@@ -8908,9 +8906,9 @@ war.path=${app.server.portal.dir}/</echo>
 
 			<exec executable="./validate_db_upgrade_schemas.sh" outputproperty="database.changes.master" />
 
-			<delete failonerror="false" file="${selenium.output.dir.name}/tables_fresh.txt" />
-			<delete failonerror="false" file="${selenium.output.dir.name}/tables_to_remove.txt" />
-			<delete failonerror="false" file="${selenium.output.dir.name}/tables_upgraded.txt" />
+			<delete failonerror="false" file="${selenium.output.dir.name}/tables-fresh.txt" />
+			<delete failonerror="false" file="${selenium.output.dir.name}/tables-to-remove.txt" />
+			<delete failonerror="false" file="${selenium.output.dir.name}/tables-upgraded.txt" />
 
 			<if>
 				<not>

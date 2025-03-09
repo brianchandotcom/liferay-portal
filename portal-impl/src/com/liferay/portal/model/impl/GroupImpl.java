@@ -849,6 +849,17 @@ public class GroupImpl extends GroupBaseImpl {
 	}
 
 	@Override
+	public boolean isCMS() {
+		String groupKey = getGroupKey();
+
+		if (groupKey.equals(GroupConstants.CMS)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public boolean isCompany() {
 		if ((getClassNameId() == PortalUtil.getClassNameId(Company.class)) ||
 			isCompanyStagingGroup()) {

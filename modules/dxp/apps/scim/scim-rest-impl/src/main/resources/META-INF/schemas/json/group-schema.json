@@ -59,8 +59,7 @@
 					"mutability": "immutable",
 					"name": "$ref",
 					"referenceTypes": [
-						"User",
-						"Group"
+						"urn:ietf:params:scim:schemas:core:2.0:User"
 					],
 					"required": false,
 					"returned": "default",
@@ -69,8 +68,7 @@
 				},
 				{
 					"canonicalValues": [
-						"User",
-						"Group"
+						"User"
 					],
 					"caseExact": false,
 					"description": "A label indicating the type of resource, e.g., 'User' or 'Group'.",
@@ -111,7 +109,7 @@
 	"description": "Group",
 	"id": "urn:ietf:params:scim:schemas:core:2.0:Group",
 	"meta": {
-		"location": "/v2/Schemas/urn:ietf:params:scim:schemas:core:2.0:Group",
+		"location": "/urn:ietf:params:scim:schemas:core:2.0:Group",
 		"resourceType": "Schema"
 	},
 	"name": "Group"

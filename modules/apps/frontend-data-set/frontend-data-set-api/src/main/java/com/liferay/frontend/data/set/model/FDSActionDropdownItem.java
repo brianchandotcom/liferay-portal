@@ -7,6 +7,8 @@ package com.liferay.frontend.data.set.model;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.DropdownItem;
 
+import java.util.ArrayList;
+
 /**
  * @author Marco Leo
  */
@@ -23,6 +25,21 @@ public class FDSActionDropdownItem extends DropdownItem {
 		setMethod(method);
 		setPermissionKey(permissionKey);
 		setTarget(target);
+	}
+
+	public FDSActionDropdownItem(
+		String href, String icon, String id, String label, String method,
+		String permissionKey, String target,
+		ArrayList<FDSActionDropdownItemFilter> fdsActionDropdownItemFilters) {
+
+		setHref(href);
+		setIcon(icon);
+		setId(id);
+		setLabel(label);
+		setMethod(method);
+		setPermissionKey(permissionKey);
+		setTarget(target);
+		setFilters(fdsActionDropdownItemFilters);
 	}
 
 	public FDSActionDropdownItem(
@@ -64,6 +81,12 @@ public class FDSActionDropdownItem extends DropdownItem {
 
 	public void setErrorMessage(String errorMessage) {
 		putData("errorMessage", errorMessage);
+	}
+
+	public void setFilters(
+		ArrayList<FDSActionDropdownItemFilter> fdsActionDropdownItemFilters) {
+
+		putData("filters", fdsActionDropdownItemFilters);
 	}
 
 	public void setId(String id) {

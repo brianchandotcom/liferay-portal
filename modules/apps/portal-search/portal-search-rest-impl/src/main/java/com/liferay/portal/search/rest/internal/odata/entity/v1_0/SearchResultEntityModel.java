@@ -23,6 +23,7 @@ public class SearchResultEntityModel implements EntityModel {
 
 	public SearchResultEntityModel() {
 		_entityFieldsMap = EntityModel.toEntityFieldsMap(
+			new BooleanEntityField("cms", locale -> "cms"),
 			new CollectionEntityField(
 				new IntegerEntityField("groupIds", locale -> Field.GROUP_ID)),
 			new CollectionEntityField(

@@ -44,7 +44,7 @@ public abstract class BaseSectionDisplayContext {
 		StringBundler sb = new StringBundler(4);
 
 		sb.append("/o/search/v1.0/search?emptySearch=true&");
-		sb.append("filter=objectDefinitionFolder in ('");
+		sb.append("filter=cms eq true or objectDefinitionFolder in ('");
 
 		sb.append(
 			StringUtil.merge(

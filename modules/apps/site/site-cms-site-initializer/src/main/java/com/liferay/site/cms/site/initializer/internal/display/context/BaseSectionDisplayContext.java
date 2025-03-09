@@ -50,22 +50,19 @@ public abstract class BaseSectionDisplayContext {
 		String[] objectDefinitionFolderExternalReferenceCodes =
 			getObjectDefinitionFolderExternalReferenceCodes();
 
-		StringBundler sb = null;
-
-		if (objectEntryFolder == null) {
-			sb = new StringBundler(4);
-		}
-		else {
-			sb = new StringBundler(6);
-		}
+		StringBundler sb = new StringBundler(8);
 
 		sb.append("/o/search/v1.0/search?emptySearch=true&");
-		sb.append("filter=cms eq true or objectDefinitionFolder in ('");
+		sb.append("filter=objectDefinitionFolder in ('");
 
 		sb.append(
 			StringUtil.merge(
 				objectDefinitionFolderExternalReferenceCodes, "','"));
 		sb.append("')");
+
+		if (showFolders()) {
+			sb.append(" or cms eq true");
+		}
 
 		if (objectEntryFolder != null) {
 			sb.append(" and folderId eq");
@@ -97,6 +94,10 @@ public abstract class BaseSectionDisplayContext {
 
 	public String[] getObjectDefinitionFolderExternalReferenceCodes() {
 		return new String[0];
+	}
+
+	public boolean showFolders() {
+		return true;
 	}
 
 	protected String getAddStructuredContentItemURL(long objectDefinitionId) {

@@ -190,17 +190,6 @@
 			"type": "boolean"
 		},
 		{
-			"caseExact": false,
-			"description": "The User's cleartext password. This attribute is intended to be used as a means to specify an initial password when creating a new User or to reset an existing User's password.",
-			"multiValued": false,
-			"mutability": "writeOnly",
-			"name": "password",
-			"required": false,
-			"returned": "never",
-			"type": "string",
-			"uniqueness": "none"
-		},
-		{
 			"description": "Email addresses for the user. The value SHOULD be canonicalized by the service provider, e.g., 'bjensen@example.com' instead of 'bjensen@EXAMPLE.COM'. Canonical type values of 'work', 'home', and 'other'.",
 			"multiValued": true,
 			"mutability": "readWrite",
@@ -220,28 +209,15 @@
 					"uniqueness": "none"
 				},
 				{
-					"caseExact": false,
-					"description": "A human-readable name, primarily used for display purposes. READ-ONLY.",
-					"multiValued": false,
-					"mutability": "readWrite",
-					"name": "display",
-					"required": false,
-					"returned": "default",
-					"type": "string",
-					"uniqueness": "none"
-				},
-				{
 					"canonicalValues": [
-						"work",
-						"home",
-						"other"
+						"work"
 					],
 					"caseExact": false,
 					"description": "A label indicating the attribute's function, e.g., 'work' or 'home'.",
 					"multiValued": false,
 					"mutability": "readWrite",
 					"name": "type",
-					"required": true,
+					"required": false,
 					"returned": "default",
 					"type": "string",
 					"uniqueness": "none"
@@ -291,12 +267,6 @@
 				},
 				{
 					"canonicalValues": [
-						"work",
-						"home",
-						"mobile",
-						"fax",
-						"pager",
-						"other"
 					],
 					"caseExact": false,
 					"description": "A label indicating the attribute's function, e.g., 'work', 'home', 'mobile'.",
@@ -352,14 +322,6 @@
 				},
 				{
 					"canonicalValues": [
-						"aim",
-						"gtalk",
-						"icq",
-						"xmpp",
-						"msn",
-						"skype",
-						"qq",
-						"yahoo"
 					],
 					"caseExact": false,
 					"description": "A label indicating the attribute's function, e.g., 'aim', 'gtalk', 'xmpp'.",
@@ -418,8 +380,6 @@
 				},
 				{
 					"canonicalValues": [
-						"photo",
-						"thumbnail"
 					],
 					"caseExact": false,
 					"description": "A label indicating the attribute's function, i.e., 'photo' or 'thumbnail'.",
@@ -519,9 +479,6 @@
 				},
 				{
 					"canonicalValues": [
-						"work",
-						"home",
-						"other"
 					],
 					"caseExact": false,
 					"description": "A label indicating the attribute's function, e.g., 'work' or 'home'.",
@@ -584,8 +541,6 @@
 				},
 				{
 					"canonicalValues": [
-						"direct",
-						"indirect"
 					],
 					"caseExact": false,
 					"description": "A label indicating the attribute's function, e.g., 'direct' or 'indirect'.",
@@ -631,6 +586,8 @@
 					"uniqueness": "none"
 				},
 				{
+					"canonicalValues": [
+					],
 					"caseExact": false,
 					"description": "A label indicating the attribute's function.",
 					"multiValued": false,
@@ -710,17 +667,6 @@
 		},
 		{
 			"caseExact": false,
-			"description": "TThe components of the Liferay's User Schema Extension.",
-			"multiValued": false,
-			"mutability": "readWrite",
-			"name": "urn:ietf:params:scim:schemas:extension:liferay:2.0:User",
-			"required": false,
-			"returned": "default",
-			"type": "urn:ietf:params:scim:schemas:extension:liferay:2.0:User",
-			"uniqueness": "none"
-		},
-		{
-			"caseExact": false,
 			"description": "A list of certificates issued to the User.",
 			"multiValued": true,
 			"mutability": "readWrite",
@@ -779,7 +725,7 @@
 	"description": "User Account",
 	"id": "urn:ietf:params:scim:schemas:core:2.0:User",
 	"meta": {
-		"location": "/v2/Schemas/urn:ietf:params:scim:schemas:core:2.0:User",
+		"location": "/urn:ietf:params:scim:schemas:core:2.0:User",
 		"resourceType": "Schema"
 	},
 	"name": "User"

@@ -24,6 +24,7 @@ import com.liferay.object.entry.util.ObjectEntryDTOConverterUtil;
 import com.liferay.object.entry.util.ObjectEntryValuesUtil;
 import com.liferay.object.field.setting.util.ObjectFieldSettingUtil;
 import com.liferay.object.model.ObjectDefinition;
+import com.liferay.object.model.ObjectEntryFolder;
 import com.liferay.object.model.ObjectField;
 import com.liferay.object.model.ObjectRelationship;
 import com.liferay.object.related.models.ObjectRelatedModelsProvider;
@@ -43,6 +44,7 @@ import com.liferay.object.rest.internal.dto.v1_0.util.TaxonomyCategoryBriefUtil;
 import com.liferay.object.scope.ObjectScopeProvider;
 import com.liferay.object.scope.ObjectScopeProviderRegistry;
 import com.liferay.object.service.ObjectDefinitionLocalService;
+import com.liferay.object.service.ObjectEntryFolderLocalService;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.service.ObjectEntryService;
 import com.liferay.object.service.ObjectFieldLocalService;
@@ -251,6 +253,20 @@ public class ObjectEntryDTOConverter
 						return null;
 					});
 				setExternalReferenceCode(objectEntry::getExternalReferenceCode);
+				setFolderExternalReferenceCode(
+					() -> {
+						ObjectEntryFolder objectEntryFolder =
+							_objectEntryFolderLocalService.
+								fetchObjectEntryFolder(
+									objectEntry.getObjectEntryFolderId());
+
+						if (objectEntryFolder != null) {
+							return objectEntryFolder.getExternalReferenceCode();
+						}
+
+						return StringPool.BLANK;
+					});
+				setFolderId(objectEntry::getObjectEntryFolderId);
 				setFriendlyUrlPath(
 					() -> objectEntry.getURLTitle(
 						dtoConverterContext.getLocale()));
@@ -1158,6 +1174,9 @@ public class ObjectEntryDTOConverter
 
 	@Reference
 	private ObjectDefinitionLocalService _objectDefinitionLocalService;
+
+	@Reference
+	private ObjectEntryFolderLocalService _objectEntryFolderLocalService;
 
 	@Reference
 	private ObjectEntryLocalService _objectEntryLocalService;

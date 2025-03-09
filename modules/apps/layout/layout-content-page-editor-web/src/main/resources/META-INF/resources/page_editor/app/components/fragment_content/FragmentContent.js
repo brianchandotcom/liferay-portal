@@ -234,17 +234,27 @@ const FragmentContent = ({
 		getFieldValue
 	);
 
-	const style = {};
+	const style = useMemo(() => {
+		const style = {};
 
-	if (backgroundImageValue.url) {
-		style[`--lfr-background-image-${item.itemId}`] =
-			`url(${backgroundImageValue.url})`;
+		if (backgroundImageValue.url) {
+			style[`--lfr-background-image-${item.itemId}`] =
+				`url(${backgroundImageValue.url})`;
 
-		if (backgroundImage?.fileEntryId) {
-			style['--background-image-file-entry-id'] =
-				backgroundImage.fileEntryId;
+			if (backgroundImage?.fileEntryId) {
+				style['--background-image-file-entry-id'] =
+					backgroundImage.fileEntryId;
+			}
 		}
-	}
+
+		return style;
+	}, [backgroundImageValue?.url, item.itemId, backgroundImage]);
+
+	const data = useMemo(() => {
+		return {
+			fragmentEntryLinkId,
+		};
+	}, [fragmentEntryLinkId]);
 
 	return (
 		<>
@@ -271,7 +281,7 @@ const FragmentContent = ({
 						}
 					)}
 					contentRef={elementRef}
-					data={{fragmentEntryLinkId}}
+					data={data}
 					getPortals={getPortals}
 					globalContext={globalContext}
 					id={elementId}

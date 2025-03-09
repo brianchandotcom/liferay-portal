@@ -8,12 +8,9 @@ package com.liferay.site.cms.site.initializer.internal.fragment.renderer;
 import com.liferay.fragment.renderer.FragmentRenderer;
 import com.liferay.portal.kernel.feature.flag.FeatureFlagManagerUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
-
-import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -39,9 +36,7 @@ public abstract class BaseSectionFragmentRenderer implements FragmentRenderer {
 		Group group = groupLocalService.fetchGroup(
 			themeDisplay.getScopeGroupId());
 
-		if ((group == null) ||
-			!Objects.equals(group.getGroupKey(), GroupConstants.CMS)) {
-
+		if ((group == null) || !group.isCMS()) {
 			return false;
 		}
 

@@ -110,6 +110,11 @@ components:
                     type: string
                 externalReferenceCode:
                     type: string
+                folderExternalReferenceCode:
+                    type: string
+                folderId:
+                    format: int64
+                    type: integer
                 friendlyUrlPath:
                     description:
                         A relative URL to the page's rendered content.

@@ -84,8 +84,6 @@ public class ObjectEntryVersionLocalServiceTest {
 		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
 			0, _objectDefinition.getObjectDefinitionId(),
 			HashMapBuilder.<String, Serializable>put(
-				"externalReferenceCode", "externalReferenceCodeValue"
-			).put(
 				"textObjectFieldName", "textObjectFieldValue1"
 			).build());
 
@@ -94,6 +92,7 @@ public class ObjectEntryVersionLocalServiceTest {
 		_assertObjectEntryVersions(
 			Arrays.asList(
 				_createObjectEntryVersion(
+					objectEntry.getExternalReferenceCode(),
 					JSONUtil.put(
 						"textObjectFieldName", "textObjectFieldValue1"),
 					WorkflowConstants.STATUS_APPROVED, 1)),
@@ -112,10 +111,12 @@ public class ObjectEntryVersionLocalServiceTest {
 		_assertObjectEntryVersions(
 			Arrays.asList(
 				_createObjectEntryVersion(
+					objectEntry.getExternalReferenceCode(),
 					JSONUtil.put(
 						"textObjectFieldName", "textObjectFieldValue1"),
 					WorkflowConstants.STATUS_APPROVED, 1),
 				_createObjectEntryVersion(
+					objectEntry.getExternalReferenceCode(),
 					JSONUtil.put(
 						"textObjectFieldName", "textObjectFieldValue2"),
 					WorkflowConstants.STATUS_APPROVED, 2)),
@@ -141,14 +142,13 @@ public class ObjectEntryVersionLocalServiceTest {
 		ObjectEntry objectEntry = ObjectEntryTestUtil.addObjectEntry(
 			0, _objectDefinition.getObjectDefinitionId(),
 			HashMapBuilder.<String, Serializable>put(
-				"externalReferenceCode", "externalReferenceCodeValue"
-			).put(
 				"textObjectFieldName", "textObjectFieldValue1"
 			).build());
 
 		_assertObjectEntryVersions(
 			Arrays.asList(
 				_createObjectEntryVersion(
+					objectEntry.getExternalReferenceCode(),
 					JSONUtil.put(
 						"textObjectFieldName", "textObjectFieldValue1"),
 					WorkflowConstants.STATUS_PENDING, 1)),
@@ -170,6 +170,7 @@ public class ObjectEntryVersionLocalServiceTest {
 		_assertObjectEntryVersions(
 			Arrays.asList(
 				_createObjectEntryVersion(
+					objectEntry.getExternalReferenceCode(),
 					JSONUtil.put(
 						"textObjectFieldName", "textObjectFieldValue2"),
 					WorkflowConstants.STATUS_PENDING, 1)),
@@ -201,6 +202,7 @@ public class ObjectEntryVersionLocalServiceTest {
 		_assertObjectEntryVersions(
 			Arrays.asList(
 				_createObjectEntryVersion(
+					objectEntry.getExternalReferenceCode(),
 					JSONUtil.put(
 						"textObjectFieldName", "textObjectFieldValue2"),
 					WorkflowConstants.STATUS_APPROVED, 1)),
@@ -225,10 +227,12 @@ public class ObjectEntryVersionLocalServiceTest {
 		_assertObjectEntryVersions(
 			Arrays.asList(
 				_createObjectEntryVersion(
+					objectEntry.getExternalReferenceCode(),
 					JSONUtil.put(
 						"textObjectFieldName", "textObjectFieldValue2"),
 					WorkflowConstants.STATUS_APPROVED, 1),
 				_createObjectEntryVersion(
+					objectEntry.getExternalReferenceCode(),
 					JSONUtil.put(
 						"textObjectFieldName", "textObjectFieldValue3"),
 					WorkflowConstants.STATUS_PENDING, 2)),
@@ -270,7 +274,8 @@ public class ObjectEntryVersionLocalServiceTest {
 	}
 
 	private ObjectEntryVersion _createObjectEntryVersion(
-		JSONObject propertiesJSONObject, int status, int version) {
+		String externalReferenceCode, JSONObject jsonObject, int status,
+		int version) {
 
 		ObjectEntryVersion objectEntryVersion =
 			_objectEntryVersionLocalService.createObjectEntryVersion(
@@ -278,11 +283,11 @@ public class ObjectEntryVersionLocalServiceTest {
 
 		objectEntryVersion.setContent(
 			JSONUtil.put(
-				"externalReferenceCode", "externalReferenceCodeValue"
+				"externalReferenceCode", externalReferenceCode
 			).put(
 				"keywords", JSONUtil.putAll()
 			).put(
-				"properties", propertiesJSONObject
+				"properties", jsonObject
 			).put(
 				"taxonomyCategoryBriefs", JSONUtil.putAll()
 			).toString());

@@ -6,9 +6,9 @@
 import {ClayButtonWithIcon} from '@clayui/button';
 import React, {useCallback, useState} from 'react';
 
+import openModalComponent from '../modals/openModalComponent';
 import MarketplaceModal from './MarketplaceModal';
 import MarketplacePresentationModal from './MarketplacePresentationModal';
-import openModalComponent from './openModalComponent';
 
 import '../../../css/MarketplaceButton.scss';
 

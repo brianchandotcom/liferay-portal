@@ -19,10 +19,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.json.JSONObject;
-
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -30,25 +27,10 @@ import org.junit.Test;
  */
 public class RelevantRuleEngineTest extends BaseRelevantRuleTestCase {
 
-	@BeforeClass
-	public static void setUpClass() throws Exception {
-		_jsonObject.put(
-			"build_profile", "DXP"
-		).put(
-			"git_repository_dir", "liferay-portal"
-		).put(
-			"job_name", "test-portal-acceptance-pullrequest("
-		).put(
-			"test_suite_name", "relevant"
-		).put(
-			"upstream_branch_name", "master"
-		);
-	}
-
 	@Test
 	public void testExcludedModifiedFileInModule1Dir() {
 		RelevantRuleEngine relevantRuleEngine = getRelevantRuleEngine(
-			_jsonObject);
+			jsonObject);
 
 		List<RelevantRule> relevantRules =
 			relevantRuleEngine.getMatchingRelevantRules(
@@ -74,7 +56,7 @@ public class RelevantRuleEngineTest extends BaseRelevantRuleTestCase {
 	@Test
 	public void testModifiedFileForPlaywrightBatch() {
 		RelevantRuleEngine relevantRuleEngine = getRelevantRuleEngine(
-			_jsonObject);
+			jsonObject);
 
 		List<RelevantRule> relevantRules =
 			relevantRuleEngine.getMatchingRelevantRules(
@@ -128,7 +110,7 @@ public class RelevantRuleEngineTest extends BaseRelevantRuleTestCase {
 	@Test
 	public void testModifiedFileInBaseDir() {
 		RelevantRuleEngine relevantRuleEngine = getRelevantRuleEngine(
-			_jsonObject);
+			jsonObject);
 
 		List<RelevantRule> relevantRules =
 			relevantRuleEngine.getMatchingRelevantRules(
@@ -198,7 +180,5 @@ public class RelevantRuleEngineTest extends BaseRelevantRuleTestCase {
 
 		Assert.assertEquals(expectedRelevantRuleNames, actualRelevantRuleNames);
 	}
-
-	private static final JSONObject _jsonObject = new JSONObject();
 
 }

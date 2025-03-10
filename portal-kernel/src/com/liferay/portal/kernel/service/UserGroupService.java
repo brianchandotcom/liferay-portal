@@ -78,9 +78,9 @@ public interface UserGroupService extends BaseService {
 	 * </p>
 	 *
 	 * @param externalReferenceCode the user group's external reference code
-	 * @param name                  the user group's name
-	 * @param description           the user group's description
-	 * @param serviceContext        the service context to be applied (optionally
+	 * @param name the user group's name
+	 * @param description the user group's description
+	 * @param serviceContext the service context to be applied (optionally
 	 <code>null</code>). Can set expando bridge attributes for the
 	 user group.
 	 * @return the user group
@@ -296,10 +296,10 @@ public interface UserGroupService extends BaseService {
 	 * Updates the user group.
 	 *
 	 * @param externalReferenceCode the user group's external reference code
-	 * @param userGroupId           the primary key of the user group
-	 * @param name                  the user group's name
-	 * @param description           the the user group's description
-	 * @param serviceContext        the service context to be applied (optionally
+	 * @param userGroupId the primary key of the user group
+	 * @param name the user group's name
+	 * @param description the the user group's description
+	 * @param serviceContext the service context to be applied (optionally
 	 <code>null</code>). Can set expando bridge attributes for the
 	 user group.
 	 * @return the user group

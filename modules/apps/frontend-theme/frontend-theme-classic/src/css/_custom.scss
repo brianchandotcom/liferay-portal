@@ -102,3 +102,7 @@ body {
 		padding-top: 3rem;
 	}
 }
+
+.media:has(div[data-oembed-url]) {
+	display: inherit;
+}

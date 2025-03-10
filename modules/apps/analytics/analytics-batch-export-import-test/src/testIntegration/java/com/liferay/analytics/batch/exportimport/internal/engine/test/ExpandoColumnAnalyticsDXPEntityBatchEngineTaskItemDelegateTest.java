@@ -61,7 +61,10 @@ public class ExpandoColumnAnalyticsDXPEntityBatchEngineTaskItemDelegateTest {
 			ExpandoTableConstants.DEFAULT_TABLE_NAME);
 
 		_expandoColumnLocalService.addColumn(
-			_expandoTable.getTableId(), "customField",
+			_expandoTable.getTableId(), "customField1",
+			ExpandoColumnConstants.STRING);
+		_expandoColumnLocalService.addColumn(
+			_expandoTable.getTableId(), "customField2",
 			ExpandoColumnConstants.STRING);
 		_expandoColumnLocalService.addColumn(
 			_expandoTable.getTableId(), "customField3",
@@ -100,7 +103,7 @@ public class ExpandoColumnAnalyticsDXPEntityBatchEngineTaskItemDelegateTest {
 						).put(
 							"syncedUserFieldNames",
 							new String[] {
-								"customField", "customField5", "testField"
+								"customField1", "customField5", "testField"
 							}
 						).build())) {
 

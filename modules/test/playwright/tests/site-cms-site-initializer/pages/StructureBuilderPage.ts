@@ -105,11 +105,15 @@ export class StructureBuilderPage {
 			await labelInput.blur();
 		}
 
-		if (localizable) {
+		const localizableToggle = this.page.getByLabel('Localizable');
+
+		if (localizable && !(await localizableToggle.isChecked())) {
 			await this.page.getByLabel('Localizable').click();
 		}
 
-		if (mandatory) {
+		const mandatoryToggle = this.page.getByLabel('Mandatory');
+
+		if (mandatory && !(await mandatoryToggle.isChecked())) {
 			await this.page.getByLabel('Mandatory').click();
 		}
 	}

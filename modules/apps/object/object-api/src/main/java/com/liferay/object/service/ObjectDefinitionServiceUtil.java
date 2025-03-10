@@ -65,6 +65,7 @@ public class ObjectDefinitionServiceUtil {
 			String externalReferenceCode, long userId, long objectFolderId,
 			boolean enableComments, boolean enableFriendlyURLCustomization,
 			boolean enableIndexSearch, boolean enableLocalization,
+			boolean enableObjectEntryDraft,
 			Map<java.util.Locale, String> labelMap, String name,
 			String panelAppOrder, String panelCategoryKey,
 			Map<java.util.Locale, String> pluralLabelMap, boolean portlet,
@@ -77,9 +78,9 @@ public class ObjectDefinitionServiceUtil {
 		return getService().addSystemObjectDefinition(
 			externalReferenceCode, userId, objectFolderId, enableComments,
 			enableFriendlyURLCustomization, enableIndexSearch,
-			enableLocalization, labelMap, name, panelAppOrder, panelCategoryKey,
-			pluralLabelMap, portlet, scope, objectDefinitionSettings,
-			objectFields);
+			enableLocalization, enableObjectEntryDraft, labelMap, name,
+			panelAppOrder, panelCategoryKey, pluralLabelMap, portlet, scope,
+			objectDefinitionSettings, objectFields);
 	}
 
 	public static ObjectDefinition deleteObjectDefinition(

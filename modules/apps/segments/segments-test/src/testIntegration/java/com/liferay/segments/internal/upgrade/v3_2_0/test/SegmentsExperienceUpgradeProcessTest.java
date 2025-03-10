@@ -370,7 +370,11 @@ public class SegmentsExperienceUpgradeProcessTest
 				return indexMetadataList;
 			}
 
-			_db.alterColumnName(connection, tableName, columnName, columnName);
+			_db.runSQLTemplate(
+				StringBundler.concat(
+					"alter table ", tableName, " rename column ", columnName,
+					" to ", newColumnName),
+				true);
 
 			return indexMetadataList;
 		}

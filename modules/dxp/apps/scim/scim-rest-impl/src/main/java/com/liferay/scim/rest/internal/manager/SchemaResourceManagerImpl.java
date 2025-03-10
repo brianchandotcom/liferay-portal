@@ -100,9 +100,9 @@ public class SchemaResourceManagerImpl extends SchemaResourceManager {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 			URLUtil.toString(userSchemaURL));
 
-		JSONObject metaJSONObject = (JSONObject)jsonObject.get("meta");
+		JSONObject metaJSONObject = jsonObject.getJSONObject("meta");
 
-		String locationString = (String)metaJSONObject.get("location");
+		String locationString = metaJSONObject.getString("location");
 
 		metaJSONObject.put("location", attribute + locationString);
 
@@ -156,22 +156,20 @@ public class SchemaResourceManagerImpl extends SchemaResourceManager {
 		throws AbstractCharonException {
 
 		try {
-			JSONArray schemasJSONArray = JSONFactoryUtil.createJSONArray(
-				"[\"urn:ietf:params:scim:api:messages:2.0:ListResponse\"]");
-
 			Map<String, String> schemaIdJsonFileNameStringMap =
 				ScimUtil.getMapSchemaIdJsonFileName();
 
-			JSONObject rootJSONObject = JSONFactoryUtil.createJSONObject(
-				HashMapBuilder.put(
-					"itemsPerPage", 3
-				).put(
-					"startIndex", 1
-				).put(
-					"totalResults", schemaIdJsonFileNameStringMap.size()
-				).build());
-
-			rootJSONObject.put("schemas", schemasJSONArray);
+			JSONObject rootJSONObject = JSONUtil.put(
+				"itemsPerPage", 3
+			).put(
+				"schemas",
+				JSONFactoryUtil.createJSONArray(
+					"[\"urn:ietf:params:scim:api:messages:2.0:ListResponse\"]")
+			).put(
+				"startIndex", 1
+			).put(
+				"totalResults", schemaIdJsonFileNameStringMap.size()
+			);
 
 			JSONArray resourcesJSONArray = JSONFactoryUtil.createJSONArray();
 

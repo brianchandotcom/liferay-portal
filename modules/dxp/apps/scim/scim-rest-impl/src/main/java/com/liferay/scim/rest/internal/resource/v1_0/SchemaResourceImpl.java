@@ -15,6 +15,7 @@ import com.liferay.portal.kernel.service.UserGroupService;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.Searcher;
@@ -50,8 +51,9 @@ public class SchemaResourceImpl extends BaseSchemaResourceImpl {
 		return _buildResponse(
 			_schemaResourceManager.get(
 				id, _userManager,
-				(String)contextHttpServletRequest.getAttribute(
-					WebKeys.CURRENT_COMPLETE_URL),
+				ParamUtil.getString(
+					contextHttpServletRequest, WebKeys.CURRENT_COMPLETE_URL,
+					null),
 				null));
 	}
 
@@ -60,8 +62,9 @@ public class SchemaResourceImpl extends BaseSchemaResourceImpl {
 		return _buildResponse(
 			_schemaResourceManager.get(
 				(String)null, _userManager,
-				(String)contextHttpServletRequest.getAttribute(
-					WebKeys.CURRENT_COMPLETE_URL),
+				ParamUtil.getString(
+					contextHttpServletRequest, WebKeys.CURRENT_COMPLETE_URL,
+					null),
 				null));
 	}
 

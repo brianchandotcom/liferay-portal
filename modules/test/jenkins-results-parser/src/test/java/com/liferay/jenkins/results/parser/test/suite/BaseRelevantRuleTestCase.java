@@ -60,12 +60,6 @@ public abstract class BaseRelevantRuleTestCase {
 		return _baseDir;
 	}
 
-	protected PortalAcceptancePullRequestJob
-		getPortalAcceptancePullRequestJob() {
-
-		return getPortalAcceptancePullRequestJob(null);
-	}
-
 	protected PortalAcceptancePullRequestJob getPortalAcceptancePullRequestJob(
 		JSONObject jsonObject) {
 

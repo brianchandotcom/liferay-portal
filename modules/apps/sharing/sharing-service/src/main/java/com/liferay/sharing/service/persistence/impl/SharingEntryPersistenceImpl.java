@@ -15,12 +15,18 @@ import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.SessionFactory;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.sanitizer.Sanitizer;
+import com.liferay.portal.kernel.sanitizer.SanitizerException;
+import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
+import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -29,6 +35,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.sharing.exception.DuplicateSharingEntryExternalReferenceCodeException;
 import com.liferay.sharing.exception.NoSuchEntryException;
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.model.SharingEntryTable;
@@ -5229,6 +5236,211 @@ public class SharingEntryPersistenceImpl
 	private static final String _FINDER_COLUMN_TU_C_C_CLASSPK_2 =
 		"sharingEntry.classPK = ?";
 
+	private FinderPath _finderPathFetchByERC_G;
+
+	/**
+	 * Returns the sharing entry where externalReferenceCode = &#63; and groupId = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 * @return the matching sharing entry
+	 * @throws NoSuchEntryException if a matching sharing entry could not be found
+	 */
+	@Override
+	public SharingEntry findByERC_G(String externalReferenceCode, long groupId)
+		throws NoSuchEntryException {
+
+		SharingEntry sharingEntry = fetchByERC_G(
+			externalReferenceCode, groupId);
+
+		if (sharingEntry == null) {
+			StringBundler sb = new StringBundler(6);
+
+			sb.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			sb.append("externalReferenceCode=");
+			sb.append(externalReferenceCode);
+
+			sb.append(", groupId=");
+			sb.append(groupId);
+
+			sb.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(sb.toString());
+			}
+
+			throw new NoSuchEntryException(sb.toString());
+		}
+
+		return sharingEntry;
+	}
+
+	/**
+	 * Returns the sharing entry where externalReferenceCode = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 * @return the matching sharing entry, or <code>null</code> if a matching sharing entry could not be found
+	 */
+	@Override
+	public SharingEntry fetchByERC_G(
+		String externalReferenceCode, long groupId) {
+
+		return fetchByERC_G(externalReferenceCode, groupId, true);
+	}
+
+	/**
+	 * Returns the sharing entry where externalReferenceCode = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching sharing entry, or <code>null</code> if a matching sharing entry could not be found
+	 */
+	@Override
+	public SharingEntry fetchByERC_G(
+		String externalReferenceCode, long groupId, boolean useFinderCache) {
+
+		externalReferenceCode = Objects.toString(externalReferenceCode, "");
+
+		Object[] finderArgs = null;
+
+		if (useFinderCache) {
+			finderArgs = new Object[] {externalReferenceCode, groupId};
+		}
+
+		Object result = null;
+
+		if (useFinderCache) {
+			result = finderCache.getResult(
+				_finderPathFetchByERC_G, finderArgs, this);
+		}
+
+		if (result instanceof SharingEntry) {
+			SharingEntry sharingEntry = (SharingEntry)result;
+
+			if (!Objects.equals(
+					externalReferenceCode,
+					sharingEntry.getExternalReferenceCode()) ||
+				(groupId != sharingEntry.getGroupId())) {
+
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(_SQL_SELECT_SHARINGENTRY_WHERE);
+
+			boolean bindExternalReferenceCode = false;
+
+			if (externalReferenceCode.isEmpty()) {
+				sb.append(_FINDER_COLUMN_ERC_G_EXTERNALREFERENCECODE_3);
+			}
+			else {
+				bindExternalReferenceCode = true;
+
+				sb.append(_FINDER_COLUMN_ERC_G_EXTERNALREFERENCECODE_2);
+			}
+
+			sb.append(_FINDER_COLUMN_ERC_G_GROUPID_2);
+
+			String sql = sb.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query query = session.createQuery(sql);
+
+				QueryPos queryPos = QueryPos.getInstance(query);
+
+				if (bindExternalReferenceCode) {
+					queryPos.add(externalReferenceCode);
+				}
+
+				queryPos.add(groupId);
+
+				List<SharingEntry> list = query.list();
+
+				if (list.isEmpty()) {
+					if (useFinderCache) {
+						finderCache.putResult(
+							_finderPathFetchByERC_G, finderArgs, list);
+					}
+				}
+				else {
+					SharingEntry sharingEntry = list.get(0);
+
+					result = sharingEntry;
+
+					cacheResult(sharingEntry);
+				}
+			}
+			catch (Exception exception) {
+				throw processException(exception);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (SharingEntry)result;
+		}
+	}
+
+	/**
+	 * Removes the sharing entry where externalReferenceCode = &#63; and groupId = &#63; from the database.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 * @return the sharing entry that was removed
+	 */
+	@Override
+	public SharingEntry removeByERC_G(
+			String externalReferenceCode, long groupId)
+		throws NoSuchEntryException {
+
+		SharingEntry sharingEntry = findByERC_G(externalReferenceCode, groupId);
+
+		return remove(sharingEntry);
+	}
+
+	/**
+	 * Returns the number of sharing entries where externalReferenceCode = &#63; and groupId = &#63;.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 * @return the number of matching sharing entries
+	 */
+	@Override
+	public int countByERC_G(String externalReferenceCode, long groupId) {
+		SharingEntry sharingEntry = fetchByERC_G(
+			externalReferenceCode, groupId);
+
+		if (sharingEntry == null) {
+			return 0;
+		}
+
+		return 1;
+	}
+
+	private static final String _FINDER_COLUMN_ERC_G_EXTERNALREFERENCECODE_2 =
+		"sharingEntry.externalReferenceCode = ? AND ";
+
+	private static final String _FINDER_COLUMN_ERC_G_EXTERNALREFERENCECODE_3 =
+		"(sharingEntry.externalReferenceCode IS NULL OR sharingEntry.externalReferenceCode = '') AND ";
+
+	private static final String _FINDER_COLUMN_ERC_G_GROUPID_2 =
+		"sharingEntry.groupId = ?";
+
 	public SharingEntryPersistenceImpl() {
 		Map<String, String> dbColumnNames = new HashMap<String, String>();
 
@@ -5264,6 +5476,14 @@ public class SharingEntryPersistenceImpl
 			new Object[] {
 				sharingEntry.getToUserId(), sharingEntry.getClassNameId(),
 				sharingEntry.getClassPK()
+			},
+			sharingEntry);
+
+		finderCache.putResult(
+			_finderPathFetchByERC_G,
+			new Object[] {
+				sharingEntry.getExternalReferenceCode(),
+				sharingEntry.getGroupId()
 			},
 			sharingEntry);
 	}
@@ -5354,6 +5574,14 @@ public class SharingEntryPersistenceImpl
 
 		finderCache.putResult(
 			_finderPathFetchByTU_C_C, args, sharingEntryModelImpl);
+
+		args = new Object[] {
+			sharingEntryModelImpl.getExternalReferenceCode(),
+			sharingEntryModelImpl.getGroupId()
+		};
+
+		finderCache.putResult(
+			_finderPathFetchByERC_G, args, sharingEntryModelImpl);
 	}
 
 	/**
@@ -5491,6 +5719,68 @@ public class SharingEntryPersistenceImpl
 			String uuid = PortalUUIDUtil.generate();
 
 			sharingEntry.setUuid(uuid);
+		}
+
+		if (Validator.isNull(sharingEntry.getExternalReferenceCode())) {
+			sharingEntry.setExternalReferenceCode(sharingEntry.getUuid());
+		}
+		else {
+			if (!Objects.equals(
+					sharingEntryModelImpl.getColumnOriginalValue(
+						"externalReferenceCode"),
+					sharingEntry.getExternalReferenceCode())) {
+
+				long userId = GetterUtil.getLong(
+					PrincipalThreadLocal.getName());
+
+				if (userId > 0) {
+					long companyId = sharingEntry.getCompanyId();
+
+					long groupId = sharingEntry.getGroupId();
+
+					long classPK = 0;
+
+					if (!isNew) {
+						classPK = sharingEntry.getPrimaryKey();
+					}
+
+					try {
+						sharingEntry.setExternalReferenceCode(
+							SanitizerUtil.sanitize(
+								companyId, groupId, userId,
+								SharingEntry.class.getName(), classPK,
+								ContentTypes.TEXT_HTML, Sanitizer.MODE_ALL,
+								sharingEntry.getExternalReferenceCode(), null));
+					}
+					catch (SanitizerException sanitizerException) {
+						throw new SystemException(sanitizerException);
+					}
+				}
+			}
+
+			SharingEntry ercSharingEntry = fetchByERC_G(
+				sharingEntry.getExternalReferenceCode(),
+				sharingEntry.getGroupId());
+
+			if (isNew) {
+				if (ercSharingEntry != null) {
+					throw new DuplicateSharingEntryExternalReferenceCodeException(
+						"Duplicate sharing entry with external reference code " +
+							sharingEntry.getExternalReferenceCode() +
+								" and group " + sharingEntry.getGroupId());
+				}
+			}
+			else {
+				if ((ercSharingEntry != null) &&
+					(sharingEntry.getSharingEntryId() !=
+						ercSharingEntry.getSharingEntryId())) {
+
+					throw new DuplicateSharingEntryExternalReferenceCodeException(
+						"Duplicate sharing entry with external reference code " +
+							sharingEntry.getExternalReferenceCode() +
+								" and group " + sharingEntry.getGroupId());
+				}
+			}
 		}
 
 		ServiceContext serviceContext =
@@ -5995,6 +6285,11 @@ public class SharingEntryPersistenceImpl
 				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
 			new String[] {"toUserId", "classNameId", "classPK"}, true);
+
+		_finderPathFetchByERC_G = new FinderPath(
+			FINDER_CLASS_NAME_ENTITY, "fetchByERC_G",
+			new String[] {String.class.getName(), Long.class.getName()},
+			new String[] {"externalReferenceCode", "groupId"}, true);
 
 		SharingEntryUtil.setPersistence(this);
 	}

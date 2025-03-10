@@ -313,6 +313,10 @@ public interface SharingEntryLocalService
 	public SharingEntry fetchSharingEntry(
 		long toUserId, long classNameId, long classPK);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public SharingEntry fetchSharingEntryByExternalReferenceCode(
+		String externalReferenceCode, long groupId);
+
 	/**
 	 * Returns the sharing entry matching the UUID and group.
 	 *
@@ -508,6 +512,11 @@ public interface SharingEntryLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public SharingEntry getSharingEntry(
 			long toUserId, long classNameId, long classPK)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public SharingEntry getSharingEntryByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
 		throws PortalException;
 
 	/**

@@ -53,10 +53,12 @@ public class SharingEntryCacheModel
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
+		sb.append(", externalReferenceCode=");
+		sb.append(externalReferenceCode);
 		sb.append(", sharingEntryId=");
 		sb.append(sharingEntryId);
 		sb.append(", groupId=");
@@ -97,6 +99,13 @@ public class SharingEntryCacheModel
 		}
 		else {
 			sharingEntryImpl.setUuid(uuid);
+		}
+
+		if (externalReferenceCode == null) {
+			sharingEntryImpl.setExternalReferenceCode("");
+		}
+		else {
+			sharingEntryImpl.setExternalReferenceCode(externalReferenceCode);
 		}
 
 		sharingEntryImpl.setSharingEntryId(sharingEntryId);
@@ -146,6 +155,7 @@ public class SharingEntryCacheModel
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		uuid = objectInput.readUTF();
+		externalReferenceCode = objectInput.readUTF();
 
 		sharingEntryId = objectInput.readLong();
 
@@ -179,6 +189,13 @@ public class SharingEntryCacheModel
 			objectOutput.writeUTF(uuid);
 		}
 
+		if (externalReferenceCode == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(externalReferenceCode);
+		}
+
 		objectOutput.writeLong(sharingEntryId);
 
 		objectOutput.writeLong(groupId);
@@ -210,6 +227,7 @@ public class SharingEntryCacheModel
 	}
 
 	public String uuid;
+	public String externalReferenceCode;
 	public long sharingEntryId;
 	public long groupId;
 	public long companyId;

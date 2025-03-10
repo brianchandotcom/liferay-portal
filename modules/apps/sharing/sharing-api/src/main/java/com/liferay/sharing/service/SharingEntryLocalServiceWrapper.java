@@ -378,6 +378,16 @@ public class SharingEntryLocalServiceWrapper
 			toUserId, classNameId, classPK);
 	}
 
+	@Override
+	public com.liferay.sharing.model.SharingEntry
+		fetchSharingEntryByExternalReferenceCode(
+			String externalReferenceCode, long groupId) {
+
+		return _sharingEntryLocalService.
+			fetchSharingEntryByExternalReferenceCode(
+				externalReferenceCode, groupId);
+	}
+
 	/**
 	 * Returns the sharing entry matching the UUID and group.
 	 *
@@ -649,6 +659,16 @@ public class SharingEntryLocalServiceWrapper
 
 		return _sharingEntryLocalService.getSharingEntry(
 			toUserId, classNameId, classPK);
+	}
+
+	@Override
+	public com.liferay.sharing.model.SharingEntry
+			getSharingEntryByExternalReferenceCode(
+				String externalReferenceCode, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _sharingEntryLocalService.getSharingEntryByExternalReferenceCode(
+			externalReferenceCode, groupId);
 	}
 
 	/**

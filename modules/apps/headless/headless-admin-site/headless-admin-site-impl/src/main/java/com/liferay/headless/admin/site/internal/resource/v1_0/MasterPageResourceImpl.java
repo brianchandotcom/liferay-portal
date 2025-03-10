@@ -297,6 +297,10 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 			return 0;
 		}
 
+		if (pageSpecifications.length != 2) {
+			throw new UnsupportedOperationException();
+		}
+
 		ContentPageSpecification publishedContentPageSpecification =
 			(ContentPageSpecification)pageSpecifications[0];
 		ContentPageSpecification draftContentPageSpecification = null;
@@ -312,6 +316,17 @@ public class MasterPageResourceImpl extends BaseMasterPageResourceImpl {
 		else {
 			draftContentPageSpecification =
 				(ContentPageSpecification)pageSpecifications[1];
+		}
+
+		if (Validator.isNull(
+				publishedContentPageSpecification.
+					getDraftContentPageSpecificationExternalReferenceCode()) ||
+			!Objects.equals(
+				publishedContentPageSpecification.
+					getDraftContentPageSpecificationExternalReferenceCode(),
+				draftContentPageSpecification.getExternalReferenceCode())) {
+
+			throw new UnsupportedOperationException();
 		}
 
 		Map<Locale, String> titleMap = Collections.singletonMap(

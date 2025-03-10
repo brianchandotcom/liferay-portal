@@ -30,6 +30,7 @@ TrashManagementToolbarDisplayContext trashManagementToolbarDisplayContext = new 
 
 	<clay:container-fluid
 		cssClass="sidenav-content"
+		size="xxxl"
 	>
 		<c:if test="<%= Validator.isNull(trashDisplayContext.getKeywords()) %>">
 			<liferay-site-navigation:breadcrumb

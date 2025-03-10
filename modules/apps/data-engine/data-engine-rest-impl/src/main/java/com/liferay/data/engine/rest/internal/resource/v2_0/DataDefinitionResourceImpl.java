@@ -523,6 +523,13 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 			DDMStructure existingDDMStructure =
 				_ddmStructureLocalService.getDDMStructure(classPK);
 
+			if (!Objects.equals(
+					ddmStructure.getCompanyId(),
+					existingDDMStructure.getCompanyId())) {
+
+				continue;
+			}
+
 			DataDefinition existingDataDefinition =
 				DataDefinitionUtil.toDataDefinition(
 					_ddmFormFieldTypeServicesRegistry, existingDDMStructure,
@@ -779,7 +786,10 @@ public class DataDefinitionResourceImpl extends BaseDataDefinitionResourceImpl {
 		DDMStructure ddmStructure = _ddmStructureLocalService.fetchStructure(
 			MapUtil.getLong(properties, "ddmStructureId"));
 
-		if (ddmStructure != null) {
+		if ((ddmStructure != null) &&
+			Objects.equals(
+				ddmStructure.getCompanyId(), contextCompany.getCompanyId())) {
+
 			return ddmStructure;
 		}
 

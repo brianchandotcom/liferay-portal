@@ -160,7 +160,7 @@ export class CommerceThemeMiniumCatalogPage {
 	) {
 		const maxDifference = maxQuantity % multipleQuantity;
 
-		if (!maxDifference) {
+		if (!maxDifference || maxQuantity < multipleQuantity) {
 			return parseFloat(maxQuantity.toFixed(precision));
 		}
 

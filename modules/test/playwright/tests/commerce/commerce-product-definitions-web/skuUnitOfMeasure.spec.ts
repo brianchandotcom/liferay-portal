@@ -1987,24 +1987,28 @@ test('COMMERCE-12399 Verify that the maximum order quantity is applied correctly
 	let multipleQuantityNotSatisfied;
 
 	for (const quantitySelectorActualQuantity of [1.8, 1.2]) {
-		await commerceThemeMiniumCatalogPage
-			.quantitySelector(page.locator('.product-detail'))
-			.focus();
-		await commerceThemeMiniumCatalogPage
-			.quantitySelector(page.locator('.product-detail'))
-			.fill(`${quantitySelectorActualQuantity}`);
+		await expect(async () => {
+			await commerceThemeMiniumCatalogPage
+				.quantitySelector(page.locator('.product-detail'))
+				.focus();
+			await commerceThemeMiniumCatalogPage
+				.quantitySelector(page.locator('.product-detail'))
+				.fill(`${quantitySelectorActualQuantity}`);
 
-		maxQuantityNotSatisfied = quantitySelectorActualQuantity > maxQuantity1;
-		minQuantityNotSatisfied = quantitySelectorActualQuantity < minQuantity1;
-		multipleQuantityNotSatisfied = !Number.isInteger(
-			quantitySelectorActualQuantity / multipleQuantity1
-		);
+			maxQuantityNotSatisfied =
+				quantitySelectorActualQuantity > maxQuantity1;
+			minQuantityNotSatisfied =
+				quantitySelectorActualQuantity < minQuantity1;
+			multipleQuantityNotSatisfied = !Number.isInteger(
+				quantitySelectorActualQuantity / multipleQuantity1
+			);
 
-		await expect(
-			commerceThemeMiniumCatalogPage.quantitySelector(
-				page.locator('.product-detail')
-			)
-		).toHaveValue(`${quantitySelectorActualQuantity}`);
+			await expect(
+				commerceThemeMiniumCatalogPage.quantitySelector(
+					page.locator('.product-detail')
+				)
+			).toHaveValue(`${quantitySelectorActualQuantity}`);
+		}).toPass();
 
 		if (
 			maxQuantityNotSatisfied ||
@@ -2041,18 +2045,20 @@ test('COMMERCE-12399 Verify that the maximum order quantity is applied correctly
 	await page.goto(`/web/${site.name}/p/` + productName2);
 
 	for (const quantitySelectorActualQuantity of [0.5, 0.6, 0.7]) {
-		await commerceThemeMiniumCatalogPage
-			.quantitySelector(page.locator('.product-detail'))
-			.focus();
-		await commerceThemeMiniumCatalogPage
-			.quantitySelector(page.locator('.product-detail'))
-			.fill(`${quantitySelectorActualQuantity}`);
+		await expect(async () => {
+			await commerceThemeMiniumCatalogPage
+				.quantitySelector(page.locator('.product-detail'))
+				.focus();
+			await commerceThemeMiniumCatalogPage
+				.quantitySelector(page.locator('.product-detail'))
+				.fill(`${quantitySelectorActualQuantity}`);
 
-		await expect(
-			commerceThemeMiniumCatalogPage.quantitySelector(
-				page.locator('.product-detail')
-			)
-		).toHaveValue(`${quantitySelectorActualQuantity}`);
+			await expect(
+				commerceThemeMiniumCatalogPage.quantitySelector(
+					page.locator('.product-detail')
+				)
+			).toHaveValue(`${quantitySelectorActualQuantity}`);
+		}).toPass();
 
 		await expect(productDetailsPage.addToCartButton).toHaveClass(
 			/not-allowed/

@@ -1346,9 +1346,9 @@ public class ObjectDefinitionLocalServiceTest {
 			() -> _objectDefinitionLocalService.addSystemObjectDefinition(
 				null, TestPropsValues.getUserId(), 0,
 				ObjectDefinitionTestUtil.getRandomName(), null, false, true,
-				true, false, RandomTestUtil.randomLocaleStringMap(), false,
-				ObjectDefinitionTestUtil.getRandomName(), null, null, null,
-				null, RandomTestUtil.randomLocaleStringMap(), false,
+				true, false, false, RandomTestUtil.randomLocaleStringMap(),
+				false, ObjectDefinitionTestUtil.getRandomName(), null, null,
+				null, null, RandomTestUtil.randomLocaleStringMap(), false,
 				ObjectDefinitionConstants.SCOPE_COMPANY, null, 1,
 				WorkflowConstants.STATUS_APPROVED, Collections.emptyList(),
 				Collections.emptyList()));
@@ -1362,7 +1362,7 @@ public class ObjectDefinitionLocalServiceTest {
 			() -> ObjectDefinitionLocalServiceUtil.addSystemObjectDefinition(
 				null, TestPropsValues.getUserId(), 0,
 				ObjectDefinitionTestUtil.getRandomName(), null, false, false,
-				true, true,
+				true, true, false,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),
 				false, "Test", null, null, null, null,
 				LocalizedMapUtil.getLocalizedMap(RandomTestUtil.randomString()),

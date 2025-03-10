@@ -51,8 +51,8 @@ public class SharingEntryLocalServiceWrapper
 	 */
 	@Override
 	public com.liferay.sharing.model.SharingEntry addOrUpdateSharingEntry(
-			long userId, long toUserId, long classNameId, long classPK,
-			long groupId, boolean shareable,
+			String externalReferenceCode, long userId, long toUserId,
+			long classNameId, long classPK, long groupId, boolean shareable,
 			java.util.Collection
 				<com.liferay.sharing.security.permission.SharingEntryAction>
 					sharingEntryActions,
@@ -61,8 +61,26 @@ public class SharingEntryLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _sharingEntryLocalService.addOrUpdateSharingEntry(
-			userId, toUserId, classNameId, classPK, groupId, shareable,
-			sharingEntryActions, expirationDate, serviceContext);
+			externalReferenceCode, userId, toUserId, classNameId, classPK,
+			groupId, shareable, sharingEntryActions, expirationDate,
+			serviceContext);
+	}
+
+	/**
+	 * Adds the sharing entry to the database. Also notifies the appropriate model listeners.
+	 *
+	 * <p>
+	 * <strong>Important:</strong> Inspect SharingEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
+	 * </p>
+	 *
+	 * @param sharingEntry the sharing entry
+	 * @return the sharing entry that was added
+	 */
+	@Override
+	public com.liferay.sharing.model.SharingEntry addSharingEntry(
+		com.liferay.sharing.model.SharingEntry sharingEntry) {
+
+		return _sharingEntryLocalService.addSharingEntry(sharingEntry);
 	}
 
 	/**
@@ -88,8 +106,8 @@ public class SharingEntryLocalServiceWrapper
 	 */
 	@Override
 	public com.liferay.sharing.model.SharingEntry addSharingEntry(
-			long userId, long toUserId, long classNameId, long classPK,
-			long groupId, boolean shareable,
+			String externalReferenceCode, long userId, long toUserId,
+			long classNameId, long classPK, long groupId, boolean shareable,
 			java.util.Collection
 				<com.liferay.sharing.security.permission.SharingEntryAction>
 					sharingEntryActions,
@@ -98,25 +116,9 @@ public class SharingEntryLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _sharingEntryLocalService.addSharingEntry(
-			userId, toUserId, classNameId, classPK, groupId, shareable,
-			sharingEntryActions, expirationDate, serviceContext);
-	}
-
-	/**
-	 * Adds the sharing entry to the database. Also notifies the appropriate model listeners.
-	 *
-	 * <p>
-	 * <strong>Important:</strong> Inspect SharingEntryLocalServiceImpl for overloaded versions of the method. If provided, use these entry points to the API, as the implementation logic may require the additional parameters defined there.
-	 * </p>
-	 *
-	 * @param sharingEntry the sharing entry
-	 * @return the sharing entry that was added
-	 */
-	@Override
-	public com.liferay.sharing.model.SharingEntry addSharingEntry(
-		com.liferay.sharing.model.SharingEntry sharingEntry) {
-
-		return _sharingEntryLocalService.addSharingEntry(sharingEntry);
+			externalReferenceCode, userId, toUserId, classNameId, classPK,
+			groupId, shareable, sharingEntryActions, expirationDate,
+			serviceContext);
 	}
 
 	/**
@@ -238,6 +240,17 @@ public class SharingEntryLocalServiceWrapper
 		com.liferay.sharing.model.SharingEntry sharingEntry) {
 
 		return _sharingEntryLocalService.deleteSharingEntry(sharingEntry);
+	}
+
+	@Override
+	public com.liferay.sharing.model.SharingEntry
+			deleteSharingEntryByExternalReferenceCode(
+				String externalReferenceCode, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _sharingEntryLocalService.
+			deleteSharingEntryByExternalReferenceCode(
+				externalReferenceCode, groupId);
 	}
 
 	/**

@@ -6,11 +6,11 @@
 package com.liferay.portal.workflow.task.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
+import com.liferay.portal.kernel.test.portlet.MockActionRequest;
 import com.liferay.portal.kernel.test.portlet.MockLiferayPortletActionResponse;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.test.rule.LiferayUnitTestRule;
-import com.liferay.portletmvc4spring.test.mock.web.portlet.MockActionRequest;
 import com.liferay.portletmvc4spring.test.mock.web.portlet.MockActionResponse;
 import com.liferay.portletmvc4spring.test.mock.web.portlet.MockPortletResponse;
 

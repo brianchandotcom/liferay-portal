@@ -11,8 +11,6 @@ import com.liferay.jenkins.results.parser.NotificationUtil;
 import java.io.File;
 import java.io.IOException;
 
-import java.net.URL;
-
 import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
@@ -158,32 +156,50 @@ public abstract class BaseScanCodePipeline implements ScanCodePipeline {
 			ComplianceAlertType.valueOf(complianceAlertTypeString));
 	}
 
-	public void downloadResultFiles() throws IOException {
+	public void downloadResultFiles() throws IOException, TimeoutException {
 		String scanCodeResultsDir = JenkinsResultsParserUtil.getBuildProperty(
 			"scancode.results.dir");
 
-		for (String resultFileExtension : _RESULT_FILES_EXTENSIONS) {
-			String link = JenkinsResultsParserUtil.combine(
-				_projectURL, "results/", resultFileExtension);
+		for (Map.Entry<String, String> resultTypeEntry :
+				_resultTypeExtensionsMap.entrySet()) {
 
-			URL url = new URL(link);
+			StringBuilder sb = new StringBuilder();
 
-			File file = new File(
-				JenkinsResultsParserUtil.combine(
-					scanCodeResultsDir, _projectNameFromURL, ".",
-					resultFileExtension));
+			sb.append("curl ");
+			sb.append("--output ");
+			sb.append(scanCodeResultsDir + _projectNameFromURL);
+			sb.append(".");
+			sb.append(resultTypeEntry.getValue());
+			sb.append(" \"");
+			sb.append(_projectAPIURL);
+			sb.append("results_download/?output_format=");
+			sb.append(resultTypeEntry.getKey());
+			sb.append("\" --header \"Authorization:Token ");
+			sb.append(_API_KEY);
+			sb.append("\" --request GET ");
 
-			JenkinsResultsParserUtil.toFile(url, file);
+			Process process = JenkinsResultsParserUtil.executeBashCommands(
+				sb.toString());
+
+			try {
+				JenkinsResultsParserUtil.readInputStream(
+					process.getInputStream());
+			}
+			catch (IOException ioException) {
+				ioException.printStackTrace();
+			}
 		}
 
 		String tarGzName = _projectNameFromURL + ".tar.gz";
 
-		File resultsTarGzFile = new File(scanCodeResultsDir, tarGzName);
+		File resultsTarGzFile = new File(tarGzName);
 
 		JenkinsResultsParserUtil.tarGzip(
 			new File(scanCodeResultsDir), resultsTarGzFile);
 
 		uploadResultsToBucket(resultsTarGzFile.toString());
+
+		JenkinsResultsParserUtil.delete(resultsTarGzFile);
 	}
 
 	public abstract void execute() throws IOException, TimeoutException;
@@ -552,12 +568,17 @@ public abstract class BaseScanCodePipeline implements ScanCodePipeline {
 	private static final String _CONTENT_TYPE =
 		"'Content-Type: application/json;'";
 
-	private static final String[] _RESULT_FILES_EXTENSIONS = {
-		"attribution", "cyclonedx", "spdx", "xls"
-	};
-
 	private static final Map<String, Integer> _complianceAlertCountsMap =
 		new HashMap<>();
+	private static final Map<String, String> _resultTypeExtensionsMap =
+		new HashMap<String, String>() {
+			{
+				put("attribution", "attribution.html");
+				put("cyclonedx", "cdx.json");
+				put("spdx", "spdx.json");
+				put("xlsx", "xlsx");
+			}
+		};
 
 	static {
 		try {

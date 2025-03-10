@@ -94,7 +94,7 @@ public class MoveFragmentEntryLinkMVCActionCommand
 			layoutStructure -> {
 				for (int i = 0; i < finalItemIds.length; i++) {
 					_formItemManager.checkFormContainerParentItemRequired(
-						finalItemIds[i], layoutStructure,
+						new String[] {finalItemIds[i]}, layoutStructure,
 						finalParentItemIds[i]);
 
 					layoutStructure.moveLayoutStructureItem(

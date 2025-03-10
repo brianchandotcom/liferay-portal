@@ -33,7 +33,9 @@ PortletURL portletURL = entriesSearchContainer.getIteratorURL();
 	portletURL="<%= restoreTrashEntriesURL %>"
 />
 
-<clay:container-fluid>
+<clay:container-fluid
+	size="xxxl"
+>
 	<aui:form action="<%= portletURL %>" method="get" name="fm">
 		<aui:input name="<%= Constants.CMD %>" type="hidden" />
 		<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />

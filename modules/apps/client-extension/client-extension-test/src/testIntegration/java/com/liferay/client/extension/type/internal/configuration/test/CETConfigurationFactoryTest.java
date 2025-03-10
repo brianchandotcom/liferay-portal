@@ -113,7 +113,6 @@ public class CETConfigurationFactoryTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
-
 		_user = UserTestUtil.getAdminUser(_virtualInstanceCompanyId);
 	}
 
@@ -140,10 +139,6 @@ public class CETConfigurationFactoryTest {
 				publicLayoutSet.getLayoutSetId(), externalReferenceCode,
 				ClientExtensionEntryConstants.TYPE_THEME_CSS, StringPool.BLANK,
 				ServiceContextTestUtil.getServiceContext(_group.getGroupId()));
-
-		clientExtensionEntryRel =
-			_clientExtensionEntryRelLocalService.fetchClientExtensionEntryRel(
-				clientExtensionEntryRel.getClientExtensionEntryRelId());
 
 		Assert.assertNotNull(clientExtensionEntryRel);
 

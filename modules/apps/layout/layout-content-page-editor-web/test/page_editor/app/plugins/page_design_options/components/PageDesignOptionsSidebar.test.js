@@ -83,6 +83,20 @@ describe('PageDesignOptionsSidebar', () => {
 		expect(screen.getByText('page-design-options')).toBeInTheDocument();
 	});
 
+	it('assert style books info message', () => {
+		Liferay.FeatureFlags['LPD-30204'] = true;
+
+		renderComponent();
+
+		expect(
+			screen.getByText(
+				'only-style-books-based-on-the-frontend-token-definition-provided-by-x-are-visible'
+			)
+		).toBeInTheDocument();
+
+		Liferay.FeatureFlags['LPD-30204'] = false;
+	});
+
 	it('checks panel accessibility', async () => {
 		const {container} = renderComponent();
 

@@ -233,82 +233,102 @@ const OptionList = ({options = [], icon, type}) => {
 	}
 
 	return (
-		<ul className="list-unstyled mt-4">
-			{options.map(
-				(
-					{imagePreviewURL, isActive, name, onClick, subtitle},
-					index
-				) => (
-					<li key={index}>
-						<ClayCard
-							aria-label={name}
-							className={classNames({
-								'page-editor__sidebar__design-options__tab-card--active':
-									isActive,
-							})}
-							displayType="file"
-							onClick={() => {
-								if (!isActive) {
-									onClick();
-								}
-							}}
-							onKeyDown={(event) => {
-								if (event.key === 'Enter' && !isActive) {
-									onClick();
-								}
-							}}
-							role="button"
-							selectable
-							tabIndex="0"
-						>
-							<ClayCard.AspectRatio
-								className="card-item-first"
-								containerAspectRatio="16/9"
+		<>
+			{Liferay.FeatureFlags['LPD-30204'] &&
+				type === OPTIONS_TYPES.styleBook &&
+				!!options.length && (
+					<ClayAlert
+						arial-label="style-book-alert"
+						className="mt-3"
+						displayType="info"
+						title="Info"
+					>
+						{sub(
+							Liferay.Language.get(
+								'only-style-books-based-on-the-frontend-token-definition-provided-by-x-are-visible'
+							),
+							config.themeName
+						)}
+					</ClayAlert>
+				)}
+
+			<ul className="list-unstyled mt-4">
+				{options.map(
+					(
+						{imagePreviewURL, isActive, name, onClick, subtitle},
+						index
+					) => (
+						<li key={index}>
+							<ClayCard
+								aria-label={name}
+								className={classNames({
+									'page-editor__sidebar__design-options__tab-card--active':
+										isActive,
+								})}
+								displayType="file"
+								onClick={() => {
+									if (!isActive) {
+										onClick();
+									}
+								}}
+								onKeyDown={(event) => {
+									if (event.key === 'Enter' && !isActive) {
+										onClick();
+									}
+								}}
+								role="button"
+								selectable
+								tabIndex="0"
 							>
-								{imagePreviewURL ? (
-									<img
-										alt="thumbnail"
-										className="aspect-ratio-item aspect-ratio-item-center-middle aspect-ratio-item-fluid"
-										src={imagePreviewURL}
-									/>
-								) : (
-									<div className="aspect-ratio-item aspect-ratio-item-center-middle aspect-ratio-item-fluid card-type-asset-icon">
-										<ClayIcon symbol={icon} />
-									</div>
-								)}
+								<ClayCard.AspectRatio
+									className="card-item-first"
+									containerAspectRatio="16/9"
+								>
+									{imagePreviewURL ? (
+										<img
+											alt="thumbnail"
+											className="aspect-ratio-item aspect-ratio-item-center-middle aspect-ratio-item-fluid"
+											src={imagePreviewURL}
+										/>
+									) : (
+										<div className="aspect-ratio-item aspect-ratio-item-center-middle aspect-ratio-item-fluid card-type-asset-icon">
+											<ClayIcon symbol={icon} />
+										</div>
+									)}
 
-								{isActive && (
-									<ClaySticker
-										displayType="primary"
-										position="bottom-left"
-									>
-										<ClayIcon symbol="check-circle" />
-									</ClaySticker>
-								)}
-							</ClayCard.AspectRatio>
+									{isActive && (
+										<ClaySticker
+											displayType="primary"
+											position="bottom-left"
+										>
+											<ClayIcon symbol="check-circle" />
+										</ClaySticker>
+									)}
+								</ClayCard.AspectRatio>
 
-							<ClayCard.Body>
-								<ClayCard.Row>
-									<div className="autofit-col autofit-col-expand">
-										<section className="autofit-section">
-											<ClayCard.Description displayType="title">
-												{name}
-											</ClayCard.Description>
-
-											{subtitle && (
-												<ClayCard.Description displayType="subtitle">
-													{subtitle}
+								<ClayCard.Body>
+									<ClayCard.Row>
+										<div className="autofit-col autofit-col-expand">
+											<section className="autofit-section">
+												<ClayCard.Description displayType="title">
+													{name}
 												</ClayCard.Description>
-											)}
-										</section>
-									</div>
-								</ClayCard.Row>
-							</ClayCard.Body>
-						</ClayCard>
-					</li>
-				)
-			)}
-		</ul>
+
+												{subtitle && (
+													<ClayCard.Description displayType="subtitle">
+														{subtitle}
+													</ClayCard.Description>
+												)}
+											</section>
+										</div>
+									</ClayCard.Row>
+								</ClayCard.Body>
+							</ClayCard>
+						</li>
+					)
+				)}
+			</ul>
+		</>
 	);
 };
 

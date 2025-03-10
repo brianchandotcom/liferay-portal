@@ -5,9 +5,7 @@
 
 package com.liferay.scim.rest.internal.resource.v1_0;
 
-import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
@@ -21,10 +19,6 @@ import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.scim.rest.internal.util.ScimUtil;
 import com.liferay.scim.rest.resource.v1_0.SchemaResource;
-
-import java.io.IOException;
-
-import java.net.URL;
 
 import java.util.Map;
 
@@ -84,44 +78,6 @@ public class SchemaResourceImpl extends BaseSchemaResourceImpl {
 		return responseBuilder.build();
 	}
 
-	private JSONObject _createSchema(String jsonFile) throws Exception {
-		Bundle bundle = FrameworkUtil.getBundle(SchemaResourceImpl.class);
-
-		URL userSchemaURL = bundle.getResource(
-			"META-INF/schemas/json/" + jsonFile);
-
-		JSONObject jsonObject = _jsonFactory.createJSONObject(
-			URLUtil.toString(userSchemaURL));
-
-		JSONObject metaJSONObject = jsonObject.getJSONObject("meta");
-
-		String resourceEndpointURL =
-			AbstractResourceManager.getResourceEndpointURL(
-				SCIMConstants.SCHEMAS_ENDPOINT);
-
-		metaJSONObject.put(
-			"location",
-			resourceEndpointURL + metaJSONObject.getString("location"));
-
-		JSONArray schemasJSONArray = JSONUtil.put(
-			"urn:ietf:params:scim:schemas:core:2.0:Schema");
-
-		jsonObject.put("schemas", schemasJSONArray);
-
-		return jsonObject;
-	}
-
-	private Map<String, String> _getMapSchemaIdJsonFileName() {
-		return HashMapBuilder.put(
-			"urn:ietf:params:scim:schemas:core:2.0:Group", "group-schema.json"
-		).put(
-			"urn:ietf:params:scim:schemas:core:2.0:User", "user-schema.json"
-		).put(
-			"urn:ietf:params:scim:schemas:extension:liferay:2.0:User",
-			"user-extension-schema.json"
-		).build();
-	}
-
 	private Map<String, String> _getResponseHeaders() throws NotFoundException {
 		return HashMapBuilder.put(
 			SCIMConstants.CONTENT_TYPE_HEADER, SCIMConstants.APPLICATION_JSON
@@ -133,81 +89,40 @@ public class SchemaResourceImpl extends BaseSchemaResourceImpl {
 	}
 
 	private String _getSchema(String id) throws AbstractCharonException {
-		try {
-			Map<String, String> schemaIdJsonFileNameStringMap =
-				_getMapSchemaIdJsonFileName();
+		if (_schemasMap.containsKey(id)) {
+			JSONObject schemaJSONObject = _read(_schemasMap.get(id));
 
-			if (Validator.isNotNull(schemaIdJsonFileNameStringMap.get(id))) {
-				JSONObject schemajsonObject = _createSchema(
-					schemaIdJsonFileNameStringMap.get(id));
-
-				if (schemajsonObject != null) {
-					return schemajsonObject.toString();
-				}
-			}
-
-			throw new NotFoundException("No schema found with schema ID " + id);
+			return schemaJSONObject.toString();
 		}
-		catch (IOException | JSONException exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
 
-			String error = "Error getting the schemas.";
-
-			throw new InternalErrorException(error);
-		}
-		catch (Exception exception) {
-			return ReflectionUtil.throwException(exception);
-		}
+		throw new NotFoundException("No schema found with schema ID " + id);
 	}
 
 	private String _getSchemas() throws AbstractCharonException {
-		try {
-			Map<String, String> schemaIdJsonFileNameStringMap =
-				_getMapSchemaIdJsonFileName();
+		return JSONUtil.put(
+			"itemsPerPage", 3
+		).put(
+			"Resources",
+			() -> {
+				JSONArray resourcesJSONArray = _jsonFactory.createJSONArray();
 
-			JSONObject rootJSONObject = JSONUtil.put(
-				"itemsPerPage", 3
-			).put(
-				"schemas",
-				_jsonFactory.createJSONArray(
-					"[\"urn:ietf:params:scim:api:messages:2.0:ListResponse\"]")
-			).put(
-				"startIndex", 1
-			).put(
-				"totalResults", schemaIdJsonFileNameStringMap.size()
-			);
+				for (Map.Entry<String, String> entry : _schemasMap.entrySet()) {
+					resourcesJSONArray.put(_read(entry.getValue()));
+				}
 
-			JSONArray resourcesJSONArray = _jsonFactory.createJSONArray();
-
-			for (Map.Entry<String, String> entry :
-					schemaIdJsonFileNameStringMap.entrySet()) {
-
-				resourcesJSONArray.put(_createSchema(entry.getValue()));
+				return resourcesJSONArray;
 			}
-
-			rootJSONObject.put("Resources", resourcesJSONArray);
-
-			return rootJSONObject.toString();
-		}
-		catch (IOException | JSONException exception) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(exception);
-			}
-
-			String error = "Error getting the schemas.";
-
-			throw new InternalErrorException(error);
-		}
-		catch (Exception exception) {
-			return ReflectionUtil.throwException(exception);
-		}
+		).put(
+			"schemas",
+			JSONUtil.put("urn:ietf:params:scim:api:messages:2.0:ListResponse")
+		).put(
+			"startIndex", 1
+		).put(
+			"totalResults", _schemasMap.size()
+		).toString();
 	}
 
 	private SCIMResponse _getSCIMResponse(String id) {
-		String responseString = null;
-
 		try {
 			ServiceContext serviceContext =
 				ServiceContextThreadLocal.getServiceContext();
@@ -216,20 +131,20 @@ public class SchemaResourceImpl extends BaseSchemaResourceImpl {
 				serviceContext.getCompanyId(), _configurationAdmin);
 
 			if (Validator.isNull(id)) {
-				responseString = _getSchemas();
-			}
-			else {
-				responseString = _getSchema(id);
+				return new SCIMResponse(
+					ResponseCodeConstants.CODE_OK, _getSchemas(),
+					_getResponseHeaders());
 			}
 
-			if (Validator.isNull(responseString)) {
+			String schema = _getSchema(id);
+
+			if (Validator.isNull(schema)) {
 				throw new NotFoundException(
 					"No schema found with schema ID " + id);
 			}
 
 			return new SCIMResponse(
-				ResponseCodeConstants.CODE_OK, responseString,
-				_getResponseHeaders());
+				ResponseCodeConstants.CODE_OK, schema, _getResponseHeaders());
 		}
 		catch (AbstractCharonException abstractCharonException) {
 			return AbstractResourceManager.encodeSCIMException(
@@ -245,6 +160,40 @@ public class SchemaResourceImpl extends BaseSchemaResourceImpl {
 		}
 	}
 
+	private JSONObject _read(String fileName) throws InternalErrorException {
+		try {
+			Bundle bundle = FrameworkUtil.getBundle(SchemaResourceImpl.class);
+
+			JSONObject schemaJSONObject = _jsonFactory.createJSONObject(
+				URLUtil.toString(
+					bundle.getResource("META-INF/schemas/json/" + fileName)));
+
+			JSONObject metaJSONObject = schemaJSONObject.getJSONObject("meta");
+
+			String resourceEndpointURL =
+				AbstractResourceManager.getResourceEndpointURL(
+					SCIMConstants.SCHEMAS_ENDPOINT);
+
+			metaJSONObject.put(
+				"location",
+				resourceEndpointURL + metaJSONObject.getString("location"));
+
+			schemaJSONObject.put(
+				"schemas",
+				JSONUtil.put("urn:ietf:params:scim:schemas:core:2.0:Schema"));
+
+			return schemaJSONObject;
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(exception);
+			}
+
+			throw new InternalErrorException(
+				"Error reading schema file " + fileName);
+		}
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		SchemaResourceImpl.class);
 
@@ -253,5 +202,11 @@ public class SchemaResourceImpl extends BaseSchemaResourceImpl {
 
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	private final Map<String, String> _schemasMap = Map.of(
+		"urn:ietf:params:scim:schemas:core:2.0:Group", "group-schema.json",
+		"urn:ietf:params:scim:schemas:core:2.0:User", "user-schema.json",
+		"urn:ietf:params:scim:schemas:extension:liferay:2.0:User",
+		"user-extension-schema.json");
 
 }

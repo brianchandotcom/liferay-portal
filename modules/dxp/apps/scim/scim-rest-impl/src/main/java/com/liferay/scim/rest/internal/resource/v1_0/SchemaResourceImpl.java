@@ -5,9 +5,6 @@
 
 package com.liferay.scim.rest.internal.resource.v1_0;
 
-import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
-import com.liferay.expando.kernel.service.ExpandoTableLocalService;
-import com.liferay.expando.kernel.service.ExpandoValueLocalService;
 import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
@@ -16,21 +13,12 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.service.ClassNameLocalService;
-import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.service.UserGroupLocalService;
-import com.liferay.portal.kernel.service.UserGroupService;
-import com.liferay.portal.kernel.service.UserLocalService;
-import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.util.HashMapBuilder;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.URLUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
-import com.liferay.portal.search.searcher.Searcher;
-import com.liferay.scim.rest.internal.manager.UserManagerImpl;
 import com.liferay.scim.rest.internal.util.ScimUtil;
 import com.liferay.scim.rest.resource.v1_0.SchemaResource;
 
@@ -45,7 +33,6 @@ import javax.ws.rs.core.Response;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.service.cm.ConfigurationAdmin;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ServiceScope;
@@ -54,7 +41,6 @@ import org.wso2.charon3.core.exceptions.AbstractCharonException;
 import org.wso2.charon3.core.exceptions.ConflictException;
 import org.wso2.charon3.core.exceptions.InternalErrorException;
 import org.wso2.charon3.core.exceptions.NotFoundException;
-import org.wso2.charon3.core.extensions.UserManager;
 import org.wso2.charon3.core.protocol.ResponseCodeConstants;
 import org.wso2.charon3.core.protocol.SCIMResponse;
 import org.wso2.charon3.core.protocol.endpoints.AbstractResourceManager;
@@ -71,22 +57,12 @@ public class SchemaResourceImpl extends BaseSchemaResourceImpl {
 
 	@Override
 	public Object getV2SchemaById(String id) throws Exception {
-		return _buildResponse(_getSCIMResponse(id, _userManager));
+		return _buildResponse(_getSCIMResponse(id));
 	}
 
 	@Override
 	public Object getV2Schemas() throws Exception {
 		return getV2SchemaById(null);
-	}
-
-	@Activate
-	protected void activate() {
-		_userManager = new UserManagerImpl(
-			_classNameLocalService, _companyLocalService, _configurationAdmin,
-			_expandoColumnLocalService, _expandoTableLocalService,
-			_expandoValueLocalService, _searcher, _searchRequestBuilderFactory,
-			_userGroupLocalService, _userGroupService, _userLocalService,
-			_userService);
 	}
 
 	private Response _buildResponse(SCIMResponse scimResponse) {
@@ -229,37 +205,31 @@ public class SchemaResourceImpl extends BaseSchemaResourceImpl {
 		}
 	}
 
-	private SCIMResponse _getSCIMResponse(String id, UserManager userManager) {
+	private SCIMResponse _getSCIMResponse(String id) {
 		String responseString = null;
 
 		try {
-			if (userManager != null) {
-				ServiceContext serviceContext =
-					ServiceContextThreadLocal.getServiceContext();
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
 
-				ScimUtil.getScimClientOAuth2ApplicationConfiguration(
-					serviceContext.getCompanyId(), _configurationAdmin);
+			ScimUtil.getScimClientOAuth2ApplicationConfiguration(
+				serviceContext.getCompanyId(), _configurationAdmin);
 
-				if (Validator.isNull(id)) {
-					responseString = _getSchemas();
-				}
-				else {
-					responseString = _getSchema(id);
-				}
-
-				if (Validator.isNull(responseString)) {
-					throw new NotFoundException(
-						"No schema found with schema ID " + id);
-				}
-
-				return new SCIMResponse(
-					ResponseCodeConstants.CODE_OK, responseString,
-					_getResponseHeaders());
+			if (Validator.isNull(id)) {
+				responseString = _getSchemas();
+			}
+			else {
+				responseString = _getSchema(id);
 			}
 
-			String error = "Provided user manager handler is null.";
+			if (Validator.isNull(responseString)) {
+				throw new NotFoundException(
+					"No schema found with schema ID " + id);
+			}
 
-			throw new InternalErrorException(error);
+			return new SCIMResponse(
+				ResponseCodeConstants.CODE_OK, responseString,
+				_getResponseHeaders());
 		}
 		catch (AbstractCharonException abstractCharonException) {
 			return AbstractResourceManager.encodeSCIMException(
@@ -279,44 +249,9 @@ public class SchemaResourceImpl extends BaseSchemaResourceImpl {
 		SchemaResourceImpl.class);
 
 	@Reference
-	private ClassNameLocalService _classNameLocalService;
-
-	@Reference
-	private CompanyLocalService _companyLocalService;
-
-	@Reference
 	private ConfigurationAdmin _configurationAdmin;
 
 	@Reference
-	private ExpandoColumnLocalService _expandoColumnLocalService;
-
-	@Reference
-	private ExpandoTableLocalService _expandoTableLocalService;
-
-	@Reference
-	private ExpandoValueLocalService _expandoValueLocalService;
-
-	@Reference
 	private JSONFactory _jsonFactory;
-
-	@Reference
-	private Searcher _searcher;
-
-	@Reference
-	private SearchRequestBuilderFactory _searchRequestBuilderFactory;
-
-	@Reference
-	private UserGroupLocalService _userGroupLocalService;
-
-	@Reference
-	private UserGroupService _userGroupService;
-
-	@Reference
-	private UserLocalService _userLocalService;
-
-	private UserManager _userManager;
-
-	@Reference
-	private UserService _userService;
 
 }

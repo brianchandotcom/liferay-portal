@@ -335,7 +335,7 @@ public class PageSpecificationResourceImpl
 		return _pageSpecificationDTOConverter.toDTO(
 			LayoutUtil.updateLayout(
 				(ContentPageSpecification)pageSpecification, layout,
-				serviceContext));
+				WorkflowConstants.STATUS_DRAFT, serviceContext));
 	}
 
 	@Override

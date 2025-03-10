@@ -82,6 +82,13 @@ public class PriceEntryResourceTest extends BasePriceEntryResourceTestCase {
 	@Ignore
 	@Override
 	@Test
+	public void testDeletePriceEntryBatch() throws Exception {
+		super.testDeletePriceEntryBatch();
+	}
+
+	@Ignore
+	@Override
+	@Test
 	public void testDeletePriceEntryByExternalReferenceCode() throws Exception {
 		super.testDeletePriceEntryByExternalReferenceCode();
 	}

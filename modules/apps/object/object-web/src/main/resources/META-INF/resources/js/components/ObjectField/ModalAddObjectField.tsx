@@ -205,6 +205,7 @@ export function ModalAddObjectField({
 											label={Liferay.Language.get(
 												'enable-entry-translations'
 											)}
+											name="enableEntryTranslations"
 											onToggle={(localized) =>
 												setValues({
 													localized,

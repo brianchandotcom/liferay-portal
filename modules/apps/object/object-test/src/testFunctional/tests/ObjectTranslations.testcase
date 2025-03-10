@@ -181,6 +181,7 @@ definition {
 
 			ObjectAdmin.addObjectFieldViaUI(
 				acceptUniqueValuesOnly = "true",
+				enableEntryTranslations = "true",
 				fieldLabel = "Text Field",
 				fieldType = "Text");
 		}

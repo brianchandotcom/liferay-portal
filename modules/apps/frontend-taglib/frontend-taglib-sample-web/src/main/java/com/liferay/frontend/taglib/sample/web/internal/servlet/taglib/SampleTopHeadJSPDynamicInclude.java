@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Antonio Ortega
  */
 @Component(service = DynamicInclude.class)
-public class SampleTopHeadPreJSPDynamicInclude extends BaseJSPDynamicInclude {
+public class SampleTopHeadJSPDynamicInclude extends BaseJSPDynamicInclude {
 
 	@Override
 	public void include(

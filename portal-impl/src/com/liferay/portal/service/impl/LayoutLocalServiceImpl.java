@@ -444,6 +444,12 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		if (!layout.isDraftLayout() &&
 			(layout.isTypeAssetDisplay() || layout.isTypeContent())) {
 
+			serviceContext.setAttribute(
+				"defaultSegmentsExperienceExternalReferenceCode",
+				serviceContext.getAttribute(
+					"draftLayoutDefaultSegmentsExperienceExternalReference" +
+						"Code"));
+
 			serviceContext.setModifiedDate(date);
 
 			addLayout(

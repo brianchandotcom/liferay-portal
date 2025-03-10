@@ -199,17 +199,14 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 			externalReferenceCode, companyId);
 
 		if (userGroup != null) {
-			return updateUserGroup(
-				companyId, userGroup.getUserGroupId(), name, description,
-				serviceContext);
+			return userGroupLocalService.updateUserGroup(
+				externalReferenceCode, companyId, userGroup.getUserGroupId(),
+				name, description, serviceContext);
 		}
 
-		userGroup = addUserGroup(
-			userId, companyId, name, description, serviceContext);
-
-		userGroup.setExternalReferenceCode(externalReferenceCode);
-
-		return userGroupPersistence.update(userGroup);
+		return userGroupLocalService.addUserGroup(
+			externalReferenceCode, userId, companyId, name, description,
+			serviceContext);
 	}
 
 	@Override
@@ -254,19 +251,20 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	 * resources for the user group.
 	 * </p>
 	 *
-	 * @param  userId the primary key of the user
-	 * @param  companyId the primary key of the user group's company
-	 * @param  name the user group's name
-	 * @param  description the user group's description
-	 * @param  serviceContext the service context to be applied (optionally
-	 *         <code>null</code>). Can set expando bridge attributes for the
-	 *         user group.
+	 * @param externalReferenceCode	the user group's external reference code
+	 * @param userId                the primary key of the user
+	 * @param companyId             the primary key of the user group's company
+	 * @param name                  the user group's name
+	 * @param description           the user group's description
+	 * @param serviceContext        the service context to be applied (optionally
+	 *                              <code>null</code>). Can set expando bridge attributes for the
+	 *                              user group.
 	 * @return the user group
 	 */
 	@Override
 	public UserGroup addUserGroup(
-			long userId, long companyId, String name, String description,
-			ServiceContext serviceContext)
+			String externalReferenceCode, long userId, long companyId,
+			String name, String description, ServiceContext serviceContext)
 		throws PortalException {
 
 		// User group
@@ -283,6 +281,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 			userGroup.setUuid(serviceContext.getUuid());
 		}
 
+		userGroup.setExternalReferenceCode(externalReferenceCode);
 		userGroup.setCompanyId(companyId);
 		userGroup.setUserId(user.getUserId());
 		userGroup.setUserName(user.getFullName());
@@ -1033,19 +1032,20 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 	/**
 	 * Updates the user group.
 	 *
-	 * @param  companyId the primary key of the user group's company
-	 * @param  userGroupId the primary key of the user group
-	 * @param  name the user group's name
-	 * @param  description the user group's description
-	 * @param  serviceContext the service context to be applied (optionally
-	 *         <code>null</code>). Can set expando bridge attributes for the
-	 *         user group.
+	 * @param externalReferenceCode the user group's external reference code
+	 * @param companyId             the primary key of the user group's company
+	 * @param userGroupId           the primary key of the user group
+	 * @param name                  the user group's name
+	 * @param description           the user group's description
+	 * @param serviceContext        the service context to be applied (optionally
+	 *                              <code>null</code>). Can set expando bridge attributes for the
+	 *                              user group.
 	 * @return the user group
 	 */
 	@Override
 	public UserGroup updateUserGroup(
-			long companyId, long userGroupId, String name, String description,
-			ServiceContext serviceContext)
+			String externalReferenceCode, long companyId, long userGroupId,
+			String name, String description, ServiceContext serviceContext)
 		throws PortalException {
 
 		// User group
@@ -1055,6 +1055,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		UserGroup userGroup = userGroupPersistence.findByPrimaryKey(
 			userGroupId);
 
+		userGroup.setExternalReferenceCode(externalReferenceCode);
 		userGroup.setName(name);
 		userGroup.setDescription(description);
 		userGroup.setExpandoBridgeAttributes(serviceContext);

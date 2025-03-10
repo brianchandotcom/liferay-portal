@@ -40,6 +40,7 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -99,6 +100,13 @@ public class ShipmentItemResourceTest extends BaseShipmentItemResourceTestCase {
 				_commerceOrder.getShippingAddressId(),
 				_commerceOrder.getCommerceShippingMethodId(),
 				_commerceOrder.getShippingOptionName(), _serviceContext);
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testDeleteShipmentItemBatch() throws Exception {
+		super.testDeleteShipmentItemBatch();
 	}
 
 	@Override

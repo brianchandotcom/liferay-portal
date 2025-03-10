@@ -164,6 +164,18 @@ definition {
 			Clustering.shutdownSpecificServer(nodePort = 9080);
 		}
 
+		task ("Create an empty database") {
+			AntCommands.runCommand("build-test.xml", "rebuild-database -Ddatabase.type=mysql -Dsql.dir=sql/create-bare/ -Dsql.file=create-bare-mysql.sql");
+
+			Clustering.startSpecificServer(
+				deleteLiferayHome = "false",
+				nodePort = 8080);
+
+			Clustering.startSpecificServer(
+				deleteLiferayHome = "false",
+				nodePort = 9080);
+		}
+
 		task ("Removing the original schemas") {
 			var databaseType = PropsUtil.get("database.type");
 
@@ -177,18 +189,6 @@ definition {
 
 				SQL.executeSQLStatement(sqlStatement = "drop schema if exists lpartition_44913 cascade;");
 			}
-		}
-
-		task ("Create an empty database") {
-			AntCommands.runCommand("build-test.xml", "rebuild-database -Ddatabase.type=mysql -Dsql.dir=sql/create-bare/ -Dsql.file=create-bare-mysql.sql");
-
-			Clustering.startSpecificServer(
-				deleteLiferayHome = "false",
-				nodePort = 8080);
-
-			Clustering.startSpecificServer(
-				deleteLiferayHome = "false",
-				nodePort = 9080);
 		}
 
 		task ("Add previously extracted partitions into new database") {

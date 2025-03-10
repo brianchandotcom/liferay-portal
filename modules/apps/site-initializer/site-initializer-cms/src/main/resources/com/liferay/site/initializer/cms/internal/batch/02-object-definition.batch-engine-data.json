@@ -96,7 +96,7 @@
 			"panelCategoryKey": "",
 			"parameterRequired": false,
 			"pluralLabel": {
-				"en_US": "BasicDocuments"
+				"en_US": "Basic Documents"
 			},
 			"portlet": false,
 			"scope": "site",
@@ -168,7 +168,7 @@
 			"panelCategoryKey": "",
 			"parameterRequired": false,
 			"pluralLabel": {
-				"en_US": "BasicWebContents"
+				"en_US": "Basic Web Content"
 			},
 			"portlet": true,
 			"scope": "site",

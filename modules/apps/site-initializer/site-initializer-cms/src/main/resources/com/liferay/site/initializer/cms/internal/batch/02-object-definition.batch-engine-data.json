@@ -170,7 +170,7 @@
 			"pluralLabel": {
 				"en_US": "BasicWebContents"
 			},
-			"portlet": true,
+			"portlet": false,
 			"scope": "site",
 			"status": {
 				"code": 0

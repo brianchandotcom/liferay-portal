@@ -23,6 +23,9 @@ import com.liferay.object.model.ObjectEntry;
 import com.liferay.object.service.ObjectEntryLocalService;
 import com.liferay.object.test.util.ObjectDefinitionTestUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.test.TestInfo;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -30,6 +33,9 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapBuilder;
+import com.liferay.portal.kernel.xml.Document;
+import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.kernel.xml.SAXReader;
 import com.liferay.portal.test.log.LogCapture;
 import com.liferay.portal.test.log.LoggerTestUtil;
 import com.liferay.portal.test.rule.FeatureFlags;
@@ -39,11 +45,15 @@ import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.staging.StagingGroupHelper;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.Serializable;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -51,6 +61,9 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.skyscreamer.jsonassert.JSONAssert;
+import org.skyscreamer.jsonassert.JSONCompareMode;
 
 /**
  * @author Vendel Toreki
@@ -68,7 +81,7 @@ public class BatchEnginePortletDataHandlerTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_objectDefinition = ObjectDefinitionTestUtil.publishObjectDefinition(
+		_objectDefinition1 = ObjectDefinitionTestUtil.publishObjectDefinition(
 			ObjectDefinitionTestUtil.getRandomName(),
 			Arrays.asList(
 				ObjectFieldUtil.createObjectField(
@@ -111,12 +124,15 @@ public class BatchEnginePortletDataHandlerTest {
 					false)),
 			ObjectDefinitionConstants.SCOPE_COMPANY);
 
-		_objectEntry1 = _addObjectEntry(RandomTestUtil.randomString());
-		_objectEntry2 = _addObjectEntry(RandomTestUtil.randomString());
-		_objectEntry3 = _addObjectEntry(RandomTestUtil.randomString());
+		_objectEntry1 = _addObjectEntry(
+			_objectDefinition1, RandomTestUtil.randomString());
+		_objectEntry2 = _addObjectEntry(
+			_objectDefinition1, RandomTestUtil.randomString());
+		_objectEntry3 = _addObjectEntry(
+			_objectDefinition1, RandomTestUtil.randomString());
 
 		Group companyGroup = _stagingGroupHelper.fetchCompanyGroup(
-			_objectDefinition.getCompanyId());
+			_objectDefinition1.getCompanyId());
 
 		_companyGroupId = companyGroup.getGroupId();
 
@@ -143,15 +159,15 @@ public class BatchEnginePortletDataHandlerTest {
 		Assert.assertNotNull(
 			_objectEntryLocalService.getObjectEntry(
 				_objectEntry1.getExternalReferenceCode(),
-				_objectDefinition.getObjectDefinitionId()));
+				_objectDefinition1.getObjectDefinitionId()));
 		Assert.assertNotNull(
 			_objectEntryLocalService.getObjectEntry(
 				_objectEntry2.getExternalReferenceCode(),
-				_objectDefinition.getObjectDefinitionId()));
+				_objectDefinition1.getObjectDefinitionId()));
 		Assert.assertNotNull(
 			_objectEntryLocalService.getObjectEntry(
 				_objectEntry3.getExternalReferenceCode(),
-				_objectDefinition.getObjectDefinitionId()));
+				_objectDefinition1.getObjectDefinitionId()));
 	}
 
 	@Test
@@ -165,7 +181,8 @@ public class BatchEnginePortletDataHandlerTest {
 		_objectEntryLocalService.deleteObjectEntry(_objectEntry2);
 		_objectEntryLocalService.deleteObjectEntry(_objectEntry3);
 
-		ObjectEntry duplicateObjectEntry = _addObjectEntry(objectFieldValue);
+		ObjectEntry duplicateObjectEntry = _addObjectEntry(
+			_objectDefinition1, objectFieldValue);
 
 		try {
 			try (LogCapture logCapture1 = LoggerTestUtil.configureLog4JLogger(
@@ -190,32 +207,183 @@ public class BatchEnginePortletDataHandlerTest {
 
 		List<ObjectEntry> objectEntries =
 			_objectEntryLocalService.getObjectEntries(
-				0, _objectDefinition.getObjectDefinitionId(), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
+				0, _objectDefinition1.getObjectDefinitionId(),
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		Assert.assertEquals(objectEntries.toString(), 1, objectEntries.size());
 
 		duplicateObjectEntry = _objectEntryLocalService.getObjectEntry(
 			duplicateObjectEntry.getExternalReferenceCode(),
-			_objectDefinition.getObjectDefinitionId());
+			_objectDefinition1.getObjectDefinitionId());
 
 		Assert.assertNotEquals(
 			_objectEntry2.getExternalReferenceCode(),
 			duplicateObjectEntry.getExternalReferenceCode());
 	}
 
-	private ObjectEntry _addObjectEntry(Serializable objectFieldValue)
+	@Test
+	@TestInfo("LPD-50142")
+	public void testExportIndividualDeletionsCompanyGroup() throws Exception {
+		_objectEntryLocalService.deleteObjectEntry(_objectEntry1);
+		_objectEntryLocalService.deleteObjectEntry(_objectEntry2);
+		_objectEntryLocalService.deleteObjectEntry(_objectEntry3);
+
+		_objectDefinition2 = ObjectDefinitionTestUtil.publishObjectDefinition(
+			ObjectDefinitionTestUtil.getRandomName(),
+			Collections.singletonList(
+				ObjectFieldUtil.createObjectField(
+					ObjectFieldConstants.BUSINESS_TYPE_TEXT,
+					ObjectFieldConstants.DB_TYPE_STRING, true, true, null,
+					RandomTestUtil.randomString(), _OBJECT_FIELD_NAME_TEXT,
+					false)),
+			ObjectDefinitionConstants.SCOPE_COMPANY);
+
+		_objectEntry4 = _addObjectEntry(
+			_objectDefinition2, RandomTestUtil.randomString());
+
+		_objectEntryLocalService.deleteObjectEntry(_objectEntry4);
+
+		Map<String, String[]> exportParams =
+			_getExportIndividualDeletionsParameterMap(
+				Collections.singletonList(_objectDefinition1));
+
+		File larFile = _exportImportLocalService.exportLayoutsAsFile(
+			_exportImportConfigurationLocalService.
+				addDraftExportImportConfiguration(
+					TestPropsValues.getUserId(),
+					ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
+					ExportImportConfigurationSettingsMapFactoryUtil.
+						buildExportLayoutSettingsMap(
+							TestPropsValues.getUser(), _companyGroupId, false,
+							new long[0], exportParams)));
+
+		JSONAssert.assertEquals(
+			JSONUtil.putAll(
+				_objectEntry1.getExternalReferenceCode(),
+				_objectEntry2.getExternalReferenceCode(),
+				_objectEntry3.getExternalReferenceCode()
+			).toString(),
+			_classExternalReferenceCodesJSONArray(
+				larFile, _companyGroupId
+			).toString(),
+			JSONCompareMode.STRICT);
+
+		exportParams = _getExportIndividualDeletionsParameterMap(
+			Collections.singletonList(_objectDefinition2));
+
+		larFile = _exportImportLocalService.exportLayoutsAsFile(
+			_exportImportConfigurationLocalService.
+				addDraftExportImportConfiguration(
+					TestPropsValues.getUserId(),
+					ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
+					ExportImportConfigurationSettingsMapFactoryUtil.
+						buildExportLayoutSettingsMap(
+							TestPropsValues.getUser(), _companyGroupId, true,
+							new long[0], exportParams)));
+
+		JSONAssert.assertEquals(
+			JSONUtil.putAll(
+				_objectEntry4.getExternalReferenceCode()
+			).toString(),
+			_classExternalReferenceCodesJSONArray(
+				larFile, _companyGroupId
+			).toString(),
+			JSONCompareMode.STRICT);
+
+		exportParams = _getExportIndividualDeletionsParameterMap(
+			Arrays.asList(_objectDefinition1, _objectDefinition2));
+
+		larFile = _exportImportLocalService.exportLayoutsAsFile(
+			_exportImportConfigurationLocalService.
+				addDraftExportImportConfiguration(
+					TestPropsValues.getUserId(),
+					ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
+					ExportImportConfigurationSettingsMapFactoryUtil.
+						buildExportLayoutSettingsMap(
+							TestPropsValues.getUser(), _companyGroupId, false,
+							new long[0], exportParams)));
+
+		JSONAssert.assertEquals(
+			JSONUtil.putAll(
+				_objectEntry1.getExternalReferenceCode(),
+				_objectEntry2.getExternalReferenceCode(),
+				_objectEntry3.getExternalReferenceCode(),
+				_objectEntry4.getExternalReferenceCode()
+			).toString(),
+			_classExternalReferenceCodesJSONArray(
+				larFile, _companyGroupId
+			).toString(),
+			JSONCompareMode.STRICT);
+	}
+
+	private ObjectEntry _addObjectEntry(
+			ObjectDefinition objectDefinition, Serializable objectFieldValue)
 		throws Exception {
 
 		return _objectEntryLocalService.addObjectEntry(
 			TestPropsValues.getUserId(), 0L,
-			_objectDefinition.getObjectDefinitionId(),
+			objectDefinition.getObjectDefinitionId(),
 			ObjectEntryFolderConstants.PARENT_OBJECT_ENTRY_FOLDER_ID_DEFAULT,
 			null,
 			HashMapBuilder.put(
 				_OBJECT_FIELD_NAME_TEXT, objectFieldValue
 			).build(),
 			ServiceContextTestUtil.getServiceContext());
+	}
+
+	private JSONArray _classExternalReferenceCodesJSONArray(
+			File larFile, long groupId)
+		throws Exception {
+
+		try (ZipFile zipFile = new ZipFile(larFile)) {
+			String filePath =
+				"group/" + groupId + "/deletion-system-events.xml";
+
+			ZipEntry zipEntry = zipFile.getEntry(filePath);
+
+			if (zipEntry == null) {
+				throw new FileNotFoundException();
+			}
+
+			Document document = _saxReader.read(
+				zipFile.getInputStream(zipEntry));
+
+			Element rootElement = document.getRootElement();
+
+			JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+			for (Element deletionSystemEventElement :
+					rootElement.elements("deletion-system-event")) {
+
+				String classExternalReferenceCode =
+					deletionSystemEventElement.attributeValue(
+						"classExternalReferenceCode");
+
+				jsonArray.put(classExternalReferenceCode);
+			}
+
+			return jsonArray;
+		}
+	}
+
+	private Map<String, String[]> _getExportIndividualDeletionsParameterMap(
+		List<ObjectDefinition> objectDefinitions) {
+
+		Map<String, String[]> parameterMap = HashMapBuilder.put(
+			"DELETIONS", new String[] {"true"}
+		).put(
+			"PERMISSIONS", new String[] {"false"}
+		).put(
+			"PORTLET_DATA", new String[] {"true"}
+		).build();
+
+		objectDefinitions.forEach(
+			objectDefinition -> parameterMap.put(
+				PortletDataHandlerKeys.PORTLET_DATA + "_" +
+					objectDefinition.getPortletId(),
+				new String[] {Boolean.TRUE.toString()}));
+
+		return parameterMap;
 	}
 
 	private Map<String, String[]> _getExportParameterMap() {
@@ -230,7 +398,7 @@ public class BatchEnginePortletDataHandlerTest {
 			new String[] {Boolean.TRUE.toString()}
 		).put(
 			PortletDataHandlerKeys.PORTLET_DATA + "_" +
-				_objectDefinition.getPortletId(),
+				_objectDefinition1.getPortletId(),
 			new String[] {Boolean.TRUE.toString()}
 		).put(
 			PortletDataHandlerKeys.PORTLET_SETUP_ALL,
@@ -267,13 +435,18 @@ public class BatchEnginePortletDataHandlerTest {
 	private ExportImportLocalService _exportImportLocalService;
 
 	private File _larFile;
-	private ObjectDefinition _objectDefinition;
+	private ObjectDefinition _objectDefinition1;
+	private ObjectDefinition _objectDefinition2;
 	private ObjectEntry _objectEntry1;
 	private ObjectEntry _objectEntry2;
 	private ObjectEntry _objectEntry3;
+	private ObjectEntry _objectEntry4;
 
 	@Inject
 	private ObjectEntryLocalService _objectEntryLocalService;
+
+	@Inject
+	private SAXReader _saxReader;
 
 	@Inject
 	private StagingGroupHelper _stagingGroupHelper;

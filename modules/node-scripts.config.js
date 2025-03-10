@@ -206,6 +206,7 @@ module.exports = {
 			'Italic',
 			'Link',
 			'List',
+			'MediaEmbed',
 			'Paragraph',
 			'Plugin',
 			'RemoveFormat',

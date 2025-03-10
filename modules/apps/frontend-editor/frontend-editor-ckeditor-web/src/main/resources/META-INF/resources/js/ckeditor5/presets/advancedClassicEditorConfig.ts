@@ -60,6 +60,9 @@ const advancedClassicEditorConfig: ClassicEditorConfig = {
 			'imageTextAlternative',
 		],
 	},
+	mediaEmbed: {
+		previewsInData: true,
+	},
 	style: {
 		definitions: [
 			{

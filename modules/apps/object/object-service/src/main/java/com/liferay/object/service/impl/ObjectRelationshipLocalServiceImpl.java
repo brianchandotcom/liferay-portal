@@ -159,13 +159,18 @@ public class ObjectRelationshipLocalServiceImpl
 			externalReferenceCode, 0L, user.getCompanyId(),
 			objectDefinitionId1);
 
+		String objectFieldName = objectField.getName();
+
+		String relationshipName =
+			objectFieldName.split(StringPool.UNDERLINE)[1];
+
 		return _addObjectRelationship(
 			externalReferenceCode, user,
 			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId1),
 			_objectDefinitionPersistence.findByPrimaryKey(objectDefinitionId2),
 			0, ObjectRelationshipConstants.DELETION_TYPE_PREVENT, false,
 			LocalizedMapUtil.getLocalizedMap(externalReferenceCode),
-			externalReferenceCode, false, false,
+			relationshipName, false, false,
 			ObjectRelationshipConstants.TYPE_ONE_TO_MANY, objectField);
 	}
 

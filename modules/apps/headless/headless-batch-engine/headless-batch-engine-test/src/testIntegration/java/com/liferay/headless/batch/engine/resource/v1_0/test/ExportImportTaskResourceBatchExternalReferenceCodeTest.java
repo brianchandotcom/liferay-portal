@@ -61,7 +61,9 @@ public class ExportImportTaskResourceBatchExternalReferenceCodeTest {
 	}
 
 	@Test
-	public void testImportWithBatchExternalReferenceCode() throws Exception {
+	public void testPostImportTaskWithBatchExternalReferenceCode()
+		throws Exception {
+
 		try (BatchEngineTaskItemDelegateAutoCloseable
 				batchEngineTaskItemDelegateAutoCloseable =
 					new BatchEngineTaskItemDelegateAutoCloseable(
@@ -75,7 +77,9 @@ public class ExportImportTaskResourceBatchExternalReferenceCodeTest {
 	}
 
 	@Test
-	public void testImportWithBothExternalReferenceCodes() throws Exception {
+	public void testPostImportTaskWithBothExternalReferenceCodes()
+		throws Exception {
+
 		try (BatchEngineTaskItemDelegateAutoCloseable
 				batchEngineTaskItemDelegateAutoCloseable =
 					new BatchEngineTaskItemDelegateAutoCloseable(
@@ -89,7 +93,7 @@ public class ExportImportTaskResourceBatchExternalReferenceCodeTest {
 	}
 
 	@Test
-	public void testImportWithExternalReferenceCode() throws Exception {
+	public void testPostImportTaskWithExternalReferenceCode() throws Exception {
 		try (BatchEngineTaskItemDelegateAutoCloseable
 				batchEngineTaskItemDelegateAutoCloseable =
 					new BatchEngineTaskItemDelegateAutoCloseable(
@@ -103,7 +107,9 @@ public class ExportImportTaskResourceBatchExternalReferenceCodeTest {
 	}
 
 	@Test
-	public void testImportWithNoExternalReferenceCodesFail() throws Exception {
+	public void testPostImportTaskWithNoExternalReferenceCodesFail()
+		throws Exception {
+
 		try (BatchEngineTaskItemDelegateAutoCloseable
 				batchEngineTaskItemDelegateAutoCloseable =
 					new BatchEngineTaskItemDelegateAutoCloseable(
@@ -122,7 +128,7 @@ public class ExportImportTaskResourceBatchExternalReferenceCodeTest {
 	}
 
 	@Test
-	public void testImportWithNoExternalReferenceCodesSuccess()
+	public void testPostImportTaskWithNoExternalReferenceCodesSuccess()
 		throws Exception {
 
 		try (BatchEngineTaskItemDelegateAutoCloseable

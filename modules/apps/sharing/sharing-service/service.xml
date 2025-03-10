@@ -3,7 +3,7 @@
 
 <service-builder auto-import-default-references="false" auto-namespace-tables="false" dependency-injector="ds" package-path="com.liferay.sharing">
 	<namespace>Sharing</namespace>
-	<entity local-service="true" name="SharingEntry" remote-service="true" uuid="true">
+	<entity external-reference-code="group" local-service="true" name="SharingEntry" remote-service="true" uuid="true">
 
 		<!-- PK fields -->
 

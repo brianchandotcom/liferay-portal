@@ -413,7 +413,7 @@ public abstract class BaseBuildDatabase implements BuildDatabase {
 					_buildDatabaseFile, tempBuildDatabaseFile);
 
 				CloudBucketUtil.copyS3File(
-					tempBuildDatabaseFile.toString(), path);
+					path, tempBuildDatabaseFile.toString());
 			}
 			catch (IOException ioException) {
 				throw new RuntimeException(ioException);

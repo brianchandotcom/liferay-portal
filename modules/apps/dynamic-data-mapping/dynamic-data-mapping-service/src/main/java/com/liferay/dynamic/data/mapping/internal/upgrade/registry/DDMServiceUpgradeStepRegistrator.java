@@ -675,16 +675,17 @@ public class DDMServiceUpgradeStepRegistrator
 			UpgradeProcessFactory.alterColumnType(
 				"DDMTemplate", "name", "TEXT null"));
 
+		registry.register("7.0.0", "7.0.1", new DummyUpgradeStep());
+
 		registry.register(
-			"7.0.0", "7.0.1",
+			"7.0.1", "7.0.2",
 			UpgradeProcessFactory.runSQL(
 				StringBundler.concat(
 					"update User_ set externalReferenceCode = '",
 					DDMFormConstants.
 						DDM_FORM_DEFAULT_USER_EXTERNAL_REFERENCE_CODE,
 					"' where emailAddress like '",
-					DDMFormConstants.DDM_FORM_DEFAULT_USER_SCREEN_NAME,
-					"@%'")));
+					"ddm_form_default_user_screen_name@%'")));
 	}
 
 	@Activate

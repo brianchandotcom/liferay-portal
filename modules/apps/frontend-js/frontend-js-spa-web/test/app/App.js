@@ -1134,7 +1134,7 @@ describe('App', function () {
 
 	it('navigates when clicking on routed links', async () => {
 		this.app = new App();
-		this.app.addRoutes(new Route('/pathote', Screen));
+		this.app.addRoutes(new Route('/path', Screen));
 
 		jest.spyOn(this.app, 'updateHistory_').mockImplementation(() => {});
 		jest.spyOn(

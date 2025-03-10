@@ -9,6 +9,7 @@ import com.liferay.account.constants.AccountConstants;
 import com.liferay.account.model.AccountEntry;
 import com.liferay.account.service.AccountEntryLocalService;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.object.constants.ObjectDefinitionConstants;
 import com.liferay.object.constants.ObjectEntryFolderConstants;
 import com.liferay.object.constants.ObjectFieldConstants;
@@ -47,6 +48,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.ClassNameLocalService;
 import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
@@ -554,7 +556,7 @@ public class ObjectRelatedModelsProviderTest {
 		_testObjectEntry1toMObjectUnrelatedModelsProviderImpl(
 			company.getCompanyId());
 
-		_companyLocalService.deleteCompany(company);
+		_companyLocalService.deleteCompany(company.getCompanyId());
 	}
 
 	@Test
@@ -828,8 +830,11 @@ public class ObjectRelatedModelsProviderTest {
 			_objectRelationshipLocalService.deleteObjectRelationship(
 				_objectRelationship.getObjectRelationshipId());
 
+			_assetEntryLocalService.deleteEntry(
+				objectDefinition.getClassName(), objectEntry.getPrimaryKey());
+
 			_objectDefinitionLocalService.deleteObjectDefinition(
-				objectDefinition.getObjectDefinitionId());
+				objectDefinition);
 
 			_accountEntryLocalService.deleteAccountEntries(
 				new long[] {
@@ -1061,6 +1066,12 @@ public class ObjectRelatedModelsProviderTest {
 
 	@Inject
 	private AccountEntryLocalService _accountEntryLocalService;
+
+	@Inject
+	private AssetEntryLocalService _assetEntryLocalService;
+
+	@Inject
+	private ClassNameLocalService _classNameLocalService;
 
 	@Inject
 	private CompanyLocalService _companyLocalService;

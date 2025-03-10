@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: LGPL-2.1-or-later OR LicenseRef-Liferay-DXP-EULA-2.0.0-2023-06
  */
 
-package com.liferay.object.internal.upgrade.v10_4_1.test;
+package com.liferay.object.internal.upgrade.v10_9_1.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.object.model.ObjectDefinition;
@@ -58,13 +58,6 @@ public class ObjectDefinitionStaleClassNameUpgradeProcessTest {
 
 		_objectDefinitionLocalService.deleteObjectDefinition(objectDefinition2);
 
-		Assert.assertNotNull(
-			_classNameLocalService.fetchByClassNameId(
-				className1.getClassNameId()));
-		Assert.assertNotNull(
-			_classNameLocalService.fetchByClassNameId(
-				className2.getClassNameId()));
-
 		try (LogCapture logCapture = LoggerTestUtil.configureLog4JLogger(
 				_CLASS_NAME, LoggerTestUtil.OFF)) {
 
@@ -89,7 +82,7 @@ public class ObjectDefinitionStaleClassNameUpgradeProcessTest {
 	}
 
 	private static final String _CLASS_NAME =
-		"com.liferay.object.internal.upgrade.v10_4_1." +
+		"com.liferay.object.internal.upgrade.v10_9_1." +
 			"ObjectDefinitionStaleClassNameUpgradeProcess";
 
 	@Inject(

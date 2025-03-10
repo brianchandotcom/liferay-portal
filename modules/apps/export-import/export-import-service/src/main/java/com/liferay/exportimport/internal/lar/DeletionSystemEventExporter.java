@@ -217,6 +217,10 @@ public class DeletionSystemEventExporter {
 
 		deletionSystemEventElement.addAttribute("class-name", className);
 
+		deletionSystemEventElement.addAttribute(
+			"classExternalReferenceCode",
+			systemEvent.getClassExternalReferenceCode());
+
 		if (className.equals(FragmentEntry.class.getName())) {
 			try {
 				JSONObject extraDataJSONObject =

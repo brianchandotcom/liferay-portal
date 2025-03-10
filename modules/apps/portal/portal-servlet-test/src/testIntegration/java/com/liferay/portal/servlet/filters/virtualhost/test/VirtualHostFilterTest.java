@@ -84,6 +84,7 @@ public class VirtualHostFilterTest {
 	@After
 	public void tearDown() {
 		_portalUtil.setPortal(_portal);
+
 		_virtualHostFilter.destroy();
 	}
 
@@ -158,7 +159,6 @@ public class VirtualHostFilterTest {
 
 		mockHttpServletRequest.setAttribute(
 			WebKeys.VIRTUAL_HOST_LAYOUT_SET, _layoutSet);
-
 		mockHttpServletRequest.setRequestURI("/en-US");
 
 		Assert.assertEquals(

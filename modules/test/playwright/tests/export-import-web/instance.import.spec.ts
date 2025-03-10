@@ -549,6 +549,7 @@ test(
 		await page.getByLabel('Panel Link', {exact: true}).click();
 		await page.getByRole('option', {name: 'Object'}).click();
 		await page.getByRole('button', {name: 'Save'}).click();
+		await page.waitForTimeout(2000);
 		await applicationsMenuPage.goToObjectDefinition(objectDefinition.name);
 		await page.getByText('Add ' + objectDefinition.name).click();
 		await page.getByLabel('textField').fill('testText');
@@ -558,8 +559,6 @@ test(
 			'Success:Your request completed successfully.'
 		);
 
-		await page.waitForTimeout(2000);
-
 		await applicationsMenuPage.goToObjectDefinition(objectDefinition.name);
 
 		const objectEntryId = await page
@@ -567,7 +566,7 @@ test(
 			.innerText();
 
 		const exportFilePath = await companyExportImportPage.export(
-			objectDefinition.name + ' 1 Items'
+			objectDefinition.name
 		);
 
 		const applicationName =
@@ -649,6 +648,7 @@ test(
 		await page.getByLabel('Panel Link', {exact: true}).click();
 		await page.getByRole('option', {name: 'Object'}).click();
 		await page.getByRole('button', {name: 'Save'}).click();
+		await page.waitForTimeout(2000);
 		await applicationsMenuPage.goToObjectDefinition(objectDefinition.name);
 		await page.getByText('Add ' + objectDefinition.name).click();
 		await page.getByLabel('textField').fill('testText');
@@ -658,8 +658,6 @@ test(
 			'Success:Your request completed successfully.'
 		);
 
-		await page.waitForTimeout(2000);
-
 		await applicationsMenuPage.goToObjectDefinition(objectDefinition.name);
 
 		const objectEntryId = await page
@@ -667,7 +665,7 @@ test(
 			.innerText();
 
 		const exportFilePath = await companyExportImportPage.export(
-			objectDefinition.name + ' 1 Items'
+			objectDefinition.name
 		);
 
 		const applicationName =
@@ -745,6 +743,7 @@ test(
 		await page.getByLabel('Panel Link', {exact: true}).click();
 		await page.getByRole('option', {name: 'Object'}).click();
 		await page.getByRole('button', {name: 'Save'}).click();
+		await page.waitForTimeout(2000);
 		await applicationsMenuPage.goToObjectDefinition(objectDefinition.name);
 		await page.getByText('Add ' + objectDefinition.name).click();
 		await page.getByLabel('textField').fill('testText');
@@ -754,8 +753,6 @@ test(
 			'Success:Your request completed successfully.'
 		);
 
-		await page.waitForTimeout(2000);
-
 		await applicationsMenuPage.goToObjectDefinition(objectDefinition.name);
 
 		const objectEntryId = await page
@@ -763,7 +760,7 @@ test(
 			.innerText();
 
 		const exportFilePath = await companyExportImportPage.export(
-			objectDefinition.name + ' 1 Items'
+			objectDefinition.name
 		);
 
 		const applicationName =

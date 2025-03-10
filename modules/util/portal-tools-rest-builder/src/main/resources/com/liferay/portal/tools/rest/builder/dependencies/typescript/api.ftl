@@ -2,12 +2,8 @@ import http from 'http';
 
 import localVarRequest from 'request';
 /* tslint:disable:no-unused-locals */
-import {
-	Authentication,
-	Interceptor,
-	ObjectSerializer,
-	VoidAuth,
-} from '../model/models';
+import {ObjectSerializer} from '../model/models';
+
 <#if importClasses??>
 	<#list importClasses?sort as import>
 		<#if stringUtil.equals(import, "RequestFile")>
@@ -26,68 +22,18 @@ const defaultBasePath = 'http://localhost';
  * @generated
  */
 
-export enum ${className}ApiKeys {}
-
 export class ${className} {
 	protected _basePath = defaultBasePath;
 	protected _defaultHeaders: any = {};
-	protected _useQuerystring: boolean = false;
 
-	protected authentications = {
-		default: <Authentication>new VoidAuth(),
-	};
-
-	protected interceptors: Interceptor[] = [];
-
-	constructor(basePath?: string);
-	constructor(
-		basePathOrUsername: string,
-		password?: string,
-		basePath?: string
-	) {
-		if (password) {
-			if (basePath) {
-				this.basePath = basePath;
-			}
+	constructor(basePath?: string) {
+		if (basePath) {
+			this._basePath = basePath;
 		}
-		else {
-			if (basePathOrUsername) {
-				this.basePath = basePathOrUsername;
-			}
-		}
-	}
-
-	set useQuerystring(value: boolean) {
-		this._useQuerystring = value;
-	}
-
-	set basePath(basePath: string) {
-		this._basePath = basePath;
 	}
 
 	set defaultHeaders(defaultHeaders: any) {
 		this._defaultHeaders = defaultHeaders;
-	}
-
-	get defaultHeaders() {
-		return this._defaultHeaders;
-	}
-
-	get basePath() {
-		return this._basePath;
-	}
-
-	public setDefaultAuthentication(auth: Authentication) {
-		this.authentications.default = auth;
-	}
-
-	public setApiKey(key: ${className}ApiKeys, value: string) {
-		(this.authentications as any)[${className}ApiKeys[key]].apiKey =
-			value;
-	}
-
-	public addInterceptor(interceptor: Interceptor) {
-		this.interceptors.push(interceptor);
 	}
 
 	<#list operationsData?sort_by("operationId") as operationData>
@@ -116,7 +62,7 @@ export class ${className} {
 			</#if>
 			response: http.IncomingMessage;
 		}> {
-			const localVarPath = this.basePath + '${operationData.path}'
+			const localVarPath = this._basePath + '${operationData.path}'
 				<#list operationData.parameters as parameter>
 					<#if stringUtil.equals(parameter.type, "path")>
 						.replace(
@@ -166,10 +112,8 @@ export class ${className} {
 							localVarFormParams['${parameter.name}'] = ObjectSerializer.serialize(${parameter.name}, "${parameter.dataType}");
 						</#if>
 					}
-
 				</#if>
 			</#list>
-			const localVarUseFormData = ${localVarUseFormData?string('true', 'false')};
 
 			const localVarRequestOptions: localVarRequest.Options = {
 				<#list operationData.parameters as parameter>
@@ -182,52 +126,43 @@ export class ${className} {
 				method: '${operationData.httpMethod}',
 				qs: localVarQueryParameters,
 				uri: localVarPath,
-				useQuerystring: this._useQuerystring
 			};
 
-			let authenticationPromise = Promise.resolve();
-			authenticationPromise = authenticationPromise.then(() => this.authentications.default.applyToRequest(localVarRequestOptions));
-
-			let interceptorPromise = authenticationPromise;
-			for (const interceptor of this.interceptors) {
-				interceptorPromise = interceptorPromise.then(() => interceptor(localVarRequestOptions));
+			if (Object.keys(localVarFormParams).length) {
+				<#if localVarUseFormData>
+					(<any>localVarRequestOptions).formData = localVarFormParams;
+				<#else>
+					localVarRequestOptions.form = localVarFormParams;
+				</#if>
 			}
-
-			return interceptorPromise.then(() => {
-				if (Object.keys(localVarFormParams).length) {
-					if (localVarUseFormData) {
-						(<any>localVarRequestOptions).formData = localVarFormParams;
-					} else {
-						localVarRequestOptions.form = localVarFormParams;
+			return new Promise<{ <#if operationData.returnDataType??> body: ${operationData.returnDataType};<#else> body?: any;</#if> response: http.IncomingMessage;}>((resolve, reject) => {
+				localVarRequest(localVarRequestOptions, (error, response, body) => {
+					if (error) {
+						reject(error);
 					}
-				}
-				return new Promise<{ <#if operationData.returnDataType??> body: ${operationData.returnDataType};<#else> body?: any;</#if> response: http.IncomingMessage;}>((resolve, reject) => {
-					localVarRequest(localVarRequestOptions, (error, response, body) => {
-						if (error) {
-							reject(error);
+					else {
+						if (
+							response.statusCode &&
+							response.statusCode >= 200 &&
+							response.statusCode <= 299
+						) {
+							<#if operationData.returnDataType??>
+								body = ObjectSerializer.deserialize(body, "${operationData.returnDataType}");
+							</#if>
+							resolve({body, response});
 						}
 						else {
-							if (
-								response.statusCode &&
-								response.statusCode >= 200 &&
-								response.statusCode <= 299
-							) {
-								resolve({body, response});
-							}
-							else {
-								reject(
-									new HttpError(
-										body,
-										response,
-										response.statusCode
-									)
-								);
-							}
+							reject(
+								new HttpError(
+									body,
+									response,
+									response.statusCode
+								)
+							);
 						}
 					}
-				);
+				});
 			});
-		});
-	}
+		}
 	</#list>
 }

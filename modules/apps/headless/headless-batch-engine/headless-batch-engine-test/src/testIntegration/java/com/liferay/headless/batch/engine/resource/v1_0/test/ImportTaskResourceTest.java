@@ -151,7 +151,7 @@ public class ImportTaskResourceTest {
 					new BatchEngineTaskItemDelegateAutoCloseable(
 						batchExternalReferenceCode)) {
 
-			_testPostImportTask(
+			_postImportTask(
 				batchExternalReferenceCode, "COMPLETED", null,
 				batchEngineTaskItemDelegateAutoCloseable.
 					getTaskItemDelegateName());
@@ -169,7 +169,7 @@ public class ImportTaskResourceTest {
 					new BatchEngineTaskItemDelegateAutoCloseable(
 						batchExternalReferenceCode)) {
 
-			_testPostImportTask(
+			_postImportTask(
 				batchExternalReferenceCode, "COMPLETED",
 				RandomTestUtil.randomString(),
 				batchEngineTaskItemDelegateAutoCloseable.
@@ -186,7 +186,7 @@ public class ImportTaskResourceTest {
 					new BatchEngineTaskItemDelegateAutoCloseable(
 						externalReferenceCode)) {
 
-			_testPostImportTask(
+			_postImportTask(
 				null, "COMPLETED", externalReferenceCode,
 				batchEngineTaskItemDelegateAutoCloseable.
 					getTaskItemDelegateName());
@@ -206,7 +206,7 @@ public class ImportTaskResourceTest {
 					"BatchEngineImportTaskExecutorImpl",
 				LoggerTestUtil.ERROR)) {
 
-			_testPostImportTask(
+			_postImportTask(
 				null, "FAILED", null,
 				batchEngineTaskItemDelegateAutoCloseable.
 					getTaskItemDelegateName());
@@ -221,14 +221,14 @@ public class ImportTaskResourceTest {
 				batchEngineTaskItemDelegateAutoCloseable =
 					new BatchEngineTaskItemDelegateAutoCloseable(null)) {
 
-			_testPostImportTask(
+			_postImportTask(
 				null, "COMPLETED", null,
 				batchEngineTaskItemDelegateAutoCloseable.
 					getTaskItemDelegateName());
 		}
 	}
 
-	private void _testPostImportTask(
+	private void _postImportTask(
 			String batchExternalReferenceCode, String expectedExecuteStatus,
 			String externalReferenceCode, String taskItemDelegateName)
 		throws Exception {

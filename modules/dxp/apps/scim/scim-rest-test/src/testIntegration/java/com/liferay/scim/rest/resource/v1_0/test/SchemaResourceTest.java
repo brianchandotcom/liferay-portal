@@ -6,16 +6,19 @@
 package com.liferay.scim.rest.resource.v1_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.HashMapDictionaryBuilder;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.scim.rest.client.http.HttpInvoker;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -32,10 +35,24 @@ public class SchemaResourceTest extends BaseSchemaResourceTestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 
-		_schemasStringList.add("urn:ietf:params:scim:schemas:core:2.0:User");
-		_schemasStringList.add(
-			"urn:ietf:params:scim:schemas:extension:liferay:2.0:User");
-		_schemasStringList.add("urn:ietf:params:scim:schemas:core:2.0:Group");
+		_pid = ConfigurationTestUtil.createFactoryConfiguration(
+			"com.liferay.scim.rest.internal.configuration." +
+				"ScimClientOAuth2ApplicationConfiguration",
+			HashMapDictionaryBuilder.<String, Object>put(
+				"companyId", TestPropsValues.getCompanyId()
+			).put(
+				"matcherField", "email"
+			).put(
+				"oAuth2ApplicationName", "scim-client-test"
+			).put(
+				"userId", TestPropsValues.getUserId()
+			).build());
+	}
+
+	@After
+	@Override
+	public void tearDown() throws Exception {
+		ConfigurationTestUtil.deleteConfiguration(_pid);
 	}
 
 	@Override
@@ -109,9 +126,14 @@ public class SchemaResourceTest extends BaseSchemaResourceTestCase {
 			).toString());
 	}
 
+	private static String _pid;
+
 	@Inject
 	private JSONFactory _jsonFactory;
 
-	private final List<String> _schemasStringList = new ArrayList<>();
+	private final List<String> _schemasStringList = List.of(
+		"urn:ietf:params:scim:schemas:core:2.0:Group",
+		"urn:ietf:params:scim:schemas:core:2.0:User",
+		"urn:ietf:params:scim:schemas:extension:liferay:2.0:User");
 
 }

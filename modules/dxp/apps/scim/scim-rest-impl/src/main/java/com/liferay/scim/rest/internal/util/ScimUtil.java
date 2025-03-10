@@ -10,6 +10,7 @@ import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.UserEmailAddressException;
 import com.liferay.portal.kernel.exception.UserScreenNameException;
@@ -21,6 +22,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.ContactConstants;
 import com.liferay.portal.kernel.model.UserGroup;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -33,6 +35,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.scim.rest.dto.v1_0.Operation;
 import com.liferay.scim.rest.dto.v1_0.PatchOp;
+import com.liferay.scim.rest.internal.configuration.ScimClientOAuth2ApplicationConfiguration;
 import com.liferay.scim.rest.internal.model.ScimUser;
 
 import java.io.File;
@@ -47,11 +50,15 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.osgi.service.cm.Configuration;
+import org.osgi.service.cm.ConfigurationAdmin;
+
 import org.wso2.charon3.core.attributes.Attribute;
 import org.wso2.charon3.core.attributes.ComplexAttribute;
 import org.wso2.charon3.core.attributes.DefaultAttributeFactory;
 import org.wso2.charon3.core.attributes.SimpleAttribute;
 import org.wso2.charon3.core.config.SCIMUserSchemaExtensionBuilder;
+import org.wso2.charon3.core.exceptions.NotFoundException;
 import org.wso2.charon3.core.objects.Group;
 import org.wso2.charon3.core.objects.User;
 import org.wso2.charon3.core.objects.plainobjects.MultiValuedComplexType;
@@ -80,6 +87,43 @@ public class ScimUtil {
 			"urn:ietf:params:scim:schemas:extension:liferay:2.0:User",
 			"user-extension-schema.json"
 		).build();
+	}
+
+	public static ScimClientOAuth2ApplicationConfiguration
+		getScimClientOAuth2ApplicationConfiguration(
+			long companyId, ConfigurationAdmin configurationAdmin) {
+
+		try {
+			Configuration[] configurations =
+				configurationAdmin.listConfigurations(
+					StringBundler.concat(
+						"(&(", ConfigurationAdmin.SERVICE_FACTORYPID,
+						"=com.liferay.scim.rest.internal.configuration.",
+						"ScimClientOAuth2ApplicationConfiguration)(companyId=",
+						companyId, "))"));
+
+			if (ArrayUtil.isEmpty(configurations)) {
+				throw new NotFoundException(
+					"SCIM is not configured for company " + companyId);
+			}
+
+			Configuration configuration = configurations[0];
+
+			return ConfigurableUtil.createConfigurable(
+				ScimClientOAuth2ApplicationConfiguration.class,
+				configuration.getProperties());
+		}
+		catch (Exception exception) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					StringBundler.concat(
+						"Unable to get the SCIM client OAuth 2 application ",
+						"configuration for company ", companyId),
+					exception);
+			}
+
+			return ReflectionUtil.throwException(exception);
+		}
 	}
 
 	public static Group toGroup(List<ScimUser> scimUsers, UserGroup userGroup)

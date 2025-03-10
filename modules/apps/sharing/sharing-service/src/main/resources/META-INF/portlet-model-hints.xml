@@ -3,6 +3,7 @@
 <model-hints>
 	<model name="com.liferay.sharing.model.SharingEntry">
 		<field name="uuid" type="String" />
+		<field name="externalReferenceCode" type="String" />
 		<field name="sharingEntryId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />

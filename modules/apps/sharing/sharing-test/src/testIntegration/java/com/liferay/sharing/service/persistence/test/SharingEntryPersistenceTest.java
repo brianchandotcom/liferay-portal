@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
+import com.liferay.sharing.exception.DuplicateSharingEntryExternalReferenceCodeException;
 import com.liferay.sharing.exception.NoSuchEntryException;
 import com.liferay.sharing.model.SharingEntry;
 import com.liferay.sharing.service.SharingEntryLocalServiceUtil;
@@ -117,6 +118,8 @@ public class SharingEntryPersistenceTest {
 
 		newSharingEntry.setUuid(RandomTestUtil.randomString());
 
+		newSharingEntry.setExternalReferenceCode(RandomTestUtil.randomString());
+
 		newSharingEntry.setGroupId(RandomTestUtil.nextLong());
 
 		newSharingEntry.setCompanyId(RandomTestUtil.nextLong());
@@ -148,6 +151,9 @@ public class SharingEntryPersistenceTest {
 
 		Assert.assertEquals(
 			existingSharingEntry.getUuid(), newSharingEntry.getUuid());
+		Assert.assertEquals(
+			existingSharingEntry.getExternalReferenceCode(),
+			newSharingEntry.getExternalReferenceCode());
 		Assert.assertEquals(
 			existingSharingEntry.getSharingEntryId(),
 			newSharingEntry.getSharingEntryId());
@@ -181,6 +187,26 @@ public class SharingEntryPersistenceTest {
 		Assert.assertEquals(
 			Time.getShortTimestamp(existingSharingEntry.getExpirationDate()),
 			Time.getShortTimestamp(newSharingEntry.getExpirationDate()));
+	}
+
+	@Test(expected = DuplicateSharingEntryExternalReferenceCodeException.class)
+	public void testUpdateWithExistingExternalReferenceCode() throws Exception {
+		SharingEntry sharingEntry = addSharingEntry();
+
+		SharingEntry newSharingEntry = addSharingEntry();
+
+		newSharingEntry.setGroupId(sharingEntry.getGroupId());
+
+		newSharingEntry = _persistence.update(newSharingEntry);
+
+		Session session = _persistence.getCurrentSession();
+
+		session.evict(newSharingEntry);
+
+		newSharingEntry.setExternalReferenceCode(
+			sharingEntry.getExternalReferenceCode());
+
+		_persistence.update(newSharingEntry);
 	}
 
 	@Test
@@ -272,6 +298,15 @@ public class SharingEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByERC_G() throws Exception {
+		_persistence.countByERC_G("", RandomTestUtil.nextLong());
+
+		_persistence.countByERC_G("null", 0L);
+
+		_persistence.countByERC_G((String)null, 0L);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		SharingEntry newSharingEntry = addSharingEntry();
 
@@ -296,11 +331,12 @@ public class SharingEntryPersistenceTest {
 
 	protected OrderByComparator<SharingEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create(
-			"SharingEntry", "uuid", true, "sharingEntryId", true, "groupId",
-			true, "companyId", true, "userId", true, "userName", true,
-			"createDate", true, "modifiedDate", true, "toUserId", true,
-			"classNameId", true, "classPK", true, "shareable", true,
-			"actionIds", true, "expirationDate", true);
+			"SharingEntry", "uuid", true, "externalReferenceCode", true,
+			"sharingEntryId", true, "groupId", true, "companyId", true,
+			"userId", true, "userName", true, "createDate", true,
+			"modifiedDate", true, "toUserId", true, "classNameId", true,
+			"classPK", true, "shareable", true, "actionIds", true,
+			"expirationDate", true);
 	}
 
 	@Test
@@ -593,6 +629,17 @@ public class SharingEntryPersistenceTest {
 			ReflectionTestUtil.<Long>invoke(
 				sharingEntry, "getColumnOriginalValue",
 				new Class<?>[] {String.class}, "classPK"));
+
+		Assert.assertEquals(
+			sharingEntry.getExternalReferenceCode(),
+			ReflectionTestUtil.invoke(
+				sharingEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "externalReferenceCode"));
+		Assert.assertEquals(
+			Long.valueOf(sharingEntry.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(
+				sharingEntry, "getColumnOriginalValue",
+				new Class<?>[] {String.class}, "groupId"));
 	}
 
 	protected SharingEntry addSharingEntry() throws Exception {
@@ -601,6 +648,8 @@ public class SharingEntryPersistenceTest {
 		SharingEntry sharingEntry = _persistence.create(pk);
 
 		sharingEntry.setUuid(RandomTestUtil.randomString());
+
+		sharingEntry.setExternalReferenceCode(RandomTestUtil.randomString());
 
 		sharingEntry.setGroupId(RandomTestUtil.nextLong());
 

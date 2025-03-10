@@ -343,6 +343,13 @@ public class SharingEntryLocalServiceUtil {
 		return getService().fetchSharingEntry(toUserId, classNameId, classPK);
 	}
 
+	public static SharingEntry fetchSharingEntryByExternalReferenceCode(
+		String externalReferenceCode, long groupId) {
+
+		return getService().fetchSharingEntryByExternalReferenceCode(
+			externalReferenceCode, groupId);
+	}
+
 	/**
 	 * Returns the sharing entry matching the UUID and group.
 	 *
@@ -580,6 +587,14 @@ public class SharingEntryLocalServiceUtil {
 		throws PortalException {
 
 		return getService().getSharingEntry(toUserId, classNameId, classPK);
+	}
+
+	public static SharingEntry getSharingEntryByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return getService().getSharingEntryByExternalReferenceCode(
+			externalReferenceCode, groupId);
 	}
 
 	/**

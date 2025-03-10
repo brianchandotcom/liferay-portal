@@ -258,6 +258,23 @@ public abstract class SharingEntryLocalServiceBaseImpl
 		return sharingEntryPersistence.fetchByUUID_G(uuid, groupId);
 	}
 
+	@Override
+	public SharingEntry fetchSharingEntryByExternalReferenceCode(
+		String externalReferenceCode, long groupId) {
+
+		return sharingEntryPersistence.fetchByERC_G(
+			externalReferenceCode, groupId);
+	}
+
+	@Override
+	public SharingEntry getSharingEntryByExternalReferenceCode(
+			String externalReferenceCode, long groupId)
+		throws PortalException {
+
+		return sharingEntryPersistence.findByERC_G(
+			externalReferenceCode, groupId);
+	}
+
 	/**
 	 * Returns the sharing entry with the primary key.
 	 *

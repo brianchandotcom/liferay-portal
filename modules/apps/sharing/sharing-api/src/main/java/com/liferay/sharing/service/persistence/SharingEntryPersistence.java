@@ -1478,6 +1478,58 @@ public interface SharingEntryPersistence extends BasePersistence<SharingEntry> {
 	public int countByTU_C_C(long toUserId, long classNameId, long classPK);
 
 	/**
+	 * Returns the sharing entry where externalReferenceCode = &#63; and groupId = &#63; or throws a <code>NoSuchEntryException</code> if it could not be found.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 * @return the matching sharing entry
+	 * @throws NoSuchEntryException if a matching sharing entry could not be found
+	 */
+	public SharingEntry findByERC_G(String externalReferenceCode, long groupId)
+		throws NoSuchEntryException;
+
+	/**
+	 * Returns the sharing entry where externalReferenceCode = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 * @return the matching sharing entry, or <code>null</code> if a matching sharing entry could not be found
+	 */
+	public SharingEntry fetchByERC_G(
+		String externalReferenceCode, long groupId);
+
+	/**
+	 * Returns the sharing entry where externalReferenceCode = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the matching sharing entry, or <code>null</code> if a matching sharing entry could not be found
+	 */
+	public SharingEntry fetchByERC_G(
+		String externalReferenceCode, long groupId, boolean useFinderCache);
+
+	/**
+	 * Removes the sharing entry where externalReferenceCode = &#63; and groupId = &#63; from the database.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 * @return the sharing entry that was removed
+	 */
+	public SharingEntry removeByERC_G(
+			String externalReferenceCode, long groupId)
+		throws NoSuchEntryException;
+
+	/**
+	 * Returns the number of sharing entries where externalReferenceCode = &#63; and groupId = &#63;.
+	 *
+	 * @param externalReferenceCode the external reference code
+	 * @param groupId the group ID
+	 * @return the number of matching sharing entries
+	 */
+	public int countByERC_G(String externalReferenceCode, long groupId);
+
+	/**
 	 * Caches the sharing entry in the entity cache if it is enabled.
 	 *
 	 * @param sharingEntry the sharing entry

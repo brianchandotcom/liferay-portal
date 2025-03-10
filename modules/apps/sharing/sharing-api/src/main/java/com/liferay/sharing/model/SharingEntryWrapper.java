@@ -35,6 +35,7 @@ public class SharingEntryWrapper
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("uuid", getUuid());
+		attributes.put("externalReferenceCode", getExternalReferenceCode());
 		attributes.put("sharingEntryId", getSharingEntryId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -58,6 +59,13 @@ public class SharingEntryWrapper
 
 		if (uuid != null) {
 			setUuid(uuid);
+		}
+
+		String externalReferenceCode = (String)attributes.get(
+			"externalReferenceCode");
+
+		if (externalReferenceCode != null) {
+			setExternalReferenceCode(externalReferenceCode);
 		}
 
 		Long sharingEntryId = (Long)attributes.get("sharingEntryId");
@@ -212,6 +220,16 @@ public class SharingEntryWrapper
 	@Override
 	public Date getExpirationDate() {
 		return model.getExpirationDate();
+	}
+
+	/**
+	 * Returns the external reference code of this sharing entry.
+	 *
+	 * @return the external reference code of this sharing entry
+	 */
+	@Override
+	public String getExternalReferenceCode() {
+		return model.getExternalReferenceCode();
 	}
 
 	/**
@@ -418,6 +436,16 @@ public class SharingEntryWrapper
 	@Override
 	public void setExpirationDate(Date expirationDate) {
 		model.setExpirationDate(expirationDate);
+	}
+
+	/**
+	 * Sets the external reference code of this sharing entry.
+	 *
+	 * @param externalReferenceCode the external reference code of this sharing entry
+	 */
+	@Override
+	public void setExternalReferenceCode(String externalReferenceCode) {
+		model.setExternalReferenceCode(externalReferenceCode);
 	}
 
 	/**

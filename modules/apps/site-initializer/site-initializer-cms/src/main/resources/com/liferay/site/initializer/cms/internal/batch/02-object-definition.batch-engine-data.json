@@ -125,15 +125,15 @@
 					"DBType": "Clob",
 					"businessType": "RichText",
 					"defaultValue": "null",
-					"externalReferenceCode": "BODY",
+					"externalReferenceCode": "Content",
 					"indexed": true,
 					"indexedAsKeyword": false,
 					"indexedLanguageId": "en_US",
 					"label": {
-						"en_US": "Body"
+						"en_US": "Content"
 					},
 					"localized": true,
-					"name": "body",
+					"name": "content",
 					"readOnly": "false",
 					"readOnlyConditionExpression": "",
 					"required": false,

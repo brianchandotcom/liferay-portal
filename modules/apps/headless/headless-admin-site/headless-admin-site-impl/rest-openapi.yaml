@@ -141,6 +141,12 @@ components:
             allOf:
                 - $ref: "#/components/schemas/PageSpecification"
                 - properties:
+                      draftContentPageSpecificationExternalReferenceCode:
+                          # @review
+                          description:
+                              The draft content page specification external reference code or null if it is a draft
+                              content page specification.
+                          type: string
                       pageExperiences:
                           items:
                               $ref: "#/components/schemas/PageExperience"

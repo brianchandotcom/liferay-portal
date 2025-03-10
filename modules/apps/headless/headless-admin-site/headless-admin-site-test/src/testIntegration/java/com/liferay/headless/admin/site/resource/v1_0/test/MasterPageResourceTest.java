@@ -10,6 +10,8 @@ import com.liferay.exportimport.kernel.service.StagingLocalService;
 import com.liferay.headless.admin.site.client.dto.v1_0.ContentPageSpecification;
 import com.liferay.headless.admin.site.client.dto.v1_0.ItemExternalReference;
 import com.liferay.headless.admin.site.client.dto.v1_0.MasterPage;
+import com.liferay.headless.admin.site.client.dto.v1_0.PageElement;
+import com.liferay.headless.admin.site.client.dto.v1_0.PageExperience;
 import com.liferay.headless.admin.site.client.dto.v1_0.PageSpecification;
 import com.liferay.headless.admin.site.client.pagination.Page;
 import com.liferay.headless.admin.site.client.problem.Problem;
@@ -42,7 +44,11 @@ import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerMethodTestRule;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.segments.constants.SegmentsExperienceConstants;
+import com.liferay.segments.model.SegmentsExperience;
+import com.liferay.segments.service.SegmentsExperienceLocalService;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -496,6 +502,33 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 			RandomTestUtil.randomString(), ContentTypes.IMAGE_PNG, false);
 	}
 
+	private void _assertPageExperiences(
+		PageExperience[] expectedPageExperiences, Layout layout,
+		PageExperience[] pageExperiences) {
+
+		PageExperience expectedPageExperience = expectedPageExperiences[0];
+
+		Assert.assertEquals(
+			pageExperiences.toString(), 1, pageExperiences.length);
+
+		PageExperience pageExperience = pageExperiences[0];
+
+		Assert.assertEquals(
+			expectedPageExperience.getExternalReferenceCode(),
+			pageExperience.getExternalReferenceCode());
+		Assert.assertEquals(
+			layout.getExternalReferenceCode(),
+			pageExperience.getPageSpecificationExternalReferenceCode());
+
+		SegmentsExperience segmentsExperience =
+			_segmentsExperienceLocalService.fetchDefaultSegmentsExperience(
+				layout.getPlid());
+
+		Assert.assertEquals(
+			segmentsExperience.getExternalReferenceCode(),
+			pageExperience.getExternalReferenceCode());
+	}
+
 	private void
 			_assertPostSiteSiteByExternalReferenceCodeMasterPagePageSpecificationProblemException(
 				LayoutPageTemplateEntry layoutPageTemplateEntry)
@@ -601,6 +634,22 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 		).parameters(
 			"nestedFields", "pageSpecifications"
 		).build();
+	}
+
+	private PageExperience[] _getPageExperiences(
+		String pageSpecificationExternalReferenceCode) {
+
+		PageExperience pageExperience = new PageExperience();
+
+		pageExperience.setExternalReferenceCode(RandomTestUtil::randomString);
+		pageExperience.setKey(SegmentsExperienceConstants.KEY_DEFAULT);
+		pageExperience.setName_i18n(
+			Collections.singletonMap("en-US", RandomTestUtil.randomString()));
+		pageExperience.setPageElements(new PageElement[0]);
+		pageExperience.setPageSpecificationExternalReferenceCode(
+			pageSpecificationExternalReferenceCode);
+
+		return new PageExperience[] {pageExperience};
 	}
 
 	private void _testGetSiteSiteByExternalReferenceCodeMasterPage(
@@ -756,6 +805,10 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 				}
 			};
 
+		draftContentPageSpecification.setPageExperiences(
+			_getPageExperiences(
+				draftContentPageSpecification.getExternalReferenceCode()));
+
 		ContentPageSpecification publishedContentPageSpecification =
 			new ContentPageSpecification() {
 				{
@@ -767,6 +820,10 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 					setType(() -> Type.CONTENT_PAGE_SPECIFICATION);
 				}
 			};
+
+		publishedContentPageSpecification.setPageExperiences(
+			_getPageExperiences(
+				publishedContentPageSpecification.getExternalReferenceCode()));
 
 		masterPage.setPageSpecifications(
 			() -> new PageSpecification[] {
@@ -834,6 +891,10 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 			publishedContentPageSpecification.getExternalReferenceCode(),
 			layout.getExternalReferenceCode());
 
+		_assertPageExperiences(
+			publishedContentPageSpecification.getPageExperiences(), layout,
+			postPublishedContentPageSpecification.getPageExperiences());
+
 		if (Objects.equals(
 				PageSpecification.Status.APPROVED, publishedLayoutStatus)) {
 
@@ -848,6 +909,10 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 		Assert.assertEquals(
 			draftContentPageSpecification.getExternalReferenceCode(),
 			draftLayout.getExternalReferenceCode());
+
+		_assertPageExperiences(
+			draftContentPageSpecification.getPageExperiences(), draftLayout,
+			postDraftContentPageSpecification.getPageExperiences());
 
 		if (Objects.equals(
 				PageSpecification.Status.APPROVED, draftLayoutStatus)) {
@@ -903,6 +968,9 @@ public class MasterPageResourceTest extends BaseMasterPageResourceTestCase {
 
 	@Inject
 	private PortletFileRepository _portletFileRepository;
+
+	@Inject
+	private SegmentsExperienceLocalService _segmentsExperienceLocalService;
 
 	@Inject
 	private StagingLocalService _stagingLocalService;

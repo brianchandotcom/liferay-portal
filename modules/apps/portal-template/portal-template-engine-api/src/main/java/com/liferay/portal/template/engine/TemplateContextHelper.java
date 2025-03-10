@@ -915,43 +915,23 @@ public class TemplateContextHelper {
 
 		@Override
 		public byte[] URLtoByteArray(String location) throws IOException {
-			if (isLocationAccessDenied(location)) {
-				throw new IOException(
-					StringBundler.concat(
-						"Denied access to resource ", location,
-						" using $httpUtil variable from a template. Please ",
-						"use restricted variable $httpUtilUnsafe to access ",
-						"local network."));
-			}
-
 			Options options = new Options();
 
-			options.setFollowRedirects(false);
 			options.setLocation(location);
 
-			return _http.URLtoByteArray(options);
+			return URLtoByteArray(options);
 		}
 
 		@Override
 		public byte[] URLtoByteArray(String location, boolean post)
 			throws IOException {
 
-			if (isLocationAccessDenied(location)) {
-				throw new IOException(
-					StringBundler.concat(
-						"Denied access to resource ", location,
-						" using $httpUtil variable from a template. Please ",
-						"use restricted variable $httpUtilUnsafe to access ",
-						"local network."));
-			}
-
 			Options options = new Options();
 
-			options.setFollowRedirects(false);
 			options.setLocation(location);
 			options.setPost(post);
 
-			return _http.URLtoByteArray(options);
+			return URLtoByteArray(options);
 		}
 
 		@Override
@@ -976,43 +956,23 @@ public class TemplateContextHelper {
 		public InputStream URLtoInputStream(String location)
 			throws IOException {
 
-			if (isLocationAccessDenied(location)) {
-				throw new IOException(
-					StringBundler.concat(
-						"Denied access to resource ", location,
-						" using $httpUtil variable from a template. Please ",
-						"use restricted variable $httpUtilUnsafe to access ",
-						"local network."));
-			}
-
 			Options options = new Options();
 
-			options.setFollowRedirects(false);
 			options.setLocation(location);
 
-			return _http.URLtoInputStream(options);
+			return URLtoInputStream(options);
 		}
 
 		@Override
 		public InputStream URLtoInputStream(String location, boolean post)
 			throws IOException {
 
-			if (isLocationAccessDenied(location)) {
-				throw new IOException(
-					StringBundler.concat(
-						"Denied access to resource ", location,
-						" using $httpUtil variable from a template. Please ",
-						"use restricted variable $httpUtilUnsafe to access ",
-						"local network."));
-			}
-
 			Options options = new Options();
 
-			options.setFollowRedirects(false);
 			options.setLocation(location);
 			options.setPost(post);
 
-			return _http.URLtoInputStream(options);
+			return URLtoInputStream(options);
 		}
 
 		@Override
@@ -1033,43 +993,23 @@ public class TemplateContextHelper {
 
 		@Override
 		public String URLtoString(String location) throws IOException {
-			if (isLocationAccessDenied(location)) {
-				throw new IOException(
-					StringBundler.concat(
-						"Denied access to resource ", location,
-						" using $httpUtil variable from a template. Please ",
-						"use restricted variable $httpUtilUnsafe to access ",
-						"local network."));
-			}
-
 			Options options = new Options();
 
-			options.setFollowRedirects(false);
 			options.setLocation(location);
 
-			return _http.URLtoString(options);
+			return URLtoString(options);
 		}
 
 		@Override
 		public String URLtoString(String location, boolean post)
 			throws IOException {
 
-			if (isLocationAccessDenied(location)) {
-				throw new IOException(
-					StringBundler.concat(
-						"Denied access to resource ", location,
-						" using $httpUtil variable from a template. Please ",
-						"use restricted variable $httpUtilUnsafe to access ",
-						"local network."));
-			}
-
 			Options options = new Options();
 
-			options.setFollowRedirects(false);
 			options.setLocation(location);
 			options.setPost(post);
 
-			return _http.URLtoString(options);
+			return URLtoString(options);
 		}
 
 		@Override
@@ -1098,7 +1038,7 @@ public class TemplateContextHelper {
 			options.setFollowRedirects(false);
 			options.setLocation(url.toString());
 
-			return _http.URLtoString(options);
+			return URLtoString(options);
 		}
 
 		protected boolean isLocationAccessDenied(String location)

@@ -151,10 +151,14 @@ public class ImportTaskResourceTest {
 					new BatchEngineTaskItemDelegateAutoCloseable(
 						batchExternalReferenceCode)) {
 
-			_postImportTask(
+			ImportTask importTask = _postImportTask(
 				batchExternalReferenceCode, "COMPLETED", null,
 				batchEngineTaskItemDelegateAutoCloseable.
 					getTaskItemDelegateName());
+
+			Assert.assertNotEquals(
+				batchExternalReferenceCode,
+				importTask.getExternalReferenceCode());
 		}
 	}
 
@@ -169,11 +173,15 @@ public class ImportTaskResourceTest {
 					new BatchEngineTaskItemDelegateAutoCloseable(
 						batchExternalReferenceCode)) {
 
-			_postImportTask(
-				batchExternalReferenceCode, "COMPLETED",
-				RandomTestUtil.randomString(),
+			String externalReferenceCode = RandomTestUtil.randomString();
+
+			ImportTask importTask = _postImportTask(
+				batchExternalReferenceCode, "COMPLETED", externalReferenceCode,
 				batchEngineTaskItemDelegateAutoCloseable.
 					getTaskItemDelegateName());
+
+			Assert.assertEquals(
+				externalReferenceCode, importTask.getExternalReferenceCode());
 		}
 	}
 
@@ -186,10 +194,13 @@ public class ImportTaskResourceTest {
 					new BatchEngineTaskItemDelegateAutoCloseable(
 						externalReferenceCode)) {
 
-			_postImportTask(
+			ImportTask importTask = _postImportTask(
 				null, "COMPLETED", externalReferenceCode,
 				batchEngineTaskItemDelegateAutoCloseable.
 					getTaskItemDelegateName());
+
+			Assert.assertEquals(
+				externalReferenceCode, importTask.getExternalReferenceCode());
 		}
 	}
 
@@ -228,12 +239,12 @@ public class ImportTaskResourceTest {
 		}
 	}
 
-	private void _postImportTask(
+	private ImportTask _postImportTask(
 			String batchExternalReferenceCode, String expectedExecuteStatus,
 			String externalReferenceCode, String taskItemDelegateName)
 		throws Exception {
 
-		ExportImportTaskUtil.postImportTask(
+		return ExportImportTaskUtil.postImportTask(
 			JSONFactoryUtil.createJSONArray(
 			).put(
 				JSONUtil.put(

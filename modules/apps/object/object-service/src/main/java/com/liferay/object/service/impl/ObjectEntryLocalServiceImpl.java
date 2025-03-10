@@ -1670,7 +1670,9 @@ public class ObjectEntryLocalServiceImpl
 
 		_setRootObjectEntryId(objectDefinition, objectEntry, values);
 
-		if (workflowAction == WorkflowConstants.ACTION_SAVE_DRAFT) {
+		if ((workflowAction == WorkflowConstants.ACTION_SAVE_DRAFT) &&
+			!objectEntry.isPending()) {
+
 			objectEntry.setStatus(WorkflowConstants.STATUS_DRAFT);
 			objectEntry.setStatusByUserId(user.getUserId());
 			objectEntry.setStatusDate(serviceContext.getModifiedDate(null));

@@ -48,7 +48,8 @@ public class DefaultStyleBookEntryUtil {
 		}
 		catch (PortalException portalException) {
 			_log.error(
-				"Unable to get layout's default style book", portalException);
+				"Unable to get the layout's default style book entry",
+				portalException);
 		}
 
 		return styleBookEntry;
